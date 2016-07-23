@@ -2,149 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87E91203E3
-	for <e@80x24.org>; Sat, 23 Jul 2016 08:14:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A805B203E1
+	for <e@80x24.org>; Sat, 23 Jul 2016 08:39:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751441AbcGWIOv (ORCPT <rfc822;e@80x24.org>);
-	Sat, 23 Jul 2016 04:14:51 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:46660 "EHLO dcvr.yhbt.net"
+	id S1750975AbcGWIjv (ORCPT <rfc822;e@80x24.org>);
+	Sat, 23 Jul 2016 04:39:51 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:55224 "EHLO bsmtp3.bon.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751254AbcGWIOs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jul 2016 04:14:48 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFC5F203E1;
-	Sat, 23 Jul 2016 08:14:47 +0000 (UTC)
-Date:	Sat, 23 Jul 2016 08:14:47 +0000
-From:	Eric Wong <e@80x24.org>
-To:	larsxschneider@gmail.com
-Cc:	git@vger.kernel.org, peff@peff.net, jnareb@gmail.com, tboegi@web.de
-Subject: Re: [PATCH v1 3/3] convert: add filter.<driver>.useProtocol option
-Message-ID: <20160723081447.GA24318@starla>
-References: <20160722154900.19477-1-larsxschneider@gmail.com>
- <20160722154900.19477-4-larsxschneider@gmail.com>
+	id S1750818AbcGWIjr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jul 2016 04:39:47 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 3rxLYD3szSz5tlC;
+	Sat, 23 Jul 2016 10:39:44 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 0785952D7;
+	Sat, 23 Jul 2016 10:39:43 +0200 (CEST)
+Subject: [PATCH v2 ew/daemon-socket-keepalive] Windows: add missing definition
+ of ENOTSOCK
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
+References: <28dbe3b0-7a16-1b87-3d59-b8c981fead7c@kdbg.org>
+ <alpine.DEB.2.20.1607221020520.14111@virtualbox>
+ <xmqqmvl9a2wc.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1607230957320.14111@virtualbox>
+Cc:	Git Mailing List <git@vger.kernel.org>,
+	git-for-windows <git-for-windows@googlegroups.com>
+From:	Johannes Sixt <j6t@kdbg.org>
+Message-ID: <4ca7ee51-351b-d222-d05a-63c5bdc5c383@kdbg.org>
+Date:	Sat, 23 Jul 2016 10:39:43 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160722154900.19477-4-larsxschneider@gmail.com>
+In-Reply-To: <alpine.DEB.2.20.1607230957320.14111@virtualbox>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-larsxschneider@gmail.com wrote:
-> Please note that the protocol filters do not support stream processing
-> with this implemenatation because the filter needs to know the length of
-> the result in advance. A protocol version 2 could address this in a
-> future patch.
+The previous commit introduced the first use of ENOTSOCK. This macro is
+not available on Windows. Define it as WSAENOTSOCK because that is the
+corresponding error value reported by the Windows versions of socket
+functions.
 
-Would it be prudent to reuse pkt-line for this?
+For details, see
+https://msdn.microsoft.com/en-us/library/windows/desktop/ms740476.aspx
 
-> +static void stop_protocol_filter(struct cmd2process *entry) {
-> +	if (!entry)
-> +		return;
-> +	sigchain_push(SIGPIPE, SIG_IGN);
-> +	close(entry->process.in);
-> +	close(entry->process.out);
-> +	sigchain_pop(SIGPIPE);
-> +	finish_command(&entry->process);
-> +	child_process_clear(&entry->process);
-> +	hashmap_remove(&cmd_process_map, entry, NULL);
-> +	free(entry);
-> +}
-> +
-> +static struct cmd2process *start_protocol_filter(const char *cmd)
-> +{
-> +	int ret = 1;
-> +	struct cmd2process *entry = NULL;
-> +	struct child_process *process = NULL;
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
+ Same patch text, but the commit message is amended, just in case it's
+ easier for you to apply a new patch than to amend a queued one.
 
-These are unconditionally set below, so initializing to NULL
-may hide future bugs.
+ Thanks everybody.
 
-> +	struct strbuf nbuf = STRBUF_INIT;
-> +	struct string_list split = STRING_LIST_INIT_NODUP;
-> +	const char *argv[] = { NULL, NULL };
-> +	const char *header = "git-filter-protocol\nversion";
+ compat/mingw.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-	static const char header[] = "git-filter-protocol\nversion";
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 233933e..95e128f 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -73,6 +73,9 @@ typedef int pid_t;
+ #ifndef ECONNABORTED
+ #define ECONNABORTED WSAECONNABORTED
+ #endif
++#ifndef ENOTSOCK
++#define ENOTSOCK WSAENOTSOCK
++#endif
 
-...might be smaller by avoiding the extra pointer
-(but compilers ought to be able to optimize it)
+ struct passwd {
+     char *pw_name;
+-- 
+2.9.0.443.ga8520ad
 
-> +	entry = xmalloc(sizeof(*entry));
-> +	hashmap_entry_init(entry, strhash(cmd));
-> +	entry->cmd = cmd;
-> +	process = &entry->process;
-
-<snip>
-
-> +	ret &= strncmp(header, split.items[0].string, strlen(header)) == 0;
-
-starts_with() is probably more readable, here.
-
-> +static int apply_protocol_filter(const char *path, const char *src, size_t len,
-> +						int fd, struct strbuf *dst, const char *cmd,
-> +						const char *filter_type)
-> +{
-> +	int ret = 1;
-> +	struct cmd2process *entry = NULL;
-> +	struct child_process *process = NULL;
-
-I would leave process initialized, here, since it should
-always be set below:
-
-> +	struct stat fileStat;
-> +	struct strbuf nbuf = STRBUF_INIT;
-> +	size_t nbuf_len;
-> +	char *strtol_end;
-> +	char c;
-> +
-> +	if (!cmd || !*cmd)
-> +		return 0;
-> +
-> +	if (!dst)
-> +		return 1;
-> +
-> +	if (!cmd_process_map_init) {
-> +		cmd_process_map_init = 1;
-> +		hashmap_init(&cmd_process_map, (hashmap_cmp_fn) cmd2process_cmp, 0);
-> +	} else {
-> +		entry = find_protocol_filter_entry(cmd);
-> +	}
-> +
-> +	if (!entry){
-> +		entry = start_protocol_filter(cmd);
-> +		if (!entry) {
-> +			stop_protocol_filter(entry);
-
-stop_protocol_filter is a no-op, here, since entry is NULL
-
-> +			return 0;
-> +		}
-> +	}
-> +	process = &entry->process;
-> +
-> +	sigchain_push(SIGPIPE, SIG_IGN);
-> +	switch (entry->protocol) {
-> +		case 1:
-> +			if (fd >= 0 && !src) {
-> +				ret &= fstat(fd, &fileStat) != -1;
-> +				len = fileStat.st_size;
-
-There's a truncation bug when sizeof(size_t) < sizeof(off_t)
-(and mixedCase is inconsistent with our style)
-
-> +    my $filelen  = <STDIN>;
-> +    chomp $filelen;
-> +    print $debug " $filelen";
-> +
-> +    $filelen = int($filelen);
-
-Calling int() here is unnecessary and may hide bugs if you
-forget to check $debug.   Perhaps a regexp check is safer:
-
-	$filelen =~ /\A\d+\z/ or die "bad filelen: $filelen\n";
