@@ -7,96 +7,95 @@ X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79F9C203E1
-	for <e@80x24.org>; Sun, 24 Jul 2016 19:57:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA4F3203E3
+	for <e@80x24.org>; Sun, 24 Jul 2016 20:04:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751862AbcGXT5y (ORCPT <rfc822;e@80x24.org>);
-	Sun, 24 Jul 2016 15:57:54 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:35947 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751268AbcGXT5x (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jul 2016 15:57:53 -0400
-Received: by mail-pa0-f44.google.com with SMTP id pp5so54165224pac.3
-        for <git@vger.kernel.org>; Sun, 24 Jul 2016 12:57:53 -0700 (PDT)
+	id S1751966AbcGXUD6 (ORCPT <rfc822;e@80x24.org>);
+	Sun, 24 Jul 2016 16:03:58 -0400
+Received: from mail-pa0-f65.google.com ([209.85.220.65]:35747 "EHLO
+	mail-pa0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751892AbcGXUD6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jul 2016 16:03:58 -0400
+Received: by mail-pa0-f65.google.com with SMTP id cf3so10130043pad.2
+        for <git@vger.kernel.org>; Sun, 24 Jul 2016 13:03:57 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=subject:to:references:cc:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding;
-        bh=79/QeS+djHwCN9RjEknQnS9BvDAq5GHyQk3MUB8ti5A=;
-        b=NFTz9LB7z54H8p3i2Znr6Sy+U9vnu4UAt1f2pOdXlXob9CQZCFTbUT5bolPWLmqTf9
-         NOrJQ2I9ycTsL+VYg4hqVzNNQMzWn8+pljZ2+FWRQgYYkwa4CK3RE5Z++MgxJj2g2dRQ
-         9QfRlR0+ri33y+alBfCGV03a7ZSlH5l44YXtOPoDkVRxuiPglN5+tGbE36/8r4uq/CBX
-         +Atw6MmsUhZeaAIKbil+MENibAvwqFfJRdMs7DcdFUkAzG4Owx5Bn0XlAmW4lO2nCoeM
-         ynXlczmOrLmDQzNMUhrZkC7pv4riHf+lKWY8sxmZVGq3E0rzpmcAt3q05b/Kt8M62ZMi
-         G1gg==
+        bh=OxTQlJmX3IqziiUcGecF9MuSKQf6EJMtKBgqIol+K6I=;
+        b=uP1WON+1PPhgf/qJiTX78Lu2J9IiTsJncA5FoXvozDHJFMN3gGEg/SQ2rcl94+U5Q+
+         llWhODoed5IKFfgtihRWN1YdDmyII93oWvuWMNqyG82NG/U4BZZuL1fE4T8HZydmgz2K
+         EduheK4Q1OB+iWC+Muh3Sm3nSCEnROs60Tn2QINqYBysFTKsMNcBFWn+OgNwHmKOnC1F
+         DQ+GbAlKpb51wv9wIOx2prybglNf3cSDvXYddQe2rqbnVVfVue3AuLPhFrbzNpz9uVhE
+         BMc0EOCDj+MUUyln6W5JTQm8odh7WlGpaCdyFdAs0XVQU13M0b5Pc6sbCyqNPTM+B4ae
+         aDyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:subject:to:references:cc:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=79/QeS+djHwCN9RjEknQnS9BvDAq5GHyQk3MUB8ti5A=;
-        b=XqNcPiuKvaNXlpNbWNFs+fMZP77VcJf70NfwBPU8QdTZ61aIfUjM5xP6xq+DhfRk/c
-         lQBYqgcDrzfNNgDoq5uP2qvl9+NJ3Oz2QzylI6Q/SsHfM2vA78qJGdB+V+11R0ZQWYy7
-         95hX6VIGx5+TU0g6JNzP97kWIQ7O6sesn9GxJ1V3yWjMH1/gU6qAKiZXsHxbT4UBFy4H
-         Opjl+DRFRIaSfUSxXXrs6arjQApTNY1tD3AQkF5PuVihnHkSNdAx2Rr4kn4/Aqkhkuuh
-         /uOAjkvyQ8CO8B/tNH1snjT+KMS4s8sgKB0vQGTbV7LufhrFxkKdhDE0RuGsBfZtMcp0
-         oqgg==
-X-Gm-Message-State: AEkooutCBC1xFBMHIzwVTQQS5UXEcsG54/pFP/C3BI0po9OnA29+D4R1NiH5sQ0wnxL9GQ==
-X-Received: by 10.66.76.132 with SMTP id k4mr23434062paw.22.1469390272681;
-        Sun, 24 Jul 2016 12:57:52 -0700 (PDT)
+        bh=OxTQlJmX3IqziiUcGecF9MuSKQf6EJMtKBgqIol+K6I=;
+        b=AzawCYe6Ji2QWpSk6U/HAgnoZFqpr9qpkAo3/3sw9m3TgyYlYxzL9jtHWfb2+cLlOi
+         t934uVd78AYzt6JKtwv2EGrmKVcePTzp4zCLqPDrO+Ntc0FRDTMdL93MYts3kcwxyz4h
+         363+/GH6sArTxd47a9d5sMrPWccjNAfxlXal9R5fcHzP6mmZp0GaagJBrlGFXQhQACkI
+         BcNVeqxTHMqcnmKh24CDn4YEvxqVK5e/N/6aoBLC8pNFbDh9RLRI9qnxfsd8ENCVtAyg
+         KLqF2CiEWC3x2XnRYYmoKT1mz1qnGcUyqxKhmHOXLYUgvR/Qcar5VIDACrRAQ+Zlq1av
+         1Prw==
+X-Gm-Message-State: AEkoouuMK30p6PLtQXq202sceE9ov86pBZd+DmcnTVcsZw3Dl0hnxak+kO5iN+J7IiZzIQ==
+X-Received: by 10.66.220.73 with SMTP id pu9mr23520256pac.77.1469390637301;
+        Sun, 24 Jul 2016 13:03:57 -0700 (PDT)
 Received: from [192.168.0.109] (c-71-202-183-39.hsd1.ca.comcast.net. [71.202.183.39])
-        by smtp.googlemail.com with ESMTPSA id g10sm34398951pfc.57.2016.07.24.12.57.51
+        by smtp.googlemail.com with ESMTPSA id d5sm34433317pfc.4.2016.07.24.13.03.56
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 24 Jul 2016 12:57:51 -0700 (PDT)
-Subject: Re: [RFC] A Change to Commit IDs Too Ridiculous to Consider?
-To:	Rodrigo Campos <rodrigo@sdfg.com.ar>
-References: <nn30dv$5sn$1@ger.gmane.org> <20160724185132.GN25141@sdfg.com.ar>
-Cc:	git@vger.kernel.org
+        Sun, 24 Jul 2016 13:03:56 -0700 (PDT)
+Subject: Re: [ANN] Pro Git Reedited 2nd Edition
+To:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+References: <nn1euf$h6q$1@ger.gmane.org> <579483B7.4090508@gmail.com>
+ <6f7eea6b-2446-5740-cbec-141d71a33ea1@gmail.com>
+ <CANQwDwcy_AXTmG02ynNanNvoNVnK+t3uxf5r1J5tHn1hxaZ9kg@mail.gmail.com>
+ <d7918e4a-c4c7-c85f-1aba-3cb9a59e6eba@gmail.com> <5795087C.4010503@gmail.com>
+Cc:	git <git@vger.kernel.org>
 From:	Jon Forrest <nobozo@gmail.com>
-Message-ID: <c0af7511-a5d5-29bb-d279-66b6c3e0519c@gmail.com>
-Date:	Sun, 24 Jul 2016 12:57:50 -0700
+Message-ID: <49f49b92-bc40-e975-10e9-fccc8a3ae25c@gmail.com>
+Date:	Sun, 24 Jul 2016 13:03:56 -0700
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.1.1
 MIME-Version: 1.0
-In-Reply-To: <20160724185132.GN25141@sdfg.com.ar>
-Content-Type: text/plain; charset=windows-1252; format=flowed
+In-Reply-To: <5795087C.4010503@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+>> Also, I realized one potentially major disadvantage of sharing in
+>> Google Drive. This is that the URL will change each time I update
+>> the book. Apparently Google is taking away the ability to create
+>> a static link at the end of August 2016.
+>
+> I think you can share a folder instead, and this would be stable.
+> Alternatively, when updating the book you could update the link
+> in the GitHub repository description and/or the README for the
+> fork.
 
+By the way, I might have just figured out a good way of handling
+static links with Google Drive.
 
-On 7/24/2016 11:51 AM, Rodrigo Campos wrote:
-> And what is the problem with that, if you are doing it with instructional
-> purposes? Let's assume that this helps and not confuses later when the commits
-> *do* change. What is the problem you face?
+Apparently, when I created the pdf version of Pro Git Reedited
+2nd Edition (which I did on a Dropbox folder) I didn't wait
+long enough for the creation process to complete (I think
+that was the problem but I'm not 100% sure). Anyway, as
+a result, the pdf version didn't have any images in it.
 
-A lot of instructional material contains stuff like "Do [xxx] and you'll
-see [zzz]. If you don't then something went wrong so try to figure out
-what happened and do it again."
+After fooling around for a while, I was able to create a
+pdf that did contain the images but I was worried that uploading
+it to Google Drive would change the URL, as we had discussed.
 
-Git, as it stands, for good reason doesn't allow this approach.
-
-I don't think a Git beginner, when using a version of Git that somehow
-works the way I proposed, will be confused. The fact that performing the
-same steps results in the same commit IDs won't be something that
-they'll care about or even notice. The material can include a callout
-mentioning the difference between "real" Git and "learners" Git.
-
-> I mean, for some examples you can use HEAD, HEAD^, HEAD~4, etc. and that always
-> works, no matter the commit id.
-
-This will work in some cases, but should come later in a Git book.
-But, in many cases using relative commit IDs, rather than absolute,
-will be less clear (I believe).
-
-> In which cases do you want/need the commit ids to be equal?
-> Can you be more specific?
-
-Sure. Take a look at the 2nd or 3rd chapter of Pro Git Reedited, 2nd
-Edition (or just Pro Git 2nd Edition - it doesn't matter). You see
-lots of output showing 'git commit' commands and the commit IDs that
-result. I suspect you'd see the same in almost any book about Git.
+However, the "Manage Versions ..." option on Google Drive let
+me upload a new version of the file *without* changing the
+share URL! Assuming I wasn't hallucinating, this will be a
+great way to update both the pdf and the HTML versions as
+they change in the future.
 
 Jon
+
