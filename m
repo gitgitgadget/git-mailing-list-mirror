@@ -2,102 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17F97203E1
-	for <e@80x24.org>; Sun, 24 Jul 2016 15:34:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6052F203E1
+	for <e@80x24.org>; Sun, 24 Jul 2016 15:51:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752250AbcGXPa6 (ORCPT <rfc822;e@80x24.org>);
-	Sun, 24 Jul 2016 11:30:58 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48360 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752172AbcGXPan (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jul 2016 11:30:43 -0400
-Received: (qmail 5503 invoked by uid 102); 24 Jul 2016 15:30:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 24 Jul 2016 11:30:42 -0400
-Received: (qmail 19294 invoked by uid 107); 24 Jul 2016 15:31:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 24 Jul 2016 11:31:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 24 Jul 2016 11:30:36 -0400
-Date:	Sun, 24 Jul 2016 11:30:36 -0400
-From:	Jeff King <peff@peff.net>
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	Eric Wong <e@80x24.org>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/2] format-patch: escape "From " lines recognized by
- mailsplit
-Message-ID: <20160724153035.GA32304@sigill.intra.peff.net>
+	id S1751891AbcGXPvm (ORCPT <rfc822;e@80x24.org>);
+	Sun, 24 Jul 2016 11:51:42 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58398 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751584AbcGXPvl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jul 2016 11:51:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 17976286ED;
+	Sun, 24 Jul 2016 11:51:40 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fwq9d2/7u4clLohUNYEbcpnZwPE=; b=UI8MN0
+	lsmMM97kqNqddv3XHGurxrMquBqF9hmp23wG/JGiDmojKJQ404d11r18Gj8sZYdl
+	pxBIM+byoa5RB8irmMzr6Np42Kfwy088meMST6JPHIrzDLCU+f5BOXwINsujFZuN
+	4pY+V6wHb/23BDqnMkUeGhceBAR2m37v1dBWQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NxItUZQgF9/Y4URYUBtutlEslXSXLDJO
+	ehBGQYnn/W3voSqvLuY8RA38UUpRJpW8kd8e/6vJpFFuJMCdvrYXf5sP++5vg5e4
+	XqVsyqvD+bVjQWBdoxw3ozZXGd7uZ2oBjpthSmlnaOS5sh1AZ7Ytu12dQvyN10yX
+	CpEqtzCnugA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id F2202286EB;
+	Sun, 24 Jul 2016 11:51:39 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5D230286EA;
+	Sun, 24 Jul 2016 11:51:39 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Eric Wong <e@80x24.org>
+Cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] format-patch: escape "From " lines recognized by mailsplit
 References: <20160722224739.GA22961@whir>
- <alpine.DEB.2.20.1607231056150.14111@virtualbox>
- <20160724031409.GA32480@starla>
- <20160724031543.GC32480@starla>
- <alpine.DEB.2.20.1607240926500.14111@virtualbox>
+	<xmqqk2gb8q81.fsf@gitster.mtv.corp.google.com>
+Date:	Sun, 24 Jul 2016 08:51:37 -0700
+In-Reply-To: <xmqqk2gb8q81.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+	message of "Sun, 24 Jul 2016 00:11:58 -0700")
+Message-ID: <xmqqd1m3825y.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1607240926500.14111@virtualbox>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8255BDFC-51B6-11E6-BADB-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Sun, Jul 24, 2016 at 09:37:57AM +0200, Johannes Schindelin wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Sun, 24 Jul 2016, Eric Wong wrote:
-> 
-> > @@ -1745,9 +1746,18 @@ void pp_remainder(struct pretty_print_context *pp,
-> >  			strbuf_add_tabexpand(sb, pp->expand_tabs_in_log,
-> >  					     line, linelen);
-> >  		else {
-> > -			if (pp->fmt == CMIT_FMT_MBOXRD &&
-> > -					is_mboxrd_from(line, linelen))
-> > -				strbuf_addch(sb, '>');
-> > +			switch (pp->fmt) {
-> > +			case CMIT_FMT_EMAIL:
-> > +				if (is_from_line(line, linelen))
-> > +					strbuf_addch(sb, '>');
-> > +				break;
-> > +			case CMIT_FMT_MBOXRD:
-> > +				if (is_mboxrd_from(line, linelen))
-> > +					strbuf_addch(sb, '>');
-> > +				break;
-> > +			default:
-> > +				break;
-> > +			}
-> 
-> Sorry to be nitpicking once again; I think this would be conciser (and
-> easier to read at least for me) as:
-> 
-> -			if (pp->fmt == CMIT_FMT_MBOXRD &&
-> -					is_mboxrd_from(line, linelen))
-> +			if ((pp->fmt == CMIT_FMT_MBOXRD &&
-> +			     is_mboxrd_from(line, linelen)) ||
-> +			    (pp->fmt == CMIT_FMT_EMAIL &&
-> +			     is_from_line(line, linelen)))
->  				strbuf_addch(sb, '>');
+> Eric Wong <e@80x24.org> writes:
+>
+>> Users have mistakenly copied "From " lines into commit messages
+>> in the past, and will certainly make the same mistakes in the
+>> future.  Since not everyone uses mboxrd, yet, we should at least
+>> prevent miss-split mails by always escaping "From " lines based
+>> on the check used by mailsplit.
+>>
+>> mailsplit will not perform unescaping by default, yet, as it
+>> could cause further invocations of format-patch from old
+>> versions of git to generate bad output.  Propagating the mboxo
+>> escaping is preferable to miss-split patches.  Unescaping may
+>> still be performed via "--mboxrd".
+>
+> As a tool to produce mbox file, quoting like this in format-patch
+> output may make sense, I would think, but shouldn't send-email undo
+> this when sending individual patches?
 
-Since we are nitpicking, I think:
+Also, doesn't it break "git rebase" (non-interactive), or anything
+that internally runs format-patch to individual files and then runs
+am on each of them, anything that knows that each output file from
+format-patch corresponds to a single change and there is no need to
+split, badly if we do this unconditionally?
 
-  static int needs_from_quoting(enum cmit_fmt fmt,
-                                const char *line, size_t len)
-  {
-	if (fmt == CMIT_FMT_MBOXRD && is_mboxrd_from(line, linelen))
-		return 1;
-	if (fmt == CMIT_FMT_EMAIL && is_from_line(line, linelen))
-		return 1;
-	return 0;
-  }
-
-  ...
-  if (needs_from_quoting(pp->fmt, line, linelen))
-	strbuf_addch(sb, '>');
-
-is even nicer. There are lots of alternatives to write the helper
-function, and I do not care much which one is chosen. But splitting it
-out into a concise "do we need to do this?" query function makes the
-flow in pp_remainder much easier to follow.
-
--Peff
+IOW, shouldn't this be an optional feature to format-patch that is
+triggered by passing a new command line option that currently nobody
+is passing?
