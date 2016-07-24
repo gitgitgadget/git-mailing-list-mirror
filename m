@@ -7,124 +7,106 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 395B9203E2
-	for <e@80x24.org>; Sun, 24 Jul 2016 07:38:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBA7C203E2
+	for <e@80x24.org>; Sun, 24 Jul 2016 08:05:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752062AbcGXHiN (ORCPT <rfc822;e@80x24.org>);
-	Sun, 24 Jul 2016 03:38:13 -0400
-Received: from mout.gmx.net ([212.227.15.15]:57119 "EHLO mout.gmx.net"
+	id S1751862AbcGXIFg (ORCPT <rfc822;e@80x24.org>);
+	Sun, 24 Jul 2016 04:05:36 -0400
+Received: from mout.gmx.net ([212.227.15.18]:60697 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751870AbcGXHiM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jul 2016 03:38:12 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0Ljqgb-1aueJt0Fsv-00bqBS; Sun, 24 Jul 2016 09:38:00
+	id S1751687AbcGXIFb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jul 2016 04:05:31 -0400
+Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0M1msU-1bCSPd2l4c-00th20; Sun, 24 Jul 2016 10:05:19
  +0200
-Date:	Sun, 24 Jul 2016 09:37:57 +0200 (CEST)
+Date:	Sun, 24 Jul 2016 10:05:16 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Eric Wong <e@80x24.org>
-cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/2] format-patch: escape "From " lines recognized by
- mailsplit
-In-Reply-To: <20160724031543.GC32480@starla>
-Message-ID: <alpine.DEB.2.20.1607240926500.14111@virtualbox>
-References: <20160722224739.GA22961@whir> <alpine.DEB.2.20.1607231056150.14111@virtualbox> <20160724031409.GA32480@starla> <20160724031543.GC32480@starla>
+To:	Andreas Schwab <schwab@linux-m68k.org>
+cc:	Eric Wong <e@80x24.org>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 1/2] mailinfo: extract is_from_line from mailsplit
+In-Reply-To: <m2poq3zdu3.fsf@linux-m68k.org>
+Message-ID: <alpine.DEB.2.20.1607241003480.14111@virtualbox>
+References: <20160722224739.GA22961@whir> <alpine.DEB.2.20.1607231056150.14111@virtualbox> <20160724031409.GA32480@starla> <20160724031518.GB32480@starla> <m2poq3zdu3.fsf@linux-m68k.org>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Kb2Bi/WiXpXRcfCYPvVIXSqPUTU0EJGDJO9DI5epD27ukzfCFcx
- o/N4l1b32ZrJWbeS3H17isznCbWYCJ0ZGEDUKm88+0lY9gKXzpnox+ymCd1aElXpDD+pCPo
- QosnOV5AlBTrbIFSs3jihn42OdUiWGH/e8KlYZIRDiZYbSolZ+BmPOfDd1hU+vLXcotKgt5
- KB24FTFH5Xh38dzgr4kjg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:0suaQb3CsZM=:zUZITzh1IAY8DcgcTxjh3P
- a+XqDF/ygl4z5Lmmj3i98YlFHYWIj7sdT8P67Q4R1mB7QI6Qx9t6W6E9p/P9VnENdmbZb2YkT
- /MQGaqyYR1JYDSpxjO7rWlIT2u1zF6Z3Y5l/m00RxKM9FUQK/8MKWDrYPcFH8YTQyZqvQuzAk
- ARqlzk2KXdeyUHEmDU3vUmObyCXb590wQE4U6KrqIBZDOf6CgNAy/vGFVqW4wXk63qMe4RY2T
- mrf7SSISMNnMYsmQrMWtq9MM7OXw/PUmIW0W4NGO9quZg3MAD7bHeXhwsKJVIOu0+WRnmNvgn
- bc7FItDWXZzcyMpz1Q94x9FxdUUQAGQPSvssjtJesYkaXiYTUCheOeWq+mB7Wuxd2ZxItwlZF
- in5mEybNRD6DIQ4bVrFDOxS0KgDg4GaICt2uVeo8P8nsm7GQj9Gyl2St1jw6nWexblywmbjEk
- TU4FUAKWrlOXG+ZOUCJ6TfTYNPSF0lBqZnl3YtZkX+olsakbxW0ndcqM6twf4GnRHKwRJ+WzD
- Zs1F3Qdl7bE8plRdOseSLaVBQtAIhHXK0sabZyiQpU4zcLPnBqtQdEVt16PwQFoEHmFFM+HzE
- 6z80b7zFabp0HwaK7JG4SErr8DhtImtumWpOO3V+CIxE/48AHf+kBNHKFVagOg0iBmjc2//iW
- KC1IlHVR6wZZ7Ek/RwXLf1knnmBUDmsq76wpOb6zaa2neX1+MxyV04GvE7nsZwJl7tjcTf88e
- 3SyN4DDmnRANl/jqa3pQFamEJd+NgcEEJG5IvGbnhejhzeI9CXVq5WdUNnFO7JUI/wtDds1Ye
- JNOz8Or
+X-Provags-ID: V03:K0:+5cCXSfG8SusQYTIrMORC4SLs/nxuK5dQneoGmBuBKh9i83iQ7r
+ OrMw46myjSRW9EHMF2esnkdlKZg2JfOy++wWsKUwltV9U1k/WRB4umThcomOMWdzHVKGoVZ
+ VZzbFwA7zGctrebr8vP0inUnglsPM89+nNbAP5GeM839GDwaB15K8QRUIyYE8xdOkOkTH4d
+ I5BtmOGusjfXtwLwB+Bcw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:2l6LdiaJ3RQ=:k331s/SrFx1LDseJ60gque
+ II5ma5XsJWEjwEr8+1xJYiHOzJKrjayiU/5iIK+hYPV43yRKgrs7tx2+M953r9x0vKnuqzqp1
+ 96B8+/E+xIzpmeypyBcoZfx2EovvFTYGiI/WUy++5Z3r5riBVMDDMi+q4Mvwha1L104kIAhVF
+ 1fDwXjZRJkTLdd93c36l0IGCIWHmlHI6DYrwwkcsvnEO+xmqX4wsyFyaDrBYGDTkUvOVGxnp/
+ M9trUhSZ+9mKA2t+380AUnl5/RNr5j1GUFq9fvZbIaVO4XPMo0J59wgfJM9HIli5V4vDt7GDd
+ RtUat2PzQ8ODfHK3pyUbwpxCJL5WTYnrOxTWkPVDYswS0P0P4VR2TO9UTy90VN3RQFk1w1lBY
+ 2N3SaPVTqmlhNnWfnUfbdpvofjx2cQvldIOXn8pEgjcrAGyb1E8/BRfcD1wv9qu9exQGTymZ0
+ l2IzZqgBiaUdc+1dO4IRg4zTQ5lqrp6ntZwbQ8nJwlE565bN6HOWGDKX4Oj3Gy8uHbSS3G6Fs
+ DVGTp2hJSCXmOGLR7d98/lXgna1pxSY1nM1BV+AKlfkmuSXWLo0+CztNplrEKGez7jgoFd7bW
+ 497wpfo81NsnTi5sT4mqjM+4ImQGN2wn3deA0ZzmL7U7NgRuWd8TWStkRSfsl3BdbgN80F8Cp
+ BSX84viztGm5wYts6XzcVQam7xWM3CKwjcfoprGqO8DWsvtQDqecpS3pS0CqO431jpUt+jeYs
+ i55/ioTlIQ/iXvP1FwsHWK22fiU5PoD7HTW8UwEMWvEbveBJw+ter4yrxMYJ7hyygMeP3Ufrx
+ iWdmwJ3
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Eric,
+Hi Andreas,
 
-On Sun, 24 Jul 2016, Eric Wong wrote:
+On Sun, 24 Jul 2016, Andreas Schwab wrote:
 
-> @@ -1745,9 +1746,18 @@ void pp_remainder(struct pretty_print_context *pp,
->  			strbuf_add_tabexpand(sb, pp->expand_tabs_in_log,
->  					     line, linelen);
->  		else {
-> -			if (pp->fmt == CMIT_FMT_MBOXRD &&
-> -					is_mboxrd_from(line, linelen))
-> -				strbuf_addch(sb, '>');
-> +			switch (pp->fmt) {
-> +			case CMIT_FMT_EMAIL:
-> +				if (is_from_line(line, linelen))
-> +					strbuf_addch(sb, '>');
-> +				break;
-> +			case CMIT_FMT_MBOXRD:
-> +				if (is_mboxrd_from(line, linelen))
-> +					strbuf_addch(sb, '>');
-> +				break;
-> +			default:
-> +				break;
-> +			}
+> Eric Wong <e@80x24.org> writes:
+> 
+> > diff --git a/mailinfo.c b/mailinfo.c
+> > index 9f19ca1..0ebd953 100644
+> > --- a/mailinfo.c
+> > +++ b/mailinfo.c
+> > @@ -1035,3 +1035,34 @@ void clear_mailinfo(struct mailinfo *mi)
+> >  
+> >  	strbuf_release(&mi->log_message);
+> >  }
+> > +
+> > +int is_from_line(const char *line, int len)
+> > +{
+> > +	const char *colon;
+> > +
+> > +	if (len < 20 || memcmp("From ", line, 5))
+> > +		return 0;
+> > +
+> > +	colon = line + len - 2;
+> > +	line += 5;
+> > +	for (;;) {
+> > +		if (colon < line)
+> > +			return 0;
+> > +		if (*--colon == ':')
+> > +			break;
+> > +	}
+> > +
+> > +	if (!isdigit(colon[-4]) ||
+> > +	    !isdigit(colon[-2]) ||
+> > +	    !isdigit(colon[-1]) ||
+> > +	    !isdigit(colon[ 1]) ||
+> > +	    !isdigit(colon[ 2]))
+> > +		return 0;
+> > +
+> > +	/* year */
+> > +	if (strtol(colon+3, NULL, 10) <= 90)
+> > +		return 0;
+> > +
+> > +	/* Ok, close enough */
+> > +	return 1;
+> > +}
+> 
+> Should this be made more strict, like by checking for a space before the
+> year?
 
-Sorry to be nitpicking once again; I think this would be conciser (and
-easier to read at least for me) as:
+This patch only moves the function, so it would be inappropriate to change
+it.
 
--			if (pp->fmt == CMIT_FMT_MBOXRD &&
--					is_mboxrd_from(line, linelen))
-+			if ((pp->fmt == CMIT_FMT_MBOXRD &&
-+			     is_mboxrd_from(line, linelen)) ||
-+			    (pp->fmt == CMIT_FMT_EMAIL &&
-+			     is_from_line(line, linelen)))
- 				strbuf_addch(sb, '>');
-
-> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-> index 1206c48..8fa3982 100755
-> --- a/t/t4014-format-patch.sh
-> +++ b/t/t4014-format-patch.sh
-> @@ -1606,4 +1606,18 @@ test_expect_success 'format-patch --pretty=mboxrd' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'format-patch From escaping' '
-> +	cat >msg <<-INPUT_END &&
-> +	somebody pasted format-patch output into a body
-> +
-> +	From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-> +	INPUT_END
-> +
-> +	C=$(git commit-tree HEAD^^{tree} -p HEAD <msg) &&
-
-The double caret makes this a bit hard to read. Maybe this instead?
-
-+	C=$(git commit-tree HEAD: -p HEAD^ <msg) &&
-
-> +	git format-patch --stdout -1 $C~1..$C >patch &&
-
-Either "-1 $C" or "$C~1..$C", not both...
-
-> +	git grep -h --no-index \
-> +		">From 0000000000000000000000000000000000000000 " \
-> +		patch
-> +'
-> +
->  test_done
-> -- 
-> EW
-
-Heh, that's a nice Git version ;-)
+If you want to make it stricter, you will have to submit a separate patch.
 
 Ciao,
-Dscho
+Johannes
