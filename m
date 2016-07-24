@@ -2,99 +2,221 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A277203E1
-	for <e@80x24.org>; Sun, 24 Jul 2016 21:30:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2540203E1
+	for <e@80x24.org>; Sun, 24 Jul 2016 22:37:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752206AbcGXVas (ORCPT <rfc822;e@80x24.org>);
-	Sun, 24 Jul 2016 17:30:48 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35128 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751891AbcGXVar (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jul 2016 17:30:47 -0400
-Received: by mail-wm0-f65.google.com with SMTP id i5so14160793wmg.2
-        for <git@vger.kernel.org>; Sun, 24 Jul 2016 14:30:46 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=XJQ3dlj7inkD1e95qaL/PCyX+IuFz+ukVNyXo9BSIPg=;
-        b=tAU/yiEQHdc83NI6l98sC96qF6kVmROqoUI8nWfDJVwGpIlx7u2tsQYhX+JcrISw9H
-         H9PuFEZYM/cUhd6nxuAFp6b9BpTNMDdV5HXhfHf3k4VdsxZNe7mkTh7AeUKKlgu/f3YA
-         LUZz+b1WNbL5Bp7G6fZMffpisasbagWKZkM20Q/CR+2Hz4sahA3Ae6EHmkzuFBFhoGFL
-         8K6WLqd2BvVdEVa+8bJaRsgwiFI6aIDbmctc+RWHgs5euG+ZLP4Zf+9rZ5FSoGHmD3tW
-         bHpMA73kBQosQ+TtO6wENbWEvK9I3YMkR6yacffzFIcs5GfTILoFjIL2b6C+BK1erP+Z
-         WO0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding;
-        bh=XJQ3dlj7inkD1e95qaL/PCyX+IuFz+ukVNyXo9BSIPg=;
-        b=e84yrUkl4xj2BLNn6/FZ7GJbiskL8zgMMpS++KnsXPJK5DV/IQ6l/8N1iqddm022B9
-         Q7VYWLBmO5tb2grof8WdaetBR0PTp1L0zvrYCXdcJvZpwwgRqyGgjgHEogeDst5N87vt
-         EVBeSVclQIb+SnUBoseevAGI3tuWxuEsiPZCVhOWOuuraelDk+jVnqLqjWNNa9UPTbIG
-         NNBddx9kdQVS/yN4toZ4oAx9qdpt1tDywXPvGYdBd8H7+nw6WYWhplZ2FCz/x616AaYk
-         tjY8C7IajKyJFliAyqscBVgbEr7bJil1BEFQkUxsArLseW9wECM2+tlHXJWXvMQDz1bV
-         RQSA==
-X-Gm-Message-State: AEkoouss7rH1mlgAddooOnlKZzyf8dZlJZKAa9KYMoiOOgPrGWlo5I24bMbevyb8EPwvfA==
-X-Received: by 10.194.168.197 with SMTP id zy5mr13801858wjb.112.1469395845425;
-        Sun, 24 Jul 2016 14:30:45 -0700 (PDT)
-Received: from [192.168.1.26] (exa83.neoplus.adsl.tpnet.pl. [83.20.250.83])
-        by smtp.googlemail.com with ESMTPSA id xa2sm12397074wjc.0.2016.07.24.14.30.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 24 Jul 2016 14:30:44 -0700 (PDT)
+	id S1752622AbcGXWgm (ORCPT <rfc822;e@80x24.org>);
+	Sun, 24 Jul 2016 18:36:42 -0400
+Received: from avasout08.plus.net ([212.159.14.20]:34812 "EHLO
+	avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752619AbcGXWg0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jul 2016 18:36:26 -0400
+Received: from [10.0.2.15] ([209.93.82.95])
+	by avasout08 with smtp
+	id NmcN1t00123PrXV01mcPhN; Sun, 24 Jul 2016 23:36:23 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=Y6S6iVWN c=1 sm=1 tr=0
+ a=MrGUH+yfTxdMEvUZuMmDjA==:117 a=MrGUH+yfTxdMEvUZuMmDjA==:17
+ a=N659UExz7-8A:10 a=EBOSESyhAAAA:8 a=pGLkceISAAAA:8 a=iTZFxO3riMR52Sxq__4A:9
+ a=yJM6EZoI5SlJf8ks9Ge_:22 a=6kGIvZw6iX1k4Y-7sg4_:22
+X-AUTH:	ramsayjones@:2500
 Subject: Re: [PATCH v1 3/3] convert: add filter.<driver>.useProtocol option
 To:	Lars Schneider <larsxschneider@gmail.com>
 References: <20160722154900.19477-1-larsxschneider@gmail.com>
  <20160722154900.19477-4-larsxschneider@gmail.com>
- <5792B622.5040306@gmail.com> <0FB8A921-3465-4081-A36D-D2F19A8ED63D@gmail.com>
- <579521A1.4070501@gmail.com>
+ <9f47cf44-7163-a7a7-c1f0-87ebdee65b37@ramsayjones.plus.com>
+ <1A0C148F-C7C3-4FAF-BAEE-58B11A2324FF@gmail.com>
 Cc:	Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	jnareb@gmail.com,
 	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-	mlbright@gmail.com, Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <e@80x24.org>
-Newsgroups: gmane.comp.version-control.git
-From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <5795337A.1040701@gmail.com>
-Date:	Sun, 24 Jul 2016 23:30:34 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
+	mlbright@gmail.com
+From:	Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <194ea810-76ff-f32c-0f8a-57e8e60b65f5@ramsayjones.plus.com>
+Date:	Sun, 24 Jul 2016 23:36:21 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-In-Reply-To: <579521A1.4070501@gmail.com>
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <1A0C148F-C7C3-4FAF-BAEE-58B11A2324FF@gmail.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-W dniu 2016-07-24 o 22:14, Jakub Narêbski pisze:
-> W dniu 2016-07-24 o 20:36, Lars Schneider pisze:
 
->> I agree that the name is not ideal. "UseProtocol" as it is would be a boolean. 
->> I thought about "persistent" but this name wouldn't convey the scope of the 
->> persistency ("persistent for one Git operation" vs. "persistent for many Git 
->> operations"). What do you think about the protocol as int version idea
->> described in $gmane/300155 ?
->
-> You mean the `protocol` as a config variable name (fully name being
-> `filter.<driver>.protocol`), being integer-valued, isn't it? Wouldn't
-> `protocolVersion` be a more explicit?
 
-Just throwing out further ideas:
+On 24/07/16 18:16, Lars Schneider wrote:
+> 
+> On 23 Jul 2016, at 01:19, Ramsay Jones <ramsay@ramsayjones.plus.com> wrote:
+> 
+>> On 22/07/16 16:49, larsxschneider@gmail.com wrote:
+>>> From: Lars Schneider <larsxschneider@gmail.com>
+>>>
+>>> Git's clean/smudge mechanism invokes an external filter process for every
+>>> single blob that is affected by a filter. If Git filters a lot of blobs
+>>> then the startup time of the external filter processes can become a
+>>> significant part of the overall Git execution time.
+>>>
+>>> This patch adds the filter.<driver>.useProtocol option which, if enabled,
+>>> keeps the external filter process running and processes all blobs with
+>>> the following protocol over stdin/stdout.
+>>>
+>>> 1. Git starts the filter on first usage and expects a welcome message
+>>> with protocol version number:
+>>> 	Git <-- Filter: "git-filter-protocol\n"
+>>> 	Git <-- Filter: "version 1"
+>>
+>> Hmm, I was a bit surprised to see a 'filter' talk first (but so long as the
+>> interaction is fully defined, I guess it doesn't matter).
+>>
+>> [If you wanted to check for a version, you could add a "version" command
+>> instead, just like "clean" and "smudge".]
+> 
+> It was a conscious decision to have the `filter` talk first. My reasoning was:
+> 
+> (1) I want a reliable way to distinguish the existing filter protocol ("single-shot 
+> invocation") from the new one ("long running"). I don't think there would be a
+> situation where the existing protocol would talk first. Therefore the users would
+> not accidentally mix them with a possibly half working, undetermined, outcome.
 
-Perhaps make `persistent` string-valued variable, with the only value
-supported for now, namely "per-process" / "operation"?
+If an 'single-shot' filter were incorrectly configured, instead of a new one, then
+the interaction could last a little while - since it would result in deadlock! ;-)
 
-Perhaps require for `pidfile` to be present for it to be daemon,
-that is persist for possibly many Git operations. Or allow "daemon"
-or "server" value for `persistent`, then?
+[If Git talks first instead, configuring a 'single-shot' filter _may_ still result
+in a deadlock - depending on pipe size, etc.]
 
--- 
-Jakub Narêbski
+> 
+> (2) In the future we could extend the pipe protocol (see $gmane/297994, it's very
+> interesting). A filter could check Git's version and then pick the most appropriate
+> filter protocol on startup.
+> 
+> 
+>> [...]
+>>> +static struct cmd2process *start_protocol_filter(const char *cmd)
+>>> +{
+>>> +	int ret = 1;
+>>> +	struct cmd2process *entry = NULL;
+>>> +	struct child_process *process = NULL;
+>>> +	struct strbuf nbuf = STRBUF_INIT;
+>>> +	struct string_list split = STRING_LIST_INIT_NODUP;
+>>> +	const char *argv[] = { NULL, NULL };
+>>> +	const char *header = "git-filter-protocol\nversion";
+>>> +
+>>> +	entry = xmalloc(sizeof(*entry));
+>>> +	hashmap_entry_init(entry, strhash(cmd));
+>>> +	entry->cmd = cmd;
+>>> +	process = &entry->process;
+>>> +
+>>> +	child_process_init(process);
+>>> +	argv[0] = cmd;
+>>> +	process->argv = argv;
+>>> +	process->use_shell = 1;
+>>> +	process->in = -1;
+>>> +	process->out = -1;
+>>> +
+>>> +	if (start_command(process)) {
+>>> +		error("cannot fork to run external persistent filter '%s'", cmd);
+>>> +		return NULL;
+>>> +	}
+>>> +	strbuf_reset(&nbuf);
+>>> +
+>>> +	sigchain_push(SIGPIPE, SIG_IGN);
+>>> +	ret &= strbuf_read_once(&nbuf, process->out, 0) > 0;
+>>
+>> Hmm, how much will be read into nbuf by this single call?
+>> Since strbuf_read_once() makes a single call to xread(), with
+>> a len argument that will probably be 8192, you can not really
+>> tell how much it will read, in general. (xread() does not
+>> guarantee how many bytes it will read.)
+>>
+>> In particular, it could be less than strlen(header).
+> 
+> As mentioned to Torsten in $gmane/300156, I will add a newline
+> and then read until I find the second newline. That should solve
+> the problem, right?
+> 
+> (You wrote in $gmane/300119 that I should ignore your email but
+> I think you have a valid point here ;-)
 
+Heh, as I said, it was late and I was trying to do several things
+at once. (I am updating 3 installations of Linux Mint 17.3 to Linux
+Mint 18 - I decided to do a complete re-install, since I needed to
+change partition sizes anyway. I have only just got email back up ...)
+
+I stopped commenting on the patch early but, after sending the first
+email, I decided to scan the rest of your patch before going to bed
+and noticed something which would invalidate my comments ...
+
+> 
+> 
+>>> [...]
+>>> +	sigchain_push(SIGPIPE, SIG_IGN);
+>>> +	switch (entry->protocol) {
+>>> +		case 1:
+>>> +			if (fd >= 0 && !src) {
+>>> +				ret &= fstat(fd, &fileStat) != -1;
+>>> +				len = fileStat.st_size;
+>>> +			}
+>>> +			strbuf_reset(&nbuf);
+>>> +			strbuf_addf(&nbuf, "%s\n%s\n%zu\n", filter_type, path, len);
+>>> +			ret &= write_str_in_full(process->in, nbuf.buf) > 1;
+>>
+>> why not write_in_full(process->in, nbuf.buf, nbuf.len) ?
+> OK, this would save a "strlen" call. Do you think such a function could be of general
+> use? If yes, then I would add:
+> 
+> static inline ssize_t write_strbuf_in_full(int fd, struct strbuf *str)
+> {
+> 	return write_in_full(fd, str->buf, str->len);
+> }
+
+[I don't have strong feelings either way (but I suspect it's not worth it).]
+
+> 
+> 
+>>> +			if (len > 0) {
+>>> +				if (src)
+>>> +					ret &= write_in_full(process->in, src, len) == len;
+>>> +				else if (fd >= 0)
+>>> +					ret &= copy_fd(fd, process->in) == 0;
+>>> +				else
+>>> +					ret &= 0;
+>>> +			}
+>>> +
+>>> +			strbuf_reset(&nbuf);
+>>> +			while (xread(process->out, &c, 1) == 1 && c != '\n')
+>>> +				strbuf_addchars(&nbuf, c, 1);
+>>> +			nbuf_len = (size_t)strtol(nbuf.buf, &strtol_end, 10);
+>>> +			ret &= (strtol_end != nbuf.buf && errno != ERANGE);
+>>> +			strbuf_reset(&nbuf);
+>>> +			if (nbuf_len > 0)
+>>> +				ret &= strbuf_read_once(&nbuf, process->out, nbuf_len) == nbuf_len;
+>>
+>> Again, how many bytes will be read?
+>> Note, that in the default configuration, a _maximum_ of
+>> MAX_IO_SIZE (8MB or SSIZE_MAX, whichever is smaller) bytes
+>> will be read.
+
+... In particular, your 2GB test case should not have worked, so
+I assumed that I had missed a loop somewhere ...
+
+> Would something like this be more appropriate?
+> 
+> strbuf_reset(&nbuf);
+> if (nbuf_len > 0) {
+>     strbuf_grow(&nbuf, nbuf_len);
+>     ret &= read_in_full(process->out, nbuf.buf, nbuf_len) == nbuf_len;
+> }
+
+... and this looks better. [Note: this comment would apply equally to the
+version message.]
+
+[Hmm, now can I remember which packages I need to install ...]
+
+ATB,
+Ramsay Jones
