@@ -2,105 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76538203E2
-	for <e@80x24.org>; Sun, 24 Jul 2016 07:37:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 395B9203E2
+	for <e@80x24.org>; Sun, 24 Jul 2016 07:38:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752098AbcGXHhd (ORCPT <rfc822;e@80x24.org>);
-	Sun, 24 Jul 2016 03:37:33 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:59164 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751870AbcGXHhc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jul 2016 03:37:32 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3rxx6w3NBpz3hjNt;
-	Sun, 24 Jul 2016 09:37:28 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3rxx6w2GhjzvkRv;
-	Sun, 24 Jul 2016 09:37:28 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id QuxPqqX-YUox; Sun, 24 Jul 2016 09:37:27 +0200 (CEST)
-X-Auth-Info: cJLnRPyXviYwZ90ckFPfhUMhkohi39beZSxlH3za/zIyG8pLi/N5MEVKo2O/qQmK
-Received: from linux.local (ppp-88-217-24-98.dynamic.mnet-online.de [88.217.24.98])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Sun, 24 Jul 2016 09:37:27 +0200 (CEST)
-Received: by linux.local (Postfix, from userid 501)
-	id 6AE241E53F9; Sun, 24 Jul 2016 09:37:24 +0200 (CEST)
-From:	Andreas Schwab <schwab@linux-m68k.org>
+	id S1752062AbcGXHiN (ORCPT <rfc822;e@80x24.org>);
+	Sun, 24 Jul 2016 03:38:13 -0400
+Received: from mout.gmx.net ([212.227.15.15]:57119 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751870AbcGXHiM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jul 2016 03:38:12 -0400
+Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0Ljqgb-1aueJt0Fsv-00bqBS; Sun, 24 Jul 2016 09:38:00
+ +0200
+Date:	Sun, 24 Jul 2016 09:37:57 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
 To:	Eric Wong <e@80x24.org>
-Cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] mailinfo: extract is_from_line from mailsplit
-References: <20160722224739.GA22961@whir>
-	<alpine.DEB.2.20.1607231056150.14111@virtualbox>
-	<20160724031409.GA32480@starla> <20160724031518.GB32480@starla>
-X-Yow:	I like the way ONLY their mouths move..  They look like DYING OYSTERS
-Date:	Sun, 24 Jul 2016 09:37:24 +0200
-In-Reply-To: <20160724031518.GB32480@starla> (Eric Wong's message of "Sun, 24
-	Jul 2016 03:15:18 +0000")
-Message-ID: <m2poq3zdu3.fsf@linux-m68k.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.95 (gnu/linux)
+cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 2/2] format-patch: escape "From " lines recognized by
+ mailsplit
+In-Reply-To: <20160724031543.GC32480@starla>
+Message-ID: <alpine.DEB.2.20.1607240926500.14111@virtualbox>
+References: <20160722224739.GA22961@whir> <alpine.DEB.2.20.1607231056150.14111@virtualbox> <20160724031409.GA32480@starla> <20160724031543.GC32480@starla>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:Kb2Bi/WiXpXRcfCYPvVIXSqPUTU0EJGDJO9DI5epD27ukzfCFcx
+ o/N4l1b32ZrJWbeS3H17isznCbWYCJ0ZGEDUKm88+0lY9gKXzpnox+ymCd1aElXpDD+pCPo
+ QosnOV5AlBTrbIFSs3jihn42OdUiWGH/e8KlYZIRDiZYbSolZ+BmPOfDd1hU+vLXcotKgt5
+ KB24FTFH5Xh38dzgr4kjg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:0suaQb3CsZM=:zUZITzh1IAY8DcgcTxjh3P
+ a+XqDF/ygl4z5Lmmj3i98YlFHYWIj7sdT8P67Q4R1mB7QI6Qx9t6W6E9p/P9VnENdmbZb2YkT
+ /MQGaqyYR1JYDSpxjO7rWlIT2u1zF6Z3Y5l/m00RxKM9FUQK/8MKWDrYPcFH8YTQyZqvQuzAk
+ ARqlzk2KXdeyUHEmDU3vUmObyCXb590wQE4U6KrqIBZDOf6CgNAy/vGFVqW4wXk63qMe4RY2T
+ mrf7SSISMNnMYsmQrMWtq9MM7OXw/PUmIW0W4NGO9quZg3MAD7bHeXhwsKJVIOu0+WRnmNvgn
+ bc7FItDWXZzcyMpz1Q94x9FxdUUQAGQPSvssjtJesYkaXiYTUCheOeWq+mB7Wuxd2ZxItwlZF
+ in5mEybNRD6DIQ4bVrFDOxS0KgDg4GaICt2uVeo8P8nsm7GQj9Gyl2St1jw6nWexblywmbjEk
+ TU4FUAKWrlOXG+ZOUCJ6TfTYNPSF0lBqZnl3YtZkX+olsakbxW0ndcqM6twf4GnRHKwRJ+WzD
+ Zs1F3Qdl7bE8plRdOseSLaVBQtAIhHXK0sabZyiQpU4zcLPnBqtQdEVt16PwQFoEHmFFM+HzE
+ 6z80b7zFabp0HwaK7JG4SErr8DhtImtumWpOO3V+CIxE/48AHf+kBNHKFVagOg0iBmjc2//iW
+ KC1IlHVR6wZZ7Ek/RwXLf1knnmBUDmsq76wpOb6zaa2neX1+MxyV04GvE7nsZwJl7tjcTf88e
+ 3SyN4DDmnRANl/jqa3pQFamEJd+NgcEEJG5IvGbnhejhzeI9CXVq5WdUNnFO7JUI/wtDds1Ye
+ JNOz8Or
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Eric Wong <e@80x24.org> writes:
+Hi Eric,
 
-> diff --git a/mailinfo.c b/mailinfo.c
-> index 9f19ca1..0ebd953 100644
-> --- a/mailinfo.c
-> +++ b/mailinfo.c
-> @@ -1035,3 +1035,34 @@ void clear_mailinfo(struct mailinfo *mi)
+On Sun, 24 Jul 2016, Eric Wong wrote:
+
+> @@ -1745,9 +1746,18 @@ void pp_remainder(struct pretty_print_context *pp,
+>  			strbuf_add_tabexpand(sb, pp->expand_tabs_in_log,
+>  					     line, linelen);
+>  		else {
+> -			if (pp->fmt == CMIT_FMT_MBOXRD &&
+> -					is_mboxrd_from(line, linelen))
+> -				strbuf_addch(sb, '>');
+> +			switch (pp->fmt) {
+> +			case CMIT_FMT_EMAIL:
+> +				if (is_from_line(line, linelen))
+> +					strbuf_addch(sb, '>');
+> +				break;
+> +			case CMIT_FMT_MBOXRD:
+> +				if (is_mboxrd_from(line, linelen))
+> +					strbuf_addch(sb, '>');
+> +				break;
+> +			default:
+> +				break;
+> +			}
+
+Sorry to be nitpicking once again; I think this would be conciser (and
+easier to read at least for me) as:
+
+-			if (pp->fmt == CMIT_FMT_MBOXRD &&
+-					is_mboxrd_from(line, linelen))
++			if ((pp->fmt == CMIT_FMT_MBOXRD &&
++			     is_mboxrd_from(line, linelen)) ||
++			    (pp->fmt == CMIT_FMT_EMAIL &&
++			     is_from_line(line, linelen)))
+ 				strbuf_addch(sb, '>');
+
+> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+> index 1206c48..8fa3982 100755
+> --- a/t/t4014-format-patch.sh
+> +++ b/t/t4014-format-patch.sh
+> @@ -1606,4 +1606,18 @@ test_expect_success 'format-patch --pretty=mboxrd' '
+>  	test_cmp expect actual
+>  '
 >  
->  	strbuf_release(&mi->log_message);
->  }
+> +test_expect_success 'format-patch From escaping' '
+> +	cat >msg <<-INPUT_END &&
+> +	somebody pasted format-patch output into a body
 > +
-> +int is_from_line(const char *line, int len)
-> +{
-> +	const char *colon;
+> +	From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+> +	INPUT_END
 > +
-> +	if (len < 20 || memcmp("From ", line, 5))
-> +		return 0;
-> +
-> +	colon = line + len - 2;
-> +	line += 5;
-> +	for (;;) {
-> +		if (colon < line)
-> +			return 0;
-> +		if (*--colon == ':')
-> +			break;
-> +	}
-> +
-> +	if (!isdigit(colon[-4]) ||
-> +	    !isdigit(colon[-2]) ||
-> +	    !isdigit(colon[-1]) ||
-> +	    !isdigit(colon[ 1]) ||
-> +	    !isdigit(colon[ 2]))
-> +		return 0;
-> +
-> +	/* year */
-> +	if (strtol(colon+3, NULL, 10) <= 90)
-> +		return 0;
-> +
-> +	/* Ok, close enough */
-> +	return 1;
-> +}
+> +	C=$(git commit-tree HEAD^^{tree} -p HEAD <msg) &&
 
-Should this be made more strict, like by checking for a space before the
-year?
+The double caret makes this a bit hard to read. Maybe this instead?
 
-Andreas.
++	C=$(git commit-tree HEAD: -p HEAD^ <msg) &&
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+> +	git format-patch --stdout -1 $C~1..$C >patch &&
+
+Either "-1 $C" or "$C~1..$C", not both...
+
+> +	git grep -h --no-index \
+> +		">From 0000000000000000000000000000000000000000 " \
+> +		patch
+> +'
+> +
+>  test_done
+> -- 
+> EW
+
+Heh, that's a nice Git version ;-)
+
+Ciao,
+Dscho
