@@ -2,119 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B60E203E2
-	for <e@80x24.org>; Sun, 24 Jul 2016 08:13:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E7D2203E2
+	for <e@80x24.org>; Sun, 24 Jul 2016 09:00:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751976AbcGXINj (ORCPT <rfc822;e@80x24.org>);
-	Sun, 24 Jul 2016 04:13:39 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:37699 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751845AbcGXINg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jul 2016 04:13:36 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3rxxwY09DXz3hkBk;
-	Sun, 24 Jul 2016 10:13:32 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3rxxwX5kZpzvkSJ;
-	Sun, 24 Jul 2016 10:13:32 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id LcwqM7esJJRu; Sun, 24 Jul 2016 10:13:31 +0200 (CEST)
-X-Auth-Info: N7xXjYj9lhY2/W8iMfutmo44WXF1Nmf5hSkYrowi0GcUuLKt/ZPlGSiKQPtBV2XP
-Received: from linux.local (ppp-88-217-24-98.dynamic.mnet-online.de [88.217.24.98])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Sun, 24 Jul 2016 10:13:31 +0200 (CEST)
-Received: by linux.local (Postfix, from userid 501)
-	id 4EC6F1E53F9; Sun, 24 Jul 2016 10:13:31 +0200 (CEST)
-From:	Andreas Schwab <schwab@linux-m68k.org>
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	Eric Wong <e@80x24.org>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/2] mailinfo: extract is_from_line from mailsplit
-References: <20160722224739.GA22961@whir>
-	<alpine.DEB.2.20.1607231056150.14111@virtualbox>
-	<20160724031409.GA32480@starla> <20160724031518.GB32480@starla>
-	<m2poq3zdu3.fsf@linux-m68k.org>
-	<alpine.DEB.2.20.1607241003480.14111@virtualbox>
-X-Yow:	LOU GRANT froze my ASSETS!!
-Date:	Sun, 24 Jul 2016 10:13:31 +0200
-In-Reply-To: <alpine.DEB.2.20.1607241003480.14111@virtualbox> (Johannes
-	Schindelin's message of "Sun, 24 Jul 2016 10:05:16 +0200 (CEST)")
-Message-ID: <m2lh0rzc5w.fsf@linux-m68k.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.95 (gnu/linux)
+	id S1751993AbcGXJAw (ORCPT <rfc822;e@80x24.org>);
+	Sun, 24 Jul 2016 05:00:52 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:36901 "EHLO
+	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751858AbcGXJAu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jul 2016 05:00:50 -0400
+Received: by mail-wm0-f46.google.com with SMTP id i5so117813173wmg.0
+        for <git@vger.kernel.org>; Sun, 24 Jul 2016 02:00:50 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=QveX6c8wCoGZc8yM7ASNC7EPnvqh9rVIY9Ukbqr59eU=;
+        b=ar9eVE6KlH6eD34OLCw31P02TrlMIJlqhU0cv4r+jIl40UzZkDzPmnodWp6vMVoOjH
+         ANYn1Po9Gn1omUhF+u7bNPDcxJ4yQPLjs8VQR2CainQ2i8lQWmcEZ4nsjEidy+XeKSYy
+         nrA4hDgf+D9f/w/MpJ49BH7kteBDnhiQoJraC52I1DyE8kAYhi2jHm0F4RTLeKRA8tds
+         2HeTdEv4c0Z/QuvrjeqR5NQieYtxZDyaAiBVfzK2UW4ZDY2pd3GNDR4TuAFze5RvOWfS
+         E+1JZkB/RLBhH5EDZ7kypXoFa0Gdpu7GDYlHj1i9a71rdGA9UfufN3ls2aonjNHvAMya
+         DSQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:newsgroups:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=QveX6c8wCoGZc8yM7ASNC7EPnvqh9rVIY9Ukbqr59eU=;
+        b=JzTB5sieeHlysYTb/mgQDM4a2V3AUtrUupkZIjzKvyYcWehTea6UyjzKPCB5YaSJ+l
+         kMcnvSgQDLjwaYGRLvIADV7Evi8M7tHo7Ygl4H+nlVj7v2oQT/pQ/WwX8/lRogIKO62Z
+         64yTrd53q21awpGT/4TnL1CtXooNbB3PqCFOQTkjUuz22WYxtKGMn72lIVaP/8tF2hUQ
+         mc59+CfAfrbV/7bSR+StyJGoolepiA+9usg1hrfKWeO4iiq7rVd4tyMRCvQ8JDjNprzg
+         3VIwbmov8IZ12BVlG9FEfJWDKDphdjkLPN9DfvXiWUqL3QAWz5765gJbHyl8vDn2BvCK
+         7+wg==
+X-Gm-Message-State: ALyK8tJk/j4SIjLo2fciVHHQTM1xn7uawbde27nqaB0dB+VnXcp1Kc6i06OcfncTIwLMGw==
+X-Received: by 10.28.166.140 with SMTP id p134mr33142718wme.21.1469350849408;
+        Sun, 24 Jul 2016 02:00:49 -0700 (PDT)
+Received: from [192.168.1.26] (exa83.neoplus.adsl.tpnet.pl. [83.20.250.83])
+        by smtp.googlemail.com with ESMTPSA id b203sm21341568wmh.20.2016.07.24.02.00.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 24 Jul 2016 02:00:48 -0700 (PDT)
+Subject: Re: [ANN] Pro Git Reedited 2nd Edition
+To:	Jon Forrest <nobozo@gmail.com>, git@vger.kernel.org
+References: <nn1euf$h6q$1@ger.gmane.org>
+Newsgroups: gmane.comp.version-control.git
+From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <579483B7.4090508@gmail.com>
+Date:	Sun, 24 Jul 2016 11:00:39 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <nn1euf$h6q$1@ger.gmane.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+W dniu 2016-07-24 o 06:07, Jon Forrest pisze:
 
-> Hi Andreas,
->
-> On Sun, 24 Jul 2016, Andreas Schwab wrote:
->
->> Eric Wong <e@80x24.org> writes:
->> 
->> > diff --git a/mailinfo.c b/mailinfo.c
->> > index 9f19ca1..0ebd953 100644
->> > --- a/mailinfo.c
->> > +++ b/mailinfo.c
->> > @@ -1035,3 +1035,34 @@ void clear_mailinfo(struct mailinfo *mi)
->> >  
->> >  	strbuf_release(&mi->log_message);
->> >  }
->> > +
->> > +int is_from_line(const char *line, int len)
->> > +{
->> > +	const char *colon;
->> > +
->> > +	if (len < 20 || memcmp("From ", line, 5))
->> > +		return 0;
->> > +
->> > +	colon = line + len - 2;
->> > +	line += 5;
->> > +	for (;;) {
->> > +		if (colon < line)
->> > +			return 0;
->> > +		if (*--colon == ':')
->> > +			break;
->> > +	}
->> > +
->> > +	if (!isdigit(colon[-4]) ||
->> > +	    !isdigit(colon[-2]) ||
->> > +	    !isdigit(colon[-1]) ||
->> > +	    !isdigit(colon[ 1]) ||
->> > +	    !isdigit(colon[ 2]))
->> > +		return 0;
->> > +
->> > +	/* year */
->> > +	if (strtol(colon+3, NULL, 10) <= 90)
->> > +		return 0;
->> > +
->> > +	/* Ok, close enough */
->> > +	return 1;
->> > +}
->> 
->> Should this be made more strict, like by checking for a space before the
->> year?
->
-> This patch only moves the function, so it would be inappropriate to change
-> it.
->
-> If you want to make it stricter, you will have to submit a separate patch.
+> This an announcement of Pro Git Reedited 2nd Edition, which is
+> a substantial edit of Chacon and Straub's Pro Git 2nd Edition.
+> I spent a lot of time tightening it up and maybe clearing
+> up some explanations.
+[...]
 
-You didn't answer my question.
+> The sources for this book are at:
+> https://github.com/nobozo/progit2
 
-Andreas.
+I have not checked the book itself; it would be nice if it were
+hosted somewhere, even if using GitHub Pages (per-project or
+per-user).
 
+Could you change the description of the repository, and perhaps
+adjust the README so that it says that it is Pro Git Reedited?
+Have you tried submitting changes upstream?
+
+Best,
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Jakub Narębski
+author of "Mastering Git"
+
