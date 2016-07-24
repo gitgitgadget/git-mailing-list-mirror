@@ -2,55 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A350203E2
-	for <e@80x24.org>; Sun, 24 Jul 2016 07:12:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76538203E2
+	for <e@80x24.org>; Sun, 24 Jul 2016 07:37:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751790AbcGXHMH (ORCPT <rfc822;e@80x24.org>);
-	Sun, 24 Jul 2016 03:12:07 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57375 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751258AbcGXHME (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jul 2016 03:12:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8319D24896;
-	Sun, 24 Jul 2016 03:12:02 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AxOV1AS0bwTMuyTXR+eI/YUER7Q=; b=EX8JD3
-	kfC+zTmcTMhCmyiFqKxNAhLhWp/j3CA8DhLYxzvnCe4r79zNLlYiHTFBXy9Iaafn
-	ymCGew/5uC4+0iFkBkfovAgjVbubYXgNUhegOje3Ig5BK+QKVDGwUlub2EluL+ZI
-	Jn3dxH9r6Np3eG+tgJpxdXVZkF4g8tVxZ1VjY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CCj4/swenMlmTgGgCuvvwrFe7H2k1Fup
-	QirdappsCTBMsGs0FHAnSriSl7SXSyEuSwx7twLtHOE5KiOMfrqBjlkGhnwoC68Y
-	sdaQH2uzquEVGwUwO+YV8PFHpr/3XYQYMWHmmYzDLm3QvvudyOlvnNCG2/pIoG44
-	GJNK3qaMRuo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7BF7724894;
-	Sun, 24 Jul 2016 03:12:02 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F400A24890;
-	Sun, 24 Jul 2016 03:12:01 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
+	id S1752098AbcGXHhd (ORCPT <rfc822;e@80x24.org>);
+	Sun, 24 Jul 2016 03:37:33 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:59164 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751870AbcGXHhc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jul 2016 03:37:32 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3rxx6w3NBpz3hjNt;
+	Sun, 24 Jul 2016 09:37:28 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3rxx6w2GhjzvkRv;
+	Sun, 24 Jul 2016 09:37:28 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id QuxPqqX-YUox; Sun, 24 Jul 2016 09:37:27 +0200 (CEST)
+X-Auth-Info: cJLnRPyXviYwZ90ckFPfhUMhkohi39beZSxlH3za/zIyG8pLi/N5MEVKo2O/qQmK
+Received: from linux.local (ppp-88-217-24-98.dynamic.mnet-online.de [88.217.24.98])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Sun, 24 Jul 2016 09:37:27 +0200 (CEST)
+Received: by linux.local (Postfix, from userid 501)
+	id 6AE241E53F9; Sun, 24 Jul 2016 09:37:24 +0200 (CEST)
+From:	Andreas Schwab <schwab@linux-m68k.org>
 To:	Eric Wong <e@80x24.org>
-Cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] format-patch: escape "From " lines recognized by mailsplit
+Cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] mailinfo: extract is_from_line from mailsplit
 References: <20160722224739.GA22961@whir>
-Date:	Sun, 24 Jul 2016 00:11:58 -0700
-In-Reply-To: <20160722224739.GA22961@whir> (Eric Wong's message of "Fri, 22
-	Jul 2016 22:47:39 +0000")
-Message-ID: <xmqqk2gb8q81.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	<alpine.DEB.2.20.1607231056150.14111@virtualbox>
+	<20160724031409.GA32480@starla> <20160724031518.GB32480@starla>
+X-Yow:	I like the way ONLY their mouths move..  They look like DYING OYSTERS
+Date:	Sun, 24 Jul 2016 09:37:24 +0200
+In-Reply-To: <20160724031518.GB32480@starla> (Eric Wong's message of "Sun, 24
+	Jul 2016 03:15:18 +0000")
+Message-ID: <m2poq3zdu3.fsf@linux-m68k.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.0.95 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: EB2B0D08-516D-11E6-A22D-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,18 +55,52 @@ X-Mailing-List:	git@vger.kernel.org
 
 Eric Wong <e@80x24.org> writes:
 
-> Users have mistakenly copied "From " lines into commit messages
-> in the past, and will certainly make the same mistakes in the
-> future.  Since not everyone uses mboxrd, yet, we should at least
-> prevent miss-split mails by always escaping "From " lines based
-> on the check used by mailsplit.
->
-> mailsplit will not perform unescaping by default, yet, as it
-> could cause further invocations of format-patch from old
-> versions of git to generate bad output.  Propagating the mboxo
-> escaping is preferable to miss-split patches.  Unescaping may
-> still be performed via "--mboxrd".
+> diff --git a/mailinfo.c b/mailinfo.c
+> index 9f19ca1..0ebd953 100644
+> --- a/mailinfo.c
+> +++ b/mailinfo.c
+> @@ -1035,3 +1035,34 @@ void clear_mailinfo(struct mailinfo *mi)
+>  
+>  	strbuf_release(&mi->log_message);
+>  }
+> +
+> +int is_from_line(const char *line, int len)
+> +{
+> +	const char *colon;
+> +
+> +	if (len < 20 || memcmp("From ", line, 5))
+> +		return 0;
+> +
+> +	colon = line + len - 2;
+> +	line += 5;
+> +	for (;;) {
+> +		if (colon < line)
+> +			return 0;
+> +		if (*--colon == ':')
+> +			break;
+> +	}
+> +
+> +	if (!isdigit(colon[-4]) ||
+> +	    !isdigit(colon[-2]) ||
+> +	    !isdigit(colon[-1]) ||
+> +	    !isdigit(colon[ 1]) ||
+> +	    !isdigit(colon[ 2]))
+> +		return 0;
+> +
+> +	/* year */
+> +	if (strtol(colon+3, NULL, 10) <= 90)
+> +		return 0;
+> +
+> +	/* Ok, close enough */
+> +	return 1;
+> +}
 
-As a tool to produce mbox file, quoting like this in format-patch
-output may make sense, I would think, but shouldn't send-email undo
-this when sending individual patches?
+Should this be made more strict, like by checking for a space before the
+year?
+
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
