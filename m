@@ -2,78 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6502203E2
-	for <e@80x24.org>; Mon, 25 Jul 2016 12:58:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DBFE203E2
+	for <e@80x24.org>; Mon, 25 Jul 2016 14:37:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752169AbcGYM6o (ORCPT <rfc822;e@80x24.org>);
-	Mon, 25 Jul 2016 08:58:44 -0400
-Received: from mail-pa0-f68.google.com ([209.85.220.68]:34815 "EHLO
-	mail-pa0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752132AbcGYM6n (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2016 08:58:43 -0400
-Received: by mail-pa0-f68.google.com with SMTP id hh10so11496444pac.1
-        for <git@vger.kernel.org>; Mon, 25 Jul 2016 05:58:42 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:subject:to:message-id:date:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=x6rsLl5I5BwW6FSrcoH5A2T33gpAGiIj90q1UzxaZe8=;
-        b=H3WMRT+c0SIlxa/EOjNsi2HsPNRAbSGvR+vH/HlS/AayJiMyVZ+DEiCxdRSMVRweP2
-         Q74mpdALJtxwjsNI0SEqN6ioKFIQ26gNNInP1qJmSJOVH1EV4q8wwz6l8i+DKyfrqyUb
-         s8VbkL7nJtLaG0s/jhupWZC2fqCgN7Mk1j2Q1GVha7smghtRAK2uZ0kckG2BfrtnR5mP
-         +p8kVT+Nn2RrMG4nNRz7UeVT9WXbeJI8ql+Dw49cYi0ThrQlBa7pJYBTtDRuNurcAk1u
-         W0ILzNRQimQsafUR+/R0n8DlvS6ZwM1/6tR+vRIeJTNLfD2w5Lo70a2OXrQ4wr396Wmj
-         d+iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:subject:to:message-id:date:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=x6rsLl5I5BwW6FSrcoH5A2T33gpAGiIj90q1UzxaZe8=;
-        b=R2OQlKhuQ2RKry+1t+mzb+SYuLIfJ8G3xsjlqirjjopghqRnRbQ5rxh3VPXfxDpxWc
-         UBW9FHCC8LiN0bwbWXL28KIX+WY/284buQ8qhUpfkVFWa/Wc0ZPAlExPdOCFxzMAizTV
-         p9NolJpiFAJW0yyTfkhOPGEd+pt1OMyeiDuOYOy5X++C+DOp3CLNHGMG1UgSyxqpHQ2y
-         CansQmDStDdKQXnb7PxNWorf4WgVGZRGWEW0AUA+UAhWZZpbF4m59HOnvktYqHsmk8E9
-         SDbeMLgca4odTlaNAecyNJulzLY2ucmsj6UjinqKpgkInGh0K06IXnFAiPu0uRwrqVEL
-         wQuQ==
-X-Gm-Message-State: AEkooutjWsZaHDRBeSDmmVxWOYXgfHYBUBczIxC66xsazQQsTv/lOaH/uMEKgvDmdiMXGA==
-X-Received: by 10.66.229.9 with SMTP id sm9mr29134975pac.138.1469451522199;
-        Mon, 25 Jul 2016 05:58:42 -0700 (PDT)
-Received: from [192.168.1.10] ([122.162.150.0])
-        by smtp.gmail.com with ESMTPSA id xv9sm18072214pab.36.2016.07.25.05.58.40
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Jul 2016 05:58:41 -0700 (PDT)
-From:	Sidhant Sharma <tigerkid001@gmail.com>
-Subject: [RFC] git subcommand to check if branch is up-to-date with upstream
-To:	Git Mailing List <git@vger.kernel.org>
-Message-ID: <57960CFF.5060104@gmail.com>
-Date:	Mon, 25 Jul 2016 18:28:39 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
+	id S1752143AbcGYOhO (ORCPT <rfc822;e@80x24.org>);
+	Mon, 25 Jul 2016 10:37:14 -0400
+Received: from smtprelay04.ispgateway.de ([80.67.31.27]:36668 "EHLO
+	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751418AbcGYOhM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2016 10:37:12 -0400
+Received: from [62.224.170.225] (helo=sandbox)
+	by smtprelay04.ispgateway.de with esmtpsa (TLSv1.2:AES128-GCM-SHA256:128)
+	(Exim 4.84)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1bRh0H-0003Kc-8A; Mon, 25 Jul 2016 16:37:09 +0200
+Date:	Mon, 25 Jul 2016 16:37:07 +0200
+From:	Heiko Voigt <hvoigt@hvoigt.net>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Git List <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	=?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH] submodule-config: use explicit empty string instead of
+ strbuf in config_from()
+Message-ID: <20160725143706.GA4872@sandbox>
+References: <578E7A07.8080006@web.de>
+ <20160720082515.GA823@book.hvoigt.net>
+ <57911AFF.7030107@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <57911AFF.7030107@web.de>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
 Hi,
-I was wondering if it would be a good idea to have a command to check if a
-push or pull is required. Perhaps it can also suggest if changes are
-fast-forward or the branches (local and remote) have diverged.
-The reason I feel the need of such a command is when I need to check if my
-branch is up-to-date with the remote, and when I need to know if my local
-has diverged. Currently I use a script based on this stackoverflow answer[1]
-Not an extremely useful tool, but I thought it'll be good to have it.
 
-Warm regards,
-Sidhant Sharma
+On Thu, Jul 21, 2016 at 08:57:03PM +0200, René Scharfe wrote:
+> >diff --git a/submodule-config.c b/submodule-config.c
+> >index 077db40..dccea59 100644
+> >--- a/submodule-config.c
+> >+++ b/submodule-config.c
 
+[...]
 
-[1] http://stackoverflow.com/a/3278427/5211579
+> >@@ -431,14 +432,19 @@ static const struct submodule *config_from(struct submodule_cache *cache,
+> >  		submodule = cache_lookup_path(cache, sha1, key);
+> >  		break;
+> >  	}
+> >-	if (submodule)
+> >+	if (submodule) {
+> >+		strbuf_release(&rev);
+> >  		return submodule;
+> >+	}
+> >
+> >  	config = read_sha1_file(sha1, &type, &config_size);
+> >-	if (!config)
+> >+	if (!config) {
+> >+		strbuf_release(&rev);
+> >  		return NULL;
+> >+	}
+> >
+> >  	if (type != OBJ_BLOB) {
+> >+		strbuf_release(&rev);
+> >  		free(config);
+> >  		return NULL;
+> >  	}
+> 
+> A separate patch could combine the previous two conditionals; free(NULL) is
+> allowed.
+
+Thats a good idea. Can send a patch, but I noticed that your change is
+already in next and my change has not been picked up. So I am unsure if
+I should base my patches on next or if Junio wants to keep your change?
+
+Cheers Heiko
