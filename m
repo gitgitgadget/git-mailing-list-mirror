@@ -2,83 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9106C203E2
-	for <e@80x24.org>; Mon, 25 Jul 2016 17:28:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FAD7203E2
+	for <e@80x24.org>; Mon, 25 Jul 2016 17:28:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753229AbcGYR2O (ORCPT <rfc822;e@80x24.org>);
-	Mon, 25 Jul 2016 13:28:14 -0400
-Received: from mail-it0-f65.google.com ([209.85.214.65]:33527 "EHLO
-	mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753261AbcGYR2N convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Jul 2016 13:28:13 -0400
-Received: by mail-it0-f65.google.com with SMTP id d65so8008555ith.0
-        for <git@vger.kernel.org>; Mon, 25 Jul 2016 10:28:11 -0700 (PDT)
+	id S1753407AbcGYR2Y (ORCPT <rfc822;e@80x24.org>);
+	Mon, 25 Jul 2016 13:28:24 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:36427 "EHLO
+	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753384AbcGYR2W (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2016 13:28:22 -0400
+Received: by mail-wm0-f49.google.com with SMTP id q128so143561483wma.1
+        for <git@vger.kernel.org>; Mon, 25 Jul 2016 10:28:22 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=PwMuDZPmExe1qEpUZ2f92XJ3Y3T/LTqt+sE6OMXqKac=;
-        b=Vt+x8LM/FVf0YVwbxMeiiCDylibJZuXVEA6PS8OmAmVBhMs/pV/tzWCAArJRo4iaU/
-         qGf8foA2LUEel5hTqxrEyHvvQBVGcwXSUAV4KtLn52P7+c0u6PmSnTTXrwa2UmcnoVFE
-         UsiUOs5/IleAtlQKr4fbdKhCcKuPiu3/KPtPeG0Trpridbas3Ol7oPFVUIXK6ZXxz3UJ
-         ybwpUdGjkMzQfC50m5lguDSzwjYuBbbzVQV8YVuQiEMZPH07a6vc9hWZtrajtvBWgcn3
-         vTvuS9uKLCaSseJCiWYl9SsXc6jKF//+GHwR+ko3+RVLJtYuY68auHCuIMt40E91/gXZ
-         DhSg==
+        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=4mBRm8+Dh1y7U+aT6We3+sGqE+yhKfIfuG1x5QWbf+k=;
+        b=yJLYNFlKPo5klmFsk232MpOixG9Vx02pzpVA+gCsT26jBGP9KcFqu9Yb2YXdGGQ7nm
+         M23MHrNQz+irB3j5kyeZYPJLC90+FHBh4e4N3ga9gVwdJdvZxDkn+FD4x1PUu5QbZRX1
+         WpZVoIgLLC1QrXxNftojl9EsqOFGevTVG2Jpy3PO/d1ARGsmKZsxyml+olMKlI9Z/YP0
+         NlGrYeGS9UMSk4mV7Pw9v1GYcwRhkgp2PmVOplQJXef+LwVx6k1yGsmICQdA+zcQP8In
+         dZyAeZODsnDVvX6KqQovg/pDnQ/Dxq4abiPKSE+PIzKgsbIrOR/2CcCKdNY5akmnuIRi
+         818g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=PwMuDZPmExe1qEpUZ2f92XJ3Y3T/LTqt+sE6OMXqKac=;
-        b=N4fmJml+zpjMVvIn9bovkw9nvBQUegXboDpLUb9DVyZIWD8V4M532qhUWZarnCzskv
-         00/xyT0cRAV20p6OufmXwLNp6Ags7Sa4+VeA3pUmdwZSxgPJv7mZqDoBHCJP2nfNnIip
-         1FC2YXGGTsq6kT0XpPAFMz3BKVJ0ZDEpUnjt8ZrS7AGZB6AGGWUo//z5GmSLJzPRWBYt
-         dDV6fC242TqQGvKJwF8K2KD4fzwyRuGgAeiWAUYCBm4gTomrS6Bf7aixaZSnQqmBMxd7
-         tKsMnI8qoy3QVO5fbzA30I0oR04u+P/ROv/1kfHorYpM4BAyk1DB34QndqysHpfDshWU
-         Rh4Q==
-X-Gm-Message-State: AEkoousQ1H82FCBaDvn4miCQvziD9P2GUx6JYYFIxWkIcAUnN83gavqMoJ05VSyMB2lag6nB00N9EqfFNMZf/A==
-X-Received: by 10.36.208.71 with SMTP id m68mr22063301itg.63.1469467691348;
- Mon, 25 Jul 2016 10:28:11 -0700 (PDT)
+        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-transfer-encoding;
+        bh=4mBRm8+Dh1y7U+aT6We3+sGqE+yhKfIfuG1x5QWbf+k=;
+        b=aaBIYpf/9WZRxYcwRXKZHAVGAptfZb0YTGZovi5INQkqUjPz90wpeQc8lkxxs0on14
+         1sWtgmklsHkfQiZy+pBg9nMbzRl1YGeBr2DZkBkDPSTM24wVEOxUMkwKAPZ6UP182+8k
+         tu6h2z075tgyzu5djf/+rdH4eE0ovAxzZrqoL3AXnjkB5FEZMa/54/OVrBwvdA9ejuE6
+         Z4gVN9dJyn27dykbg2JY2US9TAyAgDIOq5lLChmQDSSmTT4LDZpJH1zrtwt5+UJOJxRI
+         cuJghVv9ysSP2w5qggLTMjp1UFU21UQALv54CeRjEBrj91NZ9vJ5N/8Xi0LplLgGKnw1
+         bf5g==
+X-Gm-Message-State: AEkoouviO6diVJHUu+7Yh48kvldizLfdc467kvmh29OSq9zLIhfbTaqZLOtbYZT8urpDuw==
+X-Received: by 10.194.238.170 with SMTP id vl10mr16737271wjc.18.1469467701453;
+        Mon, 25 Jul 2016 10:28:21 -0700 (PDT)
+Received: from [192.168.1.26] (dax80.neoplus.adsl.tpnet.pl. [83.23.23.80])
+        by smtp.googlemail.com with ESMTPSA id p83sm28451710wma.18.2016.07.25.10.28.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 25 Jul 2016 10:28:20 -0700 (PDT)
+Subject: Re: Bug: "git log --format='format:%+s%+b'" doesn't insert newline
+ before body
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Ilya Tumaykin <itumaykin@gmail.com>
+References: <8915446.47C9zkNvuX@photon>
+ <alpine.DEB.2.20.1607250926320.14111@virtualbox>
+Cc:	git@vger.kernel.org
+Newsgroups: gmane.comp.version-control.git
+From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <57964C29.9000902@gmail.com>
+Date:	Mon, 25 Jul 2016 19:28:09 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Mon, 25 Jul 2016 10:27:41 -0700 (PDT)
-In-Reply-To: <CAPc5daWNAWjtfR7CYN3RTeT7VyvgiNX5HED0=f3F=GT8h4yKPA@mail.gmail.com>
-References: <20160725162125.15734-1-pclouds@gmail.com> <CAPc5daWNAWjtfR7CYN3RTeT7VyvgiNX5HED0=f3F=GT8h4yKPA@mail.gmail.com>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Mon, 25 Jul 2016 19:27:41 +0200
-Message-ID: <CACsJy8Df2cBAf0bWe1FLTb9cOqTX3vgNgC=ko82rG2in81R-FQ@mail.gmail.com>
-Subject: Re: [PATCH] config.mak.uname: correct perl path on FreeBSD
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Git Mailing List <git@vger.kernel.org>, Eric Wong <e@80x24.org>
+In-Reply-To: <alpine.DEB.2.20.1607250926320.14111@virtualbox>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jul 25, 2016 at 6:56 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> On Mon, Jul 25, 2016 at 9:21 AM, Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
->> It looks the the symlink /usr/bin/perl (to /usr/local/bin/perl) has
->> been removed at least on FreeBSD 10.3. See [1] for more information.
->>
->> [1] https://svnweb.freebsd.org/ports/head/UPDATING?r1=386270&r2=386269&pathrev=386270&diff_format=c
->>
->> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
->> ---
->>  Tested with fbsd 10.3, kvm image. But I suppose it's the same as real
->>  fbsd.
->
-> Thanks; and we know that older (but not too old that we no longer care about)
-> FreeBSD all have /usr/local/bin/perl?
+W dniu 2016-07-25 o 09:33, Johannes Schindelin pisze:
 
-I'm no fbsd expert but from the first sentence in [1] "Perl has been
-removed from base more than ten years ago..." I would assume it meant
-"... removed from base, _to_ ports system" which means /usr/local for
-all package installation (for ten years for perl). So I think we are
-good.
+> Therefore "%s%n%+b" *might* do what you intended (I would not
+> know, because that information was missing from the report).
+
+Shouldn't it be "%s%n%n%-b" or "%s%n%-b"?
+
 -- 
-Duy
+Jakub Narębski
