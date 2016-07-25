@@ -2,130 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A26B5203E2
-	for <e@80x24.org>; Mon, 25 Jul 2016 22:10:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 764A6203E2
+	for <e@80x24.org>; Mon, 25 Jul 2016 22:10:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932172AbcGYWKO (ORCPT <rfc822;e@80x24.org>);
-	Mon, 25 Jul 2016 18:10:14 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54409 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932151AbcGYWJz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2016 18:09:55 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2DC2F2F9C8;
-	Mon, 25 Jul 2016 18:09:54 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BrXNAlIJl6+olzMNLIA0U/Sfo9M=; b=SwOp2Y
-	cYsKHlkEMIV0WcjDZ++aiPSTSpbKkg03a+EBnKt63zA7bh6p4mdbaMJ2yGXwX+PV
-	hCrs3pLfvyTO0A7goyH7p/5QHpe3+oK3aKD4GqnQKZxE+oj8sWLju+T0qw5cse0z
-	BxSyMQ/1KPKWRnDqJopjawm+Js0lf5CSTi4YI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=btH7C01rmHBZhq+Vzh54bXRBzy9rp5qm
-	keECOuxCwHiSTdnzIvPjdMv0z/bdIGsjMN/Gn2umK8h1HLya7otGDvqkLf5cJqMy
-	FSXUkg+sB322a9iOrWzLq2jDwQFeE+M8YqSdzZUUqDxrifOwNcu+Mk+2t34QeocR
-	eXRICkgohUQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2434C2F9C7;
-	Mon, 25 Jul 2016 18:09:54 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 89BFB2F9C6;
-	Mon, 25 Jul 2016 18:09:53 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH v4 06/16] merge_recursive: abort properly upon errors
-References: <cover.1467902082.git.johannes.schindelin@gmx.de>
-	<cover.1469187652.git.johannes.schindelin@gmx.de>
-	<26f12ac5a5b8e722d81c782b32585531521c98d4.1469187653.git.johannes.schindelin@gmx.de>
-Date:	Mon, 25 Jul 2016 15:09:51 -0700
-In-Reply-To: <26f12ac5a5b8e722d81c782b32585531521c98d4.1469187653.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Fri, 22 Jul 2016 14:25:16 +0200
-	(CEST)")
-Message-ID: <xmqq7fc94bf4.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S932177AbcGYWKP (ORCPT <rfc822;e@80x24.org>);
+	Mon, 25 Jul 2016 18:10:15 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48883 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755118AbcGYVlR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2016 17:41:17 -0400
+Received: (qmail 17056 invoked by uid 102); 25 Jul 2016 21:41:17 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 25 Jul 2016 17:41:17 -0400
+Received: (qmail 29349 invoked by uid 107); 25 Jul 2016 21:41:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 25 Jul 2016 17:41:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Jul 2016 17:41:13 -0400
+Date:	Mon, 25 Jul 2016 17:41:13 -0400
+From:	Jeff King <peff@peff.net>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH 1/2] pack-objects: break out of want_object loop early
+Message-ID: <20160725214113.GA13589@sigill.intra.peff.net>
+References: <20160725184938.GA12871@sigill.intra.peff.net>
+ <20160725185010.GA12974@sigill.intra.peff.net>
+ <xmqqeg6h5w60.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 83930856-52B4-11E6-AD57-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqeg6h5w60.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On Mon, Jul 25, 2016 at 12:56:23PM -0700, Junio C Hamano wrote:
 
-> There are a couple of places where return values indicating errors
-> are ignored. Let's teach them manners.
+> > This function loops through each existing packfile, looking
+> > for the object. When we find it, we mark the pack/offset
+> > combo for later use. However, we can't just return "yes, we
+> > want it" at that point. If --honor-pack-keep is in effect,
+> > we must keep looking to find it in _all_ packs, to make sure
+> > none of them has a .keep. Likewise, if --local is in effect,
+> > we must make sure it is not present in any local pack.
+> 
+> s/any local pack/any non-local pack/, no?
 
-That is because the return value never indicated errors before this
-series, isn't it?  A true error used to be expressed by dying, and
-the return value indicating "cleanliness" of the merge were
-deliberately ignored.
+Oops, yeah.
 
-The world order changed by previous patches in this series and the
-callers need to be updated to take the new kind of return values
-into account.  That is not teaching them manners ;-)
+> > diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> > index a2f8cfd..55ef5a8 100644
+> > --- a/builtin/pack-objects.c
+> > +++ b/builtin/pack-objects.c
+> > @@ -981,6 +981,8 @@ static int want_object_in_pack(const unsigned char *sha1,
+> >  				return 0;
+> >  			if (ignore_packed_keep && p->pack_local && p->pack_keep)
+> >  				return 0;
+> > +			if (!ignore_packed_keep && !local)
+> > +				break;
+> >  		}
+> >  	}
+> 
+> OK, so in this loop, we may return "false" (meaning, we do not want
+> to pack the object) if "local" (do not pack objects that appear in
+> non-local packs) or "ignore_packed_keep" (do not pack objects that
+> appear in locally kept packs) are in effect, but if neither of the
+> options is set, we know that one of the preconditions ("local" or
+> "ignore_packed_keep") for these two "reject by returning false" if
+> statements would never trigger for any pack on packed_git list, so
+> it is safe to break out and return the one that we have found.
 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  merge-recursive.c | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
->
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index dc3182b..2d4cb80 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -1949,8 +1949,9 @@ int merge_recursive(struct merge_options *o,
->  		saved_b2 = o->branch2;
->  		o->branch1 = "Temporary merge branch 1";
->  		o->branch2 = "Temporary merge branch 2";
-> -		merge_recursive(o, merged_common_ancestors, iter->item,
-> -				NULL, &merged_common_ancestors);
-> +		if (merge_recursive(o, merged_common_ancestors, iter->item,
-> +				    NULL, &merged_common_ancestors) < 0)
-> +			return -1;
->  		o->branch1 = saved_b1;
->  		o->branch2 = saved_b2;
->  		o->call_depth--;
+Correct.
 
-This hunk feels somewhat wrong as-is.
+> If that is what is going on, I would have expected to see this early
+> break before these "we found that this is available in borrowed pack
+> and we are only packing local" and "we ignore objects in locally
+> kept packs" checks return false.
+> 
+> Or am I not following the logic in the loop correctly?
 
-There is a comment before the pre-context explaining why cleanness
-flag is ignored.  It needs to be updated.  We still do not care
-about cleanliness, i.e. 0=clean, 1=merged with conflict, but we now
-can get negative values so we need to reject and return early if
-this call indicates an error.
+Yeah, I think that would work. It has to come after "did we find this in
+the pack", obviously. And it has to come after the other unrelated
+checks ("are we just finding it to exclude?" and "are we
+incremental?"). But you could do:
 
-Thee other two hunks make sense.
+  if (!*found_pack) {
+    ... first find! fill in found pack, etc ...
+  }
+  if (exclude)
+	return 1;
+  if (incremental)
+	return 0;
+  if (!ignore_packed_keep && !local)
+	break; /* effectively return 1, but I think the break is more clear */
+  if (local && !p->pack_local)
+	return 0;
+  if (ignore_packed_keep && p->pack_local && p->pack_keep)
+	return 0;
 
-Thanks.
+which just bumps it up. I don't think there is a way to make it more
+elegant, e.g., by only checking ignore_packed_keep once, because we have
+to distinguish between each condition being set independently, or the
+case where neither is set.
 
-> @@ -1966,6 +1967,8 @@ int merge_recursive(struct merge_options *o,
->  	o->ancestor = "merged common ancestors";
->  	clean = merge_trees(o, h1->tree, h2->tree, merged_common_ancestors->tree,
->  			    &mrtree);
-> +	if (clean < 0)
-> +		return clean;
->  
->  	if (o->call_depth) {
->  		*result = make_virtual_commit(mrtree, "merged tree");
-> @@ -2022,6 +2025,9 @@ int merge_recursive_generic(struct merge_options *o,
->  	hold_locked_index(lock, 1);
->  	clean = merge_recursive(o, head_commit, next_commit, ca,
->  			result);
-> +	if (clean < 0)
-> +		return clean;
-> +
->  	if (active_cache_changed &&
->  	    write_locked_index(&the_index, lock, COMMIT_LOCK))
->  		return error(_("Unable to write index."));
+So I stuck the new check at the end, because to me logically it was "can
+we break out of the loop instead of looking at p->next". But I agree it
+would be equivalent to place it before the related checks, and I don't
+mind doing that if you think it's more readable.
+
+-Peff
