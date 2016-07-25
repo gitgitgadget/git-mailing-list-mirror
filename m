@@ -3,98 +3,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C100F203E2
-	for <e@80x24.org>; Mon, 25 Jul 2016 19:52:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02CC1203E2
+	for <e@80x24.org>; Mon, 25 Jul 2016 19:56:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752481AbcGYTwP (ORCPT <rfc822;e@80x24.org>);
-	Mon, 25 Jul 2016 15:52:15 -0400
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:36678 "EHLO
-	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752271AbcGYTwN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2016 15:52:13 -0400
-Received: by mail-wm0-f51.google.com with SMTP id q128so147626222wma.1
-        for <git@vger.kernel.org>; Mon, 25 Jul 2016 12:52:13 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=70OwhI7hq77pLsgAp0e2dPE0Xr+sHYVxjYBUeyZkQx8=;
-        b=YawGhK+cXDT0HwDYbvygZeNcgLIRqpxG6dzAutwh1eu6pzU49YOeNeHJIluwl2mXDe
-         8HLcM3RvzemFuPr6XormE7G/ek59ztZOaZW7bbsh1k+jIxVs3E/PH3XCy6zzHVrYZYeF
-         ivKAo6dUmL5GNm4BjcM/dl6sx9fhxsQ5eai6LSiv+ZIb/5QSISr66fRFHtgxPB9Y6zVh
-         TFn81AtcdOXUNKqK0f462Zap9oBByhn+ctdrCQJIxrlUqq+ZA3LRKKIc4rnTs7yDwGCz
-         mOvKiS0d+Bg+UqGxct/o38F7kvYRkXDI0ASPunAeqxQCAHI9oH5+DaZRGa2ORkNCI/7J
-         Gl+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding;
-        bh=70OwhI7hq77pLsgAp0e2dPE0Xr+sHYVxjYBUeyZkQx8=;
-        b=ZUL8A0pva5OPf1cbymXbM/AyiealU/eLZjSHCSlRpNtVNl8v7yXkLGIPGYECzI6xpH
-         7QPJNfUQ6Xbx6gTOATptLB+k+nVO4r7uQFnlmYJPs0W1LahXkz0zblLxsUCuD5NaVAXK
-         e373qdsJ61QdbZ5BlIFfo6XKoKqmqMJH65eUvU3L97IiEu9RYJd6xS/DP7SFtsORUFAK
-         6aEW6v/enPFQ0k34p1ccmnSCiJ5rET/AAArkOB/ik8TWApF5JUx3gcWg5AIPms0nuYdz
-         DkxH4tdmx+O7abHXNNvDGt5MTRUwcXxkevSndADqUNptSeiS+dV3RacMvcFOrVbHh37X
-         Tv0Q==
-X-Gm-Message-State: AEkoouvw7xVsQUTLm0UpMaGYkocSNDWyd6Fx1sHPGDec7WU/uMFPsMtlxSG6owRG+7Dghw==
-X-Received: by 10.194.176.165 with SMTP id cj5mr19116357wjc.82.1469476331994;
-        Mon, 25 Jul 2016 12:52:11 -0700 (PDT)
-Received: from [192.168.1.26] (dax80.neoplus.adsl.tpnet.pl. [83.23.23.80])
-        by smtp.googlemail.com with ESMTPSA id f10sm17334333wje.14.2016.07.25.12.52.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Jul 2016 12:52:11 -0700 (PDT)
-Subject: Re: [PATCH v2 3/8] status: support --porcelain[=<version>]
-To:	Jeff Hostetler <jeffhost@microsoft.com>, git@vger.kernel.org
-References: <1469474750-49075-1-git-send-email-jeffhost@microsoft.com>
- <1469474750-49075-4-git-send-email-jeffhost@microsoft.com>
-Cc:	git@jeffhostetler.com, peff@peff.net, gitster@pobox.com,
-	Johannes.Schindelin@gmx.de
-Newsgroups: gmane.comp.version-control.git
-From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <57966DDF.5020301@gmail.com>
-Date:	Mon, 25 Jul 2016 21:51:59 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
+	id S1753003AbcGYT43 (ORCPT <rfc822;e@80x24.org>);
+	Mon, 25 Jul 2016 15:56:29 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65124 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752611AbcGYT42 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2016 15:56:28 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B67BC2E7AA;
+	Mon, 25 Jul 2016 15:56:26 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7utxM+SoHtgaESTAhiGd7DnEzTQ=; b=liR3bK
+	XHm7Nj7zMgfzz1Oj32KnbNH2tc0XVq2jKgx3I8Fl64SFB/SMX6j2RcPyy15rdcUE
+	ZfJXyAWtcX3SUu2CzqSGYuUve79J4YRAZs2q5mLaENdTeQyG/R6aMNhn182BJOkr
+	KJD0OHEYcHUkCOgAQOK2K44X3K9sSC68R/LBg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OPXXZPoV4dJE+7g87Scu/+No89Hrt6eS
+	nG1fKW/YA5oddWcpK6rDrOR7P1sq2yPtaqLlszRGHlz52Ughibczpu1Zfo0qbjog
+	utSg6IXcAwERxM07u5lVNvNJ2ayTB4R3YqSqDA9L3XECzfRNMssXcQx7wCEQlz3/
+	qA90pAca8oY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id AE6922E7A8;
+	Mon, 25 Jul 2016 15:56:26 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 366B72E7A7;
+	Mon, 25 Jul 2016 15:56:26 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff King <peff@peff.net>
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH 1/2] pack-objects: break out of want_object loop early
+References: <20160725184938.GA12871@sigill.intra.peff.net>
+	<20160725185010.GA12974@sigill.intra.peff.net>
+Date:	Mon, 25 Jul 2016 12:56:23 -0700
+In-Reply-To: <20160725185010.GA12974@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 25 Jul 2016 14:50:10 -0400")
+Message-ID: <xmqqeg6h5w60.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <1469474750-49075-4-git-send-email-jeffhost@microsoft.com>
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: DEC9C358-52A1-11E6-9179-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-W dniu 2016-07-25 o 21:25, Jeff Hostetler pisze:
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -144,6 +144,21 @@ static struct strbuf message = STRBUF_INIT;
->  
->  static enum wt_status_format status_format = STATUS_FORMAT_UNSPECIFIED;
->  
-> +static int opt_parse_porcelain(const struct option *opt, const char *arg, int unset)
-> +{
-> +	enum wt_status_format *value = (enum wt_status_format *)opt->value;
-> +	if (unset)
-> +		*value = STATUS_FORMAT_NONE;
-> +	else if (!arg)
-> +		*value = STATUS_FORMAT_PORCELAIN;
-> +	else if (!strcmp(arg, "v1"))
-> +		*value = STATUS_FORMAT_PORCELAIN;
-> +	else
-> +		die("unsupported porcelain version");
-> +
-> +	return 0;
-> +}
+Jeff King <peff@peff.net> writes:
 
-Presumably it is not something hard to find, but perhaps it
-would be better to print the version that were given (for
-example "1" instead of "v1")?
+> When pack-objects collects the list of objects to pack
+> (either from stdin, or via its internal rev-list), it
+> filters each one through want_object_in_pack().
+>
+> This function loops through each existing packfile, looking
+> for the object. When we find it, we mark the pack/offset
+> combo for later use. However, we can't just return "yes, we
+> want it" at that point. If --honor-pack-keep is in effect,
+> we must keep looking to find it in _all_ packs, to make sure
+> none of them has a .keep. Likewise, if --local is in effect,
+> we must make sure it is not present in any local pack.
 
--- 
-Jakub Narêbski
+s/any local pack/any non-local pack/, no?
 
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index a2f8cfd..55ef5a8 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -981,6 +981,8 @@ static int want_object_in_pack(const unsigned char *sha1,
+>  				return 0;
+>  			if (ignore_packed_keep && p->pack_local && p->pack_keep)
+>  				return 0;
+> +			if (!ignore_packed_keep && !local)
+> +				break;
+>  		}
+>  	}
+
+OK, so in this loop, we may return "false" (meaning, we do not want
+to pack the object) if "local" (do not pack objects that appear in
+non-local packs) or "ignore_packed_keep" (do not pack objects that
+appear in locally kept packs) are in effect, but if neither of the
+options is set, we know that one of the preconditions ("local" or
+"ignore_packed_keep") for these two "reject by returning false" if
+statements would never trigger for any pack on packed_git list, so
+it is safe to break out and return the one that we have found.
+
+If that is what is going on, I would have expected to see this early
+break before these "we found that this is available in borrowed pack
+and we are only packing local" and "we ignore objects in locally
+kept packs" checks return false.
+
+Or am I not following the logic in the loop correctly?
