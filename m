@@ -2,117 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D083203E1
-	for <e@80x24.org>; Sun, 24 Jul 2016 23:22:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C002C203E3
+	for <e@80x24.org>; Mon, 25 Jul 2016 03:57:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752415AbcGXXWZ (ORCPT <rfc822;e@80x24.org>);
-	Sun, 24 Jul 2016 19:22:25 -0400
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:35516 "EHLO
-	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752039AbcGXXWZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jul 2016 19:22:25 -0400
-Received: by mail-wm0-f51.google.com with SMTP id f65so115629304wmi.0
-        for <git@vger.kernel.org>; Sun, 24 Jul 2016 16:22:24 -0700 (PDT)
+	id S1752644AbcGYD44 (ORCPT <rfc822;e@80x24.org>);
+	Sun, 24 Jul 2016 23:56:56 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:34603 "EHLO
+	mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752585AbcGYD4z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jul 2016 23:56:55 -0400
+Received: by mail-pf0-f194.google.com with SMTP id g202so11159421pfb.1
+        for <git@vger.kernel.org>; Sun, 24 Jul 2016 20:56:55 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=eUMiUjMWqtCIE17ST2Mc8KW5qVpvOsGhXswRoMaFosk=;
-        b=GKjp+syJZMoAanZzys8pziipictgDvWVDpiBwGpb3dTAPuTr8X0S1thbi77TNCE+qn
-         ZpDsIEwd1VDE5w8uu4lvx5Zok5ca/7QpU1JgysmPmCh4y8w0pPkp5QpoEVg6bcMWVK62
-         aphFQ+0R8HfNYvhrdoRY2KpAc+YmmYY+FEkDwXdKwEHqcgLZACpbe5llt+l8PemCQHRp
-         QdlLWQ5aKY5cAjsqMMkHvmfogFkZhkho/X0hD/QLcubXRnmujjPd9rNQA9tkFwgeAtwF
-         LH9ZGhS33uCpPP6W6YvzS2SUzNAA85U9VuHKgnxQWoTq5Ab8ln31AR6MpMlcRKYVV5za
-         iSNg==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding;
+        bh=M9iXPY3IRB4feQlDslCX9KNLsJLH3RKohBqbMhXO58U=;
+        b=UDRpz7VlgZorleImutrJq6ANEpLs1tbsplc1mJK/vsoP2vedwtbMeHTOFaLWk300W2
+         +7q4LZvrud34qdLH1299Rnwci0Mf7pKTuIXPi0P8bxzLXAxdgVJzFrbxueY08A5AWrpU
+         tcoS2n/tCl5BVLsGDzeZ0MbogCbN/fz2CrLr36hYKaforksEYYmLziGh3zWoebQz1AAn
+         kLfvJpqNZuGzIoUsuEl2X4rvncFMn66vO3hFHH6r4SCE6ffe1/XS+aMN4LTT/nLfyXpg
+         8Hm9mBN5r+Fy4AJZpieYEfl3i4SNrpSLyawhkSnfGxZ01KkWVxHPEiZjH6fO3uRdFNSQ
+         UXqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding;
-        bh=eUMiUjMWqtCIE17ST2Mc8KW5qVpvOsGhXswRoMaFosk=;
-        b=iQ00cgFDnkRjOPXjk1Ms18Sf39wwOO4Y++SEl4UKL2bP160xjccP3V0/LEneqHy8D5
-         FaJBahYVcxROBi7H81ue+qUgscQwdgLCTCEGTTaEk2aJkBt6s6Y7MnkPPWZ8ZzQo/5QS
-         jHFJP1QXA4kKUVCdnptmuGgGcymfY6Kx9sw4ezOHSYL1Kk3NN4ATxjuAJUbuOB1GLacu
-         kj4WuEwbI0VRhRNZJZLliK5L9YNUnHk7U4L1LQjK9vwNDc135itk1m0p9CAyP9T1cNuP
-         EEz8KbxdtNUYDzWEb82qI2E1EBpxhiL30NCPFdEkhgZ4d4FY0xugSl8DFCcsCd3Tpn1t
-         5LHw==
-X-Gm-Message-State: AEkoouvLkDhgRLUBj5JZfvCmkfQRVbvrjEVBJjerVNNCrsNP1Rhr26y/3GzedgS39ERgUg==
-X-Received: by 10.194.248.33 with SMTP id yj1mr4283980wjc.158.1469402543330;
-        Sun, 24 Jul 2016 16:22:23 -0700 (PDT)
-Received: from [192.168.1.26] (exa83.neoplus.adsl.tpnet.pl. [83.20.250.83])
-        by smtp.googlemail.com with ESMTPSA id kc6sm12750701wjb.3.2016.07.24.16.22.21
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=M9iXPY3IRB4feQlDslCX9KNLsJLH3RKohBqbMhXO58U=;
+        b=kkl2+79HSVizTBUlDwcro7Nm70Bs5y7bvUKkul6i6dOggI9Z2nJY00+VubNyH4S/CL
+         7AYno39ryhjBf/y+x6/4oLicGPJqA8zkdNTOFHDVM72Gn2cDR6UXhPfuuMSysYTriuxV
+         WdXUjtlkxF7e/QxCyW1ZBjdCmCyHru7U2EshNnbAsXRHCWYgLT34vMnmI7CFcJL9OYlc
+         dIaoT6mGxNqsXUHRLW2D0Q6r3YqpOtsBR8rj2Jthr9mhFTR6tK+dlcAVtM8ZLbYC99qy
+         ewpui4+wMIGfre9A00ttB3VcQMOiSSReP1ImCRMGG3x73/pNwcqUm24+xZkBvDrEUfRV
+         vchw==
+X-Gm-Message-State: AEkooutVy4jofdHRQSfmrkJfxYZ/gxUMrR+tHb9O/H1VbFLYhiqOLZc89n86bXvyvnUnwA==
+X-Received: by 10.98.74.201 with SMTP id c70mr26036625pfj.113.1469419014841;
+        Sun, 24 Jul 2016 20:56:54 -0700 (PDT)
+Received: from [192.168.0.109] (c-71-202-183-39.hsd1.ca.comcast.net. [71.202.183.39])
+        by smtp.googlemail.com with ESMTPSA id q1sm35647425pfd.48.2016.07.24.20.56.53
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 24 Jul 2016 16:22:22 -0700 (PDT)
-Subject: Re: [PATCH v1 3/3] convert: add filter.<driver>.useProtocol option
-To:	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Lars Schneider <larsxschneider@gmail.com>
-References: <20160722154900.19477-1-larsxschneider@gmail.com>
- <20160722154900.19477-4-larsxschneider@gmail.com>
- <9f47cf44-7163-a7a7-c1f0-87ebdee65b37@ramsayjones.plus.com>
- <1A0C148F-C7C3-4FAF-BAEE-58B11A2324FF@gmail.com>
- <194ea810-76ff-f32c-0f8a-57e8e60b65f5@ramsayjones.plus.com>
-Cc:	Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-	mlbright@gmail.com
-Newsgroups: gmane.comp.version-control.git
-From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <57954DA3.9090006@gmail.com>
-Date:	Mon, 25 Jul 2016 01:22:11 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
+        Sun, 24 Jul 2016 20:56:54 -0700 (PDT)
+Subject: Re: [RFC] A Change to Commit IDs Too Ridiculous to Consider?
+To:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
+	git@vger.kernel.org
+References: <nn30dv$5sn$1@ger.gmane.org> <57950D12.2000607@gmail.com>
+ <cfff11c9-e212-88a1-c00b-3e7a361e0db9@gmail.com> <57952834.60706@gmail.com>
+From:	Jon Forrest <nobozo@gmail.com>
+Message-ID: <a2910716-efda-51f1-da80-42f6b2d3adb0@gmail.com>
+Date:	Sun, 24 Jul 2016 20:56:52 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.1.1
 MIME-Version: 1.0
-In-Reply-To: <194ea810-76ff-f32c-0f8a-57e8e60b65f5@ramsayjones.plus.com>
-Content-Type: text/plain; charset=windows-1252
+In-Reply-To: <57952834.60706@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-W dniu 2016-07-25 o 00:36, Ramsay Jones pisze:
-> On 24/07/16 18:16, Lars Schneider wrote:
->> On 23 Jul 2016, at 01:19, Ramsay Jones <ramsay@ramsayjones.plus.com> wrote:
->>> On 22/07/16 16:49, larsxschneider@gmail.com wrote:
-[...]
->>>> This patch adds the filter.<driver>.useProtocol option which, if enabled,
->>>> keeps the external filter process running and processes all blobs with
->>>> the following protocol over stdin/stdout.
->>>>
->>>> 1. Git starts the filter on first usage and expects a welcome message
->>>> with protocol version number:
->>>> 	Git <-- Filter: "git-filter-protocol\n"
->>>> 	Git <-- Filter: "version 1"
->>>
->>> Hmm, I was a bit surprised to see a 'filter' talk first (but so long as the
->>> interaction is fully defined, I guess it doesn't matter).
->>
->> It was a conscious decision to have the `filter` talk first. My reasoning was:
->>
->> (1) I want a reliable way to distinguish the existing filter protocol ("single-shot 
->> invocation") from the new one ("long running"). I don't think there would be a
->> situation where the existing protocol would talk first. Therefore the users would
->> not accidentally mix them with a possibly half working, undetermined, outcome.
-> 
-> If an 'single-shot' filter were incorrectly configured, instead of a new one, then
-> the interaction could last a little while - since it would result in deadlock! ;-)
-> 
-> [If Git talks first instead, configuring a 'single-shot' filter _may_ still result
-> in a deadlock - depending on pipe size, etc.]
 
-Would it be possible to do an equivalent of sending empty file to the filter?
-If it is misconfigured old-style script, it would exit after possibly empty
-output; if not, we would start new-style interaction.
- 
-This should be, if we agree that detecting misconfigured filters is a good
-thing, tested.
+>>> Another possibility is to set authordate and committerdate to some
+>>> specified time by the way of appropriate environment variables.
 
->>
->> (2) In the future we could extend the pipe protocol (see $gmane/297994, it's very
->> interesting). A filter could check Git's version and then pick the most appropriate
->> filter protocol on startup.
+To follow up, Jakub's approach works great without
+requiring any changes to Git.
+
+For example, the following test script always
+produces the same commit ID:
+
+----
+export GIT_AUTHOR_DATE=2005-04-07T22:13:13
+export GIT_COMMITTER_DATE=2005-04-07T22:13:13
+mkdir -p /tmp/test
+cd /tmp/test
+rm -rf .git
+git init
+echo "Test" > README
+git add README
+git commit -m "test"
+git log
+----
+
+As expected, commenting out the 2 export lines results in
+different commit IDs each time.
+
+Case closed.
+
+Thanks, Jakub!
+
+Jon Forrest
 
