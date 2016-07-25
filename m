@@ -2,270 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC0DD203E2
-	for <e@80x24.org>; Mon, 25 Jul 2016 19:29:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C100F203E2
+	for <e@80x24.org>; Mon, 25 Jul 2016 19:52:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752882AbcGYT26 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 25 Jul 2016 15:28:58 -0400
-Received: from siwi.pair.com ([209.68.5.199]:27479 "EHLO siwi.pair.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752839AbcGYT2y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2016 15:28:54 -0400
-Received: from jeffhost-linux1.corp.microsoft.com (unknown [167.220.24.246])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by siwi.pair.com (Postfix) with ESMTPSA id 0BD4E84609;
-	Mon, 25 Jul 2016 15:28:51 -0400 (EDT)
-From:	Jeff Hostetler <jeffhost@microsoft.com>
-To:	git@vger.kernel.org
-Cc:	git@jeffhostetler.com, peff@peff.net, gitster@pobox.com,
-	jeffhost@microsoft.com, Johannes.Schindelin@gmx.de
-Subject: [PATCH v2 4/8] status: per-file data collection for --porcelain=v2
-Date:	Mon, 25 Jul 2016 15:25:46 -0400
-Message-Id: <1469474750-49075-5-git-send-email-jeffhost@microsoft.com>
-X-Mailer: git-send-email 2.8.0.rc4.17.gac42084.dirty
-In-Reply-To: <1469474750-49075-1-git-send-email-jeffhost@microsoft.com>
+	id S1752481AbcGYTwP (ORCPT <rfc822;e@80x24.org>);
+	Mon, 25 Jul 2016 15:52:15 -0400
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:36678 "EHLO
+	mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752271AbcGYTwN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2016 15:52:13 -0400
+Received: by mail-wm0-f51.google.com with SMTP id q128so147626222wma.1
+        for <git@vger.kernel.org>; Mon, 25 Jul 2016 12:52:13 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=70OwhI7hq77pLsgAp0e2dPE0Xr+sHYVxjYBUeyZkQx8=;
+        b=YawGhK+cXDT0HwDYbvygZeNcgLIRqpxG6dzAutwh1eu6pzU49YOeNeHJIluwl2mXDe
+         8HLcM3RvzemFuPr6XormE7G/ek59ztZOaZW7bbsh1k+jIxVs3E/PH3XCy6zzHVrYZYeF
+         ivKAo6dUmL5GNm4BjcM/dl6sx9fhxsQ5eai6LSiv+ZIb/5QSISr66fRFHtgxPB9Y6zVh
+         TFn81AtcdOXUNKqK0f462Zap9oBByhn+ctdrCQJIxrlUqq+ZA3LRKKIc4rnTs7yDwGCz
+         mOvKiS0d+Bg+UqGxct/o38F7kvYRkXDI0ASPunAeqxQCAHI9oH5+DaZRGa2ORkNCI/7J
+         Gl+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-transfer-encoding;
+        bh=70OwhI7hq77pLsgAp0e2dPE0Xr+sHYVxjYBUeyZkQx8=;
+        b=ZUL8A0pva5OPf1cbymXbM/AyiealU/eLZjSHCSlRpNtVNl8v7yXkLGIPGYECzI6xpH
+         7QPJNfUQ6Xbx6gTOATptLB+k+nVO4r7uQFnlmYJPs0W1LahXkz0zblLxsUCuD5NaVAXK
+         e373qdsJ61QdbZ5BlIFfo6XKoKqmqMJH65eUvU3L97IiEu9RYJd6xS/DP7SFtsORUFAK
+         6aEW6v/enPFQ0k34p1ccmnSCiJ5rET/AAArkOB/ik8TWApF5JUx3gcWg5AIPms0nuYdz
+         DkxH4tdmx+O7abHXNNvDGt5MTRUwcXxkevSndADqUNptSeiS+dV3RacMvcFOrVbHh37X
+         Tv0Q==
+X-Gm-Message-State: AEkoouvw7xVsQUTLm0UpMaGYkocSNDWyd6Fx1sHPGDec7WU/uMFPsMtlxSG6owRG+7Dghw==
+X-Received: by 10.194.176.165 with SMTP id cj5mr19116357wjc.82.1469476331994;
+        Mon, 25 Jul 2016 12:52:11 -0700 (PDT)
+Received: from [192.168.1.26] (dax80.neoplus.adsl.tpnet.pl. [83.23.23.80])
+        by smtp.googlemail.com with ESMTPSA id f10sm17334333wje.14.2016.07.25.12.52.10
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 25 Jul 2016 12:52:11 -0700 (PDT)
+Subject: Re: [PATCH v2 3/8] status: support --porcelain[=<version>]
+To:	Jeff Hostetler <jeffhost@microsoft.com>, git@vger.kernel.org
 References: <1469474750-49075-1-git-send-email-jeffhost@microsoft.com>
+ <1469474750-49075-4-git-send-email-jeffhost@microsoft.com>
+Cc:	git@jeffhostetler.com, peff@peff.net, gitster@pobox.com,
+	Johannes.Schindelin@gmx.de
+Newsgroups: gmane.comp.version-control.git
+From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <57966DDF.5020301@gmail.com>
+Date:	Mon, 25 Jul 2016 21:51:59 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
+MIME-Version: 1.0
+In-Reply-To: <1469474750-49075-4-git-send-email-jeffhost@microsoft.com>
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-The output of `git status --porcelain` leaves out many details
-about the current status that clients might like to have. This
-can force them to be less efficient as they may need to launch
-secondary commands (and try to match the logic within git) to
-accumulate this extra information.  For example, a GUI IDE might
-need the file mode to display the correct icon for a changed item.
+W dniu 2016-07-25 o 21:25, Jeff Hostetler pisze:
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -144,6 +144,21 @@ static struct strbuf message = STRBUF_INIT;
+>  
+>  static enum wt_status_format status_format = STATUS_FORMAT_UNSPECIFIED;
+>  
+> +static int opt_parse_porcelain(const struct option *opt, const char *arg, int unset)
+> +{
+> +	enum wt_status_format *value = (enum wt_status_format *)opt->value;
+> +	if (unset)
+> +		*value = STATUS_FORMAT_NONE;
+> +	else if (!arg)
+> +		*value = STATUS_FORMAT_PORCELAIN;
+> +	else if (!strcmp(arg, "v1"))
+> +		*value = STATUS_FORMAT_PORCELAIN;
+> +	else
+> +		die("unsupported porcelain version");
+> +
+> +	return 0;
+> +}
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
- builtin/commit.c |   3 ++
- wt-status.c      | 114 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- wt-status.h      |  17 +++++++++
- 3 files changed, 133 insertions(+), 1 deletion(-)
+Presumably it is not something hard to find, but perhaps it
+would be better to print the version that were given (for
+example "1" instead of "v1")?
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index e6bbb12..5b9efd2 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -153,6 +153,8 @@ static int opt_parse_porcelain(const struct option *opt, const char *arg, int un
- 		*value = STATUS_FORMAT_PORCELAIN;
- 	else if (!strcmp(arg, "v1"))
- 		*value = STATUS_FORMAT_PORCELAIN;
-+	else if (!strcmp(arg, "v2"))
-+		*value = STATUS_FORMAT_PORCELAIN_V2;
- 	else
- 		die("unsupported porcelain version");
- 
-@@ -1104,6 +1106,7 @@ static struct status_deferred_config {
- static void finalize_deferred_config(struct wt_status *s)
- {
- 	int use_deferred_config = (status_format != STATUS_FORMAT_PORCELAIN &&
-+				   status_format != STATUS_FORMAT_PORCELAIN_V2 &&
- 				   !s->null_termination);
- 
- 	if (s->null_termination) {
-diff --git a/wt-status.c b/wt-status.c
-index a9031e4..54aedc1 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -406,6 +406,110 @@ static void wt_longstatus_print_change_data(struct wt_status *s,
- 	strbuf_release(&twobuf);
- }
- 
-+static void aux_updated_entry_porcelain_v2(
-+	struct wt_status *s,
-+	struct wt_status_change_data *d,
-+	struct diff_filepair *p)
-+{
-+	switch (p->status) {
-+	case DIFF_STATUS_ADDED:
-+		/* {mode,sha1}_head are zero for an add. */
-+		d->aux.porcelain_v2.mode_index = p->two->mode;
-+		oidcpy(&d->aux.porcelain_v2.oid_index, &p->two->oid);
-+		break;
-+
-+	case DIFF_STATUS_DELETED:
-+		d->aux.porcelain_v2.mode_head = p->one->mode;
-+		oidcpy(&d->aux.porcelain_v2.oid_head, &p->one->oid);
-+		/* {mode,oid}_index are zero for a delete. */
-+		break;
-+
-+	case DIFF_STATUS_RENAMED:
-+		d->aux.porcelain_v2.rename_score = p->score * 100 / MAX_SCORE;
-+	case DIFF_STATUS_COPIED:
-+	case DIFF_STATUS_MODIFIED:
-+	case DIFF_STATUS_TYPE_CHANGED:
-+	case DIFF_STATUS_UNMERGED:
-+		d->aux.porcelain_v2.mode_head = p->one->mode;
-+		d->aux.porcelain_v2.mode_index = p->two->mode;
-+		oidcpy(&d->aux.porcelain_v2.oid_head, &p->one->oid);
-+		oidcpy(&d->aux.porcelain_v2.oid_index, &p->two->oid);
-+		break;
-+
-+	case DIFF_STATUS_UNKNOWN:
-+		die("BUG: index status unknown");
-+		break;
-+	}
-+}
-+
-+/* Save aux info for a head-vs-index change. */
-+static void aux_updated_entry(
-+	struct wt_status *s,
-+	struct wt_status_change_data *d,
-+	struct diff_filepair *p)
-+{
-+	if (s->status_format == STATUS_FORMAT_PORCELAIN_V2)
-+		aux_updated_entry_porcelain_v2(s, d, p);
-+}
-+
-+static void aux_changed_entry_porcelain_v2(
-+	struct wt_status *s,
-+	struct wt_status_change_data *d,
-+	const struct diff_filepair *p)
-+{
-+	switch (p->status) {
-+	case DIFF_STATUS_ADDED:
-+		die("BUG: worktree status add???");
-+		break;
-+
-+	case DIFF_STATUS_DELETED:
-+		d->aux.porcelain_v2.mode_index = p->one->mode;
-+		oidcpy(&d->aux.porcelain_v2.oid_index, &p->one->oid);
-+		/* mode_worktree is zero for a delete. */
-+		break;
-+
-+	case DIFF_STATUS_MODIFIED:
-+	case DIFF_STATUS_TYPE_CHANGED:
-+	case DIFF_STATUS_UNMERGED:
-+		d->aux.porcelain_v2.mode_index = p->one->mode;
-+		d->aux.porcelain_v2.mode_worktree = p->two->mode;
-+		oidcpy(&d->aux.porcelain_v2.oid_index, &p->one->oid);
-+		break;
-+
-+	case DIFF_STATUS_UNKNOWN:
-+		die("BUG: worktree status unknown???");
-+		break;
-+	}
-+}
-+
-+/* Save aux info for an index-vs-worktree change. */
-+static void aux_changed_entry(
-+	struct wt_status *s,
-+	struct wt_status_change_data *d,
-+	struct diff_filepair *p)
-+{
-+	if (s->status_format == STATUS_FORMAT_PORCELAIN_V2)
-+		aux_changed_entry_porcelain_v2(s, d, p);
-+}
-+
-+static void aux_initial_entry_porcelain_v2(
-+	struct wt_status *s,
-+	struct wt_status_change_data *d,
-+	const struct cache_entry *ce)
-+{
-+	d->aux.porcelain_v2.mode_index = ce->ce_mode;
-+	hashcpy(d->aux.porcelain_v2.oid_index.hash, ce->sha1);
-+}
-+
-+static void aux_initial_entry(
-+	struct wt_status *s,
-+	struct wt_status_change_data *d,
-+	const struct cache_entry *ce)
-+{
-+	if (s->status_format == STATUS_FORMAT_PORCELAIN_V2)
-+		aux_initial_entry_porcelain_v2(s, d, ce);
-+}
-+
- static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
- 					 struct diff_options *options,
- 					 void *data)
-@@ -434,6 +538,7 @@ static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
- 		if (S_ISGITLINK(p->two->mode))
- 			d->new_submodule_commits = !!oidcmp(&p->one->oid,
- 							    &p->two->oid);
-+		aux_changed_entry(s, d, p);
- 	}
- }
- 
-@@ -487,6 +592,8 @@ static void wt_status_collect_updated_cb(struct diff_queue_struct *q,
- 			d->stagemask = unmerged_mask(p->two->path);
- 			break;
- 		}
-+
-+		aux_updated_entry(s, d, p);
- 	}
- }
- 
-@@ -566,8 +673,10 @@ static void wt_status_collect_changes_initial(struct wt_status *s)
- 			d->index_status = DIFF_STATUS_UNMERGED;
- 			d->stagemask |= (1 << (ce_stage(ce) - 1));
- 		}
--		else
-+		else {
- 			d->index_status = DIFF_STATUS_ADDED;
-+			aux_initial_entry(s, d, ce);
-+		}
- 	}
- }
- 
-@@ -1764,6 +1873,9 @@ void wt_status_print(struct wt_status *s)
- 	case STATUS_FORMAT_PORCELAIN:
- 		wt_porcelain_print(s);
- 		break;
-+	case STATUS_FORMAT_PORCELAIN_V2:
-+		/* TODO */
-+		break;
- 	case STATUS_FORMAT_UNSPECIFIED:
- 		die("BUG: finalize_deferred_config() should have been called");
- 		break;
-diff --git a/wt-status.h b/wt-status.h
-index a859a12..f2cb65d 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -34,6 +34,21 @@ enum commit_whence {
- 	FROM_CHERRY_PICK /* commit came from cherry-pick */
- };
- 
-+/*
-+ * Additional per-file info which may vary based
-+ * upon the chosen format.
-+ */
-+struct wt_status_aux_change_data {
-+	struct {
-+		int rename_score;
-+		int mode_head;
-+		int mode_index;
-+		int mode_worktree;
-+		struct object_id oid_head;
-+		struct object_id oid_index;
-+	} porcelain_v2;
-+};
-+
- struct wt_status_change_data {
- 	int worktree_status;
- 	int index_status;
-@@ -41,6 +56,7 @@ struct wt_status_change_data {
- 	char *head_path;
- 	unsigned dirty_submodule       : 2;
- 	unsigned new_submodule_commits : 1;
-+	struct wt_status_aux_change_data aux;
- };
- 
-  enum wt_status_format {
-@@ -48,6 +64,7 @@ struct wt_status_change_data {
- 	STATUS_FORMAT_LONG,
- 	STATUS_FORMAT_SHORT,
- 	STATUS_FORMAT_PORCELAIN,
-+	STATUS_FORMAT_PORCELAIN_V2,
- 
- 	STATUS_FORMAT_UNSPECIFIED
-  };
 -- 
-2.8.0.rc4.17.gac42084.dirty
+Jakub Narêbski
 
