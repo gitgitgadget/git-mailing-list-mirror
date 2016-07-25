@@ -2,94 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F38C203E2
-	for <e@80x24.org>; Mon, 25 Jul 2016 16:22:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62A3C203E2
+	for <e@80x24.org>; Mon, 25 Jul 2016 16:34:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753306AbcGYQWM (ORCPT <rfc822;e@80x24.org>);
-	Mon, 25 Jul 2016 12:22:12 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:35366 "EHLO
-	mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752476AbcGYQWL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2016 12:22:11 -0400
-Received: by mail-lf0-f65.google.com with SMTP id l89so11381227lfi.2
-        for <git@vger.kernel.org>; Mon, 25 Jul 2016 09:22:10 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=EzVWup+kh/raDfItyivze3RnLcFLkb6Dr0JKr2gOnpg=;
-        b=QTO44uHC+V/0Za4+LAx96z7k6ZkrPCw1dwed/ZR3gn3/vgmdKGPldy4A05cDrwnMhw
-         Yc7mrT3YckfLQF9HZ1JOv2DdUYNPNzURanIXpGDb11VrGj07PtidoZoVUiOLuwK0dSLP
-         tg2wB3nSSW5h65BiNr6fyt52NfljsJvifr2Yheo34LaGQNYM55TlW/Ce1VCC3dx8WmZk
-         XTAhkdoZiVahDtKX8fP22EOG9r2AouRwFvz/xedv5FH0guSvAN7djN7/9oq2AEDIVyOu
-         L8Wh00OuoZK9iZ/MzrXvI8FUNoTb8UT+W4EKRf8+0+RDATchpeBYF22XwaD08n4T2z3l
-         knsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=EzVWup+kh/raDfItyivze3RnLcFLkb6Dr0JKr2gOnpg=;
-        b=MisLzUp7jfcS/lrOi2w2Gs+OQRX4tvFuFO6+A4I1hLTk7wXEcmNLWm2dJqLw/IjIXi
-         bILjedx5K3iM6LGwvGJP+OuLIye9yjMz1sDb3HxoiwDtg5guBk74oYGEeKSxj+IC5GkP
-         8zbNLeuRt+w6py9iTpt/sPvYOQP29VJGfpzE/9pnyGI10QinkqgPSj/zHVnW7hIlRwkn
-         f6f3MVq9STg5azwYYXgw1/ut305S3onl74xAnbV81auI5+S7t3+kKIhwjfb+OdmBijZK
-         ae+9XQmQbVVPG7BVUBYmw0KCnfDXUCArEtuet/L4N2juULXKTcHgjxS1JwN6Hz4pYLpW
-         SYOw==
-X-Gm-Message-State: AEkoouvM42o5vIKPlj5q26hNGo8Ggp9rA4W8jSsXvgWRm177iPw266kO1dja5UTKLzUxzQ==
-X-Received: by 10.25.165.71 with SMTP id o68mr6783752lfe.95.1469463729659;
-        Mon, 25 Jul 2016 09:22:09 -0700 (PDT)
-Received: from duynguyen.does.not.exist (10.219.241.83.in-addr.dgcsystems.net. [83.241.219.10])
-        by smtp.gmail.com with ESMTPSA id c12sm5697603lfc.40.2016.07.25.09.22.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 25 Jul 2016 09:22:08 -0700 (PDT)
-From:	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To:	git@vger.kernel.org
-Cc:	e@80x24.org, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] config.mak.uname: correct perl path on FreeBSD
-Date:	Mon, 25 Jul 2016 18:21:25 +0200
-Message-Id: <20160725162125.15734-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.9.1.566.gbd532d4
+	id S1753301AbcGYQen (ORCPT <rfc822;e@80x24.org>);
+	Mon, 25 Jul 2016 12:34:43 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59083 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752611AbcGYQel convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Jul 2016 12:34:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 17CC42E971;
+	Mon, 25 Jul 2016 12:34:40 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=rZ7uFKwP+6+8
+	AM69AfDa7nz7a7E=; b=HsbE71nQmmZu+grTZK66XeKaQMYJ2CRHuELbeoJtNszc
+	Bt5lzjepZ3QkR4SAHteGJDfNN/ilRlhq2t58BUMolfqmQ4IW4nNLxbtBAoBbj5gY
+	tpBloxRO5wKNiA1a9BAZN1EGIqW+bKfk/CSsabYsIfCl/ryYkqooB7CXOhRtdks=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=lNfm4d
+	bNlHsimyq+p0FCm+hlv9QhsuG9VG0Do1XQaRQg6VhPf0I2PBgXiDvW4PqQ4ILVa5
+	v97MUrZLmvt0KGBFT/qG4S+VGBd84DXo2mQld8jKickVV2+oBoOPwfknMT9MhpkU
+	HOdKcN3tPUZwFSJ3H25Iyi//fJEC29Efh888s=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 108B82E970;
+	Mon, 25 Jul 2016 12:34:40 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8656D2E96F;
+	Mon, 25 Jul 2016 12:34:39 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+Cc:	CLOSE Dave <Dave.Close@us.thalesgroup.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Complex gitweb URL
+References: <225e6ff4-178c-cd2a-6a05-b621f0ad4a84@us.thalesgroup.com>
+	<5793ADAC.6030009@gmail.com>
+Date:	Mon, 25 Jul 2016 09:34:37 -0700
+In-Reply-To: <5793ADAC.6030009@gmail.com> ("Jakub =?utf-8?Q?Nar=C4=99bski?=
+ =?utf-8?Q?=22's?= message of "Sat,
+	23 Jul 2016 19:47:24 +0200")
+Message-ID: <xmqqoa5l7k2q.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: AEA5E5EC-5285-11E6-98DE-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-It looks the the symlink /usr/bin/perl (to /usr/local/bin/perl) has
-been removed at least on FreeBSD 10.3. See [1] for more information.
+Jakub Narębski <jnareb@gmail.com> writes:
 
-[1] https://svnweb.freebsd.org/ports/head/UPDATING?r1=386270&r2=386269&pathrev=386270&diff_format=c
+> Subject: [PATCH] gitweb(1): Document query parameters
+>
+> The gitweb manpage includes description of gitweb URL structure,
+> but it was limited to passing parameters in the path part of URL
+> ('path info'), and it didn't include explanation of query parameters.
+> ---
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- Tested with fbsd 10.3, kvm image. But I suppose it's the same as real
- fbsd.
+I think this weather-balloon patch adds the missing info at the most
+natural place in the flow of the document.  An earlier part talks
+about a GitWeb URL having <repo>, <action>, <revision>, <path> and
+followed by what is called <arguments> after a question mark '?',
+but what <arguments> part means and how to formulate it are left
+unsaid.
 
- config.mak.uname | 1 +
- 1 file changed, 1 insertion(+)
+By the way, the title of the section 'Actions, and URLs' needs to
+lose the comma, I would think.
 
-diff --git a/config.mak.uname b/config.mak.uname
-index a88f139..4cd62bd 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -203,6 +203,7 @@ ifeq ($(uname_S),FreeBSD)
- 		NO_STRTOUMAX = YesPlease
- 	endif
- 	PYTHON_PATH = /usr/local/bin/python
-+	PERL_PATH = /usr/local/bin/perl
- 	HAVE_PATHS_H = YesPlease
- 	GMTIME_UNRELIABLE_ERRORS = UnfortunatelyYes
- 	HAVE_BSD_SYSCTL = YesPlease
--- 
-2.9.1.566.gbd532d4
+>  Documentation/gitweb.txt | 37 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 37 insertions(+)
+>
+> diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
+> index 96156e5..301003f 100644
+> --- a/Documentation/gitweb.txt
+> +++ b/Documentation/gitweb.txt
+> @@ -395,6 +395,43 @@ atom::
+>  	Generates an RSS (or Atom) feed of changes to repository.
+>  
+>  
+> +Query parameters:
+> +~~~~~~~~~~~~~~~~~
+> +In some cases gitweb cannot pass a parameter in path part of URL, for
+> +example if a filename contains double dots ('..') inside.  All parameters
+> +that cannot be passed in that way are put as a query parameter, that is
+> +after '?'.
 
+Until this point, the reader hasn't even been told about "filename"
+is one of the potential things that can be given to "control the
+behaviour of the action", and is left wondering if she has a
+filename that does not have double-dots, how it can be passed "in
+path part of URL" after reading the first sentence.  Then the second
+sentence adds more to the mystery by starting with "All parameters
+that cannot be passed" "in that way": what are the possible things
+that the users may want to pass?  what exactly is "in that way",
+which probably means "encoded as part of the <path>", but it is
+unclear how that encoding works (is it just to "concatenate"?).
+
+Or is "filename in the revision" the ONLY thing the above paragraph
+talks about, and is the ONLY purpose of the "<path> part" to
+represent that "filename in the revision" in the URL?
+
+    .../gitweb.cgi/<repo>/<action>/<revision>:/<path>?<arguments>
+
+The above syntax (taken from the first paragraph of the section)
+suggests that <path> cannot be used to hold filename with a colon,
+too.  Perhaps "for example if a filename contains double-dots" needs
+to become an exhaustive description somewhere, i.e. "(see below for
+the exact rules)" added to that sentence?
+
+> +By default gitweb would generate links using query parameters, unless
+> +the original URL was using path part, or gitweb was configured to use
+> +pathinfo with the 'pathinfo' feature. All gitweb installations recognize
+> +URL in either format, so you can use one that is better for you when
+> +interacting with gitweb (handcrafting or editing URLs, or creating
+> +a program interacting with gitweb installation).
+> +
+> +Here is the list of some of query parameters, together with their
+> +long names (which should help remembering the short name of
+> +each parameter):
+> +
+> +'a' (action)::
+> +	The action that will be run.
+> +
+> +'p' (project)::
+> +	The project repository that will be displayed.
+> +
+> +'h' (hash)::
+> +	The object id of displayed object (commit, tag, tree, blob).
+> +	In case of files 'hb' (hash_base) and 'f' (filename) might be
+> +	used instead.
+> +
+> +'hp' (hash_parent)::
+> +'fp' (file_parent)::
+> +'hpb' (hash_parent_base)::
+> +      Those parameters define the second object for diff-like actions,
+> +      the object gitweb is comparing againts.
+
+There is no mention of "filename" or "path" here, which further
+confuses a reader who was told in the first paragraph that these
+query-parameters are used when <path> part cannot hold a certain
+filename.  Also it is unclear if <revision> corresponds to 'h'ash
+in the above.
+
+> +
+> +
+> +
+>  WEBSERVER CONFIGURATION
+>  -----------------------
+>  This section explains how to configure some common webservers to run gitweb. In
