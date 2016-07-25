@@ -2,105 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91DF7203E2
-	for <e@80x24.org>; Mon, 25 Jul 2016 22:22:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C8C6203E2
+	for <e@80x24.org>; Mon, 25 Jul 2016 22:23:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755478AbcGYWWN (ORCPT <rfc822;e@80x24.org>);
-	Mon, 25 Jul 2016 18:22:13 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48936 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754994AbcGYWWK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2016 18:22:10 -0400
-Received: (qmail 18842 invoked by uid 102); 25 Jul 2016 22:22:05 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 25 Jul 2016 18:22:05 -0400
-Received: (qmail 29936 invoked by uid 107); 25 Jul 2016 22:22:29 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 25 Jul 2016 18:22:29 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Jul 2016 18:22:02 -0400
-Date:	Mon, 25 Jul 2016 18:22:02 -0400
-From:	Jeff King <peff@peff.net>
-To:	Jan Smets <jan.smets@nokia.com>
-Cc:	git@vger.kernel.org, Stephen Morton <stephen.morton@nokia.com>
-Subject: Re: Client exit whilst running pre-receive hook : commit accepted
- but no post-receive hook ran
-Message-ID: <20160725222201.GC13589@sigill.intra.peff.net>
-References: <5795EB1C.1080102@nokia.com>
+	id S932171AbcGYWXV (ORCPT <rfc822;e@80x24.org>);
+	Mon, 25 Jul 2016 18:23:21 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50802 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755117AbcGYWWw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2016 18:22:52 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 73CE8304E5;
+	Mon, 25 Jul 2016 18:22:51 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4AQ/3Cy6ejGNTyHhTZ1WyhhjKsI=; b=k6mKr5
+	Q3PKgrn0z+l+PRqebrKHEGmgHH8hLV1wk6hqPQ2WaPuDE7K90ZxbvEF4Zixxt0vt
+	+DVhXbA2PKi0gjw0Dq78E+ABAyazrpDJ8zBScSFIrpNVcq0jJPnB/EcB4IK7UjQ9
+	kvUPfZxq2iB53Y6gcT3GMkKKMjgnOFw8aNydg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mk7QJkr5yrJsB0sm2eUcn0iHp6Yrf4ln
+	5FppyT96DaNkNkcIZZnURvphtnnNGRPVA45asyi2XebhvY0aAAVe7zF7P89WuF3R
+	uuoANvASm3WuWpvedsph00oGV30TJ3/9ptPLEyBbFn30fiPzh2+82n1+xZ5UvWsA
+	LlnSE+WaS+c=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6A3CA304E4;
+	Mon, 25 Jul 2016 18:22:51 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D94AA304E2;
+	Mon, 25 Jul 2016 18:22:50 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	John Keeping <john@keeping.me.uk>
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] push: add shorthand for --force-with-lease branch creation
+References: <cover.1469483499.git.john@keeping.me.uk>
+	<4e07ff23715b53fcd29564be1c74a9f66dd74e1e.1469483499.git.john@keeping.me.uk>
+Date:	Mon, 25 Jul 2016 15:22:48 -0700
+In-Reply-To: <4e07ff23715b53fcd29564be1c74a9f66dd74e1e.1469483499.git.john@keeping.me.uk>
+	(John Keeping's message of "Mon, 25 Jul 2016 22:59:56 +0100")
+Message-ID: <xmqqpoq12w93.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <5795EB1C.1080102@nokia.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 52DB4CA8-52B6-11E6-976E-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jul 25, 2016 at 12:34:04PM +0200, Jan Smets wrote:
+John Keeping <john@keeping.me.uk> writes:
 
-> I have always assumed the post-receive hook to be executed whenever a commit
-> is "accepted" by the (gitolite) server. That does not seem to be true any
-> more.
+> Allow the empty string to stand in for the null SHA-1 when pushing a new
+> branch, like we do when deleting branches.
+>
+> This means that the following command ensures that `new-branch` is
+> created on the remote (that is, is must not already exist):
+>
+> 	git push --force-with-lease=new-branch: origin new-branch
+>
+> Signed-off-by: John Keeping <john@keeping.me.uk>
+> ---
+> New in v2.
+>
+>  Documentation/git-push.txt |  3 ++-
+>  remote.c                   |  2 ++
+>  t/t5533-push-cas.sh        | 12 ++++++++++++
+>  3 files changed, 16 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+> index bf7c9a2..927a034 100644
+> --- a/Documentation/git-push.txt
+> +++ b/Documentation/git-push.txt
+> @@ -201,7 +201,8 @@ if it is going to be updated, by requiring its current value to be
+>  the same as the specified value `<expect>` (which is allowed to be
+>  different from the remote-tracking branch we have for the refname,
+>  or we do not even have to have such a remote-tracking branch when
+> -this form is used).
+> +this form is used).  If `<expect>` is the empty string, then the named ref
+> +must not already exist.
+>  +
+>  Note that all forms other than `--force-with-lease=<refname>:<expect>`
+>  that specifies the expected current value of the ref explicitly are
+> diff --git a/remote.c b/remote.c
+> index a326e4e..af94892 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -2294,6 +2294,8 @@ int parse_push_cas_option(struct push_cas_option *cas, const char *arg, int unse
+>  	entry = add_cas_entry(cas, arg, colon - arg);
+>  	if (!*colon)
+>  		entry->use_tracking = 1;
+> +	else if (!colon[1])
+> +		memset(entry->expect, 0, sizeof(entry->expect));
 
-Generally, yeah, I would expect that to be the case, too.
+hashclr()?
 
-> Since 9658846 is appears that, when a client bails out, the pre-receive hook
-> continues to run and the commit is written to the repository, but no
-> post-receive hook is executed. No signal of any kind is received in the
-> hook, not even a sig pipe when the post- hook is writing to stdout whilst
-> the client has disconnected.
-
-I see. The problem is that cmd_receive_pack() does this:
-
-        execute_commands(commands, unpack_status, &si);
-        if (pack_lockfile)
-                unlink_or_warn(pack_lockfile);
-        if (report_status)
-                report(commands, unpack_status);
-        run_receive_hook(commands, "post-receive", 1);
-        run_update_post_hook(commands);
-
-It reports the status to the client, and _then_ runs the post-receive
-hook. But if that reporting fails (either because of an error, or if we
-just get SIGPIPE because the client hung up), then we don't actually run
-the hooks.
-
-Leaving 9658846 out of it entirely, it is always going to be racy
-whether we notice that the client hung up during the pre-receive step.
-E.g.:
-
-  - your pre-receive might not write any output, so the muxer has
-    nothing to write to the other side, and we never notice that the
-    connection closed until we write the status out in report()
-
-  - if NO_PTHREADS is set, the sideband muxer runs in a sub-process, not
-    a sub-thread. And thus we don't know of a hangup except by checking
-    the result of finish_async(), which we never do.
-
-  - the client could hang up just _after_ we've written the pre-receive
-    output, but before report() is called, so there's nothing to notice
-    until we're in report()
-
-So I think 9658846 just made that race a bit longer, because it means
-that a write error in the sideband muxer during the pre-receive hook
-means we return an error via finish_async() rather than unceremoniously
-calling exit() from a sub-thread. So we have a longer period during
-which we might actually finish off execute_commands() but not make it
-out of report().
-
-And the real solution is to make cmd_receive_pack() more robust, and try
-harder to run the hooks even when the client hangs up or we have some
-other reporting error (because getting data back to the user is only one
-use of post-receive hooks; they are also used to queue jobs or do
-maintenance).
-
-But that's a bit tricky, as it requires report() to ignore SIGPIPE, and
-to stop using write_or_die() or any other functions that can exit (some
-of which happen at a lower level). Plus if a client does hangup, we
-don't want our hook to die with SIGPIPE either, so we'd want to proxy
-the data into /dev/null.
-
--Peff
+>  	else if (get_sha1(colon + 1, entry->expect))
+>  		return error("cannot parse expected object name '%s'", colon + 1);
+>  	return 0;
+> diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
+> index c732012..5e7f6e9 100755
+> --- a/t/t5533-push-cas.sh
+> +++ b/t/t5533-push-cas.sh
+> @@ -191,4 +191,16 @@ test_expect_success 'cover everything with default force-with-lease (allowed)' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'new branch covered by force-with-lease (explicit)' '
+> +	setup_srcdst_basic &&
+> +	(
+> +		cd dst &&
+> +		git branch branch master &&
+> +		git push --force-with-lease=branch: origin branch
+> +	) &&
+> +	git ls-remote dst refs/heads/branch >expect &&
+> +	git ls-remote src refs/heads/branch >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_done
