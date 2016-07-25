@@ -6,27 +6,27 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DA21203E2
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7EA3203E3
 	for <e@80x24.org>; Mon, 25 Jul 2016 19:29:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752952AbcGYT3A (ORCPT <rfc822;e@80x24.org>);
-	Mon, 25 Jul 2016 15:29:00 -0400
-Received: from siwi.pair.com ([209.68.5.199]:27492 "EHLO siwi.pair.com"
+	id S1753024AbcGYT3B (ORCPT <rfc822;e@80x24.org>);
+	Mon, 25 Jul 2016 15:29:01 -0400
+Received: from siwi.pair.com ([209.68.5.199]:27472 "EHLO siwi.pair.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752687AbcGYT2z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2016 15:28:55 -0400
+	id S1751360AbcGYT26 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2016 15:28:58 -0400
 Received: from jeffhost-linux1.corp.microsoft.com (unknown [167.220.24.246])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by siwi.pair.com (Postfix) with ESMTPSA id 94C328460B;
-	Mon, 25 Jul 2016 15:28:53 -0400 (EDT)
+	by siwi.pair.com (Postfix) with ESMTPSA id 9040384607;
+	Mon, 25 Jul 2016 15:28:56 -0400 (EDT)
 From:	Jeff Hostetler <jeffhost@microsoft.com>
 To:	git@vger.kernel.org
 Cc:	git@jeffhostetler.com, peff@peff.net, gitster@pobox.com,
 	jeffhost@microsoft.com, Johannes.Schindelin@gmx.de
-Subject: [PATCH v2 5/8] status: print per-file porcelain v2 status data
-Date:	Mon, 25 Jul 2016 15:25:47 -0400
-Message-Id: <1469474750-49075-6-git-send-email-jeffhost@microsoft.com>
+Subject: [PATCH v2 7/8] status: update git-status.txt for --porcelain=v2
+Date:	Mon, 25 Jul 2016 15:25:49 -0400
+Message-Id: <1469474750-49075-8-git-send-email-jeffhost@microsoft.com>
 X-Mailer: git-send-email 2.8.0.rc4.17.gac42084.dirty
 In-Reply-To: <1469474750-49075-1-git-send-email-jeffhost@microsoft.com>
 References: <1469474750-49075-1-git-send-email-jeffhost@microsoft.com>
@@ -35,320 +35,116 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Print per-file information in porcelain v2 format.
+Update status manpage to include information about
+porcelain v2 format.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- wt-status.c | 285 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 284 insertions(+), 1 deletion(-)
+ Documentation/git-status.txt | 83 ++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 80 insertions(+), 3 deletions(-)
 
-diff --git a/wt-status.c b/wt-status.c
-index 54aedc1..ffdfe11 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1864,6 +1864,8 @@ static void wt_porcelain_print(struct wt_status *s)
- 	wt_shortstatus_print(s);
- }
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+index 6b1454b..e64b1b8 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -185,10 +185,10 @@ If -b is used the short-format status is preceded by a line
  
-+static void wt_porcelain_v2_print(struct wt_status *s);
+ ## branchname tracking info
+ 
+-Porcelain Format
+-~~~~~~~~~~~~~~~~
++Porcelain Format Version 1
++~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+-The porcelain format is similar to the short format, but is guaranteed
++Version 1 porcelain format is similar to the short format, but is guaranteed
+ not to change in a backwards-incompatible way between Git versions or
+ based on user configuration. This makes it ideal for parsing by scripts.
+ The description of the short format above also describes the porcelain
+@@ -210,6 +210,83 @@ field from the first filename).  Third, filenames containing special
+ characters are not specially formatted; no quoting or
+ backslash-escaping is performed.
+ 
++Porcelain Format Version 2
++~~~~~~~~~~~~~~~~~~~~~~~~~~
 +
- void wt_status_print(struct wt_status *s)
- {
- 	switch (s->status_format) {
-@@ -1874,7 +1876,7 @@ void wt_status_print(struct wt_status *s)
- 		wt_porcelain_print(s);
- 		break;
- 	case STATUS_FORMAT_PORCELAIN_V2:
--		/* TODO */
-+		wt_porcelain_v2_print(s);
- 		break;
- 	case STATUS_FORMAT_UNSPECIFIED:
- 		die("BUG: finalize_deferred_config() should have been called");
-@@ -1885,3 +1887,284 @@ void wt_status_print(struct wt_status *s)
- 		break;
- 	}
- }
++Version 2 format adds more detailed information about the state of
++the worktree and the changed items.
 +
-+/*
-+ * Convert various submodule status values into a
-+ * string of characters in the buffer provided.
-+ */
-+static void wt_porcelain_v2_submodule_state(
-+	struct wt_status_change_data *d,
-+	char sub[5])
-+{
-+	if (S_ISGITLINK(d->aux.porcelain_v2.mode_head) ||
-+		S_ISGITLINK(d->aux.porcelain_v2.mode_index) ||
-+		S_ISGITLINK(d->aux.porcelain_v2.mode_worktree)) {
-+		sub[0] = 'S';
-+		sub[1] = d->new_submodule_commits ? 'C' : '.';
-+		sub[2] = (d->dirty_submodule & DIRTY_SUBMODULE_MODIFIED) ? 'M' : '.';
-+		sub[3] = (d->dirty_submodule & DIRTY_SUBMODULE_UNTRACKED) ? 'U' : '.';
-+	} else {
-+		sub[0] = 'N';
-+		sub[1] = '.';
-+		sub[2] = '.';
-+		sub[3] = '.';
-+	}
-+	sub[4] = 0;
-+}
++If `--branch` is given, a header line showing branch tracking information
++is printed.  This line begins with "### branch: ".  Fields are separated
++by a single space.
 +
-+/*
-+ * Fix-up changed entries before we print them.
-+ */
-+static void wt_porcelain_v2_fix_up_changed(
-+	struct string_list_item *it,
-+	struct wt_status *s)
-+{
-+	struct wt_status_change_data *d = it->util;
++    Field                    Meaning
++    --------------------------------------------------------
++    <sha> | (initial)        Current commit
++    <branch> | (detached)    Current branch
++    <upstream>               Upstream branch, if set
++    +<ahead>                 Ahead count, if upstream present
++    -<behind>                Behind count, if upstream present
++    --------------------------------------------------------
 +
-+	if (!d->index_status) {
-+		/*
-+		 * This entry is unchanged in the index (relative to the head).
-+		 * Therefore, the collect_updated_cb was never called for this
-+		 * entry (during the head-vs-index scan) and so the head column
-+		 * fields were never set.
-+		 *
-+		 * We must have data for the index column (from the
-+		 * index-vs-worktree scan (otherwise, this entry should not be
-+		 * in the list of changes)).
-+		 *
-+		 * Copy index column fields to the head column, so that our
-+		 * output looks complete.
-+		 */
-+		assert(d->aux.porcelain_v2.mode_head == 0);
-+		d->aux.porcelain_v2.mode_head = d->aux.porcelain_v2.mode_index;
-+		oidcpy(&d->aux.porcelain_v2.oid_head, &d->aux.porcelain_v2.oid_index);
-+	}
++A series of lines are then displayed for the tracked entries.
++Ordinary changed entries have the following format; the first
++character is a 'c' to distinguish them from unmerged entries.
 +
-+	if (!d->worktree_status) {
-+		/*
-+		 * This entry is unchanged in the worktree (relative to the index).
-+		 * Therefore, the collect_changed_cb was never called for this entry
-+		 * (during the index-vs-worktree scan) and so the worktree column
-+		 * fields were never set.
-+		 *
-+		 * We must have data for the index column (from the head-vs-index
-+		 * scan).
-+		 *
-+		 * Copy the index column fields to the worktree column so that
-+		 * our output looks complete.
-+		 *
-+		 * Note that we only have a mode field in the worktree column
-+		 * because the scan code tries really hard to not have to compute it.
-+		 */
-+		assert(d->aux.porcelain_v2.mode_worktree == 0);
-+		d->aux.porcelain_v2.mode_worktree = d->aux.porcelain_v2.mode_index;
-+	}
-+}
++    c <xy> <sub> <mH> <mI> <mW> <hH> <hI> R<nr> <path>[\t<pathSrc>]
 +
-+/*
-+ * Print porcelain v2 info for tracked entries with changes.
-+ */
-+static void wt_porcelain_v2_print_changed_entry(
-+	struct string_list_item *it,
-+	struct wt_status *s)
-+{
-+	struct wt_status_change_data *d = it->util;
-+	struct strbuf buf_current = STRBUF_INIT;
-+	struct strbuf buf_rename_src = STRBUF_INIT;
-+	const char *path_current = NULL;
-+	const char *path_rename_src = NULL;
-+	char key[3];
-+	char submodule_token[5];
-+	char changed_prefix = 'c';
-+	char sep_char, eol_char;
++    Field       Meaning
++    --------------------------------------------------------
++    <xy>        A 2 character field containing the staged and
++                unstaged XY values described in the short format,
++                with unchanged indicated by a "." rather than
++                a space.
++    <sub>       A 4 character field describing the submodule state.
++                "N..." when the entry is not a submodule.
++                "S<c><m><u>" when the entry is a submodule.
++                <c> is "C" if the commit changed; otherwise ".".
++                <m> is "M" if it has tracked changes; otherwise ".".
++                <u> is "U" if there are untracked changes; otherwise ".".
++    <m*>        The 6 character octal file modes for head, index,
++                and worktree.
++    <h*>        The head and index SHA1 values.
++    R<nr>       The rename percentage score.
++    <path>      The current pathname. It is C-Quoted if it contains
++                special control characters.
++    <pathSrc>   The original path. This is only present for staged renames.
++                It is C-Quoted if necessary.
++    --------------------------------------------------------
 +
-+	wt_porcelain_v2_fix_up_changed(it, s);
-+	wt_porcelain_v2_submodule_state(d, submodule_token);
++Unmerged entries have the following format; the first character is
++a "u" to distinguish from ordinary changed entries.
 +
-+	key[0] = d->index_status ? d->index_status : '.';
-+	key[1] = d->worktree_status ? d->worktree_status : '.';
-+	key[2] = 0;
++    u <xy> <sub> <m1> <m2> <m3> <h1> <h2> <h3> <path>
 +
-+	if (s->null_termination) {
-+		/*
-+		 * In -z mode, we DO NOT C-Quote pathnames.  Current path is ALWAYS first.
-+		 * A single NUL character separates them.
-+		 */
-+		sep_char = '\0';
-+		eol_char = '\0';
-+		path_current = it->string;
-+		path_rename_src = d->head_path;
-+	} else {
-+		/*
-+		 * Path(s) are C-Quoted if necessary. Current path is ALWAYS first.
-+		 * The rename source path is only present when necessary.
-+		 * A single TAB separates them (because paths can contain spaces
-+		 * which are not escaped and C-Quoting does escape TAB characters).
-+		 */
-+		sep_char = '\t';
-+		eol_char = '\n';
-+		path_current = quote_path(it->string, s->prefix, &buf_current);
-+		if (d->head_path)
-+			path_rename_src = quote_path(d->head_path, s->prefix, &buf_rename_src);
-+	}
++    Field       Meaning
++    --------------------------------------------------------
++    <xy>        A 2 character field describing the conflict type
++                as described in the short format.
++    <sub>       A 4 character field describing the submodule state
++                as described above.
++    <m*>        The 6 character octal file modes for the stage 1,
++                stage 2, stage 3, and worktree.
++                For regular entries, these are the head, index, and
++                worktree modes; the fourth is zero.
++    <h*>        The stage 1, stage 2, and stage 3 SHA1 values.
++    <path>      The current pathname. It is C-Quoted if necessary.
++    --------------------------------------------------------
 +
-+	fprintf(s->fp, "%c %s %s %06o %06o %06o %s %s R%d %s",
-+			changed_prefix, key, submodule_token,
-+			d->aux.porcelain_v2.mode_head,
-+			d->aux.porcelain_v2.mode_index,
-+			d->aux.porcelain_v2.mode_worktree,
-+			oid_to_hex(&d->aux.porcelain_v2.oid_head),
-+			oid_to_hex(&d->aux.porcelain_v2.oid_index),
-+			d->aux.porcelain_v2.rename_score,
-+			path_current);
-+	if (path_rename_src)
-+		fprintf(s->fp, "%c%s", sep_char, path_rename_src);
-+	fprintf(s->fp, "%c", eol_char);
-+	
-+	strbuf_release(&buf_current);
-+	strbuf_release(&buf_rename_src);
-+}
++A series of lines are then displayed for untracked and ignored entries.
 +
-+/*
-+ * Print porcelain v2 status info for unmerged entries.
-+ */
-+static void wt_porcelain_v2_print_unmerged_entry(
-+	struct string_list_item *it,
-+	struct wt_status *s)
-+{
-+	struct wt_status_change_data *d = it->util;
-+	const struct cache_entry *ce;
-+	struct strbuf buf_current = STRBUF_INIT;
-+	const char *path_current = NULL;
-+	int pos, stage, sum;
-+	struct {
-+		int mode;
-+		struct object_id oid;
-+	} stages[3];
-+	char *key;
-+	char submodule_token[5];
-+	char unmerged_prefix = 'u';
-+	char eol_char = s->null_termination ? '\0' : '\n';
++    <x> <path>
 +
-+	wt_porcelain_v2_submodule_state(d, submodule_token);
++Where <x> is "?" for untracked entries and "!" for ignored entries.
 +
-+	switch (d->stagemask) {
-+	case 1: key = "DD"; break; /* both deleted */
-+	case 2: key = "AU"; break; /* added by us */
-+	case 3: key = "UD"; break; /* deleted by them */
-+	case 4: key = "UA"; break; /* added by them */
-+	case 5: key = "DU"; break; /* deleted by us */
-+	case 6: key = "AA"; break; /* both added */
-+	case 7: key = "UU"; break; /* both modified */
-+	}
++When the `-z` option is given, a NUL (zero) byte follows each pathname;
++serving as both a separator and line termination. No pathname quoting
++or backslash escaping is performed. All fields are output in the same
++order.
 +
-+	/*
-+	 * Disregard d.aux.porcelain_v2 data that we accumulated
-+	 * for the head and index columns during the scans and
-+	 * replace with the actual stage data.
-+	 *
-+	 * Note that this is a last-one-wins for each the individual
-+	 * stage [123] columns in the event of multiple cache rows
-+	 * for a stage.
-+	 */
-+	memset(stages, 0, sizeof(stages));
-+	sum = 0;
-+	pos = cache_name_pos(it->string, strlen(it->string));
-+	assert(pos < 0);
-+	pos = -pos-1;
-+	while (pos < active_nr) {
-+		ce = active_cache[pos++];
-+		stage = ce_stage(ce);
-+		if (strcmp(ce->name, it->string) || !stage)
-+			break;
-+		stages[stage - 1].mode = ce->ce_mode;
-+		hashcpy(stages[stage - 1].oid.hash, ce->sha1);
-+		sum++;
-+	}
-+	if (!sum)
-+		die("BUG: unmerged entry without any stages");
-+
-+	if (s->null_termination)
-+		path_current = it->string;
-+	else
-+		path_current = quote_path(it->string, s->prefix, &buf_current);
-+
-+	fprintf(s->fp, "%c %s %s %06o %06o %06o %06o %s %s %s %s%c",
-+			unmerged_prefix, key, submodule_token,
-+			stages[0].mode, /* stage 1 */
-+			stages[1].mode, /* stage 2 */
-+			stages[2].mode, /* stage 3 */
-+			d->aux.porcelain_v2.mode_worktree,
-+			oid_to_hex(&stages[0].oid), /* stage 1 */
-+			oid_to_hex(&stages[1].oid), /* stage 2 */
-+			oid_to_hex(&stages[2].oid), /* stage 3 */
-+			path_current,
-+			eol_char);
-+
-+	strbuf_release(&buf_current);
-+}
-+
-+/*
-+ * Print porcelain V2 status info for untracked and ignored entries.
-+ */
-+static void wt_porcelain_v2_print_other(
-+	struct string_list_item *it,
-+	struct wt_status *s,
-+	char prefix)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	const char *path;
-+	char eol_char;
-+
-+	if (s->null_termination) {
-+		path = it->string;
-+		eol_char = '\0';
-+	} else {
-+		path = quote_path(it->string, s->prefix, &buf);
-+		eol_char = '\n';
-+	}
-+
-+	fprintf(s->fp, "%c %s%c", prefix, path, eol_char);
-+
-+	strbuf_release(&buf);
-+}
-+
-+/*
-+ * Print porcelain V2 status.
-+ *
-+ * [<v2_changed_items>]*
-+ * [<v2_unmerged_items>]*
-+ * [<v2_untracked_items>]*
-+ * [<v2_ignored_items>]*
-+ *
-+ */
-+void wt_porcelain_v2_print(struct wt_status *s)
-+{
-+	struct wt_status_change_data *d;
-+	struct string_list_item *it;
-+	int i;
-+
-+	for (i = 0; i < s->change.nr; i++) {
-+		it = &(s->change.items[i]);
-+		d = it->util;
-+		if (!d->stagemask)
-+			wt_porcelain_v2_print_changed_entry(it, s);
-+	}
-+
-+	for (i = 0; i < s->change.nr; i++) {
-+		it = &(s->change.items[i]);
-+		d = it->util;
-+		if (d->stagemask)
-+			wt_porcelain_v2_print_unmerged_entry(it, s);
-+	}
-+
-+	for (i = 0; i < s->untracked.nr; i++) {
-+		it = &(s->untracked.items[i]);
-+		wt_porcelain_v2_print_other(it, s, '?');
-+	}
-+
-+	for (i = 0; i < s->ignored.nr; i++) {
-+		it = &(s->ignored.items[i]);
-+		wt_porcelain_v2_print_other(it, s, '!');
-+	}
-+}
+ CONFIGURATION
+ -------------
+ 
 -- 
 2.8.0.rc4.17.gac42084.dirty
 
