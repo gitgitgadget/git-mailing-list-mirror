@@ -6,27 +6,27 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9F69203E2
-	for <e@80x24.org>; Mon, 25 Jul 2016 19:29:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC0DD203E2
+	for <e@80x24.org>; Mon, 25 Jul 2016 19:29:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752914AbcGYT27 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 25 Jul 2016 15:28:59 -0400
-Received: from siwi.pair.com ([209.68.5.199]:27502 "EHLO siwi.pair.com"
+	id S1752882AbcGYT26 (ORCPT <rfc822;e@80x24.org>);
+	Mon, 25 Jul 2016 15:28:58 -0400
+Received: from siwi.pair.com ([209.68.5.199]:27479 "EHLO siwi.pair.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752867AbcGYT25 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2016 15:28:57 -0400
+	id S1752839AbcGYT2y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2016 15:28:54 -0400
 Received: from jeffhost-linux1.corp.microsoft.com (unknown [167.220.24.246])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by siwi.pair.com (Postfix) with ESMTPSA id 2A13F8460E;
-	Mon, 25 Jul 2016 15:28:55 -0400 (EDT)
+	by siwi.pair.com (Postfix) with ESMTPSA id 0BD4E84609;
+	Mon, 25 Jul 2016 15:28:51 -0400 (EDT)
 From:	Jeff Hostetler <jeffhost@microsoft.com>
 To:	git@vger.kernel.org
 Cc:	git@jeffhostetler.com, peff@peff.net, gitster@pobox.com,
 	jeffhost@microsoft.com, Johannes.Schindelin@gmx.de
-Subject: [PATCH v2 6/8] status: print branch info with --porcelain=v2 --branch
-Date:	Mon, 25 Jul 2016 15:25:48 -0400
-Message-Id: <1469474750-49075-7-git-send-email-jeffhost@microsoft.com>
+Subject: [PATCH v2 4/8] status: per-file data collection for --porcelain=v2
+Date:	Mon, 25 Jul 2016 15:25:46 -0400
+Message-Id: <1469474750-49075-5-git-send-email-jeffhost@microsoft.com>
 X-Mailer: git-send-email 2.8.0.rc4.17.gac42084.dirty
 In-Reply-To: <1469474750-49075-1-git-send-email-jeffhost@microsoft.com>
 References: <1469474750-49075-1-git-send-email-jeffhost@microsoft.com>
@@ -35,163 +35,237 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Expand porcelain v2 output to include branch and tracking
-branch information.  This includes the commit SHA, the branch,
-the upstream branch, and the ahead and behind counts.
+The output of `git status --porcelain` leaves out many details
+about the current status that clients might like to have. This
+can force them to be less efficient as they may need to launch
+secondary commands (and try to match the logic within git) to
+accumulate this extra information.  For example, a GUI IDE might
+need the file mode to display the correct icon for a changed item.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/commit.c |  5 ++++
- wt-status.c      | 86 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- wt-status.h      |  1 +
- 3 files changed, 92 insertions(+)
+ builtin/commit.c |   3 ++
+ wt-status.c      | 114 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ wt-status.h      |  17 +++++++++
+ 3 files changed, 133 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/commit.c b/builtin/commit.c
-index 5b9efd2..ebb43dd 100644
+index e6bbb12..5b9efd2 100644
 --- a/builtin/commit.c
 +++ b/builtin/commit.c
-@@ -510,6 +510,8 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix, int
- 	s->fp = fp;
- 	s->nowarn = nowarn;
- 	s->is_initial = get_sha1(s->reference, sha1) ? 1 : 0;
-+	if (!s->is_initial)
-+		hashcpy(s->sha1_commit, sha1);
- 	s->status_format = status_format;
- 	s->ignore_submodule_arg = ignore_submodule_arg;
+@@ -153,6 +153,8 @@ static int opt_parse_porcelain(const struct option *opt, const char *arg, int un
+ 		*value = STATUS_FORMAT_PORCELAIN;
+ 	else if (!strcmp(arg, "v1"))
+ 		*value = STATUS_FORMAT_PORCELAIN;
++	else if (!strcmp(arg, "v2"))
++		*value = STATUS_FORMAT_PORCELAIN_V2;
+ 	else
+ 		die("unsupported porcelain version");
  
-@@ -1378,6 +1380,9 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 	fd = hold_locked_index(&index_lock, 0);
+@@ -1104,6 +1106,7 @@ static struct status_deferred_config {
+ static void finalize_deferred_config(struct wt_status *s)
+ {
+ 	int use_deferred_config = (status_format != STATUS_FORMAT_PORCELAIN &&
++				   status_format != STATUS_FORMAT_PORCELAIN_V2 &&
+ 				   !s->null_termination);
  
- 	s.is_initial = get_sha1(s.reference, sha1) ? 1 : 0;
-+	if (!s.is_initial)
-+		hashcpy(s.sha1_commit, sha1);
-+
- 	s.ignore_submodule_arg = ignore_submodule_arg;
- 	s.status_format = status_format;
- 	s.verbose = verbose;
+ 	if (s->null_termination) {
 diff --git a/wt-status.c b/wt-status.c
-index ffdfe11..39eef4b 100644
+index a9031e4..54aedc1 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -1889,6 +1889,88 @@ void wt_status_print(struct wt_status *s)
+@@ -406,6 +406,110 @@ static void wt_longstatus_print_change_data(struct wt_status *s,
+ 	strbuf_release(&twobuf);
  }
  
- /*
-+ * Print branch and tracking header for porcelain v2 output.
-+ * This is printed when the '--branch' parameter is given.
-+ *
-+ *    "## branch: <commit> <head>[ <upstream>[ +<ahead> -<behind>]]<eol>"
-+ *
-+ *              <commit> ::= the current commit hash or the the literal
-+ *                           "(initial)" to indicate an initialized repo
-+ *                           with no commits.
-+ *
-+ *                <head> ::= <branch_name> the current branch name or
-+ *                           "(detached)" literal when detached head or
-+ *                           "(unknown)" when something is wrong.
-+ *
-+ *            <upstream> ::= the upstream branch name, when set.
-+ *
-+ *               <ahead> ::= integer ahead value, when upstream set
-+ *                           and commit is present.
-+ *
-+ *              <behind> ::= integer behind value, when upstream set
-+ *                           and commit is present.
-+ *
-+ *
-+ * The end-of-line is defined by the -z flag.
-+ *
-+ *                 <eol> ::= NUL when -z,
-+ *                           LF when NOT -z.
-+ *
-+ */
-+static void wt_porcelain_v2_print_tracking(struct wt_status *s)
++static void aux_updated_entry_porcelain_v2(
++	struct wt_status *s,
++	struct wt_status_change_data *d,
++	struct diff_filepair *p)
 +{
-+	struct branch *branch;
-+	const char *base;
-+	const char *branch_name;
-+	struct wt_status_state state;
-+	int ab_info, nr_ahead, nr_behind;
++	switch (p->status) {
++	case DIFF_STATUS_ADDED:
++		/* {mode,sha1}_head are zero for an add. */
++		d->aux.porcelain_v2.mode_index = p->two->mode;
++		oidcpy(&d->aux.porcelain_v2.oid_index, &p->two->oid);
++		break;
 +
-+	memset(&state, 0, sizeof(state));
-+	wt_status_get_state(&state, s->branch && !strcmp(s->branch, "HEAD"));
++	case DIFF_STATUS_DELETED:
++		d->aux.porcelain_v2.mode_head = p->one->mode;
++		oidcpy(&d->aux.porcelain_v2.oid_head, &p->one->oid);
++		/* {mode,oid}_index are zero for a delete. */
++		break;
 +
-+	fprintf(s->fp, "## branch:");
-+	fprintf(s->fp, " %s",
-+		(s->is_initial ? "(initial)" : sha1_to_hex(s->sha1_commit)));
++	case DIFF_STATUS_RENAMED:
++		d->aux.porcelain_v2.rename_score = p->score * 100 / MAX_SCORE;
++	case DIFF_STATUS_COPIED:
++	case DIFF_STATUS_MODIFIED:
++	case DIFF_STATUS_TYPE_CHANGED:
++	case DIFF_STATUS_UNMERGED:
++		d->aux.porcelain_v2.mode_head = p->one->mode;
++		d->aux.porcelain_v2.mode_index = p->two->mode;
++		oidcpy(&d->aux.porcelain_v2.oid_head, &p->one->oid);
++		oidcpy(&d->aux.porcelain_v2.oid_index, &p->two->oid);
++		break;
 +
-+	if (!s->branch)
-+		fprintf(s->fp, " %s", "(unknown)");
-+	else {
-+		if (!strcmp(s->branch, "HEAD")) {
-+			fprintf(s->fp, " %s", "(detached)");
-+			if (state.rebase_in_progress || state.rebase_interactive_in_progress)
-+				branch_name = state.onto;
-+			else if (state.detached_from)
-+				branch_name = state.detached_from;
-+			else
-+				branch_name = "";
-+		} else {
-+			branch_name = NULL;
-+			skip_prefix(s->branch, "refs/heads/", &branch_name);
-+			fprintf(s->fp, " %s", branch_name);
-+		}
-+
-+		/* Lookup stats on the upstream tracking branch, if set. */
-+		branch = branch_get(branch_name);
-+		base = NULL;
-+		ab_info = (stat_tracking_info(branch, &nr_ahead, &nr_behind, &base) == 0);
-+		if (base) {
-+			base = shorten_unambiguous_ref(base, 0);
-+			fprintf(s->fp, " %s", base);
-+			free((char *)base);
-+
-+			if (ab_info)
-+				fprintf(s->fp, " +%d -%d", nr_ahead, nr_behind);
-+		}
++	case DIFF_STATUS_UNKNOWN:
++		die("BUG: index status unknown");
++		break;
 +	}
-+
-+	fprintf(s->fp, "%c", (s->null_termination ? '\0' : '\n'));
-+
-+	free(state.branch);
-+	free(state.onto);
-+	free(state.detached_from);
 +}
 +
-+/*
-  * Convert various submodule status values into a
-  * string of characters in the buffer provided.
-  */
-@@ -2132,6 +2214,7 @@ static void wt_porcelain_v2_print_other(
- /*
-  * Print porcelain V2 status.
-  *
-+ * [<v2_branch>]
-  * [<v2_changed_items>]*
-  * [<v2_unmerged_items>]*
-  * [<v2_untracked_items>]*
-@@ -2144,6 +2227,9 @@ void wt_porcelain_v2_print(struct wt_status *s)
- 	struct string_list_item *it;
- 	int i;
- 
-+	if (s->show_branch)
-+		wt_porcelain_v2_print_tracking(s);
++/* Save aux info for a head-vs-index change. */
++static void aux_updated_entry(
++	struct wt_status *s,
++	struct wt_status_change_data *d,
++	struct diff_filepair *p)
++{
++	if (s->status_format == STATUS_FORMAT_PORCELAIN_V2)
++		aux_updated_entry_porcelain_v2(s, d, p);
++}
 +
- 	for (i = 0; i < s->change.nr; i++) {
- 		it = &(s->change.items[i]);
- 		d = it->util;
++static void aux_changed_entry_porcelain_v2(
++	struct wt_status *s,
++	struct wt_status_change_data *d,
++	const struct diff_filepair *p)
++{
++	switch (p->status) {
++	case DIFF_STATUS_ADDED:
++		die("BUG: worktree status add???");
++		break;
++
++	case DIFF_STATUS_DELETED:
++		d->aux.porcelain_v2.mode_index = p->one->mode;
++		oidcpy(&d->aux.porcelain_v2.oid_index, &p->one->oid);
++		/* mode_worktree is zero for a delete. */
++		break;
++
++	case DIFF_STATUS_MODIFIED:
++	case DIFF_STATUS_TYPE_CHANGED:
++	case DIFF_STATUS_UNMERGED:
++		d->aux.porcelain_v2.mode_index = p->one->mode;
++		d->aux.porcelain_v2.mode_worktree = p->two->mode;
++		oidcpy(&d->aux.porcelain_v2.oid_index, &p->one->oid);
++		break;
++
++	case DIFF_STATUS_UNKNOWN:
++		die("BUG: worktree status unknown???");
++		break;
++	}
++}
++
++/* Save aux info for an index-vs-worktree change. */
++static void aux_changed_entry(
++	struct wt_status *s,
++	struct wt_status_change_data *d,
++	struct diff_filepair *p)
++{
++	if (s->status_format == STATUS_FORMAT_PORCELAIN_V2)
++		aux_changed_entry_porcelain_v2(s, d, p);
++}
++
++static void aux_initial_entry_porcelain_v2(
++	struct wt_status *s,
++	struct wt_status_change_data *d,
++	const struct cache_entry *ce)
++{
++	d->aux.porcelain_v2.mode_index = ce->ce_mode;
++	hashcpy(d->aux.porcelain_v2.oid_index.hash, ce->sha1);
++}
++
++static void aux_initial_entry(
++	struct wt_status *s,
++	struct wt_status_change_data *d,
++	const struct cache_entry *ce)
++{
++	if (s->status_format == STATUS_FORMAT_PORCELAIN_V2)
++		aux_initial_entry_porcelain_v2(s, d, ce);
++}
++
+ static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
+ 					 struct diff_options *options,
+ 					 void *data)
+@@ -434,6 +538,7 @@ static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
+ 		if (S_ISGITLINK(p->two->mode))
+ 			d->new_submodule_commits = !!oidcmp(&p->one->oid,
+ 							    &p->two->oid);
++		aux_changed_entry(s, d, p);
+ 	}
+ }
+ 
+@@ -487,6 +592,8 @@ static void wt_status_collect_updated_cb(struct diff_queue_struct *q,
+ 			d->stagemask = unmerged_mask(p->two->path);
+ 			break;
+ 		}
++
++		aux_updated_entry(s, d, p);
+ 	}
+ }
+ 
+@@ -566,8 +673,10 @@ static void wt_status_collect_changes_initial(struct wt_status *s)
+ 			d->index_status = DIFF_STATUS_UNMERGED;
+ 			d->stagemask |= (1 << (ce_stage(ce) - 1));
+ 		}
+-		else
++		else {
+ 			d->index_status = DIFF_STATUS_ADDED;
++			aux_initial_entry(s, d, ce);
++		}
+ 	}
+ }
+ 
+@@ -1764,6 +1873,9 @@ void wt_status_print(struct wt_status *s)
+ 	case STATUS_FORMAT_PORCELAIN:
+ 		wt_porcelain_print(s);
+ 		break;
++	case STATUS_FORMAT_PORCELAIN_V2:
++		/* TODO */
++		break;
+ 	case STATUS_FORMAT_UNSPECIFIED:
+ 		die("BUG: finalize_deferred_config() should have been called");
+ 		break;
 diff --git a/wt-status.h b/wt-status.h
-index f2cb65d..99f2879 100644
+index a859a12..f2cb65d 100644
 --- a/wt-status.h
 +++ b/wt-status.h
-@@ -93,6 +93,7 @@ struct wt_status {
- 	int hints;
+@@ -34,6 +34,21 @@ enum commit_whence {
+ 	FROM_CHERRY_PICK /* commit came from cherry-pick */
+ };
  
- 	enum wt_status_format status_format;
-+	unsigned char sha1_commit[GIT_SHA1_RAWSZ]; /* when not Initial */
++/*
++ * Additional per-file info which may vary based
++ * upon the chosen format.
++ */
++struct wt_status_aux_change_data {
++	struct {
++		int rename_score;
++		int mode_head;
++		int mode_index;
++		int mode_worktree;
++		struct object_id oid_head;
++		struct object_id oid_index;
++	} porcelain_v2;
++};
++
+ struct wt_status_change_data {
+ 	int worktree_status;
+ 	int index_status;
+@@ -41,6 +56,7 @@ struct wt_status_change_data {
+ 	char *head_path;
+ 	unsigned dirty_submodule       : 2;
+ 	unsigned new_submodule_commits : 1;
++	struct wt_status_aux_change_data aux;
+ };
  
- 	/* These are computed during processing of the individual sections */
- 	int commitable;
+  enum wt_status_format {
+@@ -48,6 +64,7 @@ struct wt_status_change_data {
+ 	STATUS_FORMAT_LONG,
+ 	STATUS_FORMAT_SHORT,
+ 	STATUS_FORMAT_PORCELAIN,
++	STATUS_FORMAT_PORCELAIN_V2,
+ 
+ 	STATUS_FORMAT_UNSPECIFIED
+  };
 -- 
 2.8.0.rc4.17.gac42084.dirty
 
