@@ -2,80 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD,URIBL_RED shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FAD7203E2
-	for <e@80x24.org>; Mon, 25 Jul 2016 17:28:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 18B84203E2
+	for <e@80x24.org>; Mon, 25 Jul 2016 17:33:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753407AbcGYR2Y (ORCPT <rfc822;e@80x24.org>);
-	Mon, 25 Jul 2016 13:28:24 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:36427 "EHLO
-	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753384AbcGYR2W (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2016 13:28:22 -0400
-Received: by mail-wm0-f49.google.com with SMTP id q128so143561483wma.1
-        for <git@vger.kernel.org>; Mon, 25 Jul 2016 10:28:22 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=4mBRm8+Dh1y7U+aT6We3+sGqE+yhKfIfuG1x5QWbf+k=;
-        b=yJLYNFlKPo5klmFsk232MpOixG9Vx02pzpVA+gCsT26jBGP9KcFqu9Yb2YXdGGQ7nm
-         M23MHrNQz+irB3j5kyeZYPJLC90+FHBh4e4N3ga9gVwdJdvZxDkn+FD4x1PUu5QbZRX1
-         WpZVoIgLLC1QrXxNftojl9EsqOFGevTVG2Jpy3PO/d1ARGsmKZsxyml+olMKlI9Z/YP0
-         NlGrYeGS9UMSk4mV7Pw9v1GYcwRhkgp2PmVOplQJXef+LwVx6k1yGsmICQdA+zcQP8In
-         dZyAeZODsnDVvX6KqQovg/pDnQ/Dxq4abiPKSE+PIzKgsbIrOR/2CcCKdNY5akmnuIRi
-         818g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding;
-        bh=4mBRm8+Dh1y7U+aT6We3+sGqE+yhKfIfuG1x5QWbf+k=;
-        b=aaBIYpf/9WZRxYcwRXKZHAVGAptfZb0YTGZovi5INQkqUjPz90wpeQc8lkxxs0on14
-         1sWtgmklsHkfQiZy+pBg9nMbzRl1YGeBr2DZkBkDPSTM24wVEOxUMkwKAPZ6UP182+8k
-         tu6h2z075tgyzu5djf/+rdH4eE0ovAxzZrqoL3AXnjkB5FEZMa/54/OVrBwvdA9ejuE6
-         Z4gVN9dJyn27dykbg2JY2US9TAyAgDIOq5lLChmQDSSmTT4LDZpJH1zrtwt5+UJOJxRI
-         cuJghVv9ysSP2w5qggLTMjp1UFU21UQALv54CeRjEBrj91NZ9vJ5N/8Xi0LplLgGKnw1
-         bf5g==
-X-Gm-Message-State: AEkoouviO6diVJHUu+7Yh48kvldizLfdc467kvmh29OSq9zLIhfbTaqZLOtbYZT8urpDuw==
-X-Received: by 10.194.238.170 with SMTP id vl10mr16737271wjc.18.1469467701453;
-        Mon, 25 Jul 2016 10:28:21 -0700 (PDT)
-Received: from [192.168.1.26] (dax80.neoplus.adsl.tpnet.pl. [83.23.23.80])
-        by smtp.googlemail.com with ESMTPSA id p83sm28451710wma.18.2016.07.25.10.28.20
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Jul 2016 10:28:20 -0700 (PDT)
-Subject: Re: Bug: "git log --format='format:%+s%+b'" doesn't insert newline
- before body
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Ilya Tumaykin <itumaykin@gmail.com>
-References: <8915446.47C9zkNvuX@photon>
- <alpine.DEB.2.20.1607250926320.14111@virtualbox>
-Cc:	git@vger.kernel.org
-Newsgroups: gmane.comp.version-control.git
-From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <57964C29.9000902@gmail.com>
-Date:	Mon, 25 Jul 2016 19:28:09 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
+	id S1753303AbcGYRdj (ORCPT <rfc822;e@80x24.org>);
+	Mon, 25 Jul 2016 13:33:39 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57118 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752488AbcGYRdg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2016 13:33:36 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 468D230E2E;
+	Mon, 25 Jul 2016 13:33:35 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mqiytBd60iurDTysrUOZ/mRRpXE=; b=xyu6pa
+	zjvdX8sHQjTdLte2IbAR5Sf72wQ6PO8UkQVBQX3R/iNgXnrgoxkNa2NQrFQeeWoT
+	Y4QSq9Of+8tPWLHYw2qAzHr4zhN1O6Sk69NCMWYXl+nS2A0JBsqkEpbuYRBBIJGJ
+	7n7cl9Q04DfludC5GROOEGKEz3Rq/NJkHhK8o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KHnC9ATvfSJtGOzO+QrPwJkXRERaxoGr
+	da7sBOuIYY+G3iwWTWd9hMB7QE/VdT2y2LdoPzjfMAMQMypl0UoA3ARcBndNHrJ3
+	YR1WW32QeLBA0QCoi6SLwXolOKn3eGqwiBF1u+lkz4DR9f8cmcU0lFtVKjLQJuoO
+	qTOB6/kjzvw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E83F30E2D;
+	Mon, 25 Jul 2016 13:33:35 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A26CE30E2B;
+	Mon, 25 Jul 2016 13:33:34 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Eric Wong <e@80x24.org>
+Cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] format-patch: escape "From " lines recognized by mailsplit
+References: <20160722224739.GA22961@whir>
+	<xmqqk2gb8q81.fsf@gitster.mtv.corp.google.com>
+	<xmqqd1m3825y.fsf@gitster.mtv.corp.google.com>
+	<20160725084357.GA8025@starla>
+Date:	Mon, 25 Jul 2016 10:33:32 -0700
+In-Reply-To: <20160725084357.GA8025@starla> (Eric Wong's message of "Mon, 25
+	Jul 2016 08:43:57 +0000")
+Message-ID: <xmqqzip562s3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1607250926320.14111@virtualbox>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: E9BDC67E-528D-11E6-A813-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-W dniu 2016-07-25 o 09:33, Johannes Schindelin pisze:
+Eric Wong <e@80x24.org> writes:
 
-> Therefore "%s%n%+b" *might* do what you intended (I would not
-> know, because that information was missing from the report).
+>> Also, doesn't it break "git rebase" (non-interactive), or anything
+>> that internally runs format-patch to individual files and then runs
+>> am on each of them, anything that knows that each output file from
+>> format-patch corresponds to a single change and there is no need to
+>> split, badly if we do this unconditionally?
+>
+> Yes, rebase should probably unescape is_from_line matches.
 
-Shouldn't it be "%s%n%n%-b" or "%s%n%-b"?
+This shouldn't matter for "git rebase", as it only reads from the
+mbox "From <commit object name> <datestamp>" line to learn the
+original commit and extract the log message directly from there.
 
--- 
-Jakub Narębski
+But a third-party script that wants to read format-patch output
+would be forced to upgrade, which is a pain if we make this change
+unconditionally.
+
+>> IOW, shouldn't this be an optional feature to format-patch that
+>> is triggered by passing a new command line option that currently
+>> nobody is passing?
