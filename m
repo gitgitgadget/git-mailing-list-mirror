@@ -2,115 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15091203E2
-	for <e@80x24.org>; Mon, 25 Jul 2016 20:14:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7763203E2
+	for <e@80x24.org>; Mon, 25 Jul 2016 20:16:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752899AbcGYUOg (ORCPT <rfc822;e@80x24.org>);
-	Mon, 25 Jul 2016 16:14:36 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61796 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752487AbcGYUOe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2016 16:14:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 074CC3149B;
-	Mon, 25 Jul 2016 16:14:33 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/LysXxyY+I9wQ6avrr66OhQfr5g=; b=sTPWs6
-	+/fU21MQHf8K9wdQ1PG+cbcyr4KqecfHtEmD+ooAeqOqj94Y+n2vHGLPSguDzTnl
-	zR/POBq5FSZwsUTKB6P6UbVAWo+lVKySWS6CETJy5xrzNlCRBVn96V7UXfLf52Eu
-	MC6EVVUnQRkTi7eVMNaT48yFxaGkkiPX3BNFg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pP86hX+0MutEGlVEtw9aGPc1GMHZlBfZ
-	TWIwqzMOKzPli8UMpHMUc8Sw/qPkUeRoZSt7rzNSARtjtVW+sh6lyeipLukopl0C
-	ic8kmcNoNe1ClTLsKqKx+PyW2bg2UmTsNBXL7PLu+ny31s9DaFHJGj2ymdrukMzk
-	EP/LmB9+Pak=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id F320D3149A;
-	Mon, 25 Jul 2016 16:14:32 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7962B31499;
-	Mon, 25 Jul 2016 16:14:32 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff Hostetler <jeffhost@microsoft.com>
-Cc:	git@vger.kernel.org, git@jeffhostetler.com, peff@peff.net,
-	Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v2 4/8] status: per-file data collection for --porcelain=v2
-References: <1469474750-49075-1-git-send-email-jeffhost@microsoft.com>
-	<1469474750-49075-5-git-send-email-jeffhost@microsoft.com>
-Date:	Mon, 25 Jul 2016 13:14:30 -0700
-In-Reply-To: <1469474750-49075-5-git-send-email-jeffhost@microsoft.com> (Jeff
-	Hostetler's message of "Mon, 25 Jul 2016 15:25:46 -0400")
-Message-ID: <xmqq1t2h5vbt.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 664214E6-52A4-11E6-B931-89D312518317-77302942!pb-smtp1.pobox.com
+	id S1752999AbcGYUQ2 (ORCPT <rfc822;e@80x24.org>);
+	Mon, 25 Jul 2016 16:16:28 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34859 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752265AbcGYUQS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Jul 2016 16:16:18 -0400
+Received: by mail-wm0-f68.google.com with SMTP id i5so18293023wmg.2
+        for <git@vger.kernel.org>; Mon, 25 Jul 2016 13:16:17 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=rj439lCy68xYe8QKkNfQqTWhdpljKh7sLFQMmDlUDyU=;
+        b=PTdygUbUTN+QEfIYRXo4SPZr7VmUBRaRljm/ORow8KAQvB/DoADOelz5bOuOdVoS10
+         94+tUkDyxNF3Lvca19ULNVFssw3HkZ4RFPzeq1HI91Q+J0yjPWIpYxDtYsuck8q6i7Qk
+         J6F6s910Mt8XFBgHMVyOXSt5T9goUbqWILPUfON0a9wsaB+0PidCEMJonL25OTQv7bxW
+         KzyXMM4G3PjkSO6jlnsMbMmniU9QyjdkTxugpns6vrWyzSWsmkM98rYvcvxOq0rlntY1
+         hqWVJYpNaFaMcFtvOTI6Ir+TnK9qd2voLFiQ1vy20FFkcvfUPBupIc9Wwx65zD0nv0e9
+         3mJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=rj439lCy68xYe8QKkNfQqTWhdpljKh7sLFQMmDlUDyU=;
+        b=YUNDMhuQfRJNxSyjOYs+9Am5xZHJSfewY+1cPRvfqOeDdIf2jQZkqe67mUCQvYon1R
+         fCQA8S4tg7yJjArmrWCLSQGkYLjeBNye7osg+6Xns3WJQZQr5BZqK6PlodL4SlYXr3d3
+         JxWzzdAI/V+HI+bCtGTGehhL8nMvbun7/kXFIKDVpZdxcH1ziShMTTEpxYOMh+rkmxro
+         0xuuGIcoK711FcsAddkwGRaGaBnIHehbsR1sx/Bppp/Z/0O6Jm74Ox8da48MuNOvt12f
+         f7AMRWtqeVwnrm4mhgRIgV3q44juFiyQMOYzGSP3KP7ieWTZSHcT8nWVFQHQZ22wWxw8
+         VRiA==
+X-Gm-Message-State: AEkoouuaLU/90VnEQGibLqu9XEW6uI1uDhGxkJALbc6AwBVE48t/d3AOj7a5DM1PwNOGwg==
+X-Received: by 10.195.9.226 with SMTP id dv2mr16710276wjd.180.1469477776999;
+        Mon, 25 Jul 2016 13:16:16 -0700 (PDT)
+Received: from slxbook3.fritz.box (p5DDB7A6F.dip0.t-ipconnect.de. [93.219.122.111])
+        by smtp.gmail.com with ESMTPSA id b186sm29106596wmg.23.2016.07.25.13.16.15
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 25 Jul 2016 13:16:16 -0700 (PDT)
+Content-Type: text/plain; charset=iso-8859-2
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Subject: Re: [PATCH v1 3/3] convert: add filter.<driver>.useProtocol option
+From:	Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <5795337A.1040701@gmail.com>
+Date:	Mon, 25 Jul 2016 22:16:14 +0200
+Cc:	Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	=?iso-8859-2?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	mlbright@gmail.com, Junio C Hamano <gitster@pobox.com>,
+	Eric Wong <e@80x24.org>
+Content-Transfer-Encoding: 8BIT
+Message-Id: <34F8B256-A129-4238-AE1A-CD8C1DE8C7DA@gmail.com>
+References: <20160722154900.19477-1-larsxschneider@gmail.com> <20160722154900.19477-4-larsxschneider@gmail.com> <5792B622.5040306@gmail.com> <0FB8A921-3465-4081-A36D-D2F19A8ED63D@gmail.com> <579521A1.4070501@gmail.com> <5795337A.1040701@gmail.com>
+To:	=?iso-8859-2?Q?Jakub_Nar=EAbski?= <jnareb@gmail.com>
+X-Mailer: Apple Mail (2.1878.6)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff Hostetler <jeffhost@microsoft.com> writes:
 
-> +static void aux_updated_entry_porcelain_v2(
-> +	struct wt_status *s,
-> +	struct wt_status_change_data *d,
-> +	struct diff_filepair *p)
-> +{
-> +	switch (p->status) {
-> +	case DIFF_STATUS_ADDED:
-> +		/* {mode,sha1}_head are zero for an add. */
-> +		d->aux.porcelain_v2.mode_index = p->two->mode;
+On 24 Jul 2016, at 23:30, Jakub Narêbski <jnareb@gmail.com> wrote:
 
-I doubt that it makes sense in the longer term to have a new "aux"
-field.  Why isn't it part of the wt_status_change_data structure?
-For that matter, why should these new functions have both "aux" and
-"v2" in their names?
+> W dniu 2016-07-24 o 22:14, Jakub Narêbski pisze:
+>> W dniu 2016-07-24 o 20:36, Lars Schneider pisze:
+> 
+>>> I agree that the name is not ideal. "UseProtocol" as it is would be a boolean. 
+>>> I thought about "persistent" but this name wouldn't convey the scope of the 
+>>> persistency ("persistent for one Git operation" vs. "persistent for many Git 
+>>> operations"). What do you think about the protocol as int version idea
+>>> described in $gmane/300155 ?
+>> 
+>> You mean the `protocol` as a config variable name (fully name being
+>> `filter.<driver>.protocol`), being integer-valued, isn't it? Wouldn't
+>> `protocolVersion` be a more explicit?
+> 
+> Just throwing out further ideas:
+> 
+> Perhaps make `persistent` string-valued variable, with the only value
+> supported for now, namely "per-process" / "operation"?
+> 
+> Perhaps require for `pidfile` to be present for it to be daemon,
+> that is persist for possibly many Git operations. Or allow "daemon"
+> or "server" value for `persistent`, then?
 
-Imagine what should happen when somebody wants to add --porcelain=v3
-format in 6 months.  Why must "v3" be treated differently from "v1"
-and in a way close to "v2"?  Why shouldn't all the three be treated
-in a similar way that "v1" has already?
+I like the direction of this idea. What if we use a string-valued 
+"filter.<driver>.protocol" with the following options:
 
-> +		oidcpy(&d->aux.porcelain_v2.oid_index, &p->two->oid);
-> +		break;
-> +
-> +	case DIFF_STATUS_DELETED:
-> +		d->aux.porcelain_v2.mode_head = p->one->mode;
-> +		oidcpy(&d->aux.porcelain_v2.oid_head, &p->one->oid);
-> +		/* {mode,oid}_index are zero for a delete. */
-> +		break;
-> +
-> +	case DIFF_STATUS_RENAMED:
-> +		d->aux.porcelain_v2.rename_score = p->score * 100 / MAX_SCORE;
+"simple" / "invocation-per-file" / << empty >> --> current clean/smudge behavior
+"invocation-per-process" --> new, proposed behavior
 
-I have a slight aversion against losing the precision in a helper
-function like this that does not do the actual output, but it
-probably is OK.
+If necessary this could be enhanced in the future to support even a "daemon"
+mode (with a pidfile config).
 
-Don't we have copy detection score that is computed exactly the same
-way for DIFF_STATUS_COPIED case, too?
+Thanks,
+Lars
 
-For readability, unless a case arm is completely empty, we should
-have
-		/* fallthru */
-
-comment where "break;" would go for a normal case arm.
-
-> +	case DIFF_STATUS_COPIED:
-> +	case DIFF_STATUS_MODIFIED:
-> +	case DIFF_STATUS_TYPE_CHANGED:
-> +	case DIFF_STATUS_UNMERGED:
-> +		d->aux.porcelain_v2.mode_head = p->one->mode;
-> +		d->aux.porcelain_v2.mode_index = p->two->mode;
-> +		oidcpy(&d->aux.porcelain_v2.oid_head, &p->one->oid);
-> +		oidcpy(&d->aux.porcelain_v2.oid_index, &p->two->oid);
-> +		break;
