@@ -2,94 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4ABF5203E2
-	for <e@80x24.org>; Mon, 25 Jul 2016 18:53:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09770203E2
+	for <e@80x24.org>; Mon, 25 Jul 2016 19:28:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753342AbcGYSxS (ORCPT <rfc822;e@80x24.org>);
-	Mon, 25 Jul 2016 14:53:18 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48747 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752867AbcGYSxQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2016 14:53:16 -0400
-Received: (qmail 9964 invoked by uid 102); 25 Jul 2016 18:53:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 25 Jul 2016 14:53:16 -0400
-Received: (qmail 27523 invoked by uid 107); 25 Jul 2016 18:53:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 25 Jul 2016 14:53:41 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Jul 2016 14:53:13 -0400
-Date:	Mon, 25 Jul 2016 14:53:13 -0400
-From:	Jeff King <peff@peff.net>
-To:	Kirill Smelkov <kirr@nexedi.com>
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?Q?J=C3=A9rome?= Perrin <jerome@nexedi.com>,
-	Isabelle Vallet <isabelle.vallet@nexedi.com>,
-	Kazuhiko Shiozaki <kazuhiko@nexedi.com>,
-	Julien Muchembled <jm@nexedi.com>, git@vger.kernel.org,
-	Vicent Marti <tanoku@gmail.com>
-Subject: Re: [PATCH] pack-objects: Use reachability bitmap index when
- generating non-stdout pack too
-Message-ID: <20160725185313.GA13007@sigill.intra.peff.net>
-References: <20160713083044.GB18144@sigill.intra.peff.net>
- <20160713082653.GA18144@sigill.intra.peff.net>
- <20160713105216.GB16000@teco.navytux.spb.ru>
- <20160725184025.GA12297@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160725184025.GA12297@sigill.intra.peff.net>
+	id S1752463AbcGYT2o (ORCPT <rfc822;e@80x24.org>);
+	Mon, 25 Jul 2016 15:28:44 -0400
+Received: from siwi.pair.com ([209.68.5.199]:44196 "EHLO siwi.pair.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752265AbcGYT2n (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2016 15:28:43 -0400
+Received: from jeffhost-linux1.corp.microsoft.com (unknown [167.220.24.246])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by siwi.pair.com (Postfix) with ESMTPSA id 21C3984607;
+	Mon, 25 Jul 2016 15:28:40 -0400 (EDT)
+From:	Jeff Hostetler <jeffhost@microsoft.com>
+To:	git@vger.kernel.org
+Cc:	git@jeffhostetler.com, peff@peff.net, gitster@pobox.com,
+	jeffhost@microsoft.com, Johannes.Schindelin@gmx.de
+Subject: [PATCH v2 0/8] status: V2 porcelain status
+Date:	Mon, 25 Jul 2016 15:25:42 -0400
+Message-Id: <1469474750-49075-1-git-send-email-jeffhost@microsoft.com>
+X-Mailer: git-send-email 2.8.0.rc4.17.gac42084.dirty
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jul 25, 2016 at 02:40:25PM -0400, Jeff King wrote:
+This patch series adds porcelain V2 format to status.
+This provides detailed information about file changes
+and about the current branch.
 
-> > @@ -1052,6 +1053,9 @@ static int add_object_entry_from_bitmap(const unsigned char *sha1,
-> >  {
-> >  	uint32_t index_pos;
-> >  
-> > +	if (local && has_loose_object_nonlocal(sha1))
-> > +		return 0;
-> > +
-> >  	if (have_duplicate_entry(sha1, 0, &index_pos))
-> >  		return 0;
-> 
-> Hrm. Adding entries from the bitmap should ideally be very fast, but
-> here we're introducing extra lookups in the object database. I guess it
-> only kicks in when --local is given, though, which most bitmap-using
-> paths would not do.
-> 
-> But is this check enough? The non-bitmap code path calls
-> want_object_in_pack, which checks not only loose objects, but also
-> non-local packs, and .keep.
-> 
-> Those don't kick in for your use case. I wonder if we should simply have
-> something like:
-> 
->   if (local || ignore_packed_keep)
-> 	use_bitmap_index = 0;
-> 
-> and just skip bitmaps for those cases. That's easy to reason about, and
-> I don't think anybody would care (your use case does not, and the repack
-> use case is already not going to use bitmaps).
+The new output is accessed via:
+    git status --porcelain=v2 [--branch]
 
-BTW, I thought we had more optimizations in this area, but I realized
-that I had never sent them to the list. I just did, and you may want to
-take a peek at:
+This patch series hopefully addresses all of the
+comments from the previous series.  The first 2
+commits move the choice of output routines into
+wt-status.c and cleanup the API from builtin/commit.c.
+The command line parameter is "v2" to make it easier
+to define other formats and/or JSON output later if
+we want.  Detail lines for ordinary changes and
+unmerged changes are now completely separate and have
+a unique prefix key (and are grouped by type).  The
+unit tests have been converted to use heredoc's.
 
-  http://thread.gmane.org/gmane.comp.version-control.git/300218
+I removed the v2 argument from git commit --porcelain
+since it didn't really fit here.
 
-I doubt it will speed up your case much (unless you really do have tons
-of packs in your extraction). And I think it is still worth doing
-disabling I showed above, even with the optimizations, just because it's
-easier to reason about.
+Jeff Hostetler (8):
+  status: rename long-format print routines
+  status: cleanup API to wt_status_print
+  status: support --porcelain[=<version>]
+  status: per-file data collection for --porcelain=v2
+  status: print per-file porcelain v2 status data
+  status: print branch info with --porcelain=v2 --branch
+  status: update git-status.txt for --porcelain=v2
+  status: tests for --porcelain=v2
 
-So I _think_ those optimizations are orthogonal to what we're discussing
-here, but I wanted to point you at them just in case.
+ Documentation/git-status.txt |  90 ++++++-
+ builtin/commit.c             |  78 +++---
+ t/t7060-wtstatus.sh          |  21 ++
+ t/t7064-wtstatus-pv2.sh      | 542 +++++++++++++++++++++++++++++++++++++
+ wt-status.c                  | 616 +++++++++++++++++++++++++++++++++++++++----
+ wt-status.h                  |  32 ++-
+ 6 files changed, 1269 insertions(+), 110 deletions(-)
+ create mode 100755 t/t7064-wtstatus-pv2.sh
 
--Peff
+-- 
+2.8.0.rc4.17.gac42084.dirty
+
