@@ -2,87 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_RED
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62061203E3
-	for <e@80x24.org>; Mon, 25 Jul 2016 07:27:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 72E69203C1
+	for <e@80x24.org>; Mon, 25 Jul 2016 07:33:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752344AbcGYH1r (ORCPT <rfc822;e@80x24.org>);
-	Mon, 25 Jul 2016 03:27:47 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:48332 "EHLO dcvr.yhbt.net"
+	id S1752360AbcGYHdu (ORCPT <rfc822;e@80x24.org>);
+	Mon, 25 Jul 2016 03:33:50 -0400
+Received: from mout.gmx.net ([212.227.17.22]:64198 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751127AbcGYH1q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2016 03:27:46 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37E71203C1;
-	Mon, 25 Jul 2016 07:27:45 +0000 (UTC)
-Date:	Mon, 25 Jul 2016 07:27:45 +0000
-From:	Eric Wong <e@80x24.org>
-To:	Lars Schneider <larsxschneider@gmail.com>
-Cc:	Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	jnareb@gmail.com,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	mlbright@gmail.com
-Subject: Re: [PATCH v1 3/3] convert: add filter.<driver>.useProtocol option
-Message-ID: <20160725072745.GB11634@starla>
-References: <20160722154900.19477-1-larsxschneider@gmail.com>
- <20160722154900.19477-4-larsxschneider@gmail.com>
- <20160723081447.GA24318@starla>
- <121F8453-3A12-47AE-AE10-021EADC4D995@gmail.com>
+	id S1751418AbcGYHds (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2016 03:33:48 -0400
+Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0LoJDJ-1apnnM09tZ-00gJwH; Mon, 25 Jul 2016 09:33:45
+ +0200
+Date:	Mon, 25 Jul 2016 09:33:00 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Ilya Tumaykin <itumaykin@gmail.com>
+cc:	git@vger.kernel.org
+Subject: Re: Bug: "git log --format='format:%+s%+b'" doesn't insert newline
+ before body
+In-Reply-To: <8915446.47C9zkNvuX@photon>
+Message-ID: <alpine.DEB.2.20.1607250926320.14111@virtualbox>
+References: <8915446.47C9zkNvuX@photon>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <121F8453-3A12-47AE-AE10-021EADC4D995@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:pPmSHmHcSP8XW8vTsAJE5NRgEwVVJtXbHok0DN0qb9MubCbvCm0
+ PyT9Cm0cLI/fuhMKt4N7DoMamENjYxz4yyJG93dlzBoSM5tfta2MxUW4VSFvdTpmneNUjgm
+ SaxUF2csX9CfkVLXrRPafN1ly3Us3lvXx7NfqtGcObxm0XuNxTQh5VuoydD1ZLc1HFueDHi
+ VBoZC1LYM7i1rjfSxfyXw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:Y9Qio0xtX/U=:s/xgGfANpqmJ5HyMPYG1Ie
+ zdQEcWd02wRlNspcHO0+asYZJF/y9XKRoxA7YSRxc9ta32/wuiXhJWT9VH7HdaUUR3Fu5jfQ3
+ r2fXt+ztYAFHRuJ9q2eU8vChD2tRcB9eSMyV/IabDaFqRtd72AOwsdYg2nd9RgVCXUcObFYOJ
+ mdyOMUKFlUF3sCb9CQ2M2n3eg0gN/x4Ef8epHJReSUIOihwtjdJjhnMDFZYA9v95irvdJk/zg
+ 8sxI3t9ctnCPvhbpRKjmaWwef/S7iUPeasIlOkPPWqssmUl4pBQKsvNpX7ipNVny0jPNjXfBK
+ 6YLjnQgzHACsvhokNxUrviUEBwFLRQ3awk0exexhn0pzxEJadoHBW2Q/BekMWiuQOTVxjvSRV
+ fCiUOYKultAb8MscBqmR9XaruTNl9brrPGfoSPoEeLVzaFNPkliMhjCPTWe3qhm0Lx2bNIBZE
+ tIoTyBEJUTfHXhocrhQmexrteeGr20OL/0YexYYTAIY7/t4fsBM/kz2whBTJj9LzaPcprx0nA
+ PhdoymvaBY8V4nlOgHgqoaTp0ExFuq+5cab5BAOqs3MTxksEeFC/Ox7AExdgyE5nDCyGZR18u
+ OMyIG/nHU7O2MgIE2kwx+mYSb+jU4VixqIu1O0Mwc4Xbe4scuTtZSNgFJg9aFh0kY3UDduU/j
+ NpeaK7Bv8fR/TAOVuHj4tGC1+Y5IJPjeE925XFC7IreFt66PJe/H5AayCEB2EYLzPxbE/dR/3
+ 8cC4M8T5gW308ns45YBrTgA60T3g5ljCdnVda0YdiIpnauZh6MrBfJ6HPGKkG6Feqwra9SYSd
+ 9Hg3PVr
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Lars Schneider <larsxschneider@gmail.com> wrote:
-> On 23 Jul 2016, at 10:14, Eric Wong <e@80x24.org> wrote:
-> > larsxschneider@gmail.com wrote:
-> >> +static struct cmd2process *start_protocol_filter(const char *cmd)
-> >> +{
-> >> +	int ret = 1;
-> >> +	struct cmd2process *entry = NULL;
-> >> +	struct child_process *process = NULL;
-> > 
-> > These are unconditionally set below, so initializing to NULL
-> > may hide future bugs.
+Hi Ilya,
+
+On Sun, 24 Jul 2016, Ilya Tumaykin wrote:
+
+> Steps to reproduce:
+> $ git init
+> $ >123
+> $ git add 123
+> $ git commit -v -m 'This is subject' -m 'And this is body'
+> $ git --no-pager log -1 --format='format:%+s%+b'
 > 
-> OK. I thought it is generally a good thing to initialize a pointer with 
-> NULL. Can you explain to me how this might hide future bugs?
-> I will remove the initialization.
-
-Compilers complain about uninitialized variables.  Blindly
-setting them to NULL can allow them to be dereferenced;
-triggering segfaults; especially if it's passed to a different
-compilation unit the compiler can't see.
-
-> >> +static int apply_protocol_filter(const char *path, const char *src, size_t len,
-> >> +						int fd, struct strbuf *dst, const char *cmd,
-> >> +						const char *filter_type)
-> >> +{
-
-<snip>
-
-> >> +			if (fd >= 0 && !src) {
-> >> +				ret &= fstat(fd, &fileStat) != -1;
-> >> +				len = fileStat.st_size;
-> > 
-> > There's a truncation bug when sizeof(size_t) < sizeof(off_t)
+> Actual results:
+> ```
 > 
-> OK. What would you suggest to do in that case? Should we just let the
-> filter fail? Is there anything else we could do?
+> This is subject
+> And this is body
+> ```
+> 
+> Expected results:
+> ```
+> 
+> This is subject
+> 
+> And this is body
+> ```
 
-Anything which refers to something on disk (or will eventually
-stored there, such as blobs) should evolve towards off_t rather
-than size_t.  We just discovered a bunch of 32-bit truncation
-bugs the other week:
+The empty line between commit subject and body is neither part of the
+subject nor of the body. That means that the above-mentioned expectation
+was incorrect.
 
-https://public-inbox.org/git/1466807902.28869.8.camel@gmail.com/
+Unless you somehow allow empty commit messages (Git does not, unless you
+play games with low-level commands), the second '+' is unnecessarily
+conditional. Therefore "%s%n%+b" *might* do what you intended (I would not
+know, because that information was missing from the report).
 
-If the protocol/ABI is frozen, it should probably fail;
-and a 64-bit-off_t version for 32-bit systems should be defined.
+Ciao,
+Johannes
