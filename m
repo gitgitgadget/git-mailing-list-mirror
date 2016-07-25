@@ -2,119 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04671203E2
-	for <e@80x24.org>; Mon, 25 Jul 2016 18:03:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62E00203E2
+	for <e@80x24.org>; Mon, 25 Jul 2016 18:11:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752805AbcGYSDH (ORCPT <rfc822;e@80x24.org>);
-	Mon, 25 Jul 2016 14:03:07 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54922 "EHLO
+	id S1753613AbcGYSLf (ORCPT <rfc822;e@80x24.org>);
+	Mon, 25 Jul 2016 14:11:35 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53678 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752108AbcGYSDF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2016 14:03:05 -0400
+	with ESMTP id S1753604AbcGYSLa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Jul 2016 14:11:30 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6E9B730269;
-	Mon, 25 Jul 2016 14:03:03 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7037A2D86E;
+	Mon, 25 Jul 2016 14:11:29 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IDCECqP26KATH1GI7s1+zuKUDF8=; b=hhfAAc
-	JgFNsXdgOimy3PIq1FXg149qU1GCIzwDDkNzXDYyvMPpuVdkbvQNu1u/9eOkEgE8
-	7XfcAgJj4e6fCPPWaUosFkNz9D5osFEL35eMsVD3D/G/OyaYjq3tQEN9sKkQKt8R
-	12uxGpkV4JG79gwO1tiJSb8oqGiX9y7HXK4uo=
+	:content-type:content-transfer-encoding; s=sasl; bh=KWwWSvTogjtc
+	HSYSVDW5JPa7TyM=; b=eBuXfBRxBS8v7pxHGlkZky1W6iGdFobG2jrnNsV1VDqv
+	oCW0vcZD0qHOyg2U+A+AvA1GQXcZ+HAjxbgfn4BsNIhGq8GWYRj7j8GRWUiioQP3
+	g6A0LYHkgs8D6ogS3T6xLfzzIBd3BCI62V2x2fZPILbVwYOxZeZrJiTRZmvDPl4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oAvxYSuYxNmW3oigy+43mtdOYPUExF0z
-	0M3iAAW18uPXB9fdksCYzoLcymjK4LvcO2oix+NAAZcctzNKj5+9gtt7a56sP4R/
-	NQLYBM7BFws/GBgw3MdObRAYcB0y16ZfV4fEcHYBuJtPWLWdBJSuDY8jsd7Vfw8S
-	QOco9zfk408=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6579230268;
-	Mon, 25 Jul 2016 14:03:03 -0400 (EDT)
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=OjunUr
+	c2LSE/A56Us4SkdL00Rp00M2VzIwW2UmyI+sGxkZVSVktyXSTPikCh6pYDwPd6rX
+	K32SAcNXuBku9qOckUW0yzWYtmQaJHPehcLT7sRx+aakd76zMiwx5zNERVCTqRkE
+	lznI4bW7O1ScF/0VynyQ0tKZMD0FGZRciSUl0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 698D52D86D;
+	Mon, 25 Jul 2016 14:11:29 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CDBDA30267;
-	Mon, 25 Jul 2016 14:03:02 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EB6762D86C;
+	Mon, 25 Jul 2016 14:11:28 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-To:	Andreas Schwab <schwab@linux-m68k.org>
-Cc:	Eric Wong <e@80x24.org>, git@vger.kernel.org,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] mailinfo: extract is_from_line from mailsplit
-References: <20160722224739.GA22961@whir>
-	<alpine.DEB.2.20.1607231056150.14111@virtualbox>
-	<20160724031409.GA32480@starla> <20160724031518.GB32480@starla>
-	<m2poq3zdu3.fsf@linux-m68k.org>
-Date:	Mon, 25 Jul 2016 11:03:00 -0700
-In-Reply-To: <m2poq3zdu3.fsf@linux-m68k.org> (Andreas Schwab's message of
-	"Sun, 24 Jul 2016 09:37:24 +0200")
-Message-ID: <xmqqmvl561ez.fsf@gitster.mtv.corp.google.com>
+To:	Duy Nguyen <pclouds@gmail.com>
+Cc:	Git Mailing List <git@vger.kernel.org>, Eric Wong <e@80x24.org>
+Subject: Re: [PATCH] config.mak.uname: correct perl path on FreeBSD
+References: <20160725162125.15734-1-pclouds@gmail.com>
+	<CAPc5daWNAWjtfR7CYN3RTeT7VyvgiNX5HED0=f3F=GT8h4yKPA@mail.gmail.com>
+	<CACsJy8Df2cBAf0bWe1FLTb9cOqTX3vgNgC=ko82rG2in81R-FQ@mail.gmail.com>
+Date:	Mon, 25 Jul 2016 11:11:26 -0700
+In-Reply-To: <CACsJy8Df2cBAf0bWe1FLTb9cOqTX3vgNgC=ko82rG2in81R-FQ@mail.gmail.com>
+	(Duy Nguyen's message of "Mon, 25 Jul 2016 19:27:41 +0200")
+Message-ID: <xmqqinvt610x.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 07B44C44-5292-11E6-ADD7-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 3554261E-5293-11E6-8D62-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Andreas Schwab <schwab@linux-m68k.org> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
->> +	colon = line + len - 2;
->> +	line += 5;
->> +	for (;;) {
->> +		if (colon < line)
->> +			return 0;
->> +		if (*--colon == ':')
->> +			break;
->> +	}
->> +
->> +	if (!isdigit(colon[-4]) ||
->> +	    !isdigit(colon[-2]) ||
->> +	    !isdigit(colon[-1]) ||
->> +	    !isdigit(colon[ 1]) ||
->> +	    !isdigit(colon[ 2]))
->> +		return 0;
->> +
->> +	/* year */
->> +	if (strtol(colon+3, NULL, 10) <= 90)
->> +		return 0;
->> +
->> +	/* Ok, close enough */
->> +	return 1;
->> +}
+> On Mon, Jul 25, 2016 at 6:56 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> On Mon, Jul 25, 2016 at 9:21 AM, Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
+>>> It looks the the symlink /usr/bin/perl (to /usr/local/bin/perl) has
+>>> been removed at least on FreeBSD 10.3. See [1] for more information.
+>>>
+>>> [1] https://svnweb.freebsd.org/ports/head/UPDATING?r1=386270&r2=386269&pathrev=386270&diff_format=c
+>>>
+>>> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+>>> ---
+>>>  Tested with fbsd 10.3, kvm image. But I suppose it's the same as real
+>>>  fbsd.
+>>
+>> Thanks; and we know that older (but not too old that we no longer care about)
+>> FreeBSD all have /usr/local/bin/perl?
 >
-> Should this be made more strict, like by checking for a space before the
-> year?
+> I'm no fbsd expert but from the first sentence in [1] "Perl has been
+> removed from base more than ten years ago..." I would assume it meant
+> "... removed from base, _to_ ports system" which means /usr/local for
+> all package installation (for ten years for perl). So I think we are
+> good.
 
-The function seems to judge the line to be "close enough" by
-checking these places (please view with fixed-width font ;-):
+I guess we didn't follow through
 
-    From me Mon Jul 25 01:23:45 2016
-    xxxxx               x xxxxx ....
+    http://public-inbox.org/git/%3C20160720025630.GA71874%40plume%3E/
 
-We only see if the year part is more than 90 but we do not even
-ensure that it is at the end of the line without any further
-garbage, which I think is probably OK for the purpose of "close
-enough".
+and allowed the thread to drift into a tangent?
 
-We also do not bother rejecting a single-digit hour, or there is a
-colon between the hour and minute part.
 
-I would say requiring SP between the year and the second, and
-requiring colon between hour and minute, would probably be a good
-change, i.e. something like this:
-
-	if (!isdigit(colon[-4]) ||
-	    colon[-3] != ':' ||
-	    !isdigit(colon[-2]) ||
-	    !isdigit(colon[-1]) ||
-	    !isdigit(colon[ 1]) ||
-	    !isdigit(colon[ 2]) ||
-	    colon[3] != ' ')
-
-would be safe enough without increasing the false negatives too
-much.
