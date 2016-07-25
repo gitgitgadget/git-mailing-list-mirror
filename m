@@ -2,79 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_RED
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8876C203C1
-	for <e@80x24.org>; Mon, 25 Jul 2016 08:44:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CF8E203C1
+	for <e@80x24.org>; Mon, 25 Jul 2016 09:33:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752639AbcGYIn7 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 25 Jul 2016 04:43:59 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:51348 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752475AbcGYIn6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2016 04:43:58 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B9AE203C1;
-	Mon, 25 Jul 2016 08:43:57 +0000 (UTC)
-Date:	Mon, 25 Jul 2016 08:43:57 +0000
-From:	Eric Wong <e@80x24.org>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] format-patch: escape "From " lines recognized by
- mailsplit
-Message-ID: <20160725084357.GA8025@starla>
-References: <20160722224739.GA22961@whir>
- <xmqqk2gb8q81.fsf@gitster.mtv.corp.google.com>
- <xmqqd1m3825y.fsf@gitster.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqd1m3825y.fsf@gitster.mtv.corp.google.com>
+	id S1752927AbcGYJdZ (ORCPT <rfc822;e@80x24.org>);
+	Mon, 25 Jul 2016 05:33:25 -0400
+Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:52522 "EHLO sapo.pt"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752863AbcGYJdO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2016 05:33:14 -0400
+Received: (qmail 9705 invoked from network); 25 Jul 2016 09:33:12 -0000
+Received: (qmail 14752 invoked from network); 25 Jul 2016 09:33:11 -0000
+Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
+          (envelope-sender <vascomalmeida@sapo.pt>)
+          by ptmail-mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
+          for <git@vger.kernel.org>; 25 Jul 2016 09:33:09 -0000
+X-PTMail-RemoteIP: 85.246.157.91
+X-PTMail-AllowedSender-Action: 
+X-PTMail-Service: default
+From:	Vasco Almeida <vascomalmeida@sapo.pt>
+To:	git@vger.kernel.org
+Cc:	Vasco Almeida <vascomalmeida@sapo.pt>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] t5510: become resilient to GETTEXT_POISON
+Date:	Mon, 25 Jul 2016 09:31:08 +0000
+Message-Id: <1469439068-2724-1-git-send-email-vascomalmeida@sapo.pt>
+X-Mailer: git-send-email 2.7.4
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> > Eric Wong <e@80x24.org> writes:
-> >
-> >> Users have mistakenly copied "From " lines into commit messages
-> >> in the past, and will certainly make the same mistakes in the
-> >> future.  Since not everyone uses mboxrd, yet, we should at least
-> >> prevent miss-split mails by always escaping "From " lines based
-> >> on the check used by mailsplit.
-> >>
-> >> mailsplit will not perform unescaping by default, yet, as it
-> >> could cause further invocations of format-patch from old
-> >> versions of git to generate bad output.  Propagating the mboxo
-> >> escaping is preferable to miss-split patches.  Unescaping may
-> >> still be performed via "--mboxrd".
-> >
-> > As a tool to produce mbox file, quoting like this in format-patch
-> > output may make sense, I would think, but shouldn't send-email undo
-> > this when sending individual patches?
-> 
-> Also, doesn't it break "git rebase" (non-interactive), or anything
-> that internally runs format-patch to individual files and then runs
-> am on each of them, anything that knows that each output file from
-> format-patch corresponds to a single change and there is no need to
-> split, badly if we do this unconditionally?
+Replace gettext poison text with appropriate values to be able to cut
+the right output of git fetch command for comparison.
 
-Yes, rebase should probably unescape is_from_line matches.
+The first gettext poison falls from the previous line into the next
+because the poison does not add a newline, so we must replace it with
+nothing.
 
-Anything which spawns an editor should probably warn/reprompt
-users on is_from_line() matches, too, to prevent user errors
-from sneaking in.
+Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
+---
+ t/t5510-fetch.sh | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-> IOW, shouldn't this be an optional feature to format-patch that is
-> triggered by passing a new command line option that currently nobody
-> is passing?
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 6bd4853..b261223 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -694,7 +694,10 @@ test_expect_success 'fetch aligned output' '
+ 	(
+ 		cd full-output &&
+ 		git -c fetch.output=full fetch origin 2>&1 | \
+-			grep -e "->" | cut -c 22- >../actual
++			grep -e "->" | \
++			sed -e "/master/ s/# GETTEXT POISON #//" \
++			    -e "/tag/ s/# GETTEXT POISON #/[new tag]        /" | \
++			cut -c 22- >../actual
+ 	) &&
+ 	cat >expect <<-\EOF &&
+ 	master               -> origin/master
+@@ -709,7 +712,10 @@ test_expect_success 'fetch compact output' '
+ 	(
+ 		cd compact &&
+ 		git -c fetch.output=compact fetch origin 2>&1 | \
+-			grep -e "->" | cut -c 22- >../actual
++			grep -e "->" | \
++			sed -e "/master/ s/# GETTEXT POISON #//" \
++			    -e "/extraa/ s/# GETTEXT POISON #/[new tag]        /" | \
++			cut -c 22- >../actual
+ 	) &&
+ 	cat >expect <<-\EOF &&
+ 	master     -> origin/*
+-- 
+2.7.4
 
-I added --pretty=mboxrd as the optional feature for this reason.
-It'll take a while for people to start using it (or perhaps make
-it the default in git 3.0).
-In the meantime, I would prefer extra ">" being injected rather
-than breaking mailsplit completely.
