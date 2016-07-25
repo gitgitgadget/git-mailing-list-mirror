@@ -6,124 +6,100 @@ X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C8C6203E2
-	for <e@80x24.org>; Mon, 25 Jul 2016 22:23:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 596CD203E2
+	for <e@80x24.org>; Mon, 25 Jul 2016 22:36:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932171AbcGYWXV (ORCPT <rfc822;e@80x24.org>);
-	Mon, 25 Jul 2016 18:23:21 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50802 "EHLO
+	id S1754643AbcGYWgZ (ORCPT <rfc822;e@80x24.org>);
+	Mon, 25 Jul 2016 18:36:25 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64804 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755117AbcGYWWw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2016 18:22:52 -0400
+	with ESMTP id S1753814AbcGYWgV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2016 18:36:21 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 73CE8304E5;
-	Mon, 25 Jul 2016 18:22:51 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C819430734;
+	Mon, 25 Jul 2016 18:36:19 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4AQ/3Cy6ejGNTyHhTZ1WyhhjKsI=; b=k6mKr5
-	Q3PKgrn0z+l+PRqebrKHEGmgHH8hLV1wk6hqPQ2WaPuDE7K90ZxbvEF4Zixxt0vt
-	+DVhXbA2PKi0gjw0Dq78E+ABAyazrpDJ8zBScSFIrpNVcq0jJPnB/EcB4IK7UjQ9
-	kvUPfZxq2iB53Y6gcT3GMkKKMjgnOFw8aNydg=
+	:content-type; s=sasl; bh=WE8QlKQtwB4ICCyI9G+6JAivXTM=; b=NNLg4+
+	uck1u3KW3+MHhmHbgKyOw0ToSvREiGzSXUQiXXzlEL9LLX7UvxhVMl1X4acyAN5V
+	K2MHlChAxjPA8NfRJ3oMxnq0/vE7whkd+TDwZ+Aq/NbwPzHgvzER8JzeaA08YHz9
+	BMvCrkbhSdowKgfKEg0kDrinaR+oG/NyJy3eQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mk7QJkr5yrJsB0sm2eUcn0iHp6Yrf4ln
-	5FppyT96DaNkNkcIZZnURvphtnnNGRPVA45asyi2XebhvY0aAAVe7zF7P89WuF3R
-	uuoANvASm3WuWpvedsph00oGV30TJ3/9ptPLEyBbFn30fiPzh2+82n1+xZ5UvWsA
-	LlnSE+WaS+c=
+	:content-type; q=dns; s=sasl; b=Bu+mV5/M56vS42lQZBl3M8EZx/nCsc8m
+	JAKg3cRl3yLQwrONa6njUtbk9N8mNeq9VrMnfjiGTXBctppymdQtcbI1DxgajoCr
+	GU+NBCaPzoeP3Bf58oY0/qUIg1HZWjmxAm4VmejUNh3Gnklk+KK24W5pTJNLV5zA
+	2hAsZLaTdnk=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6A3CA304E4;
-	Mon, 25 Jul 2016 18:22:51 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B554E30733;
+	Mon, 25 Jul 2016 18:36:19 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D94AA304E2;
-	Mon, 25 Jul 2016 18:22:50 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 32C1C30732;
+	Mon, 25 Jul 2016 18:36:19 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-To:	John Keeping <john@keeping.me.uk>
-Cc:	git@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] push: add shorthand for --force-with-lease branch creation
-References: <cover.1469483499.git.john@keeping.me.uk>
-	<4e07ff23715b53fcd29564be1c74a9f66dd74e1e.1469483499.git.john@keeping.me.uk>
-Date:	Mon, 25 Jul 2016 15:22:48 -0700
-In-Reply-To: <4e07ff23715b53fcd29564be1c74a9f66dd74e1e.1469483499.git.john@keeping.me.uk>
-	(John Keeping's message of "Mon, 25 Jul 2016 22:59:56 +0100")
-Message-ID: <xmqqpoq12w93.fsf@gitster.mtv.corp.google.com>
+To:	Jeff King <peff@peff.net>
+Cc:	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+	Johannes Sixt <j6t@kdbg.org>, Duy Nguyen <pclouds@gmail.com>,
+	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH v4 02/16] Report bugs consistently
+References: <cover.1467902082.git.johannes.schindelin@gmx.de>
+	<cover.1469187652.git.johannes.schindelin@gmx.de>
+	<72d1d530bb0e3c96d3affd6679cb7c26026d8321.1469187652.git.johannes.schindelin@gmx.de>
+	<xmqqfuqx4cli.fsf@gitster.mtv.corp.google.com>
+	<20160725221700.GB14131@sigill.intra.peff.net>
+Date:	Mon, 25 Jul 2016 15:36:16 -0700
+In-Reply-To: <20160725221700.GB14131@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 25 Jul 2016 18:17:01 -0400")
+Message-ID: <xmqqlh0p2vmn.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 52DB4CA8-52B6-11E6-976E-89D312518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 34B034C6-52B8-11E6-B918-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-John Keeping <john@keeping.me.uk> writes:
+Jeff King <peff@peff.net> writes:
 
-> Allow the empty string to stand in for the null SHA-1 when pushing a new
-> branch, like we do when deleting branches.
+> On Mon, Jul 25, 2016 at 02:44:25PM -0700, Junio C Hamano wrote:
 >
-> This means that the following command ensures that `new-branch` is
-> created on the remote (that is, is must not already exist):
+>> > diff --git a/imap-send.c b/imap-send.c
+>> > index db0fafe..67d67f8 100644
+>> > --- a/imap-send.c
+>> > +++ b/imap-send.c
+>> > @@ -506,12 +506,12 @@ static char *next_arg(char **s)
+>> >  
+>> >  static int nfsnprintf(char *buf, int blen, const char *fmt, ...)
+>> >  {
+>> > -	int ret;
+>> > +	int ret = -1;
+>> >  	va_list va;
+>> >  
+>> >  	va_start(va, fmt);
+>> >  	if (blen <= 0 || (unsigned)(ret = vsnprintf(buf, blen, fmt, va)) >= (unsigned)blen)
+>> > -		die("Fatal: buffer too small. Please report a bug.");
+>> > +		die("BUG: buffer too small (%d < %d)", ret, blen);
+>> >  	va_end(va);
+>> >  	return ret;
+>> >  }
+>> 
+>> If "you gave me this size but you need at least this much" is truly
+>> worth reporting, then this is misleading (ret is shown as -1 but you
+>> do not even know how much is necessary).  In any case, this should
+>> be done as a separate step anyway.
 >
-> 	git push --force-with-lease=new-branch: origin new-branch
->
-> Signed-off-by: John Keeping <john@keeping.me.uk>
-> ---
-> New in v2.
->
->  Documentation/git-push.txt |  3 ++-
->  remote.c                   |  2 ++
->  t/t5533-push-cas.sh        | 12 ++++++++++++
->  3 files changed, 16 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-> index bf7c9a2..927a034 100644
-> --- a/Documentation/git-push.txt
-> +++ b/Documentation/git-push.txt
-> @@ -201,7 +201,8 @@ if it is going to be updated, by requiring its current value to be
->  the same as the specified value `<expect>` (which is allowed to be
->  different from the remote-tracking branch we have for the refname,
->  or we do not even have to have such a remote-tracking branch when
-> -this form is used).
-> +this form is used).  If `<expect>` is the empty string, then the named ref
-> +must not already exist.
->  +
->  Note that all forms other than `--force-with-lease=<refname>:<expect>`
->  that specifies the expected current value of the ref explicitly are
-> diff --git a/remote.c b/remote.c
-> index a326e4e..af94892 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -2294,6 +2294,8 @@ int parse_push_cas_option(struct push_cas_option *cas, const char *arg, int unse
->  	entry = add_cas_entry(cas, arg, colon - arg);
->  	if (!*colon)
->  		entry->use_tracking = 1;
-> +	else if (!colon[1])
-> +		memset(entry->expect, 0, sizeof(entry->expect));
+> Hrm, isn't "ret" going to be the necessary size? According to the
+> standard, it should tell us how many bytes were needed, not "-1" (this
+> is the "your vsnprintf is broken" case handled by the strbuf code).
 
-hashclr()?
+Yes.  If blen <= 0, we do not even do vsnprintf() and that is why
+Dscho added "int ret = -1" initialization; otherwise his new die()
+would end up referencing uninitialized ret.
 
->  	else if (get_sha1(colon + 1, entry->expect))
->  		return error("cannot parse expected object name '%s'", colon + 1);
->  	return 0;
-> diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
-> index c732012..5e7f6e9 100755
-> --- a/t/t5533-push-cas.sh
-> +++ b/t/t5533-push-cas.sh
-> @@ -191,4 +191,16 @@ test_expect_success 'cover everything with default force-with-lease (allowed)' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'new branch covered by force-with-lease (explicit)' '
-> +	setup_srcdst_basic &&
-> +	(
-> +		cd dst &&
-> +		git branch branch master &&
-> +		git push --force-with-lease=branch: origin branch
-> +	) &&
-> +	git ls-remote dst refs/heads/branch >expect &&
-> +	git ls-remote src refs/heads/branch >actual &&
-> +	test_cmp expect actual
-> +'
-> +
->  test_done
+> I do think the numbers are reversed, though. It should be "blen < ret".
+
+That, too ;-)
