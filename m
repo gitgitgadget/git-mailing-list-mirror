@@ -2,105 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C7763203E2
-	for <e@80x24.org>; Mon, 25 Jul 2016 20:16:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70B59203E2
+	for <e@80x24.org>; Mon, 25 Jul 2016 20:23:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752999AbcGYUQ2 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 25 Jul 2016 16:16:28 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34859 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752265AbcGYUQS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Jul 2016 16:16:18 -0400
-Received: by mail-wm0-f68.google.com with SMTP id i5so18293023wmg.2
-        for <git@vger.kernel.org>; Mon, 25 Jul 2016 13:16:17 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=rj439lCy68xYe8QKkNfQqTWhdpljKh7sLFQMmDlUDyU=;
-        b=PTdygUbUTN+QEfIYRXo4SPZr7VmUBRaRljm/ORow8KAQvB/DoADOelz5bOuOdVoS10
-         94+tUkDyxNF3Lvca19ULNVFssw3HkZ4RFPzeq1HI91Q+J0yjPWIpYxDtYsuck8q6i7Qk
-         J6F6s910Mt8XFBgHMVyOXSt5T9goUbqWILPUfON0a9wsaB+0PidCEMJonL25OTQv7bxW
-         KzyXMM4G3PjkSO6jlnsMbMmniU9QyjdkTxugpns6vrWyzSWsmkM98rYvcvxOq0rlntY1
-         hqWVJYpNaFaMcFtvOTI6Ir+TnK9qd2voLFiQ1vy20FFkcvfUPBupIc9Wwx65zD0nv0e9
-         3mJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=rj439lCy68xYe8QKkNfQqTWhdpljKh7sLFQMmDlUDyU=;
-        b=YUNDMhuQfRJNxSyjOYs+9Am5xZHJSfewY+1cPRvfqOeDdIf2jQZkqe67mUCQvYon1R
-         fCQA8S4tg7yJjArmrWCLSQGkYLjeBNye7osg+6Xns3WJQZQr5BZqK6PlodL4SlYXr3d3
-         JxWzzdAI/V+HI+bCtGTGehhL8nMvbun7/kXFIKDVpZdxcH1ziShMTTEpxYOMh+rkmxro
-         0xuuGIcoK711FcsAddkwGRaGaBnIHehbsR1sx/Bppp/Z/0O6Jm74Ox8da48MuNOvt12f
-         f7AMRWtqeVwnrm4mhgRIgV3q44juFiyQMOYzGSP3KP7ieWTZSHcT8nWVFQHQZ22wWxw8
-         VRiA==
-X-Gm-Message-State: AEkoouuaLU/90VnEQGibLqu9XEW6uI1uDhGxkJALbc6AwBVE48t/d3AOj7a5DM1PwNOGwg==
-X-Received: by 10.195.9.226 with SMTP id dv2mr16710276wjd.180.1469477776999;
-        Mon, 25 Jul 2016 13:16:16 -0700 (PDT)
-Received: from slxbook3.fritz.box (p5DDB7A6F.dip0.t-ipconnect.de. [93.219.122.111])
-        by smtp.gmail.com with ESMTPSA id b186sm29106596wmg.23.2016.07.25.13.16.15
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 25 Jul 2016 13:16:16 -0700 (PDT)
-Content-Type: text/plain; charset=iso-8859-2
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Subject: Re: [PATCH v1 3/3] convert: add filter.<driver>.useProtocol option
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <5795337A.1040701@gmail.com>
-Date:	Mon, 25 Jul 2016 22:16:14 +0200
-Cc:	Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	=?iso-8859-2?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	mlbright@gmail.com, Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <e@80x24.org>
-Content-Transfer-Encoding: 8BIT
-Message-Id: <34F8B256-A129-4238-AE1A-CD8C1DE8C7DA@gmail.com>
-References: <20160722154900.19477-1-larsxschneider@gmail.com> <20160722154900.19477-4-larsxschneider@gmail.com> <5792B622.5040306@gmail.com> <0FB8A921-3465-4081-A36D-D2F19A8ED63D@gmail.com> <579521A1.4070501@gmail.com> <5795337A.1040701@gmail.com>
-To:	=?iso-8859-2?Q?Jakub_Nar=EAbski?= <jnareb@gmail.com>
-X-Mailer: Apple Mail (2.1878.6)
+	id S1752790AbcGYUXz (ORCPT <rfc822;e@80x24.org>);
+	Mon, 25 Jul 2016 16:23:55 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55215 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752646AbcGYUXx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2016 16:23:53 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 77FF42EB62;
+	Mon, 25 Jul 2016 16:23:52 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=y4img0f2/BXMT7qYTyTX6LMq9V0=; b=EPhaOq
+	8STftu5VWBKNtUCdBPV7PS0bGcV1hp9iInFkuj3Hn8OQ9ZKw8grUfaR+4s2Wed08
+	SwmulwAZDxJ4PP8M8xuQaj7N8Chc2nGjsPtQoAc8lYWtr2qSITnXwQgDQ4Ooh2hD
+	9DHoYrTwhndfrzlZr3hJu2aClchoV8oUsRWmg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xcoadKfXbyJ+X3Ha07rtxPyLlfKI/n/j
+	5qcrUp+EGT5V4BFai6+S7rQVYfROIMgdbaHHKj+LjBWYk01JnODiqeBQrSi8GNyv
+	PkSsWnvnbZWp1/IGtWVmbrnSLX7zpb4XMaVzVs1tHQisFTtjyWcX9vvDdoeTZIEC
+	g8L88BJox1Q=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6F61C2EB61;
+	Mon, 25 Jul 2016 16:23:52 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E89F22EB60;
+	Mon, 25 Jul 2016 16:23:51 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff Hostetler <jeffhost@microsoft.com>
+Cc:	git@vger.kernel.org, git@jeffhostetler.com, peff@peff.net,
+	Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v2 5/8] status: print per-file porcelain v2 status data
+References: <1469474750-49075-1-git-send-email-jeffhost@microsoft.com>
+	<1469474750-49075-6-git-send-email-jeffhost@microsoft.com>
+Date:	Mon, 25 Jul 2016 13:23:49 -0700
+In-Reply-To: <1469474750-49075-6-git-send-email-jeffhost@microsoft.com> (Jeff
+	Hostetler's message of "Mon, 25 Jul 2016 15:25:47 -0400")
+Message-ID: <xmqqwpk94gbu.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: B3C1F906-52A5-11E6-8A38-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Jeff Hostetler <jeffhost@microsoft.com> writes:
 
-On 24 Jul 2016, at 23:30, Jakub Narêbski <jnareb@gmail.com> wrote:
+> +static void wt_porcelain_v2_print(struct wt_status *s);
+> +
 
-> W dniu 2016-07-24 o 22:14, Jakub Narêbski pisze:
->> W dniu 2016-07-24 o 20:36, Lars Schneider pisze:
-> 
->>> I agree that the name is not ideal. "UseProtocol" as it is would be a boolean. 
->>> I thought about "persistent" but this name wouldn't convey the scope of the 
->>> persistency ("persistent for one Git operation" vs. "persistent for many Git 
->>> operations"). What do you think about the protocol as int version idea
->>> described in $gmane/300155 ?
->> 
->> You mean the `protocol` as a config variable name (fully name being
->> `filter.<driver>.protocol`), being integer-valued, isn't it? Wouldn't
->> `protocolVersion` be a more explicit?
-> 
-> Just throwing out further ideas:
-> 
-> Perhaps make `persistent` string-valued variable, with the only value
-> supported for now, namely "per-process" / "operation"?
-> 
-> Perhaps require for `pidfile` to be present for it to be daemon,
-> that is persist for possibly many Git operations. Or allow "daemon"
-> or "server" value for `persistent`, then?
+There is no point in this forward declaration, if you just place the
+implementation of these functions here, no?
 
-I like the direction of this idea. What if we use a string-valued 
-"filter.<driver>.protocol" with the following options:
+> +/*
+> + * Print porcelain v2 info for tracked entries with changes.
+> + */
+> +static void wt_porcelain_v2_print_changed_entry(
+> +	struct string_list_item *it,
+> +	struct wt_status *s)
+> +{
+> +...
+> +	fprintf(s->fp, "%c %s %s %06o %06o %06o %s %s R%d %s",
 
-"simple" / "invocation-per-file" / << empty >> --> current clean/smudge behavior
-"invocation-per-process" --> new, proposed behavior
+It is misleading to always say R in the output when there is no
+rename, isn't it?
 
-If necessary this could be enhanced in the future to support even a "daemon"
-mode (with a pidfile config).
+> +	 * Note that this is a last-one-wins for each the individual
+> +	 * stage [123] columns in the event of multiple cache rows
+> +	 * for a stage.
 
-Thanks,
-Lars
+Just FYI, the usual lingo we use for that is "multiple cache entries
+for the same stage", I would think.
+
+> +	 */
+> +	memset(stages, 0, sizeof(stages));
+> +	sum = 0;
+> +	pos = cache_name_pos(it->string, strlen(it->string));
+> +	assert(pos < 0);
+> +	pos = -pos-1;
+> +	while (pos < active_nr) {
+> +		ce = active_cache[pos++];
+> +		stage = ce_stage(ce);
+> +		if (strcmp(ce->name, it->string) || !stage)
+> +			break;
+> +		stages[stage - 1].mode = ce->ce_mode;
+> +		hashcpy(stages[stage - 1].oid.hash, ce->sha1);
+> +		sum++;
+> +	}
+> +	if (!sum)
+> +		die("BUG: unmerged entry without any stages");
+
+Hmm, we seem to already have d->stagemask; if you call that variable
+"sum" anyway, perhaps its computation can be more like
+
+	sum |= 1 << (stage - 1);
+
+so that you can compare it with d->stagemask for this sanity check?
 
