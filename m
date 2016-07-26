@@ -2,252 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2BB8203E4
-	for <e@80x24.org>; Tue, 26 Jul 2016 21:13:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA134203E4
+	for <e@80x24.org>; Tue, 26 Jul 2016 21:13:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758232AbcGZVNo (ORCPT <rfc822;e@80x24.org>);
-	Tue, 26 Jul 2016 17:13:44 -0400
-Received: from siwi.pair.com ([209.68.5.199]:18592 "EHLO siwi.pair.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753502AbcGZVNo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2016 17:13:44 -0400
-Received: from jeffhost-linux1.corp.microsoft.com (unknown [167.220.24.246])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+	id S932345AbcGZVMO (ORCPT <rfc822;e@80x24.org>);
+	Tue, 26 Jul 2016 17:12:14 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65022 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932318AbcGZVMM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2016 17:12:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1A32E2FE07;
+	Tue, 26 Jul 2016 17:12:11 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hPyekq5mhjhj6MDr6Ej0P7Bp27s=; b=uVTt3F
+	zuQpYGa8kVFvv76vvx0lkvhtDigvSkJiHgaxY8M9n73JGQXR+HZNnahFZJ1F7TI8
+	hAZJ2SPIVI6E+OjX2MW3JBIyqsKDqR4eDRnCL0PYlHbR7jj2WQYM/q0DipPvcauL
+	xu/zrjt3CkAM6sDWT23xK3+7T3JlZUonJXg1Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Fx8sgxkh5/u0KtQMeuxcqDNlaiplI8Ox
+	HtOYETvsqWupkQoO7nf2i3+DaGo6LZnTztbbq61s9JQLmfiFqi1C4AKKJHvaVL8H
+	MxL2vqgRCV8ppzJ9B3CdTw2Rv9pDU9cdzInG8jRw77ZfEzvIBGGpjmLXIa5qAjPx
+	t3fAXGW7j6o=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 13CF32FE06;
+	Tue, 26 Jul 2016 17:12:11 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by siwi.pair.com (Postfix) with ESMTPSA id A3DBC84631;
-	Tue, 26 Jul 2016 17:13:41 -0400 (EDT)
-From:	Jeff Hostetler <git@jeffhostetler.com>
-To:	git@vger.kernel.org
-Cc:	gitster@pobox.com, Johannes.Schindelin@gmx.de,
-	Jeff Hostetler <jeffhost@microsoft.com>,
-	Jeff Hostetler <git@jeffhostetler.com>
-Subject: [PATCH v3 2/8] status: cleanup API to wt_status_print
-Date:	Tue, 26 Jul 2016 17:11:17 -0400
-Message-Id: <1469567483-58794-3-git-send-email-git@jeffhostetler.com>
-X-Mailer: git-send-email 2.8.0.rc4.17.gac42084.dirty
-In-Reply-To: <1469567483-58794-1-git-send-email-git@jeffhostetler.com>
-References: <1469567483-58794-1-git-send-email-git@jeffhostetler.com>
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8BE8A2FE05;
+	Tue, 26 Jul 2016 17:12:10 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	Orgad Shaneh <orgads@gmail.com>, git <git@vger.kernel.org>
+Subject: Re: [PATCH] merge: Run commit-msg hook
+References: <1469519323-11420-1-git-send-email-orgad.shaneh@audiocodes.com>
+	<alpine.DEB.2.20.1607261456480.14111@virtualbox>
+	<CAGHpTBLr9q8h-+hVUzsTS1aS1TyZjz9gYM_T_ZBdY=o26JGaHw@mail.gmail.com>
+	<alpine.DEB.2.20.1607261614020.14111@virtualbox>
+Date:	Tue, 26 Jul 2016 14:12:08 -0700
+In-Reply-To: <alpine.DEB.2.20.1607261614020.14111@virtualbox> (Johannes
+	Schindelin's message of "Tue, 26 Jul 2016 16:54:06 +0200 (CEST)")
+Message-ID: <xmqq4m7cyuhj.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9DD7C352-5375-11E6-A3FE-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Refactor the API between builtin/commit.c and wt-status.[ch].
-Hide details of the various wt_*status_print() routines inside
-wt-status.c behind a single (new) wt_status_print() routine
-and eliminate the switch statements from builtin/commit.c
+> FWIW I dug out the original submission:
+> http://thread.gmane.org/gmane.comp.version-control.git/151297/focus=151435
+>
+> It seems that there was no discussion about the commit-msg. Which makes me
+> wonder why nobody thought of this.
 
-This will allow us to more easily add new status formats
-and isolate that within wt-status.c
+I actually think it was a mistaken argument.
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-Signed-off-by: Jeff Hostetler <git@jeffhostetler.com>
----
- builtin/commit.c | 51 +++++++++------------------------------------------
- wt-status.c      | 25 ++++++++++++++++++++++---
- wt-status.h      | 16 ++++++++++++----
- 3 files changed, 43 insertions(+), 49 deletions(-)
+We could have devised a mechanism to prevent "git commit" that
+concludes a conflicted "git merge" from calling the hook to resolve
+the inconsistency, and the solution would have been equally valid.
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index b80273b..a792deb 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -142,14 +142,7 @@ static int show_ignored_in_status, have_option_m;
- static const char *only_include_assumed;
- static struct strbuf message = STRBUF_INIT;
- 
--static enum status_format {
--	STATUS_FORMAT_NONE = 0,
--	STATUS_FORMAT_LONG,
--	STATUS_FORMAT_SHORT,
--	STATUS_FORMAT_PORCELAIN,
--
--	STATUS_FORMAT_UNSPECIFIED
--} status_format = STATUS_FORMAT_UNSPECIFIED;
-+static enum wt_status_format status_format = STATUS_FORMAT_UNSPECIFIED;
- 
- static int opt_parse_m(const struct option *opt, const char *arg, int unset)
- {
-@@ -500,24 +493,11 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix, int
- 	s->fp = fp;
- 	s->nowarn = nowarn;
- 	s->is_initial = get_sha1(s->reference, sha1) ? 1 : 0;
-+	s->status_format = status_format;
-+	s->ignore_submodule_arg = ignore_submodule_arg;
- 
- 	wt_status_collect(s);
--
--	switch (status_format) {
--	case STATUS_FORMAT_SHORT:
--		wt_shortstatus_print(s);
--		break;
--	case STATUS_FORMAT_PORCELAIN:
--		wt_porcelain_print(s);
--		break;
--	case STATUS_FORMAT_UNSPECIFIED:
--		die("BUG: finalize_deferred_config() should have been called");
--		break;
--	case STATUS_FORMAT_NONE:
--	case STATUS_FORMAT_LONG:
--		wt_longstatus_print(s);
--		break;
--	}
-+	wt_status_print(s);
- 
- 	return s->commitable;
- }
-@@ -1099,7 +1079,7 @@ static const char *read_commit_message(const char *name)
-  * is not in effect here.
-  */
- static struct status_deferred_config {
--	enum status_format status_format;
-+	enum wt_status_format status_format;
- 	int show_branch;
- } status_deferred_config = {
- 	STATUS_FORMAT_UNSPECIFIED,
-@@ -1381,6 +1361,9 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 
- 	s.is_initial = get_sha1(s.reference, sha1) ? 1 : 0;
- 	s.ignore_submodule_arg = ignore_submodule_arg;
-+	s.status_format = status_format;
-+	s.verbose = verbose;
-+
- 	wt_status_collect(&s);
- 
- 	if (0 <= fd)
-@@ -1389,23 +1372,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 	if (s.relative_paths)
- 		s.prefix = prefix;
- 
--	switch (status_format) {
--	case STATUS_FORMAT_SHORT:
--		wt_shortstatus_print(&s);
--		break;
--	case STATUS_FORMAT_PORCELAIN:
--		wt_porcelain_print(&s);
--		break;
--	case STATUS_FORMAT_UNSPECIFIED:
--		die("BUG: finalize_deferred_config() should have been called");
--		break;
--	case STATUS_FORMAT_NONE:
--	case STATUS_FORMAT_LONG:
--		s.verbose = verbose;
--		s.ignore_submodule_arg = ignore_submodule_arg;
--		wt_longstatus_print(&s);
--		break;
--	}
-+	wt_status_print(&s);
- 	return 0;
- }
- 
-diff --git a/wt-status.c b/wt-status.c
-index b9a58fd..a9031e4 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1447,7 +1447,7 @@ static void wt_longstatus_print_state(struct wt_status *s,
- 		show_bisect_in_progress(s, state, state_color);
- }
- 
--void wt_longstatus_print(struct wt_status *s)
-+static void wt_longstatus_print(struct wt_status *s)
- {
- 	const char *branch_color = color(WT_STATUS_ONBRANCH, s);
- 	const char *branch_status_color = color(WT_STATUS_HEADER, s);
-@@ -1714,7 +1714,7 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
- 	fputc(s->null_termination ? '\0' : '\n', s->fp);
- }
- 
--void wt_shortstatus_print(struct wt_status *s)
-+static void wt_shortstatus_print(struct wt_status *s)
- {
- 	int i;
- 
-@@ -1746,7 +1746,7 @@ void wt_shortstatus_print(struct wt_status *s)
- 	}
- }
- 
--void wt_porcelain_print(struct wt_status *s)
-+static void wt_porcelain_print(struct wt_status *s)
- {
- 	s->use_color = 0;
- 	s->relative_paths = 0;
-@@ -1754,3 +1754,22 @@ void wt_porcelain_print(struct wt_status *s)
- 	s->no_gettext = 1;
- 	wt_shortstatus_print(s);
- }
-+
-+void wt_status_print(struct wt_status *s)
-+{
-+	switch (s->status_format) {
-+	case STATUS_FORMAT_SHORT:
-+		wt_shortstatus_print(s);
-+		break;
-+	case STATUS_FORMAT_PORCELAIN:
-+		wt_porcelain_print(s);
-+		break;
-+	case STATUS_FORMAT_UNSPECIFIED:
-+		die("BUG: finalize_deferred_config() should have been called");
-+		break;
-+	case STATUS_FORMAT_NONE:
-+	case STATUS_FORMAT_LONG:
-+		wt_longstatus_print(s);
-+		break;
-+	}
-+}
-diff --git a/wt-status.h b/wt-status.h
-index 2023a3c..a859a12 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -43,6 +43,15 @@ struct wt_status_change_data {
- 	unsigned new_submodule_commits : 1;
- };
- 
-+ enum wt_status_format {
-+	STATUS_FORMAT_NONE = 0,
-+	STATUS_FORMAT_LONG,
-+	STATUS_FORMAT_SHORT,
-+	STATUS_FORMAT_PORCELAIN,
-+
-+	STATUS_FORMAT_UNSPECIFIED
-+ };
-+
- struct wt_status {
- 	int is_initial;
- 	char *branch;
-@@ -66,6 +75,8 @@ struct wt_status {
- 	int show_branch;
- 	int hints;
- 
-+	enum wt_status_format status_format;
-+
- 	/* These are computed during processing of the individual sections */
- 	int commitable;
- 	int workdir_dirty;
-@@ -99,6 +110,7 @@ struct wt_status_state {
- void wt_status_truncate_message_at_cut_line(struct strbuf *);
- void wt_status_add_cut_line(FILE *fp);
- void wt_status_prepare(struct wt_status *s);
-+void wt_status_print(struct wt_status *s);
- void wt_status_collect(struct wt_status *s);
- void wt_status_get_state(struct wt_status_state *state, int get_detached_from);
- int wt_status_check_rebase(const struct worktree *wt,
-@@ -106,10 +118,6 @@ int wt_status_check_rebase(const struct worktree *wt,
- int wt_status_check_bisect(const struct worktree *wt,
- 			   struct wt_status_state *state);
- 
--void wt_longstatus_print(struct wt_status *s);
--void wt_shortstatus_print(struct wt_status *s);
--void wt_porcelain_print(struct wt_status *s);
--
- __attribute__((format (printf, 3, 4)))
- void status_printf_ln(struct wt_status *s, const char *color, const char *fmt, ...);
- __attribute__((format (printf, 3, 4)))
--- 
-2.8.0.rc4.17.gac42084.dirty
+I'd rather not make things worse by repeating that same mistake.  If
+we were to change anything, we should be adding prepare-merge-msg as
+you suggested earlier and weaning people off of the current
+behaviour that was added by mistake.
+
+Thanks.
 
