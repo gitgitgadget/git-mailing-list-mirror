@@ -6,89 +6,73 @@ X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 13099203E1
-	for <e@80x24.org>; Tue, 26 Jul 2016 06:46:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0592C203E1
+	for <e@80x24.org>; Tue, 26 Jul 2016 06:47:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754366AbcGZGqM (ORCPT <rfc822;e@80x24.org>);
-	Tue, 26 Jul 2016 02:46:12 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60030 "EHLO
+	id S1753930AbcGZGrG (ORCPT <rfc822;e@80x24.org>);
+	Tue, 26 Jul 2016 02:47:06 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50224 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755061AbcGZGqL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2016 02:46:11 -0400
+	with ESMTP id S1753564AbcGZGrF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2016 02:47:05 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E772828243;
-	Tue, 26 Jul 2016 02:46:09 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3DE132CD92;
+	Tue, 26 Jul 2016 02:47:03 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gy+FxnxEcb+mhnMqvh8nW+6q0Pk=; b=iP0u/q
-	Q05LdIquPMLdN+OpclDO3wcLPTNCS3eH7LpXlxBXlNatcHXJFi5/vrW3YU41CLCA
-	cwqdEat5vdHQV+dK5wMLTa0MpV2osQLpmoQTAsKMAWGSAfmTrRoz4evPo4QkjoeQ
-	Pwda6ylmyg8p3a5a9LwQpwF8s7TTFwxRr1mAU=
+	:content-type; s=sasl; bh=Lkb8tBSWds974qRlNotAjE/IB0U=; b=C59ADJ
+	L++KnU+0uA0buk2e8ns75jeW3CZYnoSaFwCypjKbMNuYJQNg2ybUw2cbJEc9JdBc
+	6gLYZNGZ8Cgls1aBg9nEKcHKcTcx1tAQGkZ/2gkFEInao4E5IAoyfM3WLZDfgWjv
+	c+jJKCAWvPsLzNn03Kvp/SkHFmm0WZozOD28o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kyfl1xM8KUeSDN1n9Dih7miJiPels4nZ
-	9BJ0LRpZnk6YgbVFeRSsxhJZyo7zlsJePgHK/OUOfCCRBNgjgU9+NqMjK45GTNlw
-	0z4Guhl1K966SjP9ThG/yCXGEOFZKQRBqDMZPOlfhrIvWC4P5unGipvGfr9MbKr0
-	HuuOpa6q3jU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DCADB28242;
-	Tue, 26 Jul 2016 02:46:09 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=kXQv6S+g5oo4Yd77MUaWP0MjIFr04mV8
+	DwCcd58CqRgYNOqrdFvwq9KnP6sxG0D5lCPrn8H+ZXDkV7GTPBScwZH0vwDbZ0J0
+	d5eCgPXTgWRKrZPU1+ECoS139KYME7x8RtYOSUqRohJ0JKYQv+2lVfy0vg5iSHYt
+	Hq/vuZKi5gg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 349342CD91;
+	Tue, 26 Jul 2016 02:47:03 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 55E4328241;
-	Tue, 26 Jul 2016 02:46:09 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AFA532CD8C;
+	Tue, 26 Jul 2016 02:47:02 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-To:	Eric Sunshine <sunshine@sunshineco.com>
-Cc:	David Aguilar <davvid@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Brett Cundal <brett.cundal@iugome.com>,
-	"David A . Greene" <greened@obbligato.org>,
-	Charles Bailey <cbailey32@bloomberg.net>,
-	Techlive Zheng <techlivezheng@gmail.com>
-Subject: Re: [PATCH 1/3] t7900-subtree.sh: fix quoting and broken && chains
-References: <20160726041416.9438-1-davvid@gmail.com>
-	<CAPig+cRGz2eqPK0uaih3hYCV0eLayot3VGyjKaz5Qf8Jy5o=DA@mail.gmail.com>
-Date:	Mon, 25 Jul 2016 23:46:07 -0700
-In-Reply-To: <CAPig+cRGz2eqPK0uaih3hYCV0eLayot3VGyjKaz5Qf8Jy5o=DA@mail.gmail.com>
-	(Eric Sunshine's message of "Tue, 26 Jul 2016 02:06:15 -0400")
-Message-ID: <xmqqd1m03nio.fsf@gitster.mtv.corp.google.com>
+To:	Eric Wong <e@80x24.org>
+Cc:	Duy Nguyen <pclouds@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] config.mak.uname: correct perl path on FreeBSD
+References: <20160725162125.15734-1-pclouds@gmail.com>
+	<CAPc5daWNAWjtfR7CYN3RTeT7VyvgiNX5HED0=f3F=GT8h4yKPA@mail.gmail.com>
+	<CACsJy8Df2cBAf0bWe1FLTb9cOqTX3vgNgC=ko82rG2in81R-FQ@mail.gmail.com>
+	<xmqqinvt610x.fsf@gitster.mtv.corp.google.com>
+	<20160725203316.GA32053@starla>
+	<xmqqoa5l4fh0.fsf@gitster.mtv.corp.google.com>
+	<20160726061854.GA13334@starla>
+Date:	Mon, 25 Jul 2016 23:47:00 -0700
+In-Reply-To: <20160726061854.GA13334@starla> (Eric Wong's message of "Tue, 26
+	Jul 2016 06:18:54 +0000")
+Message-ID: <xmqq8two3nh7.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: A294C97C-52FC-11E6-A604-89D312518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: C25A8012-52FC-11E6-86EF-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Eric Wong <e@80x24.org> writes:
 
->> @@ -73,10 +73,10 @@ join_commits()
->>  test_create_commit() (
->>         repo=$1
->>         commit=$2
+> I dug around the freebsd history (git://github.com/freebsd/freebsd.git)
+> (~1.5G) and the 3.x and 4.x releases with perl in base still contained
+> many references to /usr/local/bin/perl
 >
-> Perhaps &&-chain the above two lines also to future-proof against
-> someone inserting important code somewhere above the following 'cd'.
+> It also seems FreeBSD 2.x releases were also perl-less in base;
+> so yes, I'm alright with Duy's patch :)
 
-Yup, also we can have them on a single line, i.e.
+Thanks for a quick digging to converge to the simplest solution.
 
-	repo=$1 commit=$2 &&
-	cd "$repo" &&
-        ...
+Will replace and merge to 'next' soonish.
 
-Thanks
-
->
->> -       cd "$repo"
->> -       mkdir -p $(dirname "$commit") \
->> +       cd "$repo" &&
->> +       mkdir -p "$(dirname "$commit")" \
->>         || error "Could not create directory for commit"
->> -       echo "$commit" >"$commit"
->> +       echo "$commit" >"$commit" &&
->>         git add "$commit" || error "Could not add commit"
->>         git commit -m "$commit" || error "Could not commit"
->>  )
