@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 09A74203E3
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CB84203E4
 	for <e@80x24.org>; Tue, 26 Jul 2016 16:06:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756995AbcGZQGY (ORCPT <rfc822;e@80x24.org>);
-	Tue, 26 Jul 2016 12:06:24 -0400
-Received: from mout.gmx.net ([212.227.15.15]:55999 "EHLO mout.gmx.net"
+	id S1757006AbcGZQGZ (ORCPT <rfc822;e@80x24.org>);
+	Tue, 26 Jul 2016 12:06:25 -0400
+Received: from mout.gmx.net ([212.227.17.21]:56280 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754198AbcGZQGU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2016 12:06:20 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LuP5z-1bHK2L13OJ-011mP5; Tue, 26 Jul 2016 18:06:06
+	id S1756782AbcGZQGW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2016 12:06:22 -0400
+Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MWgND-1bpYrI2Tjn-00XpnE; Tue, 26 Jul 2016 18:06:11
  +0200
-Date:	Tue, 26 Jul 2016 18:05:53 +0200 (CEST)
+Date:	Tue, 26 Jul 2016 18:05:57 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
@@ -28,81 +28,95 @@ cc:	Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
 	Duy Nguyen <pclouds@gmail.com>,
 	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: [PATCH v5 03/16] Avoid translating bug messages
+Subject: [PATCH v5 04/16] merge-recursive: clarify code in was_tracked()
 In-Reply-To: <cover.1469547160.git.johannes.schindelin@gmx.de>
-Message-ID: <765d70cf1697a76f4da0f22f3b243cfde1dae7aa.1469547160.git.johannes.schindelin@gmx.de>
+Message-ID: <b8e122f0c27453171334a59fa6f0c8675350e9f1.1469547160.git.johannes.schindelin@gmx.de>
 References: <cover.1469187652.git.johannes.schindelin@gmx.de> <cover.1469547160.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:OnU0QdagsWV47mVoJMv5s1+cHGoJcUlPunz//tNZ2tGmGO6WoZH
- KVg84Cyjr6MpEXZu6RxzX2BCIyafhujl0PCLKDPy39FvM8CfhuyYfS6rw5VjLl/IjukBN7W
- gCMuQ5xHE5tYDF2D39z2ZLpPWaNKN/5A+38cyw+5Ncu8FQI0wVK/FUdcql6dZnd9T9VvJXI
- wN2s7uIUKhkDMOW2ASSIQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:DcuFv4LrJIA=:VFOehEy+yL0hjbXRBQq197
- gMbcifIDbMj8d3n9f4031Jy+bZ7J1/0o9mEUPqOwbbURlpZIymZulqmkl88cMMaw/GjnCE+Ro
- 8KjwrzHIi34fSohbFMR2jAdc83Em7mElHC3MF8t3OPlwhYP5lzRSmdqYOBlchx3k+7sf9o5E6
- S1J0oQYRdt5lPh8KAxqFbyfD0LNGncEJqDK0GM/f5f53W4SIS0Q7D6TOHo0jBB549WgKL+zym
- QdrZtY0hQTl7amYC56Kiqw9908w/RsohQbnNEsbR/2rmx5WaSISOYXMjUOVTBVg8ac1vAhkYR
- TmYklhqXtx0j8RlWqGUrk6cOW0lyD9Sg/lkA7A7/jMrfIHeUiDjvnHZKqiinQoghqdLu/R3m/
- UexON+7XWncVK4Uw2qfuiMYKEGTMa6/UtZ/zQfvLFv+IjMczkRxDxRZiqKeTXTwmalrB64+1Z
- fs9uu+X381FYlNWc1Gu7kybTZHjJhqrQXyBqmhuWDPN45V1KKgl+BveEAZ7bLkqLDV/NgUD+C
- BoQ6kzpx9+ppVWPDPk/GaTWv+ySyQMCudwbvIC+NKsVUW62wQHbk5rb8LpSypCWrzt2QaDAPf
- LeVnXk/jF2pBKbmcikv4tLU7KVyT66gGrggosXOS+uqtVe54BvWQ3b3dsBNAKVIyqb6Ms1L6K
- qANDXaR6lsjSuQ1o9xZTuSCqeeCdgjQcZ6UXkDilAwWpKUAp9KBIBsr5jovjv7dNH0wi72DAP
- +ptrswyv9Qp3+sQvejl/hvzgB/qrmqezcO90YwJ9JJh6JPg9c5Ck1ycnbc6//ug6hxNbFfU9b
- uamUe0p
+X-Provags-ID: V03:K0:CapXaNaMbppa+X3aTTEVf+IGaKlDEcmtU+YDkYIhPrWbcnRPBxl
+ MM3hdYPM/WXOaehJSRz3aOl8HYNmJCvxxZypk46j/AVylDfMdcKY1Q8ApcgLfa/kfsbW9zv
+ Y/ojGA8pQmwzs2U1zN/SLdWL+1cH9KHOSCee8TSX985/RULRdXodZZAT2YQYHLIXzj3fmq9
+ i5jEzHVQvTt01NcFXTaww==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:J+vKYfUoUOo=:8pwqKhd0MgwtgNvmUa7ObX
+ kuXibgihz5Y6P+BUn7/5fihzosyLvd1IYCJvlsZdWX8phGK7EOJcjuVTU708hA0pfzhsqYRwu
+ 24FGQ7KQWZolX3EQE1mXPWuD2GDSy782mCD6i6HNaOMmuBYQ1bHHevdwyp9j2ip1wr2kvzX+4
+ tawY7KkUJquiwDm2qaeyGoOUjb1KssyJkJ5REdMXFBRW2M+FvPUZ3nONgIMTWyKN3V9idUHii
+ XOKx5h36wQ08u3OLSW7i9AcIsLzB4yk8NGvRNR2XA8w7hzbkI4chLyzHWO+sNWc0snbIlBUgb
+ H/cQj4PGz5rnWRcdalIHrfWeeLlPsIQl6Dwy6DFhhF7BceGG/IN6e3zkRK3HH+KWp0EDIF2Q3
+ AjYErP0qlAGP1taytBBV/naOAEeapa+VZn89+/MWzSjPwgDUf1wt/OkFgAeLoBWqA1D0wn3uy
+ Ds7hWjigVAQaLwyRi9a13wiv2RgUlk2u5uSB1j5HifGM5e/CmgPQtcsjhwr2SN1OAHR6V3mDA
+ QGERk0I92//OXBBao/X33CaKWEaOtMGAw5Y2V4LmavIA6OzFrZWXBjPtgdQLquROT9gt1rnVp
+ eL5nECLtsCAZLdaIS17OkWD33Hy8K5pPy9qVusmGQmMdizfcCc1roy8fpAED/XfAM9aWCDXxc
+ /HgJRP6K7OY9dqw7BEjSSK6n+P5mTY8A78KZA3fczEFl/Zqbrl76QOpgi5SZ25lD5N+CBd4NU
+ Ua3F5x9ryr44rFlkrjJinHPaqV5fePydvSkTsE6btls+VgrtKZxF183XHS7fB/MRRN6hnrx0i
+ bbEF/Rw
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-While working on the patch series that avoids die()ing in recursive
-merges, the issue came up that bug reports (i.e. die("BUG: ...")
-constructs) should never be translated, as the target audience is the
-Git developer community, not necessarily the current user, and hence
-a translated message would make it *harder* to address the problem.
+It can be puzzling to see that was_tracked() asks to get an index entry
+by name, but does not take a negative return value for an answer.
 
-So let's stop translating the obvious ones. As it is really, really
-outside the purview of this patch series to see whether there are more
-die() statements that report bugs and are currently translated, that
-task is left for another day and patch.
+The reason we have to do this is that cache_name_pos() only looks for
+entries in stage 0, even if nobody asked for any stage in particular.
+
+Let's rewrite the logic a little bit, to handle the easy case early: if
+cache_name_pos() returned a non-negative position, we know it is a match,
+and we do not even have to compare the name again (cache_name_pos() did
+that for us already). We can say right away: yes, this file was tracked.
+
+Only if there was no exact match do we need to look harder for any
+matching entry in stage 2.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- merge-recursive.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ merge-recursive.c | 30 ++++++++++++++----------------
+ 1 file changed, 14 insertions(+), 16 deletions(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 4338b73..1b6db87 100644
+index 1b6db87..3a652b7 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -967,7 +967,7 @@ static struct merge_file_info merge_file_1(struct merge_options *o,
- 			if (!oid_eq(&a->oid, &b->oid))
- 				result.clean = 0;
- 		} else
--			die(_("BUG: unsupported object type in the tree"));
-+			die("BUG: unsupported object type in the tree");
- 	}
+@@ -667,23 +667,21 @@ static int was_tracked(const char *path)
+ {
+ 	int pos = cache_name_pos(path, strlen(path));
  
- 	return result;
-@@ -1811,7 +1811,7 @@ static int process_entry(struct merge_options *o,
- 		 */
- 		remove_file(o, 1, path, !a_mode);
- 	} else
--		die(_("BUG: fatal merge failure, shouldn't happen."));
-+		die("BUG: fatal merge failure, shouldn't happen.");
- 
- 	return clean_merge;
+-	if (pos < 0)
+-		pos = -1 - pos;
+-	while (pos < active_nr &&
+-	       !strcmp(path, active_cache[pos]->name)) {
+-		/*
+-		 * If stage #0, it is definitely tracked.
+-		 * If it has stage #2 then it was tracked
+-		 * before this merge started.  All other
+-		 * cases the path was not tracked.
+-		 */
+-		switch (ce_stage(active_cache[pos])) {
+-		case 0:
+-		case 2:
++	if (0 <= pos)
++		/* we have been tracking this path */
++		return 1;
++
++	/*
++	 * Look for an unmerged entry for the path,
++	 * specifically stage #2, which would indicate
++	 * that "our" side before the merge started
++	 * had the path tracked (and resulted in a conflict).
++	 */
++	for (pos = -1 - pos;
++	     pos < active_nr && !strcmp(path, active_cache[pos]->name);
++	     pos++)
++		if (ce_stage(active_cache[pos]) == 2)
+ 			return 1;
+-		}
+-		pos++;
+-	}
+ 	return 0;
  }
-@@ -1869,7 +1869,7 @@ int merge_trees(struct merge_options *o,
- 		for (i = 0; i < entries->nr; i++) {
- 			struct stage_data *e = entries->items[i].util;
- 			if (!e->processed)
--				die(_("BUG: unprocessed path??? %s"),
-+				die("BUG: unprocessed path??? %s",
- 				    entries->items[i].string);
- 		}
  
 -- 
 2.9.0.281.g286a8d9
