@@ -2,112 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80937203E3
-	for <e@80x24.org>; Tue, 26 Jul 2016 13:34:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E161D203E3
+	for <e@80x24.org>; Tue, 26 Jul 2016 13:43:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754868AbcGZNdz (ORCPT <rfc822;e@80x24.org>);
-	Tue, 26 Jul 2016 09:33:55 -0400
-Received: from siwi.pair.com ([209.68.5.199]:20268 "EHLO siwi.pair.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751596AbcGZNdy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2016 09:33:54 -0400
-Received: from [10.160.15.137] (unknown [167.220.24.246])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by siwi.pair.com (Postfix) with ESMTPSA id 0BAD184622;
-	Tue, 26 Jul 2016 09:33:51 -0400 (EDT)
-Subject: Re: [PATCH v2 4/8] status: per-file data collection for
- --porcelain=v2
-To:	Junio C Hamano <gitster@pobox.com>,
-	Jeff Hostetler <jeffhost@microsoft.com>
-References: <1469474750-49075-1-git-send-email-jeffhost@microsoft.com>
- <1469474750-49075-5-git-send-email-jeffhost@microsoft.com>
- <xmqq1t2h5vbt.fsf@gitster.mtv.corp.google.com>
-Cc:	git@vger.kernel.org, peff@peff.net, Johannes.Schindelin@gmx.de
-From:	Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <5797663A.5000507@jeffhostetler.com>
-Date:	Tue, 26 Jul 2016 09:31:38 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
+	id S1756383AbcGZNnf (ORCPT <rfc822;e@80x24.org>);
+	Tue, 26 Jul 2016 09:43:35 -0400
+Received: from cloud.peff.net ([50.56.180.127]:49202 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756385AbcGZNnB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2016 09:43:01 -0400
+Received: (qmail 25662 invoked by uid 102); 26 Jul 2016 13:43:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 26 Jul 2016 09:43:00 -0400
+Received: (qmail 2157 invoked by uid 107); 26 Jul 2016 13:43:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 26 Jul 2016 09:43:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Jul 2016 09:42:57 -0400
+Date:	Tue, 26 Jul 2016 09:42:57 -0400
+From:	Jeff King <peff@peff.net>
+To:	Lars Schneider <larsxschneider@gmail.com>
+Cc:	Git Mailing List <git@vger.kernel.org>, schacon@gmail.com
+Subject: Re: LARGE_PACKET_MAX wrong?
+Message-ID: <20160726134257.GB19277@sigill.intra.peff.net>
+References: <077B805D-B618-41B2-84A6-BA2E3E5644F2@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqq1t2h5vbt.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <077B805D-B618-41B2-84A6-BA2E3E5644F2@gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+On Tue, Jul 26, 2016 at 03:07:41PM +0200, Lars Schneider wrote:
 
+> I am reading the pkt-line code and stumbled across this oddity:
+> 
+> LARGE_PACKET_MAX is defined as 65520
+> https://github.com/git/git/blob/8c6d1f9807c67532e7fb545a944b064faff0f70b/pkt-line.h#L79
+> 
+> In `format_packet` we check that the 4 bytes of length data plus payload is not larger than LARGE_PACKET_MAX (= 65520)
+> https://github.com/git/git/blob/8c6d1f9807c67532e7fb545a944b064faff0f70b/pkt-line.c#L111-L112
+> 
+> However, in the documentation we state that 4 bytes of length data plus payload must not exceed 65524
+> https://github.com/git/git/blob/8c6d1f9807c67532e7fb545a944b064faff0f70b/Documentation/technical/protocol-common.txt#L70-L72
+> 
+> Who is right? Code or documentation? 
 
-On 07/25/2016 04:14 PM, Junio C Hamano wrote:
-> Jeff Hostetler <jeffhost@microsoft.com> writes:
->
->> +static void aux_updated_entry_porcelain_v2(
->> +	struct wt_status *s,
->> +	struct wt_status_change_data *d,
->> +	struct diff_filepair *p)
->> +{
->> +	switch (p->status) {
->> +	case DIFF_STATUS_ADDED:
->> +		/* {mode,sha1}_head are zero for an add. */
->> +		d->aux.porcelain_v2.mode_index = p->two->mode;
->
-> I doubt that it makes sense in the longer term to have a new "aux"
-> field.  Why isn't it part of the wt_status_change_data structure?
-> For that matter, why should these new functions have both "aux" and
-> "v2" in their names?
->
-> Imagine what should happen when somebody wants to add --porcelain=v3
-> format in 6 months.  Why must "v3" be treated differently from "v1"
-> and in a way close to "v2"?  Why shouldn't all the three be treated
-> in a similar way that "v1" has already?
+I think the documentation is wrong. Git's packet_read() will complain on
+a 65524-byte incoming packet (it actually handles up to 65523, but that
+is simply a quirk of the implementation).
 
-I wasn't sure if we wanted the v2 fields to be isolated
-and only filled in for v2 requests or whether we wanted
-them to be common going forward.  In the case of the former,
-I could see the "aux" struct becoming a union and the various
-aux_*() routines only populating one member in that union.
-And then the various per-format print routines would know
-which aux member to access.  That may be more complicated
-that necessary though -- if we assume that any subsequent
-formats (and possibly any JSON formats) would always want
-to keep these fields and add more.
+The sending sides always include the 4-byte header in the
+LARGE_PACKET_MAX calculations.
 
-I'll flatten the fields into the main structure.
+So I don't know what was intended once upon a time, but I think we have
+to stick to what the code does, because there are many deployed
+instances that we cannot break compatibility with.
 
->
->> +		oidcpy(&d->aux.porcelain_v2.oid_index, &p->two->oid);
->> +		break;
->> +
->> +	case DIFF_STATUS_DELETED:
->> +		d->aux.porcelain_v2.mode_head = p->one->mode;
->> +		oidcpy(&d->aux.porcelain_v2.oid_head, &p->one->oid);
->> +		/* {mode,oid}_index are zero for a delete. */
->> +		break;
->> +
->> +	case DIFF_STATUS_RENAMED:
->> +		d->aux.porcelain_v2.rename_score = p->score * 100 / MAX_SCORE;
->
-> I have a slight aversion against losing the precision in a helper
-> function like this that does not do the actual output, but it
-> probably is OK.
->
-> Don't we have copy detection score that is computed exactly the same
-> way for DIFF_STATUS_COPIED case, too?
-
-Yes I believe so.  I'll see about adding that.  Or rather make
-the field apply to both.
-
->
-> For readability, unless a case arm is completely empty, we should
-> have
-> 		/* fallthru */
->
-> comment where "break;" would go for a normal case arm.
-
-will do. thanks.
+-Peff
