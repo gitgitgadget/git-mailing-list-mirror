@@ -3,76 +3,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0592C203E1
-	for <e@80x24.org>; Tue, 26 Jul 2016 06:47:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A8FB203E1
+	for <e@80x24.org>; Tue, 26 Jul 2016 06:55:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753930AbcGZGrG (ORCPT <rfc822;e@80x24.org>);
-	Tue, 26 Jul 2016 02:47:06 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50224 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753564AbcGZGrF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2016 02:47:05 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3DE132CD92;
-	Tue, 26 Jul 2016 02:47:03 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Lkb8tBSWds974qRlNotAjE/IB0U=; b=C59ADJ
-	L++KnU+0uA0buk2e8ns75jeW3CZYnoSaFwCypjKbMNuYJQNg2ybUw2cbJEc9JdBc
-	6gLYZNGZ8Cgls1aBg9nEKcHKcTcx1tAQGkZ/2gkFEInao4E5IAoyfM3WLZDfgWjv
-	c+jJKCAWvPsLzNn03Kvp/SkHFmm0WZozOD28o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kXQv6S+g5oo4Yd77MUaWP0MjIFr04mV8
-	DwCcd58CqRgYNOqrdFvwq9KnP6sxG0D5lCPrn8H+ZXDkV7GTPBScwZH0vwDbZ0J0
-	d5eCgPXTgWRKrZPU1+ECoS139KYME7x8RtYOSUqRohJ0JKYQv+2lVfy0vg5iSHYt
-	Hq/vuZKi5gg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 349342CD91;
-	Tue, 26 Jul 2016 02:47:03 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AFA532CD8C;
-	Tue, 26 Jul 2016 02:47:02 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Eric Wong <e@80x24.org>
-Cc:	Duy Nguyen <pclouds@gmail.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] config.mak.uname: correct perl path on FreeBSD
-References: <20160725162125.15734-1-pclouds@gmail.com>
-	<CAPc5daWNAWjtfR7CYN3RTeT7VyvgiNX5HED0=f3F=GT8h4yKPA@mail.gmail.com>
-	<CACsJy8Df2cBAf0bWe1FLTb9cOqTX3vgNgC=ko82rG2in81R-FQ@mail.gmail.com>
-	<xmqqinvt610x.fsf@gitster.mtv.corp.google.com>
-	<20160725203316.GA32053@starla>
-	<xmqqoa5l4fh0.fsf@gitster.mtv.corp.google.com>
-	<20160726061854.GA13334@starla>
-Date:	Mon, 25 Jul 2016 23:47:00 -0700
-In-Reply-To: <20160726061854.GA13334@starla> (Eric Wong's message of "Tue, 26
-	Jul 2016 06:18:54 +0000")
-Message-ID: <xmqq8two3nh7.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C25A8012-52FC-11E6-86EF-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+	id S1755273AbcGZGzO (ORCPT <rfc822;e@80x24.org>);
+	Tue, 26 Jul 2016 02:55:14 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34900 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755074AbcGZGzM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2016 02:55:12 -0400
+Received: by mail-wm0-f68.google.com with SMTP id i5so144429wmg.2
+        for <git@vger.kernel.org>; Mon, 25 Jul 2016 23:55:11 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=W4qLCMLy73tUPfd3SDLmhqdx1S1NKREsKQ/DvhqFP+M=;
+        b=aEruhzyFJHvrfizcNib20Qz2/KRUa0isAHliviTgRAjguqWi+IF4JXgszcNmqOHz3f
+         YVbuQhiMYki+VQO3yuT9Z3Nw/yaMoqYCqvQuV3+/V7pa4CLFWUW3XoGYvNYiwRjVDPw6
+         r3VRROApv7CDTtCRKARnQGK3D2cMuMdSKhLS+tGHVpYFv4gB8Wc5qNxBryoVK9BzICF+
+         zNPRcG+lJ6p/kzCL8hdiFOOnHpdhkKdWH1XFeE/VUxNdywLdk+/ioD99QId288UPqKNt
+         PQGWT7RqRku17yvyXzDhJfT3qN5a+NK7wUGXgB9H5KbTp0lLIvthVUrHAcJK/cdKIgCQ
+         Q4Zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=W4qLCMLy73tUPfd3SDLmhqdx1S1NKREsKQ/DvhqFP+M=;
+        b=IJTl0GyutFm3vKJDNjG4WKPf85VSXC8e19q9G43TEepj87IwZsmDam0Lp+DnrM4Lqj
+         QPPXQxe1oXesqEK/Ozkg9hJ3cAr6BaPpVHOq5zMwKOntTZGjTA90dTk4KPMoOp030IQc
+         dEPSSLOE5c5tHAF5ojAny3VoyzSrvyHQkF+if/JOJPFZ2g6QIyqspHumz5QoNxRRXpOn
+         2525uIK0ObqrB4unSomj3bhUfeLyvoXq+zgvgH6g1oN8T0yh0L0ujiekK6fv7RZ+edS6
+         zhpHJWIeHgL1uwzCTtk7oRw0p2kMFrWSA3j60b+PlPocC0BU1f04glahmtiJkRFvhKmA
+         9RlQ==
+X-Gm-Message-State: AEkoouuRYAxW4o5awtNC5LQJo7yKNdfDXdlCZdeNp6cOpg+C3LoTF1/CS8d/6EMGbh0Xig==
+X-Received: by 10.194.87.101 with SMTP id w5mr20631111wjz.94.1469516110605;
+        Mon, 25 Jul 2016 23:55:10 -0700 (PDT)
+Received: from slxbook3.fritz.box (p5DDB772A.dip0.t-ipconnect.de. [93.219.119.42])
+        by smtp.gmail.com with ESMTPSA id ka6sm19465232wjb.38.2016.07.25.23.55.09
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 25 Jul 2016 23:55:10 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Subject: Re: What's cooking in git.git (Jul 2016, #07; Mon, 25)
+From:	Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqqh9bd2uy4.fsf@gitster.mtv.corp.google.com>
+Date:	Tue, 26 Jul 2016 08:55:08 +0200
+Cc:	Git Mailing List <git@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+Message-Id: <6E620FEE-7149-4A01-9146-A480FD985499@gmail.com>
+References: <xmqqh9bd2uy4.fsf@gitster.mtv.corp.google.com>
+To:	Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>
+X-Mailer: Apple Mail (2.1878.6)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Eric Wong <e@80x24.org> writes:
 
-> I dug around the freebsd history (git://github.com/freebsd/freebsd.git)
-> (~1.5G) and the 3.x and 4.x releases with perl in base still contained
-> many references to /usr/local/bin/perl
->
-> It also seems FreeBSD 2.x releases were also perl-less in base;
-> so yes, I'm alright with Duy's patch :)
+On 26 Jul 2016, at 00:50, Junio C Hamano <gitster@pobox.com> wrote:
 
-Thanks for a quick digging to converge to the simplest solution.
+> [...]
+> 
+> 
+> * ew/git-svn-http-tests (2016-07-25) 2 commits
+> - git svn: migrate tests to use lib-httpd
+> - t/t91*: do not say how to avoid the tests
+> 
+> Reuse the lib-httpd test infrastructure when testing the subversion
+> integration that interacts with subversion repositories served over
+> the http:// protocol.
+> 
+> Will merge to 'next'.
 
-Will replace and merge to 'next' soonish.
+Do I understand correctly that this patch fixes $gmane/295291 ?
+Nice! Should we add "GIT_SVN_TEST_HTTPD=true" to the .travis.yml, then?
 
+Thanks,
+Lars
