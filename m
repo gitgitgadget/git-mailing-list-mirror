@@ -2,66 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E161D203E3
-	for <e@80x24.org>; Tue, 26 Jul 2016 13:43:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33EAF203E3
+	for <e@80x24.org>; Tue, 26 Jul 2016 13:43:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756383AbcGZNnf (ORCPT <rfc822;e@80x24.org>);
-	Tue, 26 Jul 2016 09:43:35 -0400
-Received: from cloud.peff.net ([50.56.180.127]:49202 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756385AbcGZNnB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2016 09:43:01 -0400
-Received: (qmail 25662 invoked by uid 102); 26 Jul 2016 13:43:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 26 Jul 2016 09:43:00 -0400
-Received: (qmail 2157 invoked by uid 107); 26 Jul 2016 13:43:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 26 Jul 2016 09:43:25 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Jul 2016 09:42:57 -0400
-Date:	Tue, 26 Jul 2016 09:42:57 -0400
-From:	Jeff King <peff@peff.net>
-To:	Lars Schneider <larsxschneider@gmail.com>
-Cc:	Git Mailing List <git@vger.kernel.org>, schacon@gmail.com
-Subject: Re: LARGE_PACKET_MAX wrong?
-Message-ID: <20160726134257.GB19277@sigill.intra.peff.net>
-References: <077B805D-B618-41B2-84A6-BA2E3E5644F2@gmail.com>
+	id S1756425AbcGZNn5 (ORCPT <rfc822;e@80x24.org>);
+	Tue, 26 Jul 2016 09:43:57 -0400
+Received: from mout.gmx.net ([212.227.15.15]:57929 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756143AbcGZNn4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2016 09:43:56 -0400
+Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MLNpK-1bRUgV0Ia2-000dDG; Tue, 26 Jul 2016 15:43:53
+ +0200
+Date:	Tue, 26 Jul 2016 15:43:43 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Orgad Shaneh <orgads@gmail.com>
+cc:	git <git@vger.kernel.org>
+Subject: Re: [PATCH] commit: Fix description of no-verify
+In-Reply-To: <CAGHpTB+5ePbGyBMjozmwC=0ksqQShUt8Pa=QzPg4R0tf5467Xw@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1607261541170.14111@virtualbox>
+References: <1469519305-11361-1-git-send-email-orgad.shaneh@audiocodes.com> <alpine.DEB.2.20.1607261452281.14111@virtualbox> <CAGHpTB+5ePbGyBMjozmwC=0ksqQShUt8Pa=QzPg4R0tf5467Xw@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <077B805D-B618-41B2-84A6-BA2E3E5644F2@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:5LBTuoykJTLt2qFTXNgADnQiwxWwD1n3If6wQteM/fB4rfEn56t
+ lV4J8EoAcle9ySatJjR0MEv3ez84oJoKeh6SKpBUo82vxPBZmq7celSJoTvfuBbIcKn6uMA
+ dU5wu6uaXi1SlMOAdyIo0X0lvRKD94nGdq0MR8r1Qr0EqpbGHnlpB70Mdd5erutljloH2yF
+ yZHpO2e/ca4dy1Tb2J1kw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:vDaXcJLJIQg=:wbX8R1lhd2YBJFyYsXT2CZ
+ ZjTjF3uqyCpOpmSp6jxPN2A41IASos1fQPaWnFPDnABWZ/cyqUy81AgvwQ/1Estwa8QE9BGWe
+ Ur6wwGq0uNCh5C3ttd7b7YgRuQjobCOmyS2Cej3l8kVdoeKO+FoTCXn0rJWqoUHjbaYeejIHp
+ P5j1T6pRR7da8YIRRG7lXufENGmtQA6s9+Ts+y3PhkclKyIalO7CPGaQb2+fGnXVkJm9XSpnC
+ eOMww+pJIwbfWUfu0VYt2kENY1+tdet6j2Q6yohn9XY4dKRnX2KW9Z04ZN8FZ/ESUFjcaFY5w
+ ri8AIldZBzy1Wf2brraY6YtwhYXTN4/6FkImy0gweFLFhyk2VaU1lOwO96hY+Mxi/H5p0Wwwa
+ 9ZvicVL/NE/WrFte1f/mtf7LJ8NQjYmHBLTRoT8UCmF/UtKQdygf2bWVvtes9ZmBZvpHN8BU4
+ w8CgT5oAktZIyj0k0IA0MXX4zMv42hbSvC6fduFxR8PUbCE3uwCtpO+WYClztUGFfNn/PZAQw
+ NQQnESQEMSoiYAxAdOp+46cZCrKJBD4aY1oGhN1i31bnD17YfNfri2BK8OozMvWoJcJG4GlIn
+ rY9BnYUwRMd9vtjBmVhbRUjo3vaKftDyeoLyNRc6nmU/14PixOwdfGu1cp21V0Dp3cIUQljxN
+ rcBY7W7mth+pIz2ZxnyyYV+6C/LfxUD4LcTzqWQqDNhXhEYDUgouhdxRELJALJJ00qBMxUXuA
+ hIrvZ3s01boI3m6RvnZHb6i3fH2ZVD9QENJQKmzI9XmRkOzXgSLTgDvf8M1lLddMKOM3b8HEV
+ JVJcLFB
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jul 26, 2016 at 03:07:41PM +0200, Lars Schneider wrote:
+Hi Orgad,
 
-> I am reading the pkt-line code and stumbled across this oddity:
+On Tue, 26 Jul 2016, Orgad Shaneh wrote:
+
+> On Tue, Jul 26, 2016 at 3:55 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Tue, 26 Jul 2016, Orgad Shaneh wrote:
+> >
+> >> include also commit-msg hook.
+> >
+> > This comment was a bit cryptic, until I read the patch. Now I find that
+> > comment redundant with the patch.
 > 
-> LARGE_PACKET_MAX is defined as 65520
-> https://github.com/git/git/blob/8c6d1f9807c67532e7fb545a944b064faff0f70b/pkt-line.h#L79
-> 
-> In `format_packet` we check that the 4 bytes of length data plus payload is not larger than LARGE_PACKET_MAX (= 65520)
-> https://github.com/git/git/blob/8c6d1f9807c67532e7fb545a944b064faff0f70b/pkt-line.c#L111-L112
-> 
-> However, in the documentation we state that 4 bytes of length data plus payload must not exceed 65524
-> https://github.com/git/git/blob/8c6d1f9807c67532e7fb545a944b064faff0f70b/Documentation/technical/protocol-common.txt#L70-L72
-> 
-> Who is right? Code or documentation? 
+> This brings the short help in line with the documentation. I should
+> have stated that in the commit message.
 
-I think the documentation is wrong. Git's packet_read() will complain on
-a 65524-byte incoming packet (it actually handles up to 65523, but that
-is simply a quirk of the implementation).
+That would be good.
 
-The sending sides always include the 4-byte header in the
-LARGE_PACKET_MAX calculations.
+> I don't have much experience with submitting patches to Git. How do I
+> edit the commit message? Submit it as a new patch?
 
-So I don't know what was intended once upon a time, but I think we have
-to stick to what the code does, because there are many deployed
-instances that we cannot break compatibility with.
+You edit it locally via `git commit --amend` (or using rebase -i's
+`reword` if you need to adjust a commit message in the middle of a patch
+series, not at the end).
 
--Peff
+Then you send it as a reply to the first submission (--in-reply-to, if you
+use format-patch), with the `[PATCH v2]` prefix (--subject-prefix='[PATCH
+v2]' if you use format-patch).
+
+Ciao,
+Dscho
