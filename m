@@ -2,107 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2607203E3
-	for <e@80x24.org>; Tue, 26 Jul 2016 20:43:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B366203E3
+	for <e@80x24.org>; Tue, 26 Jul 2016 20:44:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757607AbcGZUnD (ORCPT <rfc822;e@80x24.org>);
-	Tue, 26 Jul 2016 16:43:03 -0400
-Received: from mta02.prd.rdg.aluminati.org ([94.76.243.215]:54399 "EHLO
-	mta02.prd.rdg.aluminati.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756929AbcGZUnB (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Jul 2016 16:43:01 -0400
-Received: from mta02.prd.rdg.aluminati.org (localhost [127.0.0.1])
-	by mta.aluminati.local (Postfix) with ESMTP id D492C22FD9;
-	Tue, 26 Jul 2016 21:42:59 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by mta02.prd.rdg.aluminati.org (Postfix) with ESMTP id C7E8636CB;
-	Tue, 26 Jul 2016 21:42:59 +0100 (BST)
-X-Quarantine-ID: <OaTZYU6mB8N9>
-X-Virus-Scanned: Debian amavisd-new at mta02.prd.rdg.aluminati.org
-Received: from mta.aluminati.local ([127.0.0.1])
-	by localhost (mta02.prd.rdg.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id OaTZYU6mB8N9; Tue, 26 Jul 2016 21:42:58 +0100 (BST)
-Received: from john.keeping.me.uk (unknown [10.2.0.9])
-	by mta02.prd.rdg.aluminati.org (Postfix) with ESMTPSA id 38A9636C8;
-	Tue, 26 Jul 2016 21:42:57 +0100 (BST)
-Date:	Tue, 26 Jul 2016 21:42:53 +0100
-From:	John Keeping <john@keeping.me.uk>
-To:	Junio C Hamano <gitster@pobox.com>
+	id S1757012AbcGZUoH (ORCPT <rfc822;e@80x24.org>);
+	Tue, 26 Jul 2016 16:44:07 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59188 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752550AbcGZUoF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2016 16:44:05 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C39653035E;
+	Tue, 26 Jul 2016 16:44:03 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lLXByRYhhhYClgQvo64fmSDaWW4=; b=SnZFPj
+	r8xcyI/g1xY2XeYpjIyVDaaGxEzbGsU1wAu7phJc4Up4MlCteUUhIH3AbZKQ5wGO
+	XZFWx4ZNba7DOdzGWMMFleOd58btAIbt/BQAjZ1ezPBOBDltI4GvvCCK+6LNBAR9
+	4igkll/adDPzsDxJPyTPnWxUKtSnVE1qWYzzk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FaFuGUsSHpTqKsbFPt0tZvcIpKrI8EVj
+	1jtjizMrXBUW3KeLtooDtWlYvAADSc5wT418invx5Cmq7IPXWD9hslbeGE0HEOTU
+	s7x+u2TanPzba/yldgWGeDA2NBtkMhHCMQ1+OyJtadn34SlzF6k9vc3u7z98Q5Yn
+	gq/UczTEqDQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id BB9D33035D;
+	Tue, 26 Jul 2016 16:44:03 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 421B03035C;
+	Tue, 26 Jul 2016 16:44:03 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	orgads@gmail.com
 Cc:	git@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] push: add shorthand for --force-with-lease branch
- creation
-Message-ID: <20160726204253.ciumvungwfwaw6el@john.keeping.me.uk>
-References: <cover.1469483499.git.john@keeping.me.uk>
- <4e07ff23715b53fcd29564be1c74a9f66dd74e1e.1469483499.git.john@keeping.me.uk>
- <xmqqpoq12w93.fsf@gitster.mtv.corp.google.com>
- <20160726080309.pr46bbtzdvnr7fd3@john.keeping.me.uk>
- <xmqqwpk8yxvb.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v2] commit: Fix description of no-verify
+References: <1469541615-21726-1-git-send-email-orgads@gmail.com>
+Date:	Tue, 26 Jul 2016 13:44:01 -0700
+In-Reply-To: <1469541615-21726-1-git-send-email-orgads@gmail.com>
+	(orgads@gmail.com's message of "Tue, 26 Jul 2016 17:00:15 +0300")
+Message-ID: <xmqqoa5kyvse.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqwpk8yxvb.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.6.2 (2016-06-11)
+Content-Type: text/plain
+X-Pobox-Relay-ID: B0225AB2-5371-11E6-8E26-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jul 26, 2016 at 12:59:04PM -0700, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
-> 
-> >> > @@ -2294,6 +2294,8 @@ int parse_push_cas_option(struct push_cas_option *cas, const char *arg, int unse
-> >> >  	entry = add_cas_entry(cas, arg, colon - arg);
-> >> >  	if (!*colon)
-> >> >  		entry->use_tracking = 1;
-> >> > +	else if (!colon[1])
-> >> > +		memset(entry->expect, 0, sizeof(entry->expect));
-> >> 
-> >> hashclr()?
-> >
-> > Yes (and in the following patch as well).  I hadn't realised that
-> > function exists.
-> 
-> Thanks; I've locally tweaked these two patches; the interdiff looks
-> like this.
+orgads@gmail.com writes:
 
-Thanks.  I'm about to send v3 anyway to pull a test forward to address
-Jakub's comment.  I also used oidclr() for the last two changes below.
+> Subject: Re: [PATCH v2] commit: Fix description of no-verify
 
->  remote.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/remote.c b/remote.c
-> index e8b7bac..7eaf3c8 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -2304,7 +2304,7 @@ int parse_push_cas_option(struct push_cas_option *cas, const char *arg, int unse
->  	if (!*colon)
->  		entry->use_tracking = 1;
->  	else if (!colon[1])
-> -		memset(entry->expect, 0, sizeof(entry->expect));
-> +		hashclr(entry->expect);
->  	else if (get_sha1(colon + 1, entry->expect))
->  		return error("cannot parse expected object name '%s'", colon + 1);
->  	return 0;
-> @@ -2354,7 +2354,7 @@ static void apply_cas(struct push_cas_option *cas,
->  		if (!entry->use_tracking)
->  			hashcpy(ref->old_oid_expect.hash, cas->entry[i].expect);
->  		else if (remote_tracking(remote, ref->name, &ref->old_oid_expect))
-> -			memset(&ref->old_oid_expect, 0, sizeof(ref->old_oid_expect));
-> +			hashclr(ref->old_oid_expect.hash);
->  		return;
->  	}
->  
-> @@ -2364,7 +2364,7 @@ static void apply_cas(struct push_cas_option *cas,
->  
->  	ref->expect_old_sha1 = 1;
->  	if (remote_tracking(remote, ref->name, &ref->old_oid_expect))
-> -		memset(&ref->old_oid_expect, 0, sizeof(ref->old_oid_expect));
-> +		hashclr(ref->old_oid_expect.hash);
->  }
->  
->  void apply_push_cas(struct push_cas_option *cas,
+Following the prevailing style from "git shortlog --no-merges -100"
+would make it "commit: fix description of no-verify", but "fix" is
+too generic a word and does not convey as much information as it
+wastes bits ;-)
+
+    Subject: commit: --no-verify option skips commit-msg hook, too
+
+perhaps?
+
+> From: Orgad Shaneh <orgads@gmail.com>
+>
+> include also commit-msg hook.
+
+Then this half-sentence can go completely.
+
+Thanks; I'll do the above myself while queuing, so there is no need
+to resend.
+
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 163dbca..2725712 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -1616,7 +1616,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+>  		OPT_BOOL(0, "interactive", &interactive, N_("interactively add files")),
+>  		OPT_BOOL('p', "patch", &patch_interactive, N_("interactively add changes")),
+>  		OPT_BOOL('o', "only", &only, N_("commit only specified files")),
+> -		OPT_BOOL('n', "no-verify", &no_verify, N_("bypass pre-commit hook")),
+> +		OPT_BOOL('n', "no-verify", &no_verify, N_("bypass pre-commit and commit-msg hooks")),
+>  		OPT_BOOL(0, "dry-run", &dry_run, N_("show what would be committed")),
+>  		OPT_SET_INT(0, "short", &status_format, N_("show status concisely"),
+>  			    STATUS_FORMAT_SHORT),
