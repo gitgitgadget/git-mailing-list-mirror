@@ -2,75 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 561D9203E1
-	for <e@80x24.org>; Tue, 26 Jul 2016 11:19:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2AE2A203E3
+	for <e@80x24.org>; Tue, 26 Jul 2016 12:16:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753306AbcGZLTT (ORCPT <rfc822;e@80x24.org>);
-	Tue, 26 Jul 2016 07:19:19 -0400
-Received: from mta01.prd.rdg.aluminati.org ([94.76.243.214]:51596 "EHLO
-	mta01.prd.rdg.aluminati.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751261AbcGZLTR convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2016 07:19:17 -0400
-Received: from mta01.prd.rdg.aluminati.org (localhost [127.0.0.1])
-	by mta.aluminati.local (Postfix) with ESMTP id B2EDDC0433;
-	Tue, 26 Jul 2016 12:19:15 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by mta01.prd.rdg.aluminati.org (Postfix) with ESMTP id AD03A20B89;
-	Tue, 26 Jul 2016 12:19:15 +0100 (BST)
-X-Quarantine-ID: <h4mGZzXUChVz>
-X-Virus-Scanned: Debian amavisd-new at mta01.prd.rdg.aluminati.org
-Received: from mta.aluminati.local ([127.0.0.1])
-	by localhost (mta01.prd.rdg.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id h4mGZzXUChVz; Tue, 26 Jul 2016 12:19:14 +0100 (BST)
-Received: from john.keeping.me.uk (unknown [10.2.0.10])
-	by mta01.prd.rdg.aluminati.org (Postfix) with ESMTPSA id D0C756220B;
-	Tue, 26 Jul 2016 12:19:11 +0100 (BST)
-Date:	Tue, 26 Jul 2016 12:19:11 +0100
-From:	John Keeping <john@keeping.me.uk>
-To:	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-Cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] push: add shorthand for --force-with-lease branch
- creation
-Message-ID: <20160726111911.cehaitav4enas7dm@john.keeping.me.uk>
-References: <cover.1469483499.git.john@keeping.me.uk>
- <4e07ff23715b53fcd29564be1c74a9f66dd74e1e.1469483499.git.john@keeping.me.uk>
- <57973BAD.2020607@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <57973BAD.2020607@gmail.com>
-User-Agent: Mutt/1.6.2 (2016-06-11)
-Content-Transfer-Encoding: 8BIT
+	id S1753877AbcGZMQR (ORCPT <rfc822;e@80x24.org>);
+	Tue, 26 Jul 2016 08:16:17 -0400
+Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:40603 "EHLO sapo.pt"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753802AbcGZMQP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2016 08:16:15 -0400
+Received: (qmail 3128 invoked from network); 26 Jul 2016 12:16:10 -0000
+Received: (qmail 2453 invoked from network); 26 Jul 2016 12:16:10 -0000
+Received: from unknown (HELO catarina) (vascomalmeida@sapo.pt@[85.246.157.91])
+          (envelope-sender <vascomalmeida@sapo.pt>)
+          by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
+          for <gitster@pobox.com>; 26 Jul 2016 12:16:05 -0000
+X-PTMail-RemoteIP: 85.246.157.91
+X-PTMail-AllowedSender-Action: 
+X-PTMail-Service: default
+Message-ID: <1469535363.1845.8.camel@sapo.pt>
+Subject: Re: [PATCH v2] i18n: notes: mark comment for translation
+From:	Vasco Almeida <vascomalmeida@sapo.pt>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Git <git@vger.kernel.org>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Date:	Tue, 26 Jul 2016 12:16:03 +0000
+In-Reply-To: <xmqqr3ah621l.fsf@gitster.mtv.corp.google.com>
+References: <1469283027-23055-1-git-send-email-vascomalmeida@sapo.pt>
+	 <xmqqr3ah621l.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.20.4 (3.20.4-1.fc24) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jul 26, 2016 at 12:30:05PM +0200, Jakub Narębski wrote:
-> W dniu 2016-07-25 o 23:59, John Keeping pisze:
+A Seg, 25-07-2016 às 10:49 -0700, Junio C Hamano escreveu:
+> Vasco Almeida <vascomalmeida@sapo.pt> writes:
 > 
-> > +test_expect_success 'new branch covered by force-with-lease (explicit)' '
-> > +	setup_srcdst_basic &&
-> > +	(
-> > +		cd dst &&
-> > +		git branch branch master &&
-> > +		git push --force-with-lease=branch: origin branch
-> > +	) &&
-> > +	git ls-remote dst refs/heads/branch >expect &&
-> > +	git ls-remote src refs/heads/branch >actual &&
-> > +	test_cmp expect actual
-> > +'
+> > 
+> >  static const char note_template[] =
+> > -	"\nWrite/edit the notes for the following object:\n";
+> > +	N_("Write/edit the notes for the following object:");
+> >  
+> >  struct note_data {
+> >  	int given;
+> > @@ -179,7 +179,8 @@ static void prepare_note_data(const unsigned
+> > char *object, struct note_data *d,
+> >  			copy_obj_to_fd(fd, old_note);
+> >  
+> >  		strbuf_addch(&buf, '\n');
+> > -		strbuf_add_commented_lines(&buf, note_template,
+> > strlen(note_template));
+> > +		strbuf_addch(&buf, '\n');
+> > +		strbuf_add_commented_lines(&buf, _(note_template),
+> > strlen(_(note_template)));
 > 
-> Do we need to test the negative, that is that if branch is not
-> new it prevents push (e.g. when <branch> is HEAD), or is it
-> covered by other tests?
+> I do not quite understand why you want the blank lines surrounding
+> the message outside add_commented_lines() call.  I think the intent
+> is to produce
+> 
+>     #
+>     # Write/edit the notes for the following object:
+>     #
 
-It's covered by a test in patch 3 (at least for the implicit case added
-there), but I could pull that forwards.  In fact, converting that test
-to the explicit syntax will make it simpler since we won't need to set
-up a non-fast-forward push.
+If this is what we want, I will send a re-roll accordingly.
+
+> with the single call.  If you pushed the newlines outside the
+> message, wouldn't you end up having this instead (____ denoting an
+> extra empty line each before and after the message)?
+> 
+>     ____
+>     # Write/edit the notes for the following object:
+>     ____
+> 
+Yes, this was my intention. The original does:
+
+    #
+    # Write/edit the notes for the following object:
+    ____
+
