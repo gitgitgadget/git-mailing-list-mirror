@@ -2,100 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33231203E3
-	for <e@80x24.org>; Tue, 26 Jul 2016 21:07:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29FB5203E4
+	for <e@80x24.org>; Tue, 26 Jul 2016 21:13:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758153AbcGZVFb (ORCPT <rfc822;e@80x24.org>);
-	Tue, 26 Jul 2016 17:05:31 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50524 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758060AbcGZVFa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2016 17:05:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8962A305E7;
-	Tue, 26 Jul 2016 17:05:28 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8kgCdk46BiX2MNFx7tfyPAUtnUc=; b=Zm/j5V
-	/e0kMq3dAGv8bcs0gT4tpeEntpwyOIQf6/8559jitxUal5Ze6l9r9YFlASubmZ69
-	76y02CSu2ciS4fbkYXL864SSAqaf4TFL3nb4x9AODLXkfWgS1hZIRzd69rCqueo7
-	/9whgCb1Z5iGOIzdNqsP9K2cz8RUu+c9H7qyI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HTNGFfTKLQ+QBViR8rPFTgjHgv5bv0yc
-	F7pBLFaoGn54qYPZuyG+kMJ7lzAuTpcyjAzKrJrWIir6SA4mgtX8f9uT2wx8kjYs
-	Z1PIPGMVqwyTt2r4KIoCY2dmq3mEwkWVZE8JWyhSpqngGNO5/XgAgMmnlKuUQBoi
-	+ayiP7ZI4RE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 80314305E6;
-	Tue, 26 Jul 2016 17:05:28 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1758064AbcGZVNl (ORCPT <rfc822;e@80x24.org>);
+	Tue, 26 Jul 2016 17:13:41 -0400
+Received: from siwi.pair.com ([209.68.5.199]:20230 "EHLO siwi.pair.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753502AbcGZVNk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2016 17:13:40 -0400
+Received: from jeffhost-linux1.corp.microsoft.com (unknown [167.220.24.246])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E9126305E5;
-	Tue, 26 Jul 2016 17:05:27 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Orgad Shaneh <orgads@gmail.com>
-Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git <git@vger.kernel.org>
-Subject: Re: [PATCH] merge: Run commit-msg hook
-References: <1469519323-11420-1-git-send-email-orgad.shaneh@audiocodes.com>
-	<alpine.DEB.2.20.1607261456480.14111@virtualbox>
-	<CAGHpTBLr9q8h-+hVUzsTS1aS1TyZjz9gYM_T_ZBdY=o26JGaHw@mail.gmail.com>
-Date:	Tue, 26 Jul 2016 14:05:25 -0700
-In-Reply-To: <CAGHpTBLr9q8h-+hVUzsTS1aS1TyZjz9gYM_T_ZBdY=o26JGaHw@mail.gmail.com>
-	(Orgad Shaneh's message of "Tue, 26 Jul 2016 16:50:36 +0300")
-Message-ID: <xmqq8twoyusq.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: ADDD8DDC-5374-11E6-93EE-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+	by siwi.pair.com (Postfix) with ESMTPSA id D6BC284619;
+	Tue, 26 Jul 2016 17:13:38 -0400 (EDT)
+From:	Jeff Hostetler <git@jeffhostetler.com>
+To:	git@vger.kernel.org
+Cc:	gitster@pobox.com, Johannes.Schindelin@gmx.de,
+	Jeff Hostetler <git@jeffhostetler.com>
+Subject: [PATCH v3 0/8] status: V2 porcelain status
+Date:	Tue, 26 Jul 2016 17:11:15 -0400
+Message-Id: <1469567483-58794-1-git-send-email-git@jeffhostetler.com>
+X-Mailer: git-send-email 2.8.0.rc4.17.gac42084.dirty
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Orgad Shaneh <orgads@gmail.com> writes:
+This patch series adds porcelain V2 format to status.
+This provides detailed information about file changes
+and about the current branch.
 
->> Hmm. This is not very convincing to me, as
->>
->> - if you call commit-msg in `git merge` now, why not `prepare-commit-msg`?
->
-> prepare-commit-msg is already called, a few lines above this addition.
+The new output is accessed via:
+    git status --porcelain=v2 [--branch]
 
-I do not see such call in contrib/example/git-merge.sh; could it be
-a recent bug that it calls it?
+Relative to the v2 patch series, in this v3 patch series
+I have changed the format of the lines for ordinary changes
+to make it easier to distinguish renames and copies from
+normal entries.  I also split the --branch header information
+onto separate lines, since we're not bound by any requirement
+to have a single ## header line.  I document the argument
+as --porcelain=v2, but silently also allow --porcelain=2.
 
->> - a merge is a different beast from a simple commit. That is why we have
->>   two different commands for them. A hook to edit the merge message may
->>   need to know the *second* parent commit, too, for example to generate
->>   a diffstat, or to add information about changes in an "evil commit".
->
-> That is correct for a post-merge hook. Why should *message validation* differ
-> between simple and merge commit?
 
-Have you seen a typical merge commit message?  They certainly look
-different to me and different rules would apply.
+Jeff Hostetler (8):
+  status: rename long-format print routines
+  status: cleanup API to wt_status_print
+  status: support --porcelain[=<version>]
+  status: per-file data collection for --porcelain=v2
+  status: print per-file porcelain v2 status data
+  status: print branch info with --porcelain=v2 --branch
+  status: update git-status.txt for --porcelain=v2
+  status: tests for --porcelain=v2
 
->> - if Gerrit is the intended user, would it not make more sense to
->>   introduce a new hook, e.g. `merge-msg` (and `prepare-merge-msg`), as you
->>   have to teach Gerrit a new trick anyway?
->
-> Why is that new? Every commit in gerrit has a Change-Id footer, which is
-> generated by commit-msg hook.
+ Documentation/git-status.txt | 100 +++++++-
+ builtin/commit.c             |  78 +++---
+ t/t7060-wtstatus.sh          |  21 ++
+ t/t7064-wtstatus-pv2.sh      | 585 +++++++++++++++++++++++++++++++++++++++++++
+ wt-status.c                  | 567 ++++++++++++++++++++++++++++++++++++-----
+ wt-status.h                  |  19 +-
+ 6 files changed, 1260 insertions(+), 110 deletions(-)
+ create mode 100755 t/t7064-wtstatus-pv2.sh
 
-Hmm, I didn't know Gerrit gave Change-ID to merges.
+-- 
+2.8.0.rc4.17.gac42084.dirty
 
-In any case, I would think this is completely new.  Without this
-change, commit-msg was not called for merges, so Gerrit wouldn't
-have added Change-ID to merges with that mechanism.
-
-A new merge-msg hook would make more sense, if we were making any
-change.  I do not want to get yelled at by those who wrote their
-commit-msg hooks long time ago and have happily been using them that
-updated Git started calling them for their merges where their
-validation logic for their single-parent commit do not apply at all.
