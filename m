@@ -2,124 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F6B9203E1
-	for <e@80x24.org>; Tue, 26 Jul 2016 08:03:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CE9D203E1
+	for <e@80x24.org>; Tue, 26 Jul 2016 09:15:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753301AbcGZIDW (ORCPT <rfc822;e@80x24.org>);
-	Tue, 26 Jul 2016 04:03:22 -0400
-Received: from mta01.prd.rdg.aluminati.org ([94.76.243.214]:55863 "EHLO
-	mta01.prd.rdg.aluminati.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751660AbcGZIDT (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Jul 2016 04:03:19 -0400
-Received: from mta01.prd.rdg.aluminati.org (localhost [127.0.0.1])
-	by mta.aluminati.local (Postfix) with ESMTP id D032DC4736;
-	Tue, 26 Jul 2016 09:03:16 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by mta01.prd.rdg.aluminati.org (Postfix) with ESMTP id C4CE82092C;
-	Tue, 26 Jul 2016 09:03:16 +0100 (BST)
-X-Quarantine-ID: <q7fJqsTCGm1l>
-X-Virus-Scanned: Debian amavisd-new at mta01.prd.rdg.aluminati.org
-Received: from mta.aluminati.local ([127.0.0.1])
-	by localhost (mta01.prd.rdg.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id q7fJqsTCGm1l; Tue, 26 Jul 2016 09:03:15 +0100 (BST)
-Received: from john.keeping.me.uk (unknown [10.2.0.9])
-	by mta01.prd.rdg.aluminati.org (Postfix) with ESMTPSA id D2C8362000;
-	Tue, 26 Jul 2016 09:03:13 +0100 (BST)
-Date:	Tue, 26 Jul 2016 09:03:09 +0100
-From:	John Keeping <john@keeping.me.uk>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	git@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] push: add shorthand for --force-with-lease branch
- creation
-Message-ID: <20160726080309.pr46bbtzdvnr7fd3@john.keeping.me.uk>
-References: <cover.1469483499.git.john@keeping.me.uk>
- <4e07ff23715b53fcd29564be1c74a9f66dd74e1e.1469483499.git.john@keeping.me.uk>
- <xmqqpoq12w93.fsf@gitster.mtv.corp.google.com>
+	id S1751918AbcGZJP4 (ORCPT <rfc822;e@80x24.org>);
+	Tue, 26 Jul 2016 05:15:56 -0400
+Received: from mail-qk0-f178.google.com ([209.85.220.178]:36801 "EHLO
+	mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753229AbcGZJPy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2016 05:15:54 -0400
+Received: by mail-qk0-f178.google.com with SMTP id x1so602527qkb.3
+        for <git@vger.kernel.org>; Tue, 26 Jul 2016 02:15:53 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=6xnyfpOE2E3muKrENgSAu0CIroalTnPuzK5CDy3vG0M=;
+        b=sOODq1ukQqqS5uqGuTBWGx0CkMPJYSTbArEq2pEUeAZpRwwCC4P+MgLk0TjwLrR2Ef
+         YeFKdT3uc6YfrErZOIXFJs8NtqjR0KS7KqrA/thx2hUNfpqWVVWiFTfo+6/lk9WVTYE6
+         26VjxlmVC62rYb/i1vObGsqXlR/JxvWIjs1PIoal1H6TsFowKonGnbzYihHZ42nJyKna
+         LEUCVLlrPn21dg9oeXyibFNdYK9fgQrU6bGzb4l6aeMRc0oAgiF+eio/8QgjN0lhvTgG
+         ccsJvTsHKIMrza6odnyR6NBInYe2B0pkaQz9OHAKzfu+2B1TkDP/8u7SQKq6r9iOBhXj
+         qu+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=6xnyfpOE2E3muKrENgSAu0CIroalTnPuzK5CDy3vG0M=;
+        b=RNwUadWBzL8CvKEs5RzZAxHhtQaq7R2is/oILaHDznwuXLr1kH9ceOZv5O/1++wsOc
+         MMv46BCzESGKwktAc1TuIxc37vlvVZF/KEL2gStZeYCssgAb3VYaNqzHsOG5FxMbyKEz
+         5ZLeZoeEjG6ozHA1RnJPBtz5WugjlWPIsC/1RRYnkMMgetnRfwqMGjlcVBX2XSnypaO4
+         ox2gaOupSHn7c4oRGsXSINRXtj/8s0uuacouPmzqLVR64KUGwpbEmZ1ZlNXchtWSq8Wu
+         hpBOp7mYOE9dagXi58vc3h/RdvYhftKGs2xTK7O8ZxIM71bFvMzZLlkHZq5f4GHqT1w8
+         92DA==
+X-Gm-Message-State: AEkooutS4f8hwFUaEwB8VTddB/8fR2Nv/7CATqzg+wDt7EsVciCRVMaS5tGyXxEJ0w+HySeroutrLhnrWJyNOw==
+X-Received: by 10.233.220.133 with SMTP id q127mr28852638qkf.33.1469524553341;
+ Tue, 26 Jul 2016 02:15:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqpoq12w93.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.6.2 (2016-06-11)
+Received: by 10.200.49.164 with HTTP; Tue, 26 Jul 2016 02:15:52 -0700 (PDT)
+In-Reply-To: <nn1euf$h6q$1@ger.gmane.org>
+References: <nn1euf$h6q$1@ger.gmane.org>
+From:	Manlio Perillo <manlio.perillo@gmail.com>
+Date:	Tue, 26 Jul 2016 11:15:52 +0200
+Message-ID: <CAAToxAFuyzjf1-W4J5v1hpeyn_N4T086nb--+i0dS4QmarW5dQ@mail.gmail.com>
+Subject: Re: [ANN] Pro Git Reedited 2nd Edition
+To:	Jon Forrest <nobozo@gmail.com>
+Cc:	Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Jul 25, 2016 at 03:22:48PM -0700, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
-> 
-> > Allow the empty string to stand in for the null SHA-1 when pushing a new
-> > branch, like we do when deleting branches.
-> >
-> > This means that the following command ensures that `new-branch` is
-> > created on the remote (that is, is must not already exist):
-> >
-> > 	git push --force-with-lease=new-branch: origin new-branch
-> >
-> > Signed-off-by: John Keeping <john@keeping.me.uk>
-> > ---
-> > New in v2.
-> >
-> >  Documentation/git-push.txt |  3 ++-
-> >  remote.c                   |  2 ++
-> >  t/t5533-push-cas.sh        | 12 ++++++++++++
-> >  3 files changed, 16 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-> > index bf7c9a2..927a034 100644
-> > --- a/Documentation/git-push.txt
-> > +++ b/Documentation/git-push.txt
-> > @@ -201,7 +201,8 @@ if it is going to be updated, by requiring its current value to be
-> >  the same as the specified value `<expect>` (which is allowed to be
-> >  different from the remote-tracking branch we have for the refname,
-> >  or we do not even have to have such a remote-tracking branch when
-> > -this form is used).
-> > +this form is used).  If `<expect>` is the empty string, then the named ref
-> > +must not already exist.
-> >  +
-> >  Note that all forms other than `--force-with-lease=<refname>:<expect>`
-> >  that specifies the expected current value of the ref explicitly are
-> > diff --git a/remote.c b/remote.c
-> > index a326e4e..af94892 100644
-> > --- a/remote.c
-> > +++ b/remote.c
-> > @@ -2294,6 +2294,8 @@ int parse_push_cas_option(struct push_cas_option *cas, const char *arg, int unse
-> >  	entry = add_cas_entry(cas, arg, colon - arg);
-> >  	if (!*colon)
-> >  		entry->use_tracking = 1;
-> > +	else if (!colon[1])
-> > +		memset(entry->expect, 0, sizeof(entry->expect));
-> 
-> hashclr()?
+On Sun, Jul 24, 2016 at 6:07 AM, Jon Forrest <nobozo@gmail.com> wrote:
+> This an announcement of Pro Git Reedited 2nd Edition, which is
+> a substantial edit of Chacon and Straub's Pro Git 2nd Edition.
+> I spent a lot of time tightening it up and maybe clearing
+> up some explanations.
+>
+> The pdf is downloadable at:
+> https://drive.google.com/open?id=0B-Llso12P94-Ujg5Z1dhWUhhMm8
+>
 
-Yes (and in the following patch as well).  I hadn't realised that
-function exists.
+Thanks for your work.
 
-> >  	else if (get_sha1(colon + 1, entry->expect))
-> >  		return error("cannot parse expected object name '%s'", colon + 1);
-> >  	return 0;
-> > diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
-> > index c732012..5e7f6e9 100755
-> > --- a/t/t5533-push-cas.sh
-> > +++ b/t/t5533-push-cas.sh
-> > @@ -191,4 +191,16 @@ test_expect_success 'cover everything with default force-with-lease (allowed)' '
-> >  	test_cmp expect actual
-> >  '
-> >  
-> > +test_expect_success 'new branch covered by force-with-lease (explicit)' '
-> > +	setup_srcdst_basic &&
-> > +	(
-> > +		cd dst &&
-> > +		git branch branch master &&
-> > +		git push --force-with-lease=branch: origin branch
-> > +	) &&
-> > +	git ls-remote dst refs/heads/branch >expect &&
-> > +	git ls-remote src refs/heads/branch >actual &&
-> > +	test_cmp expect actual
-> > +'
-> > +
-> >  test_done
+I have noted a problem when reading the PDF with Chromium: the
+anchors/links do not work.
+
+I don't know if this is an issue with the conversion to PDF or an
+issue with Chromium.
+
+
+Manlio
