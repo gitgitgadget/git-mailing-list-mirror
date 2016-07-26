@@ -2,118 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15300203E3
-	for <e@80x24.org>; Tue, 26 Jul 2016 12:24:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA645203E3
+	for <e@80x24.org>; Tue, 26 Jul 2016 12:25:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755021AbcGZMYS (ORCPT <rfc822;e@80x24.org>);
-	Tue, 26 Jul 2016 08:24:18 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34462 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752056AbcGZMYQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2016 08:24:16 -0400
-Received: by mail-wm0-f66.google.com with SMTP id q128so1416155wma.1
-        for <git@vger.kernel.org>; Tue, 26 Jul 2016 05:24:16 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=35E7Ud7vlTObXZDqfZxCTu8HQ7OxorBeKvqKI9HkMW0=;
-        b=G82JwpMJz9nwI7WmEHjNAG5aIWFVmdh2MxMeoOW7hENQjd4QDiioJQwnSKU/eTtub6
-         ooFrL7gMGRJVvN7i3ltOOI5KWnNPEMtbwPRpH0LM6HDT9BtnOGvEEePMIbugHk0zwZpE
-         RyAFQXfeptXnlm/TON2GG1f+iOvUGY8H7sdbLXaz6elPjqKvA1Lc5Ay6hHMPCP1y6s8i
-         L+MV4/esi+6Wkt3NuNwbW/J1FsFbedgijg8MAWeHQwyBPYgNowgexCRAROKzosvn4ILX
-         Ji7PwsfnNooGYRySz40RdQ+wpbUcxwX/rJkSTCoqK0svg+V0/QqJ1I8WdMDZA9JO+QXJ
-         eEsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding;
-        bh=35E7Ud7vlTObXZDqfZxCTu8HQ7OxorBeKvqKI9HkMW0=;
-        b=D6RqUje+n5C3qqgYvIimmsPVATLCeBdNJr6bYPfEUnWvxXZWi2scr+qCgfh/Y1ZXti
-         7/yBQVekwz4vLWKFcmsdstsguqJPC+1F+w0P0rQJgyBjrWyUs7EnvDzjBDKh7uYkS6YX
-         pe+enMQdGSZ9oy+YjV1ldMBKxfWqEn40TILzqVS6q/YXosyjHpiK7HAjLfcmzKAr9jpf
-         fl3Lg3WWYcPvJw/p0Wuk+tLSNW6qY3tjkMAVUa39/RX/AeqIpHN2/2q6zb+kZz614ccM
-         QfgrNequFCgAfTcTVFRediIQj7/cevUzM/eJIQGFzc6nUauSoUsLD5djTY3aQioUGtos
-         rvHQ==
-X-Gm-Message-State: AEkooutOjhPm79FtkQvHyco/rhUY/7+hS0lxz0VtKlIEKfIHkya8YYInymTevoijo4S9AQ==
-X-Received: by 10.194.80.104 with SMTP id q8mr22088214wjx.151.1469535855214;
-        Tue, 26 Jul 2016 05:24:15 -0700 (PDT)
-Received: from [192.168.1.26] (afq129.neoplus.adsl.tpnet.pl. [83.25.146.129])
-        by smtp.googlemail.com with ESMTPSA id q4sm710894wjk.24.2016.07.26.05.24.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 26 Jul 2016 05:24:14 -0700 (PDT)
-Subject: Re: [PATCH v1 3/3] convert: add filter.<driver>.useProtocol option
-To:	Lars Schneider <larsxschneider@gmail.com>
-References: <20160722154900.19477-1-larsxschneider@gmail.com>
- <20160722154900.19477-4-larsxschneider@gmail.com>
- <5792B622.5040306@gmail.com> <0FB8A921-3465-4081-A36D-D2F19A8ED63D@gmail.com>
- <579521A1.4070501@gmail.com> <5795337A.1040701@gmail.com>
- <34F8B256-A129-4238-AE1A-CD8C1DE8C7DA@gmail.com>
-Cc:	Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-	mlbright@gmail.com, Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <e@80x24.org>
-Newsgroups: gmane.comp.version-control.git
-From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <57975662.9050707@gmail.com>
-Date:	Tue, 26 Jul 2016 14:24:02 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
+	id S1754689AbcGZMZb (ORCPT <rfc822;e@80x24.org>);
+	Tue, 26 Jul 2016 08:25:31 -0400
+Received: from mout.gmx.net ([212.227.15.19]:49435 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752723AbcGZMZ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2016 08:25:29 -0400
+Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0M0gww-1bB2le3OhS-00unNR; Tue, 26 Jul 2016 14:25:08
+ +0200
+Date:	Tue, 26 Jul 2016 14:24:59 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Johannes Sixt <j6t@kdbg.org>, Duy Nguyen <pclouds@gmail.com>,
+	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH v4 02/16] Report bugs consistently
+In-Reply-To: <xmqqlh0p2vmn.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1607261421310.14111@virtualbox>
+References: <cover.1467902082.git.johannes.schindelin@gmx.de> <cover.1469187652.git.johannes.schindelin@gmx.de> <72d1d530bb0e3c96d3affd6679cb7c26026d8321.1469187652.git.johannes.schindelin@gmx.de> <xmqqfuqx4cli.fsf@gitster.mtv.corp.google.com>
+ <20160725221700.GB14131@sigill.intra.peff.net> <xmqqlh0p2vmn.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <34F8B256-A129-4238-AE1A-CD8C1DE8C7DA@gmail.com>
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:xgDmNuoNUkuxmxfvEefZBsGuHNhB8Q2dY8jpXKZK/62aGaVBL02
+ 75kSdjc5PwBlGa+ik5V8GPEl0QXW0J3SmGgWDYZzL9ENfYYvGhy/ljSV2TELgZ4Jm7qrOSf
+ rdlUFVPCe4wqw/i9W46xy5GEbc+BCnatgcGmrxpchhx9djnmxKpgOaZmu8GBCfL/hFJXjUV
+ Tw0+/OIybdv96ovwxNV6w==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:iBpPdN1FuAY=:WX/mP5xVRoejNagPqxgZD6
+ dRXSQGpGz/yHd4E2Xvb1mvwXsYgAtNoNaAuWlkEPc9Fvs/jObYFmKosar4hgxT/TYazOurumu
+ C3QTZbLLbcLuifsIWMzTmx5wufHvejx6QezsDtUws/lyuqrNm9ql20thySVWlIrieMIHV67xI
+ C2Ysi1HR4Sf2fqmCV8uQGKPrSdkVD+c04hf5wFaXk0mha/FtNz/JLWO3NQjAFzMkH9tjhQAnx
+ Xj1JKT4F347bVY8wiD4KOEbKO9dLBg5QhNV1B0iw25phBsiUh5YwKMCV5DC67sAgAGIT4/sqI
+ 5TIXuZvIlkr+DEAlZhHNfaN8EWz1x52FtRG5FLfz+BLUNCM45BoTwCAa6gcJDbaueEzneMdgf
+ +YuhNo3/alRwFR7g6/T8KxyEmIgGN3akttYd+nJXjXPnOFVLj6Wysdf8K8SrBlOEWb/fg6s9R
+ A1bLTcDuOxgoGojAoXCc3ekJHp9vE0ICpnlQB8EkmQR22eFu3NBAQOIQc1wqezPmLz7BOg6L+
+ tCguPpDw9Y5K/4xTO7KyGiODyOh6w64G/AdyOuIg99RVfjKkPqbPqpfwPJI2RT2NXWZEUcWq4
+ 0KotbK9f5WXVHoG/ZNYtIIOjJHQOEXro7xDOPw2bkVg3FmxhmhhrH+kuD+VvpSzM1y7V20O28
+ Yw7qYVL4b2BNJsNWw+Y8lxxdgMMqo2UIzDWJyi/65uqBnYnbZbz7SviDgks35NeMQABa9L9bQ
+ u+IDdtXwwkiBJHE0NuKcuNpUdMUTr6sF/QHYJuLeOgAB0Lu0sD4eSb9z82PGMc82miSo19DHl
+ ny/sFIKCBvwm6tTkavUSkOCjHy2qGt0N4W854iaswVuFgdFd7Oy/5AwyczBV+2P07GGqMeodi
+ U0IF7onJIR3BAy8HKjMmmolqDGTdPi1Ps2HvHsKMkKyXUC+QT7z/8uDmKKNssn6FQtJcn0T32
+ 4zSWZkHLXHvbWhAbN7HZu/uXRbyS1mkQ=
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-W dniu 2016-07-25 o 22:16, Lars Schneider pisze:
-> 
-> On 24 Jul 2016, at 23:30, Jakub Narêbski <jnareb@gmail.com> wrote:
-> 
->> W dniu 2016-07-24 o 22:14, Jakub Narêbski pisze:
->>> W dniu 2016-07-24 o 20:36, Lars Schneider pisze:
->>
->>>> I agree that the name is not ideal. "UseProtocol" as it is would be a boolean. 
->>>> I thought about "persistent" but this name wouldn't convey the scope of the 
->>>> persistency ("persistent for one Git operation" vs. "persistent for many Git 
->>>> operations"). What do you think about the protocol as int version idea
->>>> described in $gmane/300155 ?
->>>
->>> You mean the `protocol` as a config variable name (fully name being
->>> `filter.<driver>.protocol`), being integer-valued, isn't it? Wouldn't
->>> `protocolVersion` be a more explicit?
->>
->> Just throwing out further ideas:
->>
->> Perhaps make `persistent` string-valued variable, with the only value
->> supported for now, namely "per-process" / "operation"?
->>
->> Perhaps require for `pidfile` to be present for it to be daemon,
->> that is persist for possibly many Git operations. Or allow "daemon"
->> or "server" value for `persistent`, then?
-> 
-> I like the direction of this idea. What if we use a string-valued 
-> "filter.<driver>.protocol" with the following options:
-> 
-> "simple" / "invocation-per-file" / << empty >> --> current clean/smudge behavior
-> "invocation-per-process" --> new, proposed behavior
-> 
-> If necessary this could be enhanced in the future to support even a "daemon"
-> mode (with a pidfile config).
+Hi Junio & Peff,
 
-Though, after thinking about it, this solution has the problem
-that people might think that they can use their old per-file
-filters, just flipping the `filter.<driver>.protocol`.
+On Mon, 25 Jul 2016, Junio C Hamano wrote:
 
-I dunno.
--- 
-Jakub Narêbski
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Mon, Jul 25, 2016 at 02:44:25PM -0700, Junio C Hamano wrote:
+> >
+> >> > diff --git a/imap-send.c b/imap-send.c
+> >> > index db0fafe..67d67f8 100644
+> >> > --- a/imap-send.c
+> >> > +++ b/imap-send.c
+> >> > @@ -506,12 +506,12 @@ static char *next_arg(char **s)
+> >> >  
+> >> >  static int nfsnprintf(char *buf, int blen, const char *fmt, ...)
+> >> >  {
+> >> > -	int ret;
+> >> > +	int ret = -1;
+> >> >  	va_list va;
+> >> >  
+> >> >  	va_start(va, fmt);
+> >> >  	if (blen <= 0 || (unsigned)(ret = vsnprintf(buf, blen, fmt, va)) >= (unsigned)blen)
+> >> > -		die("Fatal: buffer too small. Please report a bug.");
+> >> > +		die("BUG: buffer too small (%d < %d)", ret, blen);
+> >> >  	va_end(va);
+> >> >  	return ret;
+> >> >  }
+> >> 
+> >> If "you gave me this size but you need at least this much" is truly
+> >> worth reporting, then this is misleading (ret is shown as -1 but you
+> >> do not even know how much is necessary).  In any case, this should
+> >> be done as a separate step anyway.
+> >
+> > Hrm, isn't "ret" going to be the necessary size? According to the
+> > standard, it should tell us how many bytes were needed, not "-1" (this
+> > is the "your vsnprintf is broken" case handled by the strbuf code).
+> 
+> Yes.  If blen <= 0, we do not even do vsnprintf() and that is why
+> Dscho added "int ret = -1" initialization; otherwise his new die()
+> would end up referencing uninitialized ret.
 
+Exactly. While I was fixing this bug message, it occurred to me that it
+makes little sense to ask a user to report a bug when it is unknown how
+small the buffer was and what would have been the desired buffer size. So
+I did a fly-by fix.
+
+However, it is true that this is completely outside the purpose of this
+patch series (in fact, most of this patch is completely outside the
+purpose, and I am regretting that dearly, as the patch series' submission
+already takes almost a month, and I only now get people to review the
+critical parts of the changes).
+
+So I simply backed out the more verbose message and *only* do the obvious
+thing: replace the "Fatal:" prefix by a "BUG:" one.
+
+> > I do think the numbers are reversed, though. It should be "blen < ret".
+> 
+> That, too ;-)
+
+True. All the better that I reverted that part of the patch ;-)
+
+Ciao,
+Dscho
