@@ -2,90 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37990203E2
-	for <e@80x24.org>; Tue, 26 Jul 2016 01:43:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9843C203E2
+	for <e@80x24.org>; Tue, 26 Jul 2016 04:14:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752135AbcGZBni (ORCPT <rfc822;e@80x24.org>);
-	Mon, 25 Jul 2016 21:43:38 -0400
-Received: from mout.web.de ([212.227.15.4]:61994 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751464AbcGZBng (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2016 21:43:36 -0400
-Received: from [172.20.0.236] ([207.179.142.2]) by smtp.web.de (mrweb004) with
- ESMTPSA (Nemesis) id 0MQL8O-1btKxQ0Yiy-00ToOM; Tue, 26 Jul 2016 03:43:28
- +0200
-Subject: Re: [PATCH v10 12/12] bisect--helper: `get_terms` & `bisect_terms`
- shell function in C
-To:	Junio C Hamano <gitster@pobox.com>,
-	Pranit Bauva <pranit.bauva@gmail.com>
-References: <010201560a4781be-e8418d6a-5996-45cd-b11b-ca25894ad7f2-000000@eu-west-1.amazonses.com>
- <010201560a4782ce-8d6545f1-2454-492b-a2c6-6e0f2ac824d4-000000@eu-west-1.amazonses.com>
- <7a408f75-74d9-7e59-35d6-3a931414a7f9@web.de>
- <CAFZEwPOH+V+Nfq1KoOBBdVgeFD7YCG5c1PJrUHB50O1DkMg39Q@mail.gmail.com>
- <xmqqh9bd7j6k.fsf@gitster.mtv.corp.google.com>
-Cc:	Git List <git@vger.kernel.org>
-From:	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <f6657922-555e-affa-8904-678bc7ee3f71@web.de>
-Date:	Tue, 26 Jul 2016 03:42:52 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:45.0) Gecko/20100101
- Icedove/45.1.0
-MIME-Version: 1.0
-In-Reply-To: <xmqqh9bd7j6k.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:P3O8k3+QXb5FmvxlQ8zcvW4sTNYD3D9ANM9PZAF6+lZkRDmGt2K
- Zao/AV9WUhBWyO8n7tWHnd8GYXzvGE4cVf7v9yWcurmfJGO8y/u5K5+MbSWFOeA9TqErC7M
- bISI3TyPuAQB3fvvrDLErQTFKG8huJA+A1r6D1eqdaWQPiG+sKMdodveFernlo2NCnkPOdv
- 8PrsqWvNBIO7TuOS00yfg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:mWuYUbjMmic=:bhUsWKtNDXXcHxJ2LSd9yd
- FpmXHjqiyHTbLL3TiUndXtx5vajDRSMF8hP1/FjyzOLXF98hE5p4qfN0Y6Mz3D9TpwAfu6rTm
- tNQlVb6bzVFkqgLthUiUQiFPOds3f9EmKOKZywHAXwcnrz2CGKJl1v8nAcEDh0ynqfFjrL/49
- 8WHOVI+z4ttSGUiScVErYxe4nkYntmM2JB5Uvjyn5lUGYhcltBB+1iixZ60BnlceRnobEClyc
- uPG5aJ3GHBA0DA0G7hdeKTd1vPVbus4a2dpXHbItloPvif2x+0NFOBR6m11Jm+dbMo4fD7gCi
- cxODbu6vyASQnMMy2+mGPJRt3qAIz0woq3dAATH0PTV/6f1DtOUAh8biMfmReXuzFNTc24vQx
- Vi/R+zb0uMy6LgGkYYj4z1sx6e90J0gVUkwCMdUaiyz2765nxX+LvxFE0TIgUv+i3g6LvuTWG
- Oi66OQmODEgSD193HmBNygOc3d6iNxrsvrSDW1QpPPBpXHv77lFGHtjvIsz4exrmMxnm5WnNF
- iExn5L37tZr7FSvMzj2wlX2/AIxa3q4DP4QwSQhcncaEHM36BWR66z3e7AsAoKJl7jrU5opHJ
- FZo56fCO8Y+K3DtpXUap9zBQYP49W35Gb44e7v8/ZXfw60ehqaWP8E+O+C8GfI9/+iBo3+S21
- K1uCpbcwPDANR62ps7VblD+lZLEtzihU6/hUkqtt1FWj0KokEHZ8tICWv5VnsxQLmbSq2xTny
- DBLw5+yDE3jb3Zplx+AtyWDVN/Zt8t5NTNtZ2Win+7yMc1G1EU4dw5U/SHWJLx9fUUXpP9hct
- /AvSP6R
+	id S1753640AbcGZEOV (ORCPT <rfc822;e@80x24.org>);
+	Tue, 26 Jul 2016 00:14:21 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:36352 "EHLO
+	mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752823AbcGZEOU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2016 00:14:20 -0400
+Received: by mail-pf0-f194.google.com with SMTP id y134so13043511pfg.3
+        for <git@vger.kernel.org>; Mon, 25 Jul 2016 21:14:20 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=qasMub0hMeEDzfVDhaK3OblcoYrLxNl7pZY3hDAkTF8=;
+        b=SGFVS/+Fz9jPj75lOw1Mxs3/PTFXFsPotadXqX5s8zZ8vYyr0qyMHKwKFv+mFowmC+
+         OykKwmCcAJie5GUprQWW7HKN79gRI6D9GFOC5FXRX5VmAR7c0IVRGYF/WsLaqLt/lD6f
+         jMSn/UvPHYcuX0m0OH8/EMyN+2YUklNTJ972UoPsJkh1cVnPZ2fpv8GjgTS71vvLDMNA
+         o7MstONyM6tUlAs/ibQzc7B5bpTEEnuC8Lgbn+RHLRwVYKavLqf5No6+BtQpP22UNGuu
+         NZrwOjM6mIWDBBLXVyiWEN7mCnMNMIO3oTTn5uDFoFCdf/qZ+yVtDw+w/RriZp2UYsOb
+         J8mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=qasMub0hMeEDzfVDhaK3OblcoYrLxNl7pZY3hDAkTF8=;
+        b=fOK2WpR2Xp4Fv3HOCfU+blR6WVi9fL+ZL8zk6mMJl17yaD6lsXWHIyJJNZBs1gFZXt
+         n/xIuc317nWddRAsM31TACrl0MHJDiFvWlGKbCOk+LzDeg0UvzTANqQ00F8e7DosAkks
+         4wsc0zqPpHNrZfCBNj2MgJTB/YMTiEnZ5kv+HLT9vsXkGEfXHXJvCMrHJTQjjhB0Ra4r
+         CJed1vhltzPczTCF8Wfmvf4eleRjy7cVpv+WZrUZJez3sm76HfN72ZkwewE66NzvBkVT
+         VWTPVTanFaNFdQSM8BopXaINv71anrdRcBr+s8+Bq1+LsLFUdRcJJOjTjJDUNNXzYcYF
+         dUKg==
+X-Gm-Message-State: AEkooutupNjcA70cJai1Z7Kf/xoXrOvULpv6YTBzT90JHR9+pfGwme78vqE2GFmV714xKg==
+X-Received: by 10.98.57.90 with SMTP id g87mr35626085pfa.106.1469506459525;
+        Mon, 25 Jul 2016 21:14:19 -0700 (PDT)
+Received: from localhost.localdomain (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by smtp.gmail.com with ESMTPSA id a21sm8759877pfe.81.2016.07.25.21.14.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 25 Jul 2016 21:14:18 -0700 (PDT)
+From:	David Aguilar <davvid@gmail.com>
+To:	Git Mailing List <git@vger.kernel.org>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Brett Cundal <brett.cundal@iugome.com>,
+	"David A . Greene" <greened@obbligato.org>,
+	Charles Bailey <cbailey32@bloomberg.net>,
+	Techlive Zheng <techlivezheng@gmail.com>
+Subject: [PATCH 1/3] t7900-subtree.sh: fix quoting and broken && chains
+Date:	Mon, 25 Jul 2016 21:14:14 -0700
+Message-Id: <20160726041416.9438-1-davvid@gmail.com>
+X-Mailer: git-send-email 2.9.2.466.g8c6d1f9.dirty
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Allow whitespace in arguments to subtree_test_create_repo.
+Add missing && chains.
 
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+ contrib/subtree/t/t7900-subtree.sh | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-On 07/25/2016 06:53 PM, Junio C Hamano wrote:
-> Pranit Bauva <pranit.bauva@gmail.com> writes:
->
->>>> >>> +enum terms_defined {
->>>> >>> +       TERM_BAD = 1,
->>>> >>> +       TERM_GOOD = 2,
->>>> >>> +       TERM_NEW = 4,
->>>> >>> +       TERM_OLD = 8
->>>> >>> +};
->>>> >>> +
->>> >>
->>> >> What does TERM stand for  ?
-> The terms (words) used to denote the newer and the older parts of
-> the history.  Traditionally, as a regression-hunting tool (i.e. it
-> used to work, where did I break it?), we called older parts of the
-> history "good" and newer one "bad", but as people gained experience
-> with the tool, it was found that the pair of words was error-prone
-> to use for an opposite use case "I do not recall fixing it, but it
-> seems to have been fixed magically, when did that happen?", and a
-> more explicit "new" and "old" were introduced.
->
-Thanks for the explanation.
-Is there any risk that a more generic term like "TERM_BAD" may collide
-with some other definition some day ?
+diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
+index 3bf96a9..431a2fe 100755
+--- a/contrib/subtree/t/t7900-subtree.sh
++++ b/contrib/subtree/t/t7900-subtree.sh
+@@ -16,16 +16,16 @@ export TEST_DIRECTORY
+ 
+ subtree_test_create_repo()
+ {
+-	test_create_repo "$1"
++	test_create_repo "$1" &&
+ 	(
+-		cd $1
++		cd "$1" &&
+ 		git config log.date relative
+ 	)
+ }
+ 
+ create()
+ {
+-	echo "$1" >"$1"
++	echo "$1" >"$1" &&
+ 	git add "$1"
+ }
+ 
+@@ -73,10 +73,10 @@ join_commits()
+ test_create_commit() (
+ 	repo=$1
+ 	commit=$2
+-	cd "$repo"
+-	mkdir -p $(dirname "$commit") \
++	cd "$repo" &&
++	mkdir -p "$(dirname "$commit")" \
+ 	|| error "Could not create directory for commit"
+-	echo "$commit" >"$commit"
++	echo "$commit" >"$commit" &&
+ 	git add "$commit" || error "Could not add commit"
+ 	git commit -m "$commit" || error "Could not commit"
+ )
+-- 
+2.9.2.466.g8c6d1f9.dirty
 
-Would it make sense to call it GIT_BISECT_TERM_BAD, GBS_TERM_BAD,
-BIS_TERM_BAD or something more unique ?
