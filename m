@@ -2,107 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7787C203E3
-	for <e@80x24.org>; Tue, 26 Jul 2016 19:41:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5D01203E3
+	for <e@80x24.org>; Tue, 26 Jul 2016 19:42:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756678AbcGZTlp (ORCPT <rfc822;e@80x24.org>);
-	Tue, 26 Jul 2016 15:41:45 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60146 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754198AbcGZTlo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2016 15:41:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 32E1F2FAB3;
-	Tue, 26 Jul 2016 15:41:43 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lxPfY6fEBO8ZFUuJM1EjFrOi+vo=; b=VEak/F
-	8b3o1aO9SP/DO9C9sb88uhuq0o9i/ta4f8lXhn3K7W1CtWTgD5Y0NIbgT9YbNrTP
-	eOT4ZO4VTNccTBBuCtSgEEfMzTkqteiWNjHrXOY9HQf0RXYAx4kTGDLVrRK0CeCq
-	zkwLLqQxPLnW4R812Du8r/7LmgHJNHYLhub2s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=h3zy/nkj9XYKQkCoMpnrwnDChGV3Ownl
-	XuyRfc+W36kzYFPfu1ZwM1RS02lV6xoFyxRhOBYeZRYezC19yOE/W7/fXvAZgjUC
-	XjbwGxI6GnVcC1M9zIXA6+2nq1u/gTgtsm9wcL+CVsrQtZuQ7mv+qJqsUmzuAn5D
-	fV370MII3b0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 29AE72FAB2;
-	Tue, 26 Jul 2016 15:41:43 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8FEEB2FAB0;
-	Tue, 26 Jul 2016 15:41:42 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Christian Couder <christian.couder@gmail.com>
-Cc:	git@vger.kernel.org, Jeff King <peff@peff.net>,
-	=?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
-	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v8 36/41] apply: don't print on stdout when be_silent is set
-References: <20160627182429.31550-1-chriscool@tuxfamily.org>
-	<20160627182429.31550-37-chriscool@tuxfamily.org>
-Date:	Tue, 26 Jul 2016 12:41:40 -0700
-In-Reply-To: <20160627182429.31550-37-chriscool@tuxfamily.org> (Christian
-	Couder's message of "Mon, 27 Jun 2016 20:24:24 +0200")
-Message-ID: <xmqq60rs191n.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1756175AbcGZTkz (ORCPT <rfc822;e@80x24.org>);
+	Tue, 26 Jul 2016 15:40:55 -0400
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:37925 "EHLO
+	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753616AbcGZTky (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2016 15:40:54 -0400
+Received: by mail-wm0-f42.google.com with SMTP id o80so31474219wme.1
+        for <git@vger.kernel.org>; Tue, 26 Jul 2016 12:40:53 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=ohSJY64l2zok+eKa++67OKkpgu1cS2NrBbC6BaEfB+E=;
+        b=fjr20wm/F5cIVD+MAVwckjLEQbVGV/OHpLH4luo23KcBtqvBPkEnQ8I9rnWUpgP7iL
+         6zhzH/DdhwxsXOodn7HptcEIcRKCLV2usjKWLJGTjfAplvtIQNGNdfLf9CtaWXclTOKm
+         R3dzzpnfSqGvrwZINzkhcika3khWkmwPAkyWHyvRSXgXGVMj5LqGVtw/rm6sB6Z0RQqf
+         KbGNQk7iX2SsoLy8x/6h+JI4bevaQoczCFfepAep2hqAUBGZ6q0LEZXzFmmDaXZGllUl
+         VVhgOt4lvSc1/tHny51qVISm2vVPtwVbCsKPsTXrJgUIt93kKPdCEBLeSYl5Vhg0sSd0
+         WSMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=ohSJY64l2zok+eKa++67OKkpgu1cS2NrBbC6BaEfB+E=;
+        b=QD7Ign8flSFFAXl29nVTiM9v7NyxcoV/cv00zrYQt6dRg9Zs2Axo+YfB7mEAI46RNv
+         3tjvZJ/0y3DtnnPYGoRkfr4kGQB4wdmu8tZ3oGovUusiMs4J/3hU1o3hfU3duuKxwpHv
+         Z+UYAipouT1o/TQW83VQBAZzarDPiGSudZcW8NtEnd9PF7/Q7rkN3JmaaqdzdWQz4vLu
+         ffEXFtp3Re/cG1U/ius3es4YdYbs8HmYlYv08ALHyV3bJlIkLDmM+B9yqC+Ji5VZOuzr
+         SgsbHHFHcLCSTI54TqVHRh1lmpoerzQP2BG0PMLVsviJ9WvaVuyIgbJxvG2mLvwT13Np
+         KUig==
+X-Gm-Message-State: ALyK8tIhkunMgwkGmYtIa8W6wjZqUyYNJQ+vkBqN0W7ElNF+UpHHkfYOU7Wd7vF27j6bpZ32g+Es/75guwgHtw==
+X-Received: by 10.28.30.1 with SMTP id e1mr49598639wme.77.1469562052416; Tue,
+ 26 Jul 2016 12:40:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FA8DAA7E-5368-11E6-B1F0-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.194.154.134 with HTTP; Tue, 26 Jul 2016 12:40:51 -0700 (PDT)
+From:	Stephen Morton <stephen.c.morton@gmail.com>
+Date:	Tue, 26 Jul 2016 15:40:51 -0400
+Message-ID: <CAH8BJxGZW8eNQogksZ416sVaBkpQ78uYkV7FtN6wxGafzNwjAg@mail.gmail.com>
+Subject: git cherry-pick conflict error message is deceptive when
+ cherry-picking multiple commits
+To:	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+When I cherry-pick n commits and one of the first (n-1), fails, what I
+should do is resolve the conflict, 'git add' it, and then run 'git
+cherry-pick --continue'. However git advises me to
 
-> This variable should prevent anything to be printed on both stderr
-> and stdout.
+error: could not apply d0fb756... Commit message for test commit
+hint: after resolving the conflicts, mark the corrected paths
+hint: with 'git add <paths>' or 'git rm <paths>'
+hint: and commit the result with 'git commit'
 
-You have to mention that skipping the entire callchain, not just the
-"printing" part, is safe.  I can see numstat_patch_list() is
-probably safe as it does not do any computation other than calling
-printf() and write_name_quoted(), but other two are not immediately
-obvious that what they compute are only used for their own printing
-and there is no other side effects left to affect what happens after
-this function returns.
+I suspect this is not just a little bit deceptive but actually a bit
+destructive, as doing a 'git commit' removes some of the sequencing
+information. If I do a 'git commit', while there is .git/sequencer
+information and 'git cherry-pick --continue' will work, there is no
+indication in 'git status' that a cherry-pick is in progress.
+
+It would be extremely easy for somebody to follow cherry-pick's hints
+by running 'git commit' and think that they were done, not realizing
+that there were m more commits remaining to be cherry-picked.
+
+Would it be possible to expand the hint message to tell users to run
+'git cherry-pick --continue'
+
+This patch is *not* meant as a serious patch for submission --I'm sure
+it's all wrong-- it's just a proof of concept and showing some
+goodwill on my part that I'm trying to help and I'm willing to put in
+some work if I can be pointed more in the right direction.
+
+Regards,
+Stephen
 
 
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  apply.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/apply.c b/apply.c
-> index 1435f85..e2acc18 100644
-> --- a/apply.c
-> +++ b/apply.c
-> @@ -4698,13 +4698,13 @@ static int apply_patch(struct apply_state *state,
->  		goto end;
->  	}
->  
-> -	if (state->diffstat)
-> +	if (state->diffstat && !state->be_silent)
->  		stat_patch_list(state, list);
->  
-> -	if (state->numstat)
-> +	if (state->numstat && !state->be_silent)
->  		numstat_patch_list(state, list);
->  
-> -	if (state->summary)
-> +	if (state->summary && !state->be_silent)
->  		summary_patch_list(list);
->  
->  end:
+
+
+diff --git a/sequencer.c b/sequencer.c
+index cdfac82..b8fa534 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -171,14 +171,21 @@ static void print_advice(int show_hint, struct
+replay_opts *opts)
+
+        if (show_hint) {
+                if (opts->no_commit)
+                        advise(_("after resolving the conflicts, mark
+the corrected paths\n"
+                                 "with 'git add <paths>' or 'git rm <paths>'"));
+-               else
+-                       advise(_("after resolving the conflicts, mark
+the corrected paths\n"
+-                                "with 'git add <paths>' or 'git rm <paths>'\n"
+-                                "and commit the result with 'git commit'"));
++               else if  (! file_exists(git_path_seq_dir())) {
++                       advise(_("SCM: after resolving the conflicts,
+mark the corrected paths\n"
++                     "with 'git add <paths>' or 'git rm <paths>'\n"
++                     "and commit the result with 'git commit'"));
++        }
++        else
++        {
++            advise(_("SCM: after resolving the conflicts, mark the
+corrected paths\n"
++                     "with 'git add <paths>' or 'git rm <paths>'\n"
++                     "and continue the %s with 'git %s --continue'"),
+action_name(opts), action_name(opts));
++        }
+        }
+ }
