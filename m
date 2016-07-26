@@ -7,91 +7,81 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE5AB203E3
-	for <e@80x24.org>; Tue, 26 Jul 2016 12:31:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73955203E3
+	for <e@80x24.org>; Tue, 26 Jul 2016 12:55:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756571AbcGZMbU (ORCPT <rfc822;e@80x24.org>);
-	Tue, 26 Jul 2016 08:31:20 -0400
-Received: from mout.gmx.net ([212.227.15.18]:63217 "EHLO mout.gmx.net"
+	id S1756287AbcGZMzW (ORCPT <rfc822;e@80x24.org>);
+	Tue, 26 Jul 2016 08:55:22 -0400
+Received: from mout.gmx.net ([212.227.17.21]:56590 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756507AbcGZMbR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2016 08:31:17 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0LyEJp-1bDXe11tH3-015Y0O; Tue, 26 Jul 2016 14:31:04
+	id S1754225AbcGZMzU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2016 08:55:20 -0400
+Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MFR2O-1bVLGK3nEa-00EKra; Tue, 26 Jul 2016 14:55:17
  +0200
-Date:	Tue, 26 Jul 2016 14:30:55 +0200 (CEST)
+Date:	Tue, 26 Jul 2016 14:55:08 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH v4 11/16] am -3: use merge_recursive() directly again
-In-Reply-To: <xmqqy44p2wds.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1607261426340.14111@virtualbox>
-References: <cover.1467902082.git.johannes.schindelin@gmx.de> <cover.1469187652.git.johannes.schindelin@gmx.de> <667d2f991f1423b138a746f4c685b13c5b572a83.1469187653.git.johannes.schindelin@gmx.de> <xmqqy44p2wds.fsf@gitster.mtv.corp.google.com>
+To:	Orgad Shaneh <orgads@gmail.com>
+cc:	git@vger.kernel.org
+Subject: Re: [PATCH] commit: Fix description of no-verify
+In-Reply-To: <1469519305-11361-1-git-send-email-orgad.shaneh@audiocodes.com>
+Message-ID: <alpine.DEB.2.20.1607261452281.14111@virtualbox>
+References: <1469519305-11361-1-git-send-email-orgad.shaneh@audiocodes.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Q8+cQjR5nRtH2OtlwzHsWgqPRVhXOSKayj6MygroFaUmgmo7K7A
- k56Shhm2fHNlFKvDqp+XKNbGwZfH6jcaM0afIFt7CUq26WxHEdKSbVw52h5t3f2l4adb++u
- CAl/7liRc77X0EzhqO9s2BF9TMx+I+S9HK53KDXLbDIMe31CkNRw2/4A03Hjsu3FuNJUCfd
- Hwb2Wxvn06bMpHCwq2Axw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:5HK9AABey2g=:9R+JP0+cE/CINCD5eTi3LD
- 4F9cwebKKgoSjDbzStqagXd90ERMOvprQlaARxh6MFOxQPgxvAookGfQSyut11mX79kWRWilD
- +BR85Y37U5whSMAmo6Cu5a1pF0oPtkn96LzZPmF0Pl1NWBqmChnFVxKQgWk3Hp7Wyv5EO4bXs
- BpewsuU4YR/0TD1HvDEiGSpGQk9mvknELhIdMkDx54Y33uM+tRZAWgTpOcKj+MsBiJ9T9cKNg
- 9OZ6A+xHX4dltfjTdOLhtzimjNDKFhKUr7Thc97ONRNSD2wrydmFsKQUTg0NBFpmiMTitqG6J
- SSNLUMZSeqS6YYgC+Ji/+qhECC7amvK4zgUoLqAxR5CHYB0wPWAtiryeMPrh2NHs+Fhuhj2V8
- neAjMG0USKMTGonz446qEK/b67GUmLxoaZt1H83OqtivbZ6LlUE5nV2/4Pq20y8NpETnHmLva
- xHGlRC+XduRj9T0/c4hPHReXLF+ARbVh4dQBN1NfDxKCV+M6/pf7UXofWRS0J1Oeo0exhlnUd
- icEPG2d8+hOaI1aJiBqZYyHplRdf82gvu1f+XrXOiADEX46ASomKhdz6vKHulrRYlINvYsisG
- 5eu87Rz60mNBR5Zj5DHW+X5uCa6oIqY+jzKp0fJ+Pb5hl+PDoE67FJ2aOH74zKHxPA4js4Wfk
- y3+VWB4PhbZbr1FZlMj/3VqmGG3TfeT6WNyRk3N5bHqzQMff7zfPe2FpZf165yB80HgKrDfhH
- WUhkysVQ1v0LbLJISja8/4ugJU8LhYBgBugb7/BrPoq0UwnDpyMePjKtLXi6r6Mn+uB4boPKF
- rRTcEaS
+X-Provags-ID: V03:K0:jCOAHRStEWu+1lF/z7ZzYO0cua1ckx4BV7Zf+fsiHlfegarFB9a
+ 4foQp6lFQCCVlBCChaX9XroW80Ja6BvrmAxD2azzMUdlf+Deir7f+6djA+DpU8iXv+UvAMn
+ js7cALTyUV8cAwlqUSo/a3B5jV7QkS1c5+jyvg7KRoMsf7t8fbxTBArx17HannNHevitzi0
+ fD5I/hzDI+Jvt3FLFH9Pg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:GBsF8VMOO2U=:cgqG0QlQz1WH1aiNm935N1
+ 94Zc2/ycs+lvlvnAjKqRxSt3fbHLfNLr6bUVljS+ENYMng21mzn1cZofyjpqCMxQtZsqDpIdM
+ 2JSaS4HIWCQi0WDMeGiz7SYurxzRtiB8scxHa5SWpI/OxMzKiSJJ8jFbxxqHVXkftYzcBkBaZ
+ ypKCZabCKMVavCw7K/VR6pNYbo+VqhW8sfivGHHR5gh9A24Pv2/Xuq3JzGwjmW+L1vN2J3YGw
+ XO+1eBzilkCFj+D2gFJndA1/tFr1g5TnT1B3BCBSXtVKT/xwq+k2pl0B2n3hhKB6EFqyTg/eh
+ PpHduag68S1r3X6+2Q0VxEZIXf3VIRZ1JrkeLtWBalxMMKGeAPkUANPslwdbl7tV6o9FyFEeM
+ roZ3by9I09yXvn7rgu9JFBNPy8z7EAIp4B6jtCsVRDLj1zRvehucc9z9yYrm9ge2LT9bTUlGG
+ qlfb2UAeCWEDjDjkmjnvQWu9/V3LD7B9Y+qAEqjkOggKOq6oq1Y1r5nKoD8sf6Gv9fD9ZVxnB
+ YU5ryFjqFhPdZAYOmwL/AWU8eCMqM9FStv4/cxqjqWYEp8pXwBw3+yaax/uI9bShJNAgDg39q
+ 6LP0pMc+ARCTn5rwqI4xTFwJCnaa/0Cml79cXtzWW429qf0NM9mm6xwjAS8N4RCK5t59gG5U6
+ Ix2gzExESZEzk6ffLYfPx/NixSR4mATKRyj0q8WYBM7XrHPWoZVSODVjpXKxv88UN+seO+ABL
+ n4ejWv6NI2jWL/RJtMqgdhADhsA8X1kK40JrKlAl22ijsr5/OSH/ADONgS0UW8ppvtgYSop0A
+ aZr8g2N
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+Hi Orgad
 
-On Mon, 25 Jul 2016, Junio C Hamano wrote:
+On Tue, 26 Jul 2016, Orgad Shaneh wrote:
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > Note: the code now calls merge_recursive_generic() again. Unlike
-> > merge_trees() and merge_recursive(), this function returns 0 upon success,
-> > as most of Git's functions. Therefore, the error value -1 naturally is
-> > handled correctly, and we do not have to take care of it specifically.
-> 
-> I've finished reading through up to this point and I'd stop for
-> now.
+> From: Orgad Shaneh <orgads@gmail.com>
 
-If you want, I can break out the subsequent patches into a separate
-series. I just thought that you might want to have them here, as I
-implemented them in response to the concern you raised in a previous
-iteration of the same patch series: you pointed out that returning a
-negative error value still does not let the caller handle the error
-message, and with the subsequent patches that is now possible, too.
+This is unnecessary, as it matches your email address.
 
-> Some of the patches I didn't look beyond the context presented in
-> the patches, so it is very possible that I missed leaks caused by
-> early returns and things like that, but I didn't see anything
-> glaringly wrong.  Looks very promising.
+> include also commit-msg hook.
 
-Thanks.
+This comment was a bit cryptic, until I read the patch. Now I find that
+comment redundant with the patch.
 
-I did try my best to catch all resource leaks, but I did stare at those
-patches so often and so long that it is easy for some obvious bug to have
-slipped by. Therefore, I would appreciate it if you (or somebody as
-diligent as you) could have a careful look in particular at the
-"merge-recursive: switch to returning errors instead of dying" patch.
+However, I think that...
 
-I may have missed something as stupid as an unclosed file handle, after
-all.
+> -		OPT_BOOL('n', "no-verify", &no_verify, N_("bypass pre-commit hook")),
+> +		OPT_BOOL('n', "no-verify", &no_verify, N_("bypass pre-commit and commit-msg hooks")),
 
-Thank you,
+
+... it may be more desirable to future-proof this simply by saying "bypass
+hooks".
+
+In the alternative, it would be good if the commit message could
+convincingly make the case that there are no other hooks that will be
+skipped with -n.
+
+Of course, I could go and look at the source code to convince myself. But
+it is really the duty of the commit message to be already convincing
+enough.
+
+Ciao,
 Dscho
