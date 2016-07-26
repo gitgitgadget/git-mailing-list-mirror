@@ -2,119 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2848C203E3
-	for <e@80x24.org>; Tue, 26 Jul 2016 13:50:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E516C203E3
+	for <e@80x24.org>; Tue, 26 Jul 2016 13:55:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756577AbcGZNuj (ORCPT <rfc822;e@80x24.org>);
-	Tue, 26 Jul 2016 09:50:39 -0400
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:36920 "EHLO
-	mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755274AbcGZNui (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2016 09:50:38 -0400
-Received: by mail-wm0-f44.google.com with SMTP id i5so17959304wmg.0
-        for <git@vger.kernel.org>; Tue, 26 Jul 2016 06:50:37 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=syAyl7VKJhOaC8xCDY9KDx22rYaWqS5FAqg6uqaBoqc=;
-        b=Q3AOiEoJzppPcB4CGJ1I5rLkNJeeenycfgwYcl/bX6Dk1Xr9ft6QNaGMqeridIaJgJ
-         C00Q4+A0TERMOtmJm/KOcz+FWyEm3kTzYhZIjQHTzS2u6ZUgxLt0K8RLKgcRMzo9Xjmo
-         hWQmJ92JFFgU69qd2SUikGN99Se3wGArdWg9qb3OI6SH2OGJ3oplkyLqzRQWGTAzE/Qn
-         PRWjx7kqbIhnYMievMQvQKADr4d8elajS+ancpy5faGTmGqPa1ASGzBcYWKpM5iscAxI
-         JkKpCYvGyOzsmXrwbUPcu9biiEI5Y+FLIXLLCxb5cEJhGv3McxBOAgBVGp9unccNJhZa
-         peZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=syAyl7VKJhOaC8xCDY9KDx22rYaWqS5FAqg6uqaBoqc=;
-        b=Eh4pD5N9L/kUHu7Qca2TEEJoG/dTv/CpVU03ORkGZYnZBTQpVS4YnZutA5ihaZioY9
-         6G4iQsMSWDKzGwDZTN/qzqge9J+ZPD6XPemI9nszvqbajrRZ5ROAojdP3DABVRKTBtV4
-         6UlYwysbq22C8nfbL2/sxEuC+CT93wr2R2XMRwNvTmaAoOvsZWu/YG6mleGuVSTxvAcX
-         8wa77Hwy/sgmTm+akINoU4C9ydZ3rz/0aDRfsJqRqqPdt8BKNHcKxBu0NHH5ftzgCCrh
-         XQ3LOE7ldglmkdHLDx3ujV/xDDb8ktmxMTJAEVoK59rh3Sa9MQkXDYEvp6/8die6HwNM
-         C+2g==
-X-Gm-Message-State: ALyK8tLyXHLmLpOhu/tWnU91JDAlgLc416SV/nSseEz8wLzk+6NS7Zv68cUSE0DbgOKhoCawhHtCD9WLHI/t8w==
-X-Received: by 10.28.109.197 with SMTP id b66mr44668391wmi.68.1469541036689;
- Tue, 26 Jul 2016 06:50:36 -0700 (PDT)
+	id S932093AbcGZNz0 (ORCPT <rfc822;e@80x24.org>);
+	Tue, 26 Jul 2016 09:55:26 -0400
+Received: from siwi.pair.com ([209.68.5.199]:27095 "EHLO siwi.pair.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752056AbcGZNzZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2016 09:55:25 -0400
+Received: from [10.160.15.137] (unknown [167.220.24.246])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by siwi.pair.com (Postfix) with ESMTPSA id C935284628;
+	Tue, 26 Jul 2016 09:55:22 -0400 (EDT)
+Subject: Re: [PATCH v2 5/8] status: print per-file porcelain v2 status data
+To:	Junio C Hamano <gitster@pobox.com>,
+	Jeff Hostetler <jeffhost@microsoft.com>
+References: <1469474750-49075-1-git-send-email-jeffhost@microsoft.com>
+ <1469474750-49075-6-git-send-email-jeffhost@microsoft.com>
+ <xmqqwpk94gbu.fsf@gitster.mtv.corp.google.com>
+Cc:	git@vger.kernel.org, peff@peff.net, Johannes.Schindelin@gmx.de
+From:	Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <57976B45.9060102@jeffhostetler.com>
+Date:	Tue, 26 Jul 2016 09:53:09 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
 MIME-Version: 1.0
-Received: by 10.28.140.67 with HTTP; Tue, 26 Jul 2016 06:50:36 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1607261456480.14111@virtualbox>
-References: <1469519323-11420-1-git-send-email-orgad.shaneh@audiocodes.com> <alpine.DEB.2.20.1607261456480.14111@virtualbox>
-From:	Orgad Shaneh <orgads@gmail.com>
-Date:	Tue, 26 Jul 2016 16:50:36 +0300
-Message-ID: <CAGHpTBLr9q8h-+hVUzsTS1aS1TyZjz9gYM_T_ZBdY=o26JGaHw@mail.gmail.com>
-Subject: Re: [PATCH] merge: Run commit-msg hook
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <xmqqwpk94gbu.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi,
 
-On Tue, Jul 26, 2016 at 4:02 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Orgad,
+
+On 07/25/2016 04:23 PM, Junio C Hamano wrote:
+> Jeff Hostetler <jeffhost@microsoft.com> writes:
 >
-> On Tue, 26 Jul 2016, Orgad Shaneh wrote:
+>> +static void wt_porcelain_v2_print(struct wt_status *s);
+>> +
 >
->> From: Orgad Shaneh <orgads@gmail.com>
+> There is no point in this forward declaration, if you just place the
+> implementation of these functions here, no?
+
+Right. I just did it that way to make the diffs with the previous
+commit draw a little cleaner.  But I can take it out.
+
+
+>> +/*
+>> + * Print porcelain v2 info for tracked entries with changes.
+>> + */
+>> +static void wt_porcelain_v2_print_changed_entry(
+>> +	struct string_list_item *it,
+>> +	struct wt_status *s)
+>> +{
+>> +...
+>> +	fprintf(s->fp, "%c %s %s %06o %06o %06o %s %s R%d %s",
 >
-> Again, this is unnecessary if you already send the mail from the same
-> address.
->
->> commit-msg is needed to either validate the commit message or edit it.
->> Gerrit for instance uses this hook to append its Change-Id footer.
->>
->> This is relevant to merge commit just like any other commit.
->
-> Hmm. This is not very convincing to me, as
->
-> - if you call commit-msg in `git merge` now, why not `prepare-commit-msg`?
+> It is misleading to always say R in the output when there is no
+> rename, isn't it?
 
-prepare-commit-msg is already called, a few lines above this addition.
+Yes, especially if we add it for copied entries too.
+I was just looking for a way to have a fixed format.
+If we make the R%d field optional, then the first pathname
+is ambiguous.  That gets me back to an earlier draft where
+we have rename and non-rename line types.
+
+I'll split this up into 1 pathname and 2 pathname forms,
+and only include the R%d (or the C%d) field in the latter.
 
 >
-> - a merge is a different beast from a simple commit. That is why we have
->   two different commands for them. A hook to edit the merge message may
->   need to know the *second* parent commit, too, for example to generate
->   a diffstat, or to add information about changes in an "evil commit".
+>> +	 * Note that this is a last-one-wins for each the individual
+>> +	 * stage [123] columns in the event of multiple cache rows
+>> +	 * for a stage.
+>
+> Just FYI, the usual lingo we use for that is "multiple cache entries
+> for the same stage", I would think.
 
-That is correct for a post-merge hook. Why should *message validation* differ
-between simple and merge commit?
+thanks.
 
-> - if Gerrit is the intended user, would it not make more sense to
->   introduce a new hook, e.g. `merge-msg` (and `prepare-merge-msg`), as you
->   have to teach Gerrit a new trick anyway?
+>
+>> +	 */
+>> +	memset(stages, 0, sizeof(stages));
+>> +	sum = 0;
+>> +	pos = cache_name_pos(it->string, strlen(it->string));
+>> +	assert(pos < 0);
+>> +	pos = -pos-1;
+>> +	while (pos < active_nr) {
+>> +		ce = active_cache[pos++];
+>> +		stage = ce_stage(ce);
+>> +		if (strcmp(ce->name, it->string) || !stage)
+>> +			break;
+>> +		stages[stage - 1].mode = ce->ce_mode;
+>> +		hashcpy(stages[stage - 1].oid.hash, ce->sha1);
+>> +		sum++;
+>> +	}
+>> +	if (!sum)
+>> +		die("BUG: unmerged entry without any stages");
+>
+> Hmm, we seem to already have d->stagemask; if you call that variable
+> "sum" anyway, perhaps its computation can be more like
+>
+> 	sum |= 1 << (stage - 1);
+>
+> so that you can compare it with d->stagemask for this sanity check?
 
-Why is that new? Every commit in gerrit has a Change-Id footer, which is
-generated by commit-msg hook. What I currently do for merges that succeed
-without conflicts is unconditional commit --amend --no-edit just to
-run the hook.
-This doesn't make sense.
+good point.
 
-> - if Gerrit is the intended user, why does it not simply edit the merge
->   message itself? After all, it executes it, and probably crafts a merge
->   message mentioning that this is an automatic merge, anyway, so why not
->   add the Change-Id *then*?
+thanks
+jeff
 
-Most Gerrit setups require Change-Id in the commit message that the user
-pushes. It is possible to disable this setting, and then you don't need the
-Change-Id at all, but then you can't push a new patch set for the change
-(unless you copy the Change-Id from gerrit to your commit message).
-That's a real pain, I'm not aware of any public gerrit server that
-disables this :)
 
-> Ciao,
-> Dscho
-
-- Orgad
