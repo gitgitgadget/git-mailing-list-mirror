@@ -2,107 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A204203E3
-	for <e@80x24.org>; Tue, 26 Jul 2016 13:10:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 80937203E3
+	for <e@80x24.org>; Tue, 26 Jul 2016 13:34:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753493AbcGZNJ7 (ORCPT <rfc822;e@80x24.org>);
-	Tue, 26 Jul 2016 09:09:59 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:38067 "EHLO
-	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751462AbcGZNJ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2016 09:09:57 -0400
-Received: by mail-wm0-f41.google.com with SMTP id o80so16095980wme.1
-        for <git@vger.kernel.org>; Tue, 26 Jul 2016 06:09:57 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=HI2mDig3LBu6H5ydul+kiPfBHKTQirdXwP7H/tvWrII=;
-        b=APp7DCSFDNp8vpaQzNmWmkntkN4g4bqod6+ap9PzS1aosYbCA3O/AdJn8ssfa92Kym
-         9p+DSG7sKxZ4unoNLh8HY4rIrvWxOiMezbKTIpCYufh1/FfRdaGpkKwlsHzM951yACDS
-         zNKpY7bslMAr2aKo1t34V9h9rnx75EAL/lN4WpUbBLgNnXagB0Ys0GvT/0YLIJ/6Fr8R
-         SG33/TvO1+ezec6AsVmWCSYsu90It5dOcv4gNhlk9gNiS5zquNpucNqphNGdlNuM8skX
-         v8hRo3lNJGUTmKPmF3w4+MVNBFKVDgQo1LQG7WaVIj52RauWNDtPr73FVOCFuyV6KL7g
-         VxwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=HI2mDig3LBu6H5ydul+kiPfBHKTQirdXwP7H/tvWrII=;
-        b=BDRBUjm+kZxxNNZtUJ25xPii5HPB04Qe3zEtAJug0d6s1TF33ka2TixctLkz0T8g0q
-         6PNWHqHTgtPcbA7ALxn1qfjUr1vCPuhB5Nh+/V9aCVPfi6kugaUzDsZO9riI3G3MOFhT
-         I7KsHLLagt4q46qxtGEE1r7/8Xf5HjX6XiPl/SmIulRqnW0AJvrym35rx5lcNIWeRDYb
-         7eRPXdXnL+Zf+arH2b6kfyH6IkHSsW0o1f+fAMbPgx+PGCjODNa8XMJkeAiVH93/SKO0
-         T+Wl0xqm4//Ns6b06xgT7OgIJ/oNBSBAXRn9YCPttQ7YsjgUT7sJvaExGWSFw0GbhBI9
-         jvfw==
-X-Gm-Message-State: ALyK8tLxZF0oqfj1iQKqJpHjL0Aj5T/L+qbGWozsVyvwBlaROHAN5yxx02jZiVtw3EUN0LRL4SDQVa3YlB8mEQ==
-X-Received: by 10.28.109.197 with SMTP id b66mr44464496wmi.68.1469538596464;
- Tue, 26 Jul 2016 06:09:56 -0700 (PDT)
+	id S1754868AbcGZNdz (ORCPT <rfc822;e@80x24.org>);
+	Tue, 26 Jul 2016 09:33:55 -0400
+Received: from siwi.pair.com ([209.68.5.199]:20268 "EHLO siwi.pair.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751596AbcGZNdy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2016 09:33:54 -0400
+Received: from [10.160.15.137] (unknown [167.220.24.246])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by siwi.pair.com (Postfix) with ESMTPSA id 0BAD184622;
+	Tue, 26 Jul 2016 09:33:51 -0400 (EDT)
+Subject: Re: [PATCH v2 4/8] status: per-file data collection for
+ --porcelain=v2
+To:	Junio C Hamano <gitster@pobox.com>,
+	Jeff Hostetler <jeffhost@microsoft.com>
+References: <1469474750-49075-1-git-send-email-jeffhost@microsoft.com>
+ <1469474750-49075-5-git-send-email-jeffhost@microsoft.com>
+ <xmqq1t2h5vbt.fsf@gitster.mtv.corp.google.com>
+Cc:	git@vger.kernel.org, peff@peff.net, Johannes.Schindelin@gmx.de
+From:	Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <5797663A.5000507@jeffhostetler.com>
+Date:	Tue, 26 Jul 2016 09:31:38 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
 MIME-Version: 1.0
-Received: by 10.28.140.67 with HTTP; Tue, 26 Jul 2016 06:09:55 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1607261452281.14111@virtualbox>
-References: <1469519305-11361-1-git-send-email-orgad.shaneh@audiocodes.com> <alpine.DEB.2.20.1607261452281.14111@virtualbox>
-From:	Orgad Shaneh <orgads@gmail.com>
-Date:	Tue, 26 Jul 2016 16:09:55 +0300
-Message-ID: <CAGHpTB+5ePbGyBMjozmwC=0ksqQShUt8Pa=QzPg4R0tf5467Xw@mail.gmail.com>
-Subject: Re: [PATCH] commit: Fix description of no-verify
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <xmqq1t2h5vbt.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi and thanks for your reply.
 
-On Tue, Jul 26, 2016 at 3:55 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Orgad
->
-> On Tue, 26 Jul 2016, Orgad Shaneh wrote:
->
->> From: Orgad Shaneh <orgads@gmail.com>
->
-> This is unnecessary, as it matches your email address.
->
->> include also commit-msg hook.
->
-> This comment was a bit cryptic, until I read the patch. Now I find that
-> comment redundant with the patch.
 
-This brings the short help in line with the documentation. I should
-have stated that in the commit message.
+On 07/25/2016 04:14 PM, Junio C Hamano wrote:
+> Jeff Hostetler <jeffhost@microsoft.com> writes:
+>
+>> +static void aux_updated_entry_porcelain_v2(
+>> +	struct wt_status *s,
+>> +	struct wt_status_change_data *d,
+>> +	struct diff_filepair *p)
+>> +{
+>> +	switch (p->status) {
+>> +	case DIFF_STATUS_ADDED:
+>> +		/* {mode,sha1}_head are zero for an add. */
+>> +		d->aux.porcelain_v2.mode_index = p->two->mode;
+>
+> I doubt that it makes sense in the longer term to have a new "aux"
+> field.  Why isn't it part of the wt_status_change_data structure?
+> For that matter, why should these new functions have both "aux" and
+> "v2" in their names?
+>
+> Imagine what should happen when somebody wants to add --porcelain=v3
+> format in 6 months.  Why must "v3" be treated differently from "v1"
+> and in a way close to "v2"?  Why shouldn't all the three be treated
+> in a similar way that "v1" has already?
+
+I wasn't sure if we wanted the v2 fields to be isolated
+and only filled in for v2 requests or whether we wanted
+them to be common going forward.  In the case of the former,
+I could see the "aux" struct becoming a union and the various
+aux_*() routines only populating one member in that union.
+And then the various per-format print routines would know
+which aux member to access.  That may be more complicated
+that necessary though -- if we assume that any subsequent
+formats (and possibly any JSON formats) would always want
+to keep these fields and add more.
+
+I'll flatten the fields into the main structure.
 
 >
-> However, I think that...
+>> +		oidcpy(&d->aux.porcelain_v2.oid_index, &p->two->oid);
+>> +		break;
+>> +
+>> +	case DIFF_STATUS_DELETED:
+>> +		d->aux.porcelain_v2.mode_head = p->one->mode;
+>> +		oidcpy(&d->aux.porcelain_v2.oid_head, &p->one->oid);
+>> +		/* {mode,oid}_index are zero for a delete. */
+>> +		break;
+>> +
+>> +	case DIFF_STATUS_RENAMED:
+>> +		d->aux.porcelain_v2.rename_score = p->score * 100 / MAX_SCORE;
 >
->> -             OPT_BOOL('n', "no-verify", &no_verify, N_("bypass pre-commit hook")),
->> +             OPT_BOOL('n', "no-verify", &no_verify, N_("bypass pre-commit and commit-msg hooks")),
+> I have a slight aversion against losing the precision in a helper
+> function like this that does not do the actual output, but it
+> probably is OK.
 >
->
-> ... it may be more desirable to future-proof this simply by saying "bypass
-> hooks".
+> Don't we have copy detection score that is computed exactly the same
+> way for DIFF_STATUS_COPIED case, too?
 
-That wouldn't be correct. prepare-commit-msg is not suppressed by this flag.
+Yes I believe so.  I'll see about adding that.  Or rather make
+the field apply to both.
 
-> In the alternative, it would be good if the commit message could
-> convincingly make the case that there are no other hooks that will be
-> skipped with -n.
 >
-> Of course, I could go and look at the source code to convince myself. But
-> it is really the duty of the commit message to be already convincing
-> enough.
+> For readability, unless a case arm is completely empty, we should
+> have
+> 		/* fallthru */
 >
-> Ciao,
-> Dscho
+> comment where "break;" would go for a normal case arm.
 
-I don't have much experience with submitting patches to Git. How do I
-edit the commit message? Submit it as a new patch?
-
-- Orgad
+will do. thanks.
