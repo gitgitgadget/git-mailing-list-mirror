@@ -3,69 +3,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E707A203E3
-	for <e@80x24.org>; Tue, 26 Jul 2016 17:24:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A422203E3
+	for <e@80x24.org>; Tue, 26 Jul 2016 17:34:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754552AbcGZRYr (ORCPT <rfc822;e@80x24.org>);
-	Tue, 26 Jul 2016 13:24:47 -0400
-Received: from mail-it0-f48.google.com ([209.85.214.48]:37673 "EHLO
-	mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756648AbcGZRYq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2016 13:24:46 -0400
-Received: by mail-it0-f48.google.com with SMTP id f6so22361152ith.0
-        for <git@vger.kernel.org>; Tue, 26 Jul 2016 10:24:45 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=D0NBG9qMYVoeD/k4fxIJ3MYXpxp1gZV1oMHjXx+eVEU=;
-        b=MJwyoXfcdt+LHpB/Mq5QSvTh3ZcBxmk82dJRSZWJCR0g+oC1rFw7euH8DOXwpzaZYy
-         rY75DWvYaHkKKnkB3AJFDBPRd3HtEVKBTjDLDZ1MTLjEzFYfkcECyhUkdK8pa9PdycQ0
-         rzYcK2aFYLSk9D3EQ5BtBqXIRBW7+o8RDf9G2b+UrQdiITHdrAO7q16IA+LOGe6qIXEz
-         7jMjz1yMyceDAXj0yt5VVE7iwkoRtnMjvLyYumwVxYaeIM3Y4D7wvlDzgywy0tNXuBfh
-         PWlq/oLVnsZtyKH+Kfh2sJoefAwWYBDorGfN/l1jyTZN1QAtrZKzWRa9kHbtuIpR2x5T
-         8NHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=D0NBG9qMYVoeD/k4fxIJ3MYXpxp1gZV1oMHjXx+eVEU=;
-        b=cTPdx/QdniICapX7y+Pnme7WqS97ZGcCslRQIpMdNCl++iU3UtCjed014x+xWNlEiu
-         xIqfOwTaqcrJLteL0RDgyOEn5zz2jRS5WNlmijHKT1obG1U+xQZe/6b6qfyAsLU7eJ+e
-         SuFPdg+ke3mqaNwELAfLS6EYFSE+3h1JvAB76uiQXFF+Hal4qyVU0hs4oP5khxYJT05u
-         lr/G1VRFcOTZr0VpEyW1CKlLewb+m/a+2/gKyrceVCrf7G5qM5I5mzoL02gesLqmHTCh
-         lK8MdiGetnGHPM0XZ3aCBe4Sx1WEf1AdlPaTI6lxwkQUDf3e70pSHX6aJRyQgtn6eDN3
-         fFqQ==
-X-Gm-Message-State: AEkoouu9gej0v3L8MHfaYi4/4J/7fKqtuYo1FuVmYXlpQXt4wCtc3oPmPwvLYyNJRmte5eTkd7rak2I1QjZcbycL
-X-Received: by 10.36.127.7 with SMTP id r7mr27527577itc.49.1469553885159; Tue,
- 26 Jul 2016 10:24:45 -0700 (PDT)
+	id S1753242AbcGZRcg (ORCPT <rfc822;e@80x24.org>);
+	Tue, 26 Jul 2016 13:32:36 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53830 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751261AbcGZRcf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Jul 2016 13:32:35 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9A19C2ED03;
+	Tue, 26 Jul 2016 13:32:33 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=WCnpSN64h5aL
+	JWXkhLB/6pEZqgw=; b=S5cJvT+r1BMaueYCbes9jLQ7MHe4z2db3R7crIWMewlv
+	Th11DOIPgK9uzRqgSXr6b0GIgR/uJ4kMjY7CENEIkC7HKflNUjgYVYefoaluU0Xv
+	ps8X+EFcaZjAhOxG2ErHK4j75f1/dSsMlbMAoExMe6ZS/2Rz3mnwG+KDaXaQrbc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=VkoQJ9
+	ToDhspSE/ne6y7sIFr/utgCRF4rHQ1NYS0+UI2YpBC/CmRMKLoQGkTVCE/9Dlfrg
+	C0ZBdDuwSqmjz2LGJQ4cNnHCv0KXAgVgSxnqa69rEiAUZlKIJFeWBLWWzYaBgZIL
+	IptZi1kyE18btgOfkU4Q9SHyt4KAhUk/9NY0o=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 92FB82ED02;
+	Tue, 26 Jul 2016 13:32:33 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1312A2ED01;
+	Tue, 26 Jul 2016 13:32:33 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:	Pranit Bauva <pranit.bauva@gmail.com>,
+	Git List <git@vger.kernel.org>
+Subject: Re: [PATCH v10 12/12] bisect--helper: `get_terms` & `bisect_terms` shell function in C
+References: <010201560a4781be-e8418d6a-5996-45cd-b11b-ca25894ad7f2-000000@eu-west-1.amazonses.com>
+	<010201560a4782ce-8d6545f1-2454-492b-a2c6-6e0f2ac824d4-000000@eu-west-1.amazonses.com>
+	<7a408f75-74d9-7e59-35d6-3a931414a7f9@web.de>
+	<CAFZEwPOH+V+Nfq1KoOBBdVgeFD7YCG5c1PJrUHB50O1DkMg39Q@mail.gmail.com>
+	<xmqqh9bd7j6k.fsf@gitster.mtv.corp.google.com>
+	<f6657922-555e-affa-8904-678bc7ee3f71@web.de>
+Date:	Tue, 26 Jul 2016 10:32:30 -0700
+In-Reply-To: <f6657922-555e-affa-8904-678bc7ee3f71@web.de> ("Torsten
+	=?utf-8?Q?B=C3=B6gershausen=22's?= message of "Tue, 26 Jul 2016 03:42:52
+ +0200")
+Message-ID: <xmqqmvl41f0x.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Tue, 26 Jul 2016 10:24:44 -0700 (PDT)
-In-Reply-To: <20160726094925.GB3347@book.hvoigt.net>
-References: <578E7A07.8080006@web.de> <20160720082515.GA823@book.hvoigt.net>
- <57911AFF.7030107@web.de> <20160725143706.GA4872@sandbox> <xmqq60rt933m.fsf@gitster.mtv.corp.google.com>
- <20160726094925.GB3347@book.hvoigt.net>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Tue, 26 Jul 2016 10:24:44 -0700
-Message-ID: <CAGZ79kZ4YKxGapve0rrzP7ZUtYtgwz7e6Zh0HirmLOYp1tr3BA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] submodule-config: combine error checking if clauses
-To:	Heiko Voigt <hvoigt@hvoigt.net>
-Cc:	Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: EF71B99E-5356-11E6-86D4-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jul 26, 2016 at 2:49 AM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> So we have less return handling code.
->
-> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+Torsten Bögershausen <tboegi@web.de> writes:
 
-Thanks,
-Stefan
+> On 07/25/2016 06:53 PM, Junio C Hamano wrote:
+>> Pranit Bauva <pranit.bauva@gmail.com> writes:
+>>
+>>>>> >>> +enum terms_defined {
+>>>>> >>> +       TERM_BAD = 1,
+>>>>> >>> +       TERM_GOOD = 2,
+>>>>> >>> +       TERM_NEW = 4,
+>>>>> >>> +       TERM_OLD = 8
+>>>>> >>> +};
+>>>>> >>> +
+>>>> >> ...
+> Is there any risk that a more generic term like "TERM_BAD" may collide
+> with some other definition some day ?
+>
+> Would it make sense to call it GIT_BISECT_TERM_BAD, GBS_TERM_BAD,
+> BIS_TERM_BAD or something more unique ?
+
+I am not sure if the scope of these symbols would ever escape
+outside bisect-helper.c (and builtin/bisect.c eventually when we
+retire git-bisect.sh), but BISECT_TERM_{GOOD,BAD,OLD,NEW} would not
+be too bad.
