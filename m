@@ -2,56 +2,29 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42AD8203E2
-	for <e@80x24.org>; Tue, 26 Jul 2016 06:06:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45D6F203E2
+	for <e@80x24.org>; Tue, 26 Jul 2016 06:13:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752217AbcGZGGS (ORCPT <rfc822;e@80x24.org>);
-	Tue, 26 Jul 2016 02:06:18 -0400
-Received: from mail-it0-f65.google.com ([209.85.214.65]:35273 "EHLO
-	mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751199AbcGZGGR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2016 02:06:17 -0400
-Received: by mail-it0-f65.google.com with SMTP id f6so8910525ith.2
-        for <git@vger.kernel.org>; Mon, 25 Jul 2016 23:06:16 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=qVyf/1Rh8RMQ/UZcD0GLLCqwcsMNwJWgrPzsVIm1Brc=;
-        b=LU8VfbG+A/6A1rqqgR7/vQ4il+440P6R2TsY23f/6OVdtx8Zv99d/UbROkdYfFL2Nh
-         wZIwVwWLHzIOqUVK16m+whB54cEqry1XxpRdyt6KpokYxAPrFb9/TpT9uIqzn6L+Femi
-         SbUuXD+3LrHzuK+vrKKKx3UBHt6TUi9+Np4g1F4amm9dZhtUTALKGDBliAvdkuW3kNgU
-         pp/nt7G8oqzuoi958MPqS9XwflpUBva/+hWYZWbRA1NIp92o9wQAfH28cOsE6R1taDwV
-         fG7tq+/bxnl9KHXc2zu1JpskZpzIRsOQOBw4s0kqlg0H7rEOQtnE0x/4VS8YCs3QGVrn
-         esWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=qVyf/1Rh8RMQ/UZcD0GLLCqwcsMNwJWgrPzsVIm1Brc=;
-        b=KW1qvxKY3mlZvCcNOX3GURBw5fBbcFX8YMEksaIxPWwu4o6m7L/PWarvghSAz+G0HR
-         shS3A4azWy2BPK8Pw8mytcQm3lmiSk7CVw5fyyhqf5BY/HtgcphJMYWBPNwadFpfPmyO
-         7Hen6KEKIDIIezpVXjU8SJ90zy8efyV1RbIUmB0QeYvfYEf1CrDtIeWT8scUmWs8P8H6
-         /1W4IHASi/srx5pZxK+e5vGYt2vGFEPljntuFHZdLKDgFimM+MmKkZ7g3+liqicYTltU
-         P74ByCzG8McH0V8YKFlSpR7HCmkNvTlU3V3OVfaUfu636Y7x/3n3WSRooiLCh8bjFgNJ
-         GIcQ==
-X-Gm-Message-State: AEkoousaLsNgvmPwQks9mp+cmUMjxvtVlo73hw6rOXVnUaM9XNPIYhMzKx9JqySlPSaHE/aGvW8F1rhpjodGzA==
-X-Received: by 10.36.54.135 with SMTP id l129mr24840302itl.73.1469513176267;
- Mon, 25 Jul 2016 23:06:16 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.79.130.7 with HTTP; Mon, 25 Jul 2016 23:06:15 -0700 (PDT)
-In-Reply-To: <20160726041416.9438-1-davvid@gmail.com>
-References: <20160726041416.9438-1-davvid@gmail.com>
-From:	Eric Sunshine <sunshine@sunshineco.com>
-Date:	Tue, 26 Jul 2016 02:06:15 -0400
-X-Google-Sender-Auth: bPRVc0nr5KbqTR8wiqsBTJqk7Jc
-Message-ID: <CAPig+cRGz2eqPK0uaih3hYCV0eLayot3VGyjKaz5Qf8Jy5o=DA@mail.gmail.com>
-Subject: Re: [PATCH 1/3] t7900-subtree.sh: fix quoting and broken && chains
+	id S1755414AbcGZGMt (ORCPT <rfc822;e@80x24.org>);
+	Tue, 26 Jul 2016 02:12:49 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:42052 "EHLO bsmtp3.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755352AbcGZGMo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2016 02:12:44 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 3rz7883Cfdz5tlB;
+	Tue, 26 Jul 2016 08:12:40 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 8305429CF;
+	Tue, 26 Jul 2016 08:12:39 +0200 (CEST)
+Subject: Re: [PATCH 3/3] subtree: adjust style to match CodingGuidelines
 To:	David Aguilar <davvid@gmail.com>
+References: <20160726041416.9438-1-davvid@gmail.com>
+ <20160726041416.9438-3-davvid@gmail.com>
 Cc:	Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -59,58 +32,129 @@ Cc:	Git Mailing List <git@vger.kernel.org>,
 	"David A . Greene" <greened@obbligato.org>,
 	Charles Bailey <cbailey32@bloomberg.net>,
 	Techlive Zheng <techlivezheng@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+From:	Johannes Sixt <j6t@kdbg.org>
+Message-ID: <a12604f4-7dc9-7c35-0853-c3bffd734281@kdbg.org>
+Date:	Tue, 26 Jul 2016 08:12:39 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2
+MIME-Version: 1.0
+In-Reply-To: <20160726041416.9438-3-davvid@gmail.com>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jul 26, 2016 at 12:14 AM, David Aguilar <davvid@gmail.com> wrote:
-> Allow whitespace in arguments to subtree_test_create_repo.
-> Add missing && chains.
+These caught my eye browsing through my inbox. I'm not a subtree user.
+
+Am 26.07.2016 um 06:14 schrieb David Aguilar:
+> @@ -50,87 +51,145 @@ prefix=
 >
-> Signed-off-by: David Aguilar <davvid@gmail.com>
-> ---
-> diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-> @@ -16,16 +16,16 @@ export TEST_DIRECTORY
->  subtree_test_create_repo()
+>  debug()
 >  {
-> -       test_create_repo "$1"
-> +       test_create_repo "$1" &&
->         (
-> -               cd $1
-> +               cd "$1" &&
+> -	if [ -n "$debug" ]; then
+> -		printf "%s\n" "$*" >&2
+> +	if test -n "$debug"
+> +	then
+> +		printf "%s\n" "$@" >&2
 
-Thanks, I noticed this in December 2015 while reviewing a patch on the
-list and have had a patch to fix it sitting in my queue since then but
-never found time to formalize it.
+Are you sure you want this? It prints each argument of the 'debug' 
+invocation on its own line.
 
->                 git config log.date relative
->         )
+>  	fi
 >  }
 >
->  create()
+>  say()
 >  {
-> -       echo "$1" >"$1"
-> +       echo "$1" >"$1" &&
->         git add "$1"
+> -	if [ -z "$quiet" ]; then
+> -		printf "%s\n" "$*" >&2
+> +	if test -z "$quiet"
+> +	then
+> +		printf "%s\n" "$@" >&2
+
+Same here.
+
+>  	fi
 >  }
 >
-> @@ -73,10 +73,10 @@ join_commits()
->  test_create_commit() (
->         repo=$1
->         commit=$2
+>  progress()
+>  {
+> -	if [ -z "$quiet" ]; then
+> -		printf "%s\r" "$*" >&2
+> +	if test -z "$quiet"
+> +	then
+> +		printf "%s\r" "$@" >&2
 
-Perhaps &&-chain the above two lines also to future-proof against
-someone inserting important code somewhere above the following 'cd'.
+But here I'm pretty sure that this is not wanted; the original is 
+clearly correct.
 
-> -       cd "$repo"
-> -       mkdir -p $(dirname "$commit") \
-> +       cd "$repo" &&
-> +       mkdir -p "$(dirname "$commit")" \
->         || error "Could not create directory for commit"
-> -       echo "$commit" >"$commit"
-> +       echo "$commit" >"$commit" &&
->         git add "$commit" || error "Could not add commit"
->         git commit -m "$commit" || error "Could not commit"
->  )
+>  	fi
+>  }
+...
+> @@ -139,22 +198,27 @@ debug "command: {$command}"
+>  debug "quiet: {$quiet}"
+>  debug "revs: {$revs}"
+>  debug "dir: {$dir}"
+> -debug "opts: {$*}"
+> +debug "opts: {$@}"
+
+When the arguments of a script or function are to be printed for the 
+user's entertainment/education, then it is safer (and, therefore, 
+idiomatic) to use "$*".
+
+>  debug
+...
+>  cache_get()
+>  {
+> -	for oldrev in $*; do
+> -		if [ -r "$cachedir/$oldrev" ]; then
+> +	for oldrev in "$@"
+> +	do
+
+It is idiomatic to write this as
+
+	for oldrev
+	do
+
+(But your move from bare $* to quoted "$@" fits better under the "fix 
+quoting" topic of this patch.)
+
+> +		if test -r "$cachedir/$oldrev"
+> +		then
+>  			read newrev <"$cachedir/$oldrev"
+>  			echo $newrev
+>  		fi
+...
+> @@ -631,17 +749,19 @@ cmd_split()
+>  		debug "  parents: $parents"
+>  		newparents=$(cache_get $parents)
+>  		debug "  newparents: $newparents"
+> -		
+> +
+>  		tree=$(subtree_for_commit $rev "$dir")
+>  		debug "  tree is: $tree"
+>
+>  		check_parents $parents
+> -		
+> +
+>  		# ugly.  is there no better way to tell if this is a subtree
+>  		# vs. a mainline commit?  Does it matter?
+> -		if [ -z $tree ]; then
+> +		if test -z $tree
+
+This works by accident. When $tree is empty, this reduces to 'test -z', 
+which happens to evaluate to true, just what we want. But it be 
+appropriate to put $tree in double-quotes nevertheless.
+
+> +		then
+>  			set_notree $rev
+> -			if [ -n "$newparents" ]; then
+> +			if test -n "$newparents"
+> +			then
+>  				cache_set $rev $rev
+>  			fi
+>  			continue
+
+-- Hannes
+
