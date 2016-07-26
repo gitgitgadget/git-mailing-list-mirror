@@ -2,86 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33EAF203E3
-	for <e@80x24.org>; Tue, 26 Jul 2016 13:43:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2848C203E3
+	for <e@80x24.org>; Tue, 26 Jul 2016 13:50:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756425AbcGZNn5 (ORCPT <rfc822;e@80x24.org>);
-	Tue, 26 Jul 2016 09:43:57 -0400
-Received: from mout.gmx.net ([212.227.15.15]:57929 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756143AbcGZNn4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2016 09:43:56 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MLNpK-1bRUgV0Ia2-000dDG; Tue, 26 Jul 2016 15:43:53
- +0200
-Date:	Tue, 26 Jul 2016 15:43:43 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Orgad Shaneh <orgads@gmail.com>
-cc:	git <git@vger.kernel.org>
-Subject: Re: [PATCH] commit: Fix description of no-verify
-In-Reply-To: <CAGHpTB+5ePbGyBMjozmwC=0ksqQShUt8Pa=QzPg4R0tf5467Xw@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1607261541170.14111@virtualbox>
-References: <1469519305-11361-1-git-send-email-orgad.shaneh@audiocodes.com> <alpine.DEB.2.20.1607261452281.14111@virtualbox> <CAGHpTB+5ePbGyBMjozmwC=0ksqQShUt8Pa=QzPg4R0tf5467Xw@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1756577AbcGZNuj (ORCPT <rfc822;e@80x24.org>);
+	Tue, 26 Jul 2016 09:50:39 -0400
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:36920 "EHLO
+	mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755274AbcGZNui (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2016 09:50:38 -0400
+Received: by mail-wm0-f44.google.com with SMTP id i5so17959304wmg.0
+        for <git@vger.kernel.org>; Tue, 26 Jul 2016 06:50:37 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=syAyl7VKJhOaC8xCDY9KDx22rYaWqS5FAqg6uqaBoqc=;
+        b=Q3AOiEoJzppPcB4CGJ1I5rLkNJeeenycfgwYcl/bX6Dk1Xr9ft6QNaGMqeridIaJgJ
+         C00Q4+A0TERMOtmJm/KOcz+FWyEm3kTzYhZIjQHTzS2u6ZUgxLt0K8RLKgcRMzo9Xjmo
+         hWQmJ92JFFgU69qd2SUikGN99Se3wGArdWg9qb3OI6SH2OGJ3oplkyLqzRQWGTAzE/Qn
+         PRWjx7kqbIhnYMievMQvQKADr4d8elajS+ancpy5faGTmGqPa1ASGzBcYWKpM5iscAxI
+         JkKpCYvGyOzsmXrwbUPcu9biiEI5Y+FLIXLLCxb5cEJhGv3McxBOAgBVGp9unccNJhZa
+         peZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=syAyl7VKJhOaC8xCDY9KDx22rYaWqS5FAqg6uqaBoqc=;
+        b=Eh4pD5N9L/kUHu7Qca2TEEJoG/dTv/CpVU03ORkGZYnZBTQpVS4YnZutA5ihaZioY9
+         6G4iQsMSWDKzGwDZTN/qzqge9J+ZPD6XPemI9nszvqbajrRZ5ROAojdP3DABVRKTBtV4
+         6UlYwysbq22C8nfbL2/sxEuC+CT93wr2R2XMRwNvTmaAoOvsZWu/YG6mleGuVSTxvAcX
+         8wa77Hwy/sgmTm+akINoU4C9ydZ3rz/0aDRfsJqRqqPdt8BKNHcKxBu0NHH5ftzgCCrh
+         XQ3LOE7ldglmkdHLDx3ujV/xDDb8ktmxMTJAEVoK59rh3Sa9MQkXDYEvp6/8die6HwNM
+         C+2g==
+X-Gm-Message-State: ALyK8tLyXHLmLpOhu/tWnU91JDAlgLc416SV/nSseEz8wLzk+6NS7Zv68cUSE0DbgOKhoCawhHtCD9WLHI/t8w==
+X-Received: by 10.28.109.197 with SMTP id b66mr44668391wmi.68.1469541036689;
+ Tue, 26 Jul 2016 06:50:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:5LBTuoykJTLt2qFTXNgADnQiwxWwD1n3If6wQteM/fB4rfEn56t
- lV4J8EoAcle9ySatJjR0MEv3ez84oJoKeh6SKpBUo82vxPBZmq7celSJoTvfuBbIcKn6uMA
- dU5wu6uaXi1SlMOAdyIo0X0lvRKD94nGdq0MR8r1Qr0EqpbGHnlpB70Mdd5erutljloH2yF
- yZHpO2e/ca4dy1Tb2J1kw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:vDaXcJLJIQg=:wbX8R1lhd2YBJFyYsXT2CZ
- ZjTjF3uqyCpOpmSp6jxPN2A41IASos1fQPaWnFPDnABWZ/cyqUy81AgvwQ/1Estwa8QE9BGWe
- Ur6wwGq0uNCh5C3ttd7b7YgRuQjobCOmyS2Cej3l8kVdoeKO+FoTCXn0rJWqoUHjbaYeejIHp
- P5j1T6pRR7da8YIRRG7lXufENGmtQA6s9+Ts+y3PhkclKyIalO7CPGaQb2+fGnXVkJm9XSpnC
- eOMww+pJIwbfWUfu0VYt2kENY1+tdet6j2Q6yohn9XY4dKRnX2KW9Z04ZN8FZ/ESUFjcaFY5w
- ri8AIldZBzy1Wf2brraY6YtwhYXTN4/6FkImy0gweFLFhyk2VaU1lOwO96hY+Mxi/H5p0Wwwa
- 9ZvicVL/NE/WrFte1f/mtf7LJ8NQjYmHBLTRoT8UCmF/UtKQdygf2bWVvtes9ZmBZvpHN8BU4
- w8CgT5oAktZIyj0k0IA0MXX4zMv42hbSvC6fduFxR8PUbCE3uwCtpO+WYClztUGFfNn/PZAQw
- NQQnESQEMSoiYAxAdOp+46cZCrKJBD4aY1oGhN1i31bnD17YfNfri2BK8OozMvWoJcJG4GlIn
- rY9BnYUwRMd9vtjBmVhbRUjo3vaKftDyeoLyNRc6nmU/14PixOwdfGu1cp21V0Dp3cIUQljxN
- rcBY7W7mth+pIz2ZxnyyYV+6C/LfxUD4LcTzqWQqDNhXhEYDUgouhdxRELJALJJ00qBMxUXuA
- hIrvZ3s01boI3m6RvnZHb6i3fH2ZVD9QENJQKmzI9XmRkOzXgSLTgDvf8M1lLddMKOM3b8HEV
- JVJcLFB
+Received: by 10.28.140.67 with HTTP; Tue, 26 Jul 2016 06:50:36 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1607261456480.14111@virtualbox>
+References: <1469519323-11420-1-git-send-email-orgad.shaneh@audiocodes.com> <alpine.DEB.2.20.1607261456480.14111@virtualbox>
+From:	Orgad Shaneh <orgads@gmail.com>
+Date:	Tue, 26 Jul 2016 16:50:36 +0300
+Message-ID: <CAGHpTBLr9q8h-+hVUzsTS1aS1TyZjz9gYM_T_ZBdY=o26JGaHw@mail.gmail.com>
+Subject: Re: [PATCH] merge: Run commit-msg hook
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Orgad,
+Hi,
 
-On Tue, 26 Jul 2016, Orgad Shaneh wrote:
+On Tue, Jul 26, 2016 at 4:02 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Orgad,
+>
+> On Tue, 26 Jul 2016, Orgad Shaneh wrote:
+>
+>> From: Orgad Shaneh <orgads@gmail.com>
+>
+> Again, this is unnecessary if you already send the mail from the same
+> address.
+>
+>> commit-msg is needed to either validate the commit message or edit it.
+>> Gerrit for instance uses this hook to append its Change-Id footer.
+>>
+>> This is relevant to merge commit just like any other commit.
+>
+> Hmm. This is not very convincing to me, as
+>
+> - if you call commit-msg in `git merge` now, why not `prepare-commit-msg`?
 
-> On Tue, Jul 26, 2016 at 3:55 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > On Tue, 26 Jul 2016, Orgad Shaneh wrote:
-> >
-> >> include also commit-msg hook.
-> >
-> > This comment was a bit cryptic, until I read the patch. Now I find that
-> > comment redundant with the patch.
-> 
-> This brings the short help in line with the documentation. I should
-> have stated that in the commit message.
+prepare-commit-msg is already called, a few lines above this addition.
 
-That would be good.
+>
+> - a merge is a different beast from a simple commit. That is why we have
+>   two different commands for them. A hook to edit the merge message may
+>   need to know the *second* parent commit, too, for example to generate
+>   a diffstat, or to add information about changes in an "evil commit".
 
-> I don't have much experience with submitting patches to Git. How do I
-> edit the commit message? Submit it as a new patch?
+That is correct for a post-merge hook. Why should *message validation* differ
+between simple and merge commit?
 
-You edit it locally via `git commit --amend` (or using rebase -i's
-`reword` if you need to adjust a commit message in the middle of a patch
-series, not at the end).
+> - if Gerrit is the intended user, would it not make more sense to
+>   introduce a new hook, e.g. `merge-msg` (and `prepare-merge-msg`), as you
+>   have to teach Gerrit a new trick anyway?
 
-Then you send it as a reply to the first submission (--in-reply-to, if you
-use format-patch), with the `[PATCH v2]` prefix (--subject-prefix='[PATCH
-v2]' if you use format-patch).
+Why is that new? Every commit in gerrit has a Change-Id footer, which is
+generated by commit-msg hook. What I currently do for merges that succeed
+without conflicts is unconditional commit --amend --no-edit just to
+run the hook.
+This doesn't make sense.
 
-Ciao,
-Dscho
+> - if Gerrit is the intended user, why does it not simply edit the merge
+>   message itself? After all, it executes it, and probably crafts a merge
+>   message mentioning that this is an automatic merge, anyway, so why not
+>   add the Change-Id *then*?
+
+Most Gerrit setups require Change-Id in the commit message that the user
+pushes. It is possible to disable this setting, and then you don't need the
+Change-Id at all, but then you can't push a new patch set for the change
+(unless you copy the Change-Id from gerrit to your commit message).
+That's a real pain, I'm not aware of any public gerrit server that
+disables this :)
+
+> Ciao,
+> Dscho
+
+- Orgad
