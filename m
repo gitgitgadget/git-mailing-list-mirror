@@ -3,31 +3,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3305203E4
-	for <e@80x24.org>; Tue, 26 Jul 2016 21:14:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F3AE203E4
+	for <e@80x24.org>; Tue, 26 Jul 2016 21:14:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161126AbcGZVN4 (ORCPT <rfc822;e@80x24.org>);
-	Tue, 26 Jul 2016 17:13:56 -0400
-Received: from siwi.pair.com ([209.68.5.199]:44867 "EHLO siwi.pair.com"
+	id S1161041AbcGZVOD (ORCPT <rfc822;e@80x24.org>);
+	Tue, 26 Jul 2016 17:14:03 -0400
+Received: from siwi.pair.com ([209.68.5.199]:19343 "EHLO siwi.pair.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161053AbcGZVNx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2016 17:13:53 -0400
+	id S1758245AbcGZVNr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2016 17:13:47 -0400
 Received: from jeffhost-linux1.corp.microsoft.com (unknown [167.220.24.246])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by siwi.pair.com (Postfix) with ESMTPSA id CAE6A84634;
-	Tue, 26 Jul 2016 17:13:49 -0400 (EDT)
+	by siwi.pair.com (Postfix) with ESMTPSA id 1170A84630;
+	Tue, 26 Jul 2016 17:13:39 -0400 (EDT)
 From:	Jeff Hostetler <git@jeffhostetler.com>
 To:	git@vger.kernel.org
 Cc:	gitster@pobox.com, Johannes.Schindelin@gmx.de,
 	Jeff Hostetler <jeffhost@microsoft.com>,
 	Jeff Hostetler <git@jeffhostetler.com>
-Subject: [PATCH v3 8/8] status: tests for --porcelain=v2
-Date:	Tue, 26 Jul 2016 17:11:23 -0400
-Message-Id: <1469567483-58794-9-git-send-email-git@jeffhostetler.com>
+Subject: [PATCH v3 1/8] status: rename long-format print routines
+Date:	Tue, 26 Jul 2016 17:11:16 -0400
+Message-Id: <1469567483-58794-2-git-send-email-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.8.0.rc4.17.gac42084.dirty
 In-Reply-To: <1469567483-58794-1-git-send-email-git@jeffhostetler.com>
 References: <1469567483-58794-1-git-send-email-git@jeffhostetler.com>
@@ -38,606 +38,411 @@ X-Mailing-List:	git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Unit tests for porcelain v2 status format.
+Renamed the various wt_status_print*() routines to be
+wt_longstatus_print*() to make it clear that these
+routines are only concerned with the normal/long
+status output.
+
+This will hopefully reduce confusion as other status
+formats are added in the future.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Jeff Hostetler <git@jeffhostetler.com>
 ---
- t/t7064-wtstatus-pv2.sh | 585 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 585 insertions(+)
- create mode 100755 t/t7064-wtstatus-pv2.sh
+ builtin/commit.c |   4 +-
+ wt-status.c      | 110 +++++++++++++++++++++++++++----------------------------
+ wt-status.h      |   2 +-
+ 3 files changed, 58 insertions(+), 58 deletions(-)
 
-diff --git a/t/t7064-wtstatus-pv2.sh b/t/t7064-wtstatus-pv2.sh
-new file mode 100755
-index 0000000..ff0dd3d
---- /dev/null
-+++ b/t/t7064-wtstatus-pv2.sh
-@@ -0,0 +1,585 @@
-+#!/bin/sh
-+
-+test_description='git status --porcelain=v2
-+
-+This test exercises porcelain V2 output for git status.'
-+
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	test_tick &&
-+	git config --local core.autocrlf false &&
-+	echo x >file_x &&
-+	echo y >file_y &&
-+	echo z >file_z &&
-+	mkdir dir1 &&
-+	echo a >dir1/file_a &&
-+	echo b >dir1/file_b
-+'
-+
-+
-+##################################################################
-+## Confirm output prior to initial commit.
-+##################################################################
-+
-+test_expect_success pre_initial_commit_0 '
-+	cat >expected <<-EOF &&
-+	# branch.oid (initial)
-+	# branch.head master
-+	? actual
-+	? dir1/
-+	? expected
-+	? file_x
-+	? file_y
-+	? file_z
-+	EOF
-+
-+	git status --porcelain=v2 --branch --ignored --untracked-files=normal >actual &&
-+	test_cmp expected actual
-+'
-+
-+
-+test_expect_success pre_initial_commit_1 '
-+	git add file_x file_y file_z dir1 &&
-+	SHA_A=`git hash-object -t blob -- dir1/file_a` &&
-+	SHA_B=`git hash-object -t blob -- dir1/file_b` &&
-+	SHA_X=`git hash-object -t blob -- file_x` &&
-+	SHA_Y=`git hash-object -t blob -- file_y` &&
-+	SHA_Z=`git hash-object -t blob -- file_z` &&
-+	SHA_ZERO=0000000000000000000000000000000000000000 &&
-+
-+	cat >expected <<-EOF &&
-+	# branch.oid (initial)
-+	# branch.head master
-+	1 A. N... 000000 100644 100644 $SHA_ZERO $SHA_A dir1/file_a
-+	1 A. N... 000000 100644 100644 $SHA_ZERO $SHA_B dir1/file_b
-+	1 A. N... 000000 100644 100644 $SHA_ZERO $SHA_X file_x
-+	1 A. N... 000000 100644 100644 $SHA_ZERO $SHA_Y file_y
-+	1 A. N... 000000 100644 100644 $SHA_ZERO $SHA_Z file_z
-+	? actual
-+	? expected
-+	EOF
-+
-+	git status --porcelain=v2 --branch --ignored --untracked-files=all >actual &&
-+	test_cmp expected actual
-+'
-+
-+## Try -z on the above
-+test_expect_success pre_initial_commit_2 '
-+	cat >expected.lf <<-EOF &&
-+	# branch.oid (initial)
-+	# branch.head master
-+	1 A. N... 000000 100644 100644 $SHA_ZERO $SHA_A dir1/file_a
-+	1 A. N... 000000 100644 100644 $SHA_ZERO $SHA_B dir1/file_b
-+	1 A. N... 000000 100644 100644 $SHA_ZERO $SHA_X file_x
-+	1 A. N... 000000 100644 100644 $SHA_ZERO $SHA_Y file_y
-+	1 A. N... 000000 100644 100644 $SHA_ZERO $SHA_Z file_z
-+	? actual
-+	? expected
-+	EOF
-+	perl -pe y/\\012/\\000/ <expected.lf >expected &&
-+	rm expected.lf &&
-+
-+	git status -z --porcelain=v2 --branch --ignored --untracked-files=all >actual &&
-+	test_cmp expected actual
-+'
-+
-+##################################################################
-+## Create first commit. Confirm commit sha in new track header.
-+## Then make some changes on top of it.
-+##################################################################
-+
-+test_expect_success initial_commit_0 '
-+	git commit -m initial &&
-+	H0=`git rev-parse HEAD` &&
-+	cat >expected <<-EOF &&
-+	# branch.oid $H0
-+	# branch.head master
-+	? actual
-+	? expected
-+	EOF
-+
-+	git status --porcelain=v2 --branch --ignored --untracked-files=all >actual &&
-+	test_cmp expected actual
-+'
-+
-+
-+test_expect_success initial_commit_1 '
-+	echo x >>file_x &&
-+	SHA_X1=`git hash-object -t blob -- file_x` &&
-+	rm file_z &&
-+	H0=`git rev-parse HEAD` &&
-+
-+	cat >expected <<-EOF &&
-+	# branch.oid $H0
-+	# branch.head master
-+	1 .M N... 100644 100644 100644 $SHA_X $SHA_X file_x
-+	1 .D N... 100644 100644 000000 $SHA_Z $SHA_Z file_z
-+	? actual
-+	? expected
-+	EOF
-+
-+	git status --porcelain=v2 --branch --ignored --untracked-files=all >actual &&
-+	test_cmp expected actual
-+'
-+
-+
-+test_expect_success initial_commit_2 '
-+	git add file_x &&
-+	git rm file_z &&
-+	H0=`git rev-parse HEAD` &&
-+
-+	cat >expected <<-EOF &&
-+	# branch.oid $H0
-+	# branch.head master
-+	1 M. N... 100644 100644 100644 $SHA_X $SHA_X1 file_x
-+	1 D. N... 100644 000000 000000 $SHA_Z $SHA_ZERO file_z
-+	? actual
-+	? expected
-+	EOF
-+
-+	git status --porcelain=v2 --branch --ignored --untracked-files=all >actual &&
-+	test_cmp expected actual
-+'
-+
-+
-+test_expect_success initial_commit_3 '
-+	git mv file_y renamed_y &&
-+	H0=`git rev-parse HEAD` &&
-+
-+	cat >expected.q <<-EOF &&
-+	# branch.oid $H0
-+	# branch.head master
-+	1 M. N... 100644 100644 100644 $SHA_X $SHA_X1 file_x
-+	1 D. N... 100644 000000 000000 $SHA_Z $SHA_ZERO file_z
-+	2 R. N... 100644 100644 100644 $SHA_Y $SHA_Y R100 renamed_yQfile_y
-+	? actual
-+	? expected
-+	EOF
-+	q_to_tab <expected.q >expected &&
-+	rm expected.q &&
-+
-+	git status --porcelain=v2 --branch --ignored --untracked-files=all >actual &&
-+	test_cmp expected actual
-+'
-+
-+
-+##################################################################
-+## Create second commit.
-+##################################################################
-+
-+test_expect_success second_commit_0 '
-+	git commit -m second &&
-+	H1=`git rev-parse HEAD` &&
-+
-+	cat >expected <<-EOF &&
-+	# branch.oid $H1
-+	# branch.head master
-+	? actual
-+	? expected
-+	EOF
-+
-+	git status --porcelain=v2 --branch --ignored --untracked-files=all >actual &&
-+	test_cmp expected actual
-+'
-+
-+
-+##################################################################
-+## Ignore a file
-+##################################################################
-+
-+test_expect_success ignore_file_0 '
-+	echo x.ign >.gitignore &&
-+	echo "ignore me" >x.ign &&
-+	H1=`git rev-parse HEAD` &&
-+
-+	cat >expected <<-EOF &&
-+	# branch.oid $H1
-+	# branch.head master
-+	? .gitignore
-+	? actual
-+	? expected
-+	! x.ign
-+	EOF
-+
-+	git status --porcelain=v2 --branch --ignored --untracked-files=all >actual &&
-+	rm x.ign &&
-+	rm .gitignore &&
-+	test_cmp expected actual
-+'
-+
-+
-+##################################################################
-+## Create some conflicts.
-+##################################################################
-+
-+test_expect_success conflict_AA '
-+	git branch AA_A master &&
-+	git checkout AA_A &&
-+	echo "Branch AA_A" >conflict.txt &&
-+	SHA_AA_A=`git hash-object -t blob -- conflict.txt` &&
-+	git add conflict.txt &&
-+	git commit -m "branch aa_a" &&
-+
-+	git branch AA_B master &&
-+	git checkout AA_B &&
-+	echo "Branch AA_B" >conflict.txt &&
-+	SHA_AA_B=`git hash-object -t blob -- conflict.txt` &&
-+	git add conflict.txt &&
-+	git commit -m "branch aa_b" &&
-+
-+	git branch AA_M AA_B &&
-+	git checkout AA_M &&
-+	test_must_fail git merge AA_A &&
-+
-+	HM=`git rev-parse HEAD` &&
-+
-+	cat >expected <<-EOF &&
-+	# branch.oid $HM
-+	# branch.head AA_M
-+	u AA N... 000000 100644 100644 100644 $SHA_ZERO $SHA_AA_B $SHA_AA_A conflict.txt
-+	? actual
-+	? expected
-+	EOF
-+
-+	git status --porcelain=v2 --branch --ignored --untracked-files=all >actual &&
-+	git reset --hard &&
-+	test_cmp expected actual
-+'
-+
-+
-+test_expect_success conflict_UU '
-+	git branch UU_ANC master &&
-+	git checkout UU_ANC &&
-+	echo "Ancestor" >conflict.txt &&
-+	SHA_UU_ANC=`git hash-object -t blob -- conflict.txt` &&
-+	git add conflict.txt &&
-+	git commit -m "UU_ANC" &&
-+
-+	git branch UU_A UU_ANC &&
-+	git checkout UU_A &&
-+	echo "Branch UU_A" >conflict.txt &&
-+	SHA_UU_A=`git hash-object -t blob -- conflict.txt` &&
-+	git add conflict.txt &&
-+	git commit -m "branch uu_a" &&
-+
-+	git branch UU_B UU_ANC &&
-+	git checkout UU_B &&
-+	echo "Branch UU_B" >conflict.txt &&
-+	SHA_UU_B=`git hash-object -t blob -- conflict.txt` &&
-+	git add conflict.txt &&
-+	git commit -m "branch uu_b" &&
-+
-+	git branch UU_M UU_B &&
-+	git checkout UU_M &&
-+	test_must_fail git merge UU_A &&
-+
-+	HM=`git rev-parse HEAD` &&
-+
-+	cat >expected <<-EOF &&
-+	# branch.oid $HM
-+	# branch.head UU_M
-+	u UU N... 100644 100644 100644 100644 $SHA_UU_ANC $SHA_UU_B $SHA_UU_A conflict.txt
-+	? actual
-+	? expected
-+	EOF
-+
-+	git status --porcelain=v2 --branch --ignored --untracked-files=all >actual &&
-+	git reset --hard &&
-+	test_cmp expected actual
-+'
-+
-+
-+##################################################################
-+## Test upstream fields in branch header
-+##################################################################
-+
-+test_expect_success 'upstream_fields_0' '
-+	git checkout master &&
-+	git clone . sub_repo &&
-+	(
-+		## Confirm local master tracks remote master.
-+		cd sub_repo &&
-+		HUF=`git rev-parse HEAD` &&
-+
-+		cat >expected <<-EOF &&
-+		# branch.oid $HUF
-+		# branch.head master
-+		# branch.upstream origin/master
-+		# branch.ab +0 -0
-+		? actual
-+		? expected
-+		EOF
-+
-+		git status --porcelain=v2 --branch --ignored --untracked-files=all >actual &&
-+		test_cmp expected actual &&
-+
-+		## Test ahead/behind.
-+		echo xyz >file_xyz &&
-+		git add file_xyz &&
-+		git commit -m xyz &&
-+
-+		HUF=`git rev-parse HEAD` &&
-+
-+		cat >expected <<-EOF &&
-+		# branch.oid $HUF
-+		# branch.head master
-+		# branch.upstream origin/master
-+		# branch.ab +1 -0
-+		? actual
-+		? expected
-+		EOF
-+
-+		git status --porcelain=v2 --branch --ignored --untracked-files=all >actual &&
-+		test_cmp expected actual &&
-+
-+		## Test upstream-gone case. Fake this by pointing origin/master at
-+		## a non-existing commit.
-+		OLD=`git rev-parse origin/master` &&
-+		NEW=$SHA_ZERO &&
-+		mv .git/packed-refs .git/old-packed-refs &&
-+		sed "s/$OLD/$NEW/g" <.git/old-packed-refs >.git/packed-refs &&
-+
-+		HUF=`git rev-parse HEAD` &&
-+
-+		cat >expected <<-EOF &&
-+		# branch.oid $HUF
-+		# branch.head master
-+		# branch.upstream origin/master
-+		? actual
-+		? expected
-+		EOF
-+
-+		git status --porcelain=v2 --branch --ignored --untracked-files=all >actual &&
-+		test_cmp expected actual
-+	) &&
-+	rm -rf sub_repo
-+'
-+
-+
-+##################################################################
-+## Test submodule status flags.
-+##################################################################
-+
-+test_expect_success 'submodule_flags_0' '
-+	git checkout master &&
-+	git clone . sub_repo &&
-+	git clone . super_repo &&
-+	(	cd super_repo &&
-+		git submodule add ../sub_repo sub1 &&
-+
-+		## Confirm stage/add of clean submodule.
-+		HMOD=`git hash-object -t blob -- .gitmodules` &&
-+		HSUP=`git rev-parse HEAD` &&
-+		HSUB=$HSUP &&
-+
-+		cat >expected <<-EOF &&
-+		# branch.oid $HSUP
-+		# branch.head master
-+		# branch.upstream origin/master
-+		# branch.ab +0 -0
-+		1 A. N... 000000 100644 100644 $SHA_ZERO $HMOD .gitmodules
-+		1 A. S... 000000 160000 160000 $SHA_ZERO $HSUB sub1
-+		? actual
-+		? expected
-+		EOF
-+
-+		git status --porcelain=v2 --branch --ignored --untracked-files=all >actual &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_expect_success 'submodule_flags_1' '
-+	(	cd super_repo &&
-+		## Make some untracked dirt in the submodule.
-+		(	cd sub1 &&
-+			echo "dirt" >file_in_sub
-+		) &&
-+
-+		HMOD=`git hash-object -t blob -- .gitmodules` &&
-+		HSUP=`git rev-parse HEAD` &&
-+		HSUB=$HSUP &&
-+
-+		cat >expected <<-EOF &&
-+		# branch.oid $HSUP
-+		# branch.head master
-+		# branch.upstream origin/master
-+		# branch.ab +0 -0
-+		1 A. N... 000000 100644 100644 $SHA_ZERO $HMOD .gitmodules
-+		1 AM S..U 000000 160000 160000 $SHA_ZERO $HSUB sub1
-+		? actual
-+		? expected
-+		EOF
-+
-+		git status --porcelain=v2 --branch --ignored --untracked-files=all >actual &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_expect_success 'submodule_flags_2' '
-+	(	cd super_repo &&
-+		## Make some staged dirt in the submodule.
-+		(	cd sub1 &&
-+			git add file_in_sub
-+		) &&
-+
-+		HMOD=`git hash-object -t blob -- .gitmodules` &&
-+		HSUP=`git rev-parse HEAD` &&
-+		HSUB=$HSUP &&
-+
-+		cat >expected <<-EOF &&
-+		# branch.oid $HSUP
-+		# branch.head master
-+		# branch.upstream origin/master
-+		# branch.ab +0 -0
-+		1 A. N... 000000 100644 100644 $SHA_ZERO $HMOD .gitmodules
-+		1 AM S.M. 000000 160000 160000 $SHA_ZERO $HSUB sub1
-+		? actual
-+		? expected
-+		EOF
-+
-+		git status --porcelain=v2 --branch --ignored --untracked-files=all >actual &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_expect_success 'submodule_flags_3' '
-+	(	cd super_repo &&
-+		## Make some staged and unstaged dirt (on the same file) in the submodule.
-+		## This does not cause us to get S.MU (because the submodule does not report
-+		## a "?" line for the unstaged changes).
-+		(	cd sub1 &&
-+			echo "more dirt" >>file_in_sub
-+		) &&
-+
-+		HMOD=`git hash-object -t blob -- .gitmodules` &&
-+		HSUP=`git rev-parse HEAD` &&
-+		HSUB=$HSUP &&
-+
-+		cat >expected <<-EOF &&
-+		# branch.oid $HSUP
-+		# branch.head master
-+		# branch.upstream origin/master
-+		# branch.ab +0 -0
-+		1 A. N... 000000 100644 100644 $SHA_ZERO $HMOD .gitmodules
-+		1 AM S.M. 000000 160000 160000 $SHA_ZERO $HSUB sub1
-+		? actual
-+		? expected
-+		EOF
-+
-+		git status --porcelain=v2 --branch --ignored --untracked-files=all >actual &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_expect_success 'submodule_flags_4' '
-+	(	cd super_repo &&
-+		## Make some staged and untracked dirt (on different files) in the submodule.
-+		(	cd sub1 &&
-+			git add file_in_sub &&
-+			echo "dirt" >>another_file_in_sub
-+		) &&
-+
-+		HMOD=`git hash-object -t blob -- .gitmodules` &&
-+		HSUP=`git rev-parse HEAD` &&
-+		HSUB=$HSUP &&
-+
-+		cat >expected <<-EOF &&
-+		# branch.oid $HSUP
-+		# branch.head master
-+		# branch.upstream origin/master
-+		# branch.ab +0 -0
-+		1 A. N... 000000 100644 100644 $SHA_ZERO $HMOD .gitmodules
-+		1 AM S.MU 000000 160000 160000 $SHA_ZERO $HSUB sub1
-+		? actual
-+		? expected
-+		EOF
-+
-+		git status --porcelain=v2 --branch --ignored --untracked-files=all >actual &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_expect_success 'submodule_flags_5' '
-+	(	cd super_repo &&
-+		## Make a new commit in the submodule.
-+		(	cd sub1 &&
-+			git add file_in_sub &&
-+			rm -f another_file_in_sub &&
-+			git commit -m "new commit"
-+		) &&
-+
-+		HMOD=`git hash-object -t blob -- .gitmodules` &&
-+		HSUP=`git rev-parse HEAD` &&
-+		HSUB=$HSUP &&
-+
-+		cat >expected <<-EOF &&
-+		# branch.oid $HSUP
-+		# branch.head master
-+		# branch.upstream origin/master
-+		# branch.ab +0 -0
-+		1 A. N... 000000 100644 100644 $SHA_ZERO $HMOD .gitmodules
-+		1 AM SC.. 000000 160000 160000 $SHA_ZERO $HSUB sub1
-+		? actual
-+		? expected
-+		EOF
-+
-+		git status --porcelain=v2 --branch --ignored --untracked-files=all >actual &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_expect_success 'submodule_flags_6' '
-+	(	cd super_repo &&
-+		## Commit the new submodule commit in the super.
-+		git add sub1 &&
-+		git commit -m "super commit" &&
-+
-+		HSUP=`git rev-parse HEAD` &&
-+
-+		cat >expected <<-EOF &&
-+		# branch.oid $HSUP
-+		# branch.head master
-+		# branch.upstream origin/master
-+		# branch.ab +1 -0
-+		? actual
-+		? expected
-+		EOF
-+
-+		git status --porcelain=v2 --branch --ignored --untracked-files=all >actual &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_expect_success 'submodule_flags_7' '
-+	(	cd super_repo &&
-+		## Make some untracked dirt in the submodule.
-+		(	cd sub1 &&
-+			echo "yet more dirt" >>file_in_sub
-+		) &&
-+
-+		HMOD=`git hash-object -t blob -- .gitmodules` &&
-+		HSUP=`git rev-parse HEAD` &&
-+		HSUB=`(cd sub1 && git rev-parse HEAD)` &&
-+
-+		cat >expected <<-EOF &&
-+		# branch.oid $HSUP
-+		# branch.head master
-+		# branch.upstream origin/master
-+		# branch.ab +1 -0
-+		1 .M S.M. 160000 160000 160000 $HSUB $HSUB sub1
-+		? actual
-+		? expected
-+		EOF
-+
-+		git status --porcelain=v2 --branch --ignored --untracked-files=all >actual &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+##################################################################
-+## The end.
-+##################################################################
-+
-+test_done
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 1f6dbcd..b80273b 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -515,7 +515,7 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix, int
+ 		break;
+ 	case STATUS_FORMAT_NONE:
+ 	case STATUS_FORMAT_LONG:
+-		wt_status_print(s);
++		wt_longstatus_print(s);
+ 		break;
+ 	}
+ 
+@@ -1403,7 +1403,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 	case STATUS_FORMAT_LONG:
+ 		s.verbose = verbose;
+ 		s.ignore_submodule_arg = ignore_submodule_arg;
+-		wt_status_print(&s);
++		wt_longstatus_print(&s);
+ 		break;
+ 	}
+ 	return 0;
+diff --git a/wt-status.c b/wt-status.c
+index de62ab2..b9a58fd 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -139,7 +139,7 @@ void wt_status_prepare(struct wt_status *s)
+ 	s->display_comment_prefix = 0;
+ }
+ 
+-static void wt_status_print_unmerged_header(struct wt_status *s)
++static void wt_longstatus_print_unmerged_header(struct wt_status *s)
+ {
+ 	int i;
+ 	int del_mod_conflict = 0;
+@@ -191,7 +191,7 @@ static void wt_status_print_unmerged_header(struct wt_status *s)
+ 	status_printf_ln(s, c, "%s", "");
+ }
+ 
+-static void wt_status_print_cached_header(struct wt_status *s)
++static void wt_longstatus_print_cached_header(struct wt_status *s)
+ {
+ 	const char *c = color(WT_STATUS_HEADER, s);
+ 
+@@ -207,9 +207,9 @@ static void wt_status_print_cached_header(struct wt_status *s)
+ 	status_printf_ln(s, c, "%s", "");
+ }
+ 
+-static void wt_status_print_dirty_header(struct wt_status *s,
+-					 int has_deleted,
+-					 int has_dirty_submodules)
++static void wt_longstatus_print_dirty_header(struct wt_status *s,
++					     int has_deleted,
++					     int has_dirty_submodules)
+ {
+ 	const char *c = color(WT_STATUS_HEADER, s);
+ 
+@@ -226,9 +226,9 @@ static void wt_status_print_dirty_header(struct wt_status *s,
+ 	status_printf_ln(s, c, "%s", "");
+ }
+ 
+-static void wt_status_print_other_header(struct wt_status *s,
+-					 const char *what,
+-					 const char *how)
++static void wt_longstatus_print_other_header(struct wt_status *s,
++					     const char *what,
++					     const char *how)
+ {
+ 	const char *c = color(WT_STATUS_HEADER, s);
+ 	status_printf_ln(s, c, "%s:", what);
+@@ -238,7 +238,7 @@ static void wt_status_print_other_header(struct wt_status *s,
+ 	status_printf_ln(s, c, "%s", "");
+ }
+ 
+-static void wt_status_print_trailer(struct wt_status *s)
++static void wt_longstatus_print_trailer(struct wt_status *s)
+ {
+ 	status_printf_ln(s, color(WT_STATUS_HEADER, s), "%s", "");
+ }
+@@ -304,8 +304,8 @@ static int maxwidth(const char *(*label)(int), int minval, int maxval)
+ 	return result;
+ }
+ 
+-static void wt_status_print_unmerged_data(struct wt_status *s,
+-					  struct string_list_item *it)
++static void wt_longstatus_print_unmerged_data(struct wt_status *s,
++					      struct string_list_item *it)
+ {
+ 	const char *c = color(WT_STATUS_UNMERGED, s);
+ 	struct wt_status_change_data *d = it->util;
+@@ -331,9 +331,9 @@ static void wt_status_print_unmerged_data(struct wt_status *s,
+ 	strbuf_release(&onebuf);
+ }
+ 
+-static void wt_status_print_change_data(struct wt_status *s,
+-					int change_type,
+-					struct string_list_item *it)
++static void wt_longstatus_print_change_data(struct wt_status *s,
++					    int change_type,
++					    struct string_list_item *it)
+ {
+ 	struct wt_status_change_data *d = it->util;
+ 	const char *c = color(change_type, s);
+@@ -378,7 +378,7 @@ static void wt_status_print_change_data(struct wt_status *s,
+ 		status = d->worktree_status;
+ 		break;
+ 	default:
+-		die("BUG: unhandled change_type %d in wt_status_print_change_data",
++		die("BUG: unhandled change_type %d in wt_longstatus_print_change_data",
+ 		    change_type);
+ 	}
+ 
+@@ -627,7 +627,7 @@ void wt_status_collect(struct wt_status *s)
+ 	wt_status_collect_untracked(s);
+ }
+ 
+-static void wt_status_print_unmerged(struct wt_status *s)
++static void wt_longstatus_print_unmerged(struct wt_status *s)
+ {
+ 	int shown_header = 0;
+ 	int i;
+@@ -640,17 +640,17 @@ static void wt_status_print_unmerged(struct wt_status *s)
+ 		if (!d->stagemask)
+ 			continue;
+ 		if (!shown_header) {
+-			wt_status_print_unmerged_header(s);
++			wt_longstatus_print_unmerged_header(s);
+ 			shown_header = 1;
+ 		}
+-		wt_status_print_unmerged_data(s, it);
++		wt_longstatus_print_unmerged_data(s, it);
+ 	}
+ 	if (shown_header)
+-		wt_status_print_trailer(s);
++		wt_longstatus_print_trailer(s);
+ 
+ }
+ 
+-static void wt_status_print_updated(struct wt_status *s)
++static void wt_longstatus_print_updated(struct wt_status *s)
+ {
+ 	int shown_header = 0;
+ 	int i;
+@@ -664,14 +664,14 @@ static void wt_status_print_updated(struct wt_status *s)
+ 		    d->index_status == DIFF_STATUS_UNMERGED)
+ 			continue;
+ 		if (!shown_header) {
+-			wt_status_print_cached_header(s);
++			wt_longstatus_print_cached_header(s);
+ 			s->commitable = 1;
+ 			shown_header = 1;
+ 		}
+-		wt_status_print_change_data(s, WT_STATUS_UPDATED, it);
++		wt_longstatus_print_change_data(s, WT_STATUS_UPDATED, it);
+ 	}
+ 	if (shown_header)
+-		wt_status_print_trailer(s);
++		wt_longstatus_print_trailer(s);
+ }
+ 
+ /*
+@@ -703,7 +703,7 @@ static int wt_status_check_worktree_changes(struct wt_status *s,
+ 	return changes;
+ }
+ 
+-static void wt_status_print_changed(struct wt_status *s)
++static void wt_longstatus_print_changed(struct wt_status *s)
+ {
+ 	int i, dirty_submodules;
+ 	int worktree_changes = wt_status_check_worktree_changes(s, &dirty_submodules);
+@@ -711,7 +711,7 @@ static void wt_status_print_changed(struct wt_status *s)
+ 	if (!worktree_changes)
+ 		return;
+ 
+-	wt_status_print_dirty_header(s, worktree_changes < 0, dirty_submodules);
++	wt_longstatus_print_dirty_header(s, worktree_changes < 0, dirty_submodules);
+ 
+ 	for (i = 0; i < s->change.nr; i++) {
+ 		struct wt_status_change_data *d;
+@@ -721,12 +721,12 @@ static void wt_status_print_changed(struct wt_status *s)
+ 		if (!d->worktree_status ||
+ 		    d->worktree_status == DIFF_STATUS_UNMERGED)
+ 			continue;
+-		wt_status_print_change_data(s, WT_STATUS_CHANGED, it);
++		wt_longstatus_print_change_data(s, WT_STATUS_CHANGED, it);
+ 	}
+-	wt_status_print_trailer(s);
++	wt_longstatus_print_trailer(s);
+ }
+ 
+-static void wt_status_print_submodule_summary(struct wt_status *s, int uncommitted)
++static void wt_longstatus_print_submodule_summary(struct wt_status *s, int uncommitted)
+ {
+ 	struct child_process sm_summary = CHILD_PROCESS_INIT;
+ 	struct strbuf cmd_stdout = STRBUF_INIT;
+@@ -772,10 +772,10 @@ static void wt_status_print_submodule_summary(struct wt_status *s, int uncommitt
+ 	strbuf_release(&summary);
+ }
+ 
+-static void wt_status_print_other(struct wt_status *s,
+-				  struct string_list *l,
+-				  const char *what,
+-				  const char *how)
++static void wt_longstatus_print_other(struct wt_status *s,
++				      struct string_list *l,
++				      const char *what,
++				      const char *how)
+ {
+ 	int i;
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -785,7 +785,7 @@ static void wt_status_print_other(struct wt_status *s,
+ 	if (!l->nr)
+ 		return;
+ 
+-	wt_status_print_other_header(s, what, how);
++	wt_longstatus_print_other_header(s, what, how);
+ 
+ 	for (i = 0; i < l->nr; i++) {
+ 		struct string_list_item *it;
+@@ -845,7 +845,7 @@ void wt_status_add_cut_line(FILE *fp)
+ 	strbuf_release(&buf);
+ }
+ 
+-static void wt_status_print_verbose(struct wt_status *s)
++static void wt_longstatus_print_verbose(struct wt_status *s)
+ {
+ 	struct rev_info rev;
+ 	struct setup_revision_opt opt;
+@@ -878,7 +878,7 @@ static void wt_status_print_verbose(struct wt_status *s)
+ 	if (s->verbose > 1 && s->commitable) {
+ 		/* print_updated() printed a header, so do we */
+ 		if (s->fp != stdout)
+-			wt_status_print_trailer(s);
++			wt_longstatus_print_trailer(s);
+ 		status_printf_ln(s, c, _("Changes to be committed:"));
+ 		rev.diffopt.a_prefix = "c/";
+ 		rev.diffopt.b_prefix = "i/";
+@@ -896,7 +896,7 @@ static void wt_status_print_verbose(struct wt_status *s)
+ 	}
+ }
+ 
+-static void wt_status_print_tracking(struct wt_status *s)
++static void wt_longstatus_print_tracking(struct wt_status *s)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+ 	const char *cp, *ep, *branch_name;
+@@ -959,7 +959,7 @@ static void show_merge_in_progress(struct wt_status *s,
+ 			status_printf_ln(s, color,
+ 				_("  (use \"git commit\" to conclude merge)"));
+ 	}
+-	wt_status_print_trailer(s);
++	wt_longstatus_print_trailer(s);
+ }
+ 
+ static void show_am_in_progress(struct wt_status *s,
+@@ -980,7 +980,7 @@ static void show_am_in_progress(struct wt_status *s,
+ 		status_printf_ln(s, color,
+ 			_("  (use \"git am --abort\" to restore the original branch)"));
+ 	}
+-	wt_status_print_trailer(s);
++	wt_longstatus_print_trailer(s);
+ }
+ 
+ static char *read_line_from_git_path(const char *filename)
+@@ -1204,7 +1204,7 @@ static void show_rebase_in_progress(struct wt_status *s,
+ 				_("  (use \"git rebase --continue\" once you are satisfied with your changes)"));
+ 		}
+ 	}
+-	wt_status_print_trailer(s);
++	wt_longstatus_print_trailer(s);
+ }
+ 
+ static void show_cherry_pick_in_progress(struct wt_status *s,
+@@ -1223,7 +1223,7 @@ static void show_cherry_pick_in_progress(struct wt_status *s,
+ 		status_printf_ln(s, color,
+ 			_("  (use \"git cherry-pick --abort\" to cancel the cherry-pick operation)"));
+ 	}
+-	wt_status_print_trailer(s);
++	wt_longstatus_print_trailer(s);
+ }
+ 
+ static void show_revert_in_progress(struct wt_status *s,
+@@ -1242,7 +1242,7 @@ static void show_revert_in_progress(struct wt_status *s,
+ 		status_printf_ln(s, color,
+ 			_("  (use \"git revert --abort\" to cancel the revert operation)"));
+ 	}
+-	wt_status_print_trailer(s);
++	wt_longstatus_print_trailer(s);
+ }
+ 
+ static void show_bisect_in_progress(struct wt_status *s,
+@@ -1259,7 +1259,7 @@ static void show_bisect_in_progress(struct wt_status *s,
+ 	if (s->hints)
+ 		status_printf_ln(s, color,
+ 			_("  (use \"git bisect reset\" to get back to the original branch)"));
+-	wt_status_print_trailer(s);
++	wt_longstatus_print_trailer(s);
+ }
+ 
+ /*
+@@ -1429,8 +1429,8 @@ void wt_status_get_state(struct wt_status_state *state,
+ 		wt_status_get_detached_from(state);
+ }
+ 
+-static void wt_status_print_state(struct wt_status *s,
+-				  struct wt_status_state *state)
++static void wt_longstatus_print_state(struct wt_status *s,
++				      struct wt_status_state *state)
+ {
+ 	const char *state_color = color(WT_STATUS_HEADER, s);
+ 	if (state->merge_in_progress)
+@@ -1447,7 +1447,7 @@ static void wt_status_print_state(struct wt_status *s,
+ 		show_bisect_in_progress(s, state, state_color);
+ }
+ 
+-void wt_status_print(struct wt_status *s)
++void wt_longstatus_print(struct wt_status *s)
+ {
+ 	const char *branch_color = color(WT_STATUS_ONBRANCH, s);
+ 	const char *branch_status_color = color(WT_STATUS_HEADER, s);
+@@ -1484,10 +1484,10 @@ void wt_status_print(struct wt_status *s)
+ 		status_printf_more(s, branch_status_color, "%s", on_what);
+ 		status_printf_more(s, branch_color, "%s\n", branch_name);
+ 		if (!s->is_initial)
+-			wt_status_print_tracking(s);
++			wt_longstatus_print_tracking(s);
+ 	}
+ 
+-	wt_status_print_state(s, &state);
++	wt_longstatus_print_state(s, &state);
+ 	free(state.branch);
+ 	free(state.onto);
+ 	free(state.detached_from);
+@@ -1498,19 +1498,19 @@ void wt_status_print(struct wt_status *s)
+ 		status_printf_ln(s, color(WT_STATUS_HEADER, s), "%s", "");
+ 	}
+ 
+-	wt_status_print_updated(s);
+-	wt_status_print_unmerged(s);
+-	wt_status_print_changed(s);
++	wt_longstatus_print_updated(s);
++	wt_longstatus_print_unmerged(s);
++	wt_longstatus_print_changed(s);
+ 	if (s->submodule_summary &&
+ 	    (!s->ignore_submodule_arg ||
+ 	     strcmp(s->ignore_submodule_arg, "all"))) {
+-		wt_status_print_submodule_summary(s, 0);  /* staged */
+-		wt_status_print_submodule_summary(s, 1);  /* unstaged */
++		wt_longstatus_print_submodule_summary(s, 0);  /* staged */
++		wt_longstatus_print_submodule_summary(s, 1);  /* unstaged */
+ 	}
+ 	if (s->show_untracked_files) {
+-		wt_status_print_other(s, &s->untracked, _("Untracked files"), "add");
++		wt_longstatus_print_other(s, &s->untracked, _("Untracked files"), "add");
+ 		if (s->show_ignored_files)
+-			wt_status_print_other(s, &s->ignored, _("Ignored files"), "add -f");
++			wt_longstatus_print_other(s, &s->ignored, _("Ignored files"), "add -f");
+ 		if (advice_status_u_option && 2000 < s->untracked_in_ms) {
+ 			status_printf_ln(s, GIT_COLOR_NORMAL, "%s", "");
+ 			status_printf_ln(s, GIT_COLOR_NORMAL,
+@@ -1525,7 +1525,7 @@ void wt_status_print(struct wt_status *s)
+ 			? _(" (use -u option to show untracked files)") : "");
+ 
+ 	if (s->verbose)
+-		wt_status_print_verbose(s);
++		wt_longstatus_print_verbose(s);
+ 	if (!s->commitable) {
+ 		if (s->amend)
+ 			status_printf_ln(s, GIT_COLOR_NORMAL, _("No changes"));
+diff --git a/wt-status.h b/wt-status.h
+index 2ca93f6..2023a3c 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -99,7 +99,6 @@ struct wt_status_state {
+ void wt_status_truncate_message_at_cut_line(struct strbuf *);
+ void wt_status_add_cut_line(FILE *fp);
+ void wt_status_prepare(struct wt_status *s);
+-void wt_status_print(struct wt_status *s);
+ void wt_status_collect(struct wt_status *s);
+ void wt_status_get_state(struct wt_status_state *state, int get_detached_from);
+ int wt_status_check_rebase(const struct worktree *wt,
+@@ -107,6 +106,7 @@ int wt_status_check_rebase(const struct worktree *wt,
+ int wt_status_check_bisect(const struct worktree *wt,
+ 			   struct wt_status_state *state);
+ 
++void wt_longstatus_print(struct wt_status *s);
+ void wt_shortstatus_print(struct wt_status *s);
+ void wt_porcelain_print(struct wt_status *s);
+ 
 -- 
 2.8.0.rc4.17.gac42084.dirty
 
