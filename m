@@ -2,122 +2,195 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5D01203E3
-	for <e@80x24.org>; Tue, 26 Jul 2016 19:42:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 779AC203E3
+	for <e@80x24.org>; Tue, 26 Jul 2016 19:46:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756175AbcGZTkz (ORCPT <rfc822;e@80x24.org>);
-	Tue, 26 Jul 2016 15:40:55 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:37925 "EHLO
-	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753616AbcGZTky (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2016 15:40:54 -0400
-Received: by mail-wm0-f42.google.com with SMTP id o80so31474219wme.1
-        for <git@vger.kernel.org>; Tue, 26 Jul 2016 12:40:53 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=ohSJY64l2zok+eKa++67OKkpgu1cS2NrBbC6BaEfB+E=;
-        b=fjr20wm/F5cIVD+MAVwckjLEQbVGV/OHpLH4luo23KcBtqvBPkEnQ8I9rnWUpgP7iL
-         6zhzH/DdhwxsXOodn7HptcEIcRKCLV2usjKWLJGTjfAplvtIQNGNdfLf9CtaWXclTOKm
-         R3dzzpnfSqGvrwZINzkhcika3khWkmwPAkyWHyvRSXgXGVMj5LqGVtw/rm6sB6Z0RQqf
-         KbGNQk7iX2SsoLy8x/6h+JI4bevaQoczCFfepAep2hqAUBGZ6q0LEZXzFmmDaXZGllUl
-         VVhgOt4lvSc1/tHny51qVISm2vVPtwVbCsKPsTXrJgUIt93kKPdCEBLeSYl5Vhg0sSd0
-         WSMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=ohSJY64l2zok+eKa++67OKkpgu1cS2NrBbC6BaEfB+E=;
-        b=QD7Ign8flSFFAXl29nVTiM9v7NyxcoV/cv00zrYQt6dRg9Zs2Axo+YfB7mEAI46RNv
-         3tjvZJ/0y3DtnnPYGoRkfr4kGQB4wdmu8tZ3oGovUusiMs4J/3hU1o3hfU3duuKxwpHv
-         Z+UYAipouT1o/TQW83VQBAZzarDPiGSudZcW8NtEnd9PF7/Q7rkN3JmaaqdzdWQz4vLu
-         ffEXFtp3Re/cG1U/ius3es4YdYbs8HmYlYv08ALHyV3bJlIkLDmM+B9yqC+Ji5VZOuzr
-         SgsbHHFHcLCSTI54TqVHRh1lmpoerzQP2BG0PMLVsviJ9WvaVuyIgbJxvG2mLvwT13Np
-         KUig==
-X-Gm-Message-State: ALyK8tIhkunMgwkGmYtIa8W6wjZqUyYNJQ+vkBqN0W7ElNF+UpHHkfYOU7Wd7vF27j6bpZ32g+Es/75guwgHtw==
-X-Received: by 10.28.30.1 with SMTP id e1mr49598639wme.77.1469562052416; Tue,
- 26 Jul 2016 12:40:52 -0700 (PDT)
+	id S1756936AbcGZToj (ORCPT <rfc822;e@80x24.org>);
+	Tue, 26 Jul 2016 15:44:39 -0400
+Received: from siwi.pair.com ([209.68.5.199]:55330 "EHLO siwi.pair.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756109AbcGZToh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2016 15:44:37 -0400
+Received: from [10.160.15.137] (unknown [167.220.24.246])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by siwi.pair.com (Postfix) with ESMTPSA id 5CC57845F7;
+	Tue, 26 Jul 2016 15:44:35 -0400 (EDT)
+Subject: Re: [PATCH v2 7/8] status: update git-status.txt for --porcelain=v2
+To:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
+	Jeff Hostetler <jeffhost@microsoft.com>, git@vger.kernel.org
+References: <1469474750-49075-1-git-send-email-jeffhost@microsoft.com>
+ <1469474750-49075-8-git-send-email-jeffhost@microsoft.com>
+ <57969607.9080206@gmail.com>
+Cc:	peff@peff.net, gitster@pobox.com, Johannes.Schindelin@gmx.de
+From:	Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <5797BD1E.2010800@jeffhostetler.com>
+Date:	Tue, 26 Jul 2016 15:42:22 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
 MIME-Version: 1.0
-Received: by 10.194.154.134 with HTTP; Tue, 26 Jul 2016 12:40:51 -0700 (PDT)
-From:	Stephen Morton <stephen.c.morton@gmail.com>
-Date:	Tue, 26 Jul 2016 15:40:51 -0400
-Message-ID: <CAH8BJxGZW8eNQogksZ416sVaBkpQ78uYkV7FtN6wxGafzNwjAg@mail.gmail.com>
-Subject: git cherry-pick conflict error message is deceptive when
- cherry-picking multiple commits
-To:	"git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <57969607.9080206@gmail.com>
+Content-Type: text/plain; charset=iso-8859-2; format=flowed
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-When I cherry-pick n commits and one of the first (n-1), fails, what I
-should do is resolve the conflict, 'git add' it, and then run 'git
-cherry-pick --continue'. However git advises me to
-
-error: could not apply d0fb756... Commit message for test commit
-hint: after resolving the conflicts, mark the corrected paths
-hint: with 'git add <paths>' or 'git rm <paths>'
-hint: and commit the result with 'git commit'
-
-I suspect this is not just a little bit deceptive but actually a bit
-destructive, as doing a 'git commit' removes some of the sequencing
-information. If I do a 'git commit', while there is .git/sequencer
-information and 'git cherry-pick --continue' will work, there is no
-indication in 'git status' that a cherry-pick is in progress.
-
-It would be extremely easy for somebody to follow cherry-pick's hints
-by running 'git commit' and think that they were done, not realizing
-that there were m more commits remaining to be cherry-picked.
-
-Would it be possible to expand the hint message to tell users to run
-'git cherry-pick --continue'
-
-This patch is *not* meant as a serious patch for submission --I'm sure
-it's all wrong-- it's just a proof of concept and showing some
-goodwill on my part that I'm trying to help and I'm willing to put in
-some work if I can be pointed more in the right direction.
-
-Regards,
-Stephen
 
 
+On 07/25/2016 06:43 PM, Jakub Narêbski wrote:
+> W dniu 2016-07-25 o 21:25, Jeff Hostetler pisze:
+>
+>> +Porcelain Format Version 2
+>> +~~~~~~~~~~~~~~~~~~~~~~~~~~
+>> +
+>> +Version 2 format adds more detailed information about the state of
+>> +the worktree and the changed items.
+>
+> I think it should be "and changed items", but I am not a native speaker.
+
+fixed.
+
+>> +If `--branch` is given, a header line showing branch tracking information
+>> +is printed.  This line begins with "### branch: ".  Fields are separated
+>> +by a single space.
+>> +
+>> +    Field                    Meaning
+>> +    --------------------------------------------------------
+>> +    <sha> | (initial)        Current commit
+>> +    <branch> | (detached)    Current branch
+>> +    <upstream>               Upstream branch, if set
+>> +    +<ahead>                 Ahead count, if upstream present
+>> +    -<behind>                Behind count, if upstream present
+>> +    --------------------------------------------------------
+>> +
+>> +A series of lines are then displayed for the tracked entries.
+>> +Ordinary changed entries have the following format; the first
+>> +character is a 'c' to distinguish them from unmerged entries.
+>
+> It would be nice (though not necessary) to have an example, either
+> here or at the end.
+
+I'll try to fit that in at the bottom.
+
+>> +
+>> +    c <xy> <sub> <mH> <mI> <mW> <hH> <hI> R<nr> <path>[\t<pathSrc>]
+>> +
+>> +    Field       Meaning
+>> +    --------------------------------------------------------
+>> +    <xy>        A 2 character field containing the staged and
+>> +                unstaged XY values described in the short format,
+>> +                with unchanged indicated by a "." rather than
+>> +                a space.
+>> +    <sub>       A 4 character field describing the submodule state.
+>> +                "N..." when the entry is not a submodule.
+>> +                "S<c><m><u>" when the entry is a submodule.
+>> +                <c> is "C" if the commit changed; otherwise ".".
+>> +                <m> is "M" if it has tracked changes; otherwise ".".
+>> +                <u> is "U" if there are untracked changes; otherwise ".".
+>> +    <m*>        The 6 character octal file modes for head, index,
+>> +                and worktree.
+>
+> I think it might be more readable to be explicit: "for HEAD (<mH>),
+> index (<mI>), and worktree (<mW>)."
+
+I'll try to clarify that.
 
 
-diff --git a/sequencer.c b/sequencer.c
-index cdfac82..b8fa534 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -171,14 +171,21 @@ static void print_advice(int show_hint, struct
-replay_opts *opts)
+>> +    <h*>        The head and index SHA1 values.
+>> +    R<nr>       The rename percentage score.
+>
+> I assume this would be C<nr> copy detection heuristics percentage
+> score in case of copy detection, and B<br> break percentage score
+> in case of breaking change into addition and deletion of file.
+> Or am I confused?
 
-        if (show_hint) {
-                if (opts->no_commit)
-                        advise(_("after resolving the conflicts, mark
-the corrected paths\n"
-                                 "with 'git add <paths>' or 'git rm <paths>'"));
--               else
--                       advise(_("after resolving the conflicts, mark
-the corrected paths\n"
--                                "with 'git add <paths>' or 'git rm <paths>'\n"
--                                "and commit the result with 'git commit'"));
-+               else if  (! file_exists(git_path_seq_dir())) {
-+                       advise(_("SCM: after resolving the conflicts,
-mark the corrected paths\n"
-+                     "with 'git add <paths>' or 'git rm <paths>'\n"
-+                     "and commit the result with 'git commit'"));
-+        }
-+        else
-+        {
-+            advise(_("SCM: after resolving the conflicts, mark the
-corrected paths\n"
-+                     "with 'git add <paths>' or 'git rm <paths>'\n"
-+                     "and continue the %s with 'git %s --continue'"),
-action_name(opts), action_name(opts));
-+        }
-        }
- }
+I'm updating to include rename and copied scores.  I haven't seen
+anything in the code about a break percentage in this context.  I
+see it listed with -B in the git-diff-* pages, but not in status.
+
+>
+>
+>> +    <path>      The current pathname. It is C-Quoted if it contains
+>> +                special control characters.
+>
+> I assume that "\t" tab character between <path> and <pathSrc> is here
+> to be able to not C-Quote sane filenames with internal whitespace,
+> isn't it?
+
+I'm using the same quoting routines as the existing porcelain
+format.  So yes, that looks to be the case.  It only converts
+if there are insane characters in pathnames.
+
+>
+>> +    <pathSrc>   The original path. This is only present for staged renames.
+>> +                It is C-Quoted if necessary.
+>
+> I assume that "C-Quoted if necessary" is the same as "C-Quoted if
+> it contains special control characters"; also: '"' quote character,
+> '\' backlash escape character and "\t" horizontal tab are not control
+> characters per se., but still need C-Quoting.  The rules are the same
+> as for the rest of Git, e.g. for `git diff`, isn't it?
+
+yes, i'm using the same quoting routine.  i'll clarify.  thanks.
+
+>
+>> +    --------------------------------------------------------
+>> +
+>> +Unmerged entries have the following format; the first character is
+>> +a "u" to distinguish from ordinary changed entries.
+>> +
+>> +    u <xy> <sub> <m1> <m2> <m3> <h1> <h2> <h3> <path>
+>> +
+>> +    Field       Meaning
+>> +    --------------------------------------------------------
+>> +    <xy>        A 2 character field describing the conflict type
+>> +                as described in the short format.
+>> +    <sub>       A 4 character field describing the submodule state
+>> +                as described above.
+>> +    <m*>        The 6 character octal file modes for the stage 1,
+>> +                stage 2, stage 3, and worktree.
+>
+> Errr... the pattern has only _3_ character octal modes, <m1> <m2> <m3>.
+> A question: what happens during octopus merge?
+>
+>> +                For regular entries, these are the head, index, and
+>> +                worktree modes; the fourth is zero.
+>
+> This is remnant of the previous version of "v2" format, isn't it?
+
+yes, sorry.  I missed that one.
+
+>
+>> +    <h*>        The stage 1, stage 2, and stage 3 SHA1 values.
+>> +    <path>      The current pathname. It is C-Quoted if necessary.
+>> +    --------------------------------------------------------
+>> +
+>> +A series of lines are then displayed for untracked and ignored entries.
+>> +
+>> +    <x> <path>
+>> +
+>> +Where <x> is "?" for untracked entries and "!" for ignored entries.
+>
+> I assume that here also <path> is C-Quoted if necessary.
+
+yes.
+
+>
+>> +
+>> +When the `-z` option is given, a NUL (zero) byte follows each pathname;
+>> +serving as both a separator and line termination. No pathname quoting
+>> +or backslash escaping is performed. All fields are output in the same
+>> +order.
+>> +
+>>   CONFIGURATION
+>>   -------------
+>>
+>>
+>
+>
