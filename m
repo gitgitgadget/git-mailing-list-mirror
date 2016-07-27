@@ -2,1017 +2,833 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EEB4D1F855
-	for <e@80x24.org>; Wed, 27 Jul 2016 22:51:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 314311F855
+	for <e@80x24.org>; Wed, 27 Jul 2016 23:31:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932587AbcG0Wv3 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 27 Jul 2016 18:51:29 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60448 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932335AbcG0Wv0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jul 2016 18:51:26 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 50B10317E9;
-	Wed, 27 Jul 2016 18:51:24 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=D
-	ksSvXqiib65caFFhyvTralZoUg=; b=KTrU16a9J1wJI4Ok2ohvFSSxMpF1DEdSi
-	8yOl7Fcx8GT+pQG765Fx243ozl1eTXlCWOuESn0nBimgQPciROyDLj8Ye7SRTq4+
-	Eaikc0q/V1QmjFSGTyyJtDG5/TkxjMe/TGSa5cYbW7yc/Huw8lBtFj/MTh04mxFh
-	/GHS8kfwfU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=R3C
-	FIGnZfF6VnOMpTfSYfYWCDfTLA/BagvEAK/lsxMsEqK6P0V4bQ8re+qdaDvtID/T
-	dcX/WHRAdJYYXJXTfDI9kZBipf4o4uOJW5ULqiSTj3xMGpvvNJJnFIcA10hPGbl4
-	xyocH5z5Ca+dnqnwj65ssQa7m97Mw8azeD8/P7Ws=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 46D48317E8;
-	Wed, 27 Jul 2016 18:51:24 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7E2AE317E7;
-	Wed, 27 Jul 2016 18:51:23 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	git@vger.kernel.org
-Subject: What's cooking in git.git (Jul 2016, #08; Wed, 27)
-X-master-at: 8c6d1f9807c67532e7fb545a944b064faff0f70b
-X-next-at: f76a962d0b7dc838990b78509c5b907bd27b527e
-Date:	Wed, 27 Jul 2016 15:51:21 -0700
-Message-ID: <xmqqr3aeu23a.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S932717AbcG0XbZ (ORCPT <rfc822;e@80x24.org>);
+	Wed, 27 Jul 2016 19:31:25 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:35617 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932710AbcG0XbY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jul 2016 19:31:24 -0400
+Received: by mail-wm0-f67.google.com with SMTP id i5so8646441wmg.2
+        for <git@vger.kernel.org>; Wed, 27 Jul 2016 16:31:22 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=oZYVXWU8D15yGBDqc6/q+g83FcLy6iO8kaOi9MlHXSc=;
+        b=rkFpMZ7Pzswh6eH4FxCR8edbKGKydgRjvo59FNbL6QBnLlaPo5zUt1D1R+UGQ92KBJ
+         RekRNGZYj5A/UqS1wn4kWjOpi0jeopVqUn5LWIhfv5rVEdWRMy5zVpPV/duIjFShGGRY
+         UPRdcOSCqRvAgTkiM0ZL85MSrY1wkjSe6PKl+4sgs2hp4LZz6S/q8DQ6yJSqGp6mx9Iv
+         qHGWlQ3hqDV90/r7j8hLsvzyuYkzgaiKgk+5NjCM8zzF7L9X+OXkZ380FhkZMtIiQFUt
+         GM5v40J9miefrJOxF08ETitBtyWPeigu4HPa3/kXVSZtb/GTwlXuE2rx0rTgHhRBQKsx
+         xypw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-transfer-encoding;
+        bh=oZYVXWU8D15yGBDqc6/q+g83FcLy6iO8kaOi9MlHXSc=;
+        b=cnr75h0JG8FnOpsYcOaXQyeUyd4oCGSSGcTMKy/JBhTvgHalVeR/06gzSi1/wlIB3G
+         u+e1fWrmbzjk+NhtZp75YXJdbjwQmg44LEkdkizSkC/zyUfzHNGGZfvpwfhm8ycX2knc
+         DLtsDsblBb1l+MckrZAXLjOld1779DVNKZy8qFBYXNtIZxeImoK8kn7gPNUqqGtd7Yel
+         pQdeNqMUBQ9NK/aohItdwfrhd22UNSJYsYjPVYxttrnXZSg9hYvRGzPof5OofrbFyd/O
+         6CWsn+Wz4xTCA0hmVX+Fzl49cqe5kPJ7CW7aJ45dg55uaIU1OZS/UIKJw8je/xS30G6c
+         Nzvw==
+X-Gm-Message-State: AEkoouvrkvg/ru+/AdYqU6uCBYQl456zfGdawhtT7D2D4OGiqj9NaEkwT05JggJoM4nPSA==
+X-Received: by 10.194.186.231 with SMTP id fn7mr30304836wjc.164.1469662280896;
+        Wed, 27 Jul 2016 16:31:20 -0700 (PDT)
+Received: from [192.168.1.26] (epw206.neoplus.adsl.tpnet.pl. [83.20.64.206])
+        by smtp.googlemail.com with ESMTPSA id n131sm37479791wmd.3.2016.07.27.16.31.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 27 Jul 2016 16:31:19 -0700 (PDT)
+Subject: Re: [PATCH v2 5/5] convert: add filter.<driver>.process option
+To:	larsxschneider@gmail.com, git@vger.kernel.org
+References: <20160722154900.19477-1-larsxschneider@gmail.com>
+ <20160727000605.49982-1-larsxschneider@gmail.com>
+ <20160727000605.49982-6-larsxschneider@gmail.com>
+Cc:	gitster@pobox.com, tboegi@web.de, mlbright@gmail.com,
+	remi.galan-alfonso@ensimag.grenoble-inp.fr, pclouds@gmail.com,
+	e@80x24.org, ramsay@ramsayjones.plus.com, peff@peff.net
+Newsgroups: gmane.comp.version-control.git
+From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <57994436.4080308@gmail.com>
+Date:	Thu, 28 Jul 2016 01:31:02 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A47C8198-544C-11E6-AAEA-89D312518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <20160727000605.49982-6-larsxschneider@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Here are the topics that have been cooking.  Commits prefixed with
-'-' are only in 'pu' (proposed updates) while commits prefixed with
-'+' are in 'next'.  The ones marked with '.' do not appear in any of
-the integration branches, but I am still holding onto them.
+W dniu 2016-07-27 o 02:06, larsxschneider@gmail.com pisze:
+> From: Lars Schneider <larsxschneider@gmail.com>
+> 
+> Git's clean/smudge mechanism invokes an external filter process for every
+> single blob that is affected by a filter. If Git filters a lot of blobs
+> then the startup time of the external filter processes can become a
+> significant part of the overall Git execution time.
+
+It is not strictly necessary... but do we have any benchmarks for this,
+or is it just the feeling?  That is, in what situations Git may filter
+a large number of files (initial checkout? initial add?, switching
+to unrelated branch? getting large files from LFS solution?, and when
+startup time might become significant part of execution time (MS Windows?
+fast filters?)?
+
+> 
+> This patch adds the filter.<driver>.process string option which, if used,
+
+String option... what are possible values?  What happens if you use
+value that is not recognized by Git (it is "if used", isn't it)?  That's
+not obvious from the commit message (though it might be from the docs).
+
+What is missing is the description that it is set to a command, and
+how it interacts with `clean` and `smudge` options.
+
+> keeps the external filter process running and processes all blobs with
+> the following packet format (pkt-line) based protocol over standard input
+> and standard output.
+> 
+> Git starts the filter on first usage and expects a welcome
+> message, protocol version number, and filter capabilities
+> seperated by spaces:
+
+s/seperated/separated/
+
+Is there any handling of misconfigured one-shot filters, or would
+they still hang the execution of a Git command?
+
+> ------------------------
+> packet:          git< git-filter-protocol
+> packet:          git< version 2
+> packet:          git< clean smudge
+
+Wouldn't "capabilities clean smudge" be better?  Or is it the
+"clean smudge" proposal easier to handle?
+
+> ------------------------
+> Supported filter capabilities are "clean" and "smudge".
+> 
+> Afterwards Git sends a command (e.g. "smudge" or "clean" - based
+> on the supported capabilities), the filename, the content size as
+> ASCII number in bytes, and the content in packet format with a
+> flush packet at the end:
+> ------------------------
+> packet:          git> smudge
+> packet:          git> testfile.dat
+
+And here we don't have any problems with files containing embedded
+newlines etc.  Also Git should not be sending invalid file names.
+The question remains: is it absolute file path, or basename?
+
+> packet:          git> 7
+> packet:          git> CONTENT
+
+Can Git send file contents using more than one packet?  I think
+it should be stated upfront.
+
+> packet:          git> 0000
+> ------------------------
+
+Why we need to send content size upfront?  Well, it is not a problem
+for Git, but (as I wrote in reply to the cover letter for this
+series) might be a problem for filter scripts.
+
+> 
+> The filter is expected to respond with the result content size as
+> ASCII number in bytes and the result content in packet format with
+> a flush packet at the end:
+> ------------------------
+> packet:          git< 57
+
+This is not neccessary (and might be hard for scripts to do) if
+pkt-line protocol is used.
+
+In short: I think pkt-line is not worth the complication on
+the Git side and on the filter size, unless it is used for
+streaming, or at least filter not having to calculate output
+size upfront.
+
+> packet:          git< SMUDGED_CONTENT
+> packet:          git< 0000
+> ------------------------
+> Please note: In a future version of Git the capability "stream"
+> might be supported. In that case the content size must not be
+> part of the filter response.
+> 
+> Afterwards the filter is expected to wait for the next command.
+
+When filter is supposed to exit, then?
+
+> 
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+> Helped-by: Martin-Louis Bright <mlbright@gmail.com>
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+> ---
+>  Documentation/gitattributes.txt |  54 +++++++-
+>  convert.c                       | 269 ++++++++++++++++++++++++++++++++++++++--
+>  t/t0021-conversion.sh           | 175 ++++++++++++++++++++++++++
+>  t/t0021/rot13-filter.pl         | 146 ++++++++++++++++++++++
+>  4 files changed, 631 insertions(+), 13 deletions(-)
+>  create mode 100755 t/t0021/rot13-filter.pl
+> 
+> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+> index 8882a3e..8fb40d2 100644
+> --- a/Documentation/gitattributes.txt
+> +++ b/Documentation/gitattributes.txt
+> @@ -300,7 +300,11 @@ checkout, when the `smudge` command is specified, the command is
+>  fed the blob object from its standard input, and its standard
+>  output is used to update the worktree file.  Similarly, the
+>  `clean` command is used to convert the contents of worktree file
+> -upon checkin.
+> +upon checkin. By default these commands process only a single
+> +blob and terminate. If a long running filter process (see section
+> +below) is used then Git can process all blobs with a single filter
+> +invocation for the entire life of a single Git command (e.g.
+> +`git add .`).
+
+Ah, all right, here we give an example.
+
+But, is "blob" term used in this document, or do we use "file"
+and "file contents" only?
+
+>  
+>  One use of the content filtering is to massage the content into a shape
+>  that is more convenient for the platform, filesystem, and the user to use.
+> @@ -375,6 +379,54 @@ substitution.  For example:
+>  ------------------------
+>  
+>  
+> +Long Running Filter Process
+> +^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> +
+> +If the filter command (string value) is defined via
+> +filter.<driver>.process then Git can process all blobs with a
+> +single filter invocation for the entire life of a single Git
+> +command by talking with the following packet format (pkt-line)
+> +based protocol over standard input and standard output.
+
+Ah, so now it is the name of command, and I assume it is
+exclusive with `clean` / `smudge`, or does it only takes
+precedence based on capabilities of filter (that is if
+for example "`process`" does not include 'clean' capability,
+then `clean` filter is used, using per-file "protocol").
+Or do something different happens (like preference for
+old-style `clean` and `smudge` filters, and `process`
+used if any unset)?
+
+Anyway, Git command would never (I think) run both
+"clean" and "smudge" filters.  But I might be wrong.
+
+Yeah, I know this going back and forth seems like 
+bike-shedding, but designing good user-facing API
+is very, very important.
+
+> +
+> +Git starts the filter on first usage and expects a welcome
+> +message, protocol version number, and filter capabilities
+> +seperated by spaces:
+> +------------------------
+> +packet:          git< git-filter-protocol
+> +packet:          git< version 2
+> +packet:          git< clean smudge
+> +------------------------
+
+Neither of those is terminated by end of line character,
+that is, "\n", isn't it?
+
+> diff --git a/convert.c b/convert.c
+> index 522e2c5..5ff200b 100644
+> --- a/convert.c
+> +++ b/convert.c
+> @@ -3,6 +3,7 @@
+>  #include "run-command.h"
+>  #include "quote.h"
+>  #include "sigchain.h"
+> +#include "pkt-line.h"
+>  
+>  /*
+>   * convert.c - convert a file when checking it out and checking it in.
+> @@ -481,11 +482,232 @@ static int apply_filter(const char *path, const char *src, size_t len, int fd,
+>  	return ret;
+>  }
+>  
+> +static off_t multi_packet_read(struct strbuf *sb, const int fd, const size_t size)
+
+What's the purpose of this function?  Is it to gather read whole
+contents of file into strbuf?  Or is it to read at most 'size'
+bytes of file / of pkt-line stream into strbuf?
+
+We probably don't want to keep the whole file in memory,
+if possible.
+
+> +{
+> +	off_t bytes_read;
+> +	off_t total_bytes_read = 0;
+> +	strbuf_grow(sb, size + 1);	// we need one extra byte for the packet flush
+
+Why we put packet flush into strbuf?  Or is it only temporarily,
+and we adjust that at the end... I see that it is.
+
+> +	do {
+> +		bytes_read = packet_read(
+> +			fd, NULL, NULL,
+> +			sb->buf + total_bytes_read, sb->len - total_bytes_read - 1,
+> +			PACKET_READ_GENTLE_ON_EOF
+> +		);
+> +		total_bytes_read += bytes_read;
+> +	}
+> +	while (
+> +		bytes_read > 0 && 					// the last packet was no flush
+> +		sb->len - total_bytes_read - 1 > 0 	// we still have space left in the buffer
+> +	);
+> +	strbuf_setlen(sb, total_bytes_read);
+> +	return total_bytes_read;
+> +}
+> +
+> +static int multi_packet_write(const char *src, size_t len, const int in, const int out)
+
+What's the purpose of this function?  What are those 'in' and 'out'
+parameters?  Those names do not describe them well.  If they are
+file descriptors, add fd_* prefix (or whatever Git code uses).
+Edit: I see that's what existing code uses.
+
+Edit: so we are reading from *src + len or from fd_in, depending on
+whether fd_in is set to 0 or not?  I guess that follows existing
+code, where it is even worse, because it is hidden...
+
+> +{
+> +	int ret = 1;
+> +	char header[4];
+> +	char buffer[8192];
+
+Could those two be in one variable?  Also, 'header' or 'pkt_header'?
+
+Why 8192, and not LARGE_PACKET_MAX - 4?
+
+> +	off_t bytes_to_write;
+> +	while (ret) {
+> +		if (in >= 0) {
+> +			bytes_to_write = xread(in, buffer, sizeof(buffer));
+> +			if (bytes_to_write < 0)
+> +				ret &= 0;
+> +			src = buffer;
+> +		} else {
+> +			bytes_to_write = len > LARGE_PACKET_MAX - 4 ? LARGE_PACKET_MAX - 4 : len;
+> +			len -= bytes_to_write;
+> +		}
+> +		if (!bytes_to_write)
+> +			break;
+> +		set_packet_header(header, bytes_to_write + 4);
+> +		ret &= write_in_full(out, &header, sizeof(header)) == sizeof(header);
+> +		ret &= write_in_full(out, src, bytes_to_write) == bytes_to_write;
+
+These three lines are equivalent to write_packet(), or however
+it is named, isn't it?
+
+> +	}
+> +	ret &= write_in_full(out, "0000", 4) == 4;
+
+This is equivalent to packet_flush(), or however it is named,
+isn't it?
+
+> +	return ret;
+> +}
+> +
+> +struct cmd2process {
+> +	struct hashmap_entry ent; /* must be the first member! */
+> +	const char *cmd;
+> +	int clean;
+> +	int smudge;
+
+These two are 'int' used as 'bool', isn't it?
+
+> +	struct child_process process;
+> +};
+[...]
+> +static struct cmd2process *find_protocol_filter_entry(struct hashmap *hashmap, const char *cmd)
+
+Wouldn't it be more descriptive to name the first parameter
+to this function 'cmd_hashmap', or something like that, rather
+than plain 'hashmap' (it might be the same that is used / was
+used for a global variable)?
+
+Edit: or 'cmd_process_map'.
+
+> +{
+> +	struct cmd2process k;
+> +	hashmap_entry_init(&k, strhash(cmd));
+> +	k.cmd = cmd;
+> +	return hashmap_get(hashmap, &k, NULL);
+> +}
+
+[...]
+> +static struct cmd2process *start_protocol_filter(struct hashmap *hashmap, const char *cmd)
+> +{
+> +	int ret = 1;
+> +	struct cmd2process *entry;
+> +	struct child_process *process;
+> +	const char *argv[] = { NULL, NULL };
+
+Could we initialize it with  { cmd, NULL };?
+
+Edit: Ah, I see that you follow filter_buffer_or_fd() example from
+convert.c, isn't it?
+
+> +	struct string_list capabilities = STRING_LIST_INIT_NODUP;
+> +	char *capabilities_buffer;
+> +	int i;
+> +
+> +	entry = xmalloc(sizeof(*entry));
+> +	hashmap_entry_init(entry, strhash(cmd));
+> +	entry->cmd = cmd;
+> +	entry->clean = 0;
+> +	entry->smudge = 0;
+
+Wouldn't
+
+   	entry->clean = entry->smudge = 0;
+
+be more readable?
+
+> +	process = &entry->process;
+> +
+> +	child_process_init(process);
+> +	argv[0] = cmd;
+> +	process->argv = argv;
+> +	process->use_shell = 1;
+> +	process->in = -1;
+
+Maybe
+
+  +	process->in  = -1;
+
+to align, but perhaps it is not worth it.
+
+> +	process->out = -1;
+> +
+> +	if (start_command(process)) {
+> +		error("cannot fork to run external persistent filter '%s'", cmd);
+
+Just a question: is "cannot fork" the only reason why start_command()
+might have failed there?
+
+Edit: Ah, I see that you follow filter_buffer_or_fd() example from
+convert.c, again.
+
+> +		stop_protocol_filter(hashmap, entry);
+> +		return NULL;
+> +	}
+> +
+> +	sigchain_push(SIGPIPE, SIG_IGN);
+> +	ret &= strcmp(packet_read_line(process->out, NULL), "git-filter-protocol") == 0;
+> +	ret &= strcmp(packet_read_line(process->out, NULL), "version 2") == 0;
+
+So that's why you need packet_read_line() to return string...
+
+> +	capabilities_buffer = packet_read_line(process->out, NULL);
+> +	sigchain_pop(SIGPIPE);
+> +
+> +	string_list_split_in_place(&capabilities, capabilities_buffer, ' ', -1);
+
+This does not modify capabilities_buffer, does it?
+
+> +	for (i = 0; i < capabilities.nr; i++) {
+> +		const char *requested = capabilities.items[i].string;
+> +		if (!strcmp(requested, "clean")) {
+> +			entry->clean = 1;
+> +		} else if (!strcmp(requested, "smudge")) {
+> +			entry->smudge = 1;
+> +		} else {
+> +			warning(
+> +				"filter process '%s' requested unsupported filter capability '%s'",
+> +				cmd, requested
+> +			);
+
+Nice.  This makes it (somewhat) forward- and backward-compatibile.
+
+> +		}
+> +	}
+> +	string_list_clear(&capabilities, 0);
+> +
+> +	if (!ret) {
+> +		error("initialization for external persistent filter '%s' failed", cmd);
+
+Do we need more detailed information about the source of error?
+
+> +		stop_protocol_filter(hashmap, entry);
+> +		return NULL;
+> +	}
+> +
+> +	hashmap_add(hashmap, entry);
+> +	return entry;
+> +}
+> +
+> +static int cmd_process_map_init = 0;
+> +static struct hashmap cmd_process_map;
+> +
+> +static int apply_protocol_filter(const char *path, const char *src, size_t len,
+> +						int fd, struct strbuf *dst, const char *cmd,
+> +						const char *filter_type)
+
+That is... quite a lot of parameters.  But I guess there is precedens.
+But I think 'fd' belongs to previous line, as it is alternative to
+src+len.
+
+> +{
+> +	int ret = 1;
+> +	struct cmd2process *entry;
+> +	struct child_process *process;
+> +	struct stat file_stat;
+> +	struct strbuf nbuf = STRBUF_INIT;
+> +	off_t expected_bytes;
+> +	char *strtol_end;
+> +	char *strbuf;
+> +
+> +	if (!cmd || !*cmd)
+> +		return 0;
+> +
+> +	if (!dst)
+> +		return 1;
+> +
+> +	if (!cmd_process_map_init) {
+> +		cmd_process_map_init = 1;
+> +		hashmap_init(&cmd_process_map, (hashmap_cmp_fn) cmd2process_cmp, 0);
+> +		entry = NULL;
+
+Is it better than having entry NULL-initialized?
+
+> +	} else {
+> +		entry = find_protocol_filter_entry(&cmd_process_map, cmd);
+> +	}
+> +
+> +	if (!entry) {
+> +		entry = start_protocol_filter(&cmd_process_map, cmd);
+
+Hmmm... apply_filter() uses start_async() for some reason.  Why
+it does not apply for this new kind of filter?
+
+> +		if (!entry) {
+> +			return 0;
+> +		}
+> +	}
+> +	process = &entry->process;
+> +
+> +	if (!(!strcmp(filter_type, "clean") && entry->clean) &&
+> +		!(!strcmp(filter_type, "smudge") && entry->smudge)) {
+
+Would it be more readable as !(A || B) rather than (!A && !B)?
+
+> +		return 0;
+> +	}
+> +
+> +	if (fd >= 0 && !src) {
+> +		ret &= fstat(fd, &file_stat) != -1;
+> +		len = file_stat.st_size;
+> +	}
+
+All right, so we either use src+len,  or if we use fd we get
+file size.
+
+> +
+> +	sigchain_push(SIGPIPE, SIG_IGN);
+> +
+> +	packet_write(process->in, "%s\n", filter_type);
+> +	packet_write(process->in, "%s\n", path);
+> +	packet_write(process->in, "%zu\n", len);
+
+So "\n" is included in protocol?
+
+> +	ret &= multi_packet_write(src, len, fd, process->in);
+
+How git-receive-pack etc. handle multi-packet write?
+
+> +
+> +	strbuf = packet_read_line(process->out, NULL);
+> +	expected_bytes = (off_t)strtol(strbuf, &strtol_end, 10);
+> +	ret &= (strtol_end != strbuf && errno != ERANGE);
+> +
+> +	if (expected_bytes > 0) {
+> +		ret &= multi_packet_read(&nbuf, process->out, expected_bytes) == expected_bytes;
+> +	}
+> +
+> +	sigchain_pop(SIGPIPE);
+> +
+> +	if (ret) {
+> +		strbuf_swap(dst, &nbuf);
+> +	} else {
+> +		// Something went wrong with the protocol filter. Force shutdown!
+> +		stop_protocol_filter(&cmd_process_map, entry);
+
+Some error message would be nice... or do we print in down in stack?
+
+> +	}
+> +	strbuf_release(&nbuf);
+> +	return ret;
+> +}
+> +
+
+
+[...]
+> @@ -823,7 +1049,10 @@ int would_convert_to_git_filter_fd(const char *path)
+>  	if (!ca.drv->required)
+>  		return 0;
+>  
+> -	return apply_filter(path, NULL, 0, -1, NULL, ca.drv->clean);
+> +	if (!ca.drv->clean && ca.drv->process)
+> +		return apply_protocol_filter(path, NULL, 0, -1, NULL, ca.drv->process, "clean");
+> +	else
+> +		return apply_filter(path, NULL, 0, -1, NULL, ca.drv->clean);
+
+So the rule is: if `clean` is not set, and `process` is, try to use
+process for cleaning.  It was not clear for me from the documentation.
+
+>  }
+>  
+>  const char *get_convert_attr_ascii(const char *path)
+> @@ -856,17 +1085,22 @@ int convert_to_git(const char *path, const char *src, size_t len,
+>                     struct strbuf *dst, enum safe_crlf checksafe)
+>  {
+>  	int ret = 0;
+> -	const char *filter = NULL;
+> +	const char *clean_filter = NULL;
+> +	const char *process_filter = NULL;
+>  	int required = 0;
+>  	struct conv_attrs ca;
+>  
+>  	convert_attrs(&ca, path);
+>  	if (ca.drv) {
+> -		filter = ca.drv->clean;
+> +		clean_filter = ca.drv->clean;
+> +		process_filter = ca.drv->process;
+>  		required = ca.drv->required;
+>  	}
+>  
+> -	ret |= apply_filter(path, src, len, -1, dst, filter);
+> +	if (!clean_filter && process_filter)
+> +		ret |= apply_protocol_filter(path, src, len, -1, dst, process_filter, "clean");
+> +	else
+> +		ret |= apply_filter(path, src, len, -1, dst, clean_filter);
+
+And the rule is the same here, as it should.
+
+>  	if (!ret && required)
+>  		die("%s: clean filter '%s' failed", path, ca.drv->name);
+
+Is it a correct error message for `process`?  I guess it is, as it prints
+the name of driver, and not attempted command.  Well, we might be using
+"process" filter in 'clean' mode,... but that is sophistry.
+
+[...]
+> diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+> index b9911a4..c4793ed 100755
+> --- a/t/t0021-conversion.sh
+> +++ b/t/t0021-conversion.sh
+> @@ -4,6 +4,11 @@ test_description='blob conversion via gitattributes'
+>  
+>  . ./test-lib.sh
+>  
+> +if ! test_have_prereq PERL; then
+> +	skip_all='skipping perl interface tests, perl not available'
+> +	test_done
+> +fi
+
+Do all tests require Perl?
+
+> +test_expect_success 'required protocol filter should filter data' '
+[...]
+> +test_expect_success 'protocol filter large file' '
+[...]
+> +test_expect_success 'required protocol filter should fail with clean' '
+[...]
+> +test_expect_success 'protocol filter should restart after failure' '
+[...]
+
+> diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
+> new file mode 100755
+> index 0000000..7176836
+> --- /dev/null
+> +++ b/t/t0021/rot13-filter.pl
+> @@ -0,0 +1,146 @@
+> +#!/usr/bin/perl
+> +#
+> +# Example implementation for the Git filter protocol version 2
+> +# See Documentation/gitattributes.txt, section "Filter Protocol"
+> +#
+> +# This implementation supports two special test cases:
+> +# (1) If data with the filename "clean-write-fail.r" is processed with
+> +#     a "clean" operation then the write operation will die.
+> +# (2) If data with the filename "smudge-write-fail.r" is processed with
+> +#     a "smudge" operation then the write operation will die.
+
+Nice.
+
+> +#
+> +
+> +use strict;
+> +use warnings;
+> +
+> +my $MAX_PACKET_CONTENT_SIZE = 65516;
+> +
+> +sub rot13 {
+> +    my ($str) = @_;
+> +    $str =~ y/A-Za-z/N-ZA-Mn-za-m/;
+> +    return $str;
+> +}
+> +
+> +sub packet_read {
+> +    my $buffer;
+> +    my $bytes_read = read STDIN, $buffer, 4;
+> +    if ( $bytes_read == 0 ) {
+> +        return;
+> +    }
+> +    elsif ( $bytes_read != 4 ) {
+
+This is a bit untypical bracket style...
+
+> +        die "invalid packet size '$bytes_read' field";
+> +    }
+> +    my $pkt_size = hex($buffer);
+> +    if ( $pkt_size == 0 ) {
+> +        return ( 1, "" );
+> +    }
+> +    elsif ( $pkt_size > 4 ) {
+> +        my $content_size = $pkt_size - 4;
+> +        $bytes_read = read STDIN, $buffer, $content_size;
+> +        if ( $bytes_read != $content_size ) {
+> +            die "invalid packet";
+> +        }
+> +        return ( 0, $buffer );
+> +    }
+> +    else {
+> +        die "invalid packet size";
+> +    }
+> +}
+
+So packet reading is not that difficult...
+
+> +
+> +sub packet_write {
+> +    my ($packet) = @_;
+> +    print STDOUT sprintf( "%04x", length($packet) + 4 );
+> +    print STDOUT $packet;
+> +    STDOUT->flush();
+> +}
+
+...and packet write is easy.
+
+> +
+> +sub packet_flush {
+> +    print STDOUT sprintf( "%04x", 0 );
+> +    STDOUT->flush();
+> +}
+> +
+> +open my $debug, ">>", "output.log";
+> +print $debug "start\n";
+> +$debug->flush();
+> +
+> +packet_write("git-filter-protocol\n");
+> +packet_write("version 2\n");
+> +packet_write("clean smudge\n");
+> +print $debug "wrote filter header\n";
+> +$debug->flush();
+
+Isn't $debug flushed automatically?
+
+> +
+> +while (1) {
+> +    my $command = packet_read();
+> +    unless ( defined($command) ) {
+> +        exit();
+> +    }
+> +    chomp $command;
+> +    print $debug "IN: $command";
+> +    $debug->flush();
+> +    my $filename = packet_read();
+> +    chomp $filename;
+> +    print $debug " $filename";
+> +    $debug->flush();
+> +    my $filelen = packet_read();
+> +    chomp $filelen;
+> +    print $debug " $filelen";
+> +    $debug->flush();
+> +
+> +    $filelen =~ /\A\d+\z/ or die "bad filelen: $filelen";
+> +    my $output;
+> +
+> +    if ( $filelen > 0 ) {
+> +        my $input = "";
+> +        {
+> +            binmode(STDIN);
+> +            my $buffer;
+> +            my $done = 0;
+> +            while ( !$done ) {
+> +                ( $done, $buffer ) = packet_read();
+> +                $input .= $buffer;
+> +            }
+> +            print $debug " [OK] -- ";
+> +            $debug->flush();
+> +        }
+> +
+> +        if ( $command eq "clean" ) {
+> +            $output = rot13($input);
+> +        }
+> +        elsif ( $command eq "smudge" ) {
+> +            $output = rot13($input);
+> +        }
+> +        else {
+> +            die "bad command";
+
+Perhaps
+
+               die "bad command $command";
+
+> +        }
+> +    }
+> +
+> +    my $output_len = length($output);
+> +    packet_write("$output_len\n");
+> +    print $debug "OUT: $output_len ";
+> +    $debug->flush();
+> +    if ( $output_len > 0 ) {
+> +        if (   ( $command eq "clean" and $filename eq "clean-write-fail.r" )
+
+What happened here with whitespace around parentheses?
+
+> +            or
+> +            ( $command eq "smudge" and $filename eq "smudge-write-fail.r" ) )
+> +        {
+> +            print $debug " [FAIL]\n";
+> +            $debug->flush();
+> +            die "write error";
+> +        }
+> +        else {
+> +            while ( length($output) > 0 ) {
+> +                my $packet = substr( $output, 0, $MAX_PACKET_CONTENT_SIZE );
+> +                packet_write($packet);
+> +                if ( length($output) > $MAX_PACKET_CONTENT_SIZE ) {
+> +                    $output = substr( $output, $MAX_PACKET_CONTENT_SIZE );
+> +                }
+> +                else {
+> +                    $output = "";
+> +                }
+> +            }
+> +            packet_flush();
+> +            print $debug "[OK]\n";
+> +            $debug->flush();
+> +        }
+> +    }
+> +}
+> 
 
-You can find the changes described here in the integration branches
-of the repositories listed at
-
-    http://git-blame.blogspot.com/p/git-public-repositories.html
-
---------------------------------------------------
-[New Topics]
-
-* da/subtree-2.9-regression (2016-07-26) 2 commits
-  (merged to 'next' on 2016-07-26 at 9d71562)
- + subtree: fix "git subtree split --rejoin"
- + t7900-subtree.sh: fix quoting and broken && chains
-
- "git merge" in Git v2.9 was taught to forbid merging an unrelated
- lines of history by default, but that is exactly the kind of thing
- the "--rejoin" mode of "git subtree" (in contrib/) wants to do.
- "git subtree" has been taught to use the "--allow-unrelated-histories"
- option to override the default.
-
- Will merge to 'master'.
-
-
-* jk/pack-objects-optim-skimming (2016-07-26) 2 commits
- - pack-objects: compute local/ignore_pack_keep early
- - pack-objects: break out of want_object loop early
-
- "git pack-objects" has a few options that tell it not to pack
- objects found in certain packfiles, which require it to scan .idx
- files of all available packs.  The codepaths involved in these
- operations have been optimized for a common case of not having any
- non-local pack and/or any .kept pack.
-
- Will wait for a t/perf update.
-
-
-* nd/fetch-ref-summary (2016-07-26) 1 commit
- - t5510: skip tests under GETTEXT_POISON build
-
- Hotfix of a test in a topic that has already been merged to 'master'.
-
- Will merge to 'next'.
-
-
-* os/no-verify-skips-commit-msg-too (2016-07-26) 1 commit
-  (merged to 'next' on 2016-07-26 at 09b98b9)
- + commit: describe that --no-verify skips the commit-msg hook in the help text
-
- "git commit --help" said "--no-verify" is only about skipping the
- pre-commit hook, and failed to say that it also skipped the
- commit-msg hook.
-
- Will merge to 'master'.
-
-
-* sb/submodule-deinit-all (2016-07-26) 1 commit
-  (merged to 'next' on 2016-07-26 at ca0b067)
- + submodule deinit: remove outdated comment
-
- A comment update for a topic that was merged to Git v2.8.
-
- Will merge to 'master'.
-
-
-* cp/completion-clone-recurse-submodules (2016-07-27) 1 commit
- - completion: add option '--recurse-submodules' to 'git clone'
-
- Will merge to 'next'.
-
-
-* va/i18n (2016-07-27) 3 commits
- - SQUASH??? -Werror=format-security
- - i18n: config: unfold error messages marked for translation
- - i18n: notes: mark comment for translation
-
- More i18n marking.  The top one seems to need more work; the bottom
- one looked OK.
-
---------------------------------------------------
-[Stalled]
-
-* cc/apply-am (2016-06-28) 41 commits
- - apply: use error_errno() where possible
- - builtin/am: use apply api in run_apply()
- - apply: change error_routine when be_silent is set
- - usage: add get_error_routine() and get_warn_routine()
- - usage: add set_warn_routine()
- - apply: don't print on stdout when be_silent is set
- - apply: make 'be_silent' incompatible with 'apply_verbosely'
- - apply: add 'be_silent' variable to 'struct apply_state'
- - write_or_die: use warning() instead of fprintf(stderr, ...)
- - environment: add set_index_file()
- - apply: make some parsing functions static again
- - apply: move libified code from builtin/apply.c to apply.{c,h}
- - apply: rename and move opt constants to apply.h
- - builtin/apply: rename option parsing functions
- - builtin/apply: make create_one_file() return -1 on error
- - builtin/apply: make try_create_file() return -1 on error
- - builtin/apply: make write_out_results() return -1 on error
- - builtin/apply: make write_out_one_result() return -1 on error
- - builtin/apply: make create_file() return -1 on error
- - builtin/apply: make add_index_file() return -1 on error
- - builtin/apply: make add_conflicted_stages_file() return -1 on error
- - builtin/apply: make remove_file() return -1 on error
- - builtin/apply: make build_fake_ancestor() return -1 on error
- - builtin/apply: change die_on_unsafe_path() to check_unsafe_path()
- - builtin/apply: make gitdiff_*() return -1 on error
- - builtin/apply: make gitdiff_*() return 1 at end of header
- - builtin/apply: make parse_traditional_patch() return -1 on error
- - builtin/apply: make apply_all_patches() return 128 or 1 on error
- - builtin/apply: move check_apply_state() to apply.c
- - builtin/apply: make check_apply_state() return -1 instead of die()ing
- - apply: make init_apply_state() return -1 instead of exit()ing
- - builtin/apply: move init_apply_state() to apply.c
- - builtin/apply: make parse_ignorewhitespace_option() return -1 instead of die()ing
- - builtin/apply: make parse_whitespace_option() return -1 instead of die()ing
- - builtin/apply: make parse_single_patch() return -1 on error
- - builtin/apply: make parse_chunk() return a negative integer on error
- - builtin/apply: make find_header() return -128 instead of die()ing
- - builtin/apply: read_patch_file() return -1 instead of die()ing
- - builtin/apply: make apply_patch() return -1 or -128 instead of die()ing
- - apply: move 'struct apply_state' to apply.h
- - apply: make some names more specific
- (this branch is used by jh/clean-smudge-annex.)
-
- "git am" has been taught to make an internal call to "git apply"'s
- innards without spawning the latter as a separate process.
-
- Needs review.
-
-
-* sb/bisect (2016-04-15) 22 commits
- - SQUASH???
- - bisect: get back halfway shortcut
- - bisect: compute best bisection in compute_relevant_weights()
- - bisect: use a bottom-up traversal to find relevant weights
- - bisect: prepare for different algorithms based on find_all
- - bisect: rename count_distance() to compute_weight()
- - bisect: make total number of commits global
- - bisect: introduce distance_direction()
- - bisect: extract get_distance() function from code duplication
- - bisect: use commit instead of commit list as arguments when appropriate
- - bisect: replace clear_distance() by unique markers
- - bisect: use struct node_data array instead of int array
- - bisect: get rid of recursion in count_distance()
- - bisect: make algorithm behavior independent of DEBUG_BISECT
- - bisect: make bisect compile if DEBUG_BISECT is set
- - bisect: plug the biggest memory leak
- - bisect: add test for the bisect algorithm
- - t6030: generalize test to not rely on current implementation
- - t: use test_cmp_rev() where appropriate
- - t/test-lib-functions.sh: generalize test_cmp_rev
- - bisect: allow 'bisect run' if no good commit is known
- - bisect: write about `bisect next` in documentation
-
- The internal algorithm used in "git bisect" to find the next commit
- to check has been optimized greatly.
-
- Expecting a reroll.
- ($gmane/291163)
-
-
-* sg/completion-updates (2016-02-28) 21 commits
- . completion: cache the path to the repository
- . completion: extract repository discovery from __gitdir()
- . completion: don't guard git executions with __gitdir()
- . completion: consolidate silencing errors from git commands
- . completion: don't use __gitdir() for git commands
- . completion: respect 'git -C <path>'
- . completion: fix completion after 'git -C <path>'
- . completion: don't offer commands when 'git --opt' needs an argument
- . rev-parse: add '--absolute-git-dir' option
- . completion: list short refs from a remote given as a URL
- . completion: don't list 'HEAD' when trying refs completion outside of a repo
- . completion: list refs from remote when remote's name matches a directory
- . completion: respect 'git --git-dir=<path>' when listing remote refs
- . completion: fix most spots not respecting 'git --git-dir=<path>'
- . completion: ensure that the repository path given on the command line exists
- . completion tests: add tests for the __git_refs() helper function
- . completion tests: check __gitdir()'s output in the error cases
- . completion tests: consolidate getting path of current working directory
- . completion tests: make the $cur variable local to the test helper functions
- . completion tests: don't add test cruft to the test repository
- . completion: improve __git_refs()'s in-code documentation
-
- Will be rerolled.
- ($gmane/287839)
-
-
-* ec/annotate-deleted (2015-11-20) 1 commit
- - annotate: skip checking working tree if a revision is provided
-
- Usability fix for annotate-specific "<file> <rev>" syntax with deleted
- files.
-
- Waiting for review.
-
-
-* dk/gc-more-wo-pack (2016-01-13) 4 commits
- - gc: clean garbage .bitmap files from pack dir
- - t5304: ensure non-garbage files are not deleted
- - t5304: test .bitmap garbage files
- - prepare_packed_git(): find more garbage
-
- Follow-on to dk/gc-idx-wo-pack topic, to clean up stale
- .bitmap and .keep files.
-
- Waiting for a reroll.
- ($gmane/284368).
-
-
-* jc/diff-b-m (2015-02-23) 5 commits
- . WIPWIP
- . WIP: diff-b-m
- - diffcore-rename: allow easier debugging
- - diffcore-rename.c: add locate_rename_src()
- - diffcore-break: allow debugging
-
- "git diff -B -M" produced incorrect patch when the postimage of a
- completely rewritten file is similar to the preimage of a removed
- file; such a resulting file must not be expressed as a rename from
- other place.
-
- The fix in this patch is broken, unfortunately.
- Will discard.
-
---------------------------------------------------
-[Cooking]
-
-* jc/grep-commandline-vs-configuration (2016-07-25) 1 commit
- - grep: further simplify setting the pattern type
-
- "git -c grep.patternType=extended log --basic-regexp" misbehaved
- because the internal API to access the grep machinery was not
- designed well.
-
- Will merge to 'next'.
-
-
-* jk/diff-do-not-reuse-wtf-needs-cleaning (2016-07-22) 1 commit
- - diff: do not reuse worktree files that need "clean" conversion
-
- There is an optimization used in "git diff $treeA $treeB" to borrow
- an already checked-out copy in the working tree when it is known to
- be the same as the blob being compared, expecting that open/mmap of
- such a file is faster than reading it from the object store, which
- involves inflating and applying delta.  This however kicked in even
- when the checked-out copy needs to go through the convert-to-git
- conversion (including the clean filter), which defeats the whole
- point of the optimization.  The optimization has been disabled when
- the conversion is necessary.
-
- Will merge to 'next'.
-
-
-* jk/git-jump (2016-07-22) 3 commits
- - contrib/git-jump: fix typo in README
- - contrib/git-jump: add whitespace-checking mode
- - contrib/git-jump: fix greedy regex when matching hunks
-
- "git jump" script (in contrib/) has been updated a bit.
-
- Will merge to 'next'.
-
-
-* jk/parse-options-concat (2016-07-06) 1 commit
- - parse_options: allocate a new array when concatenating
-
- Users of the parse_options_concat() API function needs to allocate
- extra slots in advance and fill them with OPT_END() when they want
- to decide the set of options to support dynamically, which is
- error-prone and hard to read.  This has been corrected by tweaking
- the API to allocate and return a new copy of "struct option" array.
-
- Will merge to 'next'.
-
-
-* jk/push-progress (2016-07-20) 12 commits
- - receive-pack: send keepalives during quiet periods
- - receive-pack: turn on connectivity progress
- - receive-pack: relay connectivity errors to sideband
- - receive-pack: turn on index-pack resolving progress
- - index-pack: add flag for showing delta-resolution progress
- - clone: use a real progress meter for connectivity check
- - check_connected: add progress flag
- - check_connected: relay errors to alternate descriptor
- - check_everything_connected: use a struct with named options
- - check_everything_connected: convert to argv_array
- - rev-list: add optional progress reporting
- - check_everything_connected: always pass --quiet to rev-list
-
- "git push" and "git clone" learned to give better progress meters
- to the end user who is waiting on the terminal.
-
- Will merge to 'next'.
-
-
-* jk/reflog-date (2016-07-27) 7 commits
- - date: clarify --date=raw description
- - date: add "unix" format
- - date: document and test "raw-local" mode
- - doc/pretty-formats: explain shortening of %gd
- - doc/pretty-formats: describe index/time formats for %gd
- - doc/rev-list-options: explain "-g" output formats
- - doc/rev-list-options: clarify "commit@{Nth}" for "-g" option
-
- The reflog output format is documented better, and a new format
- --date=unix to report the seconds-since-epoch (without timezone)
- has been added.
-
- Will merge to 'next'.
-
-
-* mm/status-suggest-merge-abort (2016-07-22) 1 commit
- - status: suggest 'git merge --abort' when appropriate
-
- "git status" learned to suggest "merge --abort" during a conflicted
- merge, just like it already suggests "rebase --abort" during a
- conflicted rebase.
-
- Will merge to 'next'.
-
-
-* pm/build-persistent-https-with-recent-go (2016-07-22) 2 commits
- - contrib/persistent-https: use Git version for build label
- - contrib/persistent-https: update ldflags syntax for Go 1.7+
-
- The build procedure for "git persistent-https" helper (in contrib/)
- has been updated so that it can be built with more recent versions
- of Go.
-
- Will merge to 'next'.
-
-
-* sb/pack-protocol-doc-nak (2016-07-22) 1 commit
- - Documentation: pack-protocol correct NAK response
-
- A doc update.
-
- Will merge to 'next'.
-
-
-* sb/submodule-clone-retry (2016-07-22) 2 commits
- - submodule-helper: fix indexing in clone retry error reporting path
- - git-submodule: forward exit code of git-submodule--helper more faithfully
-
- An earlier tweak to make "submodule update" retry a failing clone
- of submodules was buggy and caused segfault, which has been fixed.
-
- Will merge to 'next'.
-
-
-* ew/find-perl-on-freebsd-in-local (2016-07-26) 1 commit
-  (merged to 'next' on 2016-07-26 at f76a962)
- + config.mak.uname: correct perl path on FreeBSD
-
- Recent FreeBSD stopped making perl available at /usr/bin/perl;
- switch the default the built-in path to /usr/local/bin/perl on not
- too ancient FreeBSD releases.
-
- Will merge to 'master'.
-
-
-* ew/git-svn-http-tests (2016-07-25) 2 commits
- - git svn: migrate tests to use lib-httpd
- - t/t91*: do not say how to avoid the tests
-
- Reuse the lib-httpd test infrastructure when testing the subversion
- integration that interacts with subversion repositories served over
- the http:// protocol.
-
- Will merge to 'next'.
-
-
-* jk/push-force-with-lease-creation (2016-07-26) 3 commits
- - push: allow pushing new branches with --force-with-lease
- - push: add shorthand for --force-with-lease branch creation
- - Documentation/git-push: fix placeholder formatting
-
- "git push --force-with-lease" already had enough logic to allow
- ensuring that such a push results in creation of a ref (i.e. the
- receiving end did not have another push from sideways that would be
- discarded by our force-pushing), but didn't expose this possibility
- to the users.  It does so now.
-
- Will merge to 'next'.
-
-
-* ew/daemon-socket-keepalive (2016-07-22) 2 commits
-  (merged to 'next' on 2016-07-22 at d39c827)
- + Windows: add missing definition of ENOTSOCK
-  (merged to 'next' on 2016-07-19 at 0140849)
- + daemon: ignore ENOTSOCK from setsockopt
-
- Recent update to "git daemon" tries to enable the socket-level
- KEEPALIVE, but when it is spawned via inetd, the standard input
- file descriptor may not necessarily be connected to a socket.
- Suppress an ENOTSOCK error from setsockopt().
-
- Will merge to 'master'.
-
-
-* jt/fetch-large-handshake-window-on-http (2016-07-19) 1 commit
- - fetch-pack: grow stateless RPC windows exponentially
-
- "git fetch" exchanges batched have/ack messages between the sender
- and the receiver, initially doubling every time and then falling
- back to use the maximum window size.  The "smart http" transport,
- being an half-duplex protocol, outgrows the preset limit too
- quickly and becomes inefficient when interacting with a large
- repository.  The internal mechanism learned to grow the window size
- more aggressively when working with the "smart http" transport.
-
- Will merge to 'next'.
-
-
-* ew/svn-authorsprog-doc (2016-07-19) 1 commit
- - git-svn: document svn.authorsProg in config
-
- Belated doc update.
-
- Perhaps I will get a copy of this directly from Eric together with
- other updates to git-svn, in which case this needs to be scrapped.
-
-
-* rs/submodule-config-code-cleanup (2016-07-26) 3 commits
- - submodule-config: combine error checking if clauses
- - fix passing a name for config from submodules
-  (merged to 'next' on 2016-07-19 at 59dbd58)
- + submodule-config: use explicit empty string instead of strbuf in config_from()
-
- Code cleanup.
-
- Will merge to 'next'.
-
-
-* js/am-3-merge-recursive-direct (2016-07-26) 16 commits
- - merge-recursive: flush output buffer even when erroring out
- - merge_trees(): ensure that the callers release output buffer
- - merge-recursive: offer an option to retain the output in 'obuf'
- - merge-recursive: write the commit title in one go
- - merge-recursive: flush output buffer before printing error messages
- - am -3: use merge_recursive() directly again
- - merge-recursive: switch to returning errors instead of dying
- - merge-recursive: handle return values indicating errors
- - merge-recursive: allow write_tree_from_memory() to error out
- - merge-recursive: avoid returning a wholesale struct
- - merge_recursive: abort properly upon errors
- - prepare the builtins for a libified merge_recursive()
- - merge-recursive: clarify code in was_tracked()
- - die(_("BUG")): avoid translating bug messages
- - die("bug"): report bugs consistently
- - t5520: verify that `pull --rebase` shows the helpful advice when failing
-
- "git am -3" calls "git merge-recursive" when it needs to fall back
- to a three-way merge; this call has been turned into an internal
- subroutine call instead of spawning a separate subprocess.
-
- Needs review.
- I started re-reading them, but I do want eyes from other people.
-
-
-* nd/pack-ofs-4gb-limit (2016-07-13) 7 commits
-  (merged to 'next' on 2016-07-13 at 91e217d)
- + fsck: use streaming interface for large blobs in pack
- + pack-objects: do not truncate result in-pack object size on 32-bit systems
- + index-pack: correct "offset" type in unpack_entry_data()
- + index-pack: report correct bad object offsets even if they are large
- + index-pack: correct "len" type in unpack_data()
- + sha1_file.c: use type off_t* for object_info->disk_sizep
- + pack-objects: pass length to check_pack_crc() without truncation
-
- "git pack-objects" and "git index-pack" mostly operate with off_t
- when talking about the offset of objects in a packfile, but there
- were a handful of places that used "unsigned long" to hold that
- value, leading to an unintended truncation.
-
- Will merge to 'master'.
-
-
-* sb/push-options (2016-07-14) 4 commits
-  (merged to 'next' on 2016-07-19 at ee9a83a)
- + add a test for push options
- + push: accept push options
- + receive-pack: implement advertising and receiving push options
- + push options: {pre,post}-receive hook learns about push options
-
- "git push" learned to accept and pass extra options to the
- receiving end so that hooks can read and react to them.
-
- Will merge to 'master'.
-
-
-* ew/http-walker (2016-07-18) 4 commits
-  (merged to 'next' on 2016-07-18 at a430a97)
- + list: avoid incompatibility with *BSD sys/queue.h
-  (merged to 'next' on 2016-07-13 at 8585c03)
- + http-walker: reduce O(n) ops with doubly-linked list
- + http: avoid disconnecting on 404s for loose objects
- + http-walker: remove unused parameter from fetch_object
-
- Optimize dumb http transport on the client side.
-
- Will merge to 'master'.
-
-
-* nd/log-decorate-color-head-arrow (2016-07-12) 1 commit
- - log: decorate HEAD -> branch with the same color for arrow and HEAD
-
- An entry "git log --decorate" for the tip of the current branch is
- shown as "HEAD -> name" (where "name" is the name of the branch);
- paint the arrow in the same color as "HEAD", not in the color for
- commits.
-
- Comments?  Personally I find it more-or-less "Meh".
-
-
-* jh/clean-smudge-annex (2016-07-12) 9 commits
- - use smudgeToFile filter in recursive merge
- - use smudgeToFile filter in git am
- - better recovery from failure of smudgeToFile filter
- - warn on unusable smudgeToFile/cleanFromFile config
- - use smudgeToFile in git checkout etc
- - use cleanFromFile in git add
- - add smudgeToFile and cleanFromFile filter configs
- - clarify %f documentation
- - Merge branch 'cc/apply-am' into jh/clean-smudge-annex
- (this branch uses cc/apply-am.)
-
- The interface to "clean/smudge" filters require Git to feed the
- whole contents via pipe, which is suboptimal for some applications.
- "cleanFromFile/smudgeToFile" commands are the moral equilvalents
- for these filters but they interact with the files on the
- filesystem directly.
-
- Will hold.
-
-
-* js/rebase-i-tests (2016-07-07) 3 commits
-  (merged to 'next' on 2016-07-13 at b06b28f)
- + rebase -i: we allow extra spaces after fixup!/squash!
- + rebase -i: demonstrate a bug with --autosquash
- + t3404: add a test for the --gpg-sign option
-
- A few tests that specifically target "git rebase -i" have been
- added.
-
- Will merge to 'master'.
-
-
-* rs/notes-merge-no-toctou (2016-07-07) 1 commit
-  (merged to 'next' on 2016-07-13 at f08b530)
- + notes-merge: use O_EXCL to avoid overwriting existing files
-
- "git notes merge" had a code to see if a path exists (and fails if
- it does) and then open the path for writing (when it doesn't).
- Replace it with open with O_EXCL.
-
- Will merge to 'master'.
-
-
-* jk/difftool-in-subdir (2016-07-19) 4 commits
- - difftool: use Git::* functions instead of passing around state
- - SQUASH???
- - difftool: avoid $GIT_DIR and $GIT_WORK_TREE
- - difftool: fix argument handling in subdirs
-
- "git difftool <paths>..." started in a subdirectory failed to
- interpret the paths relative to that directory, which has been
- fixed.
-
-
-* dp/autoconf-curl-ssl (2016-06-28) 1 commit
- - ./configure.ac: detect SSL in libcurl using curl-config
-
- The ./configure script generated from configure.ac was taught how
- to detect support of SSL by libcurl better.
-
- Needs review.
-
-
-* jc/pull-rebase-ff (2016-06-29) 1 commit
- -   pull: fast-forward "pull --rebase=true"
-
- "git pull --rebase", when there is no new commits on our side since
- we forked from the upstream, should be able to fast-forward without
- invoking "git rebase", but it didn't.
-
- Needs a real log message and a few tests.
-
-
-* po/range-doc (2016-07-20) 8 commits
- - doc: revisions - clarify reachability examples
- - doc: revisions - define `reachable`
- - doc: gitrevisions - clarify 'latter case' is revision walk
- - doc: gitrevisions - use 'reachable' in page description
- - doc: give headings for the two and three dot notations
- - doc: show the actual left, right, and boundary marks
- - doc: revisions - name the left and right sides
- - doc: use 'symmetric difference' consistently
-
- Clarify various ways to specify the "revision ranges" in the
- documentation.
-
- Updates in 4/8 ("give headings") is reported to break formatting?
- ($gmane/300030)
-
-
-* ex/deprecate-empty-pathspec-as-match-all (2016-06-22) 1 commit
-  (merged to 'next' on 2016-07-13 at d9ca7fb)
- + pathspec: warn on empty strings as pathspec
-
- An empty string used as a pathspec element has always meant
- 'everything matches', but it is too easy to write a script that
- finds a path to remove in $path and run 'git rm "$paht"', which
- ends up removing everything.  Start warning about this use of an
- empty string used for 'everything matches' and ask users to use a
- more explicit '.' for that instead.
-
- The hope is that existing users will not mind this change, and
- eventually the warning can be turned into a hard error, upgrading
- the deprecation into removal of this (mis)feature.
-
- Will hold to see if people scream.
-
-
-* mh/ref-store (2016-06-20) 38 commits
- - refs: implement iteration over only per-worktree refs
- - refs: make lock generic
- - refs: add method to rename refs
- - refs: add methods to init refs db
- - refs: make delete_refs() virtual
- - refs: add method for initial ref transaction commit
- - refs: add methods for reflog
- - refs: add method iterator_begin
- - files_ref_iterator_begin(): take a ref_store argument
- - split_symref_update(): add a files_ref_store argument
- - lock_ref_sha1_basic(): add a files_ref_store argument
- - lock_ref_for_update(): add a files_ref_store argument
- - commit_ref_update(): add a files_ref_store argument
- - lock_raw_ref(): add a files_ref_store argument
- - repack_without_refs(): add a files_ref_store argument
- - refs: make peel_ref() virtual
- - refs: make create_symref() virtual
- - refs: make pack_refs() virtual
- - refs: make verify_refname_available() virtual
- - refs: make read_raw_ref() virtual
- - resolve_gitlink_ref(): rename path parameter to submodule
- - resolve_gitlink_ref(): avoid memory allocation in many cases
- - resolve_gitlink_ref(): implement using resolve_ref_recursively()
- - resolve_ref_recursively(): new function
- - read_raw_ref(): take a (struct ref_store *) argument
- - resolve_gitlink_packed_ref(): remove function
- - resolve_packed_ref(): rename function from resolve_missing_loose_ref()
- - refs: reorder definitions
- - refs: add a transaction_commit() method
- - {lock,commit,rollback}_packed_refs(): add files_ref_store arguments
- - resolve_missing_loose_ref(): add a files_ref_store argument
- - get_packed_ref(): add a files_ref_store argument
- - add_packed_ref(): add a files_ref_store argument
- - refs: create a base class "ref_store" for files_ref_store
- - refs: add a backend method structure
- - refs: rename struct ref_cache to files_ref_store
- - rename_ref_available(): add docstring
- - resolve_gitlink_ref(): eliminate temporary variable
-
- The ref-store abstraction was introduced to the refs API so that we
- can plug in different backends to store references.
-
- Needs a fixup.
- ($gmane/298137)
-
-
-* jc/blame-reverse (2016-06-14) 2 commits
- - blame: dwim "blame --reverse OLD" as "blame --reverse OLD.."
- - blame: improve diagnosis for "--reverse NEW"
-
- It is a common mistake to say "git blame --reverse OLD path",
- expecting that the command line is dwimmed as if asking how lines
- in path in an old revision OLD have survived up to the current
- commit.
-
- Any supporters?  Otherwise will drop.
-
-
-* nd/shallow-deepen (2016-06-13) 27 commits
- - fetch, upload-pack: --deepen=N extends shallow boundary by N commits
- - upload-pack: add get_reachable_list()
- - upload-pack: split check_unreachable() in two, prep for get_reachable_list()
- - t5500, t5539: tests for shallow depth excluding a ref
- - clone: define shallow clone boundary with --shallow-exclude
- - fetch: define shallow boundary with --shallow-exclude
- - upload-pack: support define shallow boundary by excluding revisions
- - refs: add expand_ref()
- - t5500, t5539: tests for shallow depth since a specific date
- - clone: define shallow clone boundary based on time with --shallow-since
- - fetch: define shallow boundary with --shallow-since
- - upload-pack: add deepen-since to cut shallow repos based on time
- - shallow.c: implement a generic shallow boundary finder based on rev-list
- - fetch-pack: use a separate flag for fetch in deepening mode
- - fetch-pack.c: mark strings for translating
- - fetch-pack: use a common function for verbose printing
- - fetch-pack: use skip_prefix() instead of starts_with()
- - upload-pack: move rev-list code out of check_non_tip()
- - upload-pack: make check_non_tip() clean things up on error
- - upload-pack: tighten number parsing at "deepen" lines
- - upload-pack: use skip_prefix() instead of starts_with()
- - upload-pack: move "unshallow" sending code out of deepen()
- - upload-pack: remove unused variable "backup"
- - upload-pack: move "shallow" sending code out of deepen()
- - upload-pack: move shallow deepen code out of receive_needs()
- - transport-helper.c: refactor set_helper_option()
- - remote-curl.c: convert fetch_git() to use argv_array
-
- The existing "git fetch --depth=<n>" option was hard to use
- correctly when making the history of an existing shallow clone
- deeper.  A new option, "--deepen=<n>", has been added to make this
- easier to use.  "git clone" also learned "--shallow-since=<date>"
- and "--shallow-exclude=<tag>" options to make it easier to specify
- "I am interested only in the recent N months worth of history" and
- "Give me only the history since that version".
-
- Needs review.
-
- Rerolled.  What this topic attempts to achieve is worthwhile, I
- would think.
-
-
-* jc/attr-more (2016-06-09) 8 commits
- - attr.c: outline the future plans by heavily commenting
- - attr.c: always pass check[] to collect_some_attrs()
- - attr.c: introduce empty_attr_check_elems()
- - attr.c: correct ugly hack for git_all_attrs()
- - attr.c: rename a local variable check
- - fixup! d5ad6c13
- - attr.c: pass struct git_attr_check down the callchain
- - attr.c: add push_stack() helper
- (this branch uses jc/attr; is tangled with sb/pathspec-label and sb/submodule-default-paths.)
-
- The beginning of long and tortuous journey to clean-up attribute
- subsystem implementation.
-
- Needs to be redone.
-
-
-* mh/connect (2016-06-06) 10 commits
- - connect: [host:port] is legacy for ssh
- - connect: move ssh command line preparation to a separate function
- - connect: actively reject git:// urls with a user part
- - connect: change the --diag-url output to separate user and host
- - connect: make parse_connect_url() return the user part of the url as a separate value
- - connect: group CONNECT_DIAG_URL handling code
- - connect: make parse_connect_url() return separated host and port
- - connect: re-derive a host:port string from the separate host and port variables
- - connect: call get_host_and_port() earlier
- - connect: document why we sometimes call get_port after get_host_and_port
-
- Rewrite Git-URL parsing routine (hopefully) without changing any
- behaviour.
-
- Comments?
-
-
-* nd/worktree-lock (2016-07-08) 6 commits
-  (merged to 'next' on 2016-07-13 at c768a85)
- + worktree.c: find_worktree() search by path suffix
- + worktree: add "unlock" command
- + worktree: add "lock" command
- + worktree.c: add is_worktree_locked()
- + worktree.c: add is_main_worktree()
- + worktree.c: add find_worktree()
-
- "git worktree prune" protected worktrees that are marked as
- "locked" by creating a file in a known location.  "git worktree"
- command learned a dedicated command pair to create and remoev such
- a file, so that the users do not have to do this with editor.
-
- Will merge to 'master'.
-
-
-* sb/submodule-default-paths (2016-06-20) 5 commits
- - completion: clone can recurse into submodules
- - clone: add --init-submodule=<pathspec> switch
- - submodule update: add `--init-default-path` switch
- - Merge branch 'sb/pathspec-label' into sb/submodule-default-paths
- - Merge branch 'jc/attr' into sb/submodule-default-paths
- (this branch uses jc/attr and sb/pathspec-label; is tangled with jc/attr-more.)
-
- Allow specifying the set of submodules the user is interested in on
- the command line of "git clone" that clones the superproject.
-
-
-* jc/attr (2016-05-25) 18 commits
- - attr: support quoting pathname patterns in C style
- - attr: expose validity check for attribute names
- - attr: add counted string version of git_attr()
- - attr: add counted string version of git_check_attr()
- - attr: retire git_check_attrs() API
- - attr: convert git_check_attrs() callers to use the new API
- - attr: convert git_all_attrs() to use "struct git_attr_check"
- - attr: (re)introduce git_check_attr() and struct git_attr_check
- - attr: rename function and struct related to checking attributes
- - attr.c: plug small leak in parse_attr_line()
- - attr.c: tighten constness around "git_attr" structure
- - attr.c: simplify macroexpand_one()
- - attr.c: mark where #if DEBUG ends more clearly
- - attr.c: complete a sentence in a comment
- - attr.c: explain the lack of attr-name syntax check in parse_attr()
- - attr.c: update a stale comment on "struct match_attr"
- - attr.c: use strchrnul() to scan for one line
- - commit.c: use strchrnul() to scan for one line
- (this branch is used by jc/attr-more, sb/pathspec-label and sb/submodule-default-paths.)
-
- The attributes API has been updated so that it can later be
- optimized using the knowledge of which attributes are queried.
-
- I wanted to polish this topic further to make the attribute
- subsystem thread-ready, but because other topics depend on this
- topic and they do not (yet) need it to be thread-ready, let's merge
- this early part together with the dependent topics to 'next', and
- back-burner the threading enhancement to another day.
-
-
-* pb/bisect (2016-07-12) 9 commits
- - bisect--helper: `bisect_write` shell function in C
- - bisect--helper: `is_expected_rev` & `check_expected_revs` shell function in C
- - bisect--helper: `bisect_reset` shell function in C
- - wrapper: move is_empty_file() and rename it as is_empty_or_missing_file()
- - t6030: explicitly test for bisection cleanup
- - bisect--helper: `bisect_clean_state` shell function in C
- - bisect--helper: `write_terms` shell function in C
- - bisect: rewrite `check_term_format` shell function in C
- - bisect--helper: use OPT_CMDMODE instead of OPT_BOOL
-
- GSoC "bisect" topic.
-
- Are people happy with this version?  How much of the planned
- "porting" is finished by this part of the work?  How much more to
- go?
-
-
-* sb/pathspec-label (2016-06-03) 6 commits
- - pathspec: disable preload-index when attribute pathspec magic is in use
- - pathspec: allow escaped query values
- - pathspec: allow querying for attributes
- - pathspec: move prefix check out of the inner loop
- - pathspec: move long magic parsing out of prefix_pathspec
- - Documentation: fix a typo
- (this branch is used by sb/submodule-default-paths; uses jc/attr; is tangled with jc/attr-more.)
-
- The pathspec mechanism learned ":(attr:X)$pattern" pathspec magic
- to limit paths that match $pattern further by attribute settings.
- The preload-index mechanism is disabled when the new pathspec magic
- is in use (at least for now), because the attribute subsystem is
- not thread-ready.
-
-
-* kn/ref-filter-branch-list (2016-05-17) 17 commits
- - branch: implement '--format' option
- - branch: use ref-filter printing APIs
- - branch, tag: use porcelain output
- - ref-filter: allow porcelain to translate messages in the output
- - ref-filter: add `:dir` and `:base` options for ref printing atoms
- - ref-filter: make remote_ref_atom_parser() use refname_atom_parser_internal()
- - ref-filter: introduce symref_atom_parser() and refname_atom_parser()
- - ref-filter: introduce refname_atom_parser_internal()
- - ref-filter: make "%(symref)" atom work with the ':short' modifier
- - ref-filter: add support for %(upstream:track,nobracket)
- - ref-filter: make %(upstream:track) prints "[gone]" for invalid upstreams
- - ref-filter: introduce format_ref_array_item()
- - ref-filter: move get_head_description() from branch.c
- - ref-filter: modify "%(objectname:short)" to take length
- - ref-filter: implement %(if:equals=<string>) and %(if:notequals=<string>)
- - ref-filter: include reference to 'used_atom' within 'atom_value'
- - ref-filter: implement %(if), %(then), and %(else) atoms
-
- The code to list branches in "git branch" has been consolidated
- with the more generic ref-filter API.
-
- Rerolled.
- This also really needs review.
-
-
-* dt/index-helper (2016-07-06) 21 commits
- - index-helper: indexhelper.exitAfter config
- - trace: measure where the time is spent in the index-heavy operations
- - index-helper: optionally automatically run
- - index-helper: autorun mode
- - index-helper: don't run if already running
- - index-helper: kill mode
- - watchman: add a config option to enable the extension
- - unpack-trees: preserve index extensions
- - update-index: enable/disable watchman support
- - index-helper: use watchman to avoid refreshing index with lstat()
- - watchman: support watchman to reduce index refresh cost
- - read-cache: add watchman 'WAMA' extension
- - index-helper: log warnings
- - index-helper: add --detach
- - daemonize(): set a flag before exiting the main process
- - index-helper: add --strict
- - index-helper: new daemon for caching index and related stuff
- - unix-socket.c: add stub implementation when unix sockets are not supported
- - pkt-line: add gentle version of packet_write
- - read-cache: allow to keep mmap'd memory after reading
- - read-cache.c: fix constness of verify_hdr()
-
- A new "index-helper" daemon has been introduced to give newly
- spawned Git process a quicker access to the data in the index, and
- optionally interface with the watchman daemon to further reduce the
- refresh cost.
-
- Not quite ready yet, it seems.
- ($gmane/298949, $gmane/299506)
-
-
-* jc/bundle (2016-03-03) 6 commits
- - index-pack: --clone-bundle option
- - Merge branch 'jc/index-pack' into jc/bundle
- - bundle v3: the beginning
- - bundle: keep a copy of bundle file name in the in-core bundle header
- - bundle: plug resource leak
- - bundle doc: 'verify' is not about verifying the bundle
-
- The beginning of "split bundle", which could be one of the
- ingredients to allow "git clone" traffic off of the core server
- network to CDN.
-
- While I think it would make it easier for people to experiment and
- build on if the topic is merged to 'next', I am at the same time a
- bit reluctant to merge an unproven new topic that introduces a new
- file format, which we may end up having to support til the end of
- time.  Comments?
-
-
-* jc/merge-drop-old-syntax (2015-04-29) 1 commit
- - merge: drop 'git merge <message> HEAD <commit>' syntax
-
- Stop supporting "git merge <message> HEAD <commit>" syntax that has
- been deprecated since October 2007, and issues a deprecation
- warning message since v2.5.0.
-
- It has been reported that git-gui still uses the deprecated syntax,
- which needs to be fixed before this final step can proceed.
- ($gmane/282594)
-
---------------------------------------------------
-[Discarded]
-
-* ew/svn-bad-ref (2016-07-06) 1 commit
- . git-svn: warn instead of dying when commit data is missing
-
- Pulled directly from upstream hence discarded.
-
-
-* tb/convert-peek-in-index (2016-07-07) 2 commits
- . correct ce_compare_data() in a middle of a merge
- . read-cache: factor out get_sha1_from_index() helper
-
- Discarded and replaced by jc/renormalize-merge-kill-safer-crlf
