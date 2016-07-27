@@ -2,82 +2,233 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B507F203EB
-	for <e@80x24.org>; Wed, 27 Jul 2016 17:50:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98709203E1
+	for <e@80x24.org>; Wed, 27 Jul 2016 17:56:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757789AbcG0RuP (ORCPT <rfc822;e@80x24.org>);
-	Wed, 27 Jul 2016 13:50:15 -0400
-Received: from mail-it0-f41.google.com ([209.85.214.41]:36971 "EHLO
-	mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757560AbcG0RuO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jul 2016 13:50:14 -0400
-Received: by mail-it0-f41.google.com with SMTP id f6so56108166ith.0
-        for <git@vger.kernel.org>; Wed, 27 Jul 2016 10:50:13 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=KWB8wXIoFURKFJ3m1EiA8OBXHY7OO8EkajTlAO7xIFM=;
-        b=aAotjm2omI/Ly3RhS1qZtNvcqz2l3X/TnTXQHP9mCBLXq9IBXdsLRO51+bWWkYKbpf
-         6d8y2ywOrh9tP0ogWygOYVgmpVrcdd6S17OhD+M+Bsj5DLlxW+7MFmQuVNoHmOUee+Vz
-         jQGiseVOSzhi8raaZ/5j4yznUmcFIxCFhyc7BsdVF3szCbyZpbj7mq5/f8RgdBt4GveB
-         hU7q1dHqJqCojwsIOHBsiXpJHhZ+j2kw+OHgaX/FYlVcNxt7G7OnEPeXc4ZKSCHMlpsa
-         tt4rolgWfEAXAqWbqSgRpNW7QXHRiWxiWJNi8rs4Vw+nzUjw/+BS30OUw2CovKErg4vi
-         GhUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=KWB8wXIoFURKFJ3m1EiA8OBXHY7OO8EkajTlAO7xIFM=;
-        b=CqB+1pLC75fLeLA7SUqdq7RSJA/GLs7M1cgkuadrDwE5TdKQCxdjnCAfTNNt5gfmi1
-         R430E1Qpc6o4pVU6GuD/TwKX9TLCAkc2zV4NEk7u8rbHnkMmZTOns4g7DJxcJdlAQmof
-         iyIajZok1A6wpPPojDhEbvLebZp6rQUCbY/ihDWiwDK6YpzlwrNCFtCu0pojNyPS8nJi
-         0qq5vTLAlXdjh11Ge68ffSZ9IcAoQRgMeluPiGb+UwKaPvRBz2conPtlp6BEPfFlbsw1
-         Kg89h1OrVb/gk1djyU+6NGcOuj3jWeJdnx7Uhu3cnPOJU59+j13Ok3/SKG5uHNKI/NuD
-         L3Jw==
-X-Gm-Message-State: AEkoouv5oOYhe1I+unHELz5De5cxddvcUA57NAEYwKNZwKoB4PWK9QuUDGWQvwTt3XSWVIOUvkmU9CrUNzJhXVuy
-X-Received: by 10.36.217.12 with SMTP id p12mr36126284itg.46.1469641813203;
- Wed, 27 Jul 2016 10:50:13 -0700 (PDT)
+	id S1756920AbcG0R41 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 27 Jul 2016 13:56:27 -0400
+Received: from cloud.peff.net ([50.56.180.127]:49940 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754303AbcG0R41 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jul 2016 13:56:27 -0400
+Received: (qmail 32654 invoked by uid 102); 27 Jul 2016 17:56:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 Jul 2016 13:56:26 -0400
+Received: (qmail 18818 invoked by uid 107); 27 Jul 2016 17:56:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 Jul 2016 13:56:51 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Jul 2016 13:56:23 -0400
+Date:	Wed, 27 Jul 2016 13:56:23 -0400
+From:	Jeff King <peff@peff.net>
+To:	Phil Pennock <phil@pennock-tech.com>
+Cc:	git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] pretty format string support for reflog times
+Message-ID: <20160727175622.GA9961@sigill.intra.peff.net>
+References: <20160727081414.GA21451@breadbox>
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Wed, 27 Jul 2016 10:50:12 -0700 (PDT)
-In-Reply-To: <CACsJy8CMnywB8AdmLxB8LnsznHrMTieoezhaQS=2r1pnM8ONZA@mail.gmail.com>
-References: <CACsJy8CMnywB8AdmLxB8LnsznHrMTieoezhaQS=2r1pnM8ONZA@mail.gmail.com>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Wed, 27 Jul 2016 10:50:12 -0700
-Message-ID: <CAGZ79kY5UrjSj8xbjB+MvTE2xUyt+te1RKN6Bf0WiEA23iZ7wg@mail.gmail.com>
-Subject: Re: Find a topic branch containing a commit
-To:	Duy Nguyen <pclouds@gmail.com>
-Cc:	Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20160727081414.GA21451@breadbox>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Jul 27, 2016 at 10:42 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> Before I start doing anything silly because I don't know it can
-> already be done without waving my C wand like a mad man...
->
-> I often do this: find a commit of interest, the commit itself is not
-> enough so I need a full patch series to figure out what's going, so I
-> fire up "git log --graph --oneline" and manually search that commit
-> and trace back to the merge point, then I can "git log --patch". Is
-> there an automatic way to accomplish that? Something like "git branch
-> --contains" (or "git merge --contains")?
+On Wed, Jul 27, 2016 at 04:14:14AM -0400, Phil Pennock wrote:
 
-https://github.com/mhagger/git-when-merged ?
+> The reflog contains timestamp information, but these were not exposed to
+> `--pretty`.  Four of the six author/committer format string
+> second-letters were still available and copied, but `d`/`D` are taken
+> for reflog selector formatting.  So use `%gT` for "time" instead of
+> "date" mnemonic for using `--date=...` formatting.
 
->
-> PS. Sometimes I wish we could optionally save cover letter in the
-> merge commit. Sometimes the "big plan" is hard to see by reading
-> individual commit messages.
-> --
-> Duy
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+So as I mentioned before, this is similar to another recent patch. But I
+kind of like this one better, so let me give this one a more thorough
+review.
+
+> Implementation trade-off: could use `format_person_part()` if bounce
+> information out of the reflog as a buffer-constructed string, then parse
+> it back again, _and_ then use a hacky letter override for 'T' becoming
+> 'd'.  That would avoid reimplementing the specification of the five
+> added timestamp rendering cases.  Instead, we allow exporting the
+> timestamp information from the reflog, and if we get it, we add the same
+> data.  No memory alloc and string construction/parsing, a small amount
+> of duplication of meaning.
+
+I think this is a good tradeoff. Even if you handled 'd' in a hacky way
+now, you _don't_ want to "%g*" to magically grow to learn new placeholders
+that "%a*" does, as they might conflict with other "%g" formats in the
+same way that "%gd" (i.e., we would need to do a hacky workaround for
+_those_ too, but nothing would warn the person adding the new
+placeholders).
+
+> +		/*
+> +		 * all the date options except those taken for other reflog handling
+> +		 * (so not 'd' or 'D').
+> +		 */
+> +		case 'r':
+> +			if (get_reflog_timeinfo(&timestamp, &tz, c->pretty_ctx->reflog_info)) {
+> +				strbuf_addstr(sb, show_date(timestamp, tz, DATE_MODE(RELATIVE)));
+> +			}
+> +			return 2;
+> +		case 't':
+> +			if (get_reflog_timeinfo(&timestamp, &tz, c->pretty_ctx->reflog_info)) {
+> +				strbuf_addf(sb, "%lu", timestamp);
+> +			}
+> +			return 2;
+> +		case 'i':
+> +			if (get_reflog_timeinfo(&timestamp, &tz, c->pretty_ctx->reflog_info)) {
+> +				strbuf_addstr(sb, show_date(timestamp, tz, DATE_MODE(ISO8601)));
+> +			}
+> +			return 2;
+> +		case 'I':
+> +			if (get_reflog_timeinfo(&timestamp, &tz, c->pretty_ctx->reflog_info)) {
+> +				strbuf_addstr(sb, show_date(timestamp, tz, DATE_MODE(ISO8601_STRICT)));
+> +			}
+> +			return 2;
+
+These all look good. If for whatever reason we don't have a reflog
+entry, we write nothing (but still eat the placeholder), which seems
+sensible.
+
+One alternative interface would be more like get_reflog_message(), where
+it either puts something in a strbuf or not. And then your calls would
+look like:
+
+  get_reflog_date(sb, c->pretty_cx->reflog_info, DATE_MODE(ISO8601));
+
+or whatever. Your way here is more flexible, though, if we ever add more
+callers.
+
+> +		/*
+> +		 * reflog d/D are taken, so we can't use those for dates
+> +		 * but we do want to support using --date= format overrides
+> +		 * so we steal 'T' for those ('time' instead of 'date')
+> +		 */
+> +		case 'T':
+> +			if (get_reflog_timeinfo(&timestamp, &tz, c->pretty_ctx->reflog_info)) {
+> +				strbuf_addstr(sb, show_date(timestamp, tz, &c->pretty_ctx->date_mode));
+> +			}
+> +			return 2;
+>  		}
+
+I think we can drop this one. It's a nice direction to go eventually,
+but without the extra placeholders I mentioned elsewhere, it doesn't buy
+us much.
+
+> +int get_reflog_timeinfo(unsigned long *timestamp_out,
+> +			 int *tz_out,
+> +			 struct reflog_walk_info *reflog_info)
+> +{
+> +	struct commit_reflog *commit_reflog = reflog_info->last_commit_reflog;
+> +	struct reflog_info *info;
+> +
+> +	if (!commit_reflog)
+> +		return 0;
+> +
+> +	info = &commit_reflog->reflogs->items[commit_reflog->recno+1];
+> +	*timestamp_out = info->timestamp;
+> +	*tz_out = info->tz;
+> +	return 1;
+> +}
+
+Our usual error-return is "0 is success", "-1 is error".
+
+Though we don't _always_ adhere to that, and I won't be surprised if you
+simply copied this from other nearby code.
+
+> diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+> index d9f6242..9d211ab 100755
+> --- a/t/t4205-log-pretty-formats.sh
+> +++ b/t/t4205-log-pretty-formats.sh
+> @@ -533,4 +533,30 @@ EOF
+>  	test_cmp expected actual1
+>  '
+>  
+> +refhead1_short=$(git rev-parse --short --verify HEAD@{0}) &&
+> +refhead2_short=$(git rev-parse --short --verify HEAD@{1}) &&
+
+We try to push as much as possible into a test_expect_success block,
+since it handles things like unexpected output to stderr. I guess you
+put these outside because they are used in multiple tests. You don't
+have to do that, because tests can affect the greater environment. But
+if you do keep something outside of a test, you _don't_ want to use
+&&-chaining, as it means that the lines below it (i.e., the next test!)
+would simply not be run at all.
+
+But...
+
+> +test_expect_success 'can access the reflog' '
+> +	git reflog -n 2 >actual &&
+> +	cat >expected <<EOF &&
+> +$refhead1_short HEAD@{0}: commit (amend): shorter
+> +$refhead2_short HEAD@{1}: commit (amend): short
+> +EOF
+> +	test_cmp expected actual
+> +'
+
+I'm not sure what this is testing. Just that we have reflogs turned on
+at all? I think we can skip this, as it's implicit in the
+reflog-formatting test below.
+
+And then you can move your environment variables down into that test
+(though see below).
+
+> +test_expect_success 'reflog tformat timestamps work' '
+> +	git log -g -n 2 \
+> +		--pretty=tformat:"%h %gd / %gr %gt%n %gi %gI%n %gT : %gs" > actual &&
+> +	cat >expected <<EOF &&
+> +$refhead1_short HEAD@{0} / 11 years ago 1112912173
+> + 2005-04-07 15:16:13 -0700 2005-04-07T15:16:13-07:00
+> + Thu Apr 7 15:16:13 2005 -0700 : commit (amend): shorter
+> +$refhead2_short HEAD@{1} / 11 years ago 1112912173
+> + 2005-04-07 15:16:13 -0700 2005-04-07T15:16:13-07:00
+> + Thu Apr 7 15:16:13 2005 -0700 : commit (amend): short
+> +EOF
+> +	test_cmp expected actual
+> +'
+
+You can use "<<-" to ask the shell to strip leading tabs from the
+here-doc. And then you can indent the contents to match the rest of the
+test.
+
+I kind of wonder if it would be better to drop "%h" from your format,
+too. You're just testing the timestamps, and handling the shortening is
+cluttering up the test. So maybe just:
+
+  test_expect_success 'reflog tformat timestamps work' '
+	cat >expected <<-\EOF &&
+	HEAD@{0}
+	11 years ago
+	1112912173
+	2005-04-07 15:16:13 -0700
+	2005-04-07T15:16:13-07:00
+
+	HEAD@{1}
+	11 years ago
+	1112912173
+	2005-04-07 15:16:13 -0700
+	2005-04-07T15:16:13-07:00
+	EOF
+	git log -g -2 --format="%gd%n%gr%n%gt%n%gi%n%gI%n" >actual &&
+	test_cmp expected actual
+  '
+
+(I did a few more tweaks to the format to hopefully make it easier to
+read). It would probably be a more interesting test if the two reflogs
+actually had different timestamps, though.
+
+Also, come to think of it, that "%gr" test is going to break in about
+year. :-/
+
+We do test relative date formatting via test-date, which can take a
+special value for "when is now", but you can't do so via regular
+git-log. So the best we could do is check "%gr" separately and just make
+sure that it output _something_.
+
+-Peff
