@@ -2,146 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28562203EB
-	for <e@80x24.org>; Wed, 27 Jul 2016 09:41:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82502203E2
+	for <e@80x24.org>; Wed, 27 Jul 2016 10:14:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753432AbcG0JlF (ORCPT <rfc822;e@80x24.org>);
-	Wed, 27 Jul 2016 05:41:05 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:60676 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753285AbcG0JlE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jul 2016 05:41:04 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BCA6203E2;
-	Wed, 27 Jul 2016 09:41:03 +0000 (UTC)
-Date:	Wed, 27 Jul 2016 09:41:02 +0000
-From:	Eric Wong <e@80x24.org>
-To:	larsxschneider@gmail.com
-Cc:	git@vger.kernel.org, gitster@pobox.com, jnareb@gmail.com,
-	tboegi@web.de, mlbright@gmail.com,
-	remi.galan-alfonso@ensimag.grenoble-inp.fr, pclouds@gmail.com,
-	ramsay@ramsayjones.plus.com, peff@peff.net
-Subject: Re: [PATCH v2 5/5] convert: add filter.<driver>.process option
-Message-ID: <20160727094102.GA31374@starla>
-References: <20160722154900.19477-1-larsxschneider@gmail.com>
- <20160727000605.49982-1-larsxschneider@gmail.com>
- <20160727000605.49982-6-larsxschneider@gmail.com>
+	id S1754480AbcG0KOc (ORCPT <rfc822;e@80x24.org>);
+	Wed, 27 Jul 2016 06:14:32 -0400
+Received: from mail-lf0-f45.google.com ([209.85.215.45]:36689 "EHLO
+	mail-lf0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754062AbcG0KOb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jul 2016 06:14:31 -0400
+Received: by mail-lf0-f45.google.com with SMTP id g62so23751874lfe.3
+        for <git@vger.kernel.org>; Wed, 27 Jul 2016 03:14:31 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=tX22EVBGYPa1hpr3ELrg+F0kRg/mWV6TbT2drkg5FFY=;
+        b=hwliU3MjOtys7XAWezUXrbPblaoKRbI2gvFqoT2jvz+9zvwNwYJGP5gm1C9mVCUXds
+         BT+Xs0BBjT7c17dlI+H7QlRBAXFLjCckz9Xwve/GF8liPomy6KlgXFKC5xIvVanTpFRG
+         AEDJysIv5Lrdzf6zUq28tpjUIphgQeNRQuM8/+rOTDsQlR5DOO4EuiIc222YcGuT6zxa
+         pLNSDBV04FtFshUXpNQy3j5wdqNxnd+rsGgRbc/uCZuuGwxJSKGjd+n7tQYIfzaGECJ9
+         kZizbMvNfCFx+SvnNx0sM5E4NvwKQ/qWBmlfbFHokN+valm2i7/junvs9TLxWwST12JO
+         GdgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=tX22EVBGYPa1hpr3ELrg+F0kRg/mWV6TbT2drkg5FFY=;
+        b=Z24nh+7ExK1mZ0YLkbqohfuDDgUf4VyhakaNHWoxNENikW8JVYvXpf81Sb2dpZ6Bow
+         V+jjF5Ba7+rE71/Lx/nSZ/32wyaJgb+CImF8NPZvm28+NVgXITU/3hEoG0Jv6MsYcCiL
+         fXb1h/copTrrlWLH0RxwqjNsESK04bMwK9Nq64H0YDVxJd1KH1o1s9Ddh0h/Fex5c1Kr
+         MY+G5sgn3Aq0mJ2ULv89ajI24Rrx/vhhKbu540TWe72zC/Ile63xGzl4CGCHQz2Ng+ii
+         N0jad06yrif8qU+GGOrnwf4TB79OpbEiKru91187gkGiWWyT+XUY1hVmzlh2p59oLeP4
+         WdxA==
+X-Gm-Message-State: AEkoouse8hN56QC619k5xEzVK8JqUws83B5TDTAyZpoq+bUrPZskQ0vFkLa+TVAEcWuUDWkjFpSC9y/0y/rsVw==
+X-Received: by 10.46.9.76 with SMTP id 73mr10275612ljj.61.1469614469561; Wed,
+ 27 Jul 2016 03:14:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160727000605.49982-6-larsxschneider@gmail.com>
+Received: by 10.25.144.203 with HTTP; Wed, 27 Jul 2016 03:14:28 -0700 (PDT)
+From:	Luis Gutierrez <luisgutz@gmail.com>
+Date:	Wed, 27 Jul 2016 11:14:28 +0100
+Message-ID: <CAD8hE_yzNZDPkxRy8s4Fy2_dZN5ppWzLM_2xc01C-VAdR1Pj_g@mail.gmail.com>
+Subject: git-mergetool reverse file ordering
+To:	git@vger.kernel.org
+Content-Type: multipart/mixed; boundary=001a114b10266a5cf005389b4816
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-larsxschneider@gmail.com wrote:
-> +static off_t multi_packet_read(struct strbuf *sb, const int fd, const size_t size)
+--001a114b10266a5cf005389b4816
+Content-Type: text/plain; charset=UTF-8
 
-I'm no expert in C, but this might be const-correctness taken
-too far.  I think basing this on the read(2) prototype is less
-surprising:
+Hi,
 
-   static ssize_t multi_packet_read(int fd, struct strbuf *sb, size_t size)
+Attached is a potential patch for reversing the order on which
+git-mergetool presents the files to merge.
 
-Also what Jeff said about off_t vs size_t, but my previous
-emails may have confused you w.r.t. off_t usage...
+Currently, when running git-mergetool, it performs a sort of the files
+to merge by alphabetical ordering. When working on C, this has the
+annoying effect of presenting the merge for a .c* files before the
+header files; which is always a bit harder to do. Reading the header
+first to figure out what the other dude changed is usually preferred.
 
-> +static int multi_packet_write(const char *src, size_t len, const int in, const int out)
+The attach patch reverse the order (-r flag to sort) so *.h* are
+merged before  *.c* files
 
-Same comment about over const ints above.
-len can probably be off_t based on what is below; but you need
-to process the loop in ssize_t-friendly chunks.
+PS, given the simplicity of the patch, I have not tested it.
 
-> +{
-> +	int ret = 1;
-> +	char header[4];
-> +	char buffer[8192];
-> +	off_t bytes_to_write;
+Regards
 
-What Jeff said, this should be ssize_t to match read(2) and xread
+Luis
 
-> +	while (ret) {
-> +		if (in >= 0) {
-> +			bytes_to_write = xread(in, buffer, sizeof(buffer));
-> +			if (bytes_to_write < 0)
-> +				ret &= 0;
-> +			src = buffer;
-> +		} else {
-> +			bytes_to_write = len > LARGE_PACKET_MAX - 4 ? LARGE_PACKET_MAX - 4 : len;
-> +			len -= bytes_to_write;
-> +		}
-> +		if (!bytes_to_write)
-> +			break;
+--001a114b10266a5cf005389b4816
+Content-Type: text/plain; charset=US-ASCII; name="sort-for-c-files.txt"
+Content-Disposition: attachment; filename="sort-for-c-files.txt"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_ir4qg6ou0
 
-The whole ret &= .. style error handling is hard-to-follow and
-here, a source of bugs.  I think the expected convention on
-hitting errors is:
-
-	1) stop whatever you're doing
-	2) cleanup
-	3) propagate the error to callers
-
-"goto" is an acceptable way of accomplishing this.
-
-For example, byte_to_write may still be negative at this point
-(and interpreted as a really big number when cast to unsigned
-size_t) and src/buffer could be stack garbage.
-
-> +		set_packet_header(header, bytes_to_write + 4);
-> +		ret &= write_in_full(out, &header, sizeof(header)) == sizeof(header);
-> +		ret &= write_in_full(out, src, bytes_to_write) == bytes_to_write;
-> +	}
-> +	ret &= write_in_full(out, "0000", 4) == 4;
-> +	return ret;
-> +}
-> +
-
-> +static int apply_protocol_filter(const char *path, const char *src, size_t len,
-> +						int fd, struct strbuf *dst, const char *cmd,
-> +						const char *filter_type)
-> +{
-
-<snip>
-
-> +	if (fd >= 0 && !src) {
-> +		ret &= fstat(fd, &file_stat) != -1;
-> +		len = file_stat.st_size;
-
-Same truncation bug I noticed earlier; what I originally meant
-is the `len' arg probably ought to be off_t, here, not size_t.
-32-bit x86 Linux systems have 32-bit size_t (unsigned), but
-large file support means off_t is 64-bits (signed).
-
-Also, is it worth continuing this function if fstat fails?
-
-> +	}
-> +
-> +	sigchain_push(SIGPIPE, SIG_IGN);
-> +
-> +	packet_write(process->in, "%s\n", filter_type);
-> +	packet_write(process->in, "%s\n", path);
-> +	packet_write(process->in, "%zu\n", len);
-
-I'm not sure if "%zu" is portable since we don't do C99 (yet?)
-For 64-bit signed off_t, you can probably do:
-
-	packet_write(process->in, "%"PRIuMAX"\n", (uintmax_t)len);
-
-Since we don't have PRIiMAX or intmax_t, here, and a negative
-len would be a bug (probably from failed fstat) anyways.
-
-> +	ret &= multi_packet_write(src, len, fd, process->in);
-
-multi_packet_write will probably fail if fstat failed above...
-
-> +	strbuf = packet_read_line(process->out, NULL);
-
-And this may just block or timeout if multi_packet_write failed.
-
-
-Naptime, I may look at the rest another day.
+ZGlmZiAtLWdpdCBhL2dpdC1tZXJnZXRvb2wuc2ggYi9naXQtbWVyZ2V0b29sLnNoCmluZGV4IGJm
+ODYyNzAuLmNjZTNiMGQgMTAwNzU1Ci0tLSBhL2dpdC1tZXJnZXRvb2wuc2gKKysrIGIvZ2l0LW1l
+cmdldG9vbC5zaApAQCAtNDUzLDEwICs0NTMsMTAgQEAgdGhlbgogCXRoZW4KIAkJZmlsZXM9JChn
+aXQgcmVyZXJlIHJlbWFpbmluZykKIAllbHNlCi0JCWZpbGVzPSQoZ2l0IGxzLWZpbGVzIC11IHwg
+c2VkIC1lICdzL15bXgldKgkvLycgfCBzb3J0IC11KQorCQlmaWxlcz0kKGdpdCBscy1maWxlcyAt
+dSB8IHNlZCAtZSAncy9eW14JXSoJLy8nIHwgc29ydCAtdSAtcikKIAlmaQogZWxzZQotCWZpbGVz
+PSQoZ2l0IGxzLWZpbGVzIC11IC0tICIkQCIgfCBzZWQgLWUgJ3MvXlteCV0qCS8vJyB8IHNvcnQg
+LXUpCisJZmlsZXM9JChnaXQgbHMtZmlsZXMgLXUgLS0gIiRAIiB8IHNlZCAtZSAncy9eW14JXSoJ
+Ly8nIHwgc29ydCAtdSAtcikKIGZpCiAKIGlmIHRlc3QgLXogIiRmaWxlcyIK
+--001a114b10266a5cf005389b4816--
