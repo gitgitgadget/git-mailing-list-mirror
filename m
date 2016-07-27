@@ -6,116 +6,78 @@ X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C826203E1
-	for <e@80x24.org>; Wed, 27 Jul 2016 17:46:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B507F203EB
+	for <e@80x24.org>; Wed, 27 Jul 2016 17:50:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757372AbcG0Rqx (ORCPT <rfc822;e@80x24.org>);
-	Wed, 27 Jul 2016 13:46:53 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59294 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757358AbcG0Rqx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jul 2016 13:46:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8C7702EA5C;
-	Wed, 27 Jul 2016 13:46:51 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5+tphmdoEKJ0xoLEBLcR0rGnH8Q=; b=cTC3US
-	buJAemv8VM/0KKe0T6WSDzJKSrqFPtpkY6ZmXQ85aLU7I6Nge6xdWVl4/u/oOB78
-	CLhhazh8Xne2BA3w37Saqfm2e8JAJrStd9uajmuhnTh++gxko9aMR0V9GyeLOLW3
-	2q9vhbjuPjMBq9YiEcP2s5v1pm7ULdv7EIQCI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rDpYsl+GfcT8ktxMseT2fd0ZsH0kfkpG
-	KipOXgu72/v3xGf3tPYq9FzfnLEZlThFZLi2BpP6HBxA7Vq2j0/rq68HzzTa2xmi
-	lqZ4/zlVIi25Elwaduit/NUp2wC+xCZgO6LzCPYB0EETNgqf28gWDaC5lxtS/388
-	guwBFRQMHco=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 84A6C2EA5A;
-	Wed, 27 Jul 2016 13:46:51 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0B8332EA59;
-	Wed, 27 Jul 2016 13:46:50 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	Phil Pennock <phil@pennock-tech.com>,
-	Theodore Ts'o <tytso@mit.edu>, git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] pretty format string support for reflog times
-References: <20160727081414.GA21451@breadbox>
-	<20160727135820.GC14928@sigill.intra.peff.net>
-	<xmqqwpk7vw30.fsf@gitster.mtv.corp.google.com>
-Date:	Wed, 27 Jul 2016 10:46:48 -0700
-In-Reply-To: <xmqqwpk7vw30.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 27 Jul 2016 10:18:11 -0700")
-Message-ID: <xmqqk2g7vurb.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1757789AbcG0RuP (ORCPT <rfc822;e@80x24.org>);
+	Wed, 27 Jul 2016 13:50:15 -0400
+Received: from mail-it0-f41.google.com ([209.85.214.41]:36971 "EHLO
+	mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757560AbcG0RuO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jul 2016 13:50:14 -0400
+Received: by mail-it0-f41.google.com with SMTP id f6so56108166ith.0
+        for <git@vger.kernel.org>; Wed, 27 Jul 2016 10:50:13 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=KWB8wXIoFURKFJ3m1EiA8OBXHY7OO8EkajTlAO7xIFM=;
+        b=aAotjm2omI/Ly3RhS1qZtNvcqz2l3X/TnTXQHP9mCBLXq9IBXdsLRO51+bWWkYKbpf
+         6d8y2ywOrh9tP0ogWygOYVgmpVrcdd6S17OhD+M+Bsj5DLlxW+7MFmQuVNoHmOUee+Vz
+         jQGiseVOSzhi8raaZ/5j4yznUmcFIxCFhyc7BsdVF3szCbyZpbj7mq5/f8RgdBt4GveB
+         hU7q1dHqJqCojwsIOHBsiXpJHhZ+j2kw+OHgaX/FYlVcNxt7G7OnEPeXc4ZKSCHMlpsa
+         tt4rolgWfEAXAqWbqSgRpNW7QXHRiWxiWJNi8rs4Vw+nzUjw/+BS30OUw2CovKErg4vi
+         GhUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=KWB8wXIoFURKFJ3m1EiA8OBXHY7OO8EkajTlAO7xIFM=;
+        b=CqB+1pLC75fLeLA7SUqdq7RSJA/GLs7M1cgkuadrDwE5TdKQCxdjnCAfTNNt5gfmi1
+         R430E1Qpc6o4pVU6GuD/TwKX9TLCAkc2zV4NEk7u8rbHnkMmZTOns4g7DJxcJdlAQmof
+         iyIajZok1A6wpPPojDhEbvLebZp6rQUCbY/ihDWiwDK6YpzlwrNCFtCu0pojNyPS8nJi
+         0qq5vTLAlXdjh11Ge68ffSZ9IcAoQRgMeluPiGb+UwKaPvRBz2conPtlp6BEPfFlbsw1
+         Kg89h1OrVb/gk1djyU+6NGcOuj3jWeJdnx7Uhu3cnPOJU59+j13Ok3/SKG5uHNKI/NuD
+         L3Jw==
+X-Gm-Message-State: AEkoouv5oOYhe1I+unHELz5De5cxddvcUA57NAEYwKNZwKoB4PWK9QuUDGWQvwTt3XSWVIOUvkmU9CrUNzJhXVuy
+X-Received: by 10.36.217.12 with SMTP id p12mr36126284itg.46.1469641813203;
+ Wed, 27 Jul 2016 10:50:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 193FB318-5422-11E6-A054-89D312518317-77302942!pb-smtp1.pobox.com
+Received: by 10.107.128.66 with HTTP; Wed, 27 Jul 2016 10:50:12 -0700 (PDT)
+In-Reply-To: <CACsJy8CMnywB8AdmLxB8LnsznHrMTieoezhaQS=2r1pnM8ONZA@mail.gmail.com>
+References: <CACsJy8CMnywB8AdmLxB8LnsznHrMTieoezhaQS=2r1pnM8ONZA@mail.gmail.com>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Wed, 27 Jul 2016 10:50:12 -0700
+Message-ID: <CAGZ79kY5UrjSj8xbjB+MvTE2xUyt+te1RKN6Bf0WiEA23iZ7wg@mail.gmail.com>
+Subject: Re: Find a topic branch containing a commit
+To:	Duy Nguyen <pclouds@gmail.com>
+Cc:	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
->> Hrm. Since Ted was not cc'd, it is not clear to me whether this is
->> coincidental or in response to the thread over in
->>
->>   http://thread.gmane.org/gmane.comp.version-control.git/299201
->>
->> To summarize, I think the conclusion there was that we would go with at
->> least the 't' and 'r' formatters in the short term. The 'i/I' ones were
->> not something Ted cared about that much, I think, but they do make
->> things orthogonal with the other ident dates.
+On Wed, Jul 27, 2016 at 10:42 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> Before I start doing anything silly because I don't know it can
+> already be done without waving my C wand like a mad man...
 >
-> I forgot about that thread after it stalled without drawing
-> conclusion, after Ted asked if anybody has a strong opinion
-> and saw only one response to it at
+> I often do this: find a commit of interest, the commit itself is not
+> enough so I need a full patch series to figure out what's going, so I
+> fire up "git log --graph --oneline" and manually search that commit
+> and trace back to the merge point, then I can "git log --patch". Is
+> there an automatic way to accomplish that? Something like "git branch
+> --contains" (or "git merge --contains")?
+
+https://github.com/mhagger/git-when-merged ?
+
 >
->   https://public-inbox.org/git/20160711164317.GB3890%40thunk.org/
->
-> So, what is the next step?  Apply
->
->   https://public-inbox.org/git/20160710055402.32684-1-tytso%40mit.edu/
->
-> but exclude %g[iI] bits out of that patch while doing so?
-
-FWIW, a squash to do so is trivial, but the original had two
-compiler breakers.
-
-I am not sure about the latter, i.e. the return value from the
-get_reflog_time_t() function (which I think is misnamed, in that the
-function returns "unsigned long", not "time_t", and should be
-renamed to get_reflog_time()) uses the epoch as a fallback value.
-
-
-
- reflog-walk.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/reflog-walk.c b/reflog-walk.c
-index d0aa2d0..51bfe29 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -309,7 +309,7 @@ void get_reflog_message(struct strbuf *sb,
- 	size_t len;
- 
- 	if (!info)
--		return NULL;
-+		return;
- 	len = strlen(info->message);
- 	if (len > 0)
- 		len--; /* strip away trailing newline */
-@@ -330,7 +330,7 @@ unsigned long get_reflog_time_t(struct reflog_walk_info *reflog_info)
- 	struct reflog_info *info = get_reflog_info(reflog_info);
- 
- 	if (!info)
--		return NULL;
-+		return 0;
- 	return gm_time_t(info->timestamp, info->tz);
- }
- 
+> PS. Sometimes I wish we could optionally save cover letter in the
+> merge commit. Sometimes the "big plan" is hard to see by reading
+> individual commit messages.
+> --
+> Duy
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
