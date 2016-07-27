@@ -2,201 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7AAE9203E1
-	for <e@80x24.org>; Wed, 27 Jul 2016 12:35:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4BED203E1
+	for <e@80x24.org>; Wed, 27 Jul 2016 12:36:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755569AbcG0MfT (ORCPT <rfc822;e@80x24.org>);
-	Wed, 27 Jul 2016 08:35:19 -0400
-Received: from mout.gmx.net ([212.227.17.22]:49862 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754421AbcG0MfS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jul 2016 08:35:18 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0M1WHV-1b8mq03cPx-00tXZ9; Wed, 27 Jul 2016 14:35:13
- +0200
-Date:	Wed, 27 Jul 2016 14:35:07 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Orgad Shaneh <orgads@gmail.com>
-cc:	git <git@vger.kernel.org>
-Subject: Re: [PATCH] merge: Run commit-msg hook
-In-Reply-To: <CAGHpTBLN1vBv12fSBXK0taGzxynMymBWRu8FcG=miBy=raReHw@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1607271413480.14111@virtualbox>
-References: <1469519323-11420-1-git-send-email-orgad.shaneh@audiocodes.com> <alpine.DEB.2.20.1607261456480.14111@virtualbox> <CAGHpTBLr9q8h-+hVUzsTS1aS1TyZjz9gYM_T_ZBdY=o26JGaHw@mail.gmail.com> <alpine.DEB.2.20.1607261614020.14111@virtualbox>
- <CAGHpTBLN1vBv12fSBXK0taGzxynMymBWRu8FcG=miBy=raReHw@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1754685AbcG0MgK (ORCPT <rfc822;e@80x24.org>);
+	Wed, 27 Jul 2016 08:36:10 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:36418 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754200AbcG0MgI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jul 2016 08:36:08 -0400
+Received: by mail-wm0-f65.google.com with SMTP id x83so6246784wma.3
+        for <git@vger.kernel.org>; Wed, 27 Jul 2016 05:36:07 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=fMDypt4gGOmHz2SBq2ZNtjsuyspHp5bXaotz8CPHDng=;
+        b=v6WOeqnJi7IbLyaitFI/wBJETsVZWS3G7N1Mc9uX4mg9KuYrru21FVwwX1WOk58Qvw
+         VjHJ9SIbao+owLqfhFPHxPre7lUgLb50KNbeEGF+mbs9mZZqQeUv6UM94FhClvBXiNWM
+         EmM0JvYxUMGN4nxN/rV1S1SRqbwBGUb4Ayiylflm8TQEc+dbT9zUNcceq/qhCcMzXafr
+         80Mu2WiJt9g3AtwrJtu68vPbIGMPM2qDdVFEpsKATTRSJQ3DBI975VYSwZIuMosut8uQ
+         xaFdnaW4IJ01HJpYITwYgoxGL6s2yfdBVxGH2UQ3dIDo3JvY5v0VZeLCZ6o/oRlTmxCh
+         5YDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-transfer-encoding;
+        bh=fMDypt4gGOmHz2SBq2ZNtjsuyspHp5bXaotz8CPHDng=;
+        b=bDqUAJmRMSwisYvme98vkVfiWRG6eptKtv36BNGREQXMgt4ASU6VjH5or9aP8giqto
+         tUoFDf7Iw28YLoonzjpYHrTlvL30js7qN4Jgk1Qg1/8iiNIu8C8PjWlBXmHGVL7JsD5r
+         DR6aLRVfBq+kx/FjeW6fzEaJq5A+wPnXx7wuUWjF7JpdFqODJuc41/wsaTXDYF9nGvRZ
+         Fma3bj/pjDyLGwHOLxKNqbHiqJiix5xL+6itmNOXudtEnfADIW9NYwkeYJC80ZyvbW/1
+         vAVMFPS8jnWLIwN0jlgRJyA9cNa+XSj7xBm+TwkIx86eP4LlOu+BPbmm908UkANWQi0X
+         rNHQ==
+X-Gm-Message-State: ALyK8tI2Aie8xPwsJlm36L+QL65U1Kw5L9Ma8Nff6dy0Xx4xLTkcu/G27r+deuD0YXgLyw==
+X-Received: by 10.28.24.5 with SMTP id 5mr52972316wmy.6.1469622966345;
+        Wed, 27 Jul 2016 05:36:06 -0700 (PDT)
+Received: from [192.168.1.26] (eps206.neoplus.adsl.tpnet.pl. [83.20.60.206])
+        by smtp.googlemail.com with ESMTPSA id q137sm38160330wmd.19.2016.07.27.05.36.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 27 Jul 2016 05:36:05 -0700 (PDT)
+Subject: Re: [PATCH v2 5/6] date: document and test "raw-local" mode
+To:	Jeff King <peff@peff.net>
+References: <20160722195105.GA19542@sigill.intra.peff.net>
+ <20160722195144.GE19648@sigill.intra.peff.net> <579343C9.1040902@gmail.com>
+ <20160726184746.GA678@sigill.intra.peff.net>
+Cc:	git@vger.kernel.org, Theodore Ts'o <tytso@mit.edu>,
+	Junio C Hamano <gitster@pobox.com>
+Newsgroups: gmane.comp.version-control.git
+From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <5798AA7C.6050107@gmail.com>
+Date:	Wed, 27 Jul 2016 14:35:08 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:tRXxhC6UiiJ++uCNvuKBca3Mj43OEfw0N+atYxmjWqPGawuqO7J
- tNFL1L5uq47jTngJImZwwI0xa9LUMEnYtlJx6o1nlnKrmtCoWVtsWvDc/D55d9SJ0EvajtG
- kEb6knB3EOfuZLgXpTi2qT+CW4VAPIZvfrB0TPFW1tYxMvSweLe628fgYvmkn6WYv7bHWx1
- 0e5ldyF9XLlWWHGmt8fVA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:kyqMPvSOX8o=:lZl0rzMZSeyoRiLC9OlnUE
- 3EYW4/6lJ+oeMzB2m71UnWGysD3ghEhQy+3UXYDQcGZJ55sLsrtATO3iUsBIghW5HAM1P87TY
- puMm2HDgnbajIlTVkSF4yDRD51l9EyqCffCwYfSXZECsat1eYmljETCAd/m0Mfoa/ouv1/K9i
- hLJKT6NpD1DvIiixJdTzQGNQvqTSuF+4XUIFp0iE+xN4LNyL5vWBfxImwdbDEog+fVv/pZTca
- VtSS9qmat8xK/JFrAZM6rn/NKIqvyjYhF7TdebZ/tCSm0cpCIYE6hwPFKQFPB8NgNEJdETDRM
- L+Olco9zfTdUJHLtuChT1HdRliXsCyhW4CVdmZLt6fubCJtP9+d7C2SpUZ+4HlilmnAsI4y9E
- ocaovMNlaAHZWkeciM5y/jmEv+iVldXLhTg4lpJ8cvzqDw2Rc1cmu2zagnwpGYQ5+g4h9tJlt
- w0MDYIhe+TE+zEg8vkv1gxAOdCpdG6nb930HXzPy2+Rd8LfbGzAxCt43OGvqPjFV2bP3wKMFc
- DLRQ0W2bgku4s00aVR9RTC9xQDXQaRAfbkRLMYKUaXh3Mu/uBdmW9lkLV9jk6xDHv/FQwM7Ov
- hGK2Yt8QBFQKuhKMtSQjBsBNBvFkm5ZXdQe6Tn2hnZydwrthX50hXyOfPUOa5cFLt0bJoCuIt
- ULFY0airYnKu9cfiAmqCFHZMYoL6+8VNR/UCJknxzeDV7PwxLoJ1ymfPPyzuCkgLHi+Dt8INY
- dZrKyYGZd8oPHxFDnr7ZLArdBBLjKBG85Cm8MpZ7tjNRLEohkN4G7vuSF9eUEWMmVbAl6PpS9
- ojCCYBQ
+In-Reply-To: <20160726184746.GA678@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Orgad,
-
-On Tue, 26 Jul 2016, Orgad Shaneh wrote:
-
-> On Tue, Jul 26, 2016 at 5:54 PM, Johannes Schindelin <
-> Johannes.Schindelin@gmx.de> wrote:
+W dniu 2016-07-26 o 20:47, Jeff King pisze:
+> On Sat, Jul 23, 2016 at 12:15:37PM +0200, Jakub Narębski wrote:
 > 
-> > On Tue, 26 Jul 2016, Orgad Shaneh wrote:
-> >
-> > > On Tue, Jul 26, 2016 at 4:02 PM, Johannes Schindelin
-> > > <Johannes.Schindelin@gmx.de> wrote:
-> > > >
-> > > > On Tue, 26 Jul 2016, Orgad Shaneh wrote:
-> > > >
-> > > >> commit-msg is needed to either validate the commit message or
-> > > >> edit it.  Gerrit for instance uses this hook to append its
-> > > >> Change-Id footer.
-> > > >>
-> > > >> This is relevant to merge commit just like any other commit.
-> > > >
-> > > > Hmm. This is not very convincing to me, as
-> > > >
-> > > > - if you call commit-msg in `git merge` now, why not
-> > `prepare-commit-msg`?
-> > >
-> > > prepare-commit-msg is already called, a few lines above this
-> > > addition.
-> >
-> > Oh. That would have made a heck of a convincing argument in the commit
-> > message. Pity it was not mentioned. (Yes, please read that as a strong
-> > suggestion to fix that in the next patch iteration.)
+>>> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+>>> index 5d1de06..3ec75d4 100644
+>>> --- a/Documentation/rev-list-options.txt
+>>> +++ b/Documentation/rev-list-options.txt
+>>> @@ -725,8 +725,8 @@ include::pretty-options.txt[]
+>>>  	`iso-local`), the user's local time zone is used instead.
+>>>  +
+>>>  `--date=relative` shows dates relative to the current time,
+>>> -e.g. ``2 hours ago''. The `-local` option cannot be used with
+>>> -`--raw` or `--relative`.
+>>> +e.g. ``2 hours ago''. The `-local` option has no effect for
+>>> +`--relative`.
+>>
+>> Do I understand it correctly: --relative is a short form for more
+>> generic --date=relative (which probably should be spelled 
+>> --date-format=relative), and that --date=relative-local is the
+>> same as --date=relative, that is *-local suffix does not change
+>> how date is formatted?
+>>
+>> Because I don't think you can say --relative-local ("The `-local`
+>> option has no effect on `--relative`"), can you?
 > 
-> Done.
+> All correct. There is no --relative-local because "--relative" is a
+> historical artifact. We could support --foo for every --date=foo, but I
+> don't think there is a reason to do so (and reasons not to, like
+> avoiding cluttering the option space).
 
-Good.
+So shouldn't the last sentence 
 
-> > FWIW I dug out the original submission:
-> > http://thread.gmane.org/gmane.comp.version-control.git/151297/focus=151435
-> >
-> > It seems that there was no discussion about the commit-msg. Which
-> > makes me wonder why nobody thought of this.
-> >
-> > Now, you could make a case that you want to run the commit-msg hook in
-> > the same spirit as prepare-commit-msg (and mention that apparently
-> > nobody thought of that when the patch was accepted into
-> > builtin/merge.c).
-> >
-> > But then I wonder what your argument would be for *not* running the
-> > pre-commit and the post-commit hooks in `git merge` as well?
-> >
-> > Seems like a big inconsistency to me, one that would not be helped by
-> > a piecemeal patch that does only half the job of resolving the
-> > inconsistency.
-> >
-> > There was actually a question why the post-commit hook was not run in
-> > `git merge`:
-> > http://thread.gmane.org/gmane.comp.version-control.git/168716/focus=168773
-> > (but it seems nobody cared all that much).
-> >
-> 
-> pre-commit seems to have been rejected, though I must admit I don't
-> fully understand why.  post-commit might make sense, but I wouldn't
-> include it in the same patch.  These are different issues.
+  "The `-local` option has no effect for `--relative`." 
 
-I did not mean to include that change in the patch. I meant to make a case
-for, or against, it, in the commit message.
+be rather
 
-The commit message is an excellent place to demonstrate the usefulness of
-the change as well as background information that lets the reader
-understand how thorough the patch is. A commit message can increase the
-trust in the rigidity of the patch.
+ "The `-local` option has no effect for `--date=relative`."
 
-That is why I suggested to research further by providing two links with
-further information.
+Though this might be just me being overly nitpicky...
 
-Now that I know that pre-commit has been rejected, of course, I want to
-know why. Because the same argument might well preclude commit-msg support
-from being added to `git merge` (and it might well lead to the
-prepare-commit-msg hook to be deprecated in `git merge`).
+-- 
+Jakub Narębski
 
-This is all very useful information. We are slowly getting to the full
-picture needed to assess whether to include this patch or not.
-
-> > > > - a merge is a different beast from a simple commit. That is why
-> > > > we have two different commands for them. A hook to edit the merge
-> > > > message may need to know the *second* parent commit, too, for
-> > > > example to generate a diffstat, or to add information about
-> > > > changes in an "evil commit".
-> > >
-> > > That is correct for a post-merge hook. Why should *message
-> > > validation* differ between simple and merge commit?
-> >
-> > You yourself do not use the hook for validation. You use it to *edit*
-> > the message. My examples do the very same thing. Why should they wait
-> > for a *post-merge* hook to amend the message?
-> >
-> 
-> Because commit-msg doesn't know anything about the commit.
-
-That is incorrect. When that hook is called, `git rev-parse HEAD` refers
-to the parent commit, and `GIT_INDEX_FILE` refers to the index that will be
-written as a tree object. That is pretty much all the information needed
-to know about the future commit.
-
-> > Otherwise, why wouldn't you use the post-merge hook to add the Change-Id:
-> > in your use case, too...
-> >
-> > > > - if Gerrit is the intended user, would it not make more sense to
-> > > > introduce a new hook, e.g. `merge-msg` (and `prepare-merge-msg`),
-> > > > as you have to teach Gerrit a new trick anyway?
-> > >
-> > > Why is that new? Every commit in gerrit has a Change-Id footer, which is
-> > > generated by commit-msg hook.
-> >
-> > So it already works for Gerrit? Why is this patch needed, then? This is
-> > confusing.
-> >
-> 
-> Gerrit is a server, the user installs a commit-msg hook provided by
-> Gerrit on the local machine.  This hook currently works only for simple
-> commits and not for (trivial) merge commits.  That's where this patch
-> comes to the rescue.
-
-Sorry, you really need to explain this better in the commit message.
-Gerrit exists for quite some time, so I would assume that other developers
-would have had serious problems in similar situations. How do they address
-those challenges?
-
-> > > What I currently do for merges that succeed without conflicts is
-> > > unconditional commit --amend --no-edit just to run the hook.
-> >
-> > So you do that manually? Or you taught Gerrit to do that? Please
-> > clarify.
-> 
-> Gerrit can't do anything on my machine. It's a web/ssh server. I have my
-> own post-merge hook that runs commit --amend
-
-Okay, so why exactly do you need the commit-msg?
-
-All the concerns I raised, all the confusion *need* to be addressed by a
-commit message that makes a good case for the change. That is what commit
-messages are for. So far, the commit message of this patch is not up to
-the task.
-
-Ciao,
-Johannes
