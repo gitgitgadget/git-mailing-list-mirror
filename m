@@ -2,166 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3EF351F855
-	for <e@80x24.org>; Wed, 27 Jul 2016 20:40:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1283A1F855
+	for <e@80x24.org>; Wed, 27 Jul 2016 21:13:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758039AbcG0Ukl (ORCPT <rfc822;e@80x24.org>);
-	Wed, 27 Jul 2016 16:40:41 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58490 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757334AbcG0Ukk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jul 2016 16:40:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B9141305FA;
-	Wed, 27 Jul 2016 16:40:39 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mPjA/+2c/nyWiKyi/+mAQYL2sTI=; b=HKnRz7
-	ietDf7ItLGn1Ii0Bl9ODCE2dgUa4k2kkh34Bod8dKbjMiUJkkM7sL/Almkr9gdgn
-	hjNwSjVX3FlD8WNs4enKXuzQYpge5gYZ7Ci7UmHE/nh5yphbICAkX1HiTHFvLtHc
-	ahXoN8rR1VaCvE9AJWT62KIzueBqgETMUbAQw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=h/A4eOEb3vvPgFExHvJ8juxIpUaPrKqe
-	XSKid5TCeRPWzCuJWAGBOPSgg1tipBW2rpriFtkN+3/xvthriyixuWrcquU4nIvC
-	PPCCuoslRMOcoK5HmpZ4mnsNj1VOkVIhsiQaWMSzCfBtu9FH4tcPAjyeZ0sl3dD2
-	toULGmgRYWY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A95CE305F9;
-	Wed, 27 Jul 2016 16:40:39 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1241C305F8;
-	Wed, 27 Jul 2016 16:40:39 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Kirill Smelkov <kirr@nexedi.com>
-Cc:	Jeff King <peff@peff.net>,
-	=?utf-8?Q?J=C3=A9rome?= Perrin <jerome@nexedi.com>,
-	Isabelle Vallet <isabelle.vallet@nexedi.com>,
-	Kazuhiko Shiozaki <kazuhiko@nexedi.com>,
-	Julien Muchembled <jm@nexedi.com>, git@vger.kernel.org,
-	Vicent Marti <tanoku@gmail.com>
-Subject: Re: [PATCH] pack-objects: Use reachability bitmap index when generating non-stdout pack too
-References: <20160725185313.GA13007@sigill.intra.peff.net>
-	<20160727201506.GA15204@teco.navytux.spb.ru>
-Date:	Wed, 27 Jul 2016 13:40:36 -0700
-In-Reply-To: <20160727201506.GA15204@teco.navytux.spb.ru> (Kirill Smelkov's
-	message of "Wed, 27 Jul 2016 23:15:06 +0300")
-Message-ID: <xmqqlh0mvmpn.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1758547AbcG0VNm (ORCPT <rfc822;e@80x24.org>);
+	Wed, 27 Jul 2016 17:13:42 -0400
+Received: from cloud.peff.net ([50.56.180.127]:50145 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752275AbcG0VNl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jul 2016 17:13:41 -0400
+Received: (qmail 8794 invoked by uid 102); 27 Jul 2016 21:13:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 Jul 2016 17:13:42 -0400
+Received: (qmail 20975 invoked by uid 107); 27 Jul 2016 21:14:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 Jul 2016 17:14:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Jul 2016 17:13:38 -0400
+Date:	Wed, 27 Jul 2016 17:13:38 -0400
+From:	Jeff King <peff@peff.net>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH 1/2] pack-objects: break out of want_object loop early
+Message-ID: <20160727211338.GA20608@sigill.intra.peff.net>
+References: <20160725184938.GA12871@sigill.intra.peff.net>
+ <20160725185010.GA12974@sigill.intra.peff.net>
+ <xmqqeg6h5w60.fsf@gitster.mtv.corp.google.com>
+ <20160725214113.GA13589@sigill.intra.peff.net>
+ <xmqqbn1l4c87.fsf@gitster.mtv.corp.google.com>
+ <20160725221411.GA14131@sigill.intra.peff.net>
+ <xmqqshuwyw14.fsf@gitster.mtv.corp.google.com>
+ <20160726204851.GA22353@sigill.intra.peff.net>
+ <xmqqr3agxep7.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 60DFCDEE-543A-11E6-A7A0-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqr3agxep7.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Kirill Smelkov <kirr@nexedi.com> writes:
+On Tue, Jul 26, 2016 at 02:38:28PM -0700, Junio C Hamano wrote:
 
-> > From: Kirill Smelkov <kirr@nexedi.com>
-> Subject: [PATCH 1/2] pack-objects: Make sure use_bitmap_index is not active under
->  --local or --honor-pack-keep
->
-> Since 6b8fda2d (pack-objects: use bitmaps when packing objects) there
-> are two codepaths in pack-objects: with & without using bitmap
-> reachability index.
->
-> However add_object_entry_from_bitmap(), despite its non-bitmapped
-> counterpart add_object_entry(), in no way does check for whether --local
-> or --honor-pack-keep should be respected. In non-bitmapped codepath this
-> is handled in want_object_in_pack(), but bitmapped codepath has simply
-> no such checking at all.
->
-> The bitmapped codepath however was allowing to pass --local and
-> --honor-pack-keep and bitmap indices were still used under such
-> conditions - potentially giving wrong output (including objects from
-> non-local or .keep'ed pack).
->
-> Instead of fixing bitmapped codepath to respect those options, since
-> currently no one actually need or use them in combination with bitmaps,
-> let's just force use_bitmap_index=0 when any of --local or
-> --honor-pack-keep are used and add appropriate comment about
-> not-checking for those in add_object_entry_from_bitmap()
->
-> Suggested-by: Jeff King <peff@peff.net>
-> ---
->  builtin/pack-objects.c | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
->
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index 15866d7..d7cf782 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -1055,6 +1055,12 @@ static int add_object_entry_from_bitmap(const unsigned char *sha1,
->  	if (have_duplicate_entry(sha1, 0, &index_pos))
->  		return 0;
->  
-> +	/*
-> +	 * for simplicity we always want object to be in pack, as
-> +	 * use_bitmap_index codepath assumes neither --local nor --honor-pack-keep
-> +	 * is active.
-> +	 */
+> Jeff King <peff@peff.net> writes:
+> 
+> > I got side-tracked by adding a t/perf test to show off the improvement.
+> > It's rather tricky to get right and takes a long time to run. I _think_
+> > I have it now, but am waiting for results. :)
+> 
+> Well, then I'd stop here and wait for the reroll to requeue.
 
-I am not sure this comment is useful to readers.
+So I hoped to follow up with my little perf-testing patch last night,
+but the rabbit hole goes deeper. :)
 
-Unless the readers are comparing add_object_entry() and this
-function and wondering why this side lacks a check here, iow, when
-they are merely following from a caller of this function through
-this function down to its callee to understand what goes on, this
-comment would not help them and only confuse them.
+It turns out that I could not replicate my earlier results using a perf
+script like the one below. The problem is that it heavily depends on the
+ordering of your packs. The early-break does not do any good if you
+mostly end up finding your objects in the final pack in the list. And
+that is the exact situation my perf script creates: imagine you had a
+big repository, then 1000 pushes came in, and then you tried to run "git
+repack". We sort reverse-chronologically, so the big pack is at the end,
+and most lookups have to go through the entire pack list to get there.
 
-If we were to say something to help those who are comparing these
-two functions, I think we should be more explicit, i.e.
+In the normal object-lookup paths, we cache the last_found_pack and
+check it first, but this loop has no equivalent (and until now it
+wouldn't have helped much, because we generally had to walk the whole
+list anyway).
 
-    The caller disables use-bitmap-index when --local or
-    --honor-pack-keep options are in effect because bitmap code is
-    not prepared to handle them.  Because the control does not reach
-    here if these options are in effect, the check with
-    want_object_in_pack() to skip objects is not done.
+I knew this was a potential issue and even had experimented this back
+when the original patches were written, but in my experiments then it
+didn't help much. That makes sense, though; any case that _was_ improved
+by the first two patches would not benefit from reordering the pack
+lookups, because that meant it was finding the objects early in the
+search (or else the first two patches would have helped not at all).
 
-or something like that.
+And I think the particular case I was experimenting on back then was not
+a normal "oops, we had some pushes and forgot to run gc". It was more
+bizarre, and had several packs that had most of the objects duplicated.
 
-Or is the rest of the bitmap codepath prepared to handle these
-options and it is just the matter of adding the missing check with
-want_object_in_pack() here to make it work correctly?
+So I think this is an area worth looking into; a series of small
+incremental packs on top of a large one is what I would expect to be
+the most common case, and the first two patches don't handle it well.
 
->  	create_object_entry(sha1, type, name_hash, 0, 0, index_pos, pack, offset);
->  
->  	display_progress(progress_state, nr_result);
-> @@ -2776,6 +2782,15 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
->  	if (!use_internal_rev_list || !pack_to_stdout || is_repository_shallow())
->  		use_bitmap_index = 0;
->  
-> +	/*
-> +	 * "lazy" reasons not to use bitmaps; it is easier to reason about when
-> +	 * neither --local nor --honor-pack-keep is in action, and so far no one
-> +	 * needed nor implemented such support yet.
-> +	 */
+I tried a hacky version of the last_found_pack trick, and it does cut
+the counting phase in half for my perf test. But no patch yet. One is
+just that doing it cleanly is a little tricky. But two is that I've
+wondered if we can do even better with a most-recently-used cache
+instead of the last_pack_found hack. So I'm trying to implement and
+measure that (both for this loop, and to see if it does better in
+find_pack_entry).
 
-Justifying comment like this is a good idea, but the comment above
-does not make it very clear that this is a correctness fix, i.e. if
-we do not disable, the code will do a wrong thing.
+Perf script below is just for a sneak peek at what I'm trying to
+measure.
 
-The other logic to disable use of bitmap we can see in the
-pre-context would also benefit from some description as to why;
-6b8fda2d (pack-objects: use bitmaps when packing objects,
-2013-12-21) didn't do a very good job in that---the reason is not
-clear in its log message, either.
+-Peff
 
-> +	if (local || ignore_packed_keep)
-> +		use_bitmap_index = 0;
-> +
-> +
+-- >8 --
+#!/bin/sh
 
-I see one extra blank line here ;-)
+test_description='performance with large numbers of packs'
+. ./perf-lib.sh
 
->  	if (pack_to_stdout || !rev_list_all)
->  		write_bitmap_index = 0;
+test_perf_large_repo
 
-Thanks.
+# Pretend we just have a single branch and no reflogs, and that everything is
+# in objects/pack; that makes our fake pack-building in the next step much
+# simpler.
+test_expect_success 'simplify reachability' '
+	tip=$(git rev-parse --verify HEAD) &&
+	git for-each-ref --format="option no-deref%0adelete %(refname)" |
+	git update-ref --stdin &&
+	rm -rf .git/logs &&
+	git update-ref refs/heads/master $tip &&
+	git symbolic-ref HEAD refs/heads/master &&
+	git repack -ad
+'
+
+# A real many-pack situation would probably come from having a lot of pushes
+# over time. We don't know how big each push would be, but we can fake it by
+# just walking the first-parent chain and having each commit be its own "push".
+# This isn't _entirely_ accurate, as real pushes would have some duplicate
+# objects due to thin-pack fixing, but it's a reasonable approximation.
+#
+# And then all of the rest of the objects can go in a single packfile that
+# represents the state before any of those pushes (actually, we'll generate
+# that first because in such a setup it would be the oldest pack, and we sort
+# the packs by reverse mtime inside git).
+#
+# We prepare this in a staging area, because we need to install our baseline
+# set of packs for each iteration of the perf test (which unfortunately counts
+# against their times, but is a limitation of the perf framework).
+test_expect_success 'create a large number of packs' '
+	mkdir staging &&
+
+	pushes() {
+		git rev-list --first-parent -1000 HEAD
+	} &&
+	pack() {
+		git pack-objects --revs --delta-base-offset staging/pack
+	} &&
+
+	bottom=$(pushes | tail -n 1) &&
+	echo "$bottom^" | pack &&
+
+	pushes |
+	while read rev
+	do
+		printf "%s\n^%s^" $rev $rev | pack ||
+			return 1
+	done &&
+
+	setup_many_packs () {
+		rm -f .git/objects/pack/* &&
+		cp staging/* .git/objects/pack/
+	} &&
+	setup_many_packs
+'
+
+test_perf 'rev-list' '
+	git rev-list --objects --all
+'
+
+test_perf 'full repack' '
+	setup_many_packs &&
+	git repack -ad
+'
+
+test_done
