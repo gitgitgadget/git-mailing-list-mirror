@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19612203EA
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AA0B203EA
 	for <e@80x24.org>; Wed, 27 Jul 2016 00:06:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758385AbcG0AGU (ORCPT <rfc822;e@80x24.org>);
-	Tue, 26 Jul 2016 20:06:20 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:32926 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758030AbcG0AGM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2016 20:06:12 -0400
-Received: by mail-wm0-f68.google.com with SMTP id o80so4045572wme.0
-        for <git@vger.kernel.org>; Tue, 26 Jul 2016 17:06:11 -0700 (PDT)
+	id S1161099AbcG0AGX (ORCPT <rfc822;e@80x24.org>);
+	Tue, 26 Jul 2016 20:06:23 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:32935 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758183AbcG0AGO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Jul 2016 20:06:14 -0400
+Received: by mail-wm0-f66.google.com with SMTP id o80so4045630wme.0
+        for <git@vger.kernel.org>; Tue, 26 Jul 2016 17:06:13 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/StpRBsXzeISNV9wEfbNVtKaMcF5zcKLlmNIgNBJpNk=;
-        b=kuTEdm2tMKEQaq1/yj2g3tNIWhEWlc2C5rQGRV1vVWBcNZZNfbDUSKoinXdDUbcycH
-         vMiZcRf4sKI7MxNISGj6EjoZhZhvLgkAmY6GrmEB4cUbzli64tmKXawm/YiTFhcrsGji
-         uO1tblgDI0Q7L9mzFDTgupfLq/thlk4VCwi4jY1vtCR5BBylnkJcWT8rNoGXIPDF46Wa
-         SmEerX9xmDwJw3g/eEKXk3pETDTRoyevizx2uUTE0+Eksrx5VsTDbCarBvzvGdat2RxY
-         AOdlPLkcmlZozeWFZdK8OfkyQRt8mnIQZRSWzh/ez5oUA8k+Edod93xm9liLenmc5K+3
-         TiPg==
+        bh=pWhz17ZhOznvWFCixP6efd3klx9qXsAbKDgL86cDElo=;
+        b=ZUEj3u0m2DKImu+MMHwGckLiB+uSQoK34I/jf+X/vpHn7vhWJ13zFI+oADIDTGBMaf
+         4YSA/Ju49tw6OijfKQvDHBGH4dORedRtxiKtFVxuwlsaMb3PiHgHOqJSqYwcKwkHpzwa
+         BoR9klBDeBZUuXwHmi0kB41FRNx2k1bcrWdKu1grykabEDTe+dAGma4i2Lm0DszXjj+/
+         ERDQb/tWIYJlIRMLDgaK2Q4PbPEuqR38xrnkipRJ+r4VR3bq5+A+eOJajVZpuhOhLu7h
+         dkguJZyF8baMP14UCAlR9qtPSFCSin7oiS3tiyv2j2ah6HO6cqLtLlZYt0BwIIHAjpuK
+         IMGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=/StpRBsXzeISNV9wEfbNVtKaMcF5zcKLlmNIgNBJpNk=;
-        b=GXSY5ju9+T1n9Vrtl21kkoO4edEn3SddZwEKpyb+jKKqqGj+DEBfzZiIRu1RzpR08X
-         q4sw32oHNDlTpkWf+GLnWzi48ryUPxRQ+atEevX4fUqA+3zbA4t5xDWMOYzLc+XbmI9j
-         pPddb1OeHM19v59onkC0QUAshAyjWTFX19OyaV6ROcIxPUskfzgeJ4g8u4h3x4s4f+TJ
-         aqUlibczZR5X7JhnMZ2yJdVBr5asqJKrAxjPSsuGNwXaQ/Wf2BM7+qcEWW0wRJlWzUeS
-         Q1JLXtAecygTEmTyHQNCwbeL8yG9QJwmG0z7ufpTbMGCugqFszbG4NcAYCS0FBGpbc2g
-         bOjw==
-X-Gm-Message-State: AEkoout9e4lbqrlJSFv3ePpQBc7Nkocl0EF4OR0AKKc+bb3cqJRknXUVZ0OnSHTfC1xKcw==
-X-Received: by 10.28.45.69 with SMTP id t66mr26510010wmt.41.1469577970954;
-        Tue, 26 Jul 2016 17:06:10 -0700 (PDT)
+        bh=pWhz17ZhOznvWFCixP6efd3klx9qXsAbKDgL86cDElo=;
+        b=LHMErh39fhAhBJDztNSjNliE8TGx5TtlofWzAiRWNkSm1VlgUDNhIPXl0WaqsBODpF
+         QapPfKgHNsPac5m0FPsFgl97u2LxraOYTJhACrwIj+e++gaLuVP1G5RP5PwGCzC2T9RD
+         toNfT04VpLWaqlWKamHgZSJTX3SzLUtN0F4RQhn7JwMJMmakNyBVkZGnkEX9MrPv3zM1
+         dXK5m8LZLM0quBtobNQfMEKXy4LJtJsldHOxVq4nSAl75Tk7dUSWZSdSivfvQa3pnFig
+         L6X7sdS3HhJXfp2rhetgF89lTvnpgyABAKNsZIL/YvvfCm+F1Vm6h0WfnntpxHZT12IH
+         3MWg==
+X-Gm-Message-State: ALyK8tLZm/RaFSvqqwYbKdL64WDTghONXEHkGBdaFyUBV1rC+dZ07Hhp+N3Tm1hBMCvP0w==
+X-Received: by 10.28.46.204 with SMTP id u195mr47267984wmu.57.1469577972699;
+        Tue, 26 Jul 2016 17:06:12 -0700 (PDT)
 Received: from slxBook4.fritz.box (p5DDB772A.dip0.t-ipconnect.de. [93.219.119.42])
-        by smtp.gmail.com with ESMTPSA id q137sm35330015wmd.19.2016.07.26.17.06.09
+        by smtp.gmail.com with ESMTPSA id q137sm35330015wmd.19.2016.07.26.17.06.11
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 26 Jul 2016 17:06:10 -0700 (PDT)
+        Tue, 26 Jul 2016 17:06:11 -0700 (PDT)
 From:	larsxschneider@gmail.com
 To:	git@vger.kernel.org
 Cc:	gitster@pobox.com, jnareb@gmail.com, tboegi@web.de,
 	mlbright@gmail.com, remi.galan-alfonso@ensimag.grenoble-inp.fr,
 	pclouds@gmail.com, e@80x24.org, ramsay@ramsayjones.plus.com,
 	peff@peff.net, Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v2 2/5] convert: modernize tests
-Date:	Wed, 27 Jul 2016 02:06:02 +0200
-Message-Id: <20160727000605.49982-3-larsxschneider@gmail.com>
+Subject: [PATCH v2 3/5] pkt-line: extract and use `set_packet_header` function
+Date:	Wed, 27 Jul 2016 02:06:03 +0200
+Message-Id: <20160727000605.49982-4-larsxschneider@gmail.com>
 X-Mailer: git-send-email 2.9.0
 In-Reply-To: <20160727000605.49982-1-larsxschneider@gmail.com>
 References: <20160722154900.19477-1-larsxschneider@gmail.com>
@@ -66,180 +66,63 @@ X-Mailing-List:	git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-Use `test_config` to set the config, check that files are empty with
-`test_must_be_empty`, compare files with `test_cmp`, and remove spaces
-after ">".
+`set_packet_header` converts an integer to a 4 byte hex string. Make
+this function publicly available so that other parts of Git can easily
+generate a pkt-line.
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- t/t0021-conversion.sh | 62 +++++++++++++++++++++++++--------------------------
- 1 file changed, 31 insertions(+), 31 deletions(-)
+ pkt-line.c | 15 ++++++++++-----
+ pkt-line.h |  1 +
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index 7bac2bc..7b45136 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -13,8 +13,8 @@ EOF
- chmod +x rot13.sh
+diff --git a/pkt-line.c b/pkt-line.c
+index 62fdb37..6820224 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -98,9 +98,17 @@ void packet_buf_flush(struct strbuf *buf)
+ }
  
- test_expect_success setup '
--	git config filter.rot13.smudge ./rot13.sh &&
--	git config filter.rot13.clean ./rot13.sh &&
-+	test_config filter.rot13.smudge ./rot13.sh &&
-+	test_config filter.rot13.clean ./rot13.sh &&
+ #define hex(a) (hexchar[(a) & 15])
+-static void format_packet(struct strbuf *out, const char *fmt, va_list args)
++void set_packet_header(char *buf, const int size)
+ {
+ 	static char hexchar[] = "0123456789abcdef";
++	buf[0] = hex(size >> 12);
++	buf[1] = hex(size >> 8);
++	buf[2] = hex(size >> 4);
++	buf[3] = hex(size);
++}
++
++static void format_packet(struct strbuf *out, const char *fmt, va_list args)
++{
+ 	size_t orig_len, n;
  
- 	{
- 	    echo "*.t filter=rot13"
-@@ -38,8 +38,8 @@ script='s/^\$Id: \([0-9a-f]*\) \$/\1/p'
+ 	orig_len = out->len;
+@@ -111,10 +119,7 @@ static void format_packet(struct strbuf *out, const char *fmt, va_list args)
+ 	if (n > LARGE_PACKET_MAX)
+ 		die("protocol error: impossibly long line");
  
- test_expect_success check '
+-	out->buf[orig_len + 0] = hex(n >> 12);
+-	out->buf[orig_len + 1] = hex(n >> 8);
+-	out->buf[orig_len + 2] = hex(n >> 4);
+-	out->buf[orig_len + 3] = hex(n);
++	set_packet_header(&out->buf[orig_len], n);
+ 	packet_trace(out->buf + orig_len + 4, n - 4, 1);
+ }
  
--	cmp test.o test &&
--	cmp test.o test.t &&
-+	test_cmp test.o test &&
-+	test_cmp test.o test.t &&
+diff --git a/pkt-line.h b/pkt-line.h
+index 3cb9d91..925c6d3 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -23,6 +23,7 @@ void packet_flush(int fd);
+ void packet_write(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ void packet_buf_flush(struct strbuf *buf);
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
++void set_packet_header(char *buf, const int size);
  
- 	# ident should be stripped in the repository
- 	git diff --raw --exit-code :test :test.i &&
-@@ -47,10 +47,10 @@ test_expect_success check '
- 	embedded=$(sed -ne "$script" test.i) &&
- 	test "z$id" = "z$embedded" &&
- 
--	git cat-file blob :test.t > test.r &&
-+	git cat-file blob :test.t >test.r &&
- 
--	./rot13.sh < test.o > test.t &&
--	cmp test.r test.t
-+	./rot13.sh <test.o >test.t &&
-+	test_cmp test.r test.t
- '
- 
- # If an expanded ident ever gets into the repository, we want to make sure that
-@@ -130,7 +130,7 @@ test_expect_success 'filter shell-escaped filenames' '
- 
- 	# delete the files and check them out again, using a smudge filter
- 	# that will count the args and echo the command-line back to us
--	git config filter.argc.smudge "sh ./argc.sh %f" &&
-+	test_config filter.argc.smudge "sh ./argc.sh %f" &&
- 	rm "$normal" "$special" &&
- 	git checkout -- "$normal" "$special" &&
- 
-@@ -141,7 +141,7 @@ test_expect_success 'filter shell-escaped filenames' '
- 	test_cmp expect "$special" &&
- 
- 	# do the same thing, but with more args in the filter expression
--	git config filter.argc.smudge "sh ./argc.sh %f --my-extra-arg" &&
-+	test_config filter.argc.smudge "sh ./argc.sh %f --my-extra-arg" &&
- 	rm "$normal" "$special" &&
- 	git checkout -- "$normal" "$special" &&
- 
-@@ -154,9 +154,9 @@ test_expect_success 'filter shell-escaped filenames' '
- '
- 
- test_expect_success 'required filter should filter data' '
--	git config filter.required.smudge ./rot13.sh &&
--	git config filter.required.clean ./rot13.sh &&
--	git config filter.required.required true &&
-+	test_config filter.required.smudge ./rot13.sh &&
-+	test_config filter.required.clean ./rot13.sh &&
-+	test_config filter.required.required true &&
- 
- 	echo "*.r filter=required" >.gitattributes &&
- 
-@@ -165,17 +165,17 @@ test_expect_success 'required filter should filter data' '
- 
- 	rm -f test.r &&
- 	git checkout -- test.r &&
--	cmp test.o test.r &&
-+	test_cmp test.o test.r &&
- 
- 	./rot13.sh <test.o >expected &&
- 	git cat-file blob :test.r >actual &&
--	cmp expected actual
-+	test_cmp expected actual
- '
- 
- test_expect_success 'required filter smudge failure' '
--	git config filter.failsmudge.smudge false &&
--	git config filter.failsmudge.clean cat &&
--	git config filter.failsmudge.required true &&
-+	test_config filter.failsmudge.smudge false &&
-+	test_config filter.failsmudge.clean cat &&
-+	test_config filter.failsmudge.required true &&
- 
- 	echo "*.fs filter=failsmudge" >.gitattributes &&
- 
-@@ -186,9 +186,9 @@ test_expect_success 'required filter smudge failure' '
- '
- 
- test_expect_success 'required filter clean failure' '
--	git config filter.failclean.smudge cat &&
--	git config filter.failclean.clean false &&
--	git config filter.failclean.required true &&
-+	test_config filter.failclean.smudge cat &&
-+	test_config filter.failclean.clean false &&
-+	test_config filter.failclean.required true &&
- 
- 	echo "*.fc filter=failclean" >.gitattributes &&
- 
-@@ -197,8 +197,8 @@ test_expect_success 'required filter clean failure' '
- '
- 
- test_expect_success 'filtering large input to small output should use little memory' '
--	git config filter.devnull.clean "cat >/dev/null" &&
--	git config filter.devnull.required true &&
-+	test_config filter.devnull.clean "cat >/dev/null" &&
-+	test_config filter.devnull.required true &&
- 	for i in $(test_seq 1 30); do printf "%1048576d" 1; done >30MB &&
- 	echo "30MB filter=devnull" >.gitattributes &&
- 	GIT_MMAP_LIMIT=1m GIT_ALLOC_LIMIT=1m git add 30MB
-@@ -207,7 +207,7 @@ test_expect_success 'filtering large input to small output should use little mem
- test_expect_success 'filter that does not read is fine' '
- 	test-genrandom foo $((128 * 1024 + 1)) >big &&
- 	echo "big filter=epipe" >.gitattributes &&
--	git config filter.epipe.clean "echo xyzzy" &&
-+	test_config filter.epipe.clean "echo xyzzy" &&
- 	git add big &&
- 	git cat-file blob :big >actual &&
- 	echo xyzzy >expect &&
-@@ -215,20 +215,20 @@ test_expect_success 'filter that does not read is fine' '
- '
- 
- test_expect_success EXPENSIVE 'filter large file' '
--	git config filter.largefile.smudge cat &&
--	git config filter.largefile.clean cat &&
-+	test_config filter.largefile.smudge cat &&
-+	test_config filter.largefile.clean cat &&
- 	for i in $(test_seq 1 2048); do printf "%1048576d" 1; done >2GB &&
- 	echo "2GB filter=largefile" >.gitattributes &&
- 	git add 2GB 2>err &&
--	! test -s err &&
-+	test_must_be_empty err &&
- 	rm -f 2GB &&
- 	git checkout -- 2GB 2>err &&
--	! test -s err
-+	test_must_be_empty err
- '
- 
- test_expect_success "filter: clean empty file" '
--	git config filter.in-repo-header.clean  "echo cleaned && cat" &&
--	git config filter.in-repo-header.smudge "sed 1d" &&
-+	test_config filter.in-repo-header.clean  "echo cleaned && cat" &&
-+	test_config filter.in-repo-header.smudge "sed 1d" &&
- 
- 	echo "empty-in-worktree    filter=in-repo-header" >>.gitattributes &&
- 	>empty-in-worktree &&
-@@ -240,8 +240,8 @@ test_expect_success "filter: clean empty file" '
- '
- 
- test_expect_success "filter: smudge empty file" '
--	git config filter.empty-in-repo.clean "cat >/dev/null" &&
--	git config filter.empty-in-repo.smudge "echo smudged && cat" &&
-+	test_config filter.empty-in-repo.clean "cat >/dev/null" &&
-+	test_config filter.empty-in-repo.smudge "echo smudged && cat" &&
- 
- 	echo "empty-in-repo filter=empty-in-repo" >>.gitattributes &&
- 	echo dead data walking >empty-in-repo &&
+ /*
+  * Read a packetized line into the buffer, which must be at least size bytes
 -- 
 2.9.0
 
