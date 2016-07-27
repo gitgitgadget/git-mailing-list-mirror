@@ -6,67 +6,81 @@ X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C05C1F855
-	for <e@80x24.org>; Wed, 27 Jul 2016 22:36:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E79651F855
+	for <e@80x24.org>; Wed, 27 Jul 2016 22:41:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1163588AbcG0Wg0 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 27 Jul 2016 18:36:26 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57814 "EHLO
+	id S1163589AbcG0WlM (ORCPT <rfc822;e@80x24.org>);
+	Wed, 27 Jul 2016 18:41:12 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57756 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1163457AbcG0WgY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jul 2016 18:36:24 -0400
+	with ESMTP id S1162965AbcG0WlJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jul 2016 18:41:09 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4EA7530AA3;
-	Wed, 27 Jul 2016 18:36:23 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0D51F316B1;
+	Wed, 27 Jul 2016 18:41:08 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KiEHoGMG/RxJbuU64E3CdIulHG4=; b=Si6cn0
-	1B/c3zTTRfaBujr4jDtlmHLTHjPVbWlS67aUStOoKaNp+m8SrocZMW/WcnLgOH8S
-	hRl4j/oaMPSQ8aMZqd3JEB6wkoXo61Je3kn9whFc/g70Qv7CNfgGyZBzW1apMO9v
-	mb+qK53fTEf1mfcDBUgKkXLKL540gbFUnglOE=
+	:content-type; s=sasl; bh=FPYrK8kmxPLHW+qsl9koA6g4X/M=; b=h1zvFi
+	yalva6H50MpWkIcB7Qo39tlAy4KfA0iG3ZroFSO5KGfvMO/xpGs2lMDtiTLncU2W
+	oBVrFxNx/VdHPcUAmTVyw6sF4FOy37kr16Asz9WnrtqhSbcP5D/e7i1jL8EUhEmA
+	Pwy1ohHtFXt2xb5RuTTMUzGp0a9ZLjrhl9oJo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iaG1qIirJ8Fm91QoPk0nHSgi3MRLdA7I
-	8sfjzVWjroAgY27QGK3rbchgC3WVkb/GIMOpwD4OLJPwBrFVADNeUg6ngV8AJNmp
-	zFwqv8iB8wfvUyUFoNcWB5XKAMfIDFsoZEeXY68kHN4TKMcxzfBvCNo689sb/xuT
-	Jzy2pLg3YfU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 46BC530AA2;
-	Wed, 27 Jul 2016 18:36:23 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=cNVfW+sngXX1mXtfSMcvzvTAxKNxJHrz
+	NBp9OS1aL7KOKTCD7v80JlXnAUpvx616mzvqpm8W2XFnQjwZhtayHk72Mase0X6P
+	4tfcQIbcv4ScCro5e9oO3QnBxH748QV8rMPJyWJ+0t4efGHaYiH3exzJ7awljMoW
+	r5lFORYeylc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 04963316B0;
+	Wed, 27 Jul 2016 18:41:08 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BD0BD30AA1;
-	Wed, 27 Jul 2016 18:36:22 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7F0CC316AF;
+	Wed, 27 Jul 2016 18:41:07 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH v5 13/16] merge-recursive: write the commit title in one go
-References: <cover.1469187652.git.johannes.schindelin@gmx.de>
-	<cover.1469547160.git.johannes.schindelin@gmx.de>
-	<882273dd0067de30fe4b672050457708d56f317e.1469547160.git.johannes.schindelin@gmx.de>
-Date:	Wed, 27 Jul 2016 15:36:20 -0700
-In-Reply-To: <882273dd0067de30fe4b672050457708d56f317e.1469547160.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Tue, 26 Jul 2016 18:06:38 +0200
-	(CEST)")
-Message-ID: <xmqqzip2u2sb.fsf@gitster.mtv.corp.google.com>
+To:	Vasco Almeida <vascomalmeida@sapo.pt>
+Cc:	git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH] i18n: config: unfold error messages marked for translation
+References: <1469642375-27305-1-git-send-email-vascomalmeida@sapo.pt>
+Date:	Wed, 27 Jul 2016 15:41:05 -0700
+In-Reply-To: <1469642375-27305-1-git-send-email-vascomalmeida@sapo.pt> (Vasco
+	Almeida's message of "Wed, 27 Jul 2016 17:59:35 +0000")
+Message-ID: <xmqqvazqu2ke.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 8BA4475C-544A-11E6-8157-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 35536AB2-544B-11E6-9F44-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Vasco Almeida <vascomalmeida@sapo.pt> writes:
 
-> Let's make sure that the same holds true when outputting the commit
-> title: previously, we used several printf() statements to stdout and
-> speculated that stdout's buffer is large enough to hold the entire
-> commit title.
+> +	default:
+> +		error_msg = xstrfmt(_("bad config line %d in %s"),
+> +				      cf->linenr, cf->name);
+> +	}
+> +
+>  	if (cf->die_on_error)
+> -		die(_("bad config line %d in %s %s"), cf->linenr, cf->origin_type, cf->name);
+> +		die(error_msg);
 
-s/speculate/assume/; other than that looks very sensible.
+As error_msg is a result of xstrfmt() and there is no further
+interpolation needed, you would want to say
+
+	die("%s", error_msg);
+
+here.  It triggers 
+
+config.c:541:3: error: format not a string literal and no format arguments [-Werror=format-security]
+
+Similarly for error() below.
+
+>  	else
+> -		return error(_("bad config line %d in %s %s"), cf->linenr, cf->origin_type, cf->name);
+> +		error_return =  error(error_msg);
+
