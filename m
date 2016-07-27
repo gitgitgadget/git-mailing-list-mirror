@@ -2,103 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FD29203E2
-	for <e@80x24.org>; Wed, 27 Jul 2016 09:13:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7ECD203E2
+	for <e@80x24.org>; Wed, 27 Jul 2016 09:35:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754203AbcG0JNb (ORCPT <rfc822;e@80x24.org>);
-	Wed, 27 Jul 2016 05:13:31 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:37183 "EHLO
-	mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753432AbcG0JN3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jul 2016 05:13:29 -0400
-Received: by mail-wm0-f50.google.com with SMTP id i5so52246829wmg.0
-        for <git@vger.kernel.org>; Wed, 27 Jul 2016 02:13:28 -0700 (PDT)
+	id S1755426AbcG0JfR (ORCPT <rfc822;e@80x24.org>);
+	Wed, 27 Jul 2016 05:35:17 -0400
+Received: from mail-lf0-f43.google.com ([209.85.215.43]:33887 "EHLO
+	mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754960AbcG0J2D convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Jul 2016 05:28:03 -0400
+Received: by mail-lf0-f43.google.com with SMTP id l69so23037039lfg.1
+        for <git@vger.kernel.org>; Wed, 27 Jul 2016 02:28:02 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=NyQPONIkz9R1mqAODePWCwA3FWLMHhE50EImz9p8rHk=;
-        b=CVd9SuuwxC5zna/BQqbiFfqn0t++yJ/uA+CbXivpWTfWYlOB003EUXRtYebO1o6xXU
-         X0DWtmZeMbGU1OQG1IR4ab1u/yWUOy8Se2NcWsPaWMfSiNbPwuGuvJmClpYor5ZT7484
-         bGzAKDIj85LY45KQU6KmqDX0JJBeX0oX8i7WQmiTR1z6d7QW6ddFvR6la4HGj1HM5egT
-         ExhpbqFkHazRAr/iaRQOr4DDeH7bwBsmrXA9WGBdpzDB927QHHeOTwTj5WPUAEymgOkv
-         fV4LV6aw3mhpN2f5yxdUeLekWeVGJUufhmuEzYKI3XKAfUvgXADUfUcWZRGMtN3ImV41
-         DsvA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=4ZwombZPj6ibLaEW1i/bMzWIjzNdy0j4QBH3i5ecV34=;
+        b=EIeag3OD4pGMPIWA2MKCAKFdBIjIVHP7IdBVkVIwfXV4pongI3tpEOk7aixovPp3n5
+         qul/dpktq+qJFefpjVriAu5eazH8CtL47nAMqJf2KaGYgaYjNXckykQekBWHcSnxiIfU
+         XbOqhsXD7h4qC7COZXquA7FRt5DeFegrQmxppQVdzbQLLzF2LIK+SMVnMTyx5qz30+uZ
+         6CSjusDf334YtjZrXioTovobkF05QVbCNZy0qbtNEJHTQPQuCLoVn7CJ5jpLuJmjtNUf
+         LAISSwBij0JMSGh9DDlCtvK1MBwyr8+hPmLdVSxy0e6v/gzMyQV/tqmU0dmrVDk5KuUf
+         Sbug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=NyQPONIkz9R1mqAODePWCwA3FWLMHhE50EImz9p8rHk=;
-        b=LhQWbEYUDkAoCEGL4dd0Sh3RQM3ONT6b1Ukt+5a+npy1JapnJCME61UHbv+Il+PMRM
-         o87UG9fZywwGCyeMsmsn+LjlRHn21zRWS0ZC/vjAGuodAMUPK00OVQumm+a/g4apJw5I
-         o0+GElEm+skXipKSrJarl6fi8n2lV5JhgR3EjCjw2yXzNdTOXPNa3HqD08zaaFeAjled
-         XaeiIH030rBV1c/s1fgC95ylBltN8sTP6TVCG3OYmrPypyr4AKynfBHhHOcW1JS06QWc
-         /tc/+QrZFPGnWGOCY7ZAFInD5C2XYD3dil1yJaVuCNi2kEWHAl7mNVIS+pgcrSVwxWrV
-         Lm1g==
-X-Gm-Message-State: AEkooutTeoVPSqq9UZ8DleOlKttfsWzpRA5uJfgmuXyvbhQFI6/lzMYxIyxi5fzbChW0UQ==
-X-Received: by 10.194.75.198 with SMTP id e6mr26541549wjw.31.1469610808040;
-        Wed, 27 Jul 2016 02:13:28 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id r127sm37241452wmf.23.2016.07.27.02.13.26
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 27 Jul 2016 02:13:27 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v2 3/5] pkt-line: extract and use `set_packet_header` function
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqinvsx77w.fsf@gitster.mtv.corp.google.com>
-Date:	Wed, 27 Jul 2016 11:13:26 +0200
-Cc:	Git Mailing List <git@vger.kernel.org>,
-	=?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	tboegi@web.de, mlbright@gmail.com,
-	remi.galan-alfonso@ensimag.grenoble-inp.fr, pclouds@gmail.com,
-	e@80x24.org, ramsay@ramsayjones.plus.com, peff@peff.net
-Content-Transfer-Encoding: 7bit
-Message-Id: <A6E129CE-26F9-456A-B9C7-A502245DD19E@gmail.com>
-References: <20160722154900.19477-1-larsxschneider@gmail.com> <20160727000605.49982-1-larsxschneider@gmail.com> <20160727000605.49982-4-larsxschneider@gmail.com> <xmqqinvsx77w.fsf@gitster.mtv.corp.google.com>
-To:	Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=4ZwombZPj6ibLaEW1i/bMzWIjzNdy0j4QBH3i5ecV34=;
+        b=YywsK+37rNldgiqACHftuG9xSXB3IGe8GemWg/LNMEk5JY2PjTgzE+4HbHeeirdb5W
+         gWoc+hCVM6kr8SoXl/qjFilfSXbaPbFaZ6s+f6KElYvF/001ObMaAnsdGdj2xTtUt0A9
+         C2znhrJzaTHEOjeWq3npW3vmlh/BRqiDmMW0VzP2gg7E9aXCZpSy6erQn2GOstAoYEgj
+         QYR7pFU9ToRtGYklhO14P0olaJlwWyOw/zAotuctuwExDmMfleHhFiU/GWtYO1ZrD11F
+         r4vPrukwFyF5J1JL/YxGtwCZFeSwcAFswhBGNNE8x7oj0lXc7PxlggNTgb2CnvV13WDP
+         1ksg==
+X-Gm-Message-State: AEkoouvHRGgUhM58ncEBOZTVvuVboqKAsVeM1z0wpE/xOLaM+YS6nHW4BOz1B97C7xE4v8LK3y7zScPnPEoswA==
+X-Received: by 10.46.33.76 with SMTP id h73mr10967996ljh.41.1469611681089;
+ Wed, 27 Jul 2016 02:28:01 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.25.217.93 with HTTP; Wed, 27 Jul 2016 02:27:41 -0700 (PDT)
+In-Reply-To: <d10f574d-20fe-cdff-3d4e-0d17db5b1c86@gmail.com>
+References: <CAKEmgc=7tyb8FVpoD5yO=s3NMoGeQWr3A3WMPUXv1N+s1A7g8Q@mail.gmail.com>
+ <d10f574d-20fe-cdff-3d4e-0d17db5b1c86@gmail.com>
+From:	jessie hernandez <hernandezboy@gmail.com>
+Date:	Wed, 27 Jul 2016 11:27:41 +0200
+Message-ID: <CAKEmgcmWrUqVv4XXbdmB7CnqCCB9C9+UZ5WUdARu6k6om9TJ0w@mail.gmail.com>
+Subject: Re: Very Very small fonts in gitk
+To:	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
+Cc:	git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+I have tried all of that.
+A colleague looked at it and he reset xrdb with xrdb -remove -all
+apparently this works and my issues has been fixed.
 
-> On 27 Jul 2016, at 02:20, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> larsxschneider@gmail.com writes:
-> 
->> From: Lars Schneider <larsxschneider@gmail.com>
->> 
->> `set_packet_header` converts an integer to a 4 byte hex string. Make
->> this function publicly available so that other parts of Git can easily
->> generate a pkt-line.
-> 
-> I think that having to do this is a strong sign that the design of
-> this series is going in a wrong direction.
-
-Thanks for the feedback. Do you think using "pkt-line" is a move into
-the wrong direction in general or do you think only my usage of 
-"pkt-line" is not ideal?
+Regards,
 
 
-> If you need a helper function that writes a pkt-line format that
-> behaves differently from what is already available (for example,
-> packet_write()), it would be much better to design that new function
-> so that it would be generally useful and add that to pkt-line.[ch],
-> instead of creating random helper functions that use write(2)
-> directly, bypassing pkt-line API, to write stuff.
-> 
-> In other words, do not _mimick_ pkt-line; enhance pkt-line as
-> necessary and use it.
-
-OK, I understand your argument. If we agree on the "pkt-line" usage
-then I will address this issue.
-
-Thanks,
-Lars
+On Wed, Jul 27, 2016 at 10:21 AM, Trần Ngọc Quân <vnwildman@gmail.com> wrote:
+> On 27/07/2016 15:05, jessie hernandez wrote:
+>> Dear git,
+>>
+>> I have been dealing with an issue in gitk for a while now. I do not
+>> know if this is a specific gitk issue or something else. I cannot find
+>> any information about it online.
+>>
+>> When I start gitk in my repository gitk comes up but all the font and
+>> all the menus are Extremly small. (see attached image).
+>>
+>> My OS is Red Hat 6.6
+>> git version is 2.0.3 (i tried the 2.9.2 version also and this too
+>> gives the same small font)
+>> I am running in bash also tried in KSH
+>>
+>> Could you give an insight if this is a known gitk issue or that this is a bug?
+>>
+>> Regards,
+>> Jessie Hernandez
+> Try to edit gitk configure file `~/.gitk` manually, like this:
+>
+> set mainfont {{DejaVu Sans} 12}
+> set textfont {FreeMono 10}
+> set uifont {{DejaVu Sans} 12 bold}
+>
+> I hope it work!
+> Thanks,
+>
+> --
+> Trần Ngọc Quân.
+>
