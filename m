@@ -2,97 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4077A1F855
-	for <e@80x24.org>; Wed, 27 Jul 2016 21:37:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07F9F1F855
+	for <e@80x24.org>; Wed, 27 Jul 2016 21:53:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932318AbcG0Vhb (ORCPT <rfc822;e@80x24.org>);
-	Wed, 27 Jul 2016 17:37:31 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62177 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757989AbcG0Vha (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jul 2016 17:37:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2EBBB302C1;
-	Wed, 27 Jul 2016 17:37:29 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uhHh4RIwsLCZRM5sb7HX+ToH84k=; b=bM81MK
-	WLrnvOKk3MIZjAmWcW364dmjx/G4OL1R9pSfCWrbyd0uuPN7Tu4HX95yzhL/7jXx
-	enUrnBSsmTes2gHr3cUoML5MUDDHHZQv6CHEfr2YJ6n3W+w3rjdGSXN7FApYs/fr
-	CmYKPUOtnd1/y96B4yjlvRJ0veXuYEnOgXhu0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=F4y8tznKmmrNwR8T37AYkoFFdMV293Y6
-	18/uCW94FyYOA3XdFZgkQ1iC4nm9yPmUQNxAYcgwuHxP9HzVinBi1bjBZmE00qLK
-	p9clwluA+w3QcAdkqqyk9O8pf7eu516I5vTelSFmFpnnPIszOXj/TkPZbDB/dwqi
-	9y9eht45xGs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 23F70302BF;
-	Wed, 27 Jul 2016 17:37:29 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 99A40302BE;
-	Wed, 27 Jul 2016 17:37:28 -0400 (EDT)
+	id S964806AbcG0Vxn (ORCPT <rfc822;e@80x24.org>);
+	Wed, 27 Jul 2016 17:53:43 -0400
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:35124 "EHLO
+	mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932575AbcG0Vx3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jul 2016 17:53:29 -0400
+Received: by mail-yw0-f196.google.com with SMTP id r9so4746796ywg.2
+        for <git@vger.kernel.org>; Wed, 27 Jul 2016 14:53:28 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=qsvStGjZ7kTNlBuvu+xdYtuQoWdQc6Isdv1jT0yO4Zg=;
+        b=pTLF1Tf0mpmS8qZqBauFeACWL7S5FjWOf0eNG91+53HB7P4zfEupZ/dAzJBdj/XwMx
+         XWnI3TWMpC/9aKgGnDashGCUBXsRT5xqA50kA8MCrbHCPi7nh3itPacCva9UnEhaFRJo
+         g81xTMO/GeBgVNsctQm/nSXc2yyDyfbrF8zSWHL573zhSA+5qZVHpPi4JH9JJR1+kQMc
+         i0qUfhYzUaA0HqxqsugSksGYzOwaxK1MkyWWI1njdWi4YlcusP8lF3xVqdJAi2xHLijG
+         PvNWq68yB3dGyQG++SERfpJK00yWdgEiyI5yHvgMcTyVnSyj/uC4VdNUnHQjJFZ5wdJt
+         D0ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=qsvStGjZ7kTNlBuvu+xdYtuQoWdQc6Isdv1jT0yO4Zg=;
+        b=VNO2+JBeqpUdpHlBfT8tnlrHQ7L7/BLpdy32A5eG8E/p0eYxHUrTD0WdNZky2OLNq2
+         MPD3K+pGYr4NL7fRxF7JYa8oweSnYVX+WZeqnQO1uhj7/57/aCNi/QVYZsq555dDhumi
+         IMlTeMnzqhdOtI0vBjvSlilVsbDvbksoJCDeZzE5MbJeYM2jy1t9S+lTLw8RZQzV52lY
+         qvYal0PoM+UuMTb0RvKRXVKw2zQPupp/bw9AsBA615/XcSgkySYjI8QCoHdUDExWaymh
+         LaNAmeCzRG3+ey/XcGyW/sGnO5PhxEnyRkQt7OkyeA0ZhayvdLcn5Ulk/khV8cd5TCBJ
+         CjJQ==
+X-Gm-Message-State: AEkoouu9jjMAsE5tJkhqZDE64Oobb97axil3pu7SnstOnFYLRfoQUd7SrN+4b4IqC8lsjrrySweP5wYPSDhpRA==
+X-Received: by 10.13.251.66 with SMTP id l63mr27391843ywf.69.1469656408255;
+ Wed, 27 Jul 2016 14:53:28 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.13.250.4 with HTTP; Wed, 27 Jul 2016 14:53:08 -0700 (PDT)
+In-Reply-To: <xmqqh9bavk2x.fsf@gitster.mtv.corp.google.com>
+References: <cover.1469187652.git.johannes.schindelin@gmx.de>
+ <cover.1469547160.git.johannes.schindelin@gmx.de> <349bdfacfffa11d06241655c9e0b62506e58758b.1469547160.git.johannes.schindelin@gmx.de>
+ <xmqqh9bavk2x.fsf@gitster.mtv.corp.google.com>
 From:	Junio C Hamano <gitster@pobox.com>
+Date:	Wed, 27 Jul 2016 14:53:08 -0700
+X-Google-Sender-Auth: jxhMbN2KH5zFXfQ31ndn-RoJ510
+Message-ID: <CAPc5daUv_csGM963pE=PD+LSSnTFZq57_Shse-x+PsJBSh0dZg@mail.gmail.com>
+Subject: Re: [PATCH v5 12/16] merge-recursive: flush output buffer before
+ printing error messages
 To:	Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+Cc:	Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
 	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
 	Duy Nguyen <pclouds@gmail.com>,
-	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH v5 12/16] merge-recursive: flush output buffer before printing error messages
-References: <cover.1469187652.git.johannes.schindelin@gmx.de>
-	<cover.1469547160.git.johannes.schindelin@gmx.de>
-	<349bdfacfffa11d06241655c9e0b62506e58758b.1469547160.git.johannes.schindelin@gmx.de>
-Date:	Wed, 27 Jul 2016 14:37:26 -0700
-In-Reply-To: <349bdfacfffa11d06241655c9e0b62506e58758b.1469547160.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Tue, 26 Jul 2016 18:06:34 +0200
-	(CEST)")
-Message-ID: <xmqqh9bavk2x.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 51209AD4-5442-11E6-99AF-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-
-> The data structure passed to the recursive merge machinery has a feature
-> where the caller can ask for the output to be buffered into a strbuf, by
-> setting the field 'buffer_output'.
+On Wed, Jul 27, 2016 at 2:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Previously, we simply swallowed the buffered output when showing error
-> messages. With this patch, we show the output first, and only then print
-> the error message.
+>> +     strbuf_vaddf(&o->obuf, err, params);
+>> +     error("%s", o->obuf.buf);
+>> +     strbuf_reset(&o->obuf);
+>
+> Sneaky ;-)
 
-I didn't quite understand this paragraph until I realized that you
-meant "when showing die message".  We died without flushing, losing
-accumulated output.
+Just to avoid confusion, I am _fine_ with this "we happen to have
+a strbuf that we know to be empty at this point, so let's reuse it
+and clean after ourselves before returning".
 
-> +static int err(struct merge_options *o, const char *err, ...)
-> +{
-> +	va_list params;
-> +
-> +	va_start(params, err);
-> +	flush_output(o);
-
-I would have written the above two swapped; va_start() logically
-is about what happens in the next four lines.
-
-> +	strbuf_vaddf(&o->obuf, err, params);
-> +	error("%s", o->obuf.buf);
-> +	strbuf_reset(&o->obuf);
-
-Sneaky ;-)
-
-The remainder replaces error(...) with err(o, ...) and updates the
-callchain to pass the merge_options around, which looked good.
-
-Thanks.
+I just found it somewhere between clever and ugly, and "sneaky"
+was the first word that came to my mind.
