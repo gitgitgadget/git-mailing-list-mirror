@@ -2,83 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 790CA203EB
-	for <e@80x24.org>; Wed, 27 Jul 2016 17:33:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CCBA203E1
+	for <e@80x24.org>; Wed, 27 Jul 2016 17:39:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757095AbcG0Rds (ORCPT <rfc822;e@80x24.org>);
-	Wed, 27 Jul 2016 13:33:48 -0400
-Received: from mail-io0-f181.google.com ([209.85.223.181]:34189 "EHLO
-	mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754303AbcG0Rdr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jul 2016 13:33:47 -0400
-Received: by mail-io0-f181.google.com with SMTP id q83so77237543iod.1
-        for <git@vger.kernel.org>; Wed, 27 Jul 2016 10:33:47 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=HvFqEnCS5gE/SyvGeSzzmRzYJIxvyiopPQuREfSWfXU=;
-        b=GT5PGLEAIkJ0VUYwX5iPvOec68U2x09ih2cc7imCpRhtFLYhpX4pVerFJ3o+1LDmT7
-         DGMQe2c0zCSrVzsb0U+D1OIIN1741zIkF7TJnLYn8RzFJ4zelZ5frXHT1qGLCGH9EdHY
-         0aPcgHM/lweUEeMHp+mp8qtu5efg7jM6V/DuIGRflZGqWLs/E9Iv6FH4r/XJlMBitvc9
-         N3M9JNIRwz1FtubOa7Ke5ZT99Z4QFhcTJ76hXoONEUBW9NrFEDYEGP/bXWscgkD60nQs
-         s3TPGBvobF/+qiIhp6QqHTm2jPIRNO8Zsk1iyHfxH5gPzXssqVUFAAZ8MmBaZhvuyWzc
-         tZTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=HvFqEnCS5gE/SyvGeSzzmRzYJIxvyiopPQuREfSWfXU=;
-        b=YQKXQg1PWarmNG7DuxxpBBDQmLRVx37nBDmzfRE8AOAGD+lPM1O+vcNl3J4fArrc0O
-         M/ZXFgmlHkhwf+MrrUjycmR0Vm+PDr8mwkYekJ5Jxb/QtXPTA3qiLf41j75qtNoyTJla
-         NlwWukG5wglz1eWSXETkAFpHcrj7oP/XOXdCuODrV4kPPp0WlOnD15tzBw0+2smpWAr0
-         8bDvIVenieBGDk0YU4gMPq0IPeA9AebXMQp4IvWUBE+YigWIcNpYofBg5nNBA5yph1gC
-         uC0J/ouPFyUlZDPM5K1KscVIfTX49KDNpdFW3EP/9u/2wPdqcxDzAU+7GW0TMULVIr4e
-         HLGA==
-X-Gm-Message-State: AEkoouv70Ee8MOknAhxdhX5WPMs+kynAa6ryEpe/pcT8A5AA2gS7YG7171EzQHEXR+EM+P44y0GzVACuqPvQrQ==
-X-Received: by 10.107.159.147 with SMTP id i141mr32554667ioe.29.1469640826919;
- Wed, 27 Jul 2016 10:33:46 -0700 (PDT)
+	id S1756879AbcG0RjT (ORCPT <rfc822;e@80x24.org>);
+	Wed, 27 Jul 2016 13:39:19 -0400
+Received: from cloud.peff.net ([50.56.180.127]:49923 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756658AbcG0RjS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jul 2016 13:39:18 -0400
+Received: (qmail 31921 invoked by uid 102); 27 Jul 2016 17:39:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 Jul 2016 13:39:18 -0400
+Received: (qmail 18651 invoked by uid 107); 27 Jul 2016 17:39:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 27 Jul 2016 13:39:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Jul 2016 13:39:15 -0400
+Date:	Wed, 27 Jul 2016 13:39:15 -0400
+From:	Jeff King <peff@peff.net>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Phil Pennock <phil@pennock-tech.com>,
+	Theodore Ts'o <tytso@mit.edu>, git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] pretty format string support for reflog times
+Message-ID: <20160727173915.GA32219@sigill.intra.peff.net>
+References: <20160727081414.GA21451@breadbox>
+ <20160727135820.GC14928@sigill.intra.peff.net>
+ <xmqqwpk7vw30.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Wed, 27 Jul 2016 10:33:17 -0700 (PDT)
-In-Reply-To: <CACsJy8CRHsyT8YLPYoHZnxCuMvF1W=S5iayy2eoHZhbSe_qmDg@mail.gmail.com>
-References: <20160718223038.GA66056@plume> <20160718225424.GA813@plume> <CACsJy8CRHsyT8YLPYoHZnxCuMvF1W=S5iayy2eoHZhbSe_qmDg@mail.gmail.com>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Wed, 27 Jul 2016 19:33:17 +0200
-Message-ID: <CACsJy8D9Cy1bjzXddCTOOT7X3smBBB3xccEg7CHaOKAZruHVag@mail.gmail.com>
-Subject: Re: t7063 failure on FreeBSD 10.3 i386/amd64
-To:	Eric Wong <e@80x24.org>
-Cc:	Git Mailing List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Stefan Beller <sbeller@google.com>,
-	David Turner <novalis@novalis.org>,
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqwpk7vw30.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Jul 19, 2016 at 6:12 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Tue, Jul 19, 2016 at 12:54 AM, Eric Wong <e@80x24.org> wrote:
->> Oops, forgot to Cc some folks who worked on this :x
->>
->> Filesystem is ufs and it fails regardless of whether
->> soft-updates is enabled or not.
->
-> Nothing stands out to my eyes, so I'm going to install freebsd this
-> weekend. I hope ufs does not have any nasty surprise for me. Stay
-> tuned.
+On Wed, Jul 27, 2016 at 10:18:11AM -0700, Junio C Hamano wrote:
 
-The good news is it looks like a false alarm due to a racy test (and
-it happens on ext2 too, zfs not tested), no big flaw or anything
-(phew!). The bad news is, I still have no idea what's happening and
-why is_racy_stat() returns true in this particular case. It'll take
-some more time...
--- 
-Duy
+> > Hrm. Since Ted was not cc'd, it is not clear to me whether this is
+> > coincidental or in response to the thread over in
+> >
+> >   http://thread.gmane.org/gmane.comp.version-control.git/299201
+> >
+> > To summarize, I think the conclusion there was that we would go with at
+> > least the 't' and 'r' formatters in the short term. The 'i/I' ones were
+> > not something Ted cared about that much, I think, but they do make
+> > things orthogonal with the other ident dates.
+> 
+> I forgot about that thread after it stalled without drawing
+> conclusion, after Ted asked if anybody has a strong opinion
+> and saw only one response to it at
+> 
+>   https://public-inbox.org/git/20160711164317.GB3890%40thunk.org/
+> 
+> So, what is the next step?  Apply
+> 
+>   https://public-inbox.org/git/20160710055402.32684-1-tytso%40mit.edu/
+> 
+> but exclude %g[iI] bits out of that patch while doing so?
+
+After having thought about it, I'm inclined to leave in the "%gi".
+There's no real rationale for doing "%gr" and "%gt" and not "%gi" except
+"well, Ted didn't need it". And it does make it match the author and
+committer date-formatting (except for the 'd' formats, of course).
+
+I do think with the new "unix" format in jk/reflog-date, the interface
+to the reflog code could be simplified; we don't need a function to pull
+out just the timestamp any more. Something like the diff below.
+
+However, I see a few remaining issues with Ted's original:
+
+  - the refactored get_reflog_message() tries to return NULL, but the
+    return type of the function is void. Presumably this should just be
+    "return"?
+
+  - ditto, the new get_reflog_time_t returns NULL, but wants an unsigned
+    long (though this function goes away with my squash below)
+
+  - show_reflog_date can return NULL, but we blindly feed its return
+    value to strbuf_addstr(). I'm not sure under what conditions it
+    _would_ return NULL, but that would cause a segfault
+
+  - there should probably be tests in t6006 for the new formats
+
+  - my squash below cuts out the use of gm_time_t(). But I don't think
+    it should be necessary, as the reflog timestamp should already be in
+    GMT, I would think. But maybe I am missing something.
+
+I actually think Phil's patch from today is a little cleaner for most of
+these, as it returns the values via out-parameters, and uses the return
+value for "did we get anything?".
+
+-Peff
