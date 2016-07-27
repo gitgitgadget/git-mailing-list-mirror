@@ -2,81 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9B8C203E1
-	for <e@80x24.org>; Wed, 27 Jul 2016 18:08:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C04A6203E1
+	for <e@80x24.org>; Wed, 27 Jul 2016 18:09:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756879AbcG0SH7 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 27 Jul 2016 14:07:59 -0400
-Received: from mail-io0-f174.google.com ([209.85.223.174]:33290 "EHLO
-	mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753179AbcG0SH7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jul 2016 14:07:59 -0400
-Received: by mail-io0-f174.google.com with SMTP id 38so77755981iol.0
-        for <git@vger.kernel.org>; Wed, 27 Jul 2016 11:07:59 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=I1Q3TGpU9YJDTk7StC7sBcxqllnWonmyxPTsASq6jes=;
-        b=dBih3FhI5JyB93zgrPPCEOE0oETYjKSHwt0E7E8j4/djC5de3fRZ8LK+BxIiPUqjSa
-         j/It5j2yAo0Y0LJ2hLWsq+uzwwAUR0N/d6JvdYOQIdbGdFCzcy1l6eMVozbwdxr1yIw0
-         AcsuQ5L8yKIJQBLJdiY9nPve8b3uss5kx8XcSt4/RTYWExMlfG2TfWQN63t0c0AwRwG4
-         gl+KlnwLep3gHecy0gns/gYTFgNAA+YbIqxTuBnH2s77YBQTqaLZ/93rOi8Wry9ygX9k
-         NOZFZJXQhBoxJ9Pm06lZU5RIJf6qrziGLmFLkcQ7XDDZJ8PxvuXNPM7zYI5uMmkx5re1
-         ZfAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=I1Q3TGpU9YJDTk7StC7sBcxqllnWonmyxPTsASq6jes=;
-        b=lfnNSmeixqUavquHYTjZpZbhj5XBbfaH2ll2t9cT0eAxOaB9Al5JZetnHEt4UU94nd
-         qm6QqPZvL2I9rVteVKZKXcZY7WtfCKqOgAblsoc6zzrtJkO4NqdSY9I+jLlKIr7g/guW
-         8FLRHr0KKBQJpO7I50asufptFZJhXW78zcUkLp8pjU5XZ/a9Fkc7eL+0Rx8HWxnUEP0O
-         uvYnuUCMR6ZZDLVDvr0VStMm3nkcUCdsgUarFWwOB5fwdKeMvadVW8hh8m/D7lOGjAsE
-         0ohyHqot3zrXUL333mYRFFMvhDhlqQumDXcRsrToskSuspXC5iB5zjjNoSYc2QFWetK7
-         LvRQ==
-X-Gm-Message-State: AEkoouseffyF9J/VpSqhDTXP1oJm3Fe9cdeJdVpqYBSuLCTKffMv59SrCLPYQoYVQbyb/ZxhUx5ZQLMlpNffIw==
-X-Received: by 10.107.8.140 with SMTP id h12mr35243875ioi.95.1469642878555;
- Wed, 27 Jul 2016 11:07:58 -0700 (PDT)
+	id S1757859AbcG0SJe (ORCPT <rfc822;e@80x24.org>);
+	Wed, 27 Jul 2016 14:09:34 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58688 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754410AbcG0SJe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jul 2016 14:09:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 065F530416;
+	Wed, 27 Jul 2016 14:09:33 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0RVUCOqWcLbmulegQT8vR8HYDoE=; b=EBQLzJ
+	GyjRkpMT1UKUIWck1N+m+iUk7oBr6yiGmWzHJ2vakqZZ7RFGYzmTybCSi9zJmcFo
+	LkggcPLdLHxaHvsgIfbpLkfO/ZfXNdMIK1iggRmFIx5NDA6KPUnASsRdN0RmKqby
+	+08j1pYCopUe2y5zn9PD6gF6hT8q1gvWR3lWA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QHUaYc5CHt2iqngBsw2lNyHTPzaKN1U0
+	l79S2L/nHBmuOpYABNjq3BeYraxqS6Z3zB4I8buBWUPtk8NFozLHWoqxQmKMcwIX
+	ZwxKs/66mL426WRfDaPx67B8J5vH2Rdfr35tcADvFmr0HKZEBvKIA6rKv80UIV7a
+	MOsn5y6tZGM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id F2C9630415;
+	Wed, 27 Jul 2016 14:09:32 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6770F30414;
+	Wed, 27 Jul 2016 14:09:32 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff King <peff@peff.net>
+Cc:	Phil Pennock <phil@pennock-tech.com>,
+	Theodore Ts'o <tytso@mit.edu>, git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] pretty format string support for reflog times
+References: <20160727081414.GA21451@breadbox>
+	<20160727135820.GC14928@sigill.intra.peff.net>
+	<xmqqwpk7vw30.fsf@gitster.mtv.corp.google.com>
+	<20160727173915.GA32219@sigill.intra.peff.net>
+Date:	Wed, 27 Jul 2016 11:09:30 -0700
+In-Reply-To: <20160727173915.GA32219@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 27 Jul 2016 13:39:15 -0400")
+Message-ID: <xmqqfuqvvtph.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Wed, 27 Jul 2016 11:07:29 -0700 (PDT)
-In-Reply-To: <CAGZ79kYNFoAUu+5Y0oh221UeyAB3zan_36RgrhZnSi19Oe2vcA@mail.gmail.com>
-References: <CACsJy8CMnywB8AdmLxB8LnsznHrMTieoezhaQS=2r1pnM8ONZA@mail.gmail.com>
- <CAGZ79kY5UrjSj8xbjB+MvTE2xUyt+te1RKN6Bf0WiEA23iZ7wg@mail.gmail.com> <CAGZ79kYNFoAUu+5Y0oh221UeyAB3zan_36RgrhZnSi19Oe2vcA@mail.gmail.com>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Wed, 27 Jul 2016 20:07:29 +0200
-Message-ID: <CACsJy8AuP-E1qHM_sJ4ZPpZDSk3s1KkuQOLB9B38+OUkobO11g@mail.gmail.com>
-Subject: Re: Find a topic branch containing a commit
-To:	Stefan Beller <sbeller@google.com>
-Cc:	Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 44B10CCE-5425-11E6-B94C-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Jul 27, 2016 at 8:02 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Wed, Jul 27, 2016 at 10:50 AM, Stefan Beller <sbeller@google.com> wrote:
->>>
->>> PS. Sometimes I wish we could optionally save cover letter in the
->>> merge commit. Sometimes the "big plan" is hard to see by reading
->>> individual commit messages.
->>> --
->
-> I had this wish, too. That makes a lot of sense for merge commits,
-> although it doesn't work well with our current workflow I would presume,
-> because the merge commit happens at a different time than when Junio
-> picks up a patch series. And in the mean time, where would we
-> store the cover letter information to not get lost?
+Jeff King <peff@peff.net> writes:
 
-We have config branch.xxx.description for that. If we teach git-am to
-pick up (a selected portion of) the cover letter and save it in
-branch.xxx.description (or even a new key like branch.xxx.mergeMsg)
-then nothing is lost.
--- 
-Duy
+> I actually think Phil's patch from today is a little cleaner for most of
+> these, as it returns the values via out-parameters, and uses the return
+> value for "did we get anything?".
+
+True.  That part of the interface is indeed better done with the new
+one.
+
+I am still in favor of this suggestion you earlier made:
+
+> So the final solution is more like:
+> 
+>   - a formatter for just the reflog time, respecting date
+> 
+>   - a formatter for just the reflog index (the "0" in HEAD@{0})
+> 
+>   - a formatter for the ref name (just the "HEAD" in HEAD@{0})
+
+though.  After all we only need three short ones while we migrate
+away to a longer %(reflog:<what>) format, right?
+
+As to the unfortunate %gd that squats on the "date" other specifiers
+use, I do not see a good/quick approach to migrate it.  If our ideal
+short-term endgame before the longer format were to use %gd, %g# and
+%gg for the above three, we first start warning people who use %gd
+for the historical mistaken "reflog selector", while telling people
+to use "%gg@{%g#}" instead if they truly want "reflog selector", and
+then switch its meaning to "reflog date".  That would take a long
+time.
+
+As %r prefix is not taken, we can immediately deprecate %g-anything
+format as a historical mistake and make sure we do not repeat the
+mistake of giving "d" to "reflog selector", perhaps?
