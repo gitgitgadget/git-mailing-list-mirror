@@ -2,114 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4BED203E1
-	for <e@80x24.org>; Wed, 27 Jul 2016 12:36:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3CE8203E1
+	for <e@80x24.org>; Wed, 27 Jul 2016 12:39:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754685AbcG0MgK (ORCPT <rfc822;e@80x24.org>);
-	Wed, 27 Jul 2016 08:36:10 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:36418 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754200AbcG0MgI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jul 2016 08:36:08 -0400
-Received: by mail-wm0-f65.google.com with SMTP id x83so6246784wma.3
-        for <git@vger.kernel.org>; Wed, 27 Jul 2016 05:36:07 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=fMDypt4gGOmHz2SBq2ZNtjsuyspHp5bXaotz8CPHDng=;
-        b=v6WOeqnJi7IbLyaitFI/wBJETsVZWS3G7N1Mc9uX4mg9KuYrru21FVwwX1WOk58Qvw
-         VjHJ9SIbao+owLqfhFPHxPre7lUgLb50KNbeEGF+mbs9mZZqQeUv6UM94FhClvBXiNWM
-         EmM0JvYxUMGN4nxN/rV1S1SRqbwBGUb4Ayiylflm8TQEc+dbT9zUNcceq/qhCcMzXafr
-         80Mu2WiJt9g3AtwrJtu68vPbIGMPM2qDdVFEpsKATTRSJQ3DBI975VYSwZIuMosut8uQ
-         xaFdnaW4IJ01HJpYITwYgoxGL6s2yfdBVxGH2UQ3dIDo3JvY5v0VZeLCZ6o/oRlTmxCh
-         5YDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding;
-        bh=fMDypt4gGOmHz2SBq2ZNtjsuyspHp5bXaotz8CPHDng=;
-        b=bDqUAJmRMSwisYvme98vkVfiWRG6eptKtv36BNGREQXMgt4ASU6VjH5or9aP8giqto
-         tUoFDf7Iw28YLoonzjpYHrTlvL30js7qN4Jgk1Qg1/8iiNIu8C8PjWlBXmHGVL7JsD5r
-         DR6aLRVfBq+kx/FjeW6fzEaJq5A+wPnXx7wuUWjF7JpdFqODJuc41/wsaTXDYF9nGvRZ
-         Fma3bj/pjDyLGwHOLxKNqbHiqJiix5xL+6itmNOXudtEnfADIW9NYwkeYJC80ZyvbW/1
-         vAVMFPS8jnWLIwN0jlgRJyA9cNa+XSj7xBm+TwkIx86eP4LlOu+BPbmm908UkANWQi0X
-         rNHQ==
-X-Gm-Message-State: ALyK8tI2Aie8xPwsJlm36L+QL65U1Kw5L9Ma8Nff6dy0Xx4xLTkcu/G27r+deuD0YXgLyw==
-X-Received: by 10.28.24.5 with SMTP id 5mr52972316wmy.6.1469622966345;
-        Wed, 27 Jul 2016 05:36:06 -0700 (PDT)
-Received: from [192.168.1.26] (eps206.neoplus.adsl.tpnet.pl. [83.20.60.206])
-        by smtp.googlemail.com with ESMTPSA id q137sm38160330wmd.19.2016.07.27.05.36.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 27 Jul 2016 05:36:05 -0700 (PDT)
-Subject: Re: [PATCH v2 5/6] date: document and test "raw-local" mode
-To:	Jeff King <peff@peff.net>
-References: <20160722195105.GA19542@sigill.intra.peff.net>
- <20160722195144.GE19648@sigill.intra.peff.net> <579343C9.1040902@gmail.com>
- <20160726184746.GA678@sigill.intra.peff.net>
-Cc:	git@vger.kernel.org, Theodore Ts'o <tytso@mit.edu>,
-	Junio C Hamano <gitster@pobox.com>
-Newsgroups: gmane.comp.version-control.git
-From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <5798AA7C.6050107@gmail.com>
-Date:	Wed, 27 Jul 2016 14:35:08 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
+	id S1755891AbcG0Mjj (ORCPT <rfc822;e@80x24.org>);
+	Wed, 27 Jul 2016 08:39:39 -0400
+Received: from mout.gmx.net ([212.227.17.22]:54489 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754421AbcG0Mji (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jul 2016 08:39:38 -0400
+Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MeQ43-1bfOIr1kRb-00QF4A; Wed, 27 Jul 2016 14:39:34
+ +0200
+Date:	Wed, 27 Jul 2016 14:39:28 +0200 (CEST)
+From:	Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	git@vger.kernel.org
+cc:	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] t4130: work around Windows limitation
+Message-ID: <5bd59ca2f87e388350f3c8fb17c9a287661cd055.1469623136.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <20160726184746.GA678@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:reSgsBLOz2ZPjCyuGpzNl8VGFJ/F+6S/FTndOL8gnToMkEAZn7M
+ xK8r+JMFy3t0HOtLfPne+BMA2hqNMryNTlb/OayC40CwR7Tg6IrbqWamsh32WetcM4JcMsf
+ a1t2peYFdWXcAAkGjt3GnV7Sk0eyiRa0dt71hxjz8pfqFsTGKuk4VrfgudBQ5hQNGWt6qAa
+ nRUg1n9uWCbXl7FaaPzHQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:uk324qkpbjo=:9B9p7khSQeNWpmcSP1JPRE
+ 9i0uUdqN1jFTfnpDST8+wUzwKsQuVmxDrROesBhjMRZSLo4kHGUXoTJugG81h7KjcasUq+AKV
+ DojkIX/vle/ofYznWLBjxbdrhBa1UFxgTbhpVAS2OOQg/SaB6h33g8sL6hIiebTsdEMY4dFSk
+ eaabqfnSLUSoYLkBXI9Z6kNZNc0BF3ZGuHSZDuR2hrd6vMSsu47uYyBXwvbYqb0Eh1Ea0CxU2
+ OVmMYpLUswtaG2X8RARyReSfMIobmm0is0r/ZP+/v708qZYq3DMCCLXOL2hLPfbHlZd+YBfX2
+ GHbahUYavV0jZ1IOneFJ/VaVhB3RwmyGRL2A1FFGGqTeY0zq9kpTPSbZpuJACtsNzpIlcAbzW
+ uahUOKdUW6PdfLdFeLNEfqJWpyewpQGZnlDslMHtfctVXqooMcejYb3MpWiaQ/pPBmnXh9TuK
+ Tz8J045sD0ioznuGOIwNg5J5JAWdd+2zjVRlVy03jiqipDE7j5osUpzHnbDawFhJiOnqmGuKq
+ 9TKABhc7EdOzEAySqvXdtAy0izuKaXAsiweMy+1nP8AxucrYxM+RgyD5Z7L43xHZ595rH1DBg
+ lfX+OUsGZthz0WHxwxa19dqCTQCEDXShwLklBCqO2RHT1M0rdSXBy8qiid1aMwAK17LIkyqFg
+ /oeYRN6WZ000LK1bIrYG5XOKqycdd87i80VLsQMaMsOUdk+IpMqdXoI0DHxvRZ0K3kyq9Gv0/
+ lrHC5XS92sE4itPyj6lvz2Wj0qNd37CR2U1ZgzY0hvkk1S7c2JL7qZUmRUYpcEERaGaJrcsHC
+ wNOg23V
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-W dniu 2016-07-26 o 20:47, Jeff King pisze:
-> On Sat, Jul 23, 2016 at 12:15:37PM +0200, Jakub Narębski wrote:
-> 
->>> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
->>> index 5d1de06..3ec75d4 100644
->>> --- a/Documentation/rev-list-options.txt
->>> +++ b/Documentation/rev-list-options.txt
->>> @@ -725,8 +725,8 @@ include::pretty-options.txt[]
->>>  	`iso-local`), the user's local time zone is used instead.
->>>  +
->>>  `--date=relative` shows dates relative to the current time,
->>> -e.g. ``2 hours ago''. The `-local` option cannot be used with
->>> -`--raw` or `--relative`.
->>> +e.g. ``2 hours ago''. The `-local` option has no effect for
->>> +`--relative`.
->>
->> Do I understand it correctly: --relative is a short form for more
->> generic --date=relative (which probably should be spelled 
->> --date-format=relative), and that --date=relative-local is the
->> same as --date=relative, that is *-local suffix does not change
->> how date is formatted?
->>
->> Because I don't think you can say --relative-local ("The `-local`
->> option has no effect on `--relative`"), can you?
-> 
-> All correct. There is no --relative-local because "--relative" is a
-> historical artifact. We could support --foo for every --date=foo, but I
-> don't think there is a reason to do so (and reasons not to, like
-> avoiding cluttering the option space).
+On Windows, it is already pretty expensive to try to recreate the stat()
+data that Git assumes is cheap to obtain. To make things halfway decent
+in performance, we even have to skip emulating the inode and to
+determine the number of hard links.
 
-So shouldn't the last sentence 
+This is not a huge problem, usually, as either the size or the mtime or
+the ctime are tell-tale enough to say when a file has changed, and even
+if not, those changes are typically made after the index file was
+written, triggering a rehashing of the files' contents.
 
-  "The `-local` option has no effect for `--relative`." 
+The t4130-apply-criss-cross-rename test case, however, requires the
+inode to determine that files of equal size were swapped, as renaming
+files does not update their mtime. And even if we use
+nanosecond-precision mtimes on Windows, the file system's time
+granularity is typically much coarser (100ms for NTFS, 2s for FAT).
 
-be rather
+That means that every once in a while, t4130 fails on Windows.
 
- "The `-local` option has no effect for `--date=relative`."
+This patch provides the work-around by pretending that the index file
+was written earlier than it actually was.
 
-Though this might be just me being overly nitpicky...
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+Published-As: https://github.com/dscho/git/releases/tag/t4130-mingw-v1
+ t/t4130-apply-criss-cross-rename.sh | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
+diff --git a/t/t4130-apply-criss-cross-rename.sh b/t/t4130-apply-criss-cross-rename.sh
+index d173acd..ee91af8 100755
+--- a/t/t4130-apply-criss-cross-rename.sh
++++ b/t/t4130-apply-criss-cross-rename.sh
+@@ -29,6 +29,14 @@ test_expect_success 'criss-cross rename' '
+ '
+ 
+ test_expect_success 'diff -M -B' '
++	if test_have_prereq MINGW
++	then
++		# On Windows it is prohbitively expensive to retrieve the
++		# equivalent of an "inode" when calling stat(), therefore we
++		# rely on mtime/ctime/size changes to let us know whether a
++		# file has changed, including the mtime relative to the index.
++		test-chmtime -1 .git/index
++	fi &&
+ 	git diff -M -B > diff &&
+ 	git reset --hard
+ 
+@@ -52,6 +60,14 @@ test_expect_success 'criss-cross rename' '
+ '
+ 
+ test_expect_success 'diff -M -B' '
++	if test_have_prereq MINGW
++	then
++		# On Windows it is prohbitively expensive to retrieve the
++		# equivalent of an "inode" when calling stat(), therefore we
++		# rely on mtime/ctime/size changes to let us know whether a
++		# file has changed, including the mtime relative to the index.
++		test-chmtime -1 .git/index
++	fi &&
+ 	git diff -M -B > diff &&
+ 	git reset --hard
+ '
 -- 
-Jakub Narębski
+2.9.0.281.g286a8d9
 
+base-commit: 8c6d1f9807c67532e7fb545a944b064faff0f70b
