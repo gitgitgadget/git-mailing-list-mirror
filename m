@@ -2,104 +2,198 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23174203E1
-	for <e@80x24.org>; Wed, 27 Jul 2016 16:50:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3DC9203E1
+	for <e@80x24.org>; Wed, 27 Jul 2016 16:53:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757222AbcG0Quu (ORCPT <rfc822;e@80x24.org>);
-	Wed, 27 Jul 2016 12:50:50 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33446 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757213AbcG0Qut convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Jul 2016 12:50:49 -0400
-Received: by mail-wm0-f68.google.com with SMTP id o80so7338704wme.0
-        for <git@vger.kernel.org>; Wed, 27 Jul 2016 09:50:43 -0700 (PDT)
+	id S1757097AbcG0QxR (ORCPT <rfc822;e@80x24.org>);
+	Wed, 27 Jul 2016 12:53:17 -0400
+Received: from mail-io0-f180.google.com ([209.85.223.180]:35438 "EHLO
+	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752446AbcG0QxQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jul 2016 12:53:16 -0400
+Received: by mail-io0-f180.google.com with SMTP id m101so75730582ioi.2
+        for <git@vger.kernel.org>; Wed, 27 Jul 2016 09:53:16 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=3OnC5ip7dA5xwdC15NscE/eRGdq1+NuD0fj8N7BAHnk=;
-        b=yHi1NI0MP3THaAWySI88hM5UFI9Nrk8mqS/rhQcoFcenNhYBR/dkwzTwnlZ8RXLwrA
-         WiTBp7VlIDeIZQYM76x6eSYmzZk2XLxIA/tcMyp0ZrtWeLFxfooR0tDllrjhzNidHcWB
-         1KCnQrQUUTk02/MSmJroM557/QKK7DR1vgpvZJMZxl8VVG/FK6fX2m19bLosUeGAPeJV
-         RSx9bkQ6xaZ6eLcwGzMOfQyFHSnUZgo62i70XKyl5PBk0p+jcb0l6Xx/cfDI4LeiOjNI
-         jCS3XmOqoAHwdr5dWTVZRmzusaIsCvzYsRq5OWta63eiwXqUeFdNzxaF9c5GV+XqfqKx
-         vKrA==
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=jbMvY6TL4ap+RFHjUKAYpiTLf6NncVdPi8IporYM4+4=;
+        b=Ce0I7cVGDe73lret6+LBSV5msAo1w2BB/c/9xLORZXkcN9Bp5rl96ZuVWF+9E7+3tL
+         TQkt7q93Ux2mTUB744bOeY6FAkXspZcDP93AjShnJZ633P/iljvUfybQuMKsWce433xu
+         RpxVHDr7NlY9CyMpc3hjP2EtUYUtR8U0bcRLbUQhBHxNq0QouzeoI6ePMbWPe7gUPxgt
+         CjX/IhWhxnG2h0dOoFqKcy2hLnioErTvuRozSGvRhipEy+daK7VKdIXujSOMcm8BIx7p
+         r3Mwg0N5KNKoKVhYSLCBNaIJ+ySL+Gz66WK5+CHZeyIdz10cQjlJY7QJSBElL/EMDVcp
+         bP+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=3OnC5ip7dA5xwdC15NscE/eRGdq1+NuD0fj8N7BAHnk=;
-        b=ILYPMvVnnRSsX1Jd+ddfxIZna2QJlLkcMhep3cxVXvbnQFXL5BYmDT+jvdrPc16GO3
-         IsxYFpQZ8DPK/oeuTOBt6yxI99/llnOJZ+t2qLSK4m9B8h3YnT6NgkS7k8ytFmKzbGxt
-         /jSv2h+IrZBpnJErZtIF4q4jXDHmdQ7Myppst08lXAxgsBsWPMUoWGKgqpvOQTlMniaN
-         dZ4JqGqG8B/trF7e8/LEMyigvX72op7FCRb1Skj+WRLa/06AMStbt2Z10dMPyAUgC/Jb
-         FiMvSArhlKTEI/Oz6ZuJz6v8ANI8i9PrV884MhsFJNgPmQbMaMft1gMOZRK3+F1iEf5n
-         czXw==
-X-Gm-Message-State: AEkoous7fCnaKQIHjKg7fT9jhUbWHn7pc4xe7hTiPtzeLjxwF7Ycpeb21Agi60dLYE0Q8g==
-X-Received: by 10.194.164.229 with SMTP id yt5mr28587927wjb.39.1469638242935;
-        Wed, 27 Jul 2016 09:50:42 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id f4sm39245324wmf.8.2016.07.27.09.50.41
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 27 Jul 2016 09:50:42 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v2 4/5] convert: generate large test files only once
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20160727133214.GA14928@sigill.intra.peff.net>
-Date:	Wed, 27 Jul 2016 18:50:40 +0200
-Cc:	=?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Git Mailing List <git@vger.kernel.org>,
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=jbMvY6TL4ap+RFHjUKAYpiTLf6NncVdPi8IporYM4+4=;
+        b=gKJ8mVU4E74beu+nnkE1zmK6U8xX4rXtiYaNCO7ha3HkS4517+C/vT1JyMyUrqni7Q
+         lXu7Dwy3NBoqfae5oY5PLpsfVPcQpXR2L5Li75sYPPXBkDDUscdMCUN9af4wELI5UUH0
+         7/njf1Sl054QwB+Ktu8RiUxS3yfeBpe33LZad/rAaUK+aW1aGwuS9ojunxyhIOj6Y6H6
+         AMMb6RcOZOZfknXIG0+eR/Zu2I127Ny98iksInOjK7RtBkQqumFBmceSziHbviafgV1J
+         Tm8nZYd8gduRM159sm4fZIPblsVi3mAMfluK3qYHgbZq4EmP0leGJF68IfnopA31BPFJ
+         a3Jg==
+X-Gm-Message-State: AEkoouvUz+/bAEQZeaDM+rImzIqG/5pOD4GyrkOV1anVnG9PldZz69RWkVuA+wGbPIhlxjXTzxhHARDkECqYFJi4
+X-Received: by 10.107.144.10 with SMTP id s10mr32255989iod.165.1469638394566;
+ Wed, 27 Jul 2016 09:53:14 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.107.128.66 with HTTP; Wed, 27 Jul 2016 09:53:13 -0700 (PDT)
+In-Reply-To: <5798C744.5080308@gmail.com>
+References: <CACsJy8ADRWNL3FR2TtWShviT4Lc4m1xaY8VOPP26Foyq+_A-3g@mail.gmail.com>
+ <20160720172419.25473-1-pclouds@gmail.com> <20160720172419.25473-4-pclouds@gmail.com>
+ <CAGZ79kZB8U+ERNeYpZ-i7Ldip7xbz0ND53g4bzMkzFC3pnyv+w@mail.gmail.com>
+ <CACsJy8CSnmnzDMGpMvvkhWRfJvp1L+pfOZ=eYp5JF0GWNH6D0Q@mail.gmail.com>
+ <CAGZ79ka-isR4DL7ZqOp8cXE1bmUOnd33yu=pZZHaqNmPWH3PYQ@mail.gmail.com>
+ <CACsJy8DKEV3FNmb1vWinRvb-FHSO_VftG7RevQ3TOFhP-Dm0cw@mail.gmail.com>
+ <CAGZ79kYbmoKPAPMVkTUycSKVtT6HLK-Y_eGXSX+z69G3+udR8Q@mail.gmail.com>
+ <CACsJy8DgeSOh-RScmcrSwy7PgeQXwA2R6w9mRmHzuWR4djg=4w@mail.gmail.com>
+ <CAGZ79kYGj7q=SQyHvFdmXasJppTVw56xSBMiSERdx22B+A68gQ@mail.gmail.com> <5798C744.5080308@gmail.com>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Wed, 27 Jul 2016 09:53:13 -0700
+Message-ID: <CAGZ79kZtfpmZRyOfF6NMhCqjNBgfH1bX+xWUCEdedQGbCbL71Q@mail.gmail.com>
+Subject: Re: [PATCH v4 3/4] submodule: support running in multiple worktree setup
+To:	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Cc:	Duy Nguyen <pclouds@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Max Kirillov <max@max630.net>,
 	Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	mlbright@gmail.com, remi.galan-alfonso@ensimag.grenoble-inp.fr,
-	pclouds@gmail.com, e@80x24.org, ramsay@ramsayjones.plus.com
-Content-Transfer-Encoding: 8BIT
-Message-Id: <1D133FC4-032F-434A-882C-5931AA285CD9@gmail.com>
-References: <20160722154900.19477-1-larsxschneider@gmail.com> <20160727000605.49982-1-larsxschneider@gmail.com> <20160727000605.49982-5-larsxschneider@gmail.com> <c3d7466b-cd3f-9f62-bc82-9f77b4f3d1a4@web.de> <20160727133214.GA14928@sigill.intra.peff.net>
-To:	Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3124)
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Jakub wrote:
+> I think the problem with `--reference` is that it does not
+> setup backreferences to prevent gc removing borrowed objects;
+> which is a hard problem to solve, except for limited cases...
+> like git-worktree.
 
-> On 27 Jul 2016, at 15:32, Jeff King <peff@peff.net> wrote:
-> 
-> On Wed, Jul 27, 2016 at 04:35:32AM +0200, Torsten Bögershausen wrote:
-> 
->>> +	mkdir -p generated-test-data &&
->>> +	for i in $(test_seq 1 $T0021_LARGE_FILE_SIZE)
->>> +	do
->>> +		# Generate 1MB of empty data and 100 bytes of random characters
->>> +		printf "%1048576d" 1
->>> +		printf "$(LC_ALL=C tr -dc "A-Za-z0-9" </dev/urandom | dd bs=$((RANDOM>>8)) count=1 2>/dev/null)"
->> I'm not sure how portable /dev/urandom is.
->> The other thing, that "really random" numbers are an overkill, and
->> it may be easier to use pre-defined numbers,
-> 
-> Right, there are a few reasons not to use /dev/urandom:
-> 
->  - it's not portable
-> 
->  - if we have to generate a lot of numbers, it drains the system's
->    entropy pool, which is an unfriendly thing to do (and may also be
->    slow)
-> 
->  - it makes our tests random! This sounds like a good thing, but it
->    means that if some input happens to cause failure, you are unlikely
->    to be able to reproduce it.
-> 
-> Instead, use test-genrandom, which is an LCG that starts at a seed. So
-> you get a large amount of random-ish quickly and portably, and you get
-> the same data each time.
+Right. And instead of solving the reference problem, I'd
+rather solve the worktree problem as I think it yields more?
 
-Thank you! That's exactly what I need here :-)
+>
+>> So I think the current workflow for submodules
+>> may need some redesign anyway as the submodule
+>> commands were designed with a strict "one working
+>> tree only" assumption.
+>>
+>> Submodule URLs  are stored in 3 places:
+>>  A) In the .gitmodules file of the superproject
+>>  B) In the option submodule.<name>.URL in the superproject
+>>  C) In the remote.origin.URL in the submodule
+>>
+>> A) is a recommendation from the superproject to make life
+>> of downstream easier to find and setup the whole thing.
+>> You can ignore that if you want, though generally a caring
+>> upstream provides good URLs here.
+>
+> Also, this URL might have change if the repository moves
+> to other server; even when checking out ancient version
+> we usually want to use current URL, not the one in currently
+> checked-out .gitmodules file.
 
-- Lars
+Right.
+
+>
+>> C) is where we actually fetch from (and hope it has all
+>> the sha1s that are recorded as gitlinks in the superproject)
+>
+> Is it? Or is it only the case if you do `git fetch` or
+> equivalent from within inside of submodule? You can fetch
+> updates using `git submodule ...` from supermodule, isn't it?
+> But I might be wrong here.
+
+If you call `submodule update` in the  superproject
+it actually just does a `(cd $submodule && git fetch)`.
+
+And in the submodule we have a .git file pointing to
+the superprojects ".git/modules/<name>/" which is a full
+blown git dir, i.e. it has its own config, HEAD etc.
+
+>
+> Also: if .git file is gitfile link, do submodule even has
+> it's own configuration file?
+
+Yes they do.
+
+>
+>>
+>> B) seems like a hack to enable the workflow as below:
+>
+> It has overloaded meaning, being used both for current URL
+> of submodule as seen in supermodule, AND that submodule
+> is checked out / needs to be checked out in the worktree
+> of a supermodule.  There might be the case when you check
+> out (in given worktree) a version of a supermodule that
+> do not include submodule at all, but you want to know that
+> when going back, this submodule is to be checked out (or not).
+
+I am currently working on solving that with a patch series, that
+allows 2 settings. The URL will be used only to overwrite the
+URL from the .gitmodules file and another setting will be used
+to determine if we want to checkout the submodule.
+
+>
+> The second information needs to be per-worktree. How to
+> solve it, be it per-worktree configuration (not shared),
+> or a special configuration variable, or worktree having
+> unshared copy of configuration -- this what is discussed.
+
+>
+>> Current workflow for handling submodule URLs:
+>>  1) Clone the superproject
+>>  2) Run git submodule init on desired submodules
+>
+> Or 1-2) clone the superproject recursively, with all its
+> submodules.
+
+Only if the URLs are setup properly.
+
+>
+>>  3) Inspect .git/config to see if any submodule URL needs adaption
+>
+> Which is usually not needed.
+
+Yeah, I should have added the assertion that the .gitmodules
+may be out of date or such for this workflow to make sense.
+Usually just go with recursive clone.
+
+>>
+>> This long lived stuff probably doesn't make sense for the a single
+>> repository, but in combination with submodules (which is another way
+>> to approach the "sparse/narrow" desire of a large project), I think
+>> that makes sense, because the "continuous integration" shares a lot
+>> of submodules with my "regular everyday hacking" or the "I need to
+>> test my colleague work now" worktree.
+>
+> One thing that git-worktree would be very useful, if it could work
+> with submodules: you could use separate worktrees to easily test
+> if the supermodule works with and without its submodules present.
+
+Oh! Yeah that makes sense!
+
+>
+> [...]
+>> If you switch a branch (or to any sha1), the submodule currently stays
+>> "as-is" and may be updated using "submodule update", which goes through
+>> the list of existing (checked out) submodules and checks them out to the
+>> sha1 pointed to by the superprojects gitlink.
+>
+> Which might be simply a problem that submodule UI is not mature enough.
+> I would like to see automatic switch of submodule contents, if
+> configured so.
+
+Me too. Once upon a time Jens pushed for that with a series found at:
+https://github.com/jlehmann/git-submod-enhancements/tree/git-checkout-recurse-submodules
