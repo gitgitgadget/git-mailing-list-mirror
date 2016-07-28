@@ -2,343 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41C6C1F858
-	for <e@80x24.org>; Thu, 28 Jul 2016 13:14:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 127791F858
+	for <e@80x24.org>; Thu, 28 Jul 2016 13:29:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757742AbcG1NOg (ORCPT <rfc822;e@80x24.org>);
-	Thu, 28 Jul 2016 09:14:36 -0400
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:32959 "EHLO sapo.pt"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1757478AbcG1NOe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jul 2016 09:14:34 -0400
-Received: (qmail 23558 invoked from network); 28 Jul 2016 13:14:31 -0000
-Received: (qmail 16219 invoked from network); 28 Jul 2016 13:14:31 -0000
-Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
-          (envelope-sender <vascomalmeida@sapo.pt>)
-          by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 28 Jul 2016 13:14:29 -0000
-X-PTMail-RemoteIP: 85.246.157.91
-X-PTMail-AllowedSender-Action: 
-X-PTMail-Service: default
-From:	Vasco Almeida <vascomalmeida@sapo.pt>
-To:	git@vger.kernel.org
-Cc:	Vasco Almeida <vascomalmeida@sapo.pt>, Jeff King <peff@peff.net>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH v2] i18n: config: unfold error messages marked for translation
-Date:	Thu, 28 Jul 2016 13:14:03 +0000
-Message-Id: <1469711643-10367-1-git-send-email-vascomalmeida@sapo.pt>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1469642375-27305-1-git-send-email-vascomalmeida@sapo.pt>
-References: <1469642375-27305-1-git-send-email-vascomalmeida@sapo.pt>
+	id S932080AbcG1N3M (ORCPT <rfc822;e@80x24.org>);
+	Thu, 28 Jul 2016 09:29:12 -0400
+Received: from cloud.peff.net ([50.56.180.127]:50353 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757478AbcG1N3K (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2016 09:29:10 -0400
+Received: (qmail 17396 invoked by uid 102); 28 Jul 2016 13:29:09 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 28 Jul 2016 09:29:09 -0400
+Received: (qmail 25356 invoked by uid 107); 28 Jul 2016 13:29:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 28 Jul 2016 09:29:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Jul 2016 09:29:06 -0400
+Date:	Thu, 28 Jul 2016 09:29:06 -0400
+From:	Jeff King <peff@peff.net>
+To:	Lars Schneider <larsxschneider@gmail.com>
+Cc:	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>, gitster@pobox.com,
+	tboegi@web.de, mlbright@gmail.com,
+	remi.galan-alfonso@ensimag.grenoble-inp.fr, pclouds@gmail.com,
+	e@80x24.org, ramsay@ramsayjones.plus.com
+Subject: Re: [PATCH v2 0/5] Git filter protocol
+Message-ID: <20160728132906.GA21311@sigill.intra.peff.net>
+References: <20160722154900.19477-1-larsxschneider@gmail.com>
+ <20160727000605.49982-1-larsxschneider@gmail.com>
+ <579906C5.1050809@gmail.com>
+ <BFED7ED8-40DB-46B5-A1B7-4F49624D5A62@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <BFED7ED8-40DB-46B5-A1B7-4F49624D5A62@gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Introduced in 473166b ("config: add 'origin_type' to config_source
-struct", 2016-02-19), Git can inform the user about the origin of a
-config error, but the implementation does not allow translators to
-translate the keywords 'file', 'blob, 'standard input', and
-'submodule-blob'. Moreover, for the second message, a reason for the
-error is appended to the message, not allowing translators to translate
-that reason either.
+On Thu, Jul 28, 2016 at 09:16:18AM +0200, Lars Schneider wrote:
 
-Unfold the message into several templates for each known origin_type.
-That would result in better translation at the expense of code
-verbosity.
+> But Peff ($gmane/299902), Duy, and Eric, seemed to prefer the pkt-line
+> solution (gmane is down - otherwise I would have given you the links).
 
-Add enum config_oringin_type to ease management of the various
-configuration origin types (blob, file, etc).  Previously origin type
-was considered from command line if cf->origin_type == NULL, i.e.,
-uninitialized. Now we set origin_type to CONFIG_ORIGIN_CMDLINE in
-git_config_from_parameters() and configset_add_value().
+FWIW, I think there are arguments for transmitting size + content
+(namely, that it is simpler); the downside is that it doesn't allow
+streaming.
 
-For error message in git_parse_source(), use xstrfmt() function to
-prepare the message string, instead of doing something like it's done
-for die_bad_number(), because intelligibility and code conciseness are
-improved for that instance.
+So I think there are two viable alternatives:
 
-Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
----
- cache.h            |  12 +++++-
- config.c           | 117 ++++++++++++++++++++++++++++++++++++++++++++---------
- submodule-config.c |   2 +-
- 3 files changed, 109 insertions(+), 22 deletions(-)
+  1. Total size of data in ASCII decimal, newline, then that many bytes
+     of content.
 
-diff --git a/cache.h b/cache.h
-index 3855ddf..c802098 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1566,10 +1566,18 @@ struct git_config_source {
- 	const char *blob;
- };
- 
-+enum config_origin_type {
-+	CONFIG_ORIGIN_BLOB,
-+	CONFIG_ORIGIN_FILE,
-+	CONFIG_ORIGIN_STDIN,
-+	CONFIG_ORIGIN_SUBMODULE_BLOB,
-+	CONFIG_ORIGIN_CMDLINE
-+};
-+
- typedef int (*config_fn_t)(const char *, const char *, void *);
- extern int git_default_config(const char *, const char *, void *);
- extern int git_config_from_file(config_fn_t fn, const char *, void *);
--extern int git_config_from_mem(config_fn_t fn, const char *origin_type,
-+extern int git_config_from_mem(config_fn_t fn, const enum config_origin_type,
- 					const char *name, const char *buf, size_t len, void *data);
- extern void git_config_push_parameter(const char *text);
- extern int git_config_from_parameters(config_fn_t fn, void *data);
-@@ -1713,7 +1721,7 @@ extern int ignore_untracked_cache_config;
- struct key_value_info {
- 	const char *filename;
- 	int linenr;
--	const char *origin_type;
-+	enum config_origin_type origin_type;
- 	enum config_scope scope;
- };
- 
-diff --git a/config.c b/config.c
-index bea937e..62b83d9 100644
---- a/config.c
-+++ b/config.c
-@@ -24,7 +24,7 @@ struct config_source {
- 			size_t pos;
- 		} buf;
- 	} u;
--	const char *origin_type;
-+	enum config_origin_type origin_type;
- 	const char *name;
- 	const char *path;
- 	int die_on_error;
-@@ -245,6 +245,7 @@ int git_config_from_parameters(config_fn_t fn, void *data)
- 
- 	memset(&source, 0, sizeof(source));
- 	source.prev = cf;
-+	source.origin_type = CONFIG_ORIGIN_CMDLINE;
- 	cf = &source;
- 
- 	/* sq_dequote will write over it */
-@@ -453,6 +454,8 @@ static int git_parse_source(config_fn_t fn, void *data)
- 	int comment = 0;
- 	int baselen = 0;
- 	struct strbuf *var = &cf->var;
-+	int error_return = 0;
-+	char *error_msg = NULL;
- 
- 	/* U+FEFF Byte Order Mark in UTF8 */
- 	const char *bomptr = utf8_bom;
-@@ -507,10 +510,40 @@ static int git_parse_source(config_fn_t fn, void *data)
- 		if (get_value(fn, data, var) < 0)
- 			break;
- 	}
-+
-+	switch (cf->origin_type) {
-+	case CONFIG_ORIGIN_BLOB:
-+		error_msg = xstrfmt(_("bad config line %d in blob %s"),
-+				      cf->linenr, cf->name);
-+		break;
-+	case CONFIG_ORIGIN_FILE:
-+		error_msg = xstrfmt(_("bad config line %d in file %s"),
-+				      cf->linenr, cf->name);
-+		break;
-+	case CONFIG_ORIGIN_STDIN:
-+		error_msg = xstrfmt(_("bad config line %d in standard input"),
-+				      cf->linenr);
-+		break;
-+	case CONFIG_ORIGIN_SUBMODULE_BLOB:
-+		error_msg = xstrfmt(_("bad config line %d in submodule-blob %s"),
-+				       cf->linenr, cf->name);
-+		break;
-+	case CONFIG_ORIGIN_CMDLINE:
-+		error_msg = xstrfmt(_("bad config line %d in command line %s"),
-+				       cf->linenr, cf->name);
-+		break;
-+	default:
-+		error_msg = xstrfmt(_("bad config line %d in %s"),
-+				      cf->linenr, cf->name);
-+	}
-+
- 	if (cf->die_on_error)
--		die(_("bad config line %d in %s %s"), cf->linenr, cf->origin_type, cf->name);
-+		die("%s", error_msg);
- 	else
--		return error(_("bad config line %d in %s %s"), cf->linenr, cf->origin_type, cf->name);
-+		error_return =  error("%s", error_msg);
-+
-+	free(error_msg);
-+	return error_return;
- }
- 
- static int parse_unit_factor(const char *end, uintmax_t *val)
-@@ -619,16 +652,47 @@ int git_parse_ulong(const char *value, unsigned long *ret)
- NORETURN
- static void die_bad_number(const char *name, const char *value)
- {
--	const char *reason = errno == ERANGE ?
--			     "out of range" :
--			     "invalid unit";
- 	if (!value)
- 		value = "";
- 
--	if (cf && cf->origin_type && cf->name)
--		die(_("bad numeric config value '%s' for '%s' in %s %s: %s"),
--		    value, name, cf->origin_type, cf->name, reason);
--	die(_("bad numeric config value '%s' for '%s': %s"), value, name, reason);
-+	if (!(cf && cf->name))
-+		die(errno == ERANGE
-+		    ? _("bad numeric config value '%s' for '%s': out of range")
-+		    : _("bad numeric config value '%s' for '%s': invalid unit"),
-+		    value, name);
-+
-+	switch (cf->origin_type) {
-+	case CONFIG_ORIGIN_BLOB:
-+		die(errno == ERANGE
-+		    ? _("bad numeric config value '%s' for '%s' in blob %s: out of range")
-+		    : _("bad numeric config value '%s' for '%s' in blob %s: invalid unit"),
-+		    value, name, cf->name);
-+	case CONFIG_ORIGIN_FILE:
-+		die(errno == ERANGE
-+		    ? _("bad numeric config value '%s' for '%s' in file %s: out of range")
-+		    : _("bad numeric config value '%s' for '%s' in file %s: invalid unit"),
-+		    value, name, cf->name);
-+	case CONFIG_ORIGIN_STDIN:
-+		die(errno == ERANGE
-+		    ? _("bad numeric config value '%s' for '%s' in standard input: out of range")
-+		    : _("bad numeric config value '%s' for '%s' in standard input: invalid unit"),
-+		    value, name);
-+	case CONFIG_ORIGIN_SUBMODULE_BLOB:
-+		die(errno == ERANGE
-+		    ? _("bad numeric config value '%s' for '%s' in submodule-blob %s: out of range")
-+		    : _("bad numeric config value '%s' for '%s' in submodule-blob %s: invalid unit"),
-+		    value, name, cf->name);
-+	case CONFIG_ORIGIN_CMDLINE:
-+		die(errno == ERANGE
-+		    ? _("bad numeric config value '%s' for '%s' in command line %s: out of range")
-+		    : _("bad numeric config value '%s' for '%s' in command line %s: invalid unit"),
-+		    value, name, cf->name);
-+	default:
-+		die(errno == ERANGE
-+		    ? _("bad numeric config value '%s' for '%s' in %s: out of range")
-+		    : _("bad numeric config value '%s' for '%s' in %s: invalid unit"),
-+		    value, name, cf->name);
-+	}
- }
- 
- int git_config_int(const char *name, const char *value)
-@@ -1105,7 +1169,8 @@ static int do_config_from(struct config_source *top, config_fn_t fn, void *data)
- }
- 
- static int do_config_from_file(config_fn_t fn,
--		const char *origin_type, const char *name, const char *path, FILE *f,
-+		const enum config_origin_type origin_type,
-+		const char *name, const char *path, FILE *f,
- 		void *data)
- {
- 	struct config_source top;
-@@ -1124,7 +1189,7 @@ static int do_config_from_file(config_fn_t fn,
- 
- static int git_config_from_stdin(config_fn_t fn, void *data)
- {
--	return do_config_from_file(fn, "standard input", "", NULL, stdin, data);
-+	return do_config_from_file(fn, CONFIG_ORIGIN_STDIN, "", NULL, stdin, data);
- }
- 
- int git_config_from_file(config_fn_t fn, const char *filename, void *data)
-@@ -1135,14 +1200,14 @@ int git_config_from_file(config_fn_t fn, const char *filename, void *data)
- 	f = fopen(filename, "r");
- 	if (f) {
- 		flockfile(f);
--		ret = do_config_from_file(fn, "file", filename, filename, f, data);
-+		ret = do_config_from_file(fn, CONFIG_ORIGIN_FILE, filename, filename, f, data);
- 		funlockfile(f);
- 		fclose(f);
- 	}
- 	return ret;
- }
- 
--int git_config_from_mem(config_fn_t fn, const char *origin_type,
-+int git_config_from_mem(config_fn_t fn, const enum config_origin_type origin_type,
- 			const char *name, const char *buf, size_t len, void *data)
- {
- 	struct config_source top;
-@@ -1179,7 +1244,7 @@ static int git_config_from_blob_sha1(config_fn_t fn,
- 		return error("reference '%s' does not point to a blob", name);
- 	}
- 
--	ret = git_config_from_mem(fn, "blob", name, buf, size, data);
-+	ret = git_config_from_mem(fn, CONFIG_ORIGIN_BLOB, name, buf, size, data);
- 	free(buf);
- 
- 	return ret;
-@@ -1390,12 +1455,12 @@ static int configset_add_value(struct config_set *cs, const char *key, const cha
- 	if (cf->name) {
- 		kv_info->filename = strintern(cf->name);
- 		kv_info->linenr = cf->linenr;
--		kv_info->origin_type = strintern(cf->origin_type);
-+		kv_info->origin_type = cf->origin_type;
- 	} else {
- 		/* for values read from `git_config_from_parameters()` */
- 		kv_info->filename = NULL;
- 		kv_info->linenr = -1;
--		kv_info->origin_type = NULL;
-+		kv_info->origin_type = CONFIG_ORIGIN_CMDLINE;
- 	}
- 	kv_info->scope = current_parsing_scope;
- 	si->util = kv_info;
-@@ -2476,14 +2541,28 @@ int parse_config_key(const char *var,
- 
- const char *current_config_origin_type(void)
- {
--	const char *type;
-+	int type;
- 	if (current_config_kvi)
- 		type = current_config_kvi->origin_type;
- 	else if(cf)
- 		type = cf->origin_type;
- 	else
- 		die("BUG: current_config_origin_type called outside config callback");
--	return type ? type : "command line";
-+
-+	switch (type) {
-+	case CONFIG_ORIGIN_BLOB:
-+		return "blob";
-+	case CONFIG_ORIGIN_FILE:
-+		return "file";
-+	case CONFIG_ORIGIN_STDIN:
-+		return "standard input";
-+	case CONFIG_ORIGIN_SUBMODULE_BLOB:
-+		return "submodule-blob";
-+	case CONFIG_ORIGIN_CMDLINE:
-+		return "command line";
-+	default:
-+		die("BUG: unknown config origin type");
-+	}
- }
- 
- const char *current_config_name(void)
-diff --git a/submodule-config.c b/submodule-config.c
-index 077db40..1753e01 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -448,7 +448,7 @@ static const struct submodule *config_from(struct submodule_cache *cache,
- 	parameter.commit_sha1 = commit_sha1;
- 	parameter.gitmodules_sha1 = sha1;
- 	parameter.overwrite = 0;
--	git_config_from_mem(parse_config, "submodule-blob", rev.buf,
-+	git_config_from_mem(parse_config, CONFIG_ORIGIN_SUBMODULE_BLOB, rev.buf,
- 			config, config_size, &parameter);
- 	free(config);
- 
--- 
-2.7.4
+  2. No size header, then a series of pkt-lines followed by a flush
+     packet.
 
+And you should choose between the two based on whether it's more
+important to allow streaming, or more important to make the filter
+implementations simple[1].
+
+Any solution that is in between those (like sending a size header and
+then using pktlines anyway) is sacrificing simplicity but not getting
+the streaming benefits.
+
+-Peff
+
+[1] I haven't thought hard enough about it to have a real opinion. My
+    gut says to go with the streaming, just because we've had to
+    retrofit streaming in other areas when dealing with blobs, so I
+    think we'll end up there eventually. So choosing a simpler protocol
+    like (1) would probably mean eventually implementing a next-version
+    protocol that does (2), and having to support both.
+
+PS Jakub asked for links, but gmane is down. Here are the relevant threads:
+
+   http://public-inbox.org/git/20160720134916.GB19359@sigill.intra.peff.net
+
+   http://public-inbox.org/git/20160722154900.19477-1-larsxschneider%40gmail.com/t/#u
