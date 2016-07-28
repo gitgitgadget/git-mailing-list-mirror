@@ -2,86 +2,189 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8A6E1F858
-	for <e@80x24.org>; Thu, 28 Jul 2016 17:47:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3742E1FF40
+	for <e@80x24.org>; Thu, 28 Jul 2016 18:21:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161152AbcG1Rrg (ORCPT <rfc822;e@80x24.org>);
-	Thu, 28 Jul 2016 13:47:36 -0400
-Received: from bsmtp3.bon.at ([213.33.87.17]:43903 "EHLO bsmtp3.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161013AbcG1Rre (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jul 2016 13:47:34 -0400
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp3.bon.at (Postfix) with ESMTPSA id 3s0fSz756Gz5tl9;
-	Thu, 28 Jul 2016 19:47:31 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id E43F83C9;
-	Thu, 28 Jul 2016 19:47:23 +0200 (CEST)
-To:	Vasco Almeida <vascomalmeida@sapo.pt>
-Cc:	Git Mailing List <git@vger.kernel.org>
-From:	Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH va/i18n-even-more] rebase-interactive: trim leading whitespace
- from progress count
-Message-ID: <fa512576-487e-9b9c-3ada-7f0d9b135e4b@kdbg.org>
-Date:	Thu, 28 Jul 2016 19:47:23 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+	id S1756646AbcG1SVi (ORCPT <rfc822;e@80x24.org>);
+	Thu, 28 Jul 2016 14:21:38 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:35693 "EHLO
+	mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756345AbcG1SVh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2016 14:21:37 -0400
+Received: by mail-pf0-f169.google.com with SMTP id x72so24385963pfd.2
+        for <git@vger.kernel.org>; Thu, 28 Jul 2016 11:21:36 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=vB2R2RKTOUXgeriGivZK/8sF1B1KWBmT+QlpuO/6IGY=;
+        b=LBs7fr7MZIIEbNmYI7UkTu3tWzn1qfVogOd6GkAR25AbJEFmWOEYV5ybwqSFQYFp0s
+         sD781lgeY7RzEoR+2aWs7sYWmCUJqZHVbPNpOB2ni5LgkODmp7TcNQ9YLqpS30qdpN29
+         Wp/oMuoaFGSimBj/tFrBPKyxZZpNQxKJZ/8z110YzDeed2ff8vLpf9ryrkWVPWb4maq0
+         XiYw15n3fWN5xSEitDe2nSYNrNhwWEbvyzyCrlPNuD0MW/OdcbPC2pU2V8uibyLCmb51
+         ZZcBQHN+HkxHdct3NHJtotmyiCdRv4AkLqvYymFBqlK+qF1WZYgLWWoqZ/XMTvXxVS0D
+         IZ3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=vB2R2RKTOUXgeriGivZK/8sF1B1KWBmT+QlpuO/6IGY=;
+        b=NrSHXwWUrcc4gHH7atBLpGJmhY7HJTUqTt7XrOZEzXqkplIUsTP23KddpWCE84Ns+q
+         wBRbd3UDF4xcnZ/iyv6/EkfHGJQ+vAR+UeK1RPE8PyC66ViTAYzxpIuMzkZLJ+SBxxbY
+         WKVa5l4JmDZf9J3VWDMNptWPBMi8Q40+RFGiEdLZ3k4pt5kTtdoah/qpkR5x63PvgwQK
+         NcllP0ANGB7LFQIDlLWZkCgu3BcUsAK36CxaUdApsNbsmceIFyf38NgJpqyHzH49sVtT
+         +1A6dj8JDqlZ3SHaV7y6jrZDlFWRgN8oHfjLYWTbo4SQbMyFgiUIjDbcYdq4AMq4yEfW
+         bTRQ==
+X-Gm-Message-State: AEkoouti4tC9gJQIWhuVQ6sujVEdg6iUR08q4fhfoINzqUv5BreN4eks58axHUrFSRn7f1Vv
+X-Received: by 10.98.33.72 with SMTP id h69mr60956422pfh.28.1469730096031;
+        Thu, 28 Jul 2016 11:21:36 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:6dbf:17d9:7b5c:47ec])
+        by smtp.gmail.com with ESMTPSA id x184sm18782098pfd.70.2016.07.28.11.21.35
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 28 Jul 2016 11:21:35 -0700 (PDT)
+From:	Stefan Beller <sbeller@google.com>
+To:	gitster@pobox.com
+Cc:	git@vger.kernel.org, Jens.Lehmann@web.de, jrnieder@gmail.com,
+	Stefan Beller <sbeller@google.com>,
+	Avery Pennarun <apenwarr@gmail.com>
+Subject: [PATCHv2 2/2] submodule update: allow '.' for branch value
+Date:	Thu, 28 Jul 2016 11:21:32 -0700
+Message-Id: <20160728182132.25088-1-sbeller@google.com>
+X-Mailer: git-send-email 2.9.2.468.g3d9025b
+In-Reply-To: <20160728172641.8376-3-sbeller@google.com>
+References: <20160728172641.8376-3-sbeller@google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Interactive rebase uses 'wc -l' to write the current patch number
-in a progress report. Some implementations of 'wc -l' produce spaces
-before the number, leading to ugly output such as
+Gerrit has a "superproject subscription" feature[1], that triggers a
+commit in a superproject that is subscribed to its submodules.
+Conceptually this Gerrit feature can be done on the client side with
+Git via:
 
-  Rebasing (     3/8)
+    git -C <superproject> submodule update --remote --force
+    git -C <superproject> commit -a -m "Update submodules"
+    git -C <superproject> push
 
-Remove the spaces using a trivial arithmetic evaluation.
+for each branch in the superproject. To ease the configuration in Gerrit
+a special value of "." has been introduced for the submodule.<name>.branch
+to mean the same branch as the superproject[2], such that you can create a
+new branch on both superproject and the submodule and this feature
+continues to work on that new branch.
 
-Before 9588c52 (i18n: rebase-interactive: mark strings for
-translation) this was not a problem because printf was used to
-generate the text. Since that commit, the count is interpolated
-directly from a shell variable into the text, where the spaces
-remain. The total number of patches does not have this problem
-even though it is interpolated from a shell variable in the same
-manner, because the variable is set by an arithmetic evaluation.
+Now we have find projects in the wild with such a .gitmodules file.
+To have Git working well with these, we imitate the behavior and
+look up the superprojects branch name if the submodules branch is
+configured to ".". In projects that do not use Gerrit, this value
+whould be never configured as "." is not a valid branch name.
 
-Later in the script, there is a virtually identical case where
-leading spaces are trimmed, but it uses a pattern substitution:
+[1] introduced around 2012-01, e.g.
+    https://gerrit-review.googlesource.com/#/c/30810/
+[2] excerpt from [1]:
+ > The branch value could be '.' if the submodule project branch
+ > has the same name as the destination branch of the commit having
+ > gitlinks/.gitmodules file.
 
-todocount=$(git stripspace --strip-comments <"$todo" | wc -l)
-todocount=${todocount##* }
-
-I did not choose this idiom because it adds a line of code, and
-there is already an arithmetic evaluation in the vicinity of the
-line that is changed here.
-
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+CC: Avery Pennarun <apenwarr@gmail.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- git-rebase--interactive.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index ded4595..e2da524 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -121,7 +121,7 @@ mark_action_done () {
- 	sed -e 1q < "$todo" >> "$done"
- 	sed -e 1d < "$todo" >> "$todo".new
- 	mv -f "$todo".new "$todo"
--	new_count=$(git stripspace --strip-comments <"$done" | wc -l)
-+	new_count=$(( $(git stripspace --strip-comments <"$done" | wc -l) ))
- 	echo $new_count >"$msgnum"
- 	total=$(($new_count + $(git stripspace --strip-comments <"$todo" | wc -l)))
- 	echo $total >"$end"
+ This comes with another test that I run into while using this code.
+ Please replace patch 2 with this v2.
+ 
+ Thanks,
+ Stefan
+
+ git-submodule.sh            |  9 ++++++++-
+ t/t7406-submodule-update.sh | 42 +++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 49 insertions(+), 2 deletions(-)
+
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 4ec7546..1eb33ad 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -590,7 +590,6 @@ cmd_update()
+ 
+ 		name=$(git submodule--helper name "$sm_path") || exit
+ 		url=$(git config submodule."$name".url)
+-		branch=$(get_submodule_config "$name" branch master)
+ 		if ! test -z "$update"
+ 		then
+ 			update_module=$update
+@@ -616,6 +615,14 @@ cmd_update()
+ 
+ 		if test -n "$remote"
+ 		then
++			branch=$(get_submodule_config "$name" branch master)
++			if test "$branch" = "."
++			then
++				if ! branch=$(git symbolic-ref --short -q HEAD)
++				then
++					die "$(eval_gettext "submodule branch configured to inherit branch from superproject, but it's not on any branch")"
++				fi
++			fi
+ 			if test -z "$nofetch"
+ 			then
+ 				# Fetch remote before determining tracking $sha1
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index bd261ac..953c486 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -209,9 +209,49 @@ test_expect_success 'submodule update --remote should fetch upstream changes' '
+ 	)
+ '
+ 
+-test_expect_success 'local config should override .gitmodules branch' '
++test_expect_success 'submodule update --remote should fetch upstream changes with .' '
++	(cd super &&
++	 git config -f .gitmodules submodule."submodule".branch "." &&
++	 git add .gitmodules &&
++	 git commit -m "submodules: update from the respective superproject branch"
++	) &&
+ 	(cd submodule &&
++	 echo line4a >> file &&
++	 git add file &&
++	 test_tick &&
++	 git commit -m "upstream line4a" &&
++	 git checkout -b test-branch &&
++	 test_commit on-test-branch
++	) &&
++	(cd super &&
++	 git submodule update --remote --force submodule &&
++	 (cd submodule &&
++	  test "$(git log -1 --oneline)" = "$(GIT_DIR=../../submodule/.git git log -1 --oneline master)"
++	 ) &&
+ 	 git checkout -b test-branch &&
++	 git submodule update --remote --force submodule &&
++	 (cd submodule &&
++	  test "$(git log -1 --oneline)" = "$(GIT_DIR=../../submodule/.git git log -1 --oneline test-branch)"
++	 ) &&
++	 git checkout master &&
++	 git branch -d test-branch
++	)
++'
++
++test_expect_success 'branch = . does not confuse the rest of update' '
++	(cd super &&
++	 git checkout --detach &&
++	 # update is not confused by branch="." even if the the superproject
++	 # is not on any branch currently
++	 git submodule update &&
++	 git revert HEAD &&
++	 git checkout master
++	)
++'
++
++test_expect_success 'local config should override .gitmodules branch' '
++	(cd submodule &&
++	 git checkout test-branch &&
+ 	 echo line5 >> file &&
+ 	 git add file &&
+ 	 test_tick &&
 -- 
-2.9.0.443.ga8520ad
+2.9.2.468.g3d9025b
 
