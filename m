@@ -6,49 +6,42 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 994B31F858
-	for <e@80x24.org>; Thu, 28 Jul 2016 22:06:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D95C71F955
+	for <e@80x24.org>; Thu, 28 Jul 2016 22:07:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751719AbcG1WGE (ORCPT <rfc822;e@80x24.org>);
-	Thu, 28 Jul 2016 18:06:04 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:51238 "EHLO dcvr.yhbt.net"
+	id S1752017AbcG1WHZ (ORCPT <rfc822;e@80x24.org>);
+	Thu, 28 Jul 2016 18:07:25 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:51350 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751450AbcG1WGD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jul 2016 18:06:03 -0400
+	id S1751438AbcG1WHY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2016 18:07:24 -0400
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E8CE1F858;
-	Thu, 28 Jul 2016 22:06:01 +0000 (UTC)
-Date:	Thu, 28 Jul 2016 22:06:01 +0000
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52BCF1F858;
+	Thu, 28 Jul 2016 22:07:23 +0000 (UTC)
+Date:	Thu, 28 Jul 2016 22:07:23 +0000
 From:	Eric Wong <e@80x24.org>
-To:	Duy Nguyen <pclouds@gmail.com>
-Cc:	Lars Schneider <larsxschneider@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-Subject: Re: Alternatives to mid.gmane.org?
-Message-ID: <20160728220601.GA13110@dcvr>
-References: <481D1EE2-6A66-418F-AB28-95947BBF3680@gmail.com>
- <CACsJy8Cr-=09dDMTNpqobPkcVjU54+b-fLX61+cz2jkS8o+Tiw@mail.gmail.com>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH] git-svn: allow --version to work anywhere
+Message-ID: <20160728220723.GB13110@dcvr>
+References: <20160720004734.GA19635@whir>
+ <xmqqeg6lbnow.fsf@gitster.mtv.corp.google.com>
+ <20160722204610.GA20896@whir>
+ <xmqqtwf9r013.fsf@gitster.mtv.corp.google.com>
+ <xmqqd1lxqwxf.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CACsJy8Cr-=09dDMTNpqobPkcVjU54+b-fLX61+cz2jkS8o+Tiw@mail.gmail.com>
+In-Reply-To: <xmqqd1lxqwxf.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> wrote:
-> I read this and thought "temporarily" but apparently it's not [1]. A
-> lot of our links in the mail archive are gmane's :(
+Junio C Hamano <gitster@pobox.com> wrote:
+> Subject: [PATCH] t9100: portability fix
 > 
-> [1] https://lars.ingebrigtsen.no/2016/07/28/the-end-of-gmane/
+> Do not say "export VAR=VAL"; "VAR=VAL && export VAR" is always more
+> portable.
 
-I may not have time to integrate this extensibly into the public-inbox
-search engine today, but at least here is an NNTP article number to
-Message-ID mapping for non-NNTP users:
-
-https://public-inbox.org/.temp/gmane.comp.version-control.git-300599.txt.gz
-(~5 MB)
-
-Script used to generate this:
-
-https://public-inbox.org/meta/20160728220145.13024-1-e@80x24.org/
+Oops, sorry I should've caught that :x
