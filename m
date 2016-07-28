@@ -2,101 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 75FD41F858
-	for <e@80x24.org>; Thu, 28 Jul 2016 16:57:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA76F1F858
+	for <e@80x24.org>; Thu, 28 Jul 2016 16:59:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932649AbcG1Q5Z (ORCPT <rfc822;e@80x24.org>);
-	Thu, 28 Jul 2016 12:57:25 -0400
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:37132 "EHLO
-	mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932581AbcG1Q5X convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Jul 2016 12:57:23 -0400
-Received: by mail-wm0-f44.google.com with SMTP id i5so117168746wmg.0
-        for <git@vger.kernel.org>; Thu, 28 Jul 2016 09:57:23 -0700 (PDT)
+	id S932692AbcG1Q7s (ORCPT <rfc822;e@80x24.org>);
+	Thu, 28 Jul 2016 12:59:48 -0400
+Received: from mail-it0-f43.google.com ([209.85.214.43]:35040 "EHLO
+	mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932581AbcG1Q7q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2016 12:59:46 -0400
+Received: by mail-it0-f43.google.com with SMTP id u186so173185165ita.0
+        for <git@vger.kernel.org>; Thu, 28 Jul 2016 09:59:46 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=1MDNi2lPHhviFouWe+8obgAS5/vgs3zVcgIFpXIOFM4=;
-        b=jVdUqqCcxkNLhmB0DGBeyCyuCRU7qNaiySU2UVWL4xy9dsubN67vksgYgMbK0VrQcZ
-         wHVRAhGzXqTZYLfjH/JXrOkNSX26AmbEmYCd+FjA0iehRmP/K5T0uxLoaEUoAjh2JkoQ
-         NVQWdnd2+JZflMGfrPi9xGErNUESWs+UHbn9nkizllMocga9nBLqOtQhrQXZKj/E5yzq
-         qWlxxfQfxClI3AcS1wQeEYFdRpJXEYUsurYBxolZd8/EUAGl1hZBXlWu0tIWcCyNJlTk
-         eMLsSeeQK3XEyrAxZRmqSTmyB+pmLtm+rOZkCEb20C7Byx8M8J/kldfWGpdMrdcNJlDL
-         WP+Q==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=WrC0nHF+vVufQib/QspfVL7pdQUbA3+pcBJF7TKSZHc=;
+        b=mESIc6/y0i8+bogincX1SuDJTT1qt7ZPSqv+r+OHTc6kN1b52mhZeEICWP/RMOoQ4/
+         ecKj2WJb+plHhggxLqh6IxZx1hcszI19BofB/JKFxJOyPwIoXBreSi5X3PFlTO583Xos
+         dKOTu18wxFPwlCR4HO9A9A+jRsMJ1Vf3zlGklwFryJTc83CrLa64o0KjBxbgUGxuxnjn
+         RHFsXN3cVInxJvqSxFiyvhd6oeboB4mFSJld5Edq8ZQhXZaS2FV6Exl+yn1x/oQ6ghSv
+         FfoLx9T8yKjJsQwnMNkfAVAP3ghIECRy/+qfZYUgQwS07rB6OLdeGFKPCYF8DKSs2Fw1
+         SOWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=1MDNi2lPHhviFouWe+8obgAS5/vgs3zVcgIFpXIOFM4=;
-        b=FevebTUVDZrovnkbgVjv3qLww40wplKMlLUfj+uIjl6V5KvVc95NefFE8A19/jNrpv
-         ZgUmnJU8D7DalGZrwbKG2BaQpNIXBFHJBGDdPwofUce1lYl8cBDXr0sTDl5mkDU0vIGb
-         eNRvIICZF2fayovEFHQ7zqqZ29UiPHwDVvINvawjzyBCf2OSGNkQIZOyJVU0ripHKKQv
-         DwZjWMD/sbSK+0ItAGO1be3kLEPxxdWCTeSPuqEcpQbBGpz5x0UIpk0wb0FTwpoNZWbA
-         63QTp/+68QFPJLAllC3Q5RVJbBvpIe2X1BCaxow0KjmxAWMrDsGUknKV2IToCOgsIelx
-         qmpw==
-X-Gm-Message-State: AEkoouvfuVrFQRh/o0w0NT4SA5d5mgTuB3iFIyVNtoboFGHddSxNXLTMXEGLnaeXv1f7P88QrH5lYIVFsqYH4A==
-X-Received: by 10.194.143.17 with SMTP id sa17mr32163875wjb.97.1469725042347;
- Thu, 28 Jul 2016 09:57:22 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=WrC0nHF+vVufQib/QspfVL7pdQUbA3+pcBJF7TKSZHc=;
+        b=bZ7Id0hxAHG1OzYKOKLj1g1A8sXIADYJvNVAWQWXskShf+np/u/kwSthsb1qC8OOXh
+         zjz9VTCcQOtMjQhcw9kry28l0TRr26LgX+l4taTQqJch1dcMnuX6OT1Wpd4WunCv4Mqb
+         mO4ZGRhjkWJm7oAkIvRhT+J3U+OV+93hwH9ykHM5Ndtq9BFFD9tzyx1Bn96Ibkryg+pP
+         bZfXVWFmusN7ALAByzsIRG7/4ueEhAaQROd2zAoR0HG2WIZoDeoOkobSxK3v8Fqj+YRd
+         A31mfwqY/Mggwn7UmzdFLZLmqxqR9mB5yEZvnKjrkwq6qZI47riME038Sa2Lqa3zT/HA
+         zyBw==
+X-Gm-Message-State: ALyK8tJWjGef7yTCtQ6gUeuBmkxPJYTcpCf/qItgLLzXCCLbMjXAW2tVQPF0BgHyTyx4YIsob+dPFGJuv2ho7Q==
+X-Received: by 10.36.33.197 with SMTP id e188mr92173739ita.42.1469725185885;
+ Thu, 28 Jul 2016 09:59:45 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.28.130.74 with HTTP; Thu, 28 Jul 2016 09:56:52 -0700 (PDT)
-In-Reply-To: <xmqqlh0lsoq6.fsf@gitster.mtv.corp.google.com>
-References: <CAA787r=FH7Sa4qy2A-dy+wug81ZkqOW2KmSuWBE8_3whmNj1pw@mail.gmail.com>
- <xmqqlh0lsoq6.fsf@gitster.mtv.corp.google.com>
-From:	=?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
-Date:	Thu, 28 Jul 2016 18:56:52 +0200
-X-Google-Sender-Auth: qJG1QwCIewh0BgXUx1o0Y1uEGwc
-Message-ID: <CAA787rmDb+1=4RCscvo1rZWSt=tUQSm5wrFet-=PhRKZcf9x5A@mail.gmail.com>
-Subject: Re: git-testadd: Execute a command with only the staged changes in
- Git applied
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>
+Received: by 10.64.225.235 with HTTP; Thu, 28 Jul 2016 09:59:16 -0700 (PDT)
+In-Reply-To: <20160728160226.24018-1-r.ruede@gmail.com>
+References: <20160728160226.24018-1-r.ruede@gmail.com>
+From:	Duy Nguyen <pclouds@gmail.com>
+Date:	Thu, 28 Jul 2016 18:59:16 +0200
+Message-ID: <CACsJy8AW3Z+C81F6w7WiZXXvcLRv9PB4=Wjbze6eE_MPgikU8A@mail.gmail.com>
+Subject: Re: [PATCH/RFC 0/7] Add possibility to clone specific subdirectories
+To:	Robin Ruede <r.ruede@gmail.com>
+Cc:	Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 28 July 2016 at 18:37, Junio C Hamano <gitster@pobox.com> wrote:
-> Øyvind A. Holm <sunny@sunbase.org> writes:
-> > This is a script I created some weeks ago, and I've found it to be
-> > immensely useful. Here is a snippet from git-testadd --help:
-> >
-> >   If you have lots of unrelated uncommitted changes in the current
-> >   repository and want to split up the commit, how can you easily
-> >   check if the changes passes the test suite? With all the other
-> >   unrelated changes it can be hard to make sure that only relevant
-> >   changes becomes part of the commit, and that they don't result in
-> >   regressions. This script clones the repository to the directory
-> >   ".testadd.tmp" in the current directory and applies the staged
-> >   chenges there (unless -u/--unmodified or -p/--pristine is
-> >   specified), chdirs to the same relative directory in the clone and
-> >   executes the command specified on the command line there.
+On Thu, Jul 28, 2016 at 6:02 PM, Robin Ruede <r.ruede@gmail.com> wrote:
+> This patch series adds a `--sparse-prefix=` option to multiple commands,
+> allowing fetching repository contents from only a subdirectory of a remote.
 >
-> So in short, this solves the same problem as "git stash --keep" but in
-> a more scalable way, in the sense that "git stash --keep" allows you
-> to instantiate what you have in the index so that your working tree
-> can be used for such a test, but you cannot do anything else while you
-> are waiting for the test to finish, and "testadd" allows you to keep
-> hacking in the working tree while a test runs in its own temporary
-> checkout (and presumably you can have more than one running, which
-> would allow you to scale more)?
+> This works along with sparse-checkout, and is especially useful for repositories
+> where a subdirectory has meaning when standing alone.
 
-That's correct, the test clone is entirely separated from the working
-copy, and you can keep working while the tests are running in the clone.
-Combined with git-gui and/or "git add -p/git reset -p", it's easy to
-tweak the staged changes until things are ok.
+Ah.. this is what I call narrow checkout [1] (but gmane is down at the moment)
 
-Also, there is a -l/--label option that creates a clone directory with
-the name ".testadd-[LABEL].tmp", so you can have several test clones at
-the same time, all with different staged changes. There is also a
--r/--ref option that tries to apply the staged changes onto another
-commit, and the command will only run if the apply succeeds. Also, this
-won't create dangling heads like "git stash --keep" does.
+[1] http://thread.gmane.org/gmane.comp.version-control.git/155427
 
-        Øyvind
+> * Motivation (example use cases)
+>
+> ...
+
+nods nods.. all good stuff
+
+> * Open problems:
+>
+> 1. Currently all trees are still included. It would be possible to
+> include only the trees relevant to the sparse files, which would significantly
+> reduce the pack sizes for repositories containing a lot of small files changing
+> often. For example package managers using git. Not sure in how many places all
+> trees are presumed present.
+
+You can limit some trees by passing a pathspec to "git rev-list" (in
+your "list-objects" patch). All trees completely outside sub/dir will
+be excluded. Trees leading to it (e.g. root tree and "sub") are still
+included. Not having all trees open up a new set of problems.. This is
+what I did in narrow clone: pass some directories (as pathspec) to
+rev-list on the server side, then deal with lack of trees on client
+side.
+
+> 2. This patch set implements it as a simple single prefix check command line
+> option.
+> Using the exclude_list format (same as in sparse-checkout) might be useful.
+> The server needs to check these patterns for all files in history, so I'm not
+> sure if allowing multiple/complex patterns is a good idea.
+
+I would go with something else than sparse-checkout, which I call
+narrow checkout: instead of flattening the entire tree in index and
+keep only files there, we keep trees that we don't have as trees.
+Those trees have the same "sparse checkout" attributes, e.g. ignore
+worktree and some of submodules e.g. don't bother checking the
+associated hash. This approach [2] eliminates changes in cache-tree.c
+(i.e. 3/7).
+
+And you would need something like that, when you don't have all the
+trees (from open problem 1), because you just can't flatten trees when
+you don't have them.
+
+[2] https://github.com/pclouds/git/commits/lanh/narrow-checkout (I
+think core functionality is in place, but narrow operation still needs
+more work)
+
+> 3. This patch set assumes the sparse-prefix and sparse-checkout does not change.
+> running clone and fetch both need to have the --sparse-prefix= option, otherwise
+> complete packs will be fetched. Not sure what the best way to store the
+> information is, possibly create a new file `.git/sparse` similar to
+> `.git/shallow` containing the path(s).
+
+Something like .git/shallow, yes. It's similar in nature anyway
+(shallow cuts depth, you cut the side)
+
+> 3. Bitmap indices cannot be used, because they do not contain the paths of the
+> objects. So for creating packs, the whole DAG has to be walked.
+
+And shallow clones have this same problem. Something to be sorted out :)
+
+> 4. Fsck complains about missing blobs. Should be fairly easy to fix.
+
+Not really. You'll have to associate path information with blobs
+before you decide that a blob should exist or not. Sparse patterns are
+just not designed for that (tree walking). If you narrow (heh) down to
+just path prefix not full blown sparse patterns, then it's feasible to
+walk tree and filter. A subset of pathspec would be good because we
+can already filter by pathspec, but I would not go full pathspec at
+the first step.
+
+> 5. Tests and documentation is missing.
+
+Personally I would go with my narrow clone approach, but the ability
+to selectively exclude some large blobs is still good, I think.
+However, another approach to excluding some blobs is the external
+object database [3]. It gives you what you need with a lot less code
+impact (but you will not be able to work offline 100% the time like
+what you can now with git)
+
+[3] https://public-inbox.org/git/20160613085546.11784-1-chriscool%40tuxfamily.org/
+-- 
+Duy
