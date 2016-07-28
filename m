@@ -6,56 +6,57 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F19361F858
-	for <e@80x24.org>; Thu, 28 Jul 2016 22:32:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0AAC51F858
+	for <e@80x24.org>; Thu, 28 Jul 2016 23:18:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752037AbcG1Wb6 (ORCPT <rfc822;e@80x24.org>);
-	Thu, 28 Jul 2016 18:31:58 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:35409 "EHLO
-	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751448AbcG1Wb6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Jul 2016 18:31:58 -0400
-Received: by mail-wm0-f48.google.com with SMTP id f65so268858897wmi.0
-        for <git@vger.kernel.org>; Thu, 28 Jul 2016 15:31:57 -0700 (PDT)
+	id S1752164AbcG1XSA (ORCPT <rfc822;e@80x24.org>);
+	Thu, 28 Jul 2016 19:18:00 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:37763 "EHLO
+	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751147AbcG1XR6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Jul 2016 19:17:58 -0400
+Received: by mail-wm0-f46.google.com with SMTP id i5so128469235wmg.0
+        for <git@vger.kernel.org>; Thu, 28 Jul 2016 16:17:58 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-transfer-encoding;
-        bh=9PSrOVUoVZIvxc91+HUdTLnJ6QYfS5ew0pOJgkaKEMA=;
-        b=mu+prpsyMdIu26/T2tDoG3AV9amMG7Tdol1I3bL7J6mgR593n9WL3RHJxEHKBeFQF6
-         CiQfmW33aZ6J3GEjuwqnEVUlTvAVT2TzfeezncjggKnVYBwPVWnAG4E/X0LP4S85RGaz
-         /ygH4QFCGNYh9mTV3vpsGfG2dIuXB0z0YiwLITJxq08rXRu1q+c5pHmnA8MYFCqkx+86
-         P/6fASDjR+Wp8GIjjUOZO6T5awcNaqAjuFE3AQescWa3VjDQuaI5SpWwUAOtvMpOjKhI
-         8QlkT1C2IVXRypgcDbEjq3c8JuN905sN/l2xD8gaV8kIlw8BtV1MNaxpB+922sVqB74f
-         Ikmg==
+        bh=+Wt7yk1BL3DneUC1C9ONwUteQvmc0qDm8zmURnWvIxg=;
+        b=Hh570X6MQSo3Ryd4SYyZYfZFlwHMZxn1ydYn5IhhkCkV7AzFUbmoDQVdQRgsWuQqpj
+         EtRyn8vtH8cmuNnWdbk9XfmZZ30w94r/ojU12/Euy7sTJ01M6s2dg4j/emvNsGqnusye
+         GWXALb1px7A2Dbop9kJMdKrcXUNS2mCLTwBXO32pkg94szRVWDWPIXYYJw1ChkQfLnvI
+         KhkKSZVDuA9wEHxVkGpHeNL6xdzlWDPBYj4bJrVaXvkZExfHr5yrs/Ha6PY3Ac2sMi4c
+         1uDGPI+n50s+QDVlUi/66HrHLa9jxcbcnof6C8eeypOLBsGKJVBeWeNyEVTkmz1effog
+         fF4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=9PSrOVUoVZIvxc91+HUdTLnJ6QYfS5ew0pOJgkaKEMA=;
-        b=ah4U0SMmqbkeBROLKOgi284lL35IDlmRf/fMd1er10nrnE0o6Md0EdxfTIAc6tzB2F
-         x7oMa7UqJOTUMzgaOa5b4Vo78cf4C+0BrgayQ7OXKMSk8QS2OcWypMjADDWl9zPANlzR
-         b7XX22uNkl8h5urTdHJcBp3GA6lft+bwYZgqpVGU0kmhf3g2q+yX3fGZkK5cfwU5yZz/
-         tX8mmJW4zjuPpL197aed0nTp8DrKf0nyNEjZWJxI6mwTau1exr1/t7sUcaCI5Pc/6M4v
-         5iJQUxWE6AVllYP6eKUw4uwbeAeJ8i1i+OvuSKWSypUxJ2GqCC2OMO8WEdlUF2pFzsiB
-         7bsw==
-X-Gm-Message-State: AEkoouvEAx00BlSefCS6nGy85XobVlvAabaw1DkuuF0AC2WkQKvbbylXXtwht7XcRFNhcbxOvphbE1KNiL61jg==
-X-Received: by 10.194.149.133 with SMTP id ua5mr34868254wjb.79.1469745116588;
- Thu, 28 Jul 2016 15:31:56 -0700 (PDT)
+        bh=+Wt7yk1BL3DneUC1C9ONwUteQvmc0qDm8zmURnWvIxg=;
+        b=NRJDSuM20OjYfi5aivqMtpxUC2x1IUwCxw1M2huR9JFH1jSj+eAyTMytYBoo1GHmHW
+         bIrTRS3yzNEz83dSO3IxbXpapfwYMXfDbao8yaN+jujL5JAZGsds+ZLU0dtODM+gDE4T
+         r8k20eihhNiIkwNjV7+qtC7/gC62K4xgBx8RWek0jeB+hJ5hlmxCN/MAscad+mJVaPhE
+         hYIlRR2ldVXLUyMr1P/kTvuN8/fbjlLaNT3i2jpkPXhKcnu6ctUmjggCLMWQl8k8q42W
+         1KL9g69GzSsRmjHW5dDPe7WC6xcwugayCERudGaFt/CAWQr4B3ktJXWx1yzZQ9WLQX60
+         NsVA==
+X-Gm-Message-State: AEkooutt5FW0nZlxmgS2vtYsHYMtNMeAILPO/21snAsGiHYXTvnuBv3PtbTJzL2Ddtj2tidR8LYFkRIIqcCVtA==
+X-Received: by 10.194.149.133 with SMTP id ua5mr34985895wjb.79.1469747876565;
+ Thu, 28 Jul 2016 16:17:56 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.28.130.74 with HTTP; Thu, 28 Jul 2016 15:31:27 -0700 (PDT)
-In-Reply-To: <579A5D97.7080708@gmail.com>
+Received: by 10.28.130.74 with HTTP; Thu, 28 Jul 2016 16:17:27 -0700 (PDT)
+In-Reply-To: <xmqqzip1pew5.fsf@gitster.mtv.corp.google.com>
 References: <CAA787r=FH7Sa4qy2A-dy+wug81ZkqOW2KmSuWBE8_3whmNj1pw@mail.gmail.com>
  <xmqqlh0lsoq6.fsf@gitster.mtv.corp.google.com> <CAA787rmDb+1=4RCscvo1rZWSt=tUQSm5wrFet-=PhRKZcf9x5A@mail.gmail.com>
- <579A5D97.7080708@gmail.com>
+ <579A5D97.7080708@gmail.com> <CAA787rm+qLig6mzHw0NjNDt-6HF_77FOwmg5dBBOdwbqo3wP6A@mail.gmail.com>
+ <xmqqzip1pew5.fsf@gitster.mtv.corp.google.com>
 From:	=?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
-Date:	Fri, 29 Jul 2016 00:31:27 +0200
-X-Google-Sender-Auth: VjdvhAudT3s2m9Ltly7s73MAYOQ
-Message-ID: <CAA787rm+qLig6mzHw0NjNDt-6HF_77FOwmg5dBBOdwbqo3wP6A@mail.gmail.com>
+Date:	Fri, 29 Jul 2016 01:17:27 +0200
+X-Google-Sender-Auth: WG4mxxni907pVftttNom5FGLfdg
+Message-ID: <CAA787rnugsnAqK6iH_UZMQRhdpnjJ6NN0x8aaVn7e9GAE88=jQ@mail.gmail.com>
 Subject: Re: git-testadd: Execute a command with only the staged changes in
  Git applied
-To:	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Cc:	Junio C Hamano <gitster@pobox.com>,
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8BIT
@@ -64,64 +65,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 28 July 2016 at 21:31, Jakub Narębski <jnareb@gmail.com> wrote:
-> W dniu 2016-07-28 o 18:56, Øyvind A. Holm pisze:
-> > Øyvind A. Holm <sunny@sunbase.org> writes:
-> > > This is a script I created some weeks ago, and I've found it to be
-> > > immensely useful. Here is a snippet from git-testadd --help:
-> > > [...]
-> > >   This script clones the repository to the directory
-> > >   ".testadd.tmp" in the current directory and applies the staged
-> > >   chenges there (unless -u/--unmodified or -p/--pristine is
-> > >   specified), chdirs to the same relative directory in the clone
-> > >   and executes the command specified on the command line there.
+On 29 July 2016 at 00:38, Junio C Hamano <gitster@pobox.com> wrote:
+> Øyvind A. Holm <sunny@sunbase.org> writes:
+> > Jakub Narębski <jnareb@gmail.com> wrote:
+> > > I wonder if using `git worktree` instead of `git clone` (well,
+> > > local clone uses hardlinks, so it is not that costly as it looks
+> > > like) would be a better solution.
 > >
-> > That's correct, the test clone is entirely separated from the
-> > working copy, and you can keep working while the tests are running
-> > in the clone. Combined with git-gui and/or "git add -p/git reset
-> > -p", it's easy to tweak the staged changes until things are ok.
+> > That's an interesting idea. Have to test it out. This is the result
+> > from the current master in linux.git:
+> >
+> > With clone:
+> > ...
+> > With worktree:
+> > ...
+> >
+> > Both tests were run with cold cache ("echo 3
+> > >/proc/sys/vm/drop_caches" as root). It seems as there's no
+> > >difference, and that git clone is as fast as it can get without
+> > >breaking physical laws. And we probably shouldn't do that. :)
 >
-> I wonder if using `git worktree` instead of `git clone` (well, local
-> clone uses hardlinks, so it is not that costly as it looks like) would
-> be a better solution.
+> I expect that writing the 55k+ files in the working tree would
+> dominate the cost.  Local clone would make some hardlinks in .git
+> (including ones in .git/object/*) but the cost of that would not be
+> too high as long as the repository is well packed; "git worktree"
+> would reduce that part of the cost from "git clone", but both incur
+> the cost of "checkout", i.e. actually populating the new working tree.
+>
+> Does the test directory even need to look anything like Git?  In other
+> words, would it suffice if it resembled the result of running "git
+> archive | tar xf -"?  I suspect that it would not make much
+> difference, either, for the same reason, though ;-).
 
-That's an interesting idea. Have to test it out. This is the result from
-the current master in linux.git:
+Using git archive saved 1.6 seconds:
 
-With clone:
+  $ mkdir testdir; git archive HEAD | (cd testdir && time tar x)
 
-  $ time git testadd pwd
-  git-testadd: Using ".testadd.tmp" as destination directory
-  Cloning into '.testadd.tmp'...
-  done.
-  Checking out files: 100% (55256/55256), done.
-  git-testadd: Applying staged changes
-
-  git-testadd: Executing "pwd" in /home/sunny/src/test-wt/.testadd.tmp
-  /home/sunny/src/test-wt/.testadd.tmp
-
-  real    0m10.464s
-  user    0m5.983s
-  sys     0m2.790s
+  real    0m8.881s
+  user    0m0.440s
+  sys     0m2.740s
   $
 
-With worktree:
+But when .git is missing in the subdir, git apply doesn't work. Can't
+think of any way to get that to work without involving patch(1) and
+friends, and then the binary diffs goes out of the window.
 
-  $ time git worktree add testaddtmp
-  Preparing testaddtmp (identifier testaddtmp)
-  Checking out files: 100% (55256/55256), done.
-  HEAD is now at 194dc87 Add braces to avoid "ambiguous ‘else’" compiler
-  warnings
+But I'm quite satisfied with 10.4 seconds with cold diskcache and >55K
+files. Very impressive, actually.
 
-  real    0m10.343s
-  user    0m6.010s
-  sys     0m2.523s
-  $
-
-Both tests were run with cold cache ("echo 3 >/proc/sys/vm/drop_caches"
-as root). It seems as there's no difference, and that git clone is as
-fast as it can get without breaking physical laws. And we probably
-shouldn't do that. :)
-
-Z poważaniem,
-Øyvind
+- Øyvind
