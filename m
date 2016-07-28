@@ -2,206 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C3421F858
-	for <e@80x24.org>; Thu, 28 Jul 2016 19:10:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 065791F858
+	for <e@80x24.org>; Thu, 28 Jul 2016 19:24:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754844AbcG1TK2 (ORCPT <rfc822;e@80x24.org>);
-	Thu, 28 Jul 2016 15:10:28 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63410 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753876AbcG1TK0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jul 2016 15:10:26 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 808012ED64;
-	Thu, 28 Jul 2016 15:10:25 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8y7JFef5iXUPtf60VFOkNsnX48U=; b=v2sRdk
-	xz2CLFNUhaoNQxZgrFnBPZ1EUpPPyY9F4sDziVD7KMuI+jEZmBQeGeNJJUzJenlZ
-	q2dyYqhrINYaboYgGrKZlNew8Li+ekF2dI6aDYiXtV3GsvZmWVyNVUdMkkdg2gET
-	eRoVXkCwQJaf3lDGUOhVQmpxrGb9yGm2f4WVE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Op1xMkQjRz/EOzOkafDmn5Ib2yvlZZh9
-	/kETl8y57K4zzpHn/d1tIeMtFglLYco7C6v4mt9YONvF6WovwHc2bCkYLO6eF4UN
-	smWGJ5ZiHeyBaTiBrTAUPR2y+RAuyjFdfTEjgqZRdlSHANz69VBmV8UySLuCkW5L
-	9Fz8MrEHn4Y=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 76EDB2ED63;
-	Thu, 28 Jul 2016 15:10:25 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AF9932ED60;
-	Thu, 28 Jul 2016 15:10:24 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Stefan Beller <sbeller@google.com>
-Cc:	git@vger.kernel.org, Jens.Lehmann@web.de, jrnieder@gmail.com,
-	Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: [PATCHv2 2/2] submodule update: allow '.' for branch value
-References: <20160728172641.8376-3-sbeller@google.com>
-	<20160728182132.25088-1-sbeller@google.com>
-Date:	Thu, 28 Jul 2016 12:10:22 -0700
-In-Reply-To: <20160728182132.25088-1-sbeller@google.com> (Stefan Beller's
-	message of "Thu, 28 Jul 2016 11:21:32 -0700")
-Message-ID: <xmqq7fc5shnl.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1757285AbcG1TYH (ORCPT <rfc822;e@80x24.org>);
+	Thu, 28 Jul 2016 15:24:07 -0400
+Received: from mail-it0-f46.google.com ([209.85.214.46]:36547 "EHLO
+	mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757241AbcG1TYF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2016 15:24:05 -0400
+Received: by mail-it0-f46.google.com with SMTP id f6so175926127ith.1
+        for <git@vger.kernel.org>; Thu, 28 Jul 2016 12:24:04 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=s0wwgekzN3M/i+NMIbsvNkZJg621E36gt9Mn4xGeHkg=;
+        b=FC+/L3S+eztCSjwb4W0sUyGzFaH2llqntXPkSvfkradwozHMmF+X6ufNTjfT8c53oi
+         xEMqfL3W5jAsEPHNi6b1H54QZbLvRqgxb16WaU7ILH2tk7DzTmyhXUWnEspRXM2NH88K
+         iCmSEdFiSNjn19Nk1to/N/Kd7OwdfMmkpaJkRrptyGHtPU02pWtDRJ0xRc2YNm27K8JY
+         hzmLrYCU/cOHYwoFzWSOWzTvAHRChoKwuhs1QxbqExWGeMt5hmEQPlZ795dsOtd0njEb
+         X6842qsEdwjHJzU+h65hrEIWBY0ql2vGn1ClWzsCTEiEyenVrWUKl7LzYouFHqKHuRCt
+         qVdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=s0wwgekzN3M/i+NMIbsvNkZJg621E36gt9Mn4xGeHkg=;
+        b=WkdTHA2v3NqpORsd3ETA67n7YQ/xY5PAISvvrDQFV0w9gGsIdPpyXBo7/j6zLR3FOx
+         FfDl7xL6s4E5nT8VE0XaeIqWh1t1QSiMC5YkmO6DXCTeh8ztnLQdobzGH3UKOS/JvyaK
+         2Qen6CPuaTNYpVZjAdT9gJ3Pd+Ay+G275jL/42A3bFhKlMFdthYT5zfitEcZH2FXrT0p
+         GM9Lg88RrXReqPOKWec5qRCQ2JWd6LQR/dkjsZqpuNfZ40CzWkKilnXpIZfzTzVYZRD1
+         8mqtG/J6l1X5SBdPgaRw3h2+WE7ic4gGohMgnQ5ippamFaJGgWABNdoiPSNHwq89aOVw
+         M7qA==
+X-Gm-Message-State: AEkoouvpZPRa9TQdw7cg4jO25ZUeqloggHLCNSAuyJ4Gne2yeBp4gAryEg0FiDHfZwU626LhHBNc0JZEXEaS9kgx
+X-Received: by 10.36.127.7 with SMTP id r7mr40499960itc.49.1469733843462; Thu,
+ 28 Jul 2016 12:24:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F00B6962-54F6-11E6-A4EC-89D312518317-77302942!pb-smtp1.pobox.com
+Received: by 10.107.128.66 with HTTP; Thu, 28 Jul 2016 12:24:03 -0700 (PDT)
+In-Reply-To: <CAGZ79ka5n1_5CM3DOGHcd3W=4KJb9d-sb=E1pyvzP=XWGVXE3g@mail.gmail.com>
+References: <20160728172641.8376-1-sbeller@google.com> <20160728172641.8376-2-sbeller@google.com>
+ <xmqqeg6dsj33.fsf@gitster.mtv.corp.google.com> <CAGZ79ka5n1_5CM3DOGHcd3W=4KJb9d-sb=E1pyvzP=XWGVXE3g@mail.gmail.com>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Thu, 28 Jul 2016 12:24:03 -0700
+Message-ID: <CAGZ79kZfXKC66uokqOXeWND=V+53YfAkfd1NUK7A4jM2UAea7A@mail.gmail.com>
+Subject: Re: [PATCH 1/2] t7406: correct depth test in shallow test
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
-
-> Gerrit has a "superproject subscription" feature[1], that triggers a
-> commit in a superproject that is subscribed to its submodules.
-> Conceptually this Gerrit feature can be done on the client side with
-> Git via:
+On Thu, Jul 28, 2016 at 11:47 AM, Stefan Beller <sbeller@google.com> wrote:
+> On Thu, Jul 28, 2016 at 11:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Stefan Beller <sbeller@google.com> writes:
+>>
+>>> We used to ask for 3 changes and tested for having 1, so the test
+>>> seems broken.
+>>
+>> I am not sure what to think of "seems broken".
 >
->     git -C <superproject> submodule update --remote --force
->     git -C <superproject> commit -a -m "Update submodules"
->     git -C <superproject> push
+> When asking for depth 3, I would expect a result of 1,2, or 3 commits.
 >
-> for each branch in the superproject.
-
-Which I imagine would be useful if you only have one submodule.  If
-you work on submodules A and B and then want to give the updated
-superproject that binds the latest in both A and B as an atomic
-update, the three lines above would not quite work, no?
-
-> To ease the configuration in Gerrit
-> a special value of "." has been introduced for the submodule.<name>.branch
-> to mean the same branch as the superproject[2], such that you can create a
-> new branch on both superproject and the submodule and this feature
-> continues to work on that new branch.
+> But when testing the depth argument with a history less than 3, and then
+> implying: "I got 1, which is less than 3, so the depth works", seems
+> to be a logical shortcut to me.
 >
-> Now we have find projects in the wild with such a .gitmodules file.
+> I would have expected a history of >3, then ask for 3 and confirm we did not
+> get 4 or 5 or 6, but 3 only.
+>
+>>
+>> Asking for 3 and having 1 is broken in what way?  Should we be
+>> expecting for 3 because we asked for that many?  Should we expect
+>> less than three even though we asked for three because the upstream
+>> side does not even have that many?  If the current test that asks
+>> for 3 and gets only 1 is not failing, why should we expect that
+>> asking for 2 would get 2?  In other words, why is it sane that
+>> asking for fewer number of commits gives us more?
+>
+> I think there is a subtle thing going on, that I did not examine properly but
+> it is hidden in the modernization from
+>
+>     test 1 = $(something)
+>  to test_line_count = 2
+>
+> I'll investigate the actual reason.
 
-That's annoying.
+So when I place a test_pause just before that check for the lines
+we have the upstream submodule:
+$ git log --oneline
+6355002 upstream line4
+820877d upstream line3
+4301fd3 Commit 2
+0c90624 upstream
 
-> To have Git working well with these, we imitate the behavior and
-> look up the superprojects branch name if the submodules branch is
-> configured to ".". In projects that do not use Gerrit, this value
-> whould be never configured as "." is not a valid branch name.
+which then allows fetching
+6355002 upstream line4
+820877d upstream line3
+4301fd3 Commit 2
 
-I find that the last sentence is somewhat misleading.  I agree it is
-justifiable that using "." as the name to trigger a new (to us)
-feature is safe, because such a setting wouldn't have meant anything
-useful without this change, but I initially misread it and thought
-you added "are we using Gerrit?  Error out if we are not" logic,
-which is not the case here.
+and "Commit 2" is recorded as the sha1, i.e.
+when checking out "Commit 2" and running
+(git log --oneline | wc -l) we get 1 as it cuts
+off after that.
 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 4ec7546..1eb33ad 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -590,7 +590,6 @@ cmd_update()
->  
->  		name=$(git submodule--helper name "$sm_path") || exit
->  		url=$(git config submodule."$name".url)
-> -		branch=$(get_submodule_config "$name" branch master)
->  		if ! test -z "$update"
->  		then
->  			update_module=$update
-> @@ -616,6 +615,14 @@ cmd_update()
->  
->  		if test -n "$remote"
->  		then
-> +			branch=$(get_submodule_config "$name" branch master)
-> +			if test "$branch" = "."
-> +			then
-> +				if ! branch=$(git symbolic-ref --short -q HEAD)
-> +				then
-> +					die "$(eval_gettext "submodule branch configured to inherit branch from superproject, but it's not on any branch")"
-> +				fi
-> +			fi
+When adding a test (in the next patch) that adds
+more commits to the submodule upstream, we
+will fetch with depth 3 but will no longer see the sha1,
+so we try a different approach. Current approach:
+try fetching again with no depth, and then try again with sha1
+given.
 
-I see that you narrowed the scope of "$branch" (which is only used
-when $remote exists), but it is a bit annoying to see that change
-mixed with "now a dot means something different" change.
+So one could say there is a bug as the fetching should
+use the depth argument as well.
 
-I wonder if the above 8-line block wants to be encapsulated to
-become a part of "git submodule--helper" interface, though.  IOW,
-branch=$(git submodule--helper branch "$name") or something?
+The depth of 2 I chose originally turns out to be a lucky
+accident too, as the depth from "Commit 2" is 2,
+so that we would observe the same depth no matter if
+a --depth 2 was given and working or not.
 
-> +test_expect_success 'submodule update --remote should fetch upstream changes with .' '
-> +	(cd super &&
-> +	 git config -f .gitmodules submodule."submodule".branch "." &&
-> +	 git add .gitmodules &&
-> +	 git commit -m "submodules: update from the respective superproject branch"
-> +	) &&
->  	(cd submodule &&
-> +	 echo line4a >> file &&
-> +	 git add file &&
-> +	 test_tick &&
-> +	 git commit -m "upstream line4a" &&
-> +	 git checkout -b test-branch &&
-> +	 test_commit on-test-branch
-> +	) &&
-> +	(cd super &&
-> +	 git submodule update --remote --force submodule &&
-> +	 (cd submodule &&
-> +	  test "$(git log -1 --oneline)" = "$(GIT_DIR=../../submodule/.git git log -1 --oneline master)"
+I'll redo this test (as 2 tests, one is testing the situation as
+we have now, i.e. the desired tip is reachable from within
+the depth argument, the second test will test if it is not
+reachable.)
 
-A few issues:
-
-  * A crash in "git log" would not be noticed with this.  Perhaps
-
-	git log -1 --oneline $one_way_to_invoke >expect &&
-        git log -1 --oneline $the_other_way >actual &&
-        test_cmp expect actual
-
-    would be better?
-
-  * What exactly is this testing?  The current branch (in submodule)
-    pointing at the same commit as the tip of 'master'?  Or the
-    current branch _is_ 'master'?
-
-  * What exactly is the reason why one has GIT_DIR=... and the other
-    does not?  I do not think this a place to test that "gitdir: "
-    in .git points at the right place, so it must be testing
-    something else, but I cannot guess.
-
-> +	 ) &&
->  	 git checkout -b test-branch &&
-> +	 git submodule update --remote --force submodule &&
-> +	 (cd submodule &&
-> +	  test "$(git log -1 --oneline)" = "$(GIT_DIR=../../submodule/.git git log -1 --oneline test-branch)"
-> +	 ) &&
-> +	 git checkout master &&
-> +	 git branch -d test-branch
-> +	)
-> +'
-> +
-> +test_expect_success 'branch = . does not confuse the rest of update' '
-> +	(cd super &&
-> +	 git checkout --detach &&
-> +	 # update is not confused by branch="." even if the the superproject
-> +	 # is not on any branch currently
-> +	 git submodule update &&
-> +	 git revert HEAD &&
-
-"revert" is rather unusual thing to see in the test.  Also I am not
-sure why cmd_update that now has an explicit check to die when
-branch is set to "." and the head is detached is expected "not" to
-be confused.  Perhaps I misread the main part of the patch?
-
-Puzzled.
-
-> +	 git checkout master
-> +	)
-> +'
-> +
-> +test_expect_success 'local config should override .gitmodules branch' '
-> +	(cd submodule &&
-> +	 git checkout test-branch &&
->  	 echo line5 >> file &&
->  	 git add file &&
->  	 test_tick &&
+>
+>>
+>> Also most of the lines in this subshell seem to be breaking
+>> &&-chain.
+>
+> Thanks for pointing that out, will fix while at it.
+>
+>>
+>>
+>>
+>>> Correct the test by using test_line_count that exists in the test suite.
+>>>
+>>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>>> ---
+>>>  t/t7406-submodule-update.sh | 5 +++--
+>>>  1 file changed, 3 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+>>> index 88e9750..bd261ac 100755
+>>> --- a/t/t7406-submodule-update.sh
+>>> +++ b/t/t7406-submodule-update.sh
+>>> @@ -846,9 +846,10 @@ test_expect_success 'submodule update clone shallow submodule' '
+>>>       (cd super3 &&
+>>>        sed -e "s#url = ../#url = file://$pwd/#" <.gitmodules >.gitmodules.tmp &&
+>>>        mv -f .gitmodules.tmp .gitmodules &&
+>>> -      git submodule update --init --depth=3
+>>> +      git submodule update --init --depth=2
+>>>        (cd submodule &&
+>>> -       test 1 = $(git log --oneline | wc -l)
+>>> +       git log --oneline >lines
+>>> +       test_line_count = 2 lines
+>>>        )
+>>>  )
+>>>  '
