@@ -2,88 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BAA71F858
-	for <e@80x24.org>; Thu, 28 Jul 2016 16:21:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D5D41F858
+	for <e@80x24.org>; Thu, 28 Jul 2016 16:22:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932533AbcG1QVJ (ORCPT <rfc822;e@80x24.org>);
-	Thu, 28 Jul 2016 12:21:09 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:37169 "EHLO
-	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758928AbcG1QVG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Jul 2016 12:21:06 -0400
-Received: by mail-wm0-f46.google.com with SMTP id i5so115816056wmg.0
-        for <git@vger.kernel.org>; Thu, 28 Jul 2016 09:21:05 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=EMelntoaXtf36ZnE+G9uMOW4aT/qC+ax8OyVBHzj9fc=;
-        b=RMpMB+QevSWyYWAVER7FRbb7AO0XAWTOCKEqk04jpTMZiErRRS9qnvkRDaA66X6RX4
-         SY8YXtCKXcXLq6ZfF13HJ3DUQPMBzTS25WRgvLKLrOW48A+5StAUNV5aGMjFL9FQu71R
-         JC6PKoaePouvc+LVHcY92iImi2uBHkE3ea48CVVinqz1tWjTLKvzckrEuKnIBVtlK7pm
-         DNHpJ98HRVpY4X2io0ScVzlPvaBRDnzbxbne/8hJTN0vkMOFSrMpP8MMFnLuWICpQsHA
-         JDJmmxv9rdp+Y4hhozp8uaG+lZtjhAq1LJKsN3FrRhYpx/R0YFSRZPDSCR5lm2SrYtdl
-         JtwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to:content-transfer-encoding;
-        bh=EMelntoaXtf36ZnE+G9uMOW4aT/qC+ax8OyVBHzj9fc=;
-        b=cocZKqn22/FRdnKGz33HOKLef33V+c65v1IMRhP/gh9TnY32OFuHz8OBnfUmfw2dPU
-         6sNgvSUSrp1vm2y5BUIdsbhJL9qx97GIvQFaYuiFw7XFIdYIa0zI/2ICC4y2LUO0ZTvC
-         I3Y9Uu3HXbrMNv6fHSCmWc6ZHvvdJCqHfwTfmOi8j1ycb4y0l6YXly5tcKAIxcbS4gnH
-         IYR1AyXOoGJL83tExZtRHy3sl1I58eMLaW/CEuH53SNBWCFVaH3B9NKi25/3omnv05B0
-         ZAmPaBw/CjwnKJNJf+cTTH7A0UV/CcMF8c/NGRcsRgQYjXnuqg8JXgOrEZcoTUHuBYpt
-         l/1A==
-X-Gm-Message-State: AEkoouseQC6Q+1BIv7xQGPEU7+eEMpDbTu2pymxHnsqsah2Yk1SBZwZLBAAW+2hZOt9cNBw3mfBQNfWVYpcNNw==
-X-Received: by 10.194.18.198 with SMTP id y6mr36476851wjd.87.1469722864217;
- Thu, 28 Jul 2016 09:21:04 -0700 (PDT)
+	id S932541AbcG1QWh (ORCPT <rfc822;e@80x24.org>);
+	Thu, 28 Jul 2016 12:22:37 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58784 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1758928AbcG1QWf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2016 12:22:35 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 716A02E232;
+	Thu, 28 Jul 2016 12:22:34 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4Ho9jedo+2ZftQ+MMuzMedOhCzc=; b=cXMIYW
+	PgEbPs03doi2RSpodCOMMI8Nuf2MaZpgtAlWlovsBJkryU1DkB4QQaEid6N6pMcq
+	mRlW6zOFA1T4gGoI4gXq/mjln/I8jkSdn8nhDALYXAY392d/h0so3Kzq1Y8kNrlk
+	EY69nUEjM6jm4W0wSrfAbJWLo3T1azurZUDRw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oJ+N48bVvRLGGaL8/ZDqxWjIN6Wv7MsJ
+	jvBYbKFhjAoc0LvCudeGg7mUcrfvmjF+kmdgcXbaV7EmA+HVrQfBRnFK5/Xt6B8F
+	QhUoQM1JZNnea7cUWijPTx2PcF5fkixgp6Ekn6V/itYm8nWfXvLo+l5XHJ+MCzw5
+	K2vylx9OjXM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 673932E231;
+	Thu, 28 Jul 2016 12:22:34 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DD4312E230;
+	Thu, 28 Jul 2016 12:22:33 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Stefan Beller <sbeller@google.com>
+Cc:	Chris Packham <judge.packham@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCHv1] completion: add option '--recurse-submodules' to 'git clone'
+References: <20160727083406.10241-1-judge.packham@gmail.com>
+	<xmqqshuvvvxb.fsf@gitster.mtv.corp.google.com>
+	<xmqqoa5jvven.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79ka0kvr9RAkGHbgrZ7fery8436dH8Nu4bwG0t3K5FprgKA@mail.gmail.com>
+Date:	Thu, 28 Jul 2016 09:22:31 -0700
+In-Reply-To: <CAGZ79ka0kvr9RAkGHbgrZ7fery8436dH8Nu4bwG0t3K5FprgKA@mail.gmail.com>
+	(Stefan Beller's message of "Wed, 27 Jul 2016 10:41:08 -0700")
+Message-ID: <xmqqshutspfc.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.28.130.74 with HTTP; Thu, 28 Jul 2016 09:20:34 -0700 (PDT)
-From:	=?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
-Date:	Thu, 28 Jul 2016 18:20:34 +0200
-X-Google-Sender-Auth: iTqcqvdn_Spy2yIoSvDQ2s6qlYo
-Message-ID: <CAA787r=FH7Sa4qy2A-dy+wug81ZkqOW2KmSuWBE8_3whmNj1pw@mail.gmail.com>
-Subject: git-testadd: Execute a command with only the staged changes in Git applied
-To:	"git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7D5E8226-54DF-11E6-BC19-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-This is a script I created some weeks ago, and I've found it to be
-immensely useful. Here is a snippet from git-testadd --help:
+Stefan Beller <sbeller@google.com> writes:
 
-  If you have lots of unrelated uncommitted changes in the current
-  repository and want to split up the commit, how can you easily check
-  if the changes passes the test suite? With all the other unrelated
-  changes it can be hard to make sure that only relevant changes becomes
-  part of the commit, and that they don't result in regressions. This
-  script clones the repository to the directory ".testadd.tmp" in the
-  current directory and applies the staged chenges there (unless
-  -u/--unmodified or -p/--pristine is specified), chdirs to the same
-  relative directory in the clone and executes the command specified on
-  the command line there.
+>> Anyway, I'll apply the "addition to the completion" patch.
+>>
+>> Thanks.
+>
+> Thanks for this patch!
+>
+> Note: if we ever decide to resurrect sb/submodule-default-path,
+> we run into a merge conflict. The reasoning for using
+> "--recurse-submodules" instead of a plain "--recurse" makes sense
+> as well, so that merge conflict will be resolved in favor of this patch.
 
-The script is well-tested, and also have a test suite you can run to
-make sure it works on your *nix system. Place git-testadd.t in a
-subdirectory one level under the script location, chdir to that
-directory and execute "./git-testadd.t". It also works with binary
-files.
+Thanks for an advance warning.  My rerere database has already been
+taught about this conflict ;-)
 
-Available from
+As to sb/submodule-default-path topic, which has been blocked on
+still-in-flux attribute work, I am tempted to declare that the
+attribute work is not yet thread-ready but it is in a good enough
+shape to base other works on, and have them advance to 'next'.
 
-  https://gitlab.com/sunny256/utils/raw/master/git-testadd
-  https://gitlab.com/sunny256/utils/raw/master/tests/git-testadd.t
+The traditional pattern of allowing the callers to randomly allocate
+an array of "struct git_attr_check" and passing the pointer to its
+first element to git_check_attr() function was impossible to extend
+without having to update the callers, but we have migrated away from
+the pattern and the attribute subsystem can be enhanced without
+impacting the callers too much.
 
-It's also on GitHub, just replace "gitlab" with "github" in the URLs.
-And of course, ideas and patches for new functionality/fixes are always
-welcome.
-
-        Øyvind
