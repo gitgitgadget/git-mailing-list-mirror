@@ -2,108 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C691C20450
-	for <e@80x24.org>; Thu, 28 Jul 2016 18:22:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48A3C1F858
+	for <e@80x24.org>; Thu, 28 Jul 2016 18:39:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753389AbcG1SWH (ORCPT <rfc822;e@80x24.org>);
-	Thu, 28 Jul 2016 14:22:07 -0400
-Received: from mail-it0-f66.google.com ([209.85.214.66]:35060 "EHLO
-	mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755241AbcG1SWF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jul 2016 14:22:05 -0400
-Received: by mail-it0-f66.google.com with SMTP id f6so5384298ith.2
-        for <git@vger.kernel.org>; Thu, 28 Jul 2016 11:22:04 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=cSvNV+kLfNbMsx0aV9A2d98/lTHJ0003kCSJwLgh93M=;
-        b=iSWcY7O9sKn/K+neuRyHpervVHwVGqmQ0YvMazijvBPrpFji9LbMw3DaOjReXnXH8v
-         IBlYwy+c8YzNT6j2hjnqQ7CGZgwez5LovPzAvGPFvWNH8n9b9FNKn3vP+jjmr/mDR7+/
-         CtwMw1bT5jWGfp0Bfc0D0a/In6M19wmrI4wOekf5erZLj5xslfWO9CxP7rj14EJG1JjA
-         TOtOHrdiDN6AzYMeXm2/fQSnYJ/wLO5rzkIwJR1g3gf9t+GPc5/jx+s9DtZKdaY3NzOT
-         eHufCi0FFWnLNwOm4q8HYB1y26Kksu+B3M8UKbogAxrBQKIEYTTmBuQv+15A+61JrTgt
-         +pvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=cSvNV+kLfNbMsx0aV9A2d98/lTHJ0003kCSJwLgh93M=;
-        b=GXBRbO432afJ65jssCc9n5JNx/3znr0n0e/vKZzAJi+WSUYiMo0/Cy+zQ5nYVdJOtk
-         NQd/yR/ncHPnHDEO/znbbguzDsYmm+KE7fPYQggEuiUcG/8YjN0IIXdSjOnQbHNw9W4q
-         Bh0ls8l5tZ3aPGpHI7fMjrJU2VZR8+j3natbBO2U21UnuYa2qS3lZCVwQV/jOqw8PKyp
-         dYp2zG7l1eJJ1BgR4FicodSIE8J8RDy1WGhFgDuQhzhADlfz6D9sYicrs61uG6/GBPdP
-         MK9/p7CX2d0Cm6BYbSxZnJKObk3buFWvRuTmx1+H+t9+y/8xCSczcFei9fVxSbNSiBCi
-         2KDg==
-X-Gm-Message-State: AEkoouvWTn20AaaXMV2+YJ8uKa86g4hTmPjwJkIT529bfgkrNH6nIMkeEoocsRdScmWNMEYXzcNWGty0Ix5CdA==
-X-Received: by 10.36.54.135 with SMTP id l129mr41231571itl.73.1469730123532;
- Thu, 28 Jul 2016 11:22:03 -0700 (PDT)
+	id S1754844AbcG1Sje (ORCPT <rfc822;e@80x24.org>);
+	Thu, 28 Jul 2016 14:39:34 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63779 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753876AbcG1Sjd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2016 14:39:33 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9423B2E98E;
+	Thu, 28 Jul 2016 14:39:31 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=v8yzN9Faa7D07aB2rnSihShiGrc=; b=HsgnEd
+	6NOakMUlC5GognXRk2zY8QMQSfLXS86GmkkjM1gD13RzWjZR9NiU11dIdXkpRHaj
+	vZp2ehZFnKm/o52Z8Y1lUmyMrITzvtX+M3HihomfE/2kyhVfbeYcaxvjBEFpz26T
+	6MXFMRCv6G+oLnM84itNIg8GvyfpWrOxezP8k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HYVq99Sqky/iX+CZVQ5LJJBZu/AobNGY
+	+0jhVg5FcltNPIWYPMttcxI70dNBlcob+uBOex7LshxhtaxOKXcqJ/scwx7A58Ub
+	vo/Wp4Fx68SbnIqkHin0BvkYDYcD1bt6iUOYIykhh9Ajm9ETqvAFCN9BRJDGTbgN
+	eXTTFyE50fw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 896942E98D;
+	Thu, 28 Jul 2016 14:39:31 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E3F042E98C;
+	Thu, 28 Jul 2016 14:39:30 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Stefan Beller <sbeller@google.com>
+Cc:	git@vger.kernel.org, Jens.Lehmann@web.de, jrnieder@gmail.com
+Subject: Re: [PATCH 1/2] t7406: correct depth test in shallow test
+References: <20160728172641.8376-1-sbeller@google.com>
+	<20160728172641.8376-2-sbeller@google.com>
+Date:	Thu, 28 Jul 2016 11:39:28 -0700
+In-Reply-To: <20160728172641.8376-2-sbeller@google.com> (Stefan Beller's
+	message of "Thu, 28 Jul 2016 10:26:40 -0700")
+Message-ID: <xmqqeg6dsj33.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.79.130.7 with HTTP; Thu, 28 Jul 2016 11:22:03 -0700 (PDT)
-In-Reply-To: <fa512576-487e-9b9c-3ada-7f0d9b135e4b@kdbg.org>
-References: <fa512576-487e-9b9c-3ada-7f0d9b135e4b@kdbg.org>
-From:	Eric Sunshine <sunshine@sunshineco.com>
-Date:	Thu, 28 Jul 2016 14:22:03 -0400
-X-Google-Sender-Auth: j9AYJSDQZaTL-A72AiukikgXIeo
-Message-ID: <CAPig+cSBZ_Vey2BW8S4D+7ufG1U3a-N402s4zZZJ2OE=xH1+tQ@mail.gmail.com>
-Subject: Re: [PATCH va/i18n-even-more] rebase-interactive: trim leading
- whitespace from progress count
-To:	Johannes Sixt <j6t@kdbg.org>
-Cc:	Vasco Almeida <vascomalmeida@sapo.pt>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9F194550-54F2-11E6-8572-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jul 28, 2016 at 1:47 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Interactive rebase uses 'wc -l' to write the current patch number
-> in a progress report. Some implementations of 'wc -l' produce spaces
-> before the number, leading to ugly output such as
->
->   Rebasing (     3/8)
->
-> Remove the spaces using a trivial arithmetic evaluation.
->
-> Before 9588c52 (i18n: rebase-interactive: mark strings for
-> translation) this was not a problem because printf was used to
-> generate the text. Since that commit, the count is interpolated
-> directly from a shell variable into the text, where the spaces
-> remain. The total number of patches does not have this problem
-> even though it is interpolated from a shell variable in the same
-> manner, because the variable is set by an arithmetic evaluation.
->
-> Later in the script, there is a virtually identical case where
-> leading spaces are trimmed, but it uses a pattern substitution:
->
-> todocount=$(git stripspace --strip-comments <"$todo" | wc -l)
-> todocount=${todocount##* }
->
-> I did not choose this idiom because it adds a line of code, and
-> there is already an arithmetic evaluation in the vicinity of the
-> line that is changed here.
+Stefan Beller <sbeller@google.com> writes:
 
-On the other hand, to a newcomer (not familiar with this patch),
-${foo##* } is an obvious and intentional stripping of whitespace,
-whereas taking advantage of a side-effect of arithmetic evaluation to
-achieve the same is quite subtle and likely to be interpreted as
-pointless, thus forces the reader to consult 'blame' to understand why
-the code is the way it is.
+> We used to ask for 3 changes and tested for having 1, so the test
+> seems broken.
 
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+I am not sure what to think of "seems broken".
+
+Asking for 3 and having 1 is broken in what way?  Should we be
+expecting for 3 because we asked for that many?  Should we expect
+less than three even though we asked for three because the upstream
+side does not even have that many?  If the current test that asks
+for 3 and gets only 1 is not failing, why should we expect that
+asking for 2 would get 2?  In other words, why is it sane that
+asking for fewer number of commits gives us more?
+
+Also most of the lines in this subshell seem to be breaking
+&&-chain.
+
+
+
+> Correct the test by using test_line_count that exists in the test suite.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
 > ---
-> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> @@ -121,7 +121,7 @@ mark_action_done () {
->         sed -e 1q < "$todo" >> "$done"
->         sed -e 1d < "$todo" >> "$todo".new
->         mv -f "$todo".new "$todo"
-> -       new_count=$(git stripspace --strip-comments <"$done" | wc -l)
-> +       new_count=$(( $(git stripspace --strip-comments <"$done" | wc -l) ))
->         echo $new_count >"$msgnum"
->         total=$(($new_count + $(git stripspace --strip-comments <"$todo" | wc -l)))
->         echo $total >"$end"
+>  t/t7406-submodule-update.sh | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+> index 88e9750..bd261ac 100755
+> --- a/t/t7406-submodule-update.sh
+> +++ b/t/t7406-submodule-update.sh
+> @@ -846,9 +846,10 @@ test_expect_success 'submodule update clone shallow submodule' '
+>  	(cd super3 &&
+>  	 sed -e "s#url = ../#url = file://$pwd/#" <.gitmodules >.gitmodules.tmp &&
+>  	 mv -f .gitmodules.tmp .gitmodules &&
+> -	 git submodule update --init --depth=3
+> +	 git submodule update --init --depth=2
+>  	 (cd submodule &&
+> -	  test 1 = $(git log --oneline | wc -l)
+> +	  git log --oneline >lines
+> +	  test_line_count = 2 lines
+>  	 )
+>  )
+>  '
