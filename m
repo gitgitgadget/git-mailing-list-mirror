@@ -2,56 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0EECC1F955
-	for <e@80x24.org>; Thu, 28 Jul 2016 16:03:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AAE0D1F858
+	for <e@80x24.org>; Thu, 28 Jul 2016 16:03:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759054AbcG1QDM (ORCPT <rfc822;e@80x24.org>);
-	Thu, 28 Jul 2016 12:03:12 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35934 "EHLO
+	id S1759069AbcG1QDP (ORCPT <rfc822;e@80x24.org>);
+	Thu, 28 Jul 2016 12:03:15 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:34572 "EHLO
 	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758947AbcG1QDI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jul 2016 12:03:08 -0400
-Received: by mail-wm0-f65.google.com with SMTP id x83so11813789wma.3
-        for <git@vger.kernel.org>; Thu, 28 Jul 2016 09:03:07 -0700 (PDT)
+	with ESMTP id S1759041AbcG1QDJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2016 12:03:09 -0400
+Received: by mail-wm0-f65.google.com with SMTP id q128so11845958wma.1
+        for <git@vger.kernel.org>; Thu, 28 Jul 2016 09:03:08 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=QMkFet5g8DdyNzEULujvya8XIReHX/640JxfLpp4Spk=;
-        b=Al6FI0CyrvHfH602bwlcMMPhay763UHVjHBLxg1ZR2+HzhAi9gLWIFPVD7ct/GxQlF
-         si0XXDMzhBRsQmUoZ1tRY3rTEgE3KAToNFliyHUJQD6cH3nOaXhScEd5lAMAZdltLjHW
-         5JFq+nEYPYfUAWvoSXneoDpbTMeYOLOMpF6+5PSpNbH7BqpbgMeDeNTStvf91I/7Rx1e
-         bCixap7MR9fBR59CTI3UaZ9ttYqOmoYDPOj3fTw9VEiohvshZ0z49yi2rThov5KVTNIi
-         o70ZBcwnIw193RS7qRWanH6ZqkXifbEuq47sX1w7/r4B5h+SgfWceW16Eii09pHINgcv
-         nJHA==
+        bh=v4Ks++OPcezjn9rGEfb4eVvAV3EhukwfnccteyGQ8YI=;
+        b=DN5K/ylyRr0m6duqtpS+RMMM7Y3R2uPVCBbIPM9FMGRe1HjDCBUlgxWQ2F+KLQQBFa
+         1SAOjn5BAGqj/aplTzP4+ClgY53nFotiHpk35axkFa/7/OohsaqI0t3HxKqHXU2FLnpy
+         +Bcv18+kWntmY4mbIyDHjty4mgVx+i+D+85EjpsGZZD0TTMlspWk6bfb0mUT+0LDYcJd
+         Dolesr3p6FL93TQ4zg/3Ra9Tv0cwNZwWGRo5fAHn7TdI+zYuWK9gpg4nUapgAiUMbeWD
+         V0ZWKgqpjKJmU8wCUHbqilSUhSUZV3CfQ73Trv9J8TrIUzpEoi+1ggWcYMusv37UQQBW
+         hAWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=QMkFet5g8DdyNzEULujvya8XIReHX/640JxfLpp4Spk=;
-        b=YFSKPtQ/vyu0XhSEF+9iVrUmLynkfPpNfuiZz0MvZMtztj6vjg00unx3qyV03oKt1o
-         4Gz0JsDCw/tV4PriK/Kn6J5FblJZ6jjcQJgq02xMrNbBgP9TCIFJbOFA2do+4PHizRfR
-         Gk6c6X5BGjwYlDCPIB/xnQt+Pi5ubNJ8FPzCUuNHSGqwWyQrHeZa/7xfwWd4Vh/xY0Me
-         Y6KTqJN6pPxSrxoaJ/Xd6keW9XW60TmTxHX6irN97h/2RggNl0Ath7PXzyW8093ybmYk
-         xeXWmBQL16DcioFFydJ/SrXxufX0RfSqBS+bF5zq3uWdDZK8vYHWk60X++GkB8+e8ox8
-         10KQ==
-X-Gm-Message-State: ALyK8tIgF44lXRmE/KavLFWlLc1djkq+c+C/JcSbzccn0iMVIt0JuZR0B90Frw3CzDIIYw==
-X-Received: by 10.28.153.70 with SMTP id b67mr60982656wme.84.1469721786343;
-        Thu, 28 Jul 2016 09:03:06 -0700 (PDT)
+        bh=v4Ks++OPcezjn9rGEfb4eVvAV3EhukwfnccteyGQ8YI=;
+        b=OcMBCv4zdc8CBurgWT3n6sRoHY4pvLmC0neMwelb5T5QSXytpQmt1hIHK89hUeqh9m
+         sjGn5whxFLBwBM4WdVNq+sebgbNEjc0zm64nlCze+nYq5BrQHMrwDl5MV8MH0I30cBDX
+         PeFB6SgGyAK/ZwQxkUYkpFVXAhkojZl8rJz8AlfjFsjFdXBncWeIt4okA8mtF4Vr02t2
+         075IDfHkAx8dCE9UmcCj1Vmw+gopa2zCTIlR3ZVcjdwXoA5iBKkByYfIwtGBNBgGNNEj
+         5LKCTrZYwcB/T30n2S8g6U5gaHFTwjILhk9mYlg/y9rAfnWJwDYLqzNqzGP1CMz1EkMP
+         az2A==
+X-Gm-Message-State: AEkooutXgYlEBtrq/pjfFuCICd5BmgOJW16KazAh7YtdzcsslOrledviEoG+0ENeilT5FA==
+X-Received: by 10.194.77.174 with SMTP id t14mr36801369wjw.146.1469721787696;
+        Thu, 28 Jul 2016 09:03:07 -0700 (PDT)
 Received: from localhost.localdomain (p54A20961.dip0.t-ipconnect.de. [84.162.9.97])
-        by smtp.gmail.com with ESMTPSA id ka6sm12118232wjb.38.2016.07.28.09.03.05
+        by smtp.gmail.com with ESMTPSA id ka6sm12118232wjb.38.2016.07.28.09.03.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 28 Jul 2016 09:03:05 -0700 (PDT)
+        Thu, 28 Jul 2016 09:03:06 -0700 (PDT)
 From:	Robin Ruede <r.ruede@gmail.com>
 To:	git@vger.kernel.org
 Cc:	Robin Ruede <r.ruede@gmail.com>
-Subject: [PATCH/RFC 2/7] pack-objects: add sparse-prefix
-Date:	Thu, 28 Jul 2016 18:02:21 +0200
-Message-Id: <20160728160226.24018-3-r.ruede@gmail.com>
+Subject: [PATCH/RFC 3/7] Skip checking integrity of files ignored by sparse
+Date:	Thu, 28 Jul 2016 18:02:22 +0200
+Message-Id: <20160728160226.24018-4-r.ruede@gmail.com>
 X-Mailer: git-send-email 2.9.2.472.g105ab30
 In-Reply-To: <20160728160226.24018-1-r.ruede@gmail.com>
 References: <20160728160226.24018-1-r.ruede@gmail.com>
@@ -60,55 +60,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-this allows creating packs that contain only the blobs relevant to a
-specific subdirectory, e.g.
-
-    echo HEAD | git pack-objects --revs --sparse-prefix=/contrib/
-
-will create a pack containing the complete history of HEAD, including
-all commits, all trees, and the files in the contrib directory.
+(this might be wrong, not sure if this is the right place)
 
 Signed-off-by: Robin Ruede <r.ruede@gmail.com>
 ---
- builtin/pack-objects.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ cache-tree.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index a2f8cfd..0674f57 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2621,6 +2621,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	struct argv_array rp = ARGV_ARRAY_INIT;
- 	int rev_list_unpacked = 0, rev_list_all = 0, rev_list_reflog = 0;
- 	int rev_list_index = 0;
-+	const char *sparse_prefix = NULL;
-+
- 	struct option pack_objects_options[] = {
- 		OPT_SET_INT('q', "quiet", &progress,
- 			    N_("do not show progress meter"), 0),
-@@ -2685,6 +2687,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 			 N_("create thin packs")),
- 		OPT_BOOL(0, "shallow", &shallow,
- 			 N_("create packs suitable for shallow fetches")),
-+		OPT_STRING(0, "sparse-prefix", &sparse_prefix, N_("path"),
-+		  N_("only include blobs relevant for sparse checkout (implies --revs)")),
- 		OPT_BOOL(0, "honor-pack-keep", &ignore_packed_keep,
- 			 N_("ignore packs that have companion .keep file")),
- 		OPT_INTEGER(0, "compression", &pack_compression_level,
-@@ -2725,6 +2729,13 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	} else
- 		argv_array_push(&rp, "--objects");
- 
-+	if (sparse_prefix) {
-+		use_internal_rev_list = 1;
-+		// with bitmaps the path of the blobs is not known
-+		use_bitmap_index = 0;
-+		argv_array_push(&rp, "--sparse-prefix");
-+		argv_array_push(&rp, sparse_prefix);
-+	}
- 	if (rev_list_all) {
- 		use_internal_rev_list = 1;
- 		argv_array_push(&rp, "--all");
+diff --git a/cache-tree.c b/cache-tree.c
+index f28b1f4..ab01ae5 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -354,7 +354,8 @@ static int update_one(struct cache_tree *it,
+ 			entlen = pathlen - baselen;
+ 			i++;
+ 		}
+-		if (mode != S_IFGITLINK && !missing_ok && !has_sha1_file(sha1)) {
++		if (!ce_skip_worktree(ce) && mode != S_IFGITLINK
++				&& !missing_ok && !has_sha1_file(sha1)) {
+ 			strbuf_release(&buffer);
+ 			if (expected_missing)
+ 				return -1;
 -- 
 2.9.1.283.g3ca5b4c.dirty
 
