@@ -2,92 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98C041F858
-	for <e@80x24.org>; Thu, 28 Jul 2016 17:29:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8A6E1F858
+	for <e@80x24.org>; Thu, 28 Jul 2016 17:47:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759073AbcG1R3y (ORCPT <rfc822;e@80x24.org>);
-	Thu, 28 Jul 2016 13:29:54 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:3908 "EHLO
-	smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161010AbcG1R3w (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jul 2016 13:29:52 -0400
-Received: from [192.168.2.201] ([92.22.55.62])
-	by smtp.talktalk.net with SMTP
-	id Sp81br7zDHGLwSp82bKovK; Thu, 28 Jul 2016 18:29:50 +0100
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
-	t=1469726990; bh=KAc32KIlqBq+sJhNkQ1smFryI7u79iG3gQYu1fhX7KY=;
-	h=Reply-To:Subject:References:To:Cc:From:Date:In-Reply-To;
-	b=TOXZW/ORRdu6Yaalsg0ISVTQwHNFflO2gocBNvUBG1irzx0hJWiUulA8l5Gp1suEa
-	 MWDbFnECiVUjh7swAwP8rLq1UrVzXoIe3vzc3OSZgbnX1Riw5oFw6JwpzLv/FeEFGj
-	 ZW5z7rawkYi3V4X9VeQuGLnQJrAiBrpuyczX5eXs=
-X-Originating-IP: [92.22.55.62]
-X-Spam:	0
-X-OAuthority: v=2.2 cv=dsCZMBo4 c=1 sm=1 tr=0 a=emT4YZXqgNgQELh026CzWg==:117
- a=emT4YZXqgNgQELh026CzWg==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=B_sbImRsnVZG4_ydEcgA:9 a=NWVoK91CQySWRX1oVYDe:22 a=wQf5WvvPLwzY6UdiLRIz:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Bug? git rebase -i --autostash fails to restore working files
-References: <222a3e5b-ff2c-799e-0fcb-cba23815019f@talktalk.net>
- <568300231.1133609.1469710974063.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-To:	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	phillip wood <phillip.wood@dunelm.org.uk>
-Cc:	git@vger.kernel.org
-From:	Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <595ec1d8-a759-e2cf-b387-a68bd6c0a437@talktalk.net>
-Date:	Thu, 28 Jul 2016 18:29:49 +0100
+	id S1161152AbcG1Rrg (ORCPT <rfc822;e@80x24.org>);
+	Thu, 28 Jul 2016 13:47:36 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:43903 "EHLO bsmtp3.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161013AbcG1Rre (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2016 13:47:34 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 3s0fSz756Gz5tl9;
+	Thu, 28 Jul 2016 19:47:31 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id E43F83C9;
+	Thu, 28 Jul 2016 19:47:23 +0200 (CEST)
+To:	Vasco Almeida <vascomalmeida@sapo.pt>
+Cc:	Git Mailing List <git@vger.kernel.org>
+From:	Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH va/i18n-even-more] rebase-interactive: trim leading whitespace
+ from progress count
+Message-ID: <fa512576-487e-9b9c-3ada-7f0d9b135e4b@kdbg.org>
+Date:	Thu, 28 Jul 2016 19:47:23 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+ Thunderbird/45.2
 MIME-Version: 1.0
-In-Reply-To: <568300231.1133609.1469710974063.JavaMail.zimbra@ensimag.grenoble-inp.fr>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfOCcW9l/Z3fuZply4ljZspludBpnm20ZryGmNvmLiahnivxjPoJ8YAUZiyRDtvPBvxFw2O/SWh/gmBqArdiMiuF86JXqeL04r9K+E5DRLdm9OvCicXJy
- HnQm8TPcrQ+S+b/urAl55ahXLVzxVwY7/zZSwFF6c1pnmA1XBPU4eVomKgPJxKLxHUhY/++4zgJdiWSZudJu6pjNtcyibO0DtKlEsCy0GC7ylq3Jup2fZwtm
- GW6Cfz7LV373ASVw8B8K+rpyOCk0u/mx+0s40swvMHI=
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 28/07/16 14:02, Remi Galan Alfonso wrote:
-> Hi Phillip,
-> 
-> Phillip Wood <phillip.wood@talktalk.net> writes:
->> When running ‘git rebase -i --autostash’ if the editor fails then the
->> rebase fails but stash is not applied so the working files are not
->> restored. Running ‘git rebase --abort’ replies that there’s no rebase
->> in progress. If you notice what’s happened it’s not a problem if you
->> know to do ‘git stash apply <autostash id>’ but it’s confusing as
->> normally the stash would be automatically applied. This happened to me
->> when I messed up my editor configuration but you can reproduce it with
->>
->> $ GIT_SEQUENCE_EDITOR=false git rebase -i --autostash HEAD^^
->> Created autostash: ff960d4
->> HEAD is now at f1b8af7 [git] Turn on rebase.missingCommitsCheck
-> 
-> [I'm happy to see rebase.missingCommitsCheck being used.]
-> 
->> Could not execute editor
->>
->> $ git rebase --abort
->> No rebase in progress?
-> 
-> I remembered having read something about it recently and a quick
-> search confirmed it. It was corrected in commit 33ba9c6 (29/06/2016,
-> rebase -i: restore autostash on abort) that recently graduated to
-> master (on 19/07/2016 if I read the various "What's cooking"
-> correctly). So you will need to build git from source to have this
-> corrected.
+Interactive rebase uses 'wc -l' to write the current patch number
+in a progress report. Some implementations of 'wc -l' produce spaces
+before the number, leading to ugly output such as
 
-Hi Rémi
+  Rebasing (     3/8)
 
-Thanks for the reply, it's good to know it's been fixed.
+Remove the spaces using a trivial arithmetic evaluation.
 
-Best Wishes
+Before 9588c52 (i18n: rebase-interactive: mark strings for
+translation) this was not a problem because printf was used to
+generate the text. Since that commit, the count is interpolated
+directly from a shell variable into the text, where the spaces
+remain. The total number of patches does not have this problem
+even though it is interpolated from a shell variable in the same
+manner, because the variable is set by an arithmetic evaluation.
 
-Phillip
+Later in the script, there is a virtually identical case where
+leading spaces are trimmed, but it uses a pattern substitution:
+
+todocount=$(git stripspace --strip-comments <"$todo" | wc -l)
+todocount=${todocount##* }
+
+I did not choose this idiom because it adds a line of code, and
+there is already an arithmetic evaluation in the vicinity of the
+line that is changed here.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ git-rebase--interactive.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index ded4595..e2da524 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -121,7 +121,7 @@ mark_action_done () {
+ 	sed -e 1q < "$todo" >> "$done"
+ 	sed -e 1d < "$todo" >> "$todo".new
+ 	mv -f "$todo".new "$todo"
+-	new_count=$(git stripspace --strip-comments <"$done" | wc -l)
++	new_count=$(( $(git stripspace --strip-comments <"$done" | wc -l) ))
+ 	echo $new_count >"$msgnum"
+ 	total=$(($new_count + $(git stripspace --strip-comments <"$todo" | wc -l)))
+ 	echo $total >"$end"
+-- 
+2.9.0.443.ga8520ad
 
