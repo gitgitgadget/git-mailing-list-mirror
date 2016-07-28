@@ -2,83 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93DA61F858
-	for <e@80x24.org>; Thu, 28 Jul 2016 23:47:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D68E51F858
+	for <e@80x24.org>; Thu, 28 Jul 2016 23:53:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751890AbcG1Xrj (ORCPT <rfc822;e@80x24.org>);
-	Thu, 28 Jul 2016 19:47:39 -0400
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:33422 "EHLO
-	mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751530AbcG1Xrh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jul 2016 19:47:37 -0400
-Received: by mail-yw0-f193.google.com with SMTP id z8so7198272ywa.0
-        for <git@vger.kernel.org>; Thu, 28 Jul 2016 16:47:37 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=JGu8t9XVpv6JybZA7m0SKUdvUsrrh0cLTuu5VyK1Rww=;
-        b=T2kqpRT5cnKr4zexka/Q1enfdCcmohTbJjQP6UOlCTRkS9g3kXdVmeLa5Rghj3WNs1
-         N1egaMa05nLZTsrEawRr++JwcnkD5zhaOBGhJxTUdMb/31pd9mEPNQ6nD/kIlr2kiweK
-         MZ2mMrtHbkUhQYlXXxSQ/cESUM7i1w5rdmIiGq9njfQ57JxjUZ5xC9+9SvtyBD8ZxSiK
-         ZeXMuRD9UEXro8vvdBe+eeOB7PCI07pFkAa8kKzQmaESJks1fpQyM6WWAPZD1LgPv6YU
-         o9j7OgLw2EHDqtXZ8JXNnpM9Es28ueHZKXI+aW606A1CJnBRW2IAvvmfw/NJteDiINCC
-         zrMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=JGu8t9XVpv6JybZA7m0SKUdvUsrrh0cLTuu5VyK1Rww=;
-        b=l+aGgTaeRRa0NSfjPL/cxDaDWNX/EO0Vw3BfOXvG+QGkn2n1gAQ0CpGS3KLBCDQYtK
-         cYu5JWeXGZOM1iRiJy33DW3PY/xYWFwKJe4M+ZzUeAhFHoSIChMd0ZZNzH1/shGgJP+N
-         1kTe2zORh6T7rwCWiIeR9HQefKSMzmDO85QdtiPq+0gx5dgbiheBK8rdWVmUlBsMQCBX
-         EfE1c/s+wLB2/IMgiATRyxRBG6JjoDFQR5ubzvsZarNwlssI3ggFMvOF3dh8mBVmTP4e
-         5r/deI7YBaN1gXzWyjbvhsr8Ep9WQ3sJIwC+0k33Oj31g+StK2WvXBC8YcnF6kvzpN0I
-         ifVQ==
-X-Gm-Message-State: AEkoouuyVYLTsbT7ydgr7Ofr/P0pDujIxVp2bxYIna1uQ/k1545Mq/fzfZrpmtAHzr59iJ3o/HuDdeql7hNzag==
-X-Received: by 10.37.66.147 with SMTP id p141mr344535yba.28.1469749656603;
- Thu, 28 Jul 2016 16:47:36 -0700 (PDT)
+	id S1752106AbcG1Xx1 (ORCPT <rfc822;e@80x24.org>);
+	Thu, 28 Jul 2016 19:53:27 -0400
+Received: from slow1-d.mail.gandi.net ([217.70.178.86]:57321 "EHLO
+	slow1-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751604AbcG1XxZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2016 19:53:25 -0400
+Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
+	by slow1-d.mail.gandi.net (Postfix) with ESMTP id 185A347A2C3
+	for <git@vger.kernel.org>; Fri, 29 Jul 2016 01:53:24 +0200 (CEST)
+Received: from mfilter28-d.gandi.net (mfilter28-d.gandi.net [217.70.178.159])
+	by relay2-d.mail.gandi.net (Postfix) with ESMTP id 2AB70C5A51;
+	Fri, 29 Jul 2016 01:53:22 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mfilter28-d.gandi.net
+Received: from relay2-d.mail.gandi.net ([IPv6:::ffff:217.70.183.194])
+	by mfilter28-d.gandi.net (mfilter28-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
+	with ESMTP id zDsgojaI4WQA; Fri, 29 Jul 2016 01:53:20 +0200 (CEST)
+X-Originating-IP: 50.39.163.18
+Received: from x (50-39-163-18.bvtn.or.frontiernet.net [50.39.163.18])
+	(Authenticated sender: josh@joshtriplett.org)
+	by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id 632F4C5A43;
+	Fri, 29 Jul 2016 01:53:18 +0200 (CEST)
+Date:	Thu, 28 Jul 2016 16:53:16 -0700
+From:	Josh Triplett <josh@joshtriplett.org>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [RFC] git-format-patch: default to --from to avoid spoofed mails?
+Message-ID: <20160728235316.GB3676@x>
+References: <20160728211149.GA371@x>
+ <xmqq8twlqwan.fsf@gitster.mtv.corp.google.com>
+ <20160728215603.GA22865@sigill.intra.peff.net>
+ <xmqq4m79qujr.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.13.250.4 with HTTP; Thu, 28 Jul 2016 16:47:17 -0700 (PDT)
-In-Reply-To: <CA+55aFxaia7_VkKKF3JiQt76+z5goz3vCpmWi-wTyBH=iaw5ew@mail.gmail.com>
-References: <CA+55aFxaia7_VkKKF3JiQt76+z5goz3vCpmWi-wTyBH=iaw5ew@mail.gmail.com>
-From:	Junio C Hamano <gitster@pobox.com>
-Date:	Thu, 28 Jul 2016 16:47:17 -0700
-X-Google-Sender-Auth: FjJNs8GW-bwlneblC5Y1Le4dTcU
-Message-ID: <CAPc5daX=MoqEXkV7DdpT+J=4K_qNdo0aNu_XgUs+9yggyrMXbQ@mail.gmail.com>
-Subject: Re: Small trivial annoyance with the nice new builtin "git am"
-To:	Linus Torvalds <torvalds@linux-foundation.org>
-Cc:	Paul Tan <pyokagan@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq4m79qujr.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.6.0 (2016-04-01)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jul 28, 2016 at 4:35 PM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
-> Ok, it's no longer *that* new, but I only now noticed..
->
-> So I noticed that when I applied the last patch-bomb series from
-> Andrew, all the commit date-stamps are idential.
-> ...
-> That seems entirely accidental, I think that what happened is that
-> "ident_default_date()" just ends up initializing the default date
-> string once, and then the date is cached there, because it's now run
-> as a single process for the whole series.
+On Thu, Jul 28, 2016 at 03:14:48PM -0700, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> > I think the original reason I did not make "--from" the default is that
+> > I was worried about breaking consumers which do not know how to handle
+> > in-body headers.
+> 
+> That's a fair concern.
+> 
+> So going back to Josh's original problem description:
+> 
+>     While git-send-email knows how to change the patch mails to use your own
+>     address as "From:" and add a "From:" line to the body for the author,
+>     any other tool used to send emails doesn't do that.
+> 
+> I wonder how these "any other tool" (that reads the format-patch
+> output, i.e. mbox file with one mail per file each, and sends each
+> as a piece of e-mail, without paying attention who you, the tool's
+> user, are and blindly send them with the original "From:" and other
+> headers intact in the header part of the message) are used in the
+> wild to send patch submissions.  /usr/bin/mail or /usr/bin/Mail
+> would not be among them, as I suspect they would place everything in
+> the body part, and the would do so without stripping the "From "
+> line that exists before each e-mail message.
 
-Ouch, sorry, that certainly sounds utterly broken. I have a suspicion
-that we would see more and more breakages like this in the near
-future, as there are folks trying to redo multi-commit commands in
-a single process. We need to be very careful to avoid the same
-mistake.
+mutt -H would be one example; I regularly use that to send mails.
+(It'll override "From:" if it doesn't know the address in it, which
+loses the author information entirely; it'll work fine with the --from
+format.) git-imap-send would be another example; its behavior would vary
+by mail client.  Both of those should always work fine with a mail
+produced via --from; they'll just ignore the in-body "From:" and send
+the mail.  They'd tend to do the wrong thing with a mail produced
+without using --from though.
 
-Also makes me wonder if "git cherry-pick A..B" shares the same
-breakage.
+I don't know what people who end up sending From-spoofed mails to LKML
+are using, but I've seen such mails regularly.  I also get occasional
+blowback from someone who sent such mails including patches I authored
+with my address spoofed as "From:".  And I've also seen someone flamed
+for sending patches to a mailing list for review with spoofed "From:"
+addresses.
 
-Thanks.
+I can think of aesthetic reasons to want the non-"--from" format (for
+instance, sticking patch files into a non-git-based tool like quilt or a
+distribution packaging system, and not wanting your own email address
+included), but I can't think of any tool that would produce incorrect
+results if handed the --from format.  That seems like an argument for
+switching the default, and adding a --from-author option or similar to
+get the current output.
