@@ -2,67 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9377C1F858
-	for <e@80x24.org>; Thu, 28 Jul 2016 21:12:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6FD81F858
+	for <e@80x24.org>; Thu, 28 Jul 2016 21:18:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757856AbcG1VL7 (ORCPT <rfc822;e@80x24.org>);
-	Thu, 28 Jul 2016 17:11:59 -0400
-Received: from relay3-d.mail.gandi.net ([217.70.183.195]:57108 "EHLO
-	relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751438AbcG1VL6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jul 2016 17:11:58 -0400
-Received: from mfilter25-d.gandi.net (mfilter25-d.gandi.net [217.70.178.153])
-	by relay3-d.mail.gandi.net (Postfix) with ESMTP id 6E5DEA80C6;
-	Thu, 28 Jul 2016 23:11:55 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter25-d.gandi.net
-Received: from relay3-d.mail.gandi.net ([IPv6:::ffff:217.70.183.195])
-	by mfilter25-d.gandi.net (mfilter25-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id N61U9ICFLrwx; Thu, 28 Jul 2016 23:11:54 +0200 (CEST)
-X-Originating-IP: 50.39.163.18
-Received: from x (50-39-163-18.bvtn.or.frontiernet.net [50.39.163.18])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 40DFBA80D9;
-	Thu, 28 Jul 2016 23:11:52 +0200 (CEST)
-Date:	Thu, 28 Jul 2016 14:11:51 -0700
-From:	Josh Triplett <josh@joshtriplett.org>
-To:	git@vger.kernel.org
-Subject: [RFC] git-format-patch: default to --from to avoid spoofed mails?
-Message-ID: <20160728211149.GA371@x>
+	id S1751480AbcG1VSf (ORCPT <rfc822;e@80x24.org>);
+	Thu, 28 Jul 2016 17:18:35 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58924 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751375AbcG1VSd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2016 17:18:33 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 906922FF49;
+	Thu, 28 Jul 2016 17:18:32 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hEKxpvXdTlLcrRefXxul9DKhRac=; b=T39C8W
+	yGAqzQF6uwW1g+dHTJnxZWpYrtFkxqHuqtSCH8gIIBZLV+lHO3VS/HTs+ldQv7vz
+	M8WhFWvcmyxUFEHSm2H2GWsmPZmLdbCKwD/UWpWDQT0cpCnhIwq9JQX+XIzdOB6Q
+	6MgNxUQ1UYq/MWb7oJoyXP9I6MNslW/7bAIQA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DlBKF7xXGzIhUz2AP8wEJqzZ+W2aNi23
+	3ChJb+knD3VOop6+8j1+XHADAJxj97HrKsG51QRZCCCLgsLxK4PNDKWmzDJbwdl9
+	yddu0N69s96EbIu2hSXMNI04rCbbsc/gQlsbnEFQeOOax3QIrCE+m+GLrKLrLOPP
+	XWd8Y6hHEwM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 86E282FF48;
+	Thu, 28 Jul 2016 17:18:32 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0826B2FF47;
+	Thu, 28 Jul 2016 17:18:32 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Kirill Smelkov <kirr@nexedi.com>
+Cc:	Jeff King <peff@peff.net>,
+	=?utf-8?Q?J=C3=A9rome?= Perrin <jerome@nexedi.com>,
+	Isabelle Vallet <isabelle.vallet@nexedi.com>,
+	Kazuhiko Shiozaki <kazuhiko@nexedi.com>,
+	Julien Muchembled <jm@nexedi.com>, git@vger.kernel.org,
+	Vicent Marti <tanoku@gmail.com>
+Subject: Re: [PATCH] pack-objects: Use reachability bitmap index when generating non-stdout pack too
+References: <20160725185313.GA13007@sigill.intra.peff.net>
+	<20160727201506.GA15204@teco.navytux.spb.ru>
+	<xmqqlh0mvmpn.fsf@gitster.mtv.corp.google.com>
+	<20160728202237.GC4026@teco.navytux.spb.ru>
+Date:	Thu, 28 Jul 2016 14:18:29 -0700
+In-Reply-To: <20160728202237.GC4026@teco.navytux.spb.ru> (Kirill Smelkov's
+	message of "Thu, 28 Jul 2016 23:22:37 +0300")
+Message-ID: <xmqqh9b9qx5m.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.6.0 (2016-04-01)
+Content-Type: text/plain
+X-Pobox-Relay-ID: D61396F8-5508-11E6-98D5-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-When git-format-patch formats a patch authored by someone other than
-yourself, it defaults to filling in the "From:" field of the email from
-the commit author.  If you explicitly pass the --from option,
-git-format-patch will instead use your own committer identity as the
-"From:", and then put a "From:" line at the top of the body if the
-commit author differs.  (git-am know to use that as the commit author
-when applying.)
+Kirill Smelkov <kirr@nexedi.com> writes:
 
-While git-send-email knows how to change the patch mails to use your own
-address as "From:" and add a "From:" line to the body for the author,
-any other tool used to send emails doesn't do that.  I've seen more than
-a few mails sent to various mailing lists and patch review tools with a
-spoofed "From:" field pointing to the commit author, typically without
-the knowledge of the author, which can lead to interesting surprises.
+> I'm waiting so long for main patch to be at least queued to pu, that I'm
+> now a bit frustrated and ready to do something not related to main goal :)
 
-I'd like to propose changing the default behavior of git-format-patch to
---from (and adding a --from-author option to override, and perhaps a
-config setting).  This will not change the output *except* when
-formatting patches authored by someone else.  git-am and git-send-email
-both handle the --from format without any issues.
+Perhaps the first step would be to stop putting multiple patches in
+a single e-mail buried after a few pages of discussion.  I will not
+even find that there _are_ multiple patches in the message if I am
+not involved directly in the discussion, and the discussion is still
+ongoing, because it is likely that I'd skim just a few paragraphs at
+the top before going on to other messages.
 
-Before I write such a patch: does anyone see a problem with such a
-change?
+I won't touch the message I am responding to, as your -- 8< -- cut
+mark does not even seem to be a reliable marker between patches
+(i.e.  I see something like this that is clearly not a message
+boundary:
 
-- Josh Triplett
+than `git pack-objects file.pack`. Extracting erp5.git pack from
+lab.nexedi.com backup repository:
+
+---- 8< ----
+$ time echo 0186ac99 | git pack-objects --stdout --revs >erp5pack-stdout.pack
+
+real    0m22.309s
+...
+)
+
