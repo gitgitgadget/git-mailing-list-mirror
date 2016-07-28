@@ -6,67 +6,122 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B00FE1F858
-	for <e@80x24.org>; Thu, 28 Jul 2016 22:20:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F19361F858
+	for <e@80x24.org>; Thu, 28 Jul 2016 22:32:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751588AbcG1WUE (ORCPT <rfc822;e@80x24.org>);
-	Thu, 28 Jul 2016 18:20:04 -0400
-Received: from mail-lf0-f51.google.com ([209.85.215.51]:36392 "EHLO
-	mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751377AbcG1WUB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Jul 2016 18:20:01 -0400
-Received: by mail-lf0-f51.google.com with SMTP id g62so59044916lfe.3
-        for <git@vger.kernel.org>; Thu, 28 Jul 2016 15:20:00 -0700 (PDT)
+	id S1752037AbcG1Wb6 (ORCPT <rfc822;e@80x24.org>);
+	Thu, 28 Jul 2016 18:31:58 -0400
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:35409 "EHLO
+	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751448AbcG1Wb6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Jul 2016 18:31:58 -0400
+Received: by mail-wm0-f48.google.com with SMTP id f65so268858897wmi.0
+        for <git@vger.kernel.org>; Thu, 28 Jul 2016 15:31:57 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=vandien-net.20150623.gappssmtp.com; s=20150623;
-        h=from:content-transfer-encoding:subject:message-id:date:to
-         :mime-version;
-        bh=J6CQIfb5LYrnoq1MCF5erj3oWhgg1ZyRUt9/2lzo2Ss=;
-        b=1Rul/+EgEw944uhuWWGIS1ozJpPThjmLCcf9iAurNWJ+Zj+AyFlRb/bYyMwBKZBiuc
-         yexw94ewT2pqhj68irvOAHKhMnSg7Rf3kvqeWdmUgHsC1iWVw6Uhdp4eId6H8CSIdmI9
-         FpeisXeyz7k2SUG6D/7x1AXDlCCGPLzAmvRH9dESGCGCaDrCsnkqUQ183tsQRT/6IuJ2
-         lU4wW9xz+vteNy5IrKk2PlwWUpzRAbPHMoWW34AB2if0Q2vxfI9BEN0Nfr+sWBJ8+buY
-         hATMopPS6GKM63oBEr7pt+zUx5I+fZzLK5vPjLgyQFj2jHfmCaNuv8633vqqrzrBTBZk
-         LCWg==
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=9PSrOVUoVZIvxc91+HUdTLnJ6QYfS5ew0pOJgkaKEMA=;
+        b=mu+prpsyMdIu26/T2tDoG3AV9amMG7Tdol1I3bL7J6mgR593n9WL3RHJxEHKBeFQF6
+         CiQfmW33aZ6J3GEjuwqnEVUlTvAVT2TzfeezncjggKnVYBwPVWnAG4E/X0LP4S85RGaz
+         /ygH4QFCGNYh9mTV3vpsGfG2dIuXB0z0YiwLITJxq08rXRu1q+c5pHmnA8MYFCqkx+86
+         P/6fASDjR+Wp8GIjjUOZO6T5awcNaqAjuFE3AQescWa3VjDQuaI5SpWwUAOtvMpOjKhI
+         8QlkT1C2IVXRypgcDbEjq3c8JuN905sN/l2xD8gaV8kIlw8BtV1MNaxpB+922sVqB74f
+         Ikmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:content-transfer-encoding:subject
-         :message-id:date:to:mime-version;
-        bh=J6CQIfb5LYrnoq1MCF5erj3oWhgg1ZyRUt9/2lzo2Ss=;
-        b=ONWw/My+7+gSP6nj0Cc2c5RBE1f/QMb7x1xy7Nx2hbH6AJAuxlzGI46V4eTdsqAVwW
-         YLURnP9GQHn9Vz/WnrocKXIr4xhei2nsZxdEfsx+BwfX9yeSBY/g3NNBJHLzLffgM4+x
-         j7bbYBWTPKzx5gZCui5gazGXOoyURimo+LzeNq66SchONOF5p8AiBV+szsA3WSD2UG29
-         AIOzWl1QsBvwVEV/TE5Z2Ru6yfatPJoKmgARKJsJ1gteeys5NuwsRkedzTIFogPIVchE
-         AxpGlkM6YHMDGKtz5WqYSoSr9e8/vYIciK5hRDBAcKas9FgqnTou3dcO7S7X/XZHdqPr
-         ZUYg==
-X-Gm-Message-State: AEkoouvzvpKirKuPcngIK/h87yBuPjIKvtwafNVFd60abC3SRf+fMz5n1bxdQyNQjeXx7A==
-X-Received: by 10.25.144.8 with SMTP id s8mr14447639lfd.94.1469744398917;
-        Thu, 28 Jul 2016 15:19:58 -0700 (PDT)
-Received: from [10.0.51.101] (89-67-109-52.dynamic.chello.pl. [89.67.109.52])
-        by smtp.gmail.com with ESMTPSA id h31sm2284001ljh.27.2016.07.28.15.19.57
-        for <git@vger.kernel.org>
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 28 Jul 2016 15:19:58 -0700 (PDT)
-From:	Thijs van Dien <thijs@vandien.net>
-Content-Type: text/plain; charset=us-ascii
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=9PSrOVUoVZIvxc91+HUdTLnJ6QYfS5ew0pOJgkaKEMA=;
+        b=ah4U0SMmqbkeBROLKOgi284lL35IDlmRf/fMd1er10nrnE0o6Md0EdxfTIAc6tzB2F
+         x7oMa7UqJOTUMzgaOa5b4Vo78cf4C+0BrgayQ7OXKMSk8QS2OcWypMjADDWl9zPANlzR
+         b7XX22uNkl8h5urTdHJcBp3GA6lft+bwYZgqpVGU0kmhf3g2q+yX3fGZkK5cfwU5yZz/
+         tX8mmJW4zjuPpL197aed0nTp8DrKf0nyNEjZWJxI6mwTau1exr1/t7sUcaCI5Pc/6M4v
+         5iJQUxWE6AVllYP6eKUw4uwbeAeJ8i1i+OvuSKWSypUxJ2GqCC2OMO8WEdlUF2pFzsiB
+         7bsw==
+X-Gm-Message-State: AEkoouvEAx00BlSefCS6nGy85XobVlvAabaw1DkuuF0AC2WkQKvbbylXXtwht7XcRFNhcbxOvphbE1KNiL61jg==
+X-Received: by 10.194.149.133 with SMTP id ua5mr34868254wjb.79.1469745116588;
+ Thu, 28 Jul 2016 15:31:56 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.28.130.74 with HTTP; Thu, 28 Jul 2016 15:31:27 -0700 (PDT)
+In-Reply-To: <579A5D97.7080708@gmail.com>
+References: <CAA787r=FH7Sa4qy2A-dy+wug81ZkqOW2KmSuWBE8_3whmNj1pw@mail.gmail.com>
+ <xmqqlh0lsoq6.fsf@gitster.mtv.corp.google.com> <CAA787rmDb+1=4RCscvo1rZWSt=tUQSm5wrFet-=PhRKZcf9x5A@mail.gmail.com>
+ <579A5D97.7080708@gmail.com>
+From:	=?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
+Date:	Fri, 29 Jul 2016 00:31:27 +0200
+X-Google-Sender-Auth: VjdvhAudT3s2m9Ltly7s73MAYOQ
+Message-ID: <CAA787rm+qLig6mzHw0NjNDt-6HF_77FOwmg5dBBOdwbqo3wP6A@mail.gmail.com>
+Subject: Re: git-testadd: Execute a command with only the staged changes in
+ Git applied
+To:	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8BIT
-Subject: [Git 2.9.2] diff inserted by commit.verbose not removed when rewording
-Message-Id: <539E05B5-13A5-4343-9296-19447BE14F14@vandien.net>
-Date:	Fri, 29 Jul 2016 00:19:57 +0200
-To:	git@vger.kernel.org
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-I'm just a random Git user, not very familiar with the Git development process and so on, so please by gentle.
+On 28 July 2016 at 21:31, Jakub Narębski <jnareb@gmail.com> wrote:
+> W dniu 2016-07-28 o 18:56, Øyvind A. Holm pisze:
+> > Øyvind A. Holm <sunny@sunbase.org> writes:
+> > > This is a script I created some weeks ago, and I've found it to be
+> > > immensely useful. Here is a snippet from git-testadd --help:
+> > > [...]
+> > >   This script clones the repository to the directory
+> > >   ".testadd.tmp" in the current directory and applies the staged
+> > >   chenges there (unless -u/--unmodified or -p/--pristine is
+> > >   specified), chdirs to the same relative directory in the clone
+> > >   and executes the command specified on the command line there.
+> >
+> > That's correct, the test clone is entirely separated from the
+> > working copy, and you can keep working while the tests are running
+> > in the clone. Combined with git-gui and/or "git add -p/git reset
+> > -p", it's easy to tweak the staged changes until things are ok.
+>
+> I wonder if using `git worktree` instead of `git clone` (well, local
+> clone uses hardlinks, so it is not that costly as it looks like) would
+> be a better solution.
 
-Setup:
-- OS X 10.11.6
-- Git 2.9.2 via Homebrew
+That's an interesting idea. Have to test it out. This is the result from
+the current master in linux.git:
 
-Curiosity triggered me to enable 'commit.verbose' globally with 'git config --global commit.verbose true'. I have not configured it on the repo. It works as expected when committing; the diff is appended to the commit message template, yet doesn't make it into the commit when untouched. Today I noticed that when I then rebase interactively ('git rebase -i HEAD~2'; whatever) and reword a specific commit, the diff that is appended then is _not_ removed and _does_ make it into the commit. The template looks OK ('------------------------ >8 ------------------------' and so on is there) but it seems that the logic to actually cut along that line is not executed then.
+With clone:
 
-I'm not sure what more I can say about it.
+  $ time git testadd pwd
+  git-testadd: Using ".testadd.tmp" as destination directory
+  Cloning into '.testadd.tmp'...
+  done.
+  Checking out files: 100% (55256/55256), done.
+  git-testadd: Applying staged changes
+
+  git-testadd: Executing "pwd" in /home/sunny/src/test-wt/.testadd.tmp
+  /home/sunny/src/test-wt/.testadd.tmp
+
+  real    0m10.464s
+  user    0m5.983s
+  sys     0m2.790s
+  $
+
+With worktree:
+
+  $ time git worktree add testaddtmp
+  Preparing testaddtmp (identifier testaddtmp)
+  Checking out files: 100% (55256/55256), done.
+  HEAD is now at 194dc87 Add braces to avoid "ambiguous ‘else’" compiler
+  warnings
+
+  real    0m10.343s
+  user    0m6.010s
+  sys     0m2.523s
+  $
+
+Both tests were run with cold cache ("echo 3 >/proc/sys/vm/drop_caches"
+as root). It seems as there's no difference, and that git clone is as
+fast as it can get without breaking physical laws. And we probably
+shouldn't do that. :)
+
+Z poważaniem,
+Øyvind
