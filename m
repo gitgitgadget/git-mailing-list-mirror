@@ -2,100 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8A0A1F71B
-	for <e@80x24.org>; Fri, 29 Jul 2016 09:17:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2B211F71B
+	for <e@80x24.org>; Fri, 29 Jul 2016 10:10:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751504AbcG2JRT (ORCPT <rfc822;e@80x24.org>);
-	Fri, 29 Jul 2016 05:17:19 -0400
-Received: from mail-vk0-f68.google.com ([209.85.213.68]:36617 "EHLO
-	mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751095AbcG2JRR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2016 05:17:17 -0400
-Received: by mail-vk0-f68.google.com with SMTP id r135so2861155vkf.3
-        for <git@vger.kernel.org>; Fri, 29 Jul 2016 02:17:17 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=qPlNq1Xp/OmgD/PVnAKFxgqfMFqLwbKSNmLBivt7sOQ=;
-        b=x9lI7FoFo9Zqb8lSsfRUJ8QcP2AsMrlfA+me/ORtjNurflvYvz9/ordX0Gg5plRXmf
-         ZCA3BMN+HtE1QvTnrHs3X3HoImMYppnuSBwOZXBgvIjbrD+nqZNgj3X/Vs3EnsO4Q/mL
-         nD4pkUZouFfUQD5cRG6VWMFVOy9OSopQoJJT1LLpElP7Lvhilmjsa2lIuBtRTZJLMBWa
-         3mcOcdOu4v8e4vuwMcfBadEtPcwdu8bQGHCQuYYsYw2eAY/FrvrIp6LXBy7dSypQembd
-         dRfZavlTwb4bjmy3zBka++6Q+Kp9w9ZuGK4miNjkLmhJyWqqhsWFQUskaz8UFLlY5k2K
-         C7ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=qPlNq1Xp/OmgD/PVnAKFxgqfMFqLwbKSNmLBivt7sOQ=;
-        b=SlWhT0zVQ6fqagdxY/OcwXo4SzKhwc/1MU12l8Pa+Nvhjat17+mgBZICRodtqIe5I4
-         ypjo4u0R5WkSbRn147e1F6O7Q3i15A3jp4OZLUtpYJGPmpAIQuhBxJIlQTFZIQYf+jfF
-         9oKeZw1dBaZCRImbB2QVsxeI3DwhX86S2ecAcccn8Ha/gfiIPrAfyjV6M7AP/feEYC+F
-         oeEGvYJsns8+QjlqE1bRaUaJ42EZWeEWqd4LaDGTwq1pWFjCiOaV5RB2aiScwShYwjOG
-         xcEVKb38ESoi/foeZlS3FboAaWnqLkThJCBDYPzZy44lqrJ6ZDOVObcwhYUYInPs6de9
-         G41Q==
-X-Gm-Message-State: AEkooutFGAFPuOi8MyI35x+1W+UytmABp+wQI7nRaqxXxyq6NI/+eX5Hvhp5Nx+7llU/GYvMzbaARzGGVYJm4g==
-X-Received: by 10.31.186.77 with SMTP id k74mr15952613vkf.26.1469783836303;
- Fri, 29 Jul 2016 02:17:16 -0700 (PDT)
+	id S1752657AbcG2KKd (ORCPT <rfc822;e@80x24.org>);
+	Fri, 29 Jul 2016 06:10:33 -0400
+Received: from ducie-dc1.codethink.co.uk ([185.25.241.215]:53292 "EHLO
+	ducie-dc1.codethink.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751557AbcG2KKb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2016 06:10:31 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by ducie-dc1.codethink.co.uk (Postfix) with ESMTP id 7E8004614C7;
+	Fri, 29 Jul 2016 11:10:29 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at ducie-dc1.codethink.co.uk
+Received: from ducie-dc1.codethink.co.uk ([127.0.0.1])
+	by localhost (ducie-dc1.codethink.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id phDIZoLL8IjI; Fri, 29 Jul 2016 11:10:25 +0100 (BST)
+Received: from salo (82-70-136-246.dsl.in-addr.zen.co.uk [82.70.136.246])
+	by ducie-dc1.codethink.co.uk (Postfix) with ESMTPSA id 4A6C3460A34;
+	Fri, 29 Jul 2016 11:10:25 +0100 (BST)
+Date:	Fri, 29 Jul 2016 11:10:11 +0100
+From:	Richard Ipsum <richard.ipsum@codethink.co.uk>
+To:	Josh Triplett <josh@joshtriplett.org>
+Cc:	git@vger.kernel.org, linux-kernel@vger.kernel.org,
+	dborowitz@google.com
+Subject: Re: [ANNOUNCE] git-series: track changes to a patch series over time
+Message-ID: <20160729101011.GA3469@salo>
+References: <20160729064055.GB25331@x>
 MIME-Version: 1.0
-Received: by 10.103.33.135 with HTTP; Fri, 29 Jul 2016 02:17:15 -0700 (PDT)
-From:	Dakota Hawkins <dakotahawkins@gmail.com>
-Date:	Fri, 29 Jul 2016 05:17:15 -0400
-Message-ID: <CAG0BQXnVAYdpk9EM_uiD+=UKSKmK=z1YEar5MresTr5XfDCxHw@mail.gmail.com>
-Subject: Issue with global config defaults "user.useConfigOnly = true" +
- "pull.rebase = preserve" - "user.email"
-To:	git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20160729064055.GB25331@x>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hello,
+On Thu, Jul 28, 2016 at 11:40:55PM -0700, Josh Triplett wrote:
+[snip]
+> 
+> I'd welcome any feedback, whether on the interface and workflow, the
+> internals and collaboration, ideas on presenting diffs of patch series,
+> or anything else.
+> 
 
-I have a question which may be a bug (I'm a bit skeptical), but here goes:
+This looks awesome!
 
-In my global .gitconfig, I have "user.useConfigOnly = true" and
-user.email isn't set there (I prefer to be forced to set it on a
-per-repo basis, as I use different emails for work and personal
-repos). I ALSO have "pull.rebase = preserve" set.
+I've been working on some similar stuff for a while also.[1][2]
 
-An example of the problem I have is with tools like golang (I filed an
-issue there, they closed it and suggested the problem is with git or
-my config: https://github.com/golang/go/issues/16516#issuecomment-235800085)
-that use git to pull in package repos without any real user
-interaction. When something like that runs a git pull for me (to
-update a package repo) my global config makes it try to rebase, which
-fails because git doesn't know who I am.
+I'm particularly interested in trying to establish a standard for
+storing review data in git. I've got a prototype for doing that[3],
+and an example tool that uses it[4]. The tool is still incomplete/buggy though.
 
-With golang, at least, there's no help setting-up all of its cloned
-repos with my user information in local configs, it's a manual step
-and I have to repeat it anytime anything decided to clone a new repo
-to use as a package, so it's at least persistently frustrating. Hence
-the golang bug, which I think is still a bug because they should
-handle this better.
+There seem to be a number of us trying to solve this in our different ways,
+it would be great to coordinate our efforts.
 
-In those cases specifically, I never have local commits that differ
-from the remote, so a "pull --ff-only" should leave me in the same
-state as a "pull --rebase".
+The prototype library I have is partly the result of some discussion and work
+with the Gerrit folks, since they were thinking about this problem
+before I even started writing git-candidate, and solved it with Notedb.[5]
 
-Is this a case of rebase trying to make sure it has enough information
-for me to be a committer before knowing whether I even need to rewrite
-any commits, and could/should that be avoided? Alternatively (or also)
-could/should rebase detect that a fast-forward is possible and prefer
-to do that instead?
+Let me know if you'd like to work together on this,
+I've been considering taking the perl-notedb prototype and writing
+a C library for it with bindings for other languages (i.e. Rust).
 
-I would not be surprised to learn that there's something I don't know
-or haven't considered that explains why those things aren't really
-do-able, but if that's the case I'd be interested to know what they
-are (I'd love to go back to the golang people and tell them to re-open
-my bug because there's nothing wrong with git).
+[1]: http://www.mail-archive.com/git%40vger.kernel.org/msg79461.html
+[2]: http://www.mail-archive.com/git%40vger.kernel.org/msg80972.html
 
-Thanks for your time, and please let me know if you'd like any
-additional information.
+[3]: https://bitbucket.org/richardipsum/perl-notedb
+[4]: https://bitbucket.org/richardipsum/git-candidate
 
-- Dakota Hawkins
+[5]: https://storage.googleapis.com/gerrit-talks/summit/2015/NoteDB.pdf
