@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A762D1F855
-	for <e@80x24.org>; Fri, 29 Jul 2016 23:38:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09F761F855
+	for <e@80x24.org>; Fri, 29 Jul 2016 23:38:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753499AbcG2XiX (ORCPT <rfc822;e@80x24.org>);
-	Fri, 29 Jul 2016 19:38:23 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34484 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753178AbcG2XiN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2016 19:38:13 -0400
-Received: by mail-wm0-f67.google.com with SMTP id q128so17717552wma.1
-        for <git@vger.kernel.org>; Fri, 29 Jul 2016 16:38:12 -0700 (PDT)
+	id S1753500AbcG2XiZ (ORCPT <rfc822;e@80x24.org>);
+	Fri, 29 Jul 2016 19:38:25 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:32973 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752217AbcG2XiP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2016 19:38:15 -0400
+Received: by mail-wm0-f68.google.com with SMTP id o80so17701137wme.0
+        for <git@vger.kernel.org>; Fri, 29 Jul 2016 16:38:15 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=d8Hbn5TTNpZ4dY5DoNYEE7SGDEcvbJfzCTSFu3ri+uQ=;
-        b=095jE/ksx3Ql1wl6Gpm2362RJl7QDowR23Jdp690/81Je2chBxpW4WK8u2i9UEHVho
-         oBDuVsgFfv49/8QA8LFhz/DsXbai0heHaKj4BrNFwV8v+ty1xtbmkd2lTZRmHbgiIk2E
-         5PIqjQWSdFZ3Vp/mm/dQsXwviH/2hgC5Qfv6rDybnhA/rrbMZezTFRc2w0NVCGI+zTWq
-         4oYhWfoWnFF+84ZmTwouJjQ53l0vNXSiPNObe95wHTGZhcET2Ic77ZR9nVB5iXgh/oBo
-         paAxF8RVX8DTQ07XHq2oRfLBfi7cEN3w3i2/oOK+Y0oL0W2lweSRy+6d3RBNc4VT5Ick
-         Dd3Q==
+        bh=vbMtHEKLIvWOy0KAJuKXxxmBlJn0dnG1K5xmZ7aBAwo=;
+        b=cMj5mCMdjoni6tQEOFmCz3pjgAb3TC3f9d9W7JXIAtnhNiWGw6wONap5w0z7pcPqZh
+         WIhG59X92FwzqY7Xx9UGjax1NZCANjLpJ0GOhDhXJOnVYOOlCLbCsSegA0octwRWokzP
+         jUdbCSdpQ49D/j9iI+0Eikt/XbE5TcEu5BhF7ld5MqUHBsyIz1O9DgikZf4ts7UOJWbR
+         Tyd1hIWZ4i42FtT5SVQ4O9qZq8TxBTpYyPhrFKpYzraUtwXDRFyu7sCwJy0fAcZRWBCz
+         uOcdSxQQI1SEOzRuavPKQbxikq/8E7Otb9Mm74MeIfGELAVVOk3ZmwzH6p4YBjnnd2cp
+         7o2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=d8Hbn5TTNpZ4dY5DoNYEE7SGDEcvbJfzCTSFu3ri+uQ=;
-        b=c+GKn++6zOkj5qaU9H+xofICGvwl6tuc7yxQum62hN2AI6w2WXfCD/OZlgxKi54MDB
-         qcw3MXfzfoy8VhDgJ0GkZ6baQgwaPcwVnImP82xCcubTx1CS4WFIVAvrM0I5VqEIDR8P
-         Mp/GNaxw57BW30UoMDVmzc32d576J8C4Lz+Ihi4y4FKCriw680H1ZO+YRKtV3i04Gc1g
-         7QIVroGyJfc90vRoora02FYxEHTF/oB62aP7KHKO0jEj6vTFQvOWvxBagNGiOiDyTc0W
-         y80NSBXqYJJho8k608atrCwFNekaNPyBYW5UJH85YgnOSD5kkD1A/fpQDHBejCk1DeVj
-         2aUw==
-X-Gm-Message-State: AEkoouuPwKBq1RO4SXg/O9PMboFqnTgngOxNZLFvZWLlGR5kZRojt594IKRCY4uOAnUJPQ==
-X-Received: by 10.28.17.9 with SMTP id 9mr3392501wmr.73.1469835491518;
-        Fri, 29 Jul 2016 16:38:11 -0700 (PDT)
+        bh=vbMtHEKLIvWOy0KAJuKXxxmBlJn0dnG1K5xmZ7aBAwo=;
+        b=Mq54s9QAXR4SH5+9d8832USFBNYkk/xgX3jhO+5ZNWG469bFmz0mvBjLQlBoNl5mwn
+         uUayL+IaI6klWRESDrxk2AwrmwtMv4eGCV8QajIxC6TFKZ69U+tJukzFwGG2v975Pldu
+         U7EnMVZ6IAz1ehAhXTZqjhQXUiAc7/dpNsA9LA/P6ovAYv4PFZ4FTLpVBF/tUAscLBen
+         n2YLEvKEgJIJMSFrBzin5f7LMHVHJ/LBzxtTJgQ+GEW5aAA0A0kT+RCMXqxDJF+qgIsl
+         mD351dLOjIP9Jr2JBKScnuBRArp6C/yDSlVLy9MSLzC4ZgkFj1Plx6SU08P+TQjAfwTX
+         lH7Q==
+X-Gm-Message-State: AEkooutR9PihimcKJKq2l/a3c5lQaSo7rS2yUuOBUgiJO4cZjje83jUw/K1hpk/PRsDv/Q==
+X-Received: by 10.28.25.135 with SMTP id 129mr3140927wmz.59.1469835493666;
+        Fri, 29 Jul 2016 16:38:13 -0700 (PDT)
 Received: from slxBook4.fritz.box (p5DDB4145.dip0.t-ipconnect.de. [93.219.65.69])
-        by smtp.gmail.com with ESMTPSA id i1sm18663212wjl.9.2016.07.29.16.38.09
+        by smtp.gmail.com with ESMTPSA id i1sm18663212wjl.9.2016.07.29.16.38.12
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Fri, 29 Jul 2016 16:38:10 -0700 (PDT)
+        Fri, 29 Jul 2016 16:38:13 -0700 (PDT)
 From:	larsxschneider@gmail.com
 To:	git@vger.kernel.org
 Cc:	gitster@pobox.com, jnareb@gmail.com, tboegi@web.de,
 	mlbright@gmail.com, e@80x24.org, peff@peff.net,
 	Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v3 05/10] pack-protocol: fix maximum pkt-line size
-Date:	Sat, 30 Jul 2016 01:37:56 +0200
-Message-Id: <20160729233801.82844-6-larsxschneider@gmail.com>
+Subject: [PATCH v3 07/10] convert: quote filter names in error messages
+Date:	Sat, 30 Jul 2016 01:37:58 +0200
+Message-Id: <20160729233801.82844-8-larsxschneider@gmail.com>
 X-Mailer: git-send-email 2.9.0
 In-Reply-To: <20160729233801.82844-1-larsxschneider@gmail.com>
 References: <20160727000605.49982-1-larsxschneider%40gmail.com/>
@@ -65,31 +65,61 @@ X-Mailing-List:	git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-According to LARGE_PACKET_MAX in pkt-line.h the maximal lenght of a
-pkt-line packet is 65520 bytes. The pkt-line header takes 4 bytes and
-therefore the pkt-line data component must not exceed 65516 bytes.
+Git filter driver commands with spaces (e.g. `filter.sh foo`) are hard to
+read in error messages. Quote them to improve the readability.
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- Documentation/technical/protocol-common.txt | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ convert.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/technical/protocol-common.txt b/Documentation/technical/protocol-common.txt
-index bf30167..ecedb34 100644
---- a/Documentation/technical/protocol-common.txt
-+++ b/Documentation/technical/protocol-common.txt
-@@ -67,9 +67,9 @@ with non-binary data the same whether or not they contain the trailing
- LF (stripping the LF if present, and not complaining when it is
- missing).
+diff --git a/convert.c b/convert.c
+index b1614bf..522e2c5 100644
+--- a/convert.c
++++ b/convert.c
+@@ -397,7 +397,7 @@ static int filter_buffer_or_fd(int in, int out, void *data)
+ 	child_process.out = out;
  
--The maximum length of a pkt-line's data component is 65520 bytes.
--Implementations MUST NOT send pkt-line whose length exceeds 65524
--(65520 bytes of payload + 4 bytes of length data).
-+The maximum length of a pkt-line's data component is 65516 bytes.
-+Implementations MUST NOT send pkt-line whose length exceeds 65520
-+(65516 bytes of payload + 4 bytes of length data).
+ 	if (start_command(&child_process))
+-		return error("cannot fork to run external filter %s", params->cmd);
++		return error("cannot fork to run external filter '%s'", params->cmd);
  
- Implementations SHOULD NOT send an empty pkt-line ("0004").
+ 	sigchain_push(SIGPIPE, SIG_IGN);
+ 
+@@ -415,13 +415,13 @@ static int filter_buffer_or_fd(int in, int out, void *data)
+ 	if (close(child_process.in))
+ 		write_err = 1;
+ 	if (write_err)
+-		error("cannot feed the input to external filter %s", params->cmd);
++		error("cannot feed the input to external filter '%s'", params->cmd);
+ 
+ 	sigchain_pop(SIGPIPE);
+ 
+ 	status = finish_command(&child_process);
+ 	if (status)
+-		error("external filter %s failed %d", params->cmd, status);
++		error("external filter '%s' failed %d", params->cmd, status);
+ 
+ 	strbuf_release(&cmd);
+ 	return (write_err || status);
+@@ -462,15 +462,15 @@ static int apply_filter(const char *path, const char *src, size_t len, int fd,
+ 		return 0;	/* error was already reported */
+ 
+ 	if (strbuf_read(&nbuf, async.out, len) < 0) {
+-		error("read from external filter %s failed", cmd);
++		error("read from external filter '%s' failed", cmd);
+ 		ret = 0;
+ 	}
+ 	if (close(async.out)) {
+-		error("read from external filter %s failed", cmd);
++		error("read from external filter '%s' failed", cmd);
+ 		ret = 0;
+ 	}
+ 	if (finish_async(&async)) {
+-		error("external filter %s failed", cmd);
++		error("external filter '%s' failed", cmd);
+ 		ret = 0;
+ 	}
  
 -- 
 2.9.0
