@@ -2,121 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E00D1F955
-	for <e@80x24.org>; Fri, 29 Jul 2016 16:20:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C773B1F955
+	for <e@80x24.org>; Fri, 29 Jul 2016 16:23:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753212AbcG2QU4 (ORCPT <rfc822;e@80x24.org>);
-	Fri, 29 Jul 2016 12:20:56 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:34238 "EHLO
-	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753183AbcG2QUy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2016 12:20:54 -0400
-Received: by mail-wm0-f42.google.com with SMTP id q128so42994741wma.1
-        for <git@vger.kernel.org>; Fri, 29 Jul 2016 09:20:53 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=qL7tPLMPFTCYyC31QZFi4GNH78crwbw1A78rildDcL0=;
-        b=zOqWofydGPfbxERQ1xh/zALKdTkwiBl1ziEH3H+9d/QrcRsLcPDpOeKru5mCmlGTtc
-         v4b9cpZ8AnG/GJgo/lB/ouEq2nUyP1v4kJ1wcoB8yKBIvXe1eqw1oUY3hES7JfASA5nI
-         55czlEFxJLqEGonhfH8YrQhXeFEn6F8d1VNsdhIHQYF0gveiJvXtU7bRkbETZfMC/2J+
-         21rHCcqoJ7beiGOnZu/l5dUmLlXoiE/SJytrtvbsJFN9z9dXtkbdltkP7rgNniu4JG5Y
-         pUy/y9Yl4eccaiODHmVKQpi0fei4Nv8XxZKR07rH3tbJwdwD3I4dXHYsgOy/zpqmdahv
-         vfzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=qL7tPLMPFTCYyC31QZFi4GNH78crwbw1A78rildDcL0=;
-        b=ICe8elFU2V2R2kalOiGCVAuqykRPwV2CPLYyu6ZriiINg9tnKXQlqadsZZDQ7Vu9Dj
-         +N90QanoUlB6xsmNHGPOMFVl1mV4cdY4MevfaBLQuS6ZcFNrn8TjUlU/uwJa62InuXzf
-         rBGrLaODC0xGDoXk+J1jrn5qfwEddJ5TARVRBSzrQly4tGFY9b2vp0uKfYaigkUmTEby
-         ZoG//oyYV2bbycA/bUTigDxpWB9HLRe8OYmJMn4XIeAjhBsfvwIgf/qaAGt2D8mH0u70
-         ilIhqCUZAvF18zNFyYC+YG/7dVcnNel9f3ZPjEpCEqS+ZFdq1bB7ajqxKyef7fXXO50g
-         DtXQ==
-X-Gm-Message-State: AEkooutcHEy1rkhIe7wwWq718d70jh+k3IBRRfHX0YQQmf/L6T3ZAwB3ozEX+nEDqXyJCA==
-X-Received: by 10.28.193.8 with SMTP id r8mr43474424wmf.13.1469809253073;
-        Fri, 29 Jul 2016 09:20:53 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id hy3sm17226011wjb.8.2016.07.29.09.20.51
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 29 Jul 2016 09:20:52 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v2 0/5] Git filter protocol
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20160729155740.GB29773@sigill.intra.peff.net>
-Date:	Fri, 29 Jul 2016 18:20:51 +0200
-Cc:	=?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	mlbright@gmail.com,
-	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>, e@80x24.org,
-	ramsay@ramsayjones.plus.com
-Content-Transfer-Encoding: 7bit
-Message-Id: <FA73FFDF-51D1-49FD-A24E-72A2C033E2F3@gmail.com>
-References: <20160722154900.19477-1-larsxschneider@gmail.com> <20160727000605.49982-1-larsxschneider@gmail.com> <579906C5.1050809@gmail.com> <BFED7ED8-40DB-46B5-A1B7-4F49624D5A62@gmail.com> <20160728132906.GA21311@sigill.intra.peff.net> <579B087F.7090108@gmail.com> <31219A33-CA8A-44D1-9DE0-6448AA1A7571@gmail.com> <20160729155740.GB29773@sigill.intra.peff.net>
-To:	Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3124)
+	id S1752286AbcG2QXI (ORCPT <rfc822;e@80x24.org>);
+	Fri, 29 Jul 2016 12:23:08 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:17144 "EHLO bsmtp3.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751695AbcG2QXH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2016 12:23:07 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 3s1DY46bV3z5tlG;
+	Fri, 29 Jul 2016 18:23:04 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id F34A9528F;
+	Fri, 29 Jul 2016 18:23:03 +0200 (CEST)
+Subject: Re: [PATCH] Fix failing test t3700-add.sh
+To:	=?UTF-8?Q?Ingo_Br=c3=bcckl?= <ib@wupperonline.de>
+References: <579b4ca1.18da2703.bm000@wupperonline.de>
+Cc:	git@vger.kernel.org
+From:	Johannes Sixt <j6t@kdbg.org>
+Message-ID: <6708d224-9a44-1446-8543-7c3c6403e506@kdbg.org>
+Date:	Fri, 29 Jul 2016 18:23:03 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2
+MIME-Version: 1.0
+In-Reply-To: <579b4ca1.18da2703.bm000@wupperonline.de>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Am 29.07.2016 um 14:31 schrieb Ingo Brückl:
+> At the time of the test xfoo1 already exists and is a link.
+> As a result, the check for file mode 100644 fails.
+>
+> Create not yet existing file xfoo instead.
+>
+> Signed-off-by: Ingo Brückl <ib@wupperonline.de>
+> ---
+>  t/t3700-add.sh | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
+>
+> diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+> index 4865304..aee61b9 100755
+> --- a/t/t3700-add.sh
+> +++ b/t/t3700-add.sh
+> @@ -342,12 +342,12 @@ test_expect_success 'git add --chmod=+x stages a non-executable file with +x' '
+>  '
+>
+>  test_expect_success 'git add --chmod=-x stages an executable file with -x' '
+> -	echo foo >xfoo1 &&
+> -	chmod 755 xfoo1 &&
+> -	git add --chmod=-x xfoo1 &&
+> -	case "$(git ls-files --stage xfoo1)" in
+> -	100644" "*xfoo1) echo pass;;
+> -	*) echo fail; git ls-files --stage xfoo1; (exit 1);;
+> +	echo foo >xfoo &&
+> +	chmod 755 xfoo &&
+> +	git add --chmod=-x xfoo &&
+> +	case "$(git ls-files --stage xfoo)" in
+> +	100644" "*xfoo) echo pass;;
+> +	*) echo fail; git ls-files --stage xfoo; (exit 1);;
+>  	esac
+>  '
 
-> On 29 Jul 2016, at 17:57, Jeff King <peff@peff.net> wrote:
-> 
-> On Fri, Jul 29, 2016 at 10:14:17AM +0200, Lars Schneider wrote:
-> 
->> My current implementation supports only two cases. Either the filter
->> knows the size and sends it back. Or the filter doesn't know the size
->> and Git reads until the flush packet (your "unknown" case). "Approx" is 
->> probably hard to do and fail shouldn't be part of the size, no?
-> 
-> Ah, OK, I missed that you could handle both cases. I think that is a
-> reasonable approach. It means the filter has to bother with pkt-lines,
-> but beyond that, it can choose the simple or streaming approach as
-> appropriate.
+The commit that added this test is already 2 months old. How could that 
+have been missed?
 
-Right.
+In fact, I cannot verify that there is xfoo1 in the directory or in the 
+index before this test case runs. The general statement that the commit 
+message makes is clearly not correct. What am I missing?
 
+-- Hannes
 
->> That being said a "fail" response is a very good idea! This allows
->> the filter to communicate to git that a non required filter process
->> failed. I will add that to the protocol. Thanks :) 
-> 
-> Maybe just send "ok <size>", "ok -1" (for streaming), or "fail <reason>"
-> followed by the content? That is similar to other Git protocols, though
-> I am not sure they are good models for sanity or extensibility. :)
-> 
-> I don't know if you would want to leave room for other "headers" in the
-> response, but you could also do something more HTTP-like, with a status
-> code, and arbitrary headers. And presumably git would just ignore
-> headers it doesn't know about. I think that's what Jakub's example was
-> leaning towards. I'm just not sure what other headers are really useful,
-> but it does leave room for extensibility.
-
-Well, "ok <size>" wouldn't make much sense as we already transmitted
-the size upfront I think. Right now I have implemented the following options:
-
-"success\n" --> everything was alright
-"reject\n" --> the filter rejected the operation but this is no error 
-               if "filter.<driver>.required = false"
-<anything else> --> failure that stops/restarts the filter process
-
-I don't think sending any failure reason makes sense because if a failure
-happens then we are likely in a bad state already (that's why I restart the
-filter process. I think the filter can report trouble on its own via stdout,
-no? I think this is what Git-LFS already does.
-
-I am working on the docs right now and afterwards I will send a v3 :-)
-
-- Lars
