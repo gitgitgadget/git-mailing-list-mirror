@@ -2,80 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C2601F955
-	for <e@80x24.org>; Fri, 29 Jul 2016 16:59:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D4F51F955
+	for <e@80x24.org>; Fri, 29 Jul 2016 17:06:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752510AbcG2Q7L (ORCPT <rfc822;e@80x24.org>);
-	Fri, 29 Jul 2016 12:59:11 -0400
-Received: from mail-it0-f49.google.com ([209.85.214.49]:38231 "EHLO
-	mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751695AbcG2Q7J (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2016 12:59:09 -0400
-Received: by mail-it0-f49.google.com with SMTP id j124so114859694ith.1
-        for <git@vger.kernel.org>; Fri, 29 Jul 2016 09:59:09 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=1ANUvOiu/abXMDki61+5+t2iED2ckpu8jGQHmRUFXro=;
-        b=ItdrXzvPYmZRU3K9t2tplWKBeGrgR96Xt+ri7qTnQOHLUk8ikqnzo6k6ttUDZwPSUM
-         8yzpEXhAx/4X8p05c2nUFlz1MsNNx++i/zkl90TN5sIfM2p1gnpvm0jzaPJUFDYDH9Ia
-         b/+PVMDKqRhjPaY+8cj/po53ezD3uKhN4+M3jzBeHFtb0YETHVdJ1ZKBwLaWpfD7NiEj
-         GMRrQ2zS4t7b2BMhxoDzgTsDDU7qY7/RNNt/NkR3OVN6DWan0Ycl7ofzm+tEz7lnombk
-         T6edr3HbvsjCDLXnua1yL1+pCS3tGy4GD4HX3L3oTzIpEXZ9BHW7lJxjTeo/tzBiy8aI
-         bbDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=1ANUvOiu/abXMDki61+5+t2iED2ckpu8jGQHmRUFXro=;
-        b=IrOYUavhtvJXENWgDj5oMprV3Fo1aEoA7XRC4scs98SmfWORHuEOQtOb1nTWgh8FW+
-         BIbe0ffa5cOPSr5UeNR+LiXlAfGARDWdxouQ8cG1SkZwIdia6HMkx38od2T6UaVXg3qU
-         ynEZod0L5ICLanx10Vuy2V3P/tPlr/vBa8BL/hjdrUDUXxe5xY/Y9x7QSJfnpoqSh1mA
-         60ezBO47g8P3izEAKrfAQ6XetC9iDYncD/8DJi6mMthHiytJwPGAMISAywUYdOXMA20d
-         MKcJ+VKw8eKwoyxDk012JezEV7x5oUzi6UBVaO57XtFEgLaL0K5ptWlS9PrpS7ozOpnt
-         vGBw==
-X-Gm-Message-State: AEkoouvqHTyNyXPeXCd8DQ31eXtwkzR/SyRueoeOr+QzrVsLuVhh3ue+r+uqYzYB/9Nw8O6wee139M8tUqbgs0sF
-X-Received: by 10.36.189.7 with SMTP id x7mr7976717ite.97.1469811548749; Fri,
- 29 Jul 2016 09:59:08 -0700 (PDT)
+	id S1753277AbcG2RGu (ORCPT <rfc822;e@80x24.org>);
+	Fri, 29 Jul 2016 13:06:50 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62315 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752657AbcG2RGs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2016 13:06:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 45CAD2EAFA;
+	Fri, 29 Jul 2016 13:06:47 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DgrFSRVnGqucRXU9pPVfOtYgFG8=; b=Ts//uV
+	nuAUMlSJmWrdd0dCpLKFsGbFe1aYkI7uRGWDKD/Cqjbk6hBImuzMM7cdyX5/Evu/
+	I+PWb9qRzTwY9+NGudB6oTKlMqN5SXGvkGyV1jvWkuQ/0yLebqhsRZSyxgYPVTjY
+	p5dhqjsqgG+F7AfI9UxdBADBMK2g4AmVqDX7k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DOJdsgT+cuipPxboScfdgY1raOqIKwp5
+	0woyl0XaFDuRnO3juM+pJtd5bTpC7/kF02IaaWElQtTs7YGgt0910A4sKK5h2VBe
+	fBJ6982xiP+DQ9WDC4SFHbmCeerukaD6O3++yF1h8fBkP2TkM76Ibe0L+nUPOA7z
+	tB/pR3df92k=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3E7EA2EAF6;
+	Fri, 29 Jul 2016 13:06:47 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AE8992EAF3;
+	Fri, 29 Jul 2016 13:06:46 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff King <peff@peff.net>
+Cc:	Linus Torvalds <torvalds@linux-foundation.org>,
+	Paul Tan <pyokagan@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: Small trivial annoyance with the nice new builtin "git am"
+References: <CA+55aFxaia7_VkKKF3JiQt76+z5goz3vCpmWi-wTyBH=iaw5ew@mail.gmail.com>
+	<CAPc5daX=MoqEXkV7DdpT+J=4K_qNdo0aNu_XgUs+9yggyrMXbQ@mail.gmail.com>
+	<20160729002902.GD9646@sigill.intra.peff.net>
+Date:	Fri, 29 Jul 2016 10:06:44 -0700
+In-Reply-To: <20160729002902.GD9646@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 28 Jul 2016 20:29:03 -0400")
+Message-ID: <xmqqbn1gpe57.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Fri, 29 Jul 2016 09:59:08 -0700 (PDT)
-In-Reply-To: <20160729124443.GA3686@salo>
-References: <20160729064055.GB25331@x> <20160729101011.GA3469@salo>
- <20160729110426.GA2945@x> <20160729124443.GA3686@salo>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Fri, 29 Jul 2016 09:59:08 -0700
-Message-ID: <CAGZ79kbTViNYLq0aouQ--5d7m=HYi3QxUYqaaH8sTCS_YTDquQ@mail.gmail.com>
-Subject: Re: [ANNOUNCE] git-series: track changes to a patch series over time
-To:	Richard Ipsum <richard.ipsum@codethink.co.uk>
-Cc:	Josh Triplett <josh@joshtriplett.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	"Linux-Kernel@Vger. Kernel. Org" <linux-kernel@vger.kernel.org>,
-	Dave Borowitz <dborowitz@google.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: D4FB09EE-55AE-11E6-9C36-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Jul 29, 2016 at 5:44 AM, Richard Ipsum
-<richard.ipsum@codethink.co.uk> wrote:
->>
->> These definitely seem like a family of related problems.  I'd like to
->> use git-series as a format for storing iterations on things like GitHub
->> pull-requests or Gerrit patch versions (in the latter case, overcoming
->> Gerrit's limitations on only handling one patch at a time).  Integrating
->> reviews with that seems helpful.
->
-> Worth noting here that Gerrit's one patch per change format isn't
-> intrinsic to Notedb, since we just need to track the sha we want
-> to merge and optionally the branch we intend to merge into.
+Jeff King <peff@peff.net> writes:
 
-Note that Gerrit started to lose the "one patch at a time" notion.
-It is possible to at least submit multiple changes coupled together
-(even across project boundaries) via the topic. Some sort of cover
-letter is missing though, that could be used e.g. for the merge commit.
+> On Thu, Jul 28, 2016 at 04:47:17PM -0700, Junio C Hamano wrote:
+>
+>> Also makes me wonder if "git cherry-pick A..B" shares the same
+>> breakage.
+>
+> Probably.
+
+It seems that "cherry-pick A..B" leads to sequencer.c::run_git_commit()
+that uses run_command_v_opt() to drive "git commit", so we are safe.
+
+> I guess we want something like:
+>
+> +void reset_ident_date(void)
+> +{
+> +	strbuf_reset(&git_default_date);
+> +}
+> +
+>
+> and then to sprinkle calls liberally through builtin-ified programs when
+> they move from one unit of work to the next.
+
+ident_default_date() is currently the only one that sets this to be
+cached, and that is to be used only when there is no user-specified
+date.
+
+When I saw the suggestion first time, I was worried if this had
+interaction with things like GIT_COMMITTER_DATE environment (because
+I didn't have easy access to the source) but it is not the case, so
+the change looks very sensible.
