@@ -2,83 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2E681F955
-	for <e@80x24.org>; Fri, 29 Jul 2016 18:20:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64FBE1F955
+	for <e@80x24.org>; Fri, 29 Jul 2016 18:23:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753417AbcG2SUz (ORCPT <rfc822;e@80x24.org>);
-	Fri, 29 Jul 2016 14:20:55 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55613 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752988AbcG2SUx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2016 14:20:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 562A032A2A;
-	Fri, 29 Jul 2016 14:20:52 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+KDzTMl7xH3vYCNIbm/YEppKzz4=; b=vTOXmf
-	qxTplE7pCCOIIjQryNOlYsFkUuPWx1u3UPbu7yaPt+12lSmNUcAz/codVknDIJQ0
-	Eltci9Ayo4hF9Zv87fSCBK8rfXR9cJpR3PavdSB1xzw9z4kcHoSzMpt1zx4PEauz
-	G4cSECXsivT2JM/qgRh/EGz1mHmVCPr/sRoiw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MIUBQlBw6RRwA1D8eLS/hhuufvdWT1L1
-	gCdTcjeGbgWK1wfZJ073Fv9nzmxecUpKTOqNHKPoF4iQbxvLK0OZf5IcUDHkmuU7
-	m8Q4M2+CB+6tTcx4yd/VFMxG6v3sf0kp81MwxMfoW1q5iw7EVews3lmWGaSqI8df
-	/1HA3h/Icfg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4E71A32A29;
-	Fri, 29 Jul 2016 14:20:52 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C06AB32A28;
-	Fri, 29 Jul 2016 14:20:51 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Dakota Hawkins <dakotahawkins@gmail.com>
-Cc:	git@vger.kernel.org
-Subject: Re: Issue with global config defaults "user.useConfigOnly = true" + "pull.rebase = preserve" - "user.email"
-References: <CAG0BQXnVAYdpk9EM_uiD+=UKSKmK=z1YEar5MresTr5XfDCxHw@mail.gmail.com>
-	<xmqqoa5gnxow.fsf@gitster.mtv.corp.google.com>
-Date:	Fri, 29 Jul 2016 11:20:49 -0700
-In-Reply-To: <xmqqoa5gnxow.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 29 Jul 2016 10:47:27 -0700")
-Message-ID: <xmqqa8h0nw5a.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753602AbcG2SXd (ORCPT <rfc822;e@80x24.org>);
+	Fri, 29 Jul 2016 14:23:33 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:35868 "EHLO
+	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753592AbcG2SXb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2016 14:23:31 -0400
+Received: by mail-wm0-f45.google.com with SMTP id q128so299559987wma.1
+        for <git@vger.kernel.org>; Fri, 29 Jul 2016 11:23:30 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=SIizTEnIUAC24PQwhFDwnGDvoBUOtQk0ut5QZyCKNVo=;
+        b=YRy8n3wk4xrg8yqEhoKEBaHa/9UbWWXsuAn7LBVdgoy3uF9xR31xAPzbCwyt5SX84T
+         L5Ma1EZBBNgYY4OG2H6/ElrK07MuAE6RrZdqRRAE8bxI+msb5K6x68tEUNGOc2P0r0It
+         PXFShnq8swQcz8fA/8n7ttxUFTnqIiH5y5fteDALoqanaODy0z4eGI7odWLLjmzgpbzT
+         nRipY4G6+HILfF3Ntzh3ybz68dane+8CtUsS7e1GJv2cOJDlVO3A2DaQWFpGQcI/RFVC
+         H0YMKoQZSGCNTASZgmzDSTOsiGMqs7R8fVq8NHVpbBygEFPBGiNXRgNSmku1k56YjyfR
+         4Dpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=SIizTEnIUAC24PQwhFDwnGDvoBUOtQk0ut5QZyCKNVo=;
+        b=Ey1A4X6mdZh1nOfsvb24kk3QRt9CS8fyArJZ1ONQ9v5vB8gQVmmPmwqZQfgrT75nZT
+         OisBl+Xyf6Y7ZR92pe/qAp+/ST2uCXE+BXe9sAflKCqC5t1KB5piquymrb9I6eqIRYSS
+         Vy3rGD0yTnPkdnVW/zKiDNU4OaWE6626YF7iX6YFxYGpi3WJUg/Pqeqy3Sfi7bjoWeBx
+         vF7jAb09t/BP86db8nAbIOGfgabGOzJEFwxAOde4ijFuLtkEqMitgb6unreJL5zKVrrA
+         OiWjn9uoUWRe44DFn4HOhj1PE08GRme2K6XoKtFGv2J9h4Ok6ReotLC46XkNWZAhRXNQ
+         zVSg==
+X-Gm-Message-State: AEkoouuhNdewTAS3SM5dFCw8JJDZLBRWBb7LguxQnELrWp5PopARy7vy/iZ7S7hMDY69qYzyqHDFVHmb/Hj3uQ==
+X-Received: by 10.28.167.80 with SMTP id q77mr2561038wme.62.1469816609367;
+ Fri, 29 Jul 2016 11:23:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2E72E85C-55B9-11E6-877F-89D312518317-77302942!pb-smtp1.pobox.com
+Received: by 10.194.70.167 with HTTP; Fri, 29 Jul 2016 11:23:28 -0700 (PDT)
+In-Reply-To: <CACsJy8CT2r1MKE_bQotPzKEWi10QB81sNn6w7H23GxRkEYRFfg@mail.gmail.com>
+References: <20160627182429.31550-1-chriscool@tuxfamily.org>
+ <20160627182429.31550-33-chriscool@tuxfamily.org> <xmqqinvs19ng.fsf@gitster.mtv.corp.google.com>
+ <CACsJy8Bi00yBb6UPm7_x8BDnwQKCXXpOPbswKtayRofmSOstcg@mail.gmail.com>
+ <CAP8UFD1SSjSGV+1e+zP4s=p+ohgSz6mct3EhPXqbde_y48ST7g@mail.gmail.com> <CACsJy8CT2r1MKE_bQotPzKEWi10QB81sNn6w7H23GxRkEYRFfg@mail.gmail.com>
+From:	Christian Couder <christian.couder@gmail.com>
+Date:	Fri, 29 Jul 2016 20:23:28 +0200
+Message-ID: <CAP8UFD3pZedUPWTj1A8q0zBGhR5ATL3CXOCxHf1_4Fuo+Uu4UQ@mail.gmail.com>
+Subject: Re: [PATCH v8 32/41] environment: add set_index_file()
+To:	Duy Nguyen <pclouds@gmail.com>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Dakota Hawkins <dakotahawkins@gmail.com> writes:
+On Fri, Jul 29, 2016 at 5:34 PM, Duy Nguyen <pclouds@gmail.com> wrote:
 >
->> In those cases specifically, I never have local commits that differ
->> from the remote, so a "pull --ff-only" should leave me in the same
->> state as a "pull --rebase".
->>
->> Is this a case of rebase trying to make sure it has enough information
->> for me to be a committer before knowing whether I even need to rewrite
->> any commits, and could/should that be avoided?  Alternatively (or also)
->> could/should rebase detect that a fast-forward is possible and prefer
->> to do that instead?
+> Yeah. If the libification movement is going strong, we can start
+> converting and at some point should be able to define
+> NO_THE_INDEX_COMPATIBILITY_MACROS globally (and avoid the_index along
+> the way)
 >
-> I think that is a reasonable argument,...
+> Without that, there is a risk. I looked at 'nm apply.o | grep ' [Uu]
+> '' and I don't see any external functions that would potentially
+> access the index, except ll_merge. Again there's a good chance I may
+> have missed something.
+>
+>> So it looks like it is a very big and different project to make the
+>> current libified code be explicit about which index it is using.
+>> And by the way perhaps this other project should just remove the
+>> "the_index" global altogether.
+>
+> This is probably the way to go. But it's the boring sort of work that
+> nobody wants to do :(
 
-There is one that still wants to know who you are, I think.  The
-reflog entries record who moved the tip of the ref and when, and
-obviously a fast-forward is also recorded.
-
-I _think_ our intention was to allow a bogus ident in reflog entries
-(even though we want to avoid a bogus ident in commits and tags), so
-perhaps additional code/logic for user.useConfigOnly may need to know
-about that (I didn't dig)?
-
+Do you mean that it might be a source of micro-projects for the next
+GSoC or Outreachy? ;-)
