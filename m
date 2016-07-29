@@ -2,94 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E1981F855
-	for <e@80x24.org>; Fri, 29 Jul 2016 22:58:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 789D51F855
+	for <e@80x24.org>; Fri, 29 Jul 2016 23:11:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751973AbcG2W6H (ORCPT <rfc822;e@80x24.org>);
-	Fri, 29 Jul 2016 18:58:07 -0400
-Received: from cloud.peff.net ([50.56.180.127]:51415 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751586AbcG2W6E (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2016 18:58:04 -0400
-Received: (qmail 18883 invoked by uid 102); 29 Jul 2016 22:58:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Jul 2016 18:58:04 -0400
-Received: (qmail 6356 invoked by uid 107); 29 Jul 2016 22:58:29 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Jul 2016 18:58:29 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Jul 2016 18:58:00 -0400
-Date:	Fri, 29 Jul 2016 18:58:00 -0400
-From:	Jeff King <peff@peff.net>
-To:	Josh Triplett <josh@joshtriplett.org>
-Cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [RFC] git-format-patch: default to --from to avoid spoofed mails?
-Message-ID: <20160729225800.GA23268@sigill.intra.peff.net>
-References: <20160728211149.GA371@x>
- <xmqq8twlqwan.fsf@gitster.mtv.corp.google.com>
- <20160728215603.GA22865@sigill.intra.peff.net>
- <xmqq4m79qujr.fsf@gitster.mtv.corp.google.com>
- <20160729001618.GA9646@sigill.intra.peff.net>
- <20160729020801.GA14892@x>
-MIME-Version: 1.0
+	id S1753443AbcG2XLr (ORCPT <rfc822;e@80x24.org>);
+	Fri, 29 Jul 2016 19:11:47 -0400
+Received: from plane.gmane.org ([80.91.229.3]:40456 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753442AbcG2XLq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2016 19:11:46 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1bTGwT-0006RW-67
+	for git@vger.kernel.org; Sat, 30 Jul 2016 01:11:45 +0200
+Received: from ddi132.neoplus.adsl.tpnet.pl ([83.23.86.132])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 30 Jul 2016 01:11:45 +0200
+Received: from jnareb by ddi132.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 30 Jul 2016 01:11:45 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To:	git@vger.kernel.org
+From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH v2 5/5] convert: add filter.<driver>.process option
+Date:	Sat, 30 Jul 2016 01:11:24 +0200
+Message-ID: <1a009e19-8830-7dea-2811-d475cf482ea3@gmail.com>
+References: <20160722154900.19477-1-larsxschneider@gmail.com>
+ <20160727000605.49982-1-larsxschneider@gmail.com>
+ <20160727000605.49982-6-larsxschneider@gmail.com>
+ <57994436.4080308@gmail.com> <7F1F1A0E-8FC3-4FBD-81AA-37786DE0EF50@gmail.com>
+ <xmqqshusny86.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160729020801.GA14892@x>
+Content-Transfer-Encoding: 7bit
+X-Complaints-To: usenet@ger.gmane.org
+Cc:	Git Mailing List <git@vger.kernel.org>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+	mlbright@gmail.com,
+	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Eric Wong <e@80x24.org>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Jeff King <peff@peff.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+X-Gmane-NNTP-Posting-Host: ddi132.neoplus.adsl.tpnet.pl
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
+In-Reply-To: <xmqqshusny86.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jul 28, 2016 at 07:08:02PM -0700, Josh Triplett wrote:
-
-> > I think on the whole that defaulting to "--from" would help more people
-> > than hurt them, but if we do believe there are scripts that would be
-> > regressed, it probably needs a deprecation period.
+W dniu 2016-07-29 o 19:35, Junio C Hamano pisze:
+> Lars Schneider <larsxschneider@gmail.com> writes:
 > 
-> I don't think it's likely that there are scripts that would be regressed
-> (and I think it's likely that there are scripts that would be
-> progressed), but I'd also have no objection to a deprecation period.
-
-I'm on the fence, so I'd leave the final decision on whether to deal
-with deprecation to you (who will write the patch) and Junio (as the
-maintainer).
-
-> I just confirmed that with the default changed, --no-from works to
-> return to the current behavior, so we don't need a new option.  And
-> --no-from has worked for a long time, so scripts won't need to care if
-> they're working with an old version of git.
+>> I think sending it upfront is nice for buffer allocations of big files
+>> and it doesn't cost us anything to do it.
 > 
-> I can provide a patch implementing a new config option to set the
-> format-patch --from default ("false" for --no-from, "true" for --from,
-> or a string value for --from=value).
+> While I do NOT think "total size upfront" MUST BE avoided at all costs,
+> I do not think the above statement to justify it makes ANY sense.
+> 
+> Big files are by definition something you cannot afford to hold its
+> entirety in core, so you do not want to be told that you'd be fed 40GB
+> and ask xmalloc to allocate that much.
 
-I'd be surprised if the config option is actually useful to anybody in
-practice (the distinction is not "this my preference" as much as "in
-what context am I calling the program?"). It is a convenient way to do
-deprecations (introduce an option, then flip the default, leaving the
-option as an escape hatch for anybody who has been broken), though.
+I don't know much how filter driver work internally, but in some cases
+Git reads or writes from file (file descriptor), in other cases it reads
+or writes from str+len pair (it probably predates strbuf) - I think in
+those cases file needs to fit in memory (in size_t).  So in some cases
+Git reads file into memory.  Whether it uses xmalloc or mmap, I don't
+know.
 
-> Do you think this needs the kind of very noisy deprecation period that
-> push.default had, where anyone without the git-config option set gets a
-> warning to stderr?  Or do you think it would suffice to provide a
-> warning in the release notes for a while and then change the default?
+> 
+> It allows the reader to be lazy for buffer allocations as long as
+> you know the file fits in-core, at the cost of forcing the writer to
+> somehow come up with the total number of bytes even before sending a
+> single byte (in other words, if the writer cannot produce and hold
+> the data in-core, it may even have to spool the data in a temporary
+> file only to count, and then play it back after showing the total
+> size).
 
-IMHO the noisy deprecations haven't really been all that beneficial.
-Even after the length push.default one, I think we still had people who
-had skipped enough versions to miss it, and quite a few people became
-confused or annoyed by the spew of text.
+For some types of filters you can know the size upfront:
+ - for filters such as rot13, with 1-to-1 transformation, you know
+   that the output size is the same as the input size
+ - for block encodings, and for constant-width to constant-width
+   encoding conversion, filter can calculate output size from the
+   input size (e.g. <output size> = 2*<input size>)
+ - filter may have get size from somewhere, for example LFS filter
+   stub is constant size, and files are stored in artifactory with
+   their length 
 
-OTOH, I'm not sure most people read the release notes carefully, either.
-It would be nice if we could make the change and count on people to
-notice it in 'next' or even 'master' before the release, but empirically
-that does not happen.
+> 
+> It is good that you allow both mode of operations and the size of
+> the data can either be given upfront (which allows a single fixed
+> allocation upfront without realloc, as long as the data fits in
+> core), or be left "(atend)".
 
-So I dunno. If we consider the risk minor, perhaps a mention in the
-release notes for version X, and then the change in X+1 would be fine.
-That gives some opportunity for release-note readers to pipe up. It's
-not foolproof, but it would give us more confidence.
+I think the protocol should be either: <size> + <contents>, or
+<size unknown> + <contents> + <flush>, that is do not use flush
+packet if size is known upfront -- it would be a second point
+of truth (SPOT principle).
+ 
+> I just don't want to see it oversold as a "feature" that the size
+> has to come before data.  That is a limitation, not a feature.
+> 
+> Thanks.
+> 
 
--Peff
+
