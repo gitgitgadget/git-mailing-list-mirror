@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFFE81F855
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0ABC2021D
 	for <e@80x24.org>; Fri, 29 Jul 2016 23:38:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753447AbcG2XiN (ORCPT <rfc822;e@80x24.org>);
-	Fri, 29 Jul 2016 19:38:13 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34455 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752217AbcG2XiI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2016 19:38:08 -0400
-Received: by mail-wm0-f66.google.com with SMTP id q128so17717322wma.1
-        for <git@vger.kernel.org>; Fri, 29 Jul 2016 16:38:07 -0700 (PDT)
+	id S1753467AbcG2XiQ (ORCPT <rfc822;e@80x24.org>);
+	Fri, 29 Jul 2016 19:38:16 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35216 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752758AbcG2XiJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2016 19:38:09 -0400
+Received: by mail-wm0-f68.google.com with SMTP id i5so17707942wmg.2
+        for <git@vger.kernel.org>; Fri, 29 Jul 2016 16:38:08 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=R1M+5soDJgioLJdeGWGdHLGk78oJ9+x/ZEMrAwtjCGg=;
-        b=rC40xbHsO5qEziOy1tmnGwFqenJ35jeCEtNBXo5bmhaHqLVNqqdsEKNV4pEq31xJrQ
-         piS3+bmhVsVn24ZRm1/4tm59424NKak2O8NnzxUbTrIfzXEaFXhEfOQRf2Fz4wR4coLl
-         bHbgTWs8Oq6/yRx6v16/1XmxBdwVMKcM4xgAb5VJTo6xzChJz552Hlmx/TUELENl4KGo
-         L4eine+WrPf7Sil1m+t7YIYfVo8jdmoaK5x5l0dt9WV8cG1T+1rG06YICT09tOrvQiXO
-         +oReIZ6FpWlSjagdla631jMDwNG/IwsC6KGWE0adum2UJdhi9lcYFsHRtYbis2t5q8m7
-         K/Ig==
+        bh=svEffWz4dN+c+6p7UZTC5p+1McJChkVbRaefWJX2AsY=;
+        b=qGJBC7y+0+fJgoqiAaw3gbwJXKpCfFNcbCi5Wfs8WR2VoYQL2gDltp/YC40UOdjYJa
+         yhGADXIiWpCJh4ubMTfATZTJ5Em2wjKy1QmvEieKr/Ofn3xE/RtIkHYPN5GDCcsl1qx1
+         QMBrqXZDQre8xzxGCJEFSPv6g6wGnBsu/v1bVWbMWfqkfUiDyz2SyDdIq69A+51f6pG/
+         7hlViuNLzDYHqzMf52Nlc6pObvqEKbybs9AbL6TlWNLMdK6SdVYr+ioONSGohJGXTU2y
+         qyw+bWTcUYyta4lg+qwgm/Ul322+YJF+be2bP0evLgiQX0AjJoSKSZeFl6ziSKBOzqnb
+         t7nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=R1M+5soDJgioLJdeGWGdHLGk78oJ9+x/ZEMrAwtjCGg=;
-        b=mIVqkr3e32RAn68NJrwXFUuwM0bzf5JnVEFtVedNO0agOBoJpA6gWMAdoJT5nJyaeF
-         V+GvY71b+hl6FSjhi7VAOlAUXdvrMYdM8UMij/4EWFuih0FnI7NqZ89pjwyU54LR93s6
-         pAp8okjdbcNxBt+GNmBYP9lZFe3AZmlmPRAK/nUf146S7YaT7dCeLuJiXNBsVoEmnd+0
-         fBNXI6YDyoTB3UgA4JAPt/hNUTzSb4tgtAUDNpp0u5TYsTF/qfPbc7p8sE+6Y/vY2xQs
-         ZYT2KERxvGJHaoyJF4a9hgXXIORqtvFt/Yczqr79SmsLx7ga4PygAUexGcKY1/SOLKvC
-         /sGg==
-X-Gm-Message-State: AEkoouthGaX1eaMHMWzlGVmFRrjjuLKTQbnjUmQRT/x7Q/PmE8nPMiTJWG6bgT9iG253/w==
-X-Received: by 10.28.158.142 with SMTP id h136mr46549673wme.10.1469835486917;
-        Fri, 29 Jul 2016 16:38:06 -0700 (PDT)
+        bh=svEffWz4dN+c+6p7UZTC5p+1McJChkVbRaefWJX2AsY=;
+        b=QS7ld4nt4SMk0L8k78iFmIj66Z5pg4/CdzZJR6iMIZuml0ZQ9fYPQAUz0V4FeRIwTp
+         v3u4qIhK+PW6G9VRKRJEFvSmcXdCsq0MdUy5f6nSbf0N0O1sdrOzy6nCEMQJE+Hr2rzQ
+         4xIP8vabrLiwQLpN4hA9OGpOd9fPt4UYdk7zFp3zjEaeOS9v3cEe05XznK2HJu/VjfWJ
+         O8EB2mGdE1J/d4HEWu+EuCDHkTKYB6WJnGAJI+m99QlDI9OB2SofEk+2TFta3UbfFDJC
+         I3Mhc5T9GqcAIIXppEKxXHzl8kwSNHFxhxOkoMiz448A0C9klY2wk+OM6l/05/eWecM1
+         SPTA==
+X-Gm-Message-State: AEkoouvy03uWZvgxTxmeybsJRZrihmSXQlp+dvrYfY8nHIC8Kcwn85S2J09gA4nMKbCD6A==
+X-Received: by 10.28.155.212 with SMTP id d203mr46550797wme.103.1469835487966;
+        Fri, 29 Jul 2016 16:38:07 -0700 (PDT)
 Received: from slxBook4.fritz.box (p5DDB4145.dip0.t-ipconnect.de. [93.219.65.69])
-        by smtp.gmail.com with ESMTPSA id i1sm18663212wjl.9.2016.07.29.16.38.05
+        by smtp.gmail.com with ESMTPSA id i1sm18663212wjl.9.2016.07.29.16.38.06
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Fri, 29 Jul 2016 16:38:06 -0700 (PDT)
+        Fri, 29 Jul 2016 16:38:07 -0700 (PDT)
 From:	larsxschneider@gmail.com
 To:	git@vger.kernel.org
 Cc:	gitster@pobox.com, jnareb@gmail.com, tboegi@web.de,
 	mlbright@gmail.com, e@80x24.org, peff@peff.net,
 	Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v3 02/10] pkt-line: add direct_packet_write() and direct_packet_write_data()
-Date:	Sat, 30 Jul 2016 01:37:53 +0200
-Message-Id: <20160729233801.82844-3-larsxschneider@gmail.com>
+Subject: [PATCH v3 03/10] pkt-line: add packet_flush_gentle()
+Date:	Sat, 30 Jul 2016 01:37:54 +0200
+Message-Id: <20160729233801.82844-4-larsxschneider@gmail.com>
 X-Mailer: git-send-email 2.9.0
 In-Reply-To: <20160729233801.82844-1-larsxschneider@gmail.com>
 References: <20160727000605.49982-1-larsxschneider%40gmail.com/>
@@ -65,95 +65,45 @@ X-Mailing-List:	git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-Sometimes pkt-line data is already available in a buffer and it would
-be a waste of resources to write the packet using packet_write() which
-would copy the existing buffer into a strbuf before writing it.
-
-If the caller has control over the buffer creation then the
-PKTLINE_DATA_START macro can be used to skip the header and write
-directly into the data section of a pkt-line (PKTLINE_DATA_LEN bytes
-would be the maximum). direct_packet_write() would take this buffer,
-adjust the pkt-line header and write it.
-
-If the caller has no control over the buffer creation then
-direct_packet_write_data() can be used. This function creates a pkt-line
-header. Afterwards the header and the data buffer are written using two
-consecutive write calls.
-
-Both functions have a gentle parameter that indicates if Git should die
-in case of a write error (gentle set to 0) or return with a error (gentle
-set to 1).
+packet_flush() would die in case of a write error even though for some callers
+an error would be acceptable. Add packet_flush_gentle() which writes a pkt-line
+flush packet and returns `0` for success and `1` for failure.
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- pkt-line.c | 30 ++++++++++++++++++++++++++++++
- pkt-line.h |  5 +++++
- 2 files changed, 35 insertions(+)
+ pkt-line.c | 6 ++++++
+ pkt-line.h | 1 +
+ 2 files changed, 7 insertions(+)
 
 diff --git a/pkt-line.c b/pkt-line.c
-index 445b8e1..6fae508 100644
+index 6fae508..1728690 100644
 --- a/pkt-line.c
 +++ b/pkt-line.c
-@@ -135,6 +135,36 @@ void packet_write(int fd, const char *fmt, ...)
- 	write_or_die(fd, buf.buf, buf.len);
+@@ -91,6 +91,12 @@ void packet_flush(int fd)
+ 	write_or_die(fd, "0000", 4);
  }
  
-+int direct_packet_write(int fd, char *buf, size_t size, int gentle)
++int packet_flush_gentle(int fd)
 +{
-+	int ret = 0;
-+	packet_trace(buf + 4, size - 4, 1);
-+	set_packet_header(buf, size);
-+	if (gentle)
-+		ret = !write_or_whine_pipe(fd, buf, size, "pkt-line");
-+	else
-+		write_or_die(fd, buf, size);
-+	return ret;
++	packet_trace("0000", 4, 1);
++	return !write_or_whine_pipe(fd, "0000", 4, "flush packet");
 +}
 +
-+int direct_packet_write_data(int fd, const char *buf, size_t size, int gentle)
-+{
-+	int ret = 0;
-+	char hdr[4];
-+	set_packet_header(hdr, sizeof(hdr) + size);
-+	packet_trace(buf, size, 1);
-+	if (gentle) {
-+		ret = (
-+			!write_or_whine_pipe(fd, hdr, sizeof(hdr), "pkt-line header") ||
-+			!write_or_whine_pipe(fd, buf, size, "pkt-line data")
-+		);
-+	} else {
-+		write_or_die(fd, hdr, sizeof(hdr));
-+		write_or_die(fd, buf, size);
-+	}
-+	return ret;
-+}
-+
- void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
+ void packet_buf_flush(struct strbuf *buf)
  {
- 	va_list args;
+ 	packet_trace("0000", 4, 1);
 diff --git a/pkt-line.h b/pkt-line.h
-index 3cb9d91..02dcced 100644
+index 02dcced..3953c98 100644
 --- a/pkt-line.h
 +++ b/pkt-line.h
-@@ -23,6 +23,8 @@ void packet_flush(int fd);
+@@ -23,6 +23,7 @@ void packet_flush(int fd);
  void packet_write(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
  void packet_buf_flush(struct strbuf *buf);
  void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
-+int direct_packet_write(int fd, char *buf, size_t size, int gentle);
-+int direct_packet_write_data(int fd, const char *buf, size_t size, int gentle);
++int packet_flush_gentle(int fd);
+ int direct_packet_write(int fd, char *buf, size_t size, int gentle);
+ int direct_packet_write_data(int fd, const char *buf, size_t size, int gentle);
  
- /*
-  * Read a packetized line into the buffer, which must be at least size bytes
-@@ -77,6 +79,9 @@ char *packet_read_line_buf(char **src_buf, size_t *src_len, int *size);
- 
- #define DEFAULT_PACKET_MAX 1000
- #define LARGE_PACKET_MAX 65520
-+#define PKTLINE_HEADER_LEN 4
-+#define PKTLINE_DATA_START(pkt) ((pkt) + PKTLINE_HEADER_LEN)
-+#define PKTLINE_DATA_LEN (LARGE_PACKET_MAX - PKTLINE_HEADER_LEN)
- extern char packet_buffer[LARGE_PACKET_MAX];
- 
- #endif
 -- 
 2.9.0
 
