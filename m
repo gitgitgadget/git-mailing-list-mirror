@@ -6,97 +6,75 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5FD0E1F71B
-	for <e@80x24.org>; Fri, 29 Jul 2016 06:41:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 787791F71B
+	for <e@80x24.org>; Fri, 29 Jul 2016 07:41:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751560AbcG2GlE (ORCPT <rfc822;e@80x24.org>);
-	Fri, 29 Jul 2016 02:41:04 -0400
-Received: from relay6-d.mail.gandi.net ([217.70.183.198]:44627 "EHLO
-	relay6-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750799AbcG2GlD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2016 02:41:03 -0400
-X-Greylist: delayed 24458 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 Jul 2016 02:41:02 EDT
-Received: from mfilter23-d.gandi.net (mfilter23-d.gandi.net [217.70.178.151])
-	by relay6-d.mail.gandi.net (Postfix) with ESMTP id 87CA3FB883;
-	Fri, 29 Jul 2016 08:41:00 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter23-d.gandi.net
-Received: from relay6-d.mail.gandi.net ([IPv6:::ffff:217.70.183.198])
-	by mfilter23-d.gandi.net (mfilter23-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id oijiNrEZUWyI; Fri, 29 Jul 2016 08:40:58 +0200 (CEST)
-X-Originating-IP: 50.39.163.18
-Received: from x (50-39-163-18.bvtn.or.frontiernet.net [50.39.163.18])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id A12A9FB88B;
-	Fri, 29 Jul 2016 08:40:57 +0200 (CEST)
-Date:	Thu, 28 Jul 2016 23:40:55 -0700
-From:	Josh Triplett <josh@joshtriplett.org>
-To:	git@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [ANNOUNCE] git-series: track changes to a patch series over time
-Message-ID: <20160729064055.GB25331@x>
+	id S1750917AbcG2HlA (ORCPT <rfc822;e@80x24.org>);
+	Fri, 29 Jul 2016 03:41:00 -0400
+Received: from mail2.tiolive.com ([94.23.229.207]:37628 "EHLO
+	mail2.tiolive.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750806AbcG2Hk7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2016 03:40:59 -0400
+Received: from teco.navytux.spb.ru (pppoe.95-55-164-187.dynamic.avangarddsl.ru [95.55.164.187])
+	by mail2.tiolive.com (Postfix) with ESMTPSA id 276BBBF0327;
+	Fri, 29 Jul 2016 09:40:55 +0200 (CEST)
+Received: from kirr by teco.navytux.spb.ru with local (Exim 4.87)
+	(envelope-from <kirr@teco.navytux.spb.ru>)
+	id 1bT2Pc-0004ul-3R; Fri, 29 Jul 2016 10:40:52 +0300
+Date:	Fri, 29 Jul 2016 10:40:52 +0300
+From:	Kirill Smelkov <kirr@nexedi.com>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Jeff King <peff@peff.net>,
+	=?iso-8859-1?Q?J=E9rome?= Perrin <jerome@nexedi.com>,
+	Isabelle Vallet <isabelle.vallet@nexedi.com>,
+	Kazuhiko Shiozaki <kazuhiko@nexedi.com>,
+	Julien Muchembled <jm@nexedi.com>, git@vger.kernel.org,
+	Vicent Marti <tanoku@gmail.com>
+Subject: Re: [PATCH] pack-objects: Use reachability bitmap index when
+ generating non-stdout pack too
+Message-ID: <20160729074051.GA5987@teco.navytux.spb.ru>
+References: <20160725185313.GA13007@sigill.intra.peff.net>
+ <20160727201506.GA15204@teco.navytux.spb.ru>
+ <xmqqlh0mvmpn.fsf@gitster.mtv.corp.google.com>
+ <20160728202237.GC4026@teco.navytux.spb.ru>
+ <xmqqh9b9qx5m.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <xmqqh9b9qx5m.fsf@gitster.mtv.corp.google.com>
 User-Agent: Mutt/1.6.0 (2016-04-01)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-I'd like to announce a project I've been working on for a while:
+On Thu, Jul 28, 2016 at 02:18:29PM -0700, Junio C Hamano wrote:
+> Kirill Smelkov <kirr@nexedi.com> writes:
+> 
+> > I'm waiting so long for main patch to be at least queued to pu, that I'm
+> > now a bit frustrated and ready to do something not related to main goal :)
+> 
+> Perhaps the first step would be to stop putting multiple patches in
+> a single e-mail buried after a few pages of discussion.  I will not
+> even find that there _are_ multiple patches in the message if I am
+> not involved directly in the discussion, and the discussion is still
+> ongoing, because it is likely that I'd skim just a few paragraphs at
+> the top before going on to other messages.
+> 
+> I won't touch the message I am responding to, as your -- 8< -- cut
+> mark does not even seem to be a reliable marker between patches
+> (i.e.  I see something like this that is clearly not a message
+> boundary:
+> 
+> than `git pack-objects file.pack`. Extracting erp5.git pack from
+> lab.nexedi.com backup repository:
+> 
+> ---- 8< ----
+> $ time echo 0186ac99 | git pack-objects --stdout --revs >erp5pack-stdout.pack
+> 
+> real    0m22.309s
+> ...
+> )
 
-git-series provides a tool for managing patch series with git, tracking
-the "history of history". git series tracks changes to the patch series
-over time, including rebases and other non-fast-forwarding changes. git
-series also tracks a cover letter for the patch series, formats the
-series for email, and prepares pull requests.
-
-This makes it easier to collaborate on a patch series, distribution
-package, backport, or any other development process that includes
-rebasing or non-fast-forward development.
-
-A patch series typically goes through multiple iterations before
-submission; the path from idea to RFC to [PATCHv12 1/8] includes many
-invocations of git rebase -i. However, while Git tracks and organizes
-commits quite well, it doesn't actually track changes to a patch series
-at all, outside of the ephemeral reflog. This makes it a challenge to
-collaborate on a patch series, distribution package, backport, or any
-other development process that includes rebasing or non-fast-forward
-development.
-
-Typically, tracking the evolution of a patch series over time involves
-moving part of the version control outside of git. You can move the
-patch series from git into quilt or a distribution package, and then
-version the patch files with git, losing the power of git's tools. Or,
-you can keep the patch series in git, and version it via multiple named
-branches; however, names like feature-v2, feature-v3-typofix, and
-feature-v8-rebased-4.6-alice-fix sound like filenames from corporate
-email, not modern version control. And either way, git doesn't track
-your cover letter at all.
-
-git-series tracks both a patch series and its evolution within the same
-git repository. git-series works entirely with existing git features,
-allowing git to push and pull a series to any git repository along with
-other branches and tags. Each time you change the patch series, whether
-fast-forwarding or not, you can "git series commit" a new version of the
-patch series, complete with commit message.
-
-You can rebase a patch series with "git series rebase -i", format it for
-submission with "git series format", or send a "please pull" request with
-"git series req".  git-series knows the base of your series, so you
-don't need to count patches or find a commit hash to run rebase or
-format.
-
-If you're interested in trying git-series, see
-https://github.com/git-series/git-series for installation instructions
-and a "getting started" guide.
-
-I've also documented the internal storage format of git-series at
-https://github.com/git-series/git-series/blob/master/INTERNALS.md ,
-including the details for how git-series ensures git can always reach,
-push, and pull a series.
-
-I'd welcome any feedback, whether on the interface and workflow, the
-internals and collaboration, ideas on presenting diffs of patch series,
-or anything else.
-
-- Josh Triplett
+Ok, makes sense and my fault. I'm resending each patch as separate
+message in reply to this mail.
