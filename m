@@ -2,95 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E9811F858
-	for <e@80x24.org>; Fri, 29 Jul 2016 00:05:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 267511F858
+	for <e@80x24.org>; Fri, 29 Jul 2016 00:16:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751890AbcG2AFR (ORCPT <rfc822;e@80x24.org>);
-	Thu, 28 Jul 2016 20:05:17 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:53282 "EHLO
-	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751699AbcG2AFP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jul 2016 20:05:15 -0400
-Received: from mfilter46-d.gandi.net (mfilter46-d.gandi.net [217.70.178.177])
-	by relay4-d.mail.gandi.net (Postfix) with ESMTP id 4ADC41720AE;
-	Fri, 29 Jul 2016 02:05:12 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter46-d.gandi.net
-Received: from relay4-d.mail.gandi.net ([IPv6:::ffff:217.70.183.196])
-	by mfilter46-d.gandi.net (mfilter46-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id iI2HiPmGCcEP; Fri, 29 Jul 2016 02:05:10 +0200 (CEST)
-X-Originating-IP: 50.39.163.18
-Received: from x (50-39-163-18.bvtn.or.frontiernet.net [50.39.163.18])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id C6CCF172094;
-	Fri, 29 Jul 2016 02:05:09 +0200 (CEST)
-Date:	Thu, 28 Jul 2016 17:05:07 -0700
-From:	Josh Triplett <josh@joshtriplett.org>
+	id S1752942AbcG2AQX (ORCPT <rfc822;e@80x24.org>);
+	Thu, 28 Jul 2016 20:16:23 -0400
+Received: from cloud.peff.net ([50.56.180.127]:50681 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752529AbcG2AQW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2016 20:16:22 -0400
+Received: (qmail 12346 invoked by uid 102); 29 Jul 2016 00:16:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 28 Jul 2016 20:16:22 -0400
+Received: (qmail 29857 invoked by uid 107); 29 Jul 2016 00:16:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 28 Jul 2016 20:16:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Jul 2016 20:16:19 -0400
+Date:	Thu, 28 Jul 2016 20:16:19 -0400
+From:	Jeff King <peff@peff.net>
 To:	Junio C Hamano <gitster@pobox.com>
-Cc:	git@vger.kernel.org
+Cc:	Josh Triplett <josh@joshtriplett.org>, git@vger.kernel.org
 Subject: Re: [RFC] git-format-patch: default to --from to avoid spoofed mails?
-Message-ID: <20160729000507.GA3149@x>
+Message-ID: <20160729001618.GA9646@sigill.intra.peff.net>
 References: <20160728211149.GA371@x>
  <xmqq8twlqwan.fsf@gitster.mtv.corp.google.com>
+ <20160728215603.GA22865@sigill.intra.peff.net>
+ <xmqq4m79qujr.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq8twlqwan.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.6.0 (2016-04-01)
+In-Reply-To: <xmqq4m79qujr.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jul 28, 2016 at 02:37:04PM -0700, Junio C Hamano wrote:
-> Josh Triplett <josh@joshtriplett.org> writes:
+On Thu, Jul 28, 2016 at 03:14:48PM -0700, Junio C Hamano wrote:
+
+> > I think the original reason I did not make "--from" the default is that
+> > I was worried about breaking consumers which do not know how to handle
+> > in-body headers.
 > 
-> > I'd like to propose changing the default behavior of git-format-patch to
-> > --from (and adding a --from-author option to override, and perhaps a
-> > config setting).  This will not change the output *except* when
-> > formatting patches authored by someone else.  git-am and git-send-email
-> > both handle the --from format without any issues.
+> That's a fair concern.
 > 
-> I see this in "format-patch --help":
+> So going back to Josh's original problem description:
 > 
->            Note that this option is only useful if you are actually
->            sending the emails and want to identify yourself as the
->            sender, but retain the original author (and git am will
->            correctly pick up the in-body header).  Note also that
->            git send-email already handles this transformation for
->            you, and this option should not be used if you are
->            feeding the result to git send-email.
+>     While git-send-email knows how to change the patch mails to use your own
+>     address as "From:" and add a "From:" line to the body for the author,
+>     any other tool used to send emails doesn't do that.
 > 
-> The first one says "only useful", but it seems what it really means
-> is "it becomes no-op if you are sending your own patch anyway".  So
-> that one does not worry me.  What is most worrysome is the latter
-> half of the last sentence.  Is it really "should not be", or is it
-> merely "use of this option is just a waste of time, as you would get
-> exactly the same result anyway"?  If it is the latter, that is fine.
+> I wonder how these "any other tool" (that reads the format-patch
+> output, i.e. mbox file with one mail per file each, and sends each
+> as a piece of e-mail, without paying attention who you, the tool's
+> user, are and blindly send them with the original "From:" and other
+> headers intact in the header part of the message) are used in the
+> wild to send patch submissions.  /usr/bin/mail or /usr/bin/Mail
+> would not be among them, as I suspect they would place everything in
+> the body part, and the would do so without stripping the "From "
+> line that exists before each e-mail message.
 
-As far as I can tell, it's the latter.  git send-email can do this same
-transformation, but handles mails that already have the transformation
-done to them without any issue.
+I cannot speak for everybody, of course, but the reason I implemented
+"--from" is because my workflow is basically:
 
-> One thing I absolutely do not want to see is people to start
-> repeating their own ident on in-body "From: " header when they send
-> their own patch.  That would waste everybody's time pointing out
-> "You do not have to do that, it merely adds noise".  As long as you
-> can guarantee that your change won't increase the rate of that, I am
-> fine with the proposal.
+  git format-patch --from --stdout @{u}..HEAD >mbox
+  mutt -f mbox
 
-git format-patch with --from *only* adds an in-body "From:" if the
-commit author differs from the local committer identity.  So, as far as
-I can tell, the only scenario that would produce additional in-body "From:"
-headers here would be if someone had failed to configure their git
-identity, and manually set the author for their own commits.  (In which
-case, they'd also have a broken "From:" in any cover letter they
-generated.)
+and then I use mutt's "resend" command to send each one. Mutt uses the
+"From" header written by format-patch as the default (and so I would
+have to manually move the headers around if not for "--from").
 
-So, it seems exceedingly unlikely to me that this would result in
-unnecessary in-body "From:" headers.
+The commands above are wrapped in a script, so I have no problem
+remembering to type "--from", but I can see how it would be irritating
+for general use. I would go so far as to say that any time the patches
+are going to be mailed, that "--from" is the right thing to do (because
+otherwise you are relying on your MUA to avoid impersonating the
+original author).
 
-- Josh Triplett
+The question in my mind is whether people actually use format-patch for
+things besides emailing, and if the final destination is something other
+than "git am".  It is a handy format because it is the least-lossy way
+to move commits around external to git itself.  That's why "rebase" used
+it originally. If the final destination is "am" (as it is for rebase),
+then in-body headers are OK, because we know it understands those. If
+not, then it's a regression.
+
+I think on the whole that defaulting to "--from" would help more people
+than hurt them, but if we do believe there are scripts that would be
+regressed, it probably needs a deprecation period.
+
+-Peff
