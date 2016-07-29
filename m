@@ -2,79 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB27D1F858
-	for <e@80x24.org>; Fri, 29 Jul 2016 02:08:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5FCD81F858
+	for <e@80x24.org>; Fri, 29 Jul 2016 04:04:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750923AbcG2CIL (ORCPT <rfc822;e@80x24.org>);
-	Thu, 28 Jul 2016 22:08:11 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:44231 "EHLO
-	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750719AbcG2CIJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jul 2016 22:08:09 -0400
-Received: from mfilter39-d.gandi.net (mfilter39-d.gandi.net [217.70.178.170])
-	by relay4-d.mail.gandi.net (Postfix) with ESMTP id AD1181720A3;
-	Fri, 29 Jul 2016 04:08:06 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter39-d.gandi.net
-Received: from relay4-d.mail.gandi.net ([IPv6:::ffff:217.70.183.196])
-	by mfilter39-d.gandi.net (mfilter39-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id ZKEeqryHnwD6; Fri, 29 Jul 2016 04:08:05 +0200 (CEST)
-X-Originating-IP: 50.39.163.18
-Received: from x (50-39-163-18.bvtn.or.frontiernet.net [50.39.163.18])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id EAD0017209B;
-	Fri, 29 Jul 2016 04:08:03 +0200 (CEST)
-Date:	Thu, 28 Jul 2016 19:08:02 -0700
-From:	Josh Triplett <josh@joshtriplett.org>
-To:	Jeff King <peff@peff.net>
-Cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [RFC] git-format-patch: default to --from to avoid spoofed mails?
-Message-ID: <20160729020801.GA14892@x>
-References: <20160728211149.GA371@x>
- <xmqq8twlqwan.fsf@gitster.mtv.corp.google.com>
- <20160728215603.GA22865@sigill.intra.peff.net>
- <xmqq4m79qujr.fsf@gitster.mtv.corp.google.com>
- <20160729001618.GA9646@sigill.intra.peff.net>
+	id S1750822AbcG2EE2 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 29 Jul 2016 00:04:28 -0400
+Received: from cloud.peff.net ([50.56.180.127]:50785 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750729AbcG2EE0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2016 00:04:26 -0400
+Received: (qmail 23813 invoked by uid 102); 29 Jul 2016 04:04:27 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Jul 2016 00:04:27 -0400
+Received: (qmail 31273 invoked by uid 107); 29 Jul 2016 04:04:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Jul 2016 00:04:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Jul 2016 00:04:23 -0400
+Date:	Fri, 29 Jul 2016 00:04:23 -0400
+From:	Jeff King <peff@peff.net>
+To:	git@vger.kernel.org
+Cc:	Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/7] speed up pack-objects counting with many packs
+Message-ID: <20160729040422.GA19678@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20160729001618.GA9646@sigill.intra.peff.net>
-User-Agent: Mutt/1.6.0 (2016-04-01)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jul 28, 2016 at 08:16:19PM -0400, Jeff King wrote:
-> The question in my mind is whether people actually use format-patch for
-> things besides emailing, and if the final destination is something other
-> than "git am".  It is a handy format because it is the least-lossy way
-> to move commits around external to git itself.  That's why "rebase" used
-> it originally. If the final destination is "am" (as it is for rebase),
-> then in-body headers are OK, because we know it understands those. If
-> not, then it's a regression.
-> 
-> I think on the whole that defaulting to "--from" would help more people
-> than hurt them, but if we do believe there are scripts that would be
-> regressed, it probably needs a deprecation period.
+This is a follow-up to the patches in
 
-I don't think it's likely that there are scripts that would be regressed
-(and I think it's likely that there are scripts that would be
-progressed), but I'd also have no objection to a deprecation period.
+  http://public-inbox.org/git/20160725184938.GA12871@sigill.intra.peff.net/
 
-I just confirmed that with the default changed, --no-from works to
-return to the current behavior, so we don't need a new option.  And
---no-from has worked for a long time, so scripts won't need to care if
-they're working with an old version of git.
+that are currently queued in jk/pack-objects-optim-skimming. Roughly,
+they try to optimize a loop that is O(nr_objects * nr_packs) by breaking
+out early in some cases.
 
-I can provide a patch implementing a new config option to set the
-format-patch --from default ("false" for --no-from, "true" for --from,
-or a string value for --from=value).
+I had written those patches a while ago and confirmed that they did
+speed up a particular nasty case I had. But when I tried to write a
+t/perf test to show off the improvement, I found that they didn't help!
+The reason is that the optimizations are heavily dependent on the order
+of the packs, and which objects go in which pack. The loop has the same
+worst-case complexity as it always did, but we rely on getting lucky to
+break out early.
 
-Do you think this needs the kind of very noisy deprecation period that
-push.default had, where anyone without the git-config option set gets a
-warning to stderr?  Or do you think it would suffice to provide a
-warning in the release notes for a while and then change the default?
+I think the perf test I've included here is more representative of a
+real-world workloads, and with an extra optimization, I was able to show
+good numbers with it.
+
+The general strategy is to order the pack lookups in most-recently-used
+order. This replaces an existing 1-element MRU cache in the normal pack
+lookup code, and replaces a straight reverse-chronological iteration in
+pack-objects.
+
+All credit for thinking of this scheme goes to Michael Haggerty, who
+suggested the idea to me about six months ago. It seemed like a lot of
+work at the time, so I didn't do it. :) But as I started to implement
+the same 1-element cache in pack-objects, I found that the code actually
+gets rather awkward. The MRU solution makes the callers easier to read,
+and of course it turns out to be faster, to boot.
+
+Anyway, enough chit-chat. The patches are:
+
+  [1/7]: t/perf: add tests for many-pack scenarios
+  [2/7]: sha1_file: drop free_pack_by_name
+  [3/7]: add generic most-recently-used list
+  [4/7]: find_pack_entry: replace last_found_pack with MRU cache
+  [5/7]: pack-objects: break out of want_object loop early
+  [6/7]: pack-objects: compute local/ignore_pack_keep early
+  [7/7]: pack-objects: use mru list when iterating over packs
+
+The actual optimizations are in patches 4 and 7, which have their own
+numbers. But here are end-to-end numbers for the series against the tip
+of master (for the meanings, see the discussion in patch 1, and the
+analysis in 4 and 7):
+
+[p5303, linux.git]
+Test                      origin                HEAD
+-------------------------------------------------------------------------
+5303.3: rev-list (1)      31.48(31.20+0.27)     31.18(30.95+0.22) -1.0%
+5303.4: repack (1)        40.74(39.27+2.56)     40.30(38.96+2.47) -1.1%
+5303.6: rev-list (50)     31.65(31.38+0.26)     31.26(31.02+0.23) -1.2%
+5303.7: repack (50)       60.90(71.03+2.13)     46.95(57.46+1.85) -22.9%
+5303.9: rev-list (1000)   38.63(38.25+0.37)     31.91(31.61+0.28) -17.4%
+5303.10: repack (1000)    392.52(467.09+5.05)   87.38(159.98+2.92) -77.7%
+
+[p5303, git.git]
+Test                      origin              HEAD
+---------------------------------------------------------------------
+5303.3: rev-list (1)      1.55(1.54+0.00)     1.56(1.54+0.01) +0.6%
+5303.4: repack (1)        1.83(1.82+0.06)     1.82(1.82+0.05) -0.5%
+5303.6: rev-list (50)     1.58(1.56+0.02)     1.58(1.57+0.00) +0.0%
+5303.7: repack (50)       2.50(3.16+0.04)     2.32(2.92+0.09) -7.2%
+5303.9: rev-list (1000)   2.64(2.61+0.02)     2.23(2.21+0.01) -15.5%
+5303.10: repack (1000)    12.68(19.07+0.30)   7.51(13.86+0.20) -40.8%
+
+For curiosity, I also ran the git.git case with 10,000 packs. This is
+even more silly, but it shows that the problem does get worse and worse
+as the number grows, but that the patches do continue to help:
+
+Test                        origin               HEAD
+-------------------------------------------------------------------------
+5303.12: rev-list (10,000)  26.00(25.86+0.13)    15.76(15.62+0.13) -39.4%
+5303.13: repack (10,000)   164.11(175.30+1.34)   51.48(62.96+1.18) -68.6%
+
+-Peff
