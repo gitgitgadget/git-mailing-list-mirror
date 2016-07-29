@@ -2,86 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 897CC1F955
-	for <e@80x24.org>; Fri, 29 Jul 2016 18:10:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B5DD1F955
+	for <e@80x24.org>; Fri, 29 Jul 2016 18:11:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753023AbcG2SK0 (ORCPT <rfc822;e@80x24.org>);
-	Fri, 29 Jul 2016 14:10:26 -0400
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:34218 "EHLO
-	mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751695AbcG2SKY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2016 14:10:24 -0400
-Received: by mail-yw0-f193.google.com with SMTP id j12so8766439ywb.1
-        for <git@vger.kernel.org>; Fri, 29 Jul 2016 11:10:24 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=COBINXVtQmQkSlo3cg+g3pgSXGATC/PekWxC+z3lwaM=;
-        b=c4I5/tujCQ3sjnnvb+5ebOVgg8Blxe2BxEKsb/A4KBiB8VfGQKS02qWImk22pUsWZ+
-         Rz5QGmN6UiwOLEgu+8O8FXQSGcj4T5zdxJ2/rzb56z0XEDodYb+DfnHQQhXKQ7JAPDSP
-         YRBL3wBe4YfcU+tjJEEUtKYnzOcotvoFTf7/AhVcFzamHd0isKsVJZMaoDkQ9urXpxoC
-         6QNEnFajUQLXQUpgXnoAMylL0d7zu6/nZX7HYCKHNAGYWdSjTMVLl1nsi7QntjFz/rRP
-         92xMbRi0CCXLmdgRg6olURaK3qTbkwJP+OhUES6kJeqKWLIeEc/ns73RcbO34XzghuZw
-         tgjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=COBINXVtQmQkSlo3cg+g3pgSXGATC/PekWxC+z3lwaM=;
-        b=NUz0pwCOwdl6nCtyL6ltSZa5E8JCyoJRUtYYGQioHvRgSWW+p0ZaJqfBPecr7QHA6p
-         oSlotLf/YIh0VwSvMHjQMG1z+BDgWGvf+OnyDYqovgXDciGDL8/dBqXJBpwZLlyc9SF5
-         GnmB96JyWlw7B2SqvFx8E4sPVy3BydcMYgyAPmhdLlin1aj1Fjm1dKFsw9la97d7AUep
-         ZLbxEBDQOL1FE3azaXGlNybVfMpGIb+I2Tl8NFrnSYgoFert1m9LMG4TAqQVfZtYfHLA
-         Fo7E3CwmDTKdlhP8UFqbRRklzP9VOLqV/RcpGuVK37ZhpFYs42oS2mPbSEjrm9P8KvZ/
-         /FUQ==
-X-Gm-Message-State: AEkoouswXds0oc5Z015+QV8kA87Fd7UfScXB2XTWrB00f5bbgsWTcf9US1akELs2dNkuZR6Fr+rAn7XibEPADQ==
-X-Received: by 10.129.106.139 with SMTP id f133mr37402962ywc.163.1469815823749;
- Fri, 29 Jul 2016 11:10:23 -0700 (PDT)
+	id S1753327AbcG2SL0 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 29 Jul 2016 14:11:26 -0400
+Received: from cloud.peff.net ([50.56.180.127]:51214 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753130AbcG2SLZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2016 14:11:25 -0400
+Received: (qmail 5905 invoked by uid 102); 29 Jul 2016 18:11:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Jul 2016 14:11:25 -0400
+Received: (qmail 3888 invoked by uid 107); 29 Jul 2016 18:11:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Jul 2016 14:11:51 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Jul 2016 14:11:22 -0400
+Date:	Fri, 29 Jul 2016 14:11:22 -0400
+From:	Jeff King <peff@peff.net>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Dakota Hawkins <dakotahawkins@gmail.com>, git@vger.kernel.org
+Subject: Re: Issue with global config defaults "user.useConfigOnly = true" +
+ "pull.rebase = preserve" - "user.email"
+Message-ID: <20160729181121.GB14953@sigill.intra.peff.net>
+References: <CAG0BQXnVAYdpk9EM_uiD+=UKSKmK=z1YEar5MresTr5XfDCxHw@mail.gmail.com>
+ <xmqqoa5gnxow.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.13.250.4 with HTTP; Fri, 29 Jul 2016 11:10:04 -0700 (PDT)
-In-Reply-To: <CA+55aFzRBQNU80ukcAk2JjbeWTvo8jHxejBeWWPjrHHuX7ygSQ@mail.gmail.com>
-References: <CA+55aFxaia7_VkKKF3JiQt76+z5goz3vCpmWi-wTyBH=iaw5ew@mail.gmail.com>
- <CAPc5daX=MoqEXkV7DdpT+J=4K_qNdo0aNu_XgUs+9yggyrMXbQ@mail.gmail.com>
- <20160729002902.GD9646@sigill.intra.peff.net> <CA+55aFzRBQNU80ukcAk2JjbeWTvo8jHxejBeWWPjrHHuX7ygSQ@mail.gmail.com>
-From:	Junio C Hamano <gitster@pobox.com>
-Date:	Fri, 29 Jul 2016 11:10:04 -0700
-X-Google-Sender-Auth: gtpnoBEwFBbA9aMu_0WUtQITtAI
-Message-ID: <CAPc5daX5FrUyk2UMJ47iPFwGbg_ru+GAny4uqrBL20k=uyO5Hg@mail.gmail.com>
-Subject: Re: Small trivial annoyance with the nice new builtin "git am"
-To:	Linus Torvalds <torvalds@linux-foundation.org>
-Cc:	Jeff King <peff@peff.net>, Paul Tan <pyokagan@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqoa5gnxow.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Jul 28, 2016 at 5:37 PM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
-> On Thu, Jul 28, 2016 at 5:29 PM, Jeff King <peff@peff.net> wrote:
->>
->> I guess we want something like:
->>
->> +void reset_ident_date(void)
->> +{
->> +       strbuf_reset(&git_default_date);
->> +}
->
-> Looks sane.
->
->> and then to sprinkle calls liberally through builtin-ified programs when
->> they move from one unit of work to the next.
->
-> Maybe we can just add it to the end of commit_tree_extended(), and
-> just say "the cache is reset between commits".
->
-> That way there is no sprinking in random places.
+On Fri, Jul 29, 2016 at 10:47:27AM -0700, Junio C Hamano wrote:
 
-Hmph, wouldn't that equally work well if we cleared at the beginning of the
-function, instead of at the end?
+> > In those cases specifically, I never have local commits that differ
+> > from the remote, so a "pull --ff-only" should leave me in the same
+> > state as a "pull --rebase".
+> >
+> > Is this a case of rebase trying to make sure it has enough information
+> > for me to be a committer before knowing whether I even need to rewrite
+> > any commits, and could/should that be avoided?  Alternatively (or also)
+> > could/should rebase detect that a fast-forward is possible and prefer
+> > to do that instead?
+> 
+> I think that is a reasonable argument, but to solve this for a more
+> general case, shouldn't we be discussing a solution that would also
+> work when rebase _does_ need to create a new commit?  And when the
+> latter is solved, I would imagine that "this rebase happens to be
+> fast-forward, and not having an ident shouldn't be an issue for this
+> special case" would become moot.
+
+Wouldn't it be wrong to create a commit with non-config ident when
+user.useConfigOnly is set, though? That is the exact point when it
+should kick in, to tell the user "you thought it would not matter here,
+but in this case we _do_ need your real ident; what should we do?"
+
+If the user is doing a one-off thing where they do not care if their
+crappy, fake ident makes it into a commit object, then the right thing
+is:
+
+  git -c user.useConfigOnly=false pull --rebase
+
+or even:
+
+  git -c user.email=fake-but-ok@example.com pull --rebase
+
+And they can do that preemptively for commands like the golang example
+here. They shouldn't _have_ to do that, though, if the command wouldn't
+actually create a commit. So I do think there may be a bug to be fixed,
+but it is simply commands being over-eager to make sure we have an
+ident when they might not need it.
+
+-Peff
