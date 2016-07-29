@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A9151F855
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B39D1F955
 	for <e@80x24.org>; Fri, 29 Jul 2016 23:38:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753505AbcG2Xi1 (ORCPT <rfc822;e@80x24.org>);
-	Fri, 29 Jul 2016 19:38:27 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34487 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753433AbcG2XiO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2016 19:38:14 -0400
-Received: by mail-wm0-f67.google.com with SMTP id q128so17717587wma.1
-        for <git@vger.kernel.org>; Fri, 29 Jul 2016 16:38:13 -0700 (PDT)
+	id S1753517AbcG2Xia (ORCPT <rfc822;e@80x24.org>);
+	Fri, 29 Jul 2016 19:38:30 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34503 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753466AbcG2XiQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2016 19:38:16 -0400
+Received: by mail-wm0-f66.google.com with SMTP id q128so17717741wma.1
+        for <git@vger.kernel.org>; Fri, 29 Jul 2016 16:38:16 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Rco8Gp8bthre/7rY0aykcepQfwFOo9Bck7mQ0/ZclO8=;
-        b=cu4l2g+R8oToTRIE6fLmq42URm9epxldh1TxODLdEVNhM9i6PsOolOwZ3uam+20pwK
-         5umdGDIrhGpxQPLxpRzMj+j+2DUIdPen4v/HGth5kFVDuiQveR8JO14xs5jIw1DLISYv
-         hq4GNe9vJe4gqLmgCUBWmfiwEdz4bQRhuF6ZFoLSifhjvgIlm1BEcCnFYXuGjg+QcXdF
-         BitgTkNFHMiA6K7B5r8mZBhPBw3cJyZZ5bpcJdMX262imn+2h823CmVt99ryM6GCOrlB
-         RTENreaKk/34/swCVdemTEonKG9aDeM/2NaI5blhsZgub5WNEN7fh7GSp1jPkHORxJtX
-         KsBg==
+        bh=/pQJNzRbWGWv0gnP6omZd1JSFK9zw9YYav9rpjFgFpc=;
+        b=roGEFQZitNV5QWjZRVnK1lFjw8nevTNWI/1sb7TcPp2KRML4ru8nXUVzZYXBGCdYTA
+         IikkbpblRFW/zme8t4hXvmLKV4Z7ooAVTsApk6EkO3fAZXzLAh7KNZZ2+iK/2vqaIKzt
+         3WOThBvG3wBfB2FGml/Er18+YStpYh+RL1VW8oVI4TWT+ZZQnpOhnRf58xT1MooAWcAi
+         bC8934h/Iz2oMQicTpb4vI7R90dJSUTMyUuy2sldkvwbGq8iJCcDfxHtuknIag7jKPWU
+         t0G+MY+zQvBrH+GNxMzpTb6l0cuEYe4E5gooKnSre0oFGPdKsjrNHGVsWvIoilcMiqC/
+         pxOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Rco8Gp8bthre/7rY0aykcepQfwFOo9Bck7mQ0/ZclO8=;
-        b=Jo3WnujfdioEW0uqGwOX3tUGbjQP2EjBaF2z77M0bJYKqW2GICJkh3G2OQUgaRVCM1
-         9oOIWRbIqXbMPxircADS+DN3nDsQ1diGpHf9ySK58IsQ8MawH6q19XoTSoK8dwFvdeeG
-         FK1AW/UXm6rPYcsPPn4scK+kf/LrnyigBILiVhlP2J5L5ryvNu2i/+so5frI9Gajh4rY
-         +E2kmWHco5nGxfza8ySxuvo2aWM6prO6dYCiUUCck+6ZcJeX9MJfVleJOq0C9jgbq4Lk
-         lPznboHT0uGpS8KnKWVeaWEFN4All2eubpieSBIHLYkSCbBOx5EeDlLW3ZxRWcU1QCtW
-         Uong==
-X-Gm-Message-State: AEkoousRb1C95I/PGPoF9CklDdBSddcEgaH+0oL1P63pcqwV157JE3w9a0XT1qUTsfedlA==
-X-Received: by 10.28.226.85 with SMTP id z82mr3472984wmg.101.1469835492607;
-        Fri, 29 Jul 2016 16:38:12 -0700 (PDT)
+        bh=/pQJNzRbWGWv0gnP6omZd1JSFK9zw9YYav9rpjFgFpc=;
+        b=UYT0Euja2QaupYIKCl6VHbGFoy5qGHq1i8qwCli1CMs4u8yhFzJCCjziFxcsAauwcv
+         hD10ESDv6eWF+Oxzwg3uN2fBg0LvBEnQOhGzj/jD8Xq6EHGkMx8ZwA7YQqnuICNbisTA
+         bf2chxIQKXmDSUpANluZjO0w5XZYeIs7HLPyiyGVPyloMH9sGpKw8EtYX0HZjGzkiNvH
+         jM5hl3lKacrriFLUkfPk2ILfiMRoXaq6p3YTTJNgcwOab7XyL5k8gcpECVVRPSz0BpzJ
+         dxFBKVBm5+LNJa9UxPG4nH5FBLQ6uFpa7aLFBkXPFibcQ8ztXMv2H1M/angUj7fVvHvK
+         FmCA==
+X-Gm-Message-State: AEkoouuVS6A1vi/Nt/YIS2nLZo8v/PdU9hv/ftWQeq+cZJxY82Wxu3hTEV6kP0qzN9PKCQ==
+X-Received: by 10.28.139.144 with SMTP id n138mr47327641wmd.71.1469835495177;
+        Fri, 29 Jul 2016 16:38:15 -0700 (PDT)
 Received: from slxBook4.fritz.box (p5DDB4145.dip0.t-ipconnect.de. [93.219.65.69])
-        by smtp.gmail.com with ESMTPSA id i1sm18663212wjl.9.2016.07.29.16.38.11
+        by smtp.gmail.com with ESMTPSA id i1sm18663212wjl.9.2016.07.29.16.38.14
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Fri, 29 Jul 2016 16:38:12 -0700 (PDT)
+        Fri, 29 Jul 2016 16:38:14 -0700 (PDT)
 From:	larsxschneider@gmail.com
 To:	git@vger.kernel.org
 Cc:	gitster@pobox.com, jnareb@gmail.com, tboegi@web.de,
 	mlbright@gmail.com, e@80x24.org, peff@peff.net,
 	Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v3 06/10] run-command: add clean_on_exit_handler
-Date:	Sat, 30 Jul 2016 01:37:57 +0200
-Message-Id: <20160729233801.82844-7-larsxschneider@gmail.com>
+Subject: [PATCH v3 08/10] convert: modernize tests
+Date:	Sat, 30 Jul 2016 01:37:59 +0200
+Message-Id: <20160729233801.82844-9-larsxschneider@gmail.com>
 X-Mailer: git-send-email 2.9.0
 In-Reply-To: <20160729233801.82844-1-larsxschneider@gmail.com>
 References: <20160727000605.49982-1-larsxschneider%40gmail.com/>
@@ -65,88 +65,180 @@ X-Mailing-List:	git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-Some commands might need to perform cleanup tasks on exit. Let's give
-them an interface for doing this.
+Use `test_config` to set the config, check that files are empty with
+`test_must_be_empty`, compare files with `test_cmp`, and remove spaces
+after ">" and "<".
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- run-command.c | 12 ++++++++----
- run-command.h |  1 +
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ t/t0021-conversion.sh | 62 +++++++++++++++++++++++++--------------------------
+ 1 file changed, 31 insertions(+), 31 deletions(-)
 
-diff --git a/run-command.c b/run-command.c
-index 33bc63a..197b534 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -21,6 +21,7 @@ void child_process_clear(struct child_process *child)
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index 7bac2bc..7b45136 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -13,8 +13,8 @@ EOF
+ chmod +x rot13.sh
  
- struct child_to_clean {
- 	pid_t pid;
-+	void (*clean_on_exit_handler)(pid_t);
- 	struct child_to_clean *next;
- };
- static struct child_to_clean *children_to_clean;
-@@ -30,6 +31,8 @@ static void cleanup_children(int sig, int in_signal)
- {
- 	while (children_to_clean) {
- 		struct child_to_clean *p = children_to_clean;
-+		if (p->clean_on_exit_handler)
-+			p->clean_on_exit_handler(p->pid);
- 		children_to_clean = p->next;
- 		kill(p->pid, sig);
- 		if (!in_signal)
-@@ -49,10 +52,11 @@ static void cleanup_children_on_exit(void)
- 	cleanup_children(SIGTERM, 0);
- }
+ test_expect_success setup '
+-	git config filter.rot13.smudge ./rot13.sh &&
+-	git config filter.rot13.clean ./rot13.sh &&
++	test_config filter.rot13.smudge ./rot13.sh &&
++	test_config filter.rot13.clean ./rot13.sh &&
  
--static void mark_child_for_cleanup(pid_t pid)
-+static void mark_child_for_cleanup(pid_t pid, void (*clean_on_exit_handler)(pid_t))
- {
- 	struct child_to_clean *p = xmalloc(sizeof(*p));
- 	p->pid = pid;
-+	p->clean_on_exit_handler = clean_on_exit_handler;
- 	p->next = children_to_clean;
- 	children_to_clean = p;
+ 	{
+ 	    echo "*.t filter=rot13"
+@@ -38,8 +38,8 @@ script='s/^\$Id: \([0-9a-f]*\) \$/\1/p'
  
-@@ -422,7 +426,7 @@ int start_command(struct child_process *cmd)
- 	if (cmd->pid < 0)
- 		error_errno("cannot fork() for %s", cmd->argv[0]);
- 	else if (cmd->clean_on_exit)
--		mark_child_for_cleanup(cmd->pid);
-+		mark_child_for_cleanup(cmd->pid, cmd->clean_on_exit_handler);
+ test_expect_success check '
  
- 	/*
- 	 * Wait for child's execvp. If the execvp succeeds (or if fork()
-@@ -483,7 +487,7 @@ int start_command(struct child_process *cmd)
- 	if (cmd->pid < 0 && (!cmd->silent_exec_failure || errno != ENOENT))
- 		error_errno("cannot spawn %s", cmd->argv[0]);
- 	if (cmd->clean_on_exit && cmd->pid >= 0)
--		mark_child_for_cleanup(cmd->pid);
-+		mark_child_for_cleanup(cmd->pid, cmd->clean_on_exit_handler);
+-	cmp test.o test &&
+-	cmp test.o test.t &&
++	test_cmp test.o test &&
++	test_cmp test.o test.t &&
  
- 	argv_array_clear(&nargv);
- 	cmd->argv = sargv;
-@@ -752,7 +756,7 @@ int start_async(struct async *async)
- 		exit(!!async->proc(proc_in, proc_out, async->data));
- 	}
+ 	# ident should be stripped in the repository
+ 	git diff --raw --exit-code :test :test.i &&
+@@ -47,10 +47,10 @@ test_expect_success check '
+ 	embedded=$(sed -ne "$script" test.i) &&
+ 	test "z$id" = "z$embedded" &&
  
--	mark_child_for_cleanup(async->pid);
-+	mark_child_for_cleanup(async->pid, NULL);
+-	git cat-file blob :test.t > test.r &&
++	git cat-file blob :test.t >test.r &&
  
- 	if (need_in)
- 		close(fdin[0]);
-diff --git a/run-command.h b/run-command.h
-index 5066649..59d21ea 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -43,6 +43,7 @@ struct child_process {
- 	unsigned stdout_to_stderr:1;
- 	unsigned use_shell:1;
- 	unsigned clean_on_exit:1;
-+	void (*clean_on_exit_handler)(pid_t);
- };
+-	./rot13.sh < test.o > test.t &&
+-	cmp test.r test.t
++	./rot13.sh <test.o >test.t &&
++	test_cmp test.r test.t
+ '
  
- #define CHILD_PROCESS_INIT { NULL, ARGV_ARRAY_INIT, ARGV_ARRAY_INIT }
+ # If an expanded ident ever gets into the repository, we want to make sure that
+@@ -130,7 +130,7 @@ test_expect_success 'filter shell-escaped filenames' '
+ 
+ 	# delete the files and check them out again, using a smudge filter
+ 	# that will count the args and echo the command-line back to us
+-	git config filter.argc.smudge "sh ./argc.sh %f" &&
++	test_config filter.argc.smudge "sh ./argc.sh %f" &&
+ 	rm "$normal" "$special" &&
+ 	git checkout -- "$normal" "$special" &&
+ 
+@@ -141,7 +141,7 @@ test_expect_success 'filter shell-escaped filenames' '
+ 	test_cmp expect "$special" &&
+ 
+ 	# do the same thing, but with more args in the filter expression
+-	git config filter.argc.smudge "sh ./argc.sh %f --my-extra-arg" &&
++	test_config filter.argc.smudge "sh ./argc.sh %f --my-extra-arg" &&
+ 	rm "$normal" "$special" &&
+ 	git checkout -- "$normal" "$special" &&
+ 
+@@ -154,9 +154,9 @@ test_expect_success 'filter shell-escaped filenames' '
+ '
+ 
+ test_expect_success 'required filter should filter data' '
+-	git config filter.required.smudge ./rot13.sh &&
+-	git config filter.required.clean ./rot13.sh &&
+-	git config filter.required.required true &&
++	test_config filter.required.smudge ./rot13.sh &&
++	test_config filter.required.clean ./rot13.sh &&
++	test_config filter.required.required true &&
+ 
+ 	echo "*.r filter=required" >.gitattributes &&
+ 
+@@ -165,17 +165,17 @@ test_expect_success 'required filter should filter data' '
+ 
+ 	rm -f test.r &&
+ 	git checkout -- test.r &&
+-	cmp test.o test.r &&
++	test_cmp test.o test.r &&
+ 
+ 	./rot13.sh <test.o >expected &&
+ 	git cat-file blob :test.r >actual &&
+-	cmp expected actual
++	test_cmp expected actual
+ '
+ 
+ test_expect_success 'required filter smudge failure' '
+-	git config filter.failsmudge.smudge false &&
+-	git config filter.failsmudge.clean cat &&
+-	git config filter.failsmudge.required true &&
++	test_config filter.failsmudge.smudge false &&
++	test_config filter.failsmudge.clean cat &&
++	test_config filter.failsmudge.required true &&
+ 
+ 	echo "*.fs filter=failsmudge" >.gitattributes &&
+ 
+@@ -186,9 +186,9 @@ test_expect_success 'required filter smudge failure' '
+ '
+ 
+ test_expect_success 'required filter clean failure' '
+-	git config filter.failclean.smudge cat &&
+-	git config filter.failclean.clean false &&
+-	git config filter.failclean.required true &&
++	test_config filter.failclean.smudge cat &&
++	test_config filter.failclean.clean false &&
++	test_config filter.failclean.required true &&
+ 
+ 	echo "*.fc filter=failclean" >.gitattributes &&
+ 
+@@ -197,8 +197,8 @@ test_expect_success 'required filter clean failure' '
+ '
+ 
+ test_expect_success 'filtering large input to small output should use little memory' '
+-	git config filter.devnull.clean "cat >/dev/null" &&
+-	git config filter.devnull.required true &&
++	test_config filter.devnull.clean "cat >/dev/null" &&
++	test_config filter.devnull.required true &&
+ 	for i in $(test_seq 1 30); do printf "%1048576d" 1; done >30MB &&
+ 	echo "30MB filter=devnull" >.gitattributes &&
+ 	GIT_MMAP_LIMIT=1m GIT_ALLOC_LIMIT=1m git add 30MB
+@@ -207,7 +207,7 @@ test_expect_success 'filtering large input to small output should use little mem
+ test_expect_success 'filter that does not read is fine' '
+ 	test-genrandom foo $((128 * 1024 + 1)) >big &&
+ 	echo "big filter=epipe" >.gitattributes &&
+-	git config filter.epipe.clean "echo xyzzy" &&
++	test_config filter.epipe.clean "echo xyzzy" &&
+ 	git add big &&
+ 	git cat-file blob :big >actual &&
+ 	echo xyzzy >expect &&
+@@ -215,20 +215,20 @@ test_expect_success 'filter that does not read is fine' '
+ '
+ 
+ test_expect_success EXPENSIVE 'filter large file' '
+-	git config filter.largefile.smudge cat &&
+-	git config filter.largefile.clean cat &&
++	test_config filter.largefile.smudge cat &&
++	test_config filter.largefile.clean cat &&
+ 	for i in $(test_seq 1 2048); do printf "%1048576d" 1; done >2GB &&
+ 	echo "2GB filter=largefile" >.gitattributes &&
+ 	git add 2GB 2>err &&
+-	! test -s err &&
++	test_must_be_empty err &&
+ 	rm -f 2GB &&
+ 	git checkout -- 2GB 2>err &&
+-	! test -s err
++	test_must_be_empty err
+ '
+ 
+ test_expect_success "filter: clean empty file" '
+-	git config filter.in-repo-header.clean  "echo cleaned && cat" &&
+-	git config filter.in-repo-header.smudge "sed 1d" &&
++	test_config filter.in-repo-header.clean  "echo cleaned && cat" &&
++	test_config filter.in-repo-header.smudge "sed 1d" &&
+ 
+ 	echo "empty-in-worktree    filter=in-repo-header" >>.gitattributes &&
+ 	>empty-in-worktree &&
+@@ -240,8 +240,8 @@ test_expect_success "filter: clean empty file" '
+ '
+ 
+ test_expect_success "filter: smudge empty file" '
+-	git config filter.empty-in-repo.clean "cat >/dev/null" &&
+-	git config filter.empty-in-repo.smudge "echo smudged && cat" &&
++	test_config filter.empty-in-repo.clean "cat >/dev/null" &&
++	test_config filter.empty-in-repo.smudge "echo smudged && cat" &&
+ 
+ 	echo "empty-in-repo filter=empty-in-repo" >>.gitattributes &&
+ 	echo dead data walking >empty-in-repo &&
 -- 
 2.9.0
 
