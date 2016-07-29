@@ -2,94 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E3ED21F955
-	for <e@80x24.org>; Fri, 29 Jul 2016 14:51:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F4711F955
+	for <e@80x24.org>; Fri, 29 Jul 2016 15:02:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752223AbcG2Ovg (ORCPT <rfc822;e@80x24.org>);
-	Fri, 29 Jul 2016 10:51:36 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:36121 "EHLO
-	mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752016AbcG2Ovf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2016 10:51:35 -0400
-Received: by mail-pf0-f193.google.com with SMTP id y134so5583789pfg.3
-        for <git@vger.kernel.org>; Fri, 29 Jul 2016 07:51:35 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=+gij5GBoy4i/DeWjYEetNDW295oFeLYY8G2ehzLiu6o=;
-        b=pyVc3ttmz8XfXFkOz8TGBa0z3FCIx/gTGTNEt3KwURbmm+/KkvLNDO5Fif4VDNq4Lk
-         Yg21ZpGvij6Kg7xTpf46tsE5ZNAQRDpXAvpy2KSmtNdC8x7MDItKTtLtSgq8GujQScfg
-         qYE6Jij1NsFf+uycu0buFy8oOMGvB4egQE125Onl0KC/rSwrN1NrSIgCxFQK+Ko9pVyZ
-         Nt1q6wbCBvLgz/SEKRUulzI/AWZ/bEI94gfEPGMxyiDmYjhH3Auvx5JIrfKw8fb2UDtp
-         s4TGzc7usjPM9VRY77SZ3hLZ1MA/HcbxFpTTdwc1NL44HpbFyE6b/8rWnophV9hjWx58
-         swzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=+gij5GBoy4i/DeWjYEetNDW295oFeLYY8G2ehzLiu6o=;
-        b=fj7E4nIfioVZg2vTXbgFFoQ98HpMphh1FOK3H8nnod2FRgZo+CbgOj4l9Cx2BO0Qq/
-         Gu6avUu8ihZh64qBZu8/8QNGgqqWNX6RM4YNDfBzfp9fiLVeOdBLqx4PXvv+rJCkSTa3
-         4CtBE7GuXE0rvINX9gjAV8BcLNN/4x7/mw23CZU7+ce/G1RxFlyItI/31U1P9OTY7pYC
-         LUfDRO0WBmJkXoOcH0N0hIQ7GrEnffkk4ypzRynXNMZ+sWgvokBTnXiryoeNe01Le64t
-         VJdQhTZvolsMnUBz4kIpq+m28HiT8Dc4WB1QL/CTWUgVE0mnX7mznlVkE/t4mtts0QW9
-         UUbQ==
-X-Gm-Message-State: AEkoouu4tYxKuL+tAj2gRMGsMde3Rw52NeVoi6fr7g2bjfHGW7ttJ4kgvHxKwJFxtOwDEw==
-X-Received: by 10.98.69.201 with SMTP id n70mr70597430pfi.64.1469803894550;
-        Fri, 29 Jul 2016 07:51:34 -0700 (PDT)
-Received: from tci.int.yp.com ([216.2.203.2])
-        by smtp.gmail.com with ESMTPSA id t7sm5627686paz.21.2016.07.29.07.51.33
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 29 Jul 2016 07:51:33 -0700 (PDT)
-From:	Brian Henderson <henderson.bj@gmail.com>
-To:	git@vger.kernel.org
-Cc:	Brian Henderson <henderson.bj@gmail.com>, Jeff King <peff@peff.net>
-Subject: [PATCH 0/3] diff-highlight: add support for git log --graph output.
-Date:	Fri, 29 Jul 2016 07:51:27 -0700
-Message-Id: <20160729145130.9514-1-henderson.bj@gmail.com>
-X-Mailer: git-send-email 2.9.0
+	id S1752220AbcG2PC5 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 29 Jul 2016 11:02:57 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60767 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751697AbcG2PCz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2016 11:02:55 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2EC2931091;
+	Fri, 29 Jul 2016 11:02:54 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=i0T6UcrkTYrV0eGu42u4IfIf3HE=; b=EeAEDC
+	X7SH32lgFn+1BB/CwWYtOz99N8CqzIcSaFvaqqq7qJ+vS0fAcECR9kVw6roysz2l
+	6pZsW3ptfyRJFlPceBK3yaUVqg6Lsn/1q/DfGL+rp3SP/w70HFR++SlQQ5s9SMMM
+	qDy3y6ARwaOg7M8pnNzOlzpEG8bcACv4+AkMI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gtj212UrqMLNyfeZjClMl214quikMKX/
+	tupo5eJ0bNGrlBMDBu/ctymQkJEDCF1iJeCcFK1GLcee/H2c4L1UvjhtqJV4XJ0T
+	ehCTFuCRxDDb4Fuj0veRGDz9wGkN/pnpTFauokl7WD5x8NqumkcEwA/CRxrXAvMq
+	c4a64zEpMI0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 277EF31090;
+	Fri, 29 Jul 2016 11:02:54 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A59B43108E;
+	Fri, 29 Jul 2016 11:02:53 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff King <peff@peff.net>
+Cc:	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 7/7] pack-objects: use mru list when iterating over packs
+References: <20160729040422.GA19678@sigill.intra.peff.net>
+	<20160729041524.GG22408@sigill.intra.peff.net>
+	<20160729054536.GA27343@sigill.intra.peff.net>
+Date:	Fri, 29 Jul 2016 08:02:51 -0700
+In-Reply-To: <20160729054536.GA27343@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 29 Jul 2016 01:45:37 -0400")
+Message-ID: <xmqqr3acpjvo.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 868B77A0-559D-11E6-B72A-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-(resending as thread instead of attachments)
+Jeff King <peff@peff.net> writes:
 
-Hi, I've been working with Jeff King on this patch, but he encouraged me to
-email the list.
+> On Fri, Jul 29, 2016 at 12:15:24AM -0400, Jeff King wrote:
+>
+> But because this series switches the order of pack-lookup between
+> objects, it is possible for us to find a `B` which is a delta against
+> `A` in one pack, and then another copy of `A` which is a delta against
+> another copy of `B` from another pack. We add both of the deltas to our
+> packing list, but at write time when we try to write out all of the
+> bases for `A`, we realize that whoops, we are recursing infinitely.
+>
+> As it turns out, Git actually handles this pretty well! Upon noticing
+> the recursion, it breaks the delta chain and writes out one of the
+> objects as a full base. This is due to Junio's f63c79d (pack-object:
+> tolerate broken packs that have duplicated objects, 2011-11-16), though
+> I think we later decided that duplicated objects were simply insane.
+>
+> So one option is to simply silence the warning, because the resulting
+> pack is perfectly fine.
 
-I recently learned about the diff-highlight tool, and find it very helpful,
-however, I frequently use the --graph option to git log which breaks the tool.
-This patch looks to fix this.
+Thanks for a great analysis.
 
-I wanted to try and add some tests as well, but I was unsure what number to
-pick for the second digit. As there were limited tests in the contrib directory
-(only t93xx and one t7900) I just chose the next number in the 9xxx range.
-Please let me know if I need to change it.
+My gut feeling is that keeping the warning is preferred if possible,
+because f63c79db (pack-object: tolerate broken packs that have
+duplicated objects, 2011-11-16) was made as the last ditch effort to
+warn about the presence of the problem in the delta-base selection
+code without harming the users.
 
-I'm also not super happy about my test case for the graph option. If anyone has
-any better ideas, please let me know!
+> So it's possible that the resulting pack
+> is not as small as it could be (i.e., we break the chain with a base
+> object, but it's possible if we looked that we could have broken the
+> chain by making a delta against an existing base object). So I wonder if
+> it's possible to detect this case earlier, during the "can we reuse this
+> delta" bits of check_object().
 
-Brian Henderson (3):
-  diff-highlight: add some tests.
-  diff-highlight: add failing test for handling --graph output.
-  diff-highlight: add support for --graph output.
-
- contrib/diff-highlight/Makefile                  |   5 +
- contrib/diff-highlight/diff-highlight            |  13 +--
- contrib/diff-highlight/t/Makefile                |  19 ++++
- contrib/diff-highlight/t/t9400-diff-highlight.sh |  76 ++++++++++++++++
- contrib/diff-highlight/t/test-diff-highlight.sh  | 111 +++++++++++++++++++++++
- 5 files changed, 218 insertions(+), 6 deletions(-)
- create mode 100644 contrib/diff-highlight/Makefile
- create mode 100644 contrib/diff-highlight/t/Makefile
- create mode 100644 contrib/diff-highlight/t/t9400-diff-highlight.sh
- create mode 100644 contrib/diff-highlight/t/test-diff-highlight.sh
-
--- 
-2.9.0
-
+I'd let the issue simmer in my mind a bit for now, as I do not
+think of a neat trick offhand.
