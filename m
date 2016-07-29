@@ -2,80 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4363B1F955
-	for <e@80x24.org>; Fri, 29 Jul 2016 15:57:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 150911F955
+	for <e@80x24.org>; Fri, 29 Jul 2016 16:19:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752510AbcG2P5p (ORCPT <rfc822;e@80x24.org>);
-	Fri, 29 Jul 2016 11:57:45 -0400
-Received: from cloud.peff.net ([50.56.180.127]:51066 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751695AbcG2P5n (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2016 11:57:43 -0400
-Received: (qmail 30804 invoked by uid 102); 29 Jul 2016 15:57:43 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Jul 2016 11:57:43 -0400
-Received: (qmail 2492 invoked by uid 107); 29 Jul 2016 15:58:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Jul 2016 11:58:09 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Jul 2016 11:57:40 -0400
-Date:	Fri, 29 Jul 2016 11:57:40 -0400
-From:	Jeff King <peff@peff.net>
-To:	Lars Schneider <larsxschneider@gmail.com>
-Cc:	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	mlbright@gmail.com,
-	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>, e@80x24.org,
-	ramsay@ramsayjones.plus.com
-Subject: Re: [PATCH v2 0/5] Git filter protocol
-Message-ID: <20160729155740.GB29773@sigill.intra.peff.net>
-References: <20160722154900.19477-1-larsxschneider@gmail.com>
- <20160727000605.49982-1-larsxschneider@gmail.com>
- <579906C5.1050809@gmail.com>
- <BFED7ED8-40DB-46B5-A1B7-4F49624D5A62@gmail.com>
- <20160728132906.GA21311@sigill.intra.peff.net>
- <579B087F.7090108@gmail.com>
- <31219A33-CA8A-44D1-9DE0-6448AA1A7571@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <31219A33-CA8A-44D1-9DE0-6448AA1A7571@gmail.com>
+	id S1753154AbcG2QTv (ORCPT <rfc822;e@80x24.org>);
+	Fri, 29 Jul 2016 12:19:51 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:34698 "EHLO
+	mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753130AbcG2QTu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2016 12:19:50 -0400
+Received: by mail-pf0-f193.google.com with SMTP id g202so5714952pfb.1
+        for <git@vger.kernel.org>; Fri, 29 Jul 2016 09:19:50 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=vWT3n3eQ2eGATWE8G5sfuSrNTtGOK3qCTH3KOak4l9E=;
+        b=BJFf/daMAFhWRAnpspF8xDMSjM+eXpDVy8GD88L8xz4Ngo2q0XoDhGSl4I6PkMIRXc
+         02y90r46srPBw5IiocFFzn87r1vxdejLM/UOe3XT3c08BpYABwdWwRVeP8SLWL5ROzQy
+         DInw+uku26a64hvwvX3QOmfopJ7vRCk6v83A5xrtJIlJ+CrvqbZgnEjtzTXnV45boF2R
+         JzvZhMgRGz95ATtdN3cFVw4xWNv2tGQRL5uYxWsRj90jpOZ7B3NNq5Lf67m5Ubmu1sLQ
+         AnURZTFidOBk+ymFgLabZ2MvB6XfTZvzcFV0UCxvVELEL2pLEkahykKvAbzSxXipkhkZ
+         queQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=vWT3n3eQ2eGATWE8G5sfuSrNTtGOK3qCTH3KOak4l9E=;
+        b=j830UcIzAomZPjKHefdzvYPfh1v+PQuZRv7vLv8PF3uYSs0t02hGmKJ3xQLfuKqs9M
+         GEtOXkRxb2cZOWmhAY05m4kIfx0uqGu2IAxTIhBflzLnPvWhNxHkjSBQ5/ITufd2y02M
+         waywkFaV//ZzhXfe2Aj3rMsDYrohADlPYbiA0FQyc0WrCZ7lQUHrlBvYzNFjEf3O8i1T
+         C1ZUGPywuEgjS6ZBaukPX97j0ZLLHSfIyMJ7qKT3g+UuTOI6Ft0oVSuX7468VdEkT/GM
+         hXear9o9tpvMYJUGT7DN2MJ3kTbXihgmEkxY52JKcjgak62CyYgmHo565Cunid8HplwS
+         yR5A==
+X-Gm-Message-State: AEkoouuI4foWTn+mwjHiaxgdqbeIQU5Zh0oXpLmnJmVk5Ms3MBC8l5/uAw/edDgyq8A10g==
+X-Received: by 10.98.27.200 with SMTP id b191mr69945608pfb.111.1469809189295;
+        Fri, 29 Jul 2016 09:19:49 -0700 (PDT)
+Received: from DESKTOP-SLJ7FNG.northamerica.corp.microsoft.com ([2001:4898:8010:1::5b0])
+        by smtp.gmail.com with ESMTPSA id i69sm26193282pfk.30.2016.07.29.09.19.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 29 Jul 2016 09:19:48 -0700 (PDT)
+From:	Kevin Willford <kcwillford@gmail.com>
+To:	git@vger.kernel.org
+Cc:	Kevin Willford <kcwillford@gmail.com>
+Subject: [[PATCH v2] 0/4] Use header data patch ids for rebase to avoid loading file content 
+Date:	Fri, 29 Jul 2016 12:19:16 -0400
+Message-Id: <20160729161920.3792-1-kcwillford@gmail.com>
+X-Mailer: git-send-email 2.9.2.gvfs.2.42.gb7633a3
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Jul 29, 2016 at 10:14:17AM +0200, Lars Schneider wrote:
+This patch series is to remove the hand rolled hashmap in the patch_ids
+and use the hashmap.h implementation.  It also introduces the idea of having
+a header only patch id so that the contents of the files do not have to be
+loaded in order to determine if two commits are different.
 
-> My current implementation supports only two cases. Either the filter
-> knows the size and sends it back. Or the filter doesn't know the size
-> and Git reads until the flush packet (your "unknown" case). "Approx" is 
-> probably hard to do and fail shouldn't be part of the size, no?
 
-Ah, OK, I missed that you could handle both cases. I think that is a
-reasonable approach. It means the filter has to bother with pkt-lines,
-but beyond that, it can choose the simple or streaming approach as
-appropriate.
+Kevin Willford (4):
+  patch-ids: stop using a hand-rolled hashmap implementation
+  patch-ids: replace the seen indicator with a commit pointer
+  patch-ids: add flag to create the diff patch id using header only data
+  rebase: avoid computing unnecessary patch IDs
 
-> That being said a "fail" response is a very good idea! This allows
-> the filter to communicate to git that a non required filter process
-> failed. I will add that to the protocol. Thanks :) 
+ builtin/log.c                        |  2 +-
+ diff.c                               | 16 +++---
+ diff.h                               |  2 +-
+ patch-ids.c                          | 99 +++++++++++++++---------------------
+ patch-ids.h                          | 11 ++--
+ revision.c                           | 18 ++-----
+ t/perf/p3400-rebase.sh               | 36 +++++++++++++
+ t/t6007-rev-list-cherry-pick-file.sh | 17 +++++++
+ 8 files changed, 114 insertions(+), 87 deletions(-)
+ create mode 100644 t/perf/p3400-rebase.sh
 
-Maybe just send "ok <size>", "ok -1" (for streaming), or "fail <reason>"
-followed by the content? That is similar to other Git protocols, though
-I am not sure they are good models for sanity or extensibility. :)
+-- 
+2.9.2.windows.1
 
-I don't know if you would want to leave room for other "headers" in the
-response, but you could also do something more HTTP-like, with a status
-code, and arbitrary headers. And presumably git would just ignore
-headers it doesn't know about. I think that's what Jakub's example was
-leaning towards. I'm just not sure what other headers are really useful,
-but it does leave room for extensibility.
-
--Peff
