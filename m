@@ -2,110 +2,254 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FF141F71B
-	for <e@80x24.org>; Fri, 29 Jul 2016 07:46:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA40C1F71B
+	for <e@80x24.org>; Fri, 29 Jul 2016 07:47:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751602AbcG2Hq5 (ORCPT <rfc822;e@80x24.org>);
-	Fri, 29 Jul 2016 03:46:57 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:36039 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751123AbcG2Hqz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2016 03:46:55 -0400
-Received: by mail-wm0-f68.google.com with SMTP id x83so14469967wma.3
-        for <git@vger.kernel.org>; Fri, 29 Jul 2016 00:46:55 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=oN4hjpYA6yVH/BaGQQ0WnaJsWJ98K2QUfceHBN300tk=;
-        b=R8BUGKvtR8J/htm+XPwbZomX3MjOUHX49oGNYd2rQ2ZTUA18Sip8uc/xO+b64/8d0z
-         q9pu8NuuvdCvnC7MtUYmIz45kQFWByZeQHIGRuFlX0Qq79wdQoJNOMkkGr5R8qgDPJlC
-         nMEjidN6e43QscQzXazBtEXB7EVML8enYqGtK+T4aQzs5CZQTXD9dOZ8goYe1a0Gu/Gh
-         cE706qiDE7wJ684D36UbBceI3TrqvA0Qwe5DlGmkNiZVfKctd63q4HSzP9JrHEdMYj+r
-         OuofHno/2UhgPppXFO78VA6+fhWpjIi0AoRP0aHwLsxpERu+43P85qPHZvyGqkAC3Q9c
-         87ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding;
-        bh=oN4hjpYA6yVH/BaGQQ0WnaJsWJ98K2QUfceHBN300tk=;
-        b=d6n9zb3eTGVCnN9/hZN2AMEs1p8lWE94Swr7lke/836Paof5QhDk+7rVIn39mQQHSL
-         wrfJ19/HrPjrUAHpo/KcfGLAYf+uviLUXu/W8quQyXoFgg6oN/R+X+MZxOvdN9pbdA1z
-         Rx0OWyvaPUjeHJV5ie4bvfuSWUi+aVVrjQRkvIIj8xGqNVe/sO+gz0ZeQXzLroWXqDQ7
-         RgsByG7513oGi87AHKRpKxLgIUkNsv9PaM1tcebsW3kG7fXmrPr0XKQSPqmelbepvPku
-         sWWsVGGf5dS2svQEddAWLyd1Vlf3GIOPgdc+S/NydPNjQGMk4FHenI9ygxXE+J5hTeqV
-         qk7w==
-X-Gm-Message-State: AEkoousRcbxUxnzg0uLSBzGksB/Lmwpn87tnFrvaya5hKH329c+o/ITZmjhJJQ8MKN7NiA==
-X-Received: by 10.194.77.142 with SMTP id s14mr36320803wjw.77.1469778414218;
-        Fri, 29 Jul 2016 00:46:54 -0700 (PDT)
-Received: from [192.168.1.26] (ewj64.neoplus.adsl.tpnet.pl. [83.20.233.64])
-        by smtp.googlemail.com with ESMTPSA id a2sm1728548wma.2.2016.07.29.00.46.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 29 Jul 2016 00:46:53 -0700 (PDT)
-Subject: Re: [PATCH 0/3] diff-highlight: add support for git log --graph
- output.
-To:	Brian Henderson <henderson.bj@gmail.com>, git@vger.kernel.org
-References: <20160728162712.GA29220@tci.corp.yp.com>
-Cc:	Jeff King <peff@peff.net>
-Newsgroups: gmane.comp.version-control.git
-From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <579B09DD.9000603@gmail.com>
-Date:	Fri, 29 Jul 2016 09:46:37 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
-MIME-Version: 1.0
-In-Reply-To: <20160728162712.GA29220@tci.corp.yp.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+	id S1752192AbcG2HrO (ORCPT <rfc822;e@80x24.org>);
+	Fri, 29 Jul 2016 03:47:14 -0400
+Received: from mail2.tiolive.com ([94.23.229.207]:49944 "EHLO
+	mail2.tiolive.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750962AbcG2HrO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2016 03:47:14 -0400
+Received: from teco.navytux.spb.ru (pppoe.95-55-164-187.dynamic.avangarddsl.ru [95.55.164.187])
+	by mail2.tiolive.com (Postfix) with ESMTPSA id 58C40BF01A5;
+	Fri, 29 Jul 2016 09:47:11 +0200 (CEST)
+Received: from kirr by teco.navytux.spb.ru with local (Exim 4.87)
+	(envelope-from <kirr@teco.navytux.spb.ru>)
+	id 1bT2Vi-0006tT-HL; Fri, 29 Jul 2016 10:47:10 +0300
+From:	Kirill Smelkov <kirr@nexedi.com>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Jeff King <peff@peff.net>, Vicent Marti <tanoku@gmail.com>,
+	=?UTF-8?q?J=C3=A9rome=20Perrin?= <jerome@nexedi.com>,
+	Isabelle Vallet <isabelle.vallet@nexedi.com>,
+	Kazuhiko Shiozaki <kazuhiko@nexedi.com>,
+	Julien Muchembled <jm@nexedi.com>, git@vger.kernel.org,
+	Kirill Smelkov <kirr@nexedi.com>
+Subject: [PATCH 1/2] pack-objects: Teach --use-bitmap-index codepath to respect --local, --honor-pack-keep and --incremental
+Date:	Fri, 29 Jul 2016 10:46:56 +0300
+Message-Id: <20160729074656.23813-1-kirr@nexedi.com>
+X-Mailer: git-send-email 2.9.0.431.g3cb5c84
+In-Reply-To: <20160729074051.GA5987@teco.navytux.spb.ru>
+References: <20160729074051.GA5987@teco.navytux.spb.ru>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-W dniu 2016-07-28 o 18:27, Brian Henderson pisze:
-> Hi, I've been working with Jeff King on this patch, but he encouraged me to
-> email the list.
-> 
-> I recently learned about the diff-highlight tool and find it very helpful,
-> however, I frequently use the --graph option to git log which breaks the tool.
-> This patch looks to fix this.
-> 
-> I wanted to try and add some tests as well, but I was unsure what number to
-> pick for the second digit. As there were limited tests in the contrib directory
-> (only t93xx and one t7900) I just chose the next number in the 9xxx range.
-> Please let me know if I need to change it.
-> 
-> I'm also not super happy about my test case for the graph option. If anyone has
-> any better ideas, please let me know!
-> 
-> Brian Henderson (3):
->   diff-highlight: add some tests.
->   diff-highlight: add failing test for handling --graph output.
->   diff-highlight: add support for --graph output.
+Since 6b8fda2d (pack-objects: use bitmaps when packing objects) there
+are two codepaths in pack-objects: with & without using bitmap
+reachability index.
 
-Could you please follow SubmittingPatches, and send patches in separate emails,
-inline, with those emails being replies to cover letter (like `git format-patch`
-and `git send-email` would do), and not as attachments to cover letter?
+However add_object_entry_from_bitmap(), despite its non-bitmapped
+counterpart add_object_entry(), in no way does check for whether --local
+or --honor-pack-keep or --incremental should be respected. In
+non-bitmapped codepath this is handled in want_object_in_pack(), but
+bitmapped codepath has simply no such checking at all.
 
-With email as it stands it is really difficult to review individual
-patches.
+The bitmapped codepath however was allowing to pass in all those options
+and with bitmap indices still being used under such conditions -
+potentially giving wrong output (e.g. including objects from non-local or
+.keep'ed pack).
 
-> 
->  contrib/diff-highlight/Makefile                  |   5 +
->  contrib/diff-highlight/diff-highlight            |  13 +--
->  contrib/diff-highlight/t/Makefile                |  19 ++++
->  contrib/diff-highlight/t/t9400-diff-highlight.sh |  76 ++++++++++++++++
->  contrib/diff-highlight/t/test-diff-highlight.sh  | 111 +++++++++++++++++++++++
->  5 files changed, 218 insertions(+), 6 deletions(-)
->  create mode 100644 contrib/diff-highlight/Makefile
->  create mode 100644 contrib/diff-highlight/t/Makefile
->  create mode 100644 contrib/diff-highlight/t/t9400-diff-highlight.sh
->  create mode 100644 contrib/diff-highlight/t/test-diff-highlight.sh
-> 
+We can easily fix this by noting the following: when an object comes to
+add_object_entry_from_bitmap() it can come for two reasons:
 
+    1. entries coming from main pack covered by bitmap index, and
+    2. object coming from, possibly alternate, loose or other packs.
+
+For "2" we always have pack not yet found by bitmap traversal code, and
+thus we can simply reuse non-bitmapped want_object_in_pack() to find in
+which pack an object lives and also for taking omitting decision.
+
+For "1" we always have pack already found by bitmap traversal code and we
+only need to check that pack for same criteria used in
+want_object_in_pack() for found_pack.
+
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Discussed-with: Jeff King <peff@peff.net>
+---
+ builtin/pack-objects.c  |  39 +++++++++++++++++++
+ t/t5310-pack-bitmaps.sh | 100 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 139 insertions(+)
+
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index a2f8cfd..34b3019 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -987,6 +987,42 @@ static int want_object_in_pack(const unsigned char *sha1,
+ 	return 1;
+ }
+ 
++/* Like want_object_in_pack() but for objects coming from-under bitmapped traversal */
++static int want_object_in_pack_bitmap(const unsigned char *sha1,
++				      struct packed_git **found_pack,
++				      off_t *found_offset)
++{
++	struct packed_git *p = *found_pack;
++
++	/*
++	 * There are two types of requests coming here:
++	 * 1. entries coming from main pack covered by bitmap index, and
++	 * 2. object coming from, possibly alternate, loose or other packs.
++	 *
++	 * For "1" we always have *found_pack != NULL passed here from
++	 * traverse_bitmap_commit_list(). (*found_pack is bitmap_git.pack
++	 * actually).
++	 *
++	 * For "2" we always have *found_pack == NULL passed here from
++	 * traverse_bitmap_commit_list() - since this is the way bitmap
++	 * traversal passes here "extended" bitmap entries.
++	 */
++
++	/* objects not covered by bitmap */
++	if (!p)
++		return want_object_in_pack(sha1, 0, found_pack, found_offset);
++
++	/* objects covered by bitmap - we only have to check p wrt local and .keep */
++	if (incremental)
++		return 0;
++	if (local && !p->pack_local)
++		return 0;
++	if (ignore_packed_keep && p->pack_local && p->pack_keep)
++		return 0;
++
++	return 1;
++}
++
+ static void create_object_entry(const unsigned char *sha1,
+ 				enum object_type type,
+ 				uint32_t hash,
+@@ -1055,6 +1091,9 @@ static int add_object_entry_from_bitmap(const unsigned char *sha1,
+ 	if (have_duplicate_entry(sha1, 0, &index_pos))
+ 		return 0;
+ 
++	if (!want_object_in_pack_bitmap(sha1, &pack, &offset))
++		return 0;
++
+ 	create_object_entry(sha1, type, name_hash, 0, 0, index_pos, pack, offset);
+ 
+ 	display_progress(progress_state, nr_result);
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index 3893afd..a76f6ca 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -118,6 +118,88 @@ test_expect_success 'incremental repack can disable bitmaps' '
+ 	git repack -d --no-write-bitmap-index
+ '
+ 
++test_expect_success 'pack-objects respects --local (non-local loose)' '
++	mkdir -p alt_objects/pack &&
++	echo $(pwd)/alt_objects > .git/objects/info/alternates &&
++	echo content1 > file1 &&
++	objsha1=$(GIT_OBJECT_DIRECTORY=alt_objects git hash-object -w file1) &&
++	git add file1 &&
++	test_tick &&
++	git commit -m commit_file1 &&
++	echo HEAD | \
++	git pack-objects --local --stdout --revs >1.pack &&
++	git index-pack 1.pack &&
++	git verify-pack -v 1.pack >1.objects &&
++	if egrep "^$objsha1" 1.objects; then
++		echo "Non-local object present in pack generated with --local: $objsha1"
++		return 1
++	fi
++'
++
++test_expect_success 'pack-objects respects --honor-pack-keep (local non-bitmapped pack)' '
++	echo content2 > file2 &&
++	objsha2=$(git hash-object -w file2) &&
++	git add file2 &&
++	test_tick &&
++	git commit -m commit_file2 &&
++	pack2=$(echo $objsha2 | \
++		git pack-objects pack2) &&
++	mv pack2-$pack2.* .git/objects/pack/ &&
++	touch .git/objects/pack/pack2-$pack2.keep &&
++	rm $(objpath $objsha2) &&
++	echo HEAD | \
++	git pack-objects --honor-pack-keep --stdout --revs >2a.pack &&
++	git index-pack 2a.pack &&
++	git verify-pack -v 2a.pack >2a.objects &&
++	if egrep "^$objsha2" 2a.objects; then
++		echo "Object from .keeped pack present in pack generated with --honor-pack-keep: $objsha2"
++		return 1
++	fi
++'
++
++test_expect_success 'pack-objects respects --local (non-local pack)' '
++	mv .git/objects/pack/pack2-$pack2.* alt_objects/pack/ &&
++	echo HEAD | \
++	git pack-objects --local --stdout --revs >2b.pack &&
++	git index-pack 2b.pack &&
++	git verify-pack -v 2b.pack >2b.objects &&
++	if egrep "^$objsha2" 2b.objects; then
++		echo "Non-local object present in pack generated with --local: $objsha2"
++		return 1
++	fi
++'
++
++test_expect_success 'pack-objects respects --honor-pack-keep (local bitmapped pack)' '
++	ls .git/objects/pack/ | grep bitmap >output &&
++	test_line_count = 1 output &&
++	packbitmap=$(basename $(cat output) .bitmap) &&
++	git verify-pack -v .git/objects/pack/$packbitmap.pack >packbitmap.verify &&
++	grep -o "^$_x40" packbitmap.verify |sort >packbitmap.objects &&
++	touch .git/objects/pack/$packbitmap.keep &&
++	echo HEAD | \
++	git pack-objects --honor-pack-keep --stdout --revs >3a.pack &&
++	git index-pack 3a.pack &&
++	git verify-pack -v 3a.pack >3a.objects &&
++	if grep -qFf packbitmap.objects 3a.objects; then
++		echo "Object from .keeped bitmapped pack present in pack generated with --honour-pack-keep"
++		return 1
++	fi &&
++	rm .git/objects/pack/$packbitmap.keep
++'
++
++test_expect_success 'pack-objects respects --local (non-local bitmapped pack)' '
++	mv .git/objects/pack/$packbitmap.* alt_objects/pack/ &&
++	echo HEAD | \
++	git pack-objects --local --stdout --revs >3b.pack &&
++	git index-pack 3b.pack &&
++	git verify-pack -v 3b.pack >3b.objects &&
++	if grep -qFf packbitmap.objects 3b.objects; then
++		echo "Non-local object from bitmapped pack present in pack generated with --local"
++		return 1
++	fi &&
++	mv alt_objects/pack/$packbitmap.* .git/objects/pack/
++'
++
+ test_expect_success 'full repack, reusing previous bitmaps' '
+ 	git repack -ad &&
+ 	ls .git/objects/pack/ | grep bitmap >output &&
+@@ -143,6 +225,24 @@ test_expect_success 'create objects for missing-HAVE tests' '
+ 	EOF
+ '
+ 
++test_expect_success 'pack-objects respects --incremental' '
++	cat >revs2 <<-EOF &&
++	HEAD
++	$commit
++	EOF
++	git pack-objects --incremental --stdout --revs <revs2 >4.pack &&
++	git index-pack 4.pack &&
++	git verify-pack -v 4.pack >4.verify &&
++	grep -o "^$_x40" 4.verify |sort >4.objects &&
++	test_line_count = 4 4.objects &&
++	git rev-list --objects $commit >revlist &&
++	grep -o "^$_x40" revlist |sort >objects &&
++	if grep -qvFf objects 4.objects; then
++		echo "Expected objects not present in incremental pack"
++		return 1
++	fi
++'
++
+ test_expect_success 'pack with missing blob' '
+ 	rm $(objpath $blob) &&
+ 	git pack-objects --stdout --revs <revs >/dev/null
+-- 
+2.9.0.431.g3cb5c84
