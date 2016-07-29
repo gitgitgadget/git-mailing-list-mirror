@@ -6,111 +6,184 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5FCD81F858
-	for <e@80x24.org>; Fri, 29 Jul 2016 04:04:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E5FA1F858
+	for <e@80x24.org>; Fri, 29 Jul 2016 04:06:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750822AbcG2EE2 (ORCPT <rfc822;e@80x24.org>);
-	Fri, 29 Jul 2016 00:04:28 -0400
-Received: from cloud.peff.net ([50.56.180.127]:50785 "HELO cloud.peff.net"
+	id S1750886AbcG2EGO (ORCPT <rfc822;e@80x24.org>);
+	Fri, 29 Jul 2016 00:06:14 -0400
+Received: from cloud.peff.net ([50.56.180.127]:50792 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750729AbcG2EE0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2016 00:04:26 -0400
-Received: (qmail 23813 invoked by uid 102); 29 Jul 2016 04:04:27 -0000
+	id S1750729AbcG2EGM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2016 00:06:12 -0400
+Received: (qmail 23995 invoked by uid 102); 29 Jul 2016 04:06:14 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Jul 2016 00:04:27 -0400
-Received: (qmail 31273 invoked by uid 107); 29 Jul 2016 04:04:52 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Jul 2016 00:06:14 -0400
+Received: (qmail 31305 invoked by uid 107); 29 Jul 2016 04:06:38 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Jul 2016 00:04:52 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Jul 2016 00:04:23 -0400
-Date:	Fri, 29 Jul 2016 00:04:23 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Jul 2016 00:06:38 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Jul 2016 00:06:09 -0400
+Date:	Fri, 29 Jul 2016 00:06:09 -0400
 From:	Jeff King <peff@peff.net>
 To:	git@vger.kernel.org
 Cc:	Michael Haggerty <mhagger@alum.mit.edu>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 0/7] speed up pack-objects counting with many packs
-Message-ID: <20160729040422.GA19678@sigill.intra.peff.net>
+Subject: [PATCH v2 1/7] t/perf: add tests for many-pack scenarios
+Message-ID: <20160729040609.GA22408@sigill.intra.peff.net>
+References: <20160729040422.GA19678@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <20160729040422.GA19678@sigill.intra.peff.net>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-This is a follow-up to the patches in
+Git's pack storage does efficient (log n) lookups in a
+single packfile's index, but if we have multiple packfiles,
+we have to linearly search each for a given object.  This
+patch introduces some timing tests for cases where we have a
+large number of packs, so that we can measure any
+improvements we make in the following patches.
 
-  http://public-inbox.org/git/20160725184938.GA12871@sigill.intra.peff.net/
+The main thing we want to time is object lookup. To do this,
+we measure "git rev-list --objects --all", which does a
+fairly large number of object lookups (essentially one per
+object in the repository).
 
-that are currently queued in jk/pack-objects-optim-skimming. Roughly,
-they try to optimize a loop that is O(nr_objects * nr_packs) by breaking
-out early in some cases.
+However, we also measure the time to do a full repack, which
+is interesting for two reasons. One is that in addition to
+the usual pack lookup, it has its own linear iteration over
+the list of packs. And two is that because it it is the tool
+one uses to go from an inefficient many-pack situation back
+to a single pack, we care about its performance not only at
+marginal numbers of packs, but at the extreme cases (e.g.,
+if you somehow end up with 5,000 packs, it is the only way
+to get back to 1 pack, so we need to make sure it performs
+well).
 
-I had written those patches a while ago and confirmed that they did
-speed up a particular nasty case I had. But when I tried to write a
-t/perf test to show off the improvement, I found that they didn't help!
-The reason is that the optimizations are heavily dependent on the order
-of the packs, and which objects go in which pack. The loop has the same
-worst-case complexity as it always did, but we rely on getting lucky to
-break out early.
+We measure the performance of each command in three
+scenarios: 1 pack, 50 packs, and 1,000 packs.
 
-I think the perf test I've included here is more representative of a
-real-world workloads, and with an extra optimization, I was able to show
-good numbers with it.
+The 1-pack case is a baseline; any optimizations we do to
+handle multiple packs cannot possibly perform better than
+this.
 
-The general strategy is to order the pack lookups in most-recently-used
-order. This replaces an existing 1-element MRU cache in the normal pack
-lookup code, and replaces a straight reverse-chronological iteration in
-pack-objects.
+The 50-pack case is as far as Git should generally allow
+your repository to go, if you have auto-gc enabled with the
+default settings. So this represents the maximum performance
+improvement we would expect under normal circumstances.
 
-All credit for thinking of this scheme goes to Michael Haggerty, who
-suggested the idea to me about six months ago. It seemed like a lot of
-work at the time, so I didn't do it. :) But as I started to implement
-the same 1-element cache in pack-objects, I found that the code actually
-gets rather awkward. The MRU solution makes the callers easier to read,
-and of course it turns out to be faster, to boot.
+The 1,000-pack case is hopefully rare, though I have seen it
+in the wild where automatic maintenance was broken for some
+time (and the repository continued to receive pushes). This
+represents cases where we care less about general
+performance, but want to make sure that a full repack
+command does not take excessively long.
 
-Anyway, enough chit-chat. The patches are:
+Signed-off-by: Jeff King <peff@peff.net>
+---
+By the way, a caution before you run this. It takes one the order of an
+hour to run on linux.git. So if you're comparing a few builds, be
+patient. :)
 
-  [1/7]: t/perf: add tests for many-pack scenarios
-  [2/7]: sha1_file: drop free_pack_by_name
-  [3/7]: add generic most-recently-used list
-  [4/7]: find_pack_entry: replace last_found_pack with MRU cache
-  [5/7]: pack-objects: break out of want_object loop early
-  [6/7]: pack-objects: compute local/ignore_pack_keep early
-  [7/7]: pack-objects: use mru list when iterating over packs
+ t/perf/p5303-many-packs.sh | 87 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 87 insertions(+)
+ create mode 100755 t/perf/p5303-many-packs.sh
 
-The actual optimizations are in patches 4 and 7, which have their own
-numbers. But here are end-to-end numbers for the series against the tip
-of master (for the meanings, see the discussion in patch 1, and the
-analysis in 4 and 7):
+diff --git a/t/perf/p5303-many-packs.sh b/t/perf/p5303-many-packs.sh
+new file mode 100755
+index 0000000..3779851
+--- /dev/null
++++ b/t/perf/p5303-many-packs.sh
+@@ -0,0 +1,87 @@
++#!/bin/sh
++
++test_description='performance with large numbers of packs'
++. ./perf-lib.sh
++
++test_perf_large_repo
++
++# A real many-pack situation would probably come from having a lot of pushes
++# over time. We don't know how big each push would be, but we can fake it by
++# just walking the first-parent chain and having every 5 commits be their own
++# "push". This isn't _entirely_ accurate, as real pushes would have some
++# duplicate objects due to thin-pack fixing, but it's a reasonable
++# approximation.
++#
++# And then all of the rest of the objects can go in a single packfile that
++# represents the state before any of those pushes (actually, we'll generate
++# that first because in such a setup it would be the oldest pack, and we sort
++# the packs by reverse mtime inside git).
++repack_into_n () {
++	rm -rf staging &&
++	mkdir staging &&
++
++	git rev-list --first-parent HEAD |
++	sed -n '1~5p' |
++	head -n "$1" |
++	perl -e 'print reverse <>' \
++	>pushes
++
++	# create base packfile
++	head -n 1 pushes |
++	git pack-objects --delta-base-offset --revs staging/pack
++
++	# and then incrementals between each pair of commits
++	last= &&
++	while read rev
++	do
++		if test -n "$last"; then
++			{
++				echo "$rev" &&
++				echo "^$last"
++			} |
++			git pack-objects --delta-base-offset --revs \
++				staging/pack || return 1
++		fi
++		last=$rev
++	done <pushes &&
++
++	# and install the whole thing
++	rm -f .git/objects/pack/* &&
++	mv staging/* .git/objects/pack/
++}
++
++# Pretend we just have a single branch and no reflogs, and that everything is
++# in objects/pack; that makes our fake pack-building via repack_into_n()
++# much simpler.
++test_expect_success 'simplify reachability' '
++	tip=$(git rev-parse --verify HEAD) &&
++	git for-each-ref --format="option no-deref%0adelete %(refname)" |
++	git update-ref --stdin &&
++	rm -rf .git/logs &&
++	git update-ref refs/heads/master $tip &&
++	git symbolic-ref HEAD refs/heads/master &&
++	git repack -ad
++'
++
++for nr_packs in 1 50 1000
++do
++	test_expect_success "create $nr_packs-pack scenario" '
++		repack_into_n $nr_packs
++	'
++
++	test_perf "rev-list ($nr_packs)" '
++		git rev-list --objects --all >/dev/null
++	'
++
++	# This simulates the interesting part of the repack, which is the
++	# actual pack generation, without smudging the on-disk setup
++	# between trials.
++	test_perf "repack ($nr_packs)" '
++		git pack-objects --keep-true-parents \
++		  --honor-pack-keep --non-empty --all \
++		  --reflog --indexed-objects --delta-base-offset \
++		  --stdout </dev/null >/dev/null
++	'
++done
++
++test_done
+-- 
+2.9.2.607.g98dce7b
 
-[p5303, linux.git]
-Test                      origin                HEAD
--------------------------------------------------------------------------
-5303.3: rev-list (1)      31.48(31.20+0.27)     31.18(30.95+0.22) -1.0%
-5303.4: repack (1)        40.74(39.27+2.56)     40.30(38.96+2.47) -1.1%
-5303.6: rev-list (50)     31.65(31.38+0.26)     31.26(31.02+0.23) -1.2%
-5303.7: repack (50)       60.90(71.03+2.13)     46.95(57.46+1.85) -22.9%
-5303.9: rev-list (1000)   38.63(38.25+0.37)     31.91(31.61+0.28) -17.4%
-5303.10: repack (1000)    392.52(467.09+5.05)   87.38(159.98+2.92) -77.7%
-
-[p5303, git.git]
-Test                      origin              HEAD
----------------------------------------------------------------------
-5303.3: rev-list (1)      1.55(1.54+0.00)     1.56(1.54+0.01) +0.6%
-5303.4: repack (1)        1.83(1.82+0.06)     1.82(1.82+0.05) -0.5%
-5303.6: rev-list (50)     1.58(1.56+0.02)     1.58(1.57+0.00) +0.0%
-5303.7: repack (50)       2.50(3.16+0.04)     2.32(2.92+0.09) -7.2%
-5303.9: rev-list (1000)   2.64(2.61+0.02)     2.23(2.21+0.01) -15.5%
-5303.10: repack (1000)    12.68(19.07+0.30)   7.51(13.86+0.20) -40.8%
-
-For curiosity, I also ran the git.git case with 10,000 packs. This is
-even more silly, but it shows that the problem does get worse and worse
-as the number grows, but that the patches do continue to help:
-
-Test                        origin               HEAD
--------------------------------------------------------------------------
-5303.12: rev-list (10,000)  26.00(25.86+0.13)    15.76(15.62+0.13) -39.4%
-5303.13: repack (10,000)   164.11(175.30+1.34)   51.48(62.96+1.18) -68.6%
-
--Peff
