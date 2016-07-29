@@ -2,107 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8CDFB1F955
-	for <e@80x24.org>; Fri, 29 Jul 2016 16:49:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC2DD1F955
+	for <e@80x24.org>; Fri, 29 Jul 2016 16:50:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753079AbcG2Qtj (ORCPT <rfc822;e@80x24.org>);
-	Fri, 29 Jul 2016 12:49:39 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62851 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751808AbcG2Qti (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2016 12:49:38 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A6A532E8B2;
-	Fri, 29 Jul 2016 12:49:36 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yG5KVOsshc4KHsjZDrtpAQga4Gs=; b=R2GbSP
-	A3+58jYRrDfEHQF164T/dzQtDj+WGSbNOzCcptFsCwkHNR8AdVZC503PbcxDHgzP
-	pd9OwBglu49EKHQNwfc5qG6vxLkbjkdArvO1qeBlGJxk3fV1s66Ab1JcVTJU+7uy
-	5/RBFEMSIq8mUVniVie+XaGBTxtR87/cqM6nk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oao1FAaoRLDEZl066zBVA9Jqr4nmLwNu
-	b1I4Mv1Ln62tQrCBvZlglQi4LYnJZ7Tl3X5bEHcC0GN7/Azl7z140ZBjOPq24Fd1
-	kyAdo9q68XZHckcsBbC3Zq5pGN3QQMqvaHUbIGeLyFIxfQEyhwR1Lgba0wpn63df
-	dBcl0pSnEbY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9D0AC2E8B1;
-	Fri, 29 Jul 2016 12:49:36 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1D1502E8B0;
-	Fri, 29 Jul 2016 12:49:36 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	Ingo =?utf-8?Q?Br=C3=BCckl?= <ib@wupperonline.de>,
-	Edward Thomson <ethomson@edwardthomson.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH] Fix failing test t3700-add.sh
-References: <579b4ca1.18da2703.bm000@wupperonline.de>
-	<20160729163937.GD29773@sigill.intra.peff.net>
-Date:	Fri, 29 Jul 2016 09:49:34 -0700
-In-Reply-To: <20160729163937.GD29773@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 29 Jul 2016 12:39:38 -0400")
-Message-ID: <xmqqmvl0pext.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752819AbcG2QuW (ORCPT <rfc822;e@80x24.org>);
+	Fri, 29 Jul 2016 12:50:22 -0400
+Received: from cloud.peff.net ([50.56.180.127]:51144 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752283AbcG2QuW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2016 12:50:22 -0400
+Received: (qmail 1322 invoked by uid 102); 29 Jul 2016 16:50:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Jul 2016 12:50:21 -0400
+Received: (qmail 2984 invoked by uid 107); 29 Jul 2016 16:50:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 29 Jul 2016 12:50:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Jul 2016 12:50:18 -0400
+Date:	Fri, 29 Jul 2016 12:50:18 -0400
+From:	Jeff King <peff@peff.net>
+To:	Lars Schneider <larsxschneider@gmail.com>
+Cc:	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	mlbright@gmail.com,
+	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>, e@80x24.org,
+	ramsay@ramsayjones.plus.com
+Subject: Re: [PATCH v2 0/5] Git filter protocol
+Message-ID: <20160729165018.GA6553@sigill.intra.peff.net>
+References: <20160722154900.19477-1-larsxschneider@gmail.com>
+ <20160727000605.49982-1-larsxschneider@gmail.com>
+ <579906C5.1050809@gmail.com>
+ <BFED7ED8-40DB-46B5-A1B7-4F49624D5A62@gmail.com>
+ <20160728132906.GA21311@sigill.intra.peff.net>
+ <579B087F.7090108@gmail.com>
+ <31219A33-CA8A-44D1-9DE0-6448AA1A7571@gmail.com>
+ <20160729155740.GB29773@sigill.intra.peff.net>
+ <FA73FFDF-51D1-49FD-A24E-72A2C033E2F3@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6EB2A806-55AC-11E6-838D-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <FA73FFDF-51D1-49FD-A24E-72A2C033E2F3@gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Fri, Jul 29, 2016 at 06:20:51PM +0200, Lars Schneider wrote:
 
-> I was also puzzled why the test fails for you; it does not for me.
-> Running the test script as root does make it fail. There are some
-> earlier tests which are skipped in this case, which run "git reset
-> --hard" with xfoo1 in the index, which cleans it up.
->
->> +	echo foo >xfoo &&
->> +	chmod 755 xfoo &&
->> +	git add --chmod=-x xfoo &&
->> +	case "$(git ls-files --stage xfoo)" in
->> +	100644" "*xfoo) echo pass;;
->> +	*) echo fail; git ls-files --stage xfoo; (exit 1);;
->
-> Here you just pick another name, "xfoo", which does happen to work. But
-> it seems like that has the same potential for flakiness if earlier tests
-> get adjusted or skipped, since they also use that name.
->
-> How about just:
->
->   rm -f xfoo1
->
-> at the top of the test, which explicitly documents the state we are
-> looking for?
+> >> That being said a "fail" response is a very good idea! This allows
+> >> the filter to communicate to git that a non required filter process
+> >> failed. I will add that to the protocol. Thanks :) 
+> > 
+> > Maybe just send "ok <size>", "ok -1" (for streaming), or "fail <reason>"
+> > followed by the content? That is similar to other Git protocols, though
+> > I am not sure they are good models for sanity or extensibility. :)
+> > 
+> > I don't know if you would want to leave room for other "headers" in the
+> > response, but you could also do something more HTTP-like, with a status
+> > code, and arbitrary headers. And presumably git would just ignore
+> > headers it doesn't know about. I think that's what Jakub's example was
+> > leaning towards. I'm just not sure what other headers are really useful,
+> > but it does leave room for extensibility.
+> 
+> Well, "ok <size>" wouldn't make much sense as we already transmitted
+> the size upfront I think. Right now I have implemented the following options:
 
-That's much more sensible.
+Maybe I'm confused about where in the protocol we are. I was imagining:
 
-> I also wondered if this test, which calls "chmod 755 xfoo1", should be
-> marked with the POSIXPERM prerequisite. But I guess since its goal is to
-> strip the executable bit, it "works" even on systems where that chmod is
-> a noop (the "git add --chmod" doesn't do anything, but one way or the
-> other we end up at the end state we expect).
+  git> smudge
+  git> <filename>
+  git> <size>
+  git> ...pkt-lines...
+  git> pktline-flush
 
-We could make sure --chmod=[-+]x works both ways, which would be
-more robust on either type of underlying platform.  Something along
-the lines of
+  git< ok <size>
+  git< ...pkt-lines...
+  git< flush
 
-	echo foo >xfoo1 &&
-        git add --chmod=+x xfoo1 &&
-        test_mode_in_index 100755 xfoo1 &&
-        git add --chmod=-x xfoo1 &&
-        test_mode_in_index 100644 xfoo1
+That is, we should say "I have something for you" or "I do not" before
+sending a size, because in the "I do not" case we have no size to send.
 
-with an obvious addition of a test_mode_in_index helper function as
-the same "case $(ls-files -s) in ... esac" pattern appears number of
-times.
+A more extensible protocol might look like:
 
+  git> smudge
+  git> filename=<filename>
+  git> size=<size>
+  git> pktline-flush
+  git> ...pkt-lines of data...
+  git> pktline-flush
+
+  git< ok (or success, or whatever status code you like)
+  git< size=<size>
+  git< pkt-line-flush
+  git< ...pkt-lines of data...
+  git< pktline-flush
+
+That leaves room for new "keys" to be added before the first pkt-flush,
+without having to change the parsing at all.
+
+> "success\n" --> everything was alright
+> "reject\n" --> the filter rejected the operation but this is no error 
+>                if "filter.<driver>.required = false"
+> <anything else> --> failure that stops/restarts the filter process
+> 
+> I don't think sending any failure reason makes sense because if a failure
+> happens then we are likely in a bad state already (that's why I restart the
+> filter process. I think the filter can report trouble on its own via stdout,
+> no? I think this is what Git-LFS already does.
+
+Git-LFS sends to stderr because there's no other option. I wonder if it
+would be nicer to make it Git's responsibility to talk to the user,
+because then it could respect things like "--quiet". I guess error
+messages are generally printed regardless of verbosity, though, so
+printing them unconditionally is OK.
+
+-Peff
