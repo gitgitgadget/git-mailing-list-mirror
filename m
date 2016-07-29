@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A8BF1F955
-	for <e@80x24.org>; Fri, 29 Jul 2016 23:38:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A762D1F855
+	for <e@80x24.org>; Fri, 29 Jul 2016 23:38:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753498AbcG2XiV (ORCPT <rfc822;e@80x24.org>);
-	Fri, 29 Jul 2016 19:38:21 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:34475 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752979AbcG2XiK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2016 19:38:10 -0400
-Received: by mail-wm0-f65.google.com with SMTP id q128so17717445wma.1
-        for <git@vger.kernel.org>; Fri, 29 Jul 2016 16:38:10 -0700 (PDT)
+	id S1753499AbcG2XiX (ORCPT <rfc822;e@80x24.org>);
+	Fri, 29 Jul 2016 19:38:23 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34484 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753178AbcG2XiN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2016 19:38:13 -0400
+Received: by mail-wm0-f67.google.com with SMTP id q128so17717552wma.1
+        for <git@vger.kernel.org>; Fri, 29 Jul 2016 16:38:12 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Zl/PXyufBeJKdeBHHw4trUp2naM6V8WzBiBN/h1Ki/Q=;
-        b=ZN8c4wedHccovh6BSWOz1UrPBAJlpFtIKXiFM9hi9FgEQYNUKVPhwniPBxeq96NGy1
-         YoELyYjp+ldts9T2Dj0RAVdag2GUaNiF3fI9+fdmz8crIiB7mUb6OaAAZEBcpV0DtUeJ
-         4y/k9ok0EUCTq5ua1zD0eAZ0rviCPeyKR1clWcgq5Z5EhnSVwDdgYilV8JuG85wSENCs
-         fXB0gb2+Jn2ZaTJ7hhopAEQBASLYQq9pvfT7HAN68vtA5PWqa/9ujr1P4q9MEKtaAegI
-         inf0m7w3603xTa020PqhqVsmIjyEsea7n72TZQ1wGBDb3vEogBJkomzpOf+yg85qM8pX
-         JJ0Q==
+        bh=d8Hbn5TTNpZ4dY5DoNYEE7SGDEcvbJfzCTSFu3ri+uQ=;
+        b=095jE/ksx3Ql1wl6Gpm2362RJl7QDowR23Jdp690/81Je2chBxpW4WK8u2i9UEHVho
+         oBDuVsgFfv49/8QA8LFhz/DsXbai0heHaKj4BrNFwV8v+ty1xtbmkd2lTZRmHbgiIk2E
+         5PIqjQWSdFZ3Vp/mm/dQsXwviH/2hgC5Qfv6rDybnhA/rrbMZezTFRc2w0NVCGI+zTWq
+         4oYhWfoWnFF+84ZmTwouJjQ53l0vNXSiPNObe95wHTGZhcET2Ic77ZR9nVB5iXgh/oBo
+         paAxF8RVX8DTQ07XHq2oRfLBfi7cEN3w3i2/oOK+Y0oL0W2lweSRy+6d3RBNc4VT5Ick
+         Dd3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Zl/PXyufBeJKdeBHHw4trUp2naM6V8WzBiBN/h1Ki/Q=;
-        b=Mc8AkMDJFTjnertx7reCSJM2qaHNDV8+utgxJ7cl6P4iMup5PiRW9Yrzf1+chHZO8I
-         XbU80Z3WOpAFXnhnbaEN+Sth9fik+MU73T5QIFsMUoGWPNGUfDzPT7mRoIufXFIuA9ZC
-         N2b98urZLV5qM+UN6xjMsIRKHZJo5batL1JSuOnvYxJcVgeThUYBm0XSTMKVsY/ISgcH
-         RzdefHZuCPhnvRodS/2UDpR/83bpOL0JUxX85x+LbwpVntj+moXsm/fdvUnTccU8Vwsa
-         j5GvEKAsiFPDfzvrXVN0FZd02aZSzIdJaVVc/e5sej8f/kEgpldZqNmeFeGk82xN8Sdx
-         k2mg==
-X-Gm-Message-State: AEkoouvpqF8qYmHw1PCw/rswKDZ2vHW3mrfY7/ASjWs+Rv5yy/3HhV3Q4pXerZyw1JMQcg==
-X-Received: by 10.28.86.65 with SMTP id k62mr3387849wmb.53.1469835489302;
-        Fri, 29 Jul 2016 16:38:09 -0700 (PDT)
+        bh=d8Hbn5TTNpZ4dY5DoNYEE7SGDEcvbJfzCTSFu3ri+uQ=;
+        b=c+GKn++6zOkj5qaU9H+xofICGvwl6tuc7yxQum62hN2AI6w2WXfCD/OZlgxKi54MDB
+         qcw3MXfzfoy8VhDgJ0GkZ6baQgwaPcwVnImP82xCcubTx1CS4WFIVAvrM0I5VqEIDR8P
+         Mp/GNaxw57BW30UoMDVmzc32d576J8C4Lz+Ihi4y4FKCriw680H1ZO+YRKtV3i04Gc1g
+         7QIVroGyJfc90vRoora02FYxEHTF/oB62aP7KHKO0jEj6vTFQvOWvxBagNGiOiDyTc0W
+         y80NSBXqYJJho8k608atrCwFNekaNPyBYW5UJH85YgnOSD5kkD1A/fpQDHBejCk1DeVj
+         2aUw==
+X-Gm-Message-State: AEkoouuPwKBq1RO4SXg/O9PMboFqnTgngOxNZLFvZWLlGR5kZRojt594IKRCY4uOAnUJPQ==
+X-Received: by 10.28.17.9 with SMTP id 9mr3392501wmr.73.1469835491518;
+        Fri, 29 Jul 2016 16:38:11 -0700 (PDT)
 Received: from slxBook4.fritz.box (p5DDB4145.dip0.t-ipconnect.de. [93.219.65.69])
-        by smtp.gmail.com with ESMTPSA id i1sm18663212wjl.9.2016.07.29.16.38.08
+        by smtp.gmail.com with ESMTPSA id i1sm18663212wjl.9.2016.07.29.16.38.09
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Fri, 29 Jul 2016 16:38:08 -0700 (PDT)
+        Fri, 29 Jul 2016 16:38:10 -0700 (PDT)
 From:	larsxschneider@gmail.com
 To:	git@vger.kernel.org
 Cc:	gitster@pobox.com, jnareb@gmail.com, tboegi@web.de,
 	mlbright@gmail.com, e@80x24.org, peff@peff.net,
 	Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v3 04/10] pkt-line: call packet_trace() only if a packet is actually send
-Date:	Sat, 30 Jul 2016 01:37:55 +0200
-Message-Id: <20160729233801.82844-5-larsxschneider@gmail.com>
+Subject: [PATCH v3 05/10] pack-protocol: fix maximum pkt-line size
+Date:	Sat, 30 Jul 2016 01:37:56 +0200
+Message-Id: <20160729233801.82844-6-larsxschneider@gmail.com>
 X-Mailer: git-send-email 2.9.0
 In-Reply-To: <20160729233801.82844-1-larsxschneider@gmail.com>
 References: <20160727000605.49982-1-larsxschneider%40gmail.com/>
@@ -65,36 +65,31 @@ X-Mailing-List:	git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-The packet_trace() call is not ideal in format_packet() as we would print
-a trace when a packet is formatted and (potentially) when the packet is
-actually send. This was no problem up until now because format_packet()
-was only used by one function. Fix it by moving the trace call into the
-function that actally sends the packet.
+According to LARGE_PACKET_MAX in pkt-line.h the maximal lenght of a
+pkt-line packet is 65520 bytes. The pkt-line header takes 4 bytes and
+therefore the pkt-line data component must not exceed 65516 bytes.
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- pkt-line.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/technical/protocol-common.txt | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/pkt-line.c b/pkt-line.c
-index 1728690..32c0a34 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -126,7 +126,6 @@ static void format_packet(struct strbuf *out, const char *fmt, va_list args)
- 		die("protocol error: impossibly long line");
+diff --git a/Documentation/technical/protocol-common.txt b/Documentation/technical/protocol-common.txt
+index bf30167..ecedb34 100644
+--- a/Documentation/technical/protocol-common.txt
++++ b/Documentation/technical/protocol-common.txt
+@@ -67,9 +67,9 @@ with non-binary data the same whether or not they contain the trailing
+ LF (stripping the LF if present, and not complaining when it is
+ missing).
  
- 	set_packet_header(&out->buf[orig_len], n);
--	packet_trace(out->buf + orig_len + 4, n - 4, 1);
- }
+-The maximum length of a pkt-line's data component is 65520 bytes.
+-Implementations MUST NOT send pkt-line whose length exceeds 65524
+-(65520 bytes of payload + 4 bytes of length data).
++The maximum length of a pkt-line's data component is 65516 bytes.
++Implementations MUST NOT send pkt-line whose length exceeds 65520
++(65516 bytes of payload + 4 bytes of length data).
  
- void packet_write(int fd, const char *fmt, ...)
-@@ -138,6 +137,7 @@ void packet_write(int fd, const char *fmt, ...)
- 	va_start(args, fmt);
- 	format_packet(&buf, fmt, args);
- 	va_end(args);
-+	packet_trace(buf.buf + 4, buf.len - 4, 1);
- 	write_or_die(fd, buf.buf, buf.len);
- }
+ Implementations SHOULD NOT send an empty pkt-line ("0004").
  
 -- 
 2.9.0
