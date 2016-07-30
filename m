@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F34B1F71B
-	for <e@80x24.org>; Sat, 30 Jul 2016 17:44:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA29D1F71B
+	for <e@80x24.org>; Sat, 30 Jul 2016 17:44:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753841AbcG3RoQ (ORCPT <rfc822;e@80x24.org>);
-	Sat, 30 Jul 2016 13:44:16 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35260 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753791AbcG3RoH (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753886AbcG3RoT (ORCPT <rfc822;e@80x24.org>);
+	Sat, 30 Jul 2016 13:44:19 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:34140 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753804AbcG3RoH (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 30 Jul 2016 13:44:07 -0400
-Received: by mail-wm0-f66.google.com with SMTP id i5so20085243wmg.2
-        for <git@vger.kernel.org>; Sat, 30 Jul 2016 10:44:06 -0700 (PDT)
+Received: by mail-wm0-f65.google.com with SMTP id q128so20097816wma.1
+        for <git@vger.kernel.org>; Sat, 30 Jul 2016 10:44:07 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=YdXjNUdoe7I493wQ0JfZE/79zdlJ5tdfHEyr8jGQ6Vc=;
-        b=FaGCBFoRdLJvNsvccyV+mECiTFLX9qRrf2XUQqtrjHXqk9x/lcV+AtAR5X2+Sa/78b
-         1JT4WRqGvZfp1QG+UPBlIGyQJDx4FXra9g5zJXGPNxRanOmOwV2CQsTr/HA7lA2b1yIJ
-         n038POV1cHniP20mDddEkClX3YoJf+a8gpzgjxRumjNgiqhmAFPfu2A0nDMOFaxzv5VU
-         9VLvPkSbiUJZnjc/DUMbk8TXS6b3DzV1mpwC6WsO+82GbhfdykRUsXRyy/uhwnHoAUJJ
-         CuU/AwEJ3v55vPv2DQLdg4+gPgXe+KhR/ZsRhVpJjx4Rfk1mEaAnWTrSF1a/P1AOhKk5
-         9opA==
+        bh=npY22mTRL3RzQKM4rcpOI4mig5zb9lEDKT5AQo828+4=;
+        b=sZe/1S9pgg2feVPSAfGWzub7ZUOUxDgUnMxBz+NnGKiyGRL3TQzn7o2v6C2JhXE59C
+         U87zCj5yjFl6vaCJNUJR8L2guyHuVlTi9LSejP5sLdx1aQ/MLyaSFaLS9cxRrh83xRjR
+         sjF+6uZrSpnIS3M9v1vVtq1RJCORQXruk97oydCLMHfiFVUcGONU7WD7cC86ughF0YTT
+         Wt8+YUESqxHmq0Q/idXBvM6PcDR1pI+tlopCc0aBA8gXvD6VtCvrrL3RqmzczU7y/FfD
+         hUt41iNOHbHpSEPcXnNfjp4eRPW/pZ9E0v+ik2FpztrOLG5RPgk8bLwpWT+vsakl9Ds6
+         R1Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=YdXjNUdoe7I493wQ0JfZE/79zdlJ5tdfHEyr8jGQ6Vc=;
-        b=Fnye3MQkgyFZDBXxyd3WnraaLBHKnH/amtYg+6ZeheW3KttA0TPWK2Gx4NctJAdUBJ
-         2+PuQ/Tnzqrrex7k/YGmPtXef1sixw1Etc7HJYl0k9AjN/v4mjEhOHBTQgWdmpxwCkYf
-         wldTJSxZKBEragIb6ee6khWC59NPtTSNU1V17471+Cq0Z3L/GaOdP8hBVTDk8A8XUpoW
-         glzLlmyztMAynL0fOWKvWwhL6MxaXw/HLkB+OIqxK2pet+T+UV/fSeMtnkMaMZDO9MND
-         b5BsE6t359WKMmbGrWhYtdqW24uWLQ0pvGjEhFdKQeKHQRNMJJzrDCr1ER1OGT2aHX7G
-         ARjQ==
-X-Gm-Message-State: AEkoouvBohnP0PfDhNGyRdzIGVCCoNr6BMeCdME8l+FErf/xMotszN6Q3oIGT6nO10G4NA==
-X-Received: by 10.194.149.176 with SMTP id ub16mr43556408wjb.54.1469899535702;
-        Sat, 30 Jul 2016 10:25:35 -0700 (PDT)
+        bh=npY22mTRL3RzQKM4rcpOI4mig5zb9lEDKT5AQo828+4=;
+        b=EB3ofRUWnZ37v+QGj/+RUi5VrODj2d0siWio2Lh+AQtdxlbzpNKlHC9r6Sy5KxiGf6
+         6UNhPf49jGj2cBJOkojZnxOa/xzJu9SdJMmHtt/rYJ5beM/Z3O9nw/sfUaq2nFdgTzLP
+         YUS+y/aquT+XB0IV7LxC9UjbRvIMar25PFRxotJJs3w8IuoU7+mE66hhr7IFbxGYDmj6
+         H76hnel1LK3h95EyAEcjlJC8JwICtMmZ0c+RXynqrVROd+74Hmwg9DXzsNaLoA/jVgzt
+         ENWiaINs/7o053RM/tqYUPCQ/Qu2KknbrbKASCww9sELPkmA4yxzItschV4U04sVa/qc
+         qKgg==
+X-Gm-Message-State: AEkoousfQvZgNYZanB9IWCLl6sCgpDMGhoPNix5mHgBD6Xtdlvy94JaJ204DqRnetSHi+Q==
+X-Received: by 10.28.64.86 with SMTP id n83mr51771314wma.52.1469899537947;
+        Sat, 30 Jul 2016 10:25:37 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id d62sm8641970wmd.7.2016.07.30.10.25.34
+        by smtp.gmail.com with ESMTPSA id d62sm8641970wmd.7.2016.07.30.10.25.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 30 Jul 2016 10:25:35 -0700 (PDT)
+        Sat, 30 Jul 2016 10:25:36 -0700 (PDT)
 From:	Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
 To:	git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v9 08/41] builtin/apply: make parse_whitespace_option() return -1 instead of die()ing
-Date:	Sat, 30 Jul 2016 19:24:36 +0200
-Message-Id: <20160730172509.22939-9-chriscool@tuxfamily.org>
+Subject: [PATCH v9 09/41] builtin/apply: make parse_ignorewhitespace_option() return -1 instead of die()ing
+Date:	Sat, 30 Jul 2016 19:24:37 +0200
+Message-Id: <20160730172509.22939-10-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.2.558.gf53e569
 In-Reply-To: <20160730172509.22939-1-chriscool@tuxfamily.org>
 References: <20160730172509.22939-1-chriscool@tuxfamily.org>
@@ -74,82 +74,55 @@ To libify `git apply` functionality we have to signal errors to the
 caller instead of die()ing.
 
 To do that in a compatible manner with the rest of the error handling
-in builtin/apply.c, parse_whitespace_option() should return -1 instead
-of calling die().
+in "builtin/apply.c", parse_ignorewhitespace_option() should return
+-1 instead of calling die().
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ builtin/apply.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 9939a83..be32dfd 100644
+index be32dfd..4b18916 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -27,34 +27,34 @@ static const char * const apply_usage[] = {
- 	NULL
- };
- 
--static void parse_whitespace_option(struct apply_state *state, const char *option)
-+static int parse_whitespace_option(struct apply_state *state, const char *option)
- {
- 	if (!option) {
- 		state->ws_error_action = warn_on_ws_error;
--		return;
-+		return 0;
- 	}
- 	if (!strcmp(option, "warn")) {
- 		state->ws_error_action = warn_on_ws_error;
--		return;
-+		return 0;
- 	}
- 	if (!strcmp(option, "nowarn")) {
- 		state->ws_error_action = nowarn_ws_error;
--		return;
-+		return 0;
- 	}
- 	if (!strcmp(option, "error")) {
- 		state->ws_error_action = die_on_ws_error;
--		return;
-+		return 0;
- 	}
- 	if (!strcmp(option, "error-all")) {
- 		state->ws_error_action = die_on_ws_error;
- 		state->squelch_whitespace_errors = 0;
--		return;
-+		return 0;
- 	}
- 	if (!strcmp(option, "strip") || !strcmp(option, "fix")) {
- 		state->ws_error_action = correct_ws_error;
--		return;
-+		return 0;
- 	}
--	die(_("unrecognized whitespace option '%s'"), option);
-+	return error(_("unrecognized whitespace option '%s'"), option);
+@@ -57,20 +57,20 @@ static int parse_whitespace_option(struct apply_state *state, const char *option
+ 	return error(_("unrecognized whitespace option '%s'"), option);
  }
  
- static void parse_ignorewhitespace_option(struct apply_state *state,
-@@ -4589,7 +4589,8 @@ static int option_parse_whitespace(const struct option *opt,
+-static void parse_ignorewhitespace_option(struct apply_state *state,
+-					  const char *option)
++static int parse_ignorewhitespace_option(struct apply_state *state,
++					 const char *option)
  {
- 	struct apply_state *state = opt->value;
- 	state->whitespace_option = arg;
--	parse_whitespace_option(state, arg);
-+	if (parse_whitespace_option(state, arg))
-+		exit(1);
- 	return 0;
+ 	if (!option || !strcmp(option, "no") ||
+ 	    !strcmp(option, "false") || !strcmp(option, "never") ||
+ 	    !strcmp(option, "none")) {
+ 		state->ws_ignore_action = ignore_ws_none;
+-		return;
++		return 0;
+ 	}
+ 	if (!strcmp(option, "change")) {
+ 		state->ws_ignore_action = ignore_ws_change;
+-		return;
++		return 0;
+ 	}
+-	die(_("unrecognized whitespace ignore option '%s'"), option);
++	return error(_("unrecognized whitespace ignore option '%s'"), option);
  }
  
-@@ -4626,8 +4627,8 @@ static void init_apply_state(struct apply_state *state,
- 	strbuf_init(&state->root, 0);
- 
+ static void set_default_whitespace_mode(struct apply_state *state)
+@@ -4629,8 +4629,8 @@ static void init_apply_state(struct apply_state *state,
  	git_apply_config();
--	if (apply_default_whitespace)
--		parse_whitespace_option(state, apply_default_whitespace);
-+	if (apply_default_whitespace && parse_whitespace_option(state, apply_default_whitespace))
+ 	if (apply_default_whitespace && parse_whitespace_option(state, apply_default_whitespace))
+ 		exit(1);
+-	if (apply_default_ignorewhitespace)
+-		parse_ignorewhitespace_option(state, apply_default_ignorewhitespace);
++	if (apply_default_ignorewhitespace && parse_ignorewhitespace_option(state, apply_default_ignorewhitespace))
 +		exit(1);
- 	if (apply_default_ignorewhitespace)
- 		parse_ignorewhitespace_option(state, apply_default_ignorewhitespace);
  }
+ 
+ static void clear_apply_state(struct apply_state *state)
 -- 
 2.9.2.558.gf53e569
 
