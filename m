@@ -2,119 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0508B1F71B
-	for <e@80x24.org>; Sat, 30 Jul 2016 18:12:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB69A1F71B
+	for <e@80x24.org>; Sat, 30 Jul 2016 18:20:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752734AbcG3SM4 (ORCPT <rfc822;e@80x24.org>);
-	Sat, 30 Jul 2016 14:12:56 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:47905 "EHLO
-	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752094AbcG3SMz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jul 2016 14:12:55 -0400
-Received: from mfilter47-d.gandi.net (mfilter47-d.gandi.net [217.70.178.178])
-	by relay4-d.mail.gandi.net (Postfix) with ESMTP id BBF9717209A;
-	Sat, 30 Jul 2016 20:12:51 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter47-d.gandi.net
-Received: from relay4-d.mail.gandi.net ([IPv6:::ffff:217.70.183.196])
-	by mfilter47-d.gandi.net (mfilter47-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id l-Rm7t2hc4Zt; Sat, 30 Jul 2016 20:12:50 +0200 (CEST)
-X-Originating-IP: 50.39.163.18
-Received: from x (50-39-163-18.bvtn.or.frontiernet.net [50.39.163.18])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id CA78717209F;
-	Sat, 30 Jul 2016 20:12:48 +0200 (CEST)
-Date:	Sat, 30 Jul 2016 11:12:46 -0700
-From:	Josh Triplett <josh@joshtriplett.org>
-To:	Jeff King <peff@peff.net>
-Cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 1/2] format-patch: Add a config option format.from to set
- the default for --from
-Message-ID: <20160730181246.4aifnvqfeenddzdl@x>
-References: <cover.8678faa71de50c8e78760b0bcb3d15ebeda207d5.1469871675.git-series.josh@joshtriplett.org>
- <20160730094156.etvrzqbhcpg3is2z@x>
- <20160730154034.thjrfu6zeprzwvxb@sigill.intra.peff.net>
+	id S1752859AbcG3SUX (ORCPT <rfc822;e@80x24.org>);
+	Sat, 30 Jul 2016 14:20:23 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:35655 "EHLO
+	mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752094AbcG3SUW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jul 2016 14:20:22 -0400
+Received: by mail-lf0-f66.google.com with SMTP id l89so6727371lfi.2
+        for <git@vger.kernel.org>; Sat, 30 Jul 2016 11:20:21 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=A6Cy6/3Sd3Bzg2jdJXnnuST0IkYMcOK1tQ7SnAgTCyU=;
+        b=s/KqrNuwi1jKOkkcpcIoCR2zwrWyX/XYyTJXmniHOfrvJA1+wCNhulTyh+Uihlw9W+
+         v6i6awWguo3uUF3rM9FgDrZQULarlAiHDuk/SnvkNCsyPjeNz6F/brZOeNImnigUa3gy
+         YpOG+4gST+OvUFDRVLtPL1rGoeV3XBZUqU/1qqY3O0wGi9VJzeeBorGMIRB8eSL98wwe
+         r0VUcGDh87bDDnEBOIfHIgF+tLrVs/9eIri9iQi8kPKtnr9WKtZaAVZiHzTfYj+8driF
+         tfGvo4cjIURnkZEXfV5mC/ZWT6RRmqOgutqTxsGXnLFJtQVg7tztI+QvlVcoxTdK0/4a
+         tiLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=A6Cy6/3Sd3Bzg2jdJXnnuST0IkYMcOK1tQ7SnAgTCyU=;
+        b=IjCxZ2F3j+Pq1AaQMTuZuxbLk0tphuusAD1bXAtfqW1KOreWI1srp08eMDxIfO7AjD
+         rJQL60jeQ7KFcqvRbGFuNx3gLRSoGjRa3FdvGZVpGXmaxI7fk9CjewkzNQg6eoqugnXf
+         WICPnXy70tv7ikd01tPcb5xu/9iiC10WbrQLThLeqY3ipPMWlAfJx/v5Zt7nZ4JlfA9z
+         5C12B5bcv8YWZJ+QyFyujC17GRpNSb/slcauNrGe5Knf4kc5+IdQktpKPbyp2rkB0IKj
+         A+9Yt5Uouo7Lk72xjxlGcdieEPmkGnH5+ava+rKJWn3ejogvRqszTQUqZi5b/5tUvrMW
+         NVbA==
+X-Gm-Message-State: AEkoout5o5USybP3/euWfz/xSMgZtec/qHVCqQcNYdRGFlZnACgF6iGVVKzjq433n6HOhw==
+X-Received: by 10.25.134.65 with SMTP id i62mr14026063lfd.128.1469902819996;
+        Sat, 30 Jul 2016 11:20:19 -0700 (PDT)
+Received: from duynguyen.does.not.exist (10.219.241.83.in-addr.dgcsystems.net. [83.241.219.10])
+        by smtp.gmail.com with ESMTPSA id h88sm3728362ljh.23.2016.07.30.11.20.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 30 Jul 2016 11:20:19 -0700 (PDT)
+From:	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To:	git@vger.kernel.org
+Cc:	Junio C Hamano <gitster@pobox.com>, e@80x24.org,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] t7063: work around FreeBSD's lazy mtime update feature
+Date:	Sat, 30 Jul 2016 20:20:05 +0200
+Message-Id: <20160730182005.14426-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.9.1.566.gbd532d4
+In-Reply-To: <20160718223038.GA66056@plume>
+References: <20160718223038.GA66056@plume>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160730154034.thjrfu6zeprzwvxb@sigill.intra.peff.net>
-User-Agent: Mutt/1.6.2-neo (2016-07-23)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Sat, Jul 30, 2016 at 11:40:34AM -0400, Jeff King wrote:
-> On Sat, Jul 30, 2016 at 02:41:56AM -0700, Josh Triplett wrote:
-> 
-> > @@ -807,6 +808,17 @@ static int git_format_config(const char *var, const char *value, void *cb)
-> >  		base_auto = git_config_bool(var, value);
-> >  		return 0;
-> >  	}
-> > +	if (!strcmp(var, "format.from")) {
-> > +		int b = git_config_maybe_bool(var, value);
-> > +		free(from);
-> > +		if (b < 0)
-> > +			from = xstrdup(value);
-> > +		else if (b)
-> > +			from = xstrdup(git_committer_info(IDENT_NO_DATE));
-> > +		else
-> > +			from = NULL;
-> > +		return 0;
-> > +	}
-> 
-> This "free old, then handle tri-state" mirrors the code in the parseopt
-> callback pretty closely. I wonder if they could share the logic (it is
-> not many lines, but we would want the logic to stay identical). I
-> suspect the helper function would end up with more boilerplate than it's
-> worth, though, trying to handle the unset and default cases.
+Let's start with the commit message of [1] from freebsd.git [2]
 
-I looked at trying to share that code for exactly that reason, but
-didn't find a convenient way to share the two, because from_callback
-checked two separate variables (unset and arg), while the logic above
-checks one.  So, while the *bodies* of the three-way if are duplicated,
-the *conditions* aren't.
+    Sync timestamp changes for inodes of special files to disk as late
+    as possible (when the inode is reclaimed).  Temporarily only do
+    this if option UFS_LAZYMOD configured and softupdates aren't
+    enabled.  UFS_LAZYMOD is intentionally left out of
+    /sys/conf/options.
 
-However, if you'd like to avoid the duplication between the three
-values, I can do that with a set_from function that takes an enum and a
-new value; it'll actually increase lines of code, but remove the
-duplication (as well as the second patch's third copy of setting from to
-the committer info).
+    This is mainly to avoid almost useless disk i/o on battery powered
+    machines.  It's silly to write to disk (on the next sync or when
+    the inode becomes inactive) just because someone hit a key or
+    something wrote to the screen or /dev/null.
 
-> > diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-> > index 1206c48..b0579dd 100755
-> > --- a/t/t4014-format-patch.sh
-> > +++ b/t/t4014-format-patch.sh
-> > @@ -229,6 +229,46 @@ check_patch () {
-> >  	grep -e "^Subject:" "$1"
-> >  }
-> >  
-> > +test_expect_success 'format.from=false' '
-> > +
-> > +	git -c format.from=false format-patch --stdout master..side |
-> > +	sed -e "/^\$/q" >patch &&
-> > +	check_patch patch &&
-> > +	! grep "^From: C O Mitter <committer@example.com>\$" patch
-> > +'
-> 
-> These tests follow a different style from the "--from" tests later in
-> the script (and your second patch does follow it, and puts its test
-> close there). Any reason not to have all of the "from" tests together,
-> and using the same style?
+    PR:             5577 [3]
 
-The tests covered different things.  The later --from tests made sure
-that --from behaved as expected.  These tests made sure that format.from
-and --from/--no-from interacted in the expected way, with the
-command-line options overriding the configuration.  So, I put them next
-to the tests for other options like format.to and format.cc, which
-tested the same thing (overriding those with --no-to, --no-cc, etc).
+The short version of that, in the context of t7063, is that when a
+directory is updated, its mtime may be updated later, not
+immediately. This can be shown with a simple command sequence
 
-> Overall, the whole thing looks cleanly done, and I don't mind it going
-> in as-is. These are just two things I noticed while reading it over.
+    date; sleep 1; touch abc; rm abc; sleep 10; ls -lTd .
 
-I'll send a v2 with the code duplication fixed.
+One would expect that the date shown in `ls` would be one second from
+`date`, but it's 10 seconds later. If we put another `ls -lTd .` in
+front of `sleep 10`, then the date of the last `ls` comes as
+expected. The first `ls` somehow forces mtime to be updated.
 
-- Josh Triplett
+t7063 is really sensitive to directory mtime. When mtime is too "new",
+git code suspects racy timestamps and will not trigger the shortcut in
+untracked cache, in t7063.26 (or t7063.25 before this patch) and
+eventually be detected in t7063.28
+
+We have two options thanks to this special FreeBSD feature:
+
+1) Stop supporting untracked cache on FreeBSD. Skip t7063 entirely
+   when running on FreeBSD
+
+2) Work around this problem (using the same 'ls' trick) and continue
+   to support untracked cache on FreeBSD
+
+I initially wanted to go with 1) because I didn't know the exact
+nature of this feature and feared that it would make untracked cache
+work unreliably, using the cached version when it should not.
+
+Since the behavior of this thing is clearer now. The picture is not
+that bad. If this indeed happens often, untracked cache would assume
+racy condition more often and _fall back_ to non-untracked cache code
+paths. Which means it may be less effective, but it will not show
+wrong things.
+
+This patch goes with option 2.
+
+PS. For those who want to look further in FreeBSD source code, this
+flag is now called IN_LAZYMOD. I can see it's effective in ext2 and
+ufs. zfs is questionable.
+
+[1] 660e6408e6df99a20dacb070c5e7f9739efdf96d
+[2] git://github.com/freebsd/freebsd.git
+[3] https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=5577
+
+Reported-by: Eric Wong <e@80x24.org>
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ This is only of those commits that commit messages are more important
+ than the patch itself. One of the good notes about directory mtime,
+ if we start to use it in more places in git.
+
+ t/t7063-status-untracked-cache.sh | 4 ++++
+ t/test-lib.sh                     | 6 ++++++
+ 2 files changed, 10 insertions(+)
+
+diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+index a971884..08fc586 100755
+--- a/t/t7063-status-untracked-cache.sh
++++ b/t/t7063-status-untracked-cache.sh
+@@ -419,6 +419,10 @@ test_expect_success 'create/modify files, some of which are gitignored' '
+ 	rm base
+ '
+ 
++test_expect_success FREEBSD 'Work around lazy mtime update' '
++	ls -ld . >/dev/null
++'
++
+ test_expect_success 'test sparse status with untracked cache' '
+ 	: >../trace &&
+ 	avoid_racy &&
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 0055ebb..3c730a2 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -961,6 +961,12 @@ case $(uname -s) in
+ 	test_set_prereq SED_STRIPS_CR
+ 	test_set_prereq GREP_STRIPS_CR
+ 	;;
++*FreeBSD*)
++	test_set_prereq FREEBSD
++	test_set_prereq POSIXPERM
++	test_set_prereq BSLASHPSPEC
++	test_set_prereq EXECKEEPSPID
++	;;
+ *)
+ 	test_set_prereq POSIXPERM
+ 	test_set_prereq BSLASHPSPEC
+-- 
+2.9.1.566.gbd532d4
+
