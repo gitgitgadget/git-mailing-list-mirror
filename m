@@ -7,46 +7,45 @@ X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F02181F955
-	for <e@80x24.org>; Sat, 30 Jul 2016 17:27:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFAD91F71B
+	for <e@80x24.org>; Sat, 30 Jul 2016 17:27:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753896AbcG3R1k (ORCPT <rfc822;e@80x24.org>);
-	Sat, 30 Jul 2016 13:27:40 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:36772 "EHLO
+	id S1753931AbcG3R1p (ORCPT <rfc822;e@80x24.org>);
+	Sat, 30 Jul 2016 13:27:45 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35468 "EHLO
 	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752840AbcG3R0w (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1753560AbcG3R0w (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 30 Jul 2016 13:26:52 -0400
-Received: by mail-wm0-f65.google.com with SMTP id x83so20018371wma.3
-        for <git@vger.kernel.org>; Sat, 30 Jul 2016 10:25:55 -0700 (PDT)
+Received: by mail-wm0-f65.google.com with SMTP id i5so20041840wmg.2
+        for <git@vger.kernel.org>; Sat, 30 Jul 2016 10:26:25 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=4hxyuM1HyMmB44yq+zwAb8qAeUIvxQLT/yyFYEfTAkM=;
-        b=jFsVtT/xAWLae51vLEtzgGgu7+CRnCYueL2kEIZJSBTpYpPiMWTopkO2yLFbICgnUq
-         se8Lk95WDuwifbeAAYolYMMkP78B58J1dxeIW39xg3Ccwtb96MNNMcBg0P4sTPTJDKDi
-         jEj/GDNtjlWAshrTLE3LeTMcUJMFOC6nCzYGTs7bhdY9ukkrl0glVGbpK12ZpML1JKDv
-         TufVmc0QtKoUbl+hkTfDNk2F4hvDwDnTC/4nCXqoSojaPfY4sVhSGAuy1CWqiSICmR+c
-         /iK3nPtQguFLl55MjOuaJiGYjGk7ZqrmQ544P2SJK30EmFe4I21Rt3IOcKR0GODdtWp0
-         m3Tg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=YLOKgBU3Cx7B8kxcjTE6Cqf+nZyk6n4VuefChZd9RSs=;
+        b=pk5E2BXfNtHFUJYtfYm3GS4RXwqB4vYBdHKvgD+h7ZuXrQPu43v0yzO0R4tRQ2TPK3
+         zV8uCNGGBKcOD68623mtyl2syGfYiTAD9Lvc8wYgPXY53bhwNPROw4j+YmY8J9PxMqY3
+         ayFxxfEXFPaRQy/1w8gEW1DWvS8/fdkeRltIFjxvWzASGzpEVHQjgyDWuqfoi0zimE/7
+         JRO4IaGzIat2Hj1mK06uIePAw1vR/V9dKzZs0uvZ3+7piiv6C2PvzQFRX59++m55o+2P
+         1DaZQjo6mITSxaI/fMxTRb7A1RIDlTCSJRWuBn3eZNJMHhshP/kum7v6+juciop0Z9aJ
+         2IbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=4hxyuM1HyMmB44yq+zwAb8qAeUIvxQLT/yyFYEfTAkM=;
-        b=gvpdVLeDANM1rpmeaT7N/iK12edC/EJO1tckVB0hx5HdqCcIl+IRNh8VAvXH+aT2ju
-         npXxIAMIN3Gdi21eKY5w5lboKqVYqlPerp4SKCido+BdZm1wG48Tv6hyUffSjBzd//TK
-         YFmHo/zZw+5/SnlJIquA2tiKUz8vIDsBLhvsTfzufOrjRHul8lywt5bacQ5KPLcxdquX
-         Lj/S8LOCrr+C0XXDuZfBDX9fZbfIfMaw+ESvmatRutRFwWKrLH0Khz+MyRuKXDjSEAUv
-         7FZymIgCAGuxz7b2p3IN2nC/ZgIJQYhZ8qofetrszeXDBG9bQ2h0UqhlWGpbH5t3mMZu
-         sX9w==
-X-Gm-Message-State: AEkoouswYXQ8RhloXqz0/C9xWFhSnXYDf1oARiGL+yRfsqeNlFvabuQw2kqz15R8+JCFVQ==
-X-Received: by 10.28.131.199 with SMTP id f190mr6533631wmd.30.1469899554286;
-        Sat, 30 Jul 2016 10:25:54 -0700 (PDT)
+         :references;
+        bh=YLOKgBU3Cx7B8kxcjTE6Cqf+nZyk6n4VuefChZd9RSs=;
+        b=Py35Rk2erw8SjmLqFiMzk5Lkp/ub1LGQ6o6MuliHIJStxN7H2/6JXruZ5TJxmHFXMC
+         rJzf3eJQnuW3xF2mUOjCWFxUDhqB6R3KqMMhfyCswKcC/GlFEPtrqeLdekjTUUV/Eo5V
+         4phLd8Qdwao0WucZkUeSzFIsVGTEjuHPDBNtJA4uihEDCRmOFcD2SFb5MfgvMTvIpIeR
+         SCWHTcPO/RokeeSXKFSIoKoSHgukyCXPXFrIHdc1dY+AzpddtRtjM1Tx4Cq/WDfogLdV
+         8ZLw/NTGDnkRE37K70m0EVKJoRVUecQqtG5K76yXacDBspSWjxLmFfdwPn9ueX0QZJr7
+         6pCg==
+X-Gm-Message-State: AEkoouujsIe9BF10TkklEgUi1pfaiS+0o0lKTCeHzIVaYis+kY0mMvlziUh8q7Aby0DfLw==
+X-Received: by 10.28.38.196 with SMTP id m187mr6188446wmm.81.1469899585046;
+        Sat, 30 Jul 2016 10:26:25 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id d62sm8641970wmd.7.2016.07.30.10.25.52
+        by smtp.gmail.com with ESMTPSA id d62sm8641970wmd.7.2016.07.30.10.26.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 30 Jul 2016 10:25:53 -0700 (PDT)
+        Sat, 30 Jul 2016 10:26:24 -0700 (PDT)
 From:	Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
 To:	git@vger.kernel.org
@@ -60,119 +59,81 @@ Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v9 17/41] builtin/apply: make gitdiff_*() return -1 on error
-Date:	Sat, 30 Jul 2016 19:24:45 +0200
-Message-Id: <20160730172509.22939-18-chriscool@tuxfamily.org>
+Subject: [PATCH v9 33/41] environment: add set_index_file()
+Date:	Sat, 30 Jul 2016 19:25:01 +0200
+Message-Id: <20160730172509.22939-34-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.2.558.gf53e569
 In-Reply-To: <20160730172509.22939-1-chriscool@tuxfamily.org>
 References: <20160730172509.22939-1-chriscool@tuxfamily.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-To libify `git apply` functionality we have to signal errors to the
-caller instead of die()ing.
+Introduce set_index_file() to be able to temporarily change the index file.
 
-To do that in a compatible manner with the rest of the error handling
-in "builtin/apply.c", gitdiff_*() functions should return -1 instead
-of calling die().
+It should be used like this:
 
-A previous patch made it possible for gitdiff_*() functions to
-return -1 in case of error. Let's take advantage of that to
-make gitdiff_verify_name() return -1 on error, and to have
-gitdiff_oldname() and gitdiff_newname() directly return
-what gitdiff_verify_name() returns.
+    /* Save current index file */
+    old_index_file = get_index_file();
+    set_index_file((char *)tmp_index_file);
 
-Helped-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+    /* Do stuff that will use tmp_index_file as the index file */
+    ...
+
+    /* When finished reset the index file */
+    set_index_file(old_index_file);
+
+It is intended to be used by builtins commands, in fact `git am`, to
+temporarily change the index file used by libified code.
+
+This is useful when libified code uses the global index, but a builtin
+command wants another index file to be used instead.
+
+And yeah this is a short cut and this new function should not be used
+by other code.
+
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 40 +++++++++++++++++++++-------------------
- 1 file changed, 21 insertions(+), 19 deletions(-)
+ cache.h       |  1 +
+ environment.c | 12 ++++++++++++
+ 2 files changed, 13 insertions(+)
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 877610c..6a0818b 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -827,54 +827,56 @@ static int gitdiff_hdrend(struct apply_state *state,
- #define DIFF_OLD_NAME 0
- #define DIFF_NEW_NAME 1
+diff --git a/cache.h b/cache.h
+index b5f76a4..18b96fe 100644
+--- a/cache.h
++++ b/cache.h
+@@ -461,6 +461,7 @@ extern int is_inside_work_tree(void);
+ extern const char *get_git_dir(void);
+ extern const char *get_git_common_dir(void);
+ extern char *get_object_directory(void);
++extern void set_index_file(char *index_file);
+ extern char *get_index_file(void);
+ extern char *get_graft_file(void);
+ extern int set_git_dir(const char *path);
+diff --git a/environment.c b/environment.c
+index ca72464..eb23d01 100644
+--- a/environment.c
++++ b/environment.c
+@@ -292,6 +292,18 @@ int odb_pack_keep(char *name, size_t namesz, const unsigned char *sha1)
+ 	return open(name, O_RDWR|O_CREAT|O_EXCL, 0600);
+ }
  
--static void gitdiff_verify_name(struct apply_state *state,
--				const char *line,
--				int isnull,
--				char **name,
--				int side)
-+static int gitdiff_verify_name(struct apply_state *state,
-+			       const char *line,
-+			       int isnull,
-+			       char **name,
-+			       int side)
- {
- 	if (!*name && !isnull) {
- 		*name = find_name(state, line, NULL, state->p_value, TERM_TAB);
--		return;
-+		return 0;
- 	}
- 
- 	if (*name) {
- 		int len = strlen(*name);
- 		char *another;
- 		if (isnull)
--			die(_("git apply: bad git-diff - expected /dev/null, got %s on line %d"),
--			    *name, state->linenr);
-+			return error(_("git apply: bad git-diff - expected /dev/null, got %s on line %d"),
-+				     *name, state->linenr);
- 		another = find_name(state, line, NULL, state->p_value, TERM_TAB);
--		if (!another || memcmp(another, *name, len + 1))
--			die((side == DIFF_NEW_NAME) ?
-+		if (!another || memcmp(another, *name, len + 1)) {
-+			free(another);
-+			return error((side == DIFF_NEW_NAME) ?
- 			    _("git apply: bad git-diff - inconsistent new filename on line %d") :
- 			    _("git apply: bad git-diff - inconsistent old filename on line %d"), state->linenr);
-+		}
- 		free(another);
- 	} else {
- 		/* expect "/dev/null" */
- 		if (memcmp("/dev/null", line, 9) || line[9] != '\n')
--			die(_("git apply: bad git-diff - expected /dev/null on line %d"), state->linenr);
-+			return error(_("git apply: bad git-diff - expected /dev/null on line %d"), state->linenr);
- 	}
++/*
++ * Temporarily change the index file.
++ * Please save the current index file using get_index_file() before changing
++ * the index file. And when finished, reset it to the saved value.
++ * Yeah, the libification of 'apply' took a short-circuit by adding this
++ * technical debt; please do not call this function in new codepaths.
++ */
++void set_index_file(char *index_file)
++{
++	git_index_file = index_file;
++}
 +
-+	return 0;
- }
- 
- static int gitdiff_oldname(struct apply_state *state,
- 			   const char *line,
- 			   struct patch *patch)
+ char *get_index_file(void)
  {
--	gitdiff_verify_name(state, line,
--			    patch->is_new, &patch->old_name,
--			    DIFF_OLD_NAME);
--	return 0;
-+	return gitdiff_verify_name(state, line,
-+				   patch->is_new, &patch->old_name,
-+				   DIFF_OLD_NAME);
- }
- 
- static int gitdiff_newname(struct apply_state *state,
- 			   const char *line,
- 			   struct patch *patch)
- {
--	gitdiff_verify_name(state, line,
--			    patch->is_delete, &patch->new_name,
--			    DIFF_NEW_NAME);
--	return 0;
-+	return gitdiff_verify_name(state, line,
-+				   patch->is_delete, &patch->new_name,
-+				   DIFF_NEW_NAME);
- }
- 
- static int gitdiff_oldmode(struct apply_state *state,
+ 	if (!git_index_file)
 -- 
 2.9.2.558.gf53e569
 
