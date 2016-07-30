@@ -2,173 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB69A1F71B
-	for <e@80x24.org>; Sat, 30 Jul 2016 18:20:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F3951F71B
+	for <e@80x24.org>; Sat, 30 Jul 2016 18:25:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752859AbcG3SUX (ORCPT <rfc822;e@80x24.org>);
-	Sat, 30 Jul 2016 14:20:23 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:35655 "EHLO
-	mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752094AbcG3SUW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jul 2016 14:20:22 -0400
-Received: by mail-lf0-f66.google.com with SMTP id l89so6727371lfi.2
-        for <git@vger.kernel.org>; Sat, 30 Jul 2016 11:20:21 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=A6Cy6/3Sd3Bzg2jdJXnnuST0IkYMcOK1tQ7SnAgTCyU=;
-        b=s/KqrNuwi1jKOkkcpcIoCR2zwrWyX/XYyTJXmniHOfrvJA1+wCNhulTyh+Uihlw9W+
-         v6i6awWguo3uUF3rM9FgDrZQULarlAiHDuk/SnvkNCsyPjeNz6F/brZOeNImnigUa3gy
-         YpOG+4gST+OvUFDRVLtPL1rGoeV3XBZUqU/1qqY3O0wGi9VJzeeBorGMIRB8eSL98wwe
-         r0VUcGDh87bDDnEBOIfHIgF+tLrVs/9eIri9iQi8kPKtnr9WKtZaAVZiHzTfYj+8driF
-         tfGvo4cjIURnkZEXfV5mC/ZWT6RRmqOgutqTxsGXnLFJtQVg7tztI+QvlVcoxTdK0/4a
-         tiLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=A6Cy6/3Sd3Bzg2jdJXnnuST0IkYMcOK1tQ7SnAgTCyU=;
-        b=IjCxZ2F3j+Pq1AaQMTuZuxbLk0tphuusAD1bXAtfqW1KOreWI1srp08eMDxIfO7AjD
-         rJQL60jeQ7KFcqvRbGFuNx3gLRSoGjRa3FdvGZVpGXmaxI7fk9CjewkzNQg6eoqugnXf
-         WICPnXy70tv7ikd01tPcb5xu/9iiC10WbrQLThLeqY3ipPMWlAfJx/v5Zt7nZ4JlfA9z
-         5C12B5bcv8YWZJ+QyFyujC17GRpNSb/slcauNrGe5Knf4kc5+IdQktpKPbyp2rkB0IKj
-         A+9Yt5Uouo7Lk72xjxlGcdieEPmkGnH5+ava+rKJWn3ejogvRqszTQUqZi5b/5tUvrMW
-         NVbA==
-X-Gm-Message-State: AEkoout5o5USybP3/euWfz/xSMgZtec/qHVCqQcNYdRGFlZnACgF6iGVVKzjq433n6HOhw==
-X-Received: by 10.25.134.65 with SMTP id i62mr14026063lfd.128.1469902819996;
-        Sat, 30 Jul 2016 11:20:19 -0700 (PDT)
-Received: from duynguyen.does.not.exist (10.219.241.83.in-addr.dgcsystems.net. [83.241.219.10])
-        by smtp.gmail.com with ESMTPSA id h88sm3728362ljh.23.2016.07.30.11.20.18
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 30 Jul 2016 11:20:19 -0700 (PDT)
-From:	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To:	git@vger.kernel.org
-Cc:	Junio C Hamano <gitster@pobox.com>, e@80x24.org,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] t7063: work around FreeBSD's lazy mtime update feature
-Date:	Sat, 30 Jul 2016 20:20:05 +0200
-Message-Id: <20160730182005.14426-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.9.1.566.gbd532d4
-In-Reply-To: <20160718223038.GA66056@plume>
-References: <20160718223038.GA66056@plume>
+	id S1753388AbcG3SZT (ORCPT <rfc822;e@80x24.org>);
+	Sat, 30 Jul 2016 14:25:19 -0400
+Received: from mout.web.de ([217.72.192.78]:58641 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752094AbcG3SZR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jul 2016 14:25:17 -0400
+Received: from [192.168.178.36] ([79.237.49.94]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0MeSGJ-1beDX33Snf-00QDrT; Sat, 30 Jul 2016 20:18:34
+ +0200
+To:	Git List <git@vger.kernel.org>
+Cc:	Junio C Hamano <gitster@pobox.com>
+From:	=?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] pass constants as first argument to st_mult()
+Message-ID: <579CEF77.9070202@web.de>
+Date:	Sat, 30 Jul 2016 20:18:31 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:Fzh0pqIP2w+yxbPMoIEdKcFzs6U5n00RAVBfZ+K2xS6lGgEnCZ4
+ 7uTEOxzkrzIEswFB0cMgXRU2csKPer9iy92NxcODPATXxg5MZVG5AJvcjDdWO19o2LzZ385
+ 5bfzOadW3YjT400nKk2jkJluV8PR7tSluQAGzSk4Q6c3HuAOkvRrrBDOpWCoe5L/l0Aq/Yu
+ x34X62R2/Sqs38PivBKPg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:0ZfGTU7n7zM=:9Fazs/HLAj/DaxUC06CAgo
+ Eihm1XY90Fuo7odQjCkR1k9UDLYZnLe5TlLnoEm1g2WPmQnW1IJBIMG+Pe9koNlwr+T4GqxRl
+ xv/OuxkE3kjaVqqNCu2DG3GYk+hT6d5eCSdqCB4Gi250C2BbvjazjjPTw4+HeeD7EUlV+CoBg
+ B8IO24dg5fer/tscXIeXofDA7bqbUrK1ddk2iq2sN6mp38XjsmUDg5TCq+53DN98znPNI/e8Q
+ HWesPIiZooFJUFNUk3wCabVFDPJUOhBiX0UVB0TKHJtYoUMy4yFxvuDxXaLiCa0cHaxLteBs0
+ /PKQxoLcAKPUVBlNDvnoPx5Fas346CHm4NtZAClBeMllv7g52U5TkDUu+1/utMN9jmn5RfVTf
+ xi/E6idNk8r5xUuG5cjCGB1V2Y1FqYU5XHkkgM3hH1loWOeJfKZvrWREELo5yDkC8dGcqaS2j
+ 6HjLSNlnwemrg45H1FtVbUDib0UgfcgQwSUMJQqSAdkLJXBnVj4hegBMneA8oDDXN6ebWqwmj
+ 2iLyisNOz/cd5+z4RPjLNLRF4+H3YC4u2ov6tnda+RW0a2QQVemVgjx16I48D/ycQfUu9qvWS
+ bEtypVUhq/csrCnVuiPz81zFEIrPe9iUshRh/Jf7Z+BlDQpURbxtJBXtaO31FtRsji9IyIi+t
+ /dyhyWLbFKZYUk6hdp9MPvROu1vlZdaOiHzp0LxrvfdSBDUu4DPl3W1mnFe1Jbgz8OfpsU7Pe
+ 4vmoAOdKuEoX+1Qe8o2rRlNa9eXNQDdnLrTkKXBfGItwArX6GF5+Ce10l4C3dSLQ0nKO/hklc
+ 4OFGXuM
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Let's start with the commit message of [1] from freebsd.git [2]
+The result of st_mult() is the same no matter the order of its
+arguments.  It invokes the macro unsigned_mult_overflows(), which
+divides the second parameter by the first one.  Pass constants
+first to allow that division to be done already at compile time.
 
-    Sync timestamp changes for inodes of special files to disk as late
-    as possible (when the inode is reclaimed).  Temporarily only do
-    this if option UFS_LAZYMOD configured and softupdates aren't
-    enabled.  UFS_LAZYMOD is intentionally left out of
-    /sys/conf/options.
-
-    This is mainly to avoid almost useless disk i/o on battery powered
-    machines.  It's silly to write to disk (on the next sync or when
-    the inode becomes inactive) just because someone hit a key or
-    something wrote to the screen or /dev/null.
-
-    PR:             5577 [3]
-
-The short version of that, in the context of t7063, is that when a
-directory is updated, its mtime may be updated later, not
-immediately. This can be shown with a simple command sequence
-
-    date; sleep 1; touch abc; rm abc; sleep 10; ls -lTd .
-
-One would expect that the date shown in `ls` would be one second from
-`date`, but it's 10 seconds later. If we put another `ls -lTd .` in
-front of `sleep 10`, then the date of the last `ls` comes as
-expected. The first `ls` somehow forces mtime to be updated.
-
-t7063 is really sensitive to directory mtime. When mtime is too "new",
-git code suspects racy timestamps and will not trigger the shortcut in
-untracked cache, in t7063.26 (or t7063.25 before this patch) and
-eventually be detected in t7063.28
-
-We have two options thanks to this special FreeBSD feature:
-
-1) Stop supporting untracked cache on FreeBSD. Skip t7063 entirely
-   when running on FreeBSD
-
-2) Work around this problem (using the same 'ls' trick) and continue
-   to support untracked cache on FreeBSD
-
-I initially wanted to go with 1) because I didn't know the exact
-nature of this feature and feared that it would make untracked cache
-work unreliably, using the cached version when it should not.
-
-Since the behavior of this thing is clearer now. The picture is not
-that bad. If this indeed happens often, untracked cache would assume
-racy condition more often and _fall back_ to non-untracked cache code
-paths. Which means it may be less effective, but it will not show
-wrong things.
-
-This patch goes with option 2.
-
-PS. For those who want to look further in FreeBSD source code, this
-flag is now called IN_LAZYMOD. I can see it's effective in ext2 and
-ufs. zfs is questionable.
-
-[1] 660e6408e6df99a20dacb070c5e7f9739efdf96d
-[2] git://github.com/freebsd/freebsd.git
-[3] https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=5577
-
-Reported-by: Eric Wong <e@80x24.org>
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- This is only of those commits that commit messages are more important
- than the patch itself. One of the good notes about directory mtime,
- if we start to use it in more places in git.
+ diffcore-rename.c | 2 +-
+ refs.c            | 2 +-
+ shallow.c         | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
- t/t7063-status-untracked-cache.sh | 4 ++++
- t/test-lib.sh                     | 6 ++++++
- 2 files changed, 10 insertions(+)
-
-diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
-index a971884..08fc586 100755
---- a/t/t7063-status-untracked-cache.sh
-+++ b/t/t7063-status-untracked-cache.sh
-@@ -419,6 +419,10 @@ test_expect_success 'create/modify files, some of which are gitignored' '
- 	rm base
- '
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 58ac0a5..73d003a 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -541,7 +541,7 @@ void diffcore_rename(struct diff_options *options)
+ 				rename_dst_nr * rename_src_nr, 50, 1);
+ 	}
  
-+test_expect_success FREEBSD 'Work around lazy mtime update' '
-+	ls -ld . >/dev/null
-+'
-+
- test_expect_success 'test sparse status with untracked cache' '
- 	: >../trace &&
- 	avoid_racy &&
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 0055ebb..3c730a2 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -961,6 +961,12 @@ case $(uname -s) in
- 	test_set_prereq SED_STRIPS_CR
- 	test_set_prereq GREP_STRIPS_CR
- 	;;
-+*FreeBSD*)
-+	test_set_prereq FREEBSD
-+	test_set_prereq POSIXPERM
-+	test_set_prereq BSLASHPSPEC
-+	test_set_prereq EXECKEEPSPID
-+	;;
- *)
- 	test_set_prereq POSIXPERM
- 	test_set_prereq BSLASHPSPEC
+-	mx = xcalloc(st_mult(num_create, NUM_CANDIDATE_PER_DST), sizeof(*mx));
++	mx = xcalloc(st_mult(NUM_CANDIDATE_PER_DST, num_create), sizeof(*mx));
+ 	for (dst_cnt = i = 0; i < rename_dst_nr; i++) {
+ 		struct diff_filespec *two = rename_dst[i].two;
+ 		struct diff_score *m;
+diff --git a/refs.c b/refs.c
+index 814cad3..b4e7cac 100644
+--- a/refs.c
++++ b/refs.c
+@@ -922,7 +922,7 @@ char *shorten_unambiguous_ref(const char *refname, int strict)
+ 			/* -2 for strlen("%.*s") - strlen("%s"); +1 for NUL */
+ 			total_len += strlen(ref_rev_parse_rules[nr_rules]) - 2 + 1;
+ 
+-		scanf_fmts = xmalloc(st_add(st_mult(nr_rules, sizeof(char *)), total_len));
++		scanf_fmts = xmalloc(st_add(st_mult(sizeof(char *), nr_rules), total_len));
+ 
+ 		offset = 0;
+ 		for (i = 0; i < nr_rules; i++) {
+diff --git a/shallow.c b/shallow.c
+index 4d554ca..54e2db7 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -389,7 +389,7 @@ static void paint_down(struct paint_info *info, const unsigned char *sha1,
+ 	unsigned int i, nr;
+ 	struct commit_list *head = NULL;
+ 	int bitmap_nr = (info->nr_bits + 31) / 32;
+-	size_t bitmap_size = st_mult(bitmap_nr, sizeof(uint32_t));
++	size_t bitmap_size = st_mult(sizeof(uint32_t), bitmap_nr);
+ 	uint32_t *tmp = xmalloc(bitmap_size); /* to be freed before return */
+ 	uint32_t *bitmap = paint_alloc(info);
+ 	struct commit *c = lookup_commit_reference_gently(sha1, 1);
 -- 
-2.9.1.566.gbd532d4
+2.9.2
 
