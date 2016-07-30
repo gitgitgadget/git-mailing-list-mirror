@@ -2,128 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE3DC1F71B
-	for <e@80x24.org>; Sat, 30 Jul 2016 12:29:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66BD41F71B
+	for <e@80x24.org>; Sat, 30 Jul 2016 13:31:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751973AbcG3M3i (ORCPT <rfc822;e@80x24.org>);
-	Sat, 30 Jul 2016 08:29:38 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34190 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751064AbcG3M3h (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jul 2016 08:29:37 -0400
-Received: by mail-wm0-f68.google.com with SMTP id q128so19295897wma.1
-        for <git@vger.kernel.org>; Sat, 30 Jul 2016 05:29:36 -0700 (PDT)
+	id S1752545AbcG3NbL (ORCPT <rfc822;e@80x24.org>);
+	Sat, 30 Jul 2016 09:31:11 -0400
+Received: from mail-lf0-f47.google.com ([209.85.215.47]:34855 "EHLO
+	mail-lf0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751064AbcG3NbI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jul 2016 09:31:08 -0400
+Received: by mail-lf0-f47.google.com with SMTP id f93so88283414lfi.2
+        for <git@vger.kernel.org>; Sat, 30 Jul 2016 06:31:07 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=N0vXtFdp403nHIxDuwuG96D2vTdGPIE0kH1brQmNJS8=;
-        b=G8/wHoTbk97NpSn9NZAdbUfC5vZzdtEooWJPyZhDBeRrK7FitjxRMZg4keYS0H2sRe
-         Xjdw5jk3TRDt7nbqbaHvhizPkhT4uMmtYWZSYcDJTogxKgetuaJyiimHtJ2kvyEipKpd
-         viknXBdiIJLgt4F5HLKCmGxhdDSdLO5GmgUGQFGxlYnZRNWJj+kSZdZc5ENYEiWxszkD
-         9rZAismn7t7jBICtttVjKeJghxKgf27HPeSxfYMkEQT1c0BtgnwxcatGSuHC6cmUITW2
-         Xrek7zW7GpkOMvQ9mdqpgrvfzFWPY+xheL0hyAAZcsZSVUEO7v8+/1NuqMHZUKLd9Uph
-         6WwQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=HbxMaDQQS1r0nxmF2Zzu0Pfw1uOMdxQF6cmMgrkI3A0=;
+        b=jmHlOBGTztr5rwnEO5aP5UeDe0Svixq9/9LmQGgy6WW2/4JpcdEjPohKezS/Fv7O5W
+         hJuXuyx5LfUYI4CwaUIk4I7ft5ragiOfw1Lz7HbbFI3AxymRTAJPquy3+co/KpMBGVmx
+         WQySCy6ONz6FGpBTLGVIgiRCRoULbDIGjgnxOEUl7VuULqVTr4Ivat4PFKM6nH6pmdHC
+         Glgj7lxfLjYONn2Im8wDG3uGxJkiSY7v0G9N3so5nkZ8qG9fk08iogvT30k1GWS6zGeK
+         rKckxBTfgqRCySCDfR5D7gQBknI8wiXYyuCC7mOfbmbBskapW/cyS0/cgYdBBqbjmBgY
+         17SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding;
-        bh=N0vXtFdp403nHIxDuwuG96D2vTdGPIE0kH1brQmNJS8=;
-        b=LtG9K/S44QCVOGhJfKnge57MITR4ZUn7//eMu/fkZZdueXt7fCW3NLou9SrV9ENalQ
-         rKs+YyMkNL3rF27vV5kqVnCvnrgL04MrrNLSNfQDw2fRUeiZD/qdD1aF9hsyraJAs58j
-         spmhbHY5enbou4HrwrxHoHShWAsjbvOvn41/wGVjRLRGg2+ET2fo0+f4FBkqpxvj9DTs
-         ZgPI7wpDfpDq0S+FW6MK8MpPFHrbhf0JmHBaGuRbEjSSbi5r9mLRRPeYVau6+bzHsfL4
-         +aSGEmkm2ahLZBfPTiKM08oq8PAJ44spd9pTep3VOgaoM3p5WjZVftHy6JhXPJwrCQdZ
-         tdXA==
-X-Gm-Message-State: AEkoouvNBEzDretu8vxYdNAClh2i61M1fK8j3/j/jEnZ8sgF9peLFc2mX5Nd5tUtjdTrpQ==
-X-Received: by 10.194.171.131 with SMTP id au3mr43597858wjc.125.1469881775343;
-        Sat, 30 Jul 2016 05:29:35 -0700 (PDT)
-Received: from [192.168.1.26] (dax57.neoplus.adsl.tpnet.pl. [83.23.23.57])
-        by smtp.googlemail.com with ESMTPSA id e10sm21092169wjc.21.2016.07.30.05.29.33
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=HbxMaDQQS1r0nxmF2Zzu0Pfw1uOMdxQF6cmMgrkI3A0=;
+        b=jXU/gaNksos/OXJsmfA9oOvuQdSlI6YerZ/uQT+IjDV9ItL8+rm1ltTay6pqirGj9U
+         Pc1o0247YQ4aVMhaL1HwxMa0yJI0TIbVNM7GYdGkD4hQmWamCJaZ5wQCZ1jKBSELAp/7
+         1YUl4gsCVC4AVp6OftNcE5ky3qC0lw17AFnLqqA4j+lJJoR9e3idQPBxnxA0AIxJqb1N
+         Db9A/z2Q0Z+ho8JrB9Z5bZYlN2QSmfzd4IanRvApAWE0GzdaxlZib57bn1J+sm/5jayq
+         dPlGbyWwQKqc8HWMuB/RDPe2bFn3ofBEilKXHDEmfvyJXRB2F5xaN05YSPc71q3vUyuF
+         5mig==
+X-Gm-Message-State: AEkoouvJQTXZ8+z4wbK1BLlzY2G0Tbk6aI1m05Fjm+FkrKm/UDsHKLdvDphsr4UU+4ZgDQ==
+X-Received: by 10.46.71.69 with SMTP id u66mr15590056lja.14.1469885466273;
+        Sat, 30 Jul 2016 06:31:06 -0700 (PDT)
+Received: from duynguyen (10.219.241.83.in-addr.dgcsystems.net. [83.241.219.10])
+        by smtp.gmail.com with ESMTPSA id r196sm3553091lfd.41.2016.07.30.06.31.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 30 Jul 2016 05:29:34 -0700 (PDT)
-Subject: Re: [PATCH v3 04/10] pkt-line: call packet_trace() only if a packet
- is actually send
-To:	larsxschneider@gmail.com, git@vger.kernel.org
-References: <20160727000605.49982-1-larsxschneider%40gmail.com/>
- <20160729233801.82844-1-larsxschneider@gmail.com>
- <20160729233801.82844-5-larsxschneider@gmail.com>
-Cc:	gitster@pobox.com, tboegi@web.de, mlbright@gmail.com, e@80x24.org,
-	peff@peff.net
-Newsgroups: gmane.comp.version-control.git
-From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <786f0b8e-29f0-3dd3-7bb4-5f6558f8ec84@gmail.com>
-Date:	Sat, 30 Jul 2016 14:29:17 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        Sat, 30 Jul 2016 06:31:05 -0700 (PDT)
+Date:	Sat, 30 Jul 2016 15:31:03 +0200
+From:	Duy Nguyen <pclouds@gmail.com>
+To:	Eric Wong <e@80x24.org>
+Cc:	Git Mailing List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
+	Stefan Beller <sbeller@google.com>,
+	David Turner <novalis@novalis.org>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: t7063 failure on FreeBSD 10.3 i386/amd64
+Message-ID: <20160730133102.GA4871@duynguyen>
+References: <20160718223038.GA66056@plume>
+ <20160718225424.GA813@plume>
+ <CACsJy8CRHsyT8YLPYoHZnxCuMvF1W=S5iayy2eoHZhbSe_qmDg@mail.gmail.com>
+ <CACsJy8D9Cy1bjzXddCTOOT7X3smBBB3xccEg7CHaOKAZruHVag@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20160729233801.82844-5-larsxschneider@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACsJy8D9Cy1bjzXddCTOOT7X3smBBB3xccEg7CHaOKAZruHVag@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-W dniu 30.07.2016 o 01:37, larsxschneider@gmail.com pisze:
-> From: Lars Schneider <larsxschneider@gmail.com>
+On Wed, Jul 27, 2016 at 07:33:17PM +0200, Duy Nguyen wrote:
+> On Tue, Jul 19, 2016 at 6:12 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> > On Tue, Jul 19, 2016 at 12:54 AM, Eric Wong <e@80x24.org> wrote:
+> >> Oops, forgot to Cc some folks who worked on this :x
+> >>
+> >> Filesystem is ufs and it fails regardless of whether
+> >> soft-updates is enabled or not.
+> >
+> > Nothing stands out to my eyes, so I'm going to install freebsd this
+> > weekend. I hope ufs does not have any nasty surprise for me. Stay
+> > tuned.
 > 
-> The packet_trace() call is not ideal in format_packet() as we would print
+> The good news is it looks like a false alarm due to a racy test (and
+> it happens on ext2 too, zfs not tested), no big flaw or anything
+> (phew!). The bad news is, I still have no idea what's happening and
+> why is_racy_stat() returns true in this particular case. It'll take
+> some more time...
 
-Style; I think the following is more readable:
+I give up. FreeBSD behaves so weird in this case.
 
-  The packet_trace() call in format_packet() is not ideal, as we would...
+The code of interest is this
 
-> a trace when a packet is formatted and (potentially) when the packet is
-> actually send. This was no problem up until now because format_packet()
-> was only used by one function. Fix it by moving the trace call into the
-> function that actally sends the packet.
+    test_expect_success 'test sparse status with untracked cache' '
+    	: >../trace &&
+    	avoid_racy &&
+    	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
+    	git status --porcelain >../status.actual &&
+    	...
+    '
 
-s/actally/actually/
+For some reason mtime of current directory is always latest time when
+git makes the stat call. Even if I make avoid_racy sleep longer,
+several seconds, mtime of "." will be the latest time.
 
-I don't buy this explanation.  If you want to trace packets, you might
-do it on input (when formatting packet), or on output (when writing
-packet).  It's when there are more than one formatting function, but
-one writing function, then placing trace call in write function means
-less code duplication; and of course the reverse.
+But cwd stat info is _not_ supposed to change! We haven't touched it
+while avoid_racy is running. avoid_racy is just a wrapper of
+sleep. And sleep does not change cwd's mtime from the shell prompt. I
+tried running the script with bash too (suspecting problem with
+default shell) and replaced avoid_racy with /bin/sleep. Nothing.
 
-Another issue is that something may happen between formatting packet
-and sending it, and we probably want to packet_trace() when packet
-is actually send.
+Does our test framework run something in background??? No, it
+can't be.
 
-Neither of those is visible in commit message.
+If a stat call is made before avoid_racy, then mtime is pinned down
+and does not change anymore. So a "fix" is something like this. I
+tried a minimal program that just does "stat" to make sure it's stat
+that does it, not some side effect from 'ls'.
 
-> 
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
->  pkt-line.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/pkt-line.c b/pkt-line.c
-> index 1728690..32c0a34 100644
-> --- a/pkt-line.c
-> +++ b/pkt-line.c
-> @@ -126,7 +126,6 @@ static void format_packet(struct strbuf *out, const char *fmt, va_list args)
->  		die("protocol error: impossibly long line");
->  
->  	set_packet_header(&out->buf[orig_len], n);
-> -	packet_trace(out->buf + orig_len + 4, n - 4, 1);
->  }
->  
->  void packet_write(int fd, const char *fmt, ...)
-> @@ -138,6 +137,7 @@ void packet_write(int fd, const char *fmt, ...)
->  	va_start(args, fmt);
->  	format_packet(&buf, fmt, args);
->  	va_end(args);
-> +	packet_trace(buf.buf + 4, buf.len - 4, 1);
->  	write_or_die(fd, buf.buf, buf.len);
->  }
->  
-> 
+diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+index 38b3890..fd199a0 100755
+--- a/t/t7063-status-untracked-cache.sh
++++ b/t/t7063-status-untracked-cache.sh
+@@ -421,6 +421,7 @@ test_expect_success 'create/modify files, some of which are gitignored' '
+ 
+ test_expect_success 'test sparse status with untracked cache' '
+        : >../trace &&
++       ls -d . &&
+        avoid_racy &&
+        GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
+        git status --porcelain >../status.actual &&
 
+--
+Duy
