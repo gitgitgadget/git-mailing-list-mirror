@@ -7,45 +7,46 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E9BA1F71B
-	for <e@80x24.org>; Sat, 30 Jul 2016 17:37:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 208C01F71B
+	for <e@80x24.org>; Sat, 30 Jul 2016 17:37:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753547AbcG3Rhd (ORCPT <rfc822;e@80x24.org>);
-	Sat, 30 Jul 2016 13:37:33 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35467 "EHLO
+	id S1753611AbcG3Rhq (ORCPT <rfc822;e@80x24.org>);
+	Sat, 30 Jul 2016 13:37:46 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:35903 "EHLO
 	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753010AbcG3Rhb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jul 2016 13:37:31 -0400
-Received: by mail-wm0-f67.google.com with SMTP id i5so20069099wmg.2
-        for <git@vger.kernel.org>; Sat, 30 Jul 2016 10:37:31 -0700 (PDT)
+	with ESMTP id S1753115AbcG3Rho (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jul 2016 13:37:44 -0400
+Received: by mail-wm0-f67.google.com with SMTP id x83so20046721wma.3
+        for <git@vger.kernel.org>; Sat, 30 Jul 2016 10:37:43 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=umxQZICc9CA0PuxsAGxDHbAkXxYu/2iTFt/jNBV1YbU=;
-        b=xUEY3QFjGR1cYCUzZo5Jfiv4DMcWVr0lhmG8hT5/eeOdeWRJrDSt6Sw57yUdXR6Lbz
-         ILJGWsff5XBq9HDHvkKGJzGY+H8vuHFXmzA0c1mxL6v+Ms/w5YgXBQGjflHWjo+ntQnj
-         Wi4pr3kg40uAyUHX+bVZ4hm8GQdzzeTXTPyNGP9QJn1R7uL4oiLJkhc1kmy4x2Juqa7p
-         SzRPTUHAZF+jZxRwfaP2Bl0+moPWjqA07NkfcPEniozZ8MDY10tyykzUOY5XonvXMy2I
-         psqq5iIndMeYJ3hqXd43WCyvA0W9Mn4+WZnrE3r+Lj+SPRlLnHd5Kdymev4fsmnh3JPW
-         OQsQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=pebzxHBUsOskW1kQJTGrZIup0XnqyMn4DM3DXYj5CqM=;
+        b=Va3PNCunLq45ly5K6o/ouH1u+DqOupXaScEG5q45SADme7QvbhfhXIqYsqz8vY4lKK
+         KXqJaQZV3+MT3gpQpiwP+IvIg/f4reapJJm5wvhowGAI1GDakoZSYEiDMyD/mSp79PLF
+         wsNtf2+S5SwEDancuBhOA8iw8fy1wcbotR3caSym7xAhuF9rq/hosvF61z4i7YrGh4c2
+         nDBc2waGezQzQv3vmwtjaa/8LZwtqQQcn2sTI2Sxi2+qJu2F0vwBSlAin0Dj9wN7/+Ar
+         b8FxGboKIejK/ZMXakKaqEGO6i0qMwYkFAByiSZWDk6TFB/b+5M/MQQoz5ugyAZYKA0w
+         Aqaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=umxQZICc9CA0PuxsAGxDHbAkXxYu/2iTFt/jNBV1YbU=;
-        b=Cs9b2nAMjdsdq0RbAPbr0vJl1v8b9nH1pIe7mp2fRDgfSP0f7lbgzfWY54YS33RJyy
-         sRpz9LAReglMhFHFDL0fT0gjy7TikB+1Kz4Ef3L+QZkb07rZcZYjfBbcZw/dskasySct
-         yXoXrO74b1aFqvlfNUjH/ojXxzD/mImoehBF++FES1n2GveXIDuIr5/VHeRc+EyKSW3/
-         aFwc/OQGoDJthqPu6dHKlpaKJGoGVEHgOCw8GUaJG3w6/wGI/sx+wZXa2PMe4YvBwpcs
-         iBLXszmchjGYgQ04pX3FJqY0OdsllUbiERLE5TR5f8lK5gC7LxEtj9ch8MCZDC9QufFN
-         gomA==
-X-Gm-Message-State: AEkooutM6wElpQ38NQyiXq3xqKR9WsE0KUM/dl1Q8MBDVfQvmv4YXvk/i1eMcyjIpoQaig==
-X-Received: by 10.28.145.5 with SMTP id t5mr6579534wmd.10.1469899550628;
-        Sat, 30 Jul 2016 10:25:50 -0700 (PDT)
+         :references:mime-version:content-transfer-encoding;
+        bh=pebzxHBUsOskW1kQJTGrZIup0XnqyMn4DM3DXYj5CqM=;
+        b=DgycWBfH2HI6rOrthSUyvA766BdktnLY/FNJcWBzsHVVN36UCRcseKp+BQJpDIN6R2
+         7EI0he04oTJ28exVAZVt2nldbskN/XkI7ZJFvrzT50CPceXI6oGjNwpUnDSUZdzhX0Q0
+         Ts/6qTbb4567o4Fb6XCw4zAl9eEDpY4rmjx6yOJpweCzggzjC8X7723KcqUZJBB1XYN7
+         OhcQQ/GC2lVP83d2P67eu0jZfPMwiwci/2AEaDztebyvcgYFy7XZg8K3bjDfbKuzkp8/
+         7nFgEpyFaSfLFcznEX3HjECqLLju3mFWwU7G4BJe8LaBuhTieVb1PbYXrKjtn/QnqYX0
+         9LWg==
+X-Gm-Message-State: AEkoouswCw7tUKFLZwLsBayzxDmmrPGIC7W8YTHCb0QpO2Y4G40HNBPoDBXyy6fV0lHLgA==
+X-Received: by 10.28.221.8 with SMTP id u8mr48024315wmg.61.1469899548116;
+        Sat, 30 Jul 2016 10:25:48 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id d62sm8641970wmd.7.2016.07.30.10.25.49
+        by smtp.gmail.com with ESMTPSA id d62sm8641970wmd.7.2016.07.30.10.25.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 30 Jul 2016 10:25:49 -0700 (PDT)
+        Sat, 30 Jul 2016 10:25:47 -0700 (PDT)
 From:	Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
 To:	git@vger.kernel.org
@@ -59,69 +60,117 @@ Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v9 15/41] builtin/apply: make parse_traditional_patch() return -1 on error
-Date:	Sat, 30 Jul 2016 19:24:43 +0200
-Message-Id: <20160730172509.22939-16-chriscool@tuxfamily.org>
+Subject: [PATCH v9 14/41] builtin/apply: make apply_all_patches() return 128 or 1 on error
+Date:	Sat, 30 Jul 2016 19:24:42 +0200
+Message-Id: <20160730172509.22939-15-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.2.558.gf53e569
 In-Reply-To: <20160730172509.22939-1-chriscool@tuxfamily.org>
 References: <20160730172509.22939-1-chriscool@tuxfamily.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-To libify `git apply` functionality we have to signal errors to the
-caller instead of die()ing.
+To finish libifying the apply functionality, apply_all_patches() should not
+die() or exit() in case of error, but return either 128 or 1, so that it
+gives the same exit code as when die() or exit(1) is called. This way
+scripts relying on the exit code don't need to be changed.
 
-To do that in a compatible manner with the rest of the error handling
-in "builtin/apply.c", parse_traditional_patch() should return -1
-instead of calling die().
+While doing that we must take care that file descriptors are properly closed
+and, if needed, reset to a sensible value.
 
+Also, according to the lockfile API, when finished with a lockfile, one
+should either commit it or roll it back.
+
+This is even more important now that the same lockfile can be passed
+to init_apply_state() many times to be reused by series of calls to
+the apply lib functions.
+
+Helped-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ builtin/apply.c | 37 ++++++++++++++++++++++++++-----------
+ 1 file changed, 26 insertions(+), 11 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 84dcf41..0148c2e 100644
+index 8f5e2fa..84dcf41 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -755,10 +755,10 @@ static int has_epoch_timestamp(const char *nameline)
-  * files, we can happily check the index for a match, but for creating a
-  * new file we should try to match whatever "patch" does. I have no idea.
-  */
--static void parse_traditional_patch(struct apply_state *state,
--				    const char *first,
--				    const char *second,
--				    struct patch *patch)
-+static int parse_traditional_patch(struct apply_state *state,
-+				   const char *first,
-+				   const char *second,
-+				   struct patch *patch)
- {
- 	char *name;
+@@ -4578,15 +4578,18 @@ static int apply_all_patches(struct apply_state *state,
+ 					      arg);
  
-@@ -803,7 +803,9 @@ static void parse_traditional_patch(struct apply_state *state,
- 		}
+ 		fd = open(arg, O_RDONLY);
+-		if (fd < 0)
+-			die_errno(_("can't open patch '%s'"), arg);
++		if (fd < 0) {
++			error(_("can't open patch '%s': %s"), arg, strerror(errno));
++			res = -128;
++			goto end;
++		}
+ 		read_stdin = 0;
+ 		set_default_whitespace_mode(state);
+ 		res = apply_patch(state, fd, arg, options);
++		close(fd);
+ 		if (res < 0)
+ 			goto end;
+ 		errs |= res;
+-		close(fd);
  	}
- 	if (!name)
--		die(_("unable to find filename in patch at line %d"), state->linenr);
-+		return error(_("unable to find filename in patch at line %d"), state->linenr);
+ 	set_default_whitespace_mode(state);
+ 	if (read_stdin) {
+@@ -4606,11 +4609,14 @@ static int apply_all_patches(struct apply_state *state,
+ 				   squelched),
+ 				squelched);
+ 		}
+-		if (state->ws_error_action == die_on_ws_error)
+-			die(Q_("%d line adds whitespace errors.",
+-			       "%d lines add whitespace errors.",
+-			       state->whitespace_error),
+-			    state->whitespace_error);
++		if (state->ws_error_action == die_on_ws_error) {
++			error(Q_("%d line adds whitespace errors.",
++				 "%d lines add whitespace errors.",
++				 state->whitespace_error),
++			      state->whitespace_error);
++			res = -128;
++			goto end;
++		}
+ 		if (state->applied_after_fixing_ws && state->apply)
+ 			warning("%d line%s applied after"
+ 				" fixing whitespace errors.",
+@@ -4624,15 +4630,24 @@ static int apply_all_patches(struct apply_state *state,
+ 	}
+ 
+ 	if (state->update_index) {
+-		if (write_locked_index(&the_index, state->lock_file, COMMIT_LOCK))
+-			die(_("Unable to write new index file"));
++		res = write_locked_index(&the_index, state->lock_file, COMMIT_LOCK);
++		if (res) {
++			error(_("Unable to write new index file"));
++			res = -128;
++			goto end;
++		}
+ 		state->newfd = -1;
+ 	}
+ 
+ 	return !!errs;
+ 
+ end:
+-	exit(res == -1 ? 1 : 128);
++	if (state->newfd >= 0) {
++		rollback_lock_file(state->lock_file);
++		state->newfd = -1;
++	}
 +
-+	return 0;
++	return (res == -1 ? 1 : 128);
  }
  
- static int gitdiff_hdrend(struct apply_state *state,
-@@ -1467,7 +1469,8 @@ static int find_header(struct apply_state *state,
- 			continue;
- 
- 		/* Ok, we'll consider it a patch */
--		parse_traditional_patch(state, line, line+len, patch);
-+		if (parse_traditional_patch(state, line, line+len, patch))
-+			return -128;
- 		*hdrsize = len + nextlen;
- 		state->linenr += 2;
- 		return offset;
+ int cmd_apply(int argc, const char **argv, const char *prefix)
 -- 
 2.9.2.558.gf53e569
 
