@@ -2,216 +2,329 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 204041F71B
-	for <e@80x24.org>; Sat, 30 Jul 2016 17:23:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8854B1F71B
+	for <e@80x24.org>; Sat, 30 Jul 2016 17:25:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752545AbcG3RXR (ORCPT <rfc822;e@80x24.org>);
-	Sat, 30 Jul 2016 13:23:17 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35595 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752094AbcG3RXQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jul 2016 13:23:16 -0400
-Received: by mail-wm0-f67.google.com with SMTP id i5so20033886wmg.2
-        for <git@vger.kernel.org>; Sat, 30 Jul 2016 10:23:15 -0700 (PDT)
+	id S1752985AbcG3RZY (ORCPT <rfc822;e@80x24.org>);
+	Sat, 30 Jul 2016 13:25:24 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:34048 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752094AbcG3RZW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jul 2016 13:25:22 -0400
+Received: by mail-wm0-f65.google.com with SMTP id q128so20050831wma.1
+        for <git@vger.kernel.org>; Sat, 30 Jul 2016 10:25:21 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=nQVYBkxukmKcsQDO7qdW84Pf4CwuyYsIgt+0URYYpgM=;
-        b=jrJUcI98Wtf43ypg33Gq7wxqSPl1LgVqYOVhrRdHhJO8cHKFUzJANils08TwftTCN4
-         ZKOsYFsQCCEIAtSno8w4/Wt3hIkOqKdseAFxTLDxZmTlAGXdjfqTrh1FNJkHGwtHM8wY
-         wquRRSkCzyoII8loLeOF6ahXeoQv93FRdtzqm9YyhJr8gT/c+ZLRfA35d8LiKzUZbaxg
-         M1tTNeUDTFDa2gu5B0LAo69gIl11hr3KH0R4nqFdWx0fd7K0UWlyf+yOd63HcZisNe1O
-         9D/DbltQ9LGvnwm71c7oCRBAYPiXboLN0QGfrTXZCwu9RWX1yNIe455INE+M3zsODJVH
-         qA2Q==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=r2mtB5E9YlP9Z3UaQ1e2JKTDexGb5Jh5iLHqkV78AQY=;
+        b=YjjDkgNpQ/0RrlByXoY3pV/4lHQtgEOIhPd7WyEx8hmaBMoW082m8w7l7BKNKCg12S
+         7ocOI/r6ggOP0Falfl4Y9q4JqJKEQ4i03kn2OiJ+hgfFjLg4084YedN82HIzdvyoMmr2
+         55rb3uG+Tdc/cgKU//2XGSzK9mKTTzlJdF5tZfhc6/SarqB7gvXhWaKwwaNmUsuinOoz
+         f26EYU6DPmAxVCqC1aPieW1mciS0lArMXNdvcqVSkoOZbL2SAnozBx1fcTGQdHgAzI7T
+         gqmQtKjCD5ma5wmfdU1UWIz66TqRbujcsc1Md+3dPrSdlL4Pn4A4qOkgKolhkjIFf2ZQ
+         AYZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=nQVYBkxukmKcsQDO7qdW84Pf4CwuyYsIgt+0URYYpgM=;
-        b=Fpt9D2R9vbBpKnHARzjOUB8S9czN7EcV066pFKu+ej3aUz0lqxzIRW25jhaVXEgkVY
-         YXO2Mih7tczL7TP6n/AbudF5f8bmEmiyEn61gyYTgi3oHZKXbinY/UXtImzsf9X+2dzr
-         nZvDH+4NunfmBdR3HbdtDgpu3dTw1wfzITIMLNPEtyQJLJ32qHJ1uUF9we7uenHCvXor
-         RnwHp18IBGdTVd6QsOCR5lXId4kTKnG1PSuQ1H6fR8tvzw171pMSAU5UsuPQhQENv+iB
-         94Vwf1Xw/z19OgS7RdPN6DhHkaOT3fGJ5zLlSGNUVT5teXqYrcx1T20tcpTB0Q69Z+Pk
-         8kQg==
-X-Gm-Message-State: AEkoouvneOcKKa6zN/zZPrHB+dfK9dyBstaqoiNagd1cFs5aoa4psEvWwZZjCGJxf+aHZg==
-X-Received: by 10.28.25.135 with SMTP id 129mr6080782wmz.59.1469899394375;
-        Sat, 30 Jul 2016 10:23:14 -0700 (PDT)
-Received: from [192.168.1.26] (dax57.neoplus.adsl.tpnet.pl. [83.23.23.57])
-        by smtp.googlemail.com with ESMTPSA id za2sm22069594wjb.34.2016.07.30.10.23.12
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 30 Jul 2016 10:23:13 -0700 (PDT)
-Subject: Re: [PATCH v3 7/8] status: update git-status.txt for --porcelain=v2
-To:	Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org
-References: <1469567483-58794-1-git-send-email-git@jeffhostetler.com>
- <1469567483-58794-8-git-send-email-git@jeffhostetler.com>
-Cc:	gitster@pobox.com, Johannes.Schindelin@gmx.de,
-	Jeff Hostetler <jeffhost@microsoft.com>
-Newsgroups: gmane.comp.version-control.git
-From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <fe5d1dd7-11da-e09b-5880-cf103e34fb9a@gmail.com>
-Date:	Sat, 30 Jul 2016 19:22:54 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        bh=r2mtB5E9YlP9Z3UaQ1e2JKTDexGb5Jh5iLHqkV78AQY=;
+        b=QuglZyOXFEdxukcN5RXlITJSEj+ndC1ZH0A9/yVxiazSgEK6YoDxbZ5d/uiX+94vhM
+         hqctOVGj840ZnDDew53gjssH4L4x9jUyiYRzWOzitxtLNg2EiI4K2O6xdWXcZWes8ah7
+         aUh/aJu4lPT3fHMynBWpK558QlEAUEnEwau6SNFmZFAnh+8uf43dkYh+W/K6hwmHnQAk
+         sQMi+ZRaIoGtD1GXBfQ+ULumhVUP/NaCyWi2Xkd/oU/nIq4KQ/r2wLlAQY7kbTroPTzX
+         Jbx2aXLkKLf37b5cwVbZhmmLZKKFZ58QLCSP+dBcNlhCnk39yVZE4yVlqTVXZDQZW7Jh
+         ZP2g==
+X-Gm-Message-State: AEkoouuwNL4W0tLl8NNjmXk8qfpJQG0JKaMZT7uYTScsXk4Jr1FjTJAPe4MxWd6Q2xEADw==
+X-Received: by 10.28.71.197 with SMTP id m66mr50874784wmi.26.1469899520542;
+        Sat, 30 Jul 2016 10:25:20 -0700 (PDT)
+Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
+        by smtp.gmail.com with ESMTPSA id d62sm8641970wmd.7.2016.07.30.10.25.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 30 Jul 2016 10:25:19 -0700 (PDT)
+From:	Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
+To:	git@vger.kernel.org
+Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v9 00/41] libify apply and use lib in am, part 2
+Date:	Sat, 30 Jul 2016 19:24:28 +0200
+Message-Id: <20160730172509.22939-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.9.2.558.gf53e569
 MIME-Version: 1.0
-In-Reply-To: <1469567483-58794-8-git-send-email-git@jeffhostetler.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-W dniu 26.07.2016 o 23:11, Jeff Hostetler pisze:
+Goal
+~~~~
 
-> +Porcelain Format Version 2
-> +~~~~~~~~~~~~~~~~~~~~~~~~~~
-> +
-> +Version 2 format adds more detailed information about the state of
-> +the worktree and changed items.
-> +
-> +If `--branch` is given, a series of header lines are printed with
-> +information about the current branch.
-> +
-> +    Line                                 Notes
-> +    --------------------------------------------------------
-> +    # branch.oid <commit> | (initial)    Current commit
-> +    # branch.head <branch> | (detached)  Current branch
-> +    # branch.upstream <upstream_branch>  If set
-> +    # branch.ab +<ahead> -<behind>       If set and present
+This is a patch series about libifying `git apply` functionality, and
+using this libified functionality in `git am`, so that no 'git apply'
+process is spawn anymore. This makes `git am` significantly faster, so
+`git rebase`, when it uses the am backend, is also significantly
+faster.
 
-"If set and present" means "If upstream set and present", isn't it?
-Well, it is a shortcut, and I think easy to understand.
+Previous discussions and patches series
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-> +    --------------------------------------------------------
+This has initially been discussed in the following thread:
 
-This is a nice change, available because of lack of backward
-compatibility with v1.  The porcelain v2 format branch-related
-information could be enhanced without risk of breaking parsers,
-or having new information put at the end even if it does not fit
-there (like in previous iteration).
+  http://thread.gmane.org/gmane.comp.version-control.git/287236/
 
-One thing that can serve as goal for the series is using the
-question: would it make __git_ps1() from git-prompt.sh be able
-to render fully decorated prompt with all bells and whistles,
-and with all combinations of options.  Thus beside upstream
-in the future we might want SVN upstream, and/or pushed-to
-remote branch (and remote push upstream repository), etc.
+Then the following patch series were sent:
 
-But that's for the future (and it is possible for the future)...
+RFC: http://thread.gmane.org/gmane.comp.version-control.git/288489/
+v1: http://thread.gmane.org/gmane.comp.version-control.git/292324/
+v2: http://thread.gmane.org/gmane.comp.version-control.git/294248/
+v3: http://thread.gmane.org/gmane.comp.version-control.git/295429/
+v4: http://thread.gmane.org/gmane.comp.version-control.git/296350/
+v5: http://thread.gmane.org/gmane.comp.version-control.git/296490/
+v6: http://thread.gmane.org/gmane.comp.version-control.git/297024/
+v7: http://thread.gmane.org/gmane.comp.version-control.git/297193/
+v8: https://public-inbox.org/git/20160627182429.31550-1-chriscool%40tuxfamily.org/
 
-> +
-> +A series of lines are then displayed for the tracked entries.
-> +Ordinary changed entries have the following format:
-> +
-> +    1 <XY> <sub> <mH> <mI> <mW> <hH> <hI> <path>
-> +
-> +Renamed or copied entries have the following format:
-> +
-> +    2 <XY> <sub> <mH> <mI> <mW> <hH> <hI> <X><nr> <path>\t<pathSrc>
+Highlevel view of the patches in the series
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Nice solution to avoid those all zeros / null-SHA1s
+This is "part 2" of the full patch series. This is built on top of the
+"part 1" and as the "part 1" is now in "master", this "part 2" is
+built on top of "master".
 
-> +
-> +    Field       Meaning
-> +    --------------------------------------------------------
-> +    <XY>        A 2 character field containing the staged and
-> +                unstaged XY values described in the short format,
-> +                with unchanged indicated by a "." rather than
-> +                a space.
-> +    <sub>       A 4 character field describing the submodule state.
-> +                "N..." when the entry is not a submodule.
-> +                "S<c><m><u>" when the entry is a submodule.
-> +                <c> is "C" if the commit changed; otherwise ".".
-> +                <m> is "M" if it has tracked changes; otherwise ".".
-> +                <u> is "U" if there are untracked changes; otherwise ".".
-> +    <mH>        The 6 character octal file mode in the HEAD.
-> +    <mI>        The octal file mode in the index.
-> +    <mW>        The octal file mode in the worktree.
-> +    <hH>        The SHA1 value in the HEAD.
-> +    <hI>        The SHA1 value in the index.
-> +    <X><nr>     The rename or copied percentage score. For example "R100"
-> +                or "C75".
-> +    <path>      The current pathname.
-> +    <pathSrc>   The original path. This is only present when the entry
-> +                has been renamed or copied.
-> +    --------------------------------------------------------
-> +
-> +Unmerged entries have the following format; the first character is
-> +a "u" to distinguish from ordinary changed entries.
-> +
-> +    u <xy> <sub> <m1> <m2> <m3> <mW> <h1> <h2> <h3> <path>
-> +
-> +    Field       Meaning
-> +    --------------------------------------------------------
-> +    <XY>        A 2 character field describing the conflict type
-> +                as described in the short format.
-> +    <sub>       A 4 character field describing the submodule state
-> +                as described above.
-> +    <m1>        The octal file mode for stage 1.
-> +    <m2>        The octal file mode for stage 2.
-> +    <m3>        The octal file mode for stage 3.
-> +    <mW>        The octal file mode in the worktree.
-> +    <h1>        The SHA1 value for stage 1.
-> +    <h2>        The SHA1 value for stage 2.
-> +    <h3>        The SHA1 value for stage 3.
-> +    <path>      The current pathname.
-> +    --------------------------------------------------------
+  - Patches 01/41 was new in v8 and hasn't changed.
 
-A question: do unmerged entries always have only one single filename?
-Or unmerged entries are always only about CONFLICT(contents), and no
-other?
+It renames some structs and constants that will be moved into apply.h
+to give them a more specific name.
 
-Would a note (or a link to other documentation) about octopus merges
-be out of place here?
+  - Patches 02/41 to 31/41 were in v1, v2, v6, v7 anv v8.
 
-> +
-> +A series of lines are then displayed for untracked and ignored entries.
-> +
-> +    <x> <path>
-> +
-> +Where <x> is "?" for untracked entries and "!" for ignored entries.
+They finish libifying the apply functionality that was in
+builtin/apply.c and move it into apply.{c,h}, but the libified
+functionality is not yet used in `git am`.
 
-A question: are they displayed in that order, i.e. first all untracked,
-then all ignored, or it is something one cannot rely about?
+The only change in those patches is in 30/41 where an
+`#include "builtin.h"` has been added back into "builtin/apply.c"
+thanks to Ramsey.
 
-> +
-> +In all 3 line formats, pathnames will be "C Quoted" if they contain
+  - Patch 32/41 was in v6, v7 and v8.
 
-"C Quoted" or "C-Quoted"?  How it is described in other places of
-the Git documentation?
+It replaces some calls to error() with calls to error_errno(). It is
+the same as in v8, but it was at the end of the series (41/41) in v8
+and has been moved from there as suggested by Junio.
 
-> +any of the following characters: TAB, LF, double quotes, or backslashes.
-> +These characters will be replaced with \t, \n, \", and \\, respectively,
-> +and the pathname will be enclosed in double quotes.
-> +
-> +When the `-z` option is given, a NUL (zero) byte follows each pathname;
-> +serving as both a separator and line termination. No pathname quoting
-> +or backslash escaping is performed. All fields are output in the same
-> +order.
+  - Patch 33/41 was in v2, v6, v7 and v8.
 
-Does it mean that
+It makes it possible to temporarily change the current index.
 
-    2 [...] <cq-path>\t<cq-pathSrc>\n
+This is a hack to make it possible for `git am` to use the libified
+apply functionality on a different index file.
 
-line (including line terminator) is replaced with
+`git am` used to do that by setting the GIT_INDEX_FILE env variable
+before calling `git apply`.
 
-    2 [...] <path>\0<pathSrc>\0
+The commit message has been improved and some comments have been added
+as suggested by Junio to make it clear that this is a short cut that
+adds some technical debt.
 
-that is, it replaces a separator (TAB, "\t") and line termination (LF, "\n");
-here spelled in full?
+  - Patches 34/41 to 39/41 were in v2, v6, v7 and v8.
 
-BTW. do we have name for "C-Quoted" paths?
+They implement a way to make the libified apply code silent by
+changing the bool `apply_verbosely` into a tristate enum called
+`apply_verbosity`, that can be one of `verbosity_verbose`,
+`verbosity_normal` or `verbosity_silent`.
 
-> +
->  CONFIGURATION
->  -------------
- 
+This is because "git am", since it was a shell script, has been
+silencing the apply functionality by redirecting file descriptors to
+/dev/null, but this is not acceptable in C.
+
+There are many changes, thanks to Junio, in these patches compared to
+v8, as the previous iterations added a `be_silent` bool instead of
+changing `apply_verbosely` into `apply_verbosity`.
+
+The previous patch 35/41 (apply: make 'be_silent' incompatible with
+'apply_verbosely') has been removed as it is not necessary anymore.
+
+  - Patch 40/41 is new.
+
+It refactors `git apply` option parsing to make it possible for `git
+am` to easily pass some command line options to the libified applied
+code as suggested by Junio.
+
+  - Patch 41/41 was in v1, v2, v6, v7 and v8.
+
+This patch makes `git am` use the libified functionality. It now uses
+the refactored code from the new patch 40/41 to parse `git apply`
+options.
+
+
+General comments
+~~~~~~~~~~~~~~~~
+
+Sorry if this patch series is still long. Hopefully the early part of
+this series until 32/41 will be ready soon to be moved to next and
+master, and I may only need to resend the rest.
+
+I will send a diff between this version and the previous one, as a
+reply to this email.
+
+The benefits are not just related to not creating new processes. When
+`git am` launched a `git apply` process, this new process had to read
+the index from disk. Then after the `git apply`process had terminated,
+`git am` dropped its index and read the index from disk to get the
+index that had been modified by the `git apply`process. This was
+inefficient and also prevented the split-index mechanism to provide
+many performance benefits.
+
+By the way, current work is ongoing to make it possible to use
+split-index more easily by adding a config variable, see:
+
+https://public-inbox.org/git/20160711172254.13439-1-chriscool%40tuxfamily.org/
+
+Using an earlier version of this series as rebase material, Duy
+explained split-index benefits along with this patch series like this:
+
+ > Without the series, the picture is not so surprising. We run git-apply
+ > 80+ times, each consists of this sequence
+ >
+ > read index
+ > write index (cache tree updates only)
+ > read index again
+ > optionally initialize name hash (when new entries are added, I guess)
+ > read packed-refs
+ > write index
+ >
+ > With this series, we run a single git-apply which does
+ >
+ > read index (and sharedindex too if in split-index mode)
+ > initialize name hash
+ > write index 80+ times
+
+(See: http://thread.gmane.org/gmane.comp.version-control.git/292324/focus=292460)
+
+Links
+~~~~~
+
+This patch series is available here:
+
+https://github.com/chriscool/git/commits/libify-apply-use-in-am
+
+The previous versions are available there:
+
+v1: https://github.com/chriscool/git/commits/libify-apply-use-in-am25 
+v2: https://github.com/chriscool/git/commits/libify-apply-use-in-am54
+v6: https://github.com/chriscool/git/commits/libify-apply-use-in-am65
+v7: https://github.com/chriscool/git/commits/libify-apply-use-in-am75
+v8: https://github.com/chriscool/git/commits/libify-apply-use-in-am97
+
+Performance numbers
+~~~~~~~~~~~~~~~~~~~
+
+Numbers are only available for tests that have been performed on Linux
+using a very early version of this series, though Johannes Sixt
+reported great improvements on Windows. It could be interesting to get
+detailed numbers on other platforms like Windows and OSX.
+
+  - Around mid April Ævar did a huge many-hundred commit rebase on the
+    kernel with untracked cache.
+
+command: git rebase --onto 1993b17 52bef0c 29dde7c
+
+Vanilla "next" without split index:                1m54.953s
+Vanilla "next" with split index:                   1m22.476s
+This series on top of "next" without split index:  1m12.034s
+This series on top of "next" with split index:     0m15.678s
+
+Ævar used his Debian laptop with SSD.
+
+  - Around mid April I tested rebasing 13 commits in Booking.com's
+    monorepo on a Red Hat 6.5 server with split-index and
+    GIT_TRACE_PERFORMANCE=1.
+
+With Git v2.8.0, the rebase took 6.375888383 s, with the git am
+command launched by the rebase command taking 3.705677431 s.
+
+With this series on top of next, the rebase took 3.044529494 s, with
+the git am command launched by the rebase command taking 0.583521168
+s.
+
+Christian Couder (41):
+  apply: make some names more specific
+  apply: move 'struct apply_state' to apply.h
+  builtin/apply: make apply_patch() return -1 or -128 instead of
+    die()ing
+  builtin/apply: read_patch_file() return -1 instead of die()ing
+  builtin/apply: make find_header() return -128 instead of die()ing
+  builtin/apply: make parse_chunk() return a negative integer on error
+  builtin/apply: make parse_single_patch() return -1 on error
+  builtin/apply: make parse_whitespace_option() return -1 instead of
+    die()ing
+  builtin/apply: make parse_ignorewhitespace_option() return -1 instead
+    of die()ing
+  builtin/apply: move init_apply_state() to apply.c
+  apply: make init_apply_state() return -1 instead of exit()ing
+  builtin/apply: make check_apply_state() return -1 instead of die()ing
+  builtin/apply: move check_apply_state() to apply.c
+  builtin/apply: make apply_all_patches() return 128 or 1 on error
+  builtin/apply: make parse_traditional_patch() return -1 on error
+  builtin/apply: make gitdiff_*() return 1 at end of header
+  builtin/apply: make gitdiff_*() return -1 on error
+  builtin/apply: change die_on_unsafe_path() to check_unsafe_path()
+  builtin/apply: make build_fake_ancestor() return -1 on error
+  builtin/apply: make remove_file() return -1 on error
+  builtin/apply: make add_conflicted_stages_file() return -1 on error
+  builtin/apply: make add_index_file() return -1 on error
+  builtin/apply: make create_file() return -1 on error
+  builtin/apply: make write_out_one_result() return -1 on error
+  builtin/apply: make write_out_results() return -1 on error
+  builtin/apply: make try_create_file() return -1 on error
+  builtin/apply: make create_one_file() return -1 on error
+  builtin/apply: rename option parsing functions
+  apply: rename and move opt constants to apply.h
+  Move libified code from builtin/apply.c to apply.{c,h}
+  apply: make some parsing functions static again
+  apply: use error_errno() where possible
+  environment: add set_index_file()
+  write_or_die: use warning() instead of fprintf(stderr, ...)
+  apply: make it possible to silently apply
+  apply: don't print on stdout in verbosity_silent mode
+  usage: add set_warn_routine()
+  usage: add get_error_routine() and get_warn_routine()
+  apply: change error_routine when silent
+  apply: refactor `git apply` option parsing
+  builtin/am: use apply api in run_apply()
+
+ Makefile               |    1 +
+ apply.c                | 4969 ++++++++++++++++++++++++++++++++++++++++++++++++
+ apply.h                |  142 ++
+ builtin/am.c           |   65 +-
+ builtin/apply.c        | 4873 +----------------------------------------------
+ cache.h                |    1 +
+ environment.c          |   12 +
+ git-compat-util.h      |    3 +
+ t/t4012-diff-binary.sh |    4 +-
+ t/t4254-am-corrupt.sh  |    2 +-
+ usage.c                |   15 +
+ write_or_die.c         |    3 +-
+ 12 files changed, 5209 insertions(+), 4881 deletions(-)
+ create mode 100644 apply.c
+ create mode 100644 apply.h
+
+-- 
+2.9.2.558.gf53e569
 
