@@ -2,77 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_RED
+X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 536D81F858
-	for <e@80x24.org>; Sun, 31 Jul 2016 14:34:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 560D11F858
+	for <e@80x24.org>; Sun, 31 Jul 2016 14:35:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753796AbcGaOcS (ORCPT <rfc822;e@80x24.org>);
-	Sun, 31 Jul 2016 10:32:18 -0400
-Received: from mail-io0-f170.google.com ([209.85.223.170]:36256 "EHLO
-	mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752965AbcGaObF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jul 2016 10:31:05 -0400
-Received: by mail-io0-f170.google.com with SMTP id b62so166758288iod.3
-        for <git@vger.kernel.org>; Sun, 31 Jul 2016 07:31:04 -0700 (PDT)
+	id S1753803AbcGaOd5 (ORCPT <rfc822;e@80x24.org>);
+	Sun, 31 Jul 2016 10:33:57 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:35781 "EHLO
+	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752965AbcGaOcZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2016 10:32:25 -0400
+Received: by mail-wm0-f49.google.com with SMTP id f65so341441276wmi.0
+        for <git@vger.kernel.org>; Sun, 31 Jul 2016 07:32:24 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=E8CRdC/yo7Z77+2XWRgkKbkn+a9aPJE4xh2T7rBQnM8=;
-        b=G7R82sEErUZ895J3vxecojqTHB2UaO+sFuU+yJ5B41zbDAXhhCKlfp0RAlykO/QWPs
-         iY8SW+aqPQ3uL7gfw4vtP5POhnozUSYDYBEd9UKHyoLj4u4iUB1Bw13TzEBoo7A+9OtN
-         qev5W/cKTbQjLCpWZ/UOfHAGRPnDJg9V3mFE2dExhEuoepVOm2zfqu4j99QkYi7+Wf13
-         M2W5tMjQ9L0eUl7kKpF8u7KwIYJv7pUoblbjG/+dZWW3oTlHzCZtSUrCX1Cf1eCfn9IG
-         1wf2UzIhewWVK8smoegVDbnUA54cSy/vaCs6QrygVnKiIwhMwiKFEzUvgAIndNlpC3+w
-         qM1w==
+        h=from:content-transfer-encoding:subject:message-id:date:to
+         :mime-version;
+        bh=yGEzgeI2aEWOCV3nhellgFQsML+X6cqIkWClqeo5NTc=;
+        b=TaLEGLOtdjKyhMQxjj10kshrMoGg+2kYXa/Kn3oaH3uIST7JLoxjL91gQFKxE9ujYp
+         NAZ4H/oMtPDRXjzLRKemG3e+Ut7d5oYXseiQKOFBK0JSAYlbbKqe3e9ZrlZ93s1O5zPx
+         kzfIi40FzjgQP3FM/7lIqrX6jiKkcZSflR/Ua00B99d15tLebhXAIbVC2CMkM3qGopL4
+         haWrHa4k4Ux2Qop80DyeFeFOYPT2tSFCyNPW+pSKb+Nt891GXsp2XIKflrw+O9l4BOMZ
+         SzMN+0YPUqI8WHSnSKhjCSvTAZxLEyls0Amuh2qwZfldzrQYObVj8ZMJmE0DVpCAGrGG
+         wdlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=E8CRdC/yo7Z77+2XWRgkKbkn+a9aPJE4xh2T7rBQnM8=;
-        b=KfTEXoHTOZlKQi6esq6jK1rlISreh9qe07U7rEN/NWGjXsp9+kz4oPSpk6HdjQAUI4
-         D5sv783z2wvOdBVoNx0KcdJPUZA0qo6ll0LD3B/gzTtiaBn+G1ZQ4Qe2rWStMrFwMLlJ
-         euN0LyS9zSA5Q7BJWvgW/rLJU1yjT/y0S9/g+iV4tSQVi+CnmXZhtiid11s6YVzF7xox
-         MT2ajgsgJeOgwabBIoKPvjHaWfPrU6YDmupZYAAA6KTofhg0WBftXp4NadlVrHIfSd6d
-         f71eaRiqYKbP5FToYmXE53V2+NB5UDP8MSDi4YCdkkpUYiFSa9yNqSdDavqLrAAoC3Mp
-         T8mA==
-X-Gm-Message-State: AEkoouuUF4HS973fZsASo9MWpXktjarSdtd2IaJ6DJtVDAdBBmj9rm9twezz/xsowfP42PazJ8l4CWouWFZFjw==
-X-Received: by 10.107.159.147 with SMTP id i141mr50366068ioe.29.1469975463662;
- Sun, 31 Jul 2016 07:31:03 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Sun, 31 Jul 2016 07:30:34 -0700 (PDT)
-In-Reply-To: <20160731010732.GA31840@whir>
-References: <20160718223038.GA66056@plume> <20160730182005.14426-1-pclouds@gmail.com>
- <20160731001532.GA23146@starla> <20160731010732.GA31840@whir>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Sun, 31 Jul 2016 16:30:34 +0200
-Message-ID: <CACsJy8CfLYPT5hJRT1q6nCtjy0K6+nZWGV5G+d7u=ymuEZ85tg@mail.gmail.com>
-Subject: Re: [PATCH] t7063: work around FreeBSD's lazy mtime update feature
-To:	Eric Wong <e@80x24.org>
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:from:content-transfer-encoding:subject
+         :message-id:date:to:mime-version;
+        bh=yGEzgeI2aEWOCV3nhellgFQsML+X6cqIkWClqeo5NTc=;
+        b=JyDl7J+Wkgzeo19SKsv9j8ycy1OL1gF9jqHnzbqMWjsqAN4k+ntK4tmmNR0OfeOY96
+         xsJTJhJ1BfflPA9KDOPxQ3qOQLZDXqgRXl4FuXLp5+3gIZe1T/cfJJ3G+oqqHsLIs+rZ
+         ygq5FCkPg//wyobyWIe5nzkdb9cyKHvzofF9lB18wBqzfjKNeTGkPmVcg2GKabiJUPw5
+         3iKmcpNAeEUT6h7IGEb2iV5PjljapRZGptSH3WrxrVUXikb+ZY00B/Y7T//E7yzcPSUs
+         //OjB7th/p8MCT6XzFbOrd3/SyYtOR51J/ji6DbS0ZijspWdwOrGhlD+s6rHt4mev/XT
+         VhbQ==
+X-Gm-Message-State: AEkoouusKeopiEpwLK+OzGkIw9UfR3paVaBWlAx/nC65zYN7Ly7O5XglMfaPqQLl5iYZ5Q==
+X-Received: by 10.194.184.148 with SMTP id eu20mr46616074wjc.137.1469975543819;
+        Sun, 31 Jul 2016 07:32:23 -0700 (PDT)
+Received: from [192.168.0.5] ([81.56.235.196])
+        by smtp.gmail.com with ESMTPSA id i3sm25841324wjd.31.2016.07.31.07.32.22
+        for <git@vger.kernel.org>
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 31 Jul 2016 07:32:22 -0700 (PDT)
+From:	Sylvain Garrigues <sylgar@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+Subject: git 2.9 subtree split with rejoin 
+Message-Id: <1BED74C8-2E4C-4CA7-B785-F0666B69C1A7@gmail.com>
+Date:	Sun, 31 Jul 2016 16:32:21 +0200
+To:	git@vger.kernel.org
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Sun, Jul 31, 2016 at 3:07 AM, Eric Wong <e@80x24.org> wrote:
->> would be more to the point of what is going on, here.   But I
->> also wonder if untracked cache itself could/should be doing this
->> internally.
->
-> Still wondering :>
+Hello,
 
-There's nothing we can do besides maybe run a cron job executing
-'sync' every second or so. We need to force mtime to be written down
-close to.. you know.. mtime. By the time git is executed, it's already
-late. You can execute 'sync' inside git then wait a couple seconds..
-but that's just stupid. And removing the racy check is even more
-dangerous, now you can get false output.
--- 
-Duy
+It seems now with 2.9 you cannot use git subtree split —rejoin without —onto otherwise you get:
+fatal: refusing to merge unrelated histories
+
+I wish I could pass --allow-unrelated-histories but that doesn’t work.
+
+Adding —onto makes the split operation much much longer. Could we make a bug fix which allow to pass the --allow-unrelated-histories flag to subtree split?
+
+Thanks,
+Sylvain.
+
