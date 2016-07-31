@@ -2,198 +2,293 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8EB51F855
-	for <e@80x24.org>; Sun, 31 Jul 2016 09:42:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A348C1F855
+	for <e@80x24.org>; Sun, 31 Jul 2016 09:54:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752953AbcGaJme (ORCPT <rfc822;e@80x24.org>);
-	Sun, 31 Jul 2016 05:42:34 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:36323 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752807AbcGaJmc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jul 2016 05:42:32 -0400
-Received: by mail-wm0-f67.google.com with SMTP id x83so21875090wma.3
-        for <git@vger.kernel.org>; Sun, 31 Jul 2016 02:42:31 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=JPRNJQsxaiGVjybnTtzmJ5NfDIAioMMU+AwevNzR4+A=;
-        b=eipB9NKde+rUAmLYOYPucM0N8dKBq6rbXTek3fQnmHw6P3lm2PY8TqzX61eWeW5jcx
-         uT5BZzVHQkwsX6mvaA5T6zwfqH6aKPmV0UP+gXH5g0VQsJchJGsu3aMz8HfXldegpgJ5
-         kaMolcXZjsfSu5i4eefWztun3v3/n8coWmLvFGEdLUG3Ki0cDwvwScI0UXZJMJlYoWRw
-         AGWfdOggIHiXP6+IJvrfI3D1XjzqNpWKASA9d2Yhx4Hx23V6qeQgQcbvijaPm+gpzbl2
-         byv0bAHKB4LnvsI4HvYAhw5NJgNOv5b6/LV59DhRsap47P86GtOeWQpDo9tOOtT8kNsI
-         W7oA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding;
-        bh=JPRNJQsxaiGVjybnTtzmJ5NfDIAioMMU+AwevNzR4+A=;
-        b=CknMdyA9aFVJPl05M2rYnGl3mDO/MivqJ0Toj6/fEAOd9lxDv0OHEES8KS7bn8bz+2
-         yxdxh+j5FS9a2S7+0LjutEk6AGNz2iWyMwW89bJbNdR8KIaiYFTJ2XL3bY9YRRRTHlLP
-         bnZRbA24eORs4UaLWKe43ISQuNuhkuhTvfHAqSsuvYhMi+BCt7Kra+52Nv52lFovCsBY
-         YHHxR2rNeIrud4zwSlJbpZ3xp5q8V0p8G9TFlJxXKjH6KJiAkpwVfmAFqbWqu4e17IVL
-         miWYOCbK9dr5Iazg+3DMj1TrIBv0FOga4Bp6/zq0j3y9sEVE0ETQkXp3hrIzdResDhG+
-         FYSA==
-X-Gm-Message-State: AEkoousBejST+aIXqYFtAAYVLotYtGcSx5e6dNVaZUCDL5lMPZJuSE4u61QPfDMsH4/jjg==
-X-Received: by 10.194.61.205 with SMTP id s13mr44859799wjr.86.1469958150532;
-        Sun, 31 Jul 2016 02:42:30 -0700 (PDT)
-Received: from [192.168.1.26] (dad247.neoplus.adsl.tpnet.pl. [83.23.3.247])
-        by smtp.googlemail.com with ESMTPSA id u72sm11426409wmf.5.2016.07.31.02.42.28
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 31 Jul 2016 02:42:29 -0700 (PDT)
-Subject: Re: [PATCH v3 10/10] convert: add filter.<driver>.process option
-To:	Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
-References: <20160727000605.49982-1-larsxschneider%40gmail.com/>
- <20160729233801.82844-1-larsxschneider@gmail.com>
- <20160729233801.82844-11-larsxschneider@gmail.com>
- <b4c9ac5d-bd6b-141b-5b85-ab4aa719ccb0@gmail.com>
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-	Martin-Louis Bright <mlbright@gmail.com>,
-	Eric Wong <e@80x24.org>, Jeff King <peff@peff.net>
-Newsgroups: gmane.comp.version-control.git
-From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <69988611-06ec-048d-12e7-7b87882ddc6a@gmail.com>
-Date:	Sun, 31 Jul 2016 11:42:11 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+	id S1752952AbcGaJys (ORCPT <rfc822;e@80x24.org>);
+	Sun, 31 Jul 2016 05:54:48 -0400
+Received: from a7-20.smtp-out.eu-west-1.amazonses.com ([54.240.7.20]:40667
+	"EHLO a7-20.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751342AbcGaJyq (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2016 05:54:46 -0400
+X-Greylist: delayed 1961 seconds by postgrey-1.27 at vger.kernel.org; Sun, 31 Jul 2016 05:54:46 EDT
+DKIM-Signature:	v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1469956898;
+	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+	bh=gekF2K9GBzVysPoNn7nhJ8gFNPLDRtNdz7+evub7Hu0=;
+	b=UNiGhyeXXKgmoytezu+7aFtvj03GCgGV+2SWcdZ2QnfK+R5Ykhe20HS3vp10vrb9
+	LFoHUPabQ/boLPAzUDVJus3CHZy9AkBtdZD83ULe0MXcC02y93ToA9s1ZXdtIt3FOc7
+	CWShCMAXw3nwMcmMc0PaJJ64CKbLs/1BBcvX96bg=
+From:	Pranit Bauva <pranit.bauva@gmail.com>
+To:	git@vger.kernel.org
+Message-ID: <0102015640423cf7-078bef36-54e8-4200-9097-17d95d4f3c40-000000@eu-west-1.amazonses.com>
+In-Reply-To: <0102015640423c26-2060fd70-c90d-4de3-ae8c-1801ad160b1c-000000@eu-west-1.amazonses.com>
+References: <0102015640423c26-2060fd70-c90d-4de3-ae8c-1801ad160b1c-000000@eu-west-1.amazonses.com>
+Subject: [RFC/PATCH v11 09/13] bisect--helper: `bisect_write` shell function
+ in C
 MIME-Version: 1.0
-In-Reply-To: <b4c9ac5d-bd6b-141b-5b85-ab4aa719ccb0@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:	Sun, 31 Jul 2016 09:21:38 +0000
+X-SES-Outgoing:	2016.07.31-54.240.7.20
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-[Excuse me replying to myself, but there are a few things I forgot,
- or realized only later]
+Reimplement the `bisect_write` shell function in C and add a
+`bisect-write` subcommand to `git bisect--helper` to call it from
+git-bisect.sh
 
-W dniu 31.07.2016 o 00:05, Jakub Narębski pisze:
-> W dniu 30.07.2016 o 01:38, larsxschneider@gmail.com pisze:
->> From: Lars Schneider <larsxschneider@gmail.com>
->>
->> Git's clean/smudge mechanism invokes an external filter process for every
->> single blob that is affected by a filter. If Git filters a lot of blobs
->> then the startup time of the external filter processes can become a
->> significant part of the overall Git execution time.
->>
->> This patch adds the filter.<driver>.process string option which, if used,
->> keeps the external filter process running and processes all blobs with
->> the following packet format (pkt-line) based protocol over standard input
->> and standard output.
-> 
-> I think it would be nice to have here at least summary of the benchmarks
-> you did in https://github.com/github/git-lfs/pull/1382
+Using `--bisect-write` subcommand is a temporary measure to port shell
+function in C so as to use the existing test suite. As more functions
+are ported, this subcommand will be retired and will be called by some
+other methods.
 
-Note that this feature is especially useful if startup time is long,
-that is if you are using an operating system with costly fork / new process
-startup time like MS Windows (which you have mentioned), or writing
-filter in a programming language with large startup time like Java
-or Python (the latter may have changed since).
+Note: bisect_write() uses two variables namely TERM_GOOD and TERM_BAD
+from the global shell script thus we need to pass it to the subcommand
+using the arguments. We then store them in a struct bisect_terms and
+pass the memory address around functions.
 
-  https://gnustavo.wordpress.com/2012/06/28/programming-languages-start-up-times/
+This patch also introduces new methods namely bisect_state_init() and
+bisect_terms_release() for easy memory management for the struct
+bisect_terms.
 
-[...]
-> I was thinking about having possible responses to receiving file
-> contents (or starting receiving in the streaming case) to be:
-> 
->   packet:          git< ok size=7\n    (or "ok 7\n", if size is known)
-> 
-> or
-> 
->   packet:          git< ok\n           (if filter does not know size upfront)
-> 
-> or
-> 
->   packet:          git< fail <msg>\n   (or just "fail" + packet with msg)
-> 
-> The last would be when filter knows upfront that it cannot perform
-> the operation.  Though sending an empty file with non-"success" final
-> would work as well.
+Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+---
+ builtin/bisect--helper.c | 97 ++++++++++++++++++++++++++++++++++++++++++++----
+ git-bisect.sh            | 25 ++-----------
+ 2 files changed, 94 insertions(+), 28 deletions(-)
 
-[...]
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index c0f7091..70b953f 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -22,9 +22,27 @@ static const char * const git_bisect_helper_usage[] = {
+ 	N_("git bisect--helper --write-terms <bad_term> <good_term>"),
+ 	N_("git bisect--helper --bisect-clean-state"),
+ 	N_("git bisect--helper --bisect-reset [<commit>]"),
++	N_("git bisect--helper --bisect-write <state> <revision> <TERM_GOOD> <TERM_BAD> [<nolog>]"),
+ 	NULL
+ };
+ 
++struct bisect_terms {
++	struct strbuf term_good;
++	struct strbuf term_bad;
++};
++
++static void bisect_terms_init(struct bisect_terms *terms)
++{
++	strbuf_init(&terms->term_good, 0);
++	strbuf_init(&terms->term_bad, 0);
++}
++
++static void bisect_terms_release(struct bisect_terms *terms)
++{
++	strbuf_release(&terms->term_good);
++	strbuf_release(&terms->term_bad);
++}
++
+ /*
+  * Check whether the string `term` belongs to the set of strings
+  * included in the variable arguments.
+@@ -188,6 +206,52 @@ static int check_expected_revs(const char **revs, int rev_nr)
+ 	return 0;
+ }
+ 
++static int bisect_write(const char *state, const char *rev,
++			const struct bisect_terms *terms, int nolog)
++{
++	struct strbuf tag = STRBUF_INIT;
++	struct strbuf commit_name = STRBUF_INIT;
++	struct object_id oid;
++	struct commit *commit;
++	struct pretty_print_context pp = {0};
++	FILE *fp;
++
++	if (!strcmp(state, terms->term_bad.buf))
++		strbuf_addf(&tag, "refs/bisect/%s", state);
++	else if (one_of(state, terms->term_good.buf, "skip", NULL))
++		strbuf_addf(&tag, "refs/bisect/%s-%s", state, rev);
++	else
++		return error(_("Bad bisect_write argument: %s"), state);
++
++	if (get_oid(rev, &oid)) {
++		strbuf_release(&tag);
++		return error(_("couldn't get the oid of the rev '%s'"), rev);
++	}
++
++	if (update_ref(NULL, tag.buf, oid.hash, NULL, 0,
++		       UPDATE_REFS_MSG_ON_ERR)) {
++		strbuf_release(&tag);
++		return -1;
++	}
++	strbuf_release(&tag);
++
++	fp = fopen(git_path_bisect_log(), "a");
++	if (!fp)
++		return error_errno(_("couldn't open the file '%s'"), git_path_bisect_log());
++
++	commit = lookup_commit_reference(oid.hash);
++	format_commit_message(commit, "%s", &commit_name, &pp);
++	fprintf(fp, "# %s: [%s] %s\n", state, sha1_to_hex(oid.hash),
++		commit_name.buf);
++	strbuf_release(&commit_name);
++
++	if (!nolog)
++		fprintf(fp, "git bisect %s %s\n", state, rev);
++
++	fclose(fp);
++	return 0;
++}
++
+ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	enum {
+@@ -195,9 +259,10 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		WRITE_TERMS,
+ 		BISECT_CLEAN_STATE,
+ 		BISECT_RESET,
+-		CHECK_EXPECTED_REVS
++		CHECK_EXPECTED_REVS,
++		BISECT_WRITE
+ 	} cmdmode = 0;
+-	int no_checkout = 0;
++	int no_checkout = 0, res = 0;
+ 	struct option options[] = {
+ 		OPT_CMDMODE(0, "next-all", &cmdmode,
+ 			 N_("perform 'git bisect next'"), NEXT_ALL),
+@@ -209,10 +274,14 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 			 N_("reset the bisection state"), BISECT_RESET),
+ 		OPT_CMDMODE(0, "check-expected-revs", &cmdmode,
+ 			 N_("check for expected revs"), CHECK_EXPECTED_REVS),
++		OPT_CMDMODE(0, "bisect-write", &cmdmode,
++			 N_("write out the bisection state in BISECT_LOG"), BISECT_WRITE),
+ 		OPT_BOOL(0, "no-checkout", &no_checkout,
+ 			 N_("update BISECT_HEAD instead of checking out the current commit")),
+ 		OPT_END()
+ 	};
++	struct bisect_terms terms;
++	bisect_terms_init(&terms);
+ 
+ 	argc = parse_options(argc, argv, prefix, options,
+ 			     git_bisect_helper_usage, 0);
+@@ -221,24 +290,38 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(git_bisect_helper_usage, options);
+ 
+ 	switch (cmdmode) {
++	int nolog;
+ 	case NEXT_ALL:
+ 		return bisect_next_all(prefix, no_checkout);
+ 	case WRITE_TERMS:
+ 		if (argc != 2)
+ 			die(_("--write-terms requires two arguments"));
+-		return write_terms(argv[0], argv[1]);
++		res = write_terms(argv[0], argv[1]);
++		break;
+ 	case BISECT_CLEAN_STATE:
+ 		if (argc != 0)
+ 			die(_("--bisect-clean-state requires no arguments"));
+-		return bisect_clean_state();
++		res = bisect_clean_state();
++		break;
+ 	case BISECT_RESET:
+ 		if (argc > 1)
+ 			die(_("--bisect-reset requires either zero or one arguments"));
+-		return bisect_reset(argc ? argv[0] : NULL);
++		res = bisect_reset(argc ? argv[0] : NULL);
++		break;
+ 	case CHECK_EXPECTED_REVS:
+-		return check_expected_revs(argv, argc);
++		res = check_expected_revs(argv, argc);
++		break;
++	case BISECT_WRITE:
++		if (argc != 4 && argc != 5)
++			die(_("--bisect-write requires either 4 or 5 arguments"));
++		nolog = (argc == 5) && !strcmp(argv[4], "nolog");
++		strbuf_addstr(&terms.term_good, argv[2]);
++		strbuf_addstr(&terms.term_bad, argv[3]);
++		res = bisect_write(argv[0], argv[1], &terms, nolog);
++		break;
+ 	default:
+ 		die("BUG: unknown subcommand '%d'", cmdmode);
+ 	}
+-	return 0;
++	bisect_terms_release(&terms);
++	return res;
+ }
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 4f6545e..b9896a4 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -145,7 +145,7 @@ bisect_start() {
+ 		0) state=$TERM_BAD ; bad_seen=1 ;;
+ 		*) state=$TERM_GOOD ;;
+ 		esac
+-		eval="$eval bisect_write '$state' '$rev' 'nolog' &&"
++		eval="$eval git bisect--helper --bisect-write '$state' '$rev' '$TERM_GOOD' '$TERM_BAD' 'nolog' &&"
+ 	done
+ 	#
+ 	# Verify HEAD.
+@@ -221,23 +221,6 @@ bisect_start() {
+ 	trap '-' 0
+ }
+ 
+-bisect_write() {
+-	state="$1"
+-	rev="$2"
+-	nolog="$3"
+-	case "$state" in
+-		"$TERM_BAD")
+-			tag="$state" ;;
+-		"$TERM_GOOD"|skip)
+-			tag="$state"-"$rev" ;;
+-		*)
+-			die "$(eval_gettext "Bad bisect_write argument: \$state")" ;;
+-	esac
+-	git update-ref "refs/bisect/$tag" "$rev" || exit
+-	echo "# $state: $(git show-branch $rev)" >>"$GIT_DIR/BISECT_LOG"
+-	test -n "$nolog" || echo "git bisect $state $rev" >>"$GIT_DIR/BISECT_LOG"
+-}
+-
+ bisect_skip() {
+ 	all=''
+ 	for arg in "$@"
+@@ -263,7 +246,7 @@ bisect_state() {
+ 	1,"$TERM_BAD"|1,"$TERM_GOOD"|1,skip)
+ 		rev=$(git rev-parse --verify $(bisect_head)) ||
+ 			die "$(gettext "Bad rev input: $(bisect_head)")"
+-		bisect_write "$state" "$rev"
++		git bisect--helper --bisect-write "$state" "$rev" "$TERM_GOOD" "$TERM_BAD" || exit
+ 		git bisect--helper --check-expected-revs "$rev" ;;
+ 	2,"$TERM_BAD"|*,"$TERM_GOOD"|*,skip)
+ 		shift
+@@ -276,7 +259,7 @@ bisect_state() {
+ 		done
+ 		for rev in $hash_list
+ 		do
+-			bisect_write "$state" "$rev"
++			git bisect--helper --bisect-write "$state" "$rev" "$TERM_GOOD" "$TERM_BAD" || exit
+ 		done
+ 		git bisect--helper --check-expected-revs $hash_list ;;
+ 	*,"$TERM_BAD")
+@@ -413,7 +396,7 @@ bisect_replay () {
+ 			cmd="bisect_start $rev"
+ 			eval "$cmd" ;;
+ 		"$TERM_GOOD"|"$TERM_BAD"|skip)
+-			bisect_write "$command" "$rev" ;;
++			git bisect--helper --bisect-write "$command" "$rev" "$TERM_GOOD" "$TERM_BAD" || exit;;
+ 		terms)
+ 			bisect_terms $rev ;;
+ 		*)
 
->> In case the filter cannot process the content, it is expected
->> to respond with the result content size 0 (only if "stream" is
->> not defined) and a "reject" packet.
->> ------------------------
->> packet:          git< size=0\n    (omitted with capability "stream")
->> packet:          git< reject\n
->> ------------------------
-> 
-> This is *wrong* idea!  Empty file, with size=0, can be a perfectly
-> legitimate response.  
-
-Actually, I think I have misunderstood your intent.  If you want to have
-simpler protocol, with only one place to signal errors, that is after
-sending a response, then proper way of signaling the error condition
-would be to send empty file and then "reject" instead of "success":
-
-   packet:          git< size=0\n    (omitted with capability "stream")
-   packet:          git< 0000        (we need this flush packet)
-   packet:          git< reject\n
-
-Otherwise in the case without size upfront (capability "stream")
-file with contents "reject" would be mistaken for the "reject" packet.
-
-See below for proposal with two places to signal errors: before sending
-first byte, and after.
-
-
-NOTE: there is a bit of mixed and possibly confusing notation, that
-is 0000 is flush packet, not packet with 0000 as content.  Perhaps
-write pkt-line in full?
-
-
-[...]
->> ---
->>  Documentation/gitattributes.txt |  84 ++++++++-
->>  convert.c                       | 400 +++++++++++++++++++++++++++++++++++++--
->>  t/t0021-conversion.sh           | 405 ++++++++++++++++++++++++++++++++++++++++
->>  t/t0021/rot13-filter.pl         | 177 ++++++++++++++++++
->>  4 files changed, 1053 insertions(+), 13 deletions(-)
->>  create mode 100755 t/t0021/rot13-filter.pl
-
-Wouldn't it be better for easier review to split it into separate patches?
-Perhaps at least the new test...
-
-[...]
-> I would assume that we have two error conditions.  
-> 
-> First situation is when the filter knows upfront (after receiving name
-> and size of file, and after receiving contents for not-streaming filters)
-> that it cannot process the file (like e.g. LFS filter with artifactory
-> replica/shard being a bit behind master, and not including contents of
-> the file being filtered).
-> 
-> My proposal is to reply with "fail" _in place of_ size of reply:
-> 
->    packet:         git< fail\n       (any case: size known or not, stream or not)
-> 
-> It could be "reject", or "error" instead of "fail".
-> 
-> 
-> Another situation is if filter encounters error during output,
-> either with streaming filter (or non-stream, but not storing whole
-> input upfront) realizing in the middle of output that there is something
-> wrong with input (e.g. converting between encoding, and encountering
-> character that cannot be represented in output encoding), or e.g. filter
-> process being killed, or network connection dropping with LFS filter, etc.
-> The filter has send some packets with output already.  In this case
-> filter should flush, and send "reject" or "error" packet.
-> 
->    <error condition>
->    packet:         git< "0000"       (flush packet)
->    packet:         git< reject\n
-> 
-> Should there be a place for an error message, or would standard error
-> (stderr) be used for this?
-
+--
+https://github.com/git/git/pull/281
