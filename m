@@ -2,210 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC7301F855
-	for <e@80x24.org>; Sun, 31 Jul 2016 11:07:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B81E1F858
+	for <e@80x24.org>; Sun, 31 Jul 2016 14:11:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752984AbcGaLHV (ORCPT <rfc822;e@80x24.org>);
-	Sun, 31 Jul 2016 07:07:21 -0400
-Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:35988
-	"EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751332AbcGaLHU (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2016 07:07:20 -0400
-DKIM-Signature:	v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1469956898;
-	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-	bh=Wz2trpX2mnlMDByvJrVMNoYL6MmLWKtrJZlVOOx23cA=;
-	b=H7d2lU1z6T+3rmjWKgl/RfM67MRsiNjw22ChMl82Wk0RlZfUochgMZ7zs0EeJoes
-	RWrzQB5mRJCrroFODIRigSUPff5BYmHtlZK8xHKWxFcV/Nng8nTo7KhSJqMwnXiyj3/
-	AzvLBkQ98NFmG9lweR8xh2/eZYhL+tcd9zDOo0W4=
-From:	Pranit Bauva <pranit.bauva@gmail.com>
-To:	git@vger.kernel.org
-Message-ID: <0102015640423ce6-5b11201e-736d-413f-be12-7fed613ae484-000000@eu-west-1.amazonses.com>
-In-Reply-To: <0102015640423c26-2060fd70-c90d-4de3-ae8c-1801ad160b1c-000000@eu-west-1.amazonses.com>
-References: <0102015640423c26-2060fd70-c90d-4de3-ae8c-1801ad160b1c-000000@eu-west-1.amazonses.com>
-Subject: [RFC/PATCH v11 04/13] bisect--helper: `bisect_clean_state` shell
- function in C
+	id S1753602AbcGaOKs (ORCPT <rfc822;e@80x24.org>);
+	Sun, 31 Jul 2016 10:10:48 -0400
+Received: from ducie-dc1.codethink.co.uk ([185.25.241.215]:42489 "EHLO
+	ducie-dc1.codethink.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752984AbcGaOKr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jul 2016 10:10:47 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by ducie-dc1.codethink.co.uk (Postfix) with ESMTP id 38B2D4627F7;
+	Sun, 31 Jul 2016 15:09:55 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at ducie-dc1.codethink.co.uk
+Received: from ducie-dc1.codethink.co.uk ([127.0.0.1])
+	by localhost (ducie-dc1.codethink.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id X+IhG9HJQ9HX; Sun, 31 Jul 2016 15:09:53 +0100 (BST)
+Received: from salo (82-70-136-246.dsl.in-addr.zen.co.uk [82.70.136.246])
+	by ducie-dc1.codethink.co.uk (Postfix) with ESMTPSA id DBB11462868;
+	Sun, 31 Jul 2016 15:09:52 +0100 (BST)
+Date:	Sun, 31 Jul 2016 15:09:36 +0100
+From:	Richard Ipsum <richard.ipsum@codethink.co.uk>
+To:	Stefan Beller <sbeller@google.com>
+Cc:	Josh Triplett <josh@joshtriplett.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"Linux-Kernel@Vger. Kernel. Org" <linux-kernel@vger.kernel.org>,
+	Dave Borowitz <dborowitz@google.com>
+Subject: Re: [ANNOUNCE] git-series: track changes to a patch series over time
+Message-ID: <20160731140936.GA3959@salo>
+References: <20160729064055.GB25331@x>
+ <20160729101011.GA3469@salo>
+ <20160729110426.GA2945@x>
+ <20160729124443.GA3686@salo>
+ <CAGZ79kbTViNYLq0aouQ--5d7m=HYi3QxUYqaaH8sTCS_YTDquQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:	Sun, 31 Jul 2016 09:21:38 +0000
-X-SES-Outgoing:	2016.07.31-54.240.7.12
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kbTViNYLq0aouQ--5d7m=HYi3QxUYqaaH8sTCS_YTDquQ@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Reimplement `bisect_clean_state` shell function in C and add a
-`bisect-clean-state` subcommand to `git bisect--helper` to call it from
-git-bisect.sh .
+On Fri, Jul 29, 2016 at 09:59:08AM -0700, Stefan Beller wrote:
+> On Fri, Jul 29, 2016 at 5:44 AM, Richard Ipsum
+> <richard.ipsum@codethink.co.uk> wrote:
+> >>
+> >> These definitely seem like a family of related problems.  I'd like to
+> >> use git-series as a format for storing iterations on things like GitHub
+> >> pull-requests or Gerrit patch versions (in the latter case, overcoming
+> >> Gerrit's limitations on only handling one patch at a time).  Integrating
+> >> reviews with that seems helpful.
+> >
+> > Worth noting here that Gerrit's one patch per change format isn't
+> > intrinsic to Notedb, since we just need to track the sha we want
+> > to merge and optionally the branch we intend to merge into.
+> 
+> Note that Gerrit started to lose the "one patch at a time" notion.
+> It is possible to at least submit multiple changes coupled together
+> (even across project boundaries) via the topic. Some sort of cover
+> letter is missing though, that could be used e.g. for the merge commit.
 
-Using `--bisect-clean-state` subcommand is a measure to port shell
-function to C so as to use the existing test suite. As more functions
-are ported, this subcommand will be retired and will be called by
-bisect_reset() and bisect_start().
-
-Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
----
- builtin/bisect--helper.c | 55 +++++++++++++++++++++++++++++++++++++++++++++++-
- git-bisect.sh            | 26 +++--------------------
- 2 files changed, 57 insertions(+), 24 deletions(-)
-
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 965bcc1..10dfb68 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -3,12 +3,21 @@
- #include "parse-options.h"
- #include "bisect.h"
- #include "refs.h"
-+#include "dir.h"
- 
- static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
-+static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
-+static GIT_PATH_FUNC(git_path_bisect_ancestors_ok, "BISECT_ANCESTORS_OK")
-+static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
-+static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
-+static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
-+static GIT_PATH_FUNC(git_path_head_name, "head-name")
-+static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
- 
- static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --next-all [--no-checkout]"),
- 	N_("git bisect--helper --write-terms <bad_term> <good_term>"),
-+	N_("git bisect--helper --bisect-clean-state"),
- 	NULL
- };
- 
-@@ -78,11 +87,49 @@ static int write_terms(const char *bad, const char *good)
- 	return (res < 0) ? -1 : 0;
- }
- 
-+static int mark_for_removal(const char *refname, const struct object_id *oid,
-+			    int flag, void *cb_data)
-+{
-+	struct string_list *refs = cb_data;
-+	char *ref = xstrfmt("refs/bisect/%s", refname);
-+	string_list_append(refs, ref);
-+	return 0;
-+}
-+
-+static int bisect_clean_state(void)
-+{
-+	int result = 0;
-+
-+	/* There may be some refs packed during bisection */
-+	struct string_list refs_for_removal = STRING_LIST_INIT_NODUP;
-+	for_each_ref_in("refs/bisect/", mark_for_removal, (void *) &refs_for_removal);
-+	string_list_append(&refs_for_removal, xstrdup("BISECT_HEAD"));
-+	result = delete_refs(&refs_for_removal);
-+	refs_for_removal.strdup_strings = 1;
-+	string_list_clear(&refs_for_removal, 0);
-+	remove_path(git_path_bisect_expected_rev());
-+	remove_path(git_path_bisect_ancestors_ok());
-+	remove_path(git_path_bisect_log());
-+	remove_path(git_path_bisect_names());
-+	remove_path(git_path_bisect_run());
-+	remove_path(git_path_bisect_terms());
-+	/* Cleanup head-name if it got left by an old version of git-bisect */
-+	remove_path(git_path_head_name());
-+	/*
-+	 * Cleanup BISECT_START last to support the --no-checkout option
-+	 * introduced in the commit 4796e823a.
-+	 */
-+	remove_path(git_path_bisect_start());
-+
-+	return result;
-+}
-+
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
- 	enum {
- 		NEXT_ALL = 1,
--		WRITE_TERMS
-+		WRITE_TERMS,
-+		BISECT_CLEAN_STATE
- 	} cmdmode = 0;
- 	int no_checkout = 0;
- 	struct option options[] = {
-@@ -90,6 +137,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			 N_("perform 'git bisect next'"), NEXT_ALL),
- 		OPT_CMDMODE(0, "write-terms", &cmdmode,
- 			 N_("write the terms to .git/BISECT_TERMS"), WRITE_TERMS),
-+		OPT_CMDMODE(0, "bisect-clean-state", &cmdmode,
-+			 N_("cleanup the bisection state"), BISECT_CLEAN_STATE),
- 		OPT_BOOL(0, "no-checkout", &no_checkout,
- 			 N_("update BISECT_HEAD instead of checking out the current commit")),
- 		OPT_END()
-@@ -108,6 +157,10 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		if (argc != 2)
- 			die(_("--write-terms requires two arguments"));
- 		return write_terms(argv[0], argv[1]);
-+	case BISECT_CLEAN_STATE:
-+		if (argc != 0)
-+			die(_("--bisect-clean-state requires no arguments"));
-+		return bisect_clean_state();
- 	default:
- 		die("BUG: unknown subcommand '%d'", cmdmode);
- 	}
-diff --git a/git-bisect.sh b/git-bisect.sh
-index cd39bd0..bbc57d2 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -187,7 +187,7 @@ bisect_start() {
- 	#
- 	# Get rid of any old bisect state.
- 	#
--	bisect_clean_state || exit
-+	git bisect--helper --bisect-clean-state || exit
- 
- 	#
- 	# Change state.
-@@ -196,7 +196,7 @@ bisect_start() {
- 	# We have to trap this to be able to clean up using
- 	# "bisect_clean_state".
- 	#
--	trap 'bisect_clean_state' 0
-+	trap 'git bisect--helper --bisect-clean-state' 0
- 	trap 'exit 255' 1 2 3 15
- 
- 	#
-@@ -430,27 +430,7 @@ bisect_reset() {
- 		die "$(eval_gettext "Could not check out original HEAD '\$branch'.
- Try 'git bisect reset <commit>'.")"
- 	fi
--	bisect_clean_state
--}
--
--bisect_clean_state() {
--	# There may be some refs packed during bisection.
--	git for-each-ref --format='%(refname) %(objectname)' refs/bisect/\* |
--	while read ref hash
--	do
--		git update-ref -d $ref $hash || exit
--	done
--	rm -f "$GIT_DIR/BISECT_EXPECTED_REV" &&
--	rm -f "$GIT_DIR/BISECT_ANCESTORS_OK" &&
--	rm -f "$GIT_DIR/BISECT_LOG" &&
--	rm -f "$GIT_DIR/BISECT_NAMES" &&
--	rm -f "$GIT_DIR/BISECT_RUN" &&
--	rm -f "$GIT_DIR/BISECT_TERMS" &&
--	# Cleanup head-name if it got left by an old version of git-bisect
--	rm -f "$GIT_DIR/head-name" &&
--	git update-ref -d --no-deref BISECT_HEAD &&
--	# clean up BISECT_START last
--	rm -f "$GIT_DIR/BISECT_START"
-+	git bisect--helper --bisect-clean-state || exit
- }
- 
- bisect_replay () {
-
---
-https://github.com/git/git/pull/281
+Potentially my misuse of the format but git-candidate puts the cover
+letter into the body of the commit message before the footers begin,
+for each new patchset added to the change. This has the advantage
+that you can track each version of the cover letter,
+since there's one per patchset.
