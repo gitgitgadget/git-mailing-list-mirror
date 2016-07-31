@@ -2,86 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 920891F855
-	for <e@80x24.org>; Sun, 31 Jul 2016 09:26:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7B3E1F855
+	for <e@80x24.org>; Sun, 31 Jul 2016 09:32:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753573AbcGaJ0W (ORCPT <rfc822;e@80x24.org>);
-	Sun, 31 Jul 2016 05:26:22 -0400
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:34245 "EHLO
-	mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753187AbcGaJ0V (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jul 2016 05:26:21 -0400
-Received: by mail-wm0-f44.google.com with SMTP id q128so48310796wma.1
-        for <git@vger.kernel.org>; Sun, 31 Jul 2016 02:26:20 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=Hpr7wFW0v891tiqC2/EwR+m/WvnkX+NVgQm1GsTADHE=;
-        b=COd4rJWvNV0YxOgbDTEV2cEstBD0nJ3U1CSh7cYGzoiPLF07BUCirHaY/z54mp52jA
-         iJw/Xm0Lj7Jj8wpuStKwu2Zss1cvXRenWbKsitFKVnmpGYmJobRbKvSTga0UgVxDhjJ8
-         paq/RslFAiEFNuCV9V7BfbYX1ZrMCbmJVGsxjqnHowt69JcoiIvEA0zDofMDCX9dsok5
-         sEWrVhb049hXkr6gK3YXw8TsQc5waFlVM/mfZiNLCCKakwoXD81tNdYjfWrRp8ZShgQ5
-         8uDx5h36djSr0G2GcCtqp+YQZCwSSfHWxZY4qMOAZO7PVnVmVp1GYFvmhWhAupBoMNXK
-         AQuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding;
-        bh=Hpr7wFW0v891tiqC2/EwR+m/WvnkX+NVgQm1GsTADHE=;
-        b=cKospPU5deoF6yM4lcIxD+e0acfRnaR2mqa8I+QFRzNswC+HRYed68f5DDL+D7osqS
-         QxGJ+ZmXxIVkaYGh0yznsEkqkgx1TLK2JliCFVo7cVb0l7TpKXW2wAc3HGm/Llcmgnci
-         zNnS9V7WqHVkeGgWCZlcaeXn0RTJQyMtpNn+xgabxhvEy4+uDF+NY31cWP8/vtHvvppk
-         5EhxxwkjaBiOpALIB2pH52O74RTXuU3I0B2+HuNrJZ7ecRpmFQVaYzDabk3tqzYAhA1p
-         ujR6eJTq9/gQFAffljA0d4QopjZ9GtnWicIdd92uHCenfHcNEGW8uWRJmPstGmv4teAQ
-         eQ/A==
-X-Gm-Message-State: AEkoouuYyB7pBnZDepqy7qgx4t5FBSfTNX66L9WySzo5qHLO57IUbcndRgXFEw3hdZZ8cg==
-X-Received: by 10.194.175.170 with SMTP id cb10mr16057184wjc.17.1469957179835;
-        Sun, 31 Jul 2016 02:26:19 -0700 (PDT)
-Received: from [192.168.1.26] (dad247.neoplus.adsl.tpnet.pl. [83.23.3.247])
-        by smtp.googlemail.com with ESMTPSA id a2sm11372443wma.2.2016.07.31.02.26.18
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 31 Jul 2016 02:26:18 -0700 (PDT)
-Subject: Re: git bisect for reachable commits only
-To:	Oleg Taranenko <olegtaranenko@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-References: <CABEd3j8VLbpeWbA6BfHYp5aLPEy0PesqYoHM9u4OM=b7Qm=LDg@mail.gmail.com>
- <xmqqinvonwxc.fsf@gitster.mtv.corp.google.com>
- <CABEd3j-MW--YSC9=nwcgHzxd6cqmUY+ky3-wLxMiMmbBGsvS7Q@mail.gmail.com>
-Cc:	git@vger.kernel.org
-Newsgroups: gmane.comp.version-control.git
-From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <2bfd9cf5-a9fa-7650-21e9-9ceb9cc34d8b@gmail.com>
-Date:	Sun, 31 Jul 2016 11:26:00 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+	id S1751980AbcGaJcV (ORCPT <rfc822;e@80x24.org>);
+	Sun, 31 Jul 2016 05:32:21 -0400
+Received: from a7-20.smtp-out.eu-west-1.amazonses.com ([54.240.7.20]:38551
+	"EHLO a7-20.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750953AbcGaJcT (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2016 05:32:19 -0400
+X-Greylist: delayed 613 seconds by postgrey-1.27 at vger.kernel.org; Sun, 31 Jul 2016 05:32:19 EDT
+DKIM-Signature:	v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1469956898;
+	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+	bh=YySkfJnwkrmYozOxZ+NZ/2HlfSKtqHX54Ee+BS4n/hk=;
+	b=My2TJRowWV6wTV8kRCXNWjmvaakXl9GYGsTrxSTHw+lxgk4JhZQbeDe8QH+OhjYl
+	cilr5GDfwF8rTnEBfxI62YWDF/OCOSrVNUBoPkWHgLph37ltpMqT3NvPDVOr7/dPmVN
+	ESl9wve0yoaNvEeKezAqIgorUnl7t9QlbWNSEI/8=
+From:	Pranit Bauva <pranit.bauva@gmail.com>
+To:	git@vger.kernel.org
+Message-ID: <0102015640423ceb-e1fba6c7-4973-4b72-8ea9-fab72abe043d-000000@eu-west-1.amazonses.com>
+In-Reply-To: <0102015640423c26-2060fd70-c90d-4de3-ae8c-1801ad160b1c-000000@eu-west-1.amazonses.com>
+References: <0102015640423c26-2060fd70-c90d-4de3-ae8c-1801ad160b1c-000000@eu-west-1.amazonses.com>
+Subject: [RFC/PATCH v11 05/13] t6030: explicitly test for bisection cleanup
 MIME-Version: 1.0
-In-Reply-To: <CABEd3j-MW--YSC9=nwcgHzxd6cqmUY+ky3-wLxMiMmbBGsvS7Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:	Sun, 31 Jul 2016 09:21:38 +0000
+X-SES-Outgoing:	2016.07.31-54.240.7.20
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-W dniu 31.07.2016 o 02:06, Oleg Taranenko pisze:
+Add test to explicitly check that 'git bisect reset' is working as
+expected. This is already covered implicitly by the test suite.
 
-> Then, I suggest as well additional to defaulting via 'git config
-> bisect.reachable true/false' use per bisect session switch
-> 
->     git bisect start --[un-]reachable-commits # which will override
-> default setting
+Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 
-Isn't `--reachable-commits` the same as existing `--ancestry-path`
-option to `git log` and friends (I wonder if passing log options to
-bisect, that is: `git bisect --ancestry-path ...` would work)?
+---
+I faced this problem while converting `bisect_clean_state` and the tests
+where showing breakages but it wasn't clear as to where exactly are they
+breaking. This will patch  will help in that. Also I tested the test
+coverage of the test suite before this patch and it covers this (I did
+this by purposely changing names of files in git-bisect.sh and running
+the test suite).
+---
+ t/t6030-bisect-porcelain.sh | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
--- 
-Jakub Narębski
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index e74662b..a17f7a6 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -894,4 +894,21 @@ test_expect_success 'bisect start takes options and revs in any order' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'git bisect reset cleans bisection state properly' '
++	git bisect reset &&
++	git bisect start &&
++	git bisect good $HASH1 &&
++	git bisect bad $HASH4 &&
++	git bisect reset &&
++	test -z "$(git for-each-ref "refs/bisect/*")" &&
++	test_path_is_missing "$GIT_DIR/BISECT_EXPECTED_REV" &&
++	test_path_is_missing "$GIT_DIR/BISECT_ANCESTORS_OK" &&
++	test_path_is_missing "$GIT_DIR/BISECT_LOG" &&
++	test_path_is_missing "$GIT_DIR/BISECT_RUN" &&
++	test_path_is_missing "$GIT_DIR/BISECT_TERMS" &&
++	test_path_is_missing "$GIT_DIR/head-name" &&
++	test_path_is_missing "$GIT_DIR/BISECT_HEAD" &&
++	test_path_is_missing "$GIT_DIR/BISECT_START"
++'
++
+ test_done
 
+--
+https://github.com/git/git/pull/281
