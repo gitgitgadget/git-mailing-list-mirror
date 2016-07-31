@@ -2,137 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BCAA1F855
-	for <e@80x24.org>; Sun, 31 Jul 2016 09:22:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 920891F855
+	for <e@80x24.org>; Sun, 31 Jul 2016 09:26:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752784AbcGaJWJ (ORCPT <rfc822;e@80x24.org>);
-	Sun, 31 Jul 2016 05:22:09 -0400
-Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:52486
-	"EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752953AbcGaJWG convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jul 2016 05:22:06 -0400
-DKIM-Signature:	v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1469956898;
-	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-	bh=+X7IQ0ITBq+C6x2nClmwKqMO74ovBnjZXdgBQfF2mgc=;
-	b=GIxz169jIJXCDB0S9dv7r+FfqbGWfWqB7lpYLt0Xogc/j0gLfz8eVacLaicmNfBz
-	xOqzA6LanIBZFLrCnwp5ap1FbJjAyTa0Ge2X3sk05SuunXHGtbUPaUSweDALjRVN0Jl
-	2qEf4mGb7hJE1fifTxvqjloz81IYLgssigUPN0xY=
-From:	Pranit Bauva <pranit.bauva@gmail.com>
-To:	git@vger.kernel.org
-Message-ID: <0102015640423cf1-92bad064-76de-4ee5-80b5-af735f940426-000000@eu-west-1.amazonses.com>
-In-Reply-To: <0102015640423c26-2060fd70-c90d-4de3-ae8c-1801ad160b1c-000000@eu-west-1.amazonses.com>
-References: <0102015640423c26-2060fd70-c90d-4de3-ae8c-1801ad160b1c-000000@eu-west-1.amazonses.com>
-Subject: [RFC/PATCH v11 06/13] wrapper: move is_empty_file() and rename it
- as is_empty_or_missing_file()
+	id S1753573AbcGaJ0W (ORCPT <rfc822;e@80x24.org>);
+	Sun, 31 Jul 2016 05:26:22 -0400
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:34245 "EHLO
+	mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753187AbcGaJ0V (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jul 2016 05:26:21 -0400
+Received: by mail-wm0-f44.google.com with SMTP id q128so48310796wma.1
+        for <git@vger.kernel.org>; Sun, 31 Jul 2016 02:26:20 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=Hpr7wFW0v891tiqC2/EwR+m/WvnkX+NVgQm1GsTADHE=;
+        b=COd4rJWvNV0YxOgbDTEV2cEstBD0nJ3U1CSh7cYGzoiPLF07BUCirHaY/z54mp52jA
+         iJw/Xm0Lj7Jj8wpuStKwu2Zss1cvXRenWbKsitFKVnmpGYmJobRbKvSTga0UgVxDhjJ8
+         paq/RslFAiEFNuCV9V7BfbYX1ZrMCbmJVGsxjqnHowt69JcoiIvEA0zDofMDCX9dsok5
+         sEWrVhb049hXkr6gK3YXw8TsQc5waFlVM/mfZiNLCCKakwoXD81tNdYjfWrRp8ZShgQ5
+         8uDx5h36djSr0G2GcCtqp+YQZCwSSfHWxZY4qMOAZO7PVnVmVp1GYFvmhWhAupBoMNXK
+         AQuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-transfer-encoding;
+        bh=Hpr7wFW0v891tiqC2/EwR+m/WvnkX+NVgQm1GsTADHE=;
+        b=cKospPU5deoF6yM4lcIxD+e0acfRnaR2mqa8I+QFRzNswC+HRYed68f5DDL+D7osqS
+         QxGJ+ZmXxIVkaYGh0yznsEkqkgx1TLK2JliCFVo7cVb0l7TpKXW2wAc3HGm/Llcmgnci
+         zNnS9V7WqHVkeGgWCZlcaeXn0RTJQyMtpNn+xgabxhvEy4+uDF+NY31cWP8/vtHvvppk
+         5EhxxwkjaBiOpALIB2pH52O74RTXuU3I0B2+HuNrJZ7ecRpmFQVaYzDabk3tqzYAhA1p
+         ujR6eJTq9/gQFAffljA0d4QopjZ9GtnWicIdd92uHCenfHcNEGW8uWRJmPstGmv4teAQ
+         eQ/A==
+X-Gm-Message-State: AEkoouuYyB7pBnZDepqy7qgx4t5FBSfTNX66L9WySzo5qHLO57IUbcndRgXFEw3hdZZ8cg==
+X-Received: by 10.194.175.170 with SMTP id cb10mr16057184wjc.17.1469957179835;
+        Sun, 31 Jul 2016 02:26:19 -0700 (PDT)
+Received: from [192.168.1.26] (dad247.neoplus.adsl.tpnet.pl. [83.23.3.247])
+        by smtp.googlemail.com with ESMTPSA id a2sm11372443wma.2.2016.07.31.02.26.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 31 Jul 2016 02:26:18 -0700 (PDT)
+Subject: Re: git bisect for reachable commits only
+To:	Oleg Taranenko <olegtaranenko@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+References: <CABEd3j8VLbpeWbA6BfHYp5aLPEy0PesqYoHM9u4OM=b7Qm=LDg@mail.gmail.com>
+ <xmqqinvonwxc.fsf@gitster.mtv.corp.google.com>
+ <CABEd3j-MW--YSC9=nwcgHzxd6cqmUY+ky3-wLxMiMmbBGsvS7Q@mail.gmail.com>
+Cc:	git@vger.kernel.org
+Newsgroups: gmane.comp.version-control.git
+From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <2bfd9cf5-a9fa-7650-21e9-9ceb9cc34d8b@gmail.com>
+Date:	Sun, 31 Jul 2016 11:26:00 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Date:	Sun, 31 Jul 2016 09:21:38 +0000
-X-SES-Outgoing:	2016.07.31-54.240.7.12
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+In-Reply-To: <CABEd3j-MW--YSC9=nwcgHzxd6cqmUY+ky3-wLxMiMmbBGsvS7Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-is_empty_file() can help to refactor a lot of code. This will be very
-helpful in porting "git bisect" to C.
+W dniu 31.07.2016 o 02:06, Oleg Taranenko pisze:
 
-Suggested-by: Torsten Bögershausen <tboegi@web.de>
-Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
----
- builtin/am.c | 20 ++------------------
- cache.h      |  3 +++
- wrapper.c    | 13 +++++++++++++
- 3 files changed, 18 insertions(+), 18 deletions(-)
+> Then, I suggest as well additional to defaulting via 'git config
+> bisect.reachable true/false' use per bisect session switch
+> 
+>     git bisect start --[un-]reachable-commits # which will override
+> default setting
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 3dfe70b..6ee158f 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -30,22 +30,6 @@
- #include "mailinfo.h"
- 
- /**
-- * Returns 1 if the file is empty or does not exist, 0 otherwise.
-- */
--static int is_empty_file(const char *filename)
--{
--	struct stat st;
--
--	if (stat(filename, &st) < 0) {
--		if (errno == ENOENT)
--			return 1;
--		die_errno(_("could not stat %s"), filename);
--	}
--
--	return !st.st_size;
--}
--
--/**
-  * Returns the length of the first line of msg.
-  */
- static int linelen(const char *msg)
-@@ -1323,7 +1307,7 @@ static int parse_mail(struct am_state *state, const char *mail)
- 		goto finish;
- 	}
- 
--	if (is_empty_file(am_path(state, "patch"))) {
-+	if (is_empty_or_missing_file(am_path(state, "patch"))) {
- 		printf_ln(_("Patch is empty. Was it split wrong?"));
- 		die_user_resolve(state);
- 	}
-@@ -1911,7 +1895,7 @@ static void am_run(struct am_state *state, int resume)
- 		resume = 0;
- 	}
- 
--	if (!is_empty_file(am_path(state, "rewritten"))) {
-+	if (!is_empty_or_missing_file(am_path(state, "rewritten"))) {
- 		assert(state->rebasing);
- 		copy_notes_for_rebase(state);
- 		run_post_rewrite_hook(state);
-diff --git a/cache.h b/cache.h
-index 6049f86..91e2f81 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1870,4 +1870,7 @@ void sleep_millisec(int millisec);
-  */
- void safe_create_dir(const char *dir, int share);
- 
-+/* Return 1 if the file is empty or does not exists, 0 otherwise. */
-+extern int is_empty_or_missing_file(const char *filename);
-+
- #endif /* CACHE_H */
-diff --git a/wrapper.c b/wrapper.c
-index 5dc4e15..e70e4d1 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -696,3 +696,16 @@ void sleep_millisec(int millisec)
- {
- 	poll(NULL, 0, millisec);
- }
-+
-+int is_empty_or_missing_file(const char *filename)
-+{
-+	struct stat st;
-+
-+	if (stat(filename, &st) < 0) {
-+		if (errno == ENOENT)
-+			return 1;
-+		die_errno(_("could not stat %s"), filename);
-+	}
-+
-+	return !st.st_size;
-+}
+Isn't `--reachable-commits` the same as existing `--ancestry-path`
+option to `git log` and friends (I wonder if passing log options to
+bisect, that is: `git bisect --ancestry-path ...` would work)?
 
---
-https://github.com/git/git/pull/281
+-- 
+Jakub Narębski
+
