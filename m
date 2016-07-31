@@ -2,74 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_RED
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B81E1F858
-	for <e@80x24.org>; Sun, 31 Jul 2016 14:11:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 536D81F858
+	for <e@80x24.org>; Sun, 31 Jul 2016 14:34:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753602AbcGaOKs (ORCPT <rfc822;e@80x24.org>);
-	Sun, 31 Jul 2016 10:10:48 -0400
-Received: from ducie-dc1.codethink.co.uk ([185.25.241.215]:42489 "EHLO
-	ducie-dc1.codethink.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752984AbcGaOKr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jul 2016 10:10:47 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by ducie-dc1.codethink.co.uk (Postfix) with ESMTP id 38B2D4627F7;
-	Sun, 31 Jul 2016 15:09:55 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at ducie-dc1.codethink.co.uk
-Received: from ducie-dc1.codethink.co.uk ([127.0.0.1])
-	by localhost (ducie-dc1.codethink.co.uk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id X+IhG9HJQ9HX; Sun, 31 Jul 2016 15:09:53 +0100 (BST)
-Received: from salo (82-70-136-246.dsl.in-addr.zen.co.uk [82.70.136.246])
-	by ducie-dc1.codethink.co.uk (Postfix) with ESMTPSA id DBB11462868;
-	Sun, 31 Jul 2016 15:09:52 +0100 (BST)
-Date:	Sun, 31 Jul 2016 15:09:36 +0100
-From:	Richard Ipsum <richard.ipsum@codethink.co.uk>
-To:	Stefan Beller <sbeller@google.com>
-Cc:	Josh Triplett <josh@joshtriplett.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	"Linux-Kernel@Vger. Kernel. Org" <linux-kernel@vger.kernel.org>,
-	Dave Borowitz <dborowitz@google.com>
-Subject: Re: [ANNOUNCE] git-series: track changes to a patch series over time
-Message-ID: <20160731140936.GA3959@salo>
-References: <20160729064055.GB25331@x>
- <20160729101011.GA3469@salo>
- <20160729110426.GA2945@x>
- <20160729124443.GA3686@salo>
- <CAGZ79kbTViNYLq0aouQ--5d7m=HYi3QxUYqaaH8sTCS_YTDquQ@mail.gmail.com>
+	id S1753796AbcGaOcS (ORCPT <rfc822;e@80x24.org>);
+	Sun, 31 Jul 2016 10:32:18 -0400
+Received: from mail-io0-f170.google.com ([209.85.223.170]:36256 "EHLO
+	mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752965AbcGaObF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jul 2016 10:31:05 -0400
+Received: by mail-io0-f170.google.com with SMTP id b62so166758288iod.3
+        for <git@vger.kernel.org>; Sun, 31 Jul 2016 07:31:04 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=E8CRdC/yo7Z77+2XWRgkKbkn+a9aPJE4xh2T7rBQnM8=;
+        b=G7R82sEErUZ895J3vxecojqTHB2UaO+sFuU+yJ5B41zbDAXhhCKlfp0RAlykO/QWPs
+         iY8SW+aqPQ3uL7gfw4vtP5POhnozUSYDYBEd9UKHyoLj4u4iUB1Bw13TzEBoo7A+9OtN
+         qev5W/cKTbQjLCpWZ/UOfHAGRPnDJg9V3mFE2dExhEuoepVOm2zfqu4j99QkYi7+Wf13
+         M2W5tMjQ9L0eUl7kKpF8u7KwIYJv7pUoblbjG/+dZWW3oTlHzCZtSUrCX1Cf1eCfn9IG
+         1wf2UzIhewWVK8smoegVDbnUA54cSy/vaCs6QrygVnKiIwhMwiKFEzUvgAIndNlpC3+w
+         qM1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=E8CRdC/yo7Z77+2XWRgkKbkn+a9aPJE4xh2T7rBQnM8=;
+        b=KfTEXoHTOZlKQi6esq6jK1rlISreh9qe07U7rEN/NWGjXsp9+kz4oPSpk6HdjQAUI4
+         D5sv783z2wvOdBVoNx0KcdJPUZA0qo6ll0LD3B/gzTtiaBn+G1ZQ4Qe2rWStMrFwMLlJ
+         euN0LyS9zSA5Q7BJWvgW/rLJU1yjT/y0S9/g+iV4tSQVi+CnmXZhtiid11s6YVzF7xox
+         MT2ajgsgJeOgwabBIoKPvjHaWfPrU6YDmupZYAAA6KTofhg0WBftXp4NadlVrHIfSd6d
+         f71eaRiqYKbP5FToYmXE53V2+NB5UDP8MSDi4YCdkkpUYiFSa9yNqSdDavqLrAAoC3Mp
+         T8mA==
+X-Gm-Message-State: AEkoouuUF4HS973fZsASo9MWpXktjarSdtd2IaJ6DJtVDAdBBmj9rm9twezz/xsowfP42PazJ8l4CWouWFZFjw==
+X-Received: by 10.107.159.147 with SMTP id i141mr50366068ioe.29.1469975463662;
+ Sun, 31 Jul 2016 07:31:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kbTViNYLq0aouQ--5d7m=HYi3QxUYqaaH8sTCS_YTDquQ@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+Received: by 10.64.225.235 with HTTP; Sun, 31 Jul 2016 07:30:34 -0700 (PDT)
+In-Reply-To: <20160731010732.GA31840@whir>
+References: <20160718223038.GA66056@plume> <20160730182005.14426-1-pclouds@gmail.com>
+ <20160731001532.GA23146@starla> <20160731010732.GA31840@whir>
+From:	Duy Nguyen <pclouds@gmail.com>
+Date:	Sun, 31 Jul 2016 16:30:34 +0200
+Message-ID: <CACsJy8CfLYPT5hJRT1q6nCtjy0K6+nZWGV5G+d7u=ymuEZ85tg@mail.gmail.com>
+Subject: Re: [PATCH] t7063: work around FreeBSD's lazy mtime update feature
+To:	Eric Wong <e@80x24.org>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Jul 29, 2016 at 09:59:08AM -0700, Stefan Beller wrote:
-> On Fri, Jul 29, 2016 at 5:44 AM, Richard Ipsum
-> <richard.ipsum@codethink.co.uk> wrote:
-> >>
-> >> These definitely seem like a family of related problems.  I'd like to
-> >> use git-series as a format for storing iterations on things like GitHub
-> >> pull-requests or Gerrit patch versions (in the latter case, overcoming
-> >> Gerrit's limitations on only handling one patch at a time).  Integrating
-> >> reviews with that seems helpful.
-> >
-> > Worth noting here that Gerrit's one patch per change format isn't
-> > intrinsic to Notedb, since we just need to track the sha we want
-> > to merge and optionally the branch we intend to merge into.
-> 
-> Note that Gerrit started to lose the "one patch at a time" notion.
-> It is possible to at least submit multiple changes coupled together
-> (even across project boundaries) via the topic. Some sort of cover
-> letter is missing though, that could be used e.g. for the merge commit.
+On Sun, Jul 31, 2016 at 3:07 AM, Eric Wong <e@80x24.org> wrote:
+>> would be more to the point of what is going on, here.   But I
+>> also wonder if untracked cache itself could/should be doing this
+>> internally.
+>
+> Still wondering :>
 
-Potentially my misuse of the format but git-candidate puts the cover
-letter into the body of the commit message before the footers begin,
-for each new patchset added to the change. This has the advantage
-that you can track each version of the cover letter,
-since there's one per patchset.
+There's nothing we can do besides maybe run a cron job executing
+'sync' every second or so. We need to force mtime to be written down
+close to.. you know.. mtime. By the time git is executed, it's already
+late. You can execute 'sync' inside git then wait a couple seconds..
+but that's just stupid. And removing the racy check is even more
+dangerous, now you can get false output.
+-- 
+Duy
