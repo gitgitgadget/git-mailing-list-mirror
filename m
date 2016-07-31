@@ -2,173 +2,198 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FB191F855
-	for <e@80x24.org>; Sun, 31 Jul 2016 09:41:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8EB51F855
+	for <e@80x24.org>; Sun, 31 Jul 2016 09:42:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753233AbcGaJkz (ORCPT <rfc822;e@80x24.org>);
-	Sun, 31 Jul 2016 05:40:55 -0400
-Received: from a7-20.smtp-out.eu-west-1.amazonses.com ([54.240.7.20]:39333
-	"EHLO a7-20.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753096AbcGaJks (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2016 05:40:48 -0400
-X-Greylist: delayed 1122 seconds by postgrey-1.27 at vger.kernel.org; Sun, 31 Jul 2016 05:40:48 EDT
-DKIM-Signature:	v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1469956898;
-	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-	bh=I9F3cl9iqRUb1PEvphfrtX8eeLzgT1RajqtTf7br6NQ=;
-	b=LtOKvv3ZpnI/CxUx3p7+ZlO5BqXBGmzggaxeffT+uwLNDYqGlLGBbMAByqX+J+FS
-	VyrR3+9yvh5LPVQkq6KOZLI1J4haYdBQ+UlXeH+WwHeCtB//sIERZhNjEQXYofivU7/
-	9iM+fhUl+CsHDIK8pF1DV9ANO9PtlK8WglC3tdDE=
-From:	Pranit Bauva <pranit.bauva@gmail.com>
-To:	git@vger.kernel.org
-Message-ID: <0102015640423ce7-b633a4e8-1a15-4770-ba6c-4331b2c1d941-000000@eu-west-1.amazonses.com>
-In-Reply-To: <0102015640423c26-2060fd70-c90d-4de3-ae8c-1801ad160b1c-000000@eu-west-1.amazonses.com>
-References: <0102015640423c26-2060fd70-c90d-4de3-ae8c-1801ad160b1c-000000@eu-west-1.amazonses.com>
-Subject: [RFC/PATCH v11 08/13] bisect--helper: `is_expected_rev` &
- `check_expected_revs` shell function in C
+	id S1752953AbcGaJme (ORCPT <rfc822;e@80x24.org>);
+	Sun, 31 Jul 2016 05:42:34 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36323 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752807AbcGaJmc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jul 2016 05:42:32 -0400
+Received: by mail-wm0-f67.google.com with SMTP id x83so21875090wma.3
+        for <git@vger.kernel.org>; Sun, 31 Jul 2016 02:42:31 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=JPRNJQsxaiGVjybnTtzmJ5NfDIAioMMU+AwevNzR4+A=;
+        b=eipB9NKde+rUAmLYOYPucM0N8dKBq6rbXTek3fQnmHw6P3lm2PY8TqzX61eWeW5jcx
+         uT5BZzVHQkwsX6mvaA5T6zwfqH6aKPmV0UP+gXH5g0VQsJchJGsu3aMz8HfXldegpgJ5
+         kaMolcXZjsfSu5i4eefWztun3v3/n8coWmLvFGEdLUG3Ki0cDwvwScI0UXZJMJlYoWRw
+         AGWfdOggIHiXP6+IJvrfI3D1XjzqNpWKASA9d2Yhx4Hx23V6qeQgQcbvijaPm+gpzbl2
+         byv0bAHKB4LnvsI4HvYAhw5NJgNOv5b6/LV59DhRsap47P86GtOeWQpDo9tOOtT8kNsI
+         W7oA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-transfer-encoding;
+        bh=JPRNJQsxaiGVjybnTtzmJ5NfDIAioMMU+AwevNzR4+A=;
+        b=CknMdyA9aFVJPl05M2rYnGl3mDO/MivqJ0Toj6/fEAOd9lxDv0OHEES8KS7bn8bz+2
+         yxdxh+j5FS9a2S7+0LjutEk6AGNz2iWyMwW89bJbNdR8KIaiYFTJ2XL3bY9YRRRTHlLP
+         bnZRbA24eORs4UaLWKe43ISQuNuhkuhTvfHAqSsuvYhMi+BCt7Kra+52Nv52lFovCsBY
+         YHHxR2rNeIrud4zwSlJbpZ3xp5q8V0p8G9TFlJxXKjH6KJiAkpwVfmAFqbWqu4e17IVL
+         miWYOCbK9dr5Iazg+3DMj1TrIBv0FOga4Bp6/zq0j3y9sEVE0ETQkXp3hrIzdResDhG+
+         FYSA==
+X-Gm-Message-State: AEkoousBejST+aIXqYFtAAYVLotYtGcSx5e6dNVaZUCDL5lMPZJuSE4u61QPfDMsH4/jjg==
+X-Received: by 10.194.61.205 with SMTP id s13mr44859799wjr.86.1469958150532;
+        Sun, 31 Jul 2016 02:42:30 -0700 (PDT)
+Received: from [192.168.1.26] (dad247.neoplus.adsl.tpnet.pl. [83.23.3.247])
+        by smtp.googlemail.com with ESMTPSA id u72sm11426409wmf.5.2016.07.31.02.42.28
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 31 Jul 2016 02:42:29 -0700 (PDT)
+Subject: Re: [PATCH v3 10/10] convert: add filter.<driver>.process option
+To:	Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
+References: <20160727000605.49982-1-larsxschneider%40gmail.com/>
+ <20160729233801.82844-1-larsxschneider@gmail.com>
+ <20160729233801.82844-11-larsxschneider@gmail.com>
+ <b4c9ac5d-bd6b-141b-5b85-ab4aa719ccb0@gmail.com>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+	Martin-Louis Bright <mlbright@gmail.com>,
+	Eric Wong <e@80x24.org>, Jeff King <peff@peff.net>
+Newsgroups: gmane.comp.version-control.git
+From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <69988611-06ec-048d-12e7-7b87882ddc6a@gmail.com>
+Date:	Sun, 31 Jul 2016 11:42:11 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:	Sun, 31 Jul 2016 09:21:38 +0000
-X-SES-Outgoing:	2016.07.31-54.240.7.20
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+In-Reply-To: <b4c9ac5d-bd6b-141b-5b85-ab4aa719ccb0@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Reimplement `is_expected_rev` & `check_expected_revs` shell function in
-C and add a `--check-expected-revs` subcommand to `git bisect--helper` to
-call it from git-bisect.sh .
+[Excuse me replying to myself, but there are a few things I forgot,
+ or realized only later]
 
-Using `--check-expected-revs` subcommand is a temporary measure to port
-shell functions to C so as to use the existing test suite. As more
-functions are ported, this subcommand would be retired and will be
-called by some other method.
+W dniu 31.07.2016 o 00:05, Jakub Narębski pisze:
+> W dniu 30.07.2016 o 01:38, larsxschneider@gmail.com pisze:
+>> From: Lars Schneider <larsxschneider@gmail.com>
+>>
+>> Git's clean/smudge mechanism invokes an external filter process for every
+>> single blob that is affected by a filter. If Git filters a lot of blobs
+>> then the startup time of the external filter processes can become a
+>> significant part of the overall Git execution time.
+>>
+>> This patch adds the filter.<driver>.process string option which, if used,
+>> keeps the external filter process running and processes all blobs with
+>> the following packet format (pkt-line) based protocol over standard input
+>> and standard output.
+> 
+> I think it would be nice to have here at least summary of the benchmarks
+> you did in https://github.com/github/git-lfs/pull/1382
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
----
- builtin/bisect--helper.c | 33 ++++++++++++++++++++++++++++++++-
- git-bisect.sh            | 20 ++------------------
- 2 files changed, 34 insertions(+), 19 deletions(-)
+Note that this feature is especially useful if startup time is long,
+that is if you are using an operating system with costly fork / new process
+startup time like MS Windows (which you have mentioned), or writing
+filter in a programming language with large startup time like Java
+or Python (the latter may have changed since).
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 0e09630..c0f7091 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -162,13 +162,40 @@ static int bisect_reset(const char *commit)
- 	return bisect_clean_state();
- }
- 
-+static int is_expected_rev(const char *expected_hex)
-+{
-+	struct strbuf actual_hex = STRBUF_INIT;
-+	int res = 0;
-+	if (strbuf_read_file(&actual_hex, git_path_bisect_expected_rev(), 0) >= 0) {
-+		strbuf_trim(&actual_hex);
-+		res = !strcmp(actual_hex.buf, expected_hex);
-+	}
-+	strbuf_release(&actual_hex);
-+	return res;
-+}
-+
-+static int check_expected_revs(const char **revs, int rev_nr)
-+{
-+	int i;
-+
-+	for (i = 0; i < rev_nr; i++) {
-+		if (!is_expected_rev(revs[i])) {
-+			remove_path(git_path_bisect_ancestors_ok());
-+			remove_path(git_path_bisect_expected_rev());
-+			return 0;
-+		}
-+	}
-+	return 0;
-+}
-+
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
- 	enum {
- 		NEXT_ALL = 1,
- 		WRITE_TERMS,
- 		BISECT_CLEAN_STATE,
--		BISECT_RESET
-+		BISECT_RESET,
-+		CHECK_EXPECTED_REVS
- 	} cmdmode = 0;
- 	int no_checkout = 0;
- 	struct option options[] = {
-@@ -180,6 +207,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			 N_("cleanup the bisection state"), BISECT_CLEAN_STATE),
- 		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
- 			 N_("reset the bisection state"), BISECT_RESET),
-+		OPT_CMDMODE(0, "check-expected-revs", &cmdmode,
-+			 N_("check for expected revs"), CHECK_EXPECTED_REVS),
- 		OPT_BOOL(0, "no-checkout", &no_checkout,
- 			 N_("update BISECT_HEAD instead of checking out the current commit")),
- 		OPT_END()
-@@ -206,6 +235,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		if (argc > 1)
- 			die(_("--bisect-reset requires either zero or one arguments"));
- 		return bisect_reset(argc ? argv[0] : NULL);
-+	case CHECK_EXPECTED_REVS:
-+		return check_expected_revs(argv, argc);
- 	default:
- 		die("BUG: unknown subcommand '%d'", cmdmode);
- 	}
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 18580b7..4f6545e 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -238,22 +238,6 @@ bisect_write() {
- 	test -n "$nolog" || echo "git bisect $state $rev" >>"$GIT_DIR/BISECT_LOG"
- }
- 
--is_expected_rev() {
--	test -f "$GIT_DIR/BISECT_EXPECTED_REV" &&
--	test "$1" = $(cat "$GIT_DIR/BISECT_EXPECTED_REV")
--}
--
--check_expected_revs() {
--	for _rev in "$@"; do
--		if ! is_expected_rev "$_rev"
--		then
--			rm -f "$GIT_DIR/BISECT_ANCESTORS_OK"
--			rm -f "$GIT_DIR/BISECT_EXPECTED_REV"
--			return
--		fi
--	done
--}
--
- bisect_skip() {
- 	all=''
- 	for arg in "$@"
-@@ -280,7 +264,7 @@ bisect_state() {
- 		rev=$(git rev-parse --verify $(bisect_head)) ||
- 			die "$(gettext "Bad rev input: $(bisect_head)")"
- 		bisect_write "$state" "$rev"
--		check_expected_revs "$rev" ;;
-+		git bisect--helper --check-expected-revs "$rev" ;;
- 	2,"$TERM_BAD"|*,"$TERM_GOOD"|*,skip)
- 		shift
- 		hash_list=''
-@@ -294,7 +278,7 @@ bisect_state() {
- 		do
- 			bisect_write "$state" "$rev"
- 		done
--		check_expected_revs $hash_list ;;
-+		git bisect--helper --check-expected-revs $hash_list ;;
- 	*,"$TERM_BAD")
- 		die "$(eval_gettext "'git bisect \$TERM_BAD' can take only one argument.")" ;;
- 	*)
+  https://gnustavo.wordpress.com/2012/06/28/programming-languages-start-up-times/
 
---
-https://github.com/git/git/pull/281
+[...]
+> I was thinking about having possible responses to receiving file
+> contents (or starting receiving in the streaming case) to be:
+> 
+>   packet:          git< ok size=7\n    (or "ok 7\n", if size is known)
+> 
+> or
+> 
+>   packet:          git< ok\n           (if filter does not know size upfront)
+> 
+> or
+> 
+>   packet:          git< fail <msg>\n   (or just "fail" + packet with msg)
+> 
+> The last would be when filter knows upfront that it cannot perform
+> the operation.  Though sending an empty file with non-"success" final
+> would work as well.
+
+[...]
+
+>> In case the filter cannot process the content, it is expected
+>> to respond with the result content size 0 (only if "stream" is
+>> not defined) and a "reject" packet.
+>> ------------------------
+>> packet:          git< size=0\n    (omitted with capability "stream")
+>> packet:          git< reject\n
+>> ------------------------
+> 
+> This is *wrong* idea!  Empty file, with size=0, can be a perfectly
+> legitimate response.  
+
+Actually, I think I have misunderstood your intent.  If you want to have
+simpler protocol, with only one place to signal errors, that is after
+sending a response, then proper way of signaling the error condition
+would be to send empty file and then "reject" instead of "success":
+
+   packet:          git< size=0\n    (omitted with capability "stream")
+   packet:          git< 0000        (we need this flush packet)
+   packet:          git< reject\n
+
+Otherwise in the case without size upfront (capability "stream")
+file with contents "reject" would be mistaken for the "reject" packet.
+
+See below for proposal with two places to signal errors: before sending
+first byte, and after.
+
+
+NOTE: there is a bit of mixed and possibly confusing notation, that
+is 0000 is flush packet, not packet with 0000 as content.  Perhaps
+write pkt-line in full?
+
+
+[...]
+>> ---
+>>  Documentation/gitattributes.txt |  84 ++++++++-
+>>  convert.c                       | 400 +++++++++++++++++++++++++++++++++++++--
+>>  t/t0021-conversion.sh           | 405 ++++++++++++++++++++++++++++++++++++++++
+>>  t/t0021/rot13-filter.pl         | 177 ++++++++++++++++++
+>>  4 files changed, 1053 insertions(+), 13 deletions(-)
+>>  create mode 100755 t/t0021/rot13-filter.pl
+
+Wouldn't it be better for easier review to split it into separate patches?
+Perhaps at least the new test...
+
+[...]
+> I would assume that we have two error conditions.  
+> 
+> First situation is when the filter knows upfront (after receiving name
+> and size of file, and after receiving contents for not-streaming filters)
+> that it cannot process the file (like e.g. LFS filter with artifactory
+> replica/shard being a bit behind master, and not including contents of
+> the file being filtered).
+> 
+> My proposal is to reply with "fail" _in place of_ size of reply:
+> 
+>    packet:         git< fail\n       (any case: size known or not, stream or not)
+> 
+> It could be "reject", or "error" instead of "fail".
+> 
+> 
+> Another situation is if filter encounters error during output,
+> either with streaming filter (or non-stream, but not storing whole
+> input upfront) realizing in the middle of output that there is something
+> wrong with input (e.g. converting between encoding, and encountering
+> character that cannot be represented in output encoding), or e.g. filter
+> process being killed, or network connection dropping with LFS filter, etc.
+> The filter has send some packets with output already.  In this case
+> filter should flush, and send "reject" or "error" packet.
+> 
+>    <error condition>
+>    packet:         git< "0000"       (flush packet)
+>    packet:         git< reject\n
+> 
+> Should there be a place for an error message, or would standard error
+> (stderr) be used for this?
+
