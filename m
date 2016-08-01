@@ -3,203 +3,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5729B1F71B
-	for <e@80x24.org>; Tue,  2 Aug 2016 14:16:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BFB01F71B
+	for <e@80x24.org>; Tue,  2 Aug 2016 14:35:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754608AbcHBOQI (ORCPT <rfc822;e@80x24.org>);
-	Tue, 2 Aug 2016 10:16:08 -0400
-Received: from siwi.pair.com ([209.68.5.199]:12869 "EHLO siwi.pair.com"
+	id S964897AbcHBOew (ORCPT <rfc822;e@80x24.org>);
+	Tue, 2 Aug 2016 10:34:52 -0400
+Received: from mout.gmx.net ([212.227.15.19]:64056 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755674AbcHBOPZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Aug 2016 10:15:25 -0400
-Received: from jeffhost-linux1.corp.microsoft.com (unknown [167.220.148.23])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by siwi.pair.com (Postfix) with ESMTPSA id 2361584649;
-	Tue,  2 Aug 2016 10:15:05 -0400 (EDT)
-From:	Jeff Hostetler <git@jeffhostetler.com>
-To:	git@vger.kernel.org
-Cc:	gitster@pobox.com, Johannes.Schindelin@gmx.de,
-	Jeff Hostetler <jeffhost@microsoft.com>,
-	Jeff Hostetler <git@jeffhostetler.com>
-Subject: [PATCH v4 4/8] status: per-file data collection for --porcelain=v2
-Date:	Tue,  2 Aug 2016 10:12:13 -0400
-Message-Id: <1470147137-17498-5-git-send-email-git@jeffhostetler.com>
-X-Mailer: git-send-email 2.8.0.rc4.17.gac42084.dirty
-In-Reply-To: <1470147137-17498-1-git-send-email-git@jeffhostetler.com>
-References: <1470147137-17498-1-git-send-email-git@jeffhostetler.com>
+	id S933925AbcHBOek convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Aug 2016 10:34:40 -0400
+Received: from misery ([80.109.83.31]) by mail.gmx.com (mrgmx001) with ESMTPSA
+ (Nemesis) id 0M4WuC-1b4rC51QMe-00yeJo; Mon, 01 Aug 2016 23:50:05 +0200
+Date:	Mon, 1 Aug 2016 23:49:09 +0200
+From:	Stefan Tauner <stefan.tauner@gmx.at>
+To:	Jeff King <peff@peff.net>
+Cc:	git@vger.kernel.org
+Subject: Re: Un-paged commit messages in git filter-branch's commit-filter?
+In-Reply-To: <20160801213631.2ttdlermxw2wbnbi@sigill.intra.peff.net>
+References: <0McmFl-1aux6M2oV7-00Hv9A@mail.gmx.com>
+	<20160616095947.GA15988@sigill.intra.peff.net>
+	<0MTjMy-1buKad2Fg8-00QUQV@mail.gmx.com>
+	<20160801213631.2ttdlermxw2wbnbi@sigill.intra.peff.net>
+X-Mailer: Claws Mail 3.13.2 (GTK+ 2.24.30; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+Message-ID: <0LzskF-1bGAH81g5T-014za7@mail.gmx.com>
+X-Provags-ID: V03:K0:2EJBfULjPJDL6AKgoCvpVto+tnuzjU9RyIpbsAIXTRroZnfhII5
+ MtQl+OKCvzseJ1K1BF+sGnIeYQX2oOLX+MD5T5oXNukPfvbZke3PTqxWBASwPWTqVGS6VR7
+ Q290zvVCBEz1xLmGjGRvWXvJNWDEoB+MGt8GoiEbaxdmY3vMre89OFEmQ49mGWvIjyg45tt
+ s9EMo1HCuFXCyNVmUIc5A==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:qJTQ//CpuBI=:Zq2xzzX8Qlu/6FwAfPvtyd
+ B7dL34bBIZu5lbyVpEn/Y5qZe9o6hDCf0k9/wB9WAI4J0Q3UaK7NV5oVTcBvPGFsoFyI2u/O2
+ 2C0Ebu8O7NukoGPqOtjZcIYqIQ1q2OAx2qmdlmTJfK55FW4XgGn9NCgOKdghgkU+mNG4VX/Yc
+ w+iIKesADN7WCu7HlXiJUf80wztM3d0gddVcChRYyZY5plcE8bziug5luXvcDoTgmhrzGur9u
+ +Y5TcoL3pPAGuOltFUX4sysNrgOadDdjheEn55Zn+yhMESz2ppcJj+BsL0YTCr5G67+7obXI2
+ 4/lf3QU2k2Me3KmnuN5TcMaocSCxBRHEfvoVbzQtLkxtgAUSHotPA8L8oI+3K9peOKiMRpNF+
+ x236tdt0/OkinHHTqKSLC/UhCmBEl6IAFU//iMZSxvN4GbtJsHJgwIuFaxFgTOXG+gn28dBZ2
+ 7ala3/ZstrwfWX/ecmHvDAX3YhfE3KI3DuA+xF3E4GnPDQjq206R66Y7cmqNm4ybhbdXPJqr4
+ N+YVJ6BiV5O4ZHBOBSwl6IO85E7LEOjeOBedpn/ASt5X4c3fkxzognur3ssuFZfqX/b0E6XWu
+ ehbOiCYi4rVTRkOt7VlrT563Sc8x5aak/kj6dHxjb/qFX8n0nhvrPOGCEul0kbnsAhYZB6DA7
+ DyT1O7RzZpvAGp5nsl7IpDp3bwce/GkPm0Ta9UB8/EW6Cku7NTFero5cMRnN4nFG/ejkhOiRc
+ I/wyFIuS/vT4U4DfDNQeTDK3kC4HEjl/fdcGAldgYStE8m3f+LxCL+u1rN8a6nLabkdrRR8NF
+ 1LPWWa1
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+On Mon, 1 Aug 2016 17:36:31 -0400
+Jeff King <peff@peff.net> wrote:
 
-The output of `git status --porcelain` leaves out many details
-about the current status that clients might like to have.  This
-can force them to be less efficient as they may need to launch
-secondary commands (and try to match the logic within git) to
-accumulate this extra information.  For example, a GUI IDE might
-want the file mode to display the correct icon for a changed
-item (without having to stat it afterwards).
+> On Sun, Jul 31, 2016 at 06:39:35PM +0200, Stefan Tauner wrote:
+> 
+> > > There are some output formats that will wrap lines, but by default,
+> > > filter-branch should not be using them (and I could not reproduce the
+> > > issue in a simple test). Can you show us what your commit-filter looks
+> > > like?  
+> > 
+> > Thanks for your answer. I have tried to reproduce it in other (newly
+> > created) repositories but failed. However, it seems to relate to some
+> > kind of persistent paging setting, is that possible?
+> > git config -l does not show anything suspicious.
+> > 
+> > The following commands produce paged output:
+> > git show hash
+> > git show --pretty=%B
+> > git log hash^..hash
+> > Commit message in gitk
+> > 
+> > 
+> > These do NOT produce paged output:
+> > git patch hash^..hash
+> > Commit message in gitg 0.2.7  
+> 
+> What is "git patch"? An alias for "format-patch?".
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-Signed-off-by: Jeff Hostetler <git@jeffhostetler.com>
----
- builtin/commit.c |  3 +++
- wt-status.c      | 63 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- wt-status.h      |  4 ++++
- 3 files changed, 69 insertions(+), 1 deletion(-)
+Yes, sorry.
+And this is the most amazing thing about this behavior... what's so
+different between format-patch and log or show --pretty=%B. Shouldn't
+these match 100%?
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index c3ae2c3..93ce28c 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -153,6 +153,8 @@ static int opt_parse_porcelain(const struct option *opt, const char *arg, int un
- 		*value = STATUS_FORMAT_PORCELAIN;
- 	else if (!strcmp(arg, "v1") || !strcmp(arg,"1"))
- 		*value = STATUS_FORMAT_PORCELAIN;
-+	else if (!strcmp(arg, "v2") || !strcmp(arg, "2"))
-+		*value = STATUS_FORMAT_PORCELAIN_V2;
- 	else
- 		die("unsupported porcelain version '%s'", arg);
- 
-@@ -1104,6 +1106,7 @@ static struct status_deferred_config {
- static void finalize_deferred_config(struct wt_status *s)
- {
- 	int use_deferred_config = (status_format != STATUS_FORMAT_PORCELAIN &&
-+				   status_format != STATUS_FORMAT_PORCELAIN_V2 &&
- 				   !s->null_termination);
- 
- 	if (s->null_termination) {
-diff --git a/wt-status.c b/wt-status.c
-index a9031e4..15d3349 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -434,6 +434,31 @@ static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
- 		if (S_ISGITLINK(p->two->mode))
- 			d->new_submodule_commits = !!oidcmp(&p->one->oid,
- 							    &p->two->oid);
-+
-+		switch (p->status) {
-+		case DIFF_STATUS_ADDED:
-+			die("BUG: worktree status add???");
-+			break;
-+
-+		case DIFF_STATUS_DELETED:
-+			d->mode_index = p->one->mode;
-+			oidcpy(&d->oid_index, &p->one->oid);
-+			/* mode_worktree is zero for a delete. */
-+			break;
-+
-+		case DIFF_STATUS_MODIFIED:
-+		case DIFF_STATUS_TYPE_CHANGED:
-+		case DIFF_STATUS_UNMERGED:
-+			d->mode_index = p->one->mode;
-+			d->mode_worktree = p->two->mode;
-+			oidcpy(&d->oid_index, &p->one->oid);
-+			break;
-+
-+		case DIFF_STATUS_UNKNOWN:
-+			die("BUG: worktree status unknown???");
-+			break;
-+		}
-+
- 	}
- }
- 
-@@ -479,12 +504,36 @@ static void wt_status_collect_updated_cb(struct diff_queue_struct *q,
- 		if (!d->index_status)
- 			d->index_status = p->status;
- 		switch (p->status) {
-+		case DIFF_STATUS_ADDED:
-+			/* Leave {mode,oid}_head zero for an add. */
-+			d->mode_index = p->two->mode;
-+			oidcpy(&d->oid_index, &p->two->oid);
-+			break;
-+		case DIFF_STATUS_DELETED:
-+			d->mode_head = p->one->mode;
-+			oidcpy(&d->oid_head, &p->one->oid);
-+			/* Leave {mode,oid}_index zero for a delete. */
-+			break;
-+			
- 		case DIFF_STATUS_COPIED:
- 		case DIFF_STATUS_RENAMED:
- 			d->head_path = xstrdup(p->one->path);
-+			d->score = p->score * 100 / MAX_SCORE;
-+			/* fallthru */
-+		case DIFF_STATUS_MODIFIED:
-+		case DIFF_STATUS_TYPE_CHANGED:
-+			d->mode_head = p->one->mode;
-+			d->mode_index = p->two->mode;
-+			oidcpy(&d->oid_head, &p->one->oid);
-+			oidcpy(&d->oid_index, &p->two->oid);
- 			break;
- 		case DIFF_STATUS_UNMERGED:
- 			d->stagemask = unmerged_mask(p->two->path);
-+			/*
-+			 * Don't bother setting {mode,oid}_{head,index} since the print
-+			 * code will output the stage values directly and not use the
-+			 * values in these fields.
-+			 */
- 			break;
- 		}
- 	}
-@@ -565,9 +614,18 @@ static void wt_status_collect_changes_initial(struct wt_status *s)
- 		if (ce_stage(ce)) {
- 			d->index_status = DIFF_STATUS_UNMERGED;
- 			d->stagemask |= (1 << (ce_stage(ce) - 1));
-+			/*
-+			 * Don't bother setting {mode,oid}_{head,index} since the print
-+			 * code will output the stage values directly and not use the
-+			 * values in these fields.
-+			 */
- 		}
--		else
-+		else {
- 			d->index_status = DIFF_STATUS_ADDED;
-+			/* Leave {mode,oid}_head zero for adds. */
-+			d->mode_index = ce->ce_mode;
-+			hashcpy(d->oid_index.hash, ce->sha1);
-+		}
- 	}
- }
- 
-@@ -1764,6 +1822,9 @@ void wt_status_print(struct wt_status *s)
- 	case STATUS_FORMAT_PORCELAIN:
- 		wt_porcelain_print(s);
- 		break;
-+	case STATUS_FORMAT_PORCELAIN_V2:
-+		/* TODO */
-+		break;
- 	case STATUS_FORMAT_UNSPECIFIED:
- 		die("BUG: finalize_deferred_config() should have been called");
- 		break;
-diff --git a/wt-status.h b/wt-status.h
-index a859a12..89a6d43 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -38,6 +38,9 @@ struct wt_status_change_data {
- 	int worktree_status;
- 	int index_status;
- 	int stagemask;
-+	int score;
-+	int mode_head, mode_index, mode_worktree;
-+	struct object_id oid_head, oid_index;
- 	char *head_path;
- 	unsigned dirty_submodule       : 2;
- 	unsigned new_submodule_commits : 1;
-@@ -48,6 +51,7 @@ struct wt_status_change_data {
- 	STATUS_FORMAT_LONG,
- 	STATUS_FORMAT_SHORT,
- 	STATUS_FORMAT_PORCELAIN,
-+	STATUS_FORMAT_PORCELAIN_V2,
- 
- 	STATUS_FORMAT_UNSPECIFIED
-  };
+> 
+> > This is the script I tried to use to reproduce the problem:
+> > 
+> > #!/bin/bash
+> > export LC_ALL=C
+> > input=$(cat)
+> > echo "===========================
+> > $input
+> > ===========================" >> /tmp/paging_bug.txt
+> > git commit-tree "$@" -m "$input"  
+> 
+> Can you be more specific about the input you're feeding to git and the
+> output you're seeing?
+> 
+> For instance, if I do:
+> 
+>   git init
+>   echo content >file
+>   git add file
+>   git commit -m "$(perl -e 'print join(" ", 1..100)')"
+> 
+> I get a commit message with one long unwrapped line, which I can view
+> via git-log, etc.
+
+That's approximately what I did in my tests as well. And like you, when
+I do this in a fresh repository, it works like that..
+
+> Now if I try to run filter-branch on that:
+> 
+>   git filter-branch --commit-filter '
+> 	input=$(cat)
+> 	{
+> 		echo "===================="
+> 		echo $input
+> 		echo "===================="
+> 	} >>/tmp/paging_bug.txt
+> 	git commit-tree "$@" -m "$input"
+>   '
+> 
+> then the commit remains unchanged, and paging_bug shows one long line.
+
+as well as filter-branch. That's what I meant when I wrote I cannot
+reproduce it with a new repository (to create a MWE). I wrote the first
+mail under the presumption that filter-branch is somehow involved but
+apparently it is not the only git command and receives the mangled
+input already as the commands stated in the last email show.
+
+> What am I missing?
+> 
+> (I wondered at first if the extra "cat" and "-m" could be messing up
+> whitespace for you, but it should not, as the quoting around "$input"
+> should preserve things like newlines. And anyway, the bug in that case
+> would be the _opposite_; I'd expect it to stuff everything onto a single
+> line rather than breaking lines).
+
+The commit messages I try to process are nothing special really... just
+very long and not subject-like (because SVN and not giving too much
+thought to them sometimes). The only special thing I can think of is
+that they have been processed by git-svn earlier.
+
 -- 
-2.8.0.rc4.17.gac42084.dirty
-
+Kind regards/Mit freundlichen Grüßen, Stefan Tauner
