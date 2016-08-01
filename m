@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
 	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D0481F71B
-	for <e@80x24.org>; Mon,  1 Aug 2016 11:45:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A5D11F71B
+	for <e@80x24.org>; Mon,  1 Aug 2016 11:45:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753368AbcHALpW (ORCPT <rfc822;e@80x24.org>);
-	Mon, 1 Aug 2016 07:45:22 -0400
-Received: from mout.gmx.net ([212.227.17.20]:64996 "EHLO mout.gmx.net"
+	id S1753370AbcHALpY (ORCPT <rfc822;e@80x24.org>);
+	Mon, 1 Aug 2016 07:45:24 -0400
+Received: from mout.gmx.net ([212.227.17.21]:50833 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753322AbcHALpJ (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753334AbcHALpJ (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 1 Aug 2016 07:45:09 -0400
 Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MQu9K-1bqlwT0AYA-00UNIM; Mon, 01 Aug 2016 13:44:27
+ ESMTPSA (Nemesis) id 0LlpJU-1av7wo4BhA-00ZML1; Mon, 01 Aug 2016 13:44:51
  +0200
-Date:	Mon, 1 Aug 2016 13:44:26 +0200 (CEST)
+Date:	Mon, 1 Aug 2016 13:44:50 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
@@ -28,611 +28,109 @@ cc:	Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
 	Duy Nguyen <pclouds@gmail.com>,
 	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: [PATCH v6 09/16] merge-recursive: handle return values indicating
- errors
+Subject: [PATCH v6 14/16] merge-recursive: offer an option to retain the
+ output in 'obuf'
 In-Reply-To: <cover.1470051326.git.johannes.schindelin@gmx.de>
-Message-ID: <f585a96373145c7c0e4f053557e80e37afb7ca1a.1470051326.git.johannes.schindelin@gmx.de>
+Message-ID: <2983ef4f7596c110b771f1da82dc84e426de19fd.1470051326.git.johannes.schindelin@gmx.de>
 References: <cover.1469547160.git.johannes.schindelin@gmx.de> <cover.1470051326.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:jpLKtKTp+GYPPcbigFOfuBdwiujxTQg65QzzJPzi2O1fttD1rMx
- YNcRlyV0d8b9elhAQvvH74FxH1yGkwc19S10KemZ+9Pd/gvZYJsr86eNxRII1m8Iyi8aVRs
- w4Ijg0kAkej9ugmXtP9OxolQrJ0Cm41Wzh6izxQVJU2jFNuVDGJvJyplf89Ne3xn6Nj0xMU
- B3DN/WB3XHXjNTTDqbz8Q==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:f4BwKsYfX+w=:/V8oCLSEJ36m135Sz4VRgf
- 6YrO6IJ4sHuY0+054hatuNZW4IIbhIZBMFekydVmapu6GidxN5pXd3gz93UzE2XotZzXrqTU3
- paaE2nwe72dqBbdayL1+lf9wZKC3a6tn1szu6JEwN0vyLRehTR0Gdkfhuelq8wY0H2FdpUSN8
- rRnTIG1tYs9SoaT8SIJMokG9bd0iHr4fUdPnWPlXhIHJsD76WeOp3soU/MHgiqMEJScM2waIM
- H1pTejoMX2fCWLNyvtzphSWjNjifZuQRYTnadM2ObvZx6myR6zTXvczDzzEsfqcR/J26TdgFL
- sXnfbWlSMrAl7xBmzStM4Nk2iMsQwlHNF5ckRokhtv/g27NpDnTgJ1pcWg4AzkjU4Ypr0axDX
- go46rnWwWztRlbqk8KrN0TqH2BwxDPc13G87CZZWnlgoGHdMGWLkhQ4E5g44takoIPHCcQZc7
- jfazaDkKoKmc1rbOTm831mQObx0nvFhv1EKntPHI9Sw2foRM2hEhCNSXeGSjHNSUsNdV9H3Zw
- ebPdmqADrB1WlkS92n0BOzd59Ai2jZzU1/c5tddj4zh82B7zFW/BvJeSZo6s7pJpVli82sqZB
- IsoX8fKse7mybyXWKxx0f+BR7WPnljjHPqPmseoZy3af0sgo2cVO4E/Q3LKQtiPvxdDzUB25X
- ZspmtSibJRua9OHQ1/a5zzvkuqm2Lkioz8VZRbFWa6+KAqXt5DqK3AuP/MvOJ9/WOD9AAS/5F
- tpF1NbesCayvwTsGWLLaCkAVMcnE+yxMJvGBnK8gvdKNwN2ysEmLdwVZG9vbXogL5m+I29VkG
- T7kCWrD
+X-Provags-ID: V03:K0:nfFuGGrSg74XOg/Pw5XBcp0NRfVKa59xtZkV3aA5RUoP4eWhf94
+ aSpxU4+tpmpXm7VrxGZ6lcT/ismEtTTHIQ9M1bm0W7hQsEeyOlzqjC4P2bZpdEGtydemCWB
+ RHAgpp+Q+EcpaN8vZobimwEMH0Qr16uaV2TTQOcMqvrkhev/4RWP7Ew+lunVdbIUMBLy5Y6
+ hgEoAVkt0iSquLs24E6cQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:8xhfOv1k3f0=:0FDEmeQFWu29CG7aEuHfXK
+ 7/heADHUYYi/OuukUCHJO6qcJqSKEvc+BC4nkjQw+lrOXAIe6bVB7scOTYKiyolNl7LaSmgid
+ aRbElb27B9Cqo6mmyHRBxgm8TnxtEqDFmTxQ7NgB9JQTKu8P0Nf7G/b4paDUdzpdUPjVsxSqJ
+ 3VC8CfrajNHebs0OCMwky8MuTHmwqgekH88MY1cvcL+r9T39gzyzI0JHoLT7SyyC2fllmuTCz
+ tNdbnD+1SKJ7RL2E/FGKrK5OYuez/ckQz7mEeFi8oCLFWWIJaV4m8yI774t+SFlzzoD6Du+RA
+ coDGSB1+N67rxxoKSvrENQIeWBB5b18wARP4PylVhZEz7BYLY65Qiv1JdLhMhzsUm4ciKh9OM
+ MuwA+VkoZ1SSuRWneR2R9bNzgN19yp6OvU3y89CebECZJHgFmUFsQ+uns/dtnBM6k82CE5+LV
+ dv9k5+QxXL4R9ML6O7t1OFaNHoXyhy3afOjVJbcsm3e33gfXk5KIEVREb+Mas+gauwTEtfohl
+ brmNJrZkm1mLk8OywI0U6yoWxWYmTX2oDxW0vdSx3aY2yVgJPL09ye5qvTMahB8jRWhEFna7k
+ G6rU3oZxqyg6cSpjMwKgNx04vMyI6pDALuYfilbc0kG7T/vKnx8v3jENREjBtF4Vi7U3bMZDW
+ Rni0qPl+J/WhyiHYhtUZYyFzCupzDXptpbxeQLmFFpJaxyQ9UuaIj1rILnno1zE3X17bAHSEp
+ 8/0iShXdpoWCP5kdNUlLn02x5kYLO8jn/zPkrD61J+SSlS/Yehmv8p+mMd1fo4pxTdaiffgTS
+ Xl8sk1a
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-We are about to libify the recursive merge machinery, where we only
-die() in case of a bug or memory contention. To that end, we must heed
-negative return values as indicating errors.
+Since 66a155b (Enable output buffering in merge-recursive., 2007-01-14),
+we already accumulate the output in a buffer. The idea was to avoid
+interfering with the progress output that goes to stderr, which is
+unbuffered, when we write to stdout, which is buffered.
 
-This requires our functions to be careful to pass through error
-conditions in call chains, and for quite a few functions this means
-that they have to return values to begin with.
+We extend that buffering to allow the caller to handle the output
+(possibly suppressing it). This will help us when extending the
+sequencer to do rebase -i's brunt work: it does not want the picks to
+print anything by default but instead determine itself whether to print
+the output or not.
 
-The next step will be to convert the places where we currently die() to
-return negative values (read: -1) instead.
-
-Note that we ignore errors reported by make_room_for_path(), consistent
-with the previous behavior (update_file_flags() used the return value of
-make_room_for_path() only to indicate an early return, but not a fatal
-error): if the error is really a fatal error, we will notice later; If
-not, it was not that serious a problem to begin with. (Witnesses in
-favor of this reasoning are t4151-am-abort and t7610-mergetool, which
-would start failing if we stopped on errors reported by
-make_room_for_path()).
-
-Also note: while this patch makes the code slightly less readable in
-update_file_flags() (we introduce a new "goto free_buf;" instead of
-an explicit "free(buf); return;"), it is a preparatory change for
-the next patch where we will convert all of the die() calls in the same
-function to go through the free_buf return path instead.
+Note that we also redirect the error messages into the output buffer
+when the caller asked not to flush the output buffer, for two reasons:
+1) to retain the correct output order, and 2) to allow the caller to
+suppress *all* output.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- merge-recursive.c | 252 ++++++++++++++++++++++++++++++++----------------------
- 1 file changed, 150 insertions(+), 102 deletions(-)
+ merge-recursive.c | 17 +++++++++++++----
+ merge-recursive.h |  2 +-
+ 2 files changed, 14 insertions(+), 5 deletions(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 1f86338..6beb1e4 100644
+index 99c9635..ec50932 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -742,12 +742,12 @@ static int make_room_for_path(struct merge_options *o, const char *path)
- 	return error(msg, path, _(": perhaps a D/F conflict?"));
- }
+@@ -25,7 +25,7 @@
  
--static void update_file_flags(struct merge_options *o,
--			      const struct object_id *oid,
--			      unsigned mode,
--			      const char *path,
--			      int update_cache,
--			      int update_wd)
-+static int update_file_flags(struct merge_options *o,
-+			     const struct object_id *oid,
-+			     unsigned mode,
-+			     const char *path,
-+			     int update_cache,
-+			     int update_wd)
+ static void flush_output(struct merge_options *o)
  {
- 	if (o->call_depth)
- 		update_wd = 0;
-@@ -783,8 +783,7 @@ static void update_file_flags(struct merge_options *o,
- 
- 		if (make_room_for_path(o, path) < 0) {
- 			update_wd = 0;
--			free(buf);
--			goto update_index;
-+			goto free_buf;
- 		}
- 		if (S_ISREG(mode) || (!has_symlinks && S_ISLNK(mode))) {
- 			int fd;
-@@ -807,20 +806,22 @@ static void update_file_flags(struct merge_options *o,
- 		} else
- 			die(_("do not know what to do with %06o %s '%s'"),
- 			    mode, oid_to_hex(oid), path);
-+ free_buf:
- 		free(buf);
+-	if (o->obuf.len) {
++	if (o->buffer_output < 2 && o->obuf.len) {
+ 		fputs(o->obuf.buf, stdout);
+ 		strbuf_reset(&o->obuf);
  	}
-  update_index:
- 	if (update_cache)
- 		add_cacheinfo(mode, oid, path, 0, update_wd, ADD_CACHE_OK_TO_ADD);
-+	return 0;
- }
- 
--static void update_file(struct merge_options *o,
--			int clean,
--			const struct object_id *oid,
--			unsigned mode,
--			const char *path)
-+static int update_file(struct merge_options *o,
-+		       int clean,
-+		       const struct object_id *oid,
-+		       unsigned mode,
-+		       const char *path)
+@@ -35,12 +35,21 @@ static int err(struct merge_options *o, const char *err, ...)
  {
--	update_file_flags(o, oid, mode, path, o->call_depth || clean, !o->call_depth);
-+	return update_file_flags(o, oid, mode, path, o->call_depth || clean, !o->call_depth);
+ 	va_list params;
+ 
+-	flush_output(o);
++	if (o->buffer_output < 2)
++		flush_output(o);
++	else {
++		strbuf_complete(&o->obuf, '\n');
++		strbuf_addstr(&o->obuf, "error: ");
++	}
+ 	va_start(params, err);
+ 	strbuf_vaddf(&o->obuf, err, params);
+ 	va_end(params);
+-	error("%s", o->obuf.buf);
+-	strbuf_reset(&o->obuf);
++	if (o->buffer_output > 1)
++		strbuf_addch(&o->obuf, '\n');
++	else {
++		error("%s", o->obuf.buf);
++		strbuf_reset(&o->obuf);
++	}
+ 
+ 	return -1;
  }
- 
- /* Low level file merging, update and removal */
-@@ -1019,7 +1020,7 @@ static int merge_file_one(struct merge_options *o,
- 	return merge_file_1(o, &one, &a, &b, branch1, branch2, mfi);
- }
- 
--static void handle_change_delete(struct merge_options *o,
-+static int handle_change_delete(struct merge_options *o,
- 				 const char *path,
- 				 const struct object_id *o_oid, int o_mode,
- 				 const struct object_id *a_oid, int a_mode,
-@@ -1027,6 +1028,7 @@ static void handle_change_delete(struct merge_options *o,
- 				 const char *change, const char *change_past)
- {
- 	char *renamed = NULL;
-+	int ret = 0;
- 	if (dir_in_way(path, !o->call_depth)) {
- 		renamed = unique_path(o, path, a_oid ? o->branch1 : o->branch2);
- 	}
-@@ -1037,21 +1039,23 @@ static void handle_change_delete(struct merge_options *o,
- 		 * correct; since there is no true "middle point" between
- 		 * them, simply reuse the base version for virtual merge base.
- 		 */
--		remove_file_from_cache(path);
--		update_file(o, 0, o_oid, o_mode, renamed ? renamed : path);
-+		ret = remove_file_from_cache(path);
-+		if (!ret)
-+			ret = update_file(o, 0, o_oid, o_mode,
-+					  renamed ? renamed : path);
- 	} else if (!a_oid) {
- 		if (!renamed) {
- 			output(o, 1, _("CONFLICT (%s/delete): %s deleted in %s "
- 			       "and %s in %s. Version %s of %s left in tree."),
- 			       change, path, o->branch1, change_past,
- 			       o->branch2, o->branch2, path);
--			update_file(o, 0, b_oid, b_mode, path);
-+			ret = update_file(o, 0, b_oid, b_mode, path);
- 		} else {
- 			output(o, 1, _("CONFLICT (%s/delete): %s deleted in %s "
- 			       "and %s in %s. Version %s of %s left in tree at %s."),
- 			       change, path, o->branch1, change_past,
- 			       o->branch2, o->branch2, path, renamed);
--			update_file(o, 0, b_oid, b_mode, renamed);
-+			ret = update_file(o, 0, b_oid, b_mode, renamed);
- 		}
- 	} else {
- 		if (!renamed) {
-@@ -1064,7 +1068,7 @@ static void handle_change_delete(struct merge_options *o,
- 			       "and %s in %s. Version %s of %s left in tree at %s."),
- 			       change, path, o->branch2, change_past,
- 			       o->branch1, o->branch1, path, renamed);
--			update_file(o, 0, a_oid, a_mode, renamed);
-+			ret = update_file(o, 0, a_oid, a_mode, renamed);
- 		}
- 		/*
- 		 * No need to call update_file() on path when !renamed, since
-@@ -1074,9 +1078,11 @@ static void handle_change_delete(struct merge_options *o,
- 		 */
- 	}
- 	free(renamed);
-+
-+	return ret;
- }
- 
--static void conflict_rename_delete(struct merge_options *o,
-+static int conflict_rename_delete(struct merge_options *o,
- 				   struct diff_filepair *pair,
- 				   const char *rename_branch,
- 				   const char *other_branch)
-@@ -1096,21 +1102,20 @@ static void conflict_rename_delete(struct merge_options *o,
- 		b_mode = dest->mode;
- 	}
- 
--	handle_change_delete(o,
--			     o->call_depth ? orig->path : dest->path,
--			     &orig->oid, orig->mode,
--			     a_oid, a_mode,
--			     b_oid, b_mode,
--			     _("rename"), _("renamed"));
--
--	if (o->call_depth) {
--		remove_file_from_cache(dest->path);
--	} else {
--		update_stages(dest->path, NULL,
--			      rename_branch == o->branch1 ? dest : NULL,
--			      rename_branch == o->branch1 ? NULL : dest);
--	}
-+	if (handle_change_delete(o,
-+				 o->call_depth ? orig->path : dest->path,
-+				 &orig->oid, orig->mode,
-+				 a_oid, a_mode,
-+				 b_oid, b_mode,
-+				 _("rename"), _("renamed")))
-+		return -1;
- 
-+	if (o->call_depth)
-+		return remove_file_from_cache(dest->path);
-+	else
-+		return update_stages(dest->path, NULL,
-+				     rename_branch == o->branch1 ? dest : NULL,
-+				     rename_branch == o->branch1 ? NULL : dest);
- }
- 
- static struct diff_filespec *filespec_from_entry(struct diff_filespec *target,
-@@ -1126,7 +1131,7 @@ static struct diff_filespec *filespec_from_entry(struct diff_filespec *target,
- 	return target;
- }
- 
--static void handle_file(struct merge_options *o,
-+static int handle_file(struct merge_options *o,
- 			struct diff_filespec *rename,
- 			int stage,
- 			struct rename_conflict_info *ci)
-@@ -1136,6 +1141,7 @@ static void handle_file(struct merge_options *o,
- 	const char *cur_branch, *other_branch;
- 	struct diff_filespec other;
- 	struct diff_filespec *add;
-+	int ret;
- 
- 	if (stage == 2) {
- 		dst_entry = ci->dst_entry1;
-@@ -1150,7 +1156,8 @@ static void handle_file(struct merge_options *o,
- 	add = filespec_from_entry(&other, dst_entry, stage ^ 1);
- 	if (add) {
- 		char *add_name = unique_path(o, rename->path, other_branch);
--		update_file(o, 0, &add->oid, add->mode, add_name);
-+		if (update_file(o, 0, &add->oid, add->mode, add_name))
-+			return -1;
- 
- 		remove_file(o, 0, rename->path, 0);
- 		dst_name = unique_path(o, rename->path, cur_branch);
-@@ -1161,17 +1168,20 @@ static void handle_file(struct merge_options *o,
- 			       rename->path, other_branch, dst_name);
- 		}
- 	}
--	update_file(o, 0, &rename->oid, rename->mode, dst_name);
--	if (stage == 2)
--		update_stages(rename->path, NULL, rename, add);
-+	if ((ret = update_file(o, 0, &rename->oid, rename->mode, dst_name)))
-+		; /* fall through, do allow dst_name to be released */
-+	else if (stage == 2)
-+		ret = update_stages(rename->path, NULL, rename, add);
- 	else
--		update_stages(rename->path, NULL, add, rename);
-+		ret = update_stages(rename->path, NULL, add, rename);
- 
- 	if (dst_name != rename->path)
- 		free(dst_name);
-+
-+	return ret;
- }
- 
--static void conflict_rename_rename_1to2(struct merge_options *o,
-+static int conflict_rename_rename_1to2(struct merge_options *o,
- 					struct rename_conflict_info *ci)
- {
- 	/* One file was renamed in both branches, but to different names. */
-@@ -1194,14 +1204,16 @@ static void conflict_rename_rename_1to2(struct merge_options *o,
- 				 &a->oid, a->mode,
- 				 &b->oid, b->mode,
- 				 ci->branch1, ci->branch2, &mfi))
--			return;
-+			return -1;
-+
- 		/*
- 		 * FIXME: For rename/add-source conflicts (if we could detect
- 		 * such), this is wrong.  We should instead find a unique
- 		 * pathname and then either rename the add-source file to that
- 		 * unique path, or use that unique path instead of src here.
- 		 */
--		update_file(o, 0, &mfi.oid, mfi.mode, one->path);
-+		if (update_file(o, 0, &mfi.oid, mfi.mode, one->path))
-+			return -1;
- 
- 		/*
- 		 * Above, we put the merged content at the merge-base's
-@@ -1212,22 +1224,26 @@ static void conflict_rename_rename_1to2(struct merge_options *o,
- 		 * resolving the conflict at that path in its favor.
- 		 */
- 		add = filespec_from_entry(&other, ci->dst_entry1, 2 ^ 1);
--		if (add)
--			update_file(o, 0, &add->oid, add->mode, a->path);
-+		if (add) {
-+			if (update_file(o, 0, &add->oid, add->mode, a->path))
-+				return -1;
-+		}
- 		else
- 			remove_file_from_cache(a->path);
- 		add = filespec_from_entry(&other, ci->dst_entry2, 3 ^ 1);
--		if (add)
--			update_file(o, 0, &add->oid, add->mode, b->path);
-+		if (add) {
-+			if (update_file(o, 0, &add->oid, add->mode, b->path))
-+				return -1;
-+		}
- 		else
- 			remove_file_from_cache(b->path);
--	} else {
--		handle_file(o, a, 2, ci);
--		handle_file(o, b, 3, ci);
--	}
-+	} else if (handle_file(o, a, 2, ci) || handle_file(o, b, 3, ci))
-+		return -1;
-+
-+	return 0;
- }
- 
--static void conflict_rename_rename_2to1(struct merge_options *o,
-+static int conflict_rename_rename_2to1(struct merge_options *o,
- 					struct rename_conflict_info *ci)
- {
- 	/* Two files, a & b, were renamed to the same thing, c. */
-@@ -1238,6 +1254,7 @@ static void conflict_rename_rename_2to1(struct merge_options *o,
- 	char *path = c1->path; /* == c2->path */
- 	struct merge_file_info mfi_c1;
- 	struct merge_file_info mfi_c2;
-+	int ret;
- 
- 	output(o, 1, _("CONFLICT (rename/rename): "
- 	       "Rename %s->%s in %s. "
-@@ -1254,7 +1271,7 @@ static void conflict_rename_rename_2to1(struct merge_options *o,
- 	    merge_file_special_markers(o, b, &ci->ren2_other, c2,
- 				       o->branch1, ci->ren2_other.path,
- 				       o->branch2, c2->path, &mfi_c2))
--		return;
-+		return -1;
- 
- 	if (o->call_depth) {
- 		/*
-@@ -1265,19 +1282,25 @@ static void conflict_rename_rename_2to1(struct merge_options *o,
- 		 * again later for the non-recursive merge.
- 		 */
- 		remove_file(o, 0, path, 0);
--		update_file(o, 0, &mfi_c1.oid, mfi_c1.mode, a->path);
--		update_file(o, 0, &mfi_c2.oid, mfi_c2.mode, b->path);
-+		ret = update_file(o, 0, &mfi_c1.oid, mfi_c1.mode, a->path);
-+		if (!ret)
-+			ret = update_file(o, 0, &mfi_c2.oid, mfi_c2.mode,
-+					  b->path);
- 	} else {
- 		char *new_path1 = unique_path(o, path, ci->branch1);
- 		char *new_path2 = unique_path(o, path, ci->branch2);
- 		output(o, 1, _("Renaming %s to %s and %s to %s instead"),
- 		       a->path, new_path1, b->path, new_path2);
- 		remove_file(o, 0, path, 0);
--		update_file(o, 0, &mfi_c1.oid, mfi_c1.mode, new_path1);
--		update_file(o, 0, &mfi_c2.oid, mfi_c2.mode, new_path2);
-+		ret = update_file(o, 0, &mfi_c1.oid, mfi_c1.mode, new_path1);
-+		if (!ret)
-+			ret = update_file(o, 0, &mfi_c2.oid, mfi_c2.mode,
-+					  new_path2);
- 		free(new_path2);
- 		free(new_path1);
- 	}
-+
-+	return ret;
- }
- 
- static int process_renames(struct merge_options *o,
-@@ -1462,12 +1485,13 @@ static int process_renames(struct merge_options *o,
- 				 * update_file_flags() instead of
- 				 * update_file().
- 				 */
--				update_file_flags(o,
--						  &ren1->pair->two->oid,
--						  ren1->pair->two->mode,
--						  ren1_dst,
--						  1, /* update_cache */
--						  0  /* update_wd    */);
-+				if (update_file_flags(o,
-+						      &ren1->pair->two->oid,
-+						      ren1->pair->two->mode,
-+						      ren1_dst,
-+						      1, /* update_cache */
-+						      0  /* update_wd    */))
-+					clean_merge = -1;
- 			} else if (!oid_eq(&dst_other.oid, &null_oid)) {
- 				clean_merge = 0;
- 				try_merge = 1;
-@@ -1482,22 +1506,28 @@ static int process_renames(struct merge_options *o,
- 							   ren1->pair->two->mode,
- 							   &dst_other.oid,
- 							   dst_other.mode,
--							   branch1, branch2, &mfi))
--						return -1;
-+							   branch1, branch2, &mfi)) {
-+						clean_merge = -1;
-+						goto cleanup_and_return;
-+					}
- 					output(o, 1, _("Adding merged %s"), ren1_dst);
--					update_file(o, 0, &mfi.oid,
--						    mfi.mode, ren1_dst);
-+					if (update_file(o, 0, &mfi.oid,
-+							mfi.mode, ren1_dst))
-+						clean_merge = -1;
- 					try_merge = 0;
- 				} else {
- 					char *new_path = unique_path(o, ren1_dst, branch2);
- 					output(o, 1, _("Adding as %s instead"), new_path);
--					update_file(o, 0, &dst_other.oid,
--						    dst_other.mode, new_path);
-+					if (update_file(o, 0, &dst_other.oid,
-+							dst_other.mode, new_path))
-+						clean_merge = -1;
- 					free(new_path);
- 				}
- 			} else
- 				try_merge = 1;
- 
-+			if (clean_merge < 0)
-+				goto cleanup_and_return;
- 			if (try_merge) {
- 				struct diff_filespec *one, *a, *b;
- 				src_other.path = (char *)ren1_src;
-@@ -1524,6 +1554,7 @@ static int process_renames(struct merge_options *o,
- 			}
- 		}
- 	}
-+cleanup_and_return:
- 	string_list_clear(&a_by_dst, 0);
- 	string_list_clear(&b_by_dst, 0);
- 
-@@ -1586,18 +1617,18 @@ static int blob_unchanged(const struct object_id *o_oid,
- 	return ret;
- }
- 
--static void handle_modify_delete(struct merge_options *o,
-+static int handle_modify_delete(struct merge_options *o,
- 				 const char *path,
- 				 struct object_id *o_oid, int o_mode,
- 				 struct object_id *a_oid, int a_mode,
- 				 struct object_id *b_oid, int b_mode)
- {
--	handle_change_delete(o,
--			     path,
--			     o_oid, o_mode,
--			     a_oid, a_mode,
--			     b_oid, b_mode,
--			     _("modify"), _("modified"));
-+	return handle_change_delete(o,
-+				    path,
-+				    o_oid, o_mode,
-+				    a_oid, a_mode,
-+				    b_oid, b_mode,
-+				    _("modify"), _("modified"));
- }
- 
- static int merge_content(struct merge_options *o,
-@@ -1671,7 +1702,8 @@ static int merge_content(struct merge_options *o,
- 		output(o, 1, _("CONFLICT (%s): Merge conflict in %s"),
- 				reason, path);
- 		if (rename_conflict_info && !df_conflict_remains)
--			update_stages(path, &one, &a, &b);
-+			if (update_stages(path, &one, &a, &b))
-+				return -1;
- 	}
- 
- 	if (df_conflict_remains) {
-@@ -1679,30 +1711,33 @@ static int merge_content(struct merge_options *o,
- 		if (o->call_depth) {
- 			remove_file_from_cache(path);
- 		} else {
--			if (!mfi.clean)
--				update_stages(path, &one, &a, &b);
--			else {
-+			if (!mfi.clean) {
-+				if (update_stages(path, &one, &a, &b))
-+					return -1;
-+			} else {
- 				int file_from_stage2 = was_tracked(path);
- 				struct diff_filespec merged;
- 				oidcpy(&merged.oid, &mfi.oid);
- 				merged.mode = mfi.mode;
- 
--				update_stages(path, NULL,
--					      file_from_stage2 ? &merged : NULL,
--					      file_from_stage2 ? NULL : &merged);
-+				if (update_stages(path, NULL,
-+						  file_from_stage2 ? &merged : NULL,
-+						  file_from_stage2 ? NULL : &merged))
-+					return -1;
- 			}
- 
- 		}
- 		new_path = unique_path(o, path, rename_conflict_info->branch1);
- 		output(o, 1, _("Adding as %s instead"), new_path);
--		update_file(o, 0, &mfi.oid, mfi.mode, new_path);
-+		if (update_file(o, 0, &mfi.oid, mfi.mode, new_path)) {
-+			free(new_path);
-+			return -1;
-+		}
- 		free(new_path);
- 		mfi.clean = 0;
--	} else {
--		update_file(o, mfi.clean, &mfi.oid, mfi.mode, path);
--	}
-+	} else if (update_file(o, mfi.clean, &mfi.oid, mfi.mode, path))
-+		return -1;
- 	return mfi.clean;
--
- }
- 
- /* Per entry merge function */
-@@ -1730,17 +1765,21 @@ static int process_entry(struct merge_options *o,
- 			break;
- 		case RENAME_DELETE:
- 			clean_merge = 0;
--			conflict_rename_delete(o, conflict_info->pair1,
--					       conflict_info->branch1,
--					       conflict_info->branch2);
-+			if (conflict_rename_delete(o,
-+						   conflict_info->pair1,
-+						   conflict_info->branch1,
-+						   conflict_info->branch2))
-+				clean_merge = -1;
- 			break;
- 		case RENAME_ONE_FILE_TO_TWO:
- 			clean_merge = 0;
--			conflict_rename_rename_1to2(o, conflict_info);
-+			if (conflict_rename_rename_1to2(o, conflict_info))
-+				clean_merge = -1;
- 			break;
- 		case RENAME_TWO_FILES_TO_ONE:
- 			clean_merge = 0;
--			conflict_rename_rename_2to1(o, conflict_info);
-+			if (conflict_rename_rename_2to1(o, conflict_info))
-+				clean_merge = -1;
- 			break;
- 		default:
- 			entry->processed = 0;
-@@ -1760,8 +1799,9 @@ static int process_entry(struct merge_options *o,
- 		} else {
- 			/* Modify/delete; deleted side may have put a directory in the way */
- 			clean_merge = 0;
--			handle_modify_delete(o, path, o_oid, o_mode,
--					     a_oid, a_mode, b_oid, b_mode);
-+			if (handle_modify_delete(o, path, o_oid, o_mode,
-+						 a_oid, a_mode, b_oid, b_mode))
-+				clean_merge = -1;
- 		}
- 	} else if ((!o_oid && a_oid && !b_oid) ||
- 		   (!o_oid && !a_oid && b_oid)) {
-@@ -1793,14 +1833,16 @@ static int process_entry(struct merge_options *o,
- 			output(o, 1, _("CONFLICT (%s): There is a directory with name %s in %s. "
- 			       "Adding %s as %s"),
- 			       conf, path, other_branch, path, new_path);
--			update_file(o, 0, oid, mode, new_path);
--			if (o->call_depth)
-+			if (update_file(o, 0, oid, mode, new_path))
-+				clean_merge = -1;
-+			else if (o->call_depth)
- 				remove_file_from_cache(path);
- 			free(new_path);
- 		} else {
- 			output(o, 2, _("Adding %s"), path);
- 			/* do not overwrite file if already present */
--			update_file_flags(o, oid, mode, path, 1, !a_oid);
-+			if (update_file_flags(o, oid, mode, path, 1, !a_oid))
-+				clean_merge = -1;
- 		}
- 	} else if (a_oid && b_oid) {
- 		/* Case C: Added in both (check for same permissions) and */
-@@ -1863,12 +1905,18 @@ int merge_trees(struct merge_options *o,
- 		re_head  = get_renames(o, head, common, head, merge, entries);
- 		re_merge = get_renames(o, merge, common, head, merge, entries);
- 		clean = process_renames(o, re_head, re_merge);
-+		if (clean < 0)
-+			return clean;
- 		for (i = entries->nr-1; 0 <= i; i--) {
- 			const char *path = entries->items[i].string;
- 			struct stage_data *e = entries->items[i].util;
--			if (!e->processed
--				&& !process_entry(o, path, e))
--				clean = 0;
-+			if (!e->processed) {
-+				int ret = process_entry(o, path, e);
-+				if (!ret)
-+					clean = 0;
-+				else if (ret < 0)
-+					return ret;
-+			}
- 		}
- 		for (i = 0; i < entries->nr; i++) {
- 			struct stage_data *e = entries->items[i].util;
+diff --git a/merge-recursive.h b/merge-recursive.h
+index d415724..735343b 100644
+--- a/merge-recursive.h
++++ b/merge-recursive.h
+@@ -13,7 +13,7 @@ struct merge_options {
+ 		MERGE_RECURSIVE_THEIRS
+ 	} recursive_variant;
+ 	const char *subtree_shift;
+-	unsigned buffer_output : 1;
++	unsigned buffer_output; /* 1: output at end, 2: keep buffered */
+ 	unsigned renormalize : 1;
+ 	long xdl_opts;
+ 	int verbosity;
 -- 
 2.9.0.281.g286a8d9
 
