@@ -2,156 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A53CE1F858
-	for <e@80x24.org>; Mon,  1 Aug 2016 01:37:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E4541F858
+	for <e@80x24.org>; Mon,  1 Aug 2016 01:43:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751199AbcHABho (ORCPT <rfc822;e@80x24.org>);
-	Sun, 31 Jul 2016 21:37:44 -0400
-Received: from mout.web.de ([217.72.192.78]:53374 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750805AbcHABhm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2016 21:37:42 -0400
-Received: from [192.168.2.11] ([156.34.81.190]) by smtp.web.de (mrweb101) with
- ESMTPSA (Nemesis) id 0MPHC8-1bPeRu348e-004Rzg; Mon, 01 Aug 2016 03:37:31
- +0200
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH] t7063: work around FreeBSD's lazy mtime update feature
-From:	=?utf-8?Q?Torstem_B=C3=B6gershausen?= <tboegi@web.de>
-X-Mailer: iPad Mail (12F69)
-In-Reply-To: <20160730182005.14426-1-pclouds@gmail.com>
-Date:	Sun, 31 Jul 2016 22:37:28 -0300
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	"e@80x24.org" <e@80x24.org>
-Content-Transfer-Encoding: 8BIT
-Message-Id: <6955746D-E47E-4BB8-AB0E-44D461E67AD6@web.de>
-References: <20160718223038.GA66056@plume> <20160730182005.14426-1-pclouds@gmail.com>
-To:	=?utf-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-	<pclouds@gmail.com>
-X-Provags-ID: V03:K0:NA5DFR42Nix3lfz25OuhFx7tvWTGGtCNfU6xDCyzcW0w77I6kGh
- 5gVkp1oWLVku6OQ1gRGt8auX+N9Wy0oNK3cKaZ7YHOAmlTVttkQk/QcX8jpNi7bv37ytBf1
- /jGYV47d0kAvzOFdXwSb7pGRPXq033ZTRBLFVLdEq3mJ9aOJUNuUdrrfA6lb8+Gyp5w+zVk
- 01lUWBBKIpYKSXyVsnPMw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:C1qaS5u9z8Q=:Mi2sQz2fC30KD+koliDWKv
- bxQsL8C/A047NIIPwx47N6v6uhL9PEnzQFIwz/fWMWHcfO6tbmvjPhFudMPHMYGmAX8j6l5Gd
- 7AOU0JVg6mO+wgeHenriYkJi+tKagaFJWGR8HYlvRq5pEl4udWuwp9oTxwf857gOXxbPg3R18
- ZanLSzxB2R6uFQIpd5NhjRDhd72/6IO8o0y1l3qQ/lS+loQOP/DaWo1oLCS/wSDlQoQ3DnvJ+
- XZ1CMm0NBM/VSefp7AH6tXXQmwWtxHWsUnPW3lQk40TpLL+A6rMaqU8ndBmhD2IGbX/KzCLnv
- SMLyOUHVtf+CCBd2KaDWhHE/xBrYofdSalZQPQW4VzpqsSNCHOEqXC+DiQRGdcHHupWJx7CKQ
- ggVkxetgf8iqb6/ReGN3K400VMfrgRWRp5mW8h3auWKp1AuoUxaN8y1RQkzVnYr4GlYcaX31p
- b7kHFryzqpG8RcZbsgJyNQDlSHjphgVx83+FP7WP8QOQFrVkMgiojqKJIiHyRCGWKC1KMAAe5
- s3RWy/5D/Ag/5I8Gf4QhQ/GrbQnxmlyXklNLDluJASJfOQt9Ee9bFlDumcxCOxIWKco55GKws
- 1lGPYzSZ54UA8JN0sl5mtALD76Td5jDpxGNW0Bdh5cFoUTdZnN1dVFKPGSzEutYjJOSJXjSlr
- xLAG7pDABxJickv7YtSw71yIAjv2i/sUhkqNtroxXtIBHzGEhAWaLBbTISt25DY3q0h85b6f7
- ZegjVB/DJB2HYwaENuH4E3N6byBF6GbrVMzGC2YTn7DY+BOlVjPab8slZHKzH7D75pKlJO++d
- U+/zaiY
+	id S1751199AbcHABnM (ORCPT <rfc822;e@80x24.org>);
+	Sun, 31 Jul 2016 21:43:12 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:34336 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751377AbcHABnK (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2016 21:43:10 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:395:747d:98e1:fc48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id D213C280A6;
+	Mon,  1 Aug 2016 01:43:08 +0000 (UTC)
+DKIM-Signature:	v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+	s=default; t=1470015788;
+	bh=oo7dw6VjyDeTHv03HsOltys7MLlgmgaprZ+9s2WNnm8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=rFrBA1JXS1P5cHHQuwS0QclpHjtyAyOwn+ShwTOVYFFyHxVm/XvlQ5TeKyN+v5d9e
+	 FaoCEsqiUX6XzfCvO8a4w+nI1I71oUAv/jhXh2uggxOj/O5VMzcgPHJVuYzcz1eXtj
+	 f55KJYTPwk6PgVZmNcETGwRkCjNmcb69/cWgWuwWYVVE9LMe06x5lI0LsmjITVsG3M
+	 JJ9kofygwmggnCRaLOjK7Z3Vud8lOT6qDFUKpcAfANiw6DCRufvFeqy7kmnxDEQ8UP
+	 huJsgtMM2bIujZu1b/sDpUSPqyZoLMLzhSRU8DZ399uvWr/xM4BADeZk1hqrPCWBhu
+	 6yYy+RxXjR6CEq3VxlwH8ph6hKiMm3yDPBTCJIVZXKjYVSzMry0vdjLC6aAfMwFmBR
+	 LQj2ftNIX0ooFQbpQ5+qPRIziI9UwflaqnOgVGz7OD++j3zZCAKAEZePQ1xMUq+riG
+	 34pZay10u8GHnZZEieFmx23w88ow9EitkuAiYLbnyS4KENvlV31
+Date:	Mon, 1 Aug 2016 01:43:03 +0000
+From:	"brian m. carlson" <sandals@crustytoothpaste.net>
+To:	Eric Wong <e@80x24.org>
+Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	"Kyle J. McKay" <mackyle@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/2] pager: move pager-specific setup into the build
+Message-ID: <20160801014303.x5j3dqumcmrkyc76@vauxhall.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Eric Wong <e@80x24.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, "Kyle J. McKay" <mackyle@gmail.com>,
+	git@vger.kernel.org
+References: <20160801010557.22191-1-e@80x24.org>
+ <20160801010557.22191-2-e@80x24.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="s3z7h7zyi77hjfec"
+Content-Disposition: inline
+In-Reply-To: <20160801010557.22191-2-e@80x24.org>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.7.0-rc4-amd64)
+User-Agent: Mutt/1.6.2-neo (2016-07-23)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
 
+--s3z7h7zyi77hjfec
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-
-
-> Am 30.07.2016 um 15:20 schrieb Nguyễn Thái Ngọc Duy <pclouds@gmail.com>:
-> 
-> Let's start with the commit message of [1] from freebsd.git [2]
-> 
->    Sync timestamp changes for inodes of special files to disk as late
->    as possible (when the inode is reclaimed).  Temporarily only do
->    this if option UFS_LAZYMOD configured and softupdates aren't
->    enabled.  UFS_LAZYMOD is intentionally left out of
->    /sys/conf/options.
-> 
->    This is mainly to avoid almost useless disk i/o on battery powered
->    machines.  It's silly to write to disk (on the next sync or when
->    the inode becomes inactive) just because someone hit a key or
->    something wrote to the screen or /dev/null.
-> 
->    PR:             5577 [3]
-> 
-> The short version of that, in the context of t7063, is that when a
-> directory is updated, its mtime may be updated later, not
-> immediately. This can be shown with a simple command sequence
-> 
->    date; sleep 1; touch abc; rm abc; sleep 10; ls -lTd .
-> 
-> One would expect that the date shown in `ls` would be one second from
-> `date`, but it's 10 seconds later. If we put another `ls -lTd .` in
-> front of `sleep 10`, then the date of the last `ls` comes as
-> expected. The first `ls` somehow forces mtime to be updated.
-> 
-> t7063 is really sensitive to directory mtime. When mtime is too "new",
-> git code suspects racy timestamps and will not trigger the shortcut in
-> untracked cache, in t7063.26 (or t7063.25 before this patch) and
-> eventually be detected in t7063.28
-> 
-> We have two options thanks to this special FreeBSD feature:
-> 
-> 1) Stop supporting untracked cache on FreeBSD. Skip t7063 entirely
->   when running on FreeBSD
-> 
-> 2) Work around this problem (using the same 'ls' trick) and continue
->   to support untracked cache on FreeBSD
-> 
-> I initially wanted to go with 1) because I didn't know the exact
-> nature of this feature and feared that it would make untracked cache
-> work unreliably, using the cached version when it should not.
-> 
-> Since the behavior of this thing is clearer now. The picture is not
-> that bad. If this indeed happens often, untracked cache would assume
-> racy condition more often and _fall back_ to non-untracked cache code
-> paths. Which means it may be less effective, but it will not show
-> wrong things.
-> 
-> This patch goes with option 2.
-> 
-> PS. For those who want to look further in FreeBSD source code, this
-> flag is now called IN_LAZYMOD. I can see it's effective in ext2 and
-> ufs. zfs is questionable.
-> 
-> [1] 660e6408e6df99a20dacb070c5e7f9739efdf96d
-> [2] git://github.com/freebsd/freebsd.git
-> [3] https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=5577
-> 
-> Reported-by: Eric Wong <e@80x24.org>
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
-> This is only of those commits that commit messages are more important
-> than the patch itself. One of the good notes about directory mtime,
-> if we start to use it in more places in git.
-> 
-> t/t7063-status-untracked-cache.sh | 4 ++++
-> t/test-lib.sh                     | 6 ++++++
-> 2 files changed, 10 insertions(+)
-> 
-> diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
-> index a971884..08fc586 100755
-> --- a/t/t7063-status-untracked-cache.sh
-> +++ b/t/t7063-status-untracked-cache.sh
-> @@ -419,6 +419,10 @@ test_expect_success 'create/modify files, some of which are gitignored' '
->    rm base
-> '
-> 
-> +test_expect_success FREEBSD 'Work around lazy mtime update' '
-> +    ls -ld . >/dev/null
-> +'
+On Mon, Aug 01, 2016 at 01:05:56AM +0000, Eric Wong wrote:
+> +static void setup_pager_env(struct argv_array *env)
+> +{
+> +	const char *pager_env =3D stringify(PAGER_ENV);
 > +
+> +	while (*pager_env) {
+> +		struct strbuf buf =3D STRBUF_INIT;
+> +		const char *cp =3D strchrnul(pager_env, '=3D');
+> +
+> +		if (!*cp)
+> +			die("malformed build-time PAGER_ENV");
+> +		strbuf_add(&buf, pager_env, cp - pager_env);
+> +		cp =3D strchrnul(pager_env, ' ');
+> +		if (!getenv(buf.buf)) {
+> +			strbuf_reset(&buf);
+> +			strbuf_add(&buf, pager_env, cp - pager_env);
+> +			argv_array_push(env, strbuf_detach(&buf, NULL));
+> +		}
+> +		strbuf_reset(&buf);
+> +		while (*cp && *cp =3D=3D ' ')
+> +			cp++;
+> +		pager_env =3D cp;
+> +	}
 
-the term FREEBSD may be too generic to point out a single feature
-in an OS distributution.
-Following your investigations, it may even be possible that
-other systems adapt this "feature"?
+So it looks like this function splits on spaces but doesn't provide any
+escaping mechanism.  Is there any case in which we want to accept
+environment variables containing whitespace?  I ask this as someone that
+has EDITOR set to "gvim -f" on occasion and seeing how tools sometimes
+handle that poorly.
 
-How about
-LAZY_DIR_MTIME_UPDATE
-(or similar)
+Even without that, I think this series is probably an improvement over
+the status quo.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
+--s3z7h7zyi77hjfec
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.13 (GNU/Linux)
+
+iQIcBAEBCgAGBQJXnqknAAoJEL9TXYEfUvaLeL8P/2rLVxp58irgeQEP1us8DFtN
+fT7uQOlI/glVsw0LdnCPyc8H83eFHEzWCk9nxrcRJTlQUF+ux72+FAV0F+y9aDSc
+/zBYWJurYKEu1LjR9DTVqB6klbTolIvNAbaWpOgd3vFqecxw4rxQI2NYSzf0IDYC
+JgUvH3i2Cl59bG05m51bTe8CZuk/ivbDaE/Huldu6c9VGXJEEKWtkKPBuKSmaY13
+NfuwMklIo1TSXy3BamDHq6olFSNkvmwphCqTVtGTIt08MHuWgfPhasAuubU1q9MF
+h8ibWUJ+XkTi4T7kbBF4SHrHUPhhTSax8WiYO+xqVVZQm7tdSDttyqekGohxJIr4
+A2AJLMazhlhUBpZvwj3c5NsTDiXMr/19IB2yFHU8CnqcUZQYm4JRcA5MK0Apm80H
+KyjzQFAMG4f6wl/kdzgpNamSEK98j87Y1FtTfHQe9aGCLoU09Nf44ipYEucSi4iv
+anrAaNNql2gcaYWo+A7SZIqukrGyO4bWX2jRao+n/2vfriZVKDujAi2Baa8VfiP3
+AhB+/voA/7SyH+HMAusKJY0zAEbpWncm5eALLTof7yKShVd9p2w9Vuu9X18SQoHX
+xYFYQcCfD6NUdS05ZSkN6KJGYObeZoNORPPDi8drxiNzjygiStAUHYQPx/yQNnB0
+yJQFmDRNsPux33ocH9CW
+=TODb
+-----END PGP SIGNATURE-----
+
+--s3z7h7zyi77hjfec--
