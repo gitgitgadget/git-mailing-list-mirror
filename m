@@ -2,120 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46BD81F71B
-	for <e@80x24.org>; Mon,  1 Aug 2016 08:55:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B46A1F955
+	for <e@80x24.org>; Mon,  1 Aug 2016 08:58:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751467AbcHAIzJ (ORCPT <rfc822;e@80x24.org>);
-	Mon, 1 Aug 2016 04:55:09 -0400
-Received: from mout.gmx.net ([212.227.17.22]:51959 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750954AbcHAIzH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2016 04:55:07 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MYtId-1bpR8s1e7f-00VjSK; Mon, 01 Aug 2016 10:54:49
- +0200
-Date:	Mon, 1 Aug 2016 10:54:48 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	Kevin Willford <kcwillford@gmail.com>, git@vger.kernel.org,
-	Kevin Willford <kewillf@microsoft.com>
-Subject: Re: [[PATCH v2] 1/4] patch-ids: stop using a hand-rolled hashmap
- implementation
-In-Reply-To: <xmqqoa5gmas6.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1607301056120.11824@virtualbox>
-References: <20160729161920.3792-1-kcwillford@gmail.com> <20160729161920.3792-2-kcwillford@gmail.com> <xmqqoa5gmas6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1751336AbcHAI6U (ORCPT <rfc822;e@80x24.org>);
+	Mon, 1 Aug 2016 04:58:20 -0400
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:37726 "EHLO
+	mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750954AbcHAI6S (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2016 04:58:18 -0400
+Received: by mail-wm0-f53.google.com with SMTP id i5so233607171wmg.0
+        for <git@vger.kernel.org>; Mon, 01 Aug 2016 01:57:24 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=t7VjgCVwEyzHxC2c8BldwhaNSPfPlZpGku6Fldw8sDs=;
+        b=ys6FPHRiDtDRaadoBuZNNNurrDriwgxydsXRNGXCJbB12uOCS00AakCNLlz8pHyZjI
+         8gyO66N+01PS8DxxJZdJqvrrBoOt8hcCGUA2SpjNflT2tGd4TWXOxRFz1C9dpzC4ZL99
+         U1bIg9FL7iK0hGiEjtxASkeS3S1OZj20zcBgqbsPQ/RwVVZYr5JSTjVy/+AWf4zTFlI4
+         73FTY5o+6nAIcifopKWR1d5YOVGcpBTUARqcjCQY2wcZyIBrzVDVESZst3Kvdv38pcy1
+         mknc6eg9BH5jcNnfuprdDbV7J4WHz8TQFe6wksC1LAFhBACiItJZpeBGGM7EXkqbkVBH
+         PhDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-transfer-encoding;
+        bh=t7VjgCVwEyzHxC2c8BldwhaNSPfPlZpGku6Fldw8sDs=;
+        b=jQgXHiqmNZzQyNbW2wAexbHaU6WnI+en5d2TjpRSNFJNnkv/9uzSo2inbt3j4z0dUZ
+         msUzdrBF3pROarkxTyWezqUlXw4t4iLt/H6ZJ1M5CiH+N2zav3MUp7HEezO8sS0q8QJj
+         md/HPM47xew/0zTl8AlZk34cFW2ZXeDBnJNejuegiKzZ2GWL+MvAb3LB57oxaQGparu7
+         nVwfWfp8MpK7YPko6+QPPNW2prwWW9++M1/paHmwkQ3xrEIyHn8G1cJ++pvv39NFEPXS
+         Uvv22+oJ+JWvDn52G1fTfUpgUhekKYAHxbd3QhYKBuzJIFEP4oFk3YTIz4Yd9g3a3s7T
+         mj2A==
+X-Gm-Message-State: AEkoousqoWMvk2SAv8Y2hIxHMfU//R0NfBeTcyLOiTZ9/HAp6gf1Sop9Ao+qih3sdm/NgQ==
+X-Received: by 10.194.149.113 with SMTP id tz17mr56060671wjb.64.1470041843708;
+        Mon, 01 Aug 2016 01:57:23 -0700 (PDT)
+Received: from [192.168.1.26] (afq96.neoplus.adsl.tpnet.pl. [83.25.146.96])
+        by smtp.googlemail.com with ESMTPSA id yt6sm29448690wjc.23.2016.08.01.01.57.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 01 Aug 2016 01:57:22 -0700 (PDT)
+Subject: Re: [PATCH 1/2] pager: move pager-specific setup into the build
+To:	Eric Wong <e@80x24.org>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+References: <20160801010557.22191-1-e@80x24.org>
+ <20160801010557.22191-2-e@80x24.org>
+ <20160801014303.x5j3dqumcmrkyc76@vauxhall.crustytoothpaste.net>
+ <20160801070037.GA18261@starla>
+Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	"Kyle J. McKay" <mackyle@gmail.com>, git@vger.kernel.org
+Newsgroups: gmane.comp.version-control.git
+From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <d4dc2061-afb0-baa3-f54d-bccfdf7658a5@gmail.com>
+Date:	Mon, 1 Aug 2016 10:57:02 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:+rAt0PF16EC9BDjbH0QDljeM5edIu8H0V1ArMyc8npWLl3eWc/t
- 7stbuKkoGOYDB+xzHDL8JqlbB3b2ySQgzkj3DVNxkW1sNygj2HLya4Ykm82hSqinn6JoCOE
- T/eWeb/tpFFGpY0LZvOjy0v6pLXC+nJMjfIaUUxL2hXTvJGtC+Qby12RNf4G1OcAUTNLXEs
- 8afxUI9i5CPkABVe3IL3Q==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:IYlsdZ5AGpM=:y7UTTphIX+zNaQafLAEXt1
- zKy0ixKKjMrN+z4ksbPDhx81HnQGRoLBXeXv86UAUXm1BjoMAq5mFcLTtbseJE6Neo8ceY1NV
- TMq9qD0ShH0cVLD5v6UBqOzS6MOPC4i0DxGLM0o8Q/j6PiEeufN5dLNa6NsSIyTNujLMfg1LL
- S1SvjF7J7ZYFAcjFCOa60o8y//W0SDHcYHzpVuo4+qcctnRpPHFUF/mgSauVGje2FxFG28fuW
- mcZM3peIhSnOmHD5smttzybBKjsRWxmChhGW3VOf3IWZM0B4bBmLUsyVgXogM4Qv1voS5zdeV
- CH4Q2BIjqn0rfm/Zk+k01T9xL/x4lxqWv5fGClNETrFFtouZChMoep8OvWkhCcpQhKdt5nF46
- QMj+PyfRPxOyrdT4fnfv+ZtDNhelnp9mlaiCfsANmhyr20Or5/W90UKY6d2S17PU5xgQK7mT3
- FMAiifkZ4BNuCiifygnd8sMDp34LzFbBVTCJUtqusxYPZ50D+/0K+3MBcXGQpC9CSZ0hLqUZE
- PjbrJeOHw/JyvGo9hOgDSdFG7bTmr59be2nas/A7AaiZMryHvdnPECo9sctiHnqvd25yORH9o
- 4qLYCzZSBQbtzdn+rcwSLoAt3Fv71vTia2E2xAWiqoH3XDrHVZ7bMzjfSVes2FCEoGj5rkrfQ
- yHagQUcXoRuhzC6Ckd80vl1eJjF6XrzO34xDerGC5eFuDucTOerNIPItbH15CQ6SO4nYxsjWF
- P0UdGhLXkkwIVykBkOkk/P05MtRF7jdMRr8KhDyHzQ2d8M1K72oSjkOszmamI1tkLPP9elG70
- D1rCcsz
+In-Reply-To: <20160801070037.GA18261@starla>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+W dniu 01.08.2016 o 09:00, Eric Wong pisze:
+> "brian m. carlson" <sandals@crustytoothpaste.net> wrote:
+>> On Mon, Aug 01, 2016 at 01:05:56AM +0000, Eric Wong wrote:
+>>> +		while (*cp && *cp == ' ')
+>>> +			cp++;
+>>
+>> So it looks like this function splits on spaces but doesn't provide any
+>> escaping mechanism.  Is there any case in which we want to accept
+>> environment variables containing whitespace?  I ask this as someone that
+>> has EDITOR set to "gvim -f" on occasion and seeing how tools sometimes
+>> handle that poorly.
 
-first of all: Kevin & I are colleagues and I helped prepare this patch
-series. I had the idea to have a two-level patch ID to help e.g. when an
-alternate object store is hosted on a (slow) network drive.
+This is to handle environment variables holding program options,
+which are usually (but possibly not often) using single character
+options bundled together, that is, not using spaces.
 
-On Fri, 29 Jul 2016, Junio C Hamano wrote:
+Moreover, it is about holding program options to pager.
 
-> Kevin Willford <kcwillford@gmail.com> writes:
 > 
-> >  struct patch_id *add_commit_patch_id(struct commit *commit,
-> >  				     struct patch_ids *ids)
-> >  {
-> > -	return add_commit(commit, ids, 0);
-> > +	struct patch_id *key = xcalloc(1, sizeof(*key));
-> > +
-> > +	if (init_patch_id_entry(key, commit, ids)) {
-> > +		free(key);
-> > +		return NULL;
-> > +	}
-> 
-> This is a tangent, but this made me wonder if it is safe to simply
-> free(3) the result of calling hashmap_entry_init() which is called
-> in init_patch_id_entry().  It would obviously become a resource
-> leak, if a hashmap_entry (which the api documentation says is "an
-> opaque structure") holds any allocated resource.
+> Yes, it's only split on spaces right now.  While I don't think
+> there's any current case where spaces would be useful/desirable;
+> I suppose a 3rd patch in this series could add support for using
+> split_cmdline (from alias.c)...
 
-It would be a serious bug if hashmap_entry_init() played games with
-references, given its signature (that this function does not have any
-access to the hashmap structure, only to the entry itself):
+Is there any pager that needs spaces in options-set environment
+variable?  Does MORE allow option bundling?
 
-	void hashmap_entry_init(void *entry, unsigned int hash)
+-- 
+Jakub Narębski
 
-Please note that the `void *entry` really needs to point to a struct whose
-first field is of type `struct hashmap_entry`. This is not type-safe, of
-course, but C does not allow a strong sub-typing of the kind we want to
-use here.
-
-> The fact that hashmap_entry_init() is there but there is no
-> corresponding hashmap_entry_clear() hints that there is nothing to
-> be worried about and I can see from the implementation of
-> hashmap_entry_init() that no extra resource is held inside, but an
-> API user should not have to guess.  We may want to do one of the two
-> things:
-> 
->  * document that an embedded hashmap_entry does not hold any
->    resource that need to be released and it is safe to free the user
->    structure that embeds one; or
-> 
->  * implement hashmap_entry_clear() that currently is a no-op.
-
-Urgh. The only reason we have hashmap_entry_init() is that we *may* want
-to extend `struct hashmap_entry` at some point. That is *already*
-over-engineered because that point in time seems quite unlikely to arrive,
-like, ever.
-
-In that light, as you said, why would we overengineer things even further
-by introducing a hashmap_entry_clear(), especially given that we won't
-catch any forgotten _clear() calls, given that it is a no-op anyway?
-
-Let's just not.
-
-Ciao,
-Dscho
