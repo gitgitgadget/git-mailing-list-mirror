@@ -6,51 +6,51 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4EFE1F855
-	for <e@80x24.org>; Mon,  1 Aug 2016 16:31:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B79F1F855
+	for <e@80x24.org>; Mon,  1 Aug 2016 16:43:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754230AbcHAQax (ORCPT <rfc822;e@80x24.org>);
-	Mon, 1 Aug 2016 12:30:53 -0400
-Received: from mail-oi0-f44.google.com ([209.85.218.44]:34876 "EHLO
-	mail-oi0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754198AbcHAQah (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2016 12:30:37 -0400
-Received: by mail-oi0-f44.google.com with SMTP id l72so199910274oig.2
-        for <git@vger.kernel.org>; Mon, 01 Aug 2016 09:30:37 -0700 (PDT)
+	id S1753942AbcHAQnO (ORCPT <rfc822;e@80x24.org>);
+	Mon, 1 Aug 2016 12:43:14 -0400
+Received: from mail-oi0-f48.google.com ([209.85.218.48]:33762 "EHLO
+	mail-oi0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753837AbcHAQnM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2016 12:43:12 -0400
+Received: by mail-oi0-f48.google.com with SMTP id j185so199785000oih.0
+        for <git@vger.kernel.org>; Mon, 01 Aug 2016 09:42:15 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=8Gx7d9K2YttpzDTUrTtV6AUZVirNx7WIrwizuOpRFZc=;
-        b=JaFwT7U446QtOXNtVrjvqkK29iEb/4kqeBLWb8lTai64PpQN9PpoiWjL8jrqer3i+T
-         0skTbw8lpYiAEh8s/ubJYsvfE20J7ObR6BtizNzPduKJ07yvOKotc1nJ9hYj0/ZXbbPI
-         HdrU7mCyUuSFpq0njS0KHNIOPcU+bllV/TQ0D97B7s8duw3k3pSGSCuWKmWB1Y7dT7pu
-         X7FVrKJNZHTDry5VVtopx1ZgbrusBojV2B4yKeGyPLRxOgRCrLd85I9YIBOs+zzOk2z6
-         CJvPaWCrUSHbeCfGnP3wOSUBEBQgT3VZoCIxsZQU6S7MiuO1sLOTZyGF7gELe30pVFyh
-         6oiw==
+        bh=E81Ud/DjI0kjqFKzhLG0YFnHTTugi+lZJeboS0MBkYU=;
+        b=MoSEH0ZCrladLQkTb3gIkPxcuPxe2GB+RVf38rRpWVbdfHLaMdGqwXh/sR977meNac
+         jYZi1DOITma5S8CjZdxlLsfDhVf8mDpMe34Yw1en08LIuePzfvPTEBijnJjc8HWcwcxT
+         eYUtNcaPRumB3urwpFdAFolkTuryWcbLK9CDPrH8R1p0afmP/cx29W80L0fzYmFvY4g5
+         lemPbexJMRbpDD6jvPi/P828VQ5ccbc8oqnAdUhfw/Ls9r4e04TlKERbaGCpo65JqOEn
+         1sJZaVyUYZ2m92fFjS4H9pIp2bZSqr6qCsbBHFVFkPD/iCQHoe9WgBfUHdRCL257AIGs
+         Fr7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=8Gx7d9K2YttpzDTUrTtV6AUZVirNx7WIrwizuOpRFZc=;
-        b=GaVhrE5jcCqioe5V7hZFULV+HovSUfjbXTvSH3RyCjcSSW/93x4OUmumNUQi79XopI
-         259Emw1PxJi3Az+VnxgbDoLpvi6/7bxCcLKRDqYDCem/GNMlAifyVPVNABPvUtFvt+qx
-         gK7Rhl4eVmijCm5cbCX+bE4kuY5ntekZrYwJ5cfhriL63CxKEAI4Fk5F65LfUV/xDmXJ
-         uz11Xmced5xYfGFnwKuOtzuyeYqiz4Zdn/DS+SbEfnXHZedljRnnJnX6qGf4j3NcHEFQ
-         fPBhsB+tudMqUnMH/FtfIyEN80uJyXoI1liwWrdn4rci6HSIGusz6b2YeZWPlg4gVkKT
-         OZ0Q==
-X-Gm-Message-State: AEkoousu6IkPTXn8uJxZvEhRr78x+6FZQqeRjMjlwLLJs+gteUHYLY7S+Q7qLR3g1dBWj5ZXN1JBdnjVYQ7DfM9L
-X-Received: by 10.157.39.136 with SMTP id c8mr35783955otb.34.1470068688816;
- Mon, 01 Aug 2016 09:24:48 -0700 (PDT)
+        bh=E81Ud/DjI0kjqFKzhLG0YFnHTTugi+lZJeboS0MBkYU=;
+        b=a6vuNjLPmG2w517l0zH6cS1+iyGNxO2T6jb2CDHhTjUmixvUSRDjWgR08LeAO6Sr8R
+         2ZJ+tE98oOGTSDfzd8ZPM0Ie5HP9mUmmnzsm7dG25BDOmuuNzDOx7ysgWobZpWaTU3Uk
+         8hToS1pLuXMxj8QRzAvnepOmvZ2+GHtkjvtENXYTOJbO58tMjN+ptr6P3OeZPZPE5097
+         8Zr2BlivEs7YDrhNBMeuNHbzwUoRIpoq97joQzhsdIfua8sXyJWpWiiyh0n8LTGuM8vT
+         kv5kvHSaCX0QwME+k8wBFzWzNpiiqk4TU/zpNhreiiwVmy9abN8tP0sjOQ/vq7I1H6Co
+         imYg==
+X-Gm-Message-State: AEkoouujG8JFGvpTsBgT5SaXQT0/ukGyNwI/XVcX6nR1mnRbyw7FMOxtemBVq+SYzbqL9KO0lHTHxMHzzr/d0oXj
+X-Received: by 10.202.104.33 with SMTP id d33mr33024466oic.83.1470068163202;
+ Mon, 01 Aug 2016 09:16:03 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.182.149.226 with HTTP; Mon, 1 Aug 2016 09:24:48 -0700 (PDT)
-In-Reply-To: <20160730172509.22939-5-chriscool@tuxfamily.org>
-References: <20160730172509.22939-1-chriscool@tuxfamily.org> <20160730172509.22939-5-chriscool@tuxfamily.org>
+Received: by 10.182.149.226 with HTTP; Mon, 1 Aug 2016 09:16:02 -0700 (PDT)
+In-Reply-To: <20160730172509.22939-4-chriscool@tuxfamily.org>
+References: <20160730172509.22939-1-chriscool@tuxfamily.org> <20160730172509.22939-4-chriscool@tuxfamily.org>
 From:	Stefan Beller <sbeller@google.com>
-Date:	Mon, 1 Aug 2016 09:24:48 -0700
-Message-ID: <CAGZ79kaijAFndjxUd93a49No1AwCx-VzFcwKhkrQNjdmyxodwQ@mail.gmail.com>
-Subject: Re: [PATCH v9 04/41] builtin/apply: read_patch_file() return -1
- instead of die()ing
+Date:	Mon, 1 Aug 2016 09:16:02 -0700
+Message-ID: <CAGZ79kY+VHLspQBm+cTarY8NR2_iOewUiVZVv79DHLVsv7v-Qg@mail.gmail.com>
+Subject: Re: [PATCH v9 03/41] builtin/apply: make apply_patch() return -1 or
+ -128 instead of die()ing
 To:	Christian Couder <christian.couder@gmail.com>
 Cc:	"git@vger.kernel.org" <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>,
@@ -72,35 +72,38 @@ X-Mailing-List:	git@vger.kernel.org
 On Sat, Jul 30, 2016 at 10:24 AM, Christian Couder
 <christian.couder@gmail.com> wrote:
 
-> -static void read_patch_file(struct strbuf *sb, int fd)
-> +static int read_patch_file(struct strbuf *sb, int fd)
->  {
->         if (strbuf_read(sb, fd, 0) < 0)
-> -               die_errno("git apply: failed to read");
-> +               return error_errno("git apply: failed to read");
+> + * Try to apply a patch.
+> + *
+> + * Returns:
+> + *  -128 if a bad error happened (like patch unreadable)
+> + *  -1 if patch did not apply and user cannot deal with it
+> + *   0 if the patch applied
+> + *   1 if the patch did not apply but user might fix it
 
-which always returns -1.
+I stopped and wondered when reading this comment,
+what the difference between -1 and 1 is, as the user is
+not part of this function.
 
-> @@ -4425,7 +4426,8 @@ static int apply_patch(struct apply_state *state,
->         int res = 0;
->
->         state->patch_input_file = filename;
-> -       read_patch_file(&buf, fd);
-> +       if (read_patch_file(&buf, fd))
+When reading the code, this makes sense, though.
+So -1 is returned when the user set `apply_with_reject`,
+1 otherwise? So the user told us upfront how to deal with
+certain errors.
 
-In case a reroll turns out to be needed, check for
-"read_patch_file(..) < 0" here,
-as we only want to error out in case of errors from that function?
-The return value of read_patch_file, is not documented as it seems
-trivial at the
-moment, i.e.
+What is a "bad" error, that generates a -128?
+(Only when the patch is not syntactically correct? Or are there
+other -128 errors as well?)
 
-  0 for success
-  negative values for errors
-  positive values are currently not returned, but are reserved for future use?
+Maybe:
+ Returns zero on success,
+ non zero for failing to apply a patch
+ negative values for hard errors, e.g. unreadable patc.
 
-The current implementation is correct as-is, though I think we follow the
-"negative values indicate a serious error and positive values are to
-be expected,
-and not necessarily an error" pattern in lots of other places, so we
-could here as well.
+Though this is less precise, as it doesn't differentiate between
+-1 and -128. I dunno.
+
+(These are just musings that should not stop going
+forward with this patch, just some thoughts on the precision
+of a comment)
+
+Thanks,
+Stefan
