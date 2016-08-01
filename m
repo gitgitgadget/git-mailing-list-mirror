@@ -2,113 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4E471F955
-	for <e@80x24.org>; Mon,  1 Aug 2016 23:11:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEB1E1F855
+	for <e@80x24.org>; Mon,  1 Aug 2016 23:25:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753219AbcHAXLy (ORCPT <rfc822;e@80x24.org>);
-	Mon, 1 Aug 2016 19:11:54 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50111 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753223AbcHAXLo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2016 19:11:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 605AC32DFC;
-	Mon,  1 Aug 2016 19:11:39 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hkCdLchE8dC50JPFszxU0V6csdQ=; b=piOfDo
-	6p1/QOO1ZVAS1+eWOoTIa+ybvnVm8dPhMj+YPEtDQfpv4iOJ4pYdEzapbzA13yuv
-	2OGqyrmGxM3Sxd76Pg56KsEoN/+jY7awqU7tI7sRmOnP7lLryA0klI32nJVyaMja
-	RtvRU8NMGlBanmK4zWPQPRb+3jqvdVbsldF7w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HJY3gYPKaFNt5UJJ1IaLg6dOfWEGF9L+
-	KaB010U5gSpoBtYlyHXZbRKJIZwX6XyMo9/6LP2Str3VfAMwOW2UDyIwhV4AKtD1
-	rNvu+sQ+kfCST/Wa6RtIPeD8hQoZn6jy7puxSAJzcFWcTKa/y+6XnDEB5i1G22Vu
-	JHd8LwAb8NM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 58F2732DFB;
-	Mon,  1 Aug 2016 19:11:39 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B8DF032DFA;
-	Mon,  1 Aug 2016 19:11:38 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Christian Couder <christian.couder@gmail.com>
-Cc:	Oleg Taranenko <olegtaranenko@gmail.com>, git <git@vger.kernel.org>
-Subject: Re: git bisect for reachable commits only
-References: <CABEd3j8VLbpeWbA6BfHYp5aLPEy0PesqYoHM9u4OM=b7Qm=LDg@mail.gmail.com>
-	<xmqqinvonwxc.fsf@gitster.mtv.corp.google.com>
-	<CABEd3j-MW--YSC9=nwcgHzxd6cqmUY+ky3-wLxMiMmbBGsvS7Q@mail.gmail.com>
-	<CABEd3j--sxCwv6fWmNxTtdpgwU0_YKbfiFONX6TsQFZGn79yuQ@mail.gmail.com>
-	<CAP8UFD118RdB5dX2-wEm5VnKud7sirHhdC9kvWmXV0eAQHvfsA@mail.gmail.com>
-	<xmqq7fc0jmhx.fsf@gitster.mtv.corp.google.com>
-	<CAP8UFD315CgntwYiC9g-R7KN0XiL9635Vwv_y8yi4n-uj8o90A@mail.gmail.com>
-Date:	Mon, 01 Aug 2016 16:11:36 -0700
-In-Reply-To: <CAP8UFD315CgntwYiC9g-R7KN0XiL9635Vwv_y8yi4n-uj8o90A@mail.gmail.com>
-	(Christian Couder's message of "Mon, 1 Aug 2016 22:36:06 +0200")
-Message-ID: <xmqqwpk0f5jr.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1755259AbcHAXZ3 (ORCPT <rfc822;e@80x24.org>);
+	Mon, 1 Aug 2016 19:25:29 -0400
+Received: from cloud.peff.net ([50.56.180.127]:52994 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754503AbcHAXZT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2016 19:25:19 -0400
+Received: (qmail 24024 invoked by uid 102); 1 Aug 2016 23:24:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 01 Aug 2016 19:24:33 -0400
+Received: (qmail 19771 invoked by uid 107); 1 Aug 2016 23:24:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 01 Aug 2016 19:24:59 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Aug 2016 19:24:29 -0400
+Date:	Mon, 1 Aug 2016 19:24:29 -0400
+From:	Jeff King <peff@peff.net>
+To:	Stefan Tauner <stefan.tauner@gmx.at>
+Cc:	git@vger.kernel.org
+Subject: Re: Un-paged commit messages in git filter-branch's commit-filter?
+Message-ID: <20160801232429.mb43wxev5lyhxyiw@sigill.intra.peff.net>
+References: <0McmFl-1aux6M2oV7-00Hv9A@mail.gmx.com>
+ <20160616095947.GA15988@sigill.intra.peff.net>
+ <0MTjMy-1buKad2Fg8-00QUQV@mail.gmx.com>
+ <20160801213631.2ttdlermxw2wbnbi@sigill.intra.peff.net>
+ <0LzskF-1bGAH81g5T-014za7@mail.gmx.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4CE4C4C8-583D-11E6-8C4F-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0LzskF-1bGAH81g5T-014za7@mail.gmx.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+On Mon, Aug 01, 2016 at 11:49:09PM +0200, Stefan Tauner wrote:
 
->> I think the "previous issue" was that we can ask the user to ask to
->> check one of 'x' or 'y' when given Good and Bad points in a graph like
->> this:
->>
->>         x---y---y---o---B
->>          \         /
->>           x---G---o
->>
->> while a more natural expectation by a user would be that we only
->> need to check one of these two 'o'.
->
-> Yeah, I reproduced the steps described in the Google Groups discussion:
->
-> https://groups.google.com/forum/#!topic/git-users/v3__t42qbKE
->
-> and I think that is indeed the "previous issue".
->
->> Thinking about it again, I actually think it makes sense to ask the
->> user to check 'y'; there is no good reason to believe that 'y' can
->> never have introduced the badness we are hunting for, and limiting
->> the search to --ancestry-path (which is to ask only for 'o') would
->> stop at the merge 'o' if one of the 'y' were bad, which would
->> prevents us from knowing the exact breakage.
->
-> I agree.
+> > For instance, if I do:
+> > 
+> >   git init
+> >   echo content >file
+> >   git add file
+> >   git commit -m "$(perl -e 'print join(" ", 1..100)')"
+> > 
+> > I get a commit message with one long unwrapped line, which I can view
+> > via git-log, etc.
+> 
+> That's approximately what I did in my tests as well. And like you, when
+> I do this in a fresh repository, it works like that..
 
-Having agreed on that, there are cases where you do want to stop at
-the merge 'o' on the upper history, when lower-history leading to B
-is the mainline and you are interested in finding the merge with
-which side branch introduced a breakage, and not particularly
-interested in finding the exact commit on the side branch.  Upon
-finding the merge 'o' that is the parent of 'B' is bad, you find out
-the owner of the side branch merged there who wrote the two 'y's,
-and have him work on figuring out where in his branch he broke it.
+One thing to look at, I guess, is whether they are corrupted coming in
+to the repository, or when they are being formatted.
 
-For that, the --ancestry-path is a wrong way to traverse; what we
-want in that context is the --first-parent traversal.
+If you do:
 
->> There however is no excuse if we asked to check 'x', though.  They
->> are ancestors of a Good commit, and "git bisect" should be able to
->> assume they are Good.
->
-> I think it does. When I reproduced the steps in the "previous issue",
-> it did assume they are good.
+  git cat-file commit HEAD
 
-I actually had an impression that the original report claimed that
-the user was asked to check immediate parent of G, and that would be
-a bug.
+you will get the raw bytes of the commit object stored by git. In the
+example above, it obviously shows one long line. Have you checked that
+it does so in your cases that misbehave?
+
+> > (I wondered at first if the extra "cat" and "-m" could be messing up
+> > whitespace for you, but it should not, as the quoting around "$input"
+> > should preserve things like newlines. And anyway, the bug in that case
+> > would be the _opposite_; I'd expect it to stuff everything onto a single
+> > line rather than breaking lines).
+> 
+> The commit messages I try to process are nothing special really... just
+> very long and not subject-like (because SVN and not giving too much
+> thought to them sometimes). The only special thing I can think of is
+> that they have been processed by git-svn earlier.
+
+Hmm. The usual problem with svn-imported commits is not long lines,
+exactly, but rather that the commit message has one big paragraph at the
+top, rather than a subject/body split.
+
+So when you ask git for the "subject" in such a case, it may paste many
+lines together as a single one. For example:
+
+  $ commit=$(seq 1 5 | git commit-tree HEAD^{tree})
+  $ git cat-file commit $commit
+  tree 07753f428765ac1afe2020b24e40785869bd4a85
+  author Jeff King <peff@peff.net> 1470093739 -0400
+  committer Jeff King <peff@peff.net> 1470093739 -0400
+
+  1
+  2
+  3
+  4
+  5
+
+  $ git log --format=%s $commit
+  1 2 3 4 5
+
+So could it be that your lines actually _are_ broken in the git objects,
+but "%s" and other tools try to salvage them as a single subject?
+
+I don't recall offhand whether git-svn does line-wrapping or any other
+commit-message munging.
+
+-Peff
