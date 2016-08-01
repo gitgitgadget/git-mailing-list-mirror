@@ -7,98 +7,94 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
 	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E08911F71B
-	for <e@80x24.org>; Mon,  1 Aug 2016 09:14:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13DED1F71B
+	for <e@80x24.org>; Mon,  1 Aug 2016 09:19:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752119AbcHAJN6 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 1 Aug 2016 05:13:58 -0400
-Received: from mout.gmx.net ([212.227.15.19]:59698 "EHLO mout.gmx.net"
+	id S1751559AbcHAJTJ (ORCPT <rfc822;e@80x24.org>);
+	Mon, 1 Aug 2016 05:19:09 -0400
+Received: from mout.gmx.net ([212.227.15.18]:59692 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751132AbcHAJNy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2016 05:13:54 -0400
+	id S1751132AbcHAJTG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2016 05:19:06 -0400
 Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LpcBS-1ap1Ye15y2-00fTSC; Mon, 01 Aug 2016 11:12:06
+ ESMTPSA (Nemesis) id 0MX1hk-1bp8eY0Y7w-00VxM4; Mon, 01 Aug 2016 11:18:54
  +0200
-Date:	Mon, 1 Aug 2016 11:12:04 +0200 (CEST)
+Date:	Mon, 1 Aug 2016 11:18:52 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Stephen Morton <stephen.c.morton@gmail.com>
-cc:	Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git cherry-pick conflict error message is deceptive when
- cherry-picking multiple commits
-In-Reply-To: <CAH8BJxGPzpymSWPpxXRcCCx-OPckm5bVgENUEjVM-+9sr1T+6A@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1608011107190.149069@virtualbox>
-References: <CAH8BJxGZW8eNQogksZ416sVaBkpQ78uYkV7FtN6wxGafzNwjAg@mail.gmail.com> <CAGZ79kaop1HB4tQAKxOcq8ZNEc+6VMPB1suwA9jra2BoXc27cw@mail.gmail.com> <20160726203041.GA4675@sigill.intra.peff.net> <CAH8BJxH0_RhmDaHWBkFg6QP7WWucUtPSQfsAemdVWkTzN42MPw@mail.gmail.com>
- <CAH8BJxFvyEDuj-mm=N=ca3kxysopaBpro-HsuL-HZehqE_nxDA@mail.gmail.com> <alpine.DEB.2.20.1607271649120.14111@virtualbox> <CAH8BJxGPzpymSWPpxXRcCCx-OPckm5bVgENUEjVM-+9sr1T+6A@mail.gmail.com>
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH v5 12/16] merge-recursive: flush output buffer before
+ printing error messages
+In-Reply-To: <xmqqh9bavk2x.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1608011118480.149069@virtualbox>
+References: <cover.1469187652.git.johannes.schindelin@gmx.de> <cover.1469547160.git.johannes.schindelin@gmx.de> <349bdfacfffa11d06241655c9e0b62506e58758b.1469547160.git.johannes.schindelin@gmx.de> <xmqqh9bavk2x.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Ahub3IqKduovD5Ianc0IRG0GoUQf8HjDS3l0UACh1Toa/sAXoDY
- ySxntds0gkou6dTQczM1NdganHqkMLnlnrBwoWE/e9te2D1oFZAe1osmtnitVz8rreWZt3f
- pN18vgIzSkrVa5wPLCA75o5cZ6P+BG6vDvE7DoKPNDS9uGlOrlUmRMgxMVbnMsvhP/y9v19
- qVS3bUblLIxranAPP2YAA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:egGYCAvkZXo=:EkcrNUq1BYSnIZhLXJFMra
- NUR2XLHQFLUBj2PAhaYhsIykfw8ubecvt8Ww2ZbMAkQCp2FAGIzq79qWTv6t4sbJ9LDOD51O6
- c/r7JgDsMCyfKdwIC/zm/uWi3XQgFzj6mcD0zD2EH9yl07IFRxQowjaUtg8dy8tK4qVf8OZFL
- axF2shmdc7QXorOhz9kosF4s1cwU8mJ0jVjExTzP3LRYI3I7NlqB5w2NUwLw+MgLJyNuJUNEz
- 5BltR/vzJUrKR/mi38ZLe7MwEtPux8WFKM6Dx/DM44+Ck2zgF5hBW62lz7LOrhETPPfuKQerH
- Y8/oeswbzMK/h5up+SxWj8CcQqaIMKFTW4iLjhPFPb/I2B/NZ9YK46bhhJJgdWBcmdnZ5SBrC
- pmwgTjoP/FKZ4r6bHCwO/NCVnv009ub7Q1aRjPj8L1E5l71QsJqiz8SNIGY+r5PxqpHg/TyWH
- bAc2Ph1/OTnLbIIeQUXcYdWHRF1fPdgkRmU9Agv9Px9YPlg3PO+KucXCeVf4yUHYGVuH07Uhw
- V9du5XgguCBGyEBhNHR5TbzqO/2YI3tSM+wbr/il2y/l/F8mLdndO5Ym6BCCLjwHfVhb/Ni2/
- quqWYP+JQek4TMxWk1wsDovnUmhlmrJNLREUiuYj5b5k4S8DU7BvZXe99eRObQ9izyLqw+Ylt
- BCPqqO4JGUyebs6P+nPpztpnRA54A/R43do2ckafBi4BBZHrwLYxht/Tu6iY8s4FgRhBgU5mQ
- dJTpAKBnq0Zkmo4IpCm8pFWbuuJ9dpPbOBp72vv/3P8Ma/WECd3iFHETRxpT/RrzTsIL2/3Rh
- OLdVT8R
+X-Provags-ID: V03:K0:94BUuNuK+hFzNgrReEKpBs9jYOxQNL/UIF8l69OoQBLELa5BDyV
+ Y3BT+MHfFFjGA/x/Y0V+hKK5gJbtir2oQilZPknLaJcZGH49wdXsFC14eFd13TvdOTeW8xJ
+ WUF92guI33ZpzAvHeJLYNXE5F9sKGJPLdJI2qMOkpdmJ6KTw5CIW/rWgZfFxntuz11fG4IO
+ ykcnRpzyhSxOnwidICDHA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:eOG1UjyP904=:ueUCh7W+czX5cvuQ5MgPwc
+ MTo7tY1IDH+mo1HLtj8ycUPBkf0UMd09xM5nGgpjkygntn1GWBhTsqf+i8Q1ZtmiBqsHMNAoz
+ wKGgQDsrwILIFyxDqBCs+lzQDdybRBsSX4uRTAFu5RUQCBj1/i4MAgK5NPwLBqK9iUKW0wkaH
+ z+Y3NUTpD4M9t/Jqcu2f9tDzFje2yormSr3C0hgjuM0Ht83LhbWNWyu1EJq2IHOkY000p/3kr
+ nChtdHE9Rm/7Ph1qWEWKu0Xsxw5Nc7NI2NowHxwzdATWb5CBRYsiIBqX0AjU3LEAIEVrAeAQS
+ vXMuJ2bh9PAnvdPQpMWTBjd1YLPCeM7VUuToyKKyWcs9x78MYFNKgzp86kJqUePpG+S9eoHua
+ 67s79+bTdBZ2HBLz8xMUo5URe0eDrRQW76ohTMqzIInUGDInbWxp4B0Xkd39q7RDGsq2Othh6
+ j5pjwrg3vHZBPczdRkrq4laf+z4eNHIgEZxXz/XJVHxx9ohlFgqyu65EwO4FUBivs+FUg+Dfh
+ BjddYrG1hQ4bRNrJ0KUy1dQ8Y/HH2PLA2iDS2ep69IPdIi6Rd2CBHl/nWkchjRqG35BiwF76R
+ fBg6PUiW7QVM9LCHiss9+y3r839z0Ka5rCuHMaHT0TnYyOYVPhFayEldM27ZwzNxE5M8T2LV0
+ M9+52VDbSSP0txOaCs3Jequ5C4n1Xudh8M11KVY5gnPpSWG+TyWhs+xRfl6SpduMyiz/Iaozq
+ JBqHa5vXwG1Rzv8K3+33SDIqt0uuXwNtCQRk5sswhuC+0Yex88115+9iI5ovZls19WkNnvKOT
+ be5+6RH
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Stephen,
+Hi Junio,
 
-On Wed, 27 Jul 2016, Stephen Morton wrote:
+On Wed, 27 Jul 2016, Junio C Hamano wrote:
 
-> On Wed, Jul 27, 2016 at 11:03 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > On Wed, 27 Jul 2016, Stephen Morton wrote:
-> >
-> >> diff --git a/sequencer.c b/sequencer.c
-> >> index cdfac82..ce06876 100644
-> >> --- a/sequencer.c
-> >> +++ b/sequencer.c
-> >> @@ -176,7 +176,8 @@ static void print_advice(int show_hint, struct
-> >> replay_opts *opts)
-> >>                 else
-> >>                         advise(_("after resolving the conflicts, mark
-> >> the corrected paths\n"
-> >>                                  "with 'git add <paths>' or 'git rm <paths>'\n"
-> >> -                                "and commit the result with 'git commit'"));
-> >> +                                "then continue the %s with 'git %s
-> >> --continue'\n"
-> >> +                                "or cancel the %s operation with 'git
-> >> %s --abort'" ),  action_name(opts), action_name(opts),
-> >> action_name(opts), action_name(opts));
-> >
-> > That is an awful lot of repetition right there, with an added
-> > inconsistency that the action is referred to by its name alone in the
-> > "--continue" case, but with "operation" added in the "--abort" case.
-> >
-> > And additionally, in the most common case (one commit to cherry-pick), the
-> > advice now suggests a more complicated operation than necessary: a simply
-> > `git commit` would be enough, then.
-> >
-> > Can't we have a test whether this is the last of the commits to be
-> > cherry-picked, and if so, have the simpler advice again?
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
-> Ok, knowing that I'm not on the last element of the sequencer is
-> beyond my git code knowledge.
+> > The data structure passed to the recursive merge machinery has a feature
+> > where the caller can ask for the output to be buffered into a strbuf, by
+> > setting the field 'buffer_output'.
+> >
+> > Previously, we simply swallowed the buffered output when showing error
+> > messages. With this patch, we show the output first, and only then print
+> > the error message.
+> 
+> I didn't quite understand this paragraph until I realized that you
+> meant "when showing die message".  We died without flushing, losing
+> accumulated output.
 
-Oh, my mistake: I meant to say that this information could be easily
-provided by `pick_commits()` if it passed it to `print_advice()` via
-`do_pick_commit()`.
+I rephrased it, using your explanation.
 
-Ciao,
-Johannes
+> > +static int err(struct merge_options *o, const char *err, ...)
+> > +{
+> > +	va_list params;
+> > +
+> > +	va_start(params, err);
+> > +	flush_output(o);
+> 
+> I would have written the above two swapped; va_start() logically
+> is about what happens in the next four lines.
+
+For some reason, I thought that `va_start()` must be the first statement
+of the function. Fixed.
+
+> > +	strbuf_vaddf(&o->obuf, err, params);
+> > +	error("%s", o->obuf.buf);
+> > +	strbuf_reset(&o->obuf);
+> 
+> Sneaky ;-)
+
+Thanks ;-)
+Dscho
