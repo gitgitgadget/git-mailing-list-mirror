@@ -2,87 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97F1B1F855
-	for <e@80x24.org>; Mon,  1 Aug 2016 19:47:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43C241F855
+	for <e@80x24.org>; Mon,  1 Aug 2016 19:52:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754862AbcHATrQ (ORCPT <rfc822;e@80x24.org>);
-	Mon, 1 Aug 2016 15:47:16 -0400
-Received: from slow1-d.mail.gandi.net ([217.70.178.86]:47069 "EHLO
-	slow1-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751928AbcHATrO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2016 15:47:14 -0400
-Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
-	by slow1-d.mail.gandi.net (Postfix) with ESMTP id E7F9847FB13;
-	Mon,  1 Aug 2016 20:38:59 +0200 (CEST)
-Received: from mfilter47-d.gandi.net (mfilter47-d.gandi.net [217.70.178.178])
-	by relay4-d.mail.gandi.net (Postfix) with ESMTP id 41FAF1720A5;
-	Mon,  1 Aug 2016 20:37:56 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter47-d.gandi.net
-Received: from relay4-d.mail.gandi.net ([IPv6:::ffff:217.70.183.196])
-	by mfilter47-d.gandi.net (mfilter47-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id 2M-daNVHjHSB; Mon,  1 Aug 2016 20:37:54 +0200 (CEST)
-X-Originating-IP: 50.39.163.18
-Received: from x (50-39-163-18.bvtn.or.frontiernet.net [50.39.163.18])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id DBB0B1720A9;
-	Mon,  1 Aug 2016 20:37:52 +0200 (CEST)
-Date:	Mon, 1 Aug 2016 11:37:50 -0700
-From:	Josh Triplett <josh@joshtriplett.org>
-To:	Stephen Warren <swarren@wwwdotorg.org>
-Cc:	git@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Simon Glass <sjg@chromium.org>
-Subject: Re: [ANNOUNCE] git-series: track changes to a patch series over time
-Message-ID: <20160801183750.ivwue4mxm5ilgzqz@x>
-References: <20160729064055.GB25331@x>
- <b7bd1464-1412-1feb-fe10-9ecb6018e122@wwwdotorg.org>
+	id S1754863AbcHATwP (ORCPT <rfc822;e@80x24.org>);
+	Mon, 1 Aug 2016 15:52:15 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52930 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755098AbcHATv7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2016 15:51:59 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AEEDD329E5;
+	Mon,  1 Aug 2016 15:51:57 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DkjoSEQ+000cGtlG5DO38ZDaHMk=; b=sLP1qR
+	3hC2QYzdGoEd7pGl2bXnBGLtNZ0iI0Ia9T5tqA+MUZ+a+1P4ZOn9+h5DYAOrcSaA
+	jbXme9inGgPSrssz5swdOjkieOBrSooZOAvaaPBDfVC7jGHunEbrF4iI9PsNeZZ0
+	1tC+iQ2S+znFYssjP7dabI0DkJVZ5JM/0sBlo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hBM1QXnnp31zZMMVmT7SNo2n293ZMeg6
+	u9bH9Bep+uY+zoyvjUVL6p3dhDK/Xu14llBayGAATrgO6pQB4LQmP+ORg1ApBWk+
+	Y/TSOU3PbufhdQPxON8/ikBJ2taBf1V7okt/IAl0MtlUJq5ZjHFdZd2v+918cA6t
+	GVhQYbcdWA0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A7A99329E4;
+	Mon,  1 Aug 2016 15:51:57 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 282AB329E0;
+	Mon,  1 Aug 2016 15:51:57 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Christian Couder <christian.couder@gmail.com>
+Cc:	Oleg Taranenko <olegtaranenko@gmail.com>, git <git@vger.kernel.org>
+Subject: Re: git bisect for reachable commits only
+References: <CABEd3j8VLbpeWbA6BfHYp5aLPEy0PesqYoHM9u4OM=b7Qm=LDg@mail.gmail.com>
+	<xmqqinvonwxc.fsf@gitster.mtv.corp.google.com>
+	<CABEd3j-MW--YSC9=nwcgHzxd6cqmUY+ky3-wLxMiMmbBGsvS7Q@mail.gmail.com>
+	<CABEd3j--sxCwv6fWmNxTtdpgwU0_YKbfiFONX6TsQFZGn79yuQ@mail.gmail.com>
+	<CAP8UFD118RdB5dX2-wEm5VnKud7sirHhdC9kvWmXV0eAQHvfsA@mail.gmail.com>
+Date:	Mon, 01 Aug 2016 12:51:54 -0700
+In-Reply-To: <CAP8UFD118RdB5dX2-wEm5VnKud7sirHhdC9kvWmXV0eAQHvfsA@mail.gmail.com>
+	(Christian Couder's message of "Mon, 1 Aug 2016 17:41:35 +0200")
+Message-ID: <xmqq7fc0jmhx.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b7bd1464-1412-1feb-fe10-9ecb6018e122@wwwdotorg.org>
-User-Agent: Mutt/1.6.2-neo (2016-07-23)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 674E994A-5821-11E6-B128-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Aug 01, 2016 at 09:14:54AM -0600, Stephen Warren wrote:
-> On 07/29/2016 12:40 AM, Josh Triplett wrote:
-> > I'd like to announce a project I've been working on for a while:
-> > 
-> > git-series provides a tool for managing patch series with git, tracking
-> > the "history of history". git series tracks changes to the patch series
-> > over time, including rebases and other non-fast-forwarding changes. git
-> > series also tracks a cover letter for the patch series, formats the
-> > series for email, and prepares pull requests.
-> 
-> Just as an FYI, I wouldn't be surprised if there's some overlap, or
-> potential for merging of tools, between this tool and the "patman" tool
-> that's part of the U-Boot source tree:
-> 
-> http://git.denx.de/?p=u-boot.git;a=blob;f=tools/patman/README;h=e36857dedea1d0dbafa41732aaf9bf0988d63f38;hb=HEAD
+Christian Couder <christian.couder@gmail.com> writes:
 
-Interesting tool; thanks for the link.
+> Yes, and the reason is that all the ancestors of a good commit are
+> considered good.
+> That's because git bisect supposes that there is only one transition
+> from good to bad.
+> Otherwise we would need a more complex algorithm to find all the
+> transitions from good to bad, and that is not generally needed.
 
-As far as I can tell from that documentation, patman doesn't track old
-versions of a patch series; you rebase to modify patches or change
-patman tags (embedded in commit messages), and nothing preserves the
-previous version.  And it tracks the cover letter and similar in one of
-the commit messages in the series, so previous versions of that don't
-get saved either.  If you wanted to track the history of your changes,
-you'd have to use branch names or similar.
+It may be debatable if that is generally needed or not, but by
+definition "bisect" is about having a history that has a SINGLE
+point that changes from good to bad (or old to new, or "have sugar"
+to "no sugar"), and that single-ness is what allows us to BIsect the
+graph.  So even if it may be a good thing to have to be able to find
+multiple transitions, that is outside the scope of how the current
+"git bisect" was designed to be used.
 
-In addition, tracking metadata in commit messages only works with a
-patches-by-mail workflow where the messages get processed when
-generating patches; that doesn't work for please-pull workflows.
+> I haven't looked at your previous issue much, sorry I have been busy these days.
 
-patman does have quite a few interesting ideas, though.  git-series
-needs some way of handling To/Cc addresses for patches and the cover
-letter (beyond just scripts/get_maintainer.pl), and more automatic
-handling of series versioning (v2, v3, ...) and associated series
-changelogs.  Suggestions welcome.
+I think the "previous issue" was that we can ask the user to ask to
+check one of 'x' or 'y' when given Good and Bad points in a graph like
+this:
 
-- Josh Triplett
+        x---y---y---o---B
+         \         / 
+          x---G---o
+
+while a more natural expectation by a user would be that we only
+need to check one of these two 'o'.
+
+Thinking about it again, I actually think it makes sense to ask the
+user to check 'y'; there is no good reason to believe that 'y' can
+never have introduced the badness we are hunting for, and limiting
+the search to --ancestry-path (which is to ask only for 'o') would
+stop at the merge 'o' if one of the 'y' were bad, which would
+prevents us from knowing the exact breakage.
+
+There however is no excuse if we asked to check 'x', though.  They
+are ancestors of a Good commit, and "git bisect" should be able to
+assume they are Good.
+
+
+
