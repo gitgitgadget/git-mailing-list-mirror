@@ -2,201 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FB861F855
-	for <e@80x24.org>; Mon,  1 Aug 2016 15:51:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4EFE1F855
+	for <e@80x24.org>; Mon,  1 Aug 2016 16:31:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754008AbcHAPvf (ORCPT <rfc822;e@80x24.org>);
-	Mon, 1 Aug 2016 11:51:35 -0400
-Received: from siwi.pair.com ([209.68.5.199]:37294 "EHLO siwi.pair.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753935AbcHAPvd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2016 11:51:33 -0400
-Received: from [10.160.15.137] (unknown [167.220.148.23])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by siwi.pair.com (Postfix) with ESMTPSA id 82776845D2;
-	Mon,  1 Aug 2016 11:41:46 -0400 (EDT)
-Subject: Re: [PATCH v3 7/8] status: update git-status.txt for --porcelain=v2
-To:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
-	git@vger.kernel.org
-References: <1469567483-58794-1-git-send-email-git@jeffhostetler.com>
- <1469567483-58794-8-git-send-email-git@jeffhostetler.com>
- <fe5d1dd7-11da-e09b-5880-cf103e34fb9a@gmail.com>
-Cc:	gitster@pobox.com, Johannes.Schindelin@gmx.de,
-	Jeff Hostetler <jeffhost@microsoft.com>
-From:	Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <579F6D3A.3010704@jeffhostetler.com>
-Date:	Mon, 1 Aug 2016 11:39:38 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
+	id S1754230AbcHAQax (ORCPT <rfc822;e@80x24.org>);
+	Mon, 1 Aug 2016 12:30:53 -0400
+Received: from mail-oi0-f44.google.com ([209.85.218.44]:34876 "EHLO
+	mail-oi0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754198AbcHAQah (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2016 12:30:37 -0400
+Received: by mail-oi0-f44.google.com with SMTP id l72so199910274oig.2
+        for <git@vger.kernel.org>; Mon, 01 Aug 2016 09:30:37 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=8Gx7d9K2YttpzDTUrTtV6AUZVirNx7WIrwizuOpRFZc=;
+        b=JaFwT7U446QtOXNtVrjvqkK29iEb/4kqeBLWb8lTai64PpQN9PpoiWjL8jrqer3i+T
+         0skTbw8lpYiAEh8s/ubJYsvfE20J7ObR6BtizNzPduKJ07yvOKotc1nJ9hYj0/ZXbbPI
+         HdrU7mCyUuSFpq0njS0KHNIOPcU+bllV/TQ0D97B7s8duw3k3pSGSCuWKmWB1Y7dT7pu
+         X7FVrKJNZHTDry5VVtopx1ZgbrusBojV2B4yKeGyPLRxOgRCrLd85I9YIBOs+zzOk2z6
+         CJvPaWCrUSHbeCfGnP3wOSUBEBQgT3VZoCIxsZQU6S7MiuO1sLOTZyGF7gELe30pVFyh
+         6oiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=8Gx7d9K2YttpzDTUrTtV6AUZVirNx7WIrwizuOpRFZc=;
+        b=GaVhrE5jcCqioe5V7hZFULV+HovSUfjbXTvSH3RyCjcSSW/93x4OUmumNUQi79XopI
+         259Emw1PxJi3Az+VnxgbDoLpvi6/7bxCcLKRDqYDCem/GNMlAifyVPVNABPvUtFvt+qx
+         gK7Rhl4eVmijCm5cbCX+bE4kuY5ntekZrYwJ5cfhriL63CxKEAI4Fk5F65LfUV/xDmXJ
+         uz11Xmced5xYfGFnwKuOtzuyeYqiz4Zdn/DS+SbEfnXHZedljRnnJnX6qGf4j3NcHEFQ
+         fPBhsB+tudMqUnMH/FtfIyEN80uJyXoI1liwWrdn4rci6HSIGusz6b2YeZWPlg4gVkKT
+         OZ0Q==
+X-Gm-Message-State: AEkoousu6IkPTXn8uJxZvEhRr78x+6FZQqeRjMjlwLLJs+gteUHYLY7S+Q7qLR3g1dBWj5ZXN1JBdnjVYQ7DfM9L
+X-Received: by 10.157.39.136 with SMTP id c8mr35783955otb.34.1470068688816;
+ Mon, 01 Aug 2016 09:24:48 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <fe5d1dd7-11da-e09b-5880-cf103e34fb9a@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Received: by 10.182.149.226 with HTTP; Mon, 1 Aug 2016 09:24:48 -0700 (PDT)
+In-Reply-To: <20160730172509.22939-5-chriscool@tuxfamily.org>
+References: <20160730172509.22939-1-chriscool@tuxfamily.org> <20160730172509.22939-5-chriscool@tuxfamily.org>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Mon, 1 Aug 2016 09:24:48 -0700
+Message-ID: <CAGZ79kaijAFndjxUd93a49No1AwCx-VzFcwKhkrQNjdmyxodwQ@mail.gmail.com>
+Subject: Re: [PATCH v9 04/41] builtin/apply: read_patch_file() return -1
+ instead of die()ing
+To:	Christian Couder <christian.couder@gmail.com>
+Cc:	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+On Sat, Jul 30, 2016 at 10:24 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
 
+> -static void read_patch_file(struct strbuf *sb, int fd)
+> +static int read_patch_file(struct strbuf *sb, int fd)
+>  {
+>         if (strbuf_read(sb, fd, 0) < 0)
+> -               die_errno("git apply: failed to read");
+> +               return error_errno("git apply: failed to read");
 
-On 07/30/2016 01:22 PM, Jakub Narębski wrote:
-> W dniu 26.07.2016 o 23:11, Jeff Hostetler pisze:
+which always returns -1.
+
+> @@ -4425,7 +4426,8 @@ static int apply_patch(struct apply_state *state,
+>         int res = 0;
 >
-> This is a nice change, available because of lack of backward
-> compatibility with v1.  The porcelain v2 format branch-related
-> information could be enhanced without risk of breaking parsers,
-> or having new information put at the end even if it does not fit
-> there (like in previous iteration).
->
-> One thing that can serve as goal for the series is using the
-> question: would it make __git_ps1() from git-prompt.sh be able
-> to render fully decorated prompt with all bells and whistles,
-> and with all combinations of options.  Thus beside upstream
-> in the future we might want SVN upstream, and/or pushed-to
-> remote branch (and remote push upstream repository), etc.
->
-> But that's for the future (and it is possible for the future)...
->
+>         state->patch_input_file = filename;
+> -       read_patch_file(&buf, fd);
+> +       if (read_patch_file(&buf, fd))
 
-Yes, I was hoping to be able to simplify and/or speed up
-__git_ps1() with this data.  "Namespacing" the branch data
-here.  And then later add the state data (in a merge,
-in a rebase, and etc.) in a series of "# state.*" headers.
-And so on, until we get everything that __git_ps1() needs.
-However, to really make that work, we might want to add
-a --no-scan (or minimial scan) option, to just return the
-header data, since __git_ps1() doesn't care about the list
-of changes.
+In case a reroll turns out to be needed, check for
+"read_patch_file(..) < 0" here,
+as we only want to error out in case of errors from that function?
+The return value of read_patch_file, is not documented as it seems
+trivial at the
+moment, i.e.
 
+  0 for success
+  negative values for errors
+  positive values are currently not returned, but are reserved for future use?
 
->> +
->> +A series of lines are then displayed for the tracked entries.
->> +Ordinary changed entries have the following format:
->> +
->> +    1 <XY> <sub> <mH> <mI> <mW> <hH> <hI> <path>
->> +
->> +Renamed or copied entries have the following format:
->> +
->> +    2 <XY> <sub> <mH> <mI> <mW> <hH> <hI> <X><nr> <path>\t<pathSrc>
->
-> Nice solution to avoid those all zeros / null-SHA1s
-
-Thanks.
-
-
->> +Unmerged entries have the following format; the first character is
->> +a "u" to distinguish from ordinary changed entries.
->> +
->> +    u <xy> <sub> <m1> <m2> <m3> <mW> <h1> <h2> <h3> <path>
->> +
->> +    Field       Meaning
->> +    --------------------------------------------------------
->> +    <XY>        A 2 character field describing the conflict type
->> +                as described in the short format.
->> +    <sub>       A 4 character field describing the submodule state
->> +                as described above.
->> +    <m1>        The octal file mode for stage 1.
->> +    <m2>        The octal file mode for stage 2.
->> +    <m3>        The octal file mode for stage 3.
->> +    <mW>        The octal file mode in the worktree.
->> +    <h1>        The SHA1 value for stage 1.
->> +    <h2>        The SHA1 value for stage 2.
->> +    <h3>        The SHA1 value for stage 3.
->> +    <path>      The current pathname.
->> +    --------------------------------------------------------
->
-> A question: do unmerged entries always have only one single filename?
-> Or unmerged entries are always only about CONFLICT(contents), and no
-> other?
-
-As far as I could tell, unmerged rename conflicts appear with a single
-filename.
-
-When I did a divergent rename (in both branches), merge creates
-     a stage-1 "DD" entry,
-     a stage-2 "AU" entry, and
-     a stage-3 with a "UA" entry.
-     Status reports it as 3 rows.
-
-When I did a rename in one branch and an edits in both, merge
-creates: either a "DU" or "UD" conflict (depending on the direction
-of the merge).
-
-Given that the index is ordered and accessed by path (and there is
-no pathname field in a cache entry to link it to a different one),
-I have to say that this is true.
-
->
-> Would a note (or a link to other documentation) about octopus merges
-> be out of place here?
-
-I put a note in the code about it reporting the last entry at each
-stage that are present in the index, but I'm not sure about how much
-we want to say here.
-
-If octopus finds conflicts, the worktree will probably be in a
-funky state anyway.
-
->
->> +
->> +A series of lines are then displayed for untracked and ignored entries.
->> +
->> +    <x> <path>
->> +
->> +Where <x> is "?" for untracked entries and "!" for ignored entries.
->
-> A question: are they displayed in that order, i.e. first all untracked,
-> then all ignored, or it is something one cannot rely about?
-
-With the unique prefix character it shouldn't matter.  I do print
-all the '?' lines first then all the '!' lines, so the manpage
-could be clarified if we wanted. I was just trying to save another
-paragraph in the manpage.
-
->
->> +
->> +In all 3 line formats, pathnames will be "C Quoted" if they contain
->
-> "C Quoted" or "C-Quoted"?  How it is described in other places of
-> the Git documentation?
->
-
-I was probably inconsistent, I think it should be "c-quoted" (with the
-hypen) providing we like this term.
-
-Each of the git-diff*.txt and diff-format.txt files talk about
-this quoting scheme, but none give it an explicit name.
-
-
->> +any of the following characters: TAB, LF, double quotes, or backslashes.
->> +These characters will be replaced with \t, \n, \", and \\, respectively,
->> +and the pathname will be enclosed in double quotes.
->> +
->> +When the `-z` option is given, a NUL (zero) byte follows each pathname;
->> +serving as both a separator and line termination. No pathname quoting
->> +or backslash escaping is performed. All fields are output in the same
->> +order.
->
-> Does it mean that
->
->      2 [...] <cq-path>\t<cq-pathSrc>\n
->
-> line (including line terminator) is replaced with
->
->      2 [...] <path>\0<pathSrc>\0
->
-> that is, it replaces a separator (TAB, "\t") and line termination (LF, "\n");
-> here spelled in full?
->
-
-Yes.  Let me try to clarify that in the manpage.
-
-Thanks,
-Jeff
-
-
+The current implementation is correct as-is, though I think we follow the
+"negative values indicate a serious error and positive values are to
+be expected,
+and not necessarily an error" pattern in lots of other places, so we
+could here as well.
