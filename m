@@ -2,109 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6FBE1F855
-	for <e@80x24.org>; Mon,  1 Aug 2016 21:37:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E410A1F855
+	for <e@80x24.org>; Mon,  1 Aug 2016 21:41:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751546AbcHAVh3 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 1 Aug 2016 17:37:29 -0400
-Received: from cloud.peff.net ([50.56.180.127]:52876 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751090AbcHAVh1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2016 17:37:27 -0400
-Received: (qmail 19119 invoked by uid 102); 1 Aug 2016 21:36:35 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 01 Aug 2016 17:36:35 -0400
-Received: (qmail 18320 invoked by uid 107); 1 Aug 2016 21:37:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 01 Aug 2016 17:37:01 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Aug 2016 17:36:31 -0400
-Date:	Mon, 1 Aug 2016 17:36:31 -0400
-From:	Jeff King <peff@peff.net>
-To:	Stefan Tauner <stefan.tauner@gmx.at>
+	id S1752043AbcHAVlm (ORCPT <rfc822;e@80x24.org>);
+	Mon, 1 Aug 2016 17:41:42 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58682 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750954AbcHAVlk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Aug 2016 17:41:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 51AD33292F;
+	Mon,  1 Aug 2016 17:25:22 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=5CbAyKlXbn2l
+	PSy4vKwE1l6SE4E=; b=VqfNpxChIyYI5CFRru64d0Yjd+F6YMXPlmuFJOTDGmEp
+	NOk/EcrXu/qqu/dk8p8CGi8KA3p1A4ScQUcOD/6d1Dz+EnRHaWCNg/LwEL9CXoTZ
+	qWmgWsNokqzM/ePAAy/So3I3btAmMHcAMR1LikMNY/jvGsbIz8bCFB0vOyTRJ88=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=xut4SX
+	toOFRdt5R2ZJfF4X/IQ+W1Dyx4VNS5V2VNnDhorOSMp0DVCEYnqj8rW211Ekmjl6
+	xGP/KaELIKFwwB0uHK//juw+ClIpn2kKvmk4Fx+MLgteMvNmlCP8KQsdoipIdveb
+	cZ8QfTNOf6YoS/Zsqr2XmQkzp4gGUtdKTmcJ4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 484453292D;
+	Mon,  1 Aug 2016 17:25:22 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BF7693292C;
+	Mon,  1 Aug 2016 17:25:21 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Ingo =?utf-8?Q?Br=C3=BCckl?= <ib@wupperonline.de>
 Cc:	git@vger.kernel.org
-Subject: Re: Un-paged commit messages in git filter-branch's commit-filter?
-Message-ID: <20160801213631.2ttdlermxw2wbnbi@sigill.intra.peff.net>
-References: <0McmFl-1aux6M2oV7-00Hv9A@mail.gmx.com>
- <20160616095947.GA15988@sigill.intra.peff.net>
- <0MTjMy-1buKad2Fg8-00QUQV@mail.gmx.com>
+Subject: Re: [PATCH v3 3/3] t3700: add a test_mode_in_index helper function
+References: <579d0a83.4bd3c8e4.bm002@wupperonline.de>
+Date:	Mon, 01 Aug 2016 14:25:19 -0700
+In-Reply-To: <579d0a83.4bd3c8e4.bm002@wupperonline.de> ("Ingo =?utf-8?Q?Br?=
+ =?utf-8?Q?=C3=BCckl=22's?=
+	message of "Sat, 30 Jul 2016 22:13:54 +0200")
+Message-ID: <xmqqvazkgp1c.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <0MTjMy-1buKad2Fg8-00QUQV@mail.gmx.com>
+X-Pobox-Relay-ID: 73EBE4CA-582E-11E6-B889-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Sun, Jul 31, 2016 at 06:39:35PM +0200, Stefan Tauner wrote:
+Ingo Brückl <ib@wupperonline.de> writes:
 
-> > There are some output formats that will wrap lines, but by default,
-> > filter-branch should not be using them (and I could not reproduce the
-> > issue in a simple test). Can you show us what your commit-filter looks
-> > like?
-> 
-> Thanks for your answer. I have tried to reproduce it in other (newly
-> created) repositories but failed. However, it seems to relate to some
-> kind of persistent paging setting, is that possible?
-> git config -l does not show anything suspicious.
-> 
-> The following commands produce paged output:
-> git show hash
-> git show --pretty=%B
-> git log hash^..hash
-> Commit message in gitk
-> 
-> 
-> These do NOT produce paged output:
-> git patch hash^..hash
-> Commit message in gitg 0.2.7
+Ingo Brückl <ib@wupperonline.de> writes:
 
-What is "git patch"? An alias for "format-patch?".
+> The case statement to check the file mode of a staged file appears
+> a number of times.
+>
+> Simplify the test by utilizing a test_mode_in_index helper function.
+>
+> Signed-off-by: Ingo Brückl <ib@wupperonline.de>
+> ---
+>  t/t3700-add.sh | 54 ++++++++++++++++++++++--------------------------------
+>  1 file changed, 22 insertions(+), 32 deletions(-)
 
-> This is the script I tried to use to reproduce the problem:
-> 
-> #!/bin/bash
-> export LC_ALL=C
-> input=$(cat)
-> echo "===========================
-> $input
-> ===========================" >> /tmp/paging_bug.txt
-> git commit-tree "$@" -m "$input"
+Nice.
 
-Can you be more specific about the input you're feeding to git and the
-output you're seeing?
+> diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+> index 1fa5dfd..7b98483 100755
+> --- a/t/t3700-add.sh
+> +++ b/t/t3700-add.sh
+> @@ -7,6 +7,20 @@ test_description='Test of git add, including the -- option.'
+>
+>  . ./test-lib.sh
+>
+> +# Test the file mode "$1" of the file "$2" in the index.
+> +test_mode_in_index () {
+> +	case "$(git ls-files --stage "$2")" in
+> +		$1\ *"$2")
+> +			echo pass
+> +			;;
+> +		*)
+> +			echo fail
+> +			git ls-files --stage "$2"
+> +			return 1
+> +			;;
+> +	esac
+> +}
 
-For instance, if I do:
+This case/esac is misindented, but no need to resend; I can fix it
+up trivially while queuing the patches.  It may be both easier to
+read and more robust to tweak the pattern like this, though:
 
-  git init
-  echo content >file
-  git add file
-  git commit -m "$(perl -e 'print join(" ", 1..100)')"
+# Test the file mode "$1" of the file "$2" in the index.
+test_mode_in_index () {
+	case "$(git ls-files --stage "$2")" in
+	"$1 "*"	$2")
+		echo pass
+		;;
+	*)
+		echo fail
+		git ls-files --stage "$2"
+		return 1
+		;;
+	esac
+}
 
-I get a commit message with one long unwrapped line, which I can view
-via git-log, etc. Now if I try to run filter-branch on that:
-
-  git filter-branch --commit-filter '
-	input=$(cat)
-	{
-		echo "===================="
-		echo $input
-		echo "===================="
-	} >>/tmp/paging_bug.txt
-	git commit-tree "$@" -m "$input"
-  '
-
-then the commit remains unchanged, and paging_bug shows one long line.
-What am I missing?
-
-(I wondered at first if the extra "cat" and "-m" could be messing up
-whitespace for you, but it should not, as the quoting around "$input"
-should preserve things like newlines. And anyway, the bug in that case
-would be the _opposite_; I'd expect it to stuff everything onto a single
-line rather than breaking lines).
-
--Peff
+Thanks.
