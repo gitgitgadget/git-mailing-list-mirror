@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
 	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BAAE1F71B
-	for <e@80x24.org>; Mon,  1 Aug 2016 09:36:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57EEA1F71B
+	for <e@80x24.org>; Mon,  1 Aug 2016 09:42:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752278AbcHAJgX (ORCPT <rfc822;e@80x24.org>);
-	Mon, 1 Aug 2016 05:36:23 -0400
-Received: from mout.gmx.net ([212.227.15.19]:52412 "EHLO mout.gmx.net"
+	id S1752522AbcHAJmE (ORCPT <rfc822;e@80x24.org>);
+	Mon, 1 Aug 2016 05:42:04 -0400
+Received: from mout.gmx.net ([212.227.15.19]:54589 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752123AbcHAJgQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2016 05:36:16 -0400
+	id S1752265AbcHAJlo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2016 05:41:44 -0400
 Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MAgvb-1bZy7S0Uyh-00Bw9n; Mon, 01 Aug 2016 11:35:57
+ ESMTPSA (Nemesis) id 0LfBX6-1axIvy2gLA-00orno; Mon, 01 Aug 2016 11:40:50
  +0200
-Date:	Mon, 1 Aug 2016 11:35:55 +0200 (CEST)
+Date:	Mon, 1 Aug 2016 11:40:49 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	Junio C Hamano <gitster@pobox.com>
@@ -27,31 +27,31 @@ cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
 	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
 	Duy Nguyen <pclouds@gmail.com>,
 	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH v5 14/16] merge-recursive: offer an option to retain the
- output in 'obuf'
-In-Reply-To: <xmqqd1lyvim4.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1608011135010.149069@virtualbox>
-References: <cover.1469187652.git.johannes.schindelin@gmx.de> <cover.1469547160.git.johannes.schindelin@gmx.de> <0ba371955b9a4aeb752ce08fc22bbd8171f413c4.1469547160.git.johannes.schindelin@gmx.de> <xmqqd1lyvim4.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v5 15/16] Ensure that the output buffer is released after
+ calling merge_trees()
+In-Reply-To: <xmqq8twmvib5.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1608011138110.149069@virtualbox>
+References: <cover.1469187652.git.johannes.schindelin@gmx.de> <cover.1469547160.git.johannes.schindelin@gmx.de> <a2af8827e4df9f1555821111aac92606496006be.1469547160.git.johannes.schindelin@gmx.de> <xmqq8twmvib5.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:KUWDZSyklW5NeiFLctlhG1IG529EY3+2gSy21ZE4GC8HA6EJ3UJ
- SflD3K01MfTHqgEAuWpfWiagAifNgwVHlyZibl6SZO2d6gggajqTcppToIv0MRbu7Sh7EVH
- RjV/p+b0B+jnXBmERPkBQhpeJvpRsqZrnDsVbahvLtGGZiQA9k5QCOu2BIUpNpttIK7lr06
- tPkLXoUlIU0EiJ29vVUGA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:ZcjL1uGvuY8=:YZiPSs1N0X4CPmZOLXHcJ5
- t7UuBXdXyUeV9tElyd5A6lcfLHSlpr09l6FO3EYTK+THBTYMnaFP6y9uvLRUl1d44X3K0ajC8
- 3adVJXAHj28QTuys+CsoQCfBqqdSNIwoIgLsrL5rYAe2tbXfP85qVJn0X6h6qNSyKudK30fmf
- vFeyz1jEIK2VoCJjwiu2eQKsEWdUngfe1sH5ZN9Q9AUSX5gIcH+voRzx22+Hmnvn+mGvjokSA
- 0URcNrLsBqjBe0FKkpTvw913qAHUndTldpMVC58DIqF/eoLrpI7QmRy7tK+q+0a9ipL2GpYAA
- GSHm9wNQfuQp/YvVdDtmkRgyuOSpLq8xvYQcyeKxQuZdYJ+CGFCMmYl1tmEF3rYRluyJhbl6K
- 6xuC+K+MdxJ+kymHlFX8tJBardo0sbfOkUZ404kyUfnNpuRBtb3QO9oIvTTmTo5w+gCmwDxKS
- 0m7baken63e91MmJ7tPqKa8qu4sA5RRjSbHYamPX/9MfkmrwtuyANAwp08Q/agP035CLhDrd2
- 0J6OlsiC/1RlXaXDpm6pa8T0WjTupF16FSwp5DLJtSts/9twe9L7tCpT1SaPxjlbqvPJlG1nK
- TLEzdB10UWC2G7VoT2KK5VmcgvIc2Mn2OVImwT/ILtgShobP1KoSDROh65fi2Xih6EuRrGpDQ
- CLlB243c3ItsI/Ps5EYtuYszFywbMnuw4PpkpygDwxTMBRrcHHvLwPU2Lh6dgc4cBzgQ2IlqZ
- GdHQ29HoW/8ioMgNbQ5enWZTtSSiXycu0z2ZeZs+/dZ609Euaa0zaoxpIWZx8m6cJuurA0WkS
- /EuMNSs
+X-Provags-ID: V03:K0:hUFbCc31+8GnkwA0mP2KBKlgN/8nwq2rNW1t55sAifbjtT8+lRo
+ jgGXg8Bg4XxsOfYhSbaeIHebCyfePrQ7bohqGhHFw7Vf8F87iR0979uvhCkSKcnpYeVfT42
+ EYW8tlPo7SYZTijIN+/VaHeUwsiuPeGztrF85wk4Cr6S7RCFBuKMNP3zG5Zj5h3/A/k+gzE
+ +vlt1Fyyb3mb2PFE+NjXg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:TyfZD4p9Ask=:qSaABu2qMb9FdGqI0lO+/E
+ qVrmLL2rk8U7StMllKY0r0MiBGSqOTNeVCN0qA0gcOyZQblNVHusSCDHlFNvXTfo88trVAU46
+ 4sK6koWfn4IpMdA/s6UGBK1NqFtWa+ktEBJmq20B5R9M6HsyVirL74+sOTNt8aedmAYKvDj9+
+ l2iLYuyJKaFwtRvCQVY/BrZoeAsG0fpJVfJWZBHI4V+MCAwZbwZtySKOVe8KG9ZBRa13Nrj+4
+ ltKFFYVB6GvFhR1M1RYiysdz1oMQbxwu5LQyyaOqeHu1CMwATpVNyIIJ0tNH9/gVZxrnz/S2P
+ +9BM4CFi8BZFUO72hTDy+mGKTHjeIuJ1klwuRR2bQ6ir3/0EKi/OFJNQTu3c8a2IkJaCAtegk
+ liU4fYlXUHHEhrFqqhjn4LsR/w/WJlkmKbts66cU601yQdySp8i8YG1F0prpLFojkESXEldw6
+ /QDGeS4t0XE6u/yOQxy3wB81NZxGA0NbfhFSafEg9EfMx9Oh1kKnnzbii0vSMUvWWWhG3lb8u
+ Z2BUaWnbd3Ln0JJZBLhwAGn1o9JYJaj+QyWz4wB8bB7hXAoOKF5JShJHxJjMYct1eQcWBuwZO
+ l0Fw0wig/pVA7c1RtbLTINdJ5Bz53z7B4Jwc6VdEsfpD2hu3aUZThUmRuN+Gjw3ajh7Rlp+5m
+ VgqreujKLfaZyFoQpY8w2ZbZqz+iEORQmD5MIbBLUKZQHzooP4hYW2OolTkRkMWWRiwpfinZB
+ +SkCYbrwHTQBK0YRrHVdfx+sTu4ugrg40PeT16fM28NwD2KeU37Z8P1CqQj4d/cS4aX7k+zoB
+ d2Yfuvc
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -63,25 +63,32 @@ On Wed, 27 Jul 2016, Junio C Hamano wrote:
 
 > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
-> > diff --git a/merge-recursive.h b/merge-recursive.h
-> > index d415724..340704c 100644
-> > --- a/merge-recursive.h
-> > +++ b/merge-recursive.h
-> > @@ -13,7 +13,7 @@ struct merge_options {
-> >  		MERGE_RECURSIVE_THEIRS
-> >  	} recursive_variant;
-> >  	const char *subtree_shift;
-> > -	unsigned buffer_output : 1;
-> > +	unsigned buffer_output : 2; /* 1: output at end, 2: keep buffered */
-> >  	unsigned renormalize : 1;
+> > diff --git a/merge-recursive.c b/merge-recursive.c
+> > index 311cfa4..a16b150 100644
+> > --- a/merge-recursive.c
+> > +++ b/merge-recursive.c
+> > @@ -2078,6 +2078,8 @@ int merge_recursive(struct merge_options *o,
+> >  		commit_list_insert(h2, &(*result)->parents->next);
+> >  	}
+> >  	flush_output(o);
+> > +	if (o->buffer_output < 2)
+> > +		strbuf_release(&o->obuf);
+> >  	if (show(o, 2))
+> >  		diff_warn_rename_limit("merge.renamelimit",
+> >  				       o->needed_rename_limit, 0);
 > 
-> Once a field ceases to be a boolean, it is OK not to squish it into
-> a bitfield like this for a struct that we will have only a very
-> small number of instances of.  Treating it just like "verbosity",
-> which occupies a whole int even though it can only get up to 5 or
-> so, would be more appropriate.
+> Other two hunks looked good, but this one I am not sure what is
+> going on.  It this were "if call-depth says we are called by another
+> merge_recursive, do not discard the buffer", I would understand, but
+> why does this have to be tied to o->buffer_output being "we buffer
+> the output but not errors"?
 
-I changed it to an int.
+Good point. I changed it to test for !o->call_depth in addition.
 
-Thanks,
+We must not release the output buffer here if buffer_output >= 2: the
+level "2" of the buffer_output field says that the caller of the recursive
+merge expects the output to remain in the buffer until after
+`merge_recursive()` returns.
+
+Ciao,
 Dscho
