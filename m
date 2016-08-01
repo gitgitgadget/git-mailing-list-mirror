@@ -2,117 +2,192 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93F161F855
-	for <e@80x24.org>; Mon,  1 Aug 2016 20:37:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C743B1F855
+	for <e@80x24.org>; Mon,  1 Aug 2016 20:37:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752611AbcHAUhT (ORCPT <rfc822;e@80x24.org>);
-	Mon, 1 Aug 2016 16:37:19 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:36249 "EHLO
-	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752123AbcHAUhP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2016 16:37:15 -0400
-Received: by mail-wm0-f48.google.com with SMTP id q128so384304150wma.1
-        for <git@vger.kernel.org>; Mon, 01 Aug 2016 13:36:08 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=RG4Nk9c5WdejU+4suU0z9UUBDpym9b86aaFHFebejKg=;
-        b=cb7bIh54HA8tYu+JgyEPV9eEqThiHiM13FKpuUhRjJIGCtr4V21fPS1EGYUbEmCjMd
-         X0hw3TsZOVhNTCaouDxCXZECm/iDqub5JMdnZoZTT12ui7RXKUOQ7tYcamYA91MyRPm+
-         bODvmM4RM/yRq+dQQwAp50DZLyaa4mDj78m7WmM5sACLnoPvYuR0MzcMdDDcgmIa/nQ/
-         Bi6/pJTO2iSHAIpJyuNY1CEYoy+Wgc3SRCbg87uiEB2vJPLLcD4rqGOgM/n1q4xuGV04
-         sOMPMeVPSBb2r3hlRltwfi4bpG5XlrAqutWSJ37rl6bH3Dn44QLqnzoa4K0TJSjjUM22
-         izHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=RG4Nk9c5WdejU+4suU0z9UUBDpym9b86aaFHFebejKg=;
-        b=XRWYIdE4YB/ULay5U2dSPeTKaEW0Wb3Xh85ci9yq4i/9E48ZLz7Wp+hLdzsrXcNoeU
-         /UcMCRNFSRhJFoPFht0NgOhvgyMjNmwNIHMSmrfaWJ3IIsgDWUKZTYEKdjKakBICDxJJ
-         XTNq4Mdcw6RFY2sFq2B2HBzAWW2Xo8SfIpghuBsPyrNIY9AxPOF90FtyR3RGWnEhpz8m
-         vUkQ75jonyV4f/qOrTWqWYcUEXbJ2eLdn1lQLp8YkXYvxdzr1UCipGwRtZpoX5tM0P0J
-         qFNuPzv/wryBSKwMB4eeUsUUloUi48FJQVYA932pN+4PLtjxrJbyz0J56gpo3FJC/FTn
-         pMoQ==
-X-Gm-Message-State: AEkooutC7E7P8emIphL2jzK+dyKvWcjxaSJ90P+cH5ZvKpZiqVwKH+3uKt2wctcqlWaZZtp8dZ0dLj1QPTt3OA==
-X-Received: by 10.194.87.101 with SMTP id w5mr57413923wjz.94.1470083767576;
- Mon, 01 Aug 2016 13:36:07 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.194.70.167 with HTTP; Mon, 1 Aug 2016 13:36:06 -0700 (PDT)
-In-Reply-To: <xmqq7fc0jmhx.fsf@gitster.mtv.corp.google.com>
-References: <CABEd3j8VLbpeWbA6BfHYp5aLPEy0PesqYoHM9u4OM=b7Qm=LDg@mail.gmail.com>
- <xmqqinvonwxc.fsf@gitster.mtv.corp.google.com> <CABEd3j-MW--YSC9=nwcgHzxd6cqmUY+ky3-wLxMiMmbBGsvS7Q@mail.gmail.com>
- <CABEd3j--sxCwv6fWmNxTtdpgwU0_YKbfiFONX6TsQFZGn79yuQ@mail.gmail.com>
- <CAP8UFD118RdB5dX2-wEm5VnKud7sirHhdC9kvWmXV0eAQHvfsA@mail.gmail.com> <xmqq7fc0jmhx.fsf@gitster.mtv.corp.google.com>
-From:	Christian Couder <christian.couder@gmail.com>
-Date:	Mon, 1 Aug 2016 22:36:06 +0200
-Message-ID: <CAP8UFD315CgntwYiC9g-R7KN0XiL9635Vwv_y8yi4n-uj8o90A@mail.gmail.com>
-Subject: Re: git bisect for reachable commits only
+	id S1752340AbcHAUhV (ORCPT <rfc822;e@80x24.org>);
+	Mon, 1 Aug 2016 16:37:21 -0400
+Received: from cloud.peff.net ([50.56.180.127]:52810 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752278AbcHAUhQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2016 16:37:16 -0400
+Received: (qmail 13699 invoked by uid 102); 1 Aug 2016 19:37:03 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 01 Aug 2016 15:37:03 -0400
+Received: (qmail 17039 invoked by uid 107); 1 Aug 2016 19:37:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 01 Aug 2016 15:37:30 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Aug 2016 15:37:00 -0400
+Date:	Mon, 1 Aug 2016 15:37:00 -0400
+From:	Jeff King <peff@peff.net>
 To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Oleg Taranenko <olegtaranenko@gmail.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Cc:	Paul Tan <pyokagan@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] reset cached ident date before creating objects
+Message-ID: <20160801193659.hag2yax2rniczkbo@sigill.intra.peff.net>
+References: <CAPc5daX=MoqEXkV7DdpT+J=4K_qNdo0aNu_XgUs+9yggyrMXbQ@mail.gmail.com>
+ <20160729002902.GD9646@sigill.intra.peff.net>
+ <CA+55aFzRBQNU80ukcAk2JjbeWTvo8jHxejBeWWPjrHHuX7ygSQ@mail.gmail.com>
+ <20160729155012.GA29773@sigill.intra.peff.net>
+ <xmqq7fc4pdqp.fsf@gitster.mtv.corp.google.com>
+ <20160729180517.GA14953@sigill.intra.peff.net>
+ <CACRoPnS2kDRLiY8KX3K4Havh7d1GWy3mUXSiYCzw45BznuwYeA@mail.gmail.com>
+ <20160730024135.oaqtjpo5l2e3dam2@sigill.intra.peff.net>
+ <xmqqbn1cl6qv.fsf@gitster.mtv.corp.google.com>
+ <20160801180047.sgzqgh7pvp2qzwug@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20160801180047.sgzqgh7pvp2qzwug@sigill.intra.peff.net>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Aug 1, 2016 at 9:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
->
->> Yes, and the reason is that all the ancestors of a good commit are
->> considered good.
->> That's because git bisect supposes that there is only one transition
->> from good to bad.
->> Otherwise we would need a more complex algorithm to find all the
->> transitions from good to bad, and that is not generally needed.
->
-> It may be debatable if that is generally needed or not, but by
-> definition "bisect" is about having a history that has a SINGLE
-> point that changes from good to bad (or old to new, or "have sugar"
-> to "no sugar"), and that single-ness is what allows us to BIsect the
-> graph.  So even if it may be a good thing to have to be able to find
-> multiple transitions, that is outside the scope of how the current
-> "git bisect" was designed to be used.
+On Mon, Aug 01, 2016 at 02:00:47PM -0400, Jeff King wrote:
 
-Yeah, this is a better version of what I wanted to say.
+> So at this point I think I'd lean towards programs which have multiple
+> logical commit operations explicitly saying "I am starting a new
+> operation". It may be that we end up attaching more to that in the long
+> run than just timestamp resets, too (i.e., what other cached data might
+> there be that used to happen in separate sub-processes?).
 
->> I haven't looked at your previous issue much, sorry I have been busy these days.
->
-> I think the "previous issue" was that we can ask the user to ask to
-> check one of 'x' or 'y' when given Good and Bad points in a graph like
-> this:
->
->         x---y---y---o---B
->          \         /
->           x---G---o
->
-> while a more natural expectation by a user would be that we only
-> need to check one of these two 'o'.
+Here's that patch.
 
-Yeah, I reproduced the steps described in the Google Groups discussion:
+I still just put in a bare "reset_ident_date()" in git-am. This _could_
+be wrapped in: begin_logical_commit() or something, but it would just be
+a wrapper around resetting the ident_date. So I'm inclined not to worry
+about such semantic obfuscation until we actually have a second thing to
+reset. :)
 
-https://groups.google.com/forum/#!topic/git-users/v3__t42qbKE
+I also didn't go looking for other spots which might want similar
+treatment. Junio mentioned that the sequencer code still uses an
+external commit process, so cherry-pick/revert are OK. git-fast-import
+creates a stream of commits, but already deals with this issue in a
+separate way. And I couldn't think of other programs that want to make a
+string of commits.
 
-and I think that is indeed the "previous issue".
+-- >8 --
+Subject: [PATCH] am: reset cached ident date for each patch
 
-> Thinking about it again, I actually think it makes sense to ask the
-> user to check 'y'; there is no good reason to believe that 'y' can
-> never have introduced the badness we are hunting for, and limiting
-> the search to --ancestry-path (which is to ask only for 'o') would
-> stop at the merge 'o' if one of the 'y' were bad, which would
-> prevents us from knowing the exact breakage.
+When we compute the date to go in author/committer lines of
+commits, or tagger lines of tags, we get the current date
+once and then cache it for the rest of the program.  This is
+a good thing in some cases, like "git commit", because it
+means we do not racily assign different times to the
+author/committer fields of a single commit object.
 
-I agree.
+But as more programs start to make many commits in a single
+process (e.g., the recently builtin "git am"), it means that
+you'll get long strings of commits with identical committer
+timestamps (whereas before, we invoked "git commit" many
+times and got true timestamps).
 
-> There however is no excuse if we asked to check 'x', though.  They
-> are ancestors of a Good commit, and "git bisect" should be able to
-> assume they are Good.
+This patch addresses it by letting callers reset the cached
+time, which means they'll get a fresh time on their next
+call to git_committer_info() or git_author_info(). The first
+caller to do so is "git am", which resets the time for each
+patch it applies.
 
-I think it does. When I reproduced the steps in the "previous issue",
-it did assume they are good.
+It would be nice if we could just do this automatically
+before filling in the ident fields of commit and tag
+objects. Unfortunately, it's hard to know where a particular
+logical operation begins and ends.
+
+For instance, if commit_tree_extended() were to call
+reset_ident_date() before getting the committer/author
+ident, that doesn't quite work; sometimes the author info is
+passed in to us as a parameter, and it may or may not have
+come from a previous call to ident_default_date(). So in
+those cases, we lose the property that the committer and the
+author timestamp always match.
+
+You could similarly put a date-reset at the end of
+commit_tree_extended(). That actually works in the current
+code base, but it's fragile. It makes the assumption that
+after commit_tree_extended() finishes, the caller has no
+other operations that would logically want to fall into the
+same timestamp.
+
+So instead we provide the tool to easily do the reset, and
+let the high-level callers use it to annotate their own
+logical operations.
+
+There's no automated test, because it would be inherently
+racy (it depends on whether the program takes multiple
+seconds to run). But you can see the effect with something
+like:
+
+  # make a fake 100-patch series
+  top=$(git rev-parse HEAD)
+  bottom=$(git rev-list --first-parent -100 HEAD | tail -n 1)
+  git log --format=email --reverse --first-parent \
+          --binary -m -p $bottom..$top >patch
+
+  # now apply it; this presumably takes multiple seconds
+  git checkout --detach $bottom
+  git am <patch
+
+  # now count the number of distinct committer times;
+  # prior to this patch, there would only be one, but
+  # now we'd typically see several.
+  git log --format=%ct $bottom.. | sort -u
+
+Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+Helped-by: Paul Tan <pyokagan@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/am.c | 2 ++
+ cache.h      | 1 +
+ ident.c      | 5 +++++
+ 3 files changed, 8 insertions(+)
+
+diff --git a/builtin/am.c b/builtin/am.c
+index b77bf11..8aa9b5b 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1840,6 +1840,8 @@ static void am_run(struct am_state *state, int resume)
+ 		const char *mail = am_path(state, msgnum(state));
+ 		int apply_status;
+ 
++		reset_ident_date();
++
+ 		if (!file_exists(mail))
+ 			goto next;
+ 
+diff --git a/cache.h b/cache.h
+index b5f76a4..31e65f9 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1269,6 +1269,7 @@ extern const char *ident_default_email(void);
+ extern const char *git_editor(void);
+ extern const char *git_pager(int stdout_is_tty);
+ extern int git_ident_config(const char *, const char *, void *);
++extern void reset_ident_date(void);
+ 
+ struct ident_split {
+ 	const char *name_begin;
+diff --git a/ident.c b/ident.c
+index 139c528..e20a772 100644
+--- a/ident.c
++++ b/ident.c
+@@ -184,6 +184,11 @@ static const char *ident_default_date(void)
+ 	return git_default_date.buf;
+ }
+ 
++void reset_ident_date(void)
++{
++	strbuf_reset(&git_default_date);
++}
++
+ static int crud(unsigned char c)
+ {
+ 	return  c <= 32  ||
+-- 
+2.9.2.670.gf6ce898
+
