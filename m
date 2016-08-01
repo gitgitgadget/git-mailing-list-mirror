@@ -2,100 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_RED
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68C311F855
-	for <e@80x24.org>; Mon,  1 Aug 2016 19:03:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B64DE1F855
+	for <e@80x24.org>; Mon,  1 Aug 2016 19:14:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754849AbcHATCm (ORCPT <rfc822;e@80x24.org>);
-	Mon, 1 Aug 2016 15:02:42 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:33672 "EHLO
-	mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754794AbcHATCh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2016 15:02:37 -0400
-Received: by mail-io0-f196.google.com with SMTP id y195so14569182iod.0
-        for <git@vger.kernel.org>; Mon, 01 Aug 2016 12:01:18 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=LJhGitTMId8taFnDfAlE0Zc8+H3o+5zkUaihZgaTWt4=;
-        b=Fa1tFR3XPuJ6kUbMJDxXtHJHnHog3DUAjTSrWoVjzRmOororrUCqduyH194n6AcyqI
-         b4ML+FJKNYN0erzOi9sWq9ojMV3Oby0WrTj4kk5UFBGWg/1GQ1yNdxteY4ENf+09a6wF
-         VO1Q6jsP/iPLkopU9DGoqQBfD83ZdPLAHopXkplMCkYbNkn5lqI7sGUEKLC3kqEsy47E
-         J10lNrfGW7eCb5c2tFu3aVlfY88Q6jccvWunUHCNUKTQ+MuGpIDowlnb4PeW7esz74Z6
-         2cepz0tueUr8B4qK1QSAKY4wXaGYDPlaW2MfOd3UAZj1hTLpJbDr4O3rDNdZgtUzDHO/
-         PxCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=LJhGitTMId8taFnDfAlE0Zc8+H3o+5zkUaihZgaTWt4=;
-        b=QtE0VZLPzkca8IEbDEfzRNCCxnZZjzhS8ydLxS2ezKxLPCodDbt5XCKR4JnnR3gJ70
-         fcNu4ohxtD4x6iL+WzFqi1RqtfInKh+RzL9/Jg69OMBcNHjjYF+s2LQmkoYUYk06KvuY
-         716Up3Hq1zPQrjaBOBrgsmQPLG1tI6ymOJ9BSxuxoQiImfsIsF3WGxDuDnip+CpISpDl
-         8rUmAogMbMRyywMLvjqICCyTvls7fo7Hf6esNXMSMcNHurlBk978x17YVpVDQUqVvZW9
-         lDje6s1aTqCuiB2PyaDfuYpB7fqYs6PdaIMuoUrSTM+XFGAhiKvq++TdtlODAARjw2rQ
-         hFBg==
-X-Gm-Message-State: AEkooutIZfVTDbHz9YglIVdaiHc4+tV7u1yMP/to9IYWLp6OePyfHlnWgN5ruQMzBl9qR7uE3lFb+DojY6S4LQ==
-X-Received: by 10.107.8.140 with SMTP id h12mr59653550ioi.95.1470074503932;
- Mon, 01 Aug 2016 11:01:43 -0700 (PDT)
+	id S1754829AbcHATOw (ORCPT <rfc822;e@80x24.org>);
+	Mon, 1 Aug 2016 15:14:52 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62553 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754747AbcHATOv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2016 15:14:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 417EA32E27;
+	Mon,  1 Aug 2016 14:40:43 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=p08kEGlPAplHf93yDrgC6X9NBOo=; b=J0N+jf
+	oYftzbE3z1wZKryi7MlcB8ezayWEjE9AYWuSh+KPc3WcP3aEw354GKe2V2z6UohU
+	LXKzBtDRV5cGCBYO3hEC+iEajmli4Kzx+lhg7Doe1kGsDJg01B7t0BoLaF0jNVfV
+	2VmK+k6DUV2xRXGzxDzEUFlt6qQOA1ySDncEI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=l9VWPodImTPxyrwTYbkZYBOX+LUGpneI
+	hZmdcJjenuz4T2mymrAhiCOxIANYl1Q6HtJ56dQN4DD5G480bl73mRB1MQ39XjDP
+	7A37weGJqwXwCMLF2gALoFprqrN3SbEUJGJ5n47WjjBg2PdwTaft9jIzM3hGHK1J
+	zy0i6uQfRQQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 388A732E26;
+	Mon,  1 Aug 2016 14:40:43 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AE40F32E25;
+	Mon,  1 Aug 2016 14:40:42 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH v6 05/16] Prepare the builtins for a libified merge_recursive()
+References: <cover.1469547160.git.johannes.schindelin@gmx.de>
+	<cover.1470051326.git.johannes.schindelin@gmx.de>
+	<d3c5678faf46391ce684aa79927a54cf15beea3f.1470051326.git.johannes.schindelin@gmx.de>
+Date:	Mon, 01 Aug 2016 11:40:39 -0700
+In-Reply-To: <d3c5678faf46391ce684aa79927a54cf15beea3f.1470051326.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Mon, 1 Aug 2016 13:44:08 +0200
+	(CEST)")
+Message-ID: <xmqqpopsjpso.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.64.225.235 with HTTP; Mon, 1 Aug 2016 11:01:13 -0700 (PDT)
-In-Reply-To: <20160801175216.payv2zrc3mkvkbmz@sigill.intra.peff.net>
-References: <20160801010557.22191-1-e@80x24.org> <20160801010557.22191-2-e@80x24.org>
- <CACsJy8AEFFTnGw01mTBrZu8QnUWmQav7bhZUyw7o91ph7DUwaA@mail.gmail.com> <20160801175216.payv2zrc3mkvkbmz@sigill.intra.peff.net>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Mon, 1 Aug 2016 20:01:13 +0200
-Message-ID: <CACsJy8CLNtbAvRxVtX_9qZ0cahce7cFfk=wh78Wm99Qf5B8HRw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] pager: move pager-specific setup into the build
-To:	Jeff King <peff@peff.net>
-Cc:	Eric Wong <e@80x24.org>, Junio C Hamano <gitster@pobox.com>,
-	"Kyle J. McKay" <mackyle@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7393510A-5817-11E6-99E5-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Aug 1, 2016 at 7:52 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, Aug 01, 2016 at 07:46:34PM +0200, Duy Nguyen wrote:
->
->> On Mon, Aug 1, 2016 at 3:05 AM, Eric Wong <e@80x24.org> wrote:
->> > From: Junio C Hamano <gitster@pobox.com>
->> >
->> > Allowing PAGER_ENV to be set at build-time allows us to move
->> > pager-specific knowledge out of our build.  Currently, this
->> > allows us to set a better default for FreeBSD where more(1)
->> > is the same binary as less(1).
->>
->> Nice. I was just too lazy to do something like this and "export
->> PAGER=less LESS=FRX" then ignored it :-P
->>
->> Slightly off topic, but pagers like 'more' does not understand colors
->> either. But color.ui = auto does not know what and prints color code
->> anyway. It would be nice if we had some configuration to describe
->> "this pager can show colors, that pager does not" so I don't have to
->> maintain separate .gitconfig files on two platforms.
->
-> If you are interested, I suggest you read the thread linked earlier:
->
->   https://public-inbox.org/git/52D87A79.6060600%40rawbw.com/T/#u
->
-> which discusses this and other issues. But basically, I think you cannot
-> really solve this without getting intimate with each pager (which people
-> seemed not to want to do).
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-Cooking pager specifics in git does sound bad. But it does not have to
-be that way. What if we delegate the decision whether to color or not
-to a script (e.g. by setting color.ui= "script <path to the script>")?
-The script has all the info (env variables, uname, user preference...)
-and can make a better decision than 'is stdout a tty?'. It's not about
-out of the box experience, more towards customization (without
-fragmenting .gitconfig files too much).
--- 
-Duy
+> Previously, callers of merge_trees() or merge_recursive() expected that
+> code to die() with an error message. This used to be okay because we
+> called those commands from scripts, and had a chance to print out a
+> message in case the command failed fatally (read: with exit code 128).
+>
+> As scripting incurs its own set of problems (portability, speed,
+> idiosynchracies of different shells, limited data structures leading to
+
+I think I typofixed this when I queued the previous one on 'pu'
+already, but s/synch/sync/; 
+
