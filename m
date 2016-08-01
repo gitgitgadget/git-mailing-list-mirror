@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
 	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5502A1F71B
-	for <e@80x24.org>; Mon,  1 Aug 2016 11:38:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 16B5D1F71B
+	for <e@80x24.org>; Mon,  1 Aug 2016 11:43:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753323AbcHALi3 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 1 Aug 2016 07:38:29 -0400
-Received: from mout.gmx.net ([212.227.17.21]:60525 "EHLO mout.gmx.net"
+	id S1753291AbcHALnO (ORCPT <rfc822;e@80x24.org>);
+	Mon, 1 Aug 2016 07:43:14 -0400
+Received: from mout.gmx.net ([212.227.17.21]:56255 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753199AbcHALiI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2016 07:38:08 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0LxLcc-1bEOyD2ys6-016tPY; Mon, 01 Aug 2016 13:36:47
+	id S1753087AbcHALnM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2016 07:43:12 -0400
+Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MTjMy-1bucLj4BYO-00QUEw; Mon, 01 Aug 2016 13:36:12
  +0200
-Date:	Mon, 1 Aug 2016 13:36:46 +0200 (CEST)
+Date:	Mon, 1 Aug 2016 13:36:08 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
@@ -28,262 +28,178 @@ cc:	Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
 	Duy Nguyen <pclouds@gmail.com>,
 	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: [PATCH v6 02/16] Report bugs consistently
-In-Reply-To: <cover.1470051326.git.johannes.schindelin@gmx.de>
-Message-ID: <652c5d3fc999a19e163e7a3591391d2866c70ea1.1470051326.git.johannes.schindelin@gmx.de>
-References: <cover.1469547160.git.johannes.schindelin@gmx.de> <cover.1470051326.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v6 00/16] Use merge_recursive() directly in the builtin am
+In-Reply-To: <cover.1469547160.git.johannes.schindelin@gmx.de>
+Message-ID: <cover.1470051326.git.johannes.schindelin@gmx.de>
+References: <cover.1469547160.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:nAcqXN8NBvhahLFxBxdv4wz7DS+h3QpgTvCeNbgTmREOjtYx77/
- IRBKg1I5qmwoVCb0Q3p5Ojor0VQeG/6rEix4FrQgrytq49helntBoEPQEWeiquDyDA3DA6b
- miX9TSr34ILIKvi0+h8n5kRKwXes7BPXssIV+b5OdhacCBd+i/cIW33So3EDwe6BJcYiXT3
- wlFkhKt/WR8lHw1L2UGWw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:QzZLKsMI1Gg=:lu68n1xFuJ4d1Butip2xYl
- /+aVJ9TYRmtWWmr/VDZ7Gmik2Hg6oqrZBBqwXx5w7Ah9A1K7Ykvlm1g5/VYjjacWCvXqMcE6T
- 6Frtg6n+FRbokO8XRFZwl2yogniiGkJ2tXFNe056b+tVrPf8y3ecHeocx2+JibyQCENbswr2H
- tkQqymwbu8xgEy89x8E277gYlSEXeFpbrRVyOHxEaYOUUvQiHwxoCa9zQowXmXePH6No+GftF
- P/DerM6yCgEwkFjeuUGsm5Kx1qC8f06K6VzvtqLLNRV681hI50409KEOaGvj0LH09w93BSeoK
- HNSvVqejkxXdA31p8d+pfBU4uk2GcKP3lOyECKnL6IsKP3liC91LmCJSEBPOqTkRmaCTtgnxZ
- MZs3/Xdta1Q6QUigLWsETZNC6WiDcDxG1Nf/RXM2tlGc8gPId9wajBEyrtQZ5AnBxpLtF9mgO
- IXWDt2eRa+2Uwfow6p/rj89C4Ygup5BHw5e3nm6JgMjB7l7owfMNPnzX4Y3hFCRgYEDy8WSjh
- 5unB9YWk7J8Sj860oOHT6XRTRcus/25aoH+TbR7J0yobOmpKWpf8K1ixHdeIIn144Z2LMC0na
- 21WrOfzjpSq/3xqy0U2ffhtn7xKa9rB8cf4s8SuZ4lWYpJeAb1HS7M+C4RmkKZNgRdIQb98Wf
- xeAOvVOtJ3LG4oqaYSLdsJOyAPDkJoAlGud7/rw7Dm247Bv8l7iE0c4EGJLWYuX37cZ5GCYsd
- q+CDDMx6NMptekFcrdIX/DMmmo/CG54gByP7HIsV/Jracfbn3D+95LDTIgUrdqR7jdAukrLYr
- X5kbpr3
+X-Provags-ID: V03:K0:9WcovgPppZkItlckluAFpjc5hbLoZcb0/vYvsxYTcskaQTlGdwa
+ L+Thxc2zMH/UvBIXP5iaDi1iV/JmOajnvE2+UIiVXzvqhQrNIdyBuIwOt3ev+D9+cOJCeo6
+ ODniQ1+JHl8mL5HPtiHh5XXqjzA4BepKZqDF387ClY58sSW7rOxjoA22J2/2r5FJ8Hcwt6s
+ Rnhio7k2UHICksQgRRTrQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:q7nxfWM/Kn4=:vTT7fp01sDb7iEy4VVlw6S
+ trFvkAcKpEBR0BILsE6SZVjxZcaJBpoqLYPlDsA/Mm0fG/tADoyRzn6/EzvXmaOwgMWV5gpzD
+ 6D2UfWAEEPZgMzWi4bMWhgtKshDjb2ucACeHU1SytN21gVYBigM9hgYdCFCmRKKVMpGXskiwE
+ vUeDh2Wz8I90CEWjJ1Itvi08tvQ9HYMRU5srPximJi6KCqp2/F9tNbqBOsWtGYxgFpJdrh6FH
+ gBJ/KO/vwKLqOYkcHlnamy1OHWm0LHYlBufq8kJbcCxs+6pbjwfl7cgbAAajymJ3F2wKkPE72
+ 0ir8l60qCdcF8uHb2PXiQm76QEhq6uXRxONWpWXaGgMDQTFH/tPlfo9dhTIlJDyVuuT5qLmwP
+ aNLfrRpgyh/W9rB2Gl7DxaFRMVkmtVlFLJThmxj5SIqfvtTKOM1A/2hTSd2eZD3ZEBmna9r37
+ 81PW+I9dxsX4cqoprr/XKPLAgJnwTFT5uDz4XOdDCHqO0UTla3xkjYIp3K6dcwrfvx+g/u9Bw
+ 2ZKjIL75TOsbVVb+0nMpQoD20jekEXX7Zdrvm+WTb1vVIBxtHEyRAFv42eJFUnxSq+qaYqcxu
+ CAo+rgMt7E9GnQvR/7f+plyYPGKrf9IcqzW9dNNjaok+1emlslyfBdeDKd5Bgg/xsbgwW9rrD
+ zucslZYNFM2C9iVeNgqMQD64LNbKyb0TlgcEKd2ODtPbe/ft3uaMRlnlu55LUP/aKhFrRkvvc
+ By6/amGqNWqlF36Czr+GkmCS5wvISIrP8Dvpd14PmwOO3d113+6zPtnNecE9A7ms3QOSwV3O1
+ vXRMBm4
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-The vast majority of error messages in Git's source code which report a
-bug use the convention to prefix the message with "BUG:".
+This is the sixth iteration of the long-awaited re-roll of the attempt to
+avoid spawning merge-recursive from the builtin am and use merge_recursive()
+directly instead.
 
-As part of cleaning up merge-recursive to stop die()ing except in case of
-detected bugs, let's just make the remainder of the bug reports consistent
-with the de facto rule.
+The *real* reason for the reroll is that I need a libified recursive
+merge to accelerate the interactive rebase by teaching the sequencer to
+do rebase -i's grunt work. Coming with a very nice 3x-5x speedup of
+`rebase -i`.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/ls-files.c     |  3 ++-
- builtin/update-index.c |  2 +-
- grep.c                 |  8 ++++----
- imap-send.c            |  2 +-
- merge-recursive.c      | 15 +++++++--------
- sha1_file.c            |  4 ++--
- trailer.c              |  2 +-
- transport.c            |  2 +-
- wt-status.c            |  4 ++--
- 9 files changed, 21 insertions(+), 21 deletions(-)
+In this endeavor, we need to be extra careful to retain backwards
+compatibility. The test script t6022-merge-rename.sh, for example, verifies
+that `git pull` exits with status 128 in case of a fatal error. To that end,
+we need to make sure that fatal errors are handled by existing (builtin)
+users via exit(128) (or die(), which calls exit(128) at the end).  New users
+(such as a builtin helper doing rebase -i's grunt work) may want to print
+some helpful advice what happened and how to get out of this mess before
+erroring out.
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index f02e3d2..00ea91a 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -118,7 +118,8 @@ static void show_killed_files(struct dir_struct *dir)
- 				 */
- 				pos = cache_name_pos(ent->name, ent->len);
- 				if (0 <= pos)
--					die("bug in show-killed-files");
-+					die("BUG: killed-file %.*s not found",
-+						ent->len, ent->name);
- 				pos = -pos - 1;
- 				while (pos < active_nr &&
- 				       ce_stage(active_cache[pos]))
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 6cdfd5f..ba04b19 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -1146,7 +1146,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 		report(_("Untracked cache enabled for '%s'"), get_git_work_tree());
- 		break;
- 	default:
--		die("Bug: bad untracked_cache value: %d", untracked_cache);
-+		die("BUG: bad untracked_cache value: %d", untracked_cache);
- 	}
- 
- 	if (active_cache_changed) {
-diff --git a/grep.c b/grep.c
-index 394c856..22cbb73 100644
---- a/grep.c
-+++ b/grep.c
-@@ -693,10 +693,10 @@ static struct grep_expr *prep_header_patterns(struct grep_opt *opt)
- 
- 	for (p = opt->header_list; p; p = p->next) {
- 		if (p->token != GREP_PATTERN_HEAD)
--			die("bug: a non-header pattern in grep header list.");
-+			die("BUG: a non-header pattern in grep header list.");
- 		if (p->field < GREP_HEADER_FIELD_MIN ||
- 		    GREP_HEADER_FIELD_MAX <= p->field)
--			die("bug: unknown header field %d", p->field);
-+			die("BUG: unknown header field %d", p->field);
- 		compile_regexp(p, opt);
- 	}
- 
-@@ -709,7 +709,7 @@ static struct grep_expr *prep_header_patterns(struct grep_opt *opt)
- 
- 		h = compile_pattern_atom(&pp);
- 		if (!h || pp != p->next)
--			die("bug: malformed header expr");
-+			die("BUG: malformed header expr");
- 		if (!header_group[p->field]) {
- 			header_group[p->field] = h;
- 			continue;
-@@ -1514,7 +1514,7 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
- 		case GREP_BINARY_TEXT:
- 			break;
- 		default:
--			die("bug: unknown binary handling mode");
-+			die("BUG: unknown binary handling mode");
- 		}
- 	}
- 
-diff --git a/imap-send.c b/imap-send.c
-index db0fafe..0f5f476 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -511,7 +511,7 @@ static int nfsnprintf(char *buf, int blen, const char *fmt, ...)
- 
- 	va_start(va, fmt);
- 	if (blen <= 0 || (unsigned)(ret = vsnprintf(buf, blen, fmt, va)) >= (unsigned)blen)
--		die("Fatal: buffer too small. Please report a bug.");
-+		die("BUG: buffer too small. Please report a bug.");
- 	va_end(va);
- 	return ret;
- }
-diff --git a/merge-recursive.c b/merge-recursive.c
-index a4a1195..4338b73 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -268,7 +268,7 @@ struct tree *write_tree_from_memory(struct merge_options *o)
- 				fprintf(stderr, "BUG: %d %.*s\n", ce_stage(ce),
- 					(int)ce_namelen(ce), ce->name);
- 		}
--		die("Bug in merge-recursive.c");
-+		die("BUG: unmerged index entries in merge-recursive.c");
- 	}
- 
- 	if (!active_cache_tree)
-@@ -966,9 +966,8 @@ static struct merge_file_info merge_file_1(struct merge_options *o,
- 
- 			if (!oid_eq(&a->oid, &b->oid))
- 				result.clean = 0;
--		} else {
--			die(_("unsupported object type in the tree"));
--		}
-+		} else
-+			die(_("BUG: unsupported object type in the tree"));
- 	}
- 
- 	return result;
-@@ -1354,7 +1353,7 @@ static int process_renames(struct merge_options *o,
- 			const char *ren2_dst = ren2->pair->two->path;
- 			enum rename_type rename_type;
- 			if (strcmp(ren1_src, ren2_src) != 0)
--				die("ren1_src != ren2_src");
-+				die("BUG: ren1_src != ren2_src");
- 			ren2->dst_entry->processed = 1;
- 			ren2->processed = 1;
- 			if (strcmp(ren1_dst, ren2_dst) != 0) {
-@@ -1388,7 +1387,7 @@ static int process_renames(struct merge_options *o,
- 			ren2 = lookup->util;
- 			ren2_dst = ren2->pair->two->path;
- 			if (strcmp(ren1_dst, ren2_dst) != 0)
--				die("ren1_dst != ren2_dst");
-+				die("BUG: ren1_dst != ren2_dst");
- 
- 			clean_merge = 0;
- 			ren2->processed = 1;
-@@ -1812,7 +1811,7 @@ static int process_entry(struct merge_options *o,
- 		 */
- 		remove_file(o, 1, path, !a_mode);
- 	} else
--		die(_("Fatal merge failure, shouldn't happen."));
-+		die(_("BUG: fatal merge failure, shouldn't happen."));
- 
- 	return clean_merge;
- }
-@@ -1870,7 +1869,7 @@ int merge_trees(struct merge_options *o,
- 		for (i = 0; i < entries->nr; i++) {
- 			struct stage_data *e = entries->items[i].util;
- 			if (!e->processed)
--				die(_("Unprocessed path??? %s"),
-+				die(_("BUG: unprocessed path??? %s"),
- 				    entries->items[i].string);
- 		}
- 
-diff --git a/sha1_file.c b/sha1_file.c
-index cb571ac..ebc640e 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -795,7 +795,7 @@ void close_all_packs(void)
- 
- 	for (p = packed_git; p; p = p->next)
- 		if (p->do_not_close)
--			die("BUG! Want to close pack marked 'do-not-close'");
-+			die("BUG: want to close pack marked 'do-not-close'");
- 		else
- 			close_pack(p);
- }
-@@ -2330,7 +2330,7 @@ void *unpack_entry(struct packed_git *p, off_t obj_offset,
- 	case OBJ_OFS_DELTA:
- 	case OBJ_REF_DELTA:
- 		if (data)
--			die("BUG in unpack_entry: left loop at a valid delta");
-+			die("BUG: unpack_entry: left loop at a valid delta");
- 		break;
- 	case OBJ_COMMIT:
- 	case OBJ_TREE:
-diff --git a/trailer.c b/trailer.c
-index 8e48a5c..c6ea9ac 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -562,7 +562,7 @@ static int git_trailer_config(const char *conf_key, const char *value, void *cb)
- 			warning(_("unknown value '%s' for key '%s'"), value, conf_key);
- 		break;
- 	default:
--		die("internal bug in trailer.c");
-+		die("BUG: trailer.c: unhandled type %d", type);
- 	}
- 	return 0;
- }
-diff --git a/transport.c b/transport.c
-index b233e3e..04d9454 100644
---- a/transport.c
-+++ b/transport.c
-@@ -566,7 +566,7 @@ void transport_take_over(struct transport *transport,
- 	struct git_transport_data *data;
- 
- 	if (!transport->smart_options)
--		die("Bug detected: Taking over transport requires non-NULL "
-+		die("BUG: taking over transport requires non-NULL "
- 		    "smart_options field.");
- 
- 	data = xcalloc(1, sizeof(*data));
-diff --git a/wt-status.c b/wt-status.c
-index 19cbc39..f8ae0c2 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -263,7 +263,7 @@ static const char *wt_status_unmerged_status_string(int stagemask)
- 	case 7:
- 		return _("both modified:");
- 	default:
--		die("bug: unhandled unmerged status %x", stagemask);
-+		die("BUG: unhandled unmerged status %x", stagemask);
- 	}
- }
- 
-@@ -388,7 +388,7 @@ static void wt_status_print_change_data(struct wt_status *s,
- 	status_printf(s, color(WT_STATUS_HEADER, s), "\t");
- 	what = wt_status_diff_status_string(status);
- 	if (!what)
--		die("bug: unhandled diff status %c", status);
-+		die("BUG: unhandled diff status %c", status);
- 	len = label_width - utf8_strwidth(what);
- 	assert(len >= 0);
- 	if (status == DIFF_STATUS_COPIED || status == DIFF_STATUS_RENAMED)
+The changes relative to the fifth iteration of this patch series:
+
+- the commit message that talked about swallowing messages was improved
+
+- the va_start()/va_end() statements were moved closer to the vararg usage
+
+- the `buffer_output` field is no longer a bit field because it is now
+  logically more like the verbosity level, which we traditionally keep
+  as a full `int`
+
+- the flush_output() call is no longer moved, but instead added to the
+  code path when we return early
+
+- the commit message saying that we speculated about stdout's buffer
+  size now instead states that we made an assumption
+
+This patch series touches rather important code. I appreciate thorough
+reviews with a focus on the critical parts of the code, those that could
+result in regressions.
+
+
+Johannes Schindelin (16):
+  t5520: verify that `pull --rebase` shows the helpful advice when
+    failing
+  Report bugs consistently
+  Avoid translating bug messages
+  merge-recursive: clarify code in was_tracked()
+  Prepare the builtins for a libified merge_recursive()
+  merge_recursive: abort properly upon errors
+  merge-recursive: avoid returning a wholesale struct
+  merge-recursive: allow write_tree_from_memory() to error out
+  merge-recursive: handle return values indicating errors
+  merge-recursive: switch to returning errors instead of dying
+  am -3: use merge_recursive() directly again
+  merge-recursive: flush output buffer before printing error messages
+  merge-recursive: write the commit title in one go
+  merge-recursive: offer an option to retain the output in 'obuf'
+  Ensure that the output buffer is released after calling merge_trees()
+  merge-recursive: flush output buffer even when erroring out
+
+ builtin/am.c           |  62 ++----
+ builtin/checkout.c     |   5 +-
+ builtin/ls-files.c     |   3 +-
+ builtin/merge.c        |   2 +
+ builtin/update-index.c |   2 +-
+ grep.c                 |   8 +-
+ imap-send.c            |   2 +-
+ merge-recursive.c      | 578 +++++++++++++++++++++++++++++--------------------
+ merge-recursive.h      |   2 +-
+ sequencer.c            |   5 +
+ sha1_file.c            |   4 +-
+ t/t5520-pull.sh        |  32 +++
+ trailer.c              |   2 +-
+ transport.c            |   2 +-
+ wt-status.c            |   4 +-
+ 15 files changed, 419 insertions(+), 294 deletions(-)
+
+Published-As: https://github.com/dscho/git/releases/tag/am-3-merge-recursive-direct-v6
+Interdiff vs v5:
+
+ diff --git a/merge-recursive.c b/merge-recursive.c
+ index 66e93e0..c9e4dbc 100644
+ --- a/merge-recursive.c
+ +++ b/merge-recursive.c
+ @@ -35,21 +35,21 @@ static int err(struct merge_options *o, const char *err, ...)
+  {
+  	va_list params;
+  
+ -	va_start(params, err);
+  	if (o->buffer_output < 2)
+  		flush_output(o);
+  	else {
+  		strbuf_complete(&o->obuf, '\n');
+  		strbuf_addstr(&o->obuf, "error: ");
+  	}
+ +	va_start(params, err);
+  	strbuf_vaddf(&o->obuf, err, params);
+ +	va_end(params);
+  	if (o->buffer_output > 1)
+  		strbuf_addch(&o->obuf, '\n');
+  	else {
+  		error("%s", o->obuf.buf);
+  		strbuf_reset(&o->obuf);
+  	}
+ -	va_end(params);
+  
+  	return -1;
+  }
+ @@ -2069,16 +2069,18 @@ int merge_recursive(struct merge_options *o,
+  	o->ancestor = "merged common ancestors";
+  	clean = merge_trees(o, h1->tree, h2->tree, merged_common_ancestors->tree,
+  			    &mrtree);
+ -	flush_output(o);
+ -	if (clean < 0)
+ +	if (clean < 0) {
+ +		flush_output(o);
+  		return clean;
+ +	}
+  
+  	if (o->call_depth) {
+  		*result = make_virtual_commit(mrtree, "merged tree");
+  		commit_list_insert(h1, &(*result)->parents);
+  		commit_list_insert(h2, &(*result)->parents->next);
+  	}
+ -	if (o->buffer_output < 2)
+ +	flush_output(o);
+ +	if (!o->call_depth && o->buffer_output < 2)
+  		strbuf_release(&o->obuf);
+  	if (show(o, 2))
+  		diff_warn_rename_limit("merge.renamelimit",
+ diff --git a/merge-recursive.h b/merge-recursive.h
+ index 340704c..735343b 100644
+ --- a/merge-recursive.h
+ +++ b/merge-recursive.h
+ @@ -13,7 +13,7 @@ struct merge_options {
+  		MERGE_RECURSIVE_THEIRS
+  	} recursive_variant;
+  	const char *subtree_shift;
+ -	unsigned buffer_output : 2; /* 1: output at end, 2: keep buffered */
+ +	unsigned buffer_output; /* 1: output at end, 2: keep buffered */
+  	unsigned renormalize : 1;
+  	long xdl_opts;
+  	int verbosity;
+
 -- 
 2.9.0.281.g286a8d9
 
-
+base-commit: f8f7adce9fc50a11a764d57815602dcb818d1816
