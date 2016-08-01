@@ -2,99 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47BAA2018B
-	for <e@80x24.org>; Mon,  1 Aug 2016 21:55:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A6491F855
+	for <e@80x24.org>; Mon,  1 Aug 2016 22:00:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752398AbcHAVzS (ORCPT <rfc822;e@80x24.org>);
-	Mon, 1 Aug 2016 17:55:18 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63014 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751467AbcHAVzR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2016 17:55:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A215A320B6;
-	Mon,  1 Aug 2016 17:18:49 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uNikERynh9xvNPkBQV0Tgy0cEso=; b=j2MkDK
-	OfFg/nxxyX8Ofy1WrxGLqC4GYvdsSpQfTN7uDztuyswdWOKgy3/lmhrGNvr7yCUr
-	ebF0omgAcCWGKGafRX/H2wyFTSQkawlbCS0hkUQNp3IKZrpQ3ezIjVHjFyn0Lr6e
-	6W8qhA6HchhD8vnilXe/PYC1tYla8Xzb9qxEw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=brXLFmh9bJ7LxdEQzpWlzNGkmkYmQ9kN
-	4MfZsKSlLkYfQdsdDkMBah+qFKKj2POTT38NWBiIigFTUPVdMd01AtLZ+9vdIfQA
-	Q+tcN8bXGEKD6lA9de25Stx7hrU5kTknsKfhSmwGupdKHLI7wcksFnRxPwp4Xbpq
-	yb1i2AL3oWY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9B600320B5;
-	Mon,  1 Aug 2016 17:18:49 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 246E5320B4;
-	Mon,  1 Aug 2016 17:18:49 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Josh Triplett <josh@joshtriplett.org>
-Cc:	Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] format-patch: Add a config option format.from to set the default for --from
-References: <cover.4d006cadf197f80d899ad7d7d56d8ba41f574adf.1469905775.git-series.josh@joshtriplett.org>
-	<20160730191111.cd6ay3l4hweyjf7f@x>
-Date:	Mon, 01 Aug 2016 14:18:47 -0700
-In-Reply-To: <20160730191111.cd6ay3l4hweyjf7f@x> (Josh Triplett's message of
-	"Sat, 30 Jul 2016 12:11:11 -0700")
-Message-ID: <xmqqziowgpc8.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 89E4DA26-582D-11E6-90AB-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+	id S1751559AbcHAWAa (ORCPT <rfc822;e@80x24.org>);
+	Mon, 1 Aug 2016 18:00:30 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:49884 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751208AbcHAWA3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2016 18:00:29 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 111231F855;
+	Mon,  1 Aug 2016 21:49:45 +0000 (UTC)
+From:	Eric Wong <e@80x24.org>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Eric Wong <e@80x24.org>, Jeff King <peff@peff.net>,
+	"Kyle J. McKay" <mackyle@gmail.com>, git@vger.kernel.org,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>,
+	=?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: [PATCH 0/1 v2] add PAGER_ENV to build
+Date:	Mon,  1 Aug 2016 21:49:36 +0000
+Message-Id: <20160801214937.4752-1-e@80x24.org>
+In-Reply-To: <20160801010557.22191-1-e@80x24.org>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Josh Triplett <josh@joshtriplett.org> writes:
+Changes from v1:
 
-> Subject: Re: [PATCH v2 1/2] format-patch: Add a config option format.from ...
+* dropped stringify macro in favor for quoting in Makefile
+  (diff below)
+  I'm not sure I like this change, and might be inclined to
+  go in the opposite direction of using the stringify macro
+  more widely to simplify the Makefile; but that is a separate
+  topic.
 
-At least s/Add/add/; but I would prefer an even shorter
+* dropped 2/2, I don't have a good rationale for it, either,
+  other than "it seemed easy" after 1/2 :>
 
-	format-patch: format.from gives the default for --from
+The following changes since commit f8f7adce9fc50a11a764d57815602dcb818d1816:
 
-> +static char *from;
+  Sync with maint (2016-07-28 14:21:18 -0700)
 
-The same "this does not quite help the transition" comment applies
-to this one.
+are available in the git repository at:
 
-> +enum from {
-> +	FROM_AUTHOR,
-> +	FROM_USER,
-> +	FROM_VALUE,
+  git://bogomips.org/git-svn.git pager-env-v2
 
-Drop trailing comma after the last enum definition (trailing comma
-after the last element in an array is OK, though).
+for you to fetch changes up to d3aed319c9abac006060bc81e865c93ff8363066:
 
-> +static void set_from(enum from type, const char *value)
-> +{
-> +	free(from);
-> +	switch (type) {
-> +	case FROM_AUTHOR:
-> +		from = NULL;
-> +		break;
-> +	case FROM_USER:
-> +		from = xstrdup(git_committer_info(IDENT_NO_DATE));
-> +		break;
-> +	case FROM_VALUE:
-> +		from = xstrdup(value);
-> +		break;
-> +	}
-> +}
+  pager: move pager-specific setup into the build (2016-08-01 21:46:25 +0000)
 
-I tend to agree with what Jeff said; I'd queue 1/2 from the original
-round for now.
+----------------------------------------------------------------
+Junio C Hamano (1):
+      pager: move pager-specific setup into the build
 
-Thanks.
+ Makefile         | 20 +++++++++++++++++++-
+ config.mak.uname |  1 +
+ git-sh-setup.sh  |  8 +++++---
+ pager.c          | 29 +++++++++++++++++++++++++----
+ 4 files changed, 50 insertions(+), 8 deletions(-)
+
+interdiff from 1/1 v1:
+
+diff --git a/Makefile b/Makefile
+index fe469a6..0b36b5e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1591,7 +1591,6 @@ PYTHON_PATH_SQ = $(subst ','\'',$(PYTHON_PATH))
+ TCLTK_PATH_SQ = $(subst ','\'',$(TCLTK_PATH))
+ DIFF_SQ = $(subst ','\'',$(DIFF))
+ PERLLIB_EXTRA_SQ = $(subst ','\'',$(PERLLIB_EXTRA))
+-PAGER_ENV_SQ = $(subst ','\'',$(PAGER_ENV))
+ 
+ # We must filter out any object files from $(GITLIBS),
+ # as it is typically used like:
+@@ -1604,7 +1603,7 @@ PAGER_ENV_SQ = $(subst ','\'',$(PAGER_ENV))
+ LIBS = $(filter-out %.o, $(GITLIBS)) $(EXTLIBS)
+ 
+ BASIC_CFLAGS += -DSHA1_HEADER='$(SHA1_HEADER_SQ)' \
+-	$(COMPAT_CFLAGS) -DPAGER_ENV='$(PAGER_ENV_SQ)'
++	$(COMPAT_CFLAGS)
+ LIB_OBJS += $(COMPAT_OBJS)
+ 
+ # Quote for C
+@@ -1642,6 +1641,10 @@ ifdef DEFAULT_HELP_FORMAT
+ BASIC_CFLAGS += -DDEFAULT_HELP_FORMAT='"$(DEFAULT_HELP_FORMAT)"'
+ endif
+ 
++PAGER_ENV_CQ = "$(subst ",\",$(subst \,\\,$(PAGER_ENV)))"
++PAGER_ENV_CQ_SQ = $(subst ','\'',$(PAGER_ENV_CQ))
++BASIC_CFLAGS += -DPAGER_ENV='$(PAGER_ENV_CQ_SQ)'
++
+ ALL_CFLAGS += $(BASIC_CFLAGS)
+ ALL_LDFLAGS += $(BASIC_LDFLAGS)
+ 
+diff --git a/pager.c b/pager.c
+index 2f2cadc..cd1ac54 100644
+--- a/pager.c
++++ b/pager.c
+@@ -63,12 +63,9 @@ const char *git_pager(int stdout_is_tty)
+ 	return pager;
+ }
+ 
+-#define stringify_(x) #x
+-#define stringify(x) stringify_(x)
+-
+ static void setup_pager_env(struct argv_array *env)
+ {
+-	const char *pager_env = stringify(PAGER_ENV);
++	const char *pager_env = PAGER_ENV;
+ 
+ 	while (*pager_env) {
+ 		struct strbuf buf = STRBUF_INIT;
+-- 
+EW
