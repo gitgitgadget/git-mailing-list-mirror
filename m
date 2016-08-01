@@ -2,119 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED9271F855
-	for <e@80x24.org>; Mon,  1 Aug 2016 20:25:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 93F161F855
+	for <e@80x24.org>; Mon,  1 Aug 2016 20:37:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755103AbcHAUZU (ORCPT <rfc822;e@80x24.org>);
-	Mon, 1 Aug 2016 16:25:20 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62276 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752131AbcHAUZR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2016 16:25:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id AD25B3147D;
-	Mon,  1 Aug 2016 16:11:05 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zY8g0Bg/xRCPad78giOjwAitr2g=; b=Ggt51n
-	OS8ha6kMWqy2ULdr9HhEwHyHvlhc+MGJK/ZwjwngBrGVVii9rU3esLQA7agBxeQc
-	Ytx36uY0IQDzKwpkZ7o1N4SfzGHWMyqBCTq8T4qCDYVB8MEN3sV9XRyAxT3x/Uln
-	SBx9lhul1GJLQjZ0IbkBaHlMKyX/YMbTPBPeY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Kw66YrpzgNjphGCA0PGlTetA4ScuTjFc
-	2A4o/Frsl+iZ03vJ3TzZiabcsj1vfkAJJtX1s1DPxvj9EDk3/SUPdNaB/ZmgrvuF
-	AAFzCZS1QTJxWWDxzgarpkCVvTE6U89iQzRIriKQd3vLsjWwNzctn38rrsvl/446
-	0hYluUSJCOU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A5F0B3147C;
-	Mon,  1 Aug 2016 16:11:05 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3B93431479;
-	Mon,  1 Aug 2016 16:11:05 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	Kevin Willford <kcwillford@gmail.com>, git@vger.kernel.org,
-	Kevin Willford <kewillf@microsoft.com>
-Subject: Re: [[PATCH v2] 4/4] rebase: avoid computing unnecessary patch IDs
-References: <20160729161920.3792-1-kcwillford@gmail.com>
-	<20160729161920.3792-5-kcwillford@gmail.com>
-	<xmqqa8h0m82f.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1608011055180.149069@virtualbox>
-Date:	Mon, 01 Aug 2016 13:11:02 -0700
-In-Reply-To: <alpine.DEB.2.20.1608011055180.149069@virtualbox> (Johannes
-	Schindelin's message of "Mon, 1 Aug 2016 10:58:54 +0200 (CEST)")
-Message-ID: <xmqqtwf4i71l.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752611AbcHAUhT (ORCPT <rfc822;e@80x24.org>);
+	Mon, 1 Aug 2016 16:37:19 -0400
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:36249 "EHLO
+	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752123AbcHAUhP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2016 16:37:15 -0400
+Received: by mail-wm0-f48.google.com with SMTP id q128so384304150wma.1
+        for <git@vger.kernel.org>; Mon, 01 Aug 2016 13:36:08 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=RG4Nk9c5WdejU+4suU0z9UUBDpym9b86aaFHFebejKg=;
+        b=cb7bIh54HA8tYu+JgyEPV9eEqThiHiM13FKpuUhRjJIGCtr4V21fPS1EGYUbEmCjMd
+         X0hw3TsZOVhNTCaouDxCXZECm/iDqub5JMdnZoZTT12ui7RXKUOQ7tYcamYA91MyRPm+
+         bODvmM4RM/yRq+dQQwAp50DZLyaa4mDj78m7WmM5sACLnoPvYuR0MzcMdDDcgmIa/nQ/
+         Bi6/pJTO2iSHAIpJyuNY1CEYoy+Wgc3SRCbg87uiEB2vJPLLcD4rqGOgM/n1q4xuGV04
+         sOMPMeVPSBb2r3hlRltwfi4bpG5XlrAqutWSJ37rl6bH3Dn44QLqnzoa4K0TJSjjUM22
+         izHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=RG4Nk9c5WdejU+4suU0z9UUBDpym9b86aaFHFebejKg=;
+        b=XRWYIdE4YB/ULay5U2dSPeTKaEW0Wb3Xh85ci9yq4i/9E48ZLz7Wp+hLdzsrXcNoeU
+         /UcMCRNFSRhJFoPFht0NgOhvgyMjNmwNIHMSmrfaWJ3IIsgDWUKZTYEKdjKakBICDxJJ
+         XTNq4Mdcw6RFY2sFq2B2HBzAWW2Xo8SfIpghuBsPyrNIY9AxPOF90FtyR3RGWnEhpz8m
+         vUkQ75jonyV4f/qOrTWqWYcUEXbJ2eLdn1lQLp8YkXYvxdzr1UCipGwRtZpoX5tM0P0J
+         qFNuPzv/wryBSKwMB4eeUsUUloUi48FJQVYA932pN+4PLtjxrJbyz0J56gpo3FJC/FTn
+         pMoQ==
+X-Gm-Message-State: AEkooutC7E7P8emIphL2jzK+dyKvWcjxaSJ90P+cH5ZvKpZiqVwKH+3uKt2wctcqlWaZZtp8dZ0dLj1QPTt3OA==
+X-Received: by 10.194.87.101 with SMTP id w5mr57413923wjz.94.1470083767576;
+ Mon, 01 Aug 2016 13:36:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 139D88D0-5824-11E6-A41E-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.194.70.167 with HTTP; Mon, 1 Aug 2016 13:36:06 -0700 (PDT)
+In-Reply-To: <xmqq7fc0jmhx.fsf@gitster.mtv.corp.google.com>
+References: <CABEd3j8VLbpeWbA6BfHYp5aLPEy0PesqYoHM9u4OM=b7Qm=LDg@mail.gmail.com>
+ <xmqqinvonwxc.fsf@gitster.mtv.corp.google.com> <CABEd3j-MW--YSC9=nwcgHzxd6cqmUY+ky3-wLxMiMmbBGsvS7Q@mail.gmail.com>
+ <CABEd3j--sxCwv6fWmNxTtdpgwU0_YKbfiFONX6TsQFZGn79yuQ@mail.gmail.com>
+ <CAP8UFD118RdB5dX2-wEm5VnKud7sirHhdC9kvWmXV0eAQHvfsA@mail.gmail.com> <xmqq7fc0jmhx.fsf@gitster.mtv.corp.google.com>
+From:	Christian Couder <christian.couder@gmail.com>
+Date:	Mon, 1 Aug 2016 22:36:06 +0200
+Message-ID: <CAP8UFD315CgntwYiC9g-R7KN0XiL9635Vwv_y8yi4n-uj8o90A@mail.gmail.com>
+Subject: Re: git bisect for reachable commits only
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Oleg Taranenko <olegtaranenko@gmail.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> Hi Junio,
+On Mon, Aug 1, 2016 at 9:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
 >
-> On Fri, 29 Jul 2016, Junio C Hamano wrote:
+>> Yes, and the reason is that all the ancestors of a good commit are
+>> considered good.
+>> That's because git bisect supposes that there is only one transition
+>> from good to bad.
+>> Otherwise we would need a more complex algorithm to find all the
+>> transitions from good to bad, and that is not generally needed.
 >
->> Kevin Willford <kcwillford@gmail.com> writes:
->> 
->> >  static int patch_id_cmp(struct patch_id *a,
->> >  			struct patch_id *b,
->> > -			void *keydata)
->> > +			struct diff_options *opt)
->> >  {
->> > +	if (is_null_sha1(a->patch_id) &&
->> > +	    commit_patch_id(a->commit, opt, a->patch_id, 0))
->> > +		return error("Could not get patch ID for %s",
->> > +			oid_to_hex(&a->commit->object.oid));
->> > +	if (is_null_sha1(b->patch_id) &&
->> > +	    commit_patch_id(b->commit, opt, b->patch_id, 0))
->> > +		return error("Could not get patch ID for %s",
->> > +			oid_to_hex(&b->commit->object.oid));
->> >  	return hashcmp(a->patch_id, b->patch_id);
->> >  }
->> 
->> These error returns initially looks slightly iffy in that in general
->> the caller of any_cmp_fn() wants to know how a/b compares, but by
->> returning error(), it always says "a is smaller than b".
+> It may be debatable if that is generally needed or not, but by
+> definition "bisect" is about having a history that has a SINGLE
+> point that changes from good to bad (or old to new, or "have sugar"
+> to "no sugar"), and that single-ness is what allows us to BIsect the
+> graph.  So even if it may be a good thing to have to be able to find
+> multiple transitions, that is outside the scope of how the current
+> "git bisect" was designed to be used.
+
+Yeah, this is a better version of what I wanted to say.
+
+>> I haven't looked at your previous issue much, sorry I have been busy these days.
 >
-> I am to blame, as this is my design.
+> I think the "previous issue" was that we can ask the user to ask to
+> check one of 'x' or 'y' when given Good and Bad points in a graph like
+> this:
 >
-> And yes, it is kind of funny that we require a cmpfn that returns <0, ==0
-> and >0 for comparisons, when hashmaps try to avoid any order.
+>         x---y---y---o---B
+>          \         /
+>           x---G---o
+>
+> while a more natural expectation by a user would be that we only
+> need to check one of these two 'o'.
 
-Perhaps hashmap API needs fixing in the longer term not to call this
-type hashmap_cmp_fn; instead it should lose cmp and say something
-like hashmap_eq_fn or something.
+Yeah, I reproduced the steps described in the Google Groups discussion:
 
-> Do you want a note in the commit message about this "abuse" of a negative
-> return value, or a code comment?
+https://groups.google.com/forum/#!topic/git-users/v3__t42qbKE
 
-I do not think negative (or non-zero) return is an "abuse" at all.
-It is misleading in the context of the function whose name has "cmp"
-in it, but that is not the fault of this function, rather, the
-breakage is more in the API that calls a function that wants to know
-only equality a "cmp".  A in-code comment before the function name
-may be appropriate:
+and I think that is indeed the "previous issue".
 
-        /*
-         * hashmap API calls hashmap_cmp_fn, but it only wants
-         * "does the key match the entry?" with 0 (matches) and
-         * non-zero (does not match).
-         */
-        static int patch_id_match(const struct patch_id *ent,
-                                  const struct patch_id *key,
-                                  const void *keydata)
-        {
-                ...
+> Thinking about it again, I actually think it makes sense to ask the
+> user to check 'y'; there is no good reason to believe that 'y' can
+> never have introduced the badness we are hunting for, and limiting
+> the search to --ancestry-path (which is to ask only for 'o') would
+> stop at the merge 'o' if one of the 'y' were bad, which would
+> prevents us from knowing the exact breakage.
 
+I agree.
+
+> There however is no excuse if we asked to check 'x', though.  They
+> are ancestors of a Good commit, and "git bisect" should be able to
+> assume they are Good.
+
+I think it does. When I reproduced the steps in the "previous issue",
+it did assume they are good.
