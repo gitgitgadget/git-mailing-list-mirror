@@ -2,71 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0DDC81F855
-	for <e@80x24.org>; Mon,  1 Aug 2016 22:35:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66DE71F855
+	for <e@80x24.org>; Mon,  1 Aug 2016 22:35:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752673AbcHAWfF (ORCPT <rfc822;e@80x24.org>);
-	Mon, 1 Aug 2016 18:35:05 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:51534 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751954AbcHAWfD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2016 18:35:03 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76CED1F855;
-	Mon,  1 Aug 2016 22:34:47 +0000 (UTC)
-Date:	Mon, 1 Aug 2016 22:34:47 +0000
-From:	Eric Wong <e@80x24.org>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Kevin Willford <kcwillford@gmail.com>, git@vger.kernel.org,
-	Kevin Willford <kewillf@microsoft.com>
-Subject: Re: [[PATCH v2] 1/4] patch-ids: stop using a hand-rolled hashmap
- implementation
-Message-ID: <20160801223447.GA10924@whir>
-References: <20160729161920.3792-1-kcwillford@gmail.com>
- <20160729161920.3792-2-kcwillford@gmail.com>
- <xmqqoa5gmas6.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1607301056120.11824@virtualbox>
- <xmqqy44gi7bp.fsf@gitster.mtv.corp.google.com>
+	id S1752754AbcHAWfI (ORCPT <rfc822;e@80x24.org>);
+	Mon, 1 Aug 2016 18:35:08 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52046 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752594AbcHAWfE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2016 18:35:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8418832277;
+	Mon,  1 Aug 2016 18:31:48 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=yXmwK0u/6xWHKHv/+XyKPoUyasE=; b=Tt3zc+
+	wbmhHeC536K6BYxEMZUM0waj3exYrYxbL9vVZZ6BK80Hz9q+Qp45f/h1ByuIh5/u
+	kTp1tcSExyEicxiJfRmct19mYdhHrzHVWZaBsfJJaEaToyuk6Ozj8xm7R72DQUNn
+	f1mhF3OTl+8LTO8K2ese3SpO5klFm5ESVZHwQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qC+CnqZxm8QKsmQEQ+jwz2JEeVyJAjJS
+	rHHVjkwpS7WurEuzMQ78+QwVSXN837QRJ4vbhfi4dEwGZTp12PT+z8Q+/fPlG73l
+	qBkYikNzv3tzMVrEFArLDXd506JEwV3wcgoq07rm1dht8lojSan1v31k4v6yJLJJ
+	xWtRsljOBZQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7BF7932276;
+	Mon,  1 Aug 2016 18:31:48 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0B54C32275;
+	Mon,  1 Aug 2016 18:31:47 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff King <peff@peff.net>
+Cc:	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+	Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] pass constants as first argument to st_mult()
+References: <579CEF77.9070202@web.de>
+	<20160801164723.mober7em6znt56w4@sigill.intra.peff.net>
+	<xmqq8twgi4qp.fsf@gitster.mtv.corp.google.com>
+	<20160801211131.6ernsu74ohod2cin@sigill.intra.peff.net>
+Date:	Mon, 01 Aug 2016 15:31:45 -0700
+In-Reply-To: <20160801211131.6ernsu74ohod2cin@sigill.intra.peff.net> (Jeff
+	King's message of "Mon, 1 Aug 2016 17:11:31 -0400")
+Message-ID: <xmqq60rkglym.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqy44gi7bp.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: BBEB49C4-5837-11E6-A524-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > It would be a serious bug if hashmap_entry_init() played games with
-> > references, given its signature (that this function does not have any
-> > access to the hashmap structure, only to the entry itself):
-> >
-> > 	void hashmap_entry_init(void *entry, unsigned int hash)
+Jeff King <peff@peff.net> writes:
 
-<snip>
+>> *1* I have a slight suspicion that this is cultural, i.e. how
+>> arithmetic is taught in grade schools.  When an apple costs 30 yen
+>> and I have 5 of them, I was taught to multiply 30x5 to arrive at
+>> 150, not 5x30=150, and I am guessing that is because the former
+>> matches the natural order of these two numbers (cost, quantity) in
+>> the language I was taught.
+>
+> You might be right. I was trying to figure out what is "natural" for me
+> in these cases, but after thinking about it for 2 minutes, I'm pretty
+> sure anything resembling "natural" is lost as I try to out-think myself. :)
 
-> I have a slight preference to avoid the lazy "void *", but that is
-> an unrelated tangent.
-
-Me too.  I noticed this while working on the http-walker
-speedups and my self-rejected last patch:
-
-  https://public-inbox.org/git/20160711210243.GA1604%40whir/
-
-Extracting list_entry from list.h (currently in next[1]) and
-exposing that generically as "container_of" for use with
-hashmap_* would make it safer-to-use and allow structs to belong
-to multiple hashmaps.
-
-list_entry is also an alias for container_of in the Linux
-kernel, but we don't have enough code using list_* to
-warrant two names for the same macro.
-
-[1] https://public-inbox.org/git/20160711205131.1291-4-e%4080x24.org/
+Do native English speakers (or more in general Europeans) think of
+the apple example more like "5 apples, 30 cents each", and do 5x30?
