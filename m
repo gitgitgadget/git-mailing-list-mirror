@@ -2,98 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4CE81F71B
-	for <e@80x24.org>; Mon,  1 Aug 2016 08:59:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E74CB1F71B
+	for <e@80x24.org>; Mon,  1 Aug 2016 09:01:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752180AbcHAI7k (ORCPT <rfc822;e@80x24.org>);
-	Mon, 1 Aug 2016 04:59:40 -0400
-Received: from relay5-d.mail.gandi.net ([217.70.183.197]:34258 "EHLO
-	relay5-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750971AbcHAI7i (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2016 04:59:38 -0400
-Received: from mfilter48-d.gandi.net (mfilter48-d.gandi.net [217.70.178.179])
-	by relay5-d.mail.gandi.net (Postfix) with ESMTP id CDA3B41C080;
-	Mon,  1 Aug 2016 10:59:35 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter48-d.gandi.net
-Received: from relay5-d.mail.gandi.net ([IPv6:::ffff:217.70.183.197])
-	by mfilter48-d.gandi.net (mfilter48-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id sjn1lS4aYD_r; Mon,  1 Aug 2016 10:59:33 +0200 (CEST)
-X-Originating-IP: 50.39.163.18
-Received: from x (50-39-163-18.bvtn.or.frontiernet.net [50.39.163.18])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay5-d.mail.gandi.net (Postfix) with ESMTPSA id 4C9F241C0BE;
-	Mon,  1 Aug 2016 10:59:30 +0200 (CEST)
-Date:	Mon, 1 Aug 2016 01:59:29 -0700
-From:	Josh Triplett <josh@joshtriplett.org>
-To:	Eric Wong <e@80x24.org>
-Cc:	Christian Couder <christian.couder@gmail.com>,
-	Richard Ipsum <richard.ipsum@codethink.co.uk>,
-	git@vger.kernel.org, linux-kernel@vger.kernel.org,
-	dborowitz@google.com, Omar Jarjur <ojarjur@google.com>,
-	Harry Lawrence <hazbo@gmx.com>
-Subject: Re: [ANNOUNCE] git-series: track changes to a patch series over time
-Message-ID: <20160801085928.lw3ltdksyrjujutu@x>
-References: <20160729064055.GB25331@x>
- <20160729101011.GA3469@salo>
- <CAP8UFD12Jk0s0HPPWS3CqFcB37gzhzZZi-V0PfqrRhZO4zhHOA@mail.gmail.com>
- <20160801075554.GA22222@starla>
+	id S1752088AbcHAJBV (ORCPT <rfc822;e@80x24.org>);
+	Mon, 1 Aug 2016 05:01:21 -0400
+Received: from mout.gmx.net ([212.227.15.18]:52543 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752047AbcHAJBT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2016 05:01:19 -0400
+Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0Lxgt9-1bEAQ11Uy3-017CeB; Mon, 01 Aug 2016 11:01:02
+ +0200
+Date:	Mon, 1 Aug 2016 11:01:01 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	Kevin Willford <kcwillford@gmail.com>, git@vger.kernel.org
+Subject: Re: [[PATCH v2] 0/4] Use header data patch ids for rebase to avoid
+ loading file content
+In-Reply-To: <xmqqshusmby9.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1608011059040.149069@virtualbox>
+References: <20160729161920.3792-1-kcwillford@gmail.com> <xmqqshusmby9.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160801075554.GA22222@starla>
-User-Agent: Mutt/1.6.2-neo (2016-07-23)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:OOfky4GvOq/3bEPL8U3uY/DTTjGZW6QBkQxNoJ4fzjEIJY3wC70
+ HoJWhDONKoVzQkBMkaCt/CxRHW8TZi8ACpJAcpDeK//YGGlMoI5cd/anYM1VfyeS4hj0HSJ
+ n73ikMm3A482d9XHgS463UvI/xwszT+IZTVkDz5SGmRfEZZddvmaWEie4ZSJFrtFYDUrFOZ
+ Aoh4mKuh1AcD+ubGn4kDg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:X+H/KTow7ew=:70J7SnYnVQ3hAYlkeG5Zm5
+ 8yiQ51d64KNXwokwzbbJjweUimbh3+FBXGqhGMvHZ7WR+J8uv4eKEFTFgka656xEs4r4u/xjC
+ qrHInFwyaBuxK3dhUsd1uYx9lx/HzJoVm2eBJlEfsMgV5oyeKqwG8lbk8lwuIaCjzif+2oLbT
+ 4vqpJBkzK1b2mnPU/WwD8pHInnrHu82ZAnL+NN+oEylu7Iyk8TFrp2aMqyOkHm7hNWN8Ik3UF
+ dQKOWJhDt8H0jeeiFZw+s/fPXzgaVh5dkxxT9eiOhS1T52zTKdzz5iZlwUkdkCmCcM0WqQwyQ
+ yUOi+ywLjCl9Z6IwLkf3+jkKUm8iK41Wm3IkALtVuFae2OlUxssHk7sEvSmCViCP5x99iEc65
+ vKdWByIwT7ZSwciVoxbOfIU19UdTzMN9yMP2+Hvri0iUIPLN5JlkPTLdySjGX9hVTMifAoadH
+ AvlYIRYLeco8S7BCufQNDZYR1kGR9YB1AAbrS0mFXhI1Bc1s+psBndk5SK3hP8yykJpwi/+Os
+ nbgX9QHlDvIXzykjcSl6bseDBFpjgkqU/puj8gUVnP3D0ri3vn6uYoxJ5tAVyvYXIZu3ki83E
+ sgshQ/H5bvMg0LF9uriS0BRcDquhLR7+3WoYS5swe4XgDSjQcvpE5mhw3X4SYSXashYRANvHO
+ LHk8S2QfzfH1Bvr6CX1OeGiPXA8zYpBgiHFGOqmJz+b7A5CA63hWwIpeXJXJ6e9885QhOzQPG
+ bhVfe/WRzUbBSz0OLEbIJJuJy1WIYH4z8JU/ur0NtY3v9hECbXFFkvd5/T44OfBEHbzgzqXNO
+ uK37BCx
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Aug 01, 2016 at 07:55:54AM +0000, Eric Wong wrote:
-> Christian Couder <christian.couder@gmail.com> wrote:
-> > On Fri, Jul 29, 2016 at 12:10 PM, Richard Ipsum
-> > <richard.ipsum@codethink.co.uk> wrote:
-> > > On Thu, Jul 28, 2016 at 11:40:55PM -0700, Josh Triplett wrote:
-> > > [snip]
-> > >>
-> > >> I'd welcome any feedback, whether on the interface and workflow, the
-> > >> internals and collaboration, ideas on presenting diffs of patch series,
-> > >> or anything else.
+Hi Junio,
+
+On Fri, 29 Jul 2016, Junio C Hamano wrote:
+
+> Kevin Willford <kcwillford@gmail.com> writes:
 > 
-> > > I'm particularly interested in trying to establish a standard for
-> > > storing review data in git. I've got a prototype for doing that[3],
-> > > and an example tool that uses it[4]. The tool is still incomplete/buggy though.
-> > 
-> > There is also git-appraise (https://github.com/google/git-appraise)
-> > written in Go to store code review data in Git.
-> > It looks like it stores its data in git notes and can be integrated
-> > with Rust (https://github.com/Nemo157/git-appraise-rs).
+> > This patch series is to remove the hand rolled hashmap in the patch_ids
+> > and use the hashmap.h implementation.  It also introduces the idea of having
+> > a header only patch id so that the contents of the files do not have to be
+> > loaded in order to determine if two commits are different.
 > 
-> I'm not convinced another format/standard is needed besides the
-> email workflow we already use for git and kernel development.
+> > Subject: Re: [[PATCH v2] 0/4] Use header data patch ids for rebase to avoid loading file content
+> 
+> Did you do "format-patch --subject-prefix='[PATCH v2]'" or something
+> like that?
 
-Not all projects use a patches-by-email workflow, or want to.  To the
-extent that tools and projects use some other workflow, standardizing
-the format they use to store patch reviews (including per-line
-annotations, approvals, test results, etc) seems preferable to having
-each tool use its own custom format.
+This is my fault, sorry, I suggested this usage (misremembering the
+semantics because I only use my mail-patch-series.sh helper and never use
+format-patch manually anymore).
 
-> I also see the reliance on an after-the-fact search engine
-> (which can be tuned/replaced) as philosophically inline with
-> what git does, too, such as not having rename tracking and
-> doing delayed deltafication.
+>     git format-patch --subject-prefix='PATCH v2'
+> 
+> or even better
+> 
+>     git format-patch -v2
+> 
+> would have been more appropriate.
 
-Storing review data in git doesn't mean it needs to end up in the
-history of the project itself; it can use after-the-fact annotations on
-a commit.
+Oooh, I did not know about the latter form. Nice.
 
-> Email also has the advantage of having existing tooling, and
-> being (at least for now) federated without a single point of
-> failure.
-
-Storing review data in git makes it easy to push and pull it, which can
-provide the basis for a federated system.
-
-- Josh Triplett
+Thanks,
+Dscho
