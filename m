@@ -2,124 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E4541F858
-	for <e@80x24.org>; Mon,  1 Aug 2016 01:43:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 150181F858
+	for <e@80x24.org>; Mon,  1 Aug 2016 05:04:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751199AbcHABnM (ORCPT <rfc822;e@80x24.org>);
-	Sun, 31 Jul 2016 21:43:12 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:34336 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751377AbcHABnK (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2016 21:43:10 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:395:747d:98e1:fc48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id D213C280A6;
-	Mon,  1 Aug 2016 01:43:08 +0000 (UTC)
-DKIM-Signature:	v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-	s=default; t=1470015788;
-	bh=oo7dw6VjyDeTHv03HsOltys7MLlgmgaprZ+9s2WNnm8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=rFrBA1JXS1P5cHHQuwS0QclpHjtyAyOwn+ShwTOVYFFyHxVm/XvlQ5TeKyN+v5d9e
-	 FaoCEsqiUX6XzfCvO8a4w+nI1I71oUAv/jhXh2uggxOj/O5VMzcgPHJVuYzcz1eXtj
-	 f55KJYTPwk6PgVZmNcETGwRkCjNmcb69/cWgWuwWYVVE9LMe06x5lI0LsmjITVsG3M
-	 JJ9kofygwmggnCRaLOjK7Z3Vud8lOT6qDFUKpcAfANiw6DCRufvFeqy7kmnxDEQ8UP
-	 huJsgtMM2bIujZu1b/sDpUSPqyZoLMLzhSRU8DZ399uvWr/xM4BADeZk1hqrPCWBhu
-	 6yYy+RxXjR6CEq3VxlwH8ph6hKiMm3yDPBTCJIVZXKjYVSzMry0vdjLC6aAfMwFmBR
-	 LQj2ftNIX0ooFQbpQ5+qPRIziI9UwflaqnOgVGz7OD++j3zZCAKAEZePQ1xMUq+riG
-	 34pZay10u8GHnZZEieFmx23w88ow9EitkuAiYLbnyS4KENvlV31
-Date:	Mon, 1 Aug 2016 01:43:03 +0000
-From:	"brian m. carlson" <sandals@crustytoothpaste.net>
-To:	Eric Wong <e@80x24.org>
-Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	"Kyle J. McKay" <mackyle@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 1/2] pager: move pager-specific setup into the build
-Message-ID: <20160801014303.x5j3dqumcmrkyc76@vauxhall.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Eric Wong <e@80x24.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, "Kyle J. McKay" <mackyle@gmail.com>,
-	git@vger.kernel.org
-References: <20160801010557.22191-1-e@80x24.org>
- <20160801010557.22191-2-e@80x24.org>
+	id S1750912AbcHAFET (ORCPT <rfc822;e@80x24.org>);
+	Mon, 1 Aug 2016 01:04:19 -0400
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:38193 "EHLO
+	mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750767AbcHAFER (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2016 01:04:17 -0400
+Received: by mail-wm0-f41.google.com with SMTP id o80so226201324wme.1;
+        Sun, 31 Jul 2016 22:04:16 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=N4AAXK5EYQSsxQMEEbgTVrmBfeez4+Jpf4NFRhKcfHg=;
+        b=Zm6wZrVQV4p3R5btfpTjUcw1dIpV8o6LIwjgja4+KkBsT2ghsfvket78K04J8+hj6U
+         s37t28W+ByTwP48btlpqXJtjT78D5vYkH0qURp8C1p2rNPzUJKJjVaMpvL3P/HrEKXRT
+         qtXFUuWjBdHoL125fro19VaZQ+JwmShUoZMa/zdAQV9PNPRKk939OYA0ODqnFLssoaKK
+         /whkRAe+mitiiWW4S5OTs1b/FAuimf1jXK+q/9J6APUORVg+rYNoDYdZ5fXdxFf9nz4t
+         2YOm2XFmCSUp2C8a0WUQtp6y89is3fIAsFYko1Jdt0ynKAsPe4Ly3Af6jwOFGQGbX+sl
+         MZCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=N4AAXK5EYQSsxQMEEbgTVrmBfeez4+Jpf4NFRhKcfHg=;
+        b=PvneuRfnO7kKwJriVV6mhjiV/jk+HsUzqMWcsnGo71Id+h8dt9dybXJ70yn1dyHxAJ
+         qksy+qI1lmX1W18fvmUr3dVDm0PkO6M4sYzhhHnLUTLTFu9btnwooNCrKdzUcn3Y9AQ0
+         qNn0AG0+aPxK9v8bKL9zqURhGkkEGCBSFFm8cHLWZkiOqTXE8DHwzL7eR6teMcmxSISt
+         TlwGrJB7sJ+XrhdP1XKez8qTJqyr5ql+4Hq7HCfmSW+S6MHt/FLmg6szpuQLHNahfeCY
+         kNo2Xcm5n6MeEAXv1Fg0iTsIPghJQ+OJnJ/L+P9BCb6YBtcvnnNZ+GhRf18OO7MpIvXL
+         jXNw==
+X-Gm-Message-State: AEkoousfs1O57BLd9EmNBdBPO0qyfJpYtkuvTENqIMIQ7qB0D62IKIeK0mL0Xh8agUEt8+NJuryasd8/K3OrxA==
+X-Received: by 10.28.103.6 with SMTP id b6mr57135715wmc.89.1470027855936; Sun,
+ 31 Jul 2016 22:04:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="s3z7h7zyi77hjfec"
-Content-Disposition: inline
-In-Reply-To: <20160801010557.22191-2-e@80x24.org>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.7.0-rc4-amd64)
-User-Agent: Mutt/1.6.2-neo (2016-07-23)
+Received: by 10.194.70.167 with HTTP; Sun, 31 Jul 2016 22:04:15 -0700 (PDT)
+In-Reply-To: <20160729101011.GA3469@salo>
+References: <20160729064055.GB25331@x> <20160729101011.GA3469@salo>
+From:	Christian Couder <christian.couder@gmail.com>
+Date:	Mon, 1 Aug 2016 07:04:15 +0200
+Message-ID: <CAP8UFD12Jk0s0HPPWS3CqFcB37gzhzZZi-V0PfqrRhZO4zhHOA@mail.gmail.com>
+Subject: Re: [ANNOUNCE] git-series: track changes to a patch series over time
+To:	Richard Ipsum <richard.ipsum@codethink.co.uk>
+Cc:	Josh Triplett <josh@joshtriplett.org>, git <git@vger.kernel.org>,
+	LKML <linux-kernel@vger.kernel.org>, dborowitz@google.com,
+	Omar Jarjur <ojarjur@google.com>,
+	Harry Lawrence <hazbo@gmx.com>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+On Fri, Jul 29, 2016 at 12:10 PM, Richard Ipsum
+<richard.ipsum@codethink.co.uk> wrote:
+> On Thu, Jul 28, 2016 at 11:40:55PM -0700, Josh Triplett wrote:
+> [snip]
+>>
+>> I'd welcome any feedback, whether on the interface and workflow, the
+>> internals and collaboration, ideas on presenting diffs of patch series,
+>> or anything else.
+>
+> This looks awesome!
+>
+> I've been working on some similar stuff for a while also.[1][2]
+>
+> I'm particularly interested in trying to establish a standard for
+> storing review data in git. I've got a prototype for doing that[3],
+> and an example tool that uses it[4]. The tool is still incomplete/buggy though.
 
---s3z7h7zyi77hjfec
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+There is also git-appraise (https://github.com/google/git-appraise)
+written in Go to store code review data in Git.
+It looks like it stores its data in git notes and can be integrated
+with Rust (https://github.com/Nemo157/git-appraise-rs).
 
-On Mon, Aug 01, 2016 at 01:05:56AM +0000, Eric Wong wrote:
-> +static void setup_pager_env(struct argv_array *env)
-> +{
-> +	const char *pager_env =3D stringify(PAGER_ENV);
-> +
-> +	while (*pager_env) {
-> +		struct strbuf buf =3D STRBUF_INIT;
-> +		const char *cp =3D strchrnul(pager_env, '=3D');
-> +
-> +		if (!*cp)
-> +			die("malformed build-time PAGER_ENV");
-> +		strbuf_add(&buf, pager_env, cp - pager_env);
-> +		cp =3D strchrnul(pager_env, ' ');
-> +		if (!getenv(buf.buf)) {
-> +			strbuf_reset(&buf);
-> +			strbuf_add(&buf, pager_env, cp - pager_env);
-> +			argv_array_push(env, strbuf_detach(&buf, NULL));
-> +		}
-> +		strbuf_reset(&buf);
-> +		while (*cp && *cp =3D=3D ' ')
-> +			cp++;
-> +		pager_env =3D cp;
-> +	}
+> There seem to be a number of us trying to solve this in our different ways,
+> it would be great to coordinate our efforts.
 
-So it looks like this function splits on spaces but doesn't provide any
-escaping mechanism.  Is there any case in which we want to accept
-environment variables containing whitespace?  I ask this as someone that
-has EDITOR set to "gvim -f" on occasion and seeing how tools sometimes
-handle that poorly.
-
-Even without that, I think this series is probably an improvement over
-the status quo.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---s3z7h7zyi77hjfec
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.13 (GNU/Linux)
-
-iQIcBAEBCgAGBQJXnqknAAoJEL9TXYEfUvaLeL8P/2rLVxp58irgeQEP1us8DFtN
-fT7uQOlI/glVsw0LdnCPyc8H83eFHEzWCk9nxrcRJTlQUF+ux72+FAV0F+y9aDSc
-/zBYWJurYKEu1LjR9DTVqB6klbTolIvNAbaWpOgd3vFqecxw4rxQI2NYSzf0IDYC
-JgUvH3i2Cl59bG05m51bTe8CZuk/ivbDaE/Huldu6c9VGXJEEKWtkKPBuKSmaY13
-NfuwMklIo1TSXy3BamDHq6olFSNkvmwphCqTVtGTIt08MHuWgfPhasAuubU1q9MF
-h8ibWUJ+XkTi4T7kbBF4SHrHUPhhTSax8WiYO+xqVVZQm7tdSDttyqekGohxJIr4
-A2AJLMazhlhUBpZvwj3c5NsTDiXMr/19IB2yFHU8CnqcUZQYm4JRcA5MK0Apm80H
-KyjzQFAMG4f6wl/kdzgpNamSEK98j87Y1FtTfHQe9aGCLoU09Nf44ipYEucSi4iv
-anrAaNNql2gcaYWo+A7SZIqukrGyO4bWX2jRao+n/2vfriZVKDujAi2Baa8VfiP3
-AhB+/voA/7SyH+HMAusKJY0zAEbpWncm5eALLTof7yKShVd9p2w9Vuu9X18SQoHX
-xYFYQcCfD6NUdS05ZSkN6KJGYObeZoNORPPDi8drxiNzjygiStAUHYQPx/yQNnB0
-yJQFmDRNsPux33ocH9CW
-=TODb
------END PGP SIGNATURE-----
-
---s3z7h7zyi77hjfec--
+Yeah, I agree.
