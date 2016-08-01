@@ -2,75 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03D5B1F71B
-	for <e@80x24.org>; Mon,  1 Aug 2016 09:54:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 062461F71B
+	for <e@80x24.org>; Mon,  1 Aug 2016 09:57:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752611AbcHAJyV (ORCPT <rfc822;e@80x24.org>);
-	Mon, 1 Aug 2016 05:54:21 -0400
-Received: from mout.gmx.net ([212.227.15.19]:49789 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752168AbcHAJyP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2016 05:54:15 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MBFUT-1bbcAH1oE1-00AE2C; Mon, 01 Aug 2016 11:54:00
- +0200
-Date:	Mon, 1 Aug 2016 11:53:58 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH v5 13/16] merge-recursive: write the commit title in one
- go
-In-Reply-To: <xmqqzip2u2sb.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1608011153310.149069@virtualbox>
-References: <cover.1469187652.git.johannes.schindelin@gmx.de> <cover.1469547160.git.johannes.schindelin@gmx.de> <882273dd0067de30fe4b672050457708d56f317e.1469547160.git.johannes.schindelin@gmx.de> <xmqqzip2u2sb.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1752563AbcHAJyR (ORCPT <rfc822;e@80x24.org>);
+	Mon, 1 Aug 2016 05:54:17 -0400
+Received: from ducie-dc1.codethink.co.uk ([185.25.241.215]:60317 "EHLO
+	ducie-dc1.codethink.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752518AbcHAJyM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2016 05:54:12 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by ducie-dc1.codethink.co.uk (Postfix) with ESMTP id 56250463585;
+	Mon,  1 Aug 2016 10:54:09 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at ducie-dc1.codethink.co.uk
+Received: from ducie-dc1.codethink.co.uk ([127.0.0.1])
+	by localhost (ducie-dc1.codethink.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id rMpL6mKms+BX; Mon,  1 Aug 2016 10:54:07 +0100 (BST)
+Received: from salo (82-70-136-246.dsl.in-addr.zen.co.uk [82.70.136.246])
+	by ducie-dc1.codethink.co.uk (Postfix) with ESMTPSA id 6ACA846053A;
+	Mon,  1 Aug 2016 10:54:07 +0100 (BST)
+Date:	Mon, 1 Aug 2016 10:53:51 +0100
+From:	Richard Ipsum <richard.ipsum@codethink.co.uk>
+To:	Josh Triplett <josh@joshtriplett.org>
+Cc:	Eric Wong <e@80x24.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	git@vger.kernel.org, linux-kernel@vger.kernel.org,
+	dborowitz@google.com, Omar Jarjur <ojarjur@google.com>,
+	Harry Lawrence <hazbo@gmx.com>
+Subject: Re: [ANNOUNCE] git-series: track changes to a patch series over time
+Message-ID: <20160801095351.GA27496@salo>
+References: <20160729064055.GB25331@x>
+ <20160729101011.GA3469@salo>
+ <CAP8UFD12Jk0s0HPPWS3CqFcB37gzhzZZi-V0PfqrRhZO4zhHOA@mail.gmail.com>
+ <20160801075554.GA22222@starla>
+ <20160801085928.lw3ltdksyrjujutu@x>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Cq5F1bfQKbYBqbsLG7aXrigc5cwwz9M8XBy6sCa94QIBoFWeLAb
- /ytPWkIJgPBzqWJzG9yG6k3yi/tFPUYwTlJLGUdWM0UtdBXiq9VdaB8CHNSx1uU6+WyAcDP
- 40lXo3A7l3jSYGMHK74JtaJDBDPCmSQG8LW5mmjYe8wDeuyzq6xCv6xkkO3Qoq604nzpuqa
- OVVTj5L14i3MGZeFb1jCQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:kKzebXJQChY=:JbgR8Y+uK1R26sT5gvnykA
- TmbWG4PezTaFaeuFfzKvthcIBj09POHSozlQCRcwWH44EcPyQAOQPTMomnyZ5s9/vBhU/Ec9E
- IMwtfX+bRkZLLVuHecIhseY+jn3MS+X98Z3vl64EP9+CuCmtQ2muU1bfxBrowWHB2GAsWf1SS
- C2bdUQNzveQbpQYVJxbb3QwkaH5VPiFDi9lbHFfnxEjjmvfGEeDcQCa7GnCchcX8IOmG4C8yJ
- pxC05v12h/AWaOh6X5Ym/7p+RCB3SqFOw83qyy6sMztxm1Oat/R2lhhW3jx7CKU9ezy5ro9d0
- DhNzCQMrkLhF5r1x6ZZDC+mjzK26aTkwyqOTSV2XPISa5Y/bPEnCCqtWTcN4z2hpdKGTxEU6w
- cDquTFnKcxAvKImSAH6KiXnPceUXUgc0BbhyZLxoP3iD1s8CLLnsJ+OvB39+yxigacCn3s7gj
- 1uRJHJ4RCZ3YTj/4WrMQxLFa8I/VAHjfqz9Vv6fZZDNcrFYKhSbwy4eRy7Cz2I0nvritwMxJO
- PsLrtVeOrNir1U1PPveWOIeeGACOCAx8UxUJ6wAgxrDn43J5ijtiJiVJsik7ztGx4jEJRStR/
- 37g8TXZUOBIVng1gX3jbhfDvea6ZoN3YA+TA9nSfVJvBtj09P2aQn5fV0ohku/Sz9TIrzYS0W
- Xeli8jGjZmR1L6QA6wfOq7szbTh119HpJ2BVM3PuuyM0roK3dgwzuFEgQRo/rnvRNtyEeOKnD
- s2/UzkweFc6NKlntQOhZI0rRi9tSQL3H6kC6b5kJnKrpv5n3MZ3VQgfZW3eG15xzzFzj18AQe
- Ve4EHKP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20160801085928.lw3ltdksyrjujutu@x>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
-
-On Wed, 27 Jul 2016, Junio C Hamano wrote:
-
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On Mon, Aug 01, 2016 at 01:59:29AM -0700, Josh Triplett wrote:
+> On Mon, Aug 01, 2016 at 07:55:54AM +0000, Eric Wong wrote:
+[snip]
+> > 
+> > I'm not convinced another format/standard is needed besides the
+> > email workflow we already use for git and kernel development.
 > 
-> > Let's make sure that the same holds true when outputting the commit
-> > title: previously, we used several printf() statements to stdout and
-> > speculated that stdout's buffer is large enough to hold the entire
-> > commit title.
+> Not all projects use a patches-by-email workflow, or want to.  To the
+> extent that tools and projects use some other workflow, standardizing
+> the format they use to store patch reviews (including per-line
+> annotations, approvals, test results, etc) seems preferable to having
+> each tool use its own custom format.
+
+I concur, for better or for worse many projects have abandoned
+mailing lists in favour of github, gerrit, gitlab and the like.
+The problem being, with the exception of gerrit, most of these
+tools store review data in sql databases, which is bad for obvious reasons.
+
 > 
-> s/speculate/assume/; other than that looks very sensible.
+> > I also see the reliance on an after-the-fact search engine
+> > (which can be tuned/replaced) as philosophically inline with
+> > what git does, too, such as not having rename tracking and
+> > doing delayed deltafication.
+> 
+> Storing review data in git doesn't mean it needs to end up in the
+> history of the project itself; it can use after-the-fact annotations on
+> a commit.
 
-Fixed.
-
-Thanks,
-Dscho
+Exactly.
