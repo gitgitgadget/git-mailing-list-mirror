@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
 	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16B5D1F71B
-	for <e@80x24.org>; Mon,  1 Aug 2016 11:43:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 519FD1F71B
+	for <e@80x24.org>; Mon,  1 Aug 2016 11:45:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753291AbcHALnO (ORCPT <rfc822;e@80x24.org>);
-	Mon, 1 Aug 2016 07:43:14 -0400
-Received: from mout.gmx.net ([212.227.17.21]:56255 "EHLO mout.gmx.net"
+	id S1753357AbcHALpM (ORCPT <rfc822;e@80x24.org>);
+	Mon, 1 Aug 2016 07:45:12 -0400
+Received: from mout.gmx.net ([212.227.17.22]:56506 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753087AbcHALnM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2016 07:43:12 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MTjMy-1bucLj4BYO-00QUEw; Mon, 01 Aug 2016 13:36:12
+	id S1753279AbcHALpI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2016 07:45:08 -0400
+Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MJmcS-1bT5B63wLU-00189P; Mon, 01 Aug 2016 13:44:09
  +0200
-Date:	Mon, 1 Aug 2016 13:36:08 +0200 (CEST)
+Date:	Mon, 1 Aug 2016 13:44:08 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
@@ -28,178 +28,130 @@ cc:	Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
 	Duy Nguyen <pclouds@gmail.com>,
 	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: [PATCH v6 00/16] Use merge_recursive() directly in the builtin am
-In-Reply-To: <cover.1469547160.git.johannes.schindelin@gmx.de>
-Message-ID: <cover.1470051326.git.johannes.schindelin@gmx.de>
-References: <cover.1469547160.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v6 05/16] Prepare the builtins for a libified
+ merge_recursive()
+In-Reply-To: <cover.1470051326.git.johannes.schindelin@gmx.de>
+Message-ID: <d3c5678faf46391ce684aa79927a54cf15beea3f.1470051326.git.johannes.schindelin@gmx.de>
+References: <cover.1469547160.git.johannes.schindelin@gmx.de> <cover.1470051326.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:9WcovgPppZkItlckluAFpjc5hbLoZcb0/vYvsxYTcskaQTlGdwa
- L+Thxc2zMH/UvBIXP5iaDi1iV/JmOajnvE2+UIiVXzvqhQrNIdyBuIwOt3ev+D9+cOJCeo6
- ODniQ1+JHl8mL5HPtiHh5XXqjzA4BepKZqDF387ClY58sSW7rOxjoA22J2/2r5FJ8Hcwt6s
- Rnhio7k2UHICksQgRRTrQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:q7nxfWM/Kn4=:vTT7fp01sDb7iEy4VVlw6S
- trFvkAcKpEBR0BILsE6SZVjxZcaJBpoqLYPlDsA/Mm0fG/tADoyRzn6/EzvXmaOwgMWV5gpzD
- 6D2UfWAEEPZgMzWi4bMWhgtKshDjb2ucACeHU1SytN21gVYBigM9hgYdCFCmRKKVMpGXskiwE
- vUeDh2Wz8I90CEWjJ1Itvi08tvQ9HYMRU5srPximJi6KCqp2/F9tNbqBOsWtGYxgFpJdrh6FH
- gBJ/KO/vwKLqOYkcHlnamy1OHWm0LHYlBufq8kJbcCxs+6pbjwfl7cgbAAajymJ3F2wKkPE72
- 0ir8l60qCdcF8uHb2PXiQm76QEhq6uXRxONWpWXaGgMDQTFH/tPlfo9dhTIlJDyVuuT5qLmwP
- aNLfrRpgyh/W9rB2Gl7DxaFRMVkmtVlFLJThmxj5SIqfvtTKOM1A/2hTSd2eZD3ZEBmna9r37
- 81PW+I9dxsX4cqoprr/XKPLAgJnwTFT5uDz4XOdDCHqO0UTla3xkjYIp3K6dcwrfvx+g/u9Bw
- 2ZKjIL75TOsbVVb+0nMpQoD20jekEXX7Zdrvm+WTb1vVIBxtHEyRAFv42eJFUnxSq+qaYqcxu
- CAo+rgMt7E9GnQvR/7f+plyYPGKrf9IcqzW9dNNjaok+1emlslyfBdeDKd5Bgg/xsbgwW9rrD
- zucslZYNFM2C9iVeNgqMQD64LNbKyb0TlgcEKd2ODtPbe/ft3uaMRlnlu55LUP/aKhFrRkvvc
- By6/amGqNWqlF36Czr+GkmCS5wvISIrP8Dvpd14PmwOO3d113+6zPtnNecE9A7ms3QOSwV3O1
- vXRMBm4
+X-Provags-ID: V03:K0:hxlvCAYt8ygceH9YtGiKQA1IaXfT24GAaaWV+U5p4oKvWrOzFQu
+ NuZ0hmCYo6PcIDXhkgIIUi2Jyu7Qwq2YGyEhxVskCyPPZ0EMIkpMWYriHPX5wubZcGARRdG
+ 5n8/QD9M1cjMWQAYWZKKImT1GNMc0P2gs7J1acfg4rYya+kBBAinRZqDL3u1TEu9aRhKct/
+ tu4BgCvdn6j/4xKFasu2w==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:bZfgvjhORQo=:QZUCdwGbra4G3cmYXddnrh
+ 35YpmudoCKzAcJFW1wf7TMzprwV5CuqV77cDy9EzwtBIO9iBTEDknjNAP6S5Q+3Dn65XL3g2n
+ Ph7dii7cWe3mfxxVMPm9RT3qBT8lDUTTjXd4iXDGP/g2Qn6ewDEG28I2Kk+KmgJ76ohyQNGQc
+ 9a7GiOx4xI5USxo2ltxuuHthN8HZe04daYzUk63ceta/tPIe2hHow7CggysMfyG+1oycTMWaV
+ Xvxf0OaETEk1KJUwchXJmsygpR8Z3kV1o8kYACSLU4CbFFDNeE+kGsKk0E7Z8lTZRk7SbaLQ/
+ 5YpnYKwDUqxQdMZlBK0UuKAJKSQoE7YXwyfw6bfvAuPbunnU9Ik0pUXIICKM/b67m7tBX+xpY
+ dDkXqxtY5eXqsau65Sy1nBODtAQsCz4cOm/qdTVjTNMGweTTQiLnvOuW4hvS0dNQ5L/VddqBI
+ 8Iz1S44xbN5OnuOF8m20hTErZK2Gm+b4eJ3buLSMKCHu6aWllOnVjRXh7098JVvGMMClpWHRa
+ 11P63N4iER3PJCaJIFk4Tjfhzt52Fej4EDw06H1LzCDE7SRTPrQEOKWzCBAKZ3iVV+VbRyDck
+ LHArCnVd2cnWPF26CfKkA8gwfrYW1P6E1XMNT4eesvKZbjBiAGHbYDmuYFC4xPRdB9+QK8wJE
+ hR4pPJ53KWleyNwvgbp12/Qv3SR9AE3Ut9QIPid+aAySDRqJKyrxiegBqtM7/2xM9R2x39s4b
+ ksdwmHRiofbXqZa9asyPSTxfAI5ZfA5qiNgvV2XVS6B9hbfdjBayCgguJgWz7aEYGFezs2bHW
+ Hhqe0sk
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-This is the sixth iteration of the long-awaited re-roll of the attempt to
-avoid spawning merge-recursive from the builtin am and use merge_recursive()
-directly instead.
+Previously, callers of merge_trees() or merge_recursive() expected that
+code to die() with an error message. This used to be okay because we
+called those commands from scripts, and had a chance to print out a
+message in case the command failed fatally (read: with exit code 128).
 
-The *real* reason for the reroll is that I need a libified recursive
-merge to accelerate the interactive rebase by teaching the sequencer to
-do rebase -i's grunt work. Coming with a very nice 3x-5x speedup of
-`rebase -i`.
+As scripting incurs its own set of problems (portability, speed,
+idiosynchracies of different shells, limited data structures leading to
+inefficient code), we are converting more and more of these scripts into
+builtins, using library functions directly.
 
-In this endeavor, we need to be extra careful to retain backwards
-compatibility. The test script t6022-merge-rename.sh, for example, verifies
-that `git pull` exits with status 128 in case of a fatal error. To that end,
-we need to make sure that fatal errors are handled by existing (builtin)
-users via exit(128) (or die(), which calls exit(128) at the end).  New users
-(such as a builtin helper doing rebase -i's grunt work) may want to print
-some helpful advice what happened and how to get out of this mess before
-erroring out.
+We already tried to use merge_recursive() directly in the builtin
+git-am, for example. Unfortunately, we had to roll it back temporarily
+because some of the code in merge-recursive.c still deemed it okay to
+call die(), when the builtin am code really wanted to print out a useful
+advice after the merge failed fatally. In the next commits, we want to
+fix that.
 
-The changes relative to the fifth iteration of this patch series:
+The code touched by this commit expected merge_trees() to die() with
+some useful message when there is an error condition, but merge_trees()
+is going to be improved by converting all die() calls to return error()
+instead (i.e. return value -1 after printing out the message as before),
+so that the caller can react more flexibly.
 
-- the commit message that talked about swallowing messages was improved
+This is a step to prepare for the version of merge_trees() that no
+longer dies,  even if we just imitate the previous behavior by calling
+exit(128): this is what callers of e.g. `git merge` have come to expect.
 
-- the va_start()/va_end() statements were moved closer to the vararg usage
+Note that the callers of the sequencer (revert and cherry-pick) already
+fail fast even for the return value -1; The only difference is that they
+now get a chance to say "<command> failed".
 
-- the `buffer_output` field is no longer a bit field because it is now
-  logically more like the verbosity level, which we traditionally keep
-  as a full `int`
+A caller of merge_trees() might want handle error messages themselves
+(or even suppress them). As this patch is already complex enough, we
+leave that change for a later patch.
 
-- the flush_output() call is no longer moved, but instead added to the
-  code path when we return early
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin/checkout.c | 4 +++-
+ builtin/merge.c    | 2 ++
+ sequencer.c        | 4 ++++
+ 3 files changed, 9 insertions(+), 1 deletion(-)
 
-- the commit message saying that we speculated about stdout's buffer
-  size now instead states that we made an assumption
-
-This patch series touches rather important code. I appreciate thorough
-reviews with a focus on the critical parts of the code, those that could
-result in regressions.
-
-
-Johannes Schindelin (16):
-  t5520: verify that `pull --rebase` shows the helpful advice when
-    failing
-  Report bugs consistently
-  Avoid translating bug messages
-  merge-recursive: clarify code in was_tracked()
-  Prepare the builtins for a libified merge_recursive()
-  merge_recursive: abort properly upon errors
-  merge-recursive: avoid returning a wholesale struct
-  merge-recursive: allow write_tree_from_memory() to error out
-  merge-recursive: handle return values indicating errors
-  merge-recursive: switch to returning errors instead of dying
-  am -3: use merge_recursive() directly again
-  merge-recursive: flush output buffer before printing error messages
-  merge-recursive: write the commit title in one go
-  merge-recursive: offer an option to retain the output in 'obuf'
-  Ensure that the output buffer is released after calling merge_trees()
-  merge-recursive: flush output buffer even when erroring out
-
- builtin/am.c           |  62 ++----
- builtin/checkout.c     |   5 +-
- builtin/ls-files.c     |   3 +-
- builtin/merge.c        |   2 +
- builtin/update-index.c |   2 +-
- grep.c                 |   8 +-
- imap-send.c            |   2 +-
- merge-recursive.c      | 578 +++++++++++++++++++++++++++++--------------------
- merge-recursive.h      |   2 +-
- sequencer.c            |   5 +
- sha1_file.c            |   4 +-
- t/t5520-pull.sh        |  32 +++
- trailer.c              |   2 +-
- transport.c            |   2 +-
- wt-status.c            |   4 +-
- 15 files changed, 419 insertions(+), 294 deletions(-)
-
-Published-As: https://github.com/dscho/git/releases/tag/am-3-merge-recursive-direct-v6
-Interdiff vs v5:
-
- diff --git a/merge-recursive.c b/merge-recursive.c
- index 66e93e0..c9e4dbc 100644
- --- a/merge-recursive.c
- +++ b/merge-recursive.c
- @@ -35,21 +35,21 @@ static int err(struct merge_options *o, const char *err, ...)
-  {
-  	va_list params;
-  
- -	va_start(params, err);
-  	if (o->buffer_output < 2)
-  		flush_output(o);
-  	else {
-  		strbuf_complete(&o->obuf, '\n');
-  		strbuf_addstr(&o->obuf, "error: ");
-  	}
- +	va_start(params, err);
-  	strbuf_vaddf(&o->obuf, err, params);
- +	va_end(params);
-  	if (o->buffer_output > 1)
-  		strbuf_addch(&o->obuf, '\n');
-  	else {
-  		error("%s", o->obuf.buf);
-  		strbuf_reset(&o->obuf);
-  	}
- -	va_end(params);
-  
-  	return -1;
-  }
- @@ -2069,16 +2069,18 @@ int merge_recursive(struct merge_options *o,
-  	o->ancestor = "merged common ancestors";
-  	clean = merge_trees(o, h1->tree, h2->tree, merged_common_ancestors->tree,
-  			    &mrtree);
- -	flush_output(o);
- -	if (clean < 0)
- +	if (clean < 0) {
- +		flush_output(o);
-  		return clean;
- +	}
-  
-  	if (o->call_depth) {
-  		*result = make_virtual_commit(mrtree, "merged tree");
-  		commit_list_insert(h1, &(*result)->parents);
-  		commit_list_insert(h2, &(*result)->parents->next);
-  	}
- -	if (o->buffer_output < 2)
- +	flush_output(o);
- +	if (!o->call_depth && o->buffer_output < 2)
-  		strbuf_release(&o->obuf);
-  	if (show(o, 2))
-  		diff_warn_rename_limit("merge.renamelimit",
- diff --git a/merge-recursive.h b/merge-recursive.h
- index 340704c..735343b 100644
- --- a/merge-recursive.h
- +++ b/merge-recursive.h
- @@ -13,7 +13,7 @@ struct merge_options {
-  		MERGE_RECURSIVE_THEIRS
-  	} recursive_variant;
-  	const char *subtree_shift;
- -	unsigned buffer_output : 2; /* 1: output at end, 2: keep buffered */
- +	unsigned buffer_output; /* 1: output at end, 2: keep buffered */
-  	unsigned renormalize : 1;
-  	long xdl_opts;
-  	int verbosity;
-
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 27c1a05..07dea3b 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -567,8 +567,10 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 			o.ancestor = old->name;
+ 			o.branch1 = new->name;
+ 			o.branch2 = "local";
+-			merge_trees(&o, new->commit->tree, work,
++			ret = merge_trees(&o, new->commit->tree, work,
+ 				old->commit->tree, &result);
++			if (ret < 0)
++				exit(128);
+ 			ret = reset_tree(new->commit->tree, opts, 0,
+ 					 writeout_error);
+ 			if (ret)
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 19b3bc2..148a9a5 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -673,6 +673,8 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 		hold_locked_index(&lock, 1);
+ 		clean = merge_recursive(&o, head,
+ 				remoteheads->item, reversed, &result);
++		if (clean < 0)
++			exit(128);
+ 		if (active_cache_changed &&
+ 		    write_locked_index(&the_index, &lock, COMMIT_LOCK))
+ 			die (_("unable to write %s"), get_index_file());
+diff --git a/sequencer.c b/sequencer.c
+index cdfac82..286a435 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -293,6 +293,8 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+ 	clean = merge_trees(&o,
+ 			    head_tree,
+ 			    next_tree, base_tree, &result);
++	if (clean < 0)
++		return clean;
+ 
+ 	if (active_cache_changed &&
+ 	    write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
+@@ -559,6 +561,8 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+ 	if (!opts->strategy || !strcmp(opts->strategy, "recursive") || opts->action == REPLAY_REVERT) {
+ 		res = do_recursive_merge(base, next, base_label, next_label,
+ 					 head, &msgbuf, opts);
++		if (res < 0)
++			return res;
+ 		write_message(&msgbuf, git_path_merge_msg());
+ 	} else {
+ 		struct commit_list *common = NULL;
 -- 
 2.9.0.281.g286a8d9
 
-base-commit: f8f7adce9fc50a11a764d57815602dcb818d1816
+
