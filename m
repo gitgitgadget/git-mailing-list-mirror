@@ -2,167 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 267F62021F
-	for <e@80x24.org>; Tue,  2 Aug 2016 22:46:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14C6E2021F
+	for <e@80x24.org>; Tue,  2 Aug 2016 22:56:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755955AbcHBWpy (ORCPT <rfc822;e@80x24.org>);
-	Tue, 2 Aug 2016 18:45:54 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:37199 "EHLO
-	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755388AbcHBWpt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Aug 2016 18:45:49 -0400
-X-Greylist: delayed 488 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Aug 2016 18:45:42 EDT
-Received: from [10.0.2.15] ([209.93.82.95])
-	by avasout07 with smtp
-	id SNZE1t00223PrXV01NZF7o; Tue, 02 Aug 2016 23:33:16 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=UYYTc+aN c=1 sm=1 tr=0
- a=MrGUH+yfTxdMEvUZuMmDjA==:117 a=MrGUH+yfTxdMEvUZuMmDjA==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=BETnLjAs8_MAruiCruQA:9
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH:	ramsayjones@:2500
-To:	Christian Couder <christian.couder@gmail.com>
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-From:	Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] apply: mark some file-local symbols static
-Message-ID: <a2b34209-2244-d498-6ed2-4f9fbf9f7ed1@ramsayjones.plus.com>
-Date:	Tue, 2 Aug 2016 23:33:11 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+	id S1755979AbcHBWzc (ORCPT <rfc822;e@80x24.org>);
+	Tue, 2 Aug 2016 18:55:32 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59051 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752316AbcHBWza (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2016 18:55:30 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D5622336DA;
+	Tue,  2 Aug 2016 18:52:35 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=d
+	a5e/Ny0gmV4ldTrwmiXO5ubPQI=; b=Tc02tMkxzgxeh9lCnPO410L3GeMODzH1h
+	MT9Ik0+QQ9dyBFCyMEKd5qbiAkyYQx9w6MP6+0L2OBCRnyM1UWFydKj9orb9w0iK
+	KAkSp2CxglSlzXF0e51ke2L/d9WLIz0on2f59FZDDBQmoh7Bi1c6vCDR46IihCr1
+	Kuuo8ea+U8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=QYz5A8gx+aJCop8ObqEzRG3svpbsfYm1zxwKi/awfc+CcrooF5xZ6Kb2
+	lTWuzpQe4lhnbi4NgHbqloIJoSqDayVAwmtU4OTaPh2ougHZmaSfS08FLeasPIoI
+	roKBEr10x2eWrFypaOoDsismWJFshOmVMUm8Mvt9LZ9rFbTEdEQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CDFFF336D9;
+	Tue,  2 Aug 2016 18:52:35 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 522A6336D8;
+	Tue,  2 Aug 2016 18:52:35 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	git@vger.kernel.org
+Cc:	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH] hashmap: clarify that hashmap_entry can safely be discarded
+Date:	Tue, 02 Aug 2016 15:52:33 -0700
+Message-ID: <xmqq8twebx72.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: CDC643F2-5903-11E6-AE90-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+The API documentation said that the hashmap_entry structure to be
+embedded in the caller's structure is to be treated as opaque, which
+left the reader wondering if it can safely be discarded when it no
+longer is necessary.  If the hashmap_entry structure had references
+to external resources such as allocated memory or an open file
+descriptor, merely free(3)ing the containing structure (when the
+caller's structure is on the heap) or letting it go out of scope
+(when it is on the stack) would end up leaking the external
+resource.
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Document that there is no need for hashmap_entry_clear() that
+corresponds to hashmap_entry_init() to give the API users a little
+bit of peace of mind.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
 
-Hi Christian,
+ * As I wrote the text already, I thought I'd follow-up with a log
+   message, too.
 
-I had intended to ask you to squash this into your 'cc/apply-am'
-branch, specifically commit 4d18b33a (apply: move libified code
-from builtin/apply.c to apply.{c,h}, 30-07-2016).
+ Documentation/technical/api-hashmap.txt | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-However, having read that commit a little closer, it seems that
-you deliberately made these symbols public. The commit message
-does not mention this issue at all, and it is not clear to me
-why these symbols should be public.
-
-What am I missing?
-
-ATB,
-Ramsay Jones
-
-
- apply.c | 26 +++++++++++++-------------
- apply.h | 14 --------------
- 2 files changed, 13 insertions(+), 27 deletions(-)
-
-diff --git a/apply.c b/apply.c
-index 96f02fa..ec545f6 100644
---- a/apply.c
-+++ b/apply.c
-@@ -4743,16 +4743,16 @@ static int apply_patch(struct apply_state *state,
- 	return res;
- }
+diff --git a/Documentation/technical/api-hashmap.txt b/Documentation/technical/api-hashmap.txt
+index ad7a5bd..28f5a8b 100644
+--- a/Documentation/technical/api-hashmap.txt
++++ b/Documentation/technical/api-hashmap.txt
+@@ -104,6 +104,11 @@ If `free_entries` is true, each hashmap_entry in the map is freed as well
+ `entry` points to the entry to initialize.
+ +
+ `hash` is the hash code of the entry.
+++
++The hashmap_entry structure does not hold references to external resources,
++and it is safe to just discard it once you are done with it (i.e. if
++your structure was allocated with xmalloc(), you can just free(3) it,
++and if it is on stack, you can just let it go out of scope).
  
--int apply_option_parse_exclude(const struct option *opt,
--			       const char *arg, int unset)
-+static int apply_option_parse_exclude(const struct option *opt,
-+				      const char *arg, int unset)
- {
- 	struct apply_state *state = opt->value;
- 	add_name_limit(state, arg, 1);
- 	return 0;
- }
+ `void *hashmap_get(const struct hashmap *map, const void *key, const void *keydata)`::
  
--int apply_option_parse_include(const struct option *opt,
--			       const char *arg, int unset)
-+static int apply_option_parse_include(const struct option *opt,
-+				      const char *arg, int unset)
- {
- 	struct apply_state *state = opt->value;
- 	add_name_limit(state, arg, 0);
-@@ -4760,9 +4760,9 @@ int apply_option_parse_include(const struct option *opt,
- 	return 0;
- }
- 
--int apply_option_parse_p(const struct option *opt,
--			 const char *arg,
--			 int unset)
-+static int apply_option_parse_p(const struct option *opt,
-+				const char *arg,
-+				int unset)
- {
- 	struct apply_state *state = opt->value;
- 	state->p_value = atoi(arg);
-@@ -4770,8 +4770,8 @@ int apply_option_parse_p(const struct option *opt,
- 	return 0;
- }
- 
--int apply_option_parse_space_change(const struct option *opt,
--				    const char *arg, int unset)
-+static int apply_option_parse_space_change(const struct option *opt,
-+					   const char *arg, int unset)
- {
- 	struct apply_state *state = opt->value;
- 	if (unset)
-@@ -4781,8 +4781,8 @@ int apply_option_parse_space_change(const struct option *opt,
- 	return 0;
- }
- 
--int apply_option_parse_whitespace(const struct option *opt,
--				  const char *arg, int unset)
-+static int apply_option_parse_whitespace(const struct option *opt,
-+					 const char *arg, int unset)
- {
- 	struct apply_state *state = opt->value;
- 	state->whitespace_option = arg;
-@@ -4791,8 +4791,8 @@ int apply_option_parse_whitespace(const struct option *opt,
- 	return 0;
- }
- 
--int apply_option_parse_directory(const struct option *opt,
--				 const char *arg, int unset)
-+static int apply_option_parse_directory(const struct option *opt,
-+					const char *arg, int unset)
- {
- 	struct apply_state *state = opt->value;
- 	strbuf_reset(&state->root);
-diff --git a/apply.h b/apply.h
-index 66ed0c5..010726e 100644
---- a/apply.h
-+++ b/apply.h
-@@ -107,20 +107,6 @@ struct apply_state {
- 	int applied_after_fixing_ws;
- };
- 
--extern int apply_option_parse_exclude(const struct option *opt,
--				      const char *arg, int unset);
--extern int apply_option_parse_include(const struct option *opt,
--				      const char *arg, int unset);
--extern int apply_option_parse_p(const struct option *opt,
--				const char *arg,
--				int unset);
--extern int apply_option_parse_whitespace(const struct option *opt,
--					 const char *arg, int unset);
--extern int apply_option_parse_directory(const struct option *opt,
--					const char *arg, int unset);
--extern int apply_option_parse_space_change(const struct option *opt,
--					   const char *arg, int unset);
--
- extern int apply_parse_options(int argc, const char **argv,
- 			       struct apply_state *state,
- 			       int *force_apply, int *options,
 -- 
-2.9.0
+2.9.2-708-gdb68231
 
