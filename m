@@ -6,67 +6,78 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F7732021F
-	for <e@80x24.org>; Tue,  2 Aug 2016 20:26:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E6B02021F
+	for <e@80x24.org>; Tue,  2 Aug 2016 21:00:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933192AbcHBU0G (ORCPT <rfc822;e@80x24.org>);
-	Tue, 2 Aug 2016 16:26:06 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63978 "EHLO
+	id S1757107AbcHBVA2 (ORCPT <rfc822;e@80x24.org>);
+	Tue, 2 Aug 2016 17:00:28 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63626 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933179AbcHBU0B (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Aug 2016 16:26:01 -0400
+	with ESMTP id S1757145AbcHBVAT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2016 17:00:19 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8BC3A335D2;
-	Tue,  2 Aug 2016 16:25:59 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B992A317AE;
+	Tue,  2 Aug 2016 17:00:17 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aSX0Eykz7C9AFZcTiGWpL+Y6MHs=; b=UOhXUh
-	6OAvMwu5ENwoZM+eI+4J17BDy/fmtS+eT7Jfzc46MC601wagrKsDPc6navpl03Z5
-	bXhdzslNymuOorY2KCl1nhpr8BIIxfFeEzlSmw9vB7PQSZG2f/k32V1xZ3efTm4R
-	yx4MpkdLW5bPE4xD/DkU2SA1Fri2ei7h6sTsA=
+	:content-type; s=sasl; bh=/FMOdOsGW1xHRIxRYpeEf2akrCY=; b=ISrY1G
+	t+442NXSopKXQ+S+Yygb0OP0H7eG8tjT30IjME56N6t3VpDGuUTwRfP1zDNm6zXJ
+	SHPplGeW1e4IPO75GHW8bD5ik+GCHoqUnLNPrcVJPyPsRD5MS4DM/cQJcUSIgCBn
+	UcD5E9TIMbm3XpuWu2Cjcg4rJnRazWx7k+piw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PQaQ+qBJZCmyag/ulZUfUsQ+gwjVITvc
-	sES0lP4MXhd4F5EgNVrWfdfu+MeTRhNiGRecrE+k/P4Ght4sPgbz9vhLy4xYi8Pb
-	YGBMb015FKvwy8uoIXG1FLYFG9WqAHlVSc7XXUQJReDdJWe24gUTUA48bf9CZP8b
-	PeFayiBpbCE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 84F85335D1;
-	Tue,  2 Aug 2016 16:25:59 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=SmBMcePqqzpC3BRPy4AvVh06s2lo9D+m
+	e1aMO+snu0R+u7Ay3X6HDIuZtvdSHr3Lbizvw6+oueCvt53POLgxOGtVUSYwqsAl
+	Rwbaqm0JaOB2doY6BtsFpYeZlQSEprVbUxcMUomp5nP6mFyQqiR/+rajYLZccf1i
+	NxDsLu6RCZU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B04E9317AD;
+	Tue,  2 Aug 2016 17:00:17 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0B33E335D0;
-	Tue,  2 Aug 2016 16:25:58 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 34161317AC;
+	Tue,  2 Aug 2016 17:00:17 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-To:	Pranit Bauva <pranit.bauva@gmail.com>
-Cc:	git@vger.kernel.org
-Subject: Re: [RFC/PATCH v11 09/13] bisect--helper: `bisect_write` shell function in C
-References: <0102015640423c26-2060fd70-c90d-4de3-ae8c-1801ad160b1c-000000@eu-west-1.amazonses.com>
-	<0102015640423cf7-078bef36-54e8-4200-9097-17d95d4f3c40-000000@eu-west-1.amazonses.com>
-Date:	Tue, 02 Aug 2016 13:25:57 -0700
-In-Reply-To: <0102015640423cf7-078bef36-54e8-4200-9097-17d95d4f3c40-000000@eu-west-1.amazonses.com>
-	(Pranit Bauva's message of "Sun, 31 Jul 2016 09:21:38 +0000")
-Message-ID: <xmqqmvkudiju.fsf@gitster.mtv.corp.google.com>
+To:	Oleg Taranenko <olegtaranenko@gmail.com>
+Cc:	git <git@vger.kernel.org>
+Subject: Re: git bisect for reachable commits only
+References: <CABEd3j8VLbpeWbA6BfHYp5aLPEy0PesqYoHM9u4OM=b7Qm=LDg@mail.gmail.com>
+	<xmqqinvonwxc.fsf@gitster.mtv.corp.google.com>
+	<CABEd3j-MW--YSC9=nwcgHzxd6cqmUY+ky3-wLxMiMmbBGsvS7Q@mail.gmail.com>
+	<CABEd3j--sxCwv6fWmNxTtdpgwU0_YKbfiFONX6TsQFZGn79yuQ@mail.gmail.com>
+	<CAP8UFD118RdB5dX2-wEm5VnKud7sirHhdC9kvWmXV0eAQHvfsA@mail.gmail.com>
+	<xmqq7fc0jmhx.fsf@gitster.mtv.corp.google.com>
+	<CAP8UFD315CgntwYiC9g-R7KN0XiL9635Vwv_y8yi4n-uj8o90A@mail.gmail.com>
+	<xmqqwpk0f5jr.fsf@gitster.mtv.corp.google.com>
+	<CABEd3j_6DNgs1u5AdkkzWt7U=J2fZ4a-2jewVjkfExt0KPvWiQ@mail.gmail.com>
+Date:	Tue, 02 Aug 2016 14:00:15 -0700
+In-Reply-To: <CABEd3j_6DNgs1u5AdkkzWt7U=J2fZ4a-2jewVjkfExt0KPvWiQ@mail.gmail.com>
+	(Oleg Taranenko's message of "Tue, 2 Aug 2016 12:15:06 +0200")
+Message-ID: <xmqqinvidgyo.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 52C680B8-58EF-11E6-9E5D-89D312518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 1D8A48F8-58F4-11E6-8F59-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Pranit Bauva <pranit.bauva@gmail.com> writes:
+Oleg Taranenko <olegtaranenko@gmail.com> writes:
 
-> Reimplement the `bisect_write` shell function in C and add a
-> `bisect-write` subcommand to `git bisect--helper` to call it from
-> git-bisect.sh
+> First, assuming the common ancestor is GOOD based on the fact that
+> some descendant given as GOOD is pretty bad idea.
 
-Up to around this step we've seen these patches well enough and I
-think with another reroll or two, they are in good enough shape to
-be split out and frozen for 'next'.  We may not be there quite yet,
-but I think we are getting pretty close.
+What you claim is fundamentally incompatible with the way "bisect"
+works as a O(log(n)) operation.  It is likely that your definition
+of Good for the purpose of your bug-hunting needs to be rethought if
+you want to take advantage of "bisect".
 
-Thanks.
+> I have another request to get git bisect more user-friendly, regarding
+> rolling back last step or steps, if accidentally 'git bisect bad' or
+> 'good' was wrong entered, but I think it worth for another thread.
 
+Are you aware that you can check $GIT_DIR/BISECT_LOG and replay it
+to recreate any previous state of the bisection?  That would
+probably help.
