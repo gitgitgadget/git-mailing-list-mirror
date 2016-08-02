@@ -2,118 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 859411F71B
-	for <e@80x24.org>; Tue,  2 Aug 2016 15:22:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 261B21F71B
+	for <e@80x24.org>; Tue,  2 Aug 2016 15:38:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967153AbcHBPVz (ORCPT <rfc822;e@80x24.org>);
-	Tue, 2 Aug 2016 11:21:55 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:36391 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S967040AbcHBPVt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Aug 2016 11:21:49 -0400
-Received: by mail-wm0-f65.google.com with SMTP id x83so31444767wma.3
-        for <git@vger.kernel.org>; Tue, 02 Aug 2016 08:20:03 -0700 (PDT)
+	id S934904AbcHBPiO (ORCPT <rfc822;e@80x24.org>);
+	Tue, 2 Aug 2016 11:38:14 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:34919 "EHLO
+	mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934886AbcHBPh7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2016 11:37:59 -0400
+Received: by mail-lf0-f68.google.com with SMTP id l89so10323989lfi.2
+        for <git@vger.kernel.org>; Tue, 02 Aug 2016 08:37:19 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=k+M0ajjiAF3I7aJNdyHGMJx2hU98ZPWjpH90sLOYrKI=;
-        b=qqNgLcoYVLRt4WkVuI7CqzKPyV6UaqF1/ctxotq+NqJGAYJU63MJu6SEDG07C1FUGd
-         skSZZ+YCBjIRc6W3GZRxJE6ZNX+ZOsVk8QDY0yiofDTN1r3DKevf3qzeQEHnFufl0YwQ
-         TNHmuMPI2y4AVWa9WLRf+M7P9201++KDwj91hVUBz8u9eenWMWuqxwpzUI2Zg+cxSHT2
-         BPmhFZhVCo1vbdORbK5JLXioWvh7pmqEpLxoXOaxjt8NNkNNRTIfLLoCvoQaZiuQXgp4
-         qxBY9gYFxp6ckKhOsCycsydPNCqcPT5oiOfxnHK38zHjdKzcbsFfofiZbC4UQaZx63pd
-         Ggmw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=kSpMGe6OjRn5zec4gyDcSJi0UrGyZlwMvvfdS1B4nL4=;
+        b=hhn8EMVh90slmupAcXV9N/CmwSmnwAH1o3HcxhFBqf2qMlI3G2rCK1Xh3siceDscFS
+         Jzt8aWaOyD96yGgowW7uvB2KgaT1Dq3Nn42nW/YBDe8xJri8M4tUPGrfc08Iu1IYySdU
+         Wbm853lsBAChJmPO/lG5b9obZC6qBof+SMP2GJTiS4ewNer9iSp8tl8+70U8tFxFGUzk
+         jjHOQMSCxERPvFuI40vBPwvhzj0FnbrukPUVCIib8+Ko+FXA47vsdXUe9gDvHTzHF9+S
+         hcF71ScKLna+yRHGHEIEMV52Y0gjeQaPXbLwBiMS3SEw14DhRn0XmvAh34xSfZ00Unl4
+         EzJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding;
-        bh=k+M0ajjiAF3I7aJNdyHGMJx2hU98ZPWjpH90sLOYrKI=;
-        b=N1KVDqbk3wGJx3EebwIKHBrWPiqZeKUIJOqLgAvl73kLKqGWiRtGouim3Wye4q6SB0
-         nSrVb4vv3lsIrAM8Vd9LhS/JMDuQrot/b4dssWSNHQIH99vJLYNIA5MkgrW4EklHncUN
-         qSSnlql2OYBq57pF4pS2tUfFSh3saqG+Rxn1AoTVhR6IpBtdhL5idb6M1q8+tKCvPZQf
-         P/qk9hyIFjCipkt0Dp2ioWiEcExVjX2WGJ/Zy0sOb7TbDXw52wnt9XxVUViKaqRul0V/
-         t8SzQCiEAdd5sORYpacCvob1mhqUrJiIMKyfqCeN5gmlQ4eYdZJzxOp7IUbOUHO+BHvW
-         sZfQ==
-X-Gm-Message-State: AEkooutg6M061YPpalCn2/QNfOCofS7Qq1wvFegPt5bnQvl0R0V/PmJzdnNFitNNXqrvAg==
-X-Received: by 10.194.133.104 with SMTP id pb8mr56569160wjb.139.1470151202513;
-        Tue, 02 Aug 2016 08:20:02 -0700 (PDT)
-Received: from [192.168.1.26] (els92.neoplus.adsl.tpnet.pl. [83.21.212.92])
-        by smtp.googlemail.com with ESMTPSA id wc3sm3098557wjc.47.2016.08.02.08.20.01
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=kSpMGe6OjRn5zec4gyDcSJi0UrGyZlwMvvfdS1B4nL4=;
+        b=O+egBlGXM378y7o/wd3dgSujDHMWWPnYkI6kdxx+hE1lWkgX3SVm4hTOEhi6XN+wvm
+         DTvkomISZOVdK7ErVnwNKWG1jY53EGK3H4TFKjhNLRe6rt5PLpFqBDv4mjYI4xILnA/R
+         BhKzz+laLVWqiUUuxT0fOtf+Wje4tuIMZCEPy2Upns0z2kqeLnfLBOi+EOn6W/kw0ZVU
+         fug1c/iKxL5bFGjlFDE+IRWrNc1HPgl/1RJVA0ZzTn90YPSt1GDFWd0pEVfY5KOJnder
+         HGQRM4XT0d4gRfI0NowMHwJYc3dcHTpjt2h4NSUDNIRZinX9TeLU4IxVddOUpVzIacuJ
+         peeA==
+X-Gm-Message-State: AEkoouvey8TEoc/aHc4kJkhTiNiT9FxLP+sN+DI2KmjyKNQwU5C2NDG624+bSuySIpEkow==
+X-Received: by 10.46.32.68 with SMTP id g65mr19420543ljg.51.1470152238244;
+        Tue, 02 Aug 2016 08:37:18 -0700 (PDT)
+Received: from duynguyen (10.219.241.83.in-addr.dgcsystems.net. [83.241.219.10])
+        by smtp.gmail.com with ESMTPSA id 205sm588654ljj.47.2016.08.02.08.37.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 02 Aug 2016 08:20:01 -0700 (PDT)
-Subject: Re: [PATCH v3 7/8] status: update git-status.txt for --porcelain=v2
-To:	Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org
-References: <1469567483-58794-1-git-send-email-git@jeffhostetler.com>
- <1469567483-58794-8-git-send-email-git@jeffhostetler.com>
- <fe5d1dd7-11da-e09b-5880-cf103e34fb9a@gmail.com>
- <579F6D3A.3010704@jeffhostetler.com>
-Cc:	gitster@pobox.com, Johannes.Schindelin@gmx.de,
-	Jeff Hostetler <jeffhost@microsoft.com>
-Newsgroups: gmane.comp.version-control.git
-From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <4afec4ce-ecb4-dcce-b8f5-c37844d963d8@gmail.com>
-Date:	Tue, 2 Aug 2016 17:19:39 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        Tue, 02 Aug 2016 08:37:17 -0700 (PDT)
+Date:	Tue, 2 Aug 2016 17:37:15 +0200
+From:	Duy Nguyen <pclouds@gmail.com>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Torstem =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"e@80x24.org" <e@80x24.org>
+Subject: Re: [PATCH] t7063: work around FreeBSD's lazy mtime update feature
+Message-ID: <20160802153715.GA25286@duynguyen>
+References: <20160718223038.GA66056@plume>
+ <20160730182005.14426-1-pclouds@gmail.com>
+ <6955746D-E47E-4BB8-AB0E-44D461E67AD6@web.de>
+ <CACsJy8D=dZeE1tLFRaCefkkNX8dHQfTL134Nv--5=BXvnUm1ZQ@mail.gmail.com>
+ <xmqq4m74i4k3.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-In-Reply-To: <579F6D3A.3010704@jeffhostetler.com>
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq4m74i4k3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-W dniu 01.08.2016 o 17:39, Jeff Hostetler pisze:
-> On 07/30/2016 01:22 PM, Jakub Narębski wrote:
->> W dniu 26.07.2016 o 23:11, Jeff Hostetler pisze:
->>
->> This is a nice change, available because of lack of backward
->> compatibility with v1.  The porcelain v2 format branch-related
->> information could be enhanced without risk of breaking parsers,
->> or having new information put at the end even if it does not fit
->> there (like in previous iteration).
->>
->> One thing that can serve as goal for the series is using the
->> question: would it make __git_ps1() from git-prompt.sh be able
->> to render fully decorated prompt with all bells and whistles,
->> and with all combinations of options.  Thus beside upstream
->> in the future we might want SVN upstream, and/or pushed-to
->> remote branch (and remote push upstream repository), etc.
->>
->> But that's for the future (and it is possible for the future)...
->>
+On Mon, Aug 01, 2016 at 02:04:44PM -0700, Junio C Hamano wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
 > 
-> Yes, I was hoping to be able to simplify and/or speed up
-> __git_ps1() with this data.  "Namespacing" the branch data
-> here.  And then later add the state data (in a merge,
-> in a rebase, and etc.) in a series of "# state.*" headers.
-> And so on, until we get everything that __git_ps1() needs.
-> However, to really make that work, we might want to add
-> a --no-scan (or minimial scan) option, to just return the
-> header data, since __git_ps1() doesn't care about the list
-> of changes.
+> > On Mon, Aug 1, 2016 at 3:37 AM, Torstem B�gershausen <tboegi@web.de> wrote:
+> >> the term FREEBSD may be too generic to point out a single feature
+> >> in an OS distributution.
+> >> Following your investigations, it may even be possible that
+> >> other systems adapt this "feature"?
+> >>
+> >> How about
+> >> LAZY_DIR_MTIME_UPDATE
+> >> (or similar)
+> >
+> > This feature was added in 1998, so yes there's a chance it has spread
+> > to a few fbsd derivatives (not sure if openbsd or netbsd is close
+> > enough and they ever exchange changes). But I'd rather wait for the
+> > second OS to expose the same feature before renaming it.
+> 
+> I think a name based on the observed behaviour ("feature") would be
+> more appropriate because I'd be more worried about us finding other
+> glitches we see (initially) only on FBSD.  People who need to adjust
+> tests that use the same FBSD prereq would have to wonder which
+> prereq-skip is due to which glitch.
 
-But __git_ps1() with GIT_PS1_SHOWDIRTYSTATE would want to know
-if there are unstaged and staged changes, and with
-GIT_PS1_SHOWUNTRACKEDFILES it would want to know if there
-are untracked (unknown) files, isn't it?
+OK how about this squashed in? The name was taken from fbsd definition
+IN_LAZYMOD.
 
-And GIT_PS1_SHOWSTASHSTATE would want to know if there is
-something stashed, but I guess it is outside the remit of
-git-status...
+Off topic. Since I found this macro defined twice, in ext2 and ufs,
+but not in zfs (found its source!), I assume zfs does not have this
+particular feature (but I didn't test it). Untracked cache may be more
+effecient there.
+
+-- 8< --
+diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+index 08fc586..8bb048a 100755
+--- a/t/t7063-status-untracked-cache.sh
++++ b/t/t7063-status-untracked-cache.sh
+@@ -419,7 +419,7 @@ test_expect_success 'create/modify files, some of which are gitignored' '
+ 	rm base
+ '
  
-Also, __git_ps1() uses colors from git-status, so if it
-is switched to use --porcelain=v2, then there should be an
-option to turn the color on, isn't it?
+-test_expect_success FREEBSD 'Work around lazy mtime update' '
++test_expect_success LAZYMOD 'Work around lazy mtime update' '
+ 	ls -ld . >/dev/null
+ '
+ 
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 3c730a2..1fc5266 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -962,7 +962,7 @@ case $(uname -s) in
+ 	test_set_prereq GREP_STRIPS_CR
+ 	;;
+ *FreeBSD*)
+-	test_set_prereq FREEBSD
++	test_set_prereq LAZYMOD
+ 	test_set_prereq POSIXPERM
+ 	test_set_prereq BSLASHPSPEC
+ 	test_set_prereq EXECKEEPSPID
+-- 8< --
 
--- 
-Jakub Narębski
-
+--
+Duy
