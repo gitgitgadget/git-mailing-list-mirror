@@ -2,111 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6E892021F
-	for <e@80x24.org>; Tue,  2 Aug 2016 22:26:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DF262021F
+	for <e@80x24.org>; Tue,  2 Aug 2016 22:29:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756107AbcHBW0Y (ORCPT <rfc822;e@80x24.org>);
-	Tue, 2 Aug 2016 18:26:24 -0400
-Received: from smtprelay0250.hostedemail.com ([216.40.44.250]:46224 "EHLO
-	smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753011AbcHBW0W (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Aug 2016 18:26:22 -0400
-Received: from filter.hostedemail.com (unknown [216.40.38.60])
-	by smtprelay06.hostedemail.com (Postfix) with ESMTP id 976CC9EA11;
-	Tue,  2 Aug 2016 22:26:20 +0000 (UTC)
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-HE-Tag: day67_714b6d0619316
-X-Filterd-Recvd-Size: 3374
-Received: from XPS-9350.home (unknown [96.251.125.34])
-	(Authenticated sender: joe@perches.com)
-	by omf11.hostedemail.com (Postfix) with ESMTPA;
-	Tue,  2 Aug 2016 22:26:18 +0000 (UTC)
-Message-ID: <1470176777.3998.203.camel@perches.com>
-Subject: Re: get_maintainer.pl and .mailmap entries with more than 2
- addresses
-From:	Joe Perches <joe@perches.com>
-To:	Florian Mickler <florian@mickler.org>
-Cc:	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	LKML <linux-kernel@vger.kernel.org>, git <git@vger.kernel.org>,
-	mchehab@s-opensource.com
-Date:	Tue, 02 Aug 2016 15:26:17 -0700
-In-Reply-To: <6A56763C-D795-4943-AFE9-8A53ECD61AF6@mickler.org>
-References: <1470155781.3998.181.camel@perches.com>
-	 <6A56763C-D795-4943-AFE9-8A53ECD61AF6@mickler.org>
-Content-Type: text/plain; charset="ISO-8859-1"
-X-Mailer: Evolution 3.18.5.2-0ubuntu3 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+	id S1754593AbcHBW32 (ORCPT <rfc822;e@80x24.org>);
+	Tue, 2 Aug 2016 18:29:28 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63619 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754533AbcHBW30 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2016 18:29:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 155C933462;
+	Tue,  2 Aug 2016 18:28:25 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Xedptgw2bf0puXpOqRpELAr0KtM=; b=jqm0U4
+	5CWAPA6wuQNzkPGASAJSMVAErtP+Sc1eV1bRGxGR3gOK8z6339K2e8l05LtjYStB
+	aazL5mRtbGg9LvHFfff/hOP2u8SU2tq+jIrPEOm89jFugAa4lSWsxPxg2nPmIvmZ
+	99kQ2v1oln/XSZlDH2p6GzP99nC2RM4rt6XB4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PeUO9+0w56ex70Ah7rtUP/FKVs5mZtl5
+	1Y3vsIyRPMf3KmniEP+rikyPjtehx5VYTwwoH3R80zXZhXra3lhxfHnobpCw+Dv2
+	+BK+K1Y+BODWZPRGIsEqUl05DoxmkHR17Vg8TCeqYglEqPsgKuJyDvU6ioJ6Pz2B
+	xoGg9p2NEgg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0BC5733461;
+	Tue,  2 Aug 2016 18:28:25 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7EA9033460;
+	Tue,  2 Aug 2016 18:28:24 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH v6 06/16] merge_recursive: abort properly upon errors
+References: <cover.1469547160.git.johannes.schindelin@gmx.de>
+	<cover.1470051326.git.johannes.schindelin@gmx.de>
+	<8ff71aba37be979f05abf88f467ec932aa522bdd.1470051326.git.johannes.schindelin@gmx.de>
+	<xmqqlh0gjpr6.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1608021004080.79248@virtualbox>
+Date:	Tue, 02 Aug 2016 15:28:22 -0700
+In-Reply-To: <alpine.DEB.2.20.1608021004080.79248@virtualbox> (Johannes
+	Schindelin's message of "Tue, 2 Aug 2016 10:12:29 +0200 (CEST)")
+Message-ID: <xmqqd1lqbybd.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6D0573C4-5900-11E6-8D20-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, 2016-08-03 at 00:17 +0200, Florian Mickler wrote:
-> cc'd mchehab@s-opensource.com  (Mauro, is your kernel.org address up?)
-> 
->  Am Tue, 02 Aug 2016 09:36:21 -0700
-> schrieb Joe Perches <joe@perches.com>:
-> 
-> > 
-> > Hello Florian.
-> > There is at least an oddity with get_maintainer handling of a
-> > .mailmap entry form.
-> > 
-> > For instance:
-> > 
-> > Mauro's .mailmap entry is:
-> > Mauro Carvalho Chehab <mchehab@kernel.org> <maurochehab@gmail.com>
-> > <mchehab@infradead.org> <mchehab@redhat.com> <m.chehab@samsung.com>
-> > <mchehab@osg.samsung.com> <mchehab@s-opensource.com>
-> > 
-> > Is this a valid form?
-> > 
-> > get_maintainer output for Mauro is:
-> > 
-> > $ ./scripts/get_maintainer.pl drivers/media/ -f
-> > Mauro Carvalho Chehab <mchehab@kernel.org> <maurochehab@gmail.com>
-> > <mchehab@infradead.org> <mchehab@redhat.com> <m.chehab@samsung.com>
-> > <mchehab@osg.samsung.com> (maintainer:MEDIA INPUT INFRASTRUCTURE
-> > (V4L/DVB))
-> > 
-> > I believe the Mauro's and Shuah's .mailmap entries are improper and
-> > should be changed, but I'm not completely aware of git .mailmap
-> > handling and the documentation seems weakly specified.
-> > 
-> Hmm.. looking at Mauros last .mailmap commit it seems like your patch is
-> ok for Mauro. 
-> 
-> Although <mywing81@gmail.com> and <mchehab@brturbo.com.br> are probably
-> missing? (@Mauro) 
-> 
-> 
-> $ git shortlog | grep "^Mauro C"
-> Mauro Carvalho Chehab (4404):
-> $ git log | grep "^Author:.*Mauro Carvalho Chehab" | sort | uniq -c
->       2 Author: Mauro Carvalho Chehab <maurochehab@gmail.com>
->     146 Author: Mauro Carvalho Chehab <mchehab@brturbo.com.br>
->     645 Author: Mauro Carvalho Chehab <mchehab@infradead.org>
->     794 Author: Mauro Carvalho Chehab <mchehab@osg.samsung.com>
->    2015 Author: Mauro Carvalho Chehab <mchehab@redhat.com>
->     448 Author: Mauro Carvalho Chehab <m.chehab@samsung.com>
->     353 Author: Mauro Carvalho Chehab <mchehab@s-opensource.com>
->       1 Author: Mauro Carvalho Chehab <mywing81@gmail.com>
-> 
-> 
-> 
-> Anyway, from a technical viewpoint your patches seem to fix
-> the .mailmap entry as the author intended. (See Junio's Email for the
-> documantation part) 
-> But I would wait for the ack from Mauro and Shuah. 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-As far as I understand, a single entry with just their
-name and preferred email address would work too because
-the name parts are all spelled identically.
+> I tend to think that the underscore is correct: this change is not so much
+> about the builtin (which is written with a dash) but about the function
+> (written with an underscore, used by more than just merge-recursive, e.g.
+> cherry-pick).
 
+Yes, I agree.  "merge-recursive:" prefix is about either the
+built-in command, or the machinery as a whole to support that
+built-in command.  It is preferrable to use "merge_recursive():"
+if we are talking about a single function.
 
+Thanks.
