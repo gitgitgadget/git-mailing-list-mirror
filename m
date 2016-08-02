@@ -6,28 +6,28 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0AB321F71B
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B03E1F955
 	for <e@80x24.org>; Tue,  2 Aug 2016 14:16:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752677AbcHBOPy (ORCPT <rfc822;e@80x24.org>);
-	Tue, 2 Aug 2016 10:15:54 -0400
-Received: from siwi.pair.com ([209.68.5.199]:12880 "EHLO siwi.pair.com"
+	id S1756115AbcHBOP5 (ORCPT <rfc822;e@80x24.org>);
+	Tue, 2 Aug 2016 10:15:57 -0400
+Received: from siwi.pair.com ([209.68.5.199]:12873 "EHLO siwi.pair.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755740AbcHBOP0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Aug 2016 10:15:26 -0400
+	id S1755721AbcHBOPZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2016 10:15:25 -0400
 Received: from jeffhost-linux1.corp.microsoft.com (unknown [167.220.148.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by siwi.pair.com (Postfix) with ESMTPSA id B2D358464B;
+	by siwi.pair.com (Postfix) with ESMTPSA id 67E6A8464A;
 	Tue,  2 Aug 2016 10:15:05 -0400 (EDT)
 From:	Jeff Hostetler <git@jeffhostetler.com>
 To:	git@vger.kernel.org
 Cc:	gitster@pobox.com, Johannes.Schindelin@gmx.de,
 	Jeff Hostetler <jeffhost@microsoft.com>,
 	Jeff Hostetler <git@jeffhostetler.com>
-Subject: [PATCH v4 6/8] status: print branch info with --porcelain=v2 --branch
-Date:	Tue,  2 Aug 2016 10:12:15 -0400
-Message-Id: <1470147137-17498-7-git-send-email-git@jeffhostetler.com>
+Subject: [PATCH v4 5/8] status: print per-file porcelain v2 status data
+Date:	Tue,  2 Aug 2016 10:12:14 -0400
+Message-Id: <1470147137-17498-6-git-send-email-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.8.0.rc4.17.gac42084.dirty
 In-Reply-To: <1470147137-17498-1-git-send-email-git@jeffhostetler.com>
 References: <1470147137-17498-1-git-send-email-git@jeffhostetler.com>
@@ -38,168 +38,315 @@ X-Mailing-List:	git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Expand porcelain v2 output to include branch and tracking
-branch information.  This includes the commit SHA, the branch,
-the upstream branch, and the ahead and behind counts.
+Print per-file information in porcelain v2 format.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Jeff Hostetler <git@jeffhostetler.com>
 ---
- builtin/commit.c |  5 ++++
- wt-status.c      | 90 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- wt-status.h      |  1 +
- 3 files changed, 96 insertions(+)
+ wt-status.c | 283 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 282 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 93ce28c..b1fd2d1 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -510,6 +510,8 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix, int
- 	s->fp = fp;
- 	s->nowarn = nowarn;
- 	s->is_initial = get_sha1(s->reference, sha1) ? 1 : 0;
-+	if (!s->is_initial)
-+		hashcpy(s->sha1_commit, sha1);
- 	s->status_format = status_format;
- 	s->ignore_submodule_arg = ignore_submodule_arg;
- 
-@@ -1378,6 +1380,9 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 	fd = hold_locked_index(&index_lock, 0);
- 
- 	s.is_initial = get_sha1(s.reference, sha1) ? 1 : 0;
-+	if (!s.is_initial)
-+		hashcpy(s.sha1_commit, sha1);
-+
- 	s.ignore_submodule_arg = ignore_submodule_arg;
- 	s.status_format = status_format;
- 	s.verbose = verbose;
 diff --git a/wt-status.c b/wt-status.c
-index 46061d4..592fbd2 100644
+index 15d3349..46061d4 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -1814,6 +1814,92 @@ static void wt_porcelain_print(struct wt_status *s)
+@@ -1813,6 +1813,287 @@ static void wt_porcelain_print(struct wt_status *s)
+ 	wt_shortstatus_print(s);
  }
  
- /*
-+ * Print branch information for porcelain v2 output.  These lines
-+ * are printed when the '--branch' parameter is given.
-+ *
-+ *    # branch.oid <commit><eol>
-+ *    # branch.head <head><eol>
-+ *   [# branch.upstream <upstream><eol>
-+ *   [# branch.ab +<ahead> -<behind><eol>]]
-+ *
-+ *      <commit> ::= the current commit hash or the the literal
-+ *                   "(initial)" to indicate an initialized repo
-+ *                   with no commits.
-+ *
-+ *        <head> ::= <branch_name> the current branch name or
-+ *                   "(detached)" literal when detached head or
-+ *                   "(unknown)" when something is wrong.
-+ *
-+ *    <upstream> ::= the upstream branch name, when set.
-+ *
-+ *       <ahead> ::= integer ahead value, when upstream set
-+ *                   and the commit is present (not gone).
-+ *
-+ *      <behind> ::= integer behind value, when upstream set
-+ *                   and commit is present.
-+ *
-+ *
-+ * The end-of-line is defined by the -z flag.
-+ *
-+ *                 <eol> ::= NUL when -z,
-+ *                           LF when NOT -z.
-+ *
++/*
++ * Convert various submodule status values into a
++ * fixed-length string of characters in the buffer provided.
 + */
-+static void wt_porcelain_v2_print_tracking(struct wt_status *s)
++static void wt_porcelain_v2_submodule_state(
++	struct wt_status_change_data *d,
++	char sub[5])
 +{
-+	struct branch *branch;
-+	const char *base;
-+	const char *branch_name;
-+	struct wt_status_state state;
-+	int ab_info, nr_ahead, nr_behind;
-+	char eol = s->null_termination ? '\0' : '\n';
-+
-+	memset(&state, 0, sizeof(state));
-+	wt_status_get_state(&state, s->branch && !strcmp(s->branch, "HEAD"));
-+
-+	fprintf(s->fp, "# branch.oid %s%c",
-+			(s->is_initial ? "(initial)" : sha1_to_hex(s->sha1_commit)),
-+			eol);
-+
-+	if (!s->branch)
-+		fprintf(s->fp, "# branch.head %s%c", "(unknown)", eol);
-+	else {
-+		if (!strcmp(s->branch, "HEAD")) {
-+			fprintf(s->fp, "# branch.head %s%c", "(detached)", eol);
-+
-+			if (state.rebase_in_progress || state.rebase_interactive_in_progress)
-+				branch_name = state.onto;
-+			else if (state.detached_from)
-+				branch_name = state.detached_from;
-+			else
-+				branch_name = "";
-+		} else {
-+			branch_name = NULL;
-+			skip_prefix(s->branch, "refs/heads/", &branch_name);
-+
-+			fprintf(s->fp, "# branch.head %s%c", branch_name, eol);
-+		}
-+
-+		/* Lookup stats on the upstream tracking branch, if set. */
-+		branch = branch_get(branch_name);
-+		base = NULL;
-+		ab_info = (stat_tracking_info(branch, &nr_ahead, &nr_behind, &base) == 0);
-+		if (base) {
-+			base = shorten_unambiguous_ref(base, 0);
-+			fprintf(s->fp, "# branch.upstream %s%c", base, eol);
-+			free((char *)base);
-+
-+			if (ab_info)
-+				fprintf(s->fp, "# branch.ab +%d -%d%c", nr_ahead, nr_behind, eol);
-+		}
++	if (S_ISGITLINK(d->mode_head) ||
++		S_ISGITLINK(d->mode_index) ||
++		S_ISGITLINK(d->mode_worktree)) {
++		sub[0] = 'S';
++		sub[1] = d->new_submodule_commits ? 'C' : '.';
++		sub[2] = (d->dirty_submodule & DIRTY_SUBMODULE_MODIFIED) ? 'M' : '.';
++		sub[3] = (d->dirty_submodule & DIRTY_SUBMODULE_UNTRACKED) ? 'U' : '.';
++	} else {
++		sub[0] = 'N';
++		sub[1] = '.';
++		sub[2] = '.';
++		sub[3] = '.';
 +	}
-+
-+	free(state.branch);
-+	free(state.onto);
-+	free(state.detached_from);
++	sub[4] = 0;
 +}
 +
 +/*
-  * Convert various submodule status values into a
-  * fixed-length string of characters in the buffer provided.
-  */
-@@ -2057,6 +2143,7 @@ static void wt_porcelain_v2_print_other(
- /*
-  * Print porcelain V2 status.
-  *
-+ * [<v2_branch>]
-  * [<v2_changed_items>]*
-  * [<v2_unmerged_items>]*
-  * [<v2_untracked_items>]*
-@@ -2069,6 +2156,9 @@ void wt_porcelain_v2_print(struct wt_status *s)
- 	struct string_list_item *it;
- 	int i;
- 
-+	if (s->show_branch)
-+		wt_porcelain_v2_print_tracking(s);
++ * Fix-up changed entries before we print them.
++ */
++static void wt_porcelain_v2_fix_up_changed(
++	struct string_list_item *it,
++	struct wt_status *s)
++{
++	struct wt_status_change_data *d = it->util;
 +
- 	for (i = 0; i < s->change.nr; i++) {
- 		it = &(s->change.items[i]);
- 		d = it->util;
-diff --git a/wt-status.h b/wt-status.h
-index 89a6d43..baedfe3 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -80,6 +80,7 @@ struct wt_status {
- 	int hints;
- 
- 	enum wt_status_format status_format;
-+	unsigned char sha1_commit[GIT_SHA1_RAWSZ]; /* when not Initial */
- 
- 	/* These are computed during processing of the individual sections */
- 	int commitable;
++	if (!d->index_status) {
++		/*
++		 * This entry is unchanged in the index (relative to the head).
++		 * Therefore, the collect_updated_cb was never called for this
++		 * entry (during the head-vs-index scan) and so the head column
++		 * fields were never set.
++		 *
++		 * We must have data for the index column (from the
++		 * index-vs-worktree scan (otherwise, this entry should not be
++		 * in the list of changes)).
++		 *
++		 * Copy index column fields to the head column, so that our
++		 * output looks complete.
++		 */
++		assert(d->mode_head == 0);
++		d->mode_head = d->mode_index;
++		oidcpy(&d->oid_head, &d->oid_index);
++	}
++
++	if (!d->worktree_status) {
++		/*
++		 * This entry is unchanged in the worktree (relative to the index).
++		 * Therefore, the collect_changed_cb was never called for this entry
++		 * (during the index-vs-worktree scan) and so the worktree column
++		 * fields were never set.
++		 *
++		 * We must have data for the index column (from the head-vs-index
++		 * scan).
++		 *
++		 * Copy the index column fields to the worktree column so that
++		 * our output looks complete.
++		 *
++		 * Note that we only have a mode field in the worktree column
++		 * because the scan code tries really hard to not have to compute it.
++		 */
++		assert(d->mode_worktree == 0);
++		d->mode_worktree = d->mode_index;
++	}
++}
++
++/*
++ * Print porcelain v2 info for tracked entries with changes.
++ */
++static void wt_porcelain_v2_print_changed_entry(
++	struct string_list_item *it,
++	struct wt_status *s)
++{
++	struct wt_status_change_data *d = it->util;
++	struct strbuf buf_current = STRBUF_INIT;
++	struct strbuf buf_src = STRBUF_INIT;
++	const char *path_current = NULL;
++	const char *path_src = NULL;
++	char key[3];
++	char submodule_token[5];
++	char sep_char, eol_char;
++
++	wt_porcelain_v2_fix_up_changed(it, s);
++	wt_porcelain_v2_submodule_state(d, submodule_token);
++
++	key[0] = d->index_status ? d->index_status : '.';
++	key[1] = d->worktree_status ? d->worktree_status : '.';
++	key[2] = 0;
++
++	if (s->null_termination) {
++		/*
++		 * In -z mode, we DO NOT C-Quote pathnames.  Current path is ALWAYS first.
++		 * A single NUL character separates them.
++		 */
++		sep_char = '\0';
++		eol_char = '\0';
++		path_current = it->string;
++		path_src = d->head_path;
++	} else {
++		/*
++		 * Path(s) are C-Quoted if necessary. Current path is ALWAYS first.
++		 * The source path is only present when necessary.
++		 * A single TAB separates them (because paths can contain spaces
++		 * which are not escaped and C-Quoting does escape TAB characters).
++		 */
++		sep_char = '\t';
++		eol_char = '\n';
++		path_current = quote_path(it->string, s->prefix, &buf_current);
++		if (d->head_path)
++			path_src = quote_path(d->head_path, s->prefix, &buf_src);
++	}
++
++	if (path_src)
++		fprintf(s->fp, "2 %s %s %06o %06o %06o %s %s %c%d %s%c%s%c",
++				key, submodule_token,
++				d->mode_head, d->mode_index, d->mode_worktree,
++				oid_to_hex(&d->oid_head), oid_to_hex(&d->oid_index),
++				key[0], d->score,
++				path_current, sep_char, path_src, eol_char);
++	else
++		fprintf(s->fp, "1 %s %s %06o %06o %06o %s %s %s%c",
++				key, submodule_token,
++				d->mode_head, d->mode_index, d->mode_worktree,
++				oid_to_hex(&d->oid_head), oid_to_hex(&d->oid_index),
++				path_current, eol_char);
++	
++	strbuf_release(&buf_current);
++	strbuf_release(&buf_src);
++}
++
++/*
++ * Print porcelain v2 status info for unmerged entries.
++ */
++static void wt_porcelain_v2_print_unmerged_entry(
++	struct string_list_item *it,
++	struct wt_status *s)
++{
++	struct wt_status_change_data *d = it->util;
++	const struct cache_entry *ce;
++	struct strbuf buf_current = STRBUF_INIT;
++	const char *path_current = NULL;
++	int pos, stage, sum;
++	struct {
++		int mode;
++		struct object_id oid;
++	} stages[3];
++	char *key;
++	char submodule_token[5];
++	char unmerged_prefix = 'u';
++	char eol_char = s->null_termination ? '\0' : '\n';
++
++	wt_porcelain_v2_submodule_state(d, submodule_token);
++
++	switch (d->stagemask) {
++	case 1: key = "DD"; break; /* both deleted */
++	case 2: key = "AU"; break; /* added by us */
++	case 3: key = "UD"; break; /* deleted by them */
++	case 4: key = "UA"; break; /* added by them */
++	case 5: key = "DU"; break; /* deleted by us */
++	case 6: key = "AA"; break; /* both added */
++	case 7: key = "UU"; break; /* both modified */
++	}
++
++	/*
++	 * Disregard d.aux.porcelain_v2 data that we accumulated
++	 * for the head and index columns during the scans and
++	 * replace with the actual stage data.
++	 *
++	 * Note that this is a last-one-wins for each the individual
++	 * stage [123] columns in the event of multiple cache entries
++	 * for same stage.
++	 */
++	memset(stages, 0, sizeof(stages));
++	sum = 0;
++	pos = cache_name_pos(it->string, strlen(it->string));
++	assert(pos < 0);
++	pos = -pos-1;
++	while (pos < active_nr) {
++		ce = active_cache[pos++];
++		stage = ce_stage(ce);
++		if (strcmp(ce->name, it->string) || !stage)
++			break;
++		stages[stage - 1].mode = ce->ce_mode;
++		hashcpy(stages[stage - 1].oid.hash, ce->sha1);
++		sum |= (1 << (stage - 1));
++	}
++	if (sum != d->stagemask)
++		die("BUG: observed stagemask 0x%x != expected stagemask 0x%x", sum, d->stagemask);
++
++	if (s->null_termination)
++		path_current = it->string;
++	else
++		path_current = quote_path(it->string, s->prefix, &buf_current);
++
++	fprintf(s->fp, "%c %s %s %06o %06o %06o %06o %s %s %s %s%c",
++			unmerged_prefix, key, submodule_token,
++			stages[0].mode, /* stage 1 */
++			stages[1].mode, /* stage 2 */
++			stages[2].mode, /* stage 3 */
++			d->mode_worktree,
++			oid_to_hex(&stages[0].oid), /* stage 1 */
++			oid_to_hex(&stages[1].oid), /* stage 2 */
++			oid_to_hex(&stages[2].oid), /* stage 3 */
++			path_current,
++			eol_char);
++
++	strbuf_release(&buf_current);
++}
++
++/*
++ * Print porcelain V2 status info for untracked and ignored entries.
++ */
++static void wt_porcelain_v2_print_other(
++	struct string_list_item *it,
++	struct wt_status *s,
++	char prefix)
++{
++	struct strbuf buf = STRBUF_INIT;
++	const char *path;
++	char eol_char;
++
++	if (s->null_termination) {
++		path = it->string;
++		eol_char = '\0';
++	} else {
++		path = quote_path(it->string, s->prefix, &buf);
++		eol_char = '\n';
++	}
++
++	fprintf(s->fp, "%c %s%c", prefix, path, eol_char);
++
++	strbuf_release(&buf);
++}
++
++/*
++ * Print porcelain V2 status.
++ *
++ * [<v2_changed_items>]*
++ * [<v2_unmerged_items>]*
++ * [<v2_untracked_items>]*
++ * [<v2_ignored_items>]*
++ *
++ */
++void wt_porcelain_v2_print(struct wt_status *s)
++{
++	struct wt_status_change_data *d;
++	struct string_list_item *it;
++	int i;
++
++	for (i = 0; i < s->change.nr; i++) {
++		it = &(s->change.items[i]);
++		d = it->util;
++		if (!d->stagemask)
++			wt_porcelain_v2_print_changed_entry(it, s);
++	}
++
++	for (i = 0; i < s->change.nr; i++) {
++		it = &(s->change.items[i]);
++		d = it->util;
++		if (d->stagemask)
++			wt_porcelain_v2_print_unmerged_entry(it, s);
++	}
++
++	for (i = 0; i < s->untracked.nr; i++) {
++		it = &(s->untracked.items[i]);
++		wt_porcelain_v2_print_other(it, s, '?');
++	}
++
++	for (i = 0; i < s->ignored.nr; i++) {
++		it = &(s->ignored.items[i]);
++		wt_porcelain_v2_print_other(it, s, '!');
++	}
++}
++
+ void wt_status_print(struct wt_status *s)
+ {
+ 	switch (s->status_format) {
+@@ -1823,7 +2104,7 @@ void wt_status_print(struct wt_status *s)
+ 		wt_porcelain_print(s);
+ 		break;
+ 	case STATUS_FORMAT_PORCELAIN_V2:
+-		/* TODO */
++		wt_porcelain_v2_print(s);
+ 		break;
+ 	case STATUS_FORMAT_UNSPECIFIED:
+ 		die("BUG: finalize_deferred_config() should have been called");
 -- 
 2.8.0.rc4.17.gac42084.dirty
 
