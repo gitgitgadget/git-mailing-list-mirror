@@ -6,97 +6,133 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19FCE1F71B
-	for <e@80x24.org>; Tue,  2 Aug 2016 18:20:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B076E1F71B
+	for <e@80x24.org>; Tue,  2 Aug 2016 18:25:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936293AbcHBSRL (ORCPT <rfc822;e@80x24.org>);
-	Tue, 2 Aug 2016 14:17:11 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52353 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932253AbcHBSQ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Aug 2016 14:16:57 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 736B9321C8;
-	Tue,  2 Aug 2016 14:16:29 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JZyvg2H2sFvTOJs1xoJaxMk/Ghk=; b=Lvmj9q
-	VYwMJvvotNqbf1fWrcjX6TGKPlRW7u2hQYpBRAhfPFB2zSBaYA/Nl43pUw7/Tj9T
-	/A08QBTmX/Pz1z7//VW5RAel5e6h6t8tvEXp8OZiDO+yYlkjfViRXlhLhQLrVtAE
-	vJS/36tupnJENVP2KlP0F5Ua3MJgkxIj767ZA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WmlRkTtvNWoUjOWHOJZqQ62A7cqeXFEu
-	AuLh3HwqtVE7UMDbtL04VGrheGFrUOrN1aekGG7oIRUtJJTpbxLKwG4r/v5mes2W
-	LEfGx6V69BZj1i8kjBUkWEhlQG1DzOSH41XtcOq0plvIiE2YV/aggNaTbc/AucTQ
-	7WBSSSm+xmY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6ACBD321C7;
-	Tue,  2 Aug 2016 14:16:29 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E58BB321C6;
-	Tue,  2 Aug 2016 14:16:28 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Joe Perches <joe@perches.com>
-Cc:	Florian Mickler <florian@mickler.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	LKML <linux-kernel@vger.kernel.org>, git <git@vger.kernel.org>
-Subject: Re: get_maintainer.pl and .mailmap entries with more than 2 addresses
-References: <1470155781.3998.181.camel@perches.com>
-Date:	Tue, 02 Aug 2016 11:16:26 -0700
-In-Reply-To: <1470155781.3998.181.camel@perches.com> (Joe Perches's message of
-	"Tue, 02 Aug 2016 09:36:21 -0700")
-Message-ID: <xmqqpoprdojp.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3B7974EA-58DD-11E6-959F-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+	id S936374AbcHBSZH (ORCPT <rfc822;e@80x24.org>);
+	Tue, 2 Aug 2016 14:25:07 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:33763 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936351AbcHBSXN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2016 14:23:13 -0400
+Received: by mail-pa0-f43.google.com with SMTP id b2so12947935pat.0
+        for <git@vger.kernel.org>; Tue, 02 Aug 2016 11:22:04 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=qu2L/ju/1/QJLosqrMbsSRKQ4HQwy2tcwyjzf/CJwHo=;
+        b=iyFXSO+Phdzh+mvIVEySoIicutwQpVPbbAd1sl6STlfGLCRMjrTH/1oESAdHkr+3hv
+         gEUbzeeR4iJakXaJxpHUVuyYGyAqamIq7wfBuiY+4uvf6uq7V7XCq7GBL44FL4MV3nXi
+         vyzycXgEM0IEZGGQ4gPo3/gnRnWz0qJKaZASjIarMzXC3DXfZDNlvsbARXifgZPEtlmG
+         Zz0tlznTxESg7H8xdvAAKsb+rvfNXBZOSmUYCIQcXGETs1wr4Sg2rL1PNwEsfk6p/o60
+         uSno2L6fhgyaY3YUfL3wwylmmK4DV/uMGldVY+JgSTh3J048ev8Zx01iYYoP0SCdScHs
+         xKOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=qu2L/ju/1/QJLosqrMbsSRKQ4HQwy2tcwyjzf/CJwHo=;
+        b=IZxmJfl+jNOgk8aAiDLUg9GxOlnf6nGt5RZg/caI+w8vQJy/4dbFMtqRD8nx9Aq4Xb
+         WU4UYnLKqIxd0nXdZFcd6nFBHeNwO9lfGOYsEGo07Q7uC+yGfKqIJGbxaW3/fq1mPZD8
+         hFZa/sA8qEwYDVUAysltpttlM21/KK1Ybb2h1ylKbaaOUDTDfdLjd1Zx75gl3e4GjXFG
+         xNmLxah2iGldEh8F7stqBosQcwiqZ4EAh/gj5PVRvKqwvHJD5T2oW1aczp7nVPXMth9c
+         ebcntUSJjE0Q+62MYwxPcvXAMT9aG4GUeFyJgbq+SlyXvoufZMp5OcmolHYsCyHXRHVp
+         rTIQ==
+X-Gm-Message-State: AEkoouuWE2ZrLwZxXEfDL2jnjZxAlVWShfFbBNAuTUNbibJSa2X6cnbc4zholYyNApnAOOXO
+X-Received: by 10.66.189.104 with SMTP id gh8mr107124917pac.125.1470162123924;
+        Tue, 02 Aug 2016 11:22:03 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:c95e:4bc7:6c52:ebb0])
+        by smtp.gmail.com with ESMTPSA id dz13sm6479806pac.44.2016.08.02.11.22.03
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 02 Aug 2016 11:22:03 -0700 (PDT)
+From:	Stefan Beller <sbeller@google.com>
+To:	git@vger.kernel.org, gitster@pobox.com
+Cc:	Jens.Lehmann@web.de, hvoigt@hvoigt.net, jrnieder@gmail.com,
+	Stefan Beller <sbeller@google.com>
+Subject: [PATCH 2/2] submodule update documentation: don't repeat ourselves
+Date:	Tue,  2 Aug 2016 11:21:52 -0700
+Message-Id: <20160802182152.20637-2-sbeller@google.com>
+X-Mailer: git-send-email 2.9.2.525.g1760797
+In-Reply-To: <20160802182152.20637-1-sbeller@google.com>
+References: <20160802182152.20637-1-sbeller@google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Joe Perches <joe@perches.com> writes:
+The documentation for the `git submodule update` command, repeats itself
+for each update option, "This is done when <option> is given, or no
+option is given and `submodule.<name>.update` is set to <string>.
 
-> Hello Florian.
->
-> There is at least an oddity with get_maintainer handling of a
-> .mailmap entry form.
->
-> For instance:
->
-> Mauro's .mailmap entry is:
-> Mauro Carvalho Chehab <mchehab@kernel.org> <maurochehab@gmail.com> <mchehab@infradead.org> <mchehab@redhat.com> <m.chehab@samsung.com> <mchehab@osg.samsung.com> <mchehab@s-opensource.com>
->
-> Is this a valid form?
+Avoid these repetitive clauses by stating the command line options take
+precedence over configured options.
 
-I do not think so, according to "git shortlog --help" (the canonical
-source of the document is Documentation/mailmap.txt, but shortlog
-doc includes it).  Here is the relevant bits.
+Also add 'none' to the list of options instead of mentioning it in the
+following running text and split the list into two parts, one that is
+accessible via the command line and one that is only reachable via the
+configuration variables.
 
-    In the simple form, each line in the file consists of the canonical
-    real name of an author, whitespace, and an email address used in the
-    commit (enclosed by '<' and '>') to map to the name. For example:
-    --
-            Proper Name <commit@email.xx>
-    --
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ Documentation/git-submodule.txt | 30 ++++++++++++++----------------
+ 1 file changed, 14 insertions(+), 16 deletions(-)
 
-    The more complex forms are:
-    --
-            <proper@email.xx> <commit@email.xx>
-    --
-    which allows mailmap to replace only the email part of a commit, and:
-    --
-            Proper Name <proper@email.xx> <commit@email.xx>
-    --
-    which allows mailmap to replace both the name and the email of a
-    commit matching the specified commit email address, and:
-    --
-            Proper Name <proper@email.xx> Commit Name <commit@email.xx>
-    --
-    which allows mailmap to replace both the name and the email of a
-    commit matching both the specified commit name and email address.
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 1452c31..9b5abaf 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -158,13 +158,13 @@ Update the registered submodules to match what the superproject
+ expects by cloning missing submodules and updating the working tree of
+ the submodules. The "updating" can be done in several ways depending
+ on command line options and the value of `submodule.<name>.update`
+-configuration variable. Supported update procedures are:
++configuration variable. The command line option takes precedence over
++the configuration variable. if neither is given, a checkout is performed.
++update procedures supported both from the command line as well as setting
++`submodule.<name>.update`:
+ 
+ 	checkout;; the commit recorded in the superproject will be
+-	    checked out in the submodule on a detached HEAD. This is
+-	    done when `--checkout` option is given, or no option is
+-	    given, and `submodule.<name>.update` is unset, or if it is
+-	    set to 'checkout'.
++	    checked out in the submodule on a detached HEAD.
+ +
+ If `--force` is specified, the submodule will be checked out (using
+ `git checkout --force` if appropriate), even if the commit specified
+@@ -172,23 +172,21 @@ in the index of the containing repository already matches the commit
+ checked out in the submodule.
+ 
+ 	rebase;; the current branch of the submodule will be rebased
+-	    onto the commit recorded in the superproject. This is done
+-	    when `--rebase` option is given, or no option is given, and
+-	    `submodule.<name>.update` is set to 'rebase'.
++	    onto the commit recorded in the superproject.
+ 
+ 	merge;; the commit recorded in the superproject will be merged
+-	    into the current branch in the submodule. This is done
+-	    when `--merge` option is given, or no option is given, and
+-	    `submodule.<name>.update` is set to 'merge'.
++	    into the current branch in the submodule.
++
++The following procedures are only available via the `submodule.<name>.update`
++configuration variable:
+ 
+ 	custom command;; arbitrary shell command that takes a single
+ 	    argument (the sha1 of the commit recorded in the
+-	    superproject) is executed. This is done when no option is
+-	    given, and `submodule.<name>.update` has the form of
+-	    '!command'.
++	    superproject) is executed. When `submodule.<name>.update`
++	    is set to '!command', the remainder after the exclamation mark
++	    is the custom command.
+ 
+-When no option is given and `submodule.<name>.update` is set to 'none',
+-the submodule is not updated.
++	none;; the submodule is not updated.
+ 
+ If the submodule is not yet initialized, and you just want to use the
+ setting as stored in .gitmodules, you can automatically initialize the
+-- 
+2.9.2.525.g1760797
 
