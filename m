@@ -3,100 +3,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3A721F858
-	for <e@80x24.org>; Tue,  2 Aug 2016 10:46:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B5331F858
+	for <e@80x24.org>; Tue,  2 Aug 2016 10:59:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753460AbcHBKpm (ORCPT <rfc822;e@80x24.org>);
-	Tue, 2 Aug 2016 06:45:42 -0400
-Received: from mout.gmx.net ([212.227.15.19]:50444 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752335AbcHBKpa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Aug 2016 06:45:30 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MBWTO-1bNMBU1Ij0-00AVNS; Tue, 02 Aug 2016 12:45:18
- +0200
-Date:	Tue, 2 Aug 2016 12:45:17 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	Kevin Willford <kcwillford@gmail.com>, git@vger.kernel.org,
-	Kevin Willford <kewillf@microsoft.com>
-Subject: Re: [[PATCH v2] 4/4] rebase: avoid computing unnecessary patch IDs
-In-Reply-To: <xmqqtwf4i71l.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1608021244450.79248@virtualbox>
-References: <20160729161920.3792-1-kcwillford@gmail.com> <20160729161920.3792-5-kcwillford@gmail.com> <xmqqa8h0m82f.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608011055180.149069@virtualbox> <xmqqtwf4i71l.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1752327AbcHBK7k (ORCPT <rfc822;e@80x24.org>);
+	Tue, 2 Aug 2016 06:59:40 -0400
+Received: from cloud.peff.net ([50.56.180.127]:53171 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751341AbcHBK7j (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2016 06:59:39 -0400
+Received: (qmail 22934 invoked by uid 102); 2 Aug 2016 10:52:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 02 Aug 2016 06:52:57 -0400
+Received: (qmail 23877 invoked by uid 107); 2 Aug 2016 10:53:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 02 Aug 2016 06:53:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Aug 2016 06:52:53 -0400
+Date:	Tue, 2 Aug 2016 06:52:53 -0400
+From:	Jeff King <peff@peff.net>
+To:	Eric Sunshine <sunshine@sunshineco.com>
+Cc:	Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: [PATCH] blame: drop strdup of string literal
+Message-ID: <20160802105252.jyl5x7eanttw2swj@sigill.intra.peff.net>
+References: <20160613053203.GB3950@sigill.intra.peff.net>
+ <20160613053928.GC23880@sigill.intra.peff.net>
+ <CAPig+cQudTwT6H35YgEvxdK9AAn0BwvUC8bi8-DxGYNh9rb_Lw@mail.gmail.com>
+ <20160614050541.GA9909@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:AN7ey3nLDy3E55xuyW1o4xgKjXe6GnacZFnVtlxKc+6OUPz/fNC
- 6csfRuWNtdSuNMj1P3g7+zzV5Q6kVBYoS6pGkfmtRUIHzOEWWvxssJUAjKuKGh9h9r2t0Sq
- xcApX6YKTzVnlwNT0XOg6IJ01eMyfv6+u2uzugA3NjWNuu+a0dFfVwl3xjI4fEqzbixVQWt
- BoPR6g5clMYLWW2OI1wDA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:s360eZ/00YI=:tOtKJ0M59G3E0nATxK1JoW
- phGq4SrSD3kPqaJNcREgBUj8TcWr+gdIQdvGvGGFUSHYQ+/QPeQRmWVHTOX0XsGMe9Yps2I9o
- puDJKUdokjkKYiD0hZEYp1kuWbxUs1BVgUMWZY/NXLi0iH5Fuz4C63jVyelbNhIcxSMO3TI6X
- yjOohSWHDo/RviWHdE8upCOiXJ1vVDk4Eaf6gmA8/du8a6IVIROU2mRhMyjk/RPZOI0aC0Vc8
- 9cdF+a4mnST10ugKWVqzg+HJlihRJT4uFQSR84YG2Wv/Vw606DOpBwPsFd/F00CtkdT8TSLsS
- gCvmfbSIhhpSFMoqlrV0UtwgOLgjZZxhDQ2rIgaUv9y58mMXxLks8fB46P/+W4NYGdEkEHt9N
- WLE0xIhBQVOo4lLNr0+z+IcTd2PneK3bq+CPxpTwozfPOxDJsmFKnWMd1M32E7cLyRV+7JR/w
- fR3W254q6i9I7KjLPACxumciQXH8RCOunlTA5KDaSQMk2ENa1hheO4wS7sIE4Xs5iT5aaCYp6
- eX69jsGBazK6q/VRIDsPhZL/7D0cWnrxzyh593az1EedzSmSD3AUbCnyZK5tSl9Cc0FMV4IsS
- zSGcXcmTNDpXn250ryztMvdSeZaHSA4x7WDKeq6Zx2A4s+PDY2kJlnYaWrNXdgmsYgreEIwki
- JXyimOrDVO9ip77HI6uKLNKirR1OEJRX8zAFGRRErZajHRJH7DJJfYlsDV/NG3J2Zgw1iJwuT
- 7cnitsIo2LOc/bdcWIS+cb05/Vi1GC0kDWvSIi/Xnimji/1X5Hf9eERigt0urfcdRRCtNkKup
- ytUGtR7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20160614050541.GA9909@sigill.intra.peff.net>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+On Tue, Jun 14, 2016 at 01:05:41AM -0400, Jeff King wrote:
 
-On Mon, 1 Aug 2016, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> On Tue, Jun 14, 2016 at 12:32:15AM -0400, Eric Sunshine wrote:
 > 
-> > On Fri, 29 Jul 2016, Junio C Hamano wrote:
-> >
-> >> Kevin Willford <kcwillford@gmail.com> writes:
-> >> 
-> >> >  static int patch_id_cmp(struct patch_id *a,
-> >> >  			struct patch_id *b,
-> >> > -			void *keydata)
-> >> > +			struct diff_options *opt)
-> >> >  {
-> >> > +	if (is_null_sha1(a->patch_id) &&
-> >> > +	    commit_patch_id(a->commit, opt, a->patch_id, 0))
-> >> > +		return error("Could not get patch ID for %s",
-> >> > +			oid_to_hex(&a->commit->object.oid));
-> >> > +	if (is_null_sha1(b->patch_id) &&
-> >> > +	    commit_patch_id(b->commit, opt, b->patch_id, 0))
-> >> > +		return error("Could not get patch ID for %s",
-> >> > +			oid_to_hex(&b->commit->object.oid));
-> >> >  	return hashcmp(a->patch_id, b->patch_id);
-> >> >  }
-> >> 
-> >> These error returns initially looks slightly iffy in that in general
-> >> the caller of any_cmp_fn() wants to know how a/b compares, but by
-> >> returning error(), it always says "a is smaller than b".
-> >
-> > I am to blame, as this is my design.
-> >
-> > And yes, it is kind of funny that we require a cmpfn that returns <0, ==0
-> > and >0 for comparisons, when hashmaps try to avoid any order.
+> > > +       struct string_list range_list = STRING_LIST_INIT_NODUP;
+> > 
+> > Related to this series, there's an additional "fix" which ought to be
+> > made, probably as a separate patch. In particular, in cmd_blame():
+> > 
+> >     if (lno && !range_list.nr)
+> >         string_list_append(&range_list, xstrdup("1"));
+> > 
+> > which supplies a default range ("line 1 through end of file") if -L
+> > was not specified. I used xstrdup() on the literal "1" in 58dbfa2
+> > (blame: accept multiple -L ranges, 2013-08-06) to be consistent with
+> > parse_opt_string_list() which was unconditionally xstrdup'ing the
+> > argument (but no longer does as of patch 1/3 of this series).
 > 
-> Perhaps hashmap API needs fixing in the longer term not to call this
-> type hashmap_cmp_fn; instead it should lose cmp and say something
-> like hashmap_eq_fn or something.
+> Yeah, I'd agree that this is a minor bug both before and after the
+> series due to the leak. Want to roll a patch on top?
 
-Maybe.
+Here it is, just to tie up a loose end. I marked you as the author since
+the hard part was noticing the issue and explaining the history, which
+you already did above.
 
-But to make sure: you do not expect Kevin to do that in the context of
-this here patch series, right?
+-- >8 --
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH] blame: drop strdup of string literal
 
-Ciao,
-Dscho
+This strdup was added as part of 58dbfa2 (blame: accept
+multiple -L ranges, 2013-08-06) to be consistent with
+parse_opt_string_list(), which appends to the same list.
+
+But as of 7a7a517 (parse_opt_string_list: stop allocating
+new strings, 2016-06-13), we should stop using strdup (to
+match parse_opt_string_list, and for all the reasons
+described in that commit; namely that it does nothing useful
+and causes us to leak the memory).
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/blame.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/blame.c b/builtin/blame.c
+index ab66cde..29bd479 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -2805,7 +2805,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 	lno = prepare_lines(&sb);
+ 
+ 	if (lno && !range_list.nr)
+-		string_list_append(&range_list, xstrdup("1"));
++		string_list_append(&range_list, "1");
+ 
+ 	anchor = 1;
+ 	range_set_init(&ranges, range_list.nr);
+-- 
+2.9.2.670.g42e63de
+
