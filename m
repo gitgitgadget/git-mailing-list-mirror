@@ -2,156 +2,252 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DB991F858
-	for <e@80x24.org>; Tue,  2 Aug 2016 11:02:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B23831F71B
+	for <e@80x24.org>; Tue,  2 Aug 2016 14:16:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752199AbcHBLCd (ORCPT <rfc822;e@80x24.org>);
-	Tue, 2 Aug 2016 07:02:33 -0400
-Received: from mout.gmx.net ([212.227.15.19]:64742 "EHLO mout.gmx.net"
+	id S1754747AbcHBOPe (ORCPT <rfc822;e@80x24.org>);
+	Tue, 2 Aug 2016 10:15:34 -0400
+Received: from siwi.pair.com ([209.68.5.199]:46618 "EHLO siwi.pair.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751514AbcHBLCb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Aug 2016 07:02:31 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LskKv-1b6dTk1hDV-012Fq2; Tue, 02 Aug 2016 12:43:05
- +0200
-Date:	Tue, 2 Aug 2016 12:30:36 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	Kevin Willford <kcwillford@gmail.com>, git@vger.kernel.org,
-	Kevin Willford <kewillf@microsoft.com>
-Subject: Re: [[PATCH v2] 1/4] patch-ids: stop using a hand-rolled hashmap
- implementation
-In-Reply-To: <xmqqy44gi7bp.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1608021013010.79248@virtualbox>
-References: <20160729161920.3792-1-kcwillford@gmail.com> <20160729161920.3792-2-kcwillford@gmail.com> <xmqqoa5gmas6.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1607301056120.11824@virtualbox> <xmqqy44gi7bp.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:/YVGntsSX1VxYhUAmp5/1NnFOgNFvFrHZgjinQlAjS7elOQ/TE9
- /GUHBv4YjX8BwJ82gvs3v3XchI3LStVlNFNAigD+Zdhq5lEP4iYBS92qG4B5NkK9yZI3g/f
- 1rZVyscAMkFrh27h4CP6VsQCRbV+8lx/4bWpviQeO8ndFAWfKUTyOIres5RxgiyfzgHKgOt
- sJUsNwySBzKDcw60SDZ+A==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:gJkGlFxcjV4=:W/78mnfU67OfufYOdpFymP
- KyFZE/DiBGqLJIrbuogxMk7obBbSk+XRbp65v20sK8C0Ut2TMO9mYOsxajfV3BtkMJ0NkkBuY
- mjopNDQ+WOo39zjq+ULiFYOdPq9sL2eXKovU1//w7E7MKgiuiQtemGImtjjXUknMNyhckImq2
- r3IpRlpz9GhZhqT8qfZ2IpSG9MiKJfg79uEupjzYjNh6iTacymwH0mKqRjs5UWtvIUO0lugOd
- +IF/dvoR411SXtTySfrgvsJcSA++HsVJ2Wz4CmEdZuyNUefvpL3exH669cV3yoq0xTG4l9YUt
- b5agRtOOUSw5u/z6lJE70svIYo4cL8sjAQbBULmChrtoVy5DY/N1wV2vrg6AuRvnaMSBYiYIs
- m+iWvZ0anOg94O3garpFJEfmgMR6WGnSXilNyRTJ9Zy9ZJJoR2jOV1iC2+c+0JB7RSPein8bk
- lT5wXhOrV3lMSQMSAArOggI1eqYzU+cKG6+pKkhFDe1JH+ApavF2rnE/Wl9LlveDCP/7tZZ/v
- obYB3hqUzEbcgdLwmY6Won1QvgR4X6GGRnAyyDVHrnVj1w90tdwLJ005FbdtcwHfe8vJ/uZBU
- Llkv5viJ+mqq4dXYMLBY8Xh7H0a2QOzVOUtvayAszyVKpqvFouHOpRA9yWA5EvJjW44TCAlzP
- DpWKQ+/blCCeT6mY7WPF28qUrSzxQC3lAQNrcPr6ceK8Fal9cYIk0ysOr19uuzLpn2UTgOePY
- yWPS7czYZVlG1OKHCP3g01gmDS0iVz3cVW+nt3zHmM5+oqhPeGuNwrQP/1S3FC0SpMRmB9EIl
- oQKa1WX
+	id S1755661AbcHBOPZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2016 10:15:25 -0400
+Received: from jeffhost-linux1.corp.microsoft.com (unknown [167.220.148.23])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by siwi.pair.com (Postfix) with ESMTPSA id 8FACE84647;
+	Tue,  2 Aug 2016 10:15:04 -0400 (EDT)
+From:	Jeff Hostetler <git@jeffhostetler.com>
+To:	git@vger.kernel.org
+Cc:	gitster@pobox.com, Johannes.Schindelin@gmx.de,
+	Jeff Hostetler <jeffhost@microsoft.com>,
+	Jeff Hostetler <git@jeffhostetler.com>
+Subject: [PATCH v4 2/8] status: cleanup API to wt_status_print
+Date:	Tue,  2 Aug 2016 10:12:11 -0400
+Message-Id: <1470147137-17498-3-git-send-email-git@jeffhostetler.com>
+X-Mailer: git-send-email 2.8.0.rc4.17.gac42084.dirty
+In-Reply-To: <1470147137-17498-1-git-send-email-git@jeffhostetler.com>
+References: <1470147137-17498-1-git-send-email-git@jeffhostetler.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-On Mon, 1 Aug 2016, Junio C Hamano wrote:
+Refactor the API between builtin/commit.c and wt-status.[ch].
+Hide details of the various wt_*status_print() routines inside
+wt-status.c behind a single (new) wt_status_print() routine
+and eliminate the switch statements from builtin/commit.c
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > It would be a serious bug if hashmap_entry_init() played games with
-> > references, given its signature (that this function does not have any
-> > access to the hashmap structure, only to the entry itself):
-> >
-> > 	void hashmap_entry_init(void *entry, unsigned int hash)
-> 
-> I do not think we are on the same page.  The "reference to other
-> resource" I wondered was inside the hashmap_entry structure, IOW,
-> "the entry itself".
+This will allow us to more easily add new status formats
+and isolate that within wt-status.c
 
-Oh, I see now.
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+Signed-off-by: Jeff Hostetler <git@jeffhostetler.com>
+---
+ builtin/commit.c | 51 +++++++++------------------------------------------
+ wt-status.c      | 25 ++++++++++++++++++++++---
+ wt-status.h      | 16 ++++++++++++----
+ 3 files changed, 43 insertions(+), 49 deletions(-)
 
-> Which is declared to be opaque to the API users,
+diff --git a/builtin/commit.c b/builtin/commit.c
+index b80273b..a792deb 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -142,14 +142,7 @@ static int show_ignored_in_status, have_option_m;
+ static const char *only_include_assumed;
+ static struct strbuf message = STRBUF_INIT;
+ 
+-static enum status_format {
+-	STATUS_FORMAT_NONE = 0,
+-	STATUS_FORMAT_LONG,
+-	STATUS_FORMAT_SHORT,
+-	STATUS_FORMAT_PORCELAIN,
+-
+-	STATUS_FORMAT_UNSPECIFIED
+-} status_format = STATUS_FORMAT_UNSPECIFIED;
++static enum wt_status_format status_format = STATUS_FORMAT_UNSPECIFIED;
+ 
+ static int opt_parse_m(const struct option *opt, const char *arg, int unset)
+ {
+@@ -500,24 +493,11 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix, int
+ 	s->fp = fp;
+ 	s->nowarn = nowarn;
+ 	s->is_initial = get_sha1(s->reference, sha1) ? 1 : 0;
++	s->status_format = status_format;
++	s->ignore_submodule_arg = ignore_submodule_arg;
+ 
+ 	wt_status_collect(s);
+-
+-	switch (status_format) {
+-	case STATUS_FORMAT_SHORT:
+-		wt_shortstatus_print(s);
+-		break;
+-	case STATUS_FORMAT_PORCELAIN:
+-		wt_porcelain_print(s);
+-		break;
+-	case STATUS_FORMAT_UNSPECIFIED:
+-		die("BUG: finalize_deferred_config() should have been called");
+-		break;
+-	case STATUS_FORMAT_NONE:
+-	case STATUS_FORMAT_LONG:
+-		wt_longstatus_print(s);
+-		break;
+-	}
++	wt_status_print(s);
+ 
+ 	return s->commitable;
+ }
+@@ -1099,7 +1079,7 @@ static const char *read_commit_message(const char *name)
+  * is not in effect here.
+  */
+ static struct status_deferred_config {
+-	enum status_format status_format;
++	enum wt_status_format status_format;
+ 	int show_branch;
+ } status_deferred_config = {
+ 	STATUS_FORMAT_UNSPECIFIED,
+@@ -1381,6 +1361,9 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 
+ 	s.is_initial = get_sha1(s.reference, sha1) ? 1 : 0;
+ 	s.ignore_submodule_arg = ignore_submodule_arg;
++	s.status_format = status_format;
++	s.verbose = verbose;
++
+ 	wt_status_collect(&s);
+ 
+ 	if (0 <= fd)
+@@ -1389,23 +1372,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 	if (s.relative_paths)
+ 		s.prefix = prefix;
+ 
+-	switch (status_format) {
+-	case STATUS_FORMAT_SHORT:
+-		wt_shortstatus_print(&s);
+-		break;
+-	case STATUS_FORMAT_PORCELAIN:
+-		wt_porcelain_print(&s);
+-		break;
+-	case STATUS_FORMAT_UNSPECIFIED:
+-		die("BUG: finalize_deferred_config() should have been called");
+-		break;
+-	case STATUS_FORMAT_NONE:
+-	case STATUS_FORMAT_LONG:
+-		s.verbose = verbose;
+-		s.ignore_submodule_arg = ignore_submodule_arg;
+-		wt_longstatus_print(&s);
+-		break;
+-	}
++	wt_status_print(&s);
+ 	return 0;
+ }
+ 
+diff --git a/wt-status.c b/wt-status.c
+index b9a58fd..a9031e4 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1447,7 +1447,7 @@ static void wt_longstatus_print_state(struct wt_status *s,
+ 		show_bisect_in_progress(s, state, state_color);
+ }
+ 
+-void wt_longstatus_print(struct wt_status *s)
++static void wt_longstatus_print(struct wt_status *s)
+ {
+ 	const char *branch_color = color(WT_STATUS_ONBRANCH, s);
+ 	const char *branch_status_color = color(WT_STATUS_HEADER, s);
+@@ -1714,7 +1714,7 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
+ 	fputc(s->null_termination ? '\0' : '\n', s->fp);
+ }
+ 
+-void wt_shortstatus_print(struct wt_status *s)
++static void wt_shortstatus_print(struct wt_status *s)
+ {
+ 	int i;
+ 
+@@ -1746,7 +1746,7 @@ void wt_shortstatus_print(struct wt_status *s)
+ 	}
+ }
+ 
+-void wt_porcelain_print(struct wt_status *s)
++static void wt_porcelain_print(struct wt_status *s)
+ {
+ 	s->use_color = 0;
+ 	s->relative_paths = 0;
+@@ -1754,3 +1754,22 @@ void wt_porcelain_print(struct wt_status *s)
+ 	s->no_gettext = 1;
+ 	wt_shortstatus_print(s);
+ }
++
++void wt_status_print(struct wt_status *s)
++{
++	switch (s->status_format) {
++	case STATUS_FORMAT_SHORT:
++		wt_shortstatus_print(s);
++		break;
++	case STATUS_FORMAT_PORCELAIN:
++		wt_porcelain_print(s);
++		break;
++	case STATUS_FORMAT_UNSPECIFIED:
++		die("BUG: finalize_deferred_config() should have been called");
++		break;
++	case STATUS_FORMAT_NONE:
++	case STATUS_FORMAT_LONG:
++		wt_longstatus_print(s);
++		break;
++	}
++}
+diff --git a/wt-status.h b/wt-status.h
+index 2023a3c..a859a12 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -43,6 +43,15 @@ struct wt_status_change_data {
+ 	unsigned new_submodule_commits : 1;
+ };
+ 
++ enum wt_status_format {
++	STATUS_FORMAT_NONE = 0,
++	STATUS_FORMAT_LONG,
++	STATUS_FORMAT_SHORT,
++	STATUS_FORMAT_PORCELAIN,
++
++	STATUS_FORMAT_UNSPECIFIED
++ };
++
+ struct wt_status {
+ 	int is_initial;
+ 	char *branch;
+@@ -66,6 +75,8 @@ struct wt_status {
+ 	int show_branch;
+ 	int hints;
+ 
++	enum wt_status_format status_format;
++
+ 	/* These are computed during processing of the individual sections */
+ 	int commitable;
+ 	int workdir_dirty;
+@@ -99,6 +110,7 @@ struct wt_status_state {
+ void wt_status_truncate_message_at_cut_line(struct strbuf *);
+ void wt_status_add_cut_line(FILE *fp);
+ void wt_status_prepare(struct wt_status *s);
++void wt_status_print(struct wt_status *s);
+ void wt_status_collect(struct wt_status *s);
+ void wt_status_get_state(struct wt_status_state *state, int get_detached_from);
+ int wt_status_check_rebase(const struct worktree *wt,
+@@ -106,10 +118,6 @@ int wt_status_check_rebase(const struct worktree *wt,
+ int wt_status_check_bisect(const struct worktree *wt,
+ 			   struct wt_status_state *state);
+ 
+-void wt_longstatus_print(struct wt_status *s);
+-void wt_shortstatus_print(struct wt_status *s);
+-void wt_porcelain_print(struct wt_status *s);
+-
+ __attribute__((format (printf, 3, 4)))
+ void status_printf_ln(struct wt_status *s, const char *color, const char *fmt, ...);
+ __attribute__((format (printf, 3, 4)))
+-- 
+2.8.0.rc4.17.gac42084.dirty
 
-Actually, not really. We cannot do that in C: we need to define the struct
-in hashmap.h so that its size is known to the users.
-
-> so whoever defined that API cannot blame me for not checking its
-> definition to see that it only has "unsigned int hash" and no allocated
-> memory or open file descriptor in it that needs freeing.
-
-That is the reason, I guess, why we have the documentation in
-Documentation/technical/api-hashmap.txt: it would have to talk about your
-hypothetical hashmap_entry_clear() (which would better be named
-*_release() BTW, unless I misunderstood what you want a hypothetical
-future version of that function to do).
-
-And quite frankly, unless we *have* to, I would rather try to avoid
-introducing that function as much as possible, as it would make using the
-hashmap API even more finicky than it already is.
-
-> By the way, the first parameter of the function being "void *" is
-> merely to help lazy API users, who have their own structure that
-> embeds the hashmap_entry as its first element, as API documentation
-> tells them to do, e.g.
-> 
-> 	struct foo {
->         	struct hashmap_entry e;
->                 ... other "foo" specific fields come here ...
-> 	} foo;
-> 
-> and because of the lazy "void *", they do not have to do this:
-> 
-> 	hashmap_entry_init(&foo->e, ...);
-> 
-> which would be required if the first parameter were "struct
-> hashmap_entry *", but they can just do this:
-> 
-> 	hashmap_entry_init(&foo, ...);
-
-Yes, I know that. It is the common way to simulate subclassing in C, for
-lack of a more compile-safe construct.
-
-> I have a slight preference to avoid the lazy "void *", but that is
-> an unrelated tangent.
-
-Oh, we are already safely in Unrelated Tangent Land for a while, I would
-think. Nothing of what we are discussing in this thread has anything to do
-with Kevin's patch series, which is about trying to use resources more
-sensibly when using the revision machinery's --cherry-pick option.
-
-And since we are already there, I'll offer an opinion in favor of `void
-*`: doing the &foo->e dance could quite possibly suggest that `e` is a
-field just like any other field (and does not necessarily *need* to be the
-first).
-
-But again, this has nothing to do with the patch series we are discussing
-here.
-
-> >> The fact that hashmap_entry_init() is there but there is no
-> >> corresponding hashmap_entry_clear() hints that there is nothing to be
-> >> worried about and I can see from the implementation of
-> >> hashmap_entry_init() that no extra resource is held inside, but an
-> >> API user should not have to guess.  We may want to do one of the two
-> >> things:
-> >> 
-> >>  * document that an embedded hashmap_entry does not hold any
-> >>    resource that need to be released and it is safe to free the user
-> >>    structure that embeds one; or
-> >> 
-> >>  * implement hashmap_entry_clear() that currently is a no-op.
-> >
-> > Urgh. The only reason we have hashmap_entry_init() is that we *may* want
-> > to extend `struct hashmap_entry` at some point. That is *already*
-> > over-engineered because that point in time seems quite unlikely to arrive,
-> > like, ever.
-> 
-> I am saying that an uneven over-enginnering is bad.
-
-Hmm. I guess that the _init() function could be replaced by an _INIT macro
-a la STRBUF_INIT. Not sure it is really worth the effort, though.
-
-Ciao,
-Dscho
