@@ -2,110 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E25B41F40E
-	for <e@80x24.org>; Wed,  3 Aug 2016 18:06:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB2A01F40E
+	for <e@80x24.org>; Wed,  3 Aug 2016 18:15:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756273AbcHCSGs (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 14:06:48 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:36013 "EHLO
-	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757992AbcHCSGo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2016 14:06:44 -0400
-Received: by mail-yw0-f194.google.com with SMTP id u134so17363470ywg.3
-        for <git@vger.kernel.org>; Wed, 03 Aug 2016 11:06:35 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=PGgS44zmxe3L4VQUzfettjA4w54uyec6LqOPesxPDZE=;
-        b=fWOtD7Hu33TciANg1PKqoQ2/9OZlHB+KlqrDQSpPqQxpF3hNGlTwlNLuvSAJNlPvfL
-         ArLuRYjm35CrzLzU/xLw3fQLnGk4Mc/gdWFN9mzLUU1/+4bJjGsq30ewGilPgegDkObH
-         rVUY3SnCcnbV8wWgw3Irk8jxLoxgXyWqsYIl3NjIcqMgxRZqHPCujCIMY1IHDY6PsSFT
-         tAtCliQuHA5/jmOeBXY+brpcxjVQufj+pysvTkykJbJLqKW3CYclLeakXZSHFbLpQHOA
-         fkm3BISKz0I26BvihN+IodycwT345K5ljxBfEphXzGgbBHL76EVk3B0/egnyTZliwHPN
-         y3kQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=PGgS44zmxe3L4VQUzfettjA4w54uyec6LqOPesxPDZE=;
-        b=OV8C/TFHL77dLo2jtaRVqlysa1yQl8byQ8lN5AxuFnUPLUTdKVm5ZR0VkVo9N3oFJ6
-         VY4b0rIL1HAYsVdeszClCADCTtPuTF9Y+HUgUHURrBJVU5kizaWO7xX0pnXSTUlZEWJQ
-         a63blzs+IQQUvcYsCFK0ROmuGnwNFH2FrhZ9ri7l+mu5XBN7rQuD4dWJJuz0JB/Y93t0
-         ZjU4IyWOK4ypdTkCxO8a35rXBBOIB7BwZm5jOMyV2MEnkfF5XBMJWwm0Q7mDBnTzgqXU
-         JMyCMjfDR2PyRVFifWIcjF6qiCuvfyZHwtK7NyXCBHwkPgw8ROCvvIm6znp9hqSLnit3
-         h5VA==
-X-Gm-Message-State: AEkoouu5h/v3BIzXpI8h/IprIfR2qCgyzApmIUcuQuERrelPf7B5j0VsYGDESa5fiFpCSzM6jCYfABek/dLSfw==
-X-Received: by 10.129.106.197 with SMTP id f188mr50926097ywc.38.1470246745242;
- Wed, 03 Aug 2016 10:52:25 -0700 (PDT)
+	id S1756631AbcHCSPN (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 14:15:13 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54000 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754352AbcHCSPG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2016 14:15:06 -0400
+Received: (qmail 10035 invoked by uid 102); 3 Aug 2016 18:08:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 Aug 2016 14:08:24 -0400
+Received: (qmail 3743 invoked by uid 107); 3 Aug 2016 18:08:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 Aug 2016 14:08:51 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Aug 2016 14:08:20 -0400
+Date:	Wed, 3 Aug 2016 14:08:20 -0400
+From:	Jeff King <peff@peff.net>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Michael Haggerty <mhagger@alum.mit.edu>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Chris Packham <judge.packham@gmail.com>, git@vger.kernel.org
+Subject: Re: [RFC/PATCH] rebase--interactive: Add "sign" command
+Message-ID: <20160803180820.2raazmsfjavoaogo@sigill.intra.peff.net>
+References: <20160803084743.3299-1-judge.packham@gmail.com>
+ <alpine.DEB.2.20.1608031621590.107993@virtualbox>
+ <xmqqr3a5al7z.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.13.250.4 with HTTP; Wed, 3 Aug 2016 10:52:04 -0700 (PDT)
-In-Reply-To: <20160803174522.5571-1-pclouds@gmail.com>
-References: <20160803160536.15596-1-pclouds@gmail.com> <20160803174522.5571-1-pclouds@gmail.com>
-From:	Junio C Hamano <gitster@pobox.com>
-Date:	Wed, 3 Aug 2016 10:52:04 -0700
-X-Google-Sender-Auth: gjHsHM90Ud7zIZ1DlgpjUaZuiC8
-Message-ID: <CAPc5daU49iVYw14sYeshXDbHGE_nW4vWyM=2XSz-buACVLFwoA@mail.gmail.com>
-Subject: Re: [PATCH v3] t7063: work around FreeBSD's lazy mtime update feature
-To:	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-Cc:	Git Mailing List <git@vger.kernel.org>, Eric Wong <e@80x24.org>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqr3a5al7z.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Aug 3, 2016 at 10:45 AM, Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
->  v3 differs from v2 in one line
->
->     --- a/t/t7063-status-untracked-cache.sh
->     +++ b/t/t7063-status-untracked-cache.sh
->     @@ -11,7 +11,7 @@ test_description='test untracked cache'
->      # containing directory in sync with the reality after doing blah and
->      # before checking the fast path behaviour
->      sync_mtime () {
->     -   find . -type d -exec ls -ld {} \; >/dev/null
->     +   find . -type d -ls >/dev/null
->      }
+On Wed, Aug 03, 2016 at 09:08:48AM -0700, Junio C Hamano wrote:
 
-"this and that" and "blah" are still there.
+> > However, I could imagine that we actually want this to be more extensible.
+> > After all, all you are doing is to introduce a new rebase -i command that
+> > does nothing else than shelling out to a command.
+> 
+> Yup, I tend to agree.
+> 
+> Adding "sign" feature (i.e. make it pass -S to "commit [--amend]")
+> may be a good thing, but adding "sign" command to do so is not a
+> great design.
 
-If you mean to tell the user "I won't describe it in detail, if you
-really want to know,
-go run blame yourself", spell it out like so. I was hoping that you
-can summarize
-in-line there to help the readers here.
+I'm not sure what you mean by "feature" here, but it reminded me of
+Michael's proposal to allow options to todo lines:
 
-> +# On some filesystems (e.g. FreeBSD's ext2 and ufs) this and that
-> +# happens when we do blah, which forces the untracked cache code to
-> +# take the slow path.  A test that wants to make sure the fast path
-> +# works correctly should call this helper to make mtime of the
-> +# containing directory in sync with the reality after doing blah and
-> +# before checking the fast path behaviour
-> +sync_mtime () {
-> +       find . -type d -ls >/dev/null
-> +}
-> +
->  avoid_racy() {
->         sleep 1
->  }
-> @@ -416,7 +426,8 @@ test_expect_success 'create/modify files, some of which are gitignored' '
->         echo four >done/four && # four is gitignored at a higher level
->         echo five >done/five && # five is not gitignored
->         echo test >base && #we need to ensure that the root dir is touched
-> -       rm base
-> +       rm base &&
-> +       sync_mtime
->  '
->
->  test_expect_success 'test sparse status with untracked cache' '
-> --
-> 2.9.1.566.gbd532d4
->
+  http://public-inbox.org/git/530DA00E.4090402@alum.mit.edu/
+
+which would allow:
+
+  pick -S 1234abcd
+
+If that's what you meant, I think it is a good idea. :)
+
+-Peff
