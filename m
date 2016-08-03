@@ -2,138 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 986731F40E
-	for <e@80x24.org>; Wed,  3 Aug 2016 21:36:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0A6A1F40E
+	for <e@80x24.org>; Wed,  3 Aug 2016 21:36:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932684AbcHCVgL (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 17:36:11 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63680 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932644AbcHCVgJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2016 17:36:09 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 892E4317E2;
-	Wed,  3 Aug 2016 17:36:08 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Y6O8h187f7f6RYWlMUqEitP0Gw0=; b=gE/SgB
-	WpRKJgjZQcT5rItXWz4himK3tVZ9EeokyB/b6UolmPgik1pjwRpdpR4we4I16Rrb
-	owSeELVaDy+RfuYWc1q7lZPVtZ2uhKfGjowe1SxYma0yz8xknUzko7Uh2IJ/tGek
-	HV/ibLcP+ho5ogZDm//c0PX8gk8vSFnKswWq8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GY+8lwiw5z83mR+GbwS+snNZ9lrzdRap
-	n41bEtUqmCrYGXCO9vdf4kjxPepl3KuGCFH0M6pcKKuEpPzkzCyAozOAi5BL09lY
-	1D2URSt8ShGj1klOTCaJgFfU3EGE6gBtczqevoF4TuZXgQYM6rcAWYUDoJrZMysm
-	HYV8GmWOn2M=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 82A1C317E1;
-	Wed,  3 Aug 2016 17:36:08 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0B4E7317DF;
-	Wed,  3 Aug 2016 17:36:07 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff Hostetler <git@jeffhostetler.com>
-Cc:	git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-	Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v4 2/8] status: cleanup API to wt_status_print
-References: <1470147137-17498-1-git-send-email-git@jeffhostetler.com>
-	<1470147137-17498-3-git-send-email-git@jeffhostetler.com>
-Date:	Wed, 03 Aug 2016 14:36:05 -0700
-In-Reply-To: <1470147137-17498-3-git-send-email-git@jeffhostetler.com> (Jeff
-	Hostetler's message of "Tue, 2 Aug 2016 10:12:11 -0400")
-Message-ID: <xmqqr3a57cxm.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S932724AbcHCVgc (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 17:36:32 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54243 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932518AbcHCVgb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2016 17:36:31 -0400
+Received: (qmail 17891 invoked by uid 102); 3 Aug 2016 21:09:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 Aug 2016 17:09:50 -0400
+Received: (qmail 5934 invoked by uid 107); 3 Aug 2016 21:10:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 Aug 2016 17:10:17 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Aug 2016 17:09:46 -0400
+Date:	Wed, 3 Aug 2016 17:09:46 -0400
+From:	Jeff King <peff@peff.net>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Eric Wong <e@80x24.org>, "Kyle J. McKay" <mackyle@gmail.com>,
+	git@vger.kernel.org,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: [PATCH 1/1 v2] pager: move pager-specific setup into the build
+Message-ID: <20160803210946.pjclbkz3qlsi2ezb@sigill.intra.peff.net>
+References: <20160801214937.4752-1-e@80x24.org>
+ <20160801214937.4752-2-e@80x24.org>
+ <20160803161911.dxucq7f2pvnoovoc@sigill.intra.peff.net>
+ <xmqq4m718tay.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 49F31220-59C2-11E6-9B37-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq4m718tay.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
+On Wed, Aug 03, 2016 at 01:57:09PM -0700, Junio C Hamano wrote:
 
-> From: Jeff Hostetler <jeffhost@microsoft.com>
->
-> Refactor the API between builtin/commit.c and wt-status.[ch].
-> Hide details of the various wt_*status_print() routines inside
-> wt-status.c behind a single (new) wt_status_print() routine
-> and eliminate the switch statements from builtin/commit.c
->
-> This will allow us to more easily add new status formats
-> and isolate that within wt-status.c
->
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> Signed-off-by: Jeff Hostetler <git@jeffhostetler.com>
+> All bugs are from my original, I think.  Here is a proposed squash.
+> 
+>  * This shouldn't make much difference for @@PAGER_ENV@@, but not
+>    quoting the default assignment, i.e.
+> 
+>    	: "${VAR=VAL}" && export VAR
+> 
+>    is bad manners.  cf. 01247e02 (sh-setup: enclose setting of
+>    ${VAR=default} in double-quotes, 2016-06-19)
+> 
+>  * Again, this shouldn't make much difference for PAGER_ENV, but
+>    let's follow the "reset per iteration, release at the end"
+>    pattern to avoid repeated allocation.
+> 
+>  * Let's avoid a hand-rolled "skip blanks" loop and let strspn() do
+>    it.
 
-Again, are these the same person?  I won't repeat this for the
-remainder of the series.
+Sounds good.
 
-> diff --git a/wt-status.h b/wt-status.h
-> index 2023a3c..a859a12 100644
-> --- a/wt-status.h
-> +++ b/wt-status.h
-> @@ -43,6 +43,15 @@ struct wt_status_change_data {
->  	unsigned new_submodule_commits : 1;
->  };
+> diff --git a/pager.c b/pager.c
+> index cd1ac54..7199c31 100644
+> --- a/pager.c
+> +++ b/pager.c
+> @@ -66,25 +66,22 @@ const char *git_pager(int stdout_is_tty)
+>  static void setup_pager_env(struct argv_array *env)
+>  {
+>  	const char *pager_env = PAGER_ENV;
+> +	struct strbuf buf = STRBUF_INIT;
 >  
-> + enum wt_status_format {
-> +	STATUS_FORMAT_NONE = 0,
-> +	STATUS_FORMAT_LONG,
-> +	STATUS_FORMAT_SHORT,
-> +	STATUS_FORMAT_PORCELAIN,
-> +
-> +	STATUS_FORMAT_UNSPECIFIED
-> + };
-
-Is it your editor, or is it your MUA?  This definition is indented
-by one SP, which is funny.
-
-Also throughout the series, I saw a handful of blank lines that
-should be empty but are not (e.g. three tabs and nothing else on a
-new line).  I've fixed them up all but I won't be sending an
-interdiff just for them, so please make sure they won't resurface
-when/if you reroll.
-
->  struct wt_status {
->  	int is_initial;
->  	char *branch;
-> @@ -66,6 +75,8 @@ struct wt_status {
->  	int show_branch;
->  	int hints;
+>  	while (*pager_env) {
+> -		struct strbuf buf = STRBUF_INIT;
+>  		const char *cp = strchrnul(pager_env, '=');
 >  
-> +	enum wt_status_format status_format;
-> +
->  	/* These are computed during processing of the individual sections */
->  	int commitable;
->  	int workdir_dirty;
-> @@ -99,6 +110,7 @@ struct wt_status_state {
->  void wt_status_truncate_message_at_cut_line(struct strbuf *);
->  void wt_status_add_cut_line(FILE *fp);
->  void wt_status_prepare(struct wt_status *s);
-> +void wt_status_print(struct wt_status *s);
->  void wt_status_collect(struct wt_status *s);
->  void wt_status_get_state(struct wt_status_state *state, int get_detached_from);
->  int wt_status_check_rebase(const struct worktree *wt,
-> @@ -106,10 +118,6 @@ int wt_status_check_rebase(const struct worktree *wt,
->  int wt_status_check_bisect(const struct worktree *wt,
->  			   struct wt_status_state *state);
->  
-> -void wt_longstatus_print(struct wt_status *s);
-> -void wt_shortstatus_print(struct wt_status *s);
-> -void wt_porcelain_print(struct wt_status *s);
-> -
+>  		if (!*cp)
+>  			die("malformed build-time PAGER_ENV");
+>  		strbuf_add(&buf, pager_env, cp - pager_env);
 
-I think I agreed during the previous review round that shifting the
-division of labor boundary between the command and wt-status.[ch]
-this way, to have the latter do more printing, is a good idea, and I
-still do.
+I thought you'd need a strbuf_reset() here, but I guess it is handled by
+the one at the end of the loop. That's OK because there are no other
+loop exits, though IMHO putting it at the top makes the reusable-strbuf
+idiom easier to understand.
 
-Thanks.
+-Peff
