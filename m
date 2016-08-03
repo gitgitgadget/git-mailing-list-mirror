@@ -2,93 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC00C2069B
-	for <e@80x24.org>; Wed,  3 Aug 2016 14:59:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C6DD20AA0
+	for <e@80x24.org>; Wed,  3 Aug 2016 15:33:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932275AbcHCO6e (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 10:58:34 -0400
-Received: from mail-qt0-f182.google.com ([209.85.216.182]:36632 "EHLO
-	mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757301AbcHCO6d (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2016 10:58:33 -0400
-Received: by mail-qt0-f182.google.com with SMTP id 52so144836056qtq.3
-        for <git@vger.kernel.org>; Wed, 03 Aug 2016 07:58:33 -0700 (PDT)
+	id S1756867AbcHCPdf (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 11:33:35 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:35944 "EHLO
+	mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755671AbcHCPde (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2016 11:33:34 -0400
+Received: by mail-yw0-f195.google.com with SMTP id u134so17084416ywg.3
+        for <git@vger.kernel.org>; Wed, 03 Aug 2016 08:33:33 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=CrUTL5270OQAvSC0r42gtt2XnC5IGuWoLRf0NPAWWik=;
-        b=f21cBJGuRfVW+kiOJflT4E1MyKClUsnEGtQUix9IeDUmeHL23pVO5ciT2JxJ5QQO8G
-         7gzkIYBsw/nfGGYkFW12qZFVsj0jdfIqADZjF9O//iWKO/di8zYiM7L6ucF1YWE3zGHV
-         p/fS8DraEWEkyetCmnCtJkPdq8Hhk+kvGJwK7V1wL9NeS2v0isW26J1f+2OZ/sJunI1k
-         WMAz9bvLCLn9JFhkVZl7dx2sGj1RkRvN5Sq0uFTb2X+1v98TE6e8bhFIrO0Wdkmfw7rB
-         GQN5jwupQHBM8kHKGIOUprhQobPF/uZLiBWbxmIU4f3a9MNk9ZiGHQNqGTVEgsszp8kP
-         Xk0A==
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=CKh4Aa86b+UU7YsBceeBfFGElweBaS4zvUcWXN9FQb4=;
+        b=tNdVUJ+oSDfCmePMP8qukrBgMl6Bj0/NJJEXYiUzyZ4ABa+DDmWkYQT277rPglRVyZ
+         MXuEMjCB2c6iOSTMfAMb/XlUCz+vzSMWFeKCH4U4zzTFKCx5RwvEzQJbpF3IJchJAlWP
+         CCFsV38qEw2YxEd1R00D8bisFC2UAjoYEv/TBKKaVpoxTovW3UsxkkqHsJU4v6WlF9BL
+         KxBhMODP/QKP/mAAByu9agfeRGfbBkqK8NlUrLLrqZVM7pTDG4lcNMtjSLrArwdnNHQR
+         LA8psYdWXA61V9yWKt/QmojBJ1rP3wTQ3J1NdwDm7vvl+9QpfqI5QXHYIfbx0wALuw02
+         12xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=CrUTL5270OQAvSC0r42gtt2XnC5IGuWoLRf0NPAWWik=;
-        b=kY0bZFzaAwinznRrtIQ+88XW9kxyrpAkHqu+mo6XyGqqrM6KMke9hQVtSjnD5YX8TG
-         T11vGqz1OUwgd3aj77E3MKWZcribcJaT4GuPqu0DBNDJSFUWxKII1yN0/G5pm0x6CIzC
-         oeuix55lOEpjJ7np0AEdB+shdpQ08o/CuhVcfNl9PHSbwra0H+zrN+rvRAuY36qUkG8R
-         duXCqNOKliTbhPj5Zl387fikGzwTkXYwP3Dfs6t6PZ+VPe7XTMyjMJFvP2b5TlW2vA4f
-         IETQX/9IYzrOwDD7I8YjsZ7+5c5pAh39sz6didTBG5UBZJ4wycAJMIv6uTMkZzzAFvxL
-         PQyA==
-X-Gm-Message-State: AEkoouu3ZjtjGCqSYBPFtywr+Lz8ugePIZnn0TYrYkuq9MGr6lIU8e/LPjphythGO7zpRpGe
-X-Received: by 10.200.57.34 with SMTP id s31mr259129qtb.49.1470236312388;
-        Wed, 03 Aug 2016 07:58:32 -0700 (PDT)
-Received: from LykOS.localdomain (NYUFWA-WLESSAUTHCLIENTS-01.NATPOOL.NYU.EDU. [216.165.95.72])
-        by smtp.gmail.com with ESMTPSA id e33sm4334838qta.47.2016.08.03.07.58.31
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Aug 2016 07:58:31 -0700 (PDT)
-Date:	Wed, 3 Aug 2016 10:58:31 -0400
-From:	Santiago Torres <santiago@nyu.edu>
-To:	Git <git@vger.kernel.org>
-Subject: [OT] USENIX paper on Git
-Message-ID: <20160803145830.uwssj4uhqfemhr4o@LykOS.localdomain>
-References: <20160801224043.4qmf56pmv27riq4i@LykOS.localdomain>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=CKh4Aa86b+UU7YsBceeBfFGElweBaS4zvUcWXN9FQb4=;
+        b=ZTFwFPyPv+QJMGp8ATt2fHzsh+EMPaDhrL/ogwInkOR0H0vDqkBXd13bkpo06k+C/z
+         UPAWsA3k6bU7ThW7/UOpYvs1dODwIAyyRG+x5BXNSazfeiTthc6kRrP3BdTXIcL790J8
+         iEb7o+Phqe0VJpjk0RarVO12bHx2/hwtI6FZujzENXFz01dZJptKXQiut9geV3TBC20l
+         WNeAxjwktuCzQT+EttXyHZz04efgo9F0N6g7YovsOSzr911h66fGfN3zD2qt6XthpoT1
+         QcmyV2wEjih5sP3wJQ4FjWeB35Vu8JPk7CtxjsVWDa8DatPxGGt5Fr7hndr1iF6aTK9/
+         25Mg==
+X-Gm-Message-State: AEkoous/7RPFzpbD+xh+LaLgNZrUrwDpSbvyvQaPEwCmKaeeX8Hcz2cSVHEYRv+uP5qG3e9SFJCCYmFDIZVV/w==
+X-Received: by 10.129.106.139 with SMTP id f133mr55449386ywc.163.1470238413088;
+ Wed, 03 Aug 2016 08:33:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160801224043.4qmf56pmv27riq4i@LykOS.localdomain>
+Received: by 10.13.250.4 with HTTP; Wed, 3 Aug 2016 08:33:12 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1608031021050.79248@virtualbox>
+References: <cover.1469547160.git.johannes.schindelin@gmx.de>
+ <cover.1470051326.git.johannes.schindelin@gmx.de> <8ff71aba37be979f05abf88f467ec932aa522bdd.1470051326.git.johannes.schindelin@gmx.de>
+ <xmqqlh0gjpr6.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608021004080.79248@virtualbox>
+ <xmqqy44ec15p.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608031021050.79248@virtualbox>
+From:	Junio C Hamano <gitster@pobox.com>
+Date:	Wed, 3 Aug 2016 08:33:12 -0700
+X-Google-Sender-Auth: -VKxsVGI9E0MIG3s9jdEn4kyySE
+Message-ID: <CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com>
+Subject: Re: patch submission process, was Re: [PATCH v6 06/16]
+ merge_recursive: abort properly upon errors
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hello everyone,
+On Wed, Aug 3, 2016 at 4:59 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> I disagree, however, with the suggestion to sift through your `pu` branch
+> and to somehow replace local branches with the commits found there.
 
-I will be presenting a paper regarding the Git metadata issues that we
-discussed at the beginning on the year on USENIX '16. I'm writing To
-make everyone in this ML aware that this work exists and to bring
-everyone into the loop.
-
-I'm open for feedback and corrections. If anything seems odd imprecise
-to the community, I can make an errata in the presentation (at least).
-I'll also try to work towards making corrections anywhere if possible;
-this is my first publication, so I wasn't sure if it was possible to
-share things before they are published. Thankfully, this is OK in
-USENIX's book. Here's the link:
-http://i2.cdn.turner.com/cnnnext/dam/assets/160730192650-14new-week-in-politics-super-169.jpg
-
-I do mention of work towards fixing these issues in upcoming versions of
-Git. This is in reference to the issue with Git tags, although I hope to
-continue working on Git in general once I have more time for it. Thanks
-again for all the patience reviewing patches and discussing everything.
-
-Thanks!
--Santiago.
-
-P.S. Let me know if anyone is going to USENIX. I'm looking forward to
-meeting!
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/287649 *
-I believe it to be this, but gmane seems to be down. 
-
-
+To be more in line with the "e-mailed patch" workflow, I think what I should
+do is to send the version I queued with fixups back to the list as follow-up.
+Just like reviewers review, the maintainer reviews and queues, the original
+author should be able to work in the same workflow, i.e. reading and applying
+an improved version of the patch from her mailbox.
