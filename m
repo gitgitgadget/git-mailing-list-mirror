@@ -7,121 +7,112 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3AE291F40E
-	for <e@80x24.org>; Wed,  3 Aug 2016 22:15:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6892A1F40E
+	for <e@80x24.org>; Wed,  3 Aug 2016 22:25:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932959AbcHCWPv (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 18:15:51 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:38592 "EHLO
-	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932932AbcHCWPu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2016 18:15:50 -0400
-Received: by mail-wm0-f48.google.com with SMTP id o80so355818806wme.1
-        for <git@vger.kernel.org>; Wed, 03 Aug 2016 15:15:49 -0700 (PDT)
+	id S932123AbcHCWZr (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 18:25:47 -0400
+Received: from mail-yb0-f196.google.com ([209.85.213.196]:36572 "EHLO
+	mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753134AbcHCWZq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2016 18:25:46 -0400
+X-Greylist: delayed 7013 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Aug 2016 18:25:46 EDT
+Received: by mail-yb0-f196.google.com with SMTP id o3so49658ybo.3
+        for <git@vger.kernel.org>; Wed, 03 Aug 2016 15:25:37 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=76mcyacS5rQocAL0VX5Uzl4BfUsGgCLXAmT9iSg/GBM=;
-        b=Q5dfoOywpIwjrpbelPQlYlJbOzKDoou4NkvKjnNGCdrtkk+jXKpzHHn2qjWVtLQecL
-         LKpu6qFGk/nfMwMgx2wNriMeOjMOnfKpIoYeCpTRq92uDSvUf2rPIiwnDgHJ9MX93ozC
-         gzsbCreTIscDhC72veo4kl33UaiUg6DktQbcORxVymTyxF2bSpnJPG3JLKN7M2OXg2Kj
-         RSbclkS/95jxvRYZX5tWhyYQCcxeBp3t0jPH5ksWipRJ0XG0E+fAipxWp4twxy6Pmek/
-         SapBl3uPsHXXMw1AarofZRxIVd0SswLYInUX8RSiTTVexdyB3BHvEBhKoLQIzI/BzeQG
-         GJHg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=jS98ibzQyVPOlcLtcIyc6MYeUQvc0Gkh0j4BIRHmrGA=;
+        b=REJ0MrC0lKsSe44k5DF0GasVLEOp6RMDYZML53HsoAaxh8U+MruxVQIzaOkt13T+XP
+         BnxZevNndYrcCtGsQVWqe0du7RV2XHZYWTzqjWvdWR+B+Q2W4/5UQfAJabb2CX1eWFpy
+         MfDuN41CVc2I9eWPAVB8GYOVAzVQP6GJQ/hICfkcHwAyxF3HssE3OAO7eg+W1iYuHtk3
+         VwGuX2l58rD3vSYRmTdhMDhiFwvsYgzSUf6UOf00WtoqNYJ+MisRLHjMJi6wZIqjQvYh
+         q2Oo/q+QeUfKb0fAp+YH+TR0D/V0HyYiOgCBNtvhwh3mt+i2SGABaFAPaw8ZpTypgeFo
+         NHbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=76mcyacS5rQocAL0VX5Uzl4BfUsGgCLXAmT9iSg/GBM=;
-        b=MMeQdNQI0YnjEqnEip5IlPlbd7YXTXQah2wODFc6gvV00rX/F/WJKaOjStIZKMIOwZ
-         NoRpUlMsEL1Au9rr07ILGVvgXKdbTxKVQxGtXpDa06x2hnLZZ9r92KVm5PHwPR6cx1ce
-         HUvy4wHjggsCB3zAOF15J2MwY2HwT/1IAVMKccsRF8aL/aAHQxyo2an8bI1sXA3Q2E5G
-         QwRJkR+6zcgdi/PpKmZrswhdDqJTthY8izOaaMFbcWoj4FW6loZuHs7mxZ/Q3xwdOX1t
-         A/9ky50EWdGmyuUipu1eDSQvqqlAHfkrQOuL513zGy6ostuVZr2cBVE3OWSaNUb0bNf1
-         nAgg==
-X-Gm-Message-State: AEkoousXh3MM+81gGNERox8SjahCy8YhzpwyOnc+JnToFFRPkGl4BnZW2LNE9J3BzHWLSA==
-X-Received: by 10.194.110.229 with SMTP id id5mr69963664wjb.23.1470262548833;
-        Wed, 03 Aug 2016 15:15:48 -0700 (PDT)
-Received: from slxbook4.fritz.box (p5DDB674A.dip0.t-ipconnect.de. [93.219.103.74])
-        by smtp.gmail.com with ESMTPSA id bj8sm9648975wjc.49.2016.08.03.15.15.47
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 03 Aug 2016 15:15:47 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v4 07/12] run-command: add clean_on_exit_handler
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20160803212433.zzdino3ivyem5a2v@sigill.intra.peff.net>
-Date:	Thu, 4 Aug 2016 00:15:46 +0200
-Cc:	git@vger.kernel.org, gitster@pobox.com, jnareb@gmail.com,
-	tboegi@web.de, mlbright@gmail.com, e@80x24.org
-Content-Transfer-Encoding: 7bit
-Message-Id: <826967FE-BFF8-4387-83F7-AE7036D97FEC@gmail.com>
-References: <20160729233801.82844-1-larsxschneider@gmail.com> <20160803164225.46355-1-larsxschneider@gmail.com> <20160803164225.46355-8-larsxschneider@gmail.com> <20160803212433.zzdino3ivyem5a2v@sigill.intra.peff.net>
-To:	Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=jS98ibzQyVPOlcLtcIyc6MYeUQvc0Gkh0j4BIRHmrGA=;
+        b=biPB0lEIJa2i4FvS0JQTx9KDeMhDGmWI9CyEJl82BjBrr0shVbq4iONdPsAmzXZZYU
+         QODXwTI2/EiDamxacvBUGu724nKbJkCsTdn/HhhdAbdeskFusIsYbhzUKDMSadGO39K2
+         oCa03X0/99CURUp+tScI3D3yUGmcgE4IF0eh1np9WWJ3GH1lQLF+zwE/YUDIpR7zyLnO
+         M+WFxATrFB+vayWbcl/LbnnJlKfeeXcCFDR3wMho5sqfoYQNs6e4lefJ66+qa2jXbHnI
+         DV5jBhBWeRHHAC3fMXLphw0SfYGrkUBbpqnbXmboqEnN881anRu8tMKoiV+daeP7rqWY
+         mqsQ==
+X-Gm-Message-State: AEkoout1eTHHctUxOlxWd46ePZy+67ca0gAjyUnCgMDQb1DV+2WknkK9lC25h72lhIn3jMu1bj4qf85ICjKpcA==
+X-Received: by 10.37.96.10 with SMTP id u10mr21136738ybb.7.1470256075119; Wed,
+ 03 Aug 2016 13:27:55 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.129.89.132 with HTTP; Wed, 3 Aug 2016 13:27:54 -0700 (PDT)
+In-Reply-To: <xmqqy44fdpxd.fsf@gitster.mtv.corp.google.com>
+References: <0102015640423c26-2060fd70-c90d-4de3-ae8c-1801ad160b1c-000000@eu-west-1.amazonses.com>
+ <0102015640423ce6-5b11201e-736d-413f-be12-7fed613ae484-000000@eu-west-1.amazonses.com>
+ <xmqqy44fdpxd.fsf@gitster.mtv.corp.google.com>
+From:	Pranit Bauva <pranit.bauva@gmail.com>
+Date:	Thu, 4 Aug 2016 01:57:54 +0530
+Message-ID: <CAFZEwPNFohRLCS4piB1t0LO-=keucwzRKZ2Jyhhf234tnWnVGg@mail.gmail.com>
+Subject: Re: [RFC/PATCH v11 04/13] bisect--helper: `bisect_clean_state` shell
+ function in C
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Hey Junio,
 
-> On 03 Aug 2016, at 23:24, Jeff King <peff@peff.net> wrote:
-> 
-> On Wed, Aug 03, 2016 at 06:42:20PM +0200, larsxschneider@gmail.com wrote:
-> 
->> From: Lars Schneider <larsxschneider@gmail.com>
->> 
->> Some commands might need to perform cleanup tasks on exit. Let's give
->> them an interface for doing this.
->> 
->> Please note, that the cleanup callback is not executed if Git dies of a
->> signal. The reason is that only "async-signal-safe" functions would be
->> allowed to be call in that case. Since we cannot control what functions
->> the callback will use, we will not support the case. See 507d7804 for
->> more details.
-> 
-> I'm not clear on why we want this cleanup filter. It looks like you use
-> it in the final patch to send an explicit shutdown to any filters we
-> start. But I see two issues with that:
-> 
->  1. This shutdown may come at any time, and you have no idea what state
->     the protocol conversation with the filter is in. You could be in
->     the middle of sending another pkt-line, or in a sequence of non-command
->     pkt-lines where "shutdown" is not recognized.
+On Tue, Aug 2, 2016 at 11:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Pranit Bauva <pranit.bauva@gmail.com> writes:
+>
+>> +static int bisect_clean_state(void)
+>> +{
+>> +     int result = 0;
+>> +
+>> +     /* There may be some refs packed during bisection */
+>> +     struct string_list refs_for_removal = STRING_LIST_INIT_NODUP;
+>> +     for_each_ref_in("refs/bisect/", mark_for_removal, (void *) &refs_for_removal);
+>> +     string_list_append(&refs_for_removal, xstrdup("BISECT_HEAD"));
+>> +     result = delete_refs(&refs_for_removal);
+>> +     refs_for_removal.strdup_strings = 1;
+>> +     string_list_clear(&refs_for_removal, 0);
+>> +     remove_path(git_path_bisect_expected_rev());
+>> +     remove_path(git_path_bisect_ancestors_ok());
+>> +     remove_path(git_path_bisect_log());
+>> +     remove_path(git_path_bisect_names());
+>> +     remove_path(git_path_bisect_run());
+>> +     remove_path(git_path_bisect_terms());
+>> +     /* Cleanup head-name if it got left by an old version of git-bisect */
+>> +     remove_path(git_path_head_name());
+>> +      * Cleanup BISECT_START last to support the --no-checkout option
+>> +      * introduced in the commit 4796e823a.
+>> +      */
+>> +     remove_path(git_path_bisect_start());
+>
+> I can see that refs/files-backend.c misuses it already, but
+> remove_path() helper is about removing a path in the working tree,
+> together with any parent directory that becomes empty due to the
+> removal.  You do not expect $GIT_DIR/ to become an empty directory
+> after removing $GIT_DIR/BISECT_LOG nor want to rmdir $GIT_DIR even
+> if it becomes empty.  It is a wrong helper function to use here.
+>
+> Also you do not seem to check the error from the function to smudge
+> the "result" you are returning from this function.
 
-Maybe I am missing something, but I don't think that can happen because 
-the cleanup callback is *only* executed if Git exits normally without error. 
-In that case we would be in a sane protocol state, no?
+Yes I should combine the results from every removal.
 
+> Isn't unlink_or_warn() more correct helper to use here?
 
->  2. If your protocol does bad things when it is cut off in the middle
->     without an explicit shutdown, then it's a bad protocol. As you
->     note, this patch doesn't cover signal death, nor could it ever
->     cover something like "kill -9", or a bug which prevented git from
->     saying "shutdown".
-> 
->     You're much better off to design the protocol so that a premature
->     EOF is detected as an error.  For example, if we're feeding file
->     data to the filter, and we're worried it might be writing it to
->     a data store (like LFS), we would not want it to see EOF and say
->     "well, I guess I got all the data; time to store this!". Instead,
->     it should know how many bytes are coming, or should have some kind
->     of framing so that the sender says "and now you have seen all the
->     bytes" (like a pkt-line flush).
-> 
->     AFAIK, your protocol _does_ do those things sensibly, so this
->     explicit shutdown isn't really accomplishing anything.
+The shell code uses rm -f which is silent and it removes only if
+present. So it makes me wonder which would be more appropriate
+unlink_or_warn() or remove_or_warn() or remove_path(). Is
+remove_path() different from its shell equivalent "rm -f"?
 
-Thanks. The shutdown command is not intended to be a mechanism to tell
-the filter that everything went well. At this point - as you mentioned -
-the filter already received all data in the right way. The shutdown
-command is intended to give the filter some time to perform some post
-processing before Git returns.
+>> +     return result;
+>> +}
 
-See here for some brainstorming how this feature could be useful
-in filters similar to Git LFS:
-https://github.com/github/git-lfs/issues/1401#issuecomment-236133991
-
-- Lars
-
+Regards,
+Pranit Bauva
