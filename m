@@ -3,78 +3,160 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C6DD20AA0
-	for <e@80x24.org>; Wed,  3 Aug 2016 15:33:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F9B11F858
+	for <e@80x24.org>; Wed,  3 Aug 2016 16:44:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756867AbcHCPdf (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 11:33:35 -0400
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:35944 "EHLO
-	mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755671AbcHCPde (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2016 11:33:34 -0400
-Received: by mail-yw0-f195.google.com with SMTP id u134so17084416ywg.3
-        for <git@vger.kernel.org>; Wed, 03 Aug 2016 08:33:33 -0700 (PDT)
+	id S1758118AbcHCQnk (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 12:43:40 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:36572 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757775AbcHCQnE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2016 12:43:04 -0400
+Received: by mail-wm0-f66.google.com with SMTP id x83so37153516wma.3
+        for <git@vger.kernel.org>; Wed, 03 Aug 2016 09:42:39 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=CKh4Aa86b+UU7YsBceeBfFGElweBaS4zvUcWXN9FQb4=;
-        b=tNdVUJ+oSDfCmePMP8qukrBgMl6Bj0/NJJEXYiUzyZ4ABa+DDmWkYQT277rPglRVyZ
-         MXuEMjCB2c6iOSTMfAMb/XlUCz+vzSMWFeKCH4U4zzTFKCx5RwvEzQJbpF3IJchJAlWP
-         CCFsV38qEw2YxEd1R00D8bisFC2UAjoYEv/TBKKaVpoxTovW3UsxkkqHsJU4v6WlF9BL
-         KxBhMODP/QKP/mAAByu9agfeRGfbBkqK8NlUrLLrqZVM7pTDG4lcNMtjSLrArwdnNHQR
-         LA8psYdWXA61V9yWKt/QmojBJ1rP3wTQ3J1NdwDm7vvl+9QpfqI5QXHYIfbx0wALuw02
-         12xw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Twbmbqir/uGjiI674pqW5v7s40tyl8ZT4q24AhEWhaQ=;
+        b=C9MTeBHhrYMcsyX79CXVmu4dqrPa4Zdz/rzwI6w5QOG7G2z0c2GuY8jssvCEdInQQC
+         1qu/0M8gJHRQhGUrktdA3Di+mInBcGLoxRCqRGsa4LY0I68kPC3g0GdpsPlssrVwu/za
+         mdS46o4kAIg/aqfnDuCAaNnJbpENJTRfbNKSiVVNPTO62zk5NROprYDBOrrPLiJuDeOM
+         f3SpERLHpYselIVFyHLDZEEeutuf6cpqWbYR2+6DynodKopeweWw1Y27ChXTTvzc+n/Y
+         EcP3BbDxVN/P7hPa3udS28ajGZIIuxVut7pjlea75a1CoSY4hYGLmUqMO3WNZ0lBi3/G
+         Yp5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=CKh4Aa86b+UU7YsBceeBfFGElweBaS4zvUcWXN9FQb4=;
-        b=ZTFwFPyPv+QJMGp8ATt2fHzsh+EMPaDhrL/ogwInkOR0H0vDqkBXd13bkpo06k+C/z
-         UPAWsA3k6bU7ThW7/UOpYvs1dODwIAyyRG+x5BXNSazfeiTthc6kRrP3BdTXIcL790J8
-         iEb7o+Phqe0VJpjk0RarVO12bHx2/hwtI6FZujzENXFz01dZJptKXQiut9geV3TBC20l
-         WNeAxjwktuCzQT+EttXyHZz04efgo9F0N6g7YovsOSzr911h66fGfN3zD2qt6XthpoT1
-         QcmyV2wEjih5sP3wJQ4FjWeB35Vu8JPk7CtxjsVWDa8DatPxGGt5Fr7hndr1iF6aTK9/
-         25Mg==
-X-Gm-Message-State: AEkoous/7RPFzpbD+xh+LaLgNZrUrwDpSbvyvQaPEwCmKaeeX8Hcz2cSVHEYRv+uP5qG3e9SFJCCYmFDIZVV/w==
-X-Received: by 10.129.106.139 with SMTP id f133mr55449386ywc.163.1470238413088;
- Wed, 03 Aug 2016 08:33:33 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.13.250.4 with HTTP; Wed, 3 Aug 2016 08:33:12 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1608031021050.79248@virtualbox>
-References: <cover.1469547160.git.johannes.schindelin@gmx.de>
- <cover.1470051326.git.johannes.schindelin@gmx.de> <8ff71aba37be979f05abf88f467ec932aa522bdd.1470051326.git.johannes.schindelin@gmx.de>
- <xmqqlh0gjpr6.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608021004080.79248@virtualbox>
- <xmqqy44ec15p.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608031021050.79248@virtualbox>
-From:	Junio C Hamano <gitster@pobox.com>
-Date:	Wed, 3 Aug 2016 08:33:12 -0700
-X-Google-Sender-Auth: -VKxsVGI9E0MIG3s9jdEn4kyySE
-Message-ID: <CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com>
-Subject: Re: patch submission process, was Re: [PATCH v6 06/16]
- merge_recursive: abort properly upon errors
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Twbmbqir/uGjiI674pqW5v7s40tyl8ZT4q24AhEWhaQ=;
+        b=NLqbuRMf9DisdGSbWRYVOD/ABtl8vqIJlMPTrpGdVV3R5U5t3OUNb8yztaokROQWjo
+         z8jLbUDBg4sezaHSkeicSraadNNC9mnJYeROToxmr/KXf7ATssMUTedsMd2SelD+xzwH
+         qpIzUnNXLjzA4zfO8+uxqt4UsdjkMbh7pK+SAFkM60vCVHxkB1Ah02T2U79TV0QDvkq8
+         Z5SPkJEaJRXKoEB5FcUIdr3Fo1J91zGt/76PYFTgcjm61uJ+vLLp450j70OKJKzqIqqQ
+         XdQAqZ40OUtfZhsC//5DdCI7JQ4xWQegKzoX91hNmWTJkfHKylTB6le397VSAOOEORmT
+         haoQ==
+X-Gm-Message-State: AEkoouvcwqoF1XCXy9UC3giFteE5fy6g3RF9/+GtbMdFBUv0AdLS7srH8qDhO/z8Z+m0jQ==
+X-Received: by 10.28.104.137 with SMTP id d131mr25622610wmc.7.1470242557903;
+        Wed, 03 Aug 2016 09:42:37 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id 3sm8959736wms.1.2016.08.03.09.42.37
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Wed, 03 Aug 2016 09:42:37 -0700 (PDT)
+From:	larsxschneider@gmail.com
+To:	git@vger.kernel.org
+Cc:	gitster@pobox.com, jnareb@gmail.com, tboegi@web.de,
+	mlbright@gmail.com, e@80x24.org, peff@peff.net,
+	Lars Schneider <larsxschneider@gmail.com>
+Subject: [PATCH v4 10/12] convert: generate large test files only once
+Date:	Wed,  3 Aug 2016 18:42:23 +0200
+Message-Id: <20160803164225.46355-11-larsxschneider@gmail.com>
+X-Mailer: git-send-email 2.9.0
+In-Reply-To: <20160803164225.46355-1-larsxschneider@gmail.com>
+References: <20160729233801.82844-1-larsxschneider@gmail.com>
+ <20160803164225.46355-1-larsxschneider@gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Aug 3, 2016 at 4:59 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> I disagree, however, with the suggestion to sift through your `pu` branch
-> and to somehow replace local branches with the commits found there.
+From: Lars Schneider <larsxschneider@gmail.com>
 
-To be more in line with the "e-mailed patch" workflow, I think what I should
-do is to send the version I queued with fixups back to the list as follow-up.
-Just like reviewers review, the maintainer reviews and queues, the original
-author should be able to work in the same workflow, i.e. reading and applying
-an improved version of the patch from her mailbox.
+Generate more interesting large test files with pseudo random characters
+in between and reuse these test files in multiple tests. Run tests formerly
+marked as EXPENSIVE every time but with a smaller data set.
+
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
+ t/t0021-conversion.sh | 48 ++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 38 insertions(+), 10 deletions(-)
+
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index 7b45136..34c8eb9 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -4,6 +4,15 @@ test_description='blob conversion via gitattributes'
+ 
+ . ./test-lib.sh
+ 
++if test_have_prereq EXPENSIVE
++then
++	T0021_LARGE_FILE_SIZE=2048
++	T0021_LARGISH_FILE_SIZE=100
++else
++	T0021_LARGE_FILE_SIZE=30
++	T0021_LARGISH_FILE_SIZE=2
++fi
++
+ cat <<EOF >rot13.sh
+ #!$SHELL_PATH
+ tr \
+@@ -31,7 +40,26 @@ test_expect_success setup '
+ 	cat test >test.i &&
+ 	git add test test.t test.i &&
+ 	rm -f test test.t test.i &&
+-	git checkout -- test test.t test.i
++	git checkout -- test test.t test.i &&
++
++	mkdir generated-test-data &&
++	for i in $(test_seq 1 $T0021_LARGE_FILE_SIZE)
++	do
++		RANDOM_STRING="$(test-genrandom end $i | tr -dc "A-Za-z0-9" )"
++		ROT_RANDOM_STRING="$(echo $RANDOM_STRING | ./rot13.sh )"
++		# Generate 1MB of empty data and 100 bytes of random characters
++		# printf "$(test-genrandom start $i)"
++		printf "%1048576d" 1 >>generated-test-data/large.file &&
++		printf "$RANDOM_STRING" >>generated-test-data/large.file &&
++		printf "%1048576d" 1 >>generated-test-data/large.file.rot13 &&
++		printf "$ROT_RANDOM_STRING" >>generated-test-data/large.file.rot13 &&
++
++		if test $i = $T0021_LARGISH_FILE_SIZE
++		then
++			cat generated-test-data/large.file >generated-test-data/largish.file &&
++			cat generated-test-data/large.file.rot13 >generated-test-data/largish.file.rot13
++		fi
++	done
+ '
+ 
+ script='s/^\$Id: \([0-9a-f]*\) \$/\1/p'
+@@ -199,9 +227,9 @@ test_expect_success 'required filter clean failure' '
+ test_expect_success 'filtering large input to small output should use little memory' '
+ 	test_config filter.devnull.clean "cat >/dev/null" &&
+ 	test_config filter.devnull.required true &&
+-	for i in $(test_seq 1 30); do printf "%1048576d" 1; done >30MB &&
+-	echo "30MB filter=devnull" >.gitattributes &&
+-	GIT_MMAP_LIMIT=1m GIT_ALLOC_LIMIT=1m git add 30MB
++	cp generated-test-data/large.file large.file &&
++	echo "large.file filter=devnull" >.gitattributes &&
++	GIT_MMAP_LIMIT=1m GIT_ALLOC_LIMIT=1m git add large.file
+ '
+ 
+ test_expect_success 'filter that does not read is fine' '
+@@ -214,15 +242,15 @@ test_expect_success 'filter that does not read is fine' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success EXPENSIVE 'filter large file' '
++test_expect_success 'filter large file' '
+ 	test_config filter.largefile.smudge cat &&
+ 	test_config filter.largefile.clean cat &&
+-	for i in $(test_seq 1 2048); do printf "%1048576d" 1; done >2GB &&
+-	echo "2GB filter=largefile" >.gitattributes &&
+-	git add 2GB 2>err &&
++	echo "large.file filter=largefile" >.gitattributes &&
++	cp generated-test-data/large.file large.file &&
++	git add large.file 2>err &&
+ 	test_must_be_empty err &&
+-	rm -f 2GB &&
+-	git checkout -- 2GB 2>err &&
++	rm -f large.file &&
++	git checkout -- large.file 2>err &&
+ 	test_must_be_empty err
+ '
+ 
+-- 
+2.9.0
+
