@@ -2,114 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	URIBL_DBL_ABUSE_MALW shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2BC9A1F855
-	for <e@80x24.org>; Wed,  3 Aug 2016 10:26:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D7971F855
+	for <e@80x24.org>; Wed,  3 Aug 2016 10:47:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757536AbcHCK0n (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 06:26:43 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:35120 "EHLO
-	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753938AbcHCK0m convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2016 06:26:42 -0400
-Received: by mail-wm0-f45.google.com with SMTP id f65so441945283wmi.0
-        for <git@vger.kernel.org>; Wed, 03 Aug 2016 03:26:41 -0700 (PDT)
+	id S1757699AbcHCKrB (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 06:47:01 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:38748 "EHLO
+	mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757398AbcHCKq7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2016 06:46:59 -0400
+Received: by mail-wm0-f49.google.com with SMTP id o80so329875366wme.1
+        for <git@vger.kernel.org>; Wed, 03 Aug 2016 03:46:41 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=vrnjAfbaX3q9T7JTF6UhX42KCDj9TW80aZNXUVVSl1M=;
-        b=P84rA1Zxg3UqB3JLlb1nGa38+4t5KD+/b2o6HkKP7BC6WROaYJEJ+z6G5uFTq/MtWa
-         GSmFKFTj4O0z1rA3JkDdoWxN0H8WLymJh4utzgj8pMl+Df5kwpA4fEz4mQwr/kOZkS01
-         aXNbl4Pwu82L+yx4az/2cqlAgCKOOaHUP5dAVO0tto1j+CvJy3mXkkzV/1TCCo7f3GgS
-         ScKaM5v77g3zpMJrB7PtI2s508fJpCloWWkbFBfoMgq4rd3NmIXNHZnAvauF6Yuqxe1X
-         d7jaHbKmJF3AvoE9SQdN7kcqKGloh0NUr61sorRI6xY2LGHkKOOqsoJrcViLOJxu8cVu
-         /qNg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=UjOPxwh1sUMPBs8op4VS2UH/tPkd/l0gcexJbr8qpNM=;
+        b=NdQ5Cv7tTZTwLLX1ZSUGrnAi+Z7RnuXfwDi7npV8FpccIU4fvYV1yMqG5valhUxulY
+         TXmEOGAR8csL4UHZOQSaqAfOyEHTu8v/+RpeMLLViqbOMvO1heB3i9MavFp/yg5ZFagB
+         w5Q+Cvb8iPfJc08l/oGaDgDkgUka17zgqO4gjmdiELR+Bn08TkW4SLG5KXtX2+pFvQ+1
+         eR+hEjoXCsCVRh+qMD1lLC5aOUSUJWfcEygj8bLFxoDYdy9VmYDe3hPLYoEGPz4N3tOl
+         sC59Oo5PGbN1wcNIxWQzgUocu0Zc5MXhtRA2B6Kn54eIXBC9xM9e5OWkcRh2D1u+tUxP
+         I1Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=vrnjAfbaX3q9T7JTF6UhX42KCDj9TW80aZNXUVVSl1M=;
-        b=gaabr1S5OAxFzZ19qGQNX62+bCO3ilNS0spl/dW6R9WMZhBLPTHBH1VnsiU0Ty+xEJ
-         Q4RBSTjPA+2dPI6JNfUFoZwNVQG/hHTLQpoESND0LT2JJwrrU6jgsEPFX9/8MxbPqchT
-         bUu6fgqfvh30ZbwkQ3B4je1fHmNTxs2GqbGlU6MPXN+M9pVKZR5KI6WokZSP3TdsFvoq
-         HZ1vo4rSqEPgXJTTAnIJiTrQK35sf3HRfz9Mh1hdqdY901fUUUMYYKpdmieOTzj/lbIr
-         c7i3ikgBdSKgmleBTb0+5oxSh1NXJ2MOmth2o5lnbIa6mjMWVaVwzCrG6hRLFIUCWWzY
-         Blig==
-X-Gm-Message-State: AEkoouvObIojYaR+XwRPSfvVOmZ4K/UilsS8JyXaQuC7+YTBoNy9Va3HdH8bktkh+uAvNA==
-X-Received: by 10.194.83.98 with SMTP id p2mr59900693wjy.134.1470219519384;
-        Wed, 03 Aug 2016 03:18:39 -0700 (PDT)
-Received: from [10.146.248.58] ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id e10sm6970017wjc.21.2016.08.03.03.18.38
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 03 Aug 2016 03:18:38 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: 2.9.2 test failures on macOS
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <C4207508-629B-41DF-8E89-CDD1989BCF2E@macports.org>
-Date:	Wed, 3 Aug 2016 12:18:37 +0200
-Cc:	git@vger.kernel.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <88BA92D6-305F-4B23-ABD2-55A6145F22D9@gmail.com>
-References: <C4207508-629B-41DF-8E89-CDD1989BCF2E@macports.org>
-To:	Jeremy Huddleston Sequoia <jeremyhu@macports.org>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=UjOPxwh1sUMPBs8op4VS2UH/tPkd/l0gcexJbr8qpNM=;
+        b=Nkibgje3xszN03xxuPMV7kLfER2b5RHsnZM1ejdeluokf1vqn0pjiZ0a/q9IMEgwFv
+         lRc4f82u87Fw1dyChQakDwmr8oG7P2tOwofDVT3saE9hToFr5GDP57zgRAkCDonhiaCf
+         QM/BCGZRcbYPbJUZXDZApcr2kXA47ymRs9ybHJqSwOBEVb+7z+GgxEVnzCsISvc04VLe
+         PJNxS4XvuHXLrZS9FQXCa+r6WLPvBtYNG2f73zlpd7BM4PCpBeJs0vQDM+j+E3H428Nt
+         bqRfs8dVPLFG0iDThmUV8t1ucH5vg877k3DQWnsLLrRm8PFz0ZCNbxlurRuNVTmjDGZU
+         YUkw==
+X-Gm-Message-State: AEkoousYPg/Wwpsc9yCi8O2K7nwgk64C/cIUUMgNaZMFsy3SY4V4z5FPzz7tPFhD6rnErdzLWRZ31/iTpicCmQ==
+X-Received: by 10.28.167.80 with SMTP id q77mr24506166wme.62.1470217635025;
+ Wed, 03 Aug 2016 02:47:15 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.194.70.167 with HTTP; Wed, 3 Aug 2016 02:47:14 -0700 (PDT)
+In-Reply-To: <CAPc5daVo2o7zxTGVARoZc8AmX2WAJC1cWB4R=9sG8TH8ddKkuA@mail.gmail.com>
+References: <a2b34209-2244-d498-6ed2-4f9fbf9f7ed1@ramsayjones.plus.com> <CAPc5daVo2o7zxTGVARoZc8AmX2WAJC1cWB4R=9sG8TH8ddKkuA@mail.gmail.com>
+From:	Christian Couder <christian.couder@gmail.com>
+Date:	Wed, 3 Aug 2016 11:47:14 +0200
+Message-ID: <CAP8UFD2NFZCAF=ZWNf4YF+F2L7A4ZM0XS98o-cR_MjuLLR8pfg@mail.gmail.com>
+Subject: Re: [PATCH] apply: mark some file-local symbols static
+To:	Junio C Hamano <gitster@pobox.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:	GIT Mailing-list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Hi Ramsay,
 
-> On 03 Aug 2016, at 09:35, Jeremy Huddleston Sequoia <jeremyhu@macports.org> wrote:
-> 
-> I have two test failures to report in git 2.9.2 on macOS:
-> 
-> 
-> t3210-pack-refs.sh has not changed between 2.8.4 and 2.9.2.  This test passed fine with 2.8.4, but it now fails with 2.9.2 at:
-> 
-> not ok 26 - retry acquiring packed-refs.lock
-> #	
-> #		LOCK=.git/packed-refs.lock &&
-> #		>"$LOCK" &&
-> #		test_when_finished "wait; rm -f $LOCK" &&
-> #		{
-> #			( sleep 1 ; rm -f $LOCK ) &
-> #		} &&
-> #		git -c core.packedrefstimeout=3000 pack-refs --all --prune
-> #	
-> 
-> ===
-> 
-> t3700-add.sh recently added the 'git add --chmod=-x stages an executable file with -x' test.  This test passes when run as a normal user but fails when run as root:
-> 
-> $ ./t3700-add.sh
-> ...
-> # passed all 40 test(s)
-> 1..40
-> 
-> $ sudo ./t3700-add.sh
-> ...
-> not ok 39 - git add --chmod=-x stages an executable file with -x
-> #	
-> #		echo foo >xfoo1 &&
-> #		chmod 755 xfoo1 &&
-> #		git add --chmod=-x xfoo1 &&
-> #		case "$(git ls-files --stage xfoo1)" in
-> #		100644" "*xfoo1) echo pass;;
-> #		*) echo fail; git ls-files --stage xfoo1; (exit 1);;
-> #		esac
-> #	
-> # failed 1 among 40 test(s)
-> 1..40
-> 
+On Wed, Aug 3, 2016 at 12:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> On Tue, Aug 2, 2016 at 3:33 PM, Ramsay Jones
+> <ramsay@ramsayjones.plus.com> wrote:
+>>
+>> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+>> ---
+>>
+>> Hi Christian,
+>>
+>> I had intended to ask you to squash this into your 'cc/apply-am'
+>> branch, specifically commit 4d18b33a (apply: move libified code
+>> from builtin/apply.c to apply.{c,h}, 30-07-2016).
+>>
+>> However, having read that commit a little closer, it seems that
+>> you deliberately made these symbols public. The commit message
+>> does not mention this issue at all, and it is not clear to me
+>> why these symbols should be public.
+>>
+>> What am I missing?
 
-What OS version do you use? Can you run `sw_vers` in your terminal and share the result?
+These symbols are still used in builtin/apply.c until 9f87c22 ("apply:
+refactor `git apply` option parsing") at the end of the series, for
+example:
+
+$ git checkout 4d18b33a
+$ git grep -n apply_option_parse_directory builtin/apply.c
+builtin/apply.c:86:                     0, apply_option_parse_directory },
+
+> Their exports have been made obsolete by the reroll we have
+> in 'pu' when "builtin/am: use apply api in run_apply()" was
+> redone in a way not to duplicate the argument parsing.
+
+Yeah.
+
+> They should have been cleaned with 4820e13,
+
+4820e13 (apply: make some parsing functions static again) is too early
+in the series for cleaning this.
+At that point the symbols are still used in builtin/apply.c.
+
+> but I think
+> Christian did not carefully review the whole series before
+> sending it out and did not notice that they no longer need
+> to be extern.
+
+Yeah, I did not notice that they no longer need to be extern.
+Now there are different options to fix this:
+
+1) remove the symbols in 9f87c22 ("apply: refactor `git apply` option
+parsing") at the end of the series, or
+2) move 4820e13 (apply: make some parsing functions static again) at
+the end of the series and make it also remove them, or:
+3) add another patch to remove them after 9f87c22 ("apply: refactor
+`git apply` option parsing")
+
+My preference is to do 1). This way, or if I do 3), I would not need
+to resend the first 31 patches in the series.
 
 Thanks,
-Lars
-
+Christian.
