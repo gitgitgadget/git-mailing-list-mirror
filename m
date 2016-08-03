@@ -2,69 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BEC41F40E
-	for <e@80x24.org>; Wed,  3 Aug 2016 23:16:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B8971F40E
+	for <e@80x24.org>; Wed,  3 Aug 2016 23:16:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758363AbcHCXQL (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 19:16:11 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50582 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932168AbcHCXQJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2016 19:16:09 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 699FA329CF;
-	Wed,  3 Aug 2016 19:14:37 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OvId4DZMH7NDtah5nBnj3vS2o3k=; b=o4VUnh
-	ICEJAwQgRPX5prvcbm0Gbbd2lfCnRLbrguTykfgqxe86rYSUuB9AEmKbmOquCsGE
-	0oyWMx7J5s9KUIfgNX9R3t9rRykmxUKwAUWoxPu0Pb2qO/UJmCBTcMLMsoZQyFTX
-	bCUdgfWDJcsIN1w0rB/SpscuXY4Z1bk/hqT3Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nP5LWeNd42lBznIApOECTWMqL8TOgHTf
-	QwKJqKIpw8m5SmLjx84YkRJCYa4a0PmyaRVX+U2DZanM0ojHpTMduKvB9+l6xeg9
-	oi94cNT6Wk3mgU7mblImyr/IJA0Nk5VIsYct2oaYrAJhVsJnG/DoYyLVxHh1xBM2
-	QeM1n8y+amo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 61CC2329CE;
-	Wed,  3 Aug 2016 19:14:37 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D8774329CC;
-	Wed,  3 Aug 2016 19:14:36 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
+	id S932518AbcHCXQT (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 19:16:19 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:45344 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753134AbcHCXQS (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2016 19:16:18 -0400
+X-AuditID: 12074411-a07ff70000000932-75-57a27ac2818c
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id C5.A6.02354.2CA72A75; Wed,  3 Aug 2016 19:14:12 -0400 (EDT)
+Received: from [192.168.69.130] (p57907C5F.dip0.t-ipconnect.de [87.144.124.95])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u73NE7sT027111
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 3 Aug 2016 19:14:08 -0400
+Subject: Re: [PATCH 2/8] xdl_change_compact(): clarify code
 To:	Stefan Beller <sbeller@google.com>
-Cc:	git@vger.kernel.org, Jens.Lehmann@web.de, apenwarr@gmail.com,
-	jrnieder@gmail.com
-Subject: Re: [PATCHv4 6/7] submodule update: allow '.' for branch value
-References: <20160803204404.3356-1-sbeller@google.com>
-	<20160803204404.3356-3-sbeller@google.com>
-Date:	Wed, 03 Aug 2016 16:14:35 -0700
-In-Reply-To: <20160803204404.3356-3-sbeller@google.com> (Stefan Beller's
-	message of "Wed, 3 Aug 2016 13:44:04 -0700")
-Message-ID: <xmqq4m7178dg.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+References: <cover.1470259583.git.mhagger@alum.mit.edu>
+ <f4ce27f389b64c9ae503152c66d183c4a4a970f1.1470259583.git.mhagger@alum.mit.edu>
+ <CAGZ79kZk+XW+Bwcx_fvOLVBDse_iUSjEa_K=eJqm4PpTsTAcPA@mail.gmail.com>
+Cc:	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+From:	Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <57715dee-ca73-c1bb-ee79-2813d7873649@alum.mit.edu>
+Date:	Thu, 4 Aug 2016 01:14:07 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.1.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0BEE9310-59D0-11E6-8D68-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+In-Reply-To: <CAGZ79kZk+XW+Bwcx_fvOLVBDse_iUSjEa_K=eJqm4PpTsTAcPA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpmleLIzCtJLcpLzFFi42IRYndR1D1StSjc4HcLl0XXlW4mi4beK8wW
+	uxf3M1usuDqH2eJHSw+zxebN7SwObB47Z91l91iwqdTjWe8eRo+Ll5Q9Pm+SC2CN4rJJSc3J
+	LEst0rdL4Mq4MH07c8FC/op9m7ewNzDu4O5i5OSQEDCR2NA7ga2LkYtDSGAro8TxvgusEM45
+	JokzbSuYQaqEBawl3m+8zQ5iiwioScxcNRuq4zyjxMVHx9hBHGaBJ4wS9/pvsoFUsQnoSizq
+	aWYCsXkF7CWOfTrECGKzCKhI9G/+CWaLCoRIbLvZwAZRIyhxcuYTFhCbUyBQ4vedx2BxZgF1
+	iT/zLjFD2PIS29/OYZ7AyD8LScssJGWzkJQtYGRexSiXmFOaq5ubmJlTnJqsW5ycmJeXWqRr
+	qpebWaKXmlK6iRES1oI7GGeclDvEKMDBqMTDu0FyUbgQa2JZcWXuIUZJDiYlUd6cVKAQX1J+
+	SmVGYnFGfFFpTmrxIUYJDmYlEd7t5UA53pTEyqrUonyYlDQHi5I4L98SdT8hgfTEktTs1NSC
+	1CKYrAwHh5IE76xKoEbBotT01Iq0zJwShDQTByfIcB6g4fNBaniLCxJzizPTIfKnGBWlxHlv
+	gCQEQBIZpXlwvbC084pRHOgVYd6PIFU8wJQF1/0KaDAT0OATBgtABpckIqSkGhitzu5aw+Z0
+	d2fHpEvBX0Q0+l+9mu6pdvilv8HTsLdiSyatkP78qSyAJ8qcJ1eGwfW80vItmbaP8lc9bQ4p
+	v7vGsuP4ghXK9hfWrJq1NmxT4vGZsg8vbkqvK+C7/u//j4zSBOFNxx5u36Pe/0nx3eF/O6at
+	mHYsd9/q7QeNs9cVPb788A3vMrvttUosxRmJhlrMRcWJALkN9uIWAwAA
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On 08/04/2016 12:11 AM, Stefan Beller wrote:
+> On Wed, Aug 3, 2016 at 3:00 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> Write things out a bit longer but less cryptically. Add more comments.
+> 
+> By less cryptic you mean in Git coding style ;)
+> The original author (do we want to cc Davido?) may disagree.
 
-> Gerrit has a "superproject subscription" feature[1], that triggers a
-> commit in a superproject that is subscribed to its submodules.
-> Conceptually this Gerrit feature can be done on the client side with
-> Git via (except for raciness, error handling etc):
+Davide hasn't contributed since 2008 and libxdiff is not being
+developed, so I didn't think he'd be interested.
 
-This would replace 7/7 not 6/7 obviously ;-)
+Yes, tastes certainly differ. If more people like the old version
+better, I will gnash my teeth and undo these "clarification" patches. I
+mean, what's not to like about variable names like "grpsiz" and "ixref"?
 
-Thanks.
+>> +
+>> +                       /*
+>> +                        * Are there any blank lines that could appear as the last
+>> +                        * line of this group?
+>> +                        */
+> 
+> IIRC this comment is not quite correct as this 'only' counts the number of
+> blank lines within the forward shifting section, i.e. in the movable space.
+> 
+> Later we use it as a boolean indicator (whether or not it is equal to 0)
+> to see if we can do better.
+> 
+> Any other change in code and comments looks good to me, but this stood out
+> like a sore thumb. (Probably the old heuristic as a whole stood out, but the
+> comment here specifically sounds /wrong/ to me in this place. How can
+> a question document a variable? I'd rather expect a question comment
+> to ease the understanding of a condition)
+
+I don't understand your objection. A blank line can appear as the last
+line of the group if and only if it is within the shift range ("movable
+space") of the group, right? So it seems like our formulations are
+equivalent.
+
+Since the variable is used as a boolean, it seemed natural to document
+it by stating the question that the true/false value is the answer to.
+
+If you have a concrete suggestion for a better comment, please let me know.
+
+Michael
+
