@@ -2,135 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8FAF1F858
-	for <e@80x24.org>; Wed,  3 Aug 2016 22:01:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E01DD1F40E
+	for <e@80x24.org>; Wed,  3 Aug 2016 22:01:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932821AbcHCWBK (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 18:01:10 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:44998 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756504AbcHCWA7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2016 18:00:59 -0400
-X-AuditID: 12074411-a07ff70000000932-2a-57a269937b07
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 49.84.02354.39962A75; Wed,  3 Aug 2016 18:00:51 -0400 (EDT)
-Received: from michael.fritz.box (p57907C5F.dip0.t-ipconnect.de [87.144.124.95])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u73M0fSb023677
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Wed, 3 Aug 2016 18:00:49 -0400
-From:	Michael Haggerty <mhagger@alum.mit.edu>
-To:	git@vger.kernel.org
-Cc:	Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 4/8] xdl_change_compact(): do one final shift or the other, not both
-Date:	Thu,  4 Aug 2016 00:00:32 +0200
-Message-Id: <39a135da93834fd72ee923d95d0cebfe525dfe7a.1470259583.git.mhagger@alum.mit.edu>
-X-Mailer: git-send-email 2.8.1
-In-Reply-To: <cover.1470259583.git.mhagger@alum.mit.edu>
-References: <cover.1470259583.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrEIsWRmVeSWpSXmKPExsUixO6iqDs5c1G4wfp2YYuuK91MFg29V5gt
-	di/uZ7ZYcXUOs8XtFfOZLX609DBbbN7czuLA7vH3/Qcmj52z7rJ7LNhU6vGsdw+jx8VLyh6f
-	N8kFsEVx2aSk5mSWpRbp2yVwZTzq1ymYL1rxdHoPSwPjVf4uRk4OCQETiTU9f9m7GLk4hAS2
-	Mkpc+reYCcI5ziRx4Pw9FpAqNgFdiUU9zUwgtoiAuMTb4zPBOpgF+pkkfnR0MYIkhAVCJLqP
-	LmIHsVkEVCW29a4BauDg4BWIkjj/LBxim5zE5ekP2EBsTgELiauTZoPNFBIwl3jbsYt1AiPP
-	AkaGVYxyiTmlubq5iZk5xanJusXJiXl5qUW6pnq5mSV6qSmlmxghQSW4g3HGSblDjAIcjEo8
-	vBskF4ULsSaWFVfmHmKU5GBSEuXNSQUK8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuG9lwKU401J
-	rKxKLcqHSUlzsCiJ8/ItUfcTEkhPLEnNTk0tSC2CycpwcChJ8CZnADUKFqWmp1akZeaUIKSZ
-	ODhBhvMADd+TDjK8uCAxtzgzHSJ/ilFRSpzXAiQhAJLIKM2D64VF/StGcaBXhHmrQVbwABMG
-	XPcroMFMQINPGCwAGVySiJCSamDcfvjMwbnfN3w0fFGxsdhkqumL/KBDXNbKQvanW+dffBup
-	3LXkVg/TI+UzC+IuF+z7+yo06ab67YcZF/fLNPdwL5Q7xslpv/j9pOk2O77svM/OJ7D3rj/P
-	lRfTQrKE9U4WTdneu9JRcXJEaZrtIkd27b975lxwPFP/QJBlmUry/LBDX1N6Ii5eUmIpzkg0
-	1GIuKk4EAJAr66DVAgAA
+	id S932866AbcHCWBj (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 18:01:39 -0400
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:36598 "EHLO
+	mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932828AbcHCWBh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2016 18:01:37 -0400
+Received: by mail-yw0-f193.google.com with SMTP id u134so17708903ywg.3
+        for <git@vger.kernel.org>; Wed, 03 Aug 2016 15:01:37 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=aBvurxDSu7eXDNXlHE7XIJRLbRyJaMsCQkxfJNSTosk=;
+        b=mL2sSMRdJER1srwPw7etPMxNKik6tsDWEKM6oQ0ZusIfmEQQdEtdQ2ppeBg4oFBgsQ
+         ReyHvLrZPzJEmZV8IKpdBeUgRMP9z6Raoojz012fdkI3EMuO+4gi4pRJfnPkPVcA5fTe
+         eV13RV193FgUxxXCQXo+A7A1qE5lLHo98hq+yAxwBv6OE2KAXbQbPFeo6hFN+EN2qV+d
+         1nfcjLZ1zz5OpLhK1MVpZshxdhXwMGaoaCUwVhpFSkK9Paw3ELUyhUBswz6u6ds/yr3n
+         AT7CcgELVXvJHfGMaamnznx88FbQGKmk6FzDCHeKDTBYsxiCrs0zjlAelUPB8O9UFP0l
+         o/Sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=aBvurxDSu7eXDNXlHE7XIJRLbRyJaMsCQkxfJNSTosk=;
+        b=bRAtbZJ+AdD+DRXGKZS1DWbZ4XL39OvUYe2YFPUs1afsoQScjla58Rd9SxXVSbWSdF
+         m6i+Y9ViFhN91TB3NZ1ntf7jE95MYdU5PxDk0BjSpgaxb0vtulH8ByuA0YJy5U5yddI1
+         dRDNSIUr8k85RG0LS7aGhWHGEXQEJh5MGSYhLM3wlmjJa4QjacOsJrMoj3hF8ZbH2Qw2
+         +2DnthsnleJCyaOjpyXwhGX+aW+9z/QkssWlsl+NyqhAT1arcQktsMcsna9DfBkShRPj
+         8IftX20pnWEcqT9KH0/CKrqCxlHszYo5oVQSeMpw23Og7LFKxNNPe1+R5PyHvjnTdS9w
+         /1Jg==
+X-Gm-Message-State: AEkoouuGTv3lA9GJRrufdLZyMipPAH5m5bCjskr/7cxWHo0u034pIlFLTg46wodqAyB46h/46+bcbhjdD7r05w==
+X-Received: by 10.129.106.139 with SMTP id f133mr56462109ywc.163.1470260627663;
+ Wed, 03 Aug 2016 14:43:47 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.13.250.4 with HTTP; Wed, 3 Aug 2016 14:43:27 -0700 (PDT)
+In-Reply-To: <564CA3AD-EA8E-46D3-9564-BF468CAF32B0@gmail.com>
+References: <20160729233801.82844-1-larsxschneider@gmail.com>
+ <20160803164225.46355-1-larsxschneider@gmail.com> <20160803164225.46355-12-larsxschneider@gmail.com>
+ <xmqq8twd8uld.fsf@gitster.mtv.corp.google.com> <564CA3AD-EA8E-46D3-9564-BF468CAF32B0@gmail.com>
+From:	Junio C Hamano <gitster@pobox.com>
+Date:	Wed, 3 Aug 2016 14:43:27 -0700
+X-Google-Sender-Auth: 6I7ffcRhzbn6GzGwQzzotXT5rtM
+Message-ID: <CAPc5daWH1z3am2hV_U1dE5WA7R+xrOFxgrxV4CN-vhz6uHz8Hw@mail.gmail.com>
+Subject: Re: [PATCH v4 11/12] convert: add filter.<driver>.process option
+To:	Lars Schneider <larsxschneider@gmail.com>
+Cc:	Git Mailing List <git@vger.kernel.org>,
+	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	mlbright@gmail.com, Eric Wong <e@80x24.org>,
+	Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-There is no need to shift the group to match a diff in the other file if
-we're just going to override that shift based on the compaction
-heuristic. Note that this changes the behavior if the matching shift
-would have shifted the group higher than the last blank line: the old
-code would have ignored the compaction heuristic in that case, whereas
-the new code always gives precedence to the compaction heuristic when it
-is turned on.
+On Wed, Aug 3, 2016 at 2:37 PM, Lars Schneider <larsxschneider@gmail.com> wrote:
+>>
+>> I think this was already pointed out in the previous review by Peff,
+>> but a variable "ret" that says "0 is bad" somehow makes it hard to
+>> follow the code.  Perhaps rename it to "int error", flip the meaning,
+>> and if the caller wants this function to return non-zero on success
+>> flip the polarity in the return statement itself, i.e. "return !errors",
+>> may make it easier to follow?
+>
+> This follows the existing filter function. Please see Peff's later
+> reply here:
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- xdiff/xdiffi.c | 44 ++++++++++++++++++++++----------------------
- 1 file changed, 22 insertions(+), 22 deletions(-)
+Which I did before mentioning "pointed out in his review".
 
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 0f235bc..c67cfe3 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -547,11 +547,28 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
- 			}
- 		} while (groupsize != end - start);
- 
--		/*
--		 * Try to move back the possibly merged group of changes, to match
--		 * the recorded position in the other file.
--		 */
--		if (end_matching_other != -1) {
-+		if ((flags & XDF_COMPACTION_HEURISTIC) && blank_lines) {
-+			/*
-+			 * Compaction heuristic: if a group can be moved back and
-+			 * forth, then if possible shift the group to make its
-+			 * bottom line a blank line.
-+			 *
-+			 * As we already shifted the group forward as far as
-+			 * possible in the earlier loop, we only need to handle
-+			 * backward shifts, not forward ones.
-+			 */
-+			while (start > 0 &&
-+			       !is_blank_line(recs, end - 1, flags) &&
-+			       recs_match(recs, start - 1, end - 1, flags)) {
-+				rchg[--start] = 1;
-+				rchg[--end] = 0;
-+			}
-+		} else if (end_matching_other != -1) {
-+			/*
-+			 * Move the possibly merged group of changes back to line
-+			 * up with the last group of changes from the other file
-+			 * that it can align with.
-+			 */
- 			while (end_matching_other < end) {
- 				rchg[--start] = 1;
- 				rchg[--end] = 0;
-@@ -561,23 +578,6 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
- 					io--;
- 			}
- 		}
--
--		/*
--		 * If a group can be moved back and forth, see if there is a
--		 * blank line in the moving space. If there is a blank line,
--		 * make sure the last blank line is the end of the group.
--		 *
--		 * As we already shifted the group forward as far as possible
--		 * in the earlier loop, we need to shift it back only if at all.
--		 */
--		if ((flags & XDF_COMPACTION_HEURISTIC) && blank_lines) {
--			while (start > 0 &&
--			       !is_blank_line(recs, end - 1, flags) &&
--			       recs_match(recs, start - 1, end - 1, flags)) {
--				rchg[--start] = 1;
--				rchg[--end] = 0;
--			}
--		}
- 	}
- 
- 	return 0;
--- 
-2.8.1
+> That's why I kept it the way it is. If you prefer the "!errors" approach
+> then I will change that.
 
+I am not suggesting to change the RETURN VALUE from this function.
+That is why I mentioned "return !errors" to flip the polarity at the end.
+Inside the function, "ret" variable _forces_ the readers to think "this
+function unlike the others signal an error with 0" constantly while
+reading it, and one possible approach to reduce the mental burden
+is to replace "ret" variable with "errors" variable, which is clear to
+anybody that it would be non-zero when we saw error(s).
+
+Oh, I am not suggesting to _count_ the number of errors by
+mentioning a possible variable name "errors"; the only reason
+why I mentioned that name is because "error" is already
+taken, and "seen_error" is a bit too long.
