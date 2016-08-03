@@ -2,109 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7C3B1F858
-	for <e@80x24.org>; Wed,  3 Aug 2016 16:15:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24C0E1F858
+	for <e@80x24.org>; Wed,  3 Aug 2016 16:15:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757585AbcHCQOs (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 12:14:48 -0400
-Received: from mout.gmx.net ([212.227.15.18]:58566 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754339AbcHCQOq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2016 12:14:46 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MBnvD-1bN2603P7f-00Apgz; Wed, 03 Aug 2016 18:07:47
- +0200
-Date:	Wed, 3 Aug 2016 18:07:45 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: patch submission process, was Re: [PATCH v6 06/16] merge_recursive:
- abort properly upon errors
-In-Reply-To: <CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1608031753431.107993@virtualbox>
-References: <cover.1469547160.git.johannes.schindelin@gmx.de> <cover.1470051326.git.johannes.schindelin@gmx.de> <8ff71aba37be979f05abf88f467ec932aa522bdd.1470051326.git.johannes.schindelin@gmx.de> <xmqqlh0gjpr6.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1608021004080.79248@virtualbox> <xmqqy44ec15p.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608031021050.79248@virtualbox> <CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1754499AbcHCQPr (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 12:15:47 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59750 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751501AbcHCQPp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2016 12:15:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 897E42F5C9;
+	Wed,  3 Aug 2016 12:08:51 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=G/z74WYZIhrZjo9/xY8I2Oy31G8=; b=Zysbut
+	4dJaQ4kDbGuE4ujCCBDF4iffHwFf8q/ztYf5ZcVEGFVg+bETUXp7CVR4TDcNptI5
+	S6CMieugi7lqufHNlfBTz+xyZVbXHoU5B8PmzlNqLsMMbWKU9eTPvGjAFqMvomK9
+	UgjSx+w7qIk5ykeFdjJvgT3BugCa8xXfJB4Nc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Wk9VADnwHt1sHuDf6thWff9F/BdK8u9Q
+	QR2rn1SYo1xBCZBAiJyE3UjNQbo2oqkU7INS66RC46LDfNjvVrblO4QE5Uth34dq
+	tm4IcdMUpPNBzVFdQ5KXsdEUq+09KurZHYgCrpkulf+z9lCIoUPDyS4jzQvde1+a
+	R4zK8vBpY5k=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7E83D2F5C7;
+	Wed,  3 Aug 2016 12:08:51 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E91812F5C5;
+	Wed,  3 Aug 2016 12:08:50 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	Chris Packham <judge.packham@gmail.com>, git@vger.kernel.org
+Subject: Re: [RFC/PATCH] rebase--interactive: Add "sign" command
+References: <20160803084743.3299-1-judge.packham@gmail.com>
+	<alpine.DEB.2.20.1608031621590.107993@virtualbox>
+Date:	Wed, 03 Aug 2016 09:08:48 -0700
+In-Reply-To: <alpine.DEB.2.20.1608031621590.107993@virtualbox> (Johannes
+	Schindelin's message of "Wed, 3 Aug 2016 16:31:41 +0200 (CEST)")
+Message-ID: <xmqqr3a5al7z.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:+7wMPwV4KFxlxPpb9jKY1lgZTKH3jfIvif8mrAHcn404KVhplYn
- guFIZQe2ocaAfsBQcHoeAqDbjE70WdigH+/LilksQDvTH3TklmqmYF7lyCOeBoZRwXX4l1n
- bDxLG3SePuqawZymORy0tJgDRv16eZVqz+6l5Wmv2ZnJHCTMPE+sMOkZfS1K8KQ3Q0PUvFo
- ZyD7SXGPEqHikYnmL2/fw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:oHUSsPbMmbw=:4zIayX9SjfUXDv4TbZCvIR
- SJWK38SpMCXYdbdRpx0pvZ89D1LdzlSkG5sQeKcvrdPtF/16D31qd7RUwGVlnVwuWGTifjw3t
- Eqz0TPt7rLERtB/rmNGAYrgxy0/xIIx+MNKnX4GJ/cNGaxUUYmlVLhxYb6uTZ5CsCY/V/0/s/
- YTGs6BX03ZPM1Cd1xdzqJRmg5fK1XhoMvsdTFys6B95gJ3vYS3lDhCa4rJvnTH8Lp3mwWia6X
- VcgGL597HJpl3b7RwOnLOVVRSr7/TAJWPxFHea2JDGwyKrBjXM/gSFe9ZxDYLhvOMBvtSYWR+
- 7+MtS7MOVQPFMdbhoTcr+xz68s0AI/nfX/jhTw8WFPF1Uc6r83ys0aTge22mFo/ix6VeJx+B6
- 0r1sX1YV9VgNLkaaQDnIAyXPJ1zdJO4DYFJx/13AJe4kaXetXGjYKUbrpd5ZDWj9CI2dUtK3b
- xF895UO6aH10sAuHOc9UV4in2Qa2m+TtwIBWuy5CythaLJLbDcSWUR/Q1R1klCS9RU9URred3
- 6zLWWL7bDgWiQyNgWWNYmDvyVYAO+zTsN6YBIFprVKvWckPtaqulh7+8T2md4PYi1NL9OqQ64
- GUZ0zQ2YoYRlkPCc75m2jhjIA33uATnGNmGlSoCNK5PI2xoxFLX7I20BHNFPKzjxxt/er+90C
- mbMd0AQIpXJnk7RcGfP/e0y0RZQPCdsSsY48wL0A8ehpkzgF1Pjs0BOdJ36szqvt3bqhpHGuG
- zWS962eLuThl3VMGAsPmVWRi6GiBsoXyNgEVKkDvON/ZfOxIKBsX4Bo2IXyJkX+nIbvwshrzK
- HQjx6Tx
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9154AF08-5994-11E6-AD36-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Wed, 3 Aug 2016, Junio C Hamano wrote:
+> ... my Git garden shears [*1*] (essentially, what
+> git rebase --interactive --preserve-merges *should* have been).
 
-> On Wed, Aug 3, 2016 at 4:59 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > I disagree, however, with the suggestion to sift through your `pu` branch
-> > and to somehow replace local branches with the commits found there.
-> 
-> To be more in line with the "e-mailed patch" workflow, I think what I should
-> do is to send the version I queued with fixups back to the list as follow-up.
-> Just like reviewers review, the maintainer reviews and queues, the original
-> author should be able to work in the same workflow, i.e. reading and applying
-> an improved version of the patch from her mailbox.
+Any plan to fold it into "git rebase -i" as a new (improved) mode of
+operation, by the way?
 
-You seem to assume that it isn't cumbersome for people like me to extract
-patches out of mails and to replace existing commits using those patches.
+> However, I could imagine that we actually want this to be more extensible.
+> After all, all you are doing is to introduce a new rebase -i command that
+> does nothing else than shelling out to a command.
 
-So it probably comes as a huge surprise to you to learn that this *is*
-cumbersome for me.
+Yup, I tend to agree.
 
-I got too used to the ease of git push, git pull with or without --rebase,
-and many other Git commands. Having to transmogrify code changes from
-commits in Git into a completely different universe: plain text patches in
-my mailbox, and back, losing all kinds of data in the process, is just
-not at all that easy. And it costs a lot of time.
+Adding "sign" feature (i.e. make it pass -S to "commit [--amend]")
+may be a good thing, but adding "sign" command to do so is not a
+great design.
 
-In short: if you start "submitting patches" back to me via mail, it does
-not help me. It makes things harder for me. In particular when you add
-your sign-off to every patch and I have to strip it.
+There is no inherent reason why "sign" feature implies "--no-edit",
+and adding a "sign" command like this patch means that the next
+command somebody else proposes will be "sign-and-reword".
 
-If you change your workflow, I would humbly request that you do it in a
-way that makes things easier on both sides, not harder.
+We should be able to treat Signing and Rewording as two orthogonal
+features, one that passes -S, and the other that refrains from
+passing --no-edit.  Otherwise as the number of features grow, the
+number of commands will see combinatorial growth.
 
-It would be a totally different matter, of course, if you used the
-branches I publish via my GitHub repository, added fixup! and squash!
-commits, published the result to a public repository and then told me to
-pull from there, that would make things easier. We could even introduce a
-reword! construct, to make the review of the suggested edits of the commit
-message easier. I could easily verify that my branch head agrees with the
-base commit of your branch, I could build proper tooling around this
-workflow, and it would lighten my load.
+Thanks.
 
-I guess what I am saying is that we might just as well start using this
-awesome tool to work with code, that tool named "Git".
 
-Ciao,
-Dscho
