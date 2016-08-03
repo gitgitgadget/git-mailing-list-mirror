@@ -2,179 +2,180 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD,URI_HEX shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D4BF2022A
-	for <e@80x24.org>; Wed,  3 Aug 2016 17:46:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2D551F40E
+	for <e@80x24.org>; Wed,  3 Aug 2016 17:48:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754729AbcHCRpu (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 13:45:50 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:34499 "EHLO
-	mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754352AbcHCRps (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2016 13:45:48 -0400
-Received: by mail-lf0-f68.google.com with SMTP id l69so12349291lfg.1
-        for <git@vger.kernel.org>; Wed, 03 Aug 2016 10:45:47 -0700 (PDT)
+	id S932274AbcHCRsG (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 13:48:06 -0400
+Received: from mail-io0-f171.google.com ([209.85.223.171]:34005 "EHLO
+	mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932264AbcHCRsB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2016 13:48:01 -0400
+Received: by mail-io0-f171.google.com with SMTP id q83so250785221iod.1
+        for <git@vger.kernel.org>; Wed, 03 Aug 2016 10:48:01 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=37jHvwwiyzFowP9hQCkBeNueTbtZ2mYCMykxgQ+RKnE=;
-        b=SAy0DV7WCybEg4EjS+CnhCedIqD/aYZDr8VEDMuHWZpcZMI8qvTahdMVGuTNoi/V10
-         KKM9R7c9iwWK6Bp9w8I8VMwSvzqQpoPYT5vqUIhkocMkCiN9Z8mX4bLSdZ1szyg1k3vt
-         iDNHL6N5s5rBkvCVQH4E0P2fhour5xNzXP7IT3iKiLcK4KeeZ9R/yWLs60SYt/eIUV/H
-         NbGTokLFzTKi4SVH74Ii7A5mCkfmnwd71ue+/Ih9OIKLJJfuCCh61AMPLH5L69riPoMB
-         Vadi0L9r3Ac3YF7yHJgjN6ToXfabwtqcrvKD8qrY96qQFfyjpNwIcgpaKGJ+2zuZpyyc
-         Pqcg==
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=R6Ik/qaQbTrMSwWH84yZuzFAnrwswGixi6/Pnh4AJV4=;
+        b=Q26Qx4zvvrvprk9dUqibezIe5UubcdRsaYfmSdLo2OHa17FS/eSTMp5EHZoQYh2gHe
+         NzyF8zDPqTJyyqbm38Dfa9i5vZJCkRdOJlP2NqPvoaSVzDheG9/BOfL9RzbkRUUSPA29
+         q47rlXBe1nMKtFieDZUT3p0vyjGGaFvw/QsYJeHhWt3Dk/IbJqFD8NrkAB1sbI4r07ax
+         3f4xq3+7k79cWekvMY4zG4S0bza5aE0EUcC97owcQjorOrdpI6qJuSJOmP9F2431Cdmy
+         xtZMimbT0E+q7hBOLgIiVUouEQjFvih1nJhMkxiYkpNxjqKeXbNZsiXv5PkSgOox3OYF
+         eGlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=37jHvwwiyzFowP9hQCkBeNueTbtZ2mYCMykxgQ+RKnE=;
-        b=NW4zQYv+htlJ0buSMkiMU6gOgWbmR3l8Z4nCJJ6M1Gp/WeXt4W43ZuE0TMVW3G+j0w
-         mfMpiEq3+FV7PGrjIMMLxduge2ixh+n0lCdIqrFb+YnOgoSU/82MAd46eN3JX4XcoTuU
-         AIIb84j8tOTOM/sfEEDGgTuGFeqjPdL81kLRz8rzDCpmgTU2lIgnBSR5OVkQl3+iGUgn
-         6Uunv8kgeHxLVSuQGyhMMgzQKK48+2reMr6Hs/Kay+LneOTpyeTg8e6EyNv92evU9VEB
-         jd8kv99PjGyPyyarMkR4A5OcX7+nlRCh6n81aVkeR/iNqoD6LzBU/v6RXmUQ1IBgqVt5
-         ZqUQ==
-X-Gm-Message-State: AEkoouv8/FnznFcRJ43lJ7wsrOMoVWZFjG17mwz0rt3U6+sZUDFJl/TRuXwfq5fZNwgBSQ==
-X-Received: by 10.25.142.204 with SMTP id q195mr19219188lfd.220.1470246345752;
-        Wed, 03 Aug 2016 10:45:45 -0700 (PDT)
-Received: from duynguyen.does.not.exist (10.219.241.83.in-addr.dgcsystems.net. [83.241.219.10])
-        by smtp.gmail.com with ESMTPSA id u11sm1555498lja.12.2016.08.03.10.45.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 03 Aug 2016 10:45:44 -0700 (PDT)
-From:	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To:	git@vger.kernel.org
-Cc:	Junio C Hamano <gitster@pobox.com>, e@80x24.org, tboegi@web.de,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v3] t7063: work around FreeBSD's lazy mtime update feature
-Date:	Wed,  3 Aug 2016 19:45:22 +0200
-Message-Id: <20160803174522.5571-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.9.1.566.gbd532d4
-In-Reply-To: <20160803160536.15596-1-pclouds@gmail.com>
-References: <20160803160536.15596-1-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=R6Ik/qaQbTrMSwWH84yZuzFAnrwswGixi6/Pnh4AJV4=;
+        b=GooBV82ePr1kQZ1cxYm0YwAIsveoUDt59HjKDRqL395uAyqNslXhgDX3LlaXiezPWa
+         2lrAyS2koWkS+dTFkZp1r6tF1eyDxd9nGfSya6ka5e7v/9zgxq7/xf0hNbKUL7hpupye
+         EbgBGIn91/+9/ztlaYVt3fTEOTE4oaiX3g7KqR7CXhDtaprYZL3dJfgxu/12Zu6F917i
+         D8r2ZVN1Y8nqQmbVabQq7L8Z5phE4HFSjr6ciIT+Llnp46DgsW1HYRzvOllE9+Q/ahSz
+         /bHsBKdbsLacwlkNOSJ7rhMav9QZLB9K7Ri9znUMWFNe1IRj4HNXpRQWZIiQx0p5Xt90
+         ikig==
+X-Gm-Message-State: AEkoouvvqxwAfpXErl4pFxL5x0SiLai43unBiD6UMUaRJ6CK7YjB5/8st35MaEiohbZjMKSzClBYPNtP8MBOnLZG
+X-Received: by 10.107.144.10 with SMTP id s10mr65956258iod.165.1470246479850;
+ Wed, 03 Aug 2016 10:47:59 -0700 (PDT)
 MIME-Version: 1.0
+Received: by 10.107.128.66 with HTTP; Wed, 3 Aug 2016 10:47:59 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1608031753431.107993@virtualbox>
+References: <cover.1469547160.git.johannes.schindelin@gmx.de>
+ <cover.1470051326.git.johannes.schindelin@gmx.de> <8ff71aba37be979f05abf88f467ec932aa522bdd.1470051326.git.johannes.schindelin@gmx.de>
+ <xmqqlh0gjpr6.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608021004080.79248@virtualbox>
+ <xmqqy44ec15p.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608031021050.79248@virtualbox>
+ <CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com> <alpine.DEB.2.20.1608031753431.107993@virtualbox>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Wed, 3 Aug 2016 10:47:59 -0700
+Message-ID: <CAGZ79kYWdZCNW_eBi5aLAacyBZJXQ9xyOWMBmjNsYT5NWjr-Og@mail.gmail.com>
+Subject: Re: patch submission process, was Re: [PATCH v6 06/16]
+ merge_recursive: abort properly upon errors
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Let's start with the commit message of [1] from freebsd.git [2]
+On Wed, Aug 3, 2016 at 9:07 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Junio,
+>
+> On Wed, 3 Aug 2016, Junio C Hamano wrote:
+>
+>> On Wed, Aug 3, 2016 at 4:59 AM, Johannes Schindelin
+>> <Johannes.Schindelin@gmx.de> wrote:
+>> >
+>> > I disagree, however, with the suggestion to sift through your `pu` branch
+>> > and to somehow replace local branches with the commits found there.
+>>
+>> To be more in line with the "e-mailed patch" workflow, I think what I should
+>> do is to send the version I queued with fixups back to the list as follow-up.
+>> Just like reviewers review, the maintainer reviews and queues, the original
+>> author should be able to work in the same workflow, i.e. reading and applying
+>> an improved version of the patch from her mailbox.
+>
+> You seem to assume that it isn't cumbersome for people like me to extract
+> patches out of mails and to replace existing commits using those patches.
+>
+> So it probably comes as a huge surprise to you to learn that this *is*
+> cumbersome for me.
 
-    Sync timestamp changes for inodes of special files to disk as late
-    as possible (when the inode is reclaimed).  Temporarily only do
-    this if option UFS_LAZYMOD configured and softupdates aren't
-    enabled.  UFS_LAZYMOD is intentionally left out of
-    /sys/conf/options.
+It is also cumbersome for me, because I never had the need to setup a proper
+mail client that has the strength to apply patches. The need was not there as
+I tend to apply only rarely patches by email, so I can go the painful
+way each time.
 
-    This is mainly to avoid almost useless disk i/o on battery powered
-    machines.  It's silly to write to disk (on the next sync or when
-    the inode becomes inactive) just because someone hit a key or
-    something wrote to the screen or /dev/null.
+But if we as a community decide that we bounce emails back and forth,
+I (and you)
+may have to find a proper email client that is easy to work with, e.g.
+one key shortcut
+to apply a patch series to the HEAD of your local repository.
 
-    PR:             5577 [3]
+>
+> I got too used to the ease of git push, git pull with or without --rebase,
+> and many other Git commands. Having to transmogrify code changes from
+> commits in Git into a completely different universe: plain text patches in
+> my mailbox, and back, losing all kinds of data in the process, is just
+> not at all that easy. And it costs a lot of time.
+>
+> In short: if you start "submitting patches" back to me via mail, it does
+> not help me. It makes things harder for me. In particular when you add
+> your sign-off to every patch and I have to strip it.
 
-The short version of that, in the context of t7063, is that when a
-directory is updated, its mtime may be updated later, not
-immediately. This can be shown with a simple command sequence
+You don't have to strip the sign off, as it shows the flow of the patch,
+e.g.
 
-    date; sleep 1; touch abc; rm abc; sleep 10; ls -lTd .
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-One would expect that the date shown in `ls` would be one second from
-`date`, but it's 10 seconds later. If we put another `ls -lTd .` in
-front of `sleep 10`, then the date of the last `ls` comes as
-expected. The first `ls` somehow forces mtime to be updated.
+may indicate you proposed a patch, Junio picked it up (and fixed a
+typo optionally),
+I obtained the patch (via mail, via Git?) improved it, you improved it further
+and then Junio took it and merged it upstream.
 
-t7063 is really sensitive to directory mtime. When mtime is too "new",
-git code suspects racy timestamps and will not trigger the shortcut in
-untracked cache, in t7063.24 and eventually be detected in t7063.27
+>
+> If you change your workflow, I would humbly request that you do it in a
+> way that makes things easier on both sides, not harder.
 
-We have two options thanks to this special FreeBSD feature:
+When attending the Git Merge conference in May, gregkh said roughtly:
+"We deliberately waste developers time, because it is not scarce.
+Maintainers time is scarce however " and it stuck with me. (and I
+am a developer, not a maintainer ;( so at least the kernel community
+deems it ok to waste my time).
 
-1) Stop supporting untracked cache on FreeBSD. Skip t7063 entirely
-   when running on FreeBSD
+While that is true for the kernel community, I guess it is also true for the
+Git community, unless Junio (and the community) want to appoint a
+bunch of maintainer lieutenants, such that they outnumber the number
+of developers, e.g. divided by areas of the code:
+a refs backend maintainer, a submodule maintainer, ...
+or rather by area of usage: a porcelain UI maintainer, a git-on-server
+maintainer.
 
-2) Work around this problem (using the same 'ls' trick) and continue
-   to support untracked cache on FreeBSD
+Though Git is not as diverse and large as the kernel, so the horde of
+maintainers would step onto each feet quite frequently IMHO.
 
-I initially wanted to go with 1) because I didn't know the exact
-nature of this feature and feared that it would make untracked cache
-work unreliably, using the cached version when it should not.
+>
+> It would be a totally different matter, of course, if you used the
+> branches I publish via my GitHub repository, added fixup! and squash!
+> commits, published the result to a public repository and then told me to
+> pull from there, that would make things easier. We could even introduce a
+> reword! construct, to make the review of the suggested edits of the commit
+> message easier. I could easily verify that my branch head agrees with the
+> base commit of your branch, I could build proper tooling around this
+> workflow, and it would lighten my load.
+>
+> I guess what I am saying is that we might just as well start using this
+> awesome tool to work with code, that tool named "Git".
 
-Since the behavior of this thing is clearer now. The picture is not
-that bad. If this indeed happens often, untracked cache would assume
-racy condition more often and _fall back_ to non-untracked cache code
-paths. Which means it may be less effective, but it will not show
-wrong things.
+I think Git itself is for the tracking the code and managing it, e.g. merging,
+moving, keeping it. That doesn't quite include modifying and creating code
+(e.g. there is no "git edit" command)
 
-This patch goes with option 2.
+If we were to change our workflows drastically, I'd propose to
+go a way[1] similar to notedb in Gerrit, or git-series, which defines
+a common review format, such that we have a "protocol" how to store
+the review data and how to store the progress of potential collaboration
+and then we can develop tools against that protocol. Some people
+want to have a web UI, whereas others want to have a text only thing
+as they are faster keyboard only.
 
-PS. For those who want to look further in FreeBSD source code, this
-flag is now called IN_LAZYMOD. I can see it's effective in ext2 and
-ufs. zfs is not affected.
+[1] http://git.661346.n2.nabble.com/Working-towards-a-common-review-format-for-git-td7645242.html
 
-[1] 660e6408e6df99a20dacb070c5e7f9739efdf96d
-[2] git://github.com/freebsd/freebsd.git
-[3] https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=5577
-
-Reported-by: Eric Wong <e@80x24.org>
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- v3 differs from v2 in one line
-
-    --- a/t/t7063-status-untracked-cache.sh
-    +++ b/t/t7063-status-untracked-cache.sh
-    @@ -11,7 +11,7 @@ test_description='test untracked cache'
-     # containing directory in sync with the reality after doing blah and
-     # before checking the fast path behaviour
-     sync_mtime () {
-    -	find . -type d -exec ls -ld {} \; >/dev/null
-    +	find . -type d -ls >/dev/null
-     }
- 
- avoid_racy() {
- t/t7063-status-untracked-cache.sh | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
-
-diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
-index a971884..d31d080 100755
---- a/t/t7063-status-untracked-cache.sh
-+++ b/t/t7063-status-untracked-cache.sh
-@@ -4,6 +4,16 @@ test_description='test untracked cache'
- 
- . ./test-lib.sh
- 
-+# On some filesystems (e.g. FreeBSD's ext2 and ufs) this and that
-+# happens when we do blah, which forces the untracked cache code to
-+# take the slow path.  A test that wants to make sure the fast path
-+# works correctly should call this helper to make mtime of the
-+# containing directory in sync with the reality after doing blah and
-+# before checking the fast path behaviour
-+sync_mtime () {
-+	find . -type d -ls >/dev/null
-+}
-+
- avoid_racy() {
- 	sleep 1
- }
-@@ -416,7 +426,8 @@ test_expect_success 'create/modify files, some of which are gitignored' '
- 	echo four >done/four && # four is gitignored at a higher level
- 	echo five >done/five && # five is not gitignored
- 	echo test >base && #we need to ensure that the root dir is touched
--	rm base
-+	rm base &&
-+	sync_mtime
- '
- 
- test_expect_success 'test sparse status with untracked cache' '
--- 
-2.9.1.566.gbd532d4
-
+Thanks for starting this discussion,
+Stefan
