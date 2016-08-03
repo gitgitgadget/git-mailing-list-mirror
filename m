@@ -6,140 +6,90 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB53B1F40E
-	for <e@80x24.org>; Wed,  3 Aug 2016 20:00:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 261791F40E
+	for <e@80x24.org>; Wed,  3 Aug 2016 20:00:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758005AbcHCUAg (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 16:00:36 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51302 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757747AbcHCUAe (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1758149AbcHCUAi (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 16:00:38 -0400
+Received: from mail-io0-f176.google.com ([209.85.223.176]:33648 "EHLO
+	mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756518AbcHCUAe (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 3 Aug 2016 16:00:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id AD65F3073B;
-	Wed,  3 Aug 2016 15:54:50 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qqHB96q1bhmyF3TxlnZdwFgY0eo=; b=TSsupq
-	ySueSRpyZM2Tu5eSIoUpceV9oMwsDbWMNLytdglzpe480EWwRMZzVOjw2N+0Qd0j
-	S0flGZdnMDYiFzLU/S4vPyC2PeBrZs5oT6ugPIJrmvHGlZAtNznOyFoeN1jWBhM9
-	XZza8ZTHyixv56xIOFvfqybBwbdF7JhduMmzQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NcaKfG1LdT1umnxZjlTuklQkDHG6q2SG
-	tEyGEpX9v0mb5Vou1Nv5m9ech8qF5Jjkl1SQ0WcMdFyHTtoX/m7tgxOibqygqLn6
-	9UgR3I30Y0A13fCtgYQvB1C1TykgohjA1m/pByT664/zn/zS89QoyL5EpMvxZ+I0
-	ued7ocr6QmE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A2F013073A;
-	Wed,  3 Aug 2016 15:54:50 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1366730739;
-	Wed,  3 Aug 2016 15:54:50 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	Stephen Morton <stephen.morton@nokia.com>,
-	Jan Smets <jan.smets@nokia.com>, git@vger.kernel.org
-Subject: Re: Client exit whilst running pre-receive hook : commit accepted but no post-receive hook ran
-References: <5795EB1C.1080102@nokia.com>
-	<20160725222201.GC13589@sigill.intra.peff.net>
-	<a3f64a09-3094-eee1-0050-9960f0674036@nokia.com>
-	<20160803193018.ydhmxntikhyowmjz@sigill.intra.peff.net>
-Date:	Wed, 03 Aug 2016 12:54:48 -0700
-In-Reply-To: <20160803193018.ydhmxntikhyowmjz@sigill.intra.peff.net> (Jeff
-	King's message of "Wed, 3 Aug 2016 15:30:18 -0400")
-Message-ID: <xmqqlh0d8w6v.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+Received: by mail-io0-f176.google.com with SMTP id 38so253651260iol.0
+        for <git@vger.kernel.org>; Wed, 03 Aug 2016 12:59:35 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=t++Nx27v3SY9mC7JL703wUtOTpI4MSw+Iy/q85ni5W4=;
+        b=lI/4k/hIbCkb2lTrORnPSduGNUwIdItm/VPXXpvumYXV9dk/ps2HZ3IyiH1BklX/wm
+         nt2J41vIhUfFnSAEGAszrzIvBkNKONV7Yu6LpGiUdjv5BnoiQ3h/qpyNO1WF+K/X/yy7
+         APZE58iZ8CQ9vsx8pYimwz15aH7ZWoz2xMvWeXsdn63dF7hcudn4mbect/AshIW0aDaR
+         7o1brbNAaJpEeHGKECvCaDQB6RWCjYXEQ2n6hg+mMFfyVpZBipNCxbcdOLYLa4eo+5xk
+         7btNUmk0JzO10hjdEBRiCyaJTuu2Kcnv5HznY9M2UPLYb1DUrryOjGqDGiWIA4bJjlLu
+         jMuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=t++Nx27v3SY9mC7JL703wUtOTpI4MSw+Iy/q85ni5W4=;
+        b=OhexOt1F2JIk+TkCmOMtore3v6fw80RqOhoRDG+OPgS21BdLrY9WxvsdRKYyMNItXS
+         FSQIMjouttOHJ8+mjKDnW6Btu4kGHE89tP8MrqXCanWR8jh/8YZOIMrwpRbQT4r6FB+X
+         H9m3OME5oT1XPY1aU/ptHNgvWPt1+3HgSYn9FTeemg8iENlbQWWTWSrGNUHSkNtsO/6V
+         i57njteTqCDaEV4n/3nk1kqA2vTGhacIbslfj0ahT47dRQGQsTKqXi7EKYqaset8MX9c
+         68QqvELTO9YLv4iDJOZec3FsGHAYsE8UhmCkZhb+rJUvAKDCn+jYXjfQbVMwVYTsI+p3
+         yq3w==
+X-Gm-Message-State: AEkoouuoMCm7C1zMSA/MQAXfSwrvv7BxPjO1FL0MLrn0alDeJYpSxjHi82AxmwY3L3GephuvC0QAciuBYGuwvjz8
+X-Received: by 10.107.131.38 with SMTP id f38mr72591864iod.173.1470254374422;
+ Wed, 03 Aug 2016 12:59:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 233D0CAC-59B4-11E6-9228-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.107.128.66 with HTTP; Wed, 3 Aug 2016 12:59:34 -0700 (PDT)
+In-Reply-To: <20160803194913.cz6xiai3g5r3sghq@sigill.intra.peff.net>
+References: <579CEF77.9070202@web.de> <20160801164723.mober7em6znt56w4@sigill.intra.peff.net>
+ <xmqq8twgi4qp.fsf@gitster.mtv.corp.google.com> <20160801211131.6ernsu74ohod2cin@sigill.intra.peff.net>
+ <xmqq60rkglym.fsf@gitster.mtv.corp.google.com> <20160803191334.jflia6cqxqx2uqjx@sigill.intra.peff.net>
+ <CAPc5daVABao1UZdPk0BnJNkTtYYV74Tw_0CZ9-uj9sK92h+x7g@mail.gmail.com> <20160803194913.cz6xiai3g5r3sghq@sigill.intra.peff.net>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Wed, 3 Aug 2016 12:59:34 -0700
+Message-ID: <CAGZ79kYonA8pYfW68SC6YaZ84Gz2Eo_qXDxQJ14_62abcd8-Og@mail.gmail.com>
+Subject: Re: [PATCH] pass constants as first argument to st_mult()
+To:	Jeff King <peff@peff.net>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+	Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> I agree it would be a good property to have. I think it's hard to do
-> atomically, though. Certainly we can wait to tell the other side "your
-> push has been recorded" until after the hook is run. But we would
-> already have updated the refs locally at that point (and we must -- that
-> is part of the interface to the post-receive hooks, that the refs are
-> already in place). So would we roll-back the ref update then? Even that
-> suffers from power failures, etc.
+On Wed, Aug 3, 2016 at 12:49 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Aug 03, 2016 at 12:41:30PM -0700, Junio C Hamano wrote:
 >
-> So I'm not sure if making it truly atomic is all the feasible.
+>> On Wed, Aug 3, 2016 at 12:13 PM, Jeff King <peff@peff.net> wrote:
+>> > On Mon, Aug 01, 2016 at 03:31:45PM -0700, Junio C Hamano wrote:
+>> >
+>> > I think in my head I rewrite any multiplication like "N of M" as having
+>> > "N" as the smaller number. I.e., it is conceptually simpler to me to
+>> > count five 30's, then 30 five's (even though I do not implement it in my
+>> > head as a sequence of additions, of course; I'd probably do that
+>> > particular case as "half of ten 30's").
+>> >
+>> > I have no idea if that's cultural or not, though.
 
-As long as the requirement is that post- hook must see the updated
-ref in place, I do not think it is feasible to give "the hook always
-runs once" guarantee, without cooperation by other parts of the flow
-(think: pulling the power at an arbitrary point in the process).
+Well I think there is a difference between how you do the math in your head
+and between the textbook question.
 
-A receiving repository can implement it all in the userland, I would
-think, though:
+In textbook I would expect 5x30, because first we need to talk about the
+object before the price of the object makes sense:
+"I am interested in 5 apples, and each apple costs 30 yen, so I am paying
+150 yen". Only that in Europe you would substitute the 30 by 0.84 Euros
+(integer-> number with 2 values after comma, not quite a float).
 
- * A pre-receive hook records the intention to update a ref (from
-   what old commit to what new commit), and does not return until
-   that record is securely in a database;
+When doing the math in your head you look for the easy tricks, i.e.
+x5  = x10 /2 or such.
 
- * A post-receive hook checks the entry in the database above (it
-   _must_ find one), and atomically does its thing and marks the
-   entry "done";
-
- * A separate sweeper scans the database for entries not yet marked
-   as "done", sees if the ref has been already updated, and
-   atomically does its thing and marks the entry "done" (the same
-   can be done as part of a post-receive for previously pushed
-   commit that pre-receive recorded but did not manage to run
-   post-receive before the power was pulled or the user did \C-c).
-
-As you originally described, the non-atomicity is not new; as long
-as we have necessary hooks in place on the git-core side for
-repositories that want a stronger guarantee, I do not think there is
-any more thing we need to do on this topic.  If we can narrow the
-window in a non-intrusive way, that would be a good thing to do,
-though.
-
-> However,
-> we could certainly make things more robust than they are now.
-
-And this change may to the "narrowing the window in a non-intrusive
-way" (I wonder if we also need to lift the post-update hook the same
-way, though).
-
-But that would still not guarantee "the hook always runs once".
-What we have is "the hook runs at most once".
-
-Thanks.
-
-> The simplest thing may be to just bump the post-receive hook before the
-> status report. That opens up the question of whether clients are
-> actually waiting already for the post-receive to finish. Looking at the
-> code in send-pack, it looks like the network is hooked up to the
-> sideband demuxer thread, which will read until EOF on the network. So we
-> are waiting either way for the post-receive to run. It doesn't really
-> matter if it happens before or after the report to the client.
->
-> So I _think_ something like this would work:
->
-> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index 15c323a..91d01f0 100644
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -1767,9 +1767,9 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
->  		execute_commands(commands, unpack_status, &si);
->  		if (pack_lockfile)
->  			unlink_or_warn(pack_lockfile);
-> +		run_receive_hook(commands, "post-receive", 1);
->  		if (report_status)
->  			report(commands, unpack_status);
-> -		run_receive_hook(commands, "post-receive", 1);
->  		run_update_post_hook(commands);
->  		if (auto_gc) {
->  			const char *argv_gc_auto[] = {
->
-> but maybe there are other gotchas.
->
-> -Peff
+I think I'd find calloc intuitive as a typical textbook question, "I
+want to have
+space for "foos", which each cost 5 memory, go figure out how much I need
+and hand it back to me".
