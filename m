@@ -2,161 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F9B11F858
-	for <e@80x24.org>; Wed,  3 Aug 2016 16:44:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 478651F40E
+	for <e@80x24.org>; Wed,  3 Aug 2016 16:59:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758118AbcHCQnk (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 12:43:40 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36572 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757775AbcHCQnE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2016 12:43:04 -0400
-Received: by mail-wm0-f66.google.com with SMTP id x83so37153516wma.3
-        for <git@vger.kernel.org>; Wed, 03 Aug 2016 09:42:39 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Twbmbqir/uGjiI674pqW5v7s40tyl8ZT4q24AhEWhaQ=;
-        b=C9MTeBHhrYMcsyX79CXVmu4dqrPa4Zdz/rzwI6w5QOG7G2z0c2GuY8jssvCEdInQQC
-         1qu/0M8gJHRQhGUrktdA3Di+mInBcGLoxRCqRGsa4LY0I68kPC3g0GdpsPlssrVwu/za
-         mdS46o4kAIg/aqfnDuCAaNnJbpENJTRfbNKSiVVNPTO62zk5NROprYDBOrrPLiJuDeOM
-         f3SpERLHpYselIVFyHLDZEEeutuf6cpqWbYR2+6DynodKopeweWw1Y27ChXTTvzc+n/Y
-         EcP3BbDxVN/P7hPa3udS28ajGZIIuxVut7pjlea75a1CoSY4hYGLmUqMO3WNZ0lBi3/G
-         Yp5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Twbmbqir/uGjiI674pqW5v7s40tyl8ZT4q24AhEWhaQ=;
-        b=NLqbuRMf9DisdGSbWRYVOD/ABtl8vqIJlMPTrpGdVV3R5U5t3OUNb8yztaokROQWjo
-         z8jLbUDBg4sezaHSkeicSraadNNC9mnJYeROToxmr/KXf7ATssMUTedsMd2SelD+xzwH
-         qpIzUnNXLjzA4zfO8+uxqt4UsdjkMbh7pK+SAFkM60vCVHxkB1Ah02T2U79TV0QDvkq8
-         Z5SPkJEaJRXKoEB5FcUIdr3Fo1J91zGt/76PYFTgcjm61uJ+vLLp450j70OKJKzqIqqQ
-         XdQAqZ40OUtfZhsC//5DdCI7JQ4xWQegKzoX91hNmWTJkfHKylTB6le397VSAOOEORmT
-         haoQ==
-X-Gm-Message-State: AEkoouvcwqoF1XCXy9UC3giFteE5fy6g3RF9/+GtbMdFBUv0AdLS7srH8qDhO/z8Z+m0jQ==
-X-Received: by 10.28.104.137 with SMTP id d131mr25622610wmc.7.1470242557903;
-        Wed, 03 Aug 2016 09:42:37 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id 3sm8959736wms.1.2016.08.03.09.42.37
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Wed, 03 Aug 2016 09:42:37 -0700 (PDT)
-From:	larsxschneider@gmail.com
-To:	git@vger.kernel.org
-Cc:	gitster@pobox.com, jnareb@gmail.com, tboegi@web.de,
-	mlbright@gmail.com, e@80x24.org, peff@peff.net,
-	Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v4 10/12] convert: generate large test files only once
-Date:	Wed,  3 Aug 2016 18:42:23 +0200
-Message-Id: <20160803164225.46355-11-larsxschneider@gmail.com>
-X-Mailer: git-send-email 2.9.0
-In-Reply-To: <20160803164225.46355-1-larsxschneider@gmail.com>
-References: <20160729233801.82844-1-larsxschneider@gmail.com>
- <20160803164225.46355-1-larsxschneider@gmail.com>
+	id S1757777AbcHCQ7J (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 12:59:09 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62408 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757340AbcHCQ7H (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2016 12:59:07 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 11AF92FE37;
+	Wed,  3 Aug 2016 12:59:06 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tjqcSkWAHJD+6OddDyK5VL4Bo88=; b=KXEg4B
+	zBVWMjYHAk0ywct8l9RuDuvGWu1Sl1UYakxTqGi/WQF/tuXIp3tOTb2z6DoeLLbo
+	4AyPWyNXJuF1uL/M6LINpREerGmMrE+QjWPhLaiZy+tlG7M3Z7fcoL755cdandts
+	3EFvKsDj0YkQf7x9UD1+E/NPySQhGXhXFEkGA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=W7H4BYIOPziMhkJhY+ybk/+kaX2/zJ04
+	xZ3HM6dcomfY8uZbxpXNd5dJsT5v8/IJhGboKSOomwa6y+IqYQDbLrfZJhvp8voS
+	5sYB/jSSSSfekXd5e3wtUQqesHyR2HQeprm9TJaE+rhORisKYbFQ+3zSSwsriq2q
+	Nx2dEzY47Uk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0947D2FE36;
+	Wed,  3 Aug 2016 12:59:06 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7F2C02FE34;
+	Wed,  3 Aug 2016 12:59:05 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	Jeff Hostetler <git@jeffhostetler.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v4 0/8] status: V2 porcelain status
+References: <1470147137-17498-1-git-send-email-git@jeffhostetler.com>
+	<alpine.DEB.2.20.1608031708560.107993@virtualbox>
+	<CAPc5daVuD7K7zKEG4yHTjBU77rUbdVcbSeBgX9eAJVMWMmxC2w@mail.gmail.com>
+	<alpine.DEB.2.20.1608031808130.107993@virtualbox>
+Date:	Wed, 03 Aug 2016 09:59:03 -0700
+In-Reply-To: <alpine.DEB.2.20.1608031808130.107993@virtualbox> (Johannes
+	Schindelin's message of "Wed, 3 Aug 2016 18:10:52 +0200 (CEST)")
+Message-ID: <xmqq7fbxaiw8.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 96276258-599B-11E6-8973-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Lars Schneider <larsxschneider@gmail.com>
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Generate more interesting large test files with pseudo random characters
-in between and reuse these test files in multiple tests. Run tests formerly
-marked as EXPENSIVE every time but with a smaller data set.
+> On Wed, 3 Aug 2016, Junio C Hamano wrote:
+>
+>> On Wed, Aug 3, 2016 at 8:09 AM, Johannes Schindelin
+>> <Johannes.Schindelin@gmx.de> wrote:
+>>
+>> > Any word when it will be included in `pu`, at least?
+>> 
+>> I've been waiting to see that the amount and quality of
+>> comments from others indicate that the series passed
+>> the phase that goes through frequent rerolls. Having a
+>> serious review in the thread that demonstrates and
+>> concludes that it is well designed, well implemented,
+>> and ready to go would help, of course.
+>
+> Oh, I thought I had stated clearly already that what with Jeff being my
+> colleague and working on a feature I have a lot of interest in, I had
+> reviewed this patch series even before it was submitted to the Git mailing
+> list.
 
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
- t/t0021-conversion.sh | 48 ++++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 38 insertions(+), 10 deletions(-)
 
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index 7b45136..34c8eb9 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -4,6 +4,15 @@ test_description='blob conversion via gitattributes'
- 
- . ./test-lib.sh
- 
-+if test_have_prereq EXPENSIVE
-+then
-+	T0021_LARGE_FILE_SIZE=2048
-+	T0021_LARGISH_FILE_SIZE=100
-+else
-+	T0021_LARGE_FILE_SIZE=30
-+	T0021_LARGISH_FILE_SIZE=2
-+fi
-+
- cat <<EOF >rot13.sh
- #!$SHELL_PATH
- tr \
-@@ -31,7 +40,26 @@ test_expect_success setup '
- 	cat test >test.i &&
- 	git add test test.t test.i &&
- 	rm -f test test.t test.i &&
--	git checkout -- test test.t test.i
-+	git checkout -- test test.t test.i &&
-+
-+	mkdir generated-test-data &&
-+	for i in $(test_seq 1 $T0021_LARGE_FILE_SIZE)
-+	do
-+		RANDOM_STRING="$(test-genrandom end $i | tr -dc "A-Za-z0-9" )"
-+		ROT_RANDOM_STRING="$(echo $RANDOM_STRING | ./rot13.sh )"
-+		# Generate 1MB of empty data and 100 bytes of random characters
-+		# printf "$(test-genrandom start $i)"
-+		printf "%1048576d" 1 >>generated-test-data/large.file &&
-+		printf "$RANDOM_STRING" >>generated-test-data/large.file &&
-+		printf "%1048576d" 1 >>generated-test-data/large.file.rot13 &&
-+		printf "$ROT_RANDOM_STRING" >>generated-test-data/large.file.rot13 &&
-+
-+		if test $i = $T0021_LARGISH_FILE_SIZE
-+		then
-+			cat generated-test-data/large.file >generated-test-data/largish.file &&
-+			cat generated-test-data/large.file.rot13 >generated-test-data/largish.file.rot13
-+		fi
-+	done
- '
- 
- script='s/^\$Id: \([0-9a-f]*\) \$/\1/p'
-@@ -199,9 +227,9 @@ test_expect_success 'required filter clean failure' '
- test_expect_success 'filtering large input to small output should use little memory' '
- 	test_config filter.devnull.clean "cat >/dev/null" &&
- 	test_config filter.devnull.required true &&
--	for i in $(test_seq 1 30); do printf "%1048576d" 1; done >30MB &&
--	echo "30MB filter=devnull" >.gitattributes &&
--	GIT_MMAP_LIMIT=1m GIT_ALLOC_LIMIT=1m git add 30MB
-+	cp generated-test-data/large.file large.file &&
-+	echo "large.file filter=devnull" >.gitattributes &&
-+	GIT_MMAP_LIMIT=1m GIT_ALLOC_LIMIT=1m git add large.file
- '
- 
- test_expect_success 'filter that does not read is fine' '
-@@ -214,15 +242,15 @@ test_expect_success 'filter that does not read is fine' '
- 	test_cmp expect actual
- '
- 
--test_expect_success EXPENSIVE 'filter large file' '
-+test_expect_success 'filter large file' '
- 	test_config filter.largefile.smudge cat &&
- 	test_config filter.largefile.clean cat &&
--	for i in $(test_seq 1 2048); do printf "%1048576d" 1; done >2GB &&
--	echo "2GB filter=largefile" >.gitattributes &&
--	git add 2GB 2>err &&
-+	echo "large.file filter=largefile" >.gitattributes &&
-+	cp generated-test-data/large.file large.file &&
-+	git add large.file 2>err &&
- 	test_must_be_empty err &&
--	rm -f 2GB &&
--	git checkout -- 2GB 2>err &&
-+	rm -f large.file &&
-+	git checkout -- large.file 2>err &&
- 	test_must_be_empty err
- '
- 
--- 
-2.9.0
+What I meant by a "serious review" is a bit more than "I reviewed
+without involving the list, and you know me well enough, trust me".
 
+Even if a reviewer does not see any more need to change the patch,
+perhaps because it is perfect after internal reviews, a reviewer can
+still point out positive things, e.g. what is done well compared to
+other possible approaches and in what way the presented patch is
+better than possible alternatives.  See my response to your import-tars
+update for an example.
+
+Thanks.
