@@ -6,120 +6,170 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0AFDE1F40E
-	for <e@80x24.org>; Wed,  3 Aug 2016 20:45:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28F581F40E
+	for <e@80x24.org>; Wed,  3 Aug 2016 20:45:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932644AbcHCUpT (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 16:45:19 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:35574 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932213AbcHCUpS (ORCPT <rfc822;git@vger.kernel.org>);
+	id S932806AbcHCUpf (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 16:45:35 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:35583 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932499AbcHCUpS (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 3 Aug 2016 16:45:18 -0400
-Received: by mail-pa0-f47.google.com with SMTP id iw10so76996428pac.2
-        for <git@vger.kernel.org>; Wed, 03 Aug 2016 13:44:21 -0700 (PDT)
+Received: by mail-pa0-f42.google.com with SMTP id iw10so76996856pac.2
+        for <git@vger.kernel.org>; Wed, 03 Aug 2016 13:44:26 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=UXXvcZwzEcNkzww6Xd552L1tQ+jS/FmyKMwQFbSy/y4=;
-        b=U4aSWWmDZGy0GxApDwCBdhLlvhKOcMahg2tBogII8cJjd1r1j/p4Y3j/HP0RDz8Qts
-         Kb2imcOsOW283UYOSD+p4eXyQkFktrosXrR2kBejrXSNyTnHeTgPFY2q421k7yNHN0tD
-         xAl2VYuRdyirJK3grMiBmLN/i8AdSe9zff88fT+BwlpfT7elCMhdxHkChoheihQvayBS
-         ccGxuSe71dnTJ878cqJ8isxlezecHCupapF5IJSGOeaAEkMTCkQMKG9V2CHrlDFbGAjC
-         u5yB+7mDiC2c/APQ/COCfRMPf+R9DzaHarvkoA4FBF5KAVLadtvzu0lh0xYGscpMo5bx
-         XQvg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=LdfbR+V7wH3RI9w5M8uTGWmmfVEcHXSaubUbBDVjFJ8=;
+        b=HMkVry6TNt4e2lQOhVDfaCPaMj6p+pbbw5a9NlxQCPIHzem2SkBnMzZ2HJqF7GfE5c
+         WQzsq9ANXQwwTqMLthDaFAJXre4oMf1RwTTd2VD2eqrWOBsfrNeZyNQW753b/8Ymo7V9
+         XnaTpIY1rs9acwB41YUtjjvQgSXLLJ9FlkoJ9csqUYrCS98TT3W5Bc6tYmhy2IlttCmJ
+         QE7xjjB6Vq1K7zwWmVpWB5l8wlz1YHQPSR+VfuLyvjMKVcvmQjrmriHDeUJ3Cbv5a1I4
+         3dl3zdFHWmgPs97L0BVkx89mUAOpaCgE4A7M46PiYqG15YR5gGeAdfZhkl1+EtSXOtsf
+         tJJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=UXXvcZwzEcNkzww6Xd552L1tQ+jS/FmyKMwQFbSy/y4=;
-        b=eDI1TJ3Ul8fvZIPG6z//Pa7bkmy7520p5pMFo1TLoLGgaFKiiuzJu/4NOX1sJ91Bn/
-         9SJtDAK2RAx7jK5++rFxJ9BANyDneu0bLYkFv7P2sDNfnNLrUv9GxR3duzZx0liO++z5
-         CMim97xMg9vB/0ChINI3SUFBt190I/IUrSxkEf8sK/gYod0RUd92wVNSc3aHS/5fvk/9
-         5ahjHkkK+6f0IEbs1WKJzaPtlEilXuTrRZtr/xdOuVrrRLbDk5m8HwmVO1L5NgSr6vbl
-         y7n+jKup0KINe90k/8jQbFCTIYZ8n8S1EAaU+NA39AOD/jhFAlGv6djW05TrTFihxskW
-         84mA==
-X-Gm-Message-State: AEkoous8FL9M/4NELNOOlCCod5BgPtosD0tRY5hV7akVRadt7F7HYF7VZEFbEmu9uYxU1ArL
-X-Received: by 10.67.3.164 with SMTP id bx4mr121311794pad.9.1470257061232;
-        Wed, 03 Aug 2016 13:44:21 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=LdfbR+V7wH3RI9w5M8uTGWmmfVEcHXSaubUbBDVjFJ8=;
+        b=lfWjg59Ah6CyDeQRXdVrD1wxrPH6tJhQepV1a6V/b+9/P2cYOSAvWYt9M/Z/q1wS+L
+         2QH5RSOfKbzUPgs/qHlMTMg3mphWjUnIgLNwR+nOXyn3YbhvZ8gHb+dfiWigcyRu5L2U
+         FuixZ0BTaXWehhtYcq8llw1YKmzR5xFytkROlNEYn5ryOqtgeOOnEPKChJYae4NL1tNY
+         Fzeai6JsEOhPSX44Qpq7FlJQA/ogdypJvW4QyABBC1E9cu6fp4hKjuMgHrWepQVYh5tV
+         LerH4I1nLtQPbqoA1JCZunpTGIkD57G5Ubm9mNmjyM8xXDdS3VfLVwmr0Cm9TZ3OIUEq
+         7wTQ==
+X-Gm-Message-State: AEkoous4VpGWQxZuXcdzsUU/qZfLKeTnkAiG38JX88qjQjkufhko7npg1jMPJK3zyUUxUrBr
+X-Received: by 10.66.142.233 with SMTP id rz9mr121268077pab.143.1470257065696;
+        Wed, 03 Aug 2016 13:44:25 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:f855:e892:92e2:7149])
-        by smtp.gmail.com with ESMTPSA id 191sm14701889pfx.68.2016.08.03.13.44.20
+        by smtp.gmail.com with ESMTPSA id q1sm14718735pfd.48.2016.08.03.13.44.25
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 03 Aug 2016 13:44:20 -0700 (PDT)
+        Wed, 03 Aug 2016 13:44:25 -0700 (PDT)
 From:	Stefan Beller <sbeller@google.com>
 To:	gitster@pobox.com
 Cc:	git@vger.kernel.org, Jens.Lehmann@web.de, apenwarr@gmail.com,
 	jrnieder@gmail.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCHv4 {6,7}/7] submodule update: allow '.' for branch value
-Date:	Wed,  3 Aug 2016 13:44:02 -0700
-Message-Id: <20160803204404.3356-1-sbeller@google.com>
+Subject: [PATCHv4 6/7] submodule update: allow '.' for branch value
+Date:	Wed,  3 Aug 2016 13:44:04 -0700
+Message-Id: <20160803204404.3356-3-sbeller@google.com>
 X-Mailer: git-send-email 2.9.2.524.gdbd1860
+In-Reply-To: <20160803204404.3356-1-sbeller@google.com>
+References: <20160803204404.3356-1-sbeller@google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-This replaces the last two commits of  sb/submodule-update-dot-branch.
+Gerrit has a "superproject subscription" feature[1], that triggers a
+commit in a superproject that is subscribed to its submodules.
+Conceptually this Gerrit feature can be done on the client side with
+Git via (except for raciness, error handling etc):
 
-Thanks Jeff for pointing out the possible segfault.
-In the last commit I removed commented code in the test.
+  while [ true ]; do
+    git -C <superproject> submodule update --remote --force
+    git -C <superproject> commit -a -m "Update submodules"
+    git -C <superproject> push
+  done
 
-Thanks,
-Stefan
+for each branch in the superproject. To ease the configuration in Gerrit
+a special value of "." has been introduced for the submodule.<name>.branch
+to mean the same branch as the superproject[2], such that you can create a
+new branch on both superproject and the submodule and this feature
+continues to work on that new branch.
 
-diff to sb/submodule-update-dot-branch:
+Now we find projects in the wild with such a .gitmodules file.
+The .gitmodules used in these Gerrit projects do not conform
+to Gits understanding of how .gitmodules should look like.
+This teaches Git to deal gracefully with this syntax as well.
+
+The redefinition of "." does no harm to existing projects unaware of
+this change, as "." is an invalid branch name in Git, so we do not
+expect such projects to exist.
+
+Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/submodule--helper.c | 18 ++++++++++++++++++
+ t/t7406-submodule-update.sh | 35 ++++++++++++++++++++++++++++++++++-
+ 2 files changed, 52 insertions(+), 1 deletion(-)
+
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index ae88eff..f1acc4d 100644
+index 9be2c75..f1acc4d 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -906,6 +906,9 @@ static const char *remote_submodule_branch(const char *path)
-        git_config(submodule_config, NULL);
+@@ -912,6 +912,24 @@ static const char *remote_submodule_branch(const char *path)
+ 	if (!sub->branch)
+ 		return "master";
  
-        sub = submodule_from_path(null_sha1, path);
-+       if (!sub)
-+               return NULL;
++	if (!strcmp(sub->branch, ".")) {
++		unsigned char sha1[20];
++		const char *refname = resolve_ref_unsafe("HEAD", 0, sha1, NULL);
 +
-        if (!sub->branch)
-                return "master";
- 
-@@ -933,11 +936,16 @@ static const char *remote_submodule_branch(const char *path)
- static int resolve_remote_submodule_branch(int argc, const char **argv,
-                const char *prefix)
- {
-+       const char *ret;
-        struct strbuf sb = STRBUF_INIT;
-        if (argc != 2)
-                die("submodule--helper remote-branch takes exactly one arguments, got %d", argc);
- 
--       printf("%s", remote_submodule_branch(argv[1]));
-+       ret = remote_submodule_branch(argv[1]);
-+       if (!ret)
-+               die("submodule %s doesn't exist", argv[1]);
++		if (!refname)
++			die(_("No such ref: %s"), "HEAD");
 +
-+       printf("%s", ret);
-        strbuf_release(&sb);
-        return 0;
++		/* detached HEAD */
++		if (!strcmp(refname, "HEAD"))
++			die(_("Submodule (%s) branch configured to inherit "
++			      "branch from superproject, but the superproject "
++			      "is not on any branch"), sub->name);
++
++		if (!skip_prefix(refname, "refs/heads/", &refname))
++			die(_("Expecting a full ref name, got %s"), refname);
++		return refname;
++	}
++
+ 	return sub->branch;
  }
+ 
 diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 1c4c1f2..d7983cf 100755
+index 1bb1f43..d7983cf 100755
 --- a/t/t7406-submodule-update.sh
 +++ b/t/t7406-submodule-update.sh
-@@ -238,7 +238,6 @@ test_expect_success 'submodule update --remote should fetch upstream changes wit
-                test_cmp expect actual &&
-                git checkout master &&
-                git branch -d test-branch &&
--               #~ git -C ../submodule branch -d test-branch &&
-                git reset --hard HEAD^
-        )
+@@ -209,9 +209,42 @@ test_expect_success 'submodule update --remote should fetch upstream changes' '
+ 	)
  '
-
-Stefan Beller (2):
-  submodule--helper: add remote-branch helper
-  submodule update: allow '.' for branch value
-
- builtin/submodule--helper.c | 54 ++++++++++++++++++++++++++++++++++++++++++++-
- git-submodule.sh            |  2 +-
- t/t7406-submodule-update.sh | 35 ++++++++++++++++++++++++++++-
- 3 files changed, 88 insertions(+), 3 deletions(-)
-
+ 
++test_expect_success 'submodule update --remote should fetch upstream changes with .' '
++	(
++		cd super &&
++		git config -f .gitmodules submodule."submodule".branch "." &&
++		git add .gitmodules &&
++		git commit -m "submodules: update from the respective superproject branch"
++	) &&
++	(
++		cd submodule &&
++		echo line4a >> file &&
++		git add file &&
++		test_tick &&
++		git commit -m "upstream line4a" &&
++		git checkout -b test-branch &&
++		test_commit on-test-branch
++	) &&
++	(
++		cd super &&
++		git submodule update --remote --force submodule &&
++		git -C submodule log -1 --oneline >actual
++		git -C ../submodule log -1 --oneline master >expect
++		test_cmp expect actual &&
++		git checkout -b test-branch &&
++		git submodule update --remote --force submodule &&
++		git -C submodule log -1 --oneline >actual
++		git -C ../submodule log -1 --oneline test-branch >expect
++		test_cmp expect actual &&
++		git checkout master &&
++		git branch -d test-branch &&
++		git reset --hard HEAD^
++	)
++'
++
+ test_expect_success 'local config should override .gitmodules branch' '
+ 	(cd submodule &&
+-	 git checkout -b test-branch &&
++	 git checkout test-branch &&
+ 	 echo line5 >> file &&
+ 	 git add file &&
+ 	 test_tick &&
 -- 
 2.9.2.524.gdbd1860
 
