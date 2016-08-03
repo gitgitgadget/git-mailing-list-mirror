@@ -7,128 +7,66 @@ X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
 	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B256F1F855
-	for <e@80x24.org>; Wed,  3 Aug 2016 12:01:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 073A720228
+	for <e@80x24.org>; Wed,  3 Aug 2016 12:13:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756175AbcHCMA7 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 08:00:59 -0400
-Received: from mout.gmx.net ([212.227.17.21]:56902 "EHLO mout.gmx.net"
+	id S1757967AbcHCMM4 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 08:12:56 -0400
+Received: from mout.gmx.net ([212.227.15.18]:54699 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753269AbcHCMA5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2016 08:00:57 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0LfC4q-1atO9M0LUW-00okC7; Wed, 03 Aug 2016 13:59:48
+	id S1754542AbcHCML6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2016 08:11:58 -0400
+Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0Lz3nU-1b8jEu2FaC-014AUl; Wed, 03 Aug 2016 14:04:00
  +0200
-Date:	Wed, 3 Aug 2016 13:59:44 +0200 (CEST)
+Date:	Wed, 3 Aug 2016 14:03:54 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: patch submission process, was Re: [PATCH v6 06/16] merge_recursive:
- abort properly upon errors
-In-Reply-To: <xmqqy44ec15p.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1608031021050.79248@virtualbox>
-References: <cover.1469547160.git.johannes.schindelin@gmx.de> <cover.1470051326.git.johannes.schindelin@gmx.de> <8ff71aba37be979f05abf88f467ec932aa522bdd.1470051326.git.johannes.schindelin@gmx.de> <xmqqlh0gjpr6.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1608021004080.79248@virtualbox> <xmqqy44ec15p.fsf@gitster.mtv.corp.google.com>
+To:	Johannes Sixt <j6t@kdbg.org>
+cc:	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v2] t4130: work around Windows limitation
+In-Reply-To: <244e3458-4a41-49bf-fba2-71da872e7f66@kdbg.org>
+Message-ID: <alpine.DEB.2.20.1608031401370.79248@virtualbox>
+References: <5bd59ca2f87e388350f3c8fb17c9a287661cd055.1469623136.git.johannes.schindelin@gmx.de> <9d167448-84ce-e368-0bb4-41aa4452268d@kdbg.org> <CAPc5daW10y_5rat0Au-1NWXUf2QYFrDfQeprqq9NsYPBjdqOTw@mail.gmail.com> <alpine.DEB.2.20.1607301011140.11824@virtualbox>
+ <244e3458-4a41-49bf-fba2-71da872e7f66@kdbg.org>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:b0EI1VJ2HPYfISkbw+v3TxRJPX0a+dA812MJhTuCJ9em8IQHT2O
- r/jNMiaUDWSZqOy1umJ7HTKzD6ej/y6GNvTlY2tWBbrCQRF3URGzjYJErSTrK4CnLlCR9t4
- S0H/iFx/5CcK2FRjwGCazVCBWV+N35xDUmmGBJEynYtsn5U5Q2qcwEskz/Wqwq1/KTRGsQI
- ELLpq2VJ7Q3zguqKpb7Vw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:sBY6lk0QmT4=:+ei8+uRfxCmzrDpMBkxbkQ
- ac9xX0YFirDJO6dW1/RBoFohC1iuuHMfDX4Jx14Dqu+1HRFGSnRaif9w1FSTCxO09h6cFMg02
- TTYLbi5NZpUNj0skkEQ8ukEsHTauF//wPD24aUGZhE3aHTn865YSMOUw2nxDNolxbiKlwIwa8
- qo48sToLtELIe137s6OX7IRN2+A2DjNj00wunfeqEjc0uligNVkSDj6q7aBPb4PVNP7l/e7GI
- tiRYxR/s/eLsRMHlHe55eTt0YpbHC1qEP86dVz5lCyfnZsgllU7FYqvlC/9nnAM72/SCzLBQt
- 2s7BqmgJYkif/pPf8cOH3Gf8CDHcGPHuaEVT57JZ5ma1v0wl8Fgf8dKHHvNz5r7JBC6HGwidb
- T5F+r5q9PuiNlUa+nIoRUP9YwnUhF2pWPvYJumkWZixvMtXQ47VsVuD3Q3zewZj1XWNpsHnpB
- ymE9f9xqztGcPJZcMFWk9Uda4EVAMfLh3UwOmnxJTavtBt2fWvuP9FlcsEGBI9L4i567yspix
- cFaZC+m1379+nF1GXGDXgIxcqeIuRE268sDQKo/E1JYzG+CLL6kYKRtN5nKIoHBksQxQp353T
- Jz/CPIMs+5Z5RjyUduFEp9bykBb2DKCcK6h7bothc7eq7/tuZ7gmL84uNo61euWoqMdQ1kTgT
- ruiul20kuvwc4LlheYR4LhONctiK6IfFC36lDAWwepbMaxuWgyv005OUxKUPlieyZWHQb5elf
- bswChi1+g1mtMq2dPfHMjdI0GB5SnahhZKjmDFtGwKm3hnxuhdfrb1JeOlRFz8FvT7T9rmVAk
- g7Fnuqu
+X-Provags-ID: V03:K0:Wgi2ZPlqYiJP8Jll16R98JIJRLBPOk6YGqhkuPui3iLsTFM2ARg
+ YgbBmOttcmZ5ghxqS6R8p6CxmKh1trPzYZtsw5oWWT0NDNqglUm4p9UV7Aw2RbOc22CPhsW
+ En4dPcaCal4Z8c8WrGweJJgr271/UQFRaBrygnqqFJZsFromPwfg+4ubNkyjdAcRALm7Dih
+ taVfvxGvKL3hUjYWnbLAw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:Jau0jcZx+uc=:rMhzyL7Yw5zL5bRlT3+t2c
+ K9D42u8XK6VPMC87yfSsxv23OLYWE/Tt5fvrkbk4v5sZ9By2uWaEHu5xD4TbzhRKmk7KdDMMG
+ QD4CL1M5SHGfvodY1+gLjrWDmB0Mj+XlBa7U9EydVMtakr+FzNopDpGZZ7o7uaCbBv/xjB3iu
+ 9Wbn/5ut1Zzow1lZ6W9+f4x9jWwHc4MLsO+GtBaA/DL8Zy2o+ukx8WpQv4fZwyACkRULogHRT
+ 8XZpWjVP+mG4jRm+mOvin3U0t3a4JDLevknH0npLsV+J6jWAxCNGpqf5Yo4C6orBj/UEuUPxf
+ uZd+t0AM58Ln1TEFEA2PyP9tL+kZo/wmSE6y97G/pXmtdwN+DVcHX7kWQkZmqnoqpU2SlXWN9
+ MlvvDRnxe3Nm8RrTPGX8llIsrgMWzfPqri3yfC6hEI/ZLtiIYyh6nr5MSeLdOeQY73F7NBUks
+ 4NrdFvgqMPFCxn8bgtrEMek2tS0hK8cH25Zh/z6JiioywHnqZ44grd9SZFoT4oThMkQ4NIDi+
+ JFHX4bsqxyFhBvZ43np3LosARMBAKsdO0wLABWW83B0ymUj1qu+2dA1Qzi/GuxjMD/8RjQVPw
+ 4iWhrHq6uafI9qcezuwQtZp1Z73ivWtVth6aFvAFFcB3BdH+MOcobGPGcpT7ZR8ct/QmrsOiK
+ Ou6mXnUh5L9yGNhwXkNJqNjZ73763IeL30B1DU38gzDtBrAf3GwRVVm9CKHGj+IlUCoQ+tFzR
+ 9uOrm4Nw5Xj0OFAQtj2RcpOLr2RT9bGYMQ8R3zfE6C1mlUYHjflExqyh+O4sFbq0Zun64GCKH
+ Skmn8nO
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+Hi Hannes,
 
-On Tue, 2 Aug 2016, Junio C Hamano wrote:
+On Wed, 3 Aug 2016, Johannes Sixt wrote:
 
-> So either I should change my workflow and mention any and all
-> typofixes in my review comments (which consumes the review
-> bandwidth), or I should force patch authors to do the "fetch from
-> 'pu' and replace" somehow to avoid this kind of back-and-forth.
+>  This fell through the cracks, I think. I marked it as v2 because
+>  there is a minor fixup in the commit message.
 
-It never occurred to me that I should replace any of my local branches
-with versions you have in `pu`. For several reasons:
+It appears that it did fall through the cracks.
 
-- just as you do not pull from me, lest patches enter your repository that
-  you have not reviewed, I do not simply pull from you,
+Given that it would make my life substantially easier (because I run the
+test suite often enough to hit this edge case multiple times a day), I
+would like to ask to fast-track it into v2.9.3.
 
-- I thought the point of avoiding GitHub in the review process at all
-  costs and require everybody to go via the mailing list instead was to
-  keep the review process open? These silent changes fly in the face of
-  that,
-
-- I agree that the mail-based process is cumbersome and error-prone, but
-  we won't fix it by asking contributors to dig through the `pu` of the
-  day, somehow stay up-to-date with possibly more silent typofixes the
-  next day, somehow manage to figure out what changes exactly were
-  introduced to their patches, and replace their local work.
-
-- even if we asked for all that trouble, the commits in `pu` are all
-  signed off by you. These sign-offs would have to be stripped out
-  tediously when making local changes.
-
-In short, I agree that our patch submission process is a saber tooth tiger
-that still reflects pre-Git times. While we use Git's tools, the workflow
-really tries to cut out Git as much as possible, in favor of pure mails
-with non-corrupted, non-HTML patches in them, a charmingly anachronistic
-requirement until you try to use state-of-the-art mail clients to send
-them.
-
-I disagree, however, with the suggestion to sift through your `pu` branch
-and to somehow replace local branches with the commits found there.
-
-I guess it is time to revisit our patch submission process if it does not
-even work between the two of us.
-
-Ideally, we would come up with a process that
-
-- makes everything easier for maintainers and contributors alike,
-
-- tracks the history of the patch iterations (answering the question "what
-  changed between iterations?"),
-
-- *actually* integrates with Git (to see what I mean, try to find the
-  commit corresponding to a given mail containing a patch, and then try to
-  find the previous iteration's version of the same commit, and weep),
-
-- provides machine-readable metadata about the context, e.g. to jump back
-  and forth between the full file contents and the patch, or to indicate
-  the dependency on another branch,
-
-- facilitates "back contributions", i.e. letting contributors accept
-  changes suggested by reviewers *with minimal effort*.
-
-- uses Git itself as much as possible, i.e. no additional tools written in
-  "you must learn this new language, it's awesome, believe me, it's huge"
-
-The biggest obstacles I see are 1) the integration with the mailing list
-(which is ironic because contributing via the list used to be a boon, not
-a burden) and 2) maintaining the integrity between what has been reviewed
-and what is actually in the branch.
-
-This is nothing we will solve overnight, of course. But I think we will
-have to fix this.
-
-Food for thought.
+Thanks,
 Dscho
