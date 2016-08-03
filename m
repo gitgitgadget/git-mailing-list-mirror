@@ -2,107 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0CBE2055A
-	for <e@80x24.org>; Wed,  3 Aug 2016 14:43:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB6111F40E
+	for <e@80x24.org>; Wed,  3 Aug 2016 17:00:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932663AbcHCOm4 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 10:42:56 -0400
-Received: from mout.gmx.net ([212.227.17.22]:58500 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932231AbcHCOmy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2016 10:42:54 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MVedf-1blJUO3PLT-00Z0VT; Wed, 03 Aug 2016 16:35:11
- +0200
-Date:	Wed, 3 Aug 2016 16:35:10 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Jeremy Huddleston Sequoia <jeremyhu@macports.org>
-cc:	git@vger.kernel.org
-Subject: Re: 2.9.2 test failures on macOS
-In-Reply-To: <C4207508-629B-41DF-8E89-CDD1989BCF2E@macports.org>
-Message-ID: <alpine.DEB.2.20.1608031632110.107993@virtualbox>
-References: <C4207508-629B-41DF-8E89-CDD1989BCF2E@macports.org>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1757786AbcHCRAC (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 13:00:02 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50102 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756585AbcHCQ7u (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2016 12:59:50 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3492B2FCEF;
+	Wed,  3 Aug 2016 12:53:21 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vFJI9yCbTO5pwkwUWXrWyCE768o=; b=dCKjfm
+	O0Pjt+0yy851DalHRFkQBnFI84jypxjPABt6EKnOBK4gF1nZ/G5opkidkGUc+XOQ
+	DYGaE0RqQboWsaP1S8KscQcgX3VwR8HtLRb2KzX/ZcKDi/2HcQWhVK6gmEZ0+waP
+	KgaeBxYLn1SEyn9BGOnOmgntDVYR5BzysCsCo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PbBDjO9eNWMg+in2qjiwlzkK+nvTXDeh
+	Gu3bQ4Yh8Z6Mtkxxs7+Iy7Ujo6sLAUPgYj0APztMfAitFVW+bYxL0/StXPhPSE2b
+	kOH03xkmvTq59obOaPH44FMkW9XbalKVFynwalS3jjoox65WHcGMXs0qXNWxvtxq
+	ZdGPegVaYyc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2B8EE2FCEE;
+	Wed,  3 Aug 2016 12:53:21 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A3C2E2FCED;
+	Wed,  3 Aug 2016 12:53:20 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff King <peff@peff.net>
+Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Johannes Sixt <j6t@kdbg.org>, Duy Nguyen <pclouds@gmail.com>,
+	Jakub =?utf-8?Q?Na?= =?utf-8?Q?r=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: patch submission process, was Re: [PATCH v6 06/16] merge_recursive: abort properly upon errors
+References: <cover.1469547160.git.johannes.schindelin@gmx.de>
+	<cover.1470051326.git.johannes.schindelin@gmx.de>
+	<8ff71aba37be979f05abf88f467ec932aa522bdd.1470051326.git.johannes.schindelin@gmx.de>
+	<xmqqlh0gjpr6.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1608021004080.79248@virtualbox>
+	<xmqqy44ec15p.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1608031021050.79248@virtualbox>
+	<CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com>
+	<20160803163449.iwjv4youmsf6okme@sigill.intra.peff.net>
+Date:	Wed, 03 Aug 2016 09:53:18 -0700
+In-Reply-To: <20160803163449.iwjv4youmsf6okme@sigill.intra.peff.net> (Jeff
+	King's message of "Wed, 3 Aug 2016 12:34:49 -0400")
+Message-ID: <xmqqbn19aj5t.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:58CojNUCljrLyLGlDCZnetkaBUctBANim7qAbkDE30GK3e8W+VM
- vQamH7Mv1hGMJgRoexdbK27ddlbiEFI4rXJr7nDI66LkjuN0ip/QFtYaKVElyS2jXb4gW4b
- IpmKuKEjH6itEQ1Qf4mYw81i+ajxX3vfUpSz3o/WBR9Ab1j9zP6qM+dDCczctkfVKs91i17
- bonGSNoQ9liM4Z3hG4/Pw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:vOU9L32VIq4=:HyoKwiTT779hTXotZXdbPM
- EigoG3oYChsGcAq8UBSsl/v4BNFTt5lW6LqVDDyAQEyJQdxdmN1lseVJ/v1jHcSixegkMGvvg
- AXeEejnUPoooDVI9YBMpz/9h0ObltQgWEbCR7wUJt0xb+dn7eVt2PxYJ4Hh7PiQz4t1r/RHyP
- rURxFAXMdk6ZVOr0Eozo6zHkZyvK/ClU96F2bqtjMxE0udXdakJ+stGSEtqd+SSvEOhkioHYt
- +to9Fv4xrzGQlfcwZWk7Fhj22dyWZq0ApfjYUrjLxPR7cNOo9OWzNN4Md4RVoz4lvxmQ3xw2n
- axPC9bz/T7akqPrawFl5NTaA0vASvzfBZrP42ZxR84McFJ3RZHOymU5zm1PL3287kx6KlNF6e
- 21FQQ/aY53DWiMl1u/MUIeytMc+AK4vJ5pn7yRF5ieKoi06qktE6/jWsN21d32lTLqOiPUqyB
- nzAtR+hGA4/lP6YyARtgoEgh/GYtD8KO/e7LSMF3IwmNaWBm3ZF2Sm/pbnoO0TpN4coRVHXWj
- cBsYLWdJ7okFYF0WPHTSCXSOKGZxANODkg1xOyuK7IX9ADc1wDVTPC177AbtcM5+i/9zTj05E
- 5R6M5NAnPM5Jm8Klcam+YlKWt6fI3oGUKA8nqMKsnivq72lPGO01RFD5cc9DCB0+kcZuQE2y2
- 02smeMrBu6Y67JT1p326SsvovMsp6IRasFGNk1ByOOZ0K8v9Gp6fxovJEL4tEOaMN9tCZde7G
- pOqEH3n2dl+NjnBXu8YfenA4kCGTTTdRi48qYhPCTelNdJNn6jfH65dq5+lDjAaymkbm9w+9U
- Tggcupo
+Content-Type: text/plain
+X-Pobox-Relay-ID: C8A53EEA-599A-11E6-AF64-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Jeremy,
+Jeff King <peff@peff.net> writes:
 
-On Wed, 3 Aug 2016, Jeremy Huddleston Sequoia wrote:
+> On Wed, Aug 03, 2016 at 08:33:12AM -0700, Junio C Hamano wrote:
+>
+>> On Wed, Aug 3, 2016 at 4:59 AM, Johannes Schindelin
+>> <Johannes.Schindelin@gmx.de> wrote:
+>> >
+>> > I disagree, however, with the suggestion to sift through your `pu` branch
+>> > and to somehow replace local branches with the commits found there.
+>> 
+>> To be more in line with the "e-mailed patch" workflow, I think what I should
+>> do is to send the version I queued with fixups back to the list as follow-up.
+>> Just like reviewers review, the maintainer reviews and queues, the original
+>> author should be able to work in the same workflow, i.e. reading and applying
+>> an improved version of the patch from her mailbox.
+>
+> Leaving aside Dscho's questions of whether pulling patches from email is
+> convenient for most submitters (it certainly is for me, but I recognize
+> that it is not for many), I would much rather see incremental fixup
+> patches from you than whole "here's what I queued" responses.
 
-> I have two test failures to report in git 2.9.2 on macOS:
-> 
-> 
-> t3210-pack-refs.sh has not changed between 2.8.4 and 2.9.2.  This test passed fine with 2.8.4, but it now fails with 2.9.2 at:
-> 
-> not ok 26 - retry acquiring packed-refs.lock
-> #	
-> #		LOCK=.git/packed-refs.lock &&
-> #		>"$LOCK" &&
-> #		test_when_finished "wait; rm -f $LOCK" &&
-> #		{
-> #			( sleep 1 ; rm -f $LOCK ) &
-> #		} &&
-> #		git -c core.packedrefstimeout=3000 pack-refs --all --prune
-> #	
-> 
-> ===
-> 
-> t3700-add.sh recently added the 'git add --chmod=-x stages an executable file with -x' test.  This test passes when run as a normal user but fails when run as root:
-> 
-> $ ./t3700-add.sh
-> ...
-> # passed all 40 test(s)
-> 1..40
-> 
-> $ sudo ./t3700-add.sh
-> ...
-> not ok 39 - git add --chmod=-x stages an executable file with -x
-> #	
-> #		echo foo >xfoo1 &&
-> #		chmod 755 xfoo1 &&
-> #		git add --chmod=-x xfoo1 &&
-> #		case "$(git ls-files --stage xfoo1)" in
-> #		100644" "*xfoo1) echo pass;;
-> #		*) echo fail; git ls-files --stage xfoo1; (exit 1);;
-> #		esac
-> #	
-> # failed 1 among 40 test(s)
-> 1..40
+Ah, yes, I misspoke.  It should be either an incremental diff or
+in-line comment to spell out what got changed as a response to the
+patch.
 
-I tried to write up all I know about debugging test failures here:
-
-https://github.com/git-for-windows/git/wiki/Running-Git's-regression-tests#running-individual-tests
-
-Could you give it a try and diagnose the breakage further? (The output you
-provided is unfortunately not enough to determine what went wrong.)
-
-Ciao,
-Johannes
+I find myself fixing the title the most often, which is part of the
+"log message" you pointed out that would not convey well with the
+"incremental diff" approach.
