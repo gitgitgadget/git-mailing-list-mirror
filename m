@@ -2,121 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 980B01F858
-	for <e@80x24.org>; Wed,  3 Aug 2016 18:02:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E25B41F40E
+	for <e@80x24.org>; Wed,  3 Aug 2016 18:06:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753497AbcHCSC3 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 14:02:29 -0400
-Received: from mail-qk0-f176.google.com ([209.85.220.176]:35644 "EHLO
-	mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753274AbcHCSCX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2016 14:02:23 -0400
-Received: by mail-qk0-f176.google.com with SMTP id x185so17310050qkc.2
-        for <git@vger.kernel.org>; Wed, 03 Aug 2016 11:02:17 -0700 (PDT)
+	id S1756273AbcHCSGs (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 14:06:48 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:36013 "EHLO
+	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757992AbcHCSGo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2016 14:06:44 -0400
+Received: by mail-yw0-f194.google.com with SMTP id u134so17363470ywg.3
+        for <git@vger.kernel.org>; Wed, 03 Aug 2016 11:06:35 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=uqWSJTh7A9//3DQ9vZyZAAEz4Gp4x5DYGHML64rMb6w=;
-        b=SLbrnHApVALvV8fyfIQR/KTZ9DHnQMlnqkAfTvKEf5lsMDrmmgIWC48TOaKsOtR4eV
-         zBbMLqXHDlk09RACilLX5o+Tv2206aKH8Tzb5Gf7moC4/FPkYy3NWLL/606+SjpIRo9w
-         1/W9o7zOjtkJ3SJqt+7e45iOIN55qwu34HL5DkCNoQZ2B5YQGExrR6e/U1Zq+zYcJCrB
-         XN/ZfjTZDLTQvCP4MV5zQdoyOju1lJyNILKhDf01PD+OxN4KEgiNfaaTZyfBKkDxuOyA
-         Z7Ur9gJcq87wYPM7IffCneZZMbAJVtDfrQydO8sOxFKlLq4j0YAcNjiw6Jog74pJByTt
-         N/Mw==
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=PGgS44zmxe3L4VQUzfettjA4w54uyec6LqOPesxPDZE=;
+        b=fWOtD7Hu33TciANg1PKqoQ2/9OZlHB+KlqrDQSpPqQxpF3hNGlTwlNLuvSAJNlPvfL
+         ArLuRYjm35CrzLzU/xLw3fQLnGk4Mc/gdWFN9mzLUU1/+4bJjGsq30ewGilPgegDkObH
+         rVUY3SnCcnbV8wWgw3Irk8jxLoxgXyWqsYIl3NjIcqMgxRZqHPCujCIMY1IHDY6PsSFT
+         tAtCliQuHA5/jmOeBXY+brpcxjVQufj+pysvTkykJbJLqKW3CYclLeakXZSHFbLpQHOA
+         fkm3BISKz0I26BvihN+IodycwT345K5ljxBfEphXzGgbBHL76EVk3B0/egnyTZliwHPN
+         y3kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=uqWSJTh7A9//3DQ9vZyZAAEz4Gp4x5DYGHML64rMb6w=;
-        b=lTr0b39Xf5JQRYAGKzNeoAgF7Hw9ZsAwL/4KyzF/DKNqW1yAFMC4dPT+DNn/tLjDX/
-         TfXu3Wvcx30hcknwbTS/q7YEAZBFwKJcHV0fqLSo/9Zu0Vz+yQ03JiDbm4IoF10CQQAH
-         7wmU5KJrA+GaMM6GXy8nh+C1guz2PCysEqKPLZ79tVReTjtc/DjhSxqaCSWj+U4SrdjW
-         zptH+l83VBdzvhmKjAyGMYAiaoGDikAzZRVMpxFq0kGDS9CcOy1/dxhnr3aPQ8svKei8
-         bMjNHnSPSNr3uEpes42OHL/PkuMhcpapv7WKmqTckVkiZdfX43DJqvd0x0NvGAbRg7zE
-         agkw==
-X-Gm-Message-State: AEkoousDiFNDohGiUCNZYZGPIBiLaTNezsDqYdyL31mMkUIK5mzNjgyLr+jDBnBwbY6xkB8x
-X-Received: by 10.55.182.135 with SMTP id g129mr1420696qkf.128.1470247336284;
-        Wed, 03 Aug 2016 11:02:16 -0700 (PDT)
-Received: from LykOS.localdomain (NYUFWA-WLESSAUTHCLIENTS-01.NATPOOL.NYU.EDU. [216.165.95.72])
-        by smtp.gmail.com with ESMTPSA id z1sm4718619qkc.40.2016.08.03.11.02.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Aug 2016 11:02:15 -0700 (PDT)
-Date:	Wed, 3 Aug 2016 14:02:15 -0400
-From:	Santiago Torres <santiago@nyu.edu>
-To:	Stefan Beller <sbeller@google.com>
-Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git <git@vger.kernel.org>
-Subject: Re: [OT] USENIX paper on Git
-Message-ID: <20160803180214.rxz455nlcm5hqn37@LykOS.localdomain>
-References: <20160801224043.4qmf56pmv27riq4i@LykOS.localdomain>
- <20160803145830.uwssj4uhqfemhr4o@LykOS.localdomain>
- <alpine.DEB.2.20.1608031721430.107993@virtualbox>
- <20160803152510.pgcd2edareqdxnmh@LykOS.localdomain>
- <CAGZ79kZPPvi2jpFgu1MZ97gZm=QqBBiZ-XcXUJphm3UzNRP-FQ@mail.gmail.com>
- <20160803172242.5jrd4saq7sga6iql@LykOS.localdomain>
- <CAGZ79kY8knsXEVqfbdoHGdEzOfygVoaZi43jy_yERnx=enuRcA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=PGgS44zmxe3L4VQUzfettjA4w54uyec6LqOPesxPDZE=;
+        b=OV8C/TFHL77dLo2jtaRVqlysa1yQl8byQ8lN5AxuFnUPLUTdKVm5ZR0VkVo9N3oFJ6
+         VY4b0rIL1HAYsVdeszClCADCTtPuTF9Y+HUgUHURrBJVU5kizaWO7xX0pnXSTUlZEWJQ
+         a63blzs+IQQUvcYsCFK0ROmuGnwNFH2FrhZ9ri7l+mu5XBN7rQuD4dWJJuz0JB/Y93t0
+         ZjU4IyWOK4ypdTkCxO8a35rXBBOIB7BwZm5jOMyV2MEnkfF5XBMJWwm0Q7mDBnTzgqXU
+         JMyCMjfDR2PyRVFifWIcjF6qiCuvfyZHwtK7NyXCBHwkPgw8ROCvvIm6znp9hqSLnit3
+         h5VA==
+X-Gm-Message-State: AEkoouu5h/v3BIzXpI8h/IprIfR2qCgyzApmIUcuQuERrelPf7B5j0VsYGDESa5fiFpCSzM6jCYfABek/dLSfw==
+X-Received: by 10.129.106.197 with SMTP id f188mr50926097ywc.38.1470246745242;
+ Wed, 03 Aug 2016 10:52:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kY8knsXEVqfbdoHGdEzOfygVoaZi43jy_yERnx=enuRcA@mail.gmail.com>
+Received: by 10.13.250.4 with HTTP; Wed, 3 Aug 2016 10:52:04 -0700 (PDT)
+In-Reply-To: <20160803174522.5571-1-pclouds@gmail.com>
+References: <20160803160536.15596-1-pclouds@gmail.com> <20160803174522.5571-1-pclouds@gmail.com>
+From:	Junio C Hamano <gitster@pobox.com>
+Date:	Wed, 3 Aug 2016 10:52:04 -0700
+X-Google-Sender-Auth: gjHsHM90Ud7zIZ1DlgpjUaZuiC8
+Message-ID: <CAPc5daU49iVYw14sYeshXDbHGE_nW4vWyM=2XSz-buACVLFwoA@mail.gmail.com>
+Subject: Re: [PATCH v3] t7063: work around FreeBSD's lazy mtime update feature
+To:	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+Cc:	Git Mailing List <git@vger.kernel.org>, Eric Wong <e@80x24.org>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Aug 03, 2016 at 10:35:39AM -0700, Stefan Beller wrote:
-> On Wed, Aug 3, 2016 at 10:22 AM, Santiago Torres <santiago@nyu.edu> wrote:
-> > On Wed, Aug 03, 2016 at 10:14:21AM -0700, Stefan Beller wrote:
-> >> On Wed, Aug 3, 2016 at 8:25 AM, Santiago Torres <santiago@nyu.edu> wrote:
-> >> >  > share things before they are published. Thankfully, this is OK in
-> >> >> > USENIX's book. Here's the link:
-> >> >> > http://i2.cdn.turner.com/cnnnext/dam/assets/160730192650-14new-week-in-politics-super-169.jpg
-> >> >>
-> >> >> While I had a good laugh, I am wondering whether this is the correct link?
-> >> >
-> >> > Oh my god, sorry, I meant to p, not to ctrl + v. My head is all over the
-> >> > place as of late.
-> >> >
-> >> > Here's the correct link:
-> >> >
-> >> > http://isis.poly.edu/~jcappos/papers/torres_toto_usenixsec-2016.pdf
-> >>
-> >> In 4.1 you write:
-> >> > Finally, Git submodules are also vulnerable, as they automatically track
-> >> > a tag (or branch). If a build dependency is included in a project as a part
-> >> > of the submodule, a package might be vulnerable via an underlying library.
-> >>
-> >> Submodules actually track commits, not tags or branches.
-> >>
-> >> This is confusing for some users, e.g. the user intended to track
-> >> a library at version 1.1, but it tracks 1234abcd instead (which is what
-> >> 1.1 points at).
-> >
-> > I'm assuming that git submodule update does update where the ref points
-> > to, does it not?
-> >
-> > let me dig into this and try to take the necessary measures to correct
-> > this
-> >
-> 
-> "git submodule update" updates to the recorded sha1, which I assume is used
-> by downstream users. If you are a maintainer and  you want to update the
-> library used, you'd be interested in have "git submodule update
-> --remote" to update
-> the sha1 to the tracking branch, which then exposes the attacks presented.
+On Wed, Aug 3, 2016 at 10:45 AM, Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
+>  v3 differs from v2 in one line
+>
+>     --- a/t/t7063-status-untracked-cache.sh
+>     +++ b/t/t7063-status-untracked-cache.sh
+>     @@ -11,7 +11,7 @@ test_description='test untracked cache'
+>      # containing directory in sync with the reality after doing blah and
+>      # before checking the fast path behaviour
+>      sync_mtime () {
+>     -   find . -type d -exec ls -ld {} \; >/dev/null
+>     +   find . -type d -ls >/dev/null
+>      }
 
-I see, I just tried to reproduce this, and it seems that, with a simple
-git clone --recursive [path], the submodule fetched does not update to
-the "malicious ref." You're right.
+"this and that" and "blah" are still there.
 
-So, in the end, git submodule update --remote also requires you to
-create a new tree, right? Then this attack wouldn't be possible by just
-fiddling with the refs if signing is in place, right?
+If you mean to tell the user "I won't describe it in detail, if you
+really want to know,
+go run blame yourself", spell it out like so. I was hoping that you
+can summarize
+in-line there to help the readers here.
 
-Thanks for clarifying!
--Santiago.
+> +# On some filesystems (e.g. FreeBSD's ext2 and ufs) this and that
+> +# happens when we do blah, which forces the untracked cache code to
+> +# take the slow path.  A test that wants to make sure the fast path
+> +# works correctly should call this helper to make mtime of the
+> +# containing directory in sync with the reality after doing blah and
+> +# before checking the fast path behaviour
+> +sync_mtime () {
+> +       find . -type d -ls >/dev/null
+> +}
+> +
+>  avoid_racy() {
+>         sleep 1
+>  }
+> @@ -416,7 +426,8 @@ test_expect_success 'create/modify files, some of which are gitignored' '
+>         echo four >done/four && # four is gitignored at a higher level
+>         echo five >done/five && # five is not gitignored
+>         echo test >base && #we need to ensure that the root dir is touched
+> -       rm base
+> +       rm base &&
+> +       sync_mtime
+>  '
+>
+>  test_expect_success 'test sparse status with untracked cache' '
+> --
+> 2.9.1.566.gbd532d4
+>
