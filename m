@@ -2,80 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6D4D1F40E
-	for <e@80x24.org>; Wed,  3 Aug 2016 23:13:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2C781F40E
+	for <e@80x24.org>; Wed,  3 Aug 2016 23:14:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932914AbcHCXN6 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 19:13:58 -0400
-Received: from mail-it0-f44.google.com ([209.85.214.44]:35101 "EHLO
-	mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757895AbcHCXN5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2016 19:13:57 -0400
-Received: by mail-it0-f44.google.com with SMTP id u186so310539767ita.0
-        for <git@vger.kernel.org>; Wed, 03 Aug 2016 16:12:07 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=wJdHEpPv0jZX2VCjyToGQlW1Nuoh7m+S8UauDJjEXgM=;
-        b=n5hBGR7kH7PnjWZw7FF19jATY6pquZY1VClGvh+ZVHlODatTe9PghKSfNudsHe78V2
-         JL7ofC9i2CEhvAP6a+w/OKqESkZTdFcGuhhOV2igkBQ+ZHjxZs81IpOou4Yvx65ndNR8
-         96W9D792wdTDsvk4yl8dX9iTCl8A8p6xEsB0QAZSqOs0GiIqgY5M9TAOwBQ2Ea8+ViGH
-         bNgGcXt0OYrTbbo+GVcmlg0+vmY4xl/zEFMQ/D19mJkBgynRCzh1gv/1CL0p5IZNh6wb
-         3KwH0C/oKTkJI5wawOdt8LNnV3Z3Bob3/gSmICLlyF8V/WqRxALQbu2rDN1y8OyjOM7C
-         Jh6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=wJdHEpPv0jZX2VCjyToGQlW1Nuoh7m+S8UauDJjEXgM=;
-        b=W0lgcN+39SZrRNl5pBcQjRYc+xY7TQSsvOzEL7T2akWa9zjqeUO6+l4AgReLZQ6Qeb
-         wduWXkeqVbC0yMSbpOxa/sKdK5HUbJaUNVvZy/SUKm+yZ8E8ha9X6wwX5fWavbk0uljs
-         lMKY0TNCBHWOPkIRU/BpxBdDZO1vjmXTsFSX7XdGpjLkyKFOsAWzUrgUIhM+G8YbI3EI
-         VjBh0gG4YMPJveoDFvCxTy7fToF1OHnHoElWq5mpcPXsiFgJzsokpzo6KFDHsyi1BuSq
-         MraMfsI4n9TyaCMFlY8AnVAOfTnfnU+XZt3gqW9+RE/dRqlGFmwEAiA/XzBivxbCzWF9
-         Sgwg==
-X-Gm-Message-State: AEkoouuzWvlQLzwRK8i6rPtrxvwkqRtIkTOVI3r8Ndsy4AgprsmMkz1X457eq9lPJJUCuAcapnry1pGNk8/e20QI
-X-Received: by 10.36.29.15 with SMTP id 15mr26749740itj.97.1470265926927; Wed,
- 03 Aug 2016 16:12:06 -0700 (PDT)
+	id S932669AbcHCXOe (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 19:14:34 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59798 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753134AbcHCXOd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2016 19:14:33 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A4798336B5;
+	Wed,  3 Aug 2016 19:13:19 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tXF0isaTVOSe85Jfk+8SUJYywno=; b=H4fuVB
+	bQgSXRln0cvDEzkgcq+D7M9OfXOJW9GIi1azgIHiuOcyd1Pl3IqFZaNA3vHm3E8A
+	VxcY2eJeTvIERScL65AA2qd40DTFng9y/OSO84EIaCe2N+2KrUq337tHgmYfRleC
+	d5OQ4tMP/m8Plr/9S/zjmmKrk8QbvdHTG2ptM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=B4X2z7Q/wVCjCfeqlqvGwr385M2fdVXD
+	RiqJLFUQ1aDRXInRX/9V+EnKrHkRcqgaZN7qxKm0EyX8RbcfIPDFrVMNgkhm813P
+	aiHsHuExNEXrPMNDRvSB/s425F3CeBrBXMjfzyRfh3KlFLHUL/fL2S5YhkaJy7BV
+	BplrLVyLwBY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9CB95336B4;
+	Wed,  3 Aug 2016 19:13:19 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 278C7336B3;
+	Wed,  3 Aug 2016 19:13:19 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Stefan Beller <sbeller@google.com>
+Cc:	git@vger.kernel.org, Jens.Lehmann@web.de, apenwarr@gmail.com,
+	jrnieder@gmail.com
+Subject: Re: [PATCHv4 6/7] submodule--helper: add remote-branch helper
+References: <20160803204404.3356-1-sbeller@google.com>
+	<20160803204404.3356-2-sbeller@google.com>
+Date:	Wed, 03 Aug 2016 16:13:17 -0700
+In-Reply-To: <20160803204404.3356-2-sbeller@google.com> (Stefan Beller's
+	message of "Wed, 3 Aug 2016 13:44:03 -0700")
+Message-ID: <xmqq8twd78fm.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Wed, 3 Aug 2016 16:12:06 -0700 (PDT)
-In-Reply-To: <xmqqd1lp78r7.fsf@gitster.mtv.corp.google.com>
-References: <xmqqd1lp78r7.fsf@gitster.mtv.corp.google.com>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Wed, 3 Aug 2016 16:12:06 -0700
-Message-ID: <CAGZ79kZb=F7k-Qs=U6aC-vbOPYoW0D9B11750t8b5uFTgX7nTg@mail.gmail.com>
-Subject: Re: What's cooking (interim report)
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: DD911736-59CF-11E6-8F80-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Aug 3, 2016 at 4:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> * sb/submodule-update-dot-branch (2016-08-01) 7 commits
->  - submodule update: allow '.' for branch value
->  - submodule--helper: add remote-branch helper
->  - submodule-config: keep configured branch around
->  - submodule--helper: fix usage string for relative-path
->  - submodule update: narrow scope of local variable
->  - submodule update: respect depth in subsequent fetches
->  - t7406: future proof tests with hard coded depth
->
->  A few updates to "git submodule update".
->
->  Will merge to 'next'.
+Stefan Beller <sbeller@google.com> writes:
 
-I sent out replacements for the two tip most commits
-about 2 hours ago, hopefully they make it in before the merge to next,
-otherwise I'll resend on top of these.
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index fb90c64..9be2c75 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -899,6 +899,39 @@ static int resolve_relative_path(int argc, const char **argv, const char *prefix
+> 	return 0;
 
-Thanks,
-Stefan
+I wonder who lost the leading SP before the tab here.  Will manually
+fix, so this is not a reason to force resending, but you may want to
+make sure there is no systemic cause to corrupt your future patches.
+
+Thanks.
