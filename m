@@ -2,110 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83DE71F40E
-	for <e@80x24.org>; Wed,  3 Aug 2016 22:01:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12A201F40E
+	for <e@80x24.org>; Wed,  3 Aug 2016 22:08:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932848AbcHCWBi (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 18:01:38 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35609 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932562AbcHCWBh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2016 18:01:37 -0400
-Received: by mail-wm0-f68.google.com with SMTP id i5so38330278wmg.2
-        for <git@vger.kernel.org>; Wed, 03 Aug 2016 15:01:36 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=2gpv+1+J7iy1yUHYYtpNkZJ2fCA0GPD46o8SvbhISig=;
-        b=sfGOPlYnYsHUTzsR4CsjdRqlUP8T39XNimZ9MoEV/6pxk3+gSNKlybdi/+OPA1ZQ2F
-         R5qiF+f4ctvt7texDTypoqWfLEKNi/dwBofs6HXybuuDVhVz3oj8Nfa2w5g4YX+6IX//
-         3FYf1tdy+Z2aUmxoq6Rx7vL0g8RUQm2l8KderGZlyvn4HdA0XCH/J6dnj9da7nrmHO2O
-         8co30a7FSP9ii5i5dbexdqK5n/9zoNaWD3H02lbfF38bG3qPanTgBavYuHJbPStFkKy1
-         PA1BFlThhdmgzNX8OJP8pLgpTPdBTZkBEGQFpfUS0BYwaKnx23u3jYyiYxxFXmZaWZmH
-         EUlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=2gpv+1+J7iy1yUHYYtpNkZJ2fCA0GPD46o8SvbhISig=;
-        b=anB//1MeP5VVCbB4bNYdZ/VNU7DT09VoOlvWF5t9EVTX4GHyQAmyntSgqvGGthL7nm
-         33607kafoxs/s2RsmBX0+Ql4HnRD8oNIx0AlrrFcX+RTNfbr24JFASE8w35rdv+aIcmu
-         C77kbtJj7Yw97a0dcLaUpEqvkDa4zoiXzEsGfIcrM4qf7KFOs7r/uyYHpv8zOQA87qqc
-         +Nsy4Tj+dIII7A92yumJA5Z0PFDu/XQyVNePZZFnj3tNvZojr9so7b+Bq4i4kCM5r806
-         8DUfkwhOPIaD7kbaCRfrj1I/Ua79yBoS8gYqO45r+4Bfm9n/Kmi9K3dYJvXfimGjEH2V
-         EuEw==
-X-Gm-Message-State: AEkoouuUnaqvkfeS6cDDDDxIz5lNH8jqpTW224oVMZhqYjvT5LqdarSji+nhRC+EunByAw==
-X-Received: by 10.28.35.86 with SMTP id j83mr65756202wmj.18.1470261695726;
-        Wed, 03 Aug 2016 15:01:35 -0700 (PDT)
-Received: from slxbook4.fritz.box (p5DDB674A.dip0.t-ipconnect.de. [93.219.103.74])
-        by smtp.gmail.com with ESMTPSA id v189sm427979wmv.12.2016.08.03.15.01.34
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 03 Aug 2016 15:01:35 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v4 11/12] convert: add filter.<driver>.process option
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <CAPc5daWH1z3am2hV_U1dE5WA7R+xrOFxgrxV4CN-vhz6uHz8Hw@mail.gmail.com>
-Date:	Thu, 4 Aug 2016 00:01:34 +0200
-Cc:	Git Mailing List <git@vger.kernel.org>,
-	=?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	=?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	mlbright@gmail.com, Eric Wong <e@80x24.org>,
-	Jeff King <peff@peff.net>
-Content-Transfer-Encoding: 8BIT
-Message-Id: <87BF726E-E91C-4A6A-82D3-1842F806BE98@gmail.com>
-References: <20160729233801.82844-1-larsxschneider@gmail.com> <20160803164225.46355-1-larsxschneider@gmail.com> <20160803164225.46355-12-larsxschneider@gmail.com> <xmqq8twd8uld.fsf@gitster.mtv.corp.google.com> <564CA3AD-EA8E-46D3-9564-BF468CAF32B0@gmail.com> <CAPc5daWH1z3am2hV_U1dE5WA7R+xrOFxgrxV4CN-vhz6uHz8Hw@mail.gmail.com>
-To:	Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+	id S932704AbcHCWIj (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 18:08:39 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:64843 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752961AbcHCWIh (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2016 18:08:37 -0400
+X-Greylist: delayed 460 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Aug 2016 18:08:37 EDT
+X-AuditID: 1207440e-dafff70000000931-e9-57a2698cbf15
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id A0.2F.02353.C8962A75; Wed,  3 Aug 2016 18:00:44 -0400 (EDT)
+Received: from michael.fritz.box (p57907C5F.dip0.t-ipconnect.de [87.144.124.95])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u73M0fSX023677
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Wed, 3 Aug 2016 18:00:42 -0400
+From:	Michael Haggerty <mhagger@alum.mit.edu>
+To:	git@vger.kernel.org
+Cc:	Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 0/8] Better heuristics make prettier diffs
+Date:	Thu,  4 Aug 2016 00:00:28 +0200
+Message-Id: <cover.1470259583.git.mhagger@alum.mit.edu>
+X-Mailer: git-send-email 2.8.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNIsWRmVeSWpSXmKPExsUixO6iqNuTuSjc4O9XS4uuK91MFg29V5gt
+	di/uZ7ZYcXUOs8XtFfOZLX609DBbbN7czuLA7vH3/Qcmj52z7rJ7LNhU6vGsdw+jx8VLyh6f
+	N8kFsEVx2aSk5mSWpRbp2yVwZXy4spCt4KxIxeEpM5kaGLfydzFyckgImEjs+XOEpYuRi0NI
+	YCujRN/PO1DOcSaJOcvusYBUsQnoSizqaWYCsUUExCXeHp/JDlLELNDPJPGjo4sRJCEsYCVx
+	8uYDsCIWAVWJrdv2ATVzcPAKmEs8uSULsU1O4vL0B2wTGLkWMDKsYpRLzCnN1c1NzMwpTk3W
+	LU5OzMtLLdI11svNLNFLTSndxAgJE74djO3rZQ4xCnAwKvHwbpBcFC7EmlhWXJl7iFGSg0lJ
+	lDcnFSjEl5SfUpmRWJwRX1Sak1p8iFGCg1lJhPdeClCONyWxsiq1KB8mJc3BoiTOq7ZE3U9I
+	ID2xJDU7NbUgtQgmK8PBoSTBm5wB1ChYlJqeWpGWmVOCkGbi4AQZzgM0fC1IDW9xQWJucWY6
+	RP4Uo6KUOK9FOlBCACSRUZoH1wuL41eM4kCvCPNuAWnnAaYAuO5XQIOZgAafMFgAMrgkESEl
+	1cDoLGne/Iwh2Ebmo0+9StW+rbLzL3+XPxp45d2zA9p2B2e/+qa/2SfI/t5bne1Pa4NSkxfX
+	yenLfNk3hfX04a2n1VXVVu8peTZpTmV0YX/infVT2R3Sw/w1fwXI27CnPhfe9+321NeFR0RD
+	1N88fL/k31736acW+e+bxqS355r0MbH64+4JHiFGSizFGYmGWsxFxYkAUQ16QL4CAAA=
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+I've talked about this quite a bit on the list already. The idea is to
+improve ugly diffs like
 
-> On 03 Aug 2016, at 23:43, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> On Wed, Aug 3, 2016 at 2:37 PM, Lars Schneider <larsxschneider@gmail.com> wrote:
->>> 
->>> I think this was already pointed out in the previous review by Peff,
->>> but a variable "ret" that says "0 is bad" somehow makes it hard to
->>> follow the code.  Perhaps rename it to "int error", flip the meaning,
->>> and if the caller wants this function to return non-zero on success
->>> flip the polarity in the return statement itself, i.e. "return !errors",
->>> may make it easier to follow?
->> 
->> This follows the existing filter function. Please see Peff's later
->> reply here:
-> 
-> Which I did before mentioning "pointed out in his review".
-> 
->> That's why I kept it the way it is. If you prefer the "!errors" approach
->> then I will change that.
-> 
-> I am not suggesting to change the RETURN VALUE from this function.
-> That is why I mentioned "return !errors" to flip the polarity at the end.
-> Inside the function, "ret" variable _forces_ the readers to think "this
-> function unlike the others signal an error with 0" constantly while
-> reading it, and one possible approach to reduce the mental burden
-> is to replace "ret" variable with "errors" variable, which is clear to
-> anybody that it would be non-zero when we saw error(s).
-> 
-> Oh, I am not suggesting to _count_ the number of errors by
-> mentioning a possible variable name "errors"; the only reason
-> why I mentioned that name is because "error" is already
-> taken, and "seen_error" is a bit too long.
+    @@ -231,6 +231,9 @@ if (!defined $initial_reply_to && $prompting) {
+     }
 
-Agreed. I got that you didn't suggest to change the return value :-)
-In order to be consistent I would also adjust the error handling in
-the existing apply_filter() function that I renamed to 
-apply_single_file_filter() in 11/12. OK?
+     if (!$smtp_server) {
+    +       $smtp_server = $repo->config('sendemail.smtpserver');
+    +}
+    +if (!$smtp_server) {
+            foreach (qw( /usr/sbin/sendmail /usr/lib/sendmail )) {
+                    if (-x $_) {
+                            $smtp_server = $_;
 
-Thanks,
-Lars 
+by feeding clues from the surrounding lines (namely their patterns of
+indentation and blank lines) into a heuristic that more often produces
+the diffs that users would rather see, like
+
+    --- a/9c572b21dd090a1e5c5bb397053bf8043ffe7fb4:git-send-email.perl
+    +++ b/6dcfa306f2b67b733a7eb2d7ded1bc9987809edb:git-send-email.perl
+    @@ -230,6 +230,9 @@ if (!defined $initial_reply_to && $prompting) {
+            $initial_reply_to =~ s/(^\s+|\s+$)//g;
+     }
+
+    +if (!$smtp_server) {
+    +       $smtp_server = $repo->config('sendemail.smtpserver');
+    +}
+     if (!$smtp_server) {
+            foreach (qw( /usr/sbin/sendmail /usr/lib/sendmail )) {
+                    if (-x $_) {
+
+See the last commit's log message for a very detailed explanation of
+the heuristic, how it was optimized, and how you can get involved to
+make sure that the heuristic also works well for your favorite
+language.
+
+When tested against a corpus of 2700 diffs that I optimized by hand,
+this heuristic gets a "wrong" answer only about 1.7% as frequently as
+the current default Git algorithm and only about 5.3% as often as `git
+diff --compaction-heuristic`. (Though please don't treat these numbers
+as final; I want to verify them again first.)
+
+For now the new algorithm has to be enabled explicitly using either
+`--indent-heuristic` or `git config diff.indentheuristic true`.
+
+Michael Haggerty (8):
+  xdl_change_compact(): rename some local variables for clarity
+  xdl_change_compact(): clarify code
+  xdl_change_compact(): rename i to end
+  xdl_change_compact(): do one final shift or the other, not both
+  xdl_change_compact(): fix compaction heuristic to adjust io
+  xdl_change_compact(): keep track of the earliest end
+  is_blank_line: take a single xrecord_t as argument
+  diff: improve positioning of add/delete blocks in diffs
+
+ Documentation/diff-options.txt |   6 +-
+ diff.c                         |  11 +
+ git-add--interactive.perl      |   5 +-
+ xdiff/xdiff.h                  |   1 +
+ xdiff/xdiffi.c                 | 458 ++++++++++++++++++++++++++++++++++-------
+ 5 files changed, 409 insertions(+), 72 deletions(-)
+
+-- 
+2.8.1
 
