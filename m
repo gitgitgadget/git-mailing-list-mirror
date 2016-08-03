@@ -2,80 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A420E20A8F
-	for <e@80x24.org>; Wed,  3 Aug 2016 15:32:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFBC41F858
+	for <e@80x24.org>; Wed,  3 Aug 2016 16:09:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756580AbcHCPcO (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 11:32:14 -0400
-Received: from mail-qk0-f179.google.com ([209.85.220.179]:36490 "EHLO
-	mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755671AbcHCPcM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2016 11:32:12 -0400
-Received: by mail-qk0-f179.google.com with SMTP id v123so73155423qkh.3
-        for <git@vger.kernel.org>; Wed, 03 Aug 2016 08:32:11 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=RYOk10eeTtv7bBB1wwpdt45DR5v4bIwZQcdbRs81pDE=;
-        b=Bw30OneBrLkaUoieu1EgaVUVRSGm2jWVsN6aEtKVO0KX6j6mOEQPAsJMybaI17LMqr
-         vc0894Fi9EBjkZX3mTS0Cr13g7Wxv6c/MDG2ejLgewIPgm8A+PSBFJ9/LZcp1V6RHgtv
-         BRrEpfI4PXUEBMj5o8ohGgRfD2JrL3DYUKj8Q7rm83BSAmc1gUShmeybm9g+wBvtpLSx
-         2oENINvir2RPmgXu92gmq/eIQz1TN/O+S0aHaIriRdpKMHa/pmWqC1W0WeI/hlJo1Lo8
-         xzOMP/SDJRCzUQCa3wvaW45kXcS1C8L1iW8czJ+QjBmh0y0iNoPhMG6vvon/7DooO6aY
-         Qdrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=RYOk10eeTtv7bBB1wwpdt45DR5v4bIwZQcdbRs81pDE=;
-        b=Dv2U9AWdPqPJOr0tDKlla4qh6T3PmeKfHUQA0MzXdDVuJO5fv+PECdJilkJuhTTY06
-         cMURRrEYvtZ7RxrEQPctWRUyTBF/1YG3Y9KN9NMraPWmZFOqD/gdtPAqDbnxCWKIQoEK
-         CX+zomLvQQX+Fgq4g853CYDyPl/mp7aKYiftBRmjMTwbp1uNoeS0vtXIMMBYwf7mHen4
-         mh3jq6YqJH1Q+3Ul1RgufWRnpWojMnpuFyOHVvsrWUbQ9VIgpvoTsOYATtKXjuMu6Jk9
-         nzu0FEDRXwgDcawhixRHuvRztvTarLs+Pnvf+9e52tobq18IdUBMLz5NFmbw4rlbswbv
-         KgjQ==
-X-Gm-Message-State: AEkoouvd99uKUUiemJ5PHykaPIFsSSGJOjrNVlKM24mKcRVJQ+l/fxfiU4jsNeVYpydQ/FRP
-X-Received: by 10.55.71.197 with SMTP id u188mr436589qka.97.1470237912450;
-        Wed, 03 Aug 2016 08:25:12 -0700 (PDT)
-Received: from LykOS.localdomain (NYUFWA-WLESSAUTHCLIENTS-01.NATPOOL.NYU.EDU. [216.165.95.72])
-        by smtp.gmail.com with ESMTPSA id o67sm4403858qkf.17.2016.08.03.08.25.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Aug 2016 08:25:11 -0700 (PDT)
-Date:	Wed, 3 Aug 2016 11:25:11 -0400
-From:	Santiago Torres <santiago@nyu.edu>
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	Git <git@vger.kernel.org>
-Subject: Re: [OT] USENIX paper on Git
-Message-ID: <20160803152510.pgcd2edareqdxnmh@LykOS.localdomain>
-References: <20160801224043.4qmf56pmv27riq4i@LykOS.localdomain>
- <20160803145830.uwssj4uhqfemhr4o@LykOS.localdomain>
- <alpine.DEB.2.20.1608031721430.107993@virtualbox>
+	id S1757974AbcHCPup (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 11:50:45 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62204 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1757966AbcHCPum (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2016 11:50:42 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B1FAF2F254;
+	Wed,  3 Aug 2016 11:50:30 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bXRAnbj7LXrRQ+g8Bne65Mrvr/E=; b=yVJdnF
+	qfYj9QvMdCrFpex9kwkeuGZ7Ey8M8aR8kn0f09TpI8nGuOfx3T5L0eryIfGXGb8V
+	Qk7G4hEWD4Nmu4YuGLVD6bgrUTnQLHz059v6o3qLd1UCmAIKBe+qBbFSML+TvU5s
+	5p5Nc/LyDsx5xUKkO+vLEiOnPpmxugr2a+MEM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=B2AKvvuV+7q5q7j4RG0rZYQnMmTQ90w9
+	34qRQaI4anDwq0QnEgUZ24rOYhH7hdurRMJ6D3O0IAEFCjO7sG775toxQcBSZFZo
+	1d+8Y9GWtJ7z8GnA/7cOPnlVGQ4xJ6vteLlRzyswPHO6wjFscBgEqMQEu0FXeBSM
+	vZBNP8Ll1n4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A9D182F253;
+	Wed,  3 Aug 2016 11:50:30 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2D8852F252;
+	Wed,  3 Aug 2016 11:50:30 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Sixt <j6t@kdbg.org>
+Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v2] t4130: work around Windows limitation
+References: <5bd59ca2f87e388350f3c8fb17c9a287661cd055.1469623136.git.johannes.schindelin@gmx.de>
+	<9d167448-84ce-e368-0bb4-41aa4452268d@kdbg.org>
+	<CAPc5daW10y_5rat0Au-1NWXUf2QYFrDfQeprqq9NsYPBjdqOTw@mail.gmail.com>
+	<alpine.DEB.2.20.1607301011140.11824@virtualbox>
+	<244e3458-4a41-49bf-fba2-71da872e7f66@kdbg.org>
+Date:	Wed, 03 Aug 2016 08:50:28 -0700
+In-Reply-To: <244e3458-4a41-49bf-fba2-71da872e7f66@kdbg.org> (Johannes Sixt's
+	message of "Wed, 3 Aug 2016 08:15:03 +0200")
+Message-ID: <xmqq4m71c0mz.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1608031721430.107993@virtualbox>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0138A02A-5992-11E6-B687-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
- > share things before they are published. Thankfully, this is OK in
-> > USENIX's book. Here's the link:
-> > http://i2.cdn.turner.com/cnnnext/dam/assets/160730192650-14new-week-in-politics-super-169.jpg
-> 
-> While I had a good laugh, I am wondering whether this is the correct link?
+Johannes Sixt <j6t@kdbg.org> writes:
 
-Oh my god, sorry, I meant to p, not to ctrl + v. My head is all over the
-place as of late.
+>  This fell through the cracks, I think. I marked it as v2 because
+>  there is a minor fixup in the commit message.
 
-Here's the correct link:
+Thanks.  The patch itself seems to got whitespace damaged somewhere
+between you and me, which I fixed up, but there may be similar
+damage to the proposed log message as well.  What I read may already
+have whitespace damaged but I read the message twice and it made
+sense to me, so let's assume all is well ;-)
 
-http://isis.poly.edu/~jcappos/papers/torres_toto_usenixsec-2016.pdf
+Thanks.
 
-Thanks!
--Santiago.
+>
+>  t/t4130-apply-criss-cross-rename.sh | 10 +++++++---
+>  1 file changed, 7 insertions(+), 3 deletions(-)
+>
+> diff --git a/t/t4130-apply-criss-cross-rename.sh b/t/t4130-apply-criss-cross-rename.sh
+> index d173acd..f8a313b 100755
+> --- a/t/t4130-apply-criss-cross-rename.sh
+> +++ b/t/t4130-apply-criss-cross-rename.sh
+> @@ -13,9 +13,13 @@ create_file() {
+>  }
+>   test_expect_success 'setup' '
+> -	create_file file1 "File1 contents" &&
+> -	create_file file2 "File2 contents" &&
+> -	create_file file3 "File3 contents" &&
+> +	# Ensure that file sizes are different, because on Windows
+> +	# lstat() does not discover inode numbers, and we need
+> +	# other properties to discover swapped files
+> +	# (mtime is not always different, either).
+> +	create_file file1 "some content" &&
+> +	create_file file2 "some other content" &&
+> +	create_file file3 "again something else" &&
+>  	git add file1 file2 file3 &&
+>  	git commit -m 1
+>  '
