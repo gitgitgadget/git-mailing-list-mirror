@@ -2,185 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C2A31F40E
-	for <e@80x24.org>; Wed,  3 Aug 2016 20:19:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D8451F40E
+	for <e@80x24.org>; Wed,  3 Aug 2016 20:21:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758347AbcHCUTH (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 16:19:07 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:38040 "EHLO
-	mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758124AbcHCUTF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2016 16:19:05 -0400
-Received: by mail-wm0-f50.google.com with SMTP id o80so352407542wme.1
-        for <git@vger.kernel.org>; Wed, 03 Aug 2016 13:19:04 -0700 (PDT)
+	id S1758321AbcHCUUy (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 16:20:54 -0400
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:33334 "EHLO
+	mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758264AbcHCUUw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2016 16:20:52 -0400
+Received: by mail-yw0-f196.google.com with SMTP id z8so17577618ywa.0
+        for <git@vger.kernel.org>; Wed, 03 Aug 2016 13:20:35 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=Fa7Uw/8ZVsO/UYgjNW2lCvNH2ptladKWXGg1xYV2m88=;
-        b=xUU1KywDB3qw0ibL5MPdXHRFYTblmlfvgrhUKWqrBrr24BPJvFUakb3xmPGmEknrYJ
-         ajT++VAryG/FVkYW28SPs1iGs0PczQasLaUEX9RYe2jJSv06M2zjIrFEiK5QfA1kYSZ6
-         9I2cHe61XZTDUOX0/LAp3vJPvJmEpAMOI3HIU0VFFoeaJAiw9ZLFRUmvpnM+zs18Qb7V
-         3kWF8n+p+HJjfwci6NaiOAENjvY/Gc09Yd1YPvyMNi88VmxyF5z6ufe2Ne2qjFC6YnFK
-         /vmV2kBar9tYfmyAC0J6Uu4H8baIHlyTJTHLt19SLE9JSXybsbyfnS39fhoG28YpUQp3
-         9UfQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=e/qN4A1meqAWi2GotFkd+BLtXUsQmheWCYTUj+jCol8=;
+        b=KAjEMfKxeqspQWkIisRW2qZn4/ZbbV0o3sfUcxGeDksLab5Nzq2uoZalbA0jEHzGZV
+         QpHumTW0/qwNRe8+3uu188tO46tOBEALTnpnvPG8je4iU3ceTHBCDTLp59Lwr+mcpnjE
+         jhvOP/vsYsEUaE7j5KZTLc396oQrLnxyberuHoSquEzvREff96SQ7l+emMnhVYBtSI9X
+         WCRSSoHl55hGvHib3CHz4vKKW0QIgWNyotdn1nwgyyqnEQExuZxFGtplnDcPfVqszO37
+         87Pev+TkDwIg3s+kF52s5jmb7YkKxxXXPU6S2LLC7mguHH5IEgNLcaUuCloK+f+S6vAW
+         8wyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding;
-        bh=Fa7Uw/8ZVsO/UYgjNW2lCvNH2ptladKWXGg1xYV2m88=;
-        b=dMqy0JarSwsEm4Jd1cJid96OMFd38kLMxOoASzbCyygirEfd8JvIRDd2MPYuXmROBH
-         dZk+9ppvIT8rG20vsPRst6+jSKhLxww3AFLME6wWGuh23fqD73KdtIVZ4zXDUT+Q1GzG
-         1fDJoTKxeX6owCV1O/6D1X81X5PWevdWKK4coGz5l58EkCXdctU6PRGg/RyJsOS1Pf1w
-         ZmgTfLLGeoBspWvMGkj9l9RXqo0DF/ZLXAq0d1B06jKkA8G1Ia4E2VACeQtxgAkoRfMh
-         0lTw2zvQgJ2Vcz5M3+X9BPtLW0rpkHf2okalzo5BVlyqwwCyoinbLXi+1NloRHi9EZe8
-         28cQ==
-X-Gm-Message-State: AEkoouta+esxPqWawgL0kAtgh3EEWIHLQ3D91sjD82QPMgFopYcSivQ81A0Ups/m2JrPcQ==
-X-Received: by 10.28.150.146 with SMTP id y140mr26775370wmd.32.1470255192321;
-        Wed, 03 Aug 2016 13:13:12 -0700 (PDT)
-Received: from [192.168.1.26] (adbx179.neoplus.adsl.tpnet.pl. [79.184.23.179])
-        by smtp.googlemail.com with ESMTPSA id bc10sm9297019wjc.32.2016.08.03.13.13.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Aug 2016 13:13:11 -0700 (PDT)
-Subject: Re: [PATCH v3 02/10] pkt-line: add direct_packet_write() and
- direct_packet_write_data()
-To:	Lars Schneider <larsxschneider@gmail.com>
-References: <20160727000605.49982-1-larsxschneider%40gmail.com/>
- <20160729233801.82844-1-larsxschneider@gmail.com>
- <20160729233801.82844-3-larsxschneider@gmail.com>
- <58e4737b-6e0e-565c-2468-05c705dea426@gmail.com>
- <64783AA5-D579-4783-88E7-E0B3BDE5FDEB@gmail.com>
-Cc:	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>, tboegi@web.de,
-	mlbright@gmail.com, Eric Wong <e@80x24.org>,
-	Jeff King <peff@peff.net>
-Newsgroups: gmane.comp.version-control.git
-From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <e8b550ed-1765-764f-49e5-72e5a609d936@gmail.com>
-Date:	Wed, 3 Aug 2016 22:12:48 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=e/qN4A1meqAWi2GotFkd+BLtXUsQmheWCYTUj+jCol8=;
+        b=Y8aFAnx5H60N7WUW4NHEQJEzWYcamIjTBaRswGrqmBLpifID6DVB3Z+zR7jXPtCbDp
+         ph6zphPn38fNiNqwRzBoHAFL47Xh7Rrykt+dyjn4Lwta8xw/NircmBtrTfALckr6Teco
+         AVcjeA7zi+mukqOmMkdj1qiCJNaUEg7xL5ri352Nh7eHWjhosG5G9e0xsf/EUshk3AMi
+         2vtmVuZvUpSLUjBWgg9GEyd6NntFu3zF4spVEW70Kumc80MGbqfpiJ19EVTkLH7J+Ylo
+         IFpskA6TsWXBRwEWJYq24sJSqnYuQiVps76jcL9e38epFRU3ibnVUI7FSuNiHA7+AIf/
+         TmVw==
+X-Gm-Message-State: AEkoouudcKAv9havWv2uxGIIMp4vLGbzwMYyDzehGO3n9N+IPCY+R+b17CyMNQRIeLCu5j7wC3XgrDcg3AZfvQ==
+X-Received: by 10.129.136.5 with SMTP id y5mr44864978ywf.30.1470255634897;
+ Wed, 03 Aug 2016 13:20:34 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <64783AA5-D579-4783-88E7-E0B3BDE5FDEB@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.129.89.132 with HTTP; Wed, 3 Aug 2016 13:20:34 -0700 (PDT)
+In-Reply-To: <xmqq7fbzf56s.fsf@gitster.mtv.corp.google.com>
+References: <0102015640423c26-2060fd70-c90d-4de3-ae8c-1801ad160b1c-000000@eu-west-1.amazonses.com>
+ <0102015640423cc5-691952fa-3726-4132-bcc1-dfa55d4c0895-000000@eu-west-1.amazonses.com>
+ <xmqq7fbzf56s.fsf@gitster.mtv.corp.google.com>
+From:	Pranit Bauva <pranit.bauva@gmail.com>
+Date:	Thu, 4 Aug 2016 01:50:34 +0530
+Message-ID: <CAFZEwPMwen+5wrs3fEOiLUOyf3RrUTV2rftt1c0D4XCVm-UzHg@mail.gmail.com>
+Subject: Re: [RFC/PATCH v11 02/13] bisect: rewrite `check_term_format` shell
+ function in C
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-[This response might have been invalidated by v4]
+Hey Junio,
 
-W dniu 01.08.2016 o 14:00, Lars Schneider pisze:
->> On 30 Jul 2016, at 12:49, Jakub Narębski <jnareb@gmail.com> wrote:
->> W dniu 30.07.2016 o 01:37, larsxschneider@gmail.com pisze:
->>>
->>> Sometimes pkt-line data is already available in a buffer and it would
->>> be a waste of resources to write the packet using packet_write() which
->>> would copy the existing buffer into a strbuf before writing it.
->>>
->>> If the caller has control over the buffer creation then the
->>> PKTLINE_DATA_START macro can be used to skip the header and write
->>> directly into the data section of a pkt-line (PKTLINE_DATA_LEN bytes
->>> would be the maximum). direct_packet_write() would take this buffer,
->>> adjust the pkt-line header and write it.
->>>
->>> If the caller has no control over the buffer creation then
->>> direct_packet_write_data() can be used. This function creates a pkt-line
->>> header. Afterwards the header and the data buffer are written using two
->>> consecutive write calls.
->>
->> I don't quite understand what do you mean by "caller has control
->> over the buffer creation".  Do you mean that caller either can write
->> over the buffer, or cannot overwrite the buffer?  Or do you mean that
->> caller either can allocate buffer to hold header, or is getting
->> only the data?
-> 
-> How about this:
-> 
-> [...]
-> 
-> If the caller creates the buffer then a proper pkt-line buffer with header
-> and data section can be created. The PKTLINE_DATA_START macro can be used 
-> to skip the header section and write directly to the data section (PKTLINE_DATA_LEN 
-> bytes would be the maximum). direct_packet_write() would take this buffer, 
-> fill the pkt-line header section with the appropriate data length value and 
-> write the entire buffer.
-> 
-> If the caller does not create the buffer, and consequently cannot leave room
-> for the pkt-line header, then direct_packet_write_data() can be used. This 
-> function creates an extra buffer for the pkt-line header and afterwards writes
-> the header buffer and the data buffer with two consecutive write calls.
-> 
-> ---
-> Is that more clear?
+On Tue, Aug 2, 2016 at 11:01 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Pranit Bauva <pranit.bauva@gmail.com> writes:
+>
+>> +/*
+>> + * Check whether the string `term` belongs to the set of strings
+>> + * included in the variable arguments.
+>> + */
+>> +static int one_of(const char *term, ...)
+>> +{
+>> +     int res = 0;
+>> +     va_list matches;
+>> +     const char *match;
+>> +
+>> +     va_start(matches, term);
+>> +     while (!res && (match = va_arg(matches, const char *)))
+>> +             res = !strcmp(term, match);
+>> +     va_end(matches);
+>> +
+>> +     return res;
+>> +}
+>
+> It might be safer to mark this function with LAST_ARG_MUST_BE_NULL,
+> but because this is static to this function, it may not matter too
+> much.  Just an observation, not a strong suggestion to change the
+> patch.
 
-Yes, I think it is more clear.  
+Yes, I could do that.
 
-The only thing that could be improved is to perhaps instead of using
+>> +static int check_term_format(const char *term, const char *orig_term)
+>> +{
+>> +     int res;
+>> +     char *new_term = xstrfmt("refs/bisect/%s", term);
+>> +
+>> +     res = check_refname_format(new_term, 0);
+>> +     free(new_term);
+>
+> Yup, that looks much more straight-forward than using a one-time-use
+> strbuf.
 
-  "then a proper pkt-line buffer with header and data section can be created"
+Thanks!
 
-it might be more clear to write
-
-  "then a proper pkt-line buffer with data section and a place for pkt-line header"
- 
-
->>> +{
->>> +	int ret = 0;
->>> +	char hdr[4];
->>> +	set_packet_header(hdr, sizeof(hdr) + size);
->>> +	packet_trace(buf, size, 1);
->>> +	if (gentle) {
->>> +		ret = (
->>> +			!write_or_whine_pipe(fd, hdr, sizeof(hdr), "pkt-line header") ||
->>
->> You can write '4' here, no need for sizeof(hdr)... though compiler would
->> optimize it away.
-> 
-> Right, it would be optimized. However, I don't like the 4 there either. OK to use a macro
-> instead? PKTLINE_HEADER_LEN ?
-
-Did you mean 
-
-    +	char hdr[PKTLINE_HEADER_LEN];
-    +	set_packet_header(hdr, sizeof(hdr) + size);
-
- 
->>> +			!write_or_whine_pipe(fd, buf, size, "pkt-line data")
->>> +		);
->>
->> Do we want to try to write "pkt-line data" if "pkt-line header" failed?
->> If not, perhaps De Morgan-ize it
->>
->>  +		ret = !(
->>  +			write_or_whine_pipe(fd, hdr, sizeof(hdr), "pkt-line header") &&
->>  +			write_or_whine_pipe(fd, buf, size, "pkt-line data")
->>  +		);
-> 
-> 
-> Original:
-> 		ret = (
-> 			!write_or_whine_pipe(fd, hdr, sizeof(hdr), "pkt-line header") ||
-> 			!write_or_whine_pipe(fd, data, size, "pkt-line data")
-> 		);
-> 
-> Well, if the first write call fails (return == 0), then it is negated and evaluates to true.
-> I would think the second call is not evaluated, then?!
-
-This is true both for || and for &&, as in C logical boolean operators
-short-circuit.
-
-> Should I make this more explicit with a if clause?
-
-No need.
-
--- 
-Jakub Narębski
-
+Regards,
+Pranit Bauva
