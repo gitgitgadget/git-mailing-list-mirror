@@ -2,125 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F9C31F40E
-	for <e@80x24.org>; Wed,  3 Aug 2016 16:44:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7C3B1F858
+	for <e@80x24.org>; Wed,  3 Aug 2016 16:15:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758120AbcHCQnm (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 12:43:42 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:36548 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757476AbcHCQnE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2016 12:43:04 -0400
-Received: by mail-wm0-f67.google.com with SMTP id x83so37153342wma.3
-        for <git@vger.kernel.org>; Wed, 03 Aug 2016 09:42:36 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vbMtHEKLIvWOy0KAJuKXxxmBlJn0dnG1K5xmZ7aBAwo=;
-        b=jrmhoxJNWah9xW0OIRTgUnkU+JNkiGGkeubKhpgzxUpuesR5UJg31Z92/D4+4DYyu8
-         Ku0dyG3lxDI7L2KPZQgsoFIfm7d1llihFpR1A0d86yeF83YtUeNopON01KXH47XwDXyS
-         1/rmYXq/njUuzyntn2yiRdxTpZyLVopR/B5rWcIDXkSA7lGEyIP9b0bK5xf/IqVqiObj
-         tG2RihzwCtZLlqlIZqoZvYwJVzBRlVzP37uY/uACBFkcBKk4xP53YvukUCbWe+G04LYK
-         KjI4X41kuoyqYNggDqHJ4cMQvqUZ+XB4+MYhLivsgBwNfqRbmNWx50FAz/58U65ALG23
-         FW5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=vbMtHEKLIvWOy0KAJuKXxxmBlJn0dnG1K5xmZ7aBAwo=;
-        b=Gl9ovfqTr8VkQYPtpLHsmitl+clh+UrQgndLie9bUnkV7/lpRIlYlD5wUrY8hw6BTy
-         tgKgESE1XvPqI2EONG22iIkEc85wowQrBqOvMQo+id1Bsmzhxau42aMdjws4EIKtE8ZE
-         cqkl1tWsc4BoWdvAz7uD3ctX7RJ9169WDSvg+/lYhR7wlBV3xZC/LjxRHUie6fwb8Wga
-         v34sKd3jh7m7mVT13v9jfn3ehhlppZBXAzkIyNGPRykEPPGKvivZtukHQO/f57qMRJ2S
-         yRJXzotagz08uQowcXNkW7mRFuvceeWGOYNMFU/dJb1OdctA+zmzR2TKh9LKeyidHO9F
-         tTUg==
-X-Gm-Message-State: AEkoouvfxNJc/ypjT4ocwF0f5kZ0WSizPqZ0zrIQ5FrpPbjDDpY+pLuPO9e/dseE2qGPNA==
-X-Received: by 10.28.100.70 with SMTP id y67mr25918448wmb.23.1470242556074;
-        Wed, 03 Aug 2016 09:42:36 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id 3sm8959736wms.1.2016.08.03.09.42.35
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Wed, 03 Aug 2016 09:42:35 -0700 (PDT)
-From:	larsxschneider@gmail.com
-To:	git@vger.kernel.org
-Cc:	gitster@pobox.com, jnareb@gmail.com, tboegi@web.de,
-	mlbright@gmail.com, e@80x24.org, peff@peff.net,
-	Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v4 08/12] convert: quote filter names in error messages
-Date:	Wed,  3 Aug 2016 18:42:21 +0200
-Message-Id: <20160803164225.46355-9-larsxschneider@gmail.com>
-X-Mailer: git-send-email 2.9.0
-In-Reply-To: <20160803164225.46355-1-larsxschneider@gmail.com>
-References: <20160729233801.82844-1-larsxschneider@gmail.com>
- <20160803164225.46355-1-larsxschneider@gmail.com>
+	id S1757585AbcHCQOs (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 12:14:48 -0400
+Received: from mout.gmx.net ([212.227.15.18]:58566 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754339AbcHCQOq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2016 12:14:46 -0400
+Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MBnvD-1bN2603P7f-00Apgz; Wed, 03 Aug 2016 18:07:47
+ +0200
+Date:	Wed, 3 Aug 2016 18:07:45 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: patch submission process, was Re: [PATCH v6 06/16] merge_recursive:
+ abort properly upon errors
+In-Reply-To: <CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1608031753431.107993@virtualbox>
+References: <cover.1469547160.git.johannes.schindelin@gmx.de> <cover.1470051326.git.johannes.schindelin@gmx.de> <8ff71aba37be979f05abf88f467ec932aa522bdd.1470051326.git.johannes.schindelin@gmx.de> <xmqqlh0gjpr6.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1608021004080.79248@virtualbox> <xmqqy44ec15p.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608031021050.79248@virtualbox> <CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:+7wMPwV4KFxlxPpb9jKY1lgZTKH3jfIvif8mrAHcn404KVhplYn
+ guFIZQe2ocaAfsBQcHoeAqDbjE70WdigH+/LilksQDvTH3TklmqmYF7lyCOeBoZRwXX4l1n
+ bDxLG3SePuqawZymORy0tJgDRv16eZVqz+6l5Wmv2ZnJHCTMPE+sMOkZfS1K8KQ3Q0PUvFo
+ ZyD7SXGPEqHikYnmL2/fw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:oHUSsPbMmbw=:4zIayX9SjfUXDv4TbZCvIR
+ SJWK38SpMCXYdbdRpx0pvZ89D1LdzlSkG5sQeKcvrdPtF/16D31qd7RUwGVlnVwuWGTifjw3t
+ Eqz0TPt7rLERtB/rmNGAYrgxy0/xIIx+MNKnX4GJ/cNGaxUUYmlVLhxYb6uTZ5CsCY/V/0/s/
+ YTGs6BX03ZPM1Cd1xdzqJRmg5fK1XhoMvsdTFys6B95gJ3vYS3lDhCa4rJvnTH8Lp3mwWia6X
+ VcgGL597HJpl3b7RwOnLOVVRSr7/TAJWPxFHea2JDGwyKrBjXM/gSFe9ZxDYLhvOMBvtSYWR+
+ 7+MtS7MOVQPFMdbhoTcr+xz68s0AI/nfX/jhTw8WFPF1Uc6r83ys0aTge22mFo/ix6VeJx+B6
+ 0r1sX1YV9VgNLkaaQDnIAyXPJ1zdJO4DYFJx/13AJe4kaXetXGjYKUbrpd5ZDWj9CI2dUtK3b
+ xF895UO6aH10sAuHOc9UV4in2Qa2m+TtwIBWuy5CythaLJLbDcSWUR/Q1R1klCS9RU9URred3
+ 6zLWWL7bDgWiQyNgWWNYmDvyVYAO+zTsN6YBIFprVKvWckPtaqulh7+8T2md4PYi1NL9OqQ64
+ GUZ0zQ2YoYRlkPCc75m2jhjIA33uATnGNmGlSoCNK5PI2xoxFLX7I20BHNFPKzjxxt/er+90C
+ mbMd0AQIpXJnk7RcGfP/e0y0RZQPCdsSsY48wL0A8ehpkzgF1Pjs0BOdJ36szqvt3bqhpHGuG
+ zWS962eLuThl3VMGAsPmVWRi6GiBsoXyNgEVKkDvON/ZfOxIKBsX4Bo2IXyJkX+nIbvwshrzK
+ HQjx6Tx
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Lars Schneider <larsxschneider@gmail.com>
+Hi Junio,
 
-Git filter driver commands with spaces (e.g. `filter.sh foo`) are hard to
-read in error messages. Quote them to improve the readability.
+On Wed, 3 Aug 2016, Junio C Hamano wrote:
 
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
- convert.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+> On Wed, Aug 3, 2016 at 4:59 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > I disagree, however, with the suggestion to sift through your `pu` branch
+> > and to somehow replace local branches with the commits found there.
+> 
+> To be more in line with the "e-mailed patch" workflow, I think what I should
+> do is to send the version I queued with fixups back to the list as follow-up.
+> Just like reviewers review, the maintainer reviews and queues, the original
+> author should be able to work in the same workflow, i.e. reading and applying
+> an improved version of the patch from her mailbox.
 
-diff --git a/convert.c b/convert.c
-index b1614bf..522e2c5 100644
---- a/convert.c
-+++ b/convert.c
-@@ -397,7 +397,7 @@ static int filter_buffer_or_fd(int in, int out, void *data)
- 	child_process.out = out;
- 
- 	if (start_command(&child_process))
--		return error("cannot fork to run external filter %s", params->cmd);
-+		return error("cannot fork to run external filter '%s'", params->cmd);
- 
- 	sigchain_push(SIGPIPE, SIG_IGN);
- 
-@@ -415,13 +415,13 @@ static int filter_buffer_or_fd(int in, int out, void *data)
- 	if (close(child_process.in))
- 		write_err = 1;
- 	if (write_err)
--		error("cannot feed the input to external filter %s", params->cmd);
-+		error("cannot feed the input to external filter '%s'", params->cmd);
- 
- 	sigchain_pop(SIGPIPE);
- 
- 	status = finish_command(&child_process);
- 	if (status)
--		error("external filter %s failed %d", params->cmd, status);
-+		error("external filter '%s' failed %d", params->cmd, status);
- 
- 	strbuf_release(&cmd);
- 	return (write_err || status);
-@@ -462,15 +462,15 @@ static int apply_filter(const char *path, const char *src, size_t len, int fd,
- 		return 0;	/* error was already reported */
- 
- 	if (strbuf_read(&nbuf, async.out, len) < 0) {
--		error("read from external filter %s failed", cmd);
-+		error("read from external filter '%s' failed", cmd);
- 		ret = 0;
- 	}
- 	if (close(async.out)) {
--		error("read from external filter %s failed", cmd);
-+		error("read from external filter '%s' failed", cmd);
- 		ret = 0;
- 	}
- 	if (finish_async(&async)) {
--		error("external filter %s failed", cmd);
-+		error("external filter '%s' failed", cmd);
- 		ret = 0;
- 	}
- 
--- 
-2.9.0
+You seem to assume that it isn't cumbersome for people like me to extract
+patches out of mails and to replace existing commits using those patches.
 
+So it probably comes as a huge surprise to you to learn that this *is*
+cumbersome for me.
+
+I got too used to the ease of git push, git pull with or without --rebase,
+and many other Git commands. Having to transmogrify code changes from
+commits in Git into a completely different universe: plain text patches in
+my mailbox, and back, losing all kinds of data in the process, is just
+not at all that easy. And it costs a lot of time.
+
+In short: if you start "submitting patches" back to me via mail, it does
+not help me. It makes things harder for me. In particular when you add
+your sign-off to every patch and I have to strip it.
+
+If you change your workflow, I would humbly request that you do it in a
+way that makes things easier on both sides, not harder.
+
+It would be a totally different matter, of course, if you used the
+branches I publish via my GitHub repository, added fixup! and squash!
+commits, published the result to a public repository and then told me to
+pull from there, that would make things easier. We could even introduce a
+reword! construct, to make the review of the suggested edits of the commit
+message easier. I could easily verify that my branch head agrees with the
+base commit of your branch, I could build proper tooling around this
+workflow, and it would lighten my load.
+
+I guess what I am saying is that we might just as well start using this
+awesome tool to work with code, that tool named "Git".
+
+Ciao,
+Dscho
