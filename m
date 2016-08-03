@@ -1,70 +1,74 @@
 Return-Path: <git-owner@vger.kernel.org>
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
+X-Spam-Level: 
+X-Spam-ASN: AS31976 209.132.180.0/23
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23E6420229
-	for <e@80x24.org>; Wed,  3 Aug 2016 14:23:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 186AE207A0
+	for <e@80x24.org>; Wed,  3 Aug 2016 15:31:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932275AbcHCOWZ (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 10:22:25 -0400
-Received: from mout.gmx.net ([212.227.17.21]:50393 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932213AbcHCOWI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2016 10:22:08 -0400
-Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MRocn-1bfYw414gr-00Sy9O; Wed, 03 Aug 2016 16:21:29
- +0200
-Date:	Wed, 3 Aug 2016 16:21:28 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	"jonsmirl@gmail.com" <jonsmirl@gmail.com>
-cc:	Git Mailing List <git@vger.kernel.org>
-Subject: Re: Making file permissions match
-In-Reply-To: <CAKON4OyiG=ddx77Bn3h-YAh-3BYGd2rXPb9smwaooWxfBmtDKw@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1608031620490.107993@virtualbox>
-References: <CAKON4OyiG=ddx77Bn3h-YAh-3BYGd2rXPb9smwaooWxfBmtDKw@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1754697AbcHCPbX (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 11:31:23 -0400
+Received: from mail-yw0-f174.google.com ([209.85.161.174]:33588 "EHLO
+	mail-yw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754020AbcHCPbW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2016 11:31:22 -0400
+Received: by mail-yw0-f174.google.com with SMTP id r9so231013135ywg.0
+        for <git@vger.kernel.org>; Wed, 03 Aug 2016 08:30:36 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=Hw7u3zgnKcYcYkVDlM7IZmj6XfktcwrSzqjMLikYbAE=;
+        b=z6ObpnLonXbIqv1e2pvRhBH6+J/ll036ZsxvwRvr0oGquEGhJAXVwmGbRFUh6NxSzv
+         W0wf0Nsj3DJyabq6LvlGU//RxWjUuLKOK9fNseNZOZ8UU1UelPn8zudcUr33/5MT9pEa
+         LJXaB4JqYrAX07YwroWlHobJhrhI5XAVJIaUihNTjuY9gPZQg+0R115TaUJGqxr2CGEk
+         +UlLn2zEH1cgDhfWTc8b5I/ViJux4uw5hUcMYn7sPy2BWzY8QN87UhrerqGJzBoOLUtl
+         3DTj69KnN8Dq38dSjxKsKU7QYPuf7e2bGZvzIwslgtvf+/oXp5wohaViD0cEsQwoP5iC
+         Ka4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=Hw7u3zgnKcYcYkVDlM7IZmj6XfktcwrSzqjMLikYbAE=;
+        b=YWAdlQ9DE1XvH2EI59610AErEmwhH9OPbcfvsUaQof+GVau0i7cmFOSqRB10lZfif3
+         KM3NMf2oMYMA+rkC24OxvKb8rwQl+s2vYfKcfm7YdJeywGmw7cCbdIg1rSXApOqeZ8jn
+         5Wal4Kzl+sMI/XxkeJsrcxVTzlNSNsG/NGd4sxlESmMrUgLtmND1yDUaNuZ09I2jvd7N
+         r1Yg00Bn845ePr12wml7FAEY0SQW3XVotWkzGTF0KDAWtSQ46d04ys3qkk+15vE2BWL0
+         FenXvN16BQSeTcuR/PC08s9KT1CCH/6QXnDnN92C6ogtAJ+D4yJTN57zpWbGyXDRu5zd
+         ubqw==
+X-Gm-Message-State: AEkooustW6Dc/clRAYgX40mHoamXUuCgopPtoJBemWeB7+KNJ1vS66aHqWFf+mZ4YnSY8H6f2DoB5VW/02Uitg==
+X-Received: by 10.129.106.139 with SMTP id f133mr55401595ywc.163.1470237816613;
+ Wed, 03 Aug 2016 08:23:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:q/KllcXFR8QfoNZ4GSkyHv0ZqHXJFXJrSXidGhMr45ur5Y5o+KQ
- RhGTGiaS7N7gUmRDWOBm2k2sxbN6Q2JEaJhOpSEKvvduQeGi5hyYVI38me4f8eogvK3WvnU
- j1GM2gY+8CxzYMeaYb+4GEWPZ7Aruc7C9MTfJTJCSeDwIVLElrzAhdUQPbxcuxKbYj6OnCr
- oSpnhBMjCzFXebP+4hJHQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:7CfQFYkhD1U=:hWDY4WQRk/GRupLPwnxCvY
- blTvnYDYvI+tutxTQ3aYAgmxu47sNE5B1SHEku1hJhG6Ua5qgXF9V4KDGgK79KIhgy/v8Z2Us
- F8zFNmOL7mc/KWonPzJY38kTke1FPXHzEbsjvCAaozL8cp0Gc4O7canVU5PbjV+R/a8eAQO1n
- HCfomRR7JI6VI84FbzMF1dpe+TbVeSqzS0e+u9f27zZESFnv0fWs2s4QSmmd+Ev6/oNw2yOBd
- 1kkSU8s0MotviRrJNwKXCdwS6Q4PVaXqlhoEkXS3Y5CsINi5CaglSXzCLzmbdRLwbAlZtpwPM
- YJOg3gO7DekH93anQZen7QzTbGc3yZS63amR7fopebNSFeFu7X/9gtHoBuOyxXECj5TsMbTwX
- OF3oWK762Lt5MYKXToUmGd0aho1P2m0mp5Kv/qABtLhURTMWfNlzoKeWaSwOdTCYepxiI5Q52
- xWO9r4RCU3R3ANI/UwP7VTLlphvyO3WgySFWXIqawmpXGITNt3UJIw8eKl3X3ODaPMg1oTDge
- jF6STBX7JWOGKeHuLwlFMKPqqWEnhfxATAOybq9oYJ/Nfh1WJVoC6xb5rO8owflwTwNxK/Wf4
- tE7K+T//yzde1/xBh0qpVEHABLPTNyfDboFbznmBkwzDoy7ROEZuXVl1vIqreVF02SQqygZAF
- nhTHE9FX2IA6WlJ9nZz0PLbAfZQAlLkpjOKGFtI/GjSFZbsXKfxf0lgzNuAJCksAJ00+YPb+E
- rQcT84LelESfEmn+L7u+boN6I5XnGkKPMQkS/aVqKpK3RWG8plOQa0dFUyRUN6ALSDwW6B7K8
- R9TN1tp
+Received: by 10.13.250.4 with HTTP; Wed, 3 Aug 2016 08:23:16 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1608031708560.107993@virtualbox>
+References: <1470147137-17498-1-git-send-email-git@jeffhostetler.com> <alpine.DEB.2.20.1608031708560.107993@virtualbox>
+From:	Junio C Hamano <gitster@pobox.com>
+Date:	Wed, 3 Aug 2016 08:23:16 -0700
+X-Google-Sender-Auth: jrhgP2pSEpSr27_r3ETOVcm8XNY
+Message-ID: <CAPc5daVuD7K7zKEG4yHTjBU77rUbdVcbSeBgX9eAJVMWMmxC2w@mail.gmail.com>
+Subject: Re: [PATCH v4 0/8] status: V2 porcelain status
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	Jeff Hostetler <git@jeffhostetler.com>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Jon,
+On Wed, Aug 3, 2016 at 8:09 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Junio,
+>
+> Any word when it will be included in `pu`, at least?
 
-On Wed, 3 Aug 2016, jonsmirl@gmail.com wrote:
-
-> I'm working with some Windows programmers that don't believe in file
-> permissions They keep sending me zip files of their source tree.  I
-> have my copy of the tree in git on Linux with all of the correct file
-> permissions.
-> 
-> So I unzip the archive they send me and to see what they changed. I
-> unzip it on top of my git tree. But now all of the file permissions
-> don't match. The code deltas are there but there is also all of this
-> noise from the file permissions.
-> 
-> Is there an easy way to deal with this? I want to keep the code deltas
-> and ignore the permission changes. Since there are about 100K files
-> this is too much to do manually.
-
-Maybe setting core.filemode=false before committing?
-
-Ciao,
-Johannes
+I've been waiting to see that the amount and quality of
+comments from others indicate that the series passed
+the phase that goes through frequent rerolls. Having a
+serious review in the thread that demonstrates and
+concludes that it is well designed, well implemented,
+and ready to go would help, of course.
