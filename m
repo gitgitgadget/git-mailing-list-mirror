@@ -2,73 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 186AE207A0
-	for <e@80x24.org>; Wed,  3 Aug 2016 15:31:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CEF481F40E
+	for <e@80x24.org>; Wed,  3 Aug 2016 16:16:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754697AbcHCPbX (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 11:31:23 -0400
-Received: from mail-yw0-f174.google.com ([209.85.161.174]:33588 "EHLO
-	mail-yw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754020AbcHCPbW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2016 11:31:22 -0400
-Received: by mail-yw0-f174.google.com with SMTP id r9so231013135ywg.0
-        for <git@vger.kernel.org>; Wed, 03 Aug 2016 08:30:36 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=Hw7u3zgnKcYcYkVDlM7IZmj6XfktcwrSzqjMLikYbAE=;
-        b=z6ObpnLonXbIqv1e2pvRhBH6+J/ll036ZsxvwRvr0oGquEGhJAXVwmGbRFUh6NxSzv
-         W0wf0Nsj3DJyabq6LvlGU//RxWjUuLKOK9fNseNZOZ8UU1UelPn8zudcUr33/5MT9pEa
-         LJXaB4JqYrAX07YwroWlHobJhrhI5XAVJIaUihNTjuY9gPZQg+0R115TaUJGqxr2CGEk
-         +UlLn2zEH1cgDhfWTc8b5I/ViJux4uw5hUcMYn7sPy2BWzY8QN87UhrerqGJzBoOLUtl
-         3DTj69KnN8Dq38dSjxKsKU7QYPuf7e2bGZvzIwslgtvf+/oXp5wohaViD0cEsQwoP5iC
-         Ka4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=Hw7u3zgnKcYcYkVDlM7IZmj6XfktcwrSzqjMLikYbAE=;
-        b=YWAdlQ9DE1XvH2EI59610AErEmwhH9OPbcfvsUaQof+GVau0i7cmFOSqRB10lZfif3
-         KM3NMf2oMYMA+rkC24OxvKb8rwQl+s2vYfKcfm7YdJeywGmw7cCbdIg1rSXApOqeZ8jn
-         5Wal4Kzl+sMI/XxkeJsrcxVTzlNSNsG/NGd4sxlESmMrUgLtmND1yDUaNuZ09I2jvd7N
-         r1Yg00Bn845ePr12wml7FAEY0SQW3XVotWkzGTF0KDAWtSQ46d04ys3qkk+15vE2BWL0
-         FenXvN16BQSeTcuR/PC08s9KT1CCH/6QXnDnN92C6ogtAJ+D4yJTN57zpWbGyXDRu5zd
-         ubqw==
-X-Gm-Message-State: AEkooustW6Dc/clRAYgX40mHoamXUuCgopPtoJBemWeB7+KNJ1vS66aHqWFf+mZ4YnSY8H6f2DoB5VW/02Uitg==
-X-Received: by 10.129.106.139 with SMTP id f133mr55401595ywc.163.1470237816613;
- Wed, 03 Aug 2016 08:23:36 -0700 (PDT)
+	id S1757896AbcHCQP7 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 12:15:59 -0400
+Received: from mout.gmx.net ([212.227.15.19]:52761 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754311AbcHCQP6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2016 12:15:58 -0400
+Received: from virtualbox ([37.24.142.100]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MN1j6-1bbYP21dQu-006gvt; Wed, 03 Aug 2016 18:15:52
+ +0200
+Date:	Wed, 3 Aug 2016 18:15:50 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	Chris Packham <judge.packham@gmail.com>, git@vger.kernel.org
+Subject: Re: [RFC/PATCH] rebase--interactive: Add "sign" command
+In-Reply-To: <xmqqr3a5al7z.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1608031813410.107993@virtualbox>
+References: <20160803084743.3299-1-judge.packham@gmail.com> <alpine.DEB.2.20.1608031621590.107993@virtualbox> <xmqqr3a5al7z.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.13.250.4 with HTTP; Wed, 3 Aug 2016 08:23:16 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1608031708560.107993@virtualbox>
-References: <1470147137-17498-1-git-send-email-git@jeffhostetler.com> <alpine.DEB.2.20.1608031708560.107993@virtualbox>
-From:	Junio C Hamano <gitster@pobox.com>
-Date:	Wed, 3 Aug 2016 08:23:16 -0700
-X-Google-Sender-Auth: jrhgP2pSEpSr27_r3ETOVcm8XNY
-Message-ID: <CAPc5daVuD7K7zKEG4yHTjBU77rUbdVcbSeBgX9eAJVMWMmxC2w@mail.gmail.com>
-Subject: Re: [PATCH v4 0/8] status: V2 porcelain status
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	Jeff Hostetler <git@jeffhostetler.com>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:u93OrT7l6Q3NtKA316+1zDzgVE2/nBsjtioywYAky2ZIyWuSzzB
+ cRjHAjfCIeDy+GRimZn/okwlaAuQeNToy4LsPZxzFucM8+3bCTCOedx0f7EpqoyozmItngY
+ bUrff8xJwyeJwFr0NYiCOWyCbcwMtc/1YHl/9pnYNnvAbsFMF4UpWJGg96QtzqHNB08e1VB
+ hRWrMMChp3PCUs0Z/kuVg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:CWBVdTJI5nM=:4ebHxJDFr9p/tE5zo87MlN
+ GJ56ZrHe44O3swZRg04ZN+Q0JnResmrDA2tDp90oVQaa5KCmjeH/i9og+RTR1eeRdXmRLHgl/
+ Of5oP3tKBbhrW65vyFRTpvZlHaUJ2/w8NWxNfEsYkBpOLqF7FJkXyfoOgj1zJpzpUThKtEW7L
+ Yu9JJDlMmlUdFdgX4cUTwlqnOgWEcFDDj9mIGw4e9sgjVY2WOLynniantwxTJjrflP5L76i3V
+ /ZbkfPq1NOkr86vvzUtj3T95e4vJZvGNuvMe5LcSbjp8NZgm76qwS1c3hWmDuKqEZhQ2mhGGY
+ 5c8ac7CdfFIb1kIe9wwhyroHe7idesZwh/Vbi3xkxVPrTj7E4qZH6Hk/UagkvOlZsw8gjmgyJ
+ gj4Yu78BjC9gtU4zLftTO0leZWkRl3dhupll//sTis48xmQ/MDXPJZ5BTCxf26TRZdWeNp66y
+ nw6+6Vnu6HSvrg7wOI4UM55vTo/3lczR2+9JvSTKf7htw8+zjYyZr74KJHxyPpyS/WzmyIiGh
+ PmtOn6QXDdR0GtsPNSOFGIXTErtG9UrIzYjgcb69yTwxZadhWZMkrKeok6w72NMCyQcvWawxN
+ jIjMl2W1PmxMh8Jw+NRCELAnxf2GiQfZHS2B5X1Q14sL+9xqYDW+dQ7j4z4qJPJuUQVhR0WhW
+ 756bjEVwRdhAteQprnXGhFkPIasCmjDMiHQJz8yjFqv/y6BdaIFbZWx4CCBV2w2NTBHuvHq4Q
+ LVCaw5mXKFeM+uRsoPvwkcSlPqaxzzVyaE+MW71mgMB5NR1fVzNgTlYAPexVJNx5HCnPDi4hL
+ jTmAb4o
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Aug 3, 2016 at 8:09 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Junio,
->
-> Any word when it will be included in `pu`, at least?
+Hi Junio,
 
-I've been waiting to see that the amount and quality of
-comments from others indicate that the series passed
-the phase that goes through frequent rerolls. Having a
-serious review in the thread that demonstrates and
-concludes that it is well designed, well implemented,
-and ready to go would help, of course.
+On Wed, 3 Aug 2016, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > ... my Git garden shears [*1*] (essentially, what
+> > git rebase --interactive --preserve-merges *should* have been).
+> 
+> Any plan to fold it into "git rebase -i" as a new (improved) mode of
+> operation, by the way?
+
+It was my plan to integrate it into the sequencer, once the rebase--helper
+landed in `master`. Little did I know how long it would take to get this
+done...
+
+My loose idea was to deprecate --preserve-merges after introducing a
+--recreate-branches, or some such. But enough of that. The rebase--helper
+needs to get here first.
+
+> > However, I could imagine that we actually want this to be more extensible.
+> > After all, all you are doing is to introduce a new rebase -i command that
+> > does nothing else than shelling out to a command.
+> 
+> Yup, I tend to agree.
+
+Awesome!
+
+Ciao,
+Dscho
