@@ -2,106 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1491D1F40E
-	for <e@80x24.org>; Wed,  3 Aug 2016 22:52:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD0551F40E
+	for <e@80x24.org>; Wed,  3 Aug 2016 22:53:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932918AbcHCWv7 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 18:51:59 -0400
-Received: from mail-io0-f172.google.com ([209.85.223.172]:35110 "EHLO
-	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932873AbcHCWv6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2016 18:51:58 -0400
-Received: by mail-io0-f172.google.com with SMTP id m101so257043313ioi.2
-        for <git@vger.kernel.org>; Wed, 03 Aug 2016 15:51:58 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=VnzRg86SdMdpC2GL7NT6/231QACcVrP8rQ6QkpdG7R4=;
-        b=IDm0v+JR7oBLV21LCBM1HbBEH6tU+x3Vhftkd5a3tnTwJGpe0J74l4m59dc77Px8xh
-         CEmv8RnY2Jf8w5FsXE0eNqgZvak/B6BycRkKS0ZQ73qdvvLqhkcHkON7IvemDlikW4SQ
-         wxG2M/ArpyDxdc0ucZeRp936ShvbjuvLnR5OgB472wXydKaKDyhatxH+a1QldnboqXiq
-         qWXKIGZ3PIb/tg5B87KQcmBnrKRRufo+gEIz86s65b0nVF4S27rkw1w9ZvpBySzzl+BG
-         1Cn8F/k+dVWvVA7ErTyrz3KqUWjpJZDqIL0LWQm/AS1aw0lzAusDoWPyhLGCjLH+tBNx
-         b2aA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=VnzRg86SdMdpC2GL7NT6/231QACcVrP8rQ6QkpdG7R4=;
-        b=J1RAL/7wN8mjh14fO975NL7JEooqBXHHcgVzn3EEy4c1gJ55ar0uuN2NcWBMH2cgcy
-         2wdPvcYTaAf+Obwel5vNPKsWycbtH5l+KJVC8gv0bwpRVSGFktiCF2N1SAEUPRMMopNe
-         YKCVAoAqkIzUmB7JdcGMI84SDWUFSCqCcbmTzih3h0jFrUcaKyx9wl6iHKNpitH8L20B
-         VbUEU+t8NEaSG0LDGf4U/pXqx3LMqXzOwh1igFyRKAMfkW/RpahMHJWfTvGUFq5m7YDA
-         xyS3/OzWGmCLycHlRmwLd7cPst4SbxCUM+o+lqmlmcq9gEPcIsP21UgegxUIhPrTyipt
-         /ZuA==
-X-Gm-Message-State: AEkoouslL/ant+O7hJSbTAj1Mncie3PedNiRGK87TXL1MaNQzgcbueWjHL0twrFoXInLunTGbH3K9AxaD+dNBQyU
-X-Received: by 10.107.144.10 with SMTP id s10mr67200638iod.165.1470264717577;
- Wed, 03 Aug 2016 15:51:57 -0700 (PDT)
+	id S932970AbcHCWx2 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 18:53:28 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54388 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932942AbcHCWx0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2016 18:53:26 -0400
+Received: (qmail 22458 invoked by uid 102); 3 Aug 2016 22:53:17 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 Aug 2016 18:53:17 -0400
+Received: (qmail 7849 invoked by uid 107); 3 Aug 2016 22:53:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 Aug 2016 18:53:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Aug 2016 18:53:13 -0400
+Date:	Wed, 3 Aug 2016 18:53:13 -0400
+From:	Jeff King <peff@peff.net>
+To:	Lars Schneider <larsxschneider@gmail.com>
+Cc:	git@vger.kernel.org, gitster@pobox.com, jnareb@gmail.com,
+	tboegi@web.de, mlbright@gmail.com, e@80x24.org
+Subject: Re: [PATCH v4 07/12] run-command: add clean_on_exit_handler
+Message-ID: <20160803225313.pk3tfe5ovz4y3i7l@sigill.intra.peff.net>
+References: <20160729233801.82844-1-larsxschneider@gmail.com>
+ <20160803164225.46355-1-larsxschneider@gmail.com>
+ <20160803164225.46355-8-larsxschneider@gmail.com>
+ <20160803212433.zzdino3ivyem5a2v@sigill.intra.peff.net>
+ <826967FE-BFF8-4387-83F7-AE7036D97FEC@gmail.com>
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Wed, 3 Aug 2016 15:51:57 -0700 (PDT)
-In-Reply-To: <bffbbd7b-3e1b-fa6d-ed53-b75a54fd6f69@alum.mit.edu>
-References: <cover.1470259583.git.mhagger@alum.mit.edu> <7b0680ed7a10fc13acd8d7816a75ed05a5f9e28c.1470259583.git.mhagger@alum.mit.edu>
- <CAGZ79kbzB-bogaqco1+fbRuoQ-4a4GBwTKkuSNnpXUxTFaxcXw@mail.gmail.com> <bffbbd7b-3e1b-fa6d-ed53-b75a54fd6f69@alum.mit.edu>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Wed, 3 Aug 2016 15:51:57 -0700
-Message-ID: <CAGZ79kYs9dnRzyAV_MXXUDbRCLuxQeETHKRpVsczQMCMHkQUPw@mail.gmail.com>
-Subject: Re: [PATCH 8/8] diff: improve positioning of add/delete blocks in diffs
-To:	Michael Haggerty <mhagger@alum.mit.edu>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <826967FE-BFF8-4387-83F7-AE7036D97FEC@gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Aug 3, 2016 at 3:41 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 08/04/2016 12:30 AM, Stefan Beller wrote:
->> On Wed, Aug 3, 2016 at 3:00 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->>
->>> +        return 10 * score - bonus;
->>
->> Would it make sense to define-ify the 10 as well
->> as this is the only hardcoded number in the
->> scoring function?
->
-> I started answering this question by explaining why it is not important
-> to *optimize* the number 10 (namely because scores are only ever
-> compared against other scores, so an overall scaling factor makes no
-> difference). The factor 10 only has to be large enough to provide enough
-> dynamic range for the other (adjustable) parameters.
+On Thu, Aug 04, 2016 at 12:15:46AM +0200, Lars Schneider wrote:
 
-But it only scales the score, not the bonus. So another way to write it
-would be
+> > I'm not clear on why we want this cleanup filter. It looks like you use
+> > it in the final patch to send an explicit shutdown to any filters we
+> > start. But I see two issues with that:
+> > 
+> >  1. This shutdown may come at any time, and you have no idea what state
+> >     the protocol conversation with the filter is in. You could be in
+> >     the middle of sending another pkt-line, or in a sequence of non-command
+> >     pkt-lines where "shutdown" is not recognized.
+> 
+> Maybe I am missing something, but I don't think that can happen because 
+> the cleanup callback is *only* executed if Git exits normally without error. 
+> In that case we would be in a sane protocol state, no?
 
-    score - bonus/10;
+OK, then maybe I am doubly missing the point. I thought this cleanup was
+here to hit the case where we call die() and git exits unexpectedly.
 
-assuming the values of score and bonus are large enough.
+If you only want to cover the "we are done, no errors, goodbye" case,
+then why don't you just write shutdown when we're done?
 
-In some prior conversation you said you take the indent and add an epsilon
-for some special conditions to make one indent better than the other.
+I realize you may have multiple filters, but I don't think it should be
+run-command's job to iterate over them. You are presumably keeping a
+list of active filters, and should have a function to iterate over that.
 
-Epsilons are usually very small compared to the rest of the equation,
-but if I look at the boni definitions ranging from -63..50 they are scaled up
-so much that the bonus may become larger than '1' unit of 'score', i.e.
-it is not an epsilon any more. Or to put it another way:
-If we were to s/10/100/ the results would be worse.
+Or better yet, do not require a shutdown at all. The filter sees EOF and
+knows there is nothing more to do. If we are in the middle of an
+operation, then it knows git died. If not, then presumably git had
+nothing else to say (and really, it is not the filter's business if git
+saw an error or not).
 
-Rather the 10 describes the ratio of "advanced magic" to pure indentation
-based scoring in my understanding.
+Though...
 
->
-> But I think you are asking a simpler question: should we give this
-> constant a name rather than hardcoding it? I don't see a strong reason
-> for or against, so I'll give it a name in the next version, as you suggest.
+> Thanks. The shutdown command is not intended to be a mechanism to tell
+> the filter that everything went well. At this point - as you mentioned -
+> the filter already received all data in the right way. The shutdown
+> command is intended to give the filter some time to perform some post
+> processing before Git returns.
+> 
+> See here for some brainstorming how this feature could be useful
+> in filters similar to Git LFS:
+> https://github.com/github/git-lfs/issues/1401#issuecomment-236133991
 
-Thanks,
-Stefan
+OK, so it is not really "tell the filter to shutdown" but "I am done
+with you, filter, but I will wait for you to tell me you are all done,
+so that I can tell the user".
+
+I'm not sure if calling that "shutdown" makes sense, though. It's almost
+more of a checkpoint (and I wonder if git would ever want to
+"checkpoint" without hanging up the connection).
+
+-Peff
