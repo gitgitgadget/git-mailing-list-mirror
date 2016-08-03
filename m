@@ -2,133 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82EE71F40E
-	for <e@80x24.org>; Wed,  3 Aug 2016 20:17:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC4501F40E
+	for <e@80x24.org>; Wed,  3 Aug 2016 20:19:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758341AbcHCURJ (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 16:17:09 -0400
-Received: from mail-it0-f49.google.com ([209.85.214.49]:38345 "EHLO
-	mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758330AbcHCURH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2016 16:17:07 -0400
-Received: by mail-it0-f49.google.com with SMTP id j124so245219866ith.1
-        for <git@vger.kernel.org>; Wed, 03 Aug 2016 13:17:07 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=jbWoY14R1xMk7J5MkZDEE/EFqR/Y+k4URMXxr3lDO2g=;
-        b=n+FkuL3QXeY2sdgqCMGDrv4a6x7u5oJxiaMW5paCGSrx/ITE4+0VO+widlsu4rycr1
-         qBGXB5PT8Qg91oxtZ+tyRLOxx0dQ0esyxqOy8oFrm1/9/gOd/TUgCO1JjBFTmwBjm5k4
-         HdT7T7ctFRUtPocXvJ9Kq9Nga1Wo7E/FxUmCLY4fj5TZH4WPn1HZnSl80HodBxjiskra
-         abicPcbgiGX15kMZWGqgkYvQjVV7kosaRdsQGHX0b1gYotPiKgIkqgyc6Al3SYKQ0A4H
-         SndpyZj+tx7vJG//Zh3WDEGiKIbs8xk6RfPkfHH+DezXE8pgPstyNfgvB4MkwFd/iigS
-         pefw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=jbWoY14R1xMk7J5MkZDEE/EFqR/Y+k4URMXxr3lDO2g=;
-        b=LrtaZenYvzeA2pYuwPcbylqJm59+ORKVoY6aB9bNUVkPBhy6eb7+w+LtFe1ybzBf5D
-         EL1KkR5AGuEYsoZpEIdzuPDHVTCeDT+tKT5LoVdC7Dy8P5OalJqsu0lCJVoZHCXoWgB5
-         muE/UyRTBMWrOHmnKGcin60sRjx/+uu0aA4aa9J8HqEtUuoDyF1r8hG/ZDA50GexzzRc
-         vnLfamZbLNHYFH0h5jJeZcdIAHCz4X1mvm9zcvuzXAhXkuUnmGERMkfTDPrLd8HWbmNm
-         k8NlqIO/kTvF2MlSnBO2yllaZCuUFSNDtRIYGi3YAVJWKqNwCFMDuleCywCQL3TJyweu
-         VC9g==
-X-Gm-Message-State: AEkoousZ4Vzng3hsTonDNBRiFFo+r6aG/eMF/opTvUcSzj5akPJSCF0Z7hHagksdMP73PgNnXXvZ5XxcAqY2/FZ+
-X-Received: by 10.36.217.9 with SMTP id p9mr3628615itg.46.1470255111865; Wed,
- 03 Aug 2016 13:11:51 -0700 (PDT)
+	id S1758317AbcHCUTA (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 16:19:00 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61935 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1758124AbcHCUS6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2016 16:18:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C5C4730A6B;
+	Wed,  3 Aug 2016 16:18:57 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pcqkZnqvgaShvG0NvkudOvdKfOk=; b=BDkoJ2
+	13gz6JZ6AVYkQszoZTOW77sPRF8tklMaLSGjA/IWosk9Wq8SsNk9XcYdb+q+pwQ2
+	6w0NK/mei9e3JkzVi+rir+Jvb2/s105i8wIPdaUG4BzN28hMpbmY29cLEyVMV88e
+	s/H1f0JSBg8hnDkJuJ2ZrtxQ6FFU6gecq973g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gtc1TBHH7TDI4fpZX+Nj/+M7Kaw7bIea
+	yvycTqqtq4yS17hf8iXVfucMfq4+KgEIdYdgkirsN/te4WWfeb5nbU8x/2tFB2yZ
+	d67q7fRZm4soY3Jg2XQHE/rN9WxUUGVy8++BDrXyWP2XCUyGeSmcNklHqKuypcVQ
+	p5aWf++M1w8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id BAEB730A6A;
+	Wed,  3 Aug 2016 16:18:57 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 374B330A69;
+	Wed,  3 Aug 2016 16:18:57 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	larsxschneider@gmail.com
+Cc:	git@vger.kernel.org, jnareb@gmail.com, tboegi@web.de,
+	mlbright@gmail.com, e@80x24.org, peff@peff.net
+Subject: Re: [PATCH v4 01/12] pkt-line: extract set_packet_header()
+References: <20160729233801.82844-1-larsxschneider@gmail.com>
+	<20160803164225.46355-1-larsxschneider@gmail.com>
+	<20160803164225.46355-2-larsxschneider@gmail.com>
+Date:	Wed, 03 Aug 2016 13:18:55 -0700
+In-Reply-To: <20160803164225.46355-2-larsxschneider@gmail.com>
+	(larsxschneider@gmail.com's message of "Wed, 3 Aug 2016 18:42:14
+	+0200")
+Message-ID: <xmqqd1lp8v2o.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Wed, 3 Aug 2016 13:11:51 -0700 (PDT)
-In-Reply-To: <20160803162512.veyff5g52kaqwlgx@sigill.intra.peff.net>
-References: <20160729004409.2072-1-sbeller@google.com> <20160729004409.2072-7-sbeller@google.com>
- <20160803162512.veyff5g52kaqwlgx@sigill.intra.peff.net>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Wed, 3 Aug 2016 13:11:51 -0700
-Message-ID: <CAGZ79kYW0dwUh=QpKL9W+cv8k_Z9Vc2wxoLMqud5brDtS9DYpA@mail.gmail.com>
-Subject: Re: [PATCHv3 6/7] submodule--helper: add remote-branch helper
-To:	Jeff King <peff@peff.net>
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 81CDE144-59B7-11E6-ADCD-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Aug 3, 2016 at 9:25 AM, Jeff King <peff@peff.net> wrote:
-> On Thu, Jul 28, 2016 at 05:44:08PM -0700, Stefan Beller wrote:
+larsxschneider@gmail.com writes:
+
+> From: Lars Schneider <larsxschneider@gmail.com>
 >
->> +static const char *remote_submodule_branch(const char *path)
->> +{
->> +     const struct submodule *sub;
->> +     gitmodules_config();
->> +     git_config(submodule_config, NULL);
->> +
->> +     sub = submodule_from_path(null_sha1, path);
->> +     if (!sub->branch)
->> +             return "master";
->> +
->> +     return sub->branch;
->> +}
->
-> Coverity complains about "sub" being NULL here, and indeed, it seems
-> like an easy segfault:
->
->   $ ./git submodule--helper remote-branch foo
->   Segmentation fault
->
-> I guess this should return NULL in that case. But then this...
+> set_packet_header() converts an integer to a 4 byte hex string. Make
+> this function locally available so that other pkt-line functions can
+> use it.
 
-I thought about checking for (!sub && !sub->branch) to return "master";
-However I disregarded that implementation as the submodule-config is
-reliable for any correct input. Though we need to handle wrong input as
-well. So how about:
+Didn't I say that this is a bad idea already in an earlier review?
 
-  if (!sub)
-    die(_("A submodule doesn't exist at path %s"), path);
-  if (!sub->branch)
-    return "master";
+The only reason why you want it, together with direct_packet_write()
+(which I think is another bad idea), is because you use
+packet_buf_write() to create a "<header><payload>" in a buf in the
+usercode in step 11/12 like this:
 
-...
++	packet_buf_write(&nbuf, "command=%s\n", filter_type);
++	ret = !direct_packet_write(process->in, nbuf.buf, nbuf.len, 1);
 
-I think that explains best why we even check for !sub.
+which would be totally unnecessary if you just did strbuf_addf()
+into nbuf and used packet_write() like everybody else does.
 
+Puzzled.  Why are steps 01/12 and 02/12 an improvement?
 
->
->> +static int resolve_remote_submodule_branch(int argc, const char **argv,
->> +             const char *prefix)
->> +{
->> +     struct strbuf sb = STRBUF_INIT;
->> +     if (argc != 2)
->> +             die("submodule--helper remote-branch takes exactly one arguments, got %d", argc);
->> +
->> +     printf("%s", remote_submodule_branch(argv[1]));
->> +     strbuf_release(&sb);
->> +     return 0;
->> +}
->
-> would need to handle the NULL return, as well. So maybe "master" or the
-> empty string would be better. I haven't followed the topic closely
-> enough to have an opinion.
-
-Oh I see, this can turn into a discussion what the API for
-remote_submodule_branch is. I think handling the NULL here and dying makes
-more sense as then we can keep remote_submodule_branch pure to its
-intended use case. (If in the far future we have all the submodule stuff in C,
-we may want to call remote_submodule_branch when we already know
-that the path is valid, so no need to check it in there. Also not dying in there
-is more libified.)
-
-Thanks for this review,
-Stefan
-
->
-> -Peff
