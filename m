@@ -2,133 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2C661F40E
-	for <e@80x24.org>; Wed,  3 Aug 2016 20:07:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CF821F40E
+	for <e@80x24.org>; Wed,  3 Aug 2016 20:12:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758214AbcHCUHa (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 16:07:30 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34507 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757747AbcHCUH1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2016 16:07:27 -0400
-Received: by mail-wm0-f68.google.com with SMTP id q128so37963679wma.1
-        for <git@vger.kernel.org>; Wed, 03 Aug 2016 13:06:16 -0700 (PDT)
+	id S932176AbcHCUMB (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 16:12:01 -0400
+Received: from mail-yb0-f169.google.com ([209.85.213.169]:33393 "EHLO
+	mail-yb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758123AbcHCUMA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2016 16:12:00 -0400
+X-Greylist: delayed 1354 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Aug 2016 16:11:13 EDT
+Received: by mail-yb0-f169.google.com with SMTP id e125so324299ybc.0
+        for <git@vger.kernel.org>; Wed, 03 Aug 2016 13:10:41 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=RCbpTs0muMiQQUtrschggLyfp1N/BKkAuDPkwavN8FM=;
-        b=vviqLuf+5xTxu6AfyBBvZCd9yPhgEj7LrQ6MAB4sZZzD2bw91zvYvGAsA4QqVage/r
-         JSUMsN27vD6CGmx+DgipY3FkIkre/4yoR4KRKVdVnmRoU9C/vORx9FSXFXSTEPcbGxqW
-         /ky38ZGxjRMjzsL5G5cAwJfDCAcDZqmnwM+fLwMIvA5lMNvUr1QZxKl3oifbFyfaiLNv
-         4XeROcN2E4ecmaTl/U7opgESmYRBVXXaaOJjO8HSUGt1Z6Z2wUK3tb6vA0szQXoaBnJU
-         TQR58piqMKI8evSdbdyT/5AwO0fDIhLPwjd5Qs921ZrExfbrSkj/UiOGL/XbKWJOgTfZ
-         1R1A==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=LS4h0bs5scgH2OnBX1hHJGodnrqZROyUQ+jqE0hDG+E=;
+        b=fx4NhJgyGk7bOT3fJYvG1/ySY8GbKqfRuVL7PKhZ3xdjO9YRC9JzcYAYbnrrMCG/Jm
+         4Q+hZ8xEFUrQh5DgYiF4iLx2QpplGal0x1Yj1FdYMDctRt5MYB5+l+IIea/cpnIqSP2w
+         MFs+0x6wvV+jEaa4rie6R6oDh+j9/matkL7L1KYodd7T0DDEF4Dntx95vJc+s2jLKUaM
+         NdwpHrBcnZyGVCNdNly7Ij8wcBvVFH+pJrGyhU34vL1OwGsNVDWOd1Eu7/Um3G25Siws
+         CFq4vr2JhKl6zHiw294lWinhP8O8XEFzZj4xxl2TXs5TgbwR+JqAiUeq1RQbazW1stqp
+         9rDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-transfer-encoding;
-        bh=RCbpTs0muMiQQUtrschggLyfp1N/BKkAuDPkwavN8FM=;
-        b=NgxPmVxSEiGhsC6Nen8hM4kKXAsvdy7upzYhejfflHOJkkBbM9SdQ89HrWLXm2/YCK
-         f3AF0esfpgPr7E48baAOcVZ0GjmKMgZwEUFkbJ5genuWZlnCT+qXsxHH9HuN3W+aCMoc
-         3T6aaHJYKB4OhoYRnKCeKdYYiGpGpRIYwZAiAZpG90WW6ijUaV4NqWxS3Jq6UUKiGh/3
-         CGDIclJUgxDZr+PsAlQHFA/xCTWG/qUOG7O8Pagv44lSPgE2iNYvVKpjbLjlf6FPAvdA
-         zh9hu1yySzQuoi0R2qv6uqJ6fZw0vKIq3ndNtzV/y2GJAbZiyRzgiOnpceCWakJb3cYR
-         teqA==
-X-Gm-Message-State: AEkoouv70rS1IfU4rG3nj39qeact0bfD3mpDup3jehqS8bSMoudms0F1yEreHuxHi8sW1A==
-X-Received: by 10.194.169.39 with SMTP id ab7mr71056449wjc.0.1470254775841;
-        Wed, 03 Aug 2016 13:06:15 -0700 (PDT)
-Received: from [192.168.1.26] (adbx179.neoplus.adsl.tpnet.pl. [79.184.23.179])
-        by smtp.googlemail.com with ESMTPSA id t188sm49360wme.19.2016.08.03.13.06.14
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Aug 2016 13:06:14 -0700 (PDT)
-Subject: Re: [PATCH v3 01/10] pkt-line: extract set_packet_header()
-To:	Lars Schneider <larsxschneider@gmail.com>
-References: <20160727000605.49982-1-larsxschneider%40gmail.com/>
- <20160729233801.82844-1-larsxschneider@gmail.com>
- <20160729233801.82844-2-larsxschneider@gmail.com>
- <4081bc44-d964-79ec-165f-f49f33823c17@gmail.com>
- <73AED3FA-C666-4C49-90B2-387E410F7D52@gmail.com>
-Cc:	git@vger.kernel.org, gitster@pobox.com, tboegi@web.de,
-	mlbright@gmail.com, e@80x24.org, peff@peff.net
-Newsgroups: gmane.comp.version-control.git
-From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <51080fb7-2bab-a100-0971-e82063c1ac78@gmail.com>
-Date:	Wed, 3 Aug 2016 22:05:51 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=LS4h0bs5scgH2OnBX1hHJGodnrqZROyUQ+jqE0hDG+E=;
+        b=N/tgTCBa9WaBeMqrwMRbonlNX4lKZ27Cp/9pz+Fb+yXlYH216OOEY/BWMIh8Kr9RkZ
+         6ko6LagpnVFgLge1NLLAFAKrM0dDy4DbcUQNQXzw7/EiSK0AdWg/5ljvJwwT3YpGdZEt
+         FMNG6lADoJktTErNQhX3jJc/XokrxuGsk+tAKhO/3HE3NEJkandxKmIDYSPRma1M8fIS
+         jtA2A106HbLghqtQngkJzdxDPRdTcjoSzzj0eCzn5xvAMBKopMJXqiW5qygIfysiZQtx
+         Isp0jOR4aNZFSLaf0QYjAT7c7sQb+R0yrKjZRTMKpeAEffcwcpGGRvX6EiDRyZkb3dew
+         CzPw==
+X-Gm-Message-State: AEkoous0ShFQdLcdKtcwM2CZDYUxdNqifKdz+Oltlm3y9VhtcBMRAHYMTQftzi3XeRve+Jtws7PRIzEoN3mZkQ==
+X-Received: by 10.37.78.133 with SMTP id c127mr50644686ybb.41.1470253310423;
+ Wed, 03 Aug 2016 12:41:50 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <73AED3FA-C666-4C49-90B2-387E410F7D52@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.13.250.4 with HTTP; Wed, 3 Aug 2016 12:41:30 -0700 (PDT)
+In-Reply-To: <20160803191334.jflia6cqxqx2uqjx@sigill.intra.peff.net>
+References: <579CEF77.9070202@web.de> <20160801164723.mober7em6znt56w4@sigill.intra.peff.net>
+ <xmqq8twgi4qp.fsf@gitster.mtv.corp.google.com> <20160801211131.6ernsu74ohod2cin@sigill.intra.peff.net>
+ <xmqq60rkglym.fsf@gitster.mtv.corp.google.com> <20160803191334.jflia6cqxqx2uqjx@sigill.intra.peff.net>
+From:	Junio C Hamano <gitster@pobox.com>
+Date:	Wed, 3 Aug 2016 12:41:30 -0700
+X-Google-Sender-Auth: hQiaON8gy7onoYIs3T2pgDYpqCs
+Message-ID: <CAPc5daVABao1UZdPk0BnJNkTtYYV74Tw_0CZ9-uj9sK92h+x7g@mail.gmail.com>
+Subject: Re: [PATCH] pass constants as first argument to st_mult()
+To:	Jeff King <peff@peff.net>
+Cc:	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+	Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-[This response might have been invalidated by v4]
+On Wed, Aug 3, 2016 at 12:13 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Aug 01, 2016 at 03:31:45PM -0700, Junio C Hamano wrote:
+>
+> I think in my head I rewrite any multiplication like "N of M" as having
+> "N" as the smaller number. I.e., it is conceptually simpler to me to
+> count five 30's, then 30 five's (even though I do not implement it in my
+> head as a sequence of additions, of course; I'd probably do that
+> particular case as "half of ten 30's").
+>
+> I have no idea if that's cultural or not, though.
 
-W dniu 01.08.2016 o 13:33, Lars Schneider pisze: 
->> On 30 Jul 2016, at 12:30, Jakub Narębski <jnareb@gmail.com> wrote:
+Now, when you say "count five 30's", which one do you have
+in mind? 5x30, or 30x5?
 
->>> #define hex(a) (hexchar[(a) & 15])
->>
->> I guess that this is inherited from the original, but this preprocessor
->> macro is local to the format_header() / set_packet_header() function,
->> and would not work outside it.  Therefore I think we should #undef it
->> after set_packet_header(), just in case somebody mistakes it for
->> a generic hex() function.  Perhaps even put it inside set_packet_header(),
->> together with #undef.
->>
->> But I might be mistaken... let's check... no, it isn't used outside it.
-> 
-> Agreed. Would that be OK?
-> 
-> static void set_packet_header(char *buf, const int size)
-> {
-> 	static char hexchar[] = "0123456789abcdef";
-> 	#define hex(a) (hexchar[(a) & 15])
-> 	buf[0] = hex(size >> 12);
-> 	buf[1] = hex(size >> 8);
-> 	buf[2] = hex(size >> 4);
-> 	buf[3] = hex(size);
-> 	#undef hex
-> }
-
-That's better, though I wonder if we need to start #defines at begining
-of line.  But I think current proposal is O.K.
-
-
-Either this (which has unnecessary larger scope)
-
-  #define hex(a) (hexchar[(a) & 15])
-  static void set_packet_header(char *buf, const int size)
-  {
-  	static char hexchar[] = "0123456789abcdef";
-
-  	buf[0] = hex(size >> 12);
-  	buf[1] = hex(size >> 8);
-  	buf[2] = hex(size >> 4);
-  	buf[3] = hex(size);
-  }
-  #undef hex
-
-or this (which looks worse)
-
-  static void set_packet_header(char *buf, const int size)
-  {
-  	static char hexchar[] = "0123456789abcdef";
-  #define hex(a) (hexchar[(a) & 15])
-  	buf[0] = hex(size >> 12);
-  	buf[1] = hex(size >> 8);
-  	buf[2] = hex(size >> 4);
-  	buf[3] = hex(size);
-  #undef hex
-  }
-
+If you meant the former, I think that _is_ cultural. I am pretty
+sure that I was taught in school(s) to read 5x30 as adding 5
+thirty times.
