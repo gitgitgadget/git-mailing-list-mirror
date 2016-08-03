@@ -6,25 +6,24 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12A201F40E
-	for <e@80x24.org>; Wed,  3 Aug 2016 22:08:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DC411F40E
+	for <e@80x24.org>; Wed,  3 Aug 2016 22:08:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932704AbcHCWIj (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 18:08:39 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:64843 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752961AbcHCWIh (ORCPT
+	id S932724AbcHCWIk (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 18:08:40 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:49703 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755000AbcHCWIh (ORCPT
 	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2016 18:08:37 -0400
-X-Greylist: delayed 460 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Aug 2016 18:08:37 EDT
-X-AuditID: 1207440e-dafff70000000931-e9-57a2698cbf15
+X-AuditID: 12074413-aa3ff70000000955-cf-57a2698e2e43
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id A0.2F.02353.C8962A75; Wed,  3 Aug 2016 18:00:44 -0400 (EDT)
+	by  (Symantec Messaging Gateway) with SMTP id 56.B0.02389.E8962A75; Wed,  3 Aug 2016 18:00:46 -0400 (EDT)
 Received: from michael.fritz.box (p57907C5F.dip0.t-ipconnect.de [87.144.124.95])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u73M0fSX023677
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u73M0fSY023677
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Wed, 3 Aug 2016 18:00:42 -0400
+	Wed, 3 Aug 2016 18:00:44 -0400
 From:	Michael Haggerty <mhagger@alum.mit.edu>
 To:	git@vger.kernel.org
 Cc:	Stefan Beller <sbeller@google.com>,
@@ -33,89 +32,190 @@ Cc:	Stefan Beller <sbeller@google.com>,
 	=?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
 	Jacob Keller <jacob.keller@gmail.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 0/8] Better heuristics make prettier diffs
-Date:	Thu,  4 Aug 2016 00:00:28 +0200
-Message-Id: <cover.1470259583.git.mhagger@alum.mit.edu>
+Subject: [PATCH 1/8] xdl_change_compact(): rename some local variables for clarity
+Date:	Thu,  4 Aug 2016 00:00:29 +0200
+Message-Id: <ea7d76b1a97f3ab8d83ed8ba7570c2bec1195501.1470259583.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.8.1
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNIsWRmVeSWpSXmKPExsUixO6iqNuTuSjc4O9XS4uuK91MFg29V5gt
+In-Reply-To: <cover.1470259583.git.mhagger@alum.mit.edu>
+References: <cover.1470259583.git.mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrMIsWRmVeSWpSXmKPExsUixO6iqNuXuSjc4O0MfYuuK91MFg29V5gt
 	di/uZ7ZYcXUOs8XtFfOZLX609DBbbN7czuLA7vH3/Qcmj52z7rJ7LNhU6vGsdw+jx8VLyh6f
-	N8kFsEVx2aSk5mSWpRbp2yVwZXy4spCt4KxIxeEpM5kaGLfydzFyckgImEjs+XOEpYuRi0NI
-	YCujRN/PO1DOcSaJOcvusYBUsQnoSizqaWYCsUUExCXeHp/JDlLELNDPJPGjo4sRJCEsYCVx
-	8uYDsCIWAVWJrdv2ATVzcPAKmEs8uSULsU1O4vL0B2wTGLkWMDKsYpRLzCnN1c1NzMwpTk3W
-	LU5OzMtLLdI11svNLNFLTSndxAgJE74djO3rZQ4xCnAwKvHwbpBcFC7EmlhWXJl7iFGSg0lJ
-	lDcnFSjEl5SfUpmRWJwRX1Sak1p8iFGCg1lJhPdeClCONyWxsiq1KB8mJc3BoiTOq7ZE3U9I
-	ID2xJDU7NbUgtQgmK8PBoSTBm5wB1ChYlJqeWpGWmVOCkGbi4AQZzgM0fC1IDW9xQWJucWY6
-	RP4Uo6KUOK9FOlBCACSRUZoH1wuL41eM4kCvCPNuAWnnAaYAuO5XQIOZgAafMFgAMrgkESEl
-	1cDoLGne/Iwh2Ebmo0+9StW+rbLzL3+XPxp45d2zA9p2B2e/+qa/2SfI/t5bne1Pa4NSkxfX
-	yenLfNk3hfX04a2n1VXVVu8peTZpTmV0YX/infVT2R3Sw/w1fwXI27CnPhfe9+321NeFR0RD
-	1N88fL/k31736acW+e+bxqS355r0MbH64+4JHiFGSizFGYmGWsxFxYkAUQ16QL4CAAA=
+	N8kFsEVx2aSk5mSWpRbp2yVwZfQ09jMXnNeoaJ3yhbGBcYtsFyMnh4SAicSEa5+Zuxi5OIQE
+	tjJK/N9zggXCOc4kcfLlKjaQKjYBXYlFPc1MILaIgLjE2+Mz2UGKmAX6mSR+dHQxdjFycAgL
+	BElsucoDUsMioCqxdMIsdhCbVyBKomX6OhaIbXISl6c/AJvJKWAhcXXSbLCZQgLmEm87drFO
+	YORZwMiwilEuMac0Vzc3MTOnODVZtzg5MS8vtUjXXC83s0QvNaV0EyMkrIR3MO46KXeIUYCD
+	UYmHd4PkonAh1sSy4srcQ4ySHExKorw5qUAhvqT8lMqMxOKM+KLSnNTiQ4wSHMxKIrz3UoBy
+	vCmJlVWpRfkwKWkOFiVxXrUl6n5CAumJJanZqakFqUUwWRkODiUJ3osZQI2CRanpqRVpmTkl
+	CGkmDk6Q4TxAw1+A1PAWFyTmFmemQ+RPMSpKifNapAMlBEASGaV5cL2wuH/FKA70ijCvHUg7
+	DzBlwHW/AhrMBDT4hMECkMEliQgpqQZGrqcmJsX+Grttpyj1yPxJ/lXwZu3ZQt21pj8m/ojf
+	cvRB93WeNX9fdPlo25dkX/Mvf/v4fE4fX3fOAV6Rjj9P5cuvv9r7L26e/5LwQwLVSY2FLTIW
+	77057v09tXKZ3xujJUHx2ydO12Q9f+ur5Y0v/qVFZ+d3FP1bsHmW88nnsSmv08yZ//3hVmIp
+	zkg01GIuKk4EADzgW6jWAgAA
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-I've talked about this quite a bit on the list already. The idea is to
-improve ugly diffs like
+* ix -> i
+* ixo -> io
+* ixs -> start
+* grpsiz -> groupsize
 
-    @@ -231,6 +231,9 @@ if (!defined $initial_reply_to && $prompting) {
-     }
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+Thankfully, we don't have to limit indentifers to six characters, so
+start naming things more understandably.
 
-     if (!$smtp_server) {
-    +       $smtp_server = $repo->config('sendemail.smtpserver');
-    +}
-    +if (!$smtp_server) {
-            foreach (qw( /usr/sbin/sendmail /usr/lib/sendmail )) {
-                    if (-x $_) {
-                            $smtp_server = $_;
+ xdiff/xdiffi.c | 66 +++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 33 insertions(+), 33 deletions(-)
 
-by feeding clues from the surrounding lines (namely their patterns of
-indentation and blank lines) into a heuristic that more often produces
-the diffs that users would rather see, like
-
-    --- a/9c572b21dd090a1e5c5bb397053bf8043ffe7fb4:git-send-email.perl
-    +++ b/6dcfa306f2b67b733a7eb2d7ded1bc9987809edb:git-send-email.perl
-    @@ -230,6 +230,9 @@ if (!defined $initial_reply_to && $prompting) {
-            $initial_reply_to =~ s/(^\s+|\s+$)//g;
-     }
-
-    +if (!$smtp_server) {
-    +       $smtp_server = $repo->config('sendemail.smtpserver');
-    +}
-     if (!$smtp_server) {
-            foreach (qw( /usr/sbin/sendmail /usr/lib/sendmail )) {
-                    if (-x $_) {
-
-See the last commit's log message for a very detailed explanation of
-the heuristic, how it was optimized, and how you can get involved to
-make sure that the heuristic also works well for your favorite
-language.
-
-When tested against a corpus of 2700 diffs that I optimized by hand,
-this heuristic gets a "wrong" answer only about 1.7% as frequently as
-the current default Git algorithm and only about 5.3% as often as `git
-diff --compaction-heuristic`. (Though please don't treat these numbers
-as final; I want to verify them again first.)
-
-For now the new algorithm has to be enabled explicitly using either
-`--indent-heuristic` or `git config diff.indentheuristic true`.
-
-Michael Haggerty (8):
-  xdl_change_compact(): rename some local variables for clarity
-  xdl_change_compact(): clarify code
-  xdl_change_compact(): rename i to end
-  xdl_change_compact(): do one final shift or the other, not both
-  xdl_change_compact(): fix compaction heuristic to adjust io
-  xdl_change_compact(): keep track of the earliest end
-  is_blank_line: take a single xrecord_t as argument
-  diff: improve positioning of add/delete blocks in diffs
-
- Documentation/diff-options.txt |   6 +-
- diff.c                         |  11 +
- git-add--interactive.perl      |   5 +-
- xdiff/xdiff.h                  |   1 +
- xdiff/xdiffi.c                 | 458 ++++++++++++++++++++++++++++++++++-------
- 5 files changed, 409 insertions(+), 72 deletions(-)
-
+diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
+index b3c6848..ff7fc42 100644
+--- a/xdiff/xdiffi.c
++++ b/xdiff/xdiffi.c
+@@ -414,7 +414,7 @@ static int recs_match(xrecord_t **recs, long ixs, long ix, long flags)
+ }
+ 
+ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+-	long ix, ixo, ixs, ixref, grpsiz, nrec = xdf->nrec;
++	long i, io, start, ixref, groupsize, nrec = xdf->nrec;
+ 	char *rchg = xdf->rchg, *rchgo = xdfo->rchg;
+ 	unsigned int blank_lines;
+ 	xrecord_t **recs = xdf->recs;
+@@ -424,7 +424,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 	 * change groups for a consistent and pretty diff output. This also
+ 	 * helps in finding joinable change groups and reduce the diff size.
+ 	 */
+-	for (ix = ixo = 0;;) {
++	for (i = io = 0;;) {
+ 		/*
+ 		 * Find the first changed line in the to-be-compacted file.
+ 		 * We need to keep track of both indexes, so if we find a
+@@ -434,22 +434,22 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 		 * not need index bounding since the array is prepared with
+ 		 * a zero at position -1 and N.
+ 		 */
+-		for (; ix < nrec && !rchg[ix]; ix++)
+-			while (rchgo[ixo++]);
+-		if (ix == nrec)
++		for (; i < nrec && !rchg[i]; i++)
++			while (rchgo[io++]);
++		if (i == nrec)
+ 			break;
+ 
+ 		/*
+ 		 * Record the start of a changed-group in the to-be-compacted file
+ 		 * and find the end of it, on both to-be-compacted and other file
+-		 * indexes (ix and ixo).
++		 * indexes (i and io).
+ 		 */
+-		ixs = ix;
+-		for (ix++; rchg[ix]; ix++);
+-		for (; rchgo[ixo]; ixo++);
++		start = i;
++		for (i++; rchg[i]; i++);
++		for (; rchgo[io]; io++);
+ 
+ 		do {
+-			grpsiz = ix - ixs;
++			groupsize = i - start;
+ 			blank_lines = 0;
+ 
+ 			/*
+@@ -457,9 +457,9 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 			 * the last line of the current change group, shift backward
+ 			 * the group.
+ 			 */
+-			while (ixs > 0 && recs_match(recs, ixs - 1, ix - 1, flags)) {
+-				rchg[--ixs] = 1;
+-				rchg[--ix] = 0;
++			while (start > 0 && recs_match(recs, start - 1, i - 1, flags)) {
++				rchg[--start] = 1;
++				rchg[--i] = 0;
+ 
+ 				/*
+ 				 * This change might have joined two change groups,
+@@ -467,8 +467,8 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 				 * the start index accordingly (and so the other-file
+ 				 * end-of-group index).
+ 				 */
+-				for (; rchg[ixs - 1]; ixs--);
+-				while (rchgo[--ixo]);
++				for (; rchg[start - 1]; start--);
++				while (rchgo[--io]);
+ 			}
+ 
+ 			/*
+@@ -477,18 +477,18 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 			 * change record before the end-of-group index in the other
+ 			 * file is set).
+ 			 */
+-			ixref = rchgo[ixo - 1] ? ix: nrec;
++			ixref = rchgo[io - 1] ? i : nrec;
+ 
+ 			/*
+ 			 * If the first line of the current change group, is equal to
+ 			 * the line next of the current change group, shift forward
+ 			 * the group.
+ 			 */
+-			while (ix < nrec && recs_match(recs, ixs, ix, flags)) {
+-				blank_lines += is_blank_line(recs, ix, flags);
++			while (i < nrec && recs_match(recs, start, i, flags)) {
++				blank_lines += is_blank_line(recs, i, flags);
+ 
+-				rchg[ixs++] = 0;
+-				rchg[ix++] = 1;
++				rchg[start++] = 0;
++				rchg[i++] = 1;
+ 
+ 				/*
+ 				 * This change might have joined two change groups,
+@@ -498,20 +498,20 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 				 * index in case we are shifting together with a
+ 				 * corresponding group of changes in the other file.
+ 				 */
+-				for (; rchg[ix]; ix++);
+-				while (rchgo[++ixo])
+-					ixref = ix;
++				for (; rchg[i]; i++);
++				while (rchgo[++io])
++					ixref = i;
+ 			}
+-		} while (grpsiz != ix - ixs);
++		} while (groupsize != i - start);
+ 
+ 		/*
+ 		 * Try to move back the possibly merged group of changes, to match
+ 		 * the recorded position in the other file.
+ 		 */
+-		while (ixref < ix) {
+-			rchg[--ixs] = 1;
+-			rchg[--ix] = 0;
+-			while (rchgo[--ixo]);
++		while (ixref < i) {
++			rchg[--start] = 1;
++			rchg[--i] = 0;
++			while (rchgo[--io]);
+ 		}
+ 
+ 		/*
+@@ -523,11 +523,11 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 		 * in the earlier loop, we need to shift it back only if at all.
+ 		 */
+ 		if ((flags & XDF_COMPACTION_HEURISTIC) && blank_lines) {
+-			while (ixs > 0 &&
+-			       !is_blank_line(recs, ix - 1, flags) &&
+-			       recs_match(recs, ixs - 1, ix - 1, flags)) {
+-				rchg[--ixs] = 1;
+-				rchg[--ix] = 0;
++			while (start > 0 &&
++			       !is_blank_line(recs, i - 1, flags) &&
++			       recs_match(recs, start - 1, i - 1, flags)) {
++				rchg[--start] = 1;
++				rchg[--i] = 0;
+ 			}
+ 		}
+ 	}
 -- 
 2.8.1
 
