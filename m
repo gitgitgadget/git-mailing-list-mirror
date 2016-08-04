@@ -2,116 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D431520193
-	for <e@80x24.org>; Thu,  4 Aug 2016 14:00:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3EA7C20193
+	for <e@80x24.org>; Thu,  4 Aug 2016 14:21:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757009AbcHDOAZ (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 10:00:25 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:37919 "EHLO
-	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933865AbcHDOAW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 10:00:22 -0400
-Received: by mail-wm0-f46.google.com with SMTP id o80so379667281wme.1
-        for <git@vger.kernel.org>; Thu, 04 Aug 2016 07:00:22 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=w8dgvIkoaJXew1mKqYgx87LjuvZBFw1jBa1MwySRZus=;
-        b=SUARqpjrWUFfvCPv7f+apELu4C6mvWOKmqlU6GBBmwC0VYd/BiTvSle10KHeSDqc35
-         RZSTG93OmiO0HSyN2ASN45EVu+vkxwtagYppPJjpTqvel/lQgdJ9R8b/tGQAuXjBwDOu
-         Rt9HdAnZxWjDHk8HeXnVunVWOqktELonlSzu98jOeknnK4LtyYC13XS3LglIfNPuIF08
-         O3qbtjDbnCcDH+XTx6GQz0fRtWd37Tcsd52cjO0AYWc6Ppa5OMjChf6f2hCfSGnBBM0p
-         0jiaS20AAeFRhLVPsSZBOTcgRmsQjV7mOnPWaJrxoj3elfk8LxXqI/lViuZ99WKAcxkC
-         l+Bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=w8dgvIkoaJXew1mKqYgx87LjuvZBFw1jBa1MwySRZus=;
-        b=A7kqnMSgie0nxBp0lR93tpLFIAuam985fz+MllqUYyuDSj+2eXcHlpfI4ja5awz1HF
-         jvAufT2VB0TM1U8Kej/o6nNg9heMmaCwroIKzGNYH/4DnhyTL4iuMi9YyieYUrKwrT3x
-         5DQRRidSKrWQEkwj/G9jN/IXhblvTsKJZl/LNojTz6iEXFYst9d1JdEYq86X3W/wTkeP
-         AEmuteY0ajWzAOVsekHcJDybwSPz0ggDezUmbZ/qRuLGhGSI54EjuGZAV/kfjflPBLju
-         tobLAp2IBbzafrtyHMkGKw9byf61L66Z94J9A3DfI61+LY4/dhmLvxW7uTAM8vy7qtjt
-         ZNpg==
-X-Gm-Message-State: AEkoous1VwNtoi8o0glplnJuYj9L5J4K48L10G1dl+VfK++991cdA8GvGkhji+bz+nh+Ag==
-X-Received: by 10.28.98.135 with SMTP id w129mr70791582wmb.38.1470319221284;
-        Thu, 04 Aug 2016 07:00:21 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id r13sm3817125wmf.12.2016.08.04.07.00.20
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 04 Aug 2016 07:00:20 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: What's cooking in git.git (Aug 2016, #01; Tue, 2)
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20160804113256.6idrdzfgolm4ne4o@john.keeping.me.uk>
-Date:	Thu, 4 Aug 2016 16:00:19 +0200
-Cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Transfer-Encoding: 7bit
-Message-Id: <4A2D83B3-916C-4FC8-BBEF-4D55C3204DFA@gmail.com>
-References: <xmqqlh0ebyhn.fsf@gitster.mtv.corp.google.com> <4877318E-3CBF-4C87-B24D-AAE35C427D66@gmail.com> <20160804113256.6idrdzfgolm4ne4o@john.keeping.me.uk>
-To:	John Keeping <john@keeping.me.uk>
-X-Mailer: Apple Mail (2.3124)
+	id S933771AbcHDOVq (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 10:21:46 -0400
+Received: from mout.gmx.net ([212.227.15.19]:50618 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933815AbcHDOVn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 10:21:43 -0400
+Received: from virtualbox ([37.24.141.218]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0M86PB-1bHvOj192v-00vcxk; Thu, 04 Aug 2016 16:21:12
+ +0200
+Date:	Thu, 4 Aug 2016 16:21:11 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	Kevin Willford <kcwillford@gmail.com>, git@vger.kernel.org,
+	Kevin Willford <kewillf@microsoft.com>
+Subject: Re: [[PATCH v2] 4/4] rebase: avoid computing unnecessary patch IDs
+In-Reply-To: <xmqqziot5jc3.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1608041620290.5786@virtualbox>
+References: <20160729161920.3792-1-kcwillford@gmail.com> <20160729161920.3792-5-kcwillford@gmail.com> <xmqqa8h0m82f.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608011055180.149069@virtualbox> <xmqqtwf4i71l.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1608021244450.79248@virtualbox> <xmqqk2fzf69w.fsf@gitster.mtv.corp.google.com> <xmqqziot5jc3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:WE63aswJonWNg2byVuAlKXCmfWRe43BomWKzGCftpSZNyYRIRI2
+ 1O7VLZ2sB/Bbc/JfQ9v9HsxM86PTQc8aLW0O7l6fJzzq1AgZxJ0dsFLmcu/YLfXIj5bp6Ou
+ P2YgAkmT6uZlBBmZL1/DiD3Wg7YPLfIx2d1lXCgicc9/Nvx08IvSq2bXfHJ3FRHdoO/W0Kw
+ kFVpX85zUD+ip0y8UTTeQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:0cT6aUyq9qA=:sZk7J2hsdrWYxx2vXJFODH
+ I/8dwxXvB3gFE9Xm4nJULweNRHT7lNGMtOBS1lclTcPuumGG51B0hIYhbx0ietWQeRG9+C2+L
+ Xhf38BmUpa2CIWGDbeddmlisAfZs58Gt6h2BlddA+R/2MyeTgEbBn6mdv/yVulGTVnRYLpX0k
+ BYOeIMmy4AaUMN5FthjLbzNXG37Bal3NrRJGVSX35KGrCiz0ePQHoPX2+f3oHN36KyB9bSrun
+ z6Xe7xLNcT2LkzblrVRoN59+prPgvPNuP8ZcBXnwaxNzx9FTkrvqzPoof9Ey9Jy6lCln/5DQ3
+ 975+rOfAbpKhK+YRyI2651awcaAhqWlwoyBPCALWNEPgd7YgOzwuAAVC0AIHFq5clCgFIgFrP
+ OtG7W8rktMSztIN7HxL23f1cY3Q9GYLy/b/u5Va2JxgBgAzIBzu94e7p7kh2UMbM+/nSh09gL
+ pahDjoHyP4eujppN5rib0QxLOFsNv468TjzQZcD7tQ4M0JzwWs4KHWRqSBg86xuBoait0H3ro
+ OyyL6mR+LUUU5QuKGNiJGyIXoP8bD8v3vgTznY3QzKMo2E/jIHjW0T1UwYrN+8nKlDpAghW8C
+ vd00PncA0foUpXnGHCvdF2HIdVuz/JDN5qOJ0C+ZyeQ6CberQT0S4oI1JEUCPJonDceud5k5j
+ X3VbJvjbTtdMEG1H/Uh9AN1t6HMmsgdMAQH7lxgfw7B+PA1GWCr1daK2byJ02oNv1rgeenMeu
+ LelLSP+nCunOX2ZKureKfTRfD0curwRBL1Z/sWTSka+7ThVL/zR1zRXi7SAIdKdkGoCXmcPzp
+ pJiZgJb
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Hi Junio,
 
-> On 04 Aug 2016, at 13:32, John Keeping <john@keeping.me.uk> wrote:
-> 
-> On Thu, Aug 04, 2016 at 10:03:39AM +0200, Lars Schneider wrote:
->> 
->>> 
->>> * jk/push-force-with-lease-creation (2016-07-26) 3 commits
->>> - push: allow pushing new branches with --force-with-lease
->>> - push: add shorthand for --force-with-lease branch creation
->>> - Documentation/git-push: fix placeholder formatting
->>> 
->>> "git push --force-with-lease" already had enough logic to allow
->>> ensuring that such a push results in creation of a ref (i.e. the
->>> receiving end did not have another push from sideways that would be
->>> discarded by our force-pushing), but didn't expose this possibility
->>> to the users.  It does so now.
->>> 
->>> Will merge to 'next'.
->> 
->> t5533-push-cas.sh "16 - new branch already exists" seems to be broken 
->> for OSX on next. Git bisect indicates that "push: add shorthand for 
->> --force-with-lease branch creation" might be the culprit.
->> 
->> https://travis-ci.org/git/git/jobs/149614431
->> https://api.travis-ci.org/jobs/149614431/log.txt?deansi=true (non-JS)
-> 
-> It seems that the test script has already done "test_commit C", so the
-> newly added "test_commit c" does nothing on a case-insensitive
-> filesystem.
-> 
-> Something like this will make the test more consistent with the rest of
-> the file:
-> 
-> diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
-> index 5f29664..e5bbbd8 100755
-> --- a/t/t5533-push-cas.sh
-> +++ b/t/t5533-push-cas.sh
-> @@ -220,7 +220,7 @@ test_expect_success 'new branch already exists' '
-> 	(
-> 		cd src &&
-> 		git checkout -b branch master &&
-> -		test_commit c
-> +		test_commit F
-> 	) &&
-> 	(
-> 		cd dst &&
+On Wed, 3 Aug 2016, Junio C Hamano wrote:
 
-Confirmed. This patch fixes the issue!
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > I do not think negative (or non-zero) return is an "abuse" at all.
+> > It is misleading in the context of the function whose name has "cmp"
+> > in it, but that is not the fault of this function, rather, the
+> > breakage is more in the API that calls a function that wants to know
+> > only equality a "cmp".  A in-code comment before the function name
+> > may be appropriate:
+> >
+> >         /*
+> >          * hashmap API calls hashmap_cmp_fn, but it only wants
+> >          * "does the key match the entry?" with 0 (matches) and
+> >          * non-zero (does not match).
+> >          */
+> >         static int patch_id_match(const struct patch_id *ent,
+> >                                   const struct patch_id *key,
+> >                                   const void *keydata)
+> >         {
+> >                 ...
+> 
+> How about this one instead (to be squashed into 4/4)?
+> 
+> The updated wording directly addresses the puzzlement I initially
+> felt "This returns error() which is always negative, so comparing
+> (A, B) would say A < B, while comparing (B, A) would say B < A.
+> Would it cause a problem in the caller?" while reading the function
+> by being explicit that the sign does not matter.
+
+Please squash it in. Kevin is on vacation and I am sure he is fine with
+this change.
 
 Thanks,
-Lars
+Dscho
