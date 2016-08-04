@@ -6,82 +6,70 @@ X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2909620193
-	for <e@80x24.org>; Thu,  4 Aug 2016 20:02:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A011720193
+	for <e@80x24.org>; Thu,  4 Aug 2016 20:09:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758987AbcHDUCE (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 16:02:04 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54947 "HELO cloud.peff.net"
+	id S965422AbcHDUJK (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 16:09:10 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54957 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S934070AbcHDUCC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 16:02:02 -0400
-Received: (qmail 12472 invoked by uid 102); 4 Aug 2016 20:02:01 -0000
+	id S965411AbcHDUJJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 16:09:09 -0400
+Received: (qmail 12782 invoked by uid 102); 4 Aug 2016 20:09:09 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Aug 2016 16:02:01 -0400
-Received: (qmail 15445 invoked by uid 107); 4 Aug 2016 20:02:29 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Aug 2016 16:09:09 -0400
+Received: (qmail 15563 invoked by uid 107); 4 Aug 2016 20:09:37 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Aug 2016 16:02:29 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Aug 2016 16:01:58 -0400
-Date:	Thu, 4 Aug 2016 16:01:58 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Aug 2016 16:09:37 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Aug 2016 16:09:05 -0400
+Date:	Thu, 4 Aug 2016 16:09:05 -0400
 From:	Jeff King <peff@peff.net>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	Stefan Beller <sbeller@google.com>,
-	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH 0/8] Better heuristics make prettier diffs
-Message-ID: <20160804200157.6xq67ceulwyvl7mv@sigill.intra.peff.net>
-References: <cover.1470259583.git.mhagger@alum.mit.edu>
- <20160804073833.7s3hh26hkalifima@sigill.intra.peff.net>
- <xmqqy44c1f90.fsf@gitster.mtv.corp.google.com>
+To:	git@vger.kernel.org
+Subject: Re: [BUG?] --boundary inconsistent with path limiting
+Message-ID: <20160804200905.7xdiei2yfv2aw6im@sigill.intra.peff.net>
+References: <20160804194043.z4nbosr4wpbzljdl@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqy44c1f90.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20160804194043.z4nbosr4wpbzljdl@sigill.intra.peff.net>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Aug 04, 2016 at 12:54:51PM -0700, Junio C Hamano wrote:
+On Thu, Aug 04, 2016 at 03:40:43PM -0400, Jeff King wrote:
 
-> Jeff King <peff@peff.net> writes:
+> That makes sense to me. We omit "c" because it doesn't touch "b.t", and
+> obviously include "b", which does. We _do_ include the boundary commit,
+> even though it doesn't touch the path, which makes sense to me. It
+> remains a boundary whether it touched the path or not, and without it,
+> we get no boundary at all.
 > 
-> > Not that you probably need more random cases of C code, but I happened
-> > to be looking at a diff in git.git today, b333d0d6, which is another
-> > regression for the compaction heuristic.
+> But now if I limit to "a.t", I get no output at all:
 > 
-> Wow, that one is _really_ bad.  Does it have something to do with
-> the removal being at the very end of the file?
+>   $ git log --format='%m %s' --boundary a..c -- a.t
+> 
+> whereas I would have expected "- a" to show the boundary.
+> 
+> Is this a bug, or are my expectations wrong?
 
-I think so. If it were:
+So I suppose it depends how you define "boundary" commits. In
+get_revision_internal(), I see this comment:
 
-  func1() {
-     ... unique stuff ...
-     ... shared ending ...
-  }
+        /*
+         * boundary commits are the commits that are parents of the
+         * ones we got from get_revision_1() but they themselves are
+         * not returned from get_revision_1().  Before returning
+         * 'c', we need to mark its parents that they could be boundaries.
+         */
 
-  func2() {
-     ... more unique stuff ...
-     ... shared ending ...
-  }
+By that definition, obviously if we do not have any commits to show,
+then we have no boundary commits. I don't think this definition is
+anywhere in the user-facing documentation, though.
 
-  unrelated_func() {
-  }
-
-and we dropped func2, then I think the blank line between func2() and
-unrelated_func() would cause the compaction heuristic to stop shifting.
-
-OTOH, if it were:
-
-  func2() {
-     ...
-  }
-  unrelated_func() {
-  }
-
-with no newline, you get a similar badly-shifted diff (which is not
-surprising, as we were given no syntactic hint that "func2" is a
-separate unit from "unrelated_func").
+It still seems weird to me, and I wonder if we should show all
+UNINTERESTING commits as boundaries in the case that we haven't produced
+any positive commits at all. But perhaps there is a case where that
+would not be desirable.
 
 -Peff
