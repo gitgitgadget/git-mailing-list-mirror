@@ -2,98 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A09BD20193
-	for <e@80x24.org>; Thu,  4 Aug 2016 16:57:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E15820193
+	for <e@80x24.org>; Thu,  4 Aug 2016 17:18:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965320AbcHDQ5s (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 12:57:48 -0400
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:32775 "EHLO
-	mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965494AbcHDQ5p (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 12:57:45 -0400
-Received: by mail-yw0-f196.google.com with SMTP id z8so20715834ywa.0
-        for <git@vger.kernel.org>; Thu, 04 Aug 2016 09:57:40 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=M4sQ86toNQI8Siey+6WuE+zEdO7/P+hPAnTRevRgqH4=;
-        b=XgyPaPgpvIoQsRG2kPjBmEjyuJkdZHeTMAhZ2KxrMVh+CuiHX/xWbceeIOpS8L9WBN
-         b1RgHIlg/P98J0VLwG+Isn0bioIwG5W2n+S153iRZdK12Uqx/ZfRFMjEiUKpAdQLCsHX
-         dsVnXT5xdLU4tIor4SV9VjdMn5YIhFdcwrpUyKoL1Jok8ZWG+ivtSnJQJhEyh/BEt85Z
-         MNYzmackZhPHzbP7OlBDU8UC7G4jEYqWfo9kxTPnUH386URV0i47CjLsQ4A8W8B/Bkn2
-         HbcaC7MrY26a6nXax/wChaGU+2O5AYJOPNq0QA68mHccrBVSvf8Kcxeagk+uOkFP8ZEL
-         05Ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=M4sQ86toNQI8Siey+6WuE+zEdO7/P+hPAnTRevRgqH4=;
-        b=VgkHVNnn6JYDOEFmN395r+yRcpI1E1mTpAmVrs5BtMDWolh/G+T+DOqZwPzDh0E13u
-         pGCjAyEn0wGJOvVRtTNBLTZmj9yJRYApl7D3W04StrwKf14Fuc6ilzQ76zCzcBF9rpWB
-         aueB9fn+6aw7UZ3JMFxViTAagLptulNHvgFf7KrNkedchhJYaC0p+6egtvSDqcxumpvE
-         MQCJTS4CtgCYIy0ZG5a9uEBAVAUezgzSmUO3rROg54EUZpVKdqPqPF7LWbl3fHPiAOxl
-         s5Y3pKa0ip4OhHVL1kDXvnBaAVob0PXNxrnKeEc7qNLPlvNEohErTFEuswDZuFZ17Xid
-         nQPg==
-X-Gm-Message-State: AEkoouvapx+69Ei4+n7nDrxpwuArXppf+EwV4s6PnvR6PqWC006AwEkTt1pBvYNyoo4hv+tcqF/7ZtfNfyIJWw==
-X-Received: by 10.129.50.147 with SMTP id y141mr56694702ywy.305.1470329859831;
- Thu, 04 Aug 2016 09:57:39 -0700 (PDT)
+	id S934138AbcHDRSd (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 13:18:33 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61776 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S934067AbcHDRSc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 13:18:32 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2B08F31AF9;
+	Thu,  4 Aug 2016 13:18:31 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HAom+AEC1OByRyk8ioQxvrV3BaQ=; b=S0E/cj
+	wYaavZjBhAB0/itI26kjcALa76zsztR9UtsrF61/NVJASmUSGQfLH3j+HgY+pq4I
+	ZTku7+fOWWOuQo98thAVwZapA/wJ5LsvIZcTYwTdcQcEc2cDYsXEdDVT2qJFckt4
+	WC/KnzUrK49cqgqHTm1B321X7LAtp5sM9XJ9g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=J91ZZI4Shmdl1ohXAK+n5UbIl/GifFAI
+	ztV7breVgdJJACgOqr3M2nMGQhr+sA/PQOp004ZSkKuBxGx84/NOwz5Ec1nl+AJf
+	o0lV8p8iNEYA6NZcaKeuiynMpAjOgC5T35WQ3qd/N6LG+aQkZbwJhFYhdlMAQ3Yu
+	Tg9c5tknztU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2391C31AF8;
+	Thu,  4 Aug 2016 13:18:31 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9A2CD31AF6;
+	Thu,  4 Aug 2016 13:18:30 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:	git@vger.kernel.org, John Keeping <john@keeping.me.uk>,
+	Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH] t5533: make it pass on case-sensitive filesystems
+References: <93e1fb21d1d24c5b751e2d9d25d9220704bae5aa.1470322425.git.johannes.schindelin@gmx.de>
+Date:	Thu, 04 Aug 2016 10:18:28 -0700
+In-Reply-To: <93e1fb21d1d24c5b751e2d9d25d9220704bae5aa.1470322425.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Thu, 4 Aug 2016 16:54:35 +0200
+	(CEST)")
+Message-ID: <xmqqwpjw4fmj.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.129.89.132 with HTTP; Thu, 4 Aug 2016 09:57:39 -0700 (PDT)
-In-Reply-To: <xmqq1t245vhj.fsf@gitster.mtv.corp.google.com>
-References: <0102015640423c26-2060fd70-c90d-4de3-ae8c-1801ad160b1c-000000@eu-west-1.amazonses.com>
- <0102015640423ce6-5b11201e-736d-413f-be12-7fed613ae484-000000@eu-west-1.amazonses.com>
- <xmqqy44fdpxd.fsf@gitster.mtv.corp.google.com> <CAFZEwPNFohRLCS4piB1t0LO-=keucwzRKZ2Jyhhf234tnWnVGg@mail.gmail.com>
- <xmqqr3a45yi7.fsf@gitster.mtv.corp.google.com> <CAFZEwPMdOawVT6W6Ko=xkMLu4PcWkd0s_GiJA-T5uu-oY2m23g@mail.gmail.com>
- <xmqq1t245vhj.fsf@gitster.mtv.corp.google.com>
-From:	Pranit Bauva <pranit.bauva@gmail.com>
-Date:	Thu, 4 Aug 2016 22:27:39 +0530
-Message-ID: <CAFZEwPMpgJDcEqO0A5xqYc99=kECqAr57SL+3z07CRgt-gbUSg@mail.gmail.com>
-Subject: Re: [RFC/PATCH v11 04/13] bisect--helper: `bisect_clean_state` shell
- function in C
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 77069728-5A67-11E6-BBF9-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hey Junio,
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-On Thu, Aug 4, 2016 at 10:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Pranit Bauva <pranit.bauva@gmail.com> writes:
+> The newly-added test case wants to commit a file "c.t" (note the lower
+> case) when a previous test case already committed a file "C.t". This
+> confuses Git to the point that it thinks "c.t" was not staged when "git
+> add c.t" was called.
 >
->> Hey Junio,
->>
->> On Thu, Aug 4, 2016 at 9:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Pranit Bauva <pranit.bauva@gmail.com> writes:
->>>
->>>>> Also you do not seem to check the error from the function to smudge
->>>>> the "result" you are returning from this function.
->>>>
->>>> Yes I should combine the results from every removal.
->>>>
->>>>> Isn't unlink_or_warn() more correct helper to use here?
->>>>
->>>> The shell code uses rm -f which is silent and it removes only if
->>>> present.
->>>
->>> Isn't that what unlink_or_warn() do?  Call unlink() and happily
->>> return if unlink() succeeds or errors with ENOENT (i.e. path didn't
->>> exist in the first place), but otherwise reports an error (imagine:
->>> EPERM).
->>
->> Umm, I am confused. I tried "rm -f" with a non-existing file and it
->> does not show any warning or error.
+> Simply make the naming of the test commits consistent with the previous
+> test cases: use upper-case, and advance in the alphabet.
 >
-> You are, or you were?  I hope it is the latter, iow, you are no
-> longer confused and now understand why unlink_or_warn() was
-> suggested.
+> This came up in local work to rebase the Windows-specific patches to the
+> current `next` branch. An identical fix was suggested by John Keeping.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+> Published-As: https://github.com/dscho/git/releases/tag/t5533-case-insensitive-v1
+> Fetch-It-Via: git fetch https://github.com/dscho/git t5533-case-insensitive-v1
 
-I meant to use past tense. Did not re-check before sending it.
+Thanks.  It may make it easier to see to have a blank line here,
+separating them from the diffstat.
+
+>  t/t5533-push-cas.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
+> index 09899af..a2c9e74 100755
+> --- a/t/t5533-push-cas.sh
+> +++ b/t/t5533-push-cas.sh
+> @@ -220,7 +220,7 @@ test_expect_success 'new branch already exists' '
+>  	(
+>  		cd src &&
+>  		git checkout -b branch master &&
+> -		test_commit c
+> +		test_commit F
+>  	) &&
+>  	(
+>  		cd dst &&
+
+Thanks.
+
+> -- 
+> 2.9.0.281.g286a8d9
+> 
+> base-commit: 9813b109b4ec6630220e5f3d8aff275e23cba59e
+
+A totally unrelated tangent.
+
+This line turns out to be less than useful at least in this
+particular case.
+
+The fix is meant for jk/push-force-with-lease-creation topic, but I
+had to find it out by the old fashioned way, i.e. running blame for
+these lines in 'pu' to find eee98e74f9 is the culprit and then
+running "git branch --with eee98e74f9".  The only thing the line
+made easier is I _could_ start the blame at the named commit (which
+is on 'next') instead of 'pu'.  When I took that "base-commit"
+series, I was hoping that it would give us a lot more useful
+information.
+
+
