@@ -6,198 +6,98 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 797DD20193
-	for <e@80x24.org>; Thu,  4 Aug 2016 19:52:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8019F20193
+	for <e@80x24.org>; Thu,  4 Aug 2016 19:52:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965420AbcHDTwW (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 15:52:22 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:35626 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965313AbcHDTwT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 15:52:19 -0400
-Received: by mail-pa0-f45.google.com with SMTP id iw10so85426892pac.2
-        for <git@vger.kernel.org>; Thu, 04 Aug 2016 12:52:19 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=SEmMrgsUGpEgHyNsq84AgYJYc43ZAY+tQt5OVHtd3fE=;
-        b=EKWWP1zeyZjfYudu/tYSJ2CQvmz3W+Jj2BxcYSF+z6Lqw/9JHWtbDH74IaegCZI3eY
-         9tTMnqKK/zizl3c1rBAq+9BH9bZlDiHQ+r5XjlyJlMKJQQipMTKSaZKVQI2Dqf5A6pl+
-         jRlOKEvux1eMyppK9iIuCFPJA5/QHRlMWuMfPw+9U0K1JM4rWOq5qurRaEJlccE0AIQO
-         b3WEW/8PkiGq6JPY72uElVC0S5sSyGMIoCOrOgPk61CI2Kx5m04WG2BzRIN8TFC5mulD
-         P31iSy3h7X+jWwPEgqD5dVKEtmL5yNjfsqR2qk08gnkyKqDo6cVQcirYza6XdfGhs8in
-         08bQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=SEmMrgsUGpEgHyNsq84AgYJYc43ZAY+tQt5OVHtd3fE=;
-        b=fmSAMOJ/DoatK5reKu2QVkSDgGQhJruoE8p3EFrMNbmPG0JJ7sgH/8AgksjdPWT2/6
-         /Uo3gmgWSAWNZd9id+kpq5KNfc6mTIx4Lmoer/DSTebX/ZirL/TTZlnUrdZa6/3MJKGx
-         byOzity2jdVck8meUdgZG6Eo86dt/joYG7u83/NtT8lRSb6BSoqMRa3oSH0urgJ9ltEz
-         xSWwW/VXAvknBRgk9yyEKveymTPIo5TkvbdewrEEcpKvi0AfE0Nz4RVInm6t7+lVedKL
-         FWz01tgSJvPvEIWVK6LtQNgVw6clKxUamv5qHUZ3y+Ferq5p5uKpBfrbLOHU5wsOzGgK
-         f9FQ==
-X-Gm-Message-State: AEkoousnJX52qtpIHryhRmtrp862JP/NX7m0aglWoOXJfTGUaLvdqU3T2VDnBNtOoIA4TKiR
-X-Received: by 10.66.161.225 with SMTP id xv1mr127989523pab.20.1470340337564;
-        Thu, 04 Aug 2016 12:52:17 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:b86b:a022:8342:c00c])
-        by smtp.gmail.com with ESMTPSA id yv9sm22380163pab.0.2016.08.04.12.52.16
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 04 Aug 2016 12:52:17 -0700 (PDT)
-From:	Stefan Beller <sbeller@google.com>
-To:	gitster@pobox.com
-Cc:	git@vger.kernel.org, mst@redhat.com, Jens.Lehmann@web.de,
-	Stefan Beller <sbeller@google.com>
-Subject: [PATCH 6/6] clone: reference flag is used for submodules as well
-Date:	Thu,  4 Aug 2016 12:51:59 -0700
-Message-Id: <20160804195159.7788-7-sbeller@google.com>
-X-Mailer: git-send-email 2.9.2.572.g9d9644e.dirty
-In-Reply-To: <20160804195159.7788-1-sbeller@google.com>
-References: <20160804195159.7788-1-sbeller@google.com>
+	id S965650AbcHDTwn (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 15:52:43 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61900 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S965424AbcHDTwm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 15:52:42 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8A22731451;
+	Thu,  4 Aug 2016 15:52:36 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KRO6ox7/jaG1Dqf52WKBK6RAaz0=; b=EEOT+q
+	fiiSkFuJ6b1+R2iLdths+vBC4iRtXSAFadxKqL7RnG5xMO6PWY55AYQRMSHI/D3V
+	QnzxFM6Onnnu8elEaUuhK1m2penA/PM25j6ux60gINsAkAVjdZUPtZmi7Rvy+r2+
+	aGj9TM/JhIV/a/mm0afFrc4vuCAOqohPOGhsQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GmM22GY/wamFAusfi7JFDuBjpYnIOILZ
+	qPiK04rm5+WBzUAcWjy+KdqRG8MNBwM6MFhZK5Ag9GdS69gGotbeCDSrBP2zQ83T
+	g92LpQ3vHpRWgyrSxA6cn4SXxez/JbXrnEYMobb2fVMvIIu1feZpESexjqjeKmmR
+	MHie8vUGBf0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 811D531450;
+	Thu,  4 Aug 2016 15:52:36 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 089A03144F;
+	Thu,  4 Aug 2016 15:52:36 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Michael Haggerty <mhagger@alum.mit.edu>
+Cc:	git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+	Jeff King <peff@peff.net>,
+	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH 8/8] diff: improve positioning of add/delete blocks in diffs
+References: <cover.1470259583.git.mhagger@alum.mit.edu>
+	<7b0680ed7a10fc13acd8d7816a75ed05a5f9e28c.1470259583.git.mhagger@alum.mit.edu>
+Date:	Thu, 04 Aug 2016 12:52:33 -0700
+In-Reply-To: <7b0680ed7a10fc13acd8d7816a75ed05a5f9e28c.1470259583.git.mhagger@alum.mit.edu>
+	(Michael Haggerty's message of "Thu, 4 Aug 2016 00:00:36 +0200")
+Message-ID: <xmqq37mk2txa.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: FDC0A64A-5A7C-11E6-8B89-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-When giving a --reference while also giving --recurse, the alternates
-for the submodules are assumed to be in the superproject as well.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-In case they are not, we error out when cloning the submodule.
-However the update command succeeds as usual (with no alternates).
+I agree with Peff about "comment on the voodoo upfront".
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/clone.c                | 22 ++++++++++++++++++----
- t/t7408-submodule-reference.sh | 31 ++++++++++++++++++++++++++++++-
- 2 files changed, 48 insertions(+), 5 deletions(-)
+> +#define START_OF_FILE_BONUS 9
+> +#define END_OF_FILE_BONUS 46
+> +#define TOTAL_BLANK_WEIGHT 4
+> +#define PRE_BLANK_WEIGHT 16
+> +#define RELATIVE_INDENT_BONUS -1
+> +#define RELATIVE_INDENT_HAS_BLANK_BONUS 15
+> +#define RELATIVE_OUTDENT_BONUS -19
+> +#define RELATIVE_OUTDENT_HAS_BLANK_BONUS 2
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index f044a8c..f586df5 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -51,6 +51,7 @@ static int option_progress = -1;
- static enum transport_family family;
- static struct string_list option_config = STRING_LIST_INIT_NODUP;
- static struct string_list option_reference = STRING_LIST_INIT_NODUP;
-+static struct string_list superreferences = STRING_LIST_INIT_DUP;
- static int option_dissociate;
- static int max_jobs = -1;
- 
-@@ -280,10 +281,11 @@ static void strip_trailing_slashes(char *dir)
- 	*end = '\0';
- }
- 
--static int add_one_reference(struct string_list_item *item, void *cb_data)
-+static int add_one_reference(struct string_list_item *item, void *cb_dir)
- {
- 	char *ref_git;
- 	const char *repo;
-+	const char *dir = cb_dir;
- 	struct strbuf alternate = STRBUF_INIT;
- 
- 	/* Beware: read_gitfile(), real_path() and mkpath() return static buffer */
-@@ -316,6 +318,13 @@ static int add_one_reference(struct string_list_item *item, void *cb_data)
- 	if (!access(mkpath("%s/info/grafts", ref_git), F_OK))
- 		die(_("reference repository '%s' is grafted"), item->string);
- 
-+	if (option_recursive) {
-+		struct strbuf sb = STRBUF_INIT;
-+		char *rel = xstrdup(relative_path(item->string, dir, &sb));
-+		string_list_append(&superreferences, rel);
-+		strbuf_reset(&sb);
-+	}
-+
- 	strbuf_addf(&alternate, "%s/objects", ref_git);
- 	add_to_alternates_file(alternate.buf);
- 	strbuf_release(&alternate);
-@@ -323,9 +332,9 @@ static int add_one_reference(struct string_list_item *item, void *cb_data)
- 	return 0;
- }
- 
--static void setup_reference(void)
-+static void setup_reference(char *dir)
- {
--	for_each_string_list(&option_reference, add_one_reference, NULL);
-+	for_each_string_list(&option_reference, add_one_reference, dir);
- }
- 
- static void copy_alternates(struct strbuf *src, struct strbuf *dst,
-@@ -736,6 +745,7 @@ static int checkout(void)
- 
- 	if (!err && option_recursive) {
- 		struct argv_array args = ARGV_ARRAY_INIT;
-+		static struct string_list_item *item;
- 		argv_array_pushl(&args, "submodule", "update", "--init", "--recursive", NULL);
- 
- 		if (option_shallow_submodules == 1)
-@@ -744,6 +754,10 @@ static int checkout(void)
- 		if (max_jobs != -1)
- 			argv_array_pushf(&args, "--jobs=%d", max_jobs);
- 
-+		if (superreferences.nr)
-+			for_each_string_list_item(item, &superreferences)
-+				argv_array_pushf(&args, "--super-reference=%s", item->string);
-+
- 		err = run_command_v_opt(args.argv, RUN_GIT_CMD);
- 		argv_array_clear(&args);
- 	}
-@@ -978,7 +992,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	strbuf_reset(&key);
- 
- 	if (option_reference.nr)
--		setup_reference();
-+		setup_reference(dir);
- 
- 	fetch_pattern = value.buf;
- 	refspec = parse_fetch_refspec(1, &fetch_pattern);
-diff --git a/t/t7408-submodule-reference.sh b/t/t7408-submodule-reference.sh
-index 1416cbd..2652cfe 100755
---- a/t/t7408-submodule-reference.sh
-+++ b/t/t7408-submodule-reference.sh
-@@ -56,7 +56,8 @@ test_expect_success 'submodule add --reference uses alternates' '
- 	(
- 		cd super &&
- 		git submodule add --reference ../B "file://$base_dir/A" sub &&
--		git commit -m B-super-added
-+		git commit -m B-super-added &&
-+		git repack -ad
- 	) &&
- 	test_alternate_usage super/.git/modules/sub/objects/info/alternates super/sub
- '
-@@ -68,4 +69,32 @@ test_expect_success 'updating superproject keeps alternates' '
- 	test_alternate_usage super-clone/.git/modules/sub/objects/info/alternates super-clone/sub
- '
- 
-+test_expect_success 'submodules use alternates when cloning a superproject' '
-+	test_when_finished "rm -rf super-clone" &&
-+	git clone --reference super --recursive super super-clone &&
-+	(
-+		cd super-clone &&
-+		# test superproject has alternates setup correctly
-+		test_alternate_usage .git/objects/info/alternates . &&
-+		# test submodule has correct setup
-+		test_alternate_usage .git/modules/sub/objects/info/alternates sub
-+	)
-+'
-+
-+test_expect_success 'cloning superproject, missing submodule alternates' '
-+	test_when_finished "rm -rf super-clone" &&
-+	git clone super super2 &&
-+	test_must_fail git clone --recursive --reference super2 super2 super-clone &&
-+	(
-+		cd super-clone &&
-+		# test superproject has alternates setup correctly
-+		test_alternate_usage .git/objects/info/alternates . &&
-+		# update of the submodule succeeds
-+		git submodule update --init &&
-+		# and we have no alternates:
-+		test_must_fail test_alternate_usage .git/modules/sub/objects/info/alternates sub &&
-+		test_path_is_file sub/file1
-+	)
-+'
-+
- test_done
--- 
-2.9.2.572.g9d9644e.dirty
+When I read up to here, I thought "Heh, isn't the opposite of INdent
+DEdent?" and then saw this:
 
+> +#define RELATIVE_DEDENT_BONUS -63
+> +#define RELATIVE_DEDENT_HAS_BLANK_BONUS 50
+
+It turns out that you mean by OUTdent a line that indents further
+(if I am reading the code correctly).  Is that obvious to everybody?
+
+> +	/* Bonuses based on the location of blank lines: */
+> +        bonus += TOTAL_BLANK_WEIGHT * total_blanks;
+> +	bonus += PRE_BLANK_WEIGHT * m->pre_blank;
+
+This and ...
+
+> +        } else if (indent > m->pre_indent) {
+> +		/*
+> +		 * The line is indented more than its predecessor. Score it based
+> +		 * on the larger indent:
+> +		 */
+> +		score = indent;
+> +		bonus += RELATIVE_INDENT_BONUS;
+> +		bonus += RELATIVE_INDENT_HAS_BLANK_BONUS * any_blanks;
+> +	} else if (indent < m->pre_indent) {
+
+... this seems to be indented correctly even after getting quoted,
+which in turn means most of the lines in the added code share
+indent-with-non-tab badness.
