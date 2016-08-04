@@ -2,73 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A678E20193
-	for <e@80x24.org>; Thu,  4 Aug 2016 15:06:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7D3320193
+	for <e@80x24.org>; Thu,  4 Aug 2016 15:16:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758708AbcHDPGJ (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 11:06:09 -0400
-Received: from mout.gmx.net ([212.227.15.18]:58352 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756095AbcHDPGH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 11:06:07 -0400
-Received: from virtualbox ([37.24.141.218]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MQRWm-1bhNrM39xM-00TjbS; Thu, 04 Aug 2016 16:59:24
- +0200
-Date:	Thu, 4 Aug 2016 16:59:23 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org
-Subject: Re: [PATCH] import-tars: support hard links
-In-Reply-To: <xmqqinvhaji7.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1608041658220.5786@virtualbox>
-References: <bb3b91403fae1964aa990fc16fd8a4e5f16885e6.1470230877.git.johannes.schindelin@gmx.de> <xmqqinvhaji7.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1756022AbcHDPQk (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 11:16:40 -0400
+Received: from smtp66.iad3a.emailsrvr.com ([173.203.187.66]:45586 "EHLO
+	smtp66.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756395AbcHDPQj (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Aug 2016 11:16:39 -0400
+X-Greylist: delayed 483 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Aug 2016 11:16:39 EDT
+Received: from smtp17.relay.iad3a.emailsrvr.com (localhost [127.0.0.1])
+	by smtp17.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id 5C96AA03D8
+	for <git@vger.kernel.org>; Thu,  4 Aug 2016 11:08:35 -0400 (EDT)
+X-Auth-ID: edg@greenberg.org
+Received: by smtp17.relay.iad3a.emailsrvr.com (Authenticated sender: edg-AT-greenberg.org) with ESMTPSA id 4725EA037E
+	for <git@vger.kernel.org>; Thu,  4 Aug 2016 11:08:35 -0400 (EDT)
+X-Sender-Id: edg@greenberg.org
+Received: from arthur.edgreenberg.net (cpe-69-204-130-58.nycap.res.rr.com [69.204.130.58])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+	by 0.0.0.0:465 (trex/5.5.4);
+	Thu, 04 Aug 2016 11:08:35 -0400
+To:	git@vger.kernel.org
+From:	Ed Greenberg <edg@greenberg.org>
+Subject: Problem with two copies of same branch diverging
+Message-ID: <0aab65de-21a3-eb48-c5b0-3e36d924348a@greenberg.org>
+Date:	Thu, 4 Aug 2016 11:08:34 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:4zEHgt7VM9lYkdyUSarSwhn0zArP+k0870IWql9eCbnAYn/sHrl
- IOIBBUVYlesUnesOFACDaTEbzvfZzX7gyfotteVcFppzrtyHXoeOXurUtYmW7cRz7XpxabQ
- zTQAHVXA+BslGxYM7stVstd4RdhpNcxtA462exPYOk16O583WPO6iqWgeae75FX4YxlAfgW
- FYw3VLLq9Y2c+Mo1n4CpA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:kgyAbOUl5TI=:v9eTktvAPsX1QmYShNUEoB
- 49oVLHhQ0ykEjiefo+gvXs3tEUmftdJ9Cjfu3StQI+yH/BLa638fBDYhxKdXDOIMekTcoTrGK
- UMUUjG8TMYG//pOz0GGyGVp7CwlteYju2cro7DZYU8FCpJe1a0SV043s4pcVBCxMrFyzXHzCH
- PQnkcIWxS9TYNizVLg+QzUO4WDkFmrSzulEv4qpG625Gwhq1DimyNnD9FdysTpiiXrYwYkmpc
- SjElZXm2FSCev9GO4kGcDLlsvl8c6cvuYF1NYfDUD9BZPWX0nw4XNVGzKiYkXaj4Ijxn9R0CW
- rxaNph+NQ+q1iRzcBB46FjcsAQfGKTZ7eUJNXdWlshNX84U7FQk6SRPjbdWKChyEaqngX96I6
- g3+W0g8OA6V+RmWcKT4AJKNOiN/nyfskt5dVi1jqYArW5AhUDdui7RUQIpCoPJFx17JsumWbC
- fbAMw96m5BGZfwcUfH5bwxhwABaUjujdWLZjpgB+T7Ks8A8vhHIVAp5mTCZvriqCgCgNlQK5P
- cRcBZEbNkRReUa1/mkmLslBatqxuYyceCH8thqJaI09+xGAp/ZHeLQBMiZLUvUdwXXCXSQHUY
- S8ruSmuELzKNpeOLbUWtVcooHJ2uznBuyBBx4q0dbf8uqzdWib7trkG3+XwwN7hfI8VWe4EVo
- ffouBOTBSkE/oHAht5Twymm635kXHVZndDrY/HgJajzFLeNK6TLwAA0ydgaSN5gOkwtvIt3WV
- nY/+W9iFeraIfKJyYC62qBznF72a43FwoNR3JqQH1ksLY3ZjNhGNIybaLVSx58DLkfaKTLuzD
- Q8YWIz2
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+Hi, Thanks for reading my question.
 
-On Wed, 3 Aug 2016, Junio C Hamano wrote:
+I have two copies of code checked out at the same branch. Desktop and 
+remote server.
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > ---
-> > Published-As: https://github.com/dscho/git/releases/tag/import-tars-hardlink-v1
-> 
-> A link to a page that lets you download entire source tarball is not
-> very useful to most people, except for those who want "this exact
-> change on top of some unknown base which may or may not have other
-> things they need", which I think is a minority.
+I use an IDE that automatically SFTP transfers each save from the 
+desktop to the remote server, so I can run my changes on the server 
+environment.
 
-True. I added a second line that describes how to fetch it (see the t5533
-patch I just sent out).
+At the end of the session, I commit the code on my desktop, do a git 
+push to the repo.
 
-Ciao,
-Dscho
+When I look at the server, the code there is identical to what's on my 
+desktop box and what I just comitted and pushed, but, of course, git 
+status thinks it's all modified and wants me to either commit it or 
+stash it.  In fact, doing a git log on the server doesn't show my latest 
+push.  So I need to pull the changes, but I can't because I have pending 
+stuff.
+
+What's a good git workflow for this save-upload-remote test cycle?
+
+Thanks,
+
+-- 
+Ed Greenberg
+Glens Falls, NY USA
+
