@@ -2,113 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B50431F855
-	for <e@80x24.org>; Thu,  4 Aug 2016 23:29:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34B981F855
+	for <e@80x24.org>; Thu,  4 Aug 2016 23:32:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934718AbcHDX3f (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 19:29:35 -0400
-Received: from mail-vk0-f50.google.com ([209.85.213.50]:36782 "EHLO
-	mail-vk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934670AbcHDX3e (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 19:29:34 -0400
-Received: by mail-vk0-f50.google.com with SMTP id n129so179211464vke.3
-        for <git@vger.kernel.org>; Thu, 04 Aug 2016 16:29:34 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=/x5QXE+q3edN34rJ7XVn1rXQEyVdJhvEn5Xeg4+Cniw=;
-        b=EI16GdnICtUOIFj3TjRJphwEa32wMhlv8tWTn0ycuyT9VEaAJa2XipuMufpDJvalwm
-         UQ3zjMeY4xGv27eIvHpF90X4K+udt9yTRngRlq6F0RHCftm0a8GDz9NAflOPstxWYc60
-         VDNt1sn2h90D391rTIh05Gc4I5CIHbW9ddaWHfu6OdObP5vBoF1Y7uwe/j1CSQa/Y7Wf
-         xyjeMEc2eP7YZOKGzUH5Xu77+qkaAFodpPOfpVAxX4nPU9eBz24d5Pd3UWGEdXXY7Nf4
-         3fgKNxwTiZH5eoVS7Aba5cJZj3JtEaPSwiyaCNXXNIp+jAggf/6V36/9KlgH31sZVC6d
-         7CZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=/x5QXE+q3edN34rJ7XVn1rXQEyVdJhvEn5Xeg4+Cniw=;
-        b=ZWDsTGypj71kLKiqkKHg5wUJrWAxFQ1VPpIxF77dgYYDtXRCkBG976wGMfqOz6YfAG
-         ufqWBL9MaaIp9ios2cBorJ4V/f7W5yVYpAwEgwQUzH3nY8IQMp+A7vyCMpisumKcwUfX
-         h4co/+1ixAXZ7X25+UEhLId47lcL7t9yVm3hpgJR2MaO2q6+a1aBJ4FfRwP8sJN3rHyv
-         BI+0IdYDThsmALm3UOj17dsQMobFmeQ0oK1DwbrN3BdPqHSz8T8SAAOHdQTV5MFWA3ce
-         +6fRzehRp+e58tM9McJcjNXyiqXw2d0KM5CX0mPZXnWnJX0LrbbnmQ8UHFLHo6GNfTkA
-         RqHg==
-X-Gm-Message-State: AEkoousQVpeWCf+nWk5gCdYOFc12FQEiIAwOGjiahTgdBrMpLZ8Sxyr6/8HrNyauRkSRstqSiPhqHVCUWlr9aQ==
-X-Received: by 10.31.169.148 with SMTP id s142mr34620979vke.39.1470353373764;
- Thu, 04 Aug 2016 16:29:33 -0700 (PDT)
+	id S964920AbcHDXcZ (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 19:32:25 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51342 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1758187AbcHDXcZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 19:32:25 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3B67433159;
+	Thu,  4 Aug 2016 19:32:05 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YrXYFMFl9rZyTWDnPw9D4o2xcJ4=; b=pt0kvy
+	Ll7igpbommFvHcnlWeVp92M9maS+41AkwQHCJpRaZ9VF35dj0gGqhQrCC8a99o+x
+	nhE6+Gjz5858QeJxLYvLYFBuxZRGYMiwouZhZCaoMrvam5fOIyBHa3Z3cnOT2Vqs
+	7aBkmtPHoR0xQtz1h4tEk0UFk8IoHBGZiogTg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hLjy3J+FGuHinRrBn5lyyHa32/rNy4jK
+	z09SMod4nFAzzDgBg2wvhQcM10b0ZwHm3A3RezqwzPQYXxqgkr7lEo/ad23Thclr
+	zUBxZIIWKVc9j9YxrNDyga5klHWNbIBajWFfHaL9zoKmmFz2SVGMVlXLgvUOgxNb
+	7z9lJG8SOo4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3255333158;
+	Thu,  4 Aug 2016 19:32:05 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 97BA233157;
+	Thu,  4 Aug 2016 19:32:04 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Mike Hommey <mh@glandium.org>
+Cc:	git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Aug 2016, #02; Thu, 4)
+References: <xmqqshukyxqw.fsf@gitster.mtv.corp.google.com>
+	<20160804225649.q77p4u6cbdo6q336@glandium.org>
+Date:	Thu, 04 Aug 2016 16:32:02 -0700
+In-Reply-To: <20160804225649.q77p4u6cbdo6q336@glandium.org> (Mike Hommey's
+	message of "Fri, 5 Aug 2016 07:56:49 +0900")
+Message-ID: <xmqqfuqkyutp.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.103.10.69 with HTTP; Thu, 4 Aug 2016 16:29:32 -0700 (PDT)
-In-Reply-To: <xmqqinvidgyo.fsf@gitster.mtv.corp.google.com>
-References: <CABEd3j8VLbpeWbA6BfHYp5aLPEy0PesqYoHM9u4OM=b7Qm=LDg@mail.gmail.com>
- <xmqqinvonwxc.fsf@gitster.mtv.corp.google.com> <CABEd3j-MW--YSC9=nwcgHzxd6cqmUY+ky3-wLxMiMmbBGsvS7Q@mail.gmail.com>
- <CABEd3j--sxCwv6fWmNxTtdpgwU0_YKbfiFONX6TsQFZGn79yuQ@mail.gmail.com>
- <CAP8UFD118RdB5dX2-wEm5VnKud7sirHhdC9kvWmXV0eAQHvfsA@mail.gmail.com>
- <xmqq7fc0jmhx.fsf@gitster.mtv.corp.google.com> <CAP8UFD315CgntwYiC9g-R7KN0XiL9635Vwv_y8yi4n-uj8o90A@mail.gmail.com>
- <xmqqwpk0f5jr.fsf@gitster.mtv.corp.google.com> <CABEd3j_6DNgs1u5AdkkzWt7U=J2fZ4a-2jewVjkfExt0KPvWiQ@mail.gmail.com>
- <xmqqinvidgyo.fsf@gitster.mtv.corp.google.com>
-From:	Oleg Taranenko <olegtaranenko@gmail.com>
-Date:	Fri, 5 Aug 2016 01:29:32 +0200
-Message-ID: <CABEd3j9J-fULWygXnSR0oY9g_m0vWukjAE4aeb6QmiQ1u5FOyw@mail.gmail.com>
-Subject: Re: git bisect for reachable commits only
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: A6CE51A6-5A9B-11E6-8CA3-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Aug 2, 2016 at 11:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Oleg Taranenko <olegtaranenko@gmail.com> writes:
+Mike Hommey <mh@glandium.org> writes:
+
+> On Thu, Aug 04, 2016 at 03:28:55PM -0700, Junio C Hamano wrote:
+>> * mh/connect (2016-06-06) 10 commits
+>>  - connect: [host:port] is legacy for ssh
+>>  ...
+>>  - connect: document why we sometimes call get_port after get_host_and_port
+>> 
+>>  Rewrite Git-URL parsing routine (hopefully) without changing any
+>>  behaviour.
+>> 
+>>  It has been two months without any support.  We may want to discard
+>>  this.
 >
->> First, assuming the common ancestor is GOOD based on the fact that
->> some descendant given as GOOD is pretty bad idea.
->
-> What you claim is fundamentally incompatible with the way "bisect"
-> works as a O(log(n)) operation.  It is likely that your definition
-> of Good for the purpose of your bug-hunting needs to be rethought if
-> you want to take advantage of "bisect".
+> What kind of support are you expecting?
 
-Without context it sounds a bit silly, agree. Context was, maybe not
-explicit stated, based on previous discussion:
+The only rationale I recall you justifying this series was that this
+makes the resulting code easier to read, but I do not recall other
+people agreeing with you, and I do not particularly see the
+resulting code easier to follow.
 
-If we looking in direct path G..B, of course bisect should show its
-power O(log(n));
-BUT, assuming that any predecessor (G~1/G~2...)...is good if this
-commit G~n has direct path to B,  but not via G, (as git does now) is
-wrong.
-This is my concern. Ever G~1 may have not feature we are looking for,
-then we must treated it as BAD in current git bisect session. To be
-sure we require additional evidence and just opening a new bisect
-roundrips in case G~n is GOOD.
-If G~n confirmed as BAD, we need to stop looking in this path (no need
-to find transition BAG -> BAD) and switch to another possible common
-ancestor (or next octopus parent)
-In merge-based development (opposite to rebased one) this can happen very easy
+> FWIW, I have WIP cleaning up the code further, tha obviously depends on
+> this series.
 
+As this is not even in 'next', your cleaning-up does not have to
+depend on it.  It can be part of a reroll, of course.
 
->> I have another request to get git bisect more user-friendly, regarding
->> rolling back last step or steps, if accidentally 'git bisect bad' or
->> 'good' was wrong entered, but I think it worth for another thread.
->
-> Are you aware that you can check $GIT_DIR/BISECT_LOG and replay it
-> to recreate any previous state of the bisection?  That would
-> probably help.
-
-git bisect log / replay is not convenient. First we need to find place
-where to keep log file (not forget its name), then edit it. If I'm not
-sure how many steps I did a mistake the troubles doubles,
-What are obstacles to implement git bisect back ?
-or git bisect back --steps=2
-I don't think it will be significant change in code.
-
-It would be a great help especially if hunting in multiply logically
-loose-coupled repos. Say searching bug in application, possible caused
-elusive changes on several dependent libraries.
+By the way, "discarding" is not equal to "rejecting".  The latter is
+"it is a bad thing to do, don't even come back with a new version".
+It is just "This hasn't made any progress, and it is not ready for
+'next', either. Keeping it in 'pu' is eating my time without giving
+much benefit to the project at this point".
