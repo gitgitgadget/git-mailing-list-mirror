@@ -2,109 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE09B20193
-	for <e@80x24.org>; Thu,  4 Aug 2016 17:41:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DFD320193
+	for <e@80x24.org>; Thu,  4 Aug 2016 17:53:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933812AbcHDRlr (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 13:41:47 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58687 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933845AbcHDRlq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 13:41:46 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B969331EBF;
-	Thu,  4 Aug 2016 13:41:44 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Rciz30sTAPVpgrfvhQdZnS8Ec68=; b=TozU6L
-	9hyVPY+uA/E7kYJ29zFZ/ksQ6xY6haDn9RNNvo2aBxdL/z6dDh7eP//dd+Bnux3d
-	lsNnEKUtrTyJg1S5lMbfw4fDGo64JRk8UqrUVS5OpgWbERvv1A2E+TGodYxs40tv
-	zoJ3nr1Uf50GlLerARM+1e3Ene7MSiRXnXW3o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=t+G/U0P0znCtbfYXjLVtapZ8+re4Y5dE
-	H6IO8eSFvLRGI7Q1dPu3hydCLvpqBCs89DCn0iUl3jH0OOJkkHESu5FuzjnM+EFR
-	xTmEkSTSCnQNckJpJiPPDsC6IDP6Eef5bfSow6vb+DzGe7hAteRDztQFnAcWfjm4
-	W55KtMgiUMA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B16A731EBE;
-	Thu,  4 Aug 2016 13:41:44 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 189E931EBA;
-	Thu,  4 Aug 2016 13:41:44 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:	git@vger.kernel.org
-Subject: Re: [PATCH 2/2] nedmalloc: work around overzealous GCC 6 warning
-References: <cover.1470326812.git.johannes.schindelin@gmx.de>
-	<57360f4885bdd5c36e190bea288f1e1f7f706071.1470326812.git.johannes.schindelin@gmx.de>
-Date:	Thu, 04 Aug 2016 10:41:41 -0700
-In-Reply-To: <57360f4885bdd5c36e190bea288f1e1f7f706071.1470326812.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Thu, 4 Aug 2016 18:07:08 +0200
-	(CEST)")
-Message-ID: <xmqqoa584eju.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S933959AbcHDRxd (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 13:53:33 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54843 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758806AbcHDRxc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 13:53:32 -0400
+Received: (qmail 6851 invoked by uid 102); 4 Aug 2016 17:53:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Aug 2016 13:53:32 -0400
+Received: (qmail 14006 invoked by uid 107); 4 Aug 2016 17:54:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Aug 2016 13:54:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Aug 2016 13:53:28 -0400
+Date:	Thu, 4 Aug 2016 13:53:28 -0400
+From:	Jeff King <peff@peff.net>
+To:	Eric Wong <e@80x24.org>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	"Kyle J. McKay" <mackyle@gmail.com>, git@vger.kernel.org,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: [PATCH v3] pager: move pager-specific setup into the build
+Message-ID: <20160804175328.tkjkoo34b43bvwsb@sigill.intra.peff.net>
+References: <20160801214937.4752-1-e@80x24.org>
+ <20160801214937.4752-2-e@80x24.org>
+ <20160803161911.dxucq7f2pvnoovoc@sigill.intra.peff.net>
+ <xmqq4m718tay.fsf@gitster.mtv.corp.google.com>
+ <20160803210821.GA17510@whir>
+ <xmqqziot7dv6.fsf@gitster.mtv.corp.google.com>
+ <20160804034301.GA31427@starla>
+ <20160804053405.ifjjryejgbwkkatt@sigill.intra.peff.net>
+ <20160804113410.GA13908@starla>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B59958C4-5A6A-11E6-A9E3-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20160804113410.GA13908@starla>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On Thu, Aug 04, 2016 at 11:34:10AM +0000, Eric Wong wrote:
 
-> With GCC 6, the strdup() function is declared with the "nonnull"
-> attribute, stating that it is not allowed to pass a NULL value as
-> parameter.
->
-> In nedmalloc()'s reimplementation of strdup(), Postel's Law is heeded
-> and NULL parameters are handled gracefully. GCC 6 complains about that
-> now because it thinks that NULL cannot be passed to strdup() anyway.
->
-> Let's just shut up GCC >= 6 in that case and go on with our lives.
->
-> See https://gcc.gnu.org/gcc-6/porting_to.html for details.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  compat/nedmalloc/nedmalloc.c | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/compat/nedmalloc/nedmalloc.c b/compat/nedmalloc/nedmalloc.c
-> index 677d1b2..3f28c0b 100644
-> --- a/compat/nedmalloc/nedmalloc.c
-> +++ b/compat/nedmalloc/nedmalloc.c
-> @@ -956,6 +956,9 @@ void **nedpindependent_comalloc(nedpool *p, size_t elems, size_t *sizes, void **
->  char *strdup(const char *s1)
->  {
->  	char *s2 = 0;
-> +#if __GNUC__ >= 6
-> +#pragma GCC diagnostic ignored "-Wnonnull-compare"
-> +#endif
->  	if (s1) {
->  		size_t len = strlen(s1) + 1;
->  		s2 = malloc(len);
+> > > --- a/config.mak.uname
+> > > +++ b/config.mak.uname
+> > > @@ -209,6 +209,7 @@ ifeq ($(uname_S),FreeBSD)
+> > >  	HAVE_PATHS_H = YesPlease
+> > >  	GMTIME_UNRELIABLE_ERRORS = UnfortunatelyYes
+> > >  	HAVE_BSD_SYSCTL = YesPlease
+> > > +	PAGER_ENV = LESS=FRX LV=-c MORE=FRX
+> > >  endif
+> > 
+> > Is it worth setting up PAGER_ENV's default values before including
+> > config.mak.*, and then using "+=" here? That avoids this line getting
+> > out of sync with the usual defaults.
+> 
+> Good point, but it makes ordering problematic for folks
+> who want to override it config.mak or command-line.
 
-Is it a common convention to place "#pragma GCC diagnostic"
-immediately before the statement you want to affect, and have the
-same pragma in effect until the end of the compilation unit?
+I'm not sure it changes much for them. Their "=" in config.mak, etc,
+would override our default, and anything on the command line overrides
+all of the in-Makefile stuff anyway. The only difference would be if
+they use "+=" in config.mak, but there I think it would be an
+improvement.
 
-I know this function is at the end and it is not worth doing
-push/ignored/pop dance, and I assumed that it is the reason why we
-see a single "ignore from here on", which is much simpler, but it is
-somewhat distracting.  It made me wonder if it makes it easier to
-read and less distracting to have these three lines in front of and
-outside the function definition, while thinking that it would have a
-documentation value to have it immediately before the statement you
-want to affect.  Help me convince myself that this is the best
-place.
+I'm OK to leave it as-is until somebody actually cares, though.
 
-Thanks.
+> > I know you said you don't like string parsing in C. Here is a patch (on
+> > top of yours) that converts the parsing to shell, and generates a
+> > pre-built array-of-struct (this is similar to the big series I posted
+> > long ago, but just touching this one spot, not invading the whole
+> > Makefile). Feel free to ignore it as over-engineered, but I thought I'd
+> > throw it out there in case it appeals.
+> 
+> Yeah, but I'd rather not introduce more complexity into the
+> build process, either (unless it's a performance-sensitive part,
+> which this is not).  Also, while my original 2/2 to make it
+> configurable at runtime was discarded, I wouldn't rule out
+> somebody making a compelling case for it and it would be
+> an easier change from the parse-at-runtime code.
 
+Yeah, I had similar thoughts while writing it.
+
+Your v4 patch looks fine to me.
+
+-Peff
