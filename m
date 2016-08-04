@@ -7,84 +7,68 @@ X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
 	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 859D920450
-	for <e@80x24.org>; Thu,  4 Aug 2016 15:04:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A678E20193
+	for <e@80x24.org>; Thu,  4 Aug 2016 15:06:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758746AbcHDPEn (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 11:04:43 -0400
-Received: from mout.gmx.net ([212.227.17.20]:57230 "EHLO mout.gmx.net"
+	id S1758708AbcHDPGJ (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 11:06:09 -0400
+Received: from mout.gmx.net ([212.227.15.18]:58352 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754977AbcHDPEa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 11:04:30 -0400
-Received: from virtualbox ([37.24.141.218]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0LdYSM-1amwfM1Mgc-00ihKQ; Thu, 04 Aug 2016 16:54:38
+	id S1756095AbcHDPGH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 11:06:07 -0400
+Received: from virtualbox ([37.24.141.218]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MQRWm-1bhNrM39xM-00TjbS; Thu, 04 Aug 2016 16:59:24
  +0200
-Date:	Thu, 4 Aug 2016 16:54:35 +0200 (CEST)
-From:	Johannes Schindelin <johannes.schindelin@gmx.de>
+Date:	Thu, 4 Aug 2016 16:59:23 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	git@vger.kernel.org
-cc:	Junio C Hamano <gitster@pobox.com>,
-	John Keeping <john@keeping.me.uk>,
-	Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH] t5533: make it pass on case-sensitive filesystems
-Message-ID: <93e1fb21d1d24c5b751e2d9d25d9220704bae5aa.1470322425.git.johannes.schindelin@gmx.de>
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	git@vger.kernel.org
+Subject: Re: [PATCH] import-tars: support hard links
+In-Reply-To: <xmqqinvhaji7.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1608041658220.5786@virtualbox>
+References: <bb3b91403fae1964aa990fc16fd8a4e5f16885e6.1470230877.git.johannes.schindelin@gmx.de> <xmqqinvhaji7.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:BdKwB/Bkbx9UQz7eALpFCx0nNOcL0IrJ4jZuv+LEUbvHtNcVYu/
- wWGo0ifIHIoCUoJqjsD/b4wD14hI9rSB5D1d03ZaxL2KvjaJOP03CPBOzYDvueBWbc6EHxT
- T8QasKyxd0WGll6RNWE8S5qinoIcUEcfjPBsTXUUO4koEvvkEGY7thDorEWIJBdM6Pe7ESA
- MRnoiDFt96TvdUn/AUAow==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:8i7qrT/tNGA=:3Zc779++AiFVBLdlqOdOeK
- OFNO5PzMk1Zy8uGZpYglKE30SRS8/AwBEdMUkHJmLJtl5gf3oiI04qZR7fiyW0/iJiWb8OjQD
- exrBsYJ8IeQ9XeTtjci0rGbvYMcykFXnSaJ8N961jdv1WvM9OdZ+ZUckQfpz1tGYasvcmnHTZ
- bEJrWiF8hKTO7f9KxvCidy58wkkk1Dcsc9BQ9OydIhYkrE79gW7XRq685G5/VRVCS7tA0lHJn
- 3F4gJ81u/KFzJGp2zb2hGVDocbarhj2BzxXNWo0kFdx5xIJrEcjHmcA2uDd2DGtkBbri051e9
- tVRWZin0M25FOZo3GjV+vfKSpK3TS4RYITfqQPVGA8uaRxmhRzHf3yLIICJ3KUoKh91PWW+9K
- oA3n3qNGbA9nxR95BwZhHjF3J+xQxCsYi/L2KH3Trerndi2yTG9rIOlpnv99tIiOZauz5A7Cv
- IZgGznhup8WGgYsPlAbAMCRXqSvMXcYZjdnp1VmktJJrm8Q6Aic9VNs4ShWnUGmLyyUKPn1dE
- A7Iw071MM60LEOEMnCM3dmswge76egpFzrbqM9l0K851E8Zg42L5v3u54hBGwzG7id6hV0wkJ
- DIrbPbyHnA5Cm5kD5eqsAmphi07nMijRnLhxFDN2JAn+5EecEwpsqFojBDy2ftPht23zZYr7S
- drkk2AHAM4CHgvVykbeWIIg3RxKeyPXu6fw77OpjVMVklFZzf7GjvngxrwRGv0pmK2bSKsWNY
- ToKVl4vLRYMRvkOj+lVip1csDHCDkJg25ogszRlTt7TcJCHb4QS+Qon/Pbr87gvl/mkgRaC3s
- j8VE5iI
+X-Provags-ID: V03:K0:4zEHgt7VM9lYkdyUSarSwhn0zArP+k0870IWql9eCbnAYn/sHrl
+ IOIBBUVYlesUnesOFACDaTEbzvfZzX7gyfotteVcFppzrtyHXoeOXurUtYmW7cRz7XpxabQ
+ zTQAHVXA+BslGxYM7stVstd4RdhpNcxtA462exPYOk16O583WPO6iqWgeae75FX4YxlAfgW
+ FYw3VLLq9Y2c+Mo1n4CpA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:kgyAbOUl5TI=:v9eTktvAPsX1QmYShNUEoB
+ 49oVLHhQ0ykEjiefo+gvXs3tEUmftdJ9Cjfu3StQI+yH/BLa638fBDYhxKdXDOIMekTcoTrGK
+ UMUUjG8TMYG//pOz0GGyGVp7CwlteYju2cro7DZYU8FCpJe1a0SV043s4pcVBCxMrFyzXHzCH
+ PQnkcIWxS9TYNizVLg+QzUO4WDkFmrSzulEv4qpG625Gwhq1DimyNnD9FdysTpiiXrYwYkmpc
+ SjElZXm2FSCev9GO4kGcDLlsvl8c6cvuYF1NYfDUD9BZPWX0nw4XNVGzKiYkXaj4Ijxn9R0CW
+ rxaNph+NQ+q1iRzcBB46FjcsAQfGKTZ7eUJNXdWlshNX84U7FQk6SRPjbdWKChyEaqngX96I6
+ g3+W0g8OA6V+RmWcKT4AJKNOiN/nyfskt5dVi1jqYArW5AhUDdui7RUQIpCoPJFx17JsumWbC
+ fbAMw96m5BGZfwcUfH5bwxhwABaUjujdWLZjpgB+T7Ks8A8vhHIVAp5mTCZvriqCgCgNlQK5P
+ cRcBZEbNkRReUa1/mkmLslBatqxuYyceCH8thqJaI09+xGAp/ZHeLQBMiZLUvUdwXXCXSQHUY
+ S8ruSmuELzKNpeOLbUWtVcooHJ2uznBuyBBx4q0dbf8uqzdWib7trkG3+XwwN7hfI8VWe4EVo
+ ffouBOTBSkE/oHAht5Twymm635kXHVZndDrY/HgJajzFLeNK6TLwAA0ydgaSN5gOkwtvIt3WV
+ nY/+W9iFeraIfKJyYC62qBznF72a43FwoNR3JqQH1ksLY3ZjNhGNIybaLVSx58DLkfaKTLuzD
+ Q8YWIz2
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-The newly-added test case wants to commit a file "c.t" (note the lower
-case) when a previous test case already committed a file "C.t". This
-confuses Git to the point that it thinks "c.t" was not staged when "git
-add c.t" was called.
+Hi Junio,
 
-Simply make the naming of the test commits consistent with the previous
-test cases: use upper-case, and advance in the alphabet.
+On Wed, 3 Aug 2016, Junio C Hamano wrote:
 
-This came up in local work to rebase the Windows-specific patches to the
-current `next` branch. An identical fix was suggested by John Keeping.
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > ---
+> > Published-As: https://github.com/dscho/git/releases/tag/import-tars-hardlink-v1
+> 
+> A link to a page that lets you download entire source tarball is not
+> very useful to most people, except for those who want "this exact
+> change on top of some unknown base which may or may not have other
+> things they need", which I think is a minority.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-Published-As: https://github.com/dscho/git/releases/tag/t5533-case-insensitive-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git t5533-case-insensitive-v1
- t/t5533-push-cas.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+True. I added a second line that describes how to fetch it (see the t5533
+patch I just sent out).
 
-diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
-index 09899af..a2c9e74 100755
---- a/t/t5533-push-cas.sh
-+++ b/t/t5533-push-cas.sh
-@@ -220,7 +220,7 @@ test_expect_success 'new branch already exists' '
- 	(
- 		cd src &&
- 		git checkout -b branch master &&
--		test_commit c
-+		test_commit F
- 	) &&
- 	(
- 		cd dst &&
--- 
-2.9.0.281.g286a8d9
-
-base-commit: 9813b109b4ec6630220e5f3d8aff275e23cba59e
+Ciao,
+Dscho
