@@ -2,83 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DC5020193
-	for <e@80x24.org>; Thu,  4 Aug 2016 18:54:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3366620193
+	for <e@80x24.org>; Thu,  4 Aug 2016 19:39:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934261AbcHDSyz (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 14:54:55 -0400
-Received: from mail-vk0-f44.google.com ([209.85.213.44]:33052 "EHLO
-	mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934092AbcHDSyy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 14:54:54 -0400
-Received: by mail-vk0-f44.google.com with SMTP id x130so175144870vkc.0
-        for <git@vger.kernel.org>; Thu, 04 Aug 2016 11:54:53 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=2cj0GACtsd6PVI4q3aJviDlUCw2DAL7Q51/PECM0zk8=;
-        b=WY2EuvKh+IMe+v6QbhCsroe7nHrIpB6KcBQMnH41g+qT8wI6l6k12siw1HjnAjq3Cl
-         CYGJdTU9BJU71oH2ahCNx5Yz9w5RM8HkFvjR7Pg+co9tM0OYzd+DmWh17GoQqm5dhk85
-         IWmU9iYq3QNcslb63a0UX21PB31Rsos1ExPY4HRU5/i8+/0ulkCZrv/wdrsXy+4MZOhD
-         MXKFzD0Ytwnvxgu2i1HnlING+Sn5nLGdZJVV0Z/80FQwRzbbeU5gEpf84+6QQnl1T1dj
-         PfUsKubOmqKJLx8yZBoDBwVUP0qpRoe/jgRZ1uhxe9acSpX4C4Zssgp/8vHKaAzGj9Mb
-         bupA==
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=2cj0GACtsd6PVI4q3aJviDlUCw2DAL7Q51/PECM0zk8=;
-        b=bg+9v8lHgnGRJYhbGLZ3R3dxqaYeK7eZp5YJB21J4vAeXxF9Pqx0m+FUTFFRFpSvO0
-         QV+9EUuAs7HYAxp5508/3mT9pXTc6Q+8nU/czFHWJ5vQyIH35fL7Jf3bkLmpEIONd07h
-         X83Rt5jW3JL39qaLjpi32OR5iQJBsNjhono30=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=2cj0GACtsd6PVI4q3aJviDlUCw2DAL7Q51/PECM0zk8=;
-        b=ddm3WN/v5vYPwXI/VW0ywVweg2cNtjfvPwJTwiEriBtld0hniU2j6Y56Kg+7glcpEN
-         vAoDgk3IJ0nSjIB5ebcoQ5xhwapA1798QHGIAszDV9u1HHJKvn1z4WSWu7E4xhqLvvDW
-         wyruO4z0Gk7oJ5k7mlJPJikldREVY75c4181uU0uO21lURaxyyMUnu74zmJRMTS+KbwL
-         6P9YxNNGRB11Vby9eNn10SDDbs8SCs42QylKl2OiFnLPTiAivPm6r4Dio6AlK0TBHAnR
-         Ckyi39YEqEUXAxF2HkyNqdyZsnG8v4FppJs6k71zibLmFPRXiW9uMckk5Wu5k27db9jQ
-         oKSw==
-X-Gm-Message-State: AEkoouvn9lqN0DpL7bA6tXApY0MJML2EKzY8x/qIhP2bD57r9rB/8XBVvINyeAgEt33tH1JSDMUQkRVBGV4YCnR4
-X-Received: by 10.31.188.203 with SMTP id m194mr38736995vkf.120.1470336893126;
- Thu, 04 Aug 2016 11:54:53 -0700 (PDT)
+	id S966116AbcHDTjl (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 15:39:41 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57651 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S965711AbcHDTjj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 15:39:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0B98530146;
+	Thu,  4 Aug 2016 15:39:33 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CHhwwp90aTXBffl6SfzRNnBPuOU=; b=yEpAf6
+	0YekrnndDlvzQgB8LznTfyIFDhw0xpgF6N1nqGWbftbz5ny+mBxyecD+aBmTGD9Z
+	LOhppZZf0ASsHQHyQRJU3NMf5Wzg+Q0pgkSxWY8ONMWrPanb6QwXIkgQpptM5knX
+	fLyhExADll1fOarlMKCOmQHJKIfCSwzbvZPnU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iMUUg2pnMCQor/4GATfrvbYDUvLfHLPj
+	/RKsxaPqsIJHVq+wWOP5MJp/v3gaeZ6HDhCrSyLhHf3r1aGSl0Ws86gwiXti6b3m
+	RvYnTTwaPCweLrBNvaUsBwGZDT6HHm0hv7bgwa8YlncgPTG7s21zxxcXeGetWCIR
+	yeUmA/JVm2s=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0130130145;
+	Thu,  4 Aug 2016 15:39:33 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 722BF30144;
+	Thu,  4 Aug 2016 15:39:32 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Michael Haggerty <mhagger@alum.mit.edu>
+Cc:	Jacob Keller <jacob.keller@gmail.com>,
+	Git mailing list <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH 8/8] diff: improve positioning of add/delete blocks in diffs
+References: <cover.1470259583.git.mhagger@alum.mit.edu>
+	<7b0680ed7a10fc13acd8d7816a75ed05a5f9e28c.1470259583.git.mhagger@alum.mit.edu>
+	<CA+P7+xo6q0pveVQdt1mynfsWq75DzBXsbPcgVYdd5s8rpO+97A@mail.gmail.com>
+	<f7f35993-39a8-b788-d2a7-d030ac442b9b@alum.mit.edu>
+Date:	Thu, 04 Aug 2016 12:39:30 -0700
+In-Reply-To: <f7f35993-39a8-b788-d2a7-d030ac442b9b@alum.mit.edu> (Michael
+	Haggerty's message of "Thu, 4 Aug 2016 00:36:54 +0200")
+Message-ID: <xmqqd1lo2uj1.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.159.34.167 with HTTP; Thu, 4 Aug 2016 11:54:32 -0700 (PDT)
-In-Reply-To: <xmqqr3a8goka.fsf@gitster.mtv.corp.google.com>
-References: <CACi5S_0QGEgnijGyaBeZxOSobdwfA+d-wa-jrHs64Va097mnRQ@mail.gmail.com>
- <xmqqr3a8goka.fsf@gitster.mtv.corp.google.com>
-From:	Michael Giuffrida <michaelpg@chromium.org>
-Date:	Thu, 4 Aug 2016 11:54:32 -0700
-X-Google-Sender-Auth: q5ysZM6DdLyxn8KVAVS1gp1XXEA
-Message-ID: <CACi5S_2j+PXFwE755CSiE01=sYALx-17Hk1k8zJOR9_Fj7y9Pg@mail.gmail.com>
-Subject: Re: git grep -P is multiline for negative lookahead/behind
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Michael Giuffrida <michaelpg@chromium.org>, git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2AB6253C-5A7B-11E6-97F7-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Aug 1, 2016 at 2:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Michael Giuffrida <michaelpg@chromium.org> writes:
->
->> Is this expected behavior, and if so, why/where is this documented?
->
-> I do not think "git grep" was designed to do multi-line anything,
-> with or without lookahead.  If you imagine that the implementation
-> attempts its matches line-by-line, does that explain the observed
-> symptom?
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-No. If it worked line-by-line, it would produce more results. It is
-not producing the expected matches because it *is* considering the
-previous line in negative lookbehind, when I don't want or expect it
-to. Thus it throws out results that should match.
+>>> +       }
+>>> +       /*
+>>> +        * We have reached the end of the line without finding any non-space
+>>> +        * characters; i.e., the whole line consists of trailing spaces, which we
+>>> +        * are not interested in.
+>>> +        */
+>>> +       return -1;
+
+Not related to Jacob's review, but "the whole line consists of
+trailing spaces" made me read it twice; while it is technically
+correct, "the whole line consists of spaces", or even "this is a
+blank line", would read a lot more easily, at least for me.
+
+> I was implicitly assuming that such lines would have text somewhere
+> after those 200 spaces (or 25 TABs or whatever). But you're right, the
+> line could consist only of whitespace. Unfortunately, the only way to
+> distinguish these two cases is to read the rest of the line, which is
+> exactly what we *don't* want to do.
+
+Hmm, why is it exactly what we don't want to do?  Is it a
+performance concern?  In other words, is it because this function is
+called many times to measure the same line multiple times?  After
+all, somebody in this file is already scanning each and every line
+to see where it ends to split the input into records, so perhaps a
+"right" (if the "theoretical correctness" of the return value from
+this function mattered, which you wave-away below) optimization
+could be to precompute it while the lines are broken into records
+and store it in the "rec" structure?
+
+> But I think it doesn't matter anyway. Such "text" will likely never be
+> read by a human, so it's not a big deal if the slider position is not
+> picked perfectly. And remember, this whole saga is just to improve the
+> aesthetics of the diff. The diff is *correct* (e.g., in the sense of
+> applicable) regardless of where we position the sliders.
+
+A better argument may be "if the user is truly reading a diff output
+for such an unusual "text", it is likely that she has a very wide
+display and/or running less -S, and treating such an overindented line
+as if it were a blank line would give a result that is more consistent
+to what appears on her display", perhaps?
