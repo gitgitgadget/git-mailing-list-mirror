@@ -2,87 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67D2820193
-	for <e@80x24.org>; Thu,  4 Aug 2016 20:11:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5670120193
+	for <e@80x24.org>; Thu,  4 Aug 2016 20:18:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965673AbcHDULU (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 16:11:20 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53708 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S965116AbcHDULT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 16:11:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6A8DB306DD;
-	Thu,  4 Aug 2016 16:11:18 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=K3/qZl8FBw5spY3O4FCQ12vJpns=; b=yAYDTM
-	7P2YCfgHsMrKPv+B1uS+M+HfxyThq57Yk/maHwr5J/b8AJtOKBTfBKElUMt3yk8g
-	pmv4hnEN71HpYZSmEt3PdvgvAXBCvaZ5TpowCWXLWSrnRJ4GFXWNxqNt9OCot3yx
-	F+9GTtjCzvpNUMcabimEy6dtH1Orjjpi7IA5Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MKqr018RqrV6hus3wxEQ3Zzs/guGdHkB
-	uWze8V/xXU5Sz8S5ab/xVjBEgacRthhu+REVYJPabqkUMQx/rdqx/EhspQUxJwTF
-	EzUamNW6msAbMp8tnWqUO1Mo91ZQ5i08WrhYhSCbKfTz/zqqUevwS1rQrVQ9fIPq
-	tIt+K/Vw1SQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 61E9E306DC;
-	Thu,  4 Aug 2016 16:11:18 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DA263306DB;
-	Thu,  4 Aug 2016 16:11:17 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	git@vger.kernel.org
-Subject: Re: [BUG?] --boundary inconsistent with path limiting
-References: <20160804194043.z4nbosr4wpbzljdl@sigill.intra.peff.net>
-Date:	Thu, 04 Aug 2016 13:11:15 -0700
-In-Reply-To: <20160804194043.z4nbosr4wpbzljdl@sigill.intra.peff.net> (Jeff
-	King's message of "Thu, 4 Aug 2016 15:40:43 -0400")
-Message-ID: <xmqqr3a41eho.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S965230AbcHDUSL (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 16:18:11 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:40920 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758987AbcHDUSL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 16:18:11 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id ACFDD20228;
+	Thu,  4 Aug 2016 20:17:51 +0000 (UTC)
+Date:	Thu, 4 Aug 2016 20:17:51 +0000
+From:	Eric Wong <e@80x24.org>
+To:	Stefan Beller <sbeller@google.com>
+Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: patch submission process, was Re: [PATCH v6 06/16]
+ merge_recursive: abort properly upon errors
+Message-ID: <20160804201751.GA9592@starla>
+References: <8ff71aba37be979f05abf88f467ec932aa522bdd.1470051326.git.johannes.schindelin@gmx.de>
+ <xmqqlh0gjpr6.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1608021004080.79248@virtualbox>
+ <xmqqy44ec15p.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1608031021050.79248@virtualbox>
+ <CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com>
+ <alpine.DEB.2.20.1608031753431.107993@virtualbox>
+ <CAGZ79kYWdZCNW_eBi5aLAacyBZJXQ9xyOWMBmjNsYT5NWjr-Og@mail.gmail.com>
+ <alpine.DEB.2.20.1608041730130.5786@virtualbox>
+ <CAGZ79kaTT3NgKj8akB8t9b1BF3i6sXe7Un9oq5KP8077Wz-E+g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9A64E07C-5A7F-11E6-A256-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kaTT3NgKj8akB8t9b1BF3i6sXe7Un9oq5KP8077Wz-E+g@mail.gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Stefan Beller <sbeller@google.com> wrote:
+> On Thu, Aug 4, 2016 at 8:58 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > I guess I have no really good idea yet, either, how to retain the ease of
+> > access of sending mails to the list, yet somehow keep a strong tie with
+> > the original data stored in Git.
+> 
+> Does it have to be email? Transmitting text could be solved
+> differently as well.
 
-> But now if I limit to "a.t", I get no output at all:
->
->   $ git log --format='%m %s' --boundary a..c -- a.t
->
-> whereas I would have expected "- a" to show the boundary.
->
-> Is this a bug, or are my expectations wrong?
+I've thought a lot about this over the years still think email
+is the least bad.
 
-In a range a..c, there is nothing that touches the path, so there is
-no positive outcome.  As boundaries are essentially the parents of
-the "last" positive outcome, I would not be surprised if I see an
-empty output in that scenario.
+Anti-spam tools for other messaging systems are far behind,
+proprietary, or non-existent.  bugzilla.kernel.org has been hit
+hard lately and I see plenty of bug-tracker-to-mail spam as a
+result from projects that use web-based bug trackers.
 
-But to be honest, I do not think anybody cared between the
-distinction between a bug and intended behaviour in this case.
+And email spam filtering isn't even that great
+(and I think it needs to be better for IPv6 and .onion adoption
+ since much of it is still IPv4-oriented blacklisting).
 
-The boundary started as a debugging aid for the traversal machinery
-and not as a serious feature to support end-user workflow.  In its
-early days, I do not think we even showed _all_ boundaries (instead
-we showed only ones that we have already parsed, or something like
-that).  I think we added code to do a bit more work when asked to
-show boundaries to show boundary commits that the traditional
-"primarily for debugging" logic wouldn't have shown later, losing
-its value as a debugging aid (because it no longer showed precisely
-where the traversal machinery stopped digging).
-
+I guess a blockchain (*coin) implementation might work (like
+hashcash is used for email anti-spam), but the ones I've glanced
+at all look like a bigger waste of electricity than email
+filters.
 
 
+Of course, centralized systems are unacceptable to me;
+and with that I'll never claim any network service I run
+will be reliable :)
