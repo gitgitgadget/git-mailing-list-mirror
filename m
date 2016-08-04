@@ -2,82 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5670120193
-	for <e@80x24.org>; Thu,  4 Aug 2016 20:18:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB1BC20193
+	for <e@80x24.org>; Thu,  4 Aug 2016 20:41:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965230AbcHDUSL (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 16:18:11 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:40920 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758987AbcHDUSL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 16:18:11 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ACFDD20228;
-	Thu,  4 Aug 2016 20:17:51 +0000 (UTC)
-Date:	Thu, 4 Aug 2016 20:17:51 +0000
-From:	Eric Wong <e@80x24.org>
-To:	Stefan Beller <sbeller@google.com>
-Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: patch submission process, was Re: [PATCH v6 06/16]
- merge_recursive: abort properly upon errors
-Message-ID: <20160804201751.GA9592@starla>
-References: <8ff71aba37be979f05abf88f467ec932aa522bdd.1470051326.git.johannes.schindelin@gmx.de>
- <xmqqlh0gjpr6.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1608021004080.79248@virtualbox>
- <xmqqy44ec15p.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1608031021050.79248@virtualbox>
- <CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com>
- <alpine.DEB.2.20.1608031753431.107993@virtualbox>
- <CAGZ79kYWdZCNW_eBi5aLAacyBZJXQ9xyOWMBmjNsYT5NWjr-Og@mail.gmail.com>
- <alpine.DEB.2.20.1608041730130.5786@virtualbox>
- <CAGZ79kaTT3NgKj8akB8t9b1BF3i6sXe7Un9oq5KP8077Wz-E+g@mail.gmail.com>
+	id S965707AbcHDUlH (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 16:41:07 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60467 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S965213AbcHDUlG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 16:41:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 28CB431BCD;
+	Thu,  4 Aug 2016 16:41:05 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tkvPsBPLSpbKdLJ9+XI7QI0n5vc=; b=kjBNbH
+	LCdz5fcrcwrh7VSdecjQRiSpFlKExYZ8cUjk+xQ83TsYFqura8pvCv5nxGvVy15O
+	YhZ7EmoynEZSrg4yXP5AKy0YcwB1gpUoBasqEnAvhjIBSQqAac9v7C5Vnm2Up/7i
+	ymnz8p2zcHPaF45eAW1n6B7cheSJf6HaVhScQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qzkqJF0e7n9l2RnJlrQPUuXexGlPo0e4
+	bappf7vhW/3PcKw5H4bl7c3qmq0/3uh2323S8OjdD5ceZjoB287jGfl6Y4e0cO3n
+	5IMMSZvKo18UHtZGvKMGGwCo3pLvsDXd1INP/vcswgm8TbVHADCgcoK1FixAYK5a
+	FFiwNPMIMic=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2161C31BCC;
+	Thu,  4 Aug 2016 16:41:05 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9D9A031BCA;
+	Thu,  4 Aug 2016 16:41:04 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff King <peff@peff.net>
+Cc:	larsxschneider@gmail.com, git@vger.kernel.org
+Subject: Re: [PATCH 3/7] trace: use warning() for printing trace errors
+References: <20160803225600.fgm23bdacunmrw44@sigill.intra.peff.net>
+	<20160803225826.hlr273h4cy2hcfyk@sigill.intra.peff.net>
+Date:	Thu, 04 Aug 2016 13:41:02 -0700
+In-Reply-To: <20160803225826.hlr273h4cy2hcfyk@sigill.intra.peff.net> (Jeff
+	King's message of "Wed, 3 Aug 2016 18:58:26 -0400")
+Message-ID: <xmqqk2fw1d41.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kaTT3NgKj8akB8t9b1BF3i6sXe7Un9oq5KP8077Wz-E+g@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: C361F312-5A83-11E6-BCC6-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> wrote:
-> On Thu, Aug 4, 2016 at 8:58 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > I guess I have no really good idea yet, either, how to retain the ease of
-> > access of sending mails to the list, yet somehow keep a strong tie with
-> > the original data stored in Git.
-> 
-> Does it have to be email? Transmitting text could be solved
-> differently as well.
+Jeff King <peff@peff.net> writes:
 
-I've thought a lot about this over the years still think email
-is the least bad.
+> Right now we just fprintf() straight to stderr, which can
+> make the output hard to distinguish. It would be helpful to
+> give it one of our usual prefixes like "error:", "warning:",
+> etc.
+>
+> It doesn't make sense to use error() here, as the trace code
+> is "optional" debugging code. If something goes wrong, we
+> should warn the user, but saying "error" implies the actual
+> git operation had a problem. So warning() is the only sane
+> choice.
+>
+> Note that this does end up calling warn_routine() to do the
+> formatting. So in theory, somebody who tries to trace from
+> their warn_routine() could cause a loop. But nobody does
+> this, and in fact nobody in the history of git has ever
+> replaced the default warn_builtin (there isn't even a
+> set_warn_routine function!).
 
-Anti-spam tools for other messaging systems are far behind,
-proprietary, or non-existent.  bugzilla.kernel.org has been hit
-hard lately and I see plenty of bug-tracker-to-mail spam as a
-result from projects that use web-based bug trackers.
-
-And email spam filtering isn't even that great
-(and I think it needs to be better for IPv6 and .onion adoption
- since much of it is still IPv4-oriented blacklisting).
-
-I guess a blockchain (*coin) implementation might work (like
-hashcash is used for email anti-spam), but the ones I've glanced
-at all look like a bigger waste of electricity than email
-filters.
-
-
-Of course, centralized systems are unacceptable to me;
-and with that I'll never claim any network service I run
-will be reliable :)
+I think the last bit is about to change; cf. 545f13c0 (usage: add
+set_warn_routine(), 2016-07-30) on cc/apply-am topic.
