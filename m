@@ -2,74 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A011720193
-	for <e@80x24.org>; Thu,  4 Aug 2016 20:09:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67D2820193
+	for <e@80x24.org>; Thu,  4 Aug 2016 20:11:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965422AbcHDUJK (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 16:09:10 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54957 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965411AbcHDUJJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 16:09:09 -0400
-Received: (qmail 12782 invoked by uid 102); 4 Aug 2016 20:09:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Aug 2016 16:09:09 -0400
-Received: (qmail 15563 invoked by uid 107); 4 Aug 2016 20:09:37 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Aug 2016 16:09:37 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Aug 2016 16:09:05 -0400
-Date:	Thu, 4 Aug 2016 16:09:05 -0400
-From:	Jeff King <peff@peff.net>
-To:	git@vger.kernel.org
+	id S965673AbcHDULU (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 16:11:20 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53708 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S965116AbcHDULT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 16:11:19 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6A8DB306DD;
+	Thu,  4 Aug 2016 16:11:18 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=K3/qZl8FBw5spY3O4FCQ12vJpns=; b=yAYDTM
+	7P2YCfgHsMrKPv+B1uS+M+HfxyThq57Yk/maHwr5J/b8AJtOKBTfBKElUMt3yk8g
+	pmv4hnEN71HpYZSmEt3PdvgvAXBCvaZ5TpowCWXLWSrnRJ4GFXWNxqNt9OCot3yx
+	F+9GTtjCzvpNUMcabimEy6dtH1Orjjpi7IA5Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MKqr018RqrV6hus3wxEQ3Zzs/guGdHkB
+	uWze8V/xXU5Sz8S5ab/xVjBEgacRthhu+REVYJPabqkUMQx/rdqx/EhspQUxJwTF
+	EzUamNW6msAbMp8tnWqUO1Mo91ZQ5i08WrhYhSCbKfTz/zqqUevwS1rQrVQ9fIPq
+	tIt+K/Vw1SQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 61E9E306DC;
+	Thu,  4 Aug 2016 16:11:18 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DA263306DB;
+	Thu,  4 Aug 2016 16:11:17 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff King <peff@peff.net>
+Cc:	git@vger.kernel.org
 Subject: Re: [BUG?] --boundary inconsistent with path limiting
-Message-ID: <20160804200905.7xdiei2yfv2aw6im@sigill.intra.peff.net>
 References: <20160804194043.z4nbosr4wpbzljdl@sigill.intra.peff.net>
+Date:	Thu, 04 Aug 2016 13:11:15 -0700
+In-Reply-To: <20160804194043.z4nbosr4wpbzljdl@sigill.intra.peff.net> (Jeff
+	King's message of "Thu, 4 Aug 2016 15:40:43 -0400")
+Message-ID: <xmqqr3a41eho.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160804194043.z4nbosr4wpbzljdl@sigill.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9A64E07C-5A7F-11E6-A256-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Aug 04, 2016 at 03:40:43PM -0400, Jeff King wrote:
+Jeff King <peff@peff.net> writes:
 
-> That makes sense to me. We omit "c" because it doesn't touch "b.t", and
-> obviously include "b", which does. We _do_ include the boundary commit,
-> even though it doesn't touch the path, which makes sense to me. It
-> remains a boundary whether it touched the path or not, and without it,
-> we get no boundary at all.
-> 
 > But now if I limit to "a.t", I get no output at all:
-> 
+>
 >   $ git log --format='%m %s' --boundary a..c -- a.t
-> 
+>
 > whereas I would have expected "- a" to show the boundary.
-> 
+>
 > Is this a bug, or are my expectations wrong?
 
-So I suppose it depends how you define "boundary" commits. In
-get_revision_internal(), I see this comment:
+In a range a..c, there is nothing that touches the path, so there is
+no positive outcome.  As boundaries are essentially the parents of
+the "last" positive outcome, I would not be surprised if I see an
+empty output in that scenario.
 
-        /*
-         * boundary commits are the commits that are parents of the
-         * ones we got from get_revision_1() but they themselves are
-         * not returned from get_revision_1().  Before returning
-         * 'c', we need to mark its parents that they could be boundaries.
-         */
+But to be honest, I do not think anybody cared between the
+distinction between a bug and intended behaviour in this case.
 
-By that definition, obviously if we do not have any commits to show,
-then we have no boundary commits. I don't think this definition is
-anywhere in the user-facing documentation, though.
+The boundary started as a debugging aid for the traversal machinery
+and not as a serious feature to support end-user workflow.  In its
+early days, I do not think we even showed _all_ boundaries (instead
+we showed only ones that we have already parsed, or something like
+that).  I think we added code to do a bit more work when asked to
+show boundaries to show boundary commits that the traditional
+"primarily for debugging" logic wouldn't have shown later, losing
+its value as a debugging aid (because it no longer showed precisely
+where the traversal machinery stopped digging).
 
-It still seems weird to me, and I wonder if we should show all
-UNINTERESTING commits as boundaries in the case that we haven't produced
-any positive commits at all. But perhaps there is a case where that
-would not be desirable.
 
--Peff
+
