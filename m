@@ -2,126 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5051020193
-	for <e@80x24.org>; Thu,  4 Aug 2016 18:08:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2AC2020193
+	for <e@80x24.org>; Thu,  4 Aug 2016 18:09:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932611AbcHDSH4 (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 14:07:56 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54858 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758843AbcHDSHz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 14:07:55 -0400
-Received: (qmail 7458 invoked by uid 102); 4 Aug 2016 18:07:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Aug 2016 14:07:53 -0400
-Received: (qmail 14117 invoked by uid 107); 4 Aug 2016 18:08:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Aug 2016 14:08:21 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Aug 2016 14:07:49 -0400
-Date:	Thu, 4 Aug 2016 14:07:49 -0400
-From:	Jeff King <peff@peff.net>
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Johannes Sixt <j6t@kdbg.org>, Duy Nguyen <pclouds@gmail.com>,
-	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: patch submission process, was Re: [PATCH v6 06/16]
- merge_recursive: abort properly upon errors
-Message-ID: <20160804180749.foowbsmce72s46ww@sigill.intra.peff.net>
-References: <8ff71aba37be979f05abf88f467ec932aa522bdd.1470051326.git.johannes.schindelin@gmx.de>
- <xmqqlh0gjpr6.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1608021004080.79248@virtualbox>
- <xmqqy44ec15p.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1608031021050.79248@virtualbox>
- <CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com>
- <20160803163449.iwjv4youmsf6okme@sigill.intra.peff.net>
- <xmqqbn19aj5t.fsf@gitster.mtv.corp.google.com>
- <20160803165652.zek5df7tv5reg6w4@sigill.intra.peff.net>
- <alpine.DEB.2.20.1608041706040.5786@virtualbox>
+	id S965139AbcHDSJx (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 14:09:53 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62943 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932505AbcHDSJw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 14:09:52 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C7B743235E;
+	Thu,  4 Aug 2016 14:09:50 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Frgs2ghhLsai4t2LWMVbGlQFwn4=; b=YcxUUV
+	PhpOQTa7Kdf+JAffitF6HxAHjgUyuKLatltc5saOpiQai1Ih7P9QAY0vvQEwMuYQ
+	JJFA0F35COxGlaVOWVUyPvsWG5HjvxSsSiUx6gwQs+cKvjq2tXi75WEnsb/gQlU4
+	HhDXB5B0q5f8UYVL9+e400wSWolbVzpBK0X+8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=K06IaV9sWtMeXBQHJFAbZzw/i40ABzy2
+	PhvjMxubK6jSUghgK/oDCgu+HOBai9LKBBYZfPiVWAw/INQivCAv5H4RfdE27tkG
+	RJmkZPB5amxMsS/rOl0m2B0DZ4O2TjM0qczV8u/M0rDi7kCcbBevbZgNOdYK4pxC
+	5hfgt4hooas=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C01553235D;
+	Thu,  4 Aug 2016 14:09:50 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 496713235B;
+	Thu,  4 Aug 2016 14:09:50 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH v6 07/16] merge-recursive: avoid returning a wholesale struct
+References: <cover.1469547160.git.johannes.schindelin@gmx.de>
+	<cover.1470051326.git.johannes.schindelin@gmx.de>
+	<4cbe2757bd921a202c359382086fadeb2616434a.1470051326.git.johannes.schindelin@gmx.de>
+Date:	Thu, 04 Aug 2016 11:09:48 -0700
+In-Reply-To: <4cbe2757bd921a202c359382086fadeb2616434a.1470051326.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Mon, 1 Aug 2016 13:44:17 +0200
+	(CEST)")
+Message-ID: <xmqqk2fw4d8z.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1608041706040.5786@virtualbox>
+Content-Type: text/plain
+X-Pobox-Relay-ID: A2A70938-5A6E-11E6-AB52-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Aug 04, 2016 at 05:29:52PM +0200, Johannes Schindelin wrote:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> So my idea was to introduce a new --reword=<commit> option to `git commit`
-> that would commit an empty patch and let the user edit the commit message,
-> later replacing the original one with the new one. This is not *quite* as
-> nice as I want it, because it makes the changes unobvious. On the other
-> hand, I would not find a series of sed commands more obvious, in
-> particular because that limits you in the ways of sed. And, you know,
-> regexp. I like them, but I know many people cannot really work with them.
+> It is technically allowed, as per C89, for functions' return type to
+> be complete structs (i.e. *not* just pointers to structs).
+>
+> However, it was just an oversight of this developer when converting
+> Python code to C code in 6d297f8 (Status update on merge-recursive in
+> C, 2006-07-08) which introduced such a return type.
+>
+> Besides, by converting this construct to pass in the struct, we can now
+> start returning a value that can indicate errors in future patches. This
+> will help the current effort to libify merge-recursive.c.
 
-I don't have a real opinion on this. I probably wouldn't use it, but I
-have no problem with it existing. I think it's somewhat orthogonal to
-the idea of _transmitting_ those reword operations to somebody else.
+I do not think returning a small struct by value is unconditionally
+a bad thing, but I do agree with you that this change makes the 
+resulting code much easier to read, especially once this starts
+returning errors.
 
-> > That pushes work onto the submitter, but saves work from the reviewers,
-> > who can quickly say "something like this..." without having to worry
-> > about making a full change, formatting it as a diff, etc.
-> > 
-> > I do think that's the right time-tradeoff to be making, as we have more
-> > submitters than reviewers.
-> 
-> I agree that it is the right trade-off. TBH I was shocked when I learned
-> how much effort Junio puts into applying my patches. I do not want that. I
-> want my branch to reflect pretty precisely (modulo sign-off, of course)
-> what is going to be integrated into Git's source code.
+Good.
 
-Like you, I have occasionally been bitten by Junio doing a fixup, and
-then I end up re-rolling, and lose that fixup (or have to deal with
-porting it forward with awkward tools).
-
-But I think such fixups are a calculated risk. Sometimes they save a lot
-of time, both for the maintainer and the contributor, when they manage
-to prevent another round-trip of the patch series to the list.
-
-IOW, if the flow is something like:
-
-  1. Contributor sends patches. People review.
-
-  2. Minor fixups noticed by maintainer, fixed while applying.
-
-  3. Only one small fixup needed from review. Contributor sends
-     squashable patch. Maintainer squashes.
-
-then I think that is a net win over sending the whole series again, for
-the contributor (who does not bother sending), reviewers (who really
-only need to look at the interdiff, which is what that squash is in the
-first place), and the maintainer (who can squash just as easily as
-re-applying the whole series).
-
-It does mean the "final" version of the series is never on the list. It
-has to be pieced together from the squash (and sometimes step 2 is not
-even mentioned on-list).
-
-So I think it is really a judgement call for step (3) on what is a
-"small" fixup, and whether it is easier for everybody to look at the
-squash interdiff and say "yep, that's right", versus re-reviewing the
-whole series.
-
-> I'd much prefer to resubmit a cleaned-up version, even if it was just the
-> commit subjects, and be certain that `pu` and my branch are on the same
-> page.
-> 
-> Instead, Junio puts in a tremendous amount of work, and it does not help
-> anybody, because the local branches *still* do not have his fixups, and as
-> a consequence subsequent iterations of the patch series will have to be
-> fixed up *again*.
-
-And that is the flip side. If the flow above does not happen, then step
-2 just becomes a pain.
-
-I don't have a silver bullet or anything. I'm mostly just musing.
-
--Peff
