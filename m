@@ -2,75 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7925420193
-	for <e@80x24.org>; Thu,  4 Aug 2016 21:28:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6ECB1F855
+	for <e@80x24.org>; Thu,  4 Aug 2016 21:57:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934031AbcHDV2O (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 17:28:14 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56784 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753041AbcHDV2N (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 17:28:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id DD5FE321C1;
-	Thu,  4 Aug 2016 17:28:11 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=87Ivrrz+LRk0CEXceLZDtxn89Hk=; b=isHVNi
-	vVidc3chs1Hzrycqz3fW+7tbLO9AB/HQj3Yafe/1iYoJs3kvP6SWSLYst/r6Ekpg
-	+QJMWb8Z0VHXwE9DE8dItdjljYndaUSt1f1wQd8R/SJJdxkQoCki/qYFjCsbJ4QS
-	np0JzG90HOmsVCfjP13MfBRXyXD0kqU5a1eKg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RU3aBasHhKTbLwL9U+nWGBrQyNCCMS6J
-	87CKVXaeBGG53OkJ+yb1+nI0Gho3HOBx/DU/kwRr914qdPbDNBU6VNh46A8A7lsJ
-	6ZIZfXpAV5OKpfP2EcSDI0kIMyg7CHE1nh2CJgS362DQfnUd5wF8Q0pWDGihycG9
-	y84wN7o8bCQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D40B2321C0;
-	Thu,  4 Aug 2016 17:28:11 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5EED3321BE;
-	Thu,  4 Aug 2016 17:28:11 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	Christian Couder <christian.couder@gmail.com>,
-	larsxschneider@gmail.com, git@vger.kernel.org
-Subject: Re: [PATCH 3/7] trace: use warning() for printing trace errors
-References: <20160803225600.fgm23bdacunmrw44@sigill.intra.peff.net>
-	<20160803225826.hlr273h4cy2hcfyk@sigill.intra.peff.net>
-	<xmqqk2fw1d41.fsf@gitster.mtv.corp.google.com>
-	<20160804212157.cn7ecyxcbyf4okd7@sigill.intra.peff.net>
-Date:	Thu, 04 Aug 2016 14:28:09 -0700
-In-Reply-To: <20160804212157.cn7ecyxcbyf4okd7@sigill.intra.peff.net> (Jeff
-	King's message of "Thu, 4 Aug 2016 17:21:57 -0400")
-Message-ID: <xmqqy44cz0k6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S932387AbcHDV5G (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 17:57:06 -0400
+Received: from mout.web.de ([212.227.15.3]:53085 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758985AbcHDV5E (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 17:57:04 -0400
+Received: from [192.168.178.36] ([79.213.122.241]) by smtp.web.de (mrweb004)
+ with ESMTPSA (Nemesis) id 0MFNpM-1bS5763ZJc-00EMbn; Thu, 04 Aug 2016 23:56:56
+ +0200
+Subject: Re: [PATCH 2/2] nedmalloc: work around overzealous GCC 6 warning
+To:	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org
+References: <cover.1470326812.git.johannes.schindelin@gmx.de>
+ <57360f4885bdd5c36e190bea288f1e1f7f706071.1470326812.git.johannes.schindelin@gmx.de>
+Cc:	Junio C Hamano <gitster@pobox.com>
+From:	=?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <57A3BA26.5080601@web.de>
+Date:	Thu, 4 Aug 2016 23:56:54 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 58407E76-5A8A-11E6-B728-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+In-Reply-To: <57360f4885bdd5c36e190bea288f1e1f7f706071.1470326812.git.johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:abGg7xNLWD/uB6sgs+aMp9ADDC9ynfo1ptr+uqfwqj7O4YCqZ8J
+ lwejOGqGbrMvxGgyUuJd9/T/LVYZi+OvmKFmd+8mk22+gI+/HEqW+vNGcCo0JKfmdPvCWmS
+ MmJDMjQSglfoyVW7fJMro3/+aqMWXvVkRR8pNCIuHZBdQLkYqxl8oFQKMb6/5EsvV7ECQWZ
+ bXRNQ2xhneFJsz8UtebSQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:CM9cSpwFT3U=:4Xbiq/48bYdyrSbZKMApPR
+ OdrLhLK2+/Bm+cXY9g2S3MSiGeC+OR/v5MzBa97uSwCoTVSkyV+0JxkTJ8HG0ryfHTH+6Vqpw
+ NfdaAJ5UoG3ZoKtT/mhvaNMuaAsSv7ZZ0+QJ1lU8b7BLTMb2YzyuVDc/qxpOdhT4DoGtACZMC
+ pV6NAYanaiFKTo2VLz7PEBPsbpU0ByjsyVqQnByPKYlrJfapYx2G5QLm7wXBRDTxbOQkiRNg4
+ QaKyCTtS+Cm5LLaq2XmtO7e0RHk34pRUnQ374LfWitLj9ZCaiKemgm2mD7QXmFAA98AeNWQJ/
+ QwCTlzj+M9/0CJch7zzLHS4y93TcO7nKy2OXcWDiu8nwfNhrNtoGcnlFHfnZXLcc2KVwS2d+b
+ xStM+Xn3GMg2XgI3FbwRa5wMyCZGeUEM6Rp8HnzqEj+hB/7ky2M7aUDcHNqD/M97A82/1/gGK
+ KI+38TivnJilsIrqlSKc7LYfvKhfQXVY8q8VXS5wvzzzNTSEyyInMp3Bu/beCgMxUOErNi10/
+ cybOSY9wai8n4iycPDeq+a1LxiPt8olbk77ggFGUHdQ/6CRMuWZ+KJKuG/8wwYL98vvhZjzdB
+ 08hTSslLOcQ7IOGTPHru038OJpZFpPia8a262w8RKR9dMNmjLBEvg/uZthvuriaQSlsgkLU6d
+ 9akj1/JXvCAU2BokId5g9e2jUz48jn2j0zyCq3TZH436uSuqEqpjILkNze8kUw/giKmVqUFNl
+ EyxGJNwcyI8vRgsNPkYdjC0sfbmlREoX+3eKWL7zHf/nDU2J5NwP1jrM0121OvMbvbHGbTft3
+ wdguned
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Am 04.08.2016 um 18:07 schrieb Johannes Schindelin:
+> With GCC 6, the strdup() function is declared with the "nonnull"
+> attribute, stating that it is not allowed to pass a NULL value as
+> parameter.
+>
+> In nedmalloc()'s reimplementation of strdup(), Postel's Law is heeded
+> and NULL parameters are handled gracefully. GCC 6 complains about that
+> now because it thinks that NULL cannot be passed to strdup() anyway.
+>
+> Let's just shut up GCC >= 6 in that case and go on with our lives.
 
-> I wondered if that would then let us drop set_warn_routine(), but it
-> looks like there are other warning() calls it cares about. So that would
-> invalidate the last paragraph here, though I still think converting the
-> trace errors to warning() is a reasonable thing to do.
+This version of strdup() is only compiled if nedmalloc is used instead
+of the system allocator.  That means we can't rely on strdup() being
+able to take NULL -- some (most?) platforms won't like it.  Removing
+the NULL check would be a more general and overall easier way out, no?
 
-Yes.  That is why tonight's pushout will have this series in 'jch'
-(that is a point on a linear history between 'master' and 'pu') and
-tentatively ejects cc/apply-am topic out of 'pu', expecting it to be
-rerolled.
+But it should check the result of malloc() before copying.
+---
+  compat/nedmalloc/nedmalloc.c | 8 +++-----
+  1 file changed, 3 insertions(+), 5 deletions(-)
 
-Thanks.
+diff --git a/compat/nedmalloc/nedmalloc.c b/compat/nedmalloc/nedmalloc.c
+index a0a16eb..cc18f0c 100644
+--- a/compat/nedmalloc/nedmalloc.c
++++ b/compat/nedmalloc/nedmalloc.c
+@@ -955,12 +955,10 @@ void **nedpindependent_comalloc(nedpool *p, size_t 
+elems, size_t *sizes, void **
+   */
+  char *strdup(const char *s1)
+  {
+-	char *s2 = 0;
+-	if (s1) {
+-		size_t len = strlen(s1) + 1;
+-		s2 = malloc(len);
++	size_t len = strlen(s1) + 1;
++	char *s2 = malloc(len);
++	if (s2)
+  		memcpy(s2, s1, len);
+-	}
+  	return s2;
+  }
+  #endif
+-- 
+2.9.2
 
