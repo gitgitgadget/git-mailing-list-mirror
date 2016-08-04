@@ -6,115 +6,100 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E15820193
-	for <e@80x24.org>; Thu,  4 Aug 2016 17:18:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7F5320193
+	for <e@80x24.org>; Thu,  4 Aug 2016 17:28:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934138AbcHDRSd (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 13:18:33 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61776 "EHLO
+	id S933733AbcHDR2N (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 13:28:13 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53381 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S934067AbcHDRSc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 13:18:32 -0400
+	with ESMTP id S1758831AbcHDR2L (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 13:28:11 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2B08F31AF9;
-	Thu,  4 Aug 2016 13:18:31 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 360A231CA5;
+	Thu,  4 Aug 2016 13:28:10 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HAom+AEC1OByRyk8ioQxvrV3BaQ=; b=S0E/cj
-	wYaavZjBhAB0/itI26kjcALa76zsztR9UtsrF61/NVJASmUSGQfLH3j+HgY+pq4I
-	ZTku7+fOWWOuQo98thAVwZapA/wJ5LsvIZcTYwTdcQcEc2cDYsXEdDVT2qJFckt4
-	WC/KnzUrK49cqgqHTm1B321X7LAtp5sM9XJ9g=
+	:content-type; s=sasl; bh=3Q26BJW7tPrE7dEYiidmk3brMC0=; b=dza2P4
+	xwnLTE1N/e/flYQzhB+gk1Yjh22pvEwQ8hL321hC3hpn86dALJF8oOSZ9DuXdnCc
+	MtdE7LpQFzmzrzCEXLIGecMsyaCKsFG1vJtXvBnK6tBbxfPMFGAf+ucD4tfQS9Zh
+	3SLrdgHP2hQ3pewuIIUG8/U1by4Izy12iyAto=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=J91ZZI4Shmdl1ohXAK+n5UbIl/GifFAI
-	ztV7breVgdJJACgOqr3M2nMGQhr+sA/PQOp004ZSkKuBxGx84/NOwz5Ec1nl+AJf
-	o0lV8p8iNEYA6NZcaKeuiynMpAjOgC5T35WQ3qd/N6LG+aQkZbwJhFYhdlMAQ3Yu
-	Tg9c5tknztU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2391C31AF8;
-	Thu,  4 Aug 2016 13:18:31 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=vJenp3OH6o4O8ZwI/5aj5XsU9N8reo0T
+	+MMdGnkr4Pg+58WZgBemgl+itQNDevdVVgWoh3Zby9JFNQ8iUpjWrjlN15+8tBXQ
+	etJZ4aMDIqPISX2t9Z2iq6gQ+hxmVp5UslrX5guIDIInwrYQzVrTR6lZuxsEUXj9
+	ZyGZ9DIXYQ8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2CE8331CA4;
+	Thu,  4 Aug 2016 13:28:10 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9A2CD31AF6;
-	Thu,  4 Aug 2016 13:18:30 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AB52031CA0;
+	Thu,  4 Aug 2016 13:28:09 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:	git@vger.kernel.org, John Keeping <john@keeping.me.uk>,
-	Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH] t5533: make it pass on case-sensitive filesystems
-References: <93e1fb21d1d24c5b751e2d9d25d9220704bae5aa.1470322425.git.johannes.schindelin@gmx.de>
-Date:	Thu, 04 Aug 2016 10:18:28 -0700
-In-Reply-To: <93e1fb21d1d24c5b751e2d9d25d9220704bae5aa.1470322425.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Thu, 4 Aug 2016 16:54:35 +0200
-	(CEST)")
-Message-ID: <xmqqwpjw4fmj.fsf@gitster.mtv.corp.google.com>
+To:	Ed Greenberg <edg@greenberg.org>
+Cc:	git@vger.kernel.org
+Subject: Re: Problem with two copies of same branch diverging
+References: <0aab65de-21a3-eb48-c5b0-3e36d924348a@greenberg.org>
+Date:	Thu, 04 Aug 2016 10:28:07 -0700
+In-Reply-To: <0aab65de-21a3-eb48-c5b0-3e36d924348a@greenberg.org> (Ed
+	Greenberg's message of "Thu, 4 Aug 2016 11:08:34 -0400")
+Message-ID: <xmqqshuk4f6g.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 77069728-5A67-11E6-BBF9-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: D02D7D5C-5A68-11E6-B3C4-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Ed Greenberg <edg@greenberg.org> writes:
 
-> The newly-added test case wants to commit a file "c.t" (note the lower
-> case) when a previous test case already committed a file "C.t". This
-> confuses Git to the point that it thinks "c.t" was not staged when "git
-> add c.t" was called.
+> Hi, Thanks for reading my question.
 >
-> Simply make the naming of the test commits consistent with the previous
-> test cases: use upper-case, and advance in the alphabet.
+> I have two copies of code checked out at the same branch. Desktop and
+> remote server.
 >
-> This came up in local work to rebase the Windows-specific patches to the
-> current `next` branch. An identical fix was suggested by John Keeping.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> Published-As: https://github.com/dscho/git/releases/tag/t5533-case-insensitive-v1
-> Fetch-It-Via: git fetch https://github.com/dscho/git t5533-case-insensitive-v1
+> I use an IDE that automatically SFTP transfers each save from the
+> desktop to the remote server, so I can run my changes on the server
+> environment.
 
-Thanks.  It may make it easier to see to have a blank line here,
-separating them from the diffstat.
+You are syncing _ONLY_ the working tree state without syncing Git
+state at all, and that is why the server side gets confused.  You
+have to stop doing that.
 
->  t/t5533-push-cas.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
-> index 09899af..a2c9e74 100755
-> --- a/t/t5533-push-cas.sh
-> +++ b/t/t5533-push-cas.sh
-> @@ -220,7 +220,7 @@ test_expect_success 'new branch already exists' '
->  	(
->  		cd src &&
->  		git checkout -b branch master &&
-> -		test_commit c
-> +		test_commit F
->  	) &&
->  	(
->  		cd dst &&
+If you do not do any change on the server end, you can simply stop
+having a git repository there; just treat its directory as what it
+really is: a copy of the working tree, something akin to an
+extracted tarball.
 
-Thanks.
+If you do change on both, you probably are better off without the
+mechanism to copy working tree one-way that you currently have.
+Just push or fetch between the two repositories and integrate the
+local changes.
 
-> -- 
-> 2.9.0.281.g286a8d9
-> 
-> base-commit: 9813b109b4ec6630220e5f3d8aff275e23cba59e
+Having said all that.
 
-A totally unrelated tangent.
+> At the end of the session, I commit the code on my desktop, do a git
+> push to the repo.
 
-This line turns out to be less than useful at least in this
-particular case.
+> When I look at the server, the code there is identical to what's on my
+> desktop box and what I just comitted and pushed, but, of course, git
+> status thinks it's all modified and wants me to either commit it or
+> stash it.  
 
-The fix is meant for jk/push-force-with-lease-creation topic, but I
-had to find it out by the old fashioned way, i.e. running blame for
-these lines in 'pu' to find eee98e74f9 is the culprit and then
-running "git branch --with eee98e74f9".  The only thing the line
-made easier is I _could_ start the blame at the named commit (which
-is on 'next') instead of 'pu'.  When I took that "base-commit"
-series, I was hoping that it would give us a lot more useful
-information.
+This is expected as pushing into the remote would not affect what is
+checked out, most importantly, the index.  But this ...
 
+> In fact, doing a git log on the server doesn't show my
+> latest push.  
 
+... indicates that you are not pushing to update the remote
+repository correctly.  Once you get that part working correctly,
+after you push at the end of the session, you should be able to do
+"git reset" at the other side to tell Git to notice that the updated
+working tree files that were transferred behind its back are now in
+sync with what is supposed to be checked out.
