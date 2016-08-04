@@ -7,101 +7,91 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D49B20191
-	for <e@80x24.org>; Thu,  4 Aug 2016 00:51:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D01520191
+	for <e@80x24.org>; Thu,  4 Aug 2016 00:54:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933329AbcHDAvC (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 20:51:02 -0400
-Received: from mail-it0-f45.google.com ([209.85.214.45]:38177 "EHLO
-	mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933231AbcHDAuH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2016 20:50:07 -0400
-Received: by mail-it0-f45.google.com with SMTP id j124so250235768ith.1
-        for <git@vger.kernel.org>; Wed, 03 Aug 2016 17:50:06 -0700 (PDT)
+	id S933201AbcHDAyY (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 20:54:24 -0400
+Received: from mail-io0-f173.google.com ([209.85.223.173]:36493 "EHLO
+	mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933127AbcHDAyU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2016 20:54:20 -0400
+Received: by mail-io0-f173.google.com with SMTP id b62so259019168iod.3
+        for <git@vger.kernel.org>; Wed, 03 Aug 2016 17:53:57 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=pt7n1blqNlbsKJr0/wWj4eqASXM7NEAavXPBrxKGCLw=;
-        b=SHT/FIUZBQ8LrE/6JU9xX7pou/Hd/9Nm30aViJR1eaTAAmiXZVelvUKSe+5Ec/rgyn
-         TVnYyBMtTnxpPO6UrkjeyGmVbkfl4ZK4gvL1qwSwtb7zgiHuwYVlUx1ar6QFVtYyb8He
-         GnGFjWTb4x5tZkyf2a3ab0lKe/wqh6D1Na5p8YrGtWkhRvd/RtZ8U2CC/CBNdz9HdFAU
-         ZW4tpxbZbvK7MY3+m2N6JbCge+urYADBIMZHp3s3Etd6UVc+DvvPtPrFugZyfwP2Ccak
-         RAyRetpOfdnM0wiXI9Md7kQXgiQAfcu3aUaBJVT4C9Cv1Vuzirin0ckApeyFqPC4xxeB
-         +Szg==
+        bh=2kU+2QFqQByUavlA6SMrBJMt+HQSRv32cxu5Yl+MKls=;
+        b=pGUAsvVvuIALq4ZDcZGIVqyu3aYG9GVIHHWRoao+iwc1nzznsZPOjQXwSRbGl/K2h8
+         hb9j1OHuspKGCH7eKKZNhuVBBtwiTzdUXj9VXirwCKxLy2CrmuBpu+0xqivHtBFREov9
+         xuaXseDRXLG1klWR5ftKUNQ5JaBMDxt3dvj994rY3beoZhtapGYWEM9f8aIDX+BcBikK
+         kOX+w4YHdIWEpdgaR0K9Z4FMH/lyUD1ZdJqAxXZFwkKCzeH+tuecpO73ykuXXuBzEY3/
+         PEGiysuvkE5w9q64khxrQT8vVDqcD0/3QwL/HKHFJddvvr9XTW9GCQW9bb+2satFLLal
+         mQ1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=pt7n1blqNlbsKJr0/wWj4eqASXM7NEAavXPBrxKGCLw=;
-        b=HjxnvuFUsm5YLQgebgrXMOrMAtFZx1n+C9AMlNojn0ObvDGWjOLEoqp13SxyqgDwFL
-         odA7jZ7LbespdCTOq0Jxf+t9IgTfGjEK5TqyzrYXlYWIKwEyxpBcHn5K7rX3mBJldFsG
-         OGrsv+gqldLPJIhXz3Dpj81+Josufby2R4PzZCwXc5i3zNEaBA0O4s6q3SuFhFhLwpJ6
-         WEosAWmoDt2d06QQjWPJV/qGswGygu+q4n6uNxExw7txzymoFQywCxVeMMTXp6tXuHki
-         UDdCmKCga59YHsAnmXJ2x4zTptfjwthYFKyG2y8ZCBkGHdAIgLncdtHKpyYZUt1SdAMO
-         etjg==
-X-Gm-Message-State: AEkoouvWnVlu4b6Oo/tuzPQGOonPuU8axnic7dngHjABah/FUZzjNg1pQG2ep9HtER2GdklTGQDbyLMEGLjhpg==
-X-Received: by 10.36.19.16 with SMTP id 16mr29307511itz.41.1470271307853; Wed,
- 03 Aug 2016 17:41:47 -0700 (PDT)
+        bh=2kU+2QFqQByUavlA6SMrBJMt+HQSRv32cxu5Yl+MKls=;
+        b=AeBb0GQyTnp9g9FwUkXnVOLDwKXcKEwVnYJI3EMZB2qZoY66mKm7DM++q3Jich+wm8
+         pgV1jzYueHSNcIjzVc5DFIg5yWXs3HF/Sjbq1GH3GPVZsn3gBw6YeyDzwfeAWPjwOQM6
+         6V2Md153yFj42oLZcyx0OTiKkbO7pq8w9ZZIYocQSqLs41XqfTqyazrZG8eB0aneBANY
+         z76p9yMXBnAW9PFZntVtSmRG1Lm718BVaJI4Ts19hLuvbZ3Nr7y0im2SIruKYY7q2MIj
+         vH5htY68+lKC4KYf1XxlolYDCDOAh/Cb1bMRpmsCzM3tQnmwksAvWqc0lJOKcjMBLzCJ
+         X9Ag==
+X-Gm-Message-State: AEkoousjGUoFjxtVK3amWx1k1T69xtgdtml/4PdzDWDY1SY/OoXsWmKbVs0Z5Pl9hnpAi+KUO44iZTt8OlH12w==
+X-Received: by 10.107.17.147 with SMTP id 19mr80320778ior.22.1470272036898;
+ Wed, 03 Aug 2016 17:53:56 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.79.6.212 with HTTP; Wed, 3 Aug 2016 17:41:47 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1608031621590.107993@virtualbox>
-References: <20160803084743.3299-1-judge.packham@gmail.com> <alpine.DEB.2.20.1608031621590.107993@virtualbox>
+Received: by 10.79.6.212 with HTTP; Wed, 3 Aug 2016 17:53:56 -0700 (PDT)
+In-Reply-To: <20160803180820.2raazmsfjavoaogo@sigill.intra.peff.net>
+References: <20160803084743.3299-1-judge.packham@gmail.com>
+ <alpine.DEB.2.20.1608031621590.107993@virtualbox> <xmqqr3a5al7z.fsf@gitster.mtv.corp.google.com>
+ <20160803180820.2raazmsfjavoaogo@sigill.intra.peff.net>
 From:	Chris Packham <judge.packham@gmail.com>
-Date:	Thu, 4 Aug 2016 12:41:47 +1200
-Message-ID: <CAFOYHZDHGn2HsV5U4z3Or7=7ypSkuKwbtQCmNaNuK+n06c0YXA@mail.gmail.com>
+Date:	Thu, 4 Aug 2016 12:53:56 +1200
+Message-ID: <CAFOYHZB080T51QYLaaJasoaJyBycjTRBrNQ-Gh2fitz-fcS5Sw@mail.gmail.com>
 Subject: Re: [RFC/PATCH] rebase--interactive: Add "sign" command
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	GIT <git@vger.kernel.org>
+To:	Jeff King <peff@peff.net>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	GIT <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Aug 4, 2016 at 2:31 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Chris,
+On Thu, Aug 4, 2016 at 6:08 AM, Jeff King <peff@peff.net> wrote:
+> On Wed, Aug 03, 2016 at 09:08:48AM -0700, Junio C Hamano wrote:
 >
-> On Wed, 3 Aug 2016, Chris Packham wrote:
+>> > However, I could imagine that we actually want this to be more extensible.
+>> > After all, all you are doing is to introduce a new rebase -i command that
+>> > does nothing else than shelling out to a command.
+>>
+>> Yup, I tend to agree.
+>>
+>> Adding "sign" feature (i.e. make it pass -S to "commit [--amend]")
+>> may be a good thing, but adding "sign" command to do so is not a
+>> great design.
 >
->> This is similar to the existing "reword" command in that it can be used
->> to update the commit message the difference is that the editor presented
->> to the user for the commit. It provides a useful shorthand for "exec git
->> commit --amend --no-edit -s"
-
-<snip>
-
-> Having said that, this patch clashes seriously with my current effort to
-> move a lot of the interactive rebase from shell into plain C. It is
-> actually ready, but getting this into the code base is really slow-going,
-> unfortunately.
+> I'm not sure what you mean by "feature" here, but it reminded me of
+> Michael's proposal to allow options to todo lines:
 >
-> Now, after looking at your patch it looks to me as if this would be easily
-> ported, so there is not a big deal here.
-
-Yeah sorry. I knew there was something in flight but ended up doing a
-quick hack on top of master.
-
-> However, I could imagine that we actually want this to be more extensible.
-> After all, all you are doing is to introduce a new rebase -i command that
-> does nothing else than shelling out to a command. Why not introduce a much
-> more flexible feature, where you add something like "rebase -i aliases"?
+>   http://public-inbox.org/git/530DA00E.4090402@alum.mit.edu/
 >
-> Maybe something like this:
+> which would allow:
 >
-> [rebase "command"]
->         sign = git commit --amend -s --no-post-rewrite --no-edit -S
+>   pick -S 1234abcd
+>
+> If that's what you meant, I think it is a good idea. :)
 
-I did briefly consider that. I ended up taking the shortcut because I
-had a patch series I needed to sign.
+That would definitely suit me. I see there was some discussion of
+which options were sensible to support. --signoff and --reset-author
+would be a good start from my point of view. Maybe that's something
+that could be build on top of Johannes work.
 
-Elsewhere in this thread the idea of pick -S or reword -S was raised.
-I'd actually prefer that because there seems little between 'git
-config rebase.command.sign blah' and 'exec ~/sign.sh'
-
-> I have not completely thought this through, but maybe this direction would
-> make the interactive rebase even more powerful?
-
-The uses I can think of are adding sign-off and running "make check".
-For me rebase -i doesn't need to be much more powerful than that.
+>
+> -Peff
