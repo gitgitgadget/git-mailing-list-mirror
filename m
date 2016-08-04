@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C03ED20193
-	for <e@80x24.org>; Thu,  4 Aug 2016 19:52:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D725A20193
+	for <e@80x24.org>; Thu,  4 Aug 2016 19:52:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965323AbcHDTwS (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 15:52:18 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:33562 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965313AbcHDTwQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 15:52:16 -0400
-Received: by mail-pa0-f52.google.com with SMTP id ti13so7155768pac.0
-        for <git@vger.kernel.org>; Thu, 04 Aug 2016 12:52:16 -0700 (PDT)
+	id S964796AbcHDTwL (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 15:52:11 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:35811 "EHLO
+	mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758986AbcHDTwI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 15:52:08 -0400
+Received: by mail-pf0-f181.google.com with SMTP id x72so89553092pfd.2
+        for <git@vger.kernel.org>; Thu, 04 Aug 2016 12:52:08 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=O2FgwqUuhwr1t/yITPafLQf87moJ8Gf6uh3awVdOKj4=;
-        b=PW5li9U1GjYZM13odRUftfpH1irP3PrRv79w3dC6rpg7eycjZ8qctc33teRHkJZGGT
-         VxX0bBfeqZVGC/YA97lELJ/XpqZHvy+kJrpvtICe+hs5G/ixG1tM1/sZY0VlEY3dUVkt
-         LkaNI/uEzpmG/xQMhzN7JFIyGOnjrRHmHXa4WABBDVAVXzmqCTOkOcMh82LtGdc4/zge
-         jesJ7qziQTzL2ZEGXothp9uoYpS6luPVOoRvYlUv8Hw/6TNS4mDXdCZl4fHOKI7cJ8YL
-         CFJCJzWrZhA19L9USNZWV2F2kYJ94Ecbqqah1zd4vOidrNRPis+/fOG7XVqfWHbZ09AQ
-         4rsQ==
+        bh=BD3SexaLlIoqB63aYRk8npb6bYH9/UrtQcVF7JLFd5k=;
+        b=IBI3ICDXAUCehLuO4oC/1LLi0L5WlABJNB/cb2d3r+KrwV6R3R8dUL0ZQquVq78mjT
+         pHorBcLT5NS6IibDm/kMdeFDOMnL3pzqJSmuNnzrGr48XB0uQ+A8HAvWjZ76toSSn9Pi
+         m0ztW0Ee3U2cPBvv4+RT3pVt7csnzQ9+VIZAQ99ohYrzhFa448yljLRDZKaQTvKIqEGc
+         EEAoRiF4tU8fNEMHB3TG7ctxkf6cN534lYjXQIPxgzQgk9R7aMZxoOsZYAaiSq2eLTth
+         v+CyHFUXAhQTSt5QOqYIgq4+S/EtzJ8jbgv112NDt0r6CwBivBU00/7KTHWrgXusnOKG
+         Wc3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=O2FgwqUuhwr1t/yITPafLQf87moJ8Gf6uh3awVdOKj4=;
-        b=h5XgE4kzQqbZYrOtofV01u8Y0nU3Po3CFpHpLfd1NOGqsY28io4pmKbiNTLYQmN2l3
-         zxQUzV+bYQMy0F7eTSYRNEKzvs+rqnJ7BFF8n9ixjesEoARQdQ0erES7k/5Np9VqT4qb
-         +pYF14vGUxtqsUrpIyC4hU5n+eNXkfOWkL/W1hG0mEkuUI6RLmp5USthJDcZjWk7ucFZ
-         zwkgFdMjAM/e7Vb5o/w+QlnIt8Jbkqu37MbayXhUdgRO7rMWUFciupKOT9Az5ACTk2rW
-         408QaTWbPR7TKkMA8YmAkOx/8xlZjZrs8iSADw4/ck/Lw1LH1bl8oLFRQ7b5UUUIRqPV
-         S3Ng==
-X-Gm-Message-State: AEkoouv7gRc8FoTVDGv5YVyxhL0cgRCFPytJaRukX7Gx9jvJB+arewk7liqx9m/FgqNTJmz9
-X-Received: by 10.66.249.201 with SMTP id yw9mr113050477pac.130.1470340335441;
-        Thu, 04 Aug 2016 12:52:15 -0700 (PDT)
+        bh=BD3SexaLlIoqB63aYRk8npb6bYH9/UrtQcVF7JLFd5k=;
+        b=WtmbD5HsIgzCMnjvFRMpJ5rVNeCu+Tj663bf8ZstoSrzLVQOyZD8ruChoBpgbfEdRo
+         wZbKWRE8mJtaEGaLbPkF0uzJTYJybvGfuYT8eodDpCX9JdJboYLr2Kgdm/8mPHFSa8Wv
+         8FN5JPgOPhiRJc/qKav7Dfjb28PcHiopb/ohoPemzS4pEgoSKjW2S+1UcgW10lpR3WM8
+         /lKC6iCiTJym/0QjLuuukeKtzlyP//eHEmxQIF2E793A9e7U/OcEHOayBG0zRFZ3RREU
+         Ogw7X89plYMXJPGXMXDlJl/KNTQXa2cGB2E/5XUhCY4plVDqqmW9qKlSD/Uybox+gl+R
+         x1Wg==
+X-Gm-Message-State: AEkoouuA7E7mMQDMT9nDA9TrZdEe9CQWn0uAvyjzoV1XxIP9QlWvgk/lODz2YwYKZsQ+L/Sx
+X-Received: by 10.98.133.10 with SMTP id u10mr110941942pfd.134.1470340327362;
+        Thu, 04 Aug 2016 12:52:07 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:b86b:a022:8342:c00c])
-        by smtp.gmail.com with ESMTPSA id wp4sm22357923pab.15.2016.08.04.12.52.14
+        by smtp.gmail.com with ESMTPSA id p67sm22302377pfg.22.2016.08.04.12.52.06
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 04 Aug 2016 12:52:14 -0700 (PDT)
+        Thu, 04 Aug 2016 12:52:06 -0700 (PDT)
 From:	Stefan Beller <sbeller@google.com>
 To:	gitster@pobox.com
 Cc:	git@vger.kernel.org, mst@redhat.com, Jens.Lehmann@web.de,
 	Stefan Beller <sbeller@google.com>
-Subject: [PATCH 5/6] submodule update: add super-reference flag
-Date:	Thu,  4 Aug 2016 12:51:58 -0700
-Message-Id: <20160804195159.7788-6-sbeller@google.com>
+Subject: [PATCH 1/6] t7408: modernize style
+Date:	Thu,  4 Aug 2016 12:51:54 -0700
+Message-Id: <20160804195159.7788-2-sbeller@google.com>
 X-Mailer: git-send-email 2.9.2.572.g9d9644e.dirty
 In-Reply-To: <20160804195159.7788-1-sbeller@google.com>
 References: <20160804195159.7788-1-sbeller@google.com>
@@ -60,93 +60,166 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+No functional change intended. This commit only changes formatting
+to the style we recently use, e.g. starting the body of a test with a
+single quote on the same line as the header, and then having the test
+indented in the following lines.
+
+Whenever we change directories, we do that in subshells.
+
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/submodule--helper.c | 14 +++++++++++++-
- git-submodule.sh            | 10 ++++++++++
- 2 files changed, 23 insertions(+), 1 deletion(-)
+ t/t7408-submodule-reference.sh | 138 +++++++++++++++++++++--------------------
+ 1 file changed, 71 insertions(+), 67 deletions(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index b6f297b..707f201 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -584,6 +584,7 @@ struct submodule_update_clone {
- 	int quiet;
- 	int recommend_shallow;
- 	struct string_list references;
-+	struct string_list superreferences;
- 	const char *depth;
- 	const char *recursive_prefix;
- 	const char *prefix;
-@@ -600,7 +601,7 @@ struct submodule_update_clone {
- };
- #define SUBMODULE_UPDATE_CLONE_INIT {0, MODULE_LIST_INIT, 0, \
- 	SUBMODULE_UPDATE_STRATEGY_INIT, 0, -1, STRING_LIST_INIT_DUP, \
--	NULL, NULL, NULL, \
-+	STRING_LIST_INIT_DUP, NULL, NULL, NULL, \
- 	STRING_LIST_INIT_DUP, 0, NULL, 0, 0}
+diff --git a/t/t7408-submodule-reference.sh b/t/t7408-submodule-reference.sh
+index eaea19b..afcc629 100755
+--- a/t/t7408-submodule-reference.sh
++++ b/t/t7408-submodule-reference.sh
+@@ -10,72 +10,76 @@ base_dir=$(pwd)
  
+ U=$base_dir/UPLOAD_LOG
  
-@@ -715,6 +716,15 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
- 		for_each_string_list_item(item, &suc->references)
- 			argv_array_pushl(&child->args, "--reference", item->string, NULL);
- 	}
-+	if (suc->superreferences.nr) {
-+		struct string_list_item *item;
-+		for_each_string_list_item(item, &suc->superreferences) {
-+			strbuf_reset(&sb);
-+			argv_array_pushf(&child->args, "--reference=%s/%s",
-+					 relative_path(item->string, suc->prefix, &sb),
-+					 sub->path);
-+		}
-+	}
- 	if (suc->depth)
- 		argv_array_push(&child->args, suc->depth);
+-test_expect_success 'preparing first repository' \
+-'test_create_repo A && cd A &&
+-echo first > file1 &&
+-git add file1 &&
+-git commit -m A-initial'
+-
+-cd "$base_dir"
+-
+-test_expect_success 'preparing second repository' \
+-'git clone A B && cd B &&
+-echo second > file2 &&
+-git add file2 &&
+-git commit -m B-addition &&
+-git repack -a -d &&
+-git prune'
+-
+-cd "$base_dir"
+-
+-test_expect_success 'preparing superproject' \
+-'test_create_repo super && cd super &&
+-echo file > file &&
+-git add file &&
+-git commit -m B-super-initial'
+-
+-cd "$base_dir"
+-
+-test_expect_success 'submodule add --reference' \
+-'cd super && git submodule add --reference ../B "file://$base_dir/A" sub &&
+-git commit -m B-super-added'
+-
+-cd "$base_dir"
+-
+-test_expect_success 'after add: existence of info/alternates' \
+-'test_line_count = 1 super/.git/modules/sub/objects/info/alternates'
+-
+-cd "$base_dir"
+-
+-test_expect_success 'that reference gets used with add' \
+-'cd super/sub &&
+-echo "0 objects, 0 kilobytes" > expected &&
+-git count-objects > current &&
+-diff expected current'
+-
+-cd "$base_dir"
+-
+-test_expect_success 'cloning superproject' \
+-'git clone super super-clone'
+-
+-cd "$base_dir"
+-
+-test_expect_success 'update with reference' \
+-'cd super-clone && git submodule update --init --reference ../B'
+-
+-cd "$base_dir"
+-
+-test_expect_success 'after update: existence of info/alternates' \
+-'test_line_count = 1 super-clone/.git/modules/sub/objects/info/alternates'
+-
+-cd "$base_dir"
+-
+-test_expect_success 'that reference gets used with update' \
+-'cd super-clone/sub &&
+-echo "0 objects, 0 kilobytes" > expected &&
+-git count-objects > current &&
+-diff expected current'
+-
+-cd "$base_dir"
++test_expect_success 'preparing first repository' '
++	test_create_repo A &&
++	(
++		cd A &&
++		echo first >file1 &&
++		git add file1 &&
++		git commit -m A-initial
++	)
++'
++
++test_expect_success 'preparing second repository' '
++	git clone A B &&
++	(
++		cd B &&
++		echo second >file2 &&
++		git add file2 &&
++		git commit -m B-addition &&
++		git repack -a -d &&
++		git prune
++	)
++'
++
++test_expect_success 'preparing superproject' '
++	test_create_repo super &&
++	(
++		cd super &&
++		echo file >file &&
++		git add file &&
++		git commit -m B-super-initial
++	)
++'
++
++test_expect_success 'submodule add --reference' '
++	(
++		cd super &&
++		git submodule add --reference ../B "file://$base_dir/A" sub &&
++		git commit -m B-super-added
++	)
++'
++
++test_expect_success 'after add: existence of info/alternates' '
++	test_line_count = 1 super/.git/modules/sub/objects/info/alternates
++'
++
++test_expect_success 'that reference gets used with add' '
++	(
++		cd super/sub &&
++		echo "0 objects, 0 kilobytes" > expected &&
++		git count-objects > current &&
++		diff expected current
++	)
++'
++
++test_expect_success 'cloning superproject' '
++	git clone super super-clone
++'
++
++test_expect_success 'update with reference' '
++	cd super-clone && git submodule update --init --reference ../B
++'
++
++test_expect_success 'after update: existence of info/alternates' '
++	test_line_count = 1 super-clone/.git/modules/sub/objects/info/alternates
++'
++
++test_expect_success 'that reference gets used with update' '
++	cd super-clone/sub &&
++	echo "0 objects, 0 kilobytes" > expected &&
++	git count-objects > current &&
++	diff expected current
++'
  
-@@ -835,6 +845,8 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 			   N_("rebase, merge, checkout or none")),
- 		OPT_STRING_LIST(0, "reference", &suc.references, N_("repo"),
- 			   N_("reference repository")),
-+		OPT_STRING_LIST(0, "super-reference", &suc.superreferences, N_("repo"),
-+			   N_("superproject of a reference repository")),
- 		OPT_STRING(0, "depth", &suc.depth, "<depth>",
- 			   N_("Create a shallow clone truncated to the "
- 			      "specified number of revisions")),
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 526ea5d..99d45c8 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -34,6 +34,7 @@ command=
- branch=
- force=
- reference=
-+superreference=
- cached=
- recursive=
- init=
-@@ -520,6 +521,14 @@ cmd_update()
- 		--reference=*)
- 			reference="$1"
- 			;;
-+		--super-reference)
-+			case "$2" in '') usage ;; esac
-+			superreference="--super-reference=$2"
-+			shift
-+			;;
-+		--super-reference=*)
-+			superreference="$1"
-+			;;
- 		-m|--merge)
- 			update="merge"
- 			;;
-@@ -576,6 +585,7 @@ cmd_update()
- 		${prefix:+--recursive-prefix "$prefix"} \
- 		${update:+--update "$update"} \
- 		${reference:+"$reference"} \
-+		${superreference:+"$superreference"} \
- 		${depth:+--depth "$depth"} \
- 		${recommend_shallow:+"$recommend_shallow"} \
- 		${jobs:+$jobs} \
+ test_done
 -- 
 2.9.2.572.g9d9644e.dirty
 
