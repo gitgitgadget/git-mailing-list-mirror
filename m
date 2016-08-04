@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D725A20193
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDF8520228
 	for <e@80x24.org>; Thu,  4 Aug 2016 19:52:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964796AbcHDTwL (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 15:52:11 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:35811 "EHLO
-	mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758986AbcHDTwI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 15:52:08 -0400
-Received: by mail-pf0-f181.google.com with SMTP id x72so89553092pfd.2
-        for <git@vger.kernel.org>; Thu, 04 Aug 2016 12:52:08 -0700 (PDT)
+	id S965423AbcHDTwX (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 15:52:23 -0400
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:33210 "EHLO
+	mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758986AbcHDTwM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 15:52:12 -0400
+Received: by mail-pf0-f171.google.com with SMTP id y134so89498560pfg.0
+        for <git@vger.kernel.org>; Thu, 04 Aug 2016 12:52:12 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=BD3SexaLlIoqB63aYRk8npb6bYH9/UrtQcVF7JLFd5k=;
-        b=IBI3ICDXAUCehLuO4oC/1LLi0L5WlABJNB/cb2d3r+KrwV6R3R8dUL0ZQquVq78mjT
-         pHorBcLT5NS6IibDm/kMdeFDOMnL3pzqJSmuNnzrGr48XB0uQ+A8HAvWjZ76toSSn9Pi
-         m0ztW0Ee3U2cPBvv4+RT3pVt7csnzQ9+VIZAQ99ohYrzhFa448yljLRDZKaQTvKIqEGc
-         EEAoRiF4tU8fNEMHB3TG7ctxkf6cN534lYjXQIPxgzQgk9R7aMZxoOsZYAaiSq2eLTth
-         v+CyHFUXAhQTSt5QOqYIgq4+S/EtzJ8jbgv112NDt0r6CwBivBU00/7KTHWrgXusnOKG
-         Wc3A==
+        bh=k6wiUzt7C4swNFSWcw0DmTXjHWx+BP13PCUQkj69Im0=;
+        b=Yy1N6NB/G0CCEYnRf2zLi/6yo097V++gKHfuHIaDELR230f76Dm2Av9dnlHJeIVQTF
+         WFdFOR78EIL3jiKGq4QQz93lSd7ZzjeSMipCj8byXbm1ggoYaS1dXXBHYfHusGatiX1D
+         91SOwM7aKngmlNt8j2EW4mcxmMrJpR0/0BXL7oW7/5poCH736HaB+fQOVvgaSgFAt9Ga
+         xXi51iz99fCKUg+itxRVEM64o8/GC+xwGPRlumQQyHpQAqkTf3N7fgWOzW/XfALuBw0O
+         6Gj4SSTrZ6MzLmRSIKcgxbsF0cHmbojidS+HpEYpjEF1MI6pOAE+6MqT3dEqi1K6Mve2
+         1XjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=BD3SexaLlIoqB63aYRk8npb6bYH9/UrtQcVF7JLFd5k=;
-        b=WtmbD5HsIgzCMnjvFRMpJ5rVNeCu+Tj663bf8ZstoSrzLVQOyZD8ruChoBpgbfEdRo
-         wZbKWRE8mJtaEGaLbPkF0uzJTYJybvGfuYT8eodDpCX9JdJboYLr2Kgdm/8mPHFSa8Wv
-         8FN5JPgOPhiRJc/qKav7Dfjb28PcHiopb/ohoPemzS4pEgoSKjW2S+1UcgW10lpR3WM8
-         /lKC6iCiTJym/0QjLuuukeKtzlyP//eHEmxQIF2E793A9e7U/OcEHOayBG0zRFZ3RREU
-         Ogw7X89plYMXJPGXMXDlJl/KNTQXa2cGB2E/5XUhCY4plVDqqmW9qKlSD/Uybox+gl+R
-         x1Wg==
-X-Gm-Message-State: AEkoouuA7E7mMQDMT9nDA9TrZdEe9CQWn0uAvyjzoV1XxIP9QlWvgk/lODz2YwYKZsQ+L/Sx
-X-Received: by 10.98.133.10 with SMTP id u10mr110941942pfd.134.1470340327362;
-        Thu, 04 Aug 2016 12:52:07 -0700 (PDT)
+        bh=k6wiUzt7C4swNFSWcw0DmTXjHWx+BP13PCUQkj69Im0=;
+        b=Pm4yjp+TdzzK3Xut2AlN431fznuxZrR6mxdub23w0lYRzLj+PcebnBIds+ysiEQs3e
+         wvtAC9GYkqrxfAcAAupGYEw8Twiy7QAvfJWcc5KbJQrJXRvNFfe7tq9Nn781LAArkAlX
+         eCcAz1evM4LbZZUb6BQQJ63pe+N9fU6BLpCsty550rMoiNa1f4GN6MuqmEJOHQoSX3SD
+         Dm8nFrnTOSUol4sV+HjAi3WD7ho7mbY/6X8+50XV3AuCfFnWQ70R8ZvMAEHgCxnZ5dTL
+         dUfL9qFpWA1gW7puNv/5xRWMjdPQBePYcsr9fUHwvtxYmYh8XglijiI333WEIPklgfok
+         KcJQ==
+X-Gm-Message-State: AEkoousIUy96SnMHF4+rZ065Mq/kvLW7TuVZB+0HQgdGuh3bpdFYUix1qs4OdNuch3AfVtEy
+X-Received: by 10.98.68.148 with SMTP id m20mr125577701pfi.0.1470340331527;
+        Thu, 04 Aug 2016 12:52:11 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:b86b:a022:8342:c00c])
-        by smtp.gmail.com with ESMTPSA id p67sm22302377pfg.22.2016.08.04.12.52.06
+        by smtp.gmail.com with ESMTPSA id h86sm22296482pfh.46.2016.08.04.12.52.10
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 04 Aug 2016 12:52:06 -0700 (PDT)
+        Thu, 04 Aug 2016 12:52:10 -0700 (PDT)
 From:	Stefan Beller <sbeller@google.com>
 To:	gitster@pobox.com
 Cc:	git@vger.kernel.org, mst@redhat.com, Jens.Lehmann@web.de,
 	Stefan Beller <sbeller@google.com>
-Subject: [PATCH 1/6] t7408: modernize style
-Date:	Thu,  4 Aug 2016 12:51:54 -0700
-Message-Id: <20160804195159.7788-2-sbeller@google.com>
+Subject: [PATCH 3/6] submodule--helper module-clone: allow multiple references
+Date:	Thu,  4 Aug 2016 12:51:56 -0700
+Message-Id: <20160804195159.7788-4-sbeller@google.com>
 X-Mailer: git-send-email 2.9.2.572.g9d9644e.dirty
 In-Reply-To: <20160804195159.7788-1-sbeller@google.com>
 References: <20160804195159.7788-1-sbeller@google.com>
@@ -60,166 +60,77 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-No functional change intended. This commit only changes formatting
-to the style we recently use, e.g. starting the body of a test with a
-single quote on the same line as the header, and then having the test
-indented in the following lines.
-
-Whenever we change directories, we do that in subshells.
+Allow users to pass in multiple references, just as clone accepts multiple
+references as well.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- t/t7408-submodule-reference.sh | 138 +++++++++++++++++++++--------------------
- 1 file changed, 71 insertions(+), 67 deletions(-)
+ builtin/submodule--helper.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/t/t7408-submodule-reference.sh b/t/t7408-submodule-reference.sh
-index eaea19b..afcc629 100755
---- a/t/t7408-submodule-reference.sh
-+++ b/t/t7408-submodule-reference.sh
-@@ -10,72 +10,76 @@ base_dir=$(pwd)
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index b22352b..896a3ec 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -442,7 +442,7 @@ static int module_name(int argc, const char **argv, const char *prefix)
+ }
  
- U=$base_dir/UPLOAD_LOG
+ static int clone_submodule(const char *path, const char *gitdir, const char *url,
+-			   const char *depth, const char *reference, int quiet)
++			   const char *depth, struct string_list *reference, int quiet)
+ {
+ 	struct child_process cp;
+ 	child_process_init(&cp);
+@@ -453,8 +453,11 @@ static int clone_submodule(const char *path, const char *gitdir, const char *url
+ 		argv_array_push(&cp.args, "--quiet");
+ 	if (depth && *depth)
+ 		argv_array_pushl(&cp.args, "--depth", depth, NULL);
+-	if (reference && *reference)
+-		argv_array_pushl(&cp.args, "--reference", reference, NULL);
++	if (reference->nr) {
++		struct string_list_item *item;
++		for_each_string_list_item(item, reference)
++			argv_array_pushl(&cp.args, "--reference", item->string, NULL);
++	}
+ 	if (gitdir && *gitdir)
+ 		argv_array_pushl(&cp.args, "--separate-git-dir", gitdir, NULL);
  
--test_expect_success 'preparing first repository' \
--'test_create_repo A && cd A &&
--echo first > file1 &&
--git add file1 &&
--git commit -m A-initial'
--
--cd "$base_dir"
--
--test_expect_success 'preparing second repository' \
--'git clone A B && cd B &&
--echo second > file2 &&
--git add file2 &&
--git commit -m B-addition &&
--git repack -a -d &&
--git prune'
--
--cd "$base_dir"
--
--test_expect_success 'preparing superproject' \
--'test_create_repo super && cd super &&
--echo file > file &&
--git add file &&
--git commit -m B-super-initial'
--
--cd "$base_dir"
--
--test_expect_success 'submodule add --reference' \
--'cd super && git submodule add --reference ../B "file://$base_dir/A" sub &&
--git commit -m B-super-added'
--
--cd "$base_dir"
--
--test_expect_success 'after add: existence of info/alternates' \
--'test_line_count = 1 super/.git/modules/sub/objects/info/alternates'
--
--cd "$base_dir"
--
--test_expect_success 'that reference gets used with add' \
--'cd super/sub &&
--echo "0 objects, 0 kilobytes" > expected &&
--git count-objects > current &&
--diff expected current'
--
--cd "$base_dir"
--
--test_expect_success 'cloning superproject' \
--'git clone super super-clone'
--
--cd "$base_dir"
--
--test_expect_success 'update with reference' \
--'cd super-clone && git submodule update --init --reference ../B'
--
--cd "$base_dir"
--
--test_expect_success 'after update: existence of info/alternates' \
--'test_line_count = 1 super-clone/.git/modules/sub/objects/info/alternates'
--
--cd "$base_dir"
--
--test_expect_success 'that reference gets used with update' \
--'cd super-clone/sub &&
--echo "0 objects, 0 kilobytes" > expected &&
--git count-objects > current &&
--diff expected current'
--
--cd "$base_dir"
-+test_expect_success 'preparing first repository' '
-+	test_create_repo A &&
-+	(
-+		cd A &&
-+		echo first >file1 &&
-+		git add file1 &&
-+		git commit -m A-initial
-+	)
-+'
-+
-+test_expect_success 'preparing second repository' '
-+	git clone A B &&
-+	(
-+		cd B &&
-+		echo second >file2 &&
-+		git add file2 &&
-+		git commit -m B-addition &&
-+		git repack -a -d &&
-+		git prune
-+	)
-+'
-+
-+test_expect_success 'preparing superproject' '
-+	test_create_repo super &&
-+	(
-+		cd super &&
-+		echo file >file &&
-+		git add file &&
-+		git commit -m B-super-initial
-+	)
-+'
-+
-+test_expect_success 'submodule add --reference' '
-+	(
-+		cd super &&
-+		git submodule add --reference ../B "file://$base_dir/A" sub &&
-+		git commit -m B-super-added
-+	)
-+'
-+
-+test_expect_success 'after add: existence of info/alternates' '
-+	test_line_count = 1 super/.git/modules/sub/objects/info/alternates
-+'
-+
-+test_expect_success 'that reference gets used with add' '
-+	(
-+		cd super/sub &&
-+		echo "0 objects, 0 kilobytes" > expected &&
-+		git count-objects > current &&
-+		diff expected current
-+	)
-+'
-+
-+test_expect_success 'cloning superproject' '
-+	git clone super super-clone
-+'
-+
-+test_expect_success 'update with reference' '
-+	cd super-clone && git submodule update --init --reference ../B
-+'
-+
-+test_expect_success 'after update: existence of info/alternates' '
-+	test_line_count = 1 super-clone/.git/modules/sub/objects/info/alternates
-+'
-+
-+test_expect_success 'that reference gets used with update' '
-+	cd super-clone/sub &&
-+	echo "0 objects, 0 kilobytes" > expected &&
-+	git count-objects > current &&
-+	diff expected current
-+'
+@@ -470,13 +473,13 @@ static int clone_submodule(const char *path, const char *gitdir, const char *url
  
- test_done
+ static int module_clone(int argc, const char **argv, const char *prefix)
+ {
+-	const char *name = NULL, *url = NULL;
+-	const char *reference = NULL, *depth = NULL;
++	const char *name = NULL, *url = NULL, *depth = NULL;
+ 	int quiet = 0;
+ 	FILE *submodule_dot_git;
+ 	char *p, *path = NULL, *sm_gitdir;
+ 	struct strbuf rel_path = STRBUF_INIT;
+ 	struct strbuf sb = STRBUF_INIT;
++	struct string_list reference = STRING_LIST_INIT_NODUP;
+ 
+ 	struct option module_clone_options[] = {
+ 		OPT_STRING(0, "prefix", &prefix,
+@@ -491,8 +494,8 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 		OPT_STRING(0, "url", &url,
+ 			   N_("string"),
+ 			   N_("url where to clone the submodule from")),
+-		OPT_STRING(0, "reference", &reference,
+-			   N_("string"),
++		OPT_STRING_LIST(0, "reference", &reference,
++			   N_("repo"),
+ 			   N_("reference repository")),
+ 		OPT_STRING(0, "depth", &depth,
+ 			   N_("string"),
+@@ -528,7 +531,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 	if (!file_exists(sm_gitdir)) {
+ 		if (safe_create_leading_directories_const(sm_gitdir) < 0)
+ 			die(_("could not create directory '%s'"), sm_gitdir);
+-		if (clone_submodule(path, sm_gitdir, url, depth, reference, quiet))
++		if (clone_submodule(path, sm_gitdir, url, depth, &reference, quiet))
+ 			die(_("clone of '%s' into submodule path '%s' failed"),
+ 			    url, path);
+ 	} else {
 -- 
 2.9.2.572.g9d9644e.dirty
 
