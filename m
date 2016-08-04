@@ -2,88 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A4CF20226
-	for <e@80x24.org>; Thu,  4 Aug 2016 08:03:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CABA120226
+	for <e@80x24.org>; Thu,  4 Aug 2016 10:05:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754205AbcHDIDo (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 04:03:44 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33260 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754010AbcHDIDm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 04:03:42 -0400
-Received: by mail-wm0-f68.google.com with SMTP id o80so41306961wme.0
-        for <git@vger.kernel.org>; Thu, 04 Aug 2016 01:03:41 -0700 (PDT)
+	id S1753676AbcHDKFh (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 06:05:37 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:33632 "EHLO
+	mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751188AbcHDKFg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 06:05:36 -0400
+Received: by mail-qk0-f196.google.com with SMTP id x189so11295278qkd.0
+        for <git@vger.kernel.org>; Thu, 04 Aug 2016 03:04:30 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=4m/B9BCmHoXUuVebVGEqdu9QYa3lFq6FkkVsbf8DVNk=;
-        b=wMlJa4vmZEgePxXWe3DQtWZGz0CmrISyDO90TFPVTtUaa5e9Z8gBUz0hyyclBz0Civ
-         9h+iiK7Cpi/hmG1REvskJdBxVqlsdmyRcWQO3dRMFI7X8qp35apYdjCuJxy7DK+k/+kS
-         LFU+E5pHuuIZMeDQzc0piy+TTbnCY3b7QZ1z6f1q6SE/Ris9ZAq8W1tdERUraO7whFHK
-         e2ceIyVPuxVzacrTx0a91qF8CZzf7D7TcxJyRBafQ1S8TWdY5IqRlqyxJzzSacD7GxpL
-         eFifqjhMnrUnlTjCMcAacl3l8gaHl8R/X8nDj+ECUaTROK5K/tTLtpSM4zOBUe2jF2g5
-         6pqw==
+        d=informer-com.20150623.gappssmtp.com; s=20150623;
+        h=sender:date:to:from:reply-to:subject:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YtVcc6PlKwC8KXmjnqPhmpHmVB7Po1RycI1tR5nrg8s=;
+        b=vdcBEqq7O4mhkOjiiMC8TgEsSBXFger1uV9/dR6y35I6ECfLxZcEutlyzews2lbEph
+         kl0/ygkjNSZCY6c7ZmYs/4ed8bM2IvFg0HuEye+ceQ/4umyW6C9mKoes/zaEYr6USpNH
+         2dRgJ/bQmfr1zw2/Cl92CA3vl/j8SKTHt9MxnK9j7O80bQVGMT05LL7YXHW1hkJ4hMyl
+         UuFY7IZWU7kNfoVriRzh048nVBPXUlQHPcwgsTLp7ekGNGtQSuVLQmVO1HIhuEbG9WSR
+         HdgIGNULSt/pNZJFsRpbFJU2rVJMzh2jVEFueFgvtgGBv/Vo7ouZyOMCrpLIyHFtcEdI
+         GG+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=4m/B9BCmHoXUuVebVGEqdu9QYa3lFq6FkkVsbf8DVNk=;
-        b=cN5P9wcED987FmH2Ncc/AuJxJBaInrVo3oJrKmoMQVfAa+4lj/oB7whmN+B3BdG2a0
-         ITfoe5XoJ7frPUPD/cjxBFL8uN3rDwtAJBkmcoq+aBWh5LW0r75H5rvaquP9PpbvqVM+
-         kopuD1L7OJUEn5XKa+gz9+ASX3AofZgz+KwZY4DriVXvvP/y17S5AHbTPy2hXDUHJsCE
-         2KYXlitWjoqWQQjx721g1eEVapzQe26xwK8VcmEdlGBSQfxEzFxEWHxZaX3CBprCgVIp
-         fcwqAkWlwgOhlxJBqwabGMTsHEXa1Jz6QKkNuJg1SpVgtNAm9gtNZ47kIut+ELyBvq36
-         fTtg==
-X-Gm-Message-State: AEkoouvxFBTUcAYi6eKSG6oIb+D7OIWioNLaKds1sD1v3UjNSzaxa+pja+3r2j6DJb+/nQ==
-X-Received: by 10.28.22.70 with SMTP id 67mr29870857wmw.52.1470297820756;
-        Thu, 04 Aug 2016 01:03:40 -0700 (PDT)
-Received: from slxbook4.fritz.box (p5DDB6740.dip0.t-ipconnect.de. [93.219.103.64])
-        by smtp.gmail.com with ESMTPSA id n131sm2329254wmd.3.2016.08.04.01.03.39
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 04 Aug 2016 01:03:40 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: What's cooking in git.git (Aug 2016, #01; Tue, 2)
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqlh0ebyhn.fsf@gitster.mtv.corp.google.com>
-Date:	Thu, 4 Aug 2016 10:03:39 +0200
-Cc:	git@vger.kernel.org
-Content-Transfer-Encoding: 7bit
-Message-Id: <4877318E-3CBF-4C87-B24D-AAE35C427D66@gmail.com>
-References: <xmqqlh0ebyhn.fsf@gitster.mtv.corp.google.com>
-To:	Junio C Hamano <gitster@pobox.com>, john@keeping.me.uk
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:sender:date:to:from:reply-to:subject:message-id
+         :mime-version:content-transfer-encoding;
+        bh=YtVcc6PlKwC8KXmjnqPhmpHmVB7Po1RycI1tR5nrg8s=;
+        b=Nj0iNm8sn37zwRjKvjFQby/dGx+U/04d4xFs4IcPM7y48U/arZqWg8W6/xP7djfHvv
+         9KLgAu4PpmKCwCwcXOqnfiAPGNyerzOYdQOt/6aIAuV2520p1pJmSX2gwG0iQlkaZFVu
+         yR55xIGx+1ZaXZ0cwx/p74ZPcxRjKHH747JwhyMoClZFI2/ZI0A7X8xm9t+3cwEFtUbD
+         CChnbIZx4jJyGchY8+I4yKxZrUQ/ZC0kggGFfrid4Uj0EfBkyfLOKrcCSO4Ek6tw7h5r
+         vU4s4jC5R3H8f619kWvLLmh5SqCeBc4fPqy5P6MF8k8btdlrIsab0k2gUY8ZicPR4elz
+         OGVw==
+X-Gm-Message-State: AEkoousD21pwzPQin+mVEfEXahpdV/zC/3oIhfGdrHhBuYadcwhyUtCo6P+LjAuk3eMnPg==
+X-Received: by 10.55.207.87 with SMTP id e84mr5621631qkj.266.1470305070113;
+        Thu, 04 Aug 2016 03:04:30 -0700 (PDT)
+Received: from software.informer.com (27.28.24ae.ip4.static.sl-reverse.com. [174.36.40.39])
+        by smtp.gmail.com with ESMTPSA id k20sm6508820qkl.2.2016.08.04.03.04.28
+        for <git@vger.kernel.org>
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Thu, 04 Aug 2016 03:04:28 -0700 (PDT)
+Date:	Thu, 4 Aug 2016 06:04:28 -0400
+To:	git@vger.kernel.org
+From:	Kasey Bloome <partners@informer.com>
+Reply-to: Kasey Bloome <partners@informer.com>
+Subject: GIT by github 2.9.2 is listed on Software Informer
+Message-ID: <c231393a4c285cd19aa8bc1d767b3335@software.informer.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7BIT
+Content-Type:	text/plain; charset=US-ASCII
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Good day!
 
-> 
-> * jk/push-force-with-lease-creation (2016-07-26) 3 commits
-> - push: allow pushing new branches with --force-with-lease
-> - push: add shorthand for --force-with-lease branch creation
-> - Documentation/git-push: fix placeholder formatting
-> 
-> "git push --force-with-lease" already had enough logic to allow
-> ensuring that such a push results in creation of a ref (i.e. the
-> receiving end did not have another push from sideways that would be
-> discarded by our force-pushing), but didn't expose this possibility
-> to the users.  It does so now.
-> 
-> Will merge to 'next'.
+Software.informer.com would like to inform you that your product GIT by github 2.9.2 has been reviewed by our editors and your program got "100% Clean Award" http://git.software.informer.com/.
 
-t5533-push-cas.sh "16 - new branch already exists" seems to be broken 
-for OSX on next. Git bisect indicates that "push: add shorthand for 
---force-with-lease branch creation" might be the culprit.
+We would be grateful if you place our award with a link to our review on your website. On our part, we can offer featuring your program in our Today's Highlight block. This block is shown in the rotator at the top of the main page and also on every page of our website in the upper right corner.
 
-https://travis-ci.org/git/git/jobs/149614431
-https://api.travis-ci.org/jobs/149614431/log.txt?deansi=true (non-JS)
+We also offer you to take advantage of our free storage by hosting your installation package on our servers and listing us as one of the mirror downloads for your application. There is a selection of predesigned buttons available to fit the look of your website.
 
-- Lars
+Please let me know if you're interested in any of these offers.
+
+We are on the list of the world's 500 most visited websites with over 700,000 unique visitors every day, so this could get your application some extra exposure.
+
+Kind regards,
+Kasey Bloome
+
+
