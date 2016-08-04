@@ -2,92 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F348820193
-	for <e@80x24.org>; Thu,  4 Aug 2016 16:06:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BB9120193
+	for <e@80x24.org>; Thu,  4 Aug 2016 16:07:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965014AbcHDQGB (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 12:06:01 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60809 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S964981AbcHDQGA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 12:06:00 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5402930F36;
-	Thu,  4 Aug 2016 12:05:59 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2UtmctPfT9OHURxFoLrOHzZ+0LA=; b=k8+OJ9
-	L3LNp461LNlJvezGY+hUrcQ3xu9iVRu9il+FQkqE9nG+EtPYMgc2pj05Ft/RnWG3
-	UjkSvVo+Rip+LWmI9tG4A2r6j998jzRcUzSUs/qZf3ErO5CJ21NH+0N5wdLStBt9
-	i+pmTbXxiDb/Goayo3KwPV2UuXE3fZIjaVtQI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uAnHWFoT+BHv4Vf7h2ELfe7H2wRmU907
-	Kef+UstJNKd0xrC/bOpdgKAkPOJb4fSlpZPFopp1jCuDRo6101/jbnmUxSs3uKbn
-	f8qThaYKEtIKxfJOd+hxtXCy5PXK9RUxny1UuL8ptX4HaqXlm+CFQ2AMKNFLeIPV
-	8AEumXm2loQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4B0A130F35;
-	Thu,  4 Aug 2016 12:05:59 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B593A30F34;
-	Thu,  4 Aug 2016 12:05:58 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	Michael Haggerty <mhagger@alum.mit.edu>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Chris Packham <judge.packham@gmail.com>, git@vger.kernel.org
-Subject: Re: [RFC/PATCH] rebase--interactive: Add "sign" command
-References: <20160803084743.3299-1-judge.packham@gmail.com>
-	<alpine.DEB.2.20.1608031621590.107993@virtualbox>
-	<xmqqr3a5al7z.fsf@gitster.mtv.corp.google.com>
-	<20160803180820.2raazmsfjavoaogo@sigill.intra.peff.net>
-Date:	Thu, 04 Aug 2016 09:05:56 -0700
-In-Reply-To: <20160803180820.2raazmsfjavoaogo@sigill.intra.peff.net> (Jeff
-	King's message of "Wed, 3 Aug 2016 14:08:20 -0400")
-Message-ID: <xmqqinvg5xjv.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1758796AbcHDQHI (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 12:07:08 -0400
+Received: from mout.gmx.net ([212.227.17.22]:61002 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758699AbcHDQHH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 12:07:07 -0400
+Received: from virtualbox ([37.24.141.218]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MS5jy-1bfgFT23A2-00TFEh; Thu, 04 Aug 2016 18:07:01
+ +0200
+Date:	Thu, 4 Aug 2016 18:07:00 +0200 (CEST)
+From:	Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	git@vger.kernel.org
+cc:	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/2] Patches to let Git build with GCC 6 and
+ DEVELOPER=SureWhyNot
+Message-ID: <cover.1470326812.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5522AE4E-5A5D-11E6-B674-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:FU8yeWyBGx1oEV+311HF/gygCMmIkCf3mpd3TcDQYOanXWXlzVy
+ MkLW28Ty0d1lDVIsYXPJOxzV5O6Q12U8IPjcKyXMQbhj3jECz9x4GlpAEel7yymaCLruWhp
+ QBCZY6+mSjxP2VBnDr0CU2viI4dEeRRnUrbQf2lcKz+F89XrdEiLell5lqvMkIUnekFuEeb
+ I7m88C/qWDCaSClJRXzCw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:CAJ7ThBeoR8=:VyIqU1nCrTyNdnTTbCSOc+
+ kpouxtTj12aVFykMlfQ0h9ZtM9FC9pX1BXnAt/fAFZACA24jWbxNhRBW9BwCRu6Cz1foa7Ib0
+ rg4uR0zFqPtjq1rqbJ/e/suiRqBXW2GE8amSW5flENWlxGibOdNicroWJqIMIlwU7bJ8ntK5f
+ C2CEPpJyobOOsuDl+m2brTVwSuH9ZHkjlRUPyCJl5n/b6wELDvcNgdRzNMYY/wIZr6gauhoo5
+ a/r8g7WunzH3A86sEPIJ8djHsepaheVQ6/lLa8R7qgOjyn9+O6ci/37Xl/cdgmNR4pQb+x7ZR
+ +LDrEIZJd1p8jq+wOMR5TgcOK4YF+vBKjqOsUs8ESwductN1wV86Gr4qVKj5jm2pwsXkIXq/E
+ 6LI4H+Gt5hpuC2VMKNnN/D8qmD3nApQbm3wEdFyi93RaHtlMVgBb4QhRh8vj1z7m4AXDSiF7p
+ nPxdv7DBEbV2D9/8md5G/AoiCCKT8+2vbiwzeoolH1qsHSv4keUxos9Yq11nTp7R5/JPLiONZ
+ rZWGYLCKLHU5JU2kXM55k3cDZDtEe1fIAMVQoGB4puJKVsAAvUwNlNGLbhgPmLBENoKHSluSB
+ 8f5sgijcyUaK5RZypcaQ83nhLmsCyDMx4g1XDWJYkq3rdyGibq/778x+z68NeuzWGe2o9c2JL
+ TbzU7eA3yIuHgpCGGk5dkrR3/Z4llgj7YhBz5eU365Y/QSZg6UdWOBKpTPZvP6/omkIJtp6za
+ W2eClLXw1L8yAK/Yx+8WfhSB1OTIjInWdR/KZNOHBQEqyEQQWKciq0LxRMTQKybRf7/glbRFO
+ n4uPWpw
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+While working on some local setup to allow my poor little laptop to
+build and test the Windows-specific patches of Git for Windows on top of
+the upstream branches, my development environment updated to use GCC 6,
+and these patches were required.
 
-> On Wed, Aug 03, 2016 at 09:08:48AM -0700, Junio C Hamano wrote:
->
->> > However, I could imagine that we actually want this to be more extensible.
->> > After all, all you are doing is to introduce a new rebase -i command that
->> > does nothing else than shelling out to a command.
->> 
->> Yup, I tend to agree.
->> 
->> Adding "sign" feature (i.e. make it pass -S to "commit [--amend]")
->> may be a good thing, but adding "sign" command to do so is not a
->> great design.
->
-> I'm not sure what you mean by "feature" here, but it reminded me of
-> Michael's proposal to allow options to todo lines:
->
->   http://public-inbox.org/git/530DA00E.4090402@alum.mit.edu/
->
-> which would allow:
->
->   pick -S 1234abcd
->
-> If that's what you meant, I think it is a good idea. :)
 
-Yes, by "feature" I meant "giving the ability to decide if the
-resulting commit gets signature", which can and should be orthogonal
-to the choice of using editor to reword the message when the commit
-is created or "--no-edit" is passed and the original message is used
-verbatim.
+Johannes Schindelin (2):
+  nedmalloc: fix misleading indentation
+  nedmalloc: work around overzealous GCC 6 warning
+
+ compat/nedmalloc/nedmalloc.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+Published-As: https://github.com/dscho/git/releases/tag/gcc-6-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git gcc-6-v1
+-- 
+2.9.0.281.g286a8d9
+
+base-commit: 80460f513ebd7851953f5402dd9744236128b240
