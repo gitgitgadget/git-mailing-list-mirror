@@ -2,89 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C93A20193
-	for <e@80x24.org>; Thu,  4 Aug 2016 16:07:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1A4920193
+	for <e@80x24.org>; Thu,  4 Aug 2016 16:07:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758815AbcHDQHN (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 12:07:13 -0400
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:33752 "EHLO
-	mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758799AbcHDQHL (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1758810AbcHDQHM (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 12:07:12 -0400
+Received: from mout.gmx.net ([212.227.15.15]:55359 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758699AbcHDQHL (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 4 Aug 2016 12:07:11 -0400
-Received: by mail-yw0-f193.google.com with SMTP id z8so20657457ywa.0
-        for <git@vger.kernel.org>; Thu, 04 Aug 2016 09:07:11 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=eMtZOWsx/cMGTBtVe7VjZ6o52jEvNyEwDDOZhy1i5I4=;
-        b=xWht1D51hY3YIV3eOFn/EeMP26BQLPixbRNNZbu1g4/QDDSQq4d3lhWKZfW3VmCZJn
-         DWPihNtiHZpGcCQowEPEoq9T4E7jwCBpQE7FOKhwJZHOpgfh7ymZPlOe67IONrC72LJE
-         Rg70ttbfgiLn/tb+T3DbR92Ds7BC5SS2lPk0uGFq4d8Yt8lMH2uZPJbXsTAwoVakmmGY
-         uNYo9X5sdnPwwfDev+tlATsRwtpHz4QV1HTKfpAkNM3Hw1XIOg/gVjD5vzGsxEy+waCD
-         5sPcQD+EehYyQi/lcgRBusLsGERoa3If1+jx3hdlHbrAEA9XDN+vLBCkTQqU/HUTxZUq
-         TH0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=eMtZOWsx/cMGTBtVe7VjZ6o52jEvNyEwDDOZhy1i5I4=;
-        b=N90oXbbuIDGJLvuO0rnfEYlHC+CTXY5xPqhUESCooLauGEnJbUivq4TXZSsykT3ecd
-         F16sUQMP52bvLQEWJIaZM2ol/En8+/jSQDEVwbUqPRjXiI3hqILtcuQ4wWEFIt5hTjey
-         Bsxr+E5jNMTtEZE3kLMif1KVeiuD3szRYMcMnf0/BxlN3WJDuZQhhzib3NUaS0ceA8xJ
-         nkc/t2fKQfhORqmZnvQ9jzhtSdXqLg9FHY5d3y+JoFBQ/qM1kJSleNSZDKFgquC5+BT3
-         tnvuXApUUyWOq4BVIcEKpvlrXynsKGIQZr/mjjLyS5/qOk9Y0K8YhmVs1wvVYa1FIzGn
-         swYA==
-X-Gm-Message-State: AEkoousOe1DEYn0tH/UGaVswFM74tm3TqoWoYimJ1urH8wSrdQRhOClSgarLNqULBx68MJtt+CLlwSFNhkRwAQ==
-X-Received: by 10.129.154.76 with SMTP id r73mr59728590ywg.164.1470326830539;
- Thu, 04 Aug 2016 09:07:10 -0700 (PDT)
+Received: from virtualbox ([37.24.141.218]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MLvGW-1bd3LR0O7A-007mqK; Thu, 04 Aug 2016 18:07:05
+ +0200
+Date:	Thu, 4 Aug 2016 18:07:03 +0200 (CEST)
+From:	Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	git@vger.kernel.org
+cc:	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/2] nedmalloc: fix misleading indentation
+In-Reply-To: <cover.1470326812.git.johannes.schindelin@gmx.de>
+Message-ID: <0e17a706c29932e2280a1bc1730f5064bbcfec57.1470326812.git.johannes.schindelin@gmx.de>
+References: <cover.1470326812.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.129.89.132 with HTTP; Thu, 4 Aug 2016 09:07:10 -0700 (PDT)
-In-Reply-To: <xmqqr3a45yi7.fsf@gitster.mtv.corp.google.com>
-References: <0102015640423c26-2060fd70-c90d-4de3-ae8c-1801ad160b1c-000000@eu-west-1.amazonses.com>
- <0102015640423ce6-5b11201e-736d-413f-be12-7fed613ae484-000000@eu-west-1.amazonses.com>
- <xmqqy44fdpxd.fsf@gitster.mtv.corp.google.com> <CAFZEwPNFohRLCS4piB1t0LO-=keucwzRKZ2Jyhhf234tnWnVGg@mail.gmail.com>
- <xmqqr3a45yi7.fsf@gitster.mtv.corp.google.com>
-From:	Pranit Bauva <pranit.bauva@gmail.com>
-Date:	Thu, 4 Aug 2016 21:37:10 +0530
-Message-ID: <CAFZEwPMdOawVT6W6Ko=xkMLu4PcWkd0s_GiJA-T5uu-oY2m23g@mail.gmail.com>
-Subject: Re: [RFC/PATCH v11 04/13] bisect--helper: `bisect_clean_state` shell
- function in C
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:3dLf5hRuhKCwv/KAVsej8leGAByENhidSZ2mHfvwTH2RCZD//f0
+ +lom1rxNJJOl7CtvsdiWE7Ii4vquKmu7Knucl6AMIf+ZS0xmvSZ/1+UslT1IcbrvTns2Wdw
+ u+lQpftW0SmMm2hLFxqq6haoRFo8o967FKtVEm3wngT/8/iDvOPNNyKE7L7bepw9pvcBVce
+ Fq4X8gDAfy1eLI2jVXmfg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:iyu2E137o8s=:yo1ZQ7lag+OkoyWPbMY8Kv
+ MVWHYKi7m2kkIOFsUKgBe+QQrWTiLBsKTplPVcNSSoldRcgpzwY9yBhYR1iahK/OxHAzha8Pu
+ RqeOnutbfhqH4mfS6MJgUXFz6rB62T2u03IHh6Kaij55AF+FUEMiWFr0Yc8ZaKcl1+wvYCPzP
+ pssM8qc3xhI8JcHWwr6nb4x3zdkLatqEbHSgnq5Ca+tnOYpBxhJ1iaC0s7jNX6pnycNg+qHEB
+ D4mlp66TjufZB0REk1vdZxFnaaxgivAMgZDcorV8iFnOQYe2uhjjAzRT6KQFof+66SLUMEuxL
+ 802drwzg/egI74fHq9lBPn+abKI4fNXWnCQQ915mahDQSsP9dJxfdSJK4qqumBWm9PKGAsPiH
+ LuzxMmpICNlCx8q41qaYwLJcKIhl7FqY/iSoVWnFgg8SIv9XZNwHL537IjEsuEpUGran9yOVk
+ 2JiQyGUk5FQbXJwaXFM+IhHpGt6PRqvliCd86XRJ5/pM7k+LTSbVnBftwZDRmuQ+MeRKhDP5t
+ 93qs54rZPX28SaTAibK4h4pdQWiExsyN9SNk0kb8VgrCK3i/q2a3ofHqief7hhDcC8uiMPWB1
+ 0+nBJgE0YaBZol+qDSLu3/2BDqUHbNwH/e7V1tWXKFgx2+XCz+ybAkK8Cca10iHCNnOEZJwmG
+ zEaXht/UkWIEIfVJVOg1Ma03A1Wz1ry8TBjlt2sPblG1yKoU2WQoiFK6gcxJd+CAdQaHL/2SZ
+ S3dB1jev4GE5ITjgG9yijvGlsTk6rcZ/DbCl/8E0V8S2ftSWZ1jOZM/OajELsH8XDH+7THc5I
+ vihdaHx
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hey Junio,
+Some code in nedmalloc is indented in a funny way that could be
+misinterpreted as if a line after a for loop was included in the loop
+body, when it is not.
 
-On Thu, Aug 4, 2016 at 9:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Pranit Bauva <pranit.bauva@gmail.com> writes:
->
->>> Also you do not seem to check the error from the function to smudge
->>> the "result" you are returning from this function.
->>
->> Yes I should combine the results from every removal.
->>
->>> Isn't unlink_or_warn() more correct helper to use here?
->>
->> The shell code uses rm -f which is silent and it removes only if
->> present.
->
-> Isn't that what unlink_or_warn() do?  Call unlink() and happily
-> return if unlink() succeeds or errors with ENOENT (i.e. path didn't
-> exist in the first place), but otherwise reports an error (imagine:
-> EPERM).
+GCC 6 complains about this in DEVELOPER=YepSure mode.
 
-Umm, I am confused. I tried "rm -f" with a non-existing file and it
-does not show any warning or error.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ compat/nedmalloc/nedmalloc.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Regards,
-Pranit Bauva
+diff --git a/compat/nedmalloc/nedmalloc.c b/compat/nedmalloc/nedmalloc.c
+index a0a16eb..677d1b2 100644
+--- a/compat/nedmalloc/nedmalloc.c
++++ b/compat/nedmalloc/nedmalloc.c
+@@ -938,10 +938,10 @@ void **nedpindependent_comalloc(nedpool *p, size_t elems, size_t *sizes, void **
+ 	void **ret;
+ 	threadcache *tc;
+ 	int mymspace;
+-    size_t i, *adjustedsizes=(size_t *) alloca(elems*sizeof(size_t));
+-    if(!adjustedsizes) return 0;
+-    for(i=0; i<elems; i++)
+-	adjustedsizes[i]=sizes[i]<sizeof(threadcacheblk) ? sizeof(threadcacheblk) : sizes[i];
++	size_t i, *adjustedsizes=(size_t *) alloca(elems*sizeof(size_t));
++	if(!adjustedsizes) return 0;
++	for(i=0; i<elems; i++)
++		adjustedsizes[i]=sizes[i]<sizeof(threadcacheblk) ? sizeof(threadcacheblk) : sizes[i];
+ 	GetThreadCache(&p, &tc, &mymspace, 0);
+ 	GETMSPACE(m, p, tc, mymspace, 0,
+ 	      ret=mspace_independent_comalloc(m, elems, adjustedsizes, chunks));
+-- 
+2.9.0.281.g286a8d9
+
+
