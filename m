@@ -6,57 +6,57 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB49F20193
-	for <e@80x24.org>; Thu,  4 Aug 2016 18:18:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B16C520193
+	for <e@80x24.org>; Thu,  4 Aug 2016 18:20:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758858AbcHDSS3 (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 14:18:29 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55125 "EHLO
+	id S934029AbcHDSUv (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 14:20:51 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59943 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758843AbcHDSS2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 14:18:28 -0400
+	with ESMTP id S933852AbcHDSUu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 14:20:50 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AAFFD32535;
-	Thu,  4 Aug 2016 14:18:26 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B7B5B3256D;
+	Thu,  4 Aug 2016 14:20:49 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cKa/qxpjdfZe7LHlOaMcaNeVdZ4=; b=IwD2AU
-	02KiChFJlvS9rHyO5I7P/FkzlsC2Ka1aC7jDRTD5coRCq2GJgB/EUfM8tb7QAkU1
-	fCv/d+3+KdkyHo8WiygiRVHpvOQsg+3FE3MA8ZQEY4+C75hgiL9ifDc7Hu4jHiDi
-	5SBPkQicFA/7HlQOeVOVGWdHPLPm3GkvKhC+s=
+	:content-type; s=sasl; bh=dyAg6szYcogq9l0JgjbXfX7OkuQ=; b=H1+vfd
+	96hYhJolEHcqitJ7TcqIcrm/Lguze92S5IBqFGz0w5hk1p5rPikBn7yDN3eebgVB
+	ZdMp5r6DIcRixyRq0FXKRgggtgI7JxJXbVdZ+Mk9zMu6++Jjho/7ipjbZrBFWJPA
+	qeIViQqRWJTm0V8+asKdURFPOxoLbJlJ5lprI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iUehxFixMRGSQub9QLuBRG38ofrD+YyA
-	FcHMx/cz2xvCd8CL/OoZI13RmIrSis6KD0ERVP6A59TGx3RZ/UrUoIagrF9IBTCm
-	hmdBd1iMsRSQY1Q+6EN9QLAB7T8TIqRe7ZLqW4UqLBd/lEayB6EA8UalUjCOuYpG
-	qEh7EXhcqcw=
+	:content-type; q=dns; s=sasl; b=m55FJ0XVmefGZB4YS4wLMDs3QHEec/kE
+	mqQXLuA1Fpr7gG7LY/lB/uOt5Vcw7TmYNLR3uocWbCS2dOU89Il7sGEmrBV0qkXm
+	OC7b6dBThIPBf5GYgGjQDXLJBA976aJaBsFxo8CLNuc3WFOCYkdDDh44cK5CAMlg
+	hRy/pF4dcOs=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A252E32534;
-	Thu,  4 Aug 2016 14:18:26 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AD8433256C;
+	Thu,  4 Aug 2016 14:20:49 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0B8C632533;
-	Thu,  4 Aug 2016 14:18:26 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 18F183256B;
+	Thu,  4 Aug 2016 14:20:49 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
 To:	Johannes Schindelin <johannes.schindelin@gmx.de>
 Cc:	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
 	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
 	Duy Nguyen <pclouds@gmail.com>,
 	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH v6 15/16] Ensure that the output buffer is released after calling merge_trees()
+Subject: Re: [PATCH v6 16/16] merge-recursive: flush output buffer even when erroring out
 References: <cover.1469547160.git.johannes.schindelin@gmx.de>
 	<cover.1470051326.git.johannes.schindelin@gmx.de>
-	<0fa117f8ae42e2f7c9b1cc803261b236d5cd6b17.1470051326.git.johannes.schindelin@gmx.de>
-Date:	Thu, 04 Aug 2016 11:18:23 -0700
-In-Reply-To: <0fa117f8ae42e2f7c9b1cc803261b236d5cd6b17.1470051326.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Mon, 1 Aug 2016 13:44:53 +0200
+	<3b4494c586574b59d80d0f1b88bd4c3d56b678cf.1470051326.git.johannes.schindelin@gmx.de>
+Date:	Thu, 04 Aug 2016 11:20:47 -0700
+In-Reply-To: <3b4494c586574b59d80d0f1b88bd4c3d56b678cf.1470051326.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Mon, 1 Aug 2016 13:44:57 +0200
 	(CEST)")
-Message-ID: <xmqqbn184cuo.fsf@gitster.mtv.corp.google.com>
+Message-ID: <xmqq7fbw4cqo.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: D61937A4-5A6F-11E6-9A14-89D312518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 2B5DEF66-5A70-11E6-AA26-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -64,19 +64,16 @@ X-Mailing-List:	git@vger.kernel.org
 
 Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> The recursive merge machinery accumulates its output in an output
-> buffer, to be flushed at the end of merge_recursive(). At this point,
-> we forgot to release the output buffer.
-> ...
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index ec50932..9e527de 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -2078,6 +2078,8 @@ int merge_recursive(struct merge_options *o,
->  		commit_list_insert(h2, &(*result)->parents->next);
->  	}
->  	flush_output(o);
-> +	if (!o->call_depth && o->buffer_output < 2)
-> +		strbuf_release(&o->obuf);
+> Ever since 66a155b (Enable output buffering in merge-recursive.,
+> 2007-01-14), we had a problem: When the merge failed in a fatal way, all
+> regular output was swallowed because we called die() and did not get a
+> chance to drain the output buffers.
 
-OK, with !o->call_depth the change makes sense to me.
+OK.  Even though I really wanted to see somebody else review this
+series as well, I finished reading it through one more time before
+that happened, which is unfortunate because I think this is ready to
+start cooking in 'next' even though I no longer have much faith in
+my eyes alone after staring at this series so many times---you start
+missing details.
+
+Thanks.
