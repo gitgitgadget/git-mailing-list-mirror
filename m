@@ -2,113 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 037381F40E
-	for <e@80x24.org>; Thu,  4 Aug 2016 00:36:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D49B20191
+	for <e@80x24.org>; Thu,  4 Aug 2016 00:51:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757373AbcHDAgf (ORCPT <rfc822;e@80x24.org>);
-	Wed, 3 Aug 2016 20:36:35 -0400
-Received: from us-hpatc-esg-02.alcatel-lucent.com ([135.245.18.28]:37192 "EHLO
-	smtp-us.alcatel-lucent.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754467AbcHDAgd (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2016 20:36:33 -0400
-Received: from us70tumx2.dmz.alcatel-lucent.com (unknown [135.245.18.14])
-	by Websense Email Security Gateway with ESMTPS id AC416CD05E16E;
-	Thu,  4 Aug 2016 00:35:06 +0000 (GMT)
-Received: from us70tusmtp2.zam.alcatel-lucent.com (us70tusmtp2.zam.alcatel-lucent.com [135.5.2.64])
-	by us70tumx2.dmz.alcatel-lucent.com (GMO) with ESMTP id u740Z9St028031
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Thu, 4 Aug 2016 00:35:09 GMT
-Received: from US70UWXCHHUB02.zam.alcatel-lucent.com (us70uwxchhub02.zam.alcatel-lucent.com [135.5.2.49])
-	by us70tusmtp2.zam.alcatel-lucent.com (GMO) with ESMTP id u740Z8fx010529
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
-	Thu, 4 Aug 2016 00:35:09 GMT
-Received: from [135.121.197.20] (135.5.27.17) by
- US70UWXCHHUB02.zam.alcatel-lucent.com (135.5.2.49) with Microsoft SMTP Server
- (TLS) id 14.3.195.1; Wed, 3 Aug 2016 20:35:08 -0400
-Subject: Re: Client exit whilst running pre-receive hook : commit accepted but
- no post-receive hook ran
-To:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-References: <5795EB1C.1080102@nokia.com>
- <20160725222201.GC13589@sigill.intra.peff.net>
- <a3f64a09-3094-eee1-0050-9960f0674036@nokia.com>
- <20160803193018.ydhmxntikhyowmjz@sigill.intra.peff.net>
- <xmqqlh0d8w6v.fsf@gitster.mtv.corp.google.com>
-CC:	Jan Smets <jan.smets@nokia.com>, <git@vger.kernel.org>
-From:	Stephen Morton <stephen.morton@nokia.com>
-Organization: Nokia ION
-Message-ID: <3f8fa2e0-9604-2bc9-338e-9977ea23135d@nokia.com>
-Date:	Wed, 3 Aug 2016 20:35:01 -0400
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.0
+	id S933329AbcHDAvC (ORCPT <rfc822;e@80x24.org>);
+	Wed, 3 Aug 2016 20:51:02 -0400
+Received: from mail-it0-f45.google.com ([209.85.214.45]:38177 "EHLO
+	mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933231AbcHDAuH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2016 20:50:07 -0400
+Received: by mail-it0-f45.google.com with SMTP id j124so250235768ith.1
+        for <git@vger.kernel.org>; Wed, 03 Aug 2016 17:50:06 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=pt7n1blqNlbsKJr0/wWj4eqASXM7NEAavXPBrxKGCLw=;
+        b=SHT/FIUZBQ8LrE/6JU9xX7pou/Hd/9Nm30aViJR1eaTAAmiXZVelvUKSe+5Ec/rgyn
+         TVnYyBMtTnxpPO6UrkjeyGmVbkfl4ZK4gvL1qwSwtb7zgiHuwYVlUx1ar6QFVtYyb8He
+         GnGFjWTb4x5tZkyf2a3ab0lKe/wqh6D1Na5p8YrGtWkhRvd/RtZ8U2CC/CBNdz9HdFAU
+         ZW4tpxbZbvK7MY3+m2N6JbCge+urYADBIMZHp3s3Etd6UVc+DvvPtPrFugZyfwP2Ccak
+         RAyRetpOfdnM0wiXI9Md7kQXgiQAfcu3aUaBJVT4C9Cv1Vuzirin0ckApeyFqPC4xxeB
+         +Szg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=pt7n1blqNlbsKJr0/wWj4eqASXM7NEAavXPBrxKGCLw=;
+        b=HjxnvuFUsm5YLQgebgrXMOrMAtFZx1n+C9AMlNojn0ObvDGWjOLEoqp13SxyqgDwFL
+         odA7jZ7LbespdCTOq0Jxf+t9IgTfGjEK5TqyzrYXlYWIKwEyxpBcHn5K7rX3mBJldFsG
+         OGrsv+gqldLPJIhXz3Dpj81+Josufby2R4PzZCwXc5i3zNEaBA0O4s6q3SuFhFhLwpJ6
+         WEosAWmoDt2d06QQjWPJV/qGswGygu+q4n6uNxExw7txzymoFQywCxVeMMTXp6tXuHki
+         UDdCmKCga59YHsAnmXJ2x4zTptfjwthYFKyG2y8ZCBkGHdAIgLncdtHKpyYZUt1SdAMO
+         etjg==
+X-Gm-Message-State: AEkoouvWnVlu4b6Oo/tuzPQGOonPuU8axnic7dngHjABah/FUZzjNg1pQG2ep9HtER2GdklTGQDbyLMEGLjhpg==
+X-Received: by 10.36.19.16 with SMTP id 16mr29307511itz.41.1470271307853; Wed,
+ 03 Aug 2016 17:41:47 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqlh0d8w6v.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [135.5.27.17]
+Received: by 10.79.6.212 with HTTP; Wed, 3 Aug 2016 17:41:47 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1608031621590.107993@virtualbox>
+References: <20160803084743.3299-1-judge.packham@gmail.com> <alpine.DEB.2.20.1608031621590.107993@virtualbox>
+From:	Chris Packham <judge.packham@gmail.com>
+Date:	Thu, 4 Aug 2016 12:41:47 +1200
+Message-ID: <CAFOYHZDHGn2HsV5U4z3Or7=7ypSkuKwbtQCmNaNuK+n06c0YXA@mail.gmail.com>
+Subject: Re: [RFC/PATCH] rebase--interactive: Add "sign" command
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	GIT <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 2016-08-03 3:54 PM, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
+On Thu, Aug 4, 2016 at 2:31 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Chris,
 >
->> I agree it would be a good property to have. I think it's hard to do
->> atomically, though. Certainly we can wait to tell the other side "your
->> push has been recorded" until after the hook is run. But we would
->> already have updated the refs locally at that point (and we must -- that
->> is part of the interface to the post-receive hooks, that the refs are
->> already in place). So would we roll-back the ref update then? Even that
->> suffers from power failures, etc.
->>
->> So I'm not sure if making it truly atomic is all the feasible.
-> As long as the requirement is that post- hook must see the updated
-> ref in place, I do not think it is feasible to give "the hook always
-> runs once" guarantee, without cooperation by other parts of the flow
-> (think: pulling the power at an arbitrary point in the process).
+> On Wed, 3 Aug 2016, Chris Packham wrote:
 >
-> A receiving repository can implement it all in the userland, I would
-> think, though:
+>> This is similar to the existing "reword" command in that it can be used
+>> to update the commit message the difference is that the editor presented
+>> to the user for the commit. It provides a useful shorthand for "exec git
+>> commit --amend --no-edit -s"
+
+<snip>
+
+> Having said that, this patch clashes seriously with my current effort to
+> move a lot of the interactive rebase from shell into plain C. It is
+> actually ready, but getting this into the code base is really slow-going,
+> unfortunately.
 >
->   * A pre-receive hook records the intention to update a ref (from
->     what old commit to what new commit), and does not return until
->     that record is securely in a database;
+> Now, after looking at your patch it looks to me as if this would be easily
+> ported, so there is not a big deal here.
+
+Yeah sorry. I knew there was something in flight but ended up doing a
+quick hack on top of master.
+
+> However, I could imagine that we actually want this to be more extensible.
+> After all, all you are doing is to introduce a new rebase -i command that
+> does nothing else than shelling out to a command. Why not introduce a much
+> more flexible feature, where you add something like "rebase -i aliases"?
 >
->   * A post-receive hook checks the entry in the database above (it
->     _must_ find one), and atomically does its thing and marks the
->     entry "done";
+> Maybe something like this:
 >
->   * A separate sweeper scans the database for entries not yet marked
->     as "done", sees if the ref has been already updated, and
->     atomically does its thing and marks the entry "done" (the same
->     can be done as part of a post-receive for previously pushed
->     commit that pre-receive recorded but did not manage to run
->     post-receive before the power was pulled or the user did \C-c).
->
-> As you originally described, the non-atomicity is not new; as long
-> as we have necessary hooks in place on the git-core side for
-> repositories that want a stronger guarantee, I do not think there is
-> any more thing we need to do on this topic.  If we can narrow the
-> window in a non-intrusive way, that would be a good thing to do,
-> though.
-> <snip>
+> [rebase "command"]
+>         sign = git commit --amend -s --no-post-rewrite --no-edit -S
 
-I certainly understand not being able to make it atomic when faced with 
-say "pulling the power at an arbitrary point in the process". That seems 
-to me almost along the lines of disaster recovery contingency plans. But 
-could we not guarantee that if there is no problem on the receiving end, 
-that "IF a commit is received and the ref updated, THEN the post-receive 
-hook is guaranteed to run".
+I did briefly consider that. I ended up taking the shortcut because I
+had a patch series I needed to sign.
 
-The not-so-uncommon situation where I saw this was where a user had 
-second-thoughts and hit Ctrl-C in the middle of a push. The push went 
-through --the ref was updated-- but the post-receive hooks were not run.
+Elsewhere in this thread the idea of pick -S or reword -S was raised.
+I'd actually prefer that because there seems little between 'git
+config rebase.command.sign blah' and 'exec ~/sign.sh'
 
-Steve
+> I have not completely thought this through, but maybe this direction would
+> make the interactive rebase even more powerful?
 
-
-
+The uses I can think of are adding sign-off and running "make check".
+For me rebase -i doesn't need to be much more powerful than that.
