@@ -2,102 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A6ECB1F855
-	for <e@80x24.org>; Thu,  4 Aug 2016 21:57:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DEF51F855
+	for <e@80x24.org>; Thu,  4 Aug 2016 22:09:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932387AbcHDV5G (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 17:57:06 -0400
-Received: from mout.web.de ([212.227.15.3]:53085 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758985AbcHDV5E (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 17:57:04 -0400
-Received: from [192.168.178.36] ([79.213.122.241]) by smtp.web.de (mrweb004)
- with ESMTPSA (Nemesis) id 0MFNpM-1bS5763ZJc-00EMbn; Thu, 04 Aug 2016 23:56:56
- +0200
-Subject: Re: [PATCH 2/2] nedmalloc: work around overzealous GCC 6 warning
-To:	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org
-References: <cover.1470326812.git.johannes.schindelin@gmx.de>
- <57360f4885bdd5c36e190bea288f1e1f7f706071.1470326812.git.johannes.schindelin@gmx.de>
-Cc:	Junio C Hamano <gitster@pobox.com>
-From:	=?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <57A3BA26.5080601@web.de>
-Date:	Thu, 4 Aug 2016 23:56:54 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.2
+	id S965762AbcHDWJn (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 18:09:43 -0400
+Received: from mail-yb0-f176.google.com ([209.85.213.176]:34636 "EHLO
+	mail-yb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965241AbcHDWJm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 18:09:42 -0400
+Received: by mail-yb0-f176.google.com with SMTP id x196so9123431ybe.1
+        for <git@vger.kernel.org>; Thu, 04 Aug 2016 15:09:42 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=ZINe2BBuphRObnFcIE1BHpowyxu3Tw5+GyIZy5ooNJE=;
+        b=B3FZzBbPQsBosyRcTbro5lH8CrbaSKiPLq/lVRLxnjnR4siN6efbZqZQB6ALSMFwRB
+         zrvcbfqjs7e69o8SflkKe+LLBFEUTTVkq+Hiy1h5Qo6Y/S/OIWzudUp57NiyHIt1G8Za
+         K3EfthBiseiJoiGp7pMCp2K96HO7xAaoSchE0K3XGunh7Vi9dCUP47JdkGobbbhDSGV+
+         wa5AiZHrWVS1ocx4LoWF6L3VuvjiW0YWXZzYgYqx1P35wGYdBTYPO4hB62iPeYX8kCp+
+         nYY5Gm5BY2DPpEI9GmH2rDl6yRrFN+wScbXX3rOzGb1JBjpNCuaZGFtraex0iULi/LyV
+         eVNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=ZINe2BBuphRObnFcIE1BHpowyxu3Tw5+GyIZy5ooNJE=;
+        b=kVw4jQbfZlbx/0lHXiMFpytIeljvLyzP4ElwDi9kLoCVPGoKk6UwFmn7qmcXeVStnZ
+         ijyG61sSu032BYgrgzJkhPtPTW11NgfqQSHf1kzg3DVSXuO6K7gw9t9gO/yO4tjfkq2L
+         m9vBmtbh3/Uqcu7CDJnyreKzse0cXjtdaYjl2Pp1iIhg6xtO9JMno+8re/4xJdfxljuj
+         FGcBE0znIm4bl/mA2KMN5DO0df2untaXb/b3pyOnaXt9R9yU9IVy0/VZ+zRi2KPIMb1c
+         X50hemu50R8mqVDH9kt6SlTUqlsq0kPpmEqnRlaOYKY+epwiQ7x0jdO3Bo7KFavfI/3M
+         XDSQ==
+X-Gm-Message-State: AEkoous2YXtNf60GgeBHURXI/q6IgeC0frA0TuwPItqANieU7487j/GK2jcyyoEFk5Ol7B72lVdhVZWlum5Ulw==
+X-Received: by 10.37.66.147 with SMTP id p141mr23883492yba.28.1470348581559;
+ Thu, 04 Aug 2016 15:09:41 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <57360f4885bdd5c36e190bea288f1e1f7f706071.1470326812.git.johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:abGg7xNLWD/uB6sgs+aMp9ADDC9ynfo1ptr+uqfwqj7O4YCqZ8J
- lwejOGqGbrMvxGgyUuJd9/T/LVYZi+OvmKFmd+8mk22+gI+/HEqW+vNGcCo0JKfmdPvCWmS
- MmJDMjQSglfoyVW7fJMro3/+aqMWXvVkRR8pNCIuHZBdQLkYqxl8oFQKMb6/5EsvV7ECQWZ
- bXRNQ2xhneFJsz8UtebSQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:CM9cSpwFT3U=:4Xbiq/48bYdyrSbZKMApPR
- OdrLhLK2+/Bm+cXY9g2S3MSiGeC+OR/v5MzBa97uSwCoTVSkyV+0JxkTJ8HG0ryfHTH+6Vqpw
- NfdaAJ5UoG3ZoKtT/mhvaNMuaAsSv7ZZ0+QJ1lU8b7BLTMb2YzyuVDc/qxpOdhT4DoGtACZMC
- pV6NAYanaiFKTo2VLz7PEBPsbpU0ByjsyVqQnByPKYlrJfapYx2G5QLm7wXBRDTxbOQkiRNg4
- QaKyCTtS+Cm5LLaq2XmtO7e0RHk34pRUnQ374LfWitLj9ZCaiKemgm2mD7QXmFAA98AeNWQJ/
- QwCTlzj+M9/0CJch7zzLHS4y93TcO7nKy2OXcWDiu8nwfNhrNtoGcnlFHfnZXLcc2KVwS2d+b
- xStM+Xn3GMg2XgI3FbwRa5wMyCZGeUEM6Rp8HnzqEj+hB/7ky2M7aUDcHNqD/M97A82/1/gGK
- KI+38TivnJilsIrqlSKc7LYfvKhfQXVY8q8VXS5wvzzzNTSEyyInMp3Bu/beCgMxUOErNi10/
- cybOSY9wai8n4iycPDeq+a1LxiPt8olbk77ggFGUHdQ/6CRMuWZ+KJKuG/8wwYL98vvhZjzdB
- 08hTSslLOcQ7IOGTPHru038OJpZFpPia8a262w8RKR9dMNmjLBEvg/uZthvuriaQSlsgkLU6d
- 9akj1/JXvCAU2BokId5g9e2jUz48jn2j0zyCq3TZH436uSuqEqpjILkNze8kUw/giKmVqUFNl
- EyxGJNwcyI8vRgsNPkYdjC0sfbmlREoX+3eKWL7zHf/nDU2J5NwP1jrM0121OvMbvbHGbTft3
- wdguned
+Received: by 10.13.250.4 with HTTP; Thu, 4 Aug 2016 15:09:21 -0700 (PDT)
+In-Reply-To: <CACi5S_2j+PXFwE755CSiE01=sYALx-17Hk1k8zJOR9_Fj7y9Pg@mail.gmail.com>
+References: <CACi5S_0QGEgnijGyaBeZxOSobdwfA+d-wa-jrHs64Va097mnRQ@mail.gmail.com>
+ <xmqqr3a8goka.fsf@gitster.mtv.corp.google.com> <CACi5S_2j+PXFwE755CSiE01=sYALx-17Hk1k8zJOR9_Fj7y9Pg@mail.gmail.com>
+From:	Junio C Hamano <gitster@pobox.com>
+Date:	Thu, 4 Aug 2016 15:09:21 -0700
+X-Google-Sender-Auth: OBOAKBICCHt6gZRB7m0UT1ylynU
+Message-ID: <CAPc5daVPpeCTLbo4t7gRbKbP=BMnhHHtE68uXjanQDS2nKc4dw@mail.gmail.com>
+Subject: Re: git grep -P is multiline for negative lookahead/behind
+To:	Michael Giuffrida <michaelpg@chromium.org>
+Cc:	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Am 04.08.2016 um 18:07 schrieb Johannes Schindelin:
-> With GCC 6, the strdup() function is declared with the "nonnull"
-> attribute, stating that it is not allowed to pass a NULL value as
-> parameter.
+On Thu, Aug 4, 2016 at 11:54 AM, Michael Giuffrida
+<michaelpg@chromium.org> wrote:
+> On Mon, Aug 1, 2016 at 2:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> I do not think "git grep" was designed to do multi-line anything,
+>> with or without lookahead.  If you imagine that the implementation
+>> attempts its matches line-by-line, does that explain the observed
+>> symptom?
 >
-> In nedmalloc()'s reimplementation of strdup(), Postel's Law is heeded
-> and NULL parameters are handled gracefully. GCC 6 complains about that
-> now because it thinks that NULL cannot be passed to strdup() anyway.
->
-> Let's just shut up GCC >= 6 in that case and go on with our lives.
+> No. If it worked line-by-line, it would produce more results. It is
+> not producing the expected matches because it *is* considering the
+> previous line in negative lookbehind, when I don't want or expect it
+> to. Thus it throws out results that should match.
 
-This version of strdup() is only compiled if nedmalloc is used instead
-of the system allocator.  That means we can't rely on strdup() being
-able to take NULL -- some (most?) platforms won't like it.  Removing
-the NULL check would be a more general and overall easier way out, no?
+If that is the case I do not know what is going on; perhaps
+somebody more familiar with the pcre codepath can help.
 
-But it should check the result of malloc() before copying.
----
-  compat/nedmalloc/nedmalloc.c | 8 +++-----
-  1 file changed, 3 insertions(+), 5 deletions(-)
-
-diff --git a/compat/nedmalloc/nedmalloc.c b/compat/nedmalloc/nedmalloc.c
-index a0a16eb..cc18f0c 100644
---- a/compat/nedmalloc/nedmalloc.c
-+++ b/compat/nedmalloc/nedmalloc.c
-@@ -955,12 +955,10 @@ void **nedpindependent_comalloc(nedpool *p, size_t 
-elems, size_t *sizes, void **
-   */
-  char *strdup(const char *s1)
-  {
--	char *s2 = 0;
--	if (s1) {
--		size_t len = strlen(s1) + 1;
--		s2 = malloc(len);
-+	size_t len = strlen(s1) + 1;
-+	char *s2 = malloc(len);
-+	if (s2)
-  		memcpy(s2, s1, len);
--	}
-  	return s2;
-  }
-  #endif
--- 
-2.9.2
-
+Sorry.
