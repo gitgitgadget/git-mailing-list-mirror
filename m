@@ -2,108 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E460620193
-	for <e@80x24.org>; Thu,  4 Aug 2016 20:55:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA90F20193
+	for <e@80x24.org>; Thu,  4 Aug 2016 21:12:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965927AbcHDUzv (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 16:55:51 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:33896 "EHLO
-	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965916AbcHDUzt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 16:55:49 -0400
-Received: by mail-yw0-f194.google.com with SMTP id j12so20768909ywb.1
-        for <git@vger.kernel.org>; Thu, 04 Aug 2016 13:55:48 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=gvhLxS9yjXGRtrsBHv3+QHto6697ORh4CTeD+qKD2qA=;
-        b=CljZv5yGV1bl+Q2cpMpHWnNou2iMJH3Yxk3uHkS+i4LFUKySVc99ikPlZ6R+ph6BV8
-         /DIhul5Tr5M9EDYyLq4NQ/YskN5bMU4AWig+H3/ZbZIX1x5ySl7QZJySxzXj/a3TJ4q2
-         vZqEaguEFaJ9Z7qxWcfo3pQYoUsG36RjLNfrLtZ1iTurDqYNy+zdG8Z6u1sR6MQU16xM
-         r8YDvzOoz27zEH/9IXpmlwaCSJgfZczdZ73Ieeevz/3IRkS8LK0UtMmFfVXmWNfeLCCm
-         5RVty77eZHy4LCuL/8mM76pxZJ8ODT9iCWMmT9drt8Av+i8j66EmuFVbzDM1XbanYXML
-         /IdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=gvhLxS9yjXGRtrsBHv3+QHto6697ORh4CTeD+qKD2qA=;
-        b=CekYAvH6BFBCOv6LXDGADSS0ssGytXf4+UigDGFyBR0rBdgH79lHWb/ZXFy1NmZCTl
-         xJDObiff1htB8ax4oDVlMeU6d5iRPjVrWbXDzCo31U7cNp8uBbxTBTdHoFWWQvgS1Xwy
-         OQHw7SKg1D31lgEX7rGCtafF0v8e+7RnCTMzxI9UyjpQRsr8m8Ql1ympKBYMu5fJddwO
-         o+Kgb8mU9JEw9KGZpS4a9l8azwXOvAb7bIAa19RIYxNBwvKhyDxdTh10q9T3RbRgrD+7
-         tcbkTKT35nGdH2MImA0MyQYkR6UHU+zGe6/Q8JAST9TOG7H+ZcouZaUxmiB/3LTHqUvy
-         5tGQ==
-X-Gm-Message-State: AEkooutTNgYTtKzIxfw1VyIA8gse1M7xX//RWl786jYfJmJ096foTxEQ1zNfe2UCa6IxZoHJzVZUpOSaYRm4eQ==
-X-Received: by 10.129.76.79 with SMTP id z76mr57308653ywa.33.1470344148102;
- Thu, 04 Aug 2016 13:55:48 -0700 (PDT)
+	id S966364AbcHDVMf (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 17:12:35 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57964 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S934199AbcHDVMc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 17:12:32 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7A2FF32040;
+	Thu,  4 Aug 2016 17:12:25 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ITwtm0Ll1vinSAY4PjZWQB0vzYo=; b=JTSVC+
+	sIQDAgMd5XRNL0sWcZbHI3x82kuyncLsOKJZyfFFexuJyvtQdUjNGu/S4ZrBsloH
+	8m7IF6lrbGbt6CwGcKbJKBZtAVhVssrxhBZ79+Sc121hjkzRbfSRGDA4lYIUhcJd
+	xTqw2OdiDTL2/BupOFc7QjmreQ1Lgun91lSHc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GRAzaamcOhR1ANuEymfQbaNbiooaTkq2
+	zbwY5kJsecNmruHP6AizWCcEDXY5blt8H7Oafh7c0M2dX6almrzzntclAx7xVxB3
+	lMqO646ZFNQrVFmCYZgHiIK5cryIB2XVIkN84G1DFmUgxduMzZJlI7SyuP8cpQFv
+	rcKhsZkn/vo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 70CC53203F;
+	Thu,  4 Aug 2016 17:12:25 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D55363203E;
+	Thu,  4 Aug 2016 17:12:24 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff King <peff@peff.net>
+Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Johannes Sixt <j6t@kdbg.org>, Duy Nguyen <pclouds@gmail.com>,
+	Jakub =?utf-8?Q?Na?= =?utf-8?Q?r=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: patch submission process, was Re: [PATCH v6 06/16] merge_recursive: abort properly upon errors
+References: <8ff71aba37be979f05abf88f467ec932aa522bdd.1470051326.git.johannes.schindelin@gmx.de>
+	<xmqqlh0gjpr6.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1608021004080.79248@virtualbox>
+	<xmqqy44ec15p.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1608031021050.79248@virtualbox>
+	<CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com>
+	<20160803163449.iwjv4youmsf6okme@sigill.intra.peff.net>
+	<xmqqbn19aj5t.fsf@gitster.mtv.corp.google.com>
+	<20160803165652.zek5df7tv5reg6w4@sigill.intra.peff.net>
+	<alpine.DEB.2.20.1608041706040.5786@virtualbox>
+	<20160804180749.foowbsmce72s46ww@sigill.intra.peff.net>
+Date:	Thu, 04 Aug 2016 14:12:22 -0700
+In-Reply-To: <20160804180749.foowbsmce72s46ww@sigill.intra.peff.net> (Jeff
+	King's message of "Thu, 4 Aug 2016 14:07:49 -0400")
+Message-ID: <xmqq37mk1bnt.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.129.89.132 with HTTP; Thu, 4 Aug 2016 13:55:47 -0700 (PDT)
-From:	Pranit Bauva <pranit.bauva@gmail.com>
-Date:	Fri, 5 Aug 2016 02:25:47 +0530
-Message-ID: <CAFZEwPO9yJT4hB_ottDu7Cft-a2OLvXRpXYOVODwNxMjO_h-0g@mail.gmail.com>
-Subject: [GSOC Update] Week 113
-To:	Git List <git@vger.kernel.org>
-Cc:	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Lars Schneider <larsxschneider@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 241FFC54-5A88-11E6-90C5-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-================= SUMMARY ===================
-My public git.git is available here[1]. I regularly keep pushing my work so
-anyone interested can track me there. Feel free to participate in the
-discussions going on PRs with my mentors. Your comments are valuable.
+Jeff King <peff@peff.net> writes:
 
+> Like you, I have occasionally been bitten by Junio doing a fixup, and
+> then I end up re-rolling, and lose that fixup.
 
-================ INTRODUCTION  ===================
-The purpose of this project is to convert the git-bisect utility which partly
-exists in the form of shell scripts to C code so as to make it more portable.
-I plan to do this by converting each function to C and then calling it from
-git-bisect.sh so as to use the existing test suite to test the function which
-is converted.
+... which usually is caught when I receive the reroll, as I try to
+apply to the same base and compare the result with the previous
+round.
 
-Mentors:
-Christian Couder <chriscool@tuxfamily.org>
-Lars Schneider <larsxschneider@gmail.com>
+> But I think such fixups are a calculated risk. Sometimes they save a lot
+> of time, both for the maintainer and the contributor, when they manage
+> to prevent another round-trip of the patch series to the list.
 
+Yes.
 
-=================== Updates ======================
-Things which were done in this week:
+> IOW, if the flow is something like:
+>
+>   1. Contributor sends patches. People review.
+>
+>   2. Minor fixups noticed by maintainer, fixed while applying.
 
- * I have converted bisect_start() but there is a bug which I am still working
-   on which conflicts with the `--term-bad` and `--term-good` of
-   `--bisect-terms` subcommand. A RFC has been sent to the list[2]. Junio
-   provided some reviews on it. A resend can be expected soonish.
+This includes different kinds of things:
 
-================== NEXT STEPS ====================
-Things which would be done in the coming week:
+    a) Trivially correct fixes given in other people's review.
 
- * Resend all patches according to Junio's review.
+    b) Minor fixups by the maintainer, to code.
 
- * bisect_next() has become a top priority because it would then help
-   converting bisect_auto_next() and then it can be called by other important
-   functions like bisect_start().
+    c) Minor fixups by the maintainer, to proposed log message.
 
- * Following that I will convert bisect_auto_start()
+    d) "apply --whitespace=fix" whose result I do not even actively
+       keep track of.
 
- * Then bisect_replay().
+>   3. Only one small fixup needed from review. Contributor sends
+>      squashable patch. Maintainer squashes.
+>
+> then I think that is a net win over sending the whole series again, for
+> the contributor (who does not bother sending), reviewers (who really
+> only need to look at the interdiff, which is what that squash is in the
+> first place), and the maintainer (who can squash just as easily as
+> re-applying the whole series).
 
-============ My Patches (GSoC project only) ==========
+> And that is the flip side. If the flow above does not happen, then step
+> 2 just becomes a pain.
 
- * My current work is sent out to the mailing list here[2] which contains
-   the whole conversion. The latter 2 patches still need a lot of
-   development.
+I think I can
 
-[1]: https://github.com/pranitbauva1997/git
-[2]: http://www.spinics.net/lists/git/msg282332.html
+ * stop taking 2-a).  This is less work for me, but some
+   contributors are leaky and can lose obviously good suggestions,
+   so I am not sure if that is an overall win for the quality of the
+   end product;
 
-Regards,
-Pranit Bauva
+ * do a separate "SQUASH???" commit and send them out for 2-b).
+   This is a lot more work for a large series, but about the same
+   amount of work (except for "remembering to send them out" part)
+   for a small-ish topic.  A contributor needs to realize that I
+   deal with _all_ the incoming topics, not just from topics from
+   one contributor, and small additional work tends to add up.
+
+to reduce #2.  Essentially, doing these two are about moving more
+responsibility of keeping track of good suggestions in the review
+discussion to the contributor, but a bad thing is that it does not
+mean that the maintainer can stop keeping track of them.  We need a
+way to make sure leaky contributors do not repeat the same issue in
+their reroll that has already been pointed out and whose solutions
+presented in the previous review.  Fetching from 'pu' and compare
+has been one way to do so (that is why I publish 'pu' in the first
+place, not to "build on", but to "view"), but apparently not many
+contributors are comfortable with that idea.
+
+There is no good way to reduce 2-c) and 2-d), but on the other hand,
+there is no strong need for a special channel to propagate these
+back.  2-c) can be a regular review comment (but again that risks
+"the leaky contributor" problem) and 2-d) will happen automatically
+when applying the rerolled version.
