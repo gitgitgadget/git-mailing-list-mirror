@@ -2,111 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3CC3120193
-	for <e@80x24.org>; Thu,  4 Aug 2016 15:46:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62D2620193
+	for <e@80x24.org>; Thu,  4 Aug 2016 15:46:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933910AbcHDPqq (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 11:46:46 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:35949 "EHLO
-	mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758733AbcHDPqo (ORCPT <rfc822;git@vger.kernel.org>);
+	id S933888AbcHDPqp (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 11:46:45 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54045 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756017AbcHDPqo (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 4 Aug 2016 11:46:44 -0400
-Received: by mail-io0-f193.google.com with SMTP id y34so22489433ioi.3
-        for <git@vger.kernel.org>; Thu, 04 Aug 2016 08:46:43 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=JJde5r89ZFll1/tmUAFdysXPkejZc1NQA4MSUX2388g=;
-        b=jGIKpZVAAgGsvUPXiIfD7QP3UD8QJAKILWmwdye/vlQPFtrEQeZQr7X3hZhRp7Qo9G
-         UZgJ3t29RfDrQBc2FmqB8WvpVOm8bgac49rrsNxb/2Tp/6YEq00Mjk0hKa0waS/NBX3m
-         tPS7Xam0R4Loe86g8WWajw6WHnUWfMpekXFcE+0rOpujceNeO3asVCDahPHwHkU6tJxf
-         C/dZz72hH95X8bY04+8hfsR24+t35LAdnbX0E65XEC6Eyz6wxRmKB9xeE0y3mpwy9a9g
-         xwW8VifJnHNYlPnFja77frUnxaKGGfbsFSnW0cB7JuxuEKafX0+FMgSgRE4zsVIxQKBG
-         57nQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=JJde5r89ZFll1/tmUAFdysXPkejZc1NQA4MSUX2388g=;
-        b=ZKdw+jpKF8jtSbrxXFdmqdFjTNH6zgJfMZ+Nx8DuEqFuJ4fBCWwEKt0Myga4sreZ1L
-         KHSEn7iuY8nWzxwDJEQcR/sZfQ7uy4SFKl5tEIBVrxeu9ZxTxQXcZu3ucTy0lCSZUJKv
-         cVm5IQneM/EBb+lhqxGxCVu0RN0KD/N6TH3/LXLUM6Q03Ho2j3bgvz2PrM4dElJT6ETu
-         WDMnuYveD7DqYENU7xgPDEjE6cuJ1TaZohQbinRn4Dks4/OshdhaF94JsMt4lWZLDYM5
-         vGbKNnDQzA3ZdlXXcsaXjLly+0Bl28lfCvIQ9Nt5QV5290dautBB6+Pig+OQIGISklXR
-         00jQ==
-X-Gm-Message-State: AEkoouu5Hm/3U7aHNQ707LbVYx8DLztca8EfG4Y+JWD5U/9PtZNGIVbR16AhnnByrpf6lHjh/4MdJTDUFsJ7lA==
-X-Received: by 10.107.159.147 with SMTP id i141mr71676786ioe.29.1470325603010;
- Thu, 04 Aug 2016 08:46:43 -0700 (PDT)
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4047A30BC2;
+	Thu,  4 Aug 2016 11:45:23 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ujxpU/K3Zdex2KsDdsiADkOmktc=; b=PRuI0F
+	AKiRpCOKq21vwXcmodUECil4JXXvY6SeMgB2Nar8x4m+G0TnFmyaxZaEjHJAJVCj
+	Qa4qUiRwyej4pWS5PK0OSR8W/nTNJ2c+pn80+xRnXJSKH/kccX+Ur3+ygIRBatt9
+	eVkiaDo3ZXHr4ZYpwEEW3inUc56OcZHpmYghM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TpaaadeimZPBN8S+kA3477crywrXByDn
+	z0tAmwWHe5ic8GpcEtEBFdOYOz0ZhlvLITwqitBNafrujQP/7mQStMpYucPnZwgw
+	vMAE+knZwVv+bXBaHyVTeI8nHe9Kw3SQpCtMN3qalTJk9js1IEIvFgY3MbaSgxbp
+	NVJIfPtl1b0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3777D30BBF;
+	Thu,  4 Aug 2016 11:45:23 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9BE3A30BBE;
+	Thu,  4 Aug 2016 11:45:22 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Pranit Bauva <pranit.bauva@gmail.com>
+Cc:	Git List <git@vger.kernel.org>
+Subject: Re: [RFC/PATCH v11 04/13] bisect--helper: `bisect_clean_state` shell function in C
+References: <0102015640423c26-2060fd70-c90d-4de3-ae8c-1801ad160b1c-000000@eu-west-1.amazonses.com>
+	<0102015640423ce6-5b11201e-736d-413f-be12-7fed613ae484-000000@eu-west-1.amazonses.com>
+	<xmqqy44fdpxd.fsf@gitster.mtv.corp.google.com>
+	<CAFZEwPNFohRLCS4piB1t0LO-=keucwzRKZ2Jyhhf234tnWnVGg@mail.gmail.com>
+Date:	Thu, 04 Aug 2016 08:45:20 -0700
+In-Reply-To: <CAFZEwPNFohRLCS4piB1t0LO-=keucwzRKZ2Jyhhf234tnWnVGg@mail.gmail.com>
+	(Pranit Bauva's message of "Thu, 4 Aug 2016 01:57:54 +0530")
+Message-ID: <xmqqr3a45yi7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.64.125.199 with HTTP; Thu, 4 Aug 2016 08:46:12 -0700 (PDT)
-In-Reply-To: <xmqqpopp8ycx.fsf@gitster.mtv.corp.google.com>
-References: <20160803160536.15596-1-pclouds@gmail.com> <20160803174522.5571-1-pclouds@gmail.com>
- <CAPc5daU49iVYw14sYeshXDbHGE_nW4vWyM=2XSz-buACVLFwoA@mail.gmail.com> <xmqqpopp8ycx.fsf@gitster.mtv.corp.google.com>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Thu, 4 Aug 2016 17:46:12 +0200
-Message-ID: <CACsJy8AL9+uGni8huURb9LOktEXdX3HWi_GzdDQzTWFTVWn6_w@mail.gmail.com>
-Subject: Re: [PATCH v3] t7063: work around FreeBSD's lazy mtime update feature
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Git Mailing List <git@vger.kernel.org>, Eric Wong <e@80x24.org>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7452C324-5A5A-11E6-A9AD-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Aug 3, 2016 at 9:07 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> If you mean to tell the user "I won't describe it in detail, if you
->> really want to know,
->> go run blame yourself", spell it out like so. I was hoping that you
->> can summarize
->> in-line there to help the readers here.
->
-> Here is a proposed fixup.
+Pranit Bauva <pranit.bauva@gmail.com> writes:
 
-Great! Sorry I only have one or two hours these days and could not
-propose something else quicker.
-
->  t/t7063-status-untracked-cache.sh | 16 ++++++++++------
->  1 file changed, 10 insertions(+), 6 deletions(-)
+>> Also you do not seem to check the error from the function to smudge
+>> the "result" you are returning from this function.
 >
-> diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
-> index d31d080..e0a8228 100755
-> --- a/t/t7063-status-untracked-cache.sh
-> +++ b/t/t7063-status-untracked-cache.sh
-> @@ -4,12 +4,16 @@ test_description='test untracked cache'
+> Yes I should combine the results from every removal.
 >
->  . ./test-lib.sh
+>> Isn't unlink_or_warn() more correct helper to use here?
 >
-> -# On some filesystems (e.g. FreeBSD's ext2 and ufs) this and that
-> -# happens when we do blah, which forces the untracked cache code to
-> -# take the slow path.  A test that wants to make sure the fast path
-> -# works correctly should call this helper to make mtime of the
-> -# containing directory in sync with the reality after doing blah and
-> -# before checking the fast path behaviour
-> +# On some filesystems (e.g. FreeBSD's ext2 and ufs) directory mtime
-> +# is updated lazily after contents in the directory changes, which
-> +# forces the untracked cache code to take the slow path.  A test
-> +# that wants to make sure that the fast path works correctly should
-> +# call this helper to make mtime of the containing directory in sync
-> +# with the reality before checking the fast path behaviour.
-> +#
-> +# See <20160803174522.5571-1-pclouds@gmail.com> if you want to know
-> +# more.
-> +
->  sync_mtime () {
->         find . -type d -ls >/dev/null
->  }
+> The shell code uses rm -f which is silent and it removes only if
+> present.
 
+Isn't that what unlink_or_warn() do?  Call unlink() and happily
+return if unlink() succeeds or errors with ENOENT (i.e. path didn't
+exist in the first place), but otherwise reports an error (imagine:
+EPERM).
 
+> So it makes me wonder which would be more appropriate
+> unlink_or_warn() or remove_or_warn() or remove_path(). Is
+> remove_path() different from its shell equivalent "rm -f"?
 
--- 
-Duy
+Read it again.
+
+>>> +     remove_path(git_path_bisect_start());
+>>
+>> I can see that refs/files-backend.c misuses it already, but
+>> remove_path() helper is about removing a path in the working tree,
+>> together with any parent directory that becomes empty due to the
+>> removal.  You do not expect $GIT_DIR/ to become an empty directory
+>> after removing $GIT_DIR/BISECT_LOG nor want to rmdir $GIT_DIR even
+>> if it becomes empty.  It is a wrong helper function to use here.
