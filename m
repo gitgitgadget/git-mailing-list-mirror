@@ -2,115 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C635A1F855
-	for <e@80x24.org>; Thu,  4 Aug 2016 22:40:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 893281F855
+	for <e@80x24.org>; Thu,  4 Aug 2016 22:41:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754426AbcHDWkH (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 18:40:07 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61922 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752947AbcHDWkG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Aug 2016 18:40:06 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D190E32B5E;
-	Thu,  4 Aug 2016 18:40:04 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=mH1yTcls9zx+
-	nDdEAEVsCPtl9C0=; b=fDNlPnbqI7rna1avQ6zfexgIIfeRpLAttYE8eLUxATKC
-	N878e4FN3wcQMBSAxmj6Ymfhr7ipg5gsy+qVOpFyCnpKB2Ieoo4GFlaHTBRMhgHD
-	4ZWBsl7pm9yjjvaDZm7xFsBQeMpv24PGVXktA5breH9QBq/S5iRrOuJoo2i1w0g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=VUpVUU
-	C3sDmRxXUTGxvrd12nD00d5Wcgx1hPkimEJbeI0b9BwdVqJfj+IdALSyf4b7h+yh
-	bF7u9jYUv5S6AoI8UAPNynD9JuZp0EZld/x0B0YuGWXx3rrNjydTHoQwu+a4jHxE
-	gdAh+aWORFw+NPboxbPh3i8NHbMM1Vv/CFyeo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id C953232B5D;
-	Thu,  4 Aug 2016 18:40:04 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1E13032B58;
-	Thu,  4 Aug 2016 18:40:01 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] nedmalloc: work around overzealous GCC 6 warning
-References: <cover.1470326812.git.johannes.schindelin@gmx.de>
-	<57360f4885bdd5c36e190bea288f1e1f7f706071.1470326812.git.johannes.schindelin@gmx.de>
-	<57A3BA26.5080601@web.de>
-Date:	Thu, 04 Aug 2016 15:39:58 -0700
-In-Reply-To: <57A3BA26.5080601@web.de> (=?utf-8?Q?=22Ren=C3=A9?= Scharfe"'s
- message of "Thu, 4
-	Aug 2016 23:56:54 +0200")
-Message-ID: <xmqqk2fwyx8h.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S932198AbcHDWlK (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 18:41:10 -0400
+Received: from relay3-d.mail.gandi.net ([217.70.183.195]:57246 "EHLO
+	relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758746AbcHDWlH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 18:41:07 -0400
+Received: from x (unknown [IPv6:2605:e000:d5ce:1e00:c5f5:b7bf:c731:5d3f])
+	(Authenticated sender: josh@joshtriplett.org)
+	by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 658C3A80BF;
+	Fri,  5 Aug 2016 00:41:01 +0200 (CEST)
+Date:	Thu, 4 Aug 2016 12:40:58 -1000
+From:	Josh Triplett <josh@joshtriplett.org>
+To:	Richard Ipsum <richard.ipsum@codethink.co.uk>
+Cc:	git@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [ANNOUNCE] git-series: track changes to a patch series over time
+Message-ID: <20160804224058.po43kl7w26ockfie@x>
+References: <20160729064055.GB25331@x>
+ <20160803191202.GA22881@salo>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 61EC3424-5A94-11E6-BAE6-EE617A1B28F4-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20160803191202.GA22881@salo>
+User-Agent: Mutt/1.6.2-neo (2016-07-23)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Let's try it this way.  How about this as a replacement?
+On Wed, Aug 03, 2016 at 08:12:02PM +0100, Richard Ipsum wrote:
+> On Thu, Jul 28, 2016 at 11:40:55PM -0700, Josh Triplett wrote:
+> > I'd welcome any feedback, whether on the interface and workflow, the
+> > internals and collaboration, ideas on presenting diffs of patch series,
+> > or anything else.
+> 
+> One other nice thing I've noticed about this tool is the
+> way series behave like regular git branches: I specify the name
+> of the series and from then on all other commands act on that
+> series until told otherwise.
 
--- >8 --
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Date: Thu, 4 Aug 2016 18:07:08 +0200
-Subject: [PATCH] nedmalloc: work around overzealous GCC 6 warning
+Thanks; I spent a while thinking about that part of the workflow.  I
+save the current series as a symbolic ref SHEAD, and everything operates
+on SHEAD.  (I should probably add support for running things like "git
+series log" or "git series format" on a different series, because right
+now "until told otherwise" doesn't include a way to tell it otherwise.)
 
-With GCC 6, the strdup() function is declared with the "nonnull"
-attribute, stating that it is not allowed to pass a NULL value as
-parameter.
+One fun detail that took a couple of iterations to get right: I keep
+separate "staged" and "working" versions per-series, so even with
+outstanding changes to the cover letter, base, or series, you can always
+detach or checkout another series without losing anything.  If you
+switch back, all your staged and unstaged changes will remain staged and
+unstaged where you left them.  That solves the "checkout a different
+series with modifications to the current series" case.
 
-In nedmalloc()'s reimplementation of strdup(), Postel's Law is heeded
-and NULL parameters are handled gracefully. GCC 6 complains about that
-now because it thinks that NULL cannot be passed to strdup() anyway.
+> git-appraise looks as though it might also have this behaviour.
+> I think it's a nice way to do it, since you don't generally
+> perform more than one review simultaneously. So I may well
+> use this idea in git-candidate if it's okay. :)
 
-Because the callers in this project of strdup() must be prepared to
-call any implementation of strdup() supplied by the platform, so it
-is pointless to pretend that it is OK to call it with NULL.
+By all means.  For a review tool like git-candidate, it seems like you'd
+want even more contextual information, to make it easier to specify
+things like "comment on file F line L".  For instance, what if you
+spawned the diff to review in an editor, with plenty of extra context
+and a file extension that'll cause most editors to recognize it as a
+patch (and specifically a git-candidate patch to allow specialized
+editor modes), and told people to add their comments after the line they
+applied to?  When the editor exits successfully, you can scan the file,
+detect the added lines, and save those as comments.  You could figure
+out the appropriate line by looking for the diff hunk headers and
+counting line numbers.
 
-Remove the conditional based on NULL-ness of the input; this
-squelches the warning.
+If you use a format-patch diff that includes the headers and commit
+message, you could also support commenting on those in the same way.
+Does the notedb format support commenting on those?
 
-See https://gcc.gnu.org/gcc-6/porting_to.html for details.
+> I haven't found time to use the tool to do any serious review
+> yet, but I'll try and post some more feedback when I do.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Helped-by: René Scharfe <l.s.r@web.de>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- compat/nedmalloc/nedmalloc.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+Thanks!
 
-diff --git a/compat/nedmalloc/nedmalloc.c b/compat/nedmalloc/nedmalloc.c
-index 677d1b2..88cd78c 100644
---- a/compat/nedmalloc/nedmalloc.c
-+++ b/compat/nedmalloc/nedmalloc.c
-@@ -955,12 +955,10 @@ void **nedpindependent_comalloc(nedpool *p, size_t elems, size_t *sizes, void **
-  */
- char *strdup(const char *s1)
- {
--	char *s2 = 0;
--	if (s1) {
--		size_t len = strlen(s1) + 1;
--		s2 = malloc(len);
-+	size_t len = strlen(s1) + 1;
-+	s2 = malloc(len);
-+	if (s1)
- 		memcpy(s2, s1, len);
--	}
- 	return s2;
- }
- #endif
--- 
-2.9.2-766-gd7972a8
-
+- Josh Triplett
