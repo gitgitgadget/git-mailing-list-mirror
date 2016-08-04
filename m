@@ -2,81 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A364820228
-	for <e@80x24.org>; Thu,  4 Aug 2016 20:50:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E460620193
+	for <e@80x24.org>; Thu,  4 Aug 2016 20:55:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965770AbcHDUuS (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 16:50:18 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55018 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S965701AbcHDUuR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 16:50:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 089F931C1A;
-	Thu,  4 Aug 2016 16:45:14 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=M/Lc+XvzcThJYzN9pxa+5yi+oqY=; b=UxW24P
-	TuDsYaJzBd0HrQpE3h0RsZje5kUFcrLrDSptIxMIS9ujibdoI1xBtrmB8b2j72gc
-	svae9XkmBR2IFpg34vfsSsEgHJ04Z6gk5vXpoDimuRtOiaUpaeSbi4z3TBzAl5RB
-	dc8zJoT/EPUjEQxUd3/xyOV317Zttk7iP0nYQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Qt6o+D6bDVJhiC1Dv5gerS2wltoljWTb
-	5FoGOMU40unmaR0uHxlxoDIWWdkjRHoY0p5Y7vUQK+zfzIfEOUAeWzum7JEhdvEg
-	uAoLkmnbDxs8QJNeZ3AHRaXWfUHX4WbHM4p23cVkb0k0xNcS98Nvnln6SmsOHaKN
-	bhKWVZywkRs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id F410931C19;
-	Thu,  4 Aug 2016 16:45:13 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7AE9F31C17;
-	Thu,  4 Aug 2016 16:45:13 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	larsxschneider@gmail.com, git@vger.kernel.org
-Subject: Re: [PATCH 6/7] trace: disable key after write error
-References: <20160803225600.fgm23bdacunmrw44@sigill.intra.peff.net>
-	<20160803230103.daexq233ufrttnmn@sigill.intra.peff.net>
-Date:	Thu, 04 Aug 2016 13:45:11 -0700
-In-Reply-To: <20160803230103.daexq233ufrttnmn@sigill.intra.peff.net> (Jeff
-	King's message of "Wed, 3 Aug 2016 19:01:04 -0400")
-Message-ID: <xmqq8twc1cx4.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S965927AbcHDUzv (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 16:55:51 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:33896 "EHLO
+	mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965916AbcHDUzt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 16:55:49 -0400
+Received: by mail-yw0-f194.google.com with SMTP id j12so20768909ywb.1
+        for <git@vger.kernel.org>; Thu, 04 Aug 2016 13:55:48 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=gvhLxS9yjXGRtrsBHv3+QHto6697ORh4CTeD+qKD2qA=;
+        b=CljZv5yGV1bl+Q2cpMpHWnNou2iMJH3Yxk3uHkS+i4LFUKySVc99ikPlZ6R+ph6BV8
+         /DIhul5Tr5M9EDYyLq4NQ/YskN5bMU4AWig+H3/ZbZIX1x5ySl7QZJySxzXj/a3TJ4q2
+         vZqEaguEFaJ9Z7qxWcfo3pQYoUsG36RjLNfrLtZ1iTurDqYNy+zdG8Z6u1sR6MQU16xM
+         r8YDvzOoz27zEH/9IXpmlwaCSJgfZczdZ73Ieeevz/3IRkS8LK0UtMmFfVXmWNfeLCCm
+         5RVty77eZHy4LCuL/8mM76pxZJ8ODT9iCWMmT9drt8Av+i8j66EmuFVbzDM1XbanYXML
+         /IdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=gvhLxS9yjXGRtrsBHv3+QHto6697ORh4CTeD+qKD2qA=;
+        b=CekYAvH6BFBCOv6LXDGADSS0ssGytXf4+UigDGFyBR0rBdgH79lHWb/ZXFy1NmZCTl
+         xJDObiff1htB8ax4oDVlMeU6d5iRPjVrWbXDzCo31U7cNp8uBbxTBTdHoFWWQvgS1Xwy
+         OQHw7SKg1D31lgEX7rGCtafF0v8e+7RnCTMzxI9UyjpQRsr8m8Ql1ympKBYMu5fJddwO
+         o+Kgb8mU9JEw9KGZpS4a9l8azwXOvAb7bIAa19RIYxNBwvKhyDxdTh10q9T3RbRgrD+7
+         tcbkTKT35nGdH2MImA0MyQYkR6UHU+zGe6/Q8JAST9TOG7H+ZcouZaUxmiB/3LTHqUvy
+         5tGQ==
+X-Gm-Message-State: AEkooutTNgYTtKzIxfw1VyIA8gse1M7xX//RWl786jYfJmJ096foTxEQ1zNfe2UCa6IxZoHJzVZUpOSaYRm4eQ==
+X-Received: by 10.129.76.79 with SMTP id z76mr57308653ywa.33.1470344148102;
+ Thu, 04 Aug 2016 13:55:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 57B69D56-5A84-11E6-B83D-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.129.89.132 with HTTP; Thu, 4 Aug 2016 13:55:47 -0700 (PDT)
+From:	Pranit Bauva <pranit.bauva@gmail.com>
+Date:	Fri, 5 Aug 2016 02:25:47 +0530
+Message-ID: <CAFZEwPO9yJT4hB_ottDu7Cft-a2OLvXRpXYOVODwNxMjO_h-0g@mail.gmail.com>
+Subject: [GSOC Update] Week 113
+To:	Git List <git@vger.kernel.org>
+Cc:	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+================= SUMMARY ===================
+My public git.git is available here[1]. I regularly keep pushing my work so
+anyone interested can track me there. Feel free to participate in the
+discussions going on PRs with my mentors. Your comments are valuable.
 
-> If we get a write error writing to a trace descriptor, the
-> error isn't likely to go away if we keep writing. Instead,
-> you'll just get the same error over and over. E.g., try:
->
->   GIT_TRACE_PACKET=42 git ls-remote >/dev/null
->
-> You don't really need to see:
->
->   warning: unable to write trace for GIT_TRACE_PACKET: Bad file descriptor
->
-> hundreds of times. We could fallback to tracing to stderr,
-> as we do in the error code-path for open(), but there's not
-> much point. If the user fed us a bogus descriptor, they're
-> probably better off fixing their invocation. And if they
-> didn't, and we saw a transient error (e.g., ENOSPC writing
-> to a file), it probably doesn't help anybody to have half of
-> the trace in a file, and half on stderr.
 
-Yes, I think I like this better than "we cannot open the named file,
-so let's trace into standard error stream" that is done in the code
-in the context of [3/7].  We should do the same over there.
+================ INTRODUCTION  ===================
+The purpose of this project is to convert the git-bisect utility which partly
+exists in the form of shell scripts to C code so as to make it more portable.
+I plan to do this by converting each function to C and then calling it from
+git-bisect.sh so as to use the existing test suite to test the function which
+is converted.
+
+Mentors:
+Christian Couder <chriscool@tuxfamily.org>
+Lars Schneider <larsxschneider@gmail.com>
+
+
+=================== Updates ======================
+Things which were done in this week:
+
+ * I have converted bisect_start() but there is a bug which I am still working
+   on which conflicts with the `--term-bad` and `--term-good` of
+   `--bisect-terms` subcommand. A RFC has been sent to the list[2]. Junio
+   provided some reviews on it. A resend can be expected soonish.
+
+================== NEXT STEPS ====================
+Things which would be done in the coming week:
+
+ * Resend all patches according to Junio's review.
+
+ * bisect_next() has become a top priority because it would then help
+   converting bisect_auto_next() and then it can be called by other important
+   functions like bisect_start().
+
+ * Following that I will convert bisect_auto_start()
+
+ * Then bisect_replay().
+
+============ My Patches (GSoC project only) ==========
+
+ * My current work is sent out to the mailing list here[2] which contains
+   the whole conversion. The latter 2 patches still need a lot of
+   development.
+
+[1]: https://github.com/pranitbauva1997/git
+[2]: http://www.spinics.net/lists/git/msg282332.html
+
+Regards,
+Pranit Bauva
