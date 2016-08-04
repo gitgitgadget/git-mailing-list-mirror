@@ -6,70 +6,83 @@ X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A507020226
-	for <e@80x24.org>; Thu,  4 Aug 2016 07:13:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28DE420226
+	for <e@80x24.org>; Thu,  4 Aug 2016 07:27:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752000AbcHDHNi (ORCPT <rfc822;e@80x24.org>);
-	Thu, 4 Aug 2016 03:13:38 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54592 "HELO cloud.peff.net"
+	id S1751528AbcHDH1K (ORCPT <rfc822;e@80x24.org>);
+	Thu, 4 Aug 2016 03:27:10 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54612 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750790AbcHDHNh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2016 03:13:37 -0400
-Received: (qmail 11363 invoked by uid 102); 4 Aug 2016 07:13:39 -0000
+	id S1751293AbcHDH1J (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2016 03:27:09 -0400
+Received: (qmail 11940 invoked by uid 102); 4 Aug 2016 07:27:10 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Aug 2016 03:13:39 -0400
-Received: (qmail 10506 invoked by uid 107); 4 Aug 2016 07:14:05 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Aug 2016 03:27:10 -0400
+Received: (qmail 10555 invoked by uid 107); 4 Aug 2016 07:27:36 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Aug 2016 03:14:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Aug 2016 03:13:34 -0400
-Date:	Thu, 4 Aug 2016 03:13:34 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 04 Aug 2016 03:27:36 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Aug 2016 03:27:05 -0400
+Date:	Thu, 4 Aug 2016 03:27:05 -0400
 From:	Jeff King <peff@peff.net>
-To:	Stefan Beller <sbeller@google.com>
-Cc:	Michael Haggerty <mhagger@alum.mit.edu>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
+To:	Michael Haggerty <mhagger@alum.mit.edu>
+Cc:	git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
 	Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH 2/8] xdl_change_compact(): clarify code
-Message-ID: <20160804071333.xs4ns7q7o4ykw7y3@sigill.intra.peff.net>
+Subject: Re: [PATCH 5/8] xdl_change_compact(): fix compaction heuristic to
+ adjust io
+Message-ID: <20160804072705.a53mospcccksiz4e@sigill.intra.peff.net>
 References: <cover.1470259583.git.mhagger@alum.mit.edu>
- <f4ce27f389b64c9ae503152c66d183c4a4a970f1.1470259583.git.mhagger@alum.mit.edu>
- <CAGZ79kZk+XW+Bwcx_fvOLVBDse_iUSjEa_K=eJqm4PpTsTAcPA@mail.gmail.com>
- <57715dee-ca73-c1bb-ee79-2813d7873649@alum.mit.edu>
- <CAGZ79kbyCRDTt4u+Fje819mNZZf3GkZtYVurwOMPXRfXqO-YEw@mail.gmail.com>
+ <ae7590443737a3996ec4973fd868ce89dc78a576.1470259583.git.mhagger@alum.mit.edu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kbyCRDTt4u+Fje819mNZZf3GkZtYVurwOMPXRfXqO-YEw@mail.gmail.com>
+In-Reply-To: <ae7590443737a3996ec4973fd868ce89dc78a576.1470259583.git.mhagger@alum.mit.edu>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Aug 03, 2016 at 04:50:46PM -0700, Stefan Beller wrote:
+On Thu, Aug 04, 2016 at 12:00:33AM +0200, Michael Haggerty wrote:
 
-> I was not asking for undoing these, but giving short cryptic answers myself. ;)
-> While I agree the variable names are way better than before, the use of while
-> instead of for (and then doing another final ++ after the loop) extended some
-> one liners to about 5. I am totally fine with that as they are easier
-> to read for me as I understand them as Git style, hence easier to read.
+> The code branch used for the compaction heuristic incorrectly forgot to
+> keep io in sync while the group was shifted. I think that could have
+> led to reading past the end of the rchgo array.
+> 
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+> I didn't actually try to verify the presence of a bug, because it
+> seems like more work than worthwhile. But here is my reasoning:
+> 
+> If io is not decremented correctly during one iteration of the outer
+> `while` loop, then it will loose sync with the `end` counter. In
+> particular it will be too large.
+> 
+> Suppose that the next iterations of the outer `while` loop (i.e.,
+> processing the next block of add/delete lines) don't have any sliders.
+> Then the `io` counter would be incremented by the number of
+> non-changed lines in xdf, which is the same as the number of
+> non-changed lines in xdfo that *should have* followed the group that
+> experienced the malfunction. But since `io` was too large at the end
+> of that iteration, it will be incremented past the end of the
+> xdfo->rchg array, and will try to read that memory illegally.
 
-One thing I try to do with loops is to use "for" loops only when I truly
-want an iteration from point A to point B. If I care about the value of
-the iterator _after_ the loop, I prefer a "while" loop.
+Hmm. In the loop:
 
-Not everybody necessarily has the same taste, but I assume Michael does,
-since that's what's happening in this hunk:
+  while (rchgo[io])
+	io++;
 
-> -               start = i;
-> -               for (i++; rchg[i]; i++);
-> -               for (; rchgo[io]; io++);
-> +               start = i++;
-> +
-> +               while (rchg[i])
-> +                       i++;
-> +
-> +               while (rchgo[io])
-> +                      io++;
+that implies that rchgo has a zero-marker that we can rely on hitting.
+And it looks like rchgo[io] always ends the loop on a 0. So it seems
+like we would just hit that condition again.
+
+That doesn't make it _right_, but I'm not sure I see how it would walk
+off the end of the array.  But I'm very sure I don't understand this
+code completely, so I may be missing something.
+
+Anyway, I'd suggest putting your cover letter bits into the commit
+message. Even though they are all suppositions, they are the kind of
+thing that could really help somebody debugging this in 2 years, and are
+better than nothing.
 
 -Peff
