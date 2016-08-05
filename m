@@ -3,124 +3,198 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65EA61F859
-	for <e@80x24.org>; Fri,  5 Aug 2016 11:59:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE9322018E
+	for <e@80x24.org>; Fri,  5 Aug 2016 12:02:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161028AbcHEL7j (ORCPT <rfc822;e@80x24.org>);
-	Fri, 5 Aug 2016 07:59:39 -0400
-Received: from ducie-dc1.codethink.co.uk ([185.25.241.215]:57316 "EHLO
-	ducie-dc1.codethink.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934333AbcHEL7i (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2016 07:59:38 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by ducie-dc1.codethink.co.uk (Postfix) with ESMTP id 9207746324A;
-	Fri,  5 Aug 2016 12:59:35 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at ducie-dc1.codethink.co.uk
-Received: from ducie-dc1.codethink.co.uk ([127.0.0.1])
-	by localhost (ducie-dc1.codethink.co.uk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3fHyECOOM8No; Fri,  5 Aug 2016 12:59:32 +0100 (BST)
-Received: from salo (82-70-136-246.dsl.in-addr.zen.co.uk [82.70.136.246])
-	by ducie-dc1.codethink.co.uk (Postfix) with ESMTPSA id E2BC4463009;
-	Fri,  5 Aug 2016 12:59:31 +0100 (BST)
-Date:	Fri, 5 Aug 2016 12:59:11 +0100
-From:	Richard Ipsum <richard.ipsum@codethink.co.uk>
-To:	Stefan Beller <sbeller@google.com>
-Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-	dborowitz@google.com, Michael Haggerty <mhagger@alum.mit.edu>,
-	Josh Triplett <josh@joshtriplett.org>
-Subject: Re: patch submission process, was Re: [PATCH v6 06/16]
- merge_recursive: abort properly upon errors
-Message-ID: <20160805115911.GA4787@salo>
-References: <8ff71aba37be979f05abf88f467ec932aa522bdd.1470051326.git.johannes.schindelin@gmx.de>
- <xmqqlh0gjpr6.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1608021004080.79248@virtualbox>
- <xmqqy44ec15p.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1608031021050.79248@virtualbox>
- <CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com>
- <alpine.DEB.2.20.1608031753431.107993@virtualbox>
- <CAGZ79kYWdZCNW_eBi5aLAacyBZJXQ9xyOWMBmjNsYT5NWjr-Og@mail.gmail.com>
- <alpine.DEB.2.20.1608041730130.5786@virtualbox>
- <CAGZ79kaTT3NgKj8akB8t9b1BF3i6sXe7Un9oq5KP8077Wz-E+g@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kaTT3NgKj8akB8t9b1BF3i6sXe7Un9oq5KP8077Wz-E+g@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S935000AbcHEMCY (ORCPT <rfc822;e@80x24.org>);
+	Fri, 5 Aug 2016 08:02:24 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33971 "EHLO
+	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934989AbcHEMCY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Aug 2016 08:02:24 -0400
+Received: by mail-wm0-f66.google.com with SMTP id q128so3492535wma.1
+        for <git@vger.kernel.org>; Fri, 05 Aug 2016 05:02:08 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=HQv4ruwBUzllPsJYiXdoq2F51br1M48ujONdVpIrYBU=;
+        b=yGfFCZ14eJVHnxJaa5gL0+HoqTVqR8pwYK3CWcnCx4BffNOymLTyf8sx5jfRcN1UK/
+         8QAJJZ+8oc2IbSsmb5OzDm0Enj+QfWMx85M3qEog7c1o0GeroLma5fCdyRygrvDHoDmx
+         VR8ldB9zB/jCQU56I7iLtU3bRmp+/kmeiyFaEe5VgY4a0Qu4E20vCQRlbrcgJW96e0Sn
+         wJ8pLrIm46obQV7T7+6uBsyyJT8DozorYnkX3YgxT+R3zCWcuXLPAnw4BZvYTn9Jp0AD
+         QMpSeysbhmQng3RZsTD1sAerFJ4dDifyRi4VIjLNUm44N5VZHoSpdbMvI/f6Km9dUmMO
+         zuig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=HQv4ruwBUzllPsJYiXdoq2F51br1M48ujONdVpIrYBU=;
+        b=F7A7VCWmi8qFikfng5WHYWwhBHIayJDaP/bKKYZzicSKmQEiuyTlQvYmxKLasHOzl5
+         5Z3WE6+xUPbwmB94ncFeV8JOf3hBJs8jN8jXA/TcGZFY1g468bOq07NRQIAYFlW3mY+b
+         2EmZz1qZxDd+tZFfwi/fFw/GBUKtvruSaNt84wvoi/sa9hwkaQYjJdA8vv9Am74lu5iM
+         N/p3ILrWzYqlxae0C5VqcCy/Q5OKZyZ/xwxFcdKCgOGTagM3HMcttMmM8c2xVt+69FM1
+         TGyvUfcBJ+X3V9XiCSiytK9yLN4TDq0kP1axK5UoiMogAc5uNKR/dGeqhlB5a4EoNlyt
+         BsBg==
+X-Gm-Message-State: AEkooutrvQtANXVgc55QVkUujXJoGqDQHznv50fPGBcPapO4DOuF8UxXqqrM003OFE+2yg==
+X-Received: by 10.28.70.65 with SMTP id t62mr3152565wma.53.1470398527570;
+        Fri, 05 Aug 2016 05:02:07 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id 190sm8319614wmk.13.2016.08.05.05.02.04
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 05 Aug 2016 05:02:07 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v3 02/10] pkt-line: add direct_packet_write() and direct_packet_write_data()
+From:	Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <e8b550ed-1765-764f-49e5-72e5a609d936@gmail.com>
+Date:	Fri, 5 Aug 2016 14:02:03 +0200
+Cc:	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>, tboegi@web.de,
+	mlbright@gmail.com, Eric Wong <e@80x24.org>,
+	Jeff King <peff@peff.net>
+Content-Transfer-Encoding: 8BIT
+Message-Id: <B113DD3B-A8AD-452A-B1E6-A92C84665D65@gmail.com>
+References: <20160727000605.49982-1-larsxschneider%40gmail.com/> <20160729233801.82844-1-larsxschneider@gmail.com> <20160729233801.82844-3-larsxschneider@gmail.com> <58e4737b-6e0e-565c-2468-05c705dea426@gmail.com> <64783AA5-D579-4783-88E7-E0B3BDE5FDEB@gmail.com> <e8b550ed-1765-764f-49e5-72e5a609d936@gmail.com>
+To:	=?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Aug 04, 2016 at 09:42:18AM -0700, Stefan Beller wrote:
-> On Thu, Aug 4, 2016 at 8:58 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> >> If we were to change our workflows drastically, I'd propose to
-> >> go a way[1] similar to notedb in Gerrit, or git-series,
-> >
-> > Gerrit is a huge, non-distributed system. Complex, too. If we change the
-> > patch submission process, we should make things *easier*, not *harder*. So
-> > I think Gerrit is pretty much out of the question.
+
+> On 03 Aug 2016, at 22:12, Jakub Narębski <jnareb@gmail.com> wrote:
 > 
-> I did not propose to use Gerrit or git-series or git appraise.
+> [This response might have been invalidated by v4]
 > 
-> However whenever I see these projects talking to each other, the talk focuses on
-> a "unified review storage format" pretty often, which would make them compatible
-> with each other. So then I could choose git-series, while you could go with
-> git appraise (although that is written in go, so maybe too fancy already ;)
-> Or there could be another new program written in C that follows the "review
-> format".
+> W dniu 01.08.2016 o 14:00, Lars Schneider pisze:
+>>> On 30 Jul 2016, at 12:49, Jakub Narębski <jnareb@gmail.com> wrote:
+>>> W dniu 30.07.2016 o 01:37, larsxschneider@gmail.com pisze:
+>>>> 
+>>>> Sometimes pkt-line data is already available in a buffer and it would
+>>>> be a waste of resources to write the packet using packet_write() which
+>>>> would copy the existing buffer into a strbuf before writing it.
+>>>> 
+>>>> If the caller has control over the buffer creation then the
+>>>> PKTLINE_DATA_START macro can be used to skip the header and write
+>>>> directly into the data section of a pkt-line (PKTLINE_DATA_LEN bytes
+>>>> would be the maximum). direct_packet_write() would take this buffer,
+>>>> adjust the pkt-line header and write it.
+>>>> 
+>>>> If the caller has no control over the buffer creation then
+>>>> direct_packet_write_data() can be used. This function creates a pkt-line
+>>>> header. Afterwards the header and the data buffer are written using two
+>>>> consecutive write calls.
+>>> 
+>>> I don't quite understand what do you mean by "caller has control
+>>> over the buffer creation".  Do you mean that caller either can write
+>>> over the buffer, or cannot overwrite the buffer?  Or do you mean that
+>>> caller either can allocate buffer to hold header, or is getting
+>>> only the data?
+>> 
+>> How about this:
+>> 
+>> [...]
+>> 
+>> If the caller creates the buffer then a proper pkt-line buffer with header
+>> and data section can be created. The PKTLINE_DATA_START macro can be used 
+>> to skip the header section and write directly to the data section (PKTLINE_DATA_LEN 
+>> bytes would be the maximum). direct_packet_write() would take this buffer, 
+>> fill the pkt-line header section with the appropriate data length value and 
+>> write the entire buffer.
+>> 
+>> If the caller does not create the buffer, and consequently cannot leave room
+>> for the pkt-line header, then direct_packet_write_data() can be used. This 
+>> function creates an extra buffer for the pkt-line header and afterwards writes
+>> the header buffer and the data buffer with two consecutive write calls.
+>> 
+>> ---
+>> Is that more clear?
+> 
+> Yes, I think it is more clear.  
+> 
+> The only thing that could be improved is to perhaps instead of using
+> 
+>  "then a proper pkt-line buffer with header and data section can be created"
+> 
+> it might be more clear to write
+> 
+>  "then a proper pkt-line buffer with data section and a place for pkt-line header"
 
-This "unified review storage format" really does seem to be the missing
-piece. The tool I've been working on for the past year (git-candidate)
-was initially aimed at contrib[1], and was written in perl solely
-to satisfy contrib rules. It would have been python otherwise.
+OK. I changed it to
 
-The feedback from that thread[1], was that while git-candidate itself
-seemed interesting it would be unreasonable to bless a particular
-tool's format. So it seems to me that even if git-series had been
-written in perl rather than rust it could have expected a similar
-response to that of git-candidate, possibly.
+"If the caller has control over the buffer creation then a proper pkt-line
+buffer with header and data section can be allocated. The 
+PKTLINE_DATA_START macro can be used to skip the header and write
+directly into the data section of a pkt-line (PKTLINE_DATA_LEN bytes
+would be the maximum)..."
 
-As Stefan says, if we're able to establish a standard for storing
-review data in git then it doesn't really matter what the tools are written in.
+However, I am not yet sure if I can/will keep this patch:
+http://public-inbox.org/git/xmqqeg645x6b.fsf%40gitster.mtv.corp.google.com/
 
-For what it's worth my possibly quite shoddy attempt at a library
-implementing a possible review format for git[2] is written in perl,
-mostly to satisfy contrib requirements.
 
-> >
-> > Even requiring every contributor to register with GitHub would be too much
-> > of a limitation, I would wager.
-> >
-> > And when I said I have zero interest in tools that use the "latest and
-> > greatest language", I was hinting at git-series. Rust may be a fine and
-> > wonderful language. Implementing git-series in Rust, however, immediately
-> > limited the potential engagement with developers dramatically.
+> 
+>>>> +{
+>>>> +	int ret = 0;
+>>>> +	char hdr[4];
+>>>> +	set_packet_header(hdr, sizeof(hdr) + size);
+>>>> +	packet_trace(buf, size, 1);
+>>>> +	if (gentle) {
+>>>> +		ret = (
+>>>> +			!write_or_whine_pipe(fd, hdr, sizeof(hdr), "pkt-line header") ||
+>>> 
+>>> You can write '4' here, no need for sizeof(hdr)... though compiler would
+>>> optimize it away.
+>> 
+>> Right, it would be optimized. However, I don't like the 4 there either. OK to use a macro
+>> instead? PKTLINE_HEADER_LEN ?
+> 
+> Did you mean 
+> 
+>    +	char hdr[PKTLINE_HEADER_LEN];
+>    +	set_packet_header(hdr, sizeof(hdr) + size);
 
-Ironically contrib's language requirements actually raised the bar for me
-because it meant that I had to learn perl.
+yes!
 
-> >
-> > Additionally, I would like to point out that defining a way to store
-> > reviews in Git is not necessarily improving the way our code contribution
-> > process works. If you want to record the discussions revolving around the
-> > code, I think public-inbox already does a pretty good job at that.
 
-I agree, and must apologise if this response has been too off topic,
-in any case I hope at least some of it was useful to someone.
+>>>> +			!write_or_whine_pipe(fd, buf, size, "pkt-line data")
+>>>> +		);
+>>> 
+>>> Do we want to try to write "pkt-line data" if "pkt-line header" failed?
+>>> If not, perhaps De Morgan-ize it
+>>> 
+>>> +		ret = !(
+>>> +			write_or_whine_pipe(fd, hdr, sizeof(hdr), "pkt-line header") &&
+>>> +			write_or_whine_pipe(fd, buf, size, "pkt-line data")
+>>> +		);
+>> 
+>> 
+>> Original:
+>> 		ret = (
+>> 			!write_or_whine_pipe(fd, hdr, sizeof(hdr), "pkt-line header") ||
+>> 			!write_or_whine_pipe(fd, data, size, "pkt-line data")
+>> 		);
+>> 
+>> Well, if the first write call fails (return == 0), then it is negated and evaluates to true.
+>> I would think the second call is not evaluated, then?!
+> 
+> This is true both for || and for &&, as in C logical boolean operators
+> short-circuit.
 
-Hope this helps,
-Richard Ipsum
+True. That's why I did not get your "de morganize" it comment... what would de morgan change?
 
-[1]: http://www.mail-archive.com/git%40vger.kernel.org/msg80972.html
-[2]: https://bitbucket.org/richardipsum/perl-notedb
+> 
+>> Should I make this more explicit with a if clause?
+> 
+> No need.
+
+OK
+
+
+Thanks,
+Lars
