@@ -2,75 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 95DF72018E
-	for <e@80x24.org>; Fri,  5 Aug 2016 19:08:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD8E72018E
+	for <e@80x24.org>; Fri,  5 Aug 2016 19:19:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S938976AbcHETIv (ORCPT <rfc822;e@80x24.org>);
-	Fri, 5 Aug 2016 15:08:51 -0400
-Received: from mail-io0-f172.google.com ([209.85.223.172]:35591 "EHLO
-	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762069AbcHETIr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2016 15:08:47 -0400
-Received: by mail-io0-f172.google.com with SMTP id m101so308040976ioi.2
-        for <git@vger.kernel.org>; Fri, 05 Aug 2016 12:08:47 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=nA+I5Ruh3YccIBBZb6W7mhsysxISXzCYWsT3ogQoJEU=;
-        b=KCzfVphq19LDD5PED1MfnSh2U+3KeW7sWyHw3rrEdhmywxpGqV2TVPnPWSYjMDK91n
-         i8ewdbgP0AtZaAftMmcbGa6+hJMpccL7nPh3dZEkbBmarG5YMRSuVZojSuY3UM3NiP6W
-         eW0EAYdEB2kAMTpRs8CqfxFQy+nfsPbeiFnxMmVpo4pKB0MYKfaOExETC8sn2hOv38h1
-         iS3Boen5BLfgS5aDwAF62P9kMCgF9hsWbNTPxQWWdTWe3iSWFTFTLboREKTFkhSPc/eE
-         Vy9NQu0ORSH1g0Y8KIag719+8qm7EzT9HXBerZVCPYZDfMjVQSIcDv9at448xbtSJyUd
-         DOPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=nA+I5Ruh3YccIBBZb6W7mhsysxISXzCYWsT3ogQoJEU=;
-        b=dv53RGvjkEqiEBba+6gfmDWAa9iFq185mrxarXGU9Y7g3gAMmVfy4Cj8g5lNavXyU4
-         F28AioCf8KGJ7iSeSdQVEn+UvFjtraKE63niHhDrjoD8P46RHesYskjAXkCfzi0OnW6B
-         PckiQz5W9/vkdPL2ybVcVR8tAh82FavizVQEi40wPTxshssiD2JCwmJjTFOnUIxlFIN5
-         89ypoDqa/R6k50IQbCdm2bdw4AjzOx3TmxFhBk1GQOuGuX5KaGWS32BXGA2ZQ0aY27Jh
-         vNaEhHXmiXoReY0cnmHS3n08FgPcJ+R8OBqjQ6OkOQsjmq/OuCXp2vL3TsQqGwYGmdDV
-         bTsg==
-X-Gm-Message-State: AEkoouuoCwTTtuZ3GFDsLBuvtfHpIV02SqOqrTlfl7BsMHGu3rpdr6iBmMfLQ3i2541h3qceno+dkNvn1Yuf/IRI
-X-Received: by 10.107.178.129 with SMTP id b123mr81956057iof.83.1470424126710;
- Fri, 05 Aug 2016 12:08:46 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Fri, 5 Aug 2016 12:08:46 -0700 (PDT)
-In-Reply-To: <20160804195159.7788-5-sbeller@google.com>
-References: <20160804195159.7788-1-sbeller@google.com> <20160804195159.7788-5-sbeller@google.com>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Fri, 5 Aug 2016 12:08:46 -0700
-Message-ID: <CAGZ79kY4YxftihTP_cNqLrVTn0wrfNd5_mb40AB-t2beyzvdLA@mail.gmail.com>
-Subject: Re: [PATCH 4/6] submodule--helper update-clone: allow multiple references
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>, mst@redhat.com,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset=UTF-8
+	id S1948824AbcHETTn (ORCPT <rfc822;e@80x24.org>);
+	Fri, 5 Aug 2016 15:19:43 -0400
+Received: from smx-7fb.smtp.startmail.com ([37.153.204.247]:43821 "EHLO
+	smx-7fb.smtp.startmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1948590AbcHETTk (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Aug 2016 15:19:40 -0400
+X-Greylist: delayed 515 seconds by postgrey-1.27 at vger.kernel.org; Fri, 05 Aug 2016 15:19:40 EDT
+Received: from smx-8a9.int1.startmail.com (smx-8a9.int1.startmail.com [10.1.137.139])
+	by smx-7fb.smtp.startmail.com (Postfix) with ESMTPS id BC67AB7A78
+	for <git@vger.kernel.org>; Fri,  5 Aug 2016 21:11:03 +0200 (CEST)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed; d=startmail.com;
+	s=dkim; t=1470424263;
+	bh=qsYobabSEBb4tSZYZXlX1OMSjDJxhbq7ptNSFD14NuE=;
+	h=To:From:Subject:Date:From;
+	b=XChOPvRULsGXLF/+ulmskXavsCO0esUxE1BXwBhS/0OXc5ejanJHqLv0OjkN8n0+T
+	 43cEf/XuD8dGLjqHHe4gB3oP/SEILq8B852YEwDtkKbK1mA5/3tHWllpDTuTIYoI4p
+	 JKWKicJSavpXxGyiOYXJgevd/brmFv7tmFYiJhj7MHaM88zYQ2HsoFfj7z1MHRXAaz
+	 6KOxUHtRdvTpV66TmfAkLqbmT/ihofXgK8DJTdMsRI9AeqCNQlrYgBfrGWG/axhUXs
+	 27pvpCnsj4JnKpXqrGrYM2MXTB6Q40S5jtjTmECYJwrOGzSRaAAt1ukvRHQA10Upqh
+	 l3OUNGqTaJd7Q==
+To:	git@vger.kernel.org
+From:	OmegaPhil <OmegaPhil@startmail.com>
+Subject: git fatal error on fetching
+Message-ID: <3c9671f0-782f-c5cb-08ce-a0f428994fb4@startmail.com>
+Date:	Fri, 5 Aug 2016 20:10:57 +0100
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="x077QXtMGhkdF78OC6MjgdlJat8sER19c"
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-> -               ${reference:+--reference "$reference"} \
-> +               ${reference:+"$reference"} \
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--x077QXtMGhkdF78OC6MjgdlJat8sER19c
+Content-Type: multipart/mixed; boundary="mTXtmEV40lNiWLOTiHKmEIPVmsSdadQVE"
+From: OmegaPhil <OmegaPhil@startmail.com>
+To: git@vger.kernel.org
+Message-ID: <3c9671f0-782f-c5cb-08ce-a0f428994fb4@startmail.com>
+Subject: git fatal error on fetching
 
-Note how this changed the API of the submodule--helper.
-Currently we pass in --reference $reference
-and $reference consists of the string "--reference" and the actual
-reference. So it looked like '--reference' '--reference=foo'
+--mTXtmEV40lNiWLOTiHKmEIPVmsSdadQVE
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-That is why we can pass the argument unseen to clone in the helper
-via
+Debian Testing with v4.5.5-1 kernel, git v2.8.1.
 
-    argv_array_push(&child->args, suc->reference);
+I seem to have a broken git setup somehow on this machine - I'm
+currently testing the ability to fetch PRs from Github following [0],
+e.g. testing with a PR on dattobd[1]:
 
-This is fixed now.
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+git clone https://github.com/datto/dattobd.git
+cd dattobd
+git fetch origin pull/41/head:pull_41
+git checkout pull_41
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+This works fine in a VM, but on my main machine, the fetch fails:
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+fatal: failed to read object 0000000000000000000000000000000000000000:
+Bad file descriptor
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+I moved my local config out of the way ('~/.gitconfig'), but nothing
+changed. Any ideas for how to debug this?
+
+Thanks for any help.
+
+
+0: https://gist.github.com/piscisaureus/3342247#gistcomment-1625076
+1: https://github.com/datto/dattobd/pull/41
+
+
+--mTXtmEV40lNiWLOTiHKmEIPVmsSdadQVE--
+
+--x077QXtMGhkdF78OC6MjgdlJat8sER19c
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJXpOTBAAoJEBfSPH39wvOP/XsP/3ZA6k17vSlzKmPP2oIcWmFx
+FsMcq4lsHsCaTP8i8ssK/OY9vjAQhLLRr/z2SG/m/kIUaU6SgE291MsxUmUMgxcG
+4mkdFXDkpYndax571yQdf0dlBft8xAB9c1fuVj/GNj9/a5ooQwyex4PhEFXqlB2Z
+ohMDtOV9NfULxrlu5TV92YdCAW9jTf//TnVK3ziOz8S/fDUf2BonHMU6U1hnMc88
+oqMw5l9FgqoFapAtnJujdGqM1Qc2353h9WPceT1Jp6++srImL2SI+R14f8/hkL43
+ujOySVpb+Jymb8+wHH37TU7yIprwwNBm6zAofwtN26kWY5KYmTzb/3SHEbECOF54
+Cp67QZC8sIkwTVDkxjT7TYEfnVgb9qsYJUo3mBRRbyohXY8XrkjG2+LA0QJEo+vo
+C4O2Bo35gZq/APN/171XtVq2Of66ofrdJ1Dya9RHBHYGdZCbzU2KkxBRGRuykqJ5
+tT9FJxeKt34h8E0rEOL4WwYQcIzDG3rqeK93+JuqHTl7SC2lXOasBqz+/0yzYXpR
+UwOA4ZGYs4UM/Iq2USnOV41q36I19e9hbE0V1cm+Ml4e17VejNpyGyFPCQ04nOOU
+mb24DsynpJbGgblQyYuVIGWpgJeQ3Wtubg580qPJWN5gHpt1eiKJ3EV2whF2K9Dr
+ayHBiUbaQ2MssgXyFjZY
+=6H8v
+-----END PGP SIGNATURE-----
+
+--x077QXtMGhkdF78OC6MjgdlJat8sER19c--
