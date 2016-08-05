@@ -2,115 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E01B2018E
-	for <e@80x24.org>; Fri,  5 Aug 2016 15:39:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4FC052018E
+	for <e@80x24.org>; Fri,  5 Aug 2016 15:40:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760004AbcHEPjI (ORCPT <rfc822;e@80x24.org>);
-	Fri, 5 Aug 2016 11:39:08 -0400
-Received: from mout.gmx.net ([212.227.17.22]:65234 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754029AbcHEPjH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2016 11:39:07 -0400
-Received: from virtualbox ([37.24.141.218]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0M93Jp-1bOFVA2O7h-00CP9K; Fri, 05 Aug 2016 17:39:01
- +0200
-Date:	Fri, 5 Aug 2016 17:38:46 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org
-Subject: Re: [PATCH 2/2] nedmalloc: work around overzealous GCC 6 warning
-In-Reply-To: <xmqqoa584eju.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1608051736400.5786@virtualbox>
-References: <cover.1470326812.git.johannes.schindelin@gmx.de> <57360f4885bdd5c36e190bea288f1e1f7f706071.1470326812.git.johannes.schindelin@gmx.de> <xmqqoa584eju.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1759988AbcHEPkG (ORCPT <rfc822;e@80x24.org>);
+	Fri, 5 Aug 2016 11:40:06 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52166 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1759978AbcHEPkF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Aug 2016 11:40:05 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 70A7930A19;
+	Fri,  5 Aug 2016 11:40:03 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4mbcR+5O73ymDfo/eFwXY4Uh0G4=; b=JwU8nb
+	osXnPJpkuIA+Sk1zrsTqs9pIBDNzFOP2heM6chrTOGcsqVnOwjxZ8Vxw4ACHX+dB
+	lEVw8cAhZ1su9NW3jVcNwNx6X03YsD4NAEHM4HYDK6zyHwuKAJbrvEklD8TBGlpz
+	tN0PizMmWrFBXtzY4FUXn8D8TipCLBEi9xGOg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=e6w3wni28DNUEwIW89vnrcmCQTeYp17l
+	KD0tayeNV0WQSQFWjjJtvsiGQFoAkON5tvj1DsnJ/BTuV7ywKQNW7k6ZLX/+5HF5
+	pHf7IkVyhthyD+vrivjMvnVdyTbTHYJYuWiFqdaAap/d4ecnBnnha0MZmqb7zbC3
+	Ryn7GIs5R7A=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 667B930A18;
+	Fri,  5 Aug 2016 11:40:03 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2C94B30A15;
+	Fri,  5 Aug 2016 11:40:02 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	"Michael S. Tsirkin" <mst@redhat.com>
+Cc:	Martin Fick <mfick@codeaurora.org>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Git List <git@vger.kernel.org>, repo-discuss@googlegroups.com
+Subject: Re: storing cover letter of a patch series?
+References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com>
+	<xmqqh9n241el.fsf@gitster.mtv.corp.google.com>
+	<18979417.pyyHNUINeQ@mfick1-lnx>
+	<xmqqzj0u2k5m.fsf@gitster.mtv.corp.google.com>
+	<20160804234920.GA27250@redhat.com>
+Date:	Fri, 05 Aug 2016 08:39:58 -0700
+In-Reply-To: <20160804234920.GA27250@redhat.com> (Michael S. Tsirkin's message
+	of "Fri, 5 Aug 2016 02:49:20 +0300")
+Message-ID: <xmqqy44bxm0h.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1931477388-1470411541=:5786"
-X-Provags-ID: V03:K0:gTUoxhXelA3mFNvMM06U1ShHaIwZsxfojoiRHtK4qXvazrKCaFE
- 9cWmxqVOzPlZObrNHeesC7/WOS4NhCdk46km0yRM3ptgzlHpVv2291w8O1/yT+P729/2eFH
- yGE0hq+7r84X4XvYrQws5KKUto2mMOnTKawhm7cFfZ+2gqTGaJx2nPpTwT7rBgFNl+5Bx7O
- oMaMxlC1IUORZIye717QA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:i8/tiF2RPzM=:72EKZ6kEbLhQlr3hXO3GhA
- TfxxW7L5inATPNQvLgODQPLoRgcO3lV0QpjB7URGDig7dJbDqIruGwR4sfOOf82Uurt8MGKJR
- 7SfZ9n8u1Ju+yiL9piynvSVTfQvAi2zrO6EuLcDnXBu6B3N5Q9z6oPGw3XvRnjKFphSC7MX30
- lRSvtGEH9UBeIbWL6EORrwt2HtYMhwXuZ9KN3nJlsok2Z88LScKpIQrU3cqOSbM8j8vldw9eO
- uIwdJbxQZSDBD0SXHyd3gtyr6DtFxRf09hU9+eLcET8xP3rfwcnZBcUZQbNkR/+XFRc/lOZyB
- pziYA1HoTZplJwdEwaXvuEpNkQWNshKEqA4WbbK00fCLjCpMF0KrLHFJvilN3yYxPvEfCY2hc
- BUnURC8JYlPiTnRvj+DRESD21AXWa8P2lD02DDCVvdhmOk//pPIkvxydpsdv1OX7a+my6w2tP
- MfVua60EruCKVyDRNnNjE2KJgHUsHhmH65g8v/lY5kTjAMbfaH16QOHvzM55znhLUsw2rVAD4
- mZfGKzpJE7OzjvoKdNXHXujDLXrcoyWwCRSrkc+WJX+6DZnG7og5p27QTynFDI64DPO75m5Lt
- fdg9HRG6qlnP7BUWtjL4ZHHK/1PNPCtWH80bR8kF17ANJ2P/p36jQI8C/6A9XsXCq176t9w5D
- cqMiym3LxMoRXAZpLVy0ocl2DmDfaoBHyrklPRna0NkcV7FLSw4UIbh+aYtGZHiIsTHGaeknP
- MA0clWPYHAEXBUSu4caX0wcJdtByLPdDAdJLxq5kMg8tQYmtgCoARWOw6D1SbLTpktGuOQNgO
- 4e2413Z
+Content-Type: text/plain
+X-Pobox-Relay-ID: DFF53BA2-5B22-11E6-B7AD-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+"Michael S. Tsirkin" <mst@redhat.com> writes:
 
---8323329-1931477388-1470411541=:5786
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+> On Thu, Sep 10, 2015 at 11:39:49AM -0700, Junio C Hamano wrote:
+>> The problem with "empty commit trick" is that it is a commit whose
+>> sole purpose is to describe the series, and its presence makes it
+>> clear where the series ends, but the topology does not tell where
+>> the series begins, so it is an unsatisifactory half-measure.
+>
+> Actually, when using topic branches the series always ends at head, so
+> it's better to keep the empty commit where series begins.
 
-Hi Junio,
+But that would mean that you would need to destroy and recreate more
+commits than you would need to.  If you have a five-commit series
+(with the bottom "description" one, you would have six commits) and
+you are already happy with the bottom two but want to update the
+third one, you wuld have to "rebase -i" all six of them, reword the
+bottom "description" to adjust it to describe the new version of the
+third one _before_ you even do the actual update of the third one.
 
-On Thu, 4 Aug 2016, Junio C Hamano wrote:
+That somehow feels backwards, and that backward-ness comes from the
+fact that you abused a single-parent commit for the purpose it is
+not meant to be used (i.e. they are to describe individual changes),
+because you did not find a better existing mechanism (and I suspect
+there isn't any, in which case the solution is to invent one, not
+abusing an existing mechanism that is not suited for it).
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
->=20
-> > With GCC 6, the strdup() function is declared with the "nonnull"
-> > attribute, stating that it is not allowed to pass a NULL value as
-> > parameter.
-> >
-> > In nedmalloc()'s reimplementation of strdup(), Postel's Law is heeded
-> > and NULL parameters are handled gracefully. GCC 6 complains about that
-> > now because it thinks that NULL cannot be passed to strdup() anyway.
-> >
-> > Let's just shut up GCC >=3D 6 in that case and go on with our lives.
-> >
-> > See https://gcc.gnu.org/gcc-6/porting_to.html for details.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  compat/nedmalloc/nedmalloc.c | 3 +++
-> >  1 file changed, 3 insertions(+)
-> >
-> > diff --git a/compat/nedmalloc/nedmalloc.c b/compat/nedmalloc/nedmalloc.=
-c
-> > index 677d1b2..3f28c0b 100644
-> > --- a/compat/nedmalloc/nedmalloc.c
-> > +++ b/compat/nedmalloc/nedmalloc.c
-> > @@ -956,6 +956,9 @@ void **nedpindependent_comalloc(nedpool *p, size_t =
-elems, size_t *sizes, void **
-> >  char *strdup(const char *s1)
-> >  {
-> >  =09char *s2 =3D 0;
-> > +#if __GNUC__ >=3D 6
-> > +#pragma GCC diagnostic ignored "-Wnonnull-compare"
-> > +#endif
-> >  =09if (s1) {
-> >  =09=09size_t len =3D strlen(s1) + 1;
-> >  =09=09s2 =3D malloc(len);
->=20
-> Is it a common convention to place "#pragma GCC diagnostic"
-> immediately before the statement you want to affect, and have the
-> same pragma in effect until the end of the compilation unit?
+If this were part of a workflow like this, I would understand it:
 
-Uh oh. This was a brain fart. I somehow confused the way pragmas work with
-the way __attribute__s work. You are correct, of course, that the pragma
-affects the entire remainder of the file, not just this statement.
+ * Build a N-commit series on a topic.
 
-Luckily, Ren=C3=A9 came up with a much more elegant solution, so that Git's
-history does not have to shame me eternally.
+ * You keep a "local integration testing" branch ("lit"), forked
+   from a mainline and updated _every time_ you do something to your
+   topics.  You may or may not publish this branch.  This is the
+   aggregation of what you locally have done, a convenient place to
+   test individual topics together before they get published.
 
-Ciao,
-Dscho
---8323329-1931477388-1470411541=:5786--
+ * A new topic, when you merge it to the "lit" branch, you describe
+   the cover as the merge commit message.
+
+ * When you updated an existing topic, you tell a tool like "rebase
+   -i -p" to recreate "lit" branch on top of the mainline.  This
+   would give you an opportunity to update the cover.
+
+Now the tool support for the last one is the missing piece.  In
+addition to what "rebase -i -p" would, it at least need to
+automatically figure out which topics have been updated, so that
+their merge commit log messages need to be given in the editor to
+update, while carrying over the merge log message for other topics
+intact (by default).
+
+With that, you should also be able to teach "format-patch --cover"
+to take these merge messages on "lit" into account when it creates
+the cover letter.
