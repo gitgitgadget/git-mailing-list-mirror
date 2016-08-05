@@ -6,31 +6,31 @@ X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8587E2018E
-	for <e@80x24.org>; Fri,  5 Aug 2016 20:55:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F03CF2018E
+	for <e@80x24.org>; Fri,  5 Aug 2016 20:57:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423635AbcHEUzl (ORCPT <rfc822;e@80x24.org>);
-	Fri, 5 Aug 2016 16:55:41 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:44526 "EHLO
+	id S1423464AbcHEU5V (ORCPT <rfc822;e@80x24.org>);
+	Fri, 5 Aug 2016 16:57:21 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:44848 "EHLO
 	avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2998567AbcHEUzh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2016 16:55:37 -0400
+	with ESMTP id S2998742AbcHEU5T (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Aug 2016 16:57:19 -0400
 Received: from [10.0.2.15] ([209.93.82.95])
 	by avasout07 with smtp
-	id TYvX1t00523PrXV01YvYPv; Fri, 05 Aug 2016 21:55:33 +0100
+	id TYxF1t00723PrXV01YxGRt; Fri, 05 Aug 2016 21:57:16 +0100
 X-CM-Score: 0.00
 X-CNFS-Analysis: v=2.2 cv=UYYTc+aN c=1 sm=1 tr=0
  a=MrGUH+yfTxdMEvUZuMmDjA==:117 a=MrGUH+yfTxdMEvUZuMmDjA==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=m2DuujDMaJsxSaSzbL4A:9
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=bozjXHrZ7EsA1SsZHrEA:9
  a=yJM6EZoI5SlJf8ks9Ge_:22
 X-AUTH:	ramsayjones@:2500
-To:	jeffhost@microsoft.com
+To:	Michael Haggerty <mhagger@alum.mit.edu>
 Cc:	Junio C Hamano <gitster@pobox.com>,
 	GIT Mailing-list <git@vger.kernel.org>
 From:	Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] wt-status.c: mark a file-local symbol as static
-Message-ID: <ff4862e4-da97-deef-b2dc-5201df184484@ramsayjones.plus.com>
-Date:	Fri, 5 Aug 2016 21:55:29 +0100
+Subject: [PATCH] xdiffi.c: mark some file-local symbols as static
+Message-ID: <29c40cdd-363a-df09-f9e2-fe9070bb8a9c@ramsayjones.plus.com>
+Date:	Fri, 5 Aug 2016 21:57:13 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Thunderbird/45.2.0
 MIME-Version: 1.0
@@ -45,32 +45,41 @@ X-Mailing-List:	git@vger.kernel.org
 Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 ---
 
-Hi Jeff,
+Hi Michael,
 
-If you need to re-roll your 'jh/status-v2-porcelain' branch, could
-you please squash this into the relevant patch (37f7104f, "status:
-print per-file porcelain v2 status data", 02-08-2016).
+If you need to re-roll your 'mh/diff-indent-heuristic' branch, could
+you please squash this into the relevant patch (e199b6e2, "diff: improve
+positioning of add/delete blocks in diffs", 04-08-2016).
 
 Thanks!
 
 ATB,
 Ramsay Jones
 
- wt-status.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ xdiff/xdiffi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/wt-status.c b/wt-status.c
-index 3396bf5..a80400e 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -2152,7 +2152,7 @@ static void wt_porcelain_v2_print_other(
-  * [<v2_ignored_items>]*
-  *
+diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
+index 80307f5..90226f8 100644
+--- a/xdiff/xdiffi.c
++++ b/xdiff/xdiffi.c
+@@ -499,7 +499,7 @@ struct split_measurement {
+ /*
+  * Fill m with information about a hypothetical split of xdf above line split.
   */
--void wt_porcelain_v2_print(struct wt_status *s)
-+static void wt_porcelain_v2_print(struct wt_status *s)
+-void measure_split(const xdfile_t *xdf, long split, struct split_measurement *m)
++static void measure_split(const xdfile_t *xdf, long split, struct split_measurement *m)
  {
- 	struct wt_status_change_data *d;
- 	struct string_list_item *it;
+ 	long i;
+ 
+@@ -557,7 +557,7 @@ void measure_split(const xdfile_t *xdf, long split, struct split_measurement *m)
+  * Also see that project if you want to improve the weights based on, for example,
+  * a larger or more diverse corpus.
+  */
+-int score_split(const struct split_measurement *m)
++static int score_split(const struct split_measurement *m)
+ {
+ 	/*
+ 	 * A place to accumulate bonus factors (positive makes this index more
 -- 
 2.9.0
