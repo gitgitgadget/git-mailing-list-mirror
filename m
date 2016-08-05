@@ -2,105 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9EF361F859
-	for <e@80x24.org>; Sat,  6 Aug 2016 21:08:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C47F51F859
+	for <e@80x24.org>; Sat,  6 Aug 2016 21:10:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752469AbcHFVHr (ORCPT <rfc822;e@80x24.org>);
-	Sat, 6 Aug 2016 17:07:47 -0400
-Received: from mout.web.de ([217.72.192.78]:57588 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752461AbcHFVHp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Aug 2016 17:07:45 -0400
-Received: from [192.168.178.36] ([79.213.116.69]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0M2MUi-1bD8Ix3nwC-00s8ou; Sat, 06 Aug 2016 16:35:39
- +0200
-To:	Git List <git@vger.kernel.org>
-Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-From:	=?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] archive-tar: make write_extended_header() void
-Message-ID: <57A5F5BA.8010702@web.de>
-Date:	Sat, 6 Aug 2016 16:35:38 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.2
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:vP+WrKnoG9P4OwnU4izVNB28ZguN+vGc8G5WNRr2S92VtpU928n
- q/gQ42G9Rz9OfLABn66XH/F+WQfHCcx8cBGpFEI9QoJXIHlWv9wersx6NcJHcS0PWKIWGTE
- QsTEa05BCzUG8uLalMP7XzimwEuleeniF9JrSPowgmDui4a9Jdi8Vbrs3Lgjh7P5nurt7fs
- puARsAzSXmWLLAGToFGxg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:OLr16ClkExI=:bIH/FxKaOrpxrz+gqRbeB1
- iQXtPaQTHbm+4Ac0lc4lhTw8djKMkSmmT7nhJCRPFz6FriZH4jcJRbd8uPVdNYF269vUauUnE
- XhjtW+q31Ywf0ByZ9Tn/uH/BYHxJksOtmBrHvqPatsgcnILazNAuDsHxOmBOWmPBXqmVvoxBw
- +p3yM9WomBUFlTNPm+taERIOWr9DNssFVX0+L4I89i3nbwMj/DEL/vS6Z7oipKAYVTdGjHcOz
- hn9znhWbqpjvSLj8p060ZCMmJS3JX+yWChLamvDLqoQGu+2TJoMDLCI+FoZMnNu0ACqaYSEtl
- 4geH/iVcJMHUwfPV9Gk83zADLbbEGNxjRJGKENy8cdi/e7lfeZcAD7tUys+EaybL/1dX9xEuZ
- lIt6cMcFqsMYa2UQ/Ja3fCQVb+130joK3pkQwbjCI52Q9y8N0NGB3KTMOtNtyVTpxWZBOGndm
- g+lbpqWjIJD4hzWuniIH9XgBlHbzwcjT8r6cdneYvqKVA1W+18WWxeQBH5K/gkjLMaDq4dM37
- MN9C9OgE0Sa5keEL1yX6owoF4U5YFrQoPbC4qdROM5Kd+bEttm10cbTb7K29X3oak97/FY0jY
- MKvjpR3lqayb177eAq+g+VJAEL/jRUDSH7DURWA8det+zVwlNb3LEmaFUn7EYeVcCB0iyI/5p
- qng/WhyfP0P0LXpqNMOlehZ32M6c4y4n2PjcH1WtcLOZG4kcyh6JuolAZNSX3bRlm4zEFX+0n
- vEccfQPT1J6PVZIUhWAqrLNIdF1Z1oYmRShn0kkkWAYml7x6wz1+qUcKGG2IiUfv19eTQKshC
- otf4FbJ
+	id S1751947AbcHFVKP (ORCPT <rfc822;e@80x24.org>);
+	Sat, 6 Aug 2016 17:10:15 -0400
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:36095 "EHLO
+	mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751501AbcHFVKO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Aug 2016 17:10:14 -0400
+Received: by mail-pf0-f172.google.com with SMTP id h186so106962629pfg.3
+        for <git@vger.kernel.org>; Sat, 06 Aug 2016 14:10:14 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:references;
+        bh=tR9zKi2rJ1ldn7rENtuHSWU8+UJTyYw7Io46Uk7gWZU=;
+        b=G+l0NW9VKsJEUh6NN4Cai6qvvMs/74r67OaX0yWve7pyMhEk/Oi7kRJ68085HkG00A
+         SAKGXGd9I8yczUtN/eLciQj50hq3O9fX+0WRYTUuwK3XCU7Y9vvIgu3EytQjFPgNIOQF
+         QcJIl47+iXxdXajPBOP6VoSr5gBv6LbemLxFL5PLj7Ymcw1SnHkblmS0x27npuSdZJBj
+         K/WvTNfklLri5WbmFcvzRxEhRk+eVfxpC8B9qKxCTsU8TJx50FgStUJNtaCLjw4q6rat
+         ZinoMi4F8AX/9znkZKagdXCSoTOc10rlYhKIF6Ay6IEs9AzcCqDqg1B7ubkq8oCm9r80
+         q5jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:references;
+        bh=tR9zKi2rJ1ldn7rENtuHSWU8+UJTyYw7Io46Uk7gWZU=;
+        b=gGRewbbmnXnVtSSxNpJjPRFE0v4ErbSVGNA0vvSdoXwIOGIrjKHY45iMkvkkqY6W9w
+         7saKvEVWYNN8mYmEwZtvqJmwQDk2P1pHd4X7krgo/NKdfZGW+cDuQ6kqo8b39SuoEeC5
+         /wotb0wWEzQpWMm925SUzFLsuS7DYrumn086vK5b8PqX1l/seeiEeNntfMC1EdDfkf4M
+         wG5D6wx55OSSIAHYLXj1m+S3nEaCA5qr5clVZ1NpBW5ihajM7HjJaPnZtJGORadMsbwI
+         xaNzfWDNuMIUS2gbnMgsHSMSsE+0FcL16e0VcdzIW3Bk89L8fhmRuq48IntzN51vjaVM
+         wY2g==
+X-Gm-Message-State: AEkoouu03OFLj5zEzXqPkHMdGzR6SM5vF1+yY4lKpKl9QxXJfvOQqNnM2dqcCYlA80pUUvtS
+X-Received: by 10.98.94.6 with SMTP id s6mr121333173pfb.31.1470439608091;
+        Fri, 05 Aug 2016 16:26:48 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:c0da:b815:bea9:a8ab])
+        by smtp.gmail.com with ESMTPSA id h1sm30462776pay.48.2016.08.05.16.26.47
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 05 Aug 2016 16:26:47 -0700 (PDT)
+From:	Stefan Beller <sbeller@google.com>
+To:	gitster@pobox.com
+Cc:	git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: Rename detection within in files WAS: [PATCH 2/6] t7408: merge short tests, factor out testing method
+Date:	Fri,  5 Aug 2016 16:26:43 -0700
+Message-Id: <20160805232643.23837-1-sbeller@google.com>
+X-Mailer: git-send-email 2.9.2.572.g9d9644e.dirty
+References: <20160804195159.7788-1-sbeller@google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-The function write_extended_header() only ever returns 0.  Simplify
-it and its caller by dropping its return value, like we did with
-write_global_extended_header() earlier.
+When moving code around, we usually get large chunks of text. If the contributor
+is not 100% trustworthy, we need to review all the code without much intelectual
+joy. Essentially the reviewer is just making sure the parts of the text are the
+same.
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
+I'd like to propose a new addition to the diff format that makes this use case
+easier. The idea is to mark up lines that were just moved around in the file
+instead of adding and removing them.
+
+Currently we have 3 characters that
+are allowed to start a line within a hunk:
+' ' to indicate context
+'+' to add a line
+'-' to remove a line
+
+I'd propose to add the following characters:
+'*' which is the same as '+', but it indicates that the line was moved
+    from somewhere else without change.
+'X' The same as '-', with the addition that this line was moved to a different
+    place without change.
+
+The patch below uses these new '*' and 'X'. Each hunk that makes use of these
+additions, is followed other sections, [moved-from, moved-to] that indicate
+where the corresponding line is.
+
+There are multiple things to tackle when going for such an addition:
+* How to present this to the user (it's covered in this email)
+* how to find the renamed lines algorithmically.
+  (there are already approaches to that, e.g. https://github.com/stefanbeller/duplo
+  which is http://duplo.sourceforge.net/ with no substantial additions)
+
+Any comments welcome,
+
+Thanks,
+Stefan
+
 ---
- archive-tar.c | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ t/t7408-submodule-reference.sh | 50 +++++++++++++++---------------------------
+ 1 file changed, 15 insertions(+), 29 deletions(-), 6 moved lines
 
-diff --git a/archive-tar.c b/archive-tar.c
-index 5568240..380e3ae 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -213,9 +213,9 @@ static void prepare_header(struct archiver_args *args,
- 	xsnprintf(header->chksum, sizeof(header->chksum), "%07o", ustar_header_chksum(header));
- }
- 
--static int write_extended_header(struct archiver_args *args,
--				 const unsigned char *sha1,
--				 const void *buffer, unsigned long size)
-+static void write_extended_header(struct archiver_args *args,
-+				  const unsigned char *sha1,
-+				  const void *buffer, unsigned long size)
- {
- 	struct ustar_header header;
- 	unsigned int mode;
-@@ -226,7 +226,6 @@ static int write_extended_header(struct archiver_args *args,
- 	prepare_header(args, &header, mode, size);
- 	write_blocked(&header, sizeof(header));
- 	write_blocked(buffer, size);
--	return 0;
- }
- 
- static int write_tar_entry(struct archiver_args *args,
-@@ -305,12 +304,8 @@ static int write_tar_entry(struct archiver_args *args,
- 	prepare_header(args, &header, mode, size_in_header);
- 
- 	if (ext_header.len > 0) {
--		err = write_extended_header(args, sha1, ext_header.buf,
--					    ext_header.len);
--		if (err) {
--			free(buffer);
--			return err;
--		}
-+		write_extended_header(args, sha1, ext_header.buf,
-+				      ext_header.len);
- 	}
- 	strbuf_release(&ext_header);
- 	write_blocked(&header, sizeof(header));
--- 
-2.9.2
+diff --git a/t/t7408-submodule-reference.sh b/t/t7408-submodule-reference.sh
+index afcc629..1416cbd 100755
+--- a/t/t7408-submodule-reference.sh
++++ b/t/t7408-submodule-reference.sh
+@@ -10,6 +10,16 @@ base_dir=$(pwd)
 
+ U=$base_dir/UPLOAD_LOG
+
++test_alternate_usage()
++{
++	alternates_file=$1
++	working_dir=$2
++	test_line_count = 1 $alternates_file &&
+*	echo "0 objects, 0 kilobytes" >expect &&
+*	git -C $working_dir count-objects >current &&
+*	diff expect current
++}
++
+ test_expect_success 'preparing first repository' '
+ 	test_create_repo A &&
+ 	(
+@@ move-source 42,6 @@ test_expect_success 'that reference gets used with add' '
+ test_expect_success 'that reference gets used with add' '
+ 	(
+ 		cd super/sub &&
+X		echo "0 objects, 0 kilobytes" > expected &&
+X		git count-objects > current &&
+X		diff expected current
+ 	)
+ '
+@@ -42,44 +52,20 @@ test_expect_success 'preparing superproject' '
+ 	)
+ '
+
+-test_expect_success 'submodule add --reference' '
++test_expect_success 'submodule add --reference uses alternates' '
+ 	(
+ 		cd super &&
+ 		git submodule add --reference ../B "file://$base_dir/A" sub &&
+ 		git commit -m B-super-added
+-	)
+-'
+-
+-test_expect_success 'after add: existence of info/alternates' '
+-	test_line_count = 1 super/.git/modules/sub/objects/info/alternates
+-'
+-
+-test_expect_success 'that reference gets used with add' '
+-	(
+-		cd super/sub &&
+X		echo "0 objects, 0 kilobytes" > expected &&
+X		git count-objects > current &&
+X		diff expected current
+-	)
+-'
+-
+-test_expect_success 'cloning superproject' '
+-	git clone super super-clone
+-'
+-
+@@ move-to 10,6 @@ test_alternate_usage
++	alternates_file=$1
++	working_dir=$2
++	test_line_count = 1 $alternates_file &&
+*	echo "0 objects, 0 kilobytes" >expect &&
+*	git -C $working_dir count-objects >current &&
+*	diff expect current
++}
++
+--
+2.9.2.572.g9d9644e.dirty
