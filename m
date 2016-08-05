@@ -7,101 +7,105 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A7752018E
-	for <e@80x24.org>; Fri,  5 Aug 2016 20:37:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A28F62018E
+	for <e@80x24.org>; Fri,  5 Aug 2016 20:39:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2996723AbcHEUh1 (ORCPT <rfc822;e@80x24.org>);
-	Fri, 5 Aug 2016 16:37:27 -0400
-Received: from mout.web.de ([212.227.17.12]:52204 "EHLO mout.web.de"
+	id S942956AbcHEUjM (ORCPT <rfc822;e@80x24.org>);
+	Fri, 5 Aug 2016 16:39:12 -0400
+Received: from mout.web.de ([212.227.17.11]:54718 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761921AbcHEUhU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2016 16:37:20 -0400
-Received: from [192.168.178.36] ([79.213.113.59]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0MKrPw-1bVlrk2KNk-0005zI; Fri, 05 Aug 2016 22:37:12
+	id S1762074AbcHEUjI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Aug 2016 16:39:08 -0400
+Received: from [192.168.178.36] ([79.213.113.59]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0M5wrF-1bKoXs2Pph-00xso2; Fri, 05 Aug 2016 22:38:45
  +0200
 To:	Git List <git@vger.kernel.org>
 Cc:	Junio C Hamano <gitster@pobox.com>
 From:	=?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] use strbuf_addstr() instead of strbuf_addf() with "%s"
-Message-ID: <57A4F8F7.5020109@web.de>
-Date:	Fri, 5 Aug 2016 22:37:11 +0200
+Subject: [PATCH] use CHILD_PROCESS_INIT to initialize automatic variables
+Message-ID: <57A4F954.5090607@web.de>
+Date:	Fri, 5 Aug 2016 22:38:44 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
  Thunderbird/38.7.2
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:4q+pelaL6939gm3rRbl07tNGNnL7/Vh0YsZCGLZ53YIGe/dlxot
- tpFttoEUsbn2nSp6TTUTwEO7d24JShwAu0gNgQhQKOc3BwpvEuOJq/7Uaq0bo9Ylhlx5WX2
- HOX9td/UB3u9OOB/nHQKx0lZYkAdTDdXR2TH8ojvp60G1cyftkjs/YjqaoOL8EvH+iTYxM2
- sQjc+I68CfvvKbDGCuYsg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:3WiYy79q48c=:k3M0V1HcDgaWpIfZG+SwaA
- lfrY4ylHiNv2RwDNmEgSFrUAtoR9W+ifcTml24PMZA62I8N8SGROzLvob3gHDDYoF6SxUXOwk
- gtee50X6MydXcJRTTJuHLSMpPM2K/RlTGwD0GeTv38UmwhHjRrb0lTjNZF5uzuf7cnvZA3HgN
- YfKEmdrqeCA0U+Wb9TkeR6fnXerOlAgifc3FU1zgE/g4Nct8AnZGXQMOG3uZ+id1W1ezwNwl3
- aXfbHqlxWLFAEOMZ48VVd5pA4gp1kgq9yMxlHv5MnauqKZxl4ewawhBKY91asR2+2tXXAZQ/U
- 12ZdYbolqix/w2HVASs3yXnKSjw0kgL1gOPmdW6GzblcVUjbSbIoP1N5eT6NzAQffovYF7svk
- ESwEM+WWEloHt7jS71vrwFVg6rpDPWUkFW1814JB/AF0bHUr/qOooBExDhhEXQOn5ZBIiCnMP
- 8EJEfd13LbnllhWQHl8gok3wxFPrL3ljxZdUBZUYIcQwSMp2yoUXrzps441tZzRqs/vZsJ0rA
- fV4rD/467owx00Rh8Nh8uc8kdLwZD7RX8MNagi3gSRV1XTBgvLnLqrc0cuvSq3uBOwFIMdgvZ
- G8nfLT4rxe4K1iB+iCaUl+ipFasuWzd/upm48+jROOAtLb8QqFi6lFgPTdtNfp6ZU4GDzz/QW
- LBy2/6QT2lmbbKU3r9mprUO60YXqYKRd2ObL/q8++zZTIgV6FDGqAYyp5VwY39s4MTh0s5ClR
- I4bRptJyQ+oNtbl84wuHE9/qCWmXA1d4ARwRYEOrS8Pq45oLG6hZLfw7ThnG8X72wrVXyC8/g
- o710eSW
+X-Provags-ID: V03:K0:jsnlAhHmbSekNJmwTt/h5DmJYomiGJA5s4tNe6aKTLrTamsRUDu
+ E+CWf/Sv2INDPg5NayxkOia6WV6+xU0O1JusRFz0u8fYlwJYK2CTy4AZVd3Ajvz5SaJI/QU
+ aT3zFnVY6p0mEk1ohx2Z9fFxgW2meRP/ny6XItLgBrrjXPddp4arvVq2iyEYmz/2LQ1Ej3h
+ a5n4sPwnlTb1AmXyUGJmA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:ylNBe1ffOsM=:iWIjxp7M7EwruPNoEIJzJN
+ 7bSa5hDdtmk5iF/ucL6f/zVMLMtzP8ThjQbmwT4euw3ilsDRKN83ODRDUT7T3MF9xcBnEPF52
+ 7ptrODXHnwLfYfwDW4E6sSA0QsCV5SdrbP64lSNGMQoa+3ECu30Ovt7KxLa03S2DEBD6lToPH
+ ruMmi9GvAgBGRjTonSOLgff0uDHG1MfhAKKLu2jw6xEw28360XD7mis238wEqdjutwLUvNHIz
+ KT8VweDv72qvU39XbSh+WboccQC3qnxrhOeH8q89z8z5zrSwpk6L9O34MQNV1Ql1pci0T19GF
+ VwZgXdFbrhPdxEsHklV6CDcfWsFuHMxyDDRnhfUtcATARQ724Z5nCMNgNONU3ZmQS83y81TVT
+ 2n9H6uFq6TnWc8+Qzu/efLWsbPBDOawMyHbinDvJUM4yX5A0QaONd9yRPUKWkw+tgU2jBToos
+ T3+J95izxIpyYy3H0ChHaurXKysuU2cgft1o7dVh9t5L6PxWs5jszvBMaHJjIPurS0S39/Exf
+ ySZvVPqCpb+9Q01x7en/V3U5JTA57XBQi2xQPK1vJitsXDERejCaWx9WCq7lNg1nUtIMlF7XP
+ PK1dYCFEUAMGiOmlk6Hf0aRp8u12nOyWGtPFWGnB2WghR+H6pe6QT9TPBoS0sNVsrqXBtSEYG
+ Wp/KHQnbb7rSPbVL7ttnSjiAVDMbkeSMqBHTIG4ykJeBP+PYD+qJQ/khI9n8zdtFRRf3VZC7l
+ JCNl57FNzWrfrNdxqp2eLVzxWrtU1Dgm5zy3Z5MdQRmhGlz5zqFvzxvERJ//4ssV8i/mtvOFm
+ Qiu5+Vg
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Call strbuf_addstr() for adding a simple string to a strbuf instead of
-using the heavier strbuf_addf().  This is shorter and documents the
-intent more clearly.
+Initialize struct child_process variables already when they're defined.
+That's shorter and saves a function call.
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- builtin/fmt-merge-msg.c | 2 +-
- http.c                  | 2 +-
- sequencer.c             | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ builtin/submodule--helper.c | 3 +--
+ builtin/worktree.c          | 6 ++----
+ 2 files changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index e5658c3..ac84e99 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -272,7 +272,7 @@ static int cmp_string_list_util_as_integral(const void *a_, const void *b_)
- static void add_people_count(struct strbuf *out, struct string_list *people)
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index b22352b..957f42a 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -444,8 +444,7 @@ static int module_name(int argc, const char **argv, const char *prefix)
+ static int clone_submodule(const char *path, const char *gitdir, const char *url,
+ 			   const char *depth, const char *reference, int quiet)
  {
- 	if (people->nr == 1)
--		strbuf_addf(out, "%s", people->items[0].string);
-+		strbuf_addstr(out, people->items[0].string);
- 	else if (people->nr == 2)
- 		strbuf_addf(out, "%s (%d) and %s (%d)",
- 			    people->items[0].string,
-diff --git a/http.c b/http.c
-index e81dd13..cd40b01 100644
---- a/http.c
-+++ b/http.c
-@@ -1225,7 +1225,7 @@ void append_remote_object_url(struct strbuf *buf, const char *url,
+-	struct child_process cp;
+-	child_process_init(&cp);
++	struct child_process cp = CHILD_PROCESS_INIT;
  
- 	strbuf_addf(buf, "objects/%.*s/", 2, hex);
- 	if (!only_two_digit_prefix)
--		strbuf_addf(buf, "%s", hex+2);
-+		strbuf_addstr(buf, hex + 2);
- }
+ 	argv_array_push(&cp.args, "clone");
+ 	argv_array_push(&cp.args, "--no-checkout");
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 5a41788..6dcf7bd 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -194,7 +194,7 @@ static int add_worktree(const char *path, const char *refname,
+ 	struct strbuf sb = STRBUF_INIT;
+ 	const char *name;
+ 	struct stat st;
+-	struct child_process cp;
++	struct child_process cp = CHILD_PROCESS_INIT;
+ 	struct argv_array child_env = ARGV_ARRAY_INIT;
+ 	int counter = 0, len, ret;
+ 	struct strbuf symref = STRBUF_INIT;
+@@ -273,7 +273,6 @@ static int add_worktree(const char *path, const char *refname,
  
- char *get_remote_object_url(const char *url, const char *hex,
-diff --git a/sequencer.c b/sequencer.c
-index cdfac82..7b1eb14 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -112,7 +112,7 @@ static void remove_sequencer_state(void)
- {
- 	struct strbuf seq_dir = STRBUF_INIT;
+ 	argv_array_pushf(&child_env, "%s=%s", GIT_DIR_ENVIRONMENT, sb_git.buf);
+ 	argv_array_pushf(&child_env, "%s=%s", GIT_WORK_TREE_ENVIRONMENT, path);
+-	memset(&cp, 0, sizeof(cp));
+ 	cp.git_cmd = 1;
  
--	strbuf_addf(&seq_dir, "%s", git_path(SEQ_DIR));
-+	strbuf_addstr(&seq_dir, git_path(SEQ_DIR));
- 	remove_dir_recursively(&seq_dir, 0);
- 	strbuf_release(&seq_dir);
- }
+ 	if (commit)
+@@ -365,8 +364,7 @@ static int add(int ac, const char **av, const char *prefix)
+ 	}
+ 
+ 	if (opts.new_branch) {
+-		struct child_process cp;
+-		memset(&cp, 0, sizeof(cp));
++		struct child_process cp = CHILD_PROCESS_INIT;
+ 		cp.git_cmd = 1;
+ 		argv_array_push(&cp.args, "branch");
+ 		if (opts.force_new_branch)
 -- 
 2.9.2
 
