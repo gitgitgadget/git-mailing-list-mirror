@@ -2,293 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_12_24,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 809F11F859
-	for <e@80x24.org>; Sat,  6 Aug 2016 20:47:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11CFF1F859
+	for <e@80x24.org>; Sat,  6 Aug 2016 20:58:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752441AbcHFUq7 (ORCPT <rfc822;e@80x24.org>);
-	Sat, 6 Aug 2016 16:46:59 -0400
-Received: from mail-io0-f171.google.com ([209.85.223.171]:36435 "EHLO
-	mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752497AbcHFUqv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Aug 2016 16:46:51 -0400
-Received: by mail-io0-f171.google.com with SMTP id b62so328125315iod.3
-        for <git@vger.kernel.org>; Sat, 06 Aug 2016 13:46:50 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=eno9D1ew6B7o1gl5FllFl+quNOvUCYGBlyoOLN7Pkc4=;
-        b=f2UoS0nJqwXeIHP0Pe6bYUKzidscopObNMF+V3MRVZnCaURaFJbvh0d3suS+60Qp5N
-         o4X165+U/JDYa1yFfPyzBfYtsRYUSQk6VARr5+BmfRPNUKXi+GR73v+WYVBxT5qPn/iI
-         oot6NpdpTQbHyPW778mSafLvbdI26HUatPde3ypQTEuI2dRD6IcB2HdBmweMs65YVxVf
-         uW0joBBe4wqgJ5Wfh/ROPwZA+kHKZ0WAfrjLH3xJhqp3sA8WLGTjwcRXrvvy8JqpO+t8
-         e5aMChacMEXZE390naLcRWZ58Z6ZlV2duORjz8sEwT6Ca2UcFC2m6ZptKUNBlOH9sS77
-         j5xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=eno9D1ew6B7o1gl5FllFl+quNOvUCYGBlyoOLN7Pkc4=;
-        b=dejelrCF81nBvWANIU/628nnq6q5zmH4FL7XT601BJpLXt0NXV9ur3z9+fhBWPdBvw
-         StyFB6F6Y2BmTWSS1l0mHy/tX/2hOMETtO2DifT91Kqwx6JeX2vk71dwvdlxEQ4rVGIf
-         /+Dmic8SSRAxvvo13ekHDp+tDWVZ/wbTR2NpiQDbGi6ZMf6ozkPi+oOorkUYaiijEC7G
-         Wjs5BbL5VGZUSgEomhk7DYy6SrIl9z2y76nKrskqvZKotuz6t07NrN7Rdo6BBcrpY5ik
-         Qdx2G2gkwTufHK9VDHFm/l7qnc/NslF1QvJHGZQOKpBkkn+nny7VUsDmdS4UZFFs+GfG
-         NpHg==
-X-Gm-Message-State: AEkoouvTeM8ADWOoGKO2RwohtUsFgcmi4crrB4o+l4BR5fcZWELYAEG6F/Nx7UysGdvjhQaTuMKrR7umSKsSPrGO
-X-Received: by 10.107.144.10 with SMTP id s10mr79403189iod.165.1470437113527;
- Fri, 05 Aug 2016 15:45:13 -0700 (PDT)
+	id S1752359AbcHFU6b (ORCPT <rfc822;e@80x24.org>);
+	Sat, 6 Aug 2016 16:58:31 -0400
+Received: from mout.web.de ([212.227.17.11]:50165 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752336AbcHFU6a (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Aug 2016 16:58:30 -0400
+Received: from [192.168.178.36] ([79.213.113.59]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0MWjAd-1blZ3M4C5r-00Xv0E; Sat, 06 Aug 2016 00:30:08
+ +0200
+Subject: Re: [PATCH 2/2] nedmalloc: work around overzealous GCC 6 warning
+To:	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <cover.1470326812.git.johannes.schindelin@gmx.de>
+ <57360f4885bdd5c36e190bea288f1e1f7f706071.1470326812.git.johannes.schindelin@gmx.de>
+ <57A3BA26.5080601@web.de> <xmqqk2fwyx8h.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1608051728380.5786@virtualbox>
+ <xmqqk2fuvpzm.fsf@gitster.mtv.corp.google.com>
+Cc:	git@vger.kernel.org
+From:	=?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <57A5136E.20802@web.de>
+Date:	Sat, 6 Aug 2016 00:30:06 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.2
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Fri, 5 Aug 2016 15:45:13 -0700 (PDT)
-In-Reply-To: <xmqqeg63vtar.fsf@gitster.mtv.corp.google.com>
-References: <20160804195159.7788-1-sbeller@google.com> <20160804195159.7788-3-sbeller@google.com>
- <xmqqeg63vtar.fsf@gitster.mtv.corp.google.com>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Fri, 5 Aug 2016 15:45:13 -0700
-Message-ID: <CAGZ79kZChXebtSJeTPGoZgnoKySDrWnD11NX7fyze+rOU=Jwvg@mail.gmail.com>
-Subject: Re: [PATCH 2/6] t7408: merge short tests, factor out testing method
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>, mst@redhat.com,
-	Jens Lehmann <Jens.Lehmann@web.de>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <xmqqk2fuvpzm.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:+w4GNrb0yhptquiD/SuyGLvFof1ejDew9K4SqOowpX8adR1fI3X
+ wTHW2emvsR07bPiFRDJPzyiL0qDGvFU9eheKvP0lmLZ8p+vlXVgXbBWuESN4qo2rUDTbvT7
+ 2LZY8tnAMGXw/mRc4Dfj4RIGDXmLYyzO/+aZXCON3KJEvNxlMJIYi6aiZ5SDJe22sv1+hxZ
+ 3tAHPNMsuKY8TvmobaOOg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:7EJMNHHnB1k=:REFrLHAz4D7f3B+aVP7HJR
+ dHRmTrsQTQ8NoH0LEz8BfzsDzGo/Lqqs2ncSdRG/ZegIafyp2nIxLGAYuPeLKDPLzQX6n8bMq
+ lUTa3clug3JlIrS+lcSpxldylZMAehOvPJ+cTEmMhQ2z93NuWnIqmNBOx8LaiwmP0hsCDohwD
+ 5OABc3YsS5SlwCAp0XNk0gCM8+sbWvfMbU0SNnEvzh469/HfMFDrebC+pvGNb4koijmZVQO4k
+ P04MbFrijigzf1ysGi1f/m5fdbSTsgnsfv4FVgEVjviekBUiM8CUzjSGdjyQp80S7uYHFeRl7
+ eRrcaadzL30M9QPPXAAnktpEeOod3PYIh0yRUcPLR+sooGdj1WvqN8uLNQM9RSwBQnSg5BkFe
+ TIY9WoRYCIXRAooHOERgy27wHq5wk1owUhNuluzB5J5NHXrWPbd2P3X7RcB0ltB9DA4rIkcMg
+ yreJ6gXKdDKnNl4l2ql1tvB5B37zJOUCGwgWid9EnoO12kYNT2hfbm37BKO4hR9OPtE7/wLvd
+ VZhZ0QlC3CK5muZ455EaCejJJB2m2l+RW/e/OMZOsrjWXTpSm9zxo5gTrkqpwoPUgzZuvWDUg
+ RuuQ0gAPghQWNatCUTeprosAW+c3R5aSJsRrJU5lLe6wOZrDAlweGz7O9AYgnYs2vhOFxcQV8
+ 2XG9FGMVrXtS8OYTiPBPnZ/LjKFaiaj+2yzwfWqXvJTEOT5DS5oE2tdkN0KMhMA4xaeaOkibs
+ MCBscgzVORGrpoExI9WD7/hrvP9OiCAobsfh4hqxo1HPSUWtTv6m9wsj67l8pCyCV5fpEvz+v
+ ub1Y0/Q
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Aug 5, 2016 at 1:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+Am 05.08.2016 um 23:57 schrieb Junio C Hamano:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
->> Tests consisting of one line each can be consolidated to have fewer tests
->> to run as well as fewer lines of code.
+>> Hi Junio & René,
 >>
->> When having just a few git commands, do not create a new shell but
->> use the -C flag in Git to execute in the correct directory.
->
-> Good motivations.
->
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->>  t/t7408-submodule-reference.sh | 50 +++++++++++++++---------------------------
->>  1 file changed, 18 insertions(+), 32 deletions(-)
+>> On Thu, 4 Aug 2016, Junio C Hamano wrote:
 >>
->> diff --git a/t/t7408-submodule-reference.sh b/t/t7408-submodule-reference.sh
->> index afcc629..1416cbd 100755
->> --- a/t/t7408-submodule-reference.sh
->> +++ b/t/t7408-submodule-reference.sh
->> @@ -10,6 +10,16 @@ base_dir=$(pwd)
+>>> Let's try it this way.  How about this as a replacement?
 >>
->>  U=$base_dir/UPLOAD_LOG
+>> I like it (with the if (s2) test intead of if (s1), of course). But please
+>> record René as author, maybe mentioning myself with a "Diagnosed-by:"
+>> line.
 >
-> Is this line needed anywhere?
+> Hmph.  I cannot do that unilaterally without waiting for René to
+> respond, though.  In any case, with only header and footer changes,
+> here is what will appear in 'pu'.
+
+It's fine with me, thanks. :)  Minor comments below.
+
+> Thanks.
 >
-> We (perhaps unfortunately) still need $base_dir because we want to
-> give an absolute file:/// URL to "submodule add", but I do not think
-> we use $U, so let's get rid of it.
+> -- >8 --
+> From: René Scharfe <l.s.r@web.de>
+> Date: Thu, 4 Aug 2016 23:56:54 +0200
+> Subject: [PATCH] nedmalloc: work around overzealous GCC 6 warning
 >
->> +test_alternate_usage()
->> +{
+> With GCC 6, the strdup() function is declared with the "nonnull"
+> attribute, stating that it is not allowed to pass a NULL value as
+> parameter.
 >
-> According to Documentation/CodingGuidelines, this should be:
+> In nedmalloc()'s reimplementation of strdup(), Postel's Law is heeded
+> and NULL parameters are handled gracefully. GCC 6 complains about that
+> now because it thinks that NULL cannot be passed to strdup() anyway.
 >
->     test_alternate_usage () {
+> Because the callers in this project of strdup() must be prepared to
+> call any implementation of strdup() supplied by the platform, so it
+> is pointless to pretend that it is OK to call it with NULL.
 >
-> Somehow the helper name sounds as if it is testing if an alternate
-> is used correctly (i.e. the machinery may attempt to use alternate
-> but not in a correct way), not testing if an alternate is correctly
-> used (i.e. the machinery incorrectly forgets to use an alternate at
-> all), but maybe it is just me.
+> Remove the conditional based on NULL-ness of the input; this
+> squelches the warning.
+
+My commit message would have been much shorter, probably too short.  But 
+perhaps add here: "Check the return value of malloc() instead to make 
+sure we actually got memory to write to."
+
+> See https://gcc.gnu.org/gcc-6/porting_to.html for details.
 >
->> +     alternates_file=$1
->> +     working_dir=$2
+> Diagnosed-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Signed-off-by: René Scharfe <l.s.r@web.de>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>   compat/nedmalloc/nedmalloc.c | 9 ++++-----
+>   1 file changed, 4 insertions(+), 5 deletions(-)
 >
-> These are good (they can be on a single line), but you would
-> want &&-chain just as other lines.
+> diff --git a/compat/nedmalloc/nedmalloc.c b/compat/nedmalloc/nedmalloc.c
+> index 677d1b2..2d4ef59 100644
+> --- a/compat/nedmalloc/nedmalloc.c
+> +++ b/compat/nedmalloc/nedmalloc.c
+> @@ -955,12 +955,11 @@ void **nedpindependent_comalloc(nedpool *p, size_t elems, size_t *sizes, void **
+>    */
+>   char *strdup(const char *s1)
+>   {
+> -	char *s2 = 0;
+> -	if (s1) {
+> -		size_t len = strlen(s1) + 1;
+> -		s2 = malloc(len);
+> +	size_t len = strlen(s1) + 1;
+> +	char *s2 = malloc(len);
+> +
+
+You added this blank line.  OK.
+
+> +	if (s2)
+>   		memcpy(s2, s1, len);
+> -	}
+>   	return s2;
+>   }
+>   #endif
 >
->> +     test_line_count = 1 $alternates_file &&
->
-> This needs to quote "$alternates_file" especially in a helper
-> function you have no control over future callers of.
->
-> I wonder if we want to check the actual contents of the alternate;
-> it may force us to worry about the infamous "should we expect
-> $(pwd)/something or $PWD/something" if we did so, so it is not a
-> strong suggestion.
->
->> +     echo "0 objects, 0 kilobytes" >expect &&
->> +     git -C $working_dir count-objects >current &&
->> +     diff expect current
->
-> It is more customary to name two "expect" vs "actual", and compare
-> them using "test_cmp" not "diff".
->
->> +}
->> +
->>  test_expect_success 'preparing first repository' '
->>       test_create_repo A &&
->>       (
->> @@ -42,44 +52,20 @@ test_expect_success 'preparing superproject' '
->>       )
->>  '
->>
->> -test_expect_success 'submodule add --reference' '
->> +test_expect_success 'submodule add --reference uses alternates' '
->>       (
->>               cd super &&
->>               git submodule add --reference ../B "file://$base_dir/A" sub &&
->>               git commit -m B-super-added
->> -     )
->> -'
->> -
->> -test_expect_success 'after add: existence of info/alternates' '
->> -     test_line_count = 1 super/.git/modules/sub/objects/info/alternates
->> -'
->> -
->> -test_expect_success 'that reference gets used with add' '
->> -     (
->> -             cd super/sub &&
->> -             echo "0 objects, 0 kilobytes" > expected &&
->> -             git count-objects > current &&
->> -             diff expected current
-
-This is where the "diff" and "current" above came from.
-
->> -     )
->> -'
->
-> Completely unrelated tangent, but after seeing the "how would we
-> make a more intelligent choice of the diff boundary" topic, I
-> wondered if we can notice that at this point there is a logical
-> boundary and do something intelligent about it.  All the removed
-> lines above have become "test_alternate" we see below, while all the
-> removed lines below upto "test_alternate" correspond to the updated
-> test at the end.
-
-I guess that would require even more knowledge of the underlying
-content that we track in Git.
-
-Originally I started the diff boundary topic, as I assumed that the
-new line detection is not doing harm. What Michael came up with
-is impressive though I fear there might be a selection bias in the corpus,
-i.e. we are missing some projects that get worse by it and these projects
-would have had a great influence on the selection of the tuning parameters.
-I guess we'll just wait until someone speaks up and points at worse
-examples there.
-
-What you're asking here is a complete new ballpark IMHO
-as it takes diff to a whole new (syntactical) level. As of now
-the world agrees that '\n' seems to be a good character to
-put in text documents, so we use it as a splitting token
-in our underlying diff driver, i.e. the diffs are primarily by line,
-no matter how many characters change in that line. Sometimes
-there is a "secondary" aspect such as coloring and pointing out
-the characters that changed in a line[1].
-
-[1] random example:
-https://gerrit-review.googlesource.com/#/c/79354/3/project.py
-Visually we focus on the changed characters, but the underlying
-diff is still "by line".
-
-We could write another "diff driver" that would not segment the
-text by '\n' as a primary method and then showing the changed
-hunks with +/-, but it would try to find rearrangements in the
-underlying text:
-
-As an example, this patch with such a diff driver could read partially as:
-----8<----
-***diff-driver: moved-text line 42 -> 14, length:7, post-operations: 1
- test_expect_success 'that reference gets used with add' '
-      (
-              cd super/sub &&
-*             echo "0 objects, 0 kilobytes" > expected &&
-*             git count-objects > current &&
-*             diff expected current
-      )
-***diff-driver:post-operation 1:
-*** modify moved text with:
-
-+test_alternate_usage() {
-+        alternates_file="$1" &&
-+        working_dir="$2" &&
-*             echo "0 objects, 0 kilobytes" > expected &&
-*             git count-objects > current &&
-*             diff expected current
-+ }
-
-***diff-driver: deletion 40,50
-
- -     )
- -'
- -
- -test_expect_success 'after add: existence of info/alternates' '
- -     test_line_count = 1 super/.git/modules/sub/objects/info/alternates
- -'
- -
-----8<----
-
-Thinking about this further, this would not require knowledge of
-the underlying content, it is actually "just" an intra-file-rename
-detection.
-
-We have a rename detection from one blob to another, so we
-could also have a similar thing to deduplicate within one blob,
-which would track moving code around.
-
-
->
->> -test_expect_success 'cloning superproject' '
->> -     git clone super super-clone
->> -'
->> -
->> -test_expect_success 'update with reference' '
->> -     cd super-clone && git submodule update --init --reference ../B
->> -'
->> -
->> -test_expect_success 'after update: existence of info/alternates' '
->> -     test_line_count = 1 super-clone/.git/modules/sub/objects/info/alternates
->> +     ) &&
->> +     test_alternate_usage super/.git/modules/sub/objects/info/alternates super/sub
->>  '
->>
->> -test_expect_success 'that reference gets used with update' '
->> -     cd super-clone/sub &&
->> -     echo "0 objects, 0 kilobytes" > expected &&
->> -     git count-objects > current &&
->> -     diff expected current
->> +test_expect_success 'updating superproject keeps alternates' '
->> +     test_when_finished "rm -rf super-clone" &&
->
-> This one is new; we do not remove A, B or super.  Does it matter if
-> we leave super-clone behind?  Is super-clone so special?
-
-"We need it in a later test."
-
-It comes down to philosophy of how to write tests.
-
-I spent some time in 740* and this is a surprising short test.
-Compare to 7404 and 7400 for example. These are very long,
-so when you want to add another test (no matter if testing for a
-fixed regression or a new feature), you have lots of repos like
-
-    super, super2, super3, sub, sub1, sumodule, anothersub,
-
-and none of the names make sense. (Can I reuse them?
-do they have some weird corner case configuration
-that I need to undo? etc)
-
-To stop that from happening again I want to have a clean slate,
-i.e. all clones are deleted shortly after using, so it is obvious what
-to use for testing.
-
->
->> +     git clone super super-clone &&
->> +     git -C super-clone submodule update --init --reference ../B &&
->> +     test_alternate_usage super-clone/.git/modules/sub/objects/info/alternates super-clone/sub
->>  '
->>
->>  test_done
