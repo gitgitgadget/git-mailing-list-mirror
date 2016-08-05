@@ -3,135 +3,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B81822018E
-	for <e@80x24.org>; Fri,  5 Aug 2016 11:52:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65EA61F859
+	for <e@80x24.org>; Fri,  5 Aug 2016 11:59:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161197AbcHELwI (ORCPT <rfc822;e@80x24.org>);
-	Fri, 5 Aug 2016 07:52:08 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34236 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161166AbcHELwH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Aug 2016 07:52:07 -0400
-Received: by mail-wm0-f67.google.com with SMTP id q128so3455928wma.1
-        for <git@vger.kernel.org>; Fri, 05 Aug 2016 04:52:05 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=kRzNwHl+ctBnQ5tuGq4JoNpGQIoUB1iAr+bf/ErT4U8=;
-        b=h9vKaS5z4yZgnNeBaFzq0dXp1aM22Xsy8h/IVksOy/3mSJm8rSpMft32MxKutbPenF
-         9+vUHSIqlufhyxl7LEdI/48JORLqZaIVA2enVyeX+YaDWmcX2AL8BKesj/zasmDVT+5E
-         3hpP2CXLry+U+hDTFoIsVCvEtJB7HMNcWwPDLQQg1a8YesRKGfPIJy29Eu1fv+oCuduR
-         SZmdrGGnlQUG786LuZ0mvbTg8aYfRPmfrtz+7uEwXjpFN2upaIfm9kvGL7A/IdKZr/OA
-         Get0RSDaQqNReTcs96RMV99ksFEwjbDlPmb3JAg6vqn4rQC0Yi/s/+s2j6DKKORxAGWn
-         3wig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=kRzNwHl+ctBnQ5tuGq4JoNpGQIoUB1iAr+bf/ErT4U8=;
-        b=TQtY9CKOsmWrb34R7DbUEbdixLRRgMHI6cV2hMrhL/M7RyoKGSfpndiMyq2AkiLhAY
-         yQkxd/i3JXayz5w87+W61RD0evSa20kxXB/YZd4FLCWt5++XFx9JMmWbH0uifnIY+8F3
-         RVqXFw0a0FatGEZg3oCE/SWWfmz68SSxr6VYuDah6TgYaxkruUJL64xmJIWB95zdz76/
-         RVoKgPED/poY6RbFaWg1sA/S4qlRmz07ze8urAUR1mtK6VM0LMSFOA1RN0YUgQ274S6x
-         cKLwPXXrPHhe5RCXETKctfjJtM/gKnrD5J56aWjZHcWyvyoZwNmiWeRBAfaWg4fya/M1
-         2uGw==
-X-Gm-Message-State: AEkooutM2RMX8qW+BhR/zWgk/HkEp14VNJxQkM1Ekj1+mGj9r7sZraOI7yulGrPQEaAC1Q==
-X-Received: by 10.28.88.144 with SMTP id m138mr2891367wmb.79.1470397925042;
-        Fri, 05 Aug 2016 04:52:05 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id bc10sm17486987wjc.32.2016.08.05.04.52.03
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 05 Aug 2016 04:52:04 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v3 01/10] pkt-line: extract set_packet_header()
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <51080fb7-2bab-a100-0971-e82063c1ac78@gmail.com>
-Date:	Fri, 5 Aug 2016 13:52:03 +0200
-Cc:	git@vger.kernel.org, gitster@pobox.com, tboegi@web.de,
-	mlbright@gmail.com, e@80x24.org, peff@peff.net
-Content-Transfer-Encoding: 8BIT
-Message-Id: <1DDE4AD4-C87F-42BE-AE88-BE302A0D208A@gmail.com>
-References: <20160727000605.49982-1-larsxschneider%40gmail.com/> <20160729233801.82844-1-larsxschneider@gmail.com> <20160729233801.82844-2-larsxschneider@gmail.com> <4081bc44-d964-79ec-165f-f49f33823c17@gmail.com> <73AED3FA-C666-4C49-90B2-387E410F7D52@gmail.com> <51080fb7-2bab-a100-0971-e82063c1ac78@gmail.com>
-To:	=?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-X-Mailer: Apple Mail (2.3124)
+	id S1161028AbcHEL7j (ORCPT <rfc822;e@80x24.org>);
+	Fri, 5 Aug 2016 07:59:39 -0400
+Received: from ducie-dc1.codethink.co.uk ([185.25.241.215]:57316 "EHLO
+	ducie-dc1.codethink.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934333AbcHEL7i (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Aug 2016 07:59:38 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by ducie-dc1.codethink.co.uk (Postfix) with ESMTP id 9207746324A;
+	Fri,  5 Aug 2016 12:59:35 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at ducie-dc1.codethink.co.uk
+Received: from ducie-dc1.codethink.co.uk ([127.0.0.1])
+	by localhost (ducie-dc1.codethink.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 3fHyECOOM8No; Fri,  5 Aug 2016 12:59:32 +0100 (BST)
+Received: from salo (82-70-136-246.dsl.in-addr.zen.co.uk [82.70.136.246])
+	by ducie-dc1.codethink.co.uk (Postfix) with ESMTPSA id E2BC4463009;
+	Fri,  5 Aug 2016 12:59:31 +0100 (BST)
+Date:	Fri, 5 Aug 2016 12:59:11 +0100
+From:	Richard Ipsum <richard.ipsum@codethink.co.uk>
+To:	Stefan Beller <sbeller@google.com>
+Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+	dborowitz@google.com, Michael Haggerty <mhagger@alum.mit.edu>,
+	Josh Triplett <josh@joshtriplett.org>
+Subject: Re: patch submission process, was Re: [PATCH v6 06/16]
+ merge_recursive: abort properly upon errors
+Message-ID: <20160805115911.GA4787@salo>
+References: <8ff71aba37be979f05abf88f467ec932aa522bdd.1470051326.git.johannes.schindelin@gmx.de>
+ <xmqqlh0gjpr6.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1608021004080.79248@virtualbox>
+ <xmqqy44ec15p.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1608031021050.79248@virtualbox>
+ <CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com>
+ <alpine.DEB.2.20.1608031753431.107993@virtualbox>
+ <CAGZ79kYWdZCNW_eBi5aLAacyBZJXQ9xyOWMBmjNsYT5NWjr-Og@mail.gmail.com>
+ <alpine.DEB.2.20.1608041730130.5786@virtualbox>
+ <CAGZ79kaTT3NgKj8akB8t9b1BF3i6sXe7Un9oq5KP8077Wz-E+g@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kaTT3NgKj8akB8t9b1BF3i6sXe7Un9oq5KP8077Wz-E+g@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+On Thu, Aug 04, 2016 at 09:42:18AM -0700, Stefan Beller wrote:
+> On Thu, Aug 4, 2016 at 8:58 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> >> If we were to change our workflows drastically, I'd propose to
+> >> go a way[1] similar to notedb in Gerrit, or git-series,
+> >
+> > Gerrit is a huge, non-distributed system. Complex, too. If we change the
+> > patch submission process, we should make things *easier*, not *harder*. So
+> > I think Gerrit is pretty much out of the question.
+> 
+> I did not propose to use Gerrit or git-series or git appraise.
+> 
+> However whenever I see these projects talking to each other, the talk focuses on
+> a "unified review storage format" pretty often, which would make them compatible
+> with each other. So then I could choose git-series, while you could go with
+> git appraise (although that is written in go, so maybe too fancy already ;)
+> Or there could be another new program written in C that follows the "review
+> format".
 
-> On 03 Aug 2016, at 22:05, Jakub Narębski <jnareb@gmail.com> wrote:
-> 
-> [This response might have been invalidated by v4]
-> 
-> W dniu 01.08.2016 o 13:33, Lars Schneider pisze: 
->>> On 30 Jul 2016, at 12:30, Jakub Narębski <jnareb@gmail.com> wrote:
-> 
->>>> #define hex(a) (hexchar[(a) & 15])
->>> 
->>> I guess that this is inherited from the original, but this preprocessor
->>> macro is local to the format_header() / set_packet_header() function,
->>> and would not work outside it.  Therefore I think we should #undef it
->>> after set_packet_header(), just in case somebody mistakes it for
->>> a generic hex() function.  Perhaps even put it inside set_packet_header(),
->>> together with #undef.
->>> 
->>> But I might be mistaken... let's check... no, it isn't used outside it.
->> 
->> Agreed. Would that be OK?
->> 
->> static void set_packet_header(char *buf, const int size)
->> {
->> 	static char hexchar[] = "0123456789abcdef";
->> 	#define hex(a) (hexchar[(a) & 15])
->> 	buf[0] = hex(size >> 12);
->> 	buf[1] = hex(size >> 8);
->> 	buf[2] = hex(size >> 4);
->> 	buf[3] = hex(size);
->> 	#undef hex
->> }
-> 
-> That's better, though I wonder if we need to start #defines at begining
-> of line.  But I think current proposal is O.K.
-> 
-> 
-> Either this (which has unnecessary larger scope)
-> 
->  #define hex(a) (hexchar[(a) & 15])
->  static void set_packet_header(char *buf, const int size)
->  {
->  	static char hexchar[] = "0123456789abcdef";
-> 
->  	buf[0] = hex(size >> 12);
->  	buf[1] = hex(size >> 8);
->  	buf[2] = hex(size >> 4);
->  	buf[3] = hex(size);
->  }
->  #undef hex
-> 
-> or this (which looks worse)
-> 
->  static void set_packet_header(char *buf, const int size)
->  {
->  	static char hexchar[] = "0123456789abcdef";
->  #define hex(a) (hexchar[(a) & 15])
->  	buf[0] = hex(size >> 12);
->  	buf[1] = hex(size >> 8);
->  	buf[2] = hex(size >> 4);
->  	buf[3] = hex(size);
->  #undef hex
->  }
-> 
+This "unified review storage format" really does seem to be the missing
+piece. The tool I've been working on for the past year (git-candidate)
+was initially aimed at contrib[1], and was written in perl solely
+to satisfy contrib rules. It would have been python otherwise.
 
-I probably will drop this patch as Junio is not convinced that it
-is a good idea:
-http://public-inbox.org/git/xmqqd1lp8v2o.fsf%40gitster.mtv.corp.google.com/
+The feedback from that thread[1], was that while git-candidate itself
+seemed interesting it would be unreasonable to bless a particular
+tool's format. So it seems to me that even if git-series had been
+written in perl rather than rust it could have expected a similar
+response to that of git-candidate, possibly.
 
-- Lars
+As Stefan says, if we're able to establish a standard for storing
+review data in git then it doesn't really matter what the tools are written in.
 
+For what it's worth my possibly quite shoddy attempt at a library
+implementing a possible review format for git[2] is written in perl,
+mostly to satisfy contrib requirements.
+
+> >
+> > Even requiring every contributor to register with GitHub would be too much
+> > of a limitation, I would wager.
+> >
+> > And when I said I have zero interest in tools that use the "latest and
+> > greatest language", I was hinting at git-series. Rust may be a fine and
+> > wonderful language. Implementing git-series in Rust, however, immediately
+> > limited the potential engagement with developers dramatically.
+
+Ironically contrib's language requirements actually raised the bar for me
+because it meant that I had to learn perl.
+
+> >
+> > Additionally, I would like to point out that defining a way to store
+> > reviews in Git is not necessarily improving the way our code contribution
+> > process works. If you want to record the discussions revolving around the
+> > code, I think public-inbox already does a pretty good job at that.
+
+I agree, and must apologise if this response has been too off topic,
+in any case I hope at least some of it was useful to someone.
+
+Hope this helps,
+Richard Ipsum
+
+[1]: http://www.mail-archive.com/git%40vger.kernel.org/msg80972.html
+[2]: https://bitbucket.org/richardipsum/perl-notedb
