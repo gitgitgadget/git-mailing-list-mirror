@@ -2,91 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2FCC72018E
-	for <e@80x24.org>; Fri,  5 Aug 2016 21:16:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF29F2018E
+	for <e@80x24.org>; Fri,  5 Aug 2016 21:19:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759692AbcHEVQj (ORCPT <rfc822;e@80x24.org>);
-	Fri, 5 Aug 2016 17:16:39 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55563 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S937157AbcHEVQh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2016 17:16:37 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 06EA131D98;
-	Fri,  5 Aug 2016 17:16:36 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gE2HIUr7VS3EFHhRj7oKAxwevB4=; b=NpdeaB
-	+z3L3oVVrwJkQ0pLvqwPIUdwltVJjK8DbJtZNdcWmj5tS2DzLoyukprteuSVdsSK
-	gBAA4rHVt7SC+8vV3r5xAmbYnNUAHWaWGV0ve2dcHhbRfNrOH7ea+pU8+y/Nh3BE
-	Ou1PvzohuWqGCv4g/liurUruqorMStbkxWGI4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DBokAZZojG/NwmpTkl3p5V4H9vkRD0ka
-	Aj1KaHCoblluZRpfq3RrKrgbZxmpXvZNTG0QD0eQpQ2kDCpNqDcuMFoBeWxFngcI
-	hVoO6juZ1FK9Jxmhl65EGHGM+xgT8q2jBlpzzz2mcbMt7ezW0Cvhz/EAwlbPAqWA
-	8SWIJY3jE54=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id F1AAF31D97;
-	Fri,  5 Aug 2016 17:16:35 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6D69231D96;
-	Fri,  5 Aug 2016 17:16:35 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Stefan Beller <sbeller@google.com>
-Cc:	git@vger.kernel.org, mst@redhat.com, Jens.Lehmann@web.de
-Subject: Re: [PATCH 5/6] submodule update: add super-reference flag
-References: <20160804195159.7788-1-sbeller@google.com>
-	<20160804195159.7788-6-sbeller@google.com>
-Date:	Fri, 05 Aug 2016 14:16:32 -0700
-In-Reply-To: <20160804195159.7788-6-sbeller@google.com> (Stefan Beller's
-	message of "Thu, 4 Aug 2016 12:51:58 -0700")
-Message-ID: <xmqq1t22x6fj.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S939547AbcHEVTq (ORCPT <rfc822;e@80x24.org>);
+	Fri, 5 Aug 2016 17:19:46 -0400
+Received: from mail-io0-f172.google.com ([209.85.223.172]:33959 "EHLO
+	mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1948619AbcHEVTm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Aug 2016 17:19:42 -0400
+Received: by mail-io0-f172.google.com with SMTP id q83so311754586iod.1
+        for <git@vger.kernel.org>; Fri, 05 Aug 2016 14:19:41 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Rdtabpw2p/8EMCu7DkT/h26xzrVNJ01w7jhub1gs8V4=;
+        b=RCYlRR1EOOeExUkGeTsyiYn17baUwfLoY+gVzJxgt8trc3ygMrSONejA5fNGMeKocF
+         T3t2lsVEQF4EEgDC/Q/SJYS5gt9zOLci3RPC6cohMUsbwwHHUWKdFogiqqIowuNbYiZO
+         OoYY7EvtHezK3xqQyltQigKvFUesPXsjRO6XSdwsLt9mU/enwmyTSDKnF/v8CnHPQHxp
+         k0Vo61cLBN/NZMMhb3EG4BDkgjO/HHrnSc3FUj78oSV2G0dnBfMA8tVgZiy5Y/JJh1oI
+         Wy+z38xSyiC4bG9Mzk0v+Y0sOs4wDJ/9cq6q+9SbmucAoWg/JZoEx5DYCmX7UFTA/YiY
+         CXMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Rdtabpw2p/8EMCu7DkT/h26xzrVNJ01w7jhub1gs8V4=;
+        b=FzZhXhSDVSyP9Rawkia6uSA+eOvJoTyv+IjQEFqYAqErqpNA78M+/MkwiXKW5lrRdT
+         VHJm9M0AjGNmWM09TkQ0dq/RNk+I74d3zHsIqxHr06ZdzJsWxbfS1UPCHnwhWw5zvz6x
+         rKsTpTDuKhk6CgxZqkruxXJWSqiHjlfK0aJPX3SFS4ynFiWCiW41P0ep3+tKFYdJZgK8
+         R2EngiFBbs+otUROF8TEvY7YxbnzTM+aG/62CEjEDC0FguWAnGPVLx1sm4cTyDTbHEoD
+         iO/sNWvzSm09xVMG2+4pntK0Rp6U274jZFhZ7h627J09e9SVLSG+NZR+pUkDWqP6KVPs
+         sbzg==
+X-Gm-Message-State: AEkoouvLb1yM1W0RPo7MvStbOSNFTjcnkyeePqNQnzNddPqTwjp0up3oidY8XWlex7+2HVQRBD+NMbpH9nb9doTa
+X-Received: by 10.107.178.129 with SMTP id b123mr82521578iof.83.1470431981184;
+ Fri, 05 Aug 2016 14:19:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E3DADE82-5B51-11E6-8777-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.107.128.66 with HTTP; Fri, 5 Aug 2016 14:19:40 -0700 (PDT)
+In-Reply-To: <xmqq60rfvsbq.fsf@gitster.mtv.corp.google.com>
+References: <20160804195159.7788-1-sbeller@google.com> <20160804195159.7788-5-sbeller@google.com>
+ <CAGZ79kY4YxftihTP_cNqLrVTn0wrfNd5_mb40AB-t2beyzvdLA@mail.gmail.com> <xmqq60rfvsbq.fsf@gitster.mtv.corp.google.com>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Fri, 5 Aug 2016 14:19:40 -0700
+Message-ID: <CAGZ79kbTcHN+18z+eXx+QDOCXL9vKeGYKukQJJ+ZnxT55_8htg@mail.gmail.com>
+Subject: Re: [PATCH 4/6] submodule--helper update-clone: allow multiple references
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	"git@vger.kernel.org" <git@vger.kernel.org>, mst@redhat.com,
+	Jens Lehmann <Jens.Lehmann@web.de>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Fri, Aug 5, 2016 at 2:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>>> -               ${reference:+--reference "$reference"} \
+>>> +               ${reference:+"$reference"} \
+>>
+>> Note how this changed the API of the submodule--helper.
+>> Currently we pass in --reference $reference
+>> and $reference consists of the string "--reference" and the actual
+>> reference. So it looked like '--reference' '--reference=foo'
+>
+> So this change is a strict bugfix.  The code without this patch
+> had cmd_update that places "--reference=foo" in $reference, but
+> the call to "git submodule--helper" it makes added an unnecessary
+> "--reference" in front of it.
 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
+I thought about rolling it as a strict bugfix; but the bug is shaded by the
+inverse bug in the helper, so the user would never see an issue.
 
-That's a bit sketchy description.  From the title, I expected that
-we would see one additional 'unsigned super_reference : 1;' field in
-some structure, but that is not what is happening.  The log message
-needs to describe what these string list are and why they are needed
-a bit better.
+It is more a cleanup of the internal communication between the shell
+script and the helper written in C. (And that communication is
+supposed to not be user visible or relevant)
 
-At least, please don't name a multiple_word field "multipleword" ;-)
+>
+> I was wondering why there is no corresponding change to add
+> "--reference" on the code that calls cmd_update().  Thanks for
+> saving my time ;-)
 
-> @@ -715,6 +716,15 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
->  		for_each_string_list_item(item, &suc->references)
->  			argv_array_pushl(&child->args, "--reference", item->string, NULL);
->  	}
-> +	if (suc->superreferences.nr) {
-> +		struct string_list_item *item;
-> +		for_each_string_list_item(item, &suc->superreferences) {
-> +			strbuf_reset(&sb);
-> +			argv_array_pushf(&child->args, "--reference=%s/%s",
-> +					 relative_path(item->string, suc->prefix, &sb),
-> +					 sub->path);
+When I wrote the patch I cared more about the while-at-it part than
+the bug fix as I do not consider the bug worth to merge down to maint
+or even fast tracking it as a bug fix. It's just changing the internal
+communication to be clearer.
 
-The phrase "super reference" made me imagine it is some kind of
-"reference" that is applicable to the superproject, but this code
-smells like it is a "prefix to create reference suited for use in
-submodule".  Whatever it is, it should be explained better (than "no
-desciption" which is what we have here ;-), and given a name that
-match the explanation.
+>
+> Perhaps that needs to go into the log message, though.  Allowing
+> multiple references is not that interesting from the POV of the
+> codebase immediately after this step and only deserves a "by the
+> way" mention.
+>
+>     Subject: submodule--helper: fix cmd_update()
+>
+>     cmd_update places "--reference=foo" in $reference, but the call to
+>     "git submodule--helper" it makes adds an unnecessary "--reference"
+>     in front of it.  The underlying "git clone" was called with two
+>     command options "--reference" and "--reference=foo" because of
+>     this.
+>
+>     While at it, prepare the code to accept multiple references, as
+>     the underlying "git clone" can happily take more than one.
+>
+> or something like that.
+>
+> Needless to say, "While at it" could become a separate step, and a
+> pure bugfix part may even want to become a separate and more urgent
+> topic that can go to 'maint', with a test to prevent regression.
 
-Thanks.
+Sure. I'll do so in a reroll.
