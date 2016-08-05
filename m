@@ -6,63 +6,70 @@ X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 928CB2018E
-	for <e@80x24.org>; Fri,  5 Aug 2016 20:21:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 803512018E
+	for <e@80x24.org>; Fri,  5 Aug 2016 20:22:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764148AbcHEUUx (ORCPT <rfc822;e@80x24.org>);
-	Fri, 5 Aug 2016 16:20:53 -0400
-Received: from cloud.peff.net ([50.56.180.127]:55541 "HELO cloud.peff.net"
+	id S2995614AbcHEUW4 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 5 Aug 2016 16:22:56 -0400
+Received: from cloud.peff.net ([50.56.180.127]:55547 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S942718AbcHEUUu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2016 16:20:50 -0400
-Received: (qmail 9487 invoked by uid 102); 5 Aug 2016 20:20:50 -0000
+	id S2995475AbcHEUWx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Aug 2016 16:22:53 -0400
+Received: (qmail 9583 invoked by uid 102); 5 Aug 2016 20:22:53 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 05 Aug 2016 16:20:50 -0400
-Received: (qmail 29997 invoked by uid 107); 5 Aug 2016 20:21:18 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 05 Aug 2016 16:22:53 -0400
+Received: (qmail 30051 invoked by uid 107); 5 Aug 2016 20:23:21 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 05 Aug 2016 16:21:18 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Aug 2016 16:20:47 -0400
-Date:	Fri, 5 Aug 2016 16:20:47 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 05 Aug 2016 16:23:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Aug 2016 16:22:50 -0400
+Date:	Fri, 5 Aug 2016 16:22:50 -0400
 From:	Jeff King <peff@peff.net>
-To:	Duy Nguyen <pclouds@gmail.com>
-Cc:	Eric Wong <e@80x24.org>, Git Mailing List <git@vger.kernel.org>
+To:	Eric Wong <e@80x24.org>
+Cc:	git@vger.kernel.org
 Subject: Re: [ANNOUNCE] more archives of this list
-Message-ID: <20160805202046.pd42xl76c2sbf272@sigill.intra.peff.net>
+Message-ID: <20160805202250.d23na5xdkmtnjgey@sigill.intra.peff.net>
 References: <20160710004813.GA20210@dcvr.yhbt.net>
  <20160805092805.w3nwv2l6jkbuwlzf@sigill.intra.peff.net>
- <CACsJy8DkNUD_dKwnx9nZsgvSxgdA8MH=2+rEWzMFdkigmhpJ5g@mail.gmail.com>
+ <20160805093544.scvl4yshkfg2l26p@sigill.intra.peff.net>
+ <20160805181957.GA24535@dcvr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CACsJy8DkNUD_dKwnx9nZsgvSxgdA8MH=2+rEWzMFdkigmhpJ5g@mail.gmail.com>
+In-Reply-To: <20160805181957.GA24535@dcvr>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Aug 05, 2016 at 05:04:27PM +0200, Duy Nguyen wrote:
+On Fri, Aug 05, 2016 at 06:19:57PM +0000, Eric Wong wrote:
 
-> On Fri, Aug 5, 2016 at 11:28 AM, Jeff King <peff@peff.net> wrote:
-> > There was discussion a long time ago about storing a common zlib
-> > dictionary in the packfile and using it for all of the objects. I don't
-> > recall whether there were any patches, though. It does create some
-> > complications with serving clones/fetches, as they may ask for a subset
-> > of the objects (so you have to send them the whole dictionary, which may
-> > be a lot of overhead if you're only fetching a few objects).
+> Jeff King <peff@peff.net> wrote:
+> > On Fri, Aug 05, 2016 at 05:28:05AM -0400, Jeff King wrote:
+> > > I do find it visually a little harder to navigate through threads,
+> > > because there's not much styling there, and the messages seem to run
+> > > into one another. I don't know if a border around the divs or something
+> > > would help. I'm really terrible at that kind of visual design.
+> > 
+> > I took a peek at doing something simple like:
+> > 
+> >   pre {
+> >     border-style: solid;
+> >     border-width: 1px;
+> >     background: #dddddd;
+> >   }
+> > 
+> > but it looks like there's no HTML structure at all to the current
+> > output. It's just one big <pre> tag with various levels of indentation
+> > to represent the messages.
 > 
-> I'm nit picking since it's not actually "all objects". But pack v4
-> patches have two dictionaries (or more? i don't remember) for commits
-> and trees :)
+> I added an <hr> between each message so the /T/ view ought to be more
+> readable:
+> 
+> https://public-inbox.org/meta/20160805181459.24420-1-e@80x24.org/
 
-I couldn't remember if that zlib stuff was part of packv4 or not. I like
-many of the ideas in pack v4, but I do worry a lot about the
-compatibility issues, as packv2 is the on-the-wire format.
-
-Being able to send bytes directly off disk with minimal processing is a
-key thing that makes running a large git hosting site practical. One of
-the things that makes nervous is having to do on-the-fly conversion when
-serving fetches and clones (but to be clear that is just gut
-nervousness; I haven't done any actual testing with the proto-packv4
-patches).
+Thanks. That's definitely an improvement. I still think the styling
+could go further, but I don't expect you to do it. It's something I may
+look into, but I should probably try to clear out my backlog of
+"to-review" patches before I go off spending time on it. :)
 
 -Peff
