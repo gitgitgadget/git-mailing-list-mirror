@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B53C2018E
-	for <e@80x24.org>; Fri,  5 Aug 2016 22:04:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0413D2018E
+	for <e@80x24.org>; Fri,  5 Aug 2016 22:04:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030563AbcHEWEU (ORCPT <rfc822;e@80x24.org>);
-	Fri, 5 Aug 2016 18:04:20 -0400
-Received: from siwi.pair.com ([209.68.5.199]:64388 "EHLO siwi.pair.com"
+	id S3003622AbcHEWE0 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 5 Aug 2016 18:04:26 -0400
+Received: from siwi.pair.com ([209.68.5.199]:64365 "EHLO siwi.pair.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1427917AbcHEWDV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2016 18:03:21 -0400
+	id S3003591AbcHEWDT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Aug 2016 18:03:19 -0400
 Received: from jeffhost-linux1.corp.microsoft.com (unknown [167.220.148.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by siwi.pair.com (Postfix) with ESMTPSA id 1E05D8460C;
-	Fri,  5 Aug 2016 18:03:19 -0400 (EDT)
+	by siwi.pair.com (Postfix) with ESMTPSA id 3232D84605;
+	Fri,  5 Aug 2016 18:03:18 -0400 (EDT)
 From:	Jeff Hostetler <git@jeffhostetler.com>
 To:	git@vger.kernel.org
 Cc:	gitster@pobox.com, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v5 7/9] git-status.txt: describe --porcelain=v2 format
-Date:	Fri,  5 Aug 2016 18:00:32 -0400
-Message-Id: <1470434434-64283-8-git-send-email-git@jeffhostetler.com>
+Subject: [PATCH v5 3/9] status: support --porcelain[=<version>]
+Date:	Fri,  5 Aug 2016 18:00:28 -0400
+Message-Id: <1470434434-64283-4-git-send-email-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.8.0.rc4.17.gac42084.dirty
 In-Reply-To: <1470434434-64283-1-git-send-email-git@jeffhostetler.com>
 References: <1470434434-64283-1-git-send-email-git@jeffhostetler.com>
@@ -36,160 +36,117 @@ X-Mailing-List:	git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Update status manpage to include information about
-porcelain v2 format.
+Update --porcelain argument to take optional version parameter
+to allow multiple porcelain formats to be supported in the future.
+
+The token "v1" is the default value and indicates the traditional
+porcelain format.  (The token "1" is an alias for that.)
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- Documentation/git-status.txt | 126 +++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 122 insertions(+), 4 deletions(-)
+ Documentation/git-status.txt |  7 +++++--
+ builtin/commit.c             | 21 ++++++++++++++++++---
+ t/t7060-wtstatus.sh          | 21 +++++++++++++++++++++
+ 3 files changed, 44 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
-index 6b1454b..a58973b 100644
+index e1e8f57..6b1454b 100644
 --- a/Documentation/git-status.txt
 +++ b/Documentation/git-status.txt
-@@ -183,12 +183,12 @@ in which case `XY` are `!!`.
+@@ -32,11 +32,14 @@ OPTIONS
+ --branch::
+ 	Show the branch and tracking info even in short-format.
  
- If -b is used the short-format status is preceded by a line
+---porcelain::
++--porcelain[=<version>]::
+ 	Give the output in an easy-to-parse format for scripts.
+ 	This is similar to the short output, but will remain stable
+ 	across Git versions and regardless of user configuration. See
+ 	below for details.
+++
++The version parameter is used to specify the format version.
++This is optional and defaults to the original version 'v1' format.
  
--## branchname tracking info
-+    ## branchname tracking info
+ --long::
+ 	Give the output in the long-format. This is the default.
+@@ -96,7 +99,7 @@ configuration variable documented in linkgit:git-config[1].
  
--Porcelain Format
--~~~~~~~~~~~~~~~~
-+Porcelain Format Version 1
-+~~~~~~~~~~~~~~~~~~~~~~~~~~
+ -z::
+ 	Terminate entries with NUL, instead of LF.  This implies
+-	the `--porcelain` output format if no other format is given.
++	the `--porcelain=v1` output format if no other format is given.
  
--The porcelain format is similar to the short format, but is guaranteed
-+Version 1 porcelain format is similar to the short format, but is guaranteed
- not to change in a backwards-incompatible way between Git versions or
- based on user configuration. This makes it ideal for parsing by scripts.
- The description of the short format above also describes the porcelain
-@@ -210,6 +210,124 @@ field from the first filename).  Third, filenames containing special
- characters are not specially formatted; no quoting or
- backslash-escaping is performed.
+ --column[=<options>]::
+ --no-column::
+diff --git a/builtin/commit.c b/builtin/commit.c
+index a792deb..185ac35 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -144,6 +144,21 @@ static struct strbuf message = STRBUF_INIT;
  
-+Porcelain Format Version 2
-+~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+Version 2 format adds more detailed information about the state of
-+the worktree and changed items.  Version 2 also defines an extensible
-+set of easy to parse optional headers.
-+
-+Header lines start with "#" and are added in response to specific
-+command line arguments.  Parsers should ignore headers they
-+don't recognize.
-+
-+### Branch Headers
-+
-+If `--branch` is given, a series of header lines are printed with
-+information about the current branch.
-+
-+    Line                                     Notes
-+    ------------------------------------------------------------
-+    # branch.oid <commit> | (initial)        Current commit.
-+    # branch.head <branch> | (detached)      Current branch.
-+    # branch.upstream <upstream_branch>      If upstream is set.
-+    # branch.ab +<ahead> -<behind>           If upstream is set and
-+                                             the commit is present.
-+    ------------------------------------------------------------
-+
-+### Changed Tracked Entries
-+
-+Following the headers, a series of lines are printed for tracked
-+entries.  One of three different line formats may be used to describe
-+an entry depending on the type of change.  Tracked entries are printed
-+in an undefined order; parsers should allow for a mixture of the 3
-+line types in any order.
-+
-+Ordinary changed entries have the following format:
-+
-+    1 <XY> <sub> <mH> <mI> <mW> <hH> <hI> <path>
-+
-+Renamed or copied entries have the following format:
-+
-+    2 <XY> <sub> <mH> <mI> <mW> <hH> <hI> <X><score> <path><sep><origPath>
-+
-+    Field       Meaning
-+    --------------------------------------------------------
-+    <XY>        A 2 character field containing the staged and
-+                unstaged XY values described in the short format,
-+                with unchanged indicated by a "." rather than
-+                a space.
-+    <sub>       A 4 character field describing the submodule state.
-+                "N..." when the entry is not a submodule.
-+                "S<c><m><u>" when the entry is a submodule.
-+                <c> is "C" if the commit changed; otherwise ".".
-+                <m> is "M" if it has tracked changes; otherwise ".".
-+                <u> is "U" if there are untracked changes; otherwise ".".
-+    <mH>        The octal file mode in HEAD.
-+    <mI>        The octal file mode in the index.
-+    <mW>        The octal file mode in the worktree.
-+    <hH>        The object name in HEAD.
-+    <hI>        The object name in the index.
-+    <X><score>  The rename or copy score (denoting the percentage
-+                of similarity between the source and target of the
-+                move or copy). For example "R100" or "C75".
-+    <path>      The pathname.  In a renamed/copied entry, this
-+                is the path in the index and in the working tree.
-+    <sep>       When the `-z` option is used, the 2 pathnames are separated
-+                with a NUL (ASCII 0x00) byte; otherwise, a tab (ASCII 0x09)
-+                byte separates them.
-+    <origPath>  The pathname in the commit at HEAD.  This is only
-+                present in a renamed/copied entry, and tells
-+                where the renamed/copied contents came from.
-+    --------------------------------------------------------
-+
-+Unmerged entries have the following format; the first character is
-+a "u" to distinguish from ordinary changed entries.
-+
-+    u <xy> <sub> <m1> <m2> <m3> <mW> <h1> <h2> <h3> <path>
-+
-+    Field       Meaning
-+    --------------------------------------------------------
-+    <XY>        A 2 character field describing the conflict type
-+                as described in the short format.
-+    <sub>       A 4 character field describing the submodule state
-+                as described above.
-+    <m1>        The octal file mode in stage 1.
-+    <m2>        The octal file mode in stage 2.
-+    <m3>        The octal file mode in stage 3.
-+    <mW>        The octal file mode in the worktree.
-+    <h1>        The object name in stage 1.
-+    <h2>        The object name in stage 2.
-+    <h3>        The object name in stage 3.
-+    <path>      The pathname.
-+    --------------------------------------------------------
-+
-+### Other Items
-+
-+Following the tracked entries (and if requested), a series of
-+lines will be printed for untracked and then ignored items
-+found in the worktree.
-+
-+Untracked items have the following format:
-+
-+    ? <path>
-+
-+Ignored items have the following format:
-+
-+    ! <path>
-+
-+### Pathname Format Notes and -z
-+
-+When the `-z` option is given, pathnames are printed as is and
-+without any quoting and lines are terminated with a NUL (ASCII 0x00)
-+byte.
-+
-+Otherwise, all pathnames will be "C-quoted" if they contain any tab,
-+linefeed, double quote, or backslash characters. In C-quoting, these
-+characters will be replaced with the corresponding C-style escape
-+sequences and the resulting pathname will be double quoted.
-+
-+
- CONFIGURATION
- -------------
+ static enum wt_status_format status_format = STATUS_FORMAT_UNSPECIFIED;
  
++static int opt_parse_porcelain(const struct option *opt, const char *arg, int unset)
++{
++	enum wt_status_format *value = (enum wt_status_format *)opt->value;
++	if (unset)
++		*value = STATUS_FORMAT_NONE;
++	else if (!arg)
++		*value = STATUS_FORMAT_PORCELAIN;
++	else if (!strcmp(arg, "v1") || !strcmp(arg, "1"))
++		*value = STATUS_FORMAT_PORCELAIN;
++	else
++		die("unsupported porcelain version '%s'", arg);
++
++	return 0;
++}
++
+ static int opt_parse_m(const struct option *opt, const char *arg, int unset)
+ {
+ 	struct strbuf *buf = opt->value;
+@@ -1316,9 +1331,9 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 			    N_("show status concisely"), STATUS_FORMAT_SHORT),
+ 		OPT_BOOL('b', "branch", &s.show_branch,
+ 			 N_("show branch information")),
+-		OPT_SET_INT(0, "porcelain", &status_format,
+-			    N_("machine-readable output"),
+-			    STATUS_FORMAT_PORCELAIN),
++		{ OPTION_CALLBACK, 0, "porcelain", &status_format,
++		  N_("version"), N_("machine-readable output"),
++		  PARSE_OPT_OPTARG, opt_parse_porcelain },
+ 		OPT_SET_INT(0, "long", &status_format,
+ 			    N_("show status in long format (default)"),
+ 			    STATUS_FORMAT_LONG),
+diff --git a/t/t7060-wtstatus.sh b/t/t7060-wtstatus.sh
+index 44bf1d8..00e0ceb 100755
+--- a/t/t7060-wtstatus.sh
++++ b/t/t7060-wtstatus.sh
+@@ -228,4 +228,25 @@ test_expect_success 'status --branch with detached HEAD' '
+ 	test_i18ncmp expected actual
+ '
+ 
++## Duplicate the above test and verify --porcelain=v1 arg parsing.
++test_expect_success 'status --porcelain=v1 --branch with detached HEAD' '
++	git reset --hard &&
++	git checkout master^0 &&
++	git status --branch --porcelain=v1 >actual &&
++	cat >expected <<-EOF &&
++	## HEAD (no branch)
++	?? .gitconfig
++	?? actual
++	?? expect
++	?? expected
++	?? mdconflict/
++	EOF
++	test_i18ncmp expected actual
++'
++
++## Verify parser error on invalid --porcelain argument.
++test_expect_success 'status --porcelain=bogus' '
++	test_must_fail git status --porcelain=bogus
++'
++
+ test_done
 -- 
 2.8.0.rc4.17.gac42084.dirty
 
