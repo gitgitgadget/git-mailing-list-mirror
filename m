@@ -2,74 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 803512018E
-	for <e@80x24.org>; Fri,  5 Aug 2016 20:22:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2776C2018E
+	for <e@80x24.org>; Fri,  5 Aug 2016 20:30:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2995614AbcHEUW4 (ORCPT <rfc822;e@80x24.org>);
-	Fri, 5 Aug 2016 16:22:56 -0400
-Received: from cloud.peff.net ([50.56.180.127]:55547 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S2995475AbcHEUWx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2016 16:22:53 -0400
-Received: (qmail 9583 invoked by uid 102); 5 Aug 2016 20:22:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 05 Aug 2016 16:22:53 -0400
-Received: (qmail 30051 invoked by uid 107); 5 Aug 2016 20:23:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 05 Aug 2016 16:23:21 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Aug 2016 16:22:50 -0400
-Date:	Fri, 5 Aug 2016 16:22:50 -0400
-From:	Jeff King <peff@peff.net>
-To:	Eric Wong <e@80x24.org>
-Cc:	git@vger.kernel.org
-Subject: Re: [ANNOUNCE] more archives of this list
-Message-ID: <20160805202250.d23na5xdkmtnjgey@sigill.intra.peff.net>
-References: <20160710004813.GA20210@dcvr.yhbt.net>
- <20160805092805.w3nwv2l6jkbuwlzf@sigill.intra.peff.net>
- <20160805093544.scvl4yshkfg2l26p@sigill.intra.peff.net>
- <20160805181957.GA24535@dcvr>
+	id S2996054AbcHEUaT (ORCPT <rfc822;e@80x24.org>);
+	Fri, 5 Aug 2016 16:30:19 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54476 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S2996182AbcHEUaR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Aug 2016 16:30:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 240BA33CCA;
+	Fri,  5 Aug 2016 16:30:15 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=m6tDleuNNM7XjaDm7SHr5T2CYko=; b=ttkh/m
+	M3qFa9HtieCO+uBXC/1lHIc5EYeCKtfQM0ltnKfMxwRDXWI1mLQ5zNRgHlHUAuHN
+	iZ6wBxhRVZnUPOM+9T49hnihCCcCmon9SvnuzNmfvdqSxdNFR1VJV+/clJOCQBZX
+	0Om8QrXLt8UJqDrFkDQiRTzqPYrfN4Gs7lsGU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=M0XOOvtF0OLouLDLBnfuX7bL/3vtDUH5
+	vHDuBRgB8x63O+DkhLrArvqpYvtLzNPMANlds8yL9J6NR3otqXt+7tZbo1UtkBDX
+	exVDzjPdNpSBd2HurPzbA8aJQVD7DfjPKg+WSdgDSZmgzV8mtryf0GLS4+3F6a3x
+	GTnHI0XmA/w=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1A40533CC8;
+	Fri,  5 Aug 2016 16:30:15 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E51E133CC5;
+	Fri,  5 Aug 2016 16:30:13 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Stefan Beller <sbeller@google.com>
+Cc:	git@vger.kernel.org, mst@redhat.com, Jens.Lehmann@web.de
+Subject: Re: [PATCH 1/6] t7408: modernize style
+References: <20160804195159.7788-1-sbeller@google.com>
+	<20160804195159.7788-2-sbeller@google.com>
+Date:	Fri, 05 Aug 2016 13:30:11 -0700
+In-Reply-To: <20160804195159.7788-2-sbeller@google.com> (Stefan Beller's
+	message of "Thu, 4 Aug 2016 12:51:54 -0700")
+Message-ID: <xmqqk2fvvu0c.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160805181957.GA24535@dcvr>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 69F1B498-5B4B-11E6-8FC9-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Aug 05, 2016 at 06:19:57PM +0000, Eric Wong wrote:
+Stefan Beller <sbeller@google.com> writes:
 
-> Jeff King <peff@peff.net> wrote:
-> > On Fri, Aug 05, 2016 at 05:28:05AM -0400, Jeff King wrote:
-> > > I do find it visually a little harder to navigate through threads,
-> > > because there's not much styling there, and the messages seem to run
-> > > into one another. I don't know if a border around the divs or something
-> > > would help. I'm really terrible at that kind of visual design.
-> > 
-> > I took a peek at doing something simple like:
-> > 
-> >   pre {
-> >     border-style: solid;
-> >     border-width: 1px;
-> >     background: #dddddd;
-> >   }
-> > 
-> > but it looks like there's no HTML structure at all to the current
-> > output. It's just one big <pre> tag with various levels of indentation
-> > to represent the messages.
-> 
-> I added an <hr> between each message so the /T/ view ought to be more
-> readable:
-> 
-> https://public-inbox.org/meta/20160805181459.24420-1-e@80x24.org/
+> No functional change intended. This commit only changes formatting
+> to the style we recently use, e.g. starting the body of a test with a
+> single quote on the same line as the header, and then having the test
+> indented in the following lines.
+>
+> Whenever we change directories, we do that in subshells.
 
-Thanks. That's definitely an improvement. I still think the styling
-could go further, but I don't expect you to do it. It's something I may
-look into, but I should probably try to clear out my backlog of
-"to-review" patches before I go off spending time on it. :)
-
--Peff
+All look sensible; I think it is OK to also do minor and trivial
+tweaks here, but let's see what 2/6 does.
