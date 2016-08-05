@@ -2,96 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4E812018E
-	for <e@80x24.org>; Fri,  5 Aug 2016 21:23:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20B522018E
+	for <e@80x24.org>; Fri,  5 Aug 2016 21:24:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1948755AbcHEVX4 (ORCPT <rfc822;e@80x24.org>);
-	Fri, 5 Aug 2016 17:23:56 -0400
-Received: from mail-io0-f182.google.com ([209.85.223.182]:34428 "EHLO
-	mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1949034AbcHEVXv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2016 17:23:51 -0400
-Received: by mail-io0-f182.google.com with SMTP id q83so311832814iod.1
-        for <git@vger.kernel.org>; Fri, 05 Aug 2016 14:23:50 -0700 (PDT)
+	id S1949023AbcHEVYG (ORCPT <rfc822;e@80x24.org>);
+	Fri, 5 Aug 2016 17:24:06 -0400
+Received: from mail-yb0-f196.google.com ([209.85.213.196]:33548 "EHLO
+	mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S3000976AbcHEVYD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Aug 2016 17:24:03 -0400
+Received: by mail-yb0-f196.google.com with SMTP id e125so1620502ybc.0
+        for <git@vger.kernel.org>; Fri, 05 Aug 2016 14:24:03 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=7nzhwfXuX5G3+8TSQ6IRt3BVEARnKrmgR2ZGbWaBUpk=;
-        b=YH8Q8XLY352epDVvlUJY7xvbIL8F9SpJk8k4Jn4lBDNuO2EMOBJRPL+iwFo3nuSFuL
-         ndP81vBa91X56hkGG0kkBvmbUhMH8uFLInCo67uP3/4gaTs3rYWlEyLnxpim2qChq+ui
-         HO3F0K9LGiz/OTa4eaLbeYyq8g9+/cNrXTKjme2m/j97jW6WQJ0SRyjOopAuC9VaHj83
-         l1/FrpFqJDlYc8PNRA1OxnipJ9TP4hFHQmgGWrS4MxaUDSpLNGNKM8VUoNWrXJwLqZcT
-         r6ZJbnbLa02wWT03b0//Xucrc/BLOa6eQ1oKUkQ0noBKoYvLLgMMvh9uFo+X7JJHRenJ
-         A7Yw==
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=VNTFAnv3EbMILaqCuE0PC+Y/hhXPS6S/OnllsK3PpKc=;
+        b=HRpZoBGyGHZvBKkOz5pQUmwtNMMoBcWzWYVLd952HjjBrMbi59qGowV7C3bMcXUMNC
+         NH9ZUarPHnu40E1VRPTqYDfTXtu6QcasySG4lJ45HbyZblz0pfM15CIxIGZlYnsePUPo
+         4rCCv5AqM1eOtpcrgMiUtcPGqMIT6xnbLhiC2Es6OKdFu0/LVxXaf4YFwayeS2md9vvV
+         aXKtjffEqsOYmR27slu74BoU/r4BqEb/KlIcffL/OJDi+VqsiOr0NsYNxEGLmEbZBseO
+         3uobzvA9ahFt9nvcoBXoAH14kynFmENYiCnfOBprR/Acz53Z03NODhjjh46ajGgpwZcD
+         M9Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=7nzhwfXuX5G3+8TSQ6IRt3BVEARnKrmgR2ZGbWaBUpk=;
-        b=gFzYrmPvPddbZ+Fq/EaYOBG3dNSmAEd/zx24oegmhMG9mQW7TF2Ea6GU/oJuqvKODY
-         tXa6GfvU5ScYqiH8Cc58KsCr6UZa/mzRkbbUUgxaqzTyCdprrWC5Uw4fFS5HOOY1g45H
-         CgNLcKqNYUzXt4CK2aIljtSm2NKlINrBVgetbVNZrg50S/UTBDKS2EtZtiUq6TI0Uav9
-         Gtq91s0g849xrqSEQXbsirQkUqvNw1Im0J6+JeUml1RMKQJ7g21PiXxWg7DfO704NvYe
-         cJU99/zUCXG+HbvjA7MTYFLjMaCaf+xTi+N46kPUZSh4FdaADckmozuje7L5iYonP2Y3
-         P64g==
-X-Gm-Message-State: AEkoouuXuLVbSC7n3ucH0IywFNLSngcHc3Mqc5mcaYy9bIn/aBGxIuCFhtr7QDB0Q9uOLXo5y6RjjUeqO3hZq019
-X-Received: by 10.107.144.10 with SMTP id s10mr79144921iod.165.1470432229767;
- Fri, 05 Aug 2016 14:23:49 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=VNTFAnv3EbMILaqCuE0PC+Y/hhXPS6S/OnllsK3PpKc=;
+        b=S0ro+iEeqb30gQiWHlk8+OQXbmwsk0EV/WRH5YS1oVL1Ie4UF/1EvxCy4fMIrmSd+x
+         8X95kjNgu9RVs8DZQngJNqdTVCDXQLKDD+1Zav5njcC6d0luKZlfUOFhfyPGb01/PWm/
+         +fNbG2BrjZx7XmtXewGoPr4KgJ2GhCf3onDGwBMnBuDBLWzmaI/XW3JlKSf4VUdGtYKy
+         I29lOtwGVwy2wDQ8MSOumD1fGmpCxpRyDfoCj188pNxdhG8isWqBdtnl7AtmB9gudueU
+         1Ox4k0OpUwAoSKD2osytJsAmJllbTYdNEdWreLG3+0cwh2aihTKjlNszC+lKiYa79Ky/
+         s9kQ==
+X-Gm-Message-State: AEkoouuPHL1jrUucsty/pooSuxumsR95RbilXOpC/vePzf0wJPEaZlyQbwhaEjQh0ceGaqWBrmu7m5cs34eGzQ==
+X-Received: by 10.37.66.147 with SMTP id p141mr27288997yba.28.1470432242623;
+ Fri, 05 Aug 2016 14:24:02 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Fri, 5 Aug 2016 14:23:49 -0700 (PDT)
-In-Reply-To: <xmqqoa57vvzl.fsf@gitster.mtv.corp.google.com>
-References: <20160804195159.7788-1-sbeller@google.com> <xmqqoa57vvzl.fsf@gitster.mtv.corp.google.com>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Fri, 5 Aug 2016 14:23:49 -0700
-Message-ID: <CAGZ79kY9Wry-vu9ByzW7Qc37SSkKf3doyWuzGzQeMTy4NfLMhA@mail.gmail.com>
-Subject: Re: [PATCH 0/6] git clone: Marry --recursive and --reference
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>, mst@redhat.com,
-	Jens Lehmann <Jens.Lehmann@web.de>
+Received: by 10.13.250.4 with HTTP; Fri, 5 Aug 2016 14:23:42 -0700 (PDT)
+In-Reply-To: <10752620.2J2dEZLIGc@mfick1-lnx>
+References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com>
+ <20160804234920.GA27250@redhat.com> <xmqqy44bxm0h.fsf@gitster.mtv.corp.google.com>
+ <10752620.2J2dEZLIGc@mfick1-lnx>
+From:	Junio C Hamano <gitster@pobox.com>
+Date:	Fri, 5 Aug 2016 14:23:42 -0700
+X-Google-Sender-Auth: jErNsnRv6pqK-3T-5Po7N-jDpmY
+Message-ID: <CAPc5daV51cwPs-8uc_SYLaod7RB7aDGYbjt-x-JsY1qNL81QRA@mail.gmail.com>
+Subject: Re: storing cover letter of a patch series?
+To:	Martin Fick <mfick@codeaurora.org>
+Cc:	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Git List <git@vger.kernel.org>, repo-discuss@googlegroups.com
 Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Aug 5, 2016 at 12:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
->  * You want the "clone" command above with "--recursive" to do "the
->    right thing".  That is, the clone of the superproject borrows
->    from /var/cache/super.git local mirror, and the clone of xyzzy
->    that would be made at .git/modules/xyzzy in the superproject
->    would borrow from /var/cache/xyzzy.git local mirror.
-
-This is not what I intend to solve here. The solution in 6/6 solves
-the scenario as you outlined in [1].
-
+On Fri, Aug 5, 2016 at 2:20 PM, Martin Fick <mfick@codeaurora.org> wrote:
+> On Friday, August 05, 2016 08:39:58 AM you wrote:
+>>  * A new topic, when you merge it to the "lit" branch, you
+>> describe the cover as the merge commit message.
+>>
+>>  * When you updated an existing topic, you tell a tool
+>> like "rebase -i -p" to recreate "lit" branch on top of
+>> the mainline.  This would give you an opportunity to
+>> update the cover.
 >
-> What I am not sure about is how /var/cache/xyzzy.git should be
-> automatically derived from the information given from the command
-> line of "clone" and what the clone of the superproject contains.
+> This is a neat idea.  How would this work if there is no
+> merge commit (mainline hasn't moved)?
 
-Generally speaking you cannot do that without assumptions.
-
-The scenario in [1] can be done without assumptions of the locations
-of the submodules. The only requirement for [1] is to have submodules
-checked out, which is a rather strong requirement, as that doesn't
-help you when you want to reference multiple superrpojects with
-incomplete submodule checkout. (Given all of them together may or
-may not produce the full set of references)
-
->
->     IOW, both layouts are equally sensible; what layout (either one
->     of the above two, or something entirely different) is your "at
->     the same paths" assumption meant to serve well, and what is the
->     plan to serve other layouts?
->
-
-The plan for other layouts might be
-
-    git submodule update --reference-dir /var/cache/
-
-?
+Sorry, I do not understand your question. You always
+merge into your own "lit", which is based on (some)
+version of the mainline. If a topic builds on top of the
+mainline, you "merge --no-ff" it into "lit". Because no
+merges on "lit" will be part of the future mainline anyway,
+even the project frowns upon a "no-ff" merge, that will
+not be a problem.
