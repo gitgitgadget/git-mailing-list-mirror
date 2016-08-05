@@ -2,75 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 004062018E
-	for <e@80x24.org>; Fri,  5 Aug 2016 21:47:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE7392018E
+	for <e@80x24.org>; Fri,  5 Aug 2016 21:50:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S3001705AbcHEVrm (ORCPT <rfc822;e@80x24.org>);
-	Fri, 5 Aug 2016 17:47:42 -0400
-Received: from mail-it0-f51.google.com ([209.85.214.51]:34866 "EHLO
-	mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S968902AbcHEVrl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2016 17:47:41 -0400
-Received: by mail-it0-f51.google.com with SMTP id u186so32512140ita.0
-        for <git@vger.kernel.org>; Fri, 05 Aug 2016 14:47:40 -0700 (PDT)
+	id S1947091AbcHEVuF (ORCPT <rfc822;e@80x24.org>);
+	Fri, 5 Aug 2016 17:50:05 -0400
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:36663 "EHLO
+	mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S3002424AbcHEVuA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Aug 2016 17:50:00 -0400
+Received: by mail-wm0-f50.google.com with SMTP id q128so45784415wma.1
+        for <git@vger.kernel.org>; Fri, 05 Aug 2016 14:49:59 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=cWDot+GlKIb+5XI8dnWmG3GdvF5CSD6eWEHP+jykIzk=;
-        b=VkmZgwPUTyo4+fA+sGN+u6SF3LaNpLyu0SiVuRYRvJcNlgqiWbsuzYq98A4Q61s9TU
-         b+V0b2yQVuFnlxry8g3YT+uyeB6St281t9EdLIQdGwyk9HP58XQUv/Y4aSo8eeqddwlY
-         WlQEz5hV+iK1iNHurmCkTopMkzKi723BRF4ar/mwbbfCIdEkRnhnxzPn35d5s8Ch5khV
-         rrA7uxFDjtkr4KyzDscNClASwTVRwqtoiJQVKOahqKEerldta6uwmTUMIzPMjlWSuuIY
-         qEKRSjNspl7Jh3tV0f2/xgwIQkw5dmTYFPuxCiTkn6ORL7q7v1cHpSn7Hc18OVWrGhSV
-         lXoQ==
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=/IVl7MaYwhrfGda7r80UXEu/Jt5D0tFXqefFCaQPhUU=;
+        b=LkJ7Q7vP/DElX38plpf2A5BnhJat0I11XH2z2K52NzQyP9d/pm48MfsKDv3yqh9hQS
+         YAGPivddMCNra3WVp9Vo36omg1lP8lYIK/nLPiTxsnR9pNzobZAas8Xb6HB+K+Xgw6GG
+         fez/hS3UmZegIjfj4t/XIdIbSROJh/ComIZ8iP1dTw24oKqB5DRHc9q3J1M9ttVQVqHP
+         RS9DuL71FNucILnEt70VxMaiEJde0BrJuWg3+LOlPtpeeVvlquk4fBdgUERHj5EjzBzS
+         cdE79uINwtKHebIKcLjjKZGHYJ29oxLA1rEmK/JvxAH2UoaqT+1CujxKZmU5dyGZ8tcD
+         3giQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=cWDot+GlKIb+5XI8dnWmG3GdvF5CSD6eWEHP+jykIzk=;
-        b=A6t9XWDWSMhf8o8wenrNLuVUfJL8W9zCqCVV8lcCKFwqWaMD+8jf/NzirI1OB7ZvaY
-         9Cm+NEYw3ei+kGnSWHEfJR8QyCFaYw/DaPGQgioFXvqor4YDJZQSk7bgi431js0hO/5r
-         RmPG9b3X0i4KW5k+xvw2ODdSmjReLmbUvEhjjz0OcK6A4H1KMXOK47cx3mtA2o4ki4sh
-         6VMhX2RQf9gIppcoTh5Tuh7vws36FAJp4PSAn/oUVgkcqsCCzJOkO4yZvdp9XRegxJqw
-         RLXcWrRzdy67cwXgy4GUrGRf4srKVLFehG8DjrEGG3phwUNjz9qraaBmRm5dO0t6fqg+
-         dnSg==
-X-Gm-Message-State: AEkoouvk4jpENzHrs0r4I+/Ibjl20M78ex8sTGdgMx4td8ns6+AleubUeunW9VQ7azf4rTs4BVgXAfFX1c4qc9T/
-X-Received: by 10.36.29.15 with SMTP id 15mr6585371itj.97.1470433659128; Fri,
- 05 Aug 2016 14:47:39 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Fri, 5 Aug 2016 14:47:38 -0700 (PDT)
-In-Reply-To: <CAGZ79kb2aO80csCfV=QbH8D1spdNLdkTCSPriZ8W9nSy6T5QAg@mail.gmail.com>
-References: <1470147137-17498-1-git-send-email-git@jeffhostetler.com>
- <1470147137-17498-6-git-send-email-git@jeffhostetler.com> <20160805210222.a2rvlmioim4psbhw@sigill.intra.peff.net>
- <CAPc5daUr7OgFeefbwWLWFt3KW_9X-ijRmHa2oj0--zY4fqt82A@mail.gmail.com>
- <20160805211434.54mtaw2cty4gaxsr@sigill.intra.peff.net> <CAGZ79kb2aO80csCfV=QbH8D1spdNLdkTCSPriZ8W9nSy6T5QAg@mail.gmail.com>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Fri, 5 Aug 2016 14:47:38 -0700
-Message-ID: <CAGZ79kZOv4rTuqg7kLWydPY4dCeivaBXZ8HeU8hxu79rPeu-5w@mail.gmail.com>
-Subject: Re: [PATCH v4 5/8] status: print per-file porcelain v2 status data
-To:	Jeff King <peff@peff.net>
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	Jeff Hostetler <git@jeffhostetler.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff Hostetler <jeffhost@microsoft.com>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=/IVl7MaYwhrfGda7r80UXEu/Jt5D0tFXqefFCaQPhUU=;
+        b=nAbKsleCwwQophkHEegLFV8lg6Fo3TMBQwbiXJCDx0w/dryvMPWNQL+yO0tpPgQfbD
+         hc74h8kkFBfsWRGjko4qpiddpKmYCwCdkzXKdMMYETXNd+3T5jbovjVkJxBdlUlt1QAR
+         A3WWtY5UaZJicA4J9ly7c/epgR9KI2p+YEDp3je9klyf23GSZhvFV8Fj7VoGRjq13RTG
+         MiI1j1SDgkGNg3SnvtmkpOhWUZ/ZoYDemjPWxgpA0Hq4VxSrPCZknMAAnYgVWZkQMDzJ
+         f/qpFDmTmOcPCvoQZeBUMxKaeA/S/t59h0ZK+2HyJIufJsA/fSdNKCyyozXsIy4PNCTp
+         VmUQ==
+X-Gm-Message-State: AEkoouuU5ymW6uP8t19836OWC/NSR720pbwEki9IdjNxNx2km59nOI1SBBlNcqLHjj0wYQ==
+X-Received: by 10.194.101.225 with SMTP id fj1mr80409069wjb.57.1470433798010;
+        Fri, 05 Aug 2016 14:49:58 -0700 (PDT)
+Received: from slxbook4.fritz.box (p5DDB641A.dip0.t-ipconnect.de. [93.219.100.26])
+        by smtp.gmail.com with ESMTPSA id 3sm10501963wms.1.2016.08.05.14.49.56
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 05 Aug 2016 14:49:57 -0700 (PDT)
+Content-Type: text/plain; charset=windows-1252
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v4 11/12] convert: add filter.<driver>.process option
+From:	Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <2e13c31c-5ee2-890d-1268-98fb67aba1ea@web.de>
+Date:	Fri, 5 Aug 2016 23:49:55 +0200
+Cc:	git@vger.kernel.org, gitster@pobox.com, jnareb@gmail.com,
+	mlbright@gmail.com, e@80x24.org, peff@peff.net
+Content-Transfer-Encoding: 8BIT
+Message-Id: <59C5366C-AB41-49D9-8FFF-F109AF242580@gmail.com>
+References: <20160729233801.82844-1-larsxschneider@gmail.com> <20160803164225.46355-1-larsxschneider@gmail.com> <20160803164225.46355-12-larsxschneider@gmail.com> <2e13c31c-5ee2-890d-1268-98fb67aba1ea@web.de>
+To:	=?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-Mailer: Apple Mail (2.3124)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Aug 5, 2016 at 2:43 PM, Stefan Beller <sbeller@google.com> wrote:
 
->     cov-build --dir cov-int make
+> On 05 Aug 2016, at 23:34, Torsten Bögershausen <tboegi@web.de> wrote:
+> 
+> On 2016-08-03 18.42, larsxschneider@gmail.com wrote:
+>> The filter is expected to respond with the result content in zero
+>> or more pkt-line packets and a flush packet at the end. Finally, a
+>> "result=success" packet is expected if everything went well.
+>> ------------------------
+>> packet:          git< SMUDGED_CONTENT
+>> packet:          git< 0000
+>> packet:          git< result=success\n
+>> ------------------------
+> I would really send the diagnostics/return codes before the content.
+> 
+>> If the result content is empty then the filter is expected to respond
+>> only with a flush packet and a "result=success" packet.
+>> ------------------------
+>> packet:          git< 0000
+>> packet:          git< result=success\n
+>> ------------------------
+> 
+> Which may be:
+> 
+> packet:          git< result=success\n
+> packet:          git< SMUDGED_CONTENT
+> packet:          git< 0000
+> 
+> or for an empty file:
+> 
+> packet:          git< result=success\n
+> packet:          git< SMUDGED_CONTENT
+> packet:          git< 0000
 
-For this you need to download their analytic tool and put it in
-your $PATH. Let me see if I need to update the tool so it
-enables finding more potential issues.
+I think you meant:
+packet:          git< result=success\n
+packet:          git< 0000
 
-So that was an initial hurdle.
+Right?
+
+> 
+> or in case of an error:
+> packet:          git< result=reject\n
+> # And this will not send the "0000" packet
+> 
+> Does this makes sense ?
+
+I see your point. However, I think your suggestion would not work in the
+true streaming case as the filter wouldn't know upfront if the operation 
+will succeed, right?
+
+Thanks for the review,
+Lars
+
