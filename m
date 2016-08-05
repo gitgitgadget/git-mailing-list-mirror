@@ -2,93 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 71C222018E
-	for <e@80x24.org>; Fri,  5 Aug 2016 13:22:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B5BF2018E
+	for <e@80x24.org>; Fri,  5 Aug 2016 14:19:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161185AbcHENWW (ORCPT <rfc822;e@80x24.org>);
-	Fri, 5 Aug 2016 09:22:22 -0400
-Received: from atl4mhob08.myregisteredsite.com ([209.17.115.46]:55442 "EHLO
-	atl4mhob08.myregisteredsite.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759655AbcHENWV convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 5 Aug 2016 09:22:21 -0400
-Received: from mailpod.hostingplatform.com ([10.30.71.209])
-	by atl4mhob08.myregisteredsite.com (8.14.4/8.14.4) with ESMTP id u75DMIkj004879
-	for <git@vger.kernel.org>; Fri, 5 Aug 2016 09:22:18 -0400
-Received: (qmail 6048 invoked by uid 0); 5 Aug 2016 13:22:18 -0000
-X-TCPREMOTEIP: 69.47.70.101
-X-Authenticated-UID: andrew@kellerfarm.com
-Received: from unknown (HELO ?192.168.0.190?) (andrew@kellerfarm.com@69.47.70.101)
-  by 0 with ESMTPA; 5 Aug 2016 13:22:18 -0000
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
-Subject: Re: obsolete index in wt_status_print after pre-commit hook runs
-From:	Andrew Keller <andrew@kellerfarm.com>
-In-Reply-To: <xmqq60rg5vq5.fsf@gitster.mtv.corp.google.com>
-Date:	Fri, 5 Aug 2016 09:22:14 -0400
-Cc:	Git List <git@vger.kernel.org>
-Content-Transfer-Encoding: 8BIT
-Message-Id: <B126EBED-AA93-4B5B-A932-149E4CB88C2B@kellerfarm.com>
-References: <5988D847-25A2-4997-9601-083772689879@covenanteyes.com> <2ED67396-2530-4D1C-8F21-1C30983DB9DC@kellerfarm.com> <CAPc5daWZofdZnE0VQyFX2sBQyEDvAPmU+4rmHe5rvh7eH001ZA@mail.gmail.com> <xmqqh9bqlfto.fsf@gitster.mtv.corp.google.com> <CDE30958-C112-4C26-A0EA-499BFCD4E07F@kellerfarm.com> <xmqq60rg5vq5.fsf@gitster.mtv.corp.google.com>
+	id S1759771AbcHEOTT (ORCPT <rfc822;e@80x24.org>);
+	Fri, 5 Aug 2016 10:19:19 -0400
+Received: from mout.gmx.net ([212.227.17.22]:53283 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753903AbcHEOTS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Aug 2016 10:19:18 -0400
+Received: from virtualbox ([37.24.141.218]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0LiHc7-1askiS0lOd-00nQkw; Fri, 05 Aug 2016 16:19:11
+ +0200
+Date:	Fri, 5 Aug 2016 16:19:08 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
 To:	Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.2104)
+cc:	git@vger.kernel.org, John Keeping <john@keeping.me.uk>,
+	Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH] t5533: make it pass on case-sensitive filesystems
+In-Reply-To: <xmqqwpjw4fmj.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1608051613570.5786@virtualbox>
+References: <93e1fb21d1d24c5b751e2d9d25d9220704bae5aa.1470322425.git.johannes.schindelin@gmx.de> <xmqqwpjw4fmj.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:dF7oBNrxx97baEgV/E/46VdlFYUjIRTS9IcAgkXC4V+opj3svUr
+ 0Q3OdD945Ad/ar+NMo7CuyD8hmlCfiGyoQL2+XiThkJEq60k3pscEPnL+z04Dg+ePkX37SY
+ 1NbJg6vjyX8ZXTWA+pqyCCs5nnEZt+GoL8tY/t1bZ2ofaAqm82DXX/v6m/1HzvMlN+C9L2W
+ sRLY7a1LbVt39YOqDRzjA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:Sk7VDz66Qb4=:/JvfcMm2wpm8c3ZTU0k2c8
+ D8wNinG9EjBPzEaDCV3GNqv7/I73LeUzv9smGzv98cJP1nLKwinrKqRSctncnr1TWF/5Cke6I
+ 578MnhRc4wopa7F+TV6lupsC/PwYJDnUqLmRh89e/GGzSqEnt/hGaZQMa3Ai2pepG5uHhOb3+
+ EofS8T7fW1xhgHrcxnZN1FWkdtHJbh9NzMGHiYsqustmVZCmiFshYfVR6EQJvEStHjKqpsXfz
+ ZfFvbzuT+iWCYkqPg+yznGW7JtC/7shu8PZMUrFjpQF2a/ryZrQIEnTsjWd9bQQzveCy2Z7xY
+ gbYzSzkeWOTXS1yYP2ko/w+NIP/ahGhrF4VtSlWWNb5riAJkj5crsIvCd3WWMlfq1bJkyRMfE
+ CIjG5FdA7C1RpsghvbvZyCarqW55flrPrPijUNoabIRunixYCGqF0157nIOrYe9kf0OoEOcEm
+ c6DZQY6hxXLkOMeJXmVNhMD3orD8upJje/TFl+OgJPFV3NPuBgF2E8Oqkc9Smumb7H0FUqDrc
+ Hc8poSwlFk+1+41ve3Rw17E694NVpTqCd37+KhJhfBOKz2qQa8i9G9Xaxiay2d93lFwj7WntT
+ +09+4iL6axPJvLNZQ04tJDOio1DoAJfImFC+EZXB1722YjvCmiA/T/dwGDcNpjndCjg+9D5M1
+ dwLspkGolVMMmwUDnjhCvty4+Tvqoodx1Pg7Zd1gtrPqgkL0vQq/tjhBWDY06Xq91221Y6nB7
+ Nh0p7DXo8HmsohVTv9JXu/4kHEwxmwgWCXdeMwlqfYf8PYlgbD+ue8WA16kNDPOqFbP0Do/iQ
+ 4koFQLm
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Hi Junio,
 
-Am 04.08.2016 um 12:45 nachm. schrieb Junio C Hamano <gitster@pobox.com>:
-> Andrew Keller <andrew@kellerfarm.com> writes:
-> 
->> In summary, I think I prefer #2 from a usability point of view, however I’m having
->> trouble proving that #1 is actually *bad* and should be disallowed.
-> 
-> Yeah, I agree with your argument from the usability and safety point
-> of view.
-> 
->> Any thoughts?  Would it be better for the pre-commit hook to be
->> officially allowed to edit the index [1], or would it be better
->> for the pre-commit hook to explicitly *not* be allowed to edit the
->> index [2], or would it be yet even better to simply leave it as it
->> is?
-> 
-> It is clear that our stance has been the third one so far.
-> 
-> Another thing I did not see in your analysis is what happens if the
-> user is doing a partial commit, and how the changes made by
-> pre-commit hook is propagated back to the main index and the working
-> tree.
-> 
-> The HEAD may have a file with contents in the "original" state, the
-> index may have the file with "update 1", and the working tree file
-> may have it with "update 2".  After the commit is made, the user
-> will continue working from a state where the HEAD and the index have
-> "update 1", and the working tree has "update 2".  "git diff file"
-> output before and after the commit will be identical (i.e. the
-> difference between "update 1" and "update 2") as expected.
+On Thu, 4 Aug 2016, Junio C Hamano wrote:
 
-Excellent point — one I had discovered myself but neglected to include in
-my email.  In my post-commit hook, I have logic in both versions of my
-experiment that disallows [1] fixing up diffs that are partially staged.  Both
-scripts then update both the index and the working copy.  (Sort of like how
-rebase works — clean working directory required, and then it updates the
-index and the work tree)
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > The newly-added test case wants to commit a file "c.t" (note the lower
+> > case) when a previous test case already committed a file "C.t". This
+> > confuses Git to the point that it thinks "c.t" was not staged when "git
+> > add c.t" was called.
+> >
+> > Simply make the naming of the test commits consistent with the previous
+> > test cases: use upper-case, and advance in the alphabet.
+> >
+> > This came up in local work to rebase the Windows-specific patches to the
+> > current `next` branch. An identical fix was suggested by John Keeping.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> > Published-As: https://github.com/dscho/git/releases/tag/t5533-case-insensitive-v1
+> > Fetch-It-Via: git fetch https://github.com/dscho/git t5533-case-insensitive-v1
+> 
+> Thanks.  It may make it easier to see to have a blank line here,
+> separating them from the diffstat.
 
-[1] In version #1, if any files it wants to change are partially staged, it
-    prints a detailed error message and aborts the commit outright.  In
-    version #2, the pre-commit hook sees the change it _wants_ to make,
-    informs the user that he/she should run the fixup command, aborts
-    the commit, and when the user runs the fixup command, the fixup
-    command sees the partially staged file, prints the same detailed error
-    message, and dies.
+Good suggestion! I made it so:
 
-Thanks for your help on this.  it’s really been interesting.  I’ll leave it as-is
-for now.
+	https://github.com/dscho/mail-patch-series/commit/1776cb18
 
-Thanks,
- - Andrew Keller
+> > base-commit: 9813b109b4ec6630220e5f3d8aff275e23cba59e
+> 
+> A totally unrelated tangent.
+> 
+> This line turns out to be less than useful at least in this
+> particular case.
+> 
+> The fix is meant for jk/push-force-with-lease-creation topic, but I
+> had to find it out by the old fashioned way, i.e. running blame for
+> these lines in 'pu' to find eee98e74f9 is the culprit and then
+> running "git branch --with eee98e74f9".  The only thing the line
+> made easier is I _could_ start the blame at the named commit (which
+> is on 'next') instead of 'pu'.  When I took that "base-commit"
+> series, I was hoping that it would give us a lot more useful
+> information.
 
+Sorry for that. The way my mail-patch-series.sh script works is that it
+tries to determine which branch between `master`, `next` or `pu` is the
+base (and it then submits *all* commits that are on top of that branch).
+
+So my branch was indeed based on `next` for that reason, not on
+top of `jk/push-force-with-lease-creation`. Otherwise, I would have
+resubmitted John's patches because the script would have determined that
+my patch is on top of `master`, not on top of `next`.
+
+Will try to think of a better way,
+Dscho
