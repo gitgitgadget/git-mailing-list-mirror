@@ -2,77 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E84D2018E
-	for <e@80x24.org>; Fri,  5 Aug 2016 21:47:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 004062018E
+	for <e@80x24.org>; Fri,  5 Aug 2016 21:47:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S3002123AbcHEVrj (ORCPT <rfc822;e@80x24.org>);
-	Fri, 5 Aug 2016 17:47:39 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56377 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S3002103AbcHEVri (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2016 17:47:38 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9ED0F33671;
-	Fri,  5 Aug 2016 17:47:36 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+WtQ9dl3La4PDauVKWticQmkXGA=; b=OcW8bq
-	T9bI12cFt0E8pSTyxkc8kC6p+rw9Pj/ifcqzQLMdNFwxcnM6N8/iIr9nKB37jT1N
-	5T/HuI8z8u35xOzF0vexFrI6KEIwZHula+HKBRz3HD4L6+5kTTcl56jJTb4acp0H
-	wTSSuOqMw/3R9RlQnSE6uF1e5ZZxn4QfMvvFQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vIrrziPpOy1VmdIYN78M9K7uzovIE8Tf
-	mO0vJmD4OHQUwMnorgKH9CFlaccHhf49vbA6mZWrZwfVz6XoVxZ/1QOCWm8a/i+5
-	MckHr56312Dm6LWd+rNSI6dGVYrzVK9L//xhgvopBqZ/4TnMHqFV4BVdMt5Q42CA
-	fDtPFAxfmaU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 96E583366F;
-	Fri,  5 Aug 2016 17:47:36 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 198B13366D;
-	Fri,  5 Aug 2016 17:47:36 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Stefan Beller <sbeller@google.com>
-Cc:	"git\@vger.kernel.org" <git@vger.kernel.org>, mst@redhat.com,
-	Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH 0/6] git clone: Marry --recursive and --reference
-References: <20160804195159.7788-1-sbeller@google.com>
-	<xmqqoa57vvzl.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kY9Wry-vu9ByzW7Qc37SSkKf3doyWuzGzQeMTy4NfLMhA@mail.gmail.com>
-Date:	Fri, 05 Aug 2016 14:47:34 -0700
-In-Reply-To: <CAGZ79kY9Wry-vu9ByzW7Qc37SSkKf3doyWuzGzQeMTy4NfLMhA@mail.gmail.com>
-	(Stefan Beller's message of "Fri, 5 Aug 2016 14:23:49 -0700")
-Message-ID: <xmqqoa56vqfd.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S3001705AbcHEVrm (ORCPT <rfc822;e@80x24.org>);
+	Fri, 5 Aug 2016 17:47:42 -0400
+Received: from mail-it0-f51.google.com ([209.85.214.51]:34866 "EHLO
+	mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S968902AbcHEVrl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Aug 2016 17:47:41 -0400
+Received: by mail-it0-f51.google.com with SMTP id u186so32512140ita.0
+        for <git@vger.kernel.org>; Fri, 05 Aug 2016 14:47:40 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=cWDot+GlKIb+5XI8dnWmG3GdvF5CSD6eWEHP+jykIzk=;
+        b=VkmZgwPUTyo4+fA+sGN+u6SF3LaNpLyu0SiVuRYRvJcNlgqiWbsuzYq98A4Q61s9TU
+         b+V0b2yQVuFnlxry8g3YT+uyeB6St281t9EdLIQdGwyk9HP58XQUv/Y4aSo8eeqddwlY
+         WlQEz5hV+iK1iNHurmCkTopMkzKi723BRF4ar/mwbbfCIdEkRnhnxzPn35d5s8Ch5khV
+         rrA7uxFDjtkr4KyzDscNClASwTVRwqtoiJQVKOahqKEerldta6uwmTUMIzPMjlWSuuIY
+         qEKRSjNspl7Jh3tV0f2/xgwIQkw5dmTYFPuxCiTkn6ORL7q7v1cHpSn7Hc18OVWrGhSV
+         lXoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=cWDot+GlKIb+5XI8dnWmG3GdvF5CSD6eWEHP+jykIzk=;
+        b=A6t9XWDWSMhf8o8wenrNLuVUfJL8W9zCqCVV8lcCKFwqWaMD+8jf/NzirI1OB7ZvaY
+         9Cm+NEYw3ei+kGnSWHEfJR8QyCFaYw/DaPGQgioFXvqor4YDJZQSk7bgi431js0hO/5r
+         RmPG9b3X0i4KW5k+xvw2ODdSmjReLmbUvEhjjz0OcK6A4H1KMXOK47cx3mtA2o4ki4sh
+         6VMhX2RQf9gIppcoTh5Tuh7vws36FAJp4PSAn/oUVgkcqsCCzJOkO4yZvdp9XRegxJqw
+         RLXcWrRzdy67cwXgy4GUrGRf4srKVLFehG8DjrEGG3phwUNjz9qraaBmRm5dO0t6fqg+
+         dnSg==
+X-Gm-Message-State: AEkoouvk4jpENzHrs0r4I+/Ibjl20M78ex8sTGdgMx4td8ns6+AleubUeunW9VQ7azf4rTs4BVgXAfFX1c4qc9T/
+X-Received: by 10.36.29.15 with SMTP id 15mr6585371itj.97.1470433659128; Fri,
+ 05 Aug 2016 14:47:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 38E492E8-5B56-11E6-80F3-89D312518317-77302942!pb-smtp1.pobox.com
+Received: by 10.107.128.66 with HTTP; Fri, 5 Aug 2016 14:47:38 -0700 (PDT)
+In-Reply-To: <CAGZ79kb2aO80csCfV=QbH8D1spdNLdkTCSPriZ8W9nSy6T5QAg@mail.gmail.com>
+References: <1470147137-17498-1-git-send-email-git@jeffhostetler.com>
+ <1470147137-17498-6-git-send-email-git@jeffhostetler.com> <20160805210222.a2rvlmioim4psbhw@sigill.intra.peff.net>
+ <CAPc5daUr7OgFeefbwWLWFt3KW_9X-ijRmHa2oj0--zY4fqt82A@mail.gmail.com>
+ <20160805211434.54mtaw2cty4gaxsr@sigill.intra.peff.net> <CAGZ79kb2aO80csCfV=QbH8D1spdNLdkTCSPriZ8W9nSy6T5QAg@mail.gmail.com>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Fri, 5 Aug 2016 14:47:38 -0700
+Message-ID: <CAGZ79kZOv4rTuqg7kLWydPY4dCeivaBXZ8HeU8hxu79rPeu-5w@mail.gmail.com>
+Subject: Re: [PATCH v4 5/8] status: print per-file porcelain v2 status data
+To:	Jeff King <peff@peff.net>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	Jeff Hostetler <git@jeffhostetler.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff Hostetler <jeffhost@microsoft.com>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Fri, Aug 5, 2016 at 2:43 PM, Stefan Beller <sbeller@google.com> wrote:
 
-> The plan for other layouts might be
->
->     git submodule update --reference-dir /var/cache/
+>     cov-build --dir cov-int make
 
-That is not a plan for "other layouts", but a plan for "the other
-layout that was mentioned as a possibility".  As I said, both
-layouts are equally plausible, and I do not know if we need to plan
-for layouts other than these two, but we should consider if we want
-to add one new option every time we find a new layout we need to
-support, or we want a general framework that is more flexible and
-allows us to make the "borrow from the $GIT_DIR/modules/ of the
-repository the superproject borrows from" a mere special case of it.
+For this you need to download their analytic tool and put it in
+your $PATH. Let me see if I need to update the tool so it
+enables finding more potential issues.
 
-Thanks.
-
+So that was an initial hurdle.
