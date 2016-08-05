@@ -2,89 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7EB252018E
-	for <e@80x24.org>; Fri,  5 Aug 2016 21:50:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 18E552018E
+	for <e@80x24.org>; Fri,  5 Aug 2016 21:57:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762516AbcHEVun (ORCPT <rfc822;e@80x24.org>);
-	Fri, 5 Aug 2016 17:50:43 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33343 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S3002490AbcHEVul convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Aug 2016 17:50:41 -0400
-Received: by mail-wm0-f66.google.com with SMTP id o80so5491794wme.0
-        for <git@vger.kernel.org>; Fri, 05 Aug 2016 14:50:40 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=H1brZxvNBs0cbkvw7b7SUH+bJ9bE3qpUSXFQg41tVec=;
-        b=U5kFxhPJvU4O7EMB5n3nd5OtOmwy/aS2P5LUHcF/05zT5Kt6VTJ46hUPsXqrliqYnC
-         qkMSPRVxc88sRbqWHnAsKvpuP6CQ7q2VRVbYEmFW495SQw5S48awTICPV8UV2jHfV5SE
-         FQulMg0A7YdGktkUIk9SBqNTR3kTC5Y2scMlBFR302K8Z+3xZgU32usbDYCq3RJDvuIz
-         Pjfp2wvlYFn6Tfx/c4oTA2o10VBYrFUf9KM1SAN9SwDcZ2zNeTfQPuKeEKkNl8485dlc
-         JdbnUZtFknGR+FYdUXeHaEwYyltfDikbiWqXwBy7XZ6nG0AveF5LK3GOkCuHUVmyKrfw
-         a5eQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=H1brZxvNBs0cbkvw7b7SUH+bJ9bE3qpUSXFQg41tVec=;
-        b=WpejdYOyTPSBMjdZYkLMhcvL7Tkfei/8kMn53c0w4TF5BLH6QrRx22rw0DyWOPuHcY
-         hakJUwSLR/F/Sbyqb3A/p3n/tilMzp96rguletgB8B6WUfu6R4ykQCMB37KL9+MTIg2L
-         6CPAzaGnHqjKFTv9eGzigKYDwRawQRBRzL6PfUi6zgJE4en7ruVDtCSRKTOhXlD45RFC
-         eo+DPEx5mIwWWcD6Ofi4Q6sFwrXX0e+0nhZ0ywmgk1A6D7mXvlQLnRIvPe0xUqFXM3n1
-         WtxMN2cqnHH2T4tsbvnhFpbfm8ApV7TmH+jDn4D9t6GkE8ic3nawXa+PnimcNT56qbWB
-         e6Pg==
-X-Gm-Message-State: AEkoouuTf1V+WFHhXRKNdcwUTGEdHXNNJ8maa4KImEMlcv5SfLSjWLPXv/1gXqrTFJC2gg==
-X-Received: by 10.194.110.229 with SMTP id id5mr81267716wjb.23.1470433839718;
-        Fri, 05 Aug 2016 14:50:39 -0700 (PDT)
-Received: from slxbook4.fritz.box (p5DDB641A.dip0.t-ipconnect.de. [93.219.100.26])
-        by smtp.gmail.com with ESMTPSA id 3sm10501963wms.1.2016.08.05.14.50.38
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 05 Aug 2016 14:50:39 -0700 (PDT)
-Content-Type: text/plain; charset=windows-1252
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v4 07/12] run-command: add clean_on_exit_handler
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <b14c6063-cef8-56b4-eb57-7ab8577ecf0a@web.de>
-Date:	Fri, 5 Aug 2016 23:50:38 +0200
-Cc:	Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com,
-	jnareb@gmail.com, mlbright@gmail.com, e@80x24.org
+	id S1161132AbcHEV5J (ORCPT <rfc822;e@80x24.org>);
+	Fri, 5 Aug 2016 17:57:09 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53344 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S940127AbcHEV5G convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Aug 2016 17:57:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 27886322CD;
+	Fri,  5 Aug 2016 17:57:04 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=FUJ2zJlNK/jf
+	UDiUe5C8C1E6FNw=; b=b1QQXsBT/hIpHNtYNgoI1Cqff9hxBYyDo2E1FokDxm18
+	tr7z45jsj87z134RGn7QQ/D10bOXYM0cgypbUzmIwt3YIR30pCOrz9z+Xl161Yhu
+	l4Fq7ODYp1chugng6xkORcmG80z7pjvBHzGuFZ9fJoMkQ2/3EmX/J/Je+Oa0cyw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=gHqTow
+	jIbfillQk6eN+Yno6YM8QsZY+i0b6QY2bAXYvd/XbbrAORPSJTQIY5t9l3SwVXRg
+	uiCNk0bvuRyNpgnqqjnn8yAmexPznhpUuUQ0rOswsEWERBaO7bfoFivgvHlJRd+m
+	n+4ApU+06jNQXCI7TJ8D66KFugS5MFu14a3Cg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 20520322CC;
+	Fri,  5 Aug 2016 17:57:04 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9745E322CB;
+	Fri,  5 Aug 2016 17:57:03 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] nedmalloc: work around overzealous GCC 6 warning
+References: <cover.1470326812.git.johannes.schindelin@gmx.de>
+	<57360f4885bdd5c36e190bea288f1e1f7f706071.1470326812.git.johannes.schindelin@gmx.de>
+	<57A3BA26.5080601@web.de>
+	<xmqqk2fwyx8h.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1608051728380.5786@virtualbox>
+Date:	Fri, 05 Aug 2016 14:57:01 -0700
+In-Reply-To: <alpine.DEB.2.20.1608051728380.5786@virtualbox> (Johannes
+	Schindelin's message of "Fri, 5 Aug 2016 17:34:49 +0200 (CEST)")
+Message-ID: <xmqqk2fuvpzm.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 8B27EDBA-5B57-11E6-8494-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: 8BIT
-Message-Id: <ECE58461-10CC-49C2-9BE7-DB80A6746F88@gmail.com>
-References: <20160729233801.82844-1-larsxschneider@gmail.com> <20160803164225.46355-1-larsxschneider@gmail.com> <20160803164225.46355-8-larsxschneider@gmail.com> <20160803212433.zzdino3ivyem5a2v@sigill.intra.peff.net> <826967FE-BFF8-4387-83F7-AE7036D97FEC@gmail.com> <20160803225313.pk3tfe5ovz4y3i7l@sigill.intra.peff.net> <74C2CEA6-EAAB-406F-8B37-969654955413@gmail.com> <20160803231506.h5mo5lah2pgwdvip@sigill.intra.peff.net> <6C522B0F-F8F7-4B51-8BF0-67D9EDC97B3B@gmail.com> <b14c6063-cef8-56b4-eb57-7ab8577ecf0a@web.de>
-To:	=?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-X-Mailer: Apple Mail (2.3124)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On 05 Aug 2016, at 23:19, Torsten B�gershausen <tboegi@web.de> wrote:
-> 
-> On 2016-08-05 15.08, Lars Schneider wrote:
-> 
-> []
->> Yeah it could do that. But then the filter cannot do things like
->> modifying the index after the fact... however, that might be considered
->> nasty by the Git community anyways... I am thinking about dropping
->> this patch in the next roll as it is not strictly necessary for my
->> current use case.
-> (Thanks Peff for helping me out with the EOF explanation)
-> 
-> I would say that a filter is a filter, and should do nothing else than filtering
-> one file,
-> (or a stream).
-> When you want to modify the index, a hook may be your friend.
+> Hi Junio & René,
+>
+> On Thu, 4 Aug 2016, Junio C Hamano wrote:
+>
+>> Let's try it this way.  How about this as a replacement?
+>
+> I like it (with the if (s2) test intead of if (s1), of course). But please
+> record René as author, maybe mentioning myself with a "Diagnosed-by:"
+> line.
 
-Agreed. I will remove that feature.
+Hmph.  I cannot do that unilaterally without waiting for René to
+respond, though.  In any case, with only header and footer changes,
+here is what will appear in 'pu'.
 
-Thanks,
-Lars
+Thanks.
+
+-- >8 --
+From: René Scharfe <l.s.r@web.de>
+Date: Thu, 4 Aug 2016 23:56:54 +0200
+Subject: [PATCH] nedmalloc: work around overzealous GCC 6 warning
+
+With GCC 6, the strdup() function is declared with the "nonnull"
+attribute, stating that it is not allowed to pass a NULL value as
+parameter.
+
+In nedmalloc()'s reimplementation of strdup(), Postel's Law is heeded
+and NULL parameters are handled gracefully. GCC 6 complains about that
+now because it thinks that NULL cannot be passed to strdup() anyway.
+
+Because the callers in this project of strdup() must be prepared to
+call any implementation of strdup() supplied by the platform, so it
+is pointless to pretend that it is OK to call it with NULL.
+
+Remove the conditional based on NULL-ness of the input; this
+squelches the warning.
+
+See https://gcc.gnu.org/gcc-6/porting_to.html for details.
+
+Diagnosed-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: René Scharfe <l.s.r@web.de>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ compat/nedmalloc/nedmalloc.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
+
+diff --git a/compat/nedmalloc/nedmalloc.c b/compat/nedmalloc/nedmalloc.c
+index 677d1b2..2d4ef59 100644
+--- a/compat/nedmalloc/nedmalloc.c
++++ b/compat/nedmalloc/nedmalloc.c
+@@ -955,12 +955,11 @@ void **nedpindependent_comalloc(nedpool *p, size_t elems, size_t *sizes, void **
+  */
+ char *strdup(const char *s1)
+ {
+-	char *s2 = 0;
+-	if (s1) {
+-		size_t len = strlen(s1) + 1;
+-		s2 = malloc(len);
++	size_t len = strlen(s1) + 1;
++	char *s2 = malloc(len);
++
++	if (s2)
+ 		memcpy(s2, s1, len);
+-	}
+ 	return s2;
+ }
+ #endif
+-- 
+2.9.2-766-gd7972a8
 
