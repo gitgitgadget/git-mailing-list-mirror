@@ -2,75 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FBA81F855
-	for <e@80x24.org>; Fri,  5 Aug 2016 05:40:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 191531F855
+	for <e@80x24.org>; Fri,  5 Aug 2016 06:24:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030251AbcHEFkw (ORCPT <rfc822;e@80x24.org>);
-	Fri, 5 Aug 2016 01:40:52 -0400
-Received: from bsmtp3.bon.at ([213.33.87.17]:45562 "EHLO bsmtp3.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030221AbcHEFkv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2016 01:40:51 -0400
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp3.bon.at (Postfix) with ESMTPSA id 3s5Fym6H6gz5tlG;
-	Fri,  5 Aug 2016 07:40:48 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 651065062;
-	Fri,  5 Aug 2016 07:40:48 +0200 (CEST)
+	id S1030287AbcHEGYh (ORCPT <rfc822;e@80x24.org>);
+	Fri, 5 Aug 2016 02:24:37 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50267 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1030269AbcHEGYg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Aug 2016 02:24:36 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2B12B2B8A8;
+	Fri,  5 Aug 2016 02:24:35 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nDGnBQyeol8Avm4gTlAe5blr9JI=; b=EY4J3O
+	YqVgStzfP72nUpjmgSG1V1jYZHSoeYlsP6aPJjhoaBpziDvyoJV25Oihy0OKEZYE
+	oF8IrLXuOMN91cb1CMLZMxaVVVL55o9Ub4nPes8Q0tBPaivnZ97WKMBlVYXMWBwB
+	JHRm6rMUmB76Just5ZfJSiw0VKkS69A8Ak+jE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tJjwOsaejzGAC5NrctmNL8b8/ppnC49p
+	YyOf9wV04vTkH8eG0/bd85GRvZFL4mM8UmLI3M2IuzM2BXaJGmdjVr+mxUime3Q9
+	7PKaHgrjoqz1HtE3qO/JkHhXKSJZlFeE5IQ1OVvwDulm/pIAquRiIcaouwuT0Kw/
+	mMx30eygMeQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 234DD2B8A7;
+	Fri,  5 Aug 2016 02:24:35 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9E1D42B8A6;
+	Fri,  5 Aug 2016 02:24:34 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Sixt <j6t@kdbg.org>
+Cc:	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+	git@vger.kernel.org
 Subject: Re: [PATCH 2/2] nedmalloc: work around overzealous GCC 6 warning
-To:	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
 References: <cover.1470326812.git.johannes.schindelin@gmx.de>
- <57360f4885bdd5c36e190bea288f1e1f7f706071.1470326812.git.johannes.schindelin@gmx.de>
- <57A3BA26.5080601@web.de> <xmqqk2fwyx8h.fsf@gitster.mtv.corp.google.com>
- <5ce2ec67-aa7d-0079-54fe-d73a70a46825@kdbg.org>
-Cc:	=?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
-From:	Johannes Sixt <j6t@kdbg.org>
-Message-ID: <68c24062-7fcc-758f-373f-2f123c5eb78b@kdbg.org>
-Date:	Fri, 5 Aug 2016 07:40:48 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2
+	<57360f4885bdd5c36e190bea288f1e1f7f706071.1470326812.git.johannes.schindelin@gmx.de>
+	<57A3BA26.5080601@web.de>
+	<xmqqk2fwyx8h.fsf@gitster.mtv.corp.google.com>
+	<5ce2ec67-aa7d-0079-54fe-d73a70a46825@kdbg.org>
+	<68c24062-7fcc-758f-373f-2f123c5eb78b@kdbg.org>
+Date:	Thu, 04 Aug 2016 23:24:32 -0700
+In-Reply-To: <68c24062-7fcc-758f-373f-2f123c5eb78b@kdbg.org> (Johannes Sixt's
+	message of "Fri, 5 Aug 2016 07:40:48 +0200")
+Message-ID: <xmqq7fbvzqan.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <5ce2ec67-aa7d-0079-54fe-d73a70a46825@kdbg.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 46F85F58-5AD5-11E6-AD61-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Am 05.08.2016 um 07:36 schrieb Johannes Sixt:
-> Am 05.08.2016 um 00:39 schrieb Junio C Hamano:
->> @@ -955,12 +955,10 @@ void **nedpindependent_comalloc(nedpool *p,
->> size_t elems, size_t *sizes, void **
->>   */
->>  char *strdup(const char *s1)
->>  {
->> -    char *s2 = 0;
->> -    if (s1) {
->> -        size_t len = strlen(s1) + 1;
->> -        s2 = malloc(len);
->> +    size_t len = strlen(s1) + 1;
->> +    s2 = malloc(len);
->> +    if (s1)
+Johannes Sixt <j6t@kdbg.org> writes:
+
+> Oh! This is a typo. You meant to check s2 for NULL.
 >
-> It does not make sense to check s1 for NULL when it was passed to
-> strlen() earlier; strlen() does not accept NULL, either...
+> And the declaration for s2 should remain, of course.
 
-Oh! This is a typo. You meant to check s2 for NULL.
+Yeah, the moral of the story is don't try to do something you do not
+usually do X-<.
 
-And the declaration for s2 should remain, of course.
+The second try (the log message is the same).
 
->
->>          memcpy(s2, s1, len);
->> -    }
->>      return s2;
->>  }
->>  #endif
+I do not know if we want to worry about st_add(1, strlen(s1))
+overflow around here, though.
 
--- Hannes
+ compat/nedmalloc/nedmalloc.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
+diff --git a/compat/nedmalloc/nedmalloc.c b/compat/nedmalloc/nedmalloc.c
+index 677d1b2..2d4ef59 100644
+--- a/compat/nedmalloc/nedmalloc.c
++++ b/compat/nedmalloc/nedmalloc.c
+@@ -955,12 +955,11 @@ void **nedpindependent_comalloc(nedpool *p, size_t elems, size_t *sizes, void **
+  */
+ char *strdup(const char *s1)
+ {
+-	char *s2 = 0;
+-	if (s1) {
+-		size_t len = strlen(s1) + 1;
+-		s2 = malloc(len);
++	size_t len = strlen(s1) + 1;
++	char *s2 = malloc(len);
++
++	if (s2)
+ 		memcpy(s2, s1, len);
+-	}
+ 	return s2;
+ }
+ #endif
