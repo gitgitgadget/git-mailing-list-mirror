@@ -2,95 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5647720193
-	for <e@80x24.org>; Fri,  5 Aug 2016 21:34:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20AC52018E
+	for <e@80x24.org>; Fri,  5 Aug 2016 21:36:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S968674AbcHEVeo (ORCPT <rfc822;e@80x24.org>);
-	Fri, 5 Aug 2016 17:34:44 -0400
-Received: from mout.web.de ([217.72.192.78]:63051 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1950522AbcHEVel (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2016 17:34:41 -0400
-Received: from macce.local ([217.89.153.218]) by smtp.web.de (mrweb102) with
- ESMTPSA (Nemesis) id 0MC1jI-1bN1Ji3CKm-008vbz; Fri, 05 Aug 2016 23:34:26
- +0200
-Subject: Re: [PATCH v4 11/12] convert: add filter.<driver>.process option
-To:	larsxschneider@gmail.com, git@vger.kernel.org
-References: <20160729233801.82844-1-larsxschneider@gmail.com>
- <20160803164225.46355-1-larsxschneider@gmail.com>
- <20160803164225.46355-12-larsxschneider@gmail.com>
-Cc:	gitster@pobox.com, jnareb@gmail.com, mlbright@gmail.com,
-	e@80x24.org, peff@peff.net
-From:	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <2e13c31c-5ee2-890d-1268-98fb67aba1ea@web.de>
-Date:	Fri, 5 Aug 2016 23:34:23 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:45.0)
- Gecko/20100101 Thunderbird/45.1.1
+	id S939728AbcHEVgl (ORCPT <rfc822;e@80x24.org>);
+	Fri, 5 Aug 2016 17:36:41 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58704 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S937449AbcHEVgi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Aug 2016 17:36:38 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AAC9C33517;
+	Fri,  5 Aug 2016 17:36:36 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6SdUKQlYZsFS36ZIYlYM5OrnQB4=; b=SHsBnI
+	5ZWNG/U0MaIHmSq9aQGrMxn7f4aw1ekAJZ9J0z6q2p4aFB5tsJMfL7TLBI2fMpxM
+	Era3y0rFgJ5VaeIALUvhsaT/iKasJJIlJnEPndvUKv3wq/izIsy6FzJzzN/n3xAi
+	wd5L7zv+dD/gMr2EjHWm0htRKNqMRpTF4JXVo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FIwT1Dat7YALwxzwvJQIVj5Ny6S+FnvR
+	Y77qk6DWDr4u2NzaF3NQwamcYuuqU84F4YS0MjuWgFuFrBcBsNOzWVbUIlTDXrRR
+	3Ak6JaxjblqgL2CArdHuk796GC26sRxvutGD5vHpIN1zUoLNOfUKElC3yFyMcpHO
+	B5eIH8Mxr68=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A231233516;
+	Fri,  5 Aug 2016 17:36:36 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 22DB733515;
+	Fri,  5 Aug 2016 17:36:36 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Stefan Beller <sbeller@google.com>
+Cc:	git@vger.kernel.org, mst@redhat.com, Jens.Lehmann@web.de
+Subject: Re: [PATCH 6/6] clone: reference flag is used for submodules as well
+References: <20160804195159.7788-1-sbeller@google.com>
+	<20160804195159.7788-7-sbeller@google.com>
+Date:	Fri, 05 Aug 2016 14:36:34 -0700
+In-Reply-To: <20160804195159.7788-7-sbeller@google.com> (Stefan Beller's
+	message of "Thu, 4 Aug 2016 12:51:59 -0700")
+Message-ID: <xmqqshuivqxp.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20160803164225.46355-12-larsxschneider@gmail.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:JYefmS70MhXs0xtMCs+9BIgs4pTqs7gcT8uXOrE9p5/XTO5FjXs
- rGeL4v4E0jARuz9fuTsXhynfAMzC4fLToGZi5fUyE7byjSWP8SYdFc1hU9KbSKxgnr9x3Ze
- yWbOgLMGV+TRAoYeTDbuz65PhCtCbbzo3lRg0Q6ihZRJWeh5Aqgz2HgFefBAZMHPtqf+2m1
- xxxBm5BFxjUdJI6Lzjtww==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:myYmywJXCoc=:dGgQhGut1YJ/JDC6AIyYdB
- ZbJ7T2mmWla/rMwERiCVwSUlY0DrA9SKG8ojw0R5/ig2YekIRam2BSGgcOAPUrgJOk3aecTI3
- KLs6Xw/K/4lei/ZNkVdWIjx3tlXgR1ePTCV5rRO1guPQRIHJ2702XZqN78t+AzyhPV0GwCaDA
- TwJAqGZsRR7vY/o8G4fCKLrjWO64teb4JLzzoIn4EajeckojmBiBQnnyl+ENjkD8hXLNdnFbk
- YnagVDHyQa9Hd9nfJVLgO8QQTGLzVL5PbaQX4vl/PmDD4xxgzXCNuBsZVaIYF8+bqMHvxsjmz
- 6SM50bEcRD6VYmsZG3Ts7HZSuc2bN7J7UuaJG4O0s/SRjE0SjPoZDMzia5CRenNz7EuHmF6fG
- H28wpzuSjTNVW0fUx5WjaWDqOHvq9CHCArR+TSIDKmjCMTS2cWThIXcfySXBJny1HB+1tmcwO
- qmAQ/9R7xI3uUfjQ+VmLdpW3wrUTxuRZNhYRlsmRacWG2SUjOD1Vh6sijGGvOnMmP4YbC5FNr
- CDE/4haMXljZmlhBfmeNLgMS/2B8ukLVoa78kMYoOmdOAXTaPyPu+6N0CwKkpYnTy149NO/04
- nHPVhj7tCkH+ITM0hcx9tL9PJmaPanIGc8uIXasdIu6knw7O9b8vdfbCBQHTx9vlc/7lmH2ZJ
- uON8SrlMYyolCBEfzerdLZISNB3Ib1A37Yqr8IugtrPt/d/QgcfT0qPB42C4LOHwE5wcuRwXU
- ZeQslH5WMokX2NbQ6H01YgHnhNSXJUUqjquX80oelXlwaW9prURO9hb5Qmndctuail0icE8ii
- 8mmpFPd
+Content-Type: text/plain
+X-Pobox-Relay-ID: AF85F358-5B54-11E6-BB23-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 2016-08-03 18.42, larsxschneider@gmail.com wrote:
-> The filter is expected to respond with the result content in zero
-> or more pkt-line packets and a flush packet at the end. Finally, a
-> "result=success" packet is expected if everything went well.
-> ------------------------
-> packet:          git< SMUDGED_CONTENT
-> packet:          git< 0000
-> packet:          git< result=success\n
-> ------------------------
-I would really send the diagnostics/return codes before the content.
+Stefan Beller <sbeller@google.com> writes:
 
-> If the result content is empty then the filter is expected to respond
-> only with a flush packet and a "result=success" packet.
-> ------------------------
-> packet:          git< 0000
-> packet:          git< result=success\n
-> ------------------------
+> When giving a --reference while also giving --recurse, the alternates
+> for the submodules are assumed to be in the superproject as well.
+>
+> In case they are not, we error out when cloning the submodule.
+> However the update command succeeds as usual (with no alternates).
 
-Which may be:
+I covered most of what I want to say on this in my reply to 0/6; I
+do not have strong objection against what single layout you chose to
+support, nor I have strong opinion on which single layout we should
+support by default, or what mechanism, if any, we should give users
+to specify different layout.
 
-packet:          git< result=success\n
-packet:          git< SMUDGED_CONTENT
-packet:          git< 0000
+But please make sure the choice you made is explained for the users.
+The end-user documentation should talk about the effect of giving
+these two options together.
 
-or for an empty file:
-
-packet:          git< result=success\n
-packet:          git< SMUDGED_CONTENT
-packet:          git< 0000
-
-
-or in case of an error:
-packet:          git< result=reject\n
-# And this will not send the "0000" packet
-
-Does this makes sense ?
-
+Thanks.
