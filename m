@@ -2,350 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 550972018E
-	for <e@80x24.org>; Fri,  5 Aug 2016 22:04:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C498E2018E
+	for <e@80x24.org>; Fri,  5 Aug 2016 22:06:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1428011AbcHEWEV (ORCPT <rfc822;e@80x24.org>);
-	Fri, 5 Aug 2016 18:04:21 -0400
-Received: from siwi.pair.com ([209.68.5.199]:64377 "EHLO siwi.pair.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S3003594AbcHEWDV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2016 18:03:21 -0400
-Received: from jeffhost-linux1.corp.microsoft.com (unknown [167.220.148.23])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+	id S969056AbcHEWGh (ORCPT <rfc822;e@80x24.org>);
+	Fri, 5 Aug 2016 18:06:37 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55084 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1030575AbcHEWGd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Aug 2016 18:06:33 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9926C323E9;
+	Fri,  5 Aug 2016 18:06:31 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=WetUK3LFpekt
+	1IkNkmDvAdVvR1M=; b=IlGGZPkrMEuJT/4dEdKAwDNDmqdvMY3QfE7YGShPMNGP
+	6O7bOGcnJnSlfLV7+COaLoV7ShxdehxaP1SO28t6CSHcnKkHXzLCg7/iLV3gnukL
+	bAm3o+PnImEloh+yWq9an2A/7hRC/+xa0KhDFJTpbmH7G6EghKGcLzatWikVSrc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=qUrbWy
+	4bNeWgRj2hEW8bf80TSWLJp1nhSiG9wgKVJ4JrrOnYod+Gv6bAhRXKC7EeFLt/cD
+	yL1OGwXDfZlDEoZ78+d/9m1/oXT11qffxHc1/WKsO6t/7xkOttZSE3KDSxpcHLbz
+	uVRD61SzojU2hNSZ8WGWV6tuvZEPoGOSOxmmE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 90515323E8;
+	Fri,  5 Aug 2016 18:06:31 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by siwi.pair.com (Postfix) with ESMTPSA id 9E4258460A;
-	Fri,  5 Aug 2016 18:03:18 -0400 (EDT)
-From:	Jeff Hostetler <git@jeffhostetler.com>
-To:	git@vger.kernel.org
-Cc:	gitster@pobox.com, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v5 5/9] status: print per-file porcelain v2 status data
-Date:	Fri,  5 Aug 2016 18:00:30 -0400
-Message-Id: <1470434434-64283-6-git-send-email-git@jeffhostetler.com>
-X-Mailer: git-send-email 2.8.0.rc4.17.gac42084.dirty
-In-Reply-To: <1470434434-64283-1-git-send-email-git@jeffhostetler.com>
-References: <1470434434-64283-1-git-send-email-git@jeffhostetler.com>
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E4BDF323E7;
+	Fri,  5 Aug 2016 18:06:30 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:	larsxschneider@gmail.com, git@vger.kernel.org, jnareb@gmail.com,
+	mlbright@gmail.com, e@80x24.org, peff@peff.net
+Subject: Re: [PATCH v4 11/12] convert: add filter.<driver>.process option
+References: <20160729233801.82844-1-larsxschneider@gmail.com>
+	<20160803164225.46355-1-larsxschneider@gmail.com>
+	<20160803164225.46355-12-larsxschneider@gmail.com>
+	<2e13c31c-5ee2-890d-1268-98fb67aba1ea@web.de>
+Date:	Fri, 05 Aug 2016 15:06:28 -0700
+In-Reply-To: <2e13c31c-5ee2-890d-1268-98fb67aba1ea@web.de> ("Torsten
+	=?utf-8?Q?B=C3=B6gershausen=22's?= message of "Fri, 5 Aug 2016 23:34:23
+ +0200")
+Message-ID: <xmqqfuqivpjv.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: DD576ED4-5B58-11E6-958B-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+Torsten Bögershausen <tboegi@web.de> writes:
 
-Print per-file information in porcelain v2 format.
+> On 2016-08-03 18.42, larsxschneider@gmail.com wrote:
+>> The filter is expected to respond with the result content in zero
+>> or more pkt-line packets and a flush packet at the end. Finally, a
+>> "result=success" packet is expected if everything went well.
+>> ------------------------
+>> packet:          git< SMUDGED_CONTENT
+>> packet:          git< 0000
+>> packet:          git< result=success\n
+>> ------------------------
+> I would really send the diagnostics/return codes before the content.
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
- wt-status.c | 285 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 284 insertions(+), 1 deletion(-)
+I smell the assumption "by the time the filter starts output, it
+must have finished everything and knows both size and the status".
 
-diff --git a/wt-status.c b/wt-status.c
-index ca8023e..4b6a090 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1813,6 +1813,289 @@ static void wt_porcelain_print(struct wt_status *s)
- 	wt_shortstatus_print(s);
- }
- 
-+/*
-+ * Convert various submodule status values into a
-+ * fixed-length string of characters in the buffer provided.
-+ */
-+static void wt_porcelain_v2_submodule_state(
-+	struct wt_status_change_data *d,
-+	char sub[5])
-+{
-+	if (S_ISGITLINK(d->mode_head) ||
-+		S_ISGITLINK(d->mode_index) ||
-+		S_ISGITLINK(d->mode_worktree)) {
-+		sub[0] = 'S';
-+		sub[1] = d->new_submodule_commits ? 'C' : '.';
-+		sub[2] = (d->dirty_submodule & DIRTY_SUBMODULE_MODIFIED) ? 'M' : '.';
-+		sub[3] = (d->dirty_submodule & DIRTY_SUBMODULE_UNTRACKED) ? 'U' : '.';
-+	} else {
-+		sub[0] = 'N';
-+		sub[1] = '.';
-+		sub[2] = '.';
-+		sub[3] = '.';
-+	}
-+	sub[4] = 0;
-+}
-+
-+/*
-+ * Fix-up changed entries before we print them.
-+ */
-+static void wt_porcelain_v2_fix_up_changed(
-+	struct string_list_item *it,
-+	struct wt_status *s)
-+{
-+	struct wt_status_change_data *d = it->util;
-+
-+	if (!d->index_status) {
-+		/*
-+		 * This entry is unchanged in the index (relative to the head).
-+		 * Therefore, the collect_updated_cb was never called for this
-+		 * entry (during the head-vs-index scan) and so the head column
-+		 * fields were never set.
-+		 *
-+		 * We must have data for the index column (from the
-+		 * index-vs-worktree scan (otherwise, this entry should not be
-+		 * in the list of changes)).
-+		 *
-+		 * Copy index column fields to the head column, so that our
-+		 * output looks complete.
-+		 */
-+		assert(d->mode_head == 0);
-+		d->mode_head = d->mode_index;
-+		oidcpy(&d->oid_head, &d->oid_index);
-+	}
-+
-+	if (!d->worktree_status) {
-+		/*
-+		 * This entry is unchanged in the worktree (relative to the index).
-+		 * Therefore, the collect_changed_cb was never called for this entry
-+		 * (during the index-vs-worktree scan) and so the worktree column
-+		 * fields were never set.
-+		 *
-+		 * We must have data for the index column (from the head-vs-index
-+		 * scan).
-+		 *
-+		 * Copy the index column fields to the worktree column so that
-+		 * our output looks complete.
-+		 *
-+		 * Note that we only have a mode field in the worktree column
-+		 * because the scan code tries really hard to not have to compute it.
-+		 */
-+		assert(d->mode_worktree == 0);
-+		d->mode_worktree = d->mode_index;
-+	}
-+}
-+
-+/*
-+ * Print porcelain v2 info for tracked entries with changes.
-+ */
-+static void wt_porcelain_v2_print_changed_entry(
-+	struct string_list_item *it,
-+	struct wt_status *s)
-+{
-+	struct wt_status_change_data *d = it->util;
-+	struct strbuf buf_index = STRBUF_INIT;
-+	struct strbuf buf_head = STRBUF_INIT;
-+	const char *path_index = NULL;
-+	const char *path_head = NULL;
-+	char key[3];
-+	char submodule_token[5];
-+	char sep_char, eol_char;
-+
-+	wt_porcelain_v2_fix_up_changed(it, s);
-+	wt_porcelain_v2_submodule_state(d, submodule_token);
-+
-+	key[0] = d->index_status ? d->index_status : '.';
-+	key[1] = d->worktree_status ? d->worktree_status : '.';
-+	key[2] = 0;
-+
-+	if (s->null_termination) {
-+		/*
-+		 * In -z mode, we DO NOT C-quote pathnames.  Current path is ALWAYS first.
-+		 * A single NUL character separates them.
-+		 */
-+		sep_char = '\0';
-+		eol_char = '\0';
-+		path_index = it->string;
-+		path_head = d->head_path;
-+	} else {
-+		/*
-+		 * Path(s) are C-quoted if necessary. Current path is ALWAYS first.
-+		 * The source path is only present when necessary.
-+		 * A single TAB separates them (because paths can contain spaces
-+		 * which are not escaped and C-quoting does escape TAB characters).
-+		 */
-+		sep_char = '\t';
-+		eol_char = '\n';
-+		path_index = quote_path(it->string, s->prefix, &buf_index);
-+		if (d->head_path)
-+			path_head = quote_path(d->head_path, s->prefix, &buf_head);
-+	}
-+
-+	if (path_head)
-+		fprintf(s->fp, "2 %s %s %06o %06o %06o %s %s %c%d %s%c%s%c",
-+				key, submodule_token,
-+				d->mode_head, d->mode_index, d->mode_worktree,
-+				oid_to_hex(&d->oid_head), oid_to_hex(&d->oid_index),
-+				key[0], d->score,
-+				path_index, sep_char, path_head, eol_char);
-+	else
-+		fprintf(s->fp, "1 %s %s %06o %06o %06o %s %s %s%c",
-+				key, submodule_token,
-+				d->mode_head, d->mode_index, d->mode_worktree,
-+				oid_to_hex(&d->oid_head), oid_to_hex(&d->oid_index),
-+				path_index, eol_char);
-+
-+	strbuf_release(&buf_index);
-+	strbuf_release(&buf_head);
-+}
-+
-+/*
-+ * Print porcelain v2 status info for unmerged entries.
-+ */
-+static void wt_porcelain_v2_print_unmerged_entry(
-+	struct string_list_item *it,
-+	struct wt_status *s)
-+{
-+	struct wt_status_change_data *d = it->util;
-+	const struct cache_entry *ce;
-+	struct strbuf buf_index = STRBUF_INIT;
-+	const char *path_index = NULL;
-+	int pos, stage, sum;
-+	struct {
-+		int mode;
-+		struct object_id oid;
-+	} stages[3];
-+	char *key;
-+	char submodule_token[5];
-+	char unmerged_prefix = 'u';
-+	char eol_char = s->null_termination ? '\0' : '\n';
-+
-+	wt_porcelain_v2_submodule_state(d, submodule_token);
-+
-+	switch (d->stagemask) {
-+	case 1: key = "DD"; break; /* both deleted */
-+	case 2: key = "AU"; break; /* added by us */
-+	case 3: key = "UD"; break; /* deleted by them */
-+	case 4: key = "UA"; break; /* added by them */
-+	case 5: key = "DU"; break; /* deleted by us */
-+	case 6: key = "AA"; break; /* both added */
-+	case 7: key = "UU"; break; /* both modified */
-+	default:
-+		die("BUG: unhandled unmerged status %x", d->stagemask);
-+	}
-+
-+	/*
-+	 * Disregard d.aux.porcelain_v2 data that we accumulated
-+	 * for the head and index columns during the scans and
-+	 * replace with the actual stage data.
-+	 *
-+	 * Note that this is a last-one-wins for each the individual
-+	 * stage [123] columns in the event of multiple cache entries
-+	 * for same stage.
-+	 */
-+	memset(stages, 0, sizeof(stages));
-+	sum = 0;
-+	pos = cache_name_pos(it->string, strlen(it->string));
-+	assert(pos < 0);
-+	pos = -pos-1;
-+	while (pos < active_nr) {
-+		ce = active_cache[pos++];
-+		stage = ce_stage(ce);
-+		if (strcmp(ce->name, it->string) || !stage)
-+			break;
-+		stages[stage - 1].mode = ce->ce_mode;
-+		hashcpy(stages[stage - 1].oid.hash, ce->sha1);
-+		sum |= (1 << (stage - 1));
-+	}
-+	if (sum != d->stagemask)
-+		die("BUG: observed stagemask 0x%x != expected stagemask 0x%x", sum, d->stagemask);
-+
-+	if (s->null_termination)
-+		path_index = it->string;
-+	else
-+		path_index = quote_path(it->string, s->prefix, &buf_index);
-+
-+	fprintf(s->fp, "%c %s %s %06o %06o %06o %06o %s %s %s %s%c",
-+			unmerged_prefix, key, submodule_token,
-+			stages[0].mode, /* stage 1 */
-+			stages[1].mode, /* stage 2 */
-+			stages[2].mode, /* stage 3 */
-+			d->mode_worktree,
-+			oid_to_hex(&stages[0].oid), /* stage 1 */
-+			oid_to_hex(&stages[1].oid), /* stage 2 */
-+			oid_to_hex(&stages[2].oid), /* stage 3 */
-+			path_index,
-+			eol_char);
-+
-+	strbuf_release(&buf_index);
-+}
-+
-+/*
-+ * Print porcelain V2 status info for untracked and ignored entries.
-+ */
-+static void wt_porcelain_v2_print_other(
-+	struct string_list_item *it,
-+	struct wt_status *s,
-+	char prefix)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	const char *path;
-+	char eol_char;
-+
-+	if (s->null_termination) {
-+		path = it->string;
-+		eol_char = '\0';
-+	} else {
-+		path = quote_path(it->string, s->prefix, &buf);
-+		eol_char = '\n';
-+	}
-+
-+	fprintf(s->fp, "%c %s%c", prefix, path, eol_char);
-+
-+	strbuf_release(&buf);
-+}
-+
-+/*
-+ * Print porcelain V2 status.
-+ *
-+ * [<v2_changed_items>]*
-+ * [<v2_unmerged_items>]*
-+ * [<v2_untracked_items>]*
-+ * [<v2_ignored_items>]*
-+ *
-+ */
-+static void wt_porcelain_v2_print(struct wt_status *s)
-+{
-+	struct wt_status_change_data *d;
-+	struct string_list_item *it;
-+	int i;
-+
-+	for (i = 0; i < s->change.nr; i++) {
-+		it = &(s->change.items[i]);
-+		d = it->util;
-+		if (!d->stagemask)
-+			wt_porcelain_v2_print_changed_entry(it, s);
-+	}
-+
-+	for (i = 0; i < s->change.nr; i++) {
-+		it = &(s->change.items[i]);
-+		d = it->util;
-+		if (d->stagemask)
-+			wt_porcelain_v2_print_unmerged_entry(it, s);
-+	}
-+
-+	for (i = 0; i < s->untracked.nr; i++) {
-+		it = &(s->untracked.items[i]);
-+		wt_porcelain_v2_print_other(it, s, '?');
-+	}
-+
-+	for (i = 0; i < s->ignored.nr; i++) {
-+		it = &(s->ignored.items[i]);
-+		wt_porcelain_v2_print_other(it, s, '!');
-+	}
-+}
-+
- void wt_status_print(struct wt_status *s)
- {
- 	switch (s->status_format) {
-@@ -1823,7 +2106,7 @@ void wt_status_print(struct wt_status *s)
- 		wt_porcelain_print(s);
- 		break;
- 	case STATUS_FORMAT_PORCELAIN_V2:
--		/* TODO */
-+		wt_porcelain_v2_print(s);
- 		break;
- 	case STATUS_FORMAT_UNSPECIFIED:
- 		die("BUG: finalize_deferred_config() should have been called");
--- 
-2.8.0.rc4.17.gac42084.dirty
+I'd prefer to have a protocol that allows us to do streaming I/O on
+both ends when possible, even if the initial version of the filters
+(and the code that sits on the Git side) hold everything in-core
+before starting to talk.
 
+>> If the result content is empty then the filter is expected to respond
+>> only with a flush packet and a "result=success" packet.
+> ...
+> Which may be:
+>
+> packet:          git< result=success\n
+> packet:          git< SMUDGED_CONTENT
+> packet:          git< 0000
+>
+> or for an empty file:
+>
+> packet:          git< result=success\n
+> packet:          git< SMUDGED_CONTENT
+> packet:          git< 0000
+
+The above two look the same to me.
