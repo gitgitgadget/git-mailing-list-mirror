@@ -2,91 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9931620193
-	for <e@80x24.org>; Fri,  5 Aug 2016 21:29:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A46E2018E
+	for <e@80x24.org>; Fri,  5 Aug 2016 21:31:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S968600AbcHEV3h (ORCPT <rfc822;e@80x24.org>);
-	Fri, 5 Aug 2016 17:29:37 -0400
-Received: from siwi.pair.com ([209.68.5.199]:17169 "EHLO siwi.pair.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S968589AbcHEV3f (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2016 17:29:35 -0400
-Received: from [10.160.15.137] (unknown [167.220.148.23])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	id S1950039AbcHEVb2 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 5 Aug 2016 17:31:28 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63282 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1423720AbcHEVbW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Aug 2016 17:31:22 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id EE41431F1E;
+	Fri,  5 Aug 2016 17:31:20 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wwNRkJH7pU+jVyaq4ZCkeaabcIc=; b=Gsu1Gk
+	NJj6tNBYRf6PuEKFPsnP/IMQz3wiXbzXUv1GsWJq7tMV9RF4gMCr0qgTrxEwHxvO
+	jJBR8LPM0mqK3S7sGU8aAlTrV3Nv494EHgei8Ajcpzbq7OyAGKMdFFkpXEtpivxm
+	+GprJxtCX7J1SINBAknfRj8tT4Srnqpyg1Qkw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UoN/fGJMAT51fPsBNGB7nlzbEqPvDZgb
+	xz+7nCeMqCa3HNGGSv7o8WyP7V9wSfOFEneh7pV6MpOF8ZnqvxqJxc/4Y+7BV6VL
+	i6Mr2XYSqH5PBfuhAsbh9LFVXwPKWxmx01HagDJ12Bah/tAy4r7cjunCOOBAL/Hh
+	4atM3eV0UVI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E7C1F31F17;
+	Fri,  5 Aug 2016 17:31:20 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by siwi.pair.com (Postfix) with ESMTPSA id C172A845EE;
-	Fri,  5 Aug 2016 17:29:33 -0400 (EDT)
-Subject: Re: [PATCH v4 5/8] status: print per-file porcelain v2 status data
-To:	Jeff King <peff@peff.net>
-References: <1470147137-17498-1-git-send-email-git@jeffhostetler.com>
- <1470147137-17498-6-git-send-email-git@jeffhostetler.com>
- <20160805210222.a2rvlmioim4psbhw@sigill.intra.peff.net>
-Cc:	git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de,
-	Jeff Hostetler <jeffhost@microsoft.com>
-From:	Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <57A504C0.1060808@jeffhostetler.com>
-Date:	Fri, 5 Aug 2016 17:27:28 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 73A8A31F16;
+	Fri,  5 Aug 2016 17:31:20 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Stefan Beller <sbeller@google.com>
+Cc:	"git\@vger.kernel.org" <git@vger.kernel.org>, mst@redhat.com,
+	Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 4/6] submodule--helper update-clone: allow multiple references
+References: <20160804195159.7788-1-sbeller@google.com>
+	<20160804195159.7788-5-sbeller@google.com>
+	<CAGZ79kY4YxftihTP_cNqLrVTn0wrfNd5_mb40AB-t2beyzvdLA@mail.gmail.com>
+	<xmqq60rfvsbq.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kbTcHN+18z+eXx+QDOCXL9vKeGYKukQJJ+ZnxT55_8htg@mail.gmail.com>
+Date:	Fri, 05 Aug 2016 14:31:17 -0700
+In-Reply-To: <CAGZ79kbTcHN+18z+eXx+QDOCXL9vKeGYKukQJJ+ZnxT55_8htg@mail.gmail.com>
+	(Stefan Beller's message of "Fri, 5 Aug 2016 14:19:40 -0700")
+Message-ID: <xmqqwpjuvr6i.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20160805210222.a2rvlmioim4psbhw@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: F35E4D06-5B53-11E6-8979-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Stefan Beller <sbeller@google.com> writes:
 
+> I thought about rolling it as a strict bugfix; but the bug is shaded by the
+> inverse bug in the helper, so the user would never see an issue.
 
-On 08/05/2016 05:02 PM, Jeff King wrote:
-> On Tue, Aug 02, 2016 at 10:12:14AM -0400, Jeff Hostetler wrote:
->
->> +static void wt_porcelain_v2_print_unmerged_entry(
->> +	struct string_list_item *it,
->> +	struct wt_status *s)
->> +{
->> +	struct wt_status_change_data *d = it->util;
->> +	const struct cache_entry *ce;
->> +	struct strbuf buf_current = STRBUF_INIT;
->> +	const char *path_current = NULL;
->> +	int pos, stage, sum;
->> +	struct {
->> +		int mode;
->> +		struct object_id oid;
->> +	} stages[3];
->> +	char *key;
->> [...]
->> +	switch (d->stagemask) {
->> +	case 1: key = "DD"; break; /* both deleted */
->> +	case 2: key = "AU"; break; /* added by us */
->> +	case 3: key = "UD"; break; /* deleted by them */
->> +	case 4: key = "UA"; break; /* added by them */
->> +	case 5: key = "DU"; break; /* deleted by us */
->> +	case 6: key = "AA"; break; /* both added */
->> +	case 7: key = "UU"; break; /* both modified */
->> +	}
->> [...]
->> +	fprintf(s->fp, "%c %s %s %06o %06o %06o %06o %s %s %s %s%c",
->> +			unmerged_prefix, key, submodule_token,
->
-> Coverity complains that "key" can be uninitialized here. I think it's
-> wrong, and just doesn't know that d->stagemask is constrained to 1-7.
->
-> But perhaps it is worth adding a:
->
->    default:
-> 	die("BUG: unhandled unmerged status %x", d->stagemask);
->
-> to the end of the switch. That would shut up Coverity, and give us a
-> better indication if our constraint is violated.
->
-> -Peff
->
+Ahh, OK, because the helper accepts "--reference" "--reference=foo"
+as a OPT_STRING whose value happens to be "--reference=foo", and
+then uses
 
-got it. thanks!
-Jeff
+	if (suc->reference)
+        	argv_array_push(&child->args, suc->reference)
+
+where suc->reference _is_ "--reference=foo" when invoking the
+underlying "git clone", it cancels out.
+
+Then it is OK.
+
+In fact there is NO bug.  It just is that update_clone subcommand
+used a convention different from others that took the whole
+--option=arg as a parameter to --reference option.  It could be
+argued that it is an API bug between git-submodule.sh and
+git-submodule--helper, but nobody else goes through this "weird"
+interface, so it is not worth splitting the patch.
