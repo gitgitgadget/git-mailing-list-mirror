@@ -2,137 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DFA02018E
-	for <e@80x24.org>; Fri,  5 Aug 2016 15:52:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DA2B2018E
+	for <e@80x24.org>; Fri,  5 Aug 2016 15:52:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161615AbcHEPwE (ORCPT <rfc822;e@80x24.org>);
-	Fri, 5 Aug 2016 11:52:04 -0400
-Received: from mout.gmx.net ([212.227.17.21]:52469 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161616AbcHEPwC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2016 11:52:02 -0400
-Received: from virtualbox ([37.24.141.218]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0Lurin-1b5TUp0Ntp-0108YB; Fri, 05 Aug 2016 17:51:46
- +0200
-Date:	Fri, 5 Aug 2016 17:51:43 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Johannes Sixt <j6t@kdbg.org>, Duy Nguyen <pclouds@gmail.com>,
-	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: patch submission process, was Re: [PATCH v6 06/16] merge_recursive:
- abort properly upon errors
-In-Reply-To: <xmqq37mk1bnt.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1608051743410.5786@virtualbox>
-References: <8ff71aba37be979f05abf88f467ec932aa522bdd.1470051326.git.johannes.schindelin@gmx.de> <xmqqlh0gjpr6.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608021004080.79248@virtualbox> <xmqqy44ec15p.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1608031021050.79248@virtualbox> <CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com> <20160803163449.iwjv4youmsf6okme@sigill.intra.peff.net> <xmqqbn19aj5t.fsf@gitster.mtv.corp.google.com> <20160803165652.zek5df7tv5reg6w4@sigill.intra.peff.net>
- <alpine.DEB.2.20.1608041706040.5786@virtualbox> <20160804180749.foowbsmce72s46ww@sigill.intra.peff.net> <xmqq37mk1bnt.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1161634AbcHEPwy (ORCPT <rfc822;e@80x24.org>);
+	Fri, 5 Aug 2016 11:52:54 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64569 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1161523AbcHEPwx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Aug 2016 11:52:53 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0C47930BEA;
+	Fri,  5 Aug 2016 11:52:52 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jXwxwju2jKwqGQZ/eKWHrG/7Vkc=; b=jH58K7
+	Y7GLPT2rZdEHm1s6PXu60ShLgZVyMWrs9qhR2wmL6B50x/idKQZ7XMdMfV1Kz6Iy
+	XRYq9VqtGi39jpzhmf5sP7UNT/CJzxjZ5FUR1RWyzvDhlUjAFD2Z5+L2MRWe5GYX
+	XCh9ESrUOSUIYZHHRz6acOroRmxu3ebnz/42A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=b45V7YJbvQU9aeFN8OG9GYjlv0jLa1qr
+	jXcI0cLAN2aJ18GoZ+UE286kuyHHJWoyWGSsWv0PpcvBKv5qZ8wRRHiLAP3nQbZ6
+	GCSaUVacPA7SSBoncFhi5xke/7byvwnvH9q/Y5teHhKDMczievPgt3Fr2G3ubBNj
+	6KJ12rHlw0g=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0426330BE9;
+	Fri,  5 Aug 2016 11:52:52 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 68FF230BE8;
+	Fri,  5 Aug 2016 11:52:51 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH] git mv: do not keep slash in `git mv dir non-existing-dir/`
+References: <e0415c55e9bc651e7fa9f5f7717b4f6e44eb9ce1.1470407827.git.johannes.schindelin@gmx.de>
+Date:	Fri, 05 Aug 2016 08:52:49 -0700
+In-Reply-To: <e0415c55e9bc651e7fa9f5f7717b4f6e44eb9ce1.1470407827.git.johannes.schindelin@gmx.de>
+	(Johannes Schindelin's message of "Fri, 5 Aug 2016 16:41:12 +0200
+	(CEST)")
+Message-ID: <xmqqtwezxlf2.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:lzFzhpxIKZveQrrRnqXP+PeHyyPBV26b/5YB6Kr2WQfoYDulWxM
- VzYNVgC6bTEn9AE4S6bDYzqNeTPAbTDLaefHYbF9elwgRjLm8b3YnlQWlrNsT76fKgUYkaD
- EcW9Dp8nfpbK6lr+w9ImEDMdPISepMEI3G/K82spCXMN1jC5eEdp4SmI/VFFAwCnaHoayrX
- QF5hJwGqU5C4I5RUTsE1A==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:v8Z3W/pB/jY=:HLBjTASqGyYYgwHh0Wdtks
- GGZa2+7deWEwCWmR2CbDNb0aC6iK+qFBIhLo1yXyBKFdBMV5UUWqUdrgjK1efsOJH11fbwq5Q
- qYPgA7hXT4eMkQBpJSzAepVg7GYaqd2DISDFbPvXbzeFQgMO7XBSOCkl32K+lSMLyswaxxShF
- gy5rwDompnyPgiYqODF0f50Rq2RKTEl7/U3+4sj/0voUHCs4E7cEiGdY9OYNoDktaWEq/7D8x
- e9TKKk1xkVhuF9eDs5Fvif40Gp85wPGerupwZnGv8LzvTdm0eRH+3Gk9L246LBC+NFipwJBKU
- ZmN9++wpsagvLveIU21wPmwvPI+fL8XBdChxZjKBNxZcr9Lk2/F6OPv4HJkPywhSenqcTrBz5
- /Jj+yBsVa3r3rIDO7l9k8w+MzXijugp+PkMWkvESV0/NxLYkOZNd9ido059UnpZzBhobtdBxx
- oJBZnuVd4YUO9vByrXkapGBZFIdMvs3HUIu6UbCnIZV69iDNLvKhkLoJD+NNPC8S55FzZ4R7D
- C8xV0F6M727rCKbfnwohuoXy27cmaPUG04qlY+zqSNYTkN6QTaiO6WjCZFrDfOxLnfHdOlBpU
- dd8vDeWhNns9sxspJsvAlvwTIc/zny/hMqJT3Y3KAhODc1ykMVq1Pr3lG3QND+P1BUadAZs/v
- uPLy7W5l8RuLTHraFx9J8wZ5ukdin3ytLEfOx7EdcMU+6tgtHjFTDCXaWDBLKgPLGfg8fOOTB
- O5YV3s7dnei3avw3PzR6ZziWi4bIHhcbWcK6X+oMUymJiwDp+dQjJL05k9+RSVs3F3F4kkIpf
- 93pIoYO
+Content-Type: text/plain
+X-Pobox-Relay-ID: AA3C99D6-5B24-11E6-BA94-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-On Thu, 4 Aug 2016, Junio C Hamano wrote:
+> When calling `rename("dir", "non-existing-dir/")` on Linux, it silently
+> succeeds, stripping the trailing slash of the second argument.
+>
+> This is all good and dandy but this behavior disagrees with the specs at
+>
+> http://pubs.opengroup.org/onlinepubs/9699919799/functions/rename.html
+>
+> that state clearly regarding the 2nd parameter (called `new`):
+>
+> 	If the `new` argument does not resolve to an existing directory
+> 	entry for a file of type directory and the `new` argument
+> 	contains at least one non- <slash> character and ends with one
+> 	or more trailing <slash> characters after all symbolic links
+> 	have been processed, `rename()` shall fail.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Like you, I have occasionally been bitten by Junio doing a fixup, and
-> > then I end up re-rolling, and lose that fixup.
-> 
-> ... which usually is caught when I receive the reroll, as I try to apply
-> to the same base and compare the result with the previous round.
+I agree with all of the above.  But
 
-I find it incredibly nice of you to do those fix-ups, sorry to state that
-as clearly only now. It's just that I hate to see your time wasted, in
-particular when *I* waste it because I missed the fix-ups in `pu`.
+> Of course, we would like `git mv dir non-existing-dir/` to succeed (and
+> rename the directory "dir" to "non-existing-dir").
 
-> > But I think such fixups are a calculated risk. Sometimes they save a
-> > lot of time, both for the maintainer and the contributor, when they
-> > manage to prevent another round-trip of the patch series to the list.
-> 
-> Yes.
+I do not think I want that.  When I say "mv A B/", I want it to fail
+if I made a typo for B; the trailing slash after B is an explicit
+statement "I expect B to exist and I want A to appear at B/A".
 
-FWIW I am more than just willing to spend a little more time on applying
-fix-ups and re-rolling patch series (and dual-publishing them via my
-public repository), if it helps lighten your burden.
-
-> > IOW, if the flow is something like:
-> >
-> >   1. Contributor sends patches. People review.
-> >
-> >   2. Minor fixups noticed by maintainer, fixed while applying.
-> 
-> This includes different kinds of things:
-> 
->     a) Trivially correct fixes given in other people's review.
-> 
->     b) Minor fixups by the maintainer, to code.
-> 
->     c) Minor fixups by the maintainer, to proposed log message.
-> 
->     d) "apply --whitespace=fix" whose result I do not even actively
->        keep track of.
-> 
-> >   3. Only one small fixup needed from review. Contributor sends
-> >      squashable patch. Maintainer squashes.
-> >
-> > then I think that is a net win over sending the whole series again, for
-> > the contributor (who does not bother sending), reviewers (who really
-> > only need to look at the interdiff, which is what that squash is in the
-> > first place), and the maintainer (who can squash just as easily as
-> > re-applying the whole series).
-> 
-> > And that is the flip side. If the flow above does not happen, then step
-> > 2 just becomes a pain.
-> 
-> I think I can
-> 
->  * stop taking 2-a).  This is less work for me, but some
->    contributors are leaky and can lose obviously good suggestions,
->    so I am not sure if that is an overall win for the quality of the
->    end product;
-
-If you had a `git commit --reword` command to touch up commit messages,
-would that help you, together with the `git commit --fixup` command for
-code changes? The branches in `pu` would have your fix-ups as strictly
-separate commits on top of the contributed patches, and the branches would
-need to be sent through rebase -i before merging to `next`, of course.
-
-The idea would be to not forget your fixups in subsequent iterations, but
-simply rebase them on top of the new iteration.
-
-It would still not solve my problem that there is no convenient way to
-jump from your commits in `pu` to the corresponding ones in my local
-branch. But that is my problem, not yours.
-
-Ciao,
-Dscho
+Current Git behaviour on Linux seems to allow "git mv dir no-such-dir/"
+but "dir" is renamed to "no-such-dir", which fails two expectations,
+and I think this is broken.  If Windows port does not share this
+breakage, that is a good thing.  We should fix Git behaviour on Linux
+instead, I would think.
