@@ -2,112 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A0AE01F859
-	for <e@80x24.org>; Sat,  6 Aug 2016 20:10:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE5251F859
+	for <e@80x24.org>; Sat,  6 Aug 2016 20:11:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751752AbcHFUK0 (ORCPT <rfc822;e@80x24.org>);
-	Sat, 6 Aug 2016 16:10:26 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56908 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751000AbcHFUKR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Aug 2016 16:10:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D38A42F5CB;
-	Sat,  6 Aug 2016 12:51:35 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=g7P/gdzyztQtp0IEvHkYad52Arc=; b=M63Q5O
-	DM/+TbSw3MSEzd3mNTuEyWgjlBmZ8/XnU+VqQWMu1zuRBwaCSLWIxds0s4K9w2Qh
-	cDYVMVJW7cMuZMol6MV90NWD1PTwrjEM/pohkOMqPf2W1t13buFu88dLh1Ucjlx1
-	jBU99WXvsQeHpJj/CAl/OdEPKrjVp0KFfw0PA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uOfFiS+8eB+UaxErUSllmtmYRzU2qUAe
-	FPdd2YbsPz4+3Tnb+MQmoip0buonGfahOUcoe1j9AewjnCQg9JES8qWblnsfInFN
-	ZjjUEy0Rqj+Q73E3hq4T8MFTHEdl3ySFCx99VsbXqrKSmyhwZg7tgKIQIGlKrtOQ
-	32jQaYJJJAk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id C319A2F5CA;
-	Sat,  6 Aug 2016 12:51:35 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2B6DF2F5C9;
-	Sat,  6 Aug 2016 12:51:35 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Martin Fick <mfick@codeaurora.org>
-Cc:	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Git List <git@vger.kernel.org>, repo-discuss@googlegroups.com
-Subject: Re: storing cover letter of a patch series?
-References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com>
-	<20160804234920.GA27250@redhat.com>
-	<xmqqy44bxm0h.fsf@gitster.mtv.corp.google.com>
-	<10752620.2J2dEZLIGc@mfick1-lnx>
-	<CAPc5daV51cwPs-8uc_SYLaod7RB7aDGYbjt-x-JsY1qNL81QRA@mail.gmail.com>
-Date:	Sat, 06 Aug 2016 09:51:33 -0700
-In-Reply-To: <CAPc5daV51cwPs-8uc_SYLaod7RB7aDGYbjt-x-JsY1qNL81QRA@mail.gmail.com>
-	(Junio C. Hamano's message of "Fri, 5 Aug 2016 14:23:42 -0700")
-Message-ID: <xmqqziopj0x6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 08F79300-5BF6-11E6-837E-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+	id S1751665AbcHFULh (ORCPT <rfc822;e@80x24.org>);
+	Sat, 6 Aug 2016 16:11:37 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:34820 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750934AbcHFULg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Aug 2016 16:11:36 -0400
+Received: by mail-pa0-f41.google.com with SMTP id iw10so102110508pac.2
+        for <git@vger.kernel.org>; Sat, 06 Aug 2016 13:11:36 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=WL348H6m/PBwj5zIdb7eqN4QJSfEtah075kgCqCc8qQ=;
+        b=oA9zLzloVOhRDeOnWFgLSKfXpfc6sNo8hjAslLX9IgwQHBhNklBS85Ev/v/7LKoS5R
+         uW/IGCPLd/AD/NBNZ5IAiV5cgmvLxmHuLu4uXhZeZciPhy4ZkJXsBGJNth0megSPTwPP
+         Ot2g3X/EkJ2C8zqBV2R3wPX7c4gpXCOISLVVfhOR1NanT3JeZw3LbfKU9lZ0pdl2bkrX
+         8zDDSuxBDwmoydv2jwj+NWECT0Ju4zPQQVDMl9yhfkh16OV8fQcLcGmsYj7t1Ynlug1E
+         GGs5+QBbqgf9skC1/QONq+Vu3dutHfe7E4F1K5+gWZlf3t/l+4HiVvonTxc4KxsM4b3e
+         nKCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=WL348H6m/PBwj5zIdb7eqN4QJSfEtah075kgCqCc8qQ=;
+        b=JKdzTgj9cqIYFxzukr0TNBl/9sKgsmKW+uB4yNpLbnfr3DXbJGT114HeIfV+ihGKq7
+         mtV01ZQzdosRzZER800LQ5xIeTIGhjrUaO+VWWwU4Gjsartk6RJcrHFa8pbvtcH3gTM0
+         ru1qLnGz6cPUSvN3N80KX54cjyFPvzlvNVzU3l/MtAb04sZe57bNuO/eJzbp/zApgbn4
+         GO8NDYUo270Q02tbEimMnRqu3aVjxKsI4IBsDrDaMf8tsZDkjUN2ND7o3swuU5J49WQ9
+         7kwAGerZX+LHzWG6kgFdzccPYiGuQncEQej+GraVoQ6Cjk5YYaKujZ5pgG2nlJKBe8YW
+         J9/A==
+X-Gm-Message-State: AEkoouvtEM77LgoAhVTWvjPBMbKStO30hpX5RHS3PbN6j2JTG+GtTlNem3znK3msdb2Lhqvd
+X-Received: by 10.66.72.40 with SMTP id a8mr142062854pav.15.1470446615784;
+        Fri, 05 Aug 2016 18:23:35 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:c0da:b815:bea9:a8ab])
+        by smtp.gmail.com with ESMTPSA id e10sm30706736pay.39.2016.08.05.18.23.35
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 05 Aug 2016 18:23:35 -0700 (PDT)
+From:	Stefan Beller <sbeller@google.com>
+To:	gitster@pobox.com, Jens.Lehmann@web.de
+Cc:	git@vger.kernel.org, mst@redhat.com,
+	Stefan Beller <sbeller@google.com>
+Subject: [PATCHv2 2/6] t7408: merge short tests, factor out testing method
+Date:	Fri,  5 Aug 2016 18:23:14 -0700
+Message-Id: <20160806012318.17968-3-sbeller@google.com>
+X-Mailer: git-send-email 2.9.2.572.g9d9644e.dirty
+In-Reply-To: <20160806012318.17968-1-sbeller@google.com>
+References: <20160806012318.17968-1-sbeller@google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Tests consisting of one line each can be consolidated to have fewer tests
+to run as well as fewer lines of code.
 
-> On Fri, Aug 5, 2016 at 2:20 PM, Martin Fick <mfick@codeaurora.org> wrote:
->> On Friday, August 05, 2016 08:39:58 AM you wrote:
->>>  * A new topic, when you merge it to the "lit" branch, you
->>> describe the cover as the merge commit message.
->>>
->>>  * When you updated an existing topic, you tell a tool
->>> like "rebase -i -p" to recreate "lit" branch on top of
->>> the mainline.  This would give you an opportunity to
->>> update the cover.
->>
->> This is a neat idea.  How would this work if there is no
->> merge commit (mainline hasn't moved)?
->
-> Sorry, I do not understand your question. You always
-> merge into your own "lit", which is based on (some)
-> version of the mainline. If a topic builds on top of the
-> mainline, you "merge --no-ff" it into "lit". Because no
-> merges on "lit" will be part of the future mainline anyway,
-> even the project frowns upon a "no-ff" merge, that will
-> not be a problem.
+When having just a few git commands, do not create a new shell but
+use the -C flag in Git to execute in the correct directory.
 
-In any case, the "if you want to say more than what the individual
-commits say about the topic as a whole, say it in the merge that
-brings them all into an integration branch" is not just "a neat
-idea".  
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ t/t7408-submodule-reference.sh | 49 +++++++++++++++---------------------------
+ 1 file changed, 17 insertions(+), 32 deletions(-)
 
-Recent versions of Git actively _encourages_ you to describe what it
-is about by opening your editor when you create a merge, and the
-cover letter material is something you would want the merge of your
-topic into the upstream to say when your topic finally lands there.
-And as the author of a topic, the person who writes the cover letter
-is well qualified to describe what the topic as a whole is about,
-how it relates to the state of the entire project before that merge
-happens.  That is what you want to write in the cover letter.
+diff --git a/t/t7408-submodule-reference.sh b/t/t7408-submodule-reference.sh
+index beee0bb..1d9326e 100755
+--- a/t/t7408-submodule-reference.sh
++++ b/t/t7408-submodule-reference.sh
+@@ -8,6 +8,15 @@ test_description='test clone --reference'
+ 
+ base_dir=$(pwd)
+ 
++test_alternate_usage() {
++	alternates_file="$1" &&
++	working_dir="$2" &&
++	test_line_count = 1 "$alternates_file" &&
++	echo "0 objects, 0 kilobytes" >expect &&
++	git -C "$working_dir" count-objects >actual &&
++	test_cmp expect actual
++}
++
+ test_expect_success 'preparing first repository' '
+ 	test_create_repo A &&
+ 	(
+@@ -40,44 +49,20 @@ test_expect_success 'preparing superproject' '
+ 	)
+ '
+ 
+-test_expect_success 'submodule add --reference' '
++test_expect_success 'submodule add --reference uses alternates' '
+ 	(
+ 		cd super &&
+ 		git submodule add --reference ../B "file://$base_dir/A" sub &&
+ 		git commit -m B-super-added
+-	)
+-'
+-
+-test_expect_success 'after add: existence of info/alternates' '
+-	test_line_count = 1 super/.git/modules/sub/objects/info/alternates
+-'
+-
+-test_expect_success 'that reference gets used with add' '
+-	(
+-		cd super/sub &&
+-		echo "0 objects, 0 kilobytes" > expected &&
+-		git count-objects > current &&
+-		diff expected current
+-	)
+-'
+-
+-test_expect_success 'cloning superproject' '
+-	git clone super super-clone
+-'
+-
+-test_expect_success 'update with reference' '
+-	cd super-clone && git submodule update --init --reference ../B
+-'
+-
+-test_expect_success 'after update: existence of info/alternates' '
+-	test_line_count = 1 super-clone/.git/modules/sub/objects/info/alternates
++	) &&
++	test_alternate_usage super/.git/modules/sub/objects/info/alternates super/sub
+ '
+ 
+-test_expect_success 'that reference gets used with update' '
+-	cd super-clone/sub &&
+-	echo "0 objects, 0 kilobytes" > expected &&
+-	git count-objects > current &&
+-	diff expected current
++test_expect_success 'updating superproject keeps alternates' '
++	test_when_finished "rm -rf super-clone" &&
++	git clone super super-clone &&
++	git -C super-clone submodule update --init --reference ../B &&
++	test_alternate_usage super-clone/.git/modules/sub/objects/info/alternates super-clone/sub
+ '
+ 
+ test_done
+-- 
+2.9.2.572.g9d9644e.dirty
 
-So "write it in a merge log message yourself, and somehow find a way
-to propagate it to the maintainer's tree" is the natural consequence
-of thinking and working backwards from what we want to have in the
-final history; not any novel (or neat) idea.
-
-What follows is that at the receiving end (i.e. "git am") it may be
-suboptimal to create an empty commit to record the cover letter
-material.  Storing at the bottom of the received pile of commits is
-out of question.  It _might_ be acceptable to queue it as the tip,
-and then teach "git merge $topic" to notice that $topic^0 is such a
-"cover letter commit", and turn itself into "git merge $topic^1 &&
-git commit --amend -C $topic", though.
