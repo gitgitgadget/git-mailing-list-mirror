@@ -6,103 +6,115 @@ X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FDE11F859
-	for <e@80x24.org>; Sat,  6 Aug 2016 20:09:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30D1B1F859
+	for <e@80x24.org>; Sat,  6 Aug 2016 20:10:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751321AbcHFUJw (ORCPT <rfc822;e@80x24.org>);
-	Sat, 6 Aug 2016 16:09:52 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64399 "EHLO
+	id S1751059AbcHFUKS (ORCPT <rfc822;e@80x24.org>);
+	Sat, 6 Aug 2016 16:10:18 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64693 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750912AbcHFUJv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Aug 2016 16:09:51 -0400
+	with ESMTP id S1750979AbcHFUKR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Aug 2016 16:10:17 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 695123113F;
-	Sat,  6 Aug 2016 14:33:24 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0D2082F9B0;
+	Sat,  6 Aug 2016 13:13:45 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kd9Hw2lnyYb/QBm19OurLBDgP1A=; b=iLVszY
-	Dd0U3dw6drNzGPodjJzStWvcbl9H6LG5u5adr89vp7X37MMSF0OYY+3FqleEqJn8
-	FT3yaZl68wmgqs13AsHJWSBvWcbCEXJ5TzL2N6oSl1HUgeT9HCdKOadW8mROXmpK
-	BukfuGTbjpfE4QZkcvPeKsGgWoo4bnQ78HdT0=
+	:content-type; s=sasl; bh=+aUZfD/st0fAjB5KZH/lgMbs394=; b=OavAA8
+	Fgl0lKqbPnANPSOQMd43XXbtXesgagsyfNv89Y6hrTAW2PZfo6080R7sZabBtZg+
+	cCzVhOVPPDduILKvwZ7NEEHq/of+3EXtaimBsfF/Uz1ia060SZb64zD9Fnw4v2Gm
+	cXlnMlrMwn0MvOdcU8TOtTlorOOZB8jacRelQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vfCFO+Cd2a8G0pz9He5WrrKH/e/45BwP
-	cktCx35hkXcuXF/hKb5OWO91wy7zMCxTvrjlguJSrW6+psTMz4IQf3u6Ixab3F3u
-	eOBSBqaZnRq6JFiJFLKjAt2l3tKbhOtfCEILiWqi8NtEZMZ81XnCS/vgx4i0dNr1
-	/CgYgr1B5z0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4F8133113E;
-	Sat,  6 Aug 2016 14:33:24 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=mCy91acZckOnmme/Xi5vfJ4FBJRfZNPO
+	ysfbn8HRWYUDZoOBsq1pVXcfwgnenDta+ScE6k2rw83ensXnqPaD+AaAFYHL3ytO
+	rnn+FqgB+Y3OPXDj5RUd6W14N+wqgdHJ0GK9BQOw8ItMnFeLQIixMCKxm87+YMGR
+	DThhCrdG4iU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 058442F9AF;
+	Sat,  6 Aug 2016 13:13:45 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C61593113C;
-	Sat,  6 Aug 2016 14:33:23 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 826032F9AC;
+	Sat,  6 Aug 2016 13:13:44 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	Stefan Beller <sbeller@google.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-	Eric Wong <e@80x24.org>
-Subject: Re: patch submission process, was Re: [PATCH v6 06/16] merge_recursive: abort properly upon errors
-References: <cover.1469547160.git.johannes.schindelin@gmx.de>
-	<cover.1470051326.git.johannes.schindelin@gmx.de>
-	<8ff71aba37be979f05abf88f467ec932aa522bdd.1470051326.git.johannes.schindelin@gmx.de>
-	<xmqqlh0gjpr6.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1608021004080.79248@virtualbox>
-	<xmqqy44ec15p.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1608031021050.79248@virtualbox>
-	<CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com>
-	<alpine.DEB.2.20.1608031753431.107993@virtualbox>
-	<CAGZ79kYWdZCNW_eBi5aLAacyBZJXQ9xyOWMBmjNsYT5NWjr-Og@mail.gmail.com>
-	<alpine.DEB.2.20.1608041730130.5786@virtualbox>
-	<CAGZ79kaTT3NgKj8akB8t9b1BF3i6sXe7Un9oq5KP8077Wz-E+g@mail.gmail.com>
-	<alpine.DEB.2.20.1608050925240.5786@virtualbox>
-	<CAGZ79ka5OknKYo_CgBpB16EQjwU5B35yNFWx569K-LPmHuSqWA@mail.gmail.com>
-	<alpine.DEB.2.20.1608061045240.5786@virtualbox>
-Date:	Sat, 06 Aug 2016 11:33:21 -0700
-In-Reply-To: <alpine.DEB.2.20.1608061045240.5786@virtualbox> (Johannes
-	Schindelin's message of "Sat, 6 Aug 2016 10:58:52 +0200 (CEST)")
-Message-ID: <xmqq8tw9iw7i.fsf@gitster.mtv.corp.google.com>
+To:	Stefan Beller <sbeller@google.com>
+Cc:	Jens.Lehmann@web.de, git@vger.kernel.org, mst@redhat.com
+Subject: Re: [PATCHv2 5/6] submodule update: add super-reference flag
+References: <20160806012318.17968-1-sbeller@google.com>
+	<20160806012318.17968-6-sbeller@google.com>
+Date:	Sat, 06 Aug 2016 10:13:42 -0700
+In-Reply-To: <20160806012318.17968-6-sbeller@google.com> (Stefan Beller's
+	message of "Fri, 5 Aug 2016 18:23:17 -0700")
+Message-ID: <xmqqh9axizw9.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 42091D90-5C04-11E6-B3D4-89D312518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 2153295C-5BF9-11E6-B3B5-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> The problem is not Perl, but how fiddly it is to set up. And that you lose
-> all the niceties of an email client (e.g. when you want to add a comment
-> before the diff stat that is not intended to become a part of the commit
-> message).
+> When we have a another clone of a superproject, we may want to
+> mirror the submodules using alternates. Introduce an option
+> `--super-reference` that let's a user point to another superproject,
+> which is assumed to have the same structure as the one they are
+> running the "submodule update" command from and has all submodules
+> checked out to borrow the submodule objects from within the other
+> superprojects git directory.
 
-Just this part.  I do not think that is fair to send-email.  You are
-blaming its "feature" that allows it to drive format-patch, which I
-do not consider is the proper part of the command and to which I
-kept saying from the early days of its introduction that I'd never
-use it and I think we should discourage its use exactly because it
-encourages a bad workflow (i.e. you skip the final proof-reading
-before sending out, and you cannot add footnote comments).
+That's much better than the previous round.
 
-Treat it like an MSA just like Thunderbird, just designed to be more
-suited to send out patches without corruption, and you will be OK.
-You work, commit and write your message with your favourite editor,
-do format-patch, reword or add footnote with your favourite editor,
-and then send it out.  You can avoid letting other MSAs that may
-corrupt whitespaces touch what you will send out if you used
-send-email, but that is not mandatory.  As long as your favourite
-MSA does not corrupt your message, you can use it.
+I however have trouble with the "checked out", though.  Isn't it
+that it merely has to be "init"ed?  For that matter, as long as
+super.git has $GIT_DIR/modules/ populated fully, it does not matter
+it has checkout, and more interestingly and importantly, the
+superproject mirror can even be a bare repository!
 
-Somebody mentioned "configuring it is hard--why does the user have
-to know SMTP subtleties", and that may be a valid complaint against
-the primary part of send-email.  The solution for that is not to
-discard it with bathwater, but make it just as easy as other MSAs,
-say, Thunderbird, to configure for an average user who can configure
-these other MUAs.
+> +--super-reference <superproject repository>::
+> +	This option is only valid for the update command. When update needs
+> +	to clone a repository, a reference will be passed to the clone command
+> +	that points at the submodule path inside the reference superproject.
+
+"points at the submodule path inside" sounds as if we would look at
+
+    /var/cache/super/libs/xyzzy
+
+in the scenario in <xmqqoa57vvzl.fsf@gitster.mtv.corp.google.com>, 
+when you give us "--super-reference=/var/cache/super".  Can we
+clarify to avoid such a misread?
+
+> +superreference=
+
+Please don't name a multiple_word field "multipleword".
+
+>  cached=
+>  recursive=
+>  init=
+> @@ -520,6 +521,14 @@ cmd_update()
+>  		--reference=*)
+>  			reference="$1"
+>  			;;
+> +		--super-reference)
+> +			case "$2" in '') usage ;; esac
+> +			superreference="--super-reference=$2"
+> +			shift
+> +			;;
+> +		--super-reference=*)
+> +			superreference="$1"
+> +			;;
+>  		-m|--merge)
+>  			update="merge"
+>  			;;
+> @@ -576,6 +585,7 @@ cmd_update()
+>  		${prefix:+--recursive-prefix "$prefix"} \
+>  		${update:+--update "$update"} \
+>  		${reference:+"$reference"} \
+> +		${superreference:+"$superreference"} \
+>  		${depth:+--depth "$depth"} \
+>  		${recommend_shallow:+"$recommend_shallow"} \
+>  		${jobs:+$jobs} \
