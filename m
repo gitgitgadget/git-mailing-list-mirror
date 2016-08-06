@@ -2,133 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45FD91F859
-	for <e@80x24.org>; Sat,  6 Aug 2016 20:19:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A29A31F859
+	for <e@80x24.org>; Sat,  6 Aug 2016 20:21:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751821AbcHFUTV (ORCPT <rfc822;e@80x24.org>);
-	Sat, 6 Aug 2016 16:19:21 -0400
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:35877 "EHLO
-	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751050AbcHFUTU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Aug 2016 16:19:20 -0400
-Received: by mail-wm0-f47.google.com with SMTP id q128so67802575wma.1
-        for <git@vger.kernel.org>; Sat, 06 Aug 2016 13:19:19 -0700 (PDT)
+	id S1751025AbcHFUU7 (ORCPT <rfc822;e@80x24.org>);
+	Sat, 6 Aug 2016 16:20:59 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:33762 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750954AbcHFUU6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Aug 2016 16:20:58 -0400
+Received: by mail-pa0-f50.google.com with SMTP id ti13so23898843pac.0
+        for <git@vger.kernel.org>; Sat, 06 Aug 2016 13:20:58 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=WSw7eRU0JtilIdBwMeHRltLEeIIEuE83k1XbeUgM2so=;
-        b=YZ0INTkQFzBJgW9qQv718zGJEdIghQ9Pvq7oUbjJZTunPCkGZIYfx6ZpiskOaxMl7u
-         U2IQZ/0G/FnAt3Fr5GjpKdipl5uj+x0g0+Z+iUL65U8l6TYqcpCEBNfnxfzEQGOfgxKc
-         SDtIW0lbyXcNQeZM/LMa3qkN9w9I+JQaYjRK3eb3JpEp+3EU3jgYuKyfgZ1rz1nd6zn5
-         7nS+z9paNyiSJNIIMv6mEXj6NMuRRu9OcctCpjBJcpllIsQqmv0sjSDZVwB8AGJXcXYn
-         GFvg/Mop2K1q3KNIeEaPK93cuLpfbhdFmkAQVH8btHrRoZcEDVLF3LCrsXWuK3kHXYKy
-         vEOA==
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=V8KDlbdRAhjKqKEJuneThbSOhjPepL++bQLO5EM2J3Y=;
+        b=WrEGu8C8qbEBMrU7qOQwzeBkqADQ28+el+DcjdUDF8ifSwIF0e6jN91Whi2c+ineNx
+         IRVEL+8Nd9KW1Ohi6uKgS1r9wcoaNDo19R1B5glcek+4P4Vrq8F1jt8RcItyfk1NOBIa
+         aM6zHYj5Hcr0z3hmcP0bxvU1zuChC0shnPVqSkMmzGSqV9EUKq6VU2VrGZ5XwlxvfyX4
+         FXa3z6I3USe/Uw9HNHqfCUR5SiZEoGqktrKX/zJzxsClpnFqjDi9IfP5hjQJM5Cbxmbd
+         8RkMQ/lwGoV2ZdR5jjUs5EzQ6hUL5GNQBDo6MiHo64fVGTTlD3FCbtKi/vgbhjR/PV09
+         awYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=WSw7eRU0JtilIdBwMeHRltLEeIIEuE83k1XbeUgM2so=;
-        b=mKOsSBBeKKacSV6pIf9HqGUcr3jZK8xYbr2W59e14Vo57I+CMVmZSu/n3H8MCU9+eK
-         t5HV/s9YQvrz3B5k9KQJ3F/JrQxN4fKutK/jHWKfd7jJv0CsqBW7Kk4AZJ00xctcAYN7
-         APwXAAincfPJvaKyslb0IcaQ0exhTMG87XdFgs9GH0M8Hk8gmDzrpVYSAerBx8A7mJ29
-         +YxBz9qEUUegBXbOwgwX0x9ry0u8IJlnqnX+T93Xhkg8qoSW4U6ZKXwEqaN6OxUP+MLX
-         5/PQGM86xrhB8pnMYiCqxsgib3wnYJwU+5H09Pi8GXZcRL1B7K1b/Zd4GOmSEW8GqD+5
-         chZw==
-X-Gm-Message-State: AEkoouulpk0S6DoKlQCnQjYL6z9pkYELtJZu2Ef/4IfdhYxNlbnaxkI6T6zQy8XbxikGFw==
-X-Received: by 10.194.240.4 with SMTP id vw4mr10768153wjc.134.1470507893238;
-        Sat, 06 Aug 2016 11:24:53 -0700 (PDT)
-Received: from slxbook4.fritz.box (p5DDB5C12.dip0.t-ipconnect.de. [93.219.92.18])
-        by smtp.gmail.com with ESMTPSA id uo4sm24012454wjc.36.2016.08.06.11.24.51
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 06 Aug 2016 11:24:52 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: Designing the filter process protocol (was: Re: [PATCH v3 10/10] convert: add filter.<driver>.process option)
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <607c07fe-5b6f-fd67-13e1-705020c267ee@gmail.com>
-Date:	Sat, 6 Aug 2016 20:24:51 +0200
-Cc:	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Martin-Louis Bright <mlbright@gmail.com>,
-	Eric Wong <e@80x24.org>, Jeff King <peff@peff.net>
-Content-Transfer-Encoding: 8BIT
-Message-Id: <90A43E20-B2F5-4377-8DC3-2298BDD7CC71@gmail.com>
-References: <20160727000605.49982-1-larsxschneider%40gmail.com/> <20160729233801.82844-1-larsxschneider@gmail.com> <20160729233801.82844-11-larsxschneider@gmail.com> <b4c9ac5d-bd6b-141b-5b85-ab4aa719ccb0@gmail.com> <ABE7D2DB-C45F-4F29-8CC2-8D873FD6C36A@gmail.com> <607c07fe-5b6f-fd67-13e1-705020c267ee@gmail.com>
-To:	=?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=V8KDlbdRAhjKqKEJuneThbSOhjPepL++bQLO5EM2J3Y=;
+        b=dRUAUr/9Lo3F2qbdIlcHxoAoTFKnZ69Mr20qcu9ILQUTiZjII2GI5HprPVis51u4kc
+         u69O7iFbo2SxYVsS0kCVZ3Jo4Rlolm4bq8a/OYh4R/aSlbP6+TRD+L6xLyDejQdGk13r
+         8BB7AsKoxkkSz+dxyoufJZZG9AHjZKb2MTT0LMT1sFsbW/6N9jviu4CbTMZ9KT2ik1WI
+         fPugiw9nlsaW/lT0hA/MmyBQ4IqTauO7iYwJcj5ftX3KuG7Bmitx0HrbxB1aZHcJq4Hy
+         GtqDKqGu4AbDofliYH9WwryqXDcIDdfpG9Z2gmv8mvni+srvkjn2GeP/auG/vJWmGmtE
+         1Ecw==
+X-Gm-Message-State: AEkoouu52tuh9S3DNL6p9c8O16yvAMLcxbQlpZbtV6c2fkxvjW+EGt2NPgTpSPVSJblh9YZw
+X-Received: by 10.66.21.167 with SMTP id w7mr140615132pae.62.1470446617666;
+        Fri, 05 Aug 2016 18:23:37 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:c0da:b815:bea9:a8ab])
+        by smtp.gmail.com with ESMTPSA id b68sm30628585pfg.85.2016.08.05.18.23.36
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 05 Aug 2016 18:23:37 -0700 (PDT)
+From:	Stefan Beller <sbeller@google.com>
+To:	gitster@pobox.com, Jens.Lehmann@web.de
+Cc:	git@vger.kernel.org, mst@redhat.com,
+	Stefan Beller <sbeller@google.com>
+Subject: [PATCHv2 3/6] submodule--helper module-clone: allow multiple references
+Date:	Fri,  5 Aug 2016 18:23:15 -0700
+Message-Id: <20160806012318.17968-4-sbeller@google.com>
+X-Mailer: git-send-email 2.9.2.572.g9d9644e.dirty
+In-Reply-To: <20160806012318.17968-1-sbeller@google.com>
+References: <20160806012318.17968-1-sbeller@google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Allow users to pass in multiple references, just as clone accepts multiple
+references as well.
 
-> On 03 Aug 2016, at 20:30, Jakub Narębski <jnareb@gmail.com> wrote:
-> 
-> ...
-> 
-> 
-> 2. HANDSHAKE (INITIALIZATION)
-> 
-> Next, there is deciding on and designing the handshake between Git (between
-> Git command) and the filter driver process.  With the `filter.<driver>.process`
-> solution the driver needs to tell which operations among (for now) "clean"
-> and "smudge" it does support.  Plus it provides a way to extend protocol,
-> adding new features, like support for streaming, cleaning from file or
-> smudging to file, providing size upfront, perhaps even progress report.
-> 
-> Current handshake consist of filter driver printing a signature, version
-> number and capabilities, in that order.  Git checks that it is well formed
-> and matches expectations, and notes which of "clean" and "smudge" operations
-> are supported by the filter.
-> 
-> There is no interaction from the Git side in the handshake, for example to
-> set options and expectations common to all files being filtered.  Take
-> one possible extension of protocol: supporting streaming.  The filter
-> driver needs to know whether it needs to read all the input, or whether
-> it can start printing output while input is incoming (e.g. to reduce
-> memory consumption)... though we may simply decide it to be next version
-> of the protocol.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ builtin/submodule--helper.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-I would like to change the startup sequence to this:
-
-Git starts the filter when it encounters the first file
-that needs to be cleaned or smudged. After the filter started
-Git sends a welcome message, a list of supported protocol
-version numbers, and a flush packet. Git expects to read the
-welcome message and one protocol version number from the
-previously sent list. Afterwards Git sends a list of supported
-capabilities and a flush packet. Git expects to read a list of
-desired capabilities, which must be a subset of the supported
-capabilities list, and a flush packet as response:
-------------------------
-packet:          git> git-filter-client
-packet:          git> version=2
-packet:          git> version=42
-packet:          git> 0000
-packet:          git< git-filter-server
-packet:          git< version=2
-packet:          git> clean=true
-packet:          git> smudge=true
-packet:          git> not-yet-invented=true
-packet:          git> 0000
-packet:          git< clean=true
-packet:          git< smudge=true
-packet:          git< 0000
-------------------------
-
-This would allow us to detect the case if a user configures an
-existing clean/smudge filter as `filter.<driver>.process`.
-Since Git is talking first, it would not "hang" in that case.
-
-Would that be ok with you?
-
-Thanks,
-Lars
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 6f6d67a..f2b19ea 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -442,7 +442,7 @@ static int module_name(int argc, const char **argv, const char *prefix)
+ }
+ 
+ static int clone_submodule(const char *path, const char *gitdir, const char *url,
+-			   const char *depth, const char *reference, int quiet)
++			   const char *depth, struct string_list *reference, int quiet)
+ {
+ 	struct child_process cp;
+ 	child_process_init(&cp);
+@@ -453,8 +453,11 @@ static int clone_submodule(const char *path, const char *gitdir, const char *url
+ 		argv_array_push(&cp.args, "--quiet");
+ 	if (depth && *depth)
+ 		argv_array_pushl(&cp.args, "--depth", depth, NULL);
+-	if (reference && *reference)
+-		argv_array_pushl(&cp.args, "--reference", reference, NULL);
++	if (reference->nr) {
++		struct string_list_item *item;
++		for_each_string_list_item(item, reference)
++			argv_array_pushl(&cp.args, "--reference", item->string, NULL);
++	}
+ 	if (gitdir && *gitdir)
+ 		argv_array_pushl(&cp.args, "--separate-git-dir", gitdir, NULL);
+ 
+@@ -470,13 +473,13 @@ static int clone_submodule(const char *path, const char *gitdir, const char *url
+ 
+ static int module_clone(int argc, const char **argv, const char *prefix)
+ {
+-	const char *name = NULL, *url = NULL;
+-	const char *reference = NULL, *depth = NULL;
++	const char *name = NULL, *url = NULL, *depth = NULL;
+ 	int quiet = 0;
+ 	FILE *submodule_dot_git;
+ 	char *p, *path = NULL, *sm_gitdir;
+ 	struct strbuf rel_path = STRBUF_INIT;
+ 	struct strbuf sb = STRBUF_INIT;
++	struct string_list reference = STRING_LIST_INIT_NODUP;
+ 
+ 	struct option module_clone_options[] = {
+ 		OPT_STRING(0, "prefix", &prefix,
+@@ -491,8 +494,8 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 		OPT_STRING(0, "url", &url,
+ 			   N_("string"),
+ 			   N_("url where to clone the submodule from")),
+-		OPT_STRING(0, "reference", &reference,
+-			   N_("string"),
++		OPT_STRING_LIST(0, "reference", &reference,
++			   N_("repo"),
+ 			   N_("reference repository")),
+ 		OPT_STRING(0, "depth", &depth,
+ 			   N_("string"),
+@@ -528,7 +531,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 	if (!file_exists(sm_gitdir)) {
+ 		if (safe_create_leading_directories_const(sm_gitdir) < 0)
+ 			die(_("could not create directory '%s'"), sm_gitdir);
+-		if (clone_submodule(path, sm_gitdir, url, depth, reference, quiet))
++		if (clone_submodule(path, sm_gitdir, url, depth, &reference, quiet))
+ 			die(_("clone of '%s' into submodule path '%s' failed"),
+ 			    url, path);
+ 	} else {
+-- 
+2.9.2.572.g9d9644e.dirty
 
