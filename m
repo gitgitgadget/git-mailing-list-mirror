@@ -2,120 +2,226 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC97A1F859
-	for <e@80x24.org>; Sat,  6 Aug 2016 20:22:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BE231F859
+	for <e@80x24.org>; Sat,  6 Aug 2016 20:25:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752170AbcHFUW2 (ORCPT <rfc822;e@80x24.org>);
-	Sat, 6 Aug 2016 16:22:28 -0400
-Received: from ducie-dc1.codethink.co.uk ([185.25.241.215]:56811 "EHLO
-	ducie-dc1.codethink.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751025AbcHFUW0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Aug 2016 16:22:26 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by ducie-dc1.codethink.co.uk (Postfix) with ESMTP id 5A8CB462F96;
-	Sat,  6 Aug 2016 17:46:15 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at ducie-dc1.codethink.co.uk
-Received: from ducie-dc1.codethink.co.uk ([127.0.0.1])
-	by localhost (ducie-dc1.codethink.co.uk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id N23JGXslUocr; Sat,  6 Aug 2016 17:46:13 +0100 (BST)
-Received: from salo (82-70-136-246.dsl.in-addr.zen.co.uk [82.70.136.246])
-	by ducie-dc1.codethink.co.uk (Postfix) with ESMTPSA id BE61F462F49;
-	Sat,  6 Aug 2016 17:46:12 +0100 (BST)
-Date:	Sat, 6 Aug 2016 17:45:54 +0100
-From:	Richard Ipsum <richard.ipsum@codethink.co.uk>
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-	dborowitz@google.com, Michael Haggerty <mhagger@alum.mit.edu>,
-	Josh Triplett <josh@joshtriplett.org>
-Subject: Re: patch submission process, was Re: [PATCH v6 06/16]
- merge_recursive: abort properly upon errors
-Message-ID: <20160806164554.GA24211@salo>
-References: <alpine.DEB.2.20.1608021004080.79248@virtualbox>
- <xmqqy44ec15p.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1608031021050.79248@virtualbox>
- <CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com>
- <alpine.DEB.2.20.1608031753431.107993@virtualbox>
- <CAGZ79kYWdZCNW_eBi5aLAacyBZJXQ9xyOWMBmjNsYT5NWjr-Og@mail.gmail.com>
- <alpine.DEB.2.20.1608041730130.5786@virtualbox>
- <CAGZ79kaTT3NgKj8akB8t9b1BF3i6sXe7Un9oq5KP8077Wz-E+g@mail.gmail.com>
- <20160805115911.GA4787@salo>
- <alpine.DEB.2.20.1608051714110.5786@virtualbox>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1608051714110.5786@virtualbox>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1752063AbcHFUYr (ORCPT <rfc822;e@80x24.org>);
+	Sat, 6 Aug 2016 16:24:47 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:34981 "EHLO
+	mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751981AbcHFUYp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Aug 2016 16:24:45 -0400
+Received: by mail-pf0-f178.google.com with SMTP id x72so107038043pfd.2
+        for <git@vger.kernel.org>; Sat, 06 Aug 2016 13:24:44 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=N7n9iTjQF1/LwI9HqMucKN3yODUWkobgSxSle6eMFxk=;
+        b=B0ul0PRvmN+dk7kRAP1IiJUQhUlqDT/iE7bzmhEz1rinRENClBMxIpKg6hLlzTVFaW
+         tq3SQ76Xh3m2GbFTqZ0qpQew4hjelJjH8EqMKDmrT155GixO/v6rE4oh4ZMXGf/0byyc
+         KD8r4/OjLIgBwpWhaIP7Kne6mwDtlw1Io9f5/yiGNOIvwAaSnwlBVWTwbON9PCzuhwVO
+         rhP57VpiRGbl8FsBeWm+HImCrwjYG+CeGKSqvuY2HzYzAuNSf1mFBq02xMCs8U/4zHxm
+         SmtO+0JuqbKQFMZmYeFlURo33zUkGZkwkbWxdgcyLxuorfGKSfjQ5KGG9O2SH+4CJMGo
+         m47Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=N7n9iTjQF1/LwI9HqMucKN3yODUWkobgSxSle6eMFxk=;
+        b=UHoSPpM1nCzfg9wjAqOmJ6US/I5T8bhLcqlmKEmUl85UE3G2fd7fS5f5nrsGU0tJ7W
+         YIqbrJKNvaNRxvAAN/7/27RWx4HN84nBNtjIW5PA+v5OTb1izlDa8b/xsEagqDojjimb
+         oQSMW356cmK/a+ADhrGhzvK6fJ2m/dmaDkeZoS5MAcV7GOziY/1/KQMqt9Londfa91ys
+         XMiJJ/rQeSHk5Zi2D5NkYrmUOVyhmhdyZ6+PGRQ8OwJxoIHzIuQW4YZZ+GTBLWbTbM1i
+         /HyrX/kc+dGYlxmCIUvXK+Dscs1l1LKzsmA4x6X9o/PqGu6iT+mpg4uPD64S8idmrvy4
+         PBmA==
+X-Gm-Message-State: AEkooutt/hjFFvf3ADAa8wrg6wO7pWSQ1Gzn4zBYpYsffJmzIcuEAmmAASxBWa5MOHtlAnMw
+X-Received: by 10.98.69.201 with SMTP id n70mr142788751pfi.64.1470446613781;
+        Fri, 05 Aug 2016 18:23:33 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:c0da:b815:bea9:a8ab])
+        by smtp.gmail.com with ESMTPSA id tr1sm30729997pab.19.2016.08.05.18.23.33
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 05 Aug 2016 18:23:33 -0700 (PDT)
+From:	Stefan Beller <sbeller@google.com>
+To:	gitster@pobox.com, Jens.Lehmann@web.de
+Cc:	git@vger.kernel.org, mst@redhat.com,
+	Stefan Beller <sbeller@google.com>
+Subject: [PATCHv2 1/6] t7408: modernize style
+Date:	Fri,  5 Aug 2016 18:23:13 -0700
+Message-Id: <20160806012318.17968-2-sbeller@google.com>
+X-Mailer: git-send-email 2.9.2.572.g9d9644e.dirty
+In-Reply-To: <20160806012318.17968-1-sbeller@google.com>
+References: <20160806012318.17968-1-sbeller@google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Aug 05, 2016 at 05:24:14PM +0200, Johannes Schindelin wrote:
-[snip]
-> > 
-> > This "unified review storage format" really does seem to be the missing
-> > piece.
-> 
-> FWIW I do not think so. The real trick will be to come up with an
-> improvement to the process that lets Junio and Peff continue to work as
-> before, because It Works For Them, while at the same time letting other
-> people (such as myself) use easy-to-configure tools that add substantial
-> convenience.
-> 
-> Which, to me, means that the missing piece is a clever idea how to
-> integrate with the mail-based process, without requiring everybody and her
-> dog to switch to a specific mail client.
+No functional change intended. This commit only changes formatting
+to the style we recently use, e.g. starting the body of a test with a
+single quote on the same line as the header, and then having the test
+indented in the following lines.
 
-Fair enough, yes it seems to me that git's own review process
-is probably a separate discussion.
+Whenever we change directories, we do that in subshells.
 
-As far as review tools such as git-appraise, git-series and git-candidate
-are concerned, the review storage format really is the missing piece though,
-in my opinion,
-at least if we want to live in a world with compatible review tooling.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ t/t7408-submodule-reference.sh | 140 +++++++++++++++++++++--------------------
+ 1 file changed, 71 insertions(+), 69 deletions(-)
 
-> 
-> > The tool I've been working on for the past year (git-candidate) was
-> > initially aimed at contrib[1], and was written in perl solely to satisfy
-> > contrib rules. It would have been python otherwise.
-> 
-> Oh...?
-> 
-> $ git ls-files contrib/\*.py | wc -l
-> 4
-> 
-> And for that matter:
-> 
-> $ git ls-files contrib/\*.go | wc -l
-> 4
+diff --git a/t/t7408-submodule-reference.sh b/t/t7408-submodule-reference.sh
+index eaea19b..beee0bb 100755
+--- a/t/t7408-submodule-reference.sh
++++ b/t/t7408-submodule-reference.sh
+@@ -8,74 +8,76 @@ test_description='test clone --reference'
+ 
+ base_dir=$(pwd)
+ 
+-U=$base_dir/UPLOAD_LOG
+-
+-test_expect_success 'preparing first repository' \
+-'test_create_repo A && cd A &&
+-echo first > file1 &&
+-git add file1 &&
+-git commit -m A-initial'
+-
+-cd "$base_dir"
+-
+-test_expect_success 'preparing second repository' \
+-'git clone A B && cd B &&
+-echo second > file2 &&
+-git add file2 &&
+-git commit -m B-addition &&
+-git repack -a -d &&
+-git prune'
+-
+-cd "$base_dir"
+-
+-test_expect_success 'preparing superproject' \
+-'test_create_repo super && cd super &&
+-echo file > file &&
+-git add file &&
+-git commit -m B-super-initial'
+-
+-cd "$base_dir"
+-
+-test_expect_success 'submodule add --reference' \
+-'cd super && git submodule add --reference ../B "file://$base_dir/A" sub &&
+-git commit -m B-super-added'
+-
+-cd "$base_dir"
+-
+-test_expect_success 'after add: existence of info/alternates' \
+-'test_line_count = 1 super/.git/modules/sub/objects/info/alternates'
+-
+-cd "$base_dir"
+-
+-test_expect_success 'that reference gets used with add' \
+-'cd super/sub &&
+-echo "0 objects, 0 kilobytes" > expected &&
+-git count-objects > current &&
+-diff expected current'
+-
+-cd "$base_dir"
+-
+-test_expect_success 'cloning superproject' \
+-'git clone super super-clone'
+-
+-cd "$base_dir"
+-
+-test_expect_success 'update with reference' \
+-'cd super-clone && git submodule update --init --reference ../B'
+-
+-cd "$base_dir"
+-
+-test_expect_success 'after update: existence of info/alternates' \
+-'test_line_count = 1 super-clone/.git/modules/sub/objects/info/alternates'
+-
+-cd "$base_dir"
+-
+-test_expect_success 'that reference gets used with update' \
+-'cd super-clone/sub &&
+-echo "0 objects, 0 kilobytes" > expected &&
+-git count-objects > current &&
+-diff expected current'
+-
+-cd "$base_dir"
++test_expect_success 'preparing first repository' '
++	test_create_repo A &&
++	(
++		cd A &&
++		echo first >file1 &&
++		git add file1 &&
++		git commit -m A-initial
++	)
++'
++
++test_expect_success 'preparing second repository' '
++	git clone A B &&
++	(
++		cd B &&
++		echo second >file2 &&
++		git add file2 &&
++		git commit -m B-addition &&
++		git repack -a -d &&
++		git prune
++	)
++'
++
++test_expect_success 'preparing superproject' '
++	test_create_repo super &&
++	(
++		cd super &&
++		echo file >file &&
++		git add file &&
++		git commit -m B-super-initial
++	)
++'
++
++test_expect_success 'submodule add --reference' '
++	(
++		cd super &&
++		git submodule add --reference ../B "file://$base_dir/A" sub &&
++		git commit -m B-super-added
++	)
++'
++
++test_expect_success 'after add: existence of info/alternates' '
++	test_line_count = 1 super/.git/modules/sub/objects/info/alternates
++'
++
++test_expect_success 'that reference gets used with add' '
++	(
++		cd super/sub &&
++		echo "0 objects, 0 kilobytes" > expected &&
++		git count-objects > current &&
++		diff expected current
++	)
++'
++
++test_expect_success 'cloning superproject' '
++	git clone super super-clone
++'
++
++test_expect_success 'update with reference' '
++	cd super-clone && git submodule update --init --reference ../B
++'
++
++test_expect_success 'after update: existence of info/alternates' '
++	test_line_count = 1 super-clone/.git/modules/sub/objects/info/alternates
++'
++
++test_expect_success 'that reference gets used with update' '
++	cd super-clone/sub &&
++	echo "0 objects, 0 kilobytes" > expected &&
++	git count-objects > current &&
++	diff expected current
++'
+ 
+ test_done
+-- 
+2.9.2.572.g9d9644e.dirty
 
-I read this guide[1] before I started, and wanted to be on the safe side.
-Maybe that was a mistake... :/
-
-> 
-> In fact, there are even PHP scripts:
-> 
-> $ git ls-files contrib | sed -n 's/.*\.//p' | sort | grep -v '.....' |
-> 	uniq | tr '\n' ' '
-> bash c el Git go perl php pl pm py rst sh tcsh txt zsh
-> 
-> But again, I do not think that it makes sense to focus too much on a
-> language, or on a file format, before we came up with a strategy how to
-> *not* require everybody to change their current ways.
-
-Fair enough. :)
-
-Thanks,
-Richard Ipsum
-
-[1]: https://www.kernel.org/pub/software/scm/git/docs/howto/new-command.html
