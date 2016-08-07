@@ -2,107 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2F091F859
-	for <e@80x24.org>; Sun,  7 Aug 2016 00:13:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFF971F859
+	for <e@80x24.org>; Sun,  7 Aug 2016 05:12:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750999AbcHGANd (ORCPT <rfc822;e@80x24.org>);
-	Sat, 6 Aug 2016 20:13:33 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34384 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750933AbcHGANc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Aug 2016 20:13:32 -0400
-Received: by mail-wm0-f66.google.com with SMTP id q128so9275923wma.1
-        for <git@vger.kernel.org>; Sat, 06 Aug 2016 17:13:31 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=OEJGbJ/4FtKIdN2hYs1QJeNWc29KOeNzrTCiV4ZFtUg=;
-        b=BURVCOGdHDMmkHpHNsHOGZfuDDTEShtCFfEdV7vrcEsNtFtpNTf6PrCTfSZRuYLGW0
-         mjxa+h2Yi8ii7T6lZ/EvmqOipJukNLF3NsF0U1d2hAsFP0+LtaldD17M+eocuB6aW++b
-         Y+h8Y5VzH/T4qrfXVpUMyDQzPy9isIeHL3zF3Ho1gtvM/ELO1sWc3w0uUdnolt1GRew4
-         SL2EyipLrKjP3oL2TDMqVBc5UaGuwdi4IH42gTd+bPzJPWPuEr9yfGVioharj2DSs399
-         lT8fuqNNeb25XFYPNGSCVBrWsM3grAp27k/06BkSiG6kfIXfUhQibS1+efSgV8NTWCD4
-         n0Cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=OEJGbJ/4FtKIdN2hYs1QJeNWc29KOeNzrTCiV4ZFtUg=;
-        b=VpLPYssFqZVcILNElIrRVRxDWFMarGK1i3/Q5OamH5Ft7Jmjsa80bBapnJEmRmmG+U
-         Y4qiq5Ip1hyKS9HSx0kpbxu41FX9MOAquaQqJ3SZzp3H44O8tFBiTSXThfzyH8FJRsyh
-         00ZBdfc7IAgV+yXdPu2HaffFhoynWkoIYd3RF+HtQaODDO4V47Uajw+K/3B9H5oVw7F3
-         t0IOquJtpWZGl50wo3f4a7kDjUZqa4MlVFlvUFPCM4G0QeR3IJYFMTNtTUk5zyEdfS3s
-         jTX0nERuL7pjm9O08gVpo39x55amr+0hQLj4G7nP89wZ8jWqbYdSkxc7IrLeuYKV5iUx
-         K4pw==
-X-Gm-Message-State: AEkooutQmdNICBkm35cXx8TvA71Y68iiR1NcG3FFlZedLhk0X4Zy1JgeRKU/iUbtrJ7xWQ==
-X-Received: by 10.28.15.194 with SMTP id 185mr5711243wmp.58.1470439596852;
-        Fri, 05 Aug 2016 16:26:36 -0700 (PDT)
-Received: from slxbook4.fritz.box (p5DDB641A.dip0.t-ipconnect.de. [93.219.100.26])
-        by smtp.gmail.com with ESMTPSA id x203sm10759958wmg.0.2016.08.05.16.26.35
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 05 Aug 2016 16:26:36 -0700 (PDT)
+	id S1751091AbcHGFMv (ORCPT <rfc822;e@80x24.org>);
+	Sun, 7 Aug 2016 01:12:51 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:39292 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750881AbcHGFMu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Aug 2016 01:12:50 -0400
+Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mx1.redhat.com (Postfix) with ESMTPS id 6B55E83F38;
+	Sun,  7 Aug 2016 05:12:28 +0000 (UTC)
+Received: from redhat.com (vpn1-7-9.ams2.redhat.com [10.36.7.9])
+	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id u775CObk027037;
+	Sun, 7 Aug 2016 01:12:25 -0400
+Date:	Sun, 7 Aug 2016 08:12:23 +0300
+From:	"Michael S. Tsirkin" <mst@redhat.com>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Martin Fick <mfick@codeaurora.org>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Git List <git@vger.kernel.org>, repo-discuss@googlegroups.com
+Subject: Re: storing cover letter of a patch series?
+Message-ID: <20160807080857-mutt-send-email-mst@kernel.org>
+References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com>
+ <xmqqh9n241el.fsf@gitster.mtv.corp.google.com>
+ <18979417.pyyHNUINeQ@mfick1-lnx>
+ <xmqqzj0u2k5m.fsf@gitster.mtv.corp.google.com>
+ <20160804234920.GA27250@redhat.com>
+ <xmqqy44bxm0h.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v2 5/5] convert: add filter.<driver>.process option
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20160805185559.GB463@starla>
-Date:	Sat, 6 Aug 2016 01:26:34 +0200
-Cc:	Git Mailing List <git@vger.kernel.org>, gitster@pobox.com,
-	jnareb@gmail.com, tboegi@web.de, mlbright@gmail.com,
-	remi.galan-alfonso@ensimag.grenoble-inp.fr, pclouds@gmail.com,
-	ramsay@ramsayjones.plus.com, peff@peff.net
-Content-Transfer-Encoding: 8BIT
-Message-Id: <4499EF4B-974C-4D59-B95F-541EA4CF4078@gmail.com>
-References: <20160722154900.19477-1-larsxschneider@gmail.com> <20160727000605.49982-1-larsxschneider@gmail.com> <20160727000605.49982-6-larsxschneider@gmail.com> <20160727094102.GA31374@starla> <64C7D52F-9030-460C-8F61-4076F5C1DDF6@gmail.com> <20160805185559.GB463@starla>
-To:	Eric Wong <e@80x24.org>
-X-Mailer: Apple Mail (2.3124)
+Content-Disposition: inline
+In-Reply-To: <xmqqy44bxm0h.fsf@gitster.mtv.corp.google.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.27]); Sun, 07 Aug 2016 05:12:28 +0000 (UTC)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-
-> On 05 Aug 2016, at 20:55, Eric Wong <e@80x24.org> wrote:
+On Fri, Aug 05, 2016 at 08:39:58AM -0700, Junio C Hamano wrote:
+> "Michael S. Tsirkin" <mst@redhat.com> writes:
 > 
-> Lars Schneider <larsxschneider@gmail.com> wrote:
->>> On 27 Jul 2016, at 11:41, Eric Wong <e@80x24.org> wrote:
->>> larsxschneider@gmail.com wrote:
->>>> +static int apply_protocol_filter(const char *path, const char *src, size_t len,
->>>> +						int fd, struct strbuf *dst, const char *cmd,
->>>> +						const char *filter_type)
->>>> +{
->>> 
->>> <snip>
->>> 
->>>> +	if (fd >= 0 && !src) {
->>>> +		ret &= fstat(fd, &file_stat) != -1;
->>>> +		len = file_stat.st_size;
->>> 
->>> Same truncation bug I noticed earlier; what I originally meant
->>> is the `len' arg probably ought to be off_t, here, not size_t.
->>> 32-bit x86 Linux systems have 32-bit size_t (unsigned), but
->>> large file support means off_t is 64-bits (signed).
->> 
->> OK. Would it be OK to keep size_t for this patch series?
+> > On Thu, Sep 10, 2015 at 11:39:49AM -0700, Junio C Hamano wrote:
+> >> The problem with "empty commit trick" is that it is a commit whose
+> >> sole purpose is to describe the series, and its presence makes it
+> >> clear where the series ends, but the topology does not tell where
+> >> the series begins, so it is an unsatisifactory half-measure.
+> >
+> > Actually, when using topic branches the series always ends at head, so
+> > it's better to keep the empty commit where series begins.
 > 
-> I think there should at least be a truncation warning (or die)
-> for larger-than-4GB files on 32-bit.  I don't know how common
-> they are for git-lfs users.
+> But that would mean that you would need to destroy and recreate more
+> commits than you would need to.  If you have a five-commit series
+> (with the bottom "description" one, you would have six commits) and
+> you are already happy with the bottom two but want to update the
+> third one, you wuld have to "rebase -i" all six of them, reword the
+> bottom "description" to adjust it to describe the new version of the
+> third one _before_ you even do the actual update of the third one.
 > 
-> Perhaps using xsize_t in git-compat-util.h works for now:
+> That somehow feels backwards, and that backward-ness comes from the
+> fact that you abused a single-parent commit for the purpose it is
+> not meant to be used (i.e. they are to describe individual changes),
+> because you did not find a better existing mechanism (and I suspect
+> there isn't any, in which case the solution is to invent one, not
+> abusing an existing mechanism that is not suited for it).
+
+A flag that marks a commit "beginning of series" then?
+
+> If this were part of a workflow like this, I would understand it:
 > 
-> 	len = xsize_t(file_stat.st_size);
+>  * Build a N-commit series on a topic.
+> 
+>  * You keep a "local integration testing" branch ("lit"), forked
+>    from a mainline and updated _every time_ you do something to your
+>    topics.  You may or may not publish this branch.  This is the
+>    aggregation of what you locally have done, a convenient place to
+>    test individual topics together before they get published.
 
-Thanks for the hint! Should I add the same check to sha1_file's use
-of fstat in line 1002 or is it not needed there?
+This seems to assume topic branches. I know you use them,
+but not overyone does, I don't.
 
-https://github.com/git/git/blob/c6b0597e9ac7277e148e2fd4d7615ac6e0bfb661/sha1_file.c#L1002
+>  * A new topic, when you merge it to the "lit" branch, you describe
+>    the cover as the merge commit message.
+> 
+>  * When you updated an existing topic, you tell a tool like "rebase
+>    -i -p" to recreate "lit" branch on top of the mainline.  This
+>    would give you an opportunity to update the cover.
 
-Thanks,
-Lars
+Combining patchsets might need conflict resolution,
+redoing this each time might be a lot of work.
+
+> Now the tool support for the last one is the missing piece.  In
+> addition to what "rebase -i -p" would, it at least need to
+> automatically figure out which topics have been updated, so that
+> their merge commit log messages need to be given in the editor to
+> update, while carrying over the merge log message for other topics
+> intact (by default).
+> 
+> With that, you should also be able to teach "format-patch --cover"
+> to take these merge messages on "lit" into account when it creates
+> the cover letter.
