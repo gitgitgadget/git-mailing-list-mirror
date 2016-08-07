@@ -7,72 +7,68 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD1762018E
-	for <e@80x24.org>; Sun,  7 Aug 2016 08:53:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8A1E2018E
+	for <e@80x24.org>; Sun,  7 Aug 2016 09:07:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751646AbcHGIxv (ORCPT <rfc822;e@80x24.org>);
-	Sun, 7 Aug 2016 04:53:51 -0400
-Received: from mout.gmx.net ([212.227.17.22]:60915 "EHLO mout.gmx.net"
+	id S1751559AbcHGJHB (ORCPT <rfc822;e@80x24.org>);
+	Sun, 7 Aug 2016 05:07:01 -0400
+Received: from mout.gmx.net ([212.227.15.19]:55404 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751629AbcHGIxu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Aug 2016 04:53:50 -0400
-Received: from virtualbox ([37.24.141.218]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0M2L60-1bDPVT0Aq4-00s9uZ; Sun, 07 Aug 2016 10:53:35
+	id S1751399AbcHGJHB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Aug 2016 05:07:01 -0400
+Received: from virtualbox ([37.24.141.218]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MVe87-1bkDkv0v6d-00YzBK; Sun, 07 Aug 2016 11:06:54
  +0200
-Date:	Sun, 7 Aug 2016 10:53:34 +0200 (CEST)
+Date:	Sun, 7 Aug 2016 11:06:52 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-cc:	Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] use strbuf_add_unique_abbrev() for adding short hashes
-In-Reply-To: <57A6050D.50200@web.de>
-Message-ID: <alpine.DEB.2.20.1608071051540.5786@virtualbox>
-References: <57A6050D.50200@web.de>
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Aug 2016, #02; Thu, 4)
+In-Reply-To: <xmqqshukyxqw.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1608071104070.5786@virtualbox>
+References: <xmqqshukyxqw.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-716803516-1470560015=:5786"
-X-Provags-ID: V03:K0:TTUZw89y+CQwU5qB0YZpWz863N8fxKiHtTWAxLjSLF4cZF3UrAa
- fh2J9rQ9RkGLRj5xuNlokpRo+eAMtGAEF6e0aOVCq76/v4hK7k7+cb99h13abMlvrLX0usP
- l8G89Onp7qSXHzx8AQzkSJEjruaNgOvrGBf49/xGk+yhZceWOlrtCXpXq9kKLAAl1qEx1QS
- 1Z3AF/OiEbdnnezeYe8pA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:HahDhu32TPE=:SqJ5v4zcoZT2Prf7vjfe7B
- R17Syw+5VzKGDi4WdSIxH5nMbVKpMN5FAAvxNAf+c9ezwPDSaR/vhan6JTlEj2cmG53mW7G79
- h4NqV2xaLqTtshEq3wze4a4CADcWHS5+xUypZwNHYB7727H1TXUT0x7Bra7XAcTmT/DBzg/qH
- up6W2iPUuho8+a+ol0GkD8uFZ/x9YPqhQweEIOXdQh8w7/66fIhSweI4UNcQxgtZkbTxHl6y0
- REgk/eqR9yAPRI5ds4focBH3Dul5gLZjqIQEZGtDHRkZ4B4od5oBlr64CT1QiAWozAvViSWY3
- xpryveL7oKvXutdK0lIv1PX74c9g8jrjxi7Gqi57Ch2GzWiQz0sLqhd7EYqY4SPaJvHTKT8nM
- NzgsXNqDxZVecdcw5o0Y+8KcOsSy45ap0SblI0oPbQ9Wf8d0lQ4bRAdBPD8wZH9vbztaVBrBg
- kmWKTdtYtQTrqkUL99dC7rMfSaReVbVQKtMrClIVrTxZC2DCasI+8PLVjzEAK9QHGp65XyFpJ
- YH2TAaBGHDqVpF1N7U/O9vRXfv+iT6j2mMqdaVAMz4qBpmGFlcwhCqljioFMsJiJsD4D8+TtM
- Mvta+IHsFJ0d2cThrHCeCz85rybaFCsGD7H2NaOf4gocSdMR9IndYVBztVpTBHdZj4IxE4X2b
- ZJWrbEMcqR72hyFeyBxWgHEe/0vuRiYvBHwUK0FKi25HPf2YpIKAV5wUqvrFOZW+YwKMux9ox
- cjJP7RewO4Q8mv2z7GX/XTUFhq8yzQY1iorIRdn7qRSYEXETTKGleutn3hydmvUNE0JgA4cFw
- ghfAOmW
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:3aGC+Jjvh8MpAjXs1L2RuQTdn69fDm8K1/VMTGlxKl7bbPFAxjT
+ T6RMBGxPMuEa0eiR3tHhSfqv5dhalgc0Dt7T/De4TLHxGJ+mcKgmAg+x54sa9YWqwt/aTb8
+ I4AKJxVvHoCxiSbcMp1eLKH5mydOwcnXUmTW/W0xwjr0nNFROI+LpnGeu5jVdJItn9o8n8A
+ V6Wgw/vI1zlelDB0pOa7Q==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:6n/1Sg/DWEA=:F+jN6WMvtAFcVfIJQuivBj
+ CZh05u/fPxqY0dO7Xpc19OEgvKBqmYJLDqbv+FgjGxvMUaqkxwz51l7X5TeyEQ7Flk0wNdXJK
+ oN9DoZrsD8vsYSvHlS9Tq6pdv7gl65jTdZzikNXZmznFVLSOxz9mjJsfDFiAlZ4U3ULmyhW15
+ 0Kil+JjJLJCGnMKhOmV6oX52aMJU1+eH08wPAS+trH4SkhFNm1VqsdRG9FNLbF8clpFqpyhgH
+ 50gqA5gFn8lgkD2tvzW/Fpw4kEBK5dGq2OB44VQgbpnvB6akuPHR1qgDWghJCEdP+By4z59Qc
+ HI5lcbBgSbjESD7gXjvQJH/w19N1fGIVBcjMt55JXP7vJQV6jmfhbAAI7LTa+0qNxSzRM1bF9
+ t4ZXUGVI+v5ajY+ZJVSQW49bnXili8C7WlvuwmIotu+Qllr1GW8/ZtbK+y2JHzUjzAonbPfng
+ KpPxoK1QXak8tZoE3zg0Fvecwt+OZB2JePLcaM0k97KhhF7vkCBV0rhpYup8iJMfB0AtpxtoQ
+ /FDRsw3Sodk/T+Ec/2QVOablFrYllx/9I89SEFnZFmKyF4nmArdskjaci8d40Sncvokyz1gXj
+ Y+unaTTI+dqFuvYQjbL22mPINbr2E99akKdcPIgijj973ctK8obIiQ4q0wS0HbSHN6/mqvFMU
+ hloLhSvIRWxJd6Uh81NduRYLxBA2UUKFn8JlmlTyDonPM97/P8yMWlr/6S1O85tE2n0pvKHm6
+ u42RJ0mS1VVdZ/bYKz3/T+yQ6Dg5pPNSrzRqfyVxCzYyIWJ83UZSZslpvbMPX1Zbke5acsPhA
+ mLfv6by
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323329-716803516-1470560015=:5786
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Thu, 4 Aug 2016, Junio C Hamano wrote:
 
-Hi Ren=C3=A9,
+> * js/import-tars-hardlinks (2016-08-03) 1 commit
+>  - import-tars: support hard links
+> 
+>  "import-tars" fast-import script (in contrib/) used to ignore a
+>  hardlink target and replaced it with an empty file, which has been
+>  corrected to record the same blob as the other file the hardlink is
+>  shared with.
 
-On Sat, 6 Aug 2016, Ren=C3=A9 Scharfe wrote:
+For the record: this came up, and is required, for my CI work on Windows,
+as many MSYS2 packages contain hard-linked files (think about *all* the
+builtins in Git, for example). I will use Git to synchronize MSYS2 setups
+between build agents.
 
-> Call strbuf_add_unique_abbrev() to add abbreviated hashes to strbufs
-> instead of taking detours through find_unique_abbrev() and its static
-> buffer.  This is shorter and a bit more efficient.
-
-And less error-prone.
-
-It is also a thing I need to change in my upcoming rebase--helper patches:
-I had not known about this function.
-
-Thank you,
+Ciao,
 Dscho
---8323329-716803516-1470560015=:5786--
