@@ -2,111 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFF971F859
-	for <e@80x24.org>; Sun,  7 Aug 2016 05:12:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F36F2018E
+	for <e@80x24.org>; Sun,  7 Aug 2016 08:34:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751091AbcHGFMv (ORCPT <rfc822;e@80x24.org>);
-	Sun, 7 Aug 2016 01:12:51 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:39292 "EHLO mx1.redhat.com"
+	id S1751476AbcHGIea (ORCPT <rfc822;e@80x24.org>);
+	Sun, 7 Aug 2016 04:34:30 -0400
+Received: from mout.gmx.net ([212.227.17.21]:52780 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750881AbcHGFMu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Aug 2016 01:12:50 -0400
-Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mx1.redhat.com (Postfix) with ESMTPS id 6B55E83F38;
-	Sun,  7 Aug 2016 05:12:28 +0000 (UTC)
-Received: from redhat.com (vpn1-7-9.ams2.redhat.com [10.36.7.9])
-	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id u775CObk027037;
-	Sun, 7 Aug 2016 01:12:25 -0400
-Date:	Sun, 7 Aug 2016 08:12:23 +0300
-From:	"Michael S. Tsirkin" <mst@redhat.com>
+	id S1751399AbcHGIe3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Aug 2016 04:34:29 -0400
+Received: from virtualbox ([37.24.141.218]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0Lusmr-1b5x1t1cgb-0101b0; Sun, 07 Aug 2016 10:34:16
+ +0200
+Date:	Sun, 7 Aug 2016 10:34:13 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
 To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Martin Fick <mfick@codeaurora.org>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Git List <git@vger.kernel.org>, repo-discuss@googlegroups.com
-Subject: Re: storing cover letter of a patch series?
-Message-ID: <20160807080857-mutt-send-email-mst@kernel.org>
-References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com>
- <xmqqh9n241el.fsf@gitster.mtv.corp.google.com>
- <18979417.pyyHNUINeQ@mfick1-lnx>
- <xmqqzj0u2k5m.fsf@gitster.mtv.corp.google.com>
- <20160804234920.GA27250@redhat.com>
- <xmqqy44bxm0h.fsf@gitster.mtv.corp.google.com>
+cc:	Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
+	Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v5 4/9] status: collect per-file data for
+ --porcelain=v2
+In-Reply-To: <xmqqbn16vnlf.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1608071026120.5786@virtualbox>
+References: <1470434434-64283-1-git-send-email-git@jeffhostetler.com> <1470434434-64283-5-git-send-email-git@jeffhostetler.com> <xmqqbn16vnlf.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqy44bxm0h.fsf@gitster.mtv.corp.google.com>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.27]); Sun, 07 Aug 2016 05:12:28 +0000 (UTC)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:hK94ZY+6+8cIpeyWYIWA3Hxd8OrsdBvoseRxBcrH1oX7vgEn6jU
+ Mia0rOfqCZkwUMFXf1tY0GQQPZVfxnyNTiSqSUyVPZR8Dt+mom6X2j2O2nyLn6UzduHNKkE
+ fGyLTygatXSUYzwq63EP+wegUBl8ufFHg/Rb20CH2l8o36UkBEJB7smULSGGhIvg1A8d0FB
+ 8wwnqfS78xhlVd6kvU3jA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:B3XFx+916eU=:4lmB5Fk/rEwzQROEr5NlKr
+ 0A6bGmYNWsFZDjQICGl1iGhNZ65/diCL1QhokNvPG7apZjKEKqDFAJucithQUNK9F/qDxw1E6
+ +ubDrALCcOJXbEI6XZ4jJHxECSiXnGCJEdllfc+ZV4lCmSwJY9TWsErJBkwCYKsx1zzcLeQBV
+ GG4C752jB5QWJLMwa8lUbeil3Nx44fjh203Ec/3ShnO6Y5nMDQ5TYvN2hF+TgdEuNYbZQ+1u/
+ EfA7ZOfmS/NBOE9uy0qbsaJWBdn3nM4mMsP3wxF80X3Ym062uotH2KNApiqOHFYSoFluLAq+E
+ l6FDbIhtRX3BqwZnGte787cEG5zyhCVVJEK0kZ0GiBUFvOrVbFsvD3l/NAlDi+HORLlxNzc3l
+ 9XtgWczSnFAGEJFG6Xyw05nlVimYX1fZ3PBtkj9PC4U9pAgZenO8eKEHXsm1u8GJBthSS/FH2
+ TYVpsH4opX2Zn583Shf73iMQcIZiiw6u4ZMqdVTJjHOWjW211vxWtMwCmf48OeY+Yon9YZZq8
+ G/VfVvPkIiDLS02L8i219MvcK8taSp7tx3Q3Ole8amSOPVv3dc/3dyU3wkJGFPSKrd/yk9IWM
+ k5l/vqsCcgthdjcJZ/UOJZsNPUb0mZCbUPGuyG1Fl2kPTg/iPX381YQ8JnGjsKDXl+pyXrzNL
+ U3kmRKZES0TxgRVwAaiY/NIz7PMBSgOS/uvuVW4ynzJ4eCBcsCbduAPa9QLnMBzu1qQHu5vu6
+ SMmyxER1HN+rLw8jAepU8I+cF288GQG+6Gcj6taaRDCaYyU8SdrwIAaj2lDQoWEnMFnIUpy17
+ 17MYUlE
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Aug 05, 2016 at 08:39:58AM -0700, Junio C Hamano wrote:
-> "Michael S. Tsirkin" <mst@redhat.com> writes:
-> 
-> > On Thu, Sep 10, 2015 at 11:39:49AM -0700, Junio C Hamano wrote:
-> >> The problem with "empty commit trick" is that it is a commit whose
-> >> sole purpose is to describe the series, and its presence makes it
-> >> clear where the series ends, but the topology does not tell where
-> >> the series begins, so it is an unsatisifactory half-measure.
-> >
-> > Actually, when using topic branches the series always ends at head, so
-> > it's better to keep the empty commit where series begins.
-> 
-> But that would mean that you would need to destroy and recreate more
-> commits than you would need to.  If you have a five-commit series
-> (with the bottom "description" one, you would have six commits) and
-> you are already happy with the bottom two but want to update the
-> third one, you wuld have to "rebase -i" all six of them, reword the
-> bottom "description" to adjust it to describe the new version of the
-> third one _before_ you even do the actual update of the third one.
-> 
-> That somehow feels backwards, and that backward-ness comes from the
-> fact that you abused a single-parent commit for the purpose it is
-> not meant to be used (i.e. they are to describe individual changes),
-> because you did not find a better existing mechanism (and I suspect
-> there isn't any, in which case the solution is to invent one, not
-> abusing an existing mechanism that is not suited for it).
+Hi Junio,
 
-A flag that marks a commit "beginning of series" then?
+On Fri, 5 Aug 2016, Junio C Hamano wrote:
 
-> If this were part of a workflow like this, I would understand it:
+> Jeff Hostetler <git@jeffhostetler.com> writes:
 > 
->  * Build a N-commit series on a topic.
+> >  		if (ce_stage(ce)) {
+> >  			d->index_status = DIFF_STATUS_UNMERGED;
+> >  			d->stagemask |= (1 << (ce_stage(ce) - 1));
+> > +			/*
+> > +			 * Don't bother setting {mode,oid}_{head,index} since the print
+> > +			 * code will output the stage values directly and not use the
+> > +			 * values in these fields.
+> > +			 */
+> >  		}
+> > -		else
+> > +		else {
+> >  			d->index_status = DIFF_STATUS_ADDED;
+> > +			/* Leave {mode,oid}_head zero for adds. */
+> > +			d->mode_index = ce->ce_mode;
+> > +			hashcpy(d->oid_index.hash, ce->sha1);
+> > +		}
 > 
->  * You keep a "local integration testing" branch ("lit"), forked
->    from a mainline and updated _every time_ you do something to your
->    topics.  You may or may not publish this branch.  This is the
->    aggregation of what you locally have done, a convenient place to
->    test individual topics together before they get published.
-
-This seems to assume topic branches. I know you use them,
-but not overyone does, I don't.
-
->  * A new topic, when you merge it to the "lit" branch, you describe
->    the cover as the merge commit message.
+> Not a big deal (no need to resend for this one alone), but let's
+> make the above properly formatted, i.e.
 > 
->  * When you updated an existing topic, you tell a tool like "rebase
->    -i -p" to recreate "lit" branch on top of the mainline.  This
->    would give you an opportunity to update the cover.
+> 		if (ce_stage(ce)) {
+>                 	...
+> 		} else {
+>                 	...
+> 		}                        
 
-Combining patchsets might need conflict resolution,
-redoing this each time might be a lot of work.
+Do I understand correctly that your objections is against having the curly
+brace before the "else" on its own line?
 
-> Now the tool support for the last one is the missing piece.  In
-> addition to what "rebase -i -p" would, it at least need to
-> automatically figure out which topics have been updated, so that
-> their merge commit log messages need to be given in the editor to
-> update, while carrying over the merge log message for other topics
-> intact (by default).
-> 
-> With that, you should also be able to teach "format-patch --cover"
-> to take these merge messages on "lit" into account when it creates
-> the cover letter.
+If so, when did our coding style change? I vividly remember that we
+strongly favored putting the "else" on a new line after a closing brace,
+to make diffs nicer in case the braces were removed or added.
+
+BTW your suggestion has 24 extra spaces after the final closing brace ;-)
+
+Ciao,
+Dscho
