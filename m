@@ -6,78 +6,81 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F06172018E
-	for <e@80x24.org>; Mon,  8 Aug 2016 18:01:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27D242018E
+	for <e@80x24.org>; Mon,  8 Aug 2016 18:08:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752295AbcHHSBy (ORCPT <rfc822;e@80x24.org>);
-	Mon, 8 Aug 2016 14:01:54 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63487 "EHLO
+	id S1752168AbcHHSIj (ORCPT <rfc822;e@80x24.org>);
+	Mon, 8 Aug 2016 14:08:39 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51240 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752243AbcHHSBx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2016 14:01:53 -0400
+	with ESMTP id S1752054AbcHHSIi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2016 14:08:38 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 016B132650;
-	Mon,  8 Aug 2016 14:01:52 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 36F8633C8C;
+	Mon,  8 Aug 2016 14:08:37 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DEtLCtIa/vZhpGNd1BJZJ4fxGeI=; b=bKIIPp
-	IHXwoXUgHUuNEE9vrND0/aXwiWylguHgKiEGWZexHtqlH3F8d99DzXHz9Qo2UleN
-	4FH76u39YY8SoyLv7Hy3u6l0Mp7+QMj7S2AEi/iZVG24KtO/2INcaiamCNfOYz8W
-	FotRUjQ43X5cF02Nz/AAMWRgFpvi7qe7uHGpM=
+	:content-type; s=sasl; bh=c4AQYRC4LcwdA4pqYhORUZaqfVQ=; b=vI1tLy
+	cpfpO25vVTwslifgrQl8oDDK7w8+D7c/LHZuy8Eds0ct3+y+wYmDzooxQ6YNXK5b
+	i9m2RAV+ka2mEdZCeQQ3NWHwUwnJ611lEQwK35WghePk9GxzDC3pJw413Ap3vekR
+	SoktaQHmka9qxfYDXQgYVwe7nVEJka73V+qzc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oMxWitcNaIszygVfsFMzMjZyoR3Baciv
-	lngHSpbuolFtiMw7rIRrtcaqRVLDjKK8DA6hWf2NozwHynRWXZjfAQYfTgBzk8Bz
-	Lkzn8TA2eqazYHwivSmyKtZAO+7kxAyYa1FjD4B11b91aGGuyUsZZtuYYgpsLhSB
-	Oa/rrGDh2uA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id ECB633264F;
-	Mon,  8 Aug 2016 14:01:51 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=eYJKEYJ9VbGUeh6X7CO/OeXJ8LPRehYo
+	8wkJjQwqUtK2NeAooh1gJ+DWIU+GeIxBjY35tNdhIAhDvF+XxwDiqmAxLjKVRgkm
+	1oP1nBzo9ZNalH7G6vQyfFSyZySCjaHv6IcYoswNeWmNrEA7DRl/9RzH9RT2Jsm1
+	r0sDE2cKzEw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2DA6533C8B;
+	Mon,  8 Aug 2016 14:08:37 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 778543264E;
-	Mon,  8 Aug 2016 14:01:51 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 93C5A33C89;
+	Mon,  8 Aug 2016 14:08:36 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-To:	Josh Triplett <josh@joshtriplett.org>
-Cc:	Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] format-patch: Add a config option format.from to set the default for --from
-References: <cover.4d006cadf197f80d899ad7d7d56d8ba41f574adf.1469905775.git-series.josh@joshtriplett.org>
-	<20160730191111.cd6ay3l4hweyjf7f@x>
-	<20160801173847.qph2tora75h6ebsk@sigill.intra.peff.net>
-	<20160807225701.ucv2xunq5vs4uedk@x>
-	<xmqqtwewggwi.fsf@gitster.mtv.corp.google.com>
-	<20160808043458.jrgkoy2i65hxsaeo@x>
-Date:	Mon, 08 Aug 2016 11:01:49 -0700
-In-Reply-To: <20160808043458.jrgkoy2i65hxsaeo@x> (Josh Triplett's message of
-	"Sun, 7 Aug 2016 18:34:59 -1000")
-Message-ID: <xmqqa8gnf8c2.fsf@gitster.mtv.corp.google.com>
+To:	Kirill Smelkov <kirr@nexedi.com>
+Cc:	Jeff King <peff@peff.net>, Vicent Marti <tanoku@gmail.com>,
+	=?utf-8?Q?J=C3=A9rome?= Perrin <jerome@nexedi.com>,
+	Isabelle Vallet <isabelle.vallet@nexedi.com>,
+	Kazuhiko Shiozaki <kazuhiko@nexedi.com>,
+	Julien Muchembled <jm@nexedi.com>, git@vger.kernel.org
+Subject: Re: [PATCH v4 2/2] pack-objects: Teach it to use reachability bitmap index when generating non-stdout pack too
+References: <20160729074051.GA5987@teco.navytux.spb.ru>
+	<20160729074746.31862-1-kirr@nexedi.com>
+	<20160808135600.c6hdlqwwtqe7thd5@sigill.intra.peff.net>
+	<20160808154054.GB3995@teco.navytux.spb.ru>
+Date:	Mon, 08 Aug 2016 11:08:34 -0700
+In-Reply-To: <20160808154054.GB3995@teco.navytux.spb.ru> (Kirill Smelkov's
+	message of "Mon, 8 Aug 2016 18:40:54 +0300")
+Message-ID: <xmqq60rbf80t.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 2EE91316-5D92-11E6-AD5E-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 206A9606-5D93-11E6-A237-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Josh Triplett <josh@joshtriplett.org> writes:
+Kirill Smelkov <kirr@nexedi.com> writes:
 
-> I didn't realize you had already taken the patch series into next; I'd
-> assumed from the various comments that you expected me to reroll it
-> before you'd take it.
+> Thanks for the info. I did not knew about show-index when I was starting
+> to work on this and later it just came out of sight. Please find
+> corrected patch below.
 >
-> Would you like me to write something up for the release notes regarding
-> plans to change the default?
+> ---- 8< ----
+> From: Kirill Smelkov <kirr@nexedi.com>
+> Date: Fri, 29 Jul 2016 10:47:46 +0300
+> Subject: [PATCH v5] pack-objects: Teach it to use reachability bitmap index when
+>  generating non-stdout pack too
 
-Given that we are at week #8 and -rc0 is coming soon, I suspect that
-that note will happen not in this release but in the next one.
+Please don't do this (not the patch text itself, but saying "Please
+find ..." and attaching the patch AFTER 60+ lines of response).
+When going through old/read messages to see if there are patches
+that fell through the cracks, if it is not immediately clear in the
+top part of the message that it contains an updated patch, such a
+patch will certainly be missed.
 
-The patch in question (1/2) is merely a new convenience feature that
-does not have to say anything about the future default, so we are
-good with 1/2 as-is (not v2 version of it, but the original one
-without enum), I think.
-
-
-
-
+Please say "I'll follow up with a corrected patch" instead of
+"Please find ..." and respond to that message with just the patch.
