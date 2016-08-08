@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A23D2018E
+	by dcvr.yhbt.net (Postfix) with ESMTP id C58AE2018E
 	for <e@80x24.org>; Mon,  8 Aug 2016 21:05:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752829AbcHHVFG (ORCPT <rfc822;e@80x24.org>);
-	Mon, 8 Aug 2016 17:05:06 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34148 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752802AbcHHVE4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2016 17:04:56 -0400
-Received: by mail-wm0-f68.google.com with SMTP id q128so17869122wma.1
-        for <git@vger.kernel.org>; Mon, 08 Aug 2016 14:04:55 -0700 (PDT)
+	id S1752839AbcHHVFK (ORCPT <rfc822;e@80x24.org>);
+	Mon, 8 Aug 2016 17:05:10 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:35059 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752786AbcHHVEs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2016 17:04:48 -0400
+Received: by mail-wm0-f67.google.com with SMTP id i5so17868469wmg.2
+        for <git@vger.kernel.org>; Mon, 08 Aug 2016 14:04:47 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=bPoCfrMMbOb1ZlE4EzRaJnTWGlZgCkNdg+kkjxvg2JM=;
-        b=vnwiKmjT7m7qek4oLjRhP64St026IzzhQppKTRJMOEkErjG751vFdC/8U37znOtv5l
-         RyKVDB0aIF9gTtLEUCVSx9sT0K6yWY5NZ4SpyHZWqazgWuDcLKYFKpB6uMxTyH6j2vYZ
-         l13/ATrDY44uQpbnQG/E55wAJgXGHG3+jNl7uJInAgekhmbA+X2qfNcAIaXSjexLq8rT
-         mZigphed1yk5m1LHLyl+hYERei0tidrYiuUsJWe/lh0PG9DTCCs8iJ1JalzHrHaM0Ar0
-         B0hzHqteiiuKZqSHzZqkw1kNAh/q5v+DUXT8TD1nGb/bbnHGArmS3FJ8UVC5VRrOhjyU
-         1XBw==
+        bh=WYGucJ9nPzonxWH3ckRxpOPMc/OoBjb6Ffnby1I420k=;
+        b=jt+hOc3SPzyZJCKXV4nucD2QOXvArACpE5oOls3pgkOR54xTN5EWS+IprlOquJ3fgX
+         mXIHdLfIkVbtwvwqJznk/EUebZ6QkvYS9eKkfANJZQXLxa7NnOiDHVSsdJB1we4dsuhR
+         ovDUuK1QSidueaJxewoWk3YDDRo8pioC3hr3zYC8PrQgVTpILOzfvZsnXYq5KpOhRBg3
+         VFkPlBVJBwd+T3F+Y1z5GuFlfjFGrayp+3VMAC1ry1ZWyjGBnSeT6ipGvc9fQiJKp5hp
+         SzfEA7HGV+GOQNu0kNshPLMZ/Z48jd2HrOF63PGuasP/rSTnpuV4qMf+6fmhokXsc0Cr
+         60Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=bPoCfrMMbOb1ZlE4EzRaJnTWGlZgCkNdg+kkjxvg2JM=;
-        b=Fudc1UUyITYPew+MPDoKr9x1/hfu+6Omw8+X4hekgVPCjkD31pUsF5ce7AJYDPPsci
-         OT1HBAR36F9EVjec5kLGbLZU5RQU1vDvUcid0pYW3RR4Aw7EETwnxUKXZn5ikAs1jEMX
-         Enx+0T1p47BizZm/6+s3vP8neRyaylahdAAYdGvxWsah4rHVYPrlF98Jkj5AD7ZOP8hq
-         VbrMe6LkhG84hZappzzV7BayJIyoSHM5lXZCmHZ0enuAgVcOFk+evFnYQUD6RewqHKsl
-         mmWlJJh7HCOXtjH7O/joVvhJFbgpWGc7T1pk9mcLliW7mRW0ZA/ASkHFv/cNHZnMRptv
-         nFAg==
-X-Gm-Message-State: AEkoouu1O6ORPilaOZuIFtWm/v01Bfpxe5mxty6G+1cznQljQ9wk7eucrulAZQA+7uIYcw==
-X-Received: by 10.28.152.5 with SMTP id a5mr18513065wme.76.1470690294908;
-        Mon, 08 Aug 2016 14:04:54 -0700 (PDT)
+        bh=WYGucJ9nPzonxWH3ckRxpOPMc/OoBjb6Ffnby1I420k=;
+        b=azX1iSIbU/54ViB9vkgPq0kCPu5z5JI33QeL3JMQkBduDoMXRuUGAwMUdDhGmSU6Mg
+         MRcKbd/KPAj1vxP9kG4WoBenakYH4RNeQxOk/wyin3qsfse7mmEX6Pn95ukiMDXIG2DM
+         H84EmI/HXraoQegRuXUiiJJFPuBtiTGYJTPrmx3HR6/eOsyHI/rZBjFGhTYs17VD11b7
+         MzX+wwmKF75CqpgyFIWOej/CVfzUq4yDmNjH91c8U792854Mbky8d0PkFJ2JhktgTe+N
+         Ixip+E/hqNcfAGQ5gHviU4dxWjM/irgJP7aQP3vVYc0DVMwVdMcZhUgdFwJCCbfNOs0N
+         Gomw==
+X-Gm-Message-State: AEkoouu20d2BaBMld7rGXDWnjd7zokMIfqYNQIN+DfAIVPwKi5KYWkKPTfcNlNPCTTn/+Q==
+X-Received: by 10.194.65.170 with SMTP id y10mr24239279wjs.26.1470690286621;
+        Mon, 08 Aug 2016 14:04:46 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id o2sm8539048wjo.3.2016.08.08.14.04.53
+        by smtp.gmail.com with ESMTPSA id o2sm8539048wjo.3.2016.08.08.14.04.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 08 Aug 2016 14:04:54 -0700 (PDT)
+        Mon, 08 Aug 2016 14:04:45 -0700 (PDT)
 From:	Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
 To:	git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v10 39/40] apply: refactor `git apply` option parsing
-Date:	Mon,  8 Aug 2016 23:03:36 +0200
-Message-Id: <20160808210337.5038-40-chriscool@tuxfamily.org>
+Subject: [PATCH v10 33/40] environment: add set_index_file()
+Date:	Mon,  8 Aug 2016 23:03:30 +0200
+Message-Id: <20160808210337.5038-34-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.2.614.g5428e0c
 In-Reply-To: <20160808210337.5038-1-chriscool@tuxfamily.org>
 References: <20160808210337.5038-1-chriscool@tuxfamily.org>
@@ -70,296 +70,117 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Parsing `git apply` options can be useful to other commands that
-want to call the libified apply functionality, because this way
-they can easily pass some options from their own command line to
-the libified apply functionality.
+Introduce set_index_file() to be able to temporarily change the
+index file.
 
-This will be used by `git am` in a following patch.
+Yeah, this is a short cut and this new function should not be used
+by other code.
 
-To make this possible, let's refactor the `git apply` option
-parsing code into a new libified apply_parse_options() function.
+It adds a small technical debt, because unfortunately a very big
+technical debt already exists as the apply code and a lot of other
+"libified" code already call functions like read_cache(),
+discard_cache() and cache_name_pos() instead of functions like
+read_index_from(), discard_index() and index_name_pos() that are
+available when the NO_THE_INDEX_COMPATIBILITY_MACROS env variable
+is defined.
 
-Doing that makes it possible to remove some functions definitions
-from "apply.h" and make them static in "apply.c".
+Avoiding this small new technical debt is unfortunately not as simple
+as just changing these functions in "apply.c", as these functions can
+be called by other "libified" code that can indirectly be called by
+apply code.
 
-Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+For example cache_name_pos() is used in "dir.c" and "diff.c", and then
+"dir.h" and "diff.h" are included in many other "libified" *.c files
+(including "apply.c"). So it is very difficult to make sure that apply
+code doesn't indirectly call any of the problematic functions.
+
+And even if it was possible to make sure that now "apply.c" doesn't
+indirectly call any of these functions, how could we make sure that
+later a refactoring in other "libified" code will not change a
+function that is indirectly called by "apply.c" to make it call another
+function that indirectly calls a problematic function?
+
+So it's a different project altogether to remove calls to problematic
+functions (like read_cache(), discard_cache(), cache_name_pos() and so
+on) in all the libified code, starting maybe with "dir.c" and "diff.c".
+
+Now if someone really needs to use this new function, it should be
+used like this:
+
+    /* Save current index file */
+    old_index_file = get_index_file();
+    set_index_file((char *)tmp_index_file);
+
+    /* Do stuff that will use tmp_index_file as the index file */
+    ...
+
+    /* When finished reset the index file */
+    set_index_file(old_index_file);
+
+It is intended to be used by builtins commands, in fact only `git am`,
+to temporarily change the index file used by libified code.
+
+This is useful when libified code uses the global index, but a builtin
+command wants another index file to be used instead.
+
+Helped-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- apply.c         | 103 +++++++++++++++++++++++++++++++++++++++++++++++++-------
- apply.h         |  18 +++-------
- builtin/apply.c |  74 ++--------------------------------------
- 3 files changed, 97 insertions(+), 98 deletions(-)
+ cache.h       | 13 +++++++++++++
+ environment.c | 16 ++++++++++++++++
+ 2 files changed, 29 insertions(+)
 
-diff --git a/apply.c b/apply.c
-index bf81b70..2ec2a8a 100644
---- a/apply.c
-+++ b/apply.c
-@@ -4730,16 +4730,16 @@ static int apply_patch(struct apply_state *state,
- 	return res;
- }
+diff --git a/cache.h b/cache.h
+index b5f76a4..c9ad7f9 100644
+--- a/cache.h
++++ b/cache.h
+@@ -471,6 +471,19 @@ extern const char *strip_namespace(const char *namespaced_ref);
+ extern const char *get_git_work_tree(void);
  
--int apply_option_parse_exclude(const struct option *opt,
--			       const char *arg, int unset)
-+static int apply_option_parse_exclude(const struct option *opt,
-+				      const char *arg, int unset)
- {
- 	struct apply_state *state = opt->value;
- 	add_name_limit(state, arg, 1);
- 	return 0;
- }
- 
--int apply_option_parse_include(const struct option *opt,
--			       const char *arg, int unset)
-+static int apply_option_parse_include(const struct option *opt,
-+				      const char *arg, int unset)
- {
- 	struct apply_state *state = opt->value;
- 	add_name_limit(state, arg, 0);
-@@ -4747,9 +4747,9 @@ int apply_option_parse_include(const struct option *opt,
- 	return 0;
- }
- 
--int apply_option_parse_p(const struct option *opt,
--			 const char *arg,
--			 int unset)
-+static int apply_option_parse_p(const struct option *opt,
-+				const char *arg,
-+				int unset)
- {
- 	struct apply_state *state = opt->value;
- 	state->p_value = atoi(arg);
-@@ -4757,8 +4757,8 @@ int apply_option_parse_p(const struct option *opt,
- 	return 0;
- }
- 
--int apply_option_parse_space_change(const struct option *opt,
--				    const char *arg, int unset)
-+static int apply_option_parse_space_change(const struct option *opt,
-+					   const char *arg, int unset)
- {
- 	struct apply_state *state = opt->value;
- 	if (unset)
-@@ -4768,8 +4768,8 @@ int apply_option_parse_space_change(const struct option *opt,
- 	return 0;
- }
- 
--int apply_option_parse_whitespace(const struct option *opt,
--				  const char *arg, int unset)
-+static int apply_option_parse_whitespace(const struct option *opt,
-+					 const char *arg, int unset)
- {
- 	struct apply_state *state = opt->value;
- 	state->whitespace_option = arg;
-@@ -4778,8 +4778,8 @@ int apply_option_parse_whitespace(const struct option *opt,
- 	return 0;
- }
- 
--int apply_option_parse_directory(const struct option *opt,
--				 const char *arg, int unset)
-+static int apply_option_parse_directory(const struct option *opt,
-+					const char *arg, int unset)
- {
- 	struct apply_state *state = opt->value;
- 	strbuf_reset(&state->root);
-@@ -4893,3 +4893,80 @@ int apply_all_patches(struct apply_state *state,
- 		return res;
- 	return (res == -1 ? 1 : 128);
- }
+ /*
++ * Hack to temporarily change the index.
++ * Yeah, the libification of 'apply' took a short-circuit by adding
++ * this technical debt.
++ * Please use functions available when
++ * NO_THE_INDEX_COMPATIBILITY_MACROS is defined, instead of this
++ * function.
++ * If you really need to use this function, please save the current
++ * index file using get_index_file() before changing the index
++ * file. And when finished, reset it to the saved value.
++ */
++extern void set_index_file(char *index_file);
 +
-+int apply_parse_options(int argc, const char **argv,
-+			struct apply_state *state,
-+			int *force_apply, int *options,
-+			const char * const *apply_usage)
++/*
+  * Return true if the given path is a git directory; note that this _just_
+  * looks at the directory itself. If you want to know whether "foo/.git"
+  * is a repository, you must feed that path, not just "foo".
+diff --git a/environment.c b/environment.c
+index ca72464..55b2b6b 100644
+--- a/environment.c
++++ b/environment.c
+@@ -292,6 +292,22 @@ int odb_pack_keep(char *name, size_t namesz, const unsigned char *sha1)
+ 	return open(name, O_RDWR|O_CREAT|O_EXCL, 0600);
+ }
+ 
++/*
++ * Hack to temporarily change the index.
++ * Yeah, the libification of 'apply' took a short-circuit by adding
++ * this technical debt.
++ * Please use functions available when
++ * NO_THE_INDEX_COMPATIBILITY_MACROS is defined, instead of this
++ * function.
++ * If you really need to use this function, please save the current
++ * index file using get_index_file() before changing the index
++ * file. And when finished, reset it to the saved value.
++ */
++void set_index_file(char *index_file)
 +{
-+	struct option builtin_apply_options[] = {
-+		{ OPTION_CALLBACK, 0, "exclude", state, N_("path"),
-+			N_("don't apply changes matching the given path"),
-+			0, apply_option_parse_exclude },
-+		{ OPTION_CALLBACK, 0, "include", state, N_("path"),
-+			N_("apply changes matching the given path"),
-+			0, apply_option_parse_include },
-+		{ OPTION_CALLBACK, 'p', NULL, state, N_("num"),
-+			N_("remove <num> leading slashes from traditional diff paths"),
-+			0, apply_option_parse_p },
-+		OPT_BOOL(0, "no-add", &state->no_add,
-+			N_("ignore additions made by the patch")),
-+		OPT_BOOL(0, "stat", &state->diffstat,
-+			N_("instead of applying the patch, output diffstat for the input")),
-+		OPT_NOOP_NOARG(0, "allow-binary-replacement"),
-+		OPT_NOOP_NOARG(0, "binary"),
-+		OPT_BOOL(0, "numstat", &state->numstat,
-+			N_("show number of added and deleted lines in decimal notation")),
-+		OPT_BOOL(0, "summary", &state->summary,
-+			N_("instead of applying the patch, output a summary for the input")),
-+		OPT_BOOL(0, "check", &state->check,
-+			N_("instead of applying the patch, see if the patch is applicable")),
-+		OPT_BOOL(0, "index", &state->check_index,
-+			N_("make sure the patch is applicable to the current index")),
-+		OPT_BOOL(0, "cached", &state->cached,
-+			N_("apply a patch without touching the working tree")),
-+		OPT_BOOL(0, "unsafe-paths", &state->unsafe_paths,
-+			N_("accept a patch that touches outside the working area")),
-+		OPT_BOOL(0, "apply", force_apply,
-+			N_("also apply the patch (use with --stat/--summary/--check)")),
-+		OPT_BOOL('3', "3way", &state->threeway,
-+			 N_( "attempt three-way merge if a patch does not apply")),
-+		OPT_FILENAME(0, "build-fake-ancestor", &state->fake_ancestor,
-+			N_("build a temporary index based on embedded index information")),
-+		/* Think twice before adding "--nul" synonym to this */
-+		OPT_SET_INT('z', NULL, &state->line_termination,
-+			N_("paths are separated with NUL character"), '\0'),
-+		OPT_INTEGER('C', NULL, &state->p_context,
-+				N_("ensure at least <n> lines of context match")),
-+		{ OPTION_CALLBACK, 0, "whitespace", state, N_("action"),
-+			N_("detect new or modified lines that have whitespace errors"),
-+			0, apply_option_parse_whitespace },
-+		{ OPTION_CALLBACK, 0, "ignore-space-change", state, NULL,
-+			N_("ignore changes in whitespace when finding context"),
-+			PARSE_OPT_NOARG, apply_option_parse_space_change },
-+		{ OPTION_CALLBACK, 0, "ignore-whitespace", state, NULL,
-+			N_("ignore changes in whitespace when finding context"),
-+			PARSE_OPT_NOARG, apply_option_parse_space_change },
-+		OPT_BOOL('R', "reverse", &state->apply_in_reverse,
-+			N_("apply the patch in reverse")),
-+		OPT_BOOL(0, "unidiff-zero", &state->unidiff_zero,
-+			N_("don't expect at least one line of context")),
-+		OPT_BOOL(0, "reject", &state->apply_with_reject,
-+			N_("leave the rejected hunks in corresponding *.rej files")),
-+		OPT_BOOL(0, "allow-overlap", &state->allow_overlap,
-+			N_("allow overlapping hunks")),
-+		OPT__VERBOSE(&state->apply_verbosity, N_("be verbose")),
-+		OPT_BIT(0, "inaccurate-eof", options,
-+			N_("tolerate incorrectly detected missing new-line at the end of file"),
-+			APPLY_OPT_INACCURATE_EOF),
-+		OPT_BIT(0, "recount", options,
-+			N_("do not trust the line counts in the hunk headers"),
-+			APPLY_OPT_RECOUNT),
-+		{ OPTION_CALLBACK, 0, "directory", state, N_("root"),
-+			N_("prepend <root> to all filenames"),
-+			0, apply_option_parse_directory },
-+		OPT_END()
-+	};
-+
-+	return parse_options(argc, argv, state->prefix, builtin_apply_options, apply_usage, 0);
++	git_index_file = index_file;
 +}
-diff --git a/apply.h b/apply.h
-index 5cde641..e2b89e8 100644
---- a/apply.h
-+++ b/apply.h
-@@ -111,20 +111,10 @@ struct apply_state {
- 	int applied_after_fixing_ws;
- };
- 
--extern int apply_option_parse_exclude(const struct option *opt,
--				      const char *arg, int unset);
--extern int apply_option_parse_include(const struct option *opt,
--				      const char *arg, int unset);
--extern int apply_option_parse_p(const struct option *opt,
--				const char *arg,
--				int unset);
--extern int apply_option_parse_whitespace(const struct option *opt,
--					 const char *arg, int unset);
--extern int apply_option_parse_directory(const struct option *opt,
--					const char *arg, int unset);
--extern int apply_option_parse_space_change(const struct option *opt,
--					   const char *arg, int unset);
--
-+extern int apply_parse_options(int argc, const char **argv,
-+			       struct apply_state *state,
-+			       int *force_apply, int *options,
-+			       const char * const *apply_usage);
- extern int init_apply_state(struct apply_state *state,
- 			    const char *prefix,
- 			    struct lock_file *lock_file);
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 7338701..81b9a61 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -18,80 +18,12 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
- 	int ret;
- 	struct apply_state state;
- 
--	struct option builtin_apply_options[] = {
--		{ OPTION_CALLBACK, 0, "exclude", &state, N_("path"),
--			N_("don't apply changes matching the given path"),
--			0, apply_option_parse_exclude },
--		{ OPTION_CALLBACK, 0, "include", &state, N_("path"),
--			N_("apply changes matching the given path"),
--			0, apply_option_parse_include },
--		{ OPTION_CALLBACK, 'p', NULL, &state, N_("num"),
--			N_("remove <num> leading slashes from traditional diff paths"),
--			0, apply_option_parse_p },
--		OPT_BOOL(0, "no-add", &state.no_add,
--			N_("ignore additions made by the patch")),
--		OPT_BOOL(0, "stat", &state.diffstat,
--			N_("instead of applying the patch, output diffstat for the input")),
--		OPT_NOOP_NOARG(0, "allow-binary-replacement"),
--		OPT_NOOP_NOARG(0, "binary"),
--		OPT_BOOL(0, "numstat", &state.numstat,
--			N_("show number of added and deleted lines in decimal notation")),
--		OPT_BOOL(0, "summary", &state.summary,
--			N_("instead of applying the patch, output a summary for the input")),
--		OPT_BOOL(0, "check", &state.check,
--			N_("instead of applying the patch, see if the patch is applicable")),
--		OPT_BOOL(0, "index", &state.check_index,
--			N_("make sure the patch is applicable to the current index")),
--		OPT_BOOL(0, "cached", &state.cached,
--			N_("apply a patch without touching the working tree")),
--		OPT_BOOL(0, "unsafe-paths", &state.unsafe_paths,
--			N_("accept a patch that touches outside the working area")),
--		OPT_BOOL(0, "apply", &force_apply,
--			N_("also apply the patch (use with --stat/--summary/--check)")),
--		OPT_BOOL('3', "3way", &state.threeway,
--			 N_( "attempt three-way merge if a patch does not apply")),
--		OPT_FILENAME(0, "build-fake-ancestor", &state.fake_ancestor,
--			N_("build a temporary index based on embedded index information")),
--		/* Think twice before adding "--nul" synonym to this */
--		OPT_SET_INT('z', NULL, &state.line_termination,
--			N_("paths are separated with NUL character"), '\0'),
--		OPT_INTEGER('C', NULL, &state.p_context,
--				N_("ensure at least <n> lines of context match")),
--		{ OPTION_CALLBACK, 0, "whitespace", &state, N_("action"),
--			N_("detect new or modified lines that have whitespace errors"),
--			0, apply_option_parse_whitespace },
--		{ OPTION_CALLBACK, 0, "ignore-space-change", &state, NULL,
--			N_("ignore changes in whitespace when finding context"),
--			PARSE_OPT_NOARG, apply_option_parse_space_change },
--		{ OPTION_CALLBACK, 0, "ignore-whitespace", &state, NULL,
--			N_("ignore changes in whitespace when finding context"),
--			PARSE_OPT_NOARG, apply_option_parse_space_change },
--		OPT_BOOL('R', "reverse", &state.apply_in_reverse,
--			N_("apply the patch in reverse")),
--		OPT_BOOL(0, "unidiff-zero", &state.unidiff_zero,
--			N_("don't expect at least one line of context")),
--		OPT_BOOL(0, "reject", &state.apply_with_reject,
--			N_("leave the rejected hunks in corresponding *.rej files")),
--		OPT_BOOL(0, "allow-overlap", &state.allow_overlap,
--			N_("allow overlapping hunks")),
--		OPT__VERBOSE(&state.apply_verbosity, N_("be verbose")),
--		OPT_BIT(0, "inaccurate-eof", &options,
--			N_("tolerate incorrectly detected missing new-line at the end of file"),
--			APPLY_OPT_INACCURATE_EOF),
--		OPT_BIT(0, "recount", &options,
--			N_("do not trust the line counts in the hunk headers"),
--			APPLY_OPT_RECOUNT),
--		{ OPTION_CALLBACK, 0, "directory", &state, N_("root"),
--			N_("prepend <root> to all filenames"),
--			0, apply_option_parse_directory },
--		OPT_END()
--	};
--
- 	if (init_apply_state(&state, prefix, &lock_file))
- 		exit(128);
- 
--	argc = parse_options(argc, argv, state.prefix, builtin_apply_options,
--			apply_usage, 0);
-+	argc = apply_parse_options(argc, argv,
-+				   &state, &force_apply, &options,
-+				   apply_usage);
- 
- 	if (check_apply_state(&state, force_apply))
- 		exit(128);
++
+ char *get_index_file(void)
+ {
+ 	if (!git_index_file)
 -- 
 2.9.2.614.g4980f51
 
