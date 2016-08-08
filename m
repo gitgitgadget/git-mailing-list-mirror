@@ -2,72 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16FF42018E
-	for <e@80x24.org>; Mon,  8 Aug 2016 15:05:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FF222018E
+	for <e@80x24.org>; Mon,  8 Aug 2016 15:29:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752149AbcHHPFM (ORCPT <rfc822;e@80x24.org>);
-	Mon, 8 Aug 2016 11:05:12 -0400
-Received: from mout.gmx.net ([212.227.17.21]:56927 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752054AbcHHPFL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2016 11:05:11 -0400
-Received: from virtualbox ([37.24.141.218]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0Lurin-1b6cFB19ur-0108V9; Mon, 08 Aug 2016 17:05:08
- +0200
-Date:	Mon, 8 Aug 2016 17:05:07 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-cc:	git@vger.kernel.org
-Subject: t0027 racy?
-Message-ID: <alpine.DEB.2.20.1608081556280.5786@virtualbox>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1752150AbcHHP33 (ORCPT <rfc822;e@80x24.org>);
+	Mon, 8 Aug 2016 11:29:29 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51198 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752020AbcHHP33 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2016 11:29:29 -0400
+Received: (qmail 11632 invoked by uid 109); 8 Aug 2016 15:29:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Aug 2016 15:29:28 +0000
+Received: (qmail 5714 invoked by uid 111); 8 Aug 2016 15:29:27 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Aug 2016 11:29:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Aug 2016 11:29:26 -0400
+Date:	Mon, 8 Aug 2016 11:29:26 -0400
+From:	Jeff King <peff@peff.net>
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+Subject: Re: t0027 racy?
+Message-ID: <20160808152926.mciovipy5qlnqegs@sigill.intra.peff.net>
+References: <alpine.DEB.2.20.1608081556280.5786@virtualbox>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:aXJa4PPcM1n8Y013E1hs6jjgy0/zmvMRuF8GpQI4MPbyp/1y/3J
- ksN7cH6LExcUQqRkAfymR6LDrc0fDSluOed+xztHk0Qz1CFXaPQg2sEc1AEDyPlWKqReYqK
- 00V6yQifSD7wRR0MfG6mavgXN6+gEkaf4fGq5JCr/uvwSkuyav6xCqwsW/5DB1fCxOXbWW5
- OrMOQiWQf51A9oig7pkaA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:Q/C/Re+p0Ec=:G58J2O61Vlj63qjPSqjXNc
- WbB7D6VuQJsDteZtXFioAm+lfcwlab9eUpVHRTyywd8MP9rpUH0D9cEk2SEdd3oSqm+SY9zn3
- 0a0X8biGCSZ6kEPQT371ePddYwbWdPaUtDmmIKCqWAPF0gmLfunyMF7fIr15YGt8YFJIvZKDf
- N7VY7T/5SHNPs8Ti6YEowucohmJdKhTDgVo3W/z4wmuH0iXprHrH0bSMecG5d4CTk2qR4v+K+
- NHDAJHWn1oYfcfZ602whPghpJe6DaIHyLUd8GGCPa0fm0vKY9T0gHbJow3Z+A+H5GedQZH5nW
- fcyKHkl+fyivJKahfWvG3zV7KACP5OCkON7bLmjq0fCgiCeRfCHctt9E2geDxPr41e0mVxnHE
- apmT8vRYMDaQoSZ5R0V+pQIdbUNwYtfFfbPKMUtDgKIHVTx4GBRbO0EgdHj/F58BYMbbQ9SMM
- x9MI4S7WGi9g6O6TRiupNeKALGeUH5XeFv12vw6m0KiUOlQ+EoIvMHpPCH/vjoGBxNRWZa6x8
- fCDrWNEn5lL10LEL51ctTUXKXz/9fh38Ww9CjdcmFDQPjufpmvTAEv29pwefcIFF4rpFjmjFZ
- BcNSInMSGdSiOQcTWw5WNqVhzcRdiE/O9vpZZoFem1UKr+nG9TUyMsK+qywlv5XHfuEsbFAc8
- XQw+Y2Vg1RXlsJeKAKbCtPSU6hKNPpTnKF4Lj+lzsGfpUk6xrdsUeCguE6AblITI/2rQYm/Ff
- tKlimu/TOamIzMqR74m/c8DJ20rWGfqdYBzxQj/heGEko/IXfxqLtLSaWC0vvESEfje4W+CTl
- SlaPaS9
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.20.1608081556280.5786@virtualbox>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Torsten,
+On Mon, Aug 08, 2016 at 05:05:07PM +0200, Johannes Schindelin wrote:
 
-I remember that you did a ton of work on t0027. Now I see problems, and
-not only that the entire script now takes a whopping 4 minutes 20 seconds
-to run on my high-end Windows machine.
+> I remember that you did a ton of work on t0027. Now I see problems, and
+> not only that the entire script now takes a whopping 4 minutes 20 seconds
+> to run on my high-end Windows machine.
+> 
+> It appears that t0027 fails randomly for me, in seemingly random places.
+> Sometimes all 1388 cases pass. Sometimes "29 - commit NNO files crlf=true
+> attr=auto LF" fails. Sometimes it is "24 - commit NNO files crlf=false
+> attr=auto LF". Sometimes it is "114 - commit NNO files crlf=false
+> attr=auto LF", and sometimes "111 - commit NNO files attr=auto aeol=lf
+> crlf=false CRLF_mix_LF".
+> 
+> When I run it with -i -v -x --tee, it passes every single time (taking
+> over 5 minutes, just to make things worse)...
+> 
+> Any idea about any possible races?
 
-It appears that t0027 fails randomly for me, in seemingly random places.
-Sometimes all 1388 cases pass. Sometimes "29 - commit NNO files crlf=true
-attr=auto LF" fails. Sometimes it is "24 - commit NNO files crlf=false
-attr=auto LF". Sometimes it is "114 - commit NNO files crlf=false
-attr=auto LF", and sometimes "111 - commit NNO files attr=auto aeol=lf
-crlf=false CRLF_mix_LF".
+Try:
 
-When I run it with -i -v -x --tee, it passes every single time (taking
-over 5 minutes, just to make things worse)...
+  https://github.com/peff/git/blob/meta/stress
 
-Any idea about any possible races?
+which you can run as "sh /path/to/stress t0027" in the top-level of your
+git repository. I got failure within about 30 seconds on t0027 (though 5
+minutes? Yeesh. It runs in 9s on my laptop. I weep for you).
 
-Ciao,
-Dscho
+The verbose output is not very exciting, though:
+
+	expecting success: 
+	                check_warning "$lfwarn" ${pfx}_LF.err
+
+	--- NNO_attr_auto_aeol_crlf_false_LF.err.expect 2016-08-08 15:26:37.061701392 +0000
+	+++ NNO_attr_auto_aeol_crlf_false_LF.err.actual 2016-08-08 15:26:37.061701392 +0000
+	@@ -1 +0,0 @@
+	-warning: LF will be replaced by CRLF
+	not ok 114 - commit NNO files crlf=false attr=auto LF
+
+-Peff
