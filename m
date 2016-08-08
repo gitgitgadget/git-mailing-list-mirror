@@ -6,103 +6,222 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0115B2018E
-	for <e@80x24.org>; Mon,  8 Aug 2016 13:56:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1C212018E
+	for <e@80x24.org>; Mon,  8 Aug 2016 14:50:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752224AbcHHN4E (ORCPT <rfc822;e@80x24.org>);
-	Mon, 8 Aug 2016 09:56:04 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51144 "HELO cloud.peff.net"
+	id S1752072AbcHHOur (ORCPT <rfc822;e@80x24.org>);
+	Mon, 8 Aug 2016 10:50:47 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51165 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752143AbcHHN4D (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2016 09:56:03 -0400
-Received: (qmail 5927 invoked by uid 109); 8 Aug 2016 13:56:02 -0000
+	id S1751479AbcHHOuq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2016 10:50:46 -0400
+Received: (qmail 9246 invoked by uid 109); 8 Aug 2016 14:50:45 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Aug 2016 13:56:02 +0000
-Received: (qmail 5090 invoked by uid 111); 8 Aug 2016 13:56:02 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Aug 2016 14:50:45 +0000
+Received: (qmail 5413 invoked by uid 111); 8 Aug 2016 14:50:44 -0000
 Received: from Unknown (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Aug 2016 09:56:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Aug 2016 09:56:00 -0400
-Date:	Mon, 8 Aug 2016 09:56:00 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Aug 2016 10:50:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Aug 2016 10:50:43 -0400
+Date:	Mon, 8 Aug 2016 10:50:43 -0400
 From:	Jeff King <peff@peff.net>
-To:	Kirill Smelkov <kirr@nexedi.com>
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	Vicent Marti <tanoku@gmail.com>,
-	=?utf-8?Q?J=C3=A9rome?= Perrin <jerome@nexedi.com>,
-	Isabelle Vallet <isabelle.vallet@nexedi.com>,
-	Kazuhiko Shiozaki <kazuhiko@nexedi.com>,
-	Julien Muchembled <jm@nexedi.com>, git@vger.kernel.org
-Subject: Re: [PATCH v4 2/2] pack-objects: Teach it to use reachability bitmap
- index when generating non-stdout pack too
-Message-ID: <20160808135600.c6hdlqwwtqe7thd5@sigill.intra.peff.net>
-References: <20160729074051.GA5987@teco.navytux.spb.ru>
- <20160729074746.31862-1-kirr@nexedi.com>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 7/7] pack-objects: use mru list when iterating over
+ packs
+Message-ID: <20160808145042.uwrk2m6jq3m4li37@sigill.intra.peff.net>
+References: <20160729040422.GA19678@sigill.intra.peff.net>
+ <20160729041524.GG22408@sigill.intra.peff.net>
+ <20160729054536.GA27343@sigill.intra.peff.net>
+ <xmqqr3acpjvo.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20160729074746.31862-1-kirr@nexedi.com>
+In-Reply-To: <xmqqr3acpjvo.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Jul 29, 2016 at 10:47:46AM +0300, Kirill Smelkov wrote:
+On Fri, Jul 29, 2016 at 08:02:51AM -0700, Junio C Hamano wrote:
 
-> @@ -2527,7 +2528,7 @@ static int get_object_list_from_bitmap(struct rev_info *revs)
->  	if (prepare_bitmap_walk(revs) < 0)
->  		return -1;
->  
-> -	if (pack_options_allow_reuse() &&
-> +	if (pack_options_allow_reuse() && pack_to_stdout &&
->  	    !reuse_partial_packfile_from_bitmap(
+> > So it's possible that the resulting pack
+> > is not as small as it could be (i.e., we break the chain with a base
+> > object, but it's possible if we looked that we could have broken the
+> > chain by making a delta against an existing base object). So I wonder if
+> > it's possible to detect this case earlier, during the "can we reuse this
+> > delta" bits of check_object().
+>
+> I'd let the issue simmer in my mind a bit for now, as I do not
+> think of a neat trick offhand.
 
-Should pack_to_stdout just be part of pack_options_allow_reuse()?
+Sorry, I let this go a bit longer than intended. Here's where I'm at
+with my thinking.
 
-> @@ -2812,7 +2813,23 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
->  	if (!rev_list_all || !rev_list_reflog || !rev_list_index)
->  		unpack_unreachable_expiration = 0;
->  
-> -	if (!use_internal_rev_list || !pack_to_stdout || is_repository_shallow())
-> +	/*
-> +	 * "soft" reasons not to use bitmaps - for on-disk repack by default we want
-> +	 *
-> +	 * - to produce good pack (with bitmap index not-yet-packed objects are
-> +	 *   packed in suboptimal order).
-> +	 *
-> +	 * - to use more robust pack-generation codepath (avoiding possible
-> +	 *   bugs in bitmap code and possible bitmap index corruption).
-> +	 */
-> +	if (!pack_to_stdout)
-> +		use_bitmap_index_default = 0;
-> +
-> +	if (use_bitmap_index < 0)
-> +		use_bitmap_index = use_bitmap_index_default;
-> +
-> +	/* "hard" reasons not to use bitmaps; these just won't work at all */
-> +	if (!use_internal_rev_list || (!pack_to_stdout && write_bitmap_index) || is_repository_shallow())
->  		use_bitmap_index = 0;
+To recap the issue for those just joining us, the series in question
+changes the order in which pack-objects will look at the existing
+packfiles (in order to make the counting step faster when you have many
+packs). This can introduce cycles in reused deltas because we might find
+"A" as a delta of "B" in one pack, but "B" as a delta of "A" in another
+pack. Whereas the current code, with a static pack ordering, will always
+find such an "A" and "B" in the same pack, so as long as that pack does
+not have a cycle, our set of reused deltas won't either.
 
-This all makes sense and looks good.
+The current code does detect the cycle, but not until the write phase
+(at which point we issue a warning, throw out the delta, and output the
+full object).
 
-> +test_expect_success 'pack-objects to file can use bitmap' '
-> +	# make sure we still have 1 bitmap index from previous tests
-> +	ls .git/objects/pack/ | grep bitmap >output &&
-> +	test_line_count = 1 output &&
-> +	# verify equivalent packs are generated with/without using bitmap index
-> +	packasha1=$(git pack-objects --no-use-bitmap-index --all packa </dev/null) &&
-> +	packbsha1=$(git pack-objects --use-bitmap-index --all packb </dev/null) &&
-> +	git verify-pack -v packa-$packasha1.pack >packa.verify &&
-> +	git verify-pack -v packb-$packbsha1.pack >packb.verify &&
-> +	grep -o "^$_x40" packa.verify |sort >packa.objects &&
-> +	grep -o "^$_x40" packb.verify |sort >packb.objects &&
-> +	test_cmp packa.objects packb.objects
-> +'
+Here's a list of approaches I think we can use to fix this:
 
-I don't think "grep -o" is portable. However, an easier way to do this
-is probably:
+  1. squelch the warning and ignore it. The downside here, besides not
+     warning the user about true in-pack cycles, is that we have no
+     opportunity to actually find a new delta (because we realize the
+     problem only after the delta-compression phase).
 
-  # these are already in sorted order
-  git show-index <packa-$packasha1.pack | cut -d' ' -f2 >packa.objects &&
-  git show-index <packb-$packbsha1.pack | cut -d' ' -f2 >packb.objects &&
-  test_cmp packa.objects packb.objects
+     My test repository is a bad packing of all of the forks of
+     torvalds/linux, with 3600 packs. I'm happy to share it if anybody
+     wants to see it, but note that it is 11GB.
+
+     The space overhead of the resulting pack in this case is ~3.2%
+     (versus a pack generated by the original code, using the static
+     pack order).  Which is really not that bad, but I'm sure there are
+     more pathological cases (i.e., there were on the order of hundreds
+     or maybe thousands of cycles that needed broken, out of about 15
+     million total objects; but one could imagine the worst case as
+     nr_of_objects/2).
+
+  2. break the cycles in check_object(), when we consider whether we can
+     reuse the delta.
+
+     The obvious advantage here (over breaking it in the writing phase)
+     is that we can then feed the object into the normal
+     delta-compression phase.
+
+     The question is: how?
+
+     2a. One way to do so is to provide a total ordering over the packs.
+	 I.e., if "A" is a delta of "B", then allow the delta to be
+	 reused iff the pack containing "A" sorts before or equal to the
+	 pack containing "B". The actual ordering doesn't matter for
+	 purposes of the cycle-breaking, as long as its consistent.
+
+	 I implemented this using the mtime of the packs (breaking ties
+	 by their names), as that would give us results close to the
+
+	 Unsurprisingly, this adds a bit of CPU time (because we have
+	 more delta objects to search), though it's dwarfed by the wins
+	 you get from the sped-up counting phase (in my tests, 20
+	 seconds of extra delta search for 39 minutes of "counting
+	 objects" savings).
+
+	 But it doesn't actually help the resulting pack size. It's
+	 still about 3.2% overhead (it's actually just slightly worse
+	 than case 1).
+
+	 I think what happens is that we throw out a lot of deltas, even
+	 ones that _aren't_ cycles, but just happened to be found in
+	 packs that are "backwards" in the total order. And then we have
+	 to do a delta search on them, but of course that can't always
+	 find a good match.
+
+	 I also tried two other variants here. The pack order for the
+	 cycle-breaking step shouldn't matter, so I wondered what would
+	 happen if I reversed it. It does indeed produce different
+	 results. The resulting pack is slightly better, at 2.6%
+	 overhead. But we spend even more time looking for deltas (IOW,
+	 we threw out more of them).
+
+	 I also tried bumping the pack window size, under the theory
+	 that maybe we just aren't finding great deltas for the ones we
+	 throw out. But it didn't seem to make much difference.
+
+	 So I like the simplicity of this idea (which, by the way, was
+	 not mine, but came from an off-list discussion with Michael).
+	 But I think it's a dead-end, because it throws away too many
+	 deltas that _could_ be reused.
+
+     2b. Another option is to do real cycle analysis, and break the
+         cycles.
+
+	 This is tricky to do in check_object() because we are actually
+	 filling out the delta pointers as we go. So I think we would
+	 have to make two passes: one to come up with a tentative list
+	 of deltas to reuse, and then one to check them for cycles.
+
+	 If done right, the cycle check should be linear in the number
+	 of objects (it's basically a depth-first search). In fact, I
+	 think it would look a lot like what write_object() is doing.
+	 We'd just be moving the logic _before_ the delta-compression
+	 phase, instead of after.
+
+	 This is the one approach I've considered but have not yet
+	 implemented. So no numbers.
+
+  3. Pick a consistent pack order up front, and stop changing it
+     mid-search.
+
+     The question, of course, is which order.
+
+     For my test repo, this is actually pretty easy. There's one
+     gigantic pack with 15 million objects in it, and then 3600 small
+     packs with a handful of objects from pushes. The giant pack is the
+     oldest, so the normal "reverse chronological" pack order makes
+     counting effectively O(m*n), because the majority of the objects
+     are found in the very last pack.
+
+     So an obvious thing to try is just reversing it. And indeed, the
+     counting is quite fast then (similar to the MRU numbers). Though of
+     course one can come up with a case where the objects are more
+     evenly split across the packs, and it would not help (you can come
+     up with pathological cases for MRU, too, but they're much less
+     likely in practice, because it's really exploiting locality).
+
+     But I was surprised to find that the resulting pack is even worse,
+     at 4.5% overhead.
+
+     I can't really explain that, and I'm starting to come to the
+     conclusion that there's a fair bit of luck and black magic involved
+     in delta reuse. I would not be at all surprised to find a test case
+     where reversing the order actually _improved_ things.
+
+     It may be that the numbers I saw in my (2a) tests were not because
+     we broke deltas and couldn't find replacements, but simply because
+     we get more and better deltas by looking in the smaller, newer
+     packs first.
+
+So that's where I'm at. Mostly puzzled, and wondering if any of my
+experiments were even valid or showing anything interesting, and not
+just somewhat random artifacts of the deltas that happen to be in this
+particular test case. Worse, it may be that looking in the small packs
+_is_ objectively better, and we're losing that in any kind of
+pack-ordering changes (which is an inherent part of my speed-up strategy
+for the counting phase[1]).
+
+I've yet to implement 2b, true cycle-detection before delta-compression.
+But I have a feeling it will somehow show that my resulting pack is
+about 3% worse. :-/
 
 -Peff
+
+[1] So obviously one option is to figure out a way to speed up the
+    counting phase without changing the pack order. The only way I can
+    think of is to build a master object index, where each entry has all
+    of the packs that a given object can be found in, in their correct
+    pack order.
+
+    That would be fairly easy to implement as a hash table, but:
+
+      - it would require a fair bit of memory; the pack .idx for this
+	repo is 500MB, and we usually get to just mmap it. OTOH, the
+	biggest part of that is the sha1s, so we could possibly just
+	reference them by pointer into the mmap'd data. And it's not
+	like you don't need much more than 500MB to hold the list of
+	objects to pack.
+
+      - it's inherently O(nr_of_objects_in_repo) in CPU and memory to
+	build the index, whereas some operations are
+	O(nr_of_objects_to_be_packed). In this case it's probably OK (we
+	do pay for extra entries for each of the duplicates, but it's
+	largely on the order of 15 million objects). But it's a big
+	expense if you're just packing a few of the objects.
+
+    So I dunno. I really like the MRU approach if we can salvage it.
