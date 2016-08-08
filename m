@@ -6,111 +6,103 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73A432018E
-	for <e@80x24.org>; Mon,  8 Aug 2016 17:27:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A89142018E
+	for <e@80x24.org>; Mon,  8 Aug 2016 17:29:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752197AbcHHR1V (ORCPT <rfc822;e@80x24.org>);
-	Mon, 8 Aug 2016 13:27:21 -0400
-Received: from mail-io0-f171.google.com ([209.85.223.171]:32805 "EHLO
-	mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752128AbcHHR1U (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2016 13:27:20 -0400
-Received: by mail-io0-f171.google.com with SMTP id 38so364115343iol.0
-        for <git@vger.kernel.org>; Mon, 08 Aug 2016 10:27:20 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=lG4CNGH9iApuHKUzRq84/ZQqGJSahZDSqgDbcAfrU5w=;
-        b=D4f1O+QHb0BgR6FNwHxYYFr0QHikPLVdnH15fhr2oaJkKbxOkwDpzE+vSfHY/zG+lM
-         J9RY5NATYggQnlLXGr3S+H+5qt0sPi2BECjAs2s2PJskq4WfFmEHXOVi/JfIl5F7oBR0
-         717ts4lfrC4DWtw4VsF+6Eql7AdYwmmJDtq9HEEOPCpa87ER9iVR5y7lw/zgQUfStWX1
-         vK2pIsLvFOhxFBAbEgUBvWb+ojiLtOaZIEj9VvgnAe5qgglT3ETxWv4faIXJDy6x/GM3
-         NjwD/NKDR5YHBBD5hyJyOEfm7TWVVnhqPgcBLFJqUFjVIf9mzIvNmzC/kbsNeKVWTuJr
-         Ke6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=lG4CNGH9iApuHKUzRq84/ZQqGJSahZDSqgDbcAfrU5w=;
-        b=AdJvMGE4L9U9j4VmuvZqnnW9JOjBh+oH7NpANUqxuHcm4ggJS3WUf0387V8sDpP7Iv
-         b/zgAhZavUcUOujJvjcKUeENUU3T9l89VXMspe18x884yiOmaVdJUexF6u3V63I5ySQ/
-         VcNjHz9Y8BtyCyAO4lxHku6WZwKREU+a+iy3C5LGvPgehdLi71uw1Iwy3H9y2ygj2Fvm
-         6WUVBtXX+p/JoZTiiUwZ4HV3AwKkj4gM7Yl5JuQJjrscI4fOx4JMdk/oN8l2HKlWCcnQ
-         TPadCcNCpNmu5lx3L1CvLmthJW12dBEbBeB2oIDKMHeL4EqgIEZVu265U3AhvTSSn9JZ
-         NfrA==
-X-Gm-Message-State: AEkooutCJVijibkcNtatF0zhHpdeg+geflnZgCTJxizpI+bcxnT32ugSmse3l6oz9rnfOpm68ylzNJyFqJWQU1Kq
-X-Received: by 10.107.131.38 with SMTP id f38mr98963742iod.173.1470677239404;
- Mon, 08 Aug 2016 10:27:19 -0700 (PDT)
+	id S1752449AbcHHR3k (ORCPT <rfc822;e@80x24.org>);
+	Mon, 8 Aug 2016 13:29:40 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59418 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752422AbcHHR3h (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2016 13:29:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 85AD833655;
+	Mon,  8 Aug 2016 13:29:36 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fEyMjhILVh3OdTtmdg0smLSjEBI=; b=UB2dWS
+	3bQTOq87WPhTj744VK/ajJN+9TI37i0RnR9ek244OpFrjwwPXKXh/om5heQuwTMW
+	DMO2ehEdAHsQ6/VMaTgknKO3oXyViKsRZ/dJAruK8cZpqZLFAxMGozbH8/4rDZH8
+	IrB1OihSrbTkhnCwdc+zoa72t1mPaF/kr7LnU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BO77TBmHsJYeK9hateQB6QL9Z3SRAkYI
+	+8HIENI2YiDVR+k7yulL8SumESyGbPRc1ijzmPdAfdPgXS7oJo4NImKteSi7B9Qk
+	QPdckprjSZSByJaaX504LJ7pfRS5ZcsNK3IHh4z99+DswKtuogpWPIMfIjEdZORR
+	uj3j9wW/0UU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7CEF633653;
+	Mon,  8 Aug 2016 13:29:36 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E687233652;
+	Mon,  8 Aug 2016 13:29:35 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Lars Schneider <larsxschneider@gmail.com>
+Cc:	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Jakub =?utf-8?Q?Na?= =?utf-8?Q?r=C4=99bski?= <jnareb@gmail.com>,
+	Eric Wong <e@80x24.org>
+Subject: Re: patch submission process, was Re: [PATCH v6 06/16] merge_recursive: abort properly upon errors
+References: <cover.1469547160.git.johannes.schindelin@gmx.de>
+	<cover.1470051326.git.johannes.schindelin@gmx.de>
+	<8ff71aba37be979f05abf88f467ec932aa522bdd.1470051326.git.johannes.schindelin@gmx.de>
+	<xmqqlh0gjpr6.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1608021004080.79248@virtualbox>
+	<xmqqy44ec15p.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1608031021050.79248@virtualbox>
+	<CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com>
+	<alpine.DEB.2.20.1608031753431.107993@virtualbox>
+	<CAGZ79kYWdZCNW_eBi5aLAacyBZJXQ9xyOWMBmjNsYT5NWjr-Og@mail.gmail.com>
+	<alpine.DEB.2.20.1608041730130.5786@virtualbox>
+	<CAGZ79kaTT3NgKj8akB8t9b1BF3i6sXe7Un9oq5KP8077Wz-E+g@mail.gmail.com>
+	<alpine.DEB.2.20.1608050925240.5786@virtualbox>
+	<alpine.DEB.2.20.1608061045240.5786@virtualbox>
+	<CFDF5DDE-C5D9-489E-B099-6D0D2479B331@gmail.com>
+Date:	Mon, 08 Aug 2016 10:29:34 -0700
+In-Reply-To: <CFDF5DDE-C5D9-489E-B099-6D0D2479B331@gmail.com> (Lars
+	Schneider's message of "Sun, 7 Aug 2016 13:09:28 +0200")
+Message-ID: <xmqqr39zf9tt.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Mon, 8 Aug 2016 10:27:18 -0700 (PDT)
-In-Reply-To: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com>
-References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Mon, 8 Aug 2016 10:27:18 -0700
-Message-ID: <CAGZ79kba36GprgHA04_q4NmY2=_amoWyafUaLKkcknc3HsT_-g@mail.gmail.com>
-Subject: Re: storing cover letter of a patch series?
-To:	Jacob Keller <jacob.keller@gmail.com>
-Cc:	Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: AD464A62-5D8D-11E6-B3AF-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Sep 10, 2015 at 9:28 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> Hey,
->
-> does anyone know of any tricks for storing a cover letter for a patch
-> series inside of git somehow? I'd guess the only obvious way currently
-> is to store it at the top of the series as an empty commit.. but this
-> doesn't get emailed *as* the cover letter...
->
-> Is there some other way? Would others be interested in such a feature?
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-Being late to this thread, but I think
+>     ... then I am always super
+>     eager to send out a new roll just because I don't want any other reviewer
+>     to waste time on obviously wrong patches. However, I have the impression
+>     that frequent re-rolls are frowned upon.
 
-       branch.<name>.description
-           Branch description, can be edited with git branch
-           --edit-description. Branch description is automatically added in
-           the format-patch cover letter or request-pull summary.
+Correct.  A good middle-ground is to just reply with "Yes, thanks
+for your suggestion, will fix in the next round", while receiving
+review comments.  Good reviewers who value their time will not to
+waste their time by responding on a point that has already been
+pointed out and acknowledged.
 
-is what you want. Maybe we want to see a patch that adds the reverse
-functionality as well, i.e. git-am will store the the cover letter as the
-branch description and git-merge will propose the branch description for
-the merge commit.
+> 4.) Reviewing patches is super hard for me because my email client does not
+>     support patch color highlighting and I can't easily expand context or look at
+>     the history of code touched by the patch (e.g via git blame). I tried to setup
+>     Alpine but I wasn't happy with the interface either. I like patches with a GitHub
+>     URL for review but then I need to find the right line in the original email to
+>     write a comment.
 
->
-> I get very annoyed when I've written a nice long patch cover letter in
-> vim before an email and then realize I should fix something else up,
-> or accidentally cancel it because I didn't use the write "To:" address
-> or something..
->
-> I really think it should be possible to store something somehow as a
-> blob that could be looked up later. Even if this was a slightly more
-> manual process that would be helpful to store the message inside git
-> itself.
+Unless a patch is about an area you are super familiar with so that
+you know what is beyond the context of the patch to be able to judge
+if the change is good in the context of the file being touched, it
+is always hard to review from inside a mail reader.
 
-I agree here. I personally do not use that variable (yet), as it doesn't seem
-to be editable easily.
-So here is what I do:
-1) First series is generated with format-patch --cover-letter
-2) any following v{2,3,4} is generated without the cover-letter but with
-  --subject-prefix=PATCHv{2,3,4}
-3) the cover letter is manually edited to be the next version and a section
-  is added why the next version of the series is sent.
-
->
-> In addition, this would help re-rolls since it would mean if I go back
-> to a topic and re-roll it I can just update the message. If it were
-> properly stored in my local history that would also mean I could see
-> revisions on it.
->
-> Any thoughts on how to do this?
->
-> Regards,
-> Jake
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Running "git am" is a good first step to review such a patch, as
+that lets you view the resulting code with the full power of Git.
+As you gain experience on the codebase, you'll be able to spot more
+problems while in your mail reader.
