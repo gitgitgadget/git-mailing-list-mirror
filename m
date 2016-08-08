@@ -6,88 +6,78 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7180B2018E
-	for <e@80x24.org>; Mon,  8 Aug 2016 17:55:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F06172018E
+	for <e@80x24.org>; Mon,  8 Aug 2016 18:01:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752197AbcHHRzj (ORCPT <rfc822;e@80x24.org>);
-	Mon, 8 Aug 2016 13:55:39 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52044 "EHLO
+	id S1752295AbcHHSBy (ORCPT <rfc822;e@80x24.org>);
+	Mon, 8 Aug 2016 14:01:54 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63487 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751479AbcHHRzi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2016 13:55:38 -0400
+	with ESMTP id S1752243AbcHHSBx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2016 14:01:53 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5B9213256F;
-	Mon,  8 Aug 2016 13:55:37 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 016B132650;
+	Mon,  8 Aug 2016 14:01:52 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xq35Y+PK5XWXGh8Auifbkpj5WaE=; b=UY0G8Y
-	rZXf5HTZ+PSIXQQaWsz82Tmc2pLX6kwOC16EWVyl+LRruL3Ta9reHfR74jkzXlYF
-	l9qfOM+MC+ctkQxIaKzQ+Y3GtkQaxsEBRV+6CENXWig3Nc+iQBKEOPPZ6advHFON
-	zfcJ45FDtqsTd22jY63nUJRGoedECJ56lzCng=
+	:content-type; s=sasl; bh=DEtLCtIa/vZhpGNd1BJZJ4fxGeI=; b=bKIIPp
+	IHXwoXUgHUuNEE9vrND0/aXwiWylguHgKiEGWZexHtqlH3F8d99DzXHz9Qo2UleN
+	4FH76u39YY8SoyLv7Hy3u6l0Mp7+QMj7S2AEi/iZVG24KtO/2INcaiamCNfOYz8W
+	FotRUjQ43X5cF02Nz/AAMWRgFpvi7qe7uHGpM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pGwZjyyYmyC5VAHU5nV2X2Z+9PZv1aVy
-	ZFi399NxxI/pHW+qdOJqz/iCeKv1aWDdVYBnQLY+KMoxbAr2fi8Wq7KNSZcO58cc
-	Fu3KGuI8lTziU/BCQla85f0E7zVWP+KF7HE0e5rrqIOPBZ/Aomt0wYzcGR/Kf51D
-	OzFBeC7VZPg=
+	:content-type; q=dns; s=sasl; b=oMxWitcNaIszygVfsFMzMjZyoR3Baciv
+	lngHSpbuolFtiMw7rIRrtcaqRVLDjKK8DA6hWf2NozwHynRWXZjfAQYfTgBzk8Bz
+	Lkzn8TA2eqazYHwivSmyKtZAO+7kxAyYa1FjD4B11b91aGGuyUsZZtuYYgpsLhSB
+	Oa/rrGDh2uA=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4DD763256E;
-	Mon,  8 Aug 2016 13:55:37 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id ECB633264F;
+	Mon,  8 Aug 2016 14:01:51 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D00293256D;
-	Mon,  8 Aug 2016 13:55:36 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 778543264E;
+	Mon,  8 Aug 2016 14:01:51 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-	Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] merge: use string_list_split() in add_strategies()
-References: <57A4FEAF.3040208@web.de>
-	<alpine.DEB.2.20.1608081034250.5786@virtualbox>
-Date:	Mon, 08 Aug 2016 10:55:34 -0700
-In-Reply-To: <alpine.DEB.2.20.1608081034250.5786@virtualbox> (Johannes
-	Schindelin's message of "Mon, 8 Aug 2016 10:39:08 +0200 (CEST)")
-Message-ID: <xmqqeg5zf8mh.fsf@gitster.mtv.corp.google.com>
+To:	Josh Triplett <josh@joshtriplett.org>
+Cc:	Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] format-patch: Add a config option format.from to set the default for --from
+References: <cover.4d006cadf197f80d899ad7d7d56d8ba41f574adf.1469905775.git-series.josh@joshtriplett.org>
+	<20160730191111.cd6ay3l4hweyjf7f@x>
+	<20160801173847.qph2tora75h6ebsk@sigill.intra.peff.net>
+	<20160807225701.ucv2xunq5vs4uedk@x>
+	<xmqqtwewggwi.fsf@gitster.mtv.corp.google.com>
+	<20160808043458.jrgkoy2i65hxsaeo@x>
+Date:	Mon, 08 Aug 2016 11:01:49 -0700
+In-Reply-To: <20160808043458.jrgkoy2i65hxsaeo@x> (Josh Triplett's message of
+	"Sun, 7 Aug 2016 18:34:59 -1000")
+Message-ID: <xmqqa8gnf8c2.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 4F9B92CE-5D91-11E6-B822-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 2EE91316-5D92-11E6-AD5E-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Josh Triplett <josh@joshtriplett.org> writes:
 
-> I wonder, however, if we could somhow turn things around by introducing
-> something like
+> I didn't realize you had already taken the patch series into next; I'd
+> assumed from the various comments that you expected me to reroll it
+> before you'd take it.
 >
-> 	split_and_do_for_each(item_p, length, string, delimiter)
-> 		... <do something with item_p and length> ...
->
-> that both string_list_split() *and* add_strategies() could use? We would
-> then be able to avoid allocating the list and duplicating the items in the
-> latter case.
+> Would you like me to write something up for the release notes regarding
+> plans to change the default?
 
-I do think such a feature may be useful if we often work on pieces
-of a string delimited by a delimiter, but if the caller does not see
-the split result, then the function with "split" is probably
-misnamed.
+Given that we are at week #8 and -rc0 is coming soon, I suspect that
+that note will happen not in this release but in the next one.
 
-I however suspect the variant of this where "delimiter" can just be
-a single byte would not be so useful.
+The patch in question (1/2) is merely a new convenience feature that
+does not have to say anything about the future default, so we are
+good with 1/2 as-is (not v2 version of it, but the original one
+without enum), I think.
 
-If the input comes from the end user, we certainly would want to
-allow "word1 word2\tword3 " as input (i.e. squishing repeated
-delimiters into one without introducing an "empty" element, allowing
-more than one delimiter characters like SP and HT, and ignoring
-leading or trailing runs of delimiter characters).
 
-If the input is generated internally, perhaps we should rethink the
-interface between the function that wants to do the for-each-word
-and its caller; if the caller wants to pass multiple things to the
-callee, it should be able to do so without first having to stuff
-these multiple things into a single string, only to force the callee
-to use this helper to split them out into individual pieces.
+
 
