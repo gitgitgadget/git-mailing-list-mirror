@@ -2,110 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 814D22018E
-	for <e@80x24.org>; Mon,  8 Aug 2016 18:24:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D17EA2018E
+	for <e@80x24.org>; Mon,  8 Aug 2016 18:28:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752176AbcHHSYb (ORCPT <rfc822;e@80x24.org>);
-	Mon, 8 Aug 2016 14:24:31 -0400
-Received: from mout.web.de ([212.227.15.4]:62044 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752143AbcHHSYa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2016 14:24:30 -0400
-Received: from macce.local ([79.223.103.9]) by smtp.web.de (mrweb001) with
- ESMTPSA (Nemesis) id 0Lwq0e-1b8Soc1S2K-016LRH; Mon, 08 Aug 2016 20:24:26
- +0200
-Subject: Re: t0027 racy?
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <alpine.DEB.2.20.1608081556280.5786@virtualbox>
-Cc:	git@vger.kernel.org
-From:	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <05fafffb-1065-d240-51dc-a0872fd83c48@web.de>
-Date:	Mon, 8 Aug 2016 20:24:21 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:45.0)
- Gecko/20100101 Thunderbird/45.1.1
+	id S1752561AbcHHS2J (ORCPT <rfc822;e@80x24.org>);
+	Mon, 8 Aug 2016 14:28:09 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59387 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752554AbcHHS2G (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2016 14:28:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E2C0D32B9A;
+	Mon,  8 Aug 2016 14:28:04 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=L62FJ/6bwr4YicqdZz+q1L8duq8=; b=rqSpMM
+	IwWytxeT/HXETB3w/QKHOn80D3QoK62xctSYqe+foBBoUoK/C/zSY4tNycONm1Mi
+	3gg3tH2MPtVy67MQSNolM+9Np3sm8g6iJ3ZpA9ZisU5iDcIhSBxHSYT6w/QJVeSI
+	OhrJL7CyeDSJxAWEMsAW4R8Rk6JScCBPNWr5o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=g5GsUiMPP6ksYdC4gf+Z7hbmL3sY0EFm
+	h2Ieqk/R+Y6W50Pr1MwKUHCFb3kp/qHZ2giqdqGVVNFLH8Tfbq1EtFFowDcXEosm
+	4Jy91bjqpsS46yMlkAKMwHeU2z4TvfrKEf9+Adw0OFfcHbY2TpoZtRaErdvSNr7M
+	Tn2ZCFrQjPI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D91E432B97;
+	Mon,  8 Aug 2016 14:28:04 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4A8A032B96;
+	Mon,  8 Aug 2016 14:28:04 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Kirill Smelkov <kirr@nexedi.com>
+Cc:	Jeff King <peff@peff.net>, Vicent Marti <tanoku@gmail.com>,
+	=?utf-8?Q?J=C3=A9rome?= Perrin <jerome@nexedi.com>,
+	Isabelle Vallet <isabelle.vallet@nexedi.com>,
+	Kazuhiko Shiozaki <kazuhiko@nexedi.com>,
+	Julien Muchembled <jm@nexedi.com>, git@vger.kernel.org
+Subject: Re: [PATCH v4 2/2] pack-objects: Teach it to use reachability bitmap index when generating non-stdout pack too
+References: <20160729074051.GA5987@teco.navytux.spb.ru>
+	<20160729074746.31862-1-kirr@nexedi.com>
+	<20160808135600.c6hdlqwwtqe7thd5@sigill.intra.peff.net>
+	<20160808154054.GB3995@teco.navytux.spb.ru>
+	<xmqq60rbf80t.fsf@gitster.mtv.corp.google.com>
+	<20160808181353.GC3995@teco.navytux.spb.ru>
+Date:	Mon, 08 Aug 2016 11:28:02 -0700
+In-Reply-To: <20160808181353.GC3995@teco.navytux.spb.ru> (Kirill Smelkov's
+	message of "Mon, 8 Aug 2016 21:13:53 +0300")
+Message-ID: <xmqq1t1zf74d.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1608081556280.5786@virtualbox>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:G4JbD3r60I9PNHM9PdryTsPDxJEzkyJkHYaZTOOOl8/9h5Feq0e
- lT6qLKAt6YF/uBvxTXATueEcyf+D/3dBjBugcXIuHrYAwqmroQlaaG/gRJovG1Zf67GS0GB
- AXAyX8awfOQ4tP3IINah0kneYIQym6SFXCR2I3GUpPRo9YU7h/jCWBNQZI35QAfJIpHFg5f
- yqEUPy8qK4aQ1Thw2ozPQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:BTpEd9CRCh4=:b4qvnqCAodAbHwUPNCUfMd
- alpqKOYqjwWO40CCIm+4kpcU/nSSxvzeJv/no5jllagmnnCIHP/1bsOenre6+3OOvaHKUpDFb
- xASVM+da+QmnETFlpGYbYNtb8EUPrQvOAPxo/J8nb739vyaNJ/pnvfXuyn9CgiQP0p+Uykos9
- QVC+kAu9n05MGF2IRHN/KUb1807bOWXGq0kH7hE8Nj2Xgm0g7/gBoFK9IBigU1D15W/TgOB/g
- PQG/QXLm4owJBxBrR9+NtVkpYnx1A47z+8dt6NAm2eTkrHA4oiJhQiZqed04hq2g8a+bPw6VB
- lZv3+UgVJ8LaXQvgilI/hW8FlV8530lmiDmDdASQ52EQz9zHS4/ivtKGaJfKEa+RGKSQGEanJ
- tvHhNkieGbYg7uem7j9zWZXKlLUeMfmgfResKTG4D3uOIEkpeAwDRn/r9b0gIvmI4k5ljJ6vz
- bsEis2VNGFAds7vog8Nd1XiOT+utDn7V8GxdM3imx2uB1nQ58DBOMW4tzOuOHtEFRvm3zJlvJ
- fawxb55sBrc0SfgRDKzxV51QC7aGcWJW8u8i8VHpMmMeGUmCaGAWjHaVey23AzEP21CXsWHaV
- HRhlRdowxrQEWRmZfi1KYCdkaFRUO2vxG+nJHGwmQbW9+7EiKXLqr1ElKeTTf2xls+1BzYQg/
- BjjJhh8dNPPo8ms1VeoeS7zs6u9vF61BavlZM3bE+82xCEHRmwE0NfLQF8PlTWLPnW3deFXAq
- Yg9adxwx1qX6A/vzNp7EXOM4dGD/EUiXeXcjYUDG3oKcNtIKWu/PCX5Ud9RN61IMqObPNsptX
- +HXjBpw
+Content-Type: text/plain
+X-Pobox-Relay-ID: D86B79BC-5D95-11E6-991E-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 2016-08-08 17.05, Johannes Schindelin wrote:
-> Hi Torsten,
-> 
-> I remember that you did a ton of work on t0027. Now I see problems, and
-> not only that the entire script now takes a whopping 4 minutes 20 seconds
-> to run on my high-end Windows machine.
-> 
-> It appears that t0027 fails randomly for me, in seemingly random places.
-> Sometimes all 1388 cases pass. Sometimes "29 - commit NNO files crlf=true
-> attr=auto LF" fails. Sometimes it is "24 - commit NNO files crlf=false
-> attr=auto LF". Sometimes it is "114 - commit NNO files crlf=false
-> attr=auto LF", and sometimes "111 - commit NNO files attr=auto aeol=lf
-> crlf=false CRLF_mix_LF".
-> 
-> When I run it with -i -v -x --tee, it passes every single time (taking
-> over 5 minutes, just to make things worse)...
-> 
-> Any idea about any possible races?
-Just to double-check: I assume that you have this
-commit ded2444ad8ab8128cae2b91b8efa57ea2dd8c7a5
-Author: Torsten Bögershausen <tboegi@web.de>
-Date:   Mon Apr 25 18:56:27 2016 +0200
+Kirill Smelkov <kirr@nexedi.com> writes:
 
-    t0027: make commit_chk_wrnNNO() reliable
-in your tree ?
+> Another question: I'm preparing another version of "pack-objects: Teach
+> --use-bitmap-index codepath to  respect --local ..." and was going to
+> put
+>
+>     ( updated patch is in the end of this mail )
+>
+> in the top of the message. Is it ok or better not to do so and just respin
+> the patch in its own separate mail?
 
+That would force those who pick leftover bits to _open_ and read a
+first few lines.
 
-Is there a special pattern ?
-Did you
-a) Update the machine ?
-b) Update Git code base ?
-or both ?
-(Yes, I know that this may be stupid questions)
-
-Is it only the NNO tests that fail ?
-Did they ever pass ?
-(I think I run them some time ago on a Virtual machine running Windows 7)
-
-I see only "commit NNO files...." in you report, they belong to
-check_warning(), which is called around line 126 in t0027.
-
-
-check_warning() does a grep on a file which has been re-directed from stderr.
-
-How reproducible is the problem ?
-If you add
-exit 0
-After the last "commit_chk_wrnNNO" line (line 418),
-does
-ls -l crlf*.err
-give you any hint ?
-
-
-
-
+Definitely it is better than burying a patch after 60+ lines, but a
+separate patch with incremented "[PATCH v6 1/2]" on the subject line
+beats it hands-down from discoverability's point of view.
