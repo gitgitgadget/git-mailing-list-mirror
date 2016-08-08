@@ -2,95 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=0.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SBL_CSS,
+	RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5098C2018E
-	for <e@80x24.org>; Mon,  8 Aug 2016 16:28:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C1052018E
+	for <e@80x24.org>; Mon,  8 Aug 2016 16:31:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752360AbcHHQ2e (ORCPT <rfc822;e@80x24.org>);
-	Mon, 8 Aug 2016 12:28:34 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53613 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752312AbcHHQ2d (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2016 12:28:33 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CDBC734D03;
-	Mon,  8 Aug 2016 12:28:31 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bZr7M/2TFU63NqBFCF8hrvlu7QA=; b=VUdtnk
-	f8f4TEYCXD2wgf7Ghg/dk1DxdaPutp+2DGT2kacf9EY0hrrwmvO7zNZVzIKhwE2T
-	VW+Unu1PVn2nz1xl6bEpr9OS0wVxSM1iXsMdu6f2BW7bgfPIvwrg4jCvSs/1PjiV
-	nCc8S7hw2XJwyBpr4pOEmWLG3+cy5AsmWUL3w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=X8eYQbCTOdXM/iuynoe25n1E/+2mE5A1
-	POLq6ltG0oVSQUjZZFYQk67lceHhBCbMmbxUmCsa9En0hOgcCh3IWMVUjYAS75E3
-	NaVASy4aoqArIKL3PyR49/rhk2gW3qH+uUawJRU9zavo+8wX1RzYgTyGZROlBYoj
-	Y3eMurLPSvc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B3DB134D02;
-	Mon,  8 Aug 2016 12:28:31 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 28A1134D01;
-	Mon,  8 Aug 2016 12:28:31 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 7/7] pack-objects: use mru list when iterating over packs
-References: <20160729040422.GA19678@sigill.intra.peff.net>
-	<20160729041524.GG22408@sigill.intra.peff.net>
-	<20160729054536.GA27343@sigill.intra.peff.net>
-	<xmqqr3acpjvo.fsf@gitster.mtv.corp.google.com>
-	<20160808145042.uwrk2m6jq3m4li37@sigill.intra.peff.net>
-Date:	Mon, 08 Aug 2016 09:28:29 -0700
-In-Reply-To: <20160808145042.uwrk2m6jq3m4li37@sigill.intra.peff.net> (Jeff
-	King's message of "Mon, 8 Aug 2016 10:50:43 -0400")
-Message-ID: <xmqq8tw7gr82.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752159AbcHHQbD (ORCPT <rfc822;e@80x24.org>);
+	Mon, 8 Aug 2016 12:31:03 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:8989 "EHLO bsmtp3.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751479AbcHHQbC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2016 12:31:02 -0400
+Received: from [178.114.91.225] (smtpout17.drei.com [109.126.64.17])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 3s7NFZ4XCbz5tlD;
+	Mon,  8 Aug 2016 18:30:58 +0200 (CEST)
+Subject: Re: Forward declaration of enum iterator_selection?
+To:	Ramsay Jones <ramsay@ramsayjones.plus.com>
+References: <933f540f-7752-cfce-5785-b67728fea987@kdbg.org>
+ <0604cf0a-2b94-93b3-3a01-213ea5b9849b@ramsayjones.plus.com>
+Cc:	Michael Haggerty <mhagger@alum.mit.edu>,
+	Git Mailing List <git@vger.kernel.org>
+From:	Johannes Sixt <j6t@kdbg.org>
+Message-ID: <57A8B3BD.1000002@kdbg.org>
+Date:	Mon, 8 Aug 2016 18:30:53 +0200
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 24DB40D6-5D85-11E6-9A48-89D312518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <0604cf0a-2b94-93b3-3a01-213ea5b9849b@ramsayjones.plus.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Am 07.08.2016 um 22:34 schrieb Ramsay Jones:
+> On 05/08/16 23:26, Johannes Sixt wrote:
+>> When refs.c is being compiled, the only mention of enum
+>> iterator_selection is in this piece of code pulled in from
+>> refs-internal.h(have a look at the preprocessed code):
+>>
+>> typedef enum iterator_selection ref_iterator_select_fn(
+>>          struct ref_iterator *iter0, struct ref_iterator *iter1,
+>>          void *cb_data);
+>>
+>> This looks like a forward declarations of an enumeration type name,
+>> something that I thought is illegal in C. Am I wrong? (That may well be
+>> the case, my C-foo is quite rusty.)
+>
+> At this point 'enum iterator_selection' is an incomplete type and may
+> be used when the size of the object is not required. It is not needed,
+> for example, when a typedef name is being declared as a pointer to, or
+> as a function returning such a type. However, such a type must be
+> complete before such a function is called or defined.
 
-> Here's a list of approaches I think we can use to fix this:
->
->   1. squelch the warning and ignore it. The downside here, besides not
->      warning the user about true in-pack cycles, is that we have no
->      opportunity to actually find a new delta (because we realize the
->      problem only after the delta-compression phase).
->
->      My test repository is a bad packing of all of the forks of
->      torvalds/linux, with 3600 packs. I'm happy to share it if anybody
->      wants to see it, but note that it is 11GB.
->
->      The space overhead of the resulting pack in this case is ~3.2%
->      (versus a pack generated by the original code, using the static
->      pack order).  Which is really not that bad, but I'm sure there are
->      more pathological cases (i.e., there were on the order of hundreds
->      or maybe thousands of cycles that needed broken, out of about 15
->      million total objects; but one could imagine the worst case as
->      nr_of_objects/2).
-> ...
->
->     So I dunno. I really like the MRU approach if we can salvage it.
+All you say is true when it is a struct type, of course. But I doubt that 
+there exists such a thing called "incomplete enumeration type" in C. In 
+fact, with these keywords I found 
+https://gcc.gnu.org/onlinedocs/gcc/Incomplete-Enums.html which indicates 
+that this is a GCC extension.
 
-I think I share the same feeling.  As long as the chance is small
-enough that the pack reordering creates a new cycle, the resulting
-pack would not become too bloated by the last-ditch cycle breaking
-code and finding a replacement delta instead of inflating it may not
-be worth the trouble.
+> [...] I would rather the 'enum iterator_selection' be defined
+> before this declaration. One solution could be to #include "iterator.h"
+> prior to _all_ #include "refs/refs-internal.h" in all compilation units
+> (Note it is in the opposite order in refs/iterator.c). Alternatively, you
+> could put the #include "../iterator.h" into refs/refs-internal.h directly
+> (some people would object to this).
 
-It worries me a lot to lose the warning unconditionally, though.
-That's the (only) coal-mine canary that lets us notice a problem
-when we actually start hitting that last-ditch cycle breaking too
-often.
+I concur. Which one is the correct way to do, I do not know, either. It's 
+a matter how the interface is intended to be used. Perhaps the typedef 
+must be moved to iterator.h?
+
+-- Hannes
+
