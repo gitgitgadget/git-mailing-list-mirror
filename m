@@ -2,79 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 404462018E
-	for <e@80x24.org>; Mon,  8 Aug 2016 20:12:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD5142018E
+	for <e@80x24.org>; Mon,  8 Aug 2016 20:33:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752436AbcHHUMB (ORCPT <rfc822;e@80x24.org>);
-	Mon, 8 Aug 2016 16:12:01 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60224 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752300AbcHHUMA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2016 16:12:00 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4055334E9B;
-	Mon,  8 Aug 2016 16:11:59 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qjjtY7PIoHMHUUZzrf1lPh9jc48=; b=tgKM5f
-	+ZMqZZWkegat6PmhjwyJfXWCeoh4Z4y2lncMfEZMDi4sXcDsZ1yIA/ifs5opO1el
-	N2oGuyWAv1faeqNxlCy5Te4iR+xbMTOUFQbr7MnZGcyeahzt4COiBiz8Lfl50Ozi
-	Bf6m9kffVfCb3a/qMglagENwzG3wi/RvOPCkw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eFn/+9z7yDK6y89RvhYfwC6yuu30ZVSY
-	/u635sQXbnfTneb04H8FmsZbWNRjtUxKGfED2qZUbNAo2hSpobuEUlql0MnoZWUE
-	pDPR+VWeNvc3aYHXhz5WHJNKek+I1kHoZnKmy+cxmvVe82ynYTGggimuC2wBOJXn
-	ovU+iHVRww8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3683134E9A;
-	Mon,  8 Aug 2016 16:11:59 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A5F4F34E99;
-	Mon,  8 Aug 2016 16:11:58 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-	Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] merge: use string_list_split() in add_strategies()
-References: <57A4FEAF.3040208@web.de>
-	<alpine.DEB.2.20.1608081034250.5786@virtualbox>
-	<xmqqeg5zf8mh.fsf@gitster.mtv.corp.google.com>
-Date:	Mon, 08 Aug 2016 13:11:56 -0700
-In-Reply-To: <xmqqeg5zf8mh.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 08 Aug 2016 10:55:34 -0700")
-Message-ID: <xmqqfuqfdnqr.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S932219AbcHHUcz (ORCPT <rfc822;e@80x24.org>);
+	Mon, 8 Aug 2016 16:32:55 -0400
+Received: from mout.web.de ([217.72.192.78]:52128 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932176AbcHHUcv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2016 16:32:51 -0400
+Received: from localhost ([195.252.60.88]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0McWrM-1boO4Y3z1c-00HfYP; Mon, 08 Aug 2016 22:32:27
+ +0200
+Date:	Mon, 8 Aug 2016 20:32:24 +0000
+From:	Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:	Jeff King <peff@peff.net>
+Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+Subject: Re: t0027 racy?
+Message-ID: <20160808203224.GA28431@tb-raspi>
+References: <alpine.DEB.2.20.1608081556280.5786@virtualbox>
+ <20160808152926.mciovipy5qlnqegs@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5C5BE906-5DA4-11E6-BE3B-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20160808152926.mciovipy5qlnqegs@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V03:K0:rUpESjL7v6thba2eOzFxkZpyTCZcIyUQImjjvrRLf9WLaYdsync
+ 1AMxS/f7unLfDsx5VvJGqL3/k1IX/xYrilGKoCZc3Vd6e5emOzU20Y6rraW5oyla4q9A2ei
+ p504voZOGTybi149DCEQ29nA4mXBM+g0YLD/Ym6Vp80wUttJ6XHRg2Cb21wMY5o6+LxuT3z
+ 7l2+DxKTYBwWsyCBTuyOA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:sxF8dDfcpkI=:vylfO8GXK9l2HHKrxxulvm
+ jgG3Ito22jDz/HKT6QVJGJJJF/9PZ+uj0uOoCwqnNvKTvm0ypjseu9EtbLUXgHbQuS1yEBQud
+ 7qzPHj+zubfn0mFY0dHdiFIEyBNNCd65+WC1+7SVtjzRFVRYOUrWglnWGaFANLke+mHEiojCO
+ gqI+ZEdhELZsIe221UcZCxp5DNqPPtKIdw6raZeHqeZaPClkRMbtXaw1RrL5qW358SWxf3imm
+ YmcXtCxCfCmG/3CBYScRP6M96oyMM7KmoAC2Dxh5y2o3EBG22jud4UEAt/idWlSLE1LRh5pWw
+ hyj+IRDvJfL/okL5dbtE7qaGfs+zspvIzR/qzLHNqQW2QUbUEH8SLKbL6qeF+SBzXIRo/PWUx
+ GaKuYm6XzO81ylb5Ce67Tn8aAwsfEVfyHAGist8ozUFTxZTb4kdmVCfHm9OqOONEIYVkw+0Gz
+ ls7nelaUm6vcM8MtvMHEAYxAOj2+SY+2JndGwD0QkOVotx1ltyxb5InHcZmUPjtkAJyN8Oo75
+ U3RI/3j6Ho3CddqmlwhwyoLsYuNM4TTpeyjxPnQ39iqrkTyVLON4Ag/1PyQF1jRjFXz+UUU7B
+ mo9pVLuIwRHUbLNDkiKTcpGUL0W7x5S4cZjuIqL2eQB1LWLgED6XSX9RUnqiOkzMN2Jjal9dl
+ ghnrcZ67u91XIk4Q5f/14l3FlDeQHg10LI5oA2FJi86/9uRgM1R+F8GU9bxkGVZkuP1fAy1YD
+ LtjUFiEoEvRjPEG0UPFQhWNeKpHGKix7jWecxLUDYCwF8wlay7k7V4BZS7c=
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Aug 08, 2016 at 11:29:26AM -0400, Jeff King wrote:
+> On Mon, Aug 08, 2016 at 05:05:07PM +0200, Johannes Schindelin wrote:
+> 
+> > I remember that you did a ton of work on t0027. Now I see problems, and
+> > not only that the entire script now takes a whopping 4 minutes 20 seconds
+> > to run on my high-end Windows machine.
+> > 
+> > It appears that t0027 fails randomly for me, in seemingly random places.
+> > Sometimes all 1388 cases pass. Sometimes "29 - commit NNO files crlf=true
+> > attr=auto LF" fails. Sometimes it is "24 - commit NNO files crlf=false
+> > attr=auto LF". Sometimes it is "114 - commit NNO files crlf=false
+> > attr=auto LF", and sometimes "111 - commit NNO files attr=auto aeol=lf
+> > crlf=false CRLF_mix_LF".
+> > 
+> > When I run it with -i -v -x --tee, it passes every single time (taking
+> > over 5 minutes, just to make things worse)...
+> > 
+> > Any idea about any possible races?
+> 
+> Try:
+> 
+>   https://github.com/peff/git/blob/meta/stress
+> 
+> which you can run as "sh /path/to/stress t0027" in the top-level of your
+> git repository. I got failure within about 30 seconds on t0027 (though 5
+> minutes? Yeesh. It runs in 9s on my laptop. I weep for you).
+> 
+> The verbose output is not very exciting, though:
+> 
+> 	expecting success: 
+> 	                check_warning "$lfwarn" ${pfx}_LF.err
+> 
+> 	--- NNO_attr_auto_aeol_crlf_false_LF.err.expect 2016-08-08 15:26:37.061701392 +0000
+> 	+++ NNO_attr_auto_aeol_crlf_false_LF.err.actual 2016-08-08 15:26:37.061701392 +0000
+> 	@@ -1 +0,0 @@
+> 	-warning: LF will be replaced by CRLF
+> 	not ok 114 - commit NNO files crlf=false attr=auto LF
 
-> If the input comes from the end user, we certainly would want to
-> allow "word1 word2\tword3 " as input (i.e. squishing repeated
+(I realized that t0027 is not yet self-explaining, I have it on my list)
 
-Any intelligent reader may have guessed already, but before I
-stupidly told Emacs to refill the paragraph, the above example had
-two SPs between word1 and word2.  Sorry for being sloppy.
+NNO_attr_auto_aeol_crlf_false_LF means:
 
-> delimiters into one without introducing an "empty" element, allowing
-> more than one delimiter characters like SP and HT, and ignoring
-> leading or trailing runs of delimiter characters).
->
-> If the input is generated internally, perhaps we should rethink the
-> interface between the function that wants to do the for-each-word
-> and its caller; if the caller wants to pass multiple things to the
-> callee, it should be able to do so without first having to stuff
-> these multiple things into a single string, only to force the callee
-> to use this helper to split them out into individual pieces.
+NNO:           "Not NOrmalized" A file had been commited with CRLF in the repo
+attr_auto:     .gitattributes has "* text=auto"
+aeol_eol       .gitattributes has "eol=crlf"
+crlf_false     git config core.autocrlf = false
+LF             We commit a file with LF line endings.
+
+This should happend:
+- The file is commited "as is", with LF line endings.
+- While commiting, git should print the warning
+- "warning: LF will be replaced by CRLF" to stderr
+- stderr is piped (redirected) into NNO_attr_auto_aeol_crlf_false_LF.err
+- we grep for "will be replaced by" in xx.err and pipe it into xx.err.actual
+
+The rest is test_cmp, this is what you see.
+The warning is missing, but should be there:
+
+The file has LF, and after commit and a new checkout these LF will
+be convertet into CRLF.
+
+So why isn't the warning there (but here on my oldish machines)
