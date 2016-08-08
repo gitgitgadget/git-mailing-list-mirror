@@ -6,222 +6,150 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E1C212018E
-	for <e@80x24.org>; Mon,  8 Aug 2016 14:50:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 997B12018E
+	for <e@80x24.org>; Mon,  8 Aug 2016 15:03:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752072AbcHHOur (ORCPT <rfc822;e@80x24.org>);
-	Mon, 8 Aug 2016 10:50:47 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51165 "HELO cloud.peff.net"
+	id S1752150AbcHHPC6 (ORCPT <rfc822;e@80x24.org>);
+	Mon, 8 Aug 2016 11:02:58 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51174 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751479AbcHHOuq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2016 10:50:46 -0400
-Received: (qmail 9246 invoked by uid 109); 8 Aug 2016 14:50:45 -0000
+	id S1752116AbcHHPC6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2016 11:02:58 -0400
+Received: (qmail 9975 invoked by uid 109); 8 Aug 2016 15:02:57 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Aug 2016 14:50:45 +0000
-Received: (qmail 5413 invoked by uid 111); 8 Aug 2016 14:50:44 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Aug 2016 15:02:57 +0000
+Received: (qmail 5443 invoked by uid 111); 8 Aug 2016 15:02:56 -0000
 Received: from Unknown (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Aug 2016 10:50:44 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Aug 2016 10:50:43 -0400
-Date:	Mon, 8 Aug 2016 10:50:43 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Aug 2016 11:02:56 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Aug 2016 11:02:55 -0400
+Date:	Mon, 8 Aug 2016 11:02:55 -0400
 From:	Jeff King <peff@peff.net>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 7/7] pack-objects: use mru list when iterating over
- packs
-Message-ID: <20160808145042.uwrk2m6jq3m4li37@sigill.intra.peff.net>
-References: <20160729040422.GA19678@sigill.intra.peff.net>
- <20160729041524.GG22408@sigill.intra.peff.net>
- <20160729054536.GA27343@sigill.intra.peff.net>
- <xmqqr3acpjvo.fsf@gitster.mtv.corp.google.com>
+To:	Lars Schneider <larsxschneider@gmail.com>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+	mlbright@gmail.com, e@80x24.org
+Subject: Re: [PATCH v4 11/12] convert: add filter.<driver>.process option
+Message-ID: <20160808150255.2otm3z5fluimpiqw@sigill.intra.peff.net>
+References: <20160729233801.82844-1-larsxschneider@gmail.com>
+ <20160803164225.46355-1-larsxschneider@gmail.com>
+ <20160803164225.46355-12-larsxschneider@gmail.com>
+ <2e13c31c-5ee2-890d-1268-98fb67aba1ea@web.de>
+ <xmqqfuqivpjv.fsf@gitster.mtv.corp.google.com>
+ <20160805222710.chefh5kiktyzketh@sigill.intra.peff.net>
+ <87D4BF17-67BB-4AFA-9B27-40DBB44C0456@gmail.com>
+ <20160806121421.bs7n4lhed7phdshb@sigill.intra.peff.net>
+ <A07BE78B-5A5D-41F1-A51B-5C71F3E86CCF@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqr3acpjvo.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <A07BE78B-5A5D-41F1-A51B-5C71F3E86CCF@gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Jul 29, 2016 at 08:02:51AM -0700, Junio C Hamano wrote:
+On Sat, Aug 06, 2016 at 08:19:28PM +0200, Lars Schneider wrote:
 
-> > So it's possible that the resulting pack
-> > is not as small as it could be (i.e., we break the chain with a base
-> > object, but it's possible if we looked that we could have broken the
-> > chain by making a delta against an existing base object). So I wonder if
-> > it's possible to detect this case earlier, during the "can we reuse this
-> > delta" bits of check_object().
->
-> I'd let the issue simmer in my mind a bit for now, as I do not
-> think of a neat trick offhand.
+> > I dunno. It's not _that_ big a deal to code around. I was just surprised
+> > not to see an up-front status when responding to a request. It seems
+> > like the normal thing in just about every protocol I've ever used.
+> 
+> Alright. The fact that it "surprised" you is a bad sign. 
+> How about this:
+> 
+> Happy answer:
+> ------------------------
+> packet:          git< status=accept\n
+> packet:          git< SMUDGED_CONTENT
+> packet:          git< 0000
+> packet:          git< status=success\n
+> ------------------------
 
-Sorry, I let this go a bit longer than intended. Here's where I'm at
-with my thinking.
+I notice that the status pkt-lines are by themselves. I had assumed we'd
+be sending other data, too (presumably before, but I guess possibly
+after, too). Something like:
 
-To recap the issue for those just joining us, the series in question
-changes the order in which pack-objects will look at the existing
-packfiles (in order to make the counting step faster when you have many
-packs). This can introduce cycles in reused deltas because we might find
-"A" as a delta of "B" in one pack, but "B" as a delta of "A" in another
-pack. Whereas the current code, with a static pack ordering, will always
-find such an "A" and "B" in the same pack, so as long as that pack does
-not have a cycle, our set of reused deltas won't either.
+  git< status=accept
+  git< 0000
+  git< SMUDGED_CONTENT
+  git< 0000
+  git< status=success
+  git< 0000
 
-The current code does detect the cycle, but not until the write phase
-(at which point we issue a warning, throw out the delta, and output the
-full object).
+I don't have any particular meta-information in mind, but I thought
+stuff like the tentative "size" field would be here.
 
-Here's a list of approaches I think we can use to fix this:
+I had imagined it at the front, but I guess it could go in either place.
+I wonder if keys at the end could simply replace ones from the beginning
+(so if you say "foo=bar" at the front, that is tentative, but if you
+then say "foo=revised" at the end, that takes precedence).
 
-  1. squelch the warning and ignore it. The downside here, besides not
-     warning the user about true in-pack cycles, is that we have no
-     opportunity to actually find a new delta (because we realize the
-     problem only after the delta-compression phase).
+And so the happy answer is really:
 
-     My test repository is a bad packing of all of the forks of
-     torvalds/linux, with 3600 packs. I'm happy to share it if anybody
-     wants to see it, but note that it is 11GB.
+  git< status=success
+  git< 0000
+  git< SMUDGED_CONTENT
+  git< 0000
+  git< 0000  # empty list!
 
-     The space overhead of the resulting pack in this case is ~3.2%
-     (versus a pack generated by the original code, using the static
-     pack order).  Which is really not that bad, but I'm sure there are
-     more pathological cases (i.e., there were on the order of hundreds
-     or maybe thousands of cycles that needed broken, out of about 15
-     million total objects; but one could imagine the worst case as
-     nr_of_objects/2).
+i.e., no second status. The original "success" still holds.
 
-  2. break the cycles in check_object(), when we consider whether we can
-     reuse the delta.
+And then:
 
-     The obvious advantage here (over breaking it in the writing phase)
-     is that we can then feed the object into the normal
-     delta-compression phase.
+> Happy answer with no content:
+> ------------------------
+> packet:          git< status=success\n
+> ------------------------
 
-     The question is: how?
+This can just be spelled:
 
-     2a. One way to do so is to provide a total ordering over the packs.
-	 I.e., if "A" is a delta of "B", then allow the delta to be
-	 reused iff the pack containing "A" sorts before or equal to the
-	 pack containing "B". The actual ordering doesn't matter for
-	 purposes of the cycle-breaking, as long as its consistent.
+  git< status=success
+  git< 0000
+  git< 0000   # empty content!
+  git< 0000   # empty list!
 
-	 I implemented this using the mtime of the packs (breaking ties
-	 by their names), as that would give us results close to the
+> Rejected content:
+> ------------------------
+> packet:          git< status=reject\n
+> ------------------------
 
-	 Unsurprisingly, this adds a bit of CPU time (because we have
-	 more delta objects to search), though it's dwarfed by the wins
-	 you get from the sped-up counting phase (in my tests, 20
-	 seconds of extra delta search for 39 minutes of "counting
-	 objects" savings).
+I'd assume that an error status would end the output for that file
+immediately, no empty lists necessary (so what you have here). I'd
+probably just call this "error" (see below).
 
-	 But it doesn't actually help the resulting pack size. It's
-	 still about 3.2% overhead (it's actually just slightly worse
-	 than case 1).
+> Error during content response:
+> ------------------------
+> packet:          git< status=accept\n
+> packet:          git< HALF_WRITTEN_ERRONEOUS_CONTENT
+> packet:          git< 0000
+> packet:          git< status=error\n
+> ------------------------
 
-	 I think what happens is that we throw out a lot of deltas, even
-	 ones that _aren't_ cycles, but just happened to be found in
-	 packs that are "backwards" in the total order. And then we have
-	 to do a delta search on them, but of course that can't always
-	 find a good match.
+And then this would be:
 
-	 I also tried two other variants here. The pack order for the
-	 cycle-breaking step shouldn't matter, so I wondered what would
-	 happen if I reversed it. It does indeed produce different
-	 results. The resulting pack is slightly better, at 2.6%
-	 overhead. But we spend even more time looking for deltas (IOW,
-	 we threw out more of them).
+  git< status=success
+  git< 0000
+  git< HALF_OF_CONTENT
+  git< 0000
+  git< status=error
+  git< 0000
 
-	 I also tried bumping the pack window size, under the theory
-	 that maybe we just aren't finding great deltas for the ones we
-	 throw out. But it didn't seem to make much difference.
+And then you have only two status codes: success and error. Which keeps
+things simple.
 
-	 So I like the simplicity of this idea (which, by the way, was
-	 not mine, but came from an off-list discussion with Michael).
-	 But I think it's a dead-end, because it throws away too many
-	 deltas that _could_ be reused.
+There's one other case, which is when the filter dies halfway through
+the conversation, like:
 
-     2b. Another option is to do real cycle analysis, and break the
-         cycles.
+  git< status=success
+  git< 0000
+  git< CONTENT
+  git< 0000
+  ... EOF on pipe ...
 
-	 This is tricky to do in check_object() because we are actually
-	 filling out the delta pointers as we go. So I think we would
-	 have to make two passes: one to come up with a tentative list
-	 of deltas to reuse, and then one to check them for cycles.
-
-	 If done right, the cycle check should be linear in the number
-	 of objects (it's basically a depth-first search). In fact, I
-	 think it would look a lot like what write_object() is doing.
-	 We'd just be moving the logic _before_ the delta-compression
-	 phase, instead of after.
-
-	 This is the one approach I've considered but have not yet
-	 implemented. So no numbers.
-
-  3. Pick a consistent pack order up front, and stop changing it
-     mid-search.
-
-     The question, of course, is which order.
-
-     For my test repo, this is actually pretty easy. There's one
-     gigantic pack with 15 million objects in it, and then 3600 small
-     packs with a handful of objects from pushes. The giant pack is the
-     oldest, so the normal "reverse chronological" pack order makes
-     counting effectively O(m*n), because the majority of the objects
-     are found in the very last pack.
-
-     So an obvious thing to try is just reversing it. And indeed, the
-     counting is quite fast then (similar to the MRU numbers). Though of
-     course one can come up with a case where the objects are more
-     evenly split across the packs, and it would not help (you can come
-     up with pathological cases for MRU, too, but they're much less
-     likely in practice, because it's really exploiting locality).
-
-     But I was surprised to find that the resulting pack is even worse,
-     at 4.5% overhead.
-
-     I can't really explain that, and I'm starting to come to the
-     conclusion that there's a fair bit of luck and black magic involved
-     in delta reuse. I would not be at all surprised to find a test case
-     where reversing the order actually _improved_ things.
-
-     It may be that the numbers I saw in my (2a) tests were not because
-     we broke deltas and couldn't find replacements, but simply because
-     we get more and better deltas by looking in the smaller, newer
-     packs first.
-
-So that's where I'm at. Mostly puzzled, and wondering if any of my
-experiments were even valid or showing anything interesting, and not
-just somewhat random artifacts of the deltas that happen to be in this
-particular test case. Worse, it may be that looking in the small packs
-_is_ objectively better, and we're losing that in any kind of
-pack-ordering changes (which is an inherent part of my speed-up strategy
-for the counting phase[1]).
-
-I've yet to implement 2b, true cycle-detection before delta-compression.
-But I have a feeling it will somehow show that my resulting pack is
-about 3% worse. :-/
+Any time git does not get the conversation all the way to the final
+flush after the trailers, it should be considered an error (because we
+can never know if the filter was about to say "whoops, status=error").
 
 -Peff
-
-[1] So obviously one option is to figure out a way to speed up the
-    counting phase without changing the pack order. The only way I can
-    think of is to build a master object index, where each entry has all
-    of the packs that a given object can be found in, in their correct
-    pack order.
-
-    That would be fairly easy to implement as a hash table, but:
-
-      - it would require a fair bit of memory; the pack .idx for this
-	repo is 500MB, and we usually get to just mmap it. OTOH, the
-	biggest part of that is the sha1s, so we could possibly just
-	reference them by pointer into the mmap'd data. And it's not
-	like you don't need much more than 500MB to hold the list of
-	objects to pack.
-
-      - it's inherently O(nr_of_objects_in_repo) in CPU and memory to
-	build the index, whereas some operations are
-	O(nr_of_objects_to_be_packed). In this case it's probably OK (we
-	do pay for extra entries for each of the duplicates, but it's
-	largely on the order of 15 million objects). But it's a big
-	expense if you're just packing a few of the objects.
-
-    So I dunno. I really like the MRU approach if we can salvage it.
