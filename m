@@ -7,46 +7,45 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E7682018E
-	for <e@80x24.org>; Mon,  8 Aug 2016 21:05:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABD642018E
+	for <e@80x24.org>; Mon,  8 Aug 2016 21:05:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752856AbcHHVFb (ORCPT <rfc822;e@80x24.org>);
-	Mon, 8 Aug 2016 17:05:31 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33809 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752657AbcHHVEM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2016 17:04:12 -0400
-Received: by mail-wm0-f66.google.com with SMTP id q128so17866066wma.1
-        for <git@vger.kernel.org>; Mon, 08 Aug 2016 14:04:11 -0700 (PDT)
+	id S1752859AbcHHVFc (ORCPT <rfc822;e@80x24.org>);
+	Mon, 8 Aug 2016 17:05:32 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:35714 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752590AbcHHVEE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2016 17:04:04 -0400
+Received: by mail-wm0-f67.google.com with SMTP id i5so17865313wmg.2
+        for <git@vger.kernel.org>; Mon, 08 Aug 2016 14:04:03 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=7/luPNkgZGYKMMuOgo4OO2BtKm8bN4WwiZf+cW8nDpY=;
-        b=MQnweJZj4btQwmwvZUiqJtMHlyO6/afFU4mJd1KeDfCrz2sxWIibfBtKqdbxlO3laQ
-         vnVrVg0Uf8MjU7sD2R8sU08eGGuMLj9e/hxXQHYCuV1G4czs1LhdFfrJnLv83N7LtBys
-         yfw/4cwp3Ihbx2rFm60RH6SIznSCwMq1OOsQcJa438z34hjJFgMyjGlXsyGSR737nqvV
-         E/CX3jN7XhJpyErdBhtZpAIR1Ul1FZOwQRCgDG+cx8pN3WAjkQWz3wYw3TjqvRkRap1D
-         VZU+Kt3Afj373Dux/SWeGCem2mNH9GlqCxfTPc23WE+nDBuNQF6ynBd7x+5S9G0c1iDh
-         cZBQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=2og5v4fEQDksGq5SqiE2qpKg3CQGCEGJPj3zV/WzZiY=;
+        b=UVZk3/5xw8gWeYCKm4zPCygE9eV1u7W2BLuR+EYOQj69SKsmTfAvodMHclBmIEx5X6
+         DgdD41XeZgPyUGXfkpQlUPahxzc5WbhWdK+9Ww4yYIzWl4Afm/dZr67b9gvz53j+3GYA
+         VYwY26jvPyaNOST6iGB+9LVpImMyahAqd0mV0aTEKkhQT/bXDrbvQmghIO/AOTNBP4IL
+         9F/ax7bsXMUkL/XTjyGty/PebXh32mPcgDr6wajV0rFsUu90kYUxXAeOdA61+U6rSTbz
+         19LsaHc/4C25ucWDP6faM1D88CggKUShtnUc5fhCeo5C4VxfzYNh1wVa91XYXL9r+DTO
+         2Fyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=7/luPNkgZGYKMMuOgo4OO2BtKm8bN4WwiZf+cW8nDpY=;
-        b=DozolNoaeSpKB0Donug2idAyfqjtV2H6jLuWoUquqNjbcCZtN6aj7BgT0teGnBiSPN
-         r4YzGAMRpYJ38zSAV9OykUzeLbAKXh1i/D5vT3qfN9KeymlRF7Qt01ILWzvduYw2gD4f
-         jFkGZTNpxijgeLCSoxOZFCUyKIZejxut4SrMCOsvulJBiXCt+7gsCdRRQQ7j9T4SoOSW
-         TI1da3qKedBerDsFcTE0Ol6i6kEQ5NFgxZ4xWS0K83Z6OBi2g/wxBQ1HLp0To32Mvvef
-         lnvw4EwhLfzZ4UH1bAsjNOq19/RAyTWn/9pL5QO/Uq7BeqRdg/d9pTTpXlHJ45mGS5Wo
-         iHCQ==
-X-Gm-Message-State: AEkoouuLYEyBkZG4LX3PFe/pgE7wPrllC528txwQjQziXa9uKPt/D8h8kN3JH32crTPL1A==
-X-Received: by 10.194.97.17 with SMTP id dw17mr83701764wjb.8.1470690251070;
-        Mon, 08 Aug 2016 14:04:11 -0700 (PDT)
+         :references;
+        bh=2og5v4fEQDksGq5SqiE2qpKg3CQGCEGJPj3zV/WzZiY=;
+        b=hGqvPv5a9mbfB+cTGZSqWtRgo9hBtU9lUeJQ4vqF271iOI6Jsqc9g4EgaN264Xb1yk
+         27DLpB/JvSKL2lWz175Y7sL7LihYTL8+p4e577D9sc8sbXqkYGHI0BHf/TvI5iUAOhAy
+         Ox1f02Lx63NElxlW55zXLJL9xSjJQJ5QK0qchSbxnRnDsMHFA0oTfMr0+gUANYSlBaPG
+         8fYnhcbuZb025iX5XweMnMZyDSTRSyDxdNKVVQ/tlcjyppaXa7oBwBwss4qgEKLZYE1n
+         7qVOgbo2oYFsE1/UnmijeLfuRk1fOQrZHYwGufT/j4nYRBSqmmAuO+tW5lfN3hZg5US8
+         uSiA==
+X-Gm-Message-State: AEkoouv27kVe/9DsgjPB9qRCZf2KBbh68rb5Nxl8mjmDPVr939vqn8H99AcowCkFiSb8sw==
+X-Received: by 10.28.208.140 with SMTP id h134mr19144954wmg.101.1470690243107;
+        Mon, 08 Aug 2016 14:04:03 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id o2sm8539048wjo.3.2016.08.08.14.04.09
+        by smtp.gmail.com with ESMTPSA id o2sm8539048wjo.3.2016.08.08.14.04.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 08 Aug 2016 14:04:10 -0700 (PDT)
+        Mon, 08 Aug 2016 14:04:02 -0700 (PDT)
 From:	Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
 To:	git@vger.kernel.org
@@ -60,117 +59,97 @@ Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v10 14/40] builtin/apply: make apply_all_patches() return 128 or 1 on error
-Date:	Mon,  8 Aug 2016 23:03:11 +0200
-Message-Id: <20160808210337.5038-15-chriscool@tuxfamily.org>
+Subject: [PATCH v10 08/40] builtin/apply: make parse_whitespace_option() return -1 instead of die()ing
+Date:	Mon,  8 Aug 2016 23:03:05 +0200
+Message-Id: <20160808210337.5038-9-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.2.614.g5428e0c
 In-Reply-To: <20160808210337.5038-1-chriscool@tuxfamily.org>
 References: <20160808210337.5038-1-chriscool@tuxfamily.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-To finish libifying the apply functionality, apply_all_patches() should not
-die() or exit() in case of error, but return either 128 or 1, so that it
-gives the same exit code as when die() or exit(1) is called. This way
-scripts relying on the exit code don't need to be changed.
+To libify `git apply` functionality we have to signal errors to the
+caller instead of die()ing.
 
-While doing that we must take care that file descriptors are properly closed
-and, if needed, reset to a sensible value.
+To do that in a compatible manner with the rest of the error handling
+in builtin/apply.c, parse_whitespace_option() should return -1 instead
+of calling die().
 
-Also, according to the lockfile API, when finished with a lockfile, one
-should either commit it or roll it back.
-
-This is even more important now that the same lockfile can be passed
-to init_apply_state() many times to be reused by series of calls to
-the apply lib functions.
-
-Helped-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 37 ++++++++++++++++++++++++++-----------
- 1 file changed, 26 insertions(+), 11 deletions(-)
+ builtin/apply.c | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 075ada4..5530ba1 100644
+index 10aaba7..06a76f2 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -4578,15 +4578,18 @@ static int apply_all_patches(struct apply_state *state,
- 					      arg);
+@@ -27,34 +27,34 @@ static const char * const apply_usage[] = {
+ 	NULL
+ };
  
- 		fd = open(arg, O_RDONLY);
--		if (fd < 0)
--			die_errno(_("can't open patch '%s'"), arg);
-+		if (fd < 0) {
-+			error(_("can't open patch '%s': %s"), arg, strerror(errno));
-+			res = -128;
-+			goto end;
-+		}
- 		read_stdin = 0;
- 		set_default_whitespace_mode(state);
- 		res = apply_patch(state, fd, arg, options);
-+		close(fd);
- 		if (res < 0)
- 			goto end;
- 		errs |= res;
--		close(fd);
+-static void parse_whitespace_option(struct apply_state *state, const char *option)
++static int parse_whitespace_option(struct apply_state *state, const char *option)
+ {
+ 	if (!option) {
+ 		state->ws_error_action = warn_on_ws_error;
+-		return;
++		return 0;
  	}
- 	set_default_whitespace_mode(state);
- 	if (read_stdin) {
-@@ -4606,11 +4609,14 @@ static int apply_all_patches(struct apply_state *state,
- 				   squelched),
- 				squelched);
- 		}
--		if (state->ws_error_action == die_on_ws_error)
--			die(Q_("%d line adds whitespace errors.",
--			       "%d lines add whitespace errors.",
--			       state->whitespace_error),
--			    state->whitespace_error);
-+		if (state->ws_error_action == die_on_ws_error) {
-+			error(Q_("%d line adds whitespace errors.",
-+				 "%d lines add whitespace errors.",
-+				 state->whitespace_error),
-+			      state->whitespace_error);
-+			res = -128;
-+			goto end;
-+		}
- 		if (state->applied_after_fixing_ws && state->apply)
- 			warning("%d line%s applied after"
- 				" fixing whitespace errors.",
-@@ -4624,15 +4630,24 @@ static int apply_all_patches(struct apply_state *state,
+ 	if (!strcmp(option, "warn")) {
+ 		state->ws_error_action = warn_on_ws_error;
+-		return;
++		return 0;
  	}
- 
- 	if (state->update_index) {
--		if (write_locked_index(&the_index, state->lock_file, COMMIT_LOCK))
--			die(_("Unable to write new index file"));
-+		res = write_locked_index(&the_index, state->lock_file, COMMIT_LOCK);
-+		if (res) {
-+			error(_("Unable to write new index file"));
-+			res = -128;
-+			goto end;
-+		}
- 		state->newfd = -1;
+ 	if (!strcmp(option, "nowarn")) {
+ 		state->ws_error_action = nowarn_ws_error;
+-		return;
++		return 0;
  	}
- 
- 	return !!errs;
- 
- end:
--	exit(res == -1 ? 1 : 128);
-+	if (state->newfd >= 0) {
-+		rollback_lock_file(state->lock_file);
-+		state->newfd = -1;
-+	}
-+
-+	return (res == -1 ? 1 : 128);
+ 	if (!strcmp(option, "error")) {
+ 		state->ws_error_action = die_on_ws_error;
+-		return;
++		return 0;
+ 	}
+ 	if (!strcmp(option, "error-all")) {
+ 		state->ws_error_action = die_on_ws_error;
+ 		state->squelch_whitespace_errors = 0;
+-		return;
++		return 0;
+ 	}
+ 	if (!strcmp(option, "strip") || !strcmp(option, "fix")) {
+ 		state->ws_error_action = correct_ws_error;
+-		return;
++		return 0;
+ 	}
+-	die(_("unrecognized whitespace option '%s'"), option);
++	return error(_("unrecognized whitespace option '%s'"), option);
  }
  
- int cmd_apply(int argc, const char **argv, const char *prefix)
+ static void parse_ignorewhitespace_option(struct apply_state *state,
+@@ -4589,7 +4589,8 @@ static int option_parse_whitespace(const struct option *opt,
+ {
+ 	struct apply_state *state = opt->value;
+ 	state->whitespace_option = arg;
+-	parse_whitespace_option(state, arg);
++	if (parse_whitespace_option(state, arg))
++		exit(1);
+ 	return 0;
+ }
+ 
+@@ -4626,8 +4627,8 @@ static void init_apply_state(struct apply_state *state,
+ 	strbuf_init(&state->root, 0);
+ 
+ 	git_apply_config();
+-	if (apply_default_whitespace)
+-		parse_whitespace_option(state, apply_default_whitespace);
++	if (apply_default_whitespace && parse_whitespace_option(state, apply_default_whitespace))
++		exit(1);
+ 	if (apply_default_ignorewhitespace)
+ 		parse_ignorewhitespace_option(state, apply_default_ignorewhitespace);
+ }
 -- 
 2.9.2.614.g4980f51
 
