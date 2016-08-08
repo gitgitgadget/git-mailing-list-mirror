@@ -2,154 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 997B12018E
-	for <e@80x24.org>; Mon,  8 Aug 2016 15:03:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 16FF42018E
+	for <e@80x24.org>; Mon,  8 Aug 2016 15:05:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752150AbcHHPC6 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 8 Aug 2016 11:02:58 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51174 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752116AbcHHPC6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2016 11:02:58 -0400
-Received: (qmail 9975 invoked by uid 109); 8 Aug 2016 15:02:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Aug 2016 15:02:57 +0000
-Received: (qmail 5443 invoked by uid 111); 8 Aug 2016 15:02:56 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Aug 2016 11:02:56 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Aug 2016 11:02:55 -0400
-Date:	Mon, 8 Aug 2016 11:02:55 -0400
-From:	Jeff King <peff@peff.net>
-To:	Lars Schneider <larsxschneider@gmail.com>
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-	mlbright@gmail.com, e@80x24.org
-Subject: Re: [PATCH v4 11/12] convert: add filter.<driver>.process option
-Message-ID: <20160808150255.2otm3z5fluimpiqw@sigill.intra.peff.net>
-References: <20160729233801.82844-1-larsxschneider@gmail.com>
- <20160803164225.46355-1-larsxschneider@gmail.com>
- <20160803164225.46355-12-larsxschneider@gmail.com>
- <2e13c31c-5ee2-890d-1268-98fb67aba1ea@web.de>
- <xmqqfuqivpjv.fsf@gitster.mtv.corp.google.com>
- <20160805222710.chefh5kiktyzketh@sigill.intra.peff.net>
- <87D4BF17-67BB-4AFA-9B27-40DBB44C0456@gmail.com>
- <20160806121421.bs7n4lhed7phdshb@sigill.intra.peff.net>
- <A07BE78B-5A5D-41F1-A51B-5C71F3E86CCF@gmail.com>
+	id S1752149AbcHHPFM (ORCPT <rfc822;e@80x24.org>);
+	Mon, 8 Aug 2016 11:05:12 -0400
+Received: from mout.gmx.net ([212.227.17.21]:56927 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752054AbcHHPFL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2016 11:05:11 -0400
+Received: from virtualbox ([37.24.141.218]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0Lurin-1b6cFB19ur-0108V9; Mon, 08 Aug 2016 17:05:08
+ +0200
+Date:	Mon, 8 Aug 2016 17:05:07 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+cc:	git@vger.kernel.org
+Subject: t0027 racy?
+Message-ID: <alpine.DEB.2.20.1608081556280.5786@virtualbox>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <A07BE78B-5A5D-41F1-A51B-5C71F3E86CCF@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:aXJa4PPcM1n8Y013E1hs6jjgy0/zmvMRuF8GpQI4MPbyp/1y/3J
+ ksN7cH6LExcUQqRkAfymR6LDrc0fDSluOed+xztHk0Qz1CFXaPQg2sEc1AEDyPlWKqReYqK
+ 00V6yQifSD7wRR0MfG6mavgXN6+gEkaf4fGq5JCr/uvwSkuyav6xCqwsW/5DB1fCxOXbWW5
+ OrMOQiWQf51A9oig7pkaA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:Q/C/Re+p0Ec=:G58J2O61Vlj63qjPSqjXNc
+ WbB7D6VuQJsDteZtXFioAm+lfcwlab9eUpVHRTyywd8MP9rpUH0D9cEk2SEdd3oSqm+SY9zn3
+ 0a0X8biGCSZ6kEPQT371ePddYwbWdPaUtDmmIKCqWAPF0gmLfunyMF7fIr15YGt8YFJIvZKDf
+ N7VY7T/5SHNPs8Ti6YEowucohmJdKhTDgVo3W/z4wmuH0iXprHrH0bSMecG5d4CTk2qR4v+K+
+ NHDAJHWn1oYfcfZ602whPghpJe6DaIHyLUd8GGCPa0fm0vKY9T0gHbJow3Z+A+H5GedQZH5nW
+ fcyKHkl+fyivJKahfWvG3zV7KACP5OCkON7bLmjq0fCgiCeRfCHctt9E2geDxPr41e0mVxnHE
+ apmT8vRYMDaQoSZ5R0V+pQIdbUNwYtfFfbPKMUtDgKIHVTx4GBRbO0EgdHj/F58BYMbbQ9SMM
+ x9MI4S7WGi9g6O6TRiupNeKALGeUH5XeFv12vw6m0KiUOlQ+EoIvMHpPCH/vjoGBxNRWZa6x8
+ fCDrWNEn5lL10LEL51ctTUXKXz/9fh38Ww9CjdcmFDQPjufpmvTAEv29pwefcIFF4rpFjmjFZ
+ BcNSInMSGdSiOQcTWw5WNqVhzcRdiE/O9vpZZoFem1UKr+nG9TUyMsK+qywlv5XHfuEsbFAc8
+ XQw+Y2Vg1RXlsJeKAKbCtPSU6hKNPpTnKF4Lj+lzsGfpUk6xrdsUeCguE6AblITI/2rQYm/Ff
+ tKlimu/TOamIzMqR74m/c8DJ20rWGfqdYBzxQj/heGEko/IXfxqLtLSaWC0vvESEfje4W+CTl
+ SlaPaS9
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Sat, Aug 06, 2016 at 08:19:28PM +0200, Lars Schneider wrote:
+Hi Torsten,
 
-> > I dunno. It's not _that_ big a deal to code around. I was just surprised
-> > not to see an up-front status when responding to a request. It seems
-> > like the normal thing in just about every protocol I've ever used.
-> 
-> Alright. The fact that it "surprised" you is a bad sign. 
-> How about this:
-> 
-> Happy answer:
-> ------------------------
-> packet:          git< status=accept\n
-> packet:          git< SMUDGED_CONTENT
-> packet:          git< 0000
-> packet:          git< status=success\n
-> ------------------------
+I remember that you did a ton of work on t0027. Now I see problems, and
+not only that the entire script now takes a whopping 4 minutes 20 seconds
+to run on my high-end Windows machine.
 
-I notice that the status pkt-lines are by themselves. I had assumed we'd
-be sending other data, too (presumably before, but I guess possibly
-after, too). Something like:
+It appears that t0027 fails randomly for me, in seemingly random places.
+Sometimes all 1388 cases pass. Sometimes "29 - commit NNO files crlf=true
+attr=auto LF" fails. Sometimes it is "24 - commit NNO files crlf=false
+attr=auto LF". Sometimes it is "114 - commit NNO files crlf=false
+attr=auto LF", and sometimes "111 - commit NNO files attr=auto aeol=lf
+crlf=false CRLF_mix_LF".
 
-  git< status=accept
-  git< 0000
-  git< SMUDGED_CONTENT
-  git< 0000
-  git< status=success
-  git< 0000
+When I run it with -i -v -x --tee, it passes every single time (taking
+over 5 minutes, just to make things worse)...
 
-I don't have any particular meta-information in mind, but I thought
-stuff like the tentative "size" field would be here.
+Any idea about any possible races?
 
-I had imagined it at the front, but I guess it could go in either place.
-I wonder if keys at the end could simply replace ones from the beginning
-(so if you say "foo=bar" at the front, that is tentative, but if you
-then say "foo=revised" at the end, that takes precedence).
-
-And so the happy answer is really:
-
-  git< status=success
-  git< 0000
-  git< SMUDGED_CONTENT
-  git< 0000
-  git< 0000  # empty list!
-
-i.e., no second status. The original "success" still holds.
-
-And then:
-
-> Happy answer with no content:
-> ------------------------
-> packet:          git< status=success\n
-> ------------------------
-
-This can just be spelled:
-
-  git< status=success
-  git< 0000
-  git< 0000   # empty content!
-  git< 0000   # empty list!
-
-> Rejected content:
-> ------------------------
-> packet:          git< status=reject\n
-> ------------------------
-
-I'd assume that an error status would end the output for that file
-immediately, no empty lists necessary (so what you have here). I'd
-probably just call this "error" (see below).
-
-> Error during content response:
-> ------------------------
-> packet:          git< status=accept\n
-> packet:          git< HALF_WRITTEN_ERRONEOUS_CONTENT
-> packet:          git< 0000
-> packet:          git< status=error\n
-> ------------------------
-
-And then this would be:
-
-  git< status=success
-  git< 0000
-  git< HALF_OF_CONTENT
-  git< 0000
-  git< status=error
-  git< 0000
-
-And then you have only two status codes: success and error. Which keeps
-things simple.
-
-There's one other case, which is when the filter dies halfway through
-the conversation, like:
-
-  git< status=success
-  git< 0000
-  git< CONTENT
-  git< 0000
-  ... EOF on pipe ...
-
-Any time git does not get the conversation all the way to the final
-flush after the trailers, it should be considered an error (because we
-can never know if the filter was about to say "whoops, status=error").
-
--Peff
+Ciao,
+Dscho
