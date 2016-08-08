@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49EDB20193
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62EED2018E
 	for <e@80x24.org>; Mon,  8 Aug 2016 21:04:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752759AbcHHVEg (ORCPT <rfc822;e@80x24.org>);
-	Mon, 8 Aug 2016 17:04:36 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:36305 "EHLO
+	id S1752761AbcHHVEj (ORCPT <rfc822;e@80x24.org>);
+	Mon, 8 Aug 2016 17:04:39 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:33138 "EHLO
 	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752754AbcHHVEd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2016 17:04:33 -0400
-Received: by mail-wm0-f65.google.com with SMTP id i138so318477wmf.3
-        for <git@vger.kernel.org>; Mon, 08 Aug 2016 14:04:32 -0700 (PDT)
+	with ESMTP id S1752724AbcHHVEc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2016 17:04:32 -0400
+Received: by mail-wm0-f65.google.com with SMTP id o80so17872658wme.0
+        for <git@vger.kernel.org>; Mon, 08 Aug 2016 14:04:31 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=mqKVgr/XpUhT4J4XCgPpKPe+z0xWDRzMH/W4lpxA5nA=;
-        b=CYNdjAd+nK6TqeyVt+zNPDH3WZZ1OASllgVkujMZ3bmIms3cW+JBjkUhW6SvxgF31z
-         +0aFdxV2JSAdPbJyhJP4PBOt90yKu4mYzV7xQ/kYKmOrEePi7mF5ikwla7SkHYhmUHXq
-         d/B2VbozJSmIeLMSSosaWVs6FsAaSLTzkcHYczQchm9wl9Gkkk1ddNjfhPhbuC2TTvn0
-         R/Bbzo0gMa7EfWQOspYGiH3XuFB24OTXSqEkuB+TAnnvmRdGgxcDiPl5PN5H3yGrYpZz
-         7jfiMa1AMH1r1euBoavdiQqF2Hn9dgs4njRwxWz6c+9hvkQQw7EfRyJRTB0KEvsIkLZv
-         q9Eg==
+        bh=wyrsYKc+grTe+PQ4WHE3U1tgBH3g0t1SRBjd/Y0OrPc=;
+        b=EMoHj6qj00gVICOJSW9GRFOGsjYnnU7jBQ/q70PuToEfwKlvSvNjvlIk1AMxRdAQ+H
+         SNWxFY0nZQCSHLho85TQFpoLIgsO6rLt5Pw1EZspBjl8GCr94BU6DnBNfHPBLUI3dPHz
+         IZQcQPDxhO3F/X+WqVlM4MF3NbvOsX2zk3pqyAdlWrMhIwfaBdqnPv2VSQbmwco388ay
+         n/qs1lWEc219vhDLLGnKys242K5oqvjhZAtCx7N3C/gOQAXp+if9omzZRanf0L76ou//
+         VXu9dj6Grqyg/rAWcu4mfG5MB3RvzVQXbr2fJDOMcg382dAaKUVNb0/YX926dLtXfmat
+         +2oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=mqKVgr/XpUhT4J4XCgPpKPe+z0xWDRzMH/W4lpxA5nA=;
-        b=kOtxmBfAGqXCfSS3x+LY7EIJ73TpuelJ2CCvxM9e2a54SQKe4SSjwvs5zIC28xlmGo
-         dSq03ZBEkLTRsBuD9ijWoyxgIYvWoNOjTxsVYoGtNQOFfbnPWAj3POh4Qp1eJFIhgjkL
-         jIytEtl61phy85m/gO9/RNWoloO5a1WhisN1MYCl/oCjhO9bQWi9eLU0wN14mTe6XRCu
-         t/jZtHJ8jrhz+56rDOJ2Wbjd+EXk/Zw1g7AVH2/WUIGTDlSu7ATErM0dxjU0COqHhrfK
-         jukAo0fJxYRT5gw/15NGeCGclV+6kffnSUeg5MS+7EW7MOIwwT1/Yk3BCpnjW4yfY82z
-         2kzQ==
-X-Gm-Message-State: AEkoous28WRKW2/yualfi5xQPJJIWjDFyJiI4m84s2T5JxBwXJhWDrdTH51aF4fIIN06Xw==
-X-Received: by 10.28.209.14 with SMTP id i14mr17250643wmg.35.1470690271995;
-        Mon, 08 Aug 2016 14:04:31 -0700 (PDT)
+        bh=wyrsYKc+grTe+PQ4WHE3U1tgBH3g0t1SRBjd/Y0OrPc=;
+        b=EhOwVOsh8B+TvP58NPCEa/xb4trrJbEmalp+SwMPaxxWTgIudDPgqd2CqhvlrqMksr
+         wKVJ9c3/SQkEVd4X2weyRXXyBP4OTZo00l63G3WWaIpAiG7T+LP2tGuiTY4Lm268rF1t
+         DeNpEfm56rOPdmen7txOnaEuP+RhclheqE2iP52x+LuZvChWu2xp7vxguscoaYwuin2r
+         O4KC991t/YTQAYq0HW+t0gs8V4ZLJtmeCcz8FHEmlYriK0XGUfUJbt3qx9OYFqDzR3DT
+         +4wQctthV+qG08itiLBFbr1YeFt79rdTzRMuTyPZdJDH+/ivAIvdzFXfArYJ4LxJbNfV
+         dwHw==
+X-Gm-Message-State: AEkoousIgGA9f0f/uigNG0RNkCyXEAO+fOrkSWyQ0NC5Vsw7DOO7FXkMHbdKsAr3SrthXg==
+X-Received: by 10.194.105.201 with SMTP id go9mr27467419wjb.177.1470690270758;
+        Mon, 08 Aug 2016 14:04:30 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id o2sm8539048wjo.3.2016.08.08.14.04.30
+        by smtp.gmail.com with ESMTPSA id o2sm8539048wjo.3.2016.08.08.14.04.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 08 Aug 2016 14:04:31 -0700 (PDT)
+        Mon, 08 Aug 2016 14:04:30 -0700 (PDT)
 From:	Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
 To:	git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v10 29/40] apply: rename and move opt constants to apply.h
-Date:	Mon,  8 Aug 2016 23:03:26 +0200
-Message-Id: <20160808210337.5038-30-chriscool@tuxfamily.org>
+Subject: [PATCH v10 28/40] builtin/apply: rename option parsing functions
+Date:	Mon,  8 Aug 2016 23:03:25 +0200
+Message-Id: <20160808210337.5038-29-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.2.614.g5428e0c
 In-Reply-To: <20160808210337.5038-1-chriscool@tuxfamily.org>
 References: <20160808210337.5038-1-chriscool@tuxfamily.org>
@@ -70,67 +70,129 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-The constants for the "inaccurate-eof" and the "recount" options will
-be used in both "apply.c" and "builtin/apply.c", so they need to go
-into "apply.h", and therefore they need a name that is more specific
-to the API they belong to.
+As these functions are going to be part of the libified
+apply api, let's give them a name that is more specific
+to the apply api.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- apply.h         |  3 +++
- builtin/apply.c | 11 ++++-------
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ builtin/apply.c | 40 ++++++++++++++++++++--------------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/apply.h b/apply.h
-index 53f09b5..ca1dcee 100644
---- a/apply.h
-+++ b/apply.h
-@@ -108,4 +108,7 @@ extern int init_apply_state(struct apply_state *state,
- extern void clear_apply_state(struct apply_state *state);
- extern int check_apply_state(struct apply_state *state, int force_apply);
- 
-+#define APPLY_OPT_INACCURATE_EOF	(1<<0)
-+#define APPLY_OPT_RECOUNT		(1<<1)
-+
- #endif
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 429fe44..9c396bb 100644
+index ad403f8..429fe44 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -4463,9 +4463,6 @@ static int write_out_results(struct apply_state *state, struct patch *list)
+@@ -4588,16 +4588,16 @@ static int apply_patch(struct apply_state *state,
+ 	return res;
+ }
  
- static struct lock_file lock_file;
+-static int option_parse_exclude(const struct option *opt,
+-				const char *arg, int unset)
++static int apply_option_parse_exclude(const struct option *opt,
++				      const char *arg, int unset)
+ {
+ 	struct apply_state *state = opt->value;
+ 	add_name_limit(state, arg, 1);
+ 	return 0;
+ }
  
--#define INACCURATE_EOF	(1<<0)
--#define RECOUNT		(1<<1)
--
- /*
-  * Try to apply a patch.
-  *
-@@ -4495,8 +4492,8 @@ static int apply_patch(struct apply_state *state,
- 		int nr;
+-static int option_parse_include(const struct option *opt,
+-				const char *arg, int unset)
++static int apply_option_parse_include(const struct option *opt,
++				      const char *arg, int unset)
+ {
+ 	struct apply_state *state = opt->value;
+ 	add_name_limit(state, arg, 0);
+@@ -4605,9 +4605,9 @@ static int option_parse_include(const struct option *opt,
+ 	return 0;
+ }
  
- 		patch = xcalloc(1, sizeof(*patch));
--		patch->inaccurate_eof = !!(options & INACCURATE_EOF);
--		patch->recount =  !!(options & RECOUNT);
-+		patch->inaccurate_eof = !!(options & APPLY_OPT_INACCURATE_EOF);
-+		patch->recount =  !!(options & APPLY_OPT_RECOUNT);
- 		nr = parse_chunk(state, buf.buf + offset, buf.len - offset, patch);
- 		if (nr < 0) {
- 			free_patch(patch);
-@@ -4811,10 +4808,10 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
- 		OPT__VERBOSE(&state.apply_verbosely, N_("be verbose")),
- 		OPT_BIT(0, "inaccurate-eof", &options,
- 			N_("tolerate incorrectly detected missing new-line at the end of file"),
--			INACCURATE_EOF),
-+			APPLY_OPT_INACCURATE_EOF),
- 		OPT_BIT(0, "recount", &options,
- 			N_("do not trust the line counts in the hunk headers"),
--			RECOUNT),
-+			APPLY_OPT_RECOUNT),
+-static int option_parse_p(const struct option *opt,
+-			  const char *arg,
+-			  int unset)
++static int apply_option_parse_p(const struct option *opt,
++				const char *arg,
++				int unset)
+ {
+ 	struct apply_state *state = opt->value;
+ 	state->p_value = atoi(arg);
+@@ -4615,8 +4615,8 @@ static int option_parse_p(const struct option *opt,
+ 	return 0;
+ }
+ 
+-static int option_parse_space_change(const struct option *opt,
+-				     const char *arg, int unset)
++static int apply_option_parse_space_change(const struct option *opt,
++					   const char *arg, int unset)
+ {
+ 	struct apply_state *state = opt->value;
+ 	if (unset)
+@@ -4626,8 +4626,8 @@ static int option_parse_space_change(const struct option *opt,
+ 	return 0;
+ }
+ 
+-static int option_parse_whitespace(const struct option *opt,
+-				   const char *arg, int unset)
++static int apply_option_parse_whitespace(const struct option *opt,
++					 const char *arg, int unset)
+ {
+ 	struct apply_state *state = opt->value;
+ 	state->whitespace_option = arg;
+@@ -4636,8 +4636,8 @@ static int option_parse_whitespace(const struct option *opt,
+ 	return 0;
+ }
+ 
+-static int option_parse_directory(const struct option *opt,
+-				  const char *arg, int unset)
++static int apply_option_parse_directory(const struct option *opt,
++					const char *arg, int unset)
+ {
+ 	struct apply_state *state = opt->value;
+ 	strbuf_reset(&state->root);
+@@ -4755,13 +4755,13 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
+ 	struct option builtin_apply_options[] = {
+ 		{ OPTION_CALLBACK, 0, "exclude", &state, N_("path"),
+ 			N_("don't apply changes matching the given path"),
+-			0, option_parse_exclude },
++			0, apply_option_parse_exclude },
+ 		{ OPTION_CALLBACK, 0, "include", &state, N_("path"),
+ 			N_("apply changes matching the given path"),
+-			0, option_parse_include },
++			0, apply_option_parse_include },
+ 		{ OPTION_CALLBACK, 'p', NULL, &state, N_("num"),
+ 			N_("remove <num> leading slashes from traditional diff paths"),
+-			0, option_parse_p },
++			0, apply_option_parse_p },
+ 		OPT_BOOL(0, "no-add", &state.no_add,
+ 			N_("ignore additions made by the patch")),
+ 		OPT_BOOL(0, "stat", &state.diffstat,
+@@ -4793,13 +4793,13 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
+ 				N_("ensure at least <n> lines of context match")),
+ 		{ OPTION_CALLBACK, 0, "whitespace", &state, N_("action"),
+ 			N_("detect new or modified lines that have whitespace errors"),
+-			0, option_parse_whitespace },
++			0, apply_option_parse_whitespace },
+ 		{ OPTION_CALLBACK, 0, "ignore-space-change", &state, NULL,
+ 			N_("ignore changes in whitespace when finding context"),
+-			PARSE_OPT_NOARG, option_parse_space_change },
++			PARSE_OPT_NOARG, apply_option_parse_space_change },
+ 		{ OPTION_CALLBACK, 0, "ignore-whitespace", &state, NULL,
+ 			N_("ignore changes in whitespace when finding context"),
+-			PARSE_OPT_NOARG, option_parse_space_change },
++			PARSE_OPT_NOARG, apply_option_parse_space_change },
+ 		OPT_BOOL('R', "reverse", &state.apply_in_reverse,
+ 			N_("apply the patch in reverse")),
+ 		OPT_BOOL(0, "unidiff-zero", &state.unidiff_zero,
+@@ -4817,7 +4817,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
+ 			RECOUNT),
  		{ OPTION_CALLBACK, 0, "directory", &state, N_("root"),
  			N_("prepend <root> to all filenames"),
- 			0, apply_option_parse_directory },
+-			0, option_parse_directory },
++			0, apply_option_parse_directory },
+ 		OPT_END()
+ 	};
+ 
 -- 
 2.9.2.614.g4980f51
 
