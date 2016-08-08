@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 321A32018E
-	for <e@80x24.org>; Mon,  8 Aug 2016 21:05:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 296082018E
+	for <e@80x24.org>; Mon,  8 Aug 2016 21:05:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752820AbcHHVFC (ORCPT <rfc822;e@80x24.org>);
-	Mon, 8 Aug 2016 17:05:02 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34112 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752797AbcHHVEw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2016 17:04:52 -0400
-Received: by mail-wm0-f68.google.com with SMTP id q128so17868811wma.1
-        for <git@vger.kernel.org>; Mon, 08 Aug 2016 14:04:51 -0700 (PDT)
+	id S1752824AbcHHVFE (ORCPT <rfc822;e@80x24.org>);
+	Mon, 8 Aug 2016 17:05:04 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35078 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752729AbcHHVEu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2016 17:04:50 -0400
+Received: by mail-wm0-f65.google.com with SMTP id i5so17868660wmg.2
+        for <git@vger.kernel.org>; Mon, 08 Aug 2016 14:04:50 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ptPYPFAToXei2SNkNA9s6qV1wjo5Ssh6vEjHk/vPVP8=;
-        b=S9IJN2xZd9XxeGUuech2BtDoDI/mqRqt7pRRuhUH06P62LT05PodRKbj2Xh5n1cBn6
-         KMj6tBRZLMSvKmzWIuLK0GzsGbAKlwu2Awnrfnc1xeJMGrgvAaGssi8YjoT7D8730g0c
-         q9MvXulRh6X4S1FJ6zlFScgVM2+8MM49W1W2aFAWHwYkCPkf+8Yyx5YIyQ22KfKIZLv6
-         +PTITp0rRMmAwDik9HVmpQGVAQaNkzqO8G7RkuNkuJmB6gAVB40BS46f/O2rYjufxDIj
-         92MzOnLhglHs8kA6yfVW1tvwcxSi4Ha1pa65wswvDlxVN2L703p5acSciJTCogI8lmkH
-         ZcFA==
+        bh=bd4BY5DmLcb5vqzatFOiI6so5PfhUctMrJnNaTCgcao=;
+        b=PI7c6CLfZYDSZeq2sZCMVDCIR9EV8sOMoYWLNr/HndQF6PKbDL+IIw5F8EYGUqQiXr
+         gDrmo7/0zOhmqm+w7N2pyJDI68D0bdjCf22Sq7+ZIXm78x+JQipGaTc6GbKV91ZXek+P
+         Q90HNDsXGay3bn4bjAFYIvJU43GhjZVA+hW6y9M+X/YVmG9M8B8swLpOzzOgC9XjBByW
+         eMxeWYXu5ma1hXLjTW7MDWNyGQv+3CuMDLYKYLJYYt3CIQp/Y7XyxYdoLlox5iROrJFJ
+         4lravWMw4X9B926wrK3WPVoDCVIhc7oXTDBAHLy1cnTtY9bErmmtDe7lgHVKB84Fx91J
+         SJow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ptPYPFAToXei2SNkNA9s6qV1wjo5Ssh6vEjHk/vPVP8=;
-        b=hAfycR1HHMfMy7FkmomeGMBxxwlt312ZtZDCl/O0wyLYNSYa6/S/xzSK7rAsdGCZEM
-         /YcgTt/UcEefjE00To0g2GDW79fNGjACraHlm2iQnU/YFaW2K0YHVcuTMuZVkvV3nl5p
-         xpc2iKzBEtCXh+j0lW8Ph8/y0fqP1fguhMEvXOL+o67uQxUzYb88F/0ZDuuFXVP2+a2V
-         p8aNJvhS1KyCbNPZMSgjLeZ/zHM/u3/7zcfR1gcRpc0JY2oALGhBsjPG4cVO4slm3b5Y
-         gwWl/Xq6WotLcQLBmxNMOLY1xWt7mgXeqHmLGuau9zJsLsts52Mtl4qQC9DUwBRiSlou
-         rwWA==
-X-Gm-Message-State: AEkoouuKn8P7MjLl/SXk98uP1WWu4Jv38NqSC0Rzc0RNHouOi6tP+QJzxV0/tijb4Q7EIg==
-X-Received: by 10.194.118.132 with SMTP id km4mr9083975wjb.158.1470690290855;
-        Mon, 08 Aug 2016 14:04:50 -0700 (PDT)
+        bh=bd4BY5DmLcb5vqzatFOiI6so5PfhUctMrJnNaTCgcao=;
+        b=DdqCRGg1MjMNQv2qhknIfzI8iVhVPpPTJeWZ1CoRx2HqoDFbyzhYpDWVOw138UBD55
+         7GmsXFepmajS4z9bdIIQZCl7oAH8axAZfgHAJ3SN2MpZKK+R1tKwTUne7bKzeiKcg4l+
+         ydmUPmaLavIbHmapZOTTad6zK/Lq4LpmfXsRHaxuOr8Co/ZnLm/9ZD9cmVsa14jOsXXB
+         znNW8QnCeykygepqc5Rju67RxkJhKd4GNIfOyttduvHKAED7Lwlms/rpTnRi7JeJcA2d
+         5/QvNoUll33w8V8e+aCfT2HFF3tVjXgvZ+ZwIRML+IwKqd7YTuWAiJ9fMdc09rZYly1Y
+         CF4g==
+X-Gm-Message-State: AEkoouvddncWpn82X694nJ8VAclIhvGd+vq/CwK/OG6TktvxCnraFDGNdOlBChD+Qq/CsA==
+X-Received: by 10.194.38.166 with SMTP id h6mr86952171wjk.101.1470690289574;
+        Mon, 08 Aug 2016 14:04:49 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id o2sm8539048wjo.3.2016.08.08.14.04.49
+        by smtp.gmail.com with ESMTPSA id o2sm8539048wjo.3.2016.08.08.14.04.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 08 Aug 2016 14:04:50 -0700 (PDT)
+        Mon, 08 Aug 2016 14:04:48 -0700 (PDT)
 From:	Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
 To:	git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v10 36/40] usage: add set_warn_routine()
-Date:	Mon,  8 Aug 2016 23:03:33 +0200
-Message-Id: <20160808210337.5038-37-chriscool@tuxfamily.org>
+Subject: [PATCH v10 35/40] apply: don't print on stdout in verbosity_silent mode
+Date:	Mon,  8 Aug 2016 23:03:32 +0200
+Message-Id: <20160808210337.5038-36-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.2.614.g5428e0c
 In-Reply-To: <20160808210337.5038-1-chriscool@tuxfamily.org>
 References: <20160808210337.5038-1-chriscool@tuxfamily.org>
@@ -70,44 +70,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-There are already set_die_routine() and set_error_routine(),
-so let's add set_warn_routine() as this will be needed in a
-following commit.
+When apply_verbosity is set to verbosity_silent nothing should be
+printed on both stderr and stdout.
+
+To avoid printing on stdout, we can just skip calling the following
+functions:
+
+	- stat_patch_list(),
+	- numstat_patch_list(),
+	- summary_patch_list().
+
+It is safe to do that because the above functions have no side
+effects other than printing:
+
+- stat_patch_list() only computes some local values and then call
+show_stats() and print_stat_summary(), those two functions only
+compute local values and call printing functions,
+- numstat_patch_list() also only computes local values and calls
+printing functions,
+- summary_patch_list() calls show_file_mode_name(), printf(),
+show_rename_copy(), show_mode_change() that are only printing.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- git-compat-util.h | 1 +
- usage.c           | 5 +++++
- 2 files changed, 6 insertions(+)
+ apply.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 590bfdd..c7a51f8 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -440,6 +440,7 @@ static inline int const_error(void)
+diff --git a/apply.c b/apply.c
+index df85cbc..ddbb0a2 100644
+--- a/apply.c
++++ b/apply.c
+@@ -4702,13 +4702,13 @@ static int apply_patch(struct apply_state *state,
+ 		goto end;
+ 	}
  
- extern void set_die_routine(NORETURN_PTR void (*routine)(const char *err, va_list params));
- extern void set_error_routine(void (*routine)(const char *err, va_list params));
-+extern void set_warn_routine(void (*routine)(const char *warn, va_list params));
- extern void set_die_is_recursing_routine(int (*routine)(void));
- extern void set_error_handle(FILE *);
+-	if (state->diffstat)
++	if (state->diffstat && state->apply_verbosity > verbosity_silent)
+ 		stat_patch_list(state, list);
  
-diff --git a/usage.c b/usage.c
-index 1dad03f..67e5526 100644
---- a/usage.c
-+++ b/usage.c
-@@ -70,6 +70,11 @@ void set_error_routine(void (*routine)(const char *err, va_list params))
- 	error_routine = routine;
- }
+-	if (state->numstat)
++	if (state->numstat && state->apply_verbosity > verbosity_silent)
+ 		numstat_patch_list(state, list);
  
-+void set_warn_routine(void (*routine)(const char *warn, va_list params))
-+{
-+	warn_routine = routine;
-+}
-+
- void set_die_is_recursing_routine(int (*routine)(void))
- {
- 	die_is_recursing = routine;
+-	if (state->summary)
++	if (state->summary && state->apply_verbosity > verbosity_silent)
+ 		summary_patch_list(list);
+ 
+ end:
 -- 
 2.9.2.614.g4980f51
 
