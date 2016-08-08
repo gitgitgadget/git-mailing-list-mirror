@@ -2,107 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C49532018E
-	for <e@80x24.org>; Mon,  8 Aug 2016 16:26:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5098C2018E
+	for <e@80x24.org>; Mon,  8 Aug 2016 16:28:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752132AbcHHQ0q (ORCPT <rfc822;e@80x24.org>);
-	Mon, 8 Aug 2016 12:26:46 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51250 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752054AbcHHQ0q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2016 12:26:46 -0400
-Received: (qmail 15155 invoked by uid 109); 8 Aug 2016 16:26:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Aug 2016 16:26:45 +0000
-Received: (qmail 6424 invoked by uid 111); 8 Aug 2016 16:26:44 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 Aug 2016 12:26:44 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Aug 2016 12:26:43 -0400
-Date:	Mon, 8 Aug 2016 12:26:43 -0400
-From:	Jeff King <peff@peff.net>
-To:	Lars Schneider <larsxschneider@gmail.com>
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-	mlbright@gmail.com, e@80x24.org
-Subject: Re: [PATCH v4 11/12] convert: add filter.<driver>.process option
-Message-ID: <20160808162642.x4k7yjb5fxs2jp25@sigill.intra.peff.net>
-References: <20160803164225.46355-1-larsxschneider@gmail.com>
- <20160803164225.46355-12-larsxschneider@gmail.com>
- <2e13c31c-5ee2-890d-1268-98fb67aba1ea@web.de>
- <xmqqfuqivpjv.fsf@gitster.mtv.corp.google.com>
- <20160805222710.chefh5kiktyzketh@sigill.intra.peff.net>
- <87D4BF17-67BB-4AFA-9B27-40DBB44C0456@gmail.com>
- <20160806121421.bs7n4lhed7phdshb@sigill.intra.peff.net>
- <A07BE78B-5A5D-41F1-A51B-5C71F3E86CCF@gmail.com>
- <20160808150255.2otm3z5fluimpiqw@sigill.intra.peff.net>
- <6D2101A9-2D01-47E8-9DFF-6C85DED4269D@gmail.com>
+	id S1752360AbcHHQ2e (ORCPT <rfc822;e@80x24.org>);
+	Mon, 8 Aug 2016 12:28:34 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53613 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752312AbcHHQ2d (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2016 12:28:33 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CDBC734D03;
+	Mon,  8 Aug 2016 12:28:31 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bZr7M/2TFU63NqBFCF8hrvlu7QA=; b=VUdtnk
+	f8f4TEYCXD2wgf7Ghg/dk1DxdaPutp+2DGT2kacf9EY0hrrwmvO7zNZVzIKhwE2T
+	VW+Unu1PVn2nz1xl6bEpr9OS0wVxSM1iXsMdu6f2BW7bgfPIvwrg4jCvSs/1PjiV
+	nCc8S7hw2XJwyBpr4pOEmWLG3+cy5AsmWUL3w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=X8eYQbCTOdXM/iuynoe25n1E/+2mE5A1
+	POLq6ltG0oVSQUjZZFYQk67lceHhBCbMmbxUmCsa9En0hOgcCh3IWMVUjYAS75E3
+	NaVASy4aoqArIKL3PyR49/rhk2gW3qH+uUawJRU9zavo+8wX1RzYgTyGZROlBYoj
+	Y3eMurLPSvc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B3DB134D02;
+	Mon,  8 Aug 2016 12:28:31 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 28A1134D01;
+	Mon,  8 Aug 2016 12:28:31 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff King <peff@peff.net>
+Cc:	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 7/7] pack-objects: use mru list when iterating over packs
+References: <20160729040422.GA19678@sigill.intra.peff.net>
+	<20160729041524.GG22408@sigill.intra.peff.net>
+	<20160729054536.GA27343@sigill.intra.peff.net>
+	<xmqqr3acpjvo.fsf@gitster.mtv.corp.google.com>
+	<20160808145042.uwrk2m6jq3m4li37@sigill.intra.peff.net>
+Date:	Mon, 08 Aug 2016 09:28:29 -0700
+In-Reply-To: <20160808145042.uwrk2m6jq3m4li37@sigill.intra.peff.net> (Jeff
+	King's message of "Mon, 8 Aug 2016 10:50:43 -0400")
+Message-ID: <xmqq8tw7gr82.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <6D2101A9-2D01-47E8-9DFF-6C85DED4269D@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 24DB40D6-5D85-11E6-9A48-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Aug 08, 2016 at 06:21:18PM +0200, Lars Schneider wrote:
+Jeff King <peff@peff.net> writes:
 
-> >> Happy answer with no content:
-> >> ------------------------
-> >> packet:          git< status=success\n
-> >> ------------------------
-> > 
-> > This can just be spelled:
-> > 
-> >  git< status=success
-> >  git< 0000
-> >  git< 0000   # empty content!
-> >  git< 0000   # empty list!
-> 
-> Is the first flush packet one too many?
-> If there is nothing then I think we shouldn't
-> send any packets?!
-> 
-> I agree with the remaining two flush packets.
+> Here's a list of approaches I think we can use to fix this:
+>
+>   1. squelch the warning and ignore it. The downside here, besides not
+>      warning the user about true in-pack cycles, is that we have no
+>      opportunity to actually find a new delta (because we realize the
+>      problem only after the delta-compression phase).
+>
+>      My test repository is a bad packing of all of the forks of
+>      torvalds/linux, with 3600 packs. I'm happy to share it if anybody
+>      wants to see it, but note that it is 11GB.
+>
+>      The space overhead of the resulting pack in this case is ~3.2%
+>      (versus a pack generated by the original code, using the static
+>      pack order).  Which is really not that bad, but I'm sure there are
+>      more pathological cases (i.e., there were on the order of hundreds
+>      or maybe thousands of cycles that needed broken, out of about 15
+>      million total objects; but one could imagine the worst case as
+>      nr_of_objects/2).
+> ...
+>
+>     So I dunno. I really like the MRU approach if we can salvage it.
 
-There isn't nothing, there is a "status" field (though I think that
-should probably be required, so I guess you could imagine it as a
-stand-alone pkt, separate from the list terminated by the flush). But
-regardless, you need the first flush to say "I am done telling you
-up-front keys, now I am starting the content".
+I think I share the same feeling.  As long as the chance is small
+enough that the pack reordering creates a new cycle, the resulting
+pack would not become too bloated by the last-ditch cycle breaking
+code and finding a replacement delta instead of inflating it may not
+be worth the trouble.
 
-Otherwise, what would:
-
-  git< status=success
-  git< foo=bar
-  git< 0000
-
-be parsed as? Is "foo=bar" the first line of content, or the rest of the
-pre-content header? (You could guess if you could see the total
-conversation, but you can't; you have to parse it as it comes).
-
-> There is one more thing: I introduced a return value "status=error-all".
-> Using this the filter can signal Git that it does not want to process
-> any other file using the particular command.
-> 
-> Jakub came up with this idea here:
-> 
-> "Another response, which I think should be standarized, or at
-> least described in the documentation, is filter driver refusing
-> to filter further (e.g. git-LFS and network is down), to be not
-> restarted by Git."
-> 
-> http://public-inbox.org/git/607c07fe-5b6f-fd67-13e1-705020c267ee%40gmail.com/
-> 
-> I think it is a good idea. Do you see arguments against it?
-
-No, that seems reasonable (I would have just implemented that by hanging
-up the connection, but explicitly communicating is more robust).
-
--Peff
+It worries me a lot to lose the warning unconditionally, though.
+That's the (only) coal-mine canary that lets us notice a problem
+when we actually start hitting that last-ditch cycle breaking too
+often.
