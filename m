@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 657EB2018E
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7EE6D20193
 	for <e@80x24.org>; Mon,  8 Aug 2016 21:04:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752684AbcHHVEQ (ORCPT <rfc822;e@80x24.org>);
-	Mon, 8 Aug 2016 17:04:16 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:32957 "EHLO
+	id S1752695AbcHHVES (ORCPT <rfc822;e@80x24.org>);
+	Mon, 8 Aug 2016 17:04:18 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:33797 "EHLO
 	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752650AbcHHVEJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2016 17:04:09 -0400
-Received: by mail-wm0-f67.google.com with SMTP id o80so17871044wme.0
-        for <git@vger.kernel.org>; Mon, 08 Aug 2016 14:04:09 -0700 (PDT)
+	with ESMTP id S1752653AbcHHVEL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2016 17:04:11 -0400
+Received: by mail-wm0-f67.google.com with SMTP id q128so17865957wma.1
+        for <git@vger.kernel.org>; Mon, 08 Aug 2016 14:04:10 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=OhJDZh2EmByKsIHxjIUW0PN8ul2jagR4CQEimEbiaYA=;
-        b=h+Cu080hImeNBWlPjwIxEQBLv+qrmWlhlKW2JrEVYZNS+3UlkNvvvKxh5zYLjm+7hW
-         KTd1cyT+vxQt4ip1pBhVS7tCr0Rkanx3zV9tJxxkTYZZkwX/zHGXgPyPfLDdOd1wF+Qs
-         y3hEEB+fwMfQP4wTA+16yqaJjypGYa6LNusVs2je4LiySBb7BNVjPQ+H5VWvyxjUU7k3
-         1mS0eK9BIf4W7/gsA2FVibqkCX1/bjRJJuoWEONhzPVouAbgGf1IISwGZqprLzqFa2Wd
-         zBu05/XhVd+PrceA/uwlSwM0fKBZVq/2qMwF0BKz5pAzSYHCRDVIafmnsCONhKWZq7/t
-         0ZwA==
+        bh=Zo8idKSY8vRjH4eD+dvkipWnB2LgxvVfMrLPZRPWQsE=;
+        b=uftrAq+NBzeKcLwnG6gYuZpl+9cmBIGLiIJrm9JT28/n27NEUH/T1V6W2Q0kesrWsU
+         h6ADTkRFdKLF2TuRhPVMfbMZ9nEcBKm3sCj+N1oB3xjC3XY3fVBlTPwjUM9RWpYhoOTL
+         nX/O4cwJQZgeXlQKjzGia6moOmXckkY9FTmYboTRhgNedFztDrH+EFXP7Cag0w6iVtdD
+         N5eKhvPRqbcCRPqXYXZBKmI1NfNRcO97C0rtepaRoT7NFqLVGeluQjnZ4p38zdv0ihMS
+         k0IwzR4GIrIs1Je1UqT15NpbmTacsb3SlY7RM6ui1R8YXldyiYEKTJqeHsLZl6kFo5+b
+         iQdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=OhJDZh2EmByKsIHxjIUW0PN8ul2jagR4CQEimEbiaYA=;
-        b=PPEwJNdW+1o9vxpudPTYcpQyOKQoFhb1RIopcUCTEyVT81n/C0/Wafp1Ti6rzOrqly
-         bDZ9DcWqzDvGMVbxpVOhp81sKVMbO4pnSlk85sbzYJ3ZpknjCqx+3K4S3nYaquFQDYot
-         tm1yI6ptgmeUd383vwAsR+csfXyNFHEDNqWVEg5j3OE1xJWWjeklrMnVNyrdYGRx9X/n
-         jUhp5761wrinel7+OyknZ9N5nOHhIKh+VU65Rhf28Nlx6PzokpQFYKPAjdrR0L7p3p9W
-         yKF/WZCmS/ZBqCRkiimcjZ/FMTY/uZSPsQ/n+zIHBAC7PfM518/kn9/WiMHypnOXdavC
-         MROw==
-X-Gm-Message-State: AEkoouthjLk5bfAOTI/uGHRumz3PYNR/AiUO8+8n1zJEtNuFFaE5n+u34oMPi2gS43LXeQ==
-X-Received: by 10.194.186.231 with SMTP id fn7mr86557672wjc.164.1470690248410;
-        Mon, 08 Aug 2016 14:04:08 -0700 (PDT)
+        bh=Zo8idKSY8vRjH4eD+dvkipWnB2LgxvVfMrLPZRPWQsE=;
+        b=KXdKM28UKtVNuGTiVik62xjZPLWgtvj+YiV55No8mZ7BmS3nZIvH1lpRQD1DCgH10d
+         LUPbnTGUlvVOQYL0zgMi0L9oTB8ZHEsZlxqWjYoMJAD/cl5V0+pI5vm2+9VZ1eatdATo
+         O16q8mtxME4SS0VIeymU5D+xTF/wOdwP89ZoK27GPSFgXKARXcM8SLPa/eSI5mVTspnd
+         ETXyQ7xZ0nFrkeiLcbha4lvjcMxmRIswKxca67cGm7dCMFWwJsiWttm31AstCeg9Ym5i
+         /3KhLiyLSyzgHkfD6JDjzPuD/Ves6MtEYL/kTVZgx8JEoWNk7r9yrE+BsMgeanVyHyWv
+         E4zA==
+X-Gm-Message-State: AEkooutUldc9DSXz9nqdviGlLzR8A8raFxFostbLXMKRD2EcOcp1M5V+MKdy6EfQf13aNQ==
+X-Received: by 10.28.63.8 with SMTP id m8mr19147521wma.88.1470690249676;
+        Mon, 08 Aug 2016 14:04:09 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id o2sm8539048wjo.3.2016.08.08.14.04.07
+        by smtp.gmail.com with ESMTPSA id o2sm8539048wjo.3.2016.08.08.14.04.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 08 Aug 2016 14:04:07 -0700 (PDT)
+        Mon, 08 Aug 2016 14:04:09 -0700 (PDT)
 From:	Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
 To:	git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v10 12/40] builtin/apply: make check_apply_state() return -1 instead of die()ing
-Date:	Mon,  8 Aug 2016 23:03:09 +0200
-Message-Id: <20160808210337.5038-13-chriscool@tuxfamily.org>
+Subject: [PATCH v10 13/40] builtin/apply: move check_apply_state() to apply.c
+Date:	Mon,  8 Aug 2016 23:03:10 +0200
+Message-Id: <20160808210337.5038-14-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.2.614.g5428e0c
 In-Reply-To: <20160808210337.5038-1-chriscool@tuxfamily.org>
 References: <20160808210337.5038-1-chriscool@tuxfamily.org>
@@ -70,76 +70,112 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-To libify `git apply` functionality we have to signal errors to the
-caller instead of die()ing.
+To libify `git apply` functionality we must make check_apply_state()
+usable outside "builtin/apply.c".
 
-To do that in a compatible manner with the rest of the error handling
-in "builtin/apply.c", check_apply_state() should return -1 instead of
-calling die().
+Let's do that by moving it into "apply.c".
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ apply.c         | 32 ++++++++++++++++++++++++++++++++
+ apply.h         |  1 +
+ builtin/apply.c | 32 --------------------------------
+ 3 files changed, 33 insertions(+), 32 deletions(-)
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 61fd316..bb89e07 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -4551,17 +4551,17 @@ static int option_parse_directory(const struct option *opt,
- 	return 0;
+diff --git a/apply.c b/apply.c
+index 6e0e992..2eac3e3 100644
+--- a/apply.c
++++ b/apply.c
+@@ -93,3 +93,35 @@ void clear_apply_state(struct apply_state *state)
+ 
+ 	/* &state->fn_table is cleared at the end of apply_patch() */
  }
- 
--static void check_apply_state(struct apply_state *state, int force_apply)
-+static int check_apply_state(struct apply_state *state, int force_apply)
- {
- 	int is_not_gitdir = !startup_info->have_repository;
- 
- 	if (state->apply_with_reject && state->threeway)
--		die("--reject and --3way cannot be used together.");
++
++int check_apply_state(struct apply_state *state, int force_apply)
++{
++	int is_not_gitdir = !startup_info->have_repository;
++
++	if (state->apply_with_reject && state->threeway)
 +		return error("--reject and --3way cannot be used together.");
- 	if (state->cached && state->threeway)
--		die("--cached and --3way cannot be used together.");
++	if (state->cached && state->threeway)
 +		return error("--cached and --3way cannot be used together.");
- 	if (state->threeway) {
- 		if (is_not_gitdir)
--			die(_("--3way outside a repository"));
++	if (state->threeway) {
++		if (is_not_gitdir)
 +			return error(_("--3way outside a repository"));
- 		state->check_index = 1;
- 	}
- 	if (state->apply_with_reject)
-@@ -4569,16 +4569,18 @@ static void check_apply_state(struct apply_state *state, int force_apply)
- 	if (!force_apply && (state->diffstat || state->numstat || state->summary || state->check || state->fake_ancestor))
- 		state->apply = 0;
- 	if (state->check_index && is_not_gitdir)
--		die(_("--index outside a repository"));
++		state->check_index = 1;
++	}
++	if (state->apply_with_reject)
++		state->apply = state->apply_verbosely = 1;
++	if (!force_apply && (state->diffstat || state->numstat || state->summary || state->check || state->fake_ancestor))
++		state->apply = 0;
++	if (state->check_index && is_not_gitdir)
 +		return error(_("--index outside a repository"));
- 	if (state->cached) {
- 		if (is_not_gitdir)
--			die(_("--cached outside a repository"));
++	if (state->cached) {
++		if (is_not_gitdir)
 +			return error(_("--cached outside a repository"));
- 		state->check_index = 1;
- 	}
- 	if (state->check_index)
- 		state->unsafe_paths = 0;
- 	if (!state->lock_file)
--		die("BUG: state->lock_file should not be NULL");
++		state->check_index = 1;
++	}
++	if (state->check_index)
++		state->unsafe_paths = 0;
++	if (!state->lock_file)
 +		return error("BUG: state->lock_file should not be NULL");
 +
 +	return 0;
++}
+diff --git a/apply.h b/apply.h
+index e18a18a..53f09b5 100644
+--- a/apply.h
++++ b/apply.h
+@@ -106,5 +106,6 @@ extern int init_apply_state(struct apply_state *state,
+ 			    const char *prefix,
+ 			    struct lock_file *lock_file);
+ extern void clear_apply_state(struct apply_state *state);
++extern int check_apply_state(struct apply_state *state, int force_apply);
+ 
+ #endif
+diff --git a/builtin/apply.c b/builtin/apply.c
+index bb89e07..075ada4 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -4551,38 +4551,6 @@ static int option_parse_directory(const struct option *opt,
+ 	return 0;
  }
  
+-static int check_apply_state(struct apply_state *state, int force_apply)
+-{
+-	int is_not_gitdir = !startup_info->have_repository;
+-
+-	if (state->apply_with_reject && state->threeway)
+-		return error("--reject and --3way cannot be used together.");
+-	if (state->cached && state->threeway)
+-		return error("--cached and --3way cannot be used together.");
+-	if (state->threeway) {
+-		if (is_not_gitdir)
+-			return error(_("--3way outside a repository"));
+-		state->check_index = 1;
+-	}
+-	if (state->apply_with_reject)
+-		state->apply = state->apply_verbosely = 1;
+-	if (!force_apply && (state->diffstat || state->numstat || state->summary || state->check || state->fake_ancestor))
+-		state->apply = 0;
+-	if (state->check_index && is_not_gitdir)
+-		return error(_("--index outside a repository"));
+-	if (state->cached) {
+-		if (is_not_gitdir)
+-			return error(_("--cached outside a repository"));
+-		state->check_index = 1;
+-	}
+-	if (state->check_index)
+-		state->unsafe_paths = 0;
+-	if (!state->lock_file)
+-		return error("BUG: state->lock_file should not be NULL");
+-
+-	return 0;
+-}
+-
  static int apply_all_patches(struct apply_state *state,
-@@ -4747,7 +4749,8 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, state.prefix, builtin_apply_options,
- 			apply_usage, 0);
- 
--	check_apply_state(&state, force_apply);
-+	if (check_apply_state(&state, force_apply))
-+		exit(128);
- 
- 	ret = apply_all_patches(&state, argc, argv, options);
- 
+ 			     int argc,
+ 			     const char **argv,
 -- 
 2.9.2.614.g4980f51
 
