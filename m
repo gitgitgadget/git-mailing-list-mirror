@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19EE220193
-	for <e@80x24.org>; Mon,  8 Aug 2016 21:05:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 219EC2018E
+	for <e@80x24.org>; Mon,  8 Aug 2016 21:05:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752814AbcHHVE4 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 8 Aug 2016 17:04:56 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33855 "EHLO
+	id S1752817AbcHHVFA (ORCPT <rfc822;e@80x24.org>);
+	Mon, 8 Aug 2016 17:05:00 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:33305 "EHLO
 	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752653AbcHHVET (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2016 17:04:19 -0400
-Received: by mail-wm0-f68.google.com with SMTP id q128so17866491wma.1
-        for <git@vger.kernel.org>; Mon, 08 Aug 2016 14:04:18 -0700 (PDT)
+	with ESMTP id S1752800AbcHHVEx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2016 17:04:53 -0400
+Received: by mail-wm0-f68.google.com with SMTP id o80so17874148wme.0
+        for <git@vger.kernel.org>; Mon, 08 Aug 2016 14:04:52 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FZHyE7DOpjCBJtSjQUrIUlhuNNWBdk1/KhrjpmYIp8I=;
-        b=zNeTx6O4g5JnLPKbLGfhUJ9ZmWn8K78zh9ir7RzcUKr9PH+nrA5ydD8TSr07eeDthC
-         zf038KUpCmfifRSNEPDpHmxp9WJurmMuKcIEzU31x+Zi0VDEcpyv/6fD8sxDUlL5diSA
-         34PXKG0ojHikadTAVVH8ipVJdZ/sakw7eO4hPtyE20TR15vBLhhJkbLsfox9iiCQY566
-         GKwT+wICCNPtXjCKQGskdDTAAe27McC/K/Aaqq+KslYXvtoDZwUa1Fvf/zrAj+3pLahT
-         67XYzoyayJYWplmyUBfQjb2+r2QntHaUcZmXv9OfyFH+2SSWqNLuTwZ586odWprG4kb/
-         RYow==
+        bh=sda+IDxqMdK6WIiMpKq0Fjo6r1+RzlyDwW4hnQt8exE=;
+        b=o+toF5rbEQ3fIBlaWIwlcmc0BKV31wZk4wBRmkhdQW3praZ1wpO2sragCJoyj6sFCW
+         yrCGWLAe3UfyZF+PtY25VjAN2coPIJEbt1feC6TMu3JNgd1//iLPMh3pN2LKVev0a8Gk
+         RWcvPdNlqX/InCDk6AGpSqDGeSNgRkYxM5gx5tk/4wuK2Bneyt+BVgwclc3yOP915Du/
+         SMdV8zYR9p8TpnKfkEoiy4CbqsOsqw5MdWMriK4mPqHulb02G9S3Eqo679X1KrDHMd25
+         lMTxzJREtpdPJ1eoWN/VrF5Uh5PfBGjOyZdr6iYidcL/ECn9zT/u1CFfIb02O5E8c32A
+         iZ5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=FZHyE7DOpjCBJtSjQUrIUlhuNNWBdk1/KhrjpmYIp8I=;
-        b=YQTotp51EQ3ndX/LkQNnKRQW3vFPya7IyMd+hdyeQaQvqKjHYzGMGMhSga9gDLPPc6
-         7W1GDVHRE1ON9daWhxdfg4DtBBNWHuWgJ3ohABZqbiAZU4iA88QxRYxEBTJs24t2ejUb
-         4A4bCNxc6I9GbjfitNNqF/66gGFe38KzyVTWcdjbLyM5NtMakjs9XQBCy2JnZJJbDeNR
-         ji0GplWu92gyeA/iaDnGa/WAdJU7cyh7/8dyG+J/Xp9NtE7m+Yx5odJPpl17WFddXXVX
-         CvsqKuU8xsz9T1jxuYnvvq8prvVtENkW9ggPwQqI2tORpW0LW6VCWYQ+s2XoZOUsuCs6
-         Vuyg==
-X-Gm-Message-State: AEkooutmvtQnm0nTElj+Oh3GJzPOAnCMHvSOepZd3JuA8R3WR7iCNfrS2EebMiodkYFfrA==
-X-Received: by 10.194.43.9 with SMTP id s9mr36322919wjl.46.1470690257622;
-        Mon, 08 Aug 2016 14:04:17 -0700 (PDT)
+        bh=sda+IDxqMdK6WIiMpKq0Fjo6r1+RzlyDwW4hnQt8exE=;
+        b=FqlQiWrC36iEKFnGHLqiTPCnwa8sdWcSaz00gUERtopsfoPAXUPVEwc4MJlrXI12eS
+         NI4ZUyurjW8tzkBSSaPqHV3ElB9ZnfqVNDVwMNfycJY8sGCCy9fbzbUx9pfdEMTiE0FM
+         4q52Ax54qMzFjJe6Wq1Tt8OEn1J3KtU3YZf1cl4lUifkvh9DpnM4u6Lj7oC6eXcHCS3l
+         Jvw+Ka2evdrA3/MJ1WqNOm/4E/Nacu3SHppOywStvu54HbNB+027pLVQaTJxzdauinZJ
+         M0RVHw/0bhZEHn7eSx5fRo+JOnTmruMuZTBwOtRjWdNUSe/VLgbFQA8HBw7T3/rLloma
+         X/eQ==
+X-Gm-Message-State: AEkoousKpbVLmQzHsV+tVc5/K2uMUdZr4Yopi4t7Xz6oTKilfvmSNZAm74DhbDTJepPROQ==
+X-Received: by 10.28.196.136 with SMTP id u130mr17260809wmf.83.1470690292040;
+        Mon, 08 Aug 2016 14:04:52 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id o2sm8539048wjo.3.2016.08.08.14.04.16
+        by smtp.gmail.com with ESMTPSA id o2sm8539048wjo.3.2016.08.08.14.04.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 08 Aug 2016 14:04:16 -0700 (PDT)
+        Mon, 08 Aug 2016 14:04:51 -0700 (PDT)
 From:	Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
 To:	git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v10 19/40] builtin/apply: make build_fake_ancestor() return -1 on error
-Date:	Mon,  8 Aug 2016 23:03:16 +0200
-Message-Id: <20160808210337.5038-20-chriscool@tuxfamily.org>
+Subject: [PATCH v10 37/40] usage: add get_error_routine() and get_warn_routine()
+Date:	Mon,  8 Aug 2016 23:03:34 +0200
+Message-Id: <20160808210337.5038-38-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.2.614.g5428e0c
 In-Reply-To: <20160808210337.5038-1-chriscool@tuxfamily.org>
 References: <20160808210337.5038-1-chriscool@tuxfamily.org>
@@ -70,102 +70,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-To libify `git apply` functionality we have to signal errors to the
-caller instead of die()ing.
+Let's make it possible to get the current error_routine and warn_routine,
+so that we can store them before using set_error_routine() or
+set_warn_routine() to use new ones.
 
-To do that in a compatible manner with the rest of the error handling
-in "builtin/apply.c", build_fake_ancestor() should return -1 instead
-of calling die().
+This way we will be able put back the original routines, when we are done
+with using new ones.
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 41 ++++++++++++++++++++++++++---------------
- 1 file changed, 26 insertions(+), 15 deletions(-)
+ git-compat-util.h |  2 ++
+ usage.c           | 10 ++++++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 166e94d..575981b 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -3900,11 +3900,12 @@ static int preimage_sha1_in_gitlink_patch(struct patch *p, unsigned char sha1[20
+diff --git a/git-compat-util.h b/git-compat-util.h
+index c7a51f8..de04df1 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -440,7 +440,9 @@ static inline int const_error(void)
+ 
+ extern void set_die_routine(NORETURN_PTR void (*routine)(const char *err, va_list params));
+ extern void set_error_routine(void (*routine)(const char *err, va_list params));
++extern void (*get_error_routine(void))(const char *err, va_list params);
+ extern void set_warn_routine(void (*routine)(const char *warn, va_list params));
++extern void (*get_warn_routine(void))(const char *warn, va_list params);
+ extern void set_die_is_recursing_routine(int (*routine)(void));
+ extern void set_error_handle(FILE *);
+ 
+diff --git a/usage.c b/usage.c
+index 67e5526..2fd3045 100644
+--- a/usage.c
++++ b/usage.c
+@@ -70,11 +70,21 @@ void set_error_routine(void (*routine)(const char *err, va_list params))
+ 	error_routine = routine;
  }
  
- /* Build an index that contains the just the files needed for a 3way merge */
--static void build_fake_ancestor(struct patch *list, const char *filename)
-+static int build_fake_ancestor(struct patch *list, const char *filename)
++void (*get_error_routine(void))(const char *err, va_list params)
++{
++	return error_routine;
++}
++
+ void set_warn_routine(void (*routine)(const char *warn, va_list params))
  {
- 	struct patch *patch;
- 	struct index_state result = { NULL };
- 	static struct lock_file lock;
-+	int res;
- 
- 	/* Once we start supporting the reverse patch, it may be
- 	 * worth showing the new sha1 prefix, but until then...
-@@ -3922,31 +3923,38 @@ static void build_fake_ancestor(struct patch *list, const char *filename)
- 			if (!preimage_sha1_in_gitlink_patch(patch, sha1))
- 				; /* ok, the textual part looks sane */
- 			else
--				die("sha1 information is lacking or useless for submodule %s",
--				    name);
-+				return error("sha1 information is lacking or "
-+					     "useless for submodule %s", name);
- 		} else if (!get_sha1_blob(patch->old_sha1_prefix, sha1)) {
- 			; /* ok */
- 		} else if (!patch->lines_added && !patch->lines_deleted) {
- 			/* mode-only change: update the current */
- 			if (get_current_sha1(patch->old_name, sha1))
--				die("mode change for %s, which is not "
--				    "in current HEAD", name);
-+				return error("mode change for %s, which is not "
-+					     "in current HEAD", name);
- 		} else
--			die("sha1 information is lacking or useless "
--			    "(%s).", name);
-+			return error("sha1 information is lacking or useless "
-+				     "(%s).", name);
- 
- 		ce = make_cache_entry(patch->old_mode, sha1, name, 0, 0);
- 		if (!ce)
--			die(_("make_cache_entry failed for path '%s'"), name);
--		if (add_index_entry(&result, ce, ADD_CACHE_OK_TO_ADD))
--			die ("Could not add %s to temporary index", name);
-+			return error(_("make_cache_entry failed for path '%s'"),
-+				     name);
-+		if (add_index_entry(&result, ce, ADD_CACHE_OK_TO_ADD)) {
-+			free(ce);
-+			return error("Could not add %s to temporary index",
-+				     name);
-+		}
- 	}
- 
- 	hold_lock_file_for_update(&lock, filename, LOCK_DIE_ON_ERROR);
--	if (write_locked_index(&result, &lock, COMMIT_LOCK))
--		die ("Could not write temporary index to %s", filename);
--
-+	res = write_locked_index(&result, &lock, COMMIT_LOCK);
- 	discard_index(&result);
-+
-+	if (res)
-+		return error("Could not write temporary index to %s", filename);
-+
-+	return 0;
+ 	warn_routine = routine;
  }
  
- static void stat_patch_list(struct apply_state *state, struct patch *patch)
-@@ -4495,8 +4503,11 @@ static int apply_patch(struct apply_state *state,
- 		goto end;
- 	}
- 
--	if (state->fake_ancestor)
--		build_fake_ancestor(list, state->fake_ancestor);
-+	if (state->fake_ancestor &&
-+	    build_fake_ancestor(list, state->fake_ancestor)) {
-+		res = -128;
-+		goto end;
-+	}
- 
- 	if (state->diffstat)
- 		stat_patch_list(state, list);
++void (*get_warn_routine(void))(const char *warn, va_list params)
++{
++	return warn_routine;
++}
++
+ void set_die_is_recursing_routine(int (*routine)(void))
+ {
+ 	die_is_recursing = routine;
 -- 
 2.9.2.614.g4980f51
 
