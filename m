@@ -2,147 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,LONGWORDS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	T_DKIM_INVALID shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EEB41F859
-	for <e@80x24.org>; Tue,  9 Aug 2016 18:09:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A2DC1F859
+	for <e@80x24.org>; Tue,  9 Aug 2016 18:19:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932221AbcHISJk (ORCPT <rfc822;e@80x24.org>);
-	Tue, 9 Aug 2016 14:09:40 -0400
-Received: from mail-it0-f41.google.com ([209.85.214.41]:33140 "EHLO
-	mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752287AbcHISJf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2016 14:09:35 -0400
-Received: by mail-it0-f41.google.com with SMTP id f6so2946063ith.0
-        for <git@vger.kernel.org>; Tue, 09 Aug 2016 11:09:35 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=V98yTB7JO1T9hl98uJfLrXGSBMAx7byNiWJumvbMZtw=;
-        b=YwCzgLa3LbmcXHfMDM1Fqq0AB4RS6EUle75PATm1OMZc2rsTPy5puhNxZvkiwNLeUl
-         lZiz9Pw8PwUljqH+CLirEsvjbpmVsqkehJ9hE6vrC14g500q1DmBjfQUIc3dQ/kzpWER
-         6/4hWb+u7bsQ5i7rKYaShhOrLx954zVxVd7HQJJUhEfLCbkBfly9YPHuR3N/afSqp0J8
-         VfPwluxoW2P1vzE3ZkgSVqHzyNp3dYeQ4KJhUUBRJ5pujwDBC/XtP0lz3TEYDRRlZUqu
-         efadEwbgmu/TJAi0b4UyqDb2nrubBFBA9Blu4GoNjMxJyRFAFi7WQarJtw2RWDPNx5bP
-         jZHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=V98yTB7JO1T9hl98uJfLrXGSBMAx7byNiWJumvbMZtw=;
-        b=PlE0aFsVJWKml3U+hgvulP9kV9rgyCIxzACIw+naOfH7qeCNDB7gW8rvG+INYEZPTZ
-         szTnF5EUo1YfnxYAkNItUdEMMu/PtXpvI/SlJRryj702RBftWmfBamkOS+5674wjQ2+J
-         TXkCs/T56xQzyJF5Tny/iBrkv7b1uQkvAooojtsVetndgTQiasnni16qZQZKYkq0Y5M4
-         Y5W1WuW91sJ7QpBX69maY/ahfZiZQ76t1WEk8PWAHBdU9H1N6Snm4AKJsu/GMafxne8S
-         pMJIg1dixPxtH3q6Hn5tmf9at3WfuvwzJxulNUPzUDMUqaMmno3vXG0cn2NJSe0QG+Sf
-         vfQw==
-X-Gm-Message-State: AEkoout7QIepupVgi+MPyV75mQ7CWdQNulfw9fe2jZdFs2HZAMWrxpIRBIFcrd6aK6QOtdyeW+hWAo+/A9jD/v9b
-X-Received: by 10.36.227.13 with SMTP id d13mr376682ith.97.1470766174771; Tue,
- 09 Aug 2016 11:09:34 -0700 (PDT)
+	id S1752255AbcHISTO (ORCPT <rfc822;e@80x24.org>);
+	Tue, 9 Aug 2016 14:19:14 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50133 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751774AbcHISTN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Aug 2016 14:19:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A234325A3;
+	Tue,  9 Aug 2016 14:19:12 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=lD758ESUU32+
+	H7fUw6FAzmOhbmk=; b=tr1UUITJ3zeJIiMfSxYB51qPf5Qx3cGJUeTLHqiBBoJw
+	B+1OfZ+iSfN1fZzE5v+2QGGMGCdSfRHl2zqINTT2QO1p8wtQSMoPB+xOS2OZhH6q
+	uYhORkFw/jhXgYG5pTioy52X+luE/LVfMW3lT95KfJ0ceDqKw2OtxQPoHvDS2yM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Xbzler
+	FN7BjaQTW85kqufz10++Ds8szfvsa6sFY9BnO4Q2hyJuMWb5KZCT4SL25FWLcWWM
+	swIDAkDmChKVnxH9RB/xitgdFgXYvlN/xU4m+264d5MJ1FeKNe/dBSAZv7y6W4Lc
+	WA5bXD6xOBz3HllfczvyR4iNG8LRBLG+Hy0u0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 30C73325A2;
+	Tue,  9 Aug 2016 14:19:12 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AA397325A0;
+	Tue,  9 Aug 2016 14:19:11 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Ville =?utf-8?Q?Skytt=C3=A4?= <ville.skytta@iki.fi>
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH] Spelling fixes
+References: <1470732818-408-1-git-send-email-ville.skytta@iki.fi>
+Date:	Tue, 09 Aug 2016 11:19:09 -0700
+In-Reply-To: <1470732818-408-1-git-send-email-ville.skytta@iki.fi> ("Ville
+	=?utf-8?Q?Skytt=C3=A4=22's?= message of "Tue, 9 Aug 2016 11:53:38 +0300")
+Message-ID: <xmqqpophajqa.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Tue, 9 Aug 2016 11:09:34 -0700 (PDT)
-In-Reply-To: <xmqq8tw5bzs1.fsf@gitster.mtv.corp.google.com>
-References: <20160809040811.21408-1-sbeller@google.com> <xmqqk2fqc583.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kZKTV5PCAR41O1t1c_y6N18u6gsoWozOfr=EPHic-7wYw@mail.gmail.com> <xmqq8tw5bzs1.fsf@gitster.mtv.corp.google.com>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Tue, 9 Aug 2016 11:09:34 -0700
-Message-ID: <CAGZ79kY8EiGaugsh4FxKYp1FxqYr10JfGqsrfsnhULB+OBnFXw@mail.gmail.com>
-Subject: Re: [PATCHv2 0/6] git clone: Marry --recursive and --reference
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: C555F190-5E5D-11E6-9FA1-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Aug 9, 2016 at 10:47 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> "you did ask me to use alternates once and for all when setting up the
->> superproject: now for this added submodule I don't find the alternate;
->> That is strange?"
->
-> Absolutely.  I do not think you should expect a user to remember if
-> s/he used alternates when getting a copy of the superproject long
-> time ago.  Giving "info: using from ..." is good; giving "warning:
-> not using from ..." is probably irritating, I would think.
->
-> Stepping back a bit, when the user says --reference-if-able, does it
-> warrant any warning either way?
+Ville Skyttä <ville.skytta@iki.fi> writes:
 
-Stepping another step back, let's discuss the expectations of the
-new option "--reference-if-able".
+> Signed-off-by: Ville Skyttä <ville.skytta@iki.fi>
+> ---
+>  Documentation/RelNotes/2.3.10.txt           | 2 +-
+>  Documentation/RelNotes/2.4.10.txt           | 2 +-
+>  Documentation/RelNotes/2.5.4.txt            | 2 +-
+>  Documentation/RelNotes/2.6.1.txt            | 2 +-
+>  Documentation/git-remote-fd.txt             | 2 +-
+>  Documentation/gitattributes.txt             | 2 +-
+>  Documentation/gitmodules.txt                | 2 +-
+>  contrib/hooks/multimail/README              | 4 ++--
+>  contrib/mw-to-git/.perlcriticrc             | 2 +-
+>  contrib/mw-to-git/git-remote-mediawiki.perl | 2 +-
+>  contrib/subtree/t/t7900-subtree.sh          | 2 +-
+>  git-p4.py                                   | 2 +-
+>  sha1_file.c                                 | 2 +-
+>  t/README                                    | 2 +-
+>  t/t1006-cat-file.sh                         | 2 +-
+>  t/t3101-ls-tree-dirname.sh                  | 2 +-
+>  t/t6018-rev-list-glob.sh                    | 2 +-
+>  t/t6030-bisect-porcelain.sh                 | 2 +-
+>  t/t7001-mv.sh                               | 8 ++++----
+>  t/t7810-grep.sh                             | 2 +-
+>  t/t9401-git-cvsserver-crlf.sh               | 2 +-
+>  upload-pack.c                               | 2 +-
+>  22 files changed, 26 insertions(+), 26 deletions(-)
 
-The way I understood and implemented it is
+Wow, that's a lot of typos.  I asked "git show --word-diff" what got
+changed, which told me this:
 
-    here is a path, try to use it as an alternate; if that is not
-    an alternate, it's fine too; maybe warn about it, but carry
-    on with the operation.
+    <BAD>                     <CORRECTED>
 
-With such a semantics you can just add the --reference-if-able
-to the submodules that try to borrow from the other superprojects
-submodule.
+    accidently                accidentally
+    commited                  committed
+    dependancy                dependency
+    emtpy                     empty
+    existance                 existence
+    explicitely               explicitly
+    git-upload-achive         git-upload-archive
+    hierachy                  hierarchy
+    intial                    initial
+    mulitple                  multiple
+    non-existant              non-existent
+    precendence.              precedence.
+    priviledged               privileged
+    programatically           programmatically
+    psuedo-binary             pseudo-binary
+    soemwhere                 somewhere
+    successfull               successful
+    unkown                    unknown
+    usefull                   useful
+    writting                  writing
 
-    I expected the "--reference-if-able" not necessarily be
-    used by the end user. It is a convenient way for our scripted
-    use, as the -if-able is just a check if the path exists and nothing
-    else.
+and then looked at all lines in the patch.  They all looked
+reasonable.
 
-    We could check if the git dir exists inthe helper for the
-    submodule command, such that we only pass --reference
-    as we are certain the alternate exists; we could have a switch
-    in the helper --on-missing-submodule-alternate=[die,info,silent]
+There are two "commited" you seem to have missed, though,
 
-The way you write this response I think you have a slightly
-different understanding of what the -if-able ought to do?
+t/t3420-rebase-autostash.sh:    echo uncommited-content >file0 &&
+t/t3420-rebase-autostash.sh:    echo uncommited-content >expected &&
 
-    When --reference is given, only the superproject should
-    borrow and the -if-able, may allow submodules to also borrow?
+which I'll queue on top of this patch to be later squashed (i.e. no
+need to resend the whole thing only to add these two).
 
-> I.e. "we made it borrow from there,
-> so be careful not to trash that one" may be just as warning-worthy
-> (if not even more) as "you said we can borrow from there if there is
-> anything to borrow, but it turns out there isn't any, so the result
-> is complete stand-alone."  It feels as if we can go without any
-> warning at least from "git clone --reference-if-able", unless "-v"
-> option is given.
-
-But when git clone is not issueing a warning/info, who is responsible for
-that? As you noted the superproject may be setup some time ago and
-the user forgot they used references and want to use references for this
-new submodule. So the helper would need to do that?
-
->
-> I have a very strong opinion what should happen when the end-user
-> facing command is "git submodule", but if I have to choose, I would
-> prefer to see "git submodule update" tell what it did with "info:"
-> either case, i.e. "info: borrowing from ... because the superproject
-> borrows from there", and "info: not borrowing from ... even though
-> the superproject borrows from there".
-
-I see. This way the user is most informed. The current implementation
-of "submodule update --init" for start from scratch yields for example:
-
-Submodule 'foo' (<url>) registered for path 'foo'
-Submodule 'hooks' (<url>) registered for path 'hooks'
-Cloning into '/home/sbeller/super/foo'...
-Cloning into '/home/sbeller/super/hooks'...
-warning: Not using proposed alternate
-/home/sbeller/super-reference/.git/modules/hooks/
-Submodule path 'foo': checked out '7b41f3a413b46140b050ae5324cbbcdd467d2b3a'
-Submodule path 'hooks': checked out '3acc14d10d26678eae6489038fe0d4dad644a9b4'
-
-so before this series we had 3 lines per submodule, and with this series
-we get a 4th line for the unusual case.
-
-You would prefer to see always 4 lines per submodule?
-Is one extra line (25% more output) a reasonable tradeoff for the
-reference feature?
-
-I dunno; I guess we could argue either way.
+Thanks.
