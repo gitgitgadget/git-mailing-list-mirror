@@ -2,169 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3722B1F859
-	for <e@80x24.org>; Tue,  9 Aug 2016 22:57:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 499501F859
+	for <e@80x24.org>; Tue,  9 Aug 2016 23:06:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932551AbcHIW5E (ORCPT <rfc822;e@80x24.org>);
-	Tue, 9 Aug 2016 18:57:04 -0400
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:34447 "EHLO
-	mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932526AbcHIW5C (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2016 18:57:02 -0400
-Received: by mail-yw0-f193.google.com with SMTP id j12so1186641ywb.1
-        for <git@vger.kernel.org>; Tue, 09 Aug 2016 15:57:02 -0700 (PDT)
+	id S932540AbcHIXGd (ORCPT <rfc822;e@80x24.org>);
+	Tue, 9 Aug 2016 19:06:33 -0400
+Received: from mail-it0-f65.google.com ([209.85.214.65]:33838 "EHLO
+	mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932521AbcHIXGc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Aug 2016 19:06:32 -0400
+Received: by mail-it0-f65.google.com with SMTP id u186so1938710ita.1
+        for <git@vger.kernel.org>; Tue, 09 Aug 2016 16:06:32 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=9Ix9+K6XfGe9SqZlQF1xGKnCLrKL5YKcDbOhYmO8xYE=;
-        b=wDqw/mZzlVP5QRlORIE0mG3yUqC/5W/4dtl20xqWs4CP/mbIbUAaBwZ7N5ZEC7QRVW
-         P5QhS55vnHIXSPdnzsEWld6uW5ZUejWK3BhV75UFoD1bnYKdqA7HFRTXx8vqo0eoDK1P
-         IPf5zaRQDF34DXcFUmJmqlL7BX5b7D9StSyId9qq4BpMQuW4MBr/BziP7Jp27CZ3qHlg
-         xuEAaXbgteWx6tmaaPhlY891lwSTUm7eiAYb75ka1hX/7OefvUTHGTJ4L2yoJ9JL2iBk
-         V8Fye03i0++OG9MU3Wrk/wh44potYgf57h9vT9ybvFCmBGa6KZxzft9CMgT1i4urI2iA
-         Le6w==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=tOK7jg/u3KOj/IjB6r9APVP5Hti5ljoZHIoue7fE+oc=;
+        b=hRrIb2PLXZElPZ5qvOORnzlXcUAKKkA2DdtamaNg/NQUqWBUvp7Aa8AvboU2cr89OZ
+         aVEsWjw1Pxlz9COgIewCfbw9X3z4aOPBHd6kvTQW1AVnLRaJLRlYV/LnrveuzoVrTy/Q
+         z5dmwhXOGkHyMshvTS+rV/KAomkvnaLaH1aLOv5dInscZCM2VkJtRiyCE20b657ej5xY
+         ya1/mp+8t3lmO9LzA/YRu1kB4Hj1V0QaG3Pr2LTcB/ihdQ2/kMQU4AFY71Q+0UlpCzpo
+         vncK6ornVJCMwNOXit+IrVpCclA/ndBX+U8R6KXbOiQw2wdJvmFHh1leZ+8Ki7YEJPcn
+         9hcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=9Ix9+K6XfGe9SqZlQF1xGKnCLrKL5YKcDbOhYmO8xYE=;
-        b=A0f3/lVFGbLHQXj6meO63PhhTfP9F8H6Eph2W7Dhq9OJCWlgNyb6/cIKhs0/g4P+Uo
-         kN0MKO255tUvwjcHrvLvYSkAb9vG9QI2C+PnqAgNXaK6AE9ItxUB1scAsjGk3j+yBKyk
-         sOy3dt6WSO42+EciarRNhl2kxgYBD5ugMk+J5Jaoq6qDekB/av2CwXaSdTo85LvTQd+u
-         X23QK2EnT/ShzgVO+kIqf+iiK5U4dhaq0eDRkZDnLukARnjzjF6HPsV26P0NvM8kBxdf
-         UskQpApsHANtLd4mVStVSMCfNHSKgigAZJEFKaSvV0Zp/dxswubRP/lbGTeSDWYEOJvB
-         kMnQ==
-X-Gm-Message-State: AEkoout9eGWclAq9VD8utKy7Wj5chQnBUl0xtFPFYKitsqpa0bEkUdimze9PgMm2YrZVW9EzHtJsUlAcBcFK4g==
-X-Received: by 10.13.249.135 with SMTP id j129mr621715ywf.267.1470783421608;
- Tue, 09 Aug 2016 15:57:01 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=tOK7jg/u3KOj/IjB6r9APVP5Hti5ljoZHIoue7fE+oc=;
+        b=JuzlI/Okdx4HP1b0II8YNNH4NBsQIqWVk12+1/GLlX3O/73U8pNH17ovy1LaZ1WZyR
+         aec+wmcs7/CCS1Tev26tuLldPpJgZ145NsJ87kV7Cg5778+b2v38X3EMdDMlIFXYyb1o
+         ab3s4HSK9JHK8PUvKcA202L3aJfv8IigYYs6pJx8bcHgqRtWwhVpxxtYhueanIflkQ+Y
+         jdC5Hdxmryo7rZmYLRSKhJBq2tML02ZWL5lDieZryxX8Vp6WcZ2h93EaJ+sJItUKW3tE
+         hT7eqSOqOS8AKzvtn9yfkhPPE/PvgbWRIMUcfa3tCCJf9UJCyABC0re8AEG/Nonk6jEG
+         7Rkw==
+X-Gm-Message-State: AEkooutBNpWGV+76LADizUgILRqgN0MlASq0rR5ld0xuJ6UYazhSe1Wf6yeDGKaDndgtIv1oJEB/T69NxCdDOg==
+X-Received: by 10.36.54.135 with SMTP id l129mr1845548itl.73.1470783991687;
+ Tue, 09 Aug 2016 16:06:31 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.37.50.196 with HTTP; Tue, 9 Aug 2016 15:56:41 -0700 (PDT)
-In-Reply-To: <CAGZ79kbzDhpsfpY8s=7O86_dNLA=VRkyC=8eiCqMambKvUnXmw@mail.gmail.com>
-References: <20160809223219.17982-1-jacob.e.keller@intel.com> <CAGZ79kbzDhpsfpY8s=7O86_dNLA=VRkyC=8eiCqMambKvUnXmw@mail.gmail.com>
-From:	Jacob Keller <jacob.keller@gmail.com>
-Date:	Tue, 9 Aug 2016 15:56:41 -0700
-Message-ID: <CA+P7+xqnALzwkgLXrP57BUtFGaxGudAEG7cmGTakP47ofFEjHQ@mail.gmail.com>
-Subject: Re: [PATCH RFC] diff: add SUBMODULE_DIFF format to display submodule diff
-To:	Stefan Beller <sbeller@google.com>
-Cc:	Jacob Keller <jacob.e.keller@intel.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
+Received: by 10.79.130.1 with HTTP; Tue, 9 Aug 2016 16:06:31 -0700 (PDT)
+In-Reply-To: <xmqqd1lhc05n.fsf@gitster.mtv.corp.google.com>
+References: <20160809040811.21408-1-sbeller@google.com> <20160809040811.21408-2-sbeller@google.com>
+ <CAPig+cRnDVMBZzKOOS-fW+hNaCHhYRVLM+d_akZcB4H5iyqfKA@mail.gmail.com>
+ <xmqqfuqec56x.fsf@gitster.mtv.corp.google.com> <xmqqbn12c55e.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kZgEF2FBSLQnOm=v-a+jy=6aWyPBoLC9-QU=g-aUaqj3w@mail.gmail.com> <xmqqd1lhc05n.fsf@gitster.mtv.corp.google.com>
+From:	Eric Sunshine <sunshine@sunshineco.com>
+Date:	Tue, 9 Aug 2016 19:06:31 -0400
+X-Google-Sender-Auth: Ah7W1pXgr-1MRa5H01N21Io0NKc
+Message-ID: <CAPig+cR+3KWDK5r5YW-Ew0=0jvkGRM7r1SJA3O_7+SDSNmXmeQ@mail.gmail.com>
+Subject: Re: [PATCHv3 1/9] t7408: modernize style
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Stefan Beller <sbeller@google.com>, Git List <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	"Michael S. Tsirkin" <mst@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Aug 9, 2016 at 3:50 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Tue, Aug 9, 2016 at 3:32 PM, Jacob Keller <jacob.e.keller@intel.com> wrote:
->> From: Jacob Keller <jacob.keller@gmail.com>
+On Tue, Aug 9, 2016 at 1:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>> I originally thought that it may be easier to have 2 patches.
+>> This first one is very gentle and "obviously correct" as it only changes
+>> formatting and drops the directory changes.
 >>
->> For projects which have frequent updates to submodules it is often
->> useful to be able to see a submodule update commit as a difference.
->> Teach diff's --submodule= a new "diff" format which will execute a diff
->> for the submodule between the old and new commit, and display it as
->> a standard diff. This allows users to easily see what changed in
->> a submodule without having to dig into the submodule themselves.
+>> The second patch goes for renaming ans subtle style issues,
+>> combining some tests, so it is more likely to break.
 >>
->> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
->> ---
->> There are no tests yet. Stefan suggested the use of child_process,
+>> After this review, I consider using just one patch and do it all
+>> at once to not confuse the readers as otherwise I should reword
+>> the commit message with the rationale of doing it in two patches.
 >
-> Well you said "I just want this one command but don't know where to put it "
-> so it's natural to suggest using child_process.  ;)
+> FWIW, I would think your split between 1/ and 2/ were very sensible,
+> and have a slight preference for keeping them separate.
 
-Right this is a straight forward way..
+The review comment about renaming "current" to "actual" was made
+without having looked yet at patch 2. Having now seen patch 2, I agree
+with Junio that the existing split is preferable.
 
->
->> but I
->> really believe there has to be some way of getting the diff without
->> having to run a sub process (as this means we also can't do the diff
->> without a checked out submodule). It doesn't properly handle options
->> either, so a better solution would be much appreciated.
->
-> Oh right, we would need to codify all options again (and all future options,
-> too)
-
-
-That's why I'd prefer if we had a way to do this via builtins, because
-it would make option passing easier.
-
->
->>
->> I also would prefer if the diff actually prefixed the files with
->> "path/to/submodule" so that it was obvious where the file was located in
->> the directory.
->>
->> Suggestions welcome.
->>
->> +
->> +       if (start_command(&cp))
->
-> I wonder if we want to stay single-execution here,
-> i.e. if we rather want to use run_processes_parallel
-> for all the submodules at the same time?
->
-> Though then non deterministic ordering may be an issue.
-
-There is no easy way to do this, we're given it one module at a time
-and it would be a huge re-write to make it go in parallel. I think
-that's the wrong way to think about this.
-
->
->> +               return -1;
->> +
->> +       if (strbuf_read(buf, cp.out, 0) < 0)
->
-> So we keep the whole diff in memory
-> I don't know much about the diff machinery, but I thought
-> the rest of the diff machinery just streams it out?
-
-Yea, but I can't figure out how to do that. Is there an easy way to
-stream chunks from the pipe straight into the file?
-
->
->> +
->> +void show_submodule_diff(FILE *f, const char *path,
->> +               const char *line_prefix,
->> +               unsigned char one[20], unsigned char two[20],
->> +               unsigned dirty_submodule, const char *meta,
->> +               const char *reset)
->> +{
->> +       struct strbuf buf = STRBUF_INIT;
->> +       struct strbuf sb = STRBUF_INIT;
->> +       const char *message = NULL;
->> +
->> +       if (dirty_submodule & DIRTY_SUBMODULE_UNTRACKED)
->> +               fprintf(f, "%sSubmodule %s contains untracked content\n",
->> +                       line_prefix, path);
->> +       if (dirty_submodule & DIRTY_SUBMODULE_MODIFIED)
->> +               fprintf(f, "%sSubmodule %s contains modified content\n",
->> +                       line_prefix, path);
->> +
->> +       if (!hashcmp(one, two)) {
->> +               strbuf_release(&sb);
->> +               return;
->> +       }
->> +
->> +       if (add_submodule_odb(path))
->> +               message = "(not checked out)";
->
-> When not checked out, we can invoke the diff command
-> in .git/modules/<name> as that is the git dir of the submodule,
-> i.e. operating diff with a bare repo?
-
-We can actually do this every time. How would you pass that in a
-child_process? I don't think it's "dir" but instead passing
-"--git-dir" somehow?
-
-Thanks,
-Jake
-
->
-> Thanks,
-> Stefan
+So, only the review comment about dropping space after '>' remains relevant.
