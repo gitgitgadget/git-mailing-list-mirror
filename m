@@ -6,173 +6,136 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 714C52018E
-	for <e@80x24.org>; Tue,  9 Aug 2016 04:14:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD7852018E
+	for <e@80x24.org>; Tue,  9 Aug 2016 04:15:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751152AbcHIEOF (ORCPT <rfc822;e@80x24.org>);
-	Tue, 9 Aug 2016 00:14:05 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:34730 "EHLO
-	mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750942AbcHIEOE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2016 00:14:04 -0400
-Received: by mail-pf0-f179.google.com with SMTP id p64so735671pfb.1
-        for <git@vger.kernel.org>; Mon, 08 Aug 2016 21:14:04 -0700 (PDT)
+	id S1752019AbcHIEPg (ORCPT <rfc822;e@80x24.org>);
+	Tue, 9 Aug 2016 00:15:36 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:32780 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751688AbcHIEPd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Aug 2016 00:15:33 -0400
+Received: by mail-pa0-f42.google.com with SMTP id ti13so1282969pac.0
+        for <git@vger.kernel.org>; Mon, 08 Aug 2016 21:15:33 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=GSyCeNAeOfhqEKxSeRl94hMj9BDesNkaeebG8oBYN/E=;
-        b=KglJ0+qhwt5aTE+hpygDh0BMFVwN2LYDgyfIgVhjH0P6D1sFQD6n16+5sDGUpJD2xx
-         ScJFyEWH2D1cCyZp6SscTJd1ntRsa3TeC21yuesVZiB2g/fJFWuocBLcFRZIU6vLUVAo
-         Pmg8d6pD/v0+qSxNtO649w7zkEzhkFo9MXCUCfHfVs13wIl6V/gQtmQpfgsIPee8YTvB
-         8P5/2iuH9Cm1wXKMylXyM7GPIynakJSO6y03kbgo1o7iX09RjS/HM0O3heBPntKi+tjG
-         3c2pVUQucu1BQ7AXgnn1gEQEeE5ok+FLi/keTaNoEDMmYVNtPFVvA2klEa2N+8o8PI55
-         u5EA==
+        h=from:to:cc:subject:date:message-id;
+        bh=V+P+Y+MFa+c0/OXzl9SuqlzaMuNFnp7zCCdWt/SJQwY=;
+        b=gprAe+ku6A9jyPtuCziPxgsZ/mpZRsY+iL3UQyOUb1ujVNMShaV0CwVkWfWFhcUBhF
+         cQks9mTXOyjqoQwEdJ0BvIRtYc+WAlXXL96+VvGLBv16+6yyB3SjchkkbkrLdbldJCGC
+         6vzuQTryACEngR+VT/F6Z1Q5pC69mdrPf0DDzjLV614KPX2giFcp8n270PFKJsQ5zG12
+         ePJvCWH9RgEO95DDGO95oiFwwOgJzQN+3LXynEfqPsQE5QxB6ZwcajBO1IhscPlCOHb1
+         a1PLgrjt+hLpRV16faBbWB4VyO72GRDpbbcYv0EIy1ryxjGGDmn6dZ2LEZnWDreiiK3P
+         U+ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=GSyCeNAeOfhqEKxSeRl94hMj9BDesNkaeebG8oBYN/E=;
-        b=BIAKsuncrM/gyPcZKi+CMwGSYGT0zyTmM4UmGkFWGA76sPKCEghZH72Z5VLJiept+k
-         wsOtDlB0Nfe1PsLtG+PYo7mqLiZUFswk7GmTgBR4UPetJG3b+w3eAhOrwxI9CYHcGTZb
-         gaPxVKfpSU1YWG9cBFfr+5ChbtBmvGRS6pzJyKc3gPOkmouaNIY1OqFvpeDq7oAazLqU
-         bcYOp4K2WcvUTsTqlunXtQrD39zoyrjJ4ywhiVV9b9Hercreb/FdNaM6h4pQuP046ra2
-         tyuda6WLfMhmNT7QjUHMQPfouppNLZ75Evdv8AQX0zlGEGeugMF8GTGOmM1UGV2TaS/b
-         OdkQ==
-X-Gm-Message-State: AEkoouv1mdFgZTnBPZhNLfUx6pgb44pARWKC8WntUSAWoE1s/j3CBMjTwFT+2rfhZ9iVFNDh
-X-Received: by 10.98.193.1 with SMTP id i1mr168359091pfg.66.1470715709721;
-        Mon, 08 Aug 2016 21:08:29 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=V+P+Y+MFa+c0/OXzl9SuqlzaMuNFnp7zCCdWt/SJQwY=;
+        b=mQf/NQ9bgEowMoQmFl40RYcg/vrXnVI2lYm/clMS5oF+4z/1wBnma+tQnpcp4zL7xt
+         2C+7qcMQsjVq1yXh6UPzs0DxmCuKFq6fNe2xlzctwVDI79pp6cMnkqcxNwAUk6EFNGfa
+         ZHGyGXn3UsdoSjN2JPtB9juZQ07ZG4WOx9cyL+aiYsWdBaYIcFs6lIhHbUbRUhi7nVU3
+         nIiocEzY6NMBCHZWm4UA9dBwK1iFFE5EOiTaE6dmXPrSH3cj4mLqlsIhWbvZou118LdK
+         YgRTL5exYznypTLDx1yZ/rLBOhSVLQw5iUO5XiM758geTbQ4UGvEOCDxerYeDTyLqb/A
+         eVXQ==
+X-Gm-Message-State: AEkooutYPeSu5EoWAlLcs+MtvWew+EVl2rCxTVVDbyJBRbUryEPDv2ex+Ib0L5MsBNbNGK1m
+X-Received: by 10.66.78.5 with SMTP id x5mr56910834paw.108.1470715694992;
+        Mon, 08 Aug 2016 21:08:14 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:ad25:78d3:1e25:67ef])
-        by smtp.gmail.com with ESMTPSA id b134sm51486253pfb.55.2016.08.08.21.08.29
+        by smtp.gmail.com with ESMTPSA id x184sm51480514pfd.70.2016.08.08.21.08.13
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 08 Aug 2016 21:08:29 -0700 (PDT)
+        Mon, 08 Aug 2016 21:08:14 -0700 (PDT)
 From:	Stefan Beller <sbeller@google.com>
 To:	gitster@pobox.com
 Cc:	git@vger.kernel.org, Jens.Lehmann@web.de, mst@redhat.com,
 	Stefan Beller <sbeller@google.com>
-Subject: [PATCHv3 6/9] clone: implement optional references
-Date:	Mon,  8 Aug 2016 21:08:07 -0700
-Message-Id: <20160809040811.21408-8-sbeller@google.com>
+Subject: [PATCHv2 0/6] git clone: Marry --recursive and --reference
+Date:	Mon,  8 Aug 2016 21:08:00 -0700
+Message-Id: <20160809040811.21408-1-sbeller@google.com>
 X-Mailer: git-send-email 2.9.2.583.gd6329be.dirty
-In-Reply-To: <20160809040811.21408-1-sbeller@google.com>
-References: <20160809040811.21408-1-sbeller@google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-In a later patch we want to try to create alternates for
-all submodules, but they might not exist in the referenced
-superproject. So add a way to skip the non existing references
-and report them.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- Documentation/git-clone.txt |  5 ++++-
- builtin/clone.c             | 32 ++++++++++++++++++++++++++------
- 2 files changed, 30 insertions(+), 7 deletions(-)
+v3:
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index ec41d3d..e316c4b 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -90,13 +90,16 @@ If you want to break the dependency of a repository cloned with `-s` on
- its source repository, you can simply run `git repack -a` to copy all
- objects from the source repository into a pack in the cloned repository.
+Thanks to Junios critial questions regarding the design, I took a step back
+to look at the bigger picture. 
+
+--super-reference sounds confusing. (what is the super referring to?)
+So drop that approach.
+
+Instead we'll compute where the reference might be in the superproject scope
+and ask the submodule clone operation to consider an optional reference.
+If the referenced alternate is not there, we'll just warn about it and
+carry on.
+
+
+
+* fixed the style in patch 2.
+
+* fixed another bug in the last patch, that is unrelated, but would have helped
+  me a lot.
+
+Thanks,
+Stefan
+
+ Documentation/git-clone.txt    |   9 ++++++++-
+ builtin/clone.c                |  36 ++++++++++++++++++++++++++++--------
+ builtin/submodule--helper.c    | 105 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-----------------
+ git-submodule.sh               |   2 +-
+ t/t7408-submodule-reference.sh | 162 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++----------------------------------------------------------------------
+ 5 files changed, 217 insertions(+), 97 deletions(-)
+
+v2:
+ * fixed the p1,2 cleanups
+ * added documentation to patches 5,6
+ * improved commit message in v4
  
----reference <repository>::
-+--reference[-if-able] <repository>::
- 	If the reference repository is on the local machine,
- 	automatically setup `.git/objects/info/alternates` to
- 	obtain objects from the reference repository.  Using
- 	an already existing repository as an alternate will
- 	require fewer objects to be copied from the repository
- 	being cloned, reducing network and local storage costs.
-+	When using the `--reference-if-able`, a non existing
-+	directory is skipped with a warning instead of aborting
-+	the clone.
- +
- *NOTE*: see the NOTE for the `--shared` option, and also the
- `--dissociate` option.
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 052a769..8f3c4d4 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -51,6 +51,7 @@ static int option_progress = -1;
- static enum transport_family family;
- static struct string_list option_config = STRING_LIST_INIT_NODUP;
- static struct string_list option_required_reference = STRING_LIST_INIT_NODUP;
-+static struct string_list option_optional_reference = STRING_LIST_INIT_NODUP;
- static int option_dissociate;
- static int max_jobs = -1;
+ Thanks,
+ Stefan
  
-@@ -81,6 +82,8 @@ static struct option builtin_clone_options[] = {
- 		   N_("directory from which templates will be used")),
- 	OPT_STRING_LIST(0, "reference", &option_required_reference, N_("repo"),
- 			N_("reference repository")),
-+	OPT_STRING_LIST(0, "reference-if-able", &option_optional_reference,
-+			N_("repo"), N_("reference repository")),
- 	OPT_BOOL(0, "dissociate", &option_dissociate,
- 		 N_("use --reference only while cloning")),
- 	OPT_STRING('o', "origin", &option_origin, N_("name"),
-@@ -283,11 +286,22 @@ static void strip_trailing_slashes(char *dir)
- static int add_one_reference(struct string_list_item *item, void *cb_data)
- {
- 	char *ref_git;
--	const char *repo;
-+	const char *repo, *ref_git_s;
-+	int *required = cb_data;
- 	struct strbuf alternate = STRBUF_INIT;
+v1:
  
--	/* Beware: read_gitfile(), real_path() and mkpath() return static buffer */
--	ref_git = xstrdup(real_path(item->string));
-+	ref_git_s = *required ?
-+			real_path(item->string) :
-+			real_path_if_valid(item->string);
-+	if (!ref_git_s) {
-+		warning(_("Not using proposed alternate %s"), item->string);
-+		return 0;
-+	} else
-+		/*
-+		 * Beware: read_gitfile(), real_path() and mkpath()
-+		 * return static buffer
-+		 */
-+		ref_git = xstrdup(ref_git_s);
+ Currently when cloning a superproject with --recursive and --reference
+ only the superproject learns about its alternates. The submodules are
+ cloned independently, which may incur lots of network costs.
  
- 	repo = read_gitfile(ref_git);
- 	if (!repo)
-@@ -304,7 +318,8 @@ static int add_one_reference(struct string_list_item *item, void *cb_data)
- 	} else if (!is_directory(mkpath("%s/objects", ref_git))) {
- 		struct strbuf sb = STRBUF_INIT;
- 		if (get_common_dir(&sb, ref_git))
--			die(_("reference repository '%s' as a linked checkout is not supported yet."),
-+			die(_("reference repository '%s' as a "
-+			      "linked checkout is not supported yet."),
- 			    item->string);
- 		die(_("reference repository '%s' is not a local repository."),
- 		    item->string);
-@@ -325,7 +340,12 @@ static int add_one_reference(struct string_list_item *item, void *cb_data)
+ Assume that the reference repository has the submodules at the same
+ paths as the to-be-cloned submodule and try to setup alternates from
+ there.
  
- static void setup_reference(void)
- {
--	for_each_string_list(&option_required_reference, add_one_reference, NULL);
-+	int required = 1;
-+	for_each_string_list(&option_required_reference,
-+			     add_one_reference, &required);
-+	required = 0;
-+	for_each_string_list(&option_optional_reference,
-+			     add_one_reference, &required);
- }
+ Some submodules in the referenced superproject may not be there, 
+ (they are just not initialized/cloned/checked out), which yields
+ an error for now. In future work we may want to soften the alternate
+ check and not die in the clone when one of the given alternates doesn't
+ exist.
  
- static void copy_alternates(struct strbuf *src, struct strbuf *dst,
-@@ -977,7 +997,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	git_config_set(key.buf, repo);
- 	strbuf_reset(&key);
+ patch 1,2 are modernizing style of t7408, 
+ patches 3,4 are not strictly necessary, but I think it is a good thing
+ to not leave the submodule related C code in a crippled state (i.e.
+ allowing only one reference). The shell code would also need this update,
+ but it looked ugly to me, so I postpone it until more of the submodule code
+ is written in C. 
  
--	if (option_required_reference.nr)
-+	if (option_required_reference.nr || option_optional_reference.nr)
- 		setup_reference();
- 
- 	fetch_pattern = value.buf;
+ Thanks,
+ Stefan 
+
+Stefan Beller (6):
+  t7408: modernize style
+  t7408: merge short tests, factor out testing method
+  submodule--helper module-clone: allow multiple references
+  submodule--helper update-clone: allow multiple references
+  submodule update: add super-reference flag
+  clone: reference flag is used for submodules as well
+
+ builtin/clone.c                |  22 ++++--
+ builtin/submodule--helper.c    |  45 ++++++++----
+ git-submodule.sh               |  12 +++-
+ t/t7408-submodule-reference.sh | 153 +++++++++++++++++++++++------------------
+ 4 files changed, 147 insertions(+), 85 deletions(-)
+
 -- 
-2.9.2.583.gd6329be.dirty
+2.9.2.572.g9d9644e.dirty
 
