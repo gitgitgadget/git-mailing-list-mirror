@@ -2,109 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C216520193
-	for <e@80x24.org>; Tue,  9 Aug 2016 18:20:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3ACCA1F859
+	for <e@80x24.org>; Tue,  9 Aug 2016 18:28:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932329AbcHISUN (ORCPT <rfc822;e@80x24.org>);
-	Tue, 9 Aug 2016 14:20:13 -0400
-Received: from mail-io0-f169.google.com ([209.85.223.169]:36368 "EHLO
-	mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932331AbcHISUL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2016 14:20:11 -0400
-Received: by mail-io0-f169.google.com with SMTP id b62so19429421iod.3
-        for <git@vger.kernel.org>; Tue, 09 Aug 2016 11:20:10 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=DPHUcqqB6MLlJqZievd6grmlIWEX0IDN+SZMWoOTqoM=;
-        b=n/MAjbANAucroaroIe4OpPG6t2hEs8/gwu+ISblCuF00YBtaitzj1WGH/vCnJoOPY5
-         SaDMpedmVuyc41jwMGCgZJBY9x5dynDXHUCNs/uNYNWthSk3F5TAVbVWncedLn6DPaBu
-         2OOsOlTaiBkUraQQ5mzulMAQzuyBM3CcJktK5czoRYi9xvzxbWbr9J1+vbuuYSzx0Jjv
-         Iu7eL91/E2g0xCRw8yGd7+0ErnhgbYdN5bGSDr8earDnnDPEEOg2wIwlyFe7UpgMZCTp
-         vS5oUEpj6f3mbpDU10ONoyoYYkrPrHONoh5jLO2wRkYCPGR4EmGojsiZVV7DEMcyzlJR
-         t+YQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=DPHUcqqB6MLlJqZievd6grmlIWEX0IDN+SZMWoOTqoM=;
-        b=ktrAzU81a6AaBv6+DOcImCxkM7C2wkLnh2IRzlXeRYQONO3MenZeC46vKVZ9aPpa1d
-         mYq3abByLWyC4MkL43WDYOYJf1COHhjLEWMb/fLSCp9BcdaSN1k7gMm+0cfcIHfATCEY
-         4EkFIV6Ccu5/mDGMVPMHG0pAuO8efD1O8eNfIa3ySo0jD8ho4taeeAq30wapoc37awbs
-         tfd+FplnGX+TIGqjCCgOpxDsSJakw1KJ1y/wVK3VvbPwcQF1KSTcqFuUicyULL1N96kW
-         x+tUAumAuPQMK/TBvU3dCojpfMVujqpzHDL6Jgrxhtni0LMjilqQFHo3w3wVugeJ70YV
-         W39A==
-X-Gm-Message-State: AEkoousAXJjEMOohQ8ECdFevGYaZcSTfj8DED9jc2qQ8AD1lNwnAcHdmjuNdnC0PvcW2TE2y9GwiT4a+p3qyyYih
-X-Received: by 10.107.178.129 with SMTP id b123mr487368iof.83.1470766804979;
- Tue, 09 Aug 2016 11:20:04 -0700 (PDT)
+	id S932404AbcHIS2E (ORCPT <rfc822;e@80x24.org>);
+	Tue, 9 Aug 2016 14:28:04 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:35748 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932271AbcHIS2B (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Aug 2016 14:28:01 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8F651F859;
+	Tue,  9 Aug 2016 18:28:00 +0000 (UTC)
+Date:	Tue, 9 Aug 2016 18:28:00 +0000
+From:	Eric Wong <e@80x24.org>
+To:	Michael Haggerty <mhagger@alum.mit.edu>
+Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+	Richard Ipsum <richard.ipsum@codethink.co.uk>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Philip Oakley <philipoakley@iee.org>
+Subject: Re: patch submission process, was Re: [PATCH v6 06/16]
+ merge_recursive: abort properly upon errors
+Message-ID: <20160809182800.GA19044@dcvr>
+References: <8ff71aba37be979f05abf88f467ec932aa522bdd.1470051326.git.johannes.schindelin@gmx.de>
+ <xmqqlh0gjpr6.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1608021004080.79248@virtualbox>
+ <xmqqy44ec15p.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1608031021050.79248@virtualbox>
+ <CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com>
+ <alpine.DEB.2.20.1608031753431.107993@virtualbox>
+ <CAGZ79kYWdZCNW_eBi5aLAacyBZJXQ9xyOWMBmjNsYT5NWjr-Og@mail.gmail.com>
+ <alpine.DEB.2.20.1608041730130.5786@virtualbox>
+ <6c937f79-2b82-619d-51fe-adccbe09bd66@alum.mit.edu>
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Tue, 9 Aug 2016 11:20:04 -0700 (PDT)
-In-Reply-To: <xmqq4m6tbzfd.fsf@gitster.mtv.corp.google.com>
-References: <20160809040811.21408-1-sbeller@google.com> <20160809040811.21408-8-sbeller@google.com>
- <xmqq7fbpdhkw.fsf@gitster.mtv.corp.google.com> <xmqq4m6tbzfd.fsf@gitster.mtv.corp.google.com>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Tue, 9 Aug 2016 11:20:04 -0700
-Message-ID: <CAGZ79kbS1_DULjf8gPram+zNLe-xRShETotq+at+r7bmWrUyxA@mail.gmail.com>
-Subject: Re: [PATCHv3 6/9] clone: implement optional references
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6c937f79-2b82-619d-51fe-adccbe09bd66@alum.mit.edu>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Aug 9, 2016 at 10:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> If I am reading the implementation of real_path_internal()
->> correctly, the most relevant reason that an "if-able" repository
->> cannot be used causes real_path_if_valid() to return NULL.
->
-> Oops, too many proofreading and rephrasing.  Please insert "I do not
-> think that" before "the most relevant".
+Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On 08/04/2016 05:58 PM, Johannes Schindelin wrote:
+> > [...]
+> > Even requiring every contributor to register with GitHub would be too much
+> > of a limitation, I would wager.
+> > [...]
 
-Side note:
-  It took me a while to mentally process and reread this.
-  It would have been easier with just
-  s/the most relevant reason/I do not think that the most relevant reason/
-  but that is just me being used to s/ expressions by now.
+> * Discussion of pull requests can be done either
+>   * via the website (super easy for beginners but powerful for
+> experienced users),
+>   * by setting up email notifications for your account and replying to
+> those emails, or
+>   * via an API.
+>   Such discussion is all in markdown, which supports light formatting,
+> hyperlinks, and @-mentions.
 
-I think our emails nearly crossed. In the other thread I wondered if
-you had different expectations on the -if-able part than I do.
+<snip>
 
-For the expected use case I do expect that the missing path is the
-most relevant thing (the submodule is not checked out).
+> Disclaimer: I work for GitHub, but in this email I'm speaking for myself.
+> 
+> Michael
+> 
+> [1] I concede that people who refuse on ideological grounds to use
+> proprietary software will find this step insurmountable. Perhaps we
+> could come up with a workaround for such people.
 
-Of course the submodule may be cloned shallow as it was recommended
-in the .gitmodules file, so we should also care about that use case.
+I'm one of those ideological people and I don't see an
+acceptable workaround.  GitHub already has misfeatures designed
+to lock people in into centralized messaging:
+
+* pull request feature doesn't work for self-hosted repos
+  (this disincentivizes people from running and improving
+   git-daemon/git-http-backend/etc...)
+
+* "noreply" email addresses
+
+* @-mentions you wrote about
+
+* custom email notifications
+
+This is a problem with Gitlab, Redmine, etc, too:
+they cannot interoperate with each other.
+
+At least for now, large proprietary mail providers like Gmail
+still interoperate with whatever Free Software SMTP software I
+run.  I dread the day when that is no longer true.
+
+Some of these problems I hope public-inbox (or something like
+it) can fix and turn the tide towards email, again.  In
+contrast, public-inbox is designed to push decentralization:
+
+* "reply" links are instructions for "git send-email" which
+  encourage reply-to-all (this applies to what Jeff said
+  about vger going down, I noticed it, too)
+
+* anybody can clone the code + repo, replicate the
+  instances, and tweak it to their needs.
+
+* public-inbox.org/git/$MESSAGE_ID/t.atom allows subscriptions
+  to Atom feeds without any registration or user-tracking
+
+* Message-IDs are exposed for proper threading and interop
+
+* low-bandwidth, Tor-friendly design to encourage deployments
+  even behind NATs and firewalls.
+
+Anyways, my optimistic side might interpret your advocacy as
+GitHub already feeling threatened by public-inbox.  I certainly
+wouldn't expect it at this stage, but I certainly hope it will
+be the case one day :)
 
 
-> Let's say your superproject borrows from ~/w/super, whose submodule
-> repositories (if cloned) are directly in "~/w/super/.git/modules/".
-> When you clone a submodule X for your superproject, you allow it to
-> borrow from "~/w/super/.git/modules/X" if there is one available.
-
-which is why we need to pass in ..../X/ with an ending slash.
-See the comment in 8/9.
-
-+               /*
-+                * We need to end the new path with '/' to mark it as a dir,
-+                * otherwise a submodule name containing '/' will be broken
-+                * as the last part of a missing submodule reference would
-+                * be taken as a file name.
-+                */
-+               strbuf_addf(&sb, "modules/%s/", sas->submodule_name);
-
-Thinking about that we may want to not rely on such a hack,
-but make it clearer.
-
-Thanks,
-Stefan
+Disclaimer: I've always been willing to risk a lifetime of
+unemployment for ideology.
