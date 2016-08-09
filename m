@@ -2,112 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 891F21F859
-	for <e@80x24.org>; Tue,  9 Aug 2016 22:05:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FDB31F859
+	for <e@80x24.org>; Tue,  9 Aug 2016 22:29:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932461AbcHIWFc (ORCPT <rfc822;e@80x24.org>);
-	Tue, 9 Aug 2016 18:05:32 -0400
-Received: from mail-it0-f45.google.com ([209.85.214.45]:35375 "EHLO
-	mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932421AbcHIWFb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2016 18:05:31 -0400
-Received: by mail-it0-f45.google.com with SMTP id u186so24244821ita.0
-        for <git@vger.kernel.org>; Tue, 09 Aug 2016 15:05:09 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=uIDtrenbizshMy4/REmROchWaxeGvSR1wMmofo7m+vA=;
-        b=H2IaV/mP4+wjUk39EVApNYNHwp5s+jjqaH8NmECIHrR/THFgHaQVWL5T2ro+uCzQ14
-         PDZ2Et+uTAd4ls4QP0MSsi3zPbd0aB/m0hjCmuzskyCK9FGu5E6He5YcSgsVZZ+DyLuj
-         TmoShvZ2qPjcoy1xzW0cA2RyhKIJW8NwNnfzAq7Ui7puhR8vzquB4ujr5nGQjmyCDOrq
-         Lp+3shxEeMx1VUXkyG6Y/q8Y6viXyp+cSOcIGS7nyehCsRlyX56BFIaG4RztefEDJU2F
-         nyS4hybnLLJgdMx4gqZokcpLdO5BS05bSvbLZ77VA98/C9P4NvJIEiKYWiw7H8bzEkbS
-         1enQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=uIDtrenbizshMy4/REmROchWaxeGvSR1wMmofo7m+vA=;
-        b=AbtYXLiAC4CwADBg23hWwVmxCOdJ780N9ZPWteU1cvA/8+Tw7rjVXEQBDIz4af2yJT
-         6fcKl8jUpQPhFqQBdu8mnPSgvp+yzobbQ++migPlLcXbSoVCfn/ZW0NScEFPE9YynUqB
-         r61o5C7xkV5G+DdSzFImPXyNFkLWONz7OcDj2TtSxzVGyZWIGraMEQG4EGd3/rRuacgI
-         Cm1RKSRCf3BOcwWz5QOuXPs9rNxB+8U1mOORSRpwCcmRCm/3yH/dYOKwJL0gd/JPWk6J
-         SiFmYdFCrVAYaq7w0T3A23EBaWFJgOG7EHFkJFglnjhbDPhtKRXWnmz4/1Pj/x/yV9e8
-         U1Vg==
-X-Gm-Message-State: AEkoouumUjsm/pA4OnOc195AaDbFx/XwvZVma7MMNFB+tlK/1S1mtTTJawrVBNEm9ABXFZyZoM0P89w7gAULCzYM
-X-Received: by 10.36.127.7 with SMTP id r7mr1573042itc.49.1470780308164; Tue,
- 09 Aug 2016 15:05:08 -0700 (PDT)
+	id S932584AbcHIW3i (ORCPT <rfc822;e@80x24.org>);
+	Tue, 9 Aug 2016 18:29:38 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51251 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932360AbcHIW3h (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Aug 2016 18:29:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D1D1F34B6D;
+	Tue,  9 Aug 2016 18:29:35 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ISkEpxZKmIsiQyccQ+kkM6kKBxU=; b=KRYdpe
+	Ua3kPD0hdWRO6uBLK5IjvBQQuUpgkPgaJd/DxYsaB77c/PKbu/bMafrjdwBdZFfL
+	d6H6jptxvY0sws4MldRzjqp2qo6RBuCoRIOUfKjxXa2fQZVkJyoRlA9MbX5xSun+
+	lFrxooEt75hjJyRjEDF//TYrmDY5PGY5p/jA0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aYe75yE3kIz3TzgrYNVHfAXLJe+63tyu
+	vaqVQ7344yw2lQauRECTrv2CwvNEeqJA7QQ47T2FAC4DYPH35TqurO9utaa+/sxy
+	+M++AKPkk6YlfmSvwZ0otP84CyKIMUX3r60a11fg82m/lAKOK+BeEWmmwmxJNBIx
+	FO9BjA9BJZk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C9C8634B6C;
+	Tue,  9 Aug 2016 18:29:35 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 538F034B6B;
+	Tue,  9 Aug 2016 18:29:35 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff King <peff@peff.net>
+Cc:	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 7/7] pack-objects: use mru list when iterating over packs
+References: <20160729040422.GA19678@sigill.intra.peff.net>
+	<20160729041524.GG22408@sigill.intra.peff.net>
+	<20160729054536.GA27343@sigill.intra.peff.net>
+	<xmqqr3acpjvo.fsf@gitster.mtv.corp.google.com>
+	<20160808145042.uwrk2m6jq3m4li37@sigill.intra.peff.net>
+	<xmqq8tw7gr82.fsf@gitster.mtv.corp.google.com>
+	<20160808165127.fvhnkcfsj4vif7iu@sigill.intra.peff.net>
+	<xmqqzionfafj.fsf@gitster.mtv.corp.google.com>
+	<20160809140411.7745apztp36nwshx@sigill.intra.peff.net>
+Date:	Tue, 09 Aug 2016 15:29:33 -0700
+In-Reply-To: <20160809140411.7745apztp36nwshx@sigill.intra.peff.net> (Jeff
+	King's message of "Tue, 9 Aug 2016 10:04:12 -0400")
+Message-ID: <xmqq7fbp8tki.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Tue, 9 Aug 2016 15:05:07 -0700 (PDT)
-In-Reply-To: <xmqqeg5x8vl4.fsf@gitster.mtv.corp.google.com>
-References: <20160809040811.21408-1-sbeller@google.com> <xmqqk2fqc583.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kZKTV5PCAR41O1t1c_y6N18u6gsoWozOfr=EPHic-7wYw@mail.gmail.com>
- <xmqq8tw5bzs1.fsf@gitster.mtv.corp.google.com> <CAGZ79kY8EiGaugsh4FxKYp1FxqYr10JfGqsrfsnhULB+OBnFXw@mail.gmail.com>
- <xmqq8tw5aijv.fsf@gitster.mtv.corp.google.com> <CAGZ79kbPvj6dU1DMaCh7ieJbs0qWimdHSD8xFfUyV98md2pywQ@mail.gmail.com>
- <xmqqeg5x8vl4.fsf@gitster.mtv.corp.google.com>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Tue, 9 Aug 2016 15:05:07 -0700
-Message-ID: <CAGZ79kYkn6eVUBd_hXd4FSxr+y-iNTSsOfqdcKWBWp-aaVpAkQ@mail.gmail.com>
-Subject: Re: [PATCHv2 0/6] git clone: Marry --recursive and --reference
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: C0205BD4-5E80-11E6-81FB-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Aug 9, 2016 at 2:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> becomes easily doable (i.e. subsequent "submodule update" can realize
-> that the submodule does not have alternates but it could borrow from
-> the submodule in the other-super-project-location).
+Jeff King <peff@peff.net> writes:
 
-I would suggest to postpone this to a later time once the need arises.
+> Here's the code to do the cycle-breaking. Aside from the "hacky" bit,
+> it's quite simple.  I added a new state enum to object_entry to handle
+> the graph traversal. Since it only needs 2 bits, I _assume_ a compiler
+> can fit it in with the bitfields above (or at the very least give it its
+> own single byte so we just use what would otherwise be struct padding).
+> But I didn't check; if it turns out not to be the case we can easily
+> emulate it with two bitfields.  The write_object() check abuses the
+> "idx.offset" field to keep the same state, but we could convert it to
+> use these flags if we care.
 
-I rather imagine that once you clone from "other-super-project-location"
-and get the warning about no alternates borrowing, you can decide if you want
-to set it up and link the submodule manually to that alternate, or if you just
-don't care about this one repository being duplicated.
+> @@ -1516,6 +1577,13 @@ static void get_object_details(void)
+>  			entry->no_try_delta = 1;
+>  	}
+>  
+> +	/*
+> +	 * This must happen in a second pass, since we rely on the delta
+> +	 * information for the whole list being completed.
+> +	 */
+> +	for (i = 0; i < to_pack.nr_objects; i++)
+> +		break_delta_cycles(&to_pack.objects[i]);
+> +
+>  	free(sorted_by_offset);
+>  }
 
-For now I plan to introduce 2 options, as these are 2 different things, that
-can be extended independently of each other:
+A potential cycle can only come from reusing deltas across packs in
+an unstable order, that happens way before we do the find_delta()
+thing, so this is a good place to have the new call.  While reading
+break_delta_cycles(), I was wondering if what it does is safe under
+multi-threading but there is no need to worry.
 
-submodule.alternateLocation::
-    Specifies how the submodules obtain alternates when submodules are
-    cloned. Possible values are `no`, `superproject`.
-    By default `no` is assumed, which doesn't add references. When the
-    value is set to `superproject` the submodule to be cloned computes
-    its alternates location relative to the superprojects alternate.
+The recursiveness of break-delta-cycles is not too bad for the same
+reason why it is OK to recurse in check_delta_limit(), I would guess?
 
-submodule.alternateErrorStrategy::
-    Specifies how to treat errors with the alternates for a submodule
-    as computed via `submodule.alternateLocation`. Possible values are
-    `ignore`, `info`, `die`.
+This is not new with this change, but I am not quite sure what in
+the current code prevents us from busting the delta limit for reused
+ones, though.
 
-> *1* Rather, I meant: clone has a very intimate knowledge on what and
->     what cannot be borrowed from and it is not just "is there a
->     directory?", so "git submodule update --init" is not in a good
->     position to decide if it wants to add --reference to the
->     invocation of "git clone" it makes internally, and introducing
->     an "if-able" variant to "clone" is one way to relieve it from
->     having to make that decision.
+> I think my preference is to clean up the "hacky" bit of this patch, and
+> then apply the earlier MRU patch on top of it (which takes my repack
+> from 44 minutes to 5 minutes for this particular test set).
 
-That is how I first understood the design as well.
+Yup, with something like this to break the delta chain _and_ allow
+an object to go through the usual deltify machinery, I'd say the MRU
+patch is a wonderful thing to have.
 
->
->     I could have suggested an alternative: because the submodule
->     machinery is gettting moved to C the "update --init" code that
->     drives the internal invocation of "git clone" could share the
->     the logic in "git clone --reference" that determines if a local
->     repository can be used as an alternate by small refactoring of
->     builtin/clone.c::add_one_reference().
-
-I see. I might actually need to do this anyway as the helper is a place
-to act on the submodule.alternateErrorStrategy.
