@@ -2,47 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97E0B1F859
-	for <e@80x24.org>; Tue,  9 Aug 2016 14:25:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDAD01F859
+	for <e@80x24.org>; Tue,  9 Aug 2016 14:57:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752829AbcHIOZb (ORCPT <rfc822;e@80x24.org>);
-	Tue, 9 Aug 2016 10:25:31 -0400
-Received: from bsmtp3.bon.at ([213.33.87.17]:63140 "EHLO bsmtp3.bon.at"
+	id S932736AbcHIO5h (ORCPT <rfc822;e@80x24.org>);
+	Tue, 9 Aug 2016 10:57:37 -0400
+Received: from mail96.atlas.de ([194.156.172.86]:48018 "EHLO mail96.atlas.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752522AbcHIOZb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2016 10:25:31 -0400
-Received: from [77.117.29.131] (smtpout1.drei.com [109.126.64.1])
-	by bsmtp3.bon.at (Postfix) with ESMTPSA id 3s7xQJ4fkCz5tlf;
-	Tue,  9 Aug 2016 16:25:28 +0200 (CEST)
-Subject: Re: [PATCH 2/2] commit-slab.h: avoid duplicated global static
- variables
-To:	Git Mailing List <git@vger.kernel.org>
-References: <57A9E5C1.3030205@kdbg.org> <57A9E614.6050601@kdbg.org>
-From:	Johannes Sixt <j6t@kdbg.org>
-Message-ID: <57A9E7D7.8030704@kdbg.org>
-Date:	Tue, 9 Aug 2016 16:25:27 +0200
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
+	id S932533AbcHIO5e (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Aug 2016 10:57:34 -0400
+X-Greylist: delayed 343 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Aug 2016 10:57:34 EDT
+X-IPAS-Result: =?us-ascii?q?A2AwDAD37qlX/wXKxApdHAEBhCdStxWEDIYdAhyBahABAQE?=
+ =?us-ascii?q?BAQEBgQRBEAGEDQEBAwEjBA1FEAIBCBoCJgICAioGFRACBAEMAQUCAQGIJbFMk?=
+ =?us-ascii?q?CMBAQEBAQEBAwEBAQEBAQEBH4EBhyGCVYRAF4JqgloBBIglhXOLIZhbhXKIaoN?=
+ =?us-ascii?q?Kg3g1hBluhXOBWgEBAQ?=
+Received: from scesrv02.atlas.de ([10.196.202.5])
+  by MGW102FE.atlas.de with ESMTP/TLS/DHE-RSA-AES128-GCM-SHA256; 09 Aug 2016 16:56:29 +0200
+Received: by SCESRV02.atlas.de (Postfix, from userid 600)
+	id 3s7y651h08z2MGjL; Tue,  9 Aug 2016 14:55:58 +0000 (UTC)
+Received: from MGW202PAR.atlas.de (unknown [10.206.101.61])
+	by SCESRV02.atlas.de (Postfix) with ESMTPS id 3s7y5V3nnbz2MGjP
+	for <git@vger.kernel.org>; Tue,  9 Aug 2016 14:55:58 +0000 (UTC)
+Received: from webmail.atlas.de (HELO MSEXSRV1.atlas.de) ([10.200.102.56])
+  by MGW202DAT.atlas.de with ESMTP/TLS/AES128-SHA; 09 Aug 2016 16:55:57 +0200
+Received: from MSEXSRV6.atlas.de ([169.254.4.101]) by MSEXSRV1.atlas.de
+ ([10.200.102.56]) with mapi id 14.03.0301.000; Tue, 9 Aug 2016 16:55:57 +0200
+From:	<stefan.naewe@atlas-elektronik.com>
+To:	<christian.couder@gmail.com>, <git@vger.kernel.org>
+CC:	<gitster@pobox.com>, <peff@peff.net>, <avarab@gmail.com>,
+	<karsten.blees@gmail.com>, <pclouds@gmail.com>,
+	<sbeller@google.com>, <sunshine@sunshineco.com>,
+	<ramsay@ramsayjones.plus.com>, <j6t@kdbg.org>, <l.s.r@web.de>,
+	<chriscool@tuxfamily.org>
+Subject: Re: [PATCH v10 28/40] builtin/apply: rename option parsing functions
+Thread-Topic: [PATCH v10 28/40] builtin/apply: rename option parsing
+ functions
+Thread-Index: AQHR8bihMpWztzupuUG2/Q9Uv3mLj6BAl0qA
+Date:	Tue, 9 Aug 2016 14:55:55 +0000
+Message-ID: <15e1b92a-0e05-6eb2-8e2a-261d964bfbf8@atlas-elektronik.com>
+References: <20160808210337.5038-1-chriscool@tuxfamily.org>
+ <20160808210337.5038-29-chriscool@tuxfamily.org>
+In-Reply-To: <20160808210337.5038-29-chriscool@tuxfamily.org>
+Accept-Language: de-DE, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.1.0
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <AA407D6F13CE4B4ABAB51AC48D94E4C0@atlas.de>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-In-Reply-To: <57A9E614.6050601@kdbg.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-BTW, these are all instances of duplicated global static variables that 
-can be found in a standard Linux build.
-
-How I found them? I waded through the error messages produced by compiling 
-the code base as C++ code for the fun of it (basically CFLAGS='-x c++ 
--fpermissive').
-
--- Hannes
-
+QW0gMDguMDguMjAxNiB1bSAyMzowMyBzY2hyaWViIENocmlzdGlhbiBDb3VkZXI6DQo+IEFzIHRo
+ZXNlIGZ1bmN0aW9ucyBhcmUgZ29pbmcgdG8gYmUgcGFydCBvZiB0aGUgbGliaWZpZWQNCj4gYXBw
+bHkgYXBpLCBsZXQncyBnaXZlIHRoZW0gYSBuYW1lIHRoYXQgaXMgbW9yZSBzcGVjaWZpYw0KPiB0
+byB0aGUgYXBwbHkgYXBpLg0KDQpzL2FwaS9BUEkvDQoNCj4gDQo+IFNpZ25lZC1vZmYtYnk6IENo
+cmlzdGlhbiBDb3VkZXIgPGNocmlzY29vbEB0dXhmYW1pbHkub3JnPg0KPiAtLS0NCj4gIGJ1aWx0
+aW4vYXBwbHkuYyB8IDQwICsrKysrKysrKysrKysrKysrKysrLS0tLS0tLS0tLS0tLS0tLS0tLS0N
+Cj4gIDEgZmlsZSBjaGFuZ2VkLCAyMCBpbnNlcnRpb25zKCspLCAyMCBkZWxldGlvbnMoLSkNCj4g
+DQo+IGRpZmYgLS1naXQgYS9idWlsdGluL2FwcGx5LmMgYi9idWlsdGluL2FwcGx5LmMNCj4gaW5k
+ZXggYWQ0MDNmOC4uNDI5ZmU0NCAxMDA2NDQNCj4gLS0tIGEvYnVpbHRpbi9hcHBseS5jDQo+ICsr
+KyBiL2J1aWx0aW4vYXBwbHkuYw0KPiBAQCAtNDU4OCwxNiArNDU4OCwxNiBAQCBzdGF0aWMgaW50
+IGFwcGx5X3BhdGNoKHN0cnVjdCBhcHBseV9zdGF0ZSAqc3RhdGUsDQo+ICAJcmV0dXJuIHJlczsN
+Cj4gIH0NCj4gIA0KPiAtc3RhdGljIGludCBvcHRpb25fcGFyc2VfZXhjbHVkZShjb25zdCBzdHJ1
+Y3Qgb3B0aW9uICpvcHQsDQo+IC0JCQkJY29uc3QgY2hhciAqYXJnLCBpbnQgdW5zZXQpDQo+ICtz
+dGF0aWMgaW50IGFwcGx5X29wdGlvbl9wYXJzZV9leGNsdWRlKGNvbnN0IHN0cnVjdCBvcHRpb24g
+Km9wdCwNCj4gKwkJCQkgICAgICBjb25zdCBjaGFyICphcmcsIGludCB1bnNldCkNCj4gIHsNCj4g
+IAlzdHJ1Y3QgYXBwbHlfc3RhdGUgKnN0YXRlID0gb3B0LT52YWx1ZTsNCj4gIAlhZGRfbmFtZV9s
+aW1pdChzdGF0ZSwgYXJnLCAxKTsNCj4gIAlyZXR1cm4gMDsNCj4gIH0NCj4gIA0KPiAtc3RhdGlj
+IGludCBvcHRpb25fcGFyc2VfaW5jbHVkZShjb25zdCBzdHJ1Y3Qgb3B0aW9uICpvcHQsDQo+IC0J
+CQkJY29uc3QgY2hhciAqYXJnLCBpbnQgdW5zZXQpDQo+ICtzdGF0aWMgaW50IGFwcGx5X29wdGlv
+bl9wYXJzZV9pbmNsdWRlKGNvbnN0IHN0cnVjdCBvcHRpb24gKm9wdCwNCj4gKwkJCQkgICAgICBj
+b25zdCBjaGFyICphcmcsIGludCB1bnNldCkNCj4gIHsNCj4gIAlzdHJ1Y3QgYXBwbHlfc3RhdGUg
+KnN0YXRlID0gb3B0LT52YWx1ZTsNCj4gIAlhZGRfbmFtZV9saW1pdChzdGF0ZSwgYXJnLCAwKTsN
+Cj4gQEAgLTQ2MDUsOSArNDYwNSw5IEBAIHN0YXRpYyBpbnQgb3B0aW9uX3BhcnNlX2luY2x1ZGUo
+Y29uc3Qgc3RydWN0IG9wdGlvbiAqb3B0LA0KPiAgCXJldHVybiAwOw0KPiAgfQ0KPiAgDQo+IC1z
+dGF0aWMgaW50IG9wdGlvbl9wYXJzZV9wKGNvbnN0IHN0cnVjdCBvcHRpb24gKm9wdCwNCj4gLQkJ
+CSAgY29uc3QgY2hhciAqYXJnLA0KPiAtCQkJICBpbnQgdW5zZXQpDQo+ICtzdGF0aWMgaW50IGFw
+cGx5X29wdGlvbl9wYXJzZV9wKGNvbnN0IHN0cnVjdCBvcHRpb24gKm9wdCwNCj4gKwkJCQljb25z
+dCBjaGFyICphcmcsDQo+ICsJCQkJaW50IHVuc2V0KQ0KPiAgew0KPiAgCXN0cnVjdCBhcHBseV9z
+dGF0ZSAqc3RhdGUgPSBvcHQtPnZhbHVlOw0KPiAgCXN0YXRlLT5wX3ZhbHVlID0gYXRvaShhcmcp
+Ow0KPiBAQCAtNDYxNSw4ICs0NjE1LDggQEAgc3RhdGljIGludCBvcHRpb25fcGFyc2VfcChjb25z
+dCBzdHJ1Y3Qgb3B0aW9uICpvcHQsDQo+ICAJcmV0dXJuIDA7DQo+ICB9DQo+ICANCj4gLXN0YXRp
+YyBpbnQgb3B0aW9uX3BhcnNlX3NwYWNlX2NoYW5nZShjb25zdCBzdHJ1Y3Qgb3B0aW9uICpvcHQs
+DQo+IC0JCQkJICAgICBjb25zdCBjaGFyICphcmcsIGludCB1bnNldCkNCj4gK3N0YXRpYyBpbnQg
+YXBwbHlfb3B0aW9uX3BhcnNlX3NwYWNlX2NoYW5nZShjb25zdCBzdHJ1Y3Qgb3B0aW9uICpvcHQs
+DQo+ICsJCQkJCSAgIGNvbnN0IGNoYXIgKmFyZywgaW50IHVuc2V0KQ0KPiAgew0KPiAgCXN0cnVj
+dCBhcHBseV9zdGF0ZSAqc3RhdGUgPSBvcHQtPnZhbHVlOw0KPiAgCWlmICh1bnNldCkNCj4gQEAg
+LTQ2MjYsOCArNDYyNiw4IEBAIHN0YXRpYyBpbnQgb3B0aW9uX3BhcnNlX3NwYWNlX2NoYW5nZShj
+b25zdCBzdHJ1Y3Qgb3B0aW9uICpvcHQsDQo+ICAJcmV0dXJuIDA7DQo+ICB9DQo+ICANCj4gLXN0
+YXRpYyBpbnQgb3B0aW9uX3BhcnNlX3doaXRlc3BhY2UoY29uc3Qgc3RydWN0IG9wdGlvbiAqb3B0
+LA0KPiAtCQkJCSAgIGNvbnN0IGNoYXIgKmFyZywgaW50IHVuc2V0KQ0KPiArc3RhdGljIGludCBh
+cHBseV9vcHRpb25fcGFyc2Vfd2hpdGVzcGFjZShjb25zdCBzdHJ1Y3Qgb3B0aW9uICpvcHQsDQo+
+ICsJCQkJCSBjb25zdCBjaGFyICphcmcsIGludCB1bnNldCkNCj4gIHsNCj4gIAlzdHJ1Y3QgYXBw
+bHlfc3RhdGUgKnN0YXRlID0gb3B0LT52YWx1ZTsNCj4gIAlzdGF0ZS0+d2hpdGVzcGFjZV9vcHRp
+b24gPSBhcmc7DQo+IEBAIC00NjM2LDggKzQ2MzYsOCBAQCBzdGF0aWMgaW50IG9wdGlvbl9wYXJz
+ZV93aGl0ZXNwYWNlKGNvbnN0IHN0cnVjdCBvcHRpb24gKm9wdCwNCj4gIAlyZXR1cm4gMDsNCj4g
+IH0NCj4gIA0KPiAtc3RhdGljIGludCBvcHRpb25fcGFyc2VfZGlyZWN0b3J5KGNvbnN0IHN0cnVj
+dCBvcHRpb24gKm9wdCwNCj4gLQkJCQkgIGNvbnN0IGNoYXIgKmFyZywgaW50IHVuc2V0KQ0KPiAr
+c3RhdGljIGludCBhcHBseV9vcHRpb25fcGFyc2VfZGlyZWN0b3J5KGNvbnN0IHN0cnVjdCBvcHRp
+b24gKm9wdCwNCj4gKwkJCQkJY29uc3QgY2hhciAqYXJnLCBpbnQgdW5zZXQpDQo+ICB7DQo+ICAJ
+c3RydWN0IGFwcGx5X3N0YXRlICpzdGF0ZSA9IG9wdC0+dmFsdWU7DQo+ICAJc3RyYnVmX3Jlc2V0
+KCZzdGF0ZS0+cm9vdCk7DQo+IEBAIC00NzU1LDEzICs0NzU1LDEzIEBAIGludCBjbWRfYXBwbHko
+aW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmd2LCBjb25zdCBjaGFyICpwcmVmaXgpDQo+ICAJc3Ry
+dWN0IG9wdGlvbiBidWlsdGluX2FwcGx5X29wdGlvbnNbXSA9IHsNCj4gIAkJeyBPUFRJT05fQ0FM
+TEJBQ0ssIDAsICJleGNsdWRlIiwgJnN0YXRlLCBOXygicGF0aCIpLA0KPiAgCQkJTl8oImRvbid0
+IGFwcGx5IGNoYW5nZXMgbWF0Y2hpbmcgdGhlIGdpdmVuIHBhdGgiKSwNCj4gLQkJCTAsIG9wdGlv
+bl9wYXJzZV9leGNsdWRlIH0sDQo+ICsJCQkwLCBhcHBseV9vcHRpb25fcGFyc2VfZXhjbHVkZSB9
+LA0KPiAgCQl7IE9QVElPTl9DQUxMQkFDSywgMCwgImluY2x1ZGUiLCAmc3RhdGUsIE5fKCJwYXRo
+IiksDQo+ICAJCQlOXygiYXBwbHkgY2hhbmdlcyBtYXRjaGluZyB0aGUgZ2l2ZW4gcGF0aCIpLA0K
+PiAtCQkJMCwgb3B0aW9uX3BhcnNlX2luY2x1ZGUgfSwNCj4gKwkJCTAsIGFwcGx5X29wdGlvbl9w
+YXJzZV9pbmNsdWRlIH0sDQo+ICAJCXsgT1BUSU9OX0NBTExCQUNLLCAncCcsIE5VTEwsICZzdGF0
+ZSwgTl8oIm51bSIpLA0KPiAgCQkJTl8oInJlbW92ZSA8bnVtPiBsZWFkaW5nIHNsYXNoZXMgZnJv
+bSB0cmFkaXRpb25hbCBkaWZmIHBhdGhzIiksDQo+IC0JCQkwLCBvcHRpb25fcGFyc2VfcCB9LA0K
+PiArCQkJMCwgYXBwbHlfb3B0aW9uX3BhcnNlX3AgfSwNCj4gIAkJT1BUX0JPT0woMCwgIm5vLWFk
+ZCIsICZzdGF0ZS5ub19hZGQsDQo+ICAJCQlOXygiaWdub3JlIGFkZGl0aW9ucyBtYWRlIGJ5IHRo
+ZSBwYXRjaCIpKSwNCj4gIAkJT1BUX0JPT0woMCwgInN0YXQiLCAmc3RhdGUuZGlmZnN0YXQsDQo+
+IEBAIC00NzkzLDEzICs0NzkzLDEzIEBAIGludCBjbWRfYXBwbHkoaW50IGFyZ2MsIGNvbnN0IGNo
+YXIgKiphcmd2LCBjb25zdCBjaGFyICpwcmVmaXgpDQo+ICAJCQkJTl8oImVuc3VyZSBhdCBsZWFz
+dCA8bj4gbGluZXMgb2YgY29udGV4dCBtYXRjaCIpKSwNCj4gIAkJeyBPUFRJT05fQ0FMTEJBQ0ss
+IDAsICJ3aGl0ZXNwYWNlIiwgJnN0YXRlLCBOXygiYWN0aW9uIiksDQo+ICAJCQlOXygiZGV0ZWN0
+IG5ldyBvciBtb2RpZmllZCBsaW5lcyB0aGF0IGhhdmUgd2hpdGVzcGFjZSBlcnJvcnMiKSwNCj4g
+LQkJCTAsIG9wdGlvbl9wYXJzZV93aGl0ZXNwYWNlIH0sDQo+ICsJCQkwLCBhcHBseV9vcHRpb25f
+cGFyc2Vfd2hpdGVzcGFjZSB9LA0KPiAgCQl7IE9QVElPTl9DQUxMQkFDSywgMCwgImlnbm9yZS1z
+cGFjZS1jaGFuZ2UiLCAmc3RhdGUsIE5VTEwsDQo+ICAJCQlOXygiaWdub3JlIGNoYW5nZXMgaW4g
+d2hpdGVzcGFjZSB3aGVuIGZpbmRpbmcgY29udGV4dCIpLA0KPiAtCQkJUEFSU0VfT1BUX05PQVJH
+LCBvcHRpb25fcGFyc2Vfc3BhY2VfY2hhbmdlIH0sDQo+ICsJCQlQQVJTRV9PUFRfTk9BUkcsIGFw
+cGx5X29wdGlvbl9wYXJzZV9zcGFjZV9jaGFuZ2UgfSwNCj4gIAkJeyBPUFRJT05fQ0FMTEJBQ0ss
+IDAsICJpZ25vcmUtd2hpdGVzcGFjZSIsICZzdGF0ZSwgTlVMTCwNCj4gIAkJCU5fKCJpZ25vcmUg
+Y2hhbmdlcyBpbiB3aGl0ZXNwYWNlIHdoZW4gZmluZGluZyBjb250ZXh0IiksDQo+IC0JCQlQQVJT
+RV9PUFRfTk9BUkcsIG9wdGlvbl9wYXJzZV9zcGFjZV9jaGFuZ2UgfSwNCj4gKwkJCVBBUlNFX09Q
+VF9OT0FSRywgYXBwbHlfb3B0aW9uX3BhcnNlX3NwYWNlX2NoYW5nZSB9LA0KPiAgCQlPUFRfQk9P
+TCgnUicsICJyZXZlcnNlIiwgJnN0YXRlLmFwcGx5X2luX3JldmVyc2UsDQo+ICAJCQlOXygiYXBw
+bHkgdGhlIHBhdGNoIGluIHJldmVyc2UiKSksDQo+ICAJCU9QVF9CT09MKDAsICJ1bmlkaWZmLXpl
+cm8iLCAmc3RhdGUudW5pZGlmZl96ZXJvLA0KPiBAQCAtNDgxNyw3ICs0ODE3LDcgQEAgaW50IGNt
+ZF9hcHBseShpbnQgYXJnYywgY29uc3QgY2hhciAqKmFyZ3YsIGNvbnN0IGNoYXIgKnByZWZpeCkN
+Cj4gIAkJCVJFQ09VTlQpLA0KPiAgCQl7IE9QVElPTl9DQUxMQkFDSywgMCwgImRpcmVjdG9yeSIs
+ICZzdGF0ZSwgTl8oInJvb3QiKSwNCj4gIAkJCU5fKCJwcmVwZW5kIDxyb290PiB0byBhbGwgZmls
+ZW5hbWVzIiksDQo+IC0JCQkwLCBvcHRpb25fcGFyc2VfZGlyZWN0b3J5IH0sDQo+ICsJCQkwLCBh
+cHBseV9vcHRpb25fcGFyc2VfZGlyZWN0b3J5IH0sDQo+ICAJCU9QVF9FTkQoKQ0KPiAgCX07DQo+
+ICANCj4gDQoNCg0KLS0gDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQovZGV2L3JhbmRvbSBzYXlzOiBEb24ndCBiZSBzbyBo
+dW1ibGUsIHlvdSdyZSBub3QgdGhhdCBncmVhdC4gLUdvbGRhIE1laXINCnB5dGhvbiAtYyAicHJp
+bnQgJzczNzQ2NTY2NjE2ZTJlNmU2MTY1Nzc2NTQwNjE3NDZjNjE3MzJkNjU2YzY1NmI3NDcyNmY2
+ZTY5NmIyZTYzNmY2ZCcuZGVjb2RlKCdoZXgnKSIgDQpHUEcgS2V5IGZpbmdlcnByaW50ID0gMkRG
+NSBFMDFCIDA5QzMgNzUwMSBCQ0E5ICA5NjY2IDgyOUIgNDlDNSA5MjIxIDI3QUY=
