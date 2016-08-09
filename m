@@ -2,82 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D1421FD99
-	for <e@80x24.org>; Tue,  9 Aug 2016 11:49:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2230F1FD99
+	for <e@80x24.org>; Tue,  9 Aug 2016 11:53:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932110AbcHILtl (ORCPT <rfc822;e@80x24.org>);
-	Tue, 9 Aug 2016 07:49:41 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51956 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750825AbcHILtl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2016 07:49:41 -0400
-Received: (qmail 23119 invoked by uid 109); 9 Aug 2016 11:49:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Aug 2016 11:49:40 +0000
-Received: (qmail 20060 invoked by uid 111); 9 Aug 2016 11:49:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Aug 2016 07:49:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Aug 2016 07:49:38 -0400
-Date:	Tue, 9 Aug 2016 07:49:38 -0400
-From:	Jeff King <peff@peff.net>
-To:	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-Subject: Re: t0027 racy?
-Message-ID: <20160809114938.pcrvirrzrh6ldmnr@sigill.intra.peff.net>
-References: <alpine.DEB.2.20.1608081556280.5786@virtualbox>
- <20160808152926.mciovipy5qlnqegs@sigill.intra.peff.net>
- <20160808203224.GA28431@tb-raspi>
- <20160809065110.GB17777@peff.net>
- <20160809113337.GA1143@tb-raspi>
+	id S1752809AbcHILx0 (ORCPT <rfc822;e@80x24.org>);
+	Tue, 9 Aug 2016 07:53:26 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:43174 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752804AbcHILxY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Aug 2016 07:53:24 -0400
+Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mx1.redhat.com (Postfix) with ESMTPS id A0FEF3B71E
+	for <git@vger.kernel.org>; Tue,  9 Aug 2016 11:53:23 +0000 (UTC)
+Received: from [10.36.7.128] (vpn1-7-128.ams2.redhat.com [10.36.7.128])
+	by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id u79BrMWD002846
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Tue, 9 Aug 2016 07:53:23 -0400
+From:	Michael Stahl <mstahl@redhat.com>
+Subject: [PATCH] document git-repack interaction of pack.threads and
+ pack.windowMemory
+To:	git@vger.kernel.org
+Organization: Red Hat
+Message-ID: <db25fccf-ed85-3974-143d-2c50b3037642@redhat.com>
+Date:	Tue, 9 Aug 2016 13:53:21 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20160809113337.GA1143@tb-raspi>
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Tue, 09 Aug 2016 11:53:23 +0000 (UTC)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Aug 09, 2016 at 11:33:37AM +0000, Torsten Bögershausen wrote:
+Signed-off-by: Michael Stahl <mstahl@redhat.com>
+---
+ Documentation/git-pack-objects.txt | 2 +-
+ Documentation/git-repack.txt       | 6 +++++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-> > The second one seems plausible, given the history of issues with
-> > changing CRLF settings for an existing checkout. I'm not sure if it
-> > would be feasible to reset the index completely before each tested
-> > command, but that would probably solve it.
-> The content of the file has been changed (we appended the letter 'Z' to it,
-> so even if mtime is the same, st.st_size should differ.
-> And it seems as if the commit is triggered, see below.
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+index 19cdcd0..0b655a5 100644
+--- a/Documentation/git-pack-objects.txt
++++ b/Documentation/git-pack-objects.txt
+@@ -105,7 +105,7 @@ base-name::
+ 	advantage of the large window for the smaller objects.  The
+ 	size can be suffixed with "k", "m", or "g".
+ 	`--window-memory=0` makes memory usage unlimited, which is the
+-	default.
++	default, unless the config variable `pack.windowMemory` is set.
+ 
+ --max-pack-size=<n>::
+ 	Maximum size of each output pack file. The size can be suffixed with
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index c597523..300455b 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -101,7 +101,11 @@ other objects in that pack they already have locally.
+ 	advantage of the large window for the smaller objects.  The
+ 	size can be suffixed with "k", "m", or "g".
+ 	`--window-memory=0` makes memory usage unlimited, which is the
+-	default.
++	default, unless the config variable `pack.windowMemory` is set.
++	Note that the actual memory usage will be multiplied
++	by the number of threads used by linkgit:git-pack-objects[1],
++	which is lacking a corresponding git-repack flag but can be
++	set via the config variable `pack.threads`.
+ 
+ --max-pack-size=<n>::
+ 	Maximum size of each output pack file. The size can be suffixed with
+-- 
+2.7.4
 
-I don't think I made myself clear. It's not a question of whether there
-is something to commit. It's that when git asks the index "what is the
-sha1 of the content at this path?", the index may be able to answer
-directly (the file is up-to-date, so we return the index value), or it
-may have to go to the filesystem and read the file content. It is this
-latter which triggers convert_to_git(), which is what generates the
-message in question.
-
-For a more stripped-down example, try:
-
-  git add foo
-  git commit -m msg
-
-versus:
-
-  git add foo
-  sleep 1
-  git commit -m msg
-
-In the latter case, we should not generally need convert_to_git() in the
-"commit" step. It was already done by "git add", and we reuse the cached
-result.
-
-Whereas in the first one, we may run into the racy-index problem and
-have to re-read the file to be on the safe side.
-
--Peff
