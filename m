@@ -6,80 +6,92 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4AC41FD99
-	for <e@80x24.org>; Tue,  9 Aug 2016 06:38:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B881D1FD99
+	for <e@80x24.org>; Tue,  9 Aug 2016 06:51:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751591AbcHIGi6 (ORCPT <rfc822;e@80x24.org>);
-	Tue, 9 Aug 2016 02:38:58 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51766 "HELO cloud.peff.net"
+	id S1751721AbcHIGvM (ORCPT <rfc822;e@80x24.org>);
+	Tue, 9 Aug 2016 02:51:12 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51772 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751020AbcHIGi5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2016 02:38:57 -0400
-Received: (qmail 4851 invoked by uid 109); 9 Aug 2016 06:38:55 -0000
+	id S1751337AbcHIGvM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Aug 2016 02:51:12 -0400
+Received: (qmail 5553 invoked by uid 109); 9 Aug 2016 06:51:10 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Aug 2016 06:38:55 +0000
-Received: (qmail 17829 invoked by uid 1000); 9 Aug 2016 06:38:55 -0000
-Date:	Tue, 9 Aug 2016 02:38:55 -0400
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Aug 2016 06:51:10 +0000
+Received: (qmail 17876 invoked by uid 1000); 9 Aug 2016 06:51:10 -0000
+Date:	Tue, 9 Aug 2016 02:51:10 -0400
 From:	Jeff King <peff@peff.net>
-To:	Paul Hammant <paul@hammant.org>
-Cc:	git@vger.kernel.org
-Subject: Re: [bug] git-check-ignore and file names with unicode chars in name
- - sys-out filename is corrupted
-Message-ID: <20160809063854.GA17777@peff.net>
-References: <CA+298UiKf6heNPy-NZSfdx47jyS_aK+C8UX3vh6OB3_XE+pn=g@mail.gmail.com>
+To:	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+Subject: Re: t0027 racy?
+Message-ID: <20160809065110.GB17777@peff.net>
+References: <alpine.DEB.2.20.1608081556280.5786@virtualbox>
+ <20160808152926.mciovipy5qlnqegs@sigill.intra.peff.net>
+ <20160808203224.GA28431@tb-raspi>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CA+298UiKf6heNPy-NZSfdx47jyS_aK+C8UX3vh6OB3_XE+pn=g@mail.gmail.com>
+In-Reply-To: <20160808203224.GA28431@tb-raspi>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Aug 09, 2016 at 01:47:18AM -0400, Paul Hammant wrote:
+On Mon, Aug 08, 2016 at 08:32:24PM +0000, Torsten Bögershausen wrote:
 
-> Reproduction:
+> > The verbose output is not very exciting, though:
+> > 
+> > 	expecting success: 
+> > 	                check_warning "$lfwarn" ${pfx}_LF.err
+> > 
+> > 	--- NNO_attr_auto_aeol_crlf_false_LF.err.expect 2016-08-08 15:26:37.061701392 +0000
+> > 	+++ NNO_attr_auto_aeol_crlf_false_LF.err.actual 2016-08-08 15:26:37.061701392 +0000
+> > 	@@ -1 +0,0 @@
+> > 	-warning: LF will be replaced by CRLF
+> > 	not ok 114 - commit NNO files crlf=false attr=auto LF
+> [...]
+> The warning is missing, but should be there:
 > 
->   $ echo "*.ignoreme" >> .gitignore
->   # (and commit)
->   $ touch "fooo-€.ignoreme"
->   $ find . -print | grep fooo | xargs git check-ignore
->   "./fooo-\342\202\254.ignoreme"
+> The file has LF, and after commit and a new checkout these LF will
+> be convertet into CRLF.
 > 
-> You could view that git-check-ignore isn't corrupting anything, it is
-> just outputting another form for the file name (octal escaped), but it
-> doesn't need to change it at all, and its causing downstream problems
-> in bash scripting.
+> So why isn't the warning there (but here on my oldish machines)
 
-It's not corrupted; like all git commands, check-ignore by default
-prints paths with a reversible quoting mechanism, so that odd filenames
-are not syntactically ambiguous (e.g., consider a filename with a
-newline in it), and so that you don't get binary spew on your terminal.
+To be clear, the warning _is_ there when I just run t0027 by itself, and
+the test passes.  It's only under heavy load that it isn't. So it's a
+race condition either in the test script or in git itself.
 
-For robust scripting, you can either:
+Usually race conditions like these are due to one of:
 
-  - unquote the filenames in the receiving script (detect the presence
-    of quoting by the double-quote in the first character, and then
-    normal C-style dequoting).
+  - git dying from SIGPIPE before it has a chance to output the command.
+    But I don't see any pipes being used in the test script.
 
-or
+  - index raciness causing us to avoid reading file content. For
+    example, if you do:
 
-  - use "-z" to get NUL-delimited filenames with no quoting. Your
-    example above has problems in the find, grep, and xargs
-    commands, too. A more careful version is:
+      echo foo >bar
+      git add bar
 
-      find . -print0 | grep -z fooo | git check-ignore --stdin -z
+    Then _usually_ "bar" and the index will have the same mtime. And
+    therefore subsequent commands that need to refresh the index will
+    re-read the content of "bar", because they cannot tell from the stat
+    information if we have the latest version of "bar" in the index or
+    not (it could have been written after the index update, but in the
+    same second).
 
-For human readability, you can do:
+    But on a slow or heavily loaded system (or if you simply get unlucky
+    in crossing the boundary to a new second), they'll have different
+    mtimes. And therefore git knows it can skip reading the content from
+    the filesystem.
 
-  git config core.quotepath false
+    So if your test relies on git actually re-converting the file
+    content, it would sometimes randomly fail.
 
-to avoid quoting binary characters (here and in other tools like "git
-diff"), which is convenient if you use UTF8 filenames. It also will
-"unbreak" your scripts in the sense that it will avoid quoting in more
-situations. The scripts would still choke on more weird filenames
-(e.g., ones with embedded tabs or newlines), but in practice you'd
-probably never notice.
+The second one seems plausible, given the history of issues with
+changing CRLF settings for an existing checkout. I'm not sure if it
+would be feasible to reset the index completely before each tested
+command, but that would probably solve it.
 
 -Peff
