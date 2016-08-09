@@ -2,94 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F6C41F859
-	for <e@80x24.org>; Tue,  9 Aug 2016 18:39:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74E071F859
+	for <e@80x24.org>; Tue,  9 Aug 2016 18:42:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932283AbcHISjR (ORCPT <rfc822;e@80x24.org>);
-	Tue, 9 Aug 2016 14:39:17 -0400
-Received: from mail-io0-f180.google.com ([209.85.223.180]:35127 "EHLO
-	mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932193AbcHISjR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2016 14:39:17 -0400
-Received: by mail-io0-f180.google.com with SMTP id m101so19929413ioi.2
-        for <git@vger.kernel.org>; Tue, 09 Aug 2016 11:39:16 -0700 (PDT)
+	id S932382AbcHISmZ (ORCPT <rfc822;e@80x24.org>);
+	Tue, 9 Aug 2016 14:42:25 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:33756 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932368AbcHISmX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Aug 2016 14:42:23 -0400
+Received: by mail-wm0-f65.google.com with SMTP id o80so4936015wme.0
+        for <git@vger.kernel.org>; Tue, 09 Aug 2016 11:42:17 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=6Xqvq3Op0sDqbxwPsmlW27qrxtBtT9N2eZe03UpHKdQ=;
-        b=LKB1W4f94cyj0HqCuXj7+hUqWQqtFSXAXoTFGsYE49mMuzBK7N6bF9CIynpY2neDdJ
-         q4L6w9jd0uzO4dwT1SnJ8YWNf+NU8CXpLziU5yoX1vOEXvMXLPg1i1krZHzkqlosE7Zc
-         xLjxJ3tY/g92dQGZDzFaKrsmgP6APPMALLyQA3uzAYirli53sXs55Tl+Mic8bkjJmVPb
-         Clnlv+khWCe6B2Up3hG9hZU9V6tvKVAENx4ClO7nQ7Bhj+asFzphuPqCGiK4aPaRhMp5
-         8J6BwpgX363XYtAfyCqjZNQ5ExwAYmgWArHgE7soWwZ0IoDei6o2gsn8HLfdkI9gXZVz
-         1XFg==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=lGlACanGCCCNtqic2JhYHy+nXmVqPTZVIYiq1S4DjQg=;
+        b=GowMoMNX2QOw5rhzr9K6lhT8JPC6s2t1lakvwHh9OJ3rCJ1BogmegHgoqMU2lmko+e
+         761bICyB4rp9BU+9rLG7IFYQD+knGlVU/a4dsOnkLS4kQLtVRSns3Hx83Ps5rGHdmp4U
+         qusfqTyMWTKzzAvdu+5hLkcxKpRxAlD298BJ7BEIjGbuI4eox+QQHWXXTesJEEvTmx5n
+         9G2oy35Ou2dMGz1I0dq6oP6T6tJyZdXJ2IgiEt2KRO3nzrWbdUK6N8eWpdy18hSqkH5U
+         017lzBrHVcYc0hl2DwNn33rxKXAT5eWLgjB2pgfDpLz3E8wEi93jqjjdvKhJH3KcsV0K
+         +4Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=6Xqvq3Op0sDqbxwPsmlW27qrxtBtT9N2eZe03UpHKdQ=;
-        b=EEm6fp4LRjn9NfH7LqI4/rYLqsSCyWHoJVUkN/cfq0LYcxviV+8Se9lC1yFKWB8pIC
-         NS49NKz52WpLsyWdrjPh6e3esIDIt1I58LCjdmyYUTCGHES295dm+kKPvJCVcn6gqXBC
-         Ey7ZPTdJjEuI5IsRg/7qaTmycIXbfDz9D4KZ5RAMmL8XdArMUxHkzxEwytgX/Uk90A2r
-         /0Qn3JfMukF+kKCCO1zzaJ87k89a7f21lEoZaJPz7yEQsiULcUB2vdGDaVnIpJ2AULoI
-         uiHUrY0tm0ArNROOTVsxLQmO5i1gOSLOP189M6dW5y2D+HjthY8Hxf08G53KWcJg2ezV
-         gDlQ==
-X-Gm-Message-State: AEkoouvnjR64lOtV9Q5xtsoYUth7UBjWwQVfEn/l08aEdU8LbLMahDjz7mqJLNSRm6fqCWL63kP3X/fl6YL4fg==
-X-Received: by 10.107.8.140 with SMTP id h12mr594940ioi.95.1470767956085; Tue,
- 09 Aug 2016 11:39:16 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=lGlACanGCCCNtqic2JhYHy+nXmVqPTZVIYiq1S4DjQg=;
+        b=KZHTR7JfNqo/SaRgCV+loJoGScGwPxG0wo/SxarCOr0jpDcgrSL5Pe4sYUAUONeSkx
+         tUCQiOf28nxSYCYe+BfRofig0fV/E2zA6c1SWCFKpT7o/WwVcraByE1udkv3mtSJy50j
+         AXmLBQYK3qdKyWeRGB+na665p3TlOEgn2PMLr2G6cP+SLdl1OwrRYxe7Sz7GaJk2XZ4K
+         OlzzaggnpEjz7D1CESpOQ8syD//CjHWrvW0WzDvQfPPFaLC2mqByCyykKnqvQrZYl8F3
+         ADUzo55ogXODjH3vIWSUvEXJBD7t79/nl6LepO8jEqwj3cpulL0S/ipuTQI7lZBjHM0r
+         eiQQ==
+X-Gm-Message-State: AEkoouuBCaflu854h5CaAGY0Xhq0qEobO1o9NCC2DmiysqAV7dScJmRj2IRQhGZ6j28IRbps39f3L1OBcUXlfg==
+X-Received: by 10.194.104.197 with SMTP id gg5mr89911742wjb.6.1470768136701;
+ Tue, 09 Aug 2016 11:42:16 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.64.125.199 with HTTP; Tue, 9 Aug 2016 11:38:44 -0700 (PDT)
-In-Reply-To: <CACsJy8DA7b9EYTDUMA5+kfk2Xg6hQGAuNTa5ghKH3zMiuvTRbw@mail.gmail.com>
-References: <cover.1469547160.git.johannes.schindelin@gmx.de>
- <cover.1470051326.git.johannes.schindelin@gmx.de> <8ff71aba37be979f05abf88f467ec932aa522bdd.1470051326.git.johannes.schindelin@gmx.de>
- <xmqqlh0gjpr6.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608021004080.79248@virtualbox>
- <xmqqy44ec15p.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608031021050.79248@virtualbox>
- <CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com>
- <alpine.DEB.2.20.1608031753431.107993@virtualbox> <CAGZ79kYWdZCNW_eBi5aLAacyBZJXQ9xyOWMBmjNsYT5NWjr-Og@mail.gmail.com>
- <alpine.DEB.2.20.1608041730130.5786@virtualbox> <6c937f79-2b82-619d-51fe-adccbe09bd66@alum.mit.edu>
- <xmqqshuedh1i.fsf@gitster.mtv.corp.google.com> <3055f063-c9c1-0bf5-99bd-08256c253d33@alum.mit.edu>
- <CACsJy8DA7b9EYTDUMA5+kfk2Xg6hQGAuNTa5ghKH3zMiuvTRbw@mail.gmail.com>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Tue, 9 Aug 2016 20:38:44 +0200
-Message-ID: <CACsJy8A4xwiUZ50hH9srRkmmBfxhHCQWzN70sLWo5TqZBOPQrw@mail.gmail.com>
-Subject: Re: patch submission process, was Re: [PATCH v6 06/16]
- merge_recursive: abort properly upon errors
-To:	Michael Haggerty <mhagger@alum.mit.edu>
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	Richard Ipsum <richard.ipsum@codethink.co.uk>,
-	Eric Wong <e@80x24.org>, Josh Triplett <josh@joshtriplett.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>
+Received: by 10.194.2.111 with HTTP; Tue, 9 Aug 2016 11:41:56 -0700 (PDT)
+In-Reply-To: <xmqqpophajqa.fsf@gitster.mtv.corp.google.com>
+References: <1470732818-408-1-git-send-email-ville.skytta@iki.fi> <xmqqpophajqa.fsf@gitster.mtv.corp.google.com>
+From:	=?UTF-8?Q?Ville_Skytt=C3=A4?= <ville.skytta@iki.fi>
+Date:	Tue, 9 Aug 2016 21:41:56 +0300
+X-Google-Sender-Auth: JcrYC1eaVUQiUYKSjtx1HTgIa9Q
+Message-ID: <CABr9L5DX9uHVkNMY4ihLcQtVoOLVXJh-EDA0iiOD9ffPkJSO-g@mail.gmail.com>
+Subject: Re: [PATCH] Spelling fixes
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	git@vger.kernel.org
 Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Aug 9, 2016 at 8:36 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Tue, Aug 9, 2016 at 1:20 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> Could you elaborate why you would expect quality and/or quantity of
->> reviews to suffer? I'm really curious, and I'd be happy to pass your
->> feedback along to my colleagues.
+On Tue, Aug 9, 2016 at 9:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
+[...]
+> There are two "commited" you seem to have missed, though,
 >
-> Since I have been using github at work for a couple months, I do have
-> a few complaints if it will ever become the way of reviewing things in
-> git. Some of these may be covered by other people already (I haven't
-> read all new mails in this thread yet)
+> t/t3420-rebase-autostash.sh:    echo uncommited-content >file0 &&
+> t/t3420-rebase-autostash.sh:    echo uncommited-content >expected &&
+>
+> which I'll queue on top of this patch to be later squashed (i.e. no
+> need to resend the whole thing only to add these two).
 
-Another super nit thing: use monospace font for commit messages, or at
-least have an option for that.
--- 
-Duy
+Thanks. https://github.com/client9/misspell/pull/61 :)
+
+Also, there's SSTATE_TRANSFERING->SSTATE_TRANSFERRING in
+transport-helper.c, maybe you can squash that one in as well if you
+think it's fine?
