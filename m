@@ -6,61 +6,107 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D20C1F859
-	for <e@80x24.org>; Tue,  9 Aug 2016 16:42:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDB581F859
+	for <e@80x24.org>; Tue,  9 Aug 2016 16:52:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932238AbcHIQmC (ORCPT <rfc822;e@80x24.org>);
-	Tue, 9 Aug 2016 12:42:02 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53689 "EHLO
+	id S1752702AbcHIQwW (ORCPT <rfc822;e@80x24.org>);
+	Tue, 9 Aug 2016 12:52:22 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54283 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932817AbcHIQlz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2016 12:41:55 -0400
+	with ESMTP id S1752672AbcHIQwV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Aug 2016 12:52:21 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 544F63170F;
-	Tue,  9 Aug 2016 12:41:54 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id ABCAF31822;
+	Tue,  9 Aug 2016 12:52:20 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+ms9xe5+u0+XbM6Mj+CK9We7CFY=; b=bx3TTe
-	CO3QrAgTOlLQaZo48QHd2yMLiAXZ2SKdzdBCgNwiBzGQQZYOLKFEP+5AcAX4MKo8
-	Huq9pHXTM7H2RhH4Qk4QXayaB/vXU7I0KTP1aRlXvS+u2LAI8utCo/GuaL29ll8C
-	ymH76yO9MMzrkNhPzcCN5azcWIz03tH/XuZwA=
+	:content-type; s=sasl; bh=Fgfbo/e56mSAnz6KAwwjy79z/Sc=; b=ZJdE0V
+	o6WXpALCbPYEeGuSSlJGU2X+gVHmeXcxP5pKEtv+t4bDEkmqOTPthUNhsjdIZx1P
+	TBu458hPAn5gejAfuJDWrcmZmLEQLBWZOFcoXNLmgdc05Nd0wKNiI+DmD3Hu9vEF
+	qmF5kaTeQvlRtkCbkU06Vxow6iYlNZg1+rcvg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QQfbShGrWLIbx9VfCrhKwSlMJIZP5ozy
-	g37atOO5xmnqD6kn/oH1+quCgO87cFUMjTYMhpFDv70yXXuSNz/Iw/wfs7MGy2if
-	2arWXHw3ou53ocZQ4raiWHJ0VDBMqje4vdNFjPC5GtOTd+52586EdZg+cbHbFN/o
-	pb1JtuOvxj4=
+	:content-type; q=dns; s=sasl; b=T/cVbfSwjap9KNzoVBIhcaS5HJ+mymon
+	XR1FzmdtrxiiXfDlKTxhdykUmLDFzoUgQxKX9j1KkA6dUM4kv+RM93dPgLbpdHaI
+	eLNUKz9N1Y0jM/JSHuJCGa6XbxDyz+qRwsn74EQppV33YUTQD+5mtQ0EiOr87N8z
+	U2pzg3U/udo=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 44DDA3170E;
-	Tue,  9 Aug 2016 12:41:54 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A2B7F3181F;
+	Tue,  9 Aug 2016 12:52:20 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B7BC73170D;
-	Tue,  9 Aug 2016 12:41:53 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 161C23181E;
+	Tue,  9 Aug 2016 12:52:20 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-To:	Stefan Beller <sbeller@google.com>
-Cc:	git@vger.kernel.org, Jens.Lehmann@web.de, mst@redhat.com
-Subject: Re: [PATCHv3 2/9] t7408: merge short tests, factor out testing method
-References: <20160809040811.21408-1-sbeller@google.com>
-	<20160809040811.21408-3-sbeller@google.com>
-Date:	Tue, 09 Aug 2016 09:41:51 -0700
-In-Reply-To: <20160809040811.21408-3-sbeller@google.com> (Stefan Beller's
-	message of "Mon, 8 Aug 2016 21:08:02 -0700")
-Message-ID: <xmqqy445c2sw.fsf@gitster.mtv.corp.google.com>
+To:	Kirill Smelkov <kirr@nexedi.com>
+Cc:	Jeff King <peff@peff.net>, Vicent Marti <tanoku@gmail.com>,
+	=?utf-8?Q?J=C3=A9rome?= Perrin <jerome@nexedi.com>,
+	Isabelle Vallet <isabelle.vallet@nexedi.com>,
+	Kazuhiko Shiozaki <kazuhiko@nexedi.com>,
+	Julien Muchembled <jm@nexedi.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/2] pack-objects: Teach --use-bitmap-index codepath to respect --local, --honor-pack-keep and --incremental
+References: <20160808135020.yggthtfekdiwq3lz@sigill.intra.peff.net>
+	<20160808181942.GD3995@teco.navytux.spb.ru>
+	<xmqqoa53dpue.fsf@gitster.mtv.corp.google.com>
+	<20160809112123.GA14273@teco.navytux.spb.ru>
+Date:	Tue, 09 Aug 2016 09:52:18 -0700
+In-Reply-To: <20160809112123.GA14273@teco.navytux.spb.ru> (Kirill Smelkov's
+	message of "Tue, 9 Aug 2016 14:21:27 +0300")
+Message-ID: <xmqqtwetc2bh.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 2DA5F5AA-5E50-11E6-A6D9-89D312518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: A303E662-5E51-11E6-B22A-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Kirill Smelkov <kirr@nexedi.com> writes:
 
-> +# The tests up to this point, and repositories created by them
-> +# (A, B, super and super/sub), are about setting up the stage
-> +# forsubsequent tests and meant to be kept throughout the
+> Would you please explain why we should not use touch if we do not care
+> about timestamps? Simply style?
 
-s/forsub/for sub/;
+To help readers.
+
+"touch A" forcess the readers wonder "does the timestamp of A
+matter, and if so in what way?" and "does any later test care what
+is _in_ A, and if so in what way?"  Both of them is wasting their
+time when there is no reason why "touch" should have been used. 
+
+> diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+> index cce95d8..44914ac 100755
+> --- a/t/t5310-pack-bitmaps.sh
+> +++ b/t/t5310-pack-bitmaps.sh
+> @@ -8,16 +8,15 @@ objpath () {
+>  }
+>  
+>  # show objects present in pack ($1 should be associated *.idx)
+> -packobjects () {
+> -	git show-index <$1 | cut -d' ' -f2
+> +pack_list_objects () {
+> +	git show-index <"$1" | cut -d' ' -f2
+>  }
+
+pack-list-objects still sounds as if you are packing "list objects",
+though.  If you are listing packed objects (or objects in a pack),
+list-packed-objects (or list-objects-in-pack) reads clearer and more
+to the point, at least to me.
+
+> -# hasany pattern-file content-file
+> +# has_any pattern-file content-file
+>  # tests whether content-file has any entry from pattern-file with entries being
+>  # whole lines.
+> -hasany () {
+> -	# NOTE `grep -f` is not portable
+> -	git grep --no-index -qFf $1 $2
+> +has_any () {
+> +	grep -qFf "$1" "$2"
+
+Omitting "-q" would help those who have to debug breakage in this
+test or the code that this test checks.  What test_expect_success
+outputs is not shown by default, and running the test script with
+"-v" would show them as a debugging aid.
+
+Thanks.
