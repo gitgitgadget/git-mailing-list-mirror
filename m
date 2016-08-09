@@ -2,88 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 963051F859
-	for <e@80x24.org>; Tue,  9 Aug 2016 21:28:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B39D1F859
+	for <e@80x24.org>; Tue,  9 Aug 2016 21:29:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932388AbcHIV2T (ORCPT <rfc822;e@80x24.org>);
-	Tue, 9 Aug 2016 17:28:19 -0400
-Received: from mout.web.de ([212.227.17.11]:60266 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932375AbcHIV2S (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2016 17:28:18 -0400
-Received: from localhost ([195.252.60.88]) by smtp.web.de (mrweb102) with
- ESMTPSA (Nemesis) id 0MhDkj-1btSNx2sy1-00MHjZ; Tue, 09 Aug 2016 23:28:04
- +0200
-Date:	Tue, 9 Aug 2016 21:28:02 +0000
-From:	Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:	Jeff King <peff@peff.net>
-Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-Subject: Re: t0027 racy?
-Message-ID: <20160809212802.GA4132@tb-raspi>
-References: <alpine.DEB.2.20.1608081556280.5786@virtualbox>
- <20160808152926.mciovipy5qlnqegs@sigill.intra.peff.net>
- <20160808203224.GA28431@tb-raspi>
- <20160809065110.GB17777@peff.net>
- <20160809113337.GA1143@tb-raspi>
- <20160809114938.pcrvirrzrh6ldmnr@sigill.intra.peff.net>
- <20160809125958.GA1501@tb-raspi>
- <20160809132744.kjzmkgt2qiugeolj@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160809132744.kjzmkgt2qiugeolj@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V03:K0:wKzHhGfKAnDzN7J+87GZIEzGtNAiooXAZif0kxVfVI//PsWbWHG
- Y934cyklbK/bwAR05qhMF30mml7KNTWGi9SLOwudaqz6xwYRaWRJEWBSubO4BYgFJFNmdZp
- Ach/VMyP5tXC51iLYq/B7VfsiK4CdJtOv6DVyhK5mUzynlG/XG/QlGjNXupQDKeWjT3P3Hw
- iIAYByG22P4Cq0MfJoI2A==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:cw08oI79JAE=:VZZtfJNOHm8Bf5o8+yB8QF
- HMxc5+28bHWncFHOj1OWFrdkST5P91G0YLzrcdmi2+Ok10ToVVBWzrmgC/Rf+ptm9V2gv97il
- Lhze0E185MaG2kZcZR4mSeVF2FRZycg3UpL0cnru4mHFIiQTVMMQsazpT+cb0WES8vE0aVTiW
- 36WWFlYK++BQySXHYjhCl0pTT9jgOUzDnXYUhcfU1N/9lzHwiOw4reflzSWe/HXymePeJl1It
- un0P0HCkN8uq0NvobM/IxKwbX4q2S9WH13ZNcxdecPn+A8qClW+dY2N4/8eZqiCTVFIpVot9N
- ZTm/yPuUtZjdsZP7Ak24GWXxvL3ZS+bZWrqbS7krD35m8wMk+fDOsWyV8xaZtEaaALeF0r2L4
- sqzdYoUIDjlsfXDVljS//89HDA0PO8L//yWDNinv9OqlrgusDx4E09JvY5F0Arj8FIqMtnA5B
- Ao4wst/wYygdsefMWKPINLI8cKx88/iRDQKpNvFGhn1QtoMN/wv8048YL+gOWIkLcmENH1Lj6
- /Ju+sdYPNfRqAYfpgpY/YfoepYBorqEJVC2lYowEUQiQqcCXqQ9adUO738RoSTuCtcLNBC2MT
- 0aaOyVRUvkFpbxCOY6hxF+2be+OVC0JsrvwuOkwMbboGbjo2nrc0snbab5gmIAJbScfCklW7L
- TJTUshxn4F9eS0KvTI39KPly7NFwI+8em548Ylyj3v+JclzzdnrIGrbtAqfEypF3MBKtZLbNM
- E0dqnRZK3RwTU5s2QziN2SxCe5/387TRwSzZx2Xr6ELoBIz9UUfwO9hLqiA=
+	id S932538AbcHIV3Z (ORCPT <rfc822;e@80x24.org>);
+	Tue, 9 Aug 2016 17:29:25 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:35010 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932521AbcHIV3T (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Aug 2016 17:29:19 -0400
+Received: by mail-pa0-f42.google.com with SMTP id iw10so8751206pac.2
+        for <git@vger.kernel.org>; Tue, 09 Aug 2016 14:29:18 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=3UPfRHAVybeFWWQuEKUrMLw1sn7QQj6FPh1Wk46o+gA=;
+        b=HdoLxDMP+gMwST1JP3WKlaFmORTVwQSDLBpI421XALcGHWzGyhtLBxoBHhGVVwEttV
+         DJT/9sTO9Oo8DNxVpsqDUFhOxjrGzivStwzmD9mrwcDQPXz+GDEr5mOWzKC+iIeZlh5j
+         DhBo6gzu1IVZ49iEis3jB94nWbz1F1jWu4fWIhBIRuBW+qzxyqWTU6UCNhNavFdodush
+         v9Pd3VjtKWFBzZs+qr6ueN+J5d2rqi1Et5OLFuLyX5i5x97KXB2ujEXKgdL+Jn4eSNz0
+         V92GvqSNmKxlBXv1GYYvdQ7sStUEULscx1cS32aCpJOaaJqUPck+sgLb2UYCAJhxgFYY
+         HsdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=3UPfRHAVybeFWWQuEKUrMLw1sn7QQj6FPh1Wk46o+gA=;
+        b=gfU0ORxMJoagX1uRmW3BvVwpYTgFmZwayncYexiGQdF1XYrZz4C/RXua/RigqrRf5h
+         3faOpTuFN2f+4OI2h0HwaQAGHmu1vjv+HPdx1F61/Ad+MgZySrtgaOF9DbFPkZ+E7HJD
+         JAzkU//CP06ArLsvk5pt4XpErPFRy/VkMPhi+Y1QDfpL6NWLC4OPjLVLZHsp5N9ZT9iL
+         kHOUJAmrEgPEHCBkHO7Yj5lEHdHCEdseY07/ts9u2M2RQlWlOWJVzIh7hkpIbKiF51HR
+         Juu4lVsuzXbbRui5sT44xjOwfJnN45FKrrty/jH1uFanngAes+AFmv7RK0qbVxJaPuVY
+         9Cbw==
+X-Gm-Message-State: AEkoouvsdeZIVJuZVtg/mLqLGwhsvZlQVQnoip2IKOpuU4x9N+CULtv1zvH8/lzt3bwM9Oxd
+X-Received: by 10.66.16.97 with SMTP id f1mr842734pad.39.1470778157379;
+        Tue, 09 Aug 2016 14:29:17 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:3c57:f9ac:c795:8f1b])
+        by smtp.gmail.com with ESMTPSA id n13sm58197571pfj.16.2016.08.09.14.29.16
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 09 Aug 2016 14:29:16 -0700 (PDT)
+From:	Stefan Beller <sbeller@google.com>
+To:	gitster@pobox.com
+Cc:	git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: [PATCH] submodule--helper: use parallel processor correctly.
+Date:	Tue,  9 Aug 2016 14:29:13 -0700
+Message-Id: <20160809212913.14365-1-sbeller@google.com>
+X-Mailer: git-send-email 2.9.2.583.gd6329be.dirty
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
->   git -c core.autocrlf=$crlf add $fname >"${pfx}_$f.err" 2>&1
-> 
-> would make more sense. We _know_ that we have to do convert_to_git() in
-> that step because the content is changed. And then you can ignore the
-> warnings from "git commit" (which are racy), or you can simply commit as
-> a whole later, as some other loops do.
-> 
-> But like Dscho, I do not actually understand what this test is checking.
-> The function is called commit_chk_wrnNNO(), so perhaps you really are
-> interested in what "commit" has to say. But IMHO that is not an
-> interesting test. We know that if it has to read the content from disk,
-> it will call convert_to_git(), which is the exact same code path used by
-> "git add". So I do not understand what it is accomplishing to make a
-> commit at all here.
+When developing another patch series I had a temporary state in which
+git-clone would segfault, when the call was prepared in
+prepare_to_clone_next_submodule. This lead to the call failing, i.e. in
+`update_clone_task_finished` the task was scheduled to be tried again.
+The second call to prepare_to_clone_next_submodule would return 0, as the
+segfaulted clone did create the .git file already, such that was not
+considered to need to be cloned again. I was seeing the "BUG: ce was
+a submodule before?\n" message, which was the correct behavior at the
+time as my local code was buggy. When trying to debug this failure, I
+tried to use printing messages into the strbuf that is passed around,
+but these messages were never printed as the die(..) doesn't
+flush the `err` strbuf.
 
-It seems as if the test has been written without understanding the raciness.
-It should commit files with different line endings on top of
-a file with mixed line endings.
-The warning should be checked (and here "git add" can be used,
-or the file can be commited directly).
-I'm not sure why the test ended up in doing both.
+When implementing the die() in 665b35ecc (2016-06-09, "submodule--helper:
+initial clone learns retry logic"), I considered this condition to be
+a severe condition, which should lead to an immediate abort as we do not
+trust ourselves any more. However the queued messages in `err` are valuable
+so let's not toss them out by immediately dying, but a graceful return.
 
-However, doing it the right way triggers a bug in convert.c,
-(some warnings are missing, so I need some days to come up
-with a proper patch)
+Another thing to note: The error message itself was misleading. A return
+value of 0 doesn't indicate the passed in `ce` is not a submodule any more,
+but just that we do not consider cloning it any more.
 
-Thanks for reporting & digging.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+
+ Here is the last patch of the series as an independant bug fix applicable
+ on master.
+ 
+ Thanks,
+ Stefan
+
+ builtin/submodule--helper.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 6f6d67a..bd7cce6 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -748,8 +748,12 @@ static int update_clone_get_next_task(struct child_process *child,
+ 	if (index < suc->failed_clones_nr) {
+ 		int *p;
+ 		ce = suc->failed_clones[index];
+-		if (!prepare_to_clone_next_submodule(ce, child, suc, err))
+-			die("BUG: ce was a submodule before?");
++		if (!prepare_to_clone_next_submodule(ce, child, suc, err)) {
++			suc->current ++;
++			strbuf_addf(err, "BUG: submodule considered for cloning,"
++				    "doesn't need cloning any more?\n");
++			return 0;
++		}
+ 		p = xmalloc(sizeof(*p));
+ 		*p = suc->current;
+ 		*idx_task_cb = p;
+-- 
+2.9.2.583.gd6329be.dirty
+
