@@ -2,249 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 409591F859
-	for <e@80x24.org>; Tue,  9 Aug 2016 22:32:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C57881F859
+	for <e@80x24.org>; Tue,  9 Aug 2016 22:40:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932503AbcHIWcX (ORCPT <rfc822;e@80x24.org>);
-	Tue, 9 Aug 2016 18:32:23 -0400
-Received: from mga11.intel.com ([192.55.52.93]:55035 "EHLO mga11.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932461AbcHIWcW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2016 18:32:22 -0400
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga102.fm.intel.com with ESMTP; 09 Aug 2016 15:32:21 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.28,496,1464678000"; 
-   d="scan'208";a="746542278"
-Received: from jekeller-desk.amr.corp.intel.com ([134.134.3.116])
-  by FMSMGA003.fm.intel.com with ESMTP; 09 Aug 2016 15:32:21 -0700
-From:	Jacob Keller <jacob.e.keller@intel.com>
-To:	git@vger.kernel.org
-Cc:	Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH RFC] diff: add SUBMODULE_DIFF format to display submodule diff
-Date:	Tue,  9 Aug 2016 15:32:19 -0700
-Message-Id: <20160809223219.17982-1-jacob.e.keller@intel.com>
-X-Mailer: git-send-email 2.9.2.1004.gdad50a3
+	id S932554AbcHIWke (ORCPT <rfc822;e@80x24.org>);
+	Tue, 9 Aug 2016 18:40:34 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59883 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932515AbcHIWkd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Aug 2016 18:40:33 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 846EF34C6F;
+	Tue,  9 Aug 2016 18:40:32 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XSQaB5hgFY9zygl1OMkqMdBsHz4=; b=exuMIx
+	xiKjxZz1y7A+G/fIAFy48E174j1x3qMx/GFW2RJiJkj8x3GFIsJNRVnVoJqKuHZ/
+	lfymI4kaIhIGfMjyVy3HAcOtdEx9AUg5tkj/ZWVzTXH2cMeuut++4opJnNaNo4pO
+	aHqExEm5IDNiLCqF4WAPYkklJu4zDlgcjq8uA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PWQmYy8UBFDjxJtOdK7DW8CB+hO0mJO7
+	J8uI790KwOTFq/1BjDrkzp2zKVm54QyDqTDRMLldYPPBBzYRwY0NfY7uvQBAPTdG
+	o0bBGIsWa4oCuEolfOHWC+y4lXFAP+30OYDX3T3K0oOfi7Nkyhci4CsQ8T7Ju+O3
+	XqnNp3TUxfA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7B85F34C6E;
+	Tue,  9 Aug 2016 18:40:32 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F1ED934C6D;
+	Tue,  9 Aug 2016 18:40:31 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jacob Keller <jacob.e.keller@intel.com>
+Cc:	git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH RFC] diff: add SUBMODULE_DIFF format to display submodule diff
+References: <20160809223219.17982-1-jacob.e.keller@intel.com>
+Date:	Tue, 09 Aug 2016 15:40:29 -0700
+In-Reply-To: <20160809223219.17982-1-jacob.e.keller@intel.com> (Jacob Keller's
+	message of "Tue, 9 Aug 2016 15:32:19 -0700")
+Message-ID: <xmqq37md8t2a.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4784CEA6-5E82-11E6-AD58-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Jacob Keller <jacob.keller@gmail.com>
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-For projects which have frequent updates to submodules it is often
-useful to be able to see a submodule update commit as a difference.
-Teach diff's --submodule= a new "diff" format which will execute a diff
-for the submodule between the old and new commit, and display it as
-a standard diff. This allows users to easily see what changed in
-a submodule without having to dig into the submodule themselves.
+> +static int prepare_submodule_diff(struct strbuf *buf, const char *path,
+> +		unsigned char one[20], unsigned char two[20])
+> +{
+> +	struct child_process cp = CHILD_PROCESS_INIT;
+> +	cp.git_cmd = 1;
+> +	cp.dir = path;
+> +	cp.out = -1;
+> +	cp.no_stdin = 1;
+> +	argv_array_push(&cp.args, "diff");
+> +	argv_array_push(&cp.args, sha1_to_hex(one));
+> +	argv_array_push(&cp.args, sha1_to_hex(two));
+> +
+> +	if (start_command(&cp))
+> +		return -1;
+> +
+> +	if (strbuf_read(buf, cp.out, 0) < 0)
+> +		return -1;
+> +
+> +	if (finish_command(&cp))
+> +		return -1;
+> +
+> +	return 0;
+> +}
 
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
-There are no tests yet. Stefan suggested the use of child_process, but I
-really believe there has to be some way of getting the diff without
-having to run a sub process (as this means we also can't do the diff
-without a checked out submodule). It doesn't properly handle options
-either, so a better solution would be much appreciated.
+It is a good idea to keep the submodule data isolated from the main
+process by going through run-command/start-command interface (I
+think the call to add_submodule_odb() should be rethought and
+removed if possible).
 
-I also would prefer if the diff actually prefixed the files with
-"path/to/submodule" so that it was obvious where the file was located in
-the directory.
+I however wonder if you want to use src/dst-prefix to make the path
+to the submodule appear there?  That is, if your superproject has a
+submodule at "dir/" and two versions of the submodule changes a file
+"doc/README", wouldn't you rather want to see
 
-Suggestions welcome.
+	diff --git a/dir/doc/README b/dir/doc/README
 
- Documentation/diff-config.txt  |  3 +-
- Documentation/diff-options.txt |  6 ++--
- diff.c                         | 21 +++++++++++--
- diff.h                         |  2 +-
- submodule.c                    | 67 ++++++++++++++++++++++++++++++++++++++++++
- submodule.h                    |  5 ++++
- 6 files changed, 97 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
-index d5a5b17d5088..f5d693afad6c 100644
---- a/Documentation/diff-config.txt
-+++ b/Documentation/diff-config.txt
-@@ -123,7 +123,8 @@ diff.suppressBlankEmpty::
- diff.submodule::
- 	Specify the format in which differences in submodules are
- 	shown.  The "log" format lists the commits in the range like
--	linkgit:git-submodule[1] `summary` does.  The "short" format
-+	linkgit:git-submodule[1] `summary` does.  The "diff" format shows the
-+	diff between the beginning and end of the range. The "short" format
- 	format just shows the names of the commits at the beginning
- 	and end of the range.  Defaults to short.
- 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 705a87394200..b17348407805 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -215,8 +215,10 @@ any of those replacements occurred.
- 	the commits in the range like linkgit:git-submodule[1] `summary` does.
- 	Omitting the `--submodule` option or specifying `--submodule=short`,
- 	uses the 'short' format. This format just shows the names of the commits
--	at the beginning and end of the range.  Can be tweaked via the
--	`diff.submodule` configuration variable.
-+	at the beginning and end of the range. When `--submodule=diff` is
-+	given, the 'diff' format is used. This format shows the diff between
-+	the old and new submodule commmit from the perspective of the
-+	submodule.  Can be tweaked via the `diff.submodule` configuration variable.
- 
- --color[=<when>]::
- 	Show colored diff.
-diff --git a/diff.c b/diff.c
-index b43d3dd2ecb7..74d43931c8df 100644
---- a/diff.c
-+++ b/diff.c
-@@ -130,12 +130,18 @@ static int parse_dirstat_params(struct diff_options *options, const char *params
- 
- static int parse_submodule_params(struct diff_options *options, const char *value)
- {
--	if (!strcmp(value, "log"))
-+	if (!strcmp(value, "log")) {
- 		DIFF_OPT_SET(options, SUBMODULE_LOG);
--	else if (!strcmp(value, "short"))
-+		DIFF_OPT_CLR(options, SUBMODULE_DIFF);
-+	else if (!strcmp(value, "diff")) {
-+		DIFF_OPT_SET(options, SUBMODULE_DIFF);
- 		DIFF_OPT_CLR(options, SUBMODULE_LOG);
--	else
-+	} else if (!strcmp(value, "short")) {
-+		DIFF_OPT_CLR(options, SUBMODULE_DIFF);
-+		DIFF_OPT_CLR(options, SUBMODULE_LOG);
-+	} else {
- 		return -1;
-+	}
- 	return 0;
- }
- 
-@@ -2310,6 +2316,15 @@ static void builtin_diff(const char *name_a,
- 				two->dirty_submodule,
- 				meta, del, add, reset);
- 		return;
-+	} else if (DIFF_OPT_TST(o, SUBMODULE_DIFF) &&
-+			(!one->mode || S_ISGITLINK(one->mode)) &&
-+			(!two->mode || S_ISGITLINK(two->mode))) {
-+		show_submodule_diff(o->file, one->path ? one->path : two->path,
-+				line_prefix,
-+				one->oid.hash, two->oid.hash,
-+				two->dirty_submodule,
-+				meta, reset);
-+		return;
- 	}
- 
- 	if (DIFF_OPT_TST(o, ALLOW_TEXTCONV)) {
-diff --git a/diff.h b/diff.h
-index 125447be09eb..a80f3e5bafe9 100644
---- a/diff.h
-+++ b/diff.h
-@@ -69,7 +69,7 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
- #define DIFF_OPT_FIND_COPIES_HARDER  (1 <<  6)
- #define DIFF_OPT_FOLLOW_RENAMES      (1 <<  7)
- #define DIFF_OPT_RENAME_EMPTY        (1 <<  8)
--/* (1 <<  9) unused */
-+#define DIFF_OPT_SUBMODULE_DIFF      (1 <<  9)
- #define DIFF_OPT_HAS_CHANGES         (1 << 10)
- #define DIFF_OPT_QUICK               (1 << 11)
- #define DIFF_OPT_NO_INDEX            (1 << 12)
-diff --git a/submodule.c b/submodule.c
-index 1b5cdfb7e784..4a322513d27c 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -333,6 +333,73 @@ static void print_submodule_summary(struct rev_info *rev, FILE *f,
- 	strbuf_release(&sb);
- }
- 
-+static int prepare_submodule_diff(struct strbuf *buf, const char *path,
-+		unsigned char one[20], unsigned char two[20])
-+{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	cp.git_cmd = 1;
-+	cp.dir = path;
-+	cp.out = -1;
-+	cp.no_stdin = 1;
-+	argv_array_push(&cp.args, "diff");
-+	argv_array_push(&cp.args, sha1_to_hex(one));
-+	argv_array_push(&cp.args, sha1_to_hex(two));
-+
-+	if (start_command(&cp))
-+		return -1;
-+
-+	if (strbuf_read(buf, cp.out, 0) < 0)
-+		return -1;
-+
-+	if (finish_command(&cp))
-+		return -1;
-+
-+	return 0;
-+}
-+
-+void show_submodule_diff(FILE *f, const char *path,
-+		const char *line_prefix,
-+		unsigned char one[20], unsigned char two[20],
-+		unsigned dirty_submodule, const char *meta,
-+		const char *reset)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	struct strbuf sb = STRBUF_INIT;
-+	const char *message = NULL;
-+
-+	if (dirty_submodule & DIRTY_SUBMODULE_UNTRACKED)
-+		fprintf(f, "%sSubmodule %s contains untracked content\n",
-+			line_prefix, path);
-+	if (dirty_submodule & DIRTY_SUBMODULE_MODIFIED)
-+		fprintf(f, "%sSubmodule %s contains modified content\n",
-+			line_prefix, path);
-+
-+	if (!hashcmp(one, two)) {
-+		strbuf_release(&sb);
-+		return;
-+	}
-+
-+	if (add_submodule_odb(path))
-+		message = "(not checked out)";
-+	else if (prepare_submodule_diff(&buf, path, one, two))
-+		message = "(diff failed)";
-+
-+	strbuf_addf(&sb, "%s%sSubmodule %s %s..", line_prefix, meta, path,
-+			find_unique_abbrev(one, DEFAULT_ABBREV));
-+	strbuf_addf(&sb, "%s", find_unique_abbrev(two, DEFAULT_ABBREV));
-+	if (message)
-+		strbuf_addf(&sb, " %s%s\n", message, reset);
-+	else
-+		strbuf_addf(&sb, ":%s\n", reset);
-+	fwrite(sb.buf, sb.len, 1, f);
-+
-+	if (!message) /* only NULL if we succeeded in obtaining a diff */
-+		fwrite(buf.buf, buf.len, 1, f);
-+
-+	strbuf_release(&buf);
-+	strbuf_release(&sb);
-+}
-+
- void show_submodule_summary(FILE *f, const char *path,
- 		const char *line_prefix,
- 		unsigned char one[20], unsigned char two[20],
-diff --git a/submodule.h b/submodule.h
-index 2af939099819..f9180712ae2c 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -41,6 +41,11 @@ int parse_submodule_update_strategy(const char *value,
- 		struct submodule_update_strategy *dst);
- const char *submodule_strategy_to_string(const struct submodule_update_strategy *s);
- void handle_ignore_submodules_arg(struct diff_options *diffopt, const char *);
-+void show_submodule_diff(FILE *f, const char *path,
-+		const char *line_prefix,
-+		unsigned char one[20], unsigned char two[20],
-+		unsigned dirty_submodule, const char *meta,
-+		const char *reset);
- void show_submodule_summary(FILE *f, const char *path,
- 		const char *line_prefix,
- 		unsigned char one[20], unsigned char two[20],
--- 
-2.9.2.1004.gdad50a3
-
+instead of comparison between a/doc/README and b/doc/README?
