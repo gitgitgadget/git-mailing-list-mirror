@@ -2,98 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 564991F859
-	for <e@80x24.org>; Tue,  9 Aug 2016 12:08:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E02D61F859
+	for <e@80x24.org>; Tue,  9 Aug 2016 13:00:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752504AbcHIMIE (ORCPT <rfc822;e@80x24.org>);
-	Tue, 9 Aug 2016 08:08:04 -0400
-Received: from mout.gmx.net ([212.227.15.19]:53298 "EHLO mout.gmx.net"
+	id S932674AbcHINAL (ORCPT <rfc822;e@80x24.org>);
+	Tue, 9 Aug 2016 09:00:11 -0400
+Received: from mout.web.de ([212.227.15.14]:50716 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752045AbcHIMID (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2016 08:08:03 -0400
-Received: from virtualbox ([37.24.141.218]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LdHqj-1aoiSe04VF-00iW3w; Tue, 09 Aug 2016 14:07:45
+	id S932309AbcHINAH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Aug 2016 09:00:07 -0400
+Received: from localhost ([195.252.60.88]) by smtp.web.de (mrweb003) with
+ ESMTPSA (Nemesis) id 0Lo0YS-1azxfs0IYK-00fzy7; Tue, 09 Aug 2016 15:00:00
  +0200
-Date:	Tue, 9 Aug 2016 14:07:41 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Michael Haggerty <mhagger@alum.mit.edu>
-cc:	Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	Richard Ipsum <richard.ipsum@codethink.co.uk>,
-	Eric Wong <e@80x24.org>, Josh Triplett <josh@joshtriplett.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>
-Subject: Re: patch submission process, was Re: [PATCH v6 06/16] merge_recursive:
- abort properly upon errors
-In-Reply-To: <6c937f79-2b82-619d-51fe-adccbe09bd66@alum.mit.edu>
-Message-ID: <alpine.DEB.2.20.1608091402540.5786@virtualbox>
-References: <cover.1469547160.git.johannes.schindelin@gmx.de> <cover.1470051326.git.johannes.schindelin@gmx.de> <8ff71aba37be979f05abf88f467ec932aa522bdd.1470051326.git.johannes.schindelin@gmx.de> <xmqqlh0gjpr6.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1608021004080.79248@virtualbox> <xmqqy44ec15p.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608031021050.79248@virtualbox> <CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com> <alpine.DEB.2.20.1608031753431.107993@virtualbox>
- <CAGZ79kYWdZCNW_eBi5aLAacyBZJXQ9xyOWMBmjNsYT5NWjr-Og@mail.gmail.com> <alpine.DEB.2.20.1608041730130.5786@virtualbox> <6c937f79-2b82-619d-51fe-adccbe09bd66@alum.mit.edu>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+Date:	Tue, 9 Aug 2016 12:59:58 +0000
+From:	Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:	Jeff King <peff@peff.net>
+Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+Subject: Re: t0027 racy?
+Message-ID: <20160809125958.GA1501@tb-raspi>
+References: <alpine.DEB.2.20.1608081556280.5786@virtualbox>
+ <20160808152926.mciovipy5qlnqegs@sigill.intra.peff.net>
+ <20160808203224.GA28431@tb-raspi>
+ <20160809065110.GB17777@peff.net>
+ <20160809113337.GA1143@tb-raspi>
+ <20160809114938.pcrvirrzrh6ldmnr@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:v/H/x6IkCmGRjIE7VdK2eQf224bUnODnlGVaaqxbAsT2nqAZIPZ
- G3RZowDC0YwAGlvjE6HALSVVCcuhuOI1w138VuYr09BDHk14Se4X2S/OMOaG3eX9WrEr7F1
- 4Uvf/lu8+5Bbec5uNLXgoLPbZdZ2+U+NOPtVMHBPa+PzzASFs6pM+EswgQPFqHVRhTrqrra
- oda8rkmeX/GFp6q6XscEw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:pgBy6fdVoTE=:QReXvMDoKNMcqZbOizpzXI
- 4hHdmRIgzkTDRZtBRpzUdPhCz8/QNeBXkGB867wUtzOQGjbin4de/e1kkcw7cb/H3L0AIzEYG
- iUpcjoAdv0vFpyqWbFlLWBwasdaF1yL0u8IWoneNDrADW7rzxsg3UXxfiIPGSkVxkdnT5/xZY
- TfdqwqzRTr0M1N36tqfdkimU0Ho+jCzpBrVorGXR5bVMccwgndzFg76zQ8zPKpcXNzJadDUac
- bx6k9fTuUBiMiYZO846D57obbdUFjnHlT9sH2wre8O4xGIm7dYH3NaIHHRMUnaWPnBkifc3eq
- WBmsdUR2R5zmaLdeEXD1RPKSS7/nYtdFGyP5GOToyHamJI+RcbmHaLc2dXM9P81Mpu6M+VWQw
- uxvda14X0wBzF4x9Hd2L0RGzbp/EGFlU2VDA9kBivk1n8BLNmQfO9i0ld7wWrPL1czKEIQigq
- L8oZ7Fd1tivAwc9SssxbmbUGkS93tmd7E+5WyymiBIItqELtLhpuH1AJbcOh/H8fzcNiKdfak
- C2eD0joR54DKAlRMxkz4Jcte7edcFdvqBK9V3IJirW4BKfa8fpm+qoX2Rv4e3FOXc2W//exvB
- KjeBjva4dEUYTHiayQY7Zus42mGcw4LAf35tY0XRBKmLMs/qTmGB/Tsl3KXbjuiSGRj7vNi4R
- NnWo1HBGokxZLV0OOYx/0dGgqIzgxR0LVkTs3WJtdaqFwxKYqlx6D9Qil7gAvtjNviJLkiSbk
- K8WNkQ5P17HXPHRizOoo4p/Qs9vGVtqm0UU5WfpxSldyuJ210hxfjgULkFKBhr8OEuRLDn/Vk
- CAwN0mb
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20160809114938.pcrvirrzrh6ldmnr@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V03:K0:UDYHDJWc+/CY2e/qmokzxqlCvRCBKazh/3G+q91TzyU71Yy8Jud
+ 9HeqTPg2IFczdJjuw9u2H8nFlg62rICI9xp/7d/SctkJB9MxKLmJ8x02TvHKcOjZdPaUWuQ
+ h2COotCxk91PLXjfhJldhi58syzX1JE+oF9Mh3fFt4TfyNHwPH1YqmvTcAxK+4iZv9UT11V
+ fiD+i0WgoP5WGFnNiUMyQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:1kj2Q53ygnQ=:2d/7CguY71979wVuXT/kZ6
+ bOW8J1HQG8nEWuuLjYS+Dt1YVazfN9a4llzpJiyJAuRXUBS/bOO9EFVeAoxOUAeib3Ym+Xo36
+ OL3uKJsjQADjbg1QU8e5BshDQII0w3D6rCWrd3PHlVppP5XE7LjqsmnmJjGKvietl79/hvQLu
+ SwybTJioltwwg27JD8wpQiP1SMF5nuCO39682IqnzS2v5pNWLsZ7AbYhdjs6pb/EQ7p1xaIZf
+ wVlHWeNkR04QudDSzNRlCu93xrbxLJtuLq+fEUwv6YSqKvMZkbvCpVbouJFGiwcjWkjxyq6+G
+ nLEj5qr1IxkTGhEJUBLgOMG6UVXmkErdA2qKwj4SUJCkXm5xbvFjtl67YxqSMKt9Ahl1FB/0y
+ 84Fs3zFbhVqjyUW4h9q/JW2dB/nepDz9Pr9BzGM6iDNGE3Wufrez7A1qjaD5BWVB/uHM4S4X1
+ B6nk4HaxiF+JoUbYusavLwrOXCWnWQzqmOiArv9O74Mkl3Wo1YQJqDNCubRyWU45lJvwRXEIN
+ K/yd/YJSC6Cd+/j4GFWSxbjmH5JOpAY9A3ueHEkY0CNsxNwYzXgavVzivuIdAjyVzmi8YHMwg
+ Q3E6NEuWFFzV+30b19Lyk7RqJXEjdNPuryyG9L8A5v3MRFLEVNvdff4AOpKH06/rNSVHwKwkz
+ Jqg9UuwxBRHvayXZeKsAMBBLZDpAbm2ojd1hdWU6rlC2AuVsoB4YPkBtr97rgamc+KTXZCm7B
+ 9Z5zNCp1/nkvq7NJeMCdeOlLXHXzee5lR+9SJJkG83J7by4aF7YuXf9lT0o=
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Michael,
-
-On Tue, 9 Aug 2016, Michael Haggerty wrote:
-
-> On 08/04/2016 05:58 PM, Johannes Schindelin wrote:
-> > [...]
-> > Even requiring every contributor to register with GitHub would be too
-> > much of a limitation, I would wager.
-> > [...]
+On Tue, Aug 09, 2016 at 07:49:38AM -0400, Jeff King wrote:
+> On Tue, Aug 09, 2016 at 11:33:37AM +0000, Torsten Bögershausen wrote:
 > 
-> Is it *really* so insane to consider moving collaboration on the Git
-> project to GitHub or some other similar platform?
+> > > The second one seems plausible, given the history of issues with
+> > > changing CRLF settings for an existing checkout. I'm not sure if it
+> > > would be feasible to reset the index completely before each tested
+> > > command, but that would probably solve it.
+> > The content of the file has been changed (we appended the letter 'Z' to it,
+> > so even if mtime is the same, st.st_size should differ.
+> > And it seems as if the commit is triggered, see below.
+> 
+> I don't think I made myself clear. It's not a question of whether there
+> is something to commit. It's that when git asks the index "what is the
+> sha1 of the content at this path?", the index may be able to answer
+> directly (the file is up-to-date, so we return the index value), or it
+> may have to go to the filesystem and read the file content. It is this
+> latter which triggers convert_to_git(), which is what generates the
+> message in question.
+> 
+> For a more stripped-down example, try:
+> 
+>   git add foo
+>   git commit -m msg
+> 
+> versus:
+> 
+>   git add foo
+>   sleep 1
+>   git commit -m msg
+> 
+> In the latter case, we should not generally need convert_to_git() in the
+> "commit" step. It was already done by "git add", and we reuse the cached
+> result.
+> 
+> Whereas in the first one, we may run into the racy-index problem and
+> have to re-read the file to be on the safe side.
+> 
+> -Peff
 
-Speaking for myself, I do prefer GitHub's UI to mail, by a lot. Not only
-because it is more focused on the code, but because it integrates so
-nicely with Git, which email distinctly does not.
+Thanks for the explanation, so there are 2 chances for a race.
 
-So I personally would not have the least bit of a problem to switch to
-GitHub (that's indeed what Git for Windows did, getting substantially more
-contributions than we would otherwise have).
+I assume that the suggested "touch" will fix race#2 in most cases.
+In my understanding, the change of the file size will be more reliable:
+ 
 
-And of course I use the email notifications quite a bit. They are really
-convenient: I get my updates via my mail program, still, and the
-discussion I want to participate in is just one click away.
-
-The reason why I stated that GitHub is out of the question is that I
-expected resistance against it. But you are right: I should not have ruled
-it out so categorically, it is not at all my call to make.
-
-Ciao,
-Dscho
+diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
+index 2860d2d..9933a9b 100755
+--- a/t/t0027-auto-crlf.sh
++++ b/t/t0027-auto-crlf.sh
+@@ -120,6 +120,7 @@ commit_chk_wrnNNO () {
+                cp $f $fname &&
+                printf Z >>"$fname" &&
+                git -c core.autocrlf=$crlf add $fname 2>/dev/null &&
++               printf Z >>"$fname" &&
+                git -c core.autocrlf=$crlf commit -m "commit_$fname" $fname >"${pfx}_$f.err" 2>&1
+        done
+-------------------
+Does anybody agree ?
+And, by the way, the convert warning may be issued twice, once in
+"git add" and once in "git commit".
