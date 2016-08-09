@@ -6,90 +6,98 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB4F01F859
-	for <e@80x24.org>; Tue,  9 Aug 2016 17:59:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C57911F859
+	for <e@80x24.org>; Tue,  9 Aug 2016 18:06:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932324AbcHIR7u (ORCPT <rfc822;e@80x24.org>);
-	Tue, 9 Aug 2016 13:59:50 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60680 "EHLO
+	id S1752444AbcHISG3 (ORCPT <rfc822;e@80x24.org>);
+	Tue, 9 Aug 2016 14:06:29 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63712 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932212AbcHIR7D (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2016 13:59:03 -0400
+	with ESMTP id S1752359AbcHISG2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Aug 2016 14:06:28 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A80A932306;
-	Tue,  9 Aug 2016 13:59:02 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C17633242E;
+	Tue,  9 Aug 2016 14:06:26 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HEhD7uboZWhnv5r3gFmnWTpBznY=; b=wBN2Cg
-	FM/xbs0tXtVCC4QHYqZ9eBYw506Qdwa65+4mgET4N8tVxPcsf+6vzROpIH1V4wcy
-	dompbJIN9dUtY5FrpRUXu1amyIcWR/+NtKqu9oW54GQs0pJr7zgQBtXBbKfhiQvq
-	z6FJoZng0NutalMYiSaUSXd+A5L6y0L5yknK8=
+	:content-type; s=sasl; bh=aqDbW3YgcofWhFY3HnEmHA65EYM=; b=dh0DH+
+	fMslYVa6U78/Ihnh3yJcWOGOv/3Q04GP9L7fd+hxvp+vjo9hw772uTbk0UhSm5T0
+	s5NK41zcG4NK2NEYUaChHV5ty5iYhcLA4M9ClDmOMHpRM7/DeSdYN48O92+T+edz
+	v52G3ZeMnLNLxW88E4DBCSxgz6I9pcUHLnzJ4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SFSu3PGOrC4M/jgbySQr9FNC3VnDQkCv
-	4WA+SFM52y17qsnqxJN3sBg9M5sVlVGYiWib/5NHBXadgASTXO4T2u72UTroVtSL
-	F+6Wyq4yPkaupW778q1X1ozdfNZcJ8TKAdgIRcgX3y7tYeElUwMN8GSBfWgvJ5Rj
-	guBpc3WBvwk=
+	:content-type; q=dns; s=sasl; b=F1FymTDNvXN07IS6WVLwWVl/rgA1Z2yj
+	cX/yc/stCzfFFxHrdNbFgaWKC9YE28y/m3vb6ddFUi45PnSWB2ZmmxbqJGD7/fX2
+	kNPR3aTOPk6quuaiR9zUft6coBIuF6yFLzCoEF+b2fW1R5vmM2YfDbaFr3D4QXsW
+	yashF20kGVY=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9E78432305;
-	Tue,  9 Aug 2016 13:59:02 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B99473242D;
+	Tue,  9 Aug 2016 14:06:26 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3597932304;
-	Tue,  9 Aug 2016 13:59:02 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 452403242C;
+	Tue,  9 Aug 2016 14:06:26 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-To:	Stefan Beller <sbeller@google.com>
-Cc:	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>, mst@redhat.com
-Subject: Re: [PATCHv2 0/6] git clone: Marry --recursive and --reference
-References: <20160809040811.21408-1-sbeller@google.com>
-	<xmqqk2fqc583.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kZKTV5PCAR41O1t1c_y6N18u6gsoWozOfr=EPHic-7wYw@mail.gmail.com>
-	<xmqq8tw5bzs1.fsf@gitster.mtv.corp.google.com>
-Date:	Tue, 09 Aug 2016 10:58:59 -0700
-In-Reply-To: <xmqq8tw5bzs1.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 09 Aug 2016 10:47:10 -0700")
-Message-ID: <xmqqziolaknw.fsf@gitster.mtv.corp.google.com>
+To:	Jeff King <peff@peff.net>
+Cc:	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 7/7] pack-objects: use mru list when iterating over packs
+References: <20160729040422.GA19678@sigill.intra.peff.net>
+	<20160729041524.GG22408@sigill.intra.peff.net>
+	<20160729054536.GA27343@sigill.intra.peff.net>
+	<xmqqr3acpjvo.fsf@gitster.mtv.corp.google.com>
+	<20160808145042.uwrk2m6jq3m4li37@sigill.intra.peff.net>
+	<xmqq8tw7gr82.fsf@gitster.mtv.corp.google.com>
+	<20160808165127.fvhnkcfsj4vif7iu@sigill.intra.peff.net>
+	<xmqqzionfafj.fsf@gitster.mtv.corp.google.com>
+	<20160809140411.7745apztp36nwshx@sigill.intra.peff.net>
+	<20160809174528.2ydgkhd7ayclat3t@sigill.intra.peff.net>
+Date:	Tue, 09 Aug 2016 11:06:23 -0700
+In-Reply-To: <20160809174528.2ydgkhd7ayclat3t@sigill.intra.peff.net> (Jeff
+	King's message of "Tue, 9 Aug 2016 13:45:29 -0400")
+Message-ID: <xmqqvaz9akbk.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: F46E1A64-5E5A-11E6-8CAA-89D312518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: FD1CDD8E-5E5B-11E6-9F82-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Stefan Beller <sbeller@google.com> writes:
->
->> "you did ask me to use alternates once and for all when setting up the
->> superproject: now for this added submodule I don't find the alternate;
->> That is strange?"
->
-> Absolutely.  I do not think you should expect a user to remember if
-> s/he used alternates when getting a copy of the superproject long
-> time ago.  Giving "info: using from ..." is good; giving "warning:
-> not using from ..." is probably irritating, I would think.
->
-> Stepping back a bit, when the user says --reference-if-able, does it
-> warrant any warning either way?  I.e. "we made it borrow from there,
-> so be careful not to trash that one" may be just as warning-worthy
-> (if not even more) as "you said we can borrow from there if there is
-> anything to borrow, but it turns out there isn't any, so the result
-> is complete stand-alone."  It feels as if we can go without any
-> warning at least from "git clone --reference-if-able", unless "-v"
-> option is given.
->
-> I have a very strong opinion what should happen when the end-user
+> I ran the repack again with stock git (no MRU patch), and the number of
+> objects in the delta phase jumped to 3087880, around 56,000 more than
+> with the MRU patch. So that's probably where the magic "3%" is coming
+> from.  By looking at the smaller packs first, we are more likely to find
+> copies of objects which _aren't_ deltas, and then consider them for
+> delta compression. And that compression tends to find a better match
+> than reusing what was in the big pack, and we end up with a slightly
+> smaller output pack.
 
-Too many proof-reading and rephrasing.  "I DON'T have a very strong
-opinion" is what I wanted to say.  Sorry for the lack of last-time
-proof-reading.
+Yeah, that is a very plausible explanation.
 
-> facing command is "git submodule", but if I have to choose, I would
-> prefer to see "git submodule update" tell what it did with "info:"
-> either case, i.e. "info: borrowing from ... because the superproject
-> borrows from there", and "info: not borrowing from ... even though
-> the superproject borrows from there".
+> So why are the deltas we find so much better than what is in the big
+> pack?
+>
+> There's something rather subtle going on, and it has to do with the fact
+> that the existing pack was _not_ made by a stock version of git.
+
+;-)
+
+> I may have mentioned before that I have some patches which restrict the
+> delta selection process. The goal is that if you have several "islands"
+> of refs (in my case, refs corresponding to particular forks of a
+> repository), it's desirable that you don't make a delta against a base
+> that is not reachable from all of the same islands. 
+
+That also explains it.  It is expected (small) price to pay to
+ensure the islands are standalone.
+
+> I also suspect that one of the tricks I tried, simply reversing the pack
+> order (so the big pack is at the front, but the order is stable) would
+> work very well for this case. But as I mentioned before, I prefer the
+> MRU strategy because it's less susceptible to pathological cases.
+
+Yup, excellent.  Thanks for working on this.
