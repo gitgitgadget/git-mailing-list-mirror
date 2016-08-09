@@ -2,93 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F19661FD99
-	for <e@80x24.org>; Tue,  9 Aug 2016 07:03:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8D051FD99
+	for <e@80x24.org>; Tue,  9 Aug 2016 07:23:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752342AbcHIHDt (ORCPT <rfc822;e@80x24.org>);
-	Tue, 9 Aug 2016 03:03:49 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51779 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751522AbcHIHDs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2016 03:03:48 -0400
-Received: (qmail 6301 invoked by uid 109); 9 Aug 2016 07:03:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Aug 2016 07:03:47 +0000
-Received: (qmail 18124 invoked by uid 111); 9 Aug 2016 07:03:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 Aug 2016 03:03:46 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Aug 2016 03:03:45 -0400
-Date:	Tue, 9 Aug 2016 03:03:45 -0400
-From:	Jeff King <peff@peff.net>
-To:	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-Subject: Re: t0027 racy?
-Message-ID: <20160809070345.rpdxjvmb6ujeefhv@sigill.intra.peff.net>
-References: <alpine.DEB.2.20.1608081556280.5786@virtualbox>
- <20160808152926.mciovipy5qlnqegs@sigill.intra.peff.net>
- <20160808203224.GA28431@tb-raspi>
- <20160809065110.GB17777@peff.net>
+	id S1751220AbcHIHXD (ORCPT <rfc822;e@80x24.org>);
+	Tue, 9 Aug 2016 03:23:03 -0400
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:42638 "EHLO
+	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750810AbcHIHXC (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Aug 2016 03:23:02 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id C2C3020711;
+	Tue,  9 Aug 2016 03:12:56 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute3.internal (MEProxy); Tue, 09 Aug 2016 03:12:56 -0400
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=7tf1p4uT52GOxOTqpi+Et4aQYgM=; b=faObwx
+	nuuRDw23qY1k3GDms+wd2rFWIcCcPTdiqaSwxyveBoFpKWA/ihFhbbijWq4INQCE
+	jQByy+QwZZWFrWfGBY+KMtk/aOhRgxk8/sj5vy+4nwcsphlIpGV36ZCBFAp+k65I
+	GsgOuSn2CQ4EQb5l4pqNNKxqEj5gl97BZpV0A=
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=7tf1p4uT52GOxOT
+	qpi+Et4aQYgM=; b=GW2Lz4TQ1syc5w7cDDTzgT90MzAVJ9yiga5aE+GLKlvSdzS
+	BvRz2bTVuXi3YLmVeYsxdrDDcm+3U8p6LxbkVcdC0zwAiWUkq0W6QZvM2FL94OXD
+	YDXFyuFXSUQuBi/fP+dufWWlb5HKgNBtmaMcFE+aIcwWEWfQ6qFNj9ly6r40=
+X-Sasl-enc: X/M2QLJaZQbvAFV69nD9Rv5i+9J4oin/ZyaYfRCEK7W1 1470726776
+Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+	by mail.messagingengine.com (Postfix) with ESMTPA id B3750F296E;
+	Tue,  9 Aug 2016 03:12:55 -0400 (EDT)
+Subject: Re: storing cover letter of a patch series?
+To:	Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>
+References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com>
+ <xmqqh9n241el.fsf@gitster.mtv.corp.google.com>
+ <18979417.pyyHNUINeQ@mfick1-lnx>
+ <xmqqzj0u2k5m.fsf@gitster.mtv.corp.google.com>
+ <20160804234920.GA27250@redhat.com>
+ <xmqqy44bxm0h.fsf@gitster.mtv.corp.google.com>
+ <20160807080857-mutt-send-email-mst@kernel.org>
+ <CACsJy8DhDMkmq-WCVHSMYVTTfEXNFUUzz5Cq9hQj_tGRUTj3ZA@mail.gmail.com>
+ <xmqqmvknf986.fsf@gitster.mtv.corp.google.com>
+Cc:	"Michael S. Tsirkin" <mst@redhat.com>,
+	Martin Fick <mfick@codeaurora.org>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Git List <git@vger.kernel.org>, repo-discuss@googlegroups.com,
+	Git Mailing List <git@vger.kernel.org>
+From:	Michael J Gruber <git@drmicha.warpmail.net>
+Message-ID: <70b74f2e-3870-4bef-1664-1c2dd05eda96@drmicha.warpmail.net>
+Date:	Tue, 9 Aug 2016 09:12:54 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.1.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160809065110.GB17777@peff.net>
+In-Reply-To: <xmqqmvknf986.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Aug 09, 2016 at 02:51:10AM -0400, Jeff King wrote:
-
->   - index raciness causing us to avoid reading file content. For
->     example, if you do:
+Junio C Hamano venit, vidit, dixit 08.08.2016 19:42:
+> Duy Nguyen <pclouds@gmail.com> writes:
 > 
->       echo foo >bar
->       git add bar
+>> git-notes was mentioned in this thread back in 2015, but I think it's
+>> discarded because of the argument that's part of the cover letter was
+>> not meant to be kept permanently.
 > 
->     Then _usually_ "bar" and the index will have the same mtime. And
->     therefore subsequent commands that need to refresh the index will
->     re-read the content of "bar", because they cannot tell from the stat
->     information if we have the latest version of "bar" in the index or
->     not (it could have been written after the index update, but in the
->     same second).
+> I do not think the reason why we didn't think the notes mechanism
+> was a good match was mainly because the cover letter material was
+> about a branch as a whole, which does not have a good counter-part
+> in Git at the conceptual level.  "A branch is just a moving pointer
+> that points at one commit that happens to be at the tip" is not a
+> perfect match to "I am holding these N patches to achieve X and I am
+> constantly adding, rewinding and rebuilding".  The notes mechanism
+> gives an easy way to describe the former (i.e. annotate one commit,
+> and let various commands to move that notes as you rewind and
+> rebuild) but not the latter (i.e. "branch.description" configuration
+> is the best match, but that is just a check-box feature and does not
+> make any serious attempt to be part of a version-control system).
 > 
->     But on a slow or heavily loaded system (or if you simply get unlucky
->     in crossing the boundary to a new second), they'll have different
->     mtimes. And therefore git knows it can skip reading the content from
->     the filesystem.
+>> But I think we can still use it as a
+>> local/temporary place for cover letter instead of the empty commit at
+>> the topic's tip. It is a mark of the beginning of commit, it does not
+>> require rewriting history when you update the cover letter, and
+>> git-merge can be taught to pick it up when you're ready to set it in
+>> stone.
 > 
->     So if your test relies on git actually re-converting the file
->     content, it would sometimes randomly fail.
-> 
-> The second one seems plausible, given the history of issues with
-> changing CRLF settings for an existing checkout. I'm not sure if it
-> would be feasible to reset the index completely before each tested
-> command, but that would probably solve it.
+> That depends on what you exactly mean by "the beginning of".  Do you
+> mean the first commit that is on the topic?  Then that still requires
+> you to move it around when the topic is rebuilt.  If you mean the
+> commit on the mainline the topic forks from, then of course that
+> would not work, as you can fork multiple topics at the same commit.
 
-And indeed, this seems to fix it for me (at least it has been running in
-a 16-way loop for 5 minutes, whereas before it died after 30 seconds or
-so):
+Well, my idea back then was: attach notes to refs rather than commits,
+in this case to the branch ref. That would solve both the "branch moves"
+as well as the "cover letter refers to the whole branch/topic" issues.
 
-diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
-index 2860d2d..9f057ff 100755
---- a/t/t0027-auto-crlf.sh
-+++ b/t/t0027-auto-crlf.sh
-@@ -120,6 +120,7 @@ commit_chk_wrnNNO () {
- 		cp $f $fname &&
- 		printf Z >>"$fname" &&
- 		git -c core.autocrlf=$crlf add $fname 2>/dev/null &&
-+		touch $fname && # ensure index raciness
- 		git -c core.autocrlf=$crlf commit -m "commit_$fname" $fname >"${pfx}_$f.err" 2>&1
- 	done
- 
+In fact, I had an implementation that I had been rebasing and using for
+quite some time, but it never became popular, and branch.description
+landed in-tree. [short version: notes attached to (virtual) refname
+objects (virtual blobs - not stored, but "existing" for (fsck, notes
+prune and the like)]
 
-I'm not sure if there is a more elegant solution, though (for instance,
-why not collect the output from "git add", which should have the same
-warning, I would think).
+The notes based approach suffered from the old notes deficiency: we
+don't have good simple tooling for sharing notes; really, we don't have
+good tooling for dealing with any remote refs besides branches (read:
+ref namespace reorg project is stalled), unless you set up specific
+refspecs.
 
--Peff
+
+OTOH, branch.description is inherently local, too, and can't even be
+transported after setting up refspecs or such.
+
+Also, notes trees have a history, so you would gain a log on your cover
+letter edits; again, our tooling around that notes feature is
+sub-optimal, that is: the feature is there, the ui could improve.
+
+Michael
+
