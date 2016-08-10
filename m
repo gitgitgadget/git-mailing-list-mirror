@@ -2,127 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D4FF1FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 21:20:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3BE91FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 21:27:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932423AbcHJVUl (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 17:20:41 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60953 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932638AbcHJSFR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2016 14:05:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0EE7330D1A;
-	Wed, 10 Aug 2016 13:10:05 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sEn0Iio4Ti9bMh2G3PuQnc32fGo=; b=YwCRcf
-	lY//S2BRjsP1RsDt95BjH8BqhRfrDlnAJf0yVEjTc6UZvAd0DcXmO9kEXe6Ocvuj
-	G+B1N+8FU15MBWOyn5q9XaUzT87nHdeguTEe02s6ORCGqNOybNmXQjVmomHSz2PY
-	x+LPEDhIcWKp3TeUnV+XLFRsWOtn8+BxGOLPQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ozju7HTlD96nXS6Sje/jLER3mErfUL9o
-	F5I+94C9ou29tOriL9cbl+UqvbxWMus5t6tLiF0VF5OzKjSHB/Lel8RCmbOWelIT
-	tIIpZl3GEH92gLJyQxmRwNWC7eEdJhUPcm7wlcmHafKSVwC0vsOQb786aBqbIrqc
-	VxQ7WTIo9Ng=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id F063130D18;
-	Wed, 10 Aug 2016 13:10:04 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 740CB30D14;
-	Wed, 10 Aug 2016 13:10:04 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jacob Keller <jacob.keller@gmail.com>
-Cc:	Jacob Keller <jacob.e.keller@intel.com>,
-	Git mailing list <git@vger.kernel.org>,
+	id S932500AbcHJV1f (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 17:27:35 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:33508 "EHLO
+	mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932321AbcHJSCo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2016 14:02:44 -0400
+Received: by mail-pf0-f179.google.com with SMTP id y134so18217890pfg.0
+        for <git@vger.kernel.org>; Wed, 10 Aug 2016 11:02:44 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=h71S/gFrgI4jQQcSch67h3Q5waaLx5sDoKbrTy8SoQs=;
+        b=h3qeLLhF9ICTlm92wI0sgGH7cedE/xnc4QBGlHi/35JTvIpZct2red4mEQ8ssnb12g
+         9nN2ZS2eZeEc6KlfnW2H69OX0XhwEHCf9PsPzFm3bUiGNwolHJE8ry+w+Z0i2b584243
+         4MEW06qxmibLiAfsWpQe3QNPmwnpHucvUWGXaV/CNCUIZUKnhS7Bh6kkmnbcLfI6pvN8
+         Q5mVmsj97AIfZg4oMtYBmg3AqqPkKY31zVW4zi07v0lAFD7mgDyJFV9o7CHmWCoXi0QO
+         D/HKvPyfNpXvuC5k0m8GIn9RGsLE5S0LQTY2hRBXAKnhczPddIrh+dbmdvHNUc8h3xNE
+         0ctQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=h71S/gFrgI4jQQcSch67h3Q5waaLx5sDoKbrTy8SoQs=;
+        b=keKuXv5jbHF8IYgTTLU6mzy+WYYqXblNtqdv2KOXhU4YpIvlc94YzliS0/OXLL37b0
+         ofXMlak88slbgDr0UjQJujF0dLsUyk151N48ryRLQ+zE14GYH+z+g9i+Ho3JK3NAHyox
+         rVMtH6X39lhi1V5LmuGZiQkRa3jynhmV3/kBYsZLNdoLfxNyIF/8WjtjzTudPFapKRxf
+         VPrSnT4MZkzvprb6wQ8gYQTU7/huAVr6hJ1ihR1LnPD5Nb9xCLQ+OfuZEV82adN7GMfx
+         g+T4AjWxdueEqN509kWrAiZCYPsa10b9FlzuNsJsny0QusAa7U9OhkifGEEyny4lfl+y
+         Z1Kw==
+X-Gm-Message-State: AEkooutG/ENxF9+Ih3L/nWy+/+owTnt4cV6DqWyYgkOCG8YxkFnDfFO08hmieRhc8BcXPddy
+X-Received: by 10.98.129.5 with SMTP id t5mr9409212pfd.32.1470851771512;
+        Wed, 10 Aug 2016 10:56:11 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:1d6:11b1:1dbd:105])
+        by smtp.gmail.com with ESMTPSA id d3sm65556083pfk.37.2016.08.10.10.56.10
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 10 Aug 2016 10:56:10 -0700 (PDT)
+From:	Stefan Beller <sbeller@google.com>
+To:	gitster@pobox.com
+Cc:	git@vger.kernel.org, larsxschneider@gmail.com,
 	Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH RFC v2] diff: add SUBMODULE_DIFF format to display submodule diff
-References: <20160810002315.25236-1-jacob.e.keller@intel.com>
-	<xmqqtwet70ra.fsf@gitster.mtv.corp.google.com>
-	<CA+P7+xpGGqNC8B-fQiQXZcXWha2BBQa96sFvj+_MBVHWakMh_Q@mail.gmail.com>
-Date:	Wed, 10 Aug 2016 10:10:02 -0700
-In-Reply-To: <CA+P7+xpGGqNC8B-fQiQXZcXWha2BBQa96sFvj+_MBVHWakMh_Q@mail.gmail.com>
-	(Jacob Keller's message of "Tue, 9 Aug 2016 23:52:01 -0700")
-Message-ID: <xmqqy4445z4l.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 47D00434-5F1D-11E6-8EE1-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Subject: [PATCH] t7406: fix breakage on OSX
+Date:	Wed, 10 Aug 2016 10:56:07 -0700
+Message-Id: <20160810175607.30826-1-sbeller@google.com>
+X-Mailer: git-send-email 2.9.2.665.gdb8bb2f
+In-Reply-To: <A6131C47-3230-4EC4-B3F6-B2507C937A22@gmail.com>
+References: <A6131C47-3230-4EC4-B3F6-B2507C937A22@gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+On OSX `wc` prefixes the output of numbers with whitespace, such that
+the `commit_count` would be "SP <NUMBER>". When using that in
 
->>> +     diff = fdopen(cp.out, "r");
->>> +
->>> +     c = fgetc(diff);
->>> +     while (c != EOF) {
->>> +             fputc(c, f);
->>> +             c = fgetc(diff);
->>> +     }
->>> +
->>> +     fclose(diff);
->>> +     finish_command(&cp);
->>
->> I do not think you need to do this.  If "f" is already a FILE * to
->> which the output must go, then instead of reading from the pipe and
->> writing it, you can just let the "diff" spit out its output to the
->> same file descriptor, by doing something like:
->>
->>         fflush(f);
->>         cp.out = dup(fileno(f));
->>         ... other setup ...
->>         run_command(&cp);
->>
->> no?  I do not offhand recall run_command() closes cp.out after done,
->> and if it doesn't you may have to close it yourself after the above
->> sequence.
->
-> That makes a lot more sense, yes. I hadn't thought of dup, (long time
-> since I've had to use file descriptors).
->
-> the child_process api does close the descriptor itself. That's a much
-> better way to get the result we want, and it is less code, so I'll try
-> this out.
+    git submodule update --init --depth=$commit_count
 
-One caveat.  If the superproject is doing "log -p --graph", the
-output will be broken with this "splice in 'git -C submodule diff'
-output in place" approach.  I personally do not care if it is broken
-as I do not use "-p" and "--graph" together (for that matter, I do
-not think I'll use the "splice in 'git -C submodule diff'" feature
-added by this patch, either, so I do not think I'd deeply care ;-),
-but I am reasonably sure those who would use these would.
+the depth would be empty and the number is interpreted as the pathspec.
+Fix this by not using `wc` and rather instruct rev-list to count.
 
-The way to solve it is to capture diff output and send out with the
-current graph prefix (i.e. the set of vertial lines), and the
-easiest and most expensive (probably too expensive to be practical)
-way to do so would be to capture the whole thing into a strbuf, but
-I think it is OK to teach a new option to "git diff" that tells to
-prefix a fixed string given as its argument to each and every line
-of its output, and that would be a more practical solution, which
-can also be reused if you choose to later run "diff" internally
-without spawning it as a separate process.
+Another way to fix this is to remove the `=` sign after the `--depth`
+argument as then we are allowed to have more than just one whitespace
+between `--depth` and the actual number. Prefer the solution of rev-list
+counting as that is expected to be slightly faster and more self-sustained
+within Git.
 
-The graph machinery may have to be taught a way to tell what the
-current graph prefix is if you go that route.
+Reported-by: Lars Schneider <larsxschneider@gmail.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>,
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-> I looked at trying to call diff for this, but I think it's not worth
-> it. Using the child process API makes more sense and is a cleaner
-> method. I'll go this route as it appears to work pretty well. The only
-> major concern I have is that options may not get forwarded
-> correctly...
+  origin/sb/submodule-update-dot-branch
 
-You'd need to deal with options either way.  You do not want to
-assume all options should be passed down.  You now know you need to
-tweak the prefix, but you do not know if that is all that is
-required.
+ t/t7406-submodule-update.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index d7983cf..64f322c 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -877,7 +877,7 @@ test_expect_success 'submodule update clone shallow submodule' '
+ 	test_when_finished "rm -rf super3" &&
+ 	first=$(git -C cloned submodule status submodule |cut -c2-41) &&
+ 	second=$(git -C submodule rev-parse HEAD) &&
+-	commit_count=$(git -C submodule rev-list $first^..$second | wc -l) &&
++	commit_count=$(git -C submodule rev-list --count $first^..$second) &&
+ 	git clone cloned super3 &&
+ 	pwd=$(pwd) &&
+ 	(
+-- 
+2.9.2.665.gdb8bb2f
 
