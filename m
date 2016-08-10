@@ -2,82 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BBAE1FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 19:40:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D05A71FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 19:42:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934512AbcHJTkU (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 15:40:20 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53144 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S935849AbcHJTkS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2016 15:40:18 -0400
-Received: (qmail 23251 invoked by uid 109); 10 Aug 2016 12:32:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Aug 2016 12:32:03 +0000
-Received: (qmail 31373 invoked by uid 111); 10 Aug 2016 12:32:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Aug 2016 08:32:03 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Aug 2016 08:32:02 -0400
-Date:	Wed, 10 Aug 2016 08:32:02 -0400
-From:	Jeff King <peff@peff.net>
-To:	Eric Wong <e@80x24.org>
-Cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] http-backend: buffer headers before sending
-Message-ID: <20160810123201.ylfsnzmubpmtyoaa@sigill.intra.peff.net>
-References: <20160809234731.GA10310@dcvr>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160809234731.GA10310@dcvr>
+	id S941366AbcHJTmS (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 15:42:18 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35653 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933051AbcHJTmQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2016 15:42:16 -0400
+Received: by mail-wm0-f68.google.com with SMTP id i5so11571250wmg.2
+        for <git@vger.kernel.org>; Wed, 10 Aug 2016 12:42:16 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=OyCEuRivIQfA6XCrlRnE+Z1srcO9nIoOHzLVwp4ZwC8=;
+        b=THu36XOvBoWk33AMXllJ2x5oLRoYok2jExws6iahdIPKtUt5kcnRyekmQ2L7AZ5Vwc
+         tKDuDomfqVgv/BK1j9J4t9J3PI2qNucLi+6+ovUpw1UH3MjDeOndWO4AnS0WXb9/Ui/2
+         q+Lhebxt+gghe1mVfxbbPJHzBtXoaISgR1Pb/TYn9WDtYNpbScgLNIRiGYSaI+igsukj
+         Fo9tSgk1FJcM+V+I7FxrKLfTYhRn+vv6ncjY16za1UQsu+L0Egk/vy6O3qNTR121W1IV
+         RWgrcKCdhOITpZD12pr0AmKP1PZKcmMcFWRLMgfZRz/LCZqxwkQy6SbdINy8TcV4/NpC
+         eC/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=OyCEuRivIQfA6XCrlRnE+Z1srcO9nIoOHzLVwp4ZwC8=;
+        b=bRDTlsSOi3eLtOE00xgpIthcgw1Y8KNZl3ZX02U+lq7HAXZwpzRZtAu1p5WXxePr5q
+         9pE1KlW5vl0wUNVRx66QlU3FDNistrTggkuQgbrvvW2v/y+ex7w7EMxkpa+5ksEORHYX
+         b+2/nIzbZ9HGDlmr/84cM9f48SJoDgKEimS6yt2aYR5gib4PXqvndyZ3xcIYRAabnAvj
+         m4l3EzFN76Oo2i7MVtUAvHM8skryXZWsmK2ehejJf9qxYB/52a2Xk1Tvolp2l0DVt3nB
+         3d6a4yrfOmuiFehEO7dZx3hBcbqpWW1z+pTjvYMTRXWGjQ8oERG+XYDHartWvEC2SmN6
+         4b7g==
+X-Gm-Message-State: AEkoouvrL1xa7tkD/cLgNPFWt7skpZcWHuU09cqVQrF00+t3y5sn3aRwiiD4eUY51vqxqQ==
+X-Received: by 10.28.50.199 with SMTP id y190mr3027999wmy.61.1470834257928;
+        Wed, 10 Aug 2016 06:04:17 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id p83sm8319899wma.18.2016.08.10.06.04.17
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Wed, 10 Aug 2016 06:04:17 -0700 (PDT)
+From:	larsxschneider@gmail.com
+To:	git@vger.kernel.org
+Cc:	gitster@pobox.com, jnareb@gmail.com, mlbright@gmail.com,
+	e@80x24.org, peff@peff.net, Johannes.Schindelin@gmx.de,
+	ben@wijen.net, Lars Schneider <larsxschneider@gmail.com>
+Subject: [PATCH v5 04/15] pkt-line: add packet_write_gently()
+Date:	Wed, 10 Aug 2016 15:04:00 +0200
+Message-Id: <20160810130411.12419-5-larsxschneider@gmail.com>
+X-Mailer: git-send-email 2.9.2
+In-Reply-To: <20160810130411.12419-1-larsxschneider@gmail.com>
+References: <20160803164225.46355-1-larsxschneider@gmail.com/>
+ <20160810130411.12419-1-larsxschneider@gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Aug 09, 2016 at 11:47:31PM +0000, Eric Wong wrote:
+From: Lars Schneider <larsxschneider@gmail.com>
 
-> Avoid waking up the readers for unnecessary context switches for
-> each line of header data being written, as all the headers are
-> written in short succession.
-> 
-> It is unlikely any HTTP/1.x server would want to read a CGI
-> response one-line-at-a-time and trickle each to the client.
-> Instead, I'd expect HTTP servers want to minimize syscall and
-> TCP/IP framing overhead by trying to send all of its response
-> headers in a single syscall or even combining the headers and
-> first chunk of the body with MSG_MORE or writev.
-> 
-> Verified by strace-ing response parsing on the CGI side.
+packet_write() has two shortcomings. First, it uses format_packet() which
+lets the caller only send string data via "%s". That means it cannot be
+used for arbitrary data that may contain NULs. Second, it will always
+die on error.
 
-I don't think this is wrong to do, but it does feel like it makes the
-code slightly more brittle (you have to pass around the strbuf and
-remember to initialize it and end_headers() when you're done), for not
-much benefit.
+Add packet_write_gently() which writes arbitrary data and returns `0` for
+success and `-1` for an error.
 
-Using some kind of buffered I/O would be nicer, as then you would get
-nice-sized chunks without having to impact the code. I wonder if just
-using stdio here would be that bad. The place it usually sucks is in
-complex error handling, but we don't care about that at all here (I
-think we are basically happy to write until we get SIGPIPE).
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
+ pkt-line.c | 12 ++++++++++++
+ pkt-line.h |  1 +
+ 2 files changed, 13 insertions(+)
 
-I dunno. I suspect the performance improvement from your patch is
-marginal, but it's not like the resulting code is all _that_ complex. So
-I guess I am OK either way, just not enthused.
+diff --git a/pkt-line.c b/pkt-line.c
+index e6b8410..4f25748 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -3,6 +3,7 @@
+ #include "run-command.h"
+ 
+ char packet_buffer[LARGE_PACKET_MAX];
++char packet_write_buffer[LARGE_PACKET_MAX];
+ static const char *packet_trace_prefix = "git";
+ static struct trace_key trace_packet = TRACE_KEY_INIT(PACKET);
+ static struct trace_key trace_pack = TRACE_KEY_INIT(PACKFILE);
+@@ -141,6 +142,17 @@ void packet_write(int fd, const char *fmt, ...)
+ 	write_or_die(fd, buf.buf, buf.len);
+ }
+ 
++int packet_write_gently(const int fd_out, const char *buf, size_t size)
++{
++	if (size > PKTLINE_DATA_MAXLEN)
++		return -1;
++	packet_trace(buf, size, 1);
++	memmove(packet_write_buffer + 4, buf, size);
++	size += 4;
++	set_packet_header(packet_write_buffer, size);
++	return (write_in_full(fd_out, packet_write_buffer, size) == size ? 0 : -1);
++}
++
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
+ {
+ 	va_list args;
+diff --git a/pkt-line.h b/pkt-line.h
+index 3cb9d91..88584f1 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -77,6 +77,7 @@ char *packet_read_line_buf(char **src_buf, size_t *src_len, int *size);
+ 
+ #define DEFAULT_PACKET_MAX 1000
+ #define LARGE_PACKET_MAX 65520
++#define PKTLINE_DATA_MAXLEN (LARGE_PACKET_MAX - 4)
+ extern char packet_buffer[LARGE_PACKET_MAX];
+ 
+ #endif
+-- 
+2.9.2
 
-> ---
->   I admit I only noticed this because I was being lazy when
->   implementing the reader-side on an HTTP server by making
->   a single read(2) call :x
-
-The trouble is that your HTTP server is still broken. Now it's just
-broken in an unpredictable and racy way, because the OS may still split
-the write at PIPE_BUF boundaries. (Though given that this is not in the
-commit message, I suspect you know this patch is not an excuse not to
-fix your HTTP server).
-
--Peff
