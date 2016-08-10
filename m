@@ -2,87 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F7501F859
-	for <e@80x24.org>; Wed, 10 Aug 2016 01:58:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB9E51F859
+	for <e@80x24.org>; Wed, 10 Aug 2016 03:37:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932627AbcHJB5i (ORCPT <rfc822;e@80x24.org>);
-	Tue, 9 Aug 2016 21:57:38 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:56506 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932540AbcHJB5h (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2016 21:57:37 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A83A41F859;
-	Wed, 10 Aug 2016 01:57:36 +0000 (UTC)
-Date:	Wed, 10 Aug 2016 01:57:36 +0000
-From:	Eric Wong <e@80x24.org>
-To:	Josh Triplett <josh@joshtriplett.org>
-Cc:	Michael Haggerty <mhagger@alum.mit.edu>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-	Richard Ipsum <richard.ipsum@codethink.co.uk>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>
-Subject: Re: patch submission process, was Re: [PATCH v6 06/16]
- merge_recursive: abort properly upon errors
-Message-ID: <20160810015736.GA17898@starla>
-References: <alpine.DEB.2.20.1608021004080.79248@virtualbox>
- <xmqqy44ec15p.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1608031021050.79248@virtualbox>
- <CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com>
- <alpine.DEB.2.20.1608031753431.107993@virtualbox>
- <CAGZ79kYWdZCNW_eBi5aLAacyBZJXQ9xyOWMBmjNsYT5NWjr-Og@mail.gmail.com>
- <alpine.DEB.2.20.1608041730130.5786@virtualbox>
- <6c937f79-2b82-619d-51fe-adccbe09bd66@alum.mit.edu>
- <20160809182800.GA19044@dcvr>
- <20160810005548.gee6ontd33ck5vej@x>
+	id S932594AbcHJDhR (ORCPT <rfc822;e@80x24.org>);
+	Tue, 9 Aug 2016 23:37:17 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60981 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932550AbcHJDhR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Aug 2016 23:37:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 93D8734AC8;
+	Tue,  9 Aug 2016 23:37:15 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/ouRACXMvt25gQV/Ozxq0h10SJg=; b=dUTzjn
+	BDSErY3fQdL/piiJCoMIClti6j2jiXdQdbw3MOTYEiGIgx6N3fyBnh1CWTzH328t
+	SvFCIWR4ts1IBwJtuGBNDMI16sktV+iCs0A0hAfa2BTFc6RiH5EYRLnUvGtN+iVX
+	jP8c/n9rrtqhGWbgynJ3mrhS9yJ7OIaIG0oQg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qRy6qrdt21iekwqXvnJrZbpntrR+larf
+	DOFd71I0RHiqFbsuE/G//l9Ksf3KQmMuATHeLarhdzrSHqpAJ76J9HoVzG4zYVJ1
+	+WcjAvvLJSq9UW4rmnjQB0v21UEcASBYVxieKAGv9O9g4J1xHdfVzXnEUIs1ynRf
+	yh8f/bFFNR4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8CD7C34AC7;
+	Tue,  9 Aug 2016 23:37:15 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 048B834AC6;
+	Tue,  9 Aug 2016 23:37:15 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jacob Keller <jacob.e.keller@intel.com>
+Cc:	git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH RFC v2] diff: add SUBMODULE_DIFF format to display submodule diff
+References: <20160810002315.25236-1-jacob.e.keller@intel.com>
+Date:	Tue, 09 Aug 2016 20:37:13 -0700
+In-Reply-To: <20160810002315.25236-1-jacob.e.keller@intel.com> (Jacob Keller's
+	message of "Tue, 9 Aug 2016 17:23:15 -0700")
+Message-ID: <xmqqtwet70ra.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160810005548.gee6ontd33ck5vej@x>
+Content-Type: text/plain
+X-Pobox-Relay-ID: BAFD3CA0-5EAB-11E6-AB50-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Josh Triplett <josh@joshtriplett.org> wrote:
-> On Tue, Aug 09, 2016 at 06:28:00PM +0000, Eric Wong wrote:
-> > Some of these problems I hope public-inbox (or something like
-> > it) can fix and turn the tide towards email, again.
-> 
-> This really seems like the dichotomy that drives people towards central
-> services like GitHub or GitLab.  We need an alternative that doesn't
-> involve email, or at the very least, doesn't require people to use email
-> directly.  Half of the pain in the process comes from coaxing email
-> clients that don't treat mail text as sacrosanct to leave it alone and
-> not mangle it.  (Some of that would go away if we accepted attachments
-> with inline disposition, but not all of it.  All of it would go away if
-> the submission process just involved "git push" to an appropriate
-> location.)
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-I don't mind patches as attachments and did some work a few
-months ago to ensure they're individually downloadable in the
-public-inbox WWW interface (along with full mboxrd messages)[1].
+> +void show_submodule_diff(FILE *f, const char *path,
+> +		const char *line_prefix,
+> +		unsigned char one[20], unsigned char two[20],
+> +		unsigned dirty_submodule, const char *meta,
+> +		const char *reset)
+> +{
+> +	struct child_process cp = CHILD_PROCESS_INIT;
+> +	struct strbuf sb = STRBUF_INIT;
+> +	struct strbuf submodule_git_dir = STRBUF_INIT;
+> +	const char *git_dir, *message = NULL;
+> +	int create_dirty_diff = 0;
+> +	FILE *diff;
+> +	char c;
+> +
+> +	if ((dirty_submodule & DIRTY_SUBMODULE_UNTRACKED) ||
+> +	    (dirty_submodule & DIRTY_SUBMODULE_MODIFIED))
+> +		create_dirty_diff = 1;
+> +
+> +	strbuf_addf(&sb, "%s%sSubmodule %s %s..", line_prefix, meta, path,
+> +			find_unique_abbrev(one, DEFAULT_ABBREV));
+> +	strbuf_addf(&sb, "%s:%s\n", !create_dirty_diff ?
+> +		    find_unique_abbrev(two, DEFAULT_ABBREV) : "", reset);
+> +	fwrite(sb.buf, sb.len, 1, f);
+> +
+> +	strbuf_addf(&submodule_git_dir, "%s/.git", path);
+> +	git_dir = read_gitfile(submodule_git_dir.buf);
+> +	if (!git_dir)
+> +		git_dir = submodule_git_dir.buf;
+> +	if (!is_directory(git_dir)) {
+> +		strbuf_reset(&submodule_git_dir);
+> +		strbuf_addf(&submodule_git_dir, ".git/modules/%s", path);
+> +		git_dir = submodule_git_dir.buf;
+> +	}
+> +
+> +	cp.git_cmd = 1;
+> +	if (!create_dirty_diff)
+> +		cp.dir = git_dir;
+> +	else
+> +		cp.dir = path;
+> +	cp.out = -1;
+> +	cp.no_stdin = 1;
+> +	argv_array_push(&cp.args, "diff");
+> +	argv_array_pushf(&cp.args, "--src-prefix=a/%s/", path);
+> +	argv_array_pushf(&cp.args, "--dst-prefix=b/%s/", path);
 
-Fwiw, attachments are preferred in perl5-porters, and it might
-be acceptable on LKML, even.  Not my call, though.
+I think this is wrong.  Imagine when the caller gave you prefixes
+that are different from a/ and b/ (think: the extreme case is that
+you are a sub-sub-module, and the caller is recursing into you with
+its own prefix, perhaps set to a/sub and b/sub).  Use the prefixes
+you got for a/ and b/ instead of hardcoding them and you'd be fine,
+I'd guess.
 
-Having a push/pull-only workflow would still require some sort
-of messaging system to notify others.  Ideally that message
-would have the output of "git request-pull" to ensure people are
-on the same page; but I'd prefer patches (either attachments or
-inline) continue to be sent anyways in case the server is down
-or the reader is offline or on a machine without git.
+> +	argv_array_push(&cp.args, sha1_to_hex(one));
+> +
+> +	/*
+> +	 * If the submodule has untracked or modified contents, diff between
+> +	 * the old base and the current tip. This had the advantage of showing
+> +	 * the full difference of the submodule contents.
+> +	 */
+> +	if (!create_dirty_diff)
+> +		argv_array_push(&cp.args, sha1_to_hex(two));
+> +
+> +	if (start_command(&cp))
+> +		die("Could not run 'git diff' command in submodule %s", path);
+> +
+> +	diff = fdopen(cp.out, "r");
+> +
+> +	c = fgetc(diff);
+> +	while (c != EOF) {
+> +		fputc(c, f);
+> +		c = fgetc(diff);
+> +	}
+> +
+> +	fclose(diff);
+> +	finish_command(&cp);
 
-[1] see Brian's (who is new, here) initial email for diff-highlight:
-    https://public-inbox.org/git/20160728162712.GA29220@tci.corp.yp.com/
+I do not think you need to do this.  If "f" is already a FILE * to
+which the output must go, then instead of reading from the pipe and
+writing it, you can just let the "diff" spit out its output to the
+same file descriptor, by doing something like:
+
+	fflush(f);
+        cp.out = dup(fileno(f));
+        ... other setup ...
+        run_command(&cp);
+
+no?  I do not offhand recall run_command() closes cp.out after done,
+and if it doesn't you may have to close it yourself after the above
+sequence.
+
+While I personally do not want to see code to access submodule's
+object store by temporarily adding it as alternates, the "show
+left-right log between the commits" code already does so, so I
+should point out that running "diff" internally without spawning it
+as a subprocess shouldn't be too hard.  The diff API is reasonably
+libified and there shouldn't be additional "libification" preparation
+work required to do this, if you really wanted to.
