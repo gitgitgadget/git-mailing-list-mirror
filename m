@@ -2,91 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6773C1FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 21:28:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 797E01FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 21:30:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932544AbcHJV2b (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 17:28:31 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58144 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751226AbcHJV2a (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2016 17:28:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id CF5A733589;
-	Wed, 10 Aug 2016 17:28:28 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=a6++1CcjevGfUQ9da7FXr4xCTas=; b=fz1EYg
-	bMvKtYfo6IUX92urto5KoRfWUQWjGVWcnS3fn/Py11TDkCMrc4WQvacFOqlqKKhI
-	x4m+KJ6PppU9bj09nUkmqXYB61SYPez2WFZFjteQWNJJgGGA31OiSVCYYSgNbEhu
-	+piFKgk9AijVKtqSB7op8J2vFmdpFF/UTZhxg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=g3/WD6zNm8LLINbP8DL2RIfmAgabSGor
-	xd7E2Io2xgqqLJ83V46YImVX++NR5KRDKDDlMXzGva4IhTGfpj/jmBpT02Vh2Eo0
-	W73OYG1QGVwzTw0nBez+aR0K/sBcJa5ykxS25L1z6k5jk5WkhLK0ZZ9V1NbfDt8s
-	E3EZVuCjEAw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id C761433588;
-	Wed, 10 Aug 2016 17:28:28 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S932196AbcHJVaH (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 17:30:07 -0400
+Received: from siwi.pair.com ([209.68.5.199]:59021 "EHLO siwi.pair.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752395AbcHJVaG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2016 17:30:06 -0400
+Received: from [10.160.15.137] (unknown [167.220.148.23])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 42A5233586;
-	Wed, 10 Aug 2016 17:28:28 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Michael Haggerty <mhagger@alum.mit.edu>
-Cc:	Jacob Keller <jacob.keller@gmail.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH 8/8] diff: improve positioning of add/delete blocks in diffs
-References: <cover.1470259583.git.mhagger@alum.mit.edu>
-	<7b0680ed7a10fc13acd8d7816a75ed05a5f9e28c.1470259583.git.mhagger@alum.mit.edu>
-	<CA+P7+xo6q0pveVQdt1mynfsWq75DzBXsbPcgVYdd5s8rpO+97A@mail.gmail.com>
-	<f7f35993-39a8-b788-d2a7-d030ac442b9b@alum.mit.edu>
-	<xmqqd1lo2uj1.fsf@gitster.mtv.corp.google.com>
-	<5fe0edbc-3659-058f-3328-639d1343fa05@alum.mit.edu>
-Date:	Wed, 10 Aug 2016 14:28:26 -0700
-In-Reply-To: <5fe0edbc-3659-058f-3328-639d1343fa05@alum.mit.edu> (Michael
-	Haggerty's message of "Wed, 10 Aug 2016 21:01:06 +0200")
-Message-ID: <xmqq8tw448lh.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	by siwi.pair.com (Postfix) with ESMTPSA id DE42E845E4;
+	Wed, 10 Aug 2016 17:30:03 -0400 (EDT)
+Subject: Re: [PATCH v5 9/9] status: unit tests for --porcelain=v2
+To:	Junio C Hamano <gitster@pobox.com>
+References: <1470434434-64283-1-git-send-email-git@jeffhostetler.com>
+ <1470434434-64283-10-git-send-email-git@jeffhostetler.com>
+ <xmqq4m6vgpf9.fsf@gitster.mtv.corp.google.com>
+Cc:	git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+From:	Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <57AB9C61.5060409@jeffhostetler.com>
+Date:	Wed, 10 Aug 2016 17:28:01 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 60D5C210-5F41-11E6-BEB1-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+In-Reply-To: <xmqq4m6vgpf9.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
 
->> After
->> all, somebody in this file is already scanning each and every line
->> to see where it ends to split the input into records, so perhaps a
->> "right" (if the "theoretical correctness" of the return value from
->> this function mattered, which you wave-away below) optimization
->> could be to precompute it while the lines are broken into records
->> and store it in the "rec" structure?
+
+On 08/08/2016 01:07 PM, Junio C Hamano wrote:
+> Jeff Hostetler <git@jeffhostetler.com> writes:
 >
-> That would certainly be possible, and would help in cases where there
-> are a lot of lines with lots of leading whitespace. You could get nearly
-> the same benefit by recording a single bit in struct rec, indicating
-> whether the line is blank or not.
+>> +test_expect_success pre_initial_commit_0 '
+>> +	...
+>> +	git status --porcelain=v2 --branch --untracked-files=normal >actual &&
+>> +	test_cmp expect actual
+>> +'
+>> +
+>> +
+>> +test_expect_success pre_initial_commit_1 '
+>> +	git add file_x file_y file_z dir1 &&
+>> +	...
+>> +	cat >expect <<-EOF &&
+>> +	# branch.oid (initial)
+>> +	# branch.head master
+>> +	1 A. N... 000000 100644 100644 $_z40 $OID_A dir1/file_a
+>> +	...
 >
-> But it wouldn't help the worst case described above, where each call to
-> `git_indent()` is already very cheap. And I didn't think it was worth
-> allocating the extra memory to optimize this heuristic
+> This makes one wonder what would/should be shown on the "A." column
+> if one of these files are added with "-N" (intent-to-add).  I do not
+> see any test for such entries in this patch, but I think it should.
 
-True.
+I must admit that I don't use -N, so I'm open to recommendations here.
+In my brief testing, the existing porcelain status reports it as "AM"
+(for both a file with content and an empty file).
 
-> I don't know. It seems like a pretty contrived justification for what is
-> basically, "your input is too weird for us. We're not going to break our
-> necks trying to give you the best possible slider positioning."
+The V2 code outputs the following:
+1 AM N... 000000 100644 100644 0000000000000000000000000000000000000000 
+e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 intent.add
 
-True again.
+Which I think makes sense.  I'll add a test to exercise that.
+
+
+> "Try -z on the above" can and should be in the test title to help
+> ...
+> Having said all that, it is OK to fix their titles after the current
+> 9-patch series lands on 'next'; incremental refinements are easier
+> on reviewers than having to review too many rerolls.
+
+I'll change the test titles to have all that info.
+
+
+> This is probably a good place to see what happens to these untracked
+> files and branch info if we do not ask the command to show them.
+
+I'll add some cases to cycle thru the options and confirm
+there's no output when not requested.
+
+
+>> +##################################################################
+>> +## Ignore a file
+>> +##################################################################
+>> +
+>> +test_expect_success ignore_file_0 '
+>> +	echo x.ign >.gitignore &&
+>> +	echo "ignore me" >x.ign &&
+>> +	H1=$(git rev-parse HEAD) &&
+>> +
+>> +	## ignored file SHOULD NOT appear in output when --ignored is not used.
+>> + ...
+>> +	git status --porcelain=v2 --branch --untracked-files=all >actual &&
+>> +	test_cmp expect actual &&
+>> + ...
+>> +	git status --porcelain=v2 --branch --ignored --untracked-files=all >actual &&
+>> +	rm x.ign &&
+>> +	rm .gitignore &&
+>
+> Arrange these files to be cleaned before you create them by having
+>
+> 	test_when_finished "rm -f x.ign .gitignore" &&
+>
+> at the very beginning of this test before they are created.
+> Otherwise, if any step before these removal fail, later test that
+> assume they are gone will be affected.  You already do so correctly
+> in the upstream_fields_0 test below.
+
+Missed a few.  Got it.  Thanks!
+
+
+>> +
+>> +	cat >expect <<-EOF &&
+>> +	# branch.oid $HM
+>> +	# branch.head AA_M
+>> +	u AA N... 000000 100644 100644 100644 $_z40 $OID_AA_B $OID_AA_A conflict.txt
+>> +	EOF
+>
+> This is a small point, but doesn't the lowercase 'u' somehow look
+> ugly, especially because the status letters that immediately follow
+> it are all uppercase?
+>
+
+Since we are inventing a new format and my column 1 is completely new
+I didn't think it mattered.  And I used a lowercase 'u' to distinguish 
+it from the "U" in the X and Y columns since they mean different things.
+
+But we can change it if you'd prefer.
+
+
+>> +	git status --porcelain=v2 --branch --untracked-files=all >actual &&
+>> +	git reset --hard &&
+>
+> This "reset" also may be a candidate for test_when_finished clean-up
+> (I won't repeat the comment but there probably are many others).
+
+Got it. And I hopefully caught the rest.
+
+
+>> +test_expect_success 'upstream_fields_0' '
+>> +	git checkout master &&
+>> +	test_when_finished rm -rf sub_repo &&
+>
+> The "when-finished" argument are usually quoted like this, I think:
+>
+> 	test_when_finished "rm -rf sub_repo" &&
+
+Got it. Thanks.
+
+
+I have the test changes ready.  As suggested, I'll send a single commit
+patch after my 9-patch series lands on 'next'.
+
+Thanks,
+Jeff
+
+
+
+
