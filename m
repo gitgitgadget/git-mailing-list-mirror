@@ -2,96 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2A531FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 21:20:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 110571FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 21:20:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932753AbcHJVTt (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 17:19:49 -0400
-Received: from mail-it0-f47.google.com ([209.85.214.47]:38161 "EHLO
-	mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932666AbcHJSFh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2016 14:05:37 -0400
-Received: by mail-it0-f47.google.com with SMTP id x130so52155625ite.1
-        for <git@vger.kernel.org>; Wed, 10 Aug 2016 11:05:37 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=d/UmxsYVJI85sgy6E41XtoBiX5ZAA+K33yy258EuT8Q=;
-        b=XzpFFx9U1DnuZd9A8RPOe4gfw8LNqycJ1xJm8yHGNlOKzZ5txZiYE5uuCIIQhWH0ZW
-         qqv0UzWpyoLRSTCyY1g8OfRy9mm+fommQGwNEOaOKgdEfoB1VEF4TM11eA7ACvHtFvp9
-         6t7JcKl4VdKYuv6PRdckq4EqULQX69dWpIbXv/IHX4Br3fsq/jA/8U7hXjmP6fiYAYHu
-         R45J5QQLAxRnPH7/4I+c9Q8lzUWjZEwy5BBj/bsjgM9QCryr46YLHTgZtyN9lLPeoV4N
-         brhyaBIOTg2KSDO35EXsvWNLM5XfPgY8m+R8ylhGbgibkZBPBNPjaLJ3cM8+gblBE/99
-         yQAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=d/UmxsYVJI85sgy6E41XtoBiX5ZAA+K33yy258EuT8Q=;
-        b=gdCIZKs6aO7TxA62xhSNQRLawm9vciZIYbxkfngytMPWqCC1ZRrIq2odJ2LzutzXlC
-         z6IE0eFTR36qDD9E2qaSMgmL+QWc4KDwoJPH03fFnjVUBRhAR+NMAFv9rW45dtMaUznC
-         NUtqPXUNV9jPkWdVCjAQGjC3C+kBQT9hc+o6U1m6MIti1b3xGLbaYlakf5ogbtbTpQa3
-         fL1At9aIitwfJaO5AcwnxgUc1dXjVSKSgPwLjV3DXQsnrw36E1voUww1V3eZg/EcITuT
-         8fDdcg94Am2EQtbAT6X5zv8NtDyVcgsXQI+16OuY415HUGjHwImmHFdsNpWWnSKNGjaG
-         B19w==
-X-Gm-Message-State: AEkoouvb/bXbZ2KMiKl/QwDTYymC6PYADadmn5xP4noMaB2XfuFcz2ntsyChRBnvsTgv+Vyw/mcAdz9ZyFhb/1XZ
-X-Received: by 10.36.92.206 with SMTP id q197mr4734514itb.46.1470848288509;
- Wed, 10 Aug 2016 09:58:08 -0700 (PDT)
+	id S932657AbcHJSF0 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 14:05:26 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58302 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932649AbcHJSFR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2016 14:05:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 352C830572;
+	Wed, 10 Aug 2016 12:27:17 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/lD55f/P1CL3p94OjJuuN0EwVLM=; b=PkhYdu
+	RBopy/gzwGaVFEkQvuuRBLKJobAolZMbzDE9y0RFoOiIXDhDUzQdZGcSvJ2ySema
+	dKQf389pMT0o1hYdLr0++KruEnaQWOa8pR9dY9AoamxdEIZPi0HhjcPpfz4ekf1Y
+	8HyWn18IjXy2lyFY526wr87jGZ91DwZyjRgYU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WhZr/zW+Eydz4/udFtbf/K0lC3TG+vOf
+	ihkFqNZx5//6U+XkqfKzvV8s8kO7xk8ZwK7ITE9xhVG5YbcWvlG+lUC77PO/fi4v
+	fy36+ebBfDuTAmo8xKf67q2RPthP44Srn/Tx0fJsew6m2mREq0zbDn77uucRKBuF
+	VMRFrIc3Hfk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2E5AB30571;
+	Wed, 10 Aug 2016 12:27:17 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A27DF30570;
+	Wed, 10 Aug 2016 12:27:16 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Eric Wong <e@80x24.org>
+Cc:	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH] http-backend: buffer headers before sending
+References: <20160809234731.GA10310@dcvr>
+Date:	Wed, 10 Aug 2016 09:27:14 -0700
+In-Reply-To: <20160809234731.GA10310@dcvr> (Eric Wong's message of "Tue, 9 Aug
+	2016 23:47:31 +0000")
+Message-ID: <xmqqlh047fod.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Wed, 10 Aug 2016 09:58:08 -0700 (PDT)
-In-Reply-To: <48ca79e2-418b-3c73-e075-808d39a4da9a@alum.mit.edu>
-References: <cover.1470259583.git.mhagger@alum.mit.edu> <f4ce27f389b64c9ae503152c66d183c4a4a970f1.1470259583.git.mhagger@alum.mit.edu>
- <CAGZ79kZk+XW+Bwcx_fvOLVBDse_iUSjEa_K=eJqm4PpTsTAcPA@mail.gmail.com>
- <57715dee-ca73-c1bb-ee79-2813d7873649@alum.mit.edu> <CAGZ79kbyCRDTt4u+Fje819mNZZf3GkZtYVurwOMPXRfXqO-YEw@mail.gmail.com>
- <48ca79e2-418b-3c73-e075-808d39a4da9a@alum.mit.edu>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Wed, 10 Aug 2016 09:58:08 -0700
-Message-ID: <CAGZ79kaSnm-MoWf254UpzY4XS=AO57fChqOntBzGF3wW6TxUag@mail.gmail.com>
-Subject: Re: [PATCH 2/8] xdl_change_compact(): clarify code
-To:	Michael Haggerty <mhagger@alum.mit.edu>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4D46F73E-5F17-11E6-8BA1-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Aug 10, 2016 at 9:39 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+Eric Wong <e@80x24.org> writes:
 
->
-> I realized that the main thing that took me a while to grok when I was
-> reading this code was that blank_lines was really only used as a boolean
-> value, even though it was updated with "+=". That's the main information
-> that I'd like to convey to the reader.
+> diff --git a/http-backend.c b/http-backend.c
+> index 0d59499..adc8c8c 100644
+> --- a/http-backend.c
+> +++ b/http-backend.c
+> @@ -75,55 +75,57 @@ static void format_write(int fd, const char *fmt, ...)
+>  	write_or_die(fd, buffer, n);
+>  }
+>  
+> -static void http_status(unsigned code, const char *msg)
+> +static void http_status(struct strbuf *hdr, unsigned code, const char *msg)
+>  {
+> -	format_write(1, "Status: %u %s\r\n", code, msg);
+> +	strbuf_addf(hdr, "Status: %u %s\r\n", code, msg);
+>  }
 
-Oh :(
+The idea is to pass "struct strbuf *hdr" around the callchain to
+helpers so that they can all append into it instead of doing
+format_write(), which is sensible.  This pattern continues quite a
+bit (omitted).
 
-I think there was some discussion when we added the blank line counting
-whether we would want to have it boolean or counting. And we settled
-for counting as "future algorithms can make use of this additional information"
-IIRC.
+> -static void end_headers(void)
+> +static void end_headers(struct strbuf *hdr)
+>  {
+> -	write_or_die(1, "\r\n", 2);
+> +	strbuf_add(hdr, "\r\n", 2);
+> +	write_or_die(1, hdr->buf, hdr->len);
+> +	strbuf_release(hdr);
+>  }
 
->
-> So I decided to change the comment to emphasize this fact (and change it
-> from a question to a statement), and also changed the place that
-> blank_lines is updated to treat it more like a boolean. The latter
-> change also has the advantage of not calling is_blank_line()
-> unnecessarily when blank_lines is already true.
->
-> If you have no objections, that is what I will put in v2 of this patch
-> series:
+Then end_headers() is taught to drain the buffered headers.  The
+helpers used by other helpers in the next level of abstraction that
+emit the header and the body also need to take the buffer as their
+parameter, like this one:
 
-No objections from my side,
-sorry for this lengthy discussion about a comment,
+> -static void send_strbuf(const char *type, struct strbuf *buf)
+> +static void send_strbuf(struct strbuf *hdr,
+> +			const char *type, struct strbuf *buf)
+>  {
+> -	hdr_int(content_length, buf->len);
+> -	hdr_str(content_type, type);
+> -	end_headers();
+> +	hdr_int(hdr, content_length, buf->len);
+> +	hdr_str(hdr, content_type, type);
+> +	end_headers(hdr);
+>  	write_or_die(1, buf->buf, buf->len);
+>  }
 
-Thanks,
-Stefan
+because their caller already has something to say in the header
+part.
+
+> +static int bad_request(struct strbuf *hdr, const struct service_cmd *c)
+> +{
+> +	const char *proto = getenv("SERVER_PROTOCOL");
+> +
+> +	if (proto && !strcmp(proto, "HTTP/1.1")) {
+> +		http_status(hdr, 405, "Method Not Allowed");
+> +		hdr_str(hdr, "Allow",
+> +			!strcmp(c->method, "GET") ? "GET, HEAD" : c->method);
+> +	} else
+> +		http_status(hdr, 400, "Bad Request");
+> +	hdr_nocache(hdr);
+> +	end_headers(hdr);
+> +	return 0;
+> +}
+> +
+
+This is like other helpers that respond with 4xx, e.g. forbidden(),
+but it did not exist only because there was a single callsite that
+needed this feature, which made it open-coded directly in main().
+It was somewhat surprising to see a new helper, because the only
+thing this patch changes logically is where the output is sent, but
+this is a very sensible refactoring.
+
+>  int cmd_main(int argc, const char **argv)
+>  {
+>  	char *method = getenv("REQUEST_METHOD");
+> ...
+> @@ -659,18 +681,8 @@ int cmd_main(int argc, const char **argv)
+>  		if (!regexec(&re, dir, 1, out, 0)) {
+>  			size_t n;
+>  
+> -			if (strcmp(method, c->method)) {
+> -				const char *proto = getenv("SERVER_PROTOCOL");
+> -				if (proto && !strcmp(proto, "HTTP/1.1")) {
+> -					http_status(405, "Method Not Allowed");
+> -					hdr_str("Allow", !strcmp(c->method, "GET") ?
+> -						"GET, HEAD" : c->method);
+> -				} else
+> -					http_status(400, "Bad Request");
+> -				hdr_nocache();
+> -				end_headers();
+> -				return 0;
+> -			}
+> +			if (strcmp(method, c->method))
+> +				return bad_request(&hdr, c);
+
+... and this is where it came from.  It could have been a separate
+"preparatory cleanup" step, but it is so trivial that "while at it"
+clean-up is perfectly fine.
+
+Thanks, will queue.
+
