@@ -2,82 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 800891FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 19:55:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 920621FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 19:57:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752344AbcHJTzW (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 15:55:22 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:35760 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936180AbcHJSgX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2016 14:36:23 -0400
-Received: by mail-pa0-f46.google.com with SMTP id i5so1816993pat.2
-        for <git@vger.kernel.org>; Wed, 10 Aug 2016 11:36:23 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=xXhQibAkhrb/YkUzPVBui/jDZGeR5D5FX7ezYUa0R34=;
-        b=NYElJ/VIGunJmdu9vF7Gxi+E400/67v2JXMS4/1iGW0MQWvz985/EpAWvJTHHkQ/Se
-         +TGumWFBi8wS8MnvhA1xWT6DjJaPTUiSchUOY+vWNqR35Wu1+COVGvf9BT7Wh9NdAolv
-         H18sIK1T1+7CVHUtGx//Dm3Cfp12PB/gNPpUNDeaf3XxZMnxfUdPVNvCCBgWGRZeR1I/
-         HzcpIyHSQveqrUu/yZZQ8jf7nXKgLk2+qSQElbFkaYG6A7UCnjKIFkFrbkgCA5sRk10A
-         9IcmiBFdzWinOuKD/MfarUk6zSoicOU1jfZ978ZXrEtMDkEGuswo9SVl3sU4y+fHVxyZ
-         wYCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=xXhQibAkhrb/YkUzPVBui/jDZGeR5D5FX7ezYUa0R34=;
-        b=XBxaW10wggaBIeEp9hTcosNSF9EKbL6qUQ4iM3TG5c5Wi2r6BWSJ/UX6ZoaP9gMfJS
-         3CCCapRSUfuo4W5K/X98DuHOMPOc3oaU6bzrqvT75BSjPJeBaUGM2cEsmpp8acKNrtES
-         7iRiHdwXfY6SOZSXql5V3ny4wA8dOYCCRZyJn0bq9TXVSAeN8J8ZPEVYgAstdAHACHKc
-         bZKFmc+S71zjRB5u3vWcW1jKAjmIEH84PJkiP5myGEOuYjc5ADga9SvfKuQvACSN1M1c
-         3DCvXS7WYHIJDP9mdOdcjDWlRkPnZYlnimNzb4MM+y7L4WGMO7c/uL37/fWtdm8txL3S
-         tOKQ==
-X-Gm-Message-State: AEkoouupqnTW3AT7ZtFNXxiPrxQQA/p09oJHHrbBjW5gHWNw9/O52K+Gl6stcIET1mQRXe7W
-X-Received: by 10.66.217.170 with SMTP id oz10mr9027819pac.61.1470850091709;
-        Wed, 10 Aug 2016 10:28:11 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:1d6:11b1:1dbd:105])
-        by smtp.gmail.com with ESMTPSA id ao6sm65788851pac.8.2016.08.10.10.28.10
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 10 Aug 2016 10:28:11 -0700 (PDT)
-From:	Stefan Beller <sbeller@google.com>
-To:	jrnieder@gmail.com, gitster@pobox.com
-Cc:	git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH] checkout: do not mention detach advice for explicit --detach option
-Date:	Wed, 10 Aug 2016 10:28:00 -0700
-Message-Id: <20160810172800.23575-1-sbeller@google.com>
-X-Mailer: git-send-email 2.9.2.665.gdb8bb2f
+	id S935027AbcHJT5S (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 15:57:18 -0400
+Received: from mort.cihar.com ([77.78.107.252]:37240 "EHLO mail.cihar.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933767AbcHJT5Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2016 15:57:16 -0400
+X-Greylist: delayed 5395 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Aug 2016 15:57:16 EDT
+DKIM-Signature:	v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=cihar.com; s=20150416;
+	h=Content-Type:MIME-Version:Date:Message-ID:Subject:From:To; bh=lKSops3W+VvLWKzodKVYM6nEKrW78yCEE5aQX5+L1nU=;
+	b=VFjeH7nq8G7mEF4u42jCLiXEOFjgunEnE1SJiUVuSBHYHdmILxsW8DqYtTY6wD3xq+EvDiMZ24FURpjdFJuWxgbrrl8OT40YpiOFTf5TORj5ZM8dnoGBKZJ4zzgySbGASc4iNiQDLbqdapepNOyWE0X5dUlXyDUpZ8rzk1gKaM4=;
+Received: from 127.0.0.1 (helo=authenticated.u-s-e-r)
+	by mail.cihar.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.84_2)
+	(envelope-from <michal@cihar.com>)
+	id 1bXWB7-00033E-PA
+	for git@vger.kernel.org; Wed, 10 Aug 2016 18:16:25 +0200
+Received: from [::1]
+	by nutt with esmtp (Exim 4.87)
+	(envelope-from <michal@cihar.com>)
+	id 1bXWB7-00015I-Ot
+	for git@vger.kernel.org; Wed, 10 Aug 2016 18:16:25 +0200
+To:	git@vger.kernel.org
+From:	=?UTF-8?B?TWljaGFsIMSMaWhhxZk=?= <michal@cihar.com>
+Subject: git svn --version requires working copy
+Message-ID: <8b881bf6-0b53-f917-fbe7-db22fe4910b8@cihar.com>
+Date:	Wed, 10 Aug 2016 18:16:22 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.2.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="l2mMLwxQ4CvAKe9FEMEj0foVOlHVHANaA"
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-When a user asked for a detached HEAD specifically with `--detach`,
-we do not need to give advice on what a detached HEAD state entails as
-we can assume they know what they're getting into as they asked for it.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--l2mMLwxQ4CvAKe9FEMEj0foVOlHVHANaA
+Content-Type: multipart/mixed; boundary="TuCCu0pATujFc5KVq9KOh03qAl0cag20U"
+From: =?UTF-8?B?TWljaGFsIMSMaWhhxZk=?= <michal@cihar.com>
+To: git@vger.kernel.org
+Message-ID: <8b881bf6-0b53-f917-fbe7-db22fe4910b8@cihar.com>
+Subject: git svn --version requires working copy
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/checkout.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+--TuCCu0pATujFc5KVq9KOh03qAl0cag20U
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 27c1a05..fa2dce5 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -655,7 +655,7 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
- 		update_ref(msg.buf, "HEAD", new->commit->object.oid.hash, NULL,
- 			   REF_NODEREF, UPDATE_REFS_DIE_ON_ERR);
- 		if (!opts->quiet) {
--			if (old->path && advice_detached_head)
-+			if (old->path && advice_detached_head && !opts->force_detach)
- 				detach_advice(new->name);
- 			describe_detached_head(_("HEAD is now at"), new->commit);
- 		}
--- 
-2.9.2.665.gdb8bb2f
+Hi
 
+I've just noticed, that running git svn --version requires working copy,
+what is quite ugly to require working copy just to figure out if git svn
+is installed and what version.
+
+$ git svn --version
+fatal: Not a git repository (or any parent up to mount point /home)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set)=
+=2E
+Unable to find .git directory
+ at /usr/lib/git-core/git-svn line 347.
+
+Is this expected behavior?
+
+Thanks
+--=20
+	Michal =C4=8Ciha=C5=99 | http://cihar.com/ | https://weblate.org/
+
+
+--TuCCu0pATujFc5KVq9KOh03qAl0cag20U--
+
+--l2mMLwxQ4CvAKe9FEMEj0foVOlHVHANaA
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJXq1NZAAoJEPSqIp1NWMJFey0P/jGzowKMb6YbQesx1rQE4YS6
+lvcnPzS2VFgSiLm4kJOmtfNUrcjBNT44NSnN06461FFw03zGe7YOiskQQnelgho2
+/69sJbZtxIvVEYkCjekihQHM4GtuqbbojtrIydvJ53Nv+Mm3DmT6DVQbdBwvb2Rs
+2BBFMh8+iPkT/3wCgZUvMz2dLVTChfSR65peNlZxuqYBjXk9bTWb2hzDfiTrOEzq
+qdshHD3YSYTrgQE0PJ4/zMlJaFrc/ZtkzL//84+47pxupIbI0FlGFtRvFCR+cJTO
+4FZyHFLPU9RoNWqmZDsUpDIRFJwSfTXv2DXC0ZKO8szYQ8t49Z9Z5AcH0QqwRRH3
+YxEeSkpRzgn/p/bBjxxSDyXrbz09jaPDgCVcVIEYiRuriKMlaw5v76C2I08W+4Ua
+QV2mUH5Y6fGebcMwl6LxCh+/qOSRXC5lJ/giMdHwYhtVLZqYe+wrB/ARS+JwzQ9a
+WHaqdeq8MD3sWeOv4RCNbp4fyCK4TkTkpUcBeYqvmnVVEN6yyUqcXtTfi5Rd7xxf
+TT9NK5u5fz60FNB5IAzOjh+KeydqQ6sgSA7tLSFxUJ8ij9RuPBvsYwjM/vLCA6TR
+Hy3/Z+PqewEXymsnPU0xXhAA5z8vU/wP1a++0apjSZ+aJGzVcDh20pC5X2h/g2lY
+SSoMB8iSSJbhN+wRkjMe
+=Y3/o
+-----END PGP SIGNATURE-----
+
+--l2mMLwxQ4CvAKe9FEMEj0foVOlHVHANaA--
