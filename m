@@ -2,113 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B4531FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 19:04:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CDAE91FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 19:04:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935352AbcHJTD7 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 15:03:59 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:34630 "EHLO
-	mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S941037AbcHJTD5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Aug 2016 15:03:57 -0400
-Received: by mail-qk0-f193.google.com with SMTP id x67so4128509qke.1
-        for <git@vger.kernel.org>; Wed, 10 Aug 2016 12:03:56 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=MabQ9xhshzSGAtCTXZZ96Ve092UPSHZVySBg2nNuzMQ=;
-        b=CA5srvKJyFTbpmEPdtUK3nt9mEto8uKlhDGXS0FI5qjO7BOr4czUV0IJP4G1z2A8V7
-         OI8x2vEGggCjUFi7JMEK8ulKf3W3S/ZN8FIzffO+MIsE4nzDi4jdeC2pTugyYRZyUh7I
-         9wekCyHrMEyVIue50kcsVuYUBqhnUWJRVv//CxxyJmHA8b3e+SwtADJUP+x+3aoSDAuD
-         6UZzeiPM7vFm9sHlG/djXfKr0XCIfvcvB9BGmv7y2RQ+LDJp1tQQhz3JmK90BzjKOOAz
-         YNhrS+COX3nHbMg/UNSszsHYroOZLTIrUsS0DQAe1m2EjAPTkha24e3KHS/dEzhjZAaP
-         iHjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=MabQ9xhshzSGAtCTXZZ96Ve092UPSHZVySBg2nNuzMQ=;
-        b=OtWOcPag/qkClituD4d6Tgv7BCUrfZDAMJtQUbOpMWyYMG4gefIW6X62LLxkFvG0Fs
-         j21ayInPhBcbY+RNJt+nIDuY8qtaiL98xYO4uB9InHi1CWa+b1G6K2cAsddsUYBNJexw
-         CjHAXzGANqXNNlU4MAwxKv656tDRzGAOwBn+0eLQznwB8vqoLTQyxk+mIdyb6CrB800u
-         jMRmJlbsrH48wZ0AhtU1dBu+2WDuiV1VzaM+xKmpVsZklJ7YZJnSHk+rgxT6MhfMvFey
-         1uijel1rEAKhTFDq6ETSifZTfSTL3VrCAs2kJJXgjZljKbtaqZOBT8845JW6urfzrUmV
-         LqRw==
-X-Gm-Message-State: AEkoouuRYZjdUyL9RQ6XUGc+tQ03wLOcJdMlMl526A02YHOzM0gqfCioyKO5nfwkQSHD3w==
-X-Received: by 10.55.139.4 with SMTP id n4mr6420033qkd.161.1470855835970;
-        Wed, 10 Aug 2016 12:03:55 -0700 (PDT)
-Received: from nov34rcf12.ads.autodesk.com ([132.188.72.181])
-        by smtp.gmail.com with ESMTPSA id m62sm12130396qke.13.2016.08.10.12.03.54
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 10 Aug 2016 12:03:55 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH] t7406: fix breakage on OSX
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20160810175607.30826-1-sbeller@google.com>
-Date:	Wed, 10 Aug 2016 21:03:54 +0200
-Cc:	gitster@pobox.com, git@vger.kernel.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <42522DA5-C677-4B2B-88CA-918B33069F9F@gmail.com>
-References: <A6131C47-3230-4EC4-B3F6-B2507C937A22@gmail.com> <20160810175607.30826-1-sbeller@google.com>
-To:	Stefan Beller <sbeller@google.com>
-X-Mailer: Apple Mail (2.3124)
+	id S941072AbcHJTEb (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 15:04:31 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53073 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S936506AbcHJTE3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2016 15:04:29 -0400
+Received: (qmail 27328 invoked by uid 109); 10 Aug 2016 13:37:48 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Aug 2016 13:37:48 +0000
+Received: (qmail 32492 invoked by uid 111); 10 Aug 2016 13:37:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Aug 2016 09:37:47 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Aug 2016 09:37:46 -0400
+Date:	Wed, 10 Aug 2016 09:37:46 -0400
+From:	Jeff King <peff@peff.net>
+To:	Lars Schneider <larsxschneider@gmail.com>
+Cc:	git@vger.kernel.org, gitster@pobox.com, jnareb@gmail.com,
+	mlbright@gmail.com, e@80x24.org, Johannes.Schindelin@gmx.de,
+	ben@wijen.net
+Subject: Re: [PATCH v5 03/15] pkt-line: add `gentle` parameter to
+ format_packet()
+Message-ID: <20160810133745.wagccvvf35o3pbwb@sigill.intra.peff.net>
+References: <20160803164225.46355-1-larsxschneider@gmail.com/>
+ <20160810130411.12419-1-larsxschneider@gmail.com>
+ <20160810130411.12419-4-larsxschneider@gmail.com>
+ <20160810131541.ovpvgwdxjibae5gy@sigill.intra.peff.net>
+ <F4D9C42A-5B7F-47B4-B334-704D5F6210F5@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <F4D9C42A-5B7F-47B4-B334-704D5F6210F5@gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+On Wed, Aug 10, 2016 at 03:29:26PM +0200, Lars Schneider wrote:
 
-> On 10 Aug 2016, at 19:56, Stefan Beller <sbeller@google.com> wrote:
 > 
-> On OSX `wc` prefixes the output of numbers with whitespace, such that
-> the `commit_count` would be "SP <NUMBER>". When using that in
+> > On 10 Aug 2016, at 15:15, Jeff King <peff@peff.net> wrote:
+> > 
+> > On Wed, Aug 10, 2016 at 03:03:59PM +0200, larsxschneider@gmail.com wrote:
+> > 
+> >> From: Lars Schneider <larsxschneider@gmail.com>
+> >> 
+> >> format_packet() dies if the caller wants to format a packet larger than
+> >> LARGE_PACKET_MAX. Certain callers might prefer an error response instead.
+> > 
+> > I am not sure I agree here. Certainly I see the usefulness of gently
+> > handling a failure to write(). But if you are passing in too-large
+> > buffers, isn't that a bug in the program?
+> > 
+> > How would you recover, except by splitting up the content? That might
+> > not be possible depending on how you are using the pkt-lines. And even
+> > if it is, wouldn't it be simpler to split it up before sending it to
+> > format_packet()?
 > 
->    git submodule update --init --depth=$commit_count
-> 
-> the depth would be empty and the number is interpreted as the pathspec.
-> Fix this by not using `wc` and rather instruct rev-list to count.
-> 
-> Another way to fix this is to remove the `=` sign after the `--depth`
-> argument as then we are allowed to have more than just one whitespace
-> between `--depth` and the actual number. Prefer the solution of rev-list
-> counting as that is expected to be slightly faster and more self-sustained
-> within Git.
-> 
-> Reported-by: Lars Schneider <larsxschneider@gmail.com>
-> Helped-by: Junio C Hamano <gitster@pobox.com>,
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
-> 
->  origin/sb/submodule-update-dot-branch
-> 
-> t/t7406-submodule-update.sh | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-> index d7983cf..64f322c 100755
-> --- a/t/t7406-submodule-update.sh
-> +++ b/t/t7406-submodule-update.sh
-> @@ -877,7 +877,7 @@ test_expect_success 'submodule update clone shallow submodule' '
-> 	test_when_finished "rm -rf super3" &&
-> 	first=$(git -C cloned submodule status submodule |cut -c2-41) &&
-> 	second=$(git -C submodule rev-parse HEAD) &&
-> -	commit_count=$(git -C submodule rev-list $first^..$second | wc -l) &&
-> +	commit_count=$(git -C submodule rev-list --count $first^..$second) &&
-> 	git clone cloned super3 &&
-> 	pwd=$(pwd) &&
-> 	(
-> -- 
-> 2.9.2.665.gdb8bb2f
-> 
+> Good argument. I agree - this patch should be dropped.
 
-Ack.
+Actually, after reading further, one thought did occur to me. Let's say
+you are writing to a smudge filter, and one of the header packets you
+send has the filename in it. So you might do something like:
 
-- Lars
+  if (packet_write_fmt_gently(fd, "filename=%s", filename) < 0) {
+	if (filter_required)
+		die(...);
+	else
+		return -1; /* we tried our best; skip smudge */
+  }
 
+The "recovery" there is not to try sending again, but rather to give up.
+And that is presumably a sane outcome for somebody who tries to checkout
+a filename larger than 64K.
+
+It does still feel a little weird that you cannot tell the difference
+between a write() error and bad input. Because you really might want to
+do something different between the two. Like:
+
+  #define MAX_FILENAME (PKTLINE_DATA_MAXLEN - strlen("filename"))
+
+  if (filename > MAX_FILENAME) {
+	warning("woah, that name is ridiculous; truncating");
+	ret = packet_write_fmt_gently(fd, "%.*s", MAX_FILENAME, filename);
+  } else
+	ret = packet_write_fmt_gently(fd, "%s", filename);
+
+-Peff
