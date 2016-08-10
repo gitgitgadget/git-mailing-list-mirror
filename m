@@ -2,126 +2,234 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 329181FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 21:32:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E6DA1FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 21:57:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752686AbcHJVbu (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 17:31:50 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:62843 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751378AbcHJSBZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Aug 2016 14:01:25 -0400
-X-AuditID: 1207440c-217ff700000008d5-f6-57ab5d21c0a5
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id D2.46.02261.12D5BA75; Wed, 10 Aug 2016 12:58:09 -0400 (EDT)
-Received: from [192.168.69.130] (p5B104255.dip0.t-ipconnect.de [91.16.66.85])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u7AGw6fk004905
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 10 Aug 2016 12:58:07 -0400
-Subject: Re: [PATCH 5/8] xdl_change_compact(): fix compaction heuristic to
- adjust io
-To:	Jeff King <peff@peff.net>
-References: <cover.1470259583.git.mhagger@alum.mit.edu>
- <ae7590443737a3996ec4973fd868ce89dc78a576.1470259583.git.mhagger@alum.mit.edu>
- <20160804072705.a53mospcccksiz4e@sigill.intra.peff.net>
-Cc:	git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-From:	Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <7dea0a1e-a1b4-efe4-c86d-152f6c96604a@alum.mit.edu>
-Date:	Wed, 10 Aug 2016 18:58:06 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.1.0
+	id S932679AbcHJV52 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 17:57:28 -0400
+Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:34699
+	"EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932614AbcHJV50 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Aug 2016 17:57:26 -0400
+DKIM-Signature:	v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1470866239;
+	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+	bh=sY+U/dWqzoje05kdmqN6bNK6eXT4oujE7aZZvTPUkOs=;
+	b=Hj5ka/dZNxvUMVltBHiI5yBnidd7kXnU6btHDlrxmydnsrg1WWEVKlWcL56kO5bl
+	L5FmQKBPSVKKkTFd1O4dy2x75aDdmISAd57acUPldXybx47CGK2dGSRrzaekI5DANW2
+	aE5C7Rpi5MMJ5ofxdLO7thGtRpBO0zFWB+7y4YjU=
+From:	Pranit Bauva <pranit.bauva@gmail.com>
+To:	git@vger.kernel.org
+Message-ID: <010201567675ae5e-2126c4c2-d76f-4e88-8efe-3936d3aad98d-000000@eu-west-1.amazonses.com>
+In-Reply-To: <010201567675adc1-17e27495-6b36-40d1-836d-814da029fcc4-000000@eu-west-1.amazonses.com>
+References: <010201567675adc1-17e27495-6b36-40d1-836d-814da029fcc4-000000@eu-west-1.amazonses.com>
+Subject: [PATCH v12 10/13] bisect--helper: `check_and_set_terms` shell
+ function in C
 MIME-Version: 1.0
-In-Reply-To: <20160804072705.a53mospcccksiz4e@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpkleLIzCtJLcpLzFFi42IRYndR1FWMXR1usGu1lUXXlW4mi4beK8wW
-	uxf3M1usuDqH2eJHSw+zxebN7SwObB47Z91l91iwqdTjWe8eRo+Ll5Q9Pm+SC2CN4rJJSc3J
-	LEst0rdL4Mo4v/01c8E8kYobS1+yNTAuEuhi5OSQEDCRmPrqDksXIxeHkMBWRokLcyazQzhn
-	mSRaXr1g7mLk4BAWCJPY+yYJpEFEQFbi++GNjBA1hxglDvQdAWtgFrjOKLFr7hJGkCo2AV2J
-	RT3NTCDNvAL2Evdv5IKEWQRUJfb9W8YEYosKhEhsu9nABmLzCghKnJz5hAXE5hRwkfj9dw1Y
-	nFlAXeLPvEvMELa8xPa3c5gnMPLPQtIyC0nZLCRlCxiZVzHKJeaU5urmJmbmFKcm6xYnJ+bl
-	pRbpGurlZpbopaaUbmKEhDTPDsZv62QOMQpwMCrx8G5gWhUuxJpYVlyZe4hRkoNJSZRXOGZ1
-	uBBfUn5KZUZicUZ8UWlOajHQ6xzMSiK8bRFAOd6UxMqq1KJ8mJQ0B4uSOK/qEnU/IYH0xJLU
-	7NTUgtQimKwMB4eSBO/GaKBGwaLU9NSKtMycEoQ0EwcnyHAeoOFsIIt5iwsSc4sz0yHypxgV
-	pcR5N0cBJQRAEhmleXC9sJTzilEc6BVhXlaQdh5guoLrfgU0mAlocJLqCpDBJYkIKakGRq2/
-	29beYtm18zTvxj/T/XIPd6zJEdj5+u281lCxX2dEeOev1Zn0edf5pKwJRpb8y/emrf4WeuTO
-	0Q/2N2MvS/MGMOoz/T3WdvyQQkL/+jrH2d7z0mdHHDm6Oah10dxLFytq14ZmN1/YqNIp+ZxH
-	7/7rBAnhmwZG3R9XuYfuEPuxVCLw3Ux+HSUlluKMREMt5qLiRADtidypFAMAAA==
+Date:	Wed, 10 Aug 2016 21:57:19 +0000
+X-SES-Outgoing:	2016.08.10-54.240.7.12
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 08/04/2016 09:27 AM, Jeff King wrote:
-> On Thu, Aug 04, 2016 at 12:00:33AM +0200, Michael Haggerty wrote:
-> 
->> The code branch used for the compaction heuristic incorrectly forgot to
->> keep io in sync while the group was shifted. I think that could have
->> led to reading past the end of the rchgo array.
->>
->> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
->> ---
->> I didn't actually try to verify the presence of a bug, because it
->> seems like more work than worthwhile. But here is my reasoning:
->>
->> If io is not decremented correctly during one iteration of the outer
->> `while` loop, then it will loose sync with the `end` counter. In
->> particular it will be too large.
->>
->> Suppose that the next iterations of the outer `while` loop (i.e.,
->> processing the next block of add/delete lines) don't have any sliders.
->> Then the `io` counter would be incremented by the number of
->> non-changed lines in xdf, which is the same as the number of
->> non-changed lines in xdfo that *should have* followed the group that
->> experienced the malfunction. But since `io` was too large at the end
->> of that iteration, it will be incremented past the end of the
->> xdfo->rchg array, and will try to read that memory illegally.
-> 
-> Hmm. In the loop:
-> 
->   while (rchgo[io])
-> 	io++;
-> 
-> that implies that rchgo has a zero-marker that we can rely on hitting.
+Reimplement the `check_and_set_terms` shell function in C and add
+`check-and-set-terms` subcommand to `git bisect--helper` to call it from
+git-bisect.sh
 
-I agree.
+Using `--check-and-set-terms` subcommand is a temporary measure to port
+shell function in C so as to use the existing test suite. As more
+functions are ported, this subcommand will be retired but its
+implementation will be called by some other methods.
 
-> And it looks like rchgo[io] always ends the loop on a 0. So it seems
-> like we would just hit that condition again.
+check_and_set_terms() sets and receives two global variables namely
+TERM_GOOD and TERM_BAD in the shell script. Luckily the file BISECT_TERMS
+also contains the value of those variables so its appropriate to evoke the
+method get_terms() after calling the subcommand so that it retrieves the
+value of TERM_GOOD and TERM_BAD from the file BISECT_TERMS. The two
+global variables are passed as arguments to the subcommand.
 
-Correct...in this loop. But there is another place where `io` is
-incremented unconditionally. In the version before my changes, it is via
-the preincrement operator in this while statement conditional:
+Also introduce bisect_terms_reset() to empty the contents of `term_good`
+and `term_bad` of `struct bisect_terms`.
 
-https://github.com/mhagger/git/blob/a28705da929ad746abcb34270947f738549d3246/xdiff/xdiffi.c#L502
+Also introduce set_terms() to copy the `term_good` and `term_bad` into
+`struct bisect_terms` and write it out to the file BISECT_TERMS.
 
-After my changes, the unconditional increment is more obvious because I
-took it out of the while condition:
+Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+---
+ builtin/bisect--helper.c | 52 +++++++++++++++++++++++++++++++++++++++++++++++-
+ git-bisect.sh            | 36 ++++-----------------------------
+ 2 files changed, 55 insertions(+), 33 deletions(-)
 
-https://github.com/mhagger/git/blob/39a135da93834fd72ee923d95d0cebfe525dfe7a/xdiff/xdiffi.c#L541
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 9f70edb..5c4350f 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -23,6 +23,7 @@ static const char * const git_bisect_helper_usage[] = {
+ 	N_("git bisect--helper --bisect-clean-state"),
+ 	N_("git bisect--helper --bisect-reset [<commit>]"),
+ 	N_("git bisect--helper --bisect-write <state> <revision> <TERM_GOOD> <TERM_BAD> [<nolog>]"),
++	N_("git bisect--helper --bisect-check-and-set-terms <command> <TERM_GOOD> <TERM_BAD>"),
+ 	NULL
+ };
+ 
+@@ -43,6 +44,12 @@ static void bisect_terms_release(struct bisect_terms *terms)
+ 	strbuf_release(&terms->term_bad);
+ }
+ 
++static void bisect_terms_reset(struct bisect_terms *term)
++{
++	strbuf_reset(&term->term_good);
++	strbuf_reset(&term->term_bad);
++}
++
+ /*
+  * Check whether the string `term` belongs to the set of strings
+  * included in the variable arguments.
+@@ -253,6 +260,39 @@ static int bisect_write(const char *state, const char *rev,
+ 	return 0;
+ }
+ 
++static int set_terms(struct bisect_terms *terms, const char *bad,
++		     const char *good)
++{
++	bisect_terms_reset(terms);
++	strbuf_addstr(&terms->term_good, good);
++	strbuf_addstr(&terms->term_bad, bad);
++	return write_terms(terms->term_bad.buf, terms->term_good.buf);
++}
++
++static int check_and_set_terms(struct bisect_terms *terms, const char *cmd)
++{
++	int has_term_file = !is_empty_or_missing_file(git_path_bisect_terms());
++
++	if (one_of(cmd, "skip", "start", "terms", NULL))
++		return 0;
++
++	if (has_term_file &&
++	    strcmp(cmd, terms->term_bad.buf) &&
++	    strcmp(cmd, terms->term_good.buf))
++		return error(_("Invalid command: you're currently in a "
++				"%s/%s bisect"), terms->term_bad.buf,
++				terms->term_good.buf);
++
++	if (!has_term_file) {
++		if (one_of(cmd, "bad", "good", NULL))
++			return set_terms(terms, "bad", "good");
++		if (one_of(cmd, "new", "old", NULL))
++			return set_terms(terms, "new", "old");
++	}
++
++	return 0;
++}
++
+ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	enum {
+@@ -261,7 +301,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		BISECT_CLEAN_STATE,
+ 		BISECT_RESET,
+ 		CHECK_EXPECTED_REVS,
+-		BISECT_WRITE
++		BISECT_WRITE,
++		CHECK_AND_SET_TERMS
+ 	} cmdmode = 0;
+ 	int no_checkout = 0, res = 0;
+ 	struct option options[] = {
+@@ -277,6 +318,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 			 N_("check for expected revs"), CHECK_EXPECTED_REVS),
+ 		OPT_CMDMODE(0, "bisect-write", &cmdmode,
+ 			 N_("write out the bisection state in BISECT_LOG"), BISECT_WRITE),
++		OPT_CMDMODE(0, "check-and-set-terms", &cmdmode,
++			 N_("check and set terms in a bisection state"), CHECK_AND_SET_TERMS),
+ 		OPT_BOOL(0, "no-checkout", &no_checkout,
+ 			 N_("update BISECT_HEAD instead of checking out the current commit")),
+ 		OPT_END()
+@@ -320,6 +363,13 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		strbuf_addstr(&terms.term_bad, argv[3]);
+ 		res = bisect_write(argv[0], argv[1], &terms, nolog);
+ 		break;
++	case CHECK_AND_SET_TERMS:
++		if (argc != 3)
++			die(_("--check-and-set-terms requires 3 arguments"));
++		strbuf_addstr(&terms.term_good, argv[1]);
++		strbuf_addstr(&terms.term_bad, argv[2]);
++		res = check_and_set_terms(&terms, argv[0]);
++		break;
+ 	default:
+ 		die("BUG: unknown subcommand '%d'", cmdmode);
+ 	}
+diff --git a/git-bisect.sh b/git-bisect.sh
+index b9896a4..a41e69b 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -239,7 +239,8 @@ bisect_skip() {
+ bisect_state() {
+ 	bisect_autostart
+ 	state=$1
+-	check_and_set_terms $state
++	git bisect--helper --check-and-set-terms $state $TERM_GOOD $TERM_BAD || exit
++	get_terms
+ 	case "$#,$state" in
+ 	0,*)
+ 		die "$(gettext "Please call 'bisect_state' with at least one argument.")" ;;
+@@ -390,7 +391,8 @@ bisect_replay () {
+ 			command="$bisect"
+ 		fi
+ 		get_terms
+-		check_and_set_terms "$command"
++		git bisect--helper --check-and-set-terms "$command" "$TERM_GOOD" "$TERM_BAD" || exit
++		get_terms
+ 		case "$command" in
+ 		start)
+ 			cmd="bisect_start $rev"
+@@ -480,36 +482,6 @@ get_terms () {
+ 	fi
+ }
+ 
+-check_and_set_terms () {
+-	cmd="$1"
+-	case "$cmd" in
+-	skip|start|terms) ;;
+-	*)
+-		if test -s "$GIT_DIR/BISECT_TERMS" && test "$cmd" != "$TERM_BAD" && test "$cmd" != "$TERM_GOOD"
+-		then
+-			die "$(eval_gettext "Invalid command: you're currently in a \$TERM_BAD/\$TERM_GOOD bisect.")"
+-		fi
+-		case "$cmd" in
+-		bad|good)
+-			if ! test -s "$GIT_DIR/BISECT_TERMS"
+-			then
+-				TERM_BAD=bad
+-				TERM_GOOD=good
+-				git bisect--helper --write-terms "$TERM_BAD" "$TERM_GOOD" || exit
+-			fi
+-			;;
+-		new|old)
+-			if ! test -s "$GIT_DIR/BISECT_TERMS"
+-			then
+-				TERM_BAD=new
+-				TERM_GOOD=old
+-				git bisect--helper --write-terms "$TERM_BAD" "$TERM_GOOD" || exit
+-			fi
+-			;;
+-		esac ;;
+-	esac
+-}
+-
+ bisect_voc () {
+ 	case "$1" in
+ 	bad) echo "bad|new" ;;
 
-(BTW, I think this is a good example of how patch 2/8 makes the code
-easier to reason about.)
-
-I didn't do the hard work to determine whether `io` could *really* walk
-off the end of the array, but I don't see an obvious reason why it
-*couldn't*.
-
-> Anyway, I'd suggest putting your cover letter bits into the commit
-> message. Even though they are all suppositions, they are the kind of
-> thing that could really help somebody debugging this in 2 years, and are
-> better than nothing.
-
-Good idea. Will do.
-
-Michael
-
+--
+https://github.com/git/git/pull/281
