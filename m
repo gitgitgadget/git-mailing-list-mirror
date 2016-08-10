@@ -2,90 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 127561FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 19:38:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BBAE1FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 19:40:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935152AbcHJTi0 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 15:38:26 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:34195 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934947AbcHJTiY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2016 15:38:24 -0400
-Received: by mail-wm0-f65.google.com with SMTP id q128so11544177wma.1
-        for <git@vger.kernel.org>; Wed, 10 Aug 2016 12:38:24 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=vMVzNxNdheW9QRZTXjLoDl6TCgJ94TI/caf48lfKh9Y=;
-        b=mS+I1yPys5pJG/BTTSiv2ffkDqW56ZlFyDsMBD9Ki+Ne6T/5GNUXKrR6zo2O2Lf9Q9
-         UCyIgVbjqFnHNH8DNkYPqv3NM/uAcrQbtAFpXvfaCZl9NMg+sV8hA2ERDxr9Nb/tOFfL
-         BsQ1FoxRVJDT5REaCXcbT/n0nSwOJQ+e5Sx9oSrbRhJK/UaDBvXnlXkKpkdOkZQvAUsj
-         JyNmVxebSot62qQbAnhcXVXkOIcu/1nXECB/iiss6fLIu2x1RDetlOWx0zsD/MHi/R0B
-         DsuAoBSZ5H48Hb0O1h78HgMkPsoiArmml09BUGKCOBF9oBAUI81OMYyDrgSJvMuUNNaP
-         2+vg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=vMVzNxNdheW9QRZTXjLoDl6TCgJ94TI/caf48lfKh9Y=;
-        b=QCHrCJ/zW+IjSbr/Hjr8ErHIEz6u+CZyH2KPJKGaiZrmjfuZJD2zPbvjWQNHKSiKiz
-         e5jDX4X0l3YWAskrIIT9U0WgMFp4JUvoOdbpliVymcT4/HO8+BUHhdu1olZdrKPsXu9v
-         tcHdX+WgTJDf68pCZCS6s8+qJlWMHyLmh/rn8xMcvh+2n6RkzfHx0mMvRe9wPcQvlZyg
-         KqXpByeaGkieBLRWUc/WvrTDfD8yj+bOahoupmViLPzS+y89+Ojnm253hkvs57DDH1/F
-         pykTHsgCtB93dwXEnOTADP6QQCjT/s8eSbO4kWH1bBekK4s/PznytSprQK1NigbzkeWu
-         ZuUw==
-X-Gm-Message-State: AEkoouuZ1VWj7BH0s8V6imXKRixl1HPWj1f93KuQ4AbnhPdFtxdz+/mH97k9mewh/1rIcw==
-X-Received: by 10.28.126.75 with SMTP id z72mr3181314wmc.74.1470835767534;
-        Wed, 10 Aug 2016 06:29:27 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id p83sm8421128wma.18.2016.08.10.06.29.26
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 10 Aug 2016 06:29:27 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v5 03/15] pkt-line: add `gentle` parameter to format_packet()
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20160810131541.ovpvgwdxjibae5gy@sigill.intra.peff.net>
-Date:	Wed, 10 Aug 2016 15:29:26 +0200
-Cc:	git@vger.kernel.org, gitster@pobox.com, jnareb@gmail.com,
-	mlbright@gmail.com, e@80x24.org, Johannes.Schindelin@gmx.de,
-	ben@wijen.net
-Content-Transfer-Encoding: 7bit
-Message-Id: <F4D9C42A-5B7F-47B4-B334-704D5F6210F5@gmail.com>
-References: <20160803164225.46355-1-larsxschneider@gmail.com/> <20160810130411.12419-1-larsxschneider@gmail.com> <20160810130411.12419-4-larsxschneider@gmail.com> <20160810131541.ovpvgwdxjibae5gy@sigill.intra.peff.net>
-To:	Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3124)
+	id S934512AbcHJTkU (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 15:40:20 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53144 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S935849AbcHJTkS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2016 15:40:18 -0400
+Received: (qmail 23251 invoked by uid 109); 10 Aug 2016 12:32:03 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Aug 2016 12:32:03 +0000
+Received: (qmail 31373 invoked by uid 111); 10 Aug 2016 12:32:03 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Aug 2016 08:32:03 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Aug 2016 08:32:02 -0400
+Date:	Wed, 10 Aug 2016 08:32:02 -0400
+From:	Jeff King <peff@peff.net>
+To:	Eric Wong <e@80x24.org>
+Cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] http-backend: buffer headers before sending
+Message-ID: <20160810123201.ylfsnzmubpmtyoaa@sigill.intra.peff.net>
+References: <20160809234731.GA10310@dcvr>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20160809234731.GA10310@dcvr>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+On Tue, Aug 09, 2016 at 11:47:31PM +0000, Eric Wong wrote:
 
-> On 10 Aug 2016, at 15:15, Jeff King <peff@peff.net> wrote:
+> Avoid waking up the readers for unnecessary context switches for
+> each line of header data being written, as all the headers are
+> written in short succession.
 > 
-> On Wed, Aug 10, 2016 at 03:03:59PM +0200, larsxschneider@gmail.com wrote:
+> It is unlikely any HTTP/1.x server would want to read a CGI
+> response one-line-at-a-time and trickle each to the client.
+> Instead, I'd expect HTTP servers want to minimize syscall and
+> TCP/IP framing overhead by trying to send all of its response
+> headers in a single syscall or even combining the headers and
+> first chunk of the body with MSG_MORE or writev.
 > 
->> From: Lars Schneider <larsxschneider@gmail.com>
->> 
->> format_packet() dies if the caller wants to format a packet larger than
->> LARGE_PACKET_MAX. Certain callers might prefer an error response instead.
-> 
-> I am not sure I agree here. Certainly I see the usefulness of gently
-> handling a failure to write(). But if you are passing in too-large
-> buffers, isn't that a bug in the program?
-> 
-> How would you recover, except by splitting up the content? That might
-> not be possible depending on how you are using the pkt-lines. And even
-> if it is, wouldn't it be simpler to split it up before sending it to
-> format_packet()?
+> Verified by strace-ing response parsing on the CGI side.
 
-Good argument. I agree - this patch should be dropped.
+I don't think this is wrong to do, but it does feel like it makes the
+code slightly more brittle (you have to pass around the strbuf and
+remember to initialize it and end_headers() when you're done), for not
+much benefit.
 
-Thanks,
-Lars
+Using some kind of buffered I/O would be nicer, as then you would get
+nice-sized chunks without having to impact the code. I wonder if just
+using stdio here would be that bad. The place it usually sucks is in
+complex error handling, but we don't care about that at all here (I
+think we are basically happy to write until we get SIGPIPE).
+
+I dunno. I suspect the performance improvement from your patch is
+marginal, but it's not like the resulting code is all _that_ complex. So
+I guess I am OK either way, just not enthused.
+
+> ---
+>   I admit I only noticed this because I was being lazy when
+>   implementing the reader-side on an HTTP server by making
+>   a single read(2) call :x
+
+The trouble is that your HTTP server is still broken. Now it's just
+broken in an unpredictable and racy way, because the OS may still split
+the write at PIPE_BUF boundaries. (Though given that this is not in the
+commit message, I suspect you know this patch is not an excuse not to
+fix your HTTP server).
+
+-Peff
