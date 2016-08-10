@@ -2,234 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E6DA1FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 21:57:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA4A81FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 21:59:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932679AbcHJV52 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 17:57:28 -0400
-Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:34699
-	"EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932614AbcHJV50 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Aug 2016 17:57:26 -0400
-DKIM-Signature:	v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1470866239;
-	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-	bh=sY+U/dWqzoje05kdmqN6bNK6eXT4oujE7aZZvTPUkOs=;
-	b=Hj5ka/dZNxvUMVltBHiI5yBnidd7kXnU6btHDlrxmydnsrg1WWEVKlWcL56kO5bl
-	L5FmQKBPSVKKkTFd1O4dy2x75aDdmISAd57acUPldXybx47CGK2dGSRrzaekI5DANW2
-	aE5C7Rpi5MMJ5ofxdLO7thGtRpBO0zFWB+7y4YjU=
-From:	Pranit Bauva <pranit.bauva@gmail.com>
-To:	git@vger.kernel.org
-Message-ID: <010201567675ae5e-2126c4c2-d76f-4e88-8efe-3936d3aad98d-000000@eu-west-1.amazonses.com>
-In-Reply-To: <010201567675adc1-17e27495-6b36-40d1-836d-814da029fcc4-000000@eu-west-1.amazonses.com>
-References: <010201567675adc1-17e27495-6b36-40d1-836d-814da029fcc4-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v12 10/13] bisect--helper: `check_and_set_terms` shell
- function in C
+	id S933602AbcHJV64 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 17:58:56 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56981 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933372AbcHJV6z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2016 17:58:55 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9066B35018;
+	Wed, 10 Aug 2016 17:58:53 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xIVcehehbxKd+V/X/ti/8KX2XGo=; b=wGo3QO
+	SwIxoh7wlgpRUjmdnkOW29+V2nsZFDiDmKl2uAiFDTtf9ySkHCOLjPdrTpt8hlB/
+	hmx9YPccIcMPZXj5Fav9onnT+Y69khkzsgdk9FCYcV3rqTPj+KdwXe6QXB+bYhgG
+	AOjrMqlulhv/zaPFBYS1YnW2SyWM4MqusKFjM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OUBnm0wBHyjWRR0GJOUdQyTpxcZQsnfX
+	mxb4Pz5qILgD/vn25v/PymG9VKMNzarWk/a4kFtTNRZuPETGBm27muGpYUjl0mIl
+	/dodmlivFHe92wOhB8XTYg7ZSuxHsKrb/NbjmA0pdUNLEWK7vxv5u9urVu4j/9xM
+	qiDzLyLTm0M=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 884ED35017;
+	Wed, 10 Aug 2016 17:58:53 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 116DA35015;
+	Wed, 10 Aug 2016 17:58:53 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jacob Keller <jacob.e.keller@intel.com>
+Cc:	git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v3 1/2] diff: add --line-prefix option for passing in a prefix
+References: <20160810211710.23173-1-jacob.e.keller@intel.com>
+Date:	Wed, 10 Aug 2016 14:58:50 -0700
+In-Reply-To: <20160810211710.23173-1-jacob.e.keller@intel.com> (Jacob Keller's
+	message of "Wed, 10 Aug 2016 14:17:09 -0700")
+Message-ID: <xmqq4m6s476t.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:	Wed, 10 Aug 2016 21:57:19 +0000
-X-SES-Outgoing:	2016.08.10-54.240.7.12
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Content-Type: text/plain
+X-Pobox-Relay-ID: A0756FA2-5F45-11E6-B9F1-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Reimplement the `check_and_set_terms` shell function in C and add
-`check-and-set-terms` subcommand to `git bisect--helper` to call it from
-git-bisect.sh
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-Using `--check-and-set-terms` subcommand is a temporary measure to port
-shell function in C so as to use the existing test suite. As more
-functions are ported, this subcommand will be retired but its
-implementation will be called by some other methods.
+> As suggested by Junio, I implemented --line-prefix to enable the graph
+> display correctly. This works by a neat trick of adding to the msgbuf,
+> so no code needs to be altered. I presumed that the line prefix should
+> go *after* the graphs own prefix.
 
-check_and_set_terms() sets and receives two global variables namely
-TERM_GOOD and TERM_BAD in the shell script. Luckily the file BISECT_TERMS
-also contains the value of those variables so its appropriate to evoke the
-method get_terms() after calling the subcommand so that it retrieves the
-value of TERM_GOOD and TERM_BAD from the file BISECT_TERMS. The two
-global variables are passed as arguments to the subcommand.
+I do not understand the last sentence.
 
-Also introduce bisect_terms_reset() to empty the contents of `term_good`
-and `term_bad` of `struct bisect_terms`.
+The motivation I suggested the --line-prefix for is for a scenario
+in which "git log -p --graph" that recurses into a submodule causes
+"git diff A B" between the two commits in a submodule to run; the
+internal diff machinery driven by "log -p --graph" for the
+superproject knows what the graph lines that depict the lineages of
+history in the superproject should look like, but the "git diff A B"
+in the submodule of course does not, so while showing e.g. "| | |"
+(three lineages) for the history in the superproject, you would run
+"git diff --line-prefix='| | | ' A B" and by showing them before
+anything that "git diff A B" without the new option would have
+produced, you could mimick and match the graph output in the
+superproject.
 
-Also introduce set_terms() to copy the `term_good` and `term_bad` into
-`struct bisect_terms` and write it out to the file BISECT_TERMS.
+In that scenario, the line prefix _is_ the graph's prefix in the
+superproject.
 
-Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
----
- builtin/bisect--helper.c | 52 +++++++++++++++++++++++++++++++++++++++++++++++-
- git-bisect.sh            | 36 ++++-----------------------------
- 2 files changed, 55 insertions(+), 33 deletions(-)
+You might be envisioning a future enhancement where the recursive
+one uses not "-Submodule commit A"/"-Submodule commit B", and not
+"diff A B", but "log -p A...B" in the submodule, and in such a case,
+it might make sense to run "log -p --graph A...B" instead when the
+command the end user run in the superproject asked for "--graph".
+You would use the same "--line-prefix='| | | '" when running the
+"log -p --graph A...B" command in the submodule, so that the output
+for the submodule will go _after_ the graph of the superproject, but
+in that case, the output for the submodule would also include its
+own graph to show the relationship between A and B.  The line-prefix
+must come before that graph part (and also if it is "git log" run in
+the submodule, the same line-prefix must come before each line of
+the log message output).
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 9f70edb..5c4350f 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -23,6 +23,7 @@ static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --bisect-clean-state"),
- 	N_("git bisect--helper --bisect-reset [<commit>]"),
- 	N_("git bisect--helper --bisect-write <state> <revision> <TERM_GOOD> <TERM_BAD> [<nolog>]"),
-+	N_("git bisect--helper --bisect-check-and-set-terms <command> <TERM_GOOD> <TERM_BAD>"),
- 	NULL
- };
- 
-@@ -43,6 +44,12 @@ static void bisect_terms_release(struct bisect_terms *terms)
- 	strbuf_release(&terms->term_bad);
- }
- 
-+static void bisect_terms_reset(struct bisect_terms *term)
-+{
-+	strbuf_reset(&term->term_good);
-+	strbuf_reset(&term->term_bad);
-+}
-+
- /*
-  * Check whether the string `term` belongs to the set of strings
-  * included in the variable arguments.
-@@ -253,6 +260,39 @@ static int bisect_write(const char *state, const char *rev,
- 	return 0;
- }
- 
-+static int set_terms(struct bisect_terms *terms, const char *bad,
-+		     const char *good)
-+{
-+	bisect_terms_reset(terms);
-+	strbuf_addstr(&terms->term_good, good);
-+	strbuf_addstr(&terms->term_bad, bad);
-+	return write_terms(terms->term_bad.buf, terms->term_good.buf);
-+}
-+
-+static int check_and_set_terms(struct bisect_terms *terms, const char *cmd)
-+{
-+	int has_term_file = !is_empty_or_missing_file(git_path_bisect_terms());
-+
-+	if (one_of(cmd, "skip", "start", "terms", NULL))
-+		return 0;
-+
-+	if (has_term_file &&
-+	    strcmp(cmd, terms->term_bad.buf) &&
-+	    strcmp(cmd, terms->term_good.buf))
-+		return error(_("Invalid command: you're currently in a "
-+				"%s/%s bisect"), terms->term_bad.buf,
-+				terms->term_good.buf);
-+
-+	if (!has_term_file) {
-+		if (one_of(cmd, "bad", "good", NULL))
-+			return set_terms(terms, "bad", "good");
-+		if (one_of(cmd, "new", "old", NULL))
-+			return set_terms(terms, "new", "old");
-+	}
-+
-+	return 0;
-+}
-+
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
- 	enum {
-@@ -261,7 +301,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		BISECT_CLEAN_STATE,
- 		BISECT_RESET,
- 		CHECK_EXPECTED_REVS,
--		BISECT_WRITE
-+		BISECT_WRITE,
-+		CHECK_AND_SET_TERMS
- 	} cmdmode = 0;
- 	int no_checkout = 0, res = 0;
- 	struct option options[] = {
-@@ -277,6 +318,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			 N_("check for expected revs"), CHECK_EXPECTED_REVS),
- 		OPT_CMDMODE(0, "bisect-write", &cmdmode,
- 			 N_("write out the bisection state in BISECT_LOG"), BISECT_WRITE),
-+		OPT_CMDMODE(0, "check-and-set-terms", &cmdmode,
-+			 N_("check and set terms in a bisection state"), CHECK_AND_SET_TERMS),
- 		OPT_BOOL(0, "no-checkout", &no_checkout,
- 			 N_("update BISECT_HEAD instead of checking out the current commit")),
- 		OPT_END()
-@@ -320,6 +363,13 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		strbuf_addstr(&terms.term_bad, argv[3]);
- 		res = bisect_write(argv[0], argv[1], &terms, nolog);
- 		break;
-+	case CHECK_AND_SET_TERMS:
-+		if (argc != 3)
-+			die(_("--check-and-set-terms requires 3 arguments"));
-+		strbuf_addstr(&terms.term_good, argv[1]);
-+		strbuf_addstr(&terms.term_bad, argv[2]);
-+		res = check_and_set_terms(&terms, argv[0]);
-+		break;
- 	default:
- 		die("BUG: unknown subcommand '%d'", cmdmode);
- 	}
-diff --git a/git-bisect.sh b/git-bisect.sh
-index b9896a4..a41e69b 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -239,7 +239,8 @@ bisect_skip() {
- bisect_state() {
- 	bisect_autostart
- 	state=$1
--	check_and_set_terms $state
-+	git bisect--helper --check-and-set-terms $state $TERM_GOOD $TERM_BAD || exit
-+	get_terms
- 	case "$#,$state" in
- 	0,*)
- 		die "$(gettext "Please call 'bisect_state' with at least one argument.")" ;;
-@@ -390,7 +391,8 @@ bisect_replay () {
- 			command="$bisect"
- 		fi
- 		get_terms
--		check_and_set_terms "$command"
-+		git bisect--helper --check-and-set-terms "$command" "$TERM_GOOD" "$TERM_BAD" || exit
-+		get_terms
- 		case "$command" in
- 		start)
- 			cmd="bisect_start $rev"
-@@ -480,36 +482,6 @@ get_terms () {
- 	fi
- }
- 
--check_and_set_terms () {
--	cmd="$1"
--	case "$cmd" in
--	skip|start|terms) ;;
--	*)
--		if test -s "$GIT_DIR/BISECT_TERMS" && test "$cmd" != "$TERM_BAD" && test "$cmd" != "$TERM_GOOD"
--		then
--			die "$(eval_gettext "Invalid command: you're currently in a \$TERM_BAD/\$TERM_GOOD bisect.")"
--		fi
--		case "$cmd" in
--		bad|good)
--			if ! test -s "$GIT_DIR/BISECT_TERMS"
--			then
--				TERM_BAD=bad
--				TERM_GOOD=good
--				git bisect--helper --write-terms "$TERM_BAD" "$TERM_GOOD" || exit
--			fi
--			;;
--		new|old)
--			if ! test -s "$GIT_DIR/BISECT_TERMS"
--			then
--				TERM_BAD=new
--				TERM_GOOD=old
--				git bisect--helper --write-terms "$TERM_BAD" "$TERM_GOOD" || exit
--			fi
--			;;
--		esac ;;
--	esac
--}
--
- bisect_voc () {
- 	case "$1" in
- 	bad) echo "bad|new" ;;
+With that understanding/assumption, "line prefix should go after the
+graph's own prefix" sounds like a wrong choice to me.  Shouldn't the
+prefix go before everything else?
 
---
-https://github.com/git/git/pull/281
