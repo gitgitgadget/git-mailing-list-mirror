@@ -2,146 +2,195 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_12_24,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90F8B1FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 20:17:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C3EE1FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 20:17:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934928AbcHJURY (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 16:17:24 -0400
-Received: from mail-yw0-f172.google.com ([209.85.161.172]:35093 "EHLO
-	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932313AbcHJURW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2016 16:17:22 -0400
-Received: by mail-yw0-f172.google.com with SMTP id j12so32041845ywb.2
-        for <git@vger.kernel.org>; Wed, 10 Aug 2016 13:17:21 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=clbpSAE1IY7YG+uhY4hffzmAO4anfyoXkCS1hd3w2w0=;
-        b=yUoHrs9p1cgPg0uYs67rD5vwbwYiLOU5NADHmrEr2oZ8d3XY7tX4tfGnniUzXAfmsE
-         aHrFKqCGy3JqrKb6t4BdOgvWLmOv0DiulSh3F4EyvkPysJDx1a5sv9XjovQWJiiXuwzt
-         Z4FSlOmtBtvL8OR2NEriRCOh612Ey4h4StzeW1g5emiZWYsCwZsHsK8uMSg0jpW3o0TD
-         RtDz8lPM8ROkbbsFsJQCwoMN7XrkQ7Vvlwi2YSLu0FHS5MlWeb7tVq/Ge05nt/6sICrf
-         F8Gvvw+RcQNBG3E9qXvSy2AZUpKWaKO3G4ma5Oo2kpshuuJPfMVwmEf17esNwP/3AVQh
-         16nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=clbpSAE1IY7YG+uhY4hffzmAO4anfyoXkCS1hd3w2w0=;
-        b=IICxwk5I6WY1oSCnbp+4d6wgA7mBuF2669GtASaFsJoxNhQBtbW/70loOL1ZTvQptg
-         NCYub+It6r+M2O1hm0flGdB+ggcF6AJDALkc2zsNieoaKWxGlyW6A22J9zYBJ8VpA0/E
-         JhmIkddTSaMPSlGPDjY8oeBSXlB9T4HhzKMjdcsFMtY+h5i12CrenodXK+AbWWCANoYr
-         WoKJ/lsgp36XwG2f/T65voDsGAVFgxEEBhb+xBGG6W8E6etxfKqEM2NVAZjxP91CTcxh
-         Y2WzyKY11Z2lx2QGUAAYZdApVeL1hg4oD2t8XgKUjtNqARrbgIQZMXLEL3Jk27GVJHkj
-         aVfw==
-X-Gm-Message-State: AEkoouuewOQZgNM3+SCF93MS0hnQncLccp8EDx+hn/+6St8DVQXOYsf+/PhyMKGeFPIuPZwsVxdcMu+Xx27pEw==
-X-Received: by 10.129.135.2 with SMTP id x2mr1635439ywf.310.1470811941779;
- Tue, 09 Aug 2016 23:52:21 -0700 (PDT)
+	id S934859AbcHJUR3 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 16:17:29 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64502 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S934866AbcHJUR0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2016 16:17:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 04E5833A7D;
+	Wed, 10 Aug 2016 16:17:25 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AeEAdfxnDw1Dqrewy6Yp8CAwIbY=; b=UOx3VC
+	tSr+L0uPsecNEoY97QIhX1ZpoYm7z0Q7ebPQC47gB9t8uknv1HA0eOlaMHc90nt2
+	HFIOPLtQQe3VZb4GFOhtjq/ZWgApbjHFhttgyaAomyalHA4LpOQwrRy1cBrerx87
+	hxo+6IXanBW7zy9N2krmJXdEfApHyY6Z0mx2E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YyNWzXj4/jL7fyZe9H3BQ4Uzq1LCvwXu
+	R/7HlGJ1lxFaHI80zplJXoZklUw2NE+uDZjBuQBzHFO47BzpWyGnqjkNaj4VOMx3
+	3VA/H3RtRJT8q1xPQsZZS8tuVTcH1w7JAiQ1nuGxZZoA2sm1vPDy01ty5tjg51Nd
+	yQPYHHOgBIE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id F0AA233A7C;
+	Wed, 10 Aug 2016 16:17:24 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 48ED333A7B;
+	Wed, 10 Aug 2016 16:17:24 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff King <peff@peff.net>
+Cc:	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v3 1/2] pack-objects: break delta cycles before delta-search phase
+References: <20160810115206.l57qpehpabthnl6c@sigill.intra.peff.net>
+	<20160810120248.i2hvm2q6ag3rvsk4@sigill.intra.peff.net>
+Date:	Wed, 10 Aug 2016 13:17:22 -0700
+In-Reply-To: <20160810120248.i2hvm2q6ag3rvsk4@sigill.intra.peff.net> (Jeff
+	King's message of "Wed, 10 Aug 2016 08:02:49 -0400")
+Message-ID: <xmqqr39w4bvx.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.50.196 with HTTP; Tue, 9 Aug 2016 23:52:01 -0700 (PDT)
-In-Reply-To: <xmqqtwet70ra.fsf@gitster.mtv.corp.google.com>
-References: <20160810002315.25236-1-jacob.e.keller@intel.com> <xmqqtwet70ra.fsf@gitster.mtv.corp.google.com>
-From:	Jacob Keller <jacob.keller@gmail.com>
-Date:	Tue, 9 Aug 2016 23:52:01 -0700
-Message-ID: <CA+P7+xpGGqNC8B-fQiQXZcXWha2BBQa96sFvj+_MBVHWakMh_Q@mail.gmail.com>
-Subject: Re: [PATCH RFC v2] diff: add SUBMODULE_DIFF format to display
- submodule diff
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Jacob Keller <jacob.e.keller@intel.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7344D0DA-5F37-11E6-B367-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Aug 9, 2016 at 8:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jacob Keller <jacob.e.keller@intel.com> writes:
->> +             cp.dir = path;
->> +     cp.out = -1;
->> +     cp.no_stdin = 1;
->> +     argv_array_push(&cp.args, "diff");
->> +     argv_array_pushf(&cp.args, "--src-prefix=a/%s/", path);
->> +     argv_array_pushf(&cp.args, "--dst-prefix=b/%s/", path);
->
-> I think this is wrong.  Imagine when the caller gave you prefixes
-> that are different from a/ and b/ (think: the extreme case is that
-> you are a sub-sub-module, and the caller is recursing into you with
-> its own prefix, perhaps set to a/sub and b/sub).  Use the prefixes
-> you got for a/ and b/ instead of hardcoding them and you'd be fine,
-> I'd guess.
+Jeff King <peff@peff.net> writes:
 
-I'll have to get these passed, but yes this makes more sense, will look into it.
+> ...
+> We could do analysis on any cycles that we find to
+> distinguish the two cases (i.e., it is a bogus pack if and
+> only if every delta in the cycle is in the same pack), but
+> we don't need to. If there is a cycle inside a pack, we'll
+> run into problems not only reusing the delta, but accessing
+> the object data at all. So when we try to dig up the actual
+> size of the object, we'll hit that same cycle and kick in
+> our usual complain-and-try-another-source code.
 
->
->> +     argv_array_push(&cp.args, sha1_to_hex(one));
->> +
->> +     /*
->> +      * If the submodule has untracked or modified contents, diff between
->> +      * the old base and the current tip. This had the advantage of showing
->> +      * the full difference of the submodule contents.
->> +      */
->> +     if (!create_dirty_diff)
->> +             argv_array_push(&cp.args, sha1_to_hex(two));
->> +
->> +     if (start_command(&cp))
->> +             die("Could not run 'git diff' command in submodule %s", path);
->> +
->> +     diff = fdopen(cp.out, "r");
->> +
->> +     c = fgetc(diff);
->> +     while (c != EOF) {
->> +             fputc(c, f);
->> +             c = fgetc(diff);
->> +     }
->> +
->> +     fclose(diff);
->> +     finish_command(&cp);
->
-> I do not think you need to do this.  If "f" is already a FILE * to
-> which the output must go, then instead of reading from the pipe and
-> writing it, you can just let the "diff" spit out its output to the
-> same file descriptor, by doing something like:
->
->         fflush(f);
->         cp.out = dup(fileno(f));
->         ... other setup ...
->         run_command(&cp);
->
-> no?  I do not offhand recall run_command() closes cp.out after done,
-> and if it doesn't you may have to close it yourself after the above
-> sequence.
+I agree with all of the above reasoning.
 
+> Actually, skimming the sha1_file code, I am not 100% sure that we detect
+> cycles in OBJ_REF_DELTA (you cannot have cycles in OBJ_OFS_DELTA since
+> they always point backwards in the pack). But if that is the case, then
+> I think we should fix that, not worry about special-casing it here.
 
-That makes a lot more sense, yes. I hadn't thought of dup, (long time
-since I've had to use file descriptors).
+Yes, but sha1_file.c?  It is the reading side and it is too late if
+we notice a problem, I would think.
 
-the child_process api does close the descriptor itself. That's a much
-better way to get the result we want, and it is less code, so I'll try
-this out.
+> +/*
+> + * Drop an on-disk delta we were planning to reuse. Naively, this would
+> + * just involve blanking out the "delta" field, but we have to deal
+> + * with two extra pieces of book-keeping:
+> + *
+> + *   1. Removing ourselves from the delta_sibling linked list.
+> + *
+> + *   2. Updating our size; check_object() will have filled in the size of our
+> + *      delta, but a non-delta object needs it true size.
 
->
-> While I personally do not want to see code to access submodule's
-> object store by temporarily adding it as alternates, the "show
-> left-right log between the commits" code already does so, so I
-> should point out that running "diff" internally without spawning it
-> as a subprocess shouldn't be too hard.  The diff API is reasonably
-> libified and there shouldn't be additional "libification" preparation
-> work required to do this, if you really wanted to.
+Excellent point.
 
-I looked at trying to call diff for this, but I think it's not worth
-it. Using the child process API makes more sense and is a cleaner
-method. I'll go this route as it appears to work pretty well. The only
-major concern I have is that options may not get forwarded
-correctly...
+> +/*
+> + * Follow the chain of deltas from this entry onward, throwing away any links
+> + * that cause us to hit a cycle (as determined by the DFS state flags in
+> + * the entries).
+> + */
+> +static void break_delta_cycles(struct object_entry *entry)
+> +{
+> +	/* If it's not a delta, it can't be part of a cycle. */
+> +	if (!entry->delta) {
+> +		entry->dfs_state = DFS_DONE;
+> +		return;
+> +	}
+> +
+> +	switch (entry->dfs_state) {
+> +	case DFS_NONE:
+> +		/*
+> +		 * This is the first time we've seen the object. We mark it as
+> +		 * part of the active potential cycle and recurse.
+> +		 */
+> +		entry->dfs_state = DFS_ACTIVE;
+> +		break_delta_cycles(entry->delta);
+> +		entry->dfs_state = DFS_DONE;
+> +		break;
+> +
+> +	case DFS_DONE:
+> +		/* object already examined, and not part of a cycle */
+> +		break;
+> +
+> +	case DFS_ACTIVE:
+> +		/*
+> +		 * We found a cycle that needs broken. It would be correct to
+> +		 * break any link in the chain, but it's convenient to
+> +		 * break this one.
+> +		 */
+> +		drop_reused_delta(entry);
+> +		break;
+> +	}
+> +}
 
-Thanks,
-Jake
+Do we need to do anything to the DFS state of an entry when
+drop_reused_delta() resets its other fields?  If we had this and
+started from A (read "A--->B" as "A is based on B"):
+
+    A--->B--->C--->A
+
+we paint A as ACTIVE, visit B and then C and paint them as active,
+and when we visit A for the second time, we drop it (i.e. break the
+link between A and B), return and paint C as DONE, return and paint
+B as DONE, and leaving A painted as ACTIVE, while the chain is now
+
+         B--->C--->A
+
+If we later find D that is directly based on A, wouldn't we end up
+visiting A and attempt to drop it again?  drop_reused_delta() is
+idempotent so there will be no data structure corruption, I think,
+but we can safely declare that the entry is now DONE after calling
+drop_reused_delta() on it (either in the function or in the caller
+after it calls the function), no?
+
+> + 2. Picking the next pack to examine based on locality (i.e., where we found
+> +    something else recently).
+> +
+> +    In this case, we want to make sure that we find the delta versions of A and
+> +    B and not their base versions. We can do this by putting two blobs in each
+> +    pack. The first is a "dummy" blob that can only be found in the pack in
+> +    question.  And then the second is the actual delta we want to find.
+> +
+> +    The two blobs must be present in the same tree, not present in other trees,
+> +    and the dummy pathname must sort before the delta path.
+
+> +# Create a pack containing the the tree $1 and blob $1:file, with
+> +# the latter stored as a delta against $2:file.
+> +#
+> +# We convince pack-objects to make the delta in the direction of our choosing
+> +# by marking $2 as a preferred-base edge. That results in $1:file as a thin
+> +# delta, and index-pack completes it by adding $2:file as a base.
+
+Tricky but clever and correct ;-)
+
+> +make_pack () {
+> +	 {
+> +		 echo "-$(git rev-parse $2)"
+
+Is everybody's 'echo' happy with dash followed by unknown string?
+
+> +		 echo "$(git rev-parse $1:dummy) dummy"
+> +		 echo "$(git rev-parse $1:file) file"
+> +	 } |
+> +	 git pack-objects --stdout |
+> +	 git index-pack --stdin --fix-thin
+
+An alternative
+
+	git pack-objects --stdout <<-EOF |
+	-$(git rev-parse $2)
+        $(git rev-parse $1:dummy) dummy
+        $(git rev-parse $1:file) file
+	EOF
+        git index-pack --stdin --fix-thin
+
+looks somewhat ugly, though.
+
+> +}
