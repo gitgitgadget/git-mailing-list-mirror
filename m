@@ -2,135 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58B2F1FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 18:18:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B4D71FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 18:20:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933510AbcHJSSR (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 14:18:17 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:37636 "EHLO
-	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932322AbcHJSSP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Aug 2016 14:18:15 -0400
-Received: by mail-wm0-f42.google.com with SMTP id i5so121899802wmg.0
-        for <git@vger.kernel.org>; Wed, 10 Aug 2016 11:18:15 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=k5OUuef5CBTZg7xjgjMmL/OWI9HXNT0gcsng+Vn/KK8=;
-        b=UQWkpZsO5Ot2nzkvkHCKP3aeUVAy8JL7lH3G7lxFKioRytj/zXtd01j0zN7PQvKZgo
-         cSArRy03Zfn+Y/+g4yhGd49Si5o60wmakuJ/n5SI5VcqFyZp801OoBlIu1Q7zvqLW+NT
-         1pEF3g4+ACIXiwYuh+CCM7OwUtHO2Yij8J++eAl01YJaEE9lpgoIsJh2eIY3LLVp5PGa
-         fR5ATYFWV1r8I8G/o+DDcvRvEXRFC2e8ltTZr9LaqXU5aXTH4nRJCPG9l/oo+bRoj1RU
-         q5WVWP/igDhVHDHUV3bfcYfK0Sw4Jwzb00cUwdOk/pYW/bLb1TW9knr96oDQyqmC7pIf
-         PSKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=k5OUuef5CBTZg7xjgjMmL/OWI9HXNT0gcsng+Vn/KK8=;
-        b=OzGCMqx7Cf31YW89S2dGSNFzh5ABbNiEvjdly0gu7sM5n62RHFWfDWFKzX6tkrkoWR
-         6GY1xJ7TNXe2t1WHr7JKe2bycLHmq1Xv0fLisCrPTHU3jhmI+3l0NcVKPSBBUZLvzVP4
-         JaJK6/NUIqDhEVKs9BBPCJrfRTwBK1kI7clf3mpeEGAl+7y/2BQuotjyUE+/LvP12Ird
-         FN2hWEljPXnLFheaVRmsrVBAswTf7lDSeI8LAPUHyyJKvqE/SMEF8g5h6KDRkW5eTxZN
-         UW6xbgGmGJ1LMDqodExB8tVtwtZIGzCh7hZ1+xq4uP5A+smOyOhtzaVgI1gLlu0Ot1q1
-         88OQ==
-X-Gm-Message-State: AEkoouv8dwcugrmcfSLc5ne9O5zJIYGt4dvEb8YrfU5uer3AXyXDEmuy7E5XBfS6rn9OVg==
-X-Received: by 10.28.139.144 with SMTP id n138mr4648072wmd.71.1470851217672;
-        Wed, 10 Aug 2016 10:46:57 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id h7sm44101804wjd.17.2016.08.10.10.46.56
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 10 Aug 2016 10:46:57 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: What's cooking in git.git (Aug 2016, #03; Mon, 8)
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <CAGZ79kai3V=pVMOsas6P9wSCyF=BXwVf2Piuci9CNt5BN=K7Wg@mail.gmail.com>
-Date:	Wed, 10 Aug 2016 19:46:55 +0200
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Content-Transfer-Encoding: 8BIT
-Message-Id: <4A236012-9645-424D-8E07-9E64DCFC2FFB@gmail.com>
-References: <xmqqwpjqdh7w.fsf@gitster.mtv.corp.google.com> <A6131C47-3230-4EC4-B3F6-B2507C937A22@gmail.com> <CAGZ79kai3V=pVMOsas6P9wSCyF=BXwVf2Piuci9CNt5BN=K7Wg@mail.gmail.com>
-To:	Stefan Beller <sbeller@google.com>
-X-Mailer: Apple Mail (2.3124)
+	id S933891AbcHJSTq (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 14:19:46 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:63367 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933883AbcHJSTo (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Aug 2016 14:19:44 -0400
+X-AuditID: 12074411-a1bff70000000932-3d-57ab6162dbe6
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by  (Symantec Messaging Gateway) with SMTP id 26.F1.02354.2616BA75; Wed, 10 Aug 2016 13:16:18 -0400 (EDT)
+Received: from [192.168.69.130] (p5B104255.dip0.t-ipconnect.de [91.16.66.85])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u7AHGGvs006052
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 10 Aug 2016 13:16:17 -0400
+Subject: Re: [PATCH 6/8] xdl_change_compact(): keep track of the earliest end
+To:	Junio C Hamano <gitster@pobox.com>
+References: <cover.1470259583.git.mhagger@alum.mit.edu>
+ <b0413b20e3b8de1dedb91460a9f05534166f6afa.1470259583.git.mhagger@alum.mit.edu>
+ <xmqqoa582wyp.fsf@gitster.mtv.corp.google.com>
+Cc:	git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+From:	Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <85602359-b1a1-39e4-b56b-081aa4014609@alum.mit.edu>
+Date:	Wed, 10 Aug 2016 19:16:15 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.1.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqoa582wyp.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupjleLIzCtJLcpLzFFi42IRYndR1E1KXB1u8LZXxKLrSjeTRUPvFWaL
+	3Yv7mS1WXJ3DbPGjpYfZYvPmdhYHNo+ds+6yeyzYVOrxrHcPo8fFS8oenzfJBbBGcdmkpOZk
+	lqUW6dslcGX8PL+aqWAZS8XMafNZGxjXMHcxcnJICJhI/GzdxtrFyMUhJLCVUeLxg0VMEM5Z
+	Jol9HXvBqoQFfCUap81hBLFFBNQkJrYdYoEo2skosf3zFzaQBLPAOUaJ71O0QWw2AV2JRT3N
+	TCA2r4C9xJQl11lBbBYBVYmGJx1gQ0UFQiS23Wxgg6gRlDg58wkLiM0pYC3xbOc7doiZehI7
+	rv9ihbDlJba/ncM8gZF/FpKWWUjKZiEpW8DIvIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI11Qv
+	N7NELzWldBMjJKgFdzDOOCl3iFGAg1GJh3cD06pwIdbEsuLK3EOMkhxMSqK8wjGrw4X4kvJT
+	KjMSizPii0pzUosPMUpwMCuJ8LZFAOV4UxIrq1KL8mFS0hwsSuK8fEvU/YQE0hNLUrNTUwtS
+	i2CyMhwcShK87+KBGgWLUtNTK9Iyc0oQ0kwcnCDDeYCG2yWADC8uSMwtzkyHyJ9i1OVY8OP2
+	WiYhlrz8vFQpcV53kEECIEUZpXlwc2DJ6BWjONBbwrxOIKN4gIkMbtIroCVMQEuSVFeALClJ
+	REhJNTB2/mTj+/XK1Ux6A0vifolIX6/fZVNm1SjE2z340DXjTufWXnulc+tuvzmT1PL2nF3r
+	5S2bjzWxVheLOE9xbXWrNU78Lp4x6/hejeO7rLStz39+7Bq/3JmvIGwq/561K2LernmZW9s8
+	49NXvfdLeSR+RKXN9y570qO67+ZUlc07+pmjjnLJLFZWYinOSDTUYi4qTgQAl5CJSCEDAAA=
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+On 08/04/2016 08:46 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> This makes it easier to detect whether shifting is possible, and will
+>> also make the next change easier.
+> 
+> I can see the code keeping track of earliest_end but the above does
+> not make it clear what the new "continue" is about.
+> 
+> ... easier to detect whether shifting is possible (in which case we
+> can skip the shifting), and will also make ...
+> 
+> perhaps.
 
-> On 10 Aug 2016, at 19:36, Stefan Beller <sbeller@google.com> wrote:
-> 
-> On Wed, Aug 10, 2016 at 10:30 AM, Lars Schneider
-> <larsxschneider@gmail.com> wrote:
->> 
->>> 
->>> * sb/submodule-update-dot-branch (2016-08-03) 7 commits
->>> (merged to 'next' on 2016-08-04 at 47bff41)
->>> + submodule update: allow '.' for branch value
->>> + submodule--helper: add remote-branch helper
->>> + submodule-config: keep configured branch around
->>> + submodule--helper: fix usage string for relative-path
->>> + submodule update: narrow scope of local variable
->>> + submodule update: respect depth in subsequent fetches
->>> + t7406: future proof tests with hard coded depth
->>> 
->>> A few updates to "git submodule update".
->>> 
->>> Will merge to 'master'.
->> 
->> I think "t7406: future proof tests with hard coded depth"
->> breaks the tests on OSX:
->> 
->> https://travis-ci.org/git/git/jobs/150779244
->> 
->> Cheers,
->> Lars
->> 
-> 
-> 
-> error: pathspec '4' did not match any file(s) known to git.
-> 
-> not ok 46 - submodule update clone shallow submodule
-> 
-> #
-> # test_when_finished "rm -rf super3" &&
-> # first=$(git -C cloned submodule status submodule |cut -c2-41) &&
-> # second=$(git -C submodule rev-parse HEAD) &&
-> # commit_count=$(git -C submodule rev-list $first^..$second | wc -l) &&
-> # git clone cloned super3 &&
-> # pwd=$(pwd) &&
-> # (
-> # cd super3 &&
-> # sed -e "s#url = ../#url = file://$pwd/#" <.gitmodules >.gitmodules.tmp &&
-> # mv -f .gitmodules.tmp .gitmodules &&
-> # git submodule update --init --depth=$commit_count &&
-> # test 1 = $(git -C submodule log --oneline | wc -l)
-> # )
-> #
-> 
-> 
-> Is it possible that the "wc -l" produces  SP <NUMBER> on OSX,
-> such that the
-> 
-> # git submodule update --init --depth=$commit_count
-> 
-> contains "--depth= 4" which means empty depth and 4 as the pathspec
-> for the update command?
+Thanks. I will make the change that you suggest.
 
-Consider this:
-
-~code/git git:(master) ▶ ls | wc -l
-     747
-
-Apparently `wc -l` adds 5 spaces on OS X...
-
-- Lars
+Michael
 
