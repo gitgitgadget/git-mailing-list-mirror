@@ -2,90 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9EF3B203BD
-	for <e@80x24.org>; Wed, 10 Aug 2016 18:23:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D46ED1FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 18:27:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934007AbcHJSWy (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 14:22:54 -0400
-Received: from bsmtp5.bon.at ([195.3.86.187]:36117 "EHLO bsmtp5.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934316AbcHJSWx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2016 14:22:53 -0400
-Received: from bsmtp3.bon.at (unknown [192.168.181.107])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 3s8X5V5zSDz5tml
-	for <git@vger.kernel.org>; Wed, 10 Aug 2016 15:27:58 +0200 (CEST)
-Received: from dx.site (unknown [93.83.142.38])
-	by bsmtp3.bon.at (Postfix) with ESMTPSA id 3s8X4J12hyz5tlB;
-	Wed, 10 Aug 2016 15:26:55 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-	by dx.site (Postfix) with ESMTP id 269405137;
-	Wed, 10 Aug 2016 15:26:55 +0200 (CEST)
-Subject: Re: [PATCH] Spelling fixes
-To:	Junio C Hamano <gitster@pobox.com>
-References: <1470732818-408-1-git-send-email-ville.skytta@iki.fi>
- <xmqqpophajqa.fsf@gitster.mtv.corp.google.com>
-Cc:	=?UTF-8?Q?Ville_Skytt=c3=a4?= <ville.skytta@iki.fi>,
-	git@vger.kernel.org
-From:	Johannes Sixt <j6t@kdbg.org>
-Message-ID: <f4f313a0-749d-4db2-3afc-9e93ea2ba130@kdbg.org>
-Date:	Wed, 10 Aug 2016 15:26:54 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2
+	id S934913AbcHJS1M (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 14:27:12 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55783 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933331AbcHJS1J (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2016 14:27:09 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 641CE35216;
+	Wed, 10 Aug 2016 14:27:08 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0YOa5VbM/Ge7V8Q6PxTvmB6hlrA=; b=YEL+W7
+	r3BVF5yhUppn3cJJ/bbpKnPxW31Gi4A5AhPTNWu9BYCgJAPDWsxtDv0bQsEPwsmy
+	jXgyRAVFW2Ce5PH7CPrB65LCF52LHsWYq1zIL/GkLeYTsotGAGJQdmEe8sgXGeck
+	Gh1ACZEhhvRtErdvO9CjHujG3RFByEyCX6EeQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=K/rfrDWlVJHdMrCQSnwwRQ/tm+36PvmM
+	SUOL3VM5Jtn//C/Sl9ASUListWBk0ZVdNYmep/lEM6aZdTqVGDZqkH/djeJ81n3u
+	QMhD2qKTgG/vqM9TNIl+jORzD/AL8884OXJooBcDQViHB0pQXtoD+CpfuPNI20ak
+	rgIYLoqFBpY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5ABA835215;
+	Wed, 10 Aug 2016 14:27:08 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C975735214;
+	Wed, 10 Aug 2016 14:27:07 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Stefan Beller <sbeller@google.com>
+Cc:	git@vger.kernel.org, larsxschneider@gmail.com
+Subject: Re: [PATCH] t7406: fix breakage on OSX
+References: <A6131C47-3230-4EC4-B3F6-B2507C937A22@gmail.com>
+	<20160810175607.30826-1-sbeller@google.com>
+Date:	Wed, 10 Aug 2016 11:27:05 -0700
+In-Reply-To: <20160810175607.30826-1-sbeller@google.com> (Stefan Beller's
+	message of "Wed, 10 Aug 2016 10:56:07 -0700")
+Message-ID: <xmqq1t1w5vk6.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqpophajqa.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0B8AA4BA-5F28-11E6-9E5D-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Am 09.08.2016 um 20:19 schrieb Junio C Hamano:
->     <BAD>                     <CORRECTED>
-> 
->     accidently                accidentally
->     commited                  committed
->     dependancy                dependency
->     emtpy                     empty
->     existance                 existence
->     explicitely               explicitly
->     git-upload-achive         git-upload-archive
->     hierachy                  hierarchy
->     intial                    initial
->     mulitple                  multiple
->     non-existant              non-existent
->     precendence.              precedence.
->     priviledged               privileged
->     programatically           programmatically
->     psuedo-binary             pseudo-binary
->     soemwhere                 somewhere
->     successfull               successful
->     unkown                    unknown
->     usefull                   useful
->     writting                  writing
+Stefan Beller <sbeller@google.com> writes:
 
-This reminds me of one occurrence of "indegee" in commit-slab.h that
-should be "indegree". The word is not in this list above, so I don't
-know whether you would like to have it fixed in the same patch or not...
+> On OSX `wc` prefixes the output of numbers with whitespace, such that
+> the `commit_count` would be "SP <NUMBER>". When using that in
+>
+>     git submodule update --init --depth=$commit_count
+>
+> the depth would be empty and the number is interpreted as the pathspec.
+> Fix this by not using `wc` and rather instruct rev-list to count.
+>
+> Another way to fix this is to remove the `=` sign after the `--depth`
+> argument as then we are allowed to have more than just one whitespace
+> between `--depth` and the actual number. Prefer the solution of rev-list
+> counting as that is expected to be slightly faster and more self-sustained
+> within Git.
 
-(BTW, is that word "in-degree" or "ingredient"?)
+You meant self-contained, I would guess.
 
--- Hannes
+There are a couple of "log --oneline | wc -l" remaining that are
+currently safe but they may be a time-bomb waiting to go off.
 
-diff --git a/commit-slab.h b/commit-slab.h
---- a/commit-slab.h
-+++ b/commit-slab.h
-@@ -8,7 +8,7 @@
-  *
-  * After including this header file, using:
-  *
-- * define_commit_slab(indegee, int);
-+ * define_commit_slab(indegree, int);
-  *
-  * will let you call the following functions:
-  *
-
+Thanks.
