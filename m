@@ -3,215 +3,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F145F1FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 19:21:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 955701FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 19:22:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S941407AbcHJTVi (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 15:21:38 -0400
-Received: from us-hpswa-esg-01.alcatel-lucent.com ([135.245.18.29]:45082 "EHLO
-	smtp-us.alcatel-lucent.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S941404AbcHJTVg (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Aug 2016 15:21:36 -0400
-Received: from us70uumx3.dmz.alcatel-lucent.com (unknown [135.245.18.15])
-	by Websense Email Security Gateway with ESMTPS id 37C9C2A67D642;
-	Wed, 10 Aug 2016 19:21:31 +0000 (GMT)
-Received: from us70uusmtp3.zam.alcatel-lucent.com (us70uusmtp3.zam.alcatel-lucent.com [135.5.2.65])
-	by us70uumx3.dmz.alcatel-lucent.com (GMO) with ESMTP id u7AJLYG8015385
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Wed, 10 Aug 2016 19:21:34 GMT
-Received: from US70TWXCHHUB04.zam.alcatel-lucent.com (us70twxchhub04.zam.alcatel-lucent.com [135.5.2.36])
-	by us70uusmtp3.zam.alcatel-lucent.com (GMO) with ESMTP id u7AJJgBH020936
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
-	Wed, 10 Aug 2016 19:21:33 GMT
-Received: from [135.121.197.20] (135.5.27.16) by
- US70TWXCHHUB04.zam.alcatel-lucent.com (135.5.2.36) with Microsoft SMTP Server
- (TLS) id 14.3.195.1; Wed, 10 Aug 2016 15:21:15 -0400
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-CC:	Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-From:	Stephen Morton <stephen.morton@nokia.com>
-Subject: Re: git cherry-pick conflict error message is deceptive when
- cherry-picking multiple commits
-Organization: Nokia ION
-Message-ID: <09d485df-7d14-97f8-9db9-e3db7512bd68@nokia.com>
-Date:	Wed, 10 Aug 2016 15:21:18 -0400
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [135.5.27.16]
+	id S941367AbcHJTV1 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 15:21:27 -0400
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:36994 "EHLO
+	mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936454AbcHJTCZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Aug 2016 15:02:25 -0400
+Received: by mail-wm0-f44.google.com with SMTP id i5so124191814wmg.0
+        for <git@vger.kernel.org>; Wed, 10 Aug 2016 12:01:44 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=jokIpIKeBLZqrvSTx9zVh+tDVl8ky++l7h7t03abb80=;
+        b=UQZRVcziJ9ixphb/3KiB1b1wcGBbLieuUOlGB8V8ZQ2cxUFFej4M9CSOzI+LkB43Lh
+         PRC0T7tGkIoscSdSkieYxizol83U8+3NnaYZ5gozuPVXwRpRdU7wOkx8PUqawHy4+UD8
+         3I3mZKwScAbcbh14HCkhjbav7/V0bRrbC8YEOs+s6+8vGDa87tGtz9Dd5XQR4K5rd0aj
+         S4CzpcJVpf/u+YofO6Y4bFUegFtDUam16fGnnP3BzI+OW0wx9ddeRvb4VxeMlDCRZpKR
+         76fFbicj87wj+QMTnWc/b2uUkpPN9wjyW3ShhLRnz6EzbJ/vtW0oY1iF7Enua+oCVTOQ
+         px/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=jokIpIKeBLZqrvSTx9zVh+tDVl8ky++l7h7t03abb80=;
+        b=fnMJejG+JlKXbGlC4dcIpFXIBpyryHSRxN2ktrrJs3N4b1Y/7HqE/qtP7abAVGUO2s
+         freflFKJ562h35fYBumy32OSitTcHSiBahPkPfTD+pfQHI3cGGgm1hi12/GK2Jxna9tc
+         wU/XgOfVDbRprsWqT0Wo/zIA4CCZVIemCDNz5WNzzpZxjJG17U6RE4CSp0r4oVD7kMIS
+         JmvOl+NUUF85cCco/vjtMVNSGSF67MUMYb09optQCAhxQ2LX8OoMQAtT4XlIkX5Uqfxv
+         B15vyMTmnpUNz4NO+ZRxMk0stqF8kRSs/H/aXu2izycKIs0UtZEvozEY0IiYOsbeMUeF
+         k1sw==
+X-Gm-Message-State: AEkoout0q47sToa94AG9gk98jwG7IjOkWe5l+Ut/Vnj1rNRRNK3udPkXZdyQr2ZLTOe+4A==
+X-Received: by 10.28.36.10 with SMTP id k10mr3236094wmk.33.1470837096716;
+        Wed, 10 Aug 2016 06:51:36 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id i1sm43129213wjl.9.2016.08.10.06.51.35
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 10 Aug 2016 06:51:36 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v5 02/15] pkt-line: call packet_trace() only if a packet is actually send
+From:	Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <20160810133017.ovdx3a3ldqj5gl7q@sigill.intra.peff.net>
+Date:	Wed, 10 Aug 2016 15:51:35 +0200
+Cc:	Git Mailing List <git@vger.kernel.org>, gitster@pobox.com,
+	jnareb@gmail.com, mlbright@gmail.com, e@80x24.org,
+	Johannes.Schindelin@gmx.de, ben@wijen.net
+Content-Transfer-Encoding: 8BIT
+Message-Id: <9BF0767F-6B10-42D5-9A72-2710A753E26A@gmail.com>
+References: <20160803164225.46355-1-larsxschneider@gmail.com/> <20160810130411.12419-1-larsxschneider@gmail.com> <20160810130411.12419-3-larsxschneider@gmail.com> <20160810131317.a4npld5hf2qk6wiq@sigill.intra.peff.net> <4111F00D-74A9-449D-BDE9-EE170DA4A403@gmail.com> <20160810133017.ovdx3a3ldqj5gl7q@sigill.intra.peff.net>
+To:	Jeff King <peff@peff.net>
+X-Mailer: Apple Mail (2.3124)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Aug 1, 2016 at 5:12 AM, Johannes Schindelin 
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Stephen,
->
-> On Wed, 27 Jul  2016, Stephen Morton wrote:
->
->> On Wed, Jul  27, 2016 at 11:03 AM, Johannes Schindelin
->>  <Johannes.Schindelin@gmx.de> wrote:
->> >
->> > On Wed,  27 Jul 2016, Stephen Morton wrote:
->> >
->> >>  diff --git a/sequencer.c b/sequencer.c
->> >>  index cdfac82..ce06876 100644
->> >> ---  a/sequencer.c
->> >> +++  b/sequencer.c
->> >> @@  -176,7 +176,8 @@ static void print_advice(int show_hint, struct
->> >>  replay_opts *opts)
->> >>             else
->> >>                     advise(_("after resolving the conflicts, mark
->> >> the  corrected paths\n"
->> >>                              "with 'git add <paths>' or 'git rm <paths>'\n"
->> >> -                              "and commit the result with 'git commit'"));
->> >> +                              "then continue the %s with 'git %s
->> >>  --continue'\n"
->> >> +                              "or cancel the %s operation with 'git
->> >> %s  --abort'" ),  action_name(opts), action_name(opts),
->> >>  action_name(opts), action_name(opts));
->> >
->> > That is  an awful lot of repetition right there, with an added
->> >  inconsistency that the action is referred to by its name alone in the
->> >  "--continue" case, but with "operation" added in the "--abort" case.
->> >
->> > And  additionally, in the most common case (one commit to cherry-pick), the
->> > advice  now suggests a more complicated operation than necessary: a simply
->> > `git  commit` would be enough, then.
->> >
->> > Can't  we have a test whether this is the last of the commits to be
->> >  cherry-picked, and if so, have the simpler advice again?
->>
->> Ok, knowing  that I'm not on the last element of the sequencer is
->> beyond my  git code knowledge.
->
-> Oh, my mistake:  I meant to say that this information could be easily
-> provided by  `pick_commits()` if it passed it to `print_advice()` via
->  `do_pick_commit()`.
->
-> Ciao,
-> Johannes
 
-Formatting on previous email was terrible, plus the diff wasn't 
-performed against origin. Re-sending.
+> On 10 Aug 2016, at 15:30, Jeff King <peff@peff.net> wrote:
+> 
+> On Wed, Aug 10, 2016 at 03:24:38PM +0200, Lars Schneider wrote:
+> 
+>>> On Wed, Aug 10, 2016 at 03:03:58PM +0200, larsxschneider@gmail.com wrote:
+>>> 
+>>>> From: Lars Schneider <larsxschneider@gmail.com>
+>>>> 
+>>>> The packet_trace() call is not ideal in format_packet() as we would print
+>>>> a trace when a packet is formatted and (potentially) when the packet is
+>>>> actually send. This was no problem up until now because format_packet()
+>>>> was only used by one function. Fix it by moving the trace call into the
+>>>> function that actually sends the packet.
+>>> 
+>>> It looks like there are two functions: packet_write() and
+>>> packet_buf_write().
+>> 
+>> I did not call trace in packet_buf_write() because this function does not
+>> perform any writes.
+> 
+> Yes, but then who is responsible for the trace? The caller?
 
-(Finally getting back to this.)
-
-Something like the diff below, then Johannes?
-
-(I intentionally print the '--continue' hint even in the case whereit's 
-last of n commits that fails.)
+From my point of view the one that issues the write call.
 
 
-Stephen
+> And why is it a bad thing to do it some time other than writing? It is
+> if you format and then _don't_ write the packet, but the current callers
+> are not doing that.
 
-~/ws/extern/git (maint *%>) > git diff @{u}
-diff --git a/sequencer.c b/sequencer.c
-index c6362d6..e0071aa 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -154,7 +154,7 @@ static void free_message(struct commit *commit, 
-struct commit_message *msg)
-         unuse_commit_buffer(commit, msg->message);
-  }
+True, they don't do that. However, I don't think that is intuitive behavior
+for future callers. If I call "format" and then trace tells me that a packet
+was sent although it was not (yet).
 
--static void print_advice(int show_hint, struct replay_opts *opts)
-+static void print_advice(int show_hint, int multiple_commits, struct 
-replay_opts *opts)
-  {
-         char *msg = getenv("GIT_CHERRY_PICK_HELP");
+> 
+>>> Your patch only touches one of them, and it looks like we would fail to
+>>> trace many packets (e.g., see receive-pack.c:report(), which uses
+>>> packet_buf_write() and then write()s out the result).
+>> 
+>> I see. But isn't it confusing if packet_buf_write() issues a trace call?
+>> If I just call this function then nothing happens at all. Shouldn't the
+>> trace call be made in receive-pack.c:report() ? Or shouldn't receive-pack
+>> let pkt-line.c perform the write calls?
+> 
+> How would report() do that without re-parsing each of the packets?
 
-@@ -174,9 +174,14 @@ static void print_advice(int show_hint, struct 
-replay_opts *opts)
-                         advise(_("after resolving the conflicts, mark 
-the corrected paths\n"
-                                  "with 'git add <paths>' or 'git rm 
-<paths>'"));
-                 else
--                       advise(_("after resolving the conflicts, mark 
-the corrected paths\n"
--                                "with 'git add <paths>' or 'git rm 
-<paths>'\n"
--                                "and commit the result with 'git 
-commit'"));
-+                        if  (multiple_commits)
-+                               advise(_("after resolving the conflicts, 
-mark the corrected paths with 'git add <paths>' or 'git rm <paths>'\n"
-+                                        "then continue with 'git %s 
---continue'\n"
-+                                        "or cancel with 'git %s 
---abort'" ), action_name(opts), action_name(opts));
-+                        else
-+                                advise(_("after resolving the 
-conflicts, mark the corrected paths\n"
-+                                        "with 'git add <paths>' or 'git 
-rm <paths>'\n"
-+                                        "and commit the result with 
-'git commit'"));
-         }
-  }
+We could add a function to pkt-line that takes a list of strings and
+generates a list of packets with a terminating flush packet out of it.
+Then it sends the packets.
 
-@@ -440,7 +445,7 @@ static int allow_empty(struct replay_opts *opts, 
-struct commit *commit)
-                 return 1;
-  }
+As a quick compromise we could also introduce a function "packet_buf_write_with_trace()"
+that wraps the "packet_buf_write()" and calls trace. However, I can imagine that
+would be perceived as ugly.
 
--static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
-+static int do_pick_commit(struct commit *commit, struct replay_opts 
-*opts, int multiple_commits)
-  {
-         unsigned char head[20];
-         struct commit *base, *next, *parent;
-@@ -595,7 +600,7 @@ static int do_pick_commit(struct commit *commit, 
-struct replay_opts *opts)
-                       : _("could not apply %s... %s"),
-                       find_unique_abbrev(commit->object.oid.hash, 
-DEFAULT_ABBREV),
-                       msg.subject);
--               print_advice(res == 1, opts);
-+               print_advice(res == 1, multiple_commits, opts);
-                 rerere(opts->allow_rerere_auto);
-                 goto leave;
-         }
-@@ -959,6 +964,7 @@ static int pick_commits(struct commit_list 
-*todo_list, struct replay_opts *opts)
-  {
-         struct commit_list *cur;
-         int res;
-+    int multiple_commits = (todo_list->next) != NULL;
+I guess my point is that I stumbled over the un-intutiive format_packet() behavior
+and I wanted to improve the situation in a way that others don't run into this
+trap. If you think that is no issue then it would be OK for me if we leave the
+current behavior as is.
 
-         setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
-         if (opts->allow_ff)
-@@ -968,7 +974,7 @@ static int pick_commits(struct commit_list 
-*todo_list, struct replay_opts *opts)
-
-         for (cur = todo_list; cur; cur = cur->next) {
-                 save_todo(cur, opts);
--               res = do_pick_commit(cur->item, opts);
-+               res = do_pick_commit(cur->item, opts, multiple_commits);
-                 if (res)
-                         return res;
-         }
-@@ -1016,7 +1022,7 @@ static int sequencer_continue(struct replay_opts 
-*opts)
-  static int single_pick(struct commit *cmit, struct replay_opts *opts)
-  {
-         setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
--       return do_pick_commit(cmit, opts);
-+       return do_pick_commit(cmit, opts, 0);
-  }
-
-  int sequencer_pick_revisions(struct replay_opts *opts)
+Thanks,
+Lars
 
 
 
--- 
-Stephen Morton, 7750 SR Product Group, SW Development Tools/DevOps
-w: +1-613-784-6026 (int: 2-825-6026) m: +1-613-302-2589 | EST Time Zone
 
