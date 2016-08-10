@@ -2,102 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_12_24,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2608F1FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 20:01:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90F8B1FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 20:17:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935238AbcHJUB3 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 16:01:29 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:36462 "EHLO
-	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935372AbcHJUAh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2016 16:00:37 -0400
-Received: by mail-wm0-f65.google.com with SMTP id i138so11634438wmf.3
-        for <git@vger.kernel.org>; Wed, 10 Aug 2016 13:00:36 -0700 (PDT)
+	id S934928AbcHJURY (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 16:17:24 -0400
+Received: from mail-yw0-f172.google.com ([209.85.161.172]:35093 "EHLO
+	mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932313AbcHJURW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2016 16:17:22 -0400
+Received: by mail-yw0-f172.google.com with SMTP id j12so32041845ywb.2
+        for <git@vger.kernel.org>; Wed, 10 Aug 2016 13:17:21 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=VbZM5AtNDLWZ5IOYQMcIsx7ZAYneUmNdf/iiprMyWZA=;
-        b=AtY0LSF1saE7KTz9VWJmtAUJDtYeVkW3ymwWgqltwrrd8YxfKdUC4wYLerViFbewh+
-         UEEgM3nLH/BORwTdVLUT50KSj33CDnxTsYlIhJNvGwEUhaCdToYsVk/ReWOn16NWFRxh
-         iW2rnt7Og1k7+h4e9OAGK1KCCLh9EatPvDZ8yWLk+JmkGoaJgVe0+9lxxZ0NK2k6n4Sw
-         fzK0GJLGFjd43zt0OJduBPteapZQe3skmlQKVUDFohpu689Re1IhnIMZakAN6se286YV
-         2NQ5nQ3vvuzZGaAd4w0pHSszcyXB1lmXVfluJjMw98YOnaHXnb79zA7mXwlDf3DLVgFu
-         gQjQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=clbpSAE1IY7YG+uhY4hffzmAO4anfyoXkCS1hd3w2w0=;
+        b=yUoHrs9p1cgPg0uYs67rD5vwbwYiLOU5NADHmrEr2oZ8d3XY7tX4tfGnniUzXAfmsE
+         aHrFKqCGy3JqrKb6t4BdOgvWLmOv0DiulSh3F4EyvkPysJDx1a5sv9XjovQWJiiXuwzt
+         Z4FSlOmtBtvL8OR2NEriRCOh612Ey4h4StzeW1g5emiZWYsCwZsHsK8uMSg0jpW3o0TD
+         RtDz8lPM8ROkbbsFsJQCwoMN7XrkQ7Vvlwi2YSLu0FHS5MlWeb7tVq/Ge05nt/6sICrf
+         F8Gvvw+RcQNBG3E9qXvSy2AZUpKWaKO3G4ma5Oo2kpshuuJPfMVwmEf17esNwP/3AVQh
+         16nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=VbZM5AtNDLWZ5IOYQMcIsx7ZAYneUmNdf/iiprMyWZA=;
-        b=KlprhduHhb/hETN3cyjrmalojiXwnNxEC99HrcIyyYa+pzYZTaUCzANE6IiDQAP73+
-         F3EXgSC5kQyBQ1s8wnX9rAeBkPWJ96EqHU5/3bcdbM5YJAi6+KisGhJkdcyFTkQblR3P
-         nC0yS3jPnqex6WouDC+XEYUdmETFvDbVW39Ggd7RaIhulowQZbm1RtSgdf88mNiEc/Eo
-         dsFDLyzVuwof5pWh8FafE3OguwzASQE8UDp9bc1NiHXtLOKTgl+ZXTrg+L1imGQ5zAoz
-         ft4vFAleCmZCnNv5TRICo5WKMYHQDHTSNUAN5brEmXJz01+8vh6BZ887Lygoi8OBPG5M
-         HKfg==
-X-Gm-Message-State: AEkoouvN/0Zb73MiHin10MrOMB20lvC+QTwSOPXOO8cDwQ9OyfILQRiRSeoxsRAcfBaIpQ==
-X-Received: by 10.194.37.101 with SMTP id x5mr4753629wjj.95.1470835479849;
-        Wed, 10 Aug 2016 06:24:39 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id k3sm43057311wjf.7.2016.08.10.06.24.38
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 10 Aug 2016 06:24:39 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v5 02/15] pkt-line: call packet_trace() only if a packet is actually send
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20160810131317.a4npld5hf2qk6wiq@sigill.intra.peff.net>
-Date:	Wed, 10 Aug 2016 15:24:38 +0200
-Cc:	Git Mailing List <git@vger.kernel.org>, gitster@pobox.com,
-	jnareb@gmail.com, mlbright@gmail.com, e@80x24.org,
-	Johannes.Schindelin@gmx.de, ben@wijen.net
-Content-Transfer-Encoding: 7bit
-Message-Id: <4111F00D-74A9-449D-BDE9-EE170DA4A403@gmail.com>
-References: <20160803164225.46355-1-larsxschneider@gmail.com/> <20160810130411.12419-1-larsxschneider@gmail.com> <20160810130411.12419-3-larsxschneider@gmail.com> <20160810131317.a4npld5hf2qk6wiq@sigill.intra.peff.net>
-To:	Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=clbpSAE1IY7YG+uhY4hffzmAO4anfyoXkCS1hd3w2w0=;
+        b=IICxwk5I6WY1oSCnbp+4d6wgA7mBuF2669GtASaFsJoxNhQBtbW/70loOL1ZTvQptg
+         NCYub+It6r+M2O1hm0flGdB+ggcF6AJDALkc2zsNieoaKWxGlyW6A22J9zYBJ8VpA0/E
+         JhmIkddTSaMPSlGPDjY8oeBSXlB9T4HhzKMjdcsFMtY+h5i12CrenodXK+AbWWCANoYr
+         WoKJ/lsgp36XwG2f/T65voDsGAVFgxEEBhb+xBGG6W8E6etxfKqEM2NVAZjxP91CTcxh
+         Y2WzyKY11Z2lx2QGUAAYZdApVeL1hg4oD2t8XgKUjtNqARrbgIQZMXLEL3Jk27GVJHkj
+         aVfw==
+X-Gm-Message-State: AEkoouuewOQZgNM3+SCF93MS0hnQncLccp8EDx+hn/+6St8DVQXOYsf+/PhyMKGeFPIuPZwsVxdcMu+Xx27pEw==
+X-Received: by 10.129.135.2 with SMTP id x2mr1635439ywf.310.1470811941779;
+ Tue, 09 Aug 2016 23:52:21 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.37.50.196 with HTTP; Tue, 9 Aug 2016 23:52:01 -0700 (PDT)
+In-Reply-To: <xmqqtwet70ra.fsf@gitster.mtv.corp.google.com>
+References: <20160810002315.25236-1-jacob.e.keller@intel.com> <xmqqtwet70ra.fsf@gitster.mtv.corp.google.com>
+From:	Jacob Keller <jacob.keller@gmail.com>
+Date:	Tue, 9 Aug 2016 23:52:01 -0700
+Message-ID: <CA+P7+xpGGqNC8B-fQiQXZcXWha2BBQa96sFvj+_MBVHWakMh_Q@mail.gmail.com>
+Subject: Re: [PATCH RFC v2] diff: add SUBMODULE_DIFF format to display
+ submodule diff
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Jacob Keller <jacob.e.keller@intel.com>,
+	Git mailing list <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+On Tue, Aug 9, 2016 at 8:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jacob Keller <jacob.e.keller@intel.com> writes:
+>> +             cp.dir = path;
+>> +     cp.out = -1;
+>> +     cp.no_stdin = 1;
+>> +     argv_array_push(&cp.args, "diff");
+>> +     argv_array_pushf(&cp.args, "--src-prefix=a/%s/", path);
+>> +     argv_array_pushf(&cp.args, "--dst-prefix=b/%s/", path);
+>
+> I think this is wrong.  Imagine when the caller gave you prefixes
+> that are different from a/ and b/ (think: the extreme case is that
+> you are a sub-sub-module, and the caller is recursing into you with
+> its own prefix, perhaps set to a/sub and b/sub).  Use the prefixes
+> you got for a/ and b/ instead of hardcoding them and you'd be fine,
+> I'd guess.
 
-> On 10 Aug 2016, at 15:13, Jeff King <peff@peff.net> wrote:
-> 
-> On Wed, Aug 10, 2016 at 03:03:58PM +0200, larsxschneider@gmail.com wrote:
-> 
->> From: Lars Schneider <larsxschneider@gmail.com>
->> 
->> The packet_trace() call is not ideal in format_packet() as we would print
->> a trace when a packet is formatted and (potentially) when the packet is
->> actually send. This was no problem up until now because format_packet()
->> was only used by one function. Fix it by moving the trace call into the
->> function that actually sends the packet.
-> 
-> It looks like there are two functions: packet_write() and
-> packet_buf_write().
+I'll have to get these passed, but yes this makes more sense, will look into it.
 
-I did not call trace in packet_buf_write() because this function does not
-perform any writes.
+>
+>> +     argv_array_push(&cp.args, sha1_to_hex(one));
+>> +
+>> +     /*
+>> +      * If the submodule has untracked or modified contents, diff between
+>> +      * the old base and the current tip. This had the advantage of showing
+>> +      * the full difference of the submodule contents.
+>> +      */
+>> +     if (!create_dirty_diff)
+>> +             argv_array_push(&cp.args, sha1_to_hex(two));
+>> +
+>> +     if (start_command(&cp))
+>> +             die("Could not run 'git diff' command in submodule %s", path);
+>> +
+>> +     diff = fdopen(cp.out, "r");
+>> +
+>> +     c = fgetc(diff);
+>> +     while (c != EOF) {
+>> +             fputc(c, f);
+>> +             c = fgetc(diff);
+>> +     }
+>> +
+>> +     fclose(diff);
+>> +     finish_command(&cp);
+>
+> I do not think you need to do this.  If "f" is already a FILE * to
+> which the output must go, then instead of reading from the pipe and
+> writing it, you can just let the "diff" spit out its output to the
+> same file descriptor, by doing something like:
+>
+>         fflush(f);
+>         cp.out = dup(fileno(f));
+>         ... other setup ...
+>         run_command(&cp);
+>
+> no?  I do not offhand recall run_command() closes cp.out after done,
+> and if it doesn't you may have to close it yourself after the above
+> sequence.
 
 
-> Your patch only touches one of them, and it looks like we would fail to
-> trace many packets (e.g., see receive-pack.c:report(), which uses
-> packet_buf_write() and then write()s out the result).
+That makes a lot more sense, yes. I hadn't thought of dup, (long time
+since I've had to use file descriptors).
 
-I see. But isn't it confusing if packet_buf_write() issues a trace call?
-If I just call this function then nothing happens at all. Shouldn't the
-trace call be made in receive-pack.c:report() ? Or shouldn't receive-pack
-let pkt-line.c perform the write calls?
+the child_process api does close the descriptor itself. That's a much
+better way to get the result we want, and it is less code, so I'll try
+this out.
 
--Lars
+>
+> While I personally do not want to see code to access submodule's
+> object store by temporarily adding it as alternates, the "show
+> left-right log between the commits" code already does so, so I
+> should point out that running "diff" internally without spawning it
+> as a subprocess shouldn't be too hard.  The diff API is reasonably
+> libified and there shouldn't be additional "libification" preparation
+> work required to do this, if you really wanted to.
 
+I looked at trying to call diff for this, but I think it's not worth
+it. Using the child process API makes more sense and is a cleaner
+method. I'll go this route as it appears to work pretty well. The only
+major concern I have is that options may not get forwarded
+correctly...
 
-> PS Also, s/send/sent/ in the commit message.
-
-Thanks :)
+Thanks,
+Jake
