@@ -2,167 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E1BC1FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 22:09:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D13861FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 22:10:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932628AbcHJWJY (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 18:09:24 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:42568 "EHLO
-	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932392AbcHJWJW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2016 18:09:22 -0400
-Received: from [IPv6:2607:fb90:48c9:c81b:f385:689a:55b6:6849] (unknown [IPv6:2607:fb90:48c9:c81b:f385:689a:55b6:6849])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 3178517209B;
-	Thu, 11 Aug 2016 00:08:02 +0200 (CEST)
-User-Agent: K-9 Mail for Android
-In-Reply-To: <20160810093731.GA3404@salo>
-References: <20160729064055.GB25331@x> <20160803191202.GA22881@salo> <20160804224058.po43kl7w26ockfie@x> <20160810093731.GA3404@salo>
+	id S932959AbcHJWJ5 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 18:09:57 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62321 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932392AbcHJWJz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2016 18:09:55 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A15AF3511A;
+	Wed, 10 Aug 2016 18:05:25 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tEExxg98IwfYK/s1VH2PB6bIO2k=; b=UocBHN
+	La94/YlqBG+E9xOUOGo9K6JN3/xBDWO0K4MDH/gKztHkfAlzASWQCXvvfdHqkP4N
+	rxbQ6asCZn++bKLVN7wZXF5ZZYVIrL9XOfvFOxxOQQAuyIGZL7qR7aHJCNHscjm6
+	OVUhlVv2Ym+ykjfeZ0FzS6nNEIuaLPPCs6gng=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IuluF5e2r7FQ3rybOeb+lS8WRuwQPeOj
+	D8b0vsa9JJxyLhuuoyU6rgzByiDaUXXRZbW4g3YGUCPIe2LjWemCFuIJzUI5CUrG
+	lSimbHJ5Cno2DsdlmSEvq6KfZiJXrUfnA87eKpAIQxsAUD1OGGV0C9oPpgWKCMUV
+	oT2bz+D8QuQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9918435119;
+	Wed, 10 Aug 2016 18:05:25 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 19E0635118;
+	Wed, 10 Aug 2016 18:05:25 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jacob Keller <jacob.e.keller@intel.com>
+Cc:	git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v3 2/2] diff: add SUBMODULE_DIFF format to display submodule diff
+References: <20160810211710.23173-1-jacob.e.keller@intel.com>
+	<20160810211710.23173-2-jacob.e.keller@intel.com>
+Date:	Wed, 10 Aug 2016 15:05:23 -0700
+In-Reply-To: <20160810211710.23173-2-jacob.e.keller@intel.com> (Jacob Keller's
+	message of "Wed, 10 Aug 2016 14:17:10 -0700")
+Message-ID: <xmqqziok2sbg.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain;
- charset=UTF-8
-Subject: Re: [ANNOUNCE] git-series: track changes to a patch series over time
-From:	Josh Triplett <josh@joshtriplett.org>
-Date:	Wed, 10 Aug 2016 12:07:26 -1000
-To:	Richard Ipsum <richard.ipsum@codethink.co.uk>
-CC:	git@vger.kernel.org, linux-kernel@vger.kernel.org
-Message-ID: <13509A14-16CB-476C-B983-7001F3D0DA61@joshtriplett.org>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8A21984C-5F46-11E6-B97E-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On August 9, 2016 11:37:31 PM HST, Richard Ipsum <richard.ipsum@codethink.co.uk> wrote:
->On Thu, Aug 04, 2016 at 12:40:58PM -1000, Josh Triplett wrote:
->> On Wed, Aug 03, 2016 at 08:12:02PM +0100, Richard Ipsum wrote:
->> > On Thu, Jul 28, 2016 at 11:40:55PM -0700, Josh Triplett wrote:
->> > > I'd welcome any feedback, whether on the interface and workflow,
->the
->> > > internals and collaboration, ideas on presenting diffs of patch
->series,
->> > > or anything else.
->> > 
->> > One other nice thing I've noticed about this tool is the
->> > way series behave like regular git branches: I specify the name
->> > of the series and from then on all other commands act on that
->> > series until told otherwise.
->> 
->> Thanks; I spent a while thinking about that part of the workflow.  I
->> save the current series as a symbolic ref SHEAD, and everything
->operates
->> on SHEAD.  (I should probably add support for running things like
->"git
->> series log" or "git series format" on a different series, because
->right
->> now "until told otherwise" doesn't include a way to tell it
->otherwise.)
->
->Apologies for this delayed response,
->I needed time to gather my thoughts,
->and also to fix the perl libgit2 binding to allow me to use
->your symbolic ref suggestion. :p
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-Yeah, during git-series development I ended up doing some work on both libgit2 and git2-rs. :)
+> @@ -2305,6 +2311,15 @@ static void builtin_diff(const char *name_a,
+>  	struct strbuf header = STRBUF_INIT;
+>  	const char *line_prefix = diff_line_prefix(o);
+>  
+> +	diff_set_mnemonic_prefix(o, "a/", "b/");
+> +	if (DIFF_OPT_TST(o, REVERSE_DIFF)) {
+> +		a_prefix = o->b_prefix;
+> +		b_prefix = o->a_prefix;
+> +	} else {
+> +		a_prefix = o->a_prefix;
+> +		b_prefix = o->b_prefix;
+> +	}
+> +
 
->Though it turns out that libgit2 doesn't currently allow
->me to write arbitrary data to a symbolic ref as git-symbolic-ref(1)
->will,
->so this still needs to be fixed somehow.
+Hmph, is it safe to raise this when SUBMODULE_DIFF is not in effect?
+Not objecting, just asking.
 
-What arbitrary data do you need to write?
+>  	if (DIFF_OPT_TST(o, SUBMODULE_LOG) &&
+> ...
+> +	} else if (DIFF_OPT_TST(o, SUBMODULE_DIFF) &&
 
-Also, note that you want to put your symbolic ref in refs/, not directly in .git, so that git takes it into account for object reachability.
+This makes clear that SUBMODULE_LOG and SUBMODULE_DIFF should not be
+independent bits in the diff-opt flag word.  We used to run
+something like "log --oneline --left-right A...B" and your new code
+runs "diff A B", but the next month somebody else would want to do
+"log -p --left-right A...B" or something else, and they are clearly
+mutually exclusive.
 
->> > git-appraise looks as though it might also have this behaviour.
->> > I think it's a nice way to do it, since you don't generally
->> > perform more than one review simultaneously. So I may well
->> > use this idea in git-candidate if it's okay. :)
->> 
->> By all means.  For a review tool like git-candidate, it seems like
->you'd
->> want even more contextual information, to make it easier to specify
->> things like "comment on file F line L".  For instance, what if you
->> spawned the diff to review in an editor, with plenty of extra context
->> and a file extension that'll cause most editors to recognize it as a
->> patch (and specifically a git-candidate patch to allow specialized
->> editor modes), and told people to add their comments after the line
->they
->> applied to?  When the editor exits successfully, you can scan the
->file,
->> detect the added lines, and save those as comments.  You could figure
->> out the appropriate line by looking for the diff hunk headers and
->> counting line numbers.
->
->I really like this idea, the current interface for commenting is a
->little
->tedious I find.
->
->> 
->> If you use a format-patch diff that includes the headers and commit
->> message, you could also support commenting on those in the same way.
->> Does the notedb format support commenting on those?
->
->Comments in notedb are just a git note keyed on the sha of the
->commit being commented on, I'm not certain what advantage a
->format-patch
->diff provides in this case?
+> diff --git a/diff.h b/diff.h
+> index 6a91a1139686..65df44b1fcba 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -69,7 +69,7 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
+>  #define DIFF_OPT_FIND_COPIES_HARDER  (1 <<  6)
+>  #define DIFF_OPT_FOLLOW_RENAMES      (1 <<  7)
+>  #define DIFF_OPT_RENAME_EMPTY        (1 <<  8)
+> -/* (1 <<  9) unused */
+> +#define DIFF_OPT_SUBMODULE_DIFF      (1 <<  9)
 
-I meant for opening in an editor to write email-reply-style comments. The review tool and review storage format should allow commenting on commit messages, not just diffs.
-
->I've been closely following the 'patch submission process' thread,
->and given the discussion there I'm having doubts over the value
->of comments in git-candidate vs the mailing list. It seems to me that
->git-candidate has many of the disadvantages of Github/Gitlab when it
->comes to comments, for example, there is no threading.
-
-That's not inherent, though. You could allow commenting on a comment easily enough. (Of course, at some point you've recreated email-style in-reply-to headers...)
-
->Also the system would be less open than the mailing list, since,
->as it stands currently you would require push access to the repository
->to comment on anything.
-
-You'd need a federation mechanism.
-
->It may be worth reflecting that one reason some organisations
->have switched away from mailing list reviews to Github/Gitlab is that
->they provide patch tracking, where the mailing list provides none,
->so patches there can be 'lost'. So instead of trying to reimplement
->an entire Gerrit/Github/Gitlab ui on the commandline, I wonder whether
->it would be sufficient to add the minimum functionality necessary
->to provide git with native patch tracking, and leave comments for the
->mailing list. Ofcourse this is exactly what git-series seems to do,
->so in some sense I may be advocating dropping my own work in favour of
->improving git-series.
-
-I think the two serve different (though related) functions. I'd love to be able to use a text editor and command-line tool to produce and submit comments to systems like Gerrit or GitHub.
-
->On the other hand, relying on the mailing list means that some of the
->history of a series is left outside of the repository which is
->anathema to the goal of git based/stored review, not least because
->mail archives are centralised.
->(which can obviously be problematic (as we've seen recently with
->gmane))
-
-Agreed. You can always choose to *intentionally* discard history, or store it elsewhere, but having it in the repository allows you to make that decision with all the data really available (and easily backed up).
-
->Maybe there's a better solution to this problem than git-candidate
->then,
->maybe we can just invent some wonderful new subcommand that fetches
->a mailing list archive into a git repo, for those that want that,
->I don't know.
-
-public-inbox seems to address that use case. I'd love to see a public-inbox version of LKML, with full history. I don't think that fully solves the review storage and interchange problem, but it seems like an *excellent* solution for email archiving, and for distribution of archives.
-
->Out of interest, did you have any thoughts on Notedb itself with
->respect
->to its suitability for git-series?
-
-Seems like a potentially reasonable format for storing reviews. I think the two could work well together, with git-series storing all the historical versions of a series, and then a notedb could reference those commits.
-
-I've given some thought to using git-series as a server-side storage format for something like a pull request. I think it might make sense for a tool like Gerrit or GitLab to allow pushing and pulling series branches (that must fast-forward) to a special ref (like Gerrit's refs/for/master).
-
+So I'd really prefer not to see this change; instead, we should move
+in the direction where we _REMOVE_ DIFF_OPT_SUBMODULE_LOG from these,
+and introduce an enum to hold "how would we show submodule changes"
+in the diff_options structure.
