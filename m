@@ -2,285 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 405B62018E
-	for <e@80x24.org>; Wed, 10 Aug 2016 21:17:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F2A531FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 21:20:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932720AbcHJVRT (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 17:17:19 -0400
-Received: from mga09.intel.com ([134.134.136.24]:7585 "EHLO mga09.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932672AbcHJVRO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2016 17:17:14 -0400
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by orsmga102.jf.intel.com with ESMTP; 10 Aug 2016 14:17:14 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.28,501,1464678000"; 
-   d="scan'208";a="153862832"
-Received: from jekeller-desk.amr.corp.intel.com ([134.134.3.116])
-  by fmsmga004.fm.intel.com with ESMTP; 10 Aug 2016 14:17:13 -0700
-From:	Jacob Keller <jacob.e.keller@intel.com>
-To:	git@vger.kernel.org
-Cc:	Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH v3 2/2] diff: add SUBMODULE_DIFF format to display submodule diff
-Date:	Wed, 10 Aug 2016 14:17:10 -0700
-Message-Id: <20160810211710.23173-2-jacob.e.keller@intel.com>
-X-Mailer: git-send-email 2.9.2.872.g0b694e0.dirty
-In-Reply-To: <20160810211710.23173-1-jacob.e.keller@intel.com>
-References: <20160810211710.23173-1-jacob.e.keller@intel.com>
+	id S932753AbcHJVTt (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 17:19:49 -0400
+Received: from mail-it0-f47.google.com ([209.85.214.47]:38161 "EHLO
+	mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932666AbcHJSFh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2016 14:05:37 -0400
+Received: by mail-it0-f47.google.com with SMTP id x130so52155625ite.1
+        for <git@vger.kernel.org>; Wed, 10 Aug 2016 11:05:37 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=d/UmxsYVJI85sgy6E41XtoBiX5ZAA+K33yy258EuT8Q=;
+        b=XzpFFx9U1DnuZd9A8RPOe4gfw8LNqycJ1xJm8yHGNlOKzZ5txZiYE5uuCIIQhWH0ZW
+         qqv0UzWpyoLRSTCyY1g8OfRy9mm+fommQGwNEOaOKgdEfoB1VEF4TM11eA7ACvHtFvp9
+         6t7JcKl4VdKYuv6PRdckq4EqULQX69dWpIbXv/IHX4Br3fsq/jA/8U7hXjmP6fiYAYHu
+         R45J5QQLAxRnPH7/4I+c9Q8lzUWjZEwy5BBj/bsjgM9QCryr46YLHTgZtyN9lLPeoV4N
+         brhyaBIOTg2KSDO35EXsvWNLM5XfPgY8m+R8ylhGbgibkZBPBNPjaLJ3cM8+gblBE/99
+         yQAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=d/UmxsYVJI85sgy6E41XtoBiX5ZAA+K33yy258EuT8Q=;
+        b=gdCIZKs6aO7TxA62xhSNQRLawm9vciZIYbxkfngytMPWqCC1ZRrIq2odJ2LzutzXlC
+         z6IE0eFTR36qDD9E2qaSMgmL+QWc4KDwoJPH03fFnjVUBRhAR+NMAFv9rW45dtMaUznC
+         NUtqPXUNV9jPkWdVCjAQGjC3C+kBQT9hc+o6U1m6MIti1b3xGLbaYlakf5ogbtbTpQa3
+         fL1At9aIitwfJaO5AcwnxgUc1dXjVSKSgPwLjV3DXQsnrw36E1voUww1V3eZg/EcITuT
+         8fDdcg94Am2EQtbAT6X5zv8NtDyVcgsXQI+16OuY415HUGjHwImmHFdsNpWWnSKNGjaG
+         B19w==
+X-Gm-Message-State: AEkoouvb/bXbZ2KMiKl/QwDTYymC6PYADadmn5xP4noMaB2XfuFcz2ntsyChRBnvsTgv+Vyw/mcAdz9ZyFhb/1XZ
+X-Received: by 10.36.92.206 with SMTP id q197mr4734514itb.46.1470848288509;
+ Wed, 10 Aug 2016 09:58:08 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.107.128.66 with HTTP; Wed, 10 Aug 2016 09:58:08 -0700 (PDT)
+In-Reply-To: <48ca79e2-418b-3c73-e075-808d39a4da9a@alum.mit.edu>
+References: <cover.1470259583.git.mhagger@alum.mit.edu> <f4ce27f389b64c9ae503152c66d183c4a4a970f1.1470259583.git.mhagger@alum.mit.edu>
+ <CAGZ79kZk+XW+Bwcx_fvOLVBDse_iUSjEa_K=eJqm4PpTsTAcPA@mail.gmail.com>
+ <57715dee-ca73-c1bb-ee79-2813d7873649@alum.mit.edu> <CAGZ79kbyCRDTt4u+Fje819mNZZf3GkZtYVurwOMPXRfXqO-YEw@mail.gmail.com>
+ <48ca79e2-418b-3c73-e075-808d39a4da9a@alum.mit.edu>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Wed, 10 Aug 2016 09:58:08 -0700
+Message-ID: <CAGZ79kaSnm-MoWf254UpzY4XS=AO57fChqOntBzGF3wW6TxUag@mail.gmail.com>
+Subject: Re: [PATCH 2/8] xdl_change_compact(): clarify code
+To:	Michael Haggerty <mhagger@alum.mit.edu>
+Cc:	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Jacob Keller <jacob.keller@gmail.com>
+On Wed, Aug 10, 2016 at 9:39 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
 
-For projects which have frequent updates to submodules it is often
-useful to be able to see a submodule update commit as a difference.
-Teach diff's --submodule= a new "diff" format which will execute a diff
-for the submodule between the old and new commit, and display it as
-a standard diff. This allows users to easily see what changed in
-a submodule without having to dig into the submodule themselves.
+>
+> I realized that the main thing that took me a while to grok when I was
+> reading this code was that blank_lines was really only used as a boolean
+> value, even though it was updated with "+=". That's the main information
+> that I'd like to convey to the reader.
 
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
-Changes since v2:
-* dropped the prepare_submodule_diff as it's not really needed
-* added --line-prefix to properly prefix every line
-* added correct use of a_prefix and b_prefix
-* use dup and fileno instead so that we don't have to copy output
+Oh :(
 
-I still need to sort out some tests, and I ran into one interesting
-issue: I had to do make-install in order to get the sub command to
-process the new diff option... is that normal? I think that may cause
-issues during tests as well... Shouldn't we use the same binaries we're
-running from and not search in the install path when running a sub
-command?
+I think there was some discussion when we added the blank line counting
+whether we would want to have it boolean or counting. And we settled
+for counting as "future algorithms can make use of this additional information"
+IIRC.
 
- Documentation/diff-config.txt  |  3 +-
- Documentation/diff-options.txt |  6 ++--
- diff.c                         | 39 ++++++++++++++++--------
- diff.h                         |  2 +-
- submodule.c                    | 67 ++++++++++++++++++++++++++++++++++++++++++
- submodule.h                    |  6 ++++
- 6 files changed, 107 insertions(+), 16 deletions(-)
+>
+> So I decided to change the comment to emphasize this fact (and change it
+> from a question to a statement), and also changed the place that
+> blank_lines is updated to treat it more like a boolean. The latter
+> change also has the advantage of not calling is_blank_line()
+> unnecessarily when blank_lines is already true.
+>
+> If you have no objections, that is what I will put in v2 of this patch
+> series:
 
-diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
-index d5a5b17d5088..f5d693afad6c 100644
---- a/Documentation/diff-config.txt
-+++ b/Documentation/diff-config.txt
-@@ -123,7 +123,8 @@ diff.suppressBlankEmpty::
- diff.submodule::
- 	Specify the format in which differences in submodules are
- 	shown.  The "log" format lists the commits in the range like
--	linkgit:git-submodule[1] `summary` does.  The "short" format
-+	linkgit:git-submodule[1] `summary` does.  The "diff" format shows the
-+	diff between the beginning and end of the range. The "short" format
- 	format just shows the names of the commits at the beginning
- 	and end of the range.  Defaults to short.
- 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index e7b729f3644f..988068225463 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -215,8 +215,10 @@ any of those replacements occurred.
- 	the commits in the range like linkgit:git-submodule[1] `summary` does.
- 	Omitting the `--submodule` option or specifying `--submodule=short`,
- 	uses the 'short' format. This format just shows the names of the commits
--	at the beginning and end of the range.  Can be tweaked via the
--	`diff.submodule` configuration variable.
-+	at the beginning and end of the range. When `--submodule=diff` is
-+	given, the 'diff' format is used. This format shows the diff between
-+	the old and new submodule commmit from the perspective of the
-+	submodule.  Can be tweaked via the `diff.submodule` configuration variable.
- 
- --color[=<when>]::
- 	Show colored diff.
-diff --git a/diff.c b/diff.c
-index 6fe5c6d084a3..2d23767739a4 100644
---- a/diff.c
-+++ b/diff.c
-@@ -130,12 +130,18 @@ static int parse_dirstat_params(struct diff_options *options, const char *params
- 
- static int parse_submodule_params(struct diff_options *options, const char *value)
- {
--	if (!strcmp(value, "log"))
-+	if (!strcmp(value, "log")) {
- 		DIFF_OPT_SET(options, SUBMODULE_LOG);
--	else if (!strcmp(value, "short"))
-+		DIFF_OPT_CLR(options, SUBMODULE_DIFF);
-+	} else if (!strcmp(value, "diff")) {
-+		DIFF_OPT_SET(options, SUBMODULE_DIFF);
- 		DIFF_OPT_CLR(options, SUBMODULE_LOG);
--	else
-+	} else if (!strcmp(value, "short")) {
-+		DIFF_OPT_CLR(options, SUBMODULE_DIFF);
-+		DIFF_OPT_CLR(options, SUBMODULE_LOG);
-+	} else {
- 		return -1;
-+	}
- 	return 0;
- }
- 
-@@ -2305,6 +2311,15 @@ static void builtin_diff(const char *name_a,
- 	struct strbuf header = STRBUF_INIT;
- 	const char *line_prefix = diff_line_prefix(o);
- 
-+	diff_set_mnemonic_prefix(o, "a/", "b/");
-+	if (DIFF_OPT_TST(o, REVERSE_DIFF)) {
-+		a_prefix = o->b_prefix;
-+		b_prefix = o->a_prefix;
-+	} else {
-+		a_prefix = o->a_prefix;
-+		b_prefix = o->b_prefix;
-+	}
-+
- 	if (DIFF_OPT_TST(o, SUBMODULE_LOG) &&
- 			(!one->mode || S_ISGITLINK(one->mode)) &&
- 			(!two->mode || S_ISGITLINK(two->mode))) {
-@@ -2316,6 +2331,15 @@ static void builtin_diff(const char *name_a,
- 				two->dirty_submodule,
- 				meta, del, add, reset);
- 		return;
-+	} else if (DIFF_OPT_TST(o, SUBMODULE_DIFF) &&
-+			(!one->mode || S_ISGITLINK(one->mode)) &&
-+			(!two->mode || S_ISGITLINK(two->mode))) {
-+		show_submodule_diff(o->file, one->path ? one->path : two->path,
-+				line_prefix,
-+				one->oid.hash, two->oid.hash,
-+				two->dirty_submodule,
-+				meta, a_prefix, b_prefix, reset);
-+		return;
- 	}
- 
- 	if (DIFF_OPT_TST(o, ALLOW_TEXTCONV)) {
-@@ -2323,15 +2347,6 @@ static void builtin_diff(const char *name_a,
- 		textconv_two = get_textconv(two);
- 	}
- 
--	diff_set_mnemonic_prefix(o, "a/", "b/");
--	if (DIFF_OPT_TST(o, REVERSE_DIFF)) {
--		a_prefix = o->b_prefix;
--		b_prefix = o->a_prefix;
--	} else {
--		a_prefix = o->a_prefix;
--		b_prefix = o->b_prefix;
--	}
--
- 	/* Never use a non-valid filename anywhere if at all possible */
- 	name_a = DIFF_FILE_VALID(one) ? name_a : name_b;
- 	name_b = DIFF_FILE_VALID(two) ? name_b : name_a;
-diff --git a/diff.h b/diff.h
-index 6a91a1139686..65df44b1fcba 100644
---- a/diff.h
-+++ b/diff.h
-@@ -69,7 +69,7 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
- #define DIFF_OPT_FIND_COPIES_HARDER  (1 <<  6)
- #define DIFF_OPT_FOLLOW_RENAMES      (1 <<  7)
- #define DIFF_OPT_RENAME_EMPTY        (1 <<  8)
--/* (1 <<  9) unused */
-+#define DIFF_OPT_SUBMODULE_DIFF      (1 <<  9)
- #define DIFF_OPT_HAS_CHANGES         (1 << 10)
- #define DIFF_OPT_QUICK               (1 << 11)
- #define DIFF_OPT_NO_INDEX            (1 << 12)
-diff --git a/submodule.c b/submodule.c
-index 1b5cdfb7e784..36f8fd00c3ce 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -333,6 +333,73 @@ static void print_submodule_summary(struct rev_info *rev, FILE *f,
- 	strbuf_release(&sb);
- }
- 
-+void show_submodule_diff(FILE *f, const char *path,
-+		const char *line_prefix,
-+		unsigned char one[20], unsigned char two[20],
-+		unsigned dirty_submodule, const char *meta,
-+		const char *a_prefix, const char *b_prefix,
-+		const char *reset)
-+{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	struct strbuf sb = STRBUF_INIT;
-+	struct strbuf submodule_git_dir = STRBUF_INIT;
-+	const char *git_dir, *message = NULL;
-+	int create_dirty_diff = 0;
-+	FILE *diff;
-+	char c;
-+
-+	if ((dirty_submodule & DIRTY_SUBMODULE_UNTRACKED) ||
-+	    (dirty_submodule & DIRTY_SUBMODULE_MODIFIED))
-+		create_dirty_diff = 1;
-+
-+	strbuf_addf(&sb, "%s%sSubmodule %s %s..", line_prefix, meta, path,
-+			find_unique_abbrev(one, DEFAULT_ABBREV));
-+	strbuf_addf(&sb, "%s:%s\n", !create_dirty_diff ?
-+		    find_unique_abbrev(two, DEFAULT_ABBREV) : "", reset);
-+	fwrite(sb.buf, sb.len, 1, f);
-+
-+	strbuf_addf(&submodule_git_dir, "%s/.git", path);
-+	git_dir = read_gitfile(submodule_git_dir.buf);
-+	if (!git_dir)
-+		git_dir = submodule_git_dir.buf;
-+	if (!is_directory(git_dir)) {
-+		strbuf_reset(&submodule_git_dir);
-+		strbuf_addf(&submodule_git_dir, ".git/modules/%s", path);
-+		git_dir = submodule_git_dir.buf;
-+	}
-+
-+	fflush(f);
-+
-+	cp.git_cmd = 1;
-+	if (!create_dirty_diff)
-+		cp.dir = git_dir;
-+	else
-+		cp.dir = path;
-+	cp.out = dup(fileno(f));
-+	cp.no_stdin = 1;
-+	argv_array_push(&cp.args, "diff");
-+	argv_array_pushf(&cp.args, "--line-prefix=%s", line_prefix);
-+	argv_array_pushf(&cp.args, "--src-prefix=%s%s/", a_prefix, path);
-+	argv_array_pushf(&cp.args, "--dst-prefix=%s%s/", b_prefix, path);
-+	argv_array_push(&cp.args, sha1_to_hex(one));
-+
-+	/*
-+	 * If the submodule has untracked or modified contents don't add the
-+	 * current stored commit. Thus, we will diff between the previous
-+	 * value and the current tip of working tree. The result is a complete
-+	 * diff which shows all changes to the submodule, not just changes
-+	 * that have been committed to the super project.
-+	 */
-+	if (!create_dirty_diff)
-+		argv_array_push(&cp.args, sha1_to_hex(two));
-+
-+	if (run_command(&cp))
-+		fprintf(f, "(diff failed)\n");
-+
-+	strbuf_release(&submodule_git_dir);
-+	strbuf_release(&sb);
-+}
-+
- void show_submodule_summary(FILE *f, const char *path,
- 		const char *line_prefix,
- 		unsigned char one[20], unsigned char two[20],
-diff --git a/submodule.h b/submodule.h
-index 2af939099819..f32a25c667ab 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -41,6 +41,12 @@ int parse_submodule_update_strategy(const char *value,
- 		struct submodule_update_strategy *dst);
- const char *submodule_strategy_to_string(const struct submodule_update_strategy *s);
- void handle_ignore_submodules_arg(struct diff_options *diffopt, const char *);
-+void show_submodule_diff(FILE *f, const char *path,
-+		const char *line_prefix,
-+		unsigned char one[20], unsigned char two[20],
-+		unsigned dirty_submodule, const char *meta,
-+		const char *a_prefix, const char *b_prefix,
-+		const char *reset);
- void show_submodule_summary(FILE *f, const char *path,
- 		const char *line_prefix,
- 		unsigned char one[20], unsigned char two[20],
--- 
-2.9.2.872.g0b694e0.dirty
+No objections from my side,
+sorry for this lengthy discussion about a comment,
 
+Thanks,
+Stefan
