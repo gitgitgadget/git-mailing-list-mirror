@@ -2,110 +2,318 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E42811FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 19:12:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 968541FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 19:14:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753398AbcHJTM0 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 15:12:26 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:45107 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933961AbcHJTMY (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Aug 2016 15:12:24 -0400
-X-AuditID: 12074413-aa3ff70000000955-6f-57ab7c960a42
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 83.7D.02389.69C7BA75; Wed, 10 Aug 2016 15:12:22 -0400 (EDT)
-Received: from [192.168.69.130] (p5B104255.dip0.t-ipconnect.de [91.16.66.85])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u7AJCJwR012431
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 10 Aug 2016 15:12:20 -0400
-Subject: Re: [PATCH 8/8] diff: improve positioning of add/delete blocks in
- diffs
-To:	Stefan Beller <sbeller@google.com>
-References: <cover.1470259583.git.mhagger@alum.mit.edu>
- <7b0680ed7a10fc13acd8d7816a75ed05a5f9e28c.1470259583.git.mhagger@alum.mit.edu>
- <CAGZ79kbzB-bogaqco1+fbRuoQ-4a4GBwTKkuSNnpXUxTFaxcXw@mail.gmail.com>
- <bffbbd7b-3e1b-fa6d-ed53-b75a54fd6f69@alum.mit.edu>
- <CAGZ79kYs9dnRzyAV_MXXUDbRCLuxQeETHKRpVsczQMCMHkQUPw@mail.gmail.com>
- <f84cc951-4eb0-153c-7984-fc0993d215a7@alum.mit.edu>
- <CAGZ79kY40AbZ=tSRjSHtNsO26Wj9PS2AzD6qF_ZhsOF=9tzeuA@mail.gmail.com>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-From:	Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <b54c1524-7f7d-fcc5-3bf6-471be5c33a4e@alum.mit.edu>
-Date:	Wed, 10 Aug 2016 21:12:19 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.1.0
+	id S934205AbcHJTOU (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 15:14:20 -0400
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:35501 "EHLO
+	mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932994AbcHJTOR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2016 15:14:17 -0400
+Received: by mail-wm0-f48.google.com with SMTP id f65so108126344wmi.0
+        for <git@vger.kernel.org>; Wed, 10 Aug 2016 12:14:16 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=XevNCYKfzZSXquUv4F6DfPZGaptg2BEhrJmhir43aqo=;
+        b=a/J+bwncpz+DFReC00LHlz8LwZHa0vBm9IwrtTsSQT+zr6v3PQe9dll/8PpISMnN84
+         UiJ3UiHMMHK6typVq9cPpDW5T8UB0Ii0Yx97HMjjHD2Rt4hAwi1XjVBP5sL693Z/6ZNo
+         aq+CSY3ZbmECv0eGQEgKjNsc9ohGZ1x+i7/L96o+a2L30tkPSyRiipRyrTEVudkrYe5M
+         KKXvGgmOx8kfRZLSJN1tNeRUkPnPJMSLQYEkMDzsKrZi45TI6LLwSBqmfJAHuPYz8ItG
+         NgS/Dmm+4rW9qJkK8pp7M87SVi1B9OLvUcb+VT39jfqRcpvfyPG5BKOnEOZ7MvcQR//8
+         N+7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=XevNCYKfzZSXquUv4F6DfPZGaptg2BEhrJmhir43aqo=;
+        b=Wd26+EFvwRg8gR6MnZIVW+xuXmJJiLiUDKpc1P5k+XlLU9xvHLdwXfNER4vnhJTMSu
+         V57VP7L3yD/VvGFgY4fpf6r/DxxcpS4n/JfQInYwfibt0xzxthhqQRpBYpL/dSJK6UDq
+         2bgSxsHZ2WywzfP9c4UW0rkhIt19kceS8O4j0b+J12Bl9K0oDKBmkH1lNJdql/qtaB4d
+         wuQLNkqT5Ue4SdMnCXekJaTFaRuolZ96h5OX0eP4L7qCV94bXKiAXBG6+tGVjeQkKtSK
+         3bj13RocVaTgr0d6bPqJWiZbEnhB6+5iwbVqDz2+8lgLlNsVTmzqrmVTOCUCY5nRLRDA
+         O1yA==
+X-Gm-Message-State: AEkoouvxS14gIN7TVtkeamqObOs85vxxOdQBw5wg5bE5XxNgQ2ekQVgWVNAHn9VdrNgYkNDYcSOCsZtEMRl62A==
+X-Received: by 10.28.163.199 with SMTP id m190mr5133688wme.5.1470856455941;
+ Wed, 10 Aug 2016 12:14:15 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kY40AbZ=tSRjSHtNsO26Wj9PS2AzD6qF_ZhsOF=9tzeuA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpileLIzCtJLcpLzFFi42IRYndR1J1Wszrc4PEBc4uuK91MFg29V5gt
-	di/uZ7ZYcXUOs8WPlh5mi82b21kc2Dx2zrrL7rFgU6nHs949jB4XLyl7fN4kF8AaxWWTkpqT
-	WZZapG+XwJVxf9pT5oKbAhVtb+azNTBu5e1i5OSQEDCROHJwD3MXIxeHkMBWRomLHaehnLNM
-	ElsezGYGqRIWCJLYvWk/I4gtIqAmMXPVbDaIopPMEg1LFzOBOMwCTxgl7vXfZAOpYhPQlVjU
-	08wEYvMK2EtMv/CLtYuRg4NFQFXizP4okLCoQIjEtpsNbBAlghInZz5hAbE5BQIl/vycwg5i
-	MwuoS/yZd4kZwpaX2P52DvMERv5ZSFpmISmbhaRsASPzKka5xJzSXN3cxMyc4tRk3eLkxLy8
-	1CJdc73czBK91JTSTYyQoBbewbjrpNwhRgEORiUe3g9pq8OFWBPLiitzDzFKcjApifIKxwCF
-	+JLyUyozEosz4otKc1KLDzFKcDArifA+LAHK8aYkVlalFuXDpKQ5WJTEedWWqPsJCaQnlqRm
-	p6YWpBbBZGU4OJQkeHOrgRoFi1LTUyvSMnNKENJMHJwgw3mAhjeA1PAWFyTmFmemQ+RPMSpK
-	ifPGgSQEQBIZpXlwvbCk84pRHOgVYV4xYAoS4gEmLLjuV0CDmYAGJ6muABlckoiQkmpglPjq
-	+DX3bspNpYN1y6pX/Wfe0ilT0rU6yJvL5q/RjYtPWT7zfFl1M4u1MciufPbB/j0JXLa7Luyz
-	sqwIf8X6PEf5+qnpO24u/HOnTnZdxaTbjGc/6BRdjzvvLLq5l+uBukvYwakMm9uv5fJN3/bp
-	R5a+y55Zyd85Lus+fP5k7734LffLwmdl3VNiKc5INNRiLipOBADX3DiMFQMAAA==
+Received: by 10.194.154.134 with HTTP; Wed, 10 Aug 2016 12:14:15 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1608011107190.149069@virtualbox>
+References: <CAH8BJxGZW8eNQogksZ416sVaBkpQ78uYkV7FtN6wxGafzNwjAg@mail.gmail.com>
+ <CAGZ79kaop1HB4tQAKxOcq8ZNEc+6VMPB1suwA9jra2BoXc27cw@mail.gmail.com>
+ <20160726203041.GA4675@sigill.intra.peff.net> <CAH8BJxH0_RhmDaHWBkFg6QP7WWucUtPSQfsAemdVWkTzN42MPw@mail.gmail.com>
+ <CAH8BJxFvyEDuj-mm=N=ca3kxysopaBpro-HsuL-HZehqE_nxDA@mail.gmail.com>
+ <alpine.DEB.2.20.1607271649120.14111@virtualbox> <CAH8BJxGPzpymSWPpxXRcCCx-OPckm5bVgENUEjVM-+9sr1T+6A@mail.gmail.com>
+ <alpine.DEB.2.20.1608011107190.149069@virtualbox>
+From:	Stephen Morton <stephen.c.morton@gmail.com>
+Date:	Wed, 10 Aug 2016 15:14:15 -0400
+Message-ID: <CAH8BJxE3f3HFVz5BSt_3mrcDPw0dhujNS9cS7iD0bbz_h=8dVA@mail.gmail.com>
+Subject: Re: git cherry-pick conflict error message is deceptive when
+ cherry-picking multiple commits
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 08/04/2016 02:04 AM, Stefan Beller wrote:
-> On Wed, Aug 3, 2016 at 4:30 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> Stefan Beller wrote:
->>> [...]
->>> Rather the 10 describes the ratio of "advanced magic" to pure indentation
->>> based scoring in my understanding.
+On Mon, Aug 1, 2016 at 5:12 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Stephen,
+>
+> On Wed, 27 Jul 2016, Stephen Morton wrote:
+>
+>> On Wed, Jul 27, 2016 at 11:03 AM, Johannes Schindelin
+>> <Johannes.Schindelin@gmx.de> wrote:
+>> >
+>> > On Wed, 27 Jul 2016, Stephen Morton wrote:
+>> >
+>> >> diff --git a/sequencer.c b/sequencer.c
+>> >> index cdfac82..ce06876 100644
+>> >> --- a/sequencer.c
+>> >> +++ b/sequencer.c
+>> >> @@ -176,7 +176,8 @@ static void print_advice(int show_hint, struct
+>> >> replay_opts *opts)
+>> >>                 else
+>> >>                         advise(_("after resolving the conflicts, mark
+>> >> the corrected paths\n"
+>> >>                                  "with 'git add <paths>' or 'git rm <paths>'\n"
+>> >> -                                "and commit the result with 'git commit'"));
+>> >> +                                "then continue the %s with 'git %s
+>> >> --continue'\n"
+>> >> +                                "or cancel the %s operation with 'git
+>> >> %s --abort'" ),  action_name(opts), action_name(opts),
+>> >> action_name(opts), action_name(opts));
+>> >
+>> > That is an awful lot of repetition right there, with an added
+>> > inconsistency that the action is referred to by its name alone in the
+>> > "--continue" case, but with "operation" added in the "--abort" case.
+>> >
+>> > And additionally, in the most common case (one commit to cherry-pick), the
+>> > advice now suggests a more complicated operation than necessary: a simply
+>> > `git commit` would be enough, then.
+>> >
+>> > Can't we have a test whether this is the last of the commits to be
+>> > cherry-picked, and if so, have the simpler advice again?
 >>
->> No, it's basically just a number against which the other constants are
->> compared. E.g., if another bonus wants to balance out against exactly
->> one space of indentation, its constant needs to be 10. If it wants to
->> balance out against exactly 5 spaces, its constant needs to be 50. Etc.
-> 
-> So another interpretation is that the 10 gives the resolution for all other
-> constants, i.e. if we keep 10, then we can only give weights in 1/10 of
-> "one indent". But the "ideal" weight may not be a multiple of 1/10,
-> so we approximate them to the nearest multiple of 1/10.
-> 
-> If we were to use 1000 here, we could have a higher accuracy of the
-> other constants, but probably we do not care about the 3rd decimal place
-> for these because they are created heuristically from a corpus that may
-> not warrant a precision of constants with a 3rd decimal place.
+>> Ok, knowing that I'm not on the last element of the sequencer is
+>> beyond my git code knowledge.
+>
+> Oh, my mistake: I meant to say that this information could be easily
+> provided by `pick_commits()` if it passed it to `print_advice()` via
+> `do_pick_commit()`.
+>
+> Ciao,
+> Johannes
 
-Not only that. Since all of the inputs to the heuristic are integers,
-the outputs are discontinuous and can take only certain discrete values.
-And the outputs are only ever compared against one another. So a small
-adjustment to the output will only make a difference if it causes the
-value to become larger/smaller than another of the possible output
-values. So too high a resolution makes no sense at all.
+(Finally getting back to this.)
+Something like this, then Johannes?
+(I intentionally print the '--continue' hint even in the case where
+it's last of n commits that fails.)
 
-That being said, I didn't actually check in any systematic way whether
-the resolution of 10:1 is high enough in practice. But I can say that
-the overall performance of the heuristic (in terms of number of errors
-counted) remained constant over a relatively large parameter range, so I
-think the resolution is sufficient.
+~/ws/extern/git (maint *%>) > git diff
+diff --git a/sequencer.c b/sequencer.c
+index 617a3df..e0071aa 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -154,7 +154,7 @@ static void free_message(struct commit *commit,
+struct commit_message *msg)
+        unuse_commit_buffer(commit, msg->message);
+ }
 
-Feel free to play with the parameters and/or other heuristics. The tools
-and raw data are all published in [1]. Let me know if you need help
-getting started.
+-static void print_advice(int show_hint, struct replay_opts *opts)
++static void print_advice(int show_hint, int multiple_commits, struct
+replay_opts *opts)
+ {
+        char *msg = getenv("GIT_CHERRY_PICK_HELP");
 
-Michael
+@@ -174,14 +174,14 @@ static void print_advice(int show_hint, struct
+replay_opts *opts)
+                        advise(_("after resolving the conflicts, mark
+the corrected paths\n"
+                                 "with 'git add <paths>' or 'git rm <paths>'"));
+                else
+-                        if  (! file_exists(git_path_seq_dir()))
+-                                advise(_("after resolving the
+conflicts, mark the corrected paths\n"
+-                                        "with 'git add <paths>' or
+'git rm <paths>'\n"
+-                                                 "and commit the
+result with 'git commit'"));
+-                        else
++                        if  (multiple_commits)
+                                advise(_("after resolving the
+conflicts, mark the corrected paths with 'git add <paths>' or 'git rm
+<paths>'\n"
+                                         "then continue with 'git %s
+--continue'\n"
+                                         "or cancel with 'git %s
+--abort'" ), action_name(opts), action_name(opts));
++                        else
++                                advise(_("after resolving the
+conflicts, mark the corrected paths\n"
++                                        "with 'git add <paths>' or
+'git rm <paths>'\n"
++                                        "and commit the result with
+'git commit'"));
+        }
+ }
 
-[1] https://github.com/mhagger/diff-slider-tools
+@@ -445,7 +445,7 @@ static int allow_empty(struct replay_opts *opts,
+struct commit *commit)
+                return 1;
+ }
 
+-static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
++static int do_pick_commit(struct commit *commit, struct replay_opts
+*opts, int multiple_commits)
+ {
+        unsigned char head[20];
+        struct commit *base, *next, *parent;
+@@ -600,7 +600,7 @@ static int do_pick_commit(struct commit *commit,
+struct replay_opts *opts)
+                      : _("could not apply %s... %s"),
+                      find_unique_abbrev(commit->object.oid.hash,
+DEFAULT_ABBREV),
+                      msg.subject);
+-               print_advice(res == 1, opts);
++               print_advice(res == 1, multiple_commits, opts);
+                rerere(opts->allow_rerere_auto);
+                goto leave;
+        }
+@@ -964,6 +964,7 @@ static int pick_commits(struct commit_list
+*todo_list, struct replay_opts *opts)
+ {
+        struct commit_list *cur;
+        int res;
++    int multiple_commits = (todo_list->next) != NULL;
+
+        setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
+        if (opts->allow_ff)
+@@ -973,7 +974,7 @@ static int pick_commits(struct commit_list
+*todo_list, struct replay_opts *opts)
+
+        for (cur = todo_list; cur; cur = cur->next) {
+                save_todo(cur, opts);
+-               res = do_pick_commit(cur->item, opts);
++               res = do_pick_commit(cur->item, opts, multiple_commits);
+                if (res)
+                        return res;
+        }
+@@ -1021,7 +1022,7 @@ static int sequencer_continue(struct replay_opts *opts)
+ static int single_pick(struct commit *cmit, struct replay_opts *opts)
+ {
+        setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
+-       return do_pick_commit(cmit, opts);
++       return do_pick_commit(cmit, opts, 0);
+ }
+
+ int sequencer_pick_revisions(struct replay_opts *opts)
+~/ws/extern/git (maint *%>) > git diff @{u}
+diff --git a/sequencer.c b/sequencer.c
+index c6362d6..e0071aa 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -154,7 +154,7 @@ static void free_message(struct commit *commit,
+struct commit_message *msg)
+        unuse_commit_buffer(commit, msg->message);
+ }
+
+-static void print_advice(int show_hint, struct replay_opts *opts)
++static void print_advice(int show_hint, int multiple_commits, struct
+replay_opts *opts)
+ {
+        char *msg = getenv("GIT_CHERRY_PICK_HELP");
+
+@@ -174,9 +174,14 @@ static void print_advice(int show_hint, struct
+replay_opts *opts)
+                        advise(_("after resolving the conflicts, mark
+the corrected paths\n"
+                                 "with 'git add <paths>' or 'git rm <paths>'"));
+                else
+-                       advise(_("after resolving the conflicts, mark
+the corrected paths\n"
+-                                "with 'git add <paths>' or 'git rm <paths>'\n"
+-                                "and commit the result with 'git commit'"));
++                        if  (multiple_commits)
++                               advise(_("after resolving the
+conflicts, mark the corrected paths with 'git add <paths>' or 'git rm
+<paths>'\n"
++                                        "then continue with 'git %s
+--continue'\n"
++                                        "or cancel with 'git %s
+--abort'" ), action_name(opts), action_name(opts));
++                        else
++                                advise(_("after resolving the
+conflicts, mark the corrected paths\n"
++                                        "with 'git add <paths>' or
+'git rm <paths>'\n"
++                                        "and commit the result with
+'git commit'"));
+        }
+ }
+
+@@ -440,7 +445,7 @@ static int allow_empty(struct replay_opts *opts,
+struct commit *commit)
+                return 1;
+ }
+
+-static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
++static int do_pick_commit(struct commit *commit, struct replay_opts
+*opts, int multiple_commits)
+ {
+        unsigned char head[20];
+        struct commit *base, *next, *parent;
+@@ -595,7 +600,7 @@ static int do_pick_commit(struct commit *commit,
+struct replay_opts *opts)
+                      : _("could not apply %s... %s"),
+                      find_unique_abbrev(commit->object.oid.hash,
+DEFAULT_ABBREV),
+                      msg.subject);
+-               print_advice(res == 1, opts);
++               print_advice(res == 1, multiple_commits, opts);
+                rerere(opts->allow_rerere_auto);
+                goto leave;
+        }
+@@ -959,6 +964,7 @@ static int pick_commits(struct commit_list
+*todo_list, struct replay_opts *opts)
+ {
+        struct commit_list *cur;
+        int res;
++    int multiple_commits = (todo_list->next) != NULL;
+
+        setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
+        if (opts->allow_ff)
+@@ -968,7 +974,7 @@ static int pick_commits(struct commit_list
+*todo_list, struct replay_opts *opts)
+
+        for (cur = todo_list; cur; cur = cur->next) {
+                save_todo(cur, opts);
+-               res = do_pick_commit(cur->item, opts);
++               res = do_pick_commit(cur->item, opts, multiple_commits);
+                if (res)
+                        return res;
+        }
+@@ -1016,7 +1022,7 @@ static int sequencer_continue(struct replay_opts *opts)
+ static int single_pick(struct commit *cmit, struct replay_opts *opts)
+ {
+        setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
+-       return do_pick_commit(cmit, opts);
++       return do_pick_commit(cmit, opts, 0);
+ }
+
+ int sequencer_pick_revisions(struct replay_opts *opts)
+
+
+------
+
+Stephen
