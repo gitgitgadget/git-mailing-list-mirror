@@ -2,100 +2,190 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA4A81FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 21:59:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 198711FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 22:06:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933602AbcHJV64 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 17:58:56 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56981 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S933372AbcHJV6z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2016 17:58:55 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9066B35018;
-	Wed, 10 Aug 2016 17:58:53 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xIVcehehbxKd+V/X/ti/8KX2XGo=; b=wGo3QO
-	SwIxoh7wlgpRUjmdnkOW29+V2nsZFDiDmKl2uAiFDTtf9ySkHCOLjPdrTpt8hlB/
-	hmx9YPccIcMPZXj5Fav9onnT+Y69khkzsgdk9FCYcV3rqTPj+KdwXe6QXB+bYhgG
-	AOjrMqlulhv/zaPFBYS1YnW2SyWM4MqusKFjM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OUBnm0wBHyjWRR0GJOUdQyTpxcZQsnfX
-	mxb4Pz5qILgD/vn25v/PymG9VKMNzarWk/a4kFtTNRZuPETGBm27muGpYUjl0mIl
-	/dodmlivFHe92wOhB8XTYg7ZSuxHsKrb/NbjmA0pdUNLEWK7vxv5u9urVu4j/9xM
-	qiDzLyLTm0M=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 884ED35017;
-	Wed, 10 Aug 2016 17:58:53 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 116DA35015;
-	Wed, 10 Aug 2016 17:58:53 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jacob Keller <jacob.e.keller@intel.com>
-Cc:	git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v3 1/2] diff: add --line-prefix option for passing in a prefix
-References: <20160810211710.23173-1-jacob.e.keller@intel.com>
-Date:	Wed, 10 Aug 2016 14:58:50 -0700
-In-Reply-To: <20160810211710.23173-1-jacob.e.keller@intel.com> (Jacob Keller's
-	message of "Wed, 10 Aug 2016 14:17:09 -0700")
-Message-ID: <xmqq4m6s476t.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S932219AbcHJWGR (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 18:06:17 -0400
+Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:35314
+	"EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932558AbcHJWGQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Aug 2016 18:06:16 -0400
+DKIM-Signature:	v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1470866239;
+	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+	bh=JCbaqJbYhmbAfZtF5fFCCbwWz3Tsj+0ylZ7374ilAQ0=;
+	b=WGfOFvh0I5yanV4t/wOPyBxqYywYbI+iDsK69hy7HW+sNcTqRK9n9C3Bn65KFnVE
+	LNQwdw5Wb/2a7KQLqbSp6d16Euto1RXtgfNxkA7TEnmZf6CjMlmox7Cv25XHQWJl0h8
+	HCk5kmDLAQHNT/l+ag3atKHQ0iTU9ymgNrMHhssw=
+From:	Pranit Bauva <pranit.bauva@gmail.com>
+To:	git@vger.kernel.org
+Message-ID: <010201567675ae4e-51e1afee-f0e1-4b71-b307-382de3660b9a-000000@eu-west-1.amazonses.com>
+In-Reply-To: <010201567675adc1-17e27495-6b36-40d1-836d-814da029fcc4-000000@eu-west-1.amazonses.com>
+References: <010201567675adc1-17e27495-6b36-40d1-836d-814da029fcc4-000000@eu-west-1.amazonses.com>
+Subject: [PATCH v12 03/13] bisect--helper: `write_terms` shell function in C
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A0756FA2-5F45-11E6-B9F1-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:	Wed, 10 Aug 2016 21:57:19 +0000
+X-SES-Outgoing:	2016.08.10-54.240.7.12
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+Reimplement the `write_terms` shell function in C and add a `write-terms`
+subcommand to `git bisect--helper` to call it from git-bisect.sh . Also
+remove the subcommand `--check-term-format` as it can now be called from
+inside the function write_terms() C implementation.
 
-> As suggested by Junio, I implemented --line-prefix to enable the graph
-> display correctly. This works by a neat trick of adding to the msgbuf,
-> so no code needs to be altered. I presumed that the line prefix should
-> go *after* the graphs own prefix.
+Also `|| exit` is added when calling write-terms subcommand from
+git-bisect.sh so as to exit whenever there is an error.
 
-I do not understand the last sentence.
+Using `--write-terms` subcommand is a temporary measure to port shell
+function to C so as to use the existing test suite. As more functions
+are ported, this subcommand will be retired and its implementation will
+be called by some other method.
 
-The motivation I suggested the --line-prefix for is for a scenario
-in which "git log -p --graph" that recurses into a submodule causes
-"git diff A B" between the two commits in a submodule to run; the
-internal diff machinery driven by "log -p --graph" for the
-superproject knows what the graph lines that depict the lineages of
-history in the superproject should look like, but the "git diff A B"
-in the submodule of course does not, so while showing e.g. "| | |"
-(three lineages) for the history in the superproject, you would run
-"git diff --line-prefix='| | | ' A B" and by showing them before
-anything that "git diff A B" without the new option would have
-produced, you could mimick and match the graph output in the
-superproject.
+Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+---
+ builtin/bisect--helper.c | 36 +++++++++++++++++++++++++++++-------
+ git-bisect.sh            | 22 +++++++---------------
+ 2 files changed, 36 insertions(+), 22 deletions(-)
 
-In that scenario, the line prefix _is_ the graph's prefix in the
-superproject.
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index a47f1f2..30e1031 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -4,9 +4,11 @@
+ #include "bisect.h"
+ #include "refs.h"
+ 
++static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
++
+ static const char * const git_bisect_helper_usage[] = {
+ 	N_("git bisect--helper --next-all [--no-checkout]"),
+-	N_("git bisect--helper --check-term-format <term> <orig_term>"),
++	N_("git bisect--helper --write-terms <bad_term> <good_term>"),
+ 	NULL
+ };
+ 
+@@ -57,18 +59,38 @@ static int check_term_format(const char *term, const char *orig_term)
+ 	return 0;
+ }
+ 
++static int write_terms(const char *bad, const char *good)
++{
++	FILE *fp;
++	int res;
++
++	if (!strcmp(bad, good))
++		return error(_("please use two different terms"));
++
++	if (check_term_format(bad, "bad") || check_term_format(good, "good"))
++		return -1;
++
++	fp = fopen(git_path_bisect_terms(), "w");
++	if (!fp)
++		return error_errno(_("could not open the file BISECT_TERMS"));
++
++	res = fprintf(fp, "%s\n%s\n", bad, good);
++	res |= fclose(fp);
++	return (res < 0) ? -1 : 0;
++}
++
+ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	enum {
+ 		NEXT_ALL = 1,
+-		CHECK_TERM_FMT
++		WRITE_TERMS
+ 	} cmdmode = 0;
+ 	int no_checkout = 0;
+ 	struct option options[] = {
+ 		OPT_CMDMODE(0, "next-all", &cmdmode,
+ 			 N_("perform 'git bisect next'"), NEXT_ALL),
+-		OPT_CMDMODE(0, "check-term-format", &cmdmode,
+-			 N_("check format of the term"), CHECK_TERM_FMT),
++		OPT_CMDMODE(0, "write-terms", &cmdmode,
++			 N_("write the terms to .git/BISECT_TERMS"), WRITE_TERMS),
+ 		OPT_BOOL(0, "no-checkout", &no_checkout,
+ 			 N_("update BISECT_HEAD instead of checking out the current commit")),
+ 		OPT_END()
+@@ -83,10 +105,10 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 	switch (cmdmode) {
+ 	case NEXT_ALL:
+ 		return bisect_next_all(prefix, no_checkout);
+-	case CHECK_TERM_FMT:
++	case WRITE_TERMS:
+ 		if (argc != 2)
+-			die(_("--check-term-format requires two arguments"));
+-		return check_term_format(argv[0], argv[1]);
++			die(_("--write-terms requires two arguments"));
++		return write_terms(argv[0], argv[1]);
+ 	default:
+ 		die("BUG: unknown subcommand '%d'", cmdmode);
+ 	}
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 7d7965d..cd39bd0 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -210,7 +210,7 @@ bisect_start() {
+ 	eval "$eval true" &&
+ 	if test $must_write_terms -eq 1
+ 	then
+-		write_terms "$TERM_BAD" "$TERM_GOOD"
++		git bisect--helper --write-terms "$TERM_BAD" "$TERM_GOOD"
+ 	fi &&
+ 	echo "git bisect start$orig_args" >>"$GIT_DIR/BISECT_LOG" || exit
+ 	#
+@@ -557,18 +557,6 @@ get_terms () {
+ 	fi
+ }
+ 
+-write_terms () {
+-	TERM_BAD=$1
+-	TERM_GOOD=$2
+-	if test "$TERM_BAD" = "$TERM_GOOD"
+-	then
+-		die "$(gettext "please use two different terms")"
+-	fi
+-	git bisect--helper --check-term-format "$TERM_BAD" bad || exit
+-	git bisect--helper --check-term-format "$TERM_GOOD" good || exit
+-	printf '%s\n%s\n' "$TERM_BAD" "$TERM_GOOD" >"$GIT_DIR/BISECT_TERMS"
+-}
+-
+ check_and_set_terms () {
+ 	cmd="$1"
+ 	case "$cmd" in
+@@ -582,13 +570,17 @@ check_and_set_terms () {
+ 		bad|good)
+ 			if ! test -s "$GIT_DIR/BISECT_TERMS"
+ 			then
+-				write_terms bad good
++				TERM_BAD=bad
++				TERM_GOOD=good
++				git bisect--helper --write-terms "$TERM_BAD" "$TERM_GOOD" || exit
+ 			fi
+ 			;;
+ 		new|old)
+ 			if ! test -s "$GIT_DIR/BISECT_TERMS"
+ 			then
+-				write_terms new old
++				TERM_BAD=new
++				TERM_GOOD=old
++				git bisect--helper --write-terms "$TERM_BAD" "$TERM_GOOD" || exit
+ 			fi
+ 			;;
+ 		esac ;;
 
-You might be envisioning a future enhancement where the recursive
-one uses not "-Submodule commit A"/"-Submodule commit B", and not
-"diff A B", but "log -p A...B" in the submodule, and in such a case,
-it might make sense to run "log -p --graph A...B" instead when the
-command the end user run in the superproject asked for "--graph".
-You would use the same "--line-prefix='| | | '" when running the
-"log -p --graph A...B" command in the submodule, so that the output
-for the submodule will go _after_ the graph of the superproject, but
-in that case, the output for the submodule would also include its
-own graph to show the relationship between A and B.  The line-prefix
-must come before that graph part (and also if it is "git log" run in
-the submodule, the same line-prefix must come before each line of
-the log message output).
-
-With that understanding/assumption, "line prefix should go after the
-graph's own prefix" sounds like a wrong choice to me.  Shouldn't the
-prefix go before everything else?
-
+--
+https://github.com/git/git/pull/281
