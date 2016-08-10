@@ -2,112 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 344C31FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 18:07:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F8C01FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 18:10:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932727AbcHJSHX (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 14:07:23 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35870 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752889AbcHJSHT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2016 14:07:19 -0400
-Received: by mail-wm0-f67.google.com with SMTP id i138so11048705wmf.3
-        for <git@vger.kernel.org>; Wed, 10 Aug 2016 11:07:18 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Xw5jHL1KpxRxe5sSfLQQtlcl3neRCiMR+Gnc6TT9GJA=;
-        b=HvSx/G5BN3dGwe2WKi/30nIWIL7jGv/gtN27qESE88OLgrRwsegeKR/tYtGxyCANpW
-         LmJJsznK1luPuDYtX5RY5/oyHLT8hCzpdQn3q6tyytR1iTyXxXHHCN/pJip/1BtHd87K
-         xe0/M7wiZ1+l1b+54feDwi0ERDZ+rvQK18+m7GmEjN1XUsxQcPBSorXjhJmQDf80FsmQ
-         Y2Vd0hTUlgCIKaqk4D0/w2fntpjKUBsCaH8BypAunPGae7lv/ZtY0v66zM+mxGruh1Ce
-         yjI8xSI95syVb1SV4719/qVYL0Lm22IQ9KnA+okKEf9K85cv5QnBnlRMPoDKb2N/8bdE
-         TDkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Xw5jHL1KpxRxe5sSfLQQtlcl3neRCiMR+Gnc6TT9GJA=;
-        b=DQPjPum+1pWbZRlYXUM1GXvzidr+br+5Ibn88EnrTvF3/+h+4dn7QnNPFXMaYK/1N6
-         tThJyLAHq1Q5Ksiu5uVxGULDYuKjSAyeYx7Dt99UC2vMngcqel6E+mD54NA6B16aO8IF
-         OdswpvCUubbLlR729WpH8BfTW/fxiyVt89/sZPocYSiwsUbvw0RXzDfcka5zYpIF4K7D
-         v1j5hcZl7WchvU6X1pTtnui33BN5fCq5IXMCE3m7xvvAjh+rR1Wiu8G7cOQrDXZJmilt
-         EZiKzY/Va8WST1DVnyfF7l/bzUCpHlFw8X4gJ+AC0PngB64NFE3yyD0+VoRL+TPbq67Q
-         yJ7Q==
-X-Gm-Message-State: AEkoouuE+12XSW8TEqEeyFAoJHqEqJnXSsa37VvYCA7lcyxIYJ/kU3vIK047r2l/8vpJ6g==
-X-Received: by 10.28.71.197 with SMTP id m66mr4773167wmi.26.1470851604226;
-        Wed, 10 Aug 2016 10:53:24 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id a184sm5980451wmh.1.2016.08.10.10.53.23
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 10 Aug 2016 10:53:23 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v5 05/15] pkt-line: add packet_write_gently_fmt()
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqpopg5yqf.fsf@gitster.mtv.corp.google.com>
-Date:	Wed, 10 Aug 2016 19:53:22 +0200
-Cc:	Jeff King <peff@peff.net>, git@vger.kernel.org, jnareb@gmail.com,
-	mlbright@gmail.com, e@80x24.org, Johannes.Schindelin@gmx.de,
-	ben@wijen.net
-Content-Transfer-Encoding: 7bit
-Message-Id: <2B2AC073-95AD-42E9-AD3A-23E8E13C66DE@gmail.com>
-References: <20160803164225.46355-1-larsxschneider@gmail.com/> <20160810130411.12419-1-larsxschneider@gmail.com> <20160810130411.12419-6-larsxschneider@gmail.com> <20160810134346.6nmf2sudwh56nq76@sigill.intra.peff.net> <xmqqpopg5yqf.fsf@gitster.mtv.corp.google.com>
-To:	Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+	id S932855AbcHJSKY (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 14:10:24 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52252 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932417AbcHJSKW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2016 14:10:22 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E2BEA3216A;
+	Wed, 10 Aug 2016 13:34:04 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=p2gU82b25+j26u5AY0Hp/315HZ0=; b=WDUDpY
+	48lveAFXRxpreXMB3uQWS12hwacLvLSPbUpJGs0d6ns4WK5xPm2KFhu44hFAg2Td
+	bOKJfDhyOVgECcHnt26SmThydnX6Lwu0QjHbtHFu7/zHikkDJ4Tg6oifj9K9+vwL
+	0/YdM3nKA4w8rBNA4NIBbelZbMSS2atZPHLO0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WW/7sD3eR8Zwjf4lWXgd27iwWaXqs5o3
+	8hMhsywtobANa8rNF+sw3480eHwr1ab4KCkoGUtSyu4DoD7rstEs2yqJMk2Mi75D
+	0vwmHfNdZYT6eUNcBwDJmfKGpyrslfYu9R+atYeAPF18u/tzTngvfVpH2vfyMQhR
+	8OyoW20tIRQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D9D7B32168;
+	Wed, 10 Aug 2016 13:34:04 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5DAB032167;
+	Wed, 10 Aug 2016 13:34:04 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Christian Couder <christian.couder@gmail.com>
+Cc:	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	=?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= 
+	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v10 33/40] environment: add set_index_file()
+References: <20160808210337.5038-1-chriscool@tuxfamily.org>
+	<20160808210337.5038-34-chriscool@tuxfamily.org>
+	<xmqq60raewod.fsf@gitster.mtv.corp.google.com>
+	<CAP8UFD2ZAdUjQnO-4qnum2_AK84SfBN2_yO=py+Jj+pkV8pk-w@mail.gmail.com>
+Date:	Wed, 10 Aug 2016 10:34:02 -0700
+In-Reply-To: <CAP8UFD2ZAdUjQnO-4qnum2_AK84SfBN2_yO=py+Jj+pkV8pk-w@mail.gmail.com>
+	(Christian Couder's message of "Wed, 10 Aug 2016 18:52:38 +0200")
+Message-ID: <xmqqlh045y0l.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: A21A48E8-5F20-11E6-BA06-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Christian Couder <christian.couder@gmail.com> writes:
 
-> On 10 Aug 2016, at 19:18, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> Jeff King <peff@peff.net> writes:
-> 
->> On Wed, Aug 10, 2016 at 03:04:01PM +0200, larsxschneider@gmail.com wrote:
->> 
->>> +int packet_write_gently_fmt(int fd, const char *fmt, ...)
->>> +{
->>> +	static struct strbuf buf = STRBUF_INIT;
->>> +	va_list args;
->>> +
->>> +	strbuf_reset(&buf);
->>> +	va_start(args, fmt);
->>> +	format_packet(1, &buf, fmt, args);
->>> +	va_end(args);
->>> +	packet_trace(buf.buf + 4, buf.len - 4, 1);
->>> +	return (write_in_full(fd, buf.buf, buf.len) == buf.len ? 0 : -1);
->>> +}
->> 
->> Could the end of this function just be:
->> 
->>  return packet_write_gently(fd, buf.buf, buf.len);
->> 
->> ? I guess we'd prefer to avoid that, because it incurs an extra
->> memmove() of the data.
->> 
->> Similarly, I'd think this could share code with the non-gentle form
->> (which should be able to just call this and die() if returns an error).
->> Though sometimes the va_list transformation makes that awkward.
-> 
-> Yes.
+>> Isn't the mention on NO_THE_INDEX_COMPATIBILITY_MACROS in the added
+>> comments (there are two) pure red-herring?
+>
+> Yeah, true.
+>
+> So do you want me to refactor the code to use
+> hold_lock_file_for_update() instead of hold_locked_index() and to
+> avoid the set_index_file() hack?
 
-Peff just posted that he tried the shared code idea but the result
-ended up ugly.
+I somehow thought that we already agreed to accept the technical
+debt, taking your "it is too much work" assessment at the face
+value.  If you now think it is feasible within the scope of the
+series, of course we'd prefer it done "right" ;-)
 
+> Or would the set_index_file() hack be ok with a commit message like
+> the following:
+>
+> ---
+> Introduce set_index_file() to be able to temporarily change the
+> index file.
+>
+> Yeah, this is a short cut and this new function should not be used
+> by other code.
+>
+> It adds a small technical debt, that could perhaps be avoided with a
+> refactoring and by using hold_lock_file_for_update() instead of
+> hold_locked_index() to pass the filename where the index should be
+> written.
 
-> Also regarding the naming, please have "_gently" at the end; that is
-> how all other function families with _gently variant are named, I
-> think.
+Is the problematic hold_locked_index() something you do yourself, or
+buried deep inside the callchain of a helper function you use?  I am
+sensing that it is the latter (otherwise you wouldn't be doing the
+hack or at least will trivially fixing it up in a later "now we did
+a faithful conversion from the previous code using GIT_INDEX_FILE
+enviornment variable in an earlier step. Let's clean it up by being
+in full control of what file we read from and write to" step in the
+series).
 
-OK, I will rename them.
+Do you also have an issue on the reading side (i.e. you write it out
+to temporary file and then later re-read the in-core cache from that
+temporary file, for example)?  Or is a single "write to a temporary
+index" the only thing you need to work around?  
 
-Thanks,
-Lars
+The "Yeah, this is a short cut ..." admission of guilt is much much
+less interesting than showing later people a way forward when they
+help us by cleaning up the mess we decided to leave behind for
+expediency.  I am not seeing that "here are the callchains that need
+to be proper refactored, if we want to avoid this hack" yet; but
+that is what would help them.
+
+Thanks.
+
