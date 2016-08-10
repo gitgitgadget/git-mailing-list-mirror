@@ -2,130 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE87B1FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 21:14:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5AB41FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 21:16:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932964AbcHJVOy (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 17:14:54 -0400
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:35884 "EHLO
-	mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932621AbcHJSHF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Aug 2016 14:07:05 -0400
-Received: by mail-wm0-f47.google.com with SMTP id q128so109083517wma.1
-        for <git@vger.kernel.org>; Wed, 10 Aug 2016 11:07:04 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=NyD9z74U5Tt92Q1vmC31haqP3CP9cd+ZmuVQshD0v3U=;
-        b=k4uaJylOA0n6q4dHjSM2FzOSIErfRv3r9fyYegHwcjsNgTxqP50zumGV5K3XgL7T/K
-         w1NRRLJoE6wjtD6b778b2MYzoXbramTrygroQNK2TNh/xXeNqyyKZa4ZPLAaNUPxO7zY
-         g2vknC5+WPUwUfuBouuh5+qIE+uBIk4FR1KDwHG88tKg9kkGECiDORlBSC5tW+wkMIaW
-         7QyB7ehwMFqYbshkQKdWIdGATM5uJqlRXoVA3lmgHfebXxV2XVyngDqrspatzt45Cy6k
-         sNmcCY1rA0VUA0ERDgqfIHMFi/9aP/U9ws29kzRF/S1Tg1s92sY7VPHWp3OMa0qqI2WL
-         ukLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=NyD9z74U5Tt92Q1vmC31haqP3CP9cd+ZmuVQshD0v3U=;
-        b=LFuCwEU0MCIs/PUjFr+AQXbL0Fdkc7mDftWr9jF0OWa8haxHjZFeL1Oya7zLgC18Vk
-         7pTLvad4axprVs6ykMx6daYu3/nM4Xt+HcqqloldnL8p2x7Mbju2/sLbFIIszOEHDB9E
-         k3tMDmoZE+JLH9U41UlaGsRuCy4+2fZ2jCWwb17jxEBmgMNFvMeaRhiMkmjmBzetnVp8
-         /JCK7q4KjWytKr5LYSkgEpPL6c6xQOYgIAz+4iQvzqbSj/olzLQ/4DR0rcTJxBqut0gW
-         mDf59zEvm2zuG5QC+8l2O1LHa/XJcQ6+dUbC2nTeCXNJFnPTNBhqgRr/3poR27Xl1tEC
-         AIuQ==
-X-Gm-Message-State: AEkoousesvvEMEm/NPDa5PseR9TDCFZ4/OOVBeZA1UiEzatDxrY0q5NYSAQ7J7EZ1yGuhQ==
-X-Received: by 10.194.175.106 with SMTP id bz10mr4148272wjc.42.1470837561286;
-        Wed, 10 Aug 2016 06:59:21 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id wc3sm43202073wjc.47.2016.08.10.06.59.20
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 10 Aug 2016 06:59:20 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v5 03/15] pkt-line: add `gentle` parameter to format_packet()
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20160810133745.wagccvvf35o3pbwb@sigill.intra.peff.net>
-Date:	Wed, 10 Aug 2016 15:59:19 +0200
-Cc:	git@vger.kernel.org, gitster@pobox.com, jnareb@gmail.com,
-	mlbright@gmail.com, e@80x24.org, Johannes.Schindelin@gmx.de,
-	ben@wijen.net
-Content-Transfer-Encoding: 8BIT
-Message-Id: <982CD9A4-E155-4DEE-9B47-BCEA4F0C493C@gmail.com>
-References: <20160803164225.46355-1-larsxschneider@gmail.com/> <20160810130411.12419-1-larsxschneider@gmail.com> <20160810130411.12419-4-larsxschneider@gmail.com> <20160810131541.ovpvgwdxjibae5gy@sigill.intra.peff.net> <F4D9C42A-5B7F-47B4-B334-704D5F6210F5@gmail.com> <20160810133745.wagccvvf35o3pbwb@sigill.intra.peff.net>
-To:	Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3124)
+	id S932993AbcHJVQP (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 17:16:15 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59207 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933028AbcHJVPk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2016 17:15:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id AF13A33352;
+	Wed, 10 Aug 2016 17:14:25 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QKiihS9OYTiK3ZTfhPtRjDPlmCs=; b=LW1dlw
+	zBZ+pjqIZFFgERYHDjUYIT+LrKgnN3AAEqd+WRmBht2WXE6vreubr+rW/Dhwwrsl
+	KfJFz9gRSuzIHgbLqRe5OyCSmVlZDiZBc7JOIjo96ZtZ3bl3mtEl8gIl79EjEQW1
+	yNtETLmZinXs7TQ5jQ7TluM061WChs4ULTXR0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WEPsdv72u3vDHfJ7c4X/L0KeOPxw1OxU
+	xdfLRF0XzePRc6KOI5Xwi8+jkhJCy/1MsttdkTJRUlY7fU2SLhe7IztKh90yGVI7
+	C6P3i+vdkUi6SB9QlvNuYfOiBjoClAOcWthctUgolrl20EnaTBPaokDRolM2Mlf4
+	fto+Ud4jLpg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A54FF33351;
+	Wed, 10 Aug 2016 17:14:25 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2BB0833350;
+	Wed, 10 Aug 2016 17:14:25 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Josh Triplett <josh@joshtriplett.org>
+Cc:	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+	Eric Wong <e@80x24.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stefan Beller <sbeller@google.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Richard Ipsum <richard.ipsum@codethink.co.uk>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Philip Oakley <philipoakley@iee.org>
+Subject: Re: patch submission process, was Re: [PATCH v6 06/16] merge_recursive: abort properly upon errors
+References: <xmqqy44ec15p.fsf@gitster.mtv.corp.google.com>
+	<alpine.DEB.2.20.1608031021050.79248@virtualbox>
+	<CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com>
+	<alpine.DEB.2.20.1608031753431.107993@virtualbox>
+	<CAGZ79kYWdZCNW_eBi5aLAacyBZJXQ9xyOWMBmjNsYT5NWjr-Og@mail.gmail.com>
+	<alpine.DEB.2.20.1608041730130.5786@virtualbox>
+	<6c937f79-2b82-619d-51fe-adccbe09bd66@alum.mit.edu>
+	<20160809182800.GA19044@dcvr> <20160810005548.gee6ontd33ck5vej@x>
+	<CANQwDwcL0etdZiiroAStwtpYurYEhJ7vcM52BUGUXh_ey+P9Kw@mail.gmail.com>
+	<20160810193057.s36wfcivlfm3xmh2@x>
+Date:	Wed, 10 Aug 2016 14:14:22 -0700
+In-Reply-To: <20160810193057.s36wfcivlfm3xmh2@x> (Josh Triplett's message of
+	"Wed, 10 Aug 2016 09:30:58 -1000")
+Message-ID: <xmqqd1lg498x.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6A4F4EA8-5F3F-11E6-A82E-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Josh Triplett <josh@joshtriplett.org> writes:
 
-> On 10 Aug 2016, at 15:37, Jeff King <peff@peff.net> wrote:
-> 
-> On Wed, Aug 10, 2016 at 03:29:26PM +0200, Lars Schneider wrote:
-> 
->> 
->>> On 10 Aug 2016, at 15:15, Jeff King <peff@peff.net> wrote:
->>> 
->>> On Wed, Aug 10, 2016 at 03:03:59PM +0200, larsxschneider@gmail.com wrote:
->>> 
->>>> From: Lars Schneider <larsxschneider@gmail.com>
->>>> 
->>>> format_packet() dies if the caller wants to format a packet larger than
->>>> LARGE_PACKET_MAX. Certain callers might prefer an error response instead.
->>> 
->>> I am not sure I agree here. Certainly I see the usefulness of gently
->>> handling a failure to write(). But if you are passing in too-large
->>> buffers, isn't that a bug in the program?
->>> 
->>> How would you recover, except by splitting up the content? That might
->>> not be possible depending on how you are using the pkt-lines. And even
->>> if it is, wouldn't it be simpler to split it up before sending it to
->>> format_packet()?
->> 
->> Good argument. I agree - this patch should be dropped.
-> 
-> Actually, after reading further, one thought did occur to me. Let's say
-> you are writing to a smudge filter, and one of the header packets you
-> send has the filename in it. So you might do something like:
-> 
->  if (packet_write_fmt_gently(fd, "filename=%s", filename) < 0) {
-> 	if (filter_required)
-> 		die(...);
-> 	else
-> 		return -1; /* we tried our best; skip smudge */
->  }
-> 
-> The "recovery" there is not to try sending again, but rather to give up.
-> And that is presumably a sane outcome for somebody who tries to checkout
-> a filename larger than 64K.
+>> But submission is less important than review. And for review it is
+>> usually better (except gigantic series) to have patch text for review
+>> with the review.
+>
+> Agreed.  However, submission typically requires more work than review,
+> because the patch text must remain applicable.  For review, as long as
+> the email client you use to respond doesn't do something horrible like
+> *re-wrap* the quoted patch text, the result will work as a review.
 
-Yes!
-
-
-> It does still feel a little weird that you cannot tell the difference
-> between a write() error and bad input. Because you really might want to
-> do something different between the two. Like:
-> 
->  #define MAX_FILENAME (PKTLINE_DATA_MAXLEN - strlen("filename"))
-> 
->  if (filename > MAX_FILENAME) {
-> 	warning("woah, that name is ridiculous; truncating");
-> 	ret = packet_write_fmt_gently(fd, "%.*s", MAX_FILENAME, filename);
->  } else
-> 	ret = packet_write_fmt_gently(fd, "%s", filename);
-
-
-I can do that. However, I wouldn't truncate the filename as this
-might create a weird outcome. I would just let the filter fail.
-
-OK?
-
-- Lars
+Yup.  That is why we say "please send patch inline; when asked to
+send it as an attachment, please do so".
