@@ -2,80 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DFEB1FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 20:33:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 086A51FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 20:34:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933571AbcHJUdw (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 16:33:52 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:62932 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933324AbcHJSQm (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Aug 2016 14:16:42 -0400
-X-AuditID: 1207440c-217ff700000008d5-0b-57ab60bb154e
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id 59.37.02261.BB06BA75; Wed, 10 Aug 2016 13:13:31 -0400 (EDT)
-Received: from [192.168.69.130] (p5B104255.dip0.t-ipconnect.de [91.16.66.85])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u7AHDTLv005868
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 10 Aug 2016 13:13:30 -0400
-Subject: Re: [PATCH 5/8] xdl_change_compact(): fix compaction heuristic to
- adjust io
-To:	Junio C Hamano <gitster@pobox.com>
-References: <cover.1470259583.git.mhagger@alum.mit.edu>
- <ae7590443737a3996ec4973fd868ce89dc78a576.1470259583.git.mhagger@alum.mit.edu>
- <xmqqshuk2x3p.fsf@gitster.mtv.corp.google.com>
-Cc:	git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-From:	Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <badb2c5b-e2da-03d0-e315-7b92659bb464@alum.mit.edu>
-Date:	Wed, 10 Aug 2016 19:13:29 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.1.0
+	id S933636AbcHJUej (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 16:34:39 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50810 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933050AbcHJUeh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2016 16:34:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0E56833D11;
+	Wed, 10 Aug 2016 16:34:36 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=wv1ba5u5zRZsF8pGu5P9X/IJaw4=; b=ei0Eai
+	Olv7UwAoLffFArn/6mAUHOQJ7tzLpELyAFz4UybXMpOz0zBHJFR44aqZU7vVjIce
+	lXL9MQRSchKhO8lxqNk6iXcOX+zZ66nIdzxcPjH9+/4oi8YFpxaW46igHKiYYcge
+	Klx1VJIpxcUeQn5KkBuVZJUey0DvjpSFsKqiU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gl1XQKPX5ruPIait2iEZ3WGdI67/mPvz
+	r0JT+iPXPcSHTK/wEiOfQo662F0rRAg1RiXWsmkmKQ1WHT1tAKVdD3z8eVBoGCy1
+	bD2I445aCSPJr950ekgnAdDsihxtgD602tE2nnVI1GOd+MugVTgLAxgYPI/yy/8z
+	1HBe4Y8eoPw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0522D33D10;
+	Wed, 10 Aug 2016 16:34:36 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7A05733D0E;
+	Wed, 10 Aug 2016 16:34:35 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Stefan Beller <sbeller@google.com>
+Cc:	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH] t7406: fix breakage on OSX
+In-Reply-To: <CAGZ79kb5Sy6rC1j8uLq+oCTfVVpan0tgat59yOJV20nFeRzSKQ@mail.gmail.com>
+	(Stefan Beller's message of "Wed, 10 Aug 2016 12:03:52 -0700")
+References: <A6131C47-3230-4EC4-B3F6-B2507C937A22@gmail.com>
+	<20160810175607.30826-1-sbeller@google.com>
+	<xmqq1t1w5vk6.fsf@gitster.mtv.corp.google.com>
+	<CAGZ79kb5Sy6rC1j8uLq+oCTfVVpan0tgat59yOJV20nFeRzSKQ@mail.gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+Date:	Wed, 10 Aug 2016 13:34:33 -0700
+Message-ID: <xmqqlh044b3a.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqshuk2x3p.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuphleLIzCtJLcpLzFFi42IRYndR1N2dsDrc4OIvU4uuK91MFg29V5gt
-	di/uZ7ZYcXUOs8WPlh5mi82b21kc2Dx2zrrL7rFgU6nHs949jB4XLyl7fN4kF8AaxWWTkpqT
-	WZZapG+XwJXRtPIVe8Er1ooTrb8ZGxjPs3QxcnJICJhIrJ26GMjm4hAS2Moo8bLrJiOEc5ZJ
-	4trWu0AZDg5hgTCJvW+SQBpEBNQkJrYdgmrYySjRv/wNK0iCWeAco8T3KdogNpuArsSinmYm
-	EJtXwF5i34znzCA2i4CqxPvpd8FsUYEQiW03G9ggagQlTs58AraLU8Ba4vXGCoiRehI7rv+C
-	Gi8vsf3tHOYJjPyzkHTMQlI2C0nZAkbmVYxyiTmlubq5iZk5xanJusXJiXl5qUW6hnq5mSV6
-	qSmlmxghAc2zg/HbOplDjAIcjEo8vBuYVoULsSaWFVfmHmKU5GBSEuUVjlkdLsSXlJ9SmZFY
-	nBFfVJqTWnyIUYKDWUmEty0CKMebklhZlVqUD5OS5mBREudVXaLuJySQnliSmp2aWpBaBJOV
-	4eBQkuDljQdqFCxKTU+tSMvMKUFIM3FwggznARruD1LDW1yQmFucmQ6RP8Woy7Hgx+21TEIs
-	efl5qVLivO4gRQIgRRmleXBzYInoFaM40FvCvAEgVTzAJAY36RXQEiagJUmqK0CWlCQipKQa
-	GFPO7097Kq7ZY3ah4PiZWfs97ndOUY8vZyybtsx92qcTh/QSdk3g+R1UPlGv+Flb7jNPoynp
-	WqY3zl652Bf65tL2tJn2vp9Tt9lcL+ZwtL3M523hp6BgoBxVbvl37yoXn8Jb95WOhCXY5n9L
-	NJsX2plXMlU6YdajrX1rY0zNO4ttOv0m2e+QUWIpzkg01GIuKk4EAJxe0/sfAwAA
+Content-Type: text/plain
+X-Pobox-Relay-ID: D9E96CF4-5F39-11E6-992F-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 08/04/2016 08:43 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> The code branch used for the compaction heuristic incorrectly forgot to
->> keep io in sync while the group was shifted. I think that could have
->> led to reading past the end of the rchgo array.
-> 
-> I had to read the first sentence three times as "incorrectly forgot"
-> was a bit strange thing to say (as if there is a situation where
-> 'forgetting to do' is the correct thing to do, but in that case we
-> would phrase it to stress that not doing is a deliberate choice,
-> e.g. 'refraining from doing').  Perhaps s/incorrectly // is the
-> simplest readability improvement?
+Stefan Beller <sbeller@google.com> writes:
 
-Yes, that makes it clearer. Will change.
+> On Wed, Aug 10, 2016 at 11:27 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Stefan Beller <sbeller@google.com> writes:
+>>
+>>> On OSX `wc` prefixes the output of numbers with whitespace, such that
+>>> the `commit_count` would be "SP <NUMBER>". When using that in
+>>>
+>>>     git submodule update --init --depth=$commit_count
+>>>
+>>> the depth would be empty and the number is interpreted as the pathspec.
+>>> Fix this by not using `wc` and rather instruct rev-list to count.
+>>>
+>>> Another way to fix this is to remove the `=` sign after the `--depth`
+>>> argument as then we are allowed to have more than just one whitespace
+>>> between `--depth` and the actual number. Prefer the solution of rev-list
+>>> counting as that is expected to be slightly faster and more self-sustained
+>>> within Git.
+>>
+>> You meant self-contained, I would guess.
+>
+> Yes. Mind to fix that locally, or waiting for a resend?
 
-Michael
+Fixed it up while queuing.
+
+>> There are a couple of "log --oneline | wc -l" remaining that are
+>> currently safe but they may be a time-bomb waiting to go off.
+> ...
+> All of the occurrences are not white space sensitive AFAICT,
+> they are just bad examples, which may inspire others to follow
+> that pattern.
+
+Yup, I agree(d).
+
+
 
