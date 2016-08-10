@@ -2,102 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A49C51FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 22:47:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBD071FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 22:52:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752731AbcHJWrB (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 18:47:01 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:64479 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752342AbcHJWrA (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Aug 2016 18:47:00 -0400
-X-AuditID: 1207440c-217ff700000008d5-c9-57abaed5b260
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id A2.56.02261.5DEABA75; Wed, 10 Aug 2016 18:46:46 -0400 (EDT)
-Received: from [192.168.69.130] (p5B104255.dip0.t-ipconnect.de [91.16.66.85])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u7AMkg8s023855
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 10 Aug 2016 18:46:43 -0400
-Subject: Re: Forward declaration of enum iterator_selection?
-To:	Johannes Sixt <j6t@kdbg.org>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-References: <933f540f-7752-cfce-5785-b67728fea987@kdbg.org>
- <0604cf0a-2b94-93b3-3a01-213ea5b9849b@ramsayjones.plus.com>
- <57A8B3BD.1000002@kdbg.org>
-Cc:	Git Mailing List <git@vger.kernel.org>
-From:	Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <a4f431a9-a758-a777-56c1-62bbe28f2072@alum.mit.edu>
-Date:	Thu, 11 Aug 2016 00:46:42 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.1.0
+	id S1752342AbcHJWwn (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 18:52:43 -0400
+Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:39215
+	"EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751497AbcHJWwn convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2016 18:52:43 -0400
+DKIM-Signature:	v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1470866239;
+	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+	bh=+X7IQ0ITBq+C6x2nClmwKqMO74ovBnjZXdgBQfF2mgc=;
+	b=YL2cAARoxROBCgUU5BOz9ewiC1elEvpa2UcvH79swApWcK+aOGkDYwVcqu9HUa6A
+	YHu0zthpq9L/DU6m5wnt8yHSLIMWFp0E8zYGGhp0nEZuonRm3jqBgYelTABA45wSsD0
+	w5FX/RFscoj3l0OJr6aL+CFQEULL4eoCgfiS0hDE=
+From:	Pranit Bauva <pranit.bauva@gmail.com>
+To:	git@vger.kernel.org
+Message-ID: <010201567675ae57-614652e4-7e6c-4451-a4cf-aa73922fe552-000000@eu-west-1.amazonses.com>
+In-Reply-To: <010201567675adc1-17e27495-6b36-40d1-836d-814da029fcc4-000000@eu-west-1.amazonses.com>
+References: <010201567675adc1-17e27495-6b36-40d1-836d-814da029fcc4-000000@eu-west-1.amazonses.com>
+Subject: [PATCH v12 06/13] wrapper: move is_empty_file() and rename it as
+ is_empty_or_missing_file()
 MIME-Version: 1.0
-In-Reply-To: <57A8B3BD.1000002@kdbg.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrOIsWRmVeSWpSXmKPExsUixO6iqHtt3epwg4utzBZdV7qZLJ7Mvcts
-	MfOqtQOzx8NXXewe+5duY/P4vEkugDmKyyYlNSezLLVI3y6BK2PKVP6CW3wVhxeuYWlg/Mjd
-	xcjJISFgIjHjz0wWEFtIYCujxPoTWV2MXED2WSaJ6YteMXUxcnAIC9hIfPxuDFIjIuAjMXXp
-	U2aImumMEvPezWMDSTALaEls/vmNHcRmE9CVWNTTzARi8wrYSzzZMJcRxGYRUJVYOfUOWI2o
-	QIjEtpsNbBA1ghInZz4BO4JTQEPiTuN0doiZ6hJ/5l1ihrDlJba/ncM8gZF/FpKWWUjKZiEp
-	W8DIvIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI11AvN7NELzWldBMjJDx5djB+WydziFGAg1GJ
-	h/dD2upwIdbEsuLK3EOMkhxMSqK8wjFAIb6k/JTKjMTijPii0pzU4kOMEhzMSiK839YC5XhT
-	EiurUovyYVLSHCxK4ryqS9T9hATSE0tSs1NTC1KLYLIyHBxKErwCwDgUEixKTU+tSMvMKUFI
-	M3FwggznARrODFLDW1yQmFucmQ6RP8WoKCXO+3gNUEIAJJFRmgfXC0sfrxjFgV4R5p0CchsP
-	MPXAdb8CGswENDhJdQXI4JJEhJRUA6Oj0C2H7pW9AZv3eXhfE957YEIG33zn07PClayeXTp5
-	p19oR7JRSVXMHBm/X2J7u0+k/d9tdKH4p0LL0yOtxy3fu50MjWUs/yt83vyL89+rkcxtx7d0
-	bos/uPj/dYkJzxQOLfgZdfPoe13e/4sPMW4VCWI2EeL6KlLHNkFi+Yq7xqt+LutazamhxFKc
-	kWioxVxUnAgAYVgznvoCAAA=
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+Date:	Wed, 10 Aug 2016 21:57:19 +0000
+X-SES-Outgoing:	2016.08.10-54.240.7.12
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 08/08/2016 06:30 PM, Johannes Sixt wrote:
-> Am 07.08.2016 um 22:34 schrieb Ramsay Jones:
->> [...] I would rather the 'enum iterator_selection' be defined
->> before this declaration. One solution could be to #include "iterator.h"
->> prior to _all_ #include "refs/refs-internal.h" in all compilation units
->> (Note it is in the opposite order in refs/iterator.c). Alternatively, you
->> could put the #include "../iterator.h" into refs/refs-internal.h directly
->> (some people would object to this).
-> 
-> I concur. Which one is the correct way to do, I do not know, either.
-> It's a matter how the interface is intended to be used. Perhaps the
-> typedef must be moved to iterator.h?
+is_empty_file() can help to refactor a lot of code. This will be very
+helpful in porting "git bisect" to C.
 
-Thanks for noticing this problem.
+Suggested-by: Torsten Bögershausen <tboegi@web.de>
+Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+---
+ builtin/am.c | 20 ++------------------
+ cache.h      |  3 +++
+ wrapper.c    | 13 +++++++++++++
+ 3 files changed, 18 insertions(+), 18 deletions(-)
 
-The enum is meant to be available for the use of any iterator-type
-module, of which there are currently only ref-iterator and dir-iterator,
-and the latter doesn't happen to use this enum. I'd rather not move it
-to ref-internal.h because I think keeping it in a more public place will
-encourage people implementing other types of iterators to reuse it.
+diff --git a/builtin/am.c b/builtin/am.c
+index 3dfe70b..6ee158f 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -30,22 +30,6 @@
+ #include "mailinfo.h"
+ 
+ /**
+- * Returns 1 if the file is empty or does not exist, 0 otherwise.
+- */
+-static int is_empty_file(const char *filename)
+-{
+-	struct stat st;
+-
+-	if (stat(filename, &st) < 0) {
+-		if (errno == ENOENT)
+-			return 1;
+-		die_errno(_("could not stat %s"), filename);
+-	}
+-
+-	return !st.st_size;
+-}
+-
+-/**
+  * Returns the length of the first line of msg.
+  */
+ static int linelen(const char *msg)
+@@ -1323,7 +1307,7 @@ static int parse_mail(struct am_state *state, const char *mail)
+ 		goto finish;
+ 	}
+ 
+-	if (is_empty_file(am_path(state, "patch"))) {
++	if (is_empty_or_missing_file(am_path(state, "patch"))) {
+ 		printf_ln(_("Patch is empty. Was it split wrong?"));
+ 		die_user_resolve(state);
+ 	}
+@@ -1911,7 +1895,7 @@ static void am_run(struct am_state *state, int resume)
+ 		resume = 0;
+ 	}
+ 
+-	if (!is_empty_file(am_path(state, "rewritten"))) {
++	if (!is_empty_or_missing_file(am_path(state, "rewritten"))) {
+ 		assert(state->rebasing);
+ 		copy_notes_for_rebase(state);
+ 		run_post_rewrite_hook(state);
+diff --git a/cache.h b/cache.h
+index 6049f86..91e2f81 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1870,4 +1870,7 @@ void sleep_millisec(int millisec);
+  */
+ void safe_create_dir(const char *dir, int share);
+ 
++/* Return 1 if the file is empty or does not exists, 0 otherwise. */
++extern int is_empty_or_missing_file(const char *filename);
++
+ #endif /* CACHE_H */
+diff --git a/wrapper.c b/wrapper.c
+index 5dc4e15..e70e4d1 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -696,3 +696,16 @@ void sleep_millisec(int millisec)
+ {
+ 	poll(NULL, 0, millisec);
+ }
++
++int is_empty_or_missing_file(const char *filename)
++{
++	struct stat st;
++
++	if (stat(filename, &st) < 0) {
++		if (errno == ENOENT)
++			return 1;
++		die_errno(_("could not stat %s"), filename);
++	}
++
++	return !st.st_size;
++}
 
-My understanding of the project policy is that it is OK for one header
-file to include another header file iff the second header file is
-necessary for the correct compilation of the first (but not only because
-users of the first will usually want the second as well). So my
-suggestion is to add an `#include "iterator.h"` to refs-internal.h.
-
-I also just realized that most "*.[ch]" files that live in
-subdirectories use
-
-    #include "foo.h"
-
-to include header files from the main directory, but some (including
-refs/files-backend.c) use
-
-    #include "../foo.h"
-
-I suspect that this inconsistency might cause problems for make and the
-automatic dependency generation that it relies on, so the latter should
-probably be changed to use the shorter pattern.
-
-Michael
-
+--
+https://github.com/git/git/pull/281
