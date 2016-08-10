@@ -2,116 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 920611FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 18:06:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 344C31FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 18:07:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751789AbcHJSFs (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 14:05:48 -0400
-Received: from mail-io0-f169.google.com ([209.85.223.169]:36450 "EHLO
-	mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751264AbcHJSFr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2016 14:05:47 -0400
-Received: by mail-io0-f169.google.com with SMTP id b62so49000750iod.3
-        for <git@vger.kernel.org>; Wed, 10 Aug 2016 11:05:46 -0700 (PDT)
+	id S932727AbcHJSHX (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 14:07:23 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:35870 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752889AbcHJSHT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2016 14:07:19 -0400
+Received: by mail-wm0-f67.google.com with SMTP id i138so11048705wmf.3
+        for <git@vger.kernel.org>; Wed, 10 Aug 2016 11:07:18 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=HRETcZyDtwFmhzyM+CBqg7ah6rnY6QtwqMSFoYb15TE=;
-        b=ignqoUr1aMRbyxikyswP5ld4s0DjMFu4eNgCTDXxvqxGZ69fRmQGv9UuGGgzZeoE49
-         knBcafr6POYKoUr8texRhd8nHXDBAFDspf3E4COBDismDOnvfK/k6RBFnLQxSNQJrXe4
-         9KRD6o+FFO6ImiMvkJWcDoWSNF772ApMb7BHnMl28+spm91mDm2W92F8NTWzftd1Lw3A
-         IPaxmvsybJAX6sZDBhbrkE73U63G0puKEGWjHItTuU/tTbhADmY8xeFow4Yrv+ctHSL/
-         vV2QpbMEbAjWwEbigEZAcXPyd3Y7VoNKz9AFcxIHTE1YTeLLmZJr8Nbx7eO7auP3Ji1E
-         FO1Q==
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=Xw5jHL1KpxRxe5sSfLQQtlcl3neRCiMR+Gnc6TT9GJA=;
+        b=HvSx/G5BN3dGwe2WKi/30nIWIL7jGv/gtN27qESE88OLgrRwsegeKR/tYtGxyCANpW
+         LmJJsznK1luPuDYtX5RY5/oyHLT8hCzpdQn3q6tyytR1iTyXxXHHCN/pJip/1BtHd87K
+         xe0/M7wiZ1+l1b+54feDwi0ERDZ+rvQK18+m7GmEjN1XUsxQcPBSorXjhJmQDf80FsmQ
+         Y2Vd0hTUlgCIKaqk4D0/w2fntpjKUBsCaH8BypAunPGae7lv/ZtY0v66zM+mxGruh1Ce
+         yjI8xSI95syVb1SV4719/qVYL0Lm22IQ9KnA+okKEf9K85cv5QnBnlRMPoDKb2N/8bdE
+         TDkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=HRETcZyDtwFmhzyM+CBqg7ah6rnY6QtwqMSFoYb15TE=;
-        b=LqFZo8s5i1aBXygNN4b0yU9ErO6gVtCXoXdaFzQbcDXkgk/A54V5zM2i1w12CV+Rag
-         v52vVgZb1zh5SqEHhqLPR8r2ykGgnm4Y58lPHPetAnSDiGhAA2ITDVYNcf1sJjLDd+ja
-         qXiLvAvJBQLCGlUUXfBlBxwvFTZLj2/Epjvq+tfeoVNotdRH6KXo9fG2wwzFCQhpm2ID
-         HvqRk/FFuX+fZ6pgdtf3gsK7oPuHNTa1vpxObW3ozDrXaN56ILVxudghIvMt2a0YSfiv
-         GNCN79mYI5aJd8sZd2MfzSQFebpV/FrwW5+dnEMUKYOvtTI4VjPLQ7LI/Iy/4SBqy3b/
-         lPsw==
-X-Gm-Message-State: AEkooutC8WTo+sGwk0DvrMWeINMgJtogSwUzmKaHvGFQ/2o3YHkq8N8nwhDn5a0Gu5bo/jo7lR8OK7vL7taJTdx4
-X-Received: by 10.107.131.38 with SMTP id f38mr6891314iod.173.1470850615694;
- Wed, 10 Aug 2016 10:36:55 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Wed, 10 Aug 2016 10:36:55 -0700 (PDT)
-In-Reply-To: <A6131C47-3230-4EC4-B3F6-B2507C937A22@gmail.com>
-References: <xmqqwpjqdh7w.fsf@gitster.mtv.corp.google.com> <A6131C47-3230-4EC4-B3F6-B2507C937A22@gmail.com>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Wed, 10 Aug 2016 10:36:55 -0700
-Message-ID: <CAGZ79kai3V=pVMOsas6P9wSCyF=BXwVf2Piuci9CNt5BN=K7Wg@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Aug 2016, #03; Mon, 8)
-To:	Lars Schneider <larsxschneider@gmail.com>
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=Xw5jHL1KpxRxe5sSfLQQtlcl3neRCiMR+Gnc6TT9GJA=;
+        b=DQPjPum+1pWbZRlYXUM1GXvzidr+br+5Ibn88EnrTvF3/+h+4dn7QnNPFXMaYK/1N6
+         tThJyLAHq1Q5Ksiu5uVxGULDYuKjSAyeYx7Dt99UC2vMngcqel6E+mD54NA6B16aO8IF
+         OdswpvCUubbLlR729WpH8BfTW/fxiyVt89/sZPocYSiwsUbvw0RXzDfcka5zYpIF4K7D
+         v1j5hcZl7WchvU6X1pTtnui33BN5fCq5IXMCE3m7xvvAjh+rR1Wiu8G7cOQrDXZJmilt
+         EZiKzY/Va8WST1DVnyfF7l/bzUCpHlFw8X4gJ+AC0PngB64NFE3yyD0+VoRL+TPbq67Q
+         yJ7Q==
+X-Gm-Message-State: AEkoouuE+12XSW8TEqEeyFAoJHqEqJnXSsa37VvYCA7lcyxIYJ/kU3vIK047r2l/8vpJ6g==
+X-Received: by 10.28.71.197 with SMTP id m66mr4773167wmi.26.1470851604226;
+        Wed, 10 Aug 2016 10:53:24 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id a184sm5980451wmh.1.2016.08.10.10.53.23
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 10 Aug 2016 10:53:23 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v5 05/15] pkt-line: add packet_write_gently_fmt()
+From:	Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqqpopg5yqf.fsf@gitster.mtv.corp.google.com>
+Date:	Wed, 10 Aug 2016 19:53:22 +0200
+Cc:	Jeff King <peff@peff.net>, git@vger.kernel.org, jnareb@gmail.com,
+	mlbright@gmail.com, e@80x24.org, Johannes.Schindelin@gmx.de,
+	ben@wijen.net
+Content-Transfer-Encoding: 7bit
+Message-Id: <2B2AC073-95AD-42E9-AD3A-23E8E13C66DE@gmail.com>
+References: <20160803164225.46355-1-larsxschneider@gmail.com/> <20160810130411.12419-1-larsxschneider@gmail.com> <20160810130411.12419-6-larsxschneider@gmail.com> <20160810134346.6nmf2sudwh56nq76@sigill.intra.peff.net> <xmqqpopg5yqf.fsf@gitster.mtv.corp.google.com>
+To:	Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Aug 10, 2016 at 10:30 AM, Lars Schneider
-<larsxschneider@gmail.com> wrote:
->
->>
->> * sb/submodule-update-dot-branch (2016-08-03) 7 commits
->>  (merged to 'next' on 2016-08-04 at 47bff41)
->> + submodule update: allow '.' for branch value
->> + submodule--helper: add remote-branch helper
->> + submodule-config: keep configured branch around
->> + submodule--helper: fix usage string for relative-path
->> + submodule update: narrow scope of local variable
->> + submodule update: respect depth in subsequent fetches
->> + t7406: future proof tests with hard coded depth
->>
->> A few updates to "git submodule update".
->>
->> Will merge to 'master'.
->
-> I think "t7406: future proof tests with hard coded depth"
-> breaks the tests on OSX:
->
-> https://travis-ci.org/git/git/jobs/150779244
->
-> Cheers,
-> Lars
->
+
+> On 10 Aug 2016, at 19:18, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> Jeff King <peff@peff.net> writes:
+> 
+>> On Wed, Aug 10, 2016 at 03:04:01PM +0200, larsxschneider@gmail.com wrote:
+>> 
+>>> +int packet_write_gently_fmt(int fd, const char *fmt, ...)
+>>> +{
+>>> +	static struct strbuf buf = STRBUF_INIT;
+>>> +	va_list args;
+>>> +
+>>> +	strbuf_reset(&buf);
+>>> +	va_start(args, fmt);
+>>> +	format_packet(1, &buf, fmt, args);
+>>> +	va_end(args);
+>>> +	packet_trace(buf.buf + 4, buf.len - 4, 1);
+>>> +	return (write_in_full(fd, buf.buf, buf.len) == buf.len ? 0 : -1);
+>>> +}
+>> 
+>> Could the end of this function just be:
+>> 
+>>  return packet_write_gently(fd, buf.buf, buf.len);
+>> 
+>> ? I guess we'd prefer to avoid that, because it incurs an extra
+>> memmove() of the data.
+>> 
+>> Similarly, I'd think this could share code with the non-gentle form
+>> (which should be able to just call this and die() if returns an error).
+>> Though sometimes the va_list transformation makes that awkward.
+> 
+> Yes.
+
+Peff just posted that he tried the shared code idea but the result
+ended up ugly.
 
 
-error: pathspec '4' did not match any file(s) known to git.
+> Also regarding the naming, please have "_gently" at the end; that is
+> how all other function families with _gently variant are named, I
+> think.
 
-not ok 46 - submodule update clone shallow submodule
+OK, I will rename them.
 
-#
-# test_when_finished "rm -rf super3" &&
-# first=$(git -C cloned submodule status submodule |cut -c2-41) &&
-# second=$(git -C submodule rev-parse HEAD) &&
-# commit_count=$(git -C submodule rev-list $first^..$second | wc -l) &&
-# git clone cloned super3 &&
-# pwd=$(pwd) &&
-# (
-# cd super3 &&
-# sed -e "s#url = ../#url = file://$pwd/#" <.gitmodules >.gitmodules.tmp &&
-# mv -f .gitmodules.tmp .gitmodules &&
-# git submodule update --init --depth=$commit_count &&
-# test 1 = $(git -C submodule log --oneline | wc -l)
-# )
-#
-
-
-Is it possible that the "wc -l" produces  SP <NUMBER> on OSX,
-such that the
-
-# git submodule update --init --depth=$commit_count
-
-contains "--depth= 4" which means empty depth and 4 as the pathspec
-for the update command?
+Thanks,
+Lars
