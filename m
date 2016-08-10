@@ -2,202 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A71131FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 22:09:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E1BC1FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 22:09:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932362AbcHJWJQ (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 18:09:16 -0400
-Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:37197
-	"EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752159AbcHJWJP (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Aug 2016 18:09:15 -0400
-X-Greylist: delayed 714 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Aug 2016 18:09:15 EDT
-DKIM-Signature:	v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1470866239;
-	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-	bh=+X+lCb/kIiriYCE8plskRl9kQBzc0WvZeL6pE58MbP0=;
-	b=fnB49glDoMGQ1u+SALyD92W1BACV9o52hb/Fw6Hf1r7um8nfyQmTAMVueq6PgEL0
-	Ms48xdMFtAdzqHYXjNpPf1xg0M2FpJsjnfcI+VxycvZsKd2ZIHtshvgpp+QMl8p3Yvh
-	mzALOsRYNvec+Ulb/EnMAnpzO/rJIYXX+LuU7crM=
-From:	Pranit Bauva <pranit.bauva@gmail.com>
-To:	git@vger.kernel.org
-Message-ID: <010201567675ae45-39c80adf-8b87-4a92-a908-23ffa48db947-000000@eu-west-1.amazonses.com>
-In-Reply-To: <010201567675adc1-17e27495-6b36-40d1-836d-814da029fcc4-000000@eu-west-1.amazonses.com>
-References: <010201567675adc1-17e27495-6b36-40d1-836d-814da029fcc4-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v12 02/13] bisect: rewrite `check_term_format` shell
- function in C
+	id S932628AbcHJWJY (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 18:09:24 -0400
+Received: from relay4-d.mail.gandi.net ([217.70.183.196]:42568 "EHLO
+	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932392AbcHJWJW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2016 18:09:22 -0400
+Received: from [IPv6:2607:fb90:48c9:c81b:f385:689a:55b6:6849] (unknown [IPv6:2607:fb90:48c9:c81b:f385:689a:55b6:6849])
+	(Authenticated sender: josh@joshtriplett.org)
+	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 3178517209B;
+	Thu, 11 Aug 2016 00:08:02 +0200 (CEST)
+User-Agent: K-9 Mail for Android
+In-Reply-To: <20160810093731.GA3404@salo>
+References: <20160729064055.GB25331@x> <20160803191202.GA22881@salo> <20160804224058.po43kl7w26ockfie@x> <20160810093731.GA3404@salo>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:	Wed, 10 Aug 2016 21:57:19 +0000
-X-SES-Outgoing:	2016.08.10-54.240.7.17
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+ charset=UTF-8
+Subject: Re: [ANNOUNCE] git-series: track changes to a patch series over time
+From:	Josh Triplett <josh@joshtriplett.org>
+Date:	Wed, 10 Aug 2016 12:07:26 -1000
+To:	Richard Ipsum <richard.ipsum@codethink.co.uk>
+CC:	git@vger.kernel.org, linux-kernel@vger.kernel.org
+Message-ID: <13509A14-16CB-476C-B983-7001F3D0DA61@joshtriplett.org>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Reimplement the `check_term_format` shell function in C and add
-a `--check-term-format` subcommand to `git bisect--helper` to call it
-from git-bisect.sh
+On August 9, 2016 11:37:31 PM HST, Richard Ipsum <richard.ipsum@codethink.co.uk> wrote:
+>On Thu, Aug 04, 2016 at 12:40:58PM -1000, Josh Triplett wrote:
+>> On Wed, Aug 03, 2016 at 08:12:02PM +0100, Richard Ipsum wrote:
+>> > On Thu, Jul 28, 2016 at 11:40:55PM -0700, Josh Triplett wrote:
+>> > > I'd welcome any feedback, whether on the interface and workflow,
+>the
+>> > > internals and collaboration, ideas on presenting diffs of patch
+>series,
+>> > > or anything else.
+>> > 
+>> > One other nice thing I've noticed about this tool is the
+>> > way series behave like regular git branches: I specify the name
+>> > of the series and from then on all other commands act on that
+>> > series until told otherwise.
+>> 
+>> Thanks; I spent a while thinking about that part of the workflow.  I
+>> save the current series as a symbolic ref SHEAD, and everything
+>operates
+>> on SHEAD.  (I should probably add support for running things like
+>"git
+>> series log" or "git series format" on a different series, because
+>right
+>> now "until told otherwise" doesn't include a way to tell it
+>otherwise.)
+>
+>Apologies for this delayed response,
+>I needed time to gather my thoughts,
+>and also to fix the perl libgit2 binding to allow me to use
+>your symbolic ref suggestion. :p
 
-Using `--check-term-format` subcommand is a temporary measure to port
-shell function to C so as to use the existing test suite. As more
-functions are ported, this subcommand will be retired and its
-implementation will be called by some other method/subcommand. For
-eg. In conversion of write_terms() of git-bisect.sh, the subcommand will
-be removed and instead check_term_format() will be called in its C
-implementation while a new subcommand will be introduced for write_terms().
+Yeah, during git-series development I ended up doing some work on both libgit2 and git2-rs. :)
 
-Helped-by: Johannes Schindelein <Johannes.Schindelein@gmx.de>
-Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
----
- builtin/bisect--helper.c | 60 +++++++++++++++++++++++++++++++++++++++++++++++-
- git-bisect.sh            | 31 ++-----------------------
- 2 files changed, 61 insertions(+), 30 deletions(-)
+>Though it turns out that libgit2 doesn't currently allow
+>me to write arbitrary data to a symbolic ref as git-symbolic-ref(1)
+>will,
+>so this still needs to be fixed somehow.
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 8111c91..a47f1f2 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -2,19 +2,73 @@
- #include "cache.h"
- #include "parse-options.h"
- #include "bisect.h"
-+#include "refs.h"
- 
- static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --next-all [--no-checkout]"),
-+	N_("git bisect--helper --check-term-format <term> <orig_term>"),
- 	NULL
- };
- 
-+/*
-+ * Check whether the string `term` belongs to the set of strings
-+ * included in the variable arguments.
-+ */
-+LAST_ARG_MUST_BE_NULL
-+static int one_of(const char *term, ...)
-+{
-+	int res = 0;
-+	va_list matches;
-+	const char *match;
-+
-+	va_start(matches, term);
-+	while (!res && (match = va_arg(matches, const char *)))
-+		res = !strcmp(term, match);
-+	va_end(matches);
-+
-+	return res;
-+}
-+
-+static int check_term_format(const char *term, const char *orig_term)
-+{
-+	int res;
-+	char *new_term = xstrfmt("refs/bisect/%s", term);
-+
-+	res = check_refname_format(new_term, 0);
-+	free(new_term);
-+
-+	if (res)
-+		return error(_("'%s' is not a valid term"), term);
-+
-+	if (one_of(term, "help", "start", "skip", "next", "reset",
-+			"visualize", "replay", "log", "run", NULL))
-+		return error(_("can't use the builtin command '%s' as a term"), term);
-+
-+	/*
-+	 * In theory, nothing prevents swapping completely good and bad,
-+	 * but this situation could be confusing and hasn't been tested
-+	 * enough. Forbid it for now.
-+	 */
-+
-+	if ((strcmp(orig_term, "bad") && one_of(term, "bad", "new", NULL)) ||
-+		 (strcmp(orig_term, "good") && one_of(term, "good", "old", NULL)))
-+		return error(_("can't change the meaning of the term '%s'"), term);
-+
-+	return 0;
-+}
-+
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
--	enum { NEXT_ALL = 1 } cmdmode = 0;
-+	enum {
-+		NEXT_ALL = 1,
-+		CHECK_TERM_FMT
-+	} cmdmode = 0;
- 	int no_checkout = 0;
- 	struct option options[] = {
- 		OPT_CMDMODE(0, "next-all", &cmdmode,
- 			 N_("perform 'git bisect next'"), NEXT_ALL),
-+		OPT_CMDMODE(0, "check-term-format", &cmdmode,
-+			 N_("check format of the term"), CHECK_TERM_FMT),
- 		OPT_BOOL(0, "no-checkout", &no_checkout,
- 			 N_("update BISECT_HEAD instead of checking out the current commit")),
- 		OPT_END()
-@@ -29,6 +83,10 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 	switch (cmdmode) {
- 	case NEXT_ALL:
- 		return bisect_next_all(prefix, no_checkout);
-+	case CHECK_TERM_FMT:
-+		if (argc != 2)
-+			die(_("--check-term-format requires two arguments"));
-+		return check_term_format(argv[0], argv[1]);
- 	default:
- 		die("BUG: unknown subcommand '%d'", cmdmode);
- 	}
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 5d1cb00..7d7965d 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -564,38 +564,11 @@ write_terms () {
- 	then
- 		die "$(gettext "please use two different terms")"
- 	fi
--	check_term_format "$TERM_BAD" bad
--	check_term_format "$TERM_GOOD" good
-+	git bisect--helper --check-term-format "$TERM_BAD" bad || exit
-+	git bisect--helper --check-term-format "$TERM_GOOD" good || exit
- 	printf '%s\n%s\n' "$TERM_BAD" "$TERM_GOOD" >"$GIT_DIR/BISECT_TERMS"
- }
- 
--check_term_format () {
--	term=$1
--	git check-ref-format refs/bisect/"$term" ||
--	die "$(eval_gettext "'\$term' is not a valid term")"
--	case "$term" in
--	help|start|terms|skip|next|reset|visualize|replay|log|run)
--		die "$(eval_gettext "can't use the builtin command '\$term' as a term")"
--		;;
--	bad|new)
--		if test "$2" != bad
--		then
--			# In theory, nothing prevents swapping
--			# completely good and bad, but this situation
--			# could be confusing and hasn't been tested
--			# enough. Forbid it for now.
--			die "$(eval_gettext "can't change the meaning of term '\$term'")"
--		fi
--		;;
--	good|old)
--		if test "$2" != good
--		then
--			die "$(eval_gettext "can't change the meaning of term '\$term'")"
--		fi
--		;;
--	esac
--}
--
- check_and_set_terms () {
- 	cmd="$1"
- 	case "$cmd" in
+What arbitrary data do you need to write?
 
---
-https://github.com/git/git/pull/281
+Also, note that you want to put your symbolic ref in refs/, not directly in .git, so that git takes it into account for object reachability.
+
+>> > git-appraise looks as though it might also have this behaviour.
+>> > I think it's a nice way to do it, since you don't generally
+>> > perform more than one review simultaneously. So I may well
+>> > use this idea in git-candidate if it's okay. :)
+>> 
+>> By all means.  For a review tool like git-candidate, it seems like
+>you'd
+>> want even more contextual information, to make it easier to specify
+>> things like "comment on file F line L".  For instance, what if you
+>> spawned the diff to review in an editor, with plenty of extra context
+>> and a file extension that'll cause most editors to recognize it as a
+>> patch (and specifically a git-candidate patch to allow specialized
+>> editor modes), and told people to add their comments after the line
+>they
+>> applied to?  When the editor exits successfully, you can scan the
+>file,
+>> detect the added lines, and save those as comments.  You could figure
+>> out the appropriate line by looking for the diff hunk headers and
+>> counting line numbers.
+>
+>I really like this idea, the current interface for commenting is a
+>little
+>tedious I find.
+>
+>> 
+>> If you use a format-patch diff that includes the headers and commit
+>> message, you could also support commenting on those in the same way.
+>> Does the notedb format support commenting on those?
+>
+>Comments in notedb are just a git note keyed on the sha of the
+>commit being commented on, I'm not certain what advantage a
+>format-patch
+>diff provides in this case?
+
+I meant for opening in an editor to write email-reply-style comments. The review tool and review storage format should allow commenting on commit messages, not just diffs.
+
+>I've been closely following the 'patch submission process' thread,
+>and given the discussion there I'm having doubts over the value
+>of comments in git-candidate vs the mailing list. It seems to me that
+>git-candidate has many of the disadvantages of Github/Gitlab when it
+>comes to comments, for example, there is no threading.
+
+That's not inherent, though. You could allow commenting on a comment easily enough. (Of course, at some point you've recreated email-style in-reply-to headers...)
+
+>Also the system would be less open than the mailing list, since,
+>as it stands currently you would require push access to the repository
+>to comment on anything.
+
+You'd need a federation mechanism.
+
+>It may be worth reflecting that one reason some organisations
+>have switched away from mailing list reviews to Github/Gitlab is that
+>they provide patch tracking, where the mailing list provides none,
+>so patches there can be 'lost'. So instead of trying to reimplement
+>an entire Gerrit/Github/Gitlab ui on the commandline, I wonder whether
+>it would be sufficient to add the minimum functionality necessary
+>to provide git with native patch tracking, and leave comments for the
+>mailing list. Ofcourse this is exactly what git-series seems to do,
+>so in some sense I may be advocating dropping my own work in favour of
+>improving git-series.
+
+I think the two serve different (though related) functions. I'd love to be able to use a text editor and command-line tool to produce and submit comments to systems like Gerrit or GitHub.
+
+>On the other hand, relying on the mailing list means that some of the
+>history of a series is left outside of the repository which is
+>anathema to the goal of git based/stored review, not least because
+>mail archives are centralised.
+>(which can obviously be problematic (as we've seen recently with
+>gmane))
+
+Agreed. You can always choose to *intentionally* discard history, or store it elsewhere, but having it in the repository allows you to make that decision with all the data really available (and easily backed up).
+
+>Maybe there's a better solution to this problem than git-candidate
+>then,
+>maybe we can just invent some wonderful new subcommand that fetches
+>a mailing list archive into a git repo, for those that want that,
+>I don't know.
+
+public-inbox seems to address that use case. I'd love to see a public-inbox version of LKML, with full history. I don't think that fully solves the review storage and interchange problem, but it seems like an *excellent* solution for email archiving, and for distribution of archives.
+
+>Out of interest, did you have any thoughts on Notedb itself with
+>respect
+>to its suitability for git-series?
+
+Seems like a potentially reasonable format for storing reviews. I think the two could work well together, with git-series storing all the historical versions of a series, and then a notedb could reference those commits.
+
+I've given some thought to using git-series as a server-side storage format for something like a pull request. I think it might make sense for a tool like Gerrit or GitLab to allow pushing and pulling series branches (that must fast-forward) to a special ref (like Gerrit's refs/for/master).
+
