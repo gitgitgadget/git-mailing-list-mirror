@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D05A71FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 19:42:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3DB5B1FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 19:44:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S941366AbcHJTmS (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 15:42:18 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35653 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933051AbcHJTmQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2016 15:42:16 -0400
-Received: by mail-wm0-f68.google.com with SMTP id i5so11571250wmg.2
-        for <git@vger.kernel.org>; Wed, 10 Aug 2016 12:42:16 -0700 (PDT)
+	id S938990AbcHJTnj (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 15:43:39 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:34456 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935270AbcHJTnf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2016 15:43:35 -0400
+Received: by mail-wm0-f65.google.com with SMTP id q128so11571143wma.1
+        for <git@vger.kernel.org>; Wed, 10 Aug 2016 12:43:35 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=OyCEuRivIQfA6XCrlRnE+Z1srcO9nIoOHzLVwp4ZwC8=;
-        b=THu36XOvBoWk33AMXllJ2x5oLRoYok2jExws6iahdIPKtUt5kcnRyekmQ2L7AZ5Vwc
-         tKDuDomfqVgv/BK1j9J4t9J3PI2qNucLi+6+ovUpw1UH3MjDeOndWO4AnS0WXb9/Ui/2
-         q+Lhebxt+gghe1mVfxbbPJHzBtXoaISgR1Pb/TYn9WDtYNpbScgLNIRiGYSaI+igsukj
-         Fo9tSgk1FJcM+V+I7FxrKLfTYhRn+vv6ncjY16za1UQsu+L0Egk/vy6O3qNTR121W1IV
-         RWgrcKCdhOITpZD12pr0AmKP1PZKcmMcFWRLMgfZRz/LCZqxwkQy6SbdINy8TcV4/NpC
-         eC/w==
+        bh=pWhPp0ioVa34kt+jZJedzz1jvt9QdWfKvGMNngnUBMA=;
+        b=lN2lX3osgt0ghCi5O3LK+rxjCJh134MF5z5mwhhCbwffBlnsFa3JpfG9A6P1K60bjO
+         qQzSjonKM//kK6d90+HWnK3jZlz1ouzhK+WjmubzVVOKI2vuQVLEF6YIH4HNl0yBkAGh
+         jnaf0aNfvlteLsiJNAMJRFzIyK6QQf/X5S82Ztbk68EOx9Wl4TeKu0qxgA2RxmIPNnMT
+         +Kw/88foE244Zn53NeZUMZMjqXd6X2hlQ4clwlROhQ22OOq/AFqml1fHHMLhb41Zx1DF
+         mXuXMmKqSLntUJrvPjrogk1Qviy3WcDhcDXsVOY7vWXuTCKCZO6SHF7WgFiHs+Nkb7VZ
+         IADg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=OyCEuRivIQfA6XCrlRnE+Z1srcO9nIoOHzLVwp4ZwC8=;
-        b=bRDTlsSOi3eLtOE00xgpIthcgw1Y8KNZl3ZX02U+lq7HAXZwpzRZtAu1p5WXxePr5q
-         9pE1KlW5vl0wUNVRx66QlU3FDNistrTggkuQgbrvvW2v/y+ex7w7EMxkpa+5ksEORHYX
-         b+2/nIzbZ9HGDlmr/84cM9f48SJoDgKEimS6yt2aYR5gib4PXqvndyZ3xcIYRAabnAvj
-         m4l3EzFN76Oo2i7MVtUAvHM8skryXZWsmK2ehejJf9qxYB/52a2Xk1Tvolp2l0DVt3nB
-         3d6a4yrfOmuiFehEO7dZx3hBcbqpWW1z+pTjvYMTRXWGjQ8oERG+XYDHartWvEC2SmN6
-         4b7g==
-X-Gm-Message-State: AEkoouvrL1xa7tkD/cLgNPFWt7skpZcWHuU09cqVQrF00+t3y5sn3aRwiiD4eUY51vqxqQ==
-X-Received: by 10.28.50.199 with SMTP id y190mr3027999wmy.61.1470834257928;
-        Wed, 10 Aug 2016 06:04:17 -0700 (PDT)
+        bh=pWhPp0ioVa34kt+jZJedzz1jvt9QdWfKvGMNngnUBMA=;
+        b=T3vnaAt0WHyyvig5LjtwgRxhXXH/wOeaBwDz+flM/Fqrjuq1dxivr6+v2agYkItD/F
+         WA6wDmgB32c/PMuKYIzv+EXBaigR54NvQWX1QlfIc9PhGpv9aKDMvEe8X/TIpgwgJAaW
+         7L1ntpAyPThli1JC320KgnR+GHHIvl9D/dMo+GRzzoJYAbmYrxEwcq59YoZD3Rz/ddWB
+         qHbEZXM0DPfz7flXMjEUiValAvXRrZrZ9/aNKZmC6RyX7kVpA4SBxKMCeKg0L443uhYN
+         BycWmDF92dMfeMOadC6RW/eYTGo0Ly0pqoCJnfazSdUqlmm81K9/GMf+xsoPVERF6m4j
+         3ziw==
+X-Gm-Message-State: AEkoousrxBWywNtAaLi6eyk4mjTa8junQw7f3YEF9HijNwEyhPr6X9qc6sxTgLNXibwnfw==
+X-Received: by 10.194.178.193 with SMTP id da1mr4798323wjc.66.1470834256280;
+        Wed, 10 Aug 2016 06:04:16 -0700 (PDT)
 Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id p83sm8319899wma.18.2016.08.10.06.04.17
+        by smtp.gmail.com with ESMTPSA id p83sm8319899wma.18.2016.08.10.06.04.15
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Wed, 10 Aug 2016 06:04:17 -0700 (PDT)
+        Wed, 10 Aug 2016 06:04:15 -0700 (PDT)
 From:	larsxschneider@gmail.com
 To:	git@vger.kernel.org
 Cc:	gitster@pobox.com, jnareb@gmail.com, mlbright@gmail.com,
 	e@80x24.org, peff@peff.net, Johannes.Schindelin@gmx.de,
 	ben@wijen.net, Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v5 04/15] pkt-line: add packet_write_gently()
-Date:	Wed, 10 Aug 2016 15:04:00 +0200
-Message-Id: <20160810130411.12419-5-larsxschneider@gmail.com>
+Subject: [PATCH v5 02/15] pkt-line: call packet_trace() only if a packet is actually send
+Date:	Wed, 10 Aug 2016 15:03:58 +0200
+Message-Id: <20160810130411.12419-3-larsxschneider@gmail.com>
 X-Mailer: git-send-email 2.9.2
 In-Reply-To: <20160810130411.12419-1-larsxschneider@gmail.com>
 References: <20160803164225.46355-1-larsxschneider@gmail.com/>
@@ -65,62 +65,37 @@ X-Mailing-List:	git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-packet_write() has two shortcomings. First, it uses format_packet() which
-lets the caller only send string data via "%s". That means it cannot be
-used for arbitrary data that may contain NULs. Second, it will always
-die on error.
-
-Add packet_write_gently() which writes arbitrary data and returns `0` for
-success and `-1` for an error.
+The packet_trace() call is not ideal in format_packet() as we would print
+a trace when a packet is formatted and (potentially) when the packet is
+actually send. This was no problem up until now because format_packet()
+was only used by one function. Fix it by moving the trace call into the
+function that actually sends the packet.
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- pkt-line.c | 12 ++++++++++++
- pkt-line.h |  1 +
- 2 files changed, 13 insertions(+)
+ pkt-line.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/pkt-line.c b/pkt-line.c
-index e6b8410..4f25748 100644
+index 177dc73..9400b47 100644
 --- a/pkt-line.c
 +++ b/pkt-line.c
-@@ -3,6 +3,7 @@
- #include "run-command.h"
+@@ -121,7 +121,6 @@ static void format_packet(struct strbuf *out, const char *fmt, va_list args)
+ 		die("protocol error: impossibly long line");
  
- char packet_buffer[LARGE_PACKET_MAX];
-+char packet_write_buffer[LARGE_PACKET_MAX];
- static const char *packet_trace_prefix = "git";
- static struct trace_key trace_packet = TRACE_KEY_INIT(PACKET);
- static struct trace_key trace_pack = TRACE_KEY_INIT(PACKFILE);
-@@ -141,6 +142,17 @@ void packet_write(int fd, const char *fmt, ...)
+ 	set_packet_header(&out->buf[orig_len], n);
+-	packet_trace(out->buf + orig_len + 4, n - 4, 1);
+ }
+ 
+ void packet_write(int fd, const char *fmt, ...)
+@@ -133,6 +132,7 @@ void packet_write(int fd, const char *fmt, ...)
+ 	va_start(args, fmt);
+ 	format_packet(&buf, fmt, args);
+ 	va_end(args);
++	packet_trace(buf.buf + 4, buf.len - 4, 1);
  	write_or_die(fd, buf.buf, buf.len);
  }
  
-+int packet_write_gently(const int fd_out, const char *buf, size_t size)
-+{
-+	if (size > PKTLINE_DATA_MAXLEN)
-+		return -1;
-+	packet_trace(buf, size, 1);
-+	memmove(packet_write_buffer + 4, buf, size);
-+	size += 4;
-+	set_packet_header(packet_write_buffer, size);
-+	return (write_in_full(fd_out, packet_write_buffer, size) == size ? 0 : -1);
-+}
-+
- void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
- {
- 	va_list args;
-diff --git a/pkt-line.h b/pkt-line.h
-index 3cb9d91..88584f1 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -77,6 +77,7 @@ char *packet_read_line_buf(char **src_buf, size_t *src_len, int *size);
- 
- #define DEFAULT_PACKET_MAX 1000
- #define LARGE_PACKET_MAX 65520
-+#define PKTLINE_DATA_MAXLEN (LARGE_PACKET_MAX - 4)
- extern char packet_buffer[LARGE_PACKET_MAX];
- 
- #endif
 -- 
 2.9.2
 
