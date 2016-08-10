@@ -2,95 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D797C1FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 19:31:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22B2B1FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 19:33:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933600AbcHJTbN (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 15:31:13 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:49706 "EHLO
-	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933195AbcHJTbK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2016 15:31:10 -0400
-Received: from x (unknown [IPv6:2605:e000:d5ce:1e00:c5f5:b7bf:c731:5d3f])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 7A9581720A4;
-	Wed, 10 Aug 2016 21:31:01 +0200 (CEST)
-Date:	Wed, 10 Aug 2016 09:30:58 -1000
-From:	Josh Triplett <josh@joshtriplett.org>
-To:	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-Cc:	Eric Wong <e@80x24.org>, Michael Haggerty <mhagger@alum.mit.edu>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Richard Ipsum <richard.ipsum@codethink.co.uk>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>
-Subject: Re: patch submission process, was Re: [PATCH v6 06/16]
- merge_recursive: abort properly upon errors
-Message-ID: <20160810193057.s36wfcivlfm3xmh2@x>
-References: <xmqqy44ec15p.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1608031021050.79248@virtualbox>
- <CAPc5daXJzMsJf5K84XBFuQ5=q_OwtYUW2FikZ2QsZWk8fa9jgg@mail.gmail.com>
- <alpine.DEB.2.20.1608031753431.107993@virtualbox>
- <CAGZ79kYWdZCNW_eBi5aLAacyBZJXQ9xyOWMBmjNsYT5NWjr-Og@mail.gmail.com>
- <alpine.DEB.2.20.1608041730130.5786@virtualbox>
- <6c937f79-2b82-619d-51fe-adccbe09bd66@alum.mit.edu>
- <20160809182800.GA19044@dcvr>
- <20160810005548.gee6ontd33ck5vej@x>
- <CANQwDwcL0etdZiiroAStwtpYurYEhJ7vcM52BUGUXh_ey+P9Kw@mail.gmail.com>
+	id S933208AbcHJTdv (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 15:33:51 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53047 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965039AbcHJSy7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2016 14:54:59 -0400
+Received: (qmail 26747 invoked by uid 109); 10 Aug 2016 13:28:17 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Aug 2016 13:28:17 +0000
+Received: (qmail 32382 invoked by uid 111); 10 Aug 2016 13:28:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 Aug 2016 09:28:16 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Aug 2016 09:28:15 -0400
+Date:	Wed, 10 Aug 2016 09:28:15 -0400
+From:	Jeff King <peff@peff.net>
+To:	larsxschneider@gmail.com
+Cc:	git@vger.kernel.org, gitster@pobox.com, jnareb@gmail.com,
+	mlbright@gmail.com, e@80x24.org, Johannes.Schindelin@gmx.de,
+	ben@wijen.net
+Subject: Re: [PATCH v5 04/15] pkt-line: add packet_write_gently()
+Message-ID: <20160810132814.gqnipsdwyzjmuqjy@sigill.intra.peff.net>
+References: <20160803164225.46355-1-larsxschneider@gmail.com/>
+ <20160810130411.12419-1-larsxschneider@gmail.com>
+ <20160810130411.12419-5-larsxschneider@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANQwDwcL0etdZiiroAStwtpYurYEhJ7vcM52BUGUXh_ey+P9Kw@mail.gmail.com>
-User-Agent: Mutt/1.6.2-neo (2016-07-23)
+In-Reply-To: <20160810130411.12419-5-larsxschneider@gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Aug 10, 2016 at 09:30:01AM +0200, Jakub Narębski wrote:
-> On 10 August 2016 at 02:55, Josh Triplett <josh@joshtriplett.org> wrote:
-> > On Tue, Aug 09, 2016 at 06:28:00PM +0000, Eric Wong wrote:
-> >> Some of these problems I hope public-inbox (or something like
-> >> it) can fix and turn the tide towards email, again.
-> >
-> > This really seems like the dichotomy that drives people towards central
-> > services like GitHub or GitLab.  We need an alternative that doesn't
-> > involve email, or at the very least, doesn't require people to use email
-> > directly.  Half of the pain in the process comes from coaxing email
-> > clients that don't treat mail text as sacrosanct to leave it alone and
-> > not mangle it.  (Some of that would go away if we accepted attachments
-> > with inline disposition, but not all of it.  All of it would go away if
-> > the submission process just involved "git push" to an appropriate
-> > location.)
+On Wed, Aug 10, 2016 at 03:04:00PM +0200, larsxschneider@gmail.com wrote:
+
+> From: Lars Schneider <larsxschneider@gmail.com>
 > 
-> But submission is less important than review. And for review it is
-> usually better (except gigantic series) to have patch text for review
-> with the review.
+> packet_write() has two shortcomings. First, it uses format_packet() which
+> lets the caller only send string data via "%s". That means it cannot be
+> used for arbitrary data that may contain NULs. Second, it will always
+> die on error.
+> 
+> Add packet_write_gently() which writes arbitrary data and returns `0` for
+> success and `-1` for an error.
 
-Agreed.  However, submission typically requires more work than review,
-because the patch text must remain applicable.  For review, as long as
-the email client you use to respond doesn't do something horrible like
-*re-wrap* the quoted patch text, the result will work as a review.
+So now we have packet_write() and packet_write_gently(), but they differ
+in more than just whether they are gentle. That seems like a weird
+interface.
 
-Ideally, I'd love to see 1) a review UI that stores line-by-line reviews
-into a common format and can translate those to email, and 2) a
-mechanism to translate reviews written by email and quoting into the
-review format and store them with the repository.
+Should we either be picking a new name (e.g., packet_write_mem() or
+something), or migrating packet_write() to packet_write_fmt()?
 
-> And (meta)-versioning of series.
+> diff --git a/pkt-line.c b/pkt-line.c
+> index e6b8410..4f25748 100644
+> --- a/pkt-line.c
+> +++ b/pkt-line.c
+> @@ -3,6 +3,7 @@
+>  #include "run-command.h"
+>  
+>  char packet_buffer[LARGE_PACKET_MAX];
+> +char packet_write_buffer[LARGE_PACKET_MAX];
 
-I've got a documented format for that. :)
+Should this be static? I.e., are random other bits of the code allowed
+to write into it (I guess not because it's not declared in pkt-line.h).
 
-> And place for proof-of-concept / weather-balon patches...
+> +int packet_write_gently(const int fd_out, const char *buf, size_t size)
+> +{
+> +	if (size > PKTLINE_DATA_MAXLEN)
+> +		return -1;
+> +	packet_trace(buf, size, 1);
+> +	memmove(packet_write_buffer + 4, buf, size);
 
-Same place as all other patches, just with an "RFC" tag on them.
+It looks like this iteration drops the idea of callers using a
+LARGE_PACKET_MAX buffer and only filling it at "buf+4" with
+PKTLINE_DATA_MAXLEN bytes (which is fine).
+
+I wonder if we still need PKTLINE_DATA_MAXLEN, or of it is just
+obscuring things. The magic number "4" still appears separately here,
+and it actually makes it harder to see that things are correct.  I.e.,
+doing:
+
+  if (size > sizeof(packet_write_buffer) - 4)
+	return -1;
+  memmove(packet_write_buffer + 4, buf, size);
+
+is more obviously correct, because you do not have to wonder about the
+relationship between the size of your buffer and the macro.
+
+It might still be worth having PKTLINE_DATA_MAXLEN public, though, if
+callers use it to size their input to packet_write_gently().
+
+-Peff
