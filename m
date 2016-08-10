@@ -2,227 +2,211 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
 	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B47B61FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 22:16:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0EE561FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 22:17:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752680AbcHJWQD (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 18:16:03 -0400
-Received: from a7-19.smtp-out.eu-west-1.amazonses.com ([54.240.7.19]:57614
-	"EHLO a7-19.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752139AbcHJWQD (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Aug 2016 18:16:03 -0400
+	id S932525AbcHJWRe (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 18:17:34 -0400
+Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:37887
+	"EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932302AbcHJWRd (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Aug 2016 18:17:33 -0400
+X-Greylist: delayed 1207 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Aug 2016 18:17:32 EDT
 DKIM-Signature:	v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
 	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1470866239;
 	h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-	bh=y1l6eNmePCwZIuNLlf+V4VE5NF6wftt8B2LL3tFQw+M=;
-	b=bsN++zrmgtAeJ5/w38pYj76557++qPwE8wiRxWJAIuM1CBoHudmFJ6A+W5LVJBV7
-	4XZU5VgQ4vBYS0G55Lahjg6EqMy4oNq5S6ELMX/Nm746Q69i+zWF2t/0ZbsSxW0h0TV
-	cmwuXI26rTqp80/IJt4LzrvtoFU+x2NnVYN8jglE=
+	bh=UHxq6pBPhU9P9GPg7fh6nndHJXHhF4doJ+PmaKNEXOI=;
+	b=PWZV/JwnbUDgLNrjkwmZ50whb3OxTPNZJNna3BCVV/pdscGmVuPraFBJLVOhVUe/
+	G4IMs5RqOvh/n/IzvlN6VN5XSQLYvRN7NxvG5bagsFHaVdP2Xn82F9MTluNK5F9D0Sr
+	s0NnOUnmAV7mmC3d7eZuy7VyFQonTIcGwcUE3Vq0=
 From:	Pranit Bauva <pranit.bauva@gmail.com>
 To:	git@vger.kernel.org
-Message-ID: <010201567675ae6a-d29ad308-fef5-44f2-8edf-6f7138e6cdf1-000000@eu-west-1.amazonses.com>
+Message-ID: <010201567675ae50-4349bd9e-54a4-44e5-aabb-1d928126b237-000000@eu-west-1.amazonses.com>
 In-Reply-To: <010201567675adc1-17e27495-6b36-40d1-836d-814da029fcc4-000000@eu-west-1.amazonses.com>
 References: <010201567675adc1-17e27495-6b36-40d1-836d-814da029fcc4-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v12 12/13] bisect--helper: `get_terms` & `bisect_terms`
- shell function in C
+Subject: [PATCH v12 04/13] bisect--helper: `bisect_clean_state` shell
+ function in C
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Date:	Wed, 10 Aug 2016 21:57:19 +0000
-X-SES-Outgoing:	2016.08.10-54.240.7.19
+X-SES-Outgoing:	2016.08.10-54.240.7.17
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Reimplement the `get_terms` and `bisect_terms` shell function in C and
-add `bisect-terms` subcommand to `git bisect--helper` to call it from
+Reimplement `bisect_clean_state` shell function in C and add a
+`bisect-clean-state` subcommand to `git bisect--helper` to call it from
 git-bisect.sh .
 
-Using `--bisect-terms` subcommand is a temporary measure to port shell
-function in C so as to use the existing test suite. As more functions
-are ported, this subcommand will be retired but its implementation will
-be called by some other methods.
+Using `--bisect-clean-state` subcommand is a measure to port shell
+function to C so as to use the existing test suite. As more functions
+are ported, this subcommand will be retired but its implementation  will
+be called by bisect_reset() and bisect_start().
 
 Mentored-by: Lars Schneider <larsxschneider@gmail.com>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 ---
- builtin/bisect--helper.c | 59 ++++++++++++++++++++++++++++++++++++++++++++++--
- git-bisect.sh            | 35 ++--------------------------
- 2 files changed, 59 insertions(+), 35 deletions(-)
+ builtin/bisect--helper.c | 55 +++++++++++++++++++++++++++++++++++++++++++++++-
+ git-bisect.sh            | 26 +++--------------------
+ 2 files changed, 57 insertions(+), 24 deletions(-)
 
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index b6e9973..f912010 100644
+index 30e1031..3fffa78 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -26,6 +26,7 @@ static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --bisect-write <state> <revision> <TERM_GOOD> <TERM_BAD> [<nolog>]"),
- 	N_("git bisect--helper --bisect-check-and-set-terms <command> <TERM_GOOD> <TERM_BAD>"),
- 	N_("git bisect--helper --bisect-next-check [<term>] <TERM_GOOD> <TERM_BAD"),
-+	N_("git bisect--helper --bisect-terms [--term-good | --term-old | --term-bad | --term-new]"),
+@@ -3,12 +3,21 @@
+ #include "parse-options.h"
+ #include "bisect.h"
+ #include "refs.h"
++#include "dir.h"
+ 
+ static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
++static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
++static GIT_PATH_FUNC(git_path_bisect_ancestors_ok, "BISECT_ANCESTORS_OK")
++static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
++static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
++static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
++static GIT_PATH_FUNC(git_path_head_name, "head-name")
++static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
+ 
+ static const char * const git_bisect_helper_usage[] = {
+ 	N_("git bisect--helper --next-all [--no-checkout]"),
+ 	N_("git bisect--helper --write-terms <bad_term> <good_term>"),
++	N_("git bisect--helper --bisect-clean-state"),
  	NULL
  };
  
-@@ -384,6 +385,52 @@ static int bisect_next_check(const struct bisect_terms *terms,
- 	return 0;
+@@ -79,11 +88,49 @@ static int write_terms(const char *bad, const char *good)
+ 	return (res < 0) ? -1 : 0;
  }
  
-+static int get_terms(struct bisect_terms *terms)
++static int mark_for_removal(const char *refname, const struct object_id *oid,
++			    int flag, void *cb_data)
 +{
-+	FILE *fp;
-+	int res;
-+	fp = fopen(git_path_bisect_terms(), "r");
-+	if (!fp)
-+		return -1;
-+
-+	bisect_terms_reset(terms);
-+	res = strbuf_getline(&terms->term_bad, fp) == EOF ||
-+	      strbuf_getline(&terms->term_good, fp) == EOF;
-+
-+	fclose(fp);
-+	return res ? -1 : 0;
++	struct string_list *refs = cb_data;
++	char *ref = xstrfmt("refs/bisect/%s", refname);
++	string_list_append(refs, ref);
++	return 0;
 +}
 +
-+static int bisect_terms(struct bisect_terms *terms, const char **argv, int argc)
++static int bisect_clean_state(void)
 +{
-+	int i;
++	int result = 0;
 +
-+	if (get_terms(terms)) {
-+		fprintf(stderr, N_("no terms defined\n"));
-+		return -1;
-+	}
-+	if (argc == 0) {
-+		printf(N_("Your current terms are %s for the old state\nand "
-+		       "%s for the new state.\n"), terms->term_good.buf,
-+		       terms->term_bad.buf);
-+		return 0;
-+	}
++	/* There may be some refs packed during bisection */
++	struct string_list refs_for_removal = STRING_LIST_INIT_NODUP;
++	for_each_ref_in("refs/bisect/", mark_for_removal, (void *) &refs_for_removal);
++	string_list_append(&refs_for_removal, xstrdup("BISECT_HEAD"));
++	result = delete_refs(&refs_for_removal);
++	refs_for_removal.strdup_strings = 1;
++	string_list_clear(&refs_for_removal, 0);
++	unlink_or_warn(git_path_bisect_expected_rev());
++	unlink_or_warn(git_path_bisect_ancestors_ok());
++	unlink_or_warn(git_path_bisect_log());
++	unlink_or_warn(git_path_bisect_names());
++	unlink_or_warn(git_path_bisect_run());
++	unlink_or_warn(git_path_bisect_terms());
++	/* Cleanup head-name if it got left by an old version of git-bisect */
++	unlink_or_warn(git_path_head_name());
++	/*
++	 * Cleanup BISECT_START last to support the --no-checkout option
++	 * introduced in the commit 4796e823a.
++	 */
++	unlink_or_warn(git_path_bisect_start());
 +
-+	for (i = 0; i < argc; i++) {
-+		if (!strcmp(argv[i], "--term-good"))
-+			printf(N_("%s\n"), terms->term_good.buf);
-+		else if (!strcmp(argv[i], "--term-bad"))
-+			printf(N_("%s\n"), terms->term_bad.buf);
-+		else
-+			printf(N_("invalid argument %s for 'git bisect "
-+				  "terms'.\nSupported options are: "
-+				  "--term-good|--term-old and "
-+				  "--term-bad|--term-new."), argv[i]);
-+	}
-+
-+	return 0;
++	return result;
 +}
 +
  int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
  {
  	enum {
-@@ -394,7 +441,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		CHECK_EXPECTED_REVS,
- 		BISECT_WRITE,
- 		CHECK_AND_SET_TERMS,
--		BISECT_NEXT_CHECK
-+		BISECT_NEXT_CHECK,
-+		BISECT_TERMS
+ 		NEXT_ALL = 1,
+-		WRITE_TERMS
++		WRITE_TERMS,
++		BISECT_CLEAN_STATE
  	} cmdmode = 0;
- 	int no_checkout = 0, res = 0;
+ 	int no_checkout = 0;
  	struct option options[] = {
-@@ -414,6 +462,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			 N_("check and set terms in a bisection state"), CHECK_AND_SET_TERMS),
- 		OPT_CMDMODE(0, "bisect-next-check", &cmdmode,
- 			 N_("check whether bad or good terms exist"), BISECT_NEXT_CHECK),
-+		OPT_CMDMODE(0, "bisect-terms", &cmdmode,
-+			 N_("print out the bisect terms"), BISECT_TERMS),
+@@ -91,6 +138,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 			 N_("perform 'git bisect next'"), NEXT_ALL),
+ 		OPT_CMDMODE(0, "write-terms", &cmdmode,
+ 			 N_("write the terms to .git/BISECT_TERMS"), WRITE_TERMS),
++		OPT_CMDMODE(0, "bisect-clean-state", &cmdmode,
++			 N_("cleanup the bisection state"), BISECT_CLEAN_STATE),
  		OPT_BOOL(0, "no-checkout", &no_checkout,
  			 N_("update BISECT_HEAD instead of checking out the current commit")),
  		OPT_END()
-@@ -422,7 +472,7 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 	bisect_terms_init(&terms);
- 
- 	argc = parse_options(argc, argv, prefix, options,
--			     git_bisect_helper_usage, 0);
-+			     git_bisect_helper_usage, PARSE_OPT_KEEP_UNKNOWN);
- 
- 	if (!cmdmode)
- 		usage_with_options(git_bisect_helper_usage, options);
-@@ -471,6 +521,11 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		strbuf_addstr(&terms.term_bad, argv[1]);
- 		res = bisect_next_check(&terms, argc == 3 ? argv[2] : NULL);
- 		break;
-+	case BISECT_TERMS:
-+		if (argc > 1)
-+			die(_("--bisect-terms requires 0 or 1 argument"));
-+		res = bisect_terms(&terms, argv, argc);
-+		break;
+@@ -109,6 +158,10 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		if (argc != 2)
+ 			die(_("--write-terms requires two arguments"));
+ 		return write_terms(argv[0], argv[1]);
++	case BISECT_CLEAN_STATE:
++		if (argc != 0)
++			die(_("--bisect-clean-state requires no arguments"));
++		return bisect_clean_state();
  	default:
  		die("BUG: unknown subcommand '%d'", cmdmode);
  	}
 diff --git a/git-bisect.sh b/git-bisect.sh
-index c2d6319..aea97c5f 100755
+index cd39bd0..bbc57d2 100755
 --- a/git-bisect.sh
 +++ b/git-bisect.sh
-@@ -355,7 +355,7 @@ bisect_replay () {
- 		"$TERM_GOOD"|"$TERM_BAD"|skip)
- 			git bisect--helper --bisect-write "$command" "$rev" "$TERM_GOOD" "$TERM_BAD" || exit;;
- 		terms)
--			bisect_terms $rev ;;
-+			git bisect--helper --bisect-terms $rev  || exit;;
- 		*)
- 			die "$(gettext "?? what are you talking about?")" ;;
- 		esac
-@@ -437,37 +437,6 @@ get_terms () {
- 	fi
- }
+@@ -187,7 +187,7 @@ bisect_start() {
+ 	#
+ 	# Get rid of any old bisect state.
+ 	#
+-	bisect_clean_state || exit
++	git bisect--helper --bisect-clean-state || exit
  
--bisect_terms () {
--	get_terms
--	if ! test -s "$GIT_DIR/BISECT_TERMS"
--	then
--		die "$(gettext "no terms defined")"
--	fi
--	case "$#" in
--	0)
--		gettextln "Your current terms are $TERM_GOOD for the old state
--and $TERM_BAD for the new state."
--		;;
--	1)
--		arg=$1
--		case "$arg" in
--			--term-good|--term-old)
--				printf '%s\n' "$TERM_GOOD"
--				;;
--			--term-bad|--term-new)
--				printf '%s\n' "$TERM_BAD"
--				;;
--			*)
--				die "$(eval_gettext "invalid argument \$arg for 'git bisect terms'.
--Supported options are: --term-good|--term-old and --term-bad|--term-new.")"
--				;;
--		esac
--		;;
--	*)
--		usage ;;
--	esac
+ 	#
+ 	# Change state.
+@@ -196,7 +196,7 @@ bisect_start() {
+ 	# We have to trap this to be able to clean up using
+ 	# "bisect_clean_state".
+ 	#
+-	trap 'bisect_clean_state' 0
++	trap 'git bisect--helper --bisect-clean-state' 0
+ 	trap 'exit 255' 1 2 3 15
+ 
+ 	#
+@@ -430,27 +430,7 @@ bisect_reset() {
+ 		die "$(eval_gettext "Could not check out original HEAD '\$branch'.
+ Try 'git bisect reset <commit>'.")"
+ 	fi
+-	bisect_clean_state
 -}
 -
- case "$#" in
- 0)
- 	usage ;;
-@@ -498,7 +467,7 @@ case "$#" in
- 	run)
- 		bisect_run "$@" ;;
- 	terms)
--		bisect_terms "$@" ;;
-+		git bisect--helper --bisect-terms "$@" || exit;;
- 	*)
- 		usage ;;
- 	esac
+-bisect_clean_state() {
+-	# There may be some refs packed during bisection.
+-	git for-each-ref --format='%(refname) %(objectname)' refs/bisect/\* |
+-	while read ref hash
+-	do
+-		git update-ref -d $ref $hash || exit
+-	done
+-	rm -f "$GIT_DIR/BISECT_EXPECTED_REV" &&
+-	rm -f "$GIT_DIR/BISECT_ANCESTORS_OK" &&
+-	rm -f "$GIT_DIR/BISECT_LOG" &&
+-	rm -f "$GIT_DIR/BISECT_NAMES" &&
+-	rm -f "$GIT_DIR/BISECT_RUN" &&
+-	rm -f "$GIT_DIR/BISECT_TERMS" &&
+-	# Cleanup head-name if it got left by an old version of git-bisect
+-	rm -f "$GIT_DIR/head-name" &&
+-	git update-ref -d --no-deref BISECT_HEAD &&
+-	# clean up BISECT_START last
+-	rm -f "$GIT_DIR/BISECT_START"
++	git bisect--helper --bisect-clean-state || exit
+ }
+ 
+ bisect_replay () {
 
 --
 https://github.com/git/git/pull/281
