@@ -2,92 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2B2B1FD99
-	for <e@80x24.org>; Wed, 10 Aug 2016 19:15:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51F071FD99
+	for <e@80x24.org>; Wed, 10 Aug 2016 19:16:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934200AbcHJTPz (ORCPT <rfc822;e@80x24.org>);
-	Wed, 10 Aug 2016 15:15:55 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:34166 "EHLO
-	mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932916AbcHJTPx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Aug 2016 15:15:53 -0400
-Received: by mail-qk0-f193.google.com with SMTP id x67so4151559qke.1
-        for <git@vger.kernel.org>; Wed, 10 Aug 2016 12:15:52 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=XXDN0pgqp4y75pd6xUenlz2XTU3sT7+X1gziS/n2X+0=;
-        b=DwgIRnSQtAmT887QVZ44jF+OutpZ9FhqNFcr9AxbUILratLqko4kDU+FlRevPlHX88
-         CBuxJuLYZVH1kaI5MllrxwNYwPwJ+2dtoAm87dDJ3W4mgqlbT2PL+92UMYpE96zugAJ9
-         eigExQSvPUuv3mCM0RKbQfXB11YjDpaFkM+3FJCxyHtsTKZDAP3kvk1o/i/OvJYgHIgq
-         mbJiGwkyeg0bcoMGFqVbwXEQRDs5Gikf/0yZ5Mywj4Y1Xz4T5F+M1oiJscIKp2QmyVTn
-         MOo/92DIWqYphUFLXfCV+0ckAFeqEwq89SNuw58OtdKin/HKVq1yTMNBfld4QwsthC/9
-         tuJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=XXDN0pgqp4y75pd6xUenlz2XTU3sT7+X1gziS/n2X+0=;
-        b=UUOCjOo9BHM6l2SGozsgEoBXaGI7pd2VSgUe+UE+rluGB/5pm9nNpj5WFN4F55tnQd
-         hBWum8WhOVfxOBdR+h8xHn3MT4zzZdfmP6WTXj9vGrmw6WFHqiJ43gyhi3+XRnpjQKUE
-         F+GM4RNYUbA63gSwO6Hlf54zOwuUsAxnKaeMYeqWSTkPx+NtgSfYVdjqTsDBq5MTFa3u
-         K5CX18Vld1uTZxyjFda5TTI7oKFsnY+PQor/ib5bY961WlMBwQ01iIrIDD3OGDPp5rM1
-         2MNwAZu1mC11eQcIOct+7HnCmlVyUoFaHFA0Xp0yl2LdAgM4D7sVnvnXwXxBgu4JvF0P
-         u4xw==
-X-Gm-Message-State: AEkooutD5Ma6CU+tYNXhqAaYlAgQhnms3Yf5YNE4j0B4S+F3U7D1WjLh4aqIfuxzcT4kOQ==
-X-Received: by 10.55.118.135 with SMTP id r129mr6543616qkc.124.1470856552366;
-        Wed, 10 Aug 2016 12:15:52 -0700 (PDT)
-Received: from nov34rcf12.ads.autodesk.com ([132.188.72.181])
-        by smtp.gmail.com with ESMTPSA id p70sm11782475qke.1.2016.08.10.12.15.50
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 10 Aug 2016 12:15:51 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v5 04/15] pkt-line: add packet_write_gently()
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqq8tw45vtg.fsf@gitster.mtv.corp.google.com>
-Date:	Wed, 10 Aug 2016 21:15:50 +0200
-Cc:	Jeff King <peff@peff.net>, git@vger.kernel.org, jnareb@gmail.com,
-	mlbright@gmail.com, e@80x24.org, Johannes.Schindelin@gmx.de,
-	ben@wijen.net
-Content-Transfer-Encoding: 8BIT
-Message-Id: <350E338E-BBBA-4FE4-8209-4C05056E2AAD@gmail.com>
-References: <20160803164225.46355-1-larsxschneider@gmail.com/> <20160810130411.12419-1-larsxschneider@gmail.com> <20160810130411.12419-5-larsxschneider@gmail.com> <20160810132814.gqnipsdwyzjmuqjy@sigill.intra.peff.net> <434CB5D7-3FC0-4398-9028-135701121E55@gmail.com> <20160810134003.q6mzgkcrwmkxv5fw@sigill.intra.peff.net> <xmqqtwes5ysb.fsf@gitster.mtv.corp.google.com> <13CB2673-7C7D-4982-9725-27D4091AAD84@gmail.com> <xmqq8tw45vtg.fsf@gitster.mtv.corp.google.com>
-To:	Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+	id S941044AbcHJTCe (ORCPT <rfc822;e@80x24.org>);
+	Wed, 10 Aug 2016 15:02:34 -0400
+Received: from mout.gmx.net ([212.227.17.22]:52626 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S940174AbcHJTC0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2016 15:02:26 -0400
+Received: from virtualbox ([37.24.141.218]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0M0smx-1bE89m08yd-00v9c3; Wed, 10 Aug 2016 14:28:33
+ +0200
+Date:	Wed, 10 Aug 2016 14:28:30 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+cc:	Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: t0027 racy?
+In-Reply-To: <20160809212802.GA4132@tb-raspi>
+Message-ID: <alpine.DEB.2.20.1608101423160.4924@virtualbox>
+References: <alpine.DEB.2.20.1608081556280.5786@virtualbox> <20160808152926.mciovipy5qlnqegs@sigill.intra.peff.net> <20160808203224.GA28431@tb-raspi> <20160809065110.GB17777@peff.net> <20160809113337.GA1143@tb-raspi> <20160809114938.pcrvirrzrh6ldmnr@sigill.intra.peff.net>
+ <20160809125958.GA1501@tb-raspi> <20160809132744.kjzmkgt2qiugeolj@sigill.intra.peff.net> <20160809212802.GA4132@tb-raspi>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: multipart/mixed; BOUNDARY="8323329-2084364940-1470832113=:4924"
+X-Provags-ID: V03:K0:nYxmBzzwoYvu47sS5LGZIpMk+qEKkYcdirm6ntfOAGnfOqeeI0+
+ cV6wcaSTjIhPLxy1uKeOXAVdIpVCUHZIPJsL2ZQqPmrgjlhBVn22HER2JS+ZTP2dJG9BD6T
+ aLRNic9ONH6i6Y8WlVEhy8/jGr9mkaOJe36tQ7F2KF3xKcBbkb7F4hJSYMQrxW/IHMSugjk
+ aZw7YC2v6QbmKsz9lnNpQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:Z+W/ROIPexE=:i9jN4pvXA2JhlEpnxnYgKO
+ B3K5C27HDXWkGKE5G8Ov+pmyFGeAIkfSp1f4FeHE1vTiS+2+hZi05igzaBeO+S1PUZ7Vwj1bF
+ ckswPykbdZyK8qUAxfQEKFk6oWR1k5tCjAGslVGt6J+isElkOHmbouLkUjZo3oYcw5WpigH+a
+ fNgfA6lnYCxtiwh6aMdZdXhY3rC3EXAOCjbuSjj1r5fXLg/4UIMLghLMLtGiVWsifxxOB/XND
+ kWQu1abUYyNIwoCWexFJV/XINPsrG/Ue56LAFpud+mFjZeCdkL3OUleIu66BnWfH2b49KwC5G
+ /t0zirSzk1ZRrXtdRf/Cr4miidRpdvG06FpoGkjxeZcYPx/uIPemDK0fAF7/IvlzHgtjxK3GL
+ MlB1fbtw1MMFAxtpzxRQRti2x7QC+oTb8xHzC6wya+NgNSaLCXjCa1OOG/+/6cee+7yRdy/Fw
+ HOe3rE3X8RoetbH1rPzRyMYvPYyzKsty5ZnXcXJBSMOQyk4CfTltZdVUBTJiNyrrm5zHKQGp8
+ s6DoAA90n1bRmW9WRei41cewYvwmr8M3qo/veKs2Kmm0r9wHNci/UEbEyLGaqcAdEjxq+hUkS
+ +ZfS9DQcTODuAk2EgUQyAvx/aip7/5/glQBtdSX9o7aSslxPsYNb1WHfqLncxnNliTfCmh9SS
+ C8CHlpfw8opXbtAyt9vdJ5ykSd41/HYG7wTmKwlj7jFl05dwd1ixaspYfe3Tku8USuas/XeLf
+ zNj0xpslhsrAOTkr6LPmqfyJbb/+dKyzo/bPgJCXp/M+10rF05yJzBYJS7IbLFp8oIYsXHzEk
+ SD32tbZ
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> On 10 Aug 2016, at 20:21, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> Lars Schneider <larsxschneider@gmail.com> writes:
-> 
->>> On 10 Aug 2016, at 19:17, Junio C Hamano <gitster@pobox.com> wrote:
->>> 
->> OK. Does this mean I can leave the "packet_write()" to "packet_write_fmt()"
->> rename as is in this series?
-> 
-> I didn't really check what order you are doing things to answer
-> that.
-> 
-> If the function that is introduced in this step is a version of
-> packet_write_fmt() that does its thing only gently, you would want
-> to do the rename s/packet_write/packet_write_fmt/ before this step,
-> and then add the new function as packet_write_fmt_gently(), I would
-> think.
+--8323329-2084364940-1470832113=:4924
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-OK - will fix. I did it that way because I thought it would be easier
-if we decide to drop the big rename patch.
+Hi Torsten,
 
-Thanks,
-Lars
+On Tue, 9 Aug 2016, Torsten B=C3=B6gershausen wrote:
 
+> >   git -c core.autocrlf=3D$crlf add $fname >"${pfx}_$f.err" 2>&1
+> >=20
+> > would make more sense. We _know_ that we have to do convert_to_git() in
+> > that step because the content is changed. And then you can ignore the
+> > warnings from "git commit" (which are racy), or you can simply commit a=
+s
+> > a whole later, as some other loops do.
+> >=20
+> > But like Dscho, I do not actually understand what this test is checking=
+=2E
+> > The function is called commit_chk_wrnNNO(), so perhaps you really are
+> > interested in what "commit" has to say. But IMHO that is not an
+> > interesting test. We know that if it has to read the content from disk,
+> > it will call convert_to_git(), which is the exact same code path used b=
+y
+> > "git add". So I do not understand what it is accomplishing to make a
+> > commit at all here.
+>=20
+> It seems as if the test has been written without understanding the racine=
+ss.
+> It should commit files with different line endings on top of
+> a file with mixed line endings.
+> The warning should be checked (and here "git add" can be used,
+> or the file can be commited directly).
+> I'm not sure why the test ended up in doing both.
+>=20
+> However, doing it the right way triggers a bug in convert.c,
+> (some warnings are missing, so I need some days to come up
+> with a proper patch)
+
+FWIW I would strongly prefer to use the warning of `git add` and not even
+bother with `git commit`. What we are interested in is the warning
+message, generated by convert_to_git(). Not using the first one and
+triggering a second one merely adds unnecessary churn that increases the
+CO2 budget of running the test.
+
+On that matter, I wonder whether there would be a chance to revamp t0027
+in a major way, with the following goals:
+
+- to make it very obvious to the casual reader what is being tested
+
+- to combine Git invocations when possible, e.g. running one big `git add`
+  on a couple of files and then verify the relevant parts of the output
+
+- dramatically decreasing the time required to run the test, without
+  sacrificing correctness (I would wager a bet that not only a few of
+  those 1388 test cases essentially exercise identical code paths)
+
+Ciao,
+Dscho
+--8323329-2084364940-1470832113=:4924--
