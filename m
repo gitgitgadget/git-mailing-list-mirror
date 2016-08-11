@@ -2,84 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C89D720193
-	for <e@80x24.org>; Thu, 11 Aug 2016 17:49:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3C7B20193
+	for <e@80x24.org>; Thu, 11 Aug 2016 17:53:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752504AbcHKRtH (ORCPT <rfc822;e@80x24.org>);
-	Thu, 11 Aug 2016 13:49:07 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36198 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752139AbcHKRtG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2016 13:49:06 -0400
-Received: by mail-wm0-f66.google.com with SMTP id i138so538130wmf.3
-        for <git@vger.kernel.org>; Thu, 11 Aug 2016 10:49:05 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=peHT6kQsThE7oYaUSSa60UGyN6/lFCpkkt4DKnagHHU=;
-        b=U3DNUEHoPBzkTg78614nsd7G6D50irJ1EjswfUzi5pFBOG2XUbZJmWYviCaNO6pUgk
-         7wiWYE2iH9dDJb07ccPtDtqtw2oNouHzwoqEc69qnkdIMILZzBl2bTr2e32BOA8x1xTt
-         26WmenwoZyh7v6WN0rW3nce2bXhqPg74uXYPvZ4ubBVdia8MNF5N1rg2B6x9j2YfGjdg
-         ycDeudAOyj25zyXwZUGBNRmKrJH46IWPLNQ+nHug3R8kcQWfCs9NVNEVPHSdw5Wir2b/
-         rTwA1DNPApFbw9Wz099fBbyClCu9nikoHjMz5iXvIPOGERcWDtUftUDP+ZKxFMCXafYr
-         +x1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=peHT6kQsThE7oYaUSSa60UGyN6/lFCpkkt4DKnagHHU=;
-        b=X53Ea7/BTQcywIhOoBe2z5td8CEjmODv2xko3KIaWTZwPNhvaThRaz2t5b9OWfxxuX
-         L30oo+Wix2YmEBkjmR4qiKuu4OXRcg6BTSBQ0WYpy73KtZVcG8RkIHbmqvVEB8tntviW
-         kfcaKdZqusWqc0R9X/neRm4AH+tzVjxLIEbfMkN2Ged9G5wwHdkIGnQXHQIeVK9VZmmx
-         WEkEjAe1Rd7P80xy6Pf7sMZaTxFtVFXHGjyhm/6CIwhZoGzP9Hr6ay0K7JT04FRF/pWz
-         PCKhuINWOrqDWjrbLPivkfYsGEKOV4hJGgHGtk9vUE1H+Gaiz4T5ZvWlyMaOU/3AGX/l
-         AozA==
-X-Gm-Message-State: AEkooutkNYfEkRA8hgtJmgDKlmS8/ctFaGLgjiPeX34g1ZFAw5BuHfc73GwDel7tX9RwCvb6HSn2NBT6UJiBFQ==
-X-Received: by 10.28.167.80 with SMTP id q77mr11281119wme.62.1470937744530;
- Thu, 11 Aug 2016 10:49:04 -0700 (PDT)
+	id S932298AbcHKRxn (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 13:53:43 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58282 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751802AbcHKRxk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2016 13:53:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id BD7863308A;
+	Thu, 11 Aug 2016 13:53:38 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+eM76Xd4RC0ZUviw3QP/FY12erM=; b=lTMChS
+	qUmODWfbTu/hK893d4PgbPt1q3UfhXpIR3RQvNSQFwTZb5xMkOq/VF08Yhrc85Qc
+	Jz1rEPa1Sjpdr5rmqxj/gYwvqwSgtvoFijCX3U1FlrVd/tJ0gq37DcnmAxZEXt0y
+	g9V+Vr5LPbyJG57a/JNLlM+8ZyBevRjGrLYVQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uNegwXnzPlqrJ0R2nwqsKk7jpnQ2zhIa
+	zXZQ8SvLG0sWms2pZS7XEVYRxyahCz56AGEHD80uG8mElyXpGpHOTlWVjFrjaNON
+	nbXJeMMpTr08jX4/IFNpvBrB/0y58jolNmfNVX0dYpLnny6FZl2NcUS0f3kEAvNq
+	9hehJtgY+S4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B648633088;
+	Thu, 11 Aug 2016 13:53:38 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3B6F533086;
+	Thu, 11 Aug 2016 13:53:38 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jacob Keller <jacob.e.keller@intel.com>
+Cc:	git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v4 2/2] diff: add SUBMODULE_DIFF format to display submodule diff
+References: <20160810231908.26330-1-jacob.e.keller@intel.com>
+	<20160810231908.26330-2-jacob.e.keller@intel.com>
+Date:	Thu, 11 Aug 2016 10:53:36 -0700
+In-Reply-To: <20160810231908.26330-2-jacob.e.keller@intel.com> (Jacob Keller's
+	message of "Wed, 10 Aug 2016 16:19:08 -0700")
+Message-ID: <xmqqd1lf2nvj.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.194.70.167 with HTTP; Thu, 11 Aug 2016 10:49:03 -0700 (PDT)
-In-Reply-To: <126f7789-c2c8-669f-2210-eb6864f8f6da@atlas-elektronik.com>
-References: <20160811085253.19086-1-chriscool@tuxfamily.org> <126f7789-c2c8-669f-2210-eb6864f8f6da@atlas-elektronik.com>
-From:	Christian Couder <christian.couder@gmail.com>
-Date:	Thu, 11 Aug 2016 19:49:03 +0200
-Message-ID: <CAP8UFD0msQJT2YaQHtHKwhbGo4ujO6ectfKuKKed_yda909TiA@mail.gmail.com>
-Subject: Re: [PATCH v11 28/40] builtin/apply: rename option parsing functions
-To:	stefan.naewe@atlas-elektronik.com
-Cc:	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Johannes Sixt <j6t@kdbg.org>, "l.s.r@web.de" <l.s.r@web.de>,
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 88269776-5FEC-11E6-A485-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Aug 11, 2016 at 10:58 AM,  <stefan.naewe@atlas-elektronik.com> wrote:
-> Am 11.08.2016 um 10:52 schrieb Christian Couder:
->> As these functions are going to be part of the libified
->> apply api, let's give them a name that is more specific
->
-> s/api/API/
->
-> ;-)
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-Ooops.
-Anyway as this is patch 28/40 and the other problem you found is in
-40/40, I will just resend patches from 28/40 to 40/40 in v12 (so only
-the last 13 patches, that I will call part 3 of the whole series).
+> From: Jacob Keller <jacob.keller@gmail.com>
+>
+> Teach git-diff and friends a new format for displaying the difference of
+> a submodule using git-diff inside the submodule project. This allows
+> users to easily see exactly what source changed in a given commit that
+> updates the submodule pointer. To do this, remove DIFF_SUBMODULE_LOG bit
+> from the diff options, and instead add a new enum type for these
+> formats.
+>
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> ---
+>  Documentation/diff-config.txt  |  3 +-
+>  Documentation/diff-options.txt |  6 ++--
+>  diff.c                         | 41 ++++++++++++++++----------
+>  diff.h                         |  9 +++++-
+>  submodule.c                    | 67 ++++++++++++++++++++++++++++++++++++++++++
+>  submodule.h                    |  6 ++++
+>  6 files changed, 113 insertions(+), 19 deletions(-)
+
+This looks good.
+
+You'd want some tests to make sure that the "--submodule" and the
+"--submodule=<format>" command line options and the diff.submodule
+configuration variables are parsed correctly (and when combined, the
+command line option overrides the configured default), and of course
+the machinery does the right thing, with and without "--graph" when
+used in "git log".
+
+> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+> index e7b729f3644f..988068225463 100644
+> --- a/Documentation/diff-options.txt
+> +++ b/Documentation/diff-options.txt
+> @@ -215,8 +215,10 @@ any of those replacements occurred.
+>  	the commits in the range like linkgit:git-submodule[1] `summary` does.
+>  	Omitting the `--submodule` option or specifying `--submodule=short`,
+>  	uses the 'short' format. This format just shows the names of the commits
+> -	at the beginning and end of the range.  Can be tweaked via the
+> -	`diff.submodule` configuration variable.
+> +	at the beginning and end of the range. When `--submodule=diff` is
+> +	given, the 'diff' format is used. This format shows the diff between
+> +	the old and new submodule commmit from the perspective of the
+> +	submodule.  Can be tweaked via the `diff.submodule` configuration variable.
+
+This is carried over from the existing text, but "Can be tweaked
+via" sounds a bit wasteful (and strange); "Defaults to" (or "The
+default is taken from") is the phrase we seem to use more often.
 
 Thanks.
