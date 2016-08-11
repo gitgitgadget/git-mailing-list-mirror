@@ -1,87 +1,83 @@
+Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
-X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+X-Spam-ASN: AS31976 209.132.180.0/23
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-cvsimport: add suport for CVS pserver method HTTP/1.x proxying
-Date: Thu, 23 Nov 2006 15:02:00 -0800
-Message-ID: <7vlkm1ix7b.fsf@assigned-by-dhcp.cox.net>
-References: <11642344172790-git-send-email-iarenuno@eteo.mondragon.edu>
-	<7v64d5keke.fsf@assigned-by-dhcp.cox.net>
-	<45661C36.9010101@catalyst.net.nz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-NNTP-Posting-Date: Thu, 23 Nov 2006 23:02:22 +0000 (UTC)
-Cc: git@vger.kernel.org
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <45661C36.9010101@catalyst.net.nz> (Martin Langhoff's message of
-	"Fri, 24 Nov 2006 11:09:58 +1300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74B5420193
+	for <e@80x24.org>; Thu, 11 Aug 2016 19:30:43 +0000 (UTC)
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752625AbcHKTaX (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 15:30:23 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63316 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752569AbcHKTaV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2016 15:30:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A28A131111;
+	Thu, 11 Aug 2016 15:30:19 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8l0d8K0BnZ09vBbAiZz2WlXSPxA=; b=FaD4Eg
+	5hfZzc+5UnmFOxInPR5bIOc/qznzyZHuggWQcP/r25kSwbyrTn+jHQweNCLMXDcM
+	QJaklV5hxYAxf5SPii+YO8KKV2syG3levuxcsz8/OORG4G8zOpAKlG5KM2jq1G8h
+	AcVfhF9bnaw6SHDbsjqZmHmyRrc5NPRNPjjj0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uZ3QCLl7ahdfDIva3fAL31xUt2gUBhix
+	s89MFgbgrMTaLcYlAtdL6VBn5WBN/FqXgy8CVHkdxAhd1FWw2oTIjiFakyx2puxH
+	JEBgpdkWJFemDsPLl43GFBV0NXZyq3p3nRcfiFmy6cspm987KGDzQnsISH/iUDuT
+	ydq3aDoOvrI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 959D031110;
+	Thu, 11 Aug 2016 15:30:19 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 013763110F;
+	Thu, 11 Aug 2016 15:30:19 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Christian Couder <christian.couder@gmail.com>
+Cc:	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	=?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= 
+	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v10 33/40] environment: add set_index_file()
+References: <20160808210337.5038-1-chriscool@tuxfamily.org>
+	<20160808210337.5038-34-chriscool@tuxfamily.org>
+	<xmqq60raewod.fsf@gitster.mtv.corp.google.com>
+	<CAP8UFD2ZAdUjQnO-4qnum2_AK84SfBN2_yO=py+Jj+pkV8pk-w@mail.gmail.com>
+	<xmqqlh045y0l.fsf@gitster.mtv.corp.google.com>
+	<CAP8UFD3-0=O7uLXG=KL8OVueFPCpN5y-JmtcncVyrd8GoRh--g@mail.gmail.com>
+Date:	Thu, 11 Aug 2016 12:30:17 -0700
+In-Reply-To: <CAP8UFD3-0=O7uLXG=KL8OVueFPCpN5y-JmtcncVyrd8GoRh--g@mail.gmail.com>
+	(Christian Couder's message of "Thu, 11 Aug 2016 21:08:50 +0200")
+Message-ID: <xmqqeg5v14ty.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 09B6E9D2-5FFA-11E6-8756-89D312518317-77302942!pb-smtp1.pobox.com
+Sender:	git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32167>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnNa6-0007i2-7Y for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 00:02:10 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S934241AbWKWXCH convert rfc822-to-quoted-printable (ORCPT
- <rfc822;gcvg-git@m.gmane.org>); Thu, 23 Nov 2006 18:02:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934242AbWKWXCH
- (ORCPT <rfc822;git-outgoing>); Thu, 23 Nov 2006 18:02:07 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:5613 "EHLO
- fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP id S934241AbWKWXCE
- convert rfc822-to-8bit (ORCPT <rfc822;git@vger.kernel.org>); Thu, 23 Nov 2006
- 18:02:04 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao08.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061123230201.EFZN18207.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>; Thu, 23
- Nov 2006 18:02:01 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id qP281V01Q1kojtg0000000; Thu, 23 Nov 2006
- 18:02:09 -0500
-To: "Martin Langhoff (CatalystIT)" <martin@catalyst.net.nz>
-Sender: git-owner@vger.kernel.org
+List-ID: <git.vger.kernel.org>
+X-Mailing-List:	git@vger.kernel.org
 
-"Martin Langhoff (CatalystIT)" <martin@catalyst.net.nz> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> Junio C Hamano wrote:
->> Except that this statement made me go "huh?" wondering what it
->> would do to the $filehandle to evaluate <$filehandle> in a void
->> context:
->>
->> +			# Skip the empty line of the proxy server output
->> +			<$s>;
->
-> It's a perl idiom that will discard one line of the $filehandle. If w=
-e
-> are 200% certain that it is empty, then it's fine. OTOH, it may well
-> be a bug in the particular proxy implementation I=F1aki is using -- I
-> don't know enough about CVS proxying to tell.
+> Yeah, it is feasible and perhaps even simpler using
+> hold_lock_file_for_update() than with set_index_file(), so I
+> dropped the set_index_file() patch and added a new one that uses
+> hold_lock_file_for_update().
 
-It is more about HTTP proxying and it is my understanding that
-response to CONNECT method request has that empty line after the
-successful (2xx) response line and zero or more response
-headers.  The code is still wrong; it does not have a loop to
-discard the potential response headers that come before the
-empty line the code we are discussing discards.
+I wasn't paying too close an attention while reading the changes,
+but anyway that is a great news.
 
-By the way does anybody know where this behaviour is officially
-specified?  Luotonen's draft-luotonen-web-proxy-tunneling-01.txt
-is pretty clear about the empty line that comes after the
-response headers, but that document being an internet-draft has
-expired long time ago, but still seem to be quoted by others.
-
->> The "I/O Operators" section talks about evaluating <$s> in a
->> scalar context (i.e. "$rep =3D <$s>"), which we all know would
->> return a single line, and in list context, which swallows
->
-> This is in scalar context, and that's safe to rely on.
-
-If it were in scalar context I would agree fully.  That
-behaviour is documented.  But my point is that it is in void
-context, and I did not find document specifying what should
-happen.
+Thanks.
