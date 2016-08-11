@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEB4920193
-	for <e@80x24.org>; Thu, 11 Aug 2016 23:14:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 441D020193
+	for <e@80x24.org>; Thu, 11 Aug 2016 23:14:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752329AbcHKXOV (ORCPT <rfc822;e@80x24.org>);
+	id S1752372AbcHKXOX (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 19:14:23 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:36764 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752127AbcHKXOV (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 11 Aug 2016 19:14:21 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:36761 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752256AbcHKXOT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2016 19:14:19 -0400
-Received: by mail-pa0-f47.google.com with SMTP id pp5so2703474pac.3
-        for <git@vger.kernel.org>; Thu, 11 Aug 2016 16:14:18 -0700 (PDT)
+Received: by mail-pa0-f51.google.com with SMTP id pp5so2703649pac.3
+        for <git@vger.kernel.org>; Thu, 11 Aug 2016 16:14:20 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Ayp5/M+DhPLBNymuVag1/l7+96vHQxYYLxPwUXWEzho=;
-        b=FtaTh/k1FD01s6CAr94Xoo5eVxfAFz3i4soz9XdaHaBQT3+GSD6bVnuK/IgnGoQcUa
-         jZV9AubkwTNg22+KkjSlLjCtZ7OqXB+cXpcKW0yQCFGyXyqS39oiFUABNpiVfblloymZ
-         ymkgglIYV3fesAXmK4NR9aZj0heqpc2dFhbpPD1wb6BTS3+RjqoUUJiKsI/XFfNVo+u6
-         0CkrB2G+ns454TB9DmnM2t3QlWegSmI73zpoNeVAFStnrhFkQzaN9Sx2Xq+icWfHx1he
-         psP45iaciicUQxA7/KHjjaJoNbuTq4v5guEQvsE+UnCFSOG//wm8+lyZQmLv3pbWs0FO
-         zKig==
+        bh=mLeHLJBl2v9yHzut1HrmA7mSrS78qWQbh/foaolnTUo=;
+        b=D5hj3IPx5132owPF7sE1dftSjX5KDaAKp58ex1e3vekYzgylMbPpnoIfIzE3ELCGUI
+         gi/AHv9ctM5CLeeHa8Cv85dBFiTa3/vqJIMQycn/9uhS0sNlsKQaAvtyrUbp1kiwPmWP
+         U4CsFZQEsADZxK1SMtZR+tTRxlzMtCFGvuyt7oSvLsSk9qK5Hf/iKFAmnXDjCDXkv4ev
+         SeWej7QuOKeRLBgjAthf2GO1dyP1U+wJXgLT8Vou/uQGtXH/mu8kAai54ETIkSo08D8E
+         M3AHIuk7iNAfeaxhpMbTialgy/2m4nB5R5Do1SFYUVQBk/uiZcPr2vm4WpPla+3gAEF9
+         uhTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Ayp5/M+DhPLBNymuVag1/l7+96vHQxYYLxPwUXWEzho=;
-        b=U48qni+DxORo3lTC5osFiyGYTmNe5M3LPFywcgyb2cCWGfZERx8x3/LzNqK+NQvGYn
-         O7+/2J1ZmCLyZwT+JHf6F14RnlcX/cG7GUnkZPY8zm4c605aiRZCd47pprkPKemzQsog
-         yVkOzZhnm4p6RajX1uZZ9lCOAzOc607V08QEfSfvSBn9/jBuQEvg1frquNZaXrOEsTzq
-         i8isEuDu6vu60APhHeK81XA/GHolC/NlGeDMedpnw81bXAYMm88cBi70whzFH95Zx8L+
-         3WYqfd5sLqd851KbMJMpnvSEuGs95REpydfb/1mun2JtDZc+U4jwjbSVUs7jgxAr6Wzy
-         jTvg==
-X-Gm-Message-State: AEkoousAUeIB+E2bem/1tzM+M9Ky/7OLKakl2PeaMwrAFl7PSjihH7RKvDiW6avmmP+2dpV6
-X-Received: by 10.66.54.132 with SMTP id j4mr21658177pap.110.1470957258274;
-        Thu, 11 Aug 2016 16:14:18 -0700 (PDT)
+        bh=mLeHLJBl2v9yHzut1HrmA7mSrS78qWQbh/foaolnTUo=;
+        b=FXYDODVSwKCtF9GjMZqlm/7255m9UKQYNVxEfJuTzskM0vaTTy8tk7PeYBb16mlh6g
+         SFl6d8ICnwlywGuZrp4SgrCnKoO6fTBQJoUhFc0CYy5P02KB0iG5SkyydtoWauLM8LO4
+         zfdYcAKzp+AFMpSulOL2BNB4k/Wwh4zxby0KnHS6VhvyY1CHoFGM1il0NXAgpJ2jKV/i
+         3081eM+ZOrjsB+85Ex86zR1b21cmJflYzOD5I6GlcEXbKOfoyqakJVTZcjnSHM8QAMOg
+         ao3fkSzgT9YqZaDWONJT6FtieDnL+AQeDXDcnbDl7eJKKUk0CBnXt2GvCuxwilIWfRpH
+         H2dg==
+X-Gm-Message-State: AEkoouv42N9EnltcFyfEp2umOA08RrWSPfb0NazWtstU8fgjyhP4B/tghUTB4cRCKw4WhTNy
+X-Received: by 10.66.191.66 with SMTP id gw2mr21390645pac.153.1470957260247;
+        Thu, 11 Aug 2016 16:14:20 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:2879:1504:a6e4:e441])
-        by smtp.gmail.com with ESMTPSA id p9sm7740851pfj.3.2016.08.11.16.14.17
+        by smtp.gmail.com with ESMTPSA id v26sm7722404pfi.41.2016.08.11.16.14.19
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 11 Aug 2016 16:14:17 -0700 (PDT)
+        Thu, 11 Aug 2016 16:14:19 -0700 (PDT)
 From:	Stefan Beller <sbeller@google.com>
 To:	gitster@pobox.com
 Cc:	git@vger.kernel.org, jrnieder@gmail.com, Jens.Lehmann@web.de,
 	Stefan Beller <sbeller@google.com>
-Subject: [PATCHv4 4/8] submodule--helper update-clone: allow multiple references
-Date:	Thu, 11 Aug 2016 16:14:01 -0700
-Message-Id: <20160811231405.17318-5-sbeller@google.com>
+Subject: [PATCHv4 5/8] clone: factor out checking for an alternate path
+Date:	Thu, 11 Aug 2016 16:14:02 -0700
+Message-Id: <20160811231405.17318-6-sbeller@google.com>
 X-Mailer: git-send-email 2.9.2.737.g4a14654
 In-Reply-To: <20160811231405.17318-1-sbeller@google.com>
 References: <20160811231405.17318-1-sbeller@google.com>
@@ -60,89 +60,171 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Allow the user to pass in multiple references to update_clone.
-Currently this is only internal API, but once the shell script is
-replaced by a C version, this is needed.
-
-This fixes an API bug between the shell script and the helper.
-Currently the helper accepts "--reference" "--reference=foo"
-as a OPT_STRING whose value happens to be "--reference=foo", and
-then uses
-
-        if (suc->reference)
-                argv_array_push(&child->args, suc->reference)
-
-where suc->reference _is_ "--reference=foo" when invoking the
-underlying "git clone", it cancels out.
-
-With this change we omit one of the "--reference" arguments when
-passing references from the shell script to the helper.
+In a later patch we want to determine if a path is suitable as an
+alternate from other commands than builtin/clone. Move the checking
+functionality of `add_one_reference` to `compute_alternate_path` that is
+defined in cache.h.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/submodule--helper.c | 14 +++++++++-----
- git-submodule.sh            |  2 +-
- 2 files changed, 10 insertions(+), 6 deletions(-)
+ builtin/clone.c | 42 ++++++--------------------------
+ cache.h         |  1 +
+ sha1_file.c     | 74 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 82 insertions(+), 35 deletions(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index db9270e..a10a777 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -584,7 +584,7 @@ struct submodule_update_clone {
- 	/* configuration parameters which are passed on to the children */
- 	int quiet;
- 	int recommend_shallow;
--	const char *reference;
-+	struct string_list references;
- 	const char *depth;
- 	const char *recursive_prefix;
- 	const char *prefix;
-@@ -600,7 +600,8 @@ struct submodule_update_clone {
- 	int failed_clones_nr, failed_clones_alloc;
- };
- #define SUBMODULE_UPDATE_CLONE_INIT {0, MODULE_LIST_INIT, 0, \
--	SUBMODULE_UPDATE_STRATEGY_INIT, 0, -1, NULL, NULL, NULL, NULL, \
-+	SUBMODULE_UPDATE_STRATEGY_INIT, 0, -1, STRING_LIST_INIT_DUP, \
-+	NULL, NULL, NULL, \
- 	STRING_LIST_INIT_DUP, 0, NULL, 0, 0}
+diff --git a/builtin/clone.c b/builtin/clone.c
+index f044a8c..24b17539 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -282,44 +282,16 @@ static void strip_trailing_slashes(char *dir)
  
+ static int add_one_reference(struct string_list_item *item, void *cb_data)
+ {
+-	char *ref_git;
+-	const char *repo;
+-	struct strbuf alternate = STRBUF_INIT;
+-
+-	/* Beware: read_gitfile(), real_path() and mkpath() return static buffer */
+-	ref_git = xstrdup(real_path(item->string));
+-
+-	repo = read_gitfile(ref_git);
+-	if (!repo)
+-		repo = read_gitfile(mkpath("%s/.git", ref_git));
+-	if (repo) {
+-		free(ref_git);
+-		ref_git = xstrdup(repo);
+-	}
+-
+-	if (!repo && is_directory(mkpath("%s/.git/objects", ref_git))) {
+-		char *ref_git_git = mkpathdup("%s/.git", ref_git);
+-		free(ref_git);
+-		ref_git = ref_git_git;
+-	} else if (!is_directory(mkpath("%s/objects", ref_git))) {
+-		struct strbuf sb = STRBUF_INIT;
+-		if (get_common_dir(&sb, ref_git))
+-			die(_("reference repository '%s' as a linked checkout is not supported yet."),
+-			    item->string);
+-		die(_("reference repository '%s' is not a local repository."),
+-		    item->string);
+-	}
++	struct strbuf sb = STRBUF_INIT;
++	char *ref_git = compute_alternate_path(item->string, &sb);
  
-@@ -710,8 +711,11 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
- 	argv_array_pushl(&child->args, "--path", sub->path, NULL);
- 	argv_array_pushl(&child->args, "--name", sub->name, NULL);
- 	argv_array_pushl(&child->args, "--url", url, NULL);
--	if (suc->reference)
--		argv_array_push(&child->args, suc->reference);
-+	if (suc->references.nr) {
-+		struct string_list_item *item;
-+		for_each_string_list_item(item, &suc->references)
-+			argv_array_pushl(&child->args, "--reference", item->string, NULL);
+-	if (!access(mkpath("%s/shallow", ref_git), F_OK))
+-		die(_("reference repository '%s' is shallow"), item->string);
++	if (!ref_git)
++		die("%s", sb.buf);
+ 
+-	if (!access(mkpath("%s/info/grafts", ref_git), F_OK))
+-		die(_("reference repository '%s' is grafted"), item->string);
++	strbuf_addf(&sb, "%s/objects", ref_git);
++	add_to_alternates_file(sb.buf);
+ 
+-	strbuf_addf(&alternate, "%s/objects", ref_git);
+-	add_to_alternates_file(alternate.buf);
+-	strbuf_release(&alternate);
+-	free(ref_git);
++	strbuf_release(&sb);
+ 	return 0;
+ }
+ 
+diff --git a/cache.h b/cache.h
+index 95a0bd3..35f41f7 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1344,6 +1344,7 @@ extern struct alternate_object_database {
+ } *alt_odb_list;
+ extern void prepare_alt_odb(void);
+ extern void read_info_alternates(const char * relative_base, int depth);
++extern char *compute_alternate_path(const char *path, struct strbuf *err);
+ extern void add_to_alternates_file(const char *reference);
+ typedef int alt_odb_fn(struct alternate_object_database *, void *);
+ extern int foreach_alt_odb(alt_odb_fn, void*);
+diff --git a/sha1_file.c b/sha1_file.c
+index 02940f1..7351d8c 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -418,6 +418,80 @@ void add_to_alternates_file(const char *reference)
+ 	free(alts);
+ }
+ 
++/*
++ * Compute the exact path an alternate is at and returns it. In case of
++ * error NULL is returned and the human readable error is added to `err`
++ * `path` may be relative and should point to $GITDIR.
++ * `err` must not be null.
++ */
++char *compute_alternate_path(const char *path, struct strbuf *err)
++{
++	char *ref_git = NULL;
++	const char *repo, *ref_git_s;
++	struct strbuf err_buf = STRBUF_INIT;
++
++	ref_git_s = real_path_if_valid(path);
++	if (!ref_git_s) {
++		strbuf_addf(&err_buf, _("path '%s' does not exist"), path);
++		goto out;
++	} else
++		/*
++		 * Beware: read_gitfile(), real_path() and mkpath()
++		 * return static buffer
++		 */
++		ref_git = xstrdup(ref_git_s);
++
++	repo = read_gitfile(ref_git);
++	if (!repo)
++		repo = read_gitfile(mkpath("%s/.git", ref_git));
++	if (repo) {
++		free(ref_git);
++		ref_git = xstrdup(repo);
 +	}
- 	if (suc->depth)
- 		argv_array_push(&child->args, suc->depth);
- 
-@@ -830,7 +834,7 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 		OPT_STRING(0, "update", &update,
- 			   N_("string"),
- 			   N_("rebase, merge, checkout or none")),
--		OPT_STRING(0, "reference", &suc.reference, N_("repo"),
-+		OPT_STRING_LIST(0, "reference", &suc.references, N_("repo"),
- 			   N_("reference repository")),
- 		OPT_STRING(0, "depth", &suc.depth, "<depth>",
- 			   N_("Create a shallow clone truncated to the "
-diff --git a/git-submodule.sh b/git-submodule.sh
-index b57f87d..a1cc71b 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -576,7 +576,7 @@ cmd_update()
- 		${wt_prefix:+--prefix "$wt_prefix"} \
- 		${prefix:+--recursive-prefix "$prefix"} \
- 		${update:+--update "$update"} \
--		${reference:+--reference "$reference"} \
-+		${reference:+"$reference"} \
- 		${depth:+--depth "$depth"} \
- 		${recommend_shallow:+"$recommend_shallow"} \
- 		${jobs:+$jobs} \
++
++	if (!repo && is_directory(mkpath("%s/.git/objects", ref_git))) {
++		char *ref_git_git = mkpathdup("%s/.git", ref_git);
++		free(ref_git);
++		ref_git = ref_git_git;
++	} else if (!is_directory(mkpath("%s/objects", ref_git))) {
++		struct strbuf sb = STRBUF_INIT;
++		if (get_common_dir(&sb, ref_git)) {
++			strbuf_addf(&err_buf,
++				    _("reference repository '%s' as a linked "
++				      "checkout is not supported yet."),
++				    path);
++			goto out;
++		}
++
++		strbuf_addf(&err_buf, _("reference repository '%s' is not a "
++					"local repository."), path);
++		goto out;
++	}
++
++	if (!access(mkpath("%s/shallow", ref_git), F_OK)) {
++		strbuf_addf(&err_buf, _("reference repository '%s' is shallow"),
++			    path);
++		goto out;
++	}
++
++	if (!access(mkpath("%s/info/grafts", ref_git), F_OK)) {
++		strbuf_addf(&err_buf,
++			    _("reference repository '%s' is grafted"),
++			    path);
++		goto out;
++	}
++
++out:
++	if (err_buf.len) {
++		strbuf_addbuf(err, &err_buf);
++		free(ref_git);
++		ref_git = NULL;
++	}
++
++	strbuf_release(&err_buf);
++	return ref_git;
++}
++
+ int foreach_alt_odb(alt_odb_fn fn, void *cb)
+ {
+ 	struct alternate_object_database *ent;
 -- 
 2.9.2.737.g4a14654
 
