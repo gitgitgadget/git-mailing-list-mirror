@@ -1,165 +1,103 @@
+Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
-X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+X-Spam-ASN: AS31976 209.132.180.0/23
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH/RFC] Add support for push globbed refspecs
-Date: Mon, 11 Dec 2006 21:33:41 +0000
-Message-ID: <200612112133.42060.andyparkins@gmail.com>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Mon, 11 Dec 2006 21:36:47 +0000 (UTC)
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
-        b=mD9bIBSB93S8kgSk2ZQcDwnY12OBJ+ocwnbnuYtRb05FgUmhhwo8fW6jGUWb3kttIcJwOwLGNCMkN/79mpldP7bMu8wQSVli/ZatLCsklGJYqnbwDI0lKeVJJ4Tt4sq/XZrtfRkeB4UD637wc0L5dKHqijLhg2IHPSPKUmg0Nd4=
-X-TUID: 9f2ff0cb3ad9b080
-X-UID: 182
-X-Length: 3238
-Content-Disposition: inline
+Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC97D20193
+	for <e@80x24.org>; Thu, 11 Aug 2016 20:13:14 +0000 (UTC)
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932176AbcHKUNK (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 16:13:10 -0400
+Received: from mail-io0-f178.google.com ([209.85.223.178]:33849 "EHLO
+	mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932129AbcHKUNI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2016 16:13:08 -0400
+Received: by mail-io0-f178.google.com with SMTP id q83so6697773iod.1
+        for <git@vger.kernel.org>; Thu, 11 Aug 2016 13:13:08 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Z4mUJ4qz1EfNkTMpN92N52L5cit1cCTknnT6xrOFF8w=;
+        b=WcnqbcyBj/x0u62b0xTpRvFzVpc9USJj2pu2anVppbxcb1c7qLbyc+k2abQuMyPOjs
+         vWZvqFW6mTDeB1Kmhi9tiDDXJmzkT5tKRYlGJFwjst0CL92TLSBXpd41K88516BWpXZN
+         zffw0kVVRMnqUHDP7Qm9l0EZ87dX19OWxHlYrdu79cYVYnKK2/uwZL39Uwk5bKjLhXU1
+         6YzGJGmOk5nDABA68hBvLl/8pb7anquKRhtbvHT0816IaaZPPZIjmDgxSpkuYYAlP63z
+         kz3v5yknXrrHJ3HEfcNZaRyBnPcHVxFpbbtCOXm8uFXxntrlVkpxTbhoTObqDbVxHTwK
+         w/KA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Z4mUJ4qz1EfNkTMpN92N52L5cit1cCTknnT6xrOFF8w=;
+        b=jnYMvIOR7jyQkZ0D/GpUHR8MchL2fKh5rUfz3/87ON0PkJf56X94rAiwQebvxGhHY3
+         dhuti9/e+KQsO44b0Wbmi4I7y/pNnYkjCC4I6mw5wIduO0kmYNiDZvJ0VIyN6lAj6OeM
+         2z/fEvFg+B9nwy9Jus87TgZ+34yCP8+0j5EIJUyeHQ1mtQYeWKMBCGEd3YbVjhRo4tVJ
+         NtTcUBIV7fEjqAmovjnf/IA1z0FYgy2xoKW514i6MUdqYpboqBKw4N3SBCEaHoZoulMU
+         UK/RA7MTSbbq2btHd8JAb9YKBcdTgwX3gynkmY+nIKKSLDD1azD/G1f5lVdMu5D5CGfH
+         sHcA==
+X-Gm-Message-State: AEkoousAf8y/KDU5SIuxcnCEfl6jom1YMLXFscHrG01l9mHZ3ayzw9HZbjvKdmY3qPP8bOk+0T2IKEjsIf7QhWD3
+X-Received: by 10.107.144.10 with SMTP id s10mr13246639iod.165.1470946387458;
+ Thu, 11 Aug 2016 13:13:07 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.107.128.66 with HTTP; Thu, 11 Aug 2016 13:13:06 -0700 (PDT)
+In-Reply-To: <322d7d47-423c-f631-3057-1feb03d50591@ramsayjones.plus.com>
+References: <322d7d47-423c-f631-3057-1feb03d50591@ramsayjones.plus.com>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Thu, 11 Aug 2016 13:13:06 -0700
+Message-ID: <CAGZ79kZw2E8GDLBvs9MRW90ny8AnszxOcV2yVM8+r2y_sE3=og@mail.gmail.com>
+Subject: Re: [PATCH] submodule: mark a file-local symbol as static
+To:	Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Sender:	git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34039>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1GtspG-0002yB-5X for gcvg-git@gmane.org; Mon, 11 Dec
- 2006 22:36:42 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S937020AbWLKVgj (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Dec 2006
- 16:36:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937052AbWLKVgj
- (ORCPT <rfc822;git-outgoing>); Mon, 11 Dec 2006 16:36:39 -0500
-Received: from an-out-0708.google.com ([209.85.132.245]:48164 "EHLO
- an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S937020AbWLKVgi (ORCPT <rfc822;git@vger.kernel.org>); Mon, 11 Dec
- 2006 16:36:38 -0500
-Received: by an-out-0708.google.com with SMTP id b33so330633ana for
- <git@vger.kernel.org>; Mon, 11 Dec 2006 13:36:37 -0800 (PST)
-Received: by 10.78.170.17 with SMTP id s17mr1655824hue.1165872995793; Mon, 11
- Dec 2006 13:36:35 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164]) by
- mx.google.com with ESMTP id 39sm3226080hug.2006.12.11.13.36.34; Mon, 11 Dec
- 2006 13:36:35 -0800 (PST)
-To: git@vger.kernel.org
-Sender: git-owner@vger.kernel.org
+List-ID: <git.vger.kernel.org>
+X-Mailing-List:	git@vger.kernel.org
 
-Just as we now have glob support in fetch refspecs, this patch adds
-support for globs in the push refspecs.  In other words you can do:
+On Thu, Aug 11, 2016 at 12:57 PM, Ramsay Jones
+<ramsay@ramsayjones.plus.com> wrote:
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+>
+> Hi Stefan,
+>
+> If you need to re-roll your 'sb/submodule-clone-rr' branch, could
+> you please squash this into the relevant patch (commit 336c21d,
+> "submodule: try alternates when superproject has an alternate",
+> 08-08-2016).
 
-[remote "globs"]
-	url = proto://host/repo.git
-	push = refs/heads/*:refs/remotes/from_me/*
+Not just reroll but rethink and rewrite. ;)
 
-With this, a git-push will then do a normal directory glob on the local
-ref path; whatever it finds will have the matching part extracted and
-inserted into the remote half of the refspec.
+Thanks for catching!
+Stefan
 
-Note the following:
- - subdirectories aren't supported
- - globs with more than one "*" will probably go /very/ wrong
-
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
----
-I'm not sure this is the right way to have done this.
-
-My feeling is that perhaps a for_each_ref() call and some string
-manipulation would have been better.  What'd you all reckon?
-
-
- builtin-push.c |   70 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 70 insertions(+), 0 deletions(-)
-
-diff --git a/builtin-push.c b/builtin-push.c
-index d23974e..e60db71 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -5,6 +5,7 @@
- #include "refs.h"
- #include "run-command.h"
- #include "builtin.h"
-+#include <glob.h>
- 
- #define MAX_URI (16)
- 
-@@ -22,6 +23,75 @@ static int refspec_nr;
- static void add_refspec(const char *ref)
- {
- 	int nr = refspec_nr + 1;
-+	char *globpos_local = NULL,
-+		 *globpos_remote = NULL,
-+		 *separator = NULL;
-+	char *buffer;
-+
-+	/* See if the ref is a globref */
-+	buffer = xmalloc(strlen(ref)+1);
-+	strcpy(buffer, ref);
-+	separator = strstr(buffer, ":");
-+	if (separator != NULL)
-+		globpos_remote = strstr(separator, "*");
-+	globpos_local = strstr(buffer, "*");
-+
-+	/* If globpos is set, then we have enough information to perform
-+	 * the expansion */
-+	if( globpos_remote != NULL && globpos_local != NULL) {
-+		glob_t globres;
-+		int ret;
-+		unsigned int i;
-+		unsigned int gitpathlen;
-+		char *newrefspec;
-+
-+		/* Break the refspec into chunks:
-+		 *  <localref>:<remote_prefix>*<remoteref_suffix>
-+		 */
-+		*separator = '\0';
-+		separator++;
-+		*globpos_remote = '\0';
-+		globpos_remote++;
-+		/* Now buffer points at localref; separator points at
-+		 * remoteref prefix, globpos_remote points at remoteref suffix */
-+
-+		/* Fetch all the matching local refs */
-+		globres.gl_offs = 0;
-+		ret = glob(git_path("%s", buffer), GLOB_ERR, NULL, &globres);
-+		gitpathlen = strlen( git_path("") );
-+
-+		if (ret == 0) {
-+			for (i = 0; i < globres.gl_pathc; i++) {
-+				char *p, *q;
-+
-+				p = globres.gl_pathv[i] + gitpathlen + (globpos_local - buffer);
-+				q = p + strlen(p) - strlen(globpos_local+1);
-+
-+				newrefspec = xmalloc(
-+						strlen(globres.gl_pathv[i] + gitpathlen)
-+						+ strlen(separator)
-+						+ (q-p)
-+						+ strlen( globpos_remote)
-+						+ 1 + 1 );
-+
-+				sprintf( newrefspec, "%s:%s%.*s%s",
-+						globres.gl_pathv[i] + gitpathlen,
-+						separator,
-+						q-p, p,
-+						globpos_remote );
-+
-+				add_refspec( newrefspec );
-+			}
-+		}
-+
-+		/* tidy up */
-+		globfree( &globres );
-+
-+		/* Don't add the globspec */
-+		return;
-+	}
-+	free(buffer);
-+
- 	refspec = xrealloc(refspec, nr * sizeof(char *));
- 	refspec[nr-1] = ref;
- 	refspec_nr = nr;
--- 
-1.4.4.1.GIT
+>
+> Thanks!
+>
+> ATB,
+> Ramsay Jones
+>
+>  builtin/submodule--helper.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 4c765e1..4c7d03c 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -641,7 +641,7 @@ struct submodule_alternate_setup {
+>         struct strbuf *out;
+>  };
+>
+> -int add_possible_reference(struct alternate_object_database *alt, void *sas_cb)
+> +static int add_possible_reference(struct alternate_object_database *alt, void *sas_cb)
+>  {
+>         struct submodule_alternate_setup *sas = sas_cb;
+>
+> --
+> 2.9.0
