@@ -2,122 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E7D7203BD
-	for <e@80x24.org>; Thu, 11 Aug 2016 18:47:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DB8C20193
+	for <e@80x24.org>; Thu, 11 Aug 2016 18:52:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932542AbcHKSrX (ORCPT <rfc822;e@80x24.org>);
-	Thu, 11 Aug 2016 14:47:23 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34512 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932219AbcHKSrN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2016 14:47:13 -0400
-Received: by mail-wm0-f66.google.com with SMTP id q128so870363wma.1
-        for <git@vger.kernel.org>; Thu, 11 Aug 2016 11:47:13 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=voovGovDpCE9uEDEcc5yNJxg07bmFvm/1yl0I7dJrrs=;
-        b=aml36lRwHo2yXCIf/6Jlg2ys6DB3b2GWcumco5AH3+iYPsSMo48sK8AhG4/eydy6IW
-         mZY8In6EUqbx3wg7pPcLlUsyTZvkUycqlKmzNrZAce9KrqEgk9yAkHbLsUryXQn0jB/Y
-         S1YlzT+7dcjnyihDzwJJEmwSCWyOwUh+ViHDKnGy/7UpR/CBQgPy5JFxGZPN/oJyT6Ja
-         zGA/HihHAXsvLbrw4r9xc38KBkdS7h9JyF3Bj8ljaPEkFLS+dfzizeMu2ClNH6RtYy4S
-         sqZXsUra3MUTIvyG+uW+PttAFKUOTHx04LNTjP2vEdVAGpzUKsuZjGKytX8IBMvTtxAp
-         Z54g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=voovGovDpCE9uEDEcc5yNJxg07bmFvm/1yl0I7dJrrs=;
-        b=Rqws80YpA4gVWbp6bbdHK56lp4NehfCMz7Jw5ji89z6+uGNCxJCBmlR7OITYtbvoKS
-         OFgstt57uCfa+sYm3b8zSJ15I5jov+0PYeRvq42ofdApXAVuslcaWg42z9JZV+xp6vt1
-         mQCPmnKPZ9N1A5I/ceblQf7IWO7O7xlMyaaTwZuaQQta94SRwqdP+KKTbit47brKMiR0
-         UXMDvEPzPI+VutLsUM3FAyQsYcjUiY6Yzp8fOsVy2MHApqLEzXQMfZLNF2U9l1QbRj1B
-         g9iPMIEQIMCfUu+05dn3LTIqsOmwIYBmx8SNaEIKIcQufkcG3PhyLfhASBsGK+yoHsXi
-         vLlQ==
-X-Gm-Message-State: AEkoousHqLCGZUThhaEGe6AGrucHH58Ze8zRoJhTcPPG5HWu8Te9gizJKZw0tlez4B3jTg==
-X-Received: by 10.194.178.193 with SMTP id da1mr13644294wjc.66.1470941232369;
-        Thu, 11 Aug 2016 11:47:12 -0700 (PDT)
-Received: from localhost.localdomain ([80.215.37.180])
-        by smtp.gmail.com with ESMTPSA id 190sm1047236wmk.13.2016.08.11.11.47.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 11 Aug 2016 11:47:11 -0700 (PDT)
-From:	Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
-To:	git@vger.kernel.org
-Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-	Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v12 12/13] apply: learn to use a different index file
-Date:	Thu, 11 Aug 2016 20:45:00 +0200
-Message-Id: <20160811184501.384-13-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.9.2.769.gc0f0333
-In-Reply-To: <20160811184501.384-1-chriscool@tuxfamily.org>
-References: <20160811184501.384-1-chriscool@tuxfamily.org>
+	id S932402AbcHKSwX (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 14:52:23 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56110 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751307AbcHKSwV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2016 14:52:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 503C733019;
+	Thu, 11 Aug 2016 14:52:20 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=w/mDsGlNBYuuDaDHNKmX7dsGavA=; b=XcbfHw
+	inbRtFa8V+3GG9NxJ2JofahbUzi+9+vTGLJrExVmGi4xVbAviU90jB/py9L3H8cm
+	Kr2iYUCbZq9WihutjHvfnG4JAqbtswGCbUQ82BVxP/hEtnxnhwXMeMcI79WYjbvn
+	pcNMmipTHWjgziQ+p9dkv65w//ScfpqBabQn8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OP1ffYyflX2oaQXIYnt8vSbUsXKBVdy+
+	FSoP2mQTQSlMvYDu2ge+8Ooc7BB5nXK80HdnUqmK5CDYpUivTEfo/sWQCfcE7gVV
+	R/ESvRUEJoBYsIJ2J6zXM14EwDrUTFbu8wgnrqXjmGV3uMy6oITz4mHWOKmiQf45
+	yLy5s84ZXII=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4911533018;
+	Thu, 11 Aug 2016 14:52:20 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A774E33016;
+	Thu, 11 Aug 2016 14:52:19 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff King <peff@peff.net>
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH] gc: default aggressive depth to 50
+References: <20160811161309.ecmebaafcz6rkg6o@sigill.intra.peff.net>
+	<20160811172050.44abuvwcn6gmcgk7@sigill.intra.peff.net>
+Date:	Thu, 11 Aug 2016 11:52:15 -0700
+In-Reply-To: <20160811172050.44abuvwcn6gmcgk7@sigill.intra.peff.net> (Jeff
+	King's message of "Thu, 11 Aug 2016 13:20:50 -0400")
+Message-ID: <xmqqmvkj16lc.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: BB18276E-5FF4-11E6-9D7D-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Sometimes we want to apply in a different index file.
+Jeff King <peff@peff.net> writes:
 
-Before the apply functionality was libified it was possible to
-use the GIT_INDEX_FILE environment variable, for this purpose.
+> On Thu, Aug 11, 2016 at 12:13:09PM -0400, Jeff King wrote:
+>
+>> Here are the numbers for linux.git:
+>> 
+>>    depth |  size |  %    | rev-list |  %     | log -Sfoo |   %
+>>   -------+-------+-------+----------+--------+-----------+-------
+>>     250  | 967MB |  n/a  | 48.159s  |   n/a  | 378.088   |   n/a
+>>     100  | 971MB | +0.4% | 41.471s  | -13.9% | 342.060   |  -9.5%
+>>      50  | 979MB | +1.2% | 37.778s  | -21.6% | 311.040s  | -17.7%
+>>      10  | 1.1GB | +6.6% | 32.518s  | -32.5% | 279.890s  | -25.9%
+>> [...]
+>> 
+>> You can see that that the CPU savings for regular operations improves as we
+>> decrease the depth. The savings are less for "rev-list" on a smaller repository
+>> than they are for blob-accessing operations, or even rev-list on a larger
+>> repository. This may mean that a larger delta cache would help (though setting
+>> core.deltaBaseCacheLimit by itself doesn't).
+>
+> The problem with deltaBaseCacheLimit is that it only changes the memory
+> parameter, but there are a fixed number of slots in the data structure.
+> Bumping it like this:
+>
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 02940f1..ca79703 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -2073,7 +2073,7 @@ static void *unpack_compressed_entry(struct packed_git *p,
+>  	return buffer;
+>  }
+>  
+> -#define MAX_DELTA_CACHE (256)
+> +#define MAX_DELTA_CACHE (1024)
+>  
+>  static size_t delta_base_cached;
+>
+> along with the cache size does help (this was discussed a year or two
+> ago, but nobody ever followed up with numbers or patches).
 
-But now, as the apply functionality has been libified, it should
-be possible to do that in a libified way.
+Yeah, and I also think Linus's "--depth=250 is just a sample; it
+will not perform well" already cited the number of delta-cache
+entries being the limiting factor.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- apply.c | 10 ++++++++--
- apply.h |  1 +
- 2 files changed, 9 insertions(+), 2 deletions(-)
+> I don't think bumping MAX_DELTA_CACHE naively is a good idea, though. I
+> seem to recall that it has scaling problems as it grows, so we may want
+> a better data structure (but I haven't looked at it recently enough to
+> say anything intelligent).
 
-diff --git a/apply.c b/apply.c
-index 2ec2a8a..7e561a4 100644
---- a/apply.c
-+++ b/apply.c
-@@ -4674,8 +4674,14 @@ static int apply_patch(struct apply_state *state,
- 		state->apply = 0;
- 
- 	state->update_index = state->check_index && state->apply;
--	if (state->update_index && state->newfd < 0)
--		state->newfd = hold_locked_index(state->lock_file, 1);
-+	if (state->update_index && state->newfd < 0) {
-+		if (state->index_file)
-+			state->newfd = hold_lock_file_for_update(state->lock_file,
-+								 state->index_file,
-+								 LOCK_DIE_ON_ERROR);
-+		else
-+			state->newfd = hold_locked_index(state->lock_file, 1);
-+	}
- 
- 	if (state->check_index && read_cache() < 0) {
- 		error(_("unable to read index file"));
-diff --git a/apply.h b/apply.h
-index e2b89e8..1ba4f8d 100644
---- a/apply.h
-+++ b/apply.h
-@@ -63,6 +63,7 @@ struct apply_state {
- 	int unsafe_paths;
- 
- 	/* Other non boolean parameters */
-+	const char *index_file;
- 	enum apply_verbosity apply_verbosity;
- 	const char *fake_ancestor;
- 	const char *patch_input_file;
--- 
-2.9.2.769.gc0f0333
+Me neither.  In any case, I do think reducing the aggressive depth
+down to 50 is a very sensible move.  I also suspect that window size
+may want to be a bit increased (or even made dynamic; the first time
+we need the window size determined is after to_pack.objects[] array
+is fully populated, so we could use the number of commits as one of
+the hint, for example), but that can be treated as a separate topic.
+
 
