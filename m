@@ -2,86 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B76B920193
-	for <e@80x24.org>; Thu, 11 Aug 2016 23:03:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B23A620193
+	for <e@80x24.org>; Thu, 11 Aug 2016 23:14:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752147AbcHKXDh (ORCPT <rfc822;e@80x24.org>);
-	Thu, 11 Aug 2016 19:03:37 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:33196 "EHLO
-	smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751556AbcHKXDf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2016 19:03:35 -0400
-Received: from localhost.localdomain ([92.22.69.35])
-	by smtp.talktalk.net with SMTP
-	id Xz0fbUn3J0KuvXz0fbI48S; Fri, 12 Aug 2016 00:03:34 +0100
-X-Originating-IP: [92.22.69.35]
-X-Spam:	0
-X-OAuthority: v=2.2 cv=RZjSMBlv c=1 sm=1 tr=0 a=118V6UEFpCLMRzptT8w30g==:117
- a=118V6UEFpCLMRzptT8w30g==:17 a=xtxXYLxNAAAA:8 a=gt0LKDO9OWbvjQJcSk0A:9
- a=xts0dhWdiJbonKbuqhAr:22
-From:	Philip Oakley <philipoakley@iee.org>
-To:	GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 01/12] doc: use 'symmetric difference' consistently
-Date:	Fri, 12 Aug 2016 00:03:16 +0100
-Message-Id: <20160811230327.4416-2-philipoakley@iee.org>
-X-Mailer: git-send-email 2.9.0.windows.1
-In-Reply-To: <20160811230327.4416-1-philipoakley@iee.org>
-References: <20160720211007.5520-1-philipoakley@iee.org>
- <20160811230327.4416-1-philipoakley@iee.org>
-X-CMAE-Envelope: MS4wfHrhn4rDmQTl9+51l/V+ZMB6ihAoRSkbNrp8BJ6IT8SgShZyIjhF8tIcxJsr/atSI9Oqq5PD3vC/b+MpMXoLG/Kba3H6I37O0W7TtJKAr+4VyaqbsAct
- zvyhfxWO1DC3rf7TJia5QpZ9bBMZkEIsZETf6++BeJ9Tk4vlrvMT774Ftnk1UcuzDjGM8JUqH1WuiTutpy0K/TC0Q+2mKWn1G9g=
+	id S1752164AbcHKXOL (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 19:14:11 -0400
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:35221 "EHLO
+	mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751031AbcHKXOK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2016 19:14:10 -0400
+Received: by mail-pf0-f177.google.com with SMTP id x72so2867687pfd.2
+        for <git@vger.kernel.org>; Thu, 11 Aug 2016 16:14:10 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=SlfzeRkw6Hb1eebkwcBfWfP2Z2L6oijSL1Dg39Bus+A=;
+        b=WunT1hwyZD4uKsKNyDlQfKCCZqMtzYeH7o7SkhMzA+YPprWuo9MkN6MB7rcrEEDDHF
+         kyNdg2308AFlRuOLrlMlzs5PrZxZTQuMngLrPfaENdQGRcrB39M68VsG0q9JBCaTOU1F
+         TUX4IG2TPusLRQV/NW5zDblc5cJZw6Xizby5tvXvVFdgy4cNzKkopiDy34SOYl7xfygE
+         AAOgCNmqQtx/FKrhoDSbRll2w12F7j0ZjXr0IhdsGB2rcS/3ZUynjlybczt8SEPYPm8/
+         pAvPsNGHpsJ0FyPgsLwEOlP4sYF4q55ZorYcgKW6fMRlGBUA6Xue0l/IE0MWpmvGFYLp
+         viHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=SlfzeRkw6Hb1eebkwcBfWfP2Z2L6oijSL1Dg39Bus+A=;
+        b=WmD+/KWXtjf3wY+AcRJ7daMIy+ejmwjKAe9t/4mcaIwnG0CN0cmXQpf/Fxp4N9KDNR
+         edBC1AhxfD9uFEgyOIIBTXx5gmt+9bjI4IAKihIrPT7cnoV29+rbXykUH+/NlPf+Xlv5
+         dlmoN1KMSgm0RR06m66OL/PrTT9Q7pm1w3i19HC7xkNNyExOWJhIaVZ9E6O+Jrrt6OXp
+         Tzt0QQlluvJTGOSo7Hoi8hWKBmWHkAY2xrHZZsqOSc/oy6OxJDu/StJXj6Pi9FGeR4S6
+         xunvO2Y6sYeIu0HojqDtNj0QV6ugtSBkovFpyaplTXKeE+K2kUwxDbwfLR2qTdZSdGYi
+         +foA==
+X-Gm-Message-State: AEkoousPlWP7OEuwyBivXzLzxFeYGwuK8GdKw1BfM2Asvv2Oyjalf5r4ginohRSthr0FeuYZ
+X-Received: by 10.98.103.214 with SMTP id t83mr21705811pfj.158.1470957249693;
+        Thu, 11 Aug 2016 16:14:09 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:2879:1504:a6e4:e441])
+        by smtp.gmail.com with ESMTPSA id q26sm7713045pfj.53.2016.08.11.16.14.08
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 11 Aug 2016 16:14:08 -0700 (PDT)
+From:	Stefan Beller <sbeller@google.com>
+To:	gitster@pobox.com
+Cc:	git@vger.kernel.org, jrnieder@gmail.com, Jens.Lehmann@web.de,
+	Stefan Beller <sbeller@google.com>
+Subject: [PATCHv4 0/6] git clone: Marry --recursive and --reference
+Date:	Thu, 11 Aug 2016 16:13:57 -0700
+Message-Id: <20160811231405.17318-1-sbeller@google.com>
+X-Mailer: git-send-email 2.9.2.737.g4a14654
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Signed-off-by: Philip Oakley <philipoakley@iee.org>
----
-unchanged
----
- Documentation/gitk.txt             | 2 +-
- Documentation/rev-list-options.txt | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+v4:
+Thanks to Junios critial questions regarding the design, I took a step back
+to look at the bigger picture, again.
 
-diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
-index 6ade002..6c3eb15 100644
---- a/Documentation/gitk.txt
-+++ b/Documentation/gitk.txt
-@@ -70,7 +70,7 @@ linkgit:git-rev-list[1] for a complete list.
+new patches:
+  clone: factor out checking for an alternate path
+  clone: recursive and reference option triggers submodule alternates
+  
+The last patch redesigns completely how we approach the problem.
+Now there are no new command line options (that relate to the problem
+of marrying --recursive and --reference), but instead we communicate
+everything via configuration options to have a lasting effect (i.e.
+submodule update remembers the decision of the initial setup)
+
+Thanks,
+Stefan
+
+v3:
+
+Thanks to Junios critial questions regarding the design, I took a step back
+to look at the bigger picture. 
+
+--super-reference sounds confusing. (what is the super referring to?)
+So drop that approach.
+
+Instead we'll compute where the reference might be in the superproject scope
+and ask the submodule clone operation to consider an optional reference.
+If the referenced alternate is not there, we'll just warn about it and
+carry on.
+
+
+* fixed the style in patch 2.
+
+* fixed another bug in the last patch, that is unrelated, but would have helped
+  me a lot.
+
+Thanks,
+Stefan
+
+ Documentation/git-clone.txt    |   9 ++++++++-
+ builtin/clone.c                |  36 ++++++++++++++++++++++++++++--------
+ builtin/submodule--helper.c    | 105 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-----------------
+ git-submodule.sh               |   2 +-
+ t/t7408-submodule-reference.sh | 162 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++----------------------------------------------------------------------
+ 5 files changed, 217 insertions(+), 97 deletions(-)
+
+v2:
+ * fixed the p1,2 cleanups
+ * added documentation to patches 5,6
+ * improved commit message in v4
  
- --left-right::
+ Thanks,
+ Stefan
  
--	Mark which side of a symmetric diff a commit is reachable
-+	Mark which side of a symmetric difference a commit is reachable
- 	from.  Commits from the left side are prefixed with a `<`
- 	symbol and those from the right with a `>` symbol.
+v1:
  
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 4f009d4..6dc0bb0 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -225,7 +225,7 @@ excluded from the output.
+ Currently when cloning a superproject with --recursive and --reference
+ only the superproject learns about its alternates. The submodules are
+ cloned independently, which may incur lots of network costs.
  
- --left-only::
- --right-only::
--	List only commits on the respective side of a symmetric range,
-+	List only commits on the respective side of a symmetric difference,
- 	i.e. only those which would be marked `<` resp. `>` by
- 	`--left-right`.
- +
-@@ -766,7 +766,7 @@ ifdef::git-rev-list[]
- endif::git-rev-list[]
+ Assume that the reference repository has the submodules at the same
+ paths as the to-be-cloned submodule and try to setup alternates from
+ there.
  
- --left-right::
--	Mark which side of a symmetric diff a commit is reachable from.
-+	Mark which side of a symmetric difference a commit is reachable from.
- 	Commits from the left side are prefixed with `<` and those from
- 	the right with `>`.  If combined with `--boundary`, those
- 	commits are prefixed with `-`.
+ Some submodules in the referenced superproject may not be there, 
+ (they are just not initialized/cloned/checked out), which yields
+ an error for now. In future work we may want to soften the alternate
+ check and not die in the clone when one of the given alternates doesn't
+ exist.
+ 
+ patch 1,2 are modernizing style of t7408, 
+ patches 3,4 are not strictly necessary, but I think it is a good thing
+ to not leave the submodule related C code in a crippled state (i.e.
+ allowing only one reference). The shell code would also need this update,
+ but it looked ugly to me, so I postpone it until more of the submodule code
+ is written in C. 
+ 
+ Thanks,
+ Stefan 
+
+Stefan Beller (6):
+  t7408: modernize style
+  t7408: merge short tests, factor out testing method
+  submodule--helper module-clone: allow multiple references
+  submodule--helper update-clone: allow multiple references
+  submodule update: add super-reference flag
+  clone: reference flag is used for submodules as well
+
+ builtin/clone.c                |  22 ++++--
+ builtin/submodule--helper.c    |  45 ++++++++----
+ git-submodule.sh               |  12 +++-
+ t/t7408-submodule-reference.sh | 153 +++++++++++++++++++++++------------------
+ 4 files changed, 147 insertions(+), 85 deletions(-)
+
 -- 
-2.9.0.windows.1
+2.9.2.572.g9d9644e.dirty
 
