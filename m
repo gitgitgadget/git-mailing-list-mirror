@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BD1D203BD
-	for <e@80x24.org>; Thu, 11 Aug 2016 14:50:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F5B820193
+	for <e@80x24.org>; Thu, 11 Aug 2016 14:50:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752682AbcHKOuA (ORCPT <rfc822;e@80x24.org>);
-	Thu, 11 Aug 2016 10:50:00 -0400
-Received: from siwi.pair.com ([209.68.5.199]:13474 "EHLO siwi.pair.com"
+	id S1752746AbcHKOuG (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 10:50:06 -0400
+Received: from siwi.pair.com ([209.68.5.199]:18720 "EHLO siwi.pair.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752582AbcHKOt5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2016 10:49:57 -0400
+	id S1752657AbcHKOt7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2016 10:49:59 -0400
 Received: from jeffhost-linux1.corp.microsoft.com (unknown [167.220.148.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by siwi.pair.com (Postfix) with ESMTPSA id C73A08466F;
-	Thu, 11 Aug 2016 10:49:56 -0400 (EDT)
+	by siwi.pair.com (Postfix) with ESMTPSA id 395D084673;
+	Thu, 11 Aug 2016 10:49:58 -0400 (EDT)
 From:	Jeff Hostetler <git@jeffhostetler.com>
 To:	git@vger.kernel.org
 Cc:	gitster@pobox.com, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v6 2/9] status: cleanup API to wt_status_print
-Date:	Thu, 11 Aug 2016 10:45:55 -0400
-Message-Id: <1470926762-25394-3-git-send-email-git@jeffhostetler.com>
+Subject: [PATCH v6 7/9] git-status.txt: describe --porcelain=v2 format
+Date:	Thu, 11 Aug 2016 10:46:00 -0400
+Message-Id: <1470926762-25394-8-git-send-email-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.8.0.rc4.17.gac42084.dirty
 In-Reply-To: <1470926762-25394-1-git-send-email-git@jeffhostetler.com>
 References: <1470926762-25394-1-git-send-email-git@jeffhostetler.com>
@@ -36,214 +36,160 @@ X-Mailing-List:	git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Refactor the API between builtin/commit.c and wt-status.[ch].
-
-Hide the details of the various wt_*status_print() routines inside
-wt-status.c behind a single (new) wt_status_print() routine.
-Eliminate the switch statements from builtin/commit.c.
-Allow details of new status formats to be isolated within wt-status.c
+Update status manpage to include information about
+porcelain v2 format.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/commit.c | 51 +++++++++------------------------------------------
- wt-status.c      | 25 ++++++++++++++++++++++---
- wt-status.h      | 16 ++++++++++++----
- 3 files changed, 43 insertions(+), 49 deletions(-)
+ Documentation/git-status.txt | 126 +++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 122 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index b80273b..a792deb 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -142,14 +142,7 @@ static int show_ignored_in_status, have_option_m;
- static const char *only_include_assumed;
- static struct strbuf message = STRBUF_INIT;
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+index 6b1454b..a58973b 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -183,12 +183,12 @@ in which case `XY` are `!!`.
  
--static enum status_format {
--	STATUS_FORMAT_NONE = 0,
--	STATUS_FORMAT_LONG,
--	STATUS_FORMAT_SHORT,
--	STATUS_FORMAT_PORCELAIN,
--
--	STATUS_FORMAT_UNSPECIFIED
--} status_format = STATUS_FORMAT_UNSPECIFIED;
-+static enum wt_status_format status_format = STATUS_FORMAT_UNSPECIFIED;
+ If -b is used the short-format status is preceded by a line
  
- static int opt_parse_m(const struct option *opt, const char *arg, int unset)
- {
-@@ -500,24 +493,11 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix, int
- 	s->fp = fp;
- 	s->nowarn = nowarn;
- 	s->is_initial = get_sha1(s->reference, sha1) ? 1 : 0;
-+	s->status_format = status_format;
-+	s->ignore_submodule_arg = ignore_submodule_arg;
+-## branchname tracking info
++    ## branchname tracking info
  
- 	wt_status_collect(s);
--
--	switch (status_format) {
--	case STATUS_FORMAT_SHORT:
--		wt_shortstatus_print(s);
--		break;
--	case STATUS_FORMAT_PORCELAIN:
--		wt_porcelain_print(s);
--		break;
--	case STATUS_FORMAT_UNSPECIFIED:
--		die("BUG: finalize_deferred_config() should have been called");
--		break;
--	case STATUS_FORMAT_NONE:
--	case STATUS_FORMAT_LONG:
--		wt_longstatus_print(s);
--		break;
--	}
-+	wt_status_print(s);
+-Porcelain Format
+-~~~~~~~~~~~~~~~~
++Porcelain Format Version 1
++~~~~~~~~~~~~~~~~~~~~~~~~~~
  
- 	return s->commitable;
- }
-@@ -1099,7 +1079,7 @@ static const char *read_commit_message(const char *name)
-  * is not in effect here.
-  */
- static struct status_deferred_config {
--	enum status_format status_format;
-+	enum wt_status_format status_format;
- 	int show_branch;
- } status_deferred_config = {
- 	STATUS_FORMAT_UNSPECIFIED,
-@@ -1381,6 +1361,9 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+-The porcelain format is similar to the short format, but is guaranteed
++Version 1 porcelain format is similar to the short format, but is guaranteed
+ not to change in a backwards-incompatible way between Git versions or
+ based on user configuration. This makes it ideal for parsing by scripts.
+ The description of the short format above also describes the porcelain
+@@ -210,6 +210,124 @@ field from the first filename).  Third, filenames containing special
+ characters are not specially formatted; no quoting or
+ backslash-escaping is performed.
  
- 	s.is_initial = get_sha1(s.reference, sha1) ? 1 : 0;
- 	s.ignore_submodule_arg = ignore_submodule_arg;
-+	s.status_format = status_format;
-+	s.verbose = verbose;
++Porcelain Format Version 2
++~~~~~~~~~~~~~~~~~~~~~~~~~~
 +
- 	wt_status_collect(&s);
- 
- 	if (0 <= fd)
-@@ -1389,23 +1372,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 	if (s.relative_paths)
- 		s.prefix = prefix;
- 
--	switch (status_format) {
--	case STATUS_FORMAT_SHORT:
--		wt_shortstatus_print(&s);
--		break;
--	case STATUS_FORMAT_PORCELAIN:
--		wt_porcelain_print(&s);
--		break;
--	case STATUS_FORMAT_UNSPECIFIED:
--		die("BUG: finalize_deferred_config() should have been called");
--		break;
--	case STATUS_FORMAT_NONE:
--	case STATUS_FORMAT_LONG:
--		s.verbose = verbose;
--		s.ignore_submodule_arg = ignore_submodule_arg;
--		wt_longstatus_print(&s);
--		break;
--	}
-+	wt_status_print(&s);
- 	return 0;
- }
- 
-diff --git a/wt-status.c b/wt-status.c
-index b9a58fd..a9031e4 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1447,7 +1447,7 @@ static void wt_longstatus_print_state(struct wt_status *s,
- 		show_bisect_in_progress(s, state, state_color);
- }
- 
--void wt_longstatus_print(struct wt_status *s)
-+static void wt_longstatus_print(struct wt_status *s)
- {
- 	const char *branch_color = color(WT_STATUS_ONBRANCH, s);
- 	const char *branch_status_color = color(WT_STATUS_HEADER, s);
-@@ -1714,7 +1714,7 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
- 	fputc(s->null_termination ? '\0' : '\n', s->fp);
- }
- 
--void wt_shortstatus_print(struct wt_status *s)
-+static void wt_shortstatus_print(struct wt_status *s)
- {
- 	int i;
- 
-@@ -1746,7 +1746,7 @@ void wt_shortstatus_print(struct wt_status *s)
- 	}
- }
- 
--void wt_porcelain_print(struct wt_status *s)
-+static void wt_porcelain_print(struct wt_status *s)
- {
- 	s->use_color = 0;
- 	s->relative_paths = 0;
-@@ -1754,3 +1754,22 @@ void wt_porcelain_print(struct wt_status *s)
- 	s->no_gettext = 1;
- 	wt_shortstatus_print(s);
- }
++Version 2 format adds more detailed information about the state of
++the worktree and changed items.  Version 2 also defines an extensible
++set of easy to parse optional headers.
 +
-+void wt_status_print(struct wt_status *s)
-+{
-+	switch (s->status_format) {
-+	case STATUS_FORMAT_SHORT:
-+		wt_shortstatus_print(s);
-+		break;
-+	case STATUS_FORMAT_PORCELAIN:
-+		wt_porcelain_print(s);
-+		break;
-+	case STATUS_FORMAT_UNSPECIFIED:
-+		die("BUG: finalize_deferred_config() should have been called");
-+		break;
-+	case STATUS_FORMAT_NONE:
-+	case STATUS_FORMAT_LONG:
-+		wt_longstatus_print(s);
-+		break;
-+	}
-+}
-diff --git a/wt-status.h b/wt-status.h
-index 2023a3c..9389076 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -43,6 +43,15 @@ struct wt_status_change_data {
- 	unsigned new_submodule_commits : 1;
- };
- 
-+enum wt_status_format {
-+	STATUS_FORMAT_NONE = 0,
-+	STATUS_FORMAT_LONG,
-+	STATUS_FORMAT_SHORT,
-+	STATUS_FORMAT_PORCELAIN,
++Header lines start with "#" and are added in response to specific
++command line arguments.  Parsers should ignore headers they
++don't recognize.
 +
-+	STATUS_FORMAT_UNSPECIFIED
-+};
++### Branch Headers
 +
- struct wt_status {
- 	int is_initial;
- 	char *branch;
-@@ -66,6 +75,8 @@ struct wt_status {
- 	int show_branch;
- 	int hints;
- 
-+	enum wt_status_format status_format;
++If `--branch` is given, a series of header lines are printed with
++information about the current branch.
 +
- 	/* These are computed during processing of the individual sections */
- 	int commitable;
- 	int workdir_dirty;
-@@ -99,6 +110,7 @@ struct wt_status_state {
- void wt_status_truncate_message_at_cut_line(struct strbuf *);
- void wt_status_add_cut_line(FILE *fp);
- void wt_status_prepare(struct wt_status *s);
-+void wt_status_print(struct wt_status *s);
- void wt_status_collect(struct wt_status *s);
- void wt_status_get_state(struct wt_status_state *state, int get_detached_from);
- int wt_status_check_rebase(const struct worktree *wt,
-@@ -106,10 +118,6 @@ int wt_status_check_rebase(const struct worktree *wt,
- int wt_status_check_bisect(const struct worktree *wt,
- 			   struct wt_status_state *state);
++    Line                                     Notes
++    ------------------------------------------------------------
++    # branch.oid <commit> | (initial)        Current commit.
++    # branch.head <branch> | (detached)      Current branch.
++    # branch.upstream <upstream_branch>      If upstream is set.
++    # branch.ab +<ahead> -<behind>           If upstream is set and
++                                             the commit is present.
++    ------------------------------------------------------------
++
++### Changed Tracked Entries
++
++Following the headers, a series of lines are printed for tracked
++entries.  One of three different line formats may be used to describe
++an entry depending on the type of change.  Tracked entries are printed
++in an undefined order; parsers should allow for a mixture of the 3
++line types in any order.
++
++Ordinary changed entries have the following format:
++
++    1 <XY> <sub> <mH> <mI> <mW> <hH> <hI> <path>
++
++Renamed or copied entries have the following format:
++
++    2 <XY> <sub> <mH> <mI> <mW> <hH> <hI> <X><score> <path><sep><origPath>
++
++    Field       Meaning
++    --------------------------------------------------------
++    <XY>        A 2 character field containing the staged and
++                unstaged XY values described in the short format,
++                with unchanged indicated by a "." rather than
++                a space.
++    <sub>       A 4 character field describing the submodule state.
++                "N..." when the entry is not a submodule.
++                "S<c><m><u>" when the entry is a submodule.
++                <c> is "C" if the commit changed; otherwise ".".
++                <m> is "M" if it has tracked changes; otherwise ".".
++                <u> is "U" if there are untracked changes; otherwise ".".
++    <mH>        The octal file mode in HEAD.
++    <mI>        The octal file mode in the index.
++    <mW>        The octal file mode in the worktree.
++    <hH>        The object name in HEAD.
++    <hI>        The object name in the index.
++    <X><score>  The rename or copy score (denoting the percentage
++                of similarity between the source and target of the
++                move or copy). For example "R100" or "C75".
++    <path>      The pathname.  In a renamed/copied entry, this
++                is the path in the index and in the working tree.
++    <sep>       When the `-z` option is used, the 2 pathnames are separated
++                with a NUL (ASCII 0x00) byte; otherwise, a tab (ASCII 0x09)
++                byte separates them.
++    <origPath>  The pathname in the commit at HEAD.  This is only
++                present in a renamed/copied entry, and tells
++                where the renamed/copied contents came from.
++    --------------------------------------------------------
++
++Unmerged entries have the following format; the first character is
++a "u" to distinguish from ordinary changed entries.
++
++    u <xy> <sub> <m1> <m2> <m3> <mW> <h1> <h2> <h3> <path>
++
++    Field       Meaning
++    --------------------------------------------------------
++    <XY>        A 2 character field describing the conflict type
++                as described in the short format.
++    <sub>       A 4 character field describing the submodule state
++                as described above.
++    <m1>        The octal file mode in stage 1.
++    <m2>        The octal file mode in stage 2.
++    <m3>        The octal file mode in stage 3.
++    <mW>        The octal file mode in the worktree.
++    <h1>        The object name in stage 1.
++    <h2>        The object name in stage 2.
++    <h3>        The object name in stage 3.
++    <path>      The pathname.
++    --------------------------------------------------------
++
++### Other Items
++
++Following the tracked entries (and if requested), a series of
++lines will be printed for untracked and then ignored items
++found in the worktree.
++
++Untracked items have the following format:
++
++    ? <path>
++
++Ignored items have the following format:
++
++    ! <path>
++
++### Pathname Format Notes and -z
++
++When the `-z` option is given, pathnames are printed as is and
++without any quoting and lines are terminated with a NUL (ASCII 0x00)
++byte.
++
++Otherwise, all pathnames will be "C-quoted" if they contain any tab,
++linefeed, double quote, or backslash characters. In C-quoting, these
++characters will be replaced with the corresponding C-style escape
++sequences and the resulting pathname will be double quoted.
++
++
+ CONFIGURATION
+ -------------
  
--void wt_longstatus_print(struct wt_status *s);
--void wt_shortstatus_print(struct wt_status *s);
--void wt_porcelain_print(struct wt_status *s);
--
- __attribute__((format (printf, 3, 4)))
- void status_printf_ln(struct wt_status *s, const char *color, const char *fmt, ...);
- __attribute__((format (printf, 3, 4)))
 -- 
 2.8.0.rc4.17.gac42084.dirty
 
