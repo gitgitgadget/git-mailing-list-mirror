@@ -2,84 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD,STOX_REPLY_TYPE shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7277A20193
-	for <e@80x24.org>; Thu, 11 Aug 2016 21:01:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D29BC20193
+	for <e@80x24.org>; Thu, 11 Aug 2016 21:09:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752234AbcHKVBX (ORCPT <rfc822;e@80x24.org>);
-	Thu, 11 Aug 2016 17:01:23 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61499 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752040AbcHKVBW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2016 17:01:22 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id CFB8A3246D;
-	Thu, 11 Aug 2016 17:01:21 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wBgU40LszXo0OUFuYPd5gHbuZ7I=; b=cWTrMt
-	VXoEUKmMF5uudG59a9B+I9Zze0ViMmE8bXe8lYfxubYfrjXSycxv38THEVaIp5WS
-	laajl3G6LKyPvpkdp1axFe3TJH+EIV67jSt03tRqe6X1r4dYDRLneAEV5A8lhb35
-	JjlsMFMUUOVYbZzQDYQXrNXmqANbB8ImTtjt8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sPf8CW60hV5u3CAOlJxB62//NlCxApNx
-	KGwUbWHVkJEmuWkBTWLzTr231FgKAkZyU0ah1MioQz7Dw5PlhmIGu41mhbdaYdLf
-	6eqQFdYIxDdHLwPnoYijCs8lgbMlaYDJJHks2X92uETBFOAUU/QfM4PE3KS8/EMg
-	RDEYNq4VoV8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id C73B73246C;
-	Thu, 11 Aug 2016 17:01:21 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3B9B33246B;
-	Thu, 11 Aug 2016 17:01:21 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff Hostetler <git@jeffhostetler.com>
-Cc:	git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v7 0/9] status: V2 porcelain status
-References: <1470948697-63787-1-git-send-email-git@jeffhostetler.com>
-Date:	Thu, 11 Aug 2016 14:01:18 -0700
-In-Reply-To: <1470948697-63787-1-git-send-email-git@jeffhostetler.com> (Jeff
-	Hostetler's message of "Thu, 11 Aug 2016 16:51:28 -0400")
-Message-ID: <xmqqeg5vyq8x.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S932594AbcHKVJB (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 17:09:01 -0400
+Received: from smtp-d-1.talktalk.net ([78.144.6.129]:7537 "EHLO
+	smtp-d-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932485AbcHKVJA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2016 17:09:00 -0400
+X-Greylist: delayed 489 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Aug 2016 17:08:59 EDT
+Received: from PhilipOakley ([92.22.69.35])
+	by smtp.talktalk.net with SMTP
+	id Xx5sbUcGV0KuvXx5sbI1Od; Thu, 11 Aug 2016 22:00:48 +0100
+X-Originating-IP: [92.22.69.35]
+X-Spam:	1
+X-OAuthority: v=2.2 cv=RZjSMBlv c=1 sm=1 tr=0 p=5rxgeBVgAAAA:8
+ a=118V6UEFpCLMRzptT8w30g==:117 a=118V6UEFpCLMRzptT8w30g==:17
+ a=IkcTkHD0fZMA:10 a=gdoHADL5AAAA:8 a=xtxXYLxNAAAA:8 a=ahOBBE4wpJo4Hu5N1UQA:9
+ a=PwKx63F5tFurRwaNxrlG:22 a=DclRd9yUzMzvIfv12z_R:22 a=xts0dhWdiJbonKbuqhAr:22
+Message-ID: <95848D06D55D4633A686DD892D12F501@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:	"Philip Oakley" <philipoakley@iee.org>
+To:	"Eric Wong" <e@80x24.org>
+Cc:	<git@vger.kernel.org>
+References: <73FC8DE87D24466EBEE0A5B96CBDFFBF@PhilipOakley> <20160811075628.GA24690@starla>
+Subject: Re: Mapping old gmane numbers to existing amil servers?
+Date:	Thu, 11 Aug 2016 22:00:48 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C16C34F4-6006-11E6-B6C6-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfJfRqyLDOirGkZJKm9vhs0eB23eqpp2Rr89D8/4WO0FU8Jp07mwAg7yywW4t0vbdhwVVfsstG5kbXBWo6R8T/j7uwtEF9e5NTGo2kSczAvK/zN/CMFkc
+ MdiR067TvCJjo7AX2ihrfBSLYplHjsjxd9gUTck2nyz3XekumUNHe4kk5npVf7lHjZOgMX3PTEs65Q==
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
-
-> From: Jeff Hostetler <jeffhost@microsoft.com>
+From: "Eric Wong" <e@80x24.org>
+Sent: Thursday, August 11, 2016 8:56 AM
+> Philip Oakley <philipoakley@iee.org> wrote:
+>> Is there an accessible mapping from the old gmane message numbers to one 
+>> of
+>> the remaining email list servers for the git list?
 >
-> This patch series adds porcelain V2 format to status.
-> This provides detailed information about file changes
-> and about the current branch.
+> Yes, I just posted about this after posting an initial mapping
+> a few weeks ago:
+> https://public-inbox.org/git/20160811002819.GA8311@starla/T/#u
 >
-> The new output is accessed via:
->     git status --porcelain=v2 [--branch]
+> Using "gmane:$NUM" in the search bar should work, now.
+> (there's a few missing messages which might've been due to
+> off-by-one errors, will fill them in soon)
 >
-> This v7 patch series address the most recent feedback
-> on the unit tests.
+>> I've seen discussions about the public-inbox, but no mention of any 
+>> mapping
+>> for old message references.
 >
-> This series has been rebased onto a more current master
-> branch (to get the EMPTY_BLOB changes in the test suite).
-
-Thanks for a note.  I've been queuing the series on top of f8f7adc,
-so I am assuming I won't see any changes in 1-8.
-
-Unfortunately I cannot be taking new rerolls or new topics for the
-rest of the day as I need to start today's integration cycle and
-I'll have to delay taking a look at this round, but from a quick
-glance you still seem to have a lot of dirt in the new test and I
-cannot quite tell if they are intended.
+> I had a gzipped text file published originally if you look
+> upthread there.
+>
 
 Thanks.
+
+The raw download works. My home ISP is currently blocking your email for 
+some reason, though I do see it at my work - my iee.org alias is via my 
+professional body which duplicates the email when it relays it.
+
+On thing I did note on the web display of the threads is that it would be 
+good to have a leader of " . . . . . `" so that one can count the level of 
+indent, and see the alignments via the columns of dots.
+
+When looking at 
+https://public-inbox.org/git/0648000B273C412AB7140AE959EBC99A%40PhilipOakley/ I 
+had difficulty working out which email the last 4 were replying to.
+
