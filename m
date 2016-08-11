@@ -2,36 +2,37 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 371CC20193
-	for <e@80x24.org>; Thu, 11 Aug 2016 21:50:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8463420193
+	for <e@80x24.org>; Thu, 11 Aug 2016 21:51:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932367AbcHKVuq (ORCPT <rfc822;e@80x24.org>);
-	Thu, 11 Aug 2016 17:50:46 -0400
-Received: from smtp-d-1.talktalk.net ([78.144.6.129]:24967 "EHLO
-	smtp-d-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752398AbcHKVuo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2016 17:50:44 -0400
+	id S932369AbcHKVus (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 17:50:48 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:43022 "EHLO
+	smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752420AbcHKVup (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2016 17:50:45 -0400
 Received: from localhost.localdomain ([92.22.69.35])
 	by smtp.talktalk.net with SMTP
-	id XxsAbUhKI0KuvXxsAbI2o5; Thu, 11 Aug 2016 22:50:43 +0100
+	id XxsAbUhKI0KuvXxsBbI2o9; Thu, 11 Aug 2016 22:50:43 +0100
 X-Originating-IP: [92.22.69.35]
-X-Spam:	1
-X-OAuthority: v=2.2 cv=RZjSMBlv c=1 sm=1 tr=0 p=5rxgeBVgAAAA:8
- a=118V6UEFpCLMRzptT8w30g==:117 a=118V6UEFpCLMRzptT8w30g==:17
- a=Y4fupz4FIw0blsc7H_wA:9 a=PwKx63F5tFurRwaNxrlG:22
+X-Spam:	0
+X-OAuthority: v=2.2 cv=RZjSMBlv c=1 sm=1 tr=0 a=118V6UEFpCLMRzptT8w30g==:117
+ a=118V6UEFpCLMRzptT8w30g==:17 a=xtxXYLxNAAAA:8 a=gt0LKDO9OWbvjQJcSk0A:9
+ a=xts0dhWdiJbonKbuqhAr:22
 From:	Philip Oakley <philipoakley@iee.org>
 To:	GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Cc:	Self <philipoakley@iee.org>
-Subject: [PATCH v5 00/12] Update git revisions
-Date:	Thu, 11 Aug 2016 22:50:23 +0100
-Message-Id: <20160811215035.4108-1-philipoakley@iee.org>
+Subject: [PATCH v5 01/12] doc: use 'symmetric difference' consistently
+Date:	Thu, 11 Aug 2016 22:50:24 +0100
+Message-Id: <20160811215035.4108-2-philipoakley@iee.org>
 X-Mailer: git-send-email 2.9.0.windows.1
-In-Reply-To: <20160720211007.5520-1-philipoakley@iee.org>
+In-Reply-To: <20160811215035.4108-1-philipoakley@iee.org>
 References: <20160720211007.5520-1-philipoakley@iee.org>
+ <20160811215035.4108-1-philipoakley@iee.org>
 X-CMAE-Envelope: MS4wfI537/nGpOBjd2YP9/Rjk+OUc+p23nnVYD6hj4jsJY7NvZdy0/iROqpyeR0RwbfzhHtHCA+p219sBRfi2urzLNYRJOatYlqJDrwBNu9B//Lz1tAvFSnw
  bRZlyuVyJFyGQ35686inslheBbAQYgp04GfNacgnnP2XM0/Z+7oiCzkq00qDHP+9GCFZZ+ilyQqSJwCK/EnIARl4dVdT6IMYzGfp6DasT2BEmAFL4X3w6S6l
 Sender:	git-owner@vger.kernel.org
@@ -39,52 +40,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-This has grown like topsy from a little two patch series that tried to
-name the 2-dots notation [1] into this extended set of tweaks.
+Signed-off-by: Philip Oakley <philipoakley@iee.org>
+---
+unchanged
+---
+ Documentation/gitk.txt             | 2 +-
+ Documentation/rev-list-options.txt | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-As documentation can be rather personal, I've split out each small change
-so each can be individually justified.
-
-Since V4, I've confirmed that the format breaking issue is that we cannot
-quote code in headings in the man page layout - ultimately it's a docbook
-decision, and follows the line of analysis Peff identified (see commentary
-in the patch).
-
-In addition the multi-parent notations have been clarified and extended.
-
-Thus the old patch 4 has been split into three. The first three patches are
-unchanged. The following 4 patches are also unchanged.
-
-Finally, at the end an extra 2 patches are added to build up the examples by
-including details of the notation expansions.
-
-This updates po/range-doc (2016-07-20) 8 commits.
-
-Hopefully my updated workflow will get the right patches to the right people.
-
-[1] https://public-inbox.org/git/0648000B273C412AB7140AE959EBC99A%40PhilipOakley/
-
-Philip Oakley (12):
-  doc: use 'symmetric difference' consistently
-  doc: revisions - name the left and right sides
-  doc: show the actual left, right, and boundary marks
-  doc: revisions: give headings for the two and three dot notations
-  doc: revisions: extra clarification of <rev>^! notation effects
-  doc: revisions: single vs multi-parent notation comparison
-  doc: gitrevisions - use 'reachable' in page description
-  doc: gitrevisions - clarify 'latter case' is revision walk
-  doc: revisions  - define `reachable`
-  doc: revisions - clarify reachability examples
-  doc: revisions: show revision expansion in examples
-  doc: revisions: sort examples and fix alignment of the unchanged
-
- Documentation/gitk.txt             |   2 +-
- Documentation/gitrevisions.txt     |   6 +-
- Documentation/pretty-formats.txt   |   2 +-
- Documentation/rev-list-options.txt |   4 +-
- Documentation/revisions.txt        | 121 +++++++++++++++++++++++--------------
- 5 files changed, 84 insertions(+), 51 deletions(-)
-
+diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
+index 6ade002..6c3eb15 100644
+--- a/Documentation/gitk.txt
++++ b/Documentation/gitk.txt
+@@ -70,7 +70,7 @@ linkgit:git-rev-list[1] for a complete list.
+ 
+ --left-right::
+ 
+-	Mark which side of a symmetric diff a commit is reachable
++	Mark which side of a symmetric difference a commit is reachable
+ 	from.  Commits from the left side are prefixed with a `<`
+ 	symbol and those from the right with a `>` symbol.
+ 
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 4f009d4..6dc0bb0 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -225,7 +225,7 @@ excluded from the output.
+ 
+ --left-only::
+ --right-only::
+-	List only commits on the respective side of a symmetric range,
++	List only commits on the respective side of a symmetric difference,
+ 	i.e. only those which would be marked `<` resp. `>` by
+ 	`--left-right`.
+ +
+@@ -766,7 +766,7 @@ ifdef::git-rev-list[]
+ endif::git-rev-list[]
+ 
+ --left-right::
+-	Mark which side of a symmetric diff a commit is reachable from.
++	Mark which side of a symmetric difference a commit is reachable from.
+ 	Commits from the left side are prefixed with `<` and those from
+ 	the right with `>`.  If combined with `--boundary`, those
+ 	commits are prefixed with `-`.
 -- 
 2.9.0.windows.1
 
