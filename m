@@ -2,50 +2,50 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4897203BD
-	for <e@80x24.org>; Thu, 11 Aug 2016 18:47:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 016E2203BD
+	for <e@80x24.org>; Thu, 11 Aug 2016 18:47:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932404AbcHKSrC (ORCPT <rfc822;e@80x24.org>);
-	Thu, 11 Aug 2016 14:47:02 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:36247 "EHLO
+	id S932486AbcHKSrJ (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 14:47:09 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:33182 "EHLO
 	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932339AbcHKSq7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2016 14:46:59 -0400
-Received: by mail-wm0-f68.google.com with SMTP id i138so835187wmf.3
-        for <git@vger.kernel.org>; Thu, 11 Aug 2016 11:46:58 -0700 (PDT)
+	with ESMTP id S932339AbcHKSrE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2016 14:47:04 -0400
+Received: by mail-wm0-f68.google.com with SMTP id o80so881369wme.0
+        for <git@vger.kernel.org>; Thu, 11 Aug 2016 11:47:04 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=MMQKVRo7rHW/F/HHeiP6MrrFjwzs/zSAcXsarftOv/g=;
-        b=XBBZF9/ccypgZL1FeOGd524gyi982UBpV/aqC+osf+984aEdispbtGfSN+29HsAwNB
-         ovD1OEfifW56gg6b55mm3eHVfgaPv28lvwHnGL/d+5eHVziXp3NL1k+GqBx5f9Rg3/cX
-         RwolDwEtxYTEaCmIOqSM3upLuCTsP5oXPHNhJljeaCPVgNEYY/wPtFUDUuD+l7dXGy9P
-         596bBeln2q2ukJuMF8dGxG6oIw+ThC/yGwi3upF2FMu9BCf+LZiSpSFCcofrXWriPAXQ
-         DfG/1LKM7ivw86By6PVhxiYxc12uYRtDGj0rg4MYhbNfNqwx3BjI2xr72jK4KhWlZlVT
-         MhpQ==
+        bh=O785ToW+AEoQC11WuJmw+Dzp8yQDVrdelmTeEFynaB8=;
+        b=eubdL6RiEFTnyTg4yPyuOOF8f3QvLeVXTMvZ6xnhuev60BwbB61y86qGhuSW8vUS6w
+         fpIgvtK9/hz6azxs2u9cNibasedqfgGlOWWYaTf3iD427KFBUCyXJN6l7XPsE6493bYH
+         eiN6UySooyFkXpp7UQpPeplH0XZXgOHM/xX6It07rFh1j60L/fcfOZmrXxezDIZi2+go
+         EMgvkdRt0/rMDJKoCDPw7MxroQmQJ0nQB+PDvJ7DLTftRpYPo9RBZwLIub3xCgrfHo/j
+         /Ir1Q5LEPlhSwS+l7bTrIPbryLpq369LJZnYHjaTlZY7hpUxhSJ9YA3aZUfz9/TDyS51
+         QkXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=MMQKVRo7rHW/F/HHeiP6MrrFjwzs/zSAcXsarftOv/g=;
-        b=WySaEw5NIOL+ZcFG7hlTMDd66Flgd3qGjwkbXoK4mT+OrEPDCcZXi7HxB5SISPfEWU
-         hKdVN30MW5NkLN0sCRm9uLTNI1nT+vd4qJsWPPkD2RLUPoV8MhzRJjA3j9BT8ChPmqUO
-         sd1BvsN5bcpjny3X8GaUfbTT870zcPKwzpPSz2H5Qq8O5Z8rAGnP1J9RSYuZx5nsE99G
-         qiC2AkhZQwlAlLBU+pllgFEm8zhTFQkDNvbLBobpIq/I0WJsPO99HqAkyTKlmOxLZgMd
-         5/CSbKJrL4gh2cIEqXdhVkG/TjF8qQdsoaETOwKjr1D94+OJrH2gT7INnXTOMRN9uhxF
-         4tcA==
-X-Gm-Message-State: AEkoouszb3fu2vL5khRNHTbZfFJzJsb1lFq0f1sPCg38y3W9b3dW43N+b2U/M2QXL4YrIw==
-X-Received: by 10.28.227.11 with SMTP id a11mr11297291wmh.29.1470941218056;
-        Thu, 11 Aug 2016 11:46:58 -0700 (PDT)
+        bh=O785ToW+AEoQC11WuJmw+Dzp8yQDVrdelmTeEFynaB8=;
+        b=NgL8RuuVDNEDDiFQiunVL536T99Cp4MBEqsTVT34z2VwM1BTaueV8pD90vGNgJL7P1
+         GLaomDZzDmhVlrrEFkagXPYJWBDZTz9lkP5zwhbYCVstaqzKgtA8eSZtjFOylVULwkl2
+         mhL1t97Z/eDEfHj9x3DOMg9OKHsT5bUZ0fRN/QNNyna/5PrC6qtAtR2CqCE2ylGxVqdl
+         8o1WCy/TP6YjzEVBPl3berNhWaBhpgCbldw7I0xzT3LbtCtX3+CLLE1vQfO9ixrfkFJU
+         iQ3h7J6wx3tKXzyBS/shD+4JVNAbtbX+T9JIVl4TlLONYAyqszg5jQLndGLW84gsdeO+
+         BgJA==
+X-Gm-Message-State: AEkoous2Pjn437dJKtBUX2wa9l4quG6rHpyyYmWuppi0KWMTaE2fm74xNqpdboYqGJnKVg==
+X-Received: by 10.194.140.35 with SMTP id rd3mr11068164wjb.88.1470941223574;
+        Thu, 11 Aug 2016 11:47:03 -0700 (PDT)
 Received: from localhost.localdomain ([80.215.37.180])
-        by smtp.gmail.com with ESMTPSA id 190sm1047236wmk.13.2016.08.11.11.46.55
+        by smtp.gmail.com with ESMTPSA id 190sm1047236wmk.13.2016.08.11.11.47.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 11 Aug 2016 11:46:57 -0700 (PDT)
+        Thu, 11 Aug 2016 11:47:02 -0700 (PDT)
 From:	Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
 To:	git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v12 07/13] apply: don't print on stdout in verbosity_silent mode
-Date:	Thu, 11 Aug 2016 20:44:55 +0200
-Message-Id: <20160811184501.384-8-chriscool@tuxfamily.org>
+Subject: [PATCH v12 09/13] usage: add get_error_routine() and get_warn_routine()
+Date:	Thu, 11 Aug 2016 20:44:57 +0200
+Message-Id: <20160811184501.384-10-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.2.769.gc0f0333
 In-Reply-To: <20160811184501.384-1-chriscool@tuxfamily.org>
 References: <20160811184501.384-1-chriscool@tuxfamily.org>
@@ -71,53 +71,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-When apply_verbosity is set to verbosity_silent nothing should be
-printed on both stderr and stdout.
+Let's make it possible to get the current error_routine and warn_routine,
+so that we can store them before using set_error_routine() or
+set_warn_routine() to use new ones.
 
-To avoid printing on stdout, we can just skip calling the following
-functions:
-
-	- stat_patch_list(),
-	- numstat_patch_list(),
-	- summary_patch_list().
-
-It is safe to do that because the above functions have no side
-effects other than printing:
-
-- stat_patch_list() only computes some local values and then call
-show_stats() and print_stat_summary(), those two functions only
-compute local values and call printing functions,
-- numstat_patch_list() also only computes local values and calls
-printing functions,
-- summary_patch_list() calls show_file_mode_name(), printf(),
-show_rename_copy(), show_mode_change() that are only printing.
+This way we will be able put back the original routines, when we are done
+with using new ones.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- apply.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ git-compat-util.h |  2 ++
+ usage.c           | 10 ++++++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/apply.c b/apply.c
-index df85cbc..ddbb0a2 100644
---- a/apply.c
-+++ b/apply.c
-@@ -4702,13 +4702,13 @@ static int apply_patch(struct apply_state *state,
- 		goto end;
- 	}
+diff --git a/git-compat-util.h b/git-compat-util.h
+index c7a51f8..de04df1 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -440,7 +440,9 @@ static inline int const_error(void)
  
--	if (state->diffstat)
-+	if (state->diffstat && state->apply_verbosity > verbosity_silent)
- 		stat_patch_list(state, list);
+ extern void set_die_routine(NORETURN_PTR void (*routine)(const char *err, va_list params));
+ extern void set_error_routine(void (*routine)(const char *err, va_list params));
++extern void (*get_error_routine(void))(const char *err, va_list params);
+ extern void set_warn_routine(void (*routine)(const char *warn, va_list params));
++extern void (*get_warn_routine(void))(const char *warn, va_list params);
+ extern void set_die_is_recursing_routine(int (*routine)(void));
+ extern void set_error_handle(FILE *);
  
--	if (state->numstat)
-+	if (state->numstat && state->apply_verbosity > verbosity_silent)
- 		numstat_patch_list(state, list);
+diff --git a/usage.c b/usage.c
+index 67e5526..2fd3045 100644
+--- a/usage.c
++++ b/usage.c
+@@ -70,11 +70,21 @@ void set_error_routine(void (*routine)(const char *err, va_list params))
+ 	error_routine = routine;
+ }
  
--	if (state->summary)
-+	if (state->summary && state->apply_verbosity > verbosity_silent)
- 		summary_patch_list(list);
++void (*get_error_routine(void))(const char *err, va_list params)
++{
++	return error_routine;
++}
++
+ void set_warn_routine(void (*routine)(const char *warn, va_list params))
+ {
+ 	warn_routine = routine;
+ }
  
- end:
++void (*get_warn_routine(void))(const char *warn, va_list params)
++{
++	return warn_routine;
++}
++
+ void set_die_is_recursing_routine(int (*routine)(void))
+ {
+ 	die_is_recursing = routine;
 -- 
 2.9.2.769.gc0f0333
 
