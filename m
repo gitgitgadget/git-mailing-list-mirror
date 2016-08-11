@@ -6,29 +6,28 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14F4B1F859
-	for <e@80x24.org>; Thu, 11 Aug 2016 09:26:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A000C1F859
+	for <e@80x24.org>; Thu, 11 Aug 2016 09:27:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932617AbcHKJ0k (ORCPT <rfc822;e@80x24.org>);
-	Thu, 11 Aug 2016 05:26:40 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53527 "HELO cloud.peff.net"
+	id S932642AbcHKJ1B (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 05:27:01 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53534 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932536AbcHKJ0i (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2016 05:26:38 -0400
-Received: (qmail 537 invoked by uid 109); 11 Aug 2016 09:26:37 -0000
+	id S932172AbcHKJ07 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2016 05:26:59 -0400
+Received: (qmail 549 invoked by uid 109); 11 Aug 2016 09:26:58 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 Aug 2016 09:26:37 +0000
-Received: (qmail 8441 invoked by uid 111); 11 Aug 2016 09:26:38 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 Aug 2016 09:26:58 +0000
+Received: (qmail 8459 invoked by uid 111); 11 Aug 2016 09:26:59 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 Aug 2016 05:26:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Aug 2016 05:26:36 -0400
-Date:	Thu, 11 Aug 2016 05:26:36 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 Aug 2016 05:26:59 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Aug 2016 05:26:57 -0400
+Date:	Thu, 11 Aug 2016 05:26:57 -0400
 From:	Jeff King <peff@peff.net>
 To:	Junio C Hamano <gitster@pobox.com>
 Cc:	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v5 3/4] pack-objects: break delta cycles before delta-search
- phase
-Message-ID: <20160811092635.pq33zmfuimrxcvxa@sigill.intra.peff.net>
+Subject: [PATCH v5 4/4] pack-objects: use mru list when iterating over packs
+Message-ID: <20160811092657.btqu3qsrdki654pq@sigill.intra.peff.net>
 References: <20160811092030.my5c4x6wplxaf7wz@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -39,322 +38,167 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-We do not allow cycles in the delta graph of a pack (i.e., A
-is a delta of B which is a delta of A) for the obvious
-reason that you cannot actually access any of the objects in
-such a case.
+In the original implementation of want_object_in_pack(), we
+always looked for the object in every pack, so the order did
+not matter for performance.
 
-There's a last-ditch attempt to notice cycles during the
-write phase, during which we issue a warning to the user and
-write one of the objects out in full. However, this is
-"last-ditch" for two reasons:
+As of the last few patches, however, we can now often break
+out of the loop early after finding the first instance, and
+avoid looking in the other packs at all. In this case, pack
+order can make a big difference, because we'd like to find
+the objects by looking at as few packs as possible.
 
-  1. By this time, it's too late to find another delta for
-     the object, so the resulting pack is larger than it
-     otherwise could be.
+This patch switches us to the same packed_git_mru list that
+is now used by normal object lookups.
 
-  2. The warning is there because this is something that
-     _shouldn't_ ever happen. If it does, then either:
+Here are timings for p5303 on linux.git:
 
-       a. a pack we are reusing deltas from had its own
-          cycle
+Test                      HEAD^                HEAD
+------------------------------------------------------------------------
+5303.3: rev-list (1)      31.31(31.07+0.23)    31.28(31.00+0.27) -0.1%
+5303.4: repack (1)        40.35(38.84+2.60)    40.53(39.31+2.32) +0.4%
+5303.6: rev-list (50)     31.37(31.15+0.21)    31.41(31.16+0.24) +0.1%
+5303.7: repack (50)       58.25(68.54+2.03)    47.28(57.66+1.89) -18.8%
+5303.9: rev-list (1000)   31.91(31.57+0.33)    31.93(31.64+0.28) +0.1%
+5303.10: repack (1000)    304.80(376.00+3.92)  87.21(159.54+2.84) -71.4%
 
-       b. we are reusing deltas from multiple packs, and
-          we found a cycle among them (i.e., A is a delta of
-          B in one pack, but B is a delta of A in another,
-          and we choose to use both deltas).
+The rev-list numbers are unchanged, which makes sense (they
+are not exercising this code at all). The 50- and 1000-pack
+repack cases show considerable improvement.
 
-       c. there is a bug in the delta-search code
+The single-pack repack case doesn't, of course; there's
+nothing to improve. In fact, it gives us a baseline for how
+fast we could possibly go. You can see that though rev-list
+can approach the single-pack case even with 1000 packs,
+repack doesn't. The reason is simple: the loop we are
+optimizing is only part of what the repack is doing. After
+the "counting" phase, we do delta compression, which is much
+more expensive when there are multiple packs, because we
+have fewer deltas we can reuse (you can also see that these
+numbers come from a multicore machine; the CPU times are
+much higher than the wall-clock times due to the delta
+phase).
 
-     So this code serves as a final check that none of these
-     things has happened, warns the user, and prevents us
-     from writing a bogus pack.
+So the good news is that in cases with many packs, we used
+to be dominated by the "counting" phase, and now we are
+dominated by the delta compression (which is faster, and
+which we have already parallelized).
 
-Right now, (2b) should never happen because of the static
-ordering of packs in want_object_in_pack(). If two objects
-have a delta relationship, then they must be in the same
-pack, and therefore we will find them from that same pack.
+Here are similar numbers for git.git:
 
-However, a future patch would like to change that static
-ordering, which will make (2b) a common occurrence. In
-preparation, we should be able to handle those kinds of
-cycles better. This patch does by introducing a
-cycle-breaking step during the get_object_details() phase,
-when we are deciding which deltas can be reused. That gives
-us the chance to feed the objects into the delta search as
-if the cycle did not exist.
+Test                      HEAD^               HEAD
+---------------------------------------------------------------------
+5303.3: rev-list (1)      1.55(1.51+0.02)     1.54(1.53+0.00) -0.6%
+5303.4: repack (1)        1.82(1.80+0.08)     1.82(1.78+0.09) +0.0%
+5303.6: rev-list (50)     1.58(1.57+0.00)     1.58(1.56+0.01) +0.0%
+5303.7: repack (50)       2.50(3.12+0.07)     2.31(2.95+0.06) -7.6%
+5303.9: rev-list (1000)   2.22(2.20+0.02)     2.23(2.19+0.03) +0.5%
+5303.10: repack (1000)    10.47(16.78+0.22)   7.50(13.76+0.22) -28.4%
 
-We'll leave the detection and warning in the write_object()
-phase in place, as it still serves as a check for case (2c).
+Not as impressive in terms of percentage, but still
+measurable wins.  If you look at the wall-clock time
+improvements in the 1000-pack case, you can see that linux
+improved by roughly 10x as many seconds as git. That's
+because it has roughly 10x as many objects, and we'd expect
+this improvement to scale linearly with the number of
+objects (since the number of packs is kept constant). It's
+just that the "counting" phase is a smaller percentage of
+the total time spent for a git.git repack, and hence the
+percentage win is smaller.
 
-This does mean we will stop warning for (2a). That case is
-caused by bogus input packs, and we ideally would warn the
-user about it.  However, since those cycles show up after
-picking reusable deltas, they look the same as (2b) to us;
-our new code will break the cycles early and the last-ditch
-check will never see them.
+The implementation itself is a straightforward use of the
+MRU code. We only bother marking a pack as used when we know
+that we are able to break early out of the loop, for two
+reasons:
 
-We could do analysis on any cycles that we find to
-distinguish the two cases (i.e., it is a bogus pack if and
-only if every delta in the cycle is in the same pack), but
-we don't need to. If there is a cycle inside a pack, we'll
-run into problems not only reusing the delta, but accessing
-the object data at all. So when we try to dig up the actual
-size of the object, we'll hit that same cycle and kick in
-our usual complain-and-try-another-source code.
+  1. If we can't break out early, it does no good; we have
+     to visit each pack anyway, so we might as well avoid
+     even the minor overhead of managing the cache order.
+
+  2. The mru_mark() function reorders the list, which would
+     screw up our traversal. So it is only safe to mark when
+     we are about to break out of the loop. We could record
+     the found pack and mark it after the loop finishes, of
+     course, but that's more complicated and it doesn't buy
+     us anything due to (1).
+
+Note that this reordering does have a potential impact on
+the final pack, as we store only a single "found" pack for
+each object, even if it is present in multiple packs. In
+principle, any copy is acceptable, as they all refer to the
+same content. But in practice, they may differ in whether
+they are stored as deltas, against which base, etc. This may
+have an impact on delta reuse, and even the delta search
+(since we skip pairs that were already in the same pack).
+
+It's not clear whether this change of order would hurt or
+even help average cases, though. The most likely reason to
+have duplicate objects is from the completion of thin packs
+(e.g., you have some objects in a "base" pack, then receive
+several pushes; the packs you receive may be thin on the
+wire, with deltas that refer to bases outside the pack, but
+we complete them with duplicate base objects when indexing
+them).
+
+In such a case the current code would always find the thin
+duplicates (because we currently walk the packs in reverse
+chronological order). Whereas with this patch, some of those
+duplicates would be found in the base pack instead.
+
+In my tests repacking a real-world case of linux.git with
+3600 thin-pack pushes (on top of a large "base" pack), the
+resulting pack was about 0.04% larger with this patch. On
+the other hand, because we were more likely to hit the base
+pack, there were more opportunities for delta reuse, and we
+had 50,000 fewer objects to examine in the delta search.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-This has the DONE and printf fixes from v4, along with using
-packed_object_info() to fill in the correct type when drop a delta.
-
- builtin/pack-objects.c          |  84 +++++++++++++++++++++++++++++
- pack-objects.h                  |   9 ++++
- t/t5314-pack-cycle-detection.sh | 113 ++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 206 insertions(+)
- create mode 100755 t/t5314-pack-cycle-detection.sh
+ builtin/pack-objects.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 4a63398..32c1dba 100644
+index 32c1dba..b745280 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -1495,6 +1495,83 @@ static int pack_offset_sort(const void *_a, const void *_b)
- 			(a->in_pack_offset > b->in_pack_offset);
- }
+@@ -23,6 +23,7 @@
+ #include "reachable.h"
+ #include "sha1-array.h"
+ #include "argv-array.h"
++#include "mru.h"
  
-+/*
-+ * Drop an on-disk delta we were planning to reuse. Naively, this would
-+ * just involve blanking out the "delta" field, but we have to deal
-+ * with some extra book-keeping:
-+ *
-+ *   1. Removing ourselves from the delta_sibling linked list.
-+ *
-+ *   2. Updating our size/type to the non-delta representation. These were
-+ *      either not recorded initially (size) or overwritten with the delta type
-+ *      (type) when check_object() decided to reuse the delta.
-+ */
-+static void drop_reused_delta(struct object_entry *entry)
-+{
-+	struct object_entry **p = &entry->delta->delta_child;
-+	struct object_info oi = OBJECT_INFO_INIT;
-+
-+	while (*p) {
-+		if (*p == entry)
-+			*p = (*p)->delta_sibling;
-+		else
-+			p = &(*p)->delta_sibling;
-+	}
-+	entry->delta = NULL;
-+
-+	oi.sizep = &entry->size;
-+	oi.typep = &entry->type;
-+	if (packed_object_info(entry->in_pack, entry->in_pack_offset, &oi) < 0) {
-+		/*
-+		 * We failed to get the info from this pack for some reason;
-+		 * fall back to sha1_object_info, which may find another copy.
-+		 * And if that fails, the error will be recorded in entry->type
-+		 * and dealt with in prepare_pack().
-+		 */
-+		entry->type = sha1_object_info(entry->idx.sha1, &entry->size);
-+	}
-+}
-+
-+/*
-+ * Follow the chain of deltas from this entry onward, throwing away any links
-+ * that cause us to hit a cycle (as determined by the DFS state flags in
-+ * the entries).
-+ */
-+static void break_delta_chains(struct object_entry *entry)
-+{
-+	/* If it's not a delta, it can't be part of a cycle. */
-+	if (!entry->delta) {
-+		entry->dfs_state = DFS_DONE;
-+		return;
-+	}
-+
-+	switch (entry->dfs_state) {
-+	case DFS_NONE:
-+		/*
-+		 * This is the first time we've seen the object. We mark it as
-+		 * part of the active potential cycle and recurse.
-+		 */
-+		entry->dfs_state = DFS_ACTIVE;
-+		break_delta_chains(entry->delta);
-+		entry->dfs_state = DFS_DONE;
-+		break;
-+
-+	case DFS_DONE:
-+		/* object already examined, and not part of a cycle */
-+		break;
-+
-+	case DFS_ACTIVE:
-+		/*
-+		 * We found a cycle that needs broken. It would be correct to
-+		 * break any link in the chain, but it's convenient to
-+		 * break this one.
-+		 */
-+		drop_reused_delta(entry);
-+		entry->dfs_state = DFS_DONE;
-+		break;
-+	}
-+}
-+
- static void get_object_details(void)
+ static const char *pack_usage[] = {
+ 	N_("git pack-objects --stdout [<options>...] [< <ref-list> | < <object-list>]"),
+@@ -958,7 +959,7 @@ static int want_object_in_pack(const unsigned char *sha1,
+ 			       struct packed_git **found_pack,
+ 			       off_t *found_offset)
  {
- 	uint32_t i;
-@@ -1512,6 +1589,13 @@ static void get_object_details(void)
- 			entry->no_try_delta = 1;
- 	}
+-	struct packed_git *p;
++	struct mru_entry *entry;
  
-+	/*
-+	 * This must happen in a second pass, since we rely on the delta
-+	 * information for the whole list being completed.
-+	 */
-+	for (i = 0; i < to_pack.nr_objects; i++)
-+		break_delta_chains(&to_pack.objects[i]);
-+
- 	free(sorted_by_offset);
- }
+ 	if (!exclude && local && has_loose_object_nonlocal(sha1))
+ 		return 0;
+@@ -966,7 +967,8 @@ static int want_object_in_pack(const unsigned char *sha1,
+ 	*found_pack = NULL;
+ 	*found_offset = 0;
  
-diff --git a/pack-objects.h b/pack-objects.h
-index d1b98b3..cc9b9a9 100644
---- a/pack-objects.h
-+++ b/pack-objects.h
-@@ -27,6 +27,15 @@ struct object_entry {
- 	unsigned no_try_delta:1;
- 	unsigned tagged:1; /* near the very tip of refs */
- 	unsigned filled:1; /* assigned write-order */
-+
-+	/*
-+	 * State flags for depth-first search used for analyzing delta cycles.
-+	 */
-+	enum {
-+		DFS_NONE = 0,
-+		DFS_ACTIVE,
-+		DFS_DONE
-+	} dfs_state;
- };
+-	for (p = packed_git; p; p = p->next) {
++	for (entry = packed_git_mru->head; entry; entry = entry->next) {
++		struct packed_git *p = entry->item;
+ 		off_t offset = find_pack_entry_one(sha1, p);
+ 		if (offset) {
+ 			if (!*found_pack) {
+@@ -993,8 +995,10 @@ static int want_object_in_pack(const unsigned char *sha1,
+ 			 * out of the loop to return 1 now.
+ 			 */
+ 			if (!ignore_packed_keep &&
+-			    (!local || !have_non_local_packs))
++			    (!local || !have_non_local_packs)) {
++				mru_mark(packed_git_mru, entry);
+ 				break;
++			}
  
- struct packing_data {
-diff --git a/t/t5314-pack-cycle-detection.sh b/t/t5314-pack-cycle-detection.sh
-new file mode 100755
-index 0000000..f7dbdfb
---- /dev/null
-+++ b/t/t5314-pack-cycle-detection.sh
-@@ -0,0 +1,113 @@
-+#!/bin/sh
-+
-+test_description='test handling of inter-pack delta cycles during repack
-+
-+The goal here is to create a situation where we have two blobs, A and B, with A
-+as a delta against B in one pack, and vice versa in the other. Then if we can
-+persuade a full repack to find A from one pack and B from the other, that will
-+give us a cycle when we attempt to reuse those deltas.
-+
-+The trick is in the "persuade" step, as it depends on the internals of how
-+pack-objects picks which pack to reuse the deltas from. But we can assume
-+that it does so in one of two general strategies:
-+
-+ 1. Using a static ordering of packs. In this case, no inter-pack cycles can
-+    happen. Any objects with a delta relationship must be present in the same
-+    pack (i.e., no "--thin" packs on disk), so we will find all related objects
-+    from that pack. So assuming there are no cycles within a single pack (and
-+    we avoid generating them via pack-objects or importing them via
-+    index-pack), then our result will have no cycles.
-+
-+    So this case should pass the tests no matter how we arrange things.
-+
-+ 2. Picking the next pack to examine based on locality (i.e., where we found
-+    something else recently).
-+
-+    In this case, we want to make sure that we find the delta versions of A and
-+    B and not their base versions. We can do this by putting two blobs in each
-+    pack. The first is a "dummy" blob that can only be found in the pack in
-+    question.  And then the second is the actual delta we want to find.
-+
-+    The two blobs must be present in the same tree, not present in other trees,
-+    and the dummy pathname must sort before the delta path.
-+
-+The setup below focuses on case 2. We have two commits HEAD and HEAD^, each
-+which has two files: "dummy" and "file". Then we can make two packs which
-+contain:
-+
-+  [pack one]
-+  HEAD:dummy
-+  HEAD:file  (as delta against HEAD^:file)
-+  HEAD^:file (as base)
-+
-+  [pack two]
-+  HEAD^:dummy
-+  HEAD^:file (as delta against HEAD:file)
-+  HEAD:file  (as base)
-+
-+Then no matter which order we start looking at the packs in, we know that we
-+will always find a delta for "file", because its lookup will always come
-+immediately after the lookup for "dummy".
-+'
-+. ./test-lib.sh
-+
-+
-+
-+# Create a pack containing the the tree $1 and blob $1:file, with
-+# the latter stored as a delta against $2:file.
-+#
-+# We convince pack-objects to make the delta in the direction of our choosing
-+# by marking $2 as a preferred-base edge. That results in $1:file as a thin
-+# delta, and index-pack completes it by adding $2:file as a base.
-+#
-+# Note that the two variants of "file" must be similar enough to convince git
-+# to create the delta.
-+make_pack () {
-+	{
-+		printf '%s\n' "-$(git rev-parse $2)"
-+		printf '%s dummy\n' "$(git rev-parse $1:dummy)"
-+		printf '%s file\n' "$(git rev-parse $1:file)"
-+	} |
-+	git pack-objects --stdout |
-+	git index-pack --stdin --fix-thin
-+}
-+
-+test_expect_success 'setup' '
-+	test-genrandom base 4096 >base &&
-+	for i in one two
-+	do
-+		# we want shared content here to encourage deltas...
-+		cp base file &&
-+		echo $i >>file &&
-+
-+		# ...whereas dummy should be short, because we do not want
-+		# deltas that would create duplicates when we --fix-thin
-+		echo $i >dummy &&
-+
-+		git add file dummy &&
-+		test_tick &&
-+		git commit -m $i ||
-+		return 1
-+	done &&
-+
-+	make_pack HEAD^ HEAD &&
-+	make_pack HEAD HEAD^
-+'
-+
-+test_expect_success 'repack' '
-+	# We first want to check that we do not have any internal errors,
-+	# and also that we do not hit the last-ditch cycle-breaking code
-+	# in write_object(), which will issue a warning to stderr.
-+	>expect &&
-+	git repack -ad 2>stderr &&
-+	test_cmp expect stderr &&
-+
-+	# And then double-check that the resulting pack is usable (i.e.,
-+	# we did not fail to notice any cycles). We know we are accessing
-+	# the objects via the new pack here, because "repack -d" will have
-+	# removed the others.
-+	git cat-file blob HEAD:file >/dev/null &&
-+	git cat-file blob HEAD^:file >/dev/null
-+'
-+
-+test_done
+ 			if (local && !p->pack_local)
+ 				return 0;
 -- 
 2.9.2.790.gaa5bc72
-
