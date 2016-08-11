@@ -6,152 +6,77 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 621F11F859
-	for <e@80x24.org>; Thu, 11 Aug 2016 09:00:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5BEB51F859
+	for <e@80x24.org>; Thu, 11 Aug 2016 09:20:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932434AbcHKI7l (ORCPT <rfc822;e@80x24.org>);
-	Thu, 11 Aug 2016 04:59:41 -0400
-Received: from mail95.atlas.de ([194.156.172.85]:8739 "EHLO mail95.atlas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752434AbcHKI7O (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2016 04:59:14 -0400
-X-IPAS-Result: =?us-ascii?q?A2D9DwAyPqxX/wTKxApdHAEBhCdStx6EDIYdAhyCBBABAQE?=
- =?us-ascii?q?BAQEBgQRBEAGEDQEBAwEjBA1FBQsCAQgaAiYCAgIqBhUQAgQBDAEFAgEBiCWyJ?=
- =?us-ascii?q?5A+AQEBAQEBAQEBAQEBAQEBAQEBH4EBhyEIgk2EV4JqgloBBIgmhXOLI5hlhXK?=
- =?us-ascii?q?IaoNLg3g1hBluhS2BWAEBAQ?=
-Received: from scesrv01.atlas.de ([10.196.202.4])
-  by MGW101FE.atlas.de with ESMTP/TLS/DHE-RSA-AES128-GCM-SHA256; 11 Aug 2016 10:59:07 +0200
-Received: by SCESRV01.atlas.de (Postfix, from userid 600)
-	id 3s924q3M7xz17mcP; Thu, 11 Aug 2016 08:58:43 +0000 (UTC)
-Received: from MGW202PAR.atlas.de (unknown [10.206.101.61])
-	by SCESRV01.atlas.de (Postfix) with ESMTPS id 3s924M3Jqbz17mcL
-	for <git@vger.kernel.org>; Thu, 11 Aug 2016 08:58:43 +0000 (UTC)
-Received: from msexsrv3.atlas.de ([10.200.102.58])
-  by MGW202DAT.atlas.de with ESMTP/TLS/AES128-SHA; 11 Aug 2016 10:58:42 +0200
-Received: from MSEXSRV6.atlas.de ([169.254.4.101]) by MSEXSRV3.atlas.de
- ([10.200.102.58]) with mapi id 14.03.0301.000; Thu, 11 Aug 2016 10:58:42
- +0200
-From:	<stefan.naewe@atlas-elektronik.com>
-To:	<christian.couder@gmail.com>, <git@vger.kernel.org>
-CC:	<gitster@pobox.com>, <peff@peff.net>, <avarab@gmail.com>,
-	<karsten.blees@gmail.com>, <pclouds@gmail.com>,
-	<sbeller@google.com>, <sunshine@sunshineco.com>,
-	<ramsay@ramsayjones.plus.com>, <j6t@kdbg.org>, <l.s.r@web.de>,
-	<chriscool@tuxfamily.org>
-Subject: Re: [PATCH v11 28/40] builtin/apply: rename option parsing functions
-Thread-Topic: [PATCH v11 28/40] builtin/apply: rename option parsing
- functions
-Thread-Index: AQHR863WtGOLO8TtSkydjCliKTiH5qBDVDqA
-Date:	Thu, 11 Aug 2016 08:58:43 +0000
-Message-ID: <126f7789-c2c8-669f-2210-eb6864f8f6da@atlas-elektronik.com>
-References: <20160811085253.19086-1-chriscool@tuxfamily.org>
-In-Reply-To: <20160811085253.19086-1-chriscool@tuxfamily.org>
-Accept-Language: de-DE, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.0
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <D885981163BCBE4AABA8938A2DDD00DF@atlas.de>
-Content-Transfer-Encoding: base64
+	id S932543AbcHKJUg (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 05:20:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53506 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932282AbcHKJUe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2016 05:20:34 -0400
+Received: (qmail 32646 invoked by uid 109); 11 Aug 2016 09:20:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 Aug 2016 09:20:32 +0000
+Received: (qmail 8306 invoked by uid 111); 11 Aug 2016 09:20:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 Aug 2016 05:20:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Aug 2016 05:20:30 -0400
+Date:	Thu, 11 Aug 2016 05:20:30 -0400
+From:	Jeff King <peff@peff.net>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v5] pack-objects mru
+Message-ID: <20160811092030.my5c4x6wplxaf7wz@sigill.intra.peff.net>
+References: <20160810115206.l57qpehpabthnl6c@sigill.intra.peff.net>
+ <20160810120248.i2hvm2q6ag3rvsk4@sigill.intra.peff.net>
+ <xmqqr39w4bvx.fsf@gitster.mtv.corp.google.com>
+ <20160811050252.g3iusy7bp3j6tzte@sigill.intra.peff.net>
+ <20160811065751.p64bi3sngbeotwc3@sigill.intra.peff.net>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20160811065751.p64bi3sngbeotwc3@sigill.intra.peff.net>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-QW0gMTEuMDguMjAxNiB1bSAxMDo1MiBzY2hyaWViIENocmlzdGlhbiBDb3VkZXI6DQo+IEFzIHRo
-ZXNlIGZ1bmN0aW9ucyBhcmUgZ29pbmcgdG8gYmUgcGFydCBvZiB0aGUgbGliaWZpZWQNCj4gYXBw
-bHkgYXBpLCBsZXQncyBnaXZlIHRoZW0gYSBuYW1lIHRoYXQgaXMgbW9yZSBzcGVjaWZpYw0KDQpz
-L2FwaS9BUEkvDQoNCjstKQ0KDQo+IHRvIHRoZSBhcHBseSBBUEkuDQo+IA0KPiBTaWduZWQtb2Zm
-LWJ5OiBDaHJpc3RpYW4gQ291ZGVyIDxjaHJpc2Nvb2xAdHV4ZmFtaWx5Lm9yZz4NCj4gLS0tDQo+
-ICBidWlsdGluL2FwcGx5LmMgfCA0MCArKysrKysrKysrKysrKysrKysrKy0tLS0tLS0tLS0tLS0t
-LS0tLS0tDQo+ICAxIGZpbGUgY2hhbmdlZCwgMjAgaW5zZXJ0aW9ucygrKSwgMjAgZGVsZXRpb25z
-KC0pDQo+IA0KPiBkaWZmIC0tZ2l0IGEvYnVpbHRpbi9hcHBseS5jIGIvYnVpbHRpbi9hcHBseS5j
-DQo+IGluZGV4IGFkNDAzZjguLjQyOWZlNDQgMTAwNjQ0DQo+IC0tLSBhL2J1aWx0aW4vYXBwbHku
-Yw0KPiArKysgYi9idWlsdGluL2FwcGx5LmMNCj4gQEAgLTQ1ODgsMTYgKzQ1ODgsMTYgQEAgc3Rh
-dGljIGludCBhcHBseV9wYXRjaChzdHJ1Y3QgYXBwbHlfc3RhdGUgKnN0YXRlLA0KPiAgCXJldHVy
-biByZXM7DQo+ICB9DQo+ICANCj4gLXN0YXRpYyBpbnQgb3B0aW9uX3BhcnNlX2V4Y2x1ZGUoY29u
-c3Qgc3RydWN0IG9wdGlvbiAqb3B0LA0KPiAtCQkJCWNvbnN0IGNoYXIgKmFyZywgaW50IHVuc2V0
-KQ0KPiArc3RhdGljIGludCBhcHBseV9vcHRpb25fcGFyc2VfZXhjbHVkZShjb25zdCBzdHJ1Y3Qg
-b3B0aW9uICpvcHQsDQo+ICsJCQkJICAgICAgY29uc3QgY2hhciAqYXJnLCBpbnQgdW5zZXQpDQo+
-ICB7DQo+ICAJc3RydWN0IGFwcGx5X3N0YXRlICpzdGF0ZSA9IG9wdC0+dmFsdWU7DQo+ICAJYWRk
-X25hbWVfbGltaXQoc3RhdGUsIGFyZywgMSk7DQo+ICAJcmV0dXJuIDA7DQo+ICB9DQo+ICANCj4g
-LXN0YXRpYyBpbnQgb3B0aW9uX3BhcnNlX2luY2x1ZGUoY29uc3Qgc3RydWN0IG9wdGlvbiAqb3B0
-LA0KPiAtCQkJCWNvbnN0IGNoYXIgKmFyZywgaW50IHVuc2V0KQ0KPiArc3RhdGljIGludCBhcHBs
-eV9vcHRpb25fcGFyc2VfaW5jbHVkZShjb25zdCBzdHJ1Y3Qgb3B0aW9uICpvcHQsDQo+ICsJCQkJ
-ICAgICAgY29uc3QgY2hhciAqYXJnLCBpbnQgdW5zZXQpDQo+ICB7DQo+ICAJc3RydWN0IGFwcGx5
-X3N0YXRlICpzdGF0ZSA9IG9wdC0+dmFsdWU7DQo+ICAJYWRkX25hbWVfbGltaXQoc3RhdGUsIGFy
-ZywgMCk7DQo+IEBAIC00NjA1LDkgKzQ2MDUsOSBAQCBzdGF0aWMgaW50IG9wdGlvbl9wYXJzZV9p
-bmNsdWRlKGNvbnN0IHN0cnVjdCBvcHRpb24gKm9wdCwNCj4gIAlyZXR1cm4gMDsNCj4gIH0NCj4g
-IA0KPiAtc3RhdGljIGludCBvcHRpb25fcGFyc2VfcChjb25zdCBzdHJ1Y3Qgb3B0aW9uICpvcHQs
-DQo+IC0JCQkgIGNvbnN0IGNoYXIgKmFyZywNCj4gLQkJCSAgaW50IHVuc2V0KQ0KPiArc3RhdGlj
-IGludCBhcHBseV9vcHRpb25fcGFyc2VfcChjb25zdCBzdHJ1Y3Qgb3B0aW9uICpvcHQsDQo+ICsJ
-CQkJY29uc3QgY2hhciAqYXJnLA0KPiArCQkJCWludCB1bnNldCkNCj4gIHsNCj4gIAlzdHJ1Y3Qg
-YXBwbHlfc3RhdGUgKnN0YXRlID0gb3B0LT52YWx1ZTsNCj4gIAlzdGF0ZS0+cF92YWx1ZSA9IGF0
-b2koYXJnKTsNCj4gQEAgLTQ2MTUsOCArNDYxNSw4IEBAIHN0YXRpYyBpbnQgb3B0aW9uX3BhcnNl
-X3AoY29uc3Qgc3RydWN0IG9wdGlvbiAqb3B0LA0KPiAgCXJldHVybiAwOw0KPiAgfQ0KPiAgDQo+
-IC1zdGF0aWMgaW50IG9wdGlvbl9wYXJzZV9zcGFjZV9jaGFuZ2UoY29uc3Qgc3RydWN0IG9wdGlv
-biAqb3B0LA0KPiAtCQkJCSAgICAgY29uc3QgY2hhciAqYXJnLCBpbnQgdW5zZXQpDQo+ICtzdGF0
-aWMgaW50IGFwcGx5X29wdGlvbl9wYXJzZV9zcGFjZV9jaGFuZ2UoY29uc3Qgc3RydWN0IG9wdGlv
-biAqb3B0LA0KPiArCQkJCQkgICBjb25zdCBjaGFyICphcmcsIGludCB1bnNldCkNCj4gIHsNCj4g
-IAlzdHJ1Y3QgYXBwbHlfc3RhdGUgKnN0YXRlID0gb3B0LT52YWx1ZTsNCj4gIAlpZiAodW5zZXQp
-DQo+IEBAIC00NjI2LDggKzQ2MjYsOCBAQCBzdGF0aWMgaW50IG9wdGlvbl9wYXJzZV9zcGFjZV9j
-aGFuZ2UoY29uc3Qgc3RydWN0IG9wdGlvbiAqb3B0LA0KPiAgCXJldHVybiAwOw0KPiAgfQ0KPiAg
-DQo+IC1zdGF0aWMgaW50IG9wdGlvbl9wYXJzZV93aGl0ZXNwYWNlKGNvbnN0IHN0cnVjdCBvcHRp
-b24gKm9wdCwNCj4gLQkJCQkgICBjb25zdCBjaGFyICphcmcsIGludCB1bnNldCkNCj4gK3N0YXRp
-YyBpbnQgYXBwbHlfb3B0aW9uX3BhcnNlX3doaXRlc3BhY2UoY29uc3Qgc3RydWN0IG9wdGlvbiAq
-b3B0LA0KPiArCQkJCQkgY29uc3QgY2hhciAqYXJnLCBpbnQgdW5zZXQpDQo+ICB7DQo+ICAJc3Ry
-dWN0IGFwcGx5X3N0YXRlICpzdGF0ZSA9IG9wdC0+dmFsdWU7DQo+ICAJc3RhdGUtPndoaXRlc3Bh
-Y2Vfb3B0aW9uID0gYXJnOw0KPiBAQCAtNDYzNiw4ICs0NjM2LDggQEAgc3RhdGljIGludCBvcHRp
-b25fcGFyc2Vfd2hpdGVzcGFjZShjb25zdCBzdHJ1Y3Qgb3B0aW9uICpvcHQsDQo+ICAJcmV0dXJu
-IDA7DQo+ICB9DQo+ICANCj4gLXN0YXRpYyBpbnQgb3B0aW9uX3BhcnNlX2RpcmVjdG9yeShjb25z
-dCBzdHJ1Y3Qgb3B0aW9uICpvcHQsDQo+IC0JCQkJICBjb25zdCBjaGFyICphcmcsIGludCB1bnNl
-dCkNCj4gK3N0YXRpYyBpbnQgYXBwbHlfb3B0aW9uX3BhcnNlX2RpcmVjdG9yeShjb25zdCBzdHJ1
-Y3Qgb3B0aW9uICpvcHQsDQo+ICsJCQkJCWNvbnN0IGNoYXIgKmFyZywgaW50IHVuc2V0KQ0KPiAg
-ew0KPiAgCXN0cnVjdCBhcHBseV9zdGF0ZSAqc3RhdGUgPSBvcHQtPnZhbHVlOw0KPiAgCXN0cmJ1
-Zl9yZXNldCgmc3RhdGUtPnJvb3QpOw0KPiBAQCAtNDc1NSwxMyArNDc1NSwxMyBAQCBpbnQgY21k
-X2FwcGx5KGludCBhcmdjLCBjb25zdCBjaGFyICoqYXJndiwgY29uc3QgY2hhciAqcHJlZml4KQ0K
-PiAgCXN0cnVjdCBvcHRpb24gYnVpbHRpbl9hcHBseV9vcHRpb25zW10gPSB7DQo+ICAJCXsgT1BU
-SU9OX0NBTExCQUNLLCAwLCAiZXhjbHVkZSIsICZzdGF0ZSwgTl8oInBhdGgiKSwNCj4gIAkJCU5f
-KCJkb24ndCBhcHBseSBjaGFuZ2VzIG1hdGNoaW5nIHRoZSBnaXZlbiBwYXRoIiksDQo+IC0JCQkw
-LCBvcHRpb25fcGFyc2VfZXhjbHVkZSB9LA0KPiArCQkJMCwgYXBwbHlfb3B0aW9uX3BhcnNlX2V4
-Y2x1ZGUgfSwNCj4gIAkJeyBPUFRJT05fQ0FMTEJBQ0ssIDAsICJpbmNsdWRlIiwgJnN0YXRlLCBO
-XygicGF0aCIpLA0KPiAgCQkJTl8oImFwcGx5IGNoYW5nZXMgbWF0Y2hpbmcgdGhlIGdpdmVuIHBh
-dGgiKSwNCj4gLQkJCTAsIG9wdGlvbl9wYXJzZV9pbmNsdWRlIH0sDQo+ICsJCQkwLCBhcHBseV9v
-cHRpb25fcGFyc2VfaW5jbHVkZSB9LA0KPiAgCQl7IE9QVElPTl9DQUxMQkFDSywgJ3AnLCBOVUxM
-LCAmc3RhdGUsIE5fKCJudW0iKSwNCj4gIAkJCU5fKCJyZW1vdmUgPG51bT4gbGVhZGluZyBzbGFz
-aGVzIGZyb20gdHJhZGl0aW9uYWwgZGlmZiBwYXRocyIpLA0KPiAtCQkJMCwgb3B0aW9uX3BhcnNl
-X3AgfSwNCj4gKwkJCTAsIGFwcGx5X29wdGlvbl9wYXJzZV9wIH0sDQo+ICAJCU9QVF9CT09MKDAs
-ICJuby1hZGQiLCAmc3RhdGUubm9fYWRkLA0KPiAgCQkJTl8oImlnbm9yZSBhZGRpdGlvbnMgbWFk
-ZSBieSB0aGUgcGF0Y2giKSksDQo+ICAJCU9QVF9CT09MKDAsICJzdGF0IiwgJnN0YXRlLmRpZmZz
-dGF0LA0KPiBAQCAtNDc5MywxMyArNDc5MywxMyBAQCBpbnQgY21kX2FwcGx5KGludCBhcmdjLCBj
-b25zdCBjaGFyICoqYXJndiwgY29uc3QgY2hhciAqcHJlZml4KQ0KPiAgCQkJCU5fKCJlbnN1cmUg
-YXQgbGVhc3QgPG4+IGxpbmVzIG9mIGNvbnRleHQgbWF0Y2giKSksDQo+ICAJCXsgT1BUSU9OX0NB
-TExCQUNLLCAwLCAid2hpdGVzcGFjZSIsICZzdGF0ZSwgTl8oImFjdGlvbiIpLA0KPiAgCQkJTl8o
-ImRldGVjdCBuZXcgb3IgbW9kaWZpZWQgbGluZXMgdGhhdCBoYXZlIHdoaXRlc3BhY2UgZXJyb3Jz
-IiksDQo+IC0JCQkwLCBvcHRpb25fcGFyc2Vfd2hpdGVzcGFjZSB9LA0KPiArCQkJMCwgYXBwbHlf
-b3B0aW9uX3BhcnNlX3doaXRlc3BhY2UgfSwNCj4gIAkJeyBPUFRJT05fQ0FMTEJBQ0ssIDAsICJp
-Z25vcmUtc3BhY2UtY2hhbmdlIiwgJnN0YXRlLCBOVUxMLA0KPiAgCQkJTl8oImlnbm9yZSBjaGFu
-Z2VzIGluIHdoaXRlc3BhY2Ugd2hlbiBmaW5kaW5nIGNvbnRleHQiKSwNCj4gLQkJCVBBUlNFX09Q
-VF9OT0FSRywgb3B0aW9uX3BhcnNlX3NwYWNlX2NoYW5nZSB9LA0KPiArCQkJUEFSU0VfT1BUX05P
-QVJHLCBhcHBseV9vcHRpb25fcGFyc2Vfc3BhY2VfY2hhbmdlIH0sDQo+ICAJCXsgT1BUSU9OX0NB
-TExCQUNLLCAwLCAiaWdub3JlLXdoaXRlc3BhY2UiLCAmc3RhdGUsIE5VTEwsDQo+ICAJCQlOXygi
-aWdub3JlIGNoYW5nZXMgaW4gd2hpdGVzcGFjZSB3aGVuIGZpbmRpbmcgY29udGV4dCIpLA0KPiAt
-CQkJUEFSU0VfT1BUX05PQVJHLCBvcHRpb25fcGFyc2Vfc3BhY2VfY2hhbmdlIH0sDQo+ICsJCQlQ
-QVJTRV9PUFRfTk9BUkcsIGFwcGx5X29wdGlvbl9wYXJzZV9zcGFjZV9jaGFuZ2UgfSwNCj4gIAkJ
-T1BUX0JPT0woJ1InLCAicmV2ZXJzZSIsICZzdGF0ZS5hcHBseV9pbl9yZXZlcnNlLA0KPiAgCQkJ
-Tl8oImFwcGx5IHRoZSBwYXRjaCBpbiByZXZlcnNlIikpLA0KPiAgCQlPUFRfQk9PTCgwLCAidW5p
-ZGlmZi16ZXJvIiwgJnN0YXRlLnVuaWRpZmZfemVybywNCj4gQEAgLTQ4MTcsNyArNDgxNyw3IEBA
-IGludCBjbWRfYXBwbHkoaW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmd2LCBjb25zdCBjaGFyICpw
-cmVmaXgpDQo+ICAJCQlSRUNPVU5UKSwNCj4gIAkJeyBPUFRJT05fQ0FMTEJBQ0ssIDAsICJkaXJl
-Y3RvcnkiLCAmc3RhdGUsIE5fKCJyb290IiksDQo+ICAJCQlOXygicHJlcGVuZCA8cm9vdD4gdG8g
-YWxsIGZpbGVuYW1lcyIpLA0KPiAtCQkJMCwgb3B0aW9uX3BhcnNlX2RpcmVjdG9yeSB9LA0KPiAr
-CQkJMCwgYXBwbHlfb3B0aW9uX3BhcnNlX2RpcmVjdG9yeSB9LA0KPiAgCQlPUFRfRU5EKCkNCj4g
-IAl9Ow0KPiAgDQo+IA0KDQoNCi0tIA0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KL2Rldi9yYW5kb20gc2F5czogVGlzIGJl
-dHRlciB0byBoYXZlIGxvdmVkIGFuZCBsb3N0IHRoYW4ganVzdCB0byBoYXZlIGxvc3QuDQpweXRo
-b24gLWMgInByaW50ICc3Mzc0NjU2NjYxNmUyZTZlNjE2NTc3NjU0MDYxNzQ2YzYxNzMyZDY1NmM2
-NTZiNzQ3MjZmNmU2OTZiMmU2MzZmNmQnLmRlY29kZSgnaGV4JykiIA0KR1BHIEtleSBmaW5nZXJw
-cmludCA9IDJERjUgRTAxQiAwOUMzIDc1MDEgQkNBOSAgOTY2NiA4MjlCIDQ5QzUgOTIyMSAyN0FG
+On Thu, Aug 11, 2016 at 02:57:51AM -0400, Jeff King wrote:
+
+> > One thing to be careful of is that there are more things this
+> > drop_reused_delta() should be doing. But I looked through the rest of
+> > check_object() and could not find anything else.
+> 
+> Argh, I spoke too soon.
+> 
+> It is true that the size lookup is the only part of check_object()
+> we skip if we are reusing the delta. But what I didn't notice is that
+> when we choose to reuse a delta, we overwrite entry->type (the real
+> type!) with the in_pack_type (OFS_DELTA, etc). We need to undo that so
+> that later stages see the real type.
+> 
+> I'm not sure how my existing tests worked (I confirmed that they do
+> indeed break the delta). It may be that only some code paths actually
+> care about the real type. But when playing with the depth-limit (which
+> uses the same drop_reused_delta() helper), I managed to make some pretty
+> broken packs.
+> 
+> So please disregard the v4 patch I just sent; I haven't triggered it,
+> but I imagine it has the same problem, and I just didn't manage to
+> trigger it.
+> 
+> I'll clean that up and send out a new series.
+
+Here it is. It ended up needing a few preparatory patches.
+
+  [1/4]: provide an initializer for "struct object_info"
+  [2/4]: sha1_file: make packed_object_info public
+  [3/4]: pack-objects: break delta cycles before delta-search phase
+  [4/4]: pack-objects: use mru list when iterating over packs
+
+I had originally intended to include an extra patch to handle the
+--depth limits better. But after writing it, I'm not sure it's actually
+a good idea. I'll post it as an addendum with more discussion.
+
+-Peff
