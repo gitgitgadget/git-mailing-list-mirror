@@ -2,119 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 650E220193
-	for <e@80x24.org>; Thu, 11 Aug 2016 19:08:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3E8520193
+	for <e@80x24.org>; Thu, 11 Aug 2016 19:11:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751865AbcHKTIy (ORCPT <rfc822;e@80x24.org>);
-	Thu, 11 Aug 2016 15:08:54 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:35273 "EHLO
-	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750856AbcHKTIw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2016 15:08:52 -0400
-Received: by mail-wm0-f42.google.com with SMTP id f65so9374035wmi.0
-        for <git@vger.kernel.org>; Thu, 11 Aug 2016 12:08:51 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=CMdOIYxKunniXNIIpRdUxrRt6/QRW5XOFUstcJKW46w=;
-        b=YVr6xOP02pt8BEyEHLRNZZE4RFYlBkeReBoAnOBXFDu614nP/IXaRvG5uddJNX9BEc
-         cRAi9Q1LrZlmDuE9+gGb7d4qJOdUgSuBBiIMArILj+4aIgPM+BMprlvcvzLP+u5gEtAk
-         +0C4lFeHtc0eYnlE/gcMWKzlIxfmq12yONT4DnH+ZLxZoR3aEHXRRkCYC/BIbiPSH8m0
-         7p0NiKMG1WFMZV1kSm9BDImhzkBP3ycvJBRLUM3ccM1Kdij6EFrJ/9qGHclHVgBsDuGB
-         puiKYvQDMEn0yVspmdoT5flaoVpCoK6Tt3s0nB5L+mH3dZ89UX3nErsDnZJHMlBvN/Wa
-         1ctg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=CMdOIYxKunniXNIIpRdUxrRt6/QRW5XOFUstcJKW46w=;
-        b=N7tLc+7wsywpZPCVIYl4TTl+MVbQ1aYzcmKfhA4zArVC+SNZOe2IYV/scvc31bK67s
-         /hyaY45N67ASsh3GqaWOafDe9fLSgHi6Zx9WQQ58755/0r3nEAXWhPNGzGi1uTc6J62t
-         PIE8KkUiUhdELCYAv40xXkb/34Od9mBMN+GFYTglThZjjnkMjUroDMVNiVzNYtuYVrtF
-         IJYHoxD5vw6jeW/Xy2aIn9nJkRzgLm60bZ9T55Ah2h0Z4R0+G5vAkF8TweJgVNBt3WsJ
-         1TyIAiVxk0CD6rMLCAzW5zPvh2QoCzD4bNUddsSoXnJ2hz8Q2w/b0RJNDvR8DOmGocHM
-         Kt2w==
-X-Gm-Message-State: AEkooutql2l6SB/q+6e30ArAXH10ffD6iHQilWbi6cElsgZr78RIXv5TZkVkeF1QqQBhmSsq8rLLTmf+mebNZg==
-X-Received: by 10.28.129.137 with SMTP id c131mr10278541wmd.79.1470942530861;
- Thu, 11 Aug 2016 12:08:50 -0700 (PDT)
+	id S1751975AbcHKTLq (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 15:11:46 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:60017 "EHLO
+	smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750856AbcHKTLp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2016 15:11:45 -0400
+Received: from PhilipOakley ([92.22.69.35])
+	by smtp.talktalk.net with SMTP
+	id XvOJbUS640KuvXvOJbHxzP; Thu, 11 Aug 2016 20:11:43 +0100
+X-Originating-IP: [92.22.69.35]
+X-Spam:	0
+X-OAuthority: v=2.2 cv=RZjSMBlv c=1 sm=1 tr=0 a=118V6UEFpCLMRzptT8w30g==:117
+ a=118V6UEFpCLMRzptT8w30g==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
+ a=pGLkceISAAAA:8 a=xtxXYLxNAAAA:8 a=P86X7i9WwggY1kuPCiMA:9
+ a=0RhZnL1DYvcuLYC8JZ5M:22 a=6kGIvZw6iX1k4Y-7sg4_:22 a=xts0dhWdiJbonKbuqhAr:22
+Message-ID: <75D9C1DBD21648F0B2511AA183C20CCD@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:	"Philip Oakley" <philipoakley@iee.org>
+To:	"Junio C Hamano" <gitster@pobox.com>,
+	"Jacob Keller" <jacob.keller@gmail.com>
+Cc:	"Git List" <git@vger.kernel.org>
+References: <D8F2D8316A4C4E198C6847C1165A8811@PhilipOakley><CA+P7+xpyCQLsEHE-Hqqob5mQisW=aw1gC+5f6Qq3q01etjX2Ng@mail.gmail.com><CA+P7+xrBegRdS-HXi2SfO0Uu6N=gUVVp_F29GCb1rQn9cnxnHQ@mail.gmail.com> <xmqq4m6r2npv.fsf@gitster.mtv.corp.google.com>
+Subject: Re: Can cc's be included in patches sent by send-email
+Date:	Thu, 11 Aug 2016 20:11:42 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.194.70.167 with HTTP; Thu, 11 Aug 2016 12:08:50 -0700 (PDT)
-In-Reply-To: <xmqqlh045y0l.fsf@gitster.mtv.corp.google.com>
-References: <20160808210337.5038-1-chriscool@tuxfamily.org>
- <20160808210337.5038-34-chriscool@tuxfamily.org> <xmqq60raewod.fsf@gitster.mtv.corp.google.com>
- <CAP8UFD2ZAdUjQnO-4qnum2_AK84SfBN2_yO=py+Jj+pkV8pk-w@mail.gmail.com> <xmqqlh045y0l.fsf@gitster.mtv.corp.google.com>
-From:	Christian Couder <christian.couder@gmail.com>
-Date:	Thu, 11 Aug 2016 21:08:50 +0200
-Message-ID: <CAP8UFD3-0=O7uLXG=KL8OVueFPCpN5y-JmtcncVyrd8GoRh--g@mail.gmail.com>
-Subject: Re: [PATCH v10 33/40] environment: add set_index_file()
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfDsSYg1i8uCu8pn2Km3w+XC3519iFqVsiJ7CKfUflloWEoHdZZbCd+cOwHIIdtBiA9anDA68Ih2rC3lZ9MLd3HCgFDo3SgvLrd2ICxCtlTD9SvKU+brL
+ +3yIXFUbhIRkpbk4XYXJAAr91EzXHbWo2ZmoNcJNfRdDcTblx7E4VwR/33I8PT7PlfPheTdyUGk3A21/CQjs+T3kE55p0UcppSu2bEceMkNyDpNwLNoKJs/X
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Aug 10, 2016 at 7:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
+From: "Junio C Hamano" <gitster@pobox.com>
+> Jacob Keller <jacob.keller@gmail.com> writes:
 >
->>> Isn't the mention on NO_THE_INDEX_COMPATIBILITY_MACROS in the added
->>> comments (there are two) pure red-herring?
+>> On Thu, Aug 11, 2016 at 12:58 AM, Jacob Keller <jacob.keller@gmail.com> 
+>> wrote:
+>>> On Thu, Aug 11, 2016 at 12:32 AM, Philip Oakley <philipoakley@iee.org> 
+>>> wrote:
+>>>> While 'git send-email' can have multiple --cc="addressee" options on 
+>>>> the
+>>>> command line, is it possible for the "cc:addressee<a@b.c>" to actually 
+>>>> be
+>>>> included in the patches that are to be sent, so that different patches 
+>>>> can
+>>>> have different addressee?
+>>>>
+>>>> The fortmat-patch can include appropriate from lines, so it feels as if 
+>>>> the
+>>>> sender should be able to add cc: lines at the same place. Maybe its 
+>>>> just
+>>>> part of th docs I've missed.
+>>>>
+>>>
+>>> Yes, just put them in the body as tags below the signed-off-by. It
+>>> should be on by default unless you change supresscc or signedoffbycc
+>>> configuration.
+>>>
+>>> Thanks,
+>>> Jake
+>>>
 >>
->> Yeah, true.
->>
->> So do you want me to refactor the code to use
->> hold_lock_file_for_update() instead of hold_locked_index() and to
->> avoid the set_index_file() hack?
+>> See --suppress-cc or --signed-off-by-cc help in git help send-email.
 >
-> I somehow thought that we already agreed to accept the technical
-> debt, taking your "it is too much work" assessment at the face
-> value.  If you now think it is feasible within the scope of the
-> series, of course we'd prefer it done "right" ;-)
+> Also, those who do not want to see Cc: in headers (like me) can
+> instead edit the header part of the format-patch output to add Cc:
+> lines and they should be picked up.
+> --
+When done via git gui, it looks like the Cc: is also included in the commit 
+message (first initial tries)
 
-Yeah, it is feasible and perhaps even simpler using
-hold_lock_file_for_update() than with set_index_file(), so I dropped
-the set_index_file() patch and added a new one that uses
-hold_lock_file_for_update().
-Sorry to have understood only recently what you said in some previous
-emails and thanks for the explanations.
+I'd probably place them after a --- break so that they don't get into the 
+applied commit message, but will carry around during my rebasing. I've still 
+to test if it works though.
 
-> Is the problematic hold_locked_index() something you do yourself, or
-> buried deep inside the callchain of a helper function you use?
+Philip 
 
-It is something done by the apply code, so we can easily modify that.
-
->  I am
-> sensing that it is the latter (otherwise you wouldn't be doing the
-> hack or at least will trivially fixing it up in a later "now we did
-> a faithful conversion from the previous code using GIT_INDEX_FILE
-> enviornment variable in an earlier step. Let's clean it up by being
-> in full control of what file we read from and write to" step in the
-> series).
-
-It was more a misunderstanding of how the index related functions are working.
-
-> Do you also have an issue on the reading side (i.e. you write it out
-> to temporary file and then later re-read the in-core cache from that
-> temporary file, for example)?  Or is a single "write to a temporary
-> index" the only thing you need to work around?
-
-It looks like it is the latter.
-
-Thanks,
-Christian.
