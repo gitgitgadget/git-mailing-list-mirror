@@ -6,29 +6,34 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A000C1F859
-	for <e@80x24.org>; Thu, 11 Aug 2016 09:27:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51179203BD
+	for <e@80x24.org>; Thu, 11 Aug 2016 09:57:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932642AbcHKJ1B (ORCPT <rfc822;e@80x24.org>);
-	Thu, 11 Aug 2016 05:27:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53534 "HELO cloud.peff.net"
+	id S932125AbcHKJ5R (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 05:57:17 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53540 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932172AbcHKJ07 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2016 05:26:59 -0400
-Received: (qmail 549 invoked by uid 109); 11 Aug 2016 09:26:58 -0000
+	id S1752643AbcHKJ5N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2016 05:57:13 -0400
+Received: (qmail 2190 invoked by uid 109); 11 Aug 2016 09:57:12 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 Aug 2016 09:26:58 +0000
-Received: (qmail 8459 invoked by uid 111); 11 Aug 2016 09:26:59 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 Aug 2016 09:57:12 +0000
+Received: (qmail 8522 invoked by uid 111); 11 Aug 2016 09:57:12 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 Aug 2016 05:26:59 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Aug 2016 05:26:57 -0400
-Date:	Thu, 11 Aug 2016 05:26:57 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 Aug 2016 05:57:12 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Aug 2016 05:57:10 -0400
+Date:	Thu, 11 Aug 2016 05:57:10 -0400
 From:	Jeff King <peff@peff.net>
 To:	Junio C Hamano <gitster@pobox.com>
 Cc:	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v5 4/4] pack-objects: use mru list when iterating over packs
-Message-ID: <20160811092657.btqu3qsrdki654pq@sigill.intra.peff.net>
-References: <20160811092030.my5c4x6wplxaf7wz@sigill.intra.peff.net>
+Subject: Re: [PATCH v5] pack-objects mru
+Message-ID: <20160811095710.p2bffympjlwmv3gc@sigill.intra.peff.net>
+References: <20160810115206.l57qpehpabthnl6c@sigill.intra.peff.net>
+ <20160810120248.i2hvm2q6ag3rvsk4@sigill.intra.peff.net>
+ <xmqqr39w4bvx.fsf@gitster.mtv.corp.google.com>
+ <20160811050252.g3iusy7bp3j6tzte@sigill.intra.peff.net>
+ <20160811065751.p64bi3sngbeotwc3@sigill.intra.peff.net>
+ <20160811092030.my5c4x6wplxaf7wz@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
@@ -38,167 +43,223 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-In the original implementation of want_object_in_pack(), we
-always looked for the object in every pack, so the order did
-not matter for performance.
+On Thu, Aug 11, 2016 at 05:20:30AM -0400, Jeff King wrote:
 
-As of the last few patches, however, we can now often break
-out of the loop early after finding the first instance, and
-avoid looking in the other packs at all. In this case, pack
-order can make a big difference, because we'd like to find
-the objects by looking at as few packs as possible.
+> Here it is. It ended up needing a few preparatory patches.
+> 
+>   [1/4]: provide an initializer for "struct object_info"
+>   [2/4]: sha1_file: make packed_object_info public
+>   [3/4]: pack-objects: break delta cycles before delta-search phase
+>   [4/4]: pack-objects: use mru list when iterating over packs
+> 
+> I had originally intended to include an extra patch to handle the
+> --depth limits better. But after writing it, I'm not sure it's actually
+> a good idea. I'll post it as an addendum with more discussion.
 
-This patch switches us to the same packed_git_mru list that
-is now used by normal object lookups.
+And here's the depth patch. It does work, as you can see by running the
+snippet at the bottom of the commit message.
 
-Here are timings for p5303 on linux.git:
+But I began to wonder if it's actually a desirable thing. For instance,
+if you do:
 
-Test                      HEAD^                HEAD
-------------------------------------------------------------------------
-5303.3: rev-list (1)      31.31(31.07+0.23)    31.28(31.00+0.27) -0.1%
-5303.4: repack (1)        40.35(38.84+2.60)    40.53(39.31+2.32) +0.4%
-5303.6: rev-list (50)     31.37(31.15+0.21)    31.41(31.16+0.24) +0.1%
-5303.7: repack (50)       58.25(68.54+2.03)    47.28(57.66+1.89) -18.8%
-5303.9: rev-list (1000)   31.91(31.57+0.33)    31.93(31.64+0.28) +0.1%
-5303.10: repack (1000)    304.80(376.00+3.92)  87.21(159.54+2.84) -71.4%
+  git gc --aggressive
+  ... time passes ...
+  git gc
 
-The rev-list numbers are unchanged, which makes sense (they
-are not exercising this code at all). The 50- and 1000-pack
-repack cases show considerable improvement.
+the first gc may generate chains up to 250 objects. When the second gc
+runs (and you may not even run it yourself; it might be "gc --auto"!),
+it will generally reuse most of your existing deltas, even though the
+default depth is only 50.
 
-The single-pack repack case doesn't, of course; there's
-nothing to improve. In fact, it gives us a baseline for how
-fast we could possibly go. You can see that though rev-list
-can approach the single-pack case even with 1000 packs,
-repack doesn't. The reason is simple: the loop we are
-optimizing is only part of what the repack is doing. After
-the "counting" phase, we do delta compression, which is much
-more expensive when there are multiple packs, because we
-have fewer deltas we can reuse (you can also see that these
-numbers come from a multicore machine; the CPU times are
-much higher than the wall-clock times due to the delta
-phase).
+But with the patch below, it will drop deltas from the middle of those
+long chains, undoing the prior --aggressive results. Worse, we don't
+find new deltas for those objects, because it falls afoul of the "they
+are in the same pack, so don't bother looking for a delta" rule.
 
-So the good news is that in cases with many packs, we used
-to be dominated by the "counting" phase, and now we are
-dominated by the delta compression (which is faster, and
-which we have already parallelized).
+An --aggressive repack of my git.git is 52MB. Repacking that with the
+patch below and "--depth=50" bumps it to 55MB. Dumping the "do not
+bother" condition in try_delta() drops that to 54MB.
 
-Here are similar numbers for git.git:
+So it _is_ worse for the space to drop those high-depth deltas. Even if
+we fixed the "do not bother" (e.g., by recording a bit that says "even
+though these are in the same pack, try anyway, because we had to break
+the delta for other reasons"), it's still a loss.
 
-Test                      HEAD^               HEAD
----------------------------------------------------------------------
-5303.3: rev-list (1)      1.55(1.51+0.02)     1.54(1.53+0.00) -0.6%
-5303.4: repack (1)        1.82(1.80+0.08)     1.82(1.78+0.09) +0.0%
-5303.6: rev-list (50)     1.58(1.57+0.00)     1.58(1.56+0.01) +0.0%
-5303.7: repack (50)       2.50(3.12+0.07)     2.31(2.95+0.06) -7.6%
-5303.9: rev-list (1000)   2.22(2.20+0.02)     2.23(2.19+0.03) +0.5%
-5303.10: repack (1000)    10.47(16.78+0.22)   7.50(13.76+0.22) -28.4%
+OTOH, I am not altogether convinced that the tradeoff of a giant --depth
+is worth. I'm looking only at the space here, but deeper delta chains
+cost more CPU to access (especially if they start to exceed the delta
+cache size). And the space savings aren't that amazing. Doing a "git
+repack -adf --depth=50 --window=250" (i.e., if aggressive had just
+tweaked the window size and not the depth in the first place), the
+result is only 53MB.
 
-Not as impressive in terms of percentage, but still
-measurable wins.  If you look at the wall-clock time
-improvements in the 1000-pack case, you can see that linux
-improved by roughly 10x as many seconds as git. That's
-because it has roughly 10x as many objects, and we'd expect
-this improvement to scale linearly with the number of
-objects (since the number of packs is kept constant). It's
-just that the "counting" phase is a smaller percentage of
-the total time spent for a git.git repack, and hence the
-percentage win is smaller.
+So considering "--depth" as a space-saving measure for --aggressive does
+not seem that effective. But it feels weird to quietly drop actions
+people might have done with previous aggressive runs.
 
-The implementation itself is a straightforward use of the
-MRU code. We only bother marking a pack as used when we know
-that we are able to break early out of the loop, for two
-reasons:
+-- >8 --
+Subject: [PATCH] pack-objects: enforce --depth limit in reused deltas
 
-  1. If we can't break out early, it does no good; we have
-     to visit each pack anyway, so we might as well avoid
-     even the minor overhead of managing the cache order.
+Since 898b14c (pack-objects: rework check_delta_limit usage,
+2007-04-16), we check the delta depth limit only when
+figuring out whether we should make a new delta. We don't
+consider it at all when reusing deltas, which means that
+packing once with --depth=50, and then against with
+--depth=10, the second pack my still contain chains larger
+than 10.
 
-  2. The mru_mark() function reorders the list, which would
-     screw up our traversal. So it is only safe to mark when
-     we are about to break out of the loop. We could record
-     the found pack and mark it after the loop finishes, of
-     course, but that's more complicated and it doesn't buy
-     us anything due to (1).
+This is probably not a huge deal, as it is limited to
+whatever chains you happened to create in a previous run.
+But as we start allowing cross-pack delta reuse in a future
+commit, this maximum will rise to the number of packs times
+the per-pack depth (in the worst case; on average, it will
+likely be much smaller).
 
-Note that this reordering does have a potential impact on
-the final pack, as we store only a single "found" pack for
-each object, even if it is present in multiple packs. In
-principle, any copy is acceptable, as they all refer to the
-same content. But in practice, they may differ in whether
-they are stored as deltas, against which base, etc. This may
-have an impact on delta reuse, and even the delta search
-(since we skip pairs that were already in the same pack).
+We can easily detect this as part of the existing search for
+cycles, since we visit every node in a depth-first way. That
+lets us compute the depth of any node based on the depth of
+its base, because we know the base is DFS_DONE by the time
+we look at it (modulo any cycles in the graph, but we know
+there cannot be any because we break them as we see them).
 
-It's not clear whether this change of order would hurt or
-even help average cases, though. The most likely reason to
-have duplicate objects is from the completion of thin packs
-(e.g., you have some objects in a "base" pack, then receive
-several pushes; the packs you receive may be thin on the
-wire, with deltas that refer to bases outside the pack, but
-we complete them with duplicate base objects when indexing
-them).
+There is some subtlety worth mentioning, though. We record
+the depth of each object as we compute it. It might seem
+like we could save the per-object storage space by just
+keeping track of the depth of our traversal (i.e., have
+break_delta_chains() report how deep it went). But we may
+visit an object through multiple delta paths, and on
+subsequent paths we want to know its depth immediately,
+without having to walk back down to its final base (doing so
+would make our graph walk quadratic rather than linear).
 
-In such a case the current code would always find the thin
-duplicates (because we currently walk the packs in reverse
-chronological order). Whereas with this patch, some of those
-duplicates would be found in the base pack instead.
+Likewise, one could try to record the depth not from the
+base, but from our starting point (i.e., start
+recursion_depth at 0, and pass "recursion_depth + 1" to each
+invocation of break_delta_chains()). And then when
+recursion_depth gets too big, we know that we must cut the
+delta chain.  But that technique is wrong if we do not visit
+the nodes in topological order. In a chain A->B->C, it
+if we visit "C", then "B", then "A", we will never recurse
+deeper than 1 link (because we see at each node that we have
+already visited it).
 
-In my tests repacking a real-world case of linux.git with
-3600 thin-pack pushes (on top of a large "base" pack), the
-resulting pack was about 0.04% larger with this patch. On
-the other hand, because we were more likely to hit the base
-pack, there were more opportunities for delta reuse, and we
-had 50,000 fewer objects to examine in the delta search.
+Unfortunately there is no automated test, because it's hard
+to convince pack-objects to reliably produce delta chains.
+Naively, it would seem that a sequence of ever-increasing
+blobs would work. E.g., something like:
+
+  for i in 1 2 3 4 5; do
+          test-genrandom $i 4096 >>file
+          git add file
+          git commit -m $i
+  done
+
+where a reasonable set of deltas would use "1:file" as the
+base, then "2:file" as a delta against that, "3:file" as a
+delta against "2:file", and so on, until we have a chain
+with length 5.
+
+But the delta search is much more fickle than that. It tends
+to prefer deletions to additions (because they are smaller
+than additions), so it prefers "5:file" as the base, and
+then the deltas just say "remove N bytes from the end".
+Moreover, the delta search has heuristics that penalize
+increasing depth. So packing the script above actually ends
+up with 2 chains of length 2.
+
+So I've punted on adding an automated test. One can see the
+effect on a real-world repository by repacking it with a
+small --depth value, like:
+
+  max_depth() {
+    for i in .git/objects/pack/*.pack; do
+      git verify-pack -v $i
+    done |
+    perl -lne '
+      /chain length = (\d+)/ or next;
+      $max = $1 if $1 > $max;
+      END { print $max }
+    '
+  }
+
+  echo "before: $(max_depth)"
+  git repack -ad --depth=5
+  echo "after: $(max_depth)"
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/pack-objects.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ builtin/pack-objects.c | 15 +++++++++++++++
+ pack-objects.h         |  4 ++++
+ 2 files changed, 19 insertions(+)
 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 32c1dba..b745280 100644
+index 32c1dba..d8132a4 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -23,6 +23,7 @@
- #include "reachable.h"
- #include "sha1-array.h"
- #include "argv-array.h"
-+#include "mru.h"
- 
- static const char *pack_usage[] = {
- 	N_("git pack-objects --stdout [<options>...] [< <ref-list> | < <object-list>]"),
-@@ -958,7 +959,7 @@ static int want_object_in_pack(const unsigned char *sha1,
- 			       struct packed_git **found_pack,
- 			       off_t *found_offset)
+@@ -1505,6 +1505,8 @@ static int pack_offset_sort(const void *_a, const void *_b)
+  *   2. Updating our size/type to the non-delta representation. These were
+  *      either not recorded initially (size) or overwritten with the delta type
+  *      (type) when check_object() decided to reuse the delta.
++ *
++ *   3. Resetting our delta depth, as we are now a base object.
+  */
+ static void drop_reused_delta(struct object_entry *entry)
  {
--	struct packed_git *p;
-+	struct mru_entry *entry;
+@@ -1518,6 +1520,7 @@ static void drop_reused_delta(struct object_entry *entry)
+ 			p = &(*p)->delta_sibling;
+ 	}
+ 	entry->delta = NULL;
++	entry->depth = 0;
  
- 	if (!exclude && local && has_loose_object_nonlocal(sha1))
- 		return 0;
-@@ -966,7 +967,8 @@ static int want_object_in_pack(const unsigned char *sha1,
- 	*found_pack = NULL;
- 	*found_offset = 0;
+ 	oi.sizep = &entry->size;
+ 	oi.typep = &entry->type;
+@@ -1536,6 +1539,9 @@ static void drop_reused_delta(struct object_entry *entry)
+  * Follow the chain of deltas from this entry onward, throwing away any links
+  * that cause us to hit a cycle (as determined by the DFS state flags in
+  * the entries).
++ *
++ * We also detect too-long reused chains that would violate our --depth
++ * limit.
+  */
+ static void break_delta_chains(struct object_entry *entry)
+ {
+@@ -1553,6 +1559,15 @@ static void break_delta_chains(struct object_entry *entry)
+ 		 */
+ 		entry->dfs_state = DFS_ACTIVE;
+ 		break_delta_chains(entry->delta);
++
++		/*
++		 * Once we've recursed, our base knows its depth, so we can
++		 * compute ours (and check it against the limit).
++		 */
++		entry->depth = entry->delta->depth + 1;
++		if (entry->depth > depth)
++			drop_reused_delta(entry);
++
+ 		entry->dfs_state = DFS_DONE;
+ 		break;
  
--	for (p = packed_git; p; p = p->next) {
-+	for (entry = packed_git_mru->head; entry; entry = entry->next) {
-+		struct packed_git *p = entry->item;
- 		off_t offset = find_pack_entry_one(sha1, p);
- 		if (offset) {
- 			if (!*found_pack) {
-@@ -993,8 +995,10 @@ static int want_object_in_pack(const unsigned char *sha1,
- 			 * out of the loop to return 1 now.
- 			 */
- 			if (!ignore_packed_keep &&
--			    (!local || !have_non_local_packs))
-+			    (!local || !have_non_local_packs)) {
-+				mru_mark(packed_git_mru, entry);
- 				break;
-+			}
+diff --git a/pack-objects.h b/pack-objects.h
+index cc9b9a9..03f1191 100644
+--- a/pack-objects.h
++++ b/pack-objects.h
+@@ -30,12 +30,16 @@ struct object_entry {
  
- 			if (local && !p->pack_local)
- 				return 0;
+ 	/*
+ 	 * State flags for depth-first search used for analyzing delta cycles.
++	 *
++	 * The depth is measured in delta-links to the base (so if A is a delta
++	 * against B, then A has a depth of 1, and B a depth of 0).
+ 	 */
+ 	enum {
+ 		DFS_NONE = 0,
+ 		DFS_ACTIVE,
+ 		DFS_DONE
+ 	} dfs_state;
++	int depth;
+ };
+ 
+ struct packing_data {
 -- 
 2.9.2.790.gaa5bc72
+
