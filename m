@@ -6,84 +6,80 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B0EB20193
-	for <e@80x24.org>; Thu, 11 Aug 2016 20:45:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6571120193
+	for <e@80x24.org>; Thu, 11 Aug 2016 20:50:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932260AbcHKUo7 (ORCPT <rfc822;e@80x24.org>);
-	Thu, 11 Aug 2016 16:44:59 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56159 "EHLO
+	id S932247AbcHKUuT (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 16:50:19 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51225 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932129AbcHKUo7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2016 16:44:59 -0400
+	with ESMTP id S932180AbcHKUuR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2016 16:50:17 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6A201321C2;
-	Thu, 11 Aug 2016 16:44:58 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6163031D2A;
+	Thu, 11 Aug 2016 16:50:16 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Gxu7OzQY2g1vCiQ2BQvQOD552Q8=; b=ICReBa
-	evr+/8phROF2Od+q0THtHrNcXTOLAbRhpI2v7tTmECEshRtt8TNX0I1b3BCo164t
-	NtSejoZdWDSDTjBYk9Q8mGhu21L8cxkOuDmoSWmMecT5jgfTWf23eseQLPV1mdHD
-	vbaNAxn806T9+ZJTlGQO6YIyrN/UNXITbmDQk=
+	:content-type; s=sasl; bh=vDr+NwW9AAIERAi3MvMYqyZkcjI=; b=GeGxQI
+	4dmT31KH6W1nv8DlbJ5j/L0YZbF+P9CX57TQ07eEsCMQ10kPOaBKGg1nAzdWl9qz
+	dWE1Sl1I8P+Q6WWhcP5kG3TXlLgYUL8omp6TMmbzGprhG2WpY7nTMsVoc0rL9kRW
+	t5RAH7IXie3KFay4xXdLkU4ESRxIusRevrEgU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qNnmKuZXvIWW5iVwumH40E96l9v9YqEC
-	eWMIaxkWecvbQqV/3bwmzyJBYLtRluXaBgvhOxaDbOKocpm1YMIXMCyfbzgd6SyU
-	/RxVPrNZAK1vOnbOe2VDFzeH3CCTKTTSvj9BG2jYULsbuXV80B032CEtfuFlIlcY
-	rRUGzT8uCfs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 620EF321C1;
-	Thu, 11 Aug 2016 16:44:58 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=QduREb7gWBr/v/EzzTEklK7nUcwcYZPh
+	j5i3O4Etguwx4KGF82NTbC7pb7Pv1j2DQ/Yhk43rR/5N0gX/2ee9mHLahJG6iQ5p
+	AIgDZCnzcQXQe0vqS+3Al+DcPycPh5c7Ba0SRgliv75jkQttdXYFui9IqAEqVow6
+	AL+Ka+//8oA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5784131D29;
+	Thu, 11 Aug 2016 16:50:16 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D6E2A321BE;
-	Thu, 11 Aug 2016 16:44:57 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C2F2131D28;
+	Thu, 11 Aug 2016 16:50:15 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-To:	Eric Wong <e@80x24.org>
-Cc:	git@vger.kernel.org
-Subject: Re: public-inbox.org/git updates
-References: <20160811194333.GA27387@starla>
-Date:	Thu, 11 Aug 2016 13:44:55 -0700
-In-Reply-To: <20160811194333.GA27387@starla> (Eric Wong's message of "Thu, 11
-	Aug 2016 19:43:33 +0000")
-Message-ID: <xmqqr39vyr08.fsf@gitster.mtv.corp.google.com>
+To:	Jacob Keller <jacob.e.keller@intel.com>
+Cc:	git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v4 2/2] diff: add SUBMODULE_DIFF format to display submodule diff
+References: <20160810231908.26330-1-jacob.e.keller@intel.com>
+	<20160810231908.26330-2-jacob.e.keller@intel.com>
+Date:	Thu, 11 Aug 2016 13:50:13 -0700
+In-Reply-To: <20160810231908.26330-2-jacob.e.keller@intel.com> (Jacob Keller's
+	message of "Wed, 10 Aug 2016 16:19:08 -0700")
+Message-ID: <xmqqmvkjyqre.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 774ADBCA-6004-11E6-975E-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 34C999DE-6005-11E6-9F84-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Eric Wong <e@80x24.org> writes:
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-> There'll be over 5000K injected messages from 2006 I missed from
-> the initial import :x
->
-> I noticed this while adding gmane:NNNN mapping support to the
-> search engine:
->   https://public-inbox.org/git/20160811002819.GA8311@starla/T/#u
->
-> There will still be some missing messages because some are spam.
-> news.gmane.org remains up if you want to check my work
-> (please do, because I am careless)
+> diff --git a/submodule.c b/submodule.c
+> index 1b5cdfb7e784..36f8fd00c3ce 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -333,6 +333,73 @@ static void print_submodule_summary(struct rev_info *rev, FILE *f,
+>  	strbuf_release(&sb);
+>  }
+>  
+> +void show_submodule_diff(FILE *f, const char *path,
+> +		const char *line_prefix,
+> +		unsigned char one[20], unsigned char two[20],
+> +		unsigned dirty_submodule, const char *meta,
+> +		const char *a_prefix, const char *b_prefix,
+> +		const char *reset)
+> +{
+> +	struct child_process cp = CHILD_PROCESS_INIT;
+> +	struct strbuf sb = STRBUF_INIT;
+> +	struct strbuf submodule_git_dir = STRBUF_INIT;
+> +	const char *git_dir, *message = NULL;
+> +	int create_dirty_diff = 0;
+> +	FILE *diff;
+> +	char c;
 
-Thanks for doing this.
-
-I wanted to try out your NTTP service, but it took me a while to dig
-in my inbox to find your announcement of news.public-inbox.org that
-hosts inbox.comp.version-control.git "newsgroup".  Is it possible to
-make this a bit more discoverable, or there is not enough NNTP
-audience these days to warrant such an addition?  I first went to
-http://public-inbox.org/git as I expected there may be some pointers
-to other instances of the service, where you list the "git clone"
-URL of the archive.
-
-By the way, it felt quite strange to see messages from 8 years ago
-mixed with more recent messages when I gold Gnus to fetch the most
-recent 333 messages (and of course that fetches 333 messages with
-largest message numbers, not sorted by "Date:").  I am assuming that
-this is an artifact of "over 5k injected messages" bundle that was
-added out of order.
-
+The variables message, diff and c are not used, are they?
