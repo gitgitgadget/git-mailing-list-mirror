@@ -1,181 +1,105 @@
+Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
-X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: Re: [PATCH] Make git-clone --use-separate-remote the default
-Date: Fri, 24 Nov 2006 14:32:00 +0300
-Message-ID: <20061124143200.52aa1901.vsu@altlinux.ru>
-References: <20061123225835.30071.99265.stgit@machine.or.cz>
-	<7vejrtiwqd.fsf@assigned-by-dhcp.cox.net>
-	<20061123234203.GN7201@pasky.or.cz>
-	<7vlkm1hf57.fsf@assigned-by-dhcp.cox.net>
-	<7vzmahe6qe.fsf@assigned-by-dhcp.cox.net>
-	<7vpsbde4fy.fsf@assigned-by-dhcp.cox.net>
-	<ek6glc$pn$1@sea.gmane.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature";
- micalg="PGP-SHA1";
- boundary="Signature=_Fri__24_Nov_2006_14_32_00_+0300_+5P7Ae3dViLErN8E"
-NNTP-Posting-Date: Fri, 24 Nov 2006 11:32:25 +0000 (UTC)
-Cc: git@vger.kernel.org
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <ek6glc$pn$1@sea.gmane.org>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.2; i586-alt-linux-gnu)
+X-Spam-ASN: AS31976 209.132.180.0/23
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
+Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF59B20193
+	for <e@80x24.org>; Thu, 11 Aug 2016 19:40:19 +0000 (UTC)
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932256AbcHKTkS (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 15:40:18 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62594 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752057AbcHKTkR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Aug 2016 15:40:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E16DE33670;
+	Thu, 11 Aug 2016 15:34:46 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=SpTnvV5SBII9
+	Gpzl49UpW2QFSAc=; b=MQ+ZcX+KM7ncfQGkMqfKqgnXCJLYOSIxHT3nhWG2sDH5
+	4gT/EiS4KWMrTGh4TbgDWKQF8a/NFvX/m7tyR5JdRoAkK6hWKL3mzEBF+i1qKMS3
+	5QKGVkaSPtx3KF4T4FJqKs3RWAqEsmpzIm3iJOCpP8KaFNp+nA3+O+k5ARwMvek=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Q8Qd77
+	kH0Omim+sP1DeDE3kXcYWVqFnDZ3JYcuXQEAktNclfGsGGIe6Ip5JG5zUdTDfs3u
+	E8Oax3/YCfliYnZvVLqNXtiQfPN+JTmMYaeMpGHnM+lT4NiBhoCGBt6AjFtp2gZS
+	5KQpay7PcbgsDJ0mXf8qPUUzM6x91l/7rbid8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D7CC53366F;
+	Thu, 11 Aug 2016 15:34:46 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 533D43366E;
+	Thu, 11 Aug 2016 15:34:46 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: t0027 racy?
+References: <alpine.DEB.2.20.1608081556280.5786@virtualbox>
+	<20160808152926.mciovipy5qlnqegs@sigill.intra.peff.net>
+	<20160808203224.GA28431@tb-raspi> <20160809065110.GB17777@peff.net>
+	<20160809113337.GA1143@tb-raspi>
+	<20160809114938.pcrvirrzrh6ldmnr@sigill.intra.peff.net>
+	<20160809125958.GA1501@tb-raspi>
+	<20160809132744.kjzmkgt2qiugeolj@sigill.intra.peff.net>
+	<20160809212802.GA4132@tb-raspi>
+	<alpine.DEB.2.20.1608101423160.4924@virtualbox>
+	<20160811185812.GA18434@tb-raspi>
+Date:	Thu, 11 Aug 2016 12:34:44 -0700
+In-Reply-To: <20160811185812.GA18434@tb-raspi> ("Torsten =?utf-8?Q?B=C3=B6?=
+ =?utf-8?Q?gershausen=22's?=
+	message of "Thu, 11 Aug 2016 18:58:12 +0000")
+Message-ID: <xmqqa8gj14mj.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: A9052D8C-5FFA-11E6-A1F5-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8BIT
+Sender:	git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32210>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GnZHx-0000Ov-JB for gcvg-git@gmane.org; Fri, 24 Nov
- 2006 12:32:13 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932502AbWKXLcK (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 24 Nov 2006
- 06:32:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933060AbWKXLcK
- (ORCPT <rfc822;git-outgoing>); Fri, 24 Nov 2006 06:32:10 -0500
-Received: from mivlgu.ru ([81.18.140.87]:57280 "EHLO mail.mivlgu.ru") by
- vger.kernel.org with ESMTP id S932502AbWKXLcI (ORCPT
- <rfc822;git@vger.kernel.org>); Fri, 24 Nov 2006 06:32:08 -0500
-Received: from center4.mivlgu.local (center4.mivlgu.local [192.168.1.4]) by
- mail.mivlgu.ru (Postfix) with SMTP id 539E7804E; Fri, 24 Nov 2006 14:32:05
- +0300 (MSK)
-To: Salikh Zakirov <Salikh.Zakirov@Intel.com>
-Sender: git-owner@vger.kernel.org
+List-ID: <git.vger.kernel.org>
+X-Mailing-List:	git@vger.kernel.org
 
---Signature=_Fri__24_Nov_2006_14_32_00_+0300_+5P7Ae3dViLErN8E
-Content-Type: text/plain; charset=US-ASCII
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Torsten Bögershausen <tboegi@web.de> writes:
 
-On Fri, 24 Nov 2006 13:14:00 +0300 Salikh Zakirov wrote:
-
-> git-push.1 has following description:
+> Good ideas, I will work on a series that fixes bugs first, and then we
+> can see if there is room for optimization.
 >
->     Some short-cut notations are also supported.
+> What do you think about this as a starting point, more things will
+> follow.
+> I like to here comments about the commit msg first ;-)
+
+Throughout t0027 there is no mention on what NNO stands for.  Are
+they about operations that result in un-normalized index entries?
+
+> commit 3754404d3d1ea4a0cbbed4986cc4ac1b5fe6b66e
+> Author: Torsten Bögershausen <tboegi@web.de>
+> Date:   Thu Aug 11 18:47:29 2016 +0200
 >
->               o   tag <tag> means the same as refs/tags/<tag>:refs/tags/<tag>.
+>     t0027: Correct raciness in NNO test
+>     
+>     When a non-reversible CRLF conversion is done in "git add",
+>     a warning is printed on stderr.
+>     
+>     The commit_chk_wrnNNO() function  in t0027 was written to test this,
+>     but did the wrong thing: Instead of looking at the warning
+>     from "git add", it looked at the warning from "git commit".
+>     
+>     Correct this and replace the commit for each and every file with a commit
+>     of all files in one go.
+>     
+>     The function commit_chk_wrnNNO() will to be renamed in a separate commit.
+>     Thanks to Jeff King <peff@peff.net> for analizing t0027.
+>     Reporyed-By: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-BTW, this is broken (and was broken even in 1.4.3.x):
+Reporyed?  
 
-$ mkdir ~/tmp/test_repo
-$ ( cd ~/tmp/test_repo; git-init-db )
-defaulting to local storage area
-$ git push ~/tmp/test_repo tag v1.4.4.1
-error: src refspec tag does not match any.
-error: dst refspec tag does not match any existing ref on the remote and does not start with refs/.
-fatal: unexpected EOF
-
-Omitting the "tag" word works:
-
-$ git push ~/tmp/test_repo v1.4.4.1
-updating 'refs/tags/v1.4.4.1'
-  from 0000000000000000000000000000000000000000
-  to   21dff5f4982333d694d105595a701540d4d0d1db
-Generating pack...
-Done counting 28130 objects.
-Deltifying 28130 objects.
- 100% (28130/28130) done
-Writing 28130 objects.
- 100% (28130/28130) done
-Total 28130, written 28130 (delta 19344), reused 27628 (delta 18891)
-refs/tags/v1.4.4.1: 0000000000000000000000000000000000000000 -> 21dff5f4982333d694d105595a701540d4d0d1db
-
-Seems that nobody really uses the "tag NAME" syntax...
-
->               o  A parameter <ref> without a colon is equivalent to
->                  <ref>:<ref>, hence updates <ref>  in
->                  the destination from <ref> in the source.
->
-> Maybe this is only my reading of manual page, but I understood
-> it like it does not leave the room for ambiguity, because it is using
-> _the same_ refspec as the local one.
->
-> That's why, when I do
->
->    git-push repo x
->
-> and it results in
->
->    git-push repo refs/heads/x:refs/remotes/origin/x
->
-> instead of expected
->
->    git-push repo refs/heads/x:refs/heads/x
->
-> just because the remote repo did not have refs/heads/x, but happened
-> to have refs/remotes/origin/x, would be highly surprising to me.
-
-Such interpretation would indeed be horrible, but I'm afraid this is
-exactly the case now:
-
-$ mkdir ~/tmp/test_repo
-$ ( cd ~/tmp/test_repo; git-init-db )
-defaulting to local storage area
-$ git push ~/tmp/test_repo v1.4.0^0:refs/remotes/origin/master
-updating 'refs/remotes/origin/master' using 'v1.4.0^0'
-  from 0000000000000000000000000000000000000000
-  to   41292ddd37202ff6dce34986c87a6000c5d3fbfa
-Generating pack...
-Done counting 19857 objects.
-Deltifying 19857 objects.
- 100% (19857/19857) done
-Writing 19857 objects.
- 100% (19857/19857) done
-Total 19857, written 19857 (delta 13472), reused 19038 (delta 12884)
-refs/remotes/origin/master: 0000000000000000000000000000000000000000 -> 41292ddd37202ff6dce34986c87a6000c5d3fbfa
-
-$ git push ~/tmp/test_repo master
-updating 'refs/remotes/origin/master' using 'refs/heads/master'
-  from 41292ddd37202ff6dce34986c87a6000c5d3fbfa
-  to   e945f95157c2c515e763ade874931fc1eb671a0b
-Generating pack...
-Done counting 8667 objects.
-Result has 8278 objects.
-Deltifying 8278 objects.
- 100% (8278/8278) done
-Writing 8278 objects.
- 100% (8278/8278) done
-Total 8278, written 8278 (delta 5924), reused 7396 (delta 5065)
-refs/remotes/origin/master: 41292ddd37202ff6dce34986c87a6000c5d3fbfa -> e945f95157c2c515e763ade874931fc1eb671a0b
-
-BTW, I cannot find the description of the matching algorithm used by
-connect.c:count_refspec_match() anywhere in the git-push or git-fetch
-man page, and I cannot understand why this algorithm is different from
-the default search order ($name, refs/$name, refs/tags/$name,
-refs/heads/$name, refs/remotes/$name, refs/remotes/$name/HEAD).
-
-> The expected behaviour on 'git-push repo x' in my understanding is
-> 1) git finds the exact reference for 'x' (i.e. either refs/heads/x or
-> refs/tags/x) according to local lookup rules
-> 2) git uses the found reference _unambiguously_ to create or update
-> exactly the same reference in the remote repo.
->
-> Am I the only one to have this understanding?
-
-The problem is that "$x" and "$x:$x" would be not equivalent anymore,
-unless we add a special case for "$x:$y" where $x == $y - hmm, but the
-current code seems to have that special case:
-
-			else if (!strcmp(rs[i].src, rs[i].dst) &&
-				 matched_src) {
-				/* pushing "master:master" when
-				 * remote does not have master yet.
-				 */
-
-(but that code triggers only in case we did not find any matching ref in
-the destination repo).
-
---Signature=_Fri__24_Nov_2006_14_32_00_+0300_+5P7Ae3dViLErN8E
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
-
-iD8DBQFFZtg1W82GfkQfsqIRAq6NAJ4qfD7RJ65P7oUY2K1n2Y22EGKAxgCgk4AR
-yLGC7Jbvdblk7jQfhIuy80c=
-=r/E4
------END PGP SIGNATURE-----
-
+An obligatory "comments-about-the-commit-msg";-)
