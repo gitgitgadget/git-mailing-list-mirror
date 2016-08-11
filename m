@@ -1,149 +1,129 @@
+Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
-X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
+X-Spam-ASN: AS31976 209.132.180.0/23
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [DRAFT] Branching and merging with git
-Date: Thu, 16 Nov 2006 15:47:19 -0800
-Message-ID: <7vslgj2bug.fsf@assigned-by-dhcp.cox.net>
-References: <20061116221701.4499.qmail@science.horizon.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-NNTP-Posting-Date: Thu, 16 Nov 2006 23:47:46 +0000 (UTC)
-Cc: git@vger.kernel.org
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-In-Reply-To: <20061116221701.4499.qmail@science.horizon.com>
-	(linux@horizon.com's message of "16 Nov 2006 17:17:01 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD6F120193
+	for <e@80x24.org>; Thu, 11 Aug 2016 20:17:41 +0000 (UTC)
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932216AbcHKURi (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 16:17:38 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61599 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932129AbcHKURh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2016 16:17:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 74AD233DC7;
+	Thu, 11 Aug 2016 16:17:36 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=pX24q+usamkrqWoHC4Zd8o8qCx8=; b=hI8H0y2LNbVXD454qCo8
+	MdOfZYovvH1owvn/FVXj2KRTZ5CXfDmfQKeCuJrC1y3sHsXwyfeGnyxj7jr05yok
+	wd1ozqOVZD1tp4bg7ur+va+yZQJ4mLVWbpyzV+QfaMabvbfA1mCpjc5q0EI5r0/l
+	8ko6DOvQO3hZoggVgUaeVCs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=Zj/TNj9BcRxXnXJ/VC78VE42Or2tu//fl89S5wweisALwg
+	lUMeNJgAVmoi1eMLnaMM6FxgFatAe9oy3qiJY0ibSu9ibkrU57TSJkR6CItLiIYk
+	Pjf7ZbXePVX7gWRqOSR5mlg77SKO7UeuWNLS6VTOHEqLglWx/xSqHtVa3F3yk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6C82833DC6;
+	Thu, 11 Aug 2016 16:17:36 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D689D33DC5;
+	Thu, 11 Aug 2016 16:17:35 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Christian Couder <christian.couder@gmail.com>
+Cc:	git@vger.kernel.org, Jeff King <peff@peff.net>,
+	=?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
+	<avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+	Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v12 12/13] apply: learn to use a different index file
+References: <20160811184501.384-1-chriscool@tuxfamily.org>
+	<20160811184501.384-13-chriscool@tuxfamily.org>
+Date:	Thu, 11 Aug 2016 13:17:33 -0700
+Message-ID: <xmqqvaz7ys9u.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: A49F562C-6000-11E6-A8E6-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Sender:	git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/31639>
-Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GkqxC-0002pk-Pm for gcvg-git@gmane.org; Fri, 17 Nov
- 2006 00:47:35 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1424597AbWKPXrV (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 16 Nov 2006
- 18:47:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1424601AbWKPXrV
- (ORCPT <rfc822;git-outgoing>); Thu, 16 Nov 2006 18:47:21 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:43214 "EHLO
- fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP id S1424597AbWKPXrU
- (ORCPT <rfc822;git@vger.kernel.org>); Thu, 16 Nov 2006 18:47:20 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72]) by fed1rmmtao01.cox.net
- (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP id
- <20061116234720.JGII9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>; Thu, 16
- Nov 2006 18:47:20 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80]) by
- fed1rmimpo02.cox.net with bizsmtp id nbnS1V00L1kojtg0000000; Thu, 16 Nov 2006
- 18:47:26 -0500
-To: linux@horizon.com
-Sender: git-owner@vger.kernel.org
+List-ID: <git.vger.kernel.org>
+X-Mailing-List:	git@vger.kernel.org
 
-linux@horizon.com writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> I know it took me a while to get used to playing with branches, and I
-> still get nervous when doing something creative.  So I've been trying
-> to get more comfortable, and wrote the following to document what I've
-> learned.
+> Sometimes we want to apply in a different index file.
 >
-> It's a first draft - I just finished writing it, so there are probably
-> some glaring errors - but I thought it might be of interest anyway.
-
-This is a greatest write-up I've seen for the past several
-months.  I find it very balanced to point out the quirks people
-would find difficult and explain why things are so by including
-historical notes in appropriate places when needed.  Definitely
-Documentation/ material when copyediting is done.
-
-I have finished only the first half because it's not my git day
-today, but so far...
-
-> * Naming revisions
->...
-> Second, you can refer to a head or tag name.  Git looks in the
-> following places, in order, for a head:
-> 	1) .git
-> 	2) .git/refs
-> 	3) .git/refs/heads
-> 	4) .git/refs/tags
-
-You might want to check this with the array in sha1_name.c::get_sha1_basic().
-I think tags comes earlier than heads.
-
-> 2) Revert changes to a small number of files.
+> Before the apply functionality was libified it was possible to
+> use the GIT_INDEX_FILE environment variable, for this purpose.
 >
-> 	git checkout [<revision>] [--] <paths>
->    will copy the version of the <paths> from the index to the working
->    directory.  If a <revision> is given, the index for those paths will
->    be updated from the given revision before copying from the index to
->    the working tree.
+> But now, as the apply functionality has been libified, it should
+> be possible to do that in a libified way.
 >
->    Unlike the version with no <paths> specified, this does NOT update
->    HEAD, even if <paths> is ".".
-
-It's great that you talk correctly about the latest feature-fix
-that is queued for maint but not yet pushed out.
-
-> 2) By path name.  This is a feature which appears to be unique to git.
->    If you give git-rev-list (or git-log, or gitk, or qgit) a list of
->    pathname prefixes, it will list only commits which touch those
->    paths. So "git log drivers/scsi include/scsi" will list only
->    commits which alters a file whose name begins with drivers/scsi
->    or include/scsi.
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  apply.c | 10 ++++++++--
+>  apply.h |  1 +
+>  2 files changed, 9 insertions(+), 2 deletions(-)
 >
->    (If there's any possible ambiguity between a path name and a commit
->    name, git-rev-list will refuse to proceed.  You can resolve it by
->    including "--" on the command line.  Everything before that is a
->    commit name; everything after is a path.)
->
->    This filter is in addition to the ancestry filter.  It's also rather
->    clever about omitting unnecessary detail.  In particular, if there's
->    a side branch which does touch drivers/scsi, then the entire branch,
->    and the merge at the end, will be removed from the log.
+> diff --git a/apply.c b/apply.c
+> index 2ec2a8a..7e561a4 100644
+> --- a/apply.c
+> +++ b/apply.c
+> @@ -4674,8 +4674,14 @@ static int apply_patch(struct apply_state *state,
+>  		state->apply = 0;
+>  
+>  	state->update_index = state->check_index && state->apply;
+> -	if (state->update_index && state->newfd < 0)
+> -		state->newfd = hold_locked_index(state->lock_file, 1);
+> +	if (state->update_index && state->newfd < 0) {
+> +		if (state->index_file)
+> +			state->newfd = hold_lock_file_for_update(state->lock_file,
+> +								 state->index_file,
+> +								 LOCK_DIE_ON_ERROR);
+> +		else
+> +			state->newfd = hold_locked_index(state->lock_file, 1);
+> +	}
+>  
+>  	if (state->check_index && read_cache() < 0) {
+>  		error(_("unable to read index file"));
 
-"If there's a side branch which does NOT touch the paths..." I think.
+Here is a call to read_cache() that reads the default index file on
+the filesystem into the default in-core index "the_index".
 
-> * Alternate branch naming
->
-> The original git scheme mixes tracking branches with all the other heads.
-> This requires that you remember which branches are tracking branches and
-> which aren't.  Hopefully, you remember what all your branches are for,
-> but if you track a lot of remote repositories, you might not remember
-> what every remote branch is for and what you called it locally.
+Shouldn't it be reading from state->index_file instead?
 
-I think you wanted to mention .git/refs/remotes hierarchy and
-separate-remote here, but haven't elaborated yet...
+If we limit the review only to the context of your series, I think
 
-> * Remote tags
->
-> TODO: Figure out how remote tags work, under what circumstances
-> they are fetched, and what git does if there are conflicts.
+    fall_back_threeway()
+     -> build_fake_ancestor() -- uses index_path to use custom index
+     -> discard_cache()
+     -> read_cache_from(index_path) -- reads back the fake ancestor
+     -> write_index_as_tree() -- writes the fake_ancestor
+     -> run_apply(index_path)
+        -> apply_all_patches()
+           -> apply_patch()
 
-refs/tags namespace is not policed at all by git and is treated
-as a global namespace, controlled mostly by social convention
-that your "upstream" (or central distribution point) supplies
-tags for people who use it to synchronize to share.  Also, since
-there is no guarantee that tags point at commits (v2.6.11-tree
-tag is a pointer to a tree object, for example), there is no
-farst-forward check performed for them.
+is the only codepath that uses a custom index file, so when the
+control reaches this function with a custom index file, the in-core
+index is already populated, making read_cache() a no-op, and that is
+the only thing that makes the resulting code avoid triggering this
+bug, but as part of a general "libified" codepath, I think it should
+be made to read from state->index_file using read_cache_from().
 
-The rule we use to autofollow tags currently is:
-
-When you use shorthand fetch (or pull), we find tags that do not
-exist locally, and if the object they point at are already found
-in the repository then we fetch them automatically.  So for
-example, if you are only tracking my 'maint' and not 'master'
-nor 'next', and if you have tags up to v1.4.3.2, your "git fetch
-origin" would update your copy of 'maint' and bring the commits
-reachable from the tip of my 'maint'.  After that it notices
-that v1.4.3.3, v1.4.3.4, v1.4.3.5 tags are in my repository but
-missing from yours. It also notices that now you have
-v1.4.3.3^{}, v1.4.3.4^{} and v1.4.3.5^{} in your repository, so
-it issues another round of "git fetch" internally to fetch these
-three tags.  At the same time it would also notice that I have
-v1.4.4 tag that you do not have, but v1.4.4^0 commit is not
-something you would get by fetching 'maint', so it would not
-fetch it automatically.
+I only noticed this call to read_cache(), but there may be others
+lurking nearby.
