@@ -2,131 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38B4520193
-	for <e@80x24.org>; Thu, 11 Aug 2016 18:35:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F25320193
+	for <e@80x24.org>; Thu, 11 Aug 2016 18:36:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751301AbcHKSfE (ORCPT <rfc822;e@80x24.org>);
-	Thu, 11 Aug 2016 14:35:04 -0400
-Received: from mail-yb0-f195.google.com ([209.85.213.195]:33351 "EHLO
-	mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750818AbcHKSfC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2016 14:35:02 -0400
-Received: by mail-yb0-f195.google.com with SMTP id v8so33942ybe.0
-        for <git@vger.kernel.org>; Thu, 11 Aug 2016 11:35:02 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=w5ZUkDQuKjbkvFA4AkEfzjdSCpnHuZrwoO+tOWaMywQ=;
-        b=KUDbiFv3H6IZIclFXNj88hY9D3W2uTwEiPn8VYcdo46se/B4oURGrbqmg+m72NDKrz
-         pZQFaWkJ0htucr6eLsEOmHRxrRyijTgJIborqJkwudPQVfn6WhaGJbJh4BKy27OoSNdy
-         j8LedBC0SnVu+rdCeL/E2o6s96oDV2t0rWgIg/Y3YWSNSwV/D+dgA9xM/pfiGwN/oOfX
-         b7XncKMq/suixPz4CZQIcc9eSvOYKLo0EwBpl9kQcfA1D9P2jJ0kMIelf0VcIwTyV4cV
-         BaFnW8W52WB5+GfsvWSxmpOQom6E5GlLNMHdJCTpC/etTdfDQ0FE5/AhlcOt5dFPYe6w
-         c8pQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=w5ZUkDQuKjbkvFA4AkEfzjdSCpnHuZrwoO+tOWaMywQ=;
-        b=XfaZup3EucnLQ2785Hw8RmYYZl6bH8B/iCHoi9BinS/L0K36RInzmd2ZP6MAWCDypn
-         7BYMbUrlTi1LoZluQxRze71b5U/7FQB5tok7Nqe/wV0azjI7wgkrkcvPOspwfcnrX3J2
-         ONskhuL5X3BIKUmH1GazFY04e8j5QEWuDh7wgi0jM+FUENA7hVFhHxiMocs4ssCl94Ch
-         kLdadq3rBiXWrdolRcqHKLhv9x8HlEG0H5QGQMBCYgItpmymaYaj2uuJ5INFaY/Tgykl
-         McoOqdTm30YbXqTFPQORGTtNcH/i3e6D/YCBQv7X+PMVLlmjmDjJ0gFy4XQrofN/UEZT
-         goGg==
-X-Gm-Message-State: AEkoouupK4XrbLRDRmRkt6hJZ/saZz4v5Z0zpUcpOxCv2TPd/Aea5muwx0L8ffWYQ5Rzde5XoNfF7NRjCDdUng==
-X-Received: by 10.37.97.149 with SMTP id v143mr7470293ybb.164.1470940501429;
- Thu, 11 Aug 2016 11:35:01 -0700 (PDT)
+	id S1751497AbcHKSgv (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 14:36:51 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52332 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750818AbcHKSgt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2016 14:36:49 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 68E863389E;
+	Thu, 11 Aug 2016 14:36:48 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LO7UBf1jQ+Or3U24QyvfLlaw3t4=; b=EMZS/B
+	0RauaTMIIeVJcbR2CDGIiYji1zVO6crS9fIbhfCCoxEQYfE/0eqZo9L5frZ3Rcmr
+	jDUvL5v9YyM0OU5PvAXCjHpJNk/U+Nasufs1zkCfrSdKU1hJa9ltufXbuPLZf3Lq
+	w8vKEfhDhbEEE7Cy7EuMBUa5V+naGnFUb+Nr0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=k4uH/QZ5KFbS90/r9Ybhq1KchQtRm1QY
+	4JBiFDoqCP2r6Jgm7iE706hk5srV2sypT/GP7GefxKWt+4vX+pE286GA9N2GDlm3
+	+iY+GHa1pDawjJWkIt96oSzXuLWIU9EeYXlqsneduyX3euDNMyjn4mw43WKeJLEY
+	FXk3z+ErX5w=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5F6433389D;
+	Thu, 11 Aug 2016 14:36:48 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C516D3389C;
+	Thu, 11 Aug 2016 14:36:47 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff Hostetler <git@jeffhostetler.com>
+Cc:	git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v6 9/9] status: unit tests for --porcelain=v2
+References: <1470926762-25394-1-git-send-email-git@jeffhostetler.com>
+	<1470926762-25394-10-git-send-email-git@jeffhostetler.com>
+Date:	Thu, 11 Aug 2016 11:36:45 -0700
+In-Reply-To: <1470926762-25394-10-git-send-email-git@jeffhostetler.com> (Jeff
+	Hostetler's message of "Thu, 11 Aug 2016 10:46:02 -0400")
+Message-ID: <xmqqtwer17b6.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.50.196 with HTTP; Thu, 11 Aug 2016 11:34:38 -0700 (PDT)
-In-Reply-To: <xmqqd1lf2nvj.fsf@gitster.mtv.corp.google.com>
-References: <20160810231908.26330-1-jacob.e.keller@intel.com>
- <20160810231908.26330-2-jacob.e.keller@intel.com> <xmqqd1lf2nvj.fsf@gitster.mtv.corp.google.com>
-From:	Jacob Keller <jacob.keller@gmail.com>
-Date:	Thu, 11 Aug 2016 11:34:38 -0700
-Message-ID: <CA+P7+xpYrEa4Ocsny0Ca6zsRDJxax9FwiRtuxDGArgDiPbk9Cg@mail.gmail.com>
-Subject: Re: [PATCH v4 2/2] diff: add SUBMODULE_DIFF format to display
- submodule diff
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Jacob Keller <jacob.e.keller@intel.com>,
-	Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8FA6B6B0-5FF2-11E6-AE72-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Thu, Aug 11, 2016 at 10:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jacob Keller <jacob.e.keller@intel.com> writes:
+Jeff Hostetler <git@jeffhostetler.com> writes:
+
+> From: Jeff Hostetler <jeffhost@microsoft.com>
 >
->> From: Jacob Keller <jacob.keller@gmail.com>
->>
->> Teach git-diff and friends a new format for displaying the difference of
->> a submodule using git-diff inside the submodule project. This allows
->> users to easily see exactly what source changed in a given commit that
->> updates the submodule pointer. To do this, remove DIFF_SUBMODULE_LOG bit
->> from the diff options, and instead add a new enum type for these
->> formats.
->>
->> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
->> ---
->>  Documentation/diff-config.txt  |  3 +-
->>  Documentation/diff-options.txt |  6 ++--
->>  diff.c                         | 41 ++++++++++++++++----------
->>  diff.h                         |  9 +++++-
->>  submodule.c                    | 67 ++++++++++++++++++++++++++++++++++++++++++
->>  submodule.h                    |  6 ++++
->>  6 files changed, 113 insertions(+), 19 deletions(-)
+> Test porcelain v2 status format.
 >
-> This looks good.
+> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> ---
+>  t/t7064-wtstatus-pv2.sh | 576 ++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 576 insertions(+)
+>  create mode 100755 t/t7064-wtstatus-pv2.sh
 >
-> You'd want some tests to make sure that the "--submodule" and the
-> "--submodule=<format>" command line options and the diff.submodule
-> configuration variables are parsed correctly (and when combined, the
-> command line option overrides the configured default), and of course
-> the machinery does the right thing, with and without "--graph" when
-> used in "git log".
+> diff --git a/t/t7064-wtstatus-pv2.sh b/t/t7064-wtstatus-pv2.sh
+> new file mode 100755
+> index 0000000..44a8671
+> --- /dev/null
+> +++ b/t/t7064-wtstatus-pv2.sh
+> @@ -0,0 +1,576 @@
+> +#!/bin/sh
+> +
+> +test_description='git status --porcelain=v2
+> +
+> +This test exercises porcelain V2 output for git status.'
 
-Yes, I am adding tests now, but I ran into some interesting corner
-cases for this, that still need some work.
+A general comment on the titles; with retitling of individual tests,
+the result has become a lot easier to understand.  I know coming up
+with a short and to-the-point description for them is hard, but that
+is effort and time well spent and it shows in the result.  Thanks.
 
-There's a bunch of issues with cases involving adding a submodule that
-isn't stored in .git/modules/etc, which the current tests for
---submodule=log do.
+> +. ./test-lib.sh
+> +
+> +OID_EMPTY=e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
 
-There's also the case of empty trees, which I believe I have resolved
-now. Hopefully I can sort these cases correctly.
+It seems that test-lib.sh these days has EMPTY_BLOB defined for your
+use.  You can remove this and replace its use (just two lines) with
+$EMPTY_BLOB down in the "add -N" test.
 
->
->> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
->> index e7b729f3644f..988068225463 100644
->> --- a/Documentation/diff-options.txt
->> +++ b/Documentation/diff-options.txt
->> @@ -215,8 +215,10 @@ any of those replacements occurred.
->>       the commits in the range like linkgit:git-submodule[1] `summary` does.
->>       Omitting the `--submodule` option or specifying `--submodule=short`,
->>       uses the 'short' format. This format just shows the names of the commits
->> -     at the beginning and end of the range.  Can be tweaked via the
->> -     `diff.submodule` configuration variable.
->> +     at the beginning and end of the range. When `--submodule=diff` is
->> +     given, the 'diff' format is used. This format shows the diff between
->> +     the old and new submodule commmit from the perspective of the
->> +     submodule.  Can be tweaked via the `diff.submodule` configuration variable.
->
-> This is carried over from the existing text, but "Can be tweaked
-> via" sounds a bit wasteful (and strange); "Defaults to" (or "The
-> default is taken from") is the phrase we seem to use more often.
+> +test_expect_success setup '
+> +	test_tick &&
+> +	git config --local core.autocrlf false &&
 
-Probably worth fixing here. WIll do.
+I'd suggest removing "--local".
 
-Thanks,
-Jake
+Existing use of "git config" in the test suite, unless their use is
+about testing "git config" itself to validate the operation of the
+--local/--global/--system options, do not seem to explicitly say
+"--local", which is the default anyway.
 
->
-> Thanks.
+> +test_expect_success 'after first commit, make dirt, confirm unstaged changes' '
+
+Did you mean s/dirt/dirty/?  "make and confirm unstaged changes"
+would be sufficient.  Because "confirming" is implicit (as these
+are all tests), "after the first commit, modify working tree files"
+might even be better, perhaps?
+
+> +	echo x >>file_x &&
+> +	OID_X1=$(git hash-object -t blob -- file_x) &&
+> +	rm file_z &&
+> +	H0=$(git rev-parse HEAD) &&
+> + ...
+
+> +test_expect_success 'after first commit, stage dirt, confirm staged changes' '
+
+What you "git add" is meant to be good changes, so they are no
+longer dirt ;-)  More importantly, because I never heard of "dirt"
+used in Git context, it is unclear if it is an untracked file, a
+modification that is not meant to be committed immediately, or what.
+
+"after the first commit, fully add changes to the index"?
+
+> +	git add file_x &&
+> +	git rm file_z &&
+> +	H0=$(git rev-parse HEAD) &&
+> +
+> +	cat >expect <<-EOF &&
+> +	# branch.oid $H0
+> +	# branch.head master
+> +	1 M. N... 100644 100644 100644 $OID_X $OID_X1 file_x
+> +	1 D. N... 100644 000000 000000 $OID_Z $_z40 file_z
+> +	? actual
+> +	? expect
+> +	EOF
+
+> +test_expect_success 'after first commit, also stage rename, confirm 2 path line format' '
+> +	git mv file_y renamed_y &&
+> +	H0=$(git rev-parse HEAD) &&
+> +
+> +	q_to_tab >expect <<-EOF &&
+> +	# branch.oid $H0
+> +	# branch.head master
+> +	1 M. N... 100644 100644 100644 $OID_X $OID_X1 file_x
+> +	1 D. N... 100644 000000 000000 $OID_Z $_z40 file_z
+> +	2 R. N... 100644 100644 100644 $OID_Y $OID_Y R100 renamed_yQfile_y
+> +	? actual
+> +	? expect
+> +	EOF
+> +
+> +	git status --porcelain=v2 --branch --untracked-files=all >actual &&
+> +	test_cmp expect actual
+> +'
+
+Do we want to test -z format on this, too?
+
+> ...
+> +test_expect_success 'create ignored files, confirm they are not printed' '
+> +test_expect_success 'create ignored files, confirm --ignored prints them' '
+> ...
+
+These are all good and readably titled. 
+
+> +test_expect_success 'verify upstream fields in branch header' '
+> +	git checkout master &&
+> +	test_when_finished rm -rf sub_repo &&
+
+Forgot to quote?
