@@ -3,103 +3,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_RED
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98B8D203BD
-	for <e@80x24.org>; Thu, 11 Aug 2016 22:26:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3599820193
+	for <e@80x24.org>; Thu, 11 Aug 2016 22:32:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751505AbcHKW0R (ORCPT <rfc822;e@80x24.org>);
-	Thu, 11 Aug 2016 18:26:17 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:53008 "EHLO dcvr.yhbt.net"
+	id S1752015AbcHKWcv (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 18:32:51 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:53370 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751443AbcHKW0P (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2016 18:26:15 -0400
+	id S1751356AbcHKWct (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2016 18:32:49 -0400
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 234C9203BD;
-	Thu, 11 Aug 2016 22:26:15 +0000 (UTC)
-Date:	Thu, 11 Aug 2016 22:26:15 +0000
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26E7320193;
+	Thu, 11 Aug 2016 22:32:49 +0000 (UTC)
+Date:	Thu, 11 Aug 2016 22:32:49 +0000
 From:	Eric Wong <e@80x24.org>
-To:	Philip Oakley <philipoakley@iee.org>
+To:	Junio C Hamano <gitster@pobox.com>
 Cc:	git@vger.kernel.org
-Subject: Re: Mapping old gmane numbers to existing amil servers?
-Message-ID: <20160811222615.GA5607@starla>
-References: <73FC8DE87D24466EBEE0A5B96CBDFFBF@PhilipOakley>
- <20160811075628.GA24690@starla>
- <95848D06D55D4633A686DD892D12F501@PhilipOakley>
+Subject: Re: public-inbox.org/git updates
+Message-ID: <20160811223248.GB5607@starla>
+References: <20160811194333.GA27387@starla>
+ <xmqqr39vyr08.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <95848D06D55D4633A686DD892D12F501@PhilipOakley>
+In-Reply-To: <xmqqr39vyr08.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Philip Oakley <philipoakley@iee.org> wrote:
-> The raw download works. My home ISP is currently blocking your email for
-> some reason, though I do see it at my work - my iee.org alias is via my
-> professional body which duplicates the email when it relays it.
-
-Hmm, do other emails from other users get blocked?
-I wonder if it's lack of DKIM (which gets invalidated by the
-list sig vger appends) or something else...
-
-> On thing I did note on the web display of the threads is that it would be
-> good to have a leader of " . . . . . `" so that one can count the level of
-> indent, and see the alignments via the columns of dots.
+Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Wong <e@80x24.org> writes:
 > 
-> When looking at
-> https://public-inbox.org/git/0648000B273C412AB7140AE959EBC99A%40PhilipOakley/
-> I had difficulty working out which email the last 4 were replying to.
+> > There'll be over 5000K injected messages from 2006 I missed from
+> > the initial import :x
+> >
+> > I noticed this while adding gmane:NNNN mapping support to the
+> > search engine:
+> >   https://public-inbox.org/git/20160811002819.GA8311@starla/T/#u
+> >
+> > There will still be some missing messages because some are spam.
+> > news.gmane.org remains up if you want to check my work
+> > (please do, because I am careless)
+> 
+> Thanks for doing this.
 
-https://public-inbox.org/git/0648000B273C412AB7140AE959EBC99A%40PhilipOakley/
-So, right now, it's:
+No problem!
 
-2016-07-20 21:10               ` [PATCH v4 8/8] doc: revisions - clarify reachability examples Philip Oakley
-2016-07-20 22:22               ` Junio C Hamano
-2016-08-11 21:50               ` [PATCH v5 00/12] Update git revisions Philip Oakley
-2016-08-11 21:50                 ` [PATCH v5 01/12] doc: use 'symmetric difference' consistently Philip Oakley
-2016-06-25 19:49       ` Junio C Hamano
-2016-06-27 13:37         ` Philip Oakley
-2016-06-27 15:08           ` Junio C Hamano
-2016-06-27 15:39             ` Philip Oakley
+> I wanted to try out your NTTP service, but it took me a while to dig
+> in my inbox to find your announcement of news.public-inbox.org that
+> hosts inbox.comp.version-control.git "newsgroup".  Is it possible to
+> make this a bit more discoverable, or there is not enough NNTP
+> audience these days to warrant such an addition?  I first went to
+> http://public-inbox.org/git as I expected there may be some pointers
+> to other instances of the service, where you list the "git clone"
+> URL of the archive.
 
-And you would rather see something like:
+Oops, I keep forgetting to do that :x  Should be easier to do
+now since I cleaned up the footer generation a few weeks back.
 
-2016-07-20 21:10       .       ` [PATCH v4 8/8] doc: revisions - clarify reachability examples Philip Oakley
-2016-07-20 22:22       .       ` Junio C Hamano
-2016-08-11 21:50       .       ` [PATCH v5 00/12] Update git revisions Philip Oakley
-2016-08-11 21:50       .         ` [PATCH v5 01/12] doc: use 'symmetric difference' consistently Philip Oakley
-2016-06-25 19:49       ` Junio C Hamano
-2016-06-27 13:37         ` Philip Oakley
-2016-06-27 15:08           ` Junio C Hamano
-2016-06-27 15:39             ` Philip Oakley
+> By the way, it felt quite strange to see messages from 8 years ago
+> mixed with more recent messages when I gold Gnus to fetch the most
+> recent 333 messages (and of course that fetches 333 messages with
+> largest message numbers, not sorted by "Date:").  I am assuming that
+> this is an artifact of "over 5k injected messages" bundle that was
+> added out of order.
 
-?
+Yes, definitely an artifact of fixing that screwup.
+For future inbox imports (maybe LKML), I may leave gaps in the
+sequence along the way, but I'm not sure how big the gaps
+should or could be.
 
-Actually, my initial inclination was to use the '|' character
-which is what mutt does
-
-2016-07-20 21:10       |       } [PATCH v4 8/8] doc: revisions - clarify reachability examples Philip Oakley
-2016-07-20 22:22       |       } Junio C Hamano
-2016-08-11 21:50       |       ` [PATCH v5 00/12] Update git revisions Philip Oakley
-2016-08-11 21:50       |         ` [PATCH v5 01/12] doc: use 'symmetric difference' consistently Philip Oakley
-2016-06-25 19:49       ` Junio C Hamano
-2016-06-27 13:37         ` Philip Oakley
-2016-06-27 15:08           ` Junio C Hamano
-2016-06-27 15:39             ` Philip Oakley
-
-It should be doable, and the '`' immediately following the last
-'|' probably ought to be a link to the parent, too.
-
-I would also like to use '}' (as above) or '+' where mutt would
-use "├─>" or just '├', but I don't think I can introduce multibyte
-chars without causing problems for some users.
-
-Anyways, it's definitely on my ever-growing todo list.
-
-
-(Wow, it is refreshing to be a "web designer" who can live
- entirely in a terminal without relying on screenshots :D)
+I suppose one could assign NNTP article numbers like line
+numbers in BASIC...
