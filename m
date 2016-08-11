@@ -2,87 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A496A20193
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4A7020193
 	for <e@80x24.org>; Thu, 11 Aug 2016 20:55:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932358AbcHKUzg (ORCPT <rfc822;e@80x24.org>);
-	Thu, 11 Aug 2016 16:55:36 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63813 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932254AbcHKUza (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2016 16:55:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C53BE31E19;
-	Thu, 11 Aug 2016 16:55:29 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mBYXj2NAzTqwi3FoYAb885EalTA=; b=UOgWrL
-	/M7ZrLcRH7i26sHcIvk0wXzVIjWmZ9Aoa2jAt4iM5swk/KKbTo7jit7hL1bwUkSm
-	tgQzkn/Tkq5PP3o1PWcpNWcktz1hLO65wmS36TjZLKSBj2tBsLq1LWHvBMv80gMS
-	F6lOtmsIf8KCvtmYhoNHNZvULwSBzFBPuAdo4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gL7vxmsuclD0gFzo/bS0m2FKBN4smfG8
-	CPTfMAAhyMfUm7JbBTBqZhRWG5mXuPNcjaJI3FtQcMdaoZT4B0b9gI8MjopJOyd3
-	VkWNz8Z2YiCp4iYbqClc27rgu22y+8ZBuODVrEpiDDqDqm5ZVNrZLeAQccd8AX06
-	+F8GeMsT2IE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BD6F431E17;
-	Thu, 11 Aug 2016 16:55:29 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S932368AbcHKUzn (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 16:55:43 -0400
+Received: from siwi.pair.com ([209.68.5.199]:62159 "EHLO siwi.pair.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752302AbcHKUz0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2016 16:55:26 -0400
+Received: from jeffhost-linux1.corp.microsoft.com (unknown [167.220.148.23])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 413F331E16;
-	Thu, 11 Aug 2016 16:55:29 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jacob Keller <jacob.e.keller@intel.com>
-Cc:	git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v4 1/2] diff: add --line-prefix option for passing in a prefix
-References: <20160810231908.26330-1-jacob.e.keller@intel.com>
-Date:	Thu, 11 Aug 2016 13:55:27 -0700
-In-Reply-To: <20160810231908.26330-1-jacob.e.keller@intel.com> (Jacob Keller's
-	message of "Wed, 10 Aug 2016 16:19:07 -0700")
-Message-ID: <xmqqinv7yqio.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EFA17B28-6005-11E6-8D2B-89D312518317-77302942!pb-smtp1.pobox.com
+	by siwi.pair.com (Postfix) with ESMTPSA id C8BC184618;
+	Thu, 11 Aug 2016 16:55:25 -0400 (EDT)
+From:	Jeff Hostetler <git@jeffhostetler.com>
+To:	git@vger.kernel.org
+Cc:	gitster@pobox.com, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: [PATCH v7 8/9] test-lib-functions.sh: Add lf_to_nul
+Date:	Thu, 11 Aug 2016 16:51:36 -0400
+Message-Id: <1470948697-63787-9-git-send-email-git@jeffhostetler.com>
+X-Mailer: git-send-email 2.8.0.rc4.17.gac42084.dirty
+In-Reply-To: <1470948697-63787-1-git-send-email-git@jeffhostetler.com>
+References: <1470948697-63787-1-git-send-email-git@jeffhostetler.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Subject: SQUASH??? clarify the if/{if/else} nesting
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Otherwise GCC helpfully warns you.
+Add lf_to_nul() function to test-lib-functions.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- diff.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ t/test-lib-functions.sh | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/diff.c b/diff.c
-index bfc0a6b..d128b9d 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1170,11 +1170,12 @@ const char *diff_line_prefix(struct diff_options *opt)
- {
- 	struct strbuf *msgbuf;
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 4f7eadb..fdaeb3a 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -81,6 +81,10 @@ test_decode_color () {
+ 	'
+ }
  
--	if (!opt->output_prefix)
-+	if (!opt->output_prefix) {
- 		if (opt->line_prefix)
- 			return opt->line_prefix;
- 		else
- 			return "";
-+	}
- 
- 	msgbuf = opt->output_prefix(opt, opt->output_prefix_data);
- 	/* line prefix must be printed before the output_prefix() */
++lf_to_nul () {
++	perl -pe 'y/\012/\000/'
++}
++
+ nul_to_q () {
+ 	perl -pe 'y/\000/Q/'
+ }
 -- 
-2.9.2-863-g71ed253
+2.8.0.rc4.17.gac42084.dirty
 
