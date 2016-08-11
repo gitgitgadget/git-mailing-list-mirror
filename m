@@ -2,194 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC48D20193
-	for <e@80x24.org>; Thu, 11 Aug 2016 20:55:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7277A20193
+	for <e@80x24.org>; Thu, 11 Aug 2016 21:01:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932385AbcHKUzp (ORCPT <rfc822;e@80x24.org>);
-	Thu, 11 Aug 2016 16:55:45 -0400
-Received: from siwi.pair.com ([209.68.5.199]:62155 "EHLO siwi.pair.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752265AbcHKUz0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2016 16:55:26 -0400
-Received: from jeffhost-linux1.corp.microsoft.com (unknown [167.220.148.23])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+	id S1752234AbcHKVBX (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 17:01:23 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61499 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752040AbcHKVBW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2016 17:01:22 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id CFB8A3246D;
+	Thu, 11 Aug 2016 17:01:21 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wBgU40LszXo0OUFuYPd5gHbuZ7I=; b=cWTrMt
+	VXoEUKmMF5uudG59a9B+I9Zze0ViMmE8bXe8lYfxubYfrjXSycxv38THEVaIp5WS
+	laajl3G6LKyPvpkdp1axFe3TJH+EIV67jSt03tRqe6X1r4dYDRLneAEV5A8lhb35
+	JjlsMFMUUOVYbZzQDYQXrNXmqANbB8ImTtjt8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sPf8CW60hV5u3CAOlJxB62//NlCxApNx
+	KGwUbWHVkJEmuWkBTWLzTr231FgKAkZyU0ah1MioQz7Dw5PlhmIGu41mhbdaYdLf
+	6eqQFdYIxDdHLwPnoYijCs8lgbMlaYDJJHks2X92uETBFOAUU/QfM4PE3KS8/EMg
+	RDEYNq4VoV8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C73B73246C;
+	Thu, 11 Aug 2016 17:01:21 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by siwi.pair.com (Postfix) with ESMTPSA id 937DD84616;
-	Thu, 11 Aug 2016 16:55:25 -0400 (EDT)
-From:	Jeff Hostetler <git@jeffhostetler.com>
-To:	git@vger.kernel.org
-Cc:	gitster@pobox.com, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v7 7/9] git-status.txt: describe --porcelain=v2 format
-Date:	Thu, 11 Aug 2016 16:51:35 -0400
-Message-Id: <1470948697-63787-8-git-send-email-git@jeffhostetler.com>
-X-Mailer: git-send-email 2.8.0.rc4.17.gac42084.dirty
-In-Reply-To: <1470948697-63787-1-git-send-email-git@jeffhostetler.com>
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3B9B33246B;
+	Thu, 11 Aug 2016 17:01:21 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff Hostetler <git@jeffhostetler.com>
+Cc:	git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v7 0/9] status: V2 porcelain status
 References: <1470948697-63787-1-git-send-email-git@jeffhostetler.com>
+Date:	Thu, 11 Aug 2016 14:01:18 -0700
+In-Reply-To: <1470948697-63787-1-git-send-email-git@jeffhostetler.com> (Jeff
+	Hostetler's message of "Thu, 11 Aug 2016 16:51:28 -0400")
+Message-ID: <xmqqeg5vyq8x.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: C16C34F4-6006-11E6-B6C6-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+Jeff Hostetler <git@jeffhostetler.com> writes:
 
-Update status manpage to include information about
-porcelain v2 format.
+> From: Jeff Hostetler <jeffhost@microsoft.com>
+>
+> This patch series adds porcelain V2 format to status.
+> This provides detailed information about file changes
+> and about the current branch.
+>
+> The new output is accessed via:
+>     git status --porcelain=v2 [--branch]
+>
+> This v7 patch series address the most recent feedback
+> on the unit tests.
+>
+> This series has been rebased onto a more current master
+> branch (to get the EMPTY_BLOB changes in the test suite).
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
- Documentation/git-status.txt | 126 +++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 122 insertions(+), 4 deletions(-)
+Thanks for a note.  I've been queuing the series on top of f8f7adc,
+so I am assuming I won't see any changes in 1-8.
 
-diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
-index 6b1454b..a58973b 100644
---- a/Documentation/git-status.txt
-+++ b/Documentation/git-status.txt
-@@ -183,12 +183,12 @@ in which case `XY` are `!!`.
- 
- If -b is used the short-format status is preceded by a line
- 
--## branchname tracking info
-+    ## branchname tracking info
- 
--Porcelain Format
--~~~~~~~~~~~~~~~~
-+Porcelain Format Version 1
-+~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
--The porcelain format is similar to the short format, but is guaranteed
-+Version 1 porcelain format is similar to the short format, but is guaranteed
- not to change in a backwards-incompatible way between Git versions or
- based on user configuration. This makes it ideal for parsing by scripts.
- The description of the short format above also describes the porcelain
-@@ -210,6 +210,124 @@ field from the first filename).  Third, filenames containing special
- characters are not specially formatted; no quoting or
- backslash-escaping is performed.
- 
-+Porcelain Format Version 2
-+~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+Version 2 format adds more detailed information about the state of
-+the worktree and changed items.  Version 2 also defines an extensible
-+set of easy to parse optional headers.
-+
-+Header lines start with "#" and are added in response to specific
-+command line arguments.  Parsers should ignore headers they
-+don't recognize.
-+
-+### Branch Headers
-+
-+If `--branch` is given, a series of header lines are printed with
-+information about the current branch.
-+
-+    Line                                     Notes
-+    ------------------------------------------------------------
-+    # branch.oid <commit> | (initial)        Current commit.
-+    # branch.head <branch> | (detached)      Current branch.
-+    # branch.upstream <upstream_branch>      If upstream is set.
-+    # branch.ab +<ahead> -<behind>           If upstream is set and
-+                                             the commit is present.
-+    ------------------------------------------------------------
-+
-+### Changed Tracked Entries
-+
-+Following the headers, a series of lines are printed for tracked
-+entries.  One of three different line formats may be used to describe
-+an entry depending on the type of change.  Tracked entries are printed
-+in an undefined order; parsers should allow for a mixture of the 3
-+line types in any order.
-+
-+Ordinary changed entries have the following format:
-+
-+    1 <XY> <sub> <mH> <mI> <mW> <hH> <hI> <path>
-+
-+Renamed or copied entries have the following format:
-+
-+    2 <XY> <sub> <mH> <mI> <mW> <hH> <hI> <X><score> <path><sep><origPath>
-+
-+    Field       Meaning
-+    --------------------------------------------------------
-+    <XY>        A 2 character field containing the staged and
-+                unstaged XY values described in the short format,
-+                with unchanged indicated by a "." rather than
-+                a space.
-+    <sub>       A 4 character field describing the submodule state.
-+                "N..." when the entry is not a submodule.
-+                "S<c><m><u>" when the entry is a submodule.
-+                <c> is "C" if the commit changed; otherwise ".".
-+                <m> is "M" if it has tracked changes; otherwise ".".
-+                <u> is "U" if there are untracked changes; otherwise ".".
-+    <mH>        The octal file mode in HEAD.
-+    <mI>        The octal file mode in the index.
-+    <mW>        The octal file mode in the worktree.
-+    <hH>        The object name in HEAD.
-+    <hI>        The object name in the index.
-+    <X><score>  The rename or copy score (denoting the percentage
-+                of similarity between the source and target of the
-+                move or copy). For example "R100" or "C75".
-+    <path>      The pathname.  In a renamed/copied entry, this
-+                is the path in the index and in the working tree.
-+    <sep>       When the `-z` option is used, the 2 pathnames are separated
-+                with a NUL (ASCII 0x00) byte; otherwise, a tab (ASCII 0x09)
-+                byte separates them.
-+    <origPath>  The pathname in the commit at HEAD.  This is only
-+                present in a renamed/copied entry, and tells
-+                where the renamed/copied contents came from.
-+    --------------------------------------------------------
-+
-+Unmerged entries have the following format; the first character is
-+a "u" to distinguish from ordinary changed entries.
-+
-+    u <xy> <sub> <m1> <m2> <m3> <mW> <h1> <h2> <h3> <path>
-+
-+    Field       Meaning
-+    --------------------------------------------------------
-+    <XY>        A 2 character field describing the conflict type
-+                as described in the short format.
-+    <sub>       A 4 character field describing the submodule state
-+                as described above.
-+    <m1>        The octal file mode in stage 1.
-+    <m2>        The octal file mode in stage 2.
-+    <m3>        The octal file mode in stage 3.
-+    <mW>        The octal file mode in the worktree.
-+    <h1>        The object name in stage 1.
-+    <h2>        The object name in stage 2.
-+    <h3>        The object name in stage 3.
-+    <path>      The pathname.
-+    --------------------------------------------------------
-+
-+### Other Items
-+
-+Following the tracked entries (and if requested), a series of
-+lines will be printed for untracked and then ignored items
-+found in the worktree.
-+
-+Untracked items have the following format:
-+
-+    ? <path>
-+
-+Ignored items have the following format:
-+
-+    ! <path>
-+
-+### Pathname Format Notes and -z
-+
-+When the `-z` option is given, pathnames are printed as is and
-+without any quoting and lines are terminated with a NUL (ASCII 0x00)
-+byte.
-+
-+Otherwise, all pathnames will be "C-quoted" if they contain any tab,
-+linefeed, double quote, or backslash characters. In C-quoting, these
-+characters will be replaced with the corresponding C-style escape
-+sequences and the resulting pathname will be double quoted.
-+
-+
- CONFIGURATION
- -------------
- 
--- 
-2.8.0.rc4.17.gac42084.dirty
+Unfortunately I cannot be taking new rerolls or new topics for the
+rest of the day as I need to start today's integration cycle and
+I'll have to delay taking a look at this round, but from a quick
+glance you still seem to have a lot of dirt in the new test and I
+cannot quite tell if they are intended.
 
+Thanks.
