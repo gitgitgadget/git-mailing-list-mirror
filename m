@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5B2320193
-	for <e@80x24.org>; Thu, 11 Aug 2016 23:14:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE82F20193
+	for <e@80x24.org>; Thu, 11 Aug 2016 23:14:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932167AbcHKXON (ORCPT <rfc822;e@80x24.org>);
-	Thu, 11 Aug 2016 19:14:13 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:33436 "EHLO
-	mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751676AbcHKXOM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2016 19:14:12 -0400
-Received: by mail-pf0-f170.google.com with SMTP id y134so2921314pfg.0
-        for <git@vger.kernel.org>; Thu, 11 Aug 2016 16:14:12 -0700 (PDT)
+	id S1752180AbcHKXOQ (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 19:14:16 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:36467 "EHLO
+	mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751676AbcHKXOP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2016 19:14:15 -0400
+Received: by mail-pf0-f179.google.com with SMTP id h186so2868726pfg.3
+        for <git@vger.kernel.org>; Thu, 11 Aug 2016 16:14:14 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=AErn9Pp3mFAWo9qXA9ViR2xEquxa6XXvxEnur9HrGyA=;
-        b=XNPhFl7KOoz3fVow7o+XcJoyN1DjZYSB0SJP2x0L0l2CRD4myy90d/NqPxtHQaz80f
-         udPo5R0WAoPpR++6uwkWsH9BuBq/j+RStbBShc7M0Da91C+Ql2s1teAp16IgV5ZhdTU+
-         /oZMK9yXlqHlxcthWWG2JDXR+inwsXgxl5Eu5qg46/Nc9sR80paqfEEz+Xvv87bdFVVn
-         fsoxXK4VCAv7kAV46nPDSqZbpBKrTKz6mGdgGcl5DZ5F7zhvML2JUf5XhctGfEzgK+C5
-         4eesh1rm+lZbFpBTfERf426FBxmEnLfw2D7tgWmTIyyuK/hha76b9y7LtSDBeWsDndew
-         7D7Q==
+        bh=k+mej+6czByiklHdyzIyp6Y/vBXvAKx81NsNY2JxuJw=;
+        b=Rt8eNQKCd7d7POuw282CQh6lDduiy/DgjoCkrkHTJik51+6jIoA7nqnuTDdK6U2U/0
+         wjajCSJgW6gBEF8qzD7xGphIH8QoSlbPEtWCyIE8S+Nmx42GsqVd28Kcuah6NVZu5fkd
+         qKorQkYrsWBbL40iK0O+CSNxg9UXfAc1M4hii/Xaktby6tW8GTOkqjpRIQCCiHoRflnc
+         Jqd3euw3GxOOsl+jJypfJGJJXNdjNpHfI26av/VA397YN9Z/+olx1uIWnfucGLbBgnCO
+         G70B1fy68/TLa9vpDncRQNBETFSQRgUIrvyw1EBupBxcv0Nmz2dsa1H4EKRc135x8fs0
+         9gwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=AErn9Pp3mFAWo9qXA9ViR2xEquxa6XXvxEnur9HrGyA=;
-        b=BSqGWtMBCEuOVyW5BNBq9w6be/S4FCx/0cG7dMjT4Vm1ObOeRQtESIJF29iY8k2AqA
-         gvTgkmHOFy+9w0gK+Bt9+iofPAQnNgHVV+8ZzXx5q1HtfcjCmeBTy8tag2Se7xqO1vPH
-         hK7WAS6MAyXUyD9jK/XABDxRLTQyC5r80cACnTZvWwuphLo2yVJ0mhpqtrd/Wlep9QhM
-         Izw8zpZiClTqXkj5Ni3h/dVWSXpgcfItdOAbntsvFf/fTZLtmg+iB4tigSfdHimiU54n
-         d7b/vq/A2fgHollyKY911OoTjIBW0NgynUnJQcGYHettD2Z/l1KaZvMj73GAfQxo97mp
-         OEhg==
-X-Gm-Message-State: AEkoout673xRREb3CTHwRJZgdMtPOOf9wS0Vmivm+0CCFd7Vr0fjreVJTuKMuDetC74VapPj
-X-Received: by 10.98.51.131 with SMTP id z125mr21719431pfz.109.1470957251937;
-        Thu, 11 Aug 2016 16:14:11 -0700 (PDT)
+        bh=k+mej+6czByiklHdyzIyp6Y/vBXvAKx81NsNY2JxuJw=;
+        b=Z/BJFaxMq4ZWhMSRUrXy+9xhrXScGztcGoVXs67bXL2G4Y0LVMvMBiZ6dl+UIWa1Nw
+         d2oXYD2d3Bmbxx+bok2vwPARIWuRZRWzdqbme2XCvCm3+5kEOpAonG+d2c0/i1jxJjAT
+         QxbxPPFnh7CKLzrYBE6e5yXWrUqVmjj6FV4j1q0EdtDDyQJKlCINT8TIniL2cBcfkpNo
+         rAx3O9Y0dVmilL01xIdV5YBiryKK+2mKjxLMKvkHMTRbKE5d4coB6nMkGwLJmyEX0OPl
+         Uo1Tzh7kiwltvowQSK8gvLKwOolb8l68iYrTwOWuNl1QLxe2LWTXePxdKs5Elv5WU69r
+         I7Mg==
+X-Gm-Message-State: AEkoouvVMe9YElShf6+RJO3jxEEjTFUP/rpuT12tIyXBlIS5Pdeujeua+BCaOVDys8vKpgNl
+X-Received: by 10.98.75.219 with SMTP id d88mr21859439pfj.91.1470957254073;
+        Thu, 11 Aug 2016 16:14:14 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:2879:1504:a6e4:e441])
-        by smtp.gmail.com with ESMTPSA id g10sm7705591pfc.57.2016.08.11.16.14.10
+        by smtp.gmail.com with ESMTPSA id m78sm7710589pfj.66.2016.08.11.16.14.13
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 11 Aug 2016 16:14:11 -0700 (PDT)
+        Thu, 11 Aug 2016 16:14:13 -0700 (PDT)
 From:	Stefan Beller <sbeller@google.com>
 To:	gitster@pobox.com
 Cc:	git@vger.kernel.org, jrnieder@gmail.com, Jens.Lehmann@web.de,
 	Stefan Beller <sbeller@google.com>
-Subject: [PATCHv4 1/8] t7408: modernize style
-Date:	Thu, 11 Aug 2016 16:13:58 -0700
-Message-Id: <20160811231405.17318-2-sbeller@google.com>
+Subject: [PATCHv4 2/8] t7408: merge short tests, factor out testing method
+Date:	Thu, 11 Aug 2016 16:13:59 -0700
+Message-Id: <20160811231405.17318-3-sbeller@google.com>
 X-Mailer: git-send-email 2.9.2.737.g4a14654
 In-Reply-To: <20160811231405.17318-1-sbeller@google.com>
 References: <20160811231405.17318-1-sbeller@google.com>
@@ -60,166 +60,92 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-No functional change intended. This commit only changes formatting
-to the style we recently use, e.g. starting the body of a test with a
-single quote on the same line as the header, and then having the test
-indented in the following lines.
+Tests consisting of one line each can be consolidated to have fewer tests
+to run as well as fewer lines of code.
 
-Whenever we change directories, we do that in subshells.
+When having just a few git commands, do not create a new shell but
+use the -C flag in Git to execute in the correct directory.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- t/t7408-submodule-reference.sh | 140 +++++++++++++++++++++--------------------
- 1 file changed, 71 insertions(+), 69 deletions(-)
+ t/t7408-submodule-reference.sh | 48 ++++++++++++++++++++++--------------------
+ 1 file changed, 25 insertions(+), 23 deletions(-)
 
 diff --git a/t/t7408-submodule-reference.sh b/t/t7408-submodule-reference.sh
-index eaea19b..b84c6748 100755
+index b84c6748..dff47af 100755
 --- a/t/t7408-submodule-reference.sh
 +++ b/t/t7408-submodule-reference.sh
-@@ -8,74 +8,76 @@ test_description='test clone --reference'
+@@ -8,6 +8,15 @@ test_description='test clone --reference'
  
  base_dir=$(pwd)
  
--U=$base_dir/UPLOAD_LOG
--
--test_expect_success 'preparing first repository' \
--'test_create_repo A && cd A &&
--echo first > file1 &&
--git add file1 &&
--git commit -m A-initial'
--
--cd "$base_dir"
--
--test_expect_success 'preparing second repository' \
--'git clone A B && cd B &&
--echo second > file2 &&
--git add file2 &&
--git commit -m B-addition &&
--git repack -a -d &&
--git prune'
--
--cd "$base_dir"
--
--test_expect_success 'preparing superproject' \
--'test_create_repo super && cd super &&
--echo file > file &&
--git add file &&
--git commit -m B-super-initial'
--
--cd "$base_dir"
--
--test_expect_success 'submodule add --reference' \
--'cd super && git submodule add --reference ../B "file://$base_dir/A" sub &&
--git commit -m B-super-added'
--
--cd "$base_dir"
--
--test_expect_success 'after add: existence of info/alternates' \
--'test_line_count = 1 super/.git/modules/sub/objects/info/alternates'
--
--cd "$base_dir"
--
--test_expect_success 'that reference gets used with add' \
--'cd super/sub &&
--echo "0 objects, 0 kilobytes" > expected &&
--git count-objects > current &&
--diff expected current'
--
--cd "$base_dir"
--
--test_expect_success 'cloning superproject' \
--'git clone super super-clone'
--
--cd "$base_dir"
--
--test_expect_success 'update with reference' \
--'cd super-clone && git submodule update --init --reference ../B'
--
--cd "$base_dir"
--
--test_expect_success 'after update: existence of info/alternates' \
--'test_line_count = 1 super-clone/.git/modules/sub/objects/info/alternates'
--
--cd "$base_dir"
--
--test_expect_success 'that reference gets used with update' \
--'cd super-clone/sub &&
--echo "0 objects, 0 kilobytes" > expected &&
--git count-objects > current &&
--diff expected current'
--
--cd "$base_dir"
-+test_expect_success 'preparing first repository' '
-+	test_create_repo A &&
-+	(
-+		cd A &&
-+		echo first >file1 &&
-+		git add file1 &&
-+		git commit -m A-initial
-+	)
-+'
++test_alternate_is_used () {
++	alternates_file="$1" &&
++	working_dir="$2" &&
++	test_line_count = 1 "$alternates_file" &&
++	echo "0 objects, 0 kilobytes" >expect &&
++	git -C "$working_dir" count-objects >actual &&
++	test_cmp expect actual
++}
 +
-+test_expect_success 'preparing second repository' '
-+	git clone A B &&
-+	(
-+		cd B &&
-+		echo second >file2 &&
-+		git add file2 &&
-+		git commit -m B-addition &&
-+		git repack -a -d &&
-+		git prune
-+	)
-+'
-+
-+test_expect_success 'preparing superproject' '
-+	test_create_repo super &&
-+	(
-+		cd super &&
-+		echo file >file &&
-+		git add file &&
-+		git commit -m B-super-initial
-+	)
-+'
-+
-+test_expect_success 'submodule add --reference' '
-+	(
-+		cd super &&
-+		git submodule add --reference ../B "file://$base_dir/A" sub &&
-+		git commit -m B-super-added
-+	)
-+'
-+
-+test_expect_success 'after add: existence of info/alternates' '
-+	test_line_count = 1 super/.git/modules/sub/objects/info/alternates
-+'
-+
-+test_expect_success 'that reference gets used with add' '
-+	(
-+		cd super/sub &&
-+		echo "0 objects, 0 kilobytes" >expected &&
-+		git count-objects >current &&
-+		diff expected current
-+	)
-+'
-+
-+test_expect_success 'cloning superproject' '
-+	git clone super super-clone
-+'
-+
-+test_expect_success 'update with reference' '
-+	cd super-clone && git submodule update --init --reference ../B
-+'
-+
-+test_expect_success 'after update: existence of info/alternates' '
-+	test_line_count = 1 super-clone/.git/modules/sub/objects/info/alternates
-+'
-+
-+test_expect_success 'that reference gets used with update' '
-+	cd super-clone/sub &&
-+	echo "0 objects, 0 kilobytes" >expected &&
-+	git count-objects >current &&
-+	diff expected current
-+'
+ test_expect_success 'preparing first repository' '
+ 	test_create_repo A &&
+ 	(
+@@ -40,16 +49,14 @@ test_expect_success 'preparing superproject' '
+ 	)
+ '
+ 
+-test_expect_success 'submodule add --reference' '
++test_expect_success 'submodule add --reference uses alternates' '
+ 	(
+ 		cd super &&
+ 		git submodule add --reference ../B "file://$base_dir/A" sub &&
+-		git commit -m B-super-added
+-	)
+-'
+-
+-test_expect_success 'after add: existence of info/alternates' '
+-	test_line_count = 1 super/.git/modules/sub/objects/info/alternates
++		git commit -m B-super-added &&
++		git repack -ad
++	) &&
++	test_alternate_is_used super/.git/modules/sub/objects/info/alternates super/sub
+ '
+ 
+ test_expect_success 'that reference gets used with add' '
+@@ -61,23 +68,18 @@ test_expect_success 'that reference gets used with add' '
+ 	)
+ '
+ 
+-test_expect_success 'cloning superproject' '
+-	git clone super super-clone
+-'
+-
+-test_expect_success 'update with reference' '
+-	cd super-clone && git submodule update --init --reference ../B
+-'
+-
+-test_expect_success 'after update: existence of info/alternates' '
+-	test_line_count = 1 super-clone/.git/modules/sub/objects/info/alternates
+-'
++# The tests up to this point, and repositories created by them
++# (A, B, super and super/sub), are about setting up the stage
++# for subsequent tests and meant to be kept throughout the
++# remainder of the test.
++# Tests from here on, if they create their own test repository,
++# are expected to clean after themselves.
+ 
+-test_expect_success 'that reference gets used with update' '
+-	cd super-clone/sub &&
+-	echo "0 objects, 0 kilobytes" >expected &&
+-	git count-objects >current &&
+-	diff expected current
++test_expect_success 'updating superproject keeps alternates' '
++	test_when_finished "rm -rf super-clone" &&
++	git clone super super-clone &&
++	git -C super-clone submodule update --init --reference ../B &&
++	test_alternate_is_used super-clone/.git/modules/sub/objects/info/alternates super-clone/sub
+ '
  
  test_done
 -- 
