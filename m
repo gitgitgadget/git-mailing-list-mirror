@@ -2,51 +2,50 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3CED520193
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57FE4203BD
 	for <e@80x24.org>; Thu, 11 Aug 2016 18:46:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752193AbcHKSqm (ORCPT <rfc822;e@80x24.org>);
-	Thu, 11 Aug 2016 14:46:42 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33230 "EHLO
+	id S1752098AbcHKSqk (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 14:46:40 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:33386 "EHLO
 	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751260AbcHKSpg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2016 14:45:36 -0400
-Received: by mail-wm0-f68.google.com with SMTP id o80so873998wme.0
-        for <git@vger.kernel.org>; Thu, 11 Aug 2016 11:45:35 -0700 (PDT)
+	with ESMTP id S1751979AbcHKSpt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2016 14:45:49 -0400
+Received: by mail-wm0-f68.google.com with SMTP id o80so875370wme.0
+        for <git@vger.kernel.org>; Thu, 11 Aug 2016 11:45:49 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=gwSYauULR+Q3VviPx3iDxXwfuYCHVZOIGbj/vN5+Ywg=;
-        b=GvFQ8ZXDHkZ3IYFa7MCHE/Fr6DSDHW2BZKijs3aMGHrSKthUfpX7TLDsHF3wFUUnGc
-         qleuFV3cCVzjSdOBpe0Hx+6vXK7t7AMSrsmk3Pi2fxsU/3pIsTyTXRLlhPEcHRSBsiIx
-         Oan05yQVAMFOUBBWfmiK3qCsKO4H/Us+gEAtVdp5OnxhfI7IwVs6ulAXTNhBtRV8gO5J
-         YaZaLxD+rkChtfaATcAeESGuL2qzsuFi98gpMqnR3jeMU4aE2vlEOCadBfKFCfYscXV0
-         BGMfAvwZGxAZ7PqYwJWNiWmc9GysvCEOVUn7HUezF00ntq/AJksVNZbZwhrjRM1MfiYR
-         TCOA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=aKbyk/UTuXqVunfx0HFQggG+zrevuYSFdP8CJzcrjzg=;
+        b=h7jYs7zb14lioceDuNTBH6MrEcecBr0f8oEkobFoXUZn4PYVkRyRj0+FDybZO+DTXo
+         tE/vvdn1eMYIT1E5hpgSG49lF4JLKVUWUuuds9TX5fBEYLKyHhU91YAk5V50Uc1mawZh
+         5Lnjuok4NQ6mNlCVTCtalHa5FAkjOgDAoF+bTnTL9ZZAuzSYP62d3m5aOyy6jhyKvgA/
+         02u9yUuebomQR51M05hRnxsyNqIEyd+WusJwVdGVW0p0M1GcoY2WF2pGKaUNRgRCDuHH
+         /J2VqrsoZf6ESxbM7z9GN5rpVkF+v3WD3tBZB+mvt3MVwyN0IRyTf251MwMNk1yV+KBG
+         2O7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=gwSYauULR+Q3VviPx3iDxXwfuYCHVZOIGbj/vN5+Ywg=;
-        b=AEU0ANGcyAB6cWNyDMJSWhUc5XJqXtDUbF7s42L2RnZYYJcjjhFKZLaRr1cAHtlGQp
-         gQS6uqqCCm9f9bHMrqvd1n6++PjxEInRTGtwEXLWPtamB/8+yoTP3JQ/L31rDvkb1sGi
-         fA245o8pR2M35fxo7ktzyqaLsoS6jmyTklyMTem7wbBry2KO8rADtRBWary8gDHpkdK/
-         hKBOQGmlFufXr2iHSpwQmI4lLN8EcKV9Zrmix9ZWFvddH7clTXf6tqys8kwTMKg4ei0f
-         lSIyc+JBrJ7Au2xcnkJ4HClmctBZohNNy0vtE/8n3VWrIbvlk0x3cqrl2bh4V86EaBbY
-         Yf/w==
-X-Gm-Message-State: AEkoouvNcZH5pr8EDGKZewm6kQ6QnhxtygLceqEVERxX0QPdHaAmXP86S7Qz0BnKGcEf/Q==
-X-Received: by 10.194.54.37 with SMTP id g5mr13064521wjp.65.1470941134087;
-        Thu, 11 Aug 2016 11:45:34 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=aKbyk/UTuXqVunfx0HFQggG+zrevuYSFdP8CJzcrjzg=;
+        b=COf4e9dhWJKkfGrd7gE1hRm9kOkbcQAJE0wrjhENSN1W3Diq4ERqIpHrruV6Rg8bvq
+         8hhaoux28GTdONPOBofsquazhTua+3eTO+XQwaLk4n4GiGIXsAEekFfA2kFGROiyWy/p
+         6GtXi6GfxzUIDbjpC55Ff+vEENCwRGscM/0naFfNqtiatCUfJNSEAAbzIhx4iW5lNgMX
+         EhNvsrHivECrZO2pB4t/4Y/QDnGm3EINnLKeowAmOR+t9Gg1l0or9W5I44xYCLcJRvEH
+         /B1Uvnutw/mSc3g1v/H7QGgyxHiNTGAWcW+jK86730aoiJ0QTZ334c358BHEehi76Nm9
+         AmHg==
+X-Gm-Message-State: AEkoouviL3tYNO41PUbYMSTWcGiy64MMezdG+My2SyWs4kAReySbv/VIJnMyBySjLWdDqQ==
+X-Received: by 10.194.104.106 with SMTP id gd10mr12956874wjb.55.1470941148286;
+        Thu, 11 Aug 2016 11:45:48 -0700 (PDT)
 Received: from localhost.localdomain ([80.215.37.180])
-        by smtp.gmail.com with ESMTPSA id 190sm1047236wmk.13.2016.08.11.11.45.30
+        by smtp.gmail.com with ESMTPSA id 190sm1047236wmk.13.2016.08.11.11.45.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 11 Aug 2016 11:45:33 -0700 (PDT)
+        Thu, 11 Aug 2016 11:45:47 -0700 (PDT)
 From:	Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
 To:	git@vger.kernel.org
@@ -61,232 +60,78 @@ Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v12 00/13] libify apply and use lib in am, part 3
-Date:	Thu, 11 Aug 2016 20:44:48 +0200
-Message-Id: <20160811184501.384-1-chriscool@tuxfamily.org>
+Subject: [PATCH v12 02/13] apply: rename and move opt constants to apply.h
+Date:	Thu, 11 Aug 2016 20:44:50 +0200
+Message-Id: <20160811184501.384-3-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.9.2.769.gc0f0333
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20160811184501.384-1-chriscool@tuxfamily.org>
+References: <20160811184501.384-1-chriscool@tuxfamily.org>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Goal
-~~~~
+The constants for the "inaccurate-eof" and the "recount" options will
+be used in both "apply.c" and "builtin/apply.c", so they need to go
+into "apply.h", and therefore they need a name that is more specific
+to the API they belong to.
 
-This is a patch series about libifying `git apply` functionality, and
-using this libified functionality in `git am`, so that no 'git apply'
-process is spawn anymore. This makes `git am` significantly faster, so
-`git rebase`, when it uses the am backend, is also significantly
-faster.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ apply.h         |  3 +++
+ builtin/apply.c | 11 ++++-------
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-Previous discussions and patches series
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-This has initially been discussed in the following thread:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/287236/
-
-Then the following patch series were sent:
-
-RFC: http://thread.gmane.org/gmane.comp.version-control.git/288489/
-v1: http://thread.gmane.org/gmane.comp.version-control.git/292324/
-v2: http://thread.gmane.org/gmane.comp.version-control.git/294248/
-v3: http://thread.gmane.org/gmane.comp.version-control.git/295429/
-v4: http://thread.gmane.org/gmane.comp.version-control.git/296350/
-v5: http://thread.gmane.org/gmane.comp.version-control.git/296490/
-v6: http://thread.gmane.org/gmane.comp.version-control.git/297024/
-v7: http://thread.gmane.org/gmane.comp.version-control.git/297193/
-v8: https://public-inbox.org/git/20160627182429.31550-1-chriscool%40tuxfamily.org/
-v9: https://public-inbox.org/git/20160730172509.22939-1-chriscool%40tuxfamily.org/
-v10: https://public-inbox.org/git/20160808210337.5038-1-chriscool%40tuxfamily.org/
-v11: https://public-inbox.org/git/20160811085229.19017-1-chriscool%40tuxfamily.org/
-
-Highlevel view of the patches in the series
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-This is "part 3" of the full patch series. I am resending only the
-last 13 patches of the full series as "part 3", because I don't want
-to resend the first 27 patches of v10 nearly as is. So "part 2" is
-made of patch 01/40 from v11 and patches from 02/40 to 27/40 from v10.
-The "part 1" is in "master" for some time now.
-
-  - Patch 01/13 was v1, v2, v6, v7, v8, v9, v10 and v11.
-
-Since v10 and v11 only the commit message has been changed. As
-suggested by Stefan Naewe, 'api' as been replaced with 'API'.
-
-  - Patches 02/13 to 04/13 were in v1, v2, v6, v7, v8, v9 and v10.
-
-They haven't changed since v10.
-
-Along with 01/13 they finish libifying the apply functionality that
-was in builtin/apply.c and move it into apply.{c,h}, but the libified
-functionality is not yet used in `git am`.
-
-  - Patch 05/13 was in v6, v7, v8, v9 and v10, and hasn't changed.
-
-It replaces some calls to error() with calls to error_errno().
-
-  - Patches 06/13 to 10/13 were in v2, v6, v7, v8, v9 and v10.
-
-They haven't changed since v10.
-
-They implement a way to make the libified apply code silent by
-changing the bool `apply_verbosely` into a tristate enum called
-`apply_verbosity`, that can be one of `verbosity_verbose`,
-`verbosity_normal` or `verbosity_silent`.
-
-This is because "git am", since it was a shell script, has been
-silencing the apply functionality by redirecting file descriptors to
-/dev/null, but this is not acceptable in C.
-
-  - Patch 11/13 was in v9 and v10, and hasn't changed.
-
-It refactors `git apply` option parsing to make it possible for `git
-am` to easily pass some command line options to the libified applied
-code as suggested by Junio.
-
-  - Patch 12/13 is new.
-
-It replaces patch 33/40 in v10 (environment: add set_index_file())
-that was a hack to make it possible for `git am` to use the libified
-apply functionality on a different index file.
-
-Now for this purpose, in this new patch, we add
-"const char *index_file" into "struct apply_state", and when
-"index_file" is set, we use hold_lock_file_for_update(), passing it
-"state->index_file", instead of using hold_locked_index(), as it is
-not possible to pass an index filename in hold_locked_index().
-
-  - Patch 13/13 was in v1, v2, v6, v7, v8, v9 and v10.
-
-This patch makes `git am` use the libified functionality. It now uses
-"index_file" in "struct apply_state" added by 12/13 to pass the file
-we want the index written into to the libified apply functionality.
-
-
-General comments
-~~~~~~~~~~~~~~~~
-
-Now this patch series is shorter than previously. Hopefully also the
-early part of this series until 05/13 or 11/13 will be ready soon to
-be moved to next and master, and I may only need to resend the last 2
-patches if anything.
-
-I will send a diff between this version and v10 as a reply to this
-email. (Note that in v11 only commit messages changed, so there is no
-difference between v10 and v11.)
-
-The benefits are not just related to not creating new processes. When
-`git am` launched a `git apply` process, this new process had to read
-the index from disk. Then after the `git apply`process had terminated,
-`git am` dropped its index and read the index from disk to get the
-index that had been modified by the `git apply`process. This was
-inefficient and also prevented the split-index mechanism to provide
-many performance benefits.
-
-By the way, current work is ongoing to make it possible to use
-split-index more easily by adding a config variable, see:
-
-https://public-inbox.org/git/20160711172254.13439-1-chriscool%40tuxfamily.org/
-
-Using an earlier version of this series as rebase material, Duy
-explained split-index benefits along with this patch series like this:
-
- > Without the series, the picture is not so surprising. We run git-apply
- > 80+ times, each consists of this sequence
- >
- > read index
- > write index (cache tree updates only)
- > read index again
- > optionally initialize name hash (when new entries are added, I guess)
- > read packed-refs
- > write index
- >
- > With this series, we run a single git-apply which does
- >
- > read index (and sharedindex too if in split-index mode)
- > initialize name hash
- > write index 80+ times
-
-(See: http://thread.gmane.org/gmane.comp.version-control.git/292324/focus=292460)
-
-Links
-~~~~~
-
-This patch series is available here:
-
-https://github.com/chriscool/git/commits/libify-apply-use-in-am
-
-The previous versions are available there:
-
-v1: https://github.com/chriscool/git/commits/libify-apply-use-in-am25 
-v2: https://github.com/chriscool/git/commits/libify-apply-use-in-am54
-v6: https://github.com/chriscool/git/commits/libify-apply-use-in-am65
-v7: https://github.com/chriscool/git/commits/libify-apply-use-in-am75
-v8: https://github.com/chriscool/git/commits/libify-apply-use-in-am97
-v9: https://github.com/chriscool/git/commits/libify-apply-use-in-am106
-v10: https://github.com/chriscool/git/commits/libify-apply-use-in-am114
-v11: https://github.com/chriscool/git/commits/libify-apply-use-in-am116
-
-Performance numbers
-~~~~~~~~~~~~~~~~~~~
-
-Numbers are only available for tests that have been performed on Linux
-using a very early version of this series, though Johannes Sixt
-reported great improvements on Windows. It could be interesting to get
-detailed numbers on other platforms like Windows and OSX.
-
-  - Around mid April Ævar did a huge many-hundred commit rebase on the
-    kernel with untracked cache.
-
-command: git rebase --onto 1993b17 52bef0c 29dde7c
-
-Vanilla "next" without split index:                1m54.953s
-Vanilla "next" with split index:                   1m22.476s
-This series on top of "next" without split index:  1m12.034s
-This series on top of "next" with split index:     0m15.678s
-
-Ævar used his Debian laptop with SSD.
-
-  - Around mid April I tested rebasing 13 commits in Booking.com's
-    monorepo on a Red Hat 6.5 server with split-index and
-    GIT_TRACE_PERFORMANCE=1.
-
-With Git v2.8.0, the rebase took 6.375888383 s, with the git am
-command launched by the rebase command taking 3.705677431 s.
-
-With this series on top of next, the rebase took 3.044529494 s, with
-the git am command launched by the rebase command taking 0.583521168
-s.
-
-
-Christian Couder (13):
-  builtin/apply: rename option parsing functions
-  apply: rename and move opt constants to apply.h
-  Move libified code from builtin/apply.c to apply.{c,h}
-  apply: make some parsing functions static again
-  apply: use error_errno() where possible
-  apply: make it possible to silently apply
-  apply: don't print on stdout in verbosity_silent mode
-  usage: add set_warn_routine()
-  usage: add get_error_routine() and get_warn_routine()
-  apply: change error_routine when silent
-  apply: refactor `git apply` option parsing
-  apply: learn to use a different index file
-  builtin/am: use apply API in run_apply()
-
- apply.c           | 4861 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
- apply.h           |   34 +-
- builtin/am.c      |   65 +-
- builtin/apply.c   | 4814 +---------------------------------------------------
- git-compat-util.h |    3 +
- usage.c           |   15 +
- 6 files changed, 4951 insertions(+), 4841 deletions(-)
-
+diff --git a/apply.h b/apply.h
+index 53f09b5..ca1dcee 100644
+--- a/apply.h
++++ b/apply.h
+@@ -108,4 +108,7 @@ extern int init_apply_state(struct apply_state *state,
+ extern void clear_apply_state(struct apply_state *state);
+ extern int check_apply_state(struct apply_state *state, int force_apply);
+ 
++#define APPLY_OPT_INACCURATE_EOF	(1<<0)
++#define APPLY_OPT_RECOUNT		(1<<1)
++
+ #endif
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 429fe44..9c396bb 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -4463,9 +4463,6 @@ static int write_out_results(struct apply_state *state, struct patch *list)
+ 
+ static struct lock_file lock_file;
+ 
+-#define INACCURATE_EOF	(1<<0)
+-#define RECOUNT		(1<<1)
+-
+ /*
+  * Try to apply a patch.
+  *
+@@ -4495,8 +4492,8 @@ static int apply_patch(struct apply_state *state,
+ 		int nr;
+ 
+ 		patch = xcalloc(1, sizeof(*patch));
+-		patch->inaccurate_eof = !!(options & INACCURATE_EOF);
+-		patch->recount =  !!(options & RECOUNT);
++		patch->inaccurate_eof = !!(options & APPLY_OPT_INACCURATE_EOF);
++		patch->recount =  !!(options & APPLY_OPT_RECOUNT);
+ 		nr = parse_chunk(state, buf.buf + offset, buf.len - offset, patch);
+ 		if (nr < 0) {
+ 			free_patch(patch);
+@@ -4811,10 +4808,10 @@ int cmd_apply(int argc, const char **argv, const char *prefix)
+ 		OPT__VERBOSE(&state.apply_verbosely, N_("be verbose")),
+ 		OPT_BIT(0, "inaccurate-eof", &options,
+ 			N_("tolerate incorrectly detected missing new-line at the end of file"),
+-			INACCURATE_EOF),
++			APPLY_OPT_INACCURATE_EOF),
+ 		OPT_BIT(0, "recount", &options,
+ 			N_("do not trust the line counts in the hunk headers"),
+-			RECOUNT),
++			APPLY_OPT_RECOUNT),
+ 		{ OPTION_CALLBACK, 0, "directory", &state, N_("root"),
+ 			N_("prepend <root> to all filenames"),
+ 			0, apply_option_parse_directory },
 -- 
 2.9.2.769.gc0f0333
 
