@@ -2,68 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBCA82018E
-	for <e@80x24.org>; Thu, 11 Aug 2016 06:23:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 50D381F859
+	for <e@80x24.org>; Thu, 11 Aug 2016 06:57:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752098AbcHKGXq (ORCPT <rfc822;e@80x24.org>);
-	Thu, 11 Aug 2016 02:23:46 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:44422 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752019AbcHKGXp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2016 02:23:45 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F93C2018E;
-	Thu, 11 Aug 2016 06:23:44 +0000 (UTC)
-Date:	Thu, 11 Aug 2016 06:23:44 +0000
-From:	Eric Wong <e@80x24.org>
-To:	Josh Triplett <josh@joshtriplett.org>
-Cc:	Richard Ipsum <richard.ipsum@codethink.co.uk>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [ANNOUNCE] git-series: track changes to a patch series over time
-Message-ID: <20160811062344.GA20280@starla>
-References: <20160729064055.GB25331@x>
- <20160803191202.GA22881@salo>
- <20160804224058.po43kl7w26ockfie@x>
- <20160810093731.GA3404@salo>
- <13509A14-16CB-476C-B983-7001F3D0DA61@joshtriplett.org>
+	id S1752206AbcHKG55 (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 02:57:57 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53417 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750992AbcHKG5z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2016 02:57:55 -0400
+Received: (qmail 24934 invoked by uid 109); 11 Aug 2016 06:57:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 Aug 2016 06:57:54 +0000
+Received: (qmail 7265 invoked by uid 111); 11 Aug 2016 06:57:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 Aug 2016 02:57:54 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Aug 2016 02:57:52 -0400
+Date:	Thu, 11 Aug 2016 02:57:52 -0400
+From:	Jeff King <peff@peff.net>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v3 1/2] pack-objects: break delta cycles before
+ delta-search phase
+Message-ID: <20160811065751.p64bi3sngbeotwc3@sigill.intra.peff.net>
+References: <20160810115206.l57qpehpabthnl6c@sigill.intra.peff.net>
+ <20160810120248.i2hvm2q6ag3rvsk4@sigill.intra.peff.net>
+ <xmqqr39w4bvx.fsf@gitster.mtv.corp.google.com>
+ <20160811050252.g3iusy7bp3j6tzte@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <13509A14-16CB-476C-B983-7001F3D0DA61@joshtriplett.org>
+In-Reply-To: <20160811050252.g3iusy7bp3j6tzte@sigill.intra.peff.net>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Josh Triplett <josh@joshtriplett.org> wrote:
-> On August 9, 2016 11:37:31 PM HST, Richard Ipsum <richard.ipsum@codethink.co.uk> wrote:
+On Thu, Aug 11, 2016 at 01:02:52AM -0400, Jeff King wrote:
+
+> > > + *   2. Updating our size; check_object() will have filled in the size of our
+> > > + *      delta, but a non-delta object needs it true size.
+> > 
+> > Excellent point.
 > 
-> >Maybe there's a better solution to this problem than git-candidate
-> >then,
-> >maybe we can just invent some wonderful new subcommand that fetches
-> >a mailing list archive into a git repo, for those that want that,
-> >I don't know.
+> I was not clever enough to think of it; the pack-objects code is filled
+> with nice assertions (Thanks, Nico!) that help out when you are stupid. :)
 > 
-> public-inbox seems to address that use case. I'd love to see a
-> public-inbox version of LKML, with full history. I don't think
-> that fully solves the review storage and interchange problem,
-> but it seems like an *excellent* solution for email archiving,
-> and for distribution of archives.
+> One thing to be careful of is that there are more things this
+> drop_reused_delta() should be doing. But I looked through the rest of
+> check_object() and could not find anything else.
 
-Thanks, I'd like to see an LKML version, too :)  First, I want
-to ensure public-inbox can handle large repos better, first.
-public-inbox.org/git has been doing well so far, even on a
-low-end VM with 2 cores and 2GB RAM.
+Argh, I spoke too soon.
 
-I don't have anything close to full history of LKML, and
-download.gmane.org is down, right now :<  I'd use NNTP, but
-news.gmane.org gets overloaded from slrnpull and I even got
-temporarily banned there before discovering download.gmane
-:x
+It is true that the size lookup is the only part of check_object()
+we skip if we are reusing the delta. But what I didn't notice is that
+when we choose to reuse a delta, we overwrite entry->type (the real
+type!) with the in_pack_type (OFS_DELTA, etc). We need to undo that so
+that later stages see the real type.
 
-Maybe I'll do what was done with linux.git in 2005 and just
-ignore old mail for a while...
+I'm not sure how my existing tests worked (I confirmed that they do
+indeed break the delta). It may be that only some code paths actually
+care about the real type. But when playing with the depth-limit (which
+uses the same drop_reused_delta() helper), I managed to make some pretty
+broken packs.
+
+So please disregard the v4 patch I just sent; I haven't triggered it,
+but I imagine it has the same problem, and I just didn't manage to
+trigger it.
+
+I'll clean that up and send out a new series.
+
+-Peff
