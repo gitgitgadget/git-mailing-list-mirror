@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 13A2C20193
-	for <e@80x24.org>; Thu, 11 Aug 2016 20:55:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1A0B20193
+	for <e@80x24.org>; Thu, 11 Aug 2016 20:55:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932231AbcHKUz1 (ORCPT <rfc822;e@80x24.org>);
-	Thu, 11 Aug 2016 16:55:27 -0400
-Received: from siwi.pair.com ([209.68.5.199]:59046 "EHLO siwi.pair.com"
+	id S932250AbcHKUz3 (ORCPT <rfc822;e@80x24.org>);
+	Thu, 11 Aug 2016 16:55:29 -0400
+Received: from siwi.pair.com ([209.68.5.199]:38918 "EHLO siwi.pair.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752109AbcHKUzZ (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752188AbcHKUzZ (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 11 Aug 2016 16:55:25 -0400
 Received: from jeffhost-linux1.corp.microsoft.com (unknown [167.220.148.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by siwi.pair.com (Postfix) with ESMTPSA id 287EC8460A;
+	by siwi.pair.com (Postfix) with ESMTPSA id 6F5738460C;
 	Thu, 11 Aug 2016 16:55:24 -0400 (EDT)
 From:	Jeff Hostetler <git@jeffhostetler.com>
 To:	git@vger.kernel.org
 Cc:	gitster@pobox.com, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v7 1/9] status: rename long-format print routines
-Date:	Thu, 11 Aug 2016 16:51:29 -0400
-Message-Id: <1470948697-63787-2-git-send-email-git@jeffhostetler.com>
+Subject: [PATCH v7 2/9] status: cleanup API to wt_status_print
+Date:	Thu, 11 Aug 2016 16:51:30 -0400
+Message-Id: <1470948697-63787-3-git-send-email-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.8.0.rc4.17.gac42084.dirty
 In-Reply-To: <1470948697-63787-1-git-send-email-git@jeffhostetler.com>
 References: <1470948697-63787-1-git-send-email-git@jeffhostetler.com>
@@ -36,408 +36,214 @@ X-Mailing-List:	git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Rename the various wt_status_print*() routines to be
-wt_longstatus_print*() to make it clear that these
-routines are only concerned with the normal/long
-status output and reduce developer confusion as other
-status formats are added in the future.
+Refactor the API between builtin/commit.c and wt-status.[ch].
+
+Hide the details of the various wt_*status_print() routines inside
+wt-status.c behind a single (new) wt_status_print() routine.
+Eliminate the switch statements from builtin/commit.c.
+Allow details of new status formats to be isolated within wt-status.c
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/commit.c |   4 +-
- wt-status.c      | 110 +++++++++++++++++++++++++++----------------------------
- wt-status.h      |   2 +-
- 3 files changed, 58 insertions(+), 58 deletions(-)
+ builtin/commit.c | 51 +++++++++------------------------------------------
+ wt-status.c      | 25 ++++++++++++++++++++++---
+ wt-status.h      | 16 ++++++++++++----
+ 3 files changed, 43 insertions(+), 49 deletions(-)
 
 diff --git a/builtin/commit.c b/builtin/commit.c
-index 77e3dc8..ecfc965 100644
+index ecfc965..c5e0173 100644
 --- a/builtin/commit.c
 +++ b/builtin/commit.c
-@@ -515,7 +515,7 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix, int
- 		break;
- 	case STATUS_FORMAT_NONE:
- 	case STATUS_FORMAT_LONG:
--		wt_status_print(s);
-+		wt_longstatus_print(s);
- 		break;
- 	}
+@@ -142,14 +142,7 @@ static int show_ignored_in_status, have_option_m;
+ static const char *only_include_assumed;
+ static struct strbuf message = STRBUF_INIT;
  
-@@ -1403,7 +1403,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 	case STATUS_FORMAT_LONG:
- 		s.verbose = verbose;
- 		s.ignore_submodule_arg = ignore_submodule_arg;
--		wt_status_print(&s);
-+		wt_longstatus_print(&s);
- 		break;
- 	}
+-static enum status_format {
+-	STATUS_FORMAT_NONE = 0,
+-	STATUS_FORMAT_LONG,
+-	STATUS_FORMAT_SHORT,
+-	STATUS_FORMAT_PORCELAIN,
+-
+-	STATUS_FORMAT_UNSPECIFIED
+-} status_format = STATUS_FORMAT_UNSPECIFIED;
++static enum wt_status_format status_format = STATUS_FORMAT_UNSPECIFIED;
+ 
+ static int opt_parse_m(const struct option *opt, const char *arg, int unset)
+ {
+@@ -500,24 +493,11 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix, int
+ 	s->fp = fp;
+ 	s->nowarn = nowarn;
+ 	s->is_initial = get_sha1(s->reference, sha1) ? 1 : 0;
++	s->status_format = status_format;
++	s->ignore_submodule_arg = ignore_submodule_arg;
+ 
+ 	wt_status_collect(s);
+-
+-	switch (status_format) {
+-	case STATUS_FORMAT_SHORT:
+-		wt_shortstatus_print(s);
+-		break;
+-	case STATUS_FORMAT_PORCELAIN:
+-		wt_porcelain_print(s);
+-		break;
+-	case STATUS_FORMAT_UNSPECIFIED:
+-		die("BUG: finalize_deferred_config() should have been called");
+-		break;
+-	case STATUS_FORMAT_NONE:
+-	case STATUS_FORMAT_LONG:
+-		wt_longstatus_print(s);
+-		break;
+-	}
++	wt_status_print(s);
+ 
+ 	return s->commitable;
+ }
+@@ -1099,7 +1079,7 @@ static const char *read_commit_message(const char *name)
+  * is not in effect here.
+  */
+ static struct status_deferred_config {
+-	enum status_format status_format;
++	enum wt_status_format status_format;
+ 	int show_branch;
+ } status_deferred_config = {
+ 	STATUS_FORMAT_UNSPECIFIED,
+@@ -1381,6 +1361,9 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 
+ 	s.is_initial = get_sha1(s.reference, sha1) ? 1 : 0;
+ 	s.ignore_submodule_arg = ignore_submodule_arg;
++	s.status_format = status_format;
++	s.verbose = verbose;
++
+ 	wt_status_collect(&s);
+ 
+ 	if (0 <= fd)
+@@ -1389,23 +1372,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 	if (s.relative_paths)
+ 		s.prefix = prefix;
+ 
+-	switch (status_format) {
+-	case STATUS_FORMAT_SHORT:
+-		wt_shortstatus_print(&s);
+-		break;
+-	case STATUS_FORMAT_PORCELAIN:
+-		wt_porcelain_print(&s);
+-		break;
+-	case STATUS_FORMAT_UNSPECIFIED:
+-		die("BUG: finalize_deferred_config() should have been called");
+-		break;
+-	case STATUS_FORMAT_NONE:
+-	case STATUS_FORMAT_LONG:
+-		s.verbose = verbose;
+-		s.ignore_submodule_arg = ignore_submodule_arg;
+-		wt_longstatus_print(&s);
+-		break;
+-	}
++	wt_status_print(&s);
  	return 0;
+ }
+ 
 diff --git a/wt-status.c b/wt-status.c
-index 6225a2d..bae9507 100644
+index bae9507..59bfb0b 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -139,7 +139,7 @@ void wt_status_prepare(struct wt_status *s)
- 	s->display_comment_prefix = 0;
- }
- 
--static void wt_status_print_unmerged_header(struct wt_status *s)
-+static void wt_longstatus_print_unmerged_header(struct wt_status *s)
- {
- 	int i;
- 	int del_mod_conflict = 0;
-@@ -191,7 +191,7 @@ static void wt_status_print_unmerged_header(struct wt_status *s)
- 	status_printf_ln(s, c, "%s", "");
- }
- 
--static void wt_status_print_cached_header(struct wt_status *s)
-+static void wt_longstatus_print_cached_header(struct wt_status *s)
- {
- 	const char *c = color(WT_STATUS_HEADER, s);
- 
-@@ -207,9 +207,9 @@ static void wt_status_print_cached_header(struct wt_status *s)
- 	status_printf_ln(s, c, "%s", "");
- }
- 
--static void wt_status_print_dirty_header(struct wt_status *s,
--					 int has_deleted,
--					 int has_dirty_submodules)
-+static void wt_longstatus_print_dirty_header(struct wt_status *s,
-+					     int has_deleted,
-+					     int has_dirty_submodules)
- {
- 	const char *c = color(WT_STATUS_HEADER, s);
- 
-@@ -226,9 +226,9 @@ static void wt_status_print_dirty_header(struct wt_status *s,
- 	status_printf_ln(s, c, "%s", "");
- }
- 
--static void wt_status_print_other_header(struct wt_status *s,
--					 const char *what,
--					 const char *how)
-+static void wt_longstatus_print_other_header(struct wt_status *s,
-+					     const char *what,
-+					     const char *how)
- {
- 	const char *c = color(WT_STATUS_HEADER, s);
- 	status_printf_ln(s, c, "%s:", what);
-@@ -238,7 +238,7 @@ static void wt_status_print_other_header(struct wt_status *s,
- 	status_printf_ln(s, c, "%s", "");
- }
- 
--static void wt_status_print_trailer(struct wt_status *s)
-+static void wt_longstatus_print_trailer(struct wt_status *s)
- {
- 	status_printf_ln(s, color(WT_STATUS_HEADER, s), "%s", "");
- }
-@@ -304,8 +304,8 @@ static int maxwidth(const char *(*label)(int), int minval, int maxval)
- 	return result;
- }
- 
--static void wt_status_print_unmerged_data(struct wt_status *s,
--					  struct string_list_item *it)
-+static void wt_longstatus_print_unmerged_data(struct wt_status *s,
-+					      struct string_list_item *it)
- {
- 	const char *c = color(WT_STATUS_UNMERGED, s);
- 	struct wt_status_change_data *d = it->util;
-@@ -331,9 +331,9 @@ static void wt_status_print_unmerged_data(struct wt_status *s,
- 	strbuf_release(&onebuf);
- }
- 
--static void wt_status_print_change_data(struct wt_status *s,
--					int change_type,
--					struct string_list_item *it)
-+static void wt_longstatus_print_change_data(struct wt_status *s,
-+					    int change_type,
-+					    struct string_list_item *it)
- {
- 	struct wt_status_change_data *d = it->util;
- 	const char *c = color(change_type, s);
-@@ -378,7 +378,7 @@ static void wt_status_print_change_data(struct wt_status *s,
- 		status = d->worktree_status;
- 		break;
- 	default:
--		die("BUG: unhandled change_type %d in wt_status_print_change_data",
-+		die("BUG: unhandled change_type %d in wt_longstatus_print_change_data",
- 		    change_type);
- 	}
- 
-@@ -627,7 +627,7 @@ void wt_status_collect(struct wt_status *s)
- 	wt_status_collect_untracked(s);
- }
- 
--static void wt_status_print_unmerged(struct wt_status *s)
-+static void wt_longstatus_print_unmerged(struct wt_status *s)
- {
- 	int shown_header = 0;
- 	int i;
-@@ -640,17 +640,17 @@ static void wt_status_print_unmerged(struct wt_status *s)
- 		if (!d->stagemask)
- 			continue;
- 		if (!shown_header) {
--			wt_status_print_unmerged_header(s);
-+			wt_longstatus_print_unmerged_header(s);
- 			shown_header = 1;
- 		}
--		wt_status_print_unmerged_data(s, it);
-+		wt_longstatus_print_unmerged_data(s, it);
- 	}
- 	if (shown_header)
--		wt_status_print_trailer(s);
-+		wt_longstatus_print_trailer(s);
- 
- }
- 
--static void wt_status_print_updated(struct wt_status *s)
-+static void wt_longstatus_print_updated(struct wt_status *s)
- {
- 	int shown_header = 0;
- 	int i;
-@@ -664,14 +664,14 @@ static void wt_status_print_updated(struct wt_status *s)
- 		    d->index_status == DIFF_STATUS_UNMERGED)
- 			continue;
- 		if (!shown_header) {
--			wt_status_print_cached_header(s);
-+			wt_longstatus_print_cached_header(s);
- 			s->commitable = 1;
- 			shown_header = 1;
- 		}
--		wt_status_print_change_data(s, WT_STATUS_UPDATED, it);
-+		wt_longstatus_print_change_data(s, WT_STATUS_UPDATED, it);
- 	}
- 	if (shown_header)
--		wt_status_print_trailer(s);
-+		wt_longstatus_print_trailer(s);
- }
- 
- /*
-@@ -703,7 +703,7 @@ static int wt_status_check_worktree_changes(struct wt_status *s,
- 	return changes;
- }
- 
--static void wt_status_print_changed(struct wt_status *s)
-+static void wt_longstatus_print_changed(struct wt_status *s)
- {
- 	int i, dirty_submodules;
- 	int worktree_changes = wt_status_check_worktree_changes(s, &dirty_submodules);
-@@ -711,7 +711,7 @@ static void wt_status_print_changed(struct wt_status *s)
- 	if (!worktree_changes)
- 		return;
- 
--	wt_status_print_dirty_header(s, worktree_changes < 0, dirty_submodules);
-+	wt_longstatus_print_dirty_header(s, worktree_changes < 0, dirty_submodules);
- 
- 	for (i = 0; i < s->change.nr; i++) {
- 		struct wt_status_change_data *d;
-@@ -721,12 +721,12 @@ static void wt_status_print_changed(struct wt_status *s)
- 		if (!d->worktree_status ||
- 		    d->worktree_status == DIFF_STATUS_UNMERGED)
- 			continue;
--		wt_status_print_change_data(s, WT_STATUS_CHANGED, it);
-+		wt_longstatus_print_change_data(s, WT_STATUS_CHANGED, it);
- 	}
--	wt_status_print_trailer(s);
-+	wt_longstatus_print_trailer(s);
- }
- 
--static void wt_status_print_submodule_summary(struct wt_status *s, int uncommitted)
-+static void wt_longstatus_print_submodule_summary(struct wt_status *s, int uncommitted)
- {
- 	struct child_process sm_summary = CHILD_PROCESS_INIT;
- 	struct strbuf cmd_stdout = STRBUF_INIT;
-@@ -772,10 +772,10 @@ static void wt_status_print_submodule_summary(struct wt_status *s, int uncommitt
- 	strbuf_release(&summary);
- }
- 
--static void wt_status_print_other(struct wt_status *s,
--				  struct string_list *l,
--				  const char *what,
--				  const char *how)
-+static void wt_longstatus_print_other(struct wt_status *s,
-+				      struct string_list *l,
-+				      const char *what,
-+				      const char *how)
- {
- 	int i;
- 	struct strbuf buf = STRBUF_INIT;
-@@ -785,7 +785,7 @@ static void wt_status_print_other(struct wt_status *s,
- 	if (!l->nr)
- 		return;
- 
--	wt_status_print_other_header(s, what, how);
-+	wt_longstatus_print_other_header(s, what, how);
- 
- 	for (i = 0; i < l->nr; i++) {
- 		struct string_list_item *it;
-@@ -845,7 +845,7 @@ void wt_status_add_cut_line(FILE *fp)
- 	strbuf_release(&buf);
- }
- 
--static void wt_status_print_verbose(struct wt_status *s)
-+static void wt_longstatus_print_verbose(struct wt_status *s)
- {
- 	struct rev_info rev;
- 	struct setup_revision_opt opt;
-@@ -878,7 +878,7 @@ static void wt_status_print_verbose(struct wt_status *s)
- 	if (s->verbose > 1 && s->commitable) {
- 		/* print_updated() printed a header, so do we */
- 		if (s->fp != stdout)
--			wt_status_print_trailer(s);
-+			wt_longstatus_print_trailer(s);
- 		status_printf_ln(s, c, _("Changes to be committed:"));
- 		rev.diffopt.a_prefix = "c/";
- 		rev.diffopt.b_prefix = "i/";
-@@ -896,7 +896,7 @@ static void wt_status_print_verbose(struct wt_status *s)
- 	}
- }
- 
--static void wt_status_print_tracking(struct wt_status *s)
-+static void wt_longstatus_print_tracking(struct wt_status *s)
- {
- 	struct strbuf sb = STRBUF_INIT;
- 	const char *cp, *ep, *branch_name;
-@@ -962,7 +962,7 @@ static void show_merge_in_progress(struct wt_status *s,
- 			status_printf_ln(s, color,
- 				_("  (use \"git commit\" to conclude merge)"));
- 	}
--	wt_status_print_trailer(s);
-+	wt_longstatus_print_trailer(s);
- }
- 
- static void show_am_in_progress(struct wt_status *s,
-@@ -983,7 +983,7 @@ static void show_am_in_progress(struct wt_status *s,
- 		status_printf_ln(s, color,
- 			_("  (use \"git am --abort\" to restore the original branch)"));
- 	}
--	wt_status_print_trailer(s);
-+	wt_longstatus_print_trailer(s);
- }
- 
- static char *read_line_from_git_path(const char *filename)
-@@ -1207,7 +1207,7 @@ static void show_rebase_in_progress(struct wt_status *s,
- 				_("  (use \"git rebase --continue\" once you are satisfied with your changes)"));
- 		}
- 	}
--	wt_status_print_trailer(s);
-+	wt_longstatus_print_trailer(s);
- }
- 
- static void show_cherry_pick_in_progress(struct wt_status *s,
-@@ -1226,7 +1226,7 @@ static void show_cherry_pick_in_progress(struct wt_status *s,
- 		status_printf_ln(s, color,
- 			_("  (use \"git cherry-pick --abort\" to cancel the cherry-pick operation)"));
- 	}
--	wt_status_print_trailer(s);
-+	wt_longstatus_print_trailer(s);
- }
- 
- static void show_revert_in_progress(struct wt_status *s,
-@@ -1245,7 +1245,7 @@ static void show_revert_in_progress(struct wt_status *s,
- 		status_printf_ln(s, color,
- 			_("  (use \"git revert --abort\" to cancel the revert operation)"));
- 	}
--	wt_status_print_trailer(s);
-+	wt_longstatus_print_trailer(s);
- }
- 
- static void show_bisect_in_progress(struct wt_status *s,
-@@ -1262,7 +1262,7 @@ static void show_bisect_in_progress(struct wt_status *s,
- 	if (s->hints)
- 		status_printf_ln(s, color,
- 			_("  (use \"git bisect reset\" to get back to the original branch)"));
--	wt_status_print_trailer(s);
-+	wt_longstatus_print_trailer(s);
- }
- 
- /*
-@@ -1432,8 +1432,8 @@ void wt_status_get_state(struct wt_status_state *state,
- 		wt_status_get_detached_from(state);
- }
- 
--static void wt_status_print_state(struct wt_status *s,
--				  struct wt_status_state *state)
-+static void wt_longstatus_print_state(struct wt_status *s,
-+				      struct wt_status_state *state)
- {
- 	const char *state_color = color(WT_STATUS_HEADER, s);
- 	if (state->merge_in_progress)
-@@ -1450,7 +1450,7 @@ static void wt_status_print_state(struct wt_status *s,
+@@ -1450,7 +1450,7 @@ static void wt_longstatus_print_state(struct wt_status *s,
  		show_bisect_in_progress(s, state, state_color);
  }
  
--void wt_status_print(struct wt_status *s)
-+void wt_longstatus_print(struct wt_status *s)
+-void wt_longstatus_print(struct wt_status *s)
++static void wt_longstatus_print(struct wt_status *s)
  {
  	const char *branch_color = color(WT_STATUS_ONBRANCH, s);
  	const char *branch_status_color = color(WT_STATUS_HEADER, s);
-@@ -1487,10 +1487,10 @@ void wt_status_print(struct wt_status *s)
- 		status_printf_more(s, branch_status_color, "%s", on_what);
- 		status_printf_more(s, branch_color, "%s\n", branch_name);
- 		if (!s->is_initial)
--			wt_status_print_tracking(s);
-+			wt_longstatus_print_tracking(s);
- 	}
+@@ -1717,7 +1717,7 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
+ 	fputc(s->null_termination ? '\0' : '\n', s->fp);
+ }
  
--	wt_status_print_state(s, &state);
-+	wt_longstatus_print_state(s, &state);
- 	free(state.branch);
- 	free(state.onto);
- 	free(state.detached_from);
-@@ -1501,19 +1501,19 @@ void wt_status_print(struct wt_status *s)
- 		status_printf_ln(s, color(WT_STATUS_HEADER, s), "%s", "");
- 	}
+-void wt_shortstatus_print(struct wt_status *s)
++static void wt_shortstatus_print(struct wt_status *s)
+ {
+ 	int i;
  
--	wt_status_print_updated(s);
--	wt_status_print_unmerged(s);
--	wt_status_print_changed(s);
-+	wt_longstatus_print_updated(s);
-+	wt_longstatus_print_unmerged(s);
-+	wt_longstatus_print_changed(s);
- 	if (s->submodule_summary &&
- 	    (!s->ignore_submodule_arg ||
- 	     strcmp(s->ignore_submodule_arg, "all"))) {
--		wt_status_print_submodule_summary(s, 0);  /* staged */
--		wt_status_print_submodule_summary(s, 1);  /* unstaged */
-+		wt_longstatus_print_submodule_summary(s, 0);  /* staged */
-+		wt_longstatus_print_submodule_summary(s, 1);  /* unstaged */
+@@ -1749,7 +1749,7 @@ void wt_shortstatus_print(struct wt_status *s)
  	}
- 	if (s->show_untracked_files) {
--		wt_status_print_other(s, &s->untracked, _("Untracked files"), "add");
-+		wt_longstatus_print_other(s, &s->untracked, _("Untracked files"), "add");
- 		if (s->show_ignored_files)
--			wt_status_print_other(s, &s->ignored, _("Ignored files"), "add -f");
-+			wt_longstatus_print_other(s, &s->ignored, _("Ignored files"), "add -f");
- 		if (advice_status_u_option && 2000 < s->untracked_in_ms) {
- 			status_printf_ln(s, GIT_COLOR_NORMAL, "%s", "");
- 			status_printf_ln(s, GIT_COLOR_NORMAL,
-@@ -1528,7 +1528,7 @@ void wt_status_print(struct wt_status *s)
- 			? _(" (use -u option to show untracked files)") : "");
+ }
  
- 	if (s->verbose)
--		wt_status_print_verbose(s);
-+		wt_longstatus_print_verbose(s);
- 	if (!s->commitable) {
- 		if (s->amend)
- 			status_printf_ln(s, GIT_COLOR_NORMAL, _("No changes"));
+-void wt_porcelain_print(struct wt_status *s)
++static void wt_porcelain_print(struct wt_status *s)
+ {
+ 	s->use_color = 0;
+ 	s->relative_paths = 0;
+@@ -1757,3 +1757,22 @@ void wt_porcelain_print(struct wt_status *s)
+ 	s->no_gettext = 1;
+ 	wt_shortstatus_print(s);
+ }
++
++void wt_status_print(struct wt_status *s)
++{
++	switch (s->status_format) {
++	case STATUS_FORMAT_SHORT:
++		wt_shortstatus_print(s);
++		break;
++	case STATUS_FORMAT_PORCELAIN:
++		wt_porcelain_print(s);
++		break;
++	case STATUS_FORMAT_UNSPECIFIED:
++		die("BUG: finalize_deferred_config() should have been called");
++		break;
++	case STATUS_FORMAT_NONE:
++	case STATUS_FORMAT_LONG:
++		wt_longstatus_print(s);
++		break;
++	}
++}
 diff --git a/wt-status.h b/wt-status.h
-index 2ca93f6..2023a3c 100644
+index 2023a3c..9389076 100644
 --- a/wt-status.h
 +++ b/wt-status.h
-@@ -99,7 +99,6 @@ struct wt_status_state {
+@@ -43,6 +43,15 @@ struct wt_status_change_data {
+ 	unsigned new_submodule_commits : 1;
+ };
+ 
++enum wt_status_format {
++	STATUS_FORMAT_NONE = 0,
++	STATUS_FORMAT_LONG,
++	STATUS_FORMAT_SHORT,
++	STATUS_FORMAT_PORCELAIN,
++
++	STATUS_FORMAT_UNSPECIFIED
++};
++
+ struct wt_status {
+ 	int is_initial;
+ 	char *branch;
+@@ -66,6 +75,8 @@ struct wt_status {
+ 	int show_branch;
+ 	int hints;
+ 
++	enum wt_status_format status_format;
++
+ 	/* These are computed during processing of the individual sections */
+ 	int commitable;
+ 	int workdir_dirty;
+@@ -99,6 +110,7 @@ struct wt_status_state {
  void wt_status_truncate_message_at_cut_line(struct strbuf *);
  void wt_status_add_cut_line(FILE *fp);
  void wt_status_prepare(struct wt_status *s);
--void wt_status_print(struct wt_status *s);
++void wt_status_print(struct wt_status *s);
  void wt_status_collect(struct wt_status *s);
  void wt_status_get_state(struct wt_status_state *state, int get_detached_from);
  int wt_status_check_rebase(const struct worktree *wt,
-@@ -107,6 +106,7 @@ int wt_status_check_rebase(const struct worktree *wt,
+@@ -106,10 +118,6 @@ int wt_status_check_rebase(const struct worktree *wt,
  int wt_status_check_bisect(const struct worktree *wt,
  			   struct wt_status_state *state);
  
-+void wt_longstatus_print(struct wt_status *s);
- void wt_shortstatus_print(struct wt_status *s);
- void wt_porcelain_print(struct wt_status *s);
- 
+-void wt_longstatus_print(struct wt_status *s);
+-void wt_shortstatus_print(struct wt_status *s);
+-void wt_porcelain_print(struct wt_status *s);
+-
+ __attribute__((format (printf, 3, 4)))
+ void status_printf_ln(struct wt_status *s, const char *color, const char *fmt, ...);
+ __attribute__((format (printf, 3, 4)))
 -- 
 2.8.0.rc4.17.gac42084.dirty
 
