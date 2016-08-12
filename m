@@ -2,88 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F8611F859
-	for <e@80x24.org>; Fri, 12 Aug 2016 17:07:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8B751F859
+	for <e@80x24.org>; Fri, 12 Aug 2016 17:09:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932180AbcHLRHN (ORCPT <rfc822;e@80x24.org>);
-	Fri, 12 Aug 2016 13:07:13 -0400
-Received: from mail-io0-f177.google.com ([209.85.223.177]:33950 "EHLO
-	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752637AbcHLRHM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2016 13:07:12 -0400
-Received: by mail-io0-f177.google.com with SMTP id q83so30252728iod.1
-        for <git@vger.kernel.org>; Fri, 12 Aug 2016 10:07:12 -0700 (PDT)
+	id S1752720AbcHLRJD convert rfc822-to-8bit (ORCPT
+	<rfc822;e@80x24.org>); Fri, 12 Aug 2016 13:09:03 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:36475 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752696AbcHLRJA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2016 13:09:00 -0400
+Received: by mail-wm0-f68.google.com with SMTP id i138so3973805wmf.3
+        for <git@vger.kernel.org>; Fri, 12 Aug 2016 10:08:53 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=mVe6EKJqyDqWYAOyDyd93zQ/ejYtAFzNS4FyxIDP7Qg=;
-        b=ZtCXUaVZ+t4Os0uR8tAVIlw+9zgn2R5ikGpJwPAhwIBWKKbx/Kr367Zc0BHhFg77MC
-         HD5K6OkwxQNvlCJE9IO5sCtquuN2WVzrutyI99wecwlNp+Ojx1AZ/cGrEDSZ+qsd5DQK
-         VPsoqbiXw7WdwSvLdu81Z0ZZBDJ4LrkBuPnAeqEyaZvW/j36ZNnep6QdG166hZi3PLJ7
-         06smXogBdtCe0WcxE+MoJWL9bga2/F0qYncwvT7nv9s/XcT2XEeHYQIsiZcHr3eLZ0Zc
-         kiP3gQXeEIs0lh326ya8XXZdhj8vOIlasOJGIypXOn+LiGIs1ii+xOwg+1r/LuZD+7B2
-         vukQ==
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=+BX+u4yaHSDBpDaYD6KdY6ym4wx/RfevO7zlDr17bv8=;
+        b=KJ+htsB5jiRe7XiOG6cErVrD28EQdVOBm9nYU7gLsao8FDkLRUPUoC+fTQeuTqm8a8
+         ACfwAirUFdu6iEnpQNXarqZksBvRD/nC17ETKfVO501cPLw6hVrpfPMEbKMgBhaDh/d5
+         E90zWjxt+Tvikwraexit2TBiC7RvJQw0FH7pH9qtDUzsMbSaJA6+c5gjxJ255/813sFM
+         csnskHqLXmKOrKRr9sheFX/mI/sF29Hvby0Zo5fODPNBc4PdxxvEIG8eTvdA5L2IyUNs
+         wb4DkhJh3AFJmmjBLToAwVlmRoiKSP9uv7It4CNT3ZGAj8QsnLmN+ESQ96mMVddlgAK9
+         4odQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=mVe6EKJqyDqWYAOyDyd93zQ/ejYtAFzNS4FyxIDP7Qg=;
-        b=UNLIZy/tVGDoS75EkUpEoDDlpHZ/AquGGiJFs5+8q7fX7YDVj7wlthe8UEmPMZHF4R
-         IbhG8qC4klVbWW0NEG5koelpN48koBWX2k3d3YqcoFvSfwhPPVLDFekrZiQ3YMAGA4oF
-         TL3iKdV3HSblsxXmTqRy1+sqcONRUZkoe75rMMgyOMzy+V3WpzpDKd5ZQQdHrcDVOWtl
-         1tbgw2Tdh5nvvlTLMG2ycMzMcLNn9uo+YLYu7B+7HLgz7bYGYFg+/FRnKKZ2oISDBDob
-         K2Yp+BrZZnyrd1dWfxZAPaxG3bHGMsFSepz9gt5s5y7hoNWLqxzND1db/SiBKzcmDjnB
-         OP1w==
-X-Gm-Message-State: AEkooutD+oxQDEb4yE/H74uVMfdGrZu0VJuSNASNnxWfw1R7BruPsxLdgfK2Dd8uFT/HXM52iWRMMD1HDpjbEUzT
-X-Received: by 10.107.144.10 with SMTP id s10mr18561101iod.165.1471021631521;
- Fri, 12 Aug 2016 10:07:11 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Fri, 12 Aug 2016 10:07:11 -0700 (PDT)
-In-Reply-To: <509A907F-B1B5-4244-B1C7-F1190296208D@gmail.com>
-References: <20160803164225.46355-1-larsxschneider@gmail.com/>
- <20160810130411.12419-1-larsxschneider@gmail.com> <20160810130411.12419-15-larsxschneider@gmail.com>
- <CAGZ79kboxgBRHSa2s7CKZ1Uo=13WT=rT8VHCNJNj_Q9jQzZAYw@mail.gmail.com> <509A907F-B1B5-4244-B1C7-F1190296208D@gmail.com>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Fri, 12 Aug 2016 10:07:11 -0700
-Message-ID: <CAGZ79kYL5ajdyJK8Yimy2O3b=x=46D2VuNgm2aZ5nD703y1A3Q@mail.gmail.com>
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=+BX+u4yaHSDBpDaYD6KdY6ym4wx/RfevO7zlDr17bv8=;
+        b=Dk9uU2LKvs0/741jAM+bzm7O1UBk6+9176U4msjCrMU+mzB9Tz8zlbul14Qg8hKDG3
+         CGK38n/XfgHPCOFdCREdM72OaWtobTktlz1o9WFSKJfnX5ejD02vmsNYvghgVEOLLBnr
+         EEMZLziJrPPbHhf2yPgaViz3tHhzG+wh98kDpkEz7tWGH2Qn68Xb3lqqOQNzOSirS1J/
+         jQ1ZEz279PVnIroGUXtZkh1ich84SV3SoZJQ/HDYx2RlCARt0lwyPUc4ebABfrnJ6c5I
+         KWp0R3lDUsWAwP68nIoEjI5Wn3mvw4de2ua3A6AK6YFiC9KcOMqOjqq25APlsFYLxqhA
+         Sv6A==
+X-Gm-Message-State: AEkoouspvejwjqMBY1PhrVTos17sSMx8NmUjRFPFmukvrJie1p/r5V/UFKAyFpGLrGO3Jg==
+X-Received: by 10.194.87.194 with SMTP id ba2mr18638849wjb.100.1471021732562;
+        Fri, 12 Aug 2016 10:08:52 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id jq5sm8362632wjc.20.2016.08.12.10.08.51
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 12 Aug 2016 10:08:52 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
 Subject: Re: [PATCH v5 14/15] convert: add filter.<driver>.process option
-To:	Lars Schneider <larsxschneider@gmail.com>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>,
+From:	Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <CAGZ79kaRKROUganF838w29rCkJ592sZvu+q9fo+h4a4sPeDXMQ@mail.gmail.com>
+Date:	Fri, 12 Aug 2016 19:08:51 +0200
+Cc:	Jeff King <peff@peff.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	Martin-Louis Bright <mlbright@gmail.com>,
-	Eric Wong <e@80x24.org>, Jeff King <peff@peff.net>,
+	=?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+	mlbright@gmail.com, Eric Wong <e@80x24.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>, ben@wijen.net
-Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+Message-Id: <52049A60-6CEB-40E5-A013-409CFC20252F@gmail.com>
+References: <20160803164225.46355-1-larsxschneider@gmail.com/> <20160810130411.12419-1-larsxschneider@gmail.com> <20160810130411.12419-15-larsxschneider@gmail.com> <CAGZ79kboxgBRHSa2s7CKZ1Uo=13WT=rT8VHCNJNj_Q9jQzZAYw@mail.gmail.com> <20160812163809.3wdkuqegxfjam2yn@sigill.intra.peff.net> <CAGZ79kaRKROUganF838w29rCkJ592sZvu+q9fo+h4a4sPeDXMQ@mail.gmail.com>
+To:	Stefan Beller <sbeller@google.com>
+X-Mailer: Apple Mail (2.3124)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Aug 12, 2016 at 9:59 AM, Lars Schneider
-<larsxschneider@gmail.com> wrote:
->
-> The welcome message is necessary to distinguish the long running
-> filter protocol (v2) from the current one-shot filter protocol (v1).
-> This is becomes important if a users tries to use a v1 clean/smudge
-> filter with the v2 git config settings.
 
-Oh I see, that's why we're at v2 now.
-How do you distinguish between v1 and v2? Does the welcome message
-need to follow a certain pattern to be recognized to make it v2+ ?
+> On 12 Aug 2016, at 18:48, Stefan Beller <sbeller@google.com> wrote:
+> 
+> On Fri, Aug 12, 2016 at 9:38 AM, Jeff King <peff@peff.net> wrote:
+>> On Fri, Aug 12, 2016 at 09:33:18AM -0700, Stefan Beller wrote:
+>> 
+>>>> If the result content is empty then the filter is expected to respond
+>>>> with a success status and an empty list.
+>>>> ------------------------
+>>>> packet:          git< status=success\n
+>>>> packet:          git< 0000
+>>>> packet:          git< 0000  # empty content!
+>>>> packet:          git< 0000  # empty list!
+>>>> ------------------------
+>>> 
+>>> Why do we need the last flush packet? We'd expect as many successes
+>>> as we send out contents? Do we plan on interleaving operation, i.e.
+>>> Git sends out 10 files but the filter process is not as fast as Git sending
+>>> out and the answers trickle in slowly?
+>> 
+>> There was prior discussion in the thread, but basically, it is there to
+>> be able to signal an error that is encountered midway through sending
+>> the file (i.e., to say "status=error"). If you do not have a final
+>> flush, then you would send nothing, and the receiver would be left
+>> wondering if you were successful, or if it simply did not get your error
+>> report yet.
+> 
+>    I did not follow the prior discussion, so I approached this review with
+>    no prior knowledge from prior reviews, but instead read through and
+>    was asking a lot of questions that came up immediately. In case my
+>    questions are too dumb just omit them, but I thought they were good
+>    material to answer in a commit message ("Why did we do it this way
+>    and not differently").
 
->
-> Thanks a lot for the review,
-> Lars
+Thanks! That's very helpful and I will address your questions in the commit
+message as anyone looking at this commit in the future will have no prior 
+knowledge, too.
 
-Sorry for repeating the questions (it seems I missed
-a lot of the prior discussion), but I think these questions
-may help future readers of the commit message,
+
+> Thanks for the explanation. So this is similar as the situation below
+> that we wait for the flush and then an error/success report?
+
+Correct. If we would just process the status packet then we wouldn't
+even need to wait for the flush. I added flush because that allows us
+to send an arbitrary list of key=value pairs in the future.
+
+
+>>>> If the filter experiences an error during processing, then it can
+>>>> send the status "error". Depending on the `filter.<driver>.required`
+>>>> flag Git will interpret that as error but it will not stop or restart
+>>>> the filter process.
+>>>> ------------------------
+>>>> packet:          git< status=success\n
+>>> 
+>>> So the first success is meaningless essentially?
+>>> Would it make sense to move the sucess behind the content sending
+>>> in all cases?
+>> 
+>> No, the first success says "good so far, here's the file content". The
+>> second says "I succeeded in sending you the file content".
+>> 
+>> You _can_ drop the first one, but it may be more convenient for the
+>> receiver to know up-front that there was a failure.
+> 
+> 
+> If there was a failure upfront, it would become
+> 
+> packet:          git< 0000
+> # no content is encapsulated here
+> packet:          git< 0000
+> packet:          git< status=error\n
+> packet:          git< 0000
+
+No, a failure upfront would look like this (see documentation):
+
+------------------------
+packet:          git< status=error\n
+packet:          git< 0000
+------------------------
+
+No content and no 2nd key=value pair list is exchanged after an error.
+
+
+
+> so from a protocol side I'd claim it doesn't look bad.
+> I assume with convenient you mean the implementation
+> side of things?
+> 
+> If we do the success first and then error out halfway, we
+> still have to clean up, so I do not see how this impacts
+> implementation?
+
+That is true. The reasoning is that an error in between is somewhat
+less expected. Therefore additional work is OK.
+
+An error upfront is much more likely because it is also a mechanism
+for the filter to reject certain files. If the filter is configured
+as "required=false" then this reject would actually be OK.
 
 Thanks,
-Stefan
+Lars
