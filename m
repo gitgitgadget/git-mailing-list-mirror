@@ -2,141 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 931BE1F859
-	for <e@80x24.org>; Fri, 12 Aug 2016 20:10:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F11021F859
+	for <e@80x24.org>; Fri, 12 Aug 2016 21:15:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751577AbcHLUKQ (ORCPT <rfc822;e@80x24.org>);
-	Fri, 12 Aug 2016 16:10:16 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35142 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751252AbcHLUKP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2016 16:10:15 -0400
-Received: by mail-wm0-f68.google.com with SMTP id i5so4850739wmg.2
-        for <git@vger.kernel.org>; Fri, 12 Aug 2016 13:10:15 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=bSG/1+Bs/X3f3oaZCnP3ftXOQTEsvAY/l2SZ/9ZyYwc=;
-        b=S1GAwsvAG0qn7iaTxU103HzjRW+KAaK1ZMhf/zLYcnRHp5hldLa7oqTyzsFPf2s+Ns
-         PjNioO4w1dvPyyyLb8PRlWyIkZAdjGYHgfVs112NNc43vYhbqCABx2vNdnJNZMCLqqZb
-         FXzYtqpKldeCSciZcvD4zsFJLAAofZ2PNloToc5UxmZeszXJzDb/Y8cAN79pLGHAY8v1
-         NVE9TurISwynGgheEL6GvSb3O+gJ8ZKCnPGObqtRy+hd3SxV83EzXbhX06oivC5VnBCq
-         dIcbmwu41PnHFwgbF0fzI0dofZ9U1dVIXD2pb+bYuMz3qiun82tCUPzwNBM74FUaociX
-         +RPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=bSG/1+Bs/X3f3oaZCnP3ftXOQTEsvAY/l2SZ/9ZyYwc=;
-        b=VyR1e4n7RtgFoKhKHRoP2ZgTFYDRDoZ3noSGKGmfiSZclUrcKui/gAHTgUPmbMR1e3
-         tBoBfI/aJh6wSaQ4HU/d/wyFk1U0a6h7qg6thvzolEXhZDp5QzjNohzgBLH3cvBH2IqO
-         TtoFV9IiNV4Be0Q7jsgkcpf+UQa5NB25fjEmpQYx/vslP+zrLw6zIr1Z/lQjjzfLMqJj
-         LRJqovJGEoH9TnpJ2NL1gmyeLnZSyil9XglNkgjNu66xhw5OjEunWk5k3XO4S/P/k+H1
-         Ku70nD+UiksCBDxty87PxJEXkPG25blkg6lkAO2cS56hA82GRcqZ/q5dlqw64wSttZ5x
-         OwgA==
-X-Gm-Message-State: AEkoouuGEaVMCNEza5DCP0W4qP0HSlJcoZI4nEAuqJxwpl6wOa6lt09LwTvAa1pHiS2TTg==
-X-Received: by 10.28.64.86 with SMTP id n83mr730027wma.52.1471032614358;
-        Fri, 12 Aug 2016 13:10:14 -0700 (PDT)
-Received: from localhost (cable-158-181-75-206.cust.telecolumbus.net. [158.181.75.206])
-        by smtp.gmail.com with ESMTPSA id kq2sm8933914wjc.41.2016.08.12.13.10.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 12 Aug 2016 13:10:13 -0700 (PDT)
-From:	Ralf Thielow <ralf.thielow@gmail.com>
-To:	git@vger.kernel.org, gitster@pobox.com, larsxschneider@gmail.com,
-	me@jnm2.com
-Cc:	Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] help: make option --help open man pages only for Git commands
-Date:	Fri, 12 Aug 2016 22:10:11 +0200
-Message-Id: <20160812201011.20233-1-ralf.thielow@gmail.com>
-X-Mailer: git-send-email 2.9.2.911.g31804cd.dirty
-In-Reply-To: <CAPc5daXicjUDi6B-MA8Sn=_UZ_jHvc8SE4ZXt2dHbbDQkD7=WA@mail.gmail.com>
-References: <CAPc5daXicjUDi6B-MA8Sn=_UZ_jHvc8SE4ZXt2dHbbDQkD7=WA@mail.gmail.com>
+	id S1752053AbcHLVP5 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 12 Aug 2016 17:15:57 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55533 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751010AbcHLVP4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2016 17:15:56 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 76BE335370;
+	Fri, 12 Aug 2016 17:15:55 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=IPKiBYlf4Be1OGAhY/5I8/1IqGc=; b=x5c7YC
+	Vmoekb540ob8fwHPWLy/64fQkPYjC26o5LXciULdnxc27WuX6qoUV07k9EvbKyTC
+	aKTwrYBhmkpljWpkcfEkMKDMZneJT9ogGDdnRHjcWNaWFioLWukXbiWnIjkeP7zQ
+	959D3zxVcK4thUYMABXLXWmEFxCTObkpfu7Rg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hzHocee1MUuRIBJUOjGWeSkAJLaDWzuU
+	I9JkuBAYqMYAP0ZB7Hcfd7GJV5c5tJJRP9WSIWI/0LltgD3uDRNc0WIctbHGpNxR
+	Gs6fmnfvBgcqzRGKsvll3jQ6IkFDbCdzhb7WQdFjhbsOx0YuIpGlzT999AFmnDRh
+	8wb8smDlhJs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6F12C3536F;
+	Fri, 12 Aug 2016 17:15:55 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D0C1F3536E;
+	Fri, 12 Aug 2016 17:15:54 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jacob Keller <jacob.e.keller@intel.com>
+Cc:	git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v5 2/3] diff: add --diff-line-prefix option for passing in a prefix
+References: <20160811225946.18381-1-jacob.e.keller@intel.com>
+	<20160811225946.18381-2-jacob.e.keller@intel.com>
+Date:	Fri, 12 Aug 2016 14:15:52 -0700
+In-Reply-To: <20160811225946.18381-2-jacob.e.keller@intel.com> (Jacob Keller's
+	message of "Thu, 11 Aug 2016 15:59:45 -0700")
+Message-ID: <xmqqvaz5vgc7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: F48C56D6-60D1-11E6-A104-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-If option --help is passed to a Git command, we try to open
-the man page of that command. However, we do it even for commands
-we don't know.  Make sure the command is known to Git before try
-to open the man page.  If we don't know the command, give the
-usual advice.
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
- builtin/help.c  | 21 ++++++++++++++-------
- t/t0012-help.sh | 15 +++++++++++++++
- 2 files changed, 29 insertions(+), 7 deletions(-)
- create mode 100755 t/t0012-help.sh
+> The prefix shall come first prior to any other prefix associated with
+> the --graph option or other source.
+>
+> Add tests for the same.
+>
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> ---
+> - v5
+> * Changed name to --diff-line-prefix since --line-prefix might indicate
+>   for other commands such as log, when it only modifies diff output
 
-diff --git a/builtin/help.c b/builtin/help.c
-index 8848013..55d45de 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -433,10 +433,22 @@ static void list_common_guides_help(void)
- 	putchar('\n');
- }
- 
-+static void check_git_cmd(const char* cmd) {
-+	char *alias = alias_lookup(cmd);
-+
-+	if (!is_git_command(cmd)) {
-+		if (alias) {
-+			printf_ln(_("`git %s' is aliased to `%s'"), cmd, alias);
-+			free(alias);
-+			exit(0);
-+		} else
-+			help_unknown_cmd(cmd);
-+	}
-+}
-+
- int cmd_help(int argc, const char **argv, const char *prefix)
- {
- 	int nongit;
--	char *alias;
- 	enum help_format parsed_help_format;
- 
- 	argc = parse_options(argc, argv, prefix, builtin_help_options,
-@@ -476,12 +488,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
- 	if (help_format == HELP_FORMAT_NONE)
- 		help_format = parse_help_format(DEFAULT_HELP_FORMAT);
- 
--	alias = alias_lookup(argv[0]);
--	if (alias && !is_git_command(argv[0])) {
--		printf_ln(_("`git %s' is aliased to `%s'"), argv[0], alias);
--		free(alias);
--		return 0;
--	}
-+	check_git_cmd(argv[0]);
- 
- 	switch (help_format) {
- 	case HELP_FORMAT_NONE:
-diff --git a/t/t0012-help.sh b/t/t0012-help.sh
-new file mode 100755
-index 0000000..0dab88d
---- /dev/null
-+++ b/t/t0012-help.sh
-@@ -0,0 +1,15 @@
-+#!/bin/sh
-+
-+test_description='help'
-+
-+. ./test-lib.sh
-+
-+test_expect_success "pass --help to unknown command" "
-+	cat <<-EOF >expected &&
-+		git: '123' is not a git command. See 'git --help'.
-+	EOF
-+	(git 123 --help 2>actual || true) &&
-+	test_i18ncmp expected actual
-+"
-+
-+test_done
--- 
-2.9.2.911.g31804cd.dirty
+As you are adding this to "diff.c", I think the option would be
+visible to "git log" anyway, and more importantly
+
+    git log --line-prefix='I I ' --graph --boundary -p HEAD^..HEAD
+
+should honor the line-prefix for the log message part.  I'd expect
+that its output would be like:
+
+I I * commit 3c90ffd2f01e2d0d080c8e42df2ee89709b324de
+I I | Author: Jacob Keller <jacob.keller@gmail.com>
+I I | Date:   Thu Aug 11 15:59:45 2016 -0700
+I I | 
+I I |     diff: add --diff-line-prefix option for passing in a prefix
+I I |     
+I I |     Add an option to pass additional prefix to be displayed before diff
+I I |     output. This feature will be used in a following patch to output correct
+I I |     ...
+I I |     Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+I I |     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+I I | 
+I I | diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+I I | index 705a873..f924f57 100644
+I I | --- a/Documentation/diff-options.txt
+I I | +++ b/Documentation/diff-options.txt
+I I | ...
+
+Otherwise, a "git log --graph -p --submodule=log-with-diff", when
+showing a commit in the superproject that changes submodule from
+commit A to commit B, wouldn't be able to run "git log --graph -p A..B",
+i.e. as if the command recursed beyond the module boundary, would
+it?
+
+
 
