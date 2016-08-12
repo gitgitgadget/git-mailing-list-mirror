@@ -6,49 +6,47 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A7121F859
-	for <e@80x24.org>; Fri, 12 Aug 2016 22:17:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A397F203BD
+	for <e@80x24.org>; Fri, 12 Aug 2016 22:23:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752206AbcHLWRj (ORCPT <rfc822;e@80x24.org>);
-	Fri, 12 Aug 2016 18:17:39 -0400
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:30423 "EHLO
+	id S1752243AbcHLWXb (ORCPT <rfc822;e@80x24.org>);
+	Fri, 12 Aug 2016 18:23:31 -0400
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:52594 "EHLO
 	smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751372AbcHLWRi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2016 18:17:38 -0400
+	with ESMTP id S1751372AbcHLWXa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2016 18:23:30 -0400
 Received: from PhilipOakley ([92.22.69.35])
 	by smtp.talktalk.net with SMTP
-	id YKlWbWaUoY8RwYKlWbsbIv; Fri, 12 Aug 2016 23:17:23 +0100
+	id YKrQbWauGY8RwYKrQbsbNj; Fri, 12 Aug 2016 23:23:29 +0100
 X-Originating-IP: [92.22.69.35]
 X-Spam:	0
 X-OAuthority: v=2.2 cv=b+Xw2ZOx c=1 sm=1 tr=0 a=118V6UEFpCLMRzptT8w30g==:117
- a=118V6UEFpCLMRzptT8w30g==:17 a=IkcTkHD0fZMA:10 a=8q6LdnVOAAAA:8
- a=xtxXYLxNAAAA:8 a=pGLkceISAAAA:8 a=5rxgeBVgAAAA:8 a=fqbMTqNF4WbzCJTDO8kA:9
- a=jNYSTCpFY2gkngftge3H:22 a=xts0dhWdiJbonKbuqhAr:22 a=6kGIvZw6iX1k4Y-7sg4_:22
- a=PwKx63F5tFurRwaNxrlG:22
-Message-ID: <38431C3FB1444813A222858D8F4D0390@PhilipOakley>
+ a=118V6UEFpCLMRzptT8w30g==:17 a=N659UExz7-8A:10 a=8q6LdnVOAAAA:8
+ a=xtxXYLxNAAAA:8 a=5rxgeBVgAAAA:8 a=1XWaLZrsAAAA:8 a=nIOBjO_3uPItlqc74vkA:9
+ a=jNYSTCpFY2gkngftge3H:22 a=xts0dhWdiJbonKbuqhAr:22 a=PwKx63F5tFurRwaNxrlG:22
+ a=nJcEw6yWrPvoIXZ49MH8:22
+Message-ID: <75C139198D66446D8DEE561855DE8D4E@PhilipOakley>
 Reply-To: "Philip Oakley" <philipoakley@iee.org>
 From:	"Philip Oakley" <philipoakley@iee.org>
 To:	"GitList" <git@vger.kernel.org>,
 	"Junio C Hamano" <gitster@pobox.com>,
 	"Marc Branchaud" <marcnarc@xiplink.com>
-Cc:	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-References: <20160720211007.5520-1-philipoakley@iee.org> <20160812070749.2920-1-philipoakley@iee.org> <20160812070749.2920-6-philipoakley@iee.org> <c3271034-8fc5-3e29-ea1a-1c543abc7c52@xiplink.com>
-Subject: Re: [PATCH v5 05/12] doc: revisions: extra clarification of <rev>^! notation effects
-Date:	Fri, 12 Aug 2016 23:17:21 +0100
+References: <20160720211007.5520-1-philipoakley@iee.org> <20160812070749.2920-1-philipoakley@iee.org> <20160812070749.2920-7-philipoakley@iee.org> <a3acb1fe-a1c2-cc66-315d-0dffb1291e8e@xiplink.com>
+Subject: Re: [PATCH v5 06/12] doc: revisions: single vs multi-parent notation comparison
+Date:	Fri, 12 Aug 2016 23:23:28 +0100
 Organization: OPDS
 MIME-Version: 1.0
 Content-Type: text/plain;
 	format=flowed;
-	charset="UTF-8";
+	charset="Windows-1252";
 	reply-type=response
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Priority: 3
 X-MSMail-Priority: Normal
 X-Mailer: Microsoft Outlook Express 6.00.2900.5931
 X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfHvdRC7TDGmfwWUg03IiB+CVam/vMTqUaRVGqpoYYB+U+6PEhwnl72v6Ngf/tWxdVTQrrm9IjPpEn8CxPNMQFU8wvMZxQbIGeJYzg/PC2f4H8aSv9hKi
- ORmGw7ewSnR5nx1FrYZUxOX6S0EWA6kaxUMHZcLnD2H4SCyD9RnSSW7HHHDwPRGyOREtyKY52WNMfBx0W+wXTRWrh03BG9bEchg05gF++suId2gduZgg7v69
- Z1K7FT0iA7Qy2iqbMpAUtQ==
+X-CMAE-Envelope: MS4wfFw1M98OKt/q1P78Tm1iRI9JFfgyi5Aqzk/LYjCKevnYPoXiujY99plf8kHo0SsnGu3wEQmq1g9THI4ufCVUWIrQuKq/0tbtBtIHsksk8rIxv1QYtSIM
+ OcLIVufyPOHBg5uURO5p49vSei1+kAy45FIJz9lTVw+gPTOiTZUOXjK4DvdL5s9/BLKkVGz6xzvhPDbzIsgYQ10+kMjxOq6zhMSEh0fi670QDnT9tfhnwjRj
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -59,46 +57,46 @@ From: "Marc Branchaud" <marcnarc@xiplink.com>
 >> Signed-off-by: Philip Oakley <philipoakley@iee.org>
 >> ---
 >> new
->> Cc: Jakub Narębski <jnareb@gmail.com>
->> https://public-inbox.org/git/578E4F4A.2020708%40gmail.com/
+>> Junio's final comment 
+>> https://public-inbox.org/git/xmqqwpkq6b4d.fsf%40gitster.mtv.corp.google.com/
 >> ---
->>  Documentation/revisions.txt | 3 ++-
->>  1 file changed, 2 insertions(+), 1 deletion(-)
+>>  Documentation/revisions.txt | 4 ++++
+>>  1 file changed, 4 insertions(+)
 >>
 >> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
->> index 3da0083..0b5044d 100644
+>> index 0b5044d..934d071 100644
 >> --- a/Documentation/revisions.txt
 >> +++ b/Documentation/revisions.txt
->> @@ -281,7 +281,8 @@ for naming a set that is formed by a commit and its 
->> parent commits.
->>
->>  The 'r1{caret}@' notation means all parents of 'r1'.
->>
->> -'r1{caret}!' includes commit 'r1' but excludes all of its parents.
->> +'r1{caret}!' notation includes commit 'r1' but excludes all of its 
+>> @@ -284,6 +284,10 @@ The 'r1{caret}@' notation means all parents of 'r1'.
+>>  'r1{caret}!' notation includes commit 'r1' but excludes all of its 
 >> parents.
+>>  This is the single commit 'r1', if standalone.
+>>
+>> +While '<rev>{caret}<n>' was about specifying a single commit parent, 
+>> these
+>> +two notations consider all its parents. For example you can say
+>> +'HEAD{caret}2^@', however you cannot say 'HEAD{caret}@{caret}2'.
 >
-> This sentence should start with "The".
+> That ^ should be {caret}, right?
+>
+Yes (I think so - will change).
 
-Accepted. I'd simply split the the previous text, so the nice run-on effect 
-it initially had has been lost.
+I had planned to change it but it looks like I missed it.
 
->
->> +This is the single commit 'r1', if standalone.
->
-> That reads awkwardly to me.  Perhaps
->
->        By itself, this notation denotes the single commit 'r1'.
+In an earlier version I hadn't changed any of them (or maybe just one) and 
+the asciidoc barfed. I suspect that the ^ ^ symbols have to be paired 
+properly, and a bad pairing around / across the quotes makes the parsing 
+fail. it looks like singletons (which clearly never pair) are accespted 'as 
+is'
 
-Like it. I'd toyed wth quite a few variants. It's jsut a case of finding the 
-nicest one;-)
+I think the later examples are inside some form of a block quote with no 
+expansions at all.
 
->
-> ?
->
+--
+Philip
+
+
 > M.
 >
-> --
-
-Philip 
+> 
 
