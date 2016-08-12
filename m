@@ -2,80 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D7291F859
-	for <e@80x24.org>; Fri, 12 Aug 2016 16:25:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1B341F859
+	for <e@80x24.org>; Fri, 12 Aug 2016 16:28:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752455AbcHLQZu (ORCPT <rfc822;e@80x24.org>);
-	Fri, 12 Aug 2016 12:25:50 -0400
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:36296 "EHLO
-	mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752164AbcHLQZt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2016 12:25:49 -0400
-Received: by mail-yw0-f195.google.com with SMTP id u134so1311122ywg.3
-        for <git@vger.kernel.org>; Fri, 12 Aug 2016 09:25:48 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=o6MV36GEY6GqmKcv8qvD5T2LWdzdcbVjipUp9UBLueY=;
-        b=nK2WGPhfELmyJq1o0TzrhVdn7HCDR3n6+ScsDXUVbPWVbXyPAbTvr2mF+xV2ZrWpw+
-         ZUQ3FsowgNamtgvVAGCGVKTl8g50m0SzIM/PA+9J4drNg6fDhjPNQXD/7WX8r+JsS87N
-         1PZMFcPW1apD9LpGv7QNjILCpHTpfEIT7s7dfCpHTUxWVYSI59iJAC+qeXxiCEbZW/xG
-         q+K0iq89b8OeXSwPIDw07VDS/fIzeAbrbuazGeloq2ICBM4vYCpZ18RhkRR7aNyITm1V
-         sybvcAMc6bfvOwFLOIvChV2/xK5WJD8SHyuq1HkbP65hNHvhvMjKEMJCOarZBeE2J7X5
-         8fxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=o6MV36GEY6GqmKcv8qvD5T2LWdzdcbVjipUp9UBLueY=;
-        b=Ceff3g0FETf2U2frli4J2pCPukFf95qS9Sz/clgxPpRJpzBY01NfEWPKnBECqz+4nJ
-         hdomzvcsxu0HQkmyWiV2SBEFhTmDdez0ZVoqOAEEe5yNfDVhmAgURJVhXpmJ1+84XHz6
-         Dp9nuF3sYwUW5ggHbqHt6+O8hW+y+KjU3wA2rfZD1G3e9jAH/5KtaUlxvznfSpCjcQ7i
-         +vQ2fWkGRaQbWjQaaV34OpI5T6cu+O3fDT/gDFh/BNnlk+0iiUqNutfumSGWqS78IYBu
-         aQ/q/Z8NpAqSwltsYqu4PseSruCPatAUzJVGmWvNln8bJyuatMPJL4JwrZkYbcRRiCEi
-         WxnQ==
-X-Gm-Message-State: AEkoous+8g4R/KfF+836xRJVDGV91bpkNmrgOgbI3MUxqf4ayniwaxqprK/J2z4HClqN5dTJhjaM/MsWkzYi+g==
-X-Received: by 10.13.209.71 with SMTP id t68mr11299322ywd.275.1471019148339;
- Fri, 12 Aug 2016 09:25:48 -0700 (PDT)
+	id S1752781AbcHLQ2b (ORCPT <rfc822;e@80x24.org>);
+	Fri, 12 Aug 2016 12:28:31 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54283 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752372AbcHLQ2a (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2016 12:28:30 -0400
+Received: (qmail 6878 invoked by uid 109); 12 Aug 2016 16:28:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 12 Aug 2016 16:28:28 +0000
+Received: (qmail 21055 invoked by uid 111); 12 Aug 2016 16:28:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 12 Aug 2016 12:28:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 Aug 2016 12:28:25 -0400
+Date:	Fri, 12 Aug 2016 12:28:25 -0400
+From:	Jeff King <peff@peff.net>
+To:	Stefan Beller <sbeller@google.com>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+Subject: Re: [PATCHv3] checkout: do not mention detach advice for explicit
+ --detach option
+Message-ID: <20160812162825.omk23srrbx6ofizc@sigill.intra.peff.net>
+References: <20160812153744.15045-1-sbeller@google.com>
+ <20160812154331.y2z6pv2w6cwsdsqw@sigill.intra.peff.net>
+ <CAGZ79kaOHdLrPownWdnZQSEzG6P6-iZqx2xu3MEG51DZU1U+Cg@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.13.250.4 with HTTP; Fri, 12 Aug 2016 09:25:28 -0700 (PDT)
-In-Reply-To: <CAKRjdd4V3OfDnzisxBofBUmtds7q7ejUtuV_-s96eUVf7fqwHA@mail.gmail.com>
-References: <CAKRjdd4WdVTgbT0gcR=a267+aEwD2Exztrc9gNau1nOXroC=ng@mail.gmail.com>
- <xmqqr39uxa33.fsf@gitster.mtv.corp.google.com> <A7A176B0-08CE-4D92-9756-51A59DF3B9D7@gmail.com>
- <CAKRjdd4V3OfDnzisxBofBUmtds7q7ejUtuV_-s96eUVf7fqwHA@mail.gmail.com>
-From:	Junio C Hamano <gitster@pobox.com>
-Date:	Fri, 12 Aug 2016 09:25:28 -0700
-X-Google-Sender-Auth: Xlgoj3zMPCbl0JmpkkjHGM7IJw0
-Message-ID: <CAPc5daXicjUDi6B-MA8Sn=_UZ_jHvc8SE4ZXt2dHbbDQkD7=WA@mail.gmail.com>
-Subject: Re: `git stash --help` tries to pull up nonexistent file gitstack.html
-To:	Joseph Musser <me@jnm2.com>
-Cc:	Lars Schneider <larsxschneider@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kaOHdLrPownWdnZQSEzG6P6-iZqx2xu3MEG51DZU1U+Cg@mail.gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Aug 12, 2016 at 9:15 AM, Joseph Musser <me@jnm2.com> wrote:
-> Oh, I'm embarrassed. The typo was mine, I must have typed `git stack
-> --help`. I would have expected a syntax error message or "did you
-> mean" suggestions; it didn't even enter my mind that it would look up
-> whatever I typed before --help and assume it existed on disk.
+On Fri, Aug 12, 2016 at 08:51:43AM -0700, Stefan Beller wrote:
 
-I actually think you found an interesting (albeit minor) bug.
-I think whenever "git" sees any word followed by "--help" and nothing else,
-it blindly turns it into "git help" followed by that word. I think it
-is reasonable
-to expect that "git foo --help" responds with "foo: no such subcommand",
-instead of "No manual entry for gitfoo".
+> > Hmm. Using "!test_cmp" seems weird to me, just because it would falsely
+> > claim success if something else unexpected changes. Our usual method for
+> > making sure some particular output does not appear is "test_i18ngrep"
+> > with a liberal pattern.
+> 
+> and I advanced the liberal a bit more. ;)
+> So maybe we'd be looking that no 'detached HEAD' occurs?
+> 
+>     test_i18ngrep ! "'detached HEAD'" actual
 
-It may not be too hard to arrange; this might be another low-hanging
-fruit if somebody wants to try a patch ;-)
+I was thinking maybe "advice:" to look for any advice, but at this point
+we are guessing about what might change in the future.
 
-Thanks.
+> I think testing that we do not give out advice (i.e. behave the same as if
+> not giving out advice) is best tested to just compare the output to
+> the output of "git -c advice.detachedHead=false ...", which is what I do here.
+> This seems to be future proof to me no matter how we reword the advice or
+> the actual message on checkout?
+
+Yeah, I guess that is reasonable. I thought at first you were comparing
+more distinct commands, but if only the one thing is changing, that
+seems reasonable.
+
+You may also want to grab stderr, too (I'm actually surprised advice
+goes to stdout and not stderr, and that is something that seems
+plausible to change in the future).
+
+-Peff
