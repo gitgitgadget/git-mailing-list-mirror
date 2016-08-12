@@ -2,88 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2280C1F859
-	for <e@80x24.org>; Fri, 12 Aug 2016 18:16:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 372AA1F859
+	for <e@80x24.org>; Fri, 12 Aug 2016 18:30:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751862AbcHLSQa (ORCPT <rfc822;e@80x24.org>);
-	Fri, 12 Aug 2016 14:16:30 -0400
-Received: from mail-yw0-f179.google.com ([209.85.161.179]:34908 "EHLO
-	mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751392AbcHLSQa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2016 14:16:30 -0400
-Received: by mail-yw0-f179.google.com with SMTP id j12so19626894ywb.2
-        for <git@vger.kernel.org>; Fri, 12 Aug 2016 11:15:07 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=BN/j6gE9OIejqdvhJDY7knjgw6lHc8rDSm1Qd9ethk4=;
-        b=FLiZGyX24KZJnw1v43v3o+Q6Av505fxJ4KGfpI6PoOcLS5tiOr8yy6Ax3GvM14xvHE
-         9WVwXo0YIhzAyBwiPnlOEOUFJn0nH5a8cS4vHa9D8NNIBiIWz49E5MP6xklXUMm0O0RK
-         eTuTzcyCZ7zATN3/rjKJH57hd1Lz4TQRISkdMWx0+XGmzVg89RdrcuHYd1MWyRqHK+Lw
-         8f0VWaBURJLmOt1+wV/3uthlc4WZFljzX3JqCWNQvvo2ttycOnq6xaSCND9rAkjxn2GY
-         0FDXRgB0hrT1lroo8g2idxnETz5E1Vvt/yzFG/g/b8mIqUY7aYSgugovD/Qk+1CJwEU3
-         oYog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=BN/j6gE9OIejqdvhJDY7knjgw6lHc8rDSm1Qd9ethk4=;
-        b=NS3KE8yAhuUnQKG2fWFfRdLAUYcwbIafPqqzF5H9o6SBbeqA2d0AoRPlPPewbNTSkg
-         08VzKnt+sbySkDGvf2uDLM1sYI0oo9OThx/wYXLQnduwIfqgaCD7F+yxazil/YoBT8wV
-         IK5PHAb84EAaKau3OtxKrynz9hcG90yuAgbEThQkJ0RA+kOkkWOgrSDa4zhPb4W71/Tj
-         wylQ5U0G3eASk115gTTKmSUITxkmzkma9NHsBbMJ0CpXX5pBlHd0IY4msm+14OXfWiTZ
-         kLsVGc0zsPsYHbp1SEFa8UKMOkJKhH7xqASIv1WpngtxUxSXgWaOIGzowPOTnNrnMiPz
-         zV4g==
-X-Gm-Message-State: AEkoouuPmq5buGLL0oFefXMA08yGugdaRM6yPe1FrG4bxKEUV15iP/Wn47kKyP3RTKA6Tm6aIhLWfxA/7UGIpw==
-X-Received: by 10.129.99.67 with SMTP id x64mr11687176ywb.258.1471025707140;
- Fri, 12 Aug 2016 11:15:07 -0700 (PDT)
+	id S1751577AbcHLSaR (ORCPT <rfc822;e@80x24.org>);
+	Fri, 12 Aug 2016 14:30:17 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57963 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750989AbcHLSaQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2016 14:30:16 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6FE5634E42;
+	Fri, 12 Aug 2016 14:30:15 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WCk+zev2Vf5XJmCaigelGWAbYAE=; b=VxdZFl
+	SK+W//KMPviXWcTsHDg8jHDB/CgF+kx2iBZo59SfbUD0fpfa+KaGLXeNHboeNFij
+	5wICqXGF3bfLFCdPErnvDsDghCqNZg+1qX5pisptjX8B2hbigMH0G4pSk9wnqOhD
+	rrzwBKqFBsoAQLckWQZE+UX+ByUai4B2TEkYA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=twRvPZbHzb6pn02kJbvNi9zlOQx2R7Fb
+	Drq6/zlY6vWZqcjbuQ8bO5c4HFvT/3ITs/r4Ho4Zq5rqizXyzrjZ0MPwRLjubTS4
+	o6yRcOuKRhNzlN0fxnzPInbAZsbItChdlJ43D/g8GpuoL3IlMBFIJcVD04ZR0FpS
+	7r12Jz3vmZI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6865634E41;
+	Fri, 12 Aug 2016 14:30:15 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 45CE834E3F;
+	Fri, 12 Aug 2016 14:30:14 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Ivan Oleynikov <io@metrotek.spb.ru>,
+	"David A. Greene" <greened@obbligato.org>
+Cc:	git@vger.kernel.org, dvh@metrotek.spb.ru, apenwarr@gmail.com
+Subject: Re: [PATCH] git-subtree: compare file names by absolute paths
+References: <20160812154942.GA27294@metrotek.spb.ru>
+Date:	Fri, 12 Aug 2016 11:30:11 -0700
+In-Reply-To: <20160812154942.GA27294@metrotek.spb.ru> (Ivan Oleynikov's
+	message of "Fri, 12 Aug 2016 18:49:42 +0300")
+Message-ID: <xmqqwpjlx2ks.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.50.196 with HTTP; Fri, 12 Aug 2016 11:14:46 -0700 (PDT)
-In-Reply-To: <CAPc5daXicjUDi6B-MA8Sn=_UZ_jHvc8SE4ZXt2dHbbDQkD7=WA@mail.gmail.com>
-References: <CAKRjdd4WdVTgbT0gcR=a267+aEwD2Exztrc9gNau1nOXroC=ng@mail.gmail.com>
- <xmqqr39uxa33.fsf@gitster.mtv.corp.google.com> <A7A176B0-08CE-4D92-9756-51A59DF3B9D7@gmail.com>
- <CAKRjdd4V3OfDnzisxBofBUmtds7q7ejUtuV_-s96eUVf7fqwHA@mail.gmail.com> <CAPc5daXicjUDi6B-MA8Sn=_UZ_jHvc8SE4ZXt2dHbbDQkD7=WA@mail.gmail.com>
-From:	Jacob Keller <jacob.keller@gmail.com>
-Date:	Fri, 12 Aug 2016 11:14:46 -0700
-Message-ID: <CA+P7+xp7rpVRWgAXTe9sHN9=a+T+x0SnQPUCrR5_E9Qpufo6=Q@mail.gmail.com>
-Subject: Re: `git stash --help` tries to pull up nonexistent file gitstack.html
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Joseph Musser <me@jnm2.com>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: CF81F344-60BA-11E6-85B4-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Aug 12, 2016 at 9:25 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> On Fri, Aug 12, 2016 at 9:15 AM, Joseph Musser <me@jnm2.com> wrote:
->> Oh, I'm embarrassed. The typo was mine, I must have typed `git stack
->> --help`. I would have expected a syntax error message or "did you
->> mean" suggestions; it didn't even enter my mind that it would look up
->> whatever I typed before --help and assume it existed on disk.
->
-> I actually think you found an interesting (albeit minor) bug.
-> I think whenever "git" sees any word followed by "--help" and nothing else,
-> it blindly turns it into "git help" followed by that word. I think it
-> is reasonable
-> to expect that "git foo --help" responds with "foo: no such subcommand",
-> instead of "No manual entry for gitfoo".
->
-> It may not be too hard to arrange; this might be another low-hanging
-> fruit if somebody wants to try a patch ;-)
->
+Ivan Oleynikov <io@metrotek.spb.ru> writes:
 
-What about extension subcommands that aren't core? Wouldn't we prefer
-if it still tried to find help for those also? Just a thought to add
-to this.
+> Cc: git@vger.kernel.org,  dvh@metrotek.spb.ru,  apenwarr@gmail.com
 
-Thanks,
-Jake
+I think Avery no longer actively works on this script; Dave Greene
+has been helping it move forward by reviewing, so let's ask him to
+lend his eyes.
+
+> This commit removes false positive assertion fails of `git subtree split` when
+> the --prefix argument is not in a particular form produced by `git ls-tree`.
+>
+> For example, typical usage of the command could be:
+>
+>   git subtree split -b split --prefix=some/relative/path
+>
+> But
+>
+>   git subtree split -b split --prefix=./some/relative/path
+>
+> Would fail with multiple assertion errors. This commit makes the latter command
+> work without errors.
+>
+> Signed-off-by: Ivan Oleynikov <io@metrotek.spb.ru>
+> ---
+>
+> Notes:
+>     The bug fixed by this commit can be reproduced like this:
+>     
+>     $ git init
+>     Initialized empty Git repository in /tmp/test/.git/
+>     $ mkdir a b
+>     $ touch a/file b/file
+>     $ git add a
+>     $ git commit -m a
+>     [master (root-commit) b42584a] a
+>      1 file changed, 0 insertions($), 0 deletions(-)
+>      create mode 100644 a/file
+>     $ git add b
+>     $ git commit -m b
+>     [master 5114301] b
+>      1 file changed, 0 insertions($), 0 deletions(-)
+>      create mode 100644 b/file
+>     $ git subtree split -b split_a --prefix=a
+>     Created branch 'split_a'
+>     e9f5d81efacb33ab6cf67fe9ff376b33a483a92f
+>     $ git subtree split -b split_b --prefix=./b
+>     assertion failed:  [ b = ./b ]
+>     No new revisions were found
+>     
+>     When the commit is applied `git subtree split` works as expected:
+>     
+>     $ git init
+>     Initialized empty Git repository in /tmp/test/.git/
+>     $ mkdir a b
+>     $ touch a/file b/file
+>     $ git add a
+>     $ git commit -m a
+>     [master (root-commit) bc80f36] a
+>      1 file changed, 0 insertions($), 0 deletions(-)
+>      create mode 100644 a/file
+>     $ git add b
+>     $ git commit -m b
+>     [master e59c446] b
+>      1 file changed, 0 insertions($), 0 deletions(-)
+>      create mode 100644 b/file
+>     $ git subtree split -b split_a --prefix=a
+>     Created branch 'split_a'
+>     d542e9cd2de5956dd7ca77b169dba1c8418fa03a
+>     $ git subtree split -b split_b --prefix=./b
+>     Created branch 'split_b'
+>     3ae7854c0c395413c807b2bc4e75b651adc63f8c
+>
+>  contrib/subtree/git-subtree.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+> index b567eae..d9351b9 100755
+> --- a/contrib/subtree/git-subtree.sh
+> +++ b/contrib/subtree/git-subtree.sh
+> @@ -411,7 +411,7 @@ subtree_for_commit()
+>  	dir="$2"
+>  	git ls-tree "$commit" -- "$dir" |
+>  	while read mode type tree name; do
+> -		assert [ "$name" = "$dir" ]
+> +		assert [ "$(readlink -f $name)" = "$(readlink -f $dir)" ]
+>  		assert [ "$type" = "tree" -o "$type" = "commit" ]
+>  		[ "$type" = "commit" ] && continue  # ignore submodules
+>  		echo $tree
+> -- 
+> 2.1.4
