@@ -1,114 +1,120 @@
+Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
-X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FROM,T_DKIM_INVALID shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
-Received: from vger.kernel.org (vger.kernel.org [209.132.176.167])
-	by hand.yhbt.net (Postfix) with ESMTP id 321E22DC01B
-	for <normalperson@yhbt.net>; Mon,  3 Nov 2008 19:18:03 +0000 (UTC)
+X-Spam-ASN: AS31976 209.132.180.0/23
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF48D1F859
+	for <e@80x24.org>; Fri, 12 Aug 2016 22:25:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753825AbYKCTR4 (ORCPT <rfc822;normalperson@yhbt.net>);
-	Mon, 3 Nov 2008 14:17:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753815AbYKCTR4
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Nov 2008 14:17:56 -0500
-Received: from mu-out-0910.google.com ([209.85.134.186]:48345 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753825AbYKCTRz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Nov 2008 14:17:55 -0500
-Received: by mu-out-0910.google.com with SMTP id g7so2911173muf.1
-        for <git@vger.kernel.org>; Mon, 03 Nov 2008 11:17:51 -0800 (PST)
-Received: by 10.187.210.3 with SMTP id m3mr119631faq.59.1225739871027;
-        Mon, 03 Nov 2008 11:17:51 -0800 (PST)
-Received: from ?192.168.1.11? (abvp247.neoplus.adsl.tpnet.pl [83.8.213.247])
-        by mx.google.com with ESMTPS id k1sm21353424ugf.3.2008.11.03.11.17.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 03 Nov 2008 11:17:49 -0800 (PST)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=peuzB7Cuztv50RMyxbi3VJqULtZvM0wxXySUC7YBDxU=;
-        b=DWJ2jmoFq1OEJu+Q3A0qpqgfjUV4+5rkouBSm4+M4jG1Vf7TYeDua5x5shRx7/kwjn
-         f0UAQ6NctgixMTa2xoS25TFBzLAoN6jUmHuj617+IkRyqik/vIX2/sPtx1hNE/GXJ2J0
-         TbHWBbrymREoZXanxyEhPOvsgGogkKkCu1R+U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=P78+PRefrdD5HkJ6lZbRljGyhGL4mjTJBt3XfOujZSRHJDlsD/UhGSEYcaNJtPaTGL
-         MLGCDYnT8R8yQNZAN8sm5df1HE15qpp99He+Ty2eUeZaAYfhrrNYkFe9n/KfKVOLfv4P
-         va9PHq/UpYjze1sRX+kjMsFtuoCWgqLjzVeBI=
-From:	Jakub Narebski <jnareb@gmail.com>
-To:	Francis Galiegue <fg@one2team.net>
-Subject: Re: [RFC PATCH] gitweb: Support filtering projects by .htaccess files.
-Date:	Mon, 3 Nov 2008 20:17:47 +0100
-User-Agent: KMail/1.9.3
-Cc:	"Alexander Gavrilov" <angavrilov@gmail.com>, git@vger.kernel.org
-References: <200811031943.30033.angavrilov@gmail.com> <m38ws0fzca.fsf@localhost.localdomain> <200811031944.03116.fg@one2team.net>
-In-Reply-To: <200811031944.03116.fg@one2team.net>
+	id S1752147AbcHLWZ4 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 12 Aug 2016 18:25:56 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54619 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751732AbcHLWZ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2016 18:25:56 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 858C335A2E;
+	Fri, 12 Aug 2016 18:25:55 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SU+TikIifSqX1u+liVmyBJJ3lRY=; b=LkhLFU
+	eSCA2N6f6bH/P/6DqXVgJiXHUKoGUmmH7MGNMyDmBrbObIedzgfdHiK26Jt4wZoH
+	FhFSHiZO+1e9xydV7ALuKBlXoeb7yVGC/4HFKrWLzfPXShIBgZDMtx68JwVG31uF
+	X4IkcllACdztuC1p46btthpcAf96/g/eVm5RI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=m6vpR4LV3tGoE2DaqP5Nm8NzZ2Kz3xdg
+	3QylpQpDRsT4Nd+Xvf8N7xerfuhnLExsJON6UQsa1TGevD31bBCneuOmYLk/b6LN
+	qLL0065UwZssHWg+sK58p2SB/E+SF++UZ68gG5MEuat4ZU5k9V6LVHk75LzdNzty
+	dy+9p0K4CbE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7CA1C35A2D;
+	Fri, 12 Aug 2016 18:25:55 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ED70C35A2C;
+	Fri, 12 Aug 2016 18:25:54 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Stefan Beller <sbeller@google.com>
+Cc:	git@vger.kernel.org, jrnieder@gmail.com, Jens.Lehmann@web.de
+Subject: Re: [PATCHv4 5/8] clone: factor out checking for an alternate path
+References: <20160811231405.17318-1-sbeller@google.com>
+	<20160811231405.17318-6-sbeller@google.com>
+Date:	Fri, 12 Aug 2016 15:25:52 -0700
+In-Reply-To: <20160811231405.17318-6-sbeller@google.com> (Stefan Beller's
+	message of "Thu, 11 Aug 2016 16:14:02 -0700")
+Message-ID: <xmqqa8ghvd3j.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Content-Disposition: inline
-Message-Id: <200811032017.47652.jnareb@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: BC0D5CA6-60DB-11E6-A67C-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Dnia poniedziałek 3. listopada 2008 19:44, Francis Galiegue napisał:
-> Le Monday 03 November 2008 19:18:56 Jakub Narebski, vous avez écrit :
+Stefan Beller <sbeller@google.com> writes:
 
-> > > Well, as far as Apache is concerned, it can do:
-> > > 
-> > > * basic .htpasswd authentication,
-> > > * LDAP,
-> > > * PAM,
-> > > * SSL certificate check (via mod_ssl),
-> > > * probably others.
-> > > 
-> > > Plenty of possibilities.
-> > [...]
-> > 
-> > Well, the question is if Apache (and other web servers used with
-> > gitweb) can do authentication based on path_info or on query-string.
-> > Because it is encoded in gitweb (via $projectroot) where to find git
-> > repositories...
-> > 
-> 
-> Can you expand on path_info and query-string? Keep in mind that Apache
-> has mod_rewrite, which can rewrite URLs in any way before it gets
-> actually sent to the underlying program (whether it be a CGI or
-> anything else), even badly (or mischievously).
+> +	struct strbuf sb = STRBUF_INIT;
+> +	char *ref_git = compute_alternate_path(item->string, &sb);
 
-What I mean here that the following example gitweb URLs
+Who owns the memory for ref_git?
 
-  http://example.com/gitweb.cgi?p=some/project.git;a=commit;h=HEAD
-  http://example.com/gitweb.cgi/some/project.git/commit/HEAD
+> -	if (!access(mkpath("%s/shallow", ref_git), F_OK))
+> -		die(_("reference repository '%s' is shallow"), item->string);
+> +	if (!ref_git)
+> +		die("%s", sb.buf);
 
-with the following gitweb configuration
+Presumably the second argument to compute_alternate_path() is a
+strbuf to receive the error message?  It is unfortunate that the
+variable used for this purpose is a bland "sb", but perhaps that
+cannot be helped as you would reuse that strbuf for a different
+purpose (i.e. not to store the error message, but to formulate a
+pathname).
 
-  $projectroot = /var/scm
+> -	if (!access(mkpath("%s/info/grafts", ref_git), F_OK))
+> -		die(_("reference repository '%s' is grafted"), item->string);
+> +	strbuf_addf(&sb, "%s/objects", ref_git);
+> +	add_to_alternates_file(sb.buf);
+>  
+> -	strbuf_addf(&alternate, "%s/objects", ref_git);
+> -	add_to_alternates_file(alternate.buf);
+> -	strbuf_release(&alternate);
+> -	free(ref_git);
+> +	strbuf_release(&sb);
 
-both refer to git repository (directory) at
+I am wondering about the loss of free() here in the first comment.
 
-  /var/scm/some/project.git
+> +/*
+> + * Compute the exact path an alternate is at and returns it. In case of
+> + * error NULL is returned and the human readable error is added to `err`
+> + * `path` may be relative and should point to $GITDIR.
+> + * `err` must not be null.
+> + */
+> +char *compute_alternate_path(const char *path, struct strbuf *err)
+> +{
+> +	char *ref_git = NULL;
+> +	const char *repo, *ref_git_s;
+> +	struct strbuf err_buf = STRBUF_INIT;
 
-Apache (or other web server) would have to somehow decide based on URL
-that it refers to some project, and based on project and authentication
-decide whether to grant access to it.
+Why do you need "err_buf", instead of directly writing the error to
+"err", especially if "err" is not optional?
 
+> + ...
+> +out:
+> +	if (err_buf.len) {
+> +		strbuf_addbuf(err, &err_buf);
+> +		free(ref_git);
+> +		ref_git = NULL;
+> +	}
+> +
+> +	strbuf_release(&err_buf);
+> +	return ref_git;
+> +}
 
-What is more, and what cannot be done by web server alone, is that we
-would want to not show projects which you don't have access to in the
-'projects_list' page, i.e. at
-
-  http://example.com/gitweb.cgi
-
--- 
-Jakub Narebski
-Poland
+So ref_git is a piece of memory on heap, and the caller is
+responsible for not leaking it.
