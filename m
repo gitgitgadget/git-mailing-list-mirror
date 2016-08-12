@@ -2,130 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 016561F859
-	for <e@80x24.org>; Fri, 12 Aug 2016 16:42:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7173A1F859
+	for <e@80x24.org>; Fri, 12 Aug 2016 16:48:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752754AbcHLQlw (ORCPT <rfc822;e@80x24.org>);
-	Fri, 12 Aug 2016 12:41:52 -0400
-Received: from mout.web.de ([212.227.15.4]:55082 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752591AbcHLQlt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2016 12:41:49 -0400
-Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb003) with
- ESMTPSA (Nemesis) id 0LsyOA-1b5xFN1QAU-012ZGp; Fri, 12 Aug 2016 18:41:43
- +0200
-From:	tboegi@web.de
-To:	git@vger.kernel.org
-Cc:	peff@peff.net, Johannes.Schindelin@gmx.de,
-	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v1 1/2] t0027: Correct raciness in NNO test
-Date:	Fri, 12 Aug 2016 18:51:02 +0200
-Message-Id: <1471020662-20746-1-git-send-email-tboegi@web.de>
-X-Mailer: git-send-email 2.0.0.rc1.6318.g0c2c796
+	id S1752805AbcHLQsX (ORCPT <rfc822;e@80x24.org>);
+	Fri, 12 Aug 2016 12:48:23 -0400
+Received: from mail-it0-f53.google.com ([209.85.214.53]:35066 "EHLO
+	mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752301AbcHLQsW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2016 12:48:22 -0400
+Received: by mail-it0-f53.google.com with SMTP id u186so16269587ita.0
+        for <git@vger.kernel.org>; Fri, 12 Aug 2016 09:48:22 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=grQ23fBWXz9GxpwnzHjuWlZKAp2brPlUeTAgQoUGHLY=;
+        b=RJ+pBUVdosTQEbm/qU8vJRLz1TifsRhSRZPOR0UXMmJGh7/y6c7+mS5EuMSGLCmkpY
+         fhIccRktajx7xWwguTj3UJK0HokaDDeDxF0mr5Py7yStV+K9vM2yi9gN0TNFUz5Y3IOI
+         FitMR96VYWlWTnOa8T+OfR5bLOMw5WMwqNOCMIxAXGZQCchgWed9CEl5b5nLB71VgbAg
+         CJdMxxlq0L7yVmC8t55KE316wPw2+6Z5nUATDb+A9W6Jvi+i4pBxrATqrgKb15nZRwOB
+         Oy08YnOHKonCP+6PuKH5mYCphaAad+4WTZWUBX/+uhbgZwroE+MhCSuRW0dol7AbMJEY
+         DCfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=grQ23fBWXz9GxpwnzHjuWlZKAp2brPlUeTAgQoUGHLY=;
+        b=OF9VwGiX5Vpt5p3YCNUE/tQSP3yP1mRZK/Km589QIM+9n5gktpjg6pLW6iGolnW2Uf
+         pOxgiSspp3lGXeaCpBjqIGXen6ekZtNTlzAlBq1QOS2HwF9tDp2ACZJS7bDClB6eVPCs
+         ADHfd1P5WgoGmTijXpIgKholHc+fKnlUGytD476Hr5j4O0vsomEZDoK/yzxKbRJcAF+J
+         53uxaXRjM3GYq/7GTzQguF+s4ylsF9bKa2Wyd9nL3jn8qqK3RCZRpETGHiCgGu34xP84
+         uqzmQqMpZdiLKz6wmHIzue6vLtxZ5AQOn06MdiVntERoTzsY5nXr+n7UNAVgZkAt2dPf
+         56yA==
+X-Gm-Message-State: AEkoouuGwa8WL08B9q27j4R6Vo806Oh0/ARmytIMcOc7JWZT7a1PAnCNdaP3G9occ5I8tpEw1NVWEfI+Zuni/0S8
+X-Received: by 10.36.92.206 with SMTP id q197mr4659306itb.46.1471020501605;
+ Fri, 12 Aug 2016 09:48:21 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20160809114938.pcrvirrzrh6ldmnr@sigill.intra.peff.net>
-References: <20160809114938.pcrvirrzrh6ldmnr@sigill.intra.peff.net>
+Received: by 10.107.128.66 with HTTP; Fri, 12 Aug 2016 09:48:21 -0700 (PDT)
+In-Reply-To: <20160812163809.3wdkuqegxfjam2yn@sigill.intra.peff.net>
+References: <20160803164225.46355-1-larsxschneider@gmail.com/>
+ <20160810130411.12419-1-larsxschneider@gmail.com> <20160810130411.12419-15-larsxschneider@gmail.com>
+ <CAGZ79kboxgBRHSa2s7CKZ1Uo=13WT=rT8VHCNJNj_Q9jQzZAYw@mail.gmail.com> <20160812163809.3wdkuqegxfjam2yn@sigill.intra.peff.net>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Fri, 12 Aug 2016 09:48:21 -0700
+Message-ID: <CAGZ79kaRKROUganF838w29rCkJ592sZvu+q9fo+h4a4sPeDXMQ@mail.gmail.com>
+Subject: Re: [PATCH v5 14/15] convert: add filter.<driver>.process option
+To:	Jeff King <peff@peff.net>
+Cc:	Lars Schneider <larsxschneider@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+	mlbright@gmail.com, Eric Wong <e@80x24.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, ben@wijen.net
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:PLbsFgpUh66pWLABCBnCdsIFjmDrOr1Q3dGQ5e/G+Oat0rRemw9
- aYpDnqUGnj6rXN/Rz6s5WS9fLvSsYYsUtJYNwZLIdJCc9sRNybQC7oAxSKZIH0I+PazbJSv
- Zi7CfFxV1sgWOuqCGXAak8EwLNf9QV+wlqdOv0BzGbEH09cC7Ew5pgKs/9A5biwS3g7ksHe
- 4jsitZmYXJ81pIPkri6xw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:icxKHn5chJM=:8uV7AfttprLHoW87UexSEn
- RQP+eqCSq2JEjLXYDPZ5ENnt9ikXp6TQ8TBYNYNmRZL5d5JxCzuoLillPXgMBWp7xMkuBrA6d
- 5+kFU/KAM9/s13T81m0txnzJRFvxIGa0QTNKBM7gc1f1KYoAhjrVwL1fvVIN8nTsLBqpqdHVf
- eo3b3mNh1wcxMF7VSxa64D3AiXh1k4KvPgQK+smzWd1aczQf1MfvBsUQy5Qw8i1cFefUOOgnF
- 3KP3hj4jW+wzF1flNjMAuOPe+sxIigrudstv+dDVhDfT0puK0dK2VfIIr0vJMd1T3xWd4SHyi
- 35FeDb9QR5cykVfltoZxFtzQzEuXotkUAw86lM4y0OwsSaAW36dBGw3uz3lWcyocmmKP3d9HO
- jJ9qzGDyRtbNYTYNNggW/08ZkL1okxBUmYE+3QjbIAdThFXgiTH+aUiUjs5kb5RvjBI13PW+y
- IzOubOK2y5Tx5xq04oOEuLc35VboCbAzrkGmrABmgbaEFIn2aEqUfzT+GkNJQN75TAjj6XU81
- F/6MMTqeWmc6CuN95uSt8AiuYhx6ygTSy3Po1Nw72gpE2UxUINmTcRiLwwKHLmjw4tC4MJo5s
- wwzqe7hvdtekKs+IbVFbpZ9HCP8TcaD23//UuufrgT1Ohqp/CEjMtN567BjWj/ChWRkGyjEsg
- ODB//Nv6WXeZEaj4TcbSN+GNtT9RadrghOByE12cPzMfbG2BamAByHG3GaqVBkwq+eOQ+R6pk
- V095c2Cx3q+dqd22HRHRECwQmx8O6dxjC1Po9s53iAhXgMUitW+HOg32C3lZzZqvseFSKvWHX
- grCJZat
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Torsten Bögershausen <tboegi@web.de>
+On Fri, Aug 12, 2016 at 9:38 AM, Jeff King <peff@peff.net> wrote:
+> On Fri, Aug 12, 2016 at 09:33:18AM -0700, Stefan Beller wrote:
+>
+>> > If the result content is empty then the filter is expected to respond
+>> > with a success status and an empty list.
+>> > ------------------------
+>> > packet:          git< status=success\n
+>> > packet:          git< 0000
+>> > packet:          git< 0000  # empty content!
+>> > packet:          git< 0000  # empty list!
+>> > ------------------------
+>>
+>> Why do we need the last flush packet? We'd expect as many successes
+>> as we send out contents? Do we plan on interleaving operation, i.e.
+>> Git sends out 10 files but the filter process is not as fast as Git sending
+>> out and the answers trickle in slowly?
+>
+> There was prior discussion in the thread, but basically, it is there to
+> be able to signal an error that is encountered midway through sending
+> the file (i.e., to say "status=error"). If you do not have a final
+> flush, then you would send nothing, and the receiver would be left
+> wondering if you were successful, or if it simply did not get your error
+> report yet.
 
-When a non-reversible CRLF conversion is done in "git add",
-a warning is printed on stderr (or Git dies, depending on checksafe)
+    I did not follow the prior discussion, so I approached this review with
+    no prior knowledge from prior reviews, but instead read through and
+    was asking a lot of questions that came up immediately. In case my
+    questions are too dumb just omit them, but I thought they were good
+    material to answer in a commit message ("Why did we do it this way
+    and not differently").
 
-The function commit_chk_wrnNNO() in t0027 was written to test this,
-but did the wrong thing: Instead of looking at the warning
-from "git add", it looked at the warning from "git commit".
+Thanks for the explanation. So this is similar as the situation below
+that we wait for the flush and then an error/success report?
 
-This is racy because "git commit" may not have to do CRLF conversion
-at all if it can use the sha1 value from the index (which depends on
-whether "add" and "commit" run in a single second).
+>
+>> > If the filter experiences an error during processing, then it can
+>> > send the status "error". Depending on the `filter.<driver>.required`
+>> > flag Git will interpret that as error but it will not stop or restart
+>> > the filter process.
+>> > ------------------------
+>> > packet:          git< status=success\n
+>>
+>> So the first success is meaningless essentially?
+>> Would it make sense to move the sucess behind the content sending
+>> in all cases?
+>
+> No, the first success says "good so far, here's the file content". The
+> second says "I succeeded in sending you the file content".
+>
+> You _can_ drop the first one, but it may be more convenient for the
+> receiver to know up-front that there was a failure.
 
-Correct this and replace the commit for each and every file with a commit
-of all files in one go.
 
-The function commit_chk_wrnNNO() will to be renamed in a separate commit.
-Thanks to Jeff King <peff@peff.net> for analyzing t0027.
+If there was a failure upfront, it would become
 
-Reported-By: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
- t/t0027-auto-crlf.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+packet:          git< 0000
+# no content is encapsulated here
+packet:          git< 0000
+packet:          git< status=error\n
+packet:          git< 0000
 
-diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
-index 2860d2d..ab6e962 100755
---- a/t/t0027-auto-crlf.sh
-+++ b/t/t0027-auto-crlf.sh
-@@ -119,8 +119,7 @@ commit_chk_wrnNNO () {
- 		fname=${pfx}_$f.txt &&
- 		cp $f $fname &&
- 		printf Z >>"$fname" &&
--		git -c core.autocrlf=$crlf add $fname 2>/dev/null &&
--		git -c core.autocrlf=$crlf commit -m "commit_$fname" $fname >"${pfx}_$f.err" 2>&1
-+		git -c core.autocrlf=$crlf add $fname 2>"${pfx}_$f.err"
- 	done
- 
- 	test_expect_success "commit NNO files crlf=$crlf attr=$attr LF" '
-@@ -394,11 +393,11 @@ test_expect_success 'commit files attr=crlf' '
- 
- #                 attr                    LF        CRLF      CRLFmixLF   LF_mix_CR   CRLFNUL
- commit_chk_wrnNNO ""      ""      false   ""        ""        ""          ""          ""
--commit_chk_wrnNNO ""      ""      true    LF_CRLF   ""        ""          ""          ""
-+commit_chk_wrnNNO ""      ""      true    ""        ""        ""          ""          ""
- commit_chk_wrnNNO ""      ""      input   ""        ""        ""          ""          ""
- 
--commit_chk_wrnNNO "auto"  ""      false   "$WILC"   ""        ""          ""          ""
--commit_chk_wrnNNO "auto"  ""      true    LF_CRLF   ""        ""          ""          ""
-+commit_chk_wrnNNO "auto"  ""      false   ""        ""        ""          ""          ""
-+commit_chk_wrnNNO "auto"  ""      true    ""        ""        ""          ""          ""
- commit_chk_wrnNNO "auto"  ""      input   ""        ""        ""          ""          ""
- for crlf in true false input
- do
-@@ -408,7 +407,7 @@ do
- 	commit_chk_wrnNNO ""    lf      $crlf   ""       CRLF_LF    CRLF_LF      ""         CRLF_LF
- 	commit_chk_wrnNNO ""    crlf    $crlf   LF_CRLF   ""        LF_CRLF     LF_CRLF     ""
- 	commit_chk_wrnNNO auto  lf    	$crlf   ""        ""        ""          ""          ""
--	commit_chk_wrnNNO auto  crlf  	$crlf   LF_CRLF   ""        ""          ""          ""
-+	commit_chk_wrnNNO auto  crlf  	$crlf   ""        ""        ""          ""          ""
- 	commit_chk_wrnNNO text  lf    	$crlf   ""       CRLF_LF    CRLF_LF     ""          CRLF_LF
- 	commit_chk_wrnNNO text  crlf  	$crlf   LF_CRLF   ""        LF_CRLF     LF_CRLF     ""
- done
-@@ -417,7 +416,8 @@ commit_chk_wrnNNO "text"  ""      false   "$WILC"   "$WICL"   "$WAMIX"    "$WILC
- commit_chk_wrnNNO "text"  ""      true    LF_CRLF   ""        LF_CRLF     LF_CRLF     ""
- commit_chk_wrnNNO "text"  ""      input   ""        CRLF_LF   CRLF_LF     ""          CRLF_LF
- 
--test_expect_success 'create files cleanup' '
-+test_expect_success 'commit NNO and cleanup' '
-+	git commit -m "commit files on top of NNO" &&
- 	rm -f *.txt &&
- 	git -c core.autocrlf=false reset --hard
- '
--- 
-2.0.0.rc1.6318.g0c2c796
+so from a protocol side I'd claim it doesn't look bad.
+I assume with convenient you mean the implementation
+side of things?
 
+If we do the success first and then error out halfway, we
+still have to clean up, so I do not see how this impacts
+implementation?
+
+Thanks,
+Stefan
