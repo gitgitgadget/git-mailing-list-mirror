@@ -2,119 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DB651F859
-	for <e@80x24.org>; Fri, 12 Aug 2016 15:51:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 348DA1F859
+	for <e@80x24.org>; Fri, 12 Aug 2016 15:56:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752736AbcHLPvq (ORCPT <rfc822;e@80x24.org>);
-	Fri, 12 Aug 2016 11:51:46 -0400
-Received: from mail-io0-f177.google.com ([209.85.223.177]:34990 "EHLO
-	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752365AbcHLPvp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2016 11:51:45 -0400
-Received: by mail-io0-f177.google.com with SMTP id m101so28224389ioi.2
-        for <git@vger.kernel.org>; Fri, 12 Aug 2016 08:51:44 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=PcUGw3PyTK2t81BduUP9b28nFW/AeTeGxYXr5fqje9o=;
-        b=BTYh4yQyK2zLeW5Vx6ZxZk7IleEu1JbJy/3LNDzCiUKCVpIMhz59W0/+xt/1QzJgR1
-         Py+cDrMaPlmcv6WqTtanKcVf/nFC4vcogxV19ywDE1WVqPf27z00oZCH0Bi03qKo6TwO
-         DRtOv4p7yARD/mbG9kxaeUXkaVQ0K0PeDM7yMyDX9oGFfn5h3L2HLhGjz2+RjEGjLZmI
-         t6w6QwBaSMX2ED5Uw0aP/eg0Qqd09PIqWr4iGn6Mu2saXb/vsvYo6z9sHHTr4/SNS/OM
-         ry71ZfXPY3V2pa2t48Yde+Tgtt1TEi+9tpn9YbIsrDKPiOAA+WpjRDk1aKZ7MTMj3BCS
-         86lg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=PcUGw3PyTK2t81BduUP9b28nFW/AeTeGxYXr5fqje9o=;
-        b=SgGsWXqwUCkUKEcdhkuZ5eTzTvatbx2MIIPllhGcFkrnBHe5eDgmu4Lh5ej2Qrxjsf
-         jYbOFAGmZCFgAS+DuY9EqaB/JZbI877T+f/r/escry1so/NIg9GdfSVqU5xK/W/d18X3
-         8Ast01y3nQehw4g0yw3sHJlvxJQmmaiAWf8t9+/Gc6x7GSNK3mVbds02LRmOIcbwUWo7
-         6gw/QKgLD5FlWxoQQldy3qET0Z+AtzKK2x5GvXY6dUGk3oPieQ7+oeeADv5Fbu1EwYos
-         Wkc4rPIsOCZesLRhNW8a33hQ4U0zkZYmd8qZ6J7t5k7pyuSe4Tvg3Y3bCVi2hejYUpEv
-         aKow==
-X-Gm-Message-State: AEkoouuOHvyjw0rbT7B2fe11zxqbg+c4WFKfpy5gDPTdmHXsQzQKrz4GkNhBYYx/8IWIjcLAnmmuVUweE1FMtwuk
-X-Received: by 10.107.178.129 with SMTP id b123mr19161701iof.83.1471017104087;
- Fri, 12 Aug 2016 08:51:44 -0700 (PDT)
+	id S1752637AbcHLP41 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 12 Aug 2016 11:56:27 -0400
+Received: from crazybrake.spb.ru ([188.134.13.200]:60920 "HELO ddg.spb.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752535AbcHLP40 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2016 11:56:26 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Fri, 12 Aug 2016 11:56:26 EDT
+Received: (qmail 13498 invoked from network); 12 Aug 2016 15:49:43 -0000
+Received: from mail.metrotek.spb.ru (HELO srv3.metrotek.spb.ru) (89.110.34.174)
+  by ddg.spb.ru with SMTP; 12 Aug 2016 15:49:43 -0000
+Received: (qmail 10347 invoked from network); 12 Aug 2016 15:49:42 -0000
+Received: from workplace.ddg (192.168.222.74)
+  by srv3.ddg with SMTP; 12 Aug 2016 15:49:41 -0000
+Received: (qmail 27306 invoked by uid 65618); 12 Aug 2016 15:49:42 -0000
+Date:	Fri, 12 Aug 2016 18:49:42 +0300
+From:	Ivan Oleynikov <io@metrotek.spb.ru>
+To:	git@vger.kernel.org
+Cc:	dvh@metrotek.spb.ru, apenwarr@gmail.com
+Subject: [PATCH] git-subtree: compare file names by absolute paths
+Message-ID: <20160812154942.GA27294@metrotek.spb.ru>
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Fri, 12 Aug 2016 08:51:43 -0700 (PDT)
-In-Reply-To: <20160812154331.y2z6pv2w6cwsdsqw@sigill.intra.peff.net>
-References: <20160812153744.15045-1-sbeller@google.com> <20160812154331.y2z6pv2w6cwsdsqw@sigill.intra.peff.net>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Fri, 12 Aug 2016 08:51:43 -0700
-Message-ID: <CAGZ79kaOHdLrPownWdnZQSEzG6P6-iZqx2xu3MEG51DZU1U+Cg@mail.gmail.com>
-Subject: Re: [PATCHv3] checkout: do not mention detach advice for explicit
- --detach option
-To:	Jeff King <peff@peff.net>
-Cc:	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Organization: STC Metrotek, St.Petersburg
+X-Bogosity: Ham, tests=bogofilter, spamicity=0.000000, version=1.0.3
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Aug 12, 2016 at 8:43 AM, Jeff King <peff@peff.net> wrote:
-> On Fri, Aug 12, 2016 at 08:37:44AM -0700, Stefan Beller wrote:
->
->> > Is there a reason for not unsetting `advice.detachedHead` at the
->> > end of the test?
->>
->> done
->>
->> I did not consider to clean up after myself... what a selfish world!
->
-> The right way to do it is:
->
->   test_config advice.detachedHead false &&
+This commit removes false positive assertion fails of `git subtree split` when
+the --prefix argument is not in a particular form produced by `git ls-tree`.
 
-okay.
+For example, typical usage of the command could be:
 
->   ...
->
-> so that the cleanup runs whether or not you may it to the end of the
-> script.
->
->> +test_expect_success 'no advice given for explicit detached head state' '
->> +     git config advice.detachedHead false &&
->> +     git checkout child &&
->> +     git checkout --detach HEAD >expect &&
->> +     git config advice.detachedHead true &&
->> +     git checkout child &&
->> +     git checkout --detach HEAD >actual &&
->> +     test_cmp expect actual &&
->> +     git checkout child &&
->> +     git checkout HEAD >actual &&
->> +     ! test_cmp expect actual &&
->> +     git config --unset advice.detachedHead
->> +'
->
-> Hmm. Using "!test_cmp" seems weird to me, just because it would falsely
-> claim success if something else unexpected changes. Our usual method for
-> making sure some particular output does not appear is "test_i18ngrep"
-> with a liberal pattern.
+  git subtree split -b split --prefix=some/relative/path
 
-and I advanced the liberal a bit more. ;)
-So maybe we'd be looking that no 'detached HEAD' occurs?
+But
 
-    test_i18ngrep ! "'detached HEAD'" actual
+  git subtree split -b split --prefix=./some/relative/path
 
-I think testing that we do not give out advice (i.e. behave the same as if
-not giving out advice) is best tested to just compare the output to
-the output of "git -c advice.detachedHead=false ...", which is what I do here.
-This seems to be future proof to me no matter how we reword the advice or
-the actual message on checkout?
+Would fail with multiple assertion errors. This commit makes the latter command
+work without errors.
 
-Thanks,
-Stefan
+Signed-off-by: Ivan Oleynikov <io@metrotek.spb.ru>
+---
 
->
-> -Peff
+Notes:
+    The bug fixed by this commit can be reproduced like this:
+    
+    $ git init
+    Initialized empty Git repository in /tmp/test/.git/
+    $ mkdir a b
+    $ touch a/file b/file
+    $ git add a
+    $ git commit -m a
+    [master (root-commit) b42584a] a
+     1 file changed, 0 insertions($), 0 deletions(-)
+     create mode 100644 a/file
+    $ git add b
+    $ git commit -m b
+    [master 5114301] b
+     1 file changed, 0 insertions($), 0 deletions(-)
+     create mode 100644 b/file
+    $ git subtree split -b split_a --prefix=a
+    Created branch 'split_a'
+    e9f5d81efacb33ab6cf67fe9ff376b33a483a92f
+    $ git subtree split -b split_b --prefix=./b
+    assertion failed:  [ b = ./b ]
+    No new revisions were found
+    
+    When the commit is applied `git subtree split` works as expected:
+    
+    $ git init
+    Initialized empty Git repository in /tmp/test/.git/
+    $ mkdir a b
+    $ touch a/file b/file
+    $ git add a
+    $ git commit -m a
+    [master (root-commit) bc80f36] a
+     1 file changed, 0 insertions($), 0 deletions(-)
+     create mode 100644 a/file
+    $ git add b
+    $ git commit -m b
+    [master e59c446] b
+     1 file changed, 0 insertions($), 0 deletions(-)
+     create mode 100644 b/file
+    $ git subtree split -b split_a --prefix=a
+    Created branch 'split_a'
+    d542e9cd2de5956dd7ca77b169dba1c8418fa03a
+    $ git subtree split -b split_b --prefix=./b
+    Created branch 'split_b'
+    3ae7854c0c395413c807b2bc4e75b651adc63f8c
+
+ contrib/subtree/git-subtree.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index b567eae..d9351b9 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -411,7 +411,7 @@ subtree_for_commit()
+ 	dir="$2"
+ 	git ls-tree "$commit" -- "$dir" |
+ 	while read mode type tree name; do
+-		assert [ "$name" = "$dir" ]
++		assert [ "$(readlink -f $name)" = "$(readlink -f $dir)" ]
+ 		assert [ "$type" = "tree" -o "$type" = "commit" ]
+ 		[ "$type" = "commit" ] && continue  # ignore submodules
+ 		echo $tree
+-- 
+2.1.4
+
+
+-- 
+Ivan Oleynikov
+STC Metrotek
+St.Petersburg
