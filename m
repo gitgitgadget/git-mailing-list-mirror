@@ -2,88 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A66A41F859
-	for <e@80x24.org>; Fri, 12 Aug 2016 19:20:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E797D1F859
+	for <e@80x24.org>; Fri, 12 Aug 2016 19:24:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751900AbcHLTUV (ORCPT <rfc822;e@80x24.org>);
-	Fri, 12 Aug 2016 15:20:21 -0400
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:31185 "EHLO
-	smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751570AbcHLTUU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2016 15:20:20 -0400
-Received: from PhilipOakley ([92.22.69.35])
-	by smtp.talktalk.net with SMTP
-	id YI09bWLa5Y8RwYI09bsXFZ; Fri, 12 Aug 2016 20:20:18 +0100
-X-Originating-IP: [92.22.69.35]
-X-Spam:	0
-X-OAuthority: v=2.2 cv=b+Xw2ZOx c=1 sm=1 tr=0 a=118V6UEFpCLMRzptT8w30g==:117
- a=118V6UEFpCLMRzptT8w30g==:17 a=N659UExz7-8A:10 a=8q6LdnVOAAAA:8
- a=8ePtGGE778YcKzue-YsA:9 a=jNYSTCpFY2gkngftge3H:22
-Message-ID: <30B1A2CFFF9A4544A8F03800FA5968BD@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:	"Philip Oakley" <philipoakley@iee.org>
-To:	"GitList" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Marc Branchaud" <marcnarc@xiplink.com>
-References: <20160720211007.5520-1-philipoakley@iee.org> <20160812070749.2920-1-philipoakley@iee.org> <58d0df88-4902-4519-df21-3ba3d86a19c9@xiplink.com>
-Subject: Re: [PATCH v5 00/12] Update git revisions
-Date:	Fri, 12 Aug 2016 20:20:16 +0100
-Organization: OPDS
+	id S1751570AbcHLTYb (ORCPT <rfc822;e@80x24.org>);
+	Fri, 12 Aug 2016 15:24:31 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50657 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751088AbcHLTYa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2016 15:24:30 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7795C3452E;
+	Fri, 12 Aug 2016 15:24:29 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JxfwRnyhKQJdU/4BEenELz4z6QI=; b=Pxvilo
+	dGhpgXs0asR7IY/Yt22KcPqk/aZe7RVFvFVszmUiTBAIwC5ZqtpcIKy+rYfIOpdP
+	PeXo9MV3A1p/PlTgeTgOhb8zJEcnov/u63ZXcy4ig/4vfIIG01HdHV0qsDo+VXEy
+	vDxk+jOpINMWzNz1SJVNRrWQaeoUbXZFA14wo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=o6kjFTjUOj8xfNLGg/h5Fjxv7mPapDL9
+	GZx5fHRkCDK6zaQ/YMBzSQRSTp/eNLR+wKA8UI/ukmHhgAa2eWc6kXLm4uWWmTVn
+	pE7HsYFZyO7a3k109mZU2I4kc5ajB9Hb39dk+Qjn6FjWwWEOijqqq7fCJFUtdIUD
+	VjMtHPJrBlM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 70E0B3452D;
+	Fri, 12 Aug 2016 15:24:29 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EEF883452C;
+	Fri, 12 Aug 2016 15:24:28 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Pranit Bauva <pranit.bauva@gmail.com>
+Cc:	git@vger.kernel.org
+Subject: Re: [PATCH v12 04/13] bisect--helper: `bisect_clean_state` shell function in C
+References: <010201567675adc1-17e27495-6b36-40d1-836d-814da029fcc4-000000@eu-west-1.amazonses.com>
+	<010201567675ae50-4349bd9e-54a4-44e5-aabb-1d928126b237-000000@eu-west-1.amazonses.com>
+Date:	Fri, 12 Aug 2016 12:24:26 -0700
+In-Reply-To: <010201567675ae50-4349bd9e-54a4-44e5-aabb-1d928126b237-000000@eu-west-1.amazonses.com>
+	(Pranit Bauva's message of "Wed, 10 Aug 2016 21:57:19 +0000")
+Message-ID: <xmqqlh01x02d.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="Windows-1252";
-	reply-type=response
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfJc4q+mkrW/1CpBJfkvFfNatVTsM3dRKVnjv8EwFxs7hZHahbCzVnNeADW/alfSNfFdvSZWxEuUCiN1ZwT4GKT8unXYwXh5V3ZU9/uBXz3f+6e5VV2pu
- tLswwZsD8Je8Ea3y2ypvqkpR8aFL/RNDeHyQs6dWH+X4I+MRrIKIM6X0leJ25xP8Vvkpn7jkI8m1xIYnjBNPheD/smjq1ywJN0HpOq3HFJgixwl+t23FFRNJ
+Content-Type: text/plain
+X-Pobox-Relay-ID: 63749938-60C2-11E6-9C24-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: "Marc Branchaud" <marcnarc@xiplink.com>
-> On 2016-08-12 03:07 AM, Philip Oakley wrote:
->> [2nd attempt : ISP troubles]
->>
->> This has grown like topsy from a little two patch series that tried to
->> name the 2-dots notation [1] into this extended set of tweaks.
->
-> Honestly, I start just trying point out something concrete, like 
-> misrendered headers, but then I figure since I'm sending a review comment 
-> anyway I might as well go in-depth on the rest of the patch.
->
-> I think I'm sticking to substantive comments, but if I'm getting too picky 
-> please just swat me down!
+Pranit Bauva <pranit.bauva@gmail.com> writes:
 
-No, that's fine. It's important to at least review these points.
+> +static int bisect_clean_state(void)
+> +{
+> +	int result = 0;
+> +
+> +	/* There may be some refs packed during bisection */
+> +	struct string_list refs_for_removal = STRING_LIST_INIT_NODUP;
+> +	for_each_ref_in("refs/bisect/", mark_for_removal, (void *) &refs_for_removal);
+> +	string_list_append(&refs_for_removal, xstrdup("BISECT_HEAD"));
+> +	result = delete_refs(&refs_for_removal);
 
-I thought I'd picked up all the issues, but it looks like I missed at least 
-one.
-
-The caret thing has a bit of history - see 87c6aeb4efdd43559
-
-It looks like its the two carets on a line mean superscript (Unconstrained 
-quotes) and that maybe the issue.
-
-Then it looks like {caret} does a replacement, though I can't find that in 
-the asciidoc user guide.
-
-
-I don't quite understand why the ^ symbols work for the Loliger examples, 
-but hey ho, it's good they do...
-
-I'll work on the tweaks, though it'll probably be tomorrow as we have 
-visitors.
-
---
-Philip 
-
+I think this function has changed its signature recently.  I am
+planning to tag 2.10-rc0 this weekend, and it may be a good time to
+rebase the series on to an updated codebase.
