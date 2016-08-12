@@ -2,128 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 348DA1F859
-	for <e@80x24.org>; Fri, 12 Aug 2016 15:56:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A9B31F859
+	for <e@80x24.org>; Fri, 12 Aug 2016 16:04:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752637AbcHLP41 (ORCPT <rfc822;e@80x24.org>);
-	Fri, 12 Aug 2016 11:56:27 -0400
-Received: from crazybrake.spb.ru ([188.134.13.200]:60920 "HELO ddg.spb.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752535AbcHLP40 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2016 11:56:26 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Fri, 12 Aug 2016 11:56:26 EDT
-Received: (qmail 13498 invoked from network); 12 Aug 2016 15:49:43 -0000
-Received: from mail.metrotek.spb.ru (HELO srv3.metrotek.spb.ru) (89.110.34.174)
-  by ddg.spb.ru with SMTP; 12 Aug 2016 15:49:43 -0000
-Received: (qmail 10347 invoked from network); 12 Aug 2016 15:49:42 -0000
-Received: from workplace.ddg (192.168.222.74)
-  by srv3.ddg with SMTP; 12 Aug 2016 15:49:41 -0000
-Received: (qmail 27306 invoked by uid 65618); 12 Aug 2016 15:49:42 -0000
-Date:	Fri, 12 Aug 2016 18:49:42 +0300
-From:	Ivan Oleynikov <io@metrotek.spb.ru>
-To:	git@vger.kernel.org
-Cc:	dvh@metrotek.spb.ru, apenwarr@gmail.com
-Subject: [PATCH] git-subtree: compare file names by absolute paths
-Message-ID: <20160812154942.GA27294@metrotek.spb.ru>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Organization: STC Metrotek, St.Petersburg
-X-Bogosity: Ham, tests=bogofilter, spamicity=0.000000, version=1.0.3
+	id S1753128AbcHLQES (ORCPT <rfc822;e@80x24.org>);
+	Fri, 12 Aug 2016 12:04:18 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:33679 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752206AbcHLQEQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2016 12:04:16 -0400
+Received: by mail-wm0-f65.google.com with SMTP id o80so3696226wme.0
+        for <git@vger.kernel.org>; Fri, 12 Aug 2016 09:04:15 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=dLtG5KmIbf8IHknedkUhbKY/zkZnaZ3hJOirmA8MDHg=;
+        b=jzT59q1TTU+JQdqqrf/uD/Lt3PC+cPt+p9OrYVBR/WoojoWk6wJL/9NeA/K4sip6So
+         o+Bv/y+iDtI/02/V4AvcJHHoOC5h5jJAz2YimZ64NQwbm9mrZz6u/WxAh6gX3o6IB6f7
+         rJiGtIk/qUaciUjHbIa+0x441eeIkgs98u1v359Hs7RBkgcJZEBO+Pd2RaVnFoadGs1l
+         vLfOqoGiUYnX0YrXyqFtLHJTfIPpcMZYib6egwyYaRrxSGIf40ylKLwN286vNGgGvA1v
+         xLu18nzalCK4ZQA7Bqv01yawCbkSIi3JJ2S6z7hi+djwIzhgz8h1ae3nCy1+CxzXof8j
+         2HWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=dLtG5KmIbf8IHknedkUhbKY/zkZnaZ3hJOirmA8MDHg=;
+        b=GasZYc9TVuiW4SCpNE8sP/wUWR+uRGvycSBuk8gZsIblm5j6FqYZ9wojZ1Vrl+hTiR
+         4YskNhCVJj84I2d019v2hlCElDl63j1cRSsvYx1c9hUQvnqArKzsgYzS/r96XvjcsmnT
+         yqSJXqepEYUipxpKFTA2lTxXrzU4ym5MK4QlJcJUlYkP2IgKDTxEE4HdYQ0tnqo+BmjF
+         Hs/MoLJketGipWftGBH9mvATIgwHPhUWKUAwvAxWzXU1nZD/GbduaefWeSf1a2xzK2eS
+         3r0wgZJ3762swcRLNUYKUKFJZn0vokCo0zDxeHrZueqyGP+s2D0rlanybbbX9CYQAKuG
+         uV8w==
+X-Gm-Message-State: AEkoouuzKQLmRJMktqrndB+NAZC7AMU31OvStjKE5WYgNnTkM8EVXVVvBFLxGnyZ6OLgkQ==
+X-Received: by 10.194.23.166 with SMTP id n6mr19813255wjf.36.1471017840005;
+        Fri, 12 Aug 2016 09:04:00 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id va3sm8154668wjb.18.2016.08.12.09.03.59
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 12 Aug 2016 09:03:59 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: `git stash --help` tries to pull up nonexistent file gitstack.html
+From:	Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqqr39uxa33.fsf@gitster.mtv.corp.google.com>
+Date:	Fri, 12 Aug 2016 18:03:58 +0200
+Cc:	Joseph Musser <me@jnm2.com>, git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <A7A176B0-08CE-4D92-9756-51A59DF3B9D7@gmail.com>
+References: <CAKRjdd4WdVTgbT0gcR=a267+aEwD2Exztrc9gNau1nOXroC=ng@mail.gmail.com> <xmqqr39uxa33.fsf@gitster.mtv.corp.google.com>
+To:	Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-This commit removes false positive assertion fails of `git subtree split` when
-the --prefix argument is not in a particular form produced by `git ls-tree`.
 
-For example, typical usage of the command could be:
+> On 12 Aug 2016, at 17:48, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> Joseph Musser <me@jnm2.com> writes:
+> 
+>> Looks like a simple typo.
+> 
+> Unfortunately this does not reproduce to me (built from source on
+> Ubuntu Linux).
 
-  git subtree split -b split --prefix=some/relative/path
+I tried it with the latest released version on Windows and OSX (2.9.2)
+and was not able to reproduce it, too.
 
-But
-
-  git subtree split -b split --prefix=./some/relative/path
-
-Would fail with multiple assertion errors. This commit makes the latter command
-work without errors.
-
-Signed-off-by: Ivan Oleynikov <io@metrotek.spb.ru>
----
-
-Notes:
-    The bug fixed by this commit can be reproduced like this:
-    
-    $ git init
-    Initialized empty Git repository in /tmp/test/.git/
-    $ mkdir a b
-    $ touch a/file b/file
-    $ git add a
-    $ git commit -m a
-    [master (root-commit) b42584a] a
-     1 file changed, 0 insertions($), 0 deletions(-)
-     create mode 100644 a/file
-    $ git add b
-    $ git commit -m b
-    [master 5114301] b
-     1 file changed, 0 insertions($), 0 deletions(-)
-     create mode 100644 b/file
-    $ git subtree split -b split_a --prefix=a
-    Created branch 'split_a'
-    e9f5d81efacb33ab6cf67fe9ff376b33a483a92f
-    $ git subtree split -b split_b --prefix=./b
-    assertion failed:  [ b = ./b ]
-    No new revisions were found
-    
-    When the commit is applied `git subtree split` works as expected:
-    
-    $ git init
-    Initialized empty Git repository in /tmp/test/.git/
-    $ mkdir a b
-    $ touch a/file b/file
-    $ git add a
-    $ git commit -m a
-    [master (root-commit) bc80f36] a
-     1 file changed, 0 insertions($), 0 deletions(-)
-     create mode 100644 a/file
-    $ git add b
-    $ git commit -m b
-    [master e59c446] b
-     1 file changed, 0 insertions($), 0 deletions(-)
-     create mode 100644 b/file
-    $ git subtree split -b split_a --prefix=a
-    Created branch 'split_a'
-    d542e9cd2de5956dd7ca77b169dba1c8418fa03a
-    $ git subtree split -b split_b --prefix=./b
-    Created branch 'split_b'
-    3ae7854c0c395413c807b2bc4e75b651adc63f8c
-
- contrib/subtree/git-subtree.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index b567eae..d9351b9 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -411,7 +411,7 @@ subtree_for_commit()
- 	dir="$2"
- 	git ls-tree "$commit" -- "$dir" |
- 	while read mode type tree name; do
--		assert [ "$name" = "$dir" ]
-+		assert [ "$(readlink -f $name)" = "$(readlink -f $dir)" ]
- 		assert [ "$type" = "tree" -o "$type" = "commit" ]
- 		[ "$type" = "commit" ] && continue  # ignore submodules
- 		echo $tree
--- 
-2.1.4
-
-
--- 
-Ivan Oleynikov
-STC Metrotek
-St.Petersburg
+- Lars
