@@ -2,201 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A04821F859
-	for <e@80x24.org>; Fri, 12 Aug 2016 15:49:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DB651F859
+	for <e@80x24.org>; Fri, 12 Aug 2016 15:51:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752704AbcHLPtD (ORCPT <rfc822;e@80x24.org>);
-	Fri, 12 Aug 2016 11:49:03 -0400
-Received: from siwi.pair.com ([209.68.5.199]:65163 "EHLO siwi.pair.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752611AbcHLPsr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2016 11:48:47 -0400
-Received: from jeffhost-linux1.corp.microsoft.com (unknown [167.220.148.23])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by siwi.pair.com (Postfix) with ESMTPSA id 8967384652;
-	Fri, 12 Aug 2016 11:48:46 -0400 (EDT)
-From:	Jeff Hostetler <git@jeffhostetler.com>
-To:	git@vger.kernel.org
-Cc:	gitster@pobox.com, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v8 6/9] status: print branch info with --porcelain=v2 --branch
-Date:	Fri, 12 Aug 2016 11:44:49 -0400
-Message-Id: <1471016692-35828-7-git-send-email-git@jeffhostetler.com>
-X-Mailer: git-send-email 2.8.0.rc4.17.gac42084.dirty
-In-Reply-To: <1471016692-35828-1-git-send-email-git@jeffhostetler.com>
-References: <1471016692-35828-1-git-send-email-git@jeffhostetler.com>
+	id S1752736AbcHLPvq (ORCPT <rfc822;e@80x24.org>);
+	Fri, 12 Aug 2016 11:51:46 -0400
+Received: from mail-io0-f177.google.com ([209.85.223.177]:34990 "EHLO
+	mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752365AbcHLPvp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2016 11:51:45 -0400
+Received: by mail-io0-f177.google.com with SMTP id m101so28224389ioi.2
+        for <git@vger.kernel.org>; Fri, 12 Aug 2016 08:51:44 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=PcUGw3PyTK2t81BduUP9b28nFW/AeTeGxYXr5fqje9o=;
+        b=BTYh4yQyK2zLeW5Vx6ZxZk7IleEu1JbJy/3LNDzCiUKCVpIMhz59W0/+xt/1QzJgR1
+         Py+cDrMaPlmcv6WqTtanKcVf/nFC4vcogxV19ywDE1WVqPf27z00oZCH0Bi03qKo6TwO
+         DRtOv4p7yARD/mbG9kxaeUXkaVQ0K0PeDM7yMyDX9oGFfn5h3L2HLhGjz2+RjEGjLZmI
+         t6w6QwBaSMX2ED5Uw0aP/eg0Qqd09PIqWr4iGn6Mu2saXb/vsvYo6z9sHHTr4/SNS/OM
+         ry71ZfXPY3V2pa2t48Yde+Tgtt1TEi+9tpn9YbIsrDKPiOAA+WpjRDk1aKZ7MTMj3BCS
+         86lg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=PcUGw3PyTK2t81BduUP9b28nFW/AeTeGxYXr5fqje9o=;
+        b=SgGsWXqwUCkUKEcdhkuZ5eTzTvatbx2MIIPllhGcFkrnBHe5eDgmu4Lh5ej2Qrxjsf
+         jYbOFAGmZCFgAS+DuY9EqaB/JZbI877T+f/r/escry1so/NIg9GdfSVqU5xK/W/d18X3
+         8Ast01y3nQehw4g0yw3sHJlvxJQmmaiAWf8t9+/Gc6x7GSNK3mVbds02LRmOIcbwUWo7
+         6gw/QKgLD5FlWxoQQldy3qET0Z+AtzKK2x5GvXY6dUGk3oPieQ7+oeeADv5Fbu1EwYos
+         Wkc4rPIsOCZesLRhNW8a33hQ4U0zkZYmd8qZ6J7t5k7pyuSe4Tvg3Y3bCVi2hejYUpEv
+         aKow==
+X-Gm-Message-State: AEkoouuOHvyjw0rbT7B2fe11zxqbg+c4WFKfpy5gDPTdmHXsQzQKrz4GkNhBYYx/8IWIjcLAnmmuVUweE1FMtwuk
+X-Received: by 10.107.178.129 with SMTP id b123mr19161701iof.83.1471017104087;
+ Fri, 12 Aug 2016 08:51:44 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.107.128.66 with HTTP; Fri, 12 Aug 2016 08:51:43 -0700 (PDT)
+In-Reply-To: <20160812154331.y2z6pv2w6cwsdsqw@sigill.intra.peff.net>
+References: <20160812153744.15045-1-sbeller@google.com> <20160812154331.y2z6pv2w6cwsdsqw@sigill.intra.peff.net>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Fri, 12 Aug 2016 08:51:43 -0700
+Message-ID: <CAGZ79kaOHdLrPownWdnZQSEzG6P6-iZqx2xu3MEG51DZU1U+Cg@mail.gmail.com>
+Subject: Re: [PATCHv3] checkout: do not mention detach advice for explicit
+ --detach option
+To:	Jeff King <peff@peff.net>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+On Fri, Aug 12, 2016 at 8:43 AM, Jeff King <peff@peff.net> wrote:
+> On Fri, Aug 12, 2016 at 08:37:44AM -0700, Stefan Beller wrote:
+>
+>> > Is there a reason for not unsetting `advice.detachedHead` at the
+>> > end of the test?
+>>
+>> done
+>>
+>> I did not consider to clean up after myself... what a selfish world!
+>
+> The right way to do it is:
+>
+>   test_config advice.detachedHead false &&
 
-Expand porcelain v2 output to include branch and tracking
-branch information. This includes the commit id, the branch,
-the upstream branch, and the ahead and behind counts.
+okay.
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
- builtin/commit.c |  5 ++++
- wt-status.c      | 90 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- wt-status.h      |  1 +
- 3 files changed, 96 insertions(+)
+>   ...
+>
+> so that the cleanup runs whether or not you may it to the end of the
+> script.
+>
+>> +test_expect_success 'no advice given for explicit detached head state' '
+>> +     git config advice.detachedHead false &&
+>> +     git checkout child &&
+>> +     git checkout --detach HEAD >expect &&
+>> +     git config advice.detachedHead true &&
+>> +     git checkout child &&
+>> +     git checkout --detach HEAD >actual &&
+>> +     test_cmp expect actual &&
+>> +     git checkout child &&
+>> +     git checkout HEAD >actual &&
+>> +     ! test_cmp expect actual &&
+>> +     git config --unset advice.detachedHead
+>> +'
+>
+> Hmm. Using "!test_cmp" seems weird to me, just because it would falsely
+> claim success if something else unexpected changes. Our usual method for
+> making sure some particular output does not appear is "test_i18ngrep"
+> with a liberal pattern.
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 3d222d3..5504afe 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -510,6 +510,8 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix, int
- 	s->fp = fp;
- 	s->nowarn = nowarn;
- 	s->is_initial = get_sha1(s->reference, sha1) ? 1 : 0;
-+	if (!s->is_initial)
-+		hashcpy(s->sha1_commit, sha1);
- 	s->status_format = status_format;
- 	s->ignore_submodule_arg = ignore_submodule_arg;
- 
-@@ -1378,6 +1380,9 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 	fd = hold_locked_index(&index_lock, 0);
- 
- 	s.is_initial = get_sha1(s.reference, sha1) ? 1 : 0;
-+	if (!s.is_initial)
-+		hashcpy(s.sha1_commit, sha1);
-+
- 	s.ignore_submodule_arg = ignore_submodule_arg;
- 	s.status_format = status_format;
- 	s.verbose = verbose;
-diff --git a/wt-status.c b/wt-status.c
-index bd9075b..ebe4a1e 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1813,6 +1813,92 @@ static void wt_porcelain_print(struct wt_status *s)
- }
- 
- /*
-+ * Print branch information for porcelain v2 output.  These lines
-+ * are printed when the '--branch' parameter is given.
-+ *
-+ *    # branch.oid <commit><eol>
-+ *    # branch.head <head><eol>
-+ *   [# branch.upstream <upstream><eol>
-+ *   [# branch.ab +<ahead> -<behind><eol>]]
-+ *
-+ *      <commit> ::= the current commit hash or the the literal
-+ *                   "(initial)" to indicate an initialized repo
-+ *                   with no commits.
-+ *
-+ *        <head> ::= <branch_name> the current branch name or
-+ *                   "(detached)" literal when detached head or
-+ *                   "(unknown)" when something is wrong.
-+ *
-+ *    <upstream> ::= the upstream branch name, when set.
-+ *
-+ *       <ahead> ::= integer ahead value, when upstream set
-+ *                   and the commit is present (not gone).
-+ *
-+ *      <behind> ::= integer behind value, when upstream set
-+ *                   and commit is present.
-+ *
-+ *
-+ * The end-of-line is defined by the -z flag.
-+ *
-+ *                 <eol> ::= NUL when -z,
-+ *                           LF when NOT -z.
-+ *
-+ */
-+static void wt_porcelain_v2_print_tracking(struct wt_status *s)
-+{
-+	struct branch *branch;
-+	const char *base;
-+	const char *branch_name;
-+	struct wt_status_state state;
-+	int ab_info, nr_ahead, nr_behind;
-+	char eol = s->null_termination ? '\0' : '\n';
-+
-+	memset(&state, 0, sizeof(state));
-+	wt_status_get_state(&state, s->branch && !strcmp(s->branch, "HEAD"));
-+
-+	fprintf(s->fp, "# branch.oid %s%c",
-+			(s->is_initial ? "(initial)" : sha1_to_hex(s->sha1_commit)),
-+			eol);
-+
-+	if (!s->branch)
-+		fprintf(s->fp, "# branch.head %s%c", "(unknown)", eol);
-+	else {
-+		if (!strcmp(s->branch, "HEAD")) {
-+			fprintf(s->fp, "# branch.head %s%c", "(detached)", eol);
-+
-+			if (state.rebase_in_progress || state.rebase_interactive_in_progress)
-+				branch_name = state.onto;
-+			else if (state.detached_from)
-+				branch_name = state.detached_from;
-+			else
-+				branch_name = "";
-+		} else {
-+			branch_name = NULL;
-+			skip_prefix(s->branch, "refs/heads/", &branch_name);
-+
-+			fprintf(s->fp, "# branch.head %s%c", branch_name, eol);
-+		}
-+
-+		/* Lookup stats on the upstream tracking branch, if set. */
-+		branch = branch_get(branch_name);
-+		base = NULL;
-+		ab_info = (stat_tracking_info(branch, &nr_ahead, &nr_behind, &base) == 0);
-+		if (base) {
-+			base = shorten_unambiguous_ref(base, 0);
-+			fprintf(s->fp, "# branch.upstream %s%c", base, eol);
-+			free((char *)base);
-+
-+			if (ab_info)
-+				fprintf(s->fp, "# branch.ab +%d -%d%c", nr_ahead, nr_behind, eol);
-+		}
-+	}
-+
-+	free(state.branch);
-+	free(state.onto);
-+	free(state.detached_from);
-+}
-+
-+/*
-  * Convert various submodule status values into a
-  * fixed-length string of characters in the buffer provided.
-  */
-@@ -2058,6 +2144,7 @@ static void wt_porcelain_v2_print_other(
- /*
-  * Print porcelain V2 status.
-  *
-+ * [<v2_branch>]
-  * [<v2_changed_items>]*
-  * [<v2_unmerged_items>]*
-  * [<v2_untracked_items>]*
-@@ -2070,6 +2157,9 @@ static void wt_porcelain_v2_print(struct wt_status *s)
- 	struct string_list_item *it;
- 	int i;
- 
-+	if (s->show_branch)
-+		wt_porcelain_v2_print_tracking(s);
-+
- 	for (i = 0; i < s->change.nr; i++) {
- 		it = &(s->change.items[i]);
- 		d = it->util;
-diff --git a/wt-status.h b/wt-status.h
-index 43fd3fc..e401837 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -80,6 +80,7 @@ struct wt_status {
- 	int hints;
- 
- 	enum wt_status_format status_format;
-+	unsigned char sha1_commit[GIT_SHA1_RAWSZ]; /* when not Initial */
- 
- 	/* These are computed during processing of the individual sections */
- 	int commitable;
--- 
-2.8.0.rc4.17.gac42084.dirty
+and I advanced the liberal a bit more. ;)
+So maybe we'd be looking that no 'detached HEAD' occurs?
 
+    test_i18ngrep ! "'detached HEAD'" actual
+
+I think testing that we do not give out advice (i.e. behave the same as if
+not giving out advice) is best tested to just compare the output to
+the output of "git -c advice.detachedHead=false ...", which is what I do here.
+This seems to be future proof to me no matter how we reword the advice or
+the actual message on checkout?
+
+Thanks,
+Stefan
+
+>
+> -Peff
