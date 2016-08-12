@@ -6,27 +6,29 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A0E681F859
-	for <e@80x24.org>; Fri, 12 Aug 2016 15:48:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 760621F859
+	for <e@80x24.org>; Fri, 12 Aug 2016 15:48:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752600AbcHLPsq (ORCPT <rfc822;e@80x24.org>);
-	Fri, 12 Aug 2016 11:48:46 -0400
-Received: from siwi.pair.com ([209.68.5.199]:27731 "EHLO siwi.pair.com"
+	id S1752666AbcHLPst (ORCPT <rfc822;e@80x24.org>);
+	Fri, 12 Aug 2016 11:48:49 -0400
+Received: from siwi.pair.com ([209.68.5.199]:65155 "EHLO siwi.pair.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751962AbcHLPsp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2016 11:48:45 -0400
+	id S1752597AbcHLPsr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2016 11:48:47 -0400
 Received: from jeffhost-linux1.corp.microsoft.com (unknown [167.220.148.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by siwi.pair.com (Postfix) with ESMTPSA id 8A56684652;
-	Fri, 12 Aug 2016 11:48:44 -0400 (EDT)
+	by siwi.pair.com (Postfix) with ESMTPSA id ACA5B8465E;
+	Fri, 12 Aug 2016 11:48:45 -0400 (EDT)
 From:	Jeff Hostetler <git@jeffhostetler.com>
 To:	git@vger.kernel.org
 Cc:	gitster@pobox.com, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v8 0/9] status: V2 porcelain status
-Date:	Fri, 12 Aug 2016 11:44:43 -0400
-Message-Id: <1471016692-35828-1-git-send-email-git@jeffhostetler.com>
+Subject: [PATCH v8 4/9] status: collect per-file data for --porcelain=v2
+Date:	Fri, 12 Aug 2016 11:44:47 -0400
+Message-Id: <1471016692-35828-5-git-send-email-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.8.0.rc4.17.gac42084.dirty
+In-Reply-To: <1471016692-35828-1-git-send-email-git@jeffhostetler.com>
+References: <1471016692-35828-1-git-send-email-git@jeffhostetler.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -34,39 +36,170 @@ X-Mailing-List:	git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-This patch series adds porcelain V2 format to status.
-This provides detailed information about file changes
-and about the current branch.
+Collect extra per-file data for porcelain V2 format.
 
-The new output is accessed via:
-    git status --porcelain=v2 [--branch]
+The output of `git status --porcelain` leaves out many
+details about the current status that clients might like
+to have.  This can force them to be less efficient as they
+may need to launch secondary commands (and try to match
+the logic within git) to accumulate this extra information.
+For example, a GUI IDE might want the file mode to display
+the correct icon for a changed item (without having to stat
+it afterwards).
 
-This v8 patch series addresses the remaining feedback
-about the unit tests from the v6 and v7 series.
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+---
+ builtin/commit.c |  3 +++
+ wt-status.c      | 64 ++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ wt-status.h      |  4 ++++
+ 3 files changed, 69 insertions(+), 2 deletions(-)
 
-This series has been rebased onto 787fadc reference point.
-
-Jeff Hostetler (9):
-  status: rename long-format print routines
-  status: cleanup API to wt_status_print
-  status: support --porcelain[=<version>]
-  status: collect per-file data for --porcelain=v2
-  status: print per-file porcelain v2 status data
-  status: print branch info with --porcelain=v2 --branch
-  git-status.txt: describe --porcelain=v2 format
-  test-lib-functions.sh: Add lf_to_nul
-  status: unit tests for --porcelain=v2
-
- Documentation/git-status.txt | 133 +++++++++-
- builtin/commit.c             |  78 +++---
- t/t7060-wtstatus.sh          |  21 ++
- t/t7064-wtstatus-pv2.sh      | 593 +++++++++++++++++++++++++++++++++++++++++++
- t/test-lib-functions.sh      |   4 +
- wt-status.c                  | 570 ++++++++++++++++++++++++++++++++++++-----
- wt-status.h                  |  19 +-
- 7 files changed, 1306 insertions(+), 112 deletions(-)
- create mode 100755 t/t7064-wtstatus-pv2.sh
-
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 185ac35..3d222d3 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -153,6 +153,8 @@ static int opt_parse_porcelain(const struct option *opt, const char *arg, int un
+ 		*value = STATUS_FORMAT_PORCELAIN;
+ 	else if (!strcmp(arg, "v1") || !strcmp(arg, "1"))
+ 		*value = STATUS_FORMAT_PORCELAIN;
++	else if (!strcmp(arg, "v2") || !strcmp(arg, "2"))
++		*value = STATUS_FORMAT_PORCELAIN_V2;
+ 	else
+ 		die("unsupported porcelain version '%s'", arg);
+ 
+@@ -1104,6 +1106,7 @@ static struct status_deferred_config {
+ static void finalize_deferred_config(struct wt_status *s)
+ {
+ 	int use_deferred_config = (status_format != STATUS_FORMAT_PORCELAIN &&
++				   status_format != STATUS_FORMAT_PORCELAIN_V2 &&
+ 				   !s->null_termination);
+ 
+ 	if (s->null_termination) {
+diff --git a/wt-status.c b/wt-status.c
+index e0dda24..dd0a1ab 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -434,6 +434,31 @@ static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
+ 		if (S_ISGITLINK(p->two->mode))
+ 			d->new_submodule_commits = !!oidcmp(&p->one->oid,
+ 							    &p->two->oid);
++
++		switch (p->status) {
++		case DIFF_STATUS_ADDED:
++			die("BUG: worktree status add???");
++			break;
++
++		case DIFF_STATUS_DELETED:
++			d->mode_index = p->one->mode;
++			oidcpy(&d->oid_index, &p->one->oid);
++			/* mode_worktree is zero for a delete. */
++			break;
++
++		case DIFF_STATUS_MODIFIED:
++		case DIFF_STATUS_TYPE_CHANGED:
++		case DIFF_STATUS_UNMERGED:
++			d->mode_index = p->one->mode;
++			d->mode_worktree = p->two->mode;
++			oidcpy(&d->oid_index, &p->one->oid);
++			break;
++
++		case DIFF_STATUS_UNKNOWN:
++			die("BUG: worktree status unknown???");
++			break;
++		}
++
+ 	}
+ }
+ 
+@@ -479,12 +504,36 @@ static void wt_status_collect_updated_cb(struct diff_queue_struct *q,
+ 		if (!d->index_status)
+ 			d->index_status = p->status;
+ 		switch (p->status) {
++		case DIFF_STATUS_ADDED:
++			/* Leave {mode,oid}_head zero for an add. */
++			d->mode_index = p->two->mode;
++			oidcpy(&d->oid_index, &p->two->oid);
++			break;
++		case DIFF_STATUS_DELETED:
++			d->mode_head = p->one->mode;
++			oidcpy(&d->oid_head, &p->one->oid);
++			/* Leave {mode,oid}_index zero for a delete. */
++			break;
++
+ 		case DIFF_STATUS_COPIED:
+ 		case DIFF_STATUS_RENAMED:
+ 			d->head_path = xstrdup(p->one->path);
++			d->score = p->score * 100 / MAX_SCORE;
++			/* fallthru */
++		case DIFF_STATUS_MODIFIED:
++		case DIFF_STATUS_TYPE_CHANGED:
++			d->mode_head = p->one->mode;
++			d->mode_index = p->two->mode;
++			oidcpy(&d->oid_head, &p->one->oid);
++			oidcpy(&d->oid_index, &p->two->oid);
+ 			break;
+ 		case DIFF_STATUS_UNMERGED:
+ 			d->stagemask = unmerged_mask(p->two->path);
++			/*
++			 * Don't bother setting {mode,oid}_{head,index} since the print
++			 * code will output the stage values directly and not use the
++			 * values in these fields.
++			 */
+ 			break;
+ 		}
+ 	}
+@@ -565,9 +614,17 @@ static void wt_status_collect_changes_initial(struct wt_status *s)
+ 		if (ce_stage(ce)) {
+ 			d->index_status = DIFF_STATUS_UNMERGED;
+ 			d->stagemask |= (1 << (ce_stage(ce) - 1));
+-		}
+-		else
++			/*
++			 * Don't bother setting {mode,oid}_{head,index} since the print
++			 * code will output the stage values directly and not use the
++			 * values in these fields.
++			 */
++		} else {
+ 			d->index_status = DIFF_STATUS_ADDED;
++			/* Leave {mode,oid}_head zero for adds. */
++			d->mode_index = ce->ce_mode;
++			hashcpy(d->oid_index.hash, ce->sha1);
++		}
+ 	}
+ }
+ 
+@@ -1764,6 +1821,9 @@ void wt_status_print(struct wt_status *s)
+ 	case STATUS_FORMAT_PORCELAIN:
+ 		wt_porcelain_print(s);
+ 		break;
++	case STATUS_FORMAT_PORCELAIN_V2:
++		/* TODO */
++		break;
+ 	case STATUS_FORMAT_UNSPECIFIED:
+ 		die("BUG: finalize_deferred_config() should have been called");
+ 		break;
+diff --git a/wt-status.h b/wt-status.h
+index 9389076..43fd3fc 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -38,6 +38,9 @@ struct wt_status_change_data {
+ 	int worktree_status;
+ 	int index_status;
+ 	int stagemask;
++	int score;
++	int mode_head, mode_index, mode_worktree;
++	struct object_id oid_head, oid_index;
+ 	char *head_path;
+ 	unsigned dirty_submodule       : 2;
+ 	unsigned new_submodule_commits : 1;
+@@ -48,6 +51,7 @@ enum wt_status_format {
+ 	STATUS_FORMAT_LONG,
+ 	STATUS_FORMAT_SHORT,
+ 	STATUS_FORMAT_PORCELAIN,
++	STATUS_FORMAT_PORCELAIN_V2,
+ 
+ 	STATUS_FORMAT_UNSPECIFIED
+ };
 -- 
 2.8.0.rc4.17.gac42084.dirty
 
