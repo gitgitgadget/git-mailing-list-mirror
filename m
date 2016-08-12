@@ -6,28 +6,28 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C34D72018E
-	for <e@80x24.org>; Fri, 12 Aug 2016 07:09:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 732522018E
+	for <e@80x24.org>; Fri, 12 Aug 2016 07:09:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751858AbcHLHIy (ORCPT <rfc822;e@80x24.org>);
-	Fri, 12 Aug 2016 03:08:54 -0400
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:20691 "EHLO
+	id S1751979AbcHLHJU (ORCPT <rfc822;e@80x24.org>);
+	Fri, 12 Aug 2016 03:09:20 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:16258 "EHLO
 	smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751257AbcHLHIu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2016 03:08:50 -0400
+	with ESMTP id S1751207AbcHLHIt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2016 03:08:49 -0400
 Received: from localhost.localdomain ([92.22.69.35])
 	by smtp.talktalk.net with SMTP
-	id Y6ZUbGDs4xR4bY6ZZbadhb; Fri, 12 Aug 2016 08:08:05 +0100
+	id Y6ZUbGDs4xR4bY6ZYbadhZ; Fri, 12 Aug 2016 08:08:05 +0100
 X-Originating-IP: [92.22.69.35]
 X-Spam:	0
 X-OAuthority: v=2.2 cv=JNN5iICb c=1 sm=1 tr=0 a=118V6UEFpCLMRzptT8w30g==:117
- a=118V6UEFpCLMRzptT8w30g==:17 a=xtxXYLxNAAAA:8 a=nOBXlB7yw2htNP6sz7oA:9
+ a=118V6UEFpCLMRzptT8w30g==:17 a=xtxXYLxNAAAA:8 a=aPQgYVu9WxExC_ZTeUIA:9
  a=xts0dhWdiJbonKbuqhAr:22
 From:	Philip Oakley <philipoakley@iee.org>
 To:	GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 09/12] doc: revisions  - define `reachable`
-Date:	Fri, 12 Aug 2016 08:07:46 +0100
-Message-Id: <20160812070749.2920-10-philipoakley@iee.org>
+Subject: [PATCH v5 08/12] doc: gitrevisions - clarify 'latter case' is revision walk
+Date:	Fri, 12 Aug 2016 08:07:45 +0100
+Message-Id: <20160812070749.2920-9-philipoakley@iee.org>
 X-Mailer: git-send-email 2.9.0.windows.1
 In-Reply-To: <20160812070749.2920-1-philipoakley@iee.org>
 References: <20160720211007.5520-1-philipoakley@iee.org>
@@ -39,41 +39,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Do not self-define `reachable`, which can lead to misunderstanding.
-Instead define `reachability` explictly.
+The prior sentence has too many clauses for easy parsing.
+Replace 'the latter case' with a direct quote.
 
 Signed-off-by: Philip Oakley <philipoakley@iee.org>
 ---
 unchanged
 ---
- Documentation/revisions.txt | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ Documentation/gitrevisions.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index 934d071..238be45 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -237,10 +237,16 @@ SPECIFYING RANGES
- -----------------
+diff --git a/Documentation/gitrevisions.txt b/Documentation/gitrevisions.txt
+index 33039c6..27dec5b 100644
+--- a/Documentation/gitrevisions.txt
++++ b/Documentation/gitrevisions.txt
+@@ -16,8 +16,8 @@ DESCRIPTION
+ Many Git commands take revision parameters as arguments. Depending on
+ the command, they denote a specific commit or, for commands which
+ walk the revision graph (such as linkgit:git-log[1]), all commits which are
+-reachable from that commit. In the latter case one can also specify a
+-range of revisions explicitly.
++reachable from that commit. For commands that walk the revision graph one can
++also specify a range of revisions explicitly.
  
- History traversing commands such as `git log` operate on a set
--of commits, not just a single commit.  To these commands,
--specifying a single revision with the notation described in the
--previous section means the set of commits reachable from that
--commit, following the commit ancestry chain.
-+of commits, not just a single commit.
-+
-+For these commands,
-+specifying a single revision, using the notation described in the
-+previous section, means the set of commits `reachable` from the given
-+commit.
-+
-+A commit's reachable set is the commit itself and the commits in
-+its ancestry chain.
-+
- 
- Commit Exclusions
- ~~~~~~~~~~~~~~~~~
+ In addition, some Git commands (such as linkgit:git-show[1]) also take
+ revision parameters which denote other objects than commits, e.g. blobs
 -- 
 2.9.0.windows.1
 
