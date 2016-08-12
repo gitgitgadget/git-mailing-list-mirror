@@ -2,141 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69A3B1F859
-	for <e@80x24.org>; Fri, 12 Aug 2016 16:12:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D449D1F859
+	for <e@80x24.org>; Fri, 12 Aug 2016 16:16:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752596AbcHLQMb (ORCPT <rfc822;e@80x24.org>);
-	Fri, 12 Aug 2016 12:12:31 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62621 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752575AbcHLQMa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2016 12:12:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3965D34C0E;
-	Fri, 12 Aug 2016 12:12:29 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1ma03IOi7faP8izrcg8+KHmzxEc=; b=aw2hFC
-	uVGcasGriqvjFVkKD3WFA9x0bJ+pU2se2tWtVYxR3SB7uCi61gpgx8bKtAaa4JPR
-	vCCB7JmCv/6goohWDXtSUhVT0IeKr/RR4Mj+U7+x1blx/m24/kHGskJAyXw6u5U3
-	WSTHZwOkFQ2DGgShqRlUrzmJ72m5Sp++q0CP8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IhROl70VoMhk5NWQK0S/M2r+lD2HfHqI
-	OX9dGf7LxGSfcznQ7oePpr7+hBCW4MvN/J24NHYAP9AzhnBsv7An33O3469KEj9m
-	uGC7jzP+azcywM8dcrO2Hp4C6k8Li+0PckLMD2JqTrDPYW79uPc3YawKuKfjhneO
-	J7dzVc8pHKU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 30C2034C0D;
-	Fri, 12 Aug 2016 12:12:29 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A6D2534C0C;
-	Fri, 12 Aug 2016 12:12:28 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Stefan Beller <sbeller@google.com>
-Cc:	jrnieder@gmail.com, git@vger.kernel.org,
-	remi.galan-alfonso@ensimag.grenoble-inp.fr
-Subject: Re: [PATCHv3] checkout: do not mention detach advice for explicit --detach option
-References: <20160812153744.15045-1-sbeller@google.com>
-Date:	Fri, 12 Aug 2016 09:12:26 -0700
-In-Reply-To: <20160812153744.15045-1-sbeller@google.com> (Stefan Beller's
-	message of "Fri, 12 Aug 2016 08:37:44 -0700")
-Message-ID: <xmqqmvkix8yd.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752586AbcHLQQK (ORCPT <rfc822;e@80x24.org>);
+	Fri, 12 Aug 2016 12:16:10 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:36178 "EHLO
+	mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752301AbcHLQQK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2016 12:16:10 -0400
+Received: by mail-io0-f194.google.com with SMTP id y34so1906183ioi.3
+        for <git@vger.kernel.org>; Fri, 12 Aug 2016 09:16:09 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=716KH5gZQ65B/hCDqXPVf/wA2QZpYyyMuptnRS0hEFo=;
+        b=mRYh5cfdXkD2f5+dS5p8+/j6w/zKJ0TgKATEzxPWBoZdmtGQwX7fBRGBh0hKiy24GS
+         tcjgK9ZpS5XvM5NTS358daTNjO9KW+yOaFvJ6fbL8to8Zlha3wSnumS4Hj/8uZCL/HHU
+         5deNkvTQ9GtGjmf9I21Bq/Yf1UBhxmfsDgFdfOJtNYwwwdPn1DvPIH1fwQrzTdOMiIRv
+         Aej+rTKDCjF5Psy29zPsD+IEPvBfx0xpehHGsCfpw9SilqvtdV1xcSFamX4YF82qPrdg
+         lm8iOyphfrS0YNPBkwhOKzJcwCVaNQRuclQraQdjpTj7lD/iByjQADSquZZtREGMHbr3
+         Umrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=716KH5gZQ65B/hCDqXPVf/wA2QZpYyyMuptnRS0hEFo=;
+        b=hLnZnYi3j2OqBmhLjRfM8KPDJXp5O44Dm6AgKjJnEyi2D9wc1WbDsgGKmlbhoWouz9
+         gM8p1A/Fnxc+u3dxVWzWQNgNz5Zzh8FyBwurM6lJ4QsmRRYFhRkY6EfejNkryw6C1fWX
+         aJqQdUPx1GKaW37LvE8ZmZboL2o+ZTks1QSQIykPTPg6BIj+Lg2LJg68fucco3jZkEyu
+         8e4dWzj2SNcQoi5TAda21XeMa84XqGlLHqSdRi5s0iypOVn0PRT4e++2VHuZ6f3u1wh5
+         1FLfrMqZOLugPIHaxzd/N+jWNdhGX91Z37DAcUW7zeaTfzWJzJjycOvcc2Eo3g1mKEYh
+         1Zzw==
+X-Gm-Message-State: AEkoouvfoDmHnDpTDuf3oO2vk3f2nd+SPUgwB1ENJEbH/MdFdAgtOGG6dh4Kk0HEzPtdf45i8JsAGyIdyhiDzg==
+X-Received: by 10.107.34.19 with SMTP id i19mr20366668ioi.52.1471018569353;
+ Fri, 12 Aug 2016 09:16:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 90D32626-60A7-11E6-8369-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.36.213.66 with HTTP; Fri, 12 Aug 2016 09:15:38 -0700 (PDT)
+In-Reply-To: <A7A176B0-08CE-4D92-9756-51A59DF3B9D7@gmail.com>
+References: <CAKRjdd4WdVTgbT0gcR=a267+aEwD2Exztrc9gNau1nOXroC=ng@mail.gmail.com>
+ <xmqqr39uxa33.fsf@gitster.mtv.corp.google.com> <A7A176B0-08CE-4D92-9756-51A59DF3B9D7@gmail.com>
+From:	Joseph Musser <me@jnm2.com>
+Date:	Fri, 12 Aug 2016 12:15:38 -0400
+X-Google-Sender-Auth: IdRkoMDHWSu76X_rfgxe3GVCJgk
+Message-ID: <CAKRjdd4V3OfDnzisxBofBUmtds7q7ejUtuV_-s96eUVf7fqwHA@mail.gmail.com>
+Subject: Re: `git stash --help` tries to pull up nonexistent file gitstack.html
+To:	Lars Schneider <larsxschneider@gmail.com>
+Cc:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Oh, I'm embarrassed. The typo was mine, I must have typed `git stack
+--help`. I would have expected a syntax error message or "did you
+mean" suggestions; it didn't even enter my mind that it would look up
+whatever I typed before --help and assume it existed on disk.
 
-> When a user asked for a detached HEAD specifically with `--detach`,
-> we do not need to give advice on what a detached HEAD state entails as
-> we can assume they know what they're getting into as they asked for it.
+I'm sorry!
+
+On Fri, Aug 12, 2016 at 12:03 PM, Lars Schneider
+<larsxschneider@gmail.com> wrote:
 >
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
+>> On 12 Aug 2016, at 17:48, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Joseph Musser <me@jnm2.com> writes:
+>>
+>>> Looks like a simple typo.
+>>
+>> Unfortunately this does not reproduce to me (built from source on
+>> Ubuntu Linux).
 >
-> Thanks for the review!
+> I tried it with the latest released version on Windows and OSX (2.9.2)
+> and was not able to reproduce it, too.
 >
->> Is there a reason for not unsetting `advice.detachedHead` at the
->> end of the test?
->
-> done
->
-> I did not consider to clean up after myself... what a selfish world!
-
-;-)
-
-Using test_config instead of "git config" would help.
-
-> +test_expect_success 'no advice given for explicit detached head state' '
-> +	git config advice.detachedHead false &&
-> +	git checkout child &&
-> +	git checkout --detach HEAD >expect &&
-> +	git config advice.detachedHead true &&
-> +	git checkout child &&
-> +	git checkout --detach HEAD >actual &&
-> +	test_cmp expect actual &&
-
-The above is meant to see explicit "--detach" gives the same message
-whether advice.detachedHead is set to true or false, which is good.
-It however does not make sure these messages do not caution about
-detaching.
-
-> +	git checkout child &&
-> +	git checkout HEAD >actual &&
-
-This goes to "child" branch and then does a no-op "checkout HEAD"
-that does not even detach.
-
-> +	! test_cmp expect actual &&
-
-And then it compares the message from a no-op "checkout" and
-the previously obtained message from a detaching "checkout".
-
-Another thing that this is not checking is that a detaching
-"checkout" without an explicit "--detach" still gives the advice
-when advice.detachedHead is set to true (or left to default, for
-that matter).
-
-Perhaps you would want to do it a bit differently.  How does this
-look?
-
-    # baseline
-    test_config advice.detachedHead true &&
-    git checkout child && git checkout HEAD^0 >expect.advice &&
-    test_config advice.detachedHead false &&
-    git checkout child && git checkout HEAD^0 >expect.no-advice &&
-    test_unconfig advice.detachedHead &&
-    # without configuration, the advice.* variables default to true
-    git checkout child && git checkout HEAD^0 >actual &&
-    test_cmp expect.advice actual &&
-
-    # with explicit --detach
-    # no configuration
-    test_unconfig advice.detachedHead &&
-    git checkout child && git checkout --detach HEAD >actual &&
-    test_cmp expect.no-advice actual &&
-
-    # explicitly ask advice
-    test_config advice.detachedHead true &&
-    git checkout child && git checkout --detach HEAD >actual &&
-    test_cmp expect.no-advice actual &&
-
-    # explicitly decline advice
-    test_config advice.detachedHead false &&
-    git checkout child && git checkout --detach HEAD >actual &&
-    test_cmp expect.no-advice actual
-
-It might be controversial how the second from the last case should
-behave, though.
+> - Lars
