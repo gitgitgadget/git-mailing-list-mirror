@@ -2,130 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B27321F859
-	for <e@80x24.org>; Fri, 12 Aug 2016 15:22:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB77C1F859
+	for <e@80x24.org>; Fri, 12 Aug 2016 15:37:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752447AbcHLPW1 (ORCPT <rfc822;e@80x24.org>);
-	Fri, 12 Aug 2016 11:22:27 -0400
-Received: from smtp106.iad3a.emailsrvr.com ([173.203.187.106]:50786 "EHLO
-	smtp106.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752377AbcHLPW1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Aug 2016 11:22:27 -0400
-Received: from smtp14.relay.iad3a.emailsrvr.com (localhost [127.0.0.1])
-	by smtp14.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id 51C786038B;
-	Fri, 12 Aug 2016 11:22:26 -0400 (EDT)
-X-Auth-ID: mbranchaud@xiplink.com
-Received: by smtp14.relay.iad3a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 2AAA260297;
-	Fri, 12 Aug 2016 11:22:26 -0400 (EDT)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-	by 0.0.0.0:465 (trex/5.7.1);
-	Fri, 12 Aug 2016 11:22:26 -0400
-Subject: Re: [PATCH v5 11/12] doc: revisions: show revision expansion in
- examples
-To:	Philip Oakley <philipoakley@iee.org>,
-	GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-References: <20160720211007.5520-1-philipoakley@iee.org>
- <20160812070749.2920-1-philipoakley@iee.org>
- <20160812070749.2920-12-philipoakley@iee.org>
-Cc:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-From:	Marc Branchaud <marcnarc@xiplink.com>
-Message-ID: <f418c41b-f590-0b6a-236a-c109a7296434@xiplink.com>
-Date:	Fri, 12 Aug 2016 11:22:26 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
-MIME-Version: 1.0
-In-Reply-To: <20160812070749.2920-12-philipoakley@iee.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+	id S1752255AbcHLPh4 (ORCPT <rfc822;e@80x24.org>);
+	Fri, 12 Aug 2016 11:37:56 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:34597 "EHLO
+	mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752194AbcHLPhu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2016 11:37:50 -0400
+Received: by mail-pf0-f178.google.com with SMTP id p64so10143836pfb.1
+        for <git@vger.kernel.org>; Fri, 12 Aug 2016 08:37:49 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=N5rQOQe/o6wI64BO+O7O940BqCGWRQWm0fh0fG360Po=;
+        b=YplNw6tCTTLXoEHDEzcfyw+3RaxQf04RhZW4hXqIVYsoyYCKIcu39IZpcA0gajmeH0
+         oJD3TpasapkkhIBbgcMr6CzAi8t1kMSXk+cpVGd16rK+D6VUHrjfQhhPl/If0/t2+jDL
+         TSrmaor5dnEa8Gbv9wkcoaBaQM52c+QAaJqGX6mc9GYnvCNCvw3w3sK7oeBch06uXApA
+         QfjpnXuaOYGDvq7SKUP9wRtMasvj75RFZhVbJxh6drlHhJNPQSxffJRDP2EjFHVa1j2B
+         27o0uDDW4G3BJcfSvxl9BzrlkhXU1zW/A6w3FPbKOnbD7oqJlltcDYS0qSjE6zytFFsc
+         nrtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=N5rQOQe/o6wI64BO+O7O940BqCGWRQWm0fh0fG360Po=;
+        b=SyHsuuxbOz37ElZRzIY7YCIhm0Yym20fvEpnk1APpvCXNXYZfZ9etxd4B16FEc3vIS
+         Epn0ohJrElmrFBYsXbkuCGYaZLKUPY5+8GT39+Gje4E9T18c9669GMGS+yuRlQVY+BF6
+         ILws3lm8rXD6X69r55EVy7UIc+gh0dI5RIMfLJz6a8NPuRa+Cano9y67R/1i5SG0Jpcx
+         z86XEUPkwTjDxbnMQKoCzMvybTT7daPiowfNZIZDZ02lXx0XOQKKaXdFgVk11U/rKmfV
+         b4bTIvEEngo6iqNWLgAmoeUwjss6eeVRQXvAw4xTKuCkUfEeWSSDwM8fjRspcdXszp2a
+         tBEg==
+X-Gm-Message-State: AEkoous6Hg2IDontVcNk7ONnbghWmN/N51Zbz/GA/zQudZThWNYZaWBc6TTD2DZNT5DOhXdz
+X-Received: by 10.98.75.219 with SMTP id d88mr28550979pfj.91.1471016269203;
+        Fri, 12 Aug 2016 08:37:49 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:9ce8:bfb9:108e:f4e6])
+        by smtp.gmail.com with ESMTPSA id bx9sm14016021pab.17.2016.08.12.08.37.47
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 12 Aug 2016 08:37:48 -0700 (PDT)
+From:	Stefan Beller <sbeller@google.com>
+To:	gitster@pobox.com, jrnieder@gmail.com
+Cc:	git@vger.kernel.org, remi.galan-alfonso@ensimag.grenoble-inp.fr,
+	Stefan Beller <sbeller@google.com>
+Subject: [PATCHv3] checkout: do not mention detach advice for explicit --detach option
+Date:	Fri, 12 Aug 2016 08:37:44 -0700
+Message-Id: <20160812153744.15045-1-sbeller@google.com>
+X-Mailer: git-send-email 2.9.2.730.g46b112d
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 2016-08-12 03:07 AM, Philip Oakley wrote:
-> The revisions examples show the revison arguments and the selected
-> commits, but do not show the intermediate step of the expansion of
-> the special 'range' notations. Extend the examples, including an
-> all-parents multi-parent merge commit example.
->
-> Sort the examples and fix the alignment for those unaffected
-> in the next commit.
->
-> Signed-off-by: Philip Oakley <philipoakley@iee.org>
-> ---
-> new
-> Cc: Jakub Narębski <jnareb@gmail.com>
-> ---
->  Documentation/revisions.txt | 19 +++++++++++++------
->  1 file changed, 13 insertions(+), 6 deletions(-)
->
-> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-> index 70864d5..ac7dd8e 100644
-> --- a/Documentation/revisions.txt
-> +++ b/Documentation/revisions.txt
-> @@ -326,16 +326,23 @@ Revision Range Summary
->    as giving commit '<rev>' and then all its parents prefixed with
->    '{caret}' to exclude them (and their ancestors).
->
-> -Here are a handful of examples:
-> +Here are a handful of examples using the Loeliger illustration above:
->
-> +   Args   Expansion       Selection
+When a user asked for a detached HEAD specifically with `--detach`,
+we do not need to give advice on what a detached HEAD state entails as
+we can assume they know what they're getting into as they asked for it.
 
-I think "Result" would be better than "Selection" here.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-Also, shouldn't all the ^ in these examples be {caret}?  (I likely just 
-don't understand the rationale for using {caret} in some places and ^ in 
-others...)
+Thanks for the review!
 
->     D                G H D
->     D F              G H I J D F
->     ^G D             H D
->     ^D B             E I J F B
-> -   B..C             C
-> -   B...C            G H D E B C
-> +   B..C   = ^B C          C
-> +   B...C  = B ^F C        G H D E B C
->     ^D B C           E I J F B C
->     C                I J F C
-> -   C^@              I J F
-> -   C^!              C
-> -   F^! D            G H D F
-> +   C^@    = C^1
+> Is there a reason for not unsetting `advice.detachedHead` at the
+> end of the test?
 
-I have a mixed reaction to showing this "C^1" expansion, and the "B^1 
-B^2 B^3" one as well.  I see the appeal of showing the parent notation, 
-but really that was already explained to death in the first section. 
-Here it's distracting.  I think it's clearer for the reader to remove 
-these expansions and just use the node names from the illustration.
+done
 
-> +          = F             I J F
-> +   B^@    = B^1 B^2 B^3
-> +          = D E F         D G H E F I J
-> +   C^!    = C ^C^1
+I did not consider to clean up after myself... what a selfish world!
 
-I think this expansion might be better expressed as "C ^C^@".  It'll be 
-the same for "B^! = B ^B^@" as well, which demonstrates a nice 
-consistency and also helps to emphasize the meaning of the ^@ notation.
+Stefan
 
-> +          = C ^F          C
-> +   B^! = B ^B^1 ^B^2 ^B^3
-> +       = B ^D ^E ^F       B
+ builtin/checkout.c         |  2 +-
+ t/t2020-checkout-detach.sh | 14 ++++++++++++++
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
-The layout of these last two lines doesn't match the others.  They 
-should be:
-
-    B^!    = B ^B^1 ^B^2   ^B^3
-           = B ^D ^E ^F    B
-
-I see that the next patch fixes the layout of the unchanged examples, 
-but it leaves these two unaligned.
-
-		M.
-
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 8d852d4..85408b1 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -658,7 +658,7 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+ 		update_ref(msg.buf, "HEAD", new->commit->object.oid.hash, NULL,
+ 			   REF_NODEREF, UPDATE_REFS_DIE_ON_ERR);
+ 		if (!opts->quiet) {
+-			if (old->path && advice_detached_head)
++			if (old->path && advice_detached_head && !opts->force_detach)
+ 				detach_advice(new->name);
+ 			describe_detached_head(_("HEAD is now at"), new->commit);
+ 		}
+diff --git a/t/t2020-checkout-detach.sh b/t/t2020-checkout-detach.sh
+index 5d68729..3ee60fb 100755
+--- a/t/t2020-checkout-detach.sh
++++ b/t/t2020-checkout-detach.sh
+@@ -163,4 +163,18 @@ test_expect_success 'tracking count is accurate after orphan check' '
+ 	test_i18ncmp expect stdout
+ '
+ 
++test_expect_success 'no advice given for explicit detached head state' '
++	git config advice.detachedHead false &&
++	git checkout child &&
++	git checkout --detach HEAD >expect &&
++	git config advice.detachedHead true &&
++	git checkout child &&
++	git checkout --detach HEAD >actual &&
++	test_cmp expect actual &&
++	git checkout child &&
++	git checkout HEAD >actual &&
++	! test_cmp expect actual &&
++	git config --unset advice.detachedHead
++'
++
+ test_done
+-- 
+2.9.2.730.g46b112d
