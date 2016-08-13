@@ -7,54 +7,56 @@ X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7418320193
-	for <e@80x24.org>; Sat, 13 Aug 2016 08:38:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF41F20193
+	for <e@80x24.org>; Sat, 13 Aug 2016 08:43:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752398AbcHMIiP convert rfc822-to-8bit (ORCPT
-	<rfc822;e@80x24.org>); Sat, 13 Aug 2016 04:38:15 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:36090 "EHLO
-	mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751566AbcHMIhz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Aug 2016 04:37:55 -0400
-Received: by mail-io0-f196.google.com with SMTP id y34so2971184ioi.3
-        for <git@vger.kernel.org>; Sat, 13 Aug 2016 01:37:55 -0700 (PDT)
+	id S1752429AbcHMIlg convert rfc822-to-8bit (ORCPT
+	<rfc822;e@80x24.org>); Sat, 13 Aug 2016 04:41:36 -0400
+Received: from mail-it0-f43.google.com ([209.85.214.43]:36261 "EHLO
+	mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752384AbcHMIlb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Aug 2016 04:41:31 -0400
+Received: by mail-it0-f43.google.com with SMTP id i186so2027666itf.1
+        for <git@vger.kernel.org>; Sat, 13 Aug 2016 01:41:30 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=4fouO3pNjAtdwaTPslJRihMbDIyYKnxPvizH2HOg0bc=;
-        b=obfmQ+Rf7TQkKI/nhlF861+ON2YjeH0muvDihEZle3Feq+ahGK7uBzzAltjGA67Qgg
-         6Grgv0hwb3YyHQMv3OjcetCqaGeMkMZFQPlkqiwHyD3T37ZAt6JTb468h2LkSNeFhLGg
-         yDXgoW8da6nS9+6hjMZ3w6WYglON+Vc4JER+jvAav0PrgTohPXlIl9xRFbO+tNr2sBHS
-         /1apCtbEtjPIhaz6rZcVGk3x9RNNv2hlEphoi5AHaLDufmi8ED2mWmpFXEuOyL1HxwQK
-         hOJl7Qbj8mDSrfsAyBhNyw6IMsZD2KmAsKkRajEub1hjthF0VzvUxSSXKBOUFwdHQMYy
-         GJLw==
+        bh=HebR5Jzy0NaaKm1atnfpV8iHkH5lrRb1TOjmJir7LwQ=;
+        b=Bn5qN5o+DsQca0r43GDJW6Hg5SC3dzP+Q1+XS9B+2jSxcnSZG0uq8YFKavFGSwnuk1
+         ptldX2JW4cRuN4h3CfebZQj+3lgMx/cG0z0JE0EgNFuG8B67KJxJ1ghmqHOEbDPOFwCL
+         mCdlBF2LKvLPFYibJwXHYOB7mdRdZolXgBr84XSl3SOC4Q1FqDFjcz/WxPkG10M0Zf4C
+         qpAi52AlfLlOVPa+noQllu7l3n2eyK6h2WDPbC4LFNxy4E819YW5R2kwDhCvthwDnMzx
+         WWzKCc8ueDFX57hUVami+urSPqV7jSAb+k7Qx8i0uKiPFUN4t0P8c5RHXnx/HtUoF/8c
+         MnDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=4fouO3pNjAtdwaTPslJRihMbDIyYKnxPvizH2HOg0bc=;
-        b=IMz0IST1hZcF0envI6QI6h8F4UsvhNhC2W5rFSEkE0FROoNNWBF1iD8LOfU1PCTmWa
-         L2Pt7DbXqhbfTO75lzdoiJEjPXtSYZDB6J0NH9HwZS7xVzoyuNHomAaJK92cTTyjrPtI
-         v/f6kW3AYmc+wFgO2ZlDwwxvmURaCejLwFRZ0DAnfkalaWAIl+HtJKgu8S8EiewM2hUj
-         aU72eWQOIYrxJWQjKtjL/X7oHbxUpGRVpQHzbUIdGk+jXS29i1XYD1TQRltBN8uVaw7/
-         UmPL+hVIpaY1zqZXRUnAomWNIH8X/Lsun1NBDtyiOQyc62/Ou8HasQYUZYLA+28C1t/w
-         oKAQ==
-X-Gm-Message-State: AEkooutAvDitsGILiO4MqJ62fDXO8ntq1uhseIWtXEQAQrD2J9bXl5L+pTmb3iQC5Q3hG6mah3m+Of99RDJRGw==
-X-Received: by 10.107.2.78 with SMTP id 75mr22621333ioc.128.1471077474540;
- Sat, 13 Aug 2016 01:37:54 -0700 (PDT)
+        bh=HebR5Jzy0NaaKm1atnfpV8iHkH5lrRb1TOjmJir7LwQ=;
+        b=JWNHvCPr28vIxFSLlZuzUYlo+sDOYDrGrxzY27bhLpIPqlsoZsjFkJG79LGQTuizea
+         +zItHSt1NiwooR/GTowsRmKDG6z+s4Sk2xIBUclTZwoU5LNqO+oIfLJ/yX3Cu6PgdF/C
+         EgaO1fa3M1cudxJRYKMEAEDG1NQGmXTkdad8vSrY3NV+jD92JdLAwzsMsEFL39q3eFVx
+         /cALxynVyNyqS0HG1oFD1p+cLlR1dK2iPSK0B0JxbcSzG2IZ3dWQDAxf8G595tv8L4EF
+         s3wg1m7pID4qS5hfUznRp4sbDzcORo7lvrWWpPdK7zp4RyYDOuOfFR9xDlH64082A7N3
+         ztNw==
+X-Gm-Message-State: AEkoout8cynDBV+TWLLMnntweyfswIf8eYGbTDPMaHiiJF86N+kt8nzxte/zhL87uCdDnlowrpxCrHwAMJvitA==
+X-Received: by 10.36.33.197 with SMTP id e188mr3324191ita.42.1471077689935;
+ Sat, 13 Aug 2016 01:41:29 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.64.125.199 with HTTP; Sat, 13 Aug 2016 01:37:24 -0700 (PDT)
-In-Reply-To: <20160711181532.20682-1-pclouds@gmail.com>
-References: <20160711181532.20682-1-pclouds@gmail.com>
+Received: by 10.64.125.199 with HTTP; Sat, 13 Aug 2016 01:40:59 -0700 (PDT)
+In-Reply-To: <20160714153311.2166-1-pclouds@gmail.com>
+References: <20160712164216.24072-1-pclouds@gmail.com> <20160714153311.2166-1-pclouds@gmail.com>
 From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Sat, 13 Aug 2016 15:37:24 +0700
-Message-ID: <CACsJy8AQwRYJZNjXjXr-ioFY-dR9zeeSUk1kxpVwuHDMwB9wLg@mail.gmail.com>
-Subject: Re: [PATCH] Speed up sparse checkout when $GIT_DIR/info/sparse-checkout
- is unchanged
+Date:	Sat, 13 Aug 2016 15:40:59 +0700
+Message-ID: <CACsJy8Bw0ZNu-6SB0P3dBZCLMJWJkbUqb64H_QOcn4UH+_AcNA@mail.gmail.com>
+Subject: Re: [PATCH v4] config: add conditional include
 To:	Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
-Cc:	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+Cc:	Jeff King <peff@peff.net>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
 	<pclouds@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8BIT
@@ -65,242 +67,351 @@ X-Mailing-List:	git@vger.kernel.org
 
 Ping..
 
-On Tue, Jul 12, 2016 at 1:15 AM, Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
-> When a "tree unpacking" operation is needed, which is part of
-> switching branches using "git checkout", the following happens in a
-> sparse checkout:
->
-> 1) Run all existing entries through $GIT_DIR/info/sparse-checkout,
->    mark entries that are to-be-excluded or to-be-included.
->
-> 2) Do n-way merge stuff to add, modify and delete entries.
->
-> 3) Run all new entries added at step 2 through
->    $GIT_DIR/info/sparse-checkout, mark entries that are to-be-excluded
->    or to-be-included.
->
-> 4) Compare the current excluded/include status with the to-be-status
->    from steps 1 and 3, delete newly excluded entries from worktree and
->    add newly included ones to worktree.
->
-> The "all existing entries" number in step 1 does not scale well. As
-> worktree gets bigger (or more sparse patterns are added), step 1 runs
-> slower. Which does not help because large worktrees are the reason
-> sparse-checkout is used, to keep the real worktree small again.
->
-> If we know that $GIT_DIR/info/sparse-checkout has not changed, we know
-> that running checking again would result in the exact same
-> included/excluded as recorded in the current index because
-> "sparse-checkout" is the only input to the exclude machinery. In this
-> case, marking the to-be-status is simply copying the current status
-> over, which is a lot faster.
->
-> The time breakdown of "git checkout" (no arguments) on webkit.git
-> (100k files) with a sparse checkout file of 4 negative patterns is
-> like this, where "sparse checkout loop #1" takes about 10% execution
-> time, which is the time saved after this patch.
->
-> read-cache.c:1661       performance: 0.057816104 s: read cache .git/index
-> files-backend.c:1097    performance: 0.000023980 s: read packed refs
-> preload-index.c:104     performance: 0.039178367 s: preload index
-> read-cache.c:1260       performance: 0.002700730 s: refresh index
-> name-hash.c:128         performance: 0.030409968 s: initialize name hash
->
-> unpack-trees.c:1173     performance: 0.100353572 s: sparse checkout loop #1
->
-> cache-tree.c:431        performance: 0.137213472 s: cache_tree_update
-> unpack-trees.c:1305     performance: 0.648923590 s: unpack_trees
-> read-cache.c:2139       performance: 0.074800165 s: write index, changed mask = 28
-> unpack-trees.c:1305     performance: 0.137108835 s: unpack_trees
-> diff-lib.c:506          performance: 0.137152238 s: diff-index
-> trace.c:420             performance: 0.972682413 s: git command: 'git' 'checkout'
->
+On Thu, Jul 14, 2016 at 10:33 PM, Nguyễn Thái Ngọc Duy
+<pclouds@gmail.com> wrote:
+> Helped-by: Jeff King <peff@peff.com>
 > Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 > ---
->  I mentioned about this some time ago and finally got curious enough
->  to try out. The saving is in the signficant range in my opinion, but
->  real world effect is probably lower (or much higher if you have so
->  many patterns in $GIT_DIR/info/sparse-checkout)
+>  The diff from v3 is mostly clarification in code and document.
 >
->  Note that both cache_tree_update and sparse checkout loop #1 are part
->  of unpack_trees() so actual time spent on this function is more like
->  0.4s. It's still a lot, but then this function is very scary to
->  optimize.
+>     diff --git a/Documentation/config.txt b/Documentation/config.txt
+>     index 18623ee..d971334 100644
+>     --- a/Documentation/config.txt
+>     +++ b/Documentation/config.txt
+>     @@ -99,10 +99,9 @@ Supported keywords are:
 >
->  Documentation/technical/index-format.txt |  6 +++++
->  cache.h                                  |  2 ++
->  read-cache.c                             | 22 ++++++++++++++++-
->  unpack-trees.c                           | 42 ++++++++++++++++++++++++++++++--
->  4 files changed, 69 insertions(+), 3 deletions(-)
+>      `gitdir`::
+>         The environment variable `GIT_DIR` must match the following
+>     -   pattern for files to be included. The pattern can contain
+>     -   standard globbing wildcards and two additional ones, `**/` and
+>     -   `/**`, that can match multiple path components. Please refer
+>     -   to linkgit:gitignore[5] for details. For convenience:
+>     +   pattern for files to be included. The pattern shares the same
+>     +   syntax as patterns in link:gitignore[5] with a few exceptions
+>     +   below:
 >
-> diff --git a/Documentation/technical/index-format.txt b/Documentation/technical/index-format.txt
-> index ade0b0c..3b0770a 100644
-> --- a/Documentation/technical/index-format.txt
-> +++ b/Documentation/technical/index-format.txt
-> @@ -295,3 +295,9 @@ The remaining data of each directory block is grouped by type:
->      in the previous ewah bitmap.
+>       * If the pattern starts with `~/`, `~` will be substituted with the
+>         content of the environment variable `HOME`.
+>     diff --git a/config.c b/config.c
+>     index ff44e00..690f3d5 100644
+>     --- a/config.c
+>     +++ b/config.c
+>     @@ -183,6 +183,11 @@ static int prepare_include_condition_pattern(struct strbuf *pat)
 >
->    - One NUL.
+>                 strbuf_add_absolute_path(&path, home);
+>                 strbuf_splice(pat, 0, 1, path.buf, path.len);
+>     +           /*
+>     +            * This part, path.buf[0..len], should be considered
+>     +            * a literal string even if it has wildcards in it,
+>     +            * because those wildcards are not wanted by the user.
+>     +            */
+>                 prefix = path.len + 1 /*slash*/;
+>                 strbuf_release(&path);
+>         } else if (pat->buf[0] == '.' && is_dir_sep(pat->buf[1])) {
+>     @@ -198,6 +203,11 @@ static int prepare_include_condition_pattern(struct strbuf *pat)
+>                 if (!slash)
+>                         die("BUG: how is this possible?");
+>                 strbuf_splice(pat, 0, 1, path.buf, slash - path.buf);
+>     +           /*
+>     +            * This part, path.buf[0..slash], should be consider
+>     +            * a literal string even if it has wildcards in it,
+>     +            * because those wildcards are not wanted by the user.
+>     +            */
+>                 prefix = slash - path.buf + 1 /* slash */;
+>                 strbuf_release(&path);
+>         } else if (!is_absolute_path(pat->buf))
+>     @@ -224,8 +234,9 @@ static int include_by_gitdir(const char *cond, size_t cond_len, int icase)
+>
+>         if (prefix > 0) {
+>                 /*
+>     -            * perform literal matching on the prefix part so that
+>     -            * any wildcard character in it can't create side effects.
+>     +            * perform literal matching on the expanded prefix
+>     +            * part so that any wildcard character in it (e.g in
+>     +            * the expansion of ~) can't create side effects.
+>                  */
+>                 if (text.len < prefix)
+>                         goto done;
+>  Documentation/config.txt  |  47 +++++++++++++++++++
+>  config.c                  | 113 +++++++++++++++++++++++++++++++++++++++++++++-
+>  t/t1305-config-include.sh |  56 +++++++++++++++++++++++
+>  3 files changed, 214 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index db05dec..d971334 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -91,6 +91,42 @@ found at the location of the include directive. If the value of the
+>  relative to the configuration file in which the include directive was
+>  found.  See below for examples.
+>
+> +Included files can be grouped into subsections where the subsection
+> +name is the condition that must be met for the files to be included.
+> +The condition starts with a keyword, followed by a colon and a
+> +pattern. The interpretation of the pattern depends on the keyword.
+> +Supported keywords are:
 > +
-> +== Sparse checkout cache
+> +`gitdir`::
+> +       The environment variable `GIT_DIR` must match the following
+> +       pattern for files to be included. The pattern shares the same
+> +       syntax as patterns in link:gitignore[5] with a few exceptions
+> +       below:
 > +
-> +  Sparse checkout extension saves the 20 bytes SHA-1 hash of
-> +  $GIT_DIR/info/sparse-checkout at the time it is applied to the
-> +  index.
-> diff --git a/cache.h b/cache.h
-> index f1dc289..cc4c2b1 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -320,6 +320,7 @@ static inline unsigned int canon_mode(unsigned int mode)
->  #define CACHE_TREE_CHANGED     (1 << 5)
->  #define SPLIT_INDEX_ORDERED    (1 << 6)
->  #define UNTRACKED_CHANGED      (1 << 7)
-> +#define SPARSE_CHECKOUT_CHANGED        (1 << 8)
+> + * If the pattern starts with `~/`, `~` will be substituted with the
+> +   content of the environment variable `HOME`.
+> +
+> + * If the pattern starts with `./`, it is replaced with the directory
+> +   containing the current config file.
+> +
+> + * If the pattern does not start with either `~/`, `./` or `/`, `**/`
+> +   will be automatically prepended. For example, the pattern `foo/bar`
+> +   becomes `**/foo/bar` and would match `/any/path/to/foo/bar`.
+> +
+> + * If the pattern ends with `/`, `**` will be automatically added. For
+> +   example, the pattern `foo/` becomes `foo/**`. In other words, it
+> +   matches "foo" and everything inside, recursively.
+> +
+> +`gitdir/i`::
+> +       This is the same as `gitdir` except that matching is done
+> +       case-insensitively (e.g. on case-insensitive file sytems)
+> +
+> +A few more notes on matching:
+> +
+> + * Symlinks in `$GIT_DIR` are not resolved before matching.
+> +
+> + * Note that "../" is not special and will match literally, which is
+> +   unlikely what you want.
 >
->  struct split_index;
->  struct untracked_cache;
-> @@ -338,6 +339,7 @@ struct index_state {
->         struct hashmap dir_hash;
->         unsigned char sha1[20];
->         struct untracked_cache *untracked;
-> +       unsigned char sparse_checkout[20];
->  };
+>  Example
+>  ~~~~~~~
+> @@ -119,6 +155,17 @@ Example
+>                 path = foo ; expand "foo" relative to the current file
+>                 path = ~/foo ; expand "foo" in your `$HOME` directory
 >
->  extern struct index_state the_index;
-> diff --git a/read-cache.c b/read-cache.c
-> index db27766..371d2c7 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -40,11 +40,13 @@ static struct cache_entry *refresh_cache_entry(struct cache_entry *ce,
->  #define CACHE_EXT_RESOLVE_UNDO 0x52455543 /* "REUC" */
->  #define CACHE_EXT_LINK 0x6c696e6b        /* "link" */
->  #define CACHE_EXT_UNTRACKED 0x554E5452   /* "UNTR" */
-> +#define CACHE_EXT_SPARSE 0x5350434F      /* "SPCO" */
+> +       ; include if $GIT_DIR is /path/to/foo/.git
+> +       [include "gitdir:/path/to/foo/.git"]
+> +               path = /path/to/foo.inc
+> +
+> +       ; include for all repositories inside /path/to/group
+> +       [include "gitdir:/path/to/group/"]
+> +               path = /path/to/foo.inc
+> +
+> +       ; include for all repositories inside $HOME/to/group
+> +       [include "gitdir:~/to/group/"]
+> +               path = /path/to/foo.inc
 >
->  /* changes that can be kept in $GIT_DIR/index (basically all extensions) */
->  #define EXTMASK (RESOLVE_UNDO_CHANGED | CACHE_TREE_CHANGED | \
->                  CE_ENTRY_ADDED | CE_ENTRY_REMOVED | CE_ENTRY_CHANGED | \
-> -                SPLIT_INDEX_ORDERED | UNTRACKED_CHANGED)
-> +                SPLIT_INDEX_ORDERED | UNTRACKED_CHANGED | \
-> +                SPARSE_CHECKOUT_CHANGED)
+>  Values
+>  ~~~~~~
+> diff --git a/config.c b/config.c
+> index bea937e..690f3d5 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -13,6 +13,7 @@
+>  #include "hashmap.h"
+>  #include "string-list.h"
+>  #include "utf8.h"
+> +#include "dir.h"
 >
->  struct index_state the_index;
->  static const char *alternate_index_output;
-> @@ -1384,6 +1386,11 @@ static int read_index_extension(struct index_state *istate,
->         case CACHE_EXT_UNTRACKED:
->                 istate->untracked = read_untracked_extension(data, sz);
->                 break;
-> +       case CACHE_EXT_SPARSE:
-> +               if (sz != sizeof(istate->sparse_checkout))
-> +                       return error("bad %.4s extension", ext);
-> +               hashcpy(istate->sparse_checkout, data);
-> +               break;
->         default:
->                 if (*ext < 'A' || 'Z' < *ext)
->                         return error("index uses %.4s extension, which we do not understand",
-> @@ -1704,6 +1711,7 @@ int discard_index(struct index_state *istate)
->         discard_split_index(istate);
->         free_untracked_cache(istate->untracked);
->         istate->untracked = NULL;
-> +       hashclr(&istate->sparse_checkout);
->         return 0;
+>  struct config_source {
+>         struct config_source *prev;
+> @@ -168,9 +169,113 @@ static int handle_path_include(const char *path, struct config_include_data *inc
+>         return ret;
 >  }
 >
-> @@ -2101,6 +2109,18 @@ static int do_write_index(struct index_state *istate, int newfd,
->                 if (err)
->                         return -1;
->         }
-> +       if (!strip_extensions && !is_null_sha1(istate->sparse_checkout)) {
-> +               struct strbuf sb = STRBUF_INIT;
-> +
-> +               strbuf_add(&sb, istate->sparse_checkout,
-> +                          sizeof(istate->sparse_checkout));
-> +               err = write_index_ext_header(&c, newfd, CACHE_EXT_SPARSE,
-> +                                            sb.len) < 0 ||
-> +                       ce_write(&c, newfd, sb.buf, sb.len) < 0;
-> +               strbuf_release(&sb);
-> +               if (err)
-> +                       return -1;
-> +       }
->
->         if (ce_flush(&c, newfd, istate->sha1) || fstat(newfd, &st))
->                 return -1;
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 6bc9512..f3916a9 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -1080,6 +1080,25 @@ static void mark_new_skip_worktree(struct exclude_list *el,
->                        select_flag, skip_wt_flag, el);
->  }
->
-> +static void get_sparse_checkout_hash(unsigned char *sha1)
+> +static int prepare_include_condition_pattern(struct strbuf *pat)
 > +{
-> +       struct stat st;
-> +       int fd;
+> +       int prefix = 0;
 > +
-> +       hashclr(sha1);
-> +       fd = open(git_path("info/sparse-checkout"), O_RDONLY);
-> +       if (fd == -1)
-> +               return;
-> +       if (fstat(fd, &st)) {
-> +               close(fd);
-> +               return;
-> +       }
-> +       if (index_fd(sha1, fd, &st, OBJ_BLOB,
-> +                    git_path("info/sparse-checkout"), 0) < 0)
-> +               hashclr(sha1);
-> +       close(fd);
+> +       /* TODO: maybe support ~user/ too */
+> +       if (pat->buf[0] == '~' && is_dir_sep(pat->buf[1])) {
+> +               struct strbuf path = STRBUF_INIT;
+> +               const char *home = getenv("HOME");
+> +
+> +               if (!home)
+> +                       return error(_("$HOME is not defined"));
+> +
+> +               strbuf_add_absolute_path(&path, home);
+> +               strbuf_splice(pat, 0, 1, path.buf, path.len);
+> +               /*
+> +                * This part, path.buf[0..len], should be considered
+> +                * a literal string even if it has wildcards in it,
+> +                * because those wildcards are not wanted by the user.
+> +                */
+> +               prefix = path.len + 1 /*slash*/;
+> +               strbuf_release(&path);
+> +       } else if (pat->buf[0] == '.' && is_dir_sep(pat->buf[1])) {
+> +               struct strbuf path = STRBUF_INIT;
+> +               const char *slash;
+> +
+> +               if (!cf || !cf->path)
+> +                       return error(_("relative config include "
+> +                                      "conditionals must come from files"));
+> +
+> +               strbuf_add_absolute_path(&path, cf->path);
+> +               slash = find_last_dir_sep(path.buf);
+> +               if (!slash)
+> +                       die("BUG: how is this possible?");
+> +               strbuf_splice(pat, 0, 1, path.buf, slash - path.buf);
+> +               /*
+> +                * This part, path.buf[0..slash], should be consider
+> +                * a literal string even if it has wildcards in it,
+> +                * because those wildcards are not wanted by the user.
+> +                */
+> +               prefix = slash - path.buf + 1 /* slash */;
+> +               strbuf_release(&path);
+> +       } else if (!is_absolute_path(pat->buf))
+> +               strbuf_insert(pat, 0, "**/", 3);
+> +
+> +       if (pat->len && is_dir_sep(pat->buf[pat->len - 1]))
+> +               strbuf_addstr(pat, "**");
+> +
+> +       return prefix;
 > +}
 > +
->  static int verify_absent(const struct cache_entry *,
->                          enum unpack_trees_error_types,
->                          struct unpack_trees_options *);
-> @@ -1094,6 +1113,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
->         int i, ret;
->         static struct cache_entry *dfc;
->         struct exclude_list el;
-> +       unsigned char sparse_checkout_hash[20];
->
->         if (len > MAX_UNPACK_TREES)
->                 die("unpack_trees takes at most %d trees", MAX_UNPACK_TREES);
-> @@ -1131,8 +1151,21 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
->         /*
->          * Sparse checkout loop #1: set NEW_SKIP_WORKTREE on existing entries
->          */
-> -       if (!o->skip_sparse_checkout)
-> -               mark_new_skip_worktree(o->el, o->src_index, 0, CE_NEW_SKIP_WORKTREE);
-> +       if (!o->skip_sparse_checkout) {
-> +               get_sparse_checkout_hash(sparse_checkout_hash);
+> +static int include_by_gitdir(const char *cond, size_t cond_len, int icase)
+> +{
+> +       struct strbuf text = STRBUF_INIT;
+> +       struct strbuf pattern = STRBUF_INIT;
+> +       int ret = 0, prefix;
 > +
-> +               if (!is_null_sha1(sparse_checkout_hash) &&
-> +                   !hashcmp(o->src_index->sparse_checkout, sparse_checkout_hash)) {
-> +                       struct index_state *istate = o->src_index;
-> +                       for (i = 0; i < istate->cache_nr; i++) {
-> +                               struct cache_entry *ce = istate->cache[i];
-> +                               if (ce_skip_worktree(ce))
-> +                                       ce->ce_flags |= CE_NEW_SKIP_WORKTREE;
-> +                       }
-> +               } else
-> +                       mark_new_skip_worktree(o->el, o->src_index,
-> +                                              0, CE_NEW_SKIP_WORKTREE);
+> +       strbuf_add_absolute_path(&text, get_git_dir());
+> +       strbuf_add(&pattern, cond, cond_len);
+> +       prefix = prepare_include_condition_pattern(&pattern);
+> +
+> +       if (prefix < 0)
+> +               goto done;
+> +
+> +       if (prefix > 0) {
+> +               /*
+> +                * perform literal matching on the expanded prefix
+> +                * part so that any wildcard character in it (e.g in
+> +                * the expansion of ~) can't create side effects.
+> +                */
+> +               if (text.len < prefix)
+> +                       goto done;
+> +               if (!icase && strncmp(pattern.buf, text.buf, prefix))
+> +                       goto done;
+> +               if (icase && strncasecmp(pattern.buf, text.buf, prefix))
+> +                       goto done;
 > +       }
->
->         if (!dfc)
->                 dfc = xcalloc(1, cache_entry_size(0));
-> @@ -1236,6 +1269,11 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
->                         ret = unpack_failed(o, "Sparse checkout leaves no entry on working directory");
->                         goto done;
->                 }
 > +
-> +               if (o->dst_index && !is_null_sha1(sparse_checkout_hash)) {
-> +                       hashcpy(o->result.sparse_checkout, sparse_checkout_hash);
-> +                       o->result.cache_changed |= SPARSE_CHECKOUT_CHANGED;
-> +               }
->         }
+> +       ret = !wildmatch(pattern.buf + prefix, text.buf + prefix,
+> +                        icase ? WM_CASEFOLD : 0, NULL);
+> +
+> +done:
+> +       strbuf_release(&pattern);
+> +       strbuf_release(&text);
+> +       return ret;
+> +}
+> +
+> +static int include_condition_is_true(const char *cond, size_t cond_len)
+> +{
+> +       /* no condition (i.e., "include.path") is always true */
+> +       if (!cond)
+> +               return 1;
+> +
+> +       if (skip_prefix_mem(cond, cond_len, "gitdir:", &cond, &cond_len))
+> +               return include_by_gitdir(cond, cond_len, 0);
+> +       else if (skip_prefix_mem(cond, cond_len, "gitdir/i:", &cond, &cond_len))
+> +               return include_by_gitdir(cond, cond_len, 1);
+> +
+> +       error(_("unrecognized include condition: %.*s"), (int)cond_len, cond);
+> +       /* unknown conditionals are always false */
+> +       return 0;
+> +}
+> +
+>  int git_config_include(const char *var, const char *value, void *data)
+>  {
+>         struct config_include_data *inc = data;
+> +       const char *cond, *key;
+> +       int cond_len;
+>         int ret;
 >
->         o->src_index = NULL;
+>         /*
+> @@ -181,8 +286,12 @@ int git_config_include(const char *var, const char *value, void *data)
+>         if (ret < 0)
+>                 return ret;
+>
+> -       if (!strcmp(var, "include.path"))
+> -               ret = handle_path_include(value, inc);
+> +       if (!parse_config_key(var, "include", &cond, &cond_len, &key) &&
+> +           include_condition_is_true(cond, cond_len)) {
+> +               if (!strcmp(key, "path"))
+> +                       ret = handle_path_include(value, inc);
+> +               /* else we do not know about this type of include; ignore */
+> +       }
+>         return ret;
+>  }
+>
+> diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
+> index 9ba2ba1..83501ec 100755
+> --- a/t/t1305-config-include.sh
+> +++ b/t/t1305-config-include.sh
+> @@ -152,6 +152,62 @@ test_expect_success 'relative includes from stdin line fail' '
+>         test_must_fail git config --file - test.one
+>  '
+>
+> +test_expect_success 'conditional include, both unanchored' '
+> +       git init foo &&
+> +       (
+> +               cd foo &&
+> +               echo "[include \"gitdir:foo/\"]path=bar" >>.git/config &&
+> +               echo "[test]one=1" >.git/bar &&
+> +               echo 1 >expect &&
+> +               git config test.one >actual &&
+> +               test_cmp expect actual
+> +       )
+> +'
+> +
+> +test_expect_success 'conditional include, $HOME expansion' '
+> +       (
+> +               cd foo &&
+> +               echo "[include \"gitdir:~/foo/\"]path=bar2" >>.git/config &&
+> +               echo "[test]two=2" >.git/bar2 &&
+> +               echo 2 >expect &&
+> +               git config test.two >actual &&
+> +               test_cmp expect actual
+> +       )
+> +'
+> +
+> +test_expect_success 'conditional include, full pattern' '
+> +       (
+> +               cd foo &&
+> +               echo "[include \"gitdir:**/foo/**\"]path=bar3" >>.git/config &&
+> +               echo "[test]three=3" >.git/bar3 &&
+> +               echo 3 >expect &&
+> +               git config test.three >actual &&
+> +               test_cmp expect actual
+> +       )
+> +'
+> +
+> +test_expect_success 'conditional include, relative path' '
+> +       echo "[include \"gitdir:./foo/.git\"]path=bar4" >>.gitconfig &&
+> +       echo "[test]four=4" >bar4 &&
+> +       (
+> +               cd foo &&
+> +               echo 4 >expect &&
+> +               git config test.four >actual &&
+> +               test_cmp expect actual
+> +       )
+> +'
+> +
+> +test_expect_success 'conditional include, both unanchored, icase' '
+> +       (
+> +               cd foo &&
+> +               echo "[include \"gitdir/i:FOO/\"]path=bar5" >>.git/config &&
+> +               echo "[test]five=5" >.git/bar5 &&
+> +               echo 5 >expect &&
+> +               git config test.five >actual &&
+> +               test_cmp expect actual
+> +       )
+> +'
+> +
+>  test_expect_success 'include cycles are detected' '
+>         cat >.gitconfig <<-\EOF &&
+>         [test]value = gitconfig
 > --
-> 2.8.2.537.g0965dd9
+> 2.9.1.566.gbd532d4
 >
 
 
