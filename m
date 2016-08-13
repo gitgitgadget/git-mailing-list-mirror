@@ -2,89 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3644120193
-	for <e@80x24.org>; Sat, 13 Aug 2016 08:56:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 375B520193
+	for <e@80x24.org>; Sat, 13 Aug 2016 08:59:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751566AbcHMI4K (ORCPT <rfc822;e@80x24.org>);
-	Sat, 13 Aug 2016 04:56:10 -0400
-Received: from mail-it0-f41.google.com ([209.85.214.41]:38326 "EHLO
-	mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751299AbcHMI4J (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Aug 2016 04:56:09 -0400
-Received: by mail-it0-f41.google.com with SMTP id i186so2525025itf.1
-        for <git@vger.kernel.org>; Sat, 13 Aug 2016 01:56:09 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=gc4ljEkw8MK7eQ+cTNpVsjZhfSqNFICIhFFUMsATuso=;
-        b=l5+CJlNyuUwBLyg0uJe/D+D19AMP+/GIdpY0kz7t5BdNyPyzj34ZF+84MgvFKrciga
-         ruwo6WCbVXGmdbLyFybB/T3VJGsAdh0z+2TMXONAwPCWHIY8qjUeS53E827anR4bpo39
-         19ybbF0HUkX6P2CDTHPNOhiF7OKP8J+p+/qnHaAhHMVc3LXZtmXd4IYIKZlxAESMOrs5
-         OP9AvENNebyCSgGVPCNJiBfPO5JJ5wQOuG9d4zjc1g2TPgLx3gMT4fXbQIxSZ7HYRo/w
-         uBHgT1kiEy9SrIpAeoiqJ65Zow84QlomhBtrto9xDYRohgu2UpBAxNhTYW+dJJWPiDYO
-         C/jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=gc4ljEkw8MK7eQ+cTNpVsjZhfSqNFICIhFFUMsATuso=;
-        b=hW0QCTQ+IEh81TgmCMnLA9mNI7MGkbMivehj2mD1GQI7oDRjQsaNdPWHbiFT36vKQ6
-         wMak4kue2TubSM4WgG48UzDdfkkRY/GYrlEJNV67Tpm1WNDeqN6X8dogpRHpAfoLOGJm
-         +UlGWR2YePID0EZDugz7WQah/IaPBIu4EBT/nEiqEJIPO9Rz5KgRpz2zP8eLzz8zuLWc
-         R3BYaUJD3sKO1MqU2NDXtjlEAbv3zayrm0YuxsTRtn0wbQ8+lerfaDFHqn7OgXcqG98p
-         hnTnzQDJQhbQAiElXrywvSITrdC5YSYYMFJEXXHNrl3kOEfnsNmm1RhDKDg52Dr7ChZX
-         sv4g==
-X-Gm-Message-State: AEkoousiPl/7DOWkRFpyOYPc8tILpaNlFMeJ/bP60ie4KRlfjuJWPmVMjGRuPmw/FRbjFjr536l0sXFODdXrgg==
-X-Received: by 10.36.43.88 with SMTP id h85mr3311004ita.57.1471078222032; Sat,
- 13 Aug 2016 01:50:22 -0700 (PDT)
+	id S1751732AbcHMI7K (ORCPT <rfc822;e@80x24.org>);
+	Sat, 13 Aug 2016 04:59:10 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54677 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751418AbcHMI7I (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Aug 2016 04:59:08 -0400
+Received: (qmail 1388 invoked by uid 109); 13 Aug 2016 08:59:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 13 Aug 2016 08:59:07 +0000
+Received: (qmail 27428 invoked by uid 111); 13 Aug 2016 08:59:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 13 Aug 2016 04:59:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 13 Aug 2016 04:59:05 -0400
+Date:	Sat, 13 Aug 2016 04:59:05 -0400
+From:	Jeff King <peff@peff.net>
+To:	Michael Haggerty <mhagger@alum.mit.edu>
+Cc:	git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH 8/8] diff: improve positioning of add/delete blocks in
+ diffs
+Message-ID: <20160813085904.lykoihh4v2lf4yuj@sigill.intra.peff.net>
+References: <cover.1470259583.git.mhagger@alum.mit.edu>
+ <7b0680ed7a10fc13acd8d7816a75ed05a5f9e28c.1470259583.git.mhagger@alum.mit.edu>
+ <20160804075631.jakbi5dbsbxsqcpr@sigill.intra.peff.net>
+ <e4232cba-aae8-8426-c730-7914bb750363@alum.mit.edu>
 MIME-Version: 1.0
-Received: by 10.64.125.199 with HTTP; Sat, 13 Aug 2016 01:49:51 -0700 (PDT)
-In-Reply-To: <CAGZ79kba36GprgHA04_q4NmY2=_amoWyafUaLKkcknc3HsT_-g@mail.gmail.com>
-References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com>
- <CAGZ79kba36GprgHA04_q4NmY2=_amoWyafUaLKkcknc3HsT_-g@mail.gmail.com>
-From:	Duy Nguyen <pclouds@gmail.com>
-Date:	Sat, 13 Aug 2016 15:49:51 +0700
-Message-ID: <CACsJy8C51UkH=tLSfGigAF0JjPxVS3fY0EHi0CNVRG8LY8YiCg@mail.gmail.com>
-Subject: Re: storing cover letter of a patch series?
-To:	Stefan Beller <sbeller@google.com>
-Cc:	Jacob Keller <jacob.keller@gmail.com>,
-	Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <e4232cba-aae8-8426-c730-7914bb750363@alum.mit.edu>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Aug 9, 2016 at 12:27 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Thu, Sep 10, 2015 at 9:28 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
->> Hey,
->>
->> does anyone know of any tricks for storing a cover letter for a patch
->> series inside of git somehow? I'd guess the only obvious way currently
->> is to store it at the top of the series as an empty commit.. but this
->> doesn't get emailed *as* the cover letter...
->>
->> Is there some other way? Would others be interested in such a feature?
->
-> Being late to this thread, but I think
->
->        branch.<name>.description
->            Branch description, can be edited with git branch
->            --edit-description. Branch description is automatically added in
->            the format-patch cover letter or request-pull summary.
->
-> is what you want. Maybe we want to see a patch that adds the reverse
-> functionality as well, i.e. git-am will store the the cover letter as the
-> branch description and git-merge will propose the branch description for
-> the merge commit.
+On Sat, Aug 13, 2016 at 01:25:05AM +0200, Michael Haggerty wrote:
 
-I almost suggested the same, but there is a problem with this
-approach: if you're are on a detached head, where does git-am save it?
--- 
-Duy
+> > These two flags are mutually exclusive in the xdiff code, so we should
+> > probably handle that here.
+> > 
+> > TBH, I do not care that much what:
+> > 
+> >   [diff]
+> >   compactionHeuristic = true
+> >   indentHeuristic = true
+> > 
+> > does. But right now:
+> > 
+> >   git config diff.compactionHeuristic true
+> >   git show --indent-heuristic
+> > 
+> > still prefers the compaction heuristic, which I think is objectively
+> > wrong.
+> 
+> I wasn't worrying about that yet, given that these two features are both
+> still experimental. I also have a strong inkling that at most one of
+> them needs to be made permanent. I propose that I repair the semantics
+> in the simplest way possible for now while we decide on the long-term
+> plan, which might conceivably be:
+> 
+> * keep both options permanently
+> * keep only one option permanently
+> * choose one heuristic and use it always (i.e., make it part of the new
+> standard one-and-only diff algorithm)
+> * discard both heuristics (I hope not!)
+> 
+> After we've decided on that, *then* let's decide on a suitable UI and
+> implement it before we declare either feature non-experimental.
+
+Is there a case where the compaction heuristic produces a better result
+than this indent heuristic? AFAICT, you have not found one, and I'd be
+surprised if there is one, because this _seems_ like a superset
+generally. I suppose there is always the possibility that the empirical
+knobs behave badly in some particular case that the compaction heuristic
+just happens to get right, but it should be quite rare.
+
+So assuming everything I just said isn't complete bollocks, I think we
+can move to a future where nobody uses the compaction heuristic. And
+there are three ways to deal with that:
+
+  1. The knob and feature stay. It might be useful for somebody who
+     wants to experiment in the future.
+
+  2. The knob and feature go away completely. It was an experiment, but
+     now we have something more useful.
+
+  3. The feature goes away, but the knob stays as noop, or maybe as an
+     alias for the indent heuristic, just because we did ship a version
+     that accepts "--compaction-heuristic", and maybe somebody somewhere
+     put it in a script?
+
+I think I'd be in favor of (2). It doesn't seem likely enough for people
+to experiment with to merit a run-time knob; they can always patch and
+build if they want to do so. And (3) just seems like a pain for
+something that was only shipped in one version and was kind of
+experimental, and was unlikely to end up in scripts (much more likely is
+that people set the config, but that's easier to ignore). But it does
+violate our usual backwards-compatibility rules.
+
+So if we assume that indent is useful and compaction goes away, the only
+questions are "does indent it become the default" and "if so, does it
+still get a knob". I'd say "yes" to both. Making the new behavior the
+default was what we planned to do with compaction until we saw that it
+regressed some cases. But as a new feature, it's nice for users to be
+able to easily disable it to see if it's causing a problem (or to see
+what a big improvement it is!).
+
+I think we could get by with just a command-line option for that
+purpose, rather than a config option; that saves a lot of effort in
+having porcelains manually propagate the config option when they call a
+plumbing diff-tree.
+
+I guess the only users that leaves out are ones who really want stable
+backwards-compatible diff. I guess "patch --stable" is one such user
+(but that one we could handle internally). But let's say you had a code
+review system that attached comments to lines of a diff. You might want
+to disable the feature entirely to avoid invalidating old comments.
+
+-Peff
