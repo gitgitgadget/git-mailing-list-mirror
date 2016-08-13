@@ -2,88 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AD1A1FD99
-	for <e@80x24.org>; Sat, 13 Aug 2016 11:14:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6ED01FD99
+	for <e@80x24.org>; Sat, 13 Aug 2016 11:30:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752395AbcHMLOx (ORCPT <rfc822;e@80x24.org>);
-	Sat, 13 Aug 2016 07:14:53 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54722 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752262AbcHMLOw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Aug 2016 07:14:52 -0400
-Received: (qmail 9453 invoked by uid 109); 13 Aug 2016 11:14:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 13 Aug 2016 11:14:51 +0000
-Received: (qmail 2204 invoked by uid 111); 13 Aug 2016 11:14:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 13 Aug 2016 07:14:51 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 13 Aug 2016 07:14:49 -0400
-Date:	Sat, 13 Aug 2016 07:14:49 -0400
-From:	Jeff King <peff@peff.net>
-To:	Eric Wong <e@80x24.org>
-Cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: A note from the maintainer
-Message-ID: <20160813111449.vkoo3fmlfd65loh5@sigill.intra.peff.net>
-References: <xmqq1t1twymf.fsf@gitster.mtv.corp.google.com>
- <20160812224255.GA16250@dcvr>
- <20160813081012.p46i4jcvkkfqch7m@sigill.intra.peff.net>
- <20160813090432.GA25565@starla>
+	id S1752262AbcHMLah (ORCPT <rfc822;e@80x24.org>);
+	Sat, 13 Aug 2016 07:30:37 -0400
+Received: from mta01.prd.rdg.aluminati.org ([94.76.243.214]:58316 "EHLO
+	mta01.prd.rdg.aluminati.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752180AbcHMLah (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Aug 2016 07:30:37 -0400
+Received: from mta01.prd.rdg.aluminati.org (localhost [127.0.0.1])
+	by mta.aluminati.local (Postfix) with ESMTP id 23D62C4702;
+	Sat, 13 Aug 2016 12:30:35 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by mta01.prd.rdg.aluminati.org (Postfix) with ESMTP id 1A94520CD8;
+	Sat, 13 Aug 2016 12:30:35 +0100 (BST)
+X-Quarantine-ID: <2OsYIaR26nYJ>
+X-Virus-Scanned: Debian amavisd-new at mta01.prd.rdg.aluminati.org
+Received: from mta.aluminati.local ([127.0.0.1])
+	by localhost (mta01.prd.rdg.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 2OsYIaR26nYJ; Sat, 13 Aug 2016 12:30:32 +0100 (BST)
+Received: from john.keeping.me.uk (unknown [10.2.0.10])
+	by mta01.prd.rdg.aluminati.org (Postfix) with ESMTPSA id 6EF916212F;
+	Sat, 13 Aug 2016 12:30:29 +0100 (BST)
+Date:	Sat, 13 Aug 2016 12:30:28 +0100
+From:	John Keeping <john@keeping.me.uk>
+To:	"Tom Tanner (BLOOMBERG/ LONDON)" <ttanner2@bloomberg.net>,
+	David Aguilar <davvid@gmail.com>
+Cc:	git@vger.kernel.org
+Subject: [PATCH] difftool: always honor "command not found" exit code
+Message-ID: <20160813113028.uwedje6fzuc3cuzr@john.keeping.me.uk>
+References: <57AD772501C207A400390148_0_15304@p057>
+ <20160813103639.mxscvfyztee4hbvh@john.keeping.me.uk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20160813090432.GA25565@starla>
+In-Reply-To: <20160813103639.mxscvfyztee4hbvh@john.keeping.me.uk>
+User-Agent: Mutt/1.6.2 (2016-06-11)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Sat, Aug 13, 2016 at 09:04:32AM +0000, Eric Wong wrote:
+At the moment difftool's "trust exit code" logic always suppresses the
+exit status of the diff utility we invoke.  This is useful because we
+don't want to exit just because diff returned "1" because the files
+differ, but it's confusing if the shell returns an error because the
+selected diff utility is not found.
 
-> > Is there an easy way to get _just_ the list of message-ids you are
-> > storing (I know I can download the whole archive, but it's big)?
-> 
-> XHDR (or HDR) over NNTP should do it (that's how I checked
-> against gmane):
-> --------8<-----
-> use Net::NNTP;
-> my $nntp = Net::NNTP->new($ENV{NNTPSERVER} || 'news.public-inbox.org');
-> my ($num, $first, $last) = $nntp->group('inbox.comp.version-control.git');
-> my $batch = 10000;
-> my $i;
-> for ($i = $first; $i < $last; $i += $batch) {
-> 	my $j = $i + $batch - 1;
-> 	$j = $last if $j > $last;
-> 	my $num2mid = $nntp->xhdr('Message-ID', "$i-$j");
-> 	for my $n ($i..$j) {
-> 		defined(my $mid = $num2mid->{$n}) or next;
-> 		print "$mid\n";
-> 	}
-> }
+POSIX specifies 127 as the exit status for "command not found" and 126
+for "command found but is not executable" [1] and at least bash and dash
+follow this specification, while diff utilities generally use "1" for
+the exit status we want to ignore.
 
-Thanks, that's perfect.
+Handle 126 and 127 as special values, assuming that they always mean
+that the command could not be executed.
 
-I collected the message-ids from my archive. Interestingly, I had a
-dozen or so that did not have message-ids at all. I think most of them
-are from patches that put the "From " line in the body, like this one:
+[1] http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_08_02
 
-  http://public-inbox.org/git/20070311033833.GB10781@spearce.org/
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+On Sat, Aug 13, 2016 at 11:36:39AM +0100, John Keeping wrote:
+> It would be nice if there was a way to differentiate between complete
+> failure and just the diff tool exiting with a non-zero return status
+> because the files differ, but I'm not sure whether we can do that
+> reliably.  POSIX uses 127 and 126 as errors that mean the command didn't
+> run [1] so it may be sensible to to treat those as special values.
 
-and then they got corrupted on a round-trip through one of the bad mbox
-formats (probably downloading from gmane, I'd guess; the export there
-uses mbox, and I use maildir myself, so it probably got split badly
-years ago). Anyway, public-inbox seems to get this case right, which is
-good.
+Something like this perhaps?  I think this is probably safe, but it's
+always possible that some diff utility does use 126 or 127 as a "normal"
+exit status.  I'm not sure what we can do about that other than add a
+"really, really don't trust the exit status" option!
 
-I had several hundred message ids that you didn't. About half of them
-were spam or other junk. I weeded them out manually (mostly by picking
-through the subjects, so possibly there's some error). The end result is
-279 messages that I think are legitimate that you don't have.
+ git-difftool--helper.sh | 18 ++++++++++++++----
+ t/t7800-difftool.sh     |  6 ++++++
+ 2 files changed, 20 insertions(+), 4 deletions(-)
 
-I'll send them to you off-list, as the mbox is about 300K, which the
-list will reject.
+diff --git a/git-difftool--helper.sh b/git-difftool--helper.sh
+index 84d6cc0..68877d4 100755
+--- a/git-difftool--helper.sh
++++ b/git-difftool--helper.sh
+@@ -86,11 +86,21 @@ else
+ 	do
+ 		launch_merge_tool "$1" "$2" "$5"
+ 		status=$?
+-		if test "$status" != 0 &&
+-			test "$GIT_DIFFTOOL_TRUST_EXIT_CODE" = true
+-		then
++		case "$status" in
++		0)
++			: OK
++			;;
++		126|127)
++			# Command not found or not executable
+ 			exit $status
+-		fi
++			;;
++		*)
++			if test "$GIT_DIFFTOOL_TRUST_EXIT_CODE" = true
++			then
++				exit $status
++			fi
++			;;
++		esac
+ 		shift 7
+ 	done
+ fi
+diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+index 2974900..70a2de4 100755
+--- a/t/t7800-difftool.sh
++++ b/t/t7800-difftool.sh
+@@ -124,6 +124,12 @@ test_expect_success PERL 'difftool stops on error with --trust-exit-code' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success PERL 'difftool honors exit status if command not found' '
++	test_config difftool.nonexistent.cmd i-dont-exist &&
++	test_config difftool.trustExitCode false &&
++	test_must_fail git difftool -y -t nonexistent branch
++'
++
+ test_expect_success PERL 'difftool honors --gui' '
+ 	difftool_test_setup &&
+ 	test_config merge.tool bogus-tool &&
+-- 
+2.9.2.639.g855ae9f
 
--Peff
