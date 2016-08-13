@@ -7,119 +7,76 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB5492018E
-	for <e@80x24.org>; Sat, 13 Aug 2016 12:08:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C7212018E
+	for <e@80x24.org>; Sat, 13 Aug 2016 12:10:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752461AbcHMMH7 (ORCPT <rfc822;e@80x24.org>);
-	Sat, 13 Aug 2016 08:07:59 -0400
-Received: from mout.web.de ([212.227.17.12]:58688 "EHLO mout.web.de"
+	id S1752421AbcHMMKC (ORCPT <rfc822;e@80x24.org>);
+	Sat, 13 Aug 2016 08:10:02 -0400
+Received: from mout.web.de ([212.227.17.11]:60972 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752398AbcHMMH6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Aug 2016 08:07:58 -0400
-Received: from [192.168.178.36] ([79.213.114.86]) by smtp.web.de (mrweb103)
- with ESMTPSA (Nemesis) id 0MFc9x-1bSoZI3vML-00Ecs3; Sat, 13 Aug 2016 14:07:46
+	id S1752186AbcHMMKB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Aug 2016 08:10:01 -0400
+Received: from [192.168.178.36] ([79.213.114.86]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0MLgZ5-1bXiXs20Gp-000rNv; Sat, 13 Aug 2016 14:09:51
  +0200
-Subject: Re: [PATCH] commit: introduce set_merge_remote_desc()
+Subject: [PATCH v2 1/4] commit: use xstrdup() in get_merge_parent()
 To:	Jeff King <peff@peff.net>
 References: <57AEE4F7.7090804@web.de>
  <20160813092330.vmy2hip4papyuula@sigill.intra.peff.net>
+ <57AF0D8E.6040309@web.de>
 Cc:	Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 From:	=?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <57AF0D8E.6040309@web.de>
-Date:	Sat, 13 Aug 2016 14:07:42 +0200
+Message-ID: <57AF0E0D.9030205@web.de>
+Date:	Sat, 13 Aug 2016 14:09:49 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
  Thunderbird/38.7.2
 MIME-Version: 1.0
-In-Reply-To: <20160813092330.vmy2hip4papyuula@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:ClzhbmDpUasPtDJRlXRYQvDfmyUMmNKPX5uvjnJ2XwlO3juPDEQ
- d/kK/vUHjirAzMGW9/oDDo5dkggxRl35k1vBHZ/djSgMZ58L035N7eh5XYt6sDiS3kZ5x70
- JF6Z2z6cFEQ8Tca6UM0b5wYRrjpHvJhcqJ4+gvbDXvQFKN/0RJNkrto0FTdu4V93TPyazLH
- CNln7fwb+OJrdiAmpEanA==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:3RHjt/IeImU=:msciBYckwf1NULzt8z7z2j
- lkRVtRHH0lvi/3GskBaHxs0+W7NdKg7waPMEioqq1sX7mgb4P9ecX1c2G987ZnGm5uXuZKsy0
- 6f08SWwNsNHFHFU/v7tVLDd3sYmS9kaFde4phqJqIfPCsfstTXOp18JRXgHTqfVb8OT4uE33q
- Tr6u/JhgrNSSOQyTsRbL+oKzlp9geREFOlC8B6n6PbqUsGHIYmTqZ7fGGEmfSSNuPkMOiZoXD
- VkLIs3EHyGdNg3qODrJ/PhyfHWqWr/QBeElL4hc96eoNNfX7idJd8vhc6ft3rkK9fnaYZryO5
- FSDg8YZmhQqho8mD6V2lpOV5BuF7AqFKAr2KZkclwM+H1eQ2ImdyAPhdXv5zLqyOabhKNKLTW
- uYX/w588lRVhtihpwz+FiPMnQ0X6+Q5o8ZshBoaIgQaPXPJdMYoEuxNqyCDGpIEf+7icmkcs2
- DIXEWCSVgujUKlwI1R7+1r1N8z9ImWx/VvBhfL4koxbMd7FhGIBEGqik2AQXOwQ99Tj6Toy9w
- NCGHmQN39c+Cj4G4s/p/0rboF89k4+NZ9ZHr27VVn1qkGhKX7SiIjjjpWKjArPLfM1l7nutYX
- YD0vtGaJ57keCRBQwzRKSfPdj+YkVCTjJZn+hAuv+qXLTRo8rionWnSBiZ6uwTZS7YpjYEyuR
- mjH43gpsDd8pCcGbvLdtFhAS8xJuSQVMBu3UrhUVSEVIow463ITHciRHfUbDPM2ZRqi2KUxRv
- Akek13l/tjqcpSY3M5kwcGreMDulFuLfy+4UNz1qwUpnrW9dAqE6mPeX5v+FmLrIrD5COAhOv
- 4ELSXXR
+In-Reply-To: <57AF0D8E.6040309@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:Dnj2l6s9zPHf+L3fc4jqKbN+eL2Bv9zjYqcNlrD0c6gr2iHInee
+ hmZlLG+zFvkVZLc9RM/ANSLChx/l8lgGO0cchuXrMyd14BS9TSxl3Oml0yuZnXF5uLi3qOj
+ l2pUkc4tguULChSyZYwKnuDe3NPSjUVRdo4fQBp6HCLhTTaGZdXkNyNa/oRLF8q27uLoFDb
+ bUC6RO09JqKHUfYb3x+7Q==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:VOswYssqyl4=:2eSPojOs63EtTQVf8nmbG2
+ nHYL68o/5feb6AU88OEKqatF2xuescvqLOUkh6npn+yp7AF7cdX6iyqvmDqvubeyNPQl+K7iN
+ 5NxM96YzMTJ+ib6jgJj0HEdQ6US21l4CXPRMo+FXIx/Okn3T+Na1iHSQYFItPs1UiU3Qlyxhr
+ 5Q+52DyS3s1Wa2PIm/dLHKj4x0u28Pf6z/z8vnxy9sYFOoj6CMzfKJAWwckFftazJDtb42mEj
+ Clwj71iFx9vvBCc86Yq/md7blWPk0RuGtjZSAg9jQvtAA1Shl8Q8kIJM11W1DRtvaiRABCkty
+ UdmXoRArDjgLE38Vfw6Pr9E+eIqyfJ6Irj0tUukJOXH0ChvU4B+M8UUcudq2QQp5G17mkgrLJ
+ 1LVeC2a/WGemMPKSpH1zU3JNQoNRw3ySld0fcuoGwfGFrqwbwZQcsOtmwn3DSVL7DZnt//8lp
+ KR3nDJhM9367fwWboPH6hW1O7PdCY1joKckZB0kq2NuI+r9wNv2Bz/OdjXG2iJ8qdkuzgxFR2
+ zaEtITqgbhWOOq/mw7HQFSt8BEKpOZKp1iyb44E1RnW8jSf3OXNkPYBb7oWAmkXoYrlR4I9w8
+ kXrtd48HzOKwxsO1GtXc96yjaXg+sUzzccv2nUy2MO56DJBWJuuNPvs3WBTYbiw3tpjufqKN+
+ 0979ZGCE08l23+s0d/Foq7zhNnBs1K3boJDfx9JAF5AWbSkTh6KGnknpJO5z9KMFAr+XDWKgz
+ 7Nf9yPcK/bvVLjf5ZvWP5BHntA19i5iarHTEW2NQydgJB3qaI/rgxthT5wF3LEtys2LLxdGwl
+ UOT1i+G
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Am 13.08.2016 um 11:23 schrieb Jeff King:
-> On Sat, Aug 13, 2016 at 11:14:31AM +0200, René Scharfe wrote:
->
->> Add a helper function for allocating, populating and attaching struct
->> merge_remote_desc to a commit and use it consistently.  It allocates the
->> necessary memory in a single block.
->>
->> commit.c::get_merge_parent() forgot to check for memory allocation
->> failures of strdup(3).
->>
->> merge-recursive.c::make_virtual_commit() didn't duplicate the string for
->> the name member, even though one of it's callers (indirectly through
->> get_ref()) may pass the result of oid_to_hex(), i.e. a static buffer.
->
-> It seems like you've buried the interesting part here. This isn't just
-> for cleanup, but a bugfix that the oids in our virtual commits might get
-> overwritten by subsequent actions.
->
-> It seems like that should be the subject and beginning of the commit
-> message.  And then the fix is to allocate, and by the way we can do so
-> easily with this nice new helper. :)
+Handle allocation errors for the name member just like we already do
+for the struct merge_remote_desc itself.
 
-Bugs are usually hidden, so why not hide fixes? ;-)
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ commit.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->> diff --git a/commit.c b/commit.c
->> index 71a360d..372b200 100644
->> --- a/commit.c
->> +++ b/commit.c
->> @@ -1576,6 +1576,15 @@ int commit_tree_extended(const char *msg, size_t msg_len,
->>   	return result;
->>   }
->>
->> +void set_merge_remote_desc(struct commit *commit,
->> +			   const char *name, struct object *obj)
->> +{
->> +	struct merge_remote_desc *desc;
->> +	FLEXPTR_ALLOC_STR(desc, name, name);
->> +	desc->obj = obj;
->> +	commit->util = desc;
->> +}
->
-> I don't think there is any reason to prefer FLEXPTR_ALLOC over
-> FLEX_ALLOC, unless your struct interface is constrained by non-flex
-> users (that's why it is necessary for "struct exclude", for example,
-> which sometimes needs to carry its own string and sometimes not).
->
-> Using FLEX_ALLOC saves a few bytes per struct, and avoids an extra
-> pointer indirection when accessing the data.
->
-> Since it looks like you touch all of the allocations here, I think they
-> would both be happy as a regular flex array.
-
-Good idea.
-
-So let's turn this dish into a full menu:
-
-   commit: use xstrdup() in get_merge_parent()
-   commit: factor out set_merge_remote_desc()
-   merge-recursive: fix verbose output for multiple base trees
-   commit: use FLEX_ARRAY in struct merge_remote_desc
-
-  commit.c                   | 18 +++++++++++-------
-  commit.h                   |  4 +++-
-  merge-recursive.c          |  5 +----
-  t/t3030-merge-recursive.sh | 18 ++++++++++++++++++
-  4 files changed, 33 insertions(+), 12 deletions(-)
-
+diff --git a/commit.c b/commit.c
+index 71a360d..ccd232a 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1589,7 +1589,7 @@ struct commit *get_merge_parent(const char *name)
+ 		struct merge_remote_desc *desc;
+ 		desc = xmalloc(sizeof(*desc));
+ 		desc->obj = obj;
+-		desc->name = strdup(name);
++		desc->name = xstrdup(name);
+ 		commit->util = desc;
+ 	}
+ 	return commit;
+-- 
+2.9.3
 
