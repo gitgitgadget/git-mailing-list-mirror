@@ -2,97 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05E692018E
-	for <e@80x24.org>; Sat, 13 Aug 2016 15:59:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29FEF2018E
+	for <e@80x24.org>; Sat, 13 Aug 2016 16:50:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752754AbcHMP7b (ORCPT <rfc822;e@80x24.org>);
-	Sat, 13 Aug 2016 11:59:31 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54999 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752617AbcHMP7b (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Aug 2016 11:59:31 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id C95CE33186;
-	Sat, 13 Aug 2016 11:59:29 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mA4MNCBpekgMvUfcHGGohIJtCes=; b=qHdK47
-	571cngppHANDlguoaxhrFwxNvn7hTQY1MIlKT5D13DPk7lNYUk5dsN5Gq6Z7pvGL
-	q6zpoP996xoBDgJQqTeH90yZ3wbHC61e0eti12phdymDWOJpPAOwJVxQvDrZRd1f
-	nrYvVrw+SUgWXy6jv9gSLX7OV0MZ8Ytg1bWAg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cWjYNX3PUIuKuqcz9uyEZmrugpHKoNGa
-	UsjoduGkzvC7/vPhIrBnpOiE4dXAyFmE/A9sHzq7UTxpG3PTDjkK48SjZvfY6+yr
-	EdMIh6kNSX1kGvjFXv8nc8ByH+mYCeaC9LPhbwc6Dx68S6yinKQLukPLvR8ZgOQ+
-	WgV8zgG5ftg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id C0F5333185;
-	Sat, 13 Aug 2016 11:59:29 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F25DB33184;
-	Sat, 13 Aug 2016 11:59:28 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	Stefan Beller <sbeller@google.com>,
-	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH 8/8] diff: improve positioning of add/delete blocks in diffs
-References: <cover.1470259583.git.mhagger@alum.mit.edu>
-	<7b0680ed7a10fc13acd8d7816a75ed05a5f9e28c.1470259583.git.mhagger@alum.mit.edu>
-	<20160804075631.jakbi5dbsbxsqcpr@sigill.intra.peff.net>
-	<e4232cba-aae8-8426-c730-7914bb750363@alum.mit.edu>
-	<20160813085904.lykoihh4v2lf4yuj@sigill.intra.peff.net>
-Date:	Sat, 13 Aug 2016 08:59:25 -0700
-In-Reply-To: <20160813085904.lykoihh4v2lf4yuj@sigill.intra.peff.net> (Jeff
-	King's message of "Sat, 13 Aug 2016 04:59:05 -0400")
-Message-ID: <xmqqoa4wu0bm.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752767AbcHMQuZ (ORCPT <rfc822;e@80x24.org>);
+	Sat, 13 Aug 2016 12:50:25 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:56889 "EHLO bsmtp3.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752695AbcHMQuY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Aug 2016 12:50:24 -0400
+Received: from [192.168.1.100] (213162068183.public.t-mobile.at [213.162.68.183])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 3sBSRc6yJ7z5tlD;
+	Sat, 13 Aug 2016 18:50:20 +0200 (CEST)
+Subject: Re: [PATCH v1 1/2] t0027: Correct raciness in NNO test
+To:	tboegi@web.de
+References: <20160809114938.pcrvirrzrh6ldmnr@sigill.intra.peff.net>
+ <1471020662-20746-1-git-send-email-tboegi@web.de>
+Cc:	git@vger.kernel.org, peff@peff.net, Johannes.Schindelin@gmx.de
+From:	Johannes Sixt <j6t@kdbg.org>
+Message-ID: <57AF4FCB.7090409@kdbg.org>
+Date:	Sat, 13 Aug 2016 18:50:19 +0200
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:38.0) Gecko/20100101
+ Thunderbird/38.1.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EA820A9E-616E-11E6-80D0-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+In-Reply-To: <1471020662-20746-1-git-send-email-tboegi@web.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> So assuming everything I just said isn't complete bollocks, I think we
-> can move to a future where nobody uses the compaction heuristic. And
-> there are three ways to deal with that:
+Am 12.08.2016 um 18:51 schrieb tboegi@web.de:
+> From: Torsten Bögershausen <tboegi@web.de>
 >
->   1. The knob and feature stay. It might be useful for somebody who
->      wants to experiment in the future.
+> When a non-reversible CRLF conversion is done in "git add",
+> a warning is printed on stderr (or Git dies, depending on checksafe)
 >
->   2. The knob and feature go away completely. It was an experiment, but
->      now we have something more useful.
+> The function commit_chk_wrnNNO() in t0027 was written to test this,
+> but did the wrong thing: Instead of looking at the warning
+> from "git add", it looked at the warning from "git commit".
 >
->   3. The feature goes away, but the knob stays as noop, or maybe as an
->      alias for the indent heuristic, just because we did ship a version
->      that accepts "--compaction-heuristic", and maybe somebody somewhere
->      put it in a script?
+> This is racy because "git commit" may not have to do CRLF conversion
+> at all if it can use the sha1 value from the index (which depends on
+> whether "add" and "commit" run in a single second).
 >
-> I think I'd be in favor of (2).
+> Correct this and replace the commit for each and every file with a commit
+> of all files in one go.
 
-I am all for (2) [*1*]
+The new test code does not only fix the race condition, but also tests 
+different things, or prepares test cases in a different manner. I would 
+have appreciated an explanation why this is necessary. Is it "on my 
+machine, the race condition was triggered consistently for a bunch of 
+tests, and so I recorded the wrong expected output in the test cases"?
 
-This and the previous "take a blank line as a hint" are both
-heuristics.  As long as the resulting code does not tax runtime
-performance visibly and improves the resulting output 99% of the
-time, there is no reason to leave end-users a knob.  "Among 9 hunks
-in this patch that touch hello.c, 7 are made much more readable but
-2 are worse" cannot even be helped with a command line option.
+>
+> The function commit_chk_wrnNNO() will to be renamed in a separate commit.
+> Thanks to Jeff King <peff@peff.net> for analyzing t0027.
+>
+> Reported-By: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> ---
+>   t/t0027-auto-crlf.sh | 14 +++++++-------
+>   1 file changed, 7 insertions(+), 7 deletions(-)
+>
+> diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
+> index 2860d2d..ab6e962 100755
+> --- a/t/t0027-auto-crlf.sh
+> +++ b/t/t0027-auto-crlf.sh
+> @@ -119,8 +119,7 @@ commit_chk_wrnNNO () {
+>   		fname=${pfx}_$f.txt &&
+>   		cp $f $fname &&
+>   		printf Z >>"$fname" &&
+> -		git -c core.autocrlf=$crlf add $fname 2>/dev/null &&
+> -		git -c core.autocrlf=$crlf commit -m "commit_$fname" $fname >"${pfx}_$f.err" 2>&1
+> +		git -c core.autocrlf=$crlf add $fname 2>"${pfx}_$f.err"
+>   	done
+>
+>   	test_expect_success "commit NNO files crlf=$crlf attr=$attr LF" '
+> @@ -394,11 +393,11 @@ test_expect_success 'commit files attr=crlf' '
+>
+>   #                 attr                    LF        CRLF      CRLFmixLF   LF_mix_CR   CRLFNUL
+>   commit_chk_wrnNNO ""      ""      false   ""        ""        ""          ""          ""
+> -commit_chk_wrnNNO ""      ""      true    LF_CRLF   ""        ""          ""          ""
+> +commit_chk_wrnNNO ""      ""      true    ""        ""        ""          ""          ""
+>   commit_chk_wrnNNO ""      ""      input   ""        ""        ""          ""          ""
+>
+> -commit_chk_wrnNNO "auto"  ""      false   "$WILC"   ""        ""          ""          ""
+> -commit_chk_wrnNNO "auto"  ""      true    LF_CRLF   ""        ""          ""          ""
+> +commit_chk_wrnNNO "auto"  ""      false   ""        ""        ""          ""          ""
+> +commit_chk_wrnNNO "auto"  ""      true    ""        ""        ""          ""          ""
+>   commit_chk_wrnNNO "auto"  ""      input   ""        ""        ""          ""          ""
+>   for crlf in true false input
+>   do
+> @@ -408,7 +407,7 @@ do
+>   	commit_chk_wrnNNO ""    lf      $crlf   ""       CRLF_LF    CRLF_LF      ""         CRLF_LF
+>   	commit_chk_wrnNNO ""    crlf    $crlf   LF_CRLF   ""        LF_CRLF     LF_CRLF     ""
+>   	commit_chk_wrnNNO auto  lf    	$crlf   ""        ""        ""          ""          ""
+> -	commit_chk_wrnNNO auto  crlf  	$crlf   LF_CRLF   ""        ""          ""          ""
+> +	commit_chk_wrnNNO auto  crlf  	$crlf   ""        ""        ""          ""          ""
+>   	commit_chk_wrnNNO text  lf    	$crlf   ""       CRLF_LF    CRLF_LF     ""          CRLF_LF
+>   	commit_chk_wrnNNO text  crlf  	$crlf   LF_CRLF   ""        LF_CRLF     LF_CRLF     ""
+>   done
+> @@ -417,7 +416,8 @@ commit_chk_wrnNNO "text"  ""      false   "$WILC"   "$WICL"   "$WAMIX"    "$WILC
+>   commit_chk_wrnNNO "text"  ""      true    LF_CRLF   ""        LF_CRLF     LF_CRLF     ""
+>   commit_chk_wrnNNO "text"  ""      input   ""        CRLF_LF   CRLF_LF     ""          CRLF_LF
+>
+> -test_expect_success 'create files cleanup' '
+> +test_expect_success 'commit NNO and cleanup' '
+> +	git commit -m "commit files on top of NNO" &&
+>   	rm -f *.txt &&
+>   	git -c core.autocrlf=false reset --hard
+>   '
+>
 
-
-[Footnote]
-
-*1* I am also strongly against (3), if only to teach people a
-    lesson ;-).
