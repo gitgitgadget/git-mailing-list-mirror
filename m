@@ -2,97 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3CA01F6C1
-	for <e@80x24.org>; Sun, 14 Aug 2016 11:10:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C97A1F859
+	for <e@80x24.org>; Sun, 14 Aug 2016 11:23:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933367AbcHNLKg (ORCPT <rfc822;e@80x24.org>);
-	Sun, 14 Aug 2016 07:10:36 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:59847 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933231AbcHNLKe (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Aug 2016 07:10:34 -0400
-X-AuditID: 12074412-1c3ff70000000931-db-57af773c79a0
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by  (Symantec Messaging Gateway) with SMTP id EA.80.02353.C377FA75; Sat, 13 Aug 2016 15:38:37 -0400 (EDT)
-Received: from [192.168.69.130] (p57907F6F.dip0.t-ipconnect.de [87.144.127.111])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u7DJcXIf016576
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Sat, 13 Aug 2016 15:38:34 -0400
-Subject: Re: [PATCH 1/8] xdl_change_compact(): rename some local variables for
- clarity
-To:	Jeff King <peff@peff.net>
-References: <cover.1470259583.git.mhagger@alum.mit.edu>
- <ea7d76b1a97f3ab8d83ed8ba7570c2bec1195501.1470259583.git.mhagger@alum.mit.edu>
- <20160804070604.ggxjqibryqtrwntn@sigill.intra.peff.net>
-Cc:	git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-From:	Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <2a36b020-76a5-1ecd-de5c-1d2536847e07@alum.mit.edu>
-Date:	Sat, 13 Aug 2016 21:38:33 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.1.0
+	id S933028AbcHNK75 (ORCPT <rfc822;e@80x24.org>);
+	Sun, 14 Aug 2016 06:59:57 -0400
+Received: from mout.web.de ([212.227.15.3]:59435 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932645AbcHNK7z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Aug 2016 06:59:55 -0400
+Received: from localhost ([195.252.60.88]) by smtp.web.de (mrweb001) with
+ ESMTPSA (Nemesis) id 0MTgqe-1bhaIi0T7w-00QQ3y; Sat, 13 Aug 2016 23:18:08
+ +0200
+Date:	Sat, 13 Aug 2016 21:18:05 +0000
+From:	Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:	Johannes Sixt <j6t@kdbg.org>
+Cc:	git@vger.kernel.org, peff@peff.net, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v1 1/2] t0027: Correct raciness in NNO test
+Message-ID: <20160813211805.GA10624@tb-raspi>
+References: <20160809114938.pcrvirrzrh6ldmnr@sigill.intra.peff.net>
+ <1471020662-20746-1-git-send-email-tboegi@web.de>
+ <57AF4FCB.7090409@kdbg.org>
 MIME-Version: 1.0
-In-Reply-To: <20160804070604.ggxjqibryqtrwntn@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpileLIzCtJLcpLzFFi42IRYndR1LUtXx9u8OGemEXXlW4mi4beK8wW
-	uxf3M1usuDqH2eJHSw+zxebN7SwObB47Z91l91iwqdTjWe8eRo+Ll5Q9Pm+SC2CN4rJJSc3J
-	LEst0rdL4MpYvvAlW8FEroqdF7cyNTA+Ye9i5OSQEDCReDzxHEsXIxeHkMBWRonnO46yQTgX
-	mCTm3fzJCFIlLBAhsezxWiYQW0RAVuL74Y2MEEWHGCWu3t7DDOIwC1xnlNg1dwlYB5uArsSi
-	nmawDl4Be4k1ncuAijg4WARUJc5crwcJiwqESGy72cAGUSIocXLmExYQm1PAReLY4Q1gY5gF
-	1CX+zLvEDGHLS2x/O4d5AiP/LCQts5CUzUJStoCReRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqR
-	rplebmaJXmpK6SZGSFAL7WBcf1LuEKMAB6MSD+8HznXhQqyJZcWVuYcYJTmYlER5dcyBQnxJ
-	+SmVGYnFGfFFpTmpxUCvczArifCeLFkfLsSbklhZlVqUD5OS5mBREuf9uVjdT0ggPbEkNTs1
-	tSC1CCYrw8GhJMG7txSoUbAoNT21Ii0zpwQhzcTBCTKcB2i4ThnI8OKCxNzizHSI/ClGRSlx
-	XgmQZgGQREZpHlwvLOm8YhQHekWYNxGknQeYsOC6XwENZgIafMJsDcjgkkSElFQDY/HrOeWx
-	+9/65iq/efGZ5adz4bTXPzoSl8bMyfrOFC8fde0ik73B1uhnTbcDeoQWq8falpRkOycw/Pyr
-	+ftdOFfRikMLfmmuutXOPFHV+qS6392eY9eDhAUOvJRJSbt8rHvpz4WPTKVnBletUOasir50
-	cM6bhBUXeuQfBOTIpLhu3NzjpqAeo8RSnJFoqMVcVJwIACOAPu8VAwAA
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <57AF4FCB.7090409@kdbg.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V03:K0:cGHzTcU6NEdLDOWvPL3n62qDIo+YwiDg39bu56fFOxXLD8J7aHg
+ rf86vTsrl8AWg18+mh+2Sq58uJrPHoOZ7cVCOa7zpc3dmgPURiwSW8DwO0odZzmQneGtmWy
+ 8JKxGyl2QlANNaWW4diTTz3C+T+vQt36UrrjBvn3WMWnFERmj2mr9/JhyH26cOuBEPFZwLG
+ vuaTjE9wS7Sye5vEhGICg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:L2RPzGyVFfc=:CX5Q2AR5GMN0hpByfu58KP
+ oPueNSb8y/y17P7GbxTsdGVWafsbivs9qcfz1CzF6WqbB6PtUbQfXUdKUYJc7m6sZfdR5mHMS
+ D/FucoWQi565TyFx6n1aDTP1GqZrL2NaX7GzYNLAEPlkK+fbTDc44VnH8LwFuSGvldX/cUUjn
+ R3y8umYSCpENpgJqYfaUozTXR/DfE4s9J3CbJnxlYdEYPuR9cb8ZGrAJoNMVnwLHzmDMViOHj
+ frkitjbLeAlZLFAhK5teou8O7Azlzg7WSBRPBgLWtSbaylCkjexa6Ocydx0nMZmyvYHX0Npib
+ Np51bF4iWrXDcYieIIblVzUFZoAQ1irINl1LgafFDJuv0554arCqiKOSQTHvpsaA23FYrXwE1
+ FeTi+PNB5QvPaOmjTePI43yIIGorU+Bh9LDLy+pY9XHNWmTxBpMsf7snsRrNcql0XL0Ahv+Kq
+ +pob7LAeQZZGF8mn8uT+pblCYzDmr1ZNqJnlDF444BIc+jZgouVqkvtMmgFkoiSzPikcbWR2q
+ XsMWJlP2RtTwemoSXMPxCsBmVLDzssBDjKrXtbbtZohh/xf7TBkv+KPexvxe0aiSS7zuJzuh2
+ 46wlxD9pewTc9SJ7bzIFX8BRGpe8dJiOdSr/tm9EfU2ZIh1Wji/PwciHzqK3ZbQAOq/0HT3Wg
+ Z2r9HhPPNrZmk+RatSpXTv28qR9gvBWu/PtHLYTzHedMRWKLoNhk7Zi/tK8OSgpQOOotTvn+s
+ +FWKVukbJtRTbs0ZpA1BU945lD2VmQwWZepELo8N5eYU2ZmSz118mPbGRvg=
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 08/04/2016 09:06 AM, Jeff King wrote:
-> On Thu, Aug 04, 2016 at 12:00:29AM +0200, Michael Haggerty wrote:
+On Sat, Aug 13, 2016 at 06:50:19PM +0200, Johannes Sixt wrote:
+> Am 12.08.2016 um 18:51 schrieb tboegi@web.de:
+> >From: Torsten Bögershausen <tboegi@web.de>
+> >
+> >When a non-reversible CRLF conversion is done in "git add",
+> >a warning is printed on stderr (or Git dies, depending on checksafe)
+> >
+> >The function commit_chk_wrnNNO() in t0027 was written to test this,
+> >but did the wrong thing: Instead of looking at the warning
+> >from "git add", it looked at the warning from "git commit".
+> >
+> >This is racy because "git commit" may not have to do CRLF conversion
+> >at all if it can use the sha1 value from the index (which depends on
+> >whether "add" and "commit" run in a single second).
+> >
+> >Correct this and replace the commit for each and every file with a commit
+> >of all files in one go.
 > 
->> * ix -> i
->> * ixo -> io
->> * ixs -> start
->> * grpsiz -> groupsize
+> The new test code does not only fix the race condition, but also
+> tests different things, or prepares test cases in a different
+> manner. I would have appreciated an explanation why this is
+> necessary. Is it "on my machine, the race condition was triggered
+> consistently for a bunch of tests, and so I recorded the wrong
+> expected output in the test cases"?
 > 
-> After your change, I immediately understand three of them. But what is
-> "io"?
+Good point. The origanal intention was to let t0027 pass, and fix
+the bug in convert.c in a later commit.
+(and rename NNO in a 3rd commit, that is postponed until we figured this out).
 
-The (pre-existing) convention in this function is that variable names
-dealing with the "other" file have a trailing "o"; e.g., (xdf, xdfo),
-(rchg, rchgo). There used to also be (i, io), the indexes tracking the
-current line number in the file and the other file. But I renamed "i".
-
-At first I was just going to add a comment for variable "io", but in
-trying to figure out its exact semantics I realized that this code is
-still pretty hard to follow. Part of the problem is that "the line in
-the other file corresponding to a line in the to-be-compacted file" is
-not a well-defined concept. In fact it is *groups of lines* that
-correlate with each other. So I totally refactored the function, using a
-
-    struct group {
-            long start, end;
-    };
-
-as a kind of a cursor used to iterate through the groups on both sides.
-I think the result is a lot easier to read, and while refactoring I
-found and fixed another bug in the pre-existing code :-O
-
-I hope to have v2 out soon.
-
-Michael
-
+Looking at t0027, it turns out that the changes in the test matrix done in 1/2
+are reverted in 2/2.
+This is not a good thing.
+Either (a) they should be marked as test_expect_failure in 1/2 and
+corrected in 2/2,
+or (b) 1/2 and 2/2 are squashed together and the noise in t0027 is minimal.
+I'll send a patch for (b) in a second.
