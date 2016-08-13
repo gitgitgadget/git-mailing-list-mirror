@@ -2,78 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4075220193
-	for <e@80x24.org>; Sat, 13 Aug 2016 09:01:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E40720193
+	for <e@80x24.org>; Sat, 13 Aug 2016 09:04:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752243AbcHMJBj (ORCPT <rfc822;e@80x24.org>);
-	Sat, 13 Aug 2016 05:01:39 -0400
-Received: from mout.web.de ([212.227.15.4]:60433 "EHLO mout.web.de"
+	id S1752279AbcHMJEe (ORCPT <rfc822;e@80x24.org>);
+	Sat, 13 Aug 2016 05:04:34 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:38134 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751953AbcHMJBi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Aug 2016 05:01:38 -0400
-Received: from [192.168.178.36] ([79.213.114.86]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0Lwq0e-1bA58t1VAO-016LJt; Sat, 13 Aug 2016 11:01:23
- +0200
-X-Mozilla-News-Host: news://news.gmane.org:119
-To:	Git List <git@vger.kernel.org>
-Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-From:	=?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] correct FLEXPTR_* example in comment
-Message-ID: <57AEE1E1.3080901@web.de>
-Date:	Sat, 13 Aug 2016 11:01:21 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.2
+	id S1751726AbcHMJEd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Aug 2016 05:04:33 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30B7D20193;
+	Sat, 13 Aug 2016 09:04:32 +0000 (UTC)
+Date:	Sat, 13 Aug 2016 09:04:32 +0000
+From:	Eric Wong <e@80x24.org>
+To:	Jeff King <peff@peff.net>
+Cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: A note from the maintainer
+Message-ID: <20160813090432.GA25565@starla>
+References: <xmqq1t1twymf.fsf@gitster.mtv.corp.google.com>
+ <20160812224255.GA16250@dcvr>
+ <20160813081012.p46i4jcvkkfqch7m@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:f+YcoLisG76STts2VGIwzG/Wb50Bx4AzRlLenA384QTxdv1rY1d
- vqfeBI3osrUPH5bYGD3FmQ6+oKbefO+RpRT/ykjTbCpGUILr3/ri7BYEHaPtilIpgDOzJOm
- /mBUoo4HraAq7iMf0tlhNVb60PuTSDg7o31lMMLvGhq7EV9ggdMgI/C0pvNe1dk7MEWyqe8
- MbgkgWW5obt9yHCAq2W+w==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:wUYq7MG/mTA=:bzY6Fv+gj71XhWjxSwQMj6
- 6xcbPzIcDlN/6MzQYm4XEeOb+g9s3QfshnB1lChv0KU5TKW1+5NbuLzG94ailxw3AbSs8gAum
- Mq3hkVnGfod2HmboU5oC8lAKuGZpO0tXSzpzVN2sQmysMBZf2xZfRYHAuK/CHHqb3Pb22VttO
- X9MLvqQckDsnGiyWpmW30VjwO47NNb2zbhqSKbYUMbFsM0WAqXElRUePaO2iYIBHFyD7X5JyT
- nO/wG73WF5aBdVcKUXumItmQ81Uwc9UUcFn29rOl8PN6UeXZngLIfGA1LmsOYrbw81BzM2sxQ
- 0Ik1pDn/aj0tWSpTV9YkIragQFXjVSnenFSPtZJSZ0MfiA/2FMIYn8iV0K9y1c6I9IO2++YdG
- jBefKe+E/iF0ktEQ0sm+LZuQ5fqT1HTUUo7Ki4mlzr2wK1CX/YYqxzSQ8Vi+yhZ9XbozRBSth
- hjJBfdKzd0Sywsl1twu3NA762YAdoxX7qVhjUykqfWCD+7XBBu+JPtBGHY7lRg5HhPR/DlOf4
- bHbhWq2v/3fIhylweForwOjm+De9LTB13OfHxrpgJk+O9XULwb+KDxXipFGWkqKCwwdSr0NfA
- 2ZapHf202xg4zeclGkYL+vWpuBqKEcTOn56xaHTUX5dXr7JoQ0PHBQKp5yjsjwRyfHK2qJTgJ
- UAV7bRXdKXQ0io8xk8OYMJ3jAy5WcfDa9gmkGBUo3/6fQ4wEQH1KHxwPqB/Gp1Db7mqTMKQ5F
- ju3QbrST56pm0O7j/HA4hyrvWStWTscV9QoPrGh+sM5fgvQF4opm6HZj1/o06cT2Zl+Qkksco
- RxyswHG
+Content-Disposition: inline
+In-Reply-To: <20160813081012.p46i4jcvkkfqch7m@sigill.intra.peff.net>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-This section is about "The FLEXPTR_* variants", so use FLEXPTR_ALLOC_STR
-in the example.
+Jeff King <peff@peff.net> wrote:
+> On Fri, Aug 12, 2016 at 10:42:55PM +0000, Eric Wong wrote:
+> > Junio C Hamano <gitster@pobox.com> wrote:
+> > > is still available.  An alternative
+> > > 
+> > >         nntp://news.public-inbox.org/inbox.comp.version-control.git
+> > > 
+> > > will become usable once it catches up with old messages.
+> > 
+> > Mostly caught up, I injected 33 more today which were
+> > cross-posted (which tripped up some of my anti-spam rules) or
+> > simply missed by gmane.
+> > 
+> > There may be more in some personal archives gmane doesn't
+> > have...
+> 
+> Is there an easy way to get _just_ the list of message-ids you are
+> storing (I know I can download the whole archive, but it's big)?
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- git-compat-util.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+XHDR (or HDR) over NNTP should do it (that's how I checked
+against gmane):
+--------8<-----
+use Net::NNTP;
+my $nntp = Net::NNTP->new($ENV{NNTPSERVER} || 'news.public-inbox.org');
+my ($num, $first, $last) = $nntp->group('inbox.comp.version-control.git');
+my $batch = 10000;
+my $i;
+for ($i = $first; $i < $last; $i += $batch) {
+	my $j = $i + $batch - 1;
+	$j = $last if $j > $last;
+	my $num2mid = $nntp->xhdr('Message-ID', "$i-$j");
+	for my $n ($i..$j) {
+		defined(my $mid = $num2mid->{$n}) or next;
+		print "$mid\n";
+	}
+}
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 590bfdd..f52e00b 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -815,7 +815,7 @@ extern FILE *fopen_for_writing(const char *path);
-  * you can do:
-  *
-  *   struct foo *f;
-- *   FLEX_ALLOC_STR(f, name, src);
-+ *   FLEXPTR_ALLOC_STR(f, name, src);
-  *
-  * and "name" will point to a block of memory after the struct, which will be
-  * freed along with the struct (but the pointer can be repointed anywhere).
--- 
-2.9.3
+# and I forgot to optimize XHDR/HDR further in public-inbox-nntpd.
+# Oh well, it seems to work, at least.
 
+> Then I can cross-reference with my archive. I doubt I'll have anything
+> significant that you don't. My archive of the early days was pulled from
+> gmane, though I have been collecting steadily via mailing list delivery
+> since 2007 or so.
+
+What's odd is there's some messages with two Message-ID fields
+from gmane from the old days, too.  I'll dig a bit another time.
