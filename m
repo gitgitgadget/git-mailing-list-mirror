@@ -2,133 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6ED01FD99
-	for <e@80x24.org>; Sat, 13 Aug 2016 11:30:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB5492018E
+	for <e@80x24.org>; Sat, 13 Aug 2016 12:08:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752262AbcHMLah (ORCPT <rfc822;e@80x24.org>);
-	Sat, 13 Aug 2016 07:30:37 -0400
-Received: from mta01.prd.rdg.aluminati.org ([94.76.243.214]:58316 "EHLO
-	mta01.prd.rdg.aluminati.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752180AbcHMLah (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 13 Aug 2016 07:30:37 -0400
-Received: from mta01.prd.rdg.aluminati.org (localhost [127.0.0.1])
-	by mta.aluminati.local (Postfix) with ESMTP id 23D62C4702;
-	Sat, 13 Aug 2016 12:30:35 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by mta01.prd.rdg.aluminati.org (Postfix) with ESMTP id 1A94520CD8;
-	Sat, 13 Aug 2016 12:30:35 +0100 (BST)
-X-Quarantine-ID: <2OsYIaR26nYJ>
-X-Virus-Scanned: Debian amavisd-new at mta01.prd.rdg.aluminati.org
-Received: from mta.aluminati.local ([127.0.0.1])
-	by localhost (mta01.prd.rdg.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id 2OsYIaR26nYJ; Sat, 13 Aug 2016 12:30:32 +0100 (BST)
-Received: from john.keeping.me.uk (unknown [10.2.0.10])
-	by mta01.prd.rdg.aluminati.org (Postfix) with ESMTPSA id 6EF916212F;
-	Sat, 13 Aug 2016 12:30:29 +0100 (BST)
-Date:	Sat, 13 Aug 2016 12:30:28 +0100
-From:	John Keeping <john@keeping.me.uk>
-To:	"Tom Tanner (BLOOMBERG/ LONDON)" <ttanner2@bloomberg.net>,
-	David Aguilar <davvid@gmail.com>
-Cc:	git@vger.kernel.org
-Subject: [PATCH] difftool: always honor "command not found" exit code
-Message-ID: <20160813113028.uwedje6fzuc3cuzr@john.keeping.me.uk>
-References: <57AD772501C207A400390148_0_15304@p057>
- <20160813103639.mxscvfyztee4hbvh@john.keeping.me.uk>
+	id S1752461AbcHMMH7 (ORCPT <rfc822;e@80x24.org>);
+	Sat, 13 Aug 2016 08:07:59 -0400
+Received: from mout.web.de ([212.227.17.12]:58688 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752398AbcHMMH6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Aug 2016 08:07:58 -0400
+Received: from [192.168.178.36] ([79.213.114.86]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0MFc9x-1bSoZI3vML-00Ecs3; Sat, 13 Aug 2016 14:07:46
+ +0200
+Subject: Re: [PATCH] commit: introduce set_merge_remote_desc()
+To:	Jeff King <peff@peff.net>
+References: <57AEE4F7.7090804@web.de>
+ <20160813092330.vmy2hip4papyuula@sigill.intra.peff.net>
+Cc:	Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+From:	=?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <57AF0D8E.6040309@web.de>
+Date:	Sat, 13 Aug 2016 14:07:42 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160813103639.mxscvfyztee4hbvh@john.keeping.me.uk>
-User-Agent: Mutt/1.6.2 (2016-06-11)
+In-Reply-To: <20160813092330.vmy2hip4papyuula@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:ClzhbmDpUasPtDJRlXRYQvDfmyUMmNKPX5uvjnJ2XwlO3juPDEQ
+ d/kK/vUHjirAzMGW9/oDDo5dkggxRl35k1vBHZ/djSgMZ58L035N7eh5XYt6sDiS3kZ5x70
+ JF6Z2z6cFEQ8Tca6UM0b5wYRrjpHvJhcqJ4+gvbDXvQFKN/0RJNkrto0FTdu4V93TPyazLH
+ CNln7fwb+OJrdiAmpEanA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:3RHjt/IeImU=:msciBYckwf1NULzt8z7z2j
+ lkRVtRHH0lvi/3GskBaHxs0+W7NdKg7waPMEioqq1sX7mgb4P9ecX1c2G987ZnGm5uXuZKsy0
+ 6f08SWwNsNHFHFU/v7tVLDd3sYmS9kaFde4phqJqIfPCsfstTXOp18JRXgHTqfVb8OT4uE33q
+ Tr6u/JhgrNSSOQyTsRbL+oKzlp9geREFOlC8B6n6PbqUsGHIYmTqZ7fGGEmfSSNuPkMOiZoXD
+ VkLIs3EHyGdNg3qODrJ/PhyfHWqWr/QBeElL4hc96eoNNfX7idJd8vhc6ft3rkK9fnaYZryO5
+ FSDg8YZmhQqho8mD6V2lpOV5BuF7AqFKAr2KZkclwM+H1eQ2ImdyAPhdXv5zLqyOabhKNKLTW
+ uYX/w588lRVhtihpwz+FiPMnQ0X6+Q5o8ZshBoaIgQaPXPJdMYoEuxNqyCDGpIEf+7icmkcs2
+ DIXEWCSVgujUKlwI1R7+1r1N8z9ImWx/VvBhfL4koxbMd7FhGIBEGqik2AQXOwQ99Tj6Toy9w
+ NCGHmQN39c+Cj4G4s/p/0rboF89k4+NZ9ZHr27VVn1qkGhKX7SiIjjjpWKjArPLfM1l7nutYX
+ YD0vtGaJ57keCRBQwzRKSfPdj+YkVCTjJZn+hAuv+qXLTRo8rionWnSBiZ6uwTZS7YpjYEyuR
+ mjH43gpsDd8pCcGbvLdtFhAS8xJuSQVMBu3UrhUVSEVIow463ITHciRHfUbDPM2ZRqi2KUxRv
+ Akek13l/tjqcpSY3M5kwcGreMDulFuLfy+4UNz1qwUpnrW9dAqE6mPeX5v+FmLrIrD5COAhOv
+ 4ELSXXR
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-At the moment difftool's "trust exit code" logic always suppresses the
-exit status of the diff utility we invoke.  This is useful because we
-don't want to exit just because diff returned "1" because the files
-differ, but it's confusing if the shell returns an error because the
-selected diff utility is not found.
+Am 13.08.2016 um 11:23 schrieb Jeff King:
+> On Sat, Aug 13, 2016 at 11:14:31AM +0200, René Scharfe wrote:
+>
+>> Add a helper function for allocating, populating and attaching struct
+>> merge_remote_desc to a commit and use it consistently.  It allocates the
+>> necessary memory in a single block.
+>>
+>> commit.c::get_merge_parent() forgot to check for memory allocation
+>> failures of strdup(3).
+>>
+>> merge-recursive.c::make_virtual_commit() didn't duplicate the string for
+>> the name member, even though one of it's callers (indirectly through
+>> get_ref()) may pass the result of oid_to_hex(), i.e. a static buffer.
+>
+> It seems like you've buried the interesting part here. This isn't just
+> for cleanup, but a bugfix that the oids in our virtual commits might get
+> overwritten by subsequent actions.
+>
+> It seems like that should be the subject and beginning of the commit
+> message.  And then the fix is to allocate, and by the way we can do so
+> easily with this nice new helper. :)
 
-POSIX specifies 127 as the exit status for "command not found" and 126
-for "command found but is not executable" [1] and at least bash and dash
-follow this specification, while diff utilities generally use "1" for
-the exit status we want to ignore.
+Bugs are usually hidden, so why not hide fixes? ;-)
 
-Handle 126 and 127 as special values, assuming that they always mean
-that the command could not be executed.
+>> diff --git a/commit.c b/commit.c
+>> index 71a360d..372b200 100644
+>> --- a/commit.c
+>> +++ b/commit.c
+>> @@ -1576,6 +1576,15 @@ int commit_tree_extended(const char *msg, size_t msg_len,
+>>   	return result;
+>>   }
+>>
+>> +void set_merge_remote_desc(struct commit *commit,
+>> +			   const char *name, struct object *obj)
+>> +{
+>> +	struct merge_remote_desc *desc;
+>> +	FLEXPTR_ALLOC_STR(desc, name, name);
+>> +	desc->obj = obj;
+>> +	commit->util = desc;
+>> +}
+>
+> I don't think there is any reason to prefer FLEXPTR_ALLOC over
+> FLEX_ALLOC, unless your struct interface is constrained by non-flex
+> users (that's why it is necessary for "struct exclude", for example,
+> which sometimes needs to carry its own string and sometimes not).
+>
+> Using FLEX_ALLOC saves a few bytes per struct, and avoids an extra
+> pointer indirection when accessing the data.
+>
+> Since it looks like you touch all of the allocations here, I think they
+> would both be happy as a regular flex array.
 
-[1] http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_08_02
+Good idea.
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
-On Sat, Aug 13, 2016 at 11:36:39AM +0100, John Keeping wrote:
-> It would be nice if there was a way to differentiate between complete
-> failure and just the diff tool exiting with a non-zero return status
-> because the files differ, but I'm not sure whether we can do that
-> reliably.  POSIX uses 127 and 126 as errors that mean the command didn't
-> run [1] so it may be sensible to to treat those as special values.
+So let's turn this dish into a full menu:
 
-Something like this perhaps?  I think this is probably safe, but it's
-always possible that some diff utility does use 126 or 127 as a "normal"
-exit status.  I'm not sure what we can do about that other than add a
-"really, really don't trust the exit status" option!
+   commit: use xstrdup() in get_merge_parent()
+   commit: factor out set_merge_remote_desc()
+   merge-recursive: fix verbose output for multiple base trees
+   commit: use FLEX_ARRAY in struct merge_remote_desc
 
- git-difftool--helper.sh | 18 ++++++++++++++----
- t/t7800-difftool.sh     |  6 ++++++
- 2 files changed, 20 insertions(+), 4 deletions(-)
+  commit.c                   | 18 +++++++++++-------
+  commit.h                   |  4 +++-
+  merge-recursive.c          |  5 +----
+  t/t3030-merge-recursive.sh | 18 ++++++++++++++++++
+  4 files changed, 33 insertions(+), 12 deletions(-)
 
-diff --git a/git-difftool--helper.sh b/git-difftool--helper.sh
-index 84d6cc0..68877d4 100755
---- a/git-difftool--helper.sh
-+++ b/git-difftool--helper.sh
-@@ -86,11 +86,21 @@ else
- 	do
- 		launch_merge_tool "$1" "$2" "$5"
- 		status=$?
--		if test "$status" != 0 &&
--			test "$GIT_DIFFTOOL_TRUST_EXIT_CODE" = true
--		then
-+		case "$status" in
-+		0)
-+			: OK
-+			;;
-+		126|127)
-+			# Command not found or not executable
- 			exit $status
--		fi
-+			;;
-+		*)
-+			if test "$GIT_DIFFTOOL_TRUST_EXIT_CODE" = true
-+			then
-+				exit $status
-+			fi
-+			;;
-+		esac
- 		shift 7
- 	done
- fi
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index 2974900..70a2de4 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -124,6 +124,12 @@ test_expect_success PERL 'difftool stops on error with --trust-exit-code' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success PERL 'difftool honors exit status if command not found' '
-+	test_config difftool.nonexistent.cmd i-dont-exist &&
-+	test_config difftool.trustExitCode false &&
-+	test_must_fail git difftool -y -t nonexistent branch
-+'
-+
- test_expect_success PERL 'difftool honors --gui' '
- 	difftool_test_setup &&
- 	test_config merge.tool bogus-tool &&
--- 
-2.9.2.639.g855ae9f
 
