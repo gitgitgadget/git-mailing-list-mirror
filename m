@@ -2,87 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B72D1FD99
-	for <e@80x24.org>; Sun, 14 Aug 2016 22:55:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B16E1FD99
+	for <e@80x24.org>; Sun, 14 Aug 2016 23:00:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752131AbcHNWzi (ORCPT <rfc822;e@80x24.org>);
-	Sun, 14 Aug 2016 18:55:38 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56963 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751015AbcHNWzh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Aug 2016 18:55:37 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id CBD58340DE;
-	Sun, 14 Aug 2016 18:55:36 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xpmJcgOpJWAjysdYyt4Q7wSMFVE=; b=euvdHC
-	DgEjuYlQ2s07zX+RA1VpkM2nYJQ+nLwO82JapYDjG7VlGy43LRL4gOh8C9J6Zokc
-	tcXgF5kSWctgnCTpITCnq0HmpV3w/Ul3q+7PJbPJYwiocYqv5ta+FNU9cc1N7frn
-	dwm4AZ5FSn68ACKWz9ni2qNZtqqHb+42AjOxI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RimMsQP6vskCQK8hymDPcOYsdjsF7VDs
-	iSDN8O9cRG3Hid9QuG0k1SgBU19Xql8S3ENeOSlmifLDhQrQmmMVTHXj/FMOJ7CJ
-	snWQzkziMgWMZdgikEhqN5WYchgwl39qMGrEaUCU3sJ9AKdGLm1E2tGO0A3GBITo
-	Kirsgew5sA4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id C5694340DD;
-	Sun, 14 Aug 2016 18:55:36 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4999B340DC;
-	Sun, 14 Aug 2016 18:55:36 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	"Philip Oakley" <philipoakley@iee.org>
+	id S1752073AbcHNXAR (ORCPT <rfc822;e@80x24.org>);
+	Sun, 14 Aug 2016 19:00:17 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:54368 "EHLO
+	smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751015AbcHNXAR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Aug 2016 19:00:17 -0400
+Received: from PhilipOakley ([92.22.48.2])
+	by smtp.talktalk.net with SMTP
+	id Z4O6b41MAcpskZ4O6bC8Fo; Mon, 15 Aug 2016 00:00:15 +0100
+X-Originating-IP: [92.22.48.2]
+X-Spam:	0
+X-OAuthority: v=2.2 cv=ILRAMUnG c=1 sm=1 tr=0 a=dUEO/agNDYQW2w9YSFWSZw==:117
+ a=dUEO/agNDYQW2w9YSFWSZw==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
+ a=xtxXYLxNAAAA:8 a=123w7lMHyvjBwUW4oCIA:9 a=0RhZnL1DYvcuLYC8JZ5M:22
+ a=xts0dhWdiJbonKbuqhAr:22
+Message-ID: <BF74616BD9694719A6C0D6E75ACD9CE6@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:	"Philip Oakley" <philipoakley@iee.org>
+To:	"Junio C Hamano" <gitster@pobox.com>
 Cc:	"GitList" <git@vger.kernel.org>
-Subject: Re: [PATCH v1 1/3] doc: commit: --fixup/--squash can take a commit revision
-References: <20160814214630.1312-1-philipoakley@iee.org>
-	<20160814214630.1312-2-philipoakley@iee.org>
-	<xmqq60r3knoz.fsf@gitster.mtv.corp.google.com>
-	<6ACCC850AC434350B15AADC19F02760B@PhilipOakley>
-Date:	Sun, 14 Aug 2016 15:55:33 -0700
-In-Reply-To: <6ACCC850AC434350B15AADC19F02760B@PhilipOakley> (Philip Oakley's
-	message of "Sun, 14 Aug 2016 23:45:37 +0100")
-Message-ID: <xmqqbn0vj6ze.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+References: <20160814214630.1312-1-philipoakley@iee.org><20160814214630.1312-3-philipoakley@iee.org> <xmqqziofj90b.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v1 2/3] doc: rebase: fixup! can take an object name
+Date:	Mon, 15 Aug 2016 00:00:15 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 36985AA6-6272-11E6-9859-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfMIAu1kUdxHKut7p4PFVOsfPKlLn6t4dQkHZs1OGIHTAJfLcjFP4V/k7p1dgugN6/H29r8MEu/Jy/kl7Ga/BFc6VwUdwl8oEkUDfqVJFTEs3yC3f2JIw
+ VdQmrfpj7wE+ZIxdrRFCo3PFY6ICE3BbblQNwbDGkcBtK75i/EwELuHrIintQk0cKgBJTFhhtOXGQQ==
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-"Philip Oakley" <philipoakley@iee.org> writes:
-
->> I think the
->> use of "commit" in an angle-bracket-pair in the label for the
->> section, i.e. "--fixup=<commit>", has been considered to be clear
->> enough to tell that you can use usual extended SHA-1 syntax to
->> specify the commit you want to talk about,
+From: "Junio C Hamano" <gitster@pobox.com>
+> Philip Oakley <philipoakley@iee.org> writes:
 >
-> I certainly hadn't picked up on that ability to use the extended sha1
-> syntax (specifying revisions...) here.
+>> Since 68d5d03 (rebase: teach --autosquash to match on sha1 in addition
+>> to message, 2010-11-04) the commit subject can refer directly to the
+>> destination object hash as a single word.)...
+>
+> That's not an object hash but an object name (see glossary); you got
+> it right in the actual patch text, though ;-).
 
-By "has been considered", I meant that the documentation text is
-still open for improvement.  I just didn't find rewording "commit"
-with "commit revision" is that improvement we need there.
+As noted in 1/3, the glossary also needs a fix (for those who read it) to 
+make sure the name-value confusion is distinguished, with the potential 
+'object names' (colloquial)  being via (git) 'revisions', while  the 
+cannonical object name is the (oid) sha1 hash. Somehow folk need pointing at 
+the (broad) ways of spelling commit names rather than just the narrow sha. A 
+bit of a finger and the moon problem.
 
-Perhaps we need to have somewhere central a section that explains
-various notations used in the documentation set.  I think it is safe
-to say something like "unless otherwise qualified, <commit> (or any
-object type in an angle-bracket-pair) is used as a placeholder to
-take any acceptable way to spell object names (cf. gitrevisions for
-details)" these days [*1*].
+>
+>> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+>> index 0387b40..66b789a 100644
+>> --- a/Documentation/git-rebase.txt
+>> +++ b/Documentation/git-rebase.txt
+>> @@ -421,7 +421,8 @@ without an explicit `--interactive`.
+>>  --no-autosquash::
+>>  When the commit log message begins with "squash! ..." (or
+>>  "fixup! ..."), and there is a commit whose title begins with
+>> - the same ..., automatically modify the todo list of rebase -i
+>> + the same "..." message, or a commit object name (standalone),
+>> + automatically modify the todo list of rebase -i
+>
+> What's "(standalone)"?  I can understand the updated text and agree
+> that it is better than the original without that part, though.
 
+the 'standalone' is that it must be a single (standalone) word on the 
+subject line immediately after the "fixup! "(s).
 
-[Footnote]
+communicationg that one cannot have any extra textual notes after that word 
+was the issue that 'standalone' tried to address.
 
-*1* In ancient days I think some plumbing commands only took 40-hex
-object names, but as far as I know they've all been updated.
+--
+Philip 
+
