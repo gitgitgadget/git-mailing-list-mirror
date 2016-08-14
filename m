@@ -6,89 +6,81 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48F3E1FD99
-	for <e@80x24.org>; Sun, 14 Aug 2016 22:09:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C5611FD99
+	for <e@80x24.org>; Sun, 14 Aug 2016 22:11:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752018AbcHNWJV (ORCPT <rfc822;e@80x24.org>);
-	Sun, 14 Aug 2016 18:09:21 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52269 "EHLO
+	id S1752077AbcHNWLw (ORCPT <rfc822;e@80x24.org>);
+	Sun, 14 Aug 2016 18:11:52 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65149 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751788AbcHNWJU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Aug 2016 18:09:20 -0400
+	with ESMTP id S1751788AbcHNWLw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Aug 2016 18:11:52 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A989B33C75;
-	Sun, 14 Aug 2016 18:09:19 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 75D663584F;
+	Sun, 14 Aug 2016 18:11:50 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nh2m0ES8RzVkolIANf9TT5LooMs=; b=lqYmT4
-	jcx3Y4pocxQIL5ZIpVdm+FQlic0q6MLLVQyEmr3tKbKlyiM60gyGj2Z+t75EsM8V
-	ZyjOy3ICE9PGjGG3SpUpx+2eM55NouQkpToJbFxoxvz+ibLOcNq+TI23eBBHoyr4
-	j5G24TnEvxdqizA8CM6+c2RFyTrV6F9w87xEA=
+	:content-type; s=sasl; bh=E0ebxJzMD23qeYBzjWoLhmQ/y9Q=; b=O6Nmf5
+	6YA7Pz+Q++PtqItP5okPTkReVBAU6+WuDZa9bnkhA36N8WFqwtwVfGie+LTiWxjU
+	o6aE3X5+dwaLPsc1whj6Q3rd069xkwn/Gw7Ir1aYAiLvfAHvVTkee3ESybkJsTKF
+	J62YVnK9c4jkWIJVVfB1PBNBGLsV53I2+5s5Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TRExze4HdYkeZDd8mERae8Mpa6gtoLEf
-	HHkWzUrgt6loZfSAuYx2YwmbC0cItPP80j8DVKmzkr7ogd8UFsOgte7pjDYrQnIN
-	MRJXjp4mxYqmLyM9utuSvAD25+6Vk4O7b71pakpWE1lyCu1RbbTqG37XXwif9bcR
-	szDDV0di+CQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A14A133C74;
-	Sun, 14 Aug 2016 18:09:19 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=nawmo/Q0hhJgIjm4oL+LzHVn5zcbD0Kb
+	5dGnIs7/fBy4SPKVOE5RV+GtBHjL8RDQzxYxJCL3g09pNyy7x5cYh1Eabg1YkgeJ
+	ZkMzv2Zs+I2aUYEVEEAePfighKHzTtAJlJrdtvJf13O9bRLJhOYMUgzCs34EE5Lt
+	Si16pn/Z26E=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 679193584D;
+	Sun, 14 Aug 2016 18:11:50 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0EEDF33C73;
-	Sun, 14 Aug 2016 18:09:18 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EB5903584A;
+	Sun, 14 Aug 2016 18:11:49 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
 To:	Philip Oakley <philipoakley@iee.org>
 Cc:	GitList <git@vger.kernel.org>
-Subject: Re: [PATCH v1 1/3] doc: commit: --fixup/--squash can take a commit revision
+Subject: Re: [PATCH v1 2/3] doc: rebase: fixup! can take an object name
 References: <20160814214630.1312-1-philipoakley@iee.org>
-	<20160814214630.1312-2-philipoakley@iee.org>
-Date:	Sun, 14 Aug 2016 15:09:16 -0700
-In-Reply-To: <20160814214630.1312-2-philipoakley@iee.org> (Philip Oakley's
-	message of "Sun, 14 Aug 2016 22:46:28 +0100")
-Message-ID: <xmqq60r3knoz.fsf@gitster.mtv.corp.google.com>
+	<20160814214630.1312-3-philipoakley@iee.org>
+Date:	Sun, 14 Aug 2016 15:11:48 -0700
+In-Reply-To: <20160814214630.1312-3-philipoakley@iee.org> (Philip Oakley's
+	message of "Sun, 14 Aug 2016 22:46:29 +0100")
+Message-ID: <xmqqziofj90b.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BF3C65F2-626B-11E6-AA72-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 192CF9DC-626C-11E6-B776-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
 Philip Oakley <philipoakley@iee.org> writes:
-> Be clearer that the --fixup/--squash options can take any of the
-> gitrevisions methods of specifying a commit, not just a 'hash'.
->
-> Signed-off-by: Philip Oakley <philipoakley@iee.org>
-> ---
-> ...
-> @@ -81,15 +81,15 @@ OPTIONS
->  --fixup=<commit>::
->  	Construct a commit message for use with `rebase --autosquash`.
->  	The commit message will be the subject line from the specified
-> -	commit with a prefix of "fixup! ".  See linkgit:git-rebase[1]
-> -	for details.
-> +	commit revision with a prefix of "fixup! ".  See linkgit:git-rebase[1]
-> +	and linkgit:gitrevisions[7] for details.
 
-The same comment applies to the other hunk, but rephrasing "commit"
-with "commit revision" (the latter is not even in the glossary) does
-not make it clearer at all.  Especially when discussing rebases and
-anything that rewrites commits, it can easily be mistaken as if you
-are talking about v2 of the commit by fixing up the original, but
-that is not the impression you want to give.
+> Since 68d5d03 (rebase: teach --autosquash to match on sha1 in addition
+> to message, 2010-11-04) the commit subject can refer directly to the
+> destination object hash as a single word.)...
 
-"The specified commit" is clear enough.  It may be debatable if we
-want to talk about "how" to specify the commit, though.  I think the
-use of "commit" in an angle-bracket-pair in the label for the
-section, i.e. "--fixup=<commit>", has been considered to be clear
-enough to tell that you can use usual extended SHA-1 syntax to
-specify the commit you want to talk about, but if so, that is not
-limited to this entry, and I do not think this description or the
-other one for the "--squash" option are particularly worse than
-those for the "-c" and "-C" options.  The description for "-c" does
-say "Take an existing commit object", but that's like "the specified
-commit" used here.
+That's not an object hash but an object name (see glossary); you got
+it right in the actual patch text, though ;-).
 
+> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+> index 0387b40..66b789a 100644
+> --- a/Documentation/git-rebase.txt
+> +++ b/Documentation/git-rebase.txt
+> @@ -421,7 +421,8 @@ without an explicit `--interactive`.
+>  --no-autosquash::
+>  	When the commit log message begins with "squash! ..." (or
+>  	"fixup! ..."), and there is a commit whose title begins with
+> -	the same ..., automatically modify the todo list of rebase -i
+> +	the same "..." message, or a commit object name (standalone),
+> +	automatically modify the todo list of rebase -i
+
+What's "(standalone)"?  I can understand the updated text and agree
+that it is better than the original without that part, though.
+
+>  	so that the commit marked for squashing comes right after the
+>  	commit to be modified, and change the action of the moved
+>  	commit from `pick` to `squash` (or `fixup`).  Ignores subsequent
