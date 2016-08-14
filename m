@@ -2,71 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4ACE41FD99
-	for <e@80x24.org>; Sun, 14 Aug 2016 20:04:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A3211FD99
+	for <e@80x24.org>; Sun, 14 Aug 2016 20:37:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751317AbcHNUEK (ORCPT <rfc822;e@80x24.org>);
-	Sun, 14 Aug 2016 16:04:10 -0400
-Received: from mail-qt0-f178.google.com ([209.85.216.178]:36496 "EHLO
-	mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750955AbcHNUEJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Aug 2016 16:04:09 -0400
-Received: by mail-qt0-f178.google.com with SMTP id 52so14351751qtq.3
-        for <git@vger.kernel.org>; Sun, 14 Aug 2016 13:04:09 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=9CC/cjwDs2tvsU8jGA7z2LwUlJMOWJprsPhQafSdKdo=;
-        b=UYzVOHXKPiR1Ufs02X9/BVJiJjYLdYF2zcnv6QESEcRQyzqTAHkaYMeRnR2wTKvl2Q
-         sBv0DjYUpKdZjXODK8ORsdEpxLLMEce8xKvv9NAWxs6446XL9cmVuZ/v+bnZKNVlTL3F
-         V4hY6jmBdQwSdIa/4wBjgxhz/htcf0vAFcF3YwTzDwZQ1YSRGX4rWT3VaEakhoXMQ7Ec
-         Ph7Z5WlsoMH7Zt2k4VLN5B2z6syESbKnT2trq/i5/9xobkt72YXuC0sqc+UjlYzi4lVt
-         XNnMJ6Tbxm0AxMXXlynp3cOQ4aMNsK1iDBmRFbRkM+pakhQRnbMruDQm5/1TWvsmF4cZ
-         UWRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=9CC/cjwDs2tvsU8jGA7z2LwUlJMOWJprsPhQafSdKdo=;
-        b=R5ppECnm7Z+aeWD07wdMXhT+5+4Oem0DOCsEGUoJzBLg8q+pdtWai/SVmdiXOzoJj7
-         ZYHXQYWCW4mra/RsOrbdmpFpokSkF3uO7jtKM7xrz4eWDg1LvMg/bBcxPxgAps1969c4
-         qAiweDPO40xjhSoeRRgzmuXnjij+tQApfwlulhiERdXkULvtMHZkbcc7zQBDIgDJyFgx
-         Zts3/7XSr1lxA8+HNYMeDaSTcSsuWryrc1iZCLxQ4qf6XMejwxkSd/1bxpMOH+R16yGR
-         4WJBo0XlvJMp4WYdlSaVF+IzvEr40qlMfEvvoUtYiJ5LxmCbmaxXXfLH7yI7kBaTvwKL
-         NPxg==
-X-Gm-Message-State: AEkoouvmnRMCPePcCFUfFVGxRWIf+R95OqzqEvAh+rTo5X06+Np+G/n/uUpIpIb4bcdijTaVtJOqboieDvBfVA==
-X-Received: by 10.200.45.181 with SMTP id p50mr27390243qta.31.1471205048343;
- Sun, 14 Aug 2016 13:04:08 -0700 (PDT)
+	id S1751594AbcHNUhW convert rfc822-to-8bit (ORCPT
+	<rfc822;e@80x24.org>); Sun, 14 Aug 2016 16:37:22 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62841 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751219AbcHNUhW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Aug 2016 16:37:22 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E68FF33308;
+	Sun, 14 Aug 2016 16:37:20 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=iEgWQwCrbod1
+	beeLCOAp+JF+mDE=; b=az9iSS2dMyD3Ik6t5YQWa4gENy3iESj2rrhLe090FIYZ
+	1x/PAQCs8Saepr1YWkHVEAqLYH320FpPpdCOvGWvmKhlEm7RdC/5xFB2G1Uv9t13
+	TLtnjsHVcgB5gEPM2bvU7yrjYNPI8d4PepQG++upJUKzzy1npv/zyJKKI96V9Pk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=IAjrXU
+	Fb0c8kcrbTIc8bjJGGDeCGNTycSRgdUZ/LhIEOTyD3O/V07gA6GNseVbtPQ43jiZ
+	Jv9mOMPwYvEH/uf0+4TZHx/hl37acqoGZ/51SHS3cXeUz62e4H+I7eZ4LAEuIwYB
+	VUr2XH2mdNn/D619STU9fIz/T6M8w+Ej3iymQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id DD7B733307;
+	Sun, 14 Aug 2016 16:37:20 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6390C33306;
+	Sun, 14 Aug 2016 16:37:20 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org, peff@peff.net,
+	Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v1 1/2] t0027: Correct raciness in NNO test
+References: <20160809114938.pcrvirrzrh6ldmnr@sigill.intra.peff.net>
+	<1471020662-20746-1-git-send-email-tboegi@web.de>
+	<57AF4FCB.7090409@kdbg.org> <20160813211805.GA10624@tb-raspi>
+Date:	Sun, 14 Aug 2016 13:37:17 -0700
+In-Reply-To: <20160813211805.GA10624@tb-raspi> ("Torsten =?utf-8?Q?B=C3=B6?=
+ =?utf-8?Q?gershausen=22's?=
+	message of "Sat, 13 Aug 2016 21:18:05 +0000")
+Message-ID: <xmqqpopbkrya.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.200.51.205 with HTTP; Sun, 14 Aug 2016 13:03:48 -0700 (PDT)
-In-Reply-To: <CAKkAvazV8umqbs+rTEG2399Ox0pGL1YAXsgLqHusb15RhzyH7Q@mail.gmail.com>
-References: <CAKkAvaxWk6SK4EYPaWXHQoVBh9qLgHoEqAh9+dgOrjncsi5QyA@mail.gmail.com>
- <CAKkAvazV8umqbs+rTEG2399Ox0pGL1YAXsgLqHusb15RhzyH7Q@mail.gmail.com>
-From:	Mike Rappazzo <rappazzo@gmail.com>
-Date:	Sun, 14 Aug 2016 16:03:48 -0400
-Message-ID: <CANoM8SWutGQaHJa6VCSJbRrFc9Dap0pKNUj74hhjm6hyHtYXtg@mail.gmail.com>
-Subject: Re: [PATCH] make rebase respect core.hooksPath if set
-To:	ryenus <ryenus@gmail.com>
-Cc:	Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: E5DBCC8C-625E-11E6-9440-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Sun, Aug 14, 2016 at 12:29 PM, ryenus <ryenus@gmail.com> wrote:
-> Patch attached.
->
-> It seems gmail ruined the white spaces.
-> Not sure how to stop gmail from doing that.
-> Sorry for me, and for Gmail.
+Torsten Bögershausen <tboegi@web.de> writes:
 
-Did you use git-send-email?  I don't think that the gmail ui works.
-If you have 2-factor authentication, there are instructions on how to
-set that up in the docs in Documentation/git-format-patch.txt
+> Looking at t0027, it turns out that the changes in the test matrix done in 1/2
+> are reverted in 2/2.
+> This is not a good thing.
+> Either (a) they should be marked as test_expect_failure in 1/2 and
+> corrected in 2/2,
+> or (b) 1/2 and 2/2 are squashed together and the noise in t0027 is minimal.
+
+Probably (a) is a bit more kosher and useful when somebody wants to
+inspect the history of the test ("the test was flaky and that hid a
+few bugs, but we fix the timing-dependency which exposes the bugs"
+in 1/2, "this is the fix for the bug that the previous one exposed"
+in 2/2).  (b) might be a bit less work, though.
+
