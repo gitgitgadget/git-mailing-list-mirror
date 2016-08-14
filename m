@@ -2,77 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 583171F859
-	for <e@80x24.org>; Sun, 14 Aug 2016 08:39:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ECA3B1F859
+	for <e@80x24.org>; Sun, 14 Aug 2016 08:52:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752328AbcHNIjw (ORCPT <rfc822;e@80x24.org>);
-	Sun, 14 Aug 2016 04:39:52 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62916 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751229AbcHNIjv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Aug 2016 04:39:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3B841366DF;
-	Sat, 13 Aug 2016 23:21:17 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=e0wdPi9SWdCkcptUKlK6yoi9Xi8=; b=rcJ6aj
-	RZncI7oNSX0NjtveaGReqQdki1z0UOPVRJD+pfyQrjuPL7YvB0X+MfnPQO5jNttX
-	d/JBniZZ2CI4d9LDk3bd4+Uwl6cX7rryfy4rtcoj8CQKNYOvI3SA49Fs/CFq3vF5
-	Mmis9QfH3umYfVgoTQBxlipAO7bWLV3PTW4mQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vKD/MLlEgfREUzLSPCli7YvDxR7wSQyb
-	y5/3EiOkBtdlfIZ23o0QTMOQkv64Mv4PFLSRZQvN9n6EIKkpimrpFoEhocX8wIS7
-	nTLhIRuPhJhtmOUGdSfr/YZ/Irl5aLNaXg4CriUGajEOWNRJGHnmRNlBEfG8anuX
-	+BT5MDa33ew=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 33124366DD;
-	Sat, 13 Aug 2016 23:21:17 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8C169366DC;
-	Sat, 13 Aug 2016 23:21:16 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	John Keeping <john@keeping.me.uk>
-Cc:	"Tom Tanner \(BLOOMBERG\/ LONDON\)" <ttanner2@bloomberg.net>,
-	David Aguilar <davvid@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] difftool: always honor "command not found" exit code
-References: <57AD772501C207A400390148_0_15304@p057>
-	<20160813103639.mxscvfyztee4hbvh@john.keeping.me.uk>
-	<20160813113028.uwedje6fzuc3cuzr@john.keeping.me.uk>
-Date:	Sat, 13 Aug 2016 20:21:14 -0700
-In-Reply-To: <20160813113028.uwedje6fzuc3cuzr@john.keeping.me.uk> (John
-	Keeping's message of "Sat, 13 Aug 2016 12:30:28 +0100")
-Message-ID: <xmqqtweokpcl.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753014AbcHNIwN (ORCPT <rfc822;e@80x24.org>);
+	Sun, 14 Aug 2016 04:52:13 -0400
+Received: from mail-yw0-f171.google.com ([209.85.161.171]:33034 "EHLO
+	mail-yw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750841AbcHNIv6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Aug 2016 04:51:58 -0400
+Received: by mail-yw0-f171.google.com with SMTP id r9so13694734ywg.0
+        for <git@vger.kernel.org>; Sun, 14 Aug 2016 01:51:57 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=qEXtpE7P+Lg/v3BdQDJhxvSHKnkF4xMGgzzKxsO7H7s=;
+        b=Np8Atn1xYSts1DESBlVrkCU5YaFNN9iXc76BT96jroA+n2aUj4JrsO8WSYppOxlZJd
+         GZOn1LBB0GYRBu1qLYwsR4LSrQpfpI1VyF0y/ss7NkRhfuwdeAdCxdsEw/8ztDJi5iDA
+         3E9AvsW7XMB9Mn7fIWqezR7YW+q3cN2Df4UEpMQH/QqfagSsY+hK4Pmltn1xzJ3aNa+F
+         iP46PW0wRA0AcFuhWKlO4hlY3H85fir69mZcoCxxSJ6JfNOFQlE7w4O7AwmD/9NFVQTL
+         rF3LkAzu3bbyRJAYTqHnqnsr+vZ8OY1z7XggjItfADNjrI3H7h+0KA1yE/1pMlPtRMRE
+         IUjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=qEXtpE7P+Lg/v3BdQDJhxvSHKnkF4xMGgzzKxsO7H7s=;
+        b=A7bIhORH9W/cPb4zdFTTb0Ms4W0RtXNv+fjTj6dvv01fOfxkZ7FWDPKPa+AAgVnC5V
+         GfGdg7vm8EmYeT2I7FJYJPCd0UBHRh61UJOmENB/AaAzzMmEQwASHRniAJi2/XF2fzFd
+         ji8Eh+DdPk5752PMT50m5/dd3JCpCHIJm5ydXa9v7gF+FGfVQUoSZQpMmFXLYD7O+2iO
+         SQhZnvbH6/hrD8NBcKNFTPaW7TBF1JS7mCRaddMjgDj/CkubvIF2HeQh2cpApvTAdMxN
+         uwucj9sUgW9Ct4bpC2WyUZYrUvIY8/JNWEnm89vdXc9uzpHL1zu+BvURYvdAPkl+6CnW
+         NQEg==
+X-Gm-Message-State: AEkoouv83BDJRUv5MXOIHdM3Zgs0po0mQUBeP4mOE1djM2tgPja19zCjE6bEGDxDvBE6YFjBYAd9jKm8rqh9GA==
+X-Received: by 10.129.168.9 with SMTP id f9mr1926095ywh.258.1471158972157;
+ Sun, 14 Aug 2016 00:16:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 29535FF2-61CE-11E6-A5BD-89D312518317-77302942!pb-smtp1.pobox.com
+Received: by 10.37.50.196 with HTTP; Sun, 14 Aug 2016 00:15:51 -0700 (PDT)
+In-Reply-To: <CACsJy8C51UkH=tLSfGigAF0JjPxVS3fY0EHi0CNVRG8LY8YiCg@mail.gmail.com>
+References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com>
+ <CAGZ79kba36GprgHA04_q4NmY2=_amoWyafUaLKkcknc3HsT_-g@mail.gmail.com> <CACsJy8C51UkH=tLSfGigAF0JjPxVS3fY0EHi0CNVRG8LY8YiCg@mail.gmail.com>
+From:	Jacob Keller <jacob.keller@gmail.com>
+Date:	Sun, 14 Aug 2016 00:15:51 -0700
+Message-ID: <CA+P7+xo4UJ8W4G0gV=DMLs-9Ve4v0OKc0ZunmS5Y5B1k7L0P9w@mail.gmail.com>
+Subject: Re: storing cover letter of a patch series?
+To:	Duy Nguyen <pclouds@gmail.com>
+Cc:	Stefan Beller <sbeller@google.com>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-John Keeping <john@keeping.me.uk> writes:
-
-> At the moment difftool's "trust exit code" logic always suppresses the
-> exit status of the diff utility we invoke.  This is useful because we
-> don't want to exit just because diff returned "1" because the files
-> differ, but it's confusing if the shell returns an error because the
-> selected diff utility is not found.
+On Sat, Aug 13, 2016 at 1:49 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Tue, Aug 9, 2016 at 12:27 AM, Stefan Beller <sbeller@google.com> wrote:
+>> is what you want. Maybe we want to see a patch that adds the reverse
+>> functionality as well, i.e. git-am will store the the cover letter as the
+>> branch description and git-merge will propose the branch description for
+>> the merge commit.
 >
-> POSIX specifies 127 as the exit status for "command not found" and 126
-> for "command found but is not executable" [1] and at least bash and dash
-> follow this specification, while diff utilities generally use "1" for
-> the exit status we want to ignore.
->
-> Handle 126 and 127 as special values, assuming that they always mean
-> that the command could not be executed.
+> I almost suggested the same, but there is a problem with this
+> approach: if you're are on a detached head, where does git-am save it?
+> --
+> Duy
 
-Sounds like a reasonable thing to do.  Will queue; thanks.
+Also, what about the case where a branch already has a description
+such as is the case for something other than an integration branch.
+How does git-am know the difference and ensure it doesn't overwrite
+anything? Not everyone uses separate branches for each patch and such.
+
+Thanks,
+Jake
