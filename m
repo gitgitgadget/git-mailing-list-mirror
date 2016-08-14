@@ -2,88 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_06_12,HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3AAFB1F859
-	for <e@80x24.org>; Sun, 14 Aug 2016 08:37:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 583171F859
+	for <e@80x24.org>; Sun, 14 Aug 2016 08:39:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751219AbcHNIgy (ORCPT <rfc822;e@80x24.org>);
-	Sun, 14 Aug 2016 04:36:54 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:43760 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751243AbcHNIgx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Aug 2016 04:36:53 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBA732018E;
-	Sun, 14 Aug 2016 01:27:06 +0000 (UTC)
-Date:	Sun, 14 Aug 2016 01:27:06 +0000
-From:	Eric Wong <e@80x24.org>
-To:	Jeff King <peff@peff.net>
-Cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: A note from the maintainer
-Message-ID: <20160814012706.GA18784@starla>
-References: <xmqq1t1twymf.fsf@gitster.mtv.corp.google.com>
- <20160812224255.GA16250@dcvr>
- <20160813081012.p46i4jcvkkfqch7m@sigill.intra.peff.net>
- <20160813090432.GA25565@starla>
- <20160813111449.vkoo3fmlfd65loh5@sigill.intra.peff.net>
+	id S1752328AbcHNIjw (ORCPT <rfc822;e@80x24.org>);
+	Sun, 14 Aug 2016 04:39:52 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62916 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751229AbcHNIjv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Aug 2016 04:39:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3B841366DF;
+	Sat, 13 Aug 2016 23:21:17 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=e0wdPi9SWdCkcptUKlK6yoi9Xi8=; b=rcJ6aj
+	RZncI7oNSX0NjtveaGReqQdki1z0UOPVRJD+pfyQrjuPL7YvB0X+MfnPQO5jNttX
+	d/JBniZZ2CI4d9LDk3bd4+Uwl6cX7rryfy4rtcoj8CQKNYOvI3SA49Fs/CFq3vF5
+	Mmis9QfH3umYfVgoTQBxlipAO7bWLV3PTW4mQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vKD/MLlEgfREUzLSPCli7YvDxR7wSQyb
+	y5/3EiOkBtdlfIZ23o0QTMOQkv64Mv4PFLSRZQvN9n6EIKkpimrpFoEhocX8wIS7
+	nTLhIRuPhJhtmOUGdSfr/YZ/Irl5aLNaXg4CriUGajEOWNRJGHnmRNlBEfG8anuX
+	+BT5MDa33ew=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 33124366DD;
+	Sat, 13 Aug 2016 23:21:17 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8C169366DC;
+	Sat, 13 Aug 2016 23:21:16 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	John Keeping <john@keeping.me.uk>
+Cc:	"Tom Tanner \(BLOOMBERG\/ LONDON\)" <ttanner2@bloomberg.net>,
+	David Aguilar <davvid@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] difftool: always honor "command not found" exit code
+References: <57AD772501C207A400390148_0_15304@p057>
+	<20160813103639.mxscvfyztee4hbvh@john.keeping.me.uk>
+	<20160813113028.uwedje6fzuc3cuzr@john.keeping.me.uk>
+Date:	Sat, 13 Aug 2016 20:21:14 -0700
+In-Reply-To: <20160813113028.uwedje6fzuc3cuzr@john.keeping.me.uk> (John
+	Keeping's message of "Sat, 13 Aug 2016 12:30:28 +0100")
+Message-ID: <xmqqtweokpcl.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160813111449.vkoo3fmlfd65loh5@sigill.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 29535FF2-61CE-11E6-A5BD-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> wrote:
-> I collected the message-ids from my archive. Interestingly, I had a
-> dozen or so that did not have message-ids at all. I think most of them
-> are from patches that put the "From " line in the body, like this one:
-> 
->   http://public-inbox.org/git/20070311033833.GB10781@spearce.org/
-> 
-> and then they got corrupted on a round-trip through one of the bad mbox
-> formats (probably downloading from gmane, I'd guess; the export there
-> uses mbox, and I use maildir myself, so it probably got split badly
-> years ago). Anyway, public-inbox seems to get this case right, which is
-> good.
+John Keeping <john@keeping.me.uk> writes:
 
-Yes, I was somewhat careful to check for proper mboxes from gmane;
-I just missed entire ranges :x
+> At the moment difftool's "trust exit code" logic always suppresses the
+> exit status of the diff utility we invoke.  This is useful because we
+> don't want to exit just because diff returned "1" because the files
+> differ, but it's confusing if the shell returns an error because the
+> selected diff utility is not found.
+>
+> POSIX specifies 127 as the exit status for "command not found" and 126
+> for "command found but is not executable" [1] and at least bash and dash
+> follow this specification, while diff utilities generally use "1" for
+> the exit status we want to ignore.
+>
+> Handle 126 and 127 as special values, assuming that they always mean
+> that the command could not be executed.
 
-What's also interesting about the thread you highlighed is the
-extra '<>' when you started that thread; and I have a bug where
-I strip off an extra '>' which needs to be fixed...
-
-I wonder if I should make "editorial" changes to fixup user bugs,
-but then there's also bunch of messages which are replies to <y>
-because git-send-email had usability problems back in the day...
-
-> I had several hundred message ids that you didn't. About half of them
-> were spam or other junk. I weeded them out manually (mostly by picking
-> through the subjects, so possibly there's some error). The end result is
-> 279 messages that I think are legitimate that you don't have.
-> 
-> I'll send them to you off-list, as the mbox is about 300K, which the
-> list will reject.
-
-Thanks, should all be imported.
-
-The one which started the thread belonging to
-<loom.20100716T103549-783@post.gmane.org> was really iffy,
-but I kept it; as well as an "unsubscribe" one; I guess those
-people are shamed for life :)
-
-
-  git cat-file blob HEAD:b7/5bb577d76487bc9aebf0656d4e03eff22049f4
-
-is totally legit, but doesn't seem to show up properly,
-so there's another bug I need to fix.  For the moment, the
-following also works:
-
-	public-inbox.org/git/b75bb577d76487bc9aebf0656d4e03eff22049f4/
-(but I guess it was reposted as <26299.4828321554$1213013668@news.gmane.org>
+Sounds like a reasonable thing to do.  Will queue; thanks.
