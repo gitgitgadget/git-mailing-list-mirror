@@ -2,106 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F2101F859
-	for <e@80x24.org>; Sun, 14 Aug 2016 08:56:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11C5E1F859
+	for <e@80x24.org>; Sun, 14 Aug 2016 09:15:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932265AbcHNI4l (ORCPT <rfc822;e@80x24.org>);
-	Sun, 14 Aug 2016 04:56:41 -0400
-Received: from mout.gmx.net ([212.227.17.22]:50201 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932129AbcHNI4k (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Aug 2016 04:56:40 -0400
-Received: from virtualbox ([37.24.141.212]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0Mdrph-1bphH52kZx-00Pgwm; Sun, 14 Aug 2016 10:56:26
- +0200
-Date:	Sun, 14 Aug 2016 10:56:25 +0200 (CEST)
-From:	Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	git@vger.kernel.org
-cc:	Junio C Hamano <gitster@pobox.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH] squash! diff: add --diff-line-prefix option for passing in
- a prefix
-Message-ID: <5ca415f99718b1792cd0a9c31606b45d27befc48.1471164824.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1752607AbcHNJPK (ORCPT <rfc822;e@80x24.org>);
+	Sun, 14 Aug 2016 05:15:10 -0400
+Received: from mail-yw0-f180.google.com ([209.85.161.180]:35815 "EHLO
+	mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751505AbcHNJPI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Aug 2016 05:15:08 -0400
+Received: by mail-yw0-f180.google.com with SMTP id j12so13750597ywb.2
+        for <git@vger.kernel.org>; Sun, 14 Aug 2016 02:15:08 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=SXX1xtK/lfaazR47gVhopPT6iFOhmUroQztpBYU/Pbk=;
+        b=S4C8G1OmKkQK4aSXMxfANKMYmsIv23GTrMkZ9NVAqrXqe8OQjV/t9mSlBfZRDbi3Ys
+         F2Iou0Y7lMeEcE/EnESsrztK9w1YDiUpZ2/K6z35bQVCqNdVd2GG3E5eZbaENLmtsLwb
+         Ynqu8LG70QtSQYOMyYSDojHGRkTcV8nYfpz5YCNz+dEbA1vbgz8AjsNMeSHGKiVbRIyK
+         2wKm/RSfdSVcesx49F/yFbqK+k9OsmY2nlKFGdH5DnEp5OTPlUboUx12qRSU9qYoZEb/
+         ZI4DcgHiVdulGjPrHRUzFAPOgzmDKzQjURNZoRayFj4w/VKsUHCje0bIeBesICJg6sOq
+         RteQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=SXX1xtK/lfaazR47gVhopPT6iFOhmUroQztpBYU/Pbk=;
+        b=hYsvZzNo/bpAkXRImMIc6HH0qbRJNcLD7vn4ujiBUHqjf197nrxvOaZp5EPjFTE7Ex
+         YrQZ7j/BU4/T5qo7gzJkPJFs2MQnxZ3zHMeiML4lhLmLZxIzc1WFunOOFxe/hFXIrhk6
+         c2+900WeuFFzmQVH48+jVPhxAgebMGp0GiuRQufJ4oqWEZhOI/xg9sx12YUjDLb6KxjN
+         cbCgHkwtsatAhWn6K3if2Tp6h6Y9oyng2lipynPh2WSimQDYf2kejfZai28louVw77Zf
+         l7FUMCZZ9NQHFx1w567lTo2GcRApN/vWvr+vv1lYhrqwDJhSC+F/HcJJmHUbcFlrunSD
+         cxgQ==
+X-Gm-Message-State: AEkoous9u9xh7jPuQluUhLYMa4vcZL1foA0lRqy6DGyv6MyGrG8I28mk7rMFJJxNernqzNgFZm+Z1RW5/CjE5Q==
+X-Received: by 10.13.228.196 with SMTP id n187mr17177270ywe.83.1471159320827;
+ Sun, 14 Aug 2016 00:22:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:aP93lh6xoXz2+SKBWBjfHGLkOGFNkfHIgqmLcpddZRhvAkP7UGC
- M+qpdIggWmT81XR9yoLc1RIGTssPNYC0mEl3ixmSXXvQFegFbChTcaLb9daBxMcqC2vKQen
- 8F3rKMguktU3pm8JuYchiyFhmHluHu1PKfdmwEDwrKe8fs26Rcw5+broY7eCwHkMidPqV2a
- STZbFvgyF8ogUGLmaZGhQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:09/X0k9WaHw=:ayTZdbYe5gxmHQMI2IHhY/
- UGop95CpGqSLBAtzkZ3Xzy3zteRYnsqtDleUsT0nbKrLmt4Mp3loEK1edevdws+UXXphXwS47
- DP5MHVuOG1cHhDuR+fDzSyhqtWrmFQoUUL0/CVIEAKatBsG8TCF3voSaB97jTwaSv+/ix2Ovk
- DlySRmDZrkW9/cFyZF2NJbm2fL7ikqf1hE9jOQkYTDHs5TkH1RCKjEPy61ghjDAyfC40rzWjB
- 3CvvyLcwEQO3XspIzpjIB5EpXxcSOegLaZHxRIICNxbG+MMkjlRUQaffImJ1k4BLgW06U+ZGR
- kXJbpvZI45/Ky+QTojLmgl+3T8Or0qlnTaY5cnQku1ObcMNSunUYQaijUxmpDA6E/bsOMNAMd
- zxa9yqIhdMaxel2ex+PbYtvMV/Mu43mpnC8mDavRNC7oKJ+oDHkOtF09crf1NQ79+Jy5/Z5cg
- /cP5dtt41YuuXttLw3iKtgOBMc3D/ongeQkhis5kqfDmYzRQbcWt8jFnrQvDGKAOW1upmhwUm
- pikUIycRiRYzJhhZhXcmGO2Zh/XvgkaUtuzNDWrArNs79FzKYJN7Sd6/9+FUJJYNTskoE8W3i
- d2CVLECddEg0E2rZnNomANsrhk63TL7+wYSWz9/4Tybl5ccGm1n0pQtNAm6bMc55ztLIPEShm
- xDXQDplB0BzUpHg/+NZxwWcqj8lFxcOGLWldRs3fe+1XXf1jXv8Iu6MfDDAn0Vmktzk0LyOI2
- hxuPxCnKKe4FtvjJohL9kJF/52G8zIi7BOslH3pGk2W57GMP88x+c1t3PQ3rsGWqHsoUmNwYk
- I18/3Un
+Received: by 10.37.50.196 with HTTP; Sun, 14 Aug 2016 00:21:40 -0700 (PDT)
+In-Reply-To: <xmqqoa4wu0bm.fsf@gitster.mtv.corp.google.com>
+References: <cover.1470259583.git.mhagger@alum.mit.edu> <7b0680ed7a10fc13acd8d7816a75ed05a5f9e28c.1470259583.git.mhagger@alum.mit.edu>
+ <20160804075631.jakbi5dbsbxsqcpr@sigill.intra.peff.net> <e4232cba-aae8-8426-c730-7914bb750363@alum.mit.edu>
+ <20160813085904.lykoihh4v2lf4yuj@sigill.intra.peff.net> <xmqqoa4wu0bm.fsf@gitster.mtv.corp.google.com>
+From:	Jacob Keller <jacob.keller@gmail.com>
+Date:	Sun, 14 Aug 2016 00:21:40 -0700
+Message-ID: <CA+P7+xrsz27Hhk12dwDrUEpn0L7R8F5z-XASS2JkoY6sqK7u5A@mail.gmail.com>
+Subject: Re: [PATCH 8/8] diff: improve positioning of add/delete blocks in diffs
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
+	Git mailing list <git@vger.kernel.org>,
+	Stefan Beller <sbeller@google.com>,
+	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-The '>' character is not a legal part of filenames on Windows. So let's
-just not use it in Git's source code. This poses a challenge in the test
-script t4013 which distills command-lines into file names (so that the
-expected outcome can be stored in files with said names).
+On Sat, Aug 13, 2016 at 8:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
+>
+>> So assuming everything I just said isn't complete bollocks, I think we
+>> can move to a future where nobody uses the compaction heuristic. And
+>> there are three ways to deal with that:
+>>
+>>   1. The knob and feature stay. It might be useful for somebody who
+>>      wants to experiment in the future.
+>>
+>>   2. The knob and feature go away completely. It was an experiment, but
+>>      now we have something more useful.
+>>
+>>   3. The feature goes away, but the knob stays as noop, or maybe as an
+>>      alias for the indent heuristic, just because we did ship a version
+>>      that accepts "--compaction-heuristic", and maybe somebody somewhere
+>>      put it in a script?
+>>
+>> I think I'd be in favor of (2).
+>
+> I am all for (2) [*1*]
+>
 
-We have to take particular care not to confound the existing conversion
-of unwanted characters to underscores with the new substitution of '>':
-the existing conversion chose to collapse runs of multiple unwanted
-characters into a single underscore. If we allowed '>' to be collapsed,
-too, the file name generated from the command "diff [...]=-- [...]"
-would be identical to the one generated from "diff [...]=--> [...]".
+I also am in favor of (2). I understand the reasoning for maintaining
+compatibility, but this was a known experimental feature that was
+unlikely used by many people. Even if it was, these are the very sorts
+of people who should be aware that the experimental feature is going
+away. It reduces code complexity if it just goes away, and I believe
+the new heuristic is much better (Thank you Michael!!!!!)
 
-Please squash this patch into
-3c90ffd2f01e2d0d080c8e42df2ee89709b324de
+As for a knob on the new feature, I think it can become the default
+with a way to disable the feature via command line. I'm not really
+sure it needs a config option at all.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-Published-As: https://github.com/dscho/git/releases/tag/mingw-t4013-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git mingw-t4013-v1
+> This and the previous "take a blank line as a hint" are both
+> heuristics.  As long as the resulting code does not tax runtime
+> performance visibly and improves the resulting output 99% of the
+> time, there is no reason to leave end-users a knob.  "Among 9 hunks
+> in this patch that touch hello.c, 7 are made much more readable but
+> 2 are worse" cannot even be helped with a command line option.
+>
 
-	For the record: this prevented my beautiful CI jobs from even
-	checking out the source code for `pu` in the last days.
+Yea I agree. It might be worth having it disabled via the stable patch
+IDs (? I don't know if we guarantee this?) but otherwise I don't see
+it being important either way. I would vote for a way to disable it
+via command line just because we *are* changing behavior here. But I
+don't think it needs to be a config option at all.
 
-	Junio, please let me know if you would prefer this as a separate
-	patch.
-
- t/t4013-diff-various.sh                                                 | 2 +-
- ...aster^_side => diff.diff_--diff-line-prefix=--__master_master^_side} | 0
- 2 files changed, 1 insertion(+), 1 deletion(-)
- rename t/t4013/{diff.diff_--diff-line-prefix=-->_master_master^_side => diff.diff_--diff-line-prefix=--__master_master^_side} (100%)
-
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index 5204645..84e2ee0 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -115,7 +115,7 @@ do
- 	case "$cmd" in
- 	'' | '#'*) continue ;;
- 	esac
--	test=$(echo "$cmd" | sed -e 's|[/ ][/ ]*|_|g')
-+	test=$(echo "$cmd" | sed -e 's|[/ ][/ ]*|_|g' -e 'y/>/_/')
- 	pfx=$(printf "%04d" $test_count)
- 	expect="$TEST_DIRECTORY/t4013/diff.$test"
- 	actual="$pfx-diff.$test"
-diff --git a/t/t4013/diff.diff_--diff-line-prefix=-->_master_master^_side b/t/t4013/diff.diff_--diff-line-prefix=--__master_master^_side
-similarity index 100%
-rename from t/t4013/diff.diff_--diff-line-prefix=-->_master_master^_side
-rename to t/t4013/diff.diff_--diff-line-prefix=--__master_master^_side
--- 
-2.9.2.691.g78954f3
-
-base-commit: 945e149951a152207b56d5e49ff5167d151a4c89
+>
+> [Footnote]
+>
+> *1* I am also strongly against (3), if only to teach people a
+>     lesson ;-).
