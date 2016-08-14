@@ -2,126 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 819A11FD99
-	for <e@80x24.org>; Sun, 14 Aug 2016 16:29:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ECA691FD99
+	for <e@80x24.org>; Sun, 14 Aug 2016 17:15:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753002AbcHNQ3z (ORCPT <rfc822;e@80x24.org>);
-	Sun, 14 Aug 2016 12:29:55 -0400
-Received: from mail-oi0-f54.google.com ([209.85.218.54]:34980 "EHLO
-	mail-oi0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752956AbcHNQ3y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Aug 2016 12:29:54 -0400
-Received: by mail-oi0-f54.google.com with SMTP id 4so37635112oih.2
-        for <git@vger.kernel.org>; Sun, 14 Aug 2016 09:29:54 -0700 (PDT)
+	id S1752315AbcHNRPD (ORCPT <rfc822;e@80x24.org>);
+	Sun, 14 Aug 2016 13:15:03 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:38182 "EHLO
+	mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751862AbcHNRPC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Aug 2016 13:15:02 -0400
+Received: by mail-wm0-f45.google.com with SMTP id o80so64778617wme.1
+        for <git@vger.kernel.org>; Sun, 14 Aug 2016 10:15:02 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=eLA/IWpi+XT2hI2jwn871YyFD0AJNa61ztcc7fUtCic=;
-        b=oi26an9/TtgQjU6rbfBydMimvaAcLX2Jdielzw329ly1ZVgAxUKUtOfooI24ATQCz8
-         a/z2+wzx/UnYeUdXSW9NdMBEdInLkOdZuEbR5DbmbuUkdv1a7eUQFALaIt/ffWTHPIoU
-         2st6TcBbdVY+xGQSgKbNrZoJ2olqQ/Yj9kXYErVfOK/FguI3SSlYQGRY0MQAm5NQfzV9
-         zkQdWlTUqbEaYPla0DYkfyb7G5iPoqVEVyYxLRvpFB/po2yE90nCv/8qTC/XlSylMb91
-         8Y5BeXY8paVxJLc/deyj8LItH5OGFx9kg4Bs2SZ4IX2IYLRvgzWYTS6qZZcFfUjNGelp
-         LtFA==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=gbyml1AySDhFaaXAoVb+eOGpncDmw+g+VGKO63jV9s8=;
+        b=Qe8ZMkx7urjbGba9jom+051sqEoV+7nlc1tkWoJeN+Vx1o6CAG4jZW5ccqsNvkBuOh
+         yNCrRvPIhbJvijbPz4t+Az2QalcapXlXQFrlu6YWLT19kXZFxEQN0++bR4EnNvDkeYGe
+         DexCxjfd613TBR3ZmFCbqwrw+BdWAHqWfrzotEeeRpykdKZFplW0uN/xckJKZDO52udK
+         tkcGvn4O43ZsYZreQL/I0Axx+byUnq+T2M/ZZTbB8KJrkXkCBU5uMYamHT9eiX0MbaYI
+         oe+l92XuiJ0xVSFCu5M5FmtdWmqA7Up/k6RLnFnVIkvxkkyD5v73rFTNWz59rH9r4bKT
+         iC6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=eLA/IWpi+XT2hI2jwn871YyFD0AJNa61ztcc7fUtCic=;
-        b=PCdn7NqZj+ulaIa/pU3fqN8SX7kORUFZtBRl+c7IkMX89e3yR+QeYXOVuYveMklLVQ
-         lMxgRlJdH0uWKoLmatgcNSvm1H3UJgRl+734mOS+6sbBNkogU6zo/yAjgwW8noxwrwIw
-         lnwAz1qUyMa1IxzLHvgkNC2QbLmNwA03cquog3BF5BFwTce9J1fn1YTnFjPcJag8fkgV
-         ywABvh8hpKIUCwQJnMWWgFTOorj0SIPVUCoNWk2TWwUHrWqP74Hjbv0+9q1h/n/rnoPH
-         +xIsBTp35LuF1Nd0uWuBjujp7356YCfrOtLUJUxJVqbCCaY8JmyfCrnumba26DAf0o/O
-         n4zA==
-X-Gm-Message-State: AEkoousgQXmkVdjHafCm+r59vVvQTEmiTbMiFuPnFdmKNq4hjazOKSyAag+kkYlaO/SBMwe4VblUJQIOWKKo2w==
-X-Received: by 10.157.19.85 with SMTP id q21mr11062583otq.139.1471192193579;
- Sun, 14 Aug 2016 09:29:53 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=gbyml1AySDhFaaXAoVb+eOGpncDmw+g+VGKO63jV9s8=;
+        b=hvTZkxbiPVgSzfyiFu7lkbm2/NXC9aCOP3x0P8VVqMeB+sQm2YNoTUoIr5bPsuz22H
+         ODRyhPtfBUU/B7DzGdOET4+t/jcvdVb/rETlBxJWy+SuuPmyaCTbjp/MvIQ3CwCWb6mG
+         5F2WqKkaHykAnUwvcEsmvJXv9doPY6z6rgQwKSNK9LHY1MQjmvxCNFeciqvRBptEDnOP
+         +by+4aH1zPbp0nVEaWM2AruFDLGXP1UbXAC9xEisS2NHepa5WvmR4MZrayIR7aBE8SOx
+         P1V2bT1bSEWyi4OO9QgRrYxCEANWxBLeqF/h+jz5IBPYegiCNekmA56klyNdYQd0tnSG
+         RIRA==
+X-Gm-Message-State: AEkooutLr3j50GWgHPe4bVxTyJt0tM4YQWNn7znoLv78DSeLOfcVaFKymvAgc7irvw+lhVlh1hsOn4LJ3YHg4Q==
+X-Received: by 10.28.153.202 with SMTP id b193mr10443474wme.62.1471194901364;
+ Sun, 14 Aug 2016 10:15:01 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.202.245.203 with HTTP; Sun, 14 Aug 2016 09:29:33 -0700 (PDT)
-In-Reply-To: <CAKkAvaxWk6SK4EYPaWXHQoVBh9qLgHoEqAh9+dgOrjncsi5QyA@mail.gmail.com>
-References: <CAKkAvaxWk6SK4EYPaWXHQoVBh9qLgHoEqAh9+dgOrjncsi5QyA@mail.gmail.com>
-From:	ryenus <ryenus@gmail.com>
-Date:	Mon, 15 Aug 2016 00:29:33 +0800
-Message-ID: <CAKkAvazV8umqbs+rTEG2399Ox0pGL1YAXsgLqHusb15RhzyH7Q@mail.gmail.com>
-Subject: Re: [PATCH] make rebase respect core.hooksPath if set
-To:	git@vger.kernel.org
-Content-Type: multipart/mixed; boundary=001a1139216418e1b7053a0aa0f2
+Received: by 10.194.70.167 with HTTP; Sun, 14 Aug 2016 10:15:00 -0700 (PDT)
+From:	Christian Couder <christian.couder@gmail.com>
+Date:	Sun, 14 Aug 2016 19:15:00 +0200
+Message-ID: <CAP8UFD1iveotLsMOBnpa=hU4ohcQjZ-X7tjnzY4k+xz5KJvqBw@mail.gmail.com>
+Subject: Draft of Git Rev News edition 18
+To:	git <git@vger.kernel.org>
+Cc:	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+	Nicola Paolucci <durden@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	remi galan-alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Johannes Sixt <j6t@kdbg.org>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
---001a1139216418e1b7053a0aa0f2
-Content-Type: text/plain; charset=UTF-8
+Hi,
 
-Patch attached.
+A draft of a new Git Rev News edition is available here:
 
-It seems gmail ruined the white spaces.
-Not sure how to stop gmail from doing that.
-Sorry for me, and for Gmail.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-18.md
 
---001a1139216418e1b7053a0aa0f2
-Content-Type: application/octet-stream; 
-	name="0001-make-rebase-respect-core.hooksPath-if-set.patch"
-Content-Disposition: attachment; 
-	filename="0001-make-rebase-respect-core.hooksPath-if-set.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_irutrnsg0
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
-RnJvbSA2NzQxOGRkOGZmYWQ3YzA3ZWQ5NTQzN2Y3YTRkMTM1OWRhOWQ5M2QyIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiByeWVudXMgPHJ5ZW51c0BnbWFpbC5jb20+CkRhdGU6IFN1biwg
-MTQgQXVnIDIwMTYgMTk6MTY6MjcgKzA4MDAKU3ViamVjdDogW1BBVENIXSBtYWtlIHJlYmFzZSBy
-ZXNwZWN0IGNvcmUuaG9va3NQYXRoIGlmIHNldAoKd2hlbiBsb29raW5nIGZvciBwcmUtcmViYXNl
-IGFuZCBwb3N0LXJld3JpdGUgaG9va3MsIGdpdC1yZWJhc2UKb25seSBsb29rcyBmb3IgaG9va3Mg
-ZGlyIHVzaW5nIGBnaXQgcmV2LXBhcnNlIC0tZ2l0LXBhdGggaG9va3NgLAp3aGljaCBkaWRuJ3Qg
-Y29uc2lkZXIgdGhlIHBhdGggb3ZlcnJpZGRlbiBieSBjb3JlLmhvb2tzUGF0aC4KClNpZ25lZC1v
-ZmYtYnk6IHJ5ZW51cyA8cnllbnVzQGdtYWlsLmNvbT4KLS0tCiBnaXQtcmViYXNlLS1pbnRlcmFj
-dGl2ZS5zaCB8IDE0ICsrKysrKysrKy0tLS0tCiBnaXQtcmViYXNlLS1tZXJnZS5zaCAgICAgICB8
-ICA0ICsrKy0KIGdpdC1yZWJhc2Uuc2ggICAgICAgICAgICAgIHwgIDcgKysrKystLQogMyBmaWxl
-cyBjaGFuZ2VkLCAxNyBpbnNlcnRpb25zKCspLCA4IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBh
-L2dpdC1yZWJhc2UtLWludGVyYWN0aXZlLnNoIGIvZ2l0LXJlYmFzZS0taW50ZXJhY3RpdmUuc2gK
-aW5kZXggZTJkYTUyNC4uZThhZjcwZCAxMDA2NDQKLS0tIGEvZ2l0LXJlYmFzZS0taW50ZXJhY3Rp
-dmUuc2gKKysrIGIvZ2l0LXJlYmFzZS0taW50ZXJhY3RpdmUuc2gKQEAgLTcyNCwxMSArNzI0LDE1
-IEBAIENvbW1pdCBvciBzdGFzaCB5b3VyIGNoYW5nZXMsIGFuZCB0aGVuIHJ1bgogCQlnaXQgbm90
-ZXMgY29weSAtLWZvci1yZXdyaXRlPXJlYmFzZSA8ICIkcmV3cml0dGVuX2xpc3QiIHx8CiAJCXRy
-dWUgIyB3ZSBkb24ndCBjYXJlIGlmIHRoaXMgY29weWluZyBmYWlsZWQKIAl9ICYmCi0JaG9vaz0i
-JChnaXQgcmV2LXBhcnNlIC0tZ2l0LXBhdGggaG9va3MvcG9zdC1yZXdyaXRlKSIKLQlpZiB0ZXN0
-IC14ICIkaG9vayIgJiYgdGVzdCAtcyAiJHJld3JpdHRlbl9saXN0IjsgdGhlbgotCQkiJGhvb2si
-IHJlYmFzZSA8ICIkcmV3cml0dGVuX2xpc3QiCi0JCXRydWUgIyB3ZSBkb24ndCBjYXJlIGlmIHRo
-aXMgaG9vayBmYWlsZWQKLQlmaSAmJgorCXsKKwkJaG9va3NfcGF0aD0kKGdpdCBjb25maWcgLS1n
-ZXQgY29yZS5ob29rc1BhdGgpCisJCWhvb2tzX3BhdGg9IiR7aG9va3NfcGF0aDotJChnaXQgcmV2
-LXBhcnNlIC0tZ2l0LXBhdGggaG9va3MpfSIKKwkJaG9vaz0iJHtob29rc19wYXRofS9wb3N0LXJl
-d3JpdGUiCisJCWlmIHRlc3QgLXggIiRob29rIiAmJiB0ZXN0IC1zICIkcmV3cml0dGVuX2xpc3Qi
-OyB0aGVuCisJCQkiJGhvb2siIHJlYmFzZSA8ICIkcmV3cml0dGVuX2xpc3QiCisJCQl0cnVlICMg
-d2UgZG9uJ3QgY2FyZSBpZiB0aGlzIGhvb2sgZmFpbGVkCisJCWZpCisJfSAmJgogCQl3YXJuICIk
-KGV2YWxfZ2V0dGV4dCAiU3VjY2Vzc2Z1bGx5IHJlYmFzZWQgYW5kIHVwZGF0ZWQgXCRoZWFkX25h
-bWUuIikiCiAKIAlyZXR1cm4gMSAjIG5vdCBmYWlsdXJlOyBqdXN0IHRvIGJyZWFrIHRoZSBkb19y
-ZXN0IGxvb3AKZGlmZiAtLWdpdCBhL2dpdC1yZWJhc2UtLW1lcmdlLnNoIGIvZ2l0LXJlYmFzZS0t
-bWVyZ2Uuc2gKaW5kZXggMDZhNDcyMy4uZGY1MDczZSAxMDA2NDQKLS0tIGEvZ2l0LXJlYmFzZS0t
-bWVyZ2Uuc2gKKysrIGIvZ2l0LXJlYmFzZS0tbWVyZ2Uuc2gKQEAgLTk2LDcgKzk2LDkgQEAgZmlu
-aXNoX3JiX21lcmdlICgpIHsKIAlpZiB0ZXN0IC1zICIkc3RhdGVfZGlyIi9yZXdyaXR0ZW4KIAl0
-aGVuCiAJCWdpdCBub3RlcyBjb3B5IC0tZm9yLXJld3JpdGU9cmViYXNlIDwiJHN0YXRlX2RpciIv
-cmV3cml0dGVuCi0JCWhvb2s9IiQoZ2l0IHJldi1wYXJzZSAtLWdpdC1wYXRoIGhvb2tzL3Bvc3Qt
-cmV3cml0ZSkiCisJCWhvb2tzX3BhdGg9JChnaXQgY29uZmlnIC0tZ2V0IGNvcmUuaG9va3NQYXRo
-KQorCQlob29rc19wYXRoPSIke2hvb2tzX3BhdGg6LSQoZ2l0IHJldi1wYXJzZSAtLWdpdC1wYXRo
-IGhvb2tzKX0iCisJCWhvb2s9IiR7aG9va3NfcGF0aH0vcG9zdC1yZXdyaXRlIgogCQl0ZXN0IC14
-ICIkaG9vayIgJiYgIiRob29rIiByZWJhc2UgPCIkc3RhdGVfZGlyIi9yZXdyaXR0ZW4KIAlmaQog
-CXNheSBBbGwgZG9uZS4KZGlmZiAtLWdpdCBhL2dpdC1yZWJhc2Uuc2ggYi9naXQtcmViYXNlLnNo
-CmluZGV4IDA0ZjZlNDQuLmM5YmE3NDcgMTAwNzU1Ci0tLSBhL2dpdC1yZWJhc2Uuc2gKKysrIGIv
-Z2l0LXJlYmFzZS5zaApAQCAtMjAzLDEwICsyMDMsMTMgQEAgcnVuX3NwZWNpZmljX3JlYmFzZSAo
-KSB7CiB9CiAKIHJ1bl9wcmVfcmViYXNlX2hvb2sgKCkgeworCWhvb2tzX3BhdGg9JChnaXQgY29u
-ZmlnIC0tZ2V0IGNvcmUuaG9va3NQYXRoKQorCWhvb2tzX3BhdGg9IiR7aG9va3NfcGF0aDotJChn
-aXQgcmV2LXBhcnNlIC0tZ2l0LXBhdGggaG9va3MpfSIKKwlob29rPSIke2hvb2tzX3BhdGh9L3By
-ZS1yZWJhc2UiCiAJaWYgdGVzdCAteiAiJG9rX3RvX3NraXBfcHJlX3JlYmFzZSIgJiYKLQkgICB0
-ZXN0IC14ICIkKGdpdCByZXYtcGFyc2UgLS1naXQtcGF0aCBob29rcy9wcmUtcmViYXNlKSIKKwkg
-ICB0ZXN0IC14ICIkaG9vayIKIAl0aGVuCi0JCSIkKGdpdCByZXYtcGFyc2UgLS1naXQtcGF0aCBo
-b29rcy9wcmUtcmViYXNlKSIgJHsxKyIkQCJ9IHx8CisJCSIkaG9vayIgJHsxKyIkQCJ9IHx8CiAJ
-CWRpZSAiJChnZXR0ZXh0ICJUaGUgcHJlLXJlYmFzZSBob29rIHJlZnVzZWQgdG8gcmViYXNlLiIp
-IgogCWZpCiB9Ci0tIAoyLjkuMwoK
---001a1139216418e1b7053a0aa0f2--
+  https://github.com/git/git.github.io/issues/170
+
+You can also reply to this email.
+
+I tried to cc everyone who appears in this edition but maybe I missed
+some people, sorry about that.
+
+Thomas, Nicola and myself plan to publish this edition on Wednesday
+August 17. Sorry for the late draft again.
+
+Thanks,
+Christian.
