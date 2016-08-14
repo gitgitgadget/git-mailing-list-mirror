@@ -2,71 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_RED
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E39581FD99
-	for <e@80x24.org>; Sun, 14 Aug 2016 23:02:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48E231FD99
+	for <e@80x24.org>; Sun, 14 Aug 2016 23:15:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932111AbcHNXCz (ORCPT <rfc822;e@80x24.org>);
-	Sun, 14 Aug 2016 19:02:55 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52771 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751772AbcHNXCy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Aug 2016 19:02:54 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 35E0735E06;
-	Sun, 14 Aug 2016 19:02:53 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=T8L3b1GRAbci7qotGWsKuUc0mDs=; b=VR8qrM
-	jV3/RhCb5nXJ1GE5AvRvtLdDupaKhv2gJHCh01wWo4NEz1QVK0PBe0/0IwRCgHNc
-	An0ORgzKYxVv/vN7M68FVTMkKnHBpKWLy3QXIQhqw2ruV6eF08BEto2YSUvznenP
-	WjU3YGGp0ndb5h6vb6DGumJu2T3OSJSeuMBnY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Tc989uwx+QZHGlM4TS4K4T2ncm49eOQl
-	reP1Kc6hZ6pWv02aHXUlLtDJURb0adWgsca8U3PI6dFV4pLgM0IvXjVkDd4ByvnH
-	X/HgOc45V6N1Ycg88/goJ25fVMmQ3s73YQQzyQQAZJz9VInMXq3U60U2tT/JEwqq
-	zoBqwSWgy38=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2E59F35E05;
-	Sun, 14 Aug 2016 19:02:53 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A5BBD35E03;
-	Sun, 14 Aug 2016 19:02:52 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	"Philip Oakley" <philipoakley@iee.org>
-Cc:	"GitList" <git@vger.kernel.org>
-Subject: Re: [PATCH v1 2/3] doc: rebase: fixup! can take an object name
-References: <20160814214630.1312-1-philipoakley@iee.org>
-	<20160814214630.1312-3-philipoakley@iee.org>
-	<xmqqziofj90b.fsf@gitster.mtv.corp.google.com>
-	<BF74616BD9694719A6C0D6E75ACD9CE6@PhilipOakley>
-Date:	Sun, 14 Aug 2016 16:02:50 -0700
-In-Reply-To: <BF74616BD9694719A6C0D6E75ACD9CE6@PhilipOakley> (Philip Oakley's
-	message of "Mon, 15 Aug 2016 00:00:15 +0100")
-Message-ID: <xmqq1t1rj6n9.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S932166AbcHNXKB (ORCPT <rfc822;e@80x24.org>);
+	Sun, 14 Aug 2016 19:10:01 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:53266 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751282AbcHNXKA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Aug 2016 19:10:00 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17A471FD99;
+	Sun, 14 Aug 2016 23:10:00 +0000 (UTC)
+Date:	Sun, 14 Aug 2016 23:10:00 +0000
+From:	Eric Wong <e@80x24.org>
+To:	Christian Couder <christian.couder@gmail.com>
+Cc:	Philip Oakley <philipoakley@iee.org>, git <git@vger.kernel.org>,
+	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+	Nicola Paolucci <durden@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	remi galan-alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: Draft of Git Rev News edition 18
+Message-ID: <20160814231000.GB12202@dcvr>
+References: <CAP8UFD1iveotLsMOBnpa=hU4ohcQjZ-X7tjnzY4k+xz5KJvqBw@mail.gmail.com>
+ <D5A2E231FFE74D1C891A1653E1C2D797@PhilipOakley>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3AB22940-6273-11E6-A6E8-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <D5A2E231FFE74D1C891A1653E1C2D797@PhilipOakley>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+Philip Oakley <philipoakley@iee.org> wrote:
+> From: "Christian Couder" <christian.couder@gmail.com>
+> >You can also reply to this email.
+> 
+> I see you mention in passing (weel in the small headings near the bottom)
+> that gmane web interface has gone away. It may be worth noting a few of the
+> alternatives, and in particular Eric's newly updated public-inbox
+> https://public-inbox.org/git/.
 
-> the 'standalone' is that it must be a single (standalone) word on the
-> subject line immediately after the "fixup! "(s).
->
-> communicationg that one cannot have any extra textual notes after that
-> word was the issue that 'standalone' tried to address.
+Thanks, I will also add that existing gmane links can be looked up
+in instance I maintain via:
 
-Perhaps I am slow but did you mean the same thing as "it must be a
-single word and nothing else on the remainder of the line"?
+	public-inbox.org/git/?q=gmane:123456
 
+It might be worth it to convert numeric links to Message-IDs in older
+editions, as I also published a mapping at:
+
+   https://public-inbox.org/.temp/gmane.comp.version-control.git-300599.txt.gz
+
+> I've found it very useful and probably easier to use. (now I've seen
+> https://public-inbox.org/design_www.html)
+
+Based on closer reading of RFC3986, section 3.3, I deployed a
+change to URL generation last night so the "%40" escape for '@'
+no longer shows up in generated URLs (along with a few other
+characters):
+
+   https://public-inbox.org/meta/20160814105152.21925-1-e@80x24.org/
+
+It might be worth updating this edition to avoid the percent
+escaping since it might confuse users about what the Message-IDs
+are (and to avoid users passing "%40" into their MUA)
+
+Old URLs will always continue working, of course.
