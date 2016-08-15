@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 261EA1F6C1
+	by dcvr.yhbt.net (Postfix) with ESMTP id 367CF1F859
 	for <e@80x24.org>; Mon, 15 Aug 2016 21:54:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753128AbcHOVxx (ORCPT <rfc822;e@80x24.org>);
-	Mon, 15 Aug 2016 17:53:53 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:35258 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753100AbcHOVxv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2016 17:53:51 -0400
-Received: by mail-pa0-f41.google.com with SMTP id i5so19506845pat.2
-        for <git@vger.kernel.org>; Mon, 15 Aug 2016 14:53:51 -0700 (PDT)
+	id S1753130AbcHOVxy (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 17:53:54 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:36744 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753103AbcHOVxu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 17:53:50 -0400
+Received: by mail-pa0-f45.google.com with SMTP id pp5so19416078pac.3
+        for <git@vger.kernel.org>; Mon, 15 Aug 2016 14:53:45 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=hbMXheiwOrDEWp+6BVXOziwAolklaqYKjjt/JHfdTT8=;
-        b=EoVVr/4II7DFskyNQnxC0W8RX2Wv2CtirMXaLDTkngMgR9PqHXTs96CAPPzrqKdnJ6
-         8mMMzTFpGy59UCNrYtG9M5HAiyiwjEpauktsY8PkqTZ+E184jYrxSXuW+p3tbMAJiaiK
-         ySjpQBZR52dMU10RmYAw4shuZBRx8p3vlK5KWV2UzcpIleAAt4bHqKMe78sMcagMrhMU
-         Vxa0DqO3fS7qIZTSVcQHKthJAaXO4Wc+Y0mnqWDtCPmFnConZ/Wrz5MrGWaH0F3+k85U
-         xVoXxPf332TLzK9+jqiKP0F2WchhzhZwmRLwQUyu0RQs2NcFcO8ECsyhix+xvxfqejcg
-         d9Ww==
+        bh=SH/F2LmheTA3emiHB0gHoZs+k3IJw4N5vp/hQzJU1zw=;
+        b=QH+yWuO9AvQlRHJ6NTBQtH6luawJVh4SmD18MWcA3l0eUpyz2m/biH9GAjM0HTkeHi
+         FE+/EbcpGmF4QCz9l/6LyA82yKZzRt2bdqa/nae4ts0AOUlFfu/41snUGZnsD/pKv73N
+         9njyQjVV3hBuwdIr38K0v2EBxBtuXzCIxcf4hw7axjr0RJRaOjdDDF0XN+EVeVQTD1un
+         hoU4/VT+/kAv90DlvGYYJffDPSOsvvylkWjnRFKwgMTp2BheIS1rfSbHM7EPkvOB/ORU
+         rBBCn32Aj1k7lpRsjpXIybaf0BhKuee6sjtL+dNqmEIP93zERfDK5GGizcgXlR36WXm3
+         nHEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=hbMXheiwOrDEWp+6BVXOziwAolklaqYKjjt/JHfdTT8=;
-        b=N9EuOSYRAKnGAg9hvhzv4Oa4u1fHuK7jQk/xmUgADEnenN9bJZHjUPZn6MXai4xW6I
-         n8+3R1hmvyBAV6HHaQnoW3bqFk+HnJvQI+jpcDcD35QmKTp3b63zL7NBWELArvfY0bPo
-         UOAa9hJrrAQVsL3Z2r5zG7AApGDz945FeNPHyCzyj23NOW7/qT8rZSTD64F8p6K5/8p2
-         0qM46ts8ymq27hkUa9OXXSQmjzzMjb5aERQps7M16bcumw2T1tJTXHbn5OEhIkcuGAgD
-         kDTYhPpSmVbtOyi6Lyh7sAyT/kc6lpVwLlulcUdDo4WyVfYBr3N97zcTOBfij7sPoOc5
-         efmg==
-X-Gm-Message-State: AEkooustgEuHW4bKkEg98C2xeutadFV7QD9H+xt4HLM2DRYwSC+BT+3b0o8psudQoQn7K7dg
-X-Received: by 10.66.88.131 with SMTP id bg3mr58473651pab.43.1471298030935;
-        Mon, 15 Aug 2016 14:53:50 -0700 (PDT)
+        bh=SH/F2LmheTA3emiHB0gHoZs+k3IJw4N5vp/hQzJU1zw=;
+        b=l5x/xx/oh402hvxO6rRlKkgePUm9sVxalzZocTAAGsLg96bXIGk/bhe9lnQ06kLleJ
+         Ndye0rEWDbmXvQtI8QjQv4STe1XPoEJHnkvbdpWPPfIFK8p3ZfGh9jPpMdcgAP6wa0N7
+         2WY4JFmfhCDvZ2+dNourbUKdpIH2Z4o8t3l/gPXRTdwHdvU0uhFB5/RF8KRF+Gk1Bamc
+         8iqGaztgU4SYivChO1aiwA4ulyEV3iYaZW/lNAyf+AxPEyxRxH7n5nm0qlAW7vrERh9g
+         Nf9IJ89HDbd79qwobsx9FyyzxIpblaGK3wONl5/tZNJCTyR4WzC+3AhVaOfexEuTUvCR
+         YM8A==
+X-Gm-Message-State: AEkoout+eCMqYwqUITI5iYt14LKImB7Pe/wzoo+a3sLx8fi2GSK4NGdtVp46rxVJI8w2kjyI
+X-Received: by 10.66.159.170 with SMTP id xd10mr58475033pab.41.1471298024938;
+        Mon, 15 Aug 2016 14:53:44 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:fd0c:5bce:d30d:9f4d])
-        by smtp.gmail.com with ESMTPSA id wa9sm33753498pac.35.2016.08.15.14.53.50
+        by smtp.gmail.com with ESMTPSA id tm1sm33775981pac.23.2016.08.15.14.53.43
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 15 Aug 2016 14:53:50 -0700 (PDT)
+        Mon, 15 Aug 2016 14:53:43 -0700 (PDT)
 From:	Stefan Beller <sbeller@google.com>
 To:	gitster@pobox.com
 Cc:	git@vger.kernel.org, jrnieder@gmail.com, Jens.Lehmann@web.de,
 	Stefan Beller <sbeller@google.com>
-Subject: [PATCHv5 6/8] clone: clarify option_reference as required
-Date:	Mon, 15 Aug 2016 14:53:25 -0700
-Message-Id: <20160815215327.15682-7-sbeller@google.com>
+Subject: [PATCHv5 3/8] submodule--helper module-clone: allow multiple references
+Date:	Mon, 15 Aug 2016 14:53:22 -0700
+Message-Id: <20160815215327.15682-4-sbeller@google.com>
 X-Mailer: git-send-email 2.9.2.730.g525ad04.dirty
 In-Reply-To: <20160815215327.15682-1-sbeller@google.com>
 References: <20160815215327.15682-1-sbeller@google.com>
@@ -60,54 +60,78 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-In the next patch we introduce optional references; To better distinguish
-between optional and required references we rename the variable.
+Allow users to pass in multiple references, just as clone accepts multiple
+references as well.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/clone.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ builtin/submodule--helper.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 4cd3a66..ef5db7c 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -50,7 +50,7 @@ static int option_verbosity;
- static int option_progress = -1;
- static enum transport_family family;
- static struct string_list option_config = STRING_LIST_INIT_NODUP;
--static struct string_list option_reference = STRING_LIST_INIT_NODUP;
-+static struct string_list option_required_reference = STRING_LIST_INIT_NODUP;
- static int option_dissociate;
- static int max_jobs = -1;
- 
-@@ -79,7 +79,7 @@ static struct option builtin_clone_options[] = {
- 		    N_("number of submodules cloned in parallel")),
- 	OPT_STRING(0, "template", &option_template, N_("template-directory"),
- 		   N_("directory from which templates will be used")),
--	OPT_STRING_LIST(0, "reference", &option_reference, N_("repo"),
-+	OPT_STRING_LIST(0, "reference", &option_required_reference, N_("repo"),
- 			N_("reference repository")),
- 	OPT_BOOL(0, "dissociate", &option_dissociate,
- 		 N_("use --reference only while cloning")),
-@@ -300,7 +300,7 @@ static int add_one_reference(struct string_list_item *item, void *cb_data)
- 
- static void setup_reference(void)
- {
--	for_each_string_list(&option_reference, add_one_reference, NULL);
-+	for_each_string_list(&option_required_reference, add_one_reference, NULL);
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 6f6d67a..ce9b3e9 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -442,7 +442,7 @@ static int module_name(int argc, const char **argv, const char *prefix)
  }
  
- static void copy_alternates(struct strbuf *src, struct strbuf *dst,
-@@ -952,7 +952,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	git_config_set(key.buf, repo);
- 	strbuf_reset(&key);
+ static int clone_submodule(const char *path, const char *gitdir, const char *url,
+-			   const char *depth, const char *reference, int quiet)
++			   const char *depth, struct string_list *reference, int quiet)
+ {
+ 	struct child_process cp;
+ 	child_process_init(&cp);
+@@ -453,8 +453,12 @@ static int clone_submodule(const char *path, const char *gitdir, const char *url
+ 		argv_array_push(&cp.args, "--quiet");
+ 	if (depth && *depth)
+ 		argv_array_pushl(&cp.args, "--depth", depth, NULL);
+-	if (reference && *reference)
+-		argv_array_pushl(&cp.args, "--reference", reference, NULL);
++	if (reference->nr) {
++		struct string_list_item *item;
++		for_each_string_list_item(item, reference)
++			argv_array_pushl(&cp.args, "--reference",
++					 item->string, NULL);
++	}
+ 	if (gitdir && *gitdir)
+ 		argv_array_pushl(&cp.args, "--separate-git-dir", gitdir, NULL);
  
--	if (option_reference.nr)
-+	if (option_required_reference.nr)
- 		setup_reference();
+@@ -470,13 +474,13 @@ static int clone_submodule(const char *path, const char *gitdir, const char *url
  
- 	fetch_pattern = value.buf;
+ static int module_clone(int argc, const char **argv, const char *prefix)
+ {
+-	const char *name = NULL, *url = NULL;
+-	const char *reference = NULL, *depth = NULL;
++	const char *name = NULL, *url = NULL, *depth = NULL;
+ 	int quiet = 0;
+ 	FILE *submodule_dot_git;
+ 	char *p, *path = NULL, *sm_gitdir;
+ 	struct strbuf rel_path = STRBUF_INIT;
+ 	struct strbuf sb = STRBUF_INIT;
++	struct string_list reference = STRING_LIST_INIT_NODUP;
+ 
+ 	struct option module_clone_options[] = {
+ 		OPT_STRING(0, "prefix", &prefix,
+@@ -491,8 +495,8 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 		OPT_STRING(0, "url", &url,
+ 			   N_("string"),
+ 			   N_("url where to clone the submodule from")),
+-		OPT_STRING(0, "reference", &reference,
+-			   N_("string"),
++		OPT_STRING_LIST(0, "reference", &reference,
++			   N_("repo"),
+ 			   N_("reference repository")),
+ 		OPT_STRING(0, "depth", &depth,
+ 			   N_("string"),
+@@ -528,7 +532,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 	if (!file_exists(sm_gitdir)) {
+ 		if (safe_create_leading_directories_const(sm_gitdir) < 0)
+ 			die(_("could not create directory '%s'"), sm_gitdir);
+-		if (clone_submodule(path, sm_gitdir, url, depth, reference, quiet))
++		if (clone_submodule(path, sm_gitdir, url, depth, &reference, quiet))
+ 			die(_("clone of '%s' into submodule path '%s' failed"),
+ 			    url, path);
+ 	} else {
 -- 
 2.9.2.730.g525ad04.dirty
 
