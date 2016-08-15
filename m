@@ -6,57 +6,54 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B4A71F6C1
-	for <e@80x24.org>; Mon, 15 Aug 2016 22:38:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0A6F1F6C1
+	for <e@80x24.org>; Mon, 15 Aug 2016 22:49:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932164AbcHOWiL (ORCPT <rfc822;e@80x24.org>);
-	Mon, 15 Aug 2016 18:38:11 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61048 "EHLO
+	id S1753028AbcHOWs7 (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 18:48:59 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55104 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752258AbcHOWiK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2016 18:38:10 -0400
+	with ESMTP id S1752316AbcHOWs7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 18:48:59 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 87479350BB;
-	Mon, 15 Aug 2016 18:38:09 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E2F86352B1;
+	Mon, 15 Aug 2016 18:48:57 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bbkQeUqzaArSVSpQ9p4FztGK0X0=; b=tHuH0A
-	fHd+eWDg8pLzlexs3Bin4sipIYTJ+2WSz4aMPeb1+aJgk96Y1UkY2YlqZ1265b9H
-	59MWxXljRbuUukwuN107E7yxq40uYBC/FF1RUR4h+4l7Xda4e64FClNlRoxcMuRn
-	OjrL9FdmjcpLs9iHIIEGp6BtyRLvooxG1Ldcc=
+	:content-type; s=sasl; bh=KbQ1m92WaQymJNoDkf77L5zMaKc=; b=RdfQxV
+	XC0jZo1KZnZbKYkWu9ZAXRyoz1lhV/Ab4eeQQSNbNiVN12k9OOSt4aURAshssDTV
+	ngyUU9QjLhAT103reZhb6K1LKqiyzxAf0KYyUyDjCui7fr7Dq8q6nwPFwqUSICyF
+	zRN7G2+b+/F0h05b9kdIDeIDcSmP0KVT/XVFU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=k3C2NQ3S9LAik0fkfIlESB2r0Yl2GvP/
-	8QJhRI1d/+9knkoyZraDNHuzyqdQ75KJpOkXUbiIrdnHF+/ubSWeqQ/wYKC/4nVK
-	3ylR56bqMDfJJyW1/mAbktiThxTtsNFNby/NrDO8ORvsNxTCrFE5RBFYb7KGGplQ
-	BsVyBCDAyog=
+	:content-type; q=dns; s=sasl; b=i64L4Ew8xFOz/oG3AtoUk5stuPfWELKe
+	7FjfJMspq6qoZjScvFmux9llNj30962Zo79Ce/+4eF5Pa6W2IbarypwG7g9Yu56x
+	N62C5Lv+ayxL84KxjQOyujyAsrM9VQQmWDVcOxXpkn5P6pnhFJLukFMtELwk1uNI
+	WtrDYnOm+nE=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7FDB7350B9;
-	Mon, 15 Aug 2016 18:38:09 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id DA5B5352AE;
+	Mon, 15 Aug 2016 18:48:57 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 05531350B8;
-	Mon, 15 Aug 2016 18:38:09 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5AEFA352AA;
+	Mon, 15 Aug 2016 18:48:57 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
 To:	Jeff King <peff@peff.net>
-Cc:	Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-	jrnieder@gmail.com, remi.galan-alfonso@ensimag.grenoble-inp.fr
-Subject: Re: [PATCH 2/2] checkout: do not mention detach advice for explicit --detach option
-References: <20160815184021.12396-1-sbeller@google.com>
-	<20160815184021.12396-2-sbeller@google.com>
-	<20160815184730.eevqogqrxp2zp43q@sigill.intra.peff.net>
-	<xmqqh9alg2uh.fsf@gitster.mtv.corp.google.com>
-	<xmqqd1l9g2lv.fsf@gitster.mtv.corp.google.com>
-	<20160815211354.vsyg3lpira6pttom@sigill.intra.peff.net>
-Date:	Mon, 15 Aug 2016 15:38:07 -0700
-In-Reply-To: <20160815211354.vsyg3lpira6pttom@sigill.intra.peff.net> (Jeff
-	King's message of "Mon, 15 Aug 2016 17:13:54 -0400")
-Message-ID: <xmqqvaz1ejzk.fsf@gitster.mtv.corp.google.com>
+Cc:	Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [RFC/PATCH 3/3] receive-pack: allow a maximum input size to be specified
+References: <20160815195729.16826-1-chriscool@tuxfamily.org>
+	<20160815195729.16826-4-chriscool@tuxfamily.org>
+	<20160815204034.rrjn57wigxtjpgye@sigill.intra.peff.net>
+Date:	Mon, 15 Aug 2016 15:48:55 -0700
+In-Reply-To: <20160815204034.rrjn57wigxtjpgye@sigill.intra.peff.net> (Jeff
+	King's message of "Mon, 15 Aug 2016 16:40:34 -0400")
+Message-ID: <xmqqr39pejhk.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: F0D1564A-6338-11E6-A8EF-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 733A69AE-633A-11E6-8608-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -64,13 +61,27 @@ X-Mailing-List:	git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
->>  			   REF_NODEREF, UPDATE_REFS_DIE_ON_ERR);
->>  		if (!opts->quiet) {
->>  			if (old->path &&
->> -			    (advice_detached_head == 1 ||
->> -			     (advice_detached_head == -1 && !opts->force_detach)))
->> +			    advice_detached_head == 1 && !opts->force_detach)
+> The simple fix is to call register_tempfile() in open_pack_file(), and
+> just have index-pack clean up the file on its way out.
 >
-> Maybe s/== 1//?
+> But there are harder cases. For instance, imagine somebody pushes a
+> 500MB file, and you have a pre-receive hook that says "too big; I won't
+> accept this". And then they push in a loop, as before. You've accepted
+> the incoming pack into the repository by the time the pre-receive runs.
+> You can't just delete it, because you don't know if other simultaneous
+> processes have started to depend on the objects.
+>
+> To solve that, I have patches that put incoming packfiles into a
+> "quarantine" area, then run the connectivity check and pre-receive hooks
+> with the quarantine accessible via GIT_ALTERNATE_OBJECT_DIRECTORIES. And
+> then we either move the quarantine packs into the real repo, or blow
+> away the tmpdir, depending on whether the hooks said the objects were
+> OK.
+>
+> Those are patches I plan to share upstream but just haven't gotten
+> around to yet.
 
-Surely, and thanks.
+I think these other patches can come later, independent from this
+three-patch series resurrected from the archive, so I can take a
+reroll of these once the integer-size issues you pointed out are
+sorted out.
