@@ -2,89 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA4731F6C1
-	for <e@80x24.org>; Mon, 15 Aug 2016 13:47:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AC911F859
+	for <e@80x24.org>; Mon, 15 Aug 2016 14:01:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753083AbcHONro (ORCPT <rfc822;e@80x24.org>);
-	Mon, 15 Aug 2016 09:47:44 -0400
-Received: from mta02.prd.rdg.aluminati.org ([94.76.243.215]:49616 "EHLO
-	mta02.prd.rdg.aluminati.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753086AbcHONrm (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Aug 2016 09:47:42 -0400
-Received: from mta02.prd.rdg.aluminati.org (localhost [127.0.0.1])
-	by mta.aluminati.local (Postfix) with ESMTP id 3A19E23136;
-	Mon, 15 Aug 2016 14:47:36 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by mta02.prd.rdg.aluminati.org (Postfix) with ESMTP id 2FFD93410;
-	Mon, 15 Aug 2016 14:47:36 +0100 (BST)
-X-Quarantine-ID: <ewjks7iZK77u>
-X-Virus-Scanned: Debian amavisd-new at mta02.prd.rdg.aluminati.org
-Received: from mta.aluminati.local ([127.0.0.1])
-	by localhost (mta02.prd.rdg.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id ewjks7iZK77u; Mon, 15 Aug 2016 14:47:34 +0100 (BST)
-Received: from john.keeping.me.uk (unknown [10.2.0.9])
-	by mta02.prd.rdg.aluminati.org (Postfix) with ESMTPSA id 5398933F2;
-	Mon, 15 Aug 2016 14:47:29 +0100 (BST)
-Date:	Mon, 15 Aug 2016 14:47:28 +0100
-From:	John Keeping <john@keeping.me.uk>
-To:	Duy Nguyen <pclouds@gmail.com>
-Cc:	Philip Oakley <philipoakley@iee.org>,
-	Stefan Beller <sbeller@google.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Git List <git@vger.kernel.org>
-Subject: Re: storing cover letter of a patch series?
-Message-ID: <20160815134728.atwmswrlxtwzpaxl@john.keeping.me.uk>
-References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com>
- <CAGZ79kba36GprgHA04_q4NmY2=_amoWyafUaLKkcknc3HsT_-g@mail.gmail.com>
- <CACsJy8C51UkH=tLSfGigAF0JjPxVS3fY0EHi0CNVRG8LY8YiCg@mail.gmail.com>
- <CA+P7+xo4UJ8W4G0gV=DMLs-9Ve4v0OKc0ZunmS5Y5B1k7L0P9w@mail.gmail.com>
- <CAGZ79kb27JZepMD5AmrHjOnf8haE8LehZd_CkvOQ1UoLEDuxKQ@mail.gmail.com>
- <CACsJy8BdmR5USJvjJ6xbjj=bP787tdS72_oL+PDq0D+FPYmiPA@mail.gmail.com>
- <DD86BC6E2E3245BA991E4D65CE66E4A8@PhilipOakley>
- <CACsJy8DWDEQOKLV+c1zCXhiHZbxF3iM9_rFWhju3hk=Ji1i3ZQ@mail.gmail.com>
+	id S1753030AbcHON72 (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 09:59:28 -0400
+Received: from mout.web.de ([212.227.17.12]:58986 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752635AbcHON7R (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 09:59:17 -0400
+Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb101) with
+ ESMTPSA (Nemesis) id 0MgwZQ-1bmRag0Gno-00M7Pk; Mon, 15 Aug 2016 15:59:10
+ +0200
+Subject: Re: [ANNOUNCE] Git v2.10.0-rc0
+To:	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqfuq7j7cw.fsf@gitster.mtv.corp.google.com>
+Cc:	Linux Kernel <linux-kernel@vger.kernel.org>
+From:	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <bb0e4f6b-a85a-550e-a971-2a9fabb2f87f@web.de>
+Date:	Mon, 15 Aug 2016 15:59:03 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
+ Gecko/20100101 Thunderbird/45.1.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACsJy8DWDEQOKLV+c1zCXhiHZbxF3iM9_rFWhju3hk=Ji1i3ZQ@mail.gmail.com>
-User-Agent: Mutt/1.6.2 (2016-06-11)
+In-Reply-To: <xmqqfuq7j7cw.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:9NTSdw42/zB2Ioz7DhiLp+0IB/tRtlsHDZckeMtGGmQvYX0BzvK
+ LZM13QC5gc4zmy6zWv5oiBEJD7TqxtEZd8L2zpkbrrw5Ma6dIT5KyPpCfkaxveSzB7J9ooc
+ W1tOtiKrEvD0x6s6/rLp99z3PB2YugEREsVjxwxDIm5stMB9F3pqkovBe7R1zGXJzF08ZlI
+ Nv0z8AXYcrzAZ5aHAHqlA==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:lYfGurkmyLI=:f4ZmH1cZBzescxqs9e3cI5
+ 8+b4/nZuauawrb9T+9kNQFK1/yTz5PbPt3yohkmLmhLl3GgFzHVZXjOfcNSRmp5bJAtwSDwvn
+ Ru2t3u3l87+V6xMo4Goc8p0gYjly669dUkVcCAArKDuLGBnMH5XEG2vmDEqUDBXI13HwkbBZM
+ RFZVZ+fQwnSfb0iCDpdFlyzAw04swGdZ9h60LmvYLkHy3eLP8uNj/iYotJFlZdCHwxnPx1SMz
+ /dekcsfWDjdVPxfGDJKY37P/JprjJ/wtef9Mkod1P2KKLmiJdUUMwtnz18Vtp1YarY2SbYipQ
+ mHC6VByCg6MdWHkly2JYl+aI1mPzq+3z2Fx6uKD/PHXGiqaWKtx8mfk5Llx/T89lIrqSYED+S
+ Q5O2JnG3iCKJC5afbWvCPcyi0oeZjiBQyx+XGPA3TsxrjOcXiFcQSVOKj7RCeMSS4ikiu7xbw
+ x3PFtKSFL/V/zthb2FfYCVY/+Pfwm2GaQKGyuYzWun+Wq5XxVV+NaiPO4UEPYxAKpuS/Tkap0
+ 3kdaprzvr12P85uzfreHTuJbkS7paTswt9VHvSo6O+hWaq1NycLm49pqPN0TXqd1623t0bVK+
+ fHnC1CH9FQTk3eCFGCU5qpngxi/jZvM1paiROWrKV7/kred3uIjRrnsABqVIV/8hJi/z2qP1c
+ OtoXBB7NB7Nd3jUDBDNnKuBy6ExaKsCIpimUM6GzHrViZfGgAeHuoVhnARjnbHCBsJUBeIp0A
+ vMCMfoDFgSpl4iw4KBIL4ovsU4M1h8pKBPeIDOmHU+BtF4ZihpX7K84sLLJURq9v5D35tJq/5
+ T2Lou2T
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Aug 15, 2016 at 08:30:03PM +0700, Duy Nguyen wrote:
-> On Mon, Aug 15, 2016 at 7:37 PM, Philip Oakley <philipoakley@iee.org> wrote:
-> > I appreciate there has been a lot of discussion, but it mainly appears to be
-> > about an upstream / integration viewpoint.
-> >
-> > I'd hate it if there was a one size fits all solution that was only focused
-> > on one important use case, rather than having at least a simple fallback for
-> > simple folk.
-> >
-> > Personally I liked the idea that I could start my patch series branch with a
-> > simple 'empty' commit with a commit message that read "cover! <subject of
-> > the series>" and continue with the cover letter. It's essentially the same
-> > as the fixup! and squash! idea (more the latter - it's squash! without a
-> > predecessor). For moderate size series a simple 'git rebase master..' is
-> > sufficient to see the whole series and decide which need editing, rewording,
-> > swapping, checking the fixups, etc.
-> 
-> I think you hit the jackpot (or are getting very close). This removes
-> the special status of "the commit at the tip of the branch" cover
-> letter. Maybe I just like it so much I have a hard time finding
-> anything wrong with it :)
+On 15.08.16 00:47, Junio C Hamano wrote:
+> Torsten Bögershausen (1):
+>       convert: unify the "auto" handling of CRLF
 
-I haven't followed this thread too closely, but has anyone mentioned
-U-Boot's patman tool[1] yet?
+Should we mention this change in the release notes?
 
-It defines several special trailers that can be used to annotate commits
-with additional information to use when mailing them and which are
-automatically removed from the commit message in patches sent using
-patman.
+The handling of "*.text = auto" was changed, and now
+
+    $ echo "* text=auto eol=crlf" >.gitattributes
+    has the same effect as
+    $ git config core.autocrlf true
 
 
-[1] http://git.denx.de/?p=u-boot.git;a=blob;f=tools/patman/README
