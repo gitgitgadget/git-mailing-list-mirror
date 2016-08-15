@@ -3,170 +3,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE,URIBL_RED shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 63E521F6C1
-	for <e@80x24.org>; Mon, 15 Aug 2016 20:40:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01CEF1F6C1
+	for <e@80x24.org>; Mon, 15 Aug 2016 20:41:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932410AbcHOUki (ORCPT <rfc822;e@80x24.org>);
-	Mon, 15 Aug 2016 16:40:38 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55798 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932404AbcHOUkh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2016 16:40:37 -0400
-Received: (qmail 10150 invoked by uid 109); 15 Aug 2016 20:40:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Aug 2016 20:40:37 +0000
-Received: (qmail 19621 invoked by uid 111); 15 Aug 2016 20:40:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Aug 2016 16:40:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Aug 2016 16:40:34 -0400
-Date:	Mon, 15 Aug 2016 16:40:34 -0400
-From:	Jeff King <peff@peff.net>
-To:	Christian Couder <christian.couder@gmail.com>
-Cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [RFC/PATCH 3/3] receive-pack: allow a maximum input size to be
- specified
-Message-ID: <20160815204034.rrjn57wigxtjpgye@sigill.intra.peff.net>
-References: <20160815195729.16826-1-chriscool@tuxfamily.org>
- <20160815195729.16826-4-chriscool@tuxfamily.org>
+	id S932301AbcHOUk6 (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 16:40:58 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:64485 "EHLO
+	smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932201AbcHOUk5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 16:40:57 -0400
+Received: from PhilipOakley ([92.22.3.79])
+	by smtp.talktalk.net with SMTP
+	id ZOgobckTy0KuvZOgobJvcT; Mon, 15 Aug 2016 21:40:55 +0100
+X-Originating-IP: [92.22.3.79]
+X-Spam:	0
+X-OAuthority: v=2.2 cv=RZjSMBlv c=1 sm=1 tr=0 a=LkKjIWfvQdKNf3TZC4q4CQ==:117
+ a=LkKjIWfvQdKNf3TZC4q4CQ==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
+ a=xtxXYLxNAAAA:8 a=5rxgeBVgAAAA:8 a=m5T4TEqDSwLQMX75NosA:9
+ a=0RhZnL1DYvcuLYC8JZ5M:22 a=xts0dhWdiJbonKbuqhAr:22 a=PwKx63F5tFurRwaNxrlG:22
+Message-ID: <C8DDA334A45E4B558FD1EFB191E047C9@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:	"Philip Oakley" <philipoakley@iee.org>
+To:	"Junio C Hamano" <gitster@pobox.com>
+Cc:	"Ralf Thielow" <ralf.thielow@gmail.com>, <git@vger.kernel.org>,
+	<larsxschneider@gmail.com>, <me@jnm2.com>
+References: <20160812201011.20233-1-ralf.thielow@gmail.com><20160815053628.3793-1-ralf.thielow@gmail.com><D954CB3E6C3445AF9358C6941362B69D@PhilipOakley> <xmqqr39phq3c.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v2] help: make option --help open man pages only for Git commands
+Date:	Mon, 15 Aug 2016 21:40:54 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160815195729.16826-4-chriscool@tuxfamily.org>
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfOu9+hWRasocXgRK7SWVUE7n5oxVIYYuR6QYl/6i9TahQGPXw6IpiSi+qVJjlSAl5nX/WD6xC1rqd+FlL8C7hA5bCIXE1o9KpeGyocRHiYhs3o3tjkZi
+ il+/9xbuaoe1gwc+8R13fansW5JK81ScH4l4BB2pJA1zFLrwjK6F0vvuiRaw+e09uo2Wf+i8dACHkVBQcda1aO4D0FRSI+28f9ZxtbbN/u6nZiX9aXXbq2tR
+ mLYBkWNdIaESWlVa0AFql/WVf+sj6wg3to1LwevasNRTG/ycUiO6ntjSlehCWfof
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Aug 15, 2016 at 09:57:29PM +0200, Christian Couder wrote:
+From: "Junio C Hamano" <gitster@pobox.com>
+> "Philip Oakley" <philipoakley@iee.org> writes:
+>
+>> I'm still not sure this is enough. One of the problems back when I
+>> introduced the --guides option (65f9835 (builtin/help.c: add --guide
+>> option, 2013-04-02)) was that we had no easy way of determining what
+>> guides were available, especially given the *nix/Windows split where
+>> the help defaults are different (--man/--html).
+>>
+>> At the time[1] we (I) punted on trying to determine which guides were
+>> actually installed, and just created a short list of the important
+>> guides, which I believe you now check. However the less common guides
+>> are still there (gitcvs-migration?), and others may be added locally.
+>
+> I think we should do both; "git help cvs-migration" should keep the
+> same codeflow and behaviour as we have today (so that it would still
+> work), while "git cvs-migration --help" should say "'cvs-migration'
+> is not a git command".  That would be a good clean-up anyway.
+>
+> It obviously cannot be done if git.c::handle_builtin() does the same
+> "swap <word> --help to help <word>" hack, but we could improve that
+> part (e.g. rewrite it to "help --swapped <word>" to allow cmd_help()
+> to notice).  When the user said "<word> --help", we don't do guides,
+> when we swapped the word order, we check with guides, too.
+>
+The other option is to simply build a guide-list in exactly the same format 
+as the command list (which if it works can be merged later). Re-use the 
+existing code, etc.
 
-> From: Jeff King <peff@peff.net>
-> 
-> Receive-pack feeds its input to either index-pack or
-> unpack-objects, which will happily accept as many bytes as
-> a sender is willing to provide. Let's allow an arbitrary
-> cutoff point where we will stop writing bytes to disk.
-> 
-> What has already been written to disk can be cleaned
-> outside of receive-pack.
+I did propose that in my very first patch series, but it was probably a step 
+too far at the time, as it stepped on the toes of your (junio's) script for 
+the command list.
 
-This second paragraph hints at a related problem.
+The link in my previous patch got mangled a possible start point for Ralf 
+for looking at building a guide list would be 
+http://public-inbox.org/git/1361660761-1932-7-git-send-email-philipoakley@iee.org/ 
+(which worked back then ;-)
 
-Git is generally happy to leave tmp_pack_* around to be cleaned up later
-next time git-gc runs. Including its default 2-week grace time.
+Philip
 
-So imagine that tries to "git push" in a loop. And each time they push,
-you say "nope, that's too big". And each time you acquire a new 2GB
-tmp_pack file. If your goal was to prevent somebody from streaming
-straight to your filesystem and filling up your disk, then it wasn't
-very successful. :)
 
-The simple fix is to call register_tempfile() in open_pack_file(), and
-just have index-pack clean up the file on its way out.
-
-But there are harder cases. For instance, imagine somebody pushes a
-500MB file, and you have a pre-receive hook that says "too big; I won't
-accept this". And then they push in a loop, as before. You've accepted
-the incoming pack into the repository by the time the pre-receive runs.
-You can't just delete it, because you don't know if other simultaneous
-processes have started to depend on the objects.
-
-To solve that, I have patches that put incoming packfiles into a
-"quarantine" area, then run the connectivity check and pre-receive hooks
-with the quarantine accessible via GIT_ALTERNATE_OBJECT_DIRECTORIES. And
-then we either move the quarantine packs into the real repo, or blow
-away the tmpdir, depending on whether the hooks said the objects were
-OK.
-
-Those are patches I plan to share upstream but just haven't gotten
-around to yet.
-
-> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index 92e1213..7627f7f 100644
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -46,6 +46,7 @@ static int transfer_unpack_limit = -1;
->  static int advertise_atomic_push = 1;
->  static int advertise_push_options;
->  static int unpack_limit = 100;
-> +static off_t max_input_size;
->  static int report_status;
->  static int use_sideband;
->  static int use_atomic;
-> @@ -212,6 +213,11 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
->  		return 0;
->  	}
->  
-> +	if (strcmp(var, "receive.maxsize") == 0) {
-> +		max_input_size = git_config_ulong(var, value);
-> +		return 0;
-> +	}
-
-Another off_t/ulong mismatch. I think you want git_config_int64() here.
-
-> @@ -1650,6 +1656,9 @@ static const char *unpack(int err_fd, struct shallow_info *si)
->  		if (fsck_objects)
->  			argv_array_pushf(&child.args, "--strict%s",
->  				fsck_msg_types.buf);
-> +		if (max_input_size)
-> +			argv_array_pushf(&child.args, "--max-input-size=%lu",
-> +				max_input_size);
-
-And here, PRIuMAX and uintmax_t. Or perhaps simpler, just store the
-value as a string here and pass it on to index-pack (which would then
-need to learn to handle suffixes like "2g"). We do a similar trick in
-repack; see b861e23 (repack: propagate pack-objects options as strings,
-2014-01-22).
-
-> diff --git a/t/t5546-push-limits.sh b/t/t5546-push-limits.sh
-> new file mode 100755
-> index 0000000..d3a4d1a
-> --- /dev/null
-> +++ b/t/t5546-push-limits.sh
-> @@ -0,0 +1,47 @@
-> +#!/bin/sh
-> +
-> +test_description='check input limits for pushing'
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'create known-size commit' '
-> +	test-genrandom foo 1024 >file &&
-> +	git add file &&
-> +	test_commit one-k
-> +'
-> +
-> +test_expect_success 'create remote repository' '
-> +	git init --bare dest &&
-> +	git --git-dir=dest config receive.unpacklimit 1
-> +'
-
-We're going to do basically the same battery of tests against an
-unpacklimit of "1" (to catch index-pack) and of "10" (to catch
-unpack-objects). It might be clearer to just have a for-loop like:
-
-  for unpacklimit in 1 100
-  do
-	test_expect_success 'create remote repository' '
-		rm -rf dest &&
-		git init --bare dest &&
-		git -C dest config receive.unpacklimit $unpacklimit
-	'
-
-	test_expect_success 'receive.maxsize rejects push' '
-		git -C dest config receive.maxsize 512 &&
-		test_must_fail git push dest HEAD &&
-	'
-
-	test_expect_success 'bumping limit allows push' '
-		git -C dest config receive.maxsize 4k &&
-		git push dest HEAD
-	'
-  done
-
-and it's probably worth a comment at the top of the loop explaining what
-the heck those numbers mean. :)
-
--Peff
