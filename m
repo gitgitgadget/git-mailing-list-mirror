@@ -2,74 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDBE01F6C1
-	for <e@80x24.org>; Mon, 15 Aug 2016 18:54:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55C7F1F6C1
+	for <e@80x24.org>; Mon, 15 Aug 2016 18:54:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752974AbcHOSyV (ORCPT <rfc822;e@80x24.org>);
-	Mon, 15 Aug 2016 14:54:21 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:33506 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752842AbcHOSyV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2016 14:54:21 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3sCl5j5lt0z3hk62;
-	Mon, 15 Aug 2016 20:54:17 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3sCl5j4w52zvkDY;
-	Mon, 15 Aug 2016 20:54:17 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id G9B7p-ue0DjZ; Mon, 15 Aug 2016 20:54:16 +0200 (CEST)
-X-Auth-Info: Wllimod8ESq1MWyXXWO0szfkvzTBx8b0XJS74yiUc/jQk+/1abUKulUTEy86iGRk
-Received: from igel.home (ppp-88-217-19-168.dynamic.mnet-online.de [88.217.19.168])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Mon, 15 Aug 2016 20:54:16 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id 3CC6F2C3057; Mon, 15 Aug 2016 20:54:16 +0200 (CEST)
-From:	Andreas Schwab <schwab@linux-m68k.org>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Jeff King <peff@peff.net>, Eli Barzilay <eli@barzilay.org>,
-	git@vger.kernel.org
-Subject: Re: Minor bug: git config ignores empty sections
-References: <CALO-gutdz5VMgoRmbqEa9UiaTC+L2Sy2n-3AF+zfPr-X8+1U4A@mail.gmail.com>
-	<20160815120916.6iobqirqbg76exms@sigill.intra.peff.net>
-	<8737m63phh.fsf@linux-m68k.org>
-	<20160815180905.znnz6evufsne5wy6@sigill.intra.peff.net>
-	<xmqqh9alhoor.fsf@gitster.mtv.corp.google.com>
-X-Yow:	Edwin Meese made me wear CORDOVANS!!
-Date:	Mon, 15 Aug 2016 20:54:16 +0200
-In-Reply-To: <xmqqh9alhoor.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 15 Aug 2016 11:28:20 -0700")
-Message-ID: <87y43x3lt3.fsf@linux-m68k.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+	id S1753017AbcHOSyz (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 14:54:55 -0400
+Received: from mail-io0-f181.google.com ([209.85.223.181]:34651 "EHLO
+	mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752892AbcHOSyy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 14:54:54 -0400
+Received: by mail-io0-f181.google.com with SMTP id q83so87526076iod.1
+        for <git@vger.kernel.org>; Mon, 15 Aug 2016 11:54:54 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=4iVP/zYsBGgjkwKKlyPtwfrwUYDNT2VKujmmJGVkXy4=;
+        b=Nn2v7MgJhylvn1GggEePrVc0c5AbfpD3+jKT0P2mU3GtGZGy5PpxIhMU1oZKwzcYfs
+         5DwXul7IFB+cW9ySU/29rf+VN3DTtW7Vt7pyu1hQmjS9m4vHEldDbvVbnmuUQF1PIFQ3
+         SWroXo9Ww3YiKuUcUrccnEcnn9adLrluYd2Ca2Qh/X/O5rmwIYkmgYviVuY11B42qyJS
+         Gpy8IvMCg3MEA64kpYGo2CSRUJi2U1dumQRmPTkiCpmS3sl9WXfgUG62uGrrf9FjJCux
+         lnfm7CVW3oU5wDHEzTnqbvA4NIZrJr0LPe4RhfeiibOWyAPJrTyFJsDvgQIvJ3CGPQMh
+         6yaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=4iVP/zYsBGgjkwKKlyPtwfrwUYDNT2VKujmmJGVkXy4=;
+        b=FL/Sp+F3dA8/zZ+K3hv0du5ywVpluDV1URdmR82JFRn4fdrMr6ew+uqOYMWkLQWY3P
+         qktxbiC56LlCmzKxuCXbW82yj3XqZCjCn6qNzJvx+LxU0qnHs1uREDmYTOJqReq4hd32
+         X3f4FjxokzpHXiK4ckkjaX4RnDoEa3p6E8JmUcVjbsySzSXQQS/O4yi9Cf2tTZQwxQiZ
+         BuJBTicqWH97lgXthY1M9Gy8d+zBd2y7cedYiYR4HLV9qDXeoDEbwBNnIKj02qQdyMvT
+         01J09xuJM8zR+cizvKVbMWO/gf0Cu7QGN08JiCs7lAmV27s51ONk+ewbTyPWmOMSdR3K
+         mmOQ==
+X-Gm-Message-State: AEkoousd+hiqWyES/2reTX1oXd1IKLdhfQ47uk29rWXmTj89ATtxMAD/0Pq3fLoAACNJOo4fqrdJW7k0k2LJsvha
+X-Received: by 10.107.131.38 with SMTP id f38mr725451iod.173.1471287293733;
+ Mon, 15 Aug 2016 11:54:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.107.128.66 with HTTP; Mon, 15 Aug 2016 11:54:53 -0700 (PDT)
+In-Reply-To: <20160815184730.eevqogqrxp2zp43q@sigill.intra.peff.net>
+References: <20160815184021.12396-1-sbeller@google.com> <20160815184021.12396-2-sbeller@google.com>
+ <20160815184730.eevqogqrxp2zp43q@sigill.intra.peff.net>
+From:	Stefan Beller <sbeller@google.com>
+Date:	Mon, 15 Aug 2016 11:54:53 -0700
+Message-ID: <CAGZ79kZq=dPsngaqAVOj6UhaJE0=eR==XSTSSQCmcUTKugeM0Q@mail.gmail.com>
+Subject: Re: [PATCH 2/2] checkout: do not mention detach advice for explicit
+ --detach option
+To:	Jeff King <peff@peff.net>
+Cc:	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Aug 15 2016, Junio C Hamano <gitster@pobox.com> wrote:
-
-> If we were to remove the section header at this point, we should
-> be removing the comment two out of three cases.
+On Mon, Aug 15, 2016 at 11:47 AM, Jeff King <peff@peff.net> wrote:
+> On Mon, Aug 15, 2016 at 11:40:21AM -0700, Stefan Beller wrote:
 >
->  - if it is about section.key, it should go when section.key goes.
->  - if it is about section, it should go when section goes.
->  - if it is a more generic comment about this configuration file,
->    it should stay.
+>> When a user asked for a detached HEAD specifically with `--detach`,
+>> we do not need to give advice on what a detached HEAD state entails as
+>> we can assume they know what they're getting into as they asked for it.
+>>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
+>>
+>>  Junio writes:
+>>  > It might be controversial how the second from the last case should
+>>  > behave, though.
+>>
+>>  I agree. I think if the advice is configured explicitly we can still give it.
+>>  That makes the code a bit more complicated though.
+>
+> So....I guess. But has anybody in the history of git ever explicitly
+> configured advice.* to true?
 
-The comment may not be related to the surrounding keys, but just a
-commented-out config key that you want to keep around for reference.
+An admin/teacher of a university that wants to teach Git to students
+in a class? Better be safe than sorry and explicitly ask for advice because...
+we cannot trust the default?
 
-Andreas.
+>
+> It has never produced any change of behavior, and the whole point of
+> "advice.*" was that git would advise by default, and you would use
+> advice.* to shut it up once you were sufficiently educated.
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+And now I am arguing that "by default" we should not give advice 100%
+of the time, but only when we think it is appropriate. You may disagree
+(as a teacher see above), so you can slightly change the setting to give
+out advice more often again?
+
+>
+> I don't think doing it this way is _wrong_. It just feels sort of
+> pointlessly over-engineered. It's also a little weird that all of the:
+>
+>   if (advice_foo)
+>
+> will trigger because "advice_foo" is set to -1. I think it does the
+> right thing, but it feels like a bug (the value is now a tri-state, and
+> we silently collapse two states into one).
+
+I think this is what I did in some of the submodule code as well, which
+is why I assumed it's ok (or rather the projects groupthink on how to do
+"default on but still different than explicit on")
+
+If you think this is wrong, what is the idiomatic way to solve this problem?
+
+Thanks,
+Stefan
+
+
+>
+> -Peff
