@@ -2,143 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_RED
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0A761F6C1
-	for <e@80x24.org>; Mon, 15 Aug 2016 19:15:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E67111F6C1
+	for <e@80x24.org>; Mon, 15 Aug 2016 19:58:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753230AbcHOTPm (ORCPT <rfc822;e@80x24.org>);
-	Mon, 15 Aug 2016 15:15:42 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55699 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753030AbcHOTPl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2016 15:15:41 -0400
-Received: (qmail 4823 invoked by uid 109); 15 Aug 2016 19:09:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Aug 2016 19:09:00 +0000
-Received: (qmail 18203 invoked by uid 111); 15 Aug 2016 19:09:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Aug 2016 15:09:00 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Aug 2016 15:08:57 -0400
-Date:	Mon, 15 Aug 2016 15:08:57 -0400
-From:	Jeff King <peff@peff.net>
-To:	Stefan Beller <sbeller@google.com>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-Subject: Re: [PATCH 2/2] checkout: do not mention detach advice for explicit
- --detach option
-Message-ID: <20160815190856.27obqcpym4mhxgmo@sigill.intra.peff.net>
-References: <20160815184021.12396-1-sbeller@google.com>
- <20160815184021.12396-2-sbeller@google.com>
- <20160815184730.eevqogqrxp2zp43q@sigill.intra.peff.net>
- <CAGZ79kZq=dPsngaqAVOj6UhaJE0=eR==XSTSSQCmcUTKugeM0Q@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZq=dPsngaqAVOj6UhaJE0=eR==XSTSSQCmcUTKugeM0Q@mail.gmail.com>
+	id S1753006AbcHOT6c (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 15:58:32 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34911 "EHLO
+	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752905AbcHOT6b (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 15:58:31 -0400
+Received: by mail-wm0-f67.google.com with SMTP id i5so12842585wmg.2
+        for <git@vger.kernel.org>; Mon, 15 Aug 2016 12:58:31 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=TH4l5QCUq9n3I6BCOBA0NX+CZIR4d16JZDpCXiQ+yXI=;
+        b=AK5ikFQ+axIHQO39sKg+zC2oucfc5vhSHqLw5yvq4jV6rfYXfwV6bI73WNAzca4TlQ
+         gmhv1a4k4rRWMIEbI9s5ZIqSZ2LeGRX3kb39l7VbPBneXBLH045hp5Om4KE6WeKmlevd
+         HC9ejhIKBN2rBfnzfHtkQRG3RKGz712rqxWWA8aloHv1pUtSvzq+hhggapkPk2Xztzeg
+         VQVW1EigeEBrSbBgM225nMMu2IF/C0oiCX060BlwikYBOHAi6hnf28RPGkM2/Q3t5Btv
+         FDLvSEj81EYIBpGLkpRrWZCjW7fLvNoyUggHvxxLPs7KgNQfQrfP+prs1ypCMJqp42Bf
+         wLzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=TH4l5QCUq9n3I6BCOBA0NX+CZIR4d16JZDpCXiQ+yXI=;
+        b=cY+pxkA4kkQLinqgIZZiwGRUSzirK+CN7msXL6G5eh+QYZ/C4Cq63Lv80hh50rZdao
+         EUg1rO5cYFrROjtd3x4FexDcZXEHW3flZOupf1a/SWVtJQZVW0ho4k1LWJ3OvCMp4cE1
+         EC93nvrGy2cwTPnd2jtdYP0JuLGKqkct2nZOkES/60QE6Vm5X6SNd6aHjaBTVKH/l0sq
+         1fYLOXpUbkSuTZEvO65mygUPpSWd9p29L5ll6ocBfc2beOlu/y5tIcELdqYwdwa49g+C
+         Iv8KHZv7WLuI1gmG2BybO7bzIFwrNu1lNbksPhlqu9qiReIGWvZZY1EEQZ0TDsu+7a5d
+         U1/Q==
+X-Gm-Message-State: AEkoouvHe6+hTMp2L9+P4jUCcLnjyL/0W0Eui2x0jiv8d/cHEvUKdim3ztEYF4UKRqR1Nw==
+X-Received: by 10.195.2.42 with SMTP id bl10mr34918373wjd.21.1471291110549;
+        Mon, 15 Aug 2016 12:58:30 -0700 (PDT)
+Received: from localhost.localdomain ([80.215.5.33])
+        by smtp.gmail.com with ESMTPSA id p1sm23065623wjd.37.2016.08.15.12.58.25
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 15 Aug 2016 12:58:29 -0700 (PDT)
+From:	Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From:	Christian Couder <chriscool@tuxfamily.org>
+To:	git@vger.kernel.org
+Cc:	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: [RFC/PATCH 0/3] limit the size of the packs we receive
+Date:	Mon, 15 Aug 2016 21:57:26 +0200
+Message-Id: <20160815195729.16826-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.10.0.rc0.4.g229e32c.dirty
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Aug 15, 2016 at 11:54:53AM -0700, Stefan Beller wrote:
+In https://public-inbox.org/git/20150612182045.GA23698%40peff.net/,
+Peff sent a patch that is used by GitHub to abort `git receive-pack`
+when the size of the pack we receive is bigger than a configured
+limit.
 
-> > So....I guess. But has anybody in the history of git ever explicitly
-> > configured advice.* to true?
-> 
-> An admin/teacher of a university that wants to teach Git to students
-> in a class? Better be safe than sorry and explicitly ask for advice because...
-> we cannot trust the default?
-> 
-> >
-> > It has never produced any change of behavior, and the whole point of
-> > "advice.*" was that git would advise by default, and you would use
-> > advice.* to shut it up once you were sufficiently educated.
-> 
-> And now I am arguing that "by default" we should not give advice 100%
-> of the time, but only when we think it is appropriate. You may disagree
-> (as a teacher see above), so you can slightly change the setting to give
-> out advice more often again?
+GitLab is interested in using the same approach and in standardizing
+the error messages the user could get back.
 
-I don't think it's quite the same thing. It is fine not to bother
-advising because the advice is not really applicable, and that is what
-is happening here. We do not need to lecture the user on something they
-explicitly asked for.
+So I rebased Peff's patch to the current master, refreshed it a bit,
+split it, and added the missing --max-input-size=<size> option to
+`git unpack-objects` - to make it work for all `transfer.unpacklimit`
+values - in a new patch.
 
-But that is different than "by default, in situations where we have
-useful advice to give, give it".
+There is no documentation yet for the `--max-input-size=<size>`
+options added to `git index-pack` and `git unpack-objects`, nor for
+the new `receive.maxsize` config option.
 
-I guess you are indicating that somebody may disagree on "applicable"
-here. Which I suppose is possible, but it seems like a bit of a made-up
-hypothetical.
+I kept Peff as the author of the patches that are made mostly from his
+patch, but I added my Signed-off-by to them.
 
+Christian Couder (1):
+  unpack-objects: add --max-input-size=<size> option
 
-I had also thought at first you were arguing from the position of "let's
-handle advice.detachedHEAD=true in case somebody has set it". That seems
-even more silly, because almost certainly nobody _has_ set it. But if
-your position is "let's make it do something useful in case somebody
-wants to set it", then...I still think it's silly, but at least there is
-room for debate. :)
+Jeff King (2):
+  index-pack: add --max-input-size=<size> option
+  receive-pack: allow a maximum input size to be specified
 
-> > I don't think doing it this way is _wrong_. It just feels sort of
-> > pointlessly over-engineered. It's also a little weird that all of the:
-> >
-> >   if (advice_foo)
-> >
-> > will trigger because "advice_foo" is set to -1. I think it does the
-> > right thing, but it feels like a bug (the value is now a tri-state, and
-> > we silently collapse two states into one).
-> 
-> I think this is what I did in some of the submodule code as well, which
-> is why I assumed it's ok (or rather the projects groupthink on how to do
-> "default on but still different than explicit on")
-> 
-> If you think this is wrong, what is the idiomatic way to solve this problem?
+ builtin/index-pack.c     |  5 +++++
+ builtin/receive-pack.c   | 12 ++++++++++++
+ builtin/unpack-objects.c |  7 +++++++
+ t/t5546-push-limits.sh   | 47 +++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 71 insertions(+)
+ create mode 100755 t/t5546-push-limits.sh
 
-I don't think it's wrong (didn't I say so :) ).
+-- 
+2.10.0.rc0.4.g229e32c.dirty
 
-It's just that idiomatic use of a tri-state like this is generally
-something like:
-
-  1. Set the option to -1 for "not specified"
-
-  2. Fill in the values as 0/1 if the user asks for it.
-
-  3. Canonicalize any remaining unspecified value to 0/1, depending on
-     the default. Usually this happens after we know all setup is done,
-     but sometimes is done lazily by an accessor function.
-
-  3. Check the canonical value with "if (option)", or "if (option())" if
-     using a lazy accessor.
-
-And we have fixed many bugs in the past where some non-canonical value
-slipped past step 3, and did the wrong thing in step 4.
-
-Here it's OK because "if (option)" means that "unspecified" collapses to
-"true", and that is the default for each of these options. It's just
-that it's hard to distinguish from the buggy case.
-
-I suppose the more idiomatic way would be:
-
-  static int advice_wanted(int x)
-  {
-	if (advice_values[x] < 0)
-		advice_values[x] = 1; /* all advice defaults to on */
-	return advice_values[x];
-  }
-
-  ...
-  if (advice_wanted(ADVICE_DETACHED_HEAD))
-	...
-
-but perhaps it is not worth that amount of boilerplate (but maybe at
-least a comment explaining the situation). You'd also need to check with
-your patch that each user of the advice variables is checking just for a
-non-zero value, and not explicitly for "1" (which is almost certainly
-the case, but it needs to be considered).
-
--Peff
