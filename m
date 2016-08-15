@@ -2,126 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D05F71F6C1
-	for <e@80x24.org>; Mon, 15 Aug 2016 12:38:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F28021F6C1
+	for <e@80x24.org>; Mon, 15 Aug 2016 12:43:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753030AbcHOMix (ORCPT <rfc822;e@80x24.org>);
-	Mon, 15 Aug 2016 08:38:53 -0400
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:20102 "EHLO
-	smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752925AbcHOMiw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2016 08:38:52 -0400
-Received: from PhilipOakley ([92.22.3.79])
-	by smtp.talktalk.net with SMTP
-	id ZH93b572wcpskZH93bCOeu; Mon, 15 Aug 2016 13:38:39 +0100
-X-Originating-IP: [92.22.3.79]
-X-Spam:	0
-X-OAuthority: v=2.2 cv=ILRAMUnG c=1 sm=1 tr=0 a=LkKjIWfvQdKNf3TZC4q4CQ==:117
- a=LkKjIWfvQdKNf3TZC4q4CQ==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=1XWaLZrsAAAA:8 a=IybZy-SpAF9tWSOjtQ8A:9 a=6kGIvZw6iX1k4Y-7sg4_:22
- a=nJcEw6yWrPvoIXZ49MH8:22
-Message-ID: <DD86BC6E2E3245BA991E4D65CE66E4A8@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:	"Philip Oakley" <philipoakley@iee.org>
-To:	"Duy Nguyen" <pclouds@gmail.com>,
-	"Stefan Beller" <sbeller@google.com>
-Cc:	"Jacob Keller" <jacob.keller@gmail.com>,
-	"Git List" <git@vger.kernel.org>
-References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com> <CAGZ79kba36GprgHA04_q4NmY2=_amoWyafUaLKkcknc3HsT_-g@mail.gmail.com> <CACsJy8C51UkH=tLSfGigAF0JjPxVS3fY0EHi0CNVRG8LY8YiCg@mail.gmail.com> <CA+P7+xo4UJ8W4G0gV=DMLs-9Ve4v0OKc0ZunmS5Y5B1k7L0P9w@mail.gmail.com> <CAGZ79kb27JZepMD5AmrHjOnf8haE8LehZd_CkvOQ1UoLEDuxKQ@mail.gmail.com> <CACsJy8BdmR5USJvjJ6xbjj=bP787tdS72_oL+PDq0D+FPYmiPA@mail.gmail.com>
-Subject: Re: storing cover letter of a patch series?
-Date:	Mon, 15 Aug 2016 13:37:33 +0100
-Organization: OPDS
+	id S1753058AbcHOMnm (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 08:43:42 -0400
+Received: from mout.gmx.net ([212.227.15.18]:64844 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752786AbcHOMnl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 08:43:41 -0400
+Received: from virtualbox ([37.24.141.212]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0Me8di-1bqNJn15t0-00Prjw; Mon, 15 Aug 2016 14:43:21
+ +0200
+Date:	Mon, 15 Aug 2016 14:43:18 +0200 (CEST)
+From:	Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	git@vger.kernel.org
+cc:	Junio C Hamano <gitster@pobox.com>, ryenus <ryenus@gmail.com>,
+	=?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH] rev-parse: respect core.hooksPath in --git-path
+Message-ID: <520a941f7472ac1cb4fa41e6bba33a0afc2f5999.1471264971.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfNkuLZI2slmzuCv7elqPNC+hAIPX0VQ8uI504mL0EtJ0ikjyIKvEKnSh8HMSC9cFU47Zykv8tYvOfIcW2HguEfs4mWYV2knnT/tvu1EieyHxUmNR8gbd
- yYbh9kdjqaTcZxeir2uYa4O+CyoBFGx1BGN/NxBFoVae1WBJ0WlWARZ1UDyf7HX3r0VV88cn2hUPT8KtExWWgupJS5F+wsurPa+quTSNKiFWPHiNEGL+U3Ek
- ve+dt8BIg06Xrqk3GjmlHQ==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:cMsptMn7DuAHAdCbE3DiiOTqzJnSbVrkJVJzSHOdLiBKE+5xjBZ
+ hKvpHeYDzo2PXXROAzMYVZTA6seliyIzlrcrU6Awr+YlDw/0FxLXaEtQLLWYspnJUW2P7Us
+ LhViFaoAQPSlFRzws81EzKe9jo3SiYukkf7HqnhZ9OU4OPRqXZLcpp+991OhpRC2GtTH4Bs
+ DOYk0OMsbJ4SoJiyExFGw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:rV54s5Ott3w=:uglf9LwfIIDdmo7P1597JR
+ 7Yy8ysXnfXBrYcLNsxmRAlz35fkqsEuidoMMlJiBGUESghlNvLg2RG/bjjEeRJ2co6WGbD23U
+ Dk/kz1U9SxqFlDKBqw1SDveEmH389QE+bAUC9fXXkessoNXYMQGshgKx4iirhFu3xGmWov6mP
+ Gfuurv3iluXCaX1iL8JeAFXsOhEp27oDyUZD18U98uyeo3+sGcuyT+mEAOdZd4LCbgDIwLER2
+ p9MNI6rwUojkx4/FzTFq0fp5qfgxStphzJrKlVckwR3TVU1uxw/we4iFKwvaCIVbtWsVRrauE
+ n9NMZ/yWVTc7o8fxBHXEqFmo6foPI+nt/OnL+CCUEhBnJoQdG2ADFhT/hcgvQA1su6dE8xM+P
+ 2X7MByGZ+cCnkl+Gi6IOyEYf85A8LAhGeVYMmYRd6nkDQbvNnG4Tpfy9x/51DtJaCk4nsq4WM
+ EVB/GowKZyN9MKEacAPTyj0kSOm8/5cjJqyfGR2tCqOWqMK9T+3qXSiwmPASLAGfkcHt2Ce2/
+ 1RzglUb+F4n1Atbj6ruPeDO1LY1m0wNzC6+tDMMvNhA0X3gsiPP2FpaMS0dzrlTNCXXytxpLk
+ fUc2nUMrK5XTkpmsWxBiG61iKh5fObw7TgOte2HVl9YqMEeNOe0vQCvs9MBCuEUhBK7+nhSRQ
+ 0vBgX0YiyMdo6JwyTk8K1nLL6HuQdg8QmntrtZBgnw5MxzjP5KUMC9z4iJ9bHeAFIObGL9skH
+ YppbZOWwrn713VKTFOYkTH0Iw+/epBADDGLj2kNFnJ3j/dGJqzk71ELpwwDi7FIw7DucXGGob
+ exsdSEF
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: "Duy Nguyen" <pclouds@gmail.com>
-> On Mon, Aug 15, 2016 at 1:28 PM, Stefan Beller <sbeller@google.com> wrote:
->> On Sun, Aug 14, 2016 at 12:15 AM, Jacob Keller <jacob.keller@gmail.com>
->> wrote:
->>> On Sat, Aug 13, 2016 at 1:49 AM, Duy Nguyen <pclouds@gmail.com> wrote:
->>>> On Tue, Aug 9, 2016 at 12:27 AM, Stefan Beller <sbeller@google.com>
->>>> wrote:
->>>>> is what you want. Maybe we want to see a patch that adds the reverse
->>>>> functionality as well, i.e. git-am will store the the cover letter as
->>>>> the
->>>>> branch description and git-merge will propose the branch description
->>>>> for
->>>>> the merge commit.
->>>>
->>>> I almost suggested the same, but there is a problem with this
->>>> approach: if you're are on a detached head, where does git-am save it?
->>
->> What would the user expect? We can have a range of expectations:
->> 1) reject and error out git-am
->> 2) warn about not saving branch.description and continue with am
->> 3) have a (maybe special) branch.HEAD.description thing, same for
->> FETCH_HEAD etc
->> 4) have a config option to choose between 1 and 2, if unset default to 1
->>
->> I think 3 is a bad choice.
->> 4 seems reasonable to me, though I wonder if some people use git-am in
->> a scripted workflow with a detached head and then create the branch
->> afterwards?
->> So
->>
->> 5) create a branch for them? (such as $(date)-${subject})
->>
->> My gut reaction doesn't like 5 either.
->
-> I'm starting to think option 6 (storing cover latter as an empty
-> commit at tip then git-merge replaces it with a merge commit in a
-> permanent history) may be the way to go. It handles detached heads
-> just fine, we have reflog to store older cover letters. Though it will
-> not play nice with 'git commit --amend' and 'git reset' for people who
-> rewrites history heavily during development, but maybe 'git rebase -i
-> --autosquash' would be an ok workflow alternative.
-> -- 
+The idea of the --git-path option is not only to avoid having to
+prefix paths with the output of --git-dir all the time, but also to
+respect overrides for specific common paths inside the .git directory
+(e.g. `git rev-parse --git-path objects` will report the value of
+the environment variable GIT_OBJECT_DIRECTORY, if set).
 
-[sorry if this is not the right place to 'drop in'..]
-I appreciate there has been a lot of discussion, but it mainly appears to be
-about an upstream / integration viewpoint.
+When introducing the core.hooksPath setting, we forgot to adjust
+git_path() accordingly. This patch fixes that.
 
-I'd hate it if there was a one size fits all solution that was only focused
-on one important use case, rather than having at least a simple fallback for
-simple folk.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+Published-As: https://github.com/dscho/git/releases/tag/git-path-hooks-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git git-path-hooks-v1
 
-Personally I liked the idea that I could start my patch series branch with a
-simple 'empty' commit with a commit message that read "cover! <subject of
-the series>" and continue with the cover letter. It's essentially the same
-as the fixup! and squash! idea (more the latter - it's squash! without a
-predecessor). For moderate size series a simple 'git rebase master..' is
-sufficient to see the whole series and decide which need editing, rewording,
-swapping, checking the fixups, etc.
+ path.c                       | 2 ++
+ t/t1350-config-hooks-path.sh | 6 ++++++
+ 2 files changed, 8 insertions(+)
 
-Format-patch would then be taught to spot that the first commit in the
-series is "cover! <subject>" and create the usual 0/N cover letter. Git Gui
-may need to be taught to recognise cover! (haven't checked if it recognises
-an empty commit squash!). Possibly 'git commit' may want a --cover option to
-massage the commit message and add --allow-empty, but that's finesse.
+diff --git a/path.c b/path.c
+index 17551c4..fe3c4d9 100644
+--- a/path.c
++++ b/path.c
+@@ -380,6 +380,8 @@ static void adjust_git_path(struct strbuf *buf, int git_dir_len)
+ 			      get_index_file(), strlen(get_index_file()));
+ 	else if (git_db_env && dir_prefix(base, "objects"))
+ 		replace_dir(buf, git_dir_len + 7, get_object_directory());
++	else if (git_hooks_path && dir_prefix(base, "hooks"))
++		replace_dir(buf, git_dir_len + 5, git_hooks_path);
+ 	else if (git_common_dir_env)
+ 		update_common_dir(buf, git_dir_len, NULL);
+ }
+diff --git a/t/t1350-config-hooks-path.sh b/t/t1350-config-hooks-path.sh
+index 5e3fb3a..f1f9aee 100755
+--- a/t/t1350-config-hooks-path.sh
++++ b/t/t1350-config-hooks-path.sh
+@@ -34,4 +34,10 @@ test_expect_success 'Check that various forms of specifying core.hooksPath work'
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'git rev-parse --git-path hooks' '
++	git config core.hooksPath .git/custom-hooks &&
++	git rev-parse --git-path hooks/abc >actual &&
++	test .git/custom-hooks/abc = "$(cat actual)"
++'
++
+ test_done
+-- 
+2.9.2.691.g78954f3
 
-I've no problem with more extensive methods for those preparing very big
-patch series, or with those needing to merge together a lot of series and
-want to keep the cover letters, but ensuring that a simple flow is possible
-should still be there.
---
-Philip
-
+base-commit: 726cc2ba12c4573ab2e623077479c51019e1f3cd
