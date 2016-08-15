@@ -2,140 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F3461F6C1
-	for <e@80x24.org>; Mon, 15 Aug 2016 18:40:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 700A81F6C1
+	for <e@80x24.org>; Mon, 15 Aug 2016 18:43:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752892AbcHOSkb (ORCPT <rfc822;e@80x24.org>);
-	Mon, 15 Aug 2016 14:40:31 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:36165 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752316AbcHOSka (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2016 14:40:30 -0400
-Received: by mail-pa0-f46.google.com with SMTP id pp5so18238996pac.3
-        for <git@vger.kernel.org>; Mon, 15 Aug 2016 11:40:29 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=KyucD8sH/adm8Ju+u+H5YdLpnYyt+YydVZ2EIIqgoDU=;
-        b=Xh12Odr0nrC4m7PSQYtJVSwMbrerIFSJNL6n0NA2rEHY6yRdtYBXLpy1YJJrr/JQHa
-         AdzFxW9xy2VnPWxP4ACtbXYKOXbzGhYPCoJuMX1d3rSHXquM2ZJsBYMG88e9g/KM4OY3
-         gauuEgwEZWw7NiJRAyeK9nyBykB7pwKG5fGGj/zVzwTwDC7MZafBUc33Nu6JowJ1oXP6
-         JCh8hOkQfFjeqQadzWXOaCY6MRPJv3IzZ7rngmYeykikqo0RoD8gjUTggMtjZllptEeq
-         zI0vQ+KKeM35hgwZ8AKQRLgfvHY4Dsefqh5MYa3Q6uCbMLFi6H+/qmGCyj5wAMJbcro3
-         OA4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=KyucD8sH/adm8Ju+u+H5YdLpnYyt+YydVZ2EIIqgoDU=;
-        b=lsGCCgsO+ZOj9Tlxjs92dNvzqUase8N9zlBquvsuiMBfzvqxg6zMJ0r8zQmyXJbuAr
-         2oyVHBRPF/54LOwGHpAubmFSmYQGuQ+o8yk56D9a3c+6sFu5UJur7L9DVgWxzSF6110q
-         t46WGen2v92/Q/M2Jpz9lIW/Loh/udEEns12E2Js2DEbN7PmFLsx/DobANk8ojiJBBb0
-         gE580yDGdiS6qXaQEDWyi41Bkl/E1kb/FR+0sGYiGyrKcLWV94EQOLWJfi9f9pjtf0/q
-         Tr7OAvg6jGJdcFNWld0GNZafWup2nlJTd8ixmtMXRRfln0zCylDBLVqBwDWwCaibnTqB
-         6hFg==
-X-Gm-Message-State: AEkoouveIf8x3JLrrHZHXLtveYqniRZfV/FTGwn0werMA4sK+PJay4jfBgM3ug/UPOemRvHV
-X-Received: by 10.66.155.129 with SMTP id vw1mr56047940pab.148.1471286429264;
-        Mon, 15 Aug 2016 11:40:29 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:fd0c:5bce:d30d:9f4d])
-        by smtp.gmail.com with ESMTPSA id s12sm33130058pfj.73.2016.08.15.11.40.28
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 15 Aug 2016 11:40:28 -0700 (PDT)
-From:	Stefan Beller <sbeller@google.com>
-To:	git@vger.kernel.org, gitster@pobox.com
-Cc:	jrnieder@gmail.com, peff@peff.net,
-	remi.galan-alfonso@ensimag.grenoble-inp.fr,
-	Stefan Beller <sbeller@google.com>
-Subject: [PATCH 2/2] checkout: do not mention detach advice for explicit --detach option
-Date:	Mon, 15 Aug 2016 11:40:21 -0700
-Message-Id: <20160815184021.12396-2-sbeller@google.com>
-X-Mailer: git-send-email 2.9.2.730.g525ad04.dirty
-In-Reply-To: <20160815184021.12396-1-sbeller@google.com>
-References: <20160815184021.12396-1-sbeller@google.com>
+	id S1752842AbcHOSnT (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 14:43:19 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55657 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750791AbcHOSnS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 14:43:18 -0400
+Received: (qmail 3285 invoked by uid 109); 15 Aug 2016 18:43:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Aug 2016 18:43:18 +0000
+Received: (qmail 17928 invoked by uid 111); 15 Aug 2016 18:43:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Aug 2016 14:43:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Aug 2016 14:43:15 -0400
+Date:	Mon, 15 Aug 2016 14:43:15 -0400
+From:	Jeff King <peff@peff.net>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] t/Makefile: make sure that file names are truly
+ platform-independent
+Message-ID: <20160815184315.cyhln2bxg465lq2l@sigill.intra.peff.net>
+References: <814aefbcf0f9380098e3f7a183399e11e24180dd.1471270061.git.johannes.schindelin@gmx.de>
+ <xmqqk2fihv90.fsf@gitster.mtv.corp.google.com>
+ <xmqq4m6mhsvj.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq4m6mhsvj.fsf@gitster.mtv.corp.google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-When a user asked for a detached HEAD specifically with `--detach`,
-we do not need to give advice on what a detached HEAD state entails as
-we can assume they know what they're getting into as they asked for it.
+On Mon, Aug 15, 2016 at 09:57:52AM -0700, Junio C Hamano wrote:
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+> I wonder if we already have a good mechanism to allow a project and
+> its participants (say, "me") to declare "in this project, pathnames
+> must conform to this rule" and help them avoid creating a tree that
+> violates the rule customized to their project.
+> 
+> I guess "write_index_as_tree()" would be one of the central places
+> to hook into and that covers an individual contributor or a patch
+> applier who ends up adding offending paths to the project, as well
+> as a merge made in response to a pull request (unless it is a
+> fast-forward) [*1*].  The pre-receive hook can also be used to
+> inspect and reject an attempt to push an offending tree into the
+> history.
+> 
+> Such a mechanism would allow a project that wants participation by
+> folks with case insensitive filesystems to ensure that they do not
+> create a directory that has both xt_TCPMSS.h and xt_tcpmss.h at the
+> same time, for example, but the mechanism needs to allow visibility
+> into more than just a single path when the custom check is made
+> (e.g. a hook run in "write_index_as_tree()" can see all entries in
+> the index to make the decision; if we were to also hook into
+> "add_to_index()", the hook must be able to see other entries in the
+> index to which the new entry is being added).
 
- Junio writes:
- > It might be controversial how the second from the last case should
- > behave, though.
- 
- I agree. I think if the advice is configured explicitly we can still give it.
- That makes the code a bit more complicated though.
- 
- Also note I added stderr to stdout redirections as suggested by Peff.
- 
- Thanks,
- Stefan
- 
- builtin/checkout.c         |  4 +++-
- t/t2020-checkout-detach.sh | 28 ++++++++++++++++++++++++++++
- 2 files changed, 31 insertions(+), 1 deletion(-)
+I am not convinced this mechanism needs to be built into git. Because it
+happens to be about filenames, git at least has a hope of making sense
+of the various project rules.
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 4866111..6196b40 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -658,7 +658,9 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
- 		update_ref(msg.buf, "HEAD", new->commit->object.oid.hash, NULL,
- 			   REF_NODEREF, UPDATE_REFS_DIE_ON_ERR);
- 		if (!opts->quiet) {
--			if (old->path && advice_detached_head)
-+			if (old->path &&
-+			    (advice_detached_head == 1 ||
-+			     (advice_detached_head == -1 && !opts->force_detach)))
- 				detach_advice(new->name);
- 			describe_detached_head(_("HEAD is now at"), new->commit);
- 		}
-diff --git a/t/t2020-checkout-detach.sh b/t/t2020-checkout-detach.sh
-index 5d68729..fe311a1 100755
---- a/t/t2020-checkout-detach.sh
-+++ b/t/t2020-checkout-detach.sh
-@@ -163,4 +163,32 @@ test_expect_success 'tracking count is accurate after orphan check' '
- 	test_i18ncmp expect stdout
- '
- 
-+test_expect_success 'no advice given for explicit detached head state' '
-+	# baseline
-+	test_config advice.detachedHead true &&
-+	git checkout child && git checkout HEAD^0 >expect.advice 2>&1 &&
-+	test_config advice.detachedHead false &&
-+	git checkout child && git checkout HEAD^0 >expect.no-advice 2>&1 &&
-+	test_unconfig advice.detachedHead &&
-+	# without configuration, the advice.* variables default to true
-+	git checkout child && git checkout HEAD^0 >actual 2>&1 &&
-+	test_cmp expect.advice actual &&
-+
-+	# with explicit --detach
-+	# no configuration
-+	test_unconfig advice.detachedHead &&
-+	git checkout child && git checkout --detach HEAD^0 >actual 2>&1 &&
-+	test_cmp expect.no-advice actual &&
-+
-+	# explicitly ask advice
-+	test_config advice.detachedHead true &&
-+	git checkout child && git checkout --detach HEAD^0 >actual 2>&1 &&
-+	test_cmp expect.advice actual &&
-+
-+	# explicitly decline advice
-+	test_config advice.detachedHead false &&
-+	git checkout child && git checkout --detach HEAD^0 >actual 2>&1 &&
-+	test_cmp expect.no-advice actual
-+'
-+
- test_done
--- 
-2.9.2.730.g525ad04.dirty
+But conceptually, I don't think this is really any different than "don't
+check in code which does not build on platform X", or "do not check in
+code that does not meet our style guide". We already have general hooks
+where such checks can be made[1], and this could be checked in the same
+place.
 
+I actually think the whitespace-checking done by diff and apply is in a
+similar boat, though it is useful in practice. OTOH, I think primarily
+it is used as a tool to feed information to policy hooks, rather than as
+an enforcement mechanism itself (maybe --whitespace=fix on apply is an
+exception there, though).
+
+-Peff
+
+[1] Obviously we have pre-commit for local enforcement and pre-receive
+    for central enforcement. But people with workflows around CI-style
+    tests would want to be able to fetch, check "does this meet our
+    policy", and return a yes/no answer on whether the result is OK to
+    merge.
