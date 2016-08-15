@@ -2,92 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 694531F6C1
-	for <e@80x24.org>; Mon, 15 Aug 2016 15:04:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C853D1F859
+	for <e@80x24.org>; Mon, 15 Aug 2016 15:37:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753345AbcHOPEz convert rfc822-to-8bit (ORCPT
-	<rfc822;e@80x24.org>); Mon, 15 Aug 2016 11:04:55 -0400
-Received: from mail-qt0-f170.google.com ([209.85.216.170]:34415 "EHLO
-	mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752821AbcHOPEy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2016 11:04:54 -0400
-Received: by mail-qt0-f170.google.com with SMTP id u25so22216879qtb.1
-        for <git@vger.kernel.org>; Mon, 15 Aug 2016 08:04:49 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=XJFsoD1lirZJf7lRKcOwT4VhTtrJRNmC70LrqwszupA=;
-        b=WJ7bNSX/+wGpJ7HbJrDiORX1II1H9oYAvGzxawzpBFCL5CpJzmwmao0y24T7lPToaG
-         I3ft+qaDpcRAzxfbp4Raps1zCEq1HYKz3ZAiu2GNoncLaOPceUBesd/EN+2A6vSOTkQh
-         tDIhdla6tOty/7riZ1m/iv4Zr+7kS9+6olkmbDl8g6LfRSTCX8VFJm+j429sNPV0lsBD
-         fzVVSCCo0/1y3GTnxrMc6xOes6Yu6jW2eh4qMkX41HJzwEB5aDuRHFKRLeGr+NVbyqBG
-         llRny0o+f5mKzj9Sh2uIiYgB6QE/kvO/qYbvZQnvj/7kehmF+m5CxFzuiN5X8AP8ULKT
-         TEiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=XJFsoD1lirZJf7lRKcOwT4VhTtrJRNmC70LrqwszupA=;
-        b=grzZG1iq+1RncygsVChAZZL7D+cIOIRCp6pAFSearsepfRZ0obxHjEALhTGXPpeJVQ
-         ec0R/niToB/Votv2nYnyDVE4rZhOActcry5IOrcIETkyhk7uTHz8tB0F2phwNWRJ1c68
-         VKTGEUyGKmOx6up2aPYBJ9s2pYEhH9iaf4pfzQgjm89tzH6wUlHZEFQN2TnmFaVA5/YA
-         153Qz81sRqQklDyqtlfhvBtVp+IB03Ge777UmkPZKOuTJQ4Q0zvnW8JIoXSq5AOPlRHI
-         s0e3y2aHgj6k8A5sapiv4HNndZs8TAztlBmOu5XIZx5eFeklBkI90WdjEg1Y8O2tjUf/
-         Gjgw==
-X-Gm-Message-State: AEkoout+m29GLxymppeYiKxTjqIKnyAiL7e1dcZh+iLWbL82JRcZ3u4K3BUQJ1ksUTryoeZZqwJkolc1/17YsA==
-X-Received: by 10.200.40.235 with SMTP id j40mr31501386qtj.99.1471273488404;
- Mon, 15 Aug 2016 08:04:48 -0700 (PDT)
+	id S1752966AbcHOPhw (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 11:37:52 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59063 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752590AbcHOPhw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 11:37:52 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CE8A33448A;
+	Mon, 15 Aug 2016 11:37:50 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DIvh2wBetfTVatxb7UX+HoXdAiM=; b=bsDDrU
+	Bju+Y609ebbdDfIDhvRRKO2e/DnxGpODKP9W5EeC0OKN5A4eQ6+4LXiCyC6CEMB4
+	x/BhnNHvur7CbuhBiyWHVAaXXuGbmkbM7VGBJ2q9v06kOHAvzBqtBKTHubom5HWG
+	GYCAmIS+Bb8anNTkP3ekEQ411bjEVlL+rUe1k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=b80BMNuZAR7jVYleQzarcodj8SlX8r+A
+	OLdOvUrRq49+tN7sGarpzdkcPqCB/srNkJvyq1eRsoG/9+1VcO9gE9HPCpuUmoPH
+	f9e9QUE6tEuF+JmG9BRQiDlHXy56ZbiP+VZMvpRzGUjQZIc0M7+93wmBRHNqj0Nl
+	gn85CTYwJRE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C4E8434489;
+	Mon, 15 Aug 2016 11:37:50 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4A48534488;
+	Mon, 15 Aug 2016 11:37:50 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jacob Keller <jacob.keller@gmail.com>
+Cc:	Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH v5 2/3] diff: add --diff-line-prefix option for passing in a prefix
+References: <20160811225946.18381-1-jacob.e.keller@intel.com>
+	<20160811225946.18381-2-jacob.e.keller@intel.com>
+	<xmqqvaz5vgc7.fsf@gitster.mtv.corp.google.com>
+	<CA+P7+xoX6AT7tGb5AJr1CSjzAQ67o8QXJFF1LxsV_7E_pF-moA@mail.gmail.com>
+	<CA+P7+xq+GTbvzOtVvpu4_rdYYy-hhGZHhpk_ka=KkeU7UmQRew@mail.gmail.com>
+	<CAPc5daVmyx+EX8H0yETfO6Vv+A7DqBM5bsqrnJdYzbEhVnA1wQ@mail.gmail.com>
+	<CA+P7+xp_sPk6P1qyyDfOgpkXU1GxWPivfSzvveS4PAvGb-=ggQ@mail.gmail.com>
+	<xmqqa8gfkpw1.fsf@gitster.mtv.corp.google.com>
+	<CA+P7+xr9RcKQ0uO_F7CtK6nsz83KH0OqpFaBVnzL1jqyP9YfSQ@mail.gmail.com>
+Date:	Mon, 15 Aug 2016 08:37:48 -0700
+In-Reply-To: <CA+P7+xr9RcKQ0uO_F7CtK6nsz83KH0OqpFaBVnzL1jqyP9YfSQ@mail.gmail.com>
+	(Jacob Keller's message of "Sun, 14 Aug 2016 22:32:49 -0700")
+Message-ID: <xmqqwpjihwkz.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.233.232.19 with HTTP; Mon, 15 Aug 2016 08:04:47 -0700 (PDT)
-From:	Jiang Xin <worldhello.net@gmail.com>
-Date:	Mon, 15 Aug 2016 23:04:47 +0800
-Message-ID: <CANYiYbGL+GVRNuhszp1UShaN_oJgm3netsQxZfbW74pVK0gOYQ@mail.gmail.com>
-Subject: [L10N] Kickoff of translation for Git 2.10.0 round 1
-To:	Alexander Shopov <ash@kambanaria.org>,
-	Alex Henrie <alexhenrie24@gmail.com>,
-	Ralf Thielow <ralf.thielow@gmail.com>,
-	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-	Marco Paolone <marcopaolone@gmail.com>,
-	Changwoo Ryu <cwryu@debian.org>,
-	Marco Sousa <marcomsousa@gmail.com>,
-	Dimitriy Ryazantcev <DJm00n@mail.ru>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-	Jiang Xin <worldhello.net@gmail.com>,
-	Nelson Martell <nelson6e65@gmail.com>,
-	Brian Gesiak <modocache@gmail.com>
-Cc:	Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
+X-Pobox-Relay-ID: 39413552-62FE-11E6-9004-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi,
+Jacob Keller <jacob.keller@gmail.com> writes:
 
-Git v2.10.0-rc0 has been released, and it's time to start new round of git l10n.
-This time there are 248 updated messages need to be translated since last
-update:
+> I will look more into how to do the log version tomorrow, if I am
+> still stuck I will re-work the patches as you suggest here.
+>
+> I am hoping I can find a good solution for how to handle it though.
 
-    l10n: git.pot: v2.10.0 round 1 (248 new, 56 removed)
-
-    Generate po/git.pot from v2.10.0-rc0 for git v2.10.0 l10n round 1.
-
-    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-
-You can get it from the usual place:
-
-    https://github.com/git-l10n/git-po/
-
-As how to update your XX.po and help to translate Git, please see
-"Updating a XX.po file" and other sections in “po/README" file.
-
---
-Jiang Xin
+Thanks, I am hoping the same, too ;-)
