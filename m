@@ -2,76 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EB6420193
-	for <e@80x24.org>; Mon, 15 Aug 2016 12:25:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 38B8D1F6C1
+	for <e@80x24.org>; Mon, 15 Aug 2016 12:28:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752886AbcHOMZE (ORCPT <rfc822;e@80x24.org>);
-	Mon, 15 Aug 2016 08:25:04 -0400
-Received: from mout.gmx.net ([212.227.17.22]:54120 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752768AbcHOMZD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2016 08:25:03 -0400
-Received: from virtualbox ([37.24.141.212]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0Lu2F0-1bAQ0o1Ygw-011WCs; Mon, 15 Aug 2016 14:25:00
- +0200
-Date:	Mon, 15 Aug 2016 14:24:59 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	ryenus <ryenus@gmail.com>
-cc:	git@vger.kernel.org
-Subject: Re: [PATCH] make rebase respect core.hooksPath if set
-In-Reply-To: <CAKkAvaxWk6SK4EYPaWXHQoVBh9qLgHoEqAh9+dgOrjncsi5QyA@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1608151422210.4924@virtualbox>
-References: <CAKkAvaxWk6SK4EYPaWXHQoVBh9qLgHoEqAh9+dgOrjncsi5QyA@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1752850AbcHOM2Y (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 08:28:24 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55359 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752768AbcHOM2X (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 08:28:23 -0400
+Received: (qmail 13826 invoked by uid 109); 15 Aug 2016 12:28:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Aug 2016 12:28:23 +0000
+Received: (qmail 13977 invoked by uid 111); 15 Aug 2016 12:28:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Aug 2016 08:28:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Aug 2016 08:28:20 -0400
+Date:	Mon, 15 Aug 2016 08:28:20 -0400
+From:	Jeff King <peff@peff.net>
+To:	norm@dad.org
+Cc:	git@vger.kernel.org
+Subject: Re: Getting the "message" given a branch designation and conversely
+Message-ID: <20160815122820.msajaamgmlexe2jd@sigill.intra.peff.net>
+References: <201608141458.u7EEwF8P099500@shell1.rawbw.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:AktbeywHtUDSFdtu8ZgRC5tMyEvpSnCUVm7MJftyzsoUzry6GjU
- GVPwa4hRgKdNVx8GFFcygDqIOSk67Y1pKDqTdpztj3/vd1eGx2mGp4SNXvMIOKLBorrb6tr
- 7vPplINRPOCScndte1Q6GaRq0B+I829qvfUVz2tQ9ljxdJ3CEUO9surIsAnzFfQjM1SZiFj
- b8x+EE9/BqRary/WPNH7A==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:jBEMbdtInLE=:bQosugZSjz/8jJAsmTZuQf
- 6Lj7GVgnVKdGx15nD5ObE/oOX2tmIxQZZ7qLo4C/hmJcX9RTrzZUm5p6LTAswCw2XXBpAVZSs
- MOsEKuvVxmMKNAR3j6Oy0fQnSv5FxurTNEVMaXK/1HVkdjWvYxad8svEjty99IyjZp7UtH/Hy
- lb0lIrt4cd8X4U9tTf6tTMRARVBUC7Spq1jFTNyQXYuLEscfuhsr52sRkxyBEVzFREOqwl+5L
- QOBaSZNen4SkfwkxUL9cZ2YPWLGm+nv65xYORvx/QYT0mFNlTe/SiOWxcboZzkhXkm84V09p1
- bXm4XIx87WpLohthNkA99QJwm2nIgAuMVM4Fc+eXWDXzzLinOYVBcG4YZAbv6ojNYVLhbKdEk
- QqkGUXz1/jt9IbInHpfmZ52VKdcKWVmQV1U7qm8evFWuduT2QImXuuoNRTKVZuyF7278oaId/
- yZblvnoybIxgB+/wL7uhd32g9Xox2uhrTmMu+pyp3tRNoQt75sn4w1oo2QOdvCtItgdIjI1wz
- +bg68r2yq9DG3801dN3TsX05KpmFK6q2tRPzAUmv49vxEsgrTJDTK4IS7wfmiz2SY23a96Kkr
- RWBxKgqd7NkY+YNbjcrCyWCKXbmINMkrq3OAcMff5NRukqkQZY+GXA/hctYCRSJ+DPaiaxg2l
- QyX6TOYV62Gbzqxhr2+aWoZ3KuXborJ6LlNn4GI2y8efTckUQi0aBpQqvb6TkFR2ayEXzKjhE
- RDBmMb4W6mnlI1z9UPt2gGfCLgkKOND0uExq1KwprLBNLjWuc8rwawxliU0AINGCm5K86HnKf
- WkK8KnD
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <201608141458.u7EEwF8P099500@shell1.rawbw.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi ryenus,
+On Sun, Aug 14, 2016 at 07:58:14AM -0700, norm@dad.org wrote:
 
-On Sun, 14 Aug 2016, ryenus wrote:
+> I am learning how to use git. I would like to know how:
+> 
+> Given a branch's designation, such as "master~4", how can I see the message I
+> furnished when I created the branch using "git commit"?
 
-> when looking for pre-rebase and post-rewrite hooks, git-rebase
-> only looks for hooks dir using `git rev-parse --git-path hooks`,
-> which didn't consider the path overridden by core.hooksPath.
+Somebody already pointed you at "git log", which is the right tool for
+looking at commit messages (or perhaps "git show" if you only want to
+see a single entry).
 
-Would it not be more appropriate to teach --git-path hooks to respect the
-core.hooksPath variable? This would be in line with --git-path objects
-respecting the GIT_OBJECT_DIRECTORY environment variable.
+> Conversely, given the message I furnished to "git commit", when I created a
+> branch, how can I see the branch's designation?
 
-> Signed-off-by: ryenus <ryenus@gmail.com>
+Try "git log --grep=some.regex" to find a particular commit. Usually we
+refer to commits by their sha1 id, which will be shown by git-log.
+However, you can use git-describe to generate a name for any commit that
+is based on traversing from a tag. Try:
 
-From
-https://github.com/git/git/blob/v2.9.3/Documentation/SubmittingPatches#L290-L291
+  git describe --contains --all <sha1>
 
-> Also notice that a real name is used in the Signed-off-by: line. Please
-> don't hide your real name.
+for example. Using "--all" tells git to consider names based on branches
+as well as tags. Using "--contains" will generate a name based on
+traversing backwards from the tags and branches (like "master~4") rather
+than basing the name on a tag that you build off of.
 
-Thanks,
-Johannes
+-Peff
