@@ -7,138 +7,104 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E9BF1F6C1
-	for <e@80x24.org>; Mon, 15 Aug 2016 14:08:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9E9E1F6C1
+	for <e@80x24.org>; Mon, 15 Aug 2016 14:10:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753017AbcHOOHv (ORCPT <rfc822;e@80x24.org>);
-	Mon, 15 Aug 2016 10:07:51 -0400
-Received: from mout.gmx.net ([212.227.15.18]:60772 "EHLO mout.gmx.net"
+	id S1752901AbcHOOKF (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 10:10:05 -0400
+Received: from mout.gmx.net ([212.227.17.21]:58464 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752881AbcHOOHa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2016 10:07:30 -0400
-Received: from virtualbox ([37.24.141.212]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0M4nM5-1bG7hG3Hyf-00yzFB; Mon, 15 Aug 2016 16:07:23
+	id S1752796AbcHOOIr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 10:08:47 -0400
+Received: from virtualbox ([37.24.141.212]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MRCCJ-1bld0n2kJj-00UWTV; Mon, 15 Aug 2016 16:08:42
  +0200
-Date:	Mon, 15 Aug 2016 16:07:21 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:	Mon, 15 Aug 2016 16:08:41 +0200 (CEST)
+From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH] squash! diff: add --diff-line-prefix option for passing
- in a prefix
-In-Reply-To: <xmqqinv3krpe.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1608151519480.4924@virtualbox>
-References: <5ca415f99718b1792cd0a9c31606b45d27befc48.1471164824.git.johannes.schindelin@gmx.de> <xmqqinv3krpe.fsf@gitster.mtv.corp.google.com>
+To:	git@vger.kernel.org
+cc:	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] t/Makefile: make sure that file names are truly
+ platform-independent
+Message-ID: <814aefbcf0f9380098e3f7a183399e11e24180dd.1471270061.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:kv3nxfyhYUowGPqa17tSsWsKAAVBBj8bxarO+b07WCzSJw5/11r
- jK7/Opu+QqHZ+0cZ/dbVX/e56pZSmDCV47ZNOVohvdKYV39c/QMsQUJlj4p9rgUhlscDEOV
- mf3gFBnPUHclsR//MjErbKbLsFZOslcXStmFvluEC2Lzoje+Oz1gze1C0RCuUgdEXM3Vrud
- fdt4hNUxOARK2uU7gGGpQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:4jmTwhvjfis=:f5gMuWeTtBr7kutOJDK0EG
- adPhvczVRervl12Zs61CKwFMyQCRHTvWCUxr0AEqAbP0Pai3dDUrWig/3kz9T2wpX1r+RE37v
- aMaDhgBYdWNgFeehh/z9KQ8S64kNPr9IIDirQwoivCRapZJ7JHm8icbtgxfkkIhaXQ9dSTu9F
- xtItGM4wxkBQ1ELeUcdyTNbLmhRGamAMCuAQeFLKDgpBQDc0t44jcBD8KaDd2+DVNTwgRlNhR
- vugKUFx/QM068DziFvqS5jfBPDkptTit2ZMAwCtgQw36G6L3E8cYeZhYGmsc2/REkOCiInd8Q
- nid6c+OuTwb6pPc2RnxNdAM8BWBtOqEiT9u444tYMgL4Z6l33tVFCKtdrtVtMP4tdOZhuv8on
- Vk2CRi9rLs8tBi/fPtuyfMuMwvBt6sTd93Yao7/nRehaq3tVvTV1StcVt3Cy9zJYk4F8SOgRC
- qbqjD0J4CjKNC2LtCmG16WR4Xvf+VIJRQ2tsHJRU/uP5/F2/opZPk7QBZ24SvyV4Zmn3LXfcc
- q6VaDDSCxBSZAvCkHjdg8ZgE6B+9290bTM4McFv7KZXNy7kO0c0mUY4zbYpHdr2Mv8yJEHc/N
- cef2Ex6JRw8eJpKWAmtfBwsb7L03e2Y9QasRi2RTXhLfVPh5lodg4FaVLI0bKfO1MnXg6UF8x
- 4XBs0QMUJRPStM9x4xnSsi3MwblbUurY0G8BMwMQ/1qkNb/iZTyvhR2Pdr12+SktKgJNFmc4F
- Sv8pl8tYs80l0pRt76Wxm0b+7Bkxhqnlja+A2AJATtcGSmwV0ixZ4xKUbsTlB2LTakWU7R4An
- qcnp5IU
+X-Provags-ID: V03:K0:rjyxG2XLI9LTTA45xYxPu+rei1TRzD99jrBlNFQ/yq5700KWyxE
+ WSbysq6dm9H+231zpYkSg/eAWaxGNFrm5R/U/bX+tdHQqFhYuK+S1NXB2AJi8GyJBWb11Dt
+ bZF2PbF0UD0eN1Y1zBr1YA8MENvSUFWxHlD59v/FGbQMa/vTeC/fnmt0T8MvLuxzd8y/OMD
+ X+m2er60F6hi9o/lJwV8w==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:zDTLaeKji0o=:srqyxH80UhLCqNxeYrHar3
+ lqjS+Hvz/6eFlXXynvNuO4ycdrWEZQ1Nf3SeXq3DiBV/JACeHxuLDK8ezspGjlJ/u/T7DgGpb
+ GQ8YBVot+Wm5t1MZ30FhK3w6xN/Xdwpom+4Hui85PTuBXq7YsysEpuP8EocaIHQwYT1BWbl88
+ jVI7lR72vWEAUY2FCRaFIqDPGeOaVI6RiP2EsQ4X9sDqmlXaunmyVK6hUcBUA+gbYUxrxzYKk
+ QtXBfoZgDJLqz9B4SHNXW1nW/9RBAYZ+N0XP19rvflXErlmF/R3A0OKTIOguIrQ3eHSBMX6+R
+ aq2cv+073tWBODHt+yTy0XiVdz0wljCvSMtH+jj+vLKmzWHYPj5W5Hd9CwvovQipmCqNwFIuj
+ jeiYPDWe0uBwuZav3UiKx/Ub++T1Be0YGuq19WSmXW0uJoz5TEoVA79jDwymHNkXlJ7YLQuxR
+ c+SujQQWN/5fXxrKKzuY1XP6Bf1GOh35uLm2LqP0lendiXO5NsWdYOm4NRBtv+xQH+7rvwvD+
+ MwxCBdz51JFl9AfEnIkzo1X/kShY0VdIYIVDihm4ql+N2t24yiBjLTbY3xVoMa4uAi0U3JHrI
+ NpTabzd9PFxuucoibSeWxw8q0GpOaIfM87CL2MXriy0TkiPSVs6KGdOSPBcVCyJbbuC0rEW2t
+ JeMNQi7ZYBGTdVurr10GNlxQyVaw4Qzi/RbNDUuafS1dM8g7khkPq/Oa4xa9Vx09F1qlwZiYl
+ Yfy3v6fsyppzcPC4Q8NkUxoQKTHIW5Jn24X1qKjjqsTecKFxgFHClY3susAcGA3TOb8y3vHWu
+ y1HfIwm
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Junio,
+Some file names that are okay on ext4 and on HFS+ are illegal in
+Windows. In order to stay truly platform-independent, Git's source code
+must not contain such illegal file names, even if things just happen to
+work on Linux.
 
-On Sun, 14 Aug 2016, Junio C Hamano wrote:
+One such file name was recently introduced into Git's `pu` branch:
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > -	test=$(echo "$cmd" | sed -e 's|[/ ][/ ]*|_|g')
-> > +	test=$(echo "$cmd" | sed -e 's|[/ ][/ ]*|_|g' -e 'y/>/_/')
-> 
-> The existing sed scriptlet says "we cannot have slash and do not
-> want to have space in filename, so we squash runs of them to a
-> single underscore".  If you have more characters that you do not
-> want, you should add that to the existing set instead.
+t4013/diff.diff_--diff-line-prefix=-->_master_master^_sidt4013/diff.diff_--diff-line-prefix=-->_master_master^_sid
 
-No, we cannot do that. I even mentioned it in my commit message why:
+It is illegal because it contains the '>' character that is not part of
+a valid filename on Windows.
 
-	We have to take particular care not to confound the existing
-	conversion of unwanted characters to underscores with the new
-	substitution of '>': the existing conversion chose to collapse
-	runs of multiple unwanted characters into a single underscore. If
-	we allowed '>' to be collapsed, too, the file name generated from
-	the command "diff [...]=-- [...]" would be identical to the one
-	generated from "diff [...]=--> [...]".
+To catch these issues early, let's introduce a new test-lint-* goal that
+fails if such file names were detected and run it as part of a `make
+test`.
 
-And as there is exactly this case (two command-lines, differing only in
-the '>' character), doing what you suggested would *break* the test since
-it would now look at the wrong file.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+Published-As: https://github.com/dscho/git/releases/tag/test-lint-filenames-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git test-lint-filenames-v1
 
-I know that this is so because my first iteration of the patch did exactly
-what you suggested.
+	This is the more complete fix I talked about.
 
-> While you are at it, it may be sensible to add a colon to that set, too,
-> no?
-> 
-> Something like this, perhaps?
-> 
-> > -	test=$(echo "$cmd" | sed -e 's|[/ ][/ ]*|_|g')
-> > +	test=$(echo "$cmd" | sed -e 's|[/ <:>][/ <:>]*|_|g')
+ t/Makefile | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-Maybe. But what other characters are missing? Those are not the only ones
-illegal on Windows: [/ \0-\x1f"*:<>?\\|] would be a more complete version
-of what you suggested. Except that it is not a valid basic regex.
+diff --git a/t/Makefile b/t/Makefile
+index 18e2b28..3c0eb48 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -52,7 +52,8 @@ clean-except-prove-cache:
+ clean: clean-except-prove-cache
+ 	$(RM) .prove
+ 
+-test-lint: test-lint-duplicates test-lint-executable test-lint-shell-syntax
++test-lint: test-lint-duplicates test-lint-executable test-lint-shell-syntax \
++	test-lint-filenames
+ 
+ test-lint-duplicates:
+ 	@dups=`echo $(T) | tr ' ' '\n' | sed 's/-.*//' | sort | uniq -d` && \
+@@ -67,6 +68,11 @@ test-lint-executable:
+ test-lint-shell-syntax:
+ 	@'$(PERL_PATH_SQ)' check-non-portable-shell.pl $(T) $(THELPERS)
+ 
++test-lint-filenames:
++	@illegal="$$(git ls-files | grep '["*:<>?\\|]')"; \
++		test -z "$$illegal" || { \
++		echo >&2 "illegal file name(s): " $$illegal; exit 1; }
++
+ aggregate-results-and-cleanup: $(T)
+ 	$(MAKE) aggregate-results
+ 	$(MAKE) clean
+-- 
+2.9.2.691.g78954f3
 
-But is that really necessary?
-
-I think not, for the following reasons:
-
-- my patch was specifically designed to stop my CI from pestering me about
-  a totally broken revision that cannot even be checked out (and causes
-  subsequent problems because of it),
-
-- as such, my patch was meant not to be an all-encompassing solution to
-  the problem of filenames that are illegal on Windows, but really a tiny
-  patch that you could apply as quickly as possible so that my CI jobs
-  would stop pestering me (which they did not, because `pu` is still
-  broken),
-
-- I even meant this little patch to be so small that it can be easily
-  squashed into Jacob's patch,
-
-- I do not want to complicate regular expressions unless *really* needed
-  (and you have to admit that we do not need to address any more
-  characters than the '>' *right now*), as
-
-	- regular expressions are not exactly an easy meal, so it makes
-	  sense to keep them as simple as possible both for contributors'
-	  as well as for maintainers' sake, and
-
-	- when trying to come up with a super-complete solution, it is
-	  really easy not only to spend waaaaay too much time on it, but
-	  also to introduce bugs that are not spotted for a loooong time
-	  because nothing actually exercises the newly introduced code, and
-
-	- If It Ain't Broke, Don't Fix It.
-
-- the broader solution must come separately, and not as a mere add-on to
-  one test case: we really need to ensure that such file names do not
-  enter Git's source code.
-
-I will send my proposal to address the larger issue in a moment, in the
-meantime I *beg* you to add this here patch as a quick fix to my CI woes,
-either by squashing it into the indicated commit, or by appending it to
-the topic branch. I do not care which one, as long as `pu` gets fixed.
-
-Thanks,
-Dscho
-
-
+base-commit: 5e18482599a6cfeb8d4e0ee5a98d30220cbdff72
