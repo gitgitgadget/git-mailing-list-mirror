@@ -2,77 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0429D1F6C1
-	for <e@80x24.org>; Mon, 15 Aug 2016 20:38:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 63E521F6C1
+	for <e@80x24.org>; Mon, 15 Aug 2016 20:40:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932253AbcHOUix (ORCPT <rfc822;e@80x24.org>);
-	Mon, 15 Aug 2016 16:38:53 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53710 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932115AbcHOUiw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2016 16:38:52 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A0CB347D9;
-	Mon, 15 Aug 2016 16:38:51 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TIx3m8mkjh6ASovXBM14H/gDy+Y=; b=TC9UMM
-	7GPDHzEZUc+gkUD3MCIHJXpL/YhKjddOrmRoyZ+yhVeL7zHfFOStiFsXjazMxHTj
-	3yQeFb7cLUUqlezuDPvajDBEh6qyhrPevIvJnH67ch51x83PBPHsKId6v6fbgglF
-	Cn3bLk0Ed9IdPcdMGArgAoseHgzo2Zxlam4g8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LGgP6Blm+gcbeTVFq6SjJ2B2YP5EAcVD
-	wEznMO2CyUNYh7pwGhRnmxEOrXlNUhRRHAf1vor3O6RdL++TjQxLIGcaFpSzQ7GP
-	5jTPVwP5dDzvmNef+EHi0pVSjmJ87wiymZ8zCMH6eE8idn/s+zDswZzjd3epZR+g
-	e/8zITm7y9I=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 31F62347D8;
-	Mon, 15 Aug 2016 16:38:51 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AD3C4347D7;
-	Mon, 15 Aug 2016 16:38:50 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jacob Keller <jacob.keller@gmail.com>
-Cc:	Philip Oakley <philipoakley@iee.org>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Git List <git@vger.kernel.org>
-Subject: Re: storing cover letter of a patch series?
-References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com>
-	<CAGZ79kba36GprgHA04_q4NmY2=_amoWyafUaLKkcknc3HsT_-g@mail.gmail.com>
-	<CACsJy8C51UkH=tLSfGigAF0JjPxVS3fY0EHi0CNVRG8LY8YiCg@mail.gmail.com>
-	<CA+P7+xo4UJ8W4G0gV=DMLs-9Ve4v0OKc0ZunmS5Y5B1k7L0P9w@mail.gmail.com>
-	<CAGZ79kb27JZepMD5AmrHjOnf8haE8LehZd_CkvOQ1UoLEDuxKQ@mail.gmail.com>
-	<CACsJy8BdmR5USJvjJ6xbjj=bP787tdS72_oL+PDq0D+FPYmiPA@mail.gmail.com>
-	<DD86BC6E2E3245BA991E4D65CE66E4A8@PhilipOakley>
-	<CA+P7+xqbmZznxq024fhkejp2FeCVYkOYHTSdR69Di3nkzYJooA@mail.gmail.com>
-Date:	Mon, 15 Aug 2016 13:38:48 -0700
-In-Reply-To: <CA+P7+xqbmZznxq024fhkejp2FeCVYkOYHTSdR69Di3nkzYJooA@mail.gmail.com>
-	(Jacob Keller's message of "Mon, 15 Aug 2016 13:09:42 -0700")
-Message-ID: <xmqqwpjhg42v.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S932410AbcHOUki (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 16:40:38 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55798 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932404AbcHOUkh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 16:40:37 -0400
+Received: (qmail 10150 invoked by uid 109); 15 Aug 2016 20:40:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Aug 2016 20:40:37 +0000
+Received: (qmail 19621 invoked by uid 111); 15 Aug 2016 20:40:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Aug 2016 16:40:38 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Aug 2016 16:40:34 -0400
+Date:	Mon, 15 Aug 2016 16:40:34 -0400
+From:	Jeff King <peff@peff.net>
+To:	Christian Couder <christian.couder@gmail.com>
+Cc:	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [RFC/PATCH 3/3] receive-pack: allow a maximum input size to be
+ specified
+Message-ID: <20160815204034.rrjn57wigxtjpgye@sigill.intra.peff.net>
+References: <20160815195729.16826-1-chriscool@tuxfamily.org>
+ <20160815195729.16826-4-chriscool@tuxfamily.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 46183BCA-6328-11E6-898D-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20160815195729.16826-4-chriscool@tuxfamily.org>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+On Mon, Aug 15, 2016 at 09:57:29PM +0200, Christian Couder wrote:
 
-> Some people have suggested this simple idea, and I like it, but they
-> did mention that modifying the cover letter now requires a rebase over
-> a potentially large series of patches, which can get annoying.
+> From: Jeff King <peff@peff.net>
+> 
+> Receive-pack feeds its input to either index-pack or
+> unpack-objects, which will happily accept as many bytes as
+> a sender is willing to provide. Let's allow an arbitrary
+> cutoff point where we will stop writing bytes to disk.
+> 
+> What has already been written to disk can be cleaned
+> outside of receive-pack.
 
-That can be simply solved by keeping the cover at the end.  When you
-are updating the real patch on the series with "rebase -i", you
-would have a chance to update the cover at the same time that way.
+This second paragraph hints at a related problem.
 
+Git is generally happy to leave tmp_pack_* around to be cleaned up later
+next time git-gc runs. Including its default 2-week grace time.
+
+So imagine that tries to "git push" in a loop. And each time they push,
+you say "nope, that's too big". And each time you acquire a new 2GB
+tmp_pack file. If your goal was to prevent somebody from streaming
+straight to your filesystem and filling up your disk, then it wasn't
+very successful. :)
+
+The simple fix is to call register_tempfile() in open_pack_file(), and
+just have index-pack clean up the file on its way out.
+
+But there are harder cases. For instance, imagine somebody pushes a
+500MB file, and you have a pre-receive hook that says "too big; I won't
+accept this". And then they push in a loop, as before. You've accepted
+the incoming pack into the repository by the time the pre-receive runs.
+You can't just delete it, because you don't know if other simultaneous
+processes have started to depend on the objects.
+
+To solve that, I have patches that put incoming packfiles into a
+"quarantine" area, then run the connectivity check and pre-receive hooks
+with the quarantine accessible via GIT_ALTERNATE_OBJECT_DIRECTORIES. And
+then we either move the quarantine packs into the real repo, or blow
+away the tmpdir, depending on whether the hooks said the objects were
+OK.
+
+Those are patches I plan to share upstream but just haven't gotten
+around to yet.
+
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index 92e1213..7627f7f 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -46,6 +46,7 @@ static int transfer_unpack_limit = -1;
+>  static int advertise_atomic_push = 1;
+>  static int advertise_push_options;
+>  static int unpack_limit = 100;
+> +static off_t max_input_size;
+>  static int report_status;
+>  static int use_sideband;
+>  static int use_atomic;
+> @@ -212,6 +213,11 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
+>  		return 0;
+>  	}
+>  
+> +	if (strcmp(var, "receive.maxsize") == 0) {
+> +		max_input_size = git_config_ulong(var, value);
+> +		return 0;
+> +	}
+
+Another off_t/ulong mismatch. I think you want git_config_int64() here.
+
+> @@ -1650,6 +1656,9 @@ static const char *unpack(int err_fd, struct shallow_info *si)
+>  		if (fsck_objects)
+>  			argv_array_pushf(&child.args, "--strict%s",
+>  				fsck_msg_types.buf);
+> +		if (max_input_size)
+> +			argv_array_pushf(&child.args, "--max-input-size=%lu",
+> +				max_input_size);
+
+And here, PRIuMAX and uintmax_t. Or perhaps simpler, just store the
+value as a string here and pass it on to index-pack (which would then
+need to learn to handle suffixes like "2g"). We do a similar trick in
+repack; see b861e23 (repack: propagate pack-objects options as strings,
+2014-01-22).
+
+> diff --git a/t/t5546-push-limits.sh b/t/t5546-push-limits.sh
+> new file mode 100755
+> index 0000000..d3a4d1a
+> --- /dev/null
+> +++ b/t/t5546-push-limits.sh
+> @@ -0,0 +1,47 @@
+> +#!/bin/sh
+> +
+> +test_description='check input limits for pushing'
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'create known-size commit' '
+> +	test-genrandom foo 1024 >file &&
+> +	git add file &&
+> +	test_commit one-k
+> +'
+> +
+> +test_expect_success 'create remote repository' '
+> +	git init --bare dest &&
+> +	git --git-dir=dest config receive.unpacklimit 1
+> +'
+
+We're going to do basically the same battery of tests against an
+unpacklimit of "1" (to catch index-pack) and of "10" (to catch
+unpack-objects). It might be clearer to just have a for-loop like:
+
+  for unpacklimit in 1 100
+  do
+	test_expect_success 'create remote repository' '
+		rm -rf dest &&
+		git init --bare dest &&
+		git -C dest config receive.unpacklimit $unpacklimit
+	'
+
+	test_expect_success 'receive.maxsize rejects push' '
+		git -C dest config receive.maxsize 512 &&
+		test_must_fail git push dest HEAD &&
+	'
+
+	test_expect_success 'bumping limit allows push' '
+		git -C dest config receive.maxsize 4k &&
+		git push dest HEAD
+	'
+  done
+
+and it's probably worth a comment at the top of the loop explaining what
+the heck those numbers mean. :)
+
+-Peff
