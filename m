@@ -2,95 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E07B31F6C1
-	for <e@80x24.org>; Mon, 15 Aug 2016 16:06:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C490A1F6C1
+	for <e@80x24.org>; Mon, 15 Aug 2016 16:21:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752883AbcHOQGk (ORCPT <rfc822;e@80x24.org>);
-	Mon, 15 Aug 2016 12:06:40 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62556 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752850AbcHOQGj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2016 12:06:39 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B68033363D;
-	Mon, 15 Aug 2016 12:06:37 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SwHvzlxC0cSNhnolFyUacQ+5LWc=; b=Vsm2ay
-	mOmusi/3cbmhy/MBJi+RJTVxstIp+oFgQgjv09ucwIb3CBVFbYk8DfceiDr/ZCcz
-	B5hG/yKj0U/EA0vly3uQ5Lh/6dVqs2b6BbfMw/knoWqEFo1Saz8wGuZoxynfD4OP
-	/Hs2xjzk8kgG/kAS9YdpMUSqbuadVigEeOklk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KgRcRDtjHX3KhWsnwbKzRpn3RARY+xv0
-	Po0FKu19SwFrA3VyofgPOLe7FWQStMy2WTrxfUYl5nWtI4YdvQHf9PACUidvRdAx
-	0jjA/hrA19dnwSAwlfb76HzSP/5ygIL2EIPPnSntVXFsLC+yILedeWEI81qf6l6c
-	RTfxYlz1lNc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id AEF2C3363C;
-	Mon, 15 Aug 2016 12:06:37 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 346123363B;
-	Mon, 15 Aug 2016 12:06:37 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:	git@vger.kernel.org
-Subject: Re: [PATCH] t/Makefile: make sure that file names are truly platform-independent
-References: <814aefbcf0f9380098e3f7a183399e11e24180dd.1471270061.git.johannes.schindelin@gmx.de>
-Date:	Mon, 15 Aug 2016 09:06:35 -0700
-In-Reply-To: <814aefbcf0f9380098e3f7a183399e11e24180dd.1471270061.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Mon, 15 Aug 2016 16:08:41 +0200
-	(CEST)")
-Message-ID: <xmqqk2fihv90.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752985AbcHOQVa (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 12:21:30 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:35302 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752842AbcHOQUT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 12:20:19 -0400
+Received: by mail-pa0-f54.google.com with SMTP id i5so17388513pat.2
+        for <git@vger.kernel.org>; Mon, 15 Aug 2016 09:20:19 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=NDcE4K+58dLnolPJBxWjeSe0m7bBOHYErmfXocfWUdI=;
+        b=chJpkTAinzKE1ONczIBwHF0vgw3rXtYWXm2z+IxoE7LjznDr+A/WjRWgrHmwtlKsvf
+         6cU+yRqzx3xYF81uN+a8Ridc/I046Sx9jVrlxRygIC5IVQPH3eE/LKvF5VZyFagSAnXG
+         4nZxKtG+nwEIv1ZWF4/Uzfq7wFPO6LlpT1BXbweinlolts/V212acRNLfs/Q68ieLt7s
+         5SZyTpQf7kDyS0qt1zwo0erOLn51oNvGj5NaeVi1c3dd1CV2VptXFujVBD1bb2INEurN
+         Wjtk8nZ/BwPuYt/Egsf+07tGetzNEHLUCj6OzH+y3/TInWYbX782t8Rs1HHOEWZvYW/O
+         8wQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=NDcE4K+58dLnolPJBxWjeSe0m7bBOHYErmfXocfWUdI=;
+        b=QtkYdxMmzRxBkgis+ULeuIVPAKrKa9uHuvYgAhZlqx9bHE7R/qIL6NjhrjJRvQ+NF1
+         H39TFpK8WEqXi2kcNojQqykdcL5DU/iNqsnlHnhOON84Jb6umcZWlRRW8IGvWmZ0AK93
+         16DNllDVi7AuqvTsg0p/0qT3gvGu/Gbl5A1oO9wFrEqyvJHyPNpLPCnkq2gdXv8jOhFY
+         xMGQoTecPIIZ6FlEjVdzq6NVVT4IyTiERkv1uBSaTiSlZkmSte5HjQHSD4E7H24q1yg2
+         Mon37p9Hsnsp4OcQQiRuJb/50Nz9SqOQnXr4etbokL6Z8ivH+N/qy5Jc3oWxjt0x+gMu
+         gtdg==
+X-Gm-Message-State: AEkoouvUvBSbs/OKw7uOv2NPujbou6EP+PpZYZcaEtR7t3Dp/oVGw8umm9p/N1b3IcIkIA==
+X-Received: by 10.66.0.231 with SMTP id 7mr55302626pah.118.1471278018609;
+        Mon, 15 Aug 2016 09:20:18 -0700 (PDT)
+Received: from tci.corp.yp.com ([216.2.203.2])
+        by smtp.gmail.com with ESMTPSA id c125sm32640147pfc.40.2016.08.15.09.20.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 15 Aug 2016 09:20:17 -0700 (PDT)
+From:	Brian Henderson <henderson.bj@gmail.com>
+X-Google-Original-From:	Brian Henderson <bhenderson@yp.com>
+Date:	Mon, 15 Aug 2016 09:20:16 -0700
+To:	Eric Wong <e@80x24.org>
+Cc:	Brian Henderson <henderson.bj@gmail.com>, git@vger.kernel.org,
+	peff@peff.net
+Subject: Re: [PATCH 1/3] diff-highlight: add some tests.
+Message-ID: <20160815162016.GA20659@tci.corp.yp.com>
+References: <20160730151149.15980-1-henderson.bj@gmail.com>
+ <20160730151149.15980-2-henderson.bj@gmail.com>
+ <20160810085635.GA1672@starla>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3E925F8C-6302-11E6-9B35-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20160810085635.GA1672@starla>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On Wed, Aug 10, 2016 at 08:56:35AM +0000, Eric Wong wrote:
 
-> Some file names that are okay on ext4 and on HFS+ are illegal in
-> Windows. In order to stay truly platform-independent, Git's source code
-> must not contain such illegal file names, even if things just happen to
-> work on Linux.
+<snip>
 
-Good thinking.
+> Typically, we expect a reroll in a few days, and I guess there's
+> no rush (so you can squash your comment patch in addressing
+> Junio's concern into 3/3).
+> 
+> Thanks.
 
-Some tests may have to be skipped on platforms that cannot express
-certain paths, but even then they shouldn't ship a file with
-pathname that cannot even be checked out (they should instead create
-and use such a path, protected behind filesystem specific test
-prerequisite).
-
-> +test-lint-filenames:
-> +	@illegal="$$(git ls-files | grep '["*:<>?\\|]')"; \
-
-This pattern must exclude questionables on either NTFS or HFS+; it
-is ironic that it is not even sufficient to limit ourselves to the
-Portable Character Set [*1*], but such is life.
-
-By the way, doesn't ls-files take pathspec glob, saving one extra
-process to run grep?
-
-    master$ git ls-files '*["*:<>?\\|]*'
-    pu$ git ls-files '*["*:<>?\\|]*'
-    t/t4013/diff.diff_--diff-line-prefix=-->_master_master^_side
-
-Thanks.
-
-> +		test -z "$$illegal" || { \
-> +		echo >&2 "illegal file name(s): " $$illegal; exit 1; }
-
-[Reference]
-
-*1* http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap06.html#tag_06_01
+thanks, (slowly) working on an update.
