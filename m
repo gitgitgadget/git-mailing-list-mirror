@@ -2,97 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C2A91F6C1
-	for <e@80x24.org>; Mon, 15 Aug 2016 15:00:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 694531F6C1
+	for <e@80x24.org>; Mon, 15 Aug 2016 15:04:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752883AbcHOPAH (ORCPT <rfc822;e@80x24.org>);
-	Mon, 15 Aug 2016 11:00:07 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:48055 "EHLO
-	smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752748AbcHOPAG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2016 11:00:06 -0400
-Received: from PhilipOakley ([92.22.3.79])
-	by smtp.talktalk.net with SMTP
-	id ZJMxbc5Fv0KuvZJMxbJj1I; Mon, 15 Aug 2016 16:00:04 +0100
-X-Originating-IP: [92.22.3.79]
-X-Spam:	0
-X-OAuthority: v=2.2 cv=RZjSMBlv c=1 sm=1 tr=0 a=LkKjIWfvQdKNf3TZC4q4CQ==:117
- a=LkKjIWfvQdKNf3TZC4q4CQ==:17 a=IkcTkHD0fZMA:10 a=8q6LdnVOAAAA:8
- a=Y0naqFM5TM7HVrFlFV4A:9 a=jNYSTCpFY2gkngftge3H:22
-Message-ID: <8191B8FB581F44AAA7E2467A845C7532@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:	"Philip Oakley" <philipoakley@iee.org>
-To:	"GitList" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Marc Branchaud" <marcnarc@xiplink.com>
-References: <20160811215035.4108-1-philipoakley@iee.org> <20160812234522.7792-1-philipoakley@iee.org> <5338959f-985f-d1b3-7287-eccde559d2c3@xiplink.com>
-Subject: Re: [PATCH v6 00/12] Update git revisions
-Date:	Mon, 15 Aug 2016 16:00:03 +0100
-Organization: OPDS
+	id S1753345AbcHOPEz convert rfc822-to-8bit (ORCPT
+	<rfc822;e@80x24.org>); Mon, 15 Aug 2016 11:04:55 -0400
+Received: from mail-qt0-f170.google.com ([209.85.216.170]:34415 "EHLO
+	mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752821AbcHOPEy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 11:04:54 -0400
+Received: by mail-qt0-f170.google.com with SMTP id u25so22216879qtb.1
+        for <git@vger.kernel.org>; Mon, 15 Aug 2016 08:04:49 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=XJFsoD1lirZJf7lRKcOwT4VhTtrJRNmC70LrqwszupA=;
+        b=WJ7bNSX/+wGpJ7HbJrDiORX1II1H9oYAvGzxawzpBFCL5CpJzmwmao0y24T7lPToaG
+         I3ft+qaDpcRAzxfbp4Raps1zCEq1HYKz3ZAiu2GNoncLaOPceUBesd/EN+2A6vSOTkQh
+         tDIhdla6tOty/7riZ1m/iv4Zr+7kS9+6olkmbDl8g6LfRSTCX8VFJm+j429sNPV0lsBD
+         fzVVSCCo0/1y3GTnxrMc6xOes6Yu6jW2eh4qMkX41HJzwEB5aDuRHFKRLeGr+NVbyqBG
+         llRny0o+f5mKzj9Sh2uIiYgB6QE/kvO/qYbvZQnvj/7kehmF+m5CxFzuiN5X8AP8ULKT
+         TEiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=XJFsoD1lirZJf7lRKcOwT4VhTtrJRNmC70LrqwszupA=;
+        b=grzZG1iq+1RncygsVChAZZL7D+cIOIRCp6pAFSearsepfRZ0obxHjEALhTGXPpeJVQ
+         ec0R/niToB/Votv2nYnyDVE4rZhOActcry5IOrcIETkyhk7uTHz8tB0F2phwNWRJ1c68
+         VKTGEUyGKmOx6up2aPYBJ9s2pYEhH9iaf4pfzQgjm89tzH6wUlHZEFQN2TnmFaVA5/YA
+         153Qz81sRqQklDyqtlfhvBtVp+IB03Ge777UmkPZKOuTJQ4Q0zvnW8JIoXSq5AOPlRHI
+         s0e3y2aHgj6k8A5sapiv4HNndZs8TAztlBmOu5XIZx5eFeklBkI90WdjEg1Y8O2tjUf/
+         Gjgw==
+X-Gm-Message-State: AEkoout+m29GLxymppeYiKxTjqIKnyAiL7e1dcZh+iLWbL82JRcZ3u4K3BUQJ1ksUTryoeZZqwJkolc1/17YsA==
+X-Received: by 10.200.40.235 with SMTP id j40mr31501386qtj.99.1471273488404;
+ Mon, 15 Aug 2016 08:04:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=response
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfOPRkWQ8UJK2E0x8G+D1JyOoO5jiTWOgY38SJI00HOOqJFGR2g43a9GQyMLgH+U4S++PbybP8JI3Tt9UruOjhcmuwZnKgf+jPtrLu1eFS0MD1SMjs2xh
- 8un8QjJO+oB5Ewvg9iW1nvegh3RJCl+wlsR9XLly0d/urBObXj0C7jo/+y33gIDvuQfgrRixfvpNil7E/RluyKsUo8nh+4BUYpQT8GNBl6tflia2bJ2oCdyv
+Received: by 10.233.232.19 with HTTP; Mon, 15 Aug 2016 08:04:47 -0700 (PDT)
+From:	Jiang Xin <worldhello.net@gmail.com>
+Date:	Mon, 15 Aug 2016 23:04:47 +0800
+Message-ID: <CANYiYbGL+GVRNuhszp1UShaN_oJgm3netsQxZfbW74pVK0gOYQ@mail.gmail.com>
+Subject: [L10N] Kickoff of translation for Git 2.10.0 round 1
+To:	Alexander Shopov <ash@kambanaria.org>,
+	Alex Henrie <alexhenrie24@gmail.com>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
+	Marco Paolone <marcopaolone@gmail.com>,
+	Changwoo Ryu <cwryu@debian.org>,
+	Marco Sousa <marcomsousa@gmail.com>,
+	Dimitriy Ryazantcev <DJm00n@mail.ru>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+	Jiang Xin <worldhello.net@gmail.com>,
+	Nelson Martell <nelson6e65@gmail.com>,
+	Brian Gesiak <modocache@gmail.com>
+Cc:	Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: "Marc Branchaud" <marcnarc@xiplink.com>
-> On 2016-08-12 07:45 PM, Philip Oakley wrote:
->> These are the quick fixes to Marc's comments to patches 5,6,11,
->> and a consequential change to 12.
->>
->> Only the changed patches are included.
->
-> Looks good to me -- no further comments!
->
-> However, I still don't understand why git says 11/12 has "indent with 
-> spaces" problems.
+Hi,
 
-I'm guessing it's that the text is monospaced rather than tabbed, and it's 
-flagging that.
+Git v2.10.0-rc0 has been released, and it's time to start new round of git l10n.
+This time there are 248 updated messages need to be translated since last
+update:
 
-I'd noticed that it was highlighted in the Git gui (which I use to visualise 
-both the diff, the message and the part after the three dashes at the same 
-time).
+    l10n: git.pot: v2.10.0 round 1 (248 new, 56 removed)
 
+    Generate po/git.pot from v2.10.0-rc0 for git v2.10.0 l10n round 1.
 
->
-> M.
->
->
->> Philip Oakley (12):
->>   doc: use 'symmetric difference' consistently
->>   doc: revisions - name the left and right sides
->>   doc: show the actual left, right, and boundary marks
->>   doc: revisions: give headings for the two and three dot notations
->>   doc: revisions: extra clarification of <rev>^! notation effects
->>   doc: revisions: single vs multi-parent notation comparison
->>   doc: gitrevisions - use 'reachable' in page description
->>   doc: gitrevisions - clarify 'latter case' is revision walk
->>   doc: revisions  - define `reachable`
->>   doc: revisions - clarify reachability examples
->>   doc: revisions: show revision expansion in examples
->>   doc: revisions: sort examples and fix alignment of the unchanged
->>
->>  Documentation/gitk.txt             |   2 +-
->>  Documentation/gitrevisions.txt     |   6 +-
->>  Documentation/pretty-formats.txt   |   2 +-
->>  Documentation/rev-list-options.txt |   4 +-
->>  Documentation/revisions.txt        | 125 
->> ++++++++++++++++++++++++-------------
->>  5 files changed, 88 insertions(+), 51 deletions(-)
+    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 
+You can get it from the usual place:
+
+    https://github.com/git-l10n/git-po/
+
+As how to update your XX.po and help to translate Git, please see
+"Updating a XX.po file" and other sections in “po/README" file.
+
+--
+Jiang Xin
