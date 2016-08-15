@@ -7,83 +7,71 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96E7A1F859
-	for <e@80x24.org>; Mon, 15 Aug 2016 12:21:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1EB6420193
+	for <e@80x24.org>; Mon, 15 Aug 2016 12:25:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752859AbcHOMVB (ORCPT <rfc822;e@80x24.org>);
-	Mon, 15 Aug 2016 08:21:01 -0400
-Received: from mout.gmx.net ([212.227.17.22]:52600 "EHLO mout.gmx.net"
+	id S1752886AbcHOMZE (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 08:25:04 -0400
+Received: from mout.gmx.net ([212.227.17.22]:54120 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752748AbcHOMVB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2016 08:21:01 -0400
-Received: from virtualbox ([37.24.141.212]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MN604-1bX3y00ncW-006iI6; Mon, 15 Aug 2016 14:20:52
+	id S1752768AbcHOMZD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 08:25:03 -0400
+Received: from virtualbox ([37.24.141.212]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0Lu2F0-1bAQ0o1Ygw-011WCs; Mon, 15 Aug 2016 14:25:00
  +0200
-Date:	Mon, 15 Aug 2016 14:20:51 +0200 (CEST)
+Date:	Mon, 15 Aug 2016 14:24:59 +0200 (CEST)
 From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Christian Hesse <list@eworm.de>
-cc:	git@vger.kernel.org, Christian Hesse <mail@eworm.de>
-Subject: Re: [PATCH 1/1] do not add common-main to lib
-In-Reply-To: <20160815075207.31280-1-list@eworm.de>
-Message-ID: <alpine.DEB.2.20.1608151418150.4924@virtualbox>
-References: <20160815075207.31280-1-list@eworm.de>
+To:	ryenus <ryenus@gmail.com>
+cc:	git@vger.kernel.org
+Subject: Re: [PATCH] make rebase respect core.hooksPath if set
+In-Reply-To: <CAKkAvaxWk6SK4EYPaWXHQoVBh9qLgHoEqAh9+dgOrjncsi5QyA@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1608151422210.4924@virtualbox>
+References: <CAKkAvaxWk6SK4EYPaWXHQoVBh9qLgHoEqAh9+dgOrjncsi5QyA@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:+IUGmTaGitCBCUgZcnllusJ199TeHForhpcmzsCU070wDdt/hYN
- NVW9hUXC0qAxYt0xihUcYiJqaxn4YdWy1FAJgUnpynuzMpIsGe0ZbO8SA7LIjUi8XCISQva
- ttFTAcgg7fVZMDV7MvM1UylmFW9fxDvao/4SNTGIwlkNW8+4ygJp5RPmUfyW7rMB57nuKMx
- 9MF8Qz8MC3Oh/+FVzuayg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:Rx14vI04TB0=:9v/A1H3QN0TH97+MWXyrl5
- WQ9vIcOs3pzFwwOH2S6NSW604UT+nu1Qa1e+dzbQMShgv7lADlFWH2uGrDoH2Zq8LVYEia61R
- HIcYheF2gJ6IbzNlNJtzxGNTy8l0af8FWKdX3T2Ny4G5gRcDXgmt1esi9lfM2ZUb0jT79GQzf
- U2taOCE/3HdUZ0U/gFduXtscBPH1KKMKQ7X5fw8osvP0HnzBTmAhtUEGtAc4G8F/rl0haZC/T
- 0StATUhRigvdpiAFjW2nofTKzTmgmvdxoVdaahRXDmHOIR45aF6LSDJquGhHBJ3eMM9aptGpJ
- 3HT6cZEWnc2tXbr7YNchg3r8JdU/iyqdqiuWE4cj0i8qTO/SmhjFdi7+HiVDq5Fn+aYE34140
- 1RedfcXa6gE/zQ0y0Pcy4l94eUeDT781d1DQ03R25/XQO3O0+te/ud7fzNaQjL03FtHNutvN9
- 08PaG7+lDfF1MUxFZcXAj5IHHMvprkKkM1Ahs/RuKwkeBhdcWAsu5QjojTmdjggSkTDeya6N6
- GWjoKEMXM7JNheqvdwauwpI7Yu2EfnVqabmcJNAcAQ2bTLieNl8825i9lcHvmC1l8XbEN7oAF
- 5wBEpzqr84IXQb/h+8ZksFpCqdH8gZ4w6PCBHzIS51krxz9K03HsujLrFKtTg8YFsPtSVWB65
- poJhahuqqmxGcBaW6ggi8A+ITiUj6XU9I5EwFHlJ3iUTgQ/7lYPpXylOhwCRLwPSyyYlUKUeq
- i5H/HhaGQFc5kdHtufUZw57DacZHq83ZVMSu1JbxmJlkGkGQoBOhPtU1SRjJsM51K+f8V6y7Y
- AS+9Pur
+X-Provags-ID: V03:K0:AktbeywHtUDSFdtu8ZgRC5tMyEvpSnCUVm7MJftyzsoUzry6GjU
+ GVPwa4hRgKdNVx8GFFcygDqIOSk67Y1pKDqTdpztj3/vd1eGx2mGp4SNXvMIOKLBorrb6tr
+ 7vPplINRPOCScndte1Q6GaRq0B+I829qvfUVz2tQ9ljxdJ3CEUO9surIsAnzFfQjM1SZiFj
+ b8x+EE9/BqRary/WPNH7A==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:jBEMbdtInLE=:bQosugZSjz/8jJAsmTZuQf
+ 6Lj7GVgnVKdGx15nD5ObE/oOX2tmIxQZZ7qLo4C/hmJcX9RTrzZUm5p6LTAswCw2XXBpAVZSs
+ MOsEKuvVxmMKNAR3j6Oy0fQnSv5FxurTNEVMaXK/1HVkdjWvYxad8svEjty99IyjZp7UtH/Hy
+ lb0lIrt4cd8X4U9tTf6tTMRARVBUC7Spq1jFTNyQXYuLEscfuhsr52sRkxyBEVzFREOqwl+5L
+ QOBaSZNen4SkfwkxUL9cZ2YPWLGm+nv65xYORvx/QYT0mFNlTe/SiOWxcboZzkhXkm84V09p1
+ bXm4XIx87WpLohthNkA99QJwm2nIgAuMVM4Fc+eXWDXzzLinOYVBcG4YZAbv6ojNYVLhbKdEk
+ QqkGUXz1/jt9IbInHpfmZ52VKdcKWVmQV1U7qm8evFWuduT2QImXuuoNRTKVZuyF7278oaId/
+ yZblvnoybIxgB+/wL7uhd32g9Xox2uhrTmMu+pyp3tRNoQt75sn4w1oo2QOdvCtItgdIjI1wz
+ +bg68r2yq9DG3801dN3TsX05KpmFK6q2tRPzAUmv49vxEsgrTJDTK4IS7wfmiz2SY23a96Kkr
+ RWBxKgqd7NkY+YNbjcrCyWCKXbmINMkrq3OAcMff5NRukqkQZY+GXA/hctYCRSJ+DPaiaxg2l
+ QyX6TOYV62Gbzqxhr2+aWoZ3KuXborJ6LlNn4GI2y8efTckUQi0aBpQqvb6TkFR2ayEXzKjhE
+ RDBmMb4W6mnlI1z9UPt2gGfCLgkKOND0uExq1KwprLBNLjWuc8rwawxliU0AINGCm5K86HnKf
+ WkK8KnD
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Christian,
+Hi ryenus,
 
-On Mon, 15 Aug 2016, Christian Hesse wrote:
+On Sun, 14 Aug 2016, ryenus wrote:
 
-> From: Christian Hesse <mail@eworm.de>
-> 
-> Commit 08aade70 (mingw: declare main()'s argv as const) changed
-> declaration of main function. This breaks linking external projects
-> (e.g. cgit) to libgit.a with:
-> 
-> error: Multiple definition of `main'
-> 
-> So do not add common-main to lib and let projects have their own
-> main function.
+> when looking for pre-rebase and post-rewrite hooks, git-rebase
+> only looks for hooks dir using `git rev-parse --git-path hooks`,
+> which didn't consider the path overridden by core.hooksPath.
 
-I am opposed to this change.
+Would it not be more appropriate to teach --git-path hooks to respect the
+core.hooksPath variable? This would be in line with --git-path objects
+respecting the GIT_OBJECT_DIRECTORY environment variable.
 
-For one, libgit.a is *not* a library with an API, for a good reason:
-nothing in Git's development guarantees any kind of stable API. For that
-reason, libgit.a is not installed, either, and neither are any headers.
+> Signed-off-by: ryenus <ryenus@gmail.com>
 
-And even more importantly: *iff* you *insist* on using libgit.a in your
-project *despite* having been told not to, it is your responsibility to
-stay up-to-date with the requirements of it.
+From
+https://github.com/git/git/blob/v2.9.3/Documentation/SubmittingPatches#L290-L291
 
-One such requirement is that you now implement cmd_main() instead of
-main().
+> Also notice that a real name is used in the Signed-off-by: line. Please
+> don't hide your real name.
 
-So if you want to continue to have an out-of-tree project that links
-against the (private) libgit.a, it is your out-of-tree project that needs
-changing, not libgit.a.
-
-Ciao,
+Thanks,
 Johannes
