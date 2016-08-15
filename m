@@ -1,93 +1,71 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: *
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=1.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_RECEIVED,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
-Received: (qmail 24963 invoked by uid 111); 15 Jul 2010 13:50:24 -0000
-Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.180.67)
-    by peff.net (qpsmtpd/0.40) with ESMTP; Thu, 15 Jul 2010 13:50:23 +0000
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
+	by dcvr.yhbt.net (Postfix) with ESMTP id D82731F6C1
+	for <e@80x24.org>; Mon, 15 Aug 2016 12:02:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933235Ab0GONuR (ORCPT <rfc822;peff@peff.net>);
-	Thu, 15 Jul 2010 09:50:17 -0400
-Received: from mail.famouswhy.com ([174.120.208.205]:48170 "EHLO
-	mail.famouswhy.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933231Ab0GONuQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jul 2010 09:50:16 -0400
-X-Greylist: delayed 500 seconds by postgrey-1.27 at vger.kernel.org; Thu, 15 Jul 2010 09:50:16 EDT
-Received: from localhost (unknown [127.0.0.1])
-	by mail.famouswhy.com (Postfix) with ESMTP id 67F8B310BE7
-	for <git@vger.kernel.org>; Thu, 15 Jul 2010 13:33:46 +0000 (UTC)
-X-DKIM:	Sendmail DKIM Filter v2.8.3 mail.famouswhy.com 67F8B310BE7
-DKIM-Signature:	v=1; a=rsa-sha256; c=simple/simple; d=famouswhy.com;
-	s=mydkim; t=1279200826;
-	bh=mg/kOUAIgJuke/v/BLhloPAgsiMDkhNf7amx4wtzu7k=; l=2662;
-	h=From:To:Subject:Message-Id:Date;
-	b=EE61EHnUz/91Whd8kTI474yfMxNd2vvL1JnVBU5sXp+IvSdjwa0Oe7pESpSgmXewX
-	 e1ERC6+UvFK8NpFPCb0rVCW4wi+WZ+J7gj0OWM8ONpImfOFlq+vAkkI1RfUBmS/BCW
-	 VRbhwXRp4VBhJ7AzTY8tp8hgqj6sbK4nmzoX6CkM=
-X-Virus-Scanned: amavisd-new at famouswhy.com
-Received: from mail.famouswhy.com ([174.120.208.205])
-	by localhost (famouswhy.theplanet.host [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id OQfVgNAXKiUc for <git@vger.kernel.org>;
-	Thu, 15 Jul 2010 08:33:45 -0500 (CDT)
-Received: by mail.famouswhy.com (Postfix, from userid 2003)
-	id 226DB310BE6; Thu, 15 Jul 2010 08:33:44 -0500 (CDT)
-X-DKIM:	Sendmail DKIM Filter v2.8.3 mail.famouswhy.com 226DB310BE6
-Received: from localhost (mail.famouswhy.com [174.120.208.205])
-	by mail.famouswhy.com (Postfix) with ESMTPSA id 17833310BD9
-	for <git@vger.kernel.org>; Thu, 15 Jul 2010 08:33:38 -0500 (CDT)
-X-DKIM:	Sendmail DKIM Filter v2.8.3 mail.famouswhy.com 17833310BD9
-From:	contact@famouswhy.com
-To:	git@vger.kernel.org
-Subject: Git has been granted the Famous Software Award - Download.FamousWhy.com
-Message-Id: <20100715133338.17833310BD9@mail.famouswhy.com>
-Date:	Thu, 15 Jul 2010 08:33:38 -0500 (CDT)
+	id S1752786AbcHOMC2 (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 08:02:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55331 "HELO cloud.peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752684AbcHOMC1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 08:02:27 -0400
+Received: (qmail 12202 invoked by uid 109); 15 Aug 2016 12:02:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Aug 2016 12:02:26 +0000
+Received: (qmail 13560 invoked by uid 111); 15 Aug 2016 12:02:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Aug 2016 08:02:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Aug 2016 08:02:23 -0400
+Date:	Mon, 15 Aug 2016 08:02:23 -0400
+From:	Jeff King <peff@peff.net>
+To:	Christian Hesse <list@eworm.de>
+Cc:	git@vger.kernel.org, Christian Hesse <mail@eworm.de>
+Subject: Re: [PATCH 1/1] do not add common-main to lib
+Message-ID: <20160815120223.4lr23aiqmqzjprch@sigill.intra.peff.net>
+References: <20160815075207.31280-1-list@eworm.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20160815075207.31280-1-list@eworm.de>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hello,
+On Mon, Aug 15, 2016 at 09:52:07AM +0200, Christian Hesse wrote:
 
-Congratulations!
+> From: Christian Hesse <mail@eworm.de>
+> 
+> Commit 08aade70 (mingw: declare main()'s argv as const) changed
+> declaration of main function. This breaks linking external projects
+> (e.g. cgit) to libgit.a with:
+> 
+> error: Multiple definition of `main'
 
-Your product "Git (http://download.famouswhy.com/git/)" has been granted the "Famous Software Award" by Download.FamousWhy.com.  
+I'd expect the culprit is actually 3f2e229 (add an extra level of
+indirection to main(), 2016-07-01).
 
-The Famous Software Award has been initiated by Download.FamousWhy.com to recognize "Famous Software", which come up with innovative and efficient ways to reflect the best relationship with users assuring their satisfaction.
+> So do not add common-main to lib and let projects have their own
+> main function.
 
-More information about our "Famous Software Award" is available on this page:
+That is certainly an option, but I think it means that those projects
+are potentially buggy in the same way that some git commands were prior
+to the common-main series. Namely, the common main() may do some
+run-time setup that parts of libgit.a assume has been done.
 
-http://download.famouswhy.com/Awards/Famous-Software_3.html
+I would not be surprised if cgit crashes on Windows, for instance, for
+the reasons detailed in 650c449 (common-main: call
+git_extract_argv0_path(), 2016-07-01). I would also not be surprised if
+nobody actually builds cgit on Windows. :)
 
-We really hope that you will consider placing a banner with a link from your website to the software page at Download.FamousWhy.com because if you do it, visitors could come straight to the page and also discover the award which will give higher importance, confidence and value to your software and to all the services you're offering. They can also vote for it in order to keep a high position, a better exposure in our listings pages from the main page, categories, sub-categories and tops.
+The "right" way to do it (according to the way libgit.a views the world)
+is for cgit's main to become cmd_main(), and let libgit.a do its
+run-time startup before getting there.
 
-Below is the HTML code, you can copy and paste it on your page:
-
--------------------------
-<a href="http://download.famouswhy.com/git/" target="_blank"><img src="http://download.famouswhy.com/awards/Famous_Software_Award_Logo.png"
-alt="Git" style="border:0"></a>
--------------------------
-
-IMPORTANT!
-
-If you decide to place a link pointing to your software page at Download.FamousWhy.com, just let us know and our editors will write reviews (http://download.famouswhy.com/portable_irfanview/), create polls, articles (http://articles.famouswhy.com/first_impressions_on_east-tec_eraser_2010/), tutorials (http://forum.famouswhy.com/index.php?showtopic=19590), questions, famous lists for your software and will take you a "famous interview" (http://download.famouswhy.com/publisher/irfan_skiljan/) about your website, business or services which will significantly improve your popularity as a company and it can promote your software and website in front of thousands of people, outrunning your competitors. We proudly announce that everything mentioned above is FREE OF COST!
-
-We can soon promote your software exposing it in our Featured Section of the website we're working on right now.
-
-So proudly display a "Famous Software Award" badge with a link back to your software page!
-
-Don't hesitate to contact us for more information.
-
-Thanks -- and again, congratulations!
-
-Sincerely,
-
-The FamousWhy Software Editorial Team
-http://Download.FamousWhy.com
-
-----------------------------------------------
-"Making your software famous has never been easier!"
-----------------------------------------------
+-Peff
