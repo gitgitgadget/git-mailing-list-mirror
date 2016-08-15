@@ -6,87 +6,71 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 700A81F6C1
-	for <e@80x24.org>; Mon, 15 Aug 2016 18:43:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B05451F6C1
+	for <e@80x24.org>; Mon, 15 Aug 2016 18:47:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752842AbcHOSnT (ORCPT <rfc822;e@80x24.org>);
-	Mon, 15 Aug 2016 14:43:19 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55657 "HELO cloud.peff.net"
+	id S1753016AbcHOSrg (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 14:47:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55665 "HELO cloud.peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750791AbcHOSnS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2016 14:43:18 -0400
-Received: (qmail 3285 invoked by uid 109); 15 Aug 2016 18:43:18 -0000
+	id S1752316AbcHOSrf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 14:47:35 -0400
+Received: (qmail 3534 invoked by uid 109); 15 Aug 2016 18:47:33 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Aug 2016 18:43:18 +0000
-Received: (qmail 17928 invoked by uid 111); 15 Aug 2016 18:43:19 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Aug 2016 18:47:33 +0000
+Received: (qmail 17950 invoked by uid 111); 15 Aug 2016 18:47:34 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Aug 2016 14:43:19 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Aug 2016 14:43:15 -0400
-Date:	Mon, 15 Aug 2016 14:43:15 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Aug 2016 14:47:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Aug 2016 14:47:31 -0400
+Date:	Mon, 15 Aug 2016 14:47:31 -0400
 From:	Jeff King <peff@peff.net>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] t/Makefile: make sure that file names are truly
- platform-independent
-Message-ID: <20160815184315.cyhln2bxg465lq2l@sigill.intra.peff.net>
-References: <814aefbcf0f9380098e3f7a183399e11e24180dd.1471270061.git.johannes.schindelin@gmx.de>
- <xmqqk2fihv90.fsf@gitster.mtv.corp.google.com>
- <xmqq4m6mhsvj.fsf@gitster.mtv.corp.google.com>
+To:	Stefan Beller <sbeller@google.com>
+Cc:	git@vger.kernel.org, gitster@pobox.com, jrnieder@gmail.com,
+	remi.galan-alfonso@ensimag.grenoble-inp.fr
+Subject: Re: [PATCH 2/2] checkout: do not mention detach advice for explicit
+ --detach option
+Message-ID: <20160815184730.eevqogqrxp2zp43q@sigill.intra.peff.net>
+References: <20160815184021.12396-1-sbeller@google.com>
+ <20160815184021.12396-2-sbeller@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq4m6mhsvj.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20160815184021.12396-2-sbeller@google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Aug 15, 2016 at 09:57:52AM -0700, Junio C Hamano wrote:
+On Mon, Aug 15, 2016 at 11:40:21AM -0700, Stefan Beller wrote:
 
-> I wonder if we already have a good mechanism to allow a project and
-> its participants (say, "me") to declare "in this project, pathnames
-> must conform to this rule" and help them avoid creating a tree that
-> violates the rule customized to their project.
+> When a user asked for a detached HEAD specifically with `--detach`,
+> we do not need to give advice on what a detached HEAD state entails as
+> we can assume they know what they're getting into as they asked for it.
 > 
-> I guess "write_index_as_tree()" would be one of the central places
-> to hook into and that covers an individual contributor or a patch
-> applier who ends up adding offending paths to the project, as well
-> as a merge made in response to a pull request (unless it is a
-> fast-forward) [*1*].  The pre-receive hook can also be used to
-> inspect and reject an attempt to push an offending tree into the
-> history.
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
 > 
-> Such a mechanism would allow a project that wants participation by
-> folks with case insensitive filesystems to ensure that they do not
-> create a directory that has both xt_TCPMSS.h and xt_tcpmss.h at the
-> same time, for example, but the mechanism needs to allow visibility
-> into more than just a single path when the custom check is made
-> (e.g. a hook run in "write_index_as_tree()" can see all entries in
-> the index to make the decision; if we were to also hook into
-> "add_to_index()", the hook must be able to see other entries in the
-> index to which the new entry is being added).
+>  Junio writes:
+>  > It might be controversial how the second from the last case should
+>  > behave, though.
+>  
+>  I agree. I think if the advice is configured explicitly we can still give it.
+>  That makes the code a bit more complicated though.
 
-I am not convinced this mechanism needs to be built into git. Because it
-happens to be about filenames, git at least has a hope of making sense
-of the various project rules.
+So....I guess. But has anybody in the history of git ever explicitly
+configured advice.* to true?
 
-But conceptually, I don't think this is really any different than "don't
-check in code which does not build on platform X", or "do not check in
-code that does not meet our style guide". We already have general hooks
-where such checks can be made[1], and this could be checked in the same
-place.
+It has never produced any change of behavior, and the whole point of
+"advice.*" was that git would advise by default, and you would use
+advice.* to shut it up once you were sufficiently educated.
 
-I actually think the whitespace-checking done by diff and apply is in a
-similar boat, though it is useful in practice. OTOH, I think primarily
-it is used as a tool to feed information to policy hooks, rather than as
-an enforcement mechanism itself (maybe --whitespace=fix on apply is an
-exception there, though).
+I don't think doing it this way is _wrong_. It just feels sort of
+pointlessly over-engineered. It's also a little weird that all of the:
+
+  if (advice_foo)
+
+will trigger because "advice_foo" is set to -1. I think it does the
+right thing, but it feels like a bug (the value is now a tri-state, and
+we silently collapse two states into one).
 
 -Peff
-
-[1] Obviously we have pre-commit for local enforcement and pre-receive
-    for central enforcement. But people with workflows around CI-style
-    tests would want to be able to fetch, check "does this meet our
-    policy", and return a yes/no answer on whether the result is OK to
-    merge.
