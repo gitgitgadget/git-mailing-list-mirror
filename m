@@ -2,105 +2,194 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE,URIBL_RED shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D46D02018E
-	for <e@80x24.org>; Mon, 15 Aug 2016 11:20:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1563F1F859
+	for <e@80x24.org>; Mon, 15 Aug 2016 11:25:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752946AbcHOLU3 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 15 Aug 2016 07:20:29 -0400
-Received: from mail-ua0-f170.google.com ([209.85.217.170]:35322 "EHLO
-	mail-ua0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752707AbcHOLU3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2016 07:20:29 -0400
-Received: by mail-ua0-f170.google.com with SMTP id n59so68750854uan.2
-        for <git@vger.kernel.org>; Mon, 15 Aug 2016 04:20:28 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=tmr0jooNnQduChEnPlX0HF2ijth86cs7ncb2LP2LiAw=;
-        b=ll9DzGiX4XUMifkWOIi1br9CnyThYjoy2I2+uMLQ6VV84itw8fEMvTl4uPI5ZTPyYs
-         gU37Vu5RWw4ZXlKZcK3gtmpgmiJvVh5qQ/3zzf1zfmS7LpNU/wrCR4veQd2wXJc0uJJ2
-         tiTXtIOsulkxl1PdQXNwXmZGYnbO7dnNJOuT0Mitno7eNrERt0wsp9fCRI2UY0A5hUcs
-         2etGckFXRbLCkrQwinS0qcMhbSobqhGXNxBgnHjjLO//VEmLHJK2xNZZ3Jynul4Fx/af
-         5OBRfLA/2F1BzUE65zkDGuw2stP6HuUa5xzUUrnPbsH1w2Ys2uJ1Ep3/7vaz46u3n0hm
-         sd3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=tmr0jooNnQduChEnPlX0HF2ijth86cs7ncb2LP2LiAw=;
-        b=AYozGcec2V4bzIAY+/6HrjSYG9pnyf6KRHa4957eKm3t78ANzur5WhhNqFgvBULqB2
-         REL1+iA+070SzvD9qoGrn9BewFC/Hp8DWp6VfJlt1EgzNGgTBbDxn97J08bfrRKUfVmZ
-         wApPqfMTwYAciW98WYbQTXczRL+f4oxyTZ0CdbXm0aj0z7S1+7d7HZp23c1tGOZ6tzkv
-         5Jxj6sY4mFrbwoRovRdQXYhb0382oVvsEnRPlBK19+9vQwYmH8fld8ygAVLowfI/PMty
-         TY0mn5f1YNk4krB+TNH6kHM2Z/zDlyHLf7vObOBG5zl6iCegpABBaKLCUibcqN0JXuE2
-         fOJQ==
-X-Gm-Message-State: AEkooutkkeSINY9r1c/5Wdh5mFSqkXheYsnli60fjJTPY/occkBJJ/RmVa+HWAXOwzoi/qo0MgIOWBehhCQVgA==
-X-Received: by 10.31.106.196 with SMTP id f187mr7426958vkc.61.1471260028095;
- Mon, 15 Aug 2016 04:20:28 -0700 (PDT)
+	id S1752802AbcHOLZp (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 07:25:45 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:17774 "EHLO
+	smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752455AbcHOLZn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 07:25:43 -0400
+Received: from PhilipOakley ([92.22.3.79])
+	by smtp.talktalk.net with SMTP
+	id ZG1Ub4x7ncpskZG1UbCLqS; Mon, 15 Aug 2016 12:25:41 +0100
+X-Originating-IP: [92.22.3.79]
+X-Spam:	0
+X-OAuthority: v=2.2 cv=ILRAMUnG c=1 sm=1 tr=0 a=LkKjIWfvQdKNf3TZC4q4CQ==:117
+ a=LkKjIWfvQdKNf3TZC4q4CQ==:17 a=8nJEP1OIZ-IA:10 a=pGLkceISAAAA:8
+ a=5rxgeBVgAAAA:8 a=xtxXYLxNAAAA:8 a=VwQbUJbxAAAA:8 a=UY-fgOT5wOLaZiEi0McA:9
+ a=x8gzFH9gYPwA:10 a=6kGIvZw6iX1k4Y-7sg4_:22 a=PwKx63F5tFurRwaNxrlG:22
+ a=xts0dhWdiJbonKbuqhAr:22 a=AjGcO6oz07-iQ99wixmX:22
+Message-ID: <D954CB3E6C3445AF9358C6941362B69D@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:	"Philip Oakley" <philipoakley@iee.org>
+To:	"Ralf Thielow" <ralf.thielow@gmail.com>, <git@vger.kernel.org>
+Cc:	<gitster@pobox.com>, <larsxschneider@gmail.com>, <me@jnm2.com>,
+	"Ralf Thielow" <ralf.thielow@gmail.com>
+References: <20160812201011.20233-1-ralf.thielow@gmail.com> <20160815053628.3793-1-ralf.thielow@gmail.com>
+Subject: Re: [PATCH v2] help: make option --help open man pages only for Git commands
+Date:	Mon, 15 Aug 2016 12:25:40 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.176.69.172 with HTTP; Mon, 15 Aug 2016 04:20:27 -0700 (PDT)
-From:	Arkady Shapkin <arkady.shapkin@gmail.com>
-Date:	Mon, 15 Aug 2016 14:20:27 +0300
-X-Google-Sender-Auth: j9OwGE397O45lwdnTN_sFypJuMc
-Message-ID: <CAB-zwL28qUBO5PrRznH9KmLJZUHO65_J-DxvPP+NHZEuofKh9Q@mail.gmail.com>
-Subject: Git shallow clone branch doesn't work with recursive submodules cloning
-To:	git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfE9ZM18TgGTsg8HzZjiAM1SojefbaHY+upVhYmg7jc2ivJ/jtjMoTdiKUV9NsKp20eTO3yZaQWsVEHWV/LtuuaTXYbu6hTNv/A8zgBq2eUNg0pwgNKJ8
+ 5PAjiamf/tjm3BjCmj21OSvYyhVZ/8pSzVOq+vFaQLvq9RgxbWnP9i/yt1rHUSC7laSUMyK+zaZpPo/Z9SLh5bYnKsVle4FMwGYF11dCOA1OosqSrBy7Ukxo
+ 4WR4EmRGaN16D4MrnSMZQtjiinepbaoVgp0itjyN7hfP65r5L62Qc2xR7Rr/6yUry0ji7cDbieAP4DaNK9YPZQ==
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi,
+From: "Ralf Thielow" <ralf.thielow@gmail.com>
+> If option --help is passed to a Git command, we try to open
+> the man page of that command. However, we do it even for commands
+> we don't know.  Make sure the command is known to Git before try
+> to open the man page.  If we don't know the command, give the
+> usual advice.
 
-I am trying clone repository by tag with recursive submodules init,
-but for one submodule it doesn't work.
-What I'm doing wrong?
+I'm still not sure this is enough. One of the problems back when I 
+introduced the --guides option (65f9835 (builtin/help.c: add --guide option, 
+2013-04-02)) was that we had no easy way of determining what guides were 
+available, especially given the *nix/Windows split where the help defaults 
+are different (--man/--html).
 
->git clone https://github.com/grpc/grpc.git --recursive --depth 1 dsad5
+At the time[1] we (I) punted on trying to determine which guides were 
+actually installed, and just created a short list of the important guides, 
+which I believe you now check. However the less common guides are still 
+there (gitcvs-migration?), and others may be added locally.
 
-Cloning into 'dsad5'...
-remote: Counting objects: 7475, done.
-remote: Compressing objects: 100% (4695/4695), done.
-remote: Total 7475 (delta 2593), reused 5610 (delta 1265), pack-reused 0
-Receiving objects: 100% (7475/7475), 4.85 MiB | 2.55 MiB/s, done.
-Resolving deltas: 100% (2593/2593), done.
-Checking connectivity... done.
-Checking out files: 100% (6820/6820), done.
-Submodule 'third_party/boringssl'
-(https://github.com/google/boringssl.git) registered for path
-'third_party/boringssl'
-Submodule 'third_party/gflags' (https://github.com/gflags/gflags.git)
-registered for path 'third_party/gflags'
-Submodule 'third_party/googletest'
-(https://github.com/google/googletest.git) registered for path
-'third_party/googletest'
-Submodule 'third_party/nanopb' (https://github.com/nanopb/nanopb.git)
-registered for path 'third_party/nanopb'
-Submodule 'third_party/protobuf'
-(https://github.com/google/protobuf.git) registered for path
-'third_party/protobuf'
-Submodule 'third_party/zlib' (https://github.com/madler/zlib)
-registered for path 'third_party/zlib'
-Cloning into 'D:/Work/conan-packages/dsad5/third_party/boringssl'...
-Cloning into 'D:/Work/conan-packages/dsad5/third_party/gflags'...
-Cloning into 'D:/Work/conan-packages/dsad5/third_party/googletest'...
-Cloning into 'D:/Work/conan-packages/dsad5/third_party/nanopb'...
-Cloning into 'D:/Work/conan-packages/dsad5/third_party/protobuf'...
-Cloning into 'D:/Work/conan-packages/dsad5/third_party/zlib'...
-error: no such remote ref c880e42ba1c8032d4cdde2aba0541d8a9d9fa2e9
-Fetched in submodule path 'third_party/boringssl', but it did not
-contain c880e42ba1c8032d4cdde2aba0541d8a9d9fa2e9. Direct fetching of
-that commit failed.
+One option may be to report that "no command or common guide found, will 
+search for other guide (may fail)", which at least allows you to check the 
+command list first, and then the common guide list, and only then warn 
+(option?), and finally go on the rabbit hunt (possibly fruitless) for the 
+missing guide (we've already decided it can't be a command!)
 
->git --version
-git version 2.9.0.windows.1
+--
+Philip
 
--- 
-WBR,
-Arkady Shapkin
+[1] 
+https://public-inbox.org/git/1364942392-576-1-git-send-email-philipoakley@iee.org/ 
+(V3) plus previous discussions
+https://public-inbox.org/git/1362342072-1412-1-git-send-email-philipoakley@iee.org/ 
+(V2) see note
+Patch 6 - 13:
+All dropped.
+Drop the separate guide list.txt and extraction script, which was
+copied from the common command list and script. If the guide usage
+list is useful, extend the command-list.txt and generate-cmdlist.sh
+at a later 
+datehttps://public-inbox.org/git/1361660761-1932-1-git-send-email-philipoakley@iee.org/#t 
+(V1) the original series
+
+>
+> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+> ---
+> Changes in v2:
+> - not only check for commands but also for guides
+> - use the command assumed by "help_unknown_cmd"
+>
+> builtin/help.c  | 34 +++++++++++++++++++++++++++-------
+> t/t0012-help.sh | 15 +++++++++++++++
+> 2 files changed, 42 insertions(+), 7 deletions(-)
+> create mode 100755 t/t0012-help.sh
+>
+> diff --git a/builtin/help.c b/builtin/help.c
+> index 8848013..7d2110e 100644
+> --- a/builtin/help.c
+> +++ b/builtin/help.c
+> @@ -433,10 +433,35 @@ static void list_common_guides_help(void)
+>  putchar('\n');
+> }
+>
+> +static int is_common_guide(const char* cmd)
+> +{
+> + int i;
+> +
+> + for (i = 0; i < ARRAY_SIZE(common_guides); i++)
+> + if (!strcmp(cmd, common_guides[i].name))
+> + return 1;
+> + return 0;
+> +}
+> +
+> +static const char* check_git_cmd(const char* cmd)
+> +{
+> + char *alias;
+> +
+> + if (is_git_command(cmd) || is_common_guide(cmd))
+> + return cmd;
+> +
+> + alias = alias_lookup(cmd);
+> + if (alias) {
+> + printf_ln(_("`git %s' is aliased to `%s'"), cmd, alias);
+> + free(alias);
+> + exit(0);
+> + } else
+> + return help_unknown_cmd(cmd);
+> +}
+> +
+> int cmd_help(int argc, const char **argv, const char *prefix)
+> {
+>  int nongit;
+> - char *alias;
+>  enum help_format parsed_help_format;
+>
+>  argc = parse_options(argc, argv, prefix, builtin_help_options,
+> @@ -476,12 +501,7 @@ int cmd_help(int argc, const char **argv, const char 
+> *prefix)
+>  if (help_format == HELP_FORMAT_NONE)
+>  help_format = parse_help_format(DEFAULT_HELP_FORMAT);
+>
+> - alias = alias_lookup(argv[0]);
+> - if (alias && !is_git_command(argv[0])) {
+> - printf_ln(_("`git %s' is aliased to `%s'"), argv[0], alias);
+> - free(alias);
+> - return 0;
+> - }
+> + argv[0] = check_git_cmd(argv[0]);
+>
+>  switch (help_format) {
+>  case HELP_FORMAT_NONE:
+> diff --git a/t/t0012-help.sh b/t/t0012-help.sh
+> new file mode 100755
+> index 0000000..0dab88d
+> --- /dev/null
+> +++ b/t/t0012-help.sh
+> @@ -0,0 +1,15 @@
+> +#!/bin/sh
+> +
+> +test_description='help'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success "pass --help to unknown command" "
+> + cat <<-EOF >expected &&
+> + git: '123' is not a git command. See 'git --help'.
+> + EOF
+> + (git 123 --help 2>actual || true) &&
+> + test_i18ncmp expected actual
+> +"
+> +
+> +test_done
+> -- 
+> 2.9.2.912.g51c4565.dirty
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
+
