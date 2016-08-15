@@ -2,90 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 378BB1F6C1
-	for <e@80x24.org>; Mon, 15 Aug 2016 12:37:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D05F71F6C1
+	for <e@80x24.org>; Mon, 15 Aug 2016 12:38:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753049AbcHOMhZ (ORCPT <rfc822;e@80x24.org>);
-	Mon, 15 Aug 2016 08:37:25 -0400
-Received: from mail-ua0-f175.google.com ([209.85.217.175]:36446 "EHLO
-	mail-ua0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752796AbcHOMhY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2016 08:37:24 -0400
-Received: by mail-ua0-f175.google.com with SMTP id 97so70938920uav.3
-        for <git@vger.kernel.org>; Mon, 15 Aug 2016 05:37:23 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=ZfmxUFEOQPWD2ZkE64nG7XGxeewGTPwb9MlcNfzyjII=;
-        b=qgKyyKy1PWRKlixnKgI7pLS5fnLb/vLNiUh+jIpAq5RPTXWg+sjgXcmBd1JSdsZlSm
-         tJ0nm/beRhSFOWEDe/+ap1HxkPmPl1hhYvxeLJT7zkim7WjOS1BVJ0U6ZjJbfH4P33OL
-         sao4nHlQpI3jRDMVvI+yC/y5vTe9SfFmtiz1nYq1qvxn1MHwk0rmWedibRWLiJzmuRq/
-         mVb1BXbHjZm/ExLAttK0XVfAN9uouB2WSxWQ89rw7FLM9YAhA6antT/PS0EV7c15YG0W
-         tCnQO53vAMvEzLnD62pTThTxbjYrkHiPWqzbpeBX/M4rzBztUMzg9s5S6awicwlJasxm
-         7dHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=ZfmxUFEOQPWD2ZkE64nG7XGxeewGTPwb9MlcNfzyjII=;
-        b=gxNmRxmDrjucs/J5ZvfgwEqy6ndnrcm6BUtUisb3NnsFjyad3weOng6K0IjH0Kd5gS
-         2FA+UWhxQAeRMuoin8l60brSBOSZHDY1zGd3JlqtKApDlkfbFAysk4WrFybLowox2M0E
-         lt1AmIvm5goVR/b427kA1sTvoCWmZ2AwEnmtrK2Ux5Ipk7VdJhuh0vWQno/qe5Q5c1j7
-         akNEML/btBF/cPPazXw9KSCy+k+Xskg/GmTn0JV77GfMo/n4A6VHQbRo11zCyiJZGs0U
-         jtBzq16UhnbunfmaLryNHkgCx/2+Odh3rF8z1c0nzkhbbWAotJL6JaecFtWG2ospb1w9
-         SeOA==
-X-Gm-Message-State: AEkoousDTZ//9A6fzH/pPHpLcNK0FNSGdtg7js47Bzp78wKSTz2KndwhhRRDsnb1/whjJq64y/LhVbo/oG9YUw==
-X-Received: by 10.31.68.196 with SMTP id r187mr9004468vka.41.1471264154772;
- Mon, 15 Aug 2016 05:29:14 -0700 (PDT)
+	id S1753030AbcHOMix (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 08:38:53 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:20102 "EHLO
+	smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752925AbcHOMiw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 08:38:52 -0400
+Received: from PhilipOakley ([92.22.3.79])
+	by smtp.talktalk.net with SMTP
+	id ZH93b572wcpskZH93bCOeu; Mon, 15 Aug 2016 13:38:39 +0100
+X-Originating-IP: [92.22.3.79]
+X-Spam:	0
+X-OAuthority: v=2.2 cv=ILRAMUnG c=1 sm=1 tr=0 a=LkKjIWfvQdKNf3TZC4q4CQ==:117
+ a=LkKjIWfvQdKNf3TZC4q4CQ==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=1XWaLZrsAAAA:8 a=IybZy-SpAF9tWSOjtQ8A:9 a=6kGIvZw6iX1k4Y-7sg4_:22
+ a=nJcEw6yWrPvoIXZ49MH8:22
+Message-ID: <DD86BC6E2E3245BA991E4D65CE66E4A8@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:	"Philip Oakley" <philipoakley@iee.org>
+To:	"Duy Nguyen" <pclouds@gmail.com>,
+	"Stefan Beller" <sbeller@google.com>
+Cc:	"Jacob Keller" <jacob.keller@gmail.com>,
+	"Git List" <git@vger.kernel.org>
+References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com> <CAGZ79kba36GprgHA04_q4NmY2=_amoWyafUaLKkcknc3HsT_-g@mail.gmail.com> <CACsJy8C51UkH=tLSfGigAF0JjPxVS3fY0EHi0CNVRG8LY8YiCg@mail.gmail.com> <CA+P7+xo4UJ8W4G0gV=DMLs-9Ve4v0OKc0ZunmS5Y5B1k7L0P9w@mail.gmail.com> <CAGZ79kb27JZepMD5AmrHjOnf8haE8LehZd_CkvOQ1UoLEDuxKQ@mail.gmail.com> <CACsJy8BdmR5USJvjJ6xbjj=bP787tdS72_oL+PDq0D+FPYmiPA@mail.gmail.com>
+Subject: Re: storing cover letter of a patch series?
+Date:	Mon, 15 Aug 2016 13:37:33 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.176.69.172 with HTTP; Mon, 15 Aug 2016 05:29:14 -0700 (PDT)
-In-Reply-To: <20160815120441.nwtdqfgcv3ljt4vl@sigill.intra.peff.net>
-References: <CAB-zwL28qUBO5PrRznH9KmLJZUHO65_J-DxvPP+NHZEuofKh9Q@mail.gmail.com>
- <20160815120441.nwtdqfgcv3ljt4vl@sigill.intra.peff.net>
-From:	Arkady Shapkin <arkady.shapkin@gmail.com>
-Date:	Mon, 15 Aug 2016 15:29:14 +0300
-X-Google-Sender-Auth: O4IJ8COLskEheJ90vN-vrT_us1E
-Message-ID: <CAB-zwL2oFMBFjkkoh1EhSD7FCK_1wVV+whu8uxTKTHQKJgNzrQ@mail.gmail.com>
-Subject: Re: Git shallow clone branch doesn't work with recursive submodules cloning
-To:	Jeff King <peff@peff.net>
-Cc:	git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfNkuLZI2slmzuCv7elqPNC+hAIPX0VQ8uI504mL0EtJ0ikjyIKvEKnSh8HMSC9cFU47Zykv8tYvOfIcW2HguEfs4mWYV2knnT/tvu1EieyHxUmNR8gbd
+ yYbh9kdjqaTcZxeir2uYa4O+CyoBFGx1BGN/NxBFoVae1WBJ0WlWARZ1UDyf7HX3r0VV88cn2hUPT8KtExWWgupJS5F+wsurPa+quTSNKiFWPHiNEGL+U3Ek
+ ve+dt8BIg06Xrqk3GjmlHQ==
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Thank you, after updating to "2.9.3.windows.1" options "--recursive
---depth 1" now works.
-
-But "--recursive --shallow-submodules" and "--recursive
---shallow-submodules --depth 1" still doesn't work.
-
-2016-08-15 15:04 GMT+03:00 Jeff King <peff@peff.net>:
-> On Mon, Aug 15, 2016 at 02:20:27PM +0300, Arkady Shapkin wrote:
+From: "Duy Nguyen" <pclouds@gmail.com>
+> On Mon, Aug 15, 2016 at 1:28 PM, Stefan Beller <sbeller@google.com> wrote:
+>> On Sun, Aug 14, 2016 at 12:15 AM, Jacob Keller <jacob.keller@gmail.com>
+>> wrote:
+>>> On Sat, Aug 13, 2016 at 1:49 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+>>>> On Tue, Aug 9, 2016 at 12:27 AM, Stefan Beller <sbeller@google.com>
+>>>> wrote:
+>>>>> is what you want. Maybe we want to see a patch that adds the reverse
+>>>>> functionality as well, i.e. git-am will store the the cover letter as
+>>>>> the
+>>>>> branch description and git-merge will propose the branch description
+>>>>> for
+>>>>> the merge commit.
+>>>>
+>>>> I almost suggested the same, but there is a problem with this
+>>>> approach: if you're are on a detached head, where does git-am save it?
+>>
+>> What would the user expect? We can have a range of expectations:
+>> 1) reject and error out git-am
+>> 2) warn about not saving branch.description and continue with am
+>> 3) have a (maybe special) branch.HEAD.description thing, same for
+>> FETCH_HEAD etc
+>> 4) have a config option to choose between 1 and 2, if unset default to 1
+>>
+>> I think 3 is a bad choice.
+>> 4 seems reasonable to me, though I wonder if some people use git-am in
+>> a scripted workflow with a detached head and then create the branch
+>> afterwards?
+>> So
+>>
+>> 5) create a branch for them? (such as $(date)-${subject})
+>>
+>> My gut reaction doesn't like 5 either.
 >
->> I am trying clone repository by tag with recursive submodules init,
->> but for one submodule it doesn't work.
->> What I'm doing wrong?
->
-> Nothing. See 18a74a0 (clone: do not let --depth imply
-> --shallow-submodules, 2016-06-19).
->
->> >git --version
->> git version 2.9.0.windows.1
->
-> The fix is in v2.9.1.
->
-> -Peff
+> I'm starting to think option 6 (storing cover latter as an empty
+> commit at tip then git-merge replaces it with a merge commit in a
+> permanent history) may be the way to go. It handles detached heads
+> just fine, we have reflog to store older cover letters. Though it will
+> not play nice with 'git commit --amend' and 'git reset' for people who
+> rewrites history heavily during development, but maybe 'git rebase -i
+> --autosquash' would be an ok workflow alternative.
+> -- 
 
+[sorry if this is not the right place to 'drop in'..]
+I appreciate there has been a lot of discussion, but it mainly appears to be
+about an upstream / integration viewpoint.
 
+I'd hate it if there was a one size fits all solution that was only focused
+on one important use case, rather than having at least a simple fallback for
+simple folk.
 
--- 
-WBR,
-Arkady Shapkin aka Dragon
+Personally I liked the idea that I could start my patch series branch with a
+simple 'empty' commit with a commit message that read "cover! <subject of
+the series>" and continue with the cover letter. It's essentially the same
+as the fixup! and squash! idea (more the latter - it's squash! without a
+predecessor). For moderate size series a simple 'git rebase master..' is
+sufficient to see the whole series and decide which need editing, rewording,
+swapping, checking the fixups, etc.
+
+Format-patch would then be taught to spot that the first commit in the
+series is "cover! <subject>" and create the usual 0/N cover letter. Git Gui
+may need to be taught to recognise cover! (haven't checked if it recognises
+an empty commit squash!). Possibly 'git commit' may want a --cover option to
+massage the commit message and add --allow-empty, but that's finesse.
+
+I've no problem with more extensive methods for those preparing very big
+patch series, or with those needing to merge together a lot of series and
+want to keep the cover letters, but ensuring that a simple flow is possible
+should still be there.
+--
+Philip
+
