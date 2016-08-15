@@ -2,88 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5006A1F859
-	for <e@80x24.org>; Mon, 15 Aug 2016 17:54:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32F0B1F6C1
+	for <e@80x24.org>; Mon, 15 Aug 2016 17:58:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932111AbcHORyF (ORCPT <rfc822;e@80x24.org>);
-	Mon, 15 Aug 2016 13:54:05 -0400
-Received: from smtp146.dfw.emailsrvr.com ([67.192.241.146]:53380 "EHLO
-	smtp146.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752901AbcHORyD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2016 13:54:03 -0400
-Received: from smtp19.relay.dfw1a.emailsrvr.com (localhost [127.0.0.1])
-	by smtp19.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTP id D5649402BC;
-	Mon, 15 Aug 2016 13:54:02 -0400 (EDT)
-X-Auth-ID: mbranchaud@xiplink.com
-Received: by smtp19.relay.dfw1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 893F5402B8;
-	Mon, 15 Aug 2016 13:54:02 -0400 (EDT)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-	by 0.0.0.0:465 (trex/5.7.1);
-	Mon, 15 Aug 2016 13:54:02 -0400
-Subject: Re: BUG: indent-with-non-tab always on
-To:	Philip Oakley <philipoakley@iee.org>,
-	GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-References: <20160811215035.4108-1-philipoakley@iee.org>
- <20160812234522.7792-1-philipoakley@iee.org>
- <5338959f-985f-d1b3-7287-eccde559d2c3@xiplink.com>
- <8191B8FB581F44AAA7E2467A845C7532@PhilipOakley>
- <5eda6874-43c8-7383-bbb3-b482a388370d@xiplink.com>
-From:	Marc Branchaud <marcnarc@xiplink.com>
-Message-ID: <114095ef-e267-c9bb-c5fc-52bdb5598fe6@xiplink.com>
-Date:	Mon, 15 Aug 2016 13:54:01 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+	id S1753214AbcHOR6F (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 13:58:05 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57405 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753204AbcHOR6E (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 13:58:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2780233C27;
+	Mon, 15 Aug 2016 13:58:03 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=17GWPL1SZCz22W3cnPZhie6q780=; b=u1NPu1
+	Lmxvar2OrjG/7KZefc3ME5zn2CxnU4JipDYhCSwXJFwyIeRBidDfs+4wJbcQFPXy
+	fcnYnlGXu/cToYLys4q79d7FYSzIhAKLNFWRIsLMUQ4kcMm+XIRNivpwh3BZJ7V1
+	6ggTv107xHpgmhSVt8keMHigF8Sa1QyD9ErFM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=azH+iVBcoBnwbkcwnzW9hScxE7E2g07W
+	CrZdWO0brOnOhwXsl6MXbr3M1SQWb4ZQSG/kd8RTCX2pWOMMQqvQZYDlXHGKrDo6
+	F+5ddH6c8jihbyZqIxIwmU/7Ir7bjkrTwUJrYl3Zwlk+1FrvZsjPGYY2/C6jr9OT
+	Qoqxj5kQOVw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1F6B433C26;
+	Mon, 15 Aug 2016 13:58:03 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9870A33C25;
+	Mon, 15 Aug 2016 13:58:02 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	"Philip Oakley" <philipoakley@iee.org>
+Cc:	"Ralf Thielow" <ralf.thielow@gmail.com>, <git@vger.kernel.org>,
+	<larsxschneider@gmail.com>, <me@jnm2.com>
+Subject: Re: [PATCH v2] help: make option --help open man pages only for Git commands
+References: <20160812201011.20233-1-ralf.thielow@gmail.com>
+	<20160815053628.3793-1-ralf.thielow@gmail.com>
+	<D954CB3E6C3445AF9358C6941362B69D@PhilipOakley>
+Date:	Mon, 15 Aug 2016 10:57:59 -0700
+In-Reply-To: <D954CB3E6C3445AF9358C6941362B69D@PhilipOakley> (Philip Oakley's
+	message of "Mon, 15 Aug 2016 12:25:40 +0100")
+Message-ID: <xmqqr39phq3c.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <5eda6874-43c8-7383-bbb3-b482a388370d@xiplink.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: CF6CCEB6-6311-11E6-9C0E-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 2016-08-15 12:55 PM, Marc Branchaud wrote:
-> On 2016-08-15 11:00 AM, Philip Oakley wrote:
->> From: "Marc Branchaud" <marcnarc@xiplink.com>
->>> On 2016-08-12 07:45 PM, Philip Oakley wrote:
->>>> These are the quick fixes to Marc's comments to patches 5,6,11,
->>>> and a consequential change to 12.
->>>>
->>>> Only the changed patches are included.
->>>
->>> Looks good to me -- no further comments!
->>>
->>> However, I still don't understand why git says 11/12 has "indent with
->>> spaces" problems.
->>
->> I'm guessing it's that the text is monospaced rather than tabbed, and
->> it's flagging that.
->>
->> I'd noticed that it was highlighted in the Git gui (which I use to
->> visualise both the diff, the message and the part after the three dashes
->> at the same time).
->
-> Actually, it looks like an indent-with-non-tab problem, which is
-> supposed to be off by default.
->
-> Git doesn't complain about the patch if I set
->     core.whitespace = tabwidth=11
-> presumably because the patch uses 10 spaces to indent the offending lines.
->
-> But explicitly disabling that check with
->     core.whitespace = -indent-with-non-tab
-> doesn't work.
->
-> Unfortunately, I don't have time today to track this down.
+"Philip Oakley" <philipoakley@iee.org> writes:
 
-Gah, never mind -- didn't realize it was turned on in 
-Documentation/.gitattributes.
+> I'm still not sure this is enough. One of the problems back when I
+> introduced the --guides option (65f9835 (builtin/help.c: add --guide
+> option, 2013-04-02)) was that we had no easy way of determining what
+> guides were available, especially given the *nix/Windows split where
+> the help defaults are different (--man/--html).
+>
+> At the time[1] we (I) punted on trying to determine which guides were
+> actually installed, and just created a short list of the important
+> guides, which I believe you now check. However the less common guides
+> are still there (gitcvs-migration?), and others may be added locally.
 
-		M.
+I think we should do both; "git help cvs-migration" should keep the
+same codeflow and behaviour as we have today (so that it would still
+work), while "git cvs-migration --help" should say "'cvs-migration'
+is not a git command".  That would be a good clean-up anyway.
+
+It obviously cannot be done if git.c::handle_builtin() does the same
+"swap <word> --help to help <word>" hack, but we could improve that
+part (e.g. rewrite it to "help --swapped <word>" to allow cmd_help()
+to notice).  When the user said "<word> --help", we don't do guides,
+when we swapped the word order, we check with guides, too.
+
 
