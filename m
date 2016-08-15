@@ -2,85 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E65671F6C1
-	for <e@80x24.org>; Mon, 15 Aug 2016 16:40:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11FA61F6C1
+	for <e@80x24.org>; Mon, 15 Aug 2016 16:55:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752892AbcHOQkL convert rfc822-to-8bit (ORCPT
-	<rfc822;e@80x24.org>); Mon, 15 Aug 2016 12:40:11 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35938 "EHLO
-	mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752801AbcHOQkK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2016 12:40:10 -0400
-Received: by mail-wm0-f66.google.com with SMTP id i138so11953608wmf.3
-        for <git@vger.kernel.org>; Mon, 15 Aug 2016 09:40:09 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=4imz0zKJTGNDhp72jcwWgpqrXfLOdOYv1R5vZ6xWoKY=;
-        b=ji8eS4BU4aSFr9zRwiRVWlADXsMpWJw3zIQSYbg6Lgma6onXWE5v702HUx9t7bIBKJ
-         E4qxl/Qme22aYSHgZuOfmtoKqUC5CN2MIux1kLn/yZtT1tGVydlcG/zzWnl3dlaAY30E
-         KhXCM6yVLndXhCaRasXWaqnIw8tGRjOpYraL5DJdm9Knyns+sEnX4uI72e54HIgAP4hO
-         As2fhG2yfVopnvJM9DHY2O4GvmhBJRs/wZ7RxMlTeWJjjYpFPbZkgrbeNORW/qmSsVYy
-         SNux/LN9cVD6XzKo39kT2nw9xFJN8QxErcaOLqFvyhL5m9U1+za0b+JURBKWQVSI+jgU
-         yfyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=4imz0zKJTGNDhp72jcwWgpqrXfLOdOYv1R5vZ6xWoKY=;
-        b=frZzPPPzAbXU5gydDUtk/7z0QWpnYMJNmuKUJJaMV/t/t2bF+lag0dP+4qjh+j8Wjr
-         ABlFBCxwNDOeQaZu+Kf5TU1TXkSQ4hrwxa/3ev5eipKY8PPiPtryEGvhuytnjGvFWHvt
-         +fkTXm3GbQpZzQyK0SLM8SBsNIWShWS6j3rOnP81vlg6QuX6kYWtEXAzIktkgfE5+IC0
-         RSI4ZPSpTysVE/15ZeAN7MHgk93fB9TCCs0LT5t6uiUMbUo10pbBN1Fx6oUI71y3JGho
-         DsJ7AfHWTPdU+zJDFu1eM5e1YEV6WN4aIW6EFYwyhDH9TRN06eH+lr1Nki5FGArRT1m+
-         7Paw==
-X-Gm-Message-State: AEkoouv25nssZ+WRtmpn6QQW2QBT/gxDMKVvpCvZ8T0AkiLoUvY/g7338jRfOtRsrMwzww==
-X-Received: by 10.28.22.6 with SMTP id 6mr16901144wmw.55.1471279208877;
-        Mon, 15 Aug 2016 09:40:08 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id f10sm22257303wje.14.2016.08.15.09.40.07
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 15 Aug 2016 09:40:08 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH 1/3] diff-highlight: add some tests.
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20160730151149.15980-2-henderson.bj@gmail.com>
-Date:	Mon, 15 Aug 2016 18:40:06 +0200
-Cc:	git@vger.kernel.org, peff@peff.net
-Content-Transfer-Encoding: 8BIT
-Message-Id: <A2BCF055-D3FD-4EFC-88FF-A3916BCF8FDF@gmail.com>
-References: <20160730151149.15980-1-henderson.bj@gmail.com> <20160730151149.15980-2-henderson.bj@gmail.com>
-To:	Brian Henderson <henderson.bj@gmail.com>
-X-Mailer: Apple Mail (2.3124)
+	id S1752856AbcHOQzt (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 12:55:49 -0400
+Received: from smtp90.iad3a.emailsrvr.com ([173.203.187.90]:55743 "EHLO
+	smtp90.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752801AbcHOQzs (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Aug 2016 12:55:48 -0400
+Received: from smtp28.relay.iad3a.emailsrvr.com (localhost [127.0.0.1])
+	by smtp28.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id 92938A0509;
+	Mon, 15 Aug 2016 12:55:47 -0400 (EDT)
+X-Auth-ID: mbranchaud@xiplink.com
+Received: by smtp28.relay.iad3a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 711CAA0506;
+	Mon, 15 Aug 2016 12:55:47 -0400 (EDT)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [10.10.1.32] ([TEMPUNAVAIL]. [192.252.130.194])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+	by 0.0.0.0:465 (trex/5.7.1);
+	Mon, 15 Aug 2016 12:55:47 -0400
+Subject: BUG: indent-with-non-tab always on (was: Re: [PATCH v6 00/12] Update
+ git revisions)
+To:	Philip Oakley <philipoakley@iee.org>,
+	GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+References: <20160811215035.4108-1-philipoakley@iee.org>
+ <20160812234522.7792-1-philipoakley@iee.org>
+ <5338959f-985f-d1b3-7287-eccde559d2c3@xiplink.com>
+ <8191B8FB581F44AAA7E2467A845C7532@PhilipOakley>
+From:	Marc Branchaud <marcnarc@xiplink.com>
+Message-ID: <5eda6874-43c8-7383-bbb3-b482a388370d@xiplink.com>
+Date:	Mon, 15 Aug 2016 12:55:47 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
+MIME-Version: 1.0
+In-Reply-To: <8191B8FB581F44AAA7E2467A845C7532@PhilipOakley>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+On 2016-08-15 11:00 AM, Philip Oakley wrote:
+> From: "Marc Branchaud" <marcnarc@xiplink.com>
+>> On 2016-08-12 07:45 PM, Philip Oakley wrote:
+>>> These are the quick fixes to Marc's comments to patches 5,6,11,
+>>> and a consequential change to 12.
+>>>
+>>> Only the changed patches are included.
+>>
+>> Looks good to me -- no further comments!
+>>
+>> However, I still don't understand why git says 11/12 has "indent with
+>> spaces" problems.
+>
+> I'm guessing it's that the text is monospaced rather than tabbed, and
+> it's flagging that.
+>
+> I'd noticed that it was highlighted in the Git gui (which I use to
+> visualise both the diff, the message and the part after the three dashes
+> at the same time).
 
-> On 30 Jul 2016, at 17:11, Brian Henderson <henderson.bj@gmail.com> wrote:
-> 
-> ---
-> contrib/diff-highlight/Makefile                  |  5 ++
-> contrib/diff-highlight/t/Makefile                | 19 +++++++
-> contrib/diff-highlight/t/t9400-diff-highlight.sh | 63 ++++++++++++++++++++++
-> contrib/diff-highlight/t/test-diff-highlight.sh  | 69 ++++++++++++++++++++++++
-> 4 files changed, 156 insertions(+)
-> create mode 100644 contrib/diff-highlight/Makefile
-> create mode 100644 contrib/diff-highlight/t/Makefile
-> create mode 100644 contrib/diff-highlight/t/t9400-diff-highlight.sh
-> create mode 100644 contrib/diff-highlight/t/test-diff-highlight.sh
-> 
-> diff --git a/contrib/diff-highlight/Makefile b/contrib/diff-highlight/Makefile
+Actually, it looks like an indent-with-non-tab problem, which is 
+supposed to be off by default.
 
-Would it make sense to add the contrib tests to the Travis-CI build, too?
-https://travis-ci.org/git/git/branches
+Git doesn't complain about the patch if I set
+	core.whitespace = tabwidth=11
+presumably because the patch uses 10 spaces to indent the offending lines.
 
-- Lars
+But explicitly disabling that check with
+	core.whitespace = -indent-with-non-tab
+doesn't work.
+
+Unfortunately, I don't have time today to track this down.
+
+		M.
+
