@@ -6,107 +6,136 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD16F1F6C1
-	for <e@80x24.org>; Mon, 15 Aug 2016 18:40:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F3461F6C1
+	for <e@80x24.org>; Mon, 15 Aug 2016 18:40:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752856AbcHOSk2 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 15 Aug 2016 14:40:28 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:34609 "EHLO
-	mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752316AbcHOSk1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2016 14:40:27 -0400
-Received: by mail-pf0-f176.google.com with SMTP id p64so19193395pfb.1
-        for <git@vger.kernel.org>; Mon, 15 Aug 2016 11:40:27 -0700 (PDT)
+	id S1752892AbcHOSkb (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 14:40:31 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:36165 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752316AbcHOSka (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 14:40:30 -0400
+Received: by mail-pa0-f46.google.com with SMTP id pp5so18238996pac.3
+        for <git@vger.kernel.org>; Mon, 15 Aug 2016 11:40:29 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=ixCMFHi/wTruRf82pQUqo5DAwLV4+vsvE/MIfxrik2s=;
-        b=mGJeB1ZjokHPy/ukqRnchtY1oKouSbYSQU1rnBjWlSXUUCwRzT62P8SmJjbDPAZmgj
-         XqdTT4ASzKPv8PQ2G0Dp9izeKo0+2sv+6DEhiGXpZZd/K7aDOydrB8o8ZOBQ5dOsq0l8
-         jOuMJI0WZ+jDNZIqbV7n365DQoSvMJDyEMX3pyZFGHxvB/OgsbZc3QxFiJYjJFiplNJh
-         c9Szw9cuOXZHDQ8knFp1HysflQI1oNu+5Uh+dfMOZ+U8ZAR7d+kQjDgBQ6nF6xhhh7Dp
-         OIAz25CnMrETmXsI8Ow2ogaS5RGjB/1thg9xY5ydhSMD4p9lKO5QloM/t6G5txvTAuCv
-         lupA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=KyucD8sH/adm8Ju+u+H5YdLpnYyt+YydVZ2EIIqgoDU=;
+        b=Xh12Odr0nrC4m7PSQYtJVSwMbrerIFSJNL6n0NA2rEHY6yRdtYBXLpy1YJJrr/JQHa
+         AdzFxW9xy2VnPWxP4ACtbXYKOXbzGhYPCoJuMX1d3rSHXquM2ZJsBYMG88e9g/KM4OY3
+         gauuEgwEZWw7NiJRAyeK9nyBykB7pwKG5fGGj/zVzwTwDC7MZafBUc33Nu6JowJ1oXP6
+         JCh8hOkQfFjeqQadzWXOaCY6MRPJv3IzZ7rngmYeykikqo0RoD8gjUTggMtjZllptEeq
+         zI0vQ+KKeM35hgwZ8AKQRLgfvHY4Dsefqh5MYa3Q6uCbMLFi6H+/qmGCyj5wAMJbcro3
+         OA4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=ixCMFHi/wTruRf82pQUqo5DAwLV4+vsvE/MIfxrik2s=;
-        b=TdrwtxliCeo0P4y0puSOwkAb33q63Smpi3uDyotqdOzs8mQHZXpXgKtjwI1+GIetqC
-         mmDpVEGRlrEttLa9ZAsTbz67lU8+H1OSARTOXGBH6eiOs/JybzMdg1Ad7W0PwAMtHRwH
-         ShWqyHXNL2ajFJob1DCO/ZAkChNMBdGQApiBcvhbTgzbKOz1nkKaBYPh0oFIcKAdhoN7
-         Xttj6PE5s9506icusKRGHAh1QhZSUNkYvmGptHNjKgjFytatzyurrnB+iGabDTglHYko
-         W9C6jf4V2pMyQxpAGSyPjdDJ2esihs672J87K+Z2cBLOWRI3lkigOEmOzdlSiYqxRroG
-         rSdg==
-X-Gm-Message-State: AEkooutboYDMxAdZcko7BaH5Al5xwLVrAPb/tzo6tUgErJcVTqKGON2qGFsGrNsx3wcA5z8Z
-X-Received: by 10.98.111.133 with SMTP id k127mr55901106pfc.90.1471286426869;
-        Mon, 15 Aug 2016 11:40:26 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=KyucD8sH/adm8Ju+u+H5YdLpnYyt+YydVZ2EIIqgoDU=;
+        b=lsGCCgsO+ZOj9Tlxjs92dNvzqUase8N9zlBquvsuiMBfzvqxg6zMJ0r8zQmyXJbuAr
+         2oyVHBRPF/54LOwGHpAubmFSmYQGuQ+o8yk56D9a3c+6sFu5UJur7L9DVgWxzSF6110q
+         t46WGen2v92/Q/M2Jpz9lIW/Loh/udEEns12E2Js2DEbN7PmFLsx/DobANk8ojiJBBb0
+         gE580yDGdiS6qXaQEDWyi41Bkl/E1kb/FR+0sGYiGyrKcLWV94EQOLWJfi9f9pjtf0/q
+         Tr7OAvg6jGJdcFNWld0GNZafWup2nlJTd8ixmtMXRRfln0zCylDBLVqBwDWwCaibnTqB
+         6hFg==
+X-Gm-Message-State: AEkoouveIf8x3JLrrHZHXLtveYqniRZfV/FTGwn0werMA4sK+PJay4jfBgM3ug/UPOemRvHV
+X-Received: by 10.66.155.129 with SMTP id vw1mr56047940pab.148.1471286429264;
+        Mon, 15 Aug 2016 11:40:29 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:fd0c:5bce:d30d:9f4d])
-        by smtp.gmail.com with ESMTPSA id w64sm33120379pfb.93.2016.08.15.11.40.25
+        by smtp.gmail.com with ESMTPSA id s12sm33130058pfj.73.2016.08.15.11.40.28
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 15 Aug 2016 11:40:26 -0700 (PDT)
+        Mon, 15 Aug 2016 11:40:28 -0700 (PDT)
 From:	Stefan Beller <sbeller@google.com>
 To:	git@vger.kernel.org, gitster@pobox.com
 Cc:	jrnieder@gmail.com, peff@peff.net,
 	remi.galan-alfonso@ensimag.grenoble-inp.fr,
 	Stefan Beller <sbeller@google.com>
-Subject: [PATCH 1/2] advice: preset advice preferences to -1
-Date:	Mon, 15 Aug 2016 11:40:20 -0700
-Message-Id: <20160815184021.12396-1-sbeller@google.com>
+Subject: [PATCH 2/2] checkout: do not mention detach advice for explicit --detach option
+Date:	Mon, 15 Aug 2016 11:40:21 -0700
+Message-Id: <20160815184021.12396-2-sbeller@google.com>
 X-Mailer: git-send-email 2.9.2.730.g525ad04.dirty
+In-Reply-To: <20160815184021.12396-1-sbeller@google.com>
+References: <20160815184021.12396-1-sbeller@google.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-In the next patch we want to make a distinction if a the advice was
-requested explicitly or is set implicit. To do that we need to have
-different values for the default and a value that is set explicitly.
+When a user asked for a detached HEAD specifically with `--detach`,
+we do not need to give advice on what a detached HEAD state entails as
+we can assume they know what they're getting into as they asked for it.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- advice.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/advice.c b/advice.c
-index b84ae49..56b70b6 100644
---- a/advice.c
-+++ b/advice.c
-@@ -1,20 +1,20 @@
- #include "cache.h"
+ Junio writes:
+ > It might be controversial how the second from the last case should
+ > behave, though.
  
--int advice_push_update_rejected = 1;
--int advice_push_non_ff_current = 1;
--int advice_push_non_ff_matching = 1;
--int advice_push_already_exists = 1;
--int advice_push_fetch_first = 1;
--int advice_push_needs_force = 1;
--int advice_status_hints = 1;
--int advice_status_u_option = 1;
--int advice_commit_before_merge = 1;
--int advice_resolve_conflict = 1;
--int advice_implicit_identity = 1;
--int advice_detached_head = 1;
--int advice_set_upstream_failure = 1;
--int advice_object_name_warning = 1;
--int advice_rm_hints = 1;
-+int advice_push_update_rejected = -1;
-+int advice_push_non_ff_current = -1;
-+int advice_push_non_ff_matching = -1;
-+int advice_push_already_exists = -1;
-+int advice_push_fetch_first = -1;
-+int advice_push_needs_force = -1;
-+int advice_status_hints = -1;
-+int advice_status_u_option = -1;
-+int advice_commit_before_merge = -1;
-+int advice_resolve_conflict = -1;
-+int advice_implicit_identity = -1;
-+int advice_detached_head = -1;
-+int advice_set_upstream_failure = -1;
-+int advice_object_name_warning = -1;
-+int advice_rm_hints = -1;
+ I agree. I think if the advice is configured explicitly we can still give it.
+ That makes the code a bit more complicated though.
  
- static struct {
- 	const char *name;
+ Also note I added stderr to stdout redirections as suggested by Peff.
+ 
+ Thanks,
+ Stefan
+ 
+ builtin/checkout.c         |  4 +++-
+ t/t2020-checkout-detach.sh | 28 ++++++++++++++++++++++++++++
+ 2 files changed, 31 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 4866111..6196b40 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -658,7 +658,9 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+ 		update_ref(msg.buf, "HEAD", new->commit->object.oid.hash, NULL,
+ 			   REF_NODEREF, UPDATE_REFS_DIE_ON_ERR);
+ 		if (!opts->quiet) {
+-			if (old->path && advice_detached_head)
++			if (old->path &&
++			    (advice_detached_head == 1 ||
++			     (advice_detached_head == -1 && !opts->force_detach)))
+ 				detach_advice(new->name);
+ 			describe_detached_head(_("HEAD is now at"), new->commit);
+ 		}
+diff --git a/t/t2020-checkout-detach.sh b/t/t2020-checkout-detach.sh
+index 5d68729..fe311a1 100755
+--- a/t/t2020-checkout-detach.sh
++++ b/t/t2020-checkout-detach.sh
+@@ -163,4 +163,32 @@ test_expect_success 'tracking count is accurate after orphan check' '
+ 	test_i18ncmp expect stdout
+ '
+ 
++test_expect_success 'no advice given for explicit detached head state' '
++	# baseline
++	test_config advice.detachedHead true &&
++	git checkout child && git checkout HEAD^0 >expect.advice 2>&1 &&
++	test_config advice.detachedHead false &&
++	git checkout child && git checkout HEAD^0 >expect.no-advice 2>&1 &&
++	test_unconfig advice.detachedHead &&
++	# without configuration, the advice.* variables default to true
++	git checkout child && git checkout HEAD^0 >actual 2>&1 &&
++	test_cmp expect.advice actual &&
++
++	# with explicit --detach
++	# no configuration
++	test_unconfig advice.detachedHead &&
++	git checkout child && git checkout --detach HEAD^0 >actual 2>&1 &&
++	test_cmp expect.no-advice actual &&
++
++	# explicitly ask advice
++	test_config advice.detachedHead true &&
++	git checkout child && git checkout --detach HEAD^0 >actual 2>&1 &&
++	test_cmp expect.advice actual &&
++
++	# explicitly decline advice
++	test_config advice.detachedHead false &&
++	git checkout child && git checkout --detach HEAD^0 >actual 2>&1 &&
++	test_cmp expect.no-advice actual
++'
++
+ test_done
 -- 
 2.9.2.730.g525ad04.dirty
 
