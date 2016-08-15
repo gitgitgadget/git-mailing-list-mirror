@@ -2,151 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 776481F6C1
-	for <e@80x24.org>; Mon, 15 Aug 2016 21:54:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FABA1F6C1
+	for <e@80x24.org>; Mon, 15 Aug 2016 22:19:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932249AbcHOVyr (ORCPT <rfc822;e@80x24.org>);
-	Mon, 15 Aug 2016 17:54:47 -0400
-Received: from mta02.prd.rdg.aluminati.org ([94.76.243.215]:51206 "EHLO
-	mta02.prd.rdg.aluminati.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752957AbcHOVyr (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Aug 2016 17:54:47 -0400
-Received: from mta02.prd.rdg.aluminati.org (localhost [127.0.0.1])
-	by mta.aluminati.local (Postfix) with ESMTP id 7084F232BA;
-	Mon, 15 Aug 2016 22:54:45 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by mta02.prd.rdg.aluminati.org (Postfix) with ESMTP id 607C333E9;
-	Mon, 15 Aug 2016 22:54:45 +0100 (BST)
-X-Quarantine-ID: <wmLNUigBO0Fn>
-X-Virus-Scanned: Debian amavisd-new at mta02.prd.rdg.aluminati.org
-Received: from mta.aluminati.local ([127.0.0.1])
-	by localhost (mta02.prd.rdg.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id wmLNUigBO0Fn; Mon, 15 Aug 2016 22:54:43 +0100 (BST)
-Received: from john.keeping.me.uk (unknown [10.2.0.9])
-	by mta02.prd.rdg.aluminati.org (Postfix) with ESMTPSA id EEB1B33E5;
-	Mon, 15 Aug 2016 22:54:39 +0100 (BST)
-Date:	Mon, 15 Aug 2016 22:54:39 +0100
-From:	John Keeping <john@keeping.me.uk>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	"Tom Tanner (BLOOMBERG/ LONDON)" <ttanner2@bloomberg.net>,
-	davvid@gmail.com, git@vger.kernel.org
-Subject: [PATCH v2] difftool: always honor fatal error exit codes
-Message-ID: <20160815215439.kwt4jmjrtcufjmih@john.keeping.me.uk>
-References: <57B19B9F0205070000390238_0_29566@p057>
- <xmqqa8gdhjgd.fsf@gitster.mtv.corp.google.com>
- <20160815213526.6m7gu2v3fhtmx6wj@john.keeping.me.uk>
+	id S932346AbcHOWTz (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 18:19:55 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58026 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932173AbcHOWTy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 18:19:54 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 603C636661;
+	Mon, 15 Aug 2016 18:19:53 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=G7pKctHVWIYMXxeDoJFUZBl9e5U=; b=wJS1JQ
+	EEd9fLJyZpfzyhEs8/B8AL2UC3AWz4V/MOZH5GEmht062vPmW35sQmIhWTb7n642
+	Fd/poJ2jD+5j87qZeFc+utupirVmf/gmp3cpTpBizX+1u3xnziB9C1B1Sm78oonE
+	mJ4baXys/44lMZEwlgj766InPq7Q+k4WQ5G/I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FEKnEwt6Yg62+Ihdw6Vvb6eO274KY0Fl
+	b1UId573HTAxsXb/mpFqLkuducer3HHZwBYjieaeefTvRiQtjkXjlVGNhvoO91OE
+	sVfVynLzYaoioeZEt/xBQBcwMYBV7dlWLIeOwc3HcfDB/RsKWnCuRUIHkmyRHey0
+	P6kUbUMHGOk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5616536660;
+	Mon, 15 Aug 2016 18:19:53 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CC0603665F;
+	Mon, 15 Aug 2016 18:19:52 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	"Philip Oakley" <philipoakley@iee.org>
+Cc:	"Ralf Thielow" <ralf.thielow@gmail.com>, <git@vger.kernel.org>,
+	<larsxschneider@gmail.com>, <me@jnm2.com>
+Subject: Re: [PATCH v2] help: make option --help open man pages only for Git commands
+References: <20160812201011.20233-1-ralf.thielow@gmail.com>
+	<20160815053628.3793-1-ralf.thielow@gmail.com>
+	<D954CB3E6C3445AF9358C6941362B69D@PhilipOakley>
+	<xmqqr39phq3c.fsf@gitster.mtv.corp.google.com>
+	<C8DDA334A45E4B558FD1EFB191E047C9@PhilipOakley>
+Date:	Mon, 15 Aug 2016 15:19:50 -0700
+In-Reply-To: <C8DDA334A45E4B558FD1EFB191E047C9@PhilipOakley> (Philip Oakley's
+	message of "Mon, 15 Aug 2016 21:40:54 +0100")
+Message-ID: <xmqq8tvxfzeh.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160815213526.6m7gu2v3fhtmx6wj@john.keeping.me.uk>
-User-Agent: Mutt/1.6.2 (2016-06-11)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 63673236-6336-11E6-9FCE-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-At the moment difftool's "trust exit code" logic always suppresses the
-exit status of the diff utility we invoke.  This is useful because we
-don't want to exit just because diff returned "1" because the files
-differ, but it's confusing if the shell returns an error because the
-selected diff utility is not found.
+"Philip Oakley" <philipoakley@iee.org> writes:
 
-POSIX specifies 127 as the exit status for "command not found", 126 for
-"command found but is not executable" and values greater than 128 if the
-command terminated because it received a signal [1] and at least bash
-and dash follow this specification, while diff utilities generally use
-"1" for the exit status we want to ignore.
+> The other option is to simply build a guide-list in exactly the same
+> format as the command list (which if it works can be merged
+> later). Re-use the existing code, etc.
 
-Handle any value of 126 or greater as a special value indicating that
-some form of fatal error occurred.
+Yeah, that sounds like a good way to go forward.  To implement typo
+correction for "git help <guidename>", having guide-list would be
+very useful.
 
-[1] http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_08_02
+A related tangent is that I think "git <guide> --help" shouldn't
+fall back to "git help <guide>", regardless of typo correction.  It
+happens to "work" only because we blindly turned "<w> --help" to
+"help <w>" without even checking what <w> is.  Making it stop
+"working" would be a bugfix.
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
-On Mon, Aug 15, 2016 at 10:35:26PM +0100, John Keeping wrote:
-> On Mon, Aug 15, 2016 at 01:21:22PM -0700, Junio C Hamano wrote:
-> > "Tom Tanner (BLOOMBERG/ LONDON)" <ttanner2@bloomberg.net> writes:
-> > 
-> > > From: gitster@pobox.com
-> > > To: john@keeping.me.uk
-> > > Cc: Tom Tanner (BLOOMBERG/ LONDON), davvid@gmail.com, git@vger.kernel.org
-> > > At: 08/14/16 04:21:18
-> > >
-> > > John Keeping <john@keeping.me.uk> writes:
-> > > ...
-> > >> POSIX specifies 127 as the exit status for "command not found" and 126
-> > >> for "command found but is not executable" [1] and at least bash and dash
-> > >> follow this specification, while diff utilities generally use "1" for
-> > >> the exit status we want to ignore.
-> > >>
-> > >> Handle 126 and 127 as special values, assuming that they always mean
-> > >> that the command could not be executed.
-> > >
-> > > Sounds like a reasonable thing to do.  Will queue; thanks.
-> > 
-> > > Would it be possible to also treat signals (128 and above) as
-> > > 'special' values as well (as I've seen some merge tools self
-> > > destruct like that from time to time)
-> > 
-> > Certainly, it feels safer to notice an unusual exit status code and
-> > error out to force the user to take notice, but that reasoning
-> > assumes that "128 and above" are noteworthy exceptions.
-> 
-> Reading further in POSIX:
-> 
-> 	The exit status of a command that terminated because it received
-> 	a signal shall be reported as greater than 128.
-> 
-> I think if we accept the argument above about diff utilities generally
-> using low numbers for the status values we're ignoring intentionally,
-> then we can just treat any value above 125 as a fatal error.
-
-Here's what that looks like.
-
- git-difftool--helper.sh | 7 +++++++
- t/t7800-difftool.sh     | 6 ++++++
- 2 files changed, 13 insertions(+)
-
-diff --git a/git-difftool--helper.sh b/git-difftool--helper.sh
-index 84d6cc0..7bfb673 100755
---- a/git-difftool--helper.sh
-+++ b/git-difftool--helper.sh
-@@ -86,6 +86,13 @@ else
- 	do
- 		launch_merge_tool "$1" "$2" "$5"
- 		status=$?
-+		if test $status -ge 126
-+		then
-+			# Command not found (127), not executable (126) or
-+			# exited via a signal (>= 128).
-+			exit $status
-+		fi
-+
- 		if test "$status" != 0 &&
- 			test "$GIT_DIFFTOOL_TRUST_EXIT_CODE" = true
- 		then
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index 2974900..70a2de4 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -124,6 +124,12 @@ test_expect_success PERL 'difftool stops on error with --trust-exit-code' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success PERL 'difftool honors exit status if command not found' '
-+	test_config difftool.nonexistent.cmd i-dont-exist &&
-+	test_config difftool.trustExitCode false &&
-+	test_must_fail git difftool -y -t nonexistent branch
-+'
-+
- test_expect_success PERL 'difftool honors --gui' '
- 	difftool_test_setup &&
- 	test_config merge.tool bogus-tool &&
--- 
-2.9.3.728.g30b24b4
-
+And having both command and guide list would be helpful to prevent
+"git <guide> --help" from falling back to "git help <guide>".
