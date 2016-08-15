@@ -2,78 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 716D71F6C1
-	for <e@80x24.org>; Mon, 15 Aug 2016 20:46:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C9FB1F6C1
+	for <e@80x24.org>; Mon, 15 Aug 2016 20:49:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932236AbcHOUqS (ORCPT <rfc822;e@80x24.org>);
-	Mon, 15 Aug 2016 16:46:18 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:34671 "EHLO
-	smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932182AbcHOUqR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2016 16:46:17 -0400
-Received: from PhilipOakley ([92.22.3.79])
-	by smtp.talktalk.net with SMTP
-	id ZOm0bclC40KuvZOm0bJvqV; Mon, 15 Aug 2016 21:46:16 +0100
-X-Originating-IP: [92.22.3.79]
-X-Spam:	0
-X-OAuthority: v=2.2 cv=RZjSMBlv c=1 sm=1 tr=0 a=LkKjIWfvQdKNf3TZC4q4CQ==:117
- a=LkKjIWfvQdKNf3TZC4q4CQ==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=nGgYIBRuMf6PUNQpss0A:9 a=6kGIvZw6iX1k4Y-7sg4_:22
-Message-ID: <3E80981D72F74A11A41A228901644E1C@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:	"Philip Oakley" <philipoakley@iee.org>
-To:	"Jacob Keller" <jacob.keller@gmail.com>
-Cc:	"Duy Nguyen" <pclouds@gmail.com>,
-	"Stefan Beller" <sbeller@google.com>,
-	"Git List" <git@vger.kernel.org>
-References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com> <CAGZ79kba36GprgHA04_q4NmY2=_amoWyafUaLKkcknc3HsT_-g@mail.gmail.com> <CACsJy8C51UkH=tLSfGigAF0JjPxVS3fY0EHi0CNVRG8LY8YiCg@mail.gmail.com> <CA+P7+xo4UJ8W4G0gV=DMLs-9Ve4v0OKc0ZunmS5Y5B1k7L0P9w@mail.gmail.com> <CAGZ79kb27JZepMD5AmrHjOnf8haE8LehZd_CkvOQ1UoLEDuxKQ@mail.gmail.com> <CACsJy8BdmR5USJvjJ6xbjj=bP787tdS72_oL+PDq0D+FPYmiPA@mail.gmail.com> <DD86BC6E2E3245BA991E4D65CE66E4A8@PhilipOakley> <CA+P7+xqbmZznxq024fhkejp2FeCVYkOYHTSdR69Di3nkzYJooA@mail.gmail.com>
-Subject: Re: storing cover letter of a patch series?
-Date:	Mon, 15 Aug 2016 21:46:16 +0100
-Organization: OPDS
+	id S932347AbcHOUtY (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 16:49:24 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54049 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932115AbcHOUtX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 16:49:23 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 757FB3499C;
+	Mon, 15 Aug 2016 16:49:22 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=oGhy81mHB1eUYK3wz+oYcn3T5+s=; b=qwNzt8
+	ezSZvds8izAmTe7FSU25lzsCuLg6DRO1DHps8fIdV6SxcrDSeOukNKviQZL0y0jS
+	fxn2EZ1tHlpAoaTJYRSn+QM0dMw8cRiClo76N21d00D20SCW39E3egy0tYJwcNJi
+	EIvPInKo+qOh5l4+2UZL5b9Nltatu4rqS4iJg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fyp4i4uZlfRo5bOX4ODR8XfuYfI/nxs8
+	XH5OJZBJaMm7D6zL8CAc1/OMWIM9szgEug4J1/I65PEGdNV5NY6aYGhRwvEZxUgL
+	VomaAu3zM3C/4EFs1PWY+mK49ljlnCKoP1qpP7x50V/aZzfA+7M4qqGnhz4nJXj5
+	NkhwUseVDs4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6CB6A3499B;
+	Mon, 15 Aug 2016 16:49:22 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E840F3499A;
+	Mon, 15 Aug 2016 16:49:21 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jeff King <peff@peff.net>
+Cc:	Andreas Schwab <schwab@linux-m68k.org>,
+	Eli Barzilay <eli@barzilay.org>, git@vger.kernel.org
+Subject: Re: Minor bug: git config ignores empty sections
+References: <CALO-gutdz5VMgoRmbqEa9UiaTC+L2Sy2n-3AF+zfPr-X8+1U4A@mail.gmail.com>
+	<20160815120916.6iobqirqbg76exms@sigill.intra.peff.net>
+	<8737m63phh.fsf@linux-m68k.org>
+	<20160815180905.znnz6evufsne5wy6@sigill.intra.peff.net>
+	<xmqqh9alhoor.fsf@gitster.mtv.corp.google.com>
+	<20160815185500.htgrz3t2wkztg4ww@sigill.intra.peff.net>
+Date:	Mon, 15 Aug 2016 13:49:19 -0700
+In-Reply-To: <20160815185500.htgrz3t2wkztg4ww@sigill.intra.peff.net> (Jeff
+	King's message of "Mon, 15 Aug 2016 14:55:01 -0400")
+Message-ID: <xmqqshu5g3lc.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfE/gqNhi2u7lH8/+ktUfBjPgaoIL7+Kwb67xmr3su2pRgtddG5JTakUL6KEjMDGjsR+smugGiudH+GrsxP3Kg7XWKAxt6zX9ZH0WBk/0O1sLPrpZHFuU
- Ohw8Gc8Ro6t3ND8HFNuqnHEbVouOy6VUAnspW1n3UkYWp02tHyOAhArCZNsuZC/ZiEuHRzKKTbyoRql2NcTQW500UPtORKdj0y6eQ6gS12Ma2PhxUb6gL/u9
- GpSZeGtLcQ8FEv2sToZyXw==
+Content-Type: text/plain
+X-Pobox-Relay-ID: BE57D914-6329-11E6-96C5-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: "Jacob Keller" <jacob.keller@gmail.com>
-[nip]
->>
->> I've no problem with more extensive methods for those preparing very big
->> patch series, or with those needing to merge together a lot of series and
->> want to keep the cover letters, but ensuring that a simple flow is 
->> possible
->> should still be there.
->> --
->> Philip
->>
->
-> Some people have suggested this simple idea, and I like it, but they
-> did mention that modifying the cover letter now requires a rebase over
-> a potentially large series of patches, which can get annoying.
->
-> Thanks,
-> Jake
+Jeff King <peff@peff.net> writes:
 
-They can just add "squash! cover! <series>" commits for that ;-) Though more 
-likely the advanced workflow would be used... We'll need both (more than 
-one) options.
---
-Philip 
+>> So a comment outside [section "name"] is tricky; it needs some
+>> mechanism (or convention) to tell us if it is about the particular
+>> section, or it is about the location in the configuration file.
+>
+> Keep in mind that even "outside" is hard, because sections do not
+> explicitly close.
 
+Yes, that was what I wanted to say.  We'd be deep in the
+"convention" territory.
