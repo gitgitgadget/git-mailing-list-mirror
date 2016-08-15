@@ -2,85 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_RED
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 041751F6C1
-	for <e@80x24.org>; Mon, 15 Aug 2016 20:21:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56B221F6C1
+	for <e@80x24.org>; Mon, 15 Aug 2016 20:24:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752863AbcHOUV0 (ORCPT <rfc822;e@80x24.org>);
-	Mon, 15 Aug 2016 16:21:26 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65008 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750842AbcHOUVZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2016 16:21:25 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8E7DF3436C;
-	Mon, 15 Aug 2016 16:21:24 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PfZagFfYZ20kU2na6tfKfime4tA=; b=xHM29X
-	MI4O3doh39dcejA/HKCM9RIIOggEDuF8zWIb5cBG865x/zIyG58sM0jbcK2VpCLO
-	9DBppWK+G/rNKuZnN1M/FvgZZ4njWsxSIYaPh8SuOp/aHHWeyQAUF5UqIGN6PQXm
-	7vGEVzeyuX6FsIQIyEqVPnEdzCSPrup5uv8fw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CjTV/02rj3lOMyCt1GbTOLXJhkb/fORa
-	rEIgiN/GhsW0FjxFCePv+KR1/y5l2y/7BFmUNwGzGIqBHcELzrUCH0+eRq5SS4eC
-	hrisc7XxZtCKZBCfcwN5rq71YYwO/c2HlZyRASjWZlODRL+qLYDiDFxRzN8UJa9V
-	fGuqYVQ4CIA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 866693436B;
-	Mon, 15 Aug 2016 16:21:24 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 112103436A;
-	Mon, 15 Aug 2016 16:21:24 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	"Tom Tanner \(BLOOMBERG\/ LONDON\)" <ttanner2@bloomberg.net>
-Cc:	john@keeping.me.uk, davvid@gmail.com, git@vger.kernel.org
-Subject: Re: [PATCH] difftool: always honor "command not found" exit code
-References: <57B19B9F0205070000390238_0_29566@p057>
-Date:	Mon, 15 Aug 2016 13:21:22 -0700
-In-Reply-To: <57B19B9F0205070000390238_0_29566@p057> (Tom Tanner's message of
-	"Mon, 15 Aug 2016 10:38:23 -0000")
-Message-ID: <xmqqa8gdhjgd.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752920AbcHOUYK (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 16:24:10 -0400
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:33474 "EHLO
+	mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750842AbcHOUYJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 16:24:09 -0400
+Received: by mail-yw0-f193.google.com with SMTP id z8so2719096ywa.0
+        for <git@vger.kernel.org>; Mon, 15 Aug 2016 13:24:09 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=8JAY6LpMdAsaEuRHMlm7+naJy8rpu9LoVnOrcsGwjpU=;
+        b=nOP0wvxex5Zg58aJ86QVHEVc0/v74nIqTWjwUSUQqD85WxwIWh7eKPhUGXgipdNpI8
+         htj/NZxyWcA9xx+FUMiDNksaJ9q0Ptu8+zXmiFOg7eKVk21rq521EEYyTTYTnP+fmB0T
+         9VB5WSbVV/Sa5feHd7dsryrouaTKG0SScTukow/NeNF7ifeeXaD6A7u+O+Fg2GV6vF96
+         Gb7ON8ObNgF2yvsI+DfnenCk0cfCywC+xu0iXBGmBLOQm26ewtE5Yr3heSpmpDfu61nU
+         j+k7V8otW3Pn6iWydYgP8DFtrHKqlCg4PfUOEu1dCfEcSSUdcUK2UeEClIdbdxjbUC08
+         FXmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=8JAY6LpMdAsaEuRHMlm7+naJy8rpu9LoVnOrcsGwjpU=;
+        b=YhFyGxIHYvg0to0kc88yUMq3zXKIzJVq4w2R3GQJcVcQb6m4q2xk99GiJ/ATu/1NYL
+         SIDXoWsv/B43uK/UOZvjHP46EYd7gnyve6izoyWYm1wtNn+CAtf4+xSZWC1Y8mWoO+CQ
+         S9eNaBIfA/JK3A5krotH/doyJqiHMrC3bX5qrsMHBPFa0+ACjXi08TmPAsRswnC3+HXb
+         xSdwo6JhYZOdgn+jU0OBIbOb9aLws7kdhipPpLxU5tsySesrcJk8XBW3oGv/X7hZOU+Y
+         0nvf5Ivpv4VLmVNCU13EpOekaltpXBftFGngXzHjTAmaToQhr/iyFKCb0fFWLdwtgJ0P
+         Mnzw==
+X-Gm-Message-State: AEkoousMqtPGrd0qrtIKLhMxZOfM4TW7u1Fv3m06og4iYH/+ALvke94iASFtNnLI6y6kRhTT/EQvSnbNQuBGYw==
+X-Received: by 10.129.152.88 with SMTP id p85mr21628303ywg.261.1471292648659;
+ Mon, 15 Aug 2016 13:24:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D63FA43E-6325-11E6-84B6-89D312518317-77302942!pb-smtp1.pobox.com
+Received: by 10.129.89.132 with HTTP; Mon, 15 Aug 2016 13:24:08 -0700 (PDT)
+From:	Pranit Bauva <pranit.bauva@gmail.com>
+Date:	Tue, 16 Aug 2016 01:54:08 +0530
+Message-ID: <CAFZEwPPQArBXqQ_tyo_-ximDpZfD6YkCiie8zh2UA2bHcNyxDQ@mail.gmail.com>
+Subject: Re: [GSOC Update] Week 15
+To:	Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-"Tom Tanner (BLOOMBERG/ LONDON)" <ttanner2@bloomberg.net> writes:
+From: Pranit Bauva <pranit.bauva@gmail.com>
+Subject: [GSOC Update] Week 15
 
-> From: gitster@pobox.com
-> To: john@keeping.me.uk
-> Cc: Tom Tanner (BLOOMBERG/ LONDON), davvid@gmail.com, git@vger.kernel.org
-> At: 08/14/16 04:21:18
->
-> John Keeping <john@keeping.me.uk> writes:
-> ...
->> POSIX specifies 127 as the exit status for "command not found" and 126
->> for "command found but is not executable" [1] and at least bash and dash
->> follow this specification, while diff utilities generally use "1" for
->> the exit status we want to ignore.
->>
->> Handle 126 and 127 as special values, assuming that they always mean
->> that the command could not be executed.
->
-> Sounds like a reasonable thing to do.  Will queue; thanks.
+=============== SUMMARY ==================
+My public git.git is available here[1]. I regularly keep pushing my work so
+anyone interested can track me there. Feel free to participate in the
+discussions going on PRs with my mentors. Your comments are valuable.
 
-> Would it be possible to also treat signals (128 and above) as
-> 'special' values as well (as I've seen some merge tools self
-> destruct like that from time to time)
 
-Certainly, it feels safer to notice an unusual exit status code and
-error out to force the user to take notice, but that reasoning
-assumes that "128 and above" are noteworthy exceptions.
+============== INTRODUCTION  ==============
+The purpose of this project is to convert the git-bisect utility which partly
+exists in the form of shell scripts to C code so as to make it more portable.
+I plan to do this by converting each function to C and then calling it from
+git-bisect.sh so as to use the existing test suite to test the function which
+is converted.
 
-I do not have a strong opinion on that part.
+Mentors:
+Christian Couder <chriscool@tuxfamily.org>
+Lars Schneider <larsxschneider@gmail.com>
+
+
+================ Updates ===================
+Things which were done in this week:
+
+ * I have converted bisect_start() and the bug has been eliminated too.
+
+ * I have converted bisect_next() but still has some bugs. A notable
+   problem is that the bisect.c code uses exit() statements and `trap` in
+   the shell code for cleanup with `bisect_clean_state()`. So as
+   suggested by Lars, I intend to use `bisect_clean_state()` along with
+   die() as cleanup (or goto preferably).
+
+================= NEXT STEPS =================
+Things which would be done in the coming week:
+
+ * Resend all patches rebased wtih v2.10-rc0.
+
+ * bisect_next()
+
+ * Following that I will convert bisect_auto_start()
+
+ * Then bisect_replay().
+
+=========== My Patches (GSoC project only) ===========
+
+ * My current work is sent out to the mailing list here[2] which contains
+   the whole conversion. Please don't merge the previous patches to next
+   yet. Junio has requested me to rebase it on v2.10-rc0 so will resend
+   it. Plus there are some change in the patch 04/13 which change the
+   location of the function `bisect_clean_state()` from
+   builtin/bisect--helper.c to bisect.c .
+
+[1]: https://github.com/pranitbauva1997/git
+[2]: https://public-inbox.org/git/010201567675adc1-17e27495-6b36-40d1-836d-814da029fcc4-000000@eu-west-1.amazonses.com/
+
+Regards,
+Pranit Bauva
