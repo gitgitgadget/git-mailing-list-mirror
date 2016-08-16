@@ -2,70 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E7E81FD99
-	for <e@80x24.org>; Tue, 16 Aug 2016 08:53:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7E201FD99
+	for <e@80x24.org>; Tue, 16 Aug 2016 09:31:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753345AbcHPIwz (ORCPT <rfc822;e@80x24.org>);
-	Tue, 16 Aug 2016 04:52:55 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:36900 "EHLO
-	mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752357AbcHPIwx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2016 04:52:53 -0400
-Received: by mail-wm0-f42.google.com with SMTP id i5so152149249wmg.0
-        for <git@vger.kernel.org>; Tue, 16 Aug 2016 01:52:52 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=2dw+DhHCn4iJaBKK4bkf81yqeZy3rjNFTUyHk6aTDL8=;
-        b=cT3VtU+lxsaS4jwj2+IUdz1qMr1ANyEW0WCR1nJ3K8faoBk2R1TlwqhbGxG+BHoh15
-         3X22wjWAcu/p2S44AwPq6WNRyf1K5QdYCWc3n4w1qKvKogatfertelHgUfFEUAVpYT9P
-         WECDxeF/upaCB6F1f2sspDxYK/398rylM2CwKGg4kIwig4PaPybil9xuur7+NEXduYEz
-         vRY1M6h5t4gYdLHJcVf5TiRzDzUsriNrX5X18op8WbaoUjJL9GQmhUQvSQ9to8EmulqK
-         Yp4LLfQ/WrDhYzx4S/a2W5k3u7vAllMvBCMMQ7S4d3SJMHRBH8iyAppMOwSkZ+NNh0yx
-         jKIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=2dw+DhHCn4iJaBKK4bkf81yqeZy3rjNFTUyHk6aTDL8=;
-        b=KCUK7f9kaSGxvK5FVskYhLqOVqcz68AGjgqHid2aQxBVt1fERNL4x6DSjT1zJVGaLs
-         y049L9q6dPtb2XZZ8NnRhegqRBVwaHIFe5WVj8mdWzgMV0I1R4LBi42LljnKp/NE2Mig
-         7jojYuevHuCFr1o8HG3nrIP3MEQNV+za/nNQb4Aq7JyjCiljb+J1u+BZvO0TVGOLJrhA
-         6tvm4tXG0UgO9I0YZOSYdoSYPDp98wl7H2uPzEDYW7c/E9wK07iFDJ7UM76A53p5hXS/
-         vGlHi9aMIQF+JVSDcRHBwqYYMNKnucRpq+VAr6SOmoUbVVhU28b+3vt/ZQwV0M2DygHU
-         MxAQ==
-X-Gm-Message-State: AEkoousyacBSM9/CamQawXAFcW24RIeOMA1FUBoL6/Ax22D1LEqd+XBJTSJMEyw+r3g1KqAyNClW1ddrmBEKuA==
-X-Received: by 10.194.62.70 with SMTP id w6mr41956806wjr.130.1471337572187;
- Tue, 16 Aug 2016 01:52:52 -0700 (PDT)
+	id S1753338AbcHPJbX (ORCPT <rfc822;e@80x24.org>);
+	Tue, 16 Aug 2016 05:31:23 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:53970 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753251AbcHPJa2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2016 05:30:28 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A0901FD99;
+	Tue, 16 Aug 2016 09:30:27 +0000 (UTC)
+Date:	Tue, 16 Aug 2016 09:30:27 +0000
+From:	Eric Wong <e@80x24.org>
+To:	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
+Cc:	Philip Oakley <philipoakley@iee.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	git <git@vger.kernel.org>,
+	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+	Nicola Paolucci <durden@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	remi galan-alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	meta@public-inbox.org
+Subject: Re: Draft of Git Rev News edition 18
+Message-ID: <20160816093027.GA27347@dcvr>
+References: <CAP8UFD1iveotLsMOBnpa=hU4ohcQjZ-X7tjnzY4k+xz5KJvqBw@mail.gmail.com>
+ <D5A2E231FFE74D1C891A1653E1C2D797@PhilipOakley>
+ <9f3b254f-451e-4f6d-233c-7e995d8e369e@gmail.com>
 MIME-Version: 1.0
-Received: by 10.28.199.75 with HTTP; Tue, 16 Aug 2016 01:52:31 -0700 (PDT)
-In-Reply-To: <146860882262.30566.9308142555262174975.stgit@zbitter>
-References: <146860882262.30566.9308142555262174975.stgit@zbitter>
-From:	Catalin Marinas <catalin.marinas@gmail.com>
-Date:	Tue, 16 Aug 2016 09:52:31 +0100
-Message-ID: <CAHkRjk6U0a+UsBBKTiQTCqxY61aZaJB6jqR4fEpcaGoVFcn1VA@mail.gmail.com>
-Subject: Re: [StGit PATCH] contrib/vim: Fix filetype detection in VIM >=7.4
-To:	Zane Bitter <zbitter@redhat.com>
-Cc:	Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9f3b254f-451e-4f6d-233c-7e995d8e369e@gmail.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 15 July 2016 at 19:58, Zane Bitter <zbitter@redhat.com> wrote:
-> The command "setfiletype" will not override an existing filetype. This was
-> never a problem for me previously, but since upgrading from VIM 7.3 to 7.4
-> the filetype for StGit's files is explicitly set to "text", preventing the
-> stgit ftdetect plugin overriding it. Use "setlocal filetype=" instead to
-> ensure that we override any previously detected filetype.
+Jakub Narębski <jnareb@gmail.com> wrote:
+> It's a great pity that https://public-inbox.org/ is just
+> directory index, not a true home page.
 
-Applied. Thanks.
++Cc meta@public-inbox.org
 
-Catalin
+I'm not sure one could do better while staying true to the
+minimalist nature of plain-text email.
+
+In the spirit of decentralization, there may not be /a/
+homepage, but many.   Everything is meant to clonable with each
+public-inbox, so maybe every public-inbox will have a code
+branch attached to it with the source+docs bundled.
+
+
+At least for now, other pages are more easily discoverable[1]
+but one day I hope to have repobrowse[2] running there (and
+maybe everywhere).
+
+
+For now, I am prioritizing user/admin/hacker documentation so
+more instances can exist.  I'll probably get some online help
+stuff up tomorrow.
+
+
+[1] at least the top-level of public-inbox.org already has more
+    content than both YHBT.net and bogomips.org combined :)
+
+[2] git clone -b repobrowse https://public-inbox.org/ ...
+    (idle the moment: think cgit|gitweb with the same (lack of)
+     style as public-inbox, +search, +mail thread integration)
