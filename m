@@ -2,102 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FB941F859
-	for <e@80x24.org>; Tue, 16 Aug 2016 21:15:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1850A1F859
+	for <e@80x24.org>; Tue, 16 Aug 2016 21:16:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753592AbcHPVPn (ORCPT <rfc822;e@80x24.org>);
-	Tue, 16 Aug 2016 17:15:43 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50943 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753387AbcHPVPk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2016 17:15:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7AB7136BF7;
-	Tue, 16 Aug 2016 17:14:29 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cWyZjhUY8l7O97opPCxavEnt9rU=; b=eBbals
-	cYDKqMKHLNJbrPAU+b+CwJ9PoqDuKYKPnb4oq8eDyqVkwNxTaWnhT9ljWSExtywz
-	g9BT0fZCiHU5PUmU2hfkFm0uafr+ZajOKxRTQy678cYa96jYC595IogaqeriZ9OX
-	HqejMvsik8Cgibe75+OvAsjbIMcIejaKoy9uE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sOjiPAsbFgbL2X7noGfNZaFlD7652ZP5
-	Gs0EQYdu3tn2GBrQaKMAo2hX2eCBe8vF5hGo0B5/ObudBeqdQuhQroL0SpfGCb4Q
-	h09q95Wtd8nCLIKhRwBKqM44l5ZbtfABpiuj1jTJGZHf1ksEPS3V+HkmJEekEKsS
-	pk7dOFwQx4I=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7322836BF6;
-	Tue, 16 Aug 2016 17:14:29 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EA3BF36BF5;
-	Tue, 16 Aug 2016 17:14:28 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jacob Keller <jacob.keller@gmail.com>
-Cc:	Jacob Keller <jacob.e.keller@intel.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Stefan Beller <stefanbeller@gmail.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v6 3/3] diff: add SUBMODULE_DIFF format to display submodule diff
-References: <20160815230702.30817-1-jacob.e.keller@intel.com>
-	<20160815230702.30817-4-jacob.e.keller@intel.com>
-	<xmqqh9akczyp.fsf@gitster.mtv.corp.google.com>
-	<CA+P7+xqc_WwzjUnF5P4arBhBqgRbtXyKC9QWtRJ3+fmx0Q2+oA@mail.gmail.com>
-Date:	Tue, 16 Aug 2016 14:14:27 -0700
-In-Reply-To: <CA+P7+xqc_WwzjUnF5P4arBhBqgRbtXyKC9QWtRJ3+fmx0Q2+oA@mail.gmail.com>
-	(Jacob Keller's message of "Tue, 16 Aug 2016 13:25:46 -0700")
-Message-ID: <xmqqvaz0bemk.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753301AbcHPVPm (ORCPT <rfc822;e@80x24.org>);
+	Tue, 16 Aug 2016 17:15:42 -0400
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:53064 "EHLO
+	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752588AbcHPVPk (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2016 17:15:40 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id AC398204DB
+	for <git@vger.kernel.org>; Tue, 16 Aug 2016 17:14:04 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute6.internal (MEProxy); Tue, 16 Aug 2016 17:14:04 -0400
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=fUZ0XIQc7csW2cA
+	KNiNBwOfeYu8=; b=g4K0GtdSa+0AqRcxRIjdZtODnxj8RV56NFXLMrRgsmnx74U
+	kYei+lXWUrSoJe3QRyKsW3cg+Ej2YAjS8FfBDKn9hjyZCrzpcrgo3T5cNFiRxlqi
+	MbNDG37A3igTTvx+94sf1ghbYUZsO3eBJjDyRhjmhA20X7y8eweTQecOwNl4=
+X-Sasl-enc: 0x4VQlsjBgyOv6ZtBMNFMOZJUCh12irOtLwn4k3xyuH2 1471382044
+Received: from ebox.rath.org (ebox.rath.org [45.79.69.51])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 5DE32CCDC0
+	for <git@vger.kernel.org>; Tue, 16 Aug 2016 17:14:04 -0400 (EDT)
+Received: from thinkpad.rath.org (thinkpad [192.168.12.2])
+	by ebox.rath.org (Postfix) with ESMTPS id 7C56C388DFA
+	for <git@vger.kernel.org>; Tue, 16 Aug 2016 21:14:03 +0000 (UTC)
+Received: by thinkpad.rath.org (Postfix, from userid 1000)
+	id 37AA2BFFAB; Tue, 16 Aug 2016 14:14:03 -0700 (PDT)
+From:	Nikolaus Rath <Nikolaus@rath.org>
+To:	git@vger.kernel.org
+Subject: Re: Working with zip files
+References: <87y43wwujd.fsf@thinkpad.rath.org>
+	<alpine.DEB.2.02.1608160926330.11774@nftneq.ynat.uz>
+Mail-Copies-To:	never
+Mail-Followup-To: git@vger.kernel.org
+Date:	Tue, 16 Aug 2016 14:14:03 -0700
+In-Reply-To: <alpine.DEB.2.02.1608160926330.11774@nftneq.ynat.uz> (David
+	Lang's message of "Tue, 16 Aug 2016 09:27:55 -0700 (PDT)")
+Message-ID: <87pop8wh5w.fsf@thinkpad.rath.org>
+User-Agent: Gnus/5.130014 (Ma Gnus v0.14) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6B0A7F6E-63F6-11E6-8E47-89D312518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jacob Keller <jacob.keller@gmail.com> writes:
-
->>> +
->>> +     if (dirty_submodule & DIRTY_SUBMODULE_MODIFIED) {
->>> +             /*
->>> +              * If the submodule has modified contents we want to diff
->>> +              * against the work tree, so don't add a second parameter.
->>> +              * This is essentially equivalent of using diff-index instead.
->>> +              * Note that we can't (easily) show the diff of any untracked
->>> +              * files.
->>> +              */
->> ...
->> I am debating myself if this is a good thing to do, though.  The
->> submodule is a separate project for a reason, and there is a reason
->> why the changes haven't been committed.  When asking "what's different
->> between these two superproject states?", should the user really see
->> these uncommitted changes?
+On Aug 16 2016, David Lang <david@lang.hm> wrote:
+> On Tue, 16 Aug 2016, Nikolaus Rath wrote:
 >
-> Well, the previous submodule code for "log" prints out "submodule has
-> untracked content" and "submodule has modified content" so I figured
-> the diff might want to show that as a diff too? Or maybe we just stick
-> with the messages and only show the difference of what's actually been
-> committed.. I think that's probably ok too.
+>> I would like to store Simulink models in a Git
+>> repository. Unfortunately, the file format is binary. But luckily, the
+>> binary format happens to be a zipfile containing nicely formatted XML
+>> files.
+>>
+>> Is there a way to teach Git to take advantage of this when storing,
+>> diff-ing and merging these files?
+>
+> you should be able to use clean/smudge to have git store the files
+> uncompressed, which will help a lot.
 
-I do not have a strong opinion.  We only see DIRTY when we are
-looking at the working tree at the top-level diff (i.e. "git diff
-HEAD~ HEAD" at the top-level, or "git diff --cached" will not show
-DIRTY_SUBMODULE_MODIFIED when a submodule has local modifications in
-its working tree), so in that sense, it probably makes sense to show
-the more detailed picture of the working tree like your patch does.
-After all, choosing to use --submodule=diff is a strong sign that
-the user who says top-level "git diff [<tree>]" wants to see the
-details of her work-in-progress.
+Having looked at that, I'm not sure if this really helps:
 
-Do you need to handle "git diff -R [<tree>]" at the top-level a bit
-differently, by the way?  If this function gets the full diff_options
-that is driving the top-level diff, the DIFF_OPT_REVERSE_DIFF bit
-would tell you that.
+As I understand, the smudge command is run on checkout to convert the
+blob in the repository to the format that is desired in the working
+tree. But this is the opposite of what I need: on checkout, I need to
+convert the text data in the repository to a blob in the working tree.
 
+Furthermore, I need to convert multiple text files into one blob, will
+smudge/clean seem to do just 1:1 conversions.
+
+Am I missing something? Are there any other options?
+
+Best,
+Nikolaus
+--=20
+GPG encrypted emails preferred. Key id: 0xD113FCAC3C4E599F
+Fingerprint: ED31 791B 2C5C 1613 AF38 8B8A D113 FCAC 3C4E 599F
+
+             =C2=BBTime flies like an arrow, fruit flies like a Banana.=C2=
+=AB
