@@ -2,81 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 925E61F6C1
-	for <e@80x24.org>; Tue, 16 Aug 2016 01:03:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7651C1F6C1
+	for <e@80x24.org>; Tue, 16 Aug 2016 02:02:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932221AbcHPBDN (ORCPT <rfc822;e@80x24.org>);
-	Mon, 15 Aug 2016 21:03:13 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55971 "HELO cloud.peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932182AbcHPBDN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2016 21:03:13 -0400
-Received: (qmail 26047 invoked by uid 109); 16 Aug 2016 01:03:12 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 Aug 2016 01:03:12 +0000
-Received: (qmail 21917 invoked by uid 111); 16 Aug 2016 01:03:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 Aug 2016 21:03:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Aug 2016 21:03:09 -0400
-Date:	Mon, 15 Aug 2016 21:03:09 -0400
-From:	Jeff King <peff@peff.net>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [RFC/PATCH 3/3] receive-pack: allow a maximum input size to be
- specified
-Message-ID: <20160816010309.zstrljqknc3vjziq@sigill.intra.peff.net>
-References: <20160815195729.16826-1-chriscool@tuxfamily.org>
- <20160815195729.16826-4-chriscool@tuxfamily.org>
- <20160815204034.rrjn57wigxtjpgye@sigill.intra.peff.net>
- <xmqqr39pejhk.fsf@gitster.mtv.corp.google.com>
+	id S932237AbcHPCCP (ORCPT <rfc822;e@80x24.org>);
+	Mon, 15 Aug 2016 22:02:15 -0400
+Received: from mail-oi0-f53.google.com ([209.85.218.53]:35545 "EHLO
+	mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932201AbcHPCCO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2016 22:02:14 -0400
+Received: by mail-oi0-f53.google.com with SMTP id 4so82187643oih.2
+        for <git@vger.kernel.org>; Mon, 15 Aug 2016 19:02:14 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ITn+Qx36ZKk5m9FyDPAVL0gHcmt1A4LrdQL5T9dfMXk=;
+        b=fSTzUKuGLRSOO+5Ak/aZXSKp/IZw/4dij98vaMcrTnN7frUxaXOwj4zmJ0QVYb524h
+         xIWmCOZFen35LIlC1SqU9CuYvITqDYwIhN3iBEvvnr+vyFCuQqQAcJ7kcRFju1G1OxnB
+         jSrb8bD3wMBV6U1MyAepnzDZ7yufBIL1xXGk26s1fXJ4EiHo2u7uxoQqrClmm7tSmJ/Y
+         SwXCUkKQH5a0sUkwRXYnZQh6Qc2mD65nwfDEYcyVWwSDFyQP/pEB3ATS+g76gP7ZGw2K
+         mWJaF4tvqPHAqHzabrs9Z3au8oz+PzHPyaX/tsx/CNcEY/NuzItouR1Js8lFT+PiV+m7
+         vKjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ITn+Qx36ZKk5m9FyDPAVL0gHcmt1A4LrdQL5T9dfMXk=;
+        b=VuU8L39Fx6fLSYdehRW0xnJQ2yXQrWYVO55wO5pIpXsDWYoDqeLM5ACyMPHyjQwmnK
+         4uJ9lPFkuGQqw275M+8Jwu/igP9NiBcv1PjxC+U16P/p9kfvpn8CfTZyrhm+X2bLGC3O
+         5jT9tZINbL9Dim/imPsX6oG1b9SOL2fD/cTU0tLZsVR9CLE2STRfqQiCGsTGPDHpDv/b
+         qmOhTgNlL/JprYXUba5IeFpjaGRq1AMJH0S1k4rBrXvNrp+SJe9euooGIgTawOaOL6A+
+         KG/PgOqAtfNOKBaXema1bxJoXUfBTTA6OWygG5A7/b18qIRy8r+PcovMTUKsnuNCLAmy
+         92UA==
+X-Gm-Message-State: AEkooutpEqh7PjVI03EC0I7V/GuBGGOehVkgx4TL+NLdRn2yX2ZohMhHu1Qs8pfb09s6neCL1U+wxS7HxRuMeg==
+X-Received: by 10.202.48.205 with SMTP id w196mr15363867oiw.181.1471312933745;
+ Mon, 15 Aug 2016 19:02:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqr39pejhk.fsf@gitster.mtv.corp.google.com>
+Received: by 10.202.94.133 with HTTP; Mon, 15 Aug 2016 19:01:53 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1608151422210.4924@virtualbox>
+References: <CAKkAvaxWk6SK4EYPaWXHQoVBh9qLgHoEqAh9+dgOrjncsi5QyA@mail.gmail.com>
+ <alpine.DEB.2.20.1608151422210.4924@virtualbox>
+From:	ryenus <ryenus@gmail.com>
+Date:	Tue, 16 Aug 2016 10:01:53 +0800
+Message-ID: <CAKkAvaxEeOvCy-8EZ=BeWVUPCLec_dFNv+dNpj9_VsECzAT2YA@mail.gmail.com>
+Subject: Re: [PATCH] make rebase respect core.hooksPath if set
+To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:	git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Mon, Aug 15, 2016 at 03:48:55PM -0700, Junio C Hamano wrote:
+On 15 August 2016 at 20:24, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > The simple fix is to call register_tempfile() in open_pack_file(), and
-> > just have index-pack clean up the file on its way out.
-> >
-> > But there are harder cases. For instance, imagine somebody pushes a
-> > 500MB file, and you have a pre-receive hook that says "too big; I won't
-> > accept this". And then they push in a loop, as before. You've accepted
-> > the incoming pack into the repository by the time the pre-receive runs.
-> > You can't just delete it, because you don't know if other simultaneous
-> > processes have started to depend on the objects.
-> >
-> > To solve that, I have patches that put incoming packfiles into a
-> > "quarantine" area, then run the connectivity check and pre-receive hooks
-> > with the quarantine accessible via GIT_ALTERNATE_OBJECT_DIRECTORIES. And
-> > then we either move the quarantine packs into the real repo, or blow
-> > away the tmpdir, depending on whether the hooks said the objects were
-> > OK.
-> >
-> > Those are patches I plan to share upstream but just haven't gotten
-> > around to yet.
-> 
-> I think these other patches can come later, independent from this
-> three-patch series resurrected from the archive, so I can take a
-> reroll of these once the integer-size issues you pointed out are
-> sorted out.
+> Would it not be more appropriate to teach --git-path hooks to respect the
+> core.hooksPath variable? This would be in line with --git-path objects
+> respecting the GIT_OBJECT_DIRECTORY environment variable.
 
-Yeah, definitely it's independent. I was mostly suggesting to Christian
-that he may want to look into the "easy" register_tempfile() case, as
-GitLab may find this is only half of the fix that they want.
+Indeed, I've thought about that, too, due to the bad smell of duplication,
+but not sure if that's the right position among all the abstraction layers.
 
-Also a patch I may try to polish and share in the future, but not as
-high priority as some of the other stuff.
+Also it's more convenient to come up with a shell based fix on local
+installation.
 
--Peff
+Thanks
