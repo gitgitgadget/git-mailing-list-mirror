@@ -2,85 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B17142018E
-	for <e@80x24.org>; Tue, 16 Aug 2016 19:07:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAA511F859
+	for <e@80x24.org>; Tue, 16 Aug 2016 19:56:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751936AbcHPTG4 (ORCPT <rfc822;e@80x24.org>);
-	Tue, 16 Aug 2016 15:06:56 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61062 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751584AbcHPTG4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2016 15:06:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 463B73595D;
-	Tue, 16 Aug 2016 15:06:55 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4qIH8VvEwcGvSW35QaBAWQjLw0I=; b=Poxh9c
-	ROYGpOiqjN12padHpOdl4yuuQVR3UkicDhV10/7yBMYSSJjbhWxP55Pt1sm6s1wP
-	vO4SCNu/EUY5kMsEK4xyJyik23ln4oP0V95WOFqxdwMde0MpHrCmdpEBLFEzqAkC
-	PSPu+DQ0+hMFybtXCgYezR0VMXFFIqL8NRNUQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=C3cYHX3biMJB2abJpxmuxQGrnK0zLr+E
-	ChpsZ8+bfeO6tWlsARuI3Oujsz/kAFmUmBm+3q4ey91GP54o4F/JRqVF3U76fGqE
-	FpNvdf0HWyeMgR8+nUcRFR6IvvPPUuOJe59UTYi16FKA4wF8q2hW5syjLg3szjTM
-	y/bmuGAIlYs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3B9393595C;
-	Tue, 16 Aug 2016 15:06:55 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 695973595B;
-	Tue, 16 Aug 2016 15:06:54 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Ralf Thielow <ralf.thielow@gmail.com>
-Cc:	git <git@vger.kernel.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Joseph Musser <me@jnm2.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v3] help: make option --help open man pages only for Git commands
-References: <20160815053628.3793-1-ralf.thielow@gmail.com>
-	<20160816162030.27754-1-ralf.thielow@gmail.com>
-	<xmqq60r0ei9k.fsf@gitster.mtv.corp.google.com>
-	<CAN0XMOL2WZkh17v-7OtA8AMbzs4NUuj8xPVwJBD-PnK4fBaUFw@mail.gmail.com>
-Date:	Tue, 16 Aug 2016 12:06:52 -0700
-In-Reply-To: <CAN0XMOL2WZkh17v-7OtA8AMbzs4NUuj8xPVwJBD-PnK4fBaUFw@mail.gmail.com>
-	(Ralf Thielow's message of "Tue, 16 Aug 2016 19:57:00 +0200")
-Message-ID: <xmqqd1l8cz3n.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1750882AbcHPT42 (ORCPT <rfc822;e@80x24.org>);
+	Tue, 16 Aug 2016 15:56:28 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:36271 "EHLO
+	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752056AbcHPT40 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2016 15:56:26 -0400
+Received: by mail-wm0-f68.google.com with SMTP id i138so18101408wmf.3
+        for <git@vger.kernel.org>; Tue, 16 Aug 2016 12:56:21 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=QuiE9Dc5tE0x7cN2Uu0g8xX79QsBhVZJ+znAkwZZEEI=;
+        b=sN3jUTZD3ZQ6Z/lK76iNPfWWTlCHvSxGN29S+8QwIRlhnJm16Xy0dTSr4/DBt7N3UL
+         YlLDGa7gAaclTC8sM6+Lmv+fObEfcnDHIFnBkqilWQuvEnsd7BuA0MD4KgHy7CBMERSs
+         jslpc4UyjNaOnBbsLmO3+Vttcq+7BHHooMxQ8wzGEv8wZOMQnGuCOmFfvbL4D5y5njSw
+         bBKdX4HWYpjUyhSP6z5KdzUEQwo4fD8iAgIWv8QWoQI5mVjjlt/XmpHzOvA5QJ1mvDUS
+         HumDqkpIrjmuBi3fzMaVOsCjRNCQ2VzCViqAjMhaFWxam1JRG9i68YpGluTe0p0wa8+t
+         vgbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=QuiE9Dc5tE0x7cN2Uu0g8xX79QsBhVZJ+znAkwZZEEI=;
+        b=Q3R+HqZgimr/6F4e0l28GAMZKmR5kQIhZbDnx6nKRFkZi15aCRtMidzmcInk4Os5sC
+         fdvtmN2cKFoAv4qcTi92eD9aOkOVZ1QdY4Y+92r9fBU0gVB0xRxU/oiDgHIOXmFx53bz
+         0ddLhvutiBSJaWNINDFk9fvbjhQvPtDyfj6wDbwsUHF9wBtpzZ9jO4X2BYvZNNQeyq7F
+         ld3GioUi+vcyzQ4QbIti2l+Xrfkr/IOsF/0oM5itUkBWeJpOffrMxHC/RA4Sei6eJB3B
+         mozs6bBaB1aBEqZ7WMAkIJVfcXi3dZAmT1UHtO2y5FM+VdXZpQqxL7Jr55TVZb++Xrz/
+         o80w==
+X-Gm-Message-State: AEkoouv8lC11uJlhnugN8+RsyuaoCmtwiPWI9KbF/MSLJqOwinKaosVN8pdCPO9Naowisw==
+X-Received: by 10.28.153.202 with SMTP id b193mr24326069wme.62.1471377380181;
+        Tue, 16 Aug 2016 12:56:20 -0700 (PDT)
+Received: from [192.168.1.26] (dcb51.neoplus.adsl.tpnet.pl. [83.23.53.51])
+        by smtp.googlemail.com with ESMTPSA id cw7sm28184061wjb.38.2016.08.16.12.56.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 Aug 2016 12:56:19 -0700 (PDT)
+Subject: Re: Working with zip files
+To:	Junio C Hamano <gitster@pobox.com>, David Lang <david@lang.hm>
+References: <87y43wwujd.fsf@thinkpad.rath.org>
+ <alpine.DEB.2.02.1608160926330.11774@nftneq.ynat.uz>
+ <xmqqeg5oejmn.fsf@gitster.mtv.corp.google.com>
+Cc:	Nikolaus Rath <Nikolaus@rath.org>, git@vger.kernel.org
+From:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <34d64f4f-3cda-385c-cdce-5f1852d545e3@gmail.com>
+Date:	Tue, 16 Aug 2016 21:56:08 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9896B478-63E4-11E6-8B6B-89D312518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <xmqqeg5oejmn.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Ralf Thielow <ralf.thielow@gmail.com> writes:
+W dniu 16.08.2016 o 18:58, Junio C Hamano pisze:
+> David Lang <david@lang.hm> writes:
+> 
+>> you should be able to use clean/smudge to have git store the files
+>> uncompressed, which will help a lot.
 
-> 2016-08-16 19:27 GMT+02:00 Junio C Hamano <gitster@pobox.com>:
->> Ralf Thielow <ralf.thielow@gmail.com> writes:
->>> +
->>> +     if (swapped)
->>> +             return help_unknown_cmd(cmd);
->>
->> I am guilty of suggesting "swapped"; even if we are going to mark
->> this as OPT_HIDDEN, I think we should be able to think of a better
->> name.  I think the meaning of this boolean is "we know that this is
->> not a guide and is meant to be a command.", and I hope we can come
->> up with a name that concisely expresses that (e.g. "--not-a-guide",
->> "--must-be-a-command").
->>
->
-> I think "--cmd-only" is a good name.  With a good name I think it's worth
-> to make this option visible to the user.
+You can find rezip clean/smudge filter (originally intended for
+OpenDocument Format (ODF), that is OpenOffice.org etc.) that stores
+zip or zip-archive (like ODT, jar, etc.) uncompressed.  I think
+you can find it on GitWiki, but I might be mistaken.
 
-Sure.  I'd prefer "cmd" to be spelled out in anything that is
-end-user facing, though.
+>> I think there's a way to tell it to do a xml aware diff/patch, but I
+>> don't remember how.
+> 
+> I do not know about "patch" (in the sense of "git apply"), but "git
+> diff" (and "git log -p") can take advantage of the clean/smudge
+> mechanism.  I used to deal with a file format that is gzipped xml so
+> my clean filter was "gzip -dc" while the smudge was "gzip -cn".
+> Essentially, this stores the xml before compression in the repository
+> so blobs delta well with each other and also the revisions are
+> made textually diff-able.
+> 
+> Nikolaus's case has one extra layer of complexity in that the "file"
+> is actually an archive of multiple files.  The clean/smudge pair he
+> writes need to be a filter that flattens the archive into a single
+> human-readable text byte stream and its reverse.
+
+There is also `textconv` filter that can be used instead; it might
+be 'unzip -c' (extract files to stdout, with filenames), or 'unzip -p'
+(same, without filenames).
+
+-- 
+Jakub Narębski
