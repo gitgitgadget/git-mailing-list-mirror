@@ -2,145 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0D9A1F859
-	for <e@80x24.org>; Tue, 16 Aug 2016 13:18:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A23D71F859
+	for <e@80x24.org>; Tue, 16 Aug 2016 14:27:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753444AbcHPNPW (ORCPT <rfc822;e@80x24.org>);
-	Tue, 16 Aug 2016 09:15:22 -0400
-Received: from mout.gmx.net ([212.227.15.15]:58581 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753302AbcHPNOu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2016 09:14:50 -0400
-Received: from virtualbox ([37.24.141.212]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0Lee2I-1aqAYc1pra-00qVCF; Tue, 16 Aug 2016 15:14:28
- +0200
-Date:	Tue, 16 Aug 2016 15:14:27 +0200 (CEST)
-From:	Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	git@vger.kernel.org
-cc:	Junio C Hamano <gitster@pobox.com>, ryenus <ryenus@gmail.com>,
-	=?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-	<avarab@gmail.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v2] rev-parse: respect core.hooksPath in --git-path
-In-Reply-To: <520a941f7472ac1cb4fa41e6bba33a0afc2f5999.1471264971.git.johannes.schindelin@gmx.de>
-Message-ID: <ce8891377cec31cada49208f2d192dda86658e40.1471353054.git.johannes.schindelin@gmx.de>
-References: <520a941f7472ac1cb4fa41e6bba33a0afc2f5999.1471264971.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1753182AbcHPO1N (ORCPT <rfc822;e@80x24.org>);
+	Tue, 16 Aug 2016 10:27:13 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35712 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751455AbcHPO1M (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2016 10:27:12 -0400
+Received: by mail-wm0-f65.google.com with SMTP id i5so16786031wmg.2
+        for <git@vger.kernel.org>; Tue, 16 Aug 2016 07:27:11 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=e8nIYJvQb8sRjBrwkOsF54IKUQ9Gi0IXkOq7B4cLlRA=;
+        b=w++oPh+pEeFeRpf3UYfCJ8WgQki1GZEf1Se9Ok/RF7vZ/dCJy8f3043P5o8Pd/6Ry3
+         hDQgqKN4mTxdvRB+JO+LzAzHUEdDX0pImMjy2/f25/dPRDEqPXqxIflgyh2Mzbsjl5ko
+         vvOlblCklphsnFVHcTpNeHc8wmqNc8SiLhOHwcGTypyibZLLqyeC4eo5nBL9H3ujX3cA
+         AQ5u1sCO+c0LpxlFgrirV9tBX00FPw01HkKsuwJBmNxwg2RpROR2KloyhdEHumEyEAA9
+         dr1uhZnoarB2l5BJgZCEQIF/Sw6u1AmsQavvWBab53HHlmlk06tnzuPNV54it2V+pzM0
+         K06w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=e8nIYJvQb8sRjBrwkOsF54IKUQ9Gi0IXkOq7B4cLlRA=;
+        b=O/VG7DxvXMWiMM6xjG0STBPrBivqeBLL0ARi61OiR70UxPzDtTVBRougNVjaxatrLK
+         MNDh2kFdh7C9wn7spAhWa8/bJGXZ+7btRUeygvIg85BcfA/JbItIEQhqoDuGO96pSkx5
+         9ul5NuiiISC2qjdOR3S4zcM2vj+Q/+t64PJuhzF1zumO5npemXZMfVa4Q6EetvHKBtXR
+         kXFeJpChFWGrjs3UV4Mov7BcpaDv3p4e8/mqNrHqlqIyRd28aePrGAy6a6G92057MN/b
+         ayC7J1oQVY6KzrWLjqnHJlpuGvI7HCHk1Rgdfk7M/Pf+dF5SZ2THOgS4o81Be9bcuJe8
+         IzTg==
+X-Gm-Message-State: AEkoouu4OebWGl48Z9PU4xBaXjxWQ83adK0Ujq+4Ybv6GANvPHwN4h+HIe/7fp8TQ7QQ/XmVAxTRktEWibFrQA==
+X-Received: by 10.194.190.232 with SMTP id gt8mr38429906wjc.141.1471357630747;
+ Tue, 16 Aug 2016 07:27:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:BZSQfnsgm8ZW9w1YM8RSlNDuy7vuBFcttwSxJFAS4x8PThBfE2G
- ovtztqTCPuXwuKBt6XCxvIVgZSrWQ1MhoJV9udzkY5X6pBjUYHq7U7mbyxiqMkvBkPtNijq
- JZaWL2AbwstsDFZOEwE7rw+r6dw8WqiHuqKaTpKf5vP6Bc5zDJXCVqlzwKOfZd9TUxgg3iK
- IRIsy7RyJi1brs6c05c2Q==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:Y/7hc42uRmw=:x2yYlynYr9fGsLdMeh9pyb
- EFpfOtrlFuh3W4OJub5h6DPeXmrrX8M1v3qVufwOVecw2pRO3TMEPTkY56wN02+8MbT5m0dwX
- socv+V0TTWUKwapc79nmZUWAt8yCimX4qaiKyFtUtadypIZqnb9rkmgSSrwDKvu2+J3l26nXi
- E8KkGc7LkN3j4CJ2K3lGO80WcpKFPfi96Hwxb/cHIZ0TfeOoqn8NRZ16ByD17EQKbcQKfFLDV
- eqA+Vd2Q5T8q8QPSkfMb5KmPb/B/RAlaQlKLnWY3JYZOFzm5Gha3srNSfvsrww2ihOx+p3Lr/
- Lnh9EZrzeYMZIZp+akMZjdj9YxZXzk3ZwaucXTwNtsBj0RyN8gDsO+jlb3W9XSbx9kVPbPld0
- 80hARQQMLO9t8xsSevfwtM121luGcQYAKasIWFERUN/+N+FHkn9ABiD6TJWynNQseLVzCUfQP
- DKoB9DC3a4KIVLbpgPZfJ5omOSpA8l53Jc+kwcsIOyxT2He5Mm+Qt2PzwRvacDHuTWXd6LcVH
- gIAvSOMgx/yn7BB8bLnNQRl19GWoSdvhp5Lr9/E0neeatWS2GtnQ7LpgxEbdqLeiK0/KlDp5A
- VCsgOK6zbSy4pj4dHctl82X/OHXlnN10EGVTUUP5FDdecx44yc+hTash6ZcWeHieLzZdSkkPW
- RNGsaCQGwuuk9lXELjZVqPnnaDa8gxBi1gli/ScBVYxmjWpsbtPGI3gsOw4K+Hvc6jiDZ9ueU
- zP5Uqag6FL3N+I6sEsxZTDz+2Ngf93QMlxB3idKgfVNAoyd4gXOxMlIougnP7vDyAKtfog4ro
- tWsRXU1
+Received: by 10.194.70.167 with HTTP; Tue, 16 Aug 2016 07:27:10 -0700 (PDT)
+In-Reply-To: <20160816131640.h2zzn3sy5qqdeewc@sigill.intra.peff.net>
+References: <20160816081701.29949-1-chriscool@tuxfamily.org>
+ <20160816081701.29949-4-chriscool@tuxfamily.org> <20160816131640.h2zzn3sy5qqdeewc@sigill.intra.peff.net>
+From:	Christian Couder <christian.couder@gmail.com>
+Date:	Tue, 16 Aug 2016 16:27:10 +0200
+Message-ID: <CAP8UFD2r-Zi757zizRQq-TPp+dO=+=ho=7oOipjPxY4ksmzC=g@mail.gmail.com>
+Subject: Re: [PATCH 3/3] receive-pack: allow a maximum input size to be specified
+To:	Jeff King <peff@peff.net>
+Cc:	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-The idea of the --git-path option is not only to avoid having to
-prefix paths with the output of --git-dir all the time, but also to
-respect overrides for specific common paths inside the .git directory
-(e.g. `git rev-parse --git-path objects` will report the value of the
-environment variable GIT_OBJECT_DIRECTORY, if set).
+On Tue, Aug 16, 2016 at 3:16 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Aug 16, 2016 at 10:17:01AM +0200, Christian Couder wrote:
+>>
+>> Cleaning up what has already been written to disk is a
+>> related problem that is not addressed by this patch.
+>>
+>> The problem is that git-gc can clean up tmp_pack_* files
+>> after their grace time expired, but that may not be
+>> enough if someone tries to "git push" in a loop.
+>>
+>> A simple fix is to call register_tempfile() in
+>> open_pack_file(), and just have index-pack clean up the
+>> file on its way out.
+>>
+>> But there are harder cases. For instance, if somebody
+>> pushes a 500MB file, and there is a pre-receive hook that
+>> says "too big; I won't accept this". And then they push in
+>> a loop, the incoming pack has already been accepted into
+>> the repository by the time the pre-receive hook runs.
+>> It's not possible to just delete it, because we don't know
+>> if other simultaneous processes have started to depend on
+>> the objects.
+>
+> IMHO, everything after "not addressed by this patch" doesn't really add
+> anything. This commit has value on its own, and the discussion about the
+> next steps is already documented on the list (and hopefully will be
+> fixed with other patches!).
 
-When introducing the core.hooksPath setting, we forgot to adjust
-git_path() accordingly. This patch fixes that.
+Ok, I will remove that in the next iteration.
 
-While at it, revert the special-casing of core.hooksPath in
-run-command.c, as it is now no longer needed.
+>> +test_expect_success 'create remote repository' '
+>> +     git init --bare dest
+>> +'
+>> +
+>> +# Let's run tests with different unpack limits: 1 and 10
+>> +# When the limit is 1, `git receive-pack` will call `git index-pack`.
+>> +# When the limit is 10, `git receive-pack` will call `git unpack-objects`.
+>> +
+>> +while read unpacklimit filesize filename
+>> +do
+>> [...]
+>> +done <<\EOF
+>> +1 1024 one-k-file
+>> +10 2048 two-k-file
+>> +EOF
+>
+> Is there any reason to use different filenames and sizes for the two
+> runs? They should behave identically, so it would make more sense to me
+> to subject them to identical inputs.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-Published-As: https://github.com/dscho/git/releases/tag/git-path-hooks-v2
-Fetch-It-Via: git fetch https://github.com/dscho/git git-path-hooks-v2
-Interdiff vs v1:
+About the sizes, I thought that some people might want to try sizes
+closer to the limit and also that it is good anyway in general to add
+a bit of "randomness", or at least variability, in the tests.
 
- diff --git a/run-command.c b/run-command.c
- index 33bc63a..5a4dbb6 100644
- --- a/run-command.c
- +++ b/run-command.c
- @@ -824,10 +824,7 @@ const char *find_hook(const char *name)
-  	static struct strbuf path = STRBUF_INIT;
-  
-  	strbuf_reset(&path);
- -	if (git_hooks_path)
- -		strbuf_addf(&path, "%s/%s", git_hooks_path, name);
- -	else
- -		strbuf_git_path(&path, "hooks/%s", name);
- +	strbuf_git_path(&path, "hooks/%s", name);
-  	if (access(path.buf, X_OK) < 0)
-  		return NULL;
-  	return path.buf;
+> I know you need different files and filenames to continue pushing into
+> the same "dest", but the problem is easily solved by bumping the "git
+> init" into the loop.
 
-
- path.c                       | 2 ++
- run-command.c                | 5 +----
- t/t1350-config-hooks-path.sh | 6 ++++++
- 3 files changed, 9 insertions(+), 4 deletions(-)
-
-diff --git a/path.c b/path.c
-index 17551c4..fe3c4d9 100644
---- a/path.c
-+++ b/path.c
-@@ -380,6 +380,8 @@ static void adjust_git_path(struct strbuf *buf, int git_dir_len)
- 			      get_index_file(), strlen(get_index_file()));
- 	else if (git_db_env && dir_prefix(base, "objects"))
- 		replace_dir(buf, git_dir_len + 7, get_object_directory());
-+	else if (git_hooks_path && dir_prefix(base, "hooks"))
-+		replace_dir(buf, git_dir_len + 5, git_hooks_path);
- 	else if (git_common_dir_env)
- 		update_common_dir(buf, git_dir_len, NULL);
- }
-diff --git a/run-command.c b/run-command.c
-index 33bc63a..5a4dbb6 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -824,10 +824,7 @@ const char *find_hook(const char *name)
- 	static struct strbuf path = STRBUF_INIT;
- 
- 	strbuf_reset(&path);
--	if (git_hooks_path)
--		strbuf_addf(&path, "%s/%s", git_hooks_path, name);
--	else
--		strbuf_git_path(&path, "hooks/%s", name);
-+	strbuf_git_path(&path, "hooks/%s", name);
- 	if (access(path.buf, X_OK) < 0)
- 		return NULL;
- 	return path.buf;
-diff --git a/t/t1350-config-hooks-path.sh b/t/t1350-config-hooks-path.sh
-index 5e3fb3a..f1f9aee 100755
---- a/t/t1350-config-hooks-path.sh
-+++ b/t/t1350-config-hooks-path.sh
-@@ -34,4 +34,10 @@ test_expect_success 'Check that various forms of specifying core.hooksPath work'
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'git rev-parse --git-path hooks' '
-+	git config core.hooksPath .git/custom-hooks &&
-+	git rev-parse --git-path hooks/abc >actual &&
-+	test .git/custom-hooks/abc = "$(cat actual)"
-+'
-+
- test_done
--- 
-2.9.2.691.g78954f3
-
-base-commit: 07c92928f2b782330df6e78dd9d019e984d820a7
+I thought that it would be a bit less wasteful to use the same "dest"
+and also it would make the test more realistic as people often push in
+non empty repos.
