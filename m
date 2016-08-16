@@ -2,170 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F0311F859
-	for <e@80x24.org>; Tue, 16 Aug 2016 17:28:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B67DA1F859
+	for <e@80x24.org>; Tue, 16 Aug 2016 17:35:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752269AbcHPR2X (ORCPT <rfc822;e@80x24.org>);
-	Tue, 16 Aug 2016 13:28:23 -0400
-Received: from mail-it0-f53.google.com ([209.85.214.53]:34955 "EHLO
-	mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752115AbcHPR2W (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2016 13:28:22 -0400
-Received: by mail-it0-f53.google.com with SMTP id x131so21494902ite.0
-        for <git@vger.kernel.org>; Tue, 16 Aug 2016 10:28:21 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=JyPbrDC8i3GARvhFta4eW0oOz1oh4oUg3cjYY+rvWCA=;
-        b=fUt1MbMIRH/UqZYEYPcmqoweYnf5/BNSjvoFNSRXbodHzm5SpeAgpRbGqSAtOLO5d+
-         wWKaYrosMoB7tgSpTgxlHcn1QR9QASALdDdo1+c2Ptuu+L8euRZKJ1u2uK6YLm8mWQ9p
-         hepSwsmqKj6rlzFwQktW1v8oGj7yK+NsNcDcA1PmjIJj6GDe8atIuZjoYsEI6E/MrHGT
-         dWPatz8Im3ioInMb4wgdLsXIKfq9uhD4NyGAY2gX7/dJGlQqp7BRJVxzapCY4JXPIxaF
-         yO9GCcfg6kNYp0a+RqTR875M8Yn6Q/mznpWdgjwDESHD8LuB1V0AIExzK1fdL27Jhc7y
-         EvgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=JyPbrDC8i3GARvhFta4eW0oOz1oh4oUg3cjYY+rvWCA=;
-        b=lcJrbTs4wG1zEKqEKraL+PQygid3raY0khdrg9mb6B9LuGx2N3MoPd/mxuRuqEiK+j
-         MdeH/s1mfvDCzmOQgEPPrT07t+RcAzJFOGCXL5rLr1JaC/iyfF1bPtmLohNantNAfRsJ
-         aE11q7b1iD6Vd1ThW+uQb30stK1j0nvYBrHVQM5smag/Ijn3y64fPY5wWUXTPC8pVz/t
-         2jK96SFFUKpjGURpRl7coERGiKw6mhLBvplOaJ4aNi/svSq67YOuIvCt/W0VRMxuJHaN
-         hH2idDnv20ygTtIUVe3/kjJeJmlE75e8/oDiaavuQSpZFWM0ee7fco+NuFTD0Nur4CJc
-         w3Tw==
-X-Gm-Message-State: AEkoousqBwPixy5c3Ts6hJ3DqctTO4WfdjntbVBxc+Jx2opFguaMUUSri5aTVjDZESCfOwrNGWc9bCVDv5Tg9Kcz
-X-Received: by 10.36.92.206 with SMTP id q197mr23504732itb.46.1471368178264;
- Tue, 16 Aug 2016 10:22:58 -0700 (PDT)
+	id S1753719AbcHPRex (ORCPT <rfc822;e@80x24.org>);
+	Tue, 16 Aug 2016 13:34:53 -0400
+Received: from relay6-d.mail.gandi.net ([217.70.183.198]:44410 "EHLO
+	relay6-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753220AbcHPRew (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2016 13:34:52 -0400
+Received: from mfilter20-d.gandi.net (mfilter20-d.gandi.net [217.70.178.148])
+	by relay6-d.mail.gandi.net (Postfix) with ESMTP id 6E14CFB8BC;
+	Tue, 16 Aug 2016 19:34:49 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mfilter20-d.gandi.net
+Received: from relay6-d.mail.gandi.net ([IPv6:::ffff:217.70.183.198])
+	by mfilter20-d.gandi.net (mfilter20-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
+	with ESMTP id DmVee8e6Y-kv; Tue, 16 Aug 2016 19:34:47 +0200 (CEST)
+X-Originating-IP: 50.39.163.18
+Received: from x (50-39-163-18.bvtn.or.frontiernet.net [50.39.163.18])
+	(Authenticated sender: josh@joshtriplett.org)
+	by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id EE13FFB882;
+	Tue, 16 Aug 2016 19:34:46 +0200 (CEST)
+Date:	Tue, 16 Aug 2016 10:34:44 -0700
+From:	Josh Triplett <josh@joshtriplett.org>
+To:	Jeff King <peff@peff.net>
+Cc:	git@vger.kernel.org
+Subject: Re: upload-pack/ls-remote: showing non-HEAD symbolic refs?
+Message-ID: <20160816173444.rpqlpsz2ognvlufy@x>
+References: <20160816161838.klvjhhoxsftvkfmd@x>
+ <20160816163145.mjc726til2daxl3d@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Tue, 16 Aug 2016 10:22:57 -0700 (PDT)
-In-Reply-To: <xmqqa8gcej1p.fsf@gitster.mtv.corp.google.com>
-References: <CAGZ79kasebzJb=b2n=JQiVMrSfJKaVfZaaoaVJFkXWuqKjfYKw@mail.gmail.com>
- <xmqqa8gcej1p.fsf@gitster.mtv.corp.google.com>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Tue, 16 Aug 2016 10:22:57 -0700
-Message-ID: <CAGZ79kby02NuRvQkcuTNjxxc4oDvjAH4wE=3dCXmqyRRrCU0tQ@mail.gmail.com>
-Subject: Re: Working with public-inbox.org [Was: [PATCH] rev-parse: respect
- core.hooksPath in --git-path]
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	meta@public-inbox.org, "git@vger.kernel.org" <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eric Wong <e@80x24.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20160816163145.mjc726til2daxl3d@sigill.intra.peff.net>
+User-Agent: Mutt/1.6.2-neo (2016-08-08)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Aug 16, 2016 at 10:10 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> So as a discussion starter:
->> * Should git am skip a patch 00/XX automatically ?
->
-> No.  My preference is to add "--initial-skip=<N>", though.
->
-> When I receive a patch series to reroll another series, I somehow
-> know and verify that earlier N patches have not changed, I detach
-> the HEAD at the last unchanged commit from the previous round and
-> apply the remainder of the new series, so that I can preserve the
-> author timestamps of earlier steps from the previous series.  By
-> the time I "know and verify" where the first step that was updated,
-> I have a full series in a single mbox; having "--initial-skip=<N>"
-> would help with that use case, too, and "skipping the first" is a
-> narrow special case of giving N=1.
+On Tue, Aug 16, 2016 at 12:31:45PM -0400, Jeff King wrote:
+> On Tue, Aug 16, 2016 at 09:18:39AM -0700, Josh Triplett wrote:
+> 
+> > Commit 5e7dcad771cb873e278a0571b46910d7c32e2f6c in September 2013 added
+> > support to upload-pack to show the symbolic target of non-HEAD symbolic
+> > refs.  However, commit d007dbf7d6d647dbcf0f357545f43f36dec46f3b in
+> > November 2013 reverted that, because it used a capability to transmit
+> > the information, and capabilities have a limited size (limited by the
+> > pkt-line format which can't send lines longer than 64k) and can't
+> > transmit an arbitrary number of symrefs.
+> > 
+> > (Incidentally, couldn't the same problem occur if the HEAD points to a
+> > long enough path to exceed 64k?
+> 
+> Yes. But it's a lot easier to say "your 64k symref is ridiculous; don't
+> do that" than it is to say "oh, you happened to have a lot of symrefs in
+> your repository, so we overflowed and failed".
+> 
+> Besides which, the whole protocol cannot handle refnames larger than
+> 64k, so it's not a new problem.
 
-In your work flow, how do you respect the cover letter?
-e.g. in 3787e3c16ced:
+Absolutely agreed.  I mentioned it only because if a server provided any
+mechanism to send it symbolic ref targets, this could lead to a
+situation where you could push a repository that you could not
+subsequently pull.  Depending on the protocols involved, that could
+potentially require manual admin intervention, or could even result in a
+DoS.
 
-    Merge branch 'ew/http-backend-batch-headers'
+Not something that can arise with git itself, as send-pack/receive-pack
+doesn't support sending symbolic ref targets, but I could imagine a
+server doing so to allow setting HEAD.
 
-    The http-backend (the server-side component of smart-http
-    transport) used to trickle the HTTP header one at a time.  Now
-    these write(2)s are batched.
+> > I'd like to be able to see the targets of non-HEAD symbolic refs for a
+> > repository (symbolic refs under refs/).  I'm interested in extending
+> > upload-pack to expose those somehow.  What seems like a sensible format
+> > to do so?
+> > 
+> > Would it make sense to advertise a new capability for symbolic ref
+> > targets, which would allow the client to send back a dedicated request
+> > for the targets of all symrefs?
+> 
+> It will definitely require a new capability. You cannot just send a
+> "\0symref=..." trailer after each ref, because older clients treat
+> multiple "\0" trailers as overwriting one another (so it essentially
+> overwrites the old capabilities).
+> 
+> Sadly you cannot use a capability to fix that, because all of this
+> happens before the client agrees to any capabilities (you can find
+> discussion of a "v2" protocol on the list which solves this, but it's
+> sort of languishing in the design phase).
 
-    * ew/http-backend-batch-headers:
-      http-backend: buffer headers before sending
+As a potential 1.1 version, which could work in a backward-compatible
+way with existing servers and no additional round-trip: what if, in the
+smart HTTP protocol, the client advertised client capabilities with an
+additional HTTP header (e.g.  "Git-Client-Caps: symrefs othershiny
+featurenames"?  git-http-backend could then pass those capabilities to
+git-upload-pack (--client-caps='...'), which could take them into
+account in the initial response?
 
-Is the text from the original author (and if so from which version
-of the cover letter) or is it your work?
+That wouldn't work as a single-pass approach for SSH, since the client
+can't know if the server's upload-pack supports --client-caps, but it
+would work for the smart HTTP protocol.
 
->
->> * Should the public-inbox offer another link to patches 1-n, without
->>   the cover letter? Or should it add instructions:
->>
->>         If this is a patch series you can apply it locally as:
->>         curl <link> >tmpXXX
->>         git am tmpXXX && git am --skip && git am --continue
->
-> I do not think it is sensible for "cover-letter" specific
-> instructions.  However, I do not think it is unreasonable to either
-> add another mbox.gz link or replace the behaviour of mbox.gz link so
-> that you can grab a mbox that contains "this message and everything
-> after it in the thread".  That way, I could open the first message,
-> see something like this I found in your message:
->
->>> Thread overview: 4+ messages in thread (expand / mbox.gz / Atom feed / [top])
->>> 2016-08-15 23:06 Jacob Keller [this message]
->>> 2016-08-15 23:07 ` [PATCH v6 1/3] diff.c: remove output_prefix_length field Jacob Keller
->>> 2016-08-15 23:07 ` [PATCH v6 2/3] graph: add support for --line-prefix on all graph-aware output Jacob Keller
->>> 2016-08-15 23:07 ` [PATCH v6 3/3] diff: add SUBMODULE_DIFF format to display submodule diff Jacob Keller
->
-> and then go to 1/3 and click that "this and everything that
-> follows".
+> So you are stuck introducing a new phase into the protocol, which is
+> probably rather tricky (especially with the http protocol, which is very
+> sensitive to extra round-trips). I guess the least-invasive way would be
+> to communicate the desires in the "want" phase, and then have the server
+> dump it out with the packfile. Like:
+> 
+>   - server claims "I support symref-wants" in the capability phase
+> 
+>   - during the negotiation phase, in addition to "want" and "have", the
+>     client may send "symref <ref>" packets. Probably <ref> should be a
+>     wildcard to avoid having to ask about each ref individually.
+> 
+>   - before outputting the packfile in the final phase, if any "symref"
+>     wants were sent by the client, the server dumps a list of "symref
+>     <from> <to>" packets, followed by a flush packet.
+> 
+> That should Just Work over the existing http protocol without requiring
+> an extra request.
 
-Both thoughts are sensible; However the --initial-skip=<n>
-doesn't address the special case of storing the cover letter
-(which we eventually want to do?)
-
-I thought of it as the following with room for improvement:
-
-diff --git a/builtin/am.c b/builtin/am.c (shite space broken):
-index 739b34d..5f08b61 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1246,6 +1246,7 @@ static int parse_mail(struct am_state *state,
-const char *mail)
-        FILE *fp;
-        struct strbuf sb = STRBUF_INIT;
-        struct strbuf msg = STRBUF_INIT;
-+       struct strbuf subject = STRBUF_INIT;
-        struct strbuf author_name = STRBUF_INIT;
-        struct strbuf author_date = STRBUF_INIT;
-        struct strbuf author_email = STRBUF_INIT;
-@@ -1309,6 +1310,7 @@ static int parse_mail(struct am_state *state,
-const char *mail)
-                        if (msg.len)
-                                strbuf_addch(&msg, '\n');
-                        strbuf_addstr(&msg, x);
-+                       strbuf_addstr(&subject, x);
-                } else if (skip_prefix(sb.buf, "Author: ", &x))
-                        strbuf_addstr(&author_name, x);
-                else if (skip_prefix(sb.buf, "Email: ", &x))
-@@ -1325,8 +1327,17 @@ static int parse_mail(struct am_state *state,
-const char *mail)
-        }
-
-        if (is_empty_file(am_path(state, "patch"))) {
--               printf_ln(_("Patch is empty. Was it split wrong?"));
--               die_user_resolve(state);
-+               if (indicates_coverletter(&subject))
-+                       /*
-+                        * TODO: store the cover letter as the first or last
-+                        * commit or as branch.<name>.description
-+                        */
-+                       ret = 1;
-+                       goto finish;
-+               else {
-+                       printf_ln(_("Patch is empty. Was it split wrong?"));
-+                       die_user_resolve(state);
-+               }
-        }
-
-        strbuf_addstr(&msg, "\n\n");
+It'd require one extra request for git ls-remote, which normally doesn't
+need the second round-trip, but that still seems reasonable.
