@@ -2,80 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5DE21F859
-	for <e@80x24.org>; Tue, 16 Aug 2016 17:54:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1697A1F859
+	for <e@80x24.org>; Tue, 16 Aug 2016 17:57:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751059AbcHPRyi (ORCPT <rfc822;e@80x24.org>);
-	Tue, 16 Aug 2016 13:54:38 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58357 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750803AbcHPRyh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2016 13:54:37 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1D32D34FAB;
-	Tue, 16 Aug 2016 13:54:36 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=t7w39F2efiUx+Lst2KAfwlRnkD8=; b=WY9Icw
-	KAwtSlRWHNj3YmFZylu/No7WQG2sECgySMM822tuSsLIC0EdgZo5UXD6s2N6DgWp
-	opCQDf2Dg5+DwqzJ0Jh7ndHj+xzBifFX1lk98mCMjoLfD35Uybn/a3UnnV0eRc4z
-	YFVNT5Eta/loBSb5hpM63wXAM2qnex9d2FiQs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OZPwer4jWJO64u9u7vyvqgMW9SqjpFYE
-	fjf18gWQkRZ59z93rMHUUjk5BvAJDS6YAEXPBVEoZpeDcxNJNy1e+VMJNhH9fO53
-	w2usazljOkF23uSQ/J9KWMODiyk/ImJPgCD1OSiewFt7N2WdTyisvXhsLYVNvV8D
-	KK+Eu6uFDzg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 165CA34FAA;
-	Tue, 16 Aug 2016 13:54:36 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 964FF34FA8;
-	Tue, 16 Aug 2016 13:54:35 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Jeff King <peff@peff.net>
-Cc:	Stefan Beller <sbeller@google.com>, meta@public-inbox.org,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eric Wong <e@80x24.org>
-Subject: Re: Working with public-inbox.org [Was: [PATCH] rev-parse: respect core.hooksPath in --git-path]
-References: <CAGZ79kasebzJb=b2n=JQiVMrSfJKaVfZaaoaVJFkXWuqKjfYKw@mail.gmail.com>
-	<xmqqa8gcej1p.fsf@gitster.mtv.corp.google.com>
-	<20160816172022.juqvfn5vwt2pdcyd@sigill.intra.peff.net>
-Date:	Tue, 16 Aug 2016 10:54:33 -0700
-In-Reply-To: <20160816172022.juqvfn5vwt2pdcyd@sigill.intra.peff.net> (Jeff
-	King's message of "Tue, 16 Aug 2016 13:20:22 -0400")
-Message-ID: <xmqqtwekd2g6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751944AbcHPR5D (ORCPT <rfc822;e@80x24.org>);
+	Tue, 16 Aug 2016 13:57:03 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35083 "EHLO
+	mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750822AbcHPR5C (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2016 13:57:02 -0400
+Received: by mail-wm0-f65.google.com with SMTP id i5so17704627wmg.2
+        for <git@vger.kernel.org>; Tue, 16 Aug 2016 10:57:02 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Uzwx3wAL4izCze8W1joJLNg0KJarLWYlYjpzh0V+qH0=;
+        b=pX6Crhss4geFlBVxxHgvkvOT19CCb70u/IAFIcQuX0gMhmKXV+FDrttKnH0DkutJ7N
+         y7S7NwdqHkPmhM8szgpUy7q/uuYvX8lwmMCwNUp15/NlxsQUwEqez9A6XduTKLfgkhcu
+         gKpgcCCDWWOSR99N/DSc8/NQXdszuIbqddwu8sue1bmfUWTErcIcu50jTk2OBHfpNu9v
+         s9/B/FtoxihUWiHlFYD1cH2XmAW92xC4pCahs0GtQuXdifJrUnz3y97xrFwC5A+raNDw
+         ux/REpkbdaXmC+H2yduk4Q+wZ58nCG3yqe0bMZkn0KHlL4SkHBegdZ9MB1MQ5LpgJGKP
+         oqFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Uzwx3wAL4izCze8W1joJLNg0KJarLWYlYjpzh0V+qH0=;
+        b=GVwIdL68/AVn4f8+bIcoAO3fBWmEnqBDZtgKoPzrSXlbPfevcrToZPDzB5hr0WLGlC
+         NMsMxIsKdVtxw2fOYXHCpWtSVMYIUpDLOOZ3hlzeO7+UB7scb1NOwHj5ZSCED4DWseIa
+         GUmzBlfGN2wghXq5KKjX6JKHgJDUtYyXn43y0DPFxcScoGg65gZ/NjGBTi0+JAdM9zll
+         pwlcu6cS/kcLO/bRU4iyMRu79JW1wdsii1fLuyqnml4gynX4bc3YtOgNFlNkY0Rr7GqL
+         6IfWfjtZrkmiVX+zK0zam040Vv97NmvrjjJUDQqOGzA2kotq9sCxcJ9HBwzGnP4Bq7Ho
+         3f4g==
+X-Gm-Message-State: AEkooutPE7kD3sR65HX7I5wAvq35kEA5fYlzcg2IG1AAPeTatIPAFlmlQfmMrX5i1SyNWP6F6Dp2uj6yDmyfWw==
+X-Received: by 10.28.103.6 with SMTP id b6mr24099035wmc.89.1471370221116; Tue,
+ 16 Aug 2016 10:57:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7E6A2954-63DA-11E6-AB2F-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.28.230.154 with HTTP; Tue, 16 Aug 2016 10:57:00 -0700 (PDT)
+In-Reply-To: <xmqq60r0ei9k.fsf@gitster.mtv.corp.google.com>
+References: <20160815053628.3793-1-ralf.thielow@gmail.com> <20160816162030.27754-1-ralf.thielow@gmail.com>
+ <xmqq60r0ei9k.fsf@gitster.mtv.corp.google.com>
+From:	Ralf Thielow <ralf.thielow@gmail.com>
+Date:	Tue, 16 Aug 2016 19:57:00 +0200
+Message-ID: <CAN0XMOL2WZkh17v-7OtA8AMbzs4NUuj8xPVwJBD-PnK4fBaUFw@mail.gmail.com>
+Subject: Re: [PATCH v3] help: make option --help open man pages only for Git commands
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	git <git@vger.kernel.org>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	Joseph Musser <me@jnm2.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	John Keeping <john@keeping.me.uk>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+2016-08-16 19:27 GMT+02:00 Junio C Hamano <gitster@pobox.com>:
+> Ralf Thielow <ralf.thielow@gmail.com> writes:
+>> +
+>> +     if (swapped)
+>> +             return help_unknown_cmd(cmd);
+>
+> I am guilty of suggesting "swapped"; even if we are going to mark
+> this as OPT_HIDDEN, I think we should be able to think of a better
+> name.  I think the meaning of this boolean is "we know that this is
+> not a guide and is meant to be a command.", and I hope we can come
+> up with a name that concisely expresses that (e.g. "--not-a-guide",
+> "--must-be-a-command").
+>
 
-> For my workflow, it is not about "initial skip", but rather just "skip
-> emails that don't have patches in them at all".
-
-OK.  That is different from "the subject line says 0/N so let's
-skip".
-
-If we can safely determine that there is no patch in a message,
-skipping it may feel sensible.  Historically, we try to err on the
-safe side by stopping when we do not understand an input and that is
-where "Patch is empty" message came from, because skipping and
-continuing, even with a warning, while applying tons of patches is
-not good enough to get user's attention.
-
-An "ignore empty input" option (and eventually with a configuration)
-may not be a bad idea.
+I think "--cmd-only" is a good name.  With a good name I think it's worth
+to make this option visible to the user.
