@@ -2,85 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,BODY_URI_ONLY,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23BCF1F859
-	for <e@80x24.org>; Tue, 16 Aug 2016 21:29:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B6ABF1F859
+	for <e@80x24.org>; Tue, 16 Aug 2016 21:31:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752559AbcHPV3h (ORCPT <rfc822;e@80x24.org>);
-	Tue, 16 Aug 2016 17:29:37 -0400
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:25120 "EHLO
-	smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752344AbcHPV3g (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2016 17:29:36 -0400
-Received: from PhilipOakley ([92.22.79.128])
-	by smtp.talktalk.net with SMTP
-	id ZlvRbOlccxR4bZlvRbcy9j; Tue, 16 Aug 2016 22:29:34 +0100
-X-Originating-IP: [92.22.79.128]
-X-Spam:	0
-X-OAuthority: v=2.2 cv=JNN5iICb c=1 sm=1 tr=0 a=XEvdTb7KCAz4OJCw3EI8rA==:117
- a=XEvdTb7KCAz4OJCw3EI8rA==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=8rg8s2i0kd85yYEDVlAA:9 a=6kGIvZw6iX1k4Y-7sg4_:22
-Message-ID: <A12D8350E1E24F12B530B6EBC9B4E321@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:	"Philip Oakley" <philipoakley@iee.org>
-To:	"Duy Nguyen" <pclouds@gmail.com>,
-	"Jacob Keller" <jacob.keller@gmail.com>
-Cc:	"Stefan Beller" <sbeller@google.com>,
-	"Git List" <git@vger.kernel.org>
-References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com> <CAGZ79kba36GprgHA04_q4NmY2=_amoWyafUaLKkcknc3HsT_-g@mail.gmail.com> <CACsJy8C51UkH=tLSfGigAF0JjPxVS3fY0EHi0CNVRG8LY8YiCg@mail.gmail.com> <CA+P7+xo4UJ8W4G0gV=DMLs-9Ve4v0OKc0ZunmS5Y5B1k7L0P9w@mail.gmail.com> <CAGZ79kb27JZepMD5AmrHjOnf8haE8LehZd_CkvOQ1UoLEDuxKQ@mail.gmail.com> <CACsJy8BdmR5USJvjJ6xbjj=bP787tdS72_oL+PDq0D+FPYmiPA@mail.gmail.com> <DD86BC6E2E3245BA991E4D65CE66E4A8@PhilipOakley> <CA+P7+xqbmZznxq024fhkejp2FeCVYkOYHTSdR69Di3nkzYJooA@mail.gmail.com> <3E80981D72F74A11A41A228901644E1C@PhilipOakley> <CACsJy8CXKcjo6KO8HvBpx+N4Lj7MO5yMH2q4bVWi-x3mbvWsmQ@mail.gmail.com> <CA+P7+xr+HonJTj5AcRhAMf5Z059zHKiuOY8Zbd77uu_jAiiZBA@mail.gmail.com> <CACsJy8DJmONcgQO37Xk+2cZb+Svx-bgwjrG1XrZQ4BYipownqw@mail.gmail.com>
-Subject: Re: storing cover letter of a patch series?
-Date:	Tue, 16 Aug 2016 22:29:33 +0100
-Organization: OPDS
+	id S1752344AbcHPVbV (ORCPT <rfc822;e@80x24.org>);
+	Tue, 16 Aug 2016 17:31:21 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52169 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752041AbcHPVbV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2016 17:31:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EEA1136DDE;
+	Tue, 16 Aug 2016 17:31:19 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=njsYt1dZEMupchlF3NzZ3zXpsU0=; b=w1PI2p
+	yGdASXoX/4nWWbnu7qpBvg6oaSUv91iXSrF6N7hEnIe9wttrmQUKu3yBE4mUsfJF
+	mefGMdfY8Ql980tObbgM8kLslK3QGvb2D+nNBWwPsJ4fZtwnj6Y0A7LQy0eZC7eH
+	xTz6Aq4BdDyuyISlrAe5Xjlu5zLFv0KE1sNj8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qk0QpxDXZF8fBwKTK3PgO7lnOnKTwzD1
+	gvaaShrf2NVO9zJeAFNM1KPvY1zf2+MRWJAa6Gu73GMoJSMHmN6eMuNJbMVTtW4g
+	2sdxC8DVdXhguI2dL9MoxBgETicg07ABmRBeVQEdQ815THWm6Vwb7QCTaqtMmMjy
+	rNI6mW5knmM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E5EC736DDD;
+	Tue, 16 Aug 2016 17:31:19 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6BCB636DDC;
+	Tue, 16 Aug 2016 17:31:19 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Jacob Keller <jacob.keller@gmail.com>
+Cc:	Jacob Keller <jacob.e.keller@intel.com>,
+	Git mailing list <git@vger.kernel.org>,
+	Stefan Beller <stefanbeller@gmail.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v6 3/3] diff: add SUBMODULE_DIFF format to display submodule diff
+References: <20160815230702.30817-1-jacob.e.keller@intel.com>
+	<20160815230702.30817-4-jacob.e.keller@intel.com>
+	<xmqqh9akczyp.fsf@gitster.mtv.corp.google.com>
+	<CA+P7+xqc_WwzjUnF5P4arBhBqgRbtXyKC9QWtRJ3+fmx0Q2+oA@mail.gmail.com>
+	<xmqqvaz0bemk.fsf@gitster.mtv.corp.google.com>
+	<CA+P7+xrnUAN8M4UX0hZN213yUKndb_4d+AjohWV45KvCdJm9PQ@mail.gmail.com>
+Date:	Tue, 16 Aug 2016 14:31:17 -0700
+In-Reply-To: <CA+P7+xrnUAN8M4UX0hZN213yUKndb_4d+AjohWV45KvCdJm9PQ@mail.gmail.com>
+	(Jacob Keller's message of "Tue, 16 Aug 2016 14:20:30 -0700")
+Message-ID: <xmqqmvkcbdui.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="utf-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfEFN70ogb02pH6xeI3zBodxZ9kIwTqlTRNMZtCPr7THGml9nLOMSkNk8d4g+kh1ajiD1Ko2d3fPHBTV7LvvnKpS1Ur9x16rZDS8HcUiiiOX2QQP57O/T
- LupwS1ofsncQlKLX4iRUW+L7G0Xdv5u/ohC6fuRdN0fqcsi6DKlqp8NyIqZNp4q5y1N/cFww4GT6COMqNIAEyj86mXrbzuTap7eiSgFMQf0x8lKdr1pZHm1p
- rJyZFrvdQWCbKnjSASzJeQ==
+Content-Type: text/plain
+X-Pobox-Relay-ID: C54CB7B0-63F8-11E6-B2F0-89D312518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-From: "Duy Nguyen" <pclouds@gmail.com>
-> On Tue, Aug 16, 2016 at 12:26 PM, Jacob Keller <jacob.keller@gmail.com> 
-> wrote:
->>>> They can just add "squash! cover! <series>" commits for that ;-) Though 
->>>> more
->>>> likely the advanced workflow would be used... We'll need both (more 
->>>> than
->>>> one) options.
->>>
->>> Or even better, "git commit --reword $SHA1" brings up the editor with
->>> commit message of $SHA1. Modify any way you want and it creates a new
->>> empty, "reword!" commit that contains the diff between the old commit
->>> message and the new one. "reword!" can be consumed by "rebase -i
->>> --autosquash" without bringing up the editor again. I realize making
->>> "git commit --reword" run multiple times would be tricky though...
->>
->> I was just thinking you write text and it gets appended to the text of
->> the reworded commit, and when you squash them using rebase you get to
->> finalize it like a normal squash?
->
-> I think that's what Phillip meant by 'squash! cover!' though I wanted
-> to go further, I don't want an editor popping up at rebase time,
-> instead 'rebase' just update cover letter automatically for me.
-> -- 
-Hi Duy,
-While we can have code that is auto merged, I don't think that I'd want to 
-submit a cover letter that was simply auto merged. I'd want to refresh and 
-re-personalise the text. As long as the flexibility in our cover letter 
-inclusion is there....
---
-Philip
+Jacob Keller <jacob.keller@gmail.com> writes:
+
+> Thoughts on that? Or should we just limit ourselves to only some
+> options get propagated to the submodule?
+
+I think you have to be selective either way.  You do not want
+pathspecs used to limit the top-level paths propagated down when you
+run a diff or a log in the submodule, for example, and that does not
+change even if you start using the code in diff-lib.c (after adding
+the submodule odb as an alternate).
 
