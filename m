@@ -2,80 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B73D41FD99
-	for <e@80x24.org>; Tue, 16 Aug 2016 10:07:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60B061F859
+	for <e@80x24.org>; Tue, 16 Aug 2016 12:28:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752187AbcHPKHn (ORCPT <rfc822;e@80x24.org>);
-	Tue, 16 Aug 2016 06:07:43 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52517 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751510AbcHPKHm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2016 06:07:42 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 71C1B31B59;
-	Tue, 16 Aug 2016 06:07:41 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gKg78JCkUdGFLDzrzQeLShYqU6c=; b=VzYCsl
-	4V0sz5dz2VnQJK6EgE2aGFZ3PpT9eCxZRp4ZrJOefP4KHY/5SHOQuamJWfPWLMZZ
-	0FBV8sLg8+0bHol4aZe97ubND8aD1YO3a35YmgFN2pscKkeVW8OwM+a7Q9xWp6Sf
-	aryZtcgDNS8KPYIRL3r4Cpn/V9fTIlLHUte90=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CLMsfya2ISPmhN76rU4nQgWDUV1B7rQd
-	CF5ebdq8UyX5Cw/+NfUUQ8h1RDiwQzzorhe7qoZ2aP3uwXsJt26zDyvoYJ71lB9v
-	iobG30QungO6IYTBADShbGAlOQZwwq7HF8wNl/YUUanIYpx3Ybn2BfHiMbYmGh7u
-	9EtSB4JDzXo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 69E2C31B58;
-	Tue, 16 Aug 2016 06:07:41 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D9F5B31B56;
-	Tue, 16 Aug 2016 06:07:40 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:	git@vger.kernel.org
-Subject: Re: [PATCH] t/Makefile: make sure that file names are truly platform-independent
-References: <814aefbcf0f9380098e3f7a183399e11e24180dd.1471270061.git.johannes.schindelin@gmx.de>
-	<xmqqk2fihv90.fsf@gitster.mtv.corp.google.com>
-	<xmqqoa4tg2yi.fsf@gitster.mtv.corp.google.com>
-	<alpine.DEB.2.20.1608161026110.4924@virtualbox>
-	<alpine.DEB.2.20.1608161035320.4924@virtualbox>
-	<xmqqmvkddoqi.fsf@gitster.mtv.corp.google.com>
-Date:	Tue, 16 Aug 2016 03:07:38 -0700
-In-Reply-To: <xmqqmvkddoqi.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 16 Aug 2016 02:53:09 -0700")
-Message-ID: <xmqqinv1do2d.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1753292AbcHPM2A (ORCPT <rfc822;e@80x24.org>);
+	Tue, 16 Aug 2016 08:28:00 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:36556 "EHLO
+	mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752223AbcHPM1z (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2016 08:27:55 -0400
+Received: by mail-wm0-f46.google.com with SMTP id q128so140727135wma.1
+        for <git@vger.kernel.org>; Tue, 16 Aug 2016 05:27:31 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=fA9GUVw9D2VHmadON4l8e5f09hEXEQ1jlR+F9Ovb5Wg=;
+        b=BpnJ8r4nYQ+GC0gqPnco/gTcYU0eWWHh1PPwHiqVPSeR4B8FgUb2wltYEY59IJofa0
+         55on6uLqfZGVL4J5pfriDkAubp7FAMuDXliyZgZ5Jb0z6Et+uj7/oz9hkvZQ3ZF42vnN
+         fm1Amr51oM9Nhvp5Lp9RnuAWwZWcqCc8LA4XI0xlXtEINlV5ZFuTEDcXdLzwXs2AaOdI
+         SKzpEgYefM2c9yEzLZb0BGXIjHIt2FpfmzfzSOm68jk4mo1OQLXUJEEs80Jj8QUzIubw
+         8pmPYIE9/9lOsD6JzaRwNNpF/xkZVatfX9qLpAxqvvaeDWqc3a0Vs6x3JmdYuQKB1P3n
+         aMEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=fA9GUVw9D2VHmadON4l8e5f09hEXEQ1jlR+F9Ovb5Wg=;
+        b=gld9M06VYZm409KyKb4Ybrs6FudtwGjivJOKt5JJPXj8QfL+IXJpdUq1HgM8ZQAxPi
+         AZ+8qIHK1mjRSaK6l7ATR3gSTBAZiPoEDkWy9at25xwE2I00zT3xDa4inG6UaedkxXIf
+         I2wXFt69R5m+19mBpqaP0pC/gGB/E8fmtpqlq7lXHFRhcHL6/fpN3dqBHwDr14md22Ra
+         YKsttcOpmX7QZBKRW/f13tG6E30vFxidDdz2k0VOHuxOoSYQU58YxG/hGXQAcSBJnyVR
+         7PUQGzYQsi6EOaaXfz4gXol6hu0ACIO2Zn8QAIu9fxOqeNwRuS5GEDJ8zXZXmOJgFgLT
+         g+Cg==
+X-Gm-Message-State: AEkoouvbqNLxiH6tlQAuRJEgHGG4rX2n02V0N6ZVF+L4PufjtYxECNxcRtAranhTscHtGnjk9T7PVcW3NcgJ/w==
+X-Received: by 10.194.89.73 with SMTP id bm9mr37681253wjb.76.1471350450764;
+ Tue, 16 Aug 2016 05:27:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 44563FD2-6399-11E6-9064-89D312518317-77302942!pb-smtp1.pobox.com
+Received: by 10.194.70.167 with HTTP; Tue, 16 Aug 2016 05:27:29 -0700 (PDT)
+In-Reply-To: <9f3b254f-451e-4f6d-233c-7e995d8e369e@gmail.com>
+References: <CAP8UFD1iveotLsMOBnpa=hU4ohcQjZ-X7tjnzY4k+xz5KJvqBw@mail.gmail.com>
+ <D5A2E231FFE74D1C891A1653E1C2D797@PhilipOakley> <9f3b254f-451e-4f6d-233c-7e995d8e369e@gmail.com>
+From:	Christian Couder <christian.couder@gmail.com>
+Date:	Tue, 16 Aug 2016 14:27:29 +0200
+Message-ID: <CAP8UFD24QpuOOh1b3LCbnuF-0TSJC7E34mjvqo3zdebb_spNxw@mail.gmail.com>
+Subject: Re: Draft of Git Rev News edition 18
+To:	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Cc:	Philip Oakley <philipoakley@iee.org>, git <git@vger.kernel.org>,
+	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+	Nicola Paolucci <durden@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Eric Wong <normalperson@yhbt.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	remi galan-alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Johannes Sixt <j6t@kdbg.org>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> The trick to catch non-ascii depends on core.quotepath set to true
-> (which is the default).  You would need to run ls-files with an
-> explicit "-c core.quotepath=false" to be safe.
-> ...
-> The invocation of "git -c core.quotepath=false ls-files" needs to at
-> least have 2>/dev/null to squelch an unnecessary error message.  In
-> such a scenario, we may miss a new offending pathname, but we will
-> not have false positive and I think that is the best we can do.
+On Mon, Aug 15, 2016 at 8:08 PM, Jakub Nar=C4=99bski <jnareb@gmail.com> wro=
+te:
+> W dniu 14.08.2016 o 23:10, Philip Oakley pisze:
+>> From: "Christian Couder" <christian.couder@gmail.com>
+>>>
+>>> A draft of a new Git Rev News edition is available here:
+>>>
+>>>
+>>> https://github.com/git/git.github.io/blob/master/rev_news/drafts/editio=
+n-18.md
+>>>
+>>> Everyone is welcome to contribute in any section either by editing the
+>>> above page on GitHub and sending a pull request, or by commenting on
+>>> this GitHub issue:
+>>>
+>>>  https://github.com/git/git.github.io/issues/170
+>>>
+>>> You can also reply to this email.
+>>
+>> I see you mention in passing (well in the small headings near the bottom=
+)
+>> that gmane web interface has gone away. It may be worth noting a few of
+>> the alternatives, and in particular Eric's newly updated public-inbox
+>> https://public-inbox.org/git/.
 >
-> Thanks.
+> It would be nice to turn it into mini-story rather than just putting
+> a link.
 
-Needless to say (1) both "false" should have been "true"; (2) I
-shouldn't be crawling out of bed and typing with hazy brain early in
-the morning.
+Yeah, it would be also very welcome if someone could send a patch or a
+pull request for a mini-story about it.
 
-Sorry for typoes and thinkos.
+> Additional references / information:
+>
+> * "Alternatives to mid.gmane.org?" thread, starting with
+>   Message-Id: <481D1EE2-6A66-418F-AB28-95947BBF3680@gmail.com>
+>
+>   Mentions a few alternatives besides public-inbox:
+>
+>      https://marc.info/?i=3D%s
+>      https://mid.mail-archive.com/%s
+>      https://lists.debian.org/msgid-search/%s
+>
+>   for finding message based on Message-Id
+>
+>   NOTE: there are a few mailing list archive sites not mentioned
+>   in this thread, like Nabble, some of them listed on (not updated)
+>   https://git.wiki.kernel.org/index.php/GitCommunity
+>
+> * "Ingebrigtsen: The End of Gmane?" short note / article on LWN.net,
+>   https://lwn.net/Articles/695695/ [Posted July 28, 2016 by jake],
+>   part of "Announcements" (http://lwn.net/Articles/695980/) section
+>   of LWN.net Weekly Edition for August 4, 2016
+>   (http://lwn.net/Articles/695974/)
+
+Thanks for this. Maybe you could just add those in a pull request or a
+patch to the "Git tools and sites" sub section just after the item
+about public-inbox?
+
+Thanks anyway!
