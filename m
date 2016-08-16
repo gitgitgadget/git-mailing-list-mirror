@@ -7,95 +7,75 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=unavailable autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DF061F859
-	for <e@80x24.org>; Tue, 16 Aug 2016 17:50:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5DE21F859
+	for <e@80x24.org>; Tue, 16 Aug 2016 17:54:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751292AbcHPRuR (ORCPT <rfc822;e@80x24.org>);
-	Tue, 16 Aug 2016 13:50:17 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59002 "EHLO
+	id S1751059AbcHPRyi (ORCPT <rfc822;e@80x24.org>);
+	Tue, 16 Aug 2016 13:54:38 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58357 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750803AbcHPRuR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2016 13:50:17 -0400
+	with ESMTP id S1750803AbcHPRyh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2016 13:54:37 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6FA0934EA2;
-	Tue, 16 Aug 2016 13:47:46 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1D32D34FAB;
+	Tue, 16 Aug 2016 13:54:36 -0400 (EDT)
 DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wGpdhEMpoMxsMxBhmrpBXMDOMq8=; b=E1iYrK
-	uwj3uexZRp6OoMfctsfZ+TeplDIGpuWQlLiIEZyXqvYs7OxG0dW1zPlx96i6lFZn
-	IvtwaKtuwXnpMtMc5iXXWHya+3JEGpEDr1McIQtjxtlZ/vPyOqQUN/oPKIdRSgVp
-	yJ3Qicl1UDO6ZXGchy+yIMtAcd+SV8vSFddG0=
+	:content-type; s=sasl; bh=t7w39F2efiUx+Lst2KAfwlRnkD8=; b=WY9Icw
+	KAwtSlRWHNj3YmFZylu/No7WQG2sECgySMM822tuSsLIC0EdgZo5UXD6s2N6DgWp
+	opCQDf2Dg5+DwqzJ0Jh7ndHj+xzBifFX1lk98mCMjoLfD35Uybn/a3UnnV0eRc4z
+	YFVNT5Eta/loBSb5hpM63wXAM2qnex9d2FiQs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pAPlNXIJyFjuG8iKvgD2OOns/CWjbP93
-	IpIPZLWtkiWJDleRDkdeW3j5ofi9g9saD70vIoJZ/8Wvk/UxAimgkN90Zgc/pOu+
-	SA4xFl7X22egMG4X64TOar9/ykdKlbN4TLr5ODW2RuTHNWTgO8S3baxOowXGs2p4
-	85VbkVobbpY=
+	:content-type; q=dns; s=sasl; b=OZPwer4jWJO64u9u7vyvqgMW9SqjpFYE
+	fjf18gWQkRZ59z93rMHUUjk5BvAJDS6YAEXPBVEoZpeDcxNJNy1e+VMJNhH9fO53
+	w2usazljOkF23uSQ/J9KWMODiyk/ImJPgCD1OSiewFt7N2WdTyisvXhsLYVNvV8D
+	KK+Eu6uFDzg=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 636E534EA0;
-	Tue, 16 Aug 2016 13:47:46 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 165CA34FAA;
+	Tue, 16 Aug 2016 13:54:36 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
 	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E228D34E9F;
-	Tue, 16 Aug 2016 13:47:45 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 964FF34FA8;
+	Tue, 16 Aug 2016 13:54:35 -0400 (EDT)
 From:	Junio C Hamano <gitster@pobox.com>
-To:	Stefan Beller <sbeller@google.com>
-Cc:	meta@public-inbox.org,
+To:	Jeff King <peff@peff.net>
+Cc:	Stefan Beller <sbeller@google.com>, meta@public-inbox.org,
 	"git\@vger.kernel.org" <git@vger.kernel.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Eric Wong <e@80x24.org>
 Subject: Re: Working with public-inbox.org [Was: [PATCH] rev-parse: respect core.hooksPath in --git-path]
 References: <CAGZ79kasebzJb=b2n=JQiVMrSfJKaVfZaaoaVJFkXWuqKjfYKw@mail.gmail.com>
 	<xmqqa8gcej1p.fsf@gitster.mtv.corp.google.com>
-	<CAGZ79kby02NuRvQkcuTNjxxc4oDvjAH4wE=3dCXmqyRRrCU0tQ@mail.gmail.com>
-Date:	Tue, 16 Aug 2016 10:47:44 -0700
-In-Reply-To: <CAGZ79kby02NuRvQkcuTNjxxc4oDvjAH4wE=3dCXmqyRRrCU0tQ@mail.gmail.com>
-	(Stefan Beller's message of "Tue, 16 Aug 2016 10:22:57 -0700")
-Message-ID: <xmqq1t1oehbz.fsf@gitster.mtv.corp.google.com>
+	<20160816172022.juqvfn5vwt2pdcyd@sigill.intra.peff.net>
+Date:	Tue, 16 Aug 2016 10:54:33 -0700
+In-Reply-To: <20160816172022.juqvfn5vwt2pdcyd@sigill.intra.peff.net> (Jeff
+	King's message of "Tue, 16 Aug 2016 13:20:22 -0400")
+Message-ID: <xmqqtwekd2g6.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 8A386E5E-63D9-11E6-81DF-EE617A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 7E6A2954-63DA-11E6-AB2F-EE617A1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> In your work flow, how do you respect the cover letter?
-> e.g. in 3787e3c16ced:
->
->     Merge branch 'ew/http-backend-batch-headers'
->
->     The http-backend (the server-side component of smart-http
->     transport) used to trickle the HTTP header one at a time.  Now
->     these write(2)s are batched.
->
->     * ew/http-backend-batch-headers:
->       http-backend: buffer headers before sending
->
-> Is the text from the original author (and if so from which version
-> of the cover letter) or is it your work?
+> For my workflow, it is not about "initial skip", but rather just "skip
+> emails that don't have patches in them at all".
 
-The source of truth in the merge log message is the "What's cooking"
-report.  I really prefer to write these in my own words, as that is
-a good yardstick to measure how much/little I understand the topic.
-If I cannot describe it concisely, in a way suitable as an entry in
-the release notes, that means I am merging a topic I do not have a
-good idea about, which is quite irresponsive.  Forcing me to write
-these myself keeps me honest.
+OK.  That is different from "the subject line says 0/N so let's
+skip".
 
-Of course, if a cover letter describes the topic well, it would help
-me write the entry in the "What's cooking" report.
+If we can safely determine that there is no patch in a message,
+skipping it may feel sensible.  Historically, we try to err on the
+safe side by stopping when we do not understand an input and that is
+where "Patch is empty" message came from, because skipping and
+continuing, even with a warning, while applying tons of patches is
+not good enough to get user's attention.
 
-It is a bit tricky to aim for the automation, though.  The cover is
-an overview of the proposed log messages and typically tells a story
-"I do this, and then this, and finally that", plus a reroll-specific
-commentary like "what changed since the last round".  On the other
-hand, the entries in the release notes gives a description of what
-happened from a third-party's point of view.  They are told in
-different voice for different target audience.
-
-
+An "ignore empty input" option (and eventually with a configuration)
+may not be a bad idea.
