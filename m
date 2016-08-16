@@ -2,122 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9339A1F859
-	for <e@80x24.org>; Tue, 16 Aug 2016 21:21:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2042C2018E
+	for <e@80x24.org>; Tue, 16 Aug 2016 21:27:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753387AbcHPVVB (ORCPT <rfc822;e@80x24.org>);
-	Tue, 16 Aug 2016 17:21:01 -0400
-Received: from mail-yw0-f180.google.com ([209.85.161.180]:36703 "EHLO
-	mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753240AbcHPVU6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2016 17:20:58 -0400
-Received: by mail-yw0-f180.google.com with SMTP id u134so50937642ywg.3
-        for <git@vger.kernel.org>; Tue, 16 Aug 2016 14:20:51 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=bBzEW8C+g7bvnOENUmlBbmLeQREH+jb7EaDbQqA1ORk=;
-        b=cK+PYH9pS/V6A8DLiKoCxUicNiz74uREMIxqx/y8dLx0KHPjfVEw9sZG9Tg+/q+Ez8
-         bWes3ZGg6KjND3HgHywEzUBn0u34Lf4cpbzIEkOu90LTLK0fLo6K9ZysFkgO8nukXb7/
-         ozK6t0FYuhTyug6UG5ixGRkSL9UPlTdOsC3P6tWEhVSywKajOPyiUHSfACxVp0XRWoT9
-         C1xiNOz82I1YBGL98RJPh+8qD8/6nlTSbUodS98ho6uH7wEA1kQR6/xyipc6sxZHKjWv
-         BNPgeZ4vUtNHS0nSe+9G3EnZau/J8Tfzg2dGpAAjieD4U18IElpVXF/EW+zbTFBlqAVJ
-         ZmDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=bBzEW8C+g7bvnOENUmlBbmLeQREH+jb7EaDbQqA1ORk=;
-        b=i5nFRPluG32IgFFeyHioLBmwcMi5te+db5Sc6BbsCnxS7UljvnAubBA/Xa86r4bCY5
-         2X2AhtDsJxrkzWo1+vbBfwj3xEhYakHHn1RkxIfEOhOZ6QlFLRV7mXB6DSPOZyEZ63QR
-         vKhVH5OOiXV7MjrmsAPlx8MVgCvxZoY0zhrr+Z87d3WQAvSwG+Fcj8WGI+jev0PVuGIl
-         Wd+ZSCzu6UJ74iWit/TiJR2xdJGYSe7801rfXDBDbetwYG5bnh41cuVScmaiVUQkG51i
-         oIcy0D2JbK9W6tL3dn9WePgCNoqGQjeTrA68KOvcmEg2HcOkMxamCtXeE0R+Z4dnXoFL
-         3+lg==
-X-Gm-Message-State: AEkoousio3IrqRFjEprpwwQmqSEKnubOpHd5IsBmT/UcOpy4u9c1LR2h00ZrI0zoFXby9nbsCuGIyDyk1gS95Q==
-X-Received: by 10.129.46.136 with SMTP id u130mr28217140ywu.234.1471382451189;
- Tue, 16 Aug 2016 14:20:51 -0700 (PDT)
+	id S1753756AbcHPV1G (ORCPT <rfc822;e@80x24.org>);
+	Tue, 16 Aug 2016 17:27:06 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:55840 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753501AbcHPV1F (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2016 17:27:05 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 951921F859;
+	Tue, 16 Aug 2016 21:27:04 +0000 (UTC)
+Date:	Tue, 16 Aug 2016 21:27:04 +0000
+From:	Eric Wong <e@80x24.org>
+To:	Josh Triplett <josh@joshtriplett.org>
+Cc:	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	git <git@vger.kernel.org>,
+	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+	Nicola Paolucci <durden@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Stefan Beller <sbeller@google.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	remi galan-alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Lars Schneider <larsxschneider@gmail.com>,
+	meta@public-inbox.org
+Subject: Re: Draft of Git Rev News edition 18
+Message-ID: <20160816212704.GA25034@dcvr>
+References: <CAP8UFD1iveotLsMOBnpa=hU4ohcQjZ-X7tjnzY4k+xz5KJvqBw@mail.gmail.com>
+ <D5A2E231FFE74D1C891A1653E1C2D797@PhilipOakley>
+ <9f3b254f-451e-4f6d-233c-7e995d8e369e@gmail.com>
+ <20160816093027.GA27347@dcvr>
+ <20160816093412.v3tenw4vyxipunah@x>
 MIME-Version: 1.0
-Received: by 10.37.50.196 with HTTP; Tue, 16 Aug 2016 14:20:30 -0700 (PDT)
-In-Reply-To: <xmqqvaz0bemk.fsf@gitster.mtv.corp.google.com>
-References: <20160815230702.30817-1-jacob.e.keller@intel.com>
- <20160815230702.30817-4-jacob.e.keller@intel.com> <xmqqh9akczyp.fsf@gitster.mtv.corp.google.com>
- <CA+P7+xqc_WwzjUnF5P4arBhBqgRbtXyKC9QWtRJ3+fmx0Q2+oA@mail.gmail.com> <xmqqvaz0bemk.fsf@gitster.mtv.corp.google.com>
-From:	Jacob Keller <jacob.keller@gmail.com>
-Date:	Tue, 16 Aug 2016 14:20:30 -0700
-Message-ID: <CA+P7+xrnUAN8M4UX0hZN213yUKndb_4d+AjohWV45KvCdJm9PQ@mail.gmail.com>
-Subject: Re: [PATCH v6 3/3] diff: add SUBMODULE_DIFF format to display
- submodule diff
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Jacob Keller <jacob.e.keller@intel.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Stefan Beller <stefanbeller@gmail.com>,
-	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20160816093412.v3tenw4vyxipunah@x>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Aug 16, 2016 at 2:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jacob Keller <jacob.keller@gmail.com> writes:
->
->>>> +
->>>> +     if (dirty_submodule & DIRTY_SUBMODULE_MODIFIED) {
->>>> +             /*
->>>> +              * If the submodule has modified contents we want to diff
->>>> +              * against the work tree, so don't add a second parameter.
->>>> +              * This is essentially equivalent of using diff-index instead.
->>>> +              * Note that we can't (easily) show the diff of any untracked
->>>> +              * files.
->>>> +              */
->>> ...
->>> I am debating myself if this is a good thing to do, though.  The
->>> submodule is a separate project for a reason, and there is a reason
->>> why the changes haven't been committed.  When asking "what's different
->>> between these two superproject states?", should the user really see
->>> these uncommitted changes?
->>
->> Well, the previous submodule code for "log" prints out "submodule has
->> untracked content" and "submodule has modified content" so I figured
->> the diff might want to show that as a diff too? Or maybe we just stick
->> with the messages and only show the difference of what's actually been
->> committed.. I think that's probably ok too.
->
-> I do not have a strong opinion.  We only see DIRTY when we are
-> looking at the working tree at the top-level diff (i.e. "git diff
-> HEAD~ HEAD" at the top-level, or "git diff --cached" will not show
-> DIRTY_SUBMODULE_MODIFIED when a submodule has local modifications in
-> its working tree), so in that sense, it probably makes sense to show
-> the more detailed picture of the working tree like your patch does.
-> After all, choosing to use --submodule=diff is a strong sign that
-> the user who says top-level "git diff [<tree>]" wants to see the
-> details of her work-in-progress.
->
-> Do you need to handle "git diff -R [<tree>]" at the top-level a bit
-> differently, by the way?  If this function gets the full diff_options
-> that is driving the top-level diff, the DIFF_OPT_REVERSE_DIFF bit
-> would tell you that.
->
+Josh Triplett <josh@joshtriplett.org> wrote:
+> On Tue, Aug 16, 2016 at 09:30:27AM +0000, Eric Wong wrote:
+> > Jakub Narębski <jnareb@gmail.com> wrote:
+> > > It's a great pity that https://public-inbox.org/ is just
+> > > directory index, not a true home page.
+> > 
+> > +Cc meta@public-inbox.org
+> > 
+> > I'm not sure one could do better while staying true to the
+> > minimalist nature of plain-text email.
+> > 
+> > In the spirit of decentralization, there may not be /a/
+> > homepage, but many.   Everything is meant to clonable with each
+> > public-inbox, so maybe every public-inbox will have a code
+> > branch attached to it with the source+docs bundled.
+> 
+> It'd be nice if it had a prominent list of all lists available; as far
+> as I can tell, the main page has no link to /git/.
 
-Probably. Unfortunately what I really need is to be able to convert
-(almost) all diff options from the diff_options structure back into
-command line flags. This is the primary reason I would prefer to not
-use a sub-command, but I'm not really sure what's the best way to
-actually DO that in a safe way.
+I'm not sure that's necessary; most of the traffic seems to come
+from /git/MESSAGE_ID/ links posted by others.  So it's
+probably more inside-out exposure than anything.
 
-The sub command brings nice separation between the superproject and
-its submodules... but it has problem because we can't use C calls
-directly, so I can't pass the options along myself.
+As for other projects, I'm not aware of anybody else using it,
+yet.  I have some small projects using it, but most of those are
+one-off throwaways and I'm not comfortable promoting those along
+with public-inbox.  I admit: I'm not comfortable promoting
+anything I do, really.
 
-Thoughts on that? Or should we just limit ourselves to only some
-options get propagated to the submodule?
-
-Thanks,
-Jake
+I do wish more people would start using the .onions, though...
