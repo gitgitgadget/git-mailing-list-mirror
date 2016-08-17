@@ -2,70 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3AB2F1FD99
-	for <e@80x24.org>; Wed, 17 Aug 2016 12:56:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E43AF1FD99
+	for <e@80x24.org>; Wed, 17 Aug 2016 13:09:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751014AbcHQM4M (ORCPT <rfc822;e@80x24.org>);
-	Wed, 17 Aug 2016 08:56:12 -0400
-Received: from mout.gmx.net ([212.227.15.18]:62051 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750764AbcHQM4L (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2016 08:56:11 -0400
-Received: from virtualbox ([37.24.141.212]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MNZ9u-1bYKWH0v98-0079rU; Wed, 17 Aug 2016 14:49:31
- +0200
-Date:	Wed, 17 Aug 2016 14:49:30 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Vasco Almeida <vascomalmeida@sapo.pt>
-cc:	git@vger.kernel.org, Heiko Voigt <hvoigt@hvoigt.net>,
-	Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 1/3] t3404: become resilient to GETTEXT_POISON
-In-Reply-To: <1471003142-1739-1-git-send-email-vascomalmeida@sapo.pt>
-Message-ID: <alpine.DEB.2.20.1608171448060.4924@virtualbox>
-References: <1471003142-1739-1-git-send-email-vascomalmeida@sapo.pt>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:gTWlPgdECZCUpyDVxbF6RRs2qd+J5pFQBQbKQwtWSpr1CxM63zs
- WJZtRP3ZD4np6Xy7wyM7buRwsxL2tRz5BWyKp81/7xGkDP30irGIooHI6zIvlYcGbkHBZww
- Fv/RFMqj2ro686fA/2KPy6uUOJP4tpoeA40tz+e47e1BenEkmibWGb0J2Tpli9dZ5s79dNP
- YOPe98RHJi0pG3xjt0F4A==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:C2Kq+FLmtGk=:DKyCIhId+vdiKHFJb7k1AG
- MLBHUQ6y2cLd002CGaiqSY126flwMTFNdLsVHHUgVkiRe6VHqEIl0PJPDo+sgefiiE8+Gfy+s
- FUWsTLkTpe2JdURiLDXjq5m6lFpif9Kni692907XatEvTUH0AOfmvMk0AH/pkeLur7R6HzHKX
- 8hCOUU/Me8gcwrtG4HobeiU0sg3ZbKNSZjn+PCtjoH1Ldj6fFhojj/XJSGRsdpvmYF818BuRx
- UOtNQxqgSCm0X43zPEOsYIG63qRe5ZKCSnRBhg03fq6DnBewCdOIrhhSwfzvkkgIgN+I0uNQ0
- xDs1mJZNMHS0nBlK1pHcZQcCJBtKSZADzTShb+MSRaIEpdP1a6YK7YywMLyCb2QYUKU/t7lCV
- PeGlTx0NSco8TNwxdxgMUjMtiiQhqS0YcfhTDINEYjNE8B2F6Da6b7ACPDL3qDEcaSbY3HluU
- 7T5pCHE7yC5VOq/Pt9WYwhaGOMEOLRdAnKT+M3PVkk+Ik3wzSglX2naFLXeaMhQIrrpzZFUJK
- q1IlieXy1KPK2r8wF1y7+YTt9akXw35Ey7a3iv6Loibl+LPn4udWmHetjBJYwm3Z78rlq/Sse
- R5NmuiAGuyv1YS5pi2Ge2mqnKNfXJOFWyTUYzd1wWbMAk+ZMcrxbJdNd/+C+pjGmKXeKEtoV4
- wnqnMIuI2q3SlDbndNR8aCYCrFGaSYflGKVd8/Ro+RRrkaSvcVozqIAhVOIUX1hbYpCuivFuv
- Tuc/eU6yEFsykswJqf0QEinbTsaut5Tdqcb4oFnfdOsQQqPcPZwJiwsXSf4sWa86GTQuECPtE
- CaHGzLi
+	id S1751590AbcHQNJO (ORCPT <rfc822;e@80x24.org>);
+	Wed, 17 Aug 2016 09:09:14 -0400
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:58555 "EHLO
+	homiemail-a22.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750839AbcHQNJN (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Aug 2016 09:09:13 -0400
+Received: from homiemail-a22.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a22.g.dreamhost.com (Postfix) with ESMTP id 2E034114068;
+	Wed, 17 Aug 2016 06:08:38 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=message-id
+	:subject:from:to:cc:date:in-reply-to:references:content-type
+	:mime-version:content-transfer-encoding; s=novalis.org; bh=3owQa
+	Ui7hEnHiQVOiCRlPqSJWSQ=; b=Y6KTVmnYYIHoZL6wIyztuTx077/01f+/pKXih
+	etQqx/B69l4EgN5HNM5IfTxZ9ywYm+PT63iEnKJYmLQCVuTl6ZAf+QGRcxetjwIi
+	nU/jwsG8kCYak+O7eNSBagXdWJFMrsqAv/FU7WMIpEdgovuJnDN+1Z2qxkrljFRk
+	atZM/g=
+Received: from [10.0.1.180] (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com [207.38.164.98])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: novalis@novalis.org)
+	by homiemail-a22.g.dreamhost.com (Postfix) with ESMTPSA id A7777114067;
+	Wed, 17 Aug 2016 06:08:37 -0700 (PDT)
+Message-ID: <1471439316.20273.2.camel@frank>
+Subject: Re: What's cooking in git.git (Aug 2016, #06; Sun, 14)
+From:	David Turner <novalis@novalis.org>
+To:	Duy Nguyen <pclouds@gmail.com>
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+Date:	Wed, 17 Aug 2016 09:08:36 -0400
+In-Reply-To: <CACsJy8BYk1t5cfN_dgc8o3HCi8Rqz9aM_5XFWMUkMTKXu2R7=A@mail.gmail.com>
+References: <xmqqmvkfj7dz.fsf@gitster.mtv.corp.google.com>
+	 <CACsJy8BYk1t5cfN_dgc8o3HCi8Rqz9aM_5XFWMUkMTKXu2R7=A@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.10.4-0ubuntu2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Vasco,
-
-On Fri, 12 Aug 2016, Vasco Almeida wrote:
-
-> The concerned test greps the output of exit_with_patch() in
-> git-rebase--interactive.sh script.
+On Wed, 2016-08-17 at 17:49 +0700, Duy Nguyen wrote:
+> On Mon, Aug 15, 2016 at 5:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> > * dt/index-helper (2016-07-06) 21 commits
+> >
+> >  A new "index-helper" daemon has been introduced to give newly
+> >  spawned Git process a quicker access to the data in the index, and
+> >  optionally interface with the watchman daemon to further reduce the
+> >  refresh cost.
+> >
+> >  Not quite ready yet, it seems.
+> >  cf. <alpine.DEB.2.20.1607061016330.6426@virtualbox>
+> >  cf. <CACsJy8AiER_=5aJ65r+GPCE_nXbrPTAMKJi=FuJgT8zzV2-NFw@mail.gmail.com>
 > 
-> Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
+> David I can take back this series if you are busy or no longer interested in it.
+> 
+> If so, Junio, since I may try some slightly different direction first,
+> it may take a while before I resubmit, feel free to drop it if it adds
+> work to you.
 
-Thank you for keeping an eye out for these issues. I have to admit that I
-am a bit confused when to use i18ngrep and when not, so it is good to know
-that my mistakes won't survive for long!
+Unfortunately, I am pretty busy.  So please do feel free to take over.  
 
-Ciao,
-Dscho
