@@ -6,118 +6,93 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 372351FD99
-	for <e@80x24.org>; Wed, 17 Aug 2016 22:18:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9855F1FD99
+	for <e@80x24.org>; Wed, 17 Aug 2016 22:42:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753397AbcHQWSn (ORCPT <rfc822;e@80x24.org>);
-	Wed, 17 Aug 2016 18:18:43 -0400
-Received: from mail-it0-f51.google.com ([209.85.214.51]:36491 "EHLO
-	mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752651AbcHQWSl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2016 18:18:41 -0400
-Received: by mail-it0-f51.google.com with SMTP id e63so12107327ith.1
-        for <git@vger.kernel.org>; Wed, 17 Aug 2016 15:18:41 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=/cTRtek7WHcv+T4Dz+LWLdU/eeeHC9kTWMBFsbDiZ6E=;
-        b=XPKV/qjMMKqglhvh6zvc6w7HaECUg89oirtyyiHFduOlgewF3fw6gCf4IGzHrbjw5A
-         /UXh80VUIO6oQ9BF/73c+/MXZZjbJVefFn+0yU5Z+k9+vqHC/H7Auww+nq/tMs+yG6U1
-         iX2MIWfByeXFPYki0iQlRt87M2UqBm2n2NTEb7sULTnfQrxPC7FHVl9LrPzlN6IrYxWH
-         rw6ixhM2E3FVrkWrrpmnrkXvCH1mmQTFIYbfrORaKwsM1RDS7ICy3mFgPSQOSCRHfik0
-         xQDhV//YPUo+eaEIAJQlmG1LXC4Kioujmncd6+1yusd9GdJQ8npnO/aRRfIMYCt6IOKO
-         yFmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=/cTRtek7WHcv+T4Dz+LWLdU/eeeHC9kTWMBFsbDiZ6E=;
-        b=EGTJMN5LXhqpICMjD9/N9iXk+9Uqm3hIsCTRVr/10bRGX43X1RlUqZTqsFK5a//Fvu
-         RbvJMpHSf3ZDE7bRMVZtZ6ynmHOxdTBqHmr5UyWdg+fTGYpoFSHr7q4e60CUFDLW1Emp
-         jK+nUFhWP9ggK/mIDmf5F+doABPFCBJReap/GXqSIbhYOT5qZG1GPMNSNGSQpywUQnsF
-         RumThjk0fl/2siSZVjaQDSxn8vCIjRZKoVg5EwTwlkce1N0XpzXmvxGwWK4RIWp0PhWs
-         S7U6+Dyk+FwcsPUs6VgUPlBTtufJ2gubZ9tWBkgmcqoKHjG+uCRCEmMQ59s8WtoYxiHo
-         PGfg==
-X-Gm-Message-State: AEkoous434VxI0rpwNKgpKLqH6YRlowp32a0WUnYMLi5763k10oaQFY4dSnBgpCvPHE5waA74ene2Z+34UxYiLGA
-X-Received: by 10.36.228.138 with SMTP id o132mr30084316ith.49.1471472320596;
- Wed, 17 Aug 2016 15:18:40 -0700 (PDT)
+	id S1752834AbcHQWmT (ORCPT <rfc822;e@80x24.org>);
+	Wed, 17 Aug 2016 18:42:19 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56813 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753007AbcHQWmS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2016 18:42:18 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 19775378F8;
+	Wed, 17 Aug 2016 18:41:53 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Z2p4rFur9zFGSP3/LR2H7ncK2CA=; b=sRxFO7
+	4wQO5ZZHoJr5ex6Bdd0dytM9xG3ggY00z/gDlTMyUj0Lzxf21dac0GjHElnD+bp/
+	DndDAqsPEPSBEA6mv02JrG50SWAbPKj3pqRzuKla4aTOAhgIHFg0rcpau68z7zRK
+	k/3/JgVVxCa1rby/8SWSte6sBVDQV4vYsiX1k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=a2QU5TZDvNdjTaN7P2GeZTfrJqNi76sH
+	3PHIya/2FG5EZrQI5y4EzLiLXyrg3LF4rccTbYXRHzOoC1shasIEFvRN3/Q5PHmQ
+	U3mDm1v4P3BC0rfw6OjuCO0InWbUzww5QOu72DjDN3UdJhn9ECgrIh0Ld4fO9xEs
+	5Z+he/PqHn0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 10868378F7;
+	Wed, 17 Aug 2016 18:41:53 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 834A0378F5;
+	Wed, 17 Aug 2016 18:41:52 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Tobiah <toby@tobiah.org>
+Cc:	git@vger.kernel.org
+Subject: Re: Working from different machines.
+References: <71d05705-792f-8bb9-026b-5b9251b104b9@tobiah.org>
+Date:	Wed, 17 Aug 2016 15:41:49 -0700
+In-Reply-To: <71d05705-792f-8bb9-026b-5b9251b104b9@tobiah.org> (Tobiah's
+	message of "Wed, 17 Aug 2016 14:47:45 -0700")
+Message-ID: <xmqq4m6j81ci.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Wed, 17 Aug 2016 15:18:40 -0700 (PDT)
-In-Reply-To: <xmqq8tvv82pg.fsf@gitster.mtv.corp.google.com>
-References: <20160817214635.22389-1-sbeller@google.com> <xmqq8tvv82pg.fsf@gitster.mtv.corp.google.com>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Wed, 17 Aug 2016 15:18:40 -0700
-Message-ID: <CAGZ79kaBX8UX4Hbq3Ff6DeTT6jfZTHcCXPYGOaDyMQTuWUvbyg@mail.gmail.com>
-Subject: Re: [PATCHv7 8/8] clone: recursive and reference option triggers
- submodule alternates
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: CAD571B2-64CB-11E6-9123-E86612518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Aug 17, 2016 at 3:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->>  Added a default for alternateErrorStrategy and hence fixed the null pointer
->>  for error_strategy in prepare_possible_alternates(),
->
-> Looks much better.
->
->> +submodule.alternateLocation::
->> +     Specifies how the submodules obtain alternates when submodules are
->> +     cloned. Possible values are `no`, `superproject`.
->> +     By default `no` is assumed, which doesn't add references. When the
->> +     value is set to `superproject` the submodule to be cloned computes
->> +     its alternates location relative to the superprojects alternate.
->
-> I am not seeing a code that handles 'no' and any other string that
-> is not 'superproject' differently, though.
->
-> I can see that "clone" has codepath that writes 'superproject' to
-> the variable, but the only thing that seems to care what value the
-> variable is set to checks "no".  When somebody sets the variable to
-> "yes", shouldn't we at least say "Sorry, I do not understand" and
-> preferrably stop before spreading potential damage?  We'd surely end
-> up doing something that the user who set the value to "yes" did not
-> expect.
->
-> There is something still missing?
->
+Tobiah <toby@tobiah.org> writes:
 
->> +static void prepare_possible_alternates(const char *sm_name,
->> +             struct string_list *reference)
->> +{
-...
->> +     sas.submodule_name = sm_name;
->> +     sas.reference = reference;
->> +     if (!strcmp(error_strategy, "die"))
->> +             sas.error_mode = SUBMODULE_ALTERNATE_ERROR_DIE;
->> +     if (!strcmp(error_strategy, "info"))
->> +             sas.error_mode = SUBMODULE_ALTERNATE_ERROR_INFO;
+> In other words, I want to work from different machines, and always
+> sit down to the environment exactly as I last left it.
 
-(see below first)
-Here goes the same for alternateErrorStrategy
+You have several options, but it depends on untold expectations you
+have beyond "exactly as I last left it."  So the following is only
+to show directions and possibilities without going into details.
 
->> +     if (!strcmp(sm_alternate, "superproject"))
->> +             foreach_alt_odb(add_possible_reference_from_superproject, &sas);
+For example, do you save all changes you made in your editor buffers
+before you leave the 'desktop'?  If the answer is "no", then that is
+not a problem Git-the-tool is interested in solving, and the only
+solution I could think of is to use mechanism to share the session
+between 'desktop' and 'home', using things like remote-desktop or
+screen session.
 
-here is where we would add
+If the answer is "yes", the next question is if you commit all the
+changes you made before you leave the 'desktop'.  If the answer is
+"no", again, that is not a problem Git-the-tool is interested in
+solving, and the only solution I could think of (in addition to the
+"share the session" above) is to use networked filesystem shared
+between 'desktop' and 'home'.
 
-    else if (!strcmp(sm_alternate, "no")
-        ; /* do nothing */
-    else
-        die(_("What's wrong with you?"));
+If the answer is "yes", then you are in the problem space that
+Git-the-tool is interested in solving.  Assuming that you have
+network connection into 'desktop' from 'home', the solution would
+involve making it the first thing to do when get home to run "git
+fetch" on 'home' to get the latest state from the 'desktop', and run
+"git push" on 'home' to push out the latest state to the 'desktop'
+before you leave 'home'.  If your 'server' is for your sole use, and
+if 'home' has network connection into 'server', then you could
+instead rendezvous at 'server' by running "git push server" on
+'desktop' (or 'home') to 'server' as the last thing before you leave
+'desktop' (or 'home'), and running "git fetch server" on 'home' (or
+'desktop') as the first thing before you start working on 'home' (or
+'desktop').
 
-Initially I did not add that as I considered it not relevant. But I
-guess it helps as a typo checker as well and it is more comforting
-if a wrong value yields an error. Also it is consistent with the rest of
-options.
 
-Thanks again,
-Stefan
+
+
