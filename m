@@ -2,62 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE75F2018E
-	for <e@80x24.org>; Wed, 17 Aug 2016 11:36:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6704A1FD99
+	for <e@80x24.org>; Wed, 17 Aug 2016 12:41:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752580AbcHQLgJ (ORCPT <rfc822;e@80x24.org>);
-	Wed, 17 Aug 2016 07:36:09 -0400
-Received: from smtprelay04.ispgateway.de ([80.67.31.27]:58688 "EHLO
-	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751902AbcHQLgI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2016 07:36:08 -0400
-Received: from [84.131.251.93] (helo=sandbox)
-	by smtprelay04.ispgateway.de with esmtpsa (TLSv1.2:AES128-GCM-SHA256:128)
-	(Exim 4.84)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1bZz8d-0000FJ-VB; Wed, 17 Aug 2016 13:36:04 +0200
-Date:	Wed, 17 Aug 2016 13:36:02 +0200
-From:	Heiko Voigt <hvoigt@hvoigt.net>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Stefan Beller <sbeller@google.com>, Git List <git@vger.kernel.org>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	=?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH] document how to reference previous commits
-Message-ID: <20160817113602.GB6080@sandbox>
-References: <578E7A07.8080006@web.de>
- <20160720082515.GA823@book.hvoigt.net>
- <57911AFF.7030107@web.de>
- <20160725143706.GA4872@sandbox>
- <xmqq60rt933m.fsf@gitster.mtv.corp.google.com>
- <20160726094913.GA3347@book.hvoigt.net>
- <CAGZ79kaOf3NRAXh+krM=onwswSjAF3yy_zpa1d+9CFOBNke6-w@mail.gmail.com>
- <20160728111636.GA7760@sandbox>
- <20160728125514.GA2813@sandbox>
+	id S1752962AbcHQMlA (ORCPT <rfc822;e@80x24.org>);
+	Wed, 17 Aug 2016 08:41:00 -0400
+Received: from mout.gmx.net ([212.227.15.18]:60508 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751752AbcHQMk7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2016 08:40:59 -0400
+Received: from virtualbox ([37.24.141.212]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MJjvw-1bYuDg2Kqi-0017Pk; Wed, 17 Aug 2016 14:40:52
+ +0200
+Date:	Wed, 17 Aug 2016 14:40:51 +0200 (CEST)
+From:	Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	git@vger.kernel.org
+cc:	Junio C Hamano <gitster@pobox.com>,
+	Lars Schneider <larsxschneider@gmail.com>
+Subject: [PATCH 0/2] Do not lock temporary files via child processes on
+ Windows
+Message-ID: <cover.1471437637.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160728125514.GA2813@sandbox>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:9xrKK/ONVEtD/wOvpgaCB/3OvI8SK3lO6L64farXpB9dE8M9Wih
+ QlYuiPabGm6Usc9t6gnEN5ABXUAszY3YydJeRLJ3eaqq3MCjTEKpBfDlBmVBdNw3phRmVCj
+ IZqyDkIsMmnm++DHcb95JLqJmivztPMWB04H4xytfQZkA/xKVPiQNFkid2A54ZFy8hEMG7G
+ BLMY44nM2nWeFXJ1sIagQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:ZBtfPBCYsYw=:XlZ/QmeLFodZsVNbcEXbWQ
+ 8RYWqJLkoKDJm1o2v0LVGe9TFcNjL8idRLgWXCguXEV4bbJwP967EdVnL0bdh2Dq6oHuFaGwr
+ NANKwaEN7MHgCaVxa0M5Tc+e61Klgut5KexUJvlT+/YUnl4QXPflN//PbYqM1k7B/qIccs+eY
+ dljDu2fFZ/k1PCz7ZcOHLh6qAmc5rulIk/Hu8DVJh1r7/Bt4S5j/EhljBKGBdvNVJjCpjP8rT
+ ozm99mx9OUhqSaFBMwV5H+Yn5R8/M1q1uwBeWGRGrsRmBqRDWHd8mVzT5gnxIemZIeVV5u3Xz
+ bA5sc4BrpaDFh5HHHgolBlYX673prNfA5hl8pEiTmKNF0zYmo4Y2U+iIxQaM2kwkt7J9USm9X
+ 2D4NVjxefWwvyyK3RFQykv1Y547VNlyfZRgf/GK2Dhzkp2uv2vIIGmG4fsIpQMevHg5WeWxdf
+ 9TTWvls8Bh/SR3K/EzLbj30kEhAdnhAY556S0yoA0wBPz7y1Sek81XZmwOyulRUr3LRsFejOY
+ NndhgC3flqmR+5+v5+mSrwHdmC4j0Et2wdOErTn00JOfKguIWEmKUcw3VJIW0uYLP5d8vfoYz
+ M5UrPBP8uI2WFBC5CE6Wf5Tqd2RjuO9VDBZC1F5NSInuMiIQNxPtWW1XMTlzIP+aTO/46Tauj
+ hWbreD9sfxutFUdL0kAlLVk7fP9OQsHbS2rD8ssL+MI+CdTM6xlhuR/oi9vT2DiIJQerLmrgC
+ lSQSk/YKJoBUsU0wwra2qukONp3gO/orMCk/vEJX9uTgKuHo83fMRGolRvF6joil0iXRhxwGb
+ CzjtSwG
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi,
+This issue was originally reported and fixed in
+https://github.com/git-for-windows/git/pull/755
 
-On Thu, Jul 28, 2016 at 02:55:14PM +0200, Heiko Voigt wrote:
-> To reference previous commits people used to put just the abbreviated
-> SHA-1 into commit messages. This is what has evolved as a more
-> stable format for referencing commits. So lets document it for everyone
-> to lookup when needed.
+The problem is that file handles to temporary files (such as
+index.lock) were inherited by spawned processes. If those spawned
+processes do not exit before the parent process wants to delete or
+rename them, we are in big trouble.
 
-A quick ping about this patch. Maybe you missed to include it Junio? I
-can not find any reference to it in the cooking mails and in your
-repository.
+The original use case triggering the bug is a merge driver that does
+not quit, but listen to subsequent merge requests.
 
-Cheers Heiko
+However, the same issue turned up in Lars Schneider's work on making
+clean/smudge filters batchable (i.e. more efficient by avoiding
+possibly thousands of child processes, one per file).
+
+
+Ben Wijen (2):
+  t6026-merge-attr: child processes must not inherit index.lock handles
+  mingw: ensure temporary file handles are not inherited by child
+    processes
+
+ compat/mingw.h        |  4 ++++
+ t/t6026-merge-attr.sh | 13 +++++++++++++
+ tempfile.c            |  2 +-
+ 3 files changed, 18 insertions(+), 1 deletion(-)
+
+Published-As: https://github.com/dscho/git/releases/tag/mingw-index-lock-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git mingw-index-lock-v1
+
+-- 
+2.9.2.691.g78954f3
+
+base-commit: 07c92928f2b782330df6e78dd9d019e984d820a7
