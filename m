@@ -2,84 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B7FA1FD99
-	for <e@80x24.org>; Wed, 17 Aug 2016 19:37:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 927F11FD99
+	for <e@80x24.org>; Wed, 17 Aug 2016 20:02:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753808AbcHQThR convert rfc822-to-8bit (ORCPT
-	<rfc822;e@80x24.org>); Wed, 17 Aug 2016 15:37:17 -0400
-Received: from dmz-mailsec-scanner-8.mit.edu ([18.7.68.37]:44629 "EHLO
-	dmz-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753749AbcHQThL (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Aug 2016 15:37:11 -0400
-X-AuditID: 12074425-e03ff7000000470c-ec-57b4b3f60bc2
-Received: from mailhub-auth-4.mit.edu ( [18.7.62.39])
-	(using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by  (Symantec Messaging Gateway) with SMTP id 2E.E5.18188.6F3B4B75; Wed, 17 Aug 2016 14:59:02 -0400 (EDT)
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
-	by mailhub-auth-4.mit.edu (8.13.8/8.9.2) with ESMTP id u7HIx1DD004672;
-	Wed, 17 Aug 2016 14:59:01 -0400
-Received: from localhost (howe-and-ser-moving.mit.edu [18.9.64.27])
-	(authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.8/8.12.4) with ESMTP id u7HIwxBD031015
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 17 Aug 2016 14:59:00 -0400
-Date:	Wed, 17 Aug 2016 14:58:58 -0400 (EDT)
-From:	Anders Kaseorg <andersk@mit.edu>
-To:	Junio C Hamano <gitster@pobox.com>
-cc:	git@vger.kernel.org, Bernhard Reiter <ockham@raz.or.at>,
-	"Kyle J. McKay" <mackyle@gmail.com>
-Subject: [PATCH] imap-send: Tell cURL to use imap:// or imaps://
-Message-ID: <alpine.DEB.2.10.1608171449371.57685@howe-and-ser-moving.mit.edu>
-User-Agent: Alpine 2.10 (DEB 1266 2009-07-14)
+	id S1753485AbcHQUC4 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 17 Aug 2016 16:02:56 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54063 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753435AbcHQUCz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2016 16:02:55 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EA40337185;
+	Wed, 17 Aug 2016 16:02:53 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=333fBSUcr/49FAILTAbaCU1am3g=; b=HKZLP3
+	eLeT+6Mh6Ke0J/ezMSQhDfWrGJrw4DJ4dVBayATgj0uImlRzjDriB/aDYcB/hA+f
+	BUdag4XVON+Rf9LTRijumfGrW8oVU/uiDe78iJwmVKS7oVZ+9Qci8fLvvavRvDZC
+	0JIy0uUWAz4Hky1v9dCfr3OQCaAffqxXp9YCE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RIYTvA4AYCo2uJEFxY6uE2kF+YPinKj7
+	nyAvLua4mSlqXctLyp8HwdRFPBXoqVCXogshY4qibMpXidod/nRVVvbbIQOEuGpv
+	Lz6jgOORHpzL1jGsR+ncNXbtmiRgi2XempJPMpEBYGI0DZKQSq/RTuektFoXy5Lt
+	1fNoaFiw/90=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E1EA937184;
+	Wed, 17 Aug 2016 16:02:53 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7650537183;
+	Wed, 17 Aug 2016 16:02:53 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Stefan Beller <sbeller@google.com>
+Cc:	git@vger.kernel.org, jrnieder@gmail.com, Jens.Lehmann@web.de
+Subject: Re: [PATCHv4 8/8] clone: recursive and reference option triggers submodule alternates
+References: <20160811231405.17318-1-sbeller@google.com>
+	<20160811231405.17318-9-sbeller@google.com>
+Date:	Wed, 17 Aug 2016 13:02:51 -0700
+In-Reply-To: <20160811231405.17318-9-sbeller@google.com> (Stefan Beller's
+	message of "Thu, 11 Aug 2016 16:14:05 -0700")
+Message-ID: <xmqqr39n88pg.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrEIsWRmVeSWpSXmKPExsUixG6nrvtt85Zwg4WftSy6rnQzWTT0XmG2
-	uLx3OYvF+Wl3GB1YPHbOusvucfGSsseHVYYenzfJBbBEcdmkpOZklqUW6dslcGV0n//EXLCA
-	veLY4tlMDYwdbF2MnBwSAiYSq9v+sHYxcnEICbQxSezZ8YoZwtnIKNF0ZhU7hHOASaLh7V9m
-	kBYWAW2JnTvfsoLYbAJqEh+OfgWzRYDsiW2HWEBsZoFMiWdTz4OtEBZwkHix9RITiM0r4Cux
-	4dQxsHpRAV2JQ//+sEHEBSVOznwC1asuceDTRUYIW1vi/s02tgmMfLOQlM1CUjYLSdkCRuZV
-	jLIpuVW6uYmZOcWpybrFyYl5ealFuhZ6uZkleqkppZsYwcHporqDcc5fr0OMAhyMSjy8O6Zu
-	CRdiTSwrrsw9xCjJwaQkyhs1FyjEl5SfUpmRWJwRX1Sak1p8iFGCg1lJhLdkE1CONyWxsiq1
-	KB8mJc3BoiTOu/1be7iQQHpiSWp2ampBahFMVoaDQ0mCVx4YhUKCRanpqRVpmTklCGkmDk6Q
-	4TxAwy1AaniLCxJzizPTIfKnGHU5Fvy4vZZJiCUvPy9VSpx310agIgGQoozSPLg54KTC6SD9
-	ilEc6C1h3rsgd/IAExLcpFdAS5iAlvDygy0pSURISTUwhhkt4pPs2O04Z+WMxZFPLn+KEbAM
-	aKtxnPONtcImKn7O0upJdy4uvLBum6gj/4JehYOOn1mEKiJ2vtjutspok4r/j1ztOakb96hP
-	eVy8sNL2S7vXqjtdpTJxGZrG22w7v7OIyl3iVA+80pJ8TCNLmmdx94GTeybf/HngYf/n/qa/
-	BXvlJfsXK7EUZyQaajEXFScCAB5/sygFAwAA
+Content-Type: text/plain
+X-Pobox-Relay-ID: 951D2E5E-64B5-11E6-95AB-E86612518317-77302942!pb-smtp1.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Right now the imap:// or imaps:// part of imap.host is not being
-passed on to cURL.  Perhaps it was able to guess correctly under some
-circumstances, but I was not able to find one; it was just trying to
-make HTTP requests for me.  It’s better to be explicit in any case.
+Stefan Beller <sbeller@google.com> writes:
 
-Signed-off-by: Anders Kaseorg <andersk@mit.edu>
----
- imap-send.c | 1 +
- 1 file changed, 1 insertion(+)
+> +static void prepare_possible_alternates(const char *sm_name,
+> +		struct string_list *reference)
+> +{
+> +	char *sm_alternate = NULL, *error_strategy = NULL;
+> +	struct submodule_alternate_setup sas = SUBMODULE_ALTERNATE_SETUP_INIT;
+> +
+> +	git_config_get_string("submodule.alternateLocation", &sm_alternate);
+> +	if (!sm_alternate)
+> +		return;
+> +
+> +	git_config_get_string("submodule.alternateErrorStrategy", &error_strategy);
 
-diff --git a/imap-send.c b/imap-send.c
-index 938c691..7dd5acf 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -1410,6 +1410,7 @@ static CURL *setup_curl(struct imap_server_conf *srvc)
- 	curl_easy_setopt(curl, CURLOPT_USERNAME, server.user);
- 	curl_easy_setopt(curl, CURLOPT_PASSWORD, server.pass);
- 
-+	strbuf_addstr(&path, server.use_ssl ? "imaps://" : "imap://");
- 	strbuf_addstr(&path, server.host);
- 	if (!path.len || path.buf[path.len - 1] != '/')
- 		strbuf_addch(&path, '/');
--- 
-2.10.0.rc0
+I have to admit that I need to follow the codepath in config.c every
+time to check, but I _think_ git_config_get_string() gives you your
+own copy of the value.  As this function does not give ownership of
+sm_alternate or error_strategy to something else, they are leaked
+every time this function is called, I think.
 
+> +	sas.submodule_name = sm_name;
+> +	sas.reference = reference;
+> +	if (!strcmp(error_strategy, "die"))
+> +		sas.error_mode = SUBMODULE_ALTERNATE_ERROR_DIE;
+> +	if (!strcmp(error_strategy, "info"))
+> +		sas.error_mode = SUBMODULE_ALTERNATE_ERROR_INFO;
+> +	if (!strcmp(sm_alternate, "superproject"))
+> +		foreach_alt_odb(add_possible_reference_from_superproject, &sas);
+> +}
