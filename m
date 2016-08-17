@@ -2,94 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2103E2018E
-	for <e@80x24.org>; Wed, 17 Aug 2016 12:48:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AB2F1FD99
+	for <e@80x24.org>; Wed, 17 Aug 2016 12:56:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752793AbcHQMsk (ORCPT <rfc822;e@80x24.org>);
-	Wed, 17 Aug 2016 08:48:40 -0400
-Received: from mail-it0-f68.google.com ([209.85.214.68]:33014 "EHLO
-	mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752181AbcHQMsj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2016 08:48:39 -0400
-Received: by mail-it0-f68.google.com with SMTP id d65so8968391ith.0
-        for <git@vger.kernel.org>; Wed, 17 Aug 2016 05:48:38 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=DoTgA6ekVAa4vuL6sm/NgyCOGhufN4sISre4EKp6Gvc=;
-        b=AaWD8faWqnmeMKfbn2LGXgn0/s6tCUpybHlGs81aGlnaOc9wmk07pwGmj3WMkZxFsV
-         qTVXP89Otg0hTStDuIHW5SBK02++1/IHzllnpkyz1LcWVbxXtrMh0LivHyiMbHFiZSF0
-         MMnEAL4L0dJABoRRbh1oHTfCLIgVewj8pyiRL59tsWHW7pu19SFgYeIVc9DrWrEERAah
-         vACqP4i2QQBdLbkGTy5vM1a04tyu48e2VkgUm+WaedLTyGhDC3n56a+HT19islIB/kBC
-         ECRehd07pX6NiOlriHH8Hm+OjDJTm+q+UVdoGhOfVIEN2cThvT+JgckG0DygEGlFJt0o
-         MX3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=DoTgA6ekVAa4vuL6sm/NgyCOGhufN4sISre4EKp6Gvc=;
-        b=jz0GyvR7cWNWu+vGLoenWcWRI/30jxp0TjxYfy4qht+5EdUujIA88synLXHOucIm+S
-         dlfpga7LBBPOwHE45Dw0aF0xA0wgYI/bvSIHVWn83Fk95AlZA/VbUuVsQevBa/CeEPKM
-         It3ptVvVNVe/cSxlQSbySxKsCS/QK5IvzdBUPHBWK9YVhL1WgPSnGboi2w9g+Rl9nFLM
-         kThEEgBhNuKm4nRNQ8Q/PF/4UN7yyME2XwnMcGiAn4d6VItc2hfipVM04AGax0cq9KWu
-         Rw1JmiHv0nfJCSKzCSOG5Cwm/WJLWhrbmUgcHU6JmHRuxVr5QCsSzn2wnG7yAG8qIYxi
-         Ob8A==
-X-Gm-Message-State: AEkoouvW5AfL/NqXX/q+6PanhuUKH5muKIkG+QYQ53eJiiYlvalrilA4S4eoERjsmQDUStI5J7q1a4K0tlaYBA==
-X-Received: by 10.36.210.68 with SMTP id z65mr10057267itf.32.1471438118270;
- Wed, 17 Aug 2016 05:48:38 -0700 (PDT)
+	id S1751014AbcHQM4M (ORCPT <rfc822;e@80x24.org>);
+	Wed, 17 Aug 2016 08:56:12 -0400
+Received: from mout.gmx.net ([212.227.15.18]:62051 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750764AbcHQM4L (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2016 08:56:11 -0400
+Received: from virtualbox ([37.24.141.212]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MNZ9u-1bYKWH0v98-0079rU; Wed, 17 Aug 2016 14:49:31
+ +0200
+Date:	Wed, 17 Aug 2016 14:49:30 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Vasco Almeida <vascomalmeida@sapo.pt>
+cc:	git@vger.kernel.org, Heiko Voigt <hvoigt@hvoigt.net>,
+	Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 1/3] t3404: become resilient to GETTEXT_POISON
+In-Reply-To: <1471003142-1739-1-git-send-email-vascomalmeida@sapo.pt>
+Message-ID: <alpine.DEB.2.20.1608171448060.4924@virtualbox>
+References: <1471003142-1739-1-git-send-email-vascomalmeida@sapo.pt>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.79.130.1 with HTTP; Wed, 17 Aug 2016 05:48:37 -0700 (PDT)
-In-Reply-To: <77e7c4e4de6c45a1b24bb4d08ca20a1385f43444.1471437637.git.johannes.schindelin@gmx.de>
-References: <cover.1471437637.git.johannes.schindelin@gmx.de> <77e7c4e4de6c45a1b24bb4d08ca20a1385f43444.1471437637.git.johannes.schindelin@gmx.de>
-From:	Eric Sunshine <sunshine@sunshineco.com>
-Date:	Wed, 17 Aug 2016 08:48:37 -0400
-X-Google-Sender-Auth: StiY8KAM5Y9ijbITccXbuk69FMM
-Message-ID: <CAPig+cR4=kEUb5PsZfoz3=W+R61wER=vHos5uX02kEVM8YETgA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] mingw: ensure temporary file handles are not
- inherited by child processes
-To:	Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:	Git List <git@vger.kernel.org>, Ben Wijen <ben@wijen.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Lars Schneider <larsxschneider@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:gTWlPgdECZCUpyDVxbF6RRs2qd+J5pFQBQbKQwtWSpr1CxM63zs
+ WJZtRP3ZD4np6Xy7wyM7buRwsxL2tRz5BWyKp81/7xGkDP30irGIooHI6zIvlYcGbkHBZww
+ Fv/RFMqj2ro686fA/2KPy6uUOJP4tpoeA40tz+e47e1BenEkmibWGb0J2Tpli9dZ5s79dNP
+ YOPe98RHJi0pG3xjt0F4A==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:C2Kq+FLmtGk=:DKyCIhId+vdiKHFJb7k1AG
+ MLBHUQ6y2cLd002CGaiqSY126flwMTFNdLsVHHUgVkiRe6VHqEIl0PJPDo+sgefiiE8+Gfy+s
+ FUWsTLkTpe2JdURiLDXjq5m6lFpif9Kni692907XatEvTUH0AOfmvMk0AH/pkeLur7R6HzHKX
+ 8hCOUU/Me8gcwrtG4HobeiU0sg3ZbKNSZjn+PCtjoH1Ldj6fFhojj/XJSGRsdpvmYF818BuRx
+ UOtNQxqgSCm0X43zPEOsYIG63qRe5ZKCSnRBhg03fq6DnBewCdOIrhhSwfzvkkgIgN+I0uNQ0
+ xDs1mJZNMHS0nBlK1pHcZQcCJBtKSZADzTShb+MSRaIEpdP1a6YK7YywMLyCb2QYUKU/t7lCV
+ PeGlTx0NSco8TNwxdxgMUjMtiiQhqS0YcfhTDINEYjNE8B2F6Da6b7ACPDL3qDEcaSbY3HluU
+ 7T5pCHE7yC5VOq/Pt9WYwhaGOMEOLRdAnKT+M3PVkk+Ik3wzSglX2naFLXeaMhQIrrpzZFUJK
+ q1IlieXy1KPK2r8wF1y7+YTt9akXw35Ey7a3iv6Loibl+LPn4udWmHetjBJYwm3Z78rlq/Sse
+ R5NmuiAGuyv1YS5pi2Ge2mqnKNfXJOFWyTUYzd1wWbMAk+ZMcrxbJdNd/+C+pjGmKXeKEtoV4
+ wnqnMIuI2q3SlDbndNR8aCYCrFGaSYflGKVd8/Ro+RRrkaSvcVozqIAhVOIUX1hbYpCuivFuv
+ Tuc/eU6yEFsykswJqf0QEinbTsaut5Tdqcb4oFnfdOsQQqPcPZwJiwsXSf4sWa86GTQuECPtE
+ CaHGzLi
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Aug 17, 2016 at 8:41 AM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> When the index is locked and child processes inherit the handle to
-> said lock and the parent process wants to remove the lock before the
-> child process exits, on Windows there is a problem: it won't work
-> because files cannot be deleted if a process holds a handle on them.
-> The symptom:
->
->     Rename from 'xxx/.git/index.lock' to 'xxx/.git/index' failed.
->     Should I try again? (y/n)
->
-> Spawning child processes with bInheritHandles==FALSE would not work
-> because no file handles would be inherited, not even the hStdXxx
-> handles in STARTUPINFO (stdin/stdout/stderr).
->
-> Opening every file with O_NOINHERIT does not work, either, as e.g.
-> git-upload-pack expects inherited file handles.
->
-> This leaves us with the only way out: creating temp files with the
-> O_NOINHERIT flag. This flag is Windows-specific, however. For our
-> purposes, it is equivalent our purposes) to O_CLOEXEC (which does not
+Hi Vasco,
 
-s/our purposes)//
+On Fri, 12 Aug 2016, Vasco Almeida wrote:
 
-> exist on Windows), so let's just open temporary files with the
-> O_CLOEXEC flag and map that flag to O_NOINHERIT on Windows.
->
-> This fixes the test that we just introduced to demonstrate the problem.
->
-> Signed-off-by: Ben Wijen <ben@wijen.net>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> The concerned test greps the output of exit_with_patch() in
+> git-rebase--interactive.sh script.
+> 
+> Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
+
+Thank you for keeping an eye out for these issues. I have to admit that I
+am a bit confused when to use i18ngrep and when not, so it is good to know
+that my mistakes won't survive for long!
+
+Ciao,
+Dscho
