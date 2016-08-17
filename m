@@ -7,82 +7,100 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6704A1FD99
-	for <e@80x24.org>; Wed, 17 Aug 2016 12:41:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E81961FD99
+	for <e@80x24.org>; Wed, 17 Aug 2016 12:42:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752962AbcHQMlA (ORCPT <rfc822;e@80x24.org>);
-	Wed, 17 Aug 2016 08:41:00 -0400
-Received: from mout.gmx.net ([212.227.15.18]:60508 "EHLO mout.gmx.net"
+	id S1753168AbcHQMmA (ORCPT <rfc822;e@80x24.org>);
+	Wed, 17 Aug 2016 08:42:00 -0400
+Received: from mout.gmx.net ([212.227.15.18]:57852 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751752AbcHQMk7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2016 08:40:59 -0400
-Received: from virtualbox ([37.24.141.212]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MJjvw-1bYuDg2Kqi-0017Pk; Wed, 17 Aug 2016 14:40:52
+	id S1753135AbcHQMl6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2016 08:41:58 -0400
+Received: from virtualbox ([37.24.141.212]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0LrvWY-1bBLkq1FmQ-013d2a; Wed, 17 Aug 2016 14:41:14
  +0200
-Date:	Wed, 17 Aug 2016 14:40:51 +0200 (CEST)
+Date:	Wed, 17 Aug 2016 14:40:59 +0200 (CEST)
 From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:	git@vger.kernel.org
-cc:	Junio C Hamano <gitster@pobox.com>,
+cc:	Ben Wijen <ben@wijen.net>, Junio C Hamano <gitster@pobox.com>,
 	Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH 0/2] Do not lock temporary files via child processes on
- Windows
-Message-ID: <cover.1471437637.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 1/2] t6026-merge-attr: child processes must not inherit
+ index.lock handles
+In-Reply-To: <cover.1471437637.git.johannes.schindelin@gmx.de>
+Message-ID: <742a0bc524ac20bf10ccdf9ac51bb01a30efee16.1471437637.git.johannes.schindelin@gmx.de>
+References: <cover.1471437637.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:9xrKK/ONVEtD/wOvpgaCB/3OvI8SK3lO6L64farXpB9dE8M9Wih
- QlYuiPabGm6Usc9t6gnEN5ABXUAszY3YydJeRLJ3eaqq3MCjTEKpBfDlBmVBdNw3phRmVCj
- IZqyDkIsMmnm++DHcb95JLqJmivztPMWB04H4xytfQZkA/xKVPiQNFkid2A54ZFy8hEMG7G
- BLMY44nM2nWeFXJ1sIagQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:ZBtfPBCYsYw=:XlZ/QmeLFodZsVNbcEXbWQ
- 8RYWqJLkoKDJm1o2v0LVGe9TFcNjL8idRLgWXCguXEV4bbJwP967EdVnL0bdh2Dq6oHuFaGwr
- NANKwaEN7MHgCaVxa0M5Tc+e61Klgut5KexUJvlT+/YUnl4QXPflN//PbYqM1k7B/qIccs+eY
- dljDu2fFZ/k1PCz7ZcOHLh6qAmc5rulIk/Hu8DVJh1r7/Bt4S5j/EhljBKGBdvNVJjCpjP8rT
- ozm99mx9OUhqSaFBMwV5H+Yn5R8/M1q1uwBeWGRGrsRmBqRDWHd8mVzT5gnxIemZIeVV5u3Xz
- bA5sc4BrpaDFh5HHHgolBlYX673prNfA5hl8pEiTmKNF0zYmo4Y2U+iIxQaM2kwkt7J9USm9X
- 2D4NVjxefWwvyyK3RFQykv1Y547VNlyfZRgf/GK2Dhzkp2uv2vIIGmG4fsIpQMevHg5WeWxdf
- 9TTWvls8Bh/SR3K/EzLbj30kEhAdnhAY556S0yoA0wBPz7y1Sek81XZmwOyulRUr3LRsFejOY
- NndhgC3flqmR+5+v5+mSrwHdmC4j0Et2wdOErTn00JOfKguIWEmKUcw3VJIW0uYLP5d8vfoYz
- M5UrPBP8uI2WFBC5CE6Wf5Tqd2RjuO9VDBZC1F5NSInuMiIQNxPtWW1XMTlzIP+aTO/46Tauj
- hWbreD9sfxutFUdL0kAlLVk7fP9OQsHbS2rD8ssL+MI+CdTM6xlhuR/oi9vT2DiIJQerLmrgC
- lSQSk/YKJoBUsU0wwra2qukONp3gO/orMCk/vEJX9uTgKuHo83fMRGolRvF6joil0iXRhxwGb
- CzjtSwG
+X-Provags-ID: V03:K0:ol7FDYq0AzvcVuE75stWZCnKyZeOz//4Q4URbQHo2CjRsx4tVnF
+ Yt1qZTe6XlO/qLZezNznjm+42Ozv2VEYaYHr838hYb/gb+1cn1VWmxr93tfhbXNyTJoJHSu
+ Jtec1xRtepUzDA1ir7lZPu2SQ8vfbzYqWfD+mXilDEVChWuXBB6oEMN5BkWR8u1+MU4wTPT
+ 0eAnaM7NEe3a7fwIBBbKg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:QmE4YSKYyK0=:S32KTRuyEISdCiXBtD9+3a
+ JiJ+Eta+2b3/JnosQxDqsTwmd6KZ0NR02nkG2MpKA40GZeZFP8GahaMHa9Msn1xfp1aKP3hrj
+ dgKwdLsgrWz5Kw8IJYY+UFIAYYC8eTo7S6DvnPfpgKj5ONWqDTwrV56Y4pSJZA+RQWX09Kj68
+ l2Z1yZn9gA4U9VGYI/Yc45/PxEd3FfKcEuhIl0CKESeAQzcrCTedLk7HE5++/L5RCXX5pWMHW
+ Tt19cy1N5OjhlCXYa3RXLCProo2d9EMu8kvKCr6w7+BxRg/3ckO91xYkNgTDhQpIvCmanmQDG
+ nAoNfxopHN5Oymjs3BebtdzVCV6MChbNTFlQqMwghs9qX0YPZpwTVe3WW4hQ8JOupHaP4QTwl
+ CPFH6+PfvlZosYQbn2tmdkS5gQKoM3v7VTIYmtHL8DDezV8OQvirxxZEXejjzBzkvypZsz7Bo
+ Y46zQAw8gpCAXsvqTMNTni3hBC2GO3kUUIYEUMQ8GXl/e9jwlPs91NhHwtRckQn35AgiafOJ0
+ 1RK5P+lyKYZH1rGGfIN2SbCBgZC0pK+obKyLyj+Gdu5ltjArj/FncRLrLl1wrB31WMe5eABrn
+ lceUQ/MTn2zoYLUYix+YPqrKG6uIz7gXaTJM1CdbhLHL7KJ9vAYUz/CoIpXjZg69NyJ9FHHGS
+ h5+HgOk+XRiPuGNAA5eg0IRJM0ZMKd7GEX0oF3IIqRlBn1paQVn7Jq7B2mvdwaSctDctVyCfr
+ Mmai6mSBBVWLLUT2Zh3jFCCL7W7xQameM2xoWpR/jbpMFqUeOKWYBGvfP10zDUF//Pla3/1Cp
+ o4KsLSa
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-This issue was originally reported and fixed in
-https://github.com/git-for-windows/git/pull/755
+From: Ben Wijen <ben@wijen.net>
 
-The problem is that file handles to temporary files (such as
-index.lock) were inherited by spawned processes. If those spawned
-processes do not exit before the parent process wants to delete or
-rename them, we are in big trouble.
+On Windows, files cannot be removed unless all file handles to it have
+been released. Hence it is particularly important to close handles when
+spawning children (which would probably not even know that they hold on
+to those handles).
 
-The original use case triggering the bug is a merge driver that does
-not quit, but listen to subsequent merge requests.
+The example chosen for this test is a custom merge driver that indeed
+has no idea that it blocks the deletion of index.lock. The full use case
+is a daemon that lives on after the merge, with subsequent invocations
+handing off to the daemon, thereby avoiding hefty start-up costs. We
+simulate this behavior by simply sleeping one second.
 
-However, the same issue turned up in Lars Schneider's work on making
-clean/smudge filters batchable (i.e. more efficient by avoiding
-possibly thousands of child processes, one per file).
+Note that the test only fails on Windows, due to the file locking issue.
+Since we have no way to say "expect failure with MINGW, success
+otherwise", we simply skip this test on Windows for now.
 
-
-Ben Wijen (2):
-  t6026-merge-attr: child processes must not inherit index.lock handles
-  mingw: ensure temporary file handles are not inherited by child
-    processes
-
- compat/mingw.h        |  4 ++++
+Signed-off-by: Ben Wijen <ben@wijen.net>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  t/t6026-merge-attr.sh | 13 +++++++++++++
- tempfile.c            |  2 +-
- 3 files changed, 18 insertions(+), 1 deletion(-)
+ 1 file changed, 13 insertions(+)
 
-Published-As: https://github.com/dscho/git/releases/tag/mingw-index-lock-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git mingw-index-lock-v1
-
+diff --git a/t/t6026-merge-attr.sh b/t/t6026-merge-attr.sh
+index ef0cbce..3d28c78 100755
+--- a/t/t6026-merge-attr.sh
++++ b/t/t6026-merge-attr.sh
+@@ -181,4 +181,17 @@ test_expect_success 'up-to-date merge without common ancestor' '
+ 	)
+ '
+ 
++test_expect_success !MINGW 'custom merge does not lock index' '
++	git reset --hard anchor &&
++	write_script sleep-one-second.sh <<-\EOF &&
++		sleep 1 &
++	EOF
++
++	test_write_lines >.gitattributes \
++		"* merge=ours" "text merge=sleep-one-second" &&
++	test_config merge.ours.driver true &&
++	test_config merge.sleep-one-second.driver ./sleep-one-second.sh &&
++	git merge master
++'
++
+ test_done
 -- 
 2.9.2.691.g78954f3
 
-base-commit: 07c92928f2b782330df6e78dd9d019e984d820a7
+
