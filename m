@@ -6,85 +6,82 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 567521FD99
-	for <e@80x24.org>; Wed, 17 Aug 2016 20:53:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 571BD2018E
+	for <e@80x24.org>; Wed, 17 Aug 2016 21:05:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753057AbcHQUxC (ORCPT <rfc822;e@80x24.org>);
-	Wed, 17 Aug 2016 16:53:02 -0400
-Received: from mail-io0-f174.google.com ([209.85.223.174]:34509 "EHLO
-	mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752834AbcHQUxB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2016 16:53:01 -0400
-Received: by mail-io0-f174.google.com with SMTP id q83so2731727iod.1
-        for <git@vger.kernel.org>; Wed, 17 Aug 2016 13:53:01 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=sPfmzOhEjfvuUdGC4AbhNMbi2fWtLLlVU2WDnWj29b4=;
-        b=f/JCuFbnWqpw3t3qvUQEC1A+4P5i/5g3cXru7R2ofsfzUiV7HpC37iTX2J5yXa6F32
-         7UCSmP/CFCLMY8ALr9Rm1Skb/3z+ahp3ApXA1ftigZKVLhde+ccCxDNsAHlM6bNuRHiO
-         HiHP0vqZXmwWYOifD1x4Ofut3l83xveh8OKiGBRw1iR1VxZeKBoc2X8E/Ik9EW1EflWT
-         Ox7gSEt4W5ohD1UlQpmqDljSFee////mmcYqK2uHsLo2cPE3iigHSxDoM+f7EsM5o/fT
-         4/n/FJZgPZRQkE1xqQ1zo3Yz7D8gV4JR3u+NfLiG2o9iYJ4ZVKA81cBdGKrjDnatw30r
-         U29A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=sPfmzOhEjfvuUdGC4AbhNMbi2fWtLLlVU2WDnWj29b4=;
-        b=mdRY++TGgk7bKO/F6F6jfqWKykuJgmmb/pIoz63S6xZK1OeGf63u40l/VGS8O/QD7P
-         4XrNE2RwlSfAvJKIcAaLsuXO5FKLrHekz2ocSL418VaMYQBvuHlMJ8tnlJtpAxq9TAn9
-         rwTBOchFYzdwJNhoVBSJVQBNi0lPaTZY5hmV2PajItWxfTK24+pZEgGC5s3bMm93iwel
-         0S7BMr8Po8M+ZKSGUpTKSjXAu3D7Qp+Yf1krniz+m8r8Q0kQ7Q9+2l57moOEgqKzU0Bs
-         j57pgzpUV/UrpfV/COcyqLC4H8DbgK5qE41Q2g3J+hWaHE5isztjd6x/duFfcPnB9mYs
-         E3+w==
-X-Gm-Message-State: AEkoouvvm5b8bxJ1TvzJDlqcCeJ4Be4iJIzJSnOC5Vk9X2oxbXdBnIAzWUU9BWPZV6eATmpxr7WN/UtoO9JpPxkJ
-X-Received: by 10.107.144.10 with SMTP id s10mr47239734iod.165.1471467180703;
- Wed, 17 Aug 2016 13:53:00 -0700 (PDT)
+	id S1752829AbcHQVFj (ORCPT <rfc822;e@80x24.org>);
+	Wed, 17 Aug 2016 17:05:39 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60727 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752353AbcHQVFi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2016 17:05:38 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9304436CE6;
+	Wed, 17 Aug 2016 17:05:37 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=53gka/EfleUL8TRTjOOfEBqxSeo=; b=rDJXmh
+	2CnIl5RTj/JuSV76HdfvlvqVr21J0PzHB3dkttWcZcvTdqp9v/erUMyCTWazymbz
+	7LN/Vqh3tBWtiH5uVdLwJ2JFxQ+etmA5EP4bYnCezt2NtQMqcOGUPwmRlTzll61u
+	/N9EIE0/2dXIDuqEe2LJ6JHX1rjeXK7eufIak=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CsTs+v/OJdm3G306bMjXTDikcpScjMU+
+	K2niE/YpUtROKsbE19KvjGLkfs9BqPiPC7K875RMzXecq0qOYMCEIp7AbkXpuPbI
+	/Koete30b7wA3oniv5M+yBAT12pKIWPucwmXGcIxlwvsBZ9CrZow96R9c5F6omVE
+	yZC1mpRlTaE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8A42836CE5;
+	Wed, 17 Aug 2016 17:05:37 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1347B36CE3;
+	Wed, 17 Aug 2016 17:05:37 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Stefan Beller <sbeller@google.com>
+Cc:	git@vger.kernel.org, Jens.Lehmann@web.de, iveqy@iveqy.com
+Subject: Re: [PATCH] push: change submodule default to check
+References: <20160817204848.8983-1-sbeller@google.com>
+Date:	Wed, 17 Aug 2016 14:05:35 -0700
+In-Reply-To: <20160817204848.8983-1-sbeller@google.com> (Stefan Beller's
+	message of "Wed, 17 Aug 2016 13:48:48 -0700")
+Message-ID: <xmqqmvkb85sw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Wed, 17 Aug 2016 13:53:00 -0700 (PDT)
-In-Reply-To: <xmqqr39n88pg.fsf@gitster.mtv.corp.google.com>
-References: <20160811231405.17318-1-sbeller@google.com> <20160811231405.17318-9-sbeller@google.com>
- <xmqqr39n88pg.fsf@gitster.mtv.corp.google.com>
-From:	Stefan Beller <sbeller@google.com>
-Date:	Wed, 17 Aug 2016 13:53:00 -0700
-Message-ID: <CAGZ79kZChE=y9=DiQw9rw70S1ToEJK3mqFo1JLHRueVvst4VoQ@mail.gmail.com>
-Subject: Re: [PATCHv4 8/8] clone: recursive and reference option triggers
- submodule alternates
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5864C3F6-64BE-11E6-BE6A-FCB17B1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Wed, Aug 17, 2016 at 1:02 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> +static void prepare_possible_alternates(const char *sm_name,
->> +             struct string_list *reference)
->> +{
->> +     char *sm_alternate = NULL, *error_strategy = NULL;
->> +     struct submodule_alternate_setup sas = SUBMODULE_ALTERNATE_SETUP_INIT;
->> +
->> +     git_config_get_string("submodule.alternateLocation", &sm_alternate);
->> +     if (!sm_alternate)
->> +             return;
->> +
->> +     git_config_get_string("submodule.alternateErrorStrategy", &error_strategy);
->
-> I have to admit that I need to follow the codepath in config.c every
-> time to check, but I _think_ git_config_get_string() gives you your
-> own copy of the value.  As this function does not give ownership of
-> sm_alternate or error_strategy to something else, they are leaked
-> every time this function is called, I think.
+Stefan Beller <sbeller@google.com> writes:
 
-There are quite a few more occurrences of git_config_get_string
-in the submodule helper, I'll also look at those.
+> If working with submodules, there are more reports of missing submodules
+> rather than the desire to push the superproject without the submodules
+> to be pushed out.
 
-Thanks,
-Stefan
+I do not know how you are counting the "more reports" part of that
+assertion, but it is very likely that it is biased by the current
+default.  If you flip the default, you would see more reports that
+say "I know I wasn't ready to push the submodule part out; don't bug
+me".
+
+IOW, those who want to have something different always sound louder,
+because people who are satisified tend to stay silent.
+
+> Flipping the default to check for submodules is safer
+> than the current default of ignoring submodules while pushing.
+
+That part of the assertion, on the other hand, is justifiable.
+
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  
+>  Probably too late for the 2.10 release as I'd propose to keep it in master for
+>  quite a while before actually doing a release with this.
+
+I think you meant 'next' not 'master'.  We have a few "let's keep it
+in 'next' to see if people scream" topics there already--the more
+the merrier? ;-)
