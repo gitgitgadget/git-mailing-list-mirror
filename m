@@ -2,136 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D32781FD99
-	for <e@80x24.org>; Wed, 17 Aug 2016 13:42:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A7A91FD99
+	for <e@80x24.org>; Wed, 17 Aug 2016 13:55:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752679AbcHQNm5 (ORCPT <rfc822;e@80x24.org>);
-	Wed, 17 Aug 2016 09:42:57 -0400
-Received: from us-hpatc-esg-01.alcatel-lucent.com ([135.245.18.27]:38832 "EHLO
-	smtp-us.alcatel-lucent.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751495AbcHQNm4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Aug 2016 09:42:56 -0400
-Received: from us70tumx1.dmz.alcatel-lucent.com (unknown [135.245.18.13])
-	by Websense Email Security Gateway with ESMTPS id 5E7F39B19282D;
-	Wed, 17 Aug 2016 13:42:52 +0000 (GMT)
-Received: from us70tusmtp1.zam.alcatel-lucent.com (us70tusmtp1.zam.alcatel-lucent.com [135.5.2.63])
-	by us70tumx1.dmz.alcatel-lucent.com (GMO) with ESMTP id u7HDgsKO012220
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Wed, 17 Aug 2016 13:42:54 GMT
-Received: from US70TWXCHHUB04.zam.alcatel-lucent.com (us70twxchhub04.zam.alcatel-lucent.com [135.5.2.36])
-	by us70tusmtp1.zam.alcatel-lucent.com (GMO) with ESMTP id u7HDgrIR007431
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
-	Wed, 17 Aug 2016 13:42:53 GMT
-Received: from [135.121.197.20] (135.5.27.16) by
- US70TWXCHHUB04.zam.alcatel-lucent.com (135.5.2.36) with Microsoft SMTP Server
- (TLS) id 14.3.195.1; Wed, 17 Aug 2016 09:42:53 -0400
-Subject: Re: git cherry-pick conflict error message is deceptive when
- cherry-picking multiple commits
-To:	Christian Couder <christian.couder@gmail.com>
-References: <09d485df-7d14-97f8-9db9-e3db7512bd68@nokia.com>
- <CAP8UFD04Z7JpoAA1kXkYFk5LD-GngbUDkbnpCEc3DNDXUgetEA@mail.gmail.com>
-CC:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-From:	Stephen Morton <stephen.morton@nokia.com>
-Organization: Nokia ION
-Message-ID: <f58933df-352a-9d2b-a35a-9c48cb2d958e@nokia.com>
-Date:	Wed, 17 Aug 2016 09:42:56 -0400
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.0
+	id S1752733AbcHQNy5 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 17 Aug 2016 09:54:57 -0400
+Received: from mout.gmx.net ([212.227.17.22]:56368 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752142AbcHQNyp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2016 09:54:45 -0400
+Received: from virtualbox ([37.24.141.212]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MMYZG-1bXHD12rHy-008G1j; Wed, 17 Aug 2016 15:54:21
+ +0200
+Date:	Wed, 17 Aug 2016 15:54:20 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Junio C Hamano <gitster@pobox.com>
+cc:	git-for-windows@googlegroups.com, git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git for Windows 2.9.3
+In-Reply-To: <xmqqshu8u0px.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1608171507530.4924@virtualbox>
+References: <alpine.DEB.2.20.1608131214070.4924@virtualbox> <xmqqshu8u0px.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <CAP8UFD04Z7JpoAA1kXkYFk5LD-GngbUDkbnpCEc3DNDXUgetEA@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [135.5.27.16]
+Content-Type: multipart/mixed; BOUNDARY="8323329-1426037386-1471442061=:4924"
+X-Provags-ID: V03:K0:YApLDc6cFJHbsb3UsyBqkvH15y+JIOpvjYraftgKDy718u4PPN3
+ 4IrhADYaIZ06m4iP6iVhbgn1VDXEt+6oMfZO1CEWFX7xeAwe1MQfaUbawxqZlneJM19ET/7
+ ADtwmPeo/xxAfExIbmsZjdBab7tQQuBy/NoJDv1yl/iPCyLKrSUzSLWtrf0yXzKBi2tbcx2
+ KAGagetQg1s9t+zTP4mtQ==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:P2Fx/h90JaE=:vT5x4QzqXxlmPl7VIBAs+b
+ FG5v7D3J4NhCo6KzVyj3t73Wf/t3Bzkl+BEv/Bqt+jkA2DYmXF+kJe0BNN1K8VIB3gDQvrHKT
+ 60FTTcsTR+8l1pj4f98Zd4I4CTe3HD74dQqy+eGR2yThIa78bfbCjYgjMVdtwCgGCcHmtz4x/
+ X3EmVN6+CT5Gl4R25dZ6xsZZmry4N6NGdDg6afhyZTr4bt2p3wn25Sl5S09lKra9hfdYTp0pk
+ aA3/1ydIl8li7n5zYvW2+WhN3xdG/AsQBdw8LHQfh7H+gtm3Dpson/7jZT5m6Mm50uWkdC4Ts
+ +IdhSurMc5EtSXGM5xPLOzsVfM0m8TAkJ8lodW4tA11yOYfW9r47/Nu/9eIPYyJ7EpGaV5H1C
+ TyEzrLKRBBuztmsANZYWG5KlKVCJx+sN9zvZnPPYmdPBY3YfldQDmw9MBV2QRdikQbXVgkfwS
+ bt22WkSzGAJJm5VQGtRPAIPcsK5yYsaeP4RyciO5ZAw9OoObLI2QFYdzEfllVUFbjBR7z4T8/
+ 2wlR4jgPl+A/J3VcC89uZs79ypN6RxORzNmjv3d43XdSi90XVF+/AlVB+6TTUal68yFKcQ5pD
+ Yyh3ZDOV8A6O961AgkAy8Qfii567Et4bVAt5cJdFIrbeJ6FKCxVbEThzj1w9cmviMqSq8ZtsI
+ Xh4uftVvbee3FUuWBfxbt2VrtbX9PsS6QWTVe9cRkDcBWcQTyw6YVq2hsXFOsK4LYhQ3MaRj5
+ IZl/aBAaLQgTcxonR0x18RDPMdtkCb/vLOv1OHpMjqLCDUnseJDGRcFXTrAC2v2/IMHcttA4p
+ vtIGwUy
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Responding to a few comments...
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On 2016-08-14 7:44 AM, Christian Couder wrote:
-> multiple_commits)
-> ... but here multiple_commits is the last argument.
-> It would be better if it was more consistent.
-(Johannes made the same comment.)
-Yes. Will do.
+--8323329-1426037386-1471442061=:4924
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
+Hi Junio,
 
->
-> multiple_commits = (todo_list->next) != NULL;
-> Why not "last_commit" instead of "multiple_commits"?
->
+On Sat, 13 Aug 2016, Junio C Hamano wrote:
 
-Because it *isn't*. You can see that in pick_commits(), I set 
-multiple_commits outside of the `for todo_list` loop. It is not 
-re-evaluated at every iteration of the loop. As per my comment when 
-emailing the patch "I intentionally print the '--continue' hint even in 
-the case where it's last of n commits that fails. " I think it makes 
-much more sense that "this is the message you always get when 
-cherry-picking multiple commits as opposed to "this is the message you 
-sometimes get, except when it's the last one". (Yes, the careful 
-observer will realize that if when cherry-picking multiple commits, 
-there are conflicts in the second-last and last then the --continue  
-from the second-last will result in multiple_commits being set to 0. I 
-can live with that.)
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+>=20
+> > New Features
+> >
+> >   =E2=80=A2 Comes with Git 2.9.3.
+>=20
+> For future reference, what time (in UTC) of the day is convenient
+> for you to see an upstream tarball?
 
+Heh... I don't do tarballs anymore, I now use this newfangled tool to
+manage source code... "gyt" or something like that, it is called.
 
-On 2016-08-16 4:44 AM, Remi Galan Alfonso wrote:
-> Hi Stephen,
->
-> Stephen Morton <stephen.morton@nokia.com> writes:
->> +                        if  (multiple_commits)
->> +                               advise(_("after resolving the conflicts,
->> mark the corrected paths with 'git add <paths>' or 'git rm <paths>'\n"
->> +                                        "then continue with 'git %s
->> --continue'\n"
->> +                                        "or cancel with 'git %s
->> --abort'" ), action_name(opts), action_name(opts));
->> +                        else
->> +                                advise(_("after resolving the
->> conflicts, mark the corrected paths\n"
->> +                                        "with 'git add <paths>' or 'git
->> rm <paths>'\n"
->> +                                        "and commit the result with
->> 'git commit'"));
-> In both cases (multiple_commits or not), the beginning of the advise
-> is nearly the same, with only a '\n' in the middle being the
-> difference:
->
-> multiple_commits:
->   "after resolving the conflicts, mark the corrected paths with 'git
->   add <paths>' or 'git rm <paths>'\n"
->
-> !multiple_commits:
->   "after resolving the conflicts, mark the corrected paths\n with 'git
->   add <paths>' or 'git rm <paths>'\n"
->                                                    ~~~~~~~^
->
-> In 'multiple_commits' case the advise is more than 80 characters long,
-> did you forget the '\n' in that case?
-A previous comment had indicated that having 4 lines was too many. And I 
-tend to agree. So I tried to squash it into 3. Back in xterm days, 80 
-characters was sacrosanct, but is it really a big deal to exceed it now?
+:-)
 
+Given that between you and me there is currently a time zone difference of
+9h (except for four weeks, two in spring, when it is only 8h, and two in
+fall, when it is 10h), I believe we cannot find a time that is convenient
+for both of us.
 
-On 2016-08-14 7:44 AM, Christian Couder wrote:
-> ...but please try to send a real patch.
->
-> There is https://github.com/git/git/blob/master/Documentation/SubmittingPatches
-> and also SubmitGit that can help you do that.
-Agreed. I just want to send a patch that stands a reasonable chance of 
-getting accepted.
+But I also think it is fine, when I discover a new upstream Git version in
+the morning, I can spend all day on fixing any problems and on packaging
+the result ;-)
 
-Stephen
+> >   =E2=80=A2 Sports a new --smudge option for git cat-file that lets it =
+pass
+> >   blob contents through smudge filters configured for the specified
+> >   path.
+>=20
+> Perhaps we want to upstream this, together with a new "--clean" option
+> for git hash-object?
 
+No question about that. I just needed this in a hurry and short-circuited
+it into Git for Windows before submitting it upstream.
 
--- 
-Stephen Morton, 7750 SR Product Group, SW Development Tools/DevOps
-w: +1-613-784-6026 (int: 2-825-6026) m: +1-613-302-2589 | EST Time Zone
+> And after writing all of the above, I noticed that hash-object by
+> default uses the clean machinery and that can be turned off by giving
+> the "--no-filters" option.  The reason why the option is not called
+> "--no-clean" is because it is not just about the clean filter but is
+> about using the entirety of convert_to_git() filter chain.
 
+Right, as is the --smudge option (it is about the entirety of
+convert_to_worktree()).
+
+> We probably should teach "hash-objects" to take "--filters" for
+> consistency.
+
+I actually thought about that, too. Which was one of the reasons I did not
+submit the patch to the Git mailing list first, as I expect several
+iterations to be necessary to get everything into `master`.
+
+> And then your "git cat-file" patch can be upstreamed with the option
+> renamed to (or with an additional synonym) "--filters", which would make
+> things consistent.
+
+Right. I would like to ask for a `--smudge` synonym nevertheless, just
+because I already use this. On the other hand, it is early enough to tell
+everybody who knows about this feature to change their invocation (anybody
+who would know about `--smudge` would be in that 1% of users that have
+read the release notes, so most likely would read the next release notes,
+too).
+
+Ciao,
+Dscho
+--8323329-1426037386-1471442061=:4924--
