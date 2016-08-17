@@ -2,142 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DC511FD99
-	for <e@80x24.org>; Wed, 17 Aug 2016 18:22:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2903E1FD99
+	for <e@80x24.org>; Wed, 17 Aug 2016 18:28:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753149AbcHQSWE (ORCPT <rfc822;e@80x24.org>);
-	Wed, 17 Aug 2016 14:22:04 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56118 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752973AbcHQSWE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2016 14:22:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BC26236295;
-	Wed, 17 Aug 2016 14:22:02 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3g9NlSSq+B37bakT0Pe2hf6UznM=; b=e6vbfh
-	0mxghM9+o36885uicAMUMP1zU/bPM2Ib7L01Lzqj6tTzlx+/atmQ9tEGtTuSyZEP
-	BQZhh5DY7N9R5xkv8Hvlw0ca4OLbzLtPNiuGjbrHwtnbjZC/2ciH9Pf0bq3zf0Jw
-	NZ92FXBiy4Cp0hsBayK/nZKapb/P/2BB+YQfM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=he8sDJt3h5pgDHys1bDhrZVvZyV0fr/8
-	pUyjMKUMWRMfqYdDFOkULOjfwG6y/zxFQDMbIMsPCnN9+mgpjTWvWR7qoV1N3bo+
-	AgEhcTVXbqe4APXxUUzVDXm2CL+6wamSgHq8RYXBr+f6xHfXL5W0PciAJfh3HahF
-	wSc7wshomRQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B530736294;
-	Wed, 17 Aug 2016 14:22:02 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3DF7B36293;
-	Wed, 17 Aug 2016 14:22:02 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Ben Wijen <ben@wijen.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:	git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH 2/2] mingw: ensure temporary file handles are not inherited by child processes
-References: <cover.1471437637.git.johannes.schindelin@gmx.de>
-	<77e7c4e4de6c45a1b24bb4d08ca20a1385f43444.1471437637.git.johannes.schindelin@gmx.de>
-Date:	Wed, 17 Aug 2016 11:22:00 -0700
-In-Reply-To: <77e7c4e4de6c45a1b24bb4d08ca20a1385f43444.1471437637.git.johannes.schindelin@gmx.de>
-	(Johannes Schindelin's message of "Wed, 17 Aug 2016 14:41:19 +0200
-	(CEST)")
-Message-ID: <xmqqd1l79rxz.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752807AbcHQS16 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 17 Aug 2016 14:27:58 -0400
+Received: from mail-ua0-f181.google.com ([209.85.217.181]:35573 "EHLO
+	mail-ua0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752406AbcHQS15 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2016 14:27:57 -0400
+Received: by mail-ua0-f181.google.com with SMTP id n59so184583617uan.2
+        for <git@vger.kernel.org>; Wed, 17 Aug 2016 11:26:31 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=IH/VAEy6vEIJDqUN/wnm9rBDo0oNGPXVlxqIgrPvuAg=;
+        b=vzuZtuJScJG7d5Ok8uMfw2RQUKpk2QjhnBQmT1hYyJ7UIBUFP5MNYpY+kRX7l+YCZ2
+         13upRbVCNadO+N7aES+ZrDLCdH1RYQWpWRRf3cQ1xY6NAZw5rsR8r0Gp0vc9yTAUd8Rw
+         mWsYKCyd5qWXu37sAHORGlRyRcnSOXj+IPsVW030MOIuIbpHvVoupZ73STdzoz7sfq03
+         /BGvROoKYTn6sbZuntSnQBtIsejN9GgBSB2c/+SBTfznfO8Y+gK/uV3ATGBIi4lpSMPj
+         axRwK41ntNFAyvFZCZH+/gPRyuFB54VhtENVd1K/EnfZqGOW0QKzQLexAZSzsCpUDJbA
+         fqXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=IH/VAEy6vEIJDqUN/wnm9rBDo0oNGPXVlxqIgrPvuAg=;
+        b=O6rEAyozNQXYI4CBBkzD9IiqCdrU/hbS5J090hR6gMk0K3o8zyWky+UabZKQsH+B0O
+         hrYl0dBScpTMmQnLrGxKqRy5OJOA7Hg6QMDCQ/Rf+tCKPTf2qKPrCOvRM+wU9aXtk1YC
+         K8ZjPSIDZ5ANEmO14C6uwiFLgdeRiGy5Ko2GsdwqanIAAOhUZb2CgHIIyBWyJWASdb4u
+         qvgydlJNBd0jYU122Zb3yCsMAPzCPFjdDFSVupHj06ybLG3jWStbdQk2qq//8fz6EJUg
+         6gelMkVTR9ydqybeuaeA+iqheVej8ilA5n1VimY9Qm+Jzjsvg+OMr4YFqUA/aAlLVI38
+         ruGg==
+X-Gm-Message-State: AEkooutahaDWajbPJARtDwGemOgC/kGhlJzC5BuTFaC4W9ApX9fbC1PNvHAzdz6G9DVjIemmpPIWOlLg0c40wQ==
+X-Received: by 10.176.4.85 with SMTP id 79mr6410134uav.56.1471457047630; Wed,
+ 17 Aug 2016 11:04:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7E4CFDD4-64A7-11E6-B039-E86612518317-77302942!pb-smtp1.pobox.com
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.176.4.230 with HTTP; Wed, 17 Aug 2016 11:04:07 -0700 (PDT)
+From:	Robert Dailey <rcdailey.lists@gmail.com>
+Date:	Wed, 17 Aug 2016 13:04:07 -0500
+X-Google-Sender-Auth: WvJ2qYQV5lsTE3sjXiJbmv152uM
+Message-ID: <CAHd499D50TLMYtAovTF80ev0=2u=9yyMNcq6-he3Ba2kXzqW9g@mail.gmail.com>
+Subject: diff --diff-filter on modified but locally deleted files
+To:	Git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+My use case is that I do a merge from branch A to branch B. Branch A
+modified a file which is already deleted on B some time before the
+merge.
 
-> From: Ben Wijen <ben@wijen.net>
->
-> When the index is locked and child processes inherit the handle to
-> said lock and the parent process wants to remove the lock before the
-> child process exits, on Windows there is a problem: it won't work
-> because files cannot be deleted if a process holds a handle on them.
-> The symptom:
->
->     Rename from 'xxx/.git/index.lock' to 'xxx/.git/index' failed.
->     Should I try again? (y/n)
->
-> Spawning child processes with bInheritHandles==FALSE would not work
-> because no file handles would be inherited, not even the hStdXxx
-> handles in STARTUPINFO (stdin/stdout/stderr).
->
-> Opening every file with O_NOINHERIT does not work, either, as e.g.
-> git-upload-pack expects inherited file handles.
->
-> This leaves us with the only way out: creating temp files with the
-> O_NOINHERIT flag. This flag is Windows-specific, however. For our
-> purposes, it is equivalent our purposes) to O_CLOEXEC (which does not
-> exist on Windows), so let's just open temporary files with the
-> O_CLOEXEC flag and map that flag to O_NOINHERIT on Windows.
+When I do a `git status -sb`, these locally deleted but remotely
+modified files show up as "DU".
 
-The callchain that leads to create_tempfile() eventually goes up to
-hold_lock_file_for_update() and its _timeout() variant in the
-current codebase.  There is no other create_tempfile() caller.
+I want to invoke git status or diff (or something else) to get a list
+of these specific conflicts (locally deleted, remotely modified). I
+tried this:
 
-I think all the callers of these public entry points use them to
-open a lockfile for its own use, and never delegate the writing to
-it to their children, so this change is safe right now, and I do not
-think it is too bad that a new caller that wants to do that have to
-explicitly drop O_CLOEXEC (perhaps by dup(2)ing).
+$ git diff --diff-filter=D --name-status
 
-But it deserves mention in the lockfile and the tempfile API docs in
-<lockfile.h> and <tempfile.h> that the file descriptor returned from
-these public entry points does not survive across fork(2).
+This gave me no results. I also tried adding --cached, didn't make a
+difference. If I just do this:
 
-Something along the line shown by the attached patch, perhaps.
+$ git diff --name-status
 
-Other than that, this is very nicely analyzed and discusses possible
-alternative approaches sufficiently to easily convince readers that
-this is the best solution.
+This lists those files as just U instead of DU. So I'm not sure where
+the "D" is coming from in this case.
 
-Very nicely done.  Thanks.
-
- lockfile.h | 4 ++++
- tempfile.h | 4 ++++
- 2 files changed, 8 insertions(+)
-
-diff --git a/lockfile.h b/lockfile.h
-index 3d30193..e976c7a 100644
---- a/lockfile.h
-+++ b/lockfile.h
-@@ -55,6 +55,10 @@
-  *   * calling `fdopen_lock_file()` to get a `FILE` pointer for the
-  *     open file and writing to the file using stdio.
-  *
-+ *   Note that the file descriptor returned by hold_lock_file_for_update()
-+ *   is marked O_CLOEXEC, so the new contents must be written by
-+ *   you, and not by your subprocess.
-+ *
-  * When finished writing, the caller can:
-  *
-  * * Close the file descriptor and rename the lockfile to its final
-diff --git a/tempfile.h b/tempfile.h
-index 4219fe4..d357177 100644
---- a/tempfile.h
-+++ b/tempfile.h
-@@ -33,6 +33,10 @@
-  *   * calling `fdopen_tempfile()` to get a `FILE` pointer for the
-  *     open file and writing to the file using stdio.
-  *
-+ *   Note that the file descriptor returned by create_tempfile()
-+ *   is marked O_CLOEXEC, so the new contents must be written by
-+ *   you, and not by your subprocess.
-+ *
-  * When finished writing, the caller can:
-  *
-  * * Close the file descriptor and remove the temporary file by
+Is there a way I can get a list of these specific conflicts? I'd like
+to rely on working/index status for this if possible, since as I
+resolve these conflicts I want the list to shorten and only show
+unresolved conflicts of this type. Which rules out a diff range
+between B...A that I could do.
