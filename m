@@ -2,103 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A82A1F6C1
-	for <e@80x24.org>; Wed, 17 Aug 2016 09:20:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9340A1F6C1
+	for <e@80x24.org>; Wed, 17 Aug 2016 09:58:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752228AbcHQJUm (ORCPT <rfc822;e@80x24.org>);
-	Wed, 17 Aug 2016 05:20:42 -0400
-Received: from mout.gmx.net ([212.227.15.15]:49259 "EHLO mout.gmx.net"
+	id S1752478AbcHQJ6U (ORCPT <rfc822;e@80x24.org>);
+	Wed, 17 Aug 2016 05:58:20 -0400
+Received: from lang.hm ([66.167.227.134]:55499 "EHLO bifrost.lang.hm"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751662AbcHQJUl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2016 05:20:41 -0400
-Received: from virtualbox ([37.24.141.212]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LhOvA-1anfkP10iG-00mZis; Wed, 17 Aug 2016 11:13:45
- +0200
-Date:	Wed, 17 Aug 2016 11:13:43 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-cc:	Stephen Morton <stephen.morton@nokia.com>,
-	Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-	git@vger.kernel.org
-Subject: Re: git cherry-pick conflict error message is deceptive when
- cherry-picking multiple commits
-In-Reply-To: <968827697.1226723.1471337060482.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-Message-ID: <alpine.DEB.2.20.1608171112580.4924@virtualbox>
-References: <09d485df-7d14-97f8-9db9-e3db7512bd68@nokia.com> <968827697.1226723.1471337060482.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1752435AbcHQJ6T (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2016 05:58:19 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id u7H9w9bg005993;
+	Wed, 17 Aug 2016 02:58:14 -0700
+Date:	Wed, 17 Aug 2016 02:58:09 -0700 (PDT)
+From:	David Lang <david@lang.hm>
+X-X-Sender: dlang@asgard.lang.hm
+To:	Nikolaus Rath <Nikolaus@rath.org>
+cc:	git@vger.kernel.org
+Subject: Re: Working with zip files
+In-Reply-To: <87pop8wh5w.fsf@thinkpad.rath.org>
+Message-ID: <alpine.DEB.2.02.1608170256450.11774@nftneq.ynat.uz>
+References: <87y43wwujd.fsf@thinkpad.rath.org> <alpine.DEB.2.02.1608160926330.11774@nftneq.ynat.uz> <87pop8wh5w.fsf@thinkpad.rath.org>
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:3eqoMddH8khfxGscnoj1w5bA/7lskesuLoLOUxtTh2jOYFLbhV4
- KBhJS3c67kIK6r1ew7YK+y6IBloVfi5VBG+Cx/6NjFCP51Bo+ZOe9ELx19wkNzAEY8EKn4Y
- SZjxNy/GD48SBq5LNiFJXreeyG3+hh9JT8OT98V4eafZmwQ35yL5fQCgF3VoLateQiglm8v
- Ybv8qG+KKdIrHtAwRfAcg==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:4UU1V1ZEWkA=:EM5EeAogl+R/0G3QqFp47o
- dJxXhsYqwCP4Gd+qv9EtfyEzSVsL0T4ZfoF/KO6vXMDyddW5uePqcXLV/UqNTfbpX4QqTHKj2
- eFfSRO3oWO3bclMa8u57/WXFrD1xRqKFTSB10iuB6f5Zg03R1JVC17PuXQ/YS5z3I/e2eOARY
- mY26a/tKGYWMD/HkMZCBa334A3C1qKdzM3BaTkTZaILo/1pRAFHYgZ7WIxUrfgdboN6Pvv3xF
- Aza0NyYaxlISQfS0iYbKcI+qk7oTM+lHaUa5KufWPo4Cn6wp8Ij3a7MXxidd/bROx1xhz9r5R
- 377E0+qE4lzMtb6N4UT1navHbj9zp9sArgdFJW1OZLdrzWNGT3vubP2PKmTdFwv09Yalow496
- NxjWrE4dOdWa9I7EzRHjw732cWbuskt0XiVqe+M0U7aQJDmwlQItC9O5Wj9I6OaTuf3umrw7H
- FFA4/6pMzCUyFPfwptoeB8z6yYhjuxstpsqm766TM7RmaIFVu7MjnKEu8kUDbSvzD0+vwkWQL
- HzXllEl/fZmWsOMo3a8ENB5o9aG1FsjNfxPqICDlKA+Jrplfaw8cKT1vLfLTPxiRSB6dVamzU
- /xw18tXCz2zK+alU72LSuIN8eIegv0dps5IV7upJ86qFGnV+kSmoN2+EF4hYiV53aqWNTjfjJ
- AAfOlYjouPYora5zfSr90T5qXc3kRLFY4KVSoPDF8/kT3nzH/jtZ0Auc4MllFwtAuFObybHU3
- dDFP0/bB4hg3c0WDzb09lPEDZCdOILnS+QIsk1ZS3oP5YJDH8CaL/ctG59X6BX4g/Rzx7/JRz
- BPLq9gI
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi,
+On Tue, 16 Aug 2016, Nikolaus Rath wrote:
 
-On Tue, 16 Aug 2016, Remi Galan Alfonso wrote:
+> On Aug 16 2016, David Lang <david@lang.hm> wrote:
+>> On Tue, 16 Aug 2016, Nikolaus Rath wrote:
+>>
+>>> I would like to store Simulink models in a Git
+>>> repository. Unfortunately, the file format is binary. But luckily, the
+>>> binary format happens to be a zipfile containing nicely formatted XML
+>>> files.
+>>>
+>>> Is there a way to teach Git to take advantage of this when storing,
+>>> diff-ing and merging these files?
+>>
+>> you should be able to use clean/smudge to have git store the files
+>> uncompressed, which will help a lot.
+>
+> Having looked at that, I'm not sure if this really helps:
+>
+> As I understand, the smudge command is run on checkout to convert the
+> blob in the repository to the format that is desired in the working
+> tree. But this is the opposite of what I need: on checkout, I need to
+> convert the text data in the repository to a blob in the working tree.
+>
+> Furthermore, I need to convert multiple text files into one blob, will
+> smudge/clean seem to do just 1:1 conversions.
+>
+> Am I missing something? Are there any other options?
 
-> Stephen Morton <stephen.morton@nokia.com> writes:
-> > +                        if  (multiple_commits)
-> > +                               advise(_("after resolving the conflicts,
-> > mark the corrected paths with 'git add <paths>' or 'git rm <paths>'\n"
-> > +                                        "then continue with 'git %s
-> > --continue'\n"
-> > +                                        "or cancel with 'git %s
-> > --abort'" ), action_name(opts), action_name(opts));
-> > +                        else
-> > +                                advise(_("after resolving the
-> > conflicts, mark the corrected paths\n"
-> > +                                        "with 'git add <paths>' or 'git
-> > rm <paths>'\n"
-> > +                                        "and commit the result with
-> > 'git commit'"));
-> 
-> In both cases (multiple_commits or not), the beginning of the advise
-> is nearly the same, with only a '\n' in the middle being the
-> difference:
-> 
-> multiple_commits:
->  "after resolving the conflicts, mark the corrected paths with 'git
->  add <paths>' or 'git rm <paths>'\n"
-> 
-> !multiple_commits:
->  "after resolving the conflicts, mark the corrected paths\n with 'git
->  add <paths>' or 'git rm <paths>'\n"
->                                                   ~~~~~~~^
-> 
-> In 'multiple_commits' case the advise is more than 80 characters long,
-> did you forget the '\n' in that case?
-> 
-> If you end up using the same beginning of advice, maybe it's possible
-> to give it before the 'if(multiple_commits)' and avoid duplication of
-> the lines.
+so the smudge command would zip the file and the clean command would unzip the 
+file (assuming it's a single file, if the zip is multiple files, you will have 
+to add something to combine them)
 
-I concur with this, and also with Christian's advice to append the
-parameter consistently as last one, and also with renaming it to
-"last_commit".
+you want the working tree to have a zip file and the repository to have text.
 
-Ciao,
-Johannes
+David Lang
