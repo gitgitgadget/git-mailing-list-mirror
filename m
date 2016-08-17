@@ -2,83 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BAE351F6C1
-	for <e@80x24.org>; Wed, 17 Aug 2016 10:40:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F3D81F6C1
+	for <e@80x24.org>; Wed, 17 Aug 2016 10:50:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752383AbcHQKkv (ORCPT <rfc822;e@80x24.org>);
-	Wed, 17 Aug 2016 06:40:51 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35823 "EHLO
-	mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751032AbcHQKkv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2016 06:40:51 -0400
-Received: by mail-wm0-f68.google.com with SMTP id i5so22670072wmg.2
-        for <git@vger.kernel.org>; Wed, 17 Aug 2016 03:40:50 -0700 (PDT)
+	id S1752632AbcHQKt7 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 17 Aug 2016 06:49:59 -0400
+Received: from mail-io0-f174.google.com ([209.85.223.174]:35748 "EHLO
+	mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752378AbcHQKt6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2016 06:49:58 -0400
+Received: by mail-io0-f174.google.com with SMTP id m101so132191729ioi.2
+        for <git@vger.kernel.org>; Wed, 17 Aug 2016 03:49:57 -0700 (PDT)
 DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=WuaIE+JFDkGM42dnkjnzLFlRVgEyVCOQ5tGhM5Ebi68=;
-        b=Eb0XAA54QTSTMc9Ix+WRbZhyoLqGdEYRRigVKT1SiRGRFtoFMfcpECgWx9Bqr+VT2o
-         ckVmmq+m+NlXtX7MNc6lvWAqz9dq9dEW0/WHyRsHomJs2+CV5IrRiNlrf0ApobdwSzVQ
-         UpSjL8m4k41oOGDuOuHY174R1aAK/xq8Qcnxxtt0jLvt8EHzuEBtTEuripGNP5qn82z4
-         cVflDRODyqW1x/ZhoV0UnixNJ9itCC6HwpYHr57TFMJxXC2fAxkY4c501eJEAu/bZDpx
-         WQO7fKwQ+uSAUmxVHHqDlOj4H5yU3MPEtrjIsqTOX0EFvpIok+KVT8ihyrFNT6bU0opo
-         7jPQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=wNr3klkIWTa2xPyUkBFRYHeyK1rQfOxD6u50anConTM=;
+        b=qqbi5R4Qv7VH6L2U/thsRSVcTV5fJzce2NQFnq7urJcDA/EAhBJ5T3ktZeBirlzphi
+         crua0jFyqCDhuMZ++uGwi2oK6Vs28bkc421nJpTdglbXPE0pJ7xu/1ZkuRjTcVebttCh
+         YSZnpQyW96bkmFU8edWucZFQ1QQmb2s2j1bNm2emeAiRbXFjOYxu0jh9x1145nehcc5y
+         Btric8eyMFBMwcWMD+HY3tgyAZJq2WtwmVvvwELV7F5HedE0Sy9YhWTvbMrv4Iy6Hcus
+         rQofVacgWMnAxq2apEtd4PPRRMRu304OzJB3w2dMw6jBiXfeBDwquk9/gfo+vgVM8lj5
+         Voig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=WuaIE+JFDkGM42dnkjnzLFlRVgEyVCOQ5tGhM5Ebi68=;
-        b=Ncc+3/pnTQzTeSPGcBVkfQfkPRClFdJ0wJdhTKPmcY/oHN3UKFmLe0wNyFDrFcRk2X
-         /tAHT1dXSMPJSFDhlzw3nVxiHHdT58E12KwC/tZLSA8+mpQgrj55g2SiPphFuggFjAtg
-         PwPeY+3bcKCNCwL1BlETCnY1/skghtzKJC8HAHHDMfQItkhVMLthQ9i6FJOuJVI6uGfB
-         p7BRJ40Wy4MpeIol4sBOvWPtjW2nx/uRKUZCe+pfIfE5E9GZGOrnTjgXwDj9mwS1jXD/
-         pZP1pl3VesWueSQnzFVrVTF7Bt5lINcfN06h2BTKPFkmXzsLV7lxoqGKS6hZ75MijK1n
-         xuKQ==
-X-Gm-Message-State: AEkoouuM2z7whna+GT7yb8b6eBpzkAr51jhapCu66noDmjwQ0ttzoFVhtT/8tM+eM9A8nvJjpwZB34ar/kvsqA==
-X-Received: by 10.194.149.113 with SMTP id tz17mr47688128wjb.64.1471430449557;
- Wed, 17 Aug 2016 03:40:49 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=wNr3klkIWTa2xPyUkBFRYHeyK1rQfOxD6u50anConTM=;
+        b=HWWMc5GQaxpimWRpicFo7TFfneiS1+G5WXu84CFzy4Jba27zbVQdL5dSmOUpNBJkPg
+         L1xCeCOtBmiJDOLREqfA39NECEHWP8mJskIPgUgnJKPkUdXwCWdkLz/FsFIAA6K4sglw
+         0BgZIdr2nTz3W9eLXWuUyWEdOD6QHzM0imXjjrFJqMRAuqGVMWv2toW4NP+8+VWTQFZD
+         QkzltrWPaHB7dVYmLozr6POof6hZJkliMlZoUdIy6OKlXoEcG/9ED2JhSkJAFrzSBKmR
+         0xP9ydP5yN+cGie/T0e9TNbTmw/xDhu0AtWo5rNQ2gpl+ZCfueGMjiZErtS1KoRJ5IZT
+         2kbA==
+X-Gm-Message-State: AEkoouvRymhXUOnBnpVERrkXkabo1Fgi9hcJgoH2siXHNLt/bP2kbFDcQRKvRyVSPqrNPzexplU4ssJs/SJ9Dw==
+X-Received: by 10.107.2.78 with SMTP id 75mr46082701ioc.128.1471430997377;
+ Wed, 17 Aug 2016 03:49:57 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.194.70.167 with HTTP; Wed, 17 Aug 2016 03:40:49 -0700 (PDT)
-From:	Christian Couder <christian.couder@gmail.com>
-Date:	Wed, 17 Aug 2016 12:40:49 +0200
-Message-ID: <CAP8UFD2Xz5OxmF+UrywO8Uhh2OvypgEGMQVkz3Lk=HMzs8DRmw@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 18
-To:	git <git@vger.kernel.org>
-Cc:	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	Eric Wong <normalperson@yhbt.net>,
-	Lars Schneider <larsxschneider@gmail.com>,
-	Roberto Tyley <robertotyley@gmail.com>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Stefan Beller <sbeller@google.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	remi galan-alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-	Johannes Sixt <j6t@kdbg.org>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	lwn@lwn.net
+Received: by 10.64.125.199 with HTTP; Wed, 17 Aug 2016 03:49:26 -0700 (PDT)
+In-Reply-To: <xmqqmvkfj7dz.fsf@gitster.mtv.corp.google.com>
+References: <xmqqmvkfj7dz.fsf@gitster.mtv.corp.google.com>
+From:	Duy Nguyen <pclouds@gmail.com>
+Date:	Wed, 17 Aug 2016 17:49:26 +0700
+Message-ID: <CACsJy8BYk1t5cfN_dgc8o3HCi8Rqz9aM_5XFWMUkMTKXu2R7=A@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2016, #06; Sun, 14)
+To:	Junio C Hamano <gitster@pobox.com>,
+	David Turner <novalis@novalis.org>
+Cc:	Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi everyone,
+On Mon, Aug 15, 2016 at 5:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> * dt/index-helper (2016-07-06) 21 commits
+>
+>  A new "index-helper" daemon has been introduced to give newly
+>  spawned Git process a quicker access to the data in the index, and
+>  optionally interface with the watchman daemon to further reduce the
+>  refresh cost.
+>
+>  Not quite ready yet, it seems.
+>  cf. <alpine.DEB.2.20.1607061016330.6426@virtualbox>
+>  cf. <CACsJy8AiER_=5aJ65r+GPCE_nXbrPTAMKJi=FuJgT8zzV2-NFw@mail.gmail.com>
 
-I'm happy announce that the 18th edition of Git Rev News is now published:
+David I can take back this series if you are busy or no longer interested in it.
 
-https://git.github.io/rev_news/2016/08/17/edition-18/
+If so, Junio, since I may try some slightly different direction first,
+it may take a while before I resubmit, feel free to drop it if it adds
+work to you.
 
-Thanks a lot to all the contributors and helpers, especially Lars,
-Dscho, Jakub, Roberto and Josh!
+> * nd/shallow-deepen (2016-06-13) 27 commits
+>
+>  The existing "git fetch --depth=<n>" option was hard to use
+>  correctly when making the history of an existing shallow clone
+>  deeper.  A new option, "--deepen=<n>", has been added to make this
+>  easier to use.  "git clone" also learned "--shallow-since=<date>"
+>  and "--shallow-exclude=<tag>" options to make it easier to specify
+>  "I am interested only in the recent N months worth of history" and
+>  "Give me only the history since that version".
+>
+>  Needs review.
+>
+>  Rerolled.  What this topic attempts to achieve is worthwhile, I
+>  would think.
 
-Enjoy,
-Christian and Thomas.
+I guess I can't do anything to help speed this up?
+-- 
+Duy
