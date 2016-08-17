@@ -2,80 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A72DC1FD99
-	for <e@80x24.org>; Wed, 17 Aug 2016 12:46:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2103E2018E
+	for <e@80x24.org>; Wed, 17 Aug 2016 12:48:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752683AbcHQMql (ORCPT <rfc822;e@80x24.org>);
-	Wed, 17 Aug 2016 08:46:41 -0400
-Received: from mout.gmx.net ([212.227.15.18]:55968 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752279AbcHQMqk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2016 08:46:40 -0400
-Received: from virtualbox ([37.24.141.212]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0Lzc5y-1b5qIa1HqU-014jyZ; Wed, 17 Aug 2016 14:46:34
- +0200
-Date:	Wed, 17 Aug 2016 14:46:32 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-cc:	git@vger.kernel.org, peff@peff.net, j6t@kdbg.org
-Subject: Re: [PATCH v2 0/1] convert: Correct NNO tests and missing `LF will
- be replaced by CRLF`
-In-Reply-To: <20160813212919.11282-1-tboegi@web.de>
-Message-ID: <alpine.DEB.2.20.1608171445500.4924@virtualbox>
-References: <20160809114938.pcrvirrzrh6ldmnr@sigill.intra.peff.net> <20160813212919.11282-1-tboegi@web.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1752793AbcHQMsk (ORCPT <rfc822;e@80x24.org>);
+	Wed, 17 Aug 2016 08:48:40 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:33014 "EHLO
+	mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752181AbcHQMsj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2016 08:48:39 -0400
+Received: by mail-it0-f68.google.com with SMTP id d65so8968391ith.0
+        for <git@vger.kernel.org>; Wed, 17 Aug 2016 05:48:38 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=DoTgA6ekVAa4vuL6sm/NgyCOGhufN4sISre4EKp6Gvc=;
+        b=AaWD8faWqnmeMKfbn2LGXgn0/s6tCUpybHlGs81aGlnaOc9wmk07pwGmj3WMkZxFsV
+         qTVXP89Otg0hTStDuIHW5SBK02++1/IHzllnpkyz1LcWVbxXtrMh0LivHyiMbHFiZSF0
+         MMnEAL4L0dJABoRRbh1oHTfCLIgVewj8pyiRL59tsWHW7pu19SFgYeIVc9DrWrEERAah
+         vACqP4i2QQBdLbkGTy5vM1a04tyu48e2VkgUm+WaedLTyGhDC3n56a+HT19islIB/kBC
+         ECRehd07pX6NiOlriHH8Hm+OjDJTm+q+UVdoGhOfVIEN2cThvT+JgckG0DygEGlFJt0o
+         MX3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=DoTgA6ekVAa4vuL6sm/NgyCOGhufN4sISre4EKp6Gvc=;
+        b=jz0GyvR7cWNWu+vGLoenWcWRI/30jxp0TjxYfy4qht+5EdUujIA88synLXHOucIm+S
+         dlfpga7LBBPOwHE45Dw0aF0xA0wgYI/bvSIHVWn83Fk95AlZA/VbUuVsQevBa/CeEPKM
+         It3ptVvVNVe/cSxlQSbySxKsCS/QK5IvzdBUPHBWK9YVhL1WgPSnGboi2w9g+Rl9nFLM
+         kThEEgBhNuKm4nRNQ8Q/PF/4UN7yyME2XwnMcGiAn4d6VItc2hfipVM04AGax0cq9KWu
+         Rw1JmiHv0nfJCSKzCSOG5Cwm/WJLWhrbmUgcHU6JmHRuxVr5QCsSzn2wnG7yAG8qIYxi
+         Ob8A==
+X-Gm-Message-State: AEkoouvW5AfL/NqXX/q+6PanhuUKH5muKIkG+QYQ53eJiiYlvalrilA4S4eoERjsmQDUStI5J7q1a4K0tlaYBA==
+X-Received: by 10.36.210.68 with SMTP id z65mr10057267itf.32.1471438118270;
+ Wed, 17 Aug 2016 05:48:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1385830644-1471437994=:4924"
-X-Provags-ID: V03:K0:mHAvgO3+fcD+wleAJoBBfYpyFHWjymSePPU3UZsw7rdx6eIDbcj
- MaQ3HjYskrD3a//kGlWUjvFNeH/Vurw4tFptK5phm0weM81uGwgFXRfkeYhx6fzAbS/8Tp8
- ncYQVMj80sXNUfrldhuD+45CODfJzhcbGRGC8fuKy9m2GmdD+//uE3Ngo5nolSXaJ7ii15T
- bDzeHH7+AMdPELQSYiwww==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:mNFmPQyRz/0=:YL1ryPqYOKXN/BlEPpnHOz
- IipHFtdp7zod1baPpPtlpWrgVGIwB05/JxuUNO/Wald8uzBlunpRvzzUyVfPG62b9tsyO3BhQ
- McC8C3M3/cocsFLYbbiBi87zAvhqZlPbHinS+MLVb60ZW6hwhgsNrCQgPZhxnT28JQR+ctCb5
- nmvLGE15RWoExJB8uaGrG/i7M0VA8oBBdhOFqFDNlDEeVCz1D10aYfPDQREI/GcrdcOjoYJjk
- XNratvsrn59mIqvnkbBfh4VZyXYF43J2OEla32v0MiTUfE7jWahDb6k9vR9VFbcbEXMw95yr6
- jwdQIvY72jSu2DH1voP5oQcFh5DRuOlW1wMuOCrrhYVGG6WfjvK03TDpkshz1XOU3BGxbGJkQ
- 6DxIhLGh/Oj1KwZySX+XcsY58zpCuxAmxTc1BYq6MfAENqAbf7auMyGsfyzg64fF9/0QK4i0w
- sp77bO+sEToQjTW0Lhe76ximqAzFgwrNpVrgz9cbCFoeQJcWwl5hNmYxd6arn3OCiqW6mzwEi
- Q5U+yNauNGDpIrOJMDSkl6KKq0p3WGEkcb4EBG4CRU/kEygyeMYhZUcdMcZdWuIXyKFtnviNJ
- 21aG93AyxGWpctvGp612Fun3lIM5VjKHvjU43KpicBtsfSBpCbnkBGJVQtug+bw43NYd2gWWO
- 9JMcKau97OxNY8LbRyB7k5tYB22qTJNAdyJH3Fw+N/F/qDQ0WYMdRIqzvpdOLgRU7jhPArW3u
- T9N3aK9zDnjJdeoCL0j/B44+Mtx0XtCa2DvldYxQXe6Kx+WSgm5otYlV9DuxDqgY2vn+ZDENT
- vhmKczC
+Received: by 10.79.130.1 with HTTP; Wed, 17 Aug 2016 05:48:37 -0700 (PDT)
+In-Reply-To: <77e7c4e4de6c45a1b24bb4d08ca20a1385f43444.1471437637.git.johannes.schindelin@gmx.de>
+References: <cover.1471437637.git.johannes.schindelin@gmx.de> <77e7c4e4de6c45a1b24bb4d08ca20a1385f43444.1471437637.git.johannes.schindelin@gmx.de>
+From:	Eric Sunshine <sunshine@sunshineco.com>
+Date:	Wed, 17 Aug 2016 08:48:37 -0400
+X-Google-Sender-Auth: StiY8KAM5Y9ijbITccXbuk69FMM
+Message-ID: <CAPig+cR4=kEUb5PsZfoz3=W+R61wER=vHos5uX02kEVM8YETgA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] mingw: ensure temporary file handles are not
+ inherited by child processes
+To:	Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:	Git List <git@vger.kernel.org>, Ben Wijen <ben@wijen.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Wed, Aug 17, 2016 at 8:41 AM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> When the index is locked and child processes inherit the handle to
+> said lock and the parent process wants to remove the lock before the
+> child process exits, on Windows there is a problem: it won't work
+> because files cannot be deleted if a process holds a handle on them.
+> The symptom:
+>
+>     Rename from 'xxx/.git/index.lock' to 'xxx/.git/index' failed.
+>     Should I try again? (y/n)
+>
+> Spawning child processes with bInheritHandles==FALSE would not work
+> because no file handles would be inherited, not even the hStdXxx
+> handles in STARTUPINFO (stdin/stdout/stderr).
+>
+> Opening every file with O_NOINHERIT does not work, either, as e.g.
+> git-upload-pack expects inherited file handles.
+>
+> This leaves us with the only way out: creating temp files with the
+> O_NOINHERIT flag. This flag is Windows-specific, however. For our
+> purposes, it is equivalent our purposes) to O_CLOEXEC (which does not
 
---8323329-1385830644-1471437994=:4924
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+s/our purposes)//
 
-Hi Torsten,
-
-On Sat, 13 Aug 2016, tboegi@web.de wrote:
-
-> From: Torsten B=C3=B6gershausen <tboegi@web.de>
->=20
-> Change since v1:
-> - The changes done in 1/2 in t0027 needed to be reverted in 2/2.
->   Put both changes for convert.c and t0027 into a single commit
-> Thanks to Johannes Sixt.
-> Torsten B=C3=B6gershausen (1):
->   convert: Correct NNO tests and missing `LF will be replaced by CRLF`
-
-Thank you so much for the fix!
-
-Ciao,
-Dscho
---8323329-1385830644-1471437994=:4924--
+> exist on Windows), so let's just open temporary files with the
+> O_CLOEXEC flag and map that flag to O_NOINHERIT on Windows.
+>
+> This fixes the test that we just introduced to demonstrate the problem.
+>
+> Signed-off-by: Ben Wijen <ben@wijen.net>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
