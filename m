@@ -2,141 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFEAD1FD99
-	for <e@80x24.org>; Wed, 17 Aug 2016 18:28:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83B011FD99
+	for <e@80x24.org>; Wed, 17 Aug 2016 18:35:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752426AbcHQS2n (ORCPT <rfc822;e@80x24.org>);
-	Wed, 17 Aug 2016 14:28:43 -0400
-Received: from mout.web.de ([212.227.17.11]:62027 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752435AbcHQS2m (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2016 14:28:42 -0400
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb103) with
- ESMTPSA (Nemesis) id 0Mf0lB-1bpqEF0KfR-00OZVW; Wed, 17 Aug 2016 20:27:14
- +0200
-Subject: Re: [ANNOUNCE] Git v2.10.0-rc0
-To:	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-References: <xmqqfuq7j7cw.fsf@gitster.mtv.corp.google.com>
- <bb0e4f6b-a85a-550e-a971-2a9fabb2f87f@web.de>
- <xmqqoa4uhwcn.fsf@gitster.mtv.corp.google.com>
- <20160817064245.GA5775@tb-raspi>
- <xmqq60qzbebt.fsf@gitster.mtv.corp.google.com>
- <xmqqtwej9txz.fsf@gitster.mtv.corp.google.com>
-Cc:	git@vger.kernel.org
-From:	=?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <ab7cdb40-03f4-af04-d9c5-5b09e46968a4@web.de>
-Date:	Wed, 17 Aug 2016 20:27:06 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
- Gecko/20100101 Thunderbird/45.1.1
+	id S1752966AbcHQSfK (ORCPT <rfc822;e@80x24.org>);
+	Wed, 17 Aug 2016 14:35:10 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52529 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752545AbcHQSfJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2016 14:35:09 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 23533346B3;
+	Wed, 17 Aug 2016 14:35:02 -0400 (EDT)
+DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uDie8CHJ80QgixZ8DWGWHfjgD44=; b=NIxjTP
+	RW2N2QnCNz+/m3I3xJfVWJKPm8lUILn6VgADmJ6a4fVc1k7oEtg39GiXgu2sWG07
+	xXpkMOlUyuiH94DN0W4nK8oqaRdfACtnMF4PzddV2WWwOT+IZfFXJnLM/f0MaQZ7
+	8dLmsL+wDPp+PBAKzUeg9+yEtUXJywSbX6U1M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=A5SKB4beBY88LgzrdyhSz+/gyVueZdy9
+	2HksnP6J3fbbE18KTT07GVa/qVC8iUuRfKYZldiW7K3QVVB/Vxw9PhOUyudp3Q+h
+	XDNmTulFeMs68bSEcCOA6pQg+0ks5pdrjo5exRa2iA5+Lo81Jde/kr4izry9DhPv
+	z6Uz6BR8nxQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C9327346B1;
+	Wed, 17 Aug 2016 14:35:01 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DE5EA346AF;
+	Wed, 17 Aug 2016 14:35:00 -0400 (EDT)
+From:	Junio C Hamano <gitster@pobox.com>
+To:	Robert Dailey <rcdailey.lists@gmail.com>
+Cc:	Git <git@vger.kernel.org>
+Subject: Re: diff --diff-filter on modified but locally deleted files
+References: <CAHd499D50TLMYtAovTF80ev0=2u=9yyMNcq6-he3Ba2kXzqW9g@mail.gmail.com>
+Date:	Wed, 17 Aug 2016 11:34:58 -0700
+In-Reply-To: <CAHd499D50TLMYtAovTF80ev0=2u=9yyMNcq6-he3Ba2kXzqW9g@mail.gmail.com>
+	(Robert Dailey's message of "Wed, 17 Aug 2016 13:04:07 -0500")
+Message-ID: <xmqq8tvv9rcd.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqtwej9txz.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:DfZjd9oM8HD+lx0c6peLB2zbf5P9NOv7FtUcNJeRw7gbDXkTjs9
- SSIGGpS3yXrejb3nZRTNPrUB2nY6Ghek8cgCcBMubjyXi/vfBKJpzBupjgJtxyTDq1B3a7g
- kq19uKcF2Qw01mtXoQy5Qy5e88VGyGkoMj/4Tcb7dMKFRdFd+8WC7IoUaFBZae1P43sAplT
- uSrBFmM4W3La71NWUDkgQ==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:AQtxfcT/MdA=:csuhzK6Z4r69XaTWn1ogOK
- ZNU2yDU6ywP5g0sTUIaf+ECnHNCS9CWX3J+QUaIoh5KShtUsZ86Un3nqLkKQuFraBffZuXawj
- ozIwEJVX8OS5raH2Sn+LEyu3FcYkLQax2bp9AxtbNarxBCssuvGrfKODNMPTl4Dr8DL/90R7q
- Gt6VpZhbh2x+0vlhqVgG7fGaYyoLp5E9NaK3i/4YjiZtooYGXLJMaHAWnquCW3apWsqJ8G2Qa
- q0+tG2Qn1q5lcxl9MVwNRHBdC54MwwF3ZgCaEZP8Xl4aYWbRe6wIUIj6pGgZsd+tKBqQobrpm
- D5tV8TC9XAsoGk8wum/u4vDyZBLgD7qAfFQBNSnQDVtLgvDsq5/Scg8MvJJXk5LOI1pAE13hB
- uriR+kcScnDGSJmtJF/QDKCkGwudW5PD4drXofo3rGFDXEA+dyDygb2dMQYYK6vXXQ7BhhUO0
- w9CBZ7I9sntm8qQQgtWs23zPfEtU27FTTGvnjcJb7zFpFFoV/QoZrVGyTbC3loTRMbeMhbD0q
- qHcPKryq+L+glMbz8SOhrGrtpUjSeq+gR6BxdE7XS1pRBuGf6DM58t+xA8NLs1bPY8uHOPiqM
- 1KZlr2gCLzSX6WVJoqFdSXyEtmnrfYBH9pYvCZFwLBCbvOb8OkoMWgVA8PK87EDTUs6zQcSaq
- 2YEZli9HvMEx8SSo8NqZoRowTrYmYz4VsMthQzHA4vyXPZsgretOW1cKIe0Elmu6x5aTkvwi4
- XNX0SOY/6R+HsZTBN79knXPc+tB+g9TgYISCerI6wH16GRcMnhx9fju85/WMzAK/4cXqJouP7
- OAME3Zt
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4E6D239E-64A9-11E6-91B3-FCB17B1B28F4-77302942!pb-smtp2.pobox.com
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 17.08.16 19:38, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> Torsten Bögershausen <tboegi@web.de> writes:
->>
->>> Is this `text=auto` correct ?
->>
->> Thanks for spotting a typo.  Definitely.
->>
->>> I think it should be
->>>
->>>    used to have the same effect as
->>>    $ echo "* text eol=crlf" >.gitattributes
->>
->> Thanks.
->>
->>> # In other words, the `auto` was ignored, as explained here:
->>> +   $ git config core.eol crlf
->>> +   i.e. declaring all files are text; the combination now is
->>> +   equivalent to doing
->>> +   $ git config core.autocrlf true
->>> +
-> 
-> Just to make sure I got you right, how does this look?
-> 
->  Documentation/RelNotes/2.10.0.txt | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/RelNotes/2.10.0.txt b/Documentation/RelNotes/2.10.0.txt
-> index 179e575..ccf5f64 100644
-> --- a/Documentation/RelNotes/2.10.0.txt
-> +++ b/Documentation/RelNotes/2.10.0.txt
-> @@ -235,13 +235,13 @@ Performance, Internal Implementation, Development Support etc.
->   * The API to iterate over all the refs (i.e. for_each_ref(), etc.)
->     has been revamped.
->  
-> - * The handling of the "text = auto" attribute has been updated.
-> + * The handling of the "text=auto" attribute has been corrected.
->     $ echo "* text=auto eol=crlf" >.gitattributes
->     used to have the same effect as
-> -   $ echo "* text=auto eol=crlf" >.gitattributes
-> +   $ echo "* text eol=crlf" >.gitattributes
-# Now we describe/define  the eol at checkouts twice.
-# I think we can drop this line:
->     $ git config core.eol crlf
-# The rest looks good:
-> -   i.e. declaring all files are text; the combination now is
-> -   equivalent to doing
-> +   i.e. declaring all files are text (ignoring "auto").  The
-> +   combination has been fixed to be equivalent to doing
->     $ git config core.autocrlf true
->  
->   * A few tests that specifically target "git rebase -i" have been
-> 
+Robert Dailey <rcdailey.lists@gmail.com> writes:
 
-# Just to be sure: the whole paragraph may look like this:
+> My use case is that I do a merge from branch A to branch B. Branch A
+> modified a file which is already deleted on B some time before the
+> merge.
+>
+> When I do a `git status -sb`, these locally deleted but remotely
+> modified files show up as "DU".
+>
+> I want to invoke git status or diff (or something else) to get a list
+> of these specific conflicts (locally deleted, remotely modified).
 
-* The handling of the "text=auto" attribute has been corrected.
-  $ echo "* text=auto eol=crlf" >.gitattributes
-  used to have the same effect as
-  $ echo "* text eol=crlf" >.gitattributes
-  i.e. declaring all files are text (ignoring "auto").  The
-  combination has been fixed to be equivalent to doing
-  $ git config core.autocrlf true
+As far as "git diff [--cached]" (which is "compare HEAD with the
+working tree through index") is concerned, these paths are in the
+"U"nmerged category, so you'd give "U" to diff-filter to view them.
+Of course, that would give you other kinds of unmerged entries.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+If you know they show up as DU, why not "grep DU" in that output?
