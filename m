@@ -2,123 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDE241F6C1
-	for <e@80x24.org>; Wed, 17 Aug 2016 08:22:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A82A1F6C1
+	for <e@80x24.org>; Wed, 17 Aug 2016 09:20:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754002AbcHQIW0 convert rfc822-to-8bit (ORCPT
-	<rfc822;e@80x24.org>); Wed, 17 Aug 2016 04:22:26 -0400
-Received: from zm-etu-ensimag-2.grenet.fr ([130.190.244.118]:45446 "EHLO
-	zm-etu-ensimag-2.grenet.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753620AbcHQIWY (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Aug 2016 04:22:24 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 7BD942054;
-	Wed, 17 Aug 2016 10:22:20 +0200 (CEST)
-Received: from zm-smtpout-2.grenet.fr ([127.0.0.1])
-	by localhost (zm-smtpout-2.grenet.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id XogA4oldGbaB; Wed, 17 Aug 2016 10:22:20 +0200 (CEST)
-Received: from zm-int-mbx1.grenet.fr (zm-int-mbx1.grenet.fr [130.190.242.140])
-	by zm-smtpout-2.grenet.fr (Postfix) with ESMTP id 6B1F1202B;
-	Wed, 17 Aug 2016 10:22:20 +0200 (CEST)
-Date:	Wed, 17 Aug 2016 10:43:29 +0200 (CEST)
-From:	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-To:	Junio C Hamano <gitster@pobox.com>
-Cc:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, ryenus <ryenus@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Jeff King <peff@peff.net>
-Message-ID: <594839500.1229861.1471423409171.JavaMail.zimbra@ensimag.grenoble-inp.fr>
-In-Reply-To: <xmqq4m6kcvc6.fsf@gitster.mtv.corp.google.com>
-References: <520a941f7472ac1cb4fa41e6bba33a0afc2f5999.1471264971.git.johannes.schindelin@gmx.de> <ce8891377cec31cada49208f2d192dda86658e40.1471353054.git.johannes.schindelin@gmx.de> <1134106438.1228353.1471361364992.JavaMail.zimbra@ensimag.grenoble-inp.fr> <alpine.DEB.2.20.1608161739280.4924@virtualbox> <1654103856.1228422.1471365329111.JavaMail.zimbra@ensimag.grenoble-inp.fr> <xmqq4m6kcvc6.fsf@gitster.mtv.corp.google.com>
-Subject: Re: [PATCH v2] rev-parse: respect core.hooksPath in --git-path
+	id S1752228AbcHQJUm (ORCPT <rfc822;e@80x24.org>);
+	Wed, 17 Aug 2016 05:20:42 -0400
+Received: from mout.gmx.net ([212.227.15.15]:49259 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751662AbcHQJUl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2016 05:20:41 -0400
+Received: from virtualbox ([37.24.141.212]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0LhOvA-1anfkP10iG-00mZis; Wed, 17 Aug 2016 11:13:45
+ +0200
+Date:	Wed, 17 Aug 2016 11:13:43 +0200 (CEST)
+From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:	Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
+cc:	Stephen Morton <stephen.morton@nokia.com>,
+	Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+	git@vger.kernel.org
+Subject: Re: git cherry-pick conflict error message is deceptive when
+ cherry-picking multiple commits
+In-Reply-To: <968827697.1226723.1471337060482.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+Message-ID: <alpine.DEB.2.20.1608171112580.4924@virtualbox>
+References: <09d485df-7d14-97f8-9db9-e3db7512bd68@nokia.com> <968827697.1226723.1471337060482.JavaMail.zimbra@ensimag.grenoble-inp.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
-X-Originating-IP: [130.190.242.137]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF39 (Linux)/8.0.9_GA_6191)
-Thread-Topic: rev-parse: respect core.hooksPath in --git-path
-Thread-Index: QdyK22HVNo6ESHwfAlcD/DNJoDZtfw==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:3eqoMddH8khfxGscnoj1w5bA/7lskesuLoLOUxtTh2jOYFLbhV4
+ KBhJS3c67kIK6r1ew7YK+y6IBloVfi5VBG+Cx/6NjFCP51Bo+ZOe9ELx19wkNzAEY8EKn4Y
+ SZjxNy/GD48SBq5LNiFJXreeyG3+hh9JT8OT98V4eafZmwQ35yL5fQCgF3VoLateQiglm8v
+ Ybv8qG+KKdIrHtAwRfAcg==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:4UU1V1ZEWkA=:EM5EeAogl+R/0G3QqFp47o
+ dJxXhsYqwCP4Gd+qv9EtfyEzSVsL0T4ZfoF/KO6vXMDyddW5uePqcXLV/UqNTfbpX4QqTHKj2
+ eFfSRO3oWO3bclMa8u57/WXFrD1xRqKFTSB10iuB6f5Zg03R1JVC17PuXQ/YS5z3I/e2eOARY
+ mY26a/tKGYWMD/HkMZCBa334A3C1qKdzM3BaTkTZaILo/1pRAFHYgZ7WIxUrfgdboN6Pvv3xF
+ Aza0NyYaxlISQfS0iYbKcI+qk7oTM+lHaUa5KufWPo4Cn6wp8Ij3a7MXxidd/bROx1xhz9r5R
+ 377E0+qE4lzMtb6N4UT1navHbj9zp9sArgdFJW1OZLdrzWNGT3vubP2PKmTdFwv09Yalow496
+ NxjWrE4dOdWa9I7EzRHjw732cWbuskt0XiVqe+M0U7aQJDmwlQItC9O5Wj9I6OaTuf3umrw7H
+ FFA4/6pMzCUyFPfwptoeB8z6yYhjuxstpsqm766TM7RmaIFVu7MjnKEu8kUDbSvzD0+vwkWQL
+ HzXllEl/fZmWsOMo3a8ENB5o9aG1FsjNfxPqICDlKA+Jrplfaw8cKT1vLfLTPxiRSB6dVamzU
+ /xw18tXCz2zK+alU72LSuIN8eIegv0dps5IV7upJ86qFGnV+kSmoN2+EF4hYiV53aqWNTjfjJ
+ AAfOlYjouPYora5zfSr90T5qXc3kRLFY4KVSoPDF8/kT3nzH/jtZ0Auc4MllFwtAuFObybHU3
+ dDFP0/bB4hg3c0WDzb09lPEDZCdOILnS+QIsk1ZS3oP5YJDH8CaL/ctG59X6BX4g/Rzx7/JRz
+ BPLq9gI
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-> Remi Galan Alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>
-> writes:
->
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->>> Hi Rémi,
->>>
->>> On Tue, 16 Aug 2016, Remi Galan Alfonso wrote:
->>>
->>> > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
->>> > > diff --git a/t/t1350-config-hooks-path.sh b/t/t1350-config-hooks-path.sh
->>> > > index 5e3fb3a..f1f9aee 100755
->>> > > --- a/t/t1350-config-hooks-path.sh
->>> > > +++ b/t/t1350-config-hooks-path.sh
->>> > > @@ -34,4 +34,10 @@ test_expect_success 'Check that various forms of specifying core.hooksPath work'
->>> > >          test_cmp expect actual
->>> > >  '
->>> > >  
->>> > > +test_expect_success 'git rev-parse --git-path hooks' '
->>> > > +        git config core.hooksPath .git/custom-hooks &&
->>> >
->>> > Any reason to not use 'test_config' here?
->>>
->>> Yes: consistency. The rest of the script uses `git config`, not
->>> `test_config`.
->>
->> Fine by me, then. Sorry for the noise.
->
-> No, thanks for reviewing.  I'll take Dscho's patch as-is but once it
-> hits 'next', it probably is a good idea to do a separate clean-up
-> patch on top to use test_config where necessary.
->
-> Having said that, this entire script is about constantly changing
-> the value of that single configuration variable and see how the code
-> performs, so any new test added after existing ones is expected to
-> ignore left-over values in the variable and set it to a value of its
-> own liking.  So I suspect there is no existing "git config" call in
-> this script, with or without Dscho's patch, that would benefit from
-> getting converted to test_config.
+Hi,
 
-Thanks for checking the ones in this file, considering the lack
-of benefits it might not be worth it to change it for now.
+On Tue, 16 Aug 2016, Remi Galan Alfonso wrote:
 
-I tried to see if the `git config` in other tests were in the
-same case or not but the sheer amount made me reconsider. However
-taking a look at a couple of random ones, there are some scripts
-that would benefit from the conversion.
-For example in t3200-branch there is:
+> Stephen Morton <stephen.morton@nokia.com> writes:
+> > +                        if  (multiple_commits)
+> > +                               advise(_("after resolving the conflicts,
+> > mark the corrected paths with 'git add <paths>' or 'git rm <paths>'\n"
+> > +                                        "then continue with 'git %s
+> > --continue'\n"
+> > +                                        "or cancel with 'git %s
+> > --abort'" ), action_name(opts), action_name(opts));
+> > +                        else
+> > +                                advise(_("after resolving the
+> > conflicts, mark the corrected paths\n"
+> > +                                        "with 'git add <paths>' or 'git
+> > rm <paths>'\n"
+> > +                                        "and commit the result with
+> > 'git commit'"));
+> 
+> In both cases (multiple_commits or not), the beginning of the advise
+> is nearly the same, with only a '\n' in the middle being the
+> difference:
+> 
+> multiple_commits:
+>  "after resolving the conflicts, mark the corrected paths with 'git
+>  add <paths>' or 'git rm <paths>'\n"
+> 
+> !multiple_commits:
+>  "after resolving the conflicts, mark the corrected paths\n with 'git
+>  add <paths>' or 'git rm <paths>'\n"
+>                                                   ~~~~~~~^
+> 
+> In 'multiple_commits' case the advise is more than 80 characters long,
+> did you forget the '\n' in that case?
+> 
+> If you end up using the same beginning of advice, maybe it's possible
+> to give it before the 'if(multiple_commits)' and avoid duplication of
+> the lines.
 
-    test_expect_success 'git branch with column.*' '
-    	git config column.ui column &&
-    	git config column.branch "dense" &&
-    	COLUMNS=80 git branch >actual &&
-    	git config --unset column.branch &&
-    	git config --unset column.ui &&
-    	cat >expected <<\EOF &&
-      a/b/c   bam   foo   l   * master    n     o/p   r
-      abc     bar   j/k   m/m   master2   o/o   q
-    EOF
-    	test_cmp expected actual
-    '
+I concur with this, and also with Christian's advice to append the
+parameter consistently as last one, and also with renaming it to
+"last_commit".
 
-The conversion would drop 2 lines in this particular case and
-would avoid bleeding the config should `git branch` fail (not
-sure how possible that is...).
-
-(I can make a patch for t3200 but that won't be before
-days/weeks, so if someone else wants to take care of it I won't
-mind)
-
-If I have some time to kill, I'll try looking at a few others but
-I won't expect that any time soon.
-
-Thanks,
-Rémi
+Ciao,
+Johannes
