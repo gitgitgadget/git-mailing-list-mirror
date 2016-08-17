@@ -2,161 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 594001FD99
-	for <e@80x24.org>; Wed, 17 Aug 2016 13:14:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D32781FD99
+	for <e@80x24.org>; Wed, 17 Aug 2016 13:42:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750839AbcHQNOn (ORCPT <rfc822;e@80x24.org>);
-	Wed, 17 Aug 2016 09:14:43 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35335 "EHLO
-	mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750896AbcHQNOm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2016 09:14:42 -0400
-Received: by mail-wm0-f67.google.com with SMTP id i5so24051490wmg.2
-        for <git@vger.kernel.org>; Wed, 17 Aug 2016 06:14:41 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=+hBUDVhtwdRyb/n36J9smfjNHfmrAttavCZx90k7RwE=;
-        b=vWHgcHLfLXc+zKjQ2DXvm5H+9z1Hb7EGgbvQRqev/UCnWFWM8el14iA6Uuh9c08H3J
-         datHRQjih264o6ifm2JNMwCKq+UktjN5fIEdgsQw3uePPsW1VZ/jS4KzHjpCBbQIJFcl
-         iTZNw7ZJPKKXvw3shFZQuGQaD/h0Vp0K2HLVflJnzWp3XSXBzkv+olhPb17KbyV6tbN/
-         d/chM5aRyg7+xMdLMA33RutLNVum/N8WucDG3W8zRe2gSsK9a2Qxp9st2JymoqpJf5/C
-         M/4ttBpZTSQ604EQTuALWc+FWyRgTw62phMcCKPjIQdqKbDDiY2WP+7oIA83eyaQ77U5
-         C3bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=+hBUDVhtwdRyb/n36J9smfjNHfmrAttavCZx90k7RwE=;
-        b=OI10TSr99hUuiWTF1ibdE4AOhOq2VZc4PNQ5fbszcm+J0UgJJXaIqOA+yS/EAQYvVM
-         ZExGb06BBPHZ9vVFjla+yIdtZIuhLFYngIRhIykJhhg5kiJCMzYQwcFoXNxVeGDXRnOu
-         Dr2rFFUKq1LSAdIY7Eg4GHuuUmn305MTNblruAwGhjSZWj28xeOVzAycnaWvIsmn8q2l
-         iLt/09PXXaIek2RCL6YJII9Zl+MuUGflKHYopmszksBudDSI/M15mhaq513gy3yZFZdc
-         aRMdCGszt1hiEXBWC1U5Ixm0QyWx2GUcT9GzuASfA8OYEyBfogJgORDuxpRVU+smUqIa
-         81UQ==
-X-Gm-Message-State: AEkoouuy/yYSEcMlzWJUpqphEaihV9CiQDps4Ol6L7gb7wGGBNan4Sp8ynrKtjPbbxx7WA==
-X-Received: by 10.28.198.142 with SMTP id w136mr20063174wmf.30.1471439680975;
-        Wed, 17 Aug 2016 06:14:40 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id c8sm31619034wjm.19.2016.08.17.06.14.39
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 17 Aug 2016 06:14:40 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH 2/2] mingw: ensure temporary file handles are not inherited by child processes
-From:	Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <77e7c4e4de6c45a1b24bb4d08ca20a1385f43444.1471437637.git.johannes.schindelin@gmx.de>
-Date:	Wed, 17 Aug 2016 15:14:37 +0200
-Cc:	Git Mailing List <git@vger.kernel.org>, Ben Wijen <ben@wijen.net>,
-	Junio C Hamano <gitster@pobox.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <4432DA7E-EDBB-4749-88F8-395CC7D9763D@gmail.com>
-References: <cover.1471437637.git.johannes.schindelin@gmx.de> <77e7c4e4de6c45a1b24bb4d08ca20a1385f43444.1471437637.git.johannes.schindelin@gmx.de>
-To:	Johannes Schindelin <johannes.schindelin@gmx.de>
-X-Mailer: Apple Mail (2.3124)
+	id S1752679AbcHQNm5 (ORCPT <rfc822;e@80x24.org>);
+	Wed, 17 Aug 2016 09:42:57 -0400
+Received: from us-hpatc-esg-01.alcatel-lucent.com ([135.245.18.27]:38832 "EHLO
+	smtp-us.alcatel-lucent.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751495AbcHQNm4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Aug 2016 09:42:56 -0400
+Received: from us70tumx1.dmz.alcatel-lucent.com (unknown [135.245.18.13])
+	by Websense Email Security Gateway with ESMTPS id 5E7F39B19282D;
+	Wed, 17 Aug 2016 13:42:52 +0000 (GMT)
+Received: from us70tusmtp1.zam.alcatel-lucent.com (us70tusmtp1.zam.alcatel-lucent.com [135.5.2.63])
+	by us70tumx1.dmz.alcatel-lucent.com (GMO) with ESMTP id u7HDgsKO012220
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Wed, 17 Aug 2016 13:42:54 GMT
+Received: from US70TWXCHHUB04.zam.alcatel-lucent.com (us70twxchhub04.zam.alcatel-lucent.com [135.5.2.36])
+	by us70tusmtp1.zam.alcatel-lucent.com (GMO) with ESMTP id u7HDgrIR007431
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
+	Wed, 17 Aug 2016 13:42:53 GMT
+Received: from [135.121.197.20] (135.5.27.16) by
+ US70TWXCHHUB04.zam.alcatel-lucent.com (135.5.2.36) with Microsoft SMTP Server
+ (TLS) id 14.3.195.1; Wed, 17 Aug 2016 09:42:53 -0400
+Subject: Re: git cherry-pick conflict error message is deceptive when
+ cherry-picking multiple commits
+To:	Christian Couder <christian.couder@gmail.com>
+References: <09d485df-7d14-97f8-9db9-e3db7512bd68@nokia.com>
+ <CAP8UFD04Z7JpoAA1kXkYFk5LD-GngbUDkbnpCEc3DNDXUgetEA@mail.gmail.com>
+CC:	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+From:	Stephen Morton <stephen.morton@nokia.com>
+Organization: Nokia ION
+Message-ID: <f58933df-352a-9d2b-a35a-9c48cb2d958e@nokia.com>
+Date:	Wed, 17 Aug 2016 09:42:56 -0400
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.1.0
+MIME-Version: 1.0
+In-Reply-To: <CAP8UFD04Z7JpoAA1kXkYFk5LD-GngbUDkbnpCEc3DNDXUgetEA@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [135.5.27.16]
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Responding to a few comments...
 
-> On 17 Aug 2016, at 14:41, Johannes Schindelin =
-<johannes.schindelin@gmx.de> wrote:
->=20
-> From: Ben Wijen <ben@wijen.net>
->=20
-> When the index is locked and child processes inherit the handle to
-> said lock and the parent process wants to remove the lock before the
-> child process exits, on Windows there is a problem: it won't work
-> because files cannot be deleted if a process holds a handle on them.
-> The symptom:
->=20
->    Rename from 'xxx/.git/index.lock' to 'xxx/.git/index' failed.
->    Should I try again? (y/n)
->=20
-> Spawning child processes with bInheritHandles=3D=3DFALSE would not =
-work
-> because no file handles would be inherited, not even the hStdXxx
-> handles in STARTUPINFO (stdin/stdout/stderr).
->=20
-> Opening every file with O_NOINHERIT does not work, either, as e.g.
-> git-upload-pack expects inherited file handles.
->=20
-> This leaves us with the only way out: creating temp files with the
-> O_NOINHERIT flag. This flag is Windows-specific, however. For our
-> purposes, it is equivalent our purposes) to O_CLOEXEC (which does not
-> exist on Windows), so let's just open temporary files with the
-> O_CLOEXEC flag and map that flag to O_NOINHERIT on Windows.
->=20
-> This fixes the test that we just introduced to demonstrate the =
-problem.
->=20
-> Signed-off-by: Ben Wijen <ben@wijen.net>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> compat/mingw.h        | 4 ++++
-> t/t6026-merge-attr.sh | 2 +-
-> tempfile.c            | 2 +-
-> 3 files changed, 6 insertions(+), 2 deletions(-)
->=20
-> diff --git a/compat/mingw.h b/compat/mingw.h
-> index 95e128f..753e641 100644
-> --- a/compat/mingw.h
-> +++ b/compat/mingw.h
-> @@ -67,6 +67,10 @@ typedef int pid_t;
-> #define F_SETFD 2
-> #define FD_CLOEXEC 0x1
->=20
-> +#if !defined O_CLOEXEC && defined O_NOINHERIT
-> +#define O_CLOEXEC	O_NOINHERIT
-> +#endif
-> +
-> #ifndef EAFNOSUPPORT
-> #define EAFNOSUPPORT WSAEAFNOSUPPORT
-> #endif
-> diff --git a/t/t6026-merge-attr.sh b/t/t6026-merge-attr.sh
-> index 3d28c78..dd8f88d 100755
-> --- a/t/t6026-merge-attr.sh
-> +++ b/t/t6026-merge-attr.sh
-> @@ -181,7 +181,7 @@ test_expect_success 'up-to-date merge without =
-common ancestor' '
-> 	)
-> '
->=20
-> -test_expect_success !MINGW 'custom merge does not lock index' '
-> +test_expect_success 'custom merge does not lock index' '
-> 	git reset --hard anchor &&
-> 	write_script sleep-one-second.sh <<-\EOF &&
-> 		sleep 1 &
-> diff --git a/tempfile.c b/tempfile.c
-> index 0af7ebf..db3981d 100644
-> --- a/tempfile.c
-> +++ b/tempfile.c
-> @@ -120,7 +120,7 @@ int create_tempfile(struct tempfile *tempfile, =
-const char *path)
-> 	prepare_tempfile_object(tempfile);
->=20
-> 	strbuf_add_absolute_path(&tempfile->filename, path);
-> -	tempfile->fd =3D open(tempfile->filename.buf, O_RDWR | O_CREAT | =
-O_EXCL, 0666);
-> +	tempfile->fd =3D open(tempfile->filename.buf, O_RDWR | O_CREAT | =
-O_EXCL | O_CLOEXEC, 0666);
+On 2016-08-14 7:44 AM, Christian Couder wrote:
+> multiple_commits)
+> ... but here multiple_commits is the last argument.
+> It would be better if it was more consistent.
+(Johannes made the same comment.)
+Yes. Will do.
 
-This solution works great for me. I struggled with a similar problem=20
-in my Git filter protocol series:
-=
-http://public-inbox.org/git/20160810130411.12419-16-larsxschneider@gmail.c=
-om/
 
-I also tried selectively disabling inheritance for file handles but it =
-looks like
-as this is not easily possible right now:=20
-https://github.com/git-for-windows/git/issues/770#issuecomment-238816331
+>
+> multiple_commits = (todo_list->next) != NULL;
+> Why not "last_commit" instead of "multiple_commits"?
+>
 
-- Lars=
+Because it *isn't*. You can see that in pick_commits(), I set 
+multiple_commits outside of the `for todo_list` loop. It is not 
+re-evaluated at every iteration of the loop. As per my comment when 
+emailing the patch "I intentionally print the '--continue' hint even in 
+the case where it's last of n commits that fails. " I think it makes 
+much more sense that "this is the message you always get when 
+cherry-picking multiple commits as opposed to "this is the message you 
+sometimes get, except when it's the last one". (Yes, the careful 
+observer will realize that if when cherry-picking multiple commits, 
+there are conflicts in the second-last and last then the --continue  
+from the second-last will result in multiple_commits being set to 0. I 
+can live with that.)
+
+
+On 2016-08-16 4:44 AM, Remi Galan Alfonso wrote:
+> Hi Stephen,
+>
+> Stephen Morton <stephen.morton@nokia.com> writes:
+>> +                        if  (multiple_commits)
+>> +                               advise(_("after resolving the conflicts,
+>> mark the corrected paths with 'git add <paths>' or 'git rm <paths>'\n"
+>> +                                        "then continue with 'git %s
+>> --continue'\n"
+>> +                                        "or cancel with 'git %s
+>> --abort'" ), action_name(opts), action_name(opts));
+>> +                        else
+>> +                                advise(_("after resolving the
+>> conflicts, mark the corrected paths\n"
+>> +                                        "with 'git add <paths>' or 'git
+>> rm <paths>'\n"
+>> +                                        "and commit the result with
+>> 'git commit'"));
+> In both cases (multiple_commits or not), the beginning of the advise
+> is nearly the same, with only a '\n' in the middle being the
+> difference:
+>
+> multiple_commits:
+>   "after resolving the conflicts, mark the corrected paths with 'git
+>   add <paths>' or 'git rm <paths>'\n"
+>
+> !multiple_commits:
+>   "after resolving the conflicts, mark the corrected paths\n with 'git
+>   add <paths>' or 'git rm <paths>'\n"
+>                                                    ~~~~~~~^
+>
+> In 'multiple_commits' case the advise is more than 80 characters long,
+> did you forget the '\n' in that case?
+A previous comment had indicated that having 4 lines was too many. And I 
+tend to agree. So I tried to squash it into 3. Back in xterm days, 80 
+characters was sacrosanct, but is it really a big deal to exceed it now?
+
+
+On 2016-08-14 7:44 AM, Christian Couder wrote:
+> ...but please try to send a real patch.
+>
+> There is https://github.com/git/git/blob/master/Documentation/SubmittingPatches
+> and also SubmitGit that can help you do that.
+Agreed. I just want to send a patch that stands a reasonable chance of 
+getting accepted.
+
+Stephen
+
+
+-- 
+Stephen Morton, 7750 SR Product Group, SW Development Tools/DevOps
+w: +1-613-784-6026 (int: 2-825-6026) m: +1-613-302-2589 | EST Time Zone
+
