@@ -2,94 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7026B1F859
-	for <e@80x24.org>; Wed, 17 Aug 2016 05:32:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 805081F859
+	for <e@80x24.org>; Wed, 17 Aug 2016 06:05:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750833AbcHQFcN (ORCPT <rfc822;e@80x24.org>);
-	Wed, 17 Aug 2016 01:32:13 -0400
-Received: from mail-yw0-f171.google.com ([209.85.161.171]:34169 "EHLO
-	mail-yw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750794AbcHQFcM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2016 01:32:12 -0400
-Received: by mail-yw0-f171.google.com with SMTP id z8so55505004ywa.1
-        for <git@vger.kernel.org>; Tue, 16 Aug 2016 22:32:12 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=lhhCnAOJEm+fb8zONQZ+oq4LRz2/BFApg97A9om/wDk=;
-        b=iHX8amNGY1+kZwWJr6FcJMunjR8pqZgTPlMZbhZkBUA+ki8wrKj8QFCaFnumAcKXGo
-         TN42JodIUPUn0PDr+jNWZ+xCzDaUbiBExJpwZW8BrBjOp3xIt7bfZqFgsinul/EZPpJP
-         GNof1PD6CzcHSU+qtAhk4mcQmdre75ryWrS7uLgbcu2zc/LXbl67ZXyR5qxVfDeskhNR
-         ts5ZOAihdhhmZDcB6Y5Fqfxua6dmmcLhhOYAZtaO1ULeVo+Rrk80FTHQmMTCsWefxfGH
-         3c7+vnrkMwmtTpYebgWR1TscoRNuoQkMAHUd48PUkWysVW8hiRC+Xsk9yk8rkU7eK12s
-         7vTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=lhhCnAOJEm+fb8zONQZ+oq4LRz2/BFApg97A9om/wDk=;
-        b=TVYmP+benkuSHwnisyp/vll+ziZiV28wyiHX7Yd5esQ2BrLGSLv3De3BQYqUQldNr5
-         aXatjkklqSUSFbtv08Cbu8VJJWwxye7NZ+XAP9xMS7sjZ6kONEbv+klceslufACoB4ix
-         p5tYGimWGrlHPmXcEj2a7+D7bmQBmNXEtkpfS+3bV3sHfADZAVg/W63akko5G/UrUeVs
-         ZjScIBl42NSpR6gZDBqXQkkJYwoYQIfdr9v8WVdW0BEEt0njDy5HqNgNuVQA8m29ZpU9
-         4+6gyV1u4ALLbBAAQPg7Z0C5aGjZBPcmnKSL49PbkLYQUpECtI79K+XLa5p6JSI8zZwF
-         Wqwg==
-X-Gm-Message-State: AEkoousXi6URotOCl9XbjRJqUxD6j7ef8BGrznsyunpoVfplxslptOxumag4J52g7b0yAvujso6RR0J9QF5USQ==
-X-Received: by 10.13.249.135 with SMTP id j129mr29393802ywf.267.1471411931346;
- Tue, 16 Aug 2016 22:32:11 -0700 (PDT)
+	id S1753408AbcHQGFU (ORCPT <rfc822;e@80x24.org>);
+	Wed, 17 Aug 2016 02:05:20 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:29634 "EHLO bsmtp3.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753071AbcHQGFS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2016 02:05:18 -0400
+Received: from dx.site (unknown [93.83.142.38])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 3sDdxR661Jz5tlZ;
+	Wed, 17 Aug 2016 08:05:15 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+	by dx.site (Postfix) with ESMTP id 4CB32303C;
+	Wed, 17 Aug 2016 08:05:15 +0200 (CEST)
+Subject: Re: git-mergetool reverse file ordering
+To:	David Aguilar <davvid@gmail.com>
+References: <CAD8hE_yzNZDPkxRy8s4Fy2_dZN5ppWzLM_2xc01C-VAdR1Pj_g@mail.gmail.com>
+ <20160814034221.GB21057@gmail.com>
+ <20160814103801.tpixnskdsf5ycj66@john.keeping.me.uk>
+ <CAD8hE_xR2mB3=_oot9cWxmFy7z4oBhjABNOo3aJKN=bOw5ybzQ@mail.gmail.com>
+ <20160817012554.GA12991@gmail.com>
+Cc:	Luis Gutierrez <luisgutz@gmail.com>,
+	John Keeping <john@keeping.me.uk>, git@vger.kernel.org
+From:	Johannes Sixt <j6t@kdbg.org>
+Message-ID: <18a1ef52-1c5b-4f0a-5da2-777e816a1e3e@kdbg.org>
+Date:	Wed, 17 Aug 2016 08:05:15 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2
 MIME-Version: 1.0
-Received: by 10.37.50.199 with HTTP; Tue, 16 Aug 2016 22:31:50 -0700 (PDT)
-In-Reply-To: <87pop8wh5w.fsf@thinkpad.rath.org>
-References: <87y43wwujd.fsf@thinkpad.rath.org> <alpine.DEB.2.02.1608160926330.11774@nftneq.ynat.uz>
- <87pop8wh5w.fsf@thinkpad.rath.org>
-From:	Jacob Keller <jacob.keller@gmail.com>
-Date:	Tue, 16 Aug 2016 22:31:50 -0700
-Message-ID: <CA+P7+xp2q8JWqqtqj-ATd=Ox9snTpC0DE9ND76VhV-5hOvVQdw@mail.gmail.com>
-Subject: Re: Working with zip files
-To:	Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20160817012554.GA12991@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Tue, Aug 16, 2016 at 2:14 PM, Nikolaus Rath <Nikolaus@rath.org> wrote:
-> On Aug 16 2016, David Lang <david@lang.hm> wrote:
->> On Tue, 16 Aug 2016, Nikolaus Rath wrote:
->>
->>> I would like to store Simulink models in a Git
->>> repository. Unfortunately, the file format is binary. But luckily, the
->>> binary format happens to be a zipfile containing nicely formatted XML
->>> files.
->>>
->>> Is there a way to teach Git to take advantage of this when storing,
->>> diff-ing and merging these files?
->>
->> you should be able to use clean/smudge to have git store the files
->> uncompressed, which will help a lot.
->
-> Having looked at that, I'm not sure if this really helps:
->
-> As I understand, the smudge command is run on checkout to convert the
-> blob in the repository to the format that is desired in the working
-> tree. But this is the opposite of what I need: on checkout, I need to
-> convert the text data in the repository to a blob in the working tree.
->
-> Furthermore, I need to convert multiple text files into one blob, will
-> smudge/clean seem to do just 1:1 conversions.
->
-> Am I missing something? Are there any other options?
+Am 17.08.2016 um 03:25 schrieb David Aguilar:
+> Hmm, I do like the idea of reusing the diff orderFile, but a
+> mechanism for sorting arbitrary inputs based on the orderFile
+> isn't currently exposed in a way that mergetool could use it.
 
-You want to store the contents of the zip file as *one* blob that is
-the uncompressed contents of the archive somehow concatenated
-together. That should still be a 1:1 relationship.
+Instead of using 'git ls-files -u | sed ... | sort -u' you could use
 
-You won't store one blob per file in the zip.
+   git diff-files --name-status -O... | sed -ne '/^U/s/^..//p'
 
-Thanks,
-Jake
+> But, that sort is honestly kinda crude.  It can't implement the
+> interesting case where we want bar.h to sort before bar.c but
+> not foo.h.
+>
+> If we did the sort option, we could have both.
+
+I don't think that we need a new filter when the diff machinery is 
+capable of re-ordering files. We should enhance the diff machinery instead.
+
+-- Hannes
+
