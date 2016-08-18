@@ -6,182 +6,115 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1B63203E2
-	for <e@80x24.org>; Fri, 19 Aug 2016 00:52:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC5BC203E2
+	for <e@80x24.org>; Fri, 19 Aug 2016 01:05:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752696AbcHSAv4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Aug 2016 20:51:56 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64208 "EHLO
+        id S1754664AbcHSBFE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Aug 2016 21:05:04 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62404 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754073AbcHSAt6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Aug 2016 20:49:58 -0400
+        with ESMTP id S1754385AbcHSBEv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Aug 2016 21:04:51 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 93DD434FC9;
-        Thu, 18 Aug 2016 16:25:46 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E837733FD9;
+        Thu, 18 Aug 2016 14:46:39 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=10s72cKUrgy6/SYVuypSP+DyMOw=; b=Ulk8s1
-        9+iSMZI3A7WRvKRt4QHSdLv/ckVM+YpIs9wxz07E4Po+IZHYbTm5CNj8D8FgCB/o
-        8o0TvJwk1EEwA4/Ucz6kx2Hg9poOjDtkgZQBlh2DyA3Es54NK7ecPC3ASwQnFxbG
-        vSK3+t9tSCOQEsVV5Pqb/0Fwxz/BTWIpO7AzE=
+        :content-type; s=sasl; bh=b+tOj+btlyRceuPw8F1Q1Cdftoo=; b=uwnstm
+        w+SMNYxfzW8TQUcwbgwiVc3VXPQk9Gmx8l0zP/4srAxBh/tCWrYX7sPsF3/vqomW
+        /Nnxs27CNTNJWOHw4vIyjwEpWkHopQn9OhXisj5nHETvrVyncijBsJfzswMsCUJT
+        by6wtsn8jMDSjqoPFTgrbySl1D8Xjl7VBVKWQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=JTmswQOC6YBzDEMkLfH5FC0JAalRE2e9
-        g6jj4G9YVrUwYYj4u+UQ6ucWzOgXdPBMYcP/w5O6/3rpJLRnWlGJ0MbySfw68tOf
-        xzEgQEHW/WFSmD/RwXbTlxyfdjSUc/DANlCig/QwtoeeQV71AJDRzlyvOTI5h4Qc
-        3AwgrjA0BRg=
+        :content-type; q=dns; s=sasl; b=k4WDg/jNSiezMlMcuZQhePdke0e1/uAh
+        24KpTb06Y2J7yj12C7ZPw/iA3dJQ/s0JzosKgkK9MyocnfpxIa3g2uXTMrNdqYy1
+        avmj+zDcfW5zDGsB7uG9FhWIdC8o5s9WerfhxsY6lC1Jf5qneGcsz2/dFGyvbzre
+        hn7b3SvnKuc=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 887BE34FC7;
-        Thu, 18 Aug 2016 16:25:46 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DC40033FD7;
+        Thu, 18 Aug 2016 14:46:39 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F070C34FC6;
-        Thu, 18 Aug 2016 16:25:45 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 56BAE33FD5;
+        Thu, 18 Aug 2016 14:46:39 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 3/3] receive-pack: allow a maximum input size to be specified
-References: <20160818131553.22580-1-chriscool@tuxfamily.org>
-        <20160818131553.22580-4-chriscool@tuxfamily.org>
-Date:   Thu, 18 Aug 2016 13:25:43 -0700
-In-Reply-To: <20160818131553.22580-4-chriscool@tuxfamily.org> (Christian
-        Couder's message of "Thu, 18 Aug 2016 15:15:53 +0200")
-Message-ID: <xmqqpop56czc.fsf@gitster.mtv.corp.google.com>
+To:     Jacob Keller <jacob.e.keller@intel.com>
+Cc:     git@vger.kernel.org, Stefan Beller <stefanbeller@gmail.com>,
+        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v7 4/7] submodule: allow do_submodule_path to work if given gitdir directly
+References: <20160818005131.31600-1-jacob.e.keller@intel.com>
+        <20160818005131.31600-5-jacob.e.keller@intel.com>
+Date:   Thu, 18 Aug 2016 11:46:37 -0700
+In-Reply-To: <20160818005131.31600-5-jacob.e.keller@intel.com> (Jacob Keller's
+        message of "Wed, 17 Aug 2016 17:51:28 -0700")
+Message-ID: <xmqq37m17w4y.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: F19A4DB6-6581-11E6-B20A-E86612518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 192C79D4-6574-11E6-9A72-E86612518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-> From: Jeff King <peff@peff.net>
+> From: Jacob Keller <jacob.keller@gmail.com>
 >
-> Receive-pack feeds its input to either index-pack or
-> unpack-objects, which will happily accept as many bytes as
-> a sender is willing to provide. Let's allow an arbitrary
-> cutoff point where we will stop writing bytes to disk.
+> Currently, do_submodule_path relies on read_gitfile, which will die() if
+> it can't read from the specified gitfile. Unfortunately, this means that
+> do_submodule_path will not work when given the path to a submodule which
+> is checked out directly, such as a newly added submodule which you
+> cloned and then "git submodule add". 
+
+Hmm, are you sure about that?
+
+A call to read_gitfile() turns into a call to read_gitfile_gently()
+with the return_error_code parameter set to NULL.  The function does
+a stat(2), and if the given path is not a file (e.g. we created the
+submodule working tree and repository in-place ourselves, instead of
+cloning an existing project from elsewhere, in which case we would
+see a directory there), it says READ_GIT_FILE_ERR_NOT_A_FILE and
+returns NULL, because that is not a fatal error condition.  The same
+thing happens if path does not yet exist.
+
+This caller is given <path>, prepares "<path>/.git" in buf, and
+calls read_gitfile().  If it returns a non-NULL, it replaces what is
+in buf and continues, but if it returns a NULL (i.e. the two cases I
+mentioned in the above paragraph), it continues with "<path>/.git".
+
+While I do not think changing it to resolve_gitdir() is wrong per-se,
+I am not sure if it is necessary.
+
+I must be misreading something in the existing code.
+
+> Instead, replace the call with
+> resolve_gitdir. This first checks to see if we've been given a gitdir
+> already.
 >
-> Cleaning up what has already been written to disk is a
-> related problem that is not addressed by this patch.
+> Because resolve_gitdir may return the same buffer it was passed, we have
+> to check for this case as well, since strbuf_reset() will not work as
+> expected here, and indeed is not necessary.
 >
-> Signed-off-by: Jeff King <peff@peff.net>
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 > ---
->  Documentation/config.txt           |  5 +++++
->  Documentation/git-receive-pack.txt |  3 +++
->  builtin/receive-pack.c             | 12 +++++++++++
->  t/t5546-push-limits.sh             | 42 ++++++++++++++++++++++++++++++++++++++
->  4 files changed, 62 insertions(+)
->  create mode 100755 t/t5546-push-limits.sh
+>  path.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 0bcb679..f5b6061 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -2517,6 +2517,11 @@ receive.unpackLimit::
->  	especially on slow filesystems.  If not set, the value of
->  	`transfer.unpackLimit` is used instead.
+> diff --git a/path.c b/path.c
+> index 17551c483476..d1af029152a2 100644
+> --- a/path.c
+> +++ b/path.c
+> @@ -477,8 +477,8 @@ static void do_submodule_path(struct strbuf *buf, const char *path,
+>  	strbuf_complete(buf, '/');
+>  	strbuf_addstr(buf, ".git");
 >  
-> +receive.maxsize::
-
-Shouldn't this be maxInputSize, not just maxSize?  You are limiting
-the size of the input, not the size of the resulting pack, right?
-
-> +	If the size of a pack file is larger than this limit, then
-
-So, s/a pack file/the incoming pack stream/ or something?
-
-> diff --git a/t/t5546-push-limits.sh b/t/t5546-push-limits.sh
-> new file mode 100755
-> index 0000000..09e958f
-
-Technically, that's receive-limits, no?  It is conceivable that the
-client side can also grow a feature to limit the size of an outgoing
-push, but that is not what this new script is about.
-
-> --- /dev/null
-> +++ b/t/t5546-push-limits.sh
-> @@ -0,0 +1,42 @@
-> +#!/bin/sh
-> +
-> +test_description='check input limits for pushing'
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'create remote repository' '
-> +	git init --bare dest
-> +'
-> +
-
-> +# Let's run tests with different unpack limits: 1 and 10
-> +# When the limit is 1, `git receive-pack` will call `git index-pack`.
-> +# When the limit is 10, `git receive-pack` will call `git unpack-objects`.
-
-I agree with Peff that these tests should push into an empty,
-pristine destination.  Move the "create remote" step inside the
-while loop and prefix its "git init" with "rm -rf dest", or
-something like that.
-
-It would make it crystal clear that the produced packstream for our
-transfer won't ever be affected by what is leftover in the
-destination repository.
-
-Also, I think it would make it far more readable if you made the
-body of the while loop into a helper function that runs tests,
-keeping "1/10 corresponds to index/unpack" magic hidden inside the
-helper, i.e. something like
-
-test_pack_input_limit () {
-	size=$2
-        case "$1" in
-        unpack) unpack_limit=10000 ;;
-        index) unpack_limit=1 ;;
-	esac
-
-	test_expect_success 'prepare destination repository' '
-		rm -fr dest &&
-		git --bare init dest
-	'
-
-	test_expect_success "set unpacklimit to $unpack_limit" '
-		git --git-dir=dest config receive.unpacklimit "$unpack_limit"
-	'
-
-	test_expect_success 'setting receive.maxsize to 512 rejects push' '
-		git --git-dir=dest config receive.maxsize 512 &&
-		test_must_fail git push dest HEAD
-	'
-
-	test_expect_success 'bumping limit to 4k allows push' '
-		git --git-dir=dest config receive.maxsize 4k &&
-		git push dest HEAD
-	'
-
-	test_expect_success 'prepare destination repository (again)' '
-		rm -fr dest &&
-		git --bare init dest
-	'
-
-	test_expect_success 'lifting the limit allows push' '
-		git --git-dir=dest config receive.maxsize 0 &&
-		git push dest HEAD
-	'
-}
-
-and have the body of the test more like this:
-
-	test_expect_success 'setup' '
-		test-genrandom foo 1024 >test-file &&
-		git add test-file &&
-		test_commit test-file
-	'
-
-	test_pack_input_limit unpack 1024 
-	test_pack_input_limit index 1024 
-
-Perhaps?
+> -	git_dir = read_gitfile(buf->buf);
+> -	if (git_dir) {
+> +	git_dir = resolve_gitdir(buf->buf);
+> +	if (git_dir && git_dir != buf->buf) {
+>  		strbuf_reset(buf);
+>  		strbuf_addstr(buf, git_dir);
+>  	}
