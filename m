@@ -2,126 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_12_24,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1E9C1FD99
-	for <e@80x24.org>; Fri, 19 Aug 2016 06:33:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 413F01FD99
+	for <e@80x24.org>; Fri, 19 Aug 2016 07:21:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754064AbcHSGde (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Aug 2016 02:33:34 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34129 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753005AbcHSGd3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2016 02:33:29 -0400
-Received: by mail-wm0-f66.google.com with SMTP id q128so2167548wma.1
-        for <git@vger.kernel.org>; Thu, 18 Aug 2016 23:33:06 -0700 (PDT)
+        id S1755972AbcHSHVQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Aug 2016 03:21:16 -0400
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:37169 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755641AbcHSHVA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2016 03:21:00 -0400
+Received: by mail-wm0-f44.google.com with SMTP id i5so27308064wmg.0
+        for <git@vger.kernel.org>; Fri, 19 Aug 2016 00:20:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=KguB+2DtZSEj5axh9GG7vcLpRXOAp7QsgDlfbl2ovCk=;
-        b=qrLmvY48QVmwr2wyjkM9GVm7UcHyf6dexV/BRcdhNvrNTY2rYmWdHUCnAF2+OeFEDR
-         gJsLiNYvSPUwKZEFgc46fXRk5C6vTi79Uj9mdTI5L/iHin+J8Rh4TNjrkrE+7zbkU3fg
-         Mm++4h1heS26Il+qNpxXOtYWUntCYmy0ZSFqsPES5EahjpabxmgIObGzNARqMJSd1zW2
-         l+SPnmIwB3VVDmxjJ0jf/HgzYyJomzfNdiHgbQ6/7CwwD8rgFUl0QTiwrOroieMuGig/
-         DrlLWU7A7pZcT0I/vm3GvbufobkbNBV7SYqTB6Hh0nFcVpZ1dzvKfZrxj9CJFbXFsx9C
-         b/nA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=UDvoq1MklmNyHIFyGvPUdDgKrc4+yGIsczOjaWKjSnU=;
+        b=A2LYA/S9JT4nz79r5RWbhRBPDUb7Ed0EcjJsjHnA4FGdirX8MiCEyZXT22NRsJzUo6
+         HgwCVAQ/F1GL76+KQ1TMy2bYA5hP23+j8XKgab+aspE+uyhlb4NbN4l7+JeC8E1yXGJG
+         4+wx+imXpooHLCSjK3mheQymONNks0ywwc8QQy+7IwsBkKn73lTNn/k7vuUdi39EiKZu
+         I5gNqDFtKvMFBa8OBpSKhCcITxBuPRC/AGfA87J12NoVgb0qackFVxoj0NDQrfETcLxo
+         YTXj14ynWHhX5+k5EOkoaqkwCYuln77MN9M43DTYCxhzFE9ajxBqmDWL6Ir69pXtjyKD
+         Q7Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=KguB+2DtZSEj5axh9GG7vcLpRXOAp7QsgDlfbl2ovCk=;
-        b=TB7JYBsT9d2Sc4RjNkQxv6r41oxIp3PhOYG6VLKtVu+9reCcEgi3syQvkUXtJEHPnl
-         7FTyEhDUZDqhJkiNaLGJZ0TljLt27tXRZ3FGND+MRZrsX+uYy8U/IJ3e41LMt1ojZ8e7
-         2TfJxaW5o2jWfpZt5zivwiW0i3BQZ9bjdov1IfgLIQXUM4Lx4/5tNtYqbsEyfOBKDLx2
-         cp9IjQwbaiqqDv5yoaNB3g19ZOPMuvbCmEOd4OGj0ftbKQA2IsdizmcCGjo5OAFCsLUB
-         SXdR2z74J9Bzr3FPTEjX6TqU2M9gmIkIcD/J9MATXvqbQn9uTh4v4oamJLLPDNPBW6Ja
-         yQRA==
-X-Gm-Message-State: AEkooutF6mhwNWjrNgC2R6KEFMoXoAyX6zE7zIRecxXHVdc9S5a2+YFFYq6x1/dbgTMssw==
-X-Received: by 10.194.144.114 with SMTP id sl18mr3282512wjb.123.1471546648882;
-        Thu, 18 Aug 2016 11:57:28 -0700 (PDT)
-Received: from localhost (cable-86-56-90-190.cust.telecolumbus.net. [86.56.90.190])
-        by smtp.gmail.com with ESMTPSA id e65sm864460wmg.3.2016.08.18.11.57.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 Aug 2016 11:57:28 -0700 (PDT)
-From:   Ralf Thielow <ralf.thielow@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, larsxschneider@gmail.com, me@jnm2.com,
-        philipoakley@iee.org, john@keeping.me.uk,
-        Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH 2/2] help: make option --help open man pages only for Git commands
-Date:   Thu, 18 Aug 2016 20:57:19 +0200
-Message-Id: <20160818185719.4909-3-ralf.thielow@gmail.com>
-X-Mailer: git-send-email 2.9.2.912.gd0c0e83
-In-Reply-To: <20160818185719.4909-2-ralf.thielow@gmail.com>
-References: <20160816162030.27754-1-ralf.thielow@gmail.com>
- <20160818185719.4909-1-ralf.thielow@gmail.com>
- <20160818185719.4909-2-ralf.thielow@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=UDvoq1MklmNyHIFyGvPUdDgKrc4+yGIsczOjaWKjSnU=;
+        b=enjK44zVQqPTMImFWISE3qEH5P46PIlvKHTtSfUac480AKrPFq0GEpealf3MkXyoqN
+         OxwHKTMzuxofcSGNulv7IPtVRZvfVptlAEb6bfjOXuycHrH6mIL25dt9pndcpBpF1HuD
+         WCEl+0q5WHVrFyWwb23EYo0ZORajhmK8puCJi+LtCb81kK9Ih6/26MczgL1Wqtx23fOr
+         lcpd35pxQSuZzFov4IEeN7uBZ5+DavPGE+o6AnvXJip+8gPuc5hO1t7saI6He2tS5PlS
+         Y4/hGUVQ3MhYOZwSQj6C6b/KZCW92w9N+bzIHfVcaBnFR98Rx/b4YoHsEbate8n690KH
+         8Spw==
+X-Gm-Message-State: AEkoouts20lOOv6QXnk7vdTHL0fV33SiIWvlBgRi+1N7XeVz7JLiF/VqSUrcl3Mk5mmWztb5I2Lz21FUbftRAg==
+X-Received: by 10.28.51.210 with SMTP id z201mr610240wmz.98.1471542389120;
+ Thu, 18 Aug 2016 10:46:29 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.194.102.70 with HTTP; Thu, 18 Aug 2016 10:45:48 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.02.1608180954400.11774@nftneq.ynat.uz>
+References: <87y43wwujd.fsf@thinkpad.rath.org> <alpine.DEB.2.02.1608160926330.11774@nftneq.ynat.uz>
+ <xmqqeg5oejmn.fsf@gitster.mtv.corp.google.com> <34d64f4f-3cda-385c-cdce-5f1852d545e3@gmail.com>
+ <xmqq8tvwcvrc.fsf@gitster.mtv.corp.google.com> <12866c04-f910-2a83-b445-6eada3d2efc9@gmail.com>
+ <alpine.DEB.2.02.1608180954400.11774@nftneq.ynat.uz>
+From:   =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Date:   Thu, 18 Aug 2016 19:45:48 +0200
+Message-ID: <CANQwDwebocSzwrLRNoZMCkXy0D2HrSrXSyLxV=jNJ4xzCWDhHw@mail.gmail.com>
+Subject: Re: Working with zip files
+To:     David Lang <david@lang.hm>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Nikolaus Rath <Nikolaus@rath.org>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If option --help is passed to a Git command, we try to open
-the man page of that command.  However, we do it even for commands
-we don't know.  Make sure it is a Git command.
+On 18 August 2016 at 18:56, David Lang <david@lang.hm> wrote:
+> On Thu, 18 Aug 2016, Jakub Nar=C4=99bski wrote:
+>
+>> JN>> You can find rezip clean/smudge filter (originally intended for
+>> JN>> OpenDocument Format (ODF), that is OpenOffice.org etc.) that stores
+>> JN>> zip or zip-archive (like ODT, jar, etc.) uncompressed.  I think
+>> JN>> you can find it on GitWiki, but I might be mistaken.
+>>
+>> Using 'unzip -c' as separate / additional `textconv` filter for diff
+>> generation allows to separate the problem of deltifiable storage format
+>> from textual representation for diff-ing.
+>>
+>> Though best results could be had with `diff` and `merge` drivers...
+>
+>
+> can you point at an example of how to do this? when I went looking about =
+a
+> year ago to deal with single-line json data I wasn't able to find anythin=
+g
+> good. I ended up using clean/smudge to pretty-print the json so it was
+> easier to handle.
 
-This breaks "git <concept> --help" while "git help <concept>" still works.
+Pro Git has a chapter "Customizing Git - Git Attributes" about gitattribute=
+s
+https://git-scm.com/book/en/v2/Customizing-Git-Git-Attributes
 
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
- git.c           | 15 ++++++++++++++-
- t/t0012-help.sh |  8 ++++++++
- 2 files changed, 22 insertions(+), 1 deletion(-)
+The section "Diffing Binary Files" has two examples: docx2txt (with wrapper=
+)
+for DOCX (MS Word) files, and exiftool for images. For JSON you could use
+some prettyprinter / formatter like pp-json.
 
-diff --git a/git.c b/git.c
-index 0f1937f..2cd2e06 100644
---- a/git.c
-+++ b/git.c
-@@ -528,10 +528,23 @@ static void handle_builtin(int argc, const char **argv)
- 	strip_extension(argv);
- 	cmd = argv[0];
- 
--	/* Turn "git cmd --help" into "git help cmd" */
-+	/* Turn "git cmd --help" into "git help --command-only cmd" */
- 	if (argc > 1 && !strcmp(argv[1], "--help")) {
-+		struct argv_array args;
-+		int i;
-+
- 		argv[1] = argv[0];
- 		argv[0] = cmd = "help";
-+
-+		argv_array_init(&args);
-+		for (i = 0; i < argc; i++) {
-+			argv_array_push(&args, argv[i]);
-+			if (!i)
-+				argv_array_push(&args, "--command-only");
-+		}
-+
-+		argc++;
-+		argv = argv_array_detach(&args);
- 	}
- 
- 	builtin = get_builtin(cmd);
-diff --git a/t/t0012-help.sh b/t/t0012-help.sh
-index e20f907..81fec90 100755
---- a/t/t0012-help.sh
-+++ b/t/t0012-help.sh
-@@ -18,4 +18,12 @@ test_expect_success "--command-only does not work for guides" "
- 	test_i18ncmp expected actual
- "
- 
-+test_expect_success "--help does not work for guides" "
-+	cat <<-EOF >expected &&
-+		git: 'revisions' is not a git command. See 'git --help'.
-+	EOF
-+	(git revisions --help 2>actual || true) &&
-+	test_i18ncmp expected actual
-+"
-+
- test_done
--- 
-2.9.2.912.gd0c0e83
+"Performing text diffs of binary files" section of gitattributes(1) manpage
+covers 'textconv' vs 'diff', and uses 'exif' tool as textconv example.
 
+HTH
+--=20
+Jakub Nar=C4=99bski
+
+
+
+
+--=20
+Jakub Narebski
