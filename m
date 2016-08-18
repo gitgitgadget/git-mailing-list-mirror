@@ -2,80 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BFCC1F6C1
-	for <e@80x24.org>; Fri, 19 Aug 2016 01:49:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 41AFB1F6C1
+	for <e@80x24.org>; Fri, 19 Aug 2016 01:52:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754631AbcHSBs4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Aug 2016 21:48:56 -0400
-Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.218]:12111 "EHLO
-        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754424AbcHSBsj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Aug 2016 21:48:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1471571310; l=660;
-        s=domk; d=aepfle.de;
-        h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-        References:Subject:Cc:To:From:Date;
-        bh=eq/28uiD/qGK36fYZNlZYGYHXoj463SvB5DmvRZCRRw=;
-        b=J8UHzD4/v5dJQgY86dWVNx0WyJ6c+3t0mLaa6IAn/kqbOTi3eHT02dSrKU2Wox9t8md
-        2ljNFNpvsVO6qlZcOotbYYFdLqV5i98TSk8CDxXSl1+HL2/wFQ5jlNndLQltThzMPwTvX
-        SsRoLynkE0sv4BvBFHwIJHP62FJxImCLaEE=
-X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+yackYocTD1iAi8x+OWi5z/J1IL7CYRxLEwpkY2XtLzyRUcY=
-X-RZG-CLASS-ID: mo00
-Received: from aepfle.de (nat.nue.novell.com [IPv6:2620:113:80c0:5::2222])
-        by smtp.strato.de (RZmta 38.13 AUTH)
-        with ESMTPSA id a07f67s7IFmF6cK
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve secp521r1 with 521 ECDH bits, eq. 15360 bits RSA))
-        (Client did not present a certificate);
-        Thu, 18 Aug 2016 17:48:15 +0200 (CEST)
-Date:   Thu, 18 Aug 2016 17:48:13 +0200
-From:   Olaf Hering <olaf@aepfle.de>
-To:     Jeff King <peff@peff.net>
-Cc:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
-Subject: Re: git format-patch --break-rewrites broken in 2.9.3
-Message-ID: <20160818154813.GB9062@aepfle.de>
-References: <20160818144421.GA9062@aepfle.de>
- <20160818150522.56gdx2mhgo7qwvru@sigill.intra.peff.net>
- <vpqa8gayumw.fsf@anie.imag.fr>
- <20160818154022.5mp4cr5jq57doh3d@sigill.intra.peff.net>
+        id S1754573AbcHSBwB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Aug 2016 21:52:01 -0400
+Received: from mout.web.de ([212.227.15.3]:58785 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754555AbcHSBvR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Aug 2016 21:51:17 -0400
+Received: from localhost ([195.252.60.88]) by smtp.web.de (mrweb002) with
+ ESMTPSA (Nemesis) id 0LmLOE-1b1cyi2ruk-00ZwA0; Thu, 18 Aug 2016 17:49:10
+ +0200
+Date:   Thu, 18 Aug 2016 15:49:08 +0000
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/4] cat-file: introduce the --filters option
+Message-ID: <20160818154908.GB17141@tb-raspi>
+References: <cover.1471524357.git.johannes.schindelin@gmx.de>
+ <f1e188907f31abef9e82bd6b0da120ab7d9bd4a7.1471524357.git.johannes.schindelin@gmx.de>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="3lcZGd9BuhuYXNfi"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20160818154022.5mp4cr5jq57doh3d@sigill.intra.peff.net>
-User-Agent: Mutt/1.6.2 (6759)
+In-Reply-To: <f1e188907f31abef9e82bd6b0da120ab7d9bd4a7.1471524357.git.johannes.schindelin@gmx.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V03:K0:Y4GBSmvNCkd/vigWK4pN2k4YZ3A0Bt1XLHjE7VlIWDi4E+mFpSf
+ IK08hBGOd14xeL4Z2UvPhF2eY49F4RgW4ZD4Q0qTaY6yMvk2HfAb0KPK9QbJPmky8D+FxQK
+ XNqMMaE6x+3HZKbahaeWUMT6nZujqdZB30IPCJYwZsd3ug9lItSVoHeSpFk0yifloiyzY5g
+ dU/vW3eY4oVVDsZ15unvg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:WbGSQ050vG8=:yv7l7OGjVYbGQaVfss3CUE
+ kt6brbYEi28ztrI+SvN+iNealNfbKUI4IJV/4C7S2dJAI/XEUFppVVGkKFQ74aKLyC9XPHSId
+ qfOEevatkFof8p9GslmyuL+d7/ZzBqsb39lH2lQDfW689mVS8m5b3MC+I/8b1jBi1SCBy62Av
+ 4bhufWc45EdfKI7YrTa3N77X2qKXnZ0PLY0I5LKRWPIfAHmeQv4B8sr6gyh1fvSMxhk/gizN3
+ nyUbLcONyVL7bGt3GFR+1xBZKLdk96nUdqoqPDJG8lYrtBpTmwdsXYgJ4NwNbORcd7kuR7E9s
+ JVZO0+XkNb3BqoxlvqQGxfMnu1qTl+7kNW7st4xAcBdomjGxUspxESbzfQxvKcdcQ90RWJgsu
+ zVUGr2cuN5gIBOBe0/gHVgLvpwKtOV0neFa426PVGKhH6ycQVB8CUA7RmAOCSEpeyqGNdEP5D
+ qmN6uH72psFj3ALKwImD0Rt74xA8U75aBjmYlZVa9vDQce0JKtXxrBUPBnz9znQlxgVbFyvwK
+ 4sj1HkdduVZlZYVfqLUV1kMtGAdbK4f3WmKxZudgg6l6pivPAbjLx+Kvq/9W4u4cUPqHGvzwV
+ TPR7+K64t5hechEJ0C9sQ652N30LXIC6OdFBh81/oC6WLEkovtqHhZDyd0Yt2Age/O4bOzI6G
+ 5kOLlgqV3S5fW6+LhVq2td0rUI9t39hVOMTgZS8vTPLhIimhKKoexIHZ+9/4zsyuUWAjiq32B
+ PySOaxbqb9SgeyzORvRSmGHPY6S17MbGQ8PfTTFcCh4r43J9hR1HgB2Ei04=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Aug 18, 2016 at 02:46:17PM +0200, Johannes Schindelin wrote:
+> As suggested by its name, the --filters option applies the filters
 
---3lcZGd9BuhuYXNfi
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-
-On Thu, Aug 18, Jeff King wrote:
-
-> Olaf, what version of patch are you using?
-
-Mostly 2.7.x, but also add 2.5.x to the mix.
-So far I did not try what the tools dealing with the resulting patch
-file would actually do with such a stripped down variant.
-
-Olaf
-
---3lcZGd9BuhuYXNfi
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iEYEARECAAYFAle12LoACgkQXUKg+qaYNn66cQCgnsW5WjvwiZJBi82iTJ9XMybt
-eNQAoI57U72QzB14W/gJ8dhn2irJ3ip3
-=nJFs
------END PGP SIGNATURE-----
-
---3lcZGd9BuhuYXNfi--
+[]
+> diff --git a/t/t8010-cat-file-filters.sh b/t/t8010-cat-file-filters.sh
+Does it make sense to integrate tests into t1006-cat-file ?
+> new file mode 100755
+> index 0000000..e466634
+> --- /dev/null
+> +++ b/t/t8010-cat-file-filters.sh
+> @@ -0,0 +1,34 @@
+> +#!/bin/sh
+> +
+> +test_description='git cat-file filters support'
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'setup ' '
+> +	echo "*.txt eol=crlf diff=txt" >.gitattributes &&
+> +	echo "hello" | append_cr >world.txt &&
+> +	git add .gitattributes world.txt &&
+> +	test_tick &&
+> +	git commit -m "Initial commit"
+> +'
+> +
+> +has_cr () {
+> +	tr '\015' Q <"$1" | grep Q >/dev/null
+> +}
+> +
+> +test_expect_success 'no filters with `git show`' '
+> +	git show HEAD:world.txt >actual &&
+I would prefer to have something using
+  cat >expect <<-\EOF &&
+  xxx
+  test_cmp expect actual
+to make it easier to debug in case of a failure ?
