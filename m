@@ -2,107 +2,184 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 497901F6C1
-	for <e@80x24.org>; Thu, 18 Aug 2016 14:24:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23E121F6C1
+	for <e@80x24.org>; Thu, 18 Aug 2016 14:29:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767179AbcHROYp (ORCPT <rfc822;e@80x24.org>);
-	Thu, 18 Aug 2016 10:24:45 -0400
-Received: from mout.gmx.net ([212.227.15.19]:59461 "EHLO mout.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1767547AbcHROYk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Aug 2016 10:24:40 -0400
-Received: from virtualbox ([37.24.141.212]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0LdYdG-1asqCg1c0I-00io4y; Thu, 18 Aug 2016 16:23:44
- +0200
-Date:	Thu, 18 Aug 2016 16:23:42 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:	Lars Schneider <larsxschneider@gmail.com>
-cc:	git@vger.kernel.org, gitster@pobox.com, jnareb@gmail.com,
-	mlbright@gmail.com, e@80x24.org, peff@peff.net, ben@wijen.net
-Subject: Re: [PATCH v5 15/15] read-cache: make sure file handles are not
- inherited by child processes
-In-Reply-To: <20160810130411.12419-16-larsxschneider@gmail.com>
-Message-ID: <alpine.DEB.2.20.1608181617240.4924@virtualbox>
-References: <20160803164225.46355-1-larsxschneider@gmail.com/> <20160810130411.12419-1-larsxschneider@gmail.com> <20160810130411.12419-16-larsxschneider@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+	id S1767161AbcHRO3D (ORCPT <rfc822;e@80x24.org>);
+	Thu, 18 Aug 2016 10:29:03 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:34291 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1950266AbcHRO3A (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2016 10:29:00 -0400
+Received: by mail-pa0-f45.google.com with SMTP id fi15so6730550pac.1
+        for <git@vger.kernel.org>; Thu, 18 Aug 2016 07:29:00 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tobiah-org.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:references:from:cc:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=96xeHQc4hh+L09TY+Md8+haqX/gjCBU5yQ/fAeWfVnc=;
+        b=DJtrBom5NMM5VA5tcdUWBtqmCgBspvAgiJGLxVnqTj2Jvs1ynnZ8IlLdXmQVjN7YV4
+         EvmPKqamS5ymDUNae3MoxqDl57sGs6TeIu8oZkMUHHVlG3GHT45a8QfkEDNAbaj75Edq
+         Ap5e6r8Q3b5tJnqDdcixtxvHXrAzkI8Fvk1QCCE9Id3kjPsU7KL0uYS9FyhJ6awJu9vN
+         g3Q8yAydDaW8SF1hm4QS4FR+DJtxonyx1cN5HDHf4v+3yquNudGWno5XnPgOiwFkwjWB
+         eLtzo7RlDpiXPT/ivne8bbI7RGieqUhufBjvepMxE3rEbe03S/WuB0bT4ko/to2dsySy
+         k0iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:from:cc:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=96xeHQc4hh+L09TY+Md8+haqX/gjCBU5yQ/fAeWfVnc=;
+        b=LUmxSQ66sVo7pRxhapOppQSOqagkXLSWQCTn3Npmcsp8Hh9UUWx7RFi8ObMBp7d3WP
+         RqoVH8P/nus7UX7ItwWPOK3x3AV4AVcOTeW4r9cW7skqrjTa0nhsCAPBzLDfz0y5gkZ8
+         310+TBZFwWLkcNlrqM22EgWGVJ9jcwXOP6XwMKnY5UJzcixVPFYVl5vN4N0/GZnJxbUP
+         p0qeN01NML/fMap0GDr+iIzuyu4CpjSOTiAyzTBvXqH8S5/p1yAtSSTbQdxaWbBPd/EK
+         PUtB5y3oV1lwIfZZFWkOpP138RcsWB9lY82DJpVk+p1GViDFIoVRyHhH9jizlcrV0dG+
+         afGw==
+X-Gm-Message-State: AEkooust5JBJ5r4oa30UxxD3UYv+DV82rtUBIyavfisBhUk5h0eAbkgM6b+VcSAx6MJLrQ==
+X-Received: by 10.66.137.107 with SMTP id qh11mr4558194pab.49.1471530539942;
+        Thu, 18 Aug 2016 07:28:59 -0700 (PDT)
+Received: from [10.10.10.25] (72-165-89-133.dia.static.qwest.net. [72.165.89.133])
+        by smtp.googlemail.com with ESMTPSA id p64sm4397629pfd.11.2016.08.18.07.28.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 18 Aug 2016 07:28:59 -0700 (PDT)
+Subject: Re: Working from different machines.
+To:	=?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+References: <71d05705-792f-8bb9-026b-5b9251b104b9@tobiah.org>
+ <xmqq4m6j81ci.fsf@gitster.mtv.corp.google.com>
+ <60d5e760-dbc9-121e-f003-a6971534cdcb@gmail.com>
+From:	Tobiah <toby@tobiah.org>
+Cc:	git@vger.kernel.org
+Message-ID: <4a154cc2-c3e2-65b7-4bdd-d7c41d700491@tobiah.org>
+Date:	Thu, 18 Aug 2016 07:28:58 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:aU1ezodq3LvKFHyHa/WPJ+qQoUG2cigq+4jiUQTM/64hTeMPzfb
- 2WyFr18NpnIm858Wptg/mr3u6isha9RrQUv5y5+spmRTVdVEuxBJqxM/OHuaul9mnT48xjc
- OhQL3/Wnx/RMG9RMleL268Y9FZwTtU0C+qf/QzqQ6uQAdhnE+WCH0fud4aqrBHOBS7rt3g/
- Yc6f3h38d73Vu2H3qtVRw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:mJ2MVNh7W+M=:v647ORkSReE+rpncr3BlCX
- khc+zVYWYXae1e6T82YffSCuwGXwaj+SrTuK2GfB1on9orFjkwF1e7dmuQlXTJegKp8zcFqsG
- eiUT+1QvNycqPsvzrJzigl/T09GO0391zWpd1ID/ojOdXn/eBb/ljHcTfk6J6BZ+2bbW5+5QT
- RS+ichRwVWhaZsEVqxkC9nQ+mGUd684Q4FWC26/QlJl4sDerR8Ca4Pw5PQTpE1shbgZayutg5
- 8P1XAzmkSZR0xyExi5SkA9kDcwWZTPOAoqxUMOEI3+lvCn32IN4L/IRGYMDGmq+JxKm9nJg8F
- 9ktZ//SofrB7/R3wkGCVPXhcDJunQHzDQoc7fn3QjsyOuuZk12B7gM0mHNDBAbIJMjDwgUiS8
- W5rkZWLwEYG6tKz8imoG+PSSLueL76zLgI5wOqFZLUbVZ571teB0IYkLRSuQdC50Q9eetZw9J
- onVClinFU6mHS/C//b52p7wUAvAF7uxlMhTpNWpwwgN5bf9NcBqxU6lj0sb9T/ra2TN5FZllH
- PVa5ycxQ73S+wrD0trCdddKbD0JGxv2SZP3+2eGI4oVtnPA+r1jXxFenWeMJ2NeDcXeiqF9Qh
- LwJGfekqZ6yMdtfx+5bTY/fXyAsTcR3sVo6YVMvNeedg1qWxH9JaM+BfctaJ22E+P8ktdOPol
- n2xeCosX313DROtpOBdnZFg78sB4GZMzUGUWMHWuuH3T7MCtdyzXnYSITFIOlH5IHIXcTiA55
- Mjvnbn0Og+U7e8uzdcHHkVDdYR4Ns1u2m68dvqmJpQ7uOU6VZhfsZUtB8bYxGr34JS3Kcr8IE
- 2ZBrYQR
+In-Reply-To: <60d5e760-dbc9-121e-f003-a6971534cdcb@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Lars,
 
-On Wed, 10 Aug 2016, larsxschneider@gmail.com wrote:
+>
+> * First, `--mirror` might be what the relation between 'desktop'
+>   and 'home' repositories should be.
+>
 
-> From: Lars Schneider <larsxschneider@gmail.com>
-> 
-> Consider the case of a file that requires filtering and is present in branch A
-> but not in branch B. If A is the current HEAD and we checkout B then the
-> following happens:
-> 
-> 1. ce_compare_data() opens the file
-> 2.   index_fd() detects that the file requires to run a clean filter and
->      calls index_stream_convert_blob()
-> 4.     index_stream_convert_blob() calls convert_to_git_filter_fd()
-> 5.       convert_to_git_filter_fd() calls apply_filter() which creates a new
->          long running filter process (in case it is the first file of this kind
->          to be filtered)
-> 6.       The new filter process inherits all file handles. This is the default
->          on Linux/OSX and is explicitly defined in the `CreateProcessW` call
->          in `mingw.c` on Windows.
-> 7. ce_compare_data() closes the file
-> 8. Git unlinks the file as it is not present in B
-> 
-> The unlink operation does not work on Windows because the filter process has
-> still an open handle to the file. Apparently that is no problem on Linux/OSX.
-> Probably because "[...] the two file descriptors share open file status flags"
-> (see fork(2)).
 
-We typically wrap the commit messages at 76 columns per row (personally,
-I wrap already at 72, and it seems Junio wraps at 70).
+Here's what I'm trying, am I in the right ballpark?
 
-> Fix this problem by opening files in read-cache with the `O_CLOEXEC` flag to
-> ensure that the file descriptor does not remain open in a newly spawned process.
-> `O_CLOEXEX` is defined as `O_NOINHERIT` on Windows. A similar fix for temporary
+desk> git branch
+* master
+desk> git checkout -b banana
+Switched to a new branch 'banana'
+desk> echo 'message' > oracle
+desk> git add oracle
+desk> git commit -a -moracle
+[banana 66e7823] oracle
+  1 file changed, 1 insertion(+)
+  create mode 100644 oracle
+desk> git push --mirror
+Counting objects: 3, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 260 bytes | 0 bytes/s, done.
+Total 3 (delta 1), reused 0 (delta 0)
+To toby@shells.rcsreg.com:/home/git/toby/exposmart
+  * [new branch]      banana -> banana
 
-s/CLOEXEX/CLOEXEC/
+# Then on another machine:
 
-> file handles was applied on Git for Windows already:
-> https://github.com/git-for-windows/git/commit/667b8b51ec850c3e1c7d75dee69dc13c29d1f162
+home> git branch
+* master
+## Forgot to 'pull' here, but it never shows new branches anyway
+## I have to get them by name.  Can I automate that?
 
-In response to your commit note on GitHub, I submitted this patch series
-(slightly cleaned up) yesterday (and you already commented on it):
+home> git checkout banana
+Branch banana set up to track remote branch banana from origin.
+Switched to a new branch 'banana'
+home> cat oracle
+message
+home> echo 'other message' >> oracle
+home> git commit -a -moracle2
+[banana 78e6c45] oracle2
+  1 file changed, 1 insertion(+)
+home> git push --mirror
+Counting objects: 36, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (22/22), done.
+Writing objects: 100% (36/36), 2.90 KiB | 0 bytes/s, done.
+Total 36 (delta 13), reused 14 (delta 4)
+To shells.rcsreg.com:/home/git/toby/exposmart
+    66e7823..78e6c45  banana -> banana
+    7e01bf8..c65ed75  origin/HEAD -> origin/HEAD
+  * [new branch]      origin/auto -> origin/auto
+  * [new branch]      origin/banana -> origin/banana
+  * [new branch]      origin/develop -> origin/develop
+  * [new branch]      origin/flipper -> origin/flipper
+  * [new branch]      origin/tart -> origin/tart
+home> vi
+home> git push --mirror
+Total 0 (delta 0), reused 0 (delta 0)
+To shells.rcsreg.com:/home/git/toby/exposmart
+    66e7823..78e6c45  origin/banana -> origin/banana
+home> git push --mirror
+Everything up-to-date
+home>
 
-https://public-inbox.org/git/cover.1471437637.git.johannes.schindelin@gmx.de
+## Why do I have to push three times to get the 'Everyting up-to-date'
+## message?  Why does it still mention 'flipper' and 'tart' and all
+## other branches I've played with.  When I delte them locally, I want
+## them to be deleted everywhere.  They just keep accumulating.
+##
+## Now back a the other machine
 
-The patch is obviously correct, and needs the patch series I submitted to
-compile on Windows (this note is more for Junio's interest than a comment
-on this patch).
 
-Ciao,
-Dscho
+desk> git pull
+remote: Counting objects: 5, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 1), reused 0 (delta 0)
+Unpacking objects: 100% (3/3), done.
+ From shells.rcsreg.com:/home/git/toby/exposmart
+    66e7823..78e6c45  banana     -> origin/banana
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+     git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+     git branch --set-upstream-to=origin/<branch> banana
+
+desk> git branch
+* banana
+   master
+desk> git pull origin banana
+ From shells.rcsreg.com:/home/git/toby/exposmart
+  * branch            banana     -> FETCH_HEAD
+Updating 66e7823..78e6c45
+Fast-forward
+  oracle | 1 +
+  1 file changed, 1 insertion(+)
+desk> cat oracle
+message
+other message
+
+
+## So it seems to have worked, but the more I go back and forth
+## The more I seem to have eventual problems getting branches
+## and changes.  Am I doing it right?
+
+
+Thanks
+
+
+
