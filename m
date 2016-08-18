@@ -2,103 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_03_06,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 84AFB203E2
-	for <e@80x24.org>; Fri, 19 Aug 2016 01:11:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09095203EA
+	for <e@80x24.org>; Fri, 19 Aug 2016 01:05:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754312AbcHSBLB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Aug 2016 21:11:01 -0400
-Received: from mail-yb0-f176.google.com ([209.85.213.176]:33334 "EHLO
-        mail-yb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754037AbcHSBJY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Aug 2016 21:09:24 -0400
-Received: by mail-yb0-f176.google.com with SMTP id r187so11165866ybr.0
-        for <git@vger.kernel.org>; Thu, 18 Aug 2016 18:08:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=0Rt/zzO4GHT8NYKoyeYDyshm7FY+iBsW85Ykq1FCYrM=;
-        b=WNIxQUAbfIkhYen2aeaZ+ehgT/vvZSQthRznq/4P0dcFlY6c6S2IbVzuzOZooEVs2e
-         UyAlMWHaB8OF5ZVhyHxOtrOuIvUewBmNsuQFUx1RmdRa3NINejZOrXbWtlBdnWoOu0mz
-         PWLUg/6z7oKORVjRPMkxnUCSW+IzAqO68PobGP+qjE+d8hYpbbmVTlNVuEaslNa2fXLK
-         zvqlVqyX0GbENHkeYwjAzGTXJzZmyIChS12z6MXUCHQoGWRWSsbG2swJVzvFQCk/rknA
-         tY3K3q8ZVL7KqvN6AtGCnWgOHJdlBdSrUrmFEo2OlB1X9izE0LrQT0l2tMAf9tZpV+E7
-         4kig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=0Rt/zzO4GHT8NYKoyeYDyshm7FY+iBsW85Ykq1FCYrM=;
-        b=ae67XX6jwauh+72hlxUGdMUT37LytIPMYj77z6YTvMhBK2ezDAgtyJleeZh4/SFrc6
-         KvCFzO1kwAgAJwjf+8RTGcOdtLiQvzh7bCGkqbtkGCzmbNyDMtVS0R2TocPqtbOAZ+aB
-         jzLzXyX9ob8A/rGjdExJgfgV3Y4pclLQq22oUcOWcv7ivPxbXqaDCgCixHzPKK2ob3gG
-         4c6hn9g+TcBGkwJ/l+tJ4G2jPgbVGOt3fibsuoCAEvD8psmStDSlccAsPFU8aHY8qYFv
-         iQThmGrJt8YQROIUnA9u5Ul1r2gWGqs9PsKHnpJJCf3KWcNZX0mR84m0zFCjgvyK25B5
-         K3vQ==
-X-Gm-Message-State: AEkoouudAvYLfu66XtL2cL1fUEqoIkXEkBR7ez7f6YhCnHJLrRJqcfP+tTyvdFuMkm+Tw4RfsjFz3rdGDZo+lw==
-X-Received: by 10.37.97.149 with SMTP id v143mr3388623ybb.164.1471554560357;
- Thu, 18 Aug 2016 14:09:20 -0700 (PDT)
+        id S1754677AbcHSBFF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Aug 2016 21:05:05 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62495 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754706AbcHSBEv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Aug 2016 21:04:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D23F336652;
+        Thu, 18 Aug 2016 18:47:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ntUDhPqJBzb0mVBcbU6HkIbV0AM=; b=uqxaLR
+        WFI5sDTjrdue97tCRkNqTPZSST7unOCYCtDGdbBONoxW//FKfK2BThcF0PaG3Tus
+        ee/795QwFK/lAH2/C507qnpd8BkWAZ2hAfgUjcZr0wZrQqKIycv8/8myhb+LJsOm
+        FGraQB1i9h/Zhm1S+sMK8qMaQxBVK/l2jXGxc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=flZI2U0VzrDYq/DnqMzJ9FvDYJ6uyv6u
+        GL5IV9pjKcMow2rjUVLFJ6LKxsuum8QkRD2xtq2zZJm7kekR67pDfecN7yrJlwcP
+        ftsCh2OL/208CHxvtacKTPbxvCVWKv7S5IFZ1W831Slc6t1pjf/llb7WUb/o+QH7
+        AJSY/8q/9aY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C811036651;
+        Thu, 18 Aug 2016 18:47:43 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4457036650;
+        Thu, 18 Aug 2016 18:47:43 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 4/4] cat-file: support --textconv/--filters in batch mode
+References: <cover.1471524357.git.johannes.schindelin@gmx.de>
+        <2315ae5ab6918a7c1567f11a64093a860983bc20.1471524357.git.johannes.schindelin@gmx.de>
+        <20160818220530.2dcsag4qeitia4ao@sigill.intra.peff.net>
+Date:   Thu, 18 Aug 2016 15:47:41 -0700
+In-Reply-To: <20160818220530.2dcsag4qeitia4ao@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 18 Aug 2016 18:05:31 -0400")
+Message-ID: <xmqqoa4p4rua.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.50.199 with HTTP; Thu, 18 Aug 2016 14:08:59 -0700 (PDT)
-In-Reply-To: <xmqqbn0p6bvu.fsf@gitster.mtv.corp.google.com>
-References: <20160818005131.31600-1-jacob.e.keller@intel.com>
- <20160818005131.31600-7-jacob.e.keller@intel.com> <CAGZ79kaFfrVwe+JXVJBBZVPn=mTv7F1db8T1ZzXEaMtZKoupQA@mail.gmail.com>
- <CA+P7+xrNzc-+KBdu20QpEcCJ_udYUUk=qQyDi26YoOyCwrPXiQ@mail.gmail.com>
- <CAGZ79kZp+fhB-APx+zSAyYYiLq0pinDZOS1s33a7OjckJOi5=A@mail.gmail.com>
- <CA+P7+xqQ-iaax3rtZbsGb6D4vBbwP7d63Qq4D2_z71V0Z4YCeg@mail.gmail.com> <xmqqbn0p6bvu.fsf@gitster.mtv.corp.google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 18 Aug 2016 14:08:59 -0700
-Message-ID: <CA+P7+xpQBdr1rzOPazLFhOW8cdk2ePCiqsykGqCmStvt--UMaQ@mail.gmail.com>
-Subject: Re: [PATCH v7 6/7] submodule: refactor show_submodule_summary with
- helper function
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Jacob Keller <jacob.e.keller@intel.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: C64E58B4-6595-11E6-BD6B-E86612518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 18, 2016 at 1:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jacob Keller <jacob.keller@gmail.com> writes:
->
->>>>> If we were to change those, we could discuss if we want to go with
->>>>> full sentences
->>>>> all the time:
->>>>>
->>>>>     submodule is new
->>>>>     submodule is deleted
->>>>>     submodule is not initialized
->>>>
->>>> I agree, I'll make a new patch that does this as a cleanup prior to
->>>> this re-work.
->>> ...
->> Sorry for being unclear myself, too. I'm keeping it as "not
->> initialized" and updating the description of the patch that changed it
->> from "not checked out" to "not initialized"
->
-> Whether it is done inside or outside the scope of this series, the
-> other two "is new"/"is deleted" updates look very sensible ones to
-> make in the longer run.  I'd further suggest to unify "commits not
-> present" and "revision walker failed" into one error class.  From
-> the end user's point of view, they aren't very different.
+Jeff King <peff@peff.net> writes:
 
-That won't work exactly due to the new way we separate the header
-format from the revision walk. I can change the error case though. The
-new show_submodule_header will not actually attempt a revision walk at
-all and thus won't know to display "revision walker failed" at the
-same place as the header fails. However I think almost all of the time
-it should succeed if commits are present.
+> On Thu, Aug 18, 2016 at 02:46:28PM +0200, Johannes Schindelin wrote:
+>
+>> With this patch, --batch can be combined with --textconv or --filters.
+>> For this to work, the input needs to have the form
+>> 
+>> 	<object name><single white space><path>
+>> 
+>> so that the filters can be chosen appropriately.
+>
+> The object name can have spaces in it, too. E.g.:
+>
+>   HEAD:path with spaces
+>
+> or even:
+>
+>   :/grep for this
 
-Thanks,
-Jake
+When I wrote my review, I didn't consider this use case.
+
+There is no -z format in --batch, which is unfortunate.  If we had
+one, it would trivially make it possible to do so, and we can even
+have paths with LF in them ;-).  On the other hand, producing a NUL
+separated input is a chore.
+
+Perhaps a new and separate option that is similar to "--batch" but
+lacks support for %(rest) and accepts _ONLY_ 40-hex as object name
+is the best we can do, then?
+
+> (as was pointed out to me when I tried to turn on %(rest) handling by
+> default, long ago). How do those work with your patch?
+>
+> It looks like the extra split isn't enabled unless one of those options
+> is selected. Since --filters is new, that's OK for backwards
+> compatibility. But --textconv isn't. So I think:
+>
+>   echo "HEAD:path with spaces" |
+>   git cat-file --textconv --batch
+>
+> is regressed by this patch.
+>
+> I wonder if we need an option specifically to say "the object name can
+> be split". Right now it kicks in automatically if you use "%(rest)" in
+> your format, but you might not care about passing along that output
+> (e.g., a lot of times I am piping "rev-list" straight to cat-file, and I
+> have to use a separate "cut" to throw away the pathnames).
+>
+> -Peff
