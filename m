@@ -2,139 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5CE13203EA
-	for <e@80x24.org>; Fri, 19 Aug 2016 01:03:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28A49203E2
+	for <e@80x24.org>; Fri, 19 Aug 2016 01:14:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754389AbcHSBDZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Aug 2016 21:03:25 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57789 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1754549AbcHSBCk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Aug 2016 21:02:40 -0400
-Received: (qmail 22267 invoked by uid 109); 18 Aug 2016 18:06:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 18 Aug 2016 18:06:18 +0000
-Received: (qmail 16165 invoked by uid 111); 18 Aug 2016 18:06:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 18 Aug 2016 14:06:19 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Aug 2016 14:06:15 -0400
-Date:   Thu, 18 Aug 2016 14:06:15 -0400
-From:   Jeff King <peff@peff.net>
-To:     Kirill Smelkov <kirr@nexedi.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Vicent Marti <tanoku@gmail.com>,
-        =?utf-8?Q?J=C3=A9rome?= Perrin <jerome@nexedi.com>,
-        Isabelle Vallet <isabelle.vallet@nexedi.com>,
-        Kazuhiko Shiozaki <kazuhiko@nexedi.com>,
-        Julien Muchembled <jm@nexedi.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2 v7] pack-objects: use reachability bitmap index when
- generating non-stdout pack
-Message-ID: <20160818180615.q25p57v35m2xxtww@sigill.intra.peff.net>
-References: <20160809192858.GA25822@teco.navytux.spb.ru>
- <20160809193217.32389-1-kirr@nexedi.com>
+        id S1754533AbcHSBOG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Aug 2016 21:14:06 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52483 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754072AbcHSBEv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Aug 2016 21:04:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9EE2533097;
+        Thu, 18 Aug 2016 13:08:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=wk6lWDuUonJQivbc3Ze/QxH6+Ig=; b=db2WBk
+        gw3KfGfXWa3EFXvF52l9CuuNlGREjGXP8pfbCkF1NPJ85zG0lsuLyJPgu6e4mF86
+        mTpvOKCUqww8WrEXQwrnqSmoj0ilQCw6X0mU/76p9TRj+RrMLfVHsqUqg+MeaQu4
+        cH3A3Q7/zoQSBDttZdFeLTbDk2v/2xIg3CFso=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=d08jJR5fOXj2lsTWcRuFSJnpXzC7Y+bG
+        RptPCHZO2gA/qBHEqB55MZQqexsBPS411oKz1Jc6+eJkB32B5vX8GL5cjqE/wicS
+        Kc+6/uZO+km9+eDrryYZNAkdLPqzbCaYMxV0hZiVJiSIewlDKkMPyv8bpPg2sB5I
+        iDLfSfyg7Ds=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9875A33096;
+        Thu, 18 Aug 2016 13:08:02 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3553733094;
+        Thu, 18 Aug 2016 13:08:02 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 4/4] cat-file: support --textconv/--filters in batch mode
+References: <cover.1471524357.git.johannes.schindelin@gmx.de>
+        <2315ae5ab6918a7c1567f11a64093a860983bc20.1471524357.git.johannes.schindelin@gmx.de>
+Date:   Thu, 18 Aug 2016 10:08:00 -0700
+In-Reply-To: <2315ae5ab6918a7c1567f11a64093a860983bc20.1471524357.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Thu, 18 Aug 2016 14:46:28 +0200
+        (CEST)")
+Message-ID: <xmqqbn0q6m4v.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160809193217.32389-1-kirr@nexedi.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 523EB344-6566-11E6-A96F-E86612518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 09, 2016 at 10:32:17PM +0300, Kirill Smelkov wrote:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> Subject: Re: [PATCH 2/2 v7] pack-objects: use reachability bitmap index when
->    generating non-stdout pack
+> With this patch, --batch can be combined with --textconv or --filters.
+> For this to work, the input needs to have the form
+>
+> 	<object name><single white space><path>
+>
+> so that the filters can be chosen appropriately.
+>  --batch::
+>  --batch=<format>::
+>  	Print object information and contents for each object provided
+> -	on stdin.  May not be combined with any other options or arguments.
+> -	See the section `BATCH OUTPUT` below for details.
+> +	on stdin.  May not be combined with any other options or arguments
+> +	except `--textconv` or `--filters`, in which case the input lines
+> +	also need to specify the path, separated by white space.  See the
+> +	section `BATCH OUTPUT` below for details.
 
-This is v7, but as I understand your numbering, it goes with v5 of patch
-1/2 that I just reviewed (usually we just increment the version number
-on the whole series and treat it as a unit, even if some patches didn't
-change from version to version).
+Makes sense.  This format still allows
 
-> So we can teach pack-objects to use bitmap index for initial object
-> counting phase when generating resultant pack file too:
-> 
-> - if we care it is not activated under git-repack:
+	HEAD:<path2> <path1>
 
-Do you mean "if we take care that it is not..." here?
+i.e. the object name is taken from path2 but we forget it and
+pretend that the blob sits at path2, which is a good feature.
 
-(I think you might just be getting tripped up in the English idioms;
-"care" means that we have a preference; "to take care" means that we are
-being careful).
+If I am not mistaken, your cover letter alluded that it might be
+ideal to take "HEAD:<path>" (nothing else) as input, grab "<path>"
+and feed that to the filtering machinery, but you decided to stop
+short of doing that.  I actually think that it is the right thing to
+do for this feature to ignore the trailing :<path> in the object
+name, iow, I agree with the result from the feature design POV.
 
-> - if we know bitmap index generation is not enabled for resultant pack:
-> 
->   Current code has singleton bitmap_git so cannot work simultaneously
->   with two bitmap indices.
+The only thing that somewhat is worrysome is what would happen to
+%(rest).  I guess [*1*] it is OK to declare that you cannot use %(rest) in
+your output format when --filter/--textconv is in use, but if that
+is the direction we are going, that limitation needs to be
+documented.
 
-Minor English fixes:
 
-  The current code has a singleton bitmap_git, so it cannot work
-  simultaneously with two bitmap indices.
+[Footnote]
 
-> - if we keep pack reuse enabled still only for "send-to-stdout" case:
-> 
->   Because on pack reuse raw entries are directly written out to destination
->   pack by write_reused_pack() bypassing needed for pack index generation
->   bookkeeping done by regular codepath in write_one() and friends.
-
-Ditto on English:
-
-  On pack reuse raw entries are directly written out to the destination
-  pack by write_reused_pack(), bypassing the need for pack index
-  generation bookkeeping done by the regular code path in write_one()
-  and friends.
-
-I think this is missing the implication. Why wouldn't we want to reuse
-in this case? Certainly we don't when doing a "careful" on-disk repack.
-I suspect the answer is that we cannot write a ".idx" off of the result
-of write_reused_pack(), and write-to-disk always includes the .idx.
-
-> More context:
-> 
->     http://marc.info/?t=146792101400001&r=1&w=2
-
-Can we turn this into a link to public-inbox? We have just been bit by
-all of our old links to gmane dying, and they cannot easily be replaced
-because they use a gmane-specific article number. public-inbox URLs use
-message-ids, which should be usable for other archives if public-inbox
-goes away.
-
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index b1007f2..c92d7fc 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-
-The code here looks fine.
-
-> diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-> index a278d30..9602e9a 100755
-> --- a/t/t5310-pack-bitmaps.sh
-> +++ b/t/t5310-pack-bitmaps.sh
-> @@ -196,6 +196,18 @@ test_expect_success 'pack-objects respects --local (non-local bitmapped pack)' '
->  	! has_any packbitmap.objects 3b.objects
->  '
->  
-> +test_expect_success 'pack-objects to file can use bitmap' '
-> +	# make sure we still have 1 bitmap index from previous tests
-> +	ls .git/objects/pack/ | grep bitmap >output &&
-> +	test_line_count = 1 output &&
-> +	# verify equivalent packs are generated with/without using bitmap index
-> +	packasha1=$(git pack-objects --no-use-bitmap-index --all packa </dev/null) &&
-> +	packbsha1=$(git pack-objects --use-bitmap-index --all packb </dev/null) &&
-> +	list_packed_objects <packa-$packasha1.idx >packa.objects &&
-> +	list_packed_objects <packb-$packbsha1.idx >packb.objects &&
-> +	test_cmp packa.objects packb.objects
-> +'
-
-Of course we can't know if bitmaps were actually used, or if they were
-turned off under the hood. But at least this exercises the code a bit.
-
-You could possibly add a perf test which shows off the improvement, but
-I don't think it's strictly necessary.
-
--Peff
+*1* This is just a "guess", because I do not know what people are
+using %(rest) for.  It is plausible that their use case do not need
+--filter/--textconv at all, and if that is the case, having this
+limitation is perfectly fine.
