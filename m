@@ -6,20 +6,20 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7F141FD99
-	for <e@80x24.org>; Thu, 18 Aug 2016 00:52:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 233D91FD99
+	for <e@80x24.org>; Thu, 18 Aug 2016 00:52:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753956AbcHRAvs (ORCPT <rfc822;e@80x24.org>);
-	Wed, 17 Aug 2016 20:51:48 -0400
-Received: from mga09.intel.com ([134.134.136.24]:16044 "EHLO mga09.intel.com"
+	id S1753960AbcHRAvt (ORCPT <rfc822;e@80x24.org>);
+	Wed, 17 Aug 2016 20:51:49 -0400
+Received: from mga09.intel.com ([134.134.136.24]:3579 "EHLO mga09.intel.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753937AbcHRAvg (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753936AbcHRAvg (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 17 Aug 2016 20:51:36 -0400
 Received: from fmsmga004.fm.intel.com ([10.253.24.48])
   by orsmga102.jf.intel.com with ESMTP; 17 Aug 2016 17:51:33 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.28,536,1464678000"; 
-   d="scan'208";a="157475897"
+   d="scan'208";a="157475894"
 Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.116])
   by fmsmga004.fm.intel.com with ESMTP; 17 Aug 2016 17:51:33 -0700
 From:	Jacob Keller <jacob.e.keller@intel.com>
@@ -28,9 +28,9 @@ Cc:	Junio C Hamano <gitster@pobox.com>,
 	Stefan Beller <stefanbeller@gmail.com>,
 	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
 	Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH v7 5/7] submodule: correct output of submodule log format
-Date:	Wed, 17 Aug 2016 17:51:29 -0700
-Message-Id: <20160818005131.31600-6-jacob.e.keller@intel.com>
+Subject: [PATCH v7 4/7] submodule: allow do_submodule_path to work if given gitdir directly
+Date:	Wed, 17 Aug 2016 17:51:28 -0700
+Message-Id: <20160818005131.31600-5-jacob.e.keller@intel.com>
 X-Mailer: git-send-email 2.10.0.rc0.217.g609f9e8.dirty
 In-Reply-To: <20160818005131.31600-1-jacob.e.keller@intel.com>
 References: <20160818005131.31600-1-jacob.e.keller@intel.com>
@@ -41,29 +41,38 @@ X-Mailing-List:	git@vger.kernel.org
 
 From: Jacob Keller <jacob.keller@gmail.com>
 
-The submodule log diff output incorrectly states that the submodule is
-"not checked out" in cases where it wants to say the submodule is "not
-initialized". Change the wording to reflect the actual check being
-performed.
+Currently, do_submodule_path relies on read_gitfile, which will die() if
+it can't read from the specified gitfile. Unfortunately, this means that
+do_submodule_path will not work when given the path to a submodule which
+is checked out directly, such as a newly added submodule which you
+cloned and then "git submodule add". Instead, replace the call with
+resolve_gitdir. This first checks to see if we've been given a gitdir
+already.
+
+Because resolve_gitdir may return the same buffer it was passed, we have
+to check for this case as well, since strbuf_reset() will not work as
+expected here, and indeed is not necessary.
 
 Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 ---
- submodule.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ path.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/submodule.c b/submodule.c
-index 1b5cdfb7e784..e1a51b7506ff 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -348,7 +348,7 @@ void show_submodule_summary(FILE *f, const char *path,
- 	if (is_null_sha1(two))
- 		message = "(submodule deleted)";
- 	else if (add_submodule_odb(path))
--		message = "(not checked out)";
-+		message = "(not initialized)";
- 	else if (is_null_sha1(one))
- 		message = "(new submodule)";
- 	else if (!(left = lookup_commit_reference(one)) ||
+diff --git a/path.c b/path.c
+index 17551c483476..d1af029152a2 100644
+--- a/path.c
++++ b/path.c
+@@ -477,8 +477,8 @@ static void do_submodule_path(struct strbuf *buf, const char *path,
+ 	strbuf_complete(buf, '/');
+ 	strbuf_addstr(buf, ".git");
+ 
+-	git_dir = read_gitfile(buf->buf);
+-	if (git_dir) {
++	git_dir = resolve_gitdir(buf->buf);
++	if (git_dir && git_dir != buf->buf) {
+ 		strbuf_reset(buf);
+ 		strbuf_addstr(buf, git_dir);
+ 	}
 -- 
 2.10.0.rc0.217.g609f9e8.dirty
 
