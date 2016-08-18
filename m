@@ -2,96 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_06_12,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=unavailable autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C655203E2
-	for <e@80x24.org>; Fri, 19 Aug 2016 01:15:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 885B5203EA
+	for <e@80x24.org>; Fri, 19 Aug 2016 01:00:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754507AbcHSBPp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Aug 2016 21:15:45 -0400
-Received: from mail-it0-f47.google.com ([209.85.214.47]:36999 "EHLO
-        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754719AbcHSBPm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Aug 2016 21:15:42 -0400
-Received: by mail-it0-f47.google.com with SMTP id f6so13029581ith.0
-        for <git@vger.kernel.org>; Thu, 18 Aug 2016 18:14:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=kIoDqBJHH1uBCDXXAx9a3PTclHutCOpDkuz4wIlakaQ=;
-        b=l3GQhPRoBicFdBrJC25aLdhxfVAjtO8obfXLeME+nk6wdYKLPRJvxk/LsSCop21Z1H
-         Gxzrt+aCMYbGpW/HkcLJG9ZVKjUZCWAhfOOTBAsJSVQ7XX5A8TXjdgkjZ/Xydl1jm2mt
-         dPIS7vTYtBw702kcKIRMLPWoPB5TYksBFTwTocjJwFsECxEEwdiG/qi9CiHfFwfo/tim
-         kjuJU2VuzAgO36UGJNUF+B0RN3rbgEg7Q3mztxnQa8f/uRHvjZaMTCNc8BksCRnTseNU
-         XWA0ucvsroDTt1kpKHdCzTc4sZIt4NbY2Bt+/nhg/Pd0eSGumvpdd8l4J0io3TovFYlk
-         IUWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=kIoDqBJHH1uBCDXXAx9a3PTclHutCOpDkuz4wIlakaQ=;
-        b=bLc5LvZ5Adt5CE9cBBFdJf7u6JUtYUJEl1RFv2P5HzhRE8RpdCYeyW8ghFCxKaCvj0
-         plkCOOGfzliqoi1XWurS8rVVoAXCT7Ff5f1klqLQ3eVc+MP9CcvzOH3QRLBgW5rUqi08
-         yKGLVJpRy1l37f26Rbw2uBJzMfNc3iu9ijGnCJLe9ZrF2E5LHdPFwOt85cO2C4NPbkWy
-         53yXtc96oEy9KtP++O6Cs7H+fxaahudc65w39N67VPvBOzuYqL4g4suj5bA7bT0RwCGZ
-         +h5t8WJ/y6HxsJErIrAk6yV9EygFOMA2mFsxi05Q02DXop5yissxqLLwlYvZgaYvivMJ
-         gfPQ==
-X-Gm-Message-State: AEkoouviAFjQ0H1wg+hYWdsPIcg7HB8CInmN8j608slRbt5qjaitjwAqtDUj4FDb8Sns1YR7rnKheYWIqwrMqA==
-X-Received: by 10.36.213.131 with SMTP id a125mr1214698itg.14.1471544983745;
- Thu, 18 Aug 2016 11:29:43 -0700 (PDT)
+        id S1754566AbcHSBAT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Aug 2016 21:00:19 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61308 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754556AbcHSBAR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Aug 2016 21:00:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6407236B5F;
+        Thu, 18 Aug 2016 17:41:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=PbPWscvxgmZYPKntTEx/bYuYsRY=; b=u27NZC
+        h9AyLclOs3nc24TXsqc7j1Ks0L+ePKjh7Rrf3hZQDhF4MBnGZz1u28L6b+rktPHq
+        g2zoLWnq+Rg2Y5NUkHocuxvud6ryWY4BIRvyMV3AQoGrG0cIVYdGSq+Z5uNLzc9O
+        yv4P/+t5Kf87Y6OBnIBFKnicGWmCv/FHBCG+4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=qplA0/joO2c1WuzvGIsSFKknZh95ASDj
+        8oKEjt3JpFaj1OPEGjpy51nYS+qp0yBlCxw96YlemENc0d1MR8FPRlD7Vnx7cDsq
+        7NfvmTUqxiNpRmGY/6cISrrRwqkx+Tauu8PxmYvEbIhWaRWMvaEQd7k/SDM5HpZf
+        enfgx6LNJIo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5A38B36B5E;
+        Thu, 18 Aug 2016 17:41:46 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DBC4A36B5D;
+        Thu, 18 Aug 2016 17:41:45 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Wong <e@80x24.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Stefan Beller <sbeller@google.com>, meta@public-inbox.org,
+        git@vger.kernel.org
+Subject: Re: Working with public-inbox.org [Was: [PATCH] rev-parse: respect core.hooksPath in --git-path]
+References: <CAGZ79kasebzJb=b2n=JQiVMrSfJKaVfZaaoaVJFkXWuqKjfYKw@mail.gmail.com>
+        <alpine.DEB.2.20.1608181430280.4924@virtualbox>
+        <20160818204902.GA1670@starla>
+Date:   Thu, 18 Aug 2016 14:41:43 -0700
+In-Reply-To: <20160818204902.GA1670@starla> (Eric Wong's message of "Thu, 18
+        Aug 2016 20:49:02 +0000")
+Message-ID: <xmqqzio94uw8.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.36.253.71 with HTTP; Thu, 18 Aug 2016 11:29:23 -0700 (PDT)
-In-Reply-To: <CAGZ79kZeSwteU84-=GZ0cZDCJUf6=VrGzAiNqC_gx7DgTQX-8Q@mail.gmail.com>
-References: <20160818005131.31600-1-jacob.e.keller@intel.com>
- <20160818005131.31600-3-jacob.e.keller@intel.com> <CAGZ79kZeSwteU84-=GZ0cZDCJUf6=VrGzAiNqC_gx7DgTQX-8Q@mail.gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 18 Aug 2016 11:29:23 -0700
-Message-ID: <CA+P7+xpEDy5xqNp=tFGauE7+N2hnaGgzZKr2neM2p6G6kvchWQ@mail.gmail.com>
-Subject: Re: [PATCH v7 2/7] graph: add support for --line-prefix on all
- graph-aware output
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8F866A5A-658C-11E6-A3CA-FCB17B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 18, 2016 at 10:56 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Wed, Aug 17, 2016 at 5:51 PM, Jacob Keller <jacob.e.keller@intel.com> wrote:
->> - if (!graph)
->> + if (!graph) {
->> +         graph_show_line_prefix(default_diffopt);
->>           return;
->> + }
->
->> -       if (graph_is_commit_finished(graph))
->> +       if (graph_is_commit_finished(graph)) {
->> +               graph_show_line_prefix(&graph->revs->diffopt);
->>                 return 0;
->> +       }
->
-> This seems to be a reoccurring pattern, i.e. we need to add a lot of
-> one off instructions before a return. Is it possible to make the call
-> earlier instead
-> of just before the returns? (or later for that matter) ?
->
+Eric Wong <e@80x24.org> writes:
 
-Not sure what you mean by this...? Just move the call up above this? I
-think that will work, let me give it a try.
+> I see a choice of mail client as no different than a choice of
+> text editor.  Neither my mail client or text editor is heavily
+> customized.  The key feature I rely on from both tools is piping
+> data to external commands.
 
-Thanks,
-Jake
+FWIW, that applies to me exactly, too.
 
->
-> Thanks,
-> Stefan
+> unsubscribe: meta+unsubscribe@public-inbox.org
+
+Did you mean this, really?
+
+> archive: https://public-inbox.org/meta/
+
+This I understand, though.
+
+Ahh, that's coming from meta@public-inbox.org?
