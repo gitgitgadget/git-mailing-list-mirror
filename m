@@ -2,116 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_03_06,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 147A8203E2
-	for <e@80x24.org>; Fri, 19 Aug 2016 00:58:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A35F9203E2
+	for <e@80x24.org>; Fri, 19 Aug 2016 01:01:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754458AbcHSA6a (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Aug 2016 20:58:30 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:34991 "EHLO
-        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754457AbcHSA62 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Aug 2016 20:58:28 -0400
-Received: by mail-yw0-f194.google.com with SMTP id r9so344002ywg.2
-        for <git@vger.kernel.org>; Thu, 18 Aug 2016 17:58:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=R09007yfdDxxoHfxujblS6gnOKuhadLAaZPZ3QmfiX0=;
-        b=fAiYrOiMNerghijVLXxenfaEUZM2VfR1TOZaB/QAhrJfkldkrMmzvzPkb9oIec5agB
-         s6E6J3K6w6/JhJtEfqz0+2/p6zRezbVkCsqfAue7Lgu8Y5eNn2uUjpqy3t5nVzFEJEjt
-         SrSfrvgqprb3X/jS4RDlY9CsP0Plzc5D0qHxptwKujyeUVEiltr6A7sgf7jlzMqklnlv
-         UDAGEdf+hDaCYYZ3HIcyZ4l5F6RrHWtRtz1Ej+M5nUr37Snn1R7eygFFnEzRss/HN4PM
-         YFginE/K0UxJVZYJ4WZgJOEPAJ+UTQyEB2ER35GIfyWv3zmT819rmTslKnv9SigxLuOm
-         ayYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=R09007yfdDxxoHfxujblS6gnOKuhadLAaZPZ3QmfiX0=;
-        b=PLC7sh8d9Vo8YKP0TDevFBbVCob+aQp8VQqnmnOw7+qG3hMPuNJwicilXUvLCKqZae
-         3wxjFVyc0Pe+5nO2tt9//SsOjvFmWsZksl0goWLsCf3i2IXXdk00xKVtHlMLQuM6gDZI
-         yqf1BN4jBN70VDZiBUiKHTwtOaHI9muX4nqEB0jvFEzFPfQO2t7RfZ22PIouZJe/zAUA
-         tjxrjt+axsY5oxYJVa2UoA4GzNPy9yFTGMlRhm9wUhp4jUdtfzQtLESZ37Z70YT7ip6X
-         jOHRvBt6Bwn1Vu7igtAIpcUF5t/Ev8jM2ir1+V07/FNTX+W56uDkuMqnifess1spmeo2
-         qg4Q==
-X-Gm-Message-State: AEkoouuB9nb3+jLgmuh2fxxRmdNS7p5xy+lhUzmiE+AsipAxPzeM8UrhDvUVCw6+TosogCJbC2IKoRNLpko3WA==
-X-Received: by 10.13.228.196 with SMTP id n187mr3484947ywe.83.1471553069463;
- Thu, 18 Aug 2016 13:44:29 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.37.50.199 with HTTP; Thu, 18 Aug 2016 13:44:09 -0700 (PDT)
-In-Reply-To: <CAGZ79kZp+fhB-APx+zSAyYYiLq0pinDZOS1s33a7OjckJOi5=A@mail.gmail.com>
-References: <20160818005131.31600-1-jacob.e.keller@intel.com>
- <20160818005131.31600-7-jacob.e.keller@intel.com> <CAGZ79kaFfrVwe+JXVJBBZVPn=mTv7F1db8T1ZzXEaMtZKoupQA@mail.gmail.com>
- <CA+P7+xrNzc-+KBdu20QpEcCJ_udYUUk=qQyDi26YoOyCwrPXiQ@mail.gmail.com> <CAGZ79kZp+fhB-APx+zSAyYYiLq0pinDZOS1s33a7OjckJOi5=A@mail.gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 18 Aug 2016 13:44:09 -0700
-Message-ID: <CA+P7+xqQ-iaax3rtZbsGb6D4vBbwP7d63Qq4D2_z71V0Z4YCeg@mail.gmail.com>
-Subject: Re: [PATCH v7 6/7] submodule: refactor show_submodule_summary with
- helper function
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset=UTF-8
+        id S1754625AbcHSBBX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Aug 2016 21:01:23 -0400
+Received: from mga09.intel.com ([134.134.136.24]:60233 "EHLO mga09.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754623AbcHSBBW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Aug 2016 21:01:22 -0400
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga102.jf.intel.com with ESMTP; 18 Aug 2016 11:26:15 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.28,541,1464678000"; 
+   d="scan'208";a="1038019170"
+Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.116])
+  by orsmga002.jf.intel.com with ESMTP; 18 Aug 2016 11:26:15 -0700
+From:   Jacob Keller <jacob.e.keller@intel.com>
+To:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Cc:     Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v7 2/7] graph: add support for --line-prefix on all graph-aware output
+Date:   Thu, 18 Aug 2016 11:26:03 -0700
+Message-Id: <20160818182603.10772-1-jacob.e.keller@intel.com>
+X-Mailer: git-send-email 2.10.0.rc0.217.g609f9e8.dirty
+In-Reply-To: <CAGZ79kZeSwteU84-=GZ0cZDCJUf6=VrGzAiNqC_gx7DgTQX-8Q@mail.gmail.com>
+References: <CAGZ79kZeSwteU84-=GZ0cZDCJUf6=VrGzAiNqC_gx7DgTQX-8Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 18, 2016 at 1:39 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Thu, Aug 18, 2016 at 1:24 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
->> On Thu, Aug 18, 2016 at 12:04 PM, Stefan Beller <sbeller@google.com> wrote:
->>> On Wed, Aug 17, 2016 at 5:51 PM, Jacob Keller <jacob.e.keller@intel.com> wrote:
->>>> +       if (is_null_sha1(one))
->>>> +               message = "(new submodule)";
->>>> +       else if (is_null_sha1(two))
->>>> +               message = "(submodule deleted)";
->>>> +
->>>> +       if (add_submodule_odb(path)) {
->>>> +               if (!message)
->>>> +                       message = "(submodule not initialized)";
->>>
->>> Before it was  "(not initialized)" for this case, I think we'd rather keep that?
->>> Though this code path is only used by the porcelain commands, we'd rather not
->>> want to change this in a subtle way in this commit.
->>>
->>> If we were to change those, we could discuss if we want to go with
->>> full sentences
->>> all the time:
->>>
->>>     submodule is new
->>>     submodule is deleted
->>>     submodule is not initialized
->>>
->>>
->>
->> I agree, I'll make a new patch that does this as a cleanup prior to
->> this re-work.
+From: Jacob Keller <jacob.keller@gmail.com>
+
+On Thu, Aug 18, 2016 at 10:56 AM, Stefan Beller <sbeller@google.com> wrote:
+> On Wed, Aug 17, 2016 at 5:51 PM, Jacob Keller <jacob.e.keller@intel.com> wrote:
+>> From: Jacob Keller <jacob.keller@gmail.com>
+>> -                               /*
+>> -                                * Add a newline after the commit message.
+>> -                                *
+>> -                                * Usually, this newline produces a blank
+>> -                                * padding line between entries, in which case
+>> -                                * we need to add graph padding on this line.
+>> -                                *
+>> -                                * However, the commit message may not end in a
+>> -                                * newline.  In this case the newline simply
+>> -                                * ends the last line of the commit message,
+>> -                                * and we don't need any graph output.  (This
+>> -                                * always happens with CMIT_FMT_ONELINE, and it
+>> -                                * happens with CMIT_FMT_USERFORMAT when the
+>> -                                * format doesn't explicitly end in a newline.)
+>> -                                */
+>> -                               if (buf.len && buf.buf[buf.len - 1] == '\n')
+>> -                                       graph_show_padding(revs->graph);
+>> -                               putchar('\n');
+>> -                       } else {
+>> -                               /*
+>> -                                * If the message buffer is empty, just show
+>> -                                * the rest of the graph output for this
+>> -                                * commit.
+>> -                                */
+>> -                               if (graph_show_remainder(revs->graph))
+>> -                                       putchar('\n');
+>> -                               if (revs->commit_format == CMIT_FMT_ONELINE)
+>> -                                       putchar('\n');
+>> -                       }
+>> +                       /*
+>> +                               * Add a newline after the commit message.
 >
-> I was actually not suggesting to change that. I rather wanted to point out
-> that if we'd want that we'd rather do it consistently and in a different patch.
-> Sorry for not being clear.
+> I wondered if it is my webmailer displaying things wrongly here so I checked
+> it at public inbox, and fetched the mails and applied them.
 >
-> Thanks,
-> Stefan
+> It seems to me as if this long comment is broken in indentation
+> (i.e. you removed a blank ' ' directly in front of the '*' instead of a '\t' ?)
 >
 
-Sorry for being unclear myself, too. I'm keeping it as "not
-initialized" and updating the description of the patch that changed it
-from "not checked out" to "not initialized"
+Yea it is indeed broken. Something like the following squash should fix it.
+We could also re-flow the text if desired too, but I don't really see the
+advantage.
 
-Thanks,
-Jake
+8<-----
 
->>
->> Thanks,
->> Jake
+From 345bbaa47cc14aba7049738e99c3649e2c06748c Mon Sep 17 00:00:00 2001
+From: Jacob Keller <jacob.keller@gmail.com>
+Date: Thu, 18 Aug 2016 11:13:04 -0700
+Subject: [PATCH] SQUASH: fix indentation of comment in builtin/rev-list.c
+
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+ builtin/rev-list.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
+
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 1a75a83538f4..21cde8dd6b31 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -129,20 +129,20 @@ static void show_commit(struct commit *commit, void *data)
+ 			graph_show_commit_msg(revs->graph, stdout, &buf);
+ 
+ 			/*
+-				* Add a newline after the commit message.
+-				*
+-				* Usually, this newline produces a blank
+-				* padding line between entries, in which case
+-				* we need to add graph padding on this line.
+-				*
+-				* However, the commit message may not end in a
+-				* newline.  In this case the newline simply
+-				* ends the last line of the commit message,
+-				* and we don't need any graph output.  (This
+-				* always happens with CMIT_FMT_ONELINE, and it
+-				* happens with CMIT_FMT_USERFORMAT when the
+-				* format doesn't explicitly end in a newline.)
+-				*/
++			* Add a newline after the commit message.
++			*
++			* Usually, this newline produces a blank
++			* padding line between entries, in which case
++			* we need to add graph padding on this line.
++			*
++			* However, the commit message may not end in a
++			* newline.  In this case the newline simply
++			* ends the last line of the commit message,
++			* and we don't need any graph output.  (This
++			* always happens with CMIT_FMT_ONELINE, and it
++			* happens with CMIT_FMT_USERFORMAT when the
++			* format doesn't explicitly end in a newline.)
++			*/
+ 			if (buf.len && buf.buf[buf.len - 1] == '\n')
+ 				graph_show_padding(revs->graph);
+ 			putchar('\n');
+-- 
+2.10.0.rc0.217.g609f9e8.dirty
+
