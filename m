@@ -4,105 +4,201 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=unavailable
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57A261F6C1
-	for <e@80x24.org>; Thu, 18 Aug 2016 12:43:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 965461F6C1
+	for <e@80x24.org>; Thu, 18 Aug 2016 12:48:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945890AbcHRMnd (ORCPT <rfc822;e@80x24.org>);
-	Thu, 18 Aug 2016 08:43:33 -0400
-Received: from mout.gmx.net ([212.227.17.22]:62386 "EHLO mout.gmx.net"
+	id S1752429AbcHRMsP (ORCPT <rfc822;e@80x24.org>);
+	Thu, 18 Aug 2016 08:48:15 -0400
+Received: from mout.gmx.net ([212.227.17.22]:53560 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752903AbcHRMnG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Aug 2016 08:43:06 -0400
+	id S1945898AbcHRMsI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2016 08:48:08 -0400
 Received: from virtualbox ([37.24.141.212]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0M5a9E-1bGVRj3x8K-00xcN8; Thu, 18 Aug 2016 14:42:36
+ ESMTPSA (Nemesis) id 0MDn8s-1bOmf33fRe-00H5bS; Thu, 18 Aug 2016 14:46:23
  +0200
-Date:	Thu, 18 Aug 2016 14:42:34 +0200 (CEST)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:	Thu, 18 Aug 2016 14:46:23 +0200 (CEST)
+From:	Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:	Stefan Beller <sbeller@google.com>
-cc:	meta@public-inbox.org, "git@vger.kernel.org" <git@vger.kernel.org>,
-	Eric Wong <e@80x24.org>
-Subject: Re: Working with public-inbox.org [Was: [PATCH] rev-parse: respect
- core.hooksPath in --git-path]
-In-Reply-To: <CAGZ79kasebzJb=b2n=JQiVMrSfJKaVfZaaoaVJFkXWuqKjfYKw@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1608181430280.4924@virtualbox>
-References: <CAGZ79kasebzJb=b2n=JQiVMrSfJKaVfZaaoaVJFkXWuqKjfYKw@mail.gmail.com>
+To:	git@vger.kernel.org
+cc:	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 3/4] cat-file --textconv/--filters: allow specifying the path
+ separately
+In-Reply-To: <cover.1471524357.git.johannes.schindelin@gmx.de>
+Message-ID: <787224ce9a382ddd1180a408e784ca26993e5603.1471524357.git.johannes.schindelin@gmx.de>
+References: <cover.1471524357.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:HmYpQvrJ9YE7XNmsS408xXv7UzKXn777N4CxRSeKAW8TaLJYfSm
- AmHEkbqxLe4zIF/Y1y/fcFadrcCK7zdmptKbPMsnX1WtEa4uej6yAfQHrPt7OcHzG1a6hyH
- QfsfGa4luXX+WqxC9HKSE/8Tv0lDDOIqEzf+qWQFJh8tobl2VAHWnO/94IBe6ZrJnIy93/s
- uVEDYWd16My+8e9Zv2nZw==
-X-UI-Out-Filterresults:	notjunk:1;V01:K0:uqoeyKXrZHY=:vfCVa6v64j8p5t8R5CleZ+
- DMQQKXFslg0dmVyLEfjNsimfsuC/R68UMyby1jtWFHOf/J/xzw8ut7WZYUp/TRi2wfi+8MIPh
- pAbPA3l4vjQgo5DgLpX9HKf+buHGjPF9I4cIhFoTR5iEDohr4JRkrdZyI1JWOHmE+Rg42w5+p
- 2A4nqZZxZPlHuH9koY+wfiMT/kf4UD1xRJ5ZhCLDHw0/rJAQuUXgbqOd9jJCHI3kRMuy2ipkr
- BYgm/DIbeREqIM1jACP+vNJiZVrX5zb5q6zQdTTaCtdF1Hj0bdNUIeMyaRNNfdsSdWJbOJGhX
- H2Z426WT0yRH91FNTvjgW0fmzykXU6s1pZ0vfe0r4vubB/LYSOhKVihP2r++eLuVzFT1OJu18
- Ovr5AUHhOxHfK+SPV9XF/azvJuocyTam9O3/dfjVRHyKYvVWfj6aKhYoaWuYvD5wcpFHuW/53
- M1NnwtVu2HcHP2SrO9AgCjxQY7dS19SyCv08bR4CNzSmUQPv97EVuqS9Z+730BgWgyyQflLZ2
- LT/E1EHgQgqqSqdqxz5v+2o1z/gnMflZ9yLImaIRGAeacPoeT7el9yhsWR639b3eKhxnw8Yks
- kLn1Gno+Jf//443x0h6AWNetOZOvF3ubypqgEqlfG7mT1C9N7fCGM4bcA+ulo7wNTJCt/DXe5
- HkP00SqsAAjrJCaI1fNPgj1CFJ9fGGQ2wdNVhxqCYgv96YhnNDcFsgR6MwhPb4wHHyK4BbiEC
- OfzHNONKTif7/8v9/WMW/5mftkI3BJwWNwNpm4rFQ51HJo3Rsv4/NBqdvMBQF1naWUCHO6vik
- jVwj64A
+X-Provags-ID: V03:K0:7/shNIOqUzeeOyvHUJBhq46EHAD47rcSR0uYEhePjkJ+yvDWB9k
+ MM4JCc+RsLSdaryiXl2HJr5vTCPD3L45BbizZr6i2ZgUfNZpDjKKZJmFpjgBBnRJuiQlvRt
+ fCQbfm0+Q7qOMoeCw3UyA2TLozdN50shXj7g+lXgwwnAO0ooCQVt0bOIjaBh0unTgsWSeSB
+ JAvfpZ5mmdbFaIIgDCHuw==
+X-UI-Out-Filterresults:	notjunk:1;V01:K0:y68pzysJJ1c=:fXaMGt9CWAOznk7tlTk7bd
+ kcimKsaPDG1t292fHUyTrxC0rMr4wbxqPL/G9PPi4JrvQ2wCdB92oY4kVq7VhQDWzgGgr0D+m
+ pNSYRPAhyScLDDzXRupxMZXrcv8jD1gv94Ag8hI5c8T6eFr84EKZ++0k67mKx+xKkojODwN2t
+ XlGmW2QzdSU3Leszxn5kFZ94w9KNVTVy4GZ0o/u3H5UPBppAJ745ogIpSHp/IkrSt8VCdUGdA
+ nc2WdP3G+MziDNfv9Rj6qM5iotAoiis8nXoIlJOTK+yxOwR9xFKZkwR0ktbvl6toYGa9sP992
+ amx2PMhNlymmSkJOa4TEmMI13abUMstX8YvQs8Iw5/XVTg/mqKC2rRYsQFZ7XspqsxV+YGFc2
+ ZLXXiYhO9g4hxBM41lPeCH31+mP7tQ4zLqh+pPsPQm0LagGCz8bLXNeSbvIhjeLeWTRV+pZgG
+ 0JRDy2J1kcp32D4jnTsNKHpgVHLuESuIBlP8besbEatq35Mb8o6YIYjv4ytprA+x7CbMXBt5t
+ mtpSEaP2tagZAhwnXNc8r50cGUgkkJKGQ3JloDpK/hU2B8sk9lZ9wYQF4KidnH4KlonntkQaW
+ /zZV305xR8O+7Qj9XCdl0g3pFFbB0zABnoB592yyadf/diB2uftOf7WBOX+t9Y6yp9RYnMY+Y
+ dJphYxr2WmJ2BL0YPbIzqVi8MmrubFZH8QmZRlddU/d93xC2VT3MOiJqpuJNyDTotPSImnfLx
+ KoBORZGzDD9t9oC36DKtu1oEmm2Cv/WXeSSxo1Bz/COv2b49bNOwlkCFpcBVNMzvxuAUybbhs
+ ah0GS0a
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi Stefan,
+There are circumstances when it is relatively easy to figure out the
+object name for a given path, but not the revision. For example, when
+looking at a diff generated by Git, the object names are recorded, but
+not the revision. As a matter of fact, the revisions from which the diff
+was generated may not even exist locally.
 
-On Tue, 16 Aug 2016, Stefan Beller wrote:
+In such a case, the user would have to generate a fake revision just to
+be able to use --textconv or --filters.
 
-> > BTW in light of the discussion we are having elsewhere I just need to
-> > point out that it was *dramatically* faster for me to edit run-command.c,
-> > find "hooks/" and adjust the code manually than it would have been to save
-> > the diff and apply it.
-> >
-> > That's because I do not have advanced tooling on top of email (and I also
-> > could not handle mutt, so I am stuck with a not-really-scriptable email
-> > client).
-> >
-> > Just sayin'.
-> 
-> I ran into the same problem, just for a larger patch, so I figured I can
-> download that from the public inbox and git-am it locally.
-> So I maneuvered to the cover letter of the patch series I am interested in[1]
-> and downloaded the series as a mbox.gz[2].
+Let's simplify this dramatically, because we do not really need that
+revision at all: all we care about is that we know the path. In the
+scenario described above, we do know the path, and we just want to
+specify it separately from the object name.
 
-Maybe you can adapt the script I had written to perform that magic for
-gmane?
+Example usage:
 
-https://github.com/git-for-windows/build-extra/blob/master/apply-from-gmane.sh
+	git cat-file --textconv --use-path=main.c 0f1937fd
 
-The relevant part is the one between the lines 48--72, where it detects
-0/N mails and then looks for the first children containing k/N for k=1..N.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ Documentation/git-cat-file.txt |  7 ++++++-
+ builtin/cat-file.c             | 22 +++++++++++++++++-----
+ t/t8010-cat-file-filters.sh    | 13 +++++++++++++
+ 3 files changed, 36 insertions(+), 6 deletions(-)
 
-BTW I take this thread as yet another proof that people are unhappy with
-mail list-based review: if you have to build *that much* tooling around it
-(and Peff & Junio certainly have a megaton of advanced and sophisticated
-tooling around it, holy cow!) it is really incorrect to state that the
-mail list-driven approach works for you. It is much closer to the truth to
-say that the mail-list-plus-loads-of-custom-tools-driven approach works
-for you.
+diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+index 7d48735..59a3c37 100644
+--- a/Documentation/git-cat-file.txt
++++ b/Documentation/git-cat-file.txt
+@@ -9,7 +9,7 @@ git-cat-file - Provide content or type and size information for repository objec
+ SYNOPSIS
+ --------
+ [verse]
+-'git cat-file' (-t [--allow-unknown-type]| -s [--allow-unknown-type]| -e | -p | <type> | --textconv | --filters ) <object>
++'git cat-file' (-t [--allow-unknown-type]| -s [--allow-unknown-type]| -e | -p | <type> | --textconv | --filters ) [--use-path=<path>] <object>
+ 'git cat-file' (--batch | --batch-check) [--follow-symlinks]
+ 
+ DESCRIPTION
+@@ -64,6 +64,11 @@ OPTIONS
+ 	end-of-line conversion, etc). In this case, <object> has to be of
+ 	the form <tree-ish>:<path>, or :<path>.
+ 
++--use-path=<path>::
++	For use with --textconv or --filters, to allow specifying an object
++	name and a path separately, e.g. when it is difficult to figure out
++	the revision from which the blob came.
++
+ --batch::
+ --batch=<format>::
+ 	Print object information and contents for each object provided
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 0b74afa..5ff58b3 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -20,6 +20,8 @@ struct batch_options {
+ 	const char *format;
+ };
+ 
++static const char *force_path;
++
+ static int filter_object(const char *path, unsigned mode,
+ 			 const unsigned char *sha1,
+ 			 char **buf, unsigned long *size)
+@@ -89,21 +91,24 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+ 		return !has_sha1_file(sha1);
+ 
+ 	case 'w':
+-		if (!obj_context.path[0])
++		if (!force_path && !obj_context.path[0])
+ 			die("git cat-file --filters %s: <object> must be "
+ 			    "<sha1:path>", obj_name);
+ 
+-		if (filter_object(obj_context.path, obj_context.mode,
++		if (filter_object(force_path ? force_path : obj_context.path,
++				  force_path ? 0100644 : obj_context.mode,
+ 				  sha1, &buf, &size))
+ 			return -1;
+ 		break;
+ 
+ 	case 'c':
+-		if (!obj_context.path[0])
++		if (!force_path && !obj_context.path[0])
+ 			die("git cat-file --textconv %s: <object> must be <sha1:path>",
+ 			    obj_name);
+ 
+-		if (textconv_object(obj_context.path, obj_context.mode, sha1, 1, &buf, &size))
++		if (textconv_object(force_path ? force_path : obj_context.path,
++				    force_path ? 0100644 : obj_context.mode,
++				    sha1, 1, &buf, &size))
+ 			break;
+ 
+ 	case 'p':
+@@ -477,7 +482,7 @@ static int batch_objects(struct batch_options *opt)
+ }
+ 
+ static const char * const cat_file_usage[] = {
+-	N_("git cat-file (-t [--allow-unknown-type]|-s [--allow-unknown-type]|-e|-p|<type>|--textconv|--filters) <object>"),
++	N_("git cat-file (-t [--allow-unknown-type]|-s [--allow-unknown-type]|-e|-p|<type>|--textconv|--filters) [--use-path=<path>] <object>"),
+ 	N_("git cat-file (--batch | --batch-check) [--follow-symlinks]"),
+ 	NULL
+ };
+@@ -525,6 +530,8 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+ 			    N_("for blob objects, run textconv on object's content"), 'c'),
+ 		OPT_CMDMODE(0, "filters", &opt,
+ 			    N_("for blob objects, run filters on object's content"), 'w'),
++		OPT_STRING(0, "use-path", &force_path, N_("blob"),
++			   N_("use a specific path for --textconv/--filters")),
+ 		OPT_BOOL(0, "allow-unknown-type", &unknown_type,
+ 			  N_("allow -s and -t to work with broken/corrupt objects")),
+ 		OPT_BOOL(0, "buffer", &batch.buffer_output, N_("buffer --batch output")),
+@@ -567,6 +574,11 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(cat_file_usage, options);
+ 	}
+ 
++	if (force_path && opt != 'c' && opt != 'w') {
++		error("--use-path=<path> needs --textconv or --filters");
++		usage_with_options(cat_file_usage, options);
++	}
++
+ 	if (batch.buffer_output < 0)
+ 		batch.buffer_output = batch.all_objects;
+ 
+diff --git a/t/t8010-cat-file-filters.sh b/t/t8010-cat-file-filters.sh
+index e466634..fd17159 100755
+--- a/t/t8010-cat-file-filters.sh
++++ b/t/t8010-cat-file-filters.sh
+@@ -31,4 +31,17 @@ test_expect_success 'cat-file --filters converts to worktree version' '
+ 	has_cr actual
+ '
+ 
++test_expect_success 'cat-file --filters --use-path=<path> works' '
++	sha1=$(git rev-parse -q --verify HEAD:world.txt) &&
++	git cat-file --filters --use-path=world.txt $sha1 >actual &&
++	has_cr actual
++'
++
++test_expect_success 'cat-file --textconv --use-path=<path> works' '
++	sha1=$(git rev-parse -q --verify HEAD:world.txt) &&
++	test_config diff.txt.textconv "tr A-Za-z N-ZA-Mn-za-m <" &&
++	git cat-file --textconv --use-path=hello.txt $sha1 >rot13 &&
++	test uryyb = "$(cat rot13 | remove_cr)"
++'
++
+ test_done
+-- 
+2.9.2.691.g78954f3
 
-I am really not a fan of this.
 
-The theory "it's inclusive because everyone has access to mail" falls on
-its face, badly, when even old timers have to build entire infrastructures
-around it just to begin to be able to use it efficiently.
-
-It reminds me of an old software developer I met long ago, who claimed CVS
-works for him. He had written tens of thousands of lines of shell scripts,
-is what allowed "CVS" to work for him.
-
-Same here. Old dogs claim the mail list-approach works for them. Nope.
-Doesn't. Else you would not have written all those custom scripts.
-
-Ciao,
-Dscho
