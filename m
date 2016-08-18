@@ -2,312 +2,187 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37989203E2
-	for <e@80x24.org>; Fri, 19 Aug 2016 00:51:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D9D6203E2
+	for <e@80x24.org>; Fri, 19 Aug 2016 00:59:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753427AbcHSAvB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Aug 2016 20:51:01 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:36020 "EHLO
-        mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754175AbcHSAu6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Aug 2016 20:50:58 -0400
-Received: by mail-pa0-f45.google.com with SMTP id pp5so10544499pac.3
-        for <git@vger.kernel.org>; Thu, 18 Aug 2016 17:50:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=MCbfpfRC6+N3zn8XMlJi/sK3knFUqR9fCCCAy0caq2w=;
-        b=mGpNsBfspoGsFrDE0W1nMnbycPT/u2r30UGt/hfZrr2MP7MviS588Ty/uoX34jFiSG
-         Hc7SSAwHD2YzDnSx0Wj1SBl6n9GoflZXTp3GTRDjrfi8xIIdvw2Me5pkytFsOlVymX24
-         nD42QxiSiNk0c95c5g+LZDlxjtSURKRgITsyS1mUo9v1ZIN6K+1agLswFlNswu6+z/8q
-         nddLbcDprSbPI+K/BWg3/RDLXzqUFToTw8BngyxO79AvQWExACGcltvDCo4gAipnkprH
-         eLZfjak6o7oToH/npN/zZElmh2Xp5QJl6SGx3bHOROoKsyDfPL3U72fYPEkwZTpXjDAI
-         82ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=MCbfpfRC6+N3zn8XMlJi/sK3knFUqR9fCCCAy0caq2w=;
-        b=a3v/LMqkSZgvdGUhBofXm2v0u2Q0FZkJYYYYLN6Z2QKnMgkzHrcw+lNLnSZjP17ffA
-         X2Bp4mQ4htS0mgJXKDQxL0dSPo7Ca7RZWviye+zDlykCm38F1qzRqrP+JDeaInoNEwDC
-         o971N+Z5LfpdZReSnayNJJ5DdjBrmygF5qeQehTlog3jTyeKL/bx8WOFmnYq4YnOC5HW
-         4gOepALcGvB0HiYRPurPcIitioBEmdUDyh8eUALLhzvbWRFMC1VRy+4B8MbuwIkGoKho
-         9/yW1pCqrpd5rb/VQjw37snl3OW1wQ55uofFEYeHFuBMii6vKu6NI6UlxEx8tiBIkLDn
-         Nwxg==
-X-Gm-Message-State: AEkoouuClCxI1akH22t1Hu8jcv/hrvtfjyOIDhBnVbHtMnpBDOKgXIoigrmwfCJip99iFKLm
-X-Received: by 10.66.119.11 with SMTP id kq11mr6000151pab.14.1471540957589;
-        Thu, 18 Aug 2016 10:22:37 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:a847:ce31:6fa:adad])
-        by smtp.gmail.com with ESMTPSA id k78sm198486pfa.78.2016.08.18.10.22.36
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 18 Aug 2016 10:22:36 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, Jens.Lehmann@web.de,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCHv9 8/8] clone: recursive and reference option triggers submodule alternates
-Date:   Thu, 18 Aug 2016 10:22:18 -0700
-Message-Id: <20160818172218.7626-1-sbeller@google.com>
-X-Mailer: git-send-email 2.9.2.582.g703d3c6.dirty
+        id S1754360AbcHSA7M (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Aug 2016 20:59:12 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57775 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1754079AbcHSA7K (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Aug 2016 20:59:10 -0400
+Received: (qmail 21381 invoked by uid 109); 18 Aug 2016 17:52:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 18 Aug 2016 17:52:24 +0000
+Received: (qmail 15898 invoked by uid 111); 18 Aug 2016 17:52:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 18 Aug 2016 13:52:26 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Aug 2016 13:52:22 -0400
+Date:   Thu, 18 Aug 2016 13:52:22 -0400
+From:   Jeff King <peff@peff.net>
+To:     Kirill Smelkov <kirr@nexedi.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Vicent Marti <tanoku@gmail.com>,
+        =?utf-8?Q?J=C3=A9rome?= Perrin <jerome@nexedi.com>,
+        Isabelle Vallet <isabelle.vallet@nexedi.com>,
+        Kazuhiko Shiozaki <kazuhiko@nexedi.com>,
+        Julien Muchembled <jm@nexedi.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/2 v5] pack-objects: respect
+ --local/--honor-pack-keep/--incremental when bitmap is in use
+Message-ID: <20160818175222.bmm3ivjheokf2qzl@sigill.intra.peff.net>
+References: <20160809192858.GA25822@teco.navytux.spb.ru>
+ <20160809193143.32213-1-kirr@nexedi.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20160809193143.32213-1-kirr@nexedi.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When `--recursive` and `--reference` is given, it is reasonable to
-expect that the submodules are created with references to the submodules
-of the given alternate for the superproject.
+On Tue, Aug 09, 2016 at 10:31:43PM +0300, Kirill Smelkov wrote:
 
-  An initial attempt to do this was presented to the mailing list, which
-  used flags that are passed around ("--super-reference") that instructed
-  the submodule clone to look for a reference in the submodules of the
-  referenced superproject. This is not well thought out, as any further
-  `submodule update` should also respect the initial setup.
+> Since 6b8fda2d (pack-objects: use bitmaps when packing objects) there
+> are two codepaths in pack-objects: with & without using bitmap
+> reachability index.
 
-  When a new  submodule is added to the superproject and the alternate
-  of the superproject does not know about that submodule yet, we rather
-  error out informing the user instead of being unclear if we did or did
-  not use a submodules alternate.
+Sorry, I got distracted from reviewing these patches. I'll give them a
+detailed look now and hopefully we can finalize the topic.
 
-To solve this problem introduce new options that store the configuration
-for what the user wanted originally.
+> In want_object_in_pack() we care to start the checks from already found
+> pack, if we have one, this way determining the answer right away
+> in case neither --local nor --honour-pack-keep are active. In
+> particular, as p5310-pack-bitmaps.sh shows, we do not do harm to
+> served-with-bitmap clones performance-wise:
+> 
+>     Test                      56dfeb62          this tree
+>     -----------------------------------------------------------------
+>     5310.2: repack to disk    9.63(8.67+0.33)   9.47(8.55+0.28) -1.7%
+>     5310.3: simulated clone   2.07(2.17+0.12)   2.03(2.14+0.12) -1.9%
+>     5310.4: simulated fetch   0.78(1.03+0.02)   0.76(1.00+0.03) -2.6%
+>     5310.6: partial bitmap    1.97(2.43+0.15)   1.92(2.36+0.14) -2.5%
+> 
+> with all differences strangely showing we are a bit faster now, but
+> probably all being within noise.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- Documentation/config.txt       |  12 +++++
- builtin/clone.c                |  19 ++++++++
- builtin/submodule--helper.c    | 102 +++++++++++++++++++++++++++++++++++++++++
- t/t7408-submodule-reference.sh |  43 +++++++++++++++++
- 4 files changed, 176 insertions(+)
+Good to know there is no regression. It is curious that there is a
+slight _improvement_ across the board. Do we have an explanation for
+that? It seems odd that noise would be so consistent.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index bc1c433..e2571ea 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2837,6 +2837,18 @@ submodule.fetchJobs::
- 	in parallel. A value of 0 will give some reasonable default.
- 	If unset, it defaults to 1.
- 
-+submodule.alternateLocation::
-+	Specifies how the submodules obtain alternates when submodules are
-+	cloned. Possible values are `no`, `superproject`.
-+	By default `no` is assumed, which doesn't add references. When the
-+	value is set to `superproject` the submodule to be cloned computes
-+	its alternates location relative to the superprojects alternate.
-+
-+submodule.alternateErrorStrategy
-+	Specifies how to treat errors with the alternates for a submodule
-+	as computed via `submodule.alternateLocation`. Possible values are
-+	`ignore`, `info`, `die`. Default is `die`.
-+
- tag.forceSignAnnotated::
- 	A boolean to specify whether annotated tags created should be GPG signed.
- 	If `--annotate` is specified on the command line, it takes
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 0182665..404c5e8 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -947,6 +947,25 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		else
- 			fprintf(stderr, _("Cloning into '%s'...\n"), dir);
- 	}
-+
-+	if (option_recursive) {
-+		if (option_required_reference.nr &&
-+		    option_optional_reference.nr)
-+			die(_("clone --recursive is not compatible with "
-+			      "both --reference and --reference-if-able"));
-+		else if (option_required_reference.nr) {
-+			string_list_append(&option_config,
-+				"submodule.alternateLocation=superproject");
-+			string_list_append(&option_config,
-+				"submodule.alternateErrorStrategy=die");
-+		} else if (option_optional_reference.nr) {
-+			string_list_append(&option_config,
-+				"submodule.alternateLocation=superproject");
-+			string_list_append(&option_config,
-+				"submodule.alternateErrorStrategy=info");
-+		}
-+	}
-+
- 	init_db(option_template, INIT_DB_QUIET);
- 	write_config(&option_config);
- 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 7096848..a366757 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -472,6 +472,105 @@ static int clone_submodule(const char *path, const char *gitdir, const char *url
- 	return run_command(&cp);
- }
- 
-+struct submodule_alternate_setup {
-+	const char *submodule_name;
-+	enum SUBMODULE_ALTERNATE_ERROR_MODE {
-+		SUBMODULE_ALTERNATE_ERROR_DIE,
-+		SUBMODULE_ALTERNATE_ERROR_INFO,
-+		SUBMODULE_ALTERNATE_ERROR_IGNORE
-+	} error_mode;
-+	struct string_list *reference;
-+};
-+#define SUBMODULE_ALTERNATE_SETUP_INIT { NULL, \
-+	SUBMODULE_ALTERNATE_ERROR_IGNORE, NULL }
-+
-+static int add_possible_reference_from_superproject(
-+		struct alternate_object_database *alt, void *sas_cb)
-+{
-+	struct submodule_alternate_setup *sas = sas_cb;
-+
-+	/* directory name, minus trailing slash */
-+	size_t namelen = alt->name - alt->base - 1;
-+	struct strbuf name = STRBUF_INIT;
-+	strbuf_add(&name, alt->base, namelen);
-+
-+	/*
-+	 * If the alternate object store is another repository, try the
-+	 * standard layout with .git/modules/<name>/objects
-+	 */
-+	if (ends_with(name.buf, ".git/objects")) {
-+		char *sm_alternate;
-+		struct strbuf sb = STRBUF_INIT;
-+		struct strbuf err = STRBUF_INIT;
-+		strbuf_add(&sb, name.buf, name.len - strlen("objects"));
-+		/*
-+		 * We need to end the new path with '/' to mark it as a dir,
-+		 * otherwise a submodule name containing '/' will be broken
-+		 * as the last part of a missing submodule reference would
-+		 * be taken as a file name.
-+		 */
-+		strbuf_addf(&sb, "modules/%s/", sas->submodule_name);
-+
-+		sm_alternate = compute_alternate_path(sb.buf, &err);
-+		if (sm_alternate) {
-+			string_list_append(sas->reference, xstrdup(sb.buf));
-+			free(sm_alternate);
-+		} else {
-+			switch (sas->error_mode) {
-+			case SUBMODULE_ALTERNATE_ERROR_DIE:
-+				die(_("submodule '%s' cannot add alternate: %s"),
-+				    sas->submodule_name, err.buf);
-+			case SUBMODULE_ALTERNATE_ERROR_INFO:
-+				fprintf(stderr, _("submodule '%s' cannot add alternate: %s"),
-+					sas->submodule_name, err.buf);
-+			case SUBMODULE_ALTERNATE_ERROR_IGNORE:
-+				; /* nothing */
-+			}
-+		}
-+		strbuf_release(&sb);
-+	}
-+
-+	strbuf_release(&name);
-+	return 0;
-+}
-+
-+static void prepare_possible_alternates(const char *sm_name,
-+		struct string_list *reference)
-+{
-+	char *sm_alternate = NULL, *error_strategy = NULL;
-+	struct submodule_alternate_setup sas = SUBMODULE_ALTERNATE_SETUP_INIT;
-+
-+	git_config_get_string("submodule.alternateLocation", &sm_alternate);
-+	if (!sm_alternate)
-+		return;
-+
-+	git_config_get_string("submodule.alternateErrorStrategy", &error_strategy);
-+
-+	if (!error_strategy)
-+		error_strategy = xstrdup("die");
-+
-+	sas.submodule_name = sm_name;
-+	sas.reference = reference;
-+	if (!strcmp(error_strategy, "die"))
-+		sas.error_mode = SUBMODULE_ALTERNATE_ERROR_DIE;
-+	else if (!strcmp(error_strategy, "info"))
-+		sas.error_mode = SUBMODULE_ALTERNATE_ERROR_INFO;
-+	else if (!strcmp(error_strategy, "ignore"))
-+		sas.error_mode = SUBMODULE_ALTERNATE_ERROR_IGNORE;
-+	else
-+		die(_("Value '%s' for submodule.alternateErrorStrategy is not recognized"), error_strategy);
-+
-+	if (!strcmp(sm_alternate, "superproject"))
-+		foreach_alt_odb(add_possible_reference_from_superproject, &sas);
-+	else if (!strcmp(sm_alternate, "no"))
-+		; /* do nothing */
-+	else
-+		die(_("Value '%s' for submodule.alternateLocation is not recognized"), sm_alternate);
-+
-+	free(sm_alternate);
-+	free(error_strategy);
-+}
-+
- static int module_clone(int argc, const char **argv, const char *prefix)
- {
- 	const char *name = NULL, *url = NULL, *depth = NULL;
-@@ -532,6 +631,9 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 	if (!file_exists(sm_gitdir)) {
- 		if (safe_create_leading_directories_const(sm_gitdir) < 0)
- 			die(_("could not create directory '%s'"), sm_gitdir);
-+
-+		prepare_possible_alternates(name, &reference);
-+
- 		if (clone_submodule(path, sm_gitdir, url, depth, &reference, quiet))
- 			die(_("clone of '%s' into submodule path '%s' failed"),
- 			    url, path);
-diff --git a/t/t7408-submodule-reference.sh b/t/t7408-submodule-reference.sh
-index dff47af..1c1e289 100755
---- a/t/t7408-submodule-reference.sh
-+++ b/t/t7408-submodule-reference.sh
-@@ -82,4 +82,47 @@ test_expect_success 'updating superproject keeps alternates' '
- 	test_alternate_is_used super-clone/.git/modules/sub/objects/info/alternates super-clone/sub
- '
- 
-+test_expect_success 'submodules use alternates when cloning a superproject' '
-+	test_when_finished "rm -rf super-clone" &&
-+	git clone --reference super --recursive super super-clone &&
-+	(
-+		cd super-clone &&
-+		# test superproject has alternates setup correctly
-+		test_alternate_is_used .git/objects/info/alternates . &&
-+		# test submodule has correct setup
-+		test_alternate_is_used .git/modules/sub/objects/info/alternates sub
-+	)
-+'
-+
-+test_expect_success 'missing submodule alternate fails clone and submodule update' '
-+	test_when_finished "rm -rf super-clone" &&
-+	git clone super super2 &&
-+	test_must_fail git clone --recursive --reference super2 super2 super-clone &&
-+	(
-+		cd super-clone &&
-+		# test superproject has alternates setup correctly
-+		test_alternate_is_used .git/objects/info/alternates . &&
-+		# update of the submodule succeeds
-+		test_must_fail git submodule update --init &&
-+		# and we have no alternates:
-+		test_must_fail test_alternate_is_used .git/modules/sub/objects/info/alternates sub &&
-+		test_must_fail test_path_is_file sub/file1
-+	)
-+'
-+
-+test_expect_success 'ignoring missing submodule alternates passes clone and submodule update' '
-+	test_when_finished "rm -rf super-clone" &&
-+	git clone --reference-if-able super2 --recursive super2 super-clone &&
-+	(
-+		cd super-clone &&
-+		# test superproject has alternates setup correctly
-+		test_alternate_is_used .git/objects/info/alternates . &&
-+		# update of the submodule succeeds
-+		git submodule update --init &&
-+		# and we have no alternates:
-+		test_must_fail test_alternate_is_used .git/modules/sub/objects/info/alternates sub &&
-+		test_path_is_file sub/file1
-+	)
-+'
-+
- test_done
--- 
-2.9.2.582.g703d3c6.dirty
+> And in the general case we care not to have duplicate
+> find_pack_entry_one(*found_pack) calls. Worst what can happen is we can
+> call want_found_object(*found_pack) -- newly introduced helper for
+> checking whether we want object -- twice, but since want_found_object()
+> is very lightweight it does not make any difference.
 
+I had trouble parsing this. I think maybe:
+
+  In the general case we do not want to call find_pack_entry_one() more
+  than once, because it is expensive. This patch splits the loop in
+  want_object_in_pack() into two parts: finding the object and seeing if
+  it impacts our choice to include it in the pack. We may call the
+  inexpensive want_found_object() twice, but we will never call
+  find_pack_entry_one() if we do not need to.
+
+> +static int want_found_object(int exclude, struct packed_git *p)
+> +{
+> +	if (exclude)
+> +		return 1;
+> +	if (incremental)
+> +		return 0;
+> +
+> +	/*
+> +	 * When asked to do --local (do not include an object that appears in a
+> +	 * pack we borrow from elsewhere) or --honor-pack-keep (do not include
+> +	 * an object that appears in a pack marked with .keep), finding a pack
+> +	 * that matches the criteria is sufficient for us to decide to omit it.
+> +	 * However, even if this pack does not satisfy the criteria, we need to
+> +	 * make sure no copy of this object appears in _any_ pack that makes us
+> +	 * to omit the object, so we need to check all the packs. Signal that by
+> +	 * returning -1 to the caller.
+> +	 */
+> +	if (!ignore_packed_keep &&
+> +	    (!local || !have_non_local_packs))
+> +		return 1;
+
+Hmm. The comment says "-1", but the return says "1". That is because the
+comment is describing the return that happens at the end. :)
+
+I wonder if the last sentence should be:
+
+  We can check here whether these options can possibly matter; if not,
+  we can return early from the function here. Otherwise, we signal "-1"
+  at the end to tell the caller that we do not know either way, and it
+  needs to check more packs.
+
+> -	*found_pack = NULL;
+> -	*found_offset = 0;
+> +	/*
+> +	 * If we already know the pack object lives in, start checks from that
+> +	 * pack - in the usual case when neither --local was given nor .keep files
+> +	 * are present we will determine the answer right now.
+> +	 */
+> +	if (*found_pack) {
+> +		want = want_found_object(exclude, *found_pack);
+> +		if (want != -1)
+> +			return want;
+> +	}
+
+Looks correct. Though it is not really "start checks from..." anymore,
+but rather "do a quick check to see if we can quit early, and otherwise
+start the loop". That might be nitpicking, though.
+
+>  	for (p = packed_git; p; p = p->next) {
+> -		off_t offset = find_pack_entry_one(sha1, p);
+> +		off_t offset;
+> +
+> +		if (p == *found_pack)
+> +			offset = *found_offset;
+> +		else
+> +			offset = find_pack_entry_one(sha1, p);
+> +
+
+This hunk will conflict with the MRU optimizations in 'next', but I
+think the resolution should be pretty trivial.
+
+>  static int add_object_entry(const unsigned char *sha1, enum object_type type,
+>  			    const char *name, int exclude)
+>  {
+> -	struct packed_git *found_pack;
+> -	off_t found_offset;
+> +	struct packed_git *found_pack = NULL;
+> +	off_t found_offset = 0;
+
+I think technically we don't need to initialize found_offset here (it is
+considered only if *found_pack is not NULL), but it doesn't hurt to make
+our starting assumptions clear.
+
+> @@ -1073,6 +1097,9 @@ static int add_object_entry_from_bitmap(const unsigned char *sha1,
+>  	if (have_duplicate_entry(sha1, 0, &index_pos))
+>  		return 0;
+>  
+> +	if (!want_object_in_pack(sha1, 0, &pack, &offset))
+> +		return 0;
+> +
+
+And this caller doesn't need to worry about initialization, because of
+course it knows it has a pack/offset already. Good.
+
+> diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+> index 3893afd..a278d30 100755
+> --- a/t/t5310-pack-bitmaps.sh
+> +++ b/t/t5310-pack-bitmaps.sh
+
+Tests look OK. I saw a few style nitpicks, but I think they are not even
+against our style guide but more "I would have written it like this" and
+are not even worth quibbling over.
+
+So I think the code here is fine, and I just had a few minor complaints
+on comment and commit message clarity.
+
+-Peff
