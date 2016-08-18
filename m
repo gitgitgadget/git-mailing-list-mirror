@@ -2,62 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A56B21FD99
-	for <e@80x24.org>; Thu, 18 Aug 2016 00:18:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 456E41FD99
+	for <e@80x24.org>; Thu, 18 Aug 2016 00:51:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753510AbcHRASB (ORCPT <rfc822;e@80x24.org>);
-	Wed, 17 Aug 2016 20:18:01 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53282 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753180AbcHRASB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2016 20:18:01 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8C8843602C;
-	Wed, 17 Aug 2016 20:17:59 -0400 (EDT)
-DKIM-Signature:	v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Bn5nar5I3czkyYtDgWwzn8cq21k=; b=OMk0TB
-	4o2Di26F0vvHMdhdvI1ukVI4BJ//DjBdqy3ZCrTzcYxMFYDWjxbZE/7eNb1UjzX1
-	4tTEzJKTasw9OlAkmLoNcWBbti0uviuBOVoPrUinD2NOxHoBk48pgwRZYJM6wNRM
-	0B74fm9KYmGzlQIWmd5AFKMx9Tyzyb/OEmlOs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kxj4FQwmXrxizr/oAwq17bvDMBjIHW5d
-	NvVlCgyAYdUyrO4j2j0ScLQ6QYsbzxMTc6Yp0eZIOBYWsHq5mWD6iOhvKUc4Ieto
-	Ry8ePcTpQ3SUMvYzu4Hlt75NNW9k4LZvY0eH8+alQKkrBsnr6Eb2ktWRL2bDtoKu
-	xUFRGCQQho0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 84F813602B;
-	Wed, 17 Aug 2016 20:17:59 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 064C73602A;
-	Wed, 17 Aug 2016 20:17:59 -0400 (EDT)
-From:	Junio C Hamano <gitster@pobox.com>
-To:	Stefan Beller <sbeller@google.com>
-Cc:	git@vger.kernel.org, jrnieder@gmail.com, Jens.Lehmann@web.de
-Subject: Re: [PATCHv8 8/8] clone: recursive and reference option triggers submodule alternates
-References: <20160817224535.5551-1-sbeller@google.com>
-Date:	Wed, 17 Aug 2016 17:17:56 -0700
-In-Reply-To: <20160817224535.5551-1-sbeller@google.com> (Stefan Beller's
-	message of "Wed, 17 Aug 2016 15:45:35 -0700")
-Message-ID: <xmqqziob6ibv.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 37F77A3A-64D9-11E6-9339-FCB17B1B28F4-77302942!pb-smtp2.pobox.com
+	id S1753944AbcHRAvh (ORCPT <rfc822;e@80x24.org>);
+	Wed, 17 Aug 2016 20:51:37 -0400
+Received: from mga09.intel.com ([134.134.136.24]:16044 "EHLO mga09.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753935AbcHRAvf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2016 20:51:35 -0400
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by orsmga102.jf.intel.com with ESMTP; 17 Aug 2016 17:51:33 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.28,536,1464678000"; 
+   d="scan'208";a="157475888"
+Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.116])
+  by fmsmga004.fm.intel.com with ESMTP; 17 Aug 2016 17:51:32 -0700
+From:	Jacob Keller <jacob.e.keller@intel.com>
+To:	git@vger.kernel.org
+Cc:	Junio C Hamano <gitster@pobox.com>,
+	Stefan Beller <stefanbeller@gmail.com>,
+	Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH v7 1/7] diff.c: remove output_prefix_length field
+Date:	Wed, 17 Aug 2016 17:51:25 -0700
+Message-Id: <20160818005131.31600-2-jacob.e.keller@intel.com>
+X-Mailer: git-send-email 2.10.0.rc0.217.g609f9e8.dirty
+In-Reply-To: <20160818005131.31600-1-jacob.e.keller@intel.com>
+References: <20160818005131.31600-1-jacob.e.keller@intel.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+From: Junio C Hamano <gitster@pobox.com>
 
->  and now with error handling of invalid options. 
+"diff/log --stat" has a logic that determines the display columns
+available for the diffstat part of the output and apportions it for
+pathnames and diffstat graph automatically.
 
-Thanks.
+5e71a84a (Add output_prefix_length to diff_options, 2012-04-16)
+added the output_prefix_length field to diff_options structure to
+allow this logic to subtract the display columns used for the
+history graph part from the total "terminal width"; this matters
+when the "git log --graph -p" option is in use.
+
+The field must be set to the number of display columns needed to
+show the output from the output_prefix() callback, which is error
+prone.  As there is only one user of the field, and the user has the
+actual value of the prefix string, let's get rid of the field and
+have the user count the display width itself.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ diff.c  | 2 +-
+ diff.h  | 1 -
+ graph.c | 2 --
+ 3 files changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/diff.c b/diff.c
+index 534c12e28ea8..50bef1f07658 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1625,7 +1625,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+ 	 */
+ 
+ 	if (options->stat_width == -1)
+-		width = term_columns() - options->output_prefix_length;
++		width = term_columns() - strlen(line_prefix);
+ 	else
+ 		width = options->stat_width ? options->stat_width : 80;
+ 	number_width = decimal_width(max_change) > number_width ?
+diff --git a/diff.h b/diff.h
+index 7883729edf10..747a204d75a4 100644
+--- a/diff.h
++++ b/diff.h
+@@ -174,7 +174,6 @@ struct diff_options {
+ 	diff_format_fn_t format_callback;
+ 	void *format_callback_data;
+ 	diff_prefix_fn_t output_prefix;
+-	int output_prefix_length;
+ 	void *output_prefix_data;
+ 
+ 	int diff_path_counter;
+diff --git a/graph.c b/graph.c
+index dd1720148dc5..a46803840511 100644
+--- a/graph.c
++++ b/graph.c
+@@ -197,7 +197,6 @@ static struct strbuf *diff_output_prefix_callback(struct diff_options *opt, void
+ 	assert(opt);
+ 	assert(graph);
+ 
+-	opt->output_prefix_length = graph->width;
+ 	strbuf_reset(&msgbuf);
+ 	graph_padding_line(graph, &msgbuf);
+ 	return &msgbuf;
+@@ -245,7 +244,6 @@ struct git_graph *graph_init(struct rev_info *opt)
+ 	 */
+ 	opt->diffopt.output_prefix = diff_output_prefix_callback;
+ 	opt->diffopt.output_prefix_data = graph;
+-	opt->diffopt.output_prefix_length = 0;
+ 
+ 	return graph;
+ }
+-- 
+2.10.0.rc0.217.g609f9e8.dirty
+
