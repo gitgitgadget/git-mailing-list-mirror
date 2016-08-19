@@ -2,88 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B27711F859
-	for <e@80x24.org>; Fri, 19 Aug 2016 21:11:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF6F41F859
+	for <e@80x24.org>; Fri, 19 Aug 2016 21:13:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755382AbcHSVLl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Aug 2016 17:11:41 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61844 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752435AbcHSVLl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2016 17:11:41 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CEFC835EF8;
-        Fri, 19 Aug 2016 17:11:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/edzr6wBKTh3AESUNuXEkLcivZc=; b=a2KMhd
-        C1+c/p95vW2F/OywoVC/qPTRLDVHdlg1ZjAiK7FH0Cl6/DY1QZoVz1PM3ajIcRmr
-        0QkIbJLZuYUZDlDZ7A4W5dLH+f4AUfRTraGYITZe4QzoAs0eQgtriTO6o5C2hwu1
-        C69ZUTkGagHmUV1uiqLryr1WO78LJ+PWjOpMc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hy5QvDR1EUculg7W5mJYjeFzSLohyc3G
-        rz0y6VWz6zfsBXjMRvEy9oSQKu0yBAEC9xBFMGCK49tZXllB+d26K5CVxMwHbeU9
-        tTZNbVwPWZQKvN5XltDkOIq/lcdIQtazzDKWiXCkp7RU+A2Jzv5+I+gQJjxestCd
-        Jm1CJM4yj0o=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C4DF935EF7;
-        Fri, 19 Aug 2016 17:11:39 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3B93735EF6;
-        Fri, 19 Aug 2016 17:11:39 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v8 4/8] submodule: allow add_submodule_odb to work even if path is not checked out
-References: <20160819000031.24854-1-jacob.e.keller@intel.com>
-        <20160819000031.24854-5-jacob.e.keller@intel.com>
-        <xmqqvayw1q1z.fsf@gitster.mtv.corp.google.com>
-        <CA+P7+xrFkCbLyvXKt1PKYsdFH2rCmjdMEyB27sDEScvGhxs7XA@mail.gmail.com>
-Date:   Fri, 19 Aug 2016 14:11:37 -0700
-In-Reply-To: <CA+P7+xrFkCbLyvXKt1PKYsdFH2rCmjdMEyB27sDEScvGhxs7XA@mail.gmail.com>
-        (Jacob Keller's message of "Fri, 19 Aug 2016 13:32:27 -0700")
-Message-ID: <xmqqy43szcom.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1755659AbcHSVNd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Aug 2016 17:13:33 -0400
+Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:57984
+        "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1755551AbcHSVNd (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 19 Aug 2016 17:13:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1471638750;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=uJd4j7v2x3lL+sEdrhVRP9kfllujKQ43toHCpyJAH1s=;
+        b=eLJ4IADZqFnWOoH9yAwYWPBP4rsUL0DATxW4ur3kg0uzfTRKiML5/Y8F6MaqWrlk
+        oZ1kWWL6N+Bmo2EkbwkxAh/gh0jm2M/50D5DMB40Vztt9m/zT1aTiDeI1NuRoInaIjw
+        lzoWD5yuMQF2tz1AvgcJgQ1lF+2U0igx0CgPw4z0=
+From:   Pranit Bauva <pranit.bauva@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <01020156a48145b0-4867422a-b4a1-4587-8bc3-02c854330178-000000@eu-west-1.amazonses.com>
+In-Reply-To: <01020156a48144f8-c0e127c1-8cd9-4295-ac16-449a54315cac-000000@eu-west-1.amazonses.com>
+References: <01020156a48144f8-c0e127c1-8cd9-4295-ac16-449a54315cac-000000@eu-west-1.amazonses.com>
+Subject: [PATCH v13 06/13] wrapper: move is_empty_file() and rename it as
+ is_empty_or_missing_file()
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 851F90B2-6651-11E6-A01F-FCB17B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date:   Fri, 19 Aug 2016 20:32:30 +0000
+X-SES-Outgoing: 2016.08.19-54.240.7.12
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+is_empty_file() can help to refactor a lot of code. This will be very
+helpful in porting "git bisect" to C.
 
-> submodule. I think we already have the complete path. Or is the name
-> *not* equivalent to the path?
+Suggested-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+---
+ builtin/am.c | 20 ++------------------
+ cache.h      |  3 +++
+ wrapper.c    | 13 +++++++++++++
+ 3 files changed, 18 insertions(+), 18 deletions(-)
 
-A submodule that is bound to top-level at "path" originally gets
-"path" as its name.  If you move it elsewhere, you do not want it to
-lose its identity (and its place in .git/modules/* of the
-top-level).  so a submodule whose name is "path" can reside in the
-new place after such a move.
+diff --git a/builtin/am.c b/builtin/am.c
+index 739b34d..9e1e9d6 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -30,22 +30,6 @@
+ #include "mailinfo.h"
+=20
+ /**
+- * Returns 1 if the file is empty or does not exist, 0 otherwise.
+- */
+-static int is_empty_file(const char *filename)
+-{
+-=09struct stat st;
+-
+-=09if (stat(filename, &st) < 0) {
+-=09=09if (errno =3D=3D ENOENT)
+-=09=09=09return 1;
+-=09=09die_errno(_("could not stat %s"), filename);
+-=09}
+-
+-=09return !st.st_size;
+-}
+-
+-/**
+  * Returns the length of the first line of msg.
+  */
+ static int linelen(const char *msg)
+@@ -1324,7 +1308,7 @@ static int parse_mail(struct am_state *state, const c=
+har *mail)
+ =09=09goto finish;
+ =09}
+=20
+-=09if (is_empty_file(am_path(state, "patch"))) {
++=09if (is_empty_or_missing_file(am_path(state, "patch"))) {
+ =09=09printf_ln(_("Patch is empty. Was it split wrong?"));
+ =09=09die_user_resolve(state);
+ =09}
+@@ -1896,7 +1880,7 @@ static void am_run(struct am_state *state, int resume=
+)
+ =09=09resume =3D 0;
+ =09}
+=20
+-=09if (!is_empty_file(am_path(state, "rewritten"))) {
++=09if (!is_empty_or_missing_file(am_path(state, "rewritten"))) {
+ =09=09assert(state->rebasing);
+ =09=09copy_notes_for_rebase(state);
+ =09=09run_post_rewrite_hook(state);
+diff --git a/cache.h b/cache.h
+index b780a91..49f214b 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1916,4 +1916,7 @@ void sleep_millisec(int millisec);
+  */
+ void safe_create_dir(const char *dir, int share);
+=20
++/* Return 1 if the file is empty or does not exists, 0 otherwise. */
++extern int is_empty_or_missing_file(const char *filename);
++
+ #endif /* CACHE_H */
+diff --git a/wrapper.c b/wrapper.c
+index e7f1979..78f6431 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -679,3 +679,16 @@ void sleep_millisec(int millisec)
+ {
+ =09poll(NULL, 0, millisec);
+ }
++
++int is_empty_or_missing_file(const char *filename)
++{
++=09struct stat st;
++
++=09if (stat(filename, &st) < 0) {
++=09=09if (errno =3D=3D ENOENT)
++=09=09=09return 1;
++=09=09die_errno(_("could not stat %s"), filename);
++=09}
++
++=09return !st.st_size;
++}
 
-> There was no empty line in the place I copied from.
-
-Is that "because I copied from a source that is mistaken, I refuse
-to make it right"?  Or just an explanation why there is a mistake?
-Or something else (like "we should update the original one while we
-are at it as a pure clean-up")?
-
-> If we put them in test_expect_success setup they aren't.
-
-Yes, that is why I said they are unnecessary.  Let's minimize the
-amount of random code that sits outside the control of the test
-framework (i.e. test_expect_{success,failure}).
-
-Thanks.
+--
+https://github.com/git/git/pull/281
