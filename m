@@ -2,235 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CC701F859
-	for <e@80x24.org>; Fri, 19 Aug 2016 21:30:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D31CE1F859
+	for <e@80x24.org>; Fri, 19 Aug 2016 21:50:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754567AbcHSV36 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Aug 2016 17:29:58 -0400
-Received: from a7-18.smtp-out.eu-west-1.amazonses.com ([54.240.7.18]:60077
-        "EHLO a7-18.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754043AbcHSV35 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 19 Aug 2016 17:29:57 -0400
-X-Greylist: delayed 3421 seconds by postgrey-1.27 at vger.kernel.org; Fri, 19 Aug 2016 17:29:57 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1471638750;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=lgDHJFg4RgbVfavb9tFaA2B3rdRP/4XnZ0Mrm2vE+II=;
-        b=TIvQJkqk+ZvHEfwTrBrzCOWnvuScXQX2RFkhiZAD840hA6i86xtuimRi/VY4O/+N
-        hUo6daQB+SKbQhGAwtYzcpqUOJL+xla1NaUgNwt9fDuB++ljUwOilwGvC/8sLlqDNx3
-        nhPdEderjW6Ub5HBJ/9x6yb94yOBjnW9eNCAnAz0=
-From:   Pranit Bauva <pranit.bauva@gmail.com>
+        id S1755697AbcHSVul (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Aug 2016 17:50:41 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:35604 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755653AbcHSVuj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2016 17:50:39 -0400
+Received: by mail-lf0-f65.google.com with SMTP id l89so3589343lfi.2
+        for <git@vger.kernel.org>; Fri, 19 Aug 2016 14:50:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UOowFfcwUJDeTbkSrU48XoU953MnxZxXtfs8yg1uk4c=;
+        b=lfcnsw5mxVFLXYJLPJbY/BFeG25oja6BUY62jqouWNjbXVEy9VBBEKZHqpnVqhar6p
+         /Okr7ehw074q9r1sN3VQWYqhLwBTw+FIYg1btwW8YF/P4ZDNgNKu9j29yD6CTCGKRn8j
+         MlOLQ3ct3frogNPOKs19kUEoCnZ5t3tg+i3aqfBf2Br7aBxt8CuNdeWbQf9NxLUBe+cg
+         LnnNR1v3VbLkR4diG623otk3hCAzv39+jWfOHMpFg7utSlbOx5AnO7yBAC+L0IsJdVjz
+         NN+EPcGSZq5pria8dFhIReWUjAmlGVj8bXXT9ArC60JfqMOTvO2yux7cEKIBoiITwTsT
+         /qWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UOowFfcwUJDeTbkSrU48XoU953MnxZxXtfs8yg1uk4c=;
+        b=UqFrHEFgrxpVKRnp51GZqq2BI3cUdHwGkhJaXGDeMD1q+QOvv7D56yL9p2RO+JM7Zi
+         MBWLxxww8gemfM0Z4unIpuI727b9bzYtiiwwzSRcouJo31Ik6EC4l+Mbvopxa+lgxbHE
+         eMBU6YC1hyoh2EO6mYADT4TgvBSssckXAKklpX1Q8FWzuNYEbag8qdNusRzD6c0Nk/tr
+         VOiBdYx/EebaS6wDKZXBBivMSmppoy18wCac2Sd8py0/70Z7XtmsLZlZi0iNdJGhQZRQ
+         F4Ws2b3wB0HbZ+BgzyhxLuXR6FYXgouDJuIWTtqOP5+TrcYXepwwVR+EbUtGJVxr+qX1
+         Yjwg==
+X-Gm-Message-State: AEkoouthJCtWddZ0soBbzUlh3NBcbN/UVpjsFBFTulX3rTWrKQDiJY5mwKg3Ckv/d1HxgQ==
+X-Received: by 10.25.38.149 with SMTP id m143mr2705002lfm.107.1471643437840;
+        Fri, 19 Aug 2016 14:50:37 -0700 (PDT)
+Received: from localhost.localdomain (118.222.202.84.customer.cdi.no. [84.202.222.118])
+        by smtp.gmail.com with ESMTPSA id q73sm1539721lfg.17.2016.08.19.14.50.36
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 19 Aug 2016 14:50:36 -0700 (PDT)
+From:   =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <01020156a48145c3-24771223-aca5-4838-b60f-a73a31d0eaf7-000000@eu-west-1.amazonses.com>
-In-Reply-To: <01020156a48144f8-c0e127c1-8cd9-4295-ac16-449a54315cac-000000@eu-west-1.amazonses.com>
-References: <01020156a48144f8-c0e127c1-8cd9-4295-ac16-449a54315cac-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v13 10/13] bisect--helper: `check_and_set_terms` shell
- function in C
+Cc:     =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
+Subject: [PATCH] for-each-ref: add %(upstream:gone) to mark missing refs
+Date:   Fri, 19 Aug 2016 23:50:23 +0200
+Message-Id: <20160819215023.10770-1-oystwa@gmail.com>
+X-Mailer: git-send-email 2.9.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 19 Aug 2016 20:32:30 +0000
-X-SES-Outgoing: 2016.08.19-54.240.7.18
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Reimplement the `check_and_set_terms` shell function in C and add
-`check-and-set-terms` subcommand to `git bisect--helper` to call it from
-git-bisect.sh
+git branch -vv will show "gone" next to a remote tracking branch if it
+does not exist. for-each-ref is suitable for parsing but had no way of
+showing this information.
 
-Using `--check-and-set-terms` subcommand is a temporary measure to port
-shell function in C so as to use the existing test suite. As more
-functions are ported, this subcommand will be retired but its
-implementation will be called by some other methods.
+This introduces "%(upstream:gone)" to display "gone" in the formatted
+output if the ref does not exist or an empty string otherwise, analogous
+to git branch -vv.
 
-check_and_set_terms() sets and receives two global variables namely
-TERM_GOOD and TERM_BAD in the shell script. Luckily the file BISECT_TERMS
-also contains the value of those variables so its appropriate to evoke the
-method get_terms() after calling the subcommand so that it retrieves the
-value of TERM_GOOD and TERM_BAD from the file BISECT_TERMS. The two
-global variables are passed as arguments to the subcommand.
-
-Also introduce bisect_terms_reset() to empty the contents of `term_good`
-and `term_bad` of `struct bisect_terms`.
-
-Also introduce set_terms() to copy the `term_good` and `term_bad` into
-`struct bisect_terms` and write it out to the file BISECT_TERMS.
-
-Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+Signed-off-by: Øystein Walle <oystwa@gmail.com>
 ---
- builtin/bisect--helper.c | 52 +++++++++++++++++++++++++++++++++++++++++++++++-
- git-bisect.sh            | 36 ++++-----------------------------
- 2 files changed, 55 insertions(+), 33 deletions(-)
+ Documentation/git-for-each-ref.txt |  5 +++--
+ ref-filter.c                       | 10 +++++++++-
+ t/t6300-for-each-ref.sh            | 12 ++++++++++++
+ 3 files changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 5364960..450426c 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -20,6 +20,7 @@ static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --bisect-clean-state"),
- 	N_("git bisect--helper --bisect-reset [<commit>]"),
- 	N_("git bisect--helper --bisect-write <state> <revision> <TERM_GOOD> <TERM_BAD> [<nolog>]"),
-+	N_("git bisect--helper --bisect-check-and-set-terms <command> <TERM_GOOD> <TERM_BAD>"),
- 	NULL
- };
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index f57e69b..039a86b 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -114,8 +114,9 @@ upstream::
+ 	`refname` above.  Additionally respects `:track` to show
+ 	"[ahead N, behind M]" and `:trackshort` to show the terse
+ 	version: ">" (ahead), "<" (behind), "<>" (ahead and behind),
+-	or "=" (in sync).  Has no effect if the ref does not have
+-	tracking information associated with it.
++	or "=" (in sync) and `:gone` to show "gone" if the remote ref
++	does not exist, or an empty string if it does. Has no effect if
++	the ref does not have tracking information associated with it.
  
-@@ -40,6 +41,12 @@ static void bisect_terms_release(struct bisect_terms *terms)
- 	strbuf_release(&terms->term_bad);
+ push::
+ 	The name of a local ref which represents the `@{push}` location
+diff --git a/ref-filter.c b/ref-filter.c
+index bc551a7..5402052 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -37,7 +37,7 @@ static struct used_atom {
+ 	union {
+ 		char color[COLOR_MAXLEN];
+ 		struct align align;
+-		enum { RR_NORMAL, RR_SHORTEN, RR_TRACK, RR_TRACKSHORT }
++		enum { RR_NORMAL, RR_SHORTEN, RR_TRACK, RR_TRACKSHORT, RR_GONE }
+ 			remote_ref;
+ 		struct {
+ 			enum { C_BARE, C_BODY, C_BODY_DEP, C_LINES, C_SIG, C_SUB } option;
+@@ -67,6 +67,8 @@ static void remote_ref_atom_parser(struct used_atom *atom, const char *arg)
+ 		atom->u.remote_ref = RR_TRACK;
+ 	else if (!strcmp(arg, "trackshort"))
+ 		atom->u.remote_ref = RR_TRACKSHORT;
++	else if (!strcmp(arg, "gone"))
++		atom->u.remote_ref = RR_GONE;
+ 	else
+ 		die(_("unrecognized format: %%(%s)"), atom->name);
  }
- 
-+static void bisect_terms_reset(struct bisect_terms *term)
-+{
-+	strbuf_reset(&term->term_good);
-+	strbuf_reset(&term->term_bad);
-+}
-+
- /*
-  * Check whether the string `term` belongs to the set of strings
-  * included in the variable arguments.
-@@ -213,6 +220,39 @@ static int bisect_write(const char *state, const char *rev,
- 	return 0;
+@@ -923,6 +925,12 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+ 			*s = ">";
+ 		else
+ 			*s = "<>";
++	} else if (atom->u.remote_ref == RR_GONE) {
++		const char *upstream;
++		if (stat_tracking_info(branch, &num_ours, &num_theirs, &upstream) < 0)
++			*s = "gone";
++		else
++			*s = "";
+ 	} else /* RR_NORMAL */
+ 		*s = refname;
  }
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 19a2823..1fc5d1d 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -383,6 +383,18 @@ test_expect_success 'Check that :track[short] works when upstream is invalid' '
+ 	test_cmp expected actual
+ '
  
-+static int set_terms(struct bisect_terms *terms, const char *bad,
-+		     const char *good)
-+{
-+	bisect_terms_reset(terms);
-+	strbuf_addstr(&terms->term_good, good);
-+	strbuf_addstr(&terms->term_bad, bad);
-+	return write_terms(terms->term_bad.buf, terms->term_good.buf);
-+}
++test_expect_success 'Check that :gone produces expected results' '
++	cat >expected <<-\EOF &&
++gone
++	EOF
++	test_when_finished "git config branch.master.merge refs/heads/master" &&
++	git config branch.master.merge refs/heads/does-not-exist &&
++	git for-each-ref \
++		--format="%(upstream:gone)" \
++		refs/heads >actual &&
++	test_cmp expected actual
++'
 +
-+static int check_and_set_terms(struct bisect_terms *terms, const char *cmd)
-+{
-+	int has_term_file = !is_empty_or_missing_file(git_path_bisect_terms());
-+
-+	if (one_of(cmd, "skip", "start", "terms", NULL))
-+		return 0;
-+
-+	if (has_term_file &&
-+	    strcmp(cmd, terms->term_bad.buf) &&
-+	    strcmp(cmd, terms->term_good.buf))
-+		return error(_("Invalid command: you're currently in a "
-+				"%s/%s bisect"), terms->term_bad.buf,
-+				terms->term_good.buf);
-+
-+	if (!has_term_file) {
-+		if (one_of(cmd, "bad", "good", NULL))
-+			return set_terms(terms, "bad", "good");
-+		if (one_of(cmd, "new", "old", NULL))
-+			return set_terms(terms, "new", "old");
-+	}
-+
-+	return 0;
-+}
-+
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
- 	enum {
-@@ -221,7 +261,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		BISECT_CLEAN_STATE,
- 		BISECT_RESET,
- 		CHECK_EXPECTED_REVS,
--		BISECT_WRITE
-+		BISECT_WRITE,
-+		CHECK_AND_SET_TERMS
- 	} cmdmode = 0;
- 	int no_checkout = 0, res = 0;
- 	struct option options[] = {
-@@ -237,6 +278,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			 N_("check for expected revs"), CHECK_EXPECTED_REVS),
- 		OPT_CMDMODE(0, "bisect-write", &cmdmode,
- 			 N_("write out the bisection state in BISECT_LOG"), BISECT_WRITE),
-+		OPT_CMDMODE(0, "check-and-set-terms", &cmdmode,
-+			 N_("check and set terms in a bisection state"), CHECK_AND_SET_TERMS),
- 		OPT_BOOL(0, "no-checkout", &no_checkout,
- 			 N_("update BISECT_HEAD instead of checking out the current commit")),
- 		OPT_END()
-@@ -280,6 +323,13 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		strbuf_addstr(&terms.term_bad, argv[3]);
- 		res = bisect_write(argv[0], argv[1], &terms, nolog);
- 		break;
-+	case CHECK_AND_SET_TERMS:
-+		if (argc != 3)
-+			die(_("--check-and-set-terms requires 3 arguments"));
-+		strbuf_addstr(&terms.term_good, argv[1]);
-+		strbuf_addstr(&terms.term_bad, argv[2]);
-+		res = check_and_set_terms(&terms, argv[0]);
-+		break;
- 	default:
- 		die("BUG: unknown subcommand '%d'", cmdmode);
- 	}
-diff --git a/git-bisect.sh b/git-bisect.sh
-index dfdec33..bdf2227 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -238,7 +238,8 @@ bisect_skip() {
- bisect_state() {
- 	bisect_autostart
- 	state=$1
--	check_and_set_terms $state
-+	git bisect--helper --check-and-set-terms $state $TERM_GOOD $TERM_BAD || exit
-+	get_terms
- 	case "$#,$state" in
- 	0,*)
- 		die "Please call 'bisect_state' with at least one argument." ;;
-@@ -390,7 +391,8 @@ bisect_replay () {
- 			command="$bisect"
- 		fi
- 		get_terms
--		check_and_set_terms "$command"
-+		git bisect--helper --check-and-set-terms "$command" "$TERM_GOOD" "$TERM_BAD" || exit
-+		get_terms
- 		case "$command" in
- 		start)
- 			cmd="bisect_start $rev"
-@@ -480,36 +482,6 @@ get_terms () {
- 	fi
- }
- 
--check_and_set_terms () {
--	cmd="$1"
--	case "$cmd" in
--	skip|start|terms) ;;
--	*)
--		if test -s "$GIT_DIR/BISECT_TERMS" && test "$cmd" != "$TERM_BAD" && test "$cmd" != "$TERM_GOOD"
--		then
--			die "$(eval_gettext "Invalid command: you're currently in a \$TERM_BAD/\$TERM_GOOD bisect.")"
--		fi
--		case "$cmd" in
--		bad|good)
--			if ! test -s "$GIT_DIR/BISECT_TERMS"
--			then
--				TERM_BAD=bad
--				TERM_GOOD=good
--				git bisect--helper --write-terms "$TERM_BAD" "$TERM_GOOD" || exit
--			fi
--			;;
--		new|old)
--			if ! test -s "$GIT_DIR/BISECT_TERMS"
--			then
--				TERM_BAD=new
--				TERM_GOOD=old
--				git bisect--helper --write-terms "$TERM_BAD" "$TERM_GOOD" || exit
--			fi
--			;;
--		esac ;;
--	esac
--}
--
- bisect_voc () {
- 	case "$1" in
- 	bad) echo "bad|new" ;;
+ test_expect_success 'Check for invalid refname format' '
+ 	test_must_fail git for-each-ref --format="%(refname:INVALID)"
+ '
+-- 
+2.9.2
 
---
-https://github.com/git/git/pull/281
