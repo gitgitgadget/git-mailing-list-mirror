@@ -2,94 +2,201 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D0D71F859
-	for <e@80x24.org>; Fri, 19 Aug 2016 20:36:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D4DA1F859
+	for <e@80x24.org>; Fri, 19 Aug 2016 20:39:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755278AbcHSUgO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Aug 2016 16:36:14 -0400
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:34665 "EHLO
-        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755622AbcHSUgN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2016 16:36:13 -0400
-Received: by mail-yw0-f195.google.com with SMTP id j12so1250421ywb.1
-        for <git@vger.kernel.org>; Fri, 19 Aug 2016 13:36:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=/0I8TFdrZl413KuJvhmL4EeeGTr33e2LXLgeN5XGnk8=;
-        b=fKmhfaiex3gHC7UHwEHy/AQSw9QwTzv1Ekqy1fBkTXfZ4wgeP6SYUYtuq/fcd0tSGL
-         I4+Jfh4TCTIaYC1mLImomxTxCCNdqegI6hXGTjv3DFwrKj/OIwhu8uhKgI6gx6ONSbB1
-         vIgxBOv/eSyNr+xCQuCpU3GDZnKN7gvdCreeSNHI5MdQB/DtabULXvlqTa2cO0ibyCB9
-         aMCUwTBwLTv0K/caibmyTKxDT5q9oifZI8TzDyCGqIwU3+a00DYn8vfiB9lhsOIdeMrz
-         LXPTXZy/3fDHSs6quiZDGt+ecviKcdRbDilJrcYxkabGPiSpolMczoJnIsbrFtOv+YVs
-         A3Cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=/0I8TFdrZl413KuJvhmL4EeeGTr33e2LXLgeN5XGnk8=;
-        b=hFEffcF3JWb5Ckqc5hp+FRwo8foHQo9iERZeegw9wPgvzDNrp0+nQMTEHhHDzHOUFj
-         8QxozFAtoholNgMTg3j6NQzxiPPWsTxn3zuMvIxRE+X6BDqYOaZceVbDjb4v6jVFMETg
-         YChliXKjlUDhZERCGTqs9dZcOjuXYXxKi9ljs3ktyu513iZJtJ+FtX1XZe7Sy0/db6bo
-         Oj8htYhvtVZfx2tspbd0YoFuyIi2ZZPsphstgTOafXcx5xIfEJVfwdT8LbQS38HKDZTw
-         rR+lEGsUAB9Md8DJJO2kti17WbS234KPOWcm2G/WCYxLTd8dqQkhjg3UKHm5WgHioGYY
-         nz4Q==
-X-Gm-Message-State: AEkoouvX3Kk/OZBJWtWUgDjTipXEvMO/10NkMqEJEknX+M9k2m+zRn2a9UD6zLGi5Knq1kupoUdQQR2an+V9vw==
-X-Received: by 10.13.197.195 with SMTP id h186mr7831785ywd.54.1471638972375;
- Fri, 19 Aug 2016 13:36:12 -0700 (PDT)
+        id S1754242AbcHSUj2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Aug 2016 16:39:28 -0400
+Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:55132
+        "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754140AbcHSUj1 (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 19 Aug 2016 16:39:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1471638750;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=g9pQKg/UHURs0P70Zvw3zHQ3wBJatT3srP/y9aVQUUs=;
+        b=P4UPSTgVdgvGEFoltXDUayGe9V5VY1WNemLl9+74bBt90xR7fAU0a4HbD3SrXpAq
+        8caK5/r65mIsZMw5Do2lnLcDkhmQrvkfMw37HXCfmMQWvsuPERzt5KR+Lgiadkgh89E
+        9RZwPvr8fcoJeMpTjiWYGwSdkPmy6ZiZU6QwzV98=
+From:   Pranit Bauva <pranit.bauva@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <01020156a4814591-eb28640c-8649-46be-93e2-0f583464ce18-000000@eu-west-1.amazonses.com>
+In-Reply-To: <01020156a48144f8-c0e127c1-8cd9-4295-ac16-449a54315cac-000000@eu-west-1.amazonses.com>
+References: <01020156a48144f8-c0e127c1-8cd9-4295-ac16-449a54315cac-000000@eu-west-1.amazonses.com>
+Subject: [PATCH v13 02/13] bisect: rewrite `check_term_format` shell
+ function in C
 MIME-Version: 1.0
-Received: by 10.37.50.199 with HTTP; Fri, 19 Aug 2016 13:35:51 -0700 (PDT)
-In-Reply-To: <xmqqfuq01oww.fsf@gitster.mtv.corp.google.com>
-References: <20160819000031.24854-1-jacob.e.keller@intel.com>
- <20160819000031.24854-8-jacob.e.keller@intel.com> <xmqqfuq01oww.fsf@gitster.mtv.corp.google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Fri, 19 Aug 2016 13:35:51 -0700
-Message-ID: <CA+P7+xp6VDdMnh-srDzToSwh3mZrQei+B8DjpB2N6OkqAuARkw@mail.gmail.com>
-Subject: Re: [PATCH v8 7/8] cache: add empty_tree_oid object
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 19 Aug 2016 20:32:30 +0000
+X-SES-Outgoing: 2016.08.19-54.240.7.12
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 19, 2016 at 1:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jacob Keller <jacob.e.keller@intel.com> writes:
->
->> From: Jacob Keller <jacob.keller@gmail.com>
->>
->> Add an empty_tree_oid object which can be used in place of
->> EMPTY_TREE_SHA1_BIN_LITERAL for code which is being converted to struct
->> object_id.
->
-> How widely do you envision the users of this symbol would be spread
-> across the entire codebase?  I am debating myself if we need a
-> singleton in-core copy like this (if we end up referring to it from
-> everywhere), or we only need one level higher abstraction,
-> e.g. "is_empty_tree_oid()" helper (in which case I do not think we
-> even need a singleton; just imitate how is_empty_blob_sha1() is
-> implemented).
+Reimplement the `check_term_format` shell function in C and add
+a `--check-term-format` subcommand to `git bisect--helper` to call it
+from git-bisect.sh
 
-If I do this, I'd also add an "is_empty_tree_sha1()" as well?
+Using `--check-term-format` subcommand is a temporary measure to port
+shell function to C so as to use the existing test suite. As more
+functions are ported, this subcommand will be retired and its
+implementation will be called by some other method/subcommand. For
+eg. In conversion of write_terms() of git-bisect.sh, the subcommand will
+be removed and instead check_term_format() will be called in its C
+implementation while a new subcommand will be introduced for write_terms().
 
->
-> Even if we need such a singleton, I think we avoid ".field = value"
-> struct initializations in our code.
->
+Helped-by: Johannes Schindelein <Johannes.Schindelein@gmx.de>
+Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+---
+ builtin/bisect--helper.c | 60 +++++++++++++++++++++++++++++++++++++++++++++++-
+ git-bisect.sh            | 31 ++-----------------------
+ 2 files changed, 61 insertions(+), 30 deletions(-)
 
-Is there a reason for that? I've found that .field = value is safer
-because it ensures that you don't end up initializing the wrong
-values? Or is it a compatibility thing?
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 8111c91..a47f1f2 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -2,19 +2,73 @@
+ #include "cache.h"
+ #include "parse-options.h"
+ #include "bisect.h"
++#include "refs.h"
+ 
+ static const char * const git_bisect_helper_usage[] = {
+ 	N_("git bisect--helper --next-all [--no-checkout]"),
++	N_("git bisect--helper --check-term-format <term> <orig_term>"),
+ 	NULL
+ };
+ 
++/*
++ * Check whether the string `term` belongs to the set of strings
++ * included in the variable arguments.
++ */
++LAST_ARG_MUST_BE_NULL
++static int one_of(const char *term, ...)
++{
++	int res = 0;
++	va_list matches;
++	const char *match;
++
++	va_start(matches, term);
++	while (!res && (match = va_arg(matches, const char *)))
++		res = !strcmp(term, match);
++	va_end(matches);
++
++	return res;
++}
++
++static int check_term_format(const char *term, const char *orig_term)
++{
++	int res;
++	char *new_term = xstrfmt("refs/bisect/%s", term);
++
++	res = check_refname_format(new_term, 0);
++	free(new_term);
++
++	if (res)
++		return error(_("'%s' is not a valid term"), term);
++
++	if (one_of(term, "help", "start", "skip", "next", "reset",
++			"visualize", "replay", "log", "run", NULL))
++		return error(_("can't use the builtin command '%s' as a term"), term);
++
++	/*
++	 * In theory, nothing prevents swapping completely good and bad,
++	 * but this situation could be confusing and hasn't been tested
++	 * enough. Forbid it for now.
++	 */
++
++	if ((strcmp(orig_term, "bad") && one_of(term, "bad", "new", NULL)) ||
++		 (strcmp(orig_term, "good") && one_of(term, "good", "old", NULL)))
++		return error(_("can't change the meaning of the term '%s'"), term);
++
++	return 0;
++}
++
+ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ {
+-	enum { NEXT_ALL = 1 } cmdmode = 0;
++	enum {
++		NEXT_ALL = 1,
++		CHECK_TERM_FMT
++	} cmdmode = 0;
+ 	int no_checkout = 0;
+ 	struct option options[] = {
+ 		OPT_CMDMODE(0, "next-all", &cmdmode,
+ 			 N_("perform 'git bisect next'"), NEXT_ALL),
++		OPT_CMDMODE(0, "check-term-format", &cmdmode,
++			 N_("check format of the term"), CHECK_TERM_FMT),
+ 		OPT_BOOL(0, "no-checkout", &no_checkout,
+ 			 N_("update BISECT_HEAD instead of checking out the current commit")),
+ 		OPT_END()
+@@ -29,6 +83,10 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 	switch (cmdmode) {
+ 	case NEXT_ALL:
+ 		return bisect_next_all(prefix, no_checkout);
++	case CHECK_TERM_FMT:
++		if (argc != 2)
++			die(_("--check-term-format requires two arguments"));
++		return check_term_format(argv[0], argv[1]);
+ 	default:
+ 		die("BUG: unknown subcommand '%d'", cmdmode);
+ 	}
+diff --git a/git-bisect.sh b/git-bisect.sh
+index ae3cb01..a727c59 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -564,38 +564,11 @@ write_terms () {
+ 	then
+ 		die "$(gettext "please use two different terms")"
+ 	fi
+-	check_term_format "$TERM_BAD" bad
+-	check_term_format "$TERM_GOOD" good
++	git bisect--helper --check-term-format "$TERM_BAD" bad || exit
++	git bisect--helper --check-term-format "$TERM_GOOD" good || exit
+ 	printf '%s\n%s\n' "$TERM_BAD" "$TERM_GOOD" >"$GIT_DIR/BISECT_TERMS"
+ }
+ 
+-check_term_format () {
+-	term=$1
+-	git check-ref-format refs/bisect/"$term" ||
+-	die "$(eval_gettext "'\$term' is not a valid term")"
+-	case "$term" in
+-	help|start|terms|skip|next|reset|visualize|replay|log|run)
+-		die "$(eval_gettext "can't use the builtin command '\$term' as a term")"
+-		;;
+-	bad|new)
+-		if test "$2" != bad
+-		then
+-			# In theory, nothing prevents swapping
+-			# completely good and bad, but this situation
+-			# could be confusing and hasn't been tested
+-			# enough. Forbid it for now.
+-			die "$(eval_gettext "can't change the meaning of term '\$term'")"
+-		fi
+-		;;
+-	good|old)
+-		if test "$2" != good
+-		then
+-			die "$(eval_gettext "can't change the meaning of term '\$term'")"
+-		fi
+-		;;
+-	esac
+-}
+-
+ check_and_set_terms () {
+ 	cmd="$1"
+ 	case "$cmd" in
 
-Thanks,
-Jake
+--
+https://github.com/git/git/pull/281
