@@ -2,283 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 648B81FD99
-	for <e@80x24.org>; Fri, 19 Aug 2016 09:38:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A670D2018E
+	for <e@80x24.org>; Fri, 19 Aug 2016 12:26:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754176AbcHSJiZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Aug 2016 05:38:25 -0400
-Received: from mout.web.de ([212.227.15.14]:64886 "EHLO mout.web.de"
+        id S1752244AbcHSM0S (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Aug 2016 08:26:18 -0400
+Received: from mout.gmx.net ([212.227.17.22]:62839 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752848AbcHSJiY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2016 05:38:24 -0400
-Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb004) with
- ESMTPSA (Nemesis) id 0MUBPu-1bitNf0yMU-00R3Zr; Fri, 19 Aug 2016 11:31:49
+        id S1750721AbcHSM0R (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2016 08:26:17 -0400
+Received: from virtualbox ([37.24.141.212]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0Lxdfb-1b7a6l1DFj-017GOB; Fri, 19 Aug 2016 14:25:52
  +0200
-From:   tboegi@web.de
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v1 1/1] t0027: Rename NotNormalized (NNO) into CRLF in index
-Date:   Fri, 19 Aug 2016 11:41:30 +0200
-Message-Id: <20160819094130.21140-1-tboegi@web.de>
-X-Mailer: git-send-email 2.9.3.599.g2376d31.dirty
-In-Reply-To: <20160809114938.pcrvirrzrh6ldmnr@sigill.intra.peff.net>
-References: <20160809114938.pcrvirrzrh6ldmnr@sigill.intra.peff.net>
+Date:   Fri, 19 Aug 2016 14:25:51 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/4] cat-file: support --textconv/--filters in batch
+ mode
+In-Reply-To: <20160818154213.GA17141@tb-raspi>
+Message-ID: <alpine.DEB.2.20.1608191423440.4924@virtualbox>
+References: <cover.1471524357.git.johannes.schindelin@gmx.de> <2315ae5ab6918a7c1567f11a64093a860983bc20.1471524357.git.johannes.schindelin@gmx.de> <20160818154213.GA17141@tb-raspi>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:ytplR14oOzoJwnl7l5JbB1/2fgZlOU6aD6XkddsGu6NomBQvgUa
- jtnZF8zW6VNt6vvAglaucgfLZ4+Uz/7E74GlaJmcfm0qWZk/jjD8GEZ7lm5+IGcBCyOXOJZ
- 6AQSnso1MsSdk9vZ3KBWXt8ReEZIYRWHDgFE/ld9TH5knIXDHO52dBDJsEXzhlWLFm6XZAH
- KFYT/+MnH2417RRKwnnXA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Zw0BrbGqPt0=:cNFgb1qN5kzOLk071sPPz0
- YsWbsPxzH3WHNhIs5pnxivHa7Rsd9swgYPVVFzlMtLiEemVaaRRgvVa53hQOtHPceohEM4OJ3
- DPXgeBPpQeQf9C9JdB2Huf8lcn9yVAX7K4xkGNre9K0xNcROqKFK4tfOQNppnZNmVq9idvweq
- r9iI7cfFxpVCcf5NH+SlQQcT4WAxjVAJy2PeEsqZwswzfKj18WlMUSzmLO2s1nc/OZWoDeA27
- fBvSeQr3jpH9Dfymymealc1YMh5YKSnIU86uppG3t6CsabfKLHHbvxv87ctDNMHtS+fLZnQru
- VQUm5DySGZmM15P2t7J61deHMnwXksKHbKqEUUsxLsn4MPWlweVinT/sSRih+4IhSeIcqwIsG
- dwmzih0InaqgbnCDlhJwRiU9NJZME1V1LgOur+JYkyxWWqXBS7MvhuZMLeVNjQReE3JVSvq8K
- 2jeN5DalVRBFl6XmFKpzqmnnir6UeMf/8NxmEvQ+0RarMlsorzqmdOURhnQ4TLK2q8eJROMeH
- t8bqVljgnERaiuzHK7ALGyemLC2brYIi2d+hF0A3r5S6dNIln5kbd0YjZHicJ4soyGU7Dvl0b
- GfWj2MnG1UagEUlRULCjih039GywwTVQS+aYUwiSTIiZ0UoBnWPCi4VBCmB7Vu8GPkSKlAPn3
- ijvUMUqG/n55Sx81Y0OVYM3mSJN1C73F7LJI2qLz22XdnVes8aspwPeVTbePBkpoUyIjjnzS6
- wx1IsQiZMEfQEp6D7riDfnv6Nll4FYfhNU3So67jujkLxzEAQTlZjwb3roqk1oCSZMPYFQRQj
- vcNfw6K
+Content-Type: multipart/mixed; BOUNDARY="8323329-1125215240-1471609552=:4924"
+X-Provags-ID: V03:K0:6EXvzWUdLhRMneca0JClRJwfBIzlfkxSEm7DQAUaEZJRavnPD4G
+ JHrgxOQOq9+v03P+r1PoJ6/xriEoDXms9ZPqqU/BhqRS55GX2Rl6RDpYSs1XtsDhKc7mTv4
+ 4p/aXFM+xHM4ME+QzVaLzEG7tWz6xGdmbg5dv/JAjbni48wCRwqlAzPmJdoSRBsudW+Cnir
+ nikyVUUfH5NPG8yDaiA5Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:lS5eBOcNjjE=:k0j6CY7pkdFj8P9WYnRZCJ
+ rOCt1+aIGebW5Wt26NCVnK3U73rOGWqLp353kc1E+bp1bYpKZMDynNUmdxow8UTT1rKzvMKt8
+ M2uTQMaEj5WGFaTQCfXgbpjvfT+Z0nXBHpbTrA+lctgUTFHhZalyUzgGl8poissYI8gf9FPVT
+ 8C//8PCDQMfRYIC/sf2i/ZUcIZISr31UIaWrvTMSujDxB5jM896iAEMZ9bjqCqdVj3NOgvkyi
+ C6xF5yoaZ8ojm661DeM43N8RatXPptYD3dIzPE/JTp6Xxu1T9wzYzgAKPUOdQKN6qyJB7WQVJ
+ Vz8R/UF1ZU26G7rj7WEKII9llbWV2ttrl0TijUb41n3oaZ2o0iGrjLpAjXOddiuFuavUKrosK
+ BPNn1y+M56Zx+peuKsC0D4z+FPnzAm8Ju0pGFS7nAJLgjAvUZObI6aTzRFrqgE2SAjzj4zUJ0
+ H3Vc59sbCdVB7AEIMGrIHydllN7oDMYZ0AWqm9gnxaSE3VH/JXUbepdLftHv00SMfk+J+Iv47
+ FbvDcOKSsDFCnemOOgiBOs53dUvPnMpOZs07IwilsA69hH+41uledR8pYzC0TKWexDqoG+y0j
+ LXlgXkdfog8scH+pFBbx5oT4lRpsoxALdZsG+r+BxalIc3A49QGtO1EzwvF0G8a3lNsL5Pw12
+ djyVNeK/dWkpptauSMy1Wo9XtHWqKrSfWPJa1Kw9Brqr/XmsDc50olk/RyThUzCkJK+Cm6YsY
+ FEXFHBR7BfDjBmGldoDQjzElBb4MRc4ZM2MSewGSfovYVx/zqOldU79bsDBaQib8UDVeySLQf
+ q+xSAEn
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Torsten Bögershausen <tboegi@web.de>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Originally NNO stands for content, that had been commited
-"Not NOrmalized", in other words files with CRLF in the index.
+--8323329-1125215240-1471609552=:4924
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Make more clear what should be tested:
-- commit a file with CRLF into the index
-- Change the content in the working tree
-- Run "git add" and check for the conversion warnings
-- Repeat for different content (text, LF, CRLF, mixed) and
-  binary (LF and lone CR, CRLF with NUL)
+Hi Torsten,
 
-Rename commit_chk_wrnNNO() into CRI_add_chk_wrn() and rename NNO into CRI.
+On Thu, 18 Aug 2016, Torsten B=C3=B6gershausen wrote:
 
-Integrate create_NNO_files() into 'setup master'
+> On Thu, Aug 18, 2016 at 02:46:28PM +0200, Johannes Schindelin wrote:
+> > diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+> > index 5ff58b3..5f91cf4 100644
+> > --- a/builtin/cat-file.c
+> > +++ b/builtin/cat-file.c
+> > @@ -17,6 +17,7 @@ struct batch_options {
+> >  =09int print_contents;
+> >  =09int buffer_output;
+> >  =09int all_objects;
+> > +=09int cmdmode; /* may be 'w' or 'c' for --filters or --textconv */
+> How do I read 'w' and 'c' ?
+> wilter and cextconv ? Does it make sense to use an enum here ?
+> Or a #define ?
 
-Signed-off-by: Torsten Bögershausen <tboegi@web.de>
----
- t/t0027-auto-crlf.sh | 122 +++++++++++++++++++++++++--------------------------
- 1 file changed, 61 insertions(+), 61 deletions(-)
+Sorry, Torsten, this is not my doing. So I cannot explain why it is not an
+enum.
 
-diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
-index 90db54c..bfcf14b 100755
---- a/t/t0027-auto-crlf.sh
-+++ b/t/t0027-auto-crlf.sh
-@@ -49,24 +49,6 @@ create_gitattributes () {
- 	} >.gitattributes
- }
- 
--create_NNO_files () {
--	for crlf in false true input
--	do
--		for attr in "" auto text -text
--		do
--			for aeol in "" lf crlf
--			do
--				pfx=NNO_attr_${attr}_aeol_${aeol}_${crlf}
--				cp CRLF_mix_LF ${pfx}_LF.txt &&
--				cp CRLF_mix_LF ${pfx}_CRLF.txt &&
--				cp CRLF_mix_LF ${pfx}_CRLF_mix_LF.txt &&
--				cp CRLF_mix_LF ${pfx}_LF_mix_CR.txt &&
--				cp CRLF_mix_LF ${pfx}_CRLF_nul.txt
--			done
--		done
--	done
--}
--
- check_warning () {
- 	case "$1" in
- 	LF_CRLF) echo "warning: LF will be replaced by CRLF" >"$2".expect ;;
-@@ -102,7 +84,7 @@ commit_check_warn () {
- 	check_warning "$crlfnul" ${pfx}_CRLF_nul.err
- }
- 
--commit_chk_wrnNNO () {
-+CRI_add_chk_wrn () {
- 	attr=$1 ; shift
- 	aeol=$1 ; shift
- 	crlf=$1 ; shift
-@@ -111,7 +93,7 @@ commit_chk_wrnNNO () {
- 	lfmixcrlf=$1 ; shift
- 	lfmixcr=$1 ; shift
- 	crlfnul=$1 ; shift
--	pfx=NNO_attr_${attr}_aeol_${aeol}_${crlf}
-+	pfx=CRI_attr_${attr}_aeol_${aeol}_${crlf}
- 	#Commit files on top of existing file
- 	create_gitattributes "$attr" $aeol &&
- 	for f in LF CRLF CRLF_mix_LF LF_mix_CR CRLF_nul
-@@ -122,22 +104,22 @@ commit_chk_wrnNNO () {
- 		git -c core.autocrlf=$crlf add $fname 2>"${pfx}_$f.err"
- 	done
- 
--	test_expect_success "commit NNO files crlf=$crlf attr=$attr LF" '
-+	test_expect_success "CRLF in index add file crlf=$crlf attr=$attr LF" '
- 		check_warning "$lfwarn" ${pfx}_LF.err
- 	'
--	test_expect_success "commit NNO files attr=$attr aeol=$aeol crlf=$crlf CRLF" '
-+	test_expect_success "CRLF in index add file attr=$attr aeol=$aeol crlf=$crlf CRLF" '
- 		check_warning "$crlfwarn" ${pfx}_CRLF.err
- 	'
- 
--	test_expect_success "commit NNO files attr=$attr aeol=$aeol crlf=$crlf CRLF_mix_LF" '
-+	test_expect_success "CRLF in index add file attr=$attr aeol=$aeol crlf=$crlf CRLF_mix_LF" '
- 		check_warning "$lfmixcrlf" ${pfx}_CRLF_mix_LF.err
- 	'
- 
--	test_expect_success "commit NNO files attr=$attr aeol=$aeol crlf=$crlf LF_mix_cr" '
-+	test_expect_success "CRLF in index add file attr=$attr aeol=$aeol crlf=$crlf LF_mix_cr" '
- 		check_warning "$lfmixcr" ${pfx}_LF_mix_CR.err
- 	'
- 
--	test_expect_success "commit NNO files attr=$attr aeol=$aeol crlf=$crlf CRLF_nul" '
-+	test_expect_success "CRLF in index add file attr=$attr aeol=$aeol crlf=$crlf CRLF_nul" '
- 		check_warning "$crlfnul" ${pfx}_CRLF_nul.err
- 	'
- }
-@@ -199,7 +181,7 @@ check_files_in_repo () {
- 	compare_files $crlfnul ${pfx}CRLF_nul.txt
- }
- 
--check_in_repo_NNO () {
-+check_in_repo_CRI () {
- 	attr=$1 ; shift
- 	aeol=$1 ; shift
- 	crlf=$1 ; shift
-@@ -208,7 +190,7 @@ check_in_repo_NNO () {
- 	lfmixcrlf=$1 ; shift
- 	lfmixcr=$1 ; shift
- 	crlfnul=$1 ; shift
--	pfx=NNO_attr_${attr}_aeol_${aeol}_${crlf}
-+	pfx=CRI_attr_${attr}_aeol_${aeol}_${crlf}
- 	test_expect_success "compare_files $lfname ${pfx}_LF.txt" '
- 		compare_files $lfname ${pfx}_LF.txt
- 	'
-@@ -329,8 +311,22 @@ test_expect_success 'setup master' '
- 	printf "\$Id: 0000000000000000000000000000000000000000 \$\r\nLINEONE\r\nLINETWO\rLINETHREE"   >CRLF_mix_CR &&
- 	printf "\$Id: 0000000000000000000000000000000000000000 \$\r\nLINEONEQ\r\nLINETWO\r\nLINETHREE" | q_to_nul >CRLF_nul &&
- 	printf "\$Id: 0000000000000000000000000000000000000000 \$\nLINEONEQ\nLINETWO\nLINETHREE" | q_to_nul >LF_nul &&
--	create_NNO_files CRLF_mix_LF CRLF_mix_LF CRLF_mix_LF CRLF_mix_LF CRLF_mix_LF &&
--	git -c core.autocrlf=false add NNO_*.txt &&
-+	for crlf in false true input
-+	do
-+		for attr in "" auto text -text
-+		do
-+			for aeol in "" lf crlf
-+			do
-+				pfx=CRI_attr_${attr}_aeol_${aeol}_${crlf}
-+				cp CRLF_mix_LF ${pfx}_LF.txt &&
-+				cp CRLF_mix_LF ${pfx}_CRLF.txt &&
-+				cp CRLF_mix_LF ${pfx}_CRLF_mix_LF.txt &&
-+				cp CRLF_mix_LF ${pfx}_LF_mix_CR.txt &&
-+				cp CRLF_mix_LF ${pfx}_CRLF_nul.txt
-+			done
-+		done
-+	done &&
-+	git -c core.autocrlf=false add CRI_*.txt &&
- 	git commit -m "mixed line endings" &&
- 	test_tick
- '
-@@ -391,33 +387,37 @@ test_expect_success 'commit files attr=crlf' '
- 	commit_check_warn input "crlf" "LF_CRLF" ""        "LF_CRLF" "LF_CRLF" ""
- '
- 
--#                 attr                    LF        CRLF      CRLFmixLF   LF_mix_CR   CRLFNUL
--commit_chk_wrnNNO ""      ""      false   ""        ""        ""          ""          ""
--commit_chk_wrnNNO ""      ""      true    LF_CRLF   ""        ""          ""          ""
--commit_chk_wrnNNO ""      ""      input   ""        ""        ""          ""          ""
--
--commit_chk_wrnNNO "auto"  ""      false   "$WILC"   ""        ""          ""          ""
--commit_chk_wrnNNO "auto"  ""      true    LF_CRLF   ""        ""          ""          ""
--commit_chk_wrnNNO "auto"  ""      input   ""        ""        ""          ""          ""
-+# Files had been commited with CRLF. run "git add" with different content and
-+# check if
-+# warning: LF will be replaced by CRLF or
-+# warning: CRLF will be replaced by LF are written to stderr
-+#               attr                    LF        CRLF      CRLFmixLF   LF_mix_CR   CRLFNUL
-+CRI_add_chk_wrn ""      ""      false   ""        ""        ""          ""          ""
-+CRI_add_chk_wrn ""      ""      true    LF_CRLF   ""        ""          ""          ""
-+CRI_add_chk_wrn ""      ""      input   ""        ""        ""          ""          ""
-+
-+CRI_add_chk_wrn "auto"  ""      false   "$WILC"   ""        ""          ""          ""
-+CRI_add_chk_wrn "auto"  ""      true    LF_CRLF   ""        ""          ""          ""
-+CRI_add_chk_wrn "auto"  ""      input   ""        ""        ""          ""          ""
- for crlf in true false input
- do
--	commit_chk_wrnNNO -text ""      $crlf   ""        ""        ""          ""          ""
--	commit_chk_wrnNNO -text lf      $crlf   ""        ""        ""          ""          ""
--	commit_chk_wrnNNO -text crlf    $crlf   ""        ""        ""          ""          ""
--	commit_chk_wrnNNO ""    lf      $crlf   ""       CRLF_LF    CRLF_LF      ""         CRLF_LF
--	commit_chk_wrnNNO ""    crlf    $crlf   LF_CRLF   ""        LF_CRLF     LF_CRLF     ""
--	commit_chk_wrnNNO auto  lf    	$crlf   ""        ""        ""          ""          ""
--	commit_chk_wrnNNO auto  crlf  	$crlf   LF_CRLF   ""        ""          ""          ""
--	commit_chk_wrnNNO text  lf    	$crlf   ""       CRLF_LF    CRLF_LF     ""          CRLF_LF
--	commit_chk_wrnNNO text  crlf  	$crlf   LF_CRLF   ""        LF_CRLF     LF_CRLF     ""
-+	CRI_add_chk_wrn -text ""      $crlf   ""        ""        ""          ""          ""
-+	CRI_add_chk_wrn -text lf      $crlf   ""        ""        ""          ""          ""
-+	CRI_add_chk_wrn -text crlf    $crlf   ""        ""        ""          ""          ""
-+	CRI_add_chk_wrn ""    lf      $crlf   ""        CRLF_LF   CRLF_LF      ""         CRLF_LF
-+	CRI_add_chk_wrn ""    crlf    $crlf   LF_CRLF   ""        LF_CRLF     LF_CRLF     ""
-+	CRI_add_chk_wrn auto  lf    	$crlf   ""        ""        ""          ""          ""
-+	CRI_add_chk_wrn auto  crlf  	$crlf   LF_CRLF   ""        ""          ""          ""
-+	CRI_add_chk_wrn text  lf    	$crlf   ""        CRLF_LF   CRLF_LF     ""          CRLF_LF
-+	CRI_add_chk_wrn text  crlf  	$crlf   LF_CRLF   ""        LF_CRLF     LF_CRLF     ""
- done
- 
--commit_chk_wrnNNO "text"  ""      false   "$WILC"   "$WICL"   "$WAMIX"    "$WILC"     "$WICL"
--commit_chk_wrnNNO "text"  ""      true    LF_CRLF   ""        LF_CRLF     LF_CRLF     ""
--commit_chk_wrnNNO "text"  ""      input   ""        CRLF_LF   CRLF_LF     ""          CRLF_LF
-+CRI_add_chk_wrn   text  ""      false   "$WILC"   "$WICL"   "$WAMIX"    "$WILC"     "$WICL"
-+CRI_add_chk_wrn   text  ""      true    LF_CRLF   ""        LF_CRLF     LF_CRLF     ""
-+CRI_add_chk_wrn   text  ""      input   ""        CRLF_LF   CRLF_LF     ""          CRLF_LF
- 
--test_expect_success 'commit NNO and cleanup' '
--	git commit -m "commit files on top of NNO" &&
-+test_expect_success 'commit files with CRLF in index CRI and cleanup' '
-+	git commit -m "commit files on top of CRLF" &&
- 	rm -f *.txt &&
- 	git -c core.autocrlf=false reset --hard
- '
-@@ -449,16 +449,16 @@ test_expect_success 'commit -text' '
- for crlf in true false input
- do
- 	#                 attr  aeol           LF  CRLF  CRLF_mix_LF  LF_mix_CR  CRLFNUL
--	check_in_repo_NNO ""    ""     $crlf   LF  CRLF  CRLF_mix_LF  LF_mix_CR  CRLF_nul
--	check_in_repo_NNO -text ""     $crlf   LF  CRLF  CRLF_mix_LF  LF_mix_CR  CRLF_nul
--	check_in_repo_NNO -text lf     $crlf   LF  CRLF  CRLF_mix_LF  LF_mix_CR  CRLF_nul
--	check_in_repo_NNO -text crlf   $crlf   LF  CRLF  CRLF_mix_LF  LF_mix_CR  CRLF_nul
--	check_in_repo_NNO auto  ""     $crlf   LF  CRLF  CRLF_mix_LF  LF_mix_CR  CRLF_nul
--	check_in_repo_NNO auto  lf     $crlf   LF  CRLF  CRLF_mix_LF  LF_mix_CR  CRLF_nul
--	check_in_repo_NNO auto  crlf   $crlf   LF  CRLF  CRLF_mix_LF  LF_mix_CR  CRLF_nul
--	check_in_repo_NNO text  ""     $crlf   LF  LF    LF           LF_mix_CR  LF_nul
--	check_in_repo_NNO text  lf     $crlf   LF  LF    LF           LF_mix_CR  LF_nul
--	check_in_repo_NNO text  crlf   $crlf   LF  LF    LF           LF_mix_CR  LF_nul
-+	check_in_repo_CRI ""    ""     $crlf   LF  CRLF  CRLF_mix_LF  LF_mix_CR  CRLF_nul
-+	check_in_repo_CRI -text ""     $crlf   LF  CRLF  CRLF_mix_LF  LF_mix_CR  CRLF_nul
-+	check_in_repo_CRI -text lf     $crlf   LF  CRLF  CRLF_mix_LF  LF_mix_CR  CRLF_nul
-+	check_in_repo_CRI -text crlf   $crlf   LF  CRLF  CRLF_mix_LF  LF_mix_CR  CRLF_nul
-+	check_in_repo_CRI auto  ""     $crlf   LF  CRLF  CRLF_mix_LF  LF_mix_CR  CRLF_nul
-+	check_in_repo_CRI auto  lf     $crlf   LF  CRLF  CRLF_mix_LF  LF_mix_CR  CRLF_nul
-+	check_in_repo_CRI auto  crlf   $crlf   LF  CRLF  CRLF_mix_LF  LF_mix_CR  CRLF_nul
-+	check_in_repo_CRI text  ""     $crlf   LF  LF    LF           LF_mix_CR  LF_nul
-+	check_in_repo_CRI text  lf     $crlf   LF  LF    LF           LF_mix_CR  LF_nul
-+	check_in_repo_CRI text  crlf   $crlf   LF  LF    LF           LF_mix_CR  LF_nul
- done
- ################################################################################
- # Check how files in the repo are changed when they are checked out
--- 
-2.9.3.599.g2376d31.dirty
+I *guess* the rationale for 'c' being the cmdmode of --textconv is "c for
+convert". That is why I chose "w as in worktree" as new cmdmode.
 
+Ciao,
+Dscho
+--8323329-1125215240-1471609552=:4924--
