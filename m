@@ -2,70 +2,212 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EDD41F859
-	for <e@80x24.org>; Fri, 19 Aug 2016 20:50:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FCB71F859
+	for <e@80x24.org>; Fri, 19 Aug 2016 20:50:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755538AbcHSUub (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Aug 2016 16:50:31 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55837 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755533AbcHSUua (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2016 16:50:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 08F8235C5F;
-        Fri, 19 Aug 2016 16:50:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=UdwYHVCyZoAg9hccpQZQHpXfYLQ=; b=r7G3s2
-        RmSB0o9TSE2XhjF/lgnQ4KHBeoe4GJilaltZaBHA+cWa3jVKRb3w3SwXVQkNiNJ5
-        Ob+NSw6hx76pqnS4qbG73UCA4Zd9qAtzLqZARAF9AsH/CyRtueGxHS5oJr2rNJ2w
-        sA/rGuw87wexU1Wal7zKRNhrr5dHJMYXMP2d8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=VCegwqG+4z3Dqe454Z4yzak8J6+i+kBC
-        4QouNYlHlLAgvUF/5Y+LzYNjRe2lNfH+UgrKBixwZumtYiaRb/pVh9hH0jjP4qzu
-        c6CDLVmxnHjWxQ5LODxmvwDbEgvpd5ZZ8ttEA+Ga+eJdcpzwfoyBEypxRKvJmbF/
-        C3bHrL3vxLk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F256D35C5D;
-        Fri, 19 Aug 2016 16:50:23 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6633835C5C;
-        Fri, 19 Aug 2016 16:50:23 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v8 7/8] cache: add empty_tree_oid object
-References: <20160819000031.24854-1-jacob.e.keller@intel.com>
-        <20160819000031.24854-8-jacob.e.keller@intel.com>
-        <xmqqfuq01oww.fsf@gitster.mtv.corp.google.com>
-        <CA+P7+xp6VDdMnh-srDzToSwh3mZrQei+B8DjpB2N6OkqAuARkw@mail.gmail.com>
-Date:   Fri, 19 Aug 2016 13:50:20 -0700
-In-Reply-To: <CA+P7+xp6VDdMnh-srDzToSwh3mZrQei+B8DjpB2N6OkqAuARkw@mail.gmail.com>
-        (Jacob Keller's message of "Fri, 19 Aug 2016 13:35:51 -0700")
-Message-ID: <xmqq7fbc1o1f.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S932393AbcHSUue (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Aug 2016 16:50:34 -0400
+Received: from a7-20.smtp-out.eu-west-1.amazonses.com ([54.240.7.20]:38651
+        "EHLO a7-20.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1755533AbcHSUud (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 19 Aug 2016 16:50:33 -0400
+X-Greylist: delayed 1057 seconds by postgrey-1.27 at vger.kernel.org; Fri, 19 Aug 2016 16:50:33 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1471638750;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=2+hfSyTb2cJAZ6l3TkrLRtim5ZFYj7GYobgAK0MoqTY=;
+        b=JkFP5UbgxLA2TexM5Q7co9edGu9Z2eTPnNOmpXfr0bbpGKHk8w7jWwTnUTFuTniU
+        1lArSfYlpljUq9LQrI9thbPSqnosZ8vtyBzNiT+b2IBJ9pQfCIssS8fcBNZFMGRTrOl
+        VquhS1ffV0NyX1jn9JE37/BE41WEknV4oU4cm+h8=
+From:   Pranit Bauva <pranit.bauva@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <01020156a48145b6-e0aee940-119b-42b1-b0c4-80263426cd6e-000000@eu-west-1.amazonses.com>
+In-Reply-To: <01020156a48144f8-c0e127c1-8cd9-4295-ac16-449a54315cac-000000@eu-west-1.amazonses.com>
+References: <01020156a48144f8-c0e127c1-8cd9-4295-ac16-449a54315cac-000000@eu-west-1.amazonses.com>
+Subject: [PATCH v13 07/13] bisect--helper: `bisect_reset` shell function in
+ C
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8CABEF9A-664E-11E6-BFBE-FCB17B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 19 Aug 2016 20:32:30 +0000
+X-SES-Outgoing: 2016.08.19-54.240.7.20
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+Reimplement `bisect_reset` shell function in C and add a `--bisect-reset`
+subcommand to `git bisect--helper` to call it from git-bisect.sh .
 
-> Is there a reason for that? I've found that .field = value is safer
-> because it ensures that you don't end up initializing the wrong
-> values? Or is it a compatibility thing?
+Using `bisect_reset` subcommand is a temporary measure to port shell
+functions to C so as to use the existing test suite. As more functions
+are ported, this subcommand would be retired but its implementation will
+be called by some other method.
 
-Yes.
+Note: --bisect-clean-state subcommand has not been retired as there are
+still a function namely `bisect_start()` which still uses this
+subcommand.
+
+Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+---
+ builtin/bisect--helper.c | 48 +++++++++++++++++++++++++++++++++++++++++++++++-
+ git-bisect.sh            | 28 ++--------------------------
+ 2 files changed, 49 insertions(+), 27 deletions(-)
+
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index e50934c..9aba094 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -3,17 +3,22 @@
+ #include "parse-options.h"
+ #include "bisect.h"
+ #include "refs.h"
++#include "dir.h"
++#include "argv-array.h"
++#include "run-command.h"
+ 
+ static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
+ static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
+ static GIT_PATH_FUNC(git_path_bisect_ancestors_ok, "BISECT_ANCESTORS_OK")
+ static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
+ static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
++static GIT_PATH_FUNC(git_path_bisect_head, "BISECT_HEAD")
+ 
+ static const char * const git_bisect_helper_usage[] = {
+ 	N_("git bisect--helper --next-all [--no-checkout]"),
+ 	N_("git bisect--helper --write-terms <bad_term> <good_term>"),
+ 	N_("git bisect--helper --bisect-clean-state"),
++	N_("git bisect--helper --bisect-reset [<commit>]"),
+ 	NULL
+ };
+ 
+@@ -84,12 +89,47 @@ static int write_terms(const char *bad, const char *good)
+ 	return (res < 0) ? -1 : 0;
+ }
+ 
++static int bisect_reset(const char *commit)
++{
++	struct strbuf branch = STRBUF_INIT;
++
++	if (!commit) {
++		if (strbuf_read_file(&branch, git_path_bisect_start(), 0) < 1) {
++			printf("We are not bisecting.\n");
++			return 0;
++		}
++		strbuf_rtrim(&branch);
++	} else {
++		struct object_id oid;
++		if (get_oid(commit, &oid))
++			return error(_("'%s' is not a valid commit"), commit);
++		strbuf_addstr(&branch, commit);
++	}
++
++	if (!file_exists(git_path_bisect_head())) {
++		struct argv_array argv = ARGV_ARRAY_INIT;
++		argv_array_pushl(&argv, "checkout", branch.buf, "--", NULL);
++		if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
++			error(_("Could not check out original HEAD '%s'. Try "
++				"'git bisect reset <commit>'."), branch.buf);
++			strbuf_release(&branch);
++			argv_array_clear(&argv);
++			return -1;
++		}
++		argv_array_clear(&argv);
++	}
++
++	strbuf_release(&branch);
++	return bisect_clean_state();
++}
++
+ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	enum {
+ 		NEXT_ALL = 1,
+ 		WRITE_TERMS,
+-		BISECT_CLEAN_STATE
++		BISECT_CLEAN_STATE,
++		BISECT_RESET
+ 	} cmdmode = 0;
+ 	int no_checkout = 0;
+ 	struct option options[] = {
+@@ -99,6 +139,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 			 N_("write the terms to .git/BISECT_TERMS"), WRITE_TERMS),
+ 		OPT_CMDMODE(0, "bisect-clean-state", &cmdmode,
+ 			 N_("cleanup the bisection state"), BISECT_CLEAN_STATE),
++		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
++			 N_("reset the bisection state"), BISECT_RESET),
+ 		OPT_BOOL(0, "no-checkout", &no_checkout,
+ 			 N_("update BISECT_HEAD instead of checking out the current commit")),
+ 		OPT_END()
+@@ -121,6 +163,10 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		if (argc != 0)
+ 			die(_("--bisect-clean-state requires no arguments"));
+ 		return bisect_clean_state();
++	case BISECT_RESET:
++		if (argc > 1)
++			die(_("--bisect-reset requires either zero or one arguments"));
++		return bisect_reset(argc ? argv[0] : NULL);
+ 	default:
+ 		die("BUG: unknown subcommand '%d'", cmdmode);
+ 	}
+diff --git a/git-bisect.sh b/git-bisect.sh
+index f1202df..442397b 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -409,35 +409,11 @@ bisect_visualize() {
+ 	eval '"$@"' --bisect -- $(cat "$GIT_DIR/BISECT_NAMES")
+ }
+ 
+-bisect_reset() {
+-	test -s "$GIT_DIR/BISECT_START" || {
+-		gettextln "We are not bisecting."
+-		return
+-	}
+-	case "$#" in
+-	0) branch=$(cat "$GIT_DIR/BISECT_START") ;;
+-	1) git rev-parse --quiet --verify "$1^{commit}" >/dev/null || {
+-			invalid="$1"
+-			die "$(eval_gettext "'\$invalid' is not a valid commit")"
+-		}
+-		branch="$1" ;;
+-	*)
+-		usage ;;
+-	esac
+-
+-	if ! test -f "$GIT_DIR/BISECT_HEAD" && ! git checkout "$branch" --
+-	then
+-		die "$(eval_gettext "Could not check out original HEAD '\$branch'.
+-Try 'git bisect reset <commit>'.")"
+-	fi
+-	git bisect--helper --bisect-clean-state || exit
+-}
+-
+ bisect_replay () {
+ 	file="$1"
+ 	test "$#" -eq 1 || die "$(gettext "No logfile given")"
+ 	test -r "$file" || die "$(eval_gettext "cannot read \$file for replaying")"
+-	bisect_reset
++	git bisect--helper --bisect-reset || exit
+ 	while read git bisect command rev
+ 	do
+ 		test "$git $bisect" = "git bisect" || test "$git" = "git-bisect" || continue
+@@ -627,7 +603,7 @@ case "$#" in
+ 	visualize|view)
+ 		bisect_visualize "$@" ;;
+ 	reset)
+-		bisect_reset "$@" ;;
++		git bisect--helper --bisect-reset "$@" ;;
+ 	replay)
+ 		bisect_replay "$@" ;;
+ 	log)
+
+--
+https://github.com/git/git/pull/281
