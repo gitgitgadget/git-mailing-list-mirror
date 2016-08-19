@@ -2,120 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 048CB2018E
-	for <e@80x24.org>; Fri, 19 Aug 2016 14:52:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 126FF1F859
+	for <e@80x24.org>; Fri, 19 Aug 2016 15:00:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754106AbcHSOwN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Aug 2016 10:52:13 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58144 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753616AbcHSOwN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2016 10:52:13 -0400
-Received: (qmail 2711 invoked by uid 109); 19 Aug 2016 14:51:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 Aug 2016 14:51:25 +0000
-Received: (qmail 26200 invoked by uid 111); 19 Aug 2016 14:51:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 Aug 2016 10:51:27 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Aug 2016 10:51:23 -0400
-Date:   Fri, 19 Aug 2016 10:51:23 -0400
-From:   Jeff King <peff@peff.net>
-To:     Brian Henderson <henderson.bj@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        e@80x24.org
-Subject: Re: [PATCH v2 1/3] diff-highlight: add some tests.
-Message-ID: <20160819145123.73hf7ffysy53l3kz@sigill.intra.peff.net>
-References: <20160817153124.7770-1-henderson.bj@gmail.com>
- <20160810085635.GA1672@starla>
- <20160817153124.7770-2-henderson.bj@gmail.com>
- <xmqqziob8b6i.fsf@gitster.mtv.corp.google.com>
- <20160819144235.GA29458@tci.corp.yp.com>
+        id S1755151AbcHSPAd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Aug 2016 11:00:33 -0400
+Received: from mout.gmx.net ([212.227.15.19]:56223 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754245AbcHSPAd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2016 11:00:33 -0400
+Received: from virtualbox ([37.24.141.212]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0LwaQZ-1b6Rli2IW7-018JCd; Fri, 19 Aug 2016 17:00:21
+ +0200
+Date:   Fri, 19 Aug 2016 17:00:20 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/4] cat-file: introduce the --filters option
+In-Reply-To: <20160819085700.GA23254@tb-raspi>
+Message-ID: <alpine.DEB.2.20.1608191656080.4924@virtualbox>
+References: <cover.1471524357.git.johannes.schindelin@gmx.de> <f1e188907f31abef9e82bd6b0da120ab7d9bd4a7.1471524357.git.johannes.schindelin@gmx.de> <20160819085700.GA23254@tb-raspi>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160819144235.GA29458@tci.corp.yp.com>
+Content-Type: multipart/mixed; BOUNDARY="8323329-2002993359-1471618821=:4924"
+X-Provags-ID: V03:K0:k6Q3Yr7qbtxNAMj9x2jngCkBlCmu0XzCT79OBiH+wfPOdH1R7l6
+ gDpNzPJ0QIhzoNCnh8g5Y28rXBjaBt7cZIbLil1e8g+mF/owaTI+44o8RX+/hVafXdBSh5h
+ NAUelAjVb656iNgcPiTSYxveAVFR2vrqXUGrfu2j0L7dQVKy8lOyo9V2exN0e57sHojaCqR
+ lf5uogAQUkBLpx0Ds68hQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:1DXiwMFPhCA=:EvKye3kRuehilN1s9V3Gwf
+ nitm0evxxTE20Md5fuC8od42BL6GVoGTWAUZFr3aeEdYcV4mgClfq/jXlQEBz6ziyIz6f453C
+ ay2kc3HqoWRDgdn7gBLVlXUlshAWtNbQxbw3Q83nLl1AwCgRr3MKnXyt0RxeWVSjpnu3L893d
+ UaqXsoiJ5BYTebV77eysv3c1BJe9e48g+mArbNbsKy3QdBLSUFwJ89izIST/dBHplGib9Y8LG
+ fME0xJoDe8WhlfPJT80l8pG5577n7/5ia+ybR08jpTeavj5S9nzx2m1yH9maB58vlgDwNUj2E
+ 6Pf7vs+6Ik+d5eixqIACZgE1niHWzjMbE8fLeZvkI1TCykhaaHcvu5gd+5eDAq0Bgmau7ReAA
+ Cde+hQm99TtFxPitYKzSQ46IsJNQclGjDD+i+AcAKtmbePUxQWRssQX/UHKlCv+je84EMGJtK
+ PPddTVZYZ2j6k6ruL2q4YIj8bLwbJ/nLXzQgj1NE4LaJJOLPK2ug535bwDK3alg3HDj9F3t/C
+ /Dyk8jHb7D7RlMnJJz8sXv9X8wlorV13+CjUHe9KjeE3DNgDRvKge6qBO/7P2wlScANr9J00W
+ xNij/YCxP6mJvWwzm0PD/GUVVess+yiat2W8eQc8Qa2mFVm+hL71HairA3+QVXnKdvCO/Vhd6
+ vPSsku5CdpAiMb2o1vccKx7kzcSbTNrHR2nJr6vQd/y0SL8Lz3T7LPCOt6BjYWN2PQL1VgWru
+ /UFOBnfb6FpHvcrJLt9UsTAmcbOJZ8IDc1G74gREUSCSWyHTJxUryVMFKYZaLE2NOaitfMPt7
+ JnmMDPI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 19, 2016 at 07:42:35AM -0700, Brian Henderson wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> > > +# PERL is required, but assumed to be present, although not necessarily modern
-> > > +# some tests require 5.8
-> > > +test_expect_success PERL 'name' 'true'
-> > 
-> > If the platform lacks PERL prerequisite, this will simply be
-> > skipped, and if the platform has it, it will always succeed.
-> > 
-> > I am not sure what you are trying to achieve by having this line
-> > here.
-> 
-> I originally didn't have this line, and my comment was referring to the
-> t/README which says
-> 
->    Even without the PERL prerequisite, tests can assume there is a
->    usable perl interpreter at $PERL_PATH, though it need not be
->    particularly modern.
-> 
-> There is current functionality in diff-highlight which requires at least
-> perl 5.8 (the utf8 functions). I was going to add a test for this as
-> well, but I'm not super comfy with multibyte chars.
+--8323329-2002993359-1471618821=:4924
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Yeah, I'd agree this test would want the PERL prereq. It is not just
-using perl for one-liners in support of the script; it is testing major
-perl functionality that should be skipped if we do not have a modern
-perl available.
+Hi Torsten,
 
-> Eric recommended adding this line, what do you think?
-> 
-> would `test_set_prereq PERL` be better?
+On Fri, 19 Aug 2016, Torsten B=C3=B6gershausen wrote:
 
-test_set_prereq is for telling the test scripts that we _have_ perl, but
-what I think this script wants to do is test "do we have perl?" and
-abort otherwise. The way to do that is:
+> On Thu, Aug 18, 2016 at 02:46:17PM +0200, Johannes Schindelin wrote:
+>=20
+> > +--filters::
+> > +=09Show the content as transformed by the filters configured in
+>
+> Minor comment:
+> s/transformed/converted/ ?
 
-  if ! test_have_prereq PERL
-  then
-	skip_all='skipping diff-highlight tests; perl not available'
-	test_done
-  fi
+Sure.
 
-> > > +test_expect_success 'diff-highlight does not highlight whole line' '
-> > > +	dh_test \
-> > > +		"aaa\nbbb\nccc\n" \
-> > > +		"aaa\n000\nccc\n"
-> > > +'
-> 
-> This (at least to me) is desired. See comment for `sub
-> is_pair_interesting`
+> Does it make sense to be more specific here:
+> The order of conversion is
+> - ident
+> - CRLF
+> - smudge
 
-Yeah, that is an intentional behavior, and makes sense to test.
+I do not think it makes sense to complexify the documentation in that
+manner. The filters should always be applied in the same order, methinks,
+and it would only clutter the man page to repeat that order here.
 
-> > > +test_expect_success 'diff-highlight does not highlight mismatched hunk size' '
-> > > +	dh_test \
-> > > +		"aaa\nbbb\n" \
-> > > +		"aaa\nb0b\nccc\n"
-> > > +'
-> 
-> This is undesired behavior, but currently implemented for simplicity,
-> see `sub show_hunk`
-> 
-> Do they need comments or something?
-
-Undesired behavior should generally not be tested for. It just makes
-life harder for somebody when they make a change that violates it, and
-they have to figure out "oh, but it's _good_ that I changed that, the
-tests were wrong" (or more likely "I didn't fix it, but it's just broken
-in a different way, and neither is preferable").
-
-If you want to document known shortcomings, the best thing to do is show
-what you'd _like_ to have happen, and mark it as test_expect_failure;
-the test scripts show this as a known-breakage, and somebody later who
-fixes it can flip the "failure" to "success".
-
--Peff
+Ciao,
+Dscho
+--8323329-2002993359-1471618821=:4924--
