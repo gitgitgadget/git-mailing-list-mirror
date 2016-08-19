@@ -2,80 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B6A51F859
-	for <e@80x24.org>; Fri, 19 Aug 2016 19:30:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B2D51F859
+	for <e@80x24.org>; Fri, 19 Aug 2016 19:49:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754684AbcHSTat (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Aug 2016 15:30:49 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:34098 "EHLO
-        mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754140AbcHSTas (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2016 15:30:48 -0400
-Received: by mail-pa0-f50.google.com with SMTP id fi15so18732319pac.1
-        for <git@vger.kernel.org>; Fri, 19 Aug 2016 12:30:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=3MHIQnslngtQEjdbeWZ3avn94VTBT36+HfooX8hc66s=;
-        b=FgmMyDq9lmDwp8EW5RM4zOzrVTVdcmP2rU6bHoKlFo9iSIAdzt3PN1N5jjfDHM+LAx
-         gu9P0q4x/xlx//2b4FWQJRXYlbNl7GTS9XZ3WbLKNjTIiQBjmWB1NdbENqKNA4OvUnMV
-         lBTq2OWyOxoLBbmj81toMzUxMSOAPD61flbnAxQdKl5WJvPxE0oSkIKv0w9OhwlLKIgg
-         745mkSo9aR2C4Tx6GFbkflDJogNm99VFceBkZwTyITcimnq46C6b1oWX4epyo05EWFLS
-         L6pdA404OXRHs2IR+J17VbW/TUVmkVwyynLUniIW78SJTiI8ENaS1/0bBetoXgNKOtXU
-         IUHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=3MHIQnslngtQEjdbeWZ3avn94VTBT36+HfooX8hc66s=;
-        b=Z6giLBfA2lxW+acxgXkAOzQkNyHG619D/ytoTl0m98vv2meQgUsiKZKPJ4ndGhrvdc
-         TV+rGEPpMVHomuA8C0hU8jHk+b2C0iwsiahKrUkdT6gGvaS//PJ2C9R8AecncYvTiY9K
-         9IcSI9d0yCci6mQN9WdVvOhomOMGhuu+mMkaheB8XheJfu/W6G2jUyzNTi+f+JR9IAwq
-         cCKoEaAvFbSsL2SwXqFZ9ojg51HIGZ175BKQwJqq6S92Sxq1oAfd1r1UuHVNz4B2ChTA
-         oAwjfHccxqr7En2cy7kXeQt9/AaoiDlM+Zi+CSEa/QJe1XgEI3Sd2gQjlKBwJ+9THPuw
-         pDiA==
-X-Gm-Message-State: AEkoout3ZkFcNCT6Pz9twmu+gnUWWXvRQW2gW/GhoRnH5NjXDDEbXwRFaiRcofvisCFNtA==
-X-Received: by 10.66.233.38 with SMTP id tt6mr16470147pac.99.1471635047655;
-        Fri, 19 Aug 2016 12:30:47 -0700 (PDT)
-Received: from tci.corp.yp.com ([216.2.203.2])
-        by smtp.gmail.com with ESMTPSA id g21sm8387006pfj.88.2016.08.19.12.30.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 19 Aug 2016 12:30:47 -0700 (PDT)
-From:   Brian Henderson <henderson.bj@gmail.com>
-X-Google-Original-From: Brian Henderson <bhenderson@yp.com>
-Date:   Fri, 19 Aug 2016 12:30:45 -0700
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brian Henderson <henderson.bj@gmail.com>, git@vger.kernel.org,
-        peff@peff.net, e@80x24.org
-Subject: Re: [PATCH v3 1/3] diff-highlight: add some tests.
-Message-ID: <20160819193045.GA9262@tci.corp.yp.com>
-References: <20160819170812.1676-1-henderson.bj@gmail.com>
- <20160819145123.73hf7ffysy53l3kz@sigill.intra.peff.net>
- <20160819170812.1676-2-henderson.bj@gmail.com>
- <xmqqh9ag39zk.fsf@gitster.mtv.corp.google.com>
+        id S1755235AbcHSTtt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Aug 2016 15:49:49 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53672 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754127AbcHSTts (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2016 15:49:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F41B237911;
+        Fri, 19 Aug 2016 15:49:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=xPkTGNNBWizPK4DlB92sn4Jfywo=; b=Twa+JN
+        78bixQPfNbqKY2iaSnfZOwoHz0irzzSoT60kpkMMKnvL/24xvwk1o+1XiE3ax3Hm
+        kAr+0KENS8H3xzL2hrmp4yS89YKvDtAhygjWn46lPMCTsWyZkvs1m3PXXQmaC0/V
+        ZalEaJrWe9c+ZW4Irx/k7YpRaPSVplmX5gt00=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=LuGg7DfUEuAd/Q7SMGdYTd6ifkkV7a4a
+        P6nyvhWcxEpjOj5Dv5cGaRTPPgqb9PCkBuZ+5LO+uLhGvIjAAyNJmzWh2hHr76O0
+        AO7UDHWt51M0rxProRJQDmShH/6VyruIJiqlEWiuNdOEWDeZqaH85F/NnYajh8OX
+        UhhjZFg84pk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EB68837910;
+        Fri, 19 Aug 2016 15:49:40 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 712643790F;
+        Fri, 19 Aug 2016 15:49:40 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jacob Keller <jacob.e.keller@intel.com>
+Cc:     git@vger.kernel.org, Stefan Beller <stefanbeller@gmail.com>,
+        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v8 3/8] diff: prepare for additional submodule formats
+References: <20160819000031.24854-1-jacob.e.keller@intel.com>
+        <20160819000031.24854-4-jacob.e.keller@intel.com>
+Date:   Fri, 19 Aug 2016 12:49:38 -0700
+In-Reply-To: <20160819000031.24854-4-jacob.e.keller@intel.com> (Jacob Keller's
+        message of "Thu, 18 Aug 2016 17:00:26 -0700")
+Message-ID: <xmqqzio81qul.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqh9ag39zk.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1143F0B2-6646-11E6-A300-E86612518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 19, 2016 at 11:10:55AM -0700, Junio C Hamano wrote:
-> 
-> > +# vim: set noet
-> 
-> We tend to avoid cluttering the source with editor specific insns
-> like this.
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-oops.
+> +enum diff_submodule_format {
+> +	DIFF_SUBMODULE_SHORT = 0,
+> +	DIFF_SUBMODULE_LOG,
+> +};
 
-Anyone have any suggestions for project level vim settings?
+Unlike definition of an array elements, enum {} did not allow
+trailing comma until recent versions of C, and we avoid it.
+
+No need to resend only to fix this, as I have locally amended it.
+
+Thanks.
