@@ -2,172 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E01991F859
-	for <e@80x24.org>; Fri, 19 Aug 2016 20:53:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB6C51F859
+	for <e@80x24.org>; Fri, 19 Aug 2016 20:56:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755355AbcHSUxy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Aug 2016 16:53:54 -0400
-Received: from a7-20.smtp-out.eu-west-1.amazonses.com ([54.240.7.20]:38944
-        "EHLO a7-20.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754781AbcHSUxx (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 19 Aug 2016 16:53:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1471638750;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=wTnObT2FQwxuW0XuhCWYbhrmTvG6Ru8nub7JCHTk4Sc=;
-        b=cTEKKKNgYSqbUEpCJz6stSV2dF8MKf1AEDggcrSf3IAmdLnP0rUQiFT33B2LbNEZ
-        27T9jhuhxwBXXGJFJ2MASFD2EcP+ibjfRyhOQpCP0pFSzGsN2iW3pXg7GFfK9F9/Jyj
-        vYt1laU4hkEMFpcWl2uovt81uD3o4YPbP93F5Css=
-From:   Pranit Bauva <pranit.bauva@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <01020156a48145b7-a23cda02-9f19-4948-ae45-3ed899906044-000000@eu-west-1.amazonses.com>
-In-Reply-To: <01020156a48144f8-c0e127c1-8cd9-4295-ac16-449a54315cac-000000@eu-west-1.amazonses.com>
-References: <01020156a48144f8-c0e127c1-8cd9-4295-ac16-449a54315cac-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v13 08/13] bisect--helper: `is_expected_rev` &
- `check_expected_revs` shell function in C
+        id S1755511AbcHSU45 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Aug 2016 16:56:57 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:48520 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1755378AbcHSU44 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2016 16:56:56 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id CA2F71F859;
+        Fri, 19 Aug 2016 20:56:41 +0000 (UTC)
+Date:   Fri, 19 Aug 2016 20:56:41 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Brian Henderson <henderson.bj@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        peff@peff.net
+Subject: Re: [PATCH v3 1/3] diff-highlight: add some tests.
+Message-ID: <20160819205641.GA31393@dcvr>
+References: <20160819170812.1676-1-henderson.bj@gmail.com>
+ <20160819145123.73hf7ffysy53l3kz@sigill.intra.peff.net>
+ <20160819170812.1676-2-henderson.bj@gmail.com>
+ <xmqqh9ag39zk.fsf@gitster.mtv.corp.google.com>
+ <20160819193045.GA9262@tci.corp.yp.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 19 Aug 2016 20:32:30 +0000
-X-SES-Outgoing: 2016.08.19-54.240.7.20
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Content-Disposition: inline
+In-Reply-To: <20160819193045.GA9262@tci.corp.yp.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Reimplement `is_expected_rev` & `check_expected_revs` shell function in
-C and add a `--check-expected-revs` subcommand to `git bisect--helper` to
-call it from git-bisect.sh .
+Brian Henderson <henderson.bj@gmail.com> wrote:
+> On Fri, Aug 19, 2016 at 11:10:55AM -0700, Junio C Hamano wrote:
+> > 
+> > > +# vim: set noet
+> > 
+> > We tend to avoid cluttering the source with editor specific insns
+> > like this.
+> 
+> oops.
+> 
+> Anyone have any suggestions for project level vim settings?
 
-Using `--check-expected-revs` subcommand is a temporary measure to port
-shell functions to C so as to use the existing test suite. As more
-functions are ported, this subcommand would be retired but its
-implementation will be called by some other method.
+vim defaults work fine for me on FreeBSD and Debian:
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
----
- builtin/bisect--helper.c | 33 ++++++++++++++++++++++++++++++++-
- git-bisect.sh            | 20 ++------------------
- 2 files changed, 34 insertions(+), 19 deletions(-)
+	tabstop=8 shiftwidth=8 softtabstop=0 noexpandtab
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 9aba094..711be75 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -123,13 +123,40 @@ static int bisect_reset(const char *commit)
- 	return bisect_clean_state();
- }
- 
-+static int is_expected_rev(const char *expected_hex)
-+{
-+	struct strbuf actual_hex = STRBUF_INIT;
-+	int res = 0;
-+	if (strbuf_read_file(&actual_hex, git_path_bisect_expected_rev(), 0) >= 0) {
-+		strbuf_trim(&actual_hex);
-+		res = !strcmp(actual_hex.buf, expected_hex);
-+	}
-+	strbuf_release(&actual_hex);
-+	return res;
-+}
-+
-+static int check_expected_revs(const char **revs, int rev_nr)
-+{
-+	int i;
-+
-+	for (i = 0; i < rev_nr; i++) {
-+		if (!is_expected_rev(revs[i])) {
-+			unlink_or_warn(git_path_bisect_ancestors_ok());
-+			unlink_or_warn(git_path_bisect_expected_rev());
-+			return 0;
-+		}
-+	}
-+	return 0;
-+}
-+
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
- 	enum {
- 		NEXT_ALL = 1,
- 		WRITE_TERMS,
- 		BISECT_CLEAN_STATE,
--		BISECT_RESET
-+		BISECT_RESET,
-+		CHECK_EXPECTED_REVS
- 	} cmdmode = 0;
- 	int no_checkout = 0;
- 	struct option options[] = {
-@@ -141,6 +168,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			 N_("cleanup the bisection state"), BISECT_CLEAN_STATE),
- 		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
- 			 N_("reset the bisection state"), BISECT_RESET),
-+		OPT_CMDMODE(0, "check-expected-revs", &cmdmode,
-+			 N_("check for expected revs"), CHECK_EXPECTED_REVS),
- 		OPT_BOOL(0, "no-checkout", &no_checkout,
- 			 N_("update BISECT_HEAD instead of checking out the current commit")),
- 		OPT_END()
-@@ -167,6 +196,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		if (argc > 1)
- 			die(_("--bisect-reset requires either zero or one arguments"));
- 		return bisect_reset(argc ? argv[0] : NULL);
-+	case CHECK_EXPECTED_REVS:
-+		return check_expected_revs(argv, argc);
- 	default:
- 		die("BUG: unknown subcommand '%d'", cmdmode);
- 	}
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 442397b..c3e43248 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -237,22 +237,6 @@ bisect_write() {
- 	test -n "$nolog" || echo "git bisect $state $rev" >>"$GIT_DIR/BISECT_LOG"
- }
- 
--is_expected_rev() {
--	test -f "$GIT_DIR/BISECT_EXPECTED_REV" &&
--	test "$1" = $(cat "$GIT_DIR/BISECT_EXPECTED_REV")
--}
--
--check_expected_revs() {
--	for _rev in "$@"; do
--		if ! is_expected_rev "$_rev"
--		then
--			rm -f "$GIT_DIR/BISECT_ANCESTORS_OK"
--			rm -f "$GIT_DIR/BISECT_EXPECTED_REV"
--			return
--		fi
--	done
--}
--
- bisect_skip() {
- 	all=''
- 	for arg in "$@"
-@@ -280,7 +264,7 @@ bisect_state() {
- 		rev=$(git rev-parse --verify "$bisected_head") ||
- 			die "$(eval_gettext "Bad rev input: \$bisected_head")"
- 		bisect_write "$state" "$rev"
--		check_expected_revs "$rev" ;;
-+		git bisect--helper --check-expected-revs "$rev" ;;
- 	2,"$TERM_BAD"|*,"$TERM_GOOD"|*,skip)
- 		shift
- 		hash_list=''
-@@ -294,7 +278,7 @@ bisect_state() {
- 		do
- 			bisect_write "$state" "$rev"
- 		done
--		check_expected_revs $hash_list ;;
-+		git bisect--helper --check-expected-revs $hash_list ;;
- 	*,"$TERM_BAD")
- 		die "$(eval_gettext "'git bisect \$TERM_BAD' can take only one argument.")" ;;
- 	*)
+Generally, we take after the Linux kernel:
 
---
-https://github.com/git/git/pull/281
+	https://kernel.org/doc/Documentation/CodingStyle
+
+Which I'm happy about and largely agree with.
