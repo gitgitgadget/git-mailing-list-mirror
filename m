@@ -2,169 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 503351FD99
-	for <e@80x24.org>; Fri, 19 Aug 2016 08:39:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99E611FD99
+	for <e@80x24.org>; Fri, 19 Aug 2016 08:57:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754158AbcHSIjs (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Aug 2016 04:39:48 -0400
-Received: from mout.gmx.net ([212.227.17.21]:57017 "EHLO mout.gmx.net"
+        id S1753871AbcHSI5V (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Aug 2016 04:57:21 -0400
+Received: from mout.web.de ([212.227.17.11]:50677 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753410AbcHSIjp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2016 04:39:45 -0400
-Received: from virtualbox ([37.24.141.212]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MWgND-1bgyzR3P0l-00XphF; Fri, 19 Aug 2016 10:39:38
+        id S1753547AbcHSI5U (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2016 04:57:20 -0400
+Received: from localhost ([195.252.60.88]) by smtp.web.de (mrweb101) with
+ ESMTPSA (Nemesis) id 0MQvsg-1bjyzp0t2M-00UKTY; Fri, 19 Aug 2016 10:57:03
  +0200
-Date:   Fri, 19 Aug 2016 10:39:38 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] Revert "display HTML in default browser using Windows' shell
- API"
-Message-ID: <03ae6a9d47cb95a54960bfdc90c5392f890ff1e3.1471595956.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+Date:   Fri, 19 Aug 2016 08:57:00 +0000
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/4] cat-file: introduce the --filters option
+Message-ID: <20160819085700.GA23254@tb-raspi>
+References: <cover.1471524357.git.johannes.schindelin@gmx.de>
+ <f1e188907f31abef9e82bd6b0da120ab7d9bd4a7.1471524357.git.johannes.schindelin@gmx.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:hTGr8rAttv4Tr/x0XVyJMvWmaC1i8YMrkDG2u1mh2cV1LoKk8lz
- fTDWdAlRPPwoV/9llMXg0kng2k/l955BnRUlBEiuqDLbiSQtZ6itZ132Eh35ah30vatbsVH
- 2isKmZTmhEuS0gxeUERcSAkmkZiwgCrM6iUqWvEmsniWLJtSq0pN0FopjjvyOEgADlB+uyH
- wbOTfLWbE9e5w6g4yTywg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:N1eGW/kBJMM=:6IGmfsXQ/kORjYp475yDNJ
- vRsnwgJpleVWO/UcOvVnsgDmvpyUF650wNE00D1pmx+Pv59Bg7GZKJvbauR1Evkkh3IHmTzlS
- KYcJMocFqGuTdaU4ElEQyEROcVNPjFHbKpMP+G3fbQViLWISAqJF46MWm5o/IRy8pux3Z4pbP
- FH4xyLlTk99DprsjgywqYMM22/8pRg7veQJBqPQXWCMbe1e5OOS4+Js6FdpKKlQ4qXZiDkD/w
- b8+0HUEPVOwSK3GkXyueDnieCI55q5lu8BuYQlyukN45tl/xfLdaMj8ye5trmDlaG244n/Qdc
- 6sGnseIiKHeZTv94PQWjH5xUa74RD5Undzc12evveN66OwUVzUrLgo/ascV9NBH97GndjDJ6O
- /l2zk8f3fwvFlR6yoXDjQW28QRIh3F53OFpRSxQy5oMB/zSRFpuUXaDYQK306cEaEgJnnXA+x
- kfLel4aaOnfPLHx+UQavmS+b7l9OZkl1xy7ZLjkxSqAhO2XXk3u/Sq3U6ZKL7CJEaqSCDO46X
- bzlWIKmkuBugD8yOkdEkA5mQYEmKYq9vdcTsZmlzFBQdluzh2eZ2cCFLSHl+/WB25ENBaNsHV
- 4FmqrgS0upnZ6B7oxnWoLkrUvIMCioRoY6yRUKnhtwn/p4ZCZ+uengbsmq7V4xFrNwFnqJrsE
- BJ7XvnH2k0XcGIVA+feKgC/OS/ip52eDDngmUs7ttoUWSV3lZPTtLudFR2bbubFz2Fkr15u9d
- Pm0dxSwu0PmItC0JUsGft5Dx9OsNgkz3cY8GvBt40z529hGDtLMN4ZnuUJCz9yhRG2Dn2kX2j
- 97AQ/dL
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f1e188907f31abef9e82bd6b0da120ab7d9bd4a7.1471524357.git.johannes.schindelin@gmx.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V03:K0:zPKH2lYbrw10QPhLqnp0wKrFg9YK6utqFj+GemhXLaxaXzp6+vI
+ 6zBZ1Q+emHPup0vFL0rh9vqpwwiyR9e6rTKSpFIKY2sQnZ3ismUSka07N8w4f9n2iD1DkW6
+ i0eYW2PaRIpDOnWKum+VyQMAydFMD0dKGJUCWHY+/26qyzDBKlcVmLoC3fvDeiOAwqBsN5s
+ 5kDNIvhPZMPmh0CQIlMsg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:lgb5LPQeetw=:Rqc82e0nkZxIKxMI2uwm1G
+ sU/plTR0viqhm2DYOfQ//abfR8xTKYw6RmSR3IH/DTe9lN5WYtWTCVl4ZXPzeEtbSw2jK6CV8
+ XKpGjVeoEFLmOF+/eFHDkgM7KdOA/NRbn8rVSp6j8hAAwOuk83T3ne0QKO/gVQ+Mnty32Eb2A
+ HdoWT3CziyGGQkk5a0VAaviHwUGbiBUtAulAFqliV1Aa2QtUcljbccxaPJ9/sglBZxeK7NCyb
+ sVcmPlHjlBvU3joUgKDqOmfbS7IIzIYgSWf/7iHzXIWPWBxAbzSXoyzzS1Mbp2r1Dhf2KKUFA
+ ccoKHlzFTxjtH0+dZ6wLPby5u/hZKaQpTJozN9+oh0FiFkEQUrhx6rFqqoJ7fcCdqB9JlWo2+
+ Cf9k2vwmhrL752p8LA2P8+sGcIeDQ/Yo58M9pOihBv5D+yhzINcZwMKrIdVGZuqp8Kdjar7NM
+ gdVxE5SrQpcuzMlWGOaPQuLnRugn3CUFtHL/GsGuhxsWO33M6YWAOcDx54pFBGAI3KIrB3y2k
+ bWZkm8SuKHcjM0prYv0JoH+a+JMCfRR1K8erYuTFFpo2EzjFmNKKqReM/2xD+ctM3PLzLIpxb
+ Qru5uOxo+uNmDzW2AAu/rTDxOSVUCbJvNOfkwptWlTJcXhdATkBstJDbLXVuRLTR25w0olYqZ
+ lQFPruoxYK5ixrnF0Klj690wxUmVk0rliV1qcH3lsOvd9AbqCCpeE9Ofa0esZAYIT73l8ZI+J
+ MXF9Tx5pbZRvYPJf5NdKH8n5Bz/fRpctAXL5D4uHyra40Ah1WCDOD9O7Q+U=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since 4804aab (help (Windows): Display HTML in default browser using
-Windows' shell API, 2008-07-13), Git for Windows used to call
-`ShellExecute()` to launch the default Windows handler for `.html`
-files.
+[]
+On Thu, Aug 18, 2016 at 02:46:17PM +0200, Johannes Schindelin wrote:
 
-The idea was to avoid going through a shell script, for performance
-reasons.
+> diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+> index 071029b..7d48735 100644
+> --- a/Documentation/git-cat-file.txt
+> +++ b/Documentation/git-cat-file.txt
+> @@ -9,15 +9,15 @@ git-cat-file - Provide content or type and size information for repository objec
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git cat-file' (-t [--allow-unknown-type]| -s [--allow-unknown-type]| -e | -p | <type> | --textconv ) <object>
+> +'git cat-file' (-t [--allow-unknown-type]| -s [--allow-unknown-type]| -e | -p | <type> | --textconv | --filters ) <object>
+>  'git cat-file' (--batch | --batch-check) [--follow-symlinks]
+>  
+>  DESCRIPTION
+>  -----------
+>  In its first form, the command provides the content or the type of an object in
+>  the repository. The type is required unless `-t` or `-p` is used to find the
+> -object type, or `-s` is used to find the object size, or `--textconv` is used
+> -(which implies type "blob").
+> +object type, or `-s` is used to find the object size, or `--textconv` or
+> +`--filters` is used (which imply type "blob").
+>  
+>  In the second form, a list of objects (separated by linefeeds) is provided on
+>  stdin, and the SHA-1, type, and size of each object is printed on stdout.
+> @@ -58,6 +58,12 @@ OPTIONS
+>  	order to apply the filter to the content recorded in the index at
+>  	<path>.
+>  
+> +--filters::
+> +	Show the content as transformed by the filters configured in
+Minor comment:
+s/transformed/converted/ ?
 
-However, this change ignores the `help.browser` config setting. Together
-with browsing help not being a performance-critical operation, let's
-just revert that patch.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-Published-As: https://github.com/dscho/git/releases/tag/mingw-help-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git mingw-help-v1
-
- builtin/help.c |  7 -------
- compat/mingw.c | 42 ------------------------------------------
- compat/mingw.h |  3 ---
- 3 files changed, 52 deletions(-)
-
-diff --git a/builtin/help.c b/builtin/help.c
-index 8848013..e8f79d7 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -379,17 +379,10 @@ static void get_html_page_path(struct strbuf *page_path, const char *page)
- 	free(to_free);
- }
- 
--/*
-- * If open_html is not defined in a platform-specific way (see for
-- * example compat/mingw.h), we use the script web--browse to display
-- * HTML.
-- */
--#ifndef open_html
- static void open_html(const char *path)
- {
- 	execl_git_cmd("web--browse", "-c", "help.browser", path, (char *)NULL);
- }
--#endif
- 
- static void show_html_page(const char *git_cmd)
- {
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 2b5467d..3fbfda5 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1930,48 +1930,6 @@ int mingw_raise(int sig)
- 	}
- }
- 
--
--static const char *make_backslash_path(const char *path)
--{
--	static char buf[PATH_MAX + 1];
--	char *c;
--
--	if (strlcpy(buf, path, PATH_MAX) >= PATH_MAX)
--		die("Too long path: %.*s", 60, path);
--
--	for (c = buf; *c; c++) {
--		if (*c == '/')
--			*c = '\\';
--	}
--	return buf;
--}
--
--void mingw_open_html(const char *unixpath)
--{
--	const char *htmlpath = make_backslash_path(unixpath);
--	typedef HINSTANCE (WINAPI *T)(HWND, const char *,
--			const char *, const char *, const char *, INT);
--	T ShellExecute;
--	HMODULE shell32;
--	int r;
--
--	shell32 = LoadLibrary("shell32.dll");
--	if (!shell32)
--		die("cannot load shell32.dll");
--	ShellExecute = (T)GetProcAddress(shell32, "ShellExecuteA");
--	if (!ShellExecute)
--		die("cannot run browser");
--
--	printf("Launching default browser to display HTML ...\n");
--	r = HCAST(int, ShellExecute(NULL, "open", htmlpath,
--				NULL, "\\", SW_SHOWNORMAL));
--	FreeLibrary(shell32);
--	/* see the MSDN documentation referring to the result codes here */
--	if (r <= 32) {
--		die("failed to launch browser for %.*s", MAX_PATH, unixpath);
--	}
--}
--
- int link(const char *oldpath, const char *newpath)
- {
- 	typedef BOOL (WINAPI *T)(LPCWSTR, LPCWSTR, LPSECURITY_ATTRIBUTES);
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 95e128f..2cadb81 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -417,9 +417,6 @@ int mingw_offset_1st_component(const char *path);
- #include <inttypes.h>
- #endif
- 
--void mingw_open_html(const char *path);
--#define open_html mingw_open_html
--
- /**
-  * Converts UTF-8 encoded string to UTF-16LE.
-  *
--- 
-2.9.2.691.g78954f3
-
-base-commit: d63263a4dee8fc7da9b97bbdedf9c0d1f33024d4
+Does it make sense to be more specific here:
+The order of conversion is
+- ident
+- CRLF
+- smudge
