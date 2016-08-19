@@ -2,155 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D31CE1F859
-	for <e@80x24.org>; Fri, 19 Aug 2016 21:50:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A81DC1F859
+	for <e@80x24.org>; Fri, 19 Aug 2016 21:52:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755697AbcHSVul (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Aug 2016 17:50:41 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:35604 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755653AbcHSVuj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2016 17:50:39 -0400
-Received: by mail-lf0-f65.google.com with SMTP id l89so3589343lfi.2
-        for <git@vger.kernel.org>; Fri, 19 Aug 2016 14:50:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=UOowFfcwUJDeTbkSrU48XoU953MnxZxXtfs8yg1uk4c=;
-        b=lfcnsw5mxVFLXYJLPJbY/BFeG25oja6BUY62jqouWNjbXVEy9VBBEKZHqpnVqhar6p
-         /Okr7ehw074q9r1sN3VQWYqhLwBTw+FIYg1btwW8YF/P4ZDNgNKu9j29yD6CTCGKRn8j
-         MlOLQ3ct3frogNPOKs19kUEoCnZ5t3tg+i3aqfBf2Br7aBxt8CuNdeWbQf9NxLUBe+cg
-         LnnNR1v3VbLkR4diG623otk3hCAzv39+jWfOHMpFg7utSlbOx5AnO7yBAC+L0IsJdVjz
-         NN+EPcGSZq5pria8dFhIReWUjAmlGVj8bXXT9ArC60JfqMOTvO2yux7cEKIBoiITwTsT
-         /qWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=UOowFfcwUJDeTbkSrU48XoU953MnxZxXtfs8yg1uk4c=;
-        b=UqFrHEFgrxpVKRnp51GZqq2BI3cUdHwGkhJaXGDeMD1q+QOvv7D56yL9p2RO+JM7Zi
-         MBWLxxww8gemfM0Z4unIpuI727b9bzYtiiwwzSRcouJo31Ik6EC4l+Mbvopxa+lgxbHE
-         eMBU6YC1hyoh2EO6mYADT4TgvBSssckXAKklpX1Q8FWzuNYEbag8qdNusRzD6c0Nk/tr
-         VOiBdYx/EebaS6wDKZXBBivMSmppoy18wCac2Sd8py0/70Z7XtmsLZlZi0iNdJGhQZRQ
-         F4Ws2b3wB0HbZ+BgzyhxLuXR6FYXgouDJuIWTtqOP5+TrcYXepwwVR+EbUtGJVxr+qX1
-         Yjwg==
-X-Gm-Message-State: AEkoouthJCtWddZ0soBbzUlh3NBcbN/UVpjsFBFTulX3rTWrKQDiJY5mwKg3Ckv/d1HxgQ==
-X-Received: by 10.25.38.149 with SMTP id m143mr2705002lfm.107.1471643437840;
-        Fri, 19 Aug 2016 14:50:37 -0700 (PDT)
-Received: from localhost.localdomain (118.222.202.84.customer.cdi.no. [84.202.222.118])
-        by smtp.gmail.com with ESMTPSA id q73sm1539721lfg.17.2016.08.19.14.50.36
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 19 Aug 2016 14:50:36 -0700 (PDT)
-From:   =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
-Subject: [PATCH] for-each-ref: add %(upstream:gone) to mark missing refs
-Date:   Fri, 19 Aug 2016 23:50:23 +0200
-Message-Id: <20160819215023.10770-1-oystwa@gmail.com>
-X-Mailer: git-send-email 2.9.2
+        id S1754873AbcHSVwd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Aug 2016 17:52:33 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55703 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754043AbcHSVwc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2016 17:52:32 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 813D337AEC;
+        Fri, 19 Aug 2016 17:52:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ivL8is7+TVUoRIk0YM/MQzgZojc=; b=RDJMPy
+        x5Z+7gIhWRZ1TPoSOZz2cAL/DTqTEH7kHrDh+KS0KYsDH4CDai3zby5ThpGt5Dap
+        7uVXeaAcLzvuOyww7N/voMHovkbwhHK1ZzdO3f/eecgWzeftD3wHDc0+PjYoaKoG
+        BF62pLP0gFM4d3YGRuG2BX2dpu/NRPb4/ki9c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=vk4ej5ptu7fb41ClHUn8hlZLrWtCqcmm
+        Y4552ufZZHTUIfrrWJ8MoGQrXkTWrGGpYvkTcCWvflg2fIRQaYtQyMs0fn4ti69v
+        ztHEvVdKgmrzfac3deaw8hS6GmYt4Z5yDegDh05eWq2ggD/RM/5yfAvXTB1807M3
+        qzBnP1KD3sk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7998F37AEB;
+        Fri, 19 Aug 2016 17:52:31 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 04CDB37AEA;
+        Fri, 19 Aug 2016 17:52:31 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jacob Keller <jacob.e.keller@intel.com>
+Cc:     git@vger.kernel.org, Stefan Beller <stefanbeller@gmail.com>,
+        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v8 8/8] diff: teach diff to display submodule difference with an inline diff
+References: <20160819000031.24854-1-jacob.e.keller@intel.com>
+        <20160819000031.24854-9-jacob.e.keller@intel.com>
+Date:   Fri, 19 Aug 2016 14:52:29 -0700
+In-Reply-To: <20160819000031.24854-9-jacob.e.keller@intel.com> (Jacob Keller's
+        message of "Thu, 18 Aug 2016 17:00:31 -0700")
+Message-ID: <xmqqmvk8zasi.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3A7E8904-6657-11E6-9FE0-E86612518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git branch -vv will show "gone" next to a remote tracking branch if it
-does not exist. for-each-ref is suitable for parsing but had no way of
-showing this information.
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-This introduces "%(upstream:gone)" to display "gone" in the formatted
-output if the ref does not exist or an empty string otherwise, analogous
-to git branch -vv.
+> diff --git a/diff.h b/diff.h
+> index ea5aba668eaa..192c0eedd0ff 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -112,6 +112,7 @@ enum diff_words_type {
+>  enum diff_submodule_format {
+>  	DIFF_SUBMODULE_SHORT = 0,
+>  	DIFF_SUBMODULE_LOG,
+> +	DIFF_SUBMODULE_INLINE_DIFF,
 
-Signed-off-by: Øystein Walle <oystwa@gmail.com>
----
- Documentation/git-for-each-ref.txt |  5 +++--
- ref-filter.c                       | 10 +++++++++-
- t/t6300-for-each-ref.sh            | 12 ++++++++++++
- 3 files changed, 24 insertions(+), 3 deletions(-)
+Same trailing comma.
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index f57e69b..039a86b 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -114,8 +114,9 @@ upstream::
- 	`refname` above.  Additionally respects `:track` to show
- 	"[ahead N, behind M]" and `:trackshort` to show the terse
- 	version: ">" (ahead), "<" (behind), "<>" (ahead and behind),
--	or "=" (in sync).  Has no effect if the ref does not have
--	tracking information associated with it.
-+	or "=" (in sync) and `:gone` to show "gone" if the remote ref
-+	does not exist, or an empty string if it does. Has no effect if
-+	the ref does not have tracking information associated with it.
- 
- push::
- 	The name of a local ref which represents the `@{push}` location
-diff --git a/ref-filter.c b/ref-filter.c
-index bc551a7..5402052 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -37,7 +37,7 @@ static struct used_atom {
- 	union {
- 		char color[COLOR_MAXLEN];
- 		struct align align;
--		enum { RR_NORMAL, RR_SHORTEN, RR_TRACK, RR_TRACKSHORT }
-+		enum { RR_NORMAL, RR_SHORTEN, RR_TRACK, RR_TRACKSHORT, RR_GONE }
- 			remote_ref;
- 		struct {
- 			enum { C_BARE, C_BODY, C_BODY_DEP, C_LINES, C_SIG, C_SUB } option;
-@@ -67,6 +67,8 @@ static void remote_ref_atom_parser(struct used_atom *atom, const char *arg)
- 		atom->u.remote_ref = RR_TRACK;
- 	else if (!strcmp(arg, "trackshort"))
- 		atom->u.remote_ref = RR_TRACKSHORT;
-+	else if (!strcmp(arg, "gone"))
-+		atom->u.remote_ref = RR_GONE;
- 	else
- 		die(_("unrecognized format: %%(%s)"), atom->name);
- }
-@@ -923,6 +925,12 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
- 			*s = ">";
- 		else
- 			*s = "<>";
-+	} else if (atom->u.remote_ref == RR_GONE) {
-+		const char *upstream;
-+		if (stat_tracking_info(branch, &num_ours, &num_theirs, &upstream) < 0)
-+			*s = "gone";
-+		else
-+			*s = "";
- 	} else /* RR_NORMAL */
- 		*s = refname;
- }
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 19a2823..1fc5d1d 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -383,6 +383,18 @@ test_expect_success 'Check that :track[short] works when upstream is invalid' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'Check that :gone produces expected results' '
-+	cat >expected <<-\EOF &&
-+gone
-+	EOF
-+	test_when_finished "git config branch.master.merge refs/heads/master" &&
-+	git config branch.master.merge refs/heads/does-not-exist &&
-+	git for-each-ref \
-+		--format="%(upstream:gone)" \
-+		refs/heads >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'Check for invalid refname format' '
- 	test_must_fail git for-each-ref --format="%(refname:INVALID)"
- '
--- 
-2.9.2
+>  };
+>  
+>  struct diff_options {
+> diff --git a/submodule.c b/submodule.c
+> index 7108b4786bc1..cecd3cd98de4 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -435,6 +435,68 @@ void show_submodule_summary(FILE *f, const char *path,
+>  	clear_commit_marks(right, ~0);
+>  }
+>  
+> +void show_submodule_inline_diff(FILE *f, const char *path,
+> +		const char *line_prefix,
+> +		struct object_id *one, struct object_id *two,
+> +		unsigned dirty_submodule, const char *meta,
+> +		const char *del, const char *add, const char *reset,
+> +		const struct diff_options *o)
+> +{
+> +	const struct object_id *old = &empty_tree_oid, *new = &empty_tree_oid;
+> +	struct commit *left = NULL, *right = NULL;
+> +	struct strbuf submodule_dir = STRBUF_INIT;
+> +	struct child_process cp = CHILD_PROCESS_INIT;
+> +
+> +	show_submodule_header(f, path, line_prefix, one, two, dirty_submodule,
+> +			      meta, reset, &left, &right);
+> +
+> +	/* We need a valid left and right commit to display a difference */
+> +	if (!(left || is_null_oid(one)) ||
+> +	    !(right || is_null_oid(two)))
+> +		goto done;
+> +
+> +	if (left)
+> +		old = one;
+> +	if (right)
+> +		new = two;
+> +
+> +	fflush(f);
+> +	cp.git_cmd = 1;
+> +	cp.dir = path;
+> +	cp.out = dup(fileno(f));
+> +	cp.no_stdin = 1;
+> +
+> +	/* TODO: other options may need to be passed here. */
+> +	argv_array_pushl(&cp.args, "diff");
 
+I think you meant argv_array_push() here.  Or ", NULL" at the end if
+you anticipate you would grow more args after "diff" later and keep
+using pushl().
