@@ -6,30 +6,31 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7235F1F859
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81FB22018E
 	for <e@80x24.org>; Fri, 19 Aug 2016 23:35:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755752AbcHSXfi (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Aug 2016 19:35:38 -0400
-Received: from mga01.intel.com ([192.55.52.88]:6539 "EHLO mga01.intel.com"
+        id S1755763AbcHSXfj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Aug 2016 19:35:39 -0400
+Received: from mga01.intel.com ([192.55.52.88]:50537 "EHLO mga01.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754598AbcHSXfe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2016 19:35:34 -0400
+        id S1755534AbcHSXff (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2016 19:35:35 -0400
 Received: from fmsmga002.fm.intel.com ([10.253.24.26])
   by fmsmga101.fm.intel.com with ESMTP; 19 Aug 2016 16:34:37 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.28,547,1464678000"; 
-   d="scan'208";a="1044481254"
+   d="scan'208";a="1044481261"
 Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.116])
-  by fmsmga002.fm.intel.com with ESMTP; 19 Aug 2016 16:34:36 -0700
+  by fmsmga002.fm.intel.com with ESMTP; 19 Aug 2016 16:34:37 -0700
 From:   Jacob Keller <jacob.e.keller@intel.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <stefanbeller@gmail.com>,
-        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v9 2/8] diff.c: remove output_prefix_length field
-Date:   Fri, 19 Aug 2016 16:34:26 -0700
-Message-Id: <20160819233432.15188-3-jacob.e.keller@intel.com>
+        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: [PATCH v9 6/8] submodule: convert show_submodule_summary to use struct object_id *
+Date:   Fri, 19 Aug 2016 16:34:30 -0700
+Message-Id: <20160819233432.15188-7-jacob.e.keller@intel.com>
 X-Mailer: git-send-email 2.10.0.rc0.259.g83512d9
 In-Reply-To: <20160819233432.15188-1-jacob.e.keller@intel.com>
 References: <20160819233432.15188-1-jacob.e.keller@intel.com>
@@ -38,76 +39,96 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Junio C Hamano <gitster@pobox.com>
+From: Jacob Keller <jacob.keller@gmail.com>
 
-"diff/log --stat" has a logic that determines the display columns
-available for the diffstat part of the output and apportions it for
-pathnames and diffstat graph automatically.
+Since we're going to be changing this function in a future patch, lets
+go ahead and convert this to use object_id now.
 
-5e71a84a (Add output_prefix_length to diff_options, 2012-04-16)
-added the output_prefix_length field to diff_options structure to
-allow this logic to subtract the display columns used for the
-history graph part from the total "terminal width"; this matters
-when the "git log --graph -p" option is in use.
-
-The field must be set to the number of display columns needed to
-show the output from the output_prefix() callback, which is error
-prone.  As there is only one user of the field, and the user has the
-actual value of the prefix string, let's get rid of the field and
-have the user count the display width itself.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 ---
- diff.c  | 2 +-
- diff.h  | 1 -
- graph.c | 2 --
- 3 files changed, 1 insertion(+), 4 deletions(-)
+ diff.c      |  2 +-
+ submodule.c | 16 ++++++++--------
+ submodule.h |  2 +-
+ 3 files changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 534c12e28ea8..50bef1f07658 100644
+index d6b321da3d1d..16253b191f53 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -1625,7 +1625,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 	 */
+@@ -2307,7 +2307,7 @@ static void builtin_diff(const char *name_a,
+ 		const char *add = diff_get_color_opt(o, DIFF_FILE_NEW);
+ 		show_submodule_summary(o->file, one->path ? one->path : two->path,
+ 				line_prefix,
+-				one->oid.hash, two->oid.hash,
++				&one->oid, &two->oid,
+ 				two->dirty_submodule,
+ 				meta, del, add, reset);
+ 		return;
+diff --git a/submodule.c b/submodule.c
+index e1a51b7506ff..422353ccf6cc 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -335,7 +335,7 @@ static void print_submodule_summary(struct rev_info *rev, FILE *f,
  
- 	if (options->stat_width == -1)
--		width = term_columns() - options->output_prefix_length;
-+		width = term_columns() - strlen(line_prefix);
+ void show_submodule_summary(FILE *f, const char *path,
+ 		const char *line_prefix,
+-		unsigned char one[20], unsigned char two[20],
++		struct object_id *one, struct object_id *two,
+ 		unsigned dirty_submodule, const char *meta,
+ 		const char *del, const char *add, const char *reset)
+ {
+@@ -345,14 +345,14 @@ void show_submodule_summary(FILE *f, const char *path,
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int fast_forward = 0, fast_backward = 0;
+ 
+-	if (is_null_sha1(two))
++	if (is_null_oid(two))
+ 		message = "(submodule deleted)";
+ 	else if (add_submodule_odb(path))
+ 		message = "(not initialized)";
+-	else if (is_null_sha1(one))
++	else if (is_null_oid(one))
+ 		message = "(new submodule)";
+-	else if (!(left = lookup_commit_reference(one)) ||
+-		 !(right = lookup_commit_reference(two)))
++	else if (!(left = lookup_commit_reference(one->hash)) ||
++		 !(right = lookup_commit_reference(two->hash)))
+ 		message = "(commits not present)";
+ 	else if (prepare_submodule_summary(&rev, path, left, right,
+ 					   &fast_forward, &fast_backward))
+@@ -365,16 +365,16 @@ void show_submodule_summary(FILE *f, const char *path,
+ 		fprintf(f, "%sSubmodule %s contains modified content\n",
+ 			line_prefix, path);
+ 
+-	if (!hashcmp(one, two)) {
++	if (!oidcmp(one, two)) {
+ 		strbuf_release(&sb);
+ 		return;
+ 	}
+ 
+ 	strbuf_addf(&sb, "%s%sSubmodule %s %s..", line_prefix, meta, path,
+-			find_unique_abbrev(one, DEFAULT_ABBREV));
++			find_unique_abbrev(one->hash, DEFAULT_ABBREV));
+ 	if (!fast_backward && !fast_forward)
+ 		strbuf_addch(&sb, '.');
+-	strbuf_addf(&sb, "%s", find_unique_abbrev(two, DEFAULT_ABBREV));
++	strbuf_addf(&sb, "%s", find_unique_abbrev(two->hash, DEFAULT_ABBREV));
+ 	if (message)
+ 		strbuf_addf(&sb, " %s%s\n", message, reset);
  	else
- 		width = options->stat_width ? options->stat_width : 80;
- 	number_width = decimal_width(max_change) > number_width ?
-diff --git a/diff.h b/diff.h
-index 7883729edf10..747a204d75a4 100644
---- a/diff.h
-+++ b/diff.h
-@@ -174,7 +174,6 @@ struct diff_options {
- 	diff_format_fn_t format_callback;
- 	void *format_callback_data;
- 	diff_prefix_fn_t output_prefix;
--	int output_prefix_length;
- 	void *output_prefix_data;
- 
- 	int diff_path_counter;
-diff --git a/graph.c b/graph.c
-index dd1720148dc5..a46803840511 100644
---- a/graph.c
-+++ b/graph.c
-@@ -197,7 +197,6 @@ static struct strbuf *diff_output_prefix_callback(struct diff_options *opt, void
- 	assert(opt);
- 	assert(graph);
- 
--	opt->output_prefix_length = graph->width;
- 	strbuf_reset(&msgbuf);
- 	graph_padding_line(graph, &msgbuf);
- 	return &msgbuf;
-@@ -245,7 +244,6 @@ struct git_graph *graph_init(struct rev_info *opt)
- 	 */
- 	opt->diffopt.output_prefix = diff_output_prefix_callback;
- 	opt->diffopt.output_prefix_data = graph;
--	opt->diffopt.output_prefix_length = 0;
- 
- 	return graph;
- }
+diff --git a/submodule.h b/submodule.h
+index 2af939099819..d83df57e24ff 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -43,7 +43,7 @@ const char *submodule_strategy_to_string(const struct submodule_update_strategy
+ void handle_ignore_submodules_arg(struct diff_options *diffopt, const char *);
+ void show_submodule_summary(FILE *f, const char *path,
+ 		const char *line_prefix,
+-		unsigned char one[20], unsigned char two[20],
++		struct object_id *one, struct object_id *two,
+ 		unsigned dirty_submodule, const char *meta,
+ 		const char *del, const char *add, const char *reset);
+ void set_config_fetch_recurse_submodules(int value);
 -- 
 2.10.0.rc0.259.g83512d9
 
