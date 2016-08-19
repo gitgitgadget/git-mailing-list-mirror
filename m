@@ -6,20 +6,20 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 604E91F6C1
-	for <e@80x24.org>; Fri, 19 Aug 2016 02:01:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DF5B1F6C1
+	for <e@80x24.org>; Fri, 19 Aug 2016 02:04:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754269AbcHSAyU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Aug 2016 20:54:20 -0400
+        id S1754334AbcHSCCE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Aug 2016 22:02:04 -0400
 Received: from mga11.intel.com ([192.55.52.93]:55818 "EHLO mga11.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754004AbcHSAyQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Aug 2016 20:54:16 -0400
+        id S1754051AbcHSAyS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Aug 2016 20:54:18 -0400
 Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga102.fm.intel.com with ESMTP; 18 Aug 2016 17:00:46 -0700
+  by fmsmga102.fm.intel.com with ESMTP; 18 Aug 2016 17:00:45 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.28,542,1464678000"; 
-   d="scan'208";a="867906884"
+   d="scan'208";a="867906877"
 Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.116])
   by orsmga003.jf.intel.com with ESMTP; 18 Aug 2016 17:00:40 -0700
 From:   Jacob Keller <jacob.e.keller@intel.com>
@@ -28,9 +28,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <stefanbeller@gmail.com>,
         Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
         Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH v8 7/8] cache: add empty_tree_oid object
-Date:   Thu, 18 Aug 2016 17:00:30 -0700
-Message-Id: <20160819000031.24854-8-jacob.e.keller@intel.com>
+Subject: [PATCH v8 5/8] submodule: convert show_submodule_summary to use struct object_id *
+Date:   Thu, 18 Aug 2016 17:00:28 -0700
+Message-Id: <20160819000031.24854-6-jacob.e.keller@intel.com>
 X-Mailer: git-send-email 2.10.0.rc0.217.g609f9e8.dirty
 In-Reply-To: <20160819000031.24854-1-jacob.e.keller@intel.com>
 References: <20160819000031.24854-1-jacob.e.keller@intel.com>
@@ -41,43 +41,94 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jacob Keller <jacob.keller@gmail.com>
 
-Add an empty_tree_oid object which can be used in place of
-EMPTY_TREE_SHA1_BIN_LITERAL for code which is being converted to struct
-object_id.
+Since we're going to be changing this function in a future patch, lets
+go ahead and convert this to use object_id now.
 
 Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 ---
- cache.h     | 2 ++
- sha1_file.c | 3 +++
- 2 files changed, 5 insertions(+)
+ diff.c      |  2 +-
+ submodule.c | 16 ++++++++--------
+ submodule.h |  2 +-
+ 3 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index f30a4417efdf..da9f0be67d7b 100644
---- a/cache.h
-+++ b/cache.h
-@@ -964,6 +964,8 @@ static inline void oidclr(struct object_id *oid)
- #define EMPTY_BLOB_SHA1_BIN \
- 	((const unsigned char *) EMPTY_BLOB_SHA1_BIN_LITERAL)
+diff --git a/diff.c b/diff.c
+index d6b321da3d1d..16253b191f53 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2307,7 +2307,7 @@ static void builtin_diff(const char *name_a,
+ 		const char *add = diff_get_color_opt(o, DIFF_FILE_NEW);
+ 		show_submodule_summary(o->file, one->path ? one->path : two->path,
+ 				line_prefix,
+-				one->oid.hash, two->oid.hash,
++				&one->oid, &two->oid,
+ 				two->dirty_submodule,
+ 				meta, del, add, reset);
+ 		return;
+diff --git a/submodule.c b/submodule.c
+index e1a51b7506ff..422353ccf6cc 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -335,7 +335,7 @@ static void print_submodule_summary(struct rev_info *rev, FILE *f,
  
-+extern const struct object_id empty_tree_oid;
-+
- static inline int is_empty_blob_sha1(const unsigned char *sha1)
+ void show_submodule_summary(FILE *f, const char *path,
+ 		const char *line_prefix,
+-		unsigned char one[20], unsigned char two[20],
++		struct object_id *one, struct object_id *two,
+ 		unsigned dirty_submodule, const char *meta,
+ 		const char *del, const char *add, const char *reset)
  {
- 	return !hashcmp(sha1, EMPTY_BLOB_SHA1_BIN);
-diff --git a/sha1_file.c b/sha1_file.c
-index 1e23fc186a02..10883d56a600 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -38,6 +38,9 @@ static inline uintmax_t sz_fmt(size_t s) { return s; }
+@@ -345,14 +345,14 @@ void show_submodule_summary(FILE *f, const char *path,
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int fast_forward = 0, fast_backward = 0;
  
- const unsigned char null_sha1[20];
- const struct object_id null_oid;
-+const struct object_id empty_tree_oid = {
-+	.hash = EMPTY_TREE_SHA1_BIN_LITERAL
-+};
+-	if (is_null_sha1(two))
++	if (is_null_oid(two))
+ 		message = "(submodule deleted)";
+ 	else if (add_submodule_odb(path))
+ 		message = "(not initialized)";
+-	else if (is_null_sha1(one))
++	else if (is_null_oid(one))
+ 		message = "(new submodule)";
+-	else if (!(left = lookup_commit_reference(one)) ||
+-		 !(right = lookup_commit_reference(two)))
++	else if (!(left = lookup_commit_reference(one->hash)) ||
++		 !(right = lookup_commit_reference(two->hash)))
+ 		message = "(commits not present)";
+ 	else if (prepare_submodule_summary(&rev, path, left, right,
+ 					   &fast_forward, &fast_backward))
+@@ -365,16 +365,16 @@ void show_submodule_summary(FILE *f, const char *path,
+ 		fprintf(f, "%sSubmodule %s contains modified content\n",
+ 			line_prefix, path);
  
- /*
-  * This is meant to hold a *small* number of objects that you would
+-	if (!hashcmp(one, two)) {
++	if (!oidcmp(one, two)) {
+ 		strbuf_release(&sb);
+ 		return;
+ 	}
+ 
+ 	strbuf_addf(&sb, "%s%sSubmodule %s %s..", line_prefix, meta, path,
+-			find_unique_abbrev(one, DEFAULT_ABBREV));
++			find_unique_abbrev(one->hash, DEFAULT_ABBREV));
+ 	if (!fast_backward && !fast_forward)
+ 		strbuf_addch(&sb, '.');
+-	strbuf_addf(&sb, "%s", find_unique_abbrev(two, DEFAULT_ABBREV));
++	strbuf_addf(&sb, "%s", find_unique_abbrev(two->hash, DEFAULT_ABBREV));
+ 	if (message)
+ 		strbuf_addf(&sb, " %s%s\n", message, reset);
+ 	else
+diff --git a/submodule.h b/submodule.h
+index 2af939099819..d83df57e24ff 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -43,7 +43,7 @@ const char *submodule_strategy_to_string(const struct submodule_update_strategy
+ void handle_ignore_submodules_arg(struct diff_options *diffopt, const char *);
+ void show_submodule_summary(FILE *f, const char *path,
+ 		const char *line_prefix,
+-		unsigned char one[20], unsigned char two[20],
++		struct object_id *one, struct object_id *two,
+ 		unsigned dirty_submodule, const char *meta,
+ 		const char *del, const char *add, const char *reset);
+ void set_config_fetch_recurse_submodules(int value);
 -- 
 2.10.0.rc0.217.g609f9e8.dirty
 
