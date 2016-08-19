@@ -6,31 +6,31 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 056841F859
-	for <e@80x24.org>; Fri, 19 Aug 2016 23:35:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D9101F859
+	for <e@80x24.org>; Fri, 19 Aug 2016 23:35:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755781AbcHSXfj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Aug 2016 19:35:39 -0400
-Received: from mga01.intel.com ([192.55.52.88]:6539 "EHLO mga01.intel.com"
+        id S1755674AbcHSXfh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Aug 2016 19:35:37 -0400
+Received: from mga01.intel.com ([192.55.52.88]:49730 "EHLO mga01.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755545AbcHSXfg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2016 19:35:36 -0400
+        id S1755529AbcHSXff (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2016 19:35:35 -0400
 Received: from fmsmga002.fm.intel.com ([10.253.24.26])
   by fmsmga101.fm.intel.com with ESMTP; 19 Aug 2016 16:34:37 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.28,547,1464678000"; 
-   d="scan'208";a="1044481253"
+   d="scan'208";a="1044481259"
 Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.116])
-  by fmsmga002.fm.intel.com with ESMTP; 19 Aug 2016 16:34:36 -0700
+  by fmsmga002.fm.intel.com with ESMTP; 19 Aug 2016 16:34:37 -0700
 From:   Jacob Keller <jacob.e.keller@intel.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <stefanbeller@gmail.com>,
         Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
         Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH v9 1/8] cache: add empty_tree_oid object and helper function
-Date:   Fri, 19 Aug 2016 16:34:25 -0700
-Message-Id: <20160819233432.15188-2-jacob.e.keller@intel.com>
+Subject: [PATCH v9 5/8] submodule: allow add_submodule_odb to work even if path is not checked out
+Date:   Fri, 19 Aug 2016 16:34:29 -0700
+Message-Id: <20160819233432.15188-6-jacob.e.keller@intel.com>
 X-Mailer: git-send-email 2.10.0.rc0.259.g83512d9
 In-Reply-To: <20160819233432.15188-1-jacob.e.keller@intel.com>
 References: <20160819233432.15188-1-jacob.e.keller@intel.com>
@@ -41,86 +41,222 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jacob Keller <jacob.keller@gmail.com>
 
-Similar to is_null_oid(), and is_empty_blob_sha1() add an
-empty_tree_oid along with helper function is_empty_tree_oid(). For
-completeness, also add an "is_empty_tree_sha1()",
-"is_empty_blob_sha1()", "is_empty_tree_oid()" and "is_empty_blob_oid()"
-helpers.
+Currently, do_submodule_path will first try to locate the git directory
+using read_gitfile on <path to submodule>/.git. If this fails, it goes
+ahead and assumes the path is actually the git directory. This is good
+as it allows submodules which aren't stored in the superproject's .git
+directory to function correctly. However, in some cases the submodule is
+no longer locally checked out, but still has object data stored in the
+parent project's .git/modules/<path to submodule>.
 
-To ensure we only get one singleton, implement EMPTY_BLOB_SHA1_BIN as
-simply getting the hash of empty_blob_oid structure.
+To make this work, add code to check if we found a valid git directory.
+If we haven't, then try the standard location of module data instead.
+This has the advantage of allowing callers of do_submodule_path
+(add_submodule_odb) to correctly function even if the submodule isn't
+currently checked out, but was previously initialized.
+
+Update the wording of the submodule log diff format to correctly
+display that the submodule is "not initialized" instead of "not checked
+out"
+
+Add tests to ensure that even once we remove the submodule directory, it
+works by checking in the .git directory.
 
 Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 ---
- cache.h     | 25 +++++++++++++++++++++----
- sha1_file.c |  6 ++++++
- 2 files changed, 27 insertions(+), 4 deletions(-)
+ path.c                                    |  16 ++++
+ submodule.c                               |   2 +-
+ t/t4059-diff-submodule-not-initialized.sh | 127 ++++++++++++++++++++++++++++++
+ 3 files changed, 144 insertions(+), 1 deletion(-)
+ create mode 100755 t/t4059-diff-submodule-not-initialized.sh
 
-diff --git a/cache.h b/cache.h
-index f30a4417efdf..70428e92d7ed 100644
---- a/cache.h
-+++ b/cache.h
-@@ -953,22 +953,39 @@ static inline void oidclr(struct object_id *oid)
- #define EMPTY_TREE_SHA1_BIN_LITERAL \
- 	 "\x4b\x82\x5d\xc6\x42\xcb\x6e\xb9\xa0\x60" \
- 	 "\xe5\x4b\xf8\xd6\x92\x88\xfb\xee\x49\x04"
--#define EMPTY_TREE_SHA1_BIN \
--	 ((const unsigned char *) EMPTY_TREE_SHA1_BIN_LITERAL)
-+extern const struct object_id empty_tree_oid;
-+#define EMPTY_TREE_SHA1_BIN (empty_tree_oid.hash)
+diff --git a/path.c b/path.c
+index fe3c4d96c6d8..081a22c1163c 100644
+--- a/path.c
++++ b/path.c
+@@ -6,6 +6,7 @@
+ #include "string-list.h"
+ #include "dir.h"
+ #include "worktree.h"
++#include "submodule-config.h"
  
- #define EMPTY_BLOB_SHA1_HEX \
- 	"e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
- #define EMPTY_BLOB_SHA1_BIN_LITERAL \
- 	"\xe6\x9d\xe2\x9b\xb2\xd1\xd6\x43\x4b\x8b" \
- 	"\x29\xae\x77\x5a\xd8\xc2\xe4\x8c\x53\x91"
--#define EMPTY_BLOB_SHA1_BIN \
--	((const unsigned char *) EMPTY_BLOB_SHA1_BIN_LITERAL)
-+extern const struct object_id empty_blob_oid;
-+#define EMPTY_BLOB_SHA1_BIN (empty_blob_oid.hash)
-+
- 
- static inline int is_empty_blob_sha1(const unsigned char *sha1)
+ static int get_st_mode_bits(const char *path, int *mode)
  {
- 	return !hashcmp(sha1, EMPTY_BLOB_SHA1_BIN);
- }
+@@ -474,6 +475,7 @@ static void do_submodule_path(struct strbuf *buf, const char *path,
+ 	const char *git_dir;
+ 	struct strbuf git_submodule_common_dir = STRBUF_INIT;
+ 	struct strbuf git_submodule_dir = STRBUF_INIT;
++	const struct submodule *submodule_config;
  
-+static inline int is_empty_blob_oid(const struct object_id *oid)
-+{
-+	return !hashcmp(oid->hash, EMPTY_BLOB_SHA1_BIN);
+ 	strbuf_addstr(buf, path);
+ 	strbuf_complete(buf, '/');
+@@ -484,6 +486,20 @@ static void do_submodule_path(struct strbuf *buf, const char *path,
+ 		strbuf_reset(buf);
+ 		strbuf_addstr(buf, git_dir);
+ 	}
++	if (!is_git_directory(buf->buf)) {
++		strbuf_reset(buf);
++		/*
++		 * Lookup the submodule name from the config. If that fails
++		 * fall back to assuming the path is the name.
++		 */
++		submodule_config = submodule_from_path(null_sha1, path);
++		if (submodule_config)
++			strbuf_git_path(buf, "%s/%s", "modules",
++					submodule_config->name);
++		else
++			strbuf_git_path(buf, "%s/%s", "modules", path);
++	}
++
+ 	strbuf_addch(buf, '/');
+ 	strbuf_addbuf(&git_submodule_dir, buf);
+ 
+diff --git a/submodule.c b/submodule.c
+index 1b5cdfb7e784..e1a51b7506ff 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -348,7 +348,7 @@ void show_submodule_summary(FILE *f, const char *path,
+ 	if (is_null_sha1(two))
+ 		message = "(submodule deleted)";
+ 	else if (add_submodule_odb(path))
+-		message = "(not checked out)";
++		message = "(not initialized)";
+ 	else if (is_null_sha1(one))
+ 		message = "(new submodule)";
+ 	else if (!(left = lookup_commit_reference(one)) ||
+diff --git a/t/t4059-diff-submodule-not-initialized.sh b/t/t4059-diff-submodule-not-initialized.sh
+new file mode 100755
+index 000000000000..c8775854d3c2
+--- /dev/null
++++ b/t/t4059-diff-submodule-not-initialized.sh
+@@ -0,0 +1,127 @@
++#!/bin/sh
++#
++# Copyright (c) 2016 Jacob Keller, based on t4041 by Jens Lehmann
++#
++
++test_description='Test for submodule diff on non-checked out submodule
++
++This test tries to verify that add_submodule_odb works when the submodule was
++initialized previously but the checkout has since been removed.
++'
++
++. ./test-lib.sh
++
++# Tested non-UTF-8 encoding
++test_encoding="ISO8859-1"
++
++# String "added" in German (translated with Google Translate), encoded in UTF-8,
++# used in sample commit log messages in add_file() function below.
++added=$(printf "hinzugef\303\274gt")
++
++add_file () {
++	(
++		cd "$1" &&
++		shift &&
++		for name
++		do
++			echo "$name" >"$name" &&
++			git add "$name" &&
++			test_tick &&
++			# "git commit -m" would break MinGW, as Windows refuse to pass
++			# $test_encoding encoded parameter to git.
++			echo "Add $name ($added $name)" | iconv -f utf-8 -t $test_encoding |
++			git -c "i18n.commitEncoding=$test_encoding" commit -F -
++		done >/dev/null &&
++		git rev-parse --short --verify HEAD
++	)
 +}
 +
-+static inline int is_empty_tree_sha1(const unsigned char *sha1)
-+{
-+	return !hashcmp(sha1, EMPTY_TREE_SHA1_BIN);
++commit_file () {
++	test_tick &&
++	git commit "$@" -m "Commit $*" >/dev/null
 +}
 +
-+static inline int is_empty_tree_oid(const struct object_id *oid)
-+{
-+	return !hashcmp(oid->hash, EMPTY_TREE_SHA1_BIN);
-+}
++test_expect_success 'setup - submodules' '
++	test_create_repo sm2 &&
++	add_file . foo &&
++	add_file sm2 foo1 foo2 &&
++	smhead1=$(git -C sm2 rev-parse --short --verify HEAD)
++'
 +
++test_expect_success 'setup - git submodule add' '
++	git submodule add ./sm2 sm1 &&
++	commit_file sm1 &&
++	git diff-tree -p --no-commit-id --submodule=log HEAD >actual &&
++	cat >expected <<-EOF &&
++	Submodule sm1 0000000...$smhead1 (new submodule)
++	EOF
++	test_cmp expected actual
++'
 +
- int git_mkstemp(char *path, size_t n, const char *template);
- 
- /* set default permissions by passing mode arguments to open(2) */
-diff --git a/sha1_file.c b/sha1_file.c
-index 1e23fc186a02..21cf923bcf1f 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -38,6 +38,12 @@ static inline uintmax_t sz_fmt(size_t s) { return s; }
- 
- const unsigned char null_sha1[20];
- const struct object_id null_oid;
-+const struct object_id empty_tree_oid = {
-+	EMPTY_TREE_SHA1_BIN_LITERAL
-+};
-+const struct object_id empty_blob_oid = {
-+	EMPTY_BLOB_SHA1_BIN_LITERAL
-+};
- 
- /*
-  * This is meant to hold a *small* number of objects that you would
++test_expect_success 'submodule directory removed' '
++	rm -rf sm1 &&
++	git diff-tree -p --no-commit-id --submodule=log HEAD >actual &&
++	cat >expected <<-EOF &&
++	Submodule sm1 0000000...$smhead1 (new submodule)
++	EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'setup - submodule multiple commits' '
++	git submodule update --checkout sm1 &&
++	smhead2=$(add_file sm1 foo3 foo4) &&
++	commit_file sm1 &&
++	git diff-tree -p --no-commit-id --submodule=log HEAD >actual &&
++	cat >expected <<-EOF &&
++	Submodule sm1 $smhead1..$smhead2:
++	  > Add foo4 ($added foo4)
++	  > Add foo3 ($added foo3)
++	EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'submodule removed multiple commits' '
++	rm -rf sm1 &&
++	git diff-tree -p --no-commit-id --submodule=log HEAD >actual &&
++	cat >expected <<-EOF &&
++	Submodule sm1 $smhead1..$smhead2:
++	  > Add foo4 ($added foo4)
++	  > Add foo3 ($added foo3)
++	EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'submodule not initialized in new clone' '
++	git clone . sm3 &&
++	git -C sm3 diff-tree -p --no-commit-id --submodule=log HEAD >actual &&
++	cat >expected <<-EOF &&
++	Submodule sm1 $smhead1...$smhead2 (not initialized)
++	EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'setup submodule moved' '
++	git submodule update --checkout sm1 &&
++	git mv sm1 sm4 &&
++	commit_file sm4 &&
++	git diff-tree -p --no-commit-id --submodule=log HEAD >actual &&
++	cat >expected <<-EOF &&
++	Submodule sm4 0000000...$smhead2 (new submodule)
++	EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'submodule moved then removed' '
++	smhead3=$(add_file sm4 foo6 foo7) &&
++	commit_file sm4 &&
++	rm -rf sm4 &&
++	git diff-tree -p --no-commit-id --submodule=log HEAD >actual &&
++	cat >expected <<-EOF &&
++	Submodule sm4 $smhead2..$smhead3:
++	  > Add foo7 ($added foo7)
++	  > Add foo6 ($added foo6)
++	EOF
++	test_cmp expected actual
++'
++
++test_done
 -- 
 2.10.0.rc0.259.g83512d9
 
