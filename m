@@ -6,30 +6,31 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0B2D1F6C1
-	for <e@80x24.org>; Fri, 19 Aug 2016 01:58:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F3DE1F6C1
+	for <e@80x24.org>; Fri, 19 Aug 2016 02:01:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754271AbcHSB6U (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Aug 2016 21:58:20 -0400
-Received: from mga11.intel.com ([192.55.52.93]:55818 "EHLO mga11.intel.com"
+        id S1754032AbcHSCBn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Aug 2016 22:01:43 -0400
+Received: from mga11.intel.com ([192.55.52.93]:18431 "EHLO mga11.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754285AbcHSAyX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Aug 2016 20:54:23 -0400
+        id S1754116AbcHSAyV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Aug 2016 20:54:21 -0400
 Received: from orsmga003.jf.intel.com ([10.7.209.27])
   by fmsmga102.fm.intel.com with ESMTP; 18 Aug 2016 17:00:45 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.28,542,1464678000"; 
-   d="scan'208";a="867906856"
+   d="scan'208";a="867906872"
 Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.116])
   by orsmga003.jf.intel.com with ESMTP; 18 Aug 2016 17:00:40 -0700
 From:   Jacob Keller <jacob.e.keller@intel.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <stefanbeller@gmail.com>,
-        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v8 1/8] diff.c: remove output_prefix_length field
-Date:   Thu, 18 Aug 2016 17:00:24 -0700
-Message-Id: <20160819000031.24854-2-jacob.e.keller@intel.com>
+        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: [PATCH v8 3/8] diff: prepare for additional submodule formats
+Date:   Thu, 18 Aug 2016 17:00:26 -0700
+Message-Id: <20160819000031.24854-4-jacob.e.keller@intel.com>
 X-Mailer: git-send-email 2.10.0.rc0.217.g609f9e8.dirty
 In-Reply-To: <20160819000031.24854-1-jacob.e.keller@intel.com>
 References: <20160819000031.24854-1-jacob.e.keller@intel.com>
@@ -38,76 +39,89 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Junio C Hamano <gitster@pobox.com>
+From: Jacob Keller <jacob.keller@gmail.com>
 
-"diff/log --stat" has a logic that determines the display columns
-available for the diffstat part of the output and apportions it for
-pathnames and diffstat graph automatically.
+A future patch will add a new format for displaying the difference of
+a submodule. Make it easier by changing how we store the current
+selected format. Replace the DIFF_OPT flag with an enumeration, as each
+format will be mutually exclusive.
 
-5e71a84a (Add output_prefix_length to diff_options, 2012-04-16)
-added the output_prefix_length field to diff_options structure to
-allow this logic to subtract the display columns used for the
-history graph part from the total "terminal width"; this matters
-when the "git log --graph -p" option is in use.
-
-The field must be set to the number of display columns needed to
-show the output from the output_prefix() callback, which is error
-prone.  As there is only one user of the field, and the user has the
-actual value of the prefix string, let's get rid of the field and
-have the user count the display width itself.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 ---
- diff.c  | 2 +-
- diff.h  | 1 -
- graph.c | 2 --
- 3 files changed, 1 insertion(+), 4 deletions(-)
+ diff.c | 12 ++++++------
+ diff.h |  7 ++++++-
+ 2 files changed, 12 insertions(+), 7 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 534c12e28ea8..50bef1f07658 100644
+index e57cf39ad109..d6b321da3d1d 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -1625,7 +1625,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 	 */
- 
- 	if (options->stat_width == -1)
--		width = term_columns() - options->output_prefix_length;
-+		width = term_columns() - strlen(line_prefix);
+@@ -132,9 +132,9 @@ static int parse_dirstat_params(struct diff_options *options, const char *params
+ static int parse_submodule_params(struct diff_options *options, const char *value)
+ {
+ 	if (!strcmp(value, "log"))
+-		DIFF_OPT_SET(options, SUBMODULE_LOG);
++		options->submodule_format = DIFF_SUBMODULE_LOG;
+ 	else if (!strcmp(value, "short"))
+-		DIFF_OPT_CLR(options, SUBMODULE_LOG);
++		options->submodule_format = DIFF_SUBMODULE_SHORT;
  	else
- 		width = options->stat_width ? options->stat_width : 80;
- 	number_width = decimal_width(max_change) > number_width ?
+ 		return -1;
+ 	return 0;
+@@ -2300,9 +2300,9 @@ static void builtin_diff(const char *name_a,
+ 	struct strbuf header = STRBUF_INIT;
+ 	const char *line_prefix = diff_line_prefix(o);
+ 
+-	if (DIFF_OPT_TST(o, SUBMODULE_LOG) &&
+-			(!one->mode || S_ISGITLINK(one->mode)) &&
+-			(!two->mode || S_ISGITLINK(two->mode))) {
++	if (o->submodule_format == DIFF_SUBMODULE_LOG &&
++	    (!one->mode || S_ISGITLINK(one->mode)) &&
++	    (!two->mode || S_ISGITLINK(two->mode))) {
+ 		const char *del = diff_get_color_opt(o, DIFF_FILE_OLD);
+ 		const char *add = diff_get_color_opt(o, DIFF_FILE_NEW);
+ 		show_submodule_summary(o->file, one->path ? one->path : two->path,
+@@ -3916,7 +3916,7 @@ int diff_opt_parse(struct diff_options *options,
+ 		DIFF_OPT_SET(options, OVERRIDE_SUBMODULE_CONFIG);
+ 		handle_ignore_submodules_arg(options, arg);
+ 	} else if (!strcmp(arg, "--submodule"))
+-		DIFF_OPT_SET(options, SUBMODULE_LOG);
++		options->submodule_format = DIFF_SUBMODULE_LOG;
+ 	else if (skip_prefix(arg, "--submodule=", &arg))
+ 		return parse_submodule_opt(options, arg);
+ 	else if (skip_prefix(arg, "--ws-error-highlight=", &arg))
 diff --git a/diff.h b/diff.h
-index 7883729edf10..747a204d75a4 100644
+index 1f57aad25c71..ea5aba668eaa 100644
 --- a/diff.h
 +++ b/diff.h
-@@ -174,7 +174,6 @@ struct diff_options {
- 	diff_format_fn_t format_callback;
- 	void *format_callback_data;
- 	diff_prefix_fn_t output_prefix;
--	int output_prefix_length;
- 	void *output_prefix_data;
+@@ -83,7 +83,6 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
+ #define DIFF_OPT_DIRSTAT_BY_FILE     (1 << 20)
+ #define DIFF_OPT_ALLOW_TEXTCONV      (1 << 21)
+ #define DIFF_OPT_DIFF_FROM_CONTENTS  (1 << 22)
+-#define DIFF_OPT_SUBMODULE_LOG       (1 << 23)
+ #define DIFF_OPT_DIRTY_SUBMODULES    (1 << 24)
+ #define DIFF_OPT_IGNORE_UNTRACKED_IN_SUBMODULES (1 << 25)
+ #define DIFF_OPT_IGNORE_DIRTY_SUBMODULES (1 << 26)
+@@ -110,6 +109,11 @@ enum diff_words_type {
+ 	DIFF_WORDS_COLOR
+ };
  
- 	int diff_path_counter;
-diff --git a/graph.c b/graph.c
-index dd1720148dc5..a46803840511 100644
---- a/graph.c
-+++ b/graph.c
-@@ -197,7 +197,6 @@ static struct strbuf *diff_output_prefix_callback(struct diff_options *opt, void
- 	assert(opt);
- 	assert(graph);
++enum diff_submodule_format {
++	DIFF_SUBMODULE_SHORT = 0,
++	DIFF_SUBMODULE_LOG,
++};
++
+ struct diff_options {
+ 	const char *orderfile;
+ 	const char *pickaxe;
+@@ -157,6 +161,7 @@ struct diff_options {
+ 	int stat_count;
+ 	const char *word_regex;
+ 	enum diff_words_type word_diff;
++	enum diff_submodule_format submodule_format;
  
--	opt->output_prefix_length = graph->width;
- 	strbuf_reset(&msgbuf);
- 	graph_padding_line(graph, &msgbuf);
- 	return &msgbuf;
-@@ -245,7 +244,6 @@ struct git_graph *graph_init(struct rev_info *opt)
- 	 */
- 	opt->diffopt.output_prefix = diff_output_prefix_callback;
- 	opt->diffopt.output_prefix_data = graph;
--	opt->diffopt.output_prefix_length = 0;
- 
- 	return graph;
- }
+ 	/* this is set by diffcore for DIFF_FORMAT_PATCH */
+ 	int found_changes;
 -- 
 2.10.0.rc0.217.g609f9e8.dirty
 
