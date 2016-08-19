@@ -2,247 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 539B61F859
-	for <e@80x24.org>; Fri, 19 Aug 2016 20:19:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3BCFE1F859
+	for <e@80x24.org>; Fri, 19 Aug 2016 20:24:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755315AbcHSUTL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Aug 2016 16:19:11 -0400
-Received: from mail-pa0-f68.google.com ([209.85.220.68]:35173 "EHLO
-        mail-pa0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752435AbcHSUTK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2016 16:19:10 -0400
-Received: by mail-pa0-f68.google.com with SMTP id cf3so3848556pad.2
-        for <git@vger.kernel.org>; Fri, 19 Aug 2016 13:18:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=fDqwdy4CQm0fzkJnGQLFtKG4Z1zKdIT0zaLb6EoHNL0=;
-        b=UOQoQNaRPXD5dyUhITNuk+htnmidSrkUkd9EuYtShvFRA/jQStdvJyI7/PmQ94qw+1
-         yM/YzIyJ56B2lMEJJnwYPZuxAE7licbxPt/yUgXogfSIiqKLgLQwMilDoyTTOk9K+jp3
-         3xghqcs1kysqXDyFdJC/7wyZCM9Qb3qejE5n+qbPqbglprb/w92RJ91InxqDMbLbO9zb
-         sZZ26O1LmZFFzZsf1hDtVwHnInI3Qus3vdsCuoN/l9a9vQwXBCYhtl9GKdaMOuH1y3mn
-         bKcA36Pu0SrBbAsqHOTBWQxFX2bnXqHJC165Dl7mbrdvvMhH8VMeWIOavZVxYx0503/Q
-         Eyqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=fDqwdy4CQm0fzkJnGQLFtKG4Z1zKdIT0zaLb6EoHNL0=;
-        b=aeqw7fECw9EdIV2Vpwg1OMuHYB7yWm4P40k3H0lF+mFET8pZG84R/GbwZGucgeoEW2
-         asMlt3TwgoWFy+b/YytW7XriD3O3FX0mt/ZKZuNUNHOBGK76yv2tepQzqSIlO/w0cjNx
-         8XlapDPRAb2YitbuvC7kU+B1o1xEur1MpsnVJcldLPgrltrWSX+DxtuvlTLpYYaocZkf
-         g6X6mer/mO4OSgxuS5383/82lu4SZb5tvGkjgJDbPVD6jKZrHv/CjA+TqliY7OzPEOqv
-         3RmfAZBWKP44b96HS30U6Rt7Hs0s572w2ySJxaiAf4QxvvNLj51QVCyv5EQjvD5oc7pF
-         dl5A==
-X-Gm-Message-State: AEkoousvzqUni+jDOAAL4G/b+CSy1As/bLIR30w9Itp6CSELZjprw/COARD9fiKbXqcqag==
-X-Received: by 10.66.132.11 with SMTP id oq11mr17055500pab.4.1471637919747;
-        Fri, 19 Aug 2016 13:18:39 -0700 (PDT)
-Received: from tci.corp.yp.com ([216.2.203.2])
-        by smtp.gmail.com with ESMTPSA id n80sm8594622pfi.19.2016.08.19.13.18.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 19 Aug 2016 13:18:39 -0700 (PDT)
-Date:   Fri, 19 Aug 2016 13:18:37 -0700
-From:   Brian Henderson <henderson.bj@gmail.com>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, e@80x24.org, gitster@pobox.com
-Subject: [PATCH] diff-highlight: add some tests.
-Message-ID: <20160819201837.GA18918@tci.corp.yp.com>
-References: <xmqqh9ag39zk.fsf@gitster.mtv.corp.google.com>
+        id S1755469AbcHSUYZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Aug 2016 16:24:25 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60544 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755458AbcHSUYY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2016 16:24:24 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6F693358B2;
+        Fri, 19 Aug 2016 16:24:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ZMR211TpL4GQZDBA8c4Ec487fu8=; b=h0i33B
+        m+kFajO01X3onxTlUhFo6NymrmJmG2Y/dhJOFz2rHRX+VZ35VE0/QmuucxL33EN5
+        Ehqzh7LKOcrfqleUCiuz7/AFfwjIn+ed9aPJa6l7LnbTYfKoMu20IUAMkfpPaQkM
+        KpmnyQlk2QjNTi/OzyFFLr0I7gpgapMj7effk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=hxFsUEE5M8S+GrLD/HF14KgBAT3+RRzw
+        niy+AhRl+vMMEGfT9zD3Kj3UqA5i5azWIWYFaeewtjLEei/LayZnAAmFoZmccZLg
+        anTlik8IPXH4XmyzJ8NAT5H/cJ0n8jQ6H5t8CacifizvOwqcWLfpAOYVSWHqSHDE
+        QgNcSCKAb28=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 671FC358B1;
+        Fri, 19 Aug 2016 16:24:23 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C9165358B0;
+        Fri, 19 Aug 2016 16:24:22 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jacob Keller <jacob.e.keller@intel.com>
+Cc:     git@vger.kernel.org, Stefan Beller <stefanbeller@gmail.com>,
+        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v8 6/8] submodule: refactor show_submodule_summary with helper function
+References: <20160819000031.24854-1-jacob.e.keller@intel.com>
+        <20160819000031.24854-7-jacob.e.keller@intel.com>
+Date:   Fri, 19 Aug 2016 13:24:20 -0700
+In-Reply-To: <20160819000031.24854-7-jacob.e.keller@intel.com> (Jacob Keller's
+        message of "Thu, 18 Aug 2016 17:00:29 -0700")
+Message-ID: <xmqqk2fc1p8r.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqh9ag39zk.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+Content-Type: text/plain
+X-Pobox-Relay-ID: EA7C3E4E-664A-11E6-99DA-FCB17B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio, how does this look?
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-Signed-off-by: Brian Henderson <henderson.bj@gmail.com>
----
- contrib/diff-highlight/Makefile                  |   5 +
- contrib/diff-highlight/t/Makefile                |  22 ++++
- contrib/diff-highlight/t/t9400-diff-highlight.sh | 122 +++++++++++++++++++++++
- 3 files changed, 149 insertions(+)
- create mode 100644 contrib/diff-highlight/Makefile
- create mode 100644 contrib/diff-highlight/t/Makefile
- create mode 100755 contrib/diff-highlight/t/t9400-diff-highlight.sh
+> @@ -290,12 +289,6 @@ static int prepare_submodule_summary(struct rev_info *rev, const char *path,
+>  	add_pending_object(rev, &left->object, path);
+>  	add_pending_object(rev, &right->object, path);
+>  	merge_bases = get_merge_bases(left, right);
+> -	if (merge_bases) {
+> -		if (merge_bases->item == left)
+> -			*fast_forward = 1;
+> -		else if (merge_bases->item == right)
+> -			*fast_backward = 1;
+> -	}
+>  	for (list = merge_bases; list; list = list->next) {
+>  		list->item->object.flags |= UNINTERESTING;
+>  		add_pending_object(rev, &list->item->object,
 
-diff --git a/contrib/diff-highlight/Makefile b/contrib/diff-highlight/Makefile
-new file mode 100644
-index 0000000..9018724
---- /dev/null
-+++ b/contrib/diff-highlight/Makefile
-@@ -0,0 +1,5 @@
-+# nothing to build
-+all:
-+
-+test:
-+	$(MAKE) -C t
-diff --git a/contrib/diff-highlight/t/Makefile b/contrib/diff-highlight/t/Makefile
-new file mode 100644
-index 0000000..5ff5275
---- /dev/null
-+++ b/contrib/diff-highlight/t/Makefile
-@@ -0,0 +1,22 @@
-+-include ../../../config.mak.autogen
-+-include ../../../config.mak
-+
-+# copied from ../../t/Makefile
-+SHELL_PATH ?= $(SHELL)
-+SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
-+T = $(wildcard t[0-9][0-9][0-9][0-9]-*.sh)
-+
-+all: test
-+test: $(T)
-+
-+.PHONY: help clean all test $(T)
-+
-+help:
-+	@echo 'Run "$(MAKE) test" to launch test scripts'
-+	@echo 'Run "$(MAKE) clean" to remove trash folders'
-+
-+$(T):
-+	@echo "*** $@ ***"; '$(SHELL_PATH_SQ)' $@ $(GIT_TEST_OPTS)
-+
-+clean:
-+	$(RM) -r 'trash directory'.*
-diff --git a/contrib/diff-highlight/t/t9400-diff-highlight.sh b/contrib/diff-highlight/t/t9400-diff-highlight.sh
-new file mode 100755
-index 0000000..3c04116
---- /dev/null
-+++ b/contrib/diff-highlight/t/t9400-diff-highlight.sh
-@@ -0,0 +1,122 @@
-+#!/bin/sh
-+
-+test_description='Test diff-highlight'
-+
-+CURR_DIR=$(pwd)
-+TEST_OUTPUT_DIRECTORY=$(pwd)
-+TEST_DIRECTORY="$CURR_DIR"/../../../t
-+DIFF_HIGHLIGHT="$CURR_DIR"/../diff-highlight
-+
-+CW="\033[7m"	# white
-+CR="\033[27m" # reset
-+
-+. "$TEST_DIRECTORY"/test-lib.sh
-+
-+if ! test_have_prereq PERL
-+then
-+	skip_all='skipping diff-highlight tests; perl not available'
-+	test_done
-+fi
-+
-+# dh_test is a test helper function which takes 1) some file data, 2) some
-+# change of the file data, creates a diff and commit of the changes and passes
-+# that through diff-highlight.
-+# The optional 3rd parameter is the expected output of diff-highlight minus the
-+# diff/commit header. This parameter is given directly to printf as the format
-+# string (in order to properly handle ascii escape codes; CW, CR), so any '%'
-+# need to be doubled to protect it.
-+# Don't include a 3rd parameter if diff-highlight is supposed to leave the
-+# input unmodified.
-+# For convienence, the 3rd parameter can begin with a newline which will be
-+# stripped.
-+dh_test () {
-+	a="$1" b="$2" &&
-+
-+	{
-+		printf "$a" >file &&
-+		git add file &&
-+		git commit -m "Add a file" &&
-+
-+		printf "$b" >file &&
-+		git diff file >diff.raw &&
-+		git commit -am "Update a file" &&
-+		git show >commit.raw
-+	} >/dev/null &&
-+
-+	if test $# -ge 3
-+	then
-+		# strip optional beginning newline
-+		printf "$3" | perl -pe 's/^\n//'
-+	else
-+		test_strip_patch_header diff.raw
-+	fi >patch.exp &&
-+
-+	"$DIFF_HIGHLIGHT" <diff.raw | test_strip_patch_header >diff.act &&
-+	"$DIFF_HIGHLIGHT" <commit.raw | test_strip_patch_header >commit.act &&
-+	test_cmp patch.exp diff.act &&
-+	test_cmp patch.exp commit.act
-+}
-+
-+test_strip_patch_header () {
-+	sed -e '1,/^@@/d' "$@"
-+}
-+
-+test_expect_success 'diff-highlight highlights the beginning of a line' '
-+	dh_test \
-+		"aaa\nbbb\nccc\n" \
-+		"aaa\n0bb\nccc\n" \
-+"
-+ aaa
-+-${CW}b${CR}bb
-++${CW}0${CR}bb
-+ ccc
-+"
-+'
-+
-+test_expect_success 'diff-highlight highlights the end of a line' '
-+	dh_test \
-+		"aaa\nbbb\nccc\n" \
-+		"aaa\nbb0\nccc\n" \
-+"
-+ aaa
-+-bb${CW}b${CR}
-++bb${CW}0${CR}
-+ ccc
-+"
-+'
-+
-+test_expect_success 'diff-highlight highlights the middle of a line' '
-+	dh_test \
-+		"aaa\nbbb\nccc\n" \
-+		"aaa\nb0b\nccc\n" \
-+"
-+ aaa
-+-b${CW}b${CR}b
-++b${CW}0${CR}b
-+ ccc
-+"
-+'
-+
-+test_expect_success 'diff-highlight does not highlight whole line' '
-+	dh_test \
-+		"aaa\nbbb\nccc\n" \
-+		"aaa\n000\nccc\n"
-+'
-+
-+test_expect_failure 'diff-highlight highlights mismatched hunk size' '
-+	dh_test \
-+		"aaa\nbbb\n" \
-+		"aaa\nb0b\nccc\n" \
-+"
-+ aaa
-+-b${CW}b${CR}b
-++b${CW}0${CR}b
-++ccc
-+"
-+'
-+
-+# TODO add multi-byte test
-+
-+test_done
-+
-+# vim: set noet
--- 
-2.9.0
+Not a new issue with this patch, but I wonder if this commit_list is
+leaking here.
+
+> +	/*
+> +	 * Warn about missing commits in the submodule project, but only if
+> +	 * they aren't null.
+> +	 */
+> +	if ((!is_null_oid(one) && !*left) ||
+> +	     (!is_null_oid(two) && !*right))
+> +		message = "(commits not present)";
+> +
+> +	merge_bases = get_merge_bases(*left, *right);
+> +	if (merge_bases) {
+> +		if (merge_bases->item == *left)
+> +			fast_forward = 1;
+> +		else if (merge_bases->item == *right)
+> +			fast_backward = 1;
+> +	}
+
+And probably merge_bases also leaks here.
+
+It is not cheap to compute merge bases, but show_submodule_summary()
+makes two calls to get_merge_bases(), one in show_submodule_header()
+and then another inside prepare_submodule_summary() to compute
+exactly the same set of merge bases.  We somehow need to reduce it
+to just one.
 
