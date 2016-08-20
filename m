@@ -2,87 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7CB21FD99
-	for <e@80x24.org>; Sat, 20 Aug 2016 19:07:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3671E1FD99
+	for <e@80x24.org>; Sat, 20 Aug 2016 19:14:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753099AbcHTTHD (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Aug 2016 15:07:03 -0400
-Received: from mail-io0-f176.google.com ([209.85.223.176]:33283 "EHLO
-        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752801AbcHTTHC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Aug 2016 15:07:02 -0400
-Received: by mail-io0-f176.google.com with SMTP id 38so77117270iol.0
-        for <git@vger.kernel.org>; Sat, 20 Aug 2016 12:07:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=9wTLJkdaL31EZZP7i4HJhEiyZCSIdV7WarEA4Oo86ec=;
-        b=gti3wTTyb6tMY7VSSUTibpRA8RoBCL4mAy80TUSNaA2T8HttE/dPsUHQgar4RMzU5r
-         kFp7aXkQM1K+m6FUFxO6le7w//xqu702HmrFtX3lcXFo4UIqaKJdF6F00Q1Y1pIo+ZXc
-         S+6wrx5+H8fnPBd74IRd4n5bLLLzLtenNDNHK0ARdakeQ4rfwAjqeXyX2LpBWh1GQXJ6
-         lna/aRxpJ6eYnxzTohAmQWpVwHQUE+vV4Zs5tOq8Du+mVIH+9QZg9SE8zB4uWkzXLyUR
-         y6XZAtH12v7SsgXS9fMOGdTp7I39v97qYlEUoZTAqhbOZOYxFDMPEpKl+5VY7ITmPjlH
-         CnhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=9wTLJkdaL31EZZP7i4HJhEiyZCSIdV7WarEA4Oo86ec=;
-        b=HD6lo/txXwLqfnGjAFFCWHL45Dd6OhdmwkvMpzwUuWXjSkhpV3B6EOukTasOONPyA1
-         IqYSU68pco6FGLbfdudKH0OVZOji3lzFvFk7WfRH0+B2NlBi88NMQwRmTC6GiZMs6tQU
-         yH0YBP0TeOuK6IKEdoaGhvC4Dz2TZ2vex812raH49mx/r7IJQGPB4ZiM4MdTPlXvADkP
-         3phc7m5gI2NvksMjq3PEV9+60+cFjj0+7nkziXN9XeJtnI/mcaSDXUYmlw8RuZlkn64T
-         JGdv4zBHhU+6TKi5zuVXY1VDrXUvfOQV0+ah/iwzg0B60zz9a5lw5tjpzOOMp0qqOAXH
-         k8Eg==
-X-Gm-Message-State: AEkoouuDWRM1bQ3MNVWPVj5Z597hOSWnG+GyToX4DKsTfQBQJyrhhyW6Wjab/KbViCqeuheCNG6Lcvm09nTDGw==
-X-Received: by 10.107.48.76 with SMTP id w73mr17882024iow.172.1471720021211;
- Sat, 20 Aug 2016 12:07:01 -0700 (PDT)
+        id S1753109AbcHTTO2 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Aug 2016 15:14:28 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:2316 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751510AbcHTTO2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Aug 2016 15:14:28 -0400
+Received: from PhilipOakley ([92.22.56.254])
+        by smtp.talktalk.net with SMTP
+        id bBirbXDGsxR4bbBirbfK87; Sat, 20 Aug 2016 20:14:25 +0100
+X-Originating-IP: [92.22.56.254]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=JNN5iICb c=1 sm=1 tr=0 a=b6TTeGxEIY1/y6ABFUBF6w==:117
+ a=b6TTeGxEIY1/y6ABFUBF6w==:17 a=8nJEP1OIZ-IA:10 a=1f_8sUU9AAAA:8
+ a=uPZiAMpXAAAA:8 a=vggBfdFIAAAA:8 a=LqMjxxrv5svK1h0LeM4A:9
+ a=YINEebd3GXqNeZDW032c:22 a=svzibyHiZmA4t4YY0eFS:22 a=ulBnneXc4k8OkFd-VeVl:22
+Message-ID: <91F685E894D94BB89892C695B8C1796E@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Zenaan Harkness" <zen@freedbms.net>, "git" <git@vger.kernel.org>
+References: <20160820072214.GB24992@x220-a02>
+Subject: Re: git rm --cached should be git rm --cache or git rm --stage
+Date:   Sat, 20 Aug 2016 20:14:25 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.79.83.5 with HTTP; Sat, 20 Aug 2016 12:07:00 -0700 (PDT)
-From:   Richard <richard.maw@gmail.com>
-Date:   Sat, 20 Aug 2016 20:07:00 +0100
-Message-ID: <CAB2VqoZh6zZV3Lk2B7dBPVE5h6H1LCwyxWrUo4yJFhqB=hAjig@mail.gmail.com>
-Subject: Adding more namespace support to git
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfE1QR6POUe7GXSOquNNaSGuh/XDoGyQiuKZOmjtGQybRR4vizzSfiUeQTf9iZ5IWJwtP10Hr0bgfCmNjkOUZqM9s55fUuhc+vjXmXPltwAKuazlr9GVy
+ kPkGEjv5R3WbKVM0CpguRCd+OCY7ptU/MHLGMkLoZu/JPMoTsHkeMkNBOM1LJ7Pu4cSEgyjM9V/Fzg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I work on a git server called gitano.
-We've been using and recommending cgit for the web UI.
+From: "Zenaan Harkness" <zen@freedbms.net>
+>
+>  Please CC me :)
+>
+>
+> From man git-rm:
+>
+> --cached
+>  Use this option to unstage and remove paths only from the index.
+>  Working tree files, whether modified or not, will be left alone.
+>
+>
+> This wording is unclear and dangerous, and ought be cleaned up somehow.
+>
+> Probably also the option name should change.
+>
+> See here for examples of community self-help compensating for git-rm man
+> page's particularly bad wording:
+> http://stackoverflow.com/questions/6919121/why-are-there-2-ways-to-unstage-a-file-in-git
+>
+> I suggest:
+> - change "--cached" to "--cache" at the least (allow both)
 
-I've been working on adding git namespace support to both,
-so that we can separate administrative branches from code branches.
+Such small nuance changes rarely have the effect hoped for when there are 
+such gross misunderstandings by the user.
 
-Because git is not namespace aware for anything but git-upload-pack
-and git-receive-pack,
-I've had to implement namespace parsing in cgit
-for listing branches, showing logs, displaying notes and commit decorations.
-It might be more useful if this support was added to git itself,
-so other git servers could make use of it so there's less duplicated code.
+>
+> - probably deprecate --cached and add "--stage" to replace it
+>
+> - perhaps change the wording in the man page above to something similar
+>   as on the stackoverflow page above,
+>   e.g.:
+>   "Removes a file from the index. In the case where the file is already
+>   in the repo, git rm --cached will remove the file from the index,
+>   leaving it in the working directory and a commit will now remove it
+>   from the repo as well. Basically, after the commit, you would have
+>   unversioned the file and kept a local copy."
 
-I think the way to do this would be to make the low-level ref reading functions,
-read_raw_ref, for_each_reflog_ent*, reflog_exists etc.,
-interpret the ref they are passed as being relative to the current git
-namespace.
+The idea of 'removing from the repo' can have a connotation that it means 
+total removal from history(the repository hold the history!), and not just 
+future commits.
 
-Since when upload-pack and receive-pack run hooks they leave GIT_NAMESPACE set
-there are hook scripts that expect that the current namespace is ignored,
-so commands that now want to be namespace aware would have to opt-in.
+>
+>   or perhaps something like:
+>   "does not unstage a file, it actually stages the removal of the
+>   file(s) from the repo (assuming it was already committed before) but
+>   leaves the file in your working tree (leaving you with an untracked
+>   file)"
+>
 
-I tried adding a flag to the functions
-with the intention of changing everything to conditionally set the flag
-and adding wrapper functions to provide the old ABIs,
-but quickly abandoned that after seeing how much change would be required.
+The easiest way is to simply swap around the two sentences so that the 
+positive action is listed first - this better matches people's typical 
+cognition. Human Error (by Reason)[1] tells us to Never state warnings and 
+caveats after the instruction, and preferably be positive.
 
-Is anyone more familiar with the codebase able to recommend how I
-might make it work,
-and would there any interest in accepting such patches if I got it to work?
+"--cached:
+Working tree files, whether modified or not, will be retained unchanged.
+The option will remove paths from the index (only) to unstage them from 
+future commits."
 
-Please reply-all in response, I am not subscribed to the mailing list.
+
+>
+> The git "stage" is a primary concept, and a primary noun (one reason
+> many of us have come to appreciate git), and git's cmd line options and
+> help docs ought reflect this.
+>
+> Thanks,
+> Zenaan
+> --
+
+Philip
+[1] https://www.amazon.com/Human-Error-James-Reason/dp/0521314194 
+
