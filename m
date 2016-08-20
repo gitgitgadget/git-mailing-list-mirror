@@ -3,88 +3,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FC991F6C1
-	for <e@80x24.org>; Sat, 20 Aug 2016 08:55:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 929451FD99
+	for <e@80x24.org>; Sat, 20 Aug 2016 16:02:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751640AbcHTIyr (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Aug 2016 04:54:47 -0400
-Received: from nskntqsrv02p.mx.bigpond.com ([61.9.168.234]:44383 "EHLO
-        nskntqsrv02p.mx.bigpond.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751350AbcHTIyq (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 20 Aug 2016 04:54:46 -0400
-Received: from nskntcmgw05p ([61.9.169.165]) by nskntmtas06p.mx.bigpond.com
-          with ESMTP
-          id <20160820072417.QUJT2096.nskntmtas06p.mx.bigpond.com@nskntcmgw05p>
-          for <git@vger.kernel.org>; Sat, 20 Aug 2016 07:24:17 +0000
-Received: from x220a02 ([58.168.229.151])
-        by nskntcmgw05p with BigPond Outbound
-        id ZKQH1t00Q3GeBn601KQH6T; Sat, 20 Aug 2016 07:24:17 +0000
-X-Authority-Analysis: v=2.1 cv=H9gmuLsi c=1 sm=1 tr=0
- a=gm2JgIm3B1ma6n2s4AHsSw==:117 a=gm2JgIm3B1ma6n2s4AHsSw==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=kj9zAlcOel0A:10
- a=7z1cN_iqozsA:10 a=uPZiAMpXAAAA:8 a=wL1hjHsNqf4YO_XoXZ0A:9 a=CjuIK1q_8ugA:10
- a=svzibyHiZmA4t4YY0eFS:22
-Received: by x220a02 (Postfix, from userid 1000)
-        id 9030A260040; Sat, 20 Aug 2016 17:22:14 +1000 (AEST)
-Date:   Sat, 20 Aug 2016 17:22:14 +1000
-From:   Zenaan Harkness <zen@freedbms.net>
-To:     git <git@vger.kernel.org>
-Subject: git rm --cached should be git rm --cache or git rm --stage
-Message-ID: <20160820072214.GB24992@x220-a02>
+        id S1753107AbcHTQCT convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sat, 20 Aug 2016 12:02:19 -0400
+Received: from smtpfb2-g21.free.fr ([212.27.42.10]:50825 "EHLO
+        smtpfb2-g21.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752796AbcHTQCS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Aug 2016 12:02:18 -0400
+Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
+        by smtpfb2-g21.free.fr (Postfix) with ESMTP id 77715CAD2C9
+        for <git@vger.kernel.org>; Sat, 20 Aug 2016 18:02:12 +0200 (CEST)
+Received: from cayenne.localnet (unknown [IPv6:2a01:e35:2ef1:f910:86a6:c8ff:fe05:d3e0])
+        by smtp1-g21.free.fr (Postfix) with ESMTPS id 8C0B6B0053F;
+        Sat, 20 Aug 2016 16:01:24 +0200 (CEST)
+From:   =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Alexander Shopov <ash@kambanaria.org>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        Marco Paolone <marcopaolone@gmail.com>,
+        Changwoo Ryu <cwryu@debian.org>,
+        Marco Sousa <marcomsousa@gmail.com>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Nelson Martell <nelson6e65@gmail.com>,
+        Brian Gesiak <modocache@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [L10N] Kickoff of translation for Git 2.10.0 round 1
+Date:   Sat, 20 Aug 2016 18:01:55 +0200
+Message-ID: <9262712.D6TC1VHfMN@cayenne>
+User-Agent: KMail/5.2.3 (Linux/4.6.0-1-amd64; KDE/5.23.0; x86_64; ; )
+In-Reply-To: <CANYiYbGL+GVRNuhszp1UShaN_oJgm3netsQxZfbW74pVK0gOYQ@mail.gmail.com>
+References: <CANYiYbGL+GVRNuhszp1UShaN_oJgm3netsQxZfbW74pVK0gOYQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset="iso-8859-1"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi all,
 
-  Please CC me :)
+Before anyone tries to localize this round, I'd like to make some preliminary 
+comments:
 
+1.  In config.c, the changes to the function die_bad_number tried to flatten the 
+translated strings (no message building logic). I think it went too far, and 
+the reason of the failure can be factorized so that we don't have to 
+retranslate each time. I might be wrong on this one, but I have no example of 
+language where we would need differentiated error reasons.
 
-From man git-rm:
+2.  in sequencer.c, there is a mistake in the original string to translate 
+"Cannot revert during a another revert"
 
---cached
-  Use this option to unstage and remove paths only from the index.
-  Working tree files, whether modified or not, will be left alone.
+3. git-rebase--interactive, in this_nth_commit_message and 
+skip_nth_commit_message are not localizable, because the logic of declination 
+of numeral attributes is in the code and is really oriented towards English 
+and doesn't make sense for other languages (with 28 strings to translate !). 
+In this case, I would suggest to step back and just have a single string per 
+function.
 
+If translators can quickly agree on these issues and maybe others I haven't 
+seen, I can prepare a patch for review this weekend.
 
-This wording is unclear and dangerous, and ought be cleaned up somehow.
+BR
 
-Probably also the option name should change.
-
-See here for examples of community self-help compensating for git-rm man
-page's particularly bad wording:
-http://stackoverflow.com/questions/6919121/why-are-there-2-ways-to-unstage-a-file-in-git
-
-I suggest:
- - change "--cached" to "--cache" at the least (allow both)
-
- - probably deprecate --cached and add "--stage" to replace it
-
- - perhaps change the wording in the man page above to something similar
-   as on the stackoverflow page above,
-   e.g.:
-   "Removes a file from the index. In the case where the file is already
-   in the repo, git rm --cached will remove the file from the index,
-   leaving it in the working directory and a commit will now remove it
-   from the repo as well. Basically, after the commit, you would have
-   unversioned the file and kept a local copy."
-
-   or perhaps something like:
-   "does not unstage a file, it actually stages the removal of the
-   file(s) from the repo (assuming it was already committed before) but
-   leaves the file in your working tree (leaving you with an untracked
-   file)"
+Jean-Noël (french translation)
 
 
-The git "stage" is a primary concept, and a primary noun (one reason
-many of us have come to appreciate git), and git's cmd line options and
-help docs ought reflect this.
 
-Thanks,
-Zenaan
