@@ -2,72 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC0621FD99
-	for <e@80x24.org>; Sat, 20 Aug 2016 21:41:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6265E1FD99
+	for <e@80x24.org>; Sat, 20 Aug 2016 22:27:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751494AbcHTVlo (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Aug 2016 17:41:44 -0400
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:41710 "EHLO
-        out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751147AbcHTVln (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 20 Aug 2016 17:41:43 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id D4D1520383
-        for <git@vger.kernel.org>; Sat, 20 Aug 2016 17:41:41 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute6.internal (MEProxy); Sat, 20 Aug 2016 17:41:41 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-transfer-encoding:content-type
-        :date:from:message-id:mime-version:subject:to:x-sasl-enc
-        :x-sasl-enc; s=smtpout; bh=+qGtLutq0gSIkP9mElhcr2cyY34=; b=Wq/nW
-        viIr7dQ8BWoKfgcsPbnPRvTpqgpZ0jUL3Bc0lqqJdyjkgk+C/dsKoj+W3Dj7F9UF
-        KUbV63KocOMXUWfbRx+Av6JrBTUXqKw2HedPG3H4Vrqt5B4zLYK8yf+3pM0ZTr57
-        axkze+oBzbOf/z16iBtKTy1s42dKmKlv1crQrg=
-X-Sasl-enc: sTlmH+ukhe7EsQd+ph2c+OCCk3VD/pn3KD7cF1tF6QW6 1471729301
-Received: from ebox.rath.org (ebox.rath.org [45.79.69.51])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 89115F2D2B
-        for <git@vger.kernel.org>; Sat, 20 Aug 2016 17:41:41 -0400 (EDT)
-Received: from thinkpad.rath.org (thinkpad [192.168.12.2])
-        by ebox.rath.org (Postfix) with ESMTPS id 21C353925E6
-        for <git@vger.kernel.org>; Sat, 20 Aug 2016 21:41:40 +0000 (UTC)
-Received: by thinkpad.rath.org (Postfix, from userid 1000)
-        id 6F537BFF6C; Sat, 20 Aug 2016 14:41:35 -0700 (PDT)
-From:   Nikolaus Rath <Nikolaus@rath.org>
+        id S1751919AbcHTW1U (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Aug 2016 18:27:20 -0400
+Received: from nskntmtas03p.mx.bigpond.com ([61.9.168.143]:20370 "EHLO
+        nskntmtas03p.mx.bigpond.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751510AbcHTW1T (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 20 Aug 2016 18:27:19 -0400
+Received: from nskntcmgw05p ([61.9.169.165]) by nskntmtas03p.mx.bigpond.com
+          with ESMTP
+          id <20160820222717.EEMT2042.nskntmtas03p.mx.bigpond.com@nskntcmgw05p>
+          for <git@vger.kernel.org>; Sat, 20 Aug 2016 22:27:17 +0000
+Received: from x220a02 ([124.176.162.61])
+        by nskntcmgw05p with BigPond Outbound
+        id ZaTF1t00V1KnNGU01aTGX7; Sat, 20 Aug 2016 22:27:17 +0000
+X-Authority-Analysis: v=2.1 cv=H9gmuLsi c=1 sm=1 tr=0
+ a=n8emWgr/hVQHB+p2EsdSZA==:117 a=n8emWgr/hVQHB+p2EsdSZA==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=kj9zAlcOel0A:10
+ a=7z1cN_iqozsA:10 a=1f_8sUU9AAAA:8 a=vggBfdFIAAAA:8 a=FXR6WkdROIu92lcalQMA:9
+ a=CjuIK1q_8ugA:10 a=YINEebd3GXqNeZDW032c:22 a=ulBnneXc4k8OkFd-VeVl:22
+Received: by x220a02 (Postfix, from userid 1000)
+        id D9AF1260040; Sun, 21 Aug 2016 08:25:19 +1000 (AEST)
+Date:   Sun, 21 Aug 2016 08:25:19 +1000
+From:   Zenaan Harkness <zen@freedbms.net>
 To:     git@vger.kernel.org
-Subject: Most recent revision that contains a string
-Mail-Copies-To: never
-Mail-Followup-To: git@vger.kernel.org
-Date:   Sat, 20 Aug 2016 14:41:35 -0700
-Message-ID: <87d1l3ce40.fsf@thinkpad.rath.org>
-User-Agent: Gnus/5.130014 (Ma Gnus v0.14) Emacs/24.4 (gnu/linux)
+Subject: Re: git rm --cached should be git rm --cache or git rm --stage
+Message-ID: <20160820222519.GC5044@x220-a02>
+References: <20160820072214.GB24992@x220-a02>
+ <91F685E894D94BB89892C695B8C1796E@PhilipOakley>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <91F685E894D94BB89892C695B8C1796E@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On Sat, Aug 20, 2016 at 08:14:25PM +0100, Philip Oakley wrote:
+> From: "Zenaan Harkness" <zen@freedbms.net>
+> >
+> > Please CC me :)
 
-What's the easiest way to find the most recent revision (of any file in
-the repository, including those that have been deleted in the current
-HEAD) that contains a given string?
+> >  or perhaps something like:
+> >  "does not unstage a file, it actually stages the removal of the
+> >  file(s) from the repo (assuming it was already committed before) but
+> >  leaves the file in your working tree (leaving you with an untracked
+> >  file)"
+> >
+> 
+> The easiest way is to simply swap around the two sentences so that the
+> positive action is listed first - this better matches people's typical
+> cognition. Human Error (by Reason)[1] tells us to Never state warnings and
+> caveats after the instruction, and preferably be positive.
+> 
+> "--cached:
+> Working tree files, whether modified or not, will be retained unchanged.
+> The option will remove paths from the index (only) to unstage them from
+> future commits."
 
-I was hoping that "git grep" would do this (like in Mercurial), but as
-far as I can tell it only greps through the working copy. Or is there a
-trick that I'm missing?
+That's much better. +1. Thanks.
 
-Thanks,
--Nikolaus
 
---=20
-GPG encrypted emails preferred. Key id: 0xD113FCAC3C4E599F
-Fingerprint: ED31 791B 2C5C 1613 AF38 8B8A D113 FCAC 3C4E 599F
-
-             =C2=BBTime flies like an arrow, fruit flies like a Banana.=C2=
-=AB
+> >
+> >The git "stage" is a primary concept, and a primary noun (one reason
+> >many of us have come to appreciate git), and git's cmd line options and
+> >help docs ought reflect this.
+> >
+> >Thanks,
+> >Zenaan
+> >--
+> 
+> Philip
+> [1] https://www.amazon.com/Human-Error-James-Reason/dp/0521314194
