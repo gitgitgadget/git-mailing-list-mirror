@@ -2,82 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6265E1FD99
-	for <e@80x24.org>; Sat, 20 Aug 2016 22:27:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 75B2B1FD99
+	for <e@80x24.org>; Sat, 20 Aug 2016 22:50:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751919AbcHTW1U (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Aug 2016 18:27:20 -0400
-Received: from nskntmtas03p.mx.bigpond.com ([61.9.168.143]:20370 "EHLO
-        nskntmtas03p.mx.bigpond.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751510AbcHTW1T (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 20 Aug 2016 18:27:19 -0400
-Received: from nskntcmgw05p ([61.9.169.165]) by nskntmtas03p.mx.bigpond.com
-          with ESMTP
-          id <20160820222717.EEMT2042.nskntmtas03p.mx.bigpond.com@nskntcmgw05p>
-          for <git@vger.kernel.org>; Sat, 20 Aug 2016 22:27:17 +0000
-Received: from x220a02 ([124.176.162.61])
-        by nskntcmgw05p with BigPond Outbound
-        id ZaTF1t00V1KnNGU01aTGX7; Sat, 20 Aug 2016 22:27:17 +0000
-X-Authority-Analysis: v=2.1 cv=H9gmuLsi c=1 sm=1 tr=0
- a=n8emWgr/hVQHB+p2EsdSZA==:117 a=n8emWgr/hVQHB+p2EsdSZA==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=kj9zAlcOel0A:10
- a=7z1cN_iqozsA:10 a=1f_8sUU9AAAA:8 a=vggBfdFIAAAA:8 a=FXR6WkdROIu92lcalQMA:9
- a=CjuIK1q_8ugA:10 a=YINEebd3GXqNeZDW032c:22 a=ulBnneXc4k8OkFd-VeVl:22
-Received: by x220a02 (Postfix, from userid 1000)
-        id D9AF1260040; Sun, 21 Aug 2016 08:25:19 +1000 (AEST)
-Date:   Sun, 21 Aug 2016 08:25:19 +1000
-From:   Zenaan Harkness <zen@freedbms.net>
+        id S1751584AbcHTWuW (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Aug 2016 18:50:22 -0400
+Received: from relay6-d.mail.gandi.net ([217.70.183.198]:37309 "EHLO
+        relay6-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751222AbcHTWuW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Aug 2016 18:50:22 -0400
+Received: from mfilter17-d.gandi.net (mfilter17-d.gandi.net [217.70.178.145])
+        by relay6-d.mail.gandi.net (Postfix) with ESMTP id 4EC25FB88B
+        for <git@vger.kernel.org>; Sun, 21 Aug 2016 00:50:19 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mfilter17-d.gandi.net
+Received: from relay6-d.mail.gandi.net ([IPv6:::ffff:217.70.183.198])
+        by mfilter17-d.gandi.net (mfilter17-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
+        with ESMTP id M5aT_coN1iLn for <git@vger.kernel.org>;
+        Sun, 21 Aug 2016 00:50:17 +0200 (CEST)
+X-Originating-IP: 50.39.163.18
+Received: from x (50-39-163-18.bvtn.or.frontiernet.net [50.39.163.18])
+        (Authenticated sender: josh@joshtriplett.org)
+        by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id 75FB0FB882
+        for <git@vger.kernel.org>; Sun, 21 Aug 2016 00:50:17 +0200 (CEST)
+Date:   Sat, 20 Aug 2016 15:50:15 -0700
+From:   Josh Triplett <josh@joshtriplett.org>
 To:     git@vger.kernel.org
-Subject: Re: git rm --cached should be git rm --cache or git rm --stage
-Message-ID: <20160820222519.GC5044@x220-a02>
-References: <20160820072214.GB24992@x220-a02>
- <91F685E894D94BB89892C695B8C1796E@PhilipOakley>
+Subject: Extending "extended SHA1" syntax to traverse through gitlinks?
+Message-ID: <20160820225013.l7ynru7hzcmrzff7@x>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <91F685E894D94BB89892C695B8C1796E@PhilipOakley>
+User-Agent: Mutt/1.6.2-neo (2016-08-08)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Aug 20, 2016 at 08:14:25PM +0100, Philip Oakley wrote:
-> From: "Zenaan Harkness" <zen@freedbms.net>
-> >
-> > Please CC me :)
+Currently, if you have a branch "somebranch" that contains a gitlink
+"somecommit", you can write "somebranch:somecommit" to refer to the
+commit, just like a tree or blob.  ("man git-rev-parse" defines this
+syntax in the "SPECIFYING REVISIONS" section.)  You can use this
+anywhere you can use a committish, including "git show
+somebranch:somecommit", "git log somebranch:somecommit..anotherbranch",
+or even "git format-patch -1 somebranch:somecommit".
 
-> >  or perhaps something like:
-> >  "does not unstage a file, it actually stages the removal of the
-> >  file(s) from the repo (assuming it was already committed before) but
-> >  leaves the file in your working tree (leaving you with an untracked
-> >  file)"
-> >
-> 
-> The easiest way is to simply swap around the two sentences so that the
-> positive action is listed first - this better matches people's typical
-> cognition. Human Error (by Reason)[1] tells us to Never state warnings and
-> caveats after the instruction, and preferably be positive.
-> 
-> "--cached:
-> Working tree files, whether modified or not, will be retained unchanged.
-> The option will remove paths from the index (only) to unstage them from
-> future commits."
+However, you cannot traverse *through* the gitlink to look at files
+inside its own tree, or to look at other commits relative to that
+commit.  For instance, "somebranch:somecommit:somefile" and
+"somebranch:somecommit~3" do not work.
 
-That's much better. +1. Thanks.
+I'd love to have a syntax that allows traversing through the gitlink to
+other files or commits.  Ideally, I'd suggest the syntax above, as a
+natural extension of the existing extended syntax.
 
+(That syntax would potentially introduce ambiguity if you had a file
+named "somecommit:somefile" or "somecommit~3".  That doesn't seem like a
+problem, though; the existing syntax already doesn't support accessing a
+file named "x..y" or "x...y", so scripts already can't expect to access
+arbitrary filenames with that syntax without some kind of quoting, wich
+we also don't have.)
 
-> >
-> >The git "stage" is a primary concept, and a primary noun (one reason
-> >many of us have come to appreciate git), and git's cmd line options and
-> >help docs ought reflect this.
-> >
-> >Thanks,
-> >Zenaan
-> >--
-> 
-> Philip
-> [1] https://www.amazon.com/Human-Error-James-Reason/dp/0521314194
+Does this seem reasonable?  Would a patch introducing such syntax
+(including documentation and tests) be acceptable?
+
+- Josh Triplett
