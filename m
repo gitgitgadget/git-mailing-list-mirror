@@ -2,148 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABE301F6C1
-	for <e@80x24.org>; Sun, 21 Aug 2016 15:46:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC1881F6C1
+	for <e@80x24.org>; Sun, 21 Aug 2016 17:10:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754657AbcHUPpz (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 Aug 2016 11:45:55 -0400
-Received: from mail-qt0-f181.google.com ([209.85.216.181]:36656 "EHLO
-        mail-qt0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753425AbcHUPpx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Aug 2016 11:45:53 -0400
-Received: by mail-qt0-f181.google.com with SMTP id 52so24095946qtq.3
-        for <git@vger.kernel.org>; Sun, 21 Aug 2016 08:45:53 -0700 (PDT)
+        id S1753220AbcHURKP (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 Aug 2016 13:10:15 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:38685 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753198AbcHURKO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Aug 2016 13:10:14 -0400
+Received: by mail-wm0-f46.google.com with SMTP id o80so109745971wme.1
+        for <git@vger.kernel.org>; Sun, 21 Aug 2016 10:10:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=9e0NYJzThSv6uW4ONcKUdmqtUXt6RyV/64OiLcQCtno=;
-        b=RZm1SRr/EJR8jOY7+Zuua1pgi1xVPU0PoLqc4aqyqZw89FmEVk5m+5CvPfhSfmu3Jk
-         bz7GPqXCFugFZFoFJlWeozGCRC0QnD52BQkOJqA8b2SEWcrgzUXkOzCIQD7N1zGvKK4A
-         pMH0rxu67naOxQe0PhxaRginLkz60W918xUp8wh1dFrkZ+QfnqBHPIeht9CP88XWhqts
-         Hu3VaLgYMn5fzTYUoJFIt+Phh/L+g5pbdLhBE5XENDBbv5fgHQDW27yzW6ZHcHP3iEFk
-         FEH34bX4cIMyHFPEqGVlgu9J9Y7ARY0PRj8Ujr04/7s4wZlgHmySiTXvjeRtt2u++FhF
-         BZww==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=NfZXbOJV3SoIYPu4fDiRDtd/8L3LnEE1WaYF5pDaaOQ=;
+        b=LmYEASujspC5gQ1P73ekq1TMpy9B5X7lDaHkEF8z1zq0gKy33JdbkyDZ28VnZgSZkq
+         kqx3Be+qEyMv0fp3kVnnbJoSAEVqiyjm/DbZNW08ZZD/TpEaMTD4285ElLzou9n97/eV
+         sMyKbNxLRymKgLUMd0uTQ9ST0TCQMC7XV+GWzSr6+KEJMW6n/LEpSZ+H3gc0KOUml4Jh
+         CR+kRTRVU4MJK8DDIw48mUTemisoHfQwEr4G+JaPls6SEDHNLnynGz2f1QybIHGPDWjM
+         VvWlllZI/2+VTTrTUugtdcWN7tK6Gd3M0lfYdkLlYE2rEYW6dbi20cmyKR5+QJB1dUMW
+         srJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=9e0NYJzThSv6uW4ONcKUdmqtUXt6RyV/64OiLcQCtno=;
-        b=NBgxOjPqgXBNs751lWPWvowl/rnBMjsKrZ3tCLaIe754YB3RDpeVwLB5nC9NHzJhIc
-         FqeeCzR9bUwOQ4X7HqJ5whCtx63cPHmhnA3abPJ/4ybVPgQBuPXVrXNnoZs37JYmgYwp
-         Z1RQaD/PpvfZhgh15bG+S9BxnZn3atYC9br4uBM9g0k20Q/qnrC0X+or/xL36PhVbugK
-         VCudnAtDhkf1M/6JArsEVFb3CZd0DlbKLtka90a62yxArTBr3jVKRtzolkR/3FGDLSM/
-         E8FUVWxRkKP12kUsoVx1DNZJrScA7Mjf2xPBF4/auSdSRMLsYxr6W5wUWrxrQabH6oEt
-         vHzQ==
-X-Gm-Message-State: AEkoouuCDUtSA0JibYpOkXRuyTtwt/LiPq4tQv4RpUwQfxF8loxSUtigqmBguPC6bCzJueC5RN4K+ZrfykcB5A==
-X-Received: by 10.237.54.34 with SMTP id e31mr18829895qtb.132.1471794352657;
- Sun, 21 Aug 2016 08:45:52 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.233.232.19 with HTTP; Sun, 21 Aug 2016 08:45:52 -0700 (PDT)
-In-Reply-To: <4016813.pOBvC7ZxlR@cayenne>
-References: <CANYiYbGL+GVRNuhszp1UShaN_oJgm3netsQxZfbW74pVK0gOYQ@mail.gmail.com>
- <9262712.D6TC1VHfMN@cayenne> <xmqqy43rxqqz.fsf@gitster.mtv.corp.google.com> <4016813.pOBvC7ZxlR@cayenne>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Sun, 21 Aug 2016 23:45:52 +0800
-Message-ID: <CANYiYbEPOttPvixCrv2+nh_OEehE_fi8yrpdzbQ-axG4nqbsZg@mail.gmail.com>
-Subject: Re: [L10N] Kickoff of translation for Git 2.10.0 round 1
-To:     =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=NfZXbOJV3SoIYPu4fDiRDtd/8L3LnEE1WaYF5pDaaOQ=;
+        b=NPpyY5khz+k1QDO0C1IwZMoPVUdEo+Ww/kAajxvDdCHSXSvJoiWc5BYEQwtG3UzsrP
+         QEkqdSBUe8hDg4uMluf0kI5tycx5TgaTTEpQM8fSfz1tYWtCtuZ69+hNW33T2YlSOd4K
+         naF9cdd0YtOlOHj7CjAgQHI87YGieRqxIf93LI/6V9AwvMZpvzgDOLyiBcbDpCmRfv6K
+         u9ShSz+Ezb5hb9qx+rC8HBVwiCnU50p61xndUp5iFPC6S1C90Ag54ghnOo7VcyzTeR2A
+         /sN2nKpOeqsEwoDq/nyOMFM9Y2UVfHgvMPwK+LVe71ig2K93vR/ZP91fNg1XUVcSreFN
+         ckRQ==
+X-Gm-Message-State: AEkoousz6W/Jk1ykMNZc2M40N/4L2MaEU6FOwX3ziLUVkCRYI0cz35BdQTQ5VvmTS84kYQ==
+X-Received: by 10.194.144.114 with SMTP id sl18mr14066667wjb.123.1471799412265;
+        Sun, 21 Aug 2016 10:10:12 -0700 (PDT)
+Received: from [192.168.1.26] (deh62.neoplus.adsl.tpnet.pl. [83.23.111.62])
+        by smtp.googlemail.com with ESMTPSA id lv9sm18798629wjb.22.2016.08.21.10.10.10
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 21 Aug 2016 10:10:11 -0700 (PDT)
+Subject: Re: Minor bug: git config ignores empty sections
+To:     Jeff King <peff@peff.net>, Eli Barzilay <eli@barzilay.org>
+References: <CALO-gutdz5VMgoRmbqEa9UiaTC+L2Sy2n-3AF+zfPr-X8+1U4A@mail.gmail.com>
+ <20160815120916.6iobqirqbg76exms@sigill.intra.peff.net>
+ <8737m63phh.fsf@linux-m68k.org>
+ <20160815180905.znnz6evufsne5wy6@sigill.intra.peff.net>
+ <xmqqh9alhoor.fsf@gitster.mtv.corp.google.com>
+ <20160815185500.htgrz3t2wkztg4ww@sigill.intra.peff.net>
+ <CALO-guvVMFitNdGYEonXZ9rh8g8=L9gZojXVUu7FO2_0ki24EQ@mail.gmail.com>
+ <20160816123631.ckbvzustl2j37gdx@sigill.intra.peff.net>
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        Marco Paolone <marcopaolone@gmail.com>,
-        Changwoo Ryu <cwryu@debian.org>,
-        Marco Sousa <marcomsousa@gmail.com>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-        Nelson Martell <nelson6e65@gmail.com>,
-        Brian Gesiak <modocache@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+        Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <968003ae-4f62-ebe9-f7af-53b4e1bcf7fd@gmail.com>
+Date:   Sun, 21 Aug 2016 19:09:54 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
+MIME-Version: 1.0
+In-Reply-To: <20160816123631.ckbvzustl2j37gdx@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2016-08-21 2:38 GMT+08:00 Jean-No=C3=ABl AVILA <jn.avila@free.fr>:
-> On samedi 20 ao=C3=BBt 2016 11:03:00 CEST Junio C Hamano wrote:
->> Jean-No=C3=ABl AVILA <jn.avila@free.fr> writes:
->> > 1.  In config.c, the changes to the function die_bad_number tried to
->> > flatten the translated strings (no message building logic). I think it
->> > went too far, and the reason of the failure can be factorized so that =
-we
->> > don't have to retranslate each time. I might be wrong on this one, but=
- I
->> > have no example of language where we would need differentiated error
->> > reasons.
->>
->> I do not have a strong opinion on this one.  I think it is an
->> attempt to avoid language-lego.
->
-> No problem with the changes for blob, files, command line. It's just abou=
-t
-> dividing by two the number of strings to translate by factorizing "out of
-> range" and "invalid unit", which are invariable anyway.
+W dniu 16.08.2016 o 14:36, Jeff King pisze:
 
-I agree with you.  It maybe not a good solution to expanded string "reason"
-in commit 1b8132d:
+> What I think would be much more sane in general is to parse the whole
+> thing into a tree (or even a flat list of events),
 
-    -       const char *reason =3D errno =3D=3D ERANGE ?
-    -                            "out of range" :
-    -                            "invalid unit";
+List of events is cheaper on memory (though I don't think there is
+an issue with size of config file), and can be turned into tree
+and DOM easily.
 
+>                                                    marking each
+> syntactically as a section header, a key, a comment, a run of
+> whitespace, and so on. And then do manipulations on that tree (e.g.,
+> walk down to the section of interest, add a new key at the end), and
+> then reformat the tree back into a stream of bytes. That lets you
+> separate the policy logic from the parsing, and do high-level operations
+> that might involve multiple passes or backtracking in the tree (e.g.,
+> walk to the section, walk past any existing keys, walk past any comments
+> but _not_ past any blank lines, then add the new key).
+> 
+> There are other other upsides, too. For example, the current code cannot
+> write multiple unrelated keys in a single pass.
+> 
+> The downsides is that it's a complete rewrite of the code. So it's a
+> _lot_ more work, and it carries more risk of regression. So please don't
+> take this as "no, your solution isn't OK; you have to do the rewrite".
+> We've been living with band-aids on the config code for a decade, so I
+> am OK with one more.
 
->> > 3. git-rebase--interactive, in this_nth_commit_message and
->> > skip_nth_commit_message are not localizable,
->>
->> As the "TRANSLATORS" comment alludes to, "This is the Nth thing" can
->> be rephrased to "This is the thing N" or "This is the thing #N"
->> easily, and if that form without ordinal is acceptable for many
->> languages, we should say that it is also OK in C-locale without
->> translation.  So I agree that the recent change was pointless (even
->> though the result may be localizable).
->>
->> In an ideal world, I would imagine that this would be done by using
->> Q_("This is the first thing", "This is the thing #%d", nth) aka
->> ngettext, but
->>
->>     (1) I haven't seen ngettext used from shell scripts; and
->>
-> There's a use_ngettext macro
->
->>     (2) I do not think po files are set up to express "for this
->>         message, this language has 4 variants and here are the local
->>         rules to decide which one to use depending on the number,
->>         but the rules apply only to this message".  The Plural-Forms
->>         rule [*1*] seems to be global to a .po file, unfortunately.
->>
->
->
->> so I do not think we cannot do it with ngettext().
->>
->
-> Let's cut it like this : first ten are literally translated, the followin=
-g ones
-> fall back to a general rule. All languages are treated equally. With more=
- than
-> 10 squashed commit, you no longer really care if the numbering is pedanti=
-cally
-> correct.
+So how 'git config --show-origin --list' works?  
 
+Ah, I guess it prints as it goes, instead of parsing config file(s)
+into stream of events, and printing from those.
 
-It's boring to translate all these 30 messages, I prefer #N like:
+-- 
+Jakub Narębski
 
-    gettext "The commit message #\${n} will be skipped:"
-    gettext "This is the commit message #\${n}:"
-
-
---=20
-Jiang Xin
