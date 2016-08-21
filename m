@@ -2,122 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 046DA1F859
-	for <e@80x24.org>; Sun, 21 Aug 2016 11:30:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A59731F6C1
+	for <e@80x24.org>; Sun, 21 Aug 2016 13:49:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752725AbcHULaT (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 Aug 2016 07:30:19 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:36578 "EHLO
-        mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751694AbcHULaR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Aug 2016 07:30:17 -0400
-Received: by mail-io0-f178.google.com with SMTP id b62so86408878iod.3
-        for <git@vger.kernel.org>; Sun, 21 Aug 2016 04:30:17 -0700 (PDT)
+        id S1753068AbcHUNsP (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 Aug 2016 09:48:15 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35914 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753025AbcHUNsO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Aug 2016 09:48:14 -0400
+Received: by mail-wm0-f65.google.com with SMTP id i138so9716267wmf.3
+        for <git@vger.kernel.org>; Sun, 21 Aug 2016 06:46:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=BWh582djQeHzaYg0qBi8UAvTdz9romFf4rGW/Lr2u8s=;
-        b=IuirDn3srSlk9AkhvaXFwjdJ6gNxeXWON+9S4OEvMnzISoCLcRESHUAvmdkQPQghpS
-         sDzAEabOMNg+/CruEa/BFlUA4sXoCYZI5/1z3nylHCxCMB0C0c5vOFClfNGr3mD2JNtY
-         kAQ7d5lyQSiSrBT4xf0Ze4ecoeoxS1MXdFIsPK5+zSfb9miU/HRUcZDENymPsrgMGfV0
-         +3cCbQrNTot/Qxw4THB86Fr4e3VoHXbPndRF+SwK5RaPet72kVhad3Xz4tBc90XjQ7la
-         V8ey4csxt/GhydVUTw9qhyd1RSwpXmkyjoEumbP7ICsXjqAvD2EhaW45d19lJuBiZAWq
-         WC3Q==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding;
+        bh=hTK9svkxCalPWjDuSZiFC82ZLTuRZwIdVK7MOTRmJVE=;
+        b=Il78zCdgdHdIE4MAIMae1F2hwh2rBwfHqzr8EetxAzf23nZHHz+ZcpYofabkvnHGo5
+         ha1DuT4HoMlWoS2xbjcHD9GgRlqpmlbohCyMbMp9jwqwOnMlSZhV2+NdX4eFfa98VCBL
+         MySFNb6TUBd5MwKM15f/JKkm7ISgk4R8RRlMNS3qvBQTGFUN0ezUl0Dr6K+Gc1/P4DnX
+         8ZGckxaO1CJWUH9d3oevj0h8TKRgKtOCJV4IHcOZjGIVh4oaVUwI+TxuBlP8t2PTLK5h
+         GbI1fTA7zkpE2ub9FzL2tYr1Qq8Ouk8maga8/59tzL4TaygYU9UwrwY965BMBDmjNKBR
+         Cc/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=BWh582djQeHzaYg0qBi8UAvTdz9romFf4rGW/Lr2u8s=;
-        b=KzKSdPymAYUXNRBx7wfjRZcOu8Gsclb4y8XIUYhboK4COJbJjWKAecnTs0e5Efvakv
-         dP5UG3cS+b69NyKI5uZE/GaZywjP2x+hBXyVA8WDH+VP6uIlvTz0q+U2/HJu0wKq0W/j
-         LIZqNdWiocgvdfERM/jDgakuU+NljVZzZCtrQe1aJoy5+OxsA4/Z8l1hdODCLHroMNgy
-         n6RON3WuZ6FAzERx6bVH+QS9Di99GH8xQUwfvodWxv+sg9+2zgazfjoDYGCS548WnL2q
-         Uj4DETyDSpzrIYWQdNpeHTTpEdH8XjnIla2yCaWkcVYo7QnrCiWHopTzxGTid7RaBJ1T
-         awoA==
-X-Gm-Message-State: AEkoous3e2VKIFZbzncuS7H23ZvSpJJAoc8v1nPF5S8qBlmPPGt+21DSyvk502YFDyOFxS+SIfTWS9dnsxLMtg==
-X-Received: by 10.107.47.152 with SMTP id v24mr18299786iov.154.1471779017051;
- Sun, 21 Aug 2016 04:30:17 -0700 (PDT)
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=hTK9svkxCalPWjDuSZiFC82ZLTuRZwIdVK7MOTRmJVE=;
+        b=ipTrmL8SHCs8eokxmTn5lKcDngDgTwAp/uf9ysEdGOz3fzAyW61y1ntrHy3j1vRfUy
+         Z2IEak5WPOj0vGP4o/D+Kqu2HsyFcRj4d2y89b6beD0sqQ085CzfU0SYzVm80LwhZsFq
+         9quhxyiCOles1fTxo183eTajq2VSuC9/5L4KaWje+z6pRuQzxnPwnAg4YgEXpFg5GpTx
+         yO7aBXSpOw81+1IZtELrY+BhrqToSpYehdPgA87wFW34N+rCLYCVfmtWiBdC2e9f0KdI
+         UM4U1rAwsaA2ec428RtmRm9AByNvoClnwNp//jAKONIsN3tLSap1/uP38TnkTfiy9iPB
+         vA6g==
+X-Gm-Message-State: AEkooutyXuhYjFjXiNvPk1SXAhgw8LmVYfLTU+wS4MzAmX7yZcII6AN4kB+gdb9Zs/WQpA==
+X-Received: by 10.194.186.231 with SMTP id fn7mr13852370wjc.164.1471787213444;
+        Sun, 21 Aug 2016 06:46:53 -0700 (PDT)
+Received: from [192.168.1.26] (deh62.neoplus.adsl.tpnet.pl. [83.23.111.62])
+        by smtp.googlemail.com with ESMTPSA id u2sm10255599wmf.5.2016.08.21.06.46.52
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 21 Aug 2016 06:46:52 -0700 (PDT)
+Subject: Re: Extending "extended SHA1" syntax to traverse through gitlinks?
+To:     Josh Triplett <josh@joshtriplett.org>, git@vger.kernel.org
+References: <20160820225013.l7ynru7hzcmrzff7@x>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <9bad3d13-3257-2077-a734-f985c375b8d3@gmail.com>
+Date:   Sun, 21 Aug 2016 15:46:36 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Received: by 10.79.83.5 with HTTP; Sun, 21 Aug 2016 04:30:16 -0700 (PDT)
-In-Reply-To: <20160821020537.eiyh4vnhmnuctgtz@x>
-References: <CAB2VqoZh6zZV3Lk2B7dBPVE5h6H1LCwyxWrUo4yJFhqB=hAjig@mail.gmail.com>
- <20160821020537.eiyh4vnhmnuctgtz@x>
-From:   Richard <richard.maw@gmail.com>
-Date:   Sun, 21 Aug 2016 12:30:16 +0100
-Message-ID: <CAB2VqoZdj1rhdt-4gUhXTAMQjJTOqCuwXiO6yfB2Fzyy_qSWHg@mail.gmail.com>
-Subject: Re: Adding more namespace support to git
-To:     Josh Triplett <josh@joshtriplett.org>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20160820225013.l7ynru7hzcmrzff7@x>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 21 August 2016 at 03:05, Josh Triplett <josh@joshtriplett.org> wrote:
-> On Sat, Aug 20, 2016 at 08:07:00PM +0100, Richard wrote:
->> Since when upload-pack and receive-pack run hooks they leave GIT_NAMESPACE set
->> there are hook scripts that expect that the current namespace is ignored,
->> so commands that now want to be namespace aware would have to opt-in.
->
-> That seems really unfortunate.  While at the time we wanted to start
-> with namespace support in upload-pack and receive-pack (and
-> http-backend) because those would allow using it as a server-side
-> storage format, I don't think we realized that leaving GIT_NAMESPACE in
-> the hook environment would completely prevent other git commands from
-> automatically handling namespaces.
->
-> And conversely, we can't just have upload-pack and receive-pack start
-> removing it from the hook environment, because a hook might expect to
-> read the current namespace from it (and then run git commands that the
-> hook expects will ignore it).
+W dniu 21.08.2016 o 00:50, Josh Triplett pisze:
 
-This is exactly what I've had to do for my proof of concept
-https://git.gitano.org.uk/cgit.git/commit/?h=richardmaw/namespaces&id=379124469a8a13208f976eb816375b00901ae77f
+> Currently, if you have a branch "somebranch" that contains a gitlink
+> "somecommit", you can write "somebranch:somecommit" to refer to the
+> commit, just like a tree or blob.  ("man git-rev-parse" defines this
+> syntax in the "SPECIFYING REVISIONS" section.)  You can use this
+> anywhere you can use a committish, including "git show
+> somebranch:somecommit", "git log somebranch:somecommit..anotherbranch",
+> or even "git format-patch -1 somebranch:somecommit".
+> 
+> However, you cannot traverse *through* the gitlink to look at files
+> inside its own tree, or to look at other commits relative to that
+> commit.  For instance, "somebranch:somecommit:somefile" and
+> "somebranch:somecommit~3" do not work.
 
-> For that matter, someone could run "GIT_NAMESPACE=foo git push
-> remotename branchname" or
-> "GIT_NAMESPACE=foo git clone remotename", and based on the current
-> behavior, they'd expect to have the namespace apply to the remote end,
-> but not the local end.
+Note that there is the same problem traversing through trees:
+while 'git cat-file -p HEAD:subdir/file' works, the 'HEAD:subdir:file'
+doesn't:
 
-I'm fairly sure this isn't the case, at least from what I've tried.
-At one point it appeared to be working,
-but that was just because it started the upload-pack as a subprocess,
-which inherited the GIT_NAMESPACE environment variable rather than
-being passed it.
-I think this is why the test suite always sets up a remote with the ext:: helper
-so it can set --namespace=foo in the command.
+  $ git cat-file -p HEAD:subdir:file
+  fatal: Not a valid object name HEAD:subdir:file
 
-This is one of the reasons why I have been working on namespace
-support in the git server,
-you have to encode the namespace in the url somehow
-since it isn't passed through the git protocol.
+Though you can do resolve step manually
 
-We were thinking of adding ssh://git@server/~username/repo/path.git syntax
-for letting users have their own private namespace in a repository,
-and later extending the backend of the git server's repository storage
-so that other repositories could just be namespaces of a different repository
-so we could do something like repository forks
-provided the repositories have the same availability.
+  $ git cat-file -p $(git rev-parse HEAD:subdir):file
 
-> Unfortunately, I think at this point, GIT_NAMESPACE has to exclusively
-> refer to the namespace for the remote end, to avoid breakage.  Which
-> means any automatic pervasive support for namespaces on the local side
-> would need to use a different mechanism.  (In addition to applying to
-> ref enumeration, this would also need to apply to the local end of
-> refspecs.)  And this new mechanism would need to not affect the remote
-> end, to allow remapping the local end while accessing an un-namespaced
-> (or differently namespaced) remote.
+This works.
 
-The problem for hooks is that it is implicitly inherited,
-so it could work if upload-pack receive-pack and http-backend work
-with GIT_NAMESPACE set,
-but everything else that wants to use a namespace has to set
---namespace on the command-line.
+> 
+> I'd love to have a syntax that allows traversing through the gitlink to
+> other files or commits.  Ideally, I'd suggest the syntax above, as a
+> natural extension of the existing extended syntax.
+
+And with the above manual resolving, you can see the problem with
+implementing it: the git-cat-file (in submodule) and git-rev-parse
+(in supermodule) are across repository boundary.
+
+Also the problem with proposed syntax is that is not very visible.
+But perhaps it is all right.  Maybe :/ as separator would be better,
+or using parentheses or braces?
+
+> (That syntax would potentially introduce ambiguity if you had a file
+> named "somecommit:somefile" or "somecommit~3".  That doesn't seem like a
+> problem, though; the existing syntax already doesn't support accessing a
+> file named "x..y" or "x...y", so scripts already can't expect to access
+> arbitrary filenames with that syntax without some kind of quoting, which
+> we also don't have.)
+
+Errr... what?
+
+  $ echo A..B >A..B
+  $ git add A..B
+  $ git commit -m 'A..B added'
+  [master 2d69af9] A..B added
+   1 file changed, 1 insertion(+), 1 deletion(-)
+   create mode 100644 A..B
+  $ git show HEAD:A..B
+  A..B
+
+> 
+> Does this seem reasonable?  Would a patch introducing such syntax
+> (including documentation and tests) be acceptable?
+
+-- 
+Jakub Narębski
+
