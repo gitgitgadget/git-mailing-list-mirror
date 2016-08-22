@@ -2,192 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFE131F859
-	for <e@80x24.org>; Mon, 22 Aug 2016 12:48:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DEFF11F859
+	for <e@80x24.org>; Mon, 22 Aug 2016 13:00:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752903AbcHVMsv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Aug 2016 08:48:51 -0400
-Received: from mout.gmx.net ([212.227.17.20]:63326 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752594AbcHVMsu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Aug 2016 08:48:50 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MFLmC-1bPf110z9I-00EIsz; Mon, 22 Aug 2016 14:47:59
- +0200
-Date:   Mon, 22 Aug 2016 14:47:55 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Ben Wijen <ben@wijen.net>, Junio C Hamano <gitster@pobox.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Eric Wong <e@80x24.org>
-Subject: [PATCH v3 2/2] mingw: ensure temporary file handles are not inherited
- by child processes
-In-Reply-To: <cover.1471869985.git.johannes.schindelin@gmx.de>
-Message-ID: <b31d13befa305e46bd51f8c168f42071ce2dc663.1471869985.git.johannes.schindelin@gmx.de>
-References: <cover.1471531799.git.johannes.schindelin@gmx.de> <cover.1471869985.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1753629AbcHVNAU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Aug 2016 09:00:20 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:35559 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754692AbcHVNAD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Aug 2016 09:00:03 -0400
+Received: by mail-wm0-f67.google.com with SMTP id i5so13379591wmg.2
+        for <git@vger.kernel.org>; Mon, 22 Aug 2016 05:59:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=4YSgzZp7DzJxs9qxCqs7INj/+gfCGNQkP2AOWBUkhQ0=;
+        b=fthLTHp3qSMMem434qTCRE0u4V9jyET1a9t3CLD7woK2wnIP1iCKvbc+79ekSBake/
+         B1TqLfFy4NJIMQv+dp3sleZe0PVmtxJzEe6dcCeqI3MXXNPuZGatYVkfLrO9gl+CZ9r8
+         KPO9wqoxoxBetcAmVmuDt5ZrIfPGHoelxHm955551XApobvEaW6CQKKBsNX2lZs2mndm
+         bPvurn7P0qDLvec3nhdpyFL3g/NAGIJnXjm9yY4DyQMhPZNrmaSkUDHux2lYLwqMkY7z
+         kWZfnqx1RLhlN9mpE/YkJuyXDWtLZmyCa16L+d/BJ5SLH1eM0nVzWqCjJI03ODHulUSG
+         kbog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=4YSgzZp7DzJxs9qxCqs7INj/+gfCGNQkP2AOWBUkhQ0=;
+        b=FjWzWDzci6LJzh9TDesMUlbXTXh7Om+uRVFEhMhlRNSnbJvMZouVVIvWdJoM6joFl+
+         X4YBJZBEj35+IEXdY1wz+xZ8CtipEHrlWpdFQj0BOgUOFtYcswJW73T8XDKQTNDz0eiY
+         V8lqXmzNcH8/hlEJnlmxoeRCCHqmRN1YZbpdCKvnIFpg/V2MZZ0HZYz/iy/Wcubn5hhH
+         t3S5/cvokbsXkWGsi0JXWi13gc8996v9M6TPJWdvT83e/FHXsth5d7462JpOsUoq7Kns
+         1KVLIZBuIUYbHrL9hPJ291+7rflUjGJ/yhic1yWoR7VJIp/Ko84uWbKReg2bjpTejCBy
+         tbIg==
+X-Gm-Message-State: AEkoouu9D6WIO3Kzrz4oZYgU1QFda4Z64y1pNSwFzsAiOIickpht1lyuZPn/N7FFEqyRtQ==
+X-Received: by 10.194.48.39 with SMTP id i7mr19881232wjn.173.1471870764101;
+        Mon, 22 Aug 2016 05:59:24 -0700 (PDT)
+Received: from anie (anie.imag.fr. [129.88.42.32])
+        by smtp.gmail.com with ESMTPSA id pm1sm23917987wjb.40.2016.08.22.05.59.22
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 22 Aug 2016 05:59:23 -0700 (PDT)
+From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH v4] config: add conditional include
+References: <20160712164216.24072-1-pclouds@gmail.com>
+        <20160714153311.2166-1-pclouds@gmail.com>
+        <CACsJy8Bw0ZNu-6SB0P3dBZCLMJWJkbUqb64H_QOcn4UH+_AcNA@mail.gmail.com>
+        <20160819135408.ckyw6ruseicvg2jt@sigill.intra.peff.net>
+        <5c131421-ae7f-8a37-76ab-0fd05cbe3530@gmail.com>
+        <CACsJy8C30=-LGMYQJ6MO17L8Vv1q=iQGC=R8TDhC5qM1f5Lh5A@mail.gmail.com>
+Date:   Mon, 22 Aug 2016 14:59:22 +0200
+In-Reply-To: <CACsJy8C30=-LGMYQJ6MO17L8Vv1q=iQGC=R8TDhC5qM1f5Lh5A@mail.gmail.com>
+        (Duy Nguyen's message of "Mon, 22 Aug 2016 19:43:49 +0700")
+Message-ID: <vpqr39harit.fsf@anie.imag.fr>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:k5jE/21P5dn67VvROb16eAvCXAy/+saCFsQuEqYaxikokR+zLpZ
- Yo9MmwWGp75vdJbvV8Uc+ej/FX4E0KWOSlwguTNtFNnoLZ7Avxkk6SkVkQzNBnDYeCpifu9
- +hOC21xSdEKIjsMJyFKj8oV1u8oeEv8H8jelTg9DbXxvKWjh6zUtnnzX3RiMENya9xqbaGP
- vnX26On9cWH1d3O27PAnQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:qKBAwFjr5kU=:uiBeWU+Oe9hNOzHhGc7yIL
- qsAC0GO76ChFrsDDnGMTnyMkevUmg5yytq03QUO9kCjr5IkKOPdqpSfn3hAV8a2VvvyFaMDMq
- jPxTTCkCTeu0M77ANT/ZErqeIt+tTIfk6WioPVQBt3uVH2kaf2C/aVFoRPZHlUZUmnWK6I+Lm
- IfS9txyt9AlMto7vW7SIIEgeakFHaDAJ7rN1HIZEtl4pf/vtaM5pFsAkYPnCHcAeGO0PTZvc0
- Cn6KCitIQ0mTBlSlrZokQUPHxfnnsPta4dkVzpf/fBNtqdXwrhwt0MrdGqqccDtsGBTvYo0lB
- LeTUy0MRMUU4I280amPocEIGE1jcKfxsS8MgqmHsz+vj7PWj02vySFzPI96FJZVeZLpnMuypB
- DGWUKeU9HLCXJg2Gzop8c4WLSpw3fpe9AP+3JPvhiBkMRK8XprMlfbI3suuOitry+gWCkvELE
- UHgryGQSSdyqsnWR4QjHziP3xYlqGBTHX9L8TSlzjQMaJlrAouNWjzEVlzO8S5nj78IgtNEFm
- 7I+pYjjuAD1J1rIavO6tjHZF7hEL+RIgeyKhL2109hEWIVIj99hwKYfPnvM0ut8qIQVE9VWtM
- sXchGhrZ3tJxO8baPY8t99vRo3dCkrEO1F22gfi5XpbIZZIF0+3/Dp42MDlBN2K2DTSZad8vg
- 3ycj/D7ofuWi9892OXknDpbao44f8+Fds0Q0fj08nn3Gqq+3X2hNbBYQrvwFtOIf6OaYbGXxV
- QdlkbVPSap9PAqr7StkGvFrYWjBwv2zN+6J+w8zgYZD0n/BLVaj7ahZs7pAv2Kwu58pr3Vuc9
- UA2EcFt
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ben Wijen <ben@wijen.net>
+Duy Nguyen <pclouds@gmail.com> writes:
 
-When the index is locked and child processes inherit the handle to
-said lock and the parent process wants to remove the lock before the
-child process exits, on Windows there is a problem: it won't work
-because files cannot be deleted if a process holds a handle on them.
-The symptom:
+> On Sun, Aug 21, 2016 at 4:08 AM, Jakub Narębski <jnareb@gmail.com> wrote:
+>> W dniu 19.08.2016 o 15:54, Jeff King pisze:
+>>> On Sat, Aug 13, 2016 at 03:40:59PM +0700, Duy Nguyen wrote:
+>>>
+>>>> Ping..
+>>>
+>>> There was some discussion after v4. I think the open issues are:
+>>>
+>>>   - the commit message is rather terse (it should describe motivation,
+>>>     and can refer to the docs for the "how")
+>>>
+>>>   - the syntax might be more clear as:
+>>>
+>>>        [include-if "gitdir:..."]
+>>>
+>>>     or
+>>>
+>>>        [include "gitdir-is:..."]
+>>
+>> Or
+>>
+>>          [include "if-gitdir:..."]
+>
+> I like this one. I can re-roll to address the first two bullet point,
+> if the last one, the open question, will not become a blocker later
+> on.
 
-    Rename from 'xxx/.git/index.lock' to 'xxx/.git/index' failed.
-    Should I try again? (y/n)
+I think the syntax should be design to allow arbitrary boolean
+expression later if needed. Then, I prefer one of
 
-Spawning child processes with bInheritHandles==FALSE would not work
-because no file handles would be inherited, not even the hStdXxx
-handles in STARTUPINFO (stdin/stdout/stderr).
+  [include-if "gitdir-is:..."]
+  [include    "gitdir-is:..."]
 
-Opening every file with O_NOINHERIT does not work, either, as e.g.
-git-upload-pack expects inherited file handles.
+because it may later be extended to e.g.
 
-This leaves us with the only way out: creating temp files with the
-O_NOINHERIT flag. This flag is Windows-specific, however. For our
-purposes, it is equivalent to O_CLOEXEC (which does not exist on
-Windows), so let's just open temporary files with the O_CLOEXEC flag and
-map that flag to O_NOINHERIT on Windows.
+  [include-if "not(gitdir-is:...)"]
+  [include-if "gitdir-matches:regex"]
+  [include-if "gitdir-is:... and git-version-greater:2.9"]
+  ...
 
-As Eric Wong pointed out, we need to be careful to handle the case where
-the Linux headers used to compile Git support O_CLOEXEC but the Linux
-kernel used to run Git does not: it returns an EINVAL.
+I actually already use "conditional include on version number" because I
+use push.default=upstream which makes older versions of Git crash, but
+fortunately these versions of Git also ignore the "include" directive so
+having this push.default=upstream in an included file works. It's a
+hack, it worked once but it won't work again.
 
-This fixes the test that we just introduced to demonstrate the problem.
-
-Signed-off-by: Ben Wijen <ben@wijen.net>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- compat/mingw.h        | 4 ++++
- git-compat-util.h     | 4 ++++
- lockfile.h            | 4 ++++
- t/t6026-merge-attr.sh | 2 +-
- tempfile.c            | 7 ++++++-
- tempfile.h            | 4 ++++
- 6 files changed, 23 insertions(+), 2 deletions(-)
-
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 95e128f..753e641 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -67,6 +67,10 @@ typedef int pid_t;
- #define F_SETFD 2
- #define FD_CLOEXEC 0x1
- 
-+#if !defined O_CLOEXEC && defined O_NOINHERIT
-+#define O_CLOEXEC	O_NOINHERIT
-+#endif
-+
- #ifndef EAFNOSUPPORT
- #define EAFNOSUPPORT WSAEAFNOSUPPORT
- #endif
-diff --git a/git-compat-util.h b/git-compat-util.h
-index f52e00b..db89ba7 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -667,6 +667,10 @@ void *gitmemmem(const void *haystack, size_t haystacklen,
- #define getpagesize() sysconf(_SC_PAGESIZE)
- #endif
- 
-+#ifndef O_CLOEXEC
-+#define O_CLOEXEC 0
-+#endif
-+
- #ifdef FREAD_READS_DIRECTORIES
- #ifdef fopen
- #undef fopen
-diff --git a/lockfile.h b/lockfile.h
-index 3d30193..d26ad27 100644
---- a/lockfile.h
-+++ b/lockfile.h
-@@ -55,6 +55,10 @@
-  *   * calling `fdopen_lock_file()` to get a `FILE` pointer for the
-  *     open file and writing to the file using stdio.
-  *
-+ *   Note that the file descriptor returned by hold_lock_file_for_update()
-+ *   is marked O_CLOEXEC, so the new contents must be written by the
-+ *   current process, not a spawned one.
-+ *
-  * When finished writing, the caller can:
-  *
-  * * Close the file descriptor and rename the lockfile to its final
-diff --git a/t/t6026-merge-attr.sh b/t/t6026-merge-attr.sh
-index 3d28c78..dd8f88d 100755
---- a/t/t6026-merge-attr.sh
-+++ b/t/t6026-merge-attr.sh
-@@ -181,7 +181,7 @@ test_expect_success 'up-to-date merge without common ancestor' '
- 	)
- '
- 
--test_expect_success !MINGW 'custom merge does not lock index' '
-+test_expect_success 'custom merge does not lock index' '
- 	git reset --hard anchor &&
- 	write_script sleep-one-second.sh <<-\EOF &&
- 		sleep 1 &
-diff --git a/tempfile.c b/tempfile.c
-index 0af7ebf..2990c92 100644
---- a/tempfile.c
-+++ b/tempfile.c
-@@ -120,7 +120,12 @@ int create_tempfile(struct tempfile *tempfile, const char *path)
- 	prepare_tempfile_object(tempfile);
- 
- 	strbuf_add_absolute_path(&tempfile->filename, path);
--	tempfile->fd = open(tempfile->filename.buf, O_RDWR | O_CREAT | O_EXCL, 0666);
-+	tempfile->fd = open(tempfile->filename.buf,
-+			    O_RDWR | O_CREAT | O_EXCL | O_CLOEXEC, 0666);
-+	if (O_CLOEXEC && tempfile->fd < 0 && errno == EINVAL)
-+		/* Try again w/o O_CLOEXEC: the kernel might not support it */
-+		tempfile->fd = open(tempfile->filename.buf,
-+				    O_RDWR | O_CREAT | O_EXCL, 0666);
- 	if (tempfile->fd < 0) {
- 		strbuf_reset(&tempfile->filename);
- 		return -1;
-diff --git a/tempfile.h b/tempfile.h
-index 4219fe4..2f0038d 100644
---- a/tempfile.h
-+++ b/tempfile.h
-@@ -33,6 +33,10 @@
-  *   * calling `fdopen_tempfile()` to get a `FILE` pointer for the
-  *     open file and writing to the file using stdio.
-  *
-+ *   Note that the file descriptor returned by create_tempfile()
-+ *   is marked O_CLOEXEC, so the new contents must be written by
-+ *   the current process, not any spawned one.
-+ *
-  * When finished writing, the caller can:
-  *
-  * * Close the file descriptor and remove the temporary file by
 -- 
-2.10.0.rc0.115.ged054c0
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
