@@ -6,86 +6,92 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA9F21F859
-	for <e@80x24.org>; Mon, 22 Aug 2016 21:57:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0A4E1F859
+	for <e@80x24.org>; Mon, 22 Aug 2016 21:57:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756265AbcHVV5k (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Aug 2016 17:57:40 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59283 "HELO cloud.peff.net"
+        id S1756295AbcHVV5t (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Aug 2016 17:57:49 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59286 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1755787AbcHVV5i (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Aug 2016 17:57:38 -0400
-Received: (qmail 29437 invoked by uid 109); 22 Aug 2016 21:57:29 -0000
+        id S1756274AbcHVV5s (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Aug 2016 17:57:48 -0400
+Received: (qmail 29502 invoked by uid 109); 22 Aug 2016 21:57:48 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Aug 2016 21:57:29 +0000
-Received: (qmail 17465 invoked by uid 111); 22 Aug 2016 21:57:32 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Aug 2016 21:57:48 +0000
+Received: (qmail 17482 invoked by uid 111); 22 Aug 2016 21:57:50 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Aug 2016 17:57:32 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Aug 2016 17:57:26 -0400
-Date:   Mon, 22 Aug 2016 17:57:26 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 Aug 2016 17:57:50 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Aug 2016 17:57:45 -0400
+Date:   Mon, 22 Aug 2016 17:57:45 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 0/7] tweaking the delta base cache
-Message-ID: <20160822215725.qdikfcaz3smhulau@sigill.intra.peff.net>
+Subject: [PATCH 1/7] cache_or_unpack_entry: drop keep_cache parameter
+Message-ID: <20160822215744.nc3yqv64gf3hwcv4@sigill.intra.peff.net>
+References: <20160822215725.qdikfcaz3smhulau@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <20160822215725.qdikfcaz3smhulau@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After the experiments I did with --depth=50 recently, I noticed there
-seemed to be a lot of room for improvement in the delta-base-cache (and
-in particular, there seemed to be a lack of actual numbers).
+There is only one caller of cache_or_unpack_entry() and it
+always passes 1 for the keep_cache parameter. We can
+simplify it by dropping the "!keep_cache" case.
 
-So I tried a series of experiments, and these are the tweaks I came up
-with. There are a lot of numbers and analysis in the commit messages
-themselves. The most dramatic effect I got was that before this patch,
-bumping core.deltaBaseCacheLimit for the kernel gets you basically
-nothing, whereas with it, I get:
+Another call, which did pass 0, was dropped in abe601b
+(sha1_file: remove recursion in unpack_entry, 2013-03-27),
+as unpack_entry() now does more complicated things than a
+simple unpack when there is a cache miss.
 
-  core.deltaBaseCacheLimit    time to run git log -Sfoo --raw
-  ------------------------    -------------------------------
-                      128m    4m56.486s
-                      256m    4m33.769s
-                      512m    4m12.968s
-                     1024m    3m32.623s
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ sha1_file.c | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
-Note that I don't actually propose bumping the memory limit in this
-series. That's a bit more contentious, as it's really using more
-resources to do a space/time tradeoff, and people may not want to spend
-the RAM. Whereas this series just adjusts the actual data structures to
-let us use the RAM we've already been allocated more efficiently.
+diff --git a/sha1_file.c b/sha1_file.c
+index 3045aea..2333911 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2129,25 +2129,18 @@ static void clear_delta_base_cache_entry(struct delta_base_cache_entry *ent)
+ }
+ 
+ static void *cache_or_unpack_entry(struct packed_git *p, off_t base_offset,
+-	unsigned long *base_size, enum object_type *type, int keep_cache)
++	unsigned long *base_size, enum object_type *type)
+ {
+ 	struct delta_base_cache_entry *ent;
+-	void *ret;
+ 
+ 	ent = get_delta_base_cache_entry(p, base_offset);
+ 
+ 	if (!eq_delta_base_cache_entry(ent, p, base_offset))
+ 		return unpack_entry(p, base_offset, type, base_size);
+ 
+-	ret = ent->data;
+-
+-	if (!keep_cache)
+-		clear_delta_base_cache_entry(ent);
+-	else
+-		ret = xmemdupz(ent->data, ent->size);
+ 	*type = ent->type;
+ 	*base_size = ent->size;
+-	return ret;
++	return xmemdupz(ent->data, ent->size);
+ }
+ 
+ static inline void release_delta_base_cache(struct delta_base_cache_entry *ent)
+@@ -2755,7 +2748,7 @@ static void *read_packed_sha1(const unsigned char *sha1,
+ 
+ 	if (!find_pack_entry(sha1, &e))
+ 		return NULL;
+-	data = cache_or_unpack_entry(e.p, e.offset, size, type, 1);
++	data = cache_or_unpack_entry(e.p, e.offset, size, type);
+ 	if (!data) {
+ 		/*
+ 		 * We're probably in deep shit, but let's try to fetch
+-- 
+2.10.0.rc1.118.ge2299eb
 
-The interesting changes are really patches 5 and 6, which adjust the LRU
-management and the underlying hash structure.
-
-There are a few ideas I thought of or saw in past threads but didn't
-explore. I don't plan on digging further on them right now, so if
-anybody else wants to do so, be my guest:
-
-  - limiting the size of items entering the cache (e.g., to avoid a
-    single giant blob blowing out all of the other entries)
-
-  - something more clever than LRU, like weighting by a mix of size and
-    recency
-
-  - I didn't look at the criteria for adding entries to the cache at all
-
-  - we seem to drop cache entries as we use them in unpack_entry(); I'm
-    not sure if we would do better to retain them and let them leave via
-    LRU expiration
-
-So there may be more work, but I think these improvements stand on their
-own.
-
-  [1/7]: cache_or_unpack_entry: drop keep_cache parameter
-  [2/7]: clear_delta_base_cache_entry: use a more descriptive name
-  [3/7]: release_delta_base_cache: reuse existing detach function
-  [4/7]: delta_base_cache: use list.h for LRU
-  [5/7]: delta_base_cache: drop special treatment of blobs
-  [6/7]: delta_base_cache: use hashmap.h
-  [7/7]: t/perf: add basic perf tests for delta base cache
-
--Peff
