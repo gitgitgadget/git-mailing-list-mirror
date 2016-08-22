@@ -2,102 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E84F32018E
-	for <e@80x24.org>; Mon, 22 Aug 2016 18:06:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F4681F859
+	for <e@80x24.org>; Mon, 22 Aug 2016 18:06:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755103AbcHVSGC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Aug 2016 14:06:02 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35921 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751754AbcHVSGB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Aug 2016 14:06:01 -0400
-Received: by mail-wm0-f65.google.com with SMTP id i138so14560710wmf.3
-        for <git@vger.kernel.org>; Mon, 22 Aug 2016 11:06:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=YJHy3pzc2VK3AW1adOmqNNFuy4tcyo9GIyRqNgdLgWU=;
-        b=fSkDsHNsF5LLv5IvDvklL0u6iO7x50xMex/J5aRU9bhvbEJ7GVff73C9ahn/qI+QXX
-         PUPK1KdL/B7hg+77a34lCiClezgXUoFQeBaCVzUG4F5moBxvHDTjzn4cD742xZL8/Slo
-         SFbO5/BiS2mV0stt0stHyP729syh3iuDSJ/ptvEbfc1+ttdUGxxP2MhM542oxtsh5GBE
-         XbMRQeseQD/M1uASFs1H8XBRwMGpIVMdcRxR5uN4rsIOEcEBVTDxKfkZMR0XGW0Nb3Rl
-         vnLf77ojtUZqdEszdNA/OFAYH2ij5CByHAXOsnQmYvGf/B00C5IjXYNxlBjfxiMD7adE
-         k0Lg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=YJHy3pzc2VK3AW1adOmqNNFuy4tcyo9GIyRqNgdLgWU=;
-        b=HohXy4BP9lyW5ivX4X3bfL9NYxsO72D9+l7qtqYsM4fA31rAb1Xkm5Wv/l9InEvMn8
-         df4vkvn79JTaB1383vV6cMFie27Pf3PZgc8g3oShcNEGewl0ygltVHR+mEW3kpdMR1cr
-         1gUdy/cICYBSWT/d82LFX15qcwjasEEe4WKe64u/ku5HlcO+zLC1MEYtL8uXEdIVmQRD
-         wob1rBKEWjSqOca3j7BvI618RJHacRVdNo9d0k+0aXzIwzv4W0c/hW8YOkzuxKRBP2YL
-         uInvPCBmHxlWgmvq45mBPaA99pHKPkANwHWpLwvxRxECeKEQ7nGVeAxXyskix/VhW36n
-         5hDQ==
-X-Gm-Message-State: AEkoouucg35B47mxlVVj2xE4JOHe8OAYnxfiVAhoVowNBtmMCB3rB/a8GTQijWFgetTc/Q==
-X-Received: by 10.194.235.166 with SMTP id un6mr18131928wjc.169.1471889159846;
-        Mon, 22 Aug 2016 11:05:59 -0700 (PDT)
-Received: from [192.168.1.26] (abri28.neoplus.adsl.tpnet.pl. [83.8.102.28])
-        by smtp.googlemail.com with ESMTPSA id 190sm22791168wmk.13.2016.08.22.11.05.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 22 Aug 2016 11:05:59 -0700 (PDT)
-Subject: Re: Working with public-inbox.org [Was: [PATCH] rev-parse: respect
- core.hooksPath in --git-path]
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Wong <e@80x24.org>
-References: <CAGZ79kasebzJb=b2n=JQiVMrSfJKaVfZaaoaVJFkXWuqKjfYKw@mail.gmail.com>
- <alpine.DEB.2.20.1608181430280.4924@virtualbox>
- <20160818204902.GA1670@starla>
- <alpine.DEB.2.20.1608191720040.4924@virtualbox> <20160819223547.GB16646@dcvr>
- <alpine.DEB.2.20.1608221509010.4924@virtualbox>
-Cc:     Stefan Beller <sbeller@google.com>, meta@public-inbox.org,
-        git@vger.kernel.org
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <02c1c636-b0b4-8730-68a6-18f017ed3410@gmail.com>
-Date:   Mon, 22 Aug 2016 20:05:40 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S1755839AbcHVSGM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Aug 2016 14:06:12 -0400
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:51097 "EHLO
+        out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1755412AbcHVSGK (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 22 Aug 2016 14:06:10 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id A941D20763;
+        Mon, 22 Aug 2016 14:06:08 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute6.internal (MEProxy); Mon, 22 Aug 2016 14:06:08 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=ZZoHSl84smKWr32
+        RwBMYoFaWumM=; b=S0Ay666hZCGtkBzkoUrbFlWz2+NYOtclV6dULNHl4cOTPhO
+        Jo78nksjzqob/pU+D4fvM1s/+frbHQejuEnry3eNsg0Qmu0fTej0M1GO3M/jvOfi
+        Aq4aNMvtSvRN6LrvX3ULMNQxY69aRV/cAF5l7gvkRNrSWfyNBBeed5/xmQOg=
+X-Sasl-enc: mxMuVFOjZrFSZ/nsiyoF/9ODz9hDiGwNmtNCdA0Pm4wq 1471889168
+Received: from ebox.rath.org (ebox.rath.org [45.79.69.51])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 5BAFECC021;
+        Mon, 22 Aug 2016 14:06:08 -0400 (EDT)
+Received: from thinkpad.rath.org (thinkpad [192.168.12.2])
+        by ebox.rath.org (Postfix) with ESMTPS id 98BC2396C84;
+        Mon, 22 Aug 2016 18:06:07 +0000 (UTC)
+Received: by thinkpad.rath.org (Postfix, from userid 1000)
+        id 49A8FBFFD8; Mon, 22 Aug 2016 11:06:07 -0700 (PDT)
+From:   Nikolaus Rath <Nikolaus@rath.org>
+To:     Eric Wong <e@80x24.org>
+Cc:     git@vger.kernel.org
+Subject: Re: Most recent revision that contains a string
+References: <87d1l3ce40.fsf@thinkpad.rath.org> <20160821024647.GA19536@starla>
+Mail-Copies-To: never
+Mail-Followup-To: Eric Wong <e@80x24.org>, git@vger.kernel.org
+Date:   Mon, 22 Aug 2016 11:06:07 -0700
+In-Reply-To: <20160821024647.GA19536@starla> (Eric Wong's message of "Sun, 21
+        Aug 2016 02:46:47 +0000")
+Message-ID: <871t1ghe5s.fsf@thinkpad.rath.org>
+User-Agent: Gnus/5.130014 (Ma Gnus v0.14) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1608221509010.4924@virtualbox>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 22.08.2016 o 15:18, Johannes Schindelin pisze:
+On Aug 21 2016, Eric Wong <e@80x24.org> wrote:
+> Nikolaus Rath <Nikolaus@rath.org> wrote:
+>> What's the easiest way to find the most recent revision (of any file in
+>> the repository, including those that have been deleted in the current
+>> HEAD) that contains a given string?
+>
+> I normally do something like:
+>
+> 	git log -r --raw -p -SSTRING
+> 	git log -r --raw -p -GREGEXP
+>
+> You can also add --diff-filter=3DD to filter only on deletes.
 
-> So unfortunately this thread has devolved. Which is sad. Because all I
-> wanted is to have a change in Git's submission process that would not
-> exclude *so many* developers. That is really all I care about. Not about
-> tools. Not about open vs proprietary, or standards.
-> 
-> I just want developers who are already familiar with Git, and come up with
-> an improvement to Git itself, to be able to contribute it without having
-> to pull out their hair in despair.
+Great, thanks!
 
-What is lacking in using submitGit tool for those that have problems
-with sending patches via email?
+> Btw, please don't set these headers on kernel.org lists:
+>
+> 	Mail-Copies-To: never
+> 	Mail-Followup-To: git@vger.kernel.org
+>
+> Like any mail server, vger fails from time-to-time and
+> reply-to-all prevents it from being a single point of failure.
 
-Submitting changes in Git comes in three phases:
- - submit email with patches
- - review and discuss patch
- - apply patches from email
+Huh? If the list-server fails only I will receive the message so it's
+still lost for everyone else. But I am more than happy to take this
+little risk if it saves me from the nuisance of getting duplicate
+responses.
 
-Pull request via GitHub / Bitbucket / GitLab is easier than sending
-patches via email (pity that GitHub et al. do not have such submitGit-like
-automation built-in).  But I think email, with threaded view, careful
-trimming of quoted contents, multi-level quotes is superior to exiting
-web-based solutions.
+Best,
+-Nikolaus
 
-Regards,
--- 
-Jakub Narębski
+--=20
+GPG encrypted emails preferred. Key id: 0xD113FCAC3C4E599F
+Fingerprint: ED31 791B 2C5C 1613 AF38 8B8A D113 FCAC 3C4E 599F
 
+             =C2=BBTime flies like an arrow, fruit flies like a Banana.=C2=
+=AB
