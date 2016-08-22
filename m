@@ -2,95 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 148841F859
-	for <e@80x24.org>; Mon, 22 Aug 2016 12:44:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9D621F859
+	for <e@80x24.org>; Mon, 22 Aug 2016 12:48:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752148AbcHVMoW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Aug 2016 08:44:22 -0400
-Received: from mail-io0-f172.google.com ([209.85.223.172]:33090 "EHLO
-        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751032AbcHVMoV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Aug 2016 08:44:21 -0400
-Received: by mail-io0-f172.google.com with SMTP id 38so108338708iol.0
-        for <git@vger.kernel.org>; Mon, 22 Aug 2016 05:44:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=LNl2oQZmBII9hBUmvdYjXYZJprE92wxAjlOdYSuJ1HQ=;
-        b=rFtr9ppPx5KrTMI6vMfafOND/khgDJp+/RdA25JJ2wzpkb34v2Keu4iETX8YZFYime
-         4NzLYdZVfccMQwb0PtTzIJVNS1QOE+LoMoRqC15L+BjZR2dBAesM0UYxyU6d39Tuw+kC
-         vE8cgaPKBHc5XIuFR4NrAs7Ae3t5J9wsMX9oUpHDYFX7fpPekopCKh3/JeBEw9pC8ic/
-         pUhD5ywC2bvsu/GtNFfMAZHpFU3lGi1sor+FfHYALsAHNOHPcZcp+S4lttSVJXKCiAzq
-         UZd3kkvlhiQiOv3o/V5FYixcNGHqhZL2jYnB7LozP7WkVUWpf2sUPsrX4Dwice2NjBZj
-         cHHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=LNl2oQZmBII9hBUmvdYjXYZJprE92wxAjlOdYSuJ1HQ=;
-        b=f/XSx5/rm5HkSfOisQ6O0sehAuiS6YoGcSkzZeQfYFkfAAV3TrimIM7EA+qXOyPyev
-         NHAjaHQ+l7jM2regfAPSlk2m0JHYBsv07MIS5TvavGCi5FTj3FVZgEZRyE2JcMMjCuKU
-         lALVe+IcJcZI8RZ4cBXdY3ifJV34B27GFMqEu4Uhb4JJVYiukR5soXg8LzSgAfpBFQCI
-         Gcic3BeOHGxJ1IWkIk7aROnnmEIT6JCxcUowGIxBncYm5r3sxZCafFIYzHjX3RyH6DLq
-         R+qn1+x6vldglSLGSkZK74kJnhmw4u7eoC/yrqoFMAx4cNaNqISbWaKMzYxuv2RytKa5
-         K+eQ==
-X-Gm-Message-State: AEkooutUUfAxgI+UfyEr52QewbOvSnvgjQLcxTE2zzq+hg/cuTZSV6FjrIhLs38X9K1GUqhrDNR1sMB61UsbEg==
-X-Received: by 10.107.2.78 with SMTP id 75mr23413408ioc.128.1471869860233;
- Mon, 22 Aug 2016 05:44:20 -0700 (PDT)
+        id S1752567AbcHVMse (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Aug 2016 08:48:34 -0400
+Received: from mout.gmx.net ([212.227.15.15]:62410 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751294AbcHVMsc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Aug 2016 08:48:32 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MN1C4-1bVCvq0MW0-006c2T; Mon, 22 Aug 2016 14:47:46
+ +0200
+Date:   Mon, 22 Aug 2016 14:47:43 +0200 (CEST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Eric Wong <e@80x24.org>
+Subject: [PATCH v3 0/2] Do not lock temporary files via child processes on
+ Windows
+In-Reply-To: <cover.1471531799.git.johannes.schindelin@gmx.de>
+Message-ID: <cover.1471869985.git.johannes.schindelin@gmx.de>
+References: <cover.1471531799.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.64.125.199 with HTTP; Mon, 22 Aug 2016 05:43:49 -0700 (PDT)
-In-Reply-To: <5c131421-ae7f-8a37-76ab-0fd05cbe3530@gmail.com>
-References: <20160712164216.24072-1-pclouds@gmail.com> <20160714153311.2166-1-pclouds@gmail.com>
- <CACsJy8Bw0ZNu-6SB0P3dBZCLMJWJkbUqb64H_QOcn4UH+_AcNA@mail.gmail.com>
- <20160819135408.ckyw6ruseicvg2jt@sigill.intra.peff.net> <5c131421-ae7f-8a37-76ab-0fd05cbe3530@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 22 Aug 2016 19:43:49 +0700
-Message-ID: <CACsJy8C30=-LGMYQJ6MO17L8Vv1q=iQGC=R8TDhC5qM1f5Lh5A@mail.gmail.com>
-Subject: Re: [PATCH v4] config: add conditional include
-To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Sebastian Schuberth <sschuberth@gmail.com>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:LuIV83yxIN9ea6v8yWw4KRNbfCEtKYUnIE275uOkBNf74uCo5Wq
+ jOOLkbvYLd4+9XrwLiSPRPG5Nxj9JXU65UPZcLK9Nl8EwMN9NWddnUx3MTxiumB8cvz0mLb
+ 8PYv/ga1u1fY+RaRjVrntlvNmhuSH+G7KpF/o0Vwl3rfTJxZnHeqhCyClHHgVbHq9ViwOfC
+ u6q/EQ7CMfVvhznGmFNMQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:E+8Sky2PBgg=:4r8A3IbKfaYWq2htfKlqlO
+ 0AA1H0e+Epmu4b0SRZYU3TDdCvN0NAQAdMTbVwCIGLB4hZ/5CRFwQa7J8gdfyr/woyVJpkBJ1
+ 9+V1ZU0LtOwBCoSNt1LRad5d+hJaKJGRArPrnabsWpbu2rPKSsmIAjVTSKDT0Tq/DAihOhmId
+ 0pwTxQoM2cQxIyRhjdXI/fQwM+F1Nld/5LHs+UknGOcT5d3Lp5iJjqgcQQ738/4vxk78Gzb9Y
+ m5UiehMbhLisxFrfHAvSvtm3IAduP+kLAYgD7CQaLfxMK5oiolrJXLMnSdS6KE6cH/WAGSaj9
+ w97BE6gD6m24/YGhDjLdd6KOC/r3Zx3xWYPFFultG4/NW7JXe/465JajjWa68W5uT+1v9kvWm
+ bBIFB7mbvVNYdLLtbGUY7aEsUOXep1U3evtwyxEUKMf1YP10Fw56F8Xsl9c/CbkPkXqn5Eq8q
+ 1wXEZHiNvfhT81DV1MEMlpop4VI9A7+0PqWu8v7HQdP5D7hT0yi08qNb79f3kg5TuqHFrt/g2
+ c+m0zmu87MOs47AGZR9SSReMUN2NX/u6/L9ysQzdQGeIm8mIWZ5X8MGGzn5xhoDmzKSemXuNq
+ 2C7eYyr1iuPq6CxoiXhiM3NehK1Es3dEzjXlOl8Ia/UINkN6Xv180Ef3bdvarDmvK+bVzbfKo
+ fGlUW0E7OEV8A5vJHYCp1cYFnnaO5XGUDz3Brhecs40qUZ3zzE52VvDS+4Re04lkKn37kRMT+
+ eqeYV6tIvcrGo9wkhKKXyV/3yJpdQ1yMysd9OzHs/heOOAoXemz4cBXD6hl6gJWDUUfa8lX1o
+ vIOKIyD
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Aug 21, 2016 at 4:08 AM, Jakub Nar=C4=99bski <jnareb@gmail.com> wro=
-te:
-> W dniu 19.08.2016 o 15:54, Jeff King pisze:
->> On Sat, Aug 13, 2016 at 03:40:59PM +0700, Duy Nguyen wrote:
->>
->>> Ping..
->>
->> There was some discussion after v4. I think the open issues are:
->>
->>   - the commit message is rather terse (it should describe motivation,
->>     and can refer to the docs for the "how")
->>
->>   - the syntax might be more clear as:
->>
->>        [include-if "gitdir:..."]
->>
->>     or
->>
->>        [include "gitdir-is:..."]
->
-> Or
->
->          [include "if-gitdir:..."]
+This issue was originally reported and fixed in
+https://github.com/git-for-windows/git/pull/755
 
-I like this one. I can re-roll to address the first two bullet point,
-if the last one, the open question, will not become a blocker later
-on.
---=20
-Duy
+The problem is that file handles to temporary files (such as
+index.lock) were inherited by spawned processes. If those spawned
+processes do not exit before the parent process wants to delete or
+rename them, we are in big trouble.
+
+The original use case triggering the bug is a merge driver that does
+not quit, but listen to subsequent merge requests.
+
+However, the same issue turned up in Lars Schneider's work on making
+clean/smudge filters batchable (i.e. more efficient by avoiding
+possibly thousands of child processes, one per file).
+
+Changes since v2:
+
+- O_CLOEXEC is defined in git-compat-util.h unless already defined
+- we now handle EINVAL by trying again without O_CLOEXEC
+
+
+Ben Wijen (2):
+  t6026-merge-attr: child processes must not inherit index.lock handles
+  mingw: ensure temporary file handles are not inherited by child
+    processes
+
+ compat/mingw.h        |  4 ++++
+ git-compat-util.h     |  4 ++++
+ lockfile.h            |  4 ++++
+ t/t6026-merge-attr.sh | 13 +++++++++++++
+ tempfile.c            |  7 ++++++-
+ tempfile.h            |  4 ++++
+ 6 files changed, 35 insertions(+), 1 deletion(-)
+
+Published-As: https://github.com/dscho/git/releases/tag/mingw-index-lock-v3
+Fetch-It-Via: git fetch https://github.com/dscho/git mingw-index-lock-v3
+
+Interdiff vs v2:
+
+ diff --git a/git-compat-util.h b/git-compat-util.h
+ index f52e00b..db89ba7 100644
+ --- a/git-compat-util.h
+ +++ b/git-compat-util.h
+ @@ -667,6 +667,10 @@ void *gitmemmem(const void *haystack, size_t haystacklen,
+  #define getpagesize() sysconf(_SC_PAGESIZE)
+  #endif
+  
+ +#ifndef O_CLOEXEC
+ +#define O_CLOEXEC 0
+ +#endif
+ +
+  #ifdef FREAD_READS_DIRECTORIES
+  #ifdef fopen
+  #undef fopen
+ diff --git a/tempfile.c b/tempfile.c
+ index db3981d..2990c92 100644
+ --- a/tempfile.c
+ +++ b/tempfile.c
+ @@ -120,7 +120,12 @@ int create_tempfile(struct tempfile *tempfile, const char *path)
+  	prepare_tempfile_object(tempfile);
+  
+  	strbuf_add_absolute_path(&tempfile->filename, path);
+ -	tempfile->fd = open(tempfile->filename.buf, O_RDWR | O_CREAT | O_EXCL | O_CLOEXEC, 0666);
+ +	tempfile->fd = open(tempfile->filename.buf,
+ +			    O_RDWR | O_CREAT | O_EXCL | O_CLOEXEC, 0666);
+ +	if (O_CLOEXEC && tempfile->fd < 0 && errno == EINVAL)
+ +		/* Try again w/o O_CLOEXEC: the kernel might not support it */
+ +		tempfile->fd = open(tempfile->filename.buf,
+ +				    O_RDWR | O_CREAT | O_EXCL, 0666);
+  	if (tempfile->fd < 0) {
+  		strbuf_reset(&tempfile->filename);
+  		return -1;
+
+-- 
+2.10.0.rc0.115.ged054c0
+
+base-commit: 2632c897f74b1cc9b5533f467da459b9ec725538
