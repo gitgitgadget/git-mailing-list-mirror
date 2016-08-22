@@ -6,24 +6,24 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E5EB1FD99
+	by dcvr.yhbt.net (Postfix) with ESMTP id 339622018E
 	for <e@80x24.org>; Mon, 22 Aug 2016 11:25:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754638AbcHVLYU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Aug 2016 07:24:20 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:62814 "EHLO
-        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752410AbcHVLYM (ORCPT
+        id S1755151AbcHVLY4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Aug 2016 07:24:56 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:61858 "EHLO
+        alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753724AbcHVLYM (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 22 Aug 2016 07:24:12 -0400
-X-AuditID: 12074411-a07ff70000000932-b3-57bae094c37e
+X-AuditID: 1207440e-dafff70000000931-82-57bae0933ec3
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        by  (Symantec Messaging Gateway) with SMTP id B3.74.02354.490EAB75; Mon, 22 Aug 2016 07:23:00 -0400 (EDT)
+        by  (Symantec Messaging Gateway) with SMTP id 24.47.02353.390EAB75; Mon, 22 Aug 2016 07:22:59 -0400 (EDT)
 Received: from bagpipes.fritz.box (p5790719A.dip0.t-ipconnect.de [87.144.113.154])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u7MBMnQT027076
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u7MBMnQS027076
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Mon, 22 Aug 2016 07:22:59 -0400
+        Mon, 22 Aug 2016 07:22:58 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
@@ -32,435 +32,85 @@ Cc:     Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
         Jacob Keller <jacob.keller@gmail.com>,
         Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 5/7] xdl_change_compact(): introduce the concept of a change group
-Date:   Mon, 22 Aug 2016 13:22:44 +0200
-Message-Id: <21ade4ab233a868cabbe15598cd7b2ff4d04d286.1471864378.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 4/7] recs_match(): take two xrecord_t pointers as arguments
+Date:   Mon, 22 Aug 2016 13:22:43 +0200
+Message-Id: <1f7f17cc1b2434ab5dfc4fea95a09597e61a4886.1471864378.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <cover.1471864378.git.mhagger@alum.mit.edu>
 References: <cover.1471864378.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrMIsWRmVeSWpSXmKPExsUixO6iqLviwa5wgykb1S26rnQzWTT0XmG2
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrMIsWRmVeSWpSXmKPExsUixO6iqLvqwa5wg9vz5Sy6rnQzWTT0XmG2
         2L24n9lixdU5zBa3V8xntvjR0sNssXlzO4sDu8ff9x+YPHbOusvusWBTqcez3j2MHhcvKXt8
-        3iQXwBbFZZOSmpNZllqkb5fAlXH/0wy2goMpFU0NnawNjKe9uhg5OSQETCT+L5nO1MXIxSEk
-        sJVRYtOnn8wQzikmiUmHbjODVLEJ6Eos6mlmArFFBMQl3h6fyQ5SxCzQzyTxo6OLESQhLBAq
-        caz5KwuIzSKgKrHkwxIwm1cgSmLXlq/sEOvkJC5t+wI0lIODU8BCYmuLMkhYSMBc4tmOk+wT
-        GHkWMDKsYpRLzCnN1c1NzMwpTk3WLU5OzMtLLdI11cvNLNFLTSndxAgJK8EdjDNOyh1iFOBg
-        VOLh/XBwZ7gQa2JZcWXuIUZJDiYlUV6zVqAQX1J+SmVGYnFGfFFpTmrxIUYJDmYlEV6L+7vC
-        hXhTEiurUovyYVLSHCxK4rx8S9T9hATSE0tSs1NTC1KLYLIyHBxKErw37wE1ChalpqdWpGXm
-        lCCkmTg4QYbzAA0/BlLDW1yQmFucmQ6RP8WoKCXOmw+SEABJZJTmwfXC4v4VozjQK8K8y0Cq
-        eIApA677FdBgJqDB1/9vBxlckoiQkmpgzJj/VNf4oxX7xbzYLrHWpqbIzcJ5sjlXTxw2fBe4
-        fpvZjy8ut9Zu7K9eMHWlBM/0v0/XLzs99R2PU2VicbPPHjX7DDaDE/8mqF383dv3n7PixCy/
-        3AQzhokLu61Xm1peTNizXtjG6OLyaZsqunzXJK/2uWU+XYlnw7qH191z20OKTRt+z4xXUWIp
-        zkg01GIuKk4EAExyd1XWAgAA
+        3iQXwBbFZZOSmpNZllqkb5fAlfF7zXuWgsUCFd9797I3MG7j6WLk5JAQMJF4vfguSxcjF4eQ
+        wFZGiaWre9ghnFNMEl3zPjGCVLEJ6Eos6mlmArFFBMQl3h6fCVbELNDPJPGjowusSFjAT+Lg
+        gV1gNouAqsT57UvAGngFoiReNz1gglgnJ3Fp2xfmLkYODk4BC4mtLcogYSEBc4lnO06yT2Dk
+        WcDIsIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI11gvN7NELzWldBMjJKz4djC2r5c5xCjAwajE
+        w/vh4M5wIdbEsuLK3EOMkhxMSqK8Zq1AIb6k/JTKjMTijPii0pzU4kOMEhzMSiK8++/tChfi
+        TUmsrEotyodJSXOwKInzqi1R9xMSSE8sSc1OTS1ILYLJynBwKEnw3gRpFCxKTU+tSMvMKUFI
+        M3FwggznARp+DGx4cUFibnFmOkT+FKOilDhvPkhCACSRUZoH1wuL+1eM4kCvCPMa3Qeq4gGm
+        DLjuV0CDmYAGX/+/HWRwSSJCSqqBMWPPIenL7XtOam9foxt887PprqXtsUtdT33s72S2dqh0
+        zlTMD/xW/sP7Qdnm2rC7mu+jLGT1drWK3BATkOW0CXi/0bjR0vVi7wnpKT4r/KQuZTBeN/z+
+        bf+67Zd3T76xtPqawip3o9nMjS1X3wg3bQmPETjKz3PTQ+M2lye7/Js+z/59yrvXKLEUZyQa
+        ajEXFScCAPPOEDLWAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The idea of xdl_change_compact() is fairly simple:
-
-* Proceed through groups of changed lines in the file to be compacted,
-  keeping track of the corresponding location in the "other" file.
-
-* If possible, slide the group up and down to try to give the most
-  aesthetically pleasing diff. Whenever it is slid, the current location
-  in the other file needs to be adjusted.
-
-But these simple concepts are obfuscated by a lot of index handling that
-is written in terse, subtle, and varied patterns. I found it very hard
-to convince myself that the function was correct.
-
-So introduce a "struct group" that represents a group of changed lines
-in a file. Add some functions that perform elementary operations on
-groups:
-
-* Initialize a group to the first group in a file
-* Move to the next or previous group in a file
-* Slide a group up or down
-
-Even though the resulting code is longer, I think it is easier to
-understand and review. Its performance is not changed
-appreciably (though it would be if `group_next()` and `group_previous()`
-were not inlined).
-
-...and in fact, the rewriting helped me discover another bug in the
---compaction-heuristic code: The update of blank_lines was never done
-for the highest possible position of the group. This means that it could
-fail to slide the group to its highest possible position, even if that
-position had a blank line as its last line. So for example, it yielded
-the following diff:
-
-    $ git diff --no-index --compaction-heuristic a.txt b.txt
-    diff --git a/a.txt b/b.txt
-    index e53969f..0d60c5fe 100644
-    --- a/a.txt
-    +++ b/b.txt
-    @@ -1,3 +1,7 @@
-     1
-     A
-    +
-    +B
-    +
-    +A
-     2
-
-when in fact the following diff is better (according to the rules of
---compaction-heuristic):
-
-    $ git diff --no-index --compaction-heuristic a.txt b.txt
-    diff --git a/a.txt b/b.txt
-    index e53969f..0d60c5fe 100644
-    --- a/a.txt
-    +++ b/b.txt
-    @@ -1,3 +1,7 @@
-     1
-    +A
-    +
-    +B
-    +
-     A
-     2
-
-The new code gives the bottom answer.
+There is no reason for it to take an array and two indexes as argument,
+as it only accesses two elements of the array.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- xdiff/xdiffi.c | 293 +++++++++++++++++++++++++++++++++++++++------------------
- 1 file changed, 203 insertions(+), 90 deletions(-)
+ xdiff/xdiffi.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 8a5832a..44fded6 100644
+index ed2df64..8a5832a 100644
 --- a/xdiff/xdiffi.c
 +++ b/xdiff/xdiffi.c
-@@ -413,126 +413,239 @@ static int recs_match(xrecord_t *rec1, xrecord_t *rec2, long flags)
+@@ -405,11 +405,11 @@ static int is_blank_line(xrecord_t *rec, long flags)
+ 	return xdl_blankline(rec->ptr, rec->size, flags);
+ }
+ 
+-static int recs_match(xrecord_t **recs, long ixs, long ix, long flags)
++static int recs_match(xrecord_t *rec1, xrecord_t *rec2, long flags)
+ {
+-	return (recs[ixs]->ha == recs[ix]->ha &&
+-		xdl_recmatch(recs[ixs]->ptr, recs[ixs]->size,
+-			     recs[ix]->ptr, recs[ix]->size,
++	return (rec1->ha == rec2->ha &&
++		xdl_recmatch(rec1->ptr, rec1->size,
++			     rec2->ptr, rec2->size,
  			     flags));
  }
  
--int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
--	long ix, ixo, ixs, ixref, grpsiz, nrec = xdf->nrec;
--	char *rchg = xdf->rchg, *rchgo = xdfo->rchg;
--	unsigned int blank_lines;
--	xrecord_t **recs = xdf->recs;
-+/*
-+ * Represent a group of changed lines in an xdfile_t (i.e., a contiguous group
-+ * of lines that was inserted or deleted from the corresponding version of the
-+ * file). We consider there to be such a group at the beginning of the file, at
-+ * the end of the file, and between any two unchanged lines, though most such
-+ * groups will usually be empty.
-+ *
-+ * If the first line in a group is equal to the line following the group, then
-+ * the group can be slid down. Similarly, if the last line in a group is equal
-+ * to the line preceding the group, then the group can be slid up. See
-+ * group_slide_down() and group_slide_up().
-+ *
-+ * Note that loops that are testing for changed lines in xdf->rchg do not need
-+ * index bounding since the array is prepared with a zero at position -1 and N.
-+ */
-+struct group {
-+	/*
-+	 * The index of the first changed line in the group, or the index of
-+	 * the unchanged line above which the (empty) group is located.
-+	 */
-+	long start;
- 
- 	/*
--	 * This is the same of what GNU diff does. Move back and forward
--	 * change groups for a consistent and pretty diff output. This also
--	 * helps in finding joinable change groups and reduce the diff size.
-+	 * The index of the first unchanged line after the group. For an empty
-+	 * group, end is equal to start.
- 	 */
--	for (ix = ixo = 0;;) {
--		/*
--		 * Find the first changed line in the to-be-compacted file.
--		 * We need to keep track of both indexes, so if we find a
--		 * changed lines group on the other file, while scanning the
--		 * to-be-compacted file, we need to skip it properly. Note
--		 * that loops that are testing for changed lines on rchg* do
--		 * not need index bounding since the array is prepared with
--		 * a zero at position -1 and N.
--		 */
--		for (; ix < nrec && !rchg[ix]; ix++)
--			while (rchgo[ixo++]);
--		if (ix == nrec)
--			break;
-+	long end;
-+};
-+
-+/*
-+ * Initialize g to point at the first group in xdf.
-+ */
-+static void group_init(xdfile_t *xdf, struct group *g)
-+{
-+	g->start = g->end = 0;
-+	while (xdf->rchg[g->end])
-+		g->end++;
-+}
-+
-+/*
-+ * Move g to describe the next (possibly empty) group in xdf and return 0. If g
-+ * is already at the end of the file, do nothing and return -1.
-+ */
-+static inline int group_next(xdfile_t *xdf, struct group *g)
-+{
-+	if (g->end == xdf->nrec)
-+		return -1;
-+
-+	g->start = g->end + 1;
-+	for (g->end = g->start; xdf->rchg[g->end]; g->end++)
-+		;
-+
-+	return 0;
-+}
-+
-+/*
-+ * Move g to describe the previous (possibly empty) group in xdf and return 0.
-+ * If g is already at the beginning of the file, do nothing and return -1.
-+ */
-+static inline int group_previous(xdfile_t *xdf, struct group *g)
-+{
-+	if (g->start == 0)
-+		return -1;
-+
-+	g->end = g->start - 1;
-+	for (g->start = g->end; xdf->rchg[g->start - 1]; g->start--)
-+		;
-+
-+	return 0;
-+}
-+
-+/*
-+ * If g can be slid toward the end of the file, do so, and if it bumps into a
-+ * following group, expand this group to include it. Return 0 on success or -1
-+ * if g cannot be slid down.
-+ */
-+static int group_slide_down(xdfile_t *xdf, struct group *g, long flags)
-+{
-+	if (g->end < xdf->nrec &&
-+	    recs_match(xdf->recs[g->start], xdf->recs[g->end], flags)) {
-+		xdf->rchg[g->start++] = 0;
-+		xdf->rchg[g->end++] = 1;
-+
-+		while (xdf->rchg[g->end])
-+			g->end++;
-+
-+		return 0;
-+	} else {
-+		return -1;
-+	}
-+}
-+
-+/*
-+ * If g can be slid toward the beginning of the file, do so, and if it bumps
-+ * into a previous group, expand this group to include it. Return 0 on success
-+ * or -1 if g cannot be slid up.
-+ */
-+static int group_slide_up(xdfile_t *xdf, struct group *g, long flags)
-+{
-+	if (g->start > 0 &&
-+	    recs_match(xdf->recs[g->start - 1], xdf->recs[g->end - 1], flags)) {
-+		xdf->rchg[--g->start] = 1;
-+		xdf->rchg[--g->end] = 0;
-+
-+		while (xdf->rchg[g->start - 1])
-+			g->start--;
-+
-+		return 0;
-+	} else {
-+		return -1;
-+	}
-+}
-+
-+static void xdl_bug(const char *msg)
-+{
-+	fprintf(stderr, "BUG: %s\n", msg);
-+	exit(1);
-+}
-+
-+/*
-+ * Move back and forward change groups for a consistent and pretty diff output.
-+ * This also helps in finding joinable change groups and reducing the diff
-+ * size.
-+ */
-+int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
-+	struct group g, go;
-+	long earliest_end, end_matching_other;
-+	long groupsize;
-+	unsigned int blank_lines;
-+
-+	group_init(xdf, &g);
-+	group_init(xdfo, &go);
-+
-+	while (1) {
-+		/* If the group is empty in the to-be-compacted file, skip it: */
-+		if (g.end == g.start)
-+			goto next;
- 
- 		/*
--		 * Record the start of a changed-group in the to-be-compacted file
--		 * and find the end of it, on both to-be-compacted and other file
--		 * indexes (ix and ixo).
-+		 * Now shift the change up and then down as far as possible in
-+		 * each direction. If it bumps into any other changes, merge them.
- 		 */
--		ixs = ix;
--		for (ix++; rchg[ix]; ix++);
--		for (; rchgo[ixo]; ixo++);
--
- 		do {
--			grpsiz = ix - ixs;
--			blank_lines = 0;
-+			groupsize = g.end - g.start;
- 
- 			/*
--			 * If the line before the current change group, is equal to
--			 * the last line of the current change group, shift backward
--			 * the group.
-+			 * Keep track of the last "end" index that causes this
-+			 * group to align with a group of changed lines in the
-+			 * other file. -1 indicates that we haven't found such
-+			 * a match yet:
+@@ -457,7 +457,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 			 * the last line of the current change group, shift backward
+ 			 * the group.
  			 */
--			while (ixs > 0 && recs_match(recs[ixs - 1], recs[ix - 1], flags)) {
--				rchg[--ixs] = 1;
--				rchg[--ix] = 0;
--
--				/*
--				 * This change might have joined two change groups,
--				 * so we try to take this scenario in account by moving
--				 * the start index accordingly (and so the other-file
--				 * end-of-group index).
--				 */
--				for (; rchg[ixs - 1]; ixs--);
--				while (rchgo[--ixo]);
--			}
-+			end_matching_other = -1;
+-			while (ixs > 0 && recs_match(recs, ixs - 1, ix - 1, flags)) {
++			while (ixs > 0 && recs_match(recs[ixs - 1], recs[ix - 1], flags)) {
+ 				rchg[--ixs] = 1;
+ 				rchg[--ix] = 0;
  
- 			/*
--			 * Record the end-of-group position in case we are matched
--			 * with a group of changes in the other file (that is, the
--			 * change record before the end-of-group index in the other
--			 * file is set).
-+			 * Boolean value that records whether there are any blank
-+			 * lines that could be made to be the last line of this
-+			 * group.
+@@ -484,7 +484,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 			 * the line next of the current change group, shift forward
+ 			 * the group.
  			 */
--			ixref = rchgo[ixo - 1] ? ix: nrec;
-+			blank_lines = 0;
-+
-+			/* Shift the group backward as much as possible: */
-+			while (!group_slide_up(xdf, &g, flags))
-+				if (group_previous(xdfo, &go))
-+					xdl_bug("group sync broken sliding up");
+-			while (ix < nrec && recs_match(recs, ixs, ix, flags)) {
++			while (ix < nrec && recs_match(recs[ixs], recs[ix], flags)) {
+ 				blank_lines += is_blank_line(recs[ix], flags);
  
- 			/*
--			 * If the first line of the current change group, is equal to
--			 * the line next of the current change group, shift forward
--			 * the group.
-+			 * This is this highest that this group can be shifted.
-+			 * Record its end index:
+ 				rchg[ixs++] = 0;
+@@ -525,7 +525,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
  			 */
--			while (ix < nrec && recs_match(recs[ixs], recs[ix], flags)) {
--				blank_lines += is_blank_line(recs[ix], flags);
--
--				rchg[ixs++] = 0;
--				rchg[ix++] = 1;
--
--				/*
--				 * This change might have joined two change groups,
--				 * so we try to take this scenario in account by moving
--				 * the start index accordingly (and so the other-file
--				 * end-of-group index). Keep tracking the reference
--				 * index in case we are shifting together with a
--				 * corresponding group of changes in the other file.
--				 */
--				for (; rchg[ix]; ix++);
--				while (rchgo[++ixo])
--					ixref = ix;
-+			earliest_end = g.end;
-+
-+			if (go.end > go.start)
-+				end_matching_other = g.end;
-+
-+			/* Now shift the group forward as far as possible: */
-+			while (1) {
-+				if (!blank_lines)
-+					blank_lines = is_blank_line(
-+							xdf->recs[g.end - 1],
-+							flags);
-+
-+				if (group_slide_down(xdf, &g, flags))
-+					break;
-+				if (group_next(xdfo, &go))
-+					xdl_bug("group sync broken sliding down");
-+
-+				if (go.end > go.start)
-+					end_matching_other = g.end;
- 			}
--		} while (grpsiz != ix - ixs);
-+		} while (groupsize != g.end - g.start);
- 
--		if (ixref < ix) {
-+		if (g.end == earliest_end) {
-+			/* no shifting was possible */
-+		} else if (end_matching_other != -1) {
- 			/*
--			 * Try to move back the possibly merged group of changes, to match
--			 * the recorded position in the other file.
-+			 * Move the possibly merged group of changes back to line
-+			 * up with the last group of changes from the other file
-+			 * that it can align with.
- 			 */
--			while (ixref < ix) {
--				rchg[--ixs] = 1;
--				rchg[--ix] = 0;
--				while (rchgo[--ixo]);
-+			while (go.end == go.start) {
-+				if (group_slide_up(xdf, &g, flags))
-+					xdl_bug("match disappeared");
-+				if (group_previous(xdfo, &go))
-+					xdl_bug("group sync broken sliding to match");
- 			}
- 		} else if ((flags & XDF_COMPACTION_HEURISTIC) && blank_lines) {
- 			/*
--			 * The group can be slid up to make its last line a
--			 * blank line. Do so.
-+			 * Compaction heuristic: if it is possible to shift the
-+			 * group to make its bottom line a blank line, do so.
- 			 *
- 			 * As we already shifted the group forward as far as
--			 * possible in the earlier loop, we need to shift it
--			 * back only if at all.
-+			 * possible in the earlier loop, we only need to handle
-+			 * backward shifts, not forward ones.
- 			 */
--			while (ixs > 0 &&
--			       !is_blank_line(recs[ix - 1], flags) &&
--			       recs_match(recs[ixs - 1], recs[ix - 1], flags)) {
--				rchg[--ixs] = 1;
--				rchg[--ix] = 0;
--				while (rchgo[--ixo]);
-+			while (!is_blank_line(xdf->recs[g.end - 1], flags)) {
-+				if (group_slide_up(xdf, &g, flags))
-+					xdl_bug("blank line disappeared");
-+				if (group_previous(xdfo, &go))
-+					xdl_bug("group sync broken sliding to blank line");
- 			}
- 		}
-+
-+	next:
-+		/* Move past the just-processed group: */
-+		if (group_next(xdf, &g))
-+			break;
-+		if (group_next(xdfo, &go))
-+			xdl_bug("group sync broken moving to next group");
- 	}
- 
-+	if (!group_next(xdfo, &go))
-+		xdl_bug("group sync broken at end of file");
-+
- 	return 0;
- }
- 
+ 			while (ixs > 0 &&
+ 			       !is_blank_line(recs[ix - 1], flags) &&
+-			       recs_match(recs, ixs - 1, ix - 1, flags)) {
++			       recs_match(recs[ixs - 1], recs[ix - 1], flags)) {
+ 				rchg[--ixs] = 1;
+ 				rchg[--ix] = 0;
+ 				while (rchgo[--ixo]);
 -- 
 2.9.3
 
