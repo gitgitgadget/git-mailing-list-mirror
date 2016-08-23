@@ -2,116 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5FD022018E
-	for <e@80x24.org>; Tue, 23 Aug 2016 15:22:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BDFCB1FD99
+	for <e@80x24.org>; Tue, 23 Aug 2016 15:39:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751765AbcHWPWB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Aug 2016 11:22:01 -0400
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:32975 "EHLO
-        out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750862AbcHWPWA (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 23 Aug 2016 11:22:00 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 1ABC2207A1;
-        Tue, 23 Aug 2016 11:21:59 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute3.internal (MEProxy); Tue, 23 Aug 2016 11:21:59 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-        :content-transfer-encoding:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-sasl-enc
-        :x-sasl-enc; s=mesmtp; bh=DN/jTBcR0LpPv2mbldfhVBCsAl4=; b=Ptmq4C
-        gLX/hJS53LNZiy50IJ8cUmOxMIgGbEw3loNdKGDkt2Cj3mD9aSGJskGmIYDpBMdQ
-        m438wAbaFKcv+DcbMiW0QICuXnDSXGedwlHkiLy3HyU8tleAMGI9LkOO4fCSevjD
-        fcxljpBlMbsTy1CPMiwqVqbbVzVRrb82bV7Nw=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=DN/jTBcR0LpPv2m
-        bldfhVBCsAl4=; b=t/SRdgrGKKOjfn5Bf4r2V4nAYjXRokdOAJ2HPV0uq+U74D1
-        NZ+SUP8GSXuapbo8vI9WSjj+WdAYpQFRciIp/dF/oJ5H8skdOCE+lgCxqRGnuVNo
-        4DPKHZkC4lH/m4jN6Wwy5DjYJgiISKbImMRw6GnkdtB40h1zX1YHZRnxzsVQ=
-X-Sasl-enc: YGXHp+XCJ177y2ePsXBIVMPn2GqhlN7FdnrF60njYfAL 1471965718
-Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 74541F285F;
-        Tue, 23 Aug 2016 11:21:58 -0400 (EDT)
-Subject: Re: Bug with git worktrees and git init
-To:     Max Nordlund <max.nordlund@sqore.com>, git@vger.kernel.org
-References: <CALqjkKZO_y0DNcRJjooyZ7Eso7yBMGhvZ6fE92oO4Su7JeCeng@mail.gmail.com>
-Cc:     Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-From:   Michael J Gruber <git@drmicha.warpmail.net>
-Message-ID: <f55e70fa-5244-66a0-d3a7-c6479528039d@drmicha.warpmail.net>
-Date:   Tue, 23 Aug 2016 17:21:57 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S1754225AbcHWPi3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Aug 2016 11:38:29 -0400
+Received: from mout.gmx.net ([212.227.15.19]:56172 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753918AbcHWPiD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2016 11:38:03 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0LtIdP-1bATS62KqJ-012t3e; Tue, 23 Aug 2016 17:37:45
+ +0200
+Date:   Tue, 23 Aug 2016 17:37:44 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Michael J Gruber <git@drmicha.warpmail.net>
+cc:     Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        git-for-windows <git-for-windows@googlegroups.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [git-for-windows] Re: [ANNOUNCE] Git for Windows 2.9.3
+In-Reply-To: <2a6d2230-90ce-0f54-c7ae-a5aa595a2f73@drmicha.warpmail.net>
+Message-ID: <alpine.DEB.2.20.1608231736180.4924@virtualbox>
+References: <alpine.DEB.2.20.1608131214070.4924@virtualbox> <xmqqshu8u0px.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608171507530.4924@virtualbox> <xmqqeg5nbehc.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608181022250.4924@virtualbox>
+ <CACsJy8A3tkMY-iLPCDj9sqB4HpAK_cxsUu5Z7fsGcCQEORyxUg@mail.gmail.com> <alpine.DEB.2.20.1608231553030.4924@virtualbox> <2a6d2230-90ce-0f54-c7ae-a5aa595a2f73@drmicha.warpmail.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <CALqjkKZO_y0DNcRJjooyZ7Eso7yBMGhvZ6fE92oO4Su7JeCeng@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:wZ6Pm75X0RyPU89YPeqwEvtPp03SuluEcYQiqdniq3HjqUBVMym
+ dlhzC7F6FrIZuVN/7yW0GF2K1BFQz9cjont7kmVwQPQo1zVMZJif5BoTj4Ck6nyIAHr6I5l
+ YsBJRPR7Sks5FT+PsvbU1JDgU9YusihsHpB77NAYdt+ETng9jPkCGKxqwhshE7FzOyKq6ha
+ 9FVPebzKUyZDjx/6S99pg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:eQYqV4pW0oU=:Z6bek68wJAJVGFS60fCv53
+ IuxkSxYSA1E1W/gOSs3Jkte/6mTacszKys8kS3ychIHJpTPB5UW51GP36b0LSxwMKEOC3rarH
+ 9as00GhaY3NQ+GcM68Q1igKXcfg4JGHaQQdDKRryGfDV0d4uL2FQInZF1hk/4HGFhYupC1pgK
+ gi1QUgn6+bJv30KszHk2coU3z8kVC47XPVV2UHdCql89IrCzeP149Zj81wGUafmo4IASB6Hf8
+ 0fgpMotpwMPV60GAV+SOp5/vVPQiEbVo5Va2NshOaG/Zok6oNqJL1MqIGRiNJ+aBA8q6yvT8T
+ 7OGlX+sAhbUNTrkVhry3pSYAgo5ohkKYVFTj0Zy9Lcl2ZTdBgpxOqEuCDHqL1WVaxJfOr4itf
+ Pc9eVgTRDBgk2hvM9uyasSacvTjt8RM1RR0NTZLmEvTtR9iJCgLTzO+LHWZgdY5jyZ2UJyMmG
+ wAMsnYpzJUzzhd5ZOhfRWrOfGOyJsj4yRawJ3BLM8pzqFk4iI4MHgpXPiNGWnd2onqIlpL7JY
+ Tgia5e4vbmx3HSgS065tkN4A4jpWMUfMenlitTzpYYcy8QlUSr43GFTYBqPty6nnXLA8iZMzr
+ d08Bp6Ecdx+IfEOJe5h6JWTB1+G3VClAGP3FM6YsO23DrFLbDx5l2gJ6WF14rMH+u6tbmFKMc
+ XQRdgYNTTOoP3Pn7iVuS8gsTuI0ekcJdJf0SECZd1tcx+JRHliRJhPUOT0MyRW8V8yq9GmBS8
+ yaRl0nOgs+gKVOAd6fuOe5r5dY5yYQGjqvqxOWXoI/DnDFtP2NCXdPt3aFslJ1kUtAUQbTvg6
+ 0WRsYft
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Max Nordlund venit, vidit, dixit 23.08.2016 14:35:
-> Hi,
-> 
-> I've been using multiple worktrees for months without issue (it's a
-> great feature, thanks), until recently when I wanted to add hooks to
-> them. So, when I added a template for the hooks, everything was fine
-> until I did a git reset --hard in the original repo which both applied
-> those changes to the other worktrees' working tree (the files on
-> disk), and made my master branch kinda lose it's connection to the
-> remote/think it was a kinda bare repo.
-> 
-> To reproduce this:
-> 
-> ```
-> mkdir source-repo
-> cd source-repo
-> git init
-> touch foo
-> git add foo
-> git commit -m 'Add foo'
-> git worktree add ../worktree # which also creates a new branch 'worktree'
-> touch bar
-> git add bar
-> git commit -m 'Add bar'
-> cd ../worktree
-> git init
+Hi Michael,
 
-This is where the problem is created already: git init does not quite
-notice that it is in a linked worktree. It treats
+On Tue, 23 Aug 2016, Michael J Gruber wrote:
 
-source-repo/.git/worktrees/worktree
+> Maybe you want to re-read what you wrote to trigger his response, and
+> consider adjusting your attitude ("I want this now so I'll release it in
+> Git4Win") rather than the downstream name.
 
-as a proper gitdir and creates the full gitdir structure in there
-(branches, hooks, info) which is usually shared among worktrees; also,
-it adds the config setting
+I am working *very* hard on improving the user experience of Git for
+Windows. And yes, sometimes I have to include something in Git for Windows
+versions that upstream Git does not include in the corresponding version
+number.
 
-core.worktree = <abspath>/worktree
+I am really at a loss why you see fit to attack me about that.
 
-to the main config (source-repo/.git/config) which is why "git status"
-thinks that bar is missing - it indeed is in that worktree.
-
-I've cc'ed the master of worktrees.
-
-> cd ../source-repo
-> git reset --hard master
-> cd ../worktree
-> git status # Suddenly `bar` has appear the working tree and is not tracked
-> ```
-> 
-> I don't really now what is up with this, but I did notice that it is
-> the last worktree in which git init has been run that is affected. I
-> only ran git init to copy the hooks from the template, but if that is
-> not something you should do in a worktree then a check would have been
-> nice.
-> 
-> Thanks for this awesome tool, and I hope this helps
-> Max Nordlund
-> 
-
+Ciao,
+Dscho
