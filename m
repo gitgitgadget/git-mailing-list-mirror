@@ -2,90 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 245331FD99
-	for <e@80x24.org>; Tue, 23 Aug 2016 16:43:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C4A91FD99
+	for <e@80x24.org>; Tue, 23 Aug 2016 16:50:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754619AbcHWQnr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Aug 2016 12:43:47 -0400
-Received: from mout.web.de ([212.227.15.3]:51219 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754605AbcHWQnq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2016 12:43:46 -0400
-Received: from localhost ([195.252.60.88]) by smtp.web.de (mrweb001) with
- ESMTPSA (Nemesis) id 0MarZy-1bs6z70rhC-00KPS6; Tue, 23 Aug 2016 18:43:27
- +0200
-Date:   Tue, 23 Aug 2016 16:43:26 +0000
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Lucian Smith <lucianoelsmitho@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git-svn bridge and line endings
-Message-ID: <20160823164326.GA22168@tb-raspi>
-References: <CAHLmBr2CRzt58RB+_YmnXcyost-R5=Ff51tALf1xh0kGk+frDw@mail.gmail.com>
- <CAHLmBr1JHjjp66Er-2e6Yu+3zjrhT82Da-O8fj6_OoPtEPz8eg@mail.gmail.com>
+        id S1754001AbcHWQuc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Aug 2016 12:50:32 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56491 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752325AbcHWQub (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2016 12:50:31 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0148D3582A;
+        Tue, 23 Aug 2016 12:33:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=w62iYj1HmfzPN0ABz7h3bdFw1U0=; b=uKDANd
+        GbL4DiOQZII+Su6JzmHFc2xCUvJ8rjXzw0JoxXzsHKFL/IaRnM9l7YD05MsETCY9
+        9tAxiRLIRbrP5goa78fHxJAThk/TXrHthmskG7G2BV1gtZPvkaHIAP5maVv0nol0
+        U4Cs7yjpgxwdlhwKN031Toz+50WQr8AuqjZu4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZSfa+m89x6ZM2iLi/InlDxgDsRCJIvBQ
+        V0SmQhi1gFAn+lldVeTwwDEVKifY2RxqauzwBY38HffzNYGpYUxqJRSw7sUGWlfv
+        tajlG8aEbUGyc5pbrYitCT4iKM8CUCU8nbIPb3kD1DWLSkwki05mcEM+DZiQrc9Y
+        gT2roFOY4hE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id ECA7C35829;
+        Tue, 23 Aug 2016 12:33:41 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 75CA635827;
+        Tue, 23 Aug 2016 12:33:41 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jacob Keller <jacob.e.keller@intel.com>
+Cc:     git@vger.kernel.org, Josh Triplett <josh@joshtriplett.org>,
+        James Hogan <james.hogan@imgtec.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH] format-patch: show 0/1 and 1/1 for singleton patch with cover letter
+References: <20160819234959.26308-1-jacob.e.keller@intel.com>
+Date:   Tue, 23 Aug 2016 09:33:39 -0700
+In-Reply-To: <20160819234959.26308-1-jacob.e.keller@intel.com> (Jacob Keller's
+        message of "Fri, 19 Aug 2016 16:49:59 -0700")
+Message-ID: <xmqq37lvxx5o.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHLmBr1JHjjp66Er-2e6Yu+3zjrhT82Da-O8fj6_OoPtEPz8eg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V03:K0:O73dw1hs1uKeFAh8mX/V60Y6ffa6IJm9eEG+5OC9Yl/iV+v9IgD
- w/dQGHG15I9KGLOEYrGFajpy19QzbAHuZbLB6Hu/sntIdwj4gKE8KS4XfYdtR7ZyfghvOzY
- vgk0haBjfzMqyqlDgO4OD9tkBNtDa5G1048a2Do3Y0wpVcE6yy/BOWfOJUbPOTWgfDp2VZb
- 99rn7bvr0kQHxZ93jm7EQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:uQhb7eLSbhY=:TN95Fpp5P5GIFCn21i8k5t
- PGoAaSxpXqVhpmSPwf25PanNryr1XD5/NqsbpH1nfhIqZUMdoyp3F0xhbnnUMloc6FpJhZto5
- und5VnQId04ku17hdCx4qTNtnhltinaM2ADV4yKM2S6yZrGM642LkvBwfU92X6/QhPxkmWnty
- lvobIj5nzs3E1deGlQH8jSS+G0dqmMJrVzzf9d9HhXYB7EZOy2Sg3kI/iKhCNgC+S9n1VNWn3
- 5l0o58wKFxOvtYz/Kco9KMRBNFytAnoCk53UOL+8nF0PkdyYyBmeCEW2xbmUO8+it9dudRR89
- 6xl3P51Q6fT/KFzP4Zb5+vFqGon68ZlpZm6tqohQygFwS/ull42HzjJ+KBt0eVae+oo3VjOPj
- rwUCNYoVkhm23OtytjLudPrduR842g15yrJNUQ8raFlXXh8Uhdl5BENo3ju7j46fWnjLbsyNN
- whV4vmqIH/orv/QyPfg3pfM8CD6C3oPzY5rUPwE56WSMaeyPuytzEZ+/w4GtFZAHcnwUwANsj
- QPVK5Tl1V7ZlYL5Nf00LDhRNmY5m59vC0oj8qUJ1gwdK+Ux4hPVXBx2G8+KR1PtZfcuNY6HD2
- GoPN8catZ11R5OeE6cAvR4NutpzwTbziszhv1paYIUHBpFCek6jmT4Nr9axwXx8cfMcH1fRCd
- rbVIwvWtYqBxfYFiV12cIF+vXfuz6AQB04X2OyGuRJWiSt7DVlTza/xZ7/4XxtTNVn/Y2qHGO
- qziAImIwK5F1kbpWl6bdfOjHaNlIQPvpOwFLAQnkGEh1JsLDZpGOZ3k5s7Q=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5A047EB4-694F-11E6-AE1E-E86612518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 22, 2016 at 05:04:47PM -0700, Lucian Smith wrote:
-> I'm attempting to use the git-svn bridge, and am having problems with
-> line endings on Windows.
-> 
-> The setup is that we have a git repository on github, and I've checked
-> out a branch on my Windows machine using Tortoise svn.  I make
-> changes, commit them, and the branch is updated.  In general, this
-> works fine.
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-Just to make sure:
-The repo is in git format.
-Is it a public repo ?
-Or could you make a piblic demo repo ?
-Do I understand it right: Tortoise SVN talks directly to the Git server ?
-Isn't Tortoise SVN a client to talk to SVN server?
-What goes over the wire to the remote Git server, git or SVN ?
+> From: Jacob Keller <jacob.keller@gmail.com>
+>
+> Change the default behavior of git-format-patch to generate numbered
+> sequence of 0/1 and 1/1 when generating both a cover-letter and a single
+> patch. This standardizes the cover letter to have 0/N which helps
+> distinguish the cover letter from the patch itself. Since the behavior
+> is easily changed via configuration as well as the use of -n and -N this
+> should be acceptable default behavior.
+>
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> ---
 
-To my understanding, "git svn" can use Git locally, and talk to an SVN server.
-What do I miss ?
+This obviously changes the behaviour, but I do not think of a reason
+why this change is a bad idea.  
 
-> 
-> If this was just SVN, I could set the 'eol-style' for files to
-> 'native' to let it know to expect Windows/linux/mac line endings for
-> particular files.  This seems to be handled in git by using the
-> '.gitattributes' file instead.  Unfortunately, the git/svn bridge
-> doesn't seem to be translate the information in the .gitattributes
-> file to appropriate eol-style settings in SVN.  Checking out a file
-> using SVN on Windows leaves me with a file without CRLF's, and if I
-> check in a CRLF file, that's the way it goes into the repository.
-> Differences in CRLF alone show up as 'real' differences that can be
-> checked in, and, if this happens, this causes problems with other
-> people's repositories.
-> 
-> Am I doing something wrong; is there another way to handle this; or
-> can I file this as a bug report/feature request?
-
+>  builtin/log.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/log.c b/builtin/log.c
+> index 92dc34dcb0cc..8e6100fb0c5b 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -1676,7 +1676,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+>  		/* nothing to do */
+>  		return 0;
+>  	total = nr;
+> -	if (!keep_subject && auto_number && total > 1)
+> +	if (!keep_subject && auto_number && (total > 1 || cover_letter))
+>  		numbered = 1;
+>  	if (numbered)
+>  		rev.total = total + start_number - 1;
