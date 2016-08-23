@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E3FD2018E
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E0D11FD99
 	for <e@80x24.org>; Tue, 23 Aug 2016 16:07:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753599AbcHWQHZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Aug 2016 12:07:25 -0400
-Received: from mout.gmx.net ([212.227.15.18]:56487 "EHLO mout.gmx.net"
+        id S1753830AbcHWQHj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Aug 2016 12:07:39 -0400
+Received: from mout.gmx.net ([212.227.17.22]:51402 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753542AbcHWQHT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2016 12:07:19 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MPUZ7-1bY5Ug23P7-004k7Y; Tue, 23 Aug 2016 18:07:15
+        id S1752958AbcHWQHQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2016 12:07:16 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0Las1k-1as8u70eng-00kOwk; Tue, 23 Aug 2016 18:06:39
  +0200
-Date:   Tue, 23 Aug 2016 18:07:15 +0200 (CEST)
+Date:   Tue, 23 Aug 2016 18:06:36 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 07/15] sequencer: lib'ify read_populate_opts()
+Subject: [PATCH 01/15] sequencer: lib'ify write_message()
 In-Reply-To: <cover.1471968378.git.johannes.schindelin@gmx.de>
-Message-ID: <85a8ec8273994c599402c380abd383ad2f539777.1471968378.git.johannes.schindelin@gmx.de>
+Message-ID: <6dc5e927cbdd1847db5b6cd75041609dd1e1f76d.1471968378.git.johannes.schindelin@gmx.de>
 References: <cover.1471968378.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:M9THPmp4gKmHjOlOftN1tpPuqTPx0KiCMSrDF7SHStnZZt100y7
- A10rmPqQlLYtxqrXwv5LS7wNVsPn6WZTlQoq1rp1ZaUD7AfAqyMU9v8tr8iwCaBhMNG/gzX
- vxiA1CQDocKav6bocq93CxjUTGcy58qI9CZ0UepdcP2Xd7kj2qHLH9P6v83UsnHySYt69hY
- 9b+4PsT6su8WcE8vv7M/w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:p4hi2ZIGjrs=:xBrSNeaDgNPdQGgQqd4MBH
- op4mu+NBMV02/nLR/SDEcaFyNaJ4xzf48aMVJ9jIFBWb8jxwPO+zT06kBW+2KGqtxKQOkgxUQ
- L3XbXqP+lGRdHQmq8hIXL/wLUKMxRRV9KUkEIcWHHO8174WGVAqZPAj+yNtAZPaJpzV58EQoT
- AOrkGOzTOkWMf9fXvLkmfml43TxGTvp6CFs1/3o8o4FOD1StY+QiQCaW2cmboZffYLoqI4hHG
- C7X8HkSG7iNTzXF3lJe4Azq0BtnrBBx+2/xxzkk1OUvE/lfWjhO0vJg0dYPX+HeU9LGlhkB9p
- xVWXNavZrvo591zQl3Y+JAWu2rxGtaJhrRZStoVobxNUdLtcnqhIO0gAyQjueksISX63j6Drf
- cilJdI3uW7heObSvRvK8f7jxbQEJHwCGiphkPbZZXwhAwlNvS+rnbgZ++/O6oh4S40x5NKHum
- 1Oqc6EIn2j6pKuJFhtC2qqgLonX45PUwQ96F9JqYzP+fuWv9DyLx7WfqZH1mUnKhDrslv+m+k
- +L35YYBpsTN5L/swS+C/4LmyyEYu5erJRShM3UdjxqkAs0f8fRbzTagz9K3JN7IfOKrTmjPYk
- S2B5KBaHvNME68EU4pjP59jH12v9Y4/guD1QykwR7m6tNz3qddKuT75xn6dNB87GiA0l8Yns5
- p83TWexQNv0vxeJiLukODkhJ+tM0yXRn316f1AeAL5P6i7bfopt8w7Rgr6FWOhlfCJAq3tTYM
- +QzVjf+p71B2hsw4Dt/uiqUoo7pyQLzSwzNy+vXc4a6B1M3Ei5uSNkX3Tz8RVwhbguRrUvf8P
- 4n0JTID
+X-Provags-ID: V03:K0:FTrmXm2tmgjGbdVETJoU/zjsBSle88FjTkxzWKd4NI1pQk/XlKJ
+ RSPGd9usfV61WR/NOfIX7byDzpvPw5+NngUZ+pfhTK6rMjqSfGNbu0qC18pJKAw7DUGvtk0
+ hWkxPXA+Ul4+nf9/A7gGkrizbaPlvsg1MyGRb7PD1TqNnj3MA2DSSPg1GbqkGNizyIXlpAL
+ 065ADci9SCoV/VWHM4/+g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:lMSK8gJ7vYY=:eSVFaq72/6iT9RmVLODEWT
+ osgVTfe1QHxvhfHKtVf8DpXjv94l1EsmAqapc8DwCSrz7dmzJZZaKzPaUgqHi/ZW7LmCB38fS
+ x2MyVqsM+Yx2tEhKpu6UHYS1Pz1/mv+OkdakAgunYTXW/G488jqudY1MF8ywyr99TbN04Ho6f
+ BypP4jQ44VmTy1nTUtAMSvGyqvLFtuU+Px8xX5gFpVn/zTl1GXBzFdUt92szAB9jNLEmOiwRE
+ 12SqHbjPAKQVYYA8lfrN3iD8aNFKFiSTzFNxa8+udbzu+txVtvISrR3swBvpsYddnxMYJltti
+ GHF959//6UK5e+MO9ijmE7ArL3hQ5HQpu1JaduOro8K2+AhfudjwtrPph0rO4z1vjVBtmXhFp
+ XrKWnTgUa/Ecctxo9dBwzxFGtwbY2uGKLavuJ/yYrJJW98LMQvnbzwGPWE+9BWVprgBKxmUQR
+ Jnw2bEswshEHyXhJJhp1ahESB0c7g8gSmkBjKFLVxEidbZS5ePdyf8z1OZF0jHoZ34FrfBavO
+ kmvohertSZTM26Bb1ZNAzdoHz76kyEXUNuP3XHbbqqiCCp8vUkbvmVbBS9myUu8keQe1f9F+t
+ ikTFSd22ZrkkdIXxlu7w3WCH9UkGj88JEI3CGs0HWz6MHxmUIH13QUbrzUCpsGAH3hQfmfNqR
+ ekYQtdFnejFSkEjIApjky1bVixoboD2PhKUNr3Q1ozIJx2Qh0j/U8qDJy+NgZW35gVblcl4gt
+ fpK5twTc0uVyLL2kEEc+YahEiCRMFlo1PaVFBklMjpnNcealLFpRfqfoh0XgnqlEFPREY8Uk7
+ Ja+qMfH
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,43 +58,59 @@ an error.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ sequencer.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 5f6b020..808cd53 100644
+index 2e9c7d0..c75296c 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -806,12 +806,14 @@ static int populate_opts_cb(const char *key, const char *value, void *data)
- 	return 0;
+@@ -180,17 +180,20 @@ static void print_advice(int show_hint, struct replay_opts *opts)
+ 	}
  }
  
--static void read_populate_opts(struct replay_opts **opts_ptr)
-+static int read_populate_opts(struct replay_opts **opts)
+-static void write_message(struct strbuf *msgbuf, const char *filename)
++static int write_message(struct strbuf *msgbuf, const char *filename)
  {
- 	if (!file_exists(git_path_opts_file()))
--		return;
--	if (git_config_from_file(populate_opts_cb, git_path_opts_file(), *opts_ptr) < 0)
--		die(_("Malformed options sheet: %s"), git_path_opts_file());
-+		return 0;
-+	if (git_config_from_file(populate_opts_cb, git_path_opts_file(), *opts) < 0)
-+		return error(_("Malformed options sheet: %s"),
-+			git_path_opts_file());
+ 	static struct lock_file msg_file;
+ 
+-	int msg_fd = hold_lock_file_for_update(&msg_file, filename,
+-					       LOCK_DIE_ON_ERROR);
++	int msg_fd = hold_lock_file_for_update(&msg_file, filename, 0);
++	if (msg_fd < 0)
++		return error_errno(_("Could not lock '%s'"), filename);
+ 	if (write_in_full(msg_fd, msgbuf->buf, msgbuf->len) < 0)
+-		die_errno(_("Could not write to %s"), filename);
++		return error_errno(_("Could not write to %s"), filename);
+ 	strbuf_release(msgbuf);
+ 	if (commit_lock_file(&msg_file) < 0)
+-		die(_("Error wrapping up %s."), filename);
++		return error(_("Error wrapping up %s."), filename);
++
 +	return 0;
  }
  
- static void walk_revs_populate_todo(struct commit_list **todo_list,
-@@ -1017,8 +1019,8 @@ static int sequencer_continue(struct replay_opts *opts)
+ static struct tree *empty_tree(void)
+@@ -564,16 +567,16 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+ 					 head, &msgbuf, opts);
+ 		if (res < 0)
+ 			return res;
+-		write_message(&msgbuf, git_path_merge_msg());
++		res |= write_message(&msgbuf, git_path_merge_msg());
+ 	} else {
+ 		struct commit_list *common = NULL;
+ 		struct commit_list *remotes = NULL;
  
- 	if (!file_exists(git_path_todo_file()))
- 		return continue_single_pick();
--	read_populate_opts(&opts);
--	if (read_populate_todo(&todo_list, opts))
-+	if (read_populate_opts(&opts) ||
-+			read_populate_todo(&todo_list, opts))
- 		return -1;
+-		write_message(&msgbuf, git_path_merge_msg());
++		res = write_message(&msgbuf, git_path_merge_msg());
  
- 	/* Verify that the conflict has been resolved */
+ 		commit_list_insert(base, &common);
+ 		commit_list_insert(next, &remotes);
+-		res = try_merge_command(opts->strategy, opts->xopts_nr, opts->xopts,
++		res |= try_merge_command(opts->strategy, opts->xopts_nr, opts->xopts,
+ 					common, sha1_to_hex(head), remotes);
+ 		free_commit_list(common);
+ 		free_commit_list(remotes);
 -- 
 2.10.0.rc1.99.gcd66998
 
