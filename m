@@ -7,83 +7,74 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 770C21FD99
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CEF72018E
 	for <e@80x24.org>; Tue, 23 Aug 2016 16:08:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751139AbcHWQHq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Aug 2016 12:07:46 -0400
-Received: from mout.gmx.net ([212.227.15.15]:57971 "EHLO mout.gmx.net"
+        id S1753846AbcHWQHp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Aug 2016 12:07:45 -0400
+Received: from mout.gmx.net ([212.227.17.22]:53096 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751640AbcHWQHQ (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1753065AbcHWQHQ (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 23 Aug 2016 12:07:16 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MWT8s-1berwZ1iFm-00XfON; Tue, 23 Aug 2016 18:06:33
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0LtEtL-1bAV8m3vPH-012mnd; Tue, 23 Aug 2016 18:06:48
  +0200
-Date:   Tue, 23 Aug 2016 18:06:32 +0200 (CEST)
+Date:   Tue, 23 Aug 2016 18:06:46 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 00/15] Lib'ify quite a few functions in sequencer.c
-Message-ID: <cover.1471968378.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 03/15] sequencer: lib'ify do_pick_commit()
+In-Reply-To: <cover.1471968378.git.johannes.schindelin@gmx.de>
+Message-ID: <92fdb70f3db157f8a3d2442d872e989d81c6756e.1471968378.git.johannes.schindelin@gmx.de>
+References: <cover.1471968378.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:olWA/oyilW6IXpNfAt6DTsa32e63RZiI6HxQ98OsFUG0Tqnb5wz
- rZkavKsXfAO0pLtoj0AadNuoDYIuPN5YDWwVYWvZYv/DGj07iHo2eSFvesVAo/XogGo0WK9
- N5gLpDHJ8U/VUnJgzSKtV+d1KIlWo4jxaN1GEwZYg6QsAh9ANTMICS4oxzLgP2fcCTbUniA
- Tj+5X+jbQXC7+iBYban9A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:DaO1B0RmMRk=:IkT1CHzho/JYDnPbJLKYHk
- zn3FFWcMhcEWqcYJdG32gCKHWx2ZtOy2s1yFRDP9jqMPImEvSsOdvtVIEkgEDZrMp2VkKtOMm
- tX6TjEGJjADR/WC/YJ+em/t2JrdEb89ojh7bOmAzKMyM1SNl7n0sOgQoDI7V9q5kzbu3jlE34
- /Em4/7s6NsXCVY03keBR7oULU0aB+52q9ohzUFNByLMTRM3T0TpSzZEE854NIskEoGnm/G9Wd
- pCjdkkkLhD9pEMrvRlK70T1LH9yuflJ9FgtRuaDV7wCZzU7hZF3tHHCOr+l/Xtv7erlOeUWK9
- gIYtO5yhbtsuHt8BSF0l6Wr5Q0fGRK1+iQ9PA2ed3O0cxmXsEz1QtRah/pzLAyxCjKXEK/s/6
- FKXGUFbbpjLF+NT6cMrvOKY71eRlURZLwpwKCs1M1Kqa8u5qamv+/uSg8y/tYsG0pMvXcbgwS
- gAvchSF4mqOge4f0Mgm7STnAB7BFLvx4TUQDJJfrh1Kd94Ndpmo6CJAlGkNFrmQaMWnVXxMdu
- Q+dxZ4UbKaZnxRnOm8DIAcxlREpl38ARnA0K4GL4bT4fPsk0OuB6bFIlayKXL8YhIfi7s2rue
- 2dbTGP3EE9RxcR8/+MBq7IyoP3efpaFMRANXz0Yc1NIAFZeb4llEQZ5+FbZNYd2sylrcBnpsF
- u5fsHsFGxFw2s45jrgAUYCPlTtMgw0E3GVGaHPSUJQJm6jFmJgtOLvwdAN3VtAucJhuB+FTFc
- ZhHU5aC/z/IioRukOS3dXOazy7m07O5GPFjJNg13vy822fXo19JYbi2RwgWjZpvRsM+1nNLjX
- 3FADHGn
+X-Provags-ID: V03:K0:RLbqoj1S0HMSC8oTvYmwoEBog6T1trZmGMRJOcxmmzV253t2R6U
+ L1/NxjbfgNB76kKUFtUq7IyTjqk99CrwVtqj4H5kbbtCqCVwa3+zS5KQNRDiMReV3o0XFOH
+ zDLTB9FnCybaui9QtCjqCxnJFZhZnvAMN4D9M6uS8YMWBVWqIv8TSXveZMhCYfB/mNUD2bA
+ MXpB3VMybcuQb5ltRmqHA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:fQbUPFgssxA=:CJXZdRlDwi62t680gFh9Tv
+ Pjuk2dyugmEDMrk00M+PayUW4elA4xqPjlUc8YOsJkfVLKFmnZVC/d3mWKchHOhWvnAopfiHc
+ Erk9A8F3HOvzQq2HhDIXAg6B0TdybQGAJKsFX4rsWbuIuF6KAJZFR9E11fwgb/8PAXkkmaal2
+ 8r+8Buz8xI7szUMeYAZzJMuYGvty1bQkxhglv+AbHvZjgaInZkoM1PeuBQ70s5m3pOyi1WEXY
+ 2s0h3B9M9OluE1e7nUFDKJqWUJMqNsc0JfX36sVlRXjgT0gps131/QDYb069IXPBVNcHJJn6q
+ So2qHGvcQWalAPOEemf+WLbG7aI65VGwC09/1gkkcJcNjCWmLnbvGdavMf2ka3uPiwchtJxT/
+ nCozWz/8GLNWLCPJTwxrtfJy479jcNyqjQNOrcO7FEd6AEw1+hucCM4tlULHDo7Lv7F/CXNwk
+ Qz0nEXAUhR+CjfcKhru+2SsIRF5pmhlociUlpqFsaKDVoium/jQyoCML9nvjoyrypWsSknw+l
+ cAetIRRhxpLPcO0YiIUQ3T79N97K+7GpnF4eV6PukxVUNki5WCWz6OpsNhpNCazlt5d4PW3vz
+ MInkseLp3sGS4bmxHysvAken3Q1MovIjWMdeks27vlIygaz9z5Qjrjeava6rzrOBgeE9qNrZq
+ YMbyb4LP2V2ou2+4n/e3VUsw1TviQVdP3/5Lhe/6woMOR9+Grh5ykwTL5k5SOjFXiQmx4rNaR
+ 3wufR30+HsvHzkzEOIehFDqwWeqTHs4tEvkXmD9ZYyF1KOnnO/ibPCCzuHSpQYU/c9Z9SciI1
+ mDlXfDT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch series is one of the half dozen patch series left to move the
-bulk of rebase -i into a builtin.
+To be truly useful, the sequencer should never die() but always return
+an error.
 
-The purpose of this patch series is to switch the functions in
-sequencer.c from die()ing to returning errors instead, as proper library
-functions should do, to give callers a chance to clean up after an
-error.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ sequencer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-Johannes Schindelin (15):
-  sequencer: lib'ify write_message()
-  sequencer: lib'ify do_recursive_merge()
-  sequencer: lib'ify do_pick_commit()
-  sequencer: lib'ify prepare_revs()
-  sequencer: lib'ify read_and_refresh_cache()
-  sequencer: lib'ify read_populate_todo()
-  sequencer: lib'ify read_populate_opts()
-  sequencer: lib'ify walk_revs_populate_todo()
-  sequencer: lib'ify create_seq_dir()
-  sequencer: lib'ify save_head()
-  sequencer: lib'ify save_todo()
-  sequencer: lib'ify save_opts()
-  sequencer: lib'ify sequencer_pick_revisions()
-  sequencer: do not die() in do_pick_commit()
-  sequencer: do not die() in fast_forward_to()
-
- sequencer.c | 168 ++++++++++++++++++++++++++++++++++++------------------------
- 1 file changed, 101 insertions(+), 67 deletions(-)
-
-Published-As: https://github.com/dscho/git/releases/tag/libify-sequencer-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git libify-sequencer-v1
-
+diff --git a/sequencer.c b/sequencer.c
+index 0c8c955..6ac2187 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -464,7 +464,7 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+ 		 * to work on.
+ 		 */
+ 		if (write_cache_as_tree(head, 0, NULL))
+-			die (_("Your index file is unmerged."));
++			return error (_("Your index file is unmerged."));
+ 	} else {
+ 		unborn = get_sha1("HEAD", head);
+ 		if (unborn)
 -- 
 2.10.0.rc1.99.gcd66998
 
-base-commit: 2632c897f74b1cc9b5533f467da459b9ec725538
+
