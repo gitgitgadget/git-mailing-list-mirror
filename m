@@ -2,95 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E15251FD99
+	by dcvr.yhbt.net (Postfix) with ESMTP id F19202018E
 	for <e@80x24.org>; Tue, 23 Aug 2016 21:36:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755614AbcHWVfx (ORCPT <rfc822;e@80x24.org>);
+        id S1756056AbcHWVf4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Aug 2016 17:35:56 -0400
+Received: from mail-yb0-f194.google.com ([209.85.213.194]:34466 "EHLO
+        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755637AbcHWVfx (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 23 Aug 2016 17:35:53 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58676 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755425AbcHWVfw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2016 17:35:52 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C488B369D4;
-        Tue, 23 Aug 2016 17:35:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=PU5krUF8s90vwhFN8VKH2xp0/bM=; b=ML2esT
-        AnlHsD9SCXnxjp99m+5H6n6zuyf0CKiZ+9PCsva9FVXLF6jmvxnQNNYJt+93rl7O
-        sIlaFIgI0phsaxReEfXTaUYt0Zmb1cq8gobz0q317lGeJuM7rgvLmkZ1vookuO7p
-        SoyUK9QKtsfQ8FrL+3IOb07o3A0Ro7UDue4Bw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tKe7zjM6B+UJlwxUn9OM7dVRGqWPWvl5
-        AKDSGRFTxJMupEBhn4KDvEK3FcNu85DfkTZVcZxozl1gdDCqcLBR1L9DetH7AZnL
-        /MeSNtKTpi+ciD3LFnj0jBByNx7I9rhPKI1ZgklTJ5/zPpXzh7fK0vNaQur7PJCQ
-        Wk8kG6V8BHc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BA615369D3;
-        Tue, 23 Aug 2016 17:35:23 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 39171369D2;
-        Tue, 23 Aug 2016 17:35:23 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        Jeff King <peff@peff.net>,
-        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v2 5/7] xdl_change_compact(): introduce the concept of a change group
-References: <cover.1471864378.git.mhagger@alum.mit.edu>
-        <21ade4ab233a868cabbe15598cd7b2ff4d04d286.1471864378.git.mhagger@alum.mit.edu>
-Date:   Tue, 23 Aug 2016 14:35:21 -0700
-In-Reply-To: <21ade4ab233a868cabbe15598cd7b2ff4d04d286.1471864378.git.mhagger@alum.mit.edu>
-        (Michael Haggerty's message of "Mon, 22 Aug 2016 13:22:44 +0200")
-Message-ID: <xmqqeg5fuq1y.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+Received: by mail-yb0-f194.google.com with SMTP id g67so4131493ybi.1
+        for <git@vger.kernel.org>; Tue, 23 Aug 2016 14:35:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=wyqNADvLJuDSSwlVrmrD0RcDlpp+sPu8wxVW9FWO+Qw=;
+        b=GRpWG71w789UxsjafIhLKZScE8ONfo2DlJEdd+1Be9G7U+RyUCBoIPtCH7WGgRkwGX
+         YaEQHDqmjH9nhCT3xfTyxqeg15Li4KGLtOS/yqZZIz3IFltk2H9yvfYroSkRSEb95S/4
+         CV906XkuGaOFAfv6MB06wfkO0vrc90WRvC55m3Vv2zU6g8v/nUnF8E8aeCkhTOBjJXAD
+         y6AzVLVAGb+q2YUH+XP04ufZkjztJnJn+Vn0C7uYBywR0Id2HlCz6lOBQ5AvcfeiQa5R
+         F0bnSZeyUvlBMqVAUaSCFb2S0+iWCzsbYNtRNUc3Ls03+R1qn5Xznhdoma8v5g2GC+I+
+         q3Ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=wyqNADvLJuDSSwlVrmrD0RcDlpp+sPu8wxVW9FWO+Qw=;
+        b=TuEolsZvqL0JtCap40ETYUYpZ56Yd4GudNT5uvmYO9gJLJwSl8NEv/omqqq3Q4Cd2/
+         3mSaPFdgE/hTXK9QXKg1kwSscviL3lGUjhKYogfSL1/vqwnQp3hcHBbUYknh7A+HsqqS
+         htdeU96mgvuCViyjkwtkhtL4vxw3F7J7aeodkqj7Yd25eeB62VNnYxyQvykzMEDp6NI0
+         ZIizY50HQcNdarBzD0S6L8kfvdKBv3oMuGGmN5V7kSwkpiwGbzKQMDhCLoUToJYl6qpj
+         JuWzigQzJB3B0nQi/oXtU9gnSKMpIZdSnqtLI7Y2A3AbgoMfoQ9EwlkemmYEy+/ItXXY
+         4CRw==
+X-Gm-Message-State: AEkoouuiu6KyousKMmU4fkkgGKAJLvQNx162bNPOX672edbPNd9ymzBPbYl6+s4tnJ5mJ7i4n2ERtSs3O44elA==
+X-Received: by 10.37.162.42 with SMTP id b39mr15110514ybi.53.1471987453265;
+ Tue, 23 Aug 2016 14:24:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7F8130C2-6979-11E6-A117-FCB17B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.129.89.132 with HTTP; Tue, 23 Aug 2016 14:24:12 -0700 (PDT)
+In-Reply-To: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
+References: <01020156a48144f8-c0e127c1-8cd9-4295-ac16-449a54315cac-000000@eu-west-1.amazonses.com>
+ <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
+From:   Pranit Bauva <pranit.bauva@gmail.com>
+Date:   Wed, 24 Aug 2016 02:54:12 +0530
+Message-ID: <CAFZEwPM6hDbiEVMbe_FakME4h_RNCopyzFcVLsF1PB=V=OheOA@mail.gmail.com>
+Subject: Re: [PATCH v14 01/27] bisect--helper: use OPT_CMDMODE instead of OPT_BOOL
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Hey everyone,
 
-> The idea of xdl_change_compact() is fairly simple:
->
-> * Proceed through groups of changed lines in the file to be compacted,
->   keeping track of the corresponding location in the "other" file.
->
-> * If possible, slide the group up and down to try to give the most
->   aesthetically pleasing diff. Whenever it is slid, the current location
->   in the other file needs to be adjusted.
->
-> But these simple concepts are obfuscated by a lot of index handling that
-> is written in terse, subtle, and varied patterns. I found it very hard
-> to convince myself that the function was correct.
->
-> So introduce a "struct group" that represents a group of changed lines
-> in a file. Add some functions that perform elementary operations on
-> groups:
->
-> * Initialize a group to the first group in a file
-> * Move to the next or previous group in a file
-> * Slide a group up or down
->
-> Even though the resulting code is longer, I think it is easier to
-> understand and review.
+Sending a "cover letter" to this series.
 
-Yup.  The important thing is that the length of the core logic of
-sliding up and down becomes easier to read, because it shrinks; the
-mechanics of sliding up and down may need more lines with boilderplate,
-but they are isolated "do one thing and do it well" helpers.
+Changes with wrt v12[1] are:
 
-Nice.
+ * Rebased on v2.10-rc0
+ * Two function signatures had changed while the topic
+    develop so changed those.
+ * Correct the "mark for translation" messages properly as
+    I had previously used N_() in some places but I had to
+    actually use _().
+ * In the patch 04/27[2], bisect_clean_state() is put in bisect.c
+   rather than builtin/bisect--helper.c because I will need it
+   further when porting bisect_next() function.
+ * The patches from 14th are completely new to the series.
+    They port even more functions and remove some then unused
+    subcommands.
+ * 14th patch[3] is a tricky one as it changes a lot of things. I am
+    not sure whether to put this all in one patch or split it.
 
+[1]: http://public-inbox.org/git/010201567675adc1-17e27495-6b36-40d1-836d-814da029fcc4-000000@eu-west-1.amazonses.com/
+[2]: http://public-inbox.org/git/01020156b73fe66f-bfad6316-39d4-4577-8f75-d1b4b2031263-000000@eu-west-1.amazonses.com/
+[3]: http://public-inbox.org/git/01020156b73fe6ce-3b204354-849b-40fd-93ff-2ebcf77df91c-000000@eu-west-1.amazonses.com/
 
+Regards,
+Pranit Bauva
