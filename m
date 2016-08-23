@@ -2,251 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3199C1FD99
-	for <e@80x24.org>; Tue, 23 Aug 2016 12:45:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 147581FD99
+	for <e@80x24.org>; Tue, 23 Aug 2016 13:39:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757283AbcHWMo7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Aug 2016 08:44:59 -0400
-Received: from a7-19.smtp-out.eu-west-1.amazonses.com ([54.240.7.19]:33941
-        "EHLO a7-19.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751255AbcHWMo6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 23 Aug 2016 08:44:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1471953233;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=o/pQK75iIcKvaw5MqbNirjFw5WAR0BNqXNvo70ioGCk=;
-        b=ZwDcXQ0jwb8voys87ucJyg8yp9bFCpp+HNXOtl6WtO9X7wpvWchf4V5JqphTsBlG
-        fmLBej2kcqMldreBO36rUz3/JiD9QDM7g33lKOx2EkzwD1xZHCymAPdyMRhtX+DD24e
-        9IwRcAC9AkDB5odHm41xx+vnFFVsd4zOKBWPAyKk=
-From:   Pranit Bauva <pranit.bauva@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <01020156b73fe6d7-6cd42223-f46c-4e4c-a15f-516fc13a4521-000000@eu-west-1.amazonses.com>
-In-Reply-To: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
-References: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v14 22/27] bisect--helper: `bisect_replay` shell function in
- C
+        id S1754611AbcHWNjx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Aug 2016 09:39:53 -0400
+Received: from mout.gmx.net ([212.227.17.22]:60734 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753429AbcHWNjw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2016 09:39:52 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0Lu2F0-1bBLhk0OAQ-011VH0; Tue, 23 Aug 2016 15:39:46
+ +0200
+Date:   Tue, 23 Aug 2016 15:39:45 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git v2.10.0-rc1
+In-Reply-To: <xmqq7fbcz76b.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1608231538160.4924@virtualbox>
+References: <xmqq7fbcz76b.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 23 Aug 2016 11:53:53 +0000
-X-SES-Outgoing: 2016.08.23-54.240.7.19
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:wxz3QdPy6FKE8ZwO3zGe82JpJ5a0XM2ze+v91h83MtUoK5QumAZ
+ wDf7cy7C8TfrAdg0sPTYoLpQ+uLS6XdLtfQMcLbxPwdz58DizS7YrEKJihzPtneFUvkEbKw
+ UuK9bFBGXFxTIq+71/rpCsjamCXZstH+wZvC4naEo3K/1JlpJtJzSpeWklU1uQzArGw9Y7+
+ 667zLkR0Z4FcKpweY2Pnw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:avjfnYRSbw0=:cfdS9KaxH0KWx5CvXBNO9q
+ E4Wq2x6xD7IZoMJbqhlHDOyhlvhTNJgH1P3PiaC59bNTAcW+EQ41rQ7Tm8OSWoj4ht8XVcwL4
+ r1anSPzvWTTHb/GG+aJsOlwAn0G+ovF2M3ZrGBDK6lVbaWaR5FIhUGG6mATwbM3UUvL90RXiR
+ UM4f9jK+469kdB5qRjSyCXJYGDzt5XR9KphoJwhFOw8qeCK8p6YLknIOzheY090CwK1jZWQJS
+ HCAA39aFUdttEZV/PhK7JgBcw/ycTmP1m0igYCl+Q6yUXMk8es3Re3JXd7OxbLDDVUHnbEckU
+ F/XTOPhBGTIYYNx1q9y64b1nw5ayW03QCM32Vs/P9tGXeTbdXTsPeRle+YGBvfjUiZh4IP/0f
+ 55Y3FdXqnzXjztTsP8Y3Hp4b3Xtu9Av1aXxCTLs8LeGzHzwVFaRbMkS60frbTKt0x4qQmT/27
+ phFTAd2DLXUhyjiBMJXghzFJzZOXShEXb5wlG6qyRM9LtaZf5r5EJa5Gq9yCH/0K/wFbSEFGB
+ d7BXQsx3fNCQTc7HAzGyQGNyvBReIrV/ytwExayisQa4hIQbpjF+elcUn8qp+Rcxca1hYk+Dl
+ FWv7dggNCskPwCGg1xpjTQHypKfjWt4rXB25Fw6SYUGymzYVfLzkelr2FYO1Jn6QfHFqNJADy
+ 6cuiR/Vhn/oA5aU9ww+LvEygN9KuX2fSZ9rA50sEUZKICVliX6AdMC7LRmXWFqwEnXHFeVgu8
+ p9W/hpq43GKHHZALnKoGq0ahZFGQlVn9MLFD5HOmTzQJR7YIP5Y9NMfmlPxD7n+/IBMjxlQg8
+ 2cbgvWt
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Reimplement the `bisect_replay` shell function in C and also add
-`--bisect-replay` subcommand to `git bisect--helper` to call it from
-git-bisect.sh
+Hi Junio,
 
-Using `--bisect-replay` subcommand is a temporary measure to port shell
-function to C so as to use the existing test suite. As more functions
-are ported, this subcommand will be retired and will be called by some
-other method.
+[dropping LKML]
 
-Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
----
- builtin/bisect--helper.c | 100 ++++++++++++++++++++++++++++++++++++++++++++++-
- git-bisect.sh            |  32 +--------------
- 2 files changed, 100 insertions(+), 32 deletions(-)
+On Fri, 19 Aug 2016, Junio C Hamano wrote:
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index b57b0c8..9c1108d 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -32,6 +32,7 @@ static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --bisect-autostart"),
- 	N_("git bisect--helper --bisect-state (bad|new) [<rev>]"),
- 	N_("git bisect--helper --bisect-state (good|old) [<rev>...]"),
-+	N_("git bisect--helper --bisect-replay <filename>"),
- 	NULL
- };
- 
-@@ -879,6 +880,93 @@ static int bisect_log(void)
- 	return 0;
- }
- 
-+static int get_next_word(struct strbuf *line, struct strbuf *word)
-+{
-+	int i;
-+	for (i = 0; line->buf[i] != ' ' && line->buf[i] != '\0'; i++)
-+		strbuf_addch(word, line->buf[i]);
-+
-+	return 0;
-+}
-+
-+static int bisect_replay(struct bisect_terms *terms, const char *filename)
-+{
-+	struct strbuf line = STRBUF_INIT;
-+	FILE *fp;
-+
-+	if (is_empty_or_missing_file(filename))
-+		die(_("no such file with name '%s' exists"), filename);
-+
-+	if (bisect_reset(NULL))
-+		return -1;
-+
-+	fp = fopen(filename, "r");
-+
-+	while (strbuf_getline(&line, fp) != EOF) {
-+		struct strbuf command = STRBUF_INIT;
-+		if (starts_with(line.buf, "git bisect ") ||
-+		    starts_with(line.buf, "git-bisect "))
-+			strbuf_remove(&line, 0, 11);
-+		else
-+			continue;
-+
-+		get_terms(terms);
-+		get_next_word(&line, &command);
-+		if (check_and_set_terms(terms, command.buf)) {
-+			strbuf_release(&line);
-+			strbuf_release(&command);
-+		}
-+
-+		if (line.buf[command.len] != '\0')
-+			strbuf_remove(&line, 0, command.len + 1);
-+		else
-+			strbuf_remove(&line, 0, command.len);
-+
-+		if (!strcmp(command.buf, "start")) {
-+			struct argv_array argv = ARGV_ARRAY_INIT;
-+			sq_dequote_to_argv_array(line.buf, &argv);
-+			if (bisect_start(terms, 0, argv.argv, argv.argc)) {
-+				strbuf_release(&command);
-+				strbuf_release(&line);
-+				argv_array_clear(&argv);
-+				return -1;
-+			}
-+			argv_array_clear(&argv);
-+			continue;
-+		}
-+
-+		if (one_of(command.buf, terms->term_good.buf,
-+		    terms->term_bad.buf, "skip", NULL)) {
-+			if (bisect_write(command.buf, line.buf, terms, 0)) {
-+				strbuf_release(&command);
-+				strbuf_release(&line);
-+				return -1;
-+			}
-+			continue;
-+		}
-+
-+		if (!strcmp(command.buf, "terms")) {
-+			struct argv_array argv = ARGV_ARRAY_INIT;
-+			sq_dequote_to_argv_array(line. buf, &argv);
-+			if (bisect_terms(terms, argv.argv, argv.argc)) {
-+				strbuf_release(&command);
-+				strbuf_release(&line);
-+				argv_array_clear(&argv);
-+				return -1;
-+			}
-+			argv_array_clear(&argv);
-+			continue;
-+		}
-+
-+		strbuf_release(&command);
-+		strbuf_release(&line);
-+		die(_("?? what are you talking about?"));
-+	}
-+	strbuf_release(&line);
-+
-+	return bisect_auto_next(terms, NULL);
-+}
-+
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
- 	enum {
-@@ -892,7 +980,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		BISECT_AUTO_NEXT,
- 		BISECT_AUTOSTART,
- 		BISECT_STATE,
--		BISECT_LOG
-+		BISECT_LOG,
-+		BISECT_REPLAY
- 	} cmdmode = 0;
- 	int no_checkout = 0, res = 0;
- 	struct option options[] = {
-@@ -918,6 +1007,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			 N_("mark the state of ref (or refs)"), BISECT_STATE),
- 		OPT_CMDMODE(0, "bisect-log", &cmdmode,
- 			 N_("output the contents of BISECT_LOG"), BISECT_LOG),
-+		OPT_CMDMODE(0, "bisect-replay", &cmdmode,
-+			 N_("replay the bisection process from the given file"), BISECT_REPLAY),
- 		OPT_BOOL(0, "no-checkout", &no_checkout,
- 			 N_("update BISECT_HEAD instead of checking out the current commit")),
- 		OPT_END()
-@@ -1001,6 +1092,13 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			die(_("--bisect-log requires 0 arguments"));
- 		res = bisect_log();
- 		break;
-+	case BISECT_REPLAY:
-+		if (argc != 1)
-+			die(_("--bisect-replay requires 1 argument"));
-+		strbuf_addstr(&terms.term_good, "good");
-+		strbuf_addstr(&terms.term_bad, "bad");
-+		res = bisect_replay(&terms, argv[0]);
-+		break;
- 	default:
- 		die("BUG: unknown subcommand '%d'", cmdmode);
- 	}
-diff --git a/git-bisect.sh b/git-bisect.sh
-index a47e3b5..bf66ee2 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -77,36 +77,6 @@ bisect_visualize() {
- 	eval '"$@"' --bisect -- $(cat "$GIT_DIR/BISECT_NAMES")
- }
- 
--bisect_replay () {
--	file="$1"
--	test "$#" -eq 1 || die "$(gettext "No logfile given")"
--	test -r "$file" || die "$(eval_gettext "cannot read \$file for replaying")"
--	git bisect--helper --bisect-reset || exit
--	while read git bisect command rev
--	do
--		test "$git $bisect" = "git bisect" || test "$git" = "git-bisect" || continue
--		if test "$git" = "git-bisect"
--		then
--			rev="$command"
--			command="$bisect"
--		fi
--		get_terms
--		git bisect--helper --check-and-set-terms "$command" "$TERM_GOOD" "$TERM_BAD" || exit
--		get_terms
--		case "$command" in
--		start)
--			eval "git bisect--helper --bisect-start $rev" ;;
--		"$TERM_GOOD"|"$TERM_BAD"|skip)
--			git bisect--helper --bisect-write "$command" "$rev" "$TERM_GOOD" "$TERM_BAD" || exit;;
--		terms)
--			git bisect--helper --bisect-terms $rev  || exit;;
--		*)
--			die "$(gettext "?? what are you talking about?")" ;;
--		esac
--	done <"$file"
--	git bisect--helper --bisect-auto-next
--}
--
- bisect_run () {
- 	git bisect--helper --bisect-next-check $TERM_GOOD $TERM_BAD fail || exit
- 
-@@ -201,7 +171,7 @@ case "$#" in
- 	reset)
- 		git bisect--helper --bisect-reset "$@" ;;
- 	replay)
--		bisect_replay "$@" ;;
-+		git bisect--helper --bisect-replay "$@" ;;
- 	log)
- 		git bisect--helper --bisect-log ;;
- 	run)
+> [...]
+>  * A new run-command API function pipe_command() is introduced to
+>    sanely feed data to the standard input while capturing data from
+>    the standard output and the standard error of an external process,
+>    which is cumbersome to hand-roll correctly without deadlocking.
+> 
+>    The codepath to sign data in a prepared buffer with GPG has been
+>    updated to use this API to read from the status-fd to check for
+>    errors (instead of relying on GPG's exit status).
+>    (merge efee955 jk/gpg-interface-cleanup later to maint).
 
---
-https://github.com/git/git/pull/287
+You probably want a '*' in front of this paragraph, too.
+
+>  * Squelch compiler warnings for netmalloc (in compat/) library.
+
+s/netmalloc/nedmalloc/
+
+Thank you so much for these extensive release notes. They do take time to
+read, but they really cover everything quite nicely.
+
+Ciao,
+Dscho
