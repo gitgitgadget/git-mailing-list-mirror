@@ -2,133 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 374221FD99
-	for <e@80x24.org>; Tue, 23 Aug 2016 19:17:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAC091FD99
+	for <e@80x24.org>; Tue, 23 Aug 2016 19:29:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753849AbcHWTRA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Aug 2016 15:17:00 -0400
-Received: from mout.web.de ([212.227.15.14]:57338 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752843AbcHWTQ7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2016 15:16:59 -0400
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb001) with
- ESMTPSA (Nemesis) id 0LiCbT-1aqa1110Rn-00nR44; Tue, 23 Aug 2016 21:07:40
- +0200
-Subject: Re: git-svn bridge and line endings
-To:     Lucian Smith <lucianoelsmitho@gmail.com>,
-        Julian Phillips <julian@quantumfyre.co.uk>
-References: <CAHLmBr2CRzt58RB+_YmnXcyost-R5=Ff51tALf1xh0kGk+frDw@mail.gmail.com>
- <CAHLmBr1JHjjp66Er-2e6Yu+3zjrhT82Da-O8fj6_OoPtEPz8eg@mail.gmail.com>
- <20160823030721.GA32181@starla>
- <5e17164f-f669-70c2-de78-25287ab59759@freebsd.org>
- <20160823055418.GA5990@whir>
- <CAHLmBr3Yn1tVhijmgRwd8hyxgasdc2VtfNi6pYP5FbEHjjb3Vw@mail.gmail.com>
- <501dc45544c5582379df21a758d3be6c@quantumfyre.co.uk>
- <CAHLmBr1Cd_JimZEsLUjG=+v4CgsXGGzkyFizZ1U5YSSMqjsEvw@mail.gmail.com>
-Cc:     Eric Wong <e@80x24.org>, Alfred Perlstein <alfred@freebsd.org>,
-        git@vger.kernel.org, git-owner@vger.kernel.org
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <cfb712ee-ff0e-0f62-0477-6edf483d4101@web.de>
-Date:   Tue, 23 Aug 2016 21:07:33 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
- Gecko/20100101 Thunderbird/45.1.1
+        id S1754068AbcHWT3v (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Aug 2016 15:29:51 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57777 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753204AbcHWT31 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2016 15:29:27 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3DD23373F7;
+        Tue, 23 Aug 2016 15:29:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=aAKou8MNoxdRBL3mBFbBFz3jcvE=; b=vZ0o1o
+        MRnz2zJZR55Qxzuz/LQwAY0MHwitecM7ge5VEIUGefbTkkULHWq6qaMzGKvq2aKd
+        yebAh9NCz0ayb0MyRJR+rjhYmeTWCb27cKQNTlCVrvrx7bzfzJ9fw4ZB4fTbQ81I
+        lzKwtupwHJvoDbLU0+6QTy9TVg8ANnR4tmOvI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=txchcpGkmIn0WU8GBLGmbj0kXCAHRxNT
+        n0ESJ1HEAxVwvDy6sgo0jD+zCn7AisPiw1eyLI6B94LhzCY0qnmNMUeHOKDTUR/S
+        75Ao98VFPa5p/PJj0CRFE1k70bgRI3VCM2EBIb+QDs/hM83M417q+VVw8nwiQZQo
+        Il2U5K2zAJo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 364ED373F6;
+        Tue, 23 Aug 2016 15:29:02 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ACE8D373F5;
+        Tue, 23 Aug 2016 15:29:01 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Joshua Phillips <jphillips@imap.cc>
+Cc:     git@vger.kernel.org
+Subject: Re: Possible bug: git pull --rebase discards local commits
+References: <1471969497.3553135.703756633.0F6CCC4C@webmail.messagingengine.com>
+Date:   Tue, 23 Aug 2016 12:28:59 -0700
+In-Reply-To: <1471969497.3553135.703756633.0F6CCC4C@webmail.messagingengine.com>
+        (Joshua Phillips's message of "Tue, 23 Aug 2016 16:24:57 +0000")
+Message-ID: <xmqqvayruvwk.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAHLmBr1Cd_JimZEsLUjG=+v4CgsXGGzkyFizZ1U5YSSMqjsEvw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:kR22K3Qpeuz/PPKRdGqvR0rOtGPWLlS5k6bdMzJp6YXUkdfrvmC
- +5RGNA0Vfj4gswJ/Pw2vS9waLADShA09SyFXUabkTEUWJ95tq3KxWFiGPfntTzIAhBmEx3l
- JJC6lh/KcpLvpcRFipi8pZiEl8P1cUpM997ZuT5QQaQhVjEGrf8q9UrAMyHMtUf+zJu1YKF
- /pN7JvVEtH/Wex4Qp15xQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:QpjCTltoFOw=:1YeNYxYdScC4lsjXpY0zBp
- +Yv3bn+5oRbhM/7wAM00MayrT6vJvduPuq9g3lB6Az6QWQmdJ/hZKHBxKsXXS9Yg+CCHDac1l
- ZrbotrOMBxJ7ek7vtToxEKmPM2+ORBOk2SNbynqAkTnbUEOdrrBKAjIQxSz+wdudhwM57cFrF
- OHe+n4VbSNgmc8FQG3z0SAy+pfIlIzEQwWLanXjXnP4eust50BIZuow+RiJWJV36CNAmz3Miz
- r3A+ELGOPAFHgD3qs4QDe4WVTJMIFH39xPruxi+U2bD2L62GPh6aWHMOEBtQ9GMcJXnJOzj0P
- aknZHJOMRWAQDjyh4PyAAVqQirc/SZFLkJFsORQe33AwPMrhxah6+0/uArRcvh4zld14Ajnmp
- HxqX9Alv3heETW34MiEDXVjNvflkLHtwXq7K9VOnjhyQIw8oY5MqXQIpoPovZgD4F0X5f9Ck/
- vnvEz5FivoXCoJn7XK+Z24AZY6XJhb9StnLIrV8YKPP81j3vkE8ICrbTTz42A3bRSa6/KDEC6
- /fTuEawD+g5ye9nwH6h0Z1rFiX6VZqJPHsVoq3UpK4UexDWGRazG3FySCCiGx0LsssET7kCKv
- whrR/4ZEcoQ5HceMdbQJ8XoB227E3GTss2GWUnyBIOl9JalwkNQUfFkPNkaRIBWrlYMaa35yn
- HGM9ZJHwWPD9KtCDqXyn+ktglzqDZR5/nCzrORrO1j+McPGPL/fW/W1q3ydw+eix5p2TzTTjV
- WBCufC3fc3IxP5uVTVSmqOut/+bfVo+fnMY3DB8OD2+2XkOInKiM610QV20oiX3R9Dv1y1ObB
- C+vQW6Q
+Content-Type: text/plain
+X-Pobox-Relay-ID: D88F20B4-6967-11E6-8AD5-FCB17B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23.08.16 19:50, Lucian Smith wrote:
-> On Tue, Aug 23, 2016 at 10:36 AM, Julian Phillips
-> <julian@quantumfyre.co.uk> wrote:
->> On 23/08/2016 17:14, Lucian Smith wrote:
->>>
->>> Thanks for the quick responses!
->>>
->>> My situation is that the git side is entirely whatever github.org is
->>> running; presumably the latest stable version?  They provide a URL for
->>> repositories hosted there that can be accessed by an SVN
->>> client--somewhere on github is the 'git-svn bridge' (as I understand
->>> it): something that receives SVN requests, translates them to
->>> git-speak, and replies with what SVN expects.
->>
->>
->> The ability to use a Subversion client is functionality provided by GitHub,
->> and not native to git itself.  So unless someone for the appropriate GitHub
->> team happens to read this thread I expect there isn't much we can do to
->> help.  I don't know if they've even provided any real detail of how they
->> implemented the bridge.
-> 
-> All right, that makes sense.  And yeah, it was hard to find any
-> information about the bridge, which is why I ended up here...
-> 
->>> There is indeed a .gitattributes file in the repository, but the SVN
->>> client doesn't know what to do with it.  My hope was that something in
->>> the bridge code, that translated SVN requests to git and back, could
->>> take the SVN request, "Please give me this file; I'm on Windows" look
->>> at the .gitattributes file in the repository, and hand out a file with
->>> CR/LF's in it.  Conversely, when SVN tells git "Here is the new
->>> version of the file to check in," the bridge could look at the file,
->>> realize it had CR/LF's in it, look at the .gitattributes file to know
->>> if it needed to be converted, and then convert it appropriately.
->>>
->>> I can imagine a full-blown bridge that could even translate the SVN
->>> EOL propset back and forth appropriately, but I'm not sure if going
->>> that far is necessary and/or helpful.
->>>
->>> I don't know if this is the right mailing list for that particular bit
->>> of software, but it at least seemed like a good place to start.  Thank
->>> you!
->>
->>
->> Supported properties are listed here:
->> https://help.github.com/articles/subversion-properties-supported-by-github/
->>
->> You'll need to ask GitHub to implement support for the svn:eol-style
->> property I expect.
-> 
-> Thanks for finding that!  That even has an 'ask a human' button, which
-> I expect is my next step.
-> 
->> Might be easier to just use Tortoise Git?
-> 
-> It may be!  But thanks for the responses anyway.
-Most text-files have been commited with LF:
-/tmp/ttt/sbml-test-suite> git ls-files --eol | grep "i/lf" | wc -l
-   10266
-Some have been commited with CRLF:
-/tmp/ttt/sbml-test-suite> git ls-files --eol | grep "i/crlf" | wc -l
-    1620
+Joshua Phillips <jphillips@imap.cc> writes:
 
+> I've found a case where git pull --rebase discards commits in my branch
+> if the remote-tracking branch was rewound (and the remote tracking
+> branch's reflog contains my branch's latest commit). This is due to
+> git-pull's usage of git merge-base --fork-point.
+>
+> On one hand, this behaviour might be correct since the remote repository
+> essentially removed that commit from master by 'reset --hard'. On the
+> other hand, I was surprised that git pull --rebase discarded a commit in
+> my branch.
 
-The whole repo deserves to be normalized and equipped with a .gitattributes file,
-see
+Yup, that sounds like a bad way to handle the situation.  After all,
+the upstream may have first accepted your first attempt, and then
+decided that it was premature and rewound it, expecting you to give
+an improved reroll.  But I also agree with you that it may be
+correct to drop it because the upstream already rejected it.
 
-https://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
-
+Since Git cannot tell between these two cases, we should play safer
+than what the current code does, I would think.
 
