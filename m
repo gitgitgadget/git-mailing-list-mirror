@@ -2,235 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17E131F859
-	for <e@80x24.org>; Mon, 22 Aug 2016 23:44:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7313D1F859
+	for <e@80x24.org>; Tue, 23 Aug 2016 00:04:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932864AbcHVXo2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Aug 2016 19:44:28 -0400
-Received: from mga06.intel.com ([134.134.136.31]:11778 "EHLO mga06.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756855AbcHVXnu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Aug 2016 19:43:50 -0400
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by orsmga104.jf.intel.com with ESMTP; 22 Aug 2016 16:43:45 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.28,562,1464678000"; 
-   d="scan'208";a="706791"
-Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.3.116])
-  by orsmga004.jf.intel.com with ESMTP; 22 Aug 2016 16:43:45 -0700
-From:   Jacob Keller <jacob.e.keller@intel.com>
+        id S932972AbcHWAEt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Aug 2016 20:04:49 -0400
+Received: from mail-ua0-f177.google.com ([209.85.217.177]:32923 "EHLO
+        mail-ua0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932457AbcHWAEs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Aug 2016 20:04:48 -0400
+Received: by mail-ua0-f177.google.com with SMTP id 74so218221086uau.0
+        for <git@vger.kernel.org>; Mon, 22 Aug 2016 17:04:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=IUqy5yUr1LSRJzpgLBEEyawXRa9XCq7MtlUMGK25GSs=;
+        b=xAPnAMbXU5VsUU09Ob2MoTelpbgBdMC0zKilv085DD7GpdcLs5admNpkWM212F0AjA
+         CSq4Qc5HXytHJWBBAWCwoQ/DMsCkDkKEYtJ6D9jrp3zJZ+kSPoA3y/ZYghhtqe8B69oZ
+         jkng+hLTU/QT+KdLvnrwB9B+W9bQT0/0TYEnknQ5zo80mRYNpM/Tb5rd8FPkrJ6YfvYR
+         kVFccFyIzeS1/6K20oGrHS7tVRIXPVIQk4wQd1dD7Wcx1j4aDAhqLx4v3yV+DFJLo959
+         5zbl7OJQmRRWI9/gCZtV4Gp/Qmz4myXgUao1npAsNCZVhg+q93hoO2ASBUjLBbVYzc+e
+         3wNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=IUqy5yUr1LSRJzpgLBEEyawXRa9XCq7MtlUMGK25GSs=;
+        b=UPrx/gdqYhslZqH8VreCx4OmwbQVgpmphb9xTwTtR5pC1tiPwLq1UTwaHp6nNHdsWQ
+         bmDTijTuFPNWE6lWzEpUOkw0np2ZKV11EnkXZyeThTAbZi7yiSo54fBwf5CGLt8ica+H
+         NZYR6r1MbManbtBtYr28YS/ErvE5rQ0N833t4q/GHTB1ILPRsOT+BC+W+5kEjaKMvMXv
+         Bp/aUYMPfYgAZqoLtboj/gmVFat9yx25LB08fco5I+vh64U5kyjSJtwWCZYu0U7QH2qk
+         2FOGXY1aBxshuBr6PoUky2YrRX8wOqQFKrPRmFsyYR2lZ6QFGAEJNzAVvrtKRgT38tEf
+         ZU5w==
+X-Gm-Message-State: AEkoousZm/H7ny7grZkBtKi7zxD8AbiuP7a2NmMFWFBYYUvgs4RZ0GnFwbr/NLEKbQCGIrmDvSIDo1Tm79jeig==
+X-Received: by 10.31.176.134 with SMTP id z128mr13072639vke.86.1471910687685;
+ Mon, 22 Aug 2016 17:04:47 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.103.85.4 with HTTP; Mon, 22 Aug 2016 17:04:47 -0700 (PDT)
+In-Reply-To: <CAHLmBr2CRzt58RB+_YmnXcyost-R5=Ff51tALf1xh0kGk+frDw@mail.gmail.com>
+References: <CAHLmBr2CRzt58RB+_YmnXcyost-R5=Ff51tALf1xh0kGk+frDw@mail.gmail.com>
+From:   Lucian Smith <lucianoelsmitho@gmail.com>
+Date:   Mon, 22 Aug 2016 17:04:47 -0700
+Message-ID: <CAHLmBr1JHjjp66Er-2e6Yu+3zjrhT82Da-O8fj6_OoPtEPz8eg@mail.gmail.com>
+Subject: Re: git-svn bridge and line endings
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH v10 8/9] submodule: refactor show_submodule_summary with helper function
-Date:   Mon, 22 Aug 2016 16:43:43 -0700
-Message-Id: <20160822234344.22797-9-jacob.e.keller@intel.com>
-X-Mailer: git-send-email 2.10.0.rc0.259.g83512d9
-In-Reply-To: <20160822234344.22797-1-jacob.e.keller@intel.com>
-References: <20160822234344.22797-1-jacob.e.keller@intel.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jacob Keller <jacob.keller@gmail.com>
+I'm attempting to use the git-svn bridge, and am having problems with
+line endings on Windows.
 
-A future patch is going to add a new submodule diff format which
-displays an inline diff of the submodule changes. To make this easier,
-and to ensure that both submodule diff formats use the same initial
-header, factor out show_submodule_header() function which will print the
-current submodule header line, and then leave the show_submodule_summary
-function to lookup and print the submodule log format.
+The setup is that we have a git repository on github, and I've checked
+out a branch on my Windows machine using Tortoise svn.  I make
+changes, commit them, and the branch is updated.  In general, this
+works fine.
 
-This does create one format change in that "(revision walker failed)"
-will now be displayed on its own line rather than as part of the message
-because we no longer perform this step directly in the header display
-flow. However, this is a rare case as most causes of the failure will be
-due to a missing commit which we already check for and avoid previously.
-flow. However, this is a rare case and shouldn't impact much.
+If this was just SVN, I could set the 'eol-style' for files to
+'native' to let it know to expect Windows/linux/mac line endings for
+particular files.  This seems to be handled in git by using the
+'.gitattributes' file instead.  Unfortunately, the git/svn bridge
+doesn't seem to be translate the information in the .gitattributes
+file to appropriate eol-style settings in SVN.  Checking out a file
+using SVN on Windows leaves me with a file without CRLF's, and if I
+check in a CRLF file, that's the way it goes into the repository.
+Differences in CRLF alone show up as 'real' differences that can be
+checked in, and, if this happens, this causes problems with other
+people's repositories.
 
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
- submodule.c | 115 +++++++++++++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 82 insertions(+), 33 deletions(-)
+Am I doing something wrong; is there another way to handle this; or
+can I file this as a bug report/feature request?
 
-diff --git a/submodule.c b/submodule.c
-index 422353ccf6cc..1fb753af3066 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -278,9 +278,9 @@ void handle_ignore_submodules_arg(struct diff_options *diffopt,
- 
- static int prepare_submodule_summary(struct rev_info *rev, const char *path,
- 		struct commit *left, struct commit *right,
--		int *fast_forward, int *fast_backward)
-+		struct commit_list *merge_bases)
- {
--	struct commit_list *merge_bases, *list;
-+	struct commit_list *list;
- 
- 	init_revisions(rev, NULL);
- 	setup_revisions(0, NULL, rev, NULL);
-@@ -289,13 +289,6 @@ static int prepare_submodule_summary(struct rev_info *rev, const char *path,
- 	left->object.flags |= SYMMETRIC_LEFT;
- 	add_pending_object(rev, &left->object, path);
- 	add_pending_object(rev, &right->object, path);
--	merge_bases = get_merge_bases(left, right);
--	if (merge_bases) {
--		if (merge_bases->item == left)
--			*fast_forward = 1;
--		else if (merge_bases->item == right)
--			*fast_backward = 1;
--	}
- 	for (list = merge_bases; list; list = list->next) {
- 		list->item->object.flags |= UNINTERESTING;
- 		add_pending_object(rev, &list->item->object,
-@@ -333,31 +326,23 @@ static void print_submodule_summary(struct rev_info *rev, FILE *f,
- 	strbuf_release(&sb);
- }
- 
--void show_submodule_summary(FILE *f, const char *path,
-+/* Helper function to display the submodule header line prior to the full
-+ * summary output. If it can locate the submodule objects directory it will
-+ * attempt to lookup both the left and right commits and put them into the
-+ * left and right pointers.
-+ */
-+static void show_submodule_header(FILE *f, const char *path,
- 		const char *line_prefix,
- 		struct object_id *one, struct object_id *two,
- 		unsigned dirty_submodule, const char *meta,
--		const char *del, const char *add, const char *reset)
-+		const char *reset,
-+		struct commit **left, struct commit **right,
-+		struct commit_list **merge_bases)
- {
--	struct rev_info rev;
--	struct commit *left = NULL, *right = NULL;
- 	const char *message = NULL;
- 	struct strbuf sb = STRBUF_INIT;
- 	int fast_forward = 0, fast_backward = 0;
- 
--	if (is_null_oid(two))
--		message = "(submodule deleted)";
--	else if (add_submodule_odb(path))
--		message = "(not initialized)";
--	else if (is_null_oid(one))
--		message = "(new submodule)";
--	else if (!(left = lookup_commit_reference(one->hash)) ||
--		 !(right = lookup_commit_reference(two->hash)))
--		message = "(commits not present)";
--	else if (prepare_submodule_summary(&rev, path, left, right,
--					   &fast_forward, &fast_backward))
--		message = "(revision walker failed)";
--
- 	if (dirty_submodule & DIRTY_SUBMODULE_UNTRACKED)
- 		fprintf(f, "%sSubmodule %s contains untracked content\n",
- 			line_prefix, path);
-@@ -365,11 +350,46 @@ void show_submodule_summary(FILE *f, const char *path,
- 		fprintf(f, "%sSubmodule %s contains modified content\n",
- 			line_prefix, path);
- 
-+	if (is_null_oid(one))
-+		message = "(new submodule)";
-+	else if (is_null_oid(two))
-+		message = "(submodule deleted)";
-+
-+	if (add_submodule_odb(path)) {
-+		if (!message)
-+			message = "(not initialized)";
-+		goto output_header;
-+	}
-+
-+	/*
-+	 * Attempt to lookup the commit references, and determine if this is
-+	 * a fast forward or fast backwards update.
-+	 */
-+	*left = lookup_commit_reference(one->hash);
-+	*right = lookup_commit_reference(two->hash);
-+
-+	/*
-+	 * Warn about missing commits in the submodule project, but only if
-+	 * they aren't null.
-+	 */
-+	if ((!is_null_oid(one) && !*left) ||
-+	     (!is_null_oid(two) && !*right))
-+		message = "(commits not present)";
-+
-+	*merge_bases = get_merge_bases(*left, *right);
-+	if (*merge_bases) {
-+		if ((*merge_bases)->item == *left)
-+			fast_forward = 1;
-+		else if ((*merge_bases)->item == *right)
-+			fast_backward = 1;
-+	}
-+
- 	if (!oidcmp(one, two)) {
- 		strbuf_release(&sb);
- 		return;
- 	}
- 
-+output_header:
- 	strbuf_addf(&sb, "%s%sSubmodule %s %s..", line_prefix, meta, path,
- 			find_unique_abbrev(one->hash, DEFAULT_ABBREV));
- 	if (!fast_backward && !fast_forward)
-@@ -381,16 +401,45 @@ void show_submodule_summary(FILE *f, const char *path,
- 		strbuf_addf(&sb, "%s:%s\n", fast_backward ? " (rewind)" : "", reset);
- 	fwrite(sb.buf, sb.len, 1, f);
- 
--	if (!message) /* only NULL if we succeeded in setting up the walk */
--		print_submodule_summary(&rev, f, line_prefix, del, add, reset);
--	if (left)
--		clear_commit_marks(left, ~0);
--	if (right)
--		clear_commit_marks(right, ~0);
--
- 	strbuf_release(&sb);
- }
- 
-+void show_submodule_summary(FILE *f, const char *path,
-+		const char *line_prefix,
-+		struct object_id *one, struct object_id *two,
-+		unsigned dirty_submodule, const char *meta,
-+		const char *del, const char *add, const char *reset)
-+{
-+	struct rev_info rev;
-+	struct commit *left = NULL, *right = NULL;
-+	struct commit_list *merge_bases = NULL;
-+
-+	show_submodule_header(f, path, line_prefix, one, two, dirty_submodule,
-+			      meta, reset, &left, &right, &merge_bases);
-+
-+	/*
-+	 * If we don't have both a left and a right pointer, there is no
-+	 * reason to try and display a summary. The header line should contain
-+	 * all the information the user needs.
-+	 */
-+	if (!left || !right)
-+		goto out;
-+
-+	/* Treat revision walker failure the same as missing commits */
-+	if (prepare_submodule_summary(&rev, path, left, right, merge_bases)) {
-+		fprintf(f, "%s(revision walker failed)\n", line_prefix);
-+		goto out;
-+	}
-+
-+	print_submodule_summary(&rev, f, line_prefix, del, add, reset);
-+
-+out:
-+	if (merge_bases)
-+		free_commit_list(merge_bases);
-+	clear_commit_marks(left, ~0);
-+	clear_commit_marks(right, ~0);
-+}
-+
- void set_config_fetch_recurse_submodules(int value)
- {
- 	config_fetch_recurse_submodules = value;
--- 
-2.10.0.rc0.259.g83512d9
+Thank you!
 
+-Lucian Smith
