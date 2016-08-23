@@ -1,101 +1,67 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: **
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=2.2 required=3.0 tests=BAYES_50,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID,
+	URIBL_SBL,URIBL_SBL_A shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A59D91FD99
-	for <e@80x24.org>; Tue, 23 Aug 2016 13:54:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4E7E1FD99
+	for <e@80x24.org>; Tue, 23 Aug 2016 14:32:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753904AbcHWNyv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Aug 2016 09:54:51 -0400
-Received: from mout.gmx.net ([212.227.17.21]:55241 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751214AbcHWNyu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2016 09:54:50 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MWwp6-1bfRFP2T4O-00Vu5V; Tue, 23 Aug 2016 15:54:03
- +0200
-Date:   Tue, 23 Aug 2016 15:54:01 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Duy Nguyen <pclouds@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        git-for-windows <git-for-windows@googlegroups.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [git-for-windows] Re: [ANNOUNCE] Git for Windows 2.9.3
-In-Reply-To: <CACsJy8A3tkMY-iLPCDj9sqB4HpAK_cxsUu5Z7fsGcCQEORyxUg@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1608231553030.4924@virtualbox>
-References: <alpine.DEB.2.20.1608131214070.4924@virtualbox> <xmqqshu8u0px.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608171507530.4924@virtualbox> <xmqqeg5nbehc.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608181022250.4924@virtualbox>
- <CACsJy8A3tkMY-iLPCDj9sqB4HpAK_cxsUu5Z7fsGcCQEORyxUg@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:3NabwPT2n/J0FJ+cUyrbfpVMZz9ppypwZiP++hmhdxkUczqbKfp
- ukaECFRKsHgPAgRrVOxEHvrK+ezizHrDo3mMx8q6u9FacKYSySyAAeJaONN1RxPbwGHoM8A
- h/oeYSW7vrTj75FLWjg4C/BwlxVYrHNZjtONvbYZsN3RGcg6LdcNqQQpMR7tpuoeqjd6C07
- q4lj1ep/tfVD9vUIz2lVw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ToBS/UdigfE=:hWGQTHKzldKgKW1dHse/uX
- 0t0yuC1RmV0TbiuKlgD9lv6srsy0GORJHrcwXRUrVyuf5YbiByruUDVoZB4bFAsZfi8iEFkfV
- 0Nz6KQpjEz68Zm8s3wRWzH8oEEfkKKxTM7a0FP85VL2JQItDALMmqG6K1Mdnd0PzMCmSLbxQw
- +rxlJIgLy5hdJssOBH0BcFxZMEzbUZjqWreE4yGPx3ApeQTJV7AtL1xDIIVZAt9i9O/bC3Ous
- mRxSKowIGFWlrKMhfBnM7bvfBOaBLQsyEJg7UqV1t04bnR5P71dBH/IsPvk6X2PgOPf15kDpQ
- k4pKhNER4C1uIew+vSNsOB3Kf3bk36/02BOZ0c9O36MBo/zWhSZy8yLB3EWmECiMijZUEaebg
- QuRNcV6VPBookGfUgzFNIMN0LKd8Hoz4r84hCLRTDIl+t+IvrJ7k9HvTxRxvfOym05/024pjf
- IJx0ZRF5W2IOnhY35/qreklgv2otvPDsQOt9B1/PtQRNY25ySyJZgnlWkR8phWFMzMc3i9YVf
- 3BI+cLWNQRiU+29WtLhry+oYZ0f0BMhrfe50oBHrEIkhoAcGnrrOsfqn0AZaT8tx4RwYAJZw8
- nvBHFCaSdVmRgch7kMI40t0jvoncjmwHil7g6BGMe8dwP7i7fkX5v7/qjQUeSz14vPR/r8uoS
- EPzmwDTCg9QRAXktg3PpY+zlQZ7EfSr5yBHECZbumhiZI5oKoUo7zFeGI1KzRRgR/k2ObqYpC
- nCtzbFQy2JJxBDZ7S+akCStKrQcXNQWIGjUy978Cjlg+4zutvc1ylmhF7CsA+7K9MMWfpwnpZ
- ncjl1de
+        id S1758141AbcHWOcC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Aug 2016 10:32:02 -0400
+Received: from 212bewlid.ni.net.tr ([95.173.184.212]:39622 "EHLO
+        server.palmiye.web.tr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758096AbcHWOcB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2016 10:32:01 -0400
+X-Greylist: delayed 5269 seconds by postgrey-1.27 at vger.kernel.org; Tue, 23 Aug 2016 10:32:01 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=ofsahin.com
+        ; s=default; h=To:Date:Message-Id:Subject:Mime-Version:
+        Content-Transfer-Encoding:Content-Type:From:Sender:Reply-To:Cc:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=NSVeNFika/TWKTF0pwygO2o+HfFwzS8zhqiWPv68pNU=; b=nxluR+oh2nq/OY3G05r5ANQKPy
+        97VPcNzP85AG/Al+7UqBZWcmSiRbFplS67I6Onc/h7+jigKNAePcoF6izTiCHEHWrukINxqM5O8Os
+        uufIOpKlr76t0b43BFkWr2CkpdxnV03Cq8hzCpsJWS+/AULcoqrA5Xg8bEi8WFVx0cwpiIIO2/mP6
+        nToHCeb5FCiMK1B30U6r7jmQr+rNoGMOjRmoFwYIKajW9m3SH6Pwa/u30CiF4OljFeYCJuuilkjzx
+        HWga1bj6YiaXtpLR57ZCQSHjdiGOVYO5JafuflpllszVApx5zhK1LR+yWyScAPxZfiruwr0ZBkdXf
+        WYJMSVyg==;
+Received: from [88.242.48.79] (port=56624 helo=ofsahin.com)
+        by server.palmiye.web.tr with esmtpa (Exim 4.87)
+        (envelope-from <duncan_j_ferguson@ofsahin.com>)
+        id 1bcBMl-000620-RG
+        for git@vger.kernel.org; Tue, 23 Aug 2016 16:03:46 +0300
+From:   "Duncan Ferguson" <duncan_j_ferguson@ofsahin.com>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (1.0)
+Subject: hello git
+Message-Id: <57E1FEC9-FAEB-42D9-E32D-E971105A0592@ofsahin.com>
+Date:   Tue, 23 Aug 2016 13:03:43 +0000
+To:     "git" <git@vger.kernel.org>
+X-Mailer: iPhone Mail (12A405)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - server.palmiye.web.tr
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - ofsahin.com
+X-Get-Message-Sender-Via: server.palmiye.web.tr: authenticated_id: ofsahin/from_h
+X-Authenticated-Sender: server.palmiye.web.tr: duncan_j_ferguson@ofsahin.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Duy,
+good evening git
 
-On Mon, 22 Aug 2016, Duy Nguyen wrote:
 
-> On Thu, Aug 18, 2016 at 3:37 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > Hi Junio,
-> >
-> > On Wed, 17 Aug 2016, Junio C Hamano wrote:
-> >
-> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> >>
-> >> >> And then your "git cat-file" patch can be upstreamed with the option
-> >> >> renamed to (or with an additional synonym) "--filters", which would make
-> >> >> things consistent.
-> >> >
-> >> > Right. I would like to ask for a `--smudge` synonym nevertheless, just
-> >> > because I already use this. On the other hand, it is early enough to tell
-> >> > everybody who knows about this feature to change their invocation (anybody
-> >> > who would know about `--smudge` would be in that 1% of users that have
-> >> > read the release notes, so most likely would read the next release notes,
-> >> > too).
-> >>
-> >> It is OK if it were your private edition, but you end up hurting
-> >> your users if you need to redo the feature differently.
-> >
-> > Unfortunately, this is the situation of Git for Windows from its
-> > beginning: there has not been a single time that Git for Windows could
-> > live with unpatched upstream Git's source code.
-> >
-> > Business as usual, though.
-> 
-> Bug fixes is one thing, features is completely different.
+http://www.philadelphiadisabilityattorney.com/Germany.php?farmer=3Dfahvw17v=
+ge56g0g
 
-Oh? Completely?
 
-So the core.hideDotFiles feature should have forced me to rename Git for
-Windows to, say, DschoGit on Windows?
 
-Let's just stop here. This is getting too silly.
-
-Ciao,
-Dscho
+Duncan Ferguson
