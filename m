@@ -2,134 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92D451FD99
-	for <e@80x24.org>; Tue, 23 Aug 2016 21:27:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE5A71FD99
+	for <e@80x24.org>; Tue, 23 Aug 2016 21:29:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755601AbcHWV0s (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Aug 2016 17:26:48 -0400
-Received: from mail-it0-f43.google.com ([209.85.214.43]:35425 "EHLO
-        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755627AbcHWV0q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2016 17:26:46 -0400
-Received: by mail-it0-f43.google.com with SMTP id x131so173362182ite.0
-        for <git@vger.kernel.org>; Tue, 23 Aug 2016 14:26:23 -0700 (PDT)
+        id S1750899AbcHWV3K (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Aug 2016 17:29:10 -0400
+Received: from mail-yb0-f194.google.com ([209.85.213.194]:36409 "EHLO
+        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752864AbcHWV3J (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2016 17:29:09 -0400
+Received: by mail-yb0-f194.google.com with SMTP id f60so2871182ybi.3
+        for <git@vger.kernel.org>; Tue, 23 Aug 2016 14:28:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
+        d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=7zzSozWWfYmkkLPlL0gJmmgPB0XThfwuLXE2p/u7Flo=;
-        b=IYI/frywCoQ1z9tgSyN2BUbSO9xcLyLoNJtmJk69HI26OQiqFeeohAreyh2QB89/fx
-         L+xiPkC/IWMq0n7XqERSCH2VNfnId+omn/eCy0CZny4cbyCBla0RxUS63kzWr0t98Wuf
-         D9bPUw1rXVWbTqAFD6CK5jvmzet8isI9Jrea2BOo3ICzgOsZZMh1TsjQysKUzO4PO+AO
-         +GwfeOVYIybQfK7J43gUCbgSWWzZCxDBLQ+7K9cebhH1n806e6ynLZqb5zMGvhSSc5Ux
-         c2SE4a/+YcNJPVX4j7GHN3rcF3MCyzyVbEYlyHlb7KsHv7lgwEpiqiCenmoStOLJitmf
-         24QQ==
+        bh=HIMWhTvEGp16nM94zDa/K5+7sUUJ259SYcRKxtODbR0=;
+        b=NbXc4bTiqiH9UPNkRRmwCB9IIBvb1gu3Twy40jl8iKOe2pWq8CNbfs8FgGSG/MndkG
+         oI+d2qD9IembZL5cpNtO+/1TNUWp2k8CNK42rbn+Qhf8Wp0yTs/4qOpgmX5he7sYJFI+
+         7WL+kwzhpMooTIghUe0NKDSsq+bK+rMR0VycTrx1hAZdVUUuY8skc94vOx981dbgQmdO
+         wwXJiR0E6jL0bpbmFI2u37vpFgkLtIDwKEtbPk8Jc/0OBNS/uWySKrfs6JaM/g4GvEqj
+         ijStpEYzWYDLxcVoOAlPvPnv9SUdZqrsX9BU2NfPk278SY+Ln4vUAAf2aWQha2FQ2AtB
+         pFYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=7zzSozWWfYmkkLPlL0gJmmgPB0XThfwuLXE2p/u7Flo=;
-        b=Rv9lwQAUJYUtQDKleWebUZHyNpJYtq8bUJmQH4eIK07PcSpdFlFGlt1JvRb8Ipsx27
-         wWNS/ciq0Bypjn+7WZYCLnU8az6i0NUlAIp4OtZ/1ymU6jD/mZufpM20kfajikdvA5mQ
-         sHOAEYBk4hRtggkC2T8jmRBsUcDrv93Q2CPo2yO7tIoMmma/e6ZYCCcY82BTSGSg4Lye
-         8SyNVOApBSetbrxBRy6KJvKvCD0fM7+n30CxWUjQqafke/hIyWhq29nvb+N/NTQIO2Yl
-         JAI9IkOsay6fuyjlF+F6eBTOmFEQp2Pm2PLjy+7WkSrA4vqQsHSX1YozxpQ4/Q2I/LJz
-         JFyg==
-X-Gm-Message-State: AEkoouteMy5Uw8Ok9JlQU3Rvn2H1RIjwm400tCtSPC+2KBYJ2lZSDkQlhaY/1xtNRvtaW4R9IcXMNV4xK2QF4QH9
-X-Received: by 10.36.227.7 with SMTP id d7mr56567ith.97.1471987582736; Tue, 23
- Aug 2016 14:26:22 -0700 (PDT)
+        bh=HIMWhTvEGp16nM94zDa/K5+7sUUJ259SYcRKxtODbR0=;
+        b=PmTpffbu/khHEzFJoVqGh2w5IVg9De8VfPnPVYLNl9yy4q1Sx1oliHRVbuYp8CMC9r
+         HoyTg2FPfa7wYRsdFayuA4jKSzNITYzVkm8CJmSQ5zl01E6MA6347NzblGj2eHzpUYZm
+         TAPEMxgx9j/mWMyUR82QwqO45fFnSoiKJ59ADAzJtJ5bmhwZKhAO5e1hqyV983i7e2ck
+         0gf1rPneEza3ggusMxp+rjUVv6o5k684V2Tok66AUlBVUXra01UMcleUhDqZ2l54wFE4
+         uNIjY4Nb49zklvi/q7rsbCYtCD8r2tT/awBpIajitycysaKh1F9p5ZVz8y0MvBk/XJE6
+         0ZmQ==
+X-Gm-Message-State: AEkoouubB1GBn1QJs+SWe95/ctKwf0tW+XTsFP/bw2/bMkfaoN50QZQqq4RmJN9o9u/tpjW5+YJIWL/MbtuksQ==
+X-Received: by 10.37.42.71 with SMTP id q68mr10959119ybq.29.1471987702636;
+ Tue, 23 Aug 2016 14:28:22 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Tue, 23 Aug 2016 14:26:22 -0700 (PDT)
-In-Reply-To: <20160823203446.40abfd37@labs-064.localdomain>
-References: <20160823203446.40abfd37@labs-064.localdomain>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 23 Aug 2016 14:26:22 -0700
-Message-ID: <CAGZ79kbkyupBJfvyX3Hj_R5ZW36+3ufOnnLC-Dpic40nPJAxDA@mail.gmail.com>
-Subject: Re: Getting "The following submodule paths contain changes that can
- not be found on any remote" when they are in the remote
-To:     Leandro Lucarella <leandro.lucarella@sociomantic.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Received: by 10.37.50.199 with HTTP; Tue, 23 Aug 2016 14:28:02 -0700 (PDT)
+In-Reply-To: <xmqqinuruqpk.fsf@gitster.mtv.corp.google.com>
+References: <20160819234959.26308-1-jacob.e.keller@intel.com>
+ <xmqq37lvxx5o.fsf@gitster.mtv.corp.google.com> <xmqqinuruqpk.fsf@gitster.mtv.corp.google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Tue, 23 Aug 2016 14:28:02 -0700
+Message-ID: <CA+P7+xqSurMJG7+z7yZGxpfuYWAuoZggQ_09KLiPBAs5E6yxZA@mail.gmail.com>
+Subject: Re: [PATCH] format-patch: show 0/1 and 1/1 for singleton patch with
+ cover letter
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jacob Keller <jacob.e.keller@intel.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Josh Triplett <josh@joshtriplett.org>,
+        James Hogan <james.hogan@imgtec.com>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 23, 2016 at 11:34 AM, Leandro Lucarella
-<leandro.lucarella@sociomantic.com> wrote:
-> Hi, I'm getting very often, but not always, with many different
-> projects using submodules, the message:
+On Tue, Aug 23, 2016 at 2:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>>>      total = nr;
+>>> -    if (!keep_subject && auto_number && total > 1)
+>>> +    if (!keep_subject && auto_number && (total > 1 || cover_letter))
+>>>              numbered = 1;
+>>>      if (numbered)
+>>>              rev.total = total + start_number - 1;
 >
->   The following submodule paths contain changes that can
->   not be found on any remote:
->     <module>
+> Actually there is a very good reason why this patch is not good
+> (yet).  When the --cover option is not specified on the command
+> line, cover_letter is -1 (use configuration or turn it on only when
+> it is a multi-patch series) at this point.
 >
->   Please try
+> I think you would have noticed it if you ran any format-patch tests.
+> t/t4021-format-patch-numbered.sh fails at the very beginning.
 >
->         git push --recurse-submodules=on-demand
 
-Check if push.recurseSubmodules is set (in the project, globally,
-in the home dir?)
+Oops! Sorry for not running tests.
 
-    git config --list | grep push.recurseSubmodules
-
+> With the attached SQUASH, existing tests pass, which is a strong
+> sign that this new feature needs to be protected by a new test in
+> the t4021 script to make sure other people would not break it in the
+> future.
 >
->   or cd to the path and use
+
+I'll add a new test and squash your fix in.
+
+Thanks,
+Jake
+
+>  builtin/log.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
 >
->         git push
+> diff --git a/builtin/log.c b/builtin/log.c
+> index e50d361..b7bfeb9 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -1650,16 +1650,16 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+>                 /* nothing to do */
+>                 return 0;
+>         total = nr;
+> -       if (!keep_subject && auto_number && (total > 1 || cover_letter))
+> -               numbered = 1;
+> -       if (numbered)
+> -               rev.total = total + start_number - 1;
+>         if (cover_letter == -1) {
+>                 if (config_cover_letter == COVER_AUTO)
+>                         cover_letter = (total > 1);
+>                 else
+>                         cover_letter = (config_cover_letter == COVER_ON);
+>         }
+> +       if (!keep_subject && auto_number && (total > 1 || cover_letter))
+> +               numbered = 1;
+> +       if (numbered)
+> +               rev.total = total + start_number - 1;
 >
->   to push them to a remote.
->
->   fatal: Aborting.
->
-> This even happens after doing a:
->
-> git submodule deinit <module>
-> rm -fr <module>
-> rm -fr .git/modules/<module>
-> git submodule update --init
->
-> So I am getting the reference from the remote, but when pushing a new
-> change (that doesn't touch the submodules) I keep getting this error.
-
-So the submodule did not change, but you still get the error?
-That sounds like a bug.
-
-Can you provide a sample repository that demonstrates this bug?
-Maybe there are 'dangling' submodule pointers in past commits
-that trigger this problem?
-
->
-> I tried to get more information about why this is happening but I
-> couldn't. Googling didn't help either, so I'm resorting to ask here.
-
-If you are sure it is bug and not your fault, you can overwrite
-the push.recurseSubmodules setting locally in your repository
-to be "no" or "on-demand", see the git config documentation[1].
-
-[1] e.g. https://www.kernel.org/pub/software/scm/git/docs/git-config.html
-
->
-> I would also like to report a tiny bug, when using push --quiet, I do
-> get all the message above except for the <module> name, which is quite
-> confusing.
-
-This sounds like a second bug.
-
-See https://github.com/git/git/blob/master/transport.c#L767
-
-So there are a few issues:
-
-* the printf in the loop should be an fprintf(stderr,...)  for consistency.
-* die_with_unpushed_submodules that is called from transport_push
-  doesn't respect the transport->verbose setting.
-
-The second bug can be explained with these issues; the first one
-could hint at a bug in find_unpushed_submodules in submodule.c
-
-Thanks for reporting a bug!
-Stefan
+>         if (!signature) {
+>                 ; /* --no-signature inhibits all signatures */
