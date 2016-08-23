@@ -7,50 +7,50 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5B851FD99
-	for <e@80x24.org>; Tue, 23 Aug 2016 22:05:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 522441FD99
+	for <e@80x24.org>; Tue, 23 Aug 2016 22:13:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758214AbcHWWEv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Aug 2016 18:04:51 -0400
-Received: from mail-yw0-f181.google.com ([209.85.161.181]:35273 "EHLO
-        mail-yw0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757571AbcHWWEs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2016 18:04:48 -0400
-Received: by mail-yw0-f181.google.com with SMTP id j12so80832793ywb.2
-        for <git@vger.kernel.org>; Tue, 23 Aug 2016 15:04:48 -0700 (PDT)
+        id S1753490AbcHWWNN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Aug 2016 18:13:13 -0400
+Received: from mail-yb0-f175.google.com ([209.85.213.175]:34644 "EHLO
+        mail-yb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751640AbcHWWNM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2016 18:13:12 -0400
+Received: by mail-yb0-f175.google.com with SMTP id d10so55520877ybi.1
+        for <git@vger.kernel.org>; Tue, 23 Aug 2016 15:13:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=G+HMqLVLzGs1ds0iKNKLKXjrAo/gCeUmOfEKWBsFqYY=;
-        b=bxqErkc5FKoEuocmOzMAWD3Nue5rEdL/XPUv9oAdSxGV0cXlm2zLyOtpG1tmE7jlvx
-         u1MQXu9MYHz5eUTZi3SSKwFn2CQbXf5sJvlT0uMlX2PnDRqAgG9I1gCw101yhwi4vr4Y
-         p2vFj1gxzpknT1z6jA9MCRrBy6IpP7YcJzamopwZNUmP/jHghiuHUtxNX89lvR+O1Egs
-         8qb3owbJ8AkgRdlwU64Ajqc4EJk3IzR0G6/yi3htPoZUAKW1HZ1B7cBkiGeL5H2noALW
-         obtwZt3/pMD5N1EB4cE21Sc2bdUctlBF7RjSa0QQpCP7ZNlxA/rMYI8rCFdHaUQgmjRM
-         kOjw==
+        bh=zB0K744Cc3yH7wvzsgGwzE6OJ5h/8DNosSShdxHhKt4=;
+        b=sGlkdwQV9Yrvhobo3ITJnOSj1jOk1HvwOr2zQMyPpqAYH5E4HbEyXCm94fxvKJEX8f
+         F3twnyOEEvw57l06hxNClkpJVC6WbnZIcO8P2tpDQcNYYjsUIMVY7nu696PbseyJTc5H
+         0MaTm1DrOGzXLuMqwk+Lj8K1kfFxh/qtlsN0pHujxoWMfV78gsLSCN3bPaBGlCywXFT8
+         bXFGelWZ6/QSUS+P1FBHBkqyfH0v1+j+0K72z5VnvGsslZbTeVNrR6AEPlJzxJxzPqHz
+         VY4KPRO6CYcf3rbr8+mkhZVyWo3CpGs5rbb0+0GnvO55+x8Of8eSuTyeLZkwOHs82dAW
+         QbZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=G+HMqLVLzGs1ds0iKNKLKXjrAo/gCeUmOfEKWBsFqYY=;
-        b=UnYb0pKL8Tu8ToujD0DTM4W3IRGck4XNJ78NFLU4SENBCamMzZwin05OYZ03bQ9fO9
-         21+V8UCdkBJp5ty3ZElXTecrsMJLIk4i2h+/U32sRaaHWHJZY48XF9T17PTeNDRbQlnN
-         X7n/GwGyenXUoJ1q1lWcNTLnDKg5dEffRjHGWi2j677PTgLNJ0Nk0Xq26hUpQlHWztmv
-         AmxtRO2WO8BZxcf2ZfYvcw5NbF4VqZkJ8v2XxIQlE1L9v1Vvnuox0Q8iSq65c/JJvMBO
-         3ema7fJPhz13/0bQghIQNaCMFcm03Qd9/vzJVf5luXR78X4ZiWlyx3J1YVs0T+uriFka
-         gIRg==
-X-Gm-Message-State: AEkoouvS+UpX67b2GOE1rfnvgIQxYzeQRugmu1cPSvpVIP9t1+2Ttzuzzr8Sp+hGXrFSEylm9+IGDiYP7xvygA==
-X-Received: by 10.129.135.2 with SMTP id x2mr23735200ywf.310.1471989887701;
- Tue, 23 Aug 2016 15:04:47 -0700 (PDT)
+        bh=zB0K744Cc3yH7wvzsgGwzE6OJ5h/8DNosSShdxHhKt4=;
+        b=cU0Q2e4I+caLvQs2JuBpTuyNZL7HGgcYx+t3TsyQu8uUmgbcrrO+6n3fihSEBs4/Pa
+         I9arp8NMg+nV7BedPvtDkJKrkD5aBHIxrYNCYuPiXD9VE3qFZQkJm/O8yO7tlc6EfqeT
+         u9Hdqh4DbxKxon2312mGUZsQ9DRDGBLVBwQT0vSBs9CSI9MUmGU47C0ORlKrkUbs1m22
+         hVA5zHBhpv4B29jErGhS6ELiZMDcL9wpb7Qp8+nOwzBroQ3ihfHgU1/CQNUsy3UQ1DGJ
+         BAsy8BOt5voA+3xk0KMybbiRk8iO/SAUBicstXusOuTDUEJdm7sk5xud4/YZyA/7IZqD
+         +14Q==
+X-Gm-Message-State: AEkoousfQoRp/fHl4AR5zViRYODZh5gTW+UOc3tuE2skZD5IJqUoDPddlye2VCsWPIci6zZrvBQcuPNkB8hKMg==
+X-Received: by 10.37.19.132 with SMTP id 126mr13346589ybt.113.1471990391993;
+ Tue, 23 Aug 2016 15:13:11 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.37.50.199 with HTTP; Tue, 23 Aug 2016 15:04:27 -0700 (PDT)
-In-Reply-To: <20160815215327.15682-2-sbeller@google.com>
-References: <20160815215327.15682-1-sbeller@google.com> <20160815215327.15682-2-sbeller@google.com>
+Received: by 10.37.50.199 with HTTP; Tue, 23 Aug 2016 15:12:51 -0700 (PDT)
+In-Reply-To: <20160815215327.15682-4-sbeller@google.com>
+References: <20160815215327.15682-1-sbeller@google.com> <20160815215327.15682-4-sbeller@google.com>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 23 Aug 2016 15:04:27 -0700
-Message-ID: <CA+P7+xrm0ujjydLFzD2joGi=Gbg9ie__21qYrpfHM9g5hqm=EQ@mail.gmail.com>
-Subject: Re: [PATCHv5 1/8] t7408: modernize style
+Date:   Tue, 23 Aug 2016 15:12:51 -0700
+Message-ID: <CA+P7+xrorjJvOe=y9dipxgvTtVTVp98jz3ubCkmCMUfvAcf7xA@mail.gmail.com>
+Subject: Re: [PATCHv5 3/8] submodule--helper module-clone: allow multiple references
 To:     Stefan Beller <sbeller@google.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Git mailing list <git@vger.kernel.org>,
@@ -63,19 +63,11 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Mon, Aug 15, 2016 at 2:53 PM, Stefan Beller <sbeller@google.com> wrote:
-> No functional change intended. This commit only changes formatting
-> to the style we recently use, e.g. starting the body of a test with a
-> single quote on the same line as the header, and then having the test
-> indented in the following lines.
->
-> Whenever we change directories, we do that in subshells.
+> Allow users to pass in multiple references, just as clone accepts multiple
+> references as well.
 >
 
-I looked this over using -w to ignore whitespace changes, and it
-appears to have no functional changes. Much cleaner style overall, and
-easier to read the new file as it is now. The tests pass fine both
-before and after this commit, and I don't see anything that should
-functionally change the results.
+Straight forward and reasonable change.
 
-Thanks,
+Regards,
 Jake
