@@ -2,94 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D02D31FD99
-	for <e@80x24.org>; Tue, 23 Aug 2016 17:56:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 616C91FD99
+	for <e@80x24.org>; Tue, 23 Aug 2016 17:59:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752804AbcHWR4k (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Aug 2016 13:56:40 -0400
-Received: from mail-it0-f53.google.com ([209.85.214.53]:36643 "EHLO
-        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752302AbcHWR4j (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2016 13:56:39 -0400
-Received: by mail-it0-f53.google.com with SMTP id e63so162830705ith.1
-        for <git@vger.kernel.org>; Tue, 23 Aug 2016 10:55:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Opbd1wtVifPremjzPENcQwj8nYmrNR6AsZZMQZjQEyg=;
-        b=QYqUqtLRgd1BcldjsoqTXAnD8ZTZ+3mB3jZHR0xVM5E1KsQnSv1lxYqSxkvBGPM6T3
-         eXQMa9QhKniVsYfacsd+HOCc5OJm+AdZWezetIenKw419zHS+W56C3Ym23B9+dXr1gsu
-         5Cxe8g/+ceaip/sSmRGZVz5ZpyaKYGCz31ia455sPmBq2RtqgW9wyjoGMjfozcYs3Dgs
-         n8/bOEBnTAiP2X79OoPrXEL2UpC6G4ERPfI5O/lJWD3vC5FxEU6JrI3+PakKWsDoAGjc
-         kW/6ws+bY804aqZihT1GjDjs8O4accSNw/ezTDq4yqY4cVIDX+BOt/gGwh2t/uO9Ih/9
-         ++gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Opbd1wtVifPremjzPENcQwj8nYmrNR6AsZZMQZjQEyg=;
-        b=P/skCqcB/dxCp1qwS5UZ1oVcj1CAR5M5soH0AqcOE7DdpK0B0q84QxzL6+0Bh6xRaz
-         7LPcEeAmwHUkn30Gi78UjJyXq8Fy4mMnFClVGh7KGQ6SmkIaLtwgY9w7eyGx9Qz23KKu
-         uLfv7uWwo2eoaMugQV6ADCxJQzdNtiOnPDP52gpbgDEFMPYGyRGrsorGNC+JwnAO/waB
-         ZAxqEwu2/YE1VPXYN1lfMWN+MDn485ygEslEwmJE0/J3zQkgAHcozxHBktgOJG3flp9A
-         tsODdRsxqo99gIcgw92emI85/5sljDYR0VsLu3SPOqIKZQYHLehS4cbq/IlVPnSKviKi
-         zQZQ==
-X-Gm-Message-State: AEkoousXYc8IdoeTKH3nfSfoIOGXVuJIgedBJaqTbMAMKdJl4oMZoXxYGJ6yaxbe6eM/8NSLGuXgNzn/rvIRxPfo
-X-Received: by 10.36.127.7 with SMTP id r7mr27974208itc.49.1471974465861; Tue,
- 23 Aug 2016 10:47:45 -0700 (PDT)
+        id S1751465AbcHWR7P (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Aug 2016 13:59:15 -0400
+Received: from photon.quantumfyre.co.uk ([95.85.33.242]:38791 "EHLO
+        photon.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752305AbcHWR7O (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2016 13:59:14 -0400
+X-Greylist: delayed 1384 seconds by postgrey-1.27 at vger.kernel.org; Tue, 23 Aug 2016 13:59:13 EDT
+Received: from localhost (localhost [127.0.0.1])
+        by photon.quantumfyre.co.uk (Postfix) with ESMTP id 82D0F1B5BEB;
+        Tue, 23 Aug 2016 18:36:07 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at quantumfyre.co.uk
+Received: from photon.quantumfyre.co.uk ([127.0.0.1])
+        by localhost (photon.quantumfyre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+        with LMTP id AZq3bW-0cKgy; Tue, 23 Aug 2016 18:36:03 +0100 (BST)
+Received: from photon.quantumfyre.co.uk (localhost [127.0.0.1])
+        by photon.quantumfyre.co.uk (Postfix) with ESMTP id C12021B5BEA;
+        Tue, 23 Aug 2016 18:36:03 +0100 (BST)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Tue, 23 Aug 2016 10:47:45 -0700 (PDT)
-In-Reply-To: <xmqqlgznwg6o.fsf@gitster.mtv.corp.google.com>
-References: <20160822234344.22797-1-jacob.e.keller@intel.com>
- <CAGZ79kbKibe2RpQ9QWN1naY07feZLKbhc+dts3BD-4+y-pUOVw@mail.gmail.com> <xmqqlgznwg6o.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 23 Aug 2016 10:47:45 -0700
-Message-ID: <CAGZ79kbsq52Qh0Jtn5hpPPfHu_9r2CUHvAHOTh6Cgz8ODkzreg@mail.gmail.com>
-Subject: Re: [PATCH v10 0/9] submodule inline diff format
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-        Jacob Keller <jacob.keller@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 23 Aug 2016 18:36:03 +0100
+From:   Julian Phillips <julian@quantumfyre.co.uk>
+To:     Lucian Smith <lucianoelsmitho@gmail.com>
+Cc:     Eric Wong <e@80x24.org>, Alfred Perlstein <alfred@freebsd.org>,
+        git@vger.kernel.org, git-owner@vger.kernel.org
+Subject: Re: git-svn bridge and line endings
+In-Reply-To: <CAHLmBr3Yn1tVhijmgRwd8hyxgasdc2VtfNi6pYP5FbEHjjb3Vw@mail.gmail.com>
+References: <CAHLmBr2CRzt58RB+_YmnXcyost-R5=Ff51tALf1xh0kGk+frDw@mail.gmail.com>
+ <CAHLmBr1JHjjp66Er-2e6Yu+3zjrhT82Da-O8fj6_OoPtEPz8eg@mail.gmail.com>
+ <20160823030721.GA32181@starla>
+ <5e17164f-f669-70c2-de78-25287ab59759@freebsd.org>
+ <20160823055418.GA5990@whir>
+ <CAHLmBr3Yn1tVhijmgRwd8hyxgasdc2VtfNi6pYP5FbEHjjb3Vw@mail.gmail.com>
+Message-ID: <501dc45544c5582379df21a758d3be6c@quantumfyre.co.uk>
+X-Sender: julian@quantumfyre.co.uk
+User-Agent: Roundcube Webmail/1.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 23, 2016 at 10:25 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> I am not so sure about that.  If there is an existing place that is
-> buggy, shouldn't we fix that, instead of spreading the same bug
-> (assuming that it is a bug in the first place, which I do not have a
-> strong opinion on, at least not yet)?
->
-> Can there be .git/modules/<foo>/ repository that is pointed at an
-> in-tree .git file when there is no "name" defined?
+On 23/08/2016 17:14, Lucian Smith wrote:
+> Thanks for the quick responses!
+> 
+> My situation is that the git side is entirely whatever github.org is
+> running; presumably the latest stable version?  They provide a URL for
+> repositories hosted there that can be accessed by an SVN
+> client--somewhere on github is the 'git-svn bridge' (as I understand
+> it): something that receives SVN requests, translates them to
+> git-speak, and replies with what SVN expects.
 
-If you're holding it wrong we can come into that state.
-* Checkout the submodule,
-* then remove .gitmodules as well as relevant config in .git/config.
-Result: Then we have a only a gitlink recorded as well as connected
-working tree to a gitdir inside a superprojects .git/modules/.
+The ability to use a Subversion client is functionality provided by 
+GitHub, and not native to git itself.  So unless someone for the 
+appropriate GitHub team happens to read this thread I expect there isn't 
+much we can do to help.  I don't know if they've even provided any real 
+detail of how they implemented the bridge.
 
-> I thought we
-> errored out in module_name helper function in git-submodule.sh when
-> we need a name and only have path (I just checked in the maint-2.6
-> track); did we break it recently? submodule--helper.c::module_name()
-> seems to error out when submodule_from_path() fails to find one and
-> will segfault if it does not have name, so it is not likely.
+> There is indeed a .gitattributes file in the repository, but the SVN
+> client doesn't know what to do with it.  My hope was that something in
+> the bridge code, that translated SVN requests to git and back, could
+> take the SVN request, "Please give me this file; I'm on Windows" look
+> at the .gitattributes file in the repository, and hand out a file with
+> CR/LF's in it.  Conversely, when SVN tells git "Here is the new
+> version of the file to check in," the bridge could look at the file,
+> realize it had CR/LF's in it, look at the .gitattributes file to know
+> if it needed to be converted, and then convert it appropriately.
+> 
+> I can imagine a full-blown bridge that could even translate the SVN
+> EOL propset back and forth appropriately, but I'm not sure if going
+> that far is necessary and/or helpful.
+> 
+> I don't know if this is the right mailing list for that particular bit
+> of software, but it at least seemed like a good place to start.  Thank
+> you!
 
-The name is literally the only thing that is not optional in a struct submodule
-(see submodule-config.c:182 In lookup_or_create_by_name, these structs are
-added to the internal cache.
+Supported properties are listed here: 
+https://help.github.com/articles/subversion-properties-supported-by-github/
 
-Stepping back a bit, I think we'd want to document this expectation more
-in the man pages
-    The name unlike the path of a submodule must not be changed (as the
-    name is used internally to point at the submodules git dir)
+You'll need to ask GitHub to implement support for the svn:eol-style 
+property I expect.
+
+Might be easier to just use Tortoise Git?
+
+> -Lucian
+> 
+> On Mon, Aug 22, 2016 at 10:54 PM, Eric Wong <e@80x24.org> wrote:
+>> Alfred Perlstein <alfred@freebsd.org> wrote:
+>>> I hadn't anticipated there be to translation between svn props and
+>>> .gitattributes, it sounds a bit messy but possible, that said, is it
+>>> not possible to commit .gitattribute files to the svn repo?  Even in
+>>> FreeBSD land such small token files are permitted.
+>> 
+>> I'm not sure if an automatic translation is necessary or
+>> desired (because of a corruption risk).
+>> 
+>> Perhaps Lucian can clarify the situation for his repo.
+>> 
+>>> As far as documenting svn-properties, most of the properties are
+>>> used on the Subversion side either by subversion itself, or by
+>>> scripts in the subversion repository.  Perhaps a blurb "see the
+>>> subversion documentation and/or your local subversion
+>>> administrator's guide for properties and their uses." would suffice?
+>> 
+>> Yes, perhaps with a workable example Lucian can use today with
+>> any git v2.3.0 or later.
+>> 
+>> Thanks for the quick response!
+>> 
+>>> Opinions?  Happy to look into it.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+-- 
+Julian
