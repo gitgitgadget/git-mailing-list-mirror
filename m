@@ -7,206 +7,92 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 043CA206A1
-	for <e@80x24.org>; Tue, 23 Aug 2016 12:01:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FFC7205CF
+	for <e@80x24.org>; Tue, 23 Aug 2016 12:01:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758056AbcHWMAt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Aug 2016 08:00:49 -0400
-Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:54121
-        "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1758021AbcHWMAU (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 23 Aug 2016 08:00:20 -0400
+        id S1757983AbcHWL7K (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Aug 2016 07:59:10 -0400
+Received: from a7-19.smtp-out.eu-west-1.amazonses.com ([54.240.7.19]:51307
+        "EHLO a7-19.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1756699AbcHWL6S (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 23 Aug 2016 07:58:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1471953233;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=LgOnxr/oQfMgnwpEReb7V0wWqsp68CL+8gdUsvqBu74=;
-        b=eIANzAqCha6aQkyxfNC/ra3mKPvX7UOQdppb3j18MKFNYLyIhHMTb+4Y5lAyCoQS
-        foRzh9z+XQkgEBXTOvOKE2SXGOQFsqycg6zHdlPFZMvYuYsV4fpGin8T1zaAKfAahOy
-        wf8Ts+qPruycW39czUO+rsGr/W7l+onw1XeXtLCs=
+        bh=E0AtMOStXw9l9uEgAqdBGUJ4FFm9+ODALJIaMQv6HcY=;
+        b=aWTcR+7eG0w7F970JSPrVGdon7q+X94CAOX1B4vLMJhqzNCbcSF9JXuzSbNQv1nE
+        3iZ5D4GQJarxqllrb+yh41brTsJhhRu1LG9jv4zg8iMaYj7CjdF2JVBJoYcQKTYddPj
+        oDlz4t51EBwpeD09XmaHYQ6/gHM9VrFMFeWjNUu0=
 From:   Pranit Bauva <pranit.bauva@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <01020156b73fe69a-13136cfb-4daa-4f5d-9b56-537adf2c6942-000000@eu-west-1.amazonses.com>
+Message-ID: <01020156b73fe6c6-60f4f6c2-9c39-4840-bbbf-18902961d57f-000000@eu-west-1.amazonses.com>
 In-Reply-To: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
 References: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v14 07/27] bisect--helper: `bisect_reset` shell function in
- C
+Subject: [PATCH v14 15/27] bisect--helper: retire `--bisect-clean-state`
+ subcommand
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Date:   Tue, 23 Aug 2016 11:53:53 +0000
-X-SES-Outgoing: 2016.08.23-54.240.7.12
+X-SES-Outgoing: 2016.08.23-54.240.7.19
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Reimplement `bisect_reset` shell function in C and add a `--bisect-reset`
-subcommand to `git bisect--helper` to call it from git-bisect.sh .
-
-Using `bisect_reset` subcommand is a temporary measure to port shell
-functions to C so as to use the existing test suite. As more functions
-are ported, this subcommand would be retired but its implementation will
-be called by some other method.
-
-Note: --bisect-clean-state subcommand has not been retired as there are
-still a function namely `bisect_start()` which still uses this
+The `bisect-clean-state` subcommand is no longer used in the shell
+script while the C code uses `bisect_clean_state()` thus remove the
 subcommand.
 
 Mentored-by: Lars Schneider <larsxschneider@gmail.com>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 ---
- builtin/bisect--helper.c | 48 +++++++++++++++++++++++++++++++++++++++++++++++-
- git-bisect.sh            | 28 ++--------------------------
- 2 files changed, 49 insertions(+), 27 deletions(-)
+ builtin/bisect--helper.c | 9 ---------
+ 1 file changed, 9 deletions(-)
 
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index e50934c..9aba094 100644
+index ef7b3a1..e351794 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -3,17 +3,22 @@
- #include "parse-options.h"
- #include "bisect.h"
- #include "refs.h"
-+#include "dir.h"
-+#include "argv-array.h"
-+#include "run-command.h"
- 
- static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
- static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
- static GIT_PATH_FUNC(git_path_bisect_ancestors_ok, "BISECT_ANCESTORS_OK")
- static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
- static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
-+static GIT_PATH_FUNC(git_path_bisect_head, "BISECT_HEAD")
- 
+@@ -22,7 +22,6 @@ static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
  static const char * const git_bisect_helper_usage[] = {
  	N_("git bisect--helper --next-all [--no-checkout]"),
  	N_("git bisect--helper --write-terms <bad_term> <good_term>"),
- 	N_("git bisect--helper --bisect-clean-state"),
-+	N_("git bisect--helper --bisect-reset [<commit>]"),
- 	NULL
- };
- 
-@@ -84,12 +89,47 @@ static int write_terms(const char *bad, const char *good)
- 	return (res < 0) ? -1 : 0;
- }
- 
-+static int bisect_reset(const char *commit)
-+{
-+	struct strbuf branch = STRBUF_INIT;
-+
-+	if (!commit) {
-+		if (strbuf_read_file(&branch, git_path_bisect_start(), 0) < 1) {
-+			printf("We are not bisecting.\n");
-+			return 0;
-+		}
-+		strbuf_rtrim(&branch);
-+	} else {
-+		struct object_id oid;
-+		if (get_oid(commit, &oid))
-+			return error(_("'%s' is not a valid commit"), commit);
-+		strbuf_addstr(&branch, commit);
-+	}
-+
-+	if (!file_exists(git_path_bisect_head())) {
-+		struct argv_array argv = ARGV_ARRAY_INIT;
-+		argv_array_pushl(&argv, "checkout", branch.buf, "--", NULL);
-+		if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
-+			error(_("Could not check out original HEAD '%s'. Try "
-+				"'git bisect reset <commit>'."), branch.buf);
-+			strbuf_release(&branch);
-+			argv_array_clear(&argv);
-+			return -1;
-+		}
-+		argv_array_clear(&argv);
-+	}
-+
-+	strbuf_release(&branch);
-+	return bisect_clean_state();
-+}
-+
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
+-	N_("git bisect--helper --bisect-clean-state"),
+ 	N_("git bisect--helper --bisect-reset [<commit>]"),
+ 	N_("git bisect--helper --bisect-write <state> <revision> <TERM_GOOD> <TERM_BAD> [<nolog>]"),
+ 	N_("git bisect--helper --bisect-check-and-set-terms <command> <TERM_GOOD> <TERM_BAD>"),
+@@ -767,7 +766,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
  	enum {
  		NEXT_ALL = 1,
  		WRITE_TERMS,
--		BISECT_CLEAN_STATE
-+		BISECT_CLEAN_STATE,
-+		BISECT_RESET
- 	} cmdmode = 0;
- 	int no_checkout = 0;
- 	struct option options[] = {
-@@ -99,6 +139,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+-		BISECT_CLEAN_STATE,
+ 		BISECT_RESET,
+ 		CHECK_EXPECTED_REVS,
+ 		BISECT_WRITE,
+@@ -784,8 +782,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 			 N_("perform 'git bisect next'"), NEXT_ALL),
+ 		OPT_CMDMODE(0, "write-terms", &cmdmode,
  			 N_("write the terms to .git/BISECT_TERMS"), WRITE_TERMS),
- 		OPT_CMDMODE(0, "bisect-clean-state", &cmdmode,
- 			 N_("cleanup the bisection state"), BISECT_CLEAN_STATE),
-+		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
-+			 N_("reset the bisection state"), BISECT_RESET),
- 		OPT_BOOL(0, "no-checkout", &no_checkout,
- 			 N_("update BISECT_HEAD instead of checking out the current commit")),
- 		OPT_END()
-@@ -121,6 +163,10 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		if (argc != 0)
- 			die(_("--bisect-clean-state requires no arguments"));
- 		return bisect_clean_state();
-+	case BISECT_RESET:
-+		if (argc > 1)
-+			die(_("--bisect-reset requires either zero or one arguments"));
-+		return bisect_reset(argc ? argv[0] : NULL);
- 	default:
- 		die("BUG: unknown subcommand '%d'", cmdmode);
- 	}
-diff --git a/git-bisect.sh b/git-bisect.sh
-index f1202df..442397b 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -409,35 +409,11 @@ bisect_visualize() {
- 	eval '"$@"' --bisect -- $(cat "$GIT_DIR/BISECT_NAMES")
- }
- 
--bisect_reset() {
--	test -s "$GIT_DIR/BISECT_START" || {
--		gettextln "We are not bisecting."
--		return
--	}
--	case "$#" in
--	0) branch=$(cat "$GIT_DIR/BISECT_START") ;;
--	1) git rev-parse --quiet --verify "$1^{commit}" >/dev/null || {
--			invalid="$1"
--			die "$(eval_gettext "'\$invalid' is not a valid commit")"
--		}
--		branch="$1" ;;
--	*)
--		usage ;;
--	esac
--
--	if ! test -f "$GIT_DIR/BISECT_HEAD" && ! git checkout "$branch" --
--	then
--		die "$(eval_gettext "Could not check out original HEAD '\$branch'.
--Try 'git bisect reset <commit>'.")"
--	fi
--	git bisect--helper --bisect-clean-state || exit
--}
--
- bisect_replay () {
- 	file="$1"
- 	test "$#" -eq 1 || die "$(gettext "No logfile given")"
- 	test -r "$file" || die "$(eval_gettext "cannot read \$file for replaying")"
--	bisect_reset
-+	git bisect--helper --bisect-reset || exit
- 	while read git bisect command rev
- 	do
- 		test "$git $bisect" = "git bisect" || test "$git" = "git-bisect" || continue
-@@ -627,7 +603,7 @@ case "$#" in
- 	visualize|view)
- 		bisect_visualize "$@" ;;
- 	reset)
--		bisect_reset "$@" ;;
-+		git bisect--helper --bisect-reset "$@" ;;
- 	replay)
- 		bisect_replay "$@" ;;
- 	log)
+-		OPT_CMDMODE(0, "bisect-clean-state", &cmdmode,
+-			 N_("cleanup the bisection state"), BISECT_CLEAN_STATE),
+ 		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
+ 			 N_("reset the bisection state"), BISECT_RESET),
+ 		OPT_CMDMODE(0, "check-expected-revs", &cmdmode,
+@@ -827,11 +823,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 			die(_("--write-terms requires two arguments"));
+ 		res = write_terms(argv[0], argv[1]);
+ 		break;
+-	case BISECT_CLEAN_STATE:
+-		if (argc != 0)
+-			die(_("--bisect-clean-state requires no arguments"));
+-		res = bisect_clean_state();
+-		break;
+ 	case BISECT_RESET:
+ 		if (argc > 1)
+ 			die(_("--bisect-reset requires either zero or one arguments"));
 
 --
 https://github.com/git/git/pull/287
