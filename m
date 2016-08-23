@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E0D11FD99
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E5922018E
 	for <e@80x24.org>; Tue, 23 Aug 2016 16:07:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753830AbcHWQHj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Aug 2016 12:07:39 -0400
-Received: from mout.gmx.net ([212.227.17.22]:51402 "EHLO mout.gmx.net"
+        id S1753803AbcHWQHi (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Aug 2016 12:07:38 -0400
+Received: from mout.gmx.net ([212.227.17.20]:64917 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752958AbcHWQHQ (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1753283AbcHWQHQ (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 23 Aug 2016 12:07:16 -0400
 Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0Las1k-1as8u70eng-00kOwk; Tue, 23 Aug 2016 18:06:39
+ ESMTPSA (Nemesis) id 0MUTSJ-1blkl11d7T-00RLk0; Tue, 23 Aug 2016 18:07:12
  +0200
-Date:   Tue, 23 Aug 2016 18:06:36 +0200 (CEST)
+Date:   Tue, 23 Aug 2016 18:07:11 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 01/15] sequencer: lib'ify write_message()
+Subject: [PATCH 06/15] sequencer: lib'ify read_populate_todo()
 In-Reply-To: <cover.1471968378.git.johannes.schindelin@gmx.de>
-Message-ID: <6dc5e927cbdd1847db5b6cd75041609dd1e1f76d.1471968378.git.johannes.schindelin@gmx.de>
+Message-ID: <0de75bbce8ade0c6e5cf87d3647faa71a89c6275.1471968378.git.johannes.schindelin@gmx.de>
 References: <cover.1471968378.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:FTrmXm2tmgjGbdVETJoU/zjsBSle88FjTkxzWKd4NI1pQk/XlKJ
- RSPGd9usfV61WR/NOfIX7byDzpvPw5+NngUZ+pfhTK6rMjqSfGNbu0qC18pJKAw7DUGvtk0
- hWkxPXA+Ul4+nf9/A7gGkrizbaPlvsg1MyGRb7PD1TqNnj3MA2DSSPg1GbqkGNizyIXlpAL
- 065ADci9SCoV/VWHM4/+g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:lMSK8gJ7vYY=:eSVFaq72/6iT9RmVLODEWT
- osgVTfe1QHxvhfHKtVf8DpXjv94l1EsmAqapc8DwCSrz7dmzJZZaKzPaUgqHi/ZW7LmCB38fS
- x2MyVqsM+Yx2tEhKpu6UHYS1Pz1/mv+OkdakAgunYTXW/G488jqudY1MF8ywyr99TbN04Ho6f
- BypP4jQ44VmTy1nTUtAMSvGyqvLFtuU+Px8xX5gFpVn/zTl1GXBzFdUt92szAB9jNLEmOiwRE
- 12SqHbjPAKQVYYA8lfrN3iD8aNFKFiSTzFNxa8+udbzu+txVtvISrR3swBvpsYddnxMYJltti
- GHF959//6UK5e+MO9ijmE7ArL3hQ5HQpu1JaduOro8K2+AhfudjwtrPph0rO4z1vjVBtmXhFp
- XrKWnTgUa/Ecctxo9dBwzxFGtwbY2uGKLavuJ/yYrJJW98LMQvnbzwGPWE+9BWVprgBKxmUQR
- Jnw2bEswshEHyXhJJhp1ahESB0c7g8gSmkBjKFLVxEidbZS5ePdyf8z1OZF0jHoZ34FrfBavO
- kmvohertSZTM26Bb1ZNAzdoHz76kyEXUNuP3XHbbqqiCCp8vUkbvmVbBS9myUu8keQe1f9F+t
- ikTFSd22ZrkkdIXxlu7w3WCH9UkGj88JEI3CGs0HWz6MHxmUIH13QUbrzUCpsGAH3hQfmfNqR
- ekYQtdFnejFSkEjIApjky1bVixoboD2PhKUNr3Q1ozIJx2Qh0j/U8qDJy+NgZW35gVblcl4gt
- fpK5twTc0uVyLL2kEEc+YahEiCRMFlo1PaVFBklMjpnNcealLFpRfqfoh0XgnqlEFPREY8Uk7
- Ja+qMfH
+X-Provags-ID: V03:K0:4fby13CTU4xuvRWPXulLYCXe/hGtquzAj6sdTlGWhnB8fksxem3
+ Oj8yUDydiI88cnZHxtc2RzVQW9XpNTUiLHSc1mDgP0VIx2NL/EHvVm9n9QBC6zY/CDEvBr5
+ w3hbFphkXGHOPc7yYOxi8B6yKfcF+Rt2zHrq2AHTB5mQtE2QIyFHr/s36jd9TEURh+jfR8h
+ W6DaaCQfCxXbHqrgGv5AQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Hw/wHnJNpWs=:1lxXZFE+U/XoBMnRsbPWzi
+ bKjwXEPJ4XnSutGGeJJR1El1utUl6KACywmLJp7frxh7u66V5BOCIKesnnvCKwktvmGmURM4h
+ 0bXch77Q1uEtc1hZ0IWiV/qTWlDCj31LHPehrZne97ZOoeUJa2PHNTuNlqUrhuSot7biqPmmp
+ u+OMDuqG3XtsIOIpqSZfEba38kr/RuOd9iKpNAahVcfehd5HjY1XsJGN87P63vAh29Qi0NL1t
+ Y0N9cPt6MKwxe0Gg4opbUNrjeSTLwS9hM05p3/eismfuQTQPAfjdIBJEzDz+D8zL0bwwtiNpr
+ nPPtm/yPxpd9bwKuLZWjG+AWOSFnPqmKnf0SOdgY+9y516mCwOuR1ZrihUM8H9aKVP7pUyGls
+ Tvee+O7jve9SzMjkHKNxCDzbSO2q24GDO3r7qGnZejUOkG6EgvTeq5GXzHnaikFP3bYUyrImF
+ 70hwnOgUMkjyLhHbOp4a5Lj80TC6ibeXiti3ytTXxw0/plUYuliGPV/8Y3aeBUEqV/f3WppP5
+ T8fBV0+AUx7GQX7yWNgQro1QUJn5530/BwMC8E9aoRkhcMCetamJ9SMdSdm/9VevdvmE8j+u7
+ 1WuceWy1bYfphXJFhu764jWxuofv8OL25G+/44ye6VovigC5mn9GtpW/DfzncudpwcujuKlxD
+ tq7WeL5bfV/xgBvbxu9DgVBGV/yuTvEDV+XRmVivqbg9GgDa1oYc87aQg/HSbIk7xCDDHsLeJ
+ //i2jUtIz+fSmJu7u6UPulreN7zafBOMDmA9mnRUNprOjYk3vr9zvS7JBoSCGx0vwpjOJ/AOQ
+ w8q2Bos
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,59 +58,57 @@ an error.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ sequencer.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 2e9c7d0..c75296c 100644
+index a8c3a48..5f6b020 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -180,17 +180,20 @@ static void print_advice(int show_hint, struct replay_opts *opts)
- 	}
+@@ -746,7 +746,7 @@ static int parse_insn_buffer(char *buf, struct commit_list **todo_list,
+ 	return 0;
  }
  
--static void write_message(struct strbuf *msgbuf, const char *filename)
-+static int write_message(struct strbuf *msgbuf, const char *filename)
+-static void read_populate_todo(struct commit_list **todo_list,
++static int read_populate_todo(struct commit_list **todo_list,
+ 			struct replay_opts *opts)
  {
- 	static struct lock_file msg_file;
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -754,18 +754,21 @@ static void read_populate_todo(struct commit_list **todo_list,
  
--	int msg_fd = hold_lock_file_for_update(&msg_file, filename,
--					       LOCK_DIE_ON_ERROR);
-+	int msg_fd = hold_lock_file_for_update(&msg_file, filename, 0);
-+	if (msg_fd < 0)
-+		return error_errno(_("Could not lock '%s'"), filename);
- 	if (write_in_full(msg_fd, msgbuf->buf, msgbuf->len) < 0)
--		die_errno(_("Could not write to %s"), filename);
-+		return error_errno(_("Could not write to %s"), filename);
- 	strbuf_release(msgbuf);
- 	if (commit_lock_file(&msg_file) < 0)
--		die(_("Error wrapping up %s."), filename);
-+		return error(_("Error wrapping up %s."), filename);
-+
+ 	fd = open(git_path_todo_file(), O_RDONLY);
+ 	if (fd < 0)
+-		die_errno(_("Could not open %s"), git_path_todo_file());
++		return error(_("Could not open %s (%s)"),
++			git_path_todo_file(), strerror(errno));
+ 	if (strbuf_read(&buf, fd, 0) < 0) {
+ 		close(fd);
+ 		strbuf_release(&buf);
+-		die(_("Could not read %s."), git_path_todo_file());
++		return error(_("Could not read %s."), git_path_todo_file());
+ 	}
+ 	close(fd);
+ 
+ 	res = parse_insn_buffer(buf.buf, todo_list, opts);
+ 	strbuf_release(&buf);
+ 	if (res)
+-		die(_("Unusable instruction sheet: %s"), git_path_todo_file());
++		return error(_("Unusable instruction sheet: %s"),
++			git_path_todo_file());
 +	return 0;
  }
  
- static struct tree *empty_tree(void)
-@@ -564,16 +567,16 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
- 					 head, &msgbuf, opts);
- 		if (res < 0)
- 			return res;
--		write_message(&msgbuf, git_path_merge_msg());
-+		res |= write_message(&msgbuf, git_path_merge_msg());
- 	} else {
- 		struct commit_list *common = NULL;
- 		struct commit_list *remotes = NULL;
+ static int populate_opts_cb(const char *key, const char *value, void *data)
+@@ -1015,7 +1018,8 @@ static int sequencer_continue(struct replay_opts *opts)
+ 	if (!file_exists(git_path_todo_file()))
+ 		return continue_single_pick();
+ 	read_populate_opts(&opts);
+-	read_populate_todo(&todo_list, opts);
++	if (read_populate_todo(&todo_list, opts))
++		return -1;
  
--		write_message(&msgbuf, git_path_merge_msg());
-+		res = write_message(&msgbuf, git_path_merge_msg());
- 
- 		commit_list_insert(base, &common);
- 		commit_list_insert(next, &remotes);
--		res = try_merge_command(opts->strategy, opts->xopts_nr, opts->xopts,
-+		res |= try_merge_command(opts->strategy, opts->xopts_nr, opts->xopts,
- 					common, sha1_to_hex(head), remotes);
- 		free_commit_list(common);
- 		free_commit_list(remotes);
+ 	/* Verify that the conflict has been resolved */
+ 	if (file_exists(git_path_cherry_pick_head()) ||
 -- 
 2.10.0.rc1.99.gcd66998
 
