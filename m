@@ -2,95 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FF2E1FD99
-	for <e@80x24.org>; Tue, 23 Aug 2016 18:09:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 144081FD99
+	for <e@80x24.org>; Tue, 23 Aug 2016 18:17:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754733AbcHWSJw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Aug 2016 14:09:52 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53357 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754241AbcHWSJv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2016 14:09:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2839036979;
-        Tue, 23 Aug 2016 14:02:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=98LWbIB9yWlhFicVmUn0iH+ROfQ=; b=rLge7e
-        xXrgQCYPCR+wVdniXPkZhTtDllaP0l0MGDBMyYdhswku77VcIkPL0Ma2ux+vv6RT
-        +9/wCfbJVW3VAT3eiE2qI/M5rbHgjP/jsBV7avZjnqI89MxzZQc7SnWtR2yh2k+t
-        y0gFeOtsW8wp4TZRtK09CwF8ZqMyhHL3rieNY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UsJPItF+J/2OPdkyvB2+AtAQVGQHWWfK
-        byAevWUdl0/Mjhw8NA68IF3/Maa+F+SxG+8h801abr+1W8qyaRW9Nt3h+FxMm/lS
-        HGyI/Aq6fVGdfAZdHLmLZxb1sLZ5yLBsBIJZTAe2PRPMQSUObzJxDCN+mcpoje2I
-        bqNXUmzqC2I=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1F29B36978;
-        Tue, 23 Aug 2016 14:02:56 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8BCE736976;
-        Tue, 23 Aug 2016 14:02:55 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     David Glasser <glasser@davidglasser.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] doc: mention `git -c` in git-config(1)
-References: <CAN7QDo+S21T=1zjBEM7rq3epzvVx7GhmTZ5+sgV0BPvNYhvvUg@mail.gmail.com>
-Date:   Tue, 23 Aug 2016 11:02:53 -0700
-In-Reply-To: <CAN7QDo+S21T=1zjBEM7rq3epzvVx7GhmTZ5+sgV0BPvNYhvvUg@mail.gmail.com>
-        (David Glasser's message of "Tue, 23 Aug 2016 10:33:21 -0700")
-Message-ID: <xmqqd1kzwegi.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1753729AbcHWSRK convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 23 Aug 2016 14:17:10 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1]:49737 "EHLO smtp1-g21.free.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752410AbcHWSRJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2016 14:17:09 -0400
+Received: from cayenne.localnet (unknown [IPv6:2a01:e35:2ef1:f910:86a6:c8ff:fe05:d3e0])
+        by smtp1-g21.free.fr (Postfix) with ESMTPS id 7CFE9B0055E;
+        Tue, 23 Aug 2016 18:16:32 +0200 (CEST)
+From:   =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jiang Xin <worldhello.net@gmail.com>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        Marco Paolone <marcopaolone@gmail.com>,
+        Changwoo Ryu <cwryu@debian.org>,
+        Marco Sousa <marcomsousa@gmail.com>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Nelson Martell <nelson6e65@gmail.com>,
+        Brian Gesiak <modocache@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [L10N] Kickoff of translation for Git 2.10.0 round 1
+Date:   Tue, 23 Aug 2016 20:16:52 +0200
+Message-ID: <6452157.Plx3AU2iJW@cayenne>
+User-Agent: KMail/5.2.3 (Linux/4.6.0-1-amd64; KDE/5.23.0; x86_64; ; )
+In-Reply-To: <xmqqoa4jxyrk.fsf@gitster.mtv.corp.google.com>
+References: <CANYiYbGL+GVRNuhszp1UShaN_oJgm3netsQxZfbW74pVK0gOYQ@mail.gmail.com> <4016813.pOBvC7ZxlR@cayenne> <xmqqoa4jxyrk.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D14DEC2E-695B-11E6-B60D-E86612518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset="iso-8859-1"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-David Glasser <glasser@davidglasser.net> writes:
+On mardi 23 août 2016 08:58:55 CEST Junio C Hamano wrote:
 
-> Signed-off-by: David Glasser <glasser@davidglasser.net>
-> ---
->  Documentation/git-config.txt | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-> index f163113..83f86b9 100644
-> --- a/Documentation/git-config.txt
-> +++ b/Documentation/git-config.txt
-> @@ -263,6 +263,9 @@ The files are read in the order given above, with
-> last value found taking
+> > Let's cut it like this : first ten are literally translated, the following
+> > ones fall back to a general rule.
+> 
+> I actually once wrote "It is rare to squash dozens of commits into
+> one, so the first ten or dozen messages that spell the ordinals out
+> may be a good thing for readability", in the message you are
+> responding to, before realizing that the messages actually say
+> "1st", "2nd", etc., not "first", "second", etc., and scrapped that
+> part of the response.  I do not really see much point in forcing the
+> first ten to be translated differently.
 
-No need to resend but the above context line somehow got line-wrapped.
+In fact, taking some advance on the patch, I made the translations and used 
+full words in the translated language.
+By majority of repliers, let's just use a single sentence for each case "use" 
+or "skip". 
 
->  precedence over values read earlier.  When multiple values are taken then all
->  values of a key from all files will be used.
->
-> +You may override individual configuration parameters when running any git
-> +command by using the `-c` option. See linkgit:git[1] for details.
-> +
+Will rerun the patch set.
 
-This is not a new (as linkgit:git[1] also has it) but "override" is
-a white lie, and may invite nitpickers.  The -c var=val given from
-the "git" command line is merely tacked at the end of the search
-order, so it would "override" when the variable is used as a
-single-valued variable, but when it is used as multi-valued one, it
-does not.
-
-That might be something we want to fix up further in later patches;
-the change we see in this patch is good regardless.
-
-Thanks.
-
->  All writing options will per default write to the repository specific
->  configuration file. Note that this also affects options like `--replace-all`
->  and `--unset`. *'git config' will only ever change one file at a time*.
+JN
