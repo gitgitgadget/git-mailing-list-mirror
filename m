@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 533D01FD99
-	for <e@80x24.org>; Tue, 23 Aug 2016 22:18:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 444AE1FD99
+	for <e@80x24.org>; Tue, 23 Aug 2016 22:26:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753892AbcHWWSr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Aug 2016 18:18:47 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61610 "EHLO
+        id S1755808AbcHWW0R (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Aug 2016 18:26:17 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52019 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752974AbcHWWSq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2016 18:18:46 -0400
+        with ESMTP id S1753868AbcHWW0Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2016 18:26:16 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3721D37596;
-        Tue, 23 Aug 2016 18:18:45 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 963BB371C9;
+        Tue, 23 Aug 2016 18:26:15 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ASOhJc7HB1YRJZUazEO/aMLnSQk=; b=kiSwqd
-        LnLPO5wcCrXBaZ32naEjhd35D9NV18pi4Sz5+wFePTK8HJI4Un3P4oKF24msb82t
-        /+8ROq/s12lh1F4plWez+6q4V90QNa4eED6I0jccs+mNl94kQwk+3JccURCUfhal
-        zkX83hjyjqwch0rwSad3Fn7qH8pmEk0W20HVQ=
+        :content-type; s=sasl; bh=nOVAZ586PDoj+9m2oxE67ZT87vU=; b=PAEbvT
+        AFRF+U/6i6AquUQgfzpUvubUO2j+DCNa9xz6f+nk8bV+w+KFx0woI2qdMRDGBFZv
+        kZOlfymyd12owc4eyFnufEhfxOYp4gPMCrj63pJIZ0HKzZorfW8LAOrgTOsFq8FV
+        uzFfUH2XyL3TRmt1nB6/R9C6YPONMOOJP0qbc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=sS69uUd4L2aTLD9wRsmY6kazo2YgNUQh
-        qJAxUO7SLCtLVshvpKKW3SJ5RrbWo4LmfuIR0+Ummf08t3ys4XV9fOvpkPtPq/DX
-        azjht9EBLPN9uSuosumZFjomdzr2DHR3EcD1rYr9ZbCOTfOTJwfqPfRXEj2i2+dr
-        OlCd1+MXyo0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2F6A537590;
-        Tue, 23 Aug 2016 18:18:45 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=yPoNutUfDtNIeYFwPWN59sG0SbsPipeT
+        EghAPfPHw+0GPMrJzyKnUtQX1toB4SD7qtutYX+oLLHeUiasQSpAC7d/2BSTzJIJ
+        WnQksEuUkl4zN9KY19o6O1rRdo3YmGCDkjGRrsmBTCwRNZrUyXe7YsKILq4VOyJl
+        1oXOnEBIWb0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8F34C371C8;
+        Tue, 23 Aug 2016 18:26:15 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A05E23758E;
-        Tue, 23 Aug 2016 18:18:44 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 18972371C7;
+        Tue, 23 Aug 2016 18:26:15 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 5/7] delta_base_cache: drop special treatment of blobs
+Subject: Re: [PATCH 6/7] delta_base_cache: use hashmap.h
 References: <20160822215725.qdikfcaz3smhulau@sigill.intra.peff.net>
-        <20160822215956.kuqnucvfodxjrawn@sigill.intra.peff.net>
-Date:   Tue, 23 Aug 2016 15:18:42 -0700
-In-Reply-To: <20160822215956.kuqnucvfodxjrawn@sigill.intra.peff.net> (Jeff
-        King's message of "Mon, 22 Aug 2016 17:59:56 -0400")
-Message-ID: <xmqqshtvt9h9.fsf@gitster.mtv.corp.google.com>
+        <20160822220007.lh3wzv6orlupfjmr@sigill.intra.peff.net>
+Date:   Tue, 23 Aug 2016 15:26:13 -0700
+In-Reply-To: <20160822220007.lh3wzv6orlupfjmr@sigill.intra.peff.net> (Jeff
+        King's message of "Mon, 22 Aug 2016 18:00:07 -0400")
+Message-ID: <xmqqoa4jt94q.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 8E128E00-697F-11E6-9E50-E86612518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 9A8E2D6E-6980-11E6-8122-FCB17B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -59,40 +59,25 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> Let's run the same numbers without caring about object type
-> at all (i.e., one LRU list, and always evicting whatever is
-> at the head, regardless of type).
-> ...
-> So it seems like a clear winner, and that's what this patch
-> implements.
+> So while the value for that case _isn't_ as good as the
+> optimal one measured above (which was 2048 entries), given
+> the bouncing I'm hesitant to suggest that 2048 is any kind
+> of optimum (not even for linux.git, let alone as a general
+> rule). The generic hashmap has the appeal that it drops the
+> number of tweakable numbers by one, which means we can focus
+> on tuning other elements, like the LRU strategy or the
+> core.deltaBaseCacheLimit setting.
 >
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-
-Nice work.  You make your readers expect some clever data structures
-that may perform better than the obvious two-separate-list approach
-and end up using the simplest way.  Quite nice.
-
-
-
->  sha1_file.c | 8 --------
->  1 file changed, 8 deletions(-)
+> And indeed, if we bump the cache limit to 1G (which is
+> probably silly for general use, but maybe something people
+> with big workstations would want to do), the linux.git log-S
+> time drops to 3m32s. That's something you really _can't_ do
+> easily with the static hash table, because the number of
+> entries needs to grow in proportion to the memory limit (so
+> 2048 is almost certainly not going to be the right value
+> there).
 >
-> diff --git a/sha1_file.c b/sha1_file.c
-> index c02e785..33564d6 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -2175,14 +2175,6 @@ static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
->  			list_entry(lru, struct delta_base_cache_entry, lru);
->  		if (delta_base_cached <= delta_base_cache_limit)
->  			break;
-> -		if (f->type == OBJ_BLOB)
-> -			release_delta_base_cache(f);
-> -	}
-> -	list_for_each(lru, &delta_base_cache_lru) {
-> -		struct delta_base_cache_entry *f =
-> -			list_entry(lru, struct delta_base_cache_entry, lru);
-> -		if (delta_base_cached <= delta_base_cache_limit)
-> -			break;
->  		release_delta_base_cache(f);
->  	}
+> This patch takes that direction, and drops the static hash
+> table entirely in favor of using the hashmap.h API.
+
+Sounds very sensible.
