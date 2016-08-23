@@ -2,86 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F19202018E
-	for <e@80x24.org>; Tue, 23 Aug 2016 21:36:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1E6A1FD99
+	for <e@80x24.org>; Tue, 23 Aug 2016 21:43:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756056AbcHWVf4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Aug 2016 17:35:56 -0400
-Received: from mail-yb0-f194.google.com ([209.85.213.194]:34466 "EHLO
-        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755637AbcHWVfx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2016 17:35:53 -0400
-Received: by mail-yb0-f194.google.com with SMTP id g67so4131493ybi.1
-        for <git@vger.kernel.org>; Tue, 23 Aug 2016 14:35:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=wyqNADvLJuDSSwlVrmrD0RcDlpp+sPu8wxVW9FWO+Qw=;
-        b=GRpWG71w789UxsjafIhLKZScE8ONfo2DlJEdd+1Be9G7U+RyUCBoIPtCH7WGgRkwGX
-         YaEQHDqmjH9nhCT3xfTyxqeg15Li4KGLtOS/yqZZIz3IFltk2H9yvfYroSkRSEb95S/4
-         CV906XkuGaOFAfv6MB06wfkO0vrc90WRvC55m3Vv2zU6g8v/nUnF8E8aeCkhTOBjJXAD
-         y6AzVLVAGb+q2YUH+XP04ufZkjztJnJn+Vn0C7uYBywR0Id2HlCz6lOBQ5AvcfeiQa5R
-         F0bnSZeyUvlBMqVAUaSCFb2S0+iWCzsbYNtRNUc3Ls03+R1qn5Xznhdoma8v5g2GC+I+
-         q3Ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=wyqNADvLJuDSSwlVrmrD0RcDlpp+sPu8wxVW9FWO+Qw=;
-        b=TuEolsZvqL0JtCap40ETYUYpZ56Yd4GudNT5uvmYO9gJLJwSl8NEv/omqqq3Q4Cd2/
-         3mSaPFdgE/hTXK9QXKg1kwSscviL3lGUjhKYogfSL1/vqwnQp3hcHBbUYknh7A+HsqqS
-         htdeU96mgvuCViyjkwtkhtL4vxw3F7J7aeodkqj7Yd25eeB62VNnYxyQvykzMEDp6NI0
-         ZIizY50HQcNdarBzD0S6L8kfvdKBv3oMuGGmN5V7kSwkpiwGbzKQMDhCLoUToJYl6qpj
-         JuWzigQzJB3B0nQi/oXtU9gnSKMpIZdSnqtLI7Y2A3AbgoMfoQ9EwlkemmYEy+/ItXXY
-         4CRw==
-X-Gm-Message-State: AEkoouuiu6KyousKMmU4fkkgGKAJLvQNx162bNPOX672edbPNd9ymzBPbYl6+s4tnJ5mJ7i4n2ERtSs3O44elA==
-X-Received: by 10.37.162.42 with SMTP id b39mr15110514ybi.53.1471987453265;
- Tue, 23 Aug 2016 14:24:13 -0700 (PDT)
+        id S1754278AbcHWVnk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Aug 2016 17:43:40 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53451 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753964AbcHWVmp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2016 17:42:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 522F236AD8;
+        Tue, 23 Aug 2016 17:42:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=6qfF4u10O4+wGAjo/gBrR2ZjOUY=; b=vaZk7T
+        cSwWxtPoCqGrchxBrv3CqJB8QHNoDqLryRPa9x1E8BKJPEqLzWNE2kJzb01fFF/v
+        jvPmwCPzzQs3Kj5M6a1P7W/sZpLGDPTnhtKyGpUIV+Dea2vPHuoMyWz9lh9wLb8W
+        n7b32qThHFv3L4hy4LKANgDslt2144PweaG4w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=JIoA1+Frvs3S9OFeVR5rMiWEY2MmQXUu
+        EPhEvEMpTDYTd7KqtBxBrpKHVKhpC+UAM8rpiYWwKUyUY1CMTQcIIuMeJrW+L6ku
+        h8VDWMBLDRGHZ94ovsLXFQXI6o/IDvIZxcBW8yu6riOTiLI/BOH6/07ElHy5MTDg
+        +OZIlHJr9vE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4ABD436AD7;
+        Tue, 23 Aug 2016 17:42:37 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CD99036AD6;
+        Tue, 23 Aug 2016 17:42:36 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Michael J Gruber <git@drmicha.warpmail.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        git-for-windows <git-for-windows@googlegroups.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [git-for-windows] Re: [ANNOUNCE] Git for Windows 2.9.3
+References: <alpine.DEB.2.20.1608131214070.4924@virtualbox>
+        <xmqqshu8u0px.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1608171507530.4924@virtualbox>
+        <xmqqeg5nbehc.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1608181022250.4924@virtualbox>
+        <CACsJy8A3tkMY-iLPCDj9sqB4HpAK_cxsUu5Z7fsGcCQEORyxUg@mail.gmail.com>
+        <alpine.DEB.2.20.1608231553030.4924@virtualbox>
+        <2a6d2230-90ce-0f54-c7ae-a5aa595a2f73@drmicha.warpmail.net>
+        <alpine.DEB.2.20.1608231736180.4924@virtualbox>
+        <alpine.DEB.2.20.1608231758260.4924@virtualbox>
+        <xmqqzio3uw31.fsf@gitster.mtv.corp.google.com>
+Date:   Tue, 23 Aug 2016 14:42:34 -0700
+In-Reply-To: <xmqqzio3uw31.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Tue, 23 Aug 2016 12:25:06 -0700")
+Message-ID: <xmqqa8g3uppx.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.129.89.132 with HTTP; Tue, 23 Aug 2016 14:24:12 -0700 (PDT)
-In-Reply-To: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
-References: <01020156a48144f8-c0e127c1-8cd9-4295-ac16-449a54315cac-000000@eu-west-1.amazonses.com>
- <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
-From:   Pranit Bauva <pranit.bauva@gmail.com>
-Date:   Wed, 24 Aug 2016 02:54:12 +0530
-Message-ID: <CAFZEwPM6hDbiEVMbe_FakME4h_RNCopyzFcVLsF1PB=V=OheOA@mail.gmail.com>
-Subject: Re: [PATCH v14 01/27] bisect--helper: use OPT_CMDMODE instead of OPT_BOOL
-To:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 81F3E63C-697A-11E6-9958-FCB17B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey everyone,
+Junio C Hamano <gitster@pobox.com> writes:
 
-Sending a "cover letter" to this series.
+> One way to avoid that risk may be to release the new feature as
+> "experimental-and-subject-to-change", so that interested users on
+> Windows can actually try it out to see if the feature itself
+> (whatever its interface to them is) makes sense, and you can gauge
+> the value of upstreaming it, while cautioning these early adopters
+> that it has not fully been through the usual review process and may
+> have to change while becoming part of the official release.  This is
+> no different from various "experimental features" we unleash to the
+> wild, either via 'master' or keeping it in 'next' (we tend to do
+> more of the latter, marking "see if anybody screams").
 
-Changes with wrt v12[1] are:
+In case it was not clear, I am _not_ saying that the port to Windows
+must not ship with any feature that is not yet in the upstream (the
+same goes for a port to Macs, where it may want to do more about
+dealing with Unicode "normalization" gotchas).  The differences in
+platforms make it more likely that needs for certain things are felt
+earlier and more strongly on a particular platform, and shipping a
+new thing as an experimental feature to end-users may be the most
+effective way to come up with the best approach to help the users.
 
- * Rebased on v2.10-rc0
- * Two function signatures had changed while the topic
-    develop so changed those.
- * Correct the "mark for translation" messages properly as
-    I had previously used N_() in some places but I had to
-    actually use _().
- * In the patch 04/27[2], bisect_clean_state() is put in bisect.c
-   rather than builtin/bisect--helper.c because I will need it
-   further when porting bisect_next() function.
- * The patches from 14th are completely new to the series.
-    They port even more functions and remove some then unused
-    subcommands.
- * 14th patch[3] is a tricky one as it changes a lot of things. I am
-    not sure whether to put this all in one patch or split it.
-
-[1]: http://public-inbox.org/git/010201567675adc1-17e27495-6b36-40d1-836d-814da029fcc4-000000@eu-west-1.amazonses.com/
-[2]: http://public-inbox.org/git/01020156b73fe66f-bfad6316-39d4-4577-8f75-d1b4b2031263-000000@eu-west-1.amazonses.com/
-[3]: http://public-inbox.org/git/01020156b73fe6ce-3b204354-849b-40fd-93ff-2ebcf77df91c-000000@eu-west-1.amazonses.com/
-
-Regards,
-Pranit Bauva
