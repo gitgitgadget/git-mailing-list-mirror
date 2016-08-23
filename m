@@ -6,74 +6,102 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EAC091FD99
-	for <e@80x24.org>; Tue, 23 Aug 2016 19:29:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 799891FD99
+	for <e@80x24.org>; Tue, 23 Aug 2016 19:30:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754068AbcHWT3v (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Aug 2016 15:29:51 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57777 "EHLO
+        id S1754930AbcHWTaR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Aug 2016 15:30:17 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61480 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753204AbcHWT31 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2016 15:29:27 -0400
+        with ESMTP id S1754656AbcHWTaR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2016 15:30:17 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3DD23373F7;
-        Tue, 23 Aug 2016 15:29:02 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 203B93736C;
+        Tue, 23 Aug 2016 15:25:09 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=aAKou8MNoxdRBL3mBFbBFz3jcvE=; b=vZ0o1o
-        MRnz2zJZR55Qxzuz/LQwAY0MHwitecM7ge5VEIUGefbTkkULHWq6qaMzGKvq2aKd
-        yebAh9NCz0ayb0MyRJR+rjhYmeTWCb27cKQNTlCVrvrx7bzfzJ9fw4ZB4fTbQ81I
-        lzKwtupwHJvoDbLU0+6QTy9TVg8ANnR4tmOvI=
+        :content-type; s=sasl; bh=8z1APT5TdznHjIBgqUKGw3l066g=; b=nDVv1e
+        vsCO89zAMRG6/wBQBiBDc0w3fb4ORaBzVBQmehT9O67XQ1zZKNbQJyl7hJ9WPQPR
+        peltYOBLOPS4KURp1j16HQ0sdoRnJ7EWv4Bh/ORoFmGCfKHTcwwwsVW331ZzPxCk
+        Ivuamd+UuF+LyqjmY46SxCWu2+AtB7LrAx7vo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=txchcpGkmIn0WU8GBLGmbj0kXCAHRxNT
-        n0ESJ1HEAxVwvDy6sgo0jD+zCn7AisPiw1eyLI6B94LhzCY0qnmNMUeHOKDTUR/S
-        75Ao98VFPa5p/PJj0CRFE1k70bgRI3VCM2EBIb+QDs/hM83M417q+VVw8nwiQZQo
-        Il2U5K2zAJo=
+        :content-type; q=dns; s=sasl; b=HyQyROmQymaxyrOKByNzYI+x7vGQDfyx
+        lmvs+tL0aj49UWzfIDfAUa0yAPaw3JUcwSeP3eXey+/7fP1Cmddeg7VgI610c9Ep
+        +0fcG8/JxVDZ1aU1X7SurekfdEeOtDPtpXAZ/m1SWL8a6iGDT7s8d2cvynRerKYH
+        5eUySMZ8bzQ=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 364ED373F6;
-        Tue, 23 Aug 2016 15:29:02 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1724E37369;
+        Tue, 23 Aug 2016 15:25:09 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ACE8D373F5;
-        Tue, 23 Aug 2016 15:29:01 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8821C37364;
+        Tue, 23 Aug 2016 15:25:08 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Joshua Phillips <jphillips@imap.cc>
-Cc:     git@vger.kernel.org
-Subject: Re: Possible bug: git pull --rebase discards local commits
-References: <1471969497.3553135.703756633.0F6CCC4C@webmail.messagingengine.com>
-Date:   Tue, 23 Aug 2016 12:28:59 -0700
-In-Reply-To: <1471969497.3553135.703756633.0F6CCC4C@webmail.messagingengine.com>
-        (Joshua Phillips's message of "Tue, 23 Aug 2016 16:24:57 +0000")
-Message-ID: <xmqqvayruvwk.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Michael J Gruber <git@drmicha.warpmail.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        git-for-windows <git-for-windows@googlegroups.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [git-for-windows] Re: [ANNOUNCE] Git for Windows 2.9.3
+References: <alpine.DEB.2.20.1608131214070.4924@virtualbox>
+        <xmqqshu8u0px.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1608171507530.4924@virtualbox>
+        <xmqqeg5nbehc.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1608181022250.4924@virtualbox>
+        <CACsJy8A3tkMY-iLPCDj9sqB4HpAK_cxsUu5Z7fsGcCQEORyxUg@mail.gmail.com>
+        <alpine.DEB.2.20.1608231553030.4924@virtualbox>
+        <2a6d2230-90ce-0f54-c7ae-a5aa595a2f73@drmicha.warpmail.net>
+        <alpine.DEB.2.20.1608231736180.4924@virtualbox>
+        <alpine.DEB.2.20.1608231758260.4924@virtualbox>
+Date:   Tue, 23 Aug 2016 12:25:06 -0700
+In-Reply-To: <alpine.DEB.2.20.1608231758260.4924@virtualbox> (Johannes
+        Schindelin's message of "Tue, 23 Aug 2016 18:05:32 +0200 (CEST)")
+Message-ID: <xmqqzio3uw31.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: D88F20B4-6967-11E6-8AD5-FCB17B1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 4D9785FA-6967-11E6-93B2-FCB17B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Joshua Phillips <jphillips@imap.cc> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> I've found a case where git pull --rebase discards commits in my branch
-> if the remote-tracking branch was rewound (and the remote tracking
-> branch's reflog contains my branch's latest commit). This is due to
-> git-pull's usage of git merge-base --fork-point.
+> In case it is not crystal-clear, let me clarify one very important point.
+> It seems that some people mistake the work I do for something I do on a
+> whim. This is not so.
 >
-> On one hand, this behaviour might be correct since the remote repository
-> essentially removed that commit from master by 'reset --hard'. On the
-> other hand, I was surprised that git pull --rebase discarded a commit in
-> my branch.
+> The patch series that triggered this entire unfortunate discussion
+> introduced the --smudge option, which I have subsequently renamed to
+> --filters and submitted as a patch series to the Git project.
 
-Yup, that sounds like a bad way to handle the situation.  After all,
-the upstream may have first accepted your first attempt, and then
-decided that it was premature and rewound it, expecting you to give
-an improved reroll.  But I also agree with you that it may be
-correct to drop it because the upstream already rejected it.
+As the "--filters" is meant as a new feature, it will not land on
+the maintenance track.  It is very likely that it won't be in 2.10,
+so it won't appear in 2.10.x maintenance track, either.
 
-Since Git cannot tell between these two cases, we should play safer
-than what the current code does, I would think.
+I do not agree with Duy that the "port to Windows" needs a separate
+distinct name, though.  Having said that, aside from the issue of
+handling of bugreports has been already meantioned, which mostly
+costs for Git developers, whatever new feature you unleash ahead of
+upstream to your Windows port has cost to your end-users.  Its
+implementation or its external interface may have to change when you
+upstream the new feature that has already been in the field, and
+your end-users would have to adjust their scripts and/or muscle
+memory.
+
+One way to avoid that risk may be to release the new feature as
+"experimental-and-subject-to-change", so that interested users on
+Windows can actually try it out to see if the feature itself
+(whatever its interface to them is) makes sense, and you can gauge
+the value of upstreaming it, while cautioning these early adopters
+that it has not fully been through the usual review process and may
+have to change while becoming part of the official release.  This is
+no different from various "experimental features" we unleash to the
+wild, either via 'master' or keeping it in 'next' (we tend to do
+more of the latter, marking "see if anybody screams").
+
+
 
