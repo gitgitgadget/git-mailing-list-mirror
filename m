@@ -6,82 +6,68 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B477F1FD99
-	for <e@80x24.org>; Tue, 23 Aug 2016 16:28:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 574F11FD99
+	for <e@80x24.org>; Tue, 23 Aug 2016 16:30:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753578AbcHWQ2W (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Aug 2016 12:28:22 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56865 "EHLO
+        id S932423AbcHWQaO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Aug 2016 12:30:14 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60952 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752570AbcHWQ2V (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2016 12:28:21 -0400
+        with ESMTP id S932261AbcHWQaN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2016 12:30:13 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2420535752;
-        Tue, 23 Aug 2016 12:28:20 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5E4CE3546B;
+        Tue, 23 Aug 2016 12:30:12 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0ag14UM4ME8rF8HlZlZxriVl+S0=; b=LAeEqe
-        e7Py2gmHqkTeH/VZc7NDvDD/dXlbUtUwzvr4Rs1/5linDM9iZw657NICawu1EatC
-        Y+k62ry8dUpywSgndCKYyCRBQOPecYs7YMZffjocy3Ohh90+TGqIJ736aJ23b0yv
-        3gX67hBoqMWlDnRiDzeq9TyDpIkx74WSYbd+4=
+        :content-type; s=sasl; bh=7i7bBBGUm4etbxjd93sPpnhh9zk=; b=F3EHyn
+        b0e8oD2/YsoorMhKJtPXh7EPXUUWFVZrpd7sauc1Ymgc5cx0HF23aVHfDsudiMh9
+        mVqxNDQVSGDZApb4vDkxQ1ztaW0RTK++DDlFO6px57B4MJmdslnV15QSNIK1HyCW
+        pc+oSLKtUkRi8cmJUVujXyTHtLpzhGzeittkA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=jqF93212oDk1eoQMqZZTb41PXw5s0BBd
-        aQpUgOBKSQJbA8HvDvccqiBZtk/1nqpdt/dZzrdpn5FeCO4JSvnKR9Jklc4fGkRh
-        mRWMJzt98/qBmzapevAV+xUSQIFg+MRqhJO8BSOwbrc+ltUnher5CTQd8ogXz6+u
-        W2MObjHp6tY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1B53C3574B;
-        Tue, 23 Aug 2016 12:28:20 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=KP6JQXVj0xbDSNe/pbU1/kdjsij1TIZi
+        hIFeri+vJezeu/lgBbPZO5EMRHowAignk/Hlaw8/5xRQgn1aWc0SnIr0uBlZHlOu
+        IGBdncOAuz3XoKmZqsJcCNz1MUKt279tBHMVOv42bhmLJA+6EZ+qAkLhvefdMvlJ
+        f9/uUmLHOI0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 56C633546A;
+        Tue, 23 Aug 2016 12:30:12 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 926093574A;
-        Tue, 23 Aug 2016 12:28:19 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D870435469;
+        Tue, 23 Aug 2016 12:30:11 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v8 7/8] cache: add empty_tree_oid object
-References: <20160819000031.24854-1-jacob.e.keller@intel.com>
-        <20160819000031.24854-8-jacob.e.keller@intel.com>
-        <xmqqfuq01oww.fsf@gitster.mtv.corp.google.com>
-        <20160819205806.vxzzgphqf4lgdor7@sigill.intra.peff.net>
-Date:   Tue, 23 Aug 2016 09:28:17 -0700
-In-Reply-To: <20160819205806.vxzzgphqf4lgdor7@sigill.intra.peff.net> (Jeff
-        King's message of "Fri, 19 Aug 2016 16:58:06 -0400")
-Message-ID: <xmqqbn0jxxem.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git v2.10.0-rc1
+References: <xmqq7fbcz76b.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1608231538160.4924@virtualbox>
+Date:   Tue, 23 Aug 2016 09:30:09 -0700
+In-Reply-To: <alpine.DEB.2.20.1608231538160.4924@virtualbox> (Johannes
+        Schindelin's message of "Tue, 23 Aug 2016 15:39:45 +0200 (CEST)")
+Message-ID: <xmqq7fb7xxbi.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 9A32BBDC-694E-11E6-98CA-E86612518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: DD169D06-694E-11E6-8D8D-FCB17B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> I suspect we need more than just the "is_empty" query. At least for the
-> blob case, we do hashcpy() it into a struct (which should eventually
-> become oidcpy). The empty-tree case even more so, as we pass it to
-> random functions like lookup_tree().
+> On Fri, 19 Aug 2016, Junio C Hamano wrote:
 >
-> Our EMPTY_TREE_SHA1_BIN_LITERAL effectively ends up as a singleton
-> in-core, too; it's just handled transparently by the compiler, since
-> it's a literal. This effectively gives us _two_ singletons. We could do:
+>> [...]
+>>  * A new run-command API function pipe_command() is introduced to
+> ...
+> You probably want a '*' in front of this paragraph, too.
 >
->   const struct object_id empty_blob_oid = {
-> 	  "\xe6\x9d\xe2\x9b\xb2\xd1\xd6\x43\x4b\x8b"
-> 	  "\x29\xae\x77\x5a\xd8\xc2\xe4\x8c\x53\x91"
->   };
->   #define EMPTY_BLOB_SHA1_BIN (empty_blob_oid.hash)
+>>  * Squelch compiler warnings for netmalloc (in compat/) library.
 >
-> It's possible the use of an actual string literal lets the compiler do
-> more optimizations, but I'd doubt it matters in practice. Probably it is
-> just sticking that literal somewhere in BSS and filling in the pointer
-> to it.
+> s/netmalloc/nedmalloc/
 
-Makes sense; thanks.
+Thanks.
