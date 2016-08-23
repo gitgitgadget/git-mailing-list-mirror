@@ -2,132 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 829612018E
-	for <e@80x24.org>; Tue, 23 Aug 2016 16:14:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 343FA1FD99
+	for <e@80x24.org>; Tue, 23 Aug 2016 16:14:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753483AbcHWQOM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Aug 2016 12:14:12 -0400
-Received: from mout.gmx.net ([212.227.15.15]:50393 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753466AbcHWQOJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2016 12:14:09 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0Md3ZK-1buJJk0WW2-00I9ge; Tue, 23 Aug 2016 18:07:34
- +0200
-Date:   Tue, 23 Aug 2016 18:07:33 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 12/15] sequencer: lib'ify save_opts()
-In-Reply-To: <cover.1471968378.git.johannes.schindelin@gmx.de>
-Message-ID: <7768b55e65c771a5615a6f1209b40395dc705425.1471968378.git.johannes.schindelin@gmx.de>
-References: <cover.1471968378.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1753580AbcHWQO0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Aug 2016 12:14:26 -0400
+Received: from mail-ua0-f182.google.com ([209.85.217.182]:33246 "EHLO
+        mail-ua0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752359AbcHWQOZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2016 12:14:25 -0400
+Received: by mail-ua0-f182.google.com with SMTP id 74so253231011uau.0
+        for <git@vger.kernel.org>; Tue, 23 Aug 2016 09:14:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ZbuTKCLe8U1uBRQAJzAUuQAgzqU2oM6zobaylqyyLQE=;
+        b=Ex7jMp7C5B2hcl8VXC/0FoxISFD3OMKYJ2rzChXBZkTponeh61RgQRocquwJkzWA/v
+         8LL5URG2lGDMxi0l+cLf9BIaN8u2ZYsNk10y8WYg1qBv6mymdtwZ26BU/UGjIhgSY6jJ
+         mx5UG5xlD2EEShLpw+b/1+h8fhKRpryFnmYIJ+Vj6FzCoBueqvetzc33LoxZi7C1pRBY
+         sd0JZw2DQQA91oooePWMPdcf8C96A5311yvLQ68/+TYqHaCBin3Fp5390QDpTRpOGYAW
+         Tl68lM/k4eugyMdF8BjzSGzFKhgD3RDmdtcIL43ohxlLCgg2xyq/CitdUVogOKAKPPQO
+         KO4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ZbuTKCLe8U1uBRQAJzAUuQAgzqU2oM6zobaylqyyLQE=;
+        b=mNoVFP3DgdJlnp0+iM9bXCWE4xoC+jcR1xA5o+/USeOJGNq7bsgNEPHjvLTrSYkXNp
+         poExShqxrzHafPio9Hoy/iweYAlWKRJ58/AT9f+uiKR6ugsQN42raRW4CAsPyyN/XKlw
+         6yVi5qDPDsuoNZrQME/QQAIXJwSKTA6/LvnV51pm9Ncx9GPp2+EQo0Lm4BUAM9bagf0x
+         mvOE6wUo8+GI4fAJKz7FBYq90Ag77YS8wAd+mM/OcCj7GtVEJAVyVRZWagnY6YvYL8u+
+         DlxHq+GCEnp5dIS3l2OD/etKUarsSRL1YYJSnSl2WbON3KIR01Nzn84KqS1esEa0RwB7
+         0VcA==
+X-Gm-Message-State: AEkoouvJAbDPFr1fFKOsRpjpximsmXe1Q71v/oO4WtCQuJhzXO3dpCHzSvt2ncxWjDV6PqeckvmLpWM1zrOTvQ==
+X-Received: by 10.31.176.134 with SMTP id z128mr15051356vke.86.1471968864048;
+ Tue, 23 Aug 2016 09:14:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:qpJ4QQvFV3BMpVdgv0XltQQETy88g2HD4on9bFKd+NPSYDbYj2p
- McWeTZmVq7+lZE1MyACroDC7txfPK8W2NQwWh0gUKcOAFmVye5o+XK683VD/+lgNTx2/W0a
- eAkXDCoDDzP53Sfzi7DBewvBOQ45frbabhps+Kmtku9JpTD15i0849pOIHVmIc0eEZxD5mh
- aci633drGXUkARGhJ2EKw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:C8+5i1ZS7G4=:BzwfStcYTmR+ZGPiF/7nUh
- 7hUBGnRyD0XSMif6P7GyYXyvVdwJEPh0TwWXgIQBIyiZZ/J7OxyD/oIGOwfCITsmh1/cJE4hJ
- aNAIoB9sOrmhkyUlNB4ezrD+eM+Vi6pdg/gpp1YcrnJ+qoZKb7YiNZrL0F1suxZ6JRtrOB+xV
- orUyWzD4VoouSCYxCG1fifDaSK7oW0vcYjMuccA97oa5EXf1m1foIBYKcUDS+9Zb8KxR9OWJP
- YPEgmFm16A69h3u+fIHZLNq5WV7hgF0GX0BL+8VVqys7VKuLXAcBANqIiChjuofsvo6UYfFJH
- O7Q+s6uJjNiivKX41BCtqvQyFqJSzWGzRcHPKaet9JtIVcfLd8THuX4FsP4kT1la/vzCUcWfv
- iT+WnMxSOdaGwynhczpKRx8W95tLK62iolpAnWAdRTQz1ePEr8gyDt/CTqyoKY8ASlz2doxka
- HV9K2pRDFBcvOfBwmON8JNQ6t0rqehYrKjevZqg98LMbZ9BQUbP2KYdbT5jJ4vaEKTsO9BXMC
- Csm/XtaeIA3InZkxn6NVd8HOeRwL8/2i5aWFE1uK4N8zt67mn+bboSSa38mF25mzu60e8yjFe
- P5XdO7FXkBL7+lPDKiDJ+ZumUwXJz8xGXJfMKh7Q8Uik1J8NE30x6lTrAR6wFPGQfEjKvLX6u
- Tb7VCvlGZINfFS7uiHTT9EJ/8p/q6uOUGoairt+Mt0G9zYASu+iGa3Q4GeLp2pwIFlhE/unvj
- /Lf4DB1qjSgMXmegzVbjEO0/oAE2ESl7BodUhNXUVlPtBlQKXvuxUItCtYmcJV4wm3p5zOxoq
- JI4LkeC
+Received: by 10.103.85.4 with HTTP; Tue, 23 Aug 2016 09:14:23 -0700 (PDT)
+In-Reply-To: <20160823055418.GA5990@whir>
+References: <CAHLmBr2CRzt58RB+_YmnXcyost-R5=Ff51tALf1xh0kGk+frDw@mail.gmail.com>
+ <CAHLmBr1JHjjp66Er-2e6Yu+3zjrhT82Da-O8fj6_OoPtEPz8eg@mail.gmail.com>
+ <20160823030721.GA32181@starla> <5e17164f-f669-70c2-de78-25287ab59759@freebsd.org>
+ <20160823055418.GA5990@whir>
+From:   Lucian Smith <lucianoelsmitho@gmail.com>
+Date:   Tue, 23 Aug 2016 09:14:23 -0700
+Message-ID: <CAHLmBr3Yn1tVhijmgRwd8hyxgasdc2VtfNi6pYP5FbEHjjb3Vw@mail.gmail.com>
+Subject: Re: git-svn bridge and line endings
+To:     Eric Wong <e@80x24.org>
+Cc:     Alfred Perlstein <alfred@freebsd.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To be truly useful, the sequencer should never die() but always return
-an error.
+Thanks for the quick responses!
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- sequencer.c | 26 ++++++++++++++------------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+My situation is that the git side is entirely whatever github.org is
+running; presumably the latest stable version?  They provide a URL for
+repositories hosted there that can be accessed by an SVN
+client--somewhere on github is the 'git-svn bridge' (as I understand
+it): something that receives SVN requests, translates them to
+git-speak, and replies with what SVN expects.
 
-diff --git a/sequencer.c b/sequencer.c
-index 17f2c8b..bac32ea 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -954,37 +954,39 @@ static int save_todo(struct commit_list *todo_list, struct replay_opts *opts)
- 	return 0;
- }
- 
--static void save_opts(struct replay_opts *opts)
-+static int save_opts(struct replay_opts *opts)
- {
- 	const char *opts_file = git_path_opts_file();
-+	int res = 0;
- 
- 	if (opts->no_commit)
--		git_config_set_in_file(opts_file, "options.no-commit", "true");
-+		res |= git_config_set_in_file_gently(opts_file, "options.no-commit", "true");
- 	if (opts->edit)
--		git_config_set_in_file(opts_file, "options.edit", "true");
-+		res |= git_config_set_in_file_gently(opts_file, "options.edit", "true");
- 	if (opts->signoff)
--		git_config_set_in_file(opts_file, "options.signoff", "true");
-+		res |= git_config_set_in_file_gently(opts_file, "options.signoff", "true");
- 	if (opts->record_origin)
--		git_config_set_in_file(opts_file, "options.record-origin", "true");
-+		res |= git_config_set_in_file_gently(opts_file, "options.record-origin", "true");
- 	if (opts->allow_ff)
--		git_config_set_in_file(opts_file, "options.allow-ff", "true");
-+		res |= git_config_set_in_file_gently(opts_file, "options.allow-ff", "true");
- 	if (opts->mainline) {
- 		struct strbuf buf = STRBUF_INIT;
- 		strbuf_addf(&buf, "%d", opts->mainline);
--		git_config_set_in_file(opts_file, "options.mainline", buf.buf);
-+		res |= git_config_set_in_file_gently(opts_file, "options.mainline", buf.buf);
- 		strbuf_release(&buf);
- 	}
- 	if (opts->strategy)
--		git_config_set_in_file(opts_file, "options.strategy", opts->strategy);
-+		res |= git_config_set_in_file_gently(opts_file, "options.strategy", opts->strategy);
- 	if (opts->gpg_sign)
--		git_config_set_in_file(opts_file, "options.gpg-sign", opts->gpg_sign);
-+		res |= git_config_set_in_file_gently(opts_file, "options.gpg-sign", opts->gpg_sign);
- 	if (opts->xopts) {
- 		int i;
- 		for (i = 0; i < opts->xopts_nr; i++)
--			git_config_set_multivar_in_file(opts_file,
-+			res |= git_config_set_multivar_in_file_gently(opts_file,
- 							"options.strategy-option",
- 							opts->xopts[i], "^$", 0);
- 	}
-+	return res;
- }
- 
- static int pick_commits(struct commit_list *todo_list, struct replay_opts *opts)
-@@ -1128,9 +1130,9 @@ int sequencer_pick_revisions(struct replay_opts *opts)
- 		return -1;
- 	if (get_sha1("HEAD", sha1) && (opts->action == REPLAY_REVERT))
- 		return error(_("Can't revert as initial commit"));
--	if (save_head(sha1_to_hex(sha1)))
-+	if (save_head(sha1_to_hex(sha1)) ||
-+			save_opts(opts))
- 		return -1;
--	save_opts(opts);
- 	return pick_commits(todo_list, opts);
- }
- 
--- 
-2.10.0.rc1.99.gcd66998
+There is indeed a .gitattributes file in the repository, but the SVN
+client doesn't know what to do with it.  My hope was that something in
+the bridge code, that translated SVN requests to git and back, could
+take the SVN request, "Please give me this file; I'm on Windows" look
+at the .gitattributes file in the repository, and hand out a file with
+CR/LF's in it.  Conversely, when SVN tells git "Here is the new
+version of the file to check in," the bridge could look at the file,
+realize it had CR/LF's in it, look at the .gitattributes file to know
+if it needed to be converted, and then convert it appropriately.
 
+I can imagine a full-blown bridge that could even translate the SVN
+EOL propset back and forth appropriately, but I'm not sure if going
+that far is necessary and/or helpful.
 
+I don't know if this is the right mailing list for that particular bit
+of software, but it at least seemed like a good place to start.  Thank
+you!
+
+-Lucian
+
+On Mon, Aug 22, 2016 at 10:54 PM, Eric Wong <e@80x24.org> wrote:
+> Alfred Perlstein <alfred@freebsd.org> wrote:
+>> I hadn't anticipated there be to translation between svn props and
+>> .gitattributes, it sounds a bit messy but possible, that said, is it
+>> not possible to commit .gitattribute files to the svn repo?  Even in
+>> FreeBSD land such small token files are permitted.
+>
+> I'm not sure if an automatic translation is necessary or
+> desired (because of a corruption risk).
+>
+> Perhaps Lucian can clarify the situation for his repo.
+>
+>> As far as documenting svn-properties, most of the properties are
+>> used on the Subversion side either by subversion itself, or by
+>> scripts in the subversion repository.  Perhaps a blurb "see the
+>> subversion documentation and/or your local subversion
+>> administrator's guide for properties and their uses." would suffice?
+>
+> Yes, perhaps with a workable example Lucian can use today with
+> any git v2.3.0 or later.
+>
+> Thanks for the quick response!
+>
+>> Opinions?  Happy to look into it.
