@@ -2,92 +2,312 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 43DB71FD99
-	for <e@80x24.org>; Tue, 23 Aug 2016 13:42:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F2581FD99
+	for <e@80x24.org>; Tue, 23 Aug 2016 13:42:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757937AbcHWNmw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Aug 2016 09:42:52 -0400
-Received: from mout.gmx.net ([212.227.17.20]:62827 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1757409AbcHWNmv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2016 09:42:51 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0M6ioC-1bF9HV2eY8-00wZ6Q; Tue, 23 Aug 2016 15:42:37
- +0200
-Date:   Tue, 23 Aug 2016 15:42:35 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Duy Nguyen <pclouds@gmail.com>
-cc:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH v4] config: add conditional include
-In-Reply-To: <CACsJy8BokiiDbheN1_CqWWgK3xRn8YP30t7ojjVeDnok5_M4Ow@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1608231541420.4924@virtualbox>
-References: <20160712164216.24072-1-pclouds@gmail.com> <20160714153311.2166-1-pclouds@gmail.com> <CACsJy8Bw0ZNu-6SB0P3dBZCLMJWJkbUqb64H_QOcn4UH+_AcNA@mail.gmail.com> <20160819135408.ckyw6ruseicvg2jt@sigill.intra.peff.net> <5c131421-ae7f-8a37-76ab-0fd05cbe3530@gmail.com>
- <CACsJy8C30=-LGMYQJ6MO17L8Vv1q=iQGC=R8TDhC5qM1f5Lh5A@mail.gmail.com> <vpqr39harit.fsf@anie.imag.fr> <CACsJy8BNP8GDRxDGTQwcYWTovN9o11TCkUJ28=5zav3QnGv9nQ@mail.gmail.com> <vpqlgzp9bw1.fsf@anie.imag.fr>
- <CACsJy8BokiiDbheN1_CqWWgK3xRn8YP30t7ojjVeDnok5_M4Ow@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1757960AbcHWNmz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Aug 2016 09:42:55 -0400
+Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:49157
+        "EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1757348AbcHWNmy (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 23 Aug 2016 09:42:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1471953233;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=t6cwZ/5T+/oAusqSBgGmrByG7MUY2/EM9qs2Ehzm9PU=;
+        b=WhIjjt/wjbwmm7XUZFlJI96i9BxAhi1Cm9QYRej7yLuQwzR8KSzR3DXl1ef2V2TN
+        ypTQrE+e0bl4rJN2n8rzb/qaDu5u5hZEbRmH33ZMiVR0XFiphoxQbtGwlgZvhcCUtgX
+        XfXry1zEt071roWMAYvBVLfDlifr0GrOweaa7Ihw=
+From:   Pranit Bauva <pranit.bauva@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <01020156b73fe6ae-27df9d50-59b2-4ee2-8c5b-89e7e70a2dd0-000000@eu-west-1.amazonses.com>
+In-Reply-To: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
+References: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
+Subject: [PATCH v14 11/27] bisect--helper: `bisect_next_check` & bisect_voc
+ shell function in C
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:7h3N8NXbwdx7+mEOlrb3PbKhqh4D9zpk5ZKoX9eD92xB1khOePm
- 5Tn2OVIXwj1iQEQqZh4Qa6WW790M1cBiJgVOnAoEL8/POxwQN4WVlhONuykfrs4pt+pQlO+
- MzLMDP0topfVMBvLDWwmb2FTZJ6e6P5PhJhmfyhy8dHYF1A6Ry8AtwbK5ggjw+V6I0PKcz3
- +pOHcsQ9MALaBQLoQFYJw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:BFyVNCtWrwo=:5MT6j+xOmnQZZEHUqO5ya/
- o5CVoDT/SiJ0wKiNKLtMdK/30ugne57jw8RoVBBTN48GW9QuKY3e5XV7tX2wm+IC0K3WN7pvH
- 5SQfdAckMGWgly4Ox5hdZQ54+oG12lkhFO/gjXB/IOqaVdxgLtT502+BRLZUGsdbhwhxBKIYs
- wyaJ3H+VCgmya361Oj+1tW8jwfSA6MWeHYb3cqIueEiIxIjX442dW9RUFAQSF98JOvVbNgDVq
- uO7YLJedWGny/lYvcVsYFAoKGbzPpRlLfNdZ8H+j6Czwiv8Y0E61iFp7sR0OJfCChS0qO37K+
- tu9hlDp3DS907bc+WACbjWYG0fsHeT9s5LrT7G2au8/KU5IXscO2FB1Y+m9qTtyB7VyKuxBYJ
- iYLQWfj3PNd7kY10MYX5L5RmrUa1cmLbMKZNDkfJgumlx3e8Swmhv42LZbiVQcLQ9rSG1culo
- kbuA0DJxCDN3GWVyg1XGllk1S6o8TmNpsR/DFdMaABmJUSaeX2o4yHaRiomv3NdeZ5LWbulXW
- GiPJAg2mJZA51UQNCEIAQK8YVYsQtlwmmi88H41VxHutHrOXAVl6Nb/V1891TUY9fIl6/mwSX
- 11TFEc6kgPi36yDjYlYUJ3U9ao7bB0fMT9YgzQAWBB5nkjZhZSg9ZYWQ14ojaueiAWq4MFo8/
- lejhYUP5LF8TPb13HGB4DtPyou2peUvb37PfAQSROKltfnU1O7loOvBQciCOQV9Ha5rhNlyvg
- sKJvyycPv6lXphMcDt+2Hw0J8w68l9hNQt33Y9nGq5YtLVKSeYEu3Qvk09nTP/GiZU0ha2RnZ
- ztMWUFO
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 23 Aug 2016 11:53:53 +0000
+X-SES-Outgoing: 2016.08.23-54.240.7.17
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Duy,
+Reimplement `bisect_next_check` shell function in C and add
+`bisect-next-check` subcommand to `git bisect--helper` to call it from
+git-bisect.sh .
 
-On Mon, 22 Aug 2016, Duy Nguyen wrote:
+Also reimplement `bisect_voc` shell function in C and call it from
+`bisect_next_check` implementation in C.
 
-> On Mon, Aug 22, 2016 at 8:22 PM, Matthieu Moy
-> <Matthieu.Moy@grenoble-inp.fr> wrote:
-> >>> I think the syntax should be design to allow arbitrary boolean
-> >>> expression later if needed.
-> >>
-> >> I would be against that. We may extend it more in future, but it
-> >> should be under control, not full boolean expressions.
-> >
-> > Why?
-> >
-> > I'm not saying we absolutely need it, but if we allow several kinds of
-> > conditions (gitdir-is:... and others in the future), then it's natural
-> > to allow combining them, and arbitrary boolean expression is both simple
-> > and powerful (operators and/or/not and parenthesis and you have
-> > everything you'll ever need).
-> 
-> For starter, we don't want another debate "python vs ruby vs lua vs
-> ..." as the scripting language :) (for the record I vote Scheme! maybe
-> with infix syntax)
+Using `--bisect-next-check` is a temporary measure to port shell
+function to C so as to use the existing test suite. As more functions
+are ported, this subcommand will be retired but its implementation will
+be called by some other methods.
 
-FWIW I do not think that Matthieu implied that this has to be implemented.
-But it does not make sense to slam the door shut prematurely, either.
+Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+---
+ builtin/bisect--helper.c | 103 ++++++++++++++++++++++++++++++++++++++++++++++-
+ git-bisect.sh            |  60 ++-------------------------
+ 2 files changed, 106 insertions(+), 57 deletions(-)
 
-Meaning: the more doors you can keep open with the new syntax, the better.
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 450426c..aca3908 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -6,6 +6,7 @@
+ #include "dir.h"
+ #include "argv-array.h"
+ #include "run-command.h"
++#include "prompt.h"
+ 
+ static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
+ static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
+@@ -21,6 +22,7 @@ static const char * const git_bisect_helper_usage[] = {
+ 	N_("git bisect--helper --bisect-reset [<commit>]"),
+ 	N_("git bisect--helper --bisect-write <state> <revision> <TERM_GOOD> <TERM_BAD> [<nolog>]"),
+ 	N_("git bisect--helper --bisect-check-and-set-terms <command> <TERM_GOOD> <TERM_BAD>"),
++	N_("git bisect--helper --bisect-next-check [<term>] <TERM_GOOD> <TERM_BAD"),
+ 	NULL
+ };
+ 
+@@ -253,6 +255,95 @@ static int check_and_set_terms(struct bisect_terms *terms, const char *cmd)
+ 	return 0;
+ }
+ 
++static int mark_good(const char *refname, const struct object_id *oid,
++		     int flag, void *cb_data)
++{
++	int *m_good = (int *)cb_data;
++	*m_good = 0;
++	return 1;
++}
++
++static char *bisect_voc(char *revision_type)
++{
++	if (!strcmp(revision_type, "bad"))
++		return "bad|new";
++	if (!strcmp(revision_type, "good"))
++		return "good|old";
++
++	return NULL;
++}
++
++static int bisect_next_check(const struct bisect_terms *terms,
++			     const char *current_term)
++{
++	int missing_good = 1, missing_bad = 1;
++	char *bad_ref = xstrfmt("refs/bisect/%s", terms->term_bad.buf);
++	char *good_glob = xstrfmt("%s-*", terms->term_good.buf);
++	char *bad_syn, *good_syn;
++
++	if (ref_exists(bad_ref))
++		missing_bad = 0;
++	free(bad_ref);
++
++	for_each_glob_ref_in(mark_good, good_glob, "refs/bisect/",
++			     (void *) &missing_good);
++	free(good_glob);
++
++	if (!missing_good && !missing_bad)
++		return 0;
++
++	if (!current_term)
++		return -1;
++
++	if (missing_good && !missing_bad && current_term &&
++	    !strcmp(current_term, terms->term_good.buf)) {
++		char *yesno;
++		/*
++		 * have bad (or new) but not good (or old). We could bisect
++		 * although this is less optimum.
++		 */
++		fprintf(stderr, _("Warning: bisecting only with a %s commit\n"),
++			terms->term_bad.buf);
++		if (!isatty(0))
++			return 0;
++		/*
++		 * TRANSLATORS: Make sure to include [Y] and [n] in your
++		 * translation. The program will only accept English input
++		 * at this point.
++		 */
++		yesno = git_prompt(_("Are you sure [Y/n]? "), PROMPT_ECHO);
++		if (starts_with(yesno, "N") || starts_with(yesno, "n"))
++			return -1;
++
++		return 0;
++	}
++	bad_syn = xstrdup(bisect_voc("bad"));
++	good_syn = xstrdup(bisect_voc("good"));
++	if (!is_empty_or_missing_file(git_path_bisect_start())) {
++		error(_("You need to give me at least one %s and "
++			"%s revision. You can use \"git bisect %s\" "
++			"and \"git bisect %s\" for that. \n"),
++			bad_syn, good_syn, bad_syn, good_syn);
++		free(bad_syn);
++		free(good_syn);
++		return -1;
++	}
++	else {
++		error(_("You need to start by \"git bisect start\". You "
++			"then need to give me at least one %s and %s "
++			"revision. You can use \"git bisect %s\" and "
++			"\"git bisect %s\" for that.\n"),
++			good_syn, bad_syn, bad_syn, good_syn);
++		free(bad_syn);
++		free(good_syn);
++		return -1;
++	}
++	free(bad_syn);
++	free(good_syn);
++
++	return 0;
++}
++
+ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	enum {
+@@ -262,7 +353,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		BISECT_RESET,
+ 		CHECK_EXPECTED_REVS,
+ 		BISECT_WRITE,
+-		CHECK_AND_SET_TERMS
++		CHECK_AND_SET_TERMS,
++		BISECT_NEXT_CHECK
+ 	} cmdmode = 0;
+ 	int no_checkout = 0, res = 0;
+ 	struct option options[] = {
+@@ -280,6 +372,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 			 N_("write out the bisection state in BISECT_LOG"), BISECT_WRITE),
+ 		OPT_CMDMODE(0, "check-and-set-terms", &cmdmode,
+ 			 N_("check and set terms in a bisection state"), CHECK_AND_SET_TERMS),
++		OPT_CMDMODE(0, "bisect-next-check", &cmdmode,
++			 N_("check whether bad or good terms exist"), BISECT_NEXT_CHECK),
+ 		OPT_BOOL(0, "no-checkout", &no_checkout,
+ 			 N_("update BISECT_HEAD instead of checking out the current commit")),
+ 		OPT_END()
+@@ -330,6 +424,13 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		strbuf_addstr(&terms.term_bad, argv[2]);
+ 		res = check_and_set_terms(&terms, argv[0]);
+ 		break;
++	case BISECT_NEXT_CHECK:
++		if (argc != 2 && argc != 3)
++			die(_("--bisect-next-check requires 2 or 3 arguments"));
++		strbuf_addstr(&terms.term_good, argv[0]);
++		strbuf_addstr(&terms.term_bad, argv[1]);
++		res = bisect_next_check(&terms, argc == 3 ? argv[2] : NULL);
++		break;
+ 	default:
+ 		die("BUG: unknown subcommand '%d'", cmdmode);
+ 	}
+diff --git a/git-bisect.sh b/git-bisect.sh
+index bdf2227..fe6c9d0 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -271,59 +271,14 @@ bisect_state() {
+ 	bisect_auto_next
+ }
+ 
+-bisect_next_check() {
+-	missing_good= missing_bad=
+-	git show-ref -q --verify refs/bisect/$TERM_BAD || missing_bad=t
+-	test -n "$(git for-each-ref "refs/bisect/$TERM_GOOD-*")" || missing_good=t
+-
+-	case "$missing_good,$missing_bad,$1" in
+-	,,*)
+-		: have both $TERM_GOOD and $TERM_BAD - ok
+-		;;
+-	*,)
+-		# do not have both but not asked to fail - just report.
+-		false
+-		;;
+-	t,,"$TERM_GOOD")
+-		# have bad (or new) but not good (or old).  we could bisect although
+-		# this is less optimum.
+-		eval_gettextln "Warning: bisecting only with a \$TERM_BAD commit." >&2
+-		if test -t 0
+-		then
+-			# TRANSLATORS: Make sure to include [Y] and [n] in your
+-			# translation. The program will only accept English input
+-			# at this point.
+-			gettext "Are you sure [Y/n]? " >&2
+-			read yesno
+-			case "$yesno" in [Nn]*) exit 1 ;; esac
+-		fi
+-		: bisect without $TERM_GOOD...
+-		;;
+-	*)
+-		bad_syn=$(bisect_voc bad)
+-		good_syn=$(bisect_voc good)
+-		if test -s "$GIT_DIR/BISECT_START"
+-		then
+-
+-			eval_gettextln "You need to give me at least one \$bad_syn and one \$good_syn revision.
+-(You can use \"git bisect \$bad_syn\" and \"git bisect \$good_syn\" for that.)" >&2
+-		else
+-			eval_gettextln "You need to start by \"git bisect start\".
+-You then need to give me at least one \$good_syn and one \$bad_syn revision.
+-(You can use \"git bisect \$bad_syn\" and \"git bisect \$good_syn\" for that.)" >&2
+-		fi
+-		exit 1 ;;
+-	esac
+-}
+-
+ bisect_auto_next() {
+-	bisect_next_check && bisect_next || :
++	git bisect--helper --bisect-next-check $TERM_GOOD $TERM_BAD && bisect_next || :
+ }
+ 
+ bisect_next() {
+ 	case "$#" in 0) ;; *) usage ;; esac
+ 	bisect_autostart
+-	bisect_next_check $TERM_GOOD
++	git bisect--helper --bisect-next-check $TERM_GOOD $TERM_BAD $TERM_GOOD|| exit
+ 
+ 	# Perform all bisection computation, display and checkout
+ 	git bisect--helper --next-all $(test -f "$GIT_DIR/BISECT_HEAD" && echo --no-checkout)
+@@ -355,7 +310,7 @@ bisect_next() {
+ }
+ 
+ bisect_visualize() {
+-	bisect_next_check fail
++	git bisect--helper --bisect-next-check $TERM_GOOD $TERM_BAD fail || exit
+ 
+ 	if test $# = 0
+ 	then
+@@ -409,7 +364,7 @@ bisect_replay () {
+ }
+ 
+ bisect_run () {
+-	bisect_next_check fail
++	git bisect--helper --bisect-next-check $TERM_GOOD $TERM_BAD fail || exit
+ 
+ 	while true
+ 	do
+@@ -482,13 +437,6 @@ get_terms () {
+ 	fi
+ }
+ 
+-bisect_voc () {
+-	case "$1" in
+-	bad) echo "bad|new" ;;
+-	good) echo "good|old" ;;
+-	esac
+-}
+-
+ bisect_terms () {
+ 	get_terms
+ 	if ! test -s "$GIT_DIR/BISECT_TERMS"
 
-Ciao,
-Dscho
+--
+https://github.com/git/git/pull/287
