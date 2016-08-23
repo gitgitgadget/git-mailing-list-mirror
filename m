@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D508A1FD99
-	for <e@80x24.org>; Tue, 23 Aug 2016 16:14:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 035031FD99
+	for <e@80x24.org>; Tue, 23 Aug 2016 16:14:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753282AbcHWQOB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Aug 2016 12:14:01 -0400
-Received: from mout.gmx.net ([212.227.15.19]:62796 "EHLO mout.gmx.net"
+        id S1753439AbcHWQOI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Aug 2016 12:14:08 -0400
+Received: from mout.gmx.net ([212.227.17.21]:60193 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751799AbcHWQOA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2016 12:14:00 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0M7Xi3-1bG0Ng0qGd-00xGVS; Tue, 23 Aug 2016 18:07:23
+        id S1751550AbcHWQOH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2016 12:14:07 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MHH3P-1bPo371w1L-00E1bz; Tue, 23 Aug 2016 18:07:30
  +0200
-Date:   Tue, 23 Aug 2016 18:07:22 +0200 (CEST)
+Date:   Tue, 23 Aug 2016 18:07:28 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 09/15] sequencer: lib'ify create_seq_dir()
+Subject: [PATCH 11/15] sequencer: lib'ify save_todo()
 In-Reply-To: <cover.1471968378.git.johannes.schindelin@gmx.de>
-Message-ID: <80062be27256704617280fdb479176e0d2afb4d4.1471968378.git.johannes.schindelin@gmx.de>
+Message-ID: <fff4cdfa36355af7917a06be9f67b50b56bfce99.1471968378.git.johannes.schindelin@gmx.de>
 References: <cover.1471968378.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:oPQZv9gY4ztgt4ZiWQo9JeOrObtGtBEXqQG3mX68yB+ljv0IPBK
- jKZxfhyC+Sl/imDDvVHGcAtkRgCR4FVcl4NoLM6XOr/vNnC3whhosBct7n51qFdjcmIYxxo
- v8Y0mEm93IkrPa4ud2Rh9NXEtCNPw7PbUQvu12EayBM71ZkG/Peo3jUudZCE/ADNd1T765B
- avrUVw5XYI2mPwrRSBu8g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:oZiw6c/7rMY=:fsDO8egsqDrFWiQikdqSVv
- Qi9cp49RJpgB5f3b8GHuIg6HooAZxVcBlHD1SCHqvc0nT0WOVdi3meHOin86R+kYo451FlZef
- KAYDrDivgdRNN3EpAARwP+Jr/gAKAPxwZ9ILLcIHWyuQLbJh/NkhnEkGnbzshtiEaRHDR8msf
- btldLDRs5JxvORsUXlsu59l+XwkCmMh3XB8F1UgT1Xxw+UW9oaTdCUQh7TB5fil/ZU2KgK6VW
- Oe42DnGICkDqrLAtV4Bre6aq1T5kij3JcrQ/99s7+Tdara29NEWvkeCd5KjfHZfsC1V6eLJuA
- frjsidxnobuJoZXs6wq8uiwSUgHrczpj+aviasO3hm50BZmHe6PqRiIdSWyz2NoS9KWbqB5+1
- x3PMS4UZB4opT+iSN9JqFVbAHUUoaMDPMwKCWTkS5MeFlczKUK5ODtHdfIAU91QP/HThLJVuA
- bH2WxBarfQgANzq39qVkOSqiu7GKk8UBEUpzBpVymwvWDATo9in9l9maU5dtutP+1gujnzPEl
- 4QbMaFbz8qwq7tm4kMnKiUqvQy6ctHVm35qBEhJfzI+i6wmBBJOX/f5Bb73bjad5+N8ubiggK
- idhCw8pwv+K7WXF+EBGpuELs97bPEwurztcbEAasQz8qAYNmMxaa0C4Nhma/3gZxrTeWU/iTP
- YFIB1A0iZLV60AQjKK/Q8DmBZYxENNBlmF3gFn2eMvmmLe6EiQ2mhGZHuDSnE/pNdkmF6Jp8f
- l2T6ptRmJ0A7DsUW9eE7PoH3BFK9kquixjvT1wqAdVO/gm0MsxheqvuTW474kFgMzmsVpanXn
- puoxVz0
+X-Provags-ID: V03:K0:Y9i4v5c9IflraTJsSLEYX/bXprDMcPLHsjNkwjvu1IWASI0HFGN
+ aOGEyEA8v9lQS8eWbleWmDqMwKh46HjrNkj+diZ7twcJoaD2iZUaB84FhJCf8XqL1Ir7fuM
+ EumdyUQbLQWc99wF6QbeQ3tRvLVxJHbZRYjwO+CKzoB987Sg6am9xa6UWZO3NIztYE0QJ2v
+ TOTmCe6hmIXHM292WPRkA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:hbrWjV9xPHE=:EAAdFwYlr6exOhV6H7Xnaz
+ OXWsWb31RzW68eHBJpdkLO5jmixBw9yRwT+R3wO/O8Jng9RkyQr8BbNEFmGCWhQtNswVr9nNk
+ ViI2x9omaTCQJn7eGLL4g4nULmmYAO3S4nOOg9fVdbgQivPPVGnLtTqm2CJY8FXxHDGZLY1dZ
+ irgcAc23pRloaN37VodOEOswvgQ8kmMd/gkoA0GPSp+x2zZB9+rOyG0DDoxJi0lfqk7SgsuR0
+ iI8kTUk9bGBfRSO83k8vdtVsK+V8vgFT1Mmdz2CcVLfsQGUn9lezoxkcXAYsKqHq4Ev/14dKD
+ VfhO94qTgxj1SNznjAxGXHlyaqrtelhgEhHDfcgdq7WwDpiOCel61lYyXcL99uh7f0mJt178G
+ UTy0ZaBIS9bg7Hch9NMpU3ZDZIsME5TeiqBNXjjkH6mDwpslDwE1pOVag6ehCiyZJaiZYo4de
+ MNKB24a6xE8IUFnkdnURhui2rAA8kHy7DQV6ctT0NiVPLa4dq2387wd4VOuvCzSS0sYYtexyG
+ j90si2pptuyN5V2lxIXpBpgSnrcd4dSZECaBwIfkp3NxKSPkXASP3Q0MlVxODUu3Re7MIyf7w
+ Z5O95Kb6aY+q3zzxYKMhkDdskIYji9WDTgie0aK4G1fLq40RXGntFncjSVmy+FFSzTsNHFb8i
+ VXIbADt01mh6pMf8b1iPVPFuRFW82QZvweNoxFAh6piKc3WayD48cRdFwB9pY2MgwIi7buDvF
+ zqRx4iiSmGHhrItpPv3wk9H63Cs+uBKXwcOzDQOMEm1xxzyNcJ5C4z7+/m5e/5l29FCv3Raxl
+ lmg8yDL
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,24 +58,58 @@ an error.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sequencer.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 1bcea84..1706ef4 100644
+index 3e07aa0..17f2c8b 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -839,8 +839,8 @@ static int create_seq_dir(void)
- 		return -1;
- 	}
- 	else if (mkdir(git_path_seq_dir(), 0777) < 0)
--		die_errno(_("Could not create sequencer directory %s"),
--			  git_path_seq_dir());
-+		return error(_("Could not create sequencer directory %s (%s)"),
-+			  git_path_seq_dir(), strerror(errno));
- 	return 0;
+@@ -929,24 +929,29 @@ static int sequencer_rollback(struct replay_opts *opts)
+ 	return -1;
  }
  
+-static void save_todo(struct commit_list *todo_list, struct replay_opts *opts)
++static int save_todo(struct commit_list *todo_list, struct replay_opts *opts)
+ {
+ 	static struct lock_file todo_lock;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int fd;
+ 
+-	fd = hold_lock_file_for_update(&todo_lock, git_path_todo_file(), LOCK_DIE_ON_ERROR);
++	fd = hold_lock_file_for_update(&todo_lock, git_path_todo_file(), 0);
++	if (fd < 0)
++		return error_errno(_("Could not lock '%s'"),
++				   git_path_todo_file());
+ 	if (format_todo(&buf, todo_list, opts) < 0)
+-		die(_("Could not format %s."), git_path_todo_file());
++		return error(_("Could not format %s."), git_path_todo_file());
+ 	if (write_in_full(fd, buf.buf, buf.len) < 0) {
+ 		strbuf_release(&buf);
+-		die_errno(_("Could not write to %s"), git_path_todo_file());
++		return error_errno(_("Could not write to %s"),
++				   git_path_todo_file());
+ 	}
+ 	if (commit_lock_file(&todo_lock) < 0) {
+ 		strbuf_release(&buf);
+-		die(_("Error wrapping up %s."), git_path_todo_file());
++		return error(_("Error wrapping up %s."), git_path_todo_file());
+ 	}
+ 	strbuf_release(&buf);
++	return 0;
+ }
+ 
+ static void save_opts(struct replay_opts *opts)
+@@ -995,7 +1000,8 @@ static int pick_commits(struct commit_list *todo_list, struct replay_opts *opts)
+ 		return -1;
+ 
+ 	for (cur = todo_list; cur; cur = cur->next) {
+-		save_todo(cur, opts);
++		if (save_todo(cur, opts))
++			return -1;
+ 		res = do_pick_commit(cur->item, opts);
+ 		if (res)
+ 			return res;
 -- 
 2.10.0.rc1.99.gcd66998
 
