@@ -2,82 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 444AE1FD99
-	for <e@80x24.org>; Tue, 23 Aug 2016 22:26:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 512EB1FD99
+	for <e@80x24.org>; Tue, 23 Aug 2016 22:27:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755808AbcHWW0R (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Aug 2016 18:26:17 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52019 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753868AbcHWW0Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2016 18:26:16 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 963BB371C9;
-        Tue, 23 Aug 2016 18:26:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=nOVAZ586PDoj+9m2oxE67ZT87vU=; b=PAEbvT
-        AFRF+U/6i6AquUQgfzpUvubUO2j+DCNa9xz6f+nk8bV+w+KFx0woI2qdMRDGBFZv
-        kZOlfymyd12owc4eyFnufEhfxOYp4gPMCrj63pJIZ0HKzZorfW8LAOrgTOsFq8FV
-        uzFfUH2XyL3TRmt1nB6/R9C6YPONMOOJP0qbc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=yPoNutUfDtNIeYFwPWN59sG0SbsPipeT
-        EghAPfPHw+0GPMrJzyKnUtQX1toB4SD7qtutYX+oLLHeUiasQSpAC7d/2BSTzJIJ
-        WnQksEuUkl4zN9KY19o6O1rRdo3YmGCDkjGRrsmBTCwRNZrUyXe7YsKILq4VOyJl
-        1oXOnEBIWb0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8F34C371C8;
-        Tue, 23 Aug 2016 18:26:15 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 18972371C7;
-        Tue, 23 Aug 2016 18:26:15 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 6/7] delta_base_cache: use hashmap.h
-References: <20160822215725.qdikfcaz3smhulau@sigill.intra.peff.net>
-        <20160822220007.lh3wzv6orlupfjmr@sigill.intra.peff.net>
-Date:   Tue, 23 Aug 2016 15:26:13 -0700
-In-Reply-To: <20160822220007.lh3wzv6orlupfjmr@sigill.intra.peff.net> (Jeff
-        King's message of "Mon, 22 Aug 2016 18:00:07 -0400")
-Message-ID: <xmqqoa4jt94q.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1755917AbcHWW1T (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Aug 2016 18:27:19 -0400
+Received: from mail-yw0-f194.google.com ([209.85.161.194]:36841 "EHLO
+        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755314AbcHWW1T (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2016 18:27:19 -0400
+Received: by mail-yw0-f194.google.com with SMTP id u134so5761261ywg.3
+        for <git@vger.kernel.org>; Tue, 23 Aug 2016 15:27:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=tugZrnPmDJPQ13yp/DoKP2luwkVLI7FjDXgfnSzB2hQ=;
+        b=odtohzXEAK4uS3HdWvLKlVKtoii7dmtxyKc5M3mqa4KQ942+rmWhnASjP23Pb/lTnX
+         Q50aNMc9xsXIoHOx8xFUEPRXYJN/950LMzGDcduSjfGCUmjBsxFlWLl3RRJajHDJL3Lf
+         HZm5PeAZvFb2KIl1Xr2aUdbhknS82/0mM32Do3EA+bxEiUdTlf2aQzfmjYDQsYHNzbfM
+         N7uzHDK1NKoXn3JwvvBaHqiQRawKR+plnbo6S8OyLi/oD/i+1nE/gXEAJ3MPzlhR+1OQ
+         Vk0Y13+ynfGUydcXEYV9L6BB7PSn1uUE5qZquncTgRr3ITf/IVCQU6gsnHgZZd8Ti6G5
+         v69w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=tugZrnPmDJPQ13yp/DoKP2luwkVLI7FjDXgfnSzB2hQ=;
+        b=lTZYDz5bn3d+1fyWkLidNILkO4huJbm6MP/GRDwJdv3qcVit2EutPgB4WBXTJYrsFQ
+         ZhytB5bsqXcgsNEeiJ7day70SEVsy6vjqUju8jWJWdy5dPMPS1QZM2J4gE7/huSBvlmK
+         SRIY8U0rhP9JT2TB5dnOBgWbccf0bDH7qnOAMupcz3Cc2hrpVaN/PXXgjGkUDP7rQGdZ
+         sVa1B9kNObeOHe0+eQ3MJjV6TIjuwmiA9wYG1x4M92EwxtqoCspIMh5/3PgChZfUDJYr
+         bmWcPCYL7sFhBSBmKmrQZ3d2EyA9xVoJUqa+8g2CkgaI4k6IAgz6vgaXMjTpdjrdn4M5
+         BIuw==
+X-Gm-Message-State: AEkoousvYJF8WUbx1FZ2qSeSo/tMI7+87HN9oKQsehElHcBV7qz3SFQpIp5ZhuYbufQC9+9SOD74lTRrRFeRdg==
+X-Received: by 10.129.135.2 with SMTP id x2mr23757849ywf.310.1471990243986;
+ Tue, 23 Aug 2016 15:10:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9A8E2D6E-6980-11E6-8122-FCB17B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.37.50.199 with HTTP; Tue, 23 Aug 2016 15:10:23 -0700 (PDT)
+In-Reply-To: <20160815215327.15682-3-sbeller@google.com>
+References: <20160815215327.15682-1-sbeller@google.com> <20160815215327.15682-3-sbeller@google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Tue, 23 Aug 2016 15:10:23 -0700
+Message-ID: <CA+P7+xrmsNBxmoR6+2C9ZVvXcVH7D+O3iYqKhVrbAsaNUXzF_A@mail.gmail.com>
+Subject: Re: [PATCHv5 2/8] t7408: merge short tests, factor out testing method
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jens Lehmann <Jens.Lehmann@web.de>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> So while the value for that case _isn't_ as good as the
-> optimal one measured above (which was 2048 entries), given
-> the bouncing I'm hesitant to suggest that 2048 is any kind
-> of optimum (not even for linux.git, let alone as a general
-> rule). The generic hashmap has the appeal that it drops the
-> number of tweakable numbers by one, which means we can focus
-> on tuning other elements, like the LRU strategy or the
-> core.deltaBaseCacheLimit setting.
+On Mon, Aug 15, 2016 at 2:53 PM, Stefan Beller <sbeller@google.com> wrote:
+> Tests consisting of one line each can be consolidated to have fewer tests
+> to run as well as fewer lines of code.
 >
-> And indeed, if we bump the cache limit to 1G (which is
-> probably silly for general use, but maybe something people
-> with big workstations would want to do), the linux.git log-S
-> time drops to 3m32s. That's something you really _can't_ do
-> easily with the static hash table, because the number of
-> entries needs to grow in proportion to the memory limit (so
-> 2048 is almost certainly not going to be the right value
-> there).
+> When having just a few git commands, do not create a new shell but
+> use the -C flag in Git to execute in the correct directory.
 >
-> This patch takes that direction, and drops the static hash
-> table entirely in favor of using the hashmap.h API.
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
 
-Sounds very sensible.
+Looks good. The resulting test file is easier to read, and you created
+a common function to perform checking if we used alternates instead of
+duplicating that part multiple times.
+
+>  t/t7408-submodule-reference.sh | 48 ++++++++++++++++++++++--------------------
+>  1 file changed, 25 insertions(+), 23 deletions(-)
+>
+> diff --git a/t/t7408-submodule-reference.sh b/t/t7408-submodule-reference.sh
+> index b84c6748..dff47af 100755
+> --- a/t/t7408-submodule-reference.sh
+> +++ b/t/t7408-submodule-reference.sh
+> @@ -8,6 +8,15 @@ test_description='test clone --reference'
+>
+>  base_dir=$(pwd)
+>
+> +test_alternate_is_used () {
+> +       alternates_file="$1" &&
+> +       working_dir="$2" &&
+> +       test_line_count = 1 "$alternates_file" &&
+> +       echo "0 objects, 0 kilobytes" >expect &&
+> +       git -C "$working_dir" count-objects >actual &&
+> +       test_cmp expect actual
+> +}
+> +
+
+This change wasn't mentioned in the description. You updated the tests
+to use a stronger check for when alternates is in use. This is good. I
+might have mentioned it in the description but it's not worth a
+re-roll.
+
+> -test_expect_success 'that reference gets used with update' '
+> -       cd super-clone/sub &&
+> -       echo "0 objects, 0 kilobytes" >expected &&
+> -       git count-objects >current &&
+> -       diff expected current
+
+The stronger variant was used once here, but you use it in several
+locations. It's good to have extracted this as the new tests are more
+readable.
+
+Thanks,
+Jake
