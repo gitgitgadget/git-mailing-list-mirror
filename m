@@ -6,116 +6,91 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FD231FD99
-	for <e@80x24.org>; Tue, 23 Aug 2016 21:35:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E15251FD99
+	for <e@80x24.org>; Tue, 23 Aug 2016 21:36:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755789AbcHWVfx (ORCPT <rfc822;e@80x24.org>);
+        id S1755614AbcHWVfx (ORCPT <rfc822;e@80x24.org>);
         Tue, 23 Aug 2016 17:35:53 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52685 "EHLO
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58676 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755386AbcHWVfw (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1755425AbcHWVfw (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 23 Aug 2016 17:35:52 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B27A93677F;
-        Tue, 23 Aug 2016 17:21:13 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C488B369D4;
+        Tue, 23 Aug 2016 17:35:23 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=r9+0b4ram72qI7gH80Pjp+2w09o=; b=AgJo1N
-        6sgsuYeTEvZw3a0+3jy08put4J3N0Dxf6RfsZdPumKqvIIz4eG0rRD3n93epY1cB
-        yl0rrgdmYkD1wyZMQe3FGjIQUmInpvd1+lOBR0PV47b680XdYJfc/5BFD+qn5p9k
-        Xq982rdiDoMe3zLijTQsIgF4S7zvPnm7uNm3Q=
+        :content-type; s=sasl; bh=PU5krUF8s90vwhFN8VKH2xp0/bM=; b=ML2esT
+        AnlHsD9SCXnxjp99m+5H6n6zuyf0CKiZ+9PCsva9FVXLF6jmvxnQNNYJt+93rl7O
+        sIlaFIgI0phsaxReEfXTaUYt0Zmb1cq8gobz0q317lGeJuM7rgvLmkZ1vookuO7p
+        SoyUK9QKtsfQ8FrL+3IOb07o3A0Ro7UDue4Bw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ecsfOz6F1cdA1Xv3mgEOLAaXLBrFQ/sd
-        GceQxAtOMiNKUoOI/ZLbWix6Ga7TxOkIi6/JHocUFwKnao9dtj0uEdUatJWsR90Z
-        IY37FcsxUuqNhu8JCDQcjmJ0VawjOgEj2BytOhl1eX6VmMQvwnLCCJoZFUsLvB3K
-        y4fDCJ6en5s=
+        :content-type; q=dns; s=sasl; b=tKe7zjM6B+UJlwxUn9OM7dVRGqWPWvl5
+        AKDSGRFTxJMupEBhn4KDvEK3FcNu85DfkTZVcZxozl1gdDCqcLBR1L9DetH7AZnL
+        /MeSNtKTpi+ciD3LFnj0jBByNx7I9rhPKI1ZgklTJ5/zPpXzh7fK0vNaQur7PJCQ
+        Wk8kG6V8BHc=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A98863677E;
-        Tue, 23 Aug 2016 17:21:13 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BA615369D3;
+        Tue, 23 Aug 2016 17:35:23 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2AD8C3677D;
-        Tue, 23 Aug 2016 17:21:13 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 39171369D2;
+        Tue, 23 Aug 2016 17:35:23 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.e.keller@intel.com>
-Cc:     git@vger.kernel.org, Josh Triplett <josh@joshtriplett.org>,
-        James Hogan <james.hogan@imgtec.com>,
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Jeff King <peff@peff.net>,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
         Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH] format-patch: show 0/1 and 1/1 for singleton patch with cover letter
-References: <20160819234959.26308-1-jacob.e.keller@intel.com>
-        <xmqq37lvxx5o.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 23 Aug 2016 14:21:11 -0700
-In-Reply-To: <xmqq37lvxx5o.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Tue, 23 Aug 2016 09:33:39 -0700")
-Message-ID: <xmqqinuruqpk.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v2 5/7] xdl_change_compact(): introduce the concept of a change group
+References: <cover.1471864378.git.mhagger@alum.mit.edu>
+        <21ade4ab233a868cabbe15598cd7b2ff4d04d286.1471864378.git.mhagger@alum.mit.edu>
+Date:   Tue, 23 Aug 2016 14:35:21 -0700
+In-Reply-To: <21ade4ab233a868cabbe15598cd7b2ff4d04d286.1471864378.git.mhagger@alum.mit.edu>
+        (Michael Haggerty's message of "Mon, 22 Aug 2016 13:22:44 +0200")
+Message-ID: <xmqqeg5fuq1y.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 84D3E314-6977-11E6-9A4D-FCB17B1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 7F8130C2-6979-11E6-A117-FCB17B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> This obviously changes the behaviour, but I do not think of a reason
-> why this change is a bad idea.  
+> The idea of xdl_change_compact() is fairly simple:
+>
+> * Proceed through groups of changed lines in the file to be compacted,
+>   keeping track of the corresponding location in the "other" file.
+>
+> * If possible, slide the group up and down to try to give the most
+>   aesthetically pleasing diff. Whenever it is slid, the current location
+>   in the other file needs to be adjusted.
+>
+> But these simple concepts are obfuscated by a lot of index handling that
+> is written in terse, subtle, and varied patterns. I found it very hard
+> to convince myself that the function was correct.
+>
+> So introduce a "struct group" that represents a group of changed lines
+> in a file. Add some functions that perform elementary operations on
+> groups:
+>
+> * Initialize a group to the first group in a file
+> * Move to the next or previous group in a file
+> * Slide a group up or down
+>
+> Even though the resulting code is longer, I think it is easier to
+> understand and review.
 
->> diff --git a/builtin/log.c b/builtin/log.c
->> index 92dc34dcb0cc..8e6100fb0c5b 100644
->> --- a/builtin/log.c
->> +++ b/builtin/log.c
->> @@ -1676,7 +1676,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
->>  		/* nothing to do */
->>  		return 0;
->>  	total = nr;
->> -	if (!keep_subject && auto_number && total > 1)
->> +	if (!keep_subject && auto_number && (total > 1 || cover_letter))
->>  		numbered = 1;
->>  	if (numbered)
->>  		rev.total = total + start_number - 1;
+Yup.  The important thing is that the length of the core logic of
+sliding up and down becomes easier to read, because it shrinks; the
+mechanics of sliding up and down may need more lines with boilderplate,
+but they are isolated "do one thing and do it well" helpers.
 
-Actually there is a very good reason why this patch is not good
-(yet).  When the --cover option is not specified on the command
-line, cover_letter is -1 (use configuration or turn it on only when
-it is a multi-patch series) at this point.
+Nice.
 
-I think you would have noticed it if you ran any format-patch tests.
-t/t4021-format-patch-numbered.sh fails at the very beginning.
 
-With the attached SQUASH, existing tests pass, which is a strong
-sign that this new feature needs to be protected by a new test in
-the t4021 script to make sure other people would not break it in the
-future.
-
- builtin/log.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/log.c b/builtin/log.c
-index e50d361..b7bfeb9 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1650,16 +1650,16 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		/* nothing to do */
- 		return 0;
- 	total = nr;
--	if (!keep_subject && auto_number && (total > 1 || cover_letter))
--		numbered = 1;
--	if (numbered)
--		rev.total = total + start_number - 1;
- 	if (cover_letter == -1) {
- 		if (config_cover_letter == COVER_AUTO)
- 			cover_letter = (total > 1);
- 		else
- 			cover_letter = (config_cover_letter == COVER_ON);
- 	}
-+	if (!keep_subject && auto_number && (total > 1 || cover_letter))
-+		numbered = 1;
-+	if (numbered)
-+		rev.total = total + start_number - 1;
- 
- 	if (!signature) {
- 		; /* --no-signature inhibits all signatures */
