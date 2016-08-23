@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E2331FD99
-	for <e@80x24.org>; Tue, 23 Aug 2016 16:13:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B813F1FD99
+	for <e@80x24.org>; Tue, 23 Aug 2016 16:14:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752819AbcHWQN5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Aug 2016 12:13:57 -0400
-Received: from mout.gmx.net ([212.227.15.19]:65354 "EHLO mout.gmx.net"
+        id S1753319AbcHWQOC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Aug 2016 12:14:02 -0400
+Received: from mout.gmx.net ([212.227.15.19]:52608 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751550AbcHWQN4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2016 12:13:56 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0LwrwO-1b5Fvz0Y5w-016NLP; Tue, 23 Aug 2016 18:07:19
+        id S1752958AbcHWQOA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2016 12:14:00 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MSv6D-1bk63s0UGD-00Ro7p; Tue, 23 Aug 2016 18:07:09
  +0200
-Date:   Tue, 23 Aug 2016 18:07:18 +0200 (CEST)
+Date:   Tue, 23 Aug 2016 18:07:08 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 08/15] sequencer: lib'ify walk_revs_populate_todo()
+Subject: [PATCH 05/15] sequencer: lib'ify read_and_refresh_cache()
 In-Reply-To: <cover.1471968378.git.johannes.schindelin@gmx.de>
-Message-ID: <fc1bc9ae5aeb315813d35701e19928cfe52557e3.1471968378.git.johannes.schindelin@gmx.de>
+Message-ID: <131eea01901cc3c366bad2098f6abe8738922d58.1471968378.git.johannes.schindelin@gmx.de>
 References: <cover.1471968378.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:sJ2H5Ati9l4cZt4ie27I9G9aPhHpyV7p1MqhL84Dl0J+XazjE7O
- sOAcqvCzTB1+MzeyJST5PfICVLsEOAElFZEHxM/73RPhuiGCCc+Mm1c3q8oBnytWIYsG63U
- x45COr06ccsmIgGovQCvc5fYscVHxz2IvshxDYEj/i+c7U1LKtRIM4o6gbdebb3I/RGekPD
- 79YEmzyBaC359PdML9GIQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:VGQVV66JxM8=:oPgkzPYs/kkZnPUwABROVV
- U/Fc/yIsFCfD19LY67bgTxqah2dPS8SvIBFxvNHKgyLwUXywVMUBoAjKyTkqyFqusRdjRxs/L
- 60mPlwMyi4Pp2vpwQoHZOxl+3+872ZezpW77yXI9ICreZj5rRQKXThov/7xmRV0HG0uD82v8O
- EcyOiUzGtkr7xi+ltUC7asGbornoBKXV7rue4gDkdNqmp5HVaeMbag7J0D/8QA6IXmcPmIWEt
- 0fZSihU3DvXfB6N+nYcoOWy63e00KSDWhQPK75xs+ZsBEZIa0QyjXMESEguiYJIFnjiQnMRz+
- gE8BgfK9bBhtWud9kv/myA9HJqxGOsovwHavXNLbdlTBbjmVqAqe/R5uhPhJBa8f5TpE7X7Ar
- gtnDBi409N404/xd1hOmGgXKCeT0m4rvw/UkZkRd4FqLY2TYNcA09MkVVhrYZJZRBOfUnv3ql
- gaJ6WenI6J8c6Zyk4kntJRq+HOtGF5shUpi7R48uybo+ry3YsRgwqCf8k5ifdYTJpPUU//V1x
- kosxn0S3+abT0UBUPcP901+5OLtI1hp8qhWiGH63F3zYilZTFyKPpoUlW7FhTYHlnwytcxr9j
- qSTH3daER5IiVRoVaCLS/XNvm3ew4nmvt17qDZHcopgpfJhnikcRS9YjZ5BgLSEQoaAvfuhwn
- G6wMor4jYvXhZFGe0/3wdqtCvoy8copnS8PYDxZ/I4n8UIK0g0hAGaHB6t/CDCOGYezBujWHI
- peYG0dVFmXzQglLBZpDo+/lqFzRpBmpqrzeCUgKjr3jRPMsO42FBpmyroM9pBo3raeISAfGTv
- HeuPGZf
+X-Provags-ID: V03:K0:musLMkaUqlc75nS2t2NU6GdXzXvzyovK92y/F4FCkdUUHL406kd
+ 5wQtHW4DJm0V1DFWbioZBpcifjj5FD24NhB9qP91+FTl9H3GI870Db9OniWEu/Gw5dbveDm
+ EHEzWu4hLN8nK8ijqYBVff/qAbnJrwKYld1HsnxsCg4qqlRwdh8glG/WBh1DJX/TXte0gBo
+ eIVg5wSFnWihSuT8oUbQw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:o/XfvIUFFMI=:VzGopjU1bxlLHUQ+Odn+cw
+ hzprR54eQy2SwXAVx7mHijpE6zKxup8ySSUtbItx7mhvb2ZtJsnYITKsVjy20bl9RGlLUPuFS
+ XMq12IF83jQUMKyOgS7CmKFOfTemA/GcsLgWKNIiJTJO+lCQj5RcD+6vdxQ3voirxjs0VgXrM
+ FEqbe3pcNKYUf1eLFGVT55UlRXUD+ZmjG5GNZuOn0qGZ15RvTUqvKbPx24PMurqOu6UpUhU57
+ Fn8zwlEKFKC+dNKRvFEkuzxORFaIiSMVdNxDT9yTDL5sn4rkYmUX3HWhuWzSuAuRu7233MfdR
+ /ya/wvaFF+vN6OBNkNqTAnwbcsDp0kbb1V+0PXcfO7l+L3chUAftUF2Lhrn9J8NVN4fc6lAvD
+ PdAZ7lyRFTLK8zD02zDI8JiYt5OiybJM6hOA5w1Ar4nKliTfoUCUPmwq3AQiB9xRV0xrQOEOk
+ WNqG/F6rS83y6GTdx6knfiJzmstQ2CZW/guDI1EfptOX1405EuIpqMStjnb38AYWhQVMSalwg
+ EFgIQLE27/Pn7FwwdW6Q+7J0VxXeeU2fxHgksiiOAZ6qYuHentoDqgnfR3PFsELccVRAhZStV
+ ACLA4KwsEVPsZQYSjWq0kySolK7cIjZGEOwN0FanIYyycLdoyGjFxKhC1AVJ2mI7FuoxtRdck
+ 5QuNl4ztca6VdJZPRItyoAWVYRoE/UFcGja7ARfoGLpCJO7ulAJjLwoB4e/275iygVeBV4pe8
+ hHKR+sIZZkg31F4WuLwUpjuBUZj8GJGVoZq7/Y0kmUnwc+lftmHdwBL78LXLHeTnnQM1OrAET
+ L8DfCVm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,46 +58,58 @@ an error.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ sequencer.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 808cd53..1bcea84 100644
+index b90294f..a8c3a48 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -816,17 +816,19 @@ static int read_populate_opts(struct replay_opts **opts)
+@@ -638,18 +638,21 @@ static int prepare_revs(struct replay_opts *opts)
  	return 0;
  }
  
--static void walk_revs_populate_todo(struct commit_list **todo_list,
-+static int walk_revs_populate_todo(struct commit_list **todo_list,
- 				struct replay_opts *opts)
+-static void read_and_refresh_cache(struct replay_opts *opts)
++static int read_and_refresh_cache(struct replay_opts *opts)
  {
- 	struct commit *commit;
- 	struct commit_list **next;
- 
--	prepare_revs(opts);
-+	if (prepare_revs(opts))
-+		return -1;
- 
- 	next = todo_list;
- 	while ((commit = get_revision(opts->revs)))
- 		next = commit_list_append(commit, next);
+ 	static struct lock_file index_lock;
+ 	int index_fd = hold_locked_index(&index_lock, 0);
+ 	if (read_index_preload(&the_index, NULL) < 0)
+-		die(_("git %s: failed to read the index"), action_name(opts));
++		return error(_("git %s: failed to read the index"),
++			action_name(opts));
+ 	refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, NULL, NULL, NULL);
+ 	if (the_index.cache_changed && index_fd >= 0) {
+ 		if (write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
+-			die(_("git %s: failed to refresh the index"), action_name(opts));
++			return error(_("git %s: failed to refresh the index"),
++				action_name(opts));
+ 	}
+ 	rollback_lock_file(&index_lock);
 +	return 0;
  }
  
- static int create_seq_dir(void)
-@@ -1111,8 +1113,8 @@ int sequencer_pick_revisions(struct replay_opts *opts)
- 	 * progress
- 	 */
+ static int format_todo(struct strbuf *buf, struct commit_list *todo_list,
+@@ -977,7 +980,8 @@ static int pick_commits(struct commit_list *todo_list, struct replay_opts *opts)
+ 	if (opts->allow_ff)
+ 		assert(!(opts->signoff || opts->no_commit ||
+ 				opts->record_origin || opts->edit));
+-	read_and_refresh_cache(opts);
++	if (read_and_refresh_cache(opts))
++		return -1;
  
--	walk_revs_populate_todo(&todo_list, opts);
--	if (create_seq_dir() < 0)
-+	if (walk_revs_populate_todo(&todo_list, opts) ||
-+			create_seq_dir() < 0)
- 		return -1;
- 	if (get_sha1("HEAD", sha1) && (opts->action == REPLAY_REVERT))
- 		return error(_("Can't revert as initial commit"));
+ 	for (cur = todo_list; cur; cur = cur->next) {
+ 		save_todo(cur, opts);
+@@ -1041,7 +1045,8 @@ int sequencer_pick_revisions(struct replay_opts *opts)
+ 	if (opts->subcommand == REPLAY_NONE)
+ 		assert(opts->revs);
+ 
+-	read_and_refresh_cache(opts);
++	if (read_and_refresh_cache(opts))
++		return -1;
+ 
+ 	/*
+ 	 * Decide what to do depending on the arguments; a fresh
 -- 
 2.10.0.rc1.99.gcd66998
 
