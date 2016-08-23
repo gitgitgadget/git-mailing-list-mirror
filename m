@@ -2,168 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9C461FD99
-	for <e@80x24.org>; Tue, 23 Aug 2016 16:40:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 245331FD99
+	for <e@80x24.org>; Tue, 23 Aug 2016 16:43:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754396AbcHWQjs convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 23 Aug 2016 12:39:48 -0400
-Received: from smtp6.opentext.com ([205.211.178.42]:48932 "EHLO
-        smtp6.opentext.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754367AbcHWQjr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2016 12:39:47 -0400
-X-Greylist: delayed 3243 seconds by postgrey-1.27 at vger.kernel.org; Tue, 23 Aug 2016 12:39:47 EDT
-Received: from otwlxg11.opentext.net (otwlxg11.opentext.net [10.2.103.152])
-        by wldmzsvc06.dmz.opentext.com (8.14.4/8.14.4) with ESMTP id u7NFkGua007236
-        (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=FAIL)
-        for <git@vger.kernel.org>; Tue, 23 Aug 2016 11:46:17 -0400
-Received: from OTWLXG90.opentext.net (10.2.102.170) by otwlxg11.opentext.net
- (10.2.103.152) with Microsoft SMTP Server (TLS) id 14.3.294.0; Tue, 23 Aug
- 2016 11:45:34 -0400
-Received: from OTWLXG20.opentext.net ([169.254.2.88]) by otwlxg90.opentext.net
- ([10.2.102.170]) with mapi id 14.03.0294.000; Tue, 23 Aug 2016 11:45:34 -0400
-From:   David McGough <dmcgough@opentext.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Smart HTTP push permissions failure
-Thread-Topic: Smart HTTP push permissions failure
-Thread-Index: AdH9UAqG/VuKfPWxRkeGHFrHOKkKBg==
-Date:   Tue, 23 Aug 2016 15:45:33 +0000
-Message-ID: <89CBBBEBEE33F5469A9FA456B5F70625CCDB9BEB@otwlxg20.opentext.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.2.111.33]
-X-TM-AS-Product-Ver: SMEX-11.0.0.1191-8.000.1202-22530.005
-X-TM-AS-Result: No--14.194600-8.000000-31
-X-TM-AS-User-Approved-Sender: No
-X-TM-AS-User-Blocked-Sender: No
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        id S1754619AbcHWQnr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Aug 2016 12:43:47 -0400
+Received: from mout.web.de ([212.227.15.3]:51219 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754605AbcHWQnq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2016 12:43:46 -0400
+Received: from localhost ([195.252.60.88]) by smtp.web.de (mrweb001) with
+ ESMTPSA (Nemesis) id 0MarZy-1bs6z70rhC-00KPS6; Tue, 23 Aug 2016 18:43:27
+ +0200
+Date:   Tue, 23 Aug 2016 16:43:26 +0000
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Lucian Smith <lucianoelsmitho@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: git-svn bridge and line endings
+Message-ID: <20160823164326.GA22168@tb-raspi>
+References: <CAHLmBr2CRzt58RB+_YmnXcyost-R5=Ff51tALf1xh0kGk+frDw@mail.gmail.com>
+ <CAHLmBr1JHjjp66Er-2e6Yu+3zjrhT82Da-O8fj6_OoPtEPz8eg@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHLmBr1JHjjp66Er-2e6Yu+3zjrhT82Da-O8fj6_OoPtEPz8eg@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V03:K0:O73dw1hs1uKeFAh8mX/V60Y6ffa6IJm9eEG+5OC9Yl/iV+v9IgD
+ w/dQGHG15I9KGLOEYrGFajpy19QzbAHuZbLB6Hu/sntIdwj4gKE8KS4XfYdtR7ZyfghvOzY
+ vgk0haBjfzMqyqlDgO4OD9tkBNtDa5G1048a2Do3Y0wpVcE6yy/BOWfOJUbPOTWgfDp2VZb
+ 99rn7bvr0kQHxZ93jm7EQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:uQhb7eLSbhY=:TN95Fpp5P5GIFCn21i8k5t
+ PGoAaSxpXqVhpmSPwf25PanNryr1XD5/NqsbpH1nfhIqZUMdoyp3F0xhbnnUMloc6FpJhZto5
+ und5VnQId04ku17hdCx4qTNtnhltinaM2ADV4yKM2S6yZrGM642LkvBwfU92X6/QhPxkmWnty
+ lvobIj5nzs3E1deGlQH8jSS+G0dqmMJrVzzf9d9HhXYB7EZOy2Sg3kI/iKhCNgC+S9n1VNWn3
+ 5l0o58wKFxOvtYz/Kco9KMRBNFytAnoCk53UOL+8nF0PkdyYyBmeCEW2xbmUO8+it9dudRR89
+ 6xl3P51Q6fT/KFzP4Zb5+vFqGon68ZlpZm6tqohQygFwS/ull42HzjJ+KBt0eVae+oo3VjOPj
+ rwUCNYoVkhm23OtytjLudPrduR842g15yrJNUQ8raFlXXh8Uhdl5BENo3ju7j46fWnjLbsyNN
+ whV4vmqIH/orv/QyPfg3pfM8CD6C3oPzY5rUPwE56WSMaeyPuytzEZ+/w4GtFZAHcnwUwANsj
+ QPVK5Tl1V7ZlYL5Nf00LDhRNmY5m59vC0oj8qUJ1gwdK+Ux4hPVXBx2G8+KR1PtZfcuNY6HD2
+ GoPN8catZ11R5OeE6cAvR4NutpzwTbziszhv1paYIUHBpFCek6jmT4Nr9axwXx8cfMcH1fRCd
+ rbVIwvWtYqBxfYFiV12cIF+vXfuz6AQB04X2OyGuRJWiSt7DVlTza/xZ7/4XxtTNVn/Y2qHGO
+ qziAImIwK5F1kbpWl6bdfOjHaNlIQPvpOwFLAQnkGEh1JsLDZpGOZ3k5s7Q=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Git Community!
+On Mon, Aug 22, 2016 at 05:04:47PM -0700, Lucian Smith wrote:
+> I'm attempting to use the git-svn bridge, and am having problems with
+> line endings on Windows.
+> 
+> The setup is that we have a git repository on github, and I've checked
+> out a branch on my Windows machine using Tortoise svn.  I make
+> changes, commit them, and the branch is updated.  In general, this
+> works fine.
 
-I'm trying to get Git on the server.  I installed Git and httpd on Centos 7 and configred for smart http.  I created a project on my local git and I cloned it to a base repository:
-git clone --bare DataConversion DataConversion.git then I scp it to the server: scp -r DataConversion git@xx.xx.xx.xx:/opt/git/repository/product/tools.  Then on the server for the project I ran git config core.sharedRepository group  
+Just to make sure:
+The repo is in git format.
+Is it a public repo ?
+Or could you make a piblic demo repo ?
+Do I understand it right: Tortoise SVN talks directly to the Git server ?
+Isn't Tortoise SVN a client to talk to SVN server?
+What goes over the wire to the remote Git server, git or SVN ?
 
-I added a remote server to my local project: git remote add origin http://xx.xx.xx.xx/git/product/tools/DataConversion.git
+To my understanding, "git svn" can use Git locally, and talk to an SVN server.
+What do I miss ?
 
-git remote -v shows:
-origin  http://xx.xx.xx.xx/git/product/tools/DataConversion.git (fetch)
-origin  http://xx.xx.xx.xx/git/product/tools/DataConversion.git (push)
-
-When I try to push to the server I get this message:
-remote: error: insufficient permission for adding an object to repository database ./objects
-remote: fatal: failed to write object
-
-Fwiw I can clone the project from the server to my local.
-
-Here are the permssions on the project and the objects folder.
-
-[git@services-git DataConversion.git]$ pwd
-/opt/git/repos/product/tools/DataConversion.git
-[git@services-git DataConversion.git]$ ll
-total 24
--rwxrwxr-x.  1 git staff  196 Aug 23 11:24 config
--rwxrwxr-x.  1 git staff   73 Aug 22 15:28 description
--rwxrwxr-x.  1 git staff   23 Aug 22 15:28 HEAD
-drwxrwxr-x.  2 git staff 4096 Aug 22 15:28 hooks
-drwxrwxr-x.  2 git staff   20 Aug 22 15:28 info
-drwxrwxr-x. 65 git staff 4096 Aug 22 16:50 objects
--rwxrwxr-x.  1 git staff   98 Aug 22 15:29 packed-refs
-drwxrwxr-x.  4 git staff   29 Aug 22 15:29 refs
-[git@services-git DataConversion.git]$
-[git@services-git DataConversion.git]$ cd objects
-[git@services-git objects]$ ll
-total 12
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 06
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 08
-drwxrwxr-x. 2 git staff   96 Aug 22 15:28 0a
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 17
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 19
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 1c
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 24
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 29
-drwxrwxr-x. 2 git staff 4096 Aug 22 15:28 30
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 32
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 33
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 3d
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 3f
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 41
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 4b
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 57
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 5a
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 5d
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 5f
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 64
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 65
-drwxrwxr-x. 2 git staff 4096 Aug 22 15:28 69
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 6d
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 70
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 74
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 7a
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 7b
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 7c
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 84
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 89
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 8a
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 8c
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 93
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 9d
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 a0
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 a2
-drwxrwxr-x. 2 git staff 4096 Aug 22 15:28 a3
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 a6
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 ab
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 af
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 b1
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 b7
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 b8
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 c3
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 c8
-drwxrwxr-x. 2 git staff   96 Aug 22 15:28 c9
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 cb
-drwxrwxr-x. 2 git staff   51 Aug 22 15:28 cf
-drwxrwxr-x. 2 git staff   51 Aug 22 15:29 d1
-drwxrwxr-x. 2 git staff   51 Aug 22 15:29 d8
-drwxrwxr-x. 2 git staff   51 Aug 22 15:29 d9
-drwxrwxr-x. 2 git staff   51 Aug 22 15:29 db
-drwxrwxr-x. 2 git staff   51 Aug 22 15:29 dc
-drwxrwxr-x. 2 git staff   51 Aug 22 15:29 e1
-drwxrwxr-x. 2 git staff   51 Aug 22 15:29 e7
-drwxrwxr-x. 2 git staff   51 Aug 22 15:29 e9
-drwxrwxr-x. 2 git staff   51 Aug 22 15:29 ea
-drwxrwxr-x. 2 git staff   51 Aug 22 15:29 ed
-drwxrwxr-x. 2 git staff   51 Aug 22 15:29 f0
-drwxrwxr-x. 2 git staff   51 Aug 22 15:29 f3
-drwxrwxr-x. 2 git staff   51 Aug 22 15:29 f5
-drwxrwxr-x. 2 git staff    6 Aug 22 15:29 info
-drwxrwxr-x. 2 git staff    6 Aug 22 15:29 pack
-
-apache and git users are both in the staff group, and staff group is their default group.  I have also tried to use the set group id bit but to no avail. http://www.gnu.org/software/coreutils/manual/html_node/Directory-Setuid-and-Setgid.html
-
-[root@services-git DataConversion.git]# groups apache
-apache : staff git
-[root@services-git DataConversion.git]# groups git
-git : staff apache
-
-So I am pretty confused about what the issue.  Which OS user is git using to write the files?  I hope somebody can help me understand why the project cannot be pushed to the git server.  
-
-Thanks,
-Dave
-
-  
-
-
-
-
-
+> 
+> If this was just SVN, I could set the 'eol-style' for files to
+> 'native' to let it know to expect Windows/linux/mac line endings for
+> particular files.  This seems to be handled in git by using the
+> '.gitattributes' file instead.  Unfortunately, the git/svn bridge
+> doesn't seem to be translate the information in the .gitattributes
+> file to appropriate eol-style settings in SVN.  Checking out a file
+> using SVN on Windows leaves me with a file without CRLF's, and if I
+> check in a CRLF file, that's the way it goes into the repository.
+> Differences in CRLF alone show up as 'real' differences that can be
+> checked in, and, if this happens, this causes problems with other
+> people's repositories.
+> 
+> Am I doing something wrong; is there another way to handle this; or
+> can I file this as a bug report/feature request?
 
