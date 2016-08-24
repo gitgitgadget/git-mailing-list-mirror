@@ -2,69 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8412D1F6C1
-	for <e@80x24.org>; Wed, 24 Aug 2016 21:00:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D42E1F6C1
+	for <e@80x24.org>; Wed, 24 Aug 2016 21:12:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755524AbcHXVAs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 17:00:48 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:34909 "EHLO
-        mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756124AbcHXVAr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 17:00:47 -0400
-Received: by mail-pa0-f43.google.com with SMTP id hb8so9797690pac.2
-        for <git@vger.kernel.org>; Wed, 24 Aug 2016 14:00:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=alexnauda-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=h8JYFoMvodtSyMpYSMwcCacWuubJGC7T2et+W7NXxtU=;
-        b=LafLo8KVQSZR+0ncA4migTGI/j6xhN8jbDIP5fjzi/M1D5BE03pGUEnD1qKb7SfR53
-         SYXDrNhBWRz2UVcdxCwRUtw82Fg5vH/Qs6WefZVlS2ScExGzINkxQpKDvTPeVD0kMyFD
-         5p4n/aUhk1miUxxt8x9LpdwHMkQDwFyohf+6mFJel/YpLCN7TNO3S2aNetldg5jNHWcy
-         08mJ+WD9WXqyf384vrQHxgDBMk/Eiwo3C0FvoHtYqSLT4/CjNgHbxSN9NxseUS7qJAa7
-         A7JsKDMHQiVOFEhTYXhItY9/CkA3bVZYqLhX/WZpCdcoYEVP0FbvUTSdBz+cEFBNzT6a
-         ldXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=h8JYFoMvodtSyMpYSMwcCacWuubJGC7T2et+W7NXxtU=;
-        b=kD4ICfKFZOcmI8TlwUv0x5BdEMQo4kL2PaUAHR1DhZ+s3/RGHd0LVDq9Hrl2BAYLj6
-         1tVam7fl87ZQQUwp+4Q5n5bpRxNDmZ23oSUbqQqXDkT7OxZTd7ClC7yNBS1jtvY4OhU3
-         MuJKic5itYXFSsELIttD5SXO9VED0auVySenN5IHoUjb0nvljYD2AxBS/okms0gft4Wg
-         gOaJPs1K1ExAyYFLvSJaDR+WuW7N6H5EGgcZ7KK/6ErAnbVtmYG7swvJ77BQ1fnsX6EL
-         usyLbwPCzljl9gxxWp9DnGqyjdEdlsvEIeVwMlWiR5MFWQkutC+rOoN50JhftNiyOYp6
-         C1jg==
-X-Gm-Message-State: AE9vXwO2ua1HljdlI6cGlBwsqToRMCYIQiuwmZAPb59E/EzD27HSDyTpzfqsyGTJG6X05Nyn5nbWzFT7bGY04w==
-X-Received: by 10.66.181.139 with SMTP id dw11mr9583771pac.2.1472071953827;
- Wed, 24 Aug 2016 13:52:33 -0700 (PDT)
+        id S1754417AbcHXVMi (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 17:12:38 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64623 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751227AbcHXVMh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 17:12:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5199C37435;
+        Wed, 24 Aug 2016 17:12:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=d+AFhboOMXK1Lz3g11I3XMtclHI=; b=AMkp8b
+        XOOK4SSaJcb46/1grtSPwEUm0JA/U/9BKyMRYBH/hDyL40m5XhIBqAEjq4amldsW
+        1Y90GOU3FlaKnOe8wwWbw2ZG0bleGsuqPSWsXxkpUKmZiMunO31CijdjThn2jkL8
+        kxexLJY/nm80WwhSCzRsLecIsSwNb8CYkjIs0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ePENxN6RHvmv53ezgkhM5wzBOVIN2030
+        GZZzhKLQTLnQCmdTGsFGKne6xfK/D5/b0Byh3tTIdhTmmp7h3JTOjyxXv/n2fI+q
+        Fc09RDD19GvZGVvkSDDHSjal/fCk66ix6l6zZMZPZE5sO7ub32kG5lhayOt+TuKJ
+        eEwgtCnhfVg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4B47D37433;
+        Wed, 24 Aug 2016 17:12:36 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C6A4237431;
+        Wed, 24 Aug 2016 17:12:35 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Pranit Bauva <pranit.bauva@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v14 07/27] bisect--helper: `bisect_reset` shell function in C
+References: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
+        <01020156b73fe69a-13136cfb-4daa-4f5d-9b56-537adf2c6942-000000@eu-west-1.amazonses.com>
+Date:   Wed, 24 Aug 2016 14:12:33 -0700
+In-Reply-To: <01020156b73fe69a-13136cfb-4daa-4f5d-9b56-537adf2c6942-000000@eu-west-1.amazonses.com>
+        (Pranit Bauva's message of "Tue, 23 Aug 2016 11:53:53 +0000")
+Message-ID: <xmqq4m69q3b2.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.67.4.229 with HTTP; Wed, 24 Aug 2016 13:52:33 -0700 (PDT)
-X-Originating-IP: [54.208.66.34]
-From:   Alex Nauda <alex@alexnauda.com>
-Date:   Wed, 24 Aug 2016 16:52:33 -0400
-Message-ID: <CAMQLHmAraXPL=8SmMG4X_424FAzx4q2Byk8pva5wEOg7vNSqLw@mail.gmail.com>
-Subject: on Amazon EFS (NFS): "Reference directory conflict: refs/heads/" with
- status code 128
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7ADE9D40-6A3F-11E6-A4E2-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elastic File System (EFS) is Amazon's scalable filesystem product that
-is exposed to the OS as an NFS mount. We're using EFS to host the
-filesystem used by a Jenkins CI server. Sometimes when Jenkins tries
-to git fetch, we get this error:
-$ git -c core.askpass=true fetch --tags --progress
-git@github.com:mediasilo/dodo.git
-+refs/pull/*:refs/remotes/origin/pr/*
-fatal: Reference directory conflict: refs/heads/
-$ echo $? 128
+Pranit Bauva <pranit.bauva@gmail.com> writes:
 
-Has anyone seen anything like this before? Any tips on how to troubleshoot it?
+> +static int bisect_reset(const char *commit)
+> +{
+> +	struct strbuf branch = STRBUF_INIT;
+> +
+> +	if (!commit) {
+> +		if (strbuf_read_file(&branch, git_path_bisect_start(), 0) < 1) {
 
-Related Jenkins issue: https://issues.jenkins-ci.org/browse/JENKINS-37653
+Hmm, tricky but correct to do the "< 1" comparison.  If the file
+does not exist, you'd get -1; if it fails to read it, you'd get -1;
+if it turns out to be empty, you'd get 0.
+
+> +			printf("We are not bisecting.\n");
+> +			return 0;
+> +		}
+> +		strbuf_rtrim(&branch);
+> +	} else {
+> +		struct object_id oid;
+> +		if (get_oid(commit, &oid))
+> +			return error(_("'%s' is not a valid commit"), commit);
+
+The original is
+
+	rev-parse --quiet --verify "$1^{commit}"
+
+Unless the caller of this function already appended "^{commit}" to
+whatever the user gave "bisect--helper bisect-reset", this
+conversion is not equivalent.  If you said
+
+    git bisect reset HEAD:
+
+get_oid() would tell you that the top-level tree object of the
+current commit exists in the object store, but the original is
+meant to catch "That's not a commit, it's a tree!" before attempting
+to run "git checkout" on it.
+
+I think get_sha1_committish() is what you want to use here.
+
+> +		strbuf_addstr(&branch, commit);
+> +	}
+
+Also this version fails to catch "bisect reset a b c" as an error, I
+suspect.
+
+> @@ -627,7 +603,7 @@ case "$#" in
+>  	visualize|view)
+>  		bisect_visualize "$@" ;;
+>  	reset)
+> -		bisect_reset "$@" ;;
+> +		git bisect--helper --bisect-reset "$@" ;;
+>  	replay)
+>  		bisect_replay "$@" ;;
+>  	log)
+>
+> --
+> https://github.com/git/git/pull/287
