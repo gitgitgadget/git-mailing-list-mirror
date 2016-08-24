@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FFAF1F6C1
-	for <e@80x24.org>; Wed, 24 Aug 2016 15:57:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3524E1F6C1
+	for <e@80x24.org>; Wed, 24 Aug 2016 15:59:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753719AbcHXP5y (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 11:57:54 -0400
-Received: from mout.gmx.net ([212.227.15.18]:55393 "EHLO mout.gmx.net"
+        id S1754602AbcHXP7A (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 11:59:00 -0400
+Received: from mout.gmx.net ([212.227.17.22]:49171 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753457AbcHXP5w (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 11:57:52 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MN1j6-1bW0yE2LaS-006h1N; Wed, 24 Aug 2016 17:57:18
+        id S1752308AbcHXP67 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 11:58:59 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0M51eM-1bDete0jsM-00zG4U; Wed, 24 Aug 2016 17:58:52
  +0200
-Date:   Wed, 24 Aug 2016 17:57:17 +0200 (CEST)
+Date:   Wed, 24 Aug 2016 17:58:51 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Eric Sunshine <sunshine@sunshineco.com>
 cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 06/15] sequencer: lib'ify read_populate_todo()
-In-Reply-To: <CAPig+cSR8BHFdMJz5mFkpJ3UU6w0Xmjav+tu6f3DrkG4Gi-v6A@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1608241754590.4924@virtualbox>
-References: <cover.1471968378.git.johannes.schindelin@gmx.de> <0de75bbce8ade0c6e5cf87d3647faa71a89c6275.1471968378.git.johannes.schindelin@gmx.de> <CAPig+cSR8BHFdMJz5mFkpJ3UU6w0Xmjav+tu6f3DrkG4Gi-v6A@mail.gmail.com>
+Subject: Re: [PATCH 09/15] sequencer: lib'ify create_seq_dir()
+In-Reply-To: <CAPig+cT7fNsyhk1J0Z6evk8xRxa=g8ygUniBB+EHSRMRFcNLcQ@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1608241758400.4924@virtualbox>
+References: <cover.1471968378.git.johannes.schindelin@gmx.de> <80062be27256704617280fdb479176e0d2afb4d4.1471968378.git.johannes.schindelin@gmx.de> <CAPig+cT7fNsyhk1J0Z6evk8xRxa=g8ygUniBB+EHSRMRFcNLcQ@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:W8c57Q+2GorNG6J00Jawx1zdnUe5GJ5ERCG8mRwEh7lBJbwT86T
- yO6HAuy+TgKZ1yvfqJfN3M7kHVHCNaayFLD98d1IFmQqtT6qbfOVf5MQKw2tOP+MpBcqMtx
- +ZHRWRVyqAczN9TZHpNJjvR2QBI8x0coEVdrIok4Gl4kZ01WB2oj68eDzMcFOHc63+/1buu
- beffOtw2FeUaiWSC2s7aQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:meagsdeLtGY=:6arh+wROCJzVCft0cMm023
- 0aPGr7Zs9qJRxUv2/IuYrEKWE0h19az+C4H/d6PlF0icsQiv8F47OiPCmc/inpIE4ZuGuNaJI
- 9U3FSXPKu0SWY/fPoi4IyHwNaT5XhBN3unMqvu17cMtxKqXKvpvBwLwYoSY4jNroWIyf6nXib
- KvW7V3o25Fz6x8ZghN4uuwA4fRHTKPWCwu3fdtFWBLM0eXyHC8a5gHuFe4t6BKLkLBmV+PJOH
- QP0GMpa1/S1QfJ1v2fMFtKfUbfhF0GB0NUaHehKnfxlFJbG8Urh945yAj68EAixE8UQQ9C3hl
- BhCgaJPrrwoXsRpiV0C7LaCFc99rnhhUC2wiCBSesldSASYPtxX9bUgPrYYhEQYGPH4Ft5mq+
- MirlTB/YMRBWF5pjq1hr+J9asEjI1rGNh/5TB6w/2ydxDtLObwtcJz92cz61kY0sxtKy+3WFZ
- umZoot1dQPKv2ySx9uVwfAS48Rsvyldcmhs2zSovJ9rTfTt8uUoRYWu9Jb29ValGo4IrvmPfR
- fQL9n7QBe8xzukLsID1VsQleaX3IbVpCvFlVHhItJqXAvfql2S6mtBdyZMZpiOTtZ6f2Br6+v
- i/ePxDRP3Ao9t1usKgeWnvhG0UQpqly7p7pvAU+N23PSuqaR8zqEUkuhLIEdOF3BCPk2FcVHL
- MidVgGSi01DCQp9Par0DrowVanckm/iPGn78gIBk7bJIy/uovj/0rTzIT1FRItVXbLyloIOMl
- FWyuV3w+laonC9SSpZHdOO2HavtvTjKaqEQMX4sBrFguqiQIB6jVGwNt3BLQcydLLkszhVpPR
- EFMKOZG
+X-Provags-ID: V03:K0:wqBL9lM8wMeLfr8NLDrNH8Cdyj8YaDnVhNe79Al8X5vwildLtO3
+ BRe51OAmafA57iLbr2Tj+MsxXYKuOLUGLvyfPbez9NVLuet8wmeYrqBFYetbOFQ+TyCgw0U
+ 2j4zW+612ZnjHV1/qYT2LrDi7xmFRhAh1gPT3DmHEAI3Dp5jIoCCAGkRdQVw749pjEaEAyO
+ dS6sdkIxNhPdFTBAXG4EA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:nJ+o1xWJYpU=:x7Cxk4Jqcb2vbwE+nT/NmZ
+ vUxmIU4alSUGZD79bq8b/xmyjWdoZiQRQv5oLaK7XbG43mgOFJggRKR3bh98HwcHrU2jI/jPo
+ zGJE0Qie02GoSrCrd8BlPLHLdiQf7UNSfDx4to2Ny+V/pPmfxGvQgq5g/a37p3jLRnZVUiCeo
+ boWM+OtV8hbk9hrz3eIiWbySGr4bt7qXk3/DgQj0FyGp3xj+R5VS8yrCFX8pokN51Yvrh9bP5
+ my07DxnBEdO3wKOYmouBYl/i39Zxb6iRlJ4e+NGtS/6joY3Sh4B+7YV7nK48jUv9aEjNF3VtI
+ NpTH6ZPbAkA0eykR929y+/yeMtsgxxePG9WAJGVOIyPjwAzXQGhoAYapJtKRWwk9PW8WvDI4r
+ SkbzDQVz+ZZII3SZ1OLbh+CgE/gBkIuW0G82oze8i4hjn/CNumLuwNjzDv02Sxs4aoL0ohsS4
+ 4EEMXEV/K4Rirv75gVefyMIgUpsxv8lM01ynT462r4zDqfDi5K7xDEebIG28CyrN5JcSXBfZm
+ WRca1eZxJnY/EmRjD8m9d2/v2o+D6rizw8VwzAkbXXQFFohs5PLw1RzlB2F3rsN1GMh24NTO2
+ oWq7CkgoDII+1494L6JlCd+Iafex+VI6v3Zv76Z4NBSBStrPBOaH0qb2tGczEPyz6vwKRnLG/
+ ZErJB4KuogCUk8kGmti5NhvGDT0KQF6Ow4KxGJtNhSXYo02AqhE+0K8ArTmzAz1qGSmhlcS1e
+ royNPAwXNuKtPO6f7MWZVRoGU8XeeHaYtRPZRoYlLdQ+tadw7u7qqYLycBg2pozWvIXebAos8
+ PB9Jg22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -65,17 +65,18 @@ On Wed, 24 Aug 2016, Eric Sunshine wrote:
 > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > > ---
 > > diff --git a/sequencer.c b/sequencer.c
-> > @@ -754,18 +754,21 @@ static void read_populate_todo(struct commit_list **todo_list,
-> >
-> >         fd = open(git_path_todo_file(), O_RDONLY);
-> >         if (fd < 0)
-> > -               die_errno(_("Could not open %s"), git_path_todo_file());
-> > +               return error(_("Could not open %s (%s)"),
-> > +                       git_path_todo_file(), strerror(errno));
+> > @@ -839,8 +839,8 @@ static int create_seq_dir(void)
+> >                 return -1;
+> >         }
+> >         else if (mkdir(git_path_seq_dir(), 0777) < 0)
+> > -               die_errno(_("Could not create sequencer directory %s"),
+> > -                         git_path_seq_dir());
+> > +               return error(_("Could not create sequencer directory %s (%s)"),
+> > +                         git_path_seq_dir(), strerror(errno));
 > 
-> error_errno() perhaps?
+> error_errno()?
 
-Absolutely!
+Yep!
 
 Thanks,
 Dscho
