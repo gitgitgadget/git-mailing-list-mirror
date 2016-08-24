@@ -2,99 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7ED441F6C1
-	for <e@80x24.org>; Wed, 24 Aug 2016 16:26:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC80E1F6C1
+	for <e@80x24.org>; Wed, 24 Aug 2016 16:26:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757016AbcHXQ02 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 12:26:28 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56260 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1756350AbcHXQ01 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 12:26:27 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7F5B738AE9;
-        Wed, 24 Aug 2016 12:18:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=TocbPH4RuxIooCU+PWM4eLeP6co=; b=A9Gi9v
-        hmZ8PTxLVODXgcPvOfG7ORmHAGEQhwBxLk9B5JdBM9PLGPjz006WbNTIxNzL1VHE
-        3BU+EjEoDD4mWpNtn6dstCaHaKkGF+FIPU/89F6g9PO2OzDOWOizH1LLLeRZV3GG
-        dOFztAHwuY98jMrDJZne7koogjAREg2+HNIRc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cSXW6D8SQXutvh3MT+qvxMzfcI7kdcZH
-        Pgv6Z1h014/TVR2j6UAeE9ocuOvs99BA4B9ECB4vJD+K/1K1Zp6udqRLFcFxVW2F
-        XLDhdeDO55PUGZF4k/85uu8nA3kEI6bQFXROin53e/rqwztlmOCrxGIYvUjDt7Et
-        3ymNxTuQDHg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7736838AE8;
-        Wed, 24 Aug 2016 12:18:58 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EE91538AE7;
-        Wed, 24 Aug 2016 12:18:57 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael J Gruber <git@drmicha.warpmail.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Documentation/git-patch-id: give working code example
-References: <5d33c4682e6251fc724b35c6f1c2f2a477a41b0a.1472043384.git.git@drmicha.warpmail.net>
-Date:   Wed, 24 Aug 2016 09:18:56 -0700
-In-Reply-To: <5d33c4682e6251fc724b35c6f1c2f2a477a41b0a.1472043384.git.git@drmicha.warpmail.net>
-        (Michael J. Gruber's message of "Wed, 24 Aug 2016 14:56:52 +0200")
-Message-ID: <xmqqfupurvgv.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1757032AbcHXQ0d (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 12:26:33 -0400
+Received: from mail-it0-f45.google.com ([209.85.214.45]:36251 "EHLO
+        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757021AbcHXQ0c (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 12:26:32 -0400
+Received: by mail-it0-f45.google.com with SMTP id e63so219872414ith.1
+        for <git@vger.kernel.org>; Wed, 24 Aug 2016 09:26:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=JiK4i/mDd/14khMu8Qf7im+lOVACo9gqTp/jhNqI9L8=;
+        b=GTR/5lUQhNfNJGNlSpJbRkQOHqRkAx0EITVZL3JGn7dsamNvLDeOB3C/oQybLsL6Wn
+         2RAxWRziLgRpZDFxgp7DdyI79jT6TghnFOcsRyaXuOP8Rk3X1xo/PeYVgBeizZZA9k8E
+         rgCLvTuNu8zG+xsuhp+vjQgoX7g3eJemgO+YOvLjMHzklarifkYedFavOQGLGqYHz923
+         Y/y4N5i5hIqGCbp+YtAFKQmvGPPH52vU8hHiRFCDgI3WS3jlitAC0lx/g5u/hWYWcLKk
+         i9hdqdRTKTUCDFCSVfJvxpOEzmhrpjDElaeYS/QQPlPnLS6uIliv35AOXxfubKrovdzq
+         LrbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=JiK4i/mDd/14khMu8Qf7im+lOVACo9gqTp/jhNqI9L8=;
+        b=QSo4DgOrjsgHPI8r1Lyiba3JB0wpAY4xwWkoYXY3z/tGEliH+i+P1lUSl906kkJ5YB
+         euzGFee9kc4PZru/Azr7tAQN7tqqxq0x4nJ6ZIKOOhtmbN2tBovxwOVM8PUY0+I70iZi
+         EpfyRJ2sFYIBiqBszUdACHfeWkrvvMpbgok1DZAkG1ptspjfjxxiOa9Brsi+FZWbRp5F
+         NyoBhXVo6P0ivnr/GcE5m6xYhky999uY+I6AiFjt2r22znVxmUi3XzZjG6SMLeZoL75a
+         2cDBi1cxlCJqHdrgxCEb3CiG/Ipw7DE/jGoc+JcTAUWKRbopYCsSXuvTbEkfm4/0BHMY
+         Ugyg==
+X-Gm-Message-State: AE9vXwPasdPwEng/MBN5xfgVC9O11apYyAeNpzlUqVpmpYMRHuod05RYj/TbJme8xIL2h2MgyQM0D8W1NX41CJ6t
+X-Received: by 10.36.227.134 with SMTP id d128mr636531ith.97.1472055991376;
+ Wed, 24 Aug 2016 09:26:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 75D27D68-6A16-11E6-94B4-E86612518317-77302942!pb-smtp1.pobox.com
+Received: by 10.107.128.66 with HTTP; Wed, 24 Aug 2016 09:26:30 -0700 (PDT)
+In-Reply-To: <20160824142024.xnaehfo2spw26apj@x>
+References: <9bad3d13-3257-2077-a734-f985c375b8d3@gmail.com>
+ <20160821142634.dorgzldjvc3qiaby@x> <ab6e29c1-ea6d-c1c5-e69f-867c16cc736a@gmail.com>
+ <20160823065359.34cirqig56fugnwy@x> <b2f7ff11-23b4-1065-2207-43f736c91988@gmail.com>
+ <xmqq60qqu3rl.fsf@gitster.mtv.corp.google.com> <b264e17a-12ff-69ca-f130-78d2635a0f85@gmail.com>
+ <20160824142024.xnaehfo2spw26apj@x>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 24 Aug 2016 09:26:30 -0700
+Message-ID: <CAGZ79kbz2WfbJ=uEV3irg8DREaEhJJzEX0_m9FGWiik8e9=w=g@mail.gmail.com>
+Subject: Re: Extending "extended SHA1" syntax to traverse through gitlinks?
+To:     Josh Triplett <josh@joshtriplett.org>
+Cc:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On Wed, Aug 24, 2016 at 7:20 AM, Josh Triplett <josh@joshtriplett.org> wrote:
+> Depends on which cases you want to handle.  In the most general case,
+> you'd need to find and process the applicable .gitmodules file, which
+> would only work if you started from the top-level tree, not a random
+> treeish.  On the other hand, in the most general case, you don't
+> necessarily even have the module you need, because .git/modules only
+> contains the modules the *current* version needed, not every past
+> version.
 
-> As it stands, the documentation gives the impression that
->
-> git diff-tree <treeish> | git patch-id
->
-> would be a working invocation of git patch-id, leaving the novice user
-> in the dark.
->
-> Make it explicit that 'git diff-tree -p' would be the command to use.
+The code in submodule-config.{c,h} allows exactly that:
 
-I take the lack of <treeish> as a strong hint that it is not meant
-to be the full command line but merely there to make the command the
-description talks about stand out from others (i.e. "This
-description does not apply to 'diff-files' or 'diff-cache' output").
+    submodule_from_path(commit_sha1, path)
 
-So I would think it is fine as-is.
+returns information about the submodule recorded in a .gitmodules
+file of a specific revision of the superproject.
 
-Having said that, if we were to change something, I would rather
-replace the mention of "diff-tree" with something like "git show" or
-"git log -p", neither of which were even present in their current
-form back when this piece of text was written.
+Ideally the .git/modules contains all the modules that existed, ever.
+Well "ideally" is the wrong word, but it is at least possible as the
+submodules git dir is kept even when you remove the outdated
+submodules working dir. (That's why the git dir is in the superprojects
+git dir in the first place).
+
+But as you say, it is possible of not having the submodule available.
 
 >
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
->  Documentation/git-patch-id.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> As an alternate approach (pun intended): treat every module in
+> .git/modules as an alternate and just look up the object by hash.  Or,
+> teach git-submodule to store all the objects for submodules in the
+> supermodule's .git/objects (and teach git's reachability algorithm to
+> respect refs in .git/modules, or store their refs in
+> .git/refs/submodules/ or in a namespace).
+
+This is a sensible thing to do no matter the outcome of this discussion.
+
+>>  * recorded in ref / commit in supermodule
+>>  * recorded in the index in supermodule
+>>  - recorded in ref / commit in submodule
+>>  - recorded in the index in submodule
+>>  - state of worktree in submodule
+>>
+>> The last three can be easyly acessed by cd-ing to submodule.  The first
+>> two are not easy to get, AFAIUC.
 >
-> diff --git a/Documentation/git-patch-id.txt b/Documentation/git-patch-id.txt
-> index cf71fba..67f8e28 100644
-> --- a/Documentation/git-patch-id.txt
-> +++ b/Documentation/git-patch-id.txt
-> @@ -21,7 +21,7 @@ have the same "patch ID" are almost guaranteed to be the same thing.
->  
->  IOW, you can use this thing to look for likely duplicate commits.
->  
-> -When dealing with 'git diff-tree' output, it takes advantage of
-> +When dealing with 'git diff-tree -p' output, it takes advantage of
->  the fact that the patch is prefixed with the object name of the
->  commit, and outputs two 40-byte hexadecimal strings.  The first
->  string is the patch ID, and the second string is the commit ID.
+> Right.  I primarily care about those first two cases, especially the
+> first one: given a commit containing a gitlink, how can I easily dig
+> into the linked commit?
+
+What do you exactly need? (What is digging here?)
+
+See for example the series, that Jake Keller currently tries to land:
+    "submodule inline diff format"
+https://public-inbox.org/git/20160822234344.22797-1-jacob.e.keller@intel.com
+
+That would enhance all the log/diff/show things.
+
+Reading the original message, do you want to create patches in
+the submodule from the superproject?
+
+Thanks,
+Stefan
