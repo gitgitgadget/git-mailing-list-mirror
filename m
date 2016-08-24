@@ -2,103 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 866061F6C1
-	for <e@80x24.org>; Wed, 24 Aug 2016 16:15:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D76891F6C1
+	for <e@80x24.org>; Wed, 24 Aug 2016 16:24:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756518AbcHXQPO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 12:15:14 -0400
-Received: from mail-ua0-f169.google.com ([209.85.217.169]:36846 "EHLO
-        mail-ua0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754739AbcHXQPN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 12:15:13 -0400
-Received: by mail-ua0-f169.google.com with SMTP id 97so36813517uav.3
-        for <git@vger.kernel.org>; Wed, 24 Aug 2016 09:15:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=HNtx9+68+gSl7gma9REujzOH9JkjaA4Eq7KcGjBzNYg=;
-        b=isDDpyrfjgyxwfX5NdyyzHvdBreFbfk6LBeOEOyOm6Ch+9F5Q5W7CV7z+ZwdUfjFxa
-         GHe6VlQuBae5/mj5pTdTIWUFkLzAYfTJ4JKaMYYFsDEEVsfmfxNJo8tEVE6j4Ehvfrla
-         p6eWWtFZsAuqPb3TLLW/W4Ztg2mLmnS1n1QYbCACulFI0AkgRO/QEJ6oV03oFab2Zc2O
-         jPegSWJ2OX/W7L9nQB8AdG/uCW7d9QNed6Kf9u6GTfyQrnRro8v1YNoGoRLIesdGr/k7
-         TCPwtQRoLsG2V5yn367E7x6NTI85S6YPsEIK6cLPNDN61r04ZNDCLT/Q/KUevx1Owtl7
-         ACXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=HNtx9+68+gSl7gma9REujzOH9JkjaA4Eq7KcGjBzNYg=;
-        b=WNh3lvcGrBYCtV4gltqFHXju+SO51lP6WvThBc6pzwpIVS9h/HliLyelLAskMz8w+l
-         QRr6DS+L7onCP5ZvIJBM/eQmKzw3B9QI4hWARl0clIbt4u46zLGQr3+FTQ3bl5GXaUD5
-         AFjkkgQlta7TLMe6KGnwuQHtPPPg9yGUh+uaxN2gfQpLZafZi+GJzfVDL9skWTvLA7wJ
-         ZuB1HsU1phDQ8uvfgTM5ZER+LMo4rHw3dQgkZLo8g6l97P5VLFy3vzutagBXvfXxQd4+
-         OGZNvUfPYwQgCulbXuKKfZaR8wDwUzB4MZqt+kRck+xaF3nrACwnIyeYB+SrdtEMLGeR
-         y0GQ==
-X-Gm-Message-State: AEkoouuCOCNGgZFDYUKwQr/zmaPtXAM+IaJGyrFLwFJIxh5b6w6Y/LW2HyplkBWXKpuLJDM3Bg1iPAMiox5rrA==
-X-Received: by 10.31.87.194 with SMTP id l185mr2166427vkb.32.1472054819798;
- Wed, 24 Aug 2016 09:06:59 -0700 (PDT)
+        id S1756363AbcHXQYI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 12:24:08 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61120 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1757050AbcHXQYI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 12:24:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 368E636134;
+        Wed, 24 Aug 2016 12:22:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=qPaTJG2W7erIX/pyEfOo3J1qJYo=; b=GU8Ktu
+        tEWtB74SOsAd4s2rQZIPnFROyP/2YaaHtIE35xsHkZ9jIROyM+lYvO6m9K6QmAtv
+        DDq+kGfSj7Au4zpJvEggpVup9v/dGeIZUfggp/KY7/n2qXIDCArJN7nCZ2AI+2Zk
+        FsUcUL/kp3Bb7sgWN5kjHMoMB8mOt7ZjwdqMM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Rmx+SKBWKnvd7A4YISVzMlGTjye7lUpW
+        GyiEPSYUfzHAEEBIQDs6WIxUzHwvG2Fjjx9ojauyQEZXP3HSewCC6ylhexrGUmW/
+        VjSO0QkcO7GnnBhXXNQgI/RY5b86XJIQU41BVrcSqugcodQXg2qbmsoQufc4ohhu
+        XVToICx5mXE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2F39A36133;
+        Wed, 24 Aug 2016 12:22:43 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B35C236132;
+        Wed, 24 Aug 2016 12:22:42 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Robert Dailey <rcdailey.lists@gmail.com>
+Cc:     Git <git@vger.kernel.org>
+Subject: Re: diff <commit> using 3-dot behavior
+References: <CAHd499DL2WiTgnk5A--qihUh-jF9m7aXDzHAQuW=bLRVW4Bniw@mail.gmail.com>
+Date:   Wed, 24 Aug 2016 09:22:40 -0700
+In-Reply-To: <CAHd499DL2WiTgnk5A--qihUh-jF9m7aXDzHAQuW=bLRVW4Bniw@mail.gmail.com>
+        (Robert Dailey's message of "Wed, 24 Aug 2016 09:28:24 -0500")
+Message-ID: <xmqqbn0irvan.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.103.47.140 with HTTP; Wed, 24 Aug 2016 09:06:59 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1608241740320.4924@virtualbox>
-References: <alpine.DEB.2.20.1608131214070.4924@virtualbox>
- <xmqqshu8u0px.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608171507530.4924@virtualbox>
- <xmqqeg5nbehc.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608181022250.4924@virtualbox>
- <CACsJy8A3tkMY-iLPCDj9sqB4HpAK_cxsUu5Z7fsGcCQEORyxUg@mail.gmail.com>
- <alpine.DEB.2.20.1608231553030.4924@virtualbox> <2a6d2230-90ce-0f54-c7ae-a5aa595a2f73@drmicha.warpmail.net>
- <alpine.DEB.2.20.1608231736180.4924@virtualbox> <alpine.DEB.2.20.1608231758260.4924@virtualbox>
- <xmqqzio3uw31.fsf@gitster.mtv.corp.google.com> <xmqqa8g3uppx.fsf@gitster.mtv.corp.google.com>
- <CAG0BQXmmW_0n4OMQVsVQ5+OKbNVpgXmXeExFUOXqY8nH=sg3Jw@mail.gmail.com> <alpine.DEB.2.20.1608241740320.4924@virtualbox>
-From:   Dakota Hawkins <dakotahawkins@gmail.com>
-Date:   Wed, 24 Aug 2016 12:06:59 -0400
-Message-ID: <CAG0BQXmovWAjn8sE=CFGMXguRpEqU3xUbF03aSEN4OLxNc9oZg@mail.gmail.com>
-Subject: Re: Git for Windows documentation, was Re: [git-for-windows] Re:
- [ANNOUNCE] Git for Windows 2.9.3
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael J Gruber <git@drmicha.warpmail.net>,
-        Duy Nguyen <pclouds@gmail.com>,
-        git-for-windows <git-for-windows@googlegroups.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: FBC9A220-6A16-11E6-AFF1-FCB17B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 24, 2016 at 11:41 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Dakota,
->
-> On Tue, 23 Aug 2016, Dakota Hawkins wrote:
->
->> I use GFW almost exclusively, but I pretty much always consult the
->> upstream documentation anyway (because I find it easier).
->
-> Oh... I thought that typing "git help git-commit" opening a nice HTML page
-> in your favorite browser was good enough.
->
-> Do you have any suggestion how to improve the user experience?
+Robert Dailey <rcdailey.lists@gmail.com> writes:
 
-Just a small one, and that's that I'd prefer the option to have help
-display in my terminal (that option might exist and I don't know how
-to turn it on). That would be very convenient for me.
+> $ git diff master...topic
 
-Opening a nice HTML page is probably nice for a lot of users. What
-frustrates me about it is that I don't know which browser window on
-which monitor (of 3) it's going to open in, so it's a context-switch
-to a different window somewhere that I don't have much control over.
+... which is defined roughly as
 
-The thing I find easier about using the upstream documentation is just
-that I can pick the browser window I want it to come up in, and it's
-usually faster enough for me to just google "git-whatever" or
-re-purpose an open doc tab. I don't prefer the _content_ of the
-upstream documentation, it's just less frustrating for me to use, if
-that makes sense.
+	git diff $(git merge-base master topic) topic
 
--Dakota
+The merge-base is to compute the point you forked your topic from
+the mainline.  So if you want to compare your current state in the
+index with the fork point, you'd do
+
+	git diff --cached $(git merge-base master topic)
+
+and comparing your working tree state would be
+
+	git diff --cached $(git merge-base master topic)
+
