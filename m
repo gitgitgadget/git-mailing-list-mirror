@@ -2,204 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A6DBA1F6C1
-	for <e@80x24.org>; Wed, 24 Aug 2016 22:45:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 213CB1F6C1
+	for <e@80x24.org>; Wed, 24 Aug 2016 22:52:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756620AbcHXWpt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 18:45:49 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64259 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1756583AbcHXWps (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 18:45:48 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 23FC239528;
-        Wed, 24 Aug 2016 18:30:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=GnwKpHt9U1eSIs1inE8/YlNWyrA=; b=lnG0gZ
-        B1+3qYzSYbrH70CIZgVZatksAnxoLmWGwlVgVmOXxW+TYeeQ5PfjmCab8Gd4aq6L
-        2B0x29bylOcuQU/786+Fq+gS4BWF0yQBVsQvqp1mydn5E+AIiqSTX1vLn2fMTEyj
-        Ag5SY8KZ/670HAk7QOKkrfcKzPwVdixU+s6Ps=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=u68YWV6p02vUSrKgb17HHZBUC6Ddn9lC
-        Y1XUVoLJiyOnnafpdwwH4ZJYHP+NGM8iIs86XDPSOYpHLMtO6dDHb18eZV14ASZS
-        Sok0N7LciWHKv39GCSq6f5xiGySy1EBmCSAGLtISy+ojSL/v5OPtRZ55ZA8fBppK
-        qqyiTiawcQ0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1D90C39527;
-        Wed, 24 Aug 2016 18:30:41 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6DC0739526;
-        Wed, 24 Aug 2016 18:30:40 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Pranit Bauva <pranit.bauva@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v14 09/27] bisect--helper: `bisect_write` shell function in C
-References: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
-        <01020156b73fe6a7-2e9df745-e3f4-4830-a1af-4acae7964c11-000000@eu-west-1.amazonses.com>
-Date:   Wed, 24 Aug 2016 15:30:38 -0700
-In-Reply-To: <01020156b73fe6a7-2e9df745-e3f4-4830-a1af-4acae7964c11-000000@eu-west-1.amazonses.com>
-        (Pranit Bauva's message of "Tue, 23 Aug 2016 11:53:53 +0000")
-Message-ID: <xmqqfuptol4h.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S932591AbcHXWw4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 18:52:56 -0400
+Received: from mail-it0-f54.google.com ([209.85.214.54]:37515 "EHLO
+        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932337AbcHXWwz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 18:52:55 -0400
+Received: by mail-it0-f54.google.com with SMTP id f6so61187986ith.0
+        for <git@vger.kernel.org>; Wed, 24 Aug 2016 15:52:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ukbvegAAWb2SYKq6xeQOZ+jQbGavdjlLWTcGbFIJEHA=;
+        b=h0bsEhcA5c+LpXSMuTbzdGVSL96qZMMA92N3jnu7x/P7sNTHV6Y2QuKS0Vz2yj3PDl
+         BsqCx7S8aYITupGnpwXs0P1p3OTkcLsjUswn5d2zQkY/GDkrig9jEM+tfYkyhKKlhV4T
+         yyCczQj2TC2zRRDnLLugqDsLRwyizdaiUpdZjatKtpq4Pl1423GWOwk2SqgvGS7QTSg1
+         U6TO8tSz8wglSu/hQgLXwGMNte9dBGuLJhB8PdXDg4ldlpqwnjQGbe1SXYopPVQaDyYB
+         vBBYj3PQOlckIPtiS3rkWtv0/TTz0xA1K17DUnJ7r/9oQdpLLEzgRSBWZpUvMfP36ben
+         5NHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ukbvegAAWb2SYKq6xeQOZ+jQbGavdjlLWTcGbFIJEHA=;
+        b=XjHi5OypuRXsX0j0LXr++DsHnmT0IG6/uML7uDwIPD7wrIyIyZZY++fpwD7p10eeBg
+         kk6NfNh3WjEnDUMyDIyhlqWhJFDWp1u8Qtdqmhc2Fr14m2x6TFC0J61hADa58B+0PaBO
+         5L+Ja21MGUfkO0mTRIbPQb9QEIxvlkVYbcUDL35quakG+MYsG3mHZg5dAf/h1yCAlXsV
+         QuOEbC8Yxl3uV2fzJrVdYMe/JhvXGe7RAuVXlm1DOBQ2Eopx5zSA+X8j5NOTWBGGbBrb
+         yYCfxDyoGSUmLeoz69SwvqKl3bMsSphKcImkqYUOj2fFLTA5ptS73GLTg1m0WM//1zHC
+         sgvA==
+X-Gm-Message-State: AEkoouuW/6oBuo74HQGhxyLFHxcZB/Isx3XJUgussHATuj1JXVuflR+KruX8aOTMeCCJA2BmBS01ebGwxAtaUVCJ
+X-Received: by 10.36.217.9 with SMTP id p9mr1613581itg.46.1472079174162; Wed,
+ 24 Aug 2016 15:52:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 63218248-6A4A-11E6-929A-F7BB12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.107.128.66 with HTTP; Wed, 24 Aug 2016 15:52:53 -0700 (PDT)
+In-Reply-To: <CA+P7+xpmyx+QsdOpS7JC1i9Z6cdsy_=MK7J_rGYiukPsqAJBVQ@mail.gmail.com>
+References: <20160815215327.15682-1-sbeller@google.com> <20160815215327.15682-9-sbeller@google.com>
+ <CA+P7+xpDqkTFLUJBhSwWiVnXw-iy1fmGBWzVBLmybOcPOmevBw@mail.gmail.com>
+ <CAGZ79ka6nwYjBRcUKAxCqAodq=Hw6f86J0Mq6GWyKgMO_PNi4A@mail.gmail.com> <CA+P7+xpmyx+QsdOpS7JC1i9Z6cdsy_=MK7J_rGYiukPsqAJBVQ@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 24 Aug 2016 15:52:53 -0700
+Message-ID: <CAGZ79kah4sY0NJkaqDiUqcwsCHn0SECkMjN8SoXQ8vGi6zRkuw@mail.gmail.com>
+Subject: Re: [PATCHv5 8/8] clone: recursive and reference option triggers
+ submodule alternates
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jens Lehmann <Jens.Lehmann@web.de>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pranit Bauva <pranit.bauva@gmail.com> writes:
+On Tue, Aug 23, 2016 at 11:29 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
+> On Tue, Aug 23, 2016 at 4:03 PM, Stefan Beller <sbeller@google.com> wrote:
+>>>> +
+>>>> +       if (option_recursive) {
+>>>> +               if (option_required_reference.nr &&
+>>>> +                   option_optional_reference.nr)
+>>>> +                       die(_("clone --recursive is not compatible with "
+>>>> +                             "both --reference and --reference-if-able"));
+>>>
+>>> So if you have multiple references that don't all match we basically
+>>> just refuse to allow recursive?
+>>>
+>>> Would it be better to simply assume that we want to die on missing
+>>> references instead of failing the clone here?
+>>
+>> The new config options are per repo (or even set globally), and not
+>> per alternate. And as we communicate the [if-able] part via the config
+>> options to the submodules it is not feasible to transport both
+>> kinds of (reference-or-die and reference-but-ignore-misses).
+>>
+>> That is why I introduced this check in the first place. If we'd go back
+>> to the drawing board and come up with a solution that is on a
+>> "per alternate" basis we could allow such things.
+>>
+>>> That is, treat it so
+>>> that multiple reference and reference-if-able will die, and only info
+>>> if we got only reference-if-able?
+>>>
+>>> Probably what's here is fine, and mixing reference and
+>>> reference-if-able doesn't make much sense.
+>>
+>> I think the reference-if-able doesn't make sense for one project alone
+>> as you can easily script around that, but is only useful if you have
+>> submodules in a partially checked out superproject that you want
+>> to reference to.
+>>
+>> Thanks,
+>> Stefan
+>
+> I'm not sure there is a better design.  How are alternates stored? In
+> a config section?
 
-> +struct bisect_terms {
-> +	struct strbuf term_good;
-> +	struct strbuf term_bad;
-> +};
+Alternates are stored in .git/objects/info/alternates
+with each alternate in a new line. On that file (from
+(man gitrepository-layout):
 
-I think "struct strbuf" is overrated.  For things like this, where
-these fields will never change once it is set (and setting it is
-done atomically, not incrementally), there is no good reason to use
-define the fields as strbuf.
+objects/info/alternates
 
-Only because you chose to use strbuf for these two fields, you have
-to make unnecessarily copies of argv[] in the command parser, and
-you have to remember to discard these copies later.
+This file records paths to alternate object stores that this object store
+borrows objects from, one pathname per line. Note that not only native
+Git tools use it locally, but the HTTP fetcher also tries to use it remotely;
+this will usually work if you have relative paths (relative to the object
+database, not to the repository!) in your alternates file, but it will not work
+if you use absolute paths unless the absolute path in filesystem and web
+URL is the same. See also objects/info/http-alternates.
 
-I think you can just say "const char *" in this case.  
+So changing that file is out of question.
+Ideally we would have a flag for each path here, though.
 
-> +static int bisect_write(const char *state, const char *rev,
-> +			const struct bisect_terms *terms, int nolog)
-> +{
-> +	struct strbuf tag = STRBUF_INIT;
-> +	struct strbuf commit_name = STRBUF_INIT;
-> +	struct object_id oid;
-> +	struct commit *commit;
-> +	struct pretty_print_context pp = {0};
-> +	FILE *fp;
-> +
-> +	if (!strcmp(state, terms->term_bad.buf))
-> +		strbuf_addf(&tag, "refs/bisect/%s", state);
-> +	else if (one_of(state, terms->term_good.buf, "skip", NULL))
-> +		strbuf_addf(&tag, "refs/bisect/%s-%s", state, rev);
-> +	else
-> +		return error(_("Bad bisect_write argument: %s"), state);
+> Or is there some way we can store the is-able per
+> alternate and look it up when adding them to submodule?
 
-OK.
+I guess we could invent a file as alternate-flags that is matches
+line by line to the alternates file.
 
-> +	if (get_oid(rev, &oid)) {
-> +		strbuf_release(&tag);
-> +		return error(_("couldn't get the oid of the rev '%s'"), rev);
-> +	}
-> +
-> +	if (update_ref(NULL, tag.buf, oid.hash, NULL, 0,
-> +		       UPDATE_REFS_MSG_ON_ERR)) {
-> +		strbuf_release(&tag);
-> +		return -1;
-> +	}
-> +	strbuf_release(&tag);
-> +
-> +	fp = fopen(git_path_bisect_log(), "a");
-> +	if (!fp)
-> +		return error_errno(_("couldn't open the file '%s'"), git_path_bisect_log());
-> +
-> +	commit = lookup_commit_reference(oid.hash);
-> +	format_commit_message(commit, "%s", &commit_name, &pp);
-> +	fprintf(fp, "# %s: [%s] %s\n", state, sha1_to_hex(oid.hash),
-> +		commit_name.buf);
-> +	strbuf_release(&commit_name);
-> +
-> +	if (!nolog)
-> +		fprintf(fp, "git bisect %s %s\n", state, rev);
-> +
-> +	fclose(fp);
-> +	return 0;
+I don't think we'd want to go that way for now as it would really only
+help in an edge case?
 
-You seem to be _release()ing tag all over the place.
+If we later find out we need the flag on a per-alternate basis we can
+still come up with a solution and just not set these config variables,
+so I think we'll be fine for now with this approach.
 
-Would it make sense to have a single clean-up label at the end of
-function, introduce a "int retval" variable and set it to -1 (or
-whatever) when an error is detected and "goto" to the label?  It may
-make it harder to make such a leak.  That is, to end the function
-more like:
-
-	finish:
-        	if (fp)
-                	fclose(fp);
-		strbuf_release(&tag);
-                strbuf_release(&commit_name);
-		return retval;
-	}
-
-and have sites with potential errors do something like this:
-
-	if (update_ref(...)) {
-        	retval = -1;
-                goto finish;
-	}
-
-> +	struct bisect_terms terms;
-> +	bisect_terms_init(&terms);
-
-With the type of "struct bisect_terms" members corrected, you do not
-even need the _init() function.
-
-> @@ -182,24 +251,38 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
->  		usage_with_options(git_bisect_helper_usage, options);
->  
->  	switch (cmdmode) {
-> +	int nolog;
->  	case NEXT_ALL:
->  		return bisect_next_all(prefix, no_checkout);
->  	case WRITE_TERMS:
->  		if (argc != 2)
->  			die(_("--write-terms requires two arguments"));
-> -		return write_terms(argv[0], argv[1]);
-> +		res = write_terms(argv[0], argv[1]);
-> +		break;
->  	case BISECT_CLEAN_STATE:
->  		if (argc != 0)
->  			die(_("--bisect-clean-state requires no arguments"));
-> -		return bisect_clean_state();
-> +		res = bisect_clean_state();
-> +		break;
->  	case BISECT_RESET:
->  		if (argc > 1)
->  			die(_("--bisect-reset requires either zero or one arguments"));
-> -		return bisect_reset(argc ? argv[0] : NULL);
-> +		res = bisect_reset(argc ? argv[0] : NULL);
-> +		break;
->  	case CHECK_EXPECTED_REVS:
-> -		return check_expected_revs(argv, argc);
-> +		res = check_expected_revs(argv, argc);
-> +		break;
-> +	case BISECT_WRITE:
-> +		if (argc != 4 && argc != 5)
-> +			die(_("--bisect-write requires either 4 or 5 arguments"));
-> +		nolog = (argc == 5) && !strcmp(argv[4], "nolog");
-> +		strbuf_addstr(&terms.term_good, argv[2]);
-> +		strbuf_addstr(&terms.term_bad, argv[3]);
-
-Here,
-
-	terms.term_good = argv[2];
-	terms.term_bad = argv[3];
-
-and then you do not need bisect_terms_release() at all.
-
-> +		res = bisect_write(argv[0], argv[1], &terms, nolog);
-> +		break;
->  	default:
->  		die("BUG: unknown subcommand '%d'", cmdmode);
->  	}
-> -	return 0;
-> +	bisect_terms_release(&terms);
-> +	return res;
->  }
+Thanks,
+Stefan
