@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1AD2E2018E
-	for <e@80x24.org>; Wed, 24 Aug 2016 15:53:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C21251F6C1
+	for <e@80x24.org>; Wed, 24 Aug 2016 15:54:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756452AbcHXPxN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 11:53:13 -0400
-Received: from mout.gmx.net ([212.227.15.15]:52816 "EHLO mout.gmx.net"
+        id S1754639AbcHXPyB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 11:54:01 -0400
+Received: from mout.gmx.net ([212.227.17.22]:64004 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756405AbcHXPxM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 11:53:12 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0Lpspj-1ay30216xz-00ffAo; Wed, 24 Aug 2016 17:52:57
+        id S1754281AbcHXPyA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 11:54:00 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MdWO8-1bmRsS1iJQ-00PLex; Wed, 24 Aug 2016 17:53:52
  +0200
-Date:   Wed, 24 Aug 2016 17:52:54 +0200 (CEST)
+Date:   Wed, 24 Aug 2016 17:53:50 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Eric Sunshine <sunshine@sunshineco.com>
 cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 01/15] sequencer: lib'ify write_message()
-In-Reply-To: <CAPig+cSX_F-vQ_zSrTU6BQSfMeU=5V3krE7xgmBL=g=Jr8i2MA@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1608241749190.4924@virtualbox>
-References: <cover.1471968378.git.johannes.schindelin@gmx.de> <6dc5e927cbdd1847db5b6cd75041609dd1e1f76d.1471968378.git.johannes.schindelin@gmx.de> <CAPig+cSX_F-vQ_zSrTU6BQSfMeU=5V3krE7xgmBL=g=Jr8i2MA@mail.gmail.com>
+Subject: Re: [PATCH 02/15] sequencer: lib'ify do_recursive_merge()
+In-Reply-To: <CAPig+cTCotTDT83x9=q5ORR1ZWR9oewvXiun9sjvEbTV8OuChA@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1608241753150.4924@virtualbox>
+References: <cover.1471968378.git.johannes.schindelin@gmx.de> <e00df1449af0d8c55000a93c734d8a241b1cb5f0.1471968378.git.johannes.schindelin@gmx.de> <CAPig+cTCotTDT83x9=q5ORR1ZWR9oewvXiun9sjvEbTV8OuChA@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:mNMXxt9PbSa66ph+wuPo8B/ujY9crZ/sOLPVgTJ8NODpDg7lhbp
- RAfeFSApbM1VX+N9O5kZ3RtmJbXRFxImu8ivJZU9zP715eeHvmTN787ZS+SGsilX1O9OULx
- 4OWgjOIJ60Le2MfMYl0leDVpHqvtFERTTMEWoC8JQQ/qrlblaNjZnZSVK7Iapj2JZLpxg40
- gN/ePqYw5lmit2DP+yeTg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:5jFn9J4HsIc=:emFFbTp0LWcmTOuhNN9sNp
- Z2E9fQuAGw+XsVGABMT6jm0Nw4q1Tp5Y5zB9mOoGfaGA8TkJXiPbh3xbhPwOBVKkd143iPu7a
- D4H6/z5vq69S5svk7DH7HnN3TrJqUnE96wjUsOhJDnSuMhwy6KDjlaNagPHYG3fa0qg1PAYQx
- cxAQAOml7qlGn4zBiRp/X44CjxVuuv2UVeMs7PaSIGA2ZBLHfF6vVHySojbqNZsKsqeWIQDBe
- qL0l8stL9ihwTJ2Zdn/J4PED9ITiVwKs+eu4dXL8CHQ3XxFDHY76TV2xTdPddMkJ0bxcin4EJ
- f54SjPfJcOITJVHDSCe3VZVWwkpFPixMdTNeGOv+wtY2OWEXrjJbW+Y0NarZ3/XNUFnqZFwiv
- kvvCvSk1FUY0dJrpCKZD43LjVCiepuIuh7KgajX2kCKkj+gU+Ba4d8ln/vbUNp2fJdg+xuCcu
- ODq/rTo1pb8/tKaye5EZKChueRR7qLV7xMSKwUBIrXAWRKEIpXmtGMy1JCRfPkEFzoMsny6Fm
- HRKvFQxsAKfzdaP6ckyda6jkOvt6nRBDzMvaLGdQwoxVJxYKUsimIYhZtGwWm81skiFyYvPhM
- o5xvOCyaeQLP8XDm+7PkTTuGMRArGvg1Jh+YdqKW+BTZELDX5cYlnFkNZ5Jt4pj2nxw3vqzPh
- yutoml9DMJ/MGiU1B84Mj986jylkUoc0ZE3kPyflca4VsiR00hLM2FXnizB0zM/GzlXnxIxKC
- faNOU13wWToOhysd2i3MT5fPRtWp5WqnoAVRGdd3jHWyM1iV7B9KuwdP1S3j5at3LXmKvd6Ju
- GejClcY
+X-Provags-ID: V03:K0:HLUCC3poqWA/bzIfpL17kIrHYqOJzJEJAP6+nJL0yHFvU5aVA98
+ VoCjF83MycyZav78gly6acFkT3LqwquByswO/1TcGIplMHo4lH/0dpTGeLlLAReTyiTLqAg
+ V5mgyI4aI1cBq/Bt5y4YqlnV37dWuoneLPJeYeVI1blaZIQptbddLnnFXR0lkjyijqBtOOj
+ c8gTSNL8Uu2ig5WUdkBRA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Alh9Z3NbI7Y=:BiuGRFnQ7zaGlKA1nxUH0l
+ wE4tAn1IFk5eCGjmP7JRVbPM9sxaW8EZpBqj+19TQZ08mHSa6hzsss5ozZAhTNtHRPqf36Pfa
+ ORImUxzKo1HEcOOT578C/bDmMWvRicUDrEDnc4UZK/If88sxMa3snSJYKPaER7kR+pV2JQhC1
+ zwz2qn/Pq4BkO6rU7fbTFtvR3bD28ODuQ21FuMpMfw/JnE5lOZd/AzxaFuQtCHoYjJtexItfc
+ JFFpPJJCEPLUNJ/xUjIzeF862XV5Y0zR4TY3Ne3vAg4FxtWQlJdmXFoMC7H2BHNf0O6Wx9Vvz
+ g21IAFBrWVABl/zhGMdNbGfXQd13kO5K8+HxgHfEGP1H4wakSQ6IbSqxF20OQhQQph3AxHsFK
+ xYJ5Y8aQPSo9SqR/RIXqWcFEhSVQ3GxCu3WH6tgCxYgsGFTTQerl70hB2ldhTSx25FfG/n5v8
+ q+5BfipMgdxYRiD3sbeaWAnuVGa7f4Sjw2IqM4MgF0h6K9xFknpAV6xV44/C+7IdKFCwgUumi
+ +Dq1zlokFFlShiXf3qSxwebLTK5YQi3IW/xwTAj7gNJjPRexmVy5gPBNQH8N7CiGp3hIC0k1e
+ Qw9HirXo2lGmUEo7VxCdCMghu+rTf0w9HbDZZYrTjNIMneDsFjn1jjiynxTDFSJzPAVLlh5J7
+ WlI6xojTBQOt8xWCOXtDGc9le0WHUvPkzVfWh9G9waTa3qh1E2/3jEVBh+v6fmrRvPlCUGfel
+ NoVNp0xfjyXPGdmVqdeGhmbwrR2NU9qd9IlYIaW0dXRynfRQTK91r2QC/ZGZ5uJzxhr4wOKNl
+ ik8WOSt
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -65,41 +65,22 @@ On Wed, 24 Aug 2016, Eric Sunshine wrote:
 > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > > ---
 > > diff --git a/sequencer.c b/sequencer.c
-> > @@ -180,17 +180,20 @@ static void print_advice(int show_hint, struct replay_opts *opts)
-> > -static void write_message(struct strbuf *msgbuf, const char *filename)
-> > +static int write_message(struct strbuf *msgbuf, const char *filename)
-> >  {
-> >         static struct lock_file msg_file;
-> >
-> > -       int msg_fd = hold_lock_file_for_update(&msg_file, filename,
-> > -                                              LOCK_DIE_ON_ERROR);
-> > +       int msg_fd = hold_lock_file_for_update(&msg_file, filename, 0);
-> > +       if (msg_fd < 0)
-> > +               return error_errno(_("Could not lock '%s'"), filename);
-> >         if (write_in_full(msg_fd, msgbuf->buf, msgbuf->len) < 0)
-> > -               die_errno(_("Could not write to %s"), filename);
-> > +               return error_errno(_("Could not write to %s"), filename);
+> > @@ -303,7 +303,8 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+> >         if (active_cache_changed &&
+> >             write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
+> >                 /* TRANSLATORS: %s will be "revert" or "cherry-pick" */
+> > -               die(_("%s: Unable to write new index file"), action_name(opts));
+> > +               return error(_("%s: Unable to write new index file"),
+> > +                       action_name(opts));
 > 
-> Does this need to rollback the lockfile before returning[*]?
+> Does this need to rollback the lockfile before returning?
 > 
-> [*] I'm not terribly familiar with the lockfile mechanism and I don't
-> have a lot of time to study it presently, so ignore me if this is a
-> stupid question.
+> A cursory scan of read-cache.c:do_write_locked_index() seems to
+> indicate that lockfile disposition is not handled automatically in
+> case of error (unless I'm misreading).
 
-Not a stupid question at all.
-
-The way lockfiles work is that there is an atexit() handler that ensures
-that uncommitted lockfiles get rolled back automatically. So it happens to
-work correctly right now, because all (direct and transitive) callers
-simply stop doing things as quickly as possible. That means that no
-subsequent attempt is made to write to the same file.
-
-Technically, I agree with you that it may look a bit cleaner to roll back
-at this point. However, this is outside the purview of this here patch
-series, as it would actually change the behavior (the previous die() would
-rely on the atexit() handler to roll back the locked file, too). So I
-think if this is to be changed, it has to be in its own, separate patch
-series.
+As mentioned elsewhere in this thread: an atexit() handler is tasked with
+rolling back uncommitted lockfiles.
 
 Ciao,
 Dscho
