@@ -2,78 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 610841F6C1
-	for <e@80x24.org>; Wed, 24 Aug 2016 16:56:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F34831F6C1
+	for <e@80x24.org>; Wed, 24 Aug 2016 17:01:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932328AbcHXQz0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 12:55:26 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52712 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754618AbcHXQyJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 12:54:09 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 57C5337055;
-        Wed, 24 Aug 2016 12:52:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=UU0sMm8OPeP12NvVWEOgDU5kQd4=; b=Zxtgsn
-        UCGL8n4ORD3xX7noJZ/igTr/Bnsn8t2QOIxP/rCxCBCoYSq8vHqGB5T89t+/X28J
-        0HrOS1pQgyHOfplP5CfqJGAQd0TADb1Qk12IeLwlP8pMnwMRrDbjzFBgUoSXPBCp
-        OxWN8itchAQf3UlZ8dhrD3v8CDUO/1su6kKzY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=l1/UppQJJCPnJApCfrtDYzq2Yxd+yRPY
-        ZHQO6q3hpwmOTF9MyNwzvFuT8KGSOR33hTUcQIqv108bOSDpm9iCYA/rtGdLYwKa
-        C16vgDLCz+UdVaAwHquuXtR7jWBGtOMJBD+I9aGWmI7aWih1hwAhYQYtICZfegZW
-        KUgixK7sjnM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4E37F37054;
-        Wed, 24 Aug 2016 12:52:25 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CC0F637053;
-        Wed, 24 Aug 2016 12:52:24 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Chris Packham <judge.packham@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH] completion: support excluding refs
-References: <20160824084152.2857-1-judge.packham@gmail.com>
-Date:   Wed, 24 Aug 2016 09:52:22 -0700
-In-Reply-To: <20160824084152.2857-1-judge.packham@gmail.com> (Chris Packham's
-        message of "Wed, 24 Aug 2016 20:41:52 +1200")
-Message-ID: <xmqqy43mqfcp.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1753188AbcHXRBL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 13:01:11 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60549 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751742AbcHXRBL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 13:01:11 -0400
+Received: (qmail 10515 invoked by uid 109); 24 Aug 2016 17:00:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Aug 2016 17:00:31 +0000
+Received: (qmail 4560 invoked by uid 111); 24 Aug 2016 17:00:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Aug 2016 13:00:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Aug 2016 13:00:28 -0400
+Date:   Wed, 24 Aug 2016 13:00:28 -0400
+From:   Jeff King <peff@peff.net>
+To:     David McGough <dmcgough@opentext.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Smart HTTP push permissions failure
+Message-ID: <20160824170028.y4kr5jchsnb5xdge@sigill.intra.peff.net>
+References: <89CBBBEBEE33F5469A9FA456B5F70625CCDB9BEB@otwlxg20.opentext.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 22008626-6A1B-11E6-814B-E86612518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <89CBBBEBEE33F5469A9FA456B5F70625CCDB9BEB@otwlxg20.opentext.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Chris Packham <judge.packham@gmail.com> writes:
+On Tue, Aug 23, 2016 at 03:45:33PM +0000, David McGough wrote:
 
-> Allow completion of refs with a ^ prefix. This allows completion of
-> commands like 'git log HEAD ^origin/master'.
-> ...
-> +			[[ "$cur" == ^* ]] && pfx="^"
->  			for i in HEAD FETCH_HEAD ORIG_HEAD MERGE_HEAD; do
-> -				if [ -e "$dir/$i" ]; then echo $i; fi
-> +				if [ -e "$dir/$i" ]; then echo $pfx$i; fi
->  			done
->  			format="refname:short"
->  			refs="refs/tags refs/heads refs/remotes"
->  			;;
->  		esac
-> -		git --git-dir="$dir" for-each-ref --format="%($format)" \
-> +		git --git-dir="$dir" for-each-ref --format="$pfx%($format)" \
->  			$refs
+> When I try to push to the server I get this message:
+> remote: error: insufficient permission for adding an object to repository database ./objects
+> remote: fatal: failed to write object
+> [...]
+> So I am pretty confused about what the issue.  Which OS user is git
+> using to write the files?  I hope somebody can help me understand why
+> the project cannot be pushed to the git server.
 
-That looks like a reasonable approach to me (but I am no expert in
-this area myself).
+For a smart-http push, it will be whatever user the web server execs the
+CGI as. So I'd think "apache" would be the default, but it's possible
+that it runs CGIs as a different user, depending on your config.
 
+One possibility may be to add a simple shell script CGI that does
+something like:
+
+  #!/bin/sh
+  echo "Content-type: text/plain"
+  echo
+  id
+
+just to see what's happening.
+
+Based on the data you showed, here are some wild possibilities I can
+think of:
+
+  - the CGI runs as "apache", but your files are owned by "git".
+    "apache" is in the "staff" group, and the directories all have write
+    permission for that group. But are we sure that apache does not shed
+    any group permissions when running a CGI? The "id" script above
+    should hopefully show that.
+
+  - You mentioned CentOS. It has been a while since I dealt with RHEL
+    and its derivatives, but I think selinux is turned on by default
+    there. Is it possible that the webserver runs in an selinux profile
+    that does not allow writing to the repository directory?
+
+    I don't recall the specifics of debugging selinux problems, but
+    there may be logs there.
+
+Sorry those are just stabs in the dark, but I don't see anything else
+obviously wrong with what you've posted.
+
+-Peff
