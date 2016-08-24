@@ -2,100 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68B0D1F6C1
-	for <e@80x24.org>; Wed, 24 Aug 2016 12:44:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59DE71F6C1
+	for <e@80x24.org>; Wed, 24 Aug 2016 12:57:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754244AbcHXMoh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 08:44:37 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:36184 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753012AbcHXMog (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 08:44:36 -0400
-Received: by mail-wm0-f65.google.com with SMTP id i138so2489083wmf.3
-        for <git@vger.kernel.org>; Wed, 24 Aug 2016 05:44:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=B1p4oFimbznfbWkK/boPLt2tuRap/Nws2mN3mQ9n//c=;
-        b=v+DZfYOENH5unwVHlQdZO2cYmqjXQYBHrmABHaBsnT9eMdbvmgs2xswuVt7k0ioOdK
-         cl8CMgJyC5XCNDcAW1Vf64cA+aMjYKiW3RHyY8he+9kKhKfB/9ddAAvuzVBI0dulGwTh
-         fYXdDV63gjqsZcjUIyQR/5NCu01QR6dCNNJ42OU96Qha69xSqYhcb/5FqjLOTUDyjvMJ
-         DJckKmeK6v7M82AlleH4zAa0yus4R8di/LGwdjt1EYWdtD8OX4lDDI/wYBZA4kn7pJWH
-         iRmFHtEUJ1nGj7pjxbTdKm3Ck3e/Duzkhb68QRq86VR+hU58aeMPT5JT9ewuOJbCuZCA
-         wj8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=B1p4oFimbznfbWkK/boPLt2tuRap/Nws2mN3mQ9n//c=;
-        b=Zvgh22JggYUeBGQwNyeS9jvcqsEzHDux9FKjNG0chjdS27MCdEx2fhdpLgrR8FysKV
-         DBj0FsRZVAtzF/5izFIqsc1sGXglCxrhfUAoFTrgmud6seu+qJJTMIwQdQVxxZ7zXdQk
-         XEbd++py8QwOwd8lcm4HCQnUFGgkkPPzjoav4QnFlzqg9wrid8CF5pXjzh1sjig42MDv
-         wtS8CqIFvvuBC0dlcVLjhyH4ZIYRLRJAUpCdzmGq7vk0/RZAWaPuQfe5q4MODfBPgDkb
-         Wv1nIz4wK54yErxuukZZnse5BtkPdTgC5nbppQFia0x5tB0TPIOonlnFS9Sl0tmXgvaD
-         CVPg==
-X-Gm-Message-State: AEkoouszlrfDo0ZY1m9ao79Kd3kFbxrSqf5X8qk8BNPSNRfQ0mtAT/iIqUB4BeavwEVEJg==
-X-Received: by 10.194.171.131 with SMTP id au3mr2591424wjc.125.1472042674857;
-        Wed, 24 Aug 2016 05:44:34 -0700 (PDT)
-Received: from [192.168.1.26] (epy16.neoplus.adsl.tpnet.pl. [83.20.66.16])
-        by smtp.googlemail.com with ESMTPSA id g1sm9875110wjy.5.2016.08.24.05.44.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 24 Aug 2016 05:44:33 -0700 (PDT)
-Subject: Re: [PATCH v4] config: add conditional include
-To:     Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20160712164216.24072-1-pclouds@gmail.com>
- <20160714153311.2166-1-pclouds@gmail.com>
- <CACsJy8Bw0ZNu-6SB0P3dBZCLMJWJkbUqb64H_QOcn4UH+_AcNA@mail.gmail.com>
- <20160819135408.ckyw6ruseicvg2jt@sigill.intra.peff.net>
- <5c131421-ae7f-8a37-76ab-0fd05cbe3530@gmail.com>
- <CACsJy8C30=-LGMYQJ6MO17L8Vv1q=iQGC=R8TDhC5qM1f5Lh5A@mail.gmail.com>
- <vpqr39harit.fsf@anie.imag.fr>
- <CACsJy8BNP8GDRxDGTQwcYWTovN9o11TCkUJ28=5zav3QnGv9nQ@mail.gmail.com>
- <vpqlgzp9bw1.fsf@anie.imag.fr>
- <CACsJy8BokiiDbheN1_CqWWgK3xRn8YP30t7ojjVeDnok5_M4Ow@mail.gmail.com>
- <alpine.DEB.2.20.1608231541420.4924@virtualbox>
- <CACsJy8CY1HqSTtmPw+H1yGXV_tBPt3GVU162ZTVecXFhPTnaYA@mail.gmail.com>
-Cc:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Sebastian Schuberth <sschuberth@gmail.com>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <febf6605-70e7-4653-1e3e-cddc1882e037@gmail.com>
-Date:   Wed, 24 Aug 2016 14:44:29 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
-MIME-Version: 1.0
-In-Reply-To: <CACsJy8CY1HqSTtmPw+H1yGXV_tBPt3GVU162ZTVecXFhPTnaYA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        id S1753733AbcHXM51 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 08:57:27 -0400
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:38787 "EHLO
+        out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752958AbcHXM50 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 24 Aug 2016 08:57:26 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.nyi.internal (Postfix) with ESMTP id 473322051D;
+        Wed, 24 Aug 2016 08:56:54 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute3.internal (MEProxy); Wed, 24 Aug 2016 08:56:54 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
+        date:from:message-id:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp;
+         bh=uEsSitFRWiD6WeYM8MMPweWm2jo=; b=mMOEQa/PfyCG00y8e1Qj0tN/7egr
+        MEzVfPK54lVP1FfLCTzdVKzp8XMm+aaI4qS7z1CsTPKzMlyYmlcm9nLfHgTT2zUa
+        HkR7kwoBMP6EwCF/fjofCa/7dMOAy91Qri75+s/cElHKjhPVOE0212W00TbmVaXa
+        kF4kPsLwOkGJruo=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+        messagingengine.com; h=date:from:message-id:subject:to
+        :x-sasl-enc:x-sasl-enc; s=smtpout; bh=uEsSitFRWiD6WeYM8MMPweWm2j
+        o=; b=UL4G2N8tgk2CVwZWqQU3veBNtBUgzlc9Pe+ABLijVJU1gBWu7agpouIf+9
+        ZO6GCPdMof44HPa193xEWJREuht4JN3Wivy1eC8CnUjqP54zIdwwSZ43Rly/HhkR
+        U24ax3K058qEd4blCl1mHYhpyaqW72FVtc5E5dkjIgNFD8OzY=
+X-Sasl-enc: 6ujBJV9rhT6+LGA40TtU3gc7srW2HdIrf/9HNO4xIwgr 1472043413
+Received: from localhost (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+        by mail.messagingengine.com (Postfix) with ESMTPA id D79BDF29D0;
+        Wed, 24 Aug 2016 08:56:53 -0400 (EDT)
+From:   Michael J Gruber <git@drmicha.warpmail.net>
+To:     git@vger.kernel.org
+Subject: [PATCH] Documentation/git-patch-id: give working code example
+Date:   Wed, 24 Aug 2016 14:56:52 +0200
+Message-Id: <5d33c4682e6251fc724b35c6f1c2f2a477a41b0a.1472043384.git.git@drmicha.warpmail.net>
+X-Mailer: git-send-email 2.10.0.rc0.268.ge3ba28a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 24.08.2016 o 11:37, Duy Nguyen pisze:
+As it stands, the documentation gives the impression that
 
-> It works for me either way. So I'm going to assume we want
-> "[include-if "gitdir-is:..."]", unless people think it needs more
-> discussion (then just write something, anything, so I can put it back
-> in my backlog)
+git diff-tree <treeish> | git patch-id
 
-A final note: [include "if-gitdir:..."] is inclusive by default
-(I think), that is old Git would include it unconditionally,
-while [include-if "gitdir-is:..."] is exclusive by default, that
-is old Git would ignore it.
+would be a working invocation of git patch-id, leaving the novice user
+in the dark.
 
-But I might be mistaken.
+Make it explicit that 'git diff-tree -p' would be the command to use.
 
-P.S. I personally prefer [include-if ...]
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ Documentation/git-patch-id.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/git-patch-id.txt b/Documentation/git-patch-id.txt
+index cf71fba..67f8e28 100644
+--- a/Documentation/git-patch-id.txt
++++ b/Documentation/git-patch-id.txt
+@@ -21,7 +21,7 @@ have the same "patch ID" are almost guaranteed to be the same thing.
+ 
+ IOW, you can use this thing to look for likely duplicate commits.
+ 
+-When dealing with 'git diff-tree' output, it takes advantage of
++When dealing with 'git diff-tree -p' output, it takes advantage of
+ the fact that the patch is prefixed with the object name of the
+ commit, and outputs two 40-byte hexadecimal strings.  The first
+ string is the patch ID, and the second string is the commit ID.
 -- 
-Jakub Narębski
+2.10.0.rc0.268.ge3ba28a
 
