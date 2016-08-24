@@ -2,100 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_03_06,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B9C81F6C1
-	for <e@80x24.org>; Wed, 24 Aug 2016 23:28:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB2D81F6C1
+	for <e@80x24.org>; Thu, 25 Aug 2016 04:55:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755954AbcHXX2U (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 19:28:20 -0400
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:24717 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753269AbcHXX2R (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 19:28:17 -0400
-Received: from PhilipOakley ([92.22.21.109])
-        by smtp.talktalk.net with SMTP
-        id chagbSBRNcpskchagbLU2u; Thu, 25 Aug 2016 00:28:15 +0100
-X-Originating-IP: [92.22.21.109]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=ILRAMUnG c=1 sm=1 tr=0 a=qMCwDsOCRbQP4wxbSmd05g==:117
- a=qMCwDsOCRbQP4wxbSmd05g==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=FBACa5QmktsKF8_JjZ4A:9 a=QEXdDO2ut3YA:10 a=6kGIvZw6iX1k4Y-7sg4_:22
-Message-ID: <99BC268995014F88A25852349769FD02@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Dakota Hawkins" <dakotahawkins@gmail.com>,
-        "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-Cc:     "Junio C Hamano" <gitster@pobox.com>,
-        "Michael J Gruber" <git@drmicha.warpmail.net>,
-        "Duy Nguyen" <pclouds@gmail.com>,
-        "git-for-windows" <git-for-windows@googlegroups.com>,
-        "Git Mailing List" <git@vger.kernel.org>
-References: <alpine.DEB.2.20.1608131214070.4924@virtualbox> <xmqqshu8u0px.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608171507530.4924@virtualbox> <xmqqeg5nbehc.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608181022250.4924@virtualbox> <CACsJy8A3tkMY-iLPCDj9sqB4HpAK_cxsUu5Z7fsGcCQEORyxUg@mail.gmail.com> <alpine.DEB.2.20.1608231553030.4924@virtualbox> <2a6d2230-90ce-0f54-c7ae-a5aa595a2f73@drmicha.warpmail.net> <alpine.DEB.2.20.1608231736180.4924@virtualbox> <alpine.DEB.2.20.1608231758260.4924@virtualbox> <xmqqzio3uw31.fsf@gitster.mtv.corp.google.com> <xmqqa8g3uppx.fsf@gitster.mtv.corp.google.com> <CAG0BQXmmW_0n4OMQVsVQ5+OKbNVpgXmXeExFUOXqY8nH=sg3Jw@mail.gmail.com> <alpine.DEB.2.20.1608241740320.4924@virtualbox> <CAG0BQXmovWAjn8sE=CFGMXguRpEqU3xUbF03aSEN4OLxNc9oZg@mail.gmail.com>
-Subject: Re: Git for Windows documentation, was Re: [git-for-windows] Re: [ANNOUNCE] Git for Windows 2.9.3
-Date:   Thu, 25 Aug 2016 00:28:14 +0100
-Organization: OPDS
+        id S1755587AbcHYEzD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Aug 2016 00:55:03 -0400
+Received: from mail-yb0-f173.google.com ([209.85.213.173]:36662 "EHLO
+        mail-yb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755671AbcHYEyn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2016 00:54:43 -0400
+Received: by mail-yb0-f173.google.com with SMTP id e31so12913636ybi.3
+        for <git@vger.kernel.org>; Wed, 24 Aug 2016 21:54:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=UbNbnyTXWi0zYGrJ0/f8ZDUJywVCUEvQr1pscGVkHd4=;
+        b=YQjkrXf0wLw9WVi7RbL83D5DMXw/YWADGjceLdRb85vu8538wNC0ILNCfBzKeIwJSL
+         MbsQeCTOawbF81jo2/lCTAfxeG/7oejBu0K7TwDqdm+8qzrEwg6ryg5TK2xV1Zn5jT52
+         NNhi+WtdIO80Qlnhoyu/k1RwTrMx+Q68l8EZBHfMJDgy0yZG8n67HCkthTCnexKV+BbF
+         yHjWJStVtiahyHSORIYlTomoXDs9ee19SEhzDXhCJ1o1QcE7YGsbIU7rwsHFnOXBc7p7
+         eNWbE/TBq0bjvTz3WBv8AOtqLKYqoB02hmlpFtMHftCo6UQlVuQUX7ZOAYPgXXuZgVMc
+         Q5wA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=UbNbnyTXWi0zYGrJ0/f8ZDUJywVCUEvQr1pscGVkHd4=;
+        b=XDmeqInEY16djVUiMT94d4/5Wo8+M7AkwmVx4m2LUgkJY1LcXHaDuIfRrMkFaHVqPd
+         o4SPINLdwU7x66OFB5v2ozHwI5SRHd6iMuI2brqycqn6mgEyc3A6TzOJV9quVgef4MIl
+         txisSzLrjmh3Id2ARUZP0wFSbxvu2TL2GofhTJOk+mZH682SNDd50C40PA8CzguEU44h
+         DzELy6bQTsLi0AV2mM1ptnL5bM7WIRBuGJOJWGnrg5aMvYyPZCNgNWSJKq2k96jMPJTH
+         fQsRNUAYwTTHrQ/0b5d2vdQHeJ/lPsMgGBjj3RnsiT260bUQbBaN0SFhFhPoB/JPHwRh
+         jfrg==
+X-Gm-Message-State: AEkoousFlIWrl1unJx63I8F+jI7rB8lAxHJiy790Ake3VjgMz7KfCCgXSdbk835g0rnKx3iOhyAyfweUCQe2qw==
+X-Received: by 10.37.197.211 with SMTP id v202mr4521265ybe.15.1472081869587;
+ Wed, 24 Aug 2016 16:37:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="UTF-8";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfPVhD+GwKpLlwMOzGZRgIXyCymId9vzL9jBb3MYzLhBdbcOPEaTmHc7doerk47pK+59Wp0FdSAWwwzGea6LnRHUnDV8QCc2vY/G2izOPK51vstL/ZYIJ
- SWBQu7KWzT5BckODIm+TkXlyA7iZgLVICFTvtJK6psdC8jvHxWZAoO3TrxPSy06prOGfZ7wal7LuBmDjrWLCQ5pBuxHMQSUXYV+Z3LHHzVoD6rmP7ncprEYw
- Mp1arb/pIBncAKvAmdTSgFK4Ct56qU/THxA+bObX1+ZJoMFTAb1nYVkl+Zgp6jmtVx0efYT2Tm/ne0gjrzBRldpJMV700d+AAJp8rshgPwqCw0dVAGSM+WXe
- 1TbbPTq0y1VeGoF/PmeN11/xMRAuxw==
+Received: by 10.37.96.195 with HTTP; Wed, 24 Aug 2016 16:37:29 -0700 (PDT)
+In-Reply-To: <CAGZ79kah4sY0NJkaqDiUqcwsCHn0SECkMjN8SoXQ8vGi6zRkuw@mail.gmail.com>
+References: <20160815215327.15682-1-sbeller@google.com> <20160815215327.15682-9-sbeller@google.com>
+ <CA+P7+xpDqkTFLUJBhSwWiVnXw-iy1fmGBWzVBLmybOcPOmevBw@mail.gmail.com>
+ <CAGZ79ka6nwYjBRcUKAxCqAodq=Hw6f86J0Mq6GWyKgMO_PNi4A@mail.gmail.com>
+ <CA+P7+xpmyx+QsdOpS7JC1i9Z6cdsy_=MK7J_rGYiukPsqAJBVQ@mail.gmail.com> <CAGZ79kah4sY0NJkaqDiUqcwsCHn0SECkMjN8SoXQ8vGi6zRkuw@mail.gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Wed, 24 Aug 2016 16:37:29 -0700
+Message-ID: <CA+P7+xrokr0ZGidQFuvpN+-J_WDjkaUropcnPGVjZHafc12AnQ@mail.gmail.com>
+Subject: Re: [PATCHv5 8/8] clone: recursive and reference option triggers
+ submodule alternates
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jens Lehmann <Jens.Lehmann@web.de>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Dakota Hawkins" <dakotahawkins@gmail.com>
-> On Wed, Aug 24, 2016 at 11:41 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
->> Hi Dakota,
+On Wed, Aug 24, 2016 at 3:52 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Tue, Aug 23, 2016 at 11:29 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
+>> On Tue, Aug 23, 2016 at 4:03 PM, Stefan Beller <sbeller@google.com> wrote:
+>>>>> +
+>>>>> +       if (option_recursive) {
+>>>>> +               if (option_required_reference.nr &&
+>>>>> +                   option_optional_reference.nr)
+>>>>> +                       die(_("clone --recursive is not compatible with "
+>>>>> +                             "both --reference and --reference-if-able"));
+>>>>
+>>>> So if you have multiple references that don't all match we basically
+>>>> just refuse to allow recursive?
+>>>>
+>>>> Would it be better to simply assume that we want to die on missing
+>>>> references instead of failing the clone here?
+>>>
+>>> The new config options are per repo (or even set globally), and not
+>>> per alternate. And as we communicate the [if-able] part via the config
+>>> options to the submodules it is not feasible to transport both
+>>> kinds of (reference-or-die and reference-but-ignore-misses).
+>>>
+>>> That is why I introduced this check in the first place. If we'd go back
+>>> to the drawing board and come up with a solution that is on a
+>>> "per alternate" basis we could allow such things.
+>>>
+>>>> That is, treat it so
+>>>> that multiple reference and reference-if-able will die, and only info
+>>>> if we got only reference-if-able?
+>>>>
+>>>> Probably what's here is fine, and mixing reference and
+>>>> reference-if-able doesn't make much sense.
+>>>
+>>> I think the reference-if-able doesn't make sense for one project alone
+>>> as you can easily script around that, but is only useful if you have
+>>> submodules in a partially checked out superproject that you want
+>>> to reference to.
+>>>
+>>> Thanks,
+>>> Stefan
 >>
->> On Tue, 23 Aug 2016, Dakota Hawkins wrote:
->>
->>> I use GFW almost exclusively, but I pretty much always consult the
->>> upstream documentation anyway (because I find it easier).
->>
->> Oh... I thought that typing "git help git-commit" opening a nice HTML 
->> page
->> in your favorite browser was good enough.
->>
->> Do you have any suggestion how to improve the user experience?
+>> I'm not sure there is a better design.  How are alternates stored? In
+>> a config section?
 >
-> Just a small one, and that's that I'd prefer the option to have help
-> display in my terminal (that option might exist and I don't know how
-> to turn it on). That would be very convenient for me.
+> Alternates are stored in .git/objects/info/alternates
+> with each alternate in a new line. On that file (from
+> (man gitrepository-layout):
 >
-> Opening a nice HTML page is probably nice for a lot of users. What
-> frustrates me about it is that I don't know which browser window on
-> which monitor (of 3) it's going to open in, so it's a context-switch
-> to a different window somewhere that I don't have much control over.
+> objects/info/alternates
 >
-> The thing I find easier about using the upstream documentation is just
-> that I can pick the browser window I want it to come up in, and it's
-> usually faster enough for me to just google "git-whatever" or
-> re-purpose an open doc tab. I don't prefer the _content_ of the
-> upstream documentation, it's just less frustrating for me to use, if
-> that makes sense.
+> This file records paths to alternate object stores that this object store
+> borrows objects from, one pathname per line. Note that not only native
+> Git tools use it locally, but the HTTP fetcher also tries to use it remotely;
+> this will usually work if you have relative paths (relative to the object
+> database, not to the repository!) in your alternates file, but it will not work
+> if you use absolute paths unless the absolute path in filesystem and web
+> URL is the same. See also objects/info/http-alternates.
 >
-If you would like to use the man pages, then one option is to install the 
-SDK, which then allows you to install the man package, (setting the manpath 
-as required) to allow your choice of viewer. You may need to set the minnty 
-config BoldAsFont=yes if you want the bold for the headings in the man 
-pages.
+> So changing that file is out of question.
+> Ideally we would have a flag for each path here, though.
+>
+>> Or is there some way we can store the is-able per
+>> alternate and look it up when adding them to submodule?
+>
+> I guess we could invent a file as alternate-flags that is matches
+> line by line to the alternates file.
+>
+> I don't think we'd want to go that way for now as it would really only
+> help in an edge case?
+>
+> If we later find out we need the flag on a per-alternate basis we can
+> still come up with a solution and just not set these config variables,
+> so I think we'll be fine for now with this approach.
+>
 
-With the SDK you can also create a personal release version of GfW that 
-includes the man viewer if you like.
---
-Philip
+Yes that seems reasonable.
 
+Thanks,
+Jake
