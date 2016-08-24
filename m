@@ -7,85 +7,78 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 222561F859
-	for <e@80x24.org>; Wed, 24 Aug 2016 07:48:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82B511F859
+	for <e@80x24.org>; Wed, 24 Aug 2016 07:57:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754504AbcHXHsO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 03:48:14 -0400
-Received: from mout.gmx.net ([212.227.17.22]:62282 "EHLO mout.gmx.net"
+        id S1753412AbcHXH5n (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 03:57:43 -0400
+Received: from mout.gmx.net ([212.227.17.22]:60720 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753431AbcHXHsL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 03:48:11 -0400
+        id S1752279AbcHXH5m (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 03:57:42 -0400
 Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MMHaL-1bUUAD2hUz-007ynC; Wed, 24 Aug 2016 09:47:56
+ ESMTPSA (Nemesis) id 0MIyCj-1ba05Q15zt-002UXV; Wed, 24 Aug 2016 09:57:29
  +0200
-Date:   Wed, 24 Aug 2016 09:47:54 +0200 (CEST)
+Date:   Wed, 24 Aug 2016 09:57:28 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Ralf Thielow <ralf.thielow@gmail.com>
-cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Joseph Musser <me@jnm2.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH 1/2] help: introduce option --command-only
-In-Reply-To: <CAN0XMOLTc5zzjXwnpDwhs-coP9BVD659CpYEJYp_v4789M2CpQ@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1608240947380.4924@virtualbox>
-References: <20160816162030.27754-1-ralf.thielow@gmail.com> <20160818185719.4909-1-ralf.thielow@gmail.com> <20160818185719.4909-2-ralf.thielow@gmail.com> <alpine.DEB.2.20.1608190954461.4924@virtualbox>
- <CAN0XMOLTc5zzjXwnpDwhs-coP9BVD659CpYEJYp_v4789M2CpQ@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH 3/4] cat-file --textconv/--filters: allow specifying the
+ path separately
+In-Reply-To: <xmqqy43s3fin.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1608240957040.4924@virtualbox>
+References: <cover.1471524357.git.johannes.schindelin@gmx.de> <787224ce9a382ddd1180a408e784ca26993e5603.1471524357.git.johannes.schindelin@gmx.de> <xmqqfuq26mu3.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608191521410.4924@virtualbox>
+ <xmqqy43s3fin.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:e2UkG07T3kwFilLGt3arcRyue8uABiRvsmhky5lgIfuQqF+OOWk
- /UhkZ9i7qTIA4aAFCK3fAFMFawi4JkjcuZfzsHkcb9qA71SQXnpr8S5NjgPvM5zcrKYOXsK
- Ibyhd/gvwXqd3oY7OB9/2pxS/HNvvt0hTyx+N/3Pv1zENFL5eHw7xI7nEuKHFxN3qK/S4FH
- p3PBpoklqnqyNehrVRbIw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:HnNagrGte0g=:WbAKRkSeRaZUeYIZgfc109
- 0Ry+uwsnvvWybCW2L4HNLIOqv42rD7/SU5dFiOP+Zemeb5Ewr3O1iEIgpyRz8bpy2CFQbEGV4
- b4si3cmVO7PigdpAHq8HXjhIR/v0PKc5dV2Nsg6vFiUd/gKWfV3MtqjGG1DaxdQjUKjP8EZgN
- C+2XbzdjDYW5Iuf/Mk1vvEyjWmu+gl3sml3hVchn6kvWHz+lfd/tGyECR68k3M0riHrGwKniV
- vRCZf6hJw26nyorutctXUsdK1ujxfc9K+inz0BvaIOVNwHL2hVB2rJlCssugTFAR9NiUZWr/L
- jNghMyGSH6aHFRWdpZdLq+IbBEO9Y11T3bDp++lpqbV42efbZVyZvkmqrUm5ILqz4dKRTnbZM
- mm+ZnOLkrT0KU5azn2VQfm4j2EAfGg8zeZ/L+5RRsPGRzvsDUCOimlJfgmqwq9aNuig2Pv4Fj
- MYv7WjmaRjCI4PmD9WaOSA6hT3emx4JRJLCvqgy9U4yiH833jdYTWIaCm5vLmtdmNL4p3QcEm
- dSIqvLVraKnQXshP0ab+zTRRbwpC5Q3AF/KaOSIAezP63eT5THNExHKbTYrU5HfGliXfZT1Io
- mUv0bfBoUyzv+abfZZgnYoGxVnsUjqsz1Q1xX78/hD4Tl+8abQX0TqXNQgUc6E2dgiVsBvMyH
- ht9wCa9x7QzkXHmyHEoL//+nnBUnj2grbqLbp/w3y5PnKtzKTe0UbGVRauqX/IQHv+IuTiQh6
- cjmqLA1Zd8Vp0lhYE8sp2dgcmaa2Ya3U1sevAqNZhiaPsEGgT4M9S9XC2JZxY/LAK7yzgxmBo
- LGEqeu0
+X-Provags-ID: V03:K0:EuOubJJzD/NL6Qr2Os4vdJRx6ywKcKDMvlVkFpa2oJNc6ppEFTe
+ P3QR2G2eO6PPf0M9lTYU9rY3SknO+OniH5vtFsrYhLPj4CyFtwTvRo9EgIleHVjO9oPpvNU
+ iLF/g7G/EJRisNZfYp9DTCCkQFJ96CLxdUCdiBA7hfx3jJVN4HkV++dE+rxcK/KkI1OgPeY
+ vETtCVGt9CPjS7kGI3avA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:m4yQ3PUuSPo=:MLYjYFGN0o4FXXuML8pGxf
+ xGQ4s9gKC5oFtm8W72tASCvcc6WYL8k0eZV9u/TnJnWdh6y+tu2v/p45/Mz8wRpaPFjEHasCs
+ 4MWQITJFSGfcL35CDgXn8vH31+uaZAyaAhz6/edg4Yn1QdLkA4cHX0VayCbJU1UDnt7tqsYnJ
+ qkQFUyCgsNvUfpz6titPK2SYIGi2y6DIkIOKyz8EnK/0/yQzsMAJyGMXgPWzRY5veSAIpsLy0
+ cCv2xyTY2Tkn7pAgcrOSWbQKO+0OWPat/yrwNvupSZVcTjVUcPDuWMV6Lq0hQ6O73PnmnPEAj
+ SL40TXCj682ywVBkK4I80Cc39IVL7Uk+54Fd5ElqweO6PV61D8tCrh+nvfKu3mwmaANh/ozz6
+ x33aTwzx2qRnNcYU65so2jeT+9dsM5gXrdABBnPfM6Gp6GNSh0PLgcqHyhyD/YO1BbWP/sCR+
+ EC4CMDhsCjUOatVMMiO3MiqIZmgN0NbYJJwtB4TOh6bwsQ3X+yOUI9ofoMGubSEqNDdOBQ3xZ
+ o6T+UBVMEPC1cGGfQEUW1bFIATWR4e7mh2vPK4bVPuJP3yY8/aiM2E6iMe2RkjG9mFCbD0QPf
+ svLHcF7SWJxCWp/O+KJOUcht76eoyia5lBu0Zxy6LORI0qaN57Sy6/hKY4XzKO8VKJ3SZkS6X
+ H/Q/dsJmNdKow7j5ExX5zkH3ymuH4Ogpv7WhFvaZ1KWE2Al8/r+DD3NjHUg2OVivqkbSu5FZt
+ XaXJQ+iRQvFgl3br6ouFL3ZridBaQqmiQtTcvCzM0eURaLQmFbTOH10J0S4NPgMTkLmZSDZVm
+ 7/JmT1e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ralf,
+Hi Junio,
 
-On Tue, 23 Aug 2016, Ralf Thielow wrote:
+On Fri, 19 Aug 2016, Junio C Hamano wrote:
 
-> 2016-08-19 10:32 GMT+02:00 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > So how about fixing that? I would suggest to do it this way:
+> >> I think I saw some code to ensure "when giving this option you need
+> >> that option in effect, too"; they should be tested here, too, no?
 > >
-> > - configure help.format = html (for "man", the current code would always
-> >   add $(prefix)/share/man to the MANPATH when testing, not what we want,
-> >   and hacking this code *just* for testing is both ugly and unnecessary).
-> >
-> > - configure help.htmlpath to point to a subdirectory that is created and
-> >   populated in the same test script.
-> >
-> > - configure help.browser to point to a script that is created in the same
-> >   script and whose output we can verify, too.
-> >
-> > The last point actually requires a patch that was recently introduced into
-> > Git for Windows [*1*] (and that did not make it upstream yet) which
-> > reverts that change whereby web--browse was sidestepped. That sidestepping
-> > was well-intentioned but turned out to cause more harm than good.
-> >
+> > No, I would rather not test for that. These conditionals are purely for
+> > any user's convenience, in case they specify an option that has no effect.
+> > They are absolutely not essential for the function introduced in this
+> > patch series.
 > 
-> So I'll pickup the patch you sent [1] to my series and prepare the test cases
-> the way you described to verify that the 'help' command works.
+> I didn't say "you would want to test these, no?", did I?
+> 
+> I do not want to see bugreports that say "I wanted to use this new
+> feature and by mistake gave only --path without giving --filter; Git
+> should have complained.  I found a bug, hooray!" when somebody in
+> the future refactors the command line option parsing and breaks the
+> check you already have.
 
-Thanks!
+I added a test to verify that --path without --filters nor --textconv
+complains.
 
 Ciao,
-Johannes
+Dscho
