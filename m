@@ -2,106 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 246021F6C1
-	for <e@80x24.org>; Wed, 24 Aug 2016 14:39:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 373701F6C1
+	for <e@80x24.org>; Wed, 24 Aug 2016 14:42:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756020AbcHXOjb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 10:39:31 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:36169 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755988AbcHXOja (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 10:39:30 -0400
-Received: by mail-wm0-f48.google.com with SMTP id q128so204675856wma.1
-        for <git@vger.kernel.org>; Wed, 24 Aug 2016 07:39:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=YsGw3pFqZnmIBOGPxaNFtc0j+dk2Lt5sD7T3EC25fG0=;
-        b=TpX6nsSg065jDfBOKHhepKCD6L9f9+pBw3CA/go+xlfOgcIXEv67N3n4HROofa4yuV
-         G8rQNNl/WFn6aiwh/beANJCLwF4hEAXHEQaBiKtsoCSsDCH8ipxsBtfPd1klStl3zYxh
-         Cosa21fwCPcidCL7c4Rc0qZwh7WL4U9QvCaJFJMkqlYdUPlynR9px/X/7kMTEQWq/t0M
-         iqigRtBWGuaYa/gZ49zZhb7zZTshkE6EAFEOvBqbSQO4VRhTkN1mx4g8HpmgZfYlI6ev
-         tdSTK685Y3xsgrs7UVobEItd2O/xTOPa9m5K/cPJi4qT8Ob5/IsVRd0V9tmtv/HHn9GA
-         b1qg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=YsGw3pFqZnmIBOGPxaNFtc0j+dk2Lt5sD7T3EC25fG0=;
-        b=YXZDZxxkWdFseWTesaFlWf0bK7kRWCviWwhLilVKvxPQ5GI9/MKNpT2+fs0hvM+1JP
-         hhrlleRAVN7/6Wd5pq7Q3UpLdtY64b+MjerYBIJNTApmYFNhGjXy9meWeYTZwhxlziYG
-         AUcrf1s8riqSzokPV1LJGkD3WzMHPvDBposaPg9iJTVydK0ZeQVdcGT7IrCTRI+yTAdm
-         WRn6t828qAgfLrMWGPPG/nU14W9bmx85v92VDOPtVzEQa2qy4x1Y0VZLSrC4CTxEM19V
-         u/QBbogmj9WePgYmHzyh1Wf+dAzd3E/ZcRtnoFZitA4nbztSY2QuNmr6ixkS6nzDYen9
-         o+hg==
-X-Gm-Message-State: AEkoouth7CqsQJydS/s+NIK3zHaQq0fRh6z4URiso2xX9zmL2g3W+8CZTwQkTVvsIFm1dg==
-X-Received: by 10.28.134.203 with SMTP id i194mr24290233wmd.22.1472049569180;
-        Wed, 24 Aug 2016 07:39:29 -0700 (PDT)
-Received: from [192.168.1.26] (epy16.neoplus.adsl.tpnet.pl. [83.20.66.16])
-        by smtp.googlemail.com with ESMTPSA id q65sm10928246wmd.24.2016.08.24.07.39.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 24 Aug 2016 07:39:28 -0700 (PDT)
-Subject: Re: Getting the "message" given a branch designation and conversely
-To:     Jeff King <peff@peff.net>, norm@dad.org
-References: <201608141458.u7EEwF8P099500@shell1.rawbw.com>
- <20160815122820.msajaamgmlexe2jd@sigill.intra.peff.net>
-Cc:     git@vger.kernel.org
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <d75b165c-0b68-bd8e-31c0-cf7e704d6e61@gmail.com>
-Date:   Wed, 24 Aug 2016 16:39:25 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S1756501AbcHXOmt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 10:42:49 -0400
+Received: from slow1-d.mail.gandi.net ([217.70.178.86]:36784 "EHLO
+        slow1-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755246AbcHXOmr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 10:42:47 -0400
+Received: from relay6-d.mail.gandi.net (relay6-d.mail.gandi.net [217.70.183.198])
+        by slow1-d.mail.gandi.net (Postfix) with ESMTP id 8613847B3E8
+        for <git@vger.kernel.org>; Wed, 24 Aug 2016 16:21:31 +0200 (CEST)
+Received: from mfilter20-d.gandi.net (mfilter20-d.gandi.net [217.70.178.148])
+        by relay6-d.mail.gandi.net (Postfix) with ESMTP id 1B4C3FB8A9;
+        Wed, 24 Aug 2016 16:20:30 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mfilter20-d.gandi.net
+Received: from relay6-d.mail.gandi.net ([IPv6:::ffff:217.70.183.198])
+        by mfilter20-d.gandi.net (mfilter20-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
+        with ESMTP id UT6DO45X1rlW; Wed, 24 Aug 2016 16:20:28 +0200 (CEST)
+X-Originating-IP: 75.98.193.200
+Received: from x (unknown [75.98.193.200])
+        (Authenticated sender: josh@joshtriplett.org)
+        by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id 383B9FB8CB;
+        Wed, 24 Aug 2016 16:20:26 +0200 (CEST)
+Date:   Wed, 24 Aug 2016 10:20:24 -0400
+From:   Josh Triplett <josh@joshtriplett.org>
+To:     Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: Extending "extended SHA1" syntax to traverse through gitlinks?
+Message-ID: <20160824142024.xnaehfo2spw26apj@x>
+References: <9bad3d13-3257-2077-a734-f985c375b8d3@gmail.com>
+ <20160821142634.dorgzldjvc3qiaby@x>
+ <ab6e29c1-ea6d-c1c5-e69f-867c16cc736a@gmail.com>
+ <20160823065359.34cirqig56fugnwy@x>
+ <b2f7ff11-23b4-1065-2207-43f736c91988@gmail.com>
+ <xmqq60qqu3rl.fsf@gitster.mtv.corp.google.com>
+ <b264e17a-12ff-69ca-f130-78d2635a0f85@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20160815122820.msajaamgmlexe2jd@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <b264e17a-12ff-69ca-f130-78d2635a0f85@gmail.com>
+User-Agent: Mutt/1.6.2-neo (2016-08-08)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 15.08.2016 o 14:28, Jeff King pisze:
-> On Sun, Aug 14, 2016 at 07:58:14AM -0700, norm@dad.org wrote:
+On Wed, Aug 24, 2016 at 03:16:56PM +0200, Jakub Narębski wrote:
+> W dniu 24.08.2016 o 07:36, Junio C Hamano pisze:
+> > Jakub Narębski <jnareb@gmail.com> writes:
+> > 
+> >> The point is that submodule has it's own object database.  It might
+> >> be the same as superproject's, but you need to handle submodule objects
+> >> being in separate submodule repository anyway.  Common repository is
+> >> just a special case.
+> >>
+> >> By the way, this also means that proposed "extended extended SHA1"
+> >> syntax would be useful to user's of submodules...
+> > 
+> > Not really.
+> > 
+> > I think that you gave a prime example why <treeish>:<path1>//<path2>
+> > is not a useful thing for submodules.  When the syntax resolves to a
+> > 40-hex object name, that object name by itself is not useful.
+> > 
+> > You also need to carry an additional piece of information that lets
+> > you identify the location of the repository, in which the object
+> > name is valid, in the current user's context (i.e. somewhere in the
+> > superproject where the submodule lives).  In other words, you'd need
+> > to carry <treeish>:<path1> around anyway for the object name to be
+> > useful, so there is no good reason why anybody should insist that
+> > the plumbing level resolve <treeish>:<path1>//<path2> directly to an
+> > object name in the first place.
 > 
->> I am learning how to use git. I would like to know how:
->>
->> Given a branch's designation, such as "master~4", how can I see the message I
->> furnished when I created the branch using "git commit"?
+> Not really.
 > 
-> Somebody already pointed you at "git log", which is the right tool for
-> looking at commit messages (or perhaps "git show" if you only want to
-> see a single entry).
-
-I think you would want "git log -1 master~4" or "git show master~4" to
-see the commit message of a single commit (without diff).
-
->> Conversely, given the message I furnished to "git commit", when I created a
->> branch, how can I see the branch's designation?
+> The above means only that the support for new syntax would be not
+> as easy as adding it to 'git rev-parse' (and it's built-in equivalent),
+> except for the case where submodule uses the same object database as
+> supermodule.
 > 
-> Try "git log --grep=some.regex" to find a particular commit. Usually we
-> refer to commits by their sha1 id, which will be shown by git-log.
+> So it wouldn't be as easy (on conceptual level) as adding support
+> for ':/<text>' or '<commit>^{/<text>}'.  It would be at least as
+> hard, if not harder, as adding support for '@{-1}' and its '-'
+> shortcut.
 
-There is also :/<search> and <rev>^{/<search>} syntax, if you want 
-composability (see gitrevisions(7)).
+Depends on which cases you want to handle.  In the most general case,
+you'd need to find and process the applicable .gitmodules file, which
+would only work if you started from the top-level tree, not a random
+treeish.  On the other hand, in the most general case, you don't
+necessarily even have the module you need, because .git/modules only
+contains the modules the *current* version needed, not every past
+version.
 
-> However, you can use git-describe to generate a name for any commit that
-> is based on traversing from a tag. Try:
+As an alternate approach (pun intended): treat every module in
+.git/modules as an alternate and just look up the object by hash.  Or,
+teach git-submodule to store all the objects for submodules in the
+supermodule's .git/objects (and teach git's reachability algorithm to
+respect refs in .git/modules, or store their refs in
+.git/refs/submodules/ or in a namespace).
+
+> Josh, what was the reason behind proposing this feature? Was it
+> conceived as adding completeness to gitrevisions syntax, a low-hanging
+> fruit?  It isn't (the latter).  Or was it some problem with submodule
+> handling that you would want to use this syntax for?
+
+This wasn't an abstract/theoretical completeness issue.  I specifically
+wanted this syntax for practical use with actual trees containing
+gitlinks, motivated by having a tool that creates and uses such
+gitlinks. :)
+
+> As for usefulness: this fills the hole in accessing submodules, one
+> that could be handled by combining plumbing-level commands.  Namely,
+> there are 5 states of submodule (as I understand it)
 > 
->   git describe --contains --all <sha1>
+>  * recorded in ref / commit in supermodule
+>  * recorded in the index in supermodule
+>  - recorded in ref / commit in submodule
+>  - recorded in the index in submodule
+>  - state of worktree in submodule
 > 
-> for example. Using "--all" tells git to consider names based on branches
-> as well as tags. Using "--contains" will generate a name based on
-> traversing backwards from the tags and branches (like "master~4") rather
-> than basing the name on a tag that you build off of.
+> The last three can be easyly acessed by cd-ing to submodule.  The first
+> two are not easy to get, AFAIUC.
 
-The "git describe --contains" is interface to "git name-rev" plumbing
-
--- 
-Jakub Narębski
-
+Right.  I primarily care about those first two cases, especially the
+first one: given a commit containing a gitlink, how can I easily dig
+into the linked commit?
