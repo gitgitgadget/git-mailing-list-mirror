@@ -2,95 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C36DC1F6C1
-	for <e@80x24.org>; Wed, 24 Aug 2016 19:18:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 41DB82018E
+	for <e@80x24.org>; Wed, 24 Aug 2016 19:30:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932544AbcHXTRw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 15:17:52 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:57626 "EHLO dcvr.yhbt.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754641AbcHXTQx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 15:16:53 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 2270B1F6C1;
-        Wed, 24 Aug 2016 19:16:52 +0000 (UTC)
-Date:   Wed, 24 Aug 2016 19:16:51 +0000
-From:   Eric Wong <e@80x24.org>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Philip Oakley <philipoakley@iee.org>,
-        Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>, meta@public-inbox.org,
-        git@vger.kernel.org,
-        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-        Arif Khokar <arif_khokar@hotmail.com>
-Subject: Re: Working with public-inbox.org [Was: [PATCH] rev-parse: respect
- core.hooksPath in --git-path]
-Message-ID: <20160824191651.GC8578@whir>
-References: <CAGZ79kasebzJb=b2n=JQiVMrSfJKaVfZaaoaVJFkXWuqKjfYKw@mail.gmail.com>
- <alpine.DEB.2.20.1608181430280.4924@virtualbox>
- <20160819150340.725bejnps6474u2e@sigill.intra.peff.net>
- <alpine.DEB.2.20.1608221450250.4924@virtualbox>
- <CACsJy8BG63oaLbw0f7try3OpzdphLC7UGAaJ=vgikEB36Pagqg@mail.gmail.com>
- <B21604E7033C458EAC5EA0651CFEA8E9@PhilipOakley>
- <alpine.DEB.2.20.1608241459360.4924@virtualbox>
+        id S1755607AbcHXTav (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 15:30:51 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60353 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754856AbcHXTav (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 15:30:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7961E3637F;
+        Wed, 24 Aug 2016 15:30:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+KveJW2S0OEl6WqiLCwNHilQduI=; b=rR3yxI
+        mj8Ahj3CjBN38GOcGEiPOynVLEj4qJfJoECudQXDZsmE/sMrJVc/CHualZg9B/hE
+        guqGSD6blTm0R/XUEm2a+6PR6uBQSbQnFEgbV9GmndAxUhzbKHIkIBEZCHKqspwh
+        2o+3KDHTGMi5NkXGC++RTJHUsNOV9u+mfCAnc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=NLa1gfETfAsdk3buvDJV6l1g2QKRkLDo
+        zdgDck8myRY5Xr5NCWSmHPRq9MhoKHQG0+6wXARhnxR/fqeFE8JlhDfcgMIKyvdj
+        3+nPF1x10T4smEQ2h6VdYNmt2zwAioEbz/65kasE2jO7RnqnUfb8u1oojuRbbqpw
+        iqKK3ApLiDQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 71C923637E;
+        Wed, 24 Aug 2016 15:30:49 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F288C3637D;
+        Wed, 24 Aug 2016 15:30:48 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v3 0/3] limit the size of the packs we receive
+References: <20160824184157.19264-1-chriscool@tuxfamily.org>
+Date:   Wed, 24 Aug 2016 12:30:46 -0700
+In-Reply-To: <20160824184157.19264-1-chriscool@tuxfamily.org> (Christian
+        Couder's message of "Wed, 24 Aug 2016 20:41:54 +0200")
+Message-ID: <xmqqoa4iotg9.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1608241459360.4924@virtualbox>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 42EC096C-6A31-11E6-B33D-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Mon, 22 Aug 2016, Philip Oakley wrote:
-> > I do note that dscho's patches now have the extra footer (below the three
-> > dashes) e.g.
-> > 
-> > Published-As: https://github.com/dscho/git/releases/tag/cat-file-filters-v1
-> > Fetch-It-Via: git fetch https://github.com/dscho/git cat-file-filters-v1
-> > 
-> > If say I used that, and sent my patch series via Outlook Express (<sigh>),
-> > with it's white space damage, would those footers help once the content has
-> > been reviewed (rather than white spacing style) in the applying the patch?
-> 
-> I considered recommending this as some way to improve the review process.
-> The problem, of course, is that it is very easy to craft an email with an
-> innocuous patch and then push some malicious patch to the linked
-> repository.
+Christian Couder <christian.couder@gmail.com> writes:
 
-Perhaps an automated checker of some sort packaged with git
-would help.
-(And perhaps combinable with the downloader Arif proposed)
+> Diff with previous v2 version
+> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index f5b6061..8a115b3 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -2517,10 +2517,11 @@ receive.unpackLimit::
+>  	especially on slow filesystems.  If not set, the value of
+>  	`transfer.unpackLimit` is used instead.
+>  
+> -receive.maxsize::
+> -	If the size of a pack file is larger than this limit, then
+> -	git-receive-pack will error out, instead of accepting the pack
+> -	file. If not set or set to 0, then the size is unlimited.
+> +receive.maxInputSize::
+> +	If the size of the incoming pack stream is larger than this
+> +	limit, then git-receive-pack will error out, instead of
+> +	accepting the pack file. If not set or set to 0, then the size
+> +	is unlimited.
+>  
+>  receive.denyDeletes::
+>  	If set to true, git-receive-pack will deny a ref update that deletes
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> ...
+> diff --git a/t/t5546-receive-limits.sh b/t/t5546-receive-limits.sh
+> new file mode 100755
+> index 0000000..10cb0be
+> --- /dev/null
+> +++ b/t/t5546-receive-limits.sh
+> @@ -0,0 +1,55 @@
+> +#!/bin/sh
+> + ...
+> +test_done
+> ---
+>
+> Christian Couder (1):
+>   unpack-objects: add --max-input-size=<size> option
+>
+> Jeff King (2):
+>   index-pack: add --max-input-size=<size> option
+>   receive-pack: allow a maximum input size to be specified
 
-> Now, with somebody like me who would lose a lot when destroying trust, it
-> is highly unlikely. But it is possible that in between the hundreds of
-> sincere contributors a bad apple tries to sneak in bad stuff.
+This was a pleasant read.  All looked sensible.
 
-Yes, I would never mix reviews + patch applications of emails vs
-git-fetched data.  Having a sender providing both is good; but
-the recipient needs to pick one or the other to use exclusively
-for that series.
-
-Either look exclusively at what is fetched and respond to that;
-or look exclusively at emails and ignore data from git fetch.
-
-However, ensuring the emails and the contents of the git fetch
-could be done optionally to ensure there's no tampering or
-accidents for other reviewers.
-
-> Therefore, if we were to support a Git-driven contribution process that
-> *also* sends mail, that mail needs to be generated by a trusted source, to
-> ensure that the content of the mail is identical to the original Git
-> commits.
-
-For decentralized systems, independent reproducibilility is
-needed.  Rather than trusting one source, I'd rather have some
-sort of downloading + checking tool which checks multiple
-mirrors (git protocols and NNTP).  That would allow users to
-independently verify the veracity of what they got emailed vs
-what is fetched.
+Thanks.
