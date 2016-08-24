@@ -2,101 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FCC71F6C1
-	for <e@80x24.org>; Wed, 24 Aug 2016 16:05:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2FDE1F6C1
+	for <e@80x24.org>; Wed, 24 Aug 2016 16:09:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753663AbcHXQFy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 12:05:54 -0400
-Received: from mout.gmx.net ([212.227.15.18]:63044 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753142AbcHXQFx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 12:05:53 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MPDaC-1bYCxB3lUe-004TAm; Wed, 24 Aug 2016 18:05:10
- +0200
-Date:   Wed, 24 Aug 2016 18:05:08 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 11/15] sequencer: lib'ify save_todo()
-In-Reply-To: <CAPig+cQ2xH1ytsTGNDeDZiHTZpnp28XUJoAY+W-+iw+85gMbtg@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1608241801030.4924@virtualbox>
-References: <cover.1471968378.git.johannes.schindelin@gmx.de> <fff4cdfa36355af7917a06be9f67b50b56bfce99.1471968378.git.johannes.schindelin@gmx.de> <CAPig+cQ2xH1ytsTGNDeDZiHTZpnp28XUJoAY+W-+iw+85gMbtg@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1754258AbcHXQJK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 12:09:10 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51346 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754129AbcHXQJK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 12:09:10 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B537838913;
+        Wed, 24 Aug 2016 12:09:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=eGgKoXEGUoTCqMnoFORmaUq9d0Q=; b=oMdaOI
+        jdjuHO/EmfeMPNbfDIbF547TpV0QBBPrS3cmM+TaJ9nKdR2+GfX5MNAQR8K4BhOE
+        70szaQwM71K1s2XdgOFb2LEvkynJPSdUoXUcO4QpLmACelZzTgIycyIOP/o4krwm
+        zEZ1iRyv8u+0iHtDJ/MU3hzysuXOUyhfu29LE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=E/qMyCjH+jsJ6n0xj/+lxXgFBl+HQgxU
+        /uA3EbUrKuT7TWADCAhGyflU6Ho7KGYcwy2O964sxJfRmcernSOVP/Dt2R2IOjZ5
+        UTHRRAoOd6Tgn5B8ydD5d6J6Lvw9bIxydWbR92yT5z2UkouFt6Zy8GSGiBz08HKp
+        I4kJUFu6imI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id ABF7F38912;
+        Wed, 24 Aug 2016 12:09:08 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3311C38911;
+        Wed, 24 Aug 2016 12:09:08 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 0/4] cat-file: optionally convert to worktree version
+References: <cover.1471524357.git.johannes.schindelin@gmx.de>
+        <cover.1472041389.git.johannes.schindelin@gmx.de>
+Date:   Wed, 24 Aug 2016 09:09:06 -0700
+In-Reply-To: <cover.1472041389.git.johannes.schindelin@gmx.de> (Johannes
+        Schindelin's message of "Wed, 24 Aug 2016 14:23:30 +0200 (CEST)")
+Message-ID: <xmqqk2f6rvx9.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:zCGHsT5zkub1+Pekh0saCGs89OxanYs6BS7f4j3n3CDG3Utua8w
- 1rzakgUY/QDYzx7JA5+ZDEhlWEiUvGuWIFPOyJcpFWNA4r9M4OlTHoOvu6HH5Qnph92Tueg
- pfVznVX/+40Xq5ax1gdG2m0azmuBtpPc9F7zq8To0pVtiOoKA/iTpJwHp+pcMcS5rhyUMQl
- x44aQsIYcAJ4EKenJjw3g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:OV3JL9W03LU=:+X26n8nMn7uZVFAoQJtg4i
- QyHGEUTN60sgDj/xznGCuI2iGm+Bq6rfaEU4zcHar9AGG+WosTmlebBdAuLJybFwMvOYqgHLH
- ztrbxKnZhZYOAgxiTNDSdwQ2EoOsRjDoFm4jF5Vw05XCnqkLCmJlPA8fiMeQCULLbH8oWf1ql
- +hwCmLfQxpy2tDs/RPnPbM1bs6Pw2JlgMipxpPXzZuHhNXHUjx70oE44c+sZ5tNmiHFEdFCU9
- RRVwCaeNLoJQ2BLsLHTtExwW4FYEX2EVoBSKEnMJ+BD3hW9cOfqxe53sN9HHyip/ji/1lVr+k
- kovskruA86nQUzJTjw3eEBR7BHjdc7+vJpSGnOrQWL9sWCqua3+d1k+nvz0w0StTrs9DkBv6y
- gNWD8O5CoqHbHQ+pOCz2JlJPbPuLuQhgMp2pJti2f5s+OIq391L3Au+1pykUow3/jiXlcI8mj
- Qoh4PY9sRlwNjWEFj3WP2zDJtLDNbDtVm7TF9Ybiezw5YcOLQptL2wGwXhFL63fPluc9GyBqL
- tmIL4kuJDBWLpyhNWarReMNzSzqFxfSSHH+GJOzcCYqvFgpdnQC1Qbli3N7ThTKC9AYVFQSA0
- EGuaj3a6RUEPAZcgJ7nmdVx0q4fBi4BiXDYVeS7maMKSbxQ/qUG6Wm+PML114PRpH5vEDNGlR
- 2ZMPAmZR/HUufHk2nLLWjvRS1Cb2QvpZzKcPPxkqjFzfvbUiGn5ZyJ4p8KinQdp+8FZfvzAAt
- VcWCbeNUbaTOExraD2DJRJU1tCL81YB1j6PiVY3cyjMmYNDXWQV0EgoPju0HA29qv5GyxHBHo
- 1urXA7K
+Content-Type: text/plain
+X-Pobox-Relay-ID: 164A71E4-6A15-11E6-9905-E86612518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-On Wed, 24 Aug 2016, Eric Sunshine wrote:
+>  diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+>  index 5f91cf4..f8a3a08 100644
+>  --- a/builtin/cat-file.c
+>  +++ b/builtin/cat-file.c
+>  @@ -61,6 +61,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+>   	struct object_info oi = {NULL};
+>   	struct strbuf sb = STRBUF_INIT;
+>   	unsigned flags = LOOKUP_REPLACE_OBJECT;
+>  +	const char *path = force_path;
+>   
+>   	if (unknown_type)
+>   		flags |= LOOKUP_UNKNOWN_OBJECT;
+>  @@ -68,6 +69,11 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+>   	if (get_sha1_with_context(obj_name, 0, sha1, &obj_context))
+>   		die("Not a valid object name %s", obj_name);
+>   
+>  +	if (!path)
+>  +		path = obj_context.path;
+>  +	else if (obj_context.mode == S_IFINVALID)
+>  +		obj_context.mode = 0100644;
+>  +
+>   	buf = NULL;
+>   	switch (opt) {
+>   	case 't':
 
-> On Tue, Aug 23, 2016 at 12:07 PM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
-> > To be truly useful, the sequencer should never die() but always return
-> > an error.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> > diff --git a/sequencer.c b/sequencer.c
-> > @@ -929,24 +929,29 @@ static int sequencer_rollback(struct replay_opts *opts)
-> > -static void save_todo(struct commit_list *todo_list, struct replay_opts *opts)
-> > +static int save_todo(struct commit_list *todo_list, struct replay_opts *opts)
-> >  {
-> >         static struct lock_file todo_lock;
-> >         struct strbuf buf = STRBUF_INIT;
-> >         int fd;
-> >
-> > -       fd = hold_lock_file_for_update(&todo_lock, git_path_todo_file(), LOCK_DIE_ON_ERROR);
-> > +       fd = hold_lock_file_for_update(&todo_lock, git_path_todo_file(), 0);
-> > +       if (fd < 0)
-> > +               return error_errno(_("Could not lock '%s'"),
-> > +                                  git_path_todo_file());
-> >         if (format_todo(&buf, todo_list, opts) < 0)
-> > -               die(_("Could not format %s."), git_path_todo_file());
-> > +               return error(_("Could not format %s."), git_path_todo_file());
-> 
-> format_todo() doesn't seem to make any promises about the state of the
-> strbuf upon error, so should this be releasing the strbuf before
-> returning?
+The above two hunks make all the difference in the ease of reading
+the remainder of the function.  Very good.
 
-Yes, it should. Thank you!
+>  +test_expect_success '----path=<path> complains without --textconv/--filters' '
+>  +	sha1=$(git rev-parse -q --verify HEAD:world.txt) &&
+>  +	test_must_fail git cat-file --path=hello.txt blob $sha1 >actual 2>err &&
+>  +	test ! -s actual &&
+>  +	grep "path.*needs.*filters" err
+>  +'
 
-> >         if (write_in_full(fd, buf.buf, buf.len) < 0) {
-> >                 strbuf_release(&buf);
-> > -               die_errno(_("Could not write to %s"), git_path_todo_file());
-> > +               return error_errno(_("Could not write to %s"),
-> > +                                  git_path_todo_file());
-> 
-> Do the above two new error returns need to rollback the lockfile?
+This will need to become test_i18ngrep once the error message is
+made translatable, but it is correct for now.  I personally think
+there is no need to check "actual" or "err", though---just running
+cat-file under test_must_fail should be sufficient.
 
-As before, atexit() handler to the rescue ;-)
-
-Thanks,
-Dscho
+Thanks, will queue.
