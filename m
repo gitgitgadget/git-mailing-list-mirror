@@ -2,109 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 040E81F859
-	for <e@80x24.org>; Wed, 24 Aug 2016 06:30:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD8601F859
+	for <e@80x24.org>; Wed, 24 Aug 2016 07:09:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751042AbcHXGaT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 02:30:19 -0400
-Received: from mail-yb0-f175.google.com ([209.85.213.175]:36477 "EHLO
-        mail-yb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750954AbcHXGaT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 02:30:19 -0400
-Received: by mail-yb0-f175.google.com with SMTP id e31so2454607ybi.3
-        for <git@vger.kernel.org>; Tue, 23 Aug 2016 23:30:18 -0700 (PDT)
+        id S932196AbcHXHJU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 03:09:20 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:35549 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750969AbcHXHJT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 03:09:19 -0400
+Received: by mail-it0-f66.google.com with SMTP id f6so1235241ith.2
+        for <git@vger.kernel.org>; Wed, 24 Aug 2016 00:09:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=HmhMoYlLgCWqi+j9AZiJwF6oXIaix+xJsdCXle60IGs=;
-        b=akbzq6E9/I7xUXjnYgJX3qWXzy2E3hdP3l80wAGvgiyTjkqPH1rliWZEwU+EBSi4L5
-         29mwo3vJ14gh5dCQjV3YRDh5CNE+/l9y1/RZH5Wzw3RwP4l0bUzmfPJrejGql776Myyg
-         UqWqez5FutFssSXbEGgKP5cnK6vaUiAhW3Nx7Ffp6ywevNMC9bu2tIoiDBEfMeNRbR8U
-         v4CF60dbmNYBCe9jI4yOKEh0wFfIgIzWpLqt+lBnPOtcN3S95x9vN5Kvdt2OLp/fUS+g
-         FsybNKPhhvq9gNpsr8hmiVkCKnvS81ayEUTgAJzG8BccgvGBSfJL0yZJGccHWcOkCSId
-         OpqA==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=J6g+O0iyPScawmXiTto9mlurcAb/FWqNatzC9Oqbl94=;
+        b=g8fh7LOz2FEOznd/CMsQwL5VPDkK7eTH7r3euLlfV7Pq2jvf1cnKolt8s+0UjA4Gsg
+         DzwKyzCzViDkEIFYbOqhmS/U3EkKsk6F6AFde+ZgL1oasmKiQtdQ9HmWPLcGuqSjQi+G
+         KRdyD+2B6csFrzckL+Pb9TxtOpPKsItYYdgx1qHBG2djE/lSNu00JpJRPtuhWH/x9K9X
+         U0E0jvRgr24z7Ory64EV20psD10CNtbb1nVZjw74jGQ1NX2Rt87VF4942Ki1KYLaxL79
+         pGBOzNT+RPkahOQ5eDXf/vgYmJrR8C9YKUQ1zUfk148bYChqDaOtYQfUSTEQ0YEQbbvf
+         ocAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=HmhMoYlLgCWqi+j9AZiJwF6oXIaix+xJsdCXle60IGs=;
-        b=hL701QRLcFTwLCsB3NXH5H4uFkRdzDBkpi3yXuSha8GamwpmgZbkELekAi4xVkj6rl
-         7K/L8KrsxVWKfq+vhONtfVfX+bQnkDQ9ObEGkm8aiuiKGfdvBeuAxnaKBUB8GW6oJlI1
-         e00FNRZbLDdGT5kXw4VEnZ9eV3MJJStJAzlxCnLrnTI3GFlFLtJIfwqdH5UBnK2yE2z4
-         y8pa5/aGPl3sTCw32VQzeAEMOAhxnL3BAVivdDr6FEOz/Cy0VAwyAm64JSk93lO02kJ7
-         dL+YqgwWoowGuXjNgdZog0DbiXhV4UjjilsvaZrIZPXrHlPEMIcs4MEn7k8wQ1vvl9zn
-         cVvA==
-X-Gm-Message-State: AEkoouvfVpfjgzpwbtbQ2KVQ5gSRjrV9YaFQlCxXS3YFUI7xWuaJwCSYr7190WNBvBeoDM/qnK2bbAkmjSzEgg==
-X-Received: by 10.37.110.86 with SMTP id j83mr1078706ybc.136.1472020216189;
- Tue, 23 Aug 2016 23:30:16 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=J6g+O0iyPScawmXiTto9mlurcAb/FWqNatzC9Oqbl94=;
+        b=hiB5mlruOMLD6BhAUmr6pohaPfotv9ou8A9vTEeAl6FAU8j3WVlWABZbZRgMw3+yjP
+         fFj702NFlJywadg0h+hP7bU4wDvXMrdbRWLAkFXd9ls/J32ghysUiuiJDupzWGPlxC4g
+         +r4NczJYOgLFLwsT9/ND3q+cbWBDug8TbDOScBzhQTsYMR9on5+nDsncMyevypZsCqqr
+         9Vt/fW7FnW1PlO5xBTdWSH5lydhxIrjxn7BpWxpBQI7mbuISedLKESwT8gJcpT/5Y89P
+         fPn2gBcoCMd1qiaxsxeJtf9Y69A+FGdOZfH8RepUTQlhxRJQFE8+PRi73Iox46Wog6GZ
+         UETQ==
+X-Gm-Message-State: AE9vXwNRKleQq5jxptLs6OOm891aWF6FSvSiEh1L8KKN8H8mFohSviByaygqI0Xco5thLaPIHUrEet1AK2VWEA==
+X-Received: by 10.107.25.14 with SMTP id 14mr2385966ioz.168.1472022558354;
+ Wed, 24 Aug 2016 00:09:18 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.37.96.195 with HTTP; Tue, 23 Aug 2016 23:29:55 -0700 (PDT)
-In-Reply-To: <CAGZ79ka6nwYjBRcUKAxCqAodq=Hw6f86J0Mq6GWyKgMO_PNi4A@mail.gmail.com>
-References: <20160815215327.15682-1-sbeller@google.com> <20160815215327.15682-9-sbeller@google.com>
- <CA+P7+xpDqkTFLUJBhSwWiVnXw-iy1fmGBWzVBLmybOcPOmevBw@mail.gmail.com> <CAGZ79ka6nwYjBRcUKAxCqAodq=Hw6f86J0Mq6GWyKgMO_PNi4A@mail.gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 23 Aug 2016 23:29:55 -0700
-Message-ID: <CA+P7+xpmyx+QsdOpS7JC1i9Z6cdsy_=MK7J_rGYiukPsqAJBVQ@mail.gmail.com>
-Subject: Re: [PATCHv5 8/8] clone: recursive and reference option triggers
- submodule alternates
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jens Lehmann <Jens.Lehmann@web.de>
+Received: by 10.79.130.1 with HTTP; Wed, 24 Aug 2016 00:09:17 -0700 (PDT)
+In-Reply-To: <6dc5e927cbdd1847db5b6cd75041609dd1e1f76d.1471968378.git.johannes.schindelin@gmx.de>
+References: <cover.1471968378.git.johannes.schindelin@gmx.de> <6dc5e927cbdd1847db5b6cd75041609dd1e1f76d.1471968378.git.johannes.schindelin@gmx.de>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 24 Aug 2016 03:09:17 -0400
+X-Google-Sender-Auth: 7-BXu1CPezpV5b8Nx3yWzKeiX90
+Message-ID: <CAPig+cSX_F-vQ_zSrTU6BQSfMeU=5V3krE7xgmBL=g=Jr8i2MA@mail.gmail.com>
+Subject: Re: [PATCH 01/15] sequencer: lib'ify write_message()
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 23, 2016 at 4:03 PM, Stefan Beller <sbeller@google.com> wrote:
->>> +
->>> +       if (option_recursive) {
->>> +               if (option_required_reference.nr &&
->>> +                   option_optional_reference.nr)
->>> +                       die(_("clone --recursive is not compatible with "
->>> +                             "both --reference and --reference-if-able"));
->>
->> So if you have multiple references that don't all match we basically
->> just refuse to allow recursive?
->>
->> Would it be better to simply assume that we want to die on missing
->> references instead of failing the clone here?
+On Tue, Aug 23, 2016 at 12:06 PM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> To be truly useful, the sequencer should never die() but always return
+> an error.
 >
-> The new config options are per repo (or even set globally), and not
-> per alternate. And as we communicate the [if-able] part via the config
-> options to the submodules it is not feasible to transport both
-> kinds of (reference-or-die and reference-but-ignore-misses).
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+> diff --git a/sequencer.c b/sequencer.c
+> @@ -180,17 +180,20 @@ static void print_advice(int show_hint, struct replay_opts *opts)
+> -static void write_message(struct strbuf *msgbuf, const char *filename)
+> +static int write_message(struct strbuf *msgbuf, const char *filename)
+>  {
+>         static struct lock_file msg_file;
 >
-> That is why I introduced this check in the first place. If we'd go back
-> to the drawing board and come up with a solution that is on a
-> "per alternate" basis we could allow such things.
->
->> That is, treat it so
->> that multiple reference and reference-if-able will die, and only info
->> if we got only reference-if-able?
->>
->> Probably what's here is fine, and mixing reference and
->> reference-if-able doesn't make much sense.
->
-> I think the reference-if-able doesn't make sense for one project alone
-> as you can easily script around that, but is only useful if you have
-> submodules in a partially checked out superproject that you want
-> to reference to.
->
-> Thanks,
-> Stefan
+> -       int msg_fd = hold_lock_file_for_update(&msg_file, filename,
+> -                                              LOCK_DIE_ON_ERROR);
+> +       int msg_fd = hold_lock_file_for_update(&msg_file, filename, 0);
+> +       if (msg_fd < 0)
+> +               return error_errno(_("Could not lock '%s'"), filename);
+>         if (write_in_full(msg_fd, msgbuf->buf, msgbuf->len) < 0)
+> -               die_errno(_("Could not write to %s"), filename);
+> +               return error_errno(_("Could not write to %s"), filename);
 
-I'm not sure there is a better design.  How are alternates stored? In
-a config section? Or is there some way we can store the is-able per
-alternate and look it up when adding them to submodule?
+Does this need to rollback the lockfile before returning[*]?
 
-Thanks,
-Jake
+[*] I'm not terribly familiar with the lockfile mechanism and I don't
+have a lot of time to study it presently, so ignore me if this is a
+stupid question.
+
+>         strbuf_release(msgbuf);
+>         if (commit_lock_file(&msg_file) < 0)
+> -               die(_("Error wrapping up %s."), filename);
+> +               return error(_("Error wrapping up %s."), filename);
+> +
+> +       return 0;
+>  }
