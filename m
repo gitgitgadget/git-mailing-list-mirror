@@ -2,98 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE1961F6C1
-	for <e@80x24.org>; Wed, 24 Aug 2016 16:00:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FCC71F6C1
+	for <e@80x24.org>; Wed, 24 Aug 2016 16:05:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754754AbcHXQAQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 12:00:16 -0400
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:33623 "EHLO
-        out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754291AbcHXQAQ (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 24 Aug 2016 12:00:16 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id C2C67204F5;
-        Wed, 24 Aug 2016 12:00:12 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute3.internal (MEProxy); Wed, 24 Aug 2016 12:00:12 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
-        content-transfer-encoding:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-sasl-enc
-        :x-sasl-enc; s=mesmtp; bh=/M61+342/+vl/PJyFniBG2S6B9Q=; b=iKkBRx
-        0YERvtYStFMZXlClzkZYFqQPZ2qbY+1GeW8UV2nxX9QKT//HBSIGMYs1bVjzzOAE
-        aPqGNbikEE9ZQh64nx7LZmTHJ5GqN5ixkOwgoFH8lZDMfZMoB0cyPhaACzUXZFN+
-        Xrx047Ok/DOEUsVXat80zk37IgwSEpRy5pluc=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=/M61+342/+vl/PJ
-        yFniBG2S6B9Q=; b=gtEjmmAvzHAMd3iX2gkfsRQTB6qRDx5Vclw7WhMNmnQTnDp
-        z63hrCgleayweF3px1wEExgkldvGsdiCUq6F60ZG0Ts+/bw0hYNeVgHByLqiImbi
-        ttHcnHlXMwTxEsKhCeKwiy1TgMWcofOxZdopSKnEXlLwXueLYf/2UhM6fSuU=
-X-Sasl-enc: LeNBJ0OjjBAtNJuLKrRFFqSGe+pGbCtCWLfbOprM30Ho 1472054412
-Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 4D40FCCE70;
-        Wed, 24 Aug 2016 12:00:12 -0400 (EDT)
-Subject: Re: diff <commit> using 3-dot behavior
-To:     Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
-References: <CAHd499DL2WiTgnk5A--qihUh-jF9m7aXDzHAQuW=bLRVW4Bniw@mail.gmail.com>
-From:   Michael J Gruber <git@drmicha.warpmail.net>
-Message-ID: <9efbdfbb-4c82-1355-1f89-5edca7135179@drmicha.warpmail.net>
-Date:   Wed, 24 Aug 2016 18:00:11 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S1753663AbcHXQFy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 12:05:54 -0400
+Received: from mout.gmx.net ([212.227.15.18]:63044 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753142AbcHXQFx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 12:05:53 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MPDaC-1bYCxB3lUe-004TAm; Wed, 24 Aug 2016 18:05:10
+ +0200
+Date:   Wed, 24 Aug 2016 18:05:08 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 11/15] sequencer: lib'ify save_todo()
+In-Reply-To: <CAPig+cQ2xH1ytsTGNDeDZiHTZpnp28XUJoAY+W-+iw+85gMbtg@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1608241801030.4924@virtualbox>
+References: <cover.1471968378.git.johannes.schindelin@gmx.de> <fff4cdfa36355af7917a06be9f67b50b56bfce99.1471968378.git.johannes.schindelin@gmx.de> <CAPig+cQ2xH1ytsTGNDeDZiHTZpnp28XUJoAY+W-+iw+85gMbtg@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <CAHd499DL2WiTgnk5A--qihUh-jF9m7aXDzHAQuW=bLRVW4Bniw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:zCGHsT5zkub1+Pekh0saCGs89OxanYs6BS7f4j3n3CDG3Utua8w
+ 1rzakgUY/QDYzx7JA5+ZDEhlWEiUvGuWIFPOyJcpFWNA4r9M4OlTHoOvu6HH5Qnph92Tueg
+ pfVznVX/+40Xq5ax1gdG2m0azmuBtpPc9F7zq8To0pVtiOoKA/iTpJwHp+pcMcS5rhyUMQl
+ x44aQsIYcAJ4EKenJjw3g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:OV3JL9W03LU=:+X26n8nMn7uZVFAoQJtg4i
+ QyHGEUTN60sgDj/xznGCuI2iGm+Bq6rfaEU4zcHar9AGG+WosTmlebBdAuLJybFwMvOYqgHLH
+ ztrbxKnZhZYOAgxiTNDSdwQ2EoOsRjDoFm4jF5Vw05XCnqkLCmJlPA8fiMeQCULLbH8oWf1ql
+ +hwCmLfQxpy2tDs/RPnPbM1bs6Pw2JlgMipxpPXzZuHhNXHUjx70oE44c+sZ5tNmiHFEdFCU9
+ RRVwCaeNLoJQ2BLsLHTtExwW4FYEX2EVoBSKEnMJ+BD3hW9cOfqxe53sN9HHyip/ji/1lVr+k
+ kovskruA86nQUzJTjw3eEBR7BHjdc7+vJpSGnOrQWL9sWCqua3+d1k+nvz0w0StTrs9DkBv6y
+ gNWD8O5CoqHbHQ+pOCz2JlJPbPuLuQhgMp2pJti2f5s+OIq391L3Au+1pykUow3/jiXlcI8mj
+ Qoh4PY9sRlwNjWEFj3WP2zDJtLDNbDtVm7TF9Ybiezw5YcOLQptL2wGwXhFL63fPluc9GyBqL
+ tmIL4kuJDBWLpyhNWarReMNzSzqFxfSSHH+GJOzcCYqvFgpdnQC1Qbli3N7ThTKC9AYVFQSA0
+ EGuaj3a6RUEPAZcgJ7nmdVx0q4fBi4BiXDYVeS7maMKSbxQ/qUG6Wm+PML114PRpH5vEDNGlR
+ 2ZMPAmZR/HUufHk2nLLWjvRS1Cb2QvpZzKcPPxkqjFzfvbUiGn5ZyJ4p8KinQdp+8FZfvzAAt
+ VcWCbeNUbaTOExraD2DJRJU1tCL81YB1j6PiVY3cyjMmYNDXWQV0EgoPju0HA29qv5GyxHBHo
+ 1urXA7K
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Robert Dailey venit, vidit, dixit 24.08.2016 16:28:
-> I want to view the complete diff of my branch (topic) relative to its
-> parent branch (master). This should include cached/staged files and
-> unstaged working tree changes.
-> 
-> If I do this:
-> 
-> $ git diff master
-> 
-> This will include changes on master *since* my last merge, which I do
-> not want (I don't want to see changes on master, only on topic). I
-> tried this:
-> 
-> $ git diff master --not master
-> 
-> This didn't give me any output. If I do this:
-> 
-> $ git diff master...topic
-> 
-> This shows me only committed changes on topic, but excludes staged &
-> unstaged changes.
-> 
-> How can I get the results I want?
+Hi Eric,
 
-The 3-dot notation means:
+On Wed, 24 Aug 2016, Eric Sunshine wrote:
 
-Show the difference between the merge-base of master and topic, and topic.
+> On Tue, Aug 23, 2016 at 12:07 PM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> > To be truly useful, the sequencer should never die() but always return
+> > an error.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> > diff --git a/sequencer.c b/sequencer.c
+> > @@ -929,24 +929,29 @@ static int sequencer_rollback(struct replay_opts *opts)
+> > -static void save_todo(struct commit_list *todo_list, struct replay_opts *opts)
+> > +static int save_todo(struct commit_list *todo_list, struct replay_opts *opts)
+> >  {
+> >         static struct lock_file todo_lock;
+> >         struct strbuf buf = STRBUF_INIT;
+> >         int fd;
+> >
+> > -       fd = hold_lock_file_for_update(&todo_lock, git_path_todo_file(), LOCK_DIE_ON_ERROR);
+> > +       fd = hold_lock_file_for_update(&todo_lock, git_path_todo_file(), 0);
+> > +       if (fd < 0)
+> > +               return error_errno(_("Could not lock '%s'"),
+> > +                                  git_path_todo_file());
+> >         if (format_todo(&buf, todo_list, opts) < 0)
+> > -               die(_("Could not format %s."), git_path_todo_file());
+> > +               return error(_("Could not format %s."), git_path_todo_file());
+> 
+> format_todo() doesn't seem to make any promises about the state of the
+> strbuf upon error, so should this be releasing the strbuf before
+> returning?
 
-I'm not completely sure, but I guess what you want is:
+Yes, it should. Thank you!
 
-Show the difference between the merge-base of master and topic, and the
-worktree.
+> >         if (write_in_full(fd, buf.buf, buf.len) < 0) {
+> >                 strbuf_release(&buf);
+> > -               die_errno(_("Could not write to %s"), git_path_todo_file());
+> > +               return error_errno(_("Could not write to %s"),
+> > +                                  git_path_todo_file());
+> 
+> Do the above two new error returns need to rollback the lockfile?
 
-You can accomplish this with:
+As before, atexit() handler to the rescue ;-)
 
-git diff $(git merge-base master topic)
-
-I guess a shorter notation for that could come in handy. OTOH, I usually
-diff against HEAD in a situation like that.
-
-Cheers,
-Michael
+Thanks,
+Dscho
