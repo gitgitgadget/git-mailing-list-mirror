@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C21251F6C1
-	for <e@80x24.org>; Wed, 24 Aug 2016 15:54:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FFAF1F6C1
+	for <e@80x24.org>; Wed, 24 Aug 2016 15:57:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754639AbcHXPyB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 11:54:01 -0400
-Received: from mout.gmx.net ([212.227.17.22]:64004 "EHLO mout.gmx.net"
+        id S1753719AbcHXP5y (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 11:57:54 -0400
+Received: from mout.gmx.net ([212.227.15.18]:55393 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754281AbcHXPyA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 11:54:00 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MdWO8-1bmRsS1iJQ-00PLex; Wed, 24 Aug 2016 17:53:52
+        id S1753457AbcHXP5w (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 11:57:52 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MN1j6-1bW0yE2LaS-006h1N; Wed, 24 Aug 2016 17:57:18
  +0200
-Date:   Wed, 24 Aug 2016 17:53:50 +0200 (CEST)
+Date:   Wed, 24 Aug 2016 17:57:17 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Eric Sunshine <sunshine@sunshineco.com>
 cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 02/15] sequencer: lib'ify do_recursive_merge()
-In-Reply-To: <CAPig+cTCotTDT83x9=q5ORR1ZWR9oewvXiun9sjvEbTV8OuChA@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1608241753150.4924@virtualbox>
-References: <cover.1471968378.git.johannes.schindelin@gmx.de> <e00df1449af0d8c55000a93c734d8a241b1cb5f0.1471968378.git.johannes.schindelin@gmx.de> <CAPig+cTCotTDT83x9=q5ORR1ZWR9oewvXiun9sjvEbTV8OuChA@mail.gmail.com>
+Subject: Re: [PATCH 06/15] sequencer: lib'ify read_populate_todo()
+In-Reply-To: <CAPig+cSR8BHFdMJz5mFkpJ3UU6w0Xmjav+tu6f3DrkG4Gi-v6A@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1608241754590.4924@virtualbox>
+References: <cover.1471968378.git.johannes.schindelin@gmx.de> <0de75bbce8ade0c6e5cf87d3647faa71a89c6275.1471968378.git.johannes.schindelin@gmx.de> <CAPig+cSR8BHFdMJz5mFkpJ3UU6w0Xmjav+tu6f3DrkG4Gi-v6A@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:HLUCC3poqWA/bzIfpL17kIrHYqOJzJEJAP6+nJL0yHFvU5aVA98
- VoCjF83MycyZav78gly6acFkT3LqwquByswO/1TcGIplMHo4lH/0dpTGeLlLAReTyiTLqAg
- V5mgyI4aI1cBq/Bt5y4YqlnV37dWuoneLPJeYeVI1blaZIQptbddLnnFXR0lkjyijqBtOOj
- c8gTSNL8Uu2ig5WUdkBRA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Alh9Z3NbI7Y=:BiuGRFnQ7zaGlKA1nxUH0l
- wE4tAn1IFk5eCGjmP7JRVbPM9sxaW8EZpBqj+19TQZ08mHSa6hzsss5ozZAhTNtHRPqf36Pfa
- ORImUxzKo1HEcOOT578C/bDmMWvRicUDrEDnc4UZK/If88sxMa3snSJYKPaER7kR+pV2JQhC1
- zwz2qn/Pq4BkO6rU7fbTFtvR3bD28ODuQ21FuMpMfw/JnE5lOZd/AzxaFuQtCHoYjJtexItfc
- JFFpPJJCEPLUNJ/xUjIzeF862XV5Y0zR4TY3Ne3vAg4FxtWQlJdmXFoMC7H2BHNf0O6Wx9Vvz
- g21IAFBrWVABl/zhGMdNbGfXQd13kO5K8+HxgHfEGP1H4wakSQ6IbSqxF20OQhQQph3AxHsFK
- xYJ5Y8aQPSo9SqR/RIXqWcFEhSVQ3GxCu3WH6tgCxYgsGFTTQerl70hB2ldhTSx25FfG/n5v8
- q+5BfipMgdxYRiD3sbeaWAnuVGa7f4Sjw2IqM4MgF0h6K9xFknpAV6xV44/C+7IdKFCwgUumi
- +Dq1zlokFFlShiXf3qSxwebLTK5YQi3IW/xwTAj7gNJjPRexmVy5gPBNQH8N7CiGp3hIC0k1e
- Qw9HirXo2lGmUEo7VxCdCMghu+rTf0w9HbDZZYrTjNIMneDsFjn1jjiynxTDFSJzPAVLlh5J7
- WlI6xojTBQOt8xWCOXtDGc9le0WHUvPkzVfWh9G9waTa3qh1E2/3jEVBh+v6fmrRvPlCUGfel
- NoVNp0xfjyXPGdmVqdeGhmbwrR2NU9qd9IlYIaW0dXRynfRQTK91r2QC/ZGZ5uJzxhr4wOKNl
- ik8WOSt
+X-Provags-ID: V03:K0:W8c57Q+2GorNG6J00Jawx1zdnUe5GJ5ERCG8mRwEh7lBJbwT86T
+ yO6HAuy+TgKZ1yvfqJfN3M7kHVHCNaayFLD98d1IFmQqtT6qbfOVf5MQKw2tOP+MpBcqMtx
+ +ZHRWRVyqAczN9TZHpNJjvR2QBI8x0coEVdrIok4Gl4kZ01WB2oj68eDzMcFOHc63+/1buu
+ beffOtw2FeUaiWSC2s7aQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:meagsdeLtGY=:6arh+wROCJzVCft0cMm023
+ 0aPGr7Zs9qJRxUv2/IuYrEKWE0h19az+C4H/d6PlF0icsQiv8F47OiPCmc/inpIE4ZuGuNaJI
+ 9U3FSXPKu0SWY/fPoi4IyHwNaT5XhBN3unMqvu17cMtxKqXKvpvBwLwYoSY4jNroWIyf6nXib
+ KvW7V3o25Fz6x8ZghN4uuwA4fRHTKPWCwu3fdtFWBLM0eXyHC8a5gHuFe4t6BKLkLBmV+PJOH
+ QP0GMpa1/S1QfJ1v2fMFtKfUbfhF0GB0NUaHehKnfxlFJbG8Urh945yAj68EAixE8UQQ9C3hl
+ BhCgaJPrrwoXsRpiV0C7LaCFc99rnhhUC2wiCBSesldSASYPtxX9bUgPrYYhEQYGPH4Ft5mq+
+ MirlTB/YMRBWF5pjq1hr+J9asEjI1rGNh/5TB6w/2ydxDtLObwtcJz92cz61kY0sxtKy+3WFZ
+ umZoot1dQPKv2ySx9uVwfAS48Rsvyldcmhs2zSovJ9rTfTt8uUoRYWu9Jb29ValGo4IrvmPfR
+ fQL9n7QBe8xzukLsID1VsQleaX3IbVpCvFlVHhItJqXAvfql2S6mtBdyZMZpiOTtZ6f2Br6+v
+ i/ePxDRP3Ao9t1usKgeWnvhG0UQpqly7p7pvAU+N23PSuqaR8zqEUkuhLIEdOF3BCPk2FcVHL
+ MidVgGSi01DCQp9Par0DrowVanckm/iPGn78gIBk7bJIy/uovj/0rTzIT1FRItVXbLyloIOMl
+ FWyuV3w+laonC9SSpZHdOO2HavtvTjKaqEQMX4sBrFguqiQIB6jVGwNt3BLQcydLLkszhVpPR
+ EFMKOZG
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -57,7 +57,7 @@ Hi Eric,
 
 On Wed, 24 Aug 2016, Eric Sunshine wrote:
 
-> On Tue, Aug 23, 2016 at 12:06 PM, Johannes Schindelin
+> On Tue, Aug 23, 2016 at 12:07 PM, Johannes Schindelin
 > <johannes.schindelin@gmx.de> wrote:
 > > To be truly useful, the sequencer should never die() but always return
 > > an error.
@@ -65,22 +65,17 @@ On Wed, 24 Aug 2016, Eric Sunshine wrote:
 > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > > ---
 > > diff --git a/sequencer.c b/sequencer.c
-> > @@ -303,7 +303,8 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
-> >         if (active_cache_changed &&
-> >             write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
-> >                 /* TRANSLATORS: %s will be "revert" or "cherry-pick" */
-> > -               die(_("%s: Unable to write new index file"), action_name(opts));
-> > +               return error(_("%s: Unable to write new index file"),
-> > +                       action_name(opts));
+> > @@ -754,18 +754,21 @@ static void read_populate_todo(struct commit_list **todo_list,
+> >
+> >         fd = open(git_path_todo_file(), O_RDONLY);
+> >         if (fd < 0)
+> > -               die_errno(_("Could not open %s"), git_path_todo_file());
+> > +               return error(_("Could not open %s (%s)"),
+> > +                       git_path_todo_file(), strerror(errno));
 > 
-> Does this need to rollback the lockfile before returning?
-> 
-> A cursory scan of read-cache.c:do_write_locked_index() seems to
-> indicate that lockfile disposition is not handled automatically in
-> case of error (unless I'm misreading).
+> error_errno() perhaps?
 
-As mentioned elsewhere in this thread: an atexit() handler is tasked with
-rolling back uncommitted lockfiles.
+Absolutely!
 
-Ciao,
+Thanks,
 Dscho
