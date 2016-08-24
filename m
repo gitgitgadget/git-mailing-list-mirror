@@ -2,103 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B2FDE1F6C1
-	for <e@80x24.org>; Wed, 24 Aug 2016 16:09:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F39711F6C1
+	for <e@80x24.org>; Wed, 24 Aug 2016 16:11:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754258AbcHXQJK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 12:09:10 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51346 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754129AbcHXQJK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 12:09:10 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B537838913;
-        Wed, 24 Aug 2016 12:09:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=eGgKoXEGUoTCqMnoFORmaUq9d0Q=; b=oMdaOI
-        jdjuHO/EmfeMPNbfDIbF547TpV0QBBPrS3cmM+TaJ9nKdR2+GfX5MNAQR8K4BhOE
-        70szaQwM71K1s2XdgOFb2LEvkynJPSdUoXUcO4QpLmACelZzTgIycyIOP/o4krwm
-        zEZ1iRyv8u+0iHtDJ/MU3hzysuXOUyhfu29LE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=E/qMyCjH+jsJ6n0xj/+lxXgFBl+HQgxU
-        /uA3EbUrKuT7TWADCAhGyflU6Ho7KGYcwy2O964sxJfRmcernSOVP/Dt2R2IOjZ5
-        UTHRRAoOd6Tgn5B8ydD5d6J6Lvw9bIxydWbR92yT5z2UkouFt6Zy8GSGiBz08HKp
-        I4kJUFu6imI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ABF7F38912;
-        Wed, 24 Aug 2016 12:09:08 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3311C38911;
-        Wed, 24 Aug 2016 12:09:08 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/4] cat-file: optionally convert to worktree version
-References: <cover.1471524357.git.johannes.schindelin@gmx.de>
-        <cover.1472041389.git.johannes.schindelin@gmx.de>
-Date:   Wed, 24 Aug 2016 09:09:06 -0700
-In-Reply-To: <cover.1472041389.git.johannes.schindelin@gmx.de> (Johannes
-        Schindelin's message of "Wed, 24 Aug 2016 14:23:30 +0200 (CEST)")
-Message-ID: <xmqqk2f6rvx9.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1754485AbcHXQK6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 12:10:58 -0400
+Received: from mail-ua0-f193.google.com ([209.85.217.193]:33089 "EHLO
+        mail-ua0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754460AbcHXQK5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 12:10:57 -0400
+Received: by mail-ua0-f193.google.com with SMTP id u13so1600865uau.0
+        for <git@vger.kernel.org>; Wed, 24 Aug 2016 09:10:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=/LklGATm6okV4Nl8ffaDtXb5t3k2ADeDSYnVQSeIJAQ=;
+        b=CTeUX86cdSCkYg4JR/78fxaFY8584dUrTQsiMe63RxXMltKqjBJZEffpxsdpxlxcNb
+         fcv6mRo23b/CA0Y8vznmlsSafNLXmIi9g5EgT8XNllkHvbqsC7P/Ifg4Y71BPS7BZVZX
+         XXGf/OFD4emVFHWhdNTtmbRwwyUFRjDXtwg99jgB4iJjjBnCVbHAZvs2VRNBidc9krqA
+         CFOLOkg7TTTMucEr2L8Fh0vWUhF/UyZydHKYdMp8k8fmBA8AVXvKaNSpHzzqDd/IAZR4
+         D1czQnEy3pBruA4ohD+1fwgWsg0IqnlsLY8PsgxeVhHSFVXl62IMZ26C340Sft2p6kfd
+         GWsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=/LklGATm6okV4Nl8ffaDtXb5t3k2ADeDSYnVQSeIJAQ=;
+        b=D/CapAL/kQ879oKdwZk7OoOkYxBtN1Zi8YOfUqo52trMds4BTjlWk3UQ8JGQKeZox5
+         4LTSiCrwMNB5wmmt55mw3fGJ8veCTAllGlscGOyViFK9HCM7NH/BG1zsxgY9MkaAzK6R
+         2R/0i4Gb+xeSA/0miPiIy2UCP6In6qzI21KA6c+zQmcKf2g1R+lPGfnVYLam6qp2WJmm
+         e5GaY0JPHo/2vihRBKIjO5CUPa4nSPlQt1mf/zLYIlDJRAh+OVnJaarYryVbC2Z3dYLL
+         XSDBSxN645KPG3agQ/9F86zBtva1obTJrncIfeuDUquIwGk43DjWnbtSXcB5BlZzlYwR
+         VT1g==
+X-Gm-Message-State: AEkoouuE8/7oD8Os92VpaGqFNqxKsKlbNp19QppXbxSCKUl/z1uCxWsHsN7z+/AP6IkySbKrf3JP5N86WU86XQ==
+X-Received: by 10.31.33.8 with SMTP id h8mr2243397vkh.59.1472055056949; Wed,
+ 24 Aug 2016 09:10:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 164A71E4-6A15-11E6-9905-E86612518317-77302942!pb-smtp1.pobox.com
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.176.4.230 with HTTP; Wed, 24 Aug 2016 09:10:56 -0700 (PDT)
+In-Reply-To: <9efbdfbb-4c82-1355-1f89-5edca7135179@drmicha.warpmail.net>
+References: <CAHd499DL2WiTgnk5A--qihUh-jF9m7aXDzHAQuW=bLRVW4Bniw@mail.gmail.com>
+ <9efbdfbb-4c82-1355-1f89-5edca7135179@drmicha.warpmail.net>
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Wed, 24 Aug 2016 11:10:56 -0500
+X-Google-Sender-Auth: 8wjudEKne_Je5X5Rj4buEG5gLAw
+Message-ID: <CAHd499DTkxAmLhEyGc4t+g1gFBnJpVRwgS5dhRRE=E+pUU5WDg@mail.gmail.com>
+Subject: Re: diff <commit> using 3-dot behavior
+To:     Michael J Gruber <git@drmicha.warpmail.net>
+Cc:     Git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On Wed, Aug 24, 2016 at 11:00 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> The 3-dot notation means:
+>
+> Show the difference between the merge-base of master and topic, and topic.
+>
+> I'm not completely sure, but I guess what you want is:
+>
+> Show the difference between the merge-base of master and topic, and the
+> worktree.
+>
+> You can accomplish this with:
+>
+> git diff $(git merge-base master topic)
+>
+> I guess a shorter notation for that could come in handy. OTOH, I usually
+> diff against HEAD in a situation like that.
 
->  diff --git a/builtin/cat-file.c b/builtin/cat-file.c
->  index 5f91cf4..f8a3a08 100644
->  --- a/builtin/cat-file.c
->  +++ b/builtin/cat-file.c
->  @@ -61,6 +61,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
->   	struct object_info oi = {NULL};
->   	struct strbuf sb = STRBUF_INIT;
->   	unsigned flags = LOOKUP_REPLACE_OBJECT;
->  +	const char *path = force_path;
->   
->   	if (unknown_type)
->   		flags |= LOOKUP_UNKNOWN_OBJECT;
->  @@ -68,6 +69,11 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
->   	if (get_sha1_with_context(obj_name, 0, sha1, &obj_context))
->   		die("Not a valid object name %s", obj_name);
->   
->  +	if (!path)
->  +		path = obj_context.path;
->  +	else if (obj_context.mode == S_IFINVALID)
->  +		obj_context.mode = 0100644;
->  +
->   	buf = NULL;
->   	switch (opt) {
->   	case 't':
-
-The above two hunks make all the difference in the ease of reading
-the remainder of the function.  Very good.
-
->  +test_expect_success '----path=<path> complains without --textconv/--filters' '
->  +	sha1=$(git rev-parse -q --verify HEAD:world.txt) &&
->  +	test_must_fail git cat-file --path=hello.txt blob $sha1 >actual 2>err &&
->  +	test ! -s actual &&
->  +	grep "path.*needs.*filters" err
->  +'
-
-This will need to become test_i18ngrep once the error message is
-made translatable, but it is correct for now.  I personally think
-there is no need to check "actual" or "err", though---just running
-cat-file under test_must_fail should be sufficient.
-
-Thanks, will queue.
+Great solution. I feel silly now, the answer ended up being rather
+obvious. I can create an alias for that. But I can't diff against HEAD
+because then I am not seeing a diff of changes already committed.
+Thanks for your help.
