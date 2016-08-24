@@ -7,78 +7,98 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82B511F859
-	for <e@80x24.org>; Wed, 24 Aug 2016 07:57:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 069891F859
+	for <e@80x24.org>; Wed, 24 Aug 2016 08:00:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753412AbcHXH5n (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 03:57:43 -0400
-Received: from mout.gmx.net ([212.227.17.22]:60720 "EHLO mout.gmx.net"
+        id S932255AbcHXIAR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 04:00:17 -0400
+Received: from mout.gmx.net ([212.227.17.20]:55942 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752279AbcHXH5m (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 03:57:42 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MIyCj-1ba05Q15zt-002UXV; Wed, 24 Aug 2016 09:57:29
+        id S1754040AbcHXIAQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 04:00:16 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0Lomql-1ax4wj2GYl-00gntf; Wed, 24 Aug 2016 10:00:10
  +0200
-Date:   Wed, 24 Aug 2016 09:57:28 +0200 (CEST)
+Date:   Wed, 24 Aug 2016 10:00:09 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/4] cat-file --textconv/--filters: allow specifying the
- path separately
-In-Reply-To: <xmqqy43s3fin.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1608240957040.4924@virtualbox>
-References: <cover.1471524357.git.johannes.schindelin@gmx.de> <787224ce9a382ddd1180a408e784ca26993e5603.1471524357.git.johannes.schindelin@gmx.de> <xmqqfuq26mu3.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608191521410.4924@virtualbox>
- <xmqqy43s3fin.fsf@gitster.mtv.corp.google.com>
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/4] cat-file: introduce the --filters option
+In-Reply-To: <0ee82126-3fae-723a-ab89-b5794c4abc74@web.de>
+Message-ID: <alpine.DEB.2.20.1608240958070.4924@virtualbox>
+References: <cover.1471524357.git.johannes.schindelin@gmx.de> <f1e188907f31abef9e82bd6b0da120ab7d9bd4a7.1471524357.git.johannes.schindelin@gmx.de> <20160819085700.GA23254@tb-raspi> <alpine.DEB.2.20.1608191656080.4924@virtualbox>
+ <0ee82126-3fae-723a-ab89-b5794c4abc74@web.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:EuOubJJzD/NL6Qr2Os4vdJRx6ywKcKDMvlVkFpa2oJNc6ppEFTe
- P3QR2G2eO6PPf0M9lTYU9rY3SknO+OniH5vtFsrYhLPj4CyFtwTvRo9EgIleHVjO9oPpvNU
- iLF/g7G/EJRisNZfYp9DTCCkQFJ96CLxdUCdiBA7hfx3jJVN4HkV++dE+rxcK/KkI1OgPeY
- vETtCVGt9CPjS7kGI3avA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:m4yQ3PUuSPo=:MLYjYFGN0o4FXXuML8pGxf
- xGQ4s9gKC5oFtm8W72tASCvcc6WYL8k0eZV9u/TnJnWdh6y+tu2v/p45/Mz8wRpaPFjEHasCs
- 4MWQITJFSGfcL35CDgXn8vH31+uaZAyaAhz6/edg4Yn1QdLkA4cHX0VayCbJU1UDnt7tqsYnJ
- qkQFUyCgsNvUfpz6titPK2SYIGi2y6DIkIOKyz8EnK/0/yQzsMAJyGMXgPWzRY5veSAIpsLy0
- cCv2xyTY2Tkn7pAgcrOSWbQKO+0OWPat/yrwNvupSZVcTjVUcPDuWMV6Lq0hQ6O73PnmnPEAj
- SL40TXCj682ywVBkK4I80Cc39IVL7Uk+54Fd5ElqweO6PV61D8tCrh+nvfKu3mwmaANh/ozz6
- x33aTwzx2qRnNcYU65so2jeT+9dsM5gXrdABBnPfM6Gp6GNSh0PLgcqHyhyD/YO1BbWP/sCR+
- EC4CMDhsCjUOatVMMiO3MiqIZmgN0NbYJJwtB4TOh6bwsQ3X+yOUI9ofoMGubSEqNDdOBQ3xZ
- o6T+UBVMEPC1cGGfQEUW1bFIATWR4e7mh2vPK4bVPuJP3yY8/aiM2E6iMe2RkjG9mFCbD0QPf
- svLHcF7SWJxCWp/O+KJOUcht76eoyia5lBu0Zxy6LORI0qaN57Sy6/hKY4XzKO8VKJ3SZkS6X
- H/Q/dsJmNdKow7j5ExX5zkH3ymuH4Ogpv7WhFvaZ1KWE2Al8/r+DD3NjHUg2OVivqkbSu5FZt
- XaXJQ+iRQvFgl3br6ouFL3ZridBaQqmiQtTcvCzM0eURaLQmFbTOH10J0S4NPgMTkLmZSDZVm
- 7/JmT1e
+Content-Type: multipart/mixed; BOUNDARY="8323329-784864794-1472025610=:4924"
+X-Provags-ID: V03:K0:LBMqdEEQ8lXK4vI2PPdGClciTACj5CVJfyF8qaS7hZx8Fk2iYBQ
+ AOQx9faFuLh9A9POy7Q69hq2pfCj3pwgNAULpXmC9rMh6CIxnD7Mtksc8VtC0iT/8oSwr3Z
+ e+kH0jlKdWMfFeDzBzJXVNE59tWkI1tlRyOznkgLJaHarn0P3jGnE7taFD/7fT7VRL8cZKN
+ HxurrPX3AIxGqokt+xq+A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:3i+prGTEm9Q=:+XFdumfM0sQvQq0opgjniQ
+ 5S0WkY0eNkKvqg2scEbk1zjwcyusvLBLyOnpuK0Z1+bFgq+WXjWPshCB7r39kkGOCpVHlusco
+ W0ebqImPH/vpXrM84/St4rIXRH/OwpnvbzoN0ZgQomNZfvEsApkvsVYmrtfytt0s335iy3yw8
+ AtJ20sJgUyGra7E2xvZt1pW3gCsdY+DmGQoTQ3M+85l8OZwCLDb44/j3zY1fxwpFyLRUurEjX
+ /nRhrmCqKwVYX40eLlatYTYC6mo3YP14w51B+FpaIc5TwfougCbOggaZI4f5hwAZTv4hS3k0m
+ LMiogv1U5ZjTC932Hi6XdepcqF4abhdvHVrDHdYgXQLOTzyn06tQ7sR2U3TFnZKJyFhWd/z2Y
+ 3WWvgFllW9z9CFqkw8PFWN/vBWkeJqpORhL3r4QHIrtf5oVo7gjRjJKYRgwmC5dJouse0jvzi
+ qCNovIhPQvhrJTWNJcocBLqxPvWp2yROJbzAwCnbrZ9VcKlDnJBCZ2iM564nGbT/WBaMlPkif
+ dBNJc563mYszr8F1QB35OgtaOXoueiL3QkcBzh7VulExjhGMsjrO2CuVqGdLxZUcsZpDaSJDg
+ g1LeNfih4CSazGx9WCqT0f+N1kiI7V38YAoz5z4WmEa1palBNa9C4zPR+4fFGvZ47NaoAPYoB
+ QMmzJ6wQVPE5zBxl7smY4ItL5xctuY2wlXCu0FxNhml3/aTSTokXB/PLTtBOoGM62eY5A9Khh
+ qz7NyYUSKsx9TxxxfyOSW/NTLqfDz3CGiEFz+eQ1AqeXdanVEMGo8IbX6v7DngX+UC//JlZ0e
+ g5Nql8d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Fri, 19 Aug 2016, Junio C Hamano wrote:
+--8323329-784864794-1472025610=:4924
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> I think I saw some code to ensure "when giving this option you need
-> >> that option in effect, too"; they should be tested here, too, no?
+Hi Torsten,
+
+On Mon, 22 Aug 2016, Torsten B=C3=B6gershausen wrote:
+
+> On 19.08.16 17:00, Johannes Schindelin wrote:
 > >
-> > No, I would rather not test for that. These conditionals are purely for
-> > any user's convenience, in case they specify an option that has no effect.
-> > They are absolutely not essential for the function introduced in this
-> > patch series.
-> 
-> I didn't say "you would want to test these, no?", did I?
-> 
-> I do not want to see bugreports that say "I wanted to use this new
-> feature and by mistake gave only --path without giving --filter; Git
-> should have complained.  I found a bug, hooray!" when somebody in
-> the future refactors the command line option parsing and breaks the
-> check you already have.
+> > On Fri, 19 Aug 2016, Torsten B=C3=B6gershausen wrote:
+> >
+> >> On Thu, Aug 18, 2016 at 02:46:17PM +0200, Johannes Schindelin wrote:
+> >>
+> >>> +--filters::
+> >>> +=09Show the content as transformed by the filters configured in
+> >> Minor comment:
+> >> s/transformed/converted/ ?
+> > Sure.
+> >
+> >> Does it make sense to be more specific here:
+> >> The order of conversion is
+> >> - ident
+> >> - CRLF
+> >> - smudge
+> > I do not think it makes sense to complexify the documentation in that
+> > manner. The filters should always be applied in the same order, methink=
+s,
+> > and it would only clutter the man page to repeat that order here.
+> Can we can shorten the description and have something like this:
+>=20
+> --filters::
+> +=09Show the content converted by the filters configured in
+> +=09the current working tree for the given <path>.=20
+> + =09<object> has to be of the form <tree-ish>:<path> or :<path>.
 
-I added a test to verify that --path without --filters nor --textconv
-complains.
+I do not want it shortened *that* much. I, for one, would be confused
+reading about filters, as there are so many of them. So while I do not
+want cat-file's man page to include an extensive description how filters
+work, I do want it to have an indication which filters this option is
+talking about.
 
 Ciao,
 Dscho
+--8323329-784864794-1472025610=:4924--
