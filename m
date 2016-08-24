@@ -2,90 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A6BE206A7
-	for <e@80x24.org>; Wed, 24 Aug 2016 19:12:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C36DC1F6C1
+	for <e@80x24.org>; Wed, 24 Aug 2016 19:18:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756067AbcHXTMn (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 15:12:43 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60696 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1754513AbcHXTMm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 15:12:42 -0400
-Received: (qmail 19252 invoked by uid 109); 24 Aug 2016 19:12:41 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Aug 2016 19:12:41 +0000
-Received: (qmail 6179 invoked by uid 111); 24 Aug 2016 19:12:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Aug 2016 15:12:45 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Aug 2016 15:12:38 -0400
-Date:   Wed, 24 Aug 2016 15:12:38 -0400
-From:   Jeff King <peff@peff.net>
-To:     Eric Wong <e@80x24.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Arif Khokar <arif_khokar@hotmail.com>,
-        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+        id S932544AbcHXTRw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 15:17:52 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:57626 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754641AbcHXTQx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 15:16:53 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id 2270B1F6C1;
+        Wed, 24 Aug 2016 19:16:52 +0000 (UTC)
+Date:   Wed, 24 Aug 2016 19:16:51 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
         Stefan Beller <sbeller@google.com>, meta@public-inbox.org,
-        git@vger.kernel.org
+        git@vger.kernel.org,
+        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+        Arif Khokar <arif_khokar@hotmail.com>
 Subject: Re: Working with public-inbox.org [Was: [PATCH] rev-parse: respect
  core.hooksPath in --git-path]
-Message-ID: <20160824191238.taeodwd2hz7q55gv@sigill.intra.peff.net>
+Message-ID: <20160824191651.GC8578@whir>
 References: <CAGZ79kasebzJb=b2n=JQiVMrSfJKaVfZaaoaVJFkXWuqKjfYKw@mail.gmail.com>
  <alpine.DEB.2.20.1608181430280.4924@virtualbox>
  <20160819150340.725bejnps6474u2e@sigill.intra.peff.net>
- <46a5b9b6-f3f6-7650-8a5b-b0b52223e375@gmail.com>
- <DM5PR17MB1353EFB1F6FE3B05EFDF86DCD3EB0@DM5PR17MB1353.namprd17.prod.outlook.com>
- <alpine.DEB.2.20.1608241509200.4924@virtualbox>
- <20160824184938.GB8578@whir>
+ <alpine.DEB.2.20.1608221450250.4924@virtualbox>
+ <CACsJy8BG63oaLbw0f7try3OpzdphLC7UGAaJ=vgikEB36Pagqg@mail.gmail.com>
+ <B21604E7033C458EAC5EA0651CFEA8E9@PhilipOakley>
+ <alpine.DEB.2.20.1608241459360.4924@virtualbox>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20160824184938.GB8578@whir>
+In-Reply-To: <alpine.DEB.2.20.1608241459360.4924@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 24, 2016 at 06:49:38PM +0000, Eric Wong wrote:
-
-> > > Given that public-inbox provides an NNTP interface, couldn't the ARTICLE
-> > > <message-id> NNTP command be used to easily retrieve the messages in a
-> > > given patch series (at least compared to POP or IMAP).  Perhaps
-> > > git-send-email could be modified to include the message-id value of each
-> > > patch in the series that it sends to the mailing list and include it in
-> > > the cover letter.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Mon, 22 Aug 2016, Philip Oakley wrote:
+> > I do note that dscho's patches now have the extra footer (below the three
+> > dashes) e.g.
+> > 
+> > Published-As: https://github.com/dscho/git/releases/tag/cat-file-filters-v1
+> > Fetch-It-Via: git fetch https://github.com/dscho/git cat-file-filters-v1
+> > 
+> > If say I used that, and sent my patch series via Outlook Express (<sigh>),
+> > with it's white space damage, would those footers help once the content has
+> > been reviewed (rather than white spacing style) in the applying the patch?
 > 
-> I think that makes sense; perhaps an X-Git-Followups: header
-> from send-email which lists the child Message-IDs the same way
-> References: does for ancestors.  (perhaps there's already a
-> standardized header for listing children)
+> I considered recommending this as some way to improve the review process.
+> The problem, of course, is that it is very easy to craft an email with an
+> innocuous patch and then push some malicious patch to the linked
+> repository.
 
-I think that's harder to adapt to some workflows, since it implies
-generating all of the message-ids ahead of time (whereas if you are
-feeding the messages into an existing MUA, it may generate them on the
-fly as it sends).
+Perhaps an automated checker of some sort packaged with git
+would help.
+(And perhaps combinable with the downloader Arif proposed)
 
-> I thought about allowing a giant MIME message with all the
-> patches attached, too but that won't work for a large patch
-> series due to size limits along various SMTP hops.
-> Compression might make spam filters unhappy, too.
+> Now, with somebody like me who would lose a lot when destroying trust, it
+> is highly unlikely. But it is possible that in between the hundreds of
+> sincere contributors a bad apple tries to sneak in bad stuff.
 
-This was a problem faced by binary groups on Usenet, which had to split
-large files across many messages.
+Yes, I would never mix reviews + patch applications of emails vs
+git-fetched data.  Having a sender providing both is good; but
+the recipient needs to pick one or the other to use exclusively
+for that series.
 
-It has been a long time since I've dealt with those, but I think the
-state of the art involved using "1/20", "2/20", etc in the subjects to
-piece together the original. There may also have been header or body
-content that included a unique id, so you always knew which messages
-were part of a set.
+Either look exclusively at what is fetched and respond to that;
+or look exclusively at emails and ignore data from git fetch.
 
-They also used things like forward error correction to handle dropped
-messages, but I don't think we need to go that far.
+However, ensuring the emails and the contents of the git fetch
+could be done optionally to ensure there's no tampering or
+accidents for other reviewers.
 
-So parsing the "PATCH 1/20" headers sounds hacky, but I think it has
-worked for years in other communities.
+> Therefore, if we were to support a Git-driven contribution process that
+> *also* sends mail, that mail needs to be generated by a trusted source, to
+> ensure that the content of the mail is identical to the original Git
+> commits.
 
--Peff
+For decentralized systems, independent reproducibilility is
+needed.  Rather than trusting one source, I'd rather have some
+sort of downloading + checking tool which checks multiple
+mirrors (git protocols and NNTP).  That would allow users to
+independently verify the veracity of what they got emailed vs
+what is fetched.
