@@ -2,85 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F39711F6C1
-	for <e@80x24.org>; Wed, 24 Aug 2016 16:11:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4C982018E
+	for <e@80x24.org>; Wed, 24 Aug 2016 16:11:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754485AbcHXQK6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 12:10:58 -0400
-Received: from mail-ua0-f193.google.com ([209.85.217.193]:33089 "EHLO
-        mail-ua0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754460AbcHXQK5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 12:10:57 -0400
-Received: by mail-ua0-f193.google.com with SMTP id u13so1600865uau.0
-        for <git@vger.kernel.org>; Wed, 24 Aug 2016 09:10:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=/LklGATm6okV4Nl8ffaDtXb5t3k2ADeDSYnVQSeIJAQ=;
-        b=CTeUX86cdSCkYg4JR/78fxaFY8584dUrTQsiMe63RxXMltKqjBJZEffpxsdpxlxcNb
-         fcv6mRo23b/CA0Y8vznmlsSafNLXmIi9g5EgT8XNllkHvbqsC7P/Ifg4Y71BPS7BZVZX
-         XXGf/OFD4emVFHWhdNTtmbRwwyUFRjDXtwg99jgB4iJjjBnCVbHAZvs2VRNBidc9krqA
-         CFOLOkg7TTTMucEr2L8Fh0vWUhF/UyZydHKYdMp8k8fmBA8AVXvKaNSpHzzqDd/IAZR4
-         D1czQnEy3pBruA4ohD+1fwgWsg0IqnlsLY8PsgxeVhHSFVXl62IMZ26C340Sft2p6kfd
-         GWsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=/LklGATm6okV4Nl8ffaDtXb5t3k2ADeDSYnVQSeIJAQ=;
-        b=D/CapAL/kQ879oKdwZk7OoOkYxBtN1Zi8YOfUqo52trMds4BTjlWk3UQ8JGQKeZox5
-         4LTSiCrwMNB5wmmt55mw3fGJ8veCTAllGlscGOyViFK9HCM7NH/BG1zsxgY9MkaAzK6R
-         2R/0i4Gb+xeSA/0miPiIy2UCP6In6qzI21KA6c+zQmcKf2g1R+lPGfnVYLam6qp2WJmm
-         e5GaY0JPHo/2vihRBKIjO5CUPa4nSPlQt1mf/zLYIlDJRAh+OVnJaarYryVbC2Z3dYLL
-         XSDBSxN645KPG3agQ/9F86zBtva1obTJrncIfeuDUquIwGk43DjWnbtSXcB5BlZzlYwR
-         VT1g==
-X-Gm-Message-State: AEkoouuE8/7oD8Os92VpaGqFNqxKsKlbNp19QppXbxSCKUl/z1uCxWsHsN7z+/AP6IkySbKrf3JP5N86WU86XQ==
-X-Received: by 10.31.33.8 with SMTP id h8mr2243397vkh.59.1472055056949; Wed,
- 24 Aug 2016 09:10:56 -0700 (PDT)
+        id S1754501AbcHXQLK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 12:11:10 -0400
+Received: from mout.gmx.net ([212.227.17.21]:57240 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754460AbcHXQLJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 12:11:09 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0LdYSM-1av2HX2H5u-00ihX0; Wed, 24 Aug 2016 17:54:37
+ +0200
+Date:   Wed, 24 Aug 2016 17:54:35 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 05/15] sequencer: lib'ify read_and_refresh_cache()
+In-Reply-To: <CAPig+cTP+GNubCaveO6Sf9t44VQit0EaFjXCFexq2CtCMG2=Fw@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1608241754080.4924@virtualbox>
+References: <cover.1471968378.git.johannes.schindelin@gmx.de> <131eea01901cc3c366bad2098f6abe8738922d58.1471968378.git.johannes.schindelin@gmx.de> <CAPig+cTP+GNubCaveO6Sf9t44VQit0EaFjXCFexq2CtCMG2=Fw@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.176.4.230 with HTTP; Wed, 24 Aug 2016 09:10:56 -0700 (PDT)
-In-Reply-To: <9efbdfbb-4c82-1355-1f89-5edca7135179@drmicha.warpmail.net>
-References: <CAHd499DL2WiTgnk5A--qihUh-jF9m7aXDzHAQuW=bLRVW4Bniw@mail.gmail.com>
- <9efbdfbb-4c82-1355-1f89-5edca7135179@drmicha.warpmail.net>
-From:   Robert Dailey <rcdailey.lists@gmail.com>
-Date:   Wed, 24 Aug 2016 11:10:56 -0500
-X-Google-Sender-Auth: 8wjudEKne_Je5X5Rj4buEG5gLAw
-Message-ID: <CAHd499DTkxAmLhEyGc4t+g1gFBnJpVRwgS5dhRRE=E+pUU5WDg@mail.gmail.com>
-Subject: Re: diff <commit> using 3-dot behavior
-To:     Michael J Gruber <git@drmicha.warpmail.net>
-Cc:     Git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:6XwbEpk02/xz+IQeDFn842Odab1ehn9tufKtxdAcAmv7qH1LM7c
+ zlW/zPHwy1KdxFmsOVO7+C2zoJ+6N0A5xZb6wgOQHhMOWdr8qRDFb3JvH3Mxn9QgemRa5pz
+ ZOtl/KdYUB1JU0JXeWS9AWTlDFtdnIDj8USFXAYl9dHXyQUJlNBiNt8QGYa/9QR6DfXdu5B
+ SNGVRaHhcw1BVtHMXPXWQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:VXnl5DitQlE=:Purt/YZZJbxMH0d0fvjzrM
+ uuQcSwQ6WAzGGVOrCG+zKqmW5iyl1HnJWJdQJrKwfCllMAxtOONjULnmMADS5cPUJKZt7e7Tv
+ 1r0Cu2DFGKHdFP48yFstmqd5izdEmMJ0BzOiFrq1gB3r6/oaPlcw35wLrPwgYRj8unEiBwqVY
+ mq8zyc9Q6egPlJesmxW+KZRYsOoNY1Rza9xzuDE3ZHElPIzkNEt7Jdu//3pCyXWhLbzBs0Ifv
+ nD9xOpzQvAgq/zRt9JP2XVU7CE2cBxaeGoOV+qKRECAkmteoudm+WEVAWbPzk3EkG3Lxk1e7J
+ 3vggjHevnq/obueUVpWLHUTXSYaOmmoE18LvlkC885VPeRx9BDUvn/RVEmc9/BgitMggBJW+x
+ mS2FopC9gzXiwL4njdoAeE6Y0CI2otp0s8lxoTUT9Ikh18FYG07eIek15+Fv4dHduGJQ7DlKD
+ 6WxHgZG9paWAPVBg4ye7AylPD4L+PdzgfWBfRO1Hq82puqMIvuIcBrRSc/XzMYv+eSkAkDGyc
+ yXzKoYhJZABK1cTabwPFBya7Uor7ZvfULRqjGpVvmIQ2k3+lbqnFGnXzEQ1CO+2so5d14BlXI
+ s6RHSE4N/MqfzFhH9hIgU4KycHl6ip2BgJcYdt1sPzk8omHq45eLA0LKYjhhFakwoXltAKVgn
+ lWKcyfgxvkUbbqt6zonSlA88UeeEFTcLQ/BtjUp/wekDkGrEUyQHJ/QRIkAJSA+nd43L7th/Q
+ MBvOqnHHDR8BmV2oal+2g/VbPuU/zhsvl/d2r3jC5VE0tky0snoua0Hc3TifcsrHqMo0BrX5v
+ 3yUaYZW
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 24, 2016 at 11:00 AM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> The 3-dot notation means:
->
-> Show the difference between the merge-base of master and topic, and topic.
->
-> I'm not completely sure, but I guess what you want is:
->
-> Show the difference between the merge-base of master and topic, and the
-> worktree.
->
-> You can accomplish this with:
->
-> git diff $(git merge-base master topic)
->
-> I guess a shorter notation for that could come in handy. OTOH, I usually
-> diff against HEAD in a situation like that.
+Hi Eric,
 
-Great solution. I feel silly now, the answer ended up being rather
-obvious. I can create an alias for that. But I can't diff against HEAD
-because then I am not seeing a diff of changes already committed.
-Thanks for your help.
+On Wed, 24 Aug 2016, Eric Sunshine wrote:
+
+> On Tue, Aug 23, 2016 at 12:07 PM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> > To be truly useful, the sequencer should never die() but always return
+> > an error.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> > diff --git a/sequencer.c b/sequencer.c
+> > @@ -638,18 +638,21 @@ static int prepare_revs(struct replay_opts *opts)
+> > -static void read_and_refresh_cache(struct replay_opts *opts)
+> > +static int read_and_refresh_cache(struct replay_opts *opts)
+> >  {
+> >         static struct lock_file index_lock;
+> >         int index_fd = hold_locked_index(&index_lock, 0);
+> >         if (read_index_preload(&the_index, NULL) < 0)
+> > -               die(_("git %s: failed to read the index"), action_name(opts));
+> > +               return error(_("git %s: failed to read the index"),
+> > +                       action_name(opts));
+> >         refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, NULL, NULL, NULL);
+> >         if (the_index.cache_changed && index_fd >= 0) {
+> >                 if (write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
+> > -                       die(_("git %s: failed to refresh the index"), action_name(opts));
+> > +                       return error(_("git %s: failed to refresh the index"),
+> > +                               action_name(opts));
+> 
+> Do these two error returns need to rollback the lockfile?
+
+Here, too, the atexit() handler does the job, and again, this is not a
+change in behavior.
+
+Thanks for your review!
+Dscho
