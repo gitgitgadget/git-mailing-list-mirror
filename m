@@ -3,128 +3,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 225B01F6C1
-	for <e@80x24.org>; Wed, 24 Aug 2016 23:02:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B9C81F6C1
+	for <e@80x24.org>; Wed, 24 Aug 2016 23:28:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756682AbcHXXCK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 19:02:10 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60832 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1755523AbcHXXCJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 19:02:09 -0400
-Received: (qmail 517 invoked by uid 109); 24 Aug 2016 23:01:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Aug 2016 23:01:19 +0000
-Received: (qmail 8116 invoked by uid 111); 24 Aug 2016 23:01:22 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Aug 2016 19:01:22 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Aug 2016 19:01:16 -0400
-Date:   Wed, 24 Aug 2016 19:01:16 -0400
-From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Heiko Voigt <hvoigt@hvoigt.net>,
-        Jens Lehmann <Jens.Lehmann@web.de>,
-        Fredrik Gustafsson <iveqy@iveqy.com>,
-        Leandro Lucarella <leandro.lucarella@sociomantic.com>
-Subject: Re: [PATCHv2] push: change submodule default to check
-Message-ID: <20160824230115.jhmcr4r7wobj5ejb@sigill.intra.peff.net>
-References: <20160824173017.24782-1-sbeller@google.com>
- <20160824183112.ceekegpzavnbybxp@sigill.intra.peff.net>
- <xmqqh9aaot49.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kYOBqQ0FF4J-+KbefSD8HRrUeMqpO27m_jprhm93aB+LA@mail.gmail.com>
+        id S1755954AbcHXX2U (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 19:28:20 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:24717 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753269AbcHXX2R (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 19:28:17 -0400
+Received: from PhilipOakley ([92.22.21.109])
+        by smtp.talktalk.net with SMTP
+        id chagbSBRNcpskchagbLU2u; Thu, 25 Aug 2016 00:28:15 +0100
+X-Originating-IP: [92.22.21.109]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=ILRAMUnG c=1 sm=1 tr=0 a=qMCwDsOCRbQP4wxbSmd05g==:117
+ a=qMCwDsOCRbQP4wxbSmd05g==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=FBACa5QmktsKF8_JjZ4A:9 a=QEXdDO2ut3YA:10 a=6kGIvZw6iX1k4Y-7sg4_:22
+Message-ID: <99BC268995014F88A25852349769FD02@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Dakota Hawkins" <dakotahawkins@gmail.com>,
+        "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+Cc:     "Junio C Hamano" <gitster@pobox.com>,
+        "Michael J Gruber" <git@drmicha.warpmail.net>,
+        "Duy Nguyen" <pclouds@gmail.com>,
+        "git-for-windows" <git-for-windows@googlegroups.com>,
+        "Git Mailing List" <git@vger.kernel.org>
+References: <alpine.DEB.2.20.1608131214070.4924@virtualbox> <xmqqshu8u0px.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608171507530.4924@virtualbox> <xmqqeg5nbehc.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608181022250.4924@virtualbox> <CACsJy8A3tkMY-iLPCDj9sqB4HpAK_cxsUu5Z7fsGcCQEORyxUg@mail.gmail.com> <alpine.DEB.2.20.1608231553030.4924@virtualbox> <2a6d2230-90ce-0f54-c7ae-a5aa595a2f73@drmicha.warpmail.net> <alpine.DEB.2.20.1608231736180.4924@virtualbox> <alpine.DEB.2.20.1608231758260.4924@virtualbox> <xmqqzio3uw31.fsf@gitster.mtv.corp.google.com> <xmqqa8g3uppx.fsf@gitster.mtv.corp.google.com> <CAG0BQXmmW_0n4OMQVsVQ5+OKbNVpgXmXeExFUOXqY8nH=sg3Jw@mail.gmail.com> <alpine.DEB.2.20.1608241740320.4924@virtualbox> <CAG0BQXmovWAjn8sE=CFGMXguRpEqU3xUbF03aSEN4OLxNc9oZg@mail.gmail.com>
+Subject: Re: Git for Windows documentation, was Re: [git-for-windows] Re: [ANNOUNCE] Git for Windows 2.9.3
+Date:   Thu, 25 Aug 2016 00:28:14 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kYOBqQ0FF4J-+KbefSD8HRrUeMqpO27m_jprhm93aB+LA@mail.gmail.com>
+Content-Type: text/plain;
+        format=flowed;
+        charset="UTF-8";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfPVhD+GwKpLlwMOzGZRgIXyCymId9vzL9jBb3MYzLhBdbcOPEaTmHc7doerk47pK+59Wp0FdSAWwwzGea6LnRHUnDV8QCc2vY/G2izOPK51vstL/ZYIJ
+ SWBQu7KWzT5BckODIm+TkXlyA7iZgLVICFTvtJK6psdC8jvHxWZAoO3TrxPSy06prOGfZ7wal7LuBmDjrWLCQ5pBuxHMQSUXYV+Z3LHHzVoD6rmP7ncprEYw
+ Mp1arb/pIBncAKvAmdTSgFK4Ct56qU/THxA+bObX1+ZJoMFTAb1nYVkl+Zgp6jmtVx0efYT2Tm/ne0gjrzBRldpJMV700d+AAJp8rshgPwqCw0dVAGSM+WXe
+ 1TbbPTq0y1VeGoF/PmeN11/xMRAuxw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 24, 2016 at 03:37:29PM -0700, Stefan Beller wrote:
+From: "Dakota Hawkins" <dakotahawkins@gmail.com>
+> On Wed, Aug 24, 2016 at 11:41 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+>> Hi Dakota,
+>>
+>> On Tue, 23 Aug 2016, Dakota Hawkins wrote:
+>>
+>>> I use GFW almost exclusively, but I pretty much always consult the
+>>> upstream documentation anyway (because I find it easier).
+>>
+>> Oh... I thought that typing "git help git-commit" opening a nice HTML 
+>> page
+>> in your favorite browser was good enough.
+>>
+>> Do you have any suggestion how to improve the user experience?
+>
+> Just a small one, and that's that I'd prefer the option to have help
+> display in my terminal (that option might exist and I don't know how
+> to turn it on). That would be very convenient for me.
+>
+> Opening a nice HTML page is probably nice for a lot of users. What
+> frustrates me about it is that I don't know which browser window on
+> which monitor (of 3) it's going to open in, so it's a context-switch
+> to a different window somewhere that I don't have much control over.
+>
+> The thing I find easier about using the upstream documentation is just
+> that I can pick the browser window I want it to come up in, and it's
+> usually faster enough for me to just google "git-whatever" or
+> re-purpose an open doc tab. I don't prefer the _content_ of the
+> upstream documentation, it's just less frustrating for me to use, if
+> that makes sense.
+>
+If you would like to use the man pages, then one option is to install the 
+SDK, which then allows you to install the man package, (setting the manpath 
+as required) to allow your choice of viewer. You may need to set the minnty 
+config BoldAsFont=yes if you want the bold for the headings in the man 
+pages.
 
-> > That sounds massively ... broken.  So before even thinking about
-> > flipping it to default, this needs to be fixed first.
-> 
-> I agree. That sounds bad.
-> 
-> However having the --auto-check feels like papering over the
-> actual problem which to me sounds like a design problem.
-> However this may be a viable short term solution.
+With the SDK you can also create a personal release version of GfW that 
+includes the man viewer if you like.
+--
+Philip
 
-Sort of...
-
-I may not have been clear, but there are really a few things going on.
-
-One is that the design of find_unpushed_submodules() is just brain-dead.
-It does one traversal per updated ref, which means a from-scratch mirror
-is O(nr_of_refs * nr_of_commits). That's just silly, and can easily be
-fixed behind the scenes to be O(nr_of_commits).
-
-And I _suspect_ it is what made Junio's earlier push so awful; he
-probably pushed up the same commits as part of many different branches,
-so he did the same diffs over and over.
-
-So clearing that up seems like an obvious first step, and dulls the pain
-to "if submodule recursion is on, the worst case is that you walk all
-the new objects you are sending". That's still _a_ traversal, but it's
-one we have to do anyway in pack-objects, so it's the same order of
-magnitude as the rest of the push[1].
-
-Then you've got two cases: the repo is using submodules at all, or they
-are not. The former is an easy case, if we can identify it; we can avoid
-the traversal at all, and people who do not use submodules are not
-regressed at all.
-
-That leaves people who _are_ using submodules with paying the extra
-traversal cost. Not great, but only really a pain when you have a really
-big chunk of history to push. It may be lost in the noise for such a
-push in more normal circumstances (where bandwidth to push up the
-objects dominates, though it is unfortunate that we do not even start
-utilizing the bandwidth, the critical resource, until we are done with
-the submodule check).
-
-[1] Of course with reachability bitmaps the pack-objects traversal goes
-    away, but the same cannot be accomplished here (because they do not
-    store the gitlink sha1s at all, because they do not imply
-    reachability).
-
-> We need to answer the question: Which submodule commits
-> are referenced by a given set of superproject commits.
-> 
-> This question is advancing a very similar question that we'd
-> have to ask in git-gc. In gc we would end up without having to
-> worry about a specific set, but rather the all reachable commits
-> of the superproject are in the given set.
-> 
-> So we could solve two issues at the same time if we had a quick
-> way to answer this question quickly.
-> [...]
-
-I snipped here because your solutions sound complicated (which isn't to
-say they're wrong, but that I am not willing to give them a lot of
-thought at this time in the evening ;) ).
-
-One opposite approach which appeals to me is not to remove the need for
-the traversal, but to make it much faster. E.g., by storing commits in a
-form that can be traversed more quickly, and possibly keeping a bitmap
-cache of which paths are touched in each commit (I have posted patches
-to the list for the former, but have only been considering experimenting
-with the latter).
-
-That's _also_ complicated, but it applies to way more things. Including
-normal log traversals, path-limiting for diffs, the "counting" traversal
-done by pack-object, etc.
-
-And while it is complicated in some ways, it's conceptually simple at
-the git data model layer. It's returning the same old answers about
-commits and trees, just faster.
-
-Anyway, food for thought.
-
--Peff
