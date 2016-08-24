@@ -6,51 +6,51 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 60A1D1F859
-	for <e@80x24.org>; Wed, 24 Aug 2016 07:25:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 450951F859
+	for <e@80x24.org>; Wed, 24 Aug 2016 07:29:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751524AbcHXHZ3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 03:25:29 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:36686 "EHLO
+        id S1752353AbcHXH3l (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 03:29:41 -0400
+Received: from mail-it0-f67.google.com ([209.85.214.67]:35561 "EHLO
         mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750971AbcHXHZ2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 03:25:28 -0400
-Received: by mail-it0-f67.google.com with SMTP id j124so1259814ith.3
-        for <git@vger.kernel.org>; Wed, 24 Aug 2016 00:24:47 -0700 (PDT)
+        with ESMTP id S1751710AbcHXH3k (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 03:29:40 -0400
+Received: by mail-it0-f67.google.com with SMTP id f6so1275502ith.2
+        for <git@vger.kernel.org>; Wed, 24 Aug 2016 00:28:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=yegnbJnq4XFAdq0WSTVv5i2yAK7B49YvyxpJTKulSCY=;
-        b=U+nBlYYDsax94rSfVZu1IjzXmRPNlc/qZl6C4Skdc6gISjY1bzfNV4LUqYe4BZFWeV
-         +TCgCtPZNtDNZV9YN2wesfAgojmI7lGoGpl/naAlgDEB0amGsimWB17fiqSj9GFwAXZc
-         nJC9mIst8/wHnJKzcX5u0wsijOY9G4xoBeQ/CCHu0ckTe2tqXjPRYCh6nIW4/S7yFXh6
-         8dU69JrDP4/sYpizhnuJEj04UUOsKNczB59tJtCPi+J4kaRtm88UjdvtWvYLoCDSMdO+
-         1gU0bMgxGGpiFEVSL+vd3Vk/k/JPm+sYt2iWHLd6zLo62q3NYCFytyPB6kvrLQr0W3vM
-         G+rA==
+        bh=yYDd37T2fJZRffRoHehp4q67dPBf4K9/3068RUdOUrs=;
+        b=IB6bOHBiU6eU1JahtoE8Uon56G8I2KWoAi2Ed6yssyRu7moMadjWjdxYq9gBHPg37k
+         gDHKoX/OVmhCiRBmsv5SUY3GHaY4Arkv1waKCmk61EO2+aTUhcstEaGBEVv9x2Gc9hJM
+         F8h+VSMxQj9ttSUSSgerUtaQA8TJs+4LZmQnnUuHkojk93lSYquJfOoPkAFbJ2Pda+RV
+         EoLHCZlNlt7aQOEsNolOfuyErr1DPpTrVUOxI84xs+gA8qOOt1+6QJ9Ij2Owr5R6auDw
+         AD0EgbBXt1TqBqPcUAUZ5Mm5s3ro9eXKt/b+v8SmXh7O7vdhHaTPMfTNkKfyldrbVrBV
+         GNYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=yegnbJnq4XFAdq0WSTVv5i2yAK7B49YvyxpJTKulSCY=;
-        b=kY8ZWwx5atIvaZta8Xdfz9R2yuHdqoH8TRSYaJPr4C2iHsxCKwehjQJIelztxTEiD0
-         guouCAz09pwRu2jF9aeECunh44OMWFDkoCrKiieFk9gkExusjbsiajy9HLMB6o7PAT50
-         vqpTf0JEddASchDnhhJg6HEqsP+R8e86dFhv5SMvNZuufYxneP60PqWuLKh0HP4wNGYV
-         HvteY1fHK4vUfuHdmG/xUhr9fVxSSA/YwZ5NDgeuW52EfFiHO7hH2otlwyNmL8rNxDv1
-         ZTww3LR2y/wEarcgs98a2hssHnuDISSFNxgRHDOQt39POA7U6kM88y44cLBLiMum4B28
-         zFzg==
-X-Gm-Message-State: AEkoousYIjIvLvlOlS64CrnptOrlfVJh0scblf8vByf6USSi99bYTAJHA93+8hWymc5lHPvwbqJNaoxeAF8HBw==
-X-Received: by 10.36.31.18 with SMTP id d18mr2509138itd.84.1472023486676; Wed,
- 24 Aug 2016 00:24:46 -0700 (PDT)
+        bh=yYDd37T2fJZRffRoHehp4q67dPBf4K9/3068RUdOUrs=;
+        b=icm3I2sHUQ6F92oIkIn5gLoXx+18or8NnDEw5s73t97ELBU/iNbD6/jBcNgZIaTfeE
+         my78MH8AU5o7FWI5bEs1xELhojIwmzL3KJ51H+S6BIBAgGeXF36L3YhPf41G/8pmRIvX
+         u5/rPmWJ+G0M9U7N6FOE60otbghxG0OttkND9ucVtkIEAT0NBO5YuJSgTjzBrV8ANnww
+         6fLSNi9POouIyYwW8hRxX0r8eG+FVojnTnCR9/VqoyHe+7lcnpRXz1G5wvGXqIBcBCjN
+         IJSfST1yyYo+1oAXjnJsfUoQFQSymcOhxY3SiKxXZ81i0j2NzuWGMwPv5iQPdWod6jH9
+         zNMg==
+X-Gm-Message-State: AE9vXwMyPIWsUW4WSqc4zcv0t+rtNADNxpH73epsEj9nYUAovOqZo5cUS+Oa8N3I44zPgtJJDMezp+g3Gtv4xA==
+X-Received: by 10.36.80.138 with SMTP id m132mr4758745itb.32.1472023724500;
+ Wed, 24 Aug 2016 00:28:44 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.79.130.1 with HTTP; Wed, 24 Aug 2016 00:24:46 -0700 (PDT)
-In-Reply-To: <0de75bbce8ade0c6e5cf87d3647faa71a89c6275.1471968378.git.johannes.schindelin@gmx.de>
-References: <cover.1471968378.git.johannes.schindelin@gmx.de> <0de75bbce8ade0c6e5cf87d3647faa71a89c6275.1471968378.git.johannes.schindelin@gmx.de>
+Received: by 10.79.130.1 with HTTP; Wed, 24 Aug 2016 00:28:44 -0700 (PDT)
+In-Reply-To: <80062be27256704617280fdb479176e0d2afb4d4.1471968378.git.johannes.schindelin@gmx.de>
+References: <cover.1471968378.git.johannes.schindelin@gmx.de> <80062be27256704617280fdb479176e0d2afb4d4.1471968378.git.johannes.schindelin@gmx.de>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 24 Aug 2016 03:24:46 -0400
-X-Google-Sender-Auth: LdJb83eW5tUZ4G50ZS0oFeA1J_g
-Message-ID: <CAPig+cSR8BHFdMJz5mFkpJ3UU6w0Xmjav+tu6f3DrkG4Gi-v6A@mail.gmail.com>
-Subject: Re: [PATCH 06/15] sequencer: lib'ify read_populate_todo()
+Date:   Wed, 24 Aug 2016 03:28:44 -0400
+X-Google-Sender-Auth: _5r4qydMpgUi5ZNyf0rg3NVd6zc
+Message-ID: <CAPig+cT7fNsyhk1J0Z6evk8xRxa=g8ygUniBB+EHSRMRFcNLcQ@mail.gmail.com>
+Subject: Re: [PATCH 09/15] sequencer: lib'ify create_seq_dir()
 To:     Johannes Schindelin <johannes.schindelin@gmx.de>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset=UTF-8
@@ -67,32 +67,16 @@ On Tue, Aug 23, 2016 at 12:07 PM, Johannes Schindelin
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
 > diff --git a/sequencer.c b/sequencer.c
-> @@ -754,18 +754,21 @@ static void read_populate_todo(struct commit_list **todo_list,
->
->         fd = open(git_path_todo_file(), O_RDONLY);
->         if (fd < 0)
-> -               die_errno(_("Could not open %s"), git_path_todo_file());
-> +               return error(_("Could not open %s (%s)"),
-> +                       git_path_todo_file(), strerror(errno));
-
-error_errno() perhaps?
-
->         if (strbuf_read(&buf, fd, 0) < 0) {
->                 close(fd);
->                 strbuf_release(&buf);
-> -               die(_("Could not read %s."), git_path_todo_file());
-> +               return error(_("Could not read %s."), git_path_todo_file());
+> @@ -839,8 +839,8 @@ static int create_seq_dir(void)
+>                 return -1;
 >         }
->         close(fd);
->
->         res = parse_insn_buffer(buf.buf, todo_list, opts);
->         strbuf_release(&buf);
->         if (res)
-> -               die(_("Unusable instruction sheet: %s"), git_path_todo_file());
-> +               return error(_("Unusable instruction sheet: %s"),
-> +                       git_path_todo_file());
+>         else if (mkdir(git_path_seq_dir(), 0777) < 0)
+> -               die_errno(_("Could not create sequencer directory %s"),
+> -                         git_path_seq_dir());
+> +               return error(_("Could not create sequencer directory %s (%s)"),
+> +                         git_path_seq_dir(), strerror(errno));
 
-Neither 'fd' nor 'buf' are leaked by these two new error returns. Good.
+error_errno()?
 
-> +       return 0;
+>         return 0;
 >  }
