@@ -2,77 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16AFC1F6C1
-	for <e@80x24.org>; Wed, 24 Aug 2016 17:55:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 618E11F6C1
+	for <e@80x24.org>; Wed, 24 Aug 2016 17:57:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754499AbcHXRzs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 13:55:48 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55281 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753021AbcHXRzr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 13:55:47 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BE51B37B8A;
-        Wed, 24 Aug 2016 13:55:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=h5Et8gMJdoPrQYSrQs73ER/Yq1M=; b=Xumai/
-        DhdtChe1hV3UFXm2lyJGEL4yN2Vfo8/HjaAhGKVMzlpnY2du4aJp0GE7XWDgjiVQ
-        4xT3nuqhxlrJgai3Ix2GLSJAFqQK1TdCVtonyCkZN/9XMgpsAsLzo4OO0HAVWcIy
-        b1PqE9wYtqDmAvUHb3RKWntlfzXcd8ZfwHuug=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HlSIvraOfVVxaaTXJ96dlfX+SuUB1sfq
-        SIEpLjaBJIM287fsTGCGjXVi3wTFV8+mynhgJql1Sf/0YBtfRjsR/8WjhtQ/Wl2z
-        DIHaFklzQywBrbXeTS4uKgr1KtRrruS5WI/c1MGkvTnwQ9hoiWqfpEE1a/J2sRF2
-        TWKi/e4/CpI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AFFA637B89;
-        Wed, 24 Aug 2016 13:55:46 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2052437B85;
-        Wed, 24 Aug 2016 13:55:46 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v2 0/4] cat-file: optionally convert to worktree version
-References: <cover.1471524357.git.johannes.schindelin@gmx.de>
-        <cover.1472041389.git.johannes.schindelin@gmx.de>
-        <xmqqk2f6rvx9.fsf@gitster.mtv.corp.google.com>
-        <20160824161939.d2h4qlaxhhi6limm@sigill.intra.peff.net>
-        <xmqqr39eqevk.fsf@gitster.mtv.corp.google.com>
-        <20160824173248.ami3hgadea5zjvf3@sigill.intra.peff.net>
-Date:   Wed, 24 Aug 2016 10:55:44 -0700
-In-Reply-To: <20160824173248.ami3hgadea5zjvf3@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 24 Aug 2016 13:32:48 -0400")
-Message-ID: <xmqqa8g2qcf3.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FBC03020-6A23-11E6-A250-E86612518317-77302942!pb-smtp1.pobox.com
+        id S1754249AbcHXR5p (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 13:57:45 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:34670 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753014AbcHXR5o (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 13:57:44 -0400
+Received: by mail-pf0-f176.google.com with SMTP id p64so9059406pfb.1
+        for <git@vger.kernel.org>; Wed, 24 Aug 2016 10:57:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=/WnCiIARnNKAY7w9JeIkYCJwszngl359+BBJFAIHAqI=;
+        b=leEtRE916YIcACCxILcVAr92nxut8s2G8uZz/bcFT0a7ruDs0BaY1AhvrdJEGmM38y
+         t/CQArt171aqnzNRBGfXA+P9O1hnSjMwBGD1ruDOwxC7SefYYe5RODgr3dxZd+v6ABfx
+         vY4h0BTJBj0zKA3Oj0oeo2xcGN99KCyw6PmWQRq/djtoyEHfiuJbFR4Ot8x6dODDIkd5
+         8cXew5EuJ5OZKnad8LsSpe/E6uucsWiSTfVgbtA6sJ4ErSJ4jztDzGsGek2FP4m0Mn0Y
+         YWd/jHAxJ5K1rzpc9Q64SwPjlnu0U8RHwp0X5gzax0FsKitWhRfqOEjjp3PcQykhp4SF
+         j9VA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=/WnCiIARnNKAY7w9JeIkYCJwszngl359+BBJFAIHAqI=;
+        b=YOCmy9eyt1rKaLjzU5qSxiECU1OiUyuboMsYdO8j63iMS0dg+qR0BTMGqqX20Zo1w7
+         saj/wFxwaXUM4BE9Vs0MtYQoCfF7UiJR20NSufWRLTggUtq0G69B7NjTRKdub3c4PPK6
+         LsS5SmYoqSyDUCX1XP+jdFA4BYa4d95WhXoPhPesxdleA1xXoiLyV+7MjWVUYaF4K2gy
+         nQJ2Kh7hCeXiv+HJRRx3VokYFNVAtBQiUIF99YfL4qH+zmhxg+zeHjdKZSxjZXo2OslI
+         YAwprEE5uDnjj1rQNZoIiZYuF/AWVOW7+5bIzLFSi9y9uityRC/h7FdkqiSgIRLxmnaG
+         1LeQ==
+X-Gm-Message-State: AE9vXwNjjXe+kbQfzec+P9Rl4ogZvmhv4HFCuD2s9jtkvjaMvofVxkq0r1UIDwWIotMSN2km
+X-Received: by 10.98.10.157 with SMTP id 29mr7891464pfk.62.1472059821747;
+        Wed, 24 Aug 2016 10:30:21 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:69c9:3690:64be:c544])
+        by smtp.gmail.com with ESMTPSA id l128sm15112028pfl.21.2016.08.24.10.30.20
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 24 Aug 2016 10:30:20 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, hvoigt@hvoigt.net, Jens.Lehmann@web.de,
+        iveqy@iveqy.com, leandro.lucarella@sociomantic.com,
+        gitster@pobox.com, Stefan Beller <sbeller@google.com>
+Subject: [PATCHv2] push: change submodule default to check
+Date:   Wed, 24 Aug 2016 10:30:17 -0700
+Message-Id: <20160824173017.24782-1-sbeller@google.com>
+X-Mailer: git-send-email 2.10.0.rc1.1.g1ceb01a
+To:     unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+When working with submodules, it is easy to forget to push the submodules.
+The setting 'check', which checks if any existing submodule is present on
+at least one remote of the submodule remotes, is designed to prevent this
+mistake.
 
-> I don't suppose anybody cares that much either way, but it feels weird
-> to behave differently depending on how we looked up the blob (whereas
-> for the HEAD:t case, a tree is always a tree).
+Flipping the default to check for submodules is safer than the current
+default of ignoring submodules while pushing.
 
-I do not care strongly either way, but HEAD:RelNotes case we _know_
-it is not a regular blob, and discarding that info for the sake of
-being consistent with the common denominator case, instead of using
-it to point out a possible mistake, feels wrong, too.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-In any case, not outputting anything and silently succeeding is
-definitely wrong ;-).
+Slightly reworded commit message than in v1,
+(https://public-inbox.org/git/20160817204848.8983-1-sbeller@google.com/)
+The patch itself is however the same.
+
+I just push it out now with a new commit message, such that we can easier
+pick it up later for Git 3.0, when changes that change default make more sense.
+
+As said in an earlier message, you could however also argue that this is
+fixing a bug in your workflow, so it might be worth fixing before 3.0
+as well. I dunno.
+
+Thanks,
+Stefan
+
+ builtin/push.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/push.c b/builtin/push.c
+index 3bb9d6b..479150a 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -22,7 +22,7 @@ static int deleterefs;
+ static const char *receivepack;
+ static int verbosity;
+ static int progress = -1;
+-static int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
++static int recurse_submodules = RECURSE_SUBMODULES_CHECK;
+ static enum transport_family family;
+ 
+ static struct push_cas_option cas;
+-- 
+2.10.0.rc1.1.g1ceb01a
+
