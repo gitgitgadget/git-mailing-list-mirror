@@ -2,89 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EAA471F6C1
-	for <e@80x24.org>; Wed, 24 Aug 2016 21:26:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D69251F6C1
+	for <e@80x24.org>; Wed, 24 Aug 2016 21:35:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757065AbcHXV0s (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 17:26:48 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54519 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1757055AbcHXV0q (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 17:26:46 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E661C37790;
-        Wed, 24 Aug 2016 17:26:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=lgIz5bM37WTpMOrl/EcOdI5pJ6U=; b=r/SePc
-        Zcx8Fu2nkqrMvXooDTKDbEwDgO0qDQNsL8PTUEe61J7cje309VjCivQdRoQtfut5
-        luNcvPfvX9n+48o37PLf6kn0ZiWUq0go36fDNQ+l7tk1qUttf7RW5ubMxxrFAxm2
-        bg1UNEQjhkxlr1S65TpaoRl8LgYC8GFNGSGG8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=wPV0omN4TSb7lKuAN1AtErK3WWeUj/4+
-        ZzOzW6BdO91EJwjHZjd49wi7bcoJLs+YTEo3ajBdXUGg193PJTsMy2h3ecGE7T22
-        BXVtbLN+OmzTcVv1IAeyeZ0JfwPr0PvbNiWkuXOFozJPoUP1iDRXswkOL3SVBqmw
-        2IPwTpB7RHY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DF2013778F;
-        Wed, 24 Aug 2016 17:26:45 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 66EAD3778E;
-        Wed, 24 Aug 2016 17:26:45 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-        hvoigt@hvoigt.net, Jens.Lehmann@web.de, iveqy@iveqy.com,
-        leandro.lucarella@sociomantic.com
-Subject: Re: [PATCHv2] push: change submodule default to check
-References: <20160824173017.24782-1-sbeller@google.com>
-        <20160824183112.ceekegpzavnbybxp@sigill.intra.peff.net>
-        <xmqqh9aaot49.fsf@gitster.mtv.corp.google.com>
-Date:   Wed, 24 Aug 2016 14:26:43 -0700
-In-Reply-To: <xmqqh9aaot49.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Wed, 24 Aug 2016 12:37:58 -0700")
-Message-ID: <xmqqtwe9oo30.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S932661AbcHXVe4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 17:34:56 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60769 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S932115AbcHXVez (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 17:34:55 -0400
+Received: (qmail 27737 invoked by uid 109); 24 Aug 2016 21:34:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Aug 2016 21:34:54 +0000
+Received: (qmail 7245 invoked by uid 111); 24 Aug 2016 21:34:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Aug 2016 17:34:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Aug 2016 17:34:50 -0400
+Date:   Wed, 24 Aug 2016 17:34:50 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Aug 2016, #08; Wed, 24)
+Message-ID: <20160824213450.eo6hlmt4oly6gwih@sigill.intra.peff.net>
+References: <xmqqy43lookt.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 75500A56-6A41-11E6-B720-51057B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqy43lookt.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Aug 24, 2016 at 02:16:02PM -0700, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
->
->> For instance, try this from a checkout of linux.git:
->>
->>   for i in no check; do
->> 	rm -rf dst.git
->> 	git init --bare dst.git
->> 	echo "==> Pushing with submodules=$i"
->> 	time git push --recurse-submodules=$i dst.git HEAD
->>   done
->>
->> The second case takes 30-40 seconds longer. This is a full push of
->> history, so it's an extreme case[1], but it's still rather unfortunate.
+> * jk/pack-objects-optim-mru (2016-08-11) 4 commits
+>   (merged to 'next' on 2016-08-11 at c0a7dae)
+>  + pack-objects: use mru list when iterating over packs
+>  + pack-objects: break delta cycles before delta-search phase
+>  + sha1_file: make packed_object_info public
+>  + provide an initializer for "struct object_info"
+> 
+>  "git pack-objects" in a repository with many packfiles used to
+>  spend a lot of time looking for/at objects in them; the accesses to
+>  the packfiles are now optimized by checking the most-recently-used
+>  packfile first.
+> 
+>  Will hold to see if people scream.
 
-This actually bit me just now.  github.com/gitster/git.git is
-mirror pushed, and it would seem to take forever, so I killed it,
-and flipped the configuration variable off.  Which means the feature
-won't ever get any testing from me in real life.
+Just a note that we've been running with this at GitHub on all of our
+servers for a bit over a week, and no screaming yet. That's not
+necessarily proof of anything, but it does make the audience of "people"
+a bit bigger than just "next", as we run quite a few invocations of
+pack-objects in a day.
 
-People, git.git is not a large project in any sense of the word.
+I don't think that changes anything in the near future, since this is
+obviously not for v2.10, but barring any complaints, it's probably a
+reasonable topic to consider for the version after (and of course I'll
+relay any issues we come across on our servers).
 
-Why wasn't it discovered that "push.recursesubmodules = check" is
-UNUSABLE since it was introduced is simply beyond me.
+I'm planning to deploy the delta-cache topic soon, too, so that should
+give it some good exercise.
 
-I am mad (which is unusual for me, isn't it? -- I've seen somebody
-else saying "I am mad", but I do not think I ever said it here).
+-Peff
