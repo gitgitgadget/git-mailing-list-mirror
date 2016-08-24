@@ -2,105 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DBD51F859
-	for <e@80x24.org>; Wed, 24 Aug 2016 08:43:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA1E91F859
+	for <e@80x24.org>; Wed, 24 Aug 2016 09:35:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754959AbcHXInS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 04:43:18 -0400
-Received: from mail-pa0-f66.google.com ([209.85.220.66]:33652 "EHLO
-        mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753880AbcHXImg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 04:42:36 -0400
-Received: by mail-pa0-f66.google.com with SMTP id vy10so779457pac.0
-        for <git@vger.kernel.org>; Wed, 24 Aug 2016 01:42:15 -0700 (PDT)
+        id S1753907AbcHXJff (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 05:35:35 -0400
+Received: from mail-it0-f42.google.com ([209.85.214.42]:38001 "EHLO
+        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750954AbcHXJfc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 05:35:32 -0400
+Received: by mail-it0-f42.google.com with SMTP id n128so23917830ith.1
+        for <git@vger.kernel.org>; Wed, 24 Aug 2016 02:35:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=r4UqqIJjH7wr00XBgbETvfpN0TbAtmA9sYZJQVvJFzo=;
-        b=TK8+rHIDwO/ow++RTVYdS225SHPznvbBi7RBrEfT2BN8bwjiXCpBk84cQq2Z1n4x5X
-         1V6F5M+JeEheokT00RKcC/l1cZckCAbIWMnQ89m2vmXmCL58elElOeeC+pcT+UVo0TN/
-         r12fh938Mi4jvndos+sf+ef+WuzTNqSgZ988lMjJ5VFY4FGYa+6KQzsPEF7ktQYpYLMK
-         tyFQEc7+JNndDu2SYPy7Pj7zMLnGZH+frETZq3J+JgxzxL+o4rh25Yo1zTVTzH33vJrV
-         I12Fe5kfjM0282w8ZEnwZ4QRqKKO31gBvdLjEPMedKKG/zcDjkkJHAxma5xTJMAHJa1l
-         mf2Q==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=xRQAulYJoislpIguV2ckibpnP+kBeVA7zRYuA1GIV6U=;
+        b=dggNQ+oMuRB2LTZCL0vTyxgIZjER40BnvbTX7zg5CR2snygUfuFKN0YckIN5juEqW4
+         8ouWYgWdqyK5XlFo4KbexjrikP7t8ydNXTJ84Un9YTOOeBQha+1fPw99+OAJK0K6rF6h
+         h2MpPxzRGrZT5O8KjtyYqDkkz0g3k+9P9z695yRr1r7lClSmkME44gFr9iNKdwIAtpoJ
+         k6eWtKCR0HQ6/Klrs0wKKf3Ny7ItyhauB66ONEJsb/YuaOAUBEl1V9KMWAZM4Lhj9YkD
+         jIgb79hY3wxu0XBVwAFsnlb77vfQx0V4SjBLDlhsO462QTeLmYLB0HsZ6qL5mr/DQfiA
+         08Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=r4UqqIJjH7wr00XBgbETvfpN0TbAtmA9sYZJQVvJFzo=;
-        b=bq2/YI5kEf/sx0o86EZxOWe/PsZkjLzCqzVkRPDZjiK+QOevoY2Ev2t86Y4coOmomy
-         Ad7nKWjGJ1Gch6GOhTYno7XkRHJ8EGRKy1jsEueeI3nE09B7nCZNSAPZgL+8UbFxyDD8
-         DYbnz/ZAi6entoN5SVx07UfZe2Cb/dRXBkt5bg2Uv7Ynk9Vo5g+bNTzbXXAw/zIKHWDg
-         hSo6QF8/dc96ubH/IJKF4st1CM1Cq91lzPd74HhJ9dE1IzquXycB4gXnVEBxPa4P3Xts
-         tY63sc6KFHTdMosS8fEAxBCDEDz+IlIyr+vQUD5F5rC/V5AcUdxfJEwQB/53Zg6UVNiB
-         1jCw==
-X-Gm-Message-State: AE9vXwN+amYXoNhhrUr1g7D/6QXoZ8RWCIjnv1s60mB/zjF06q8UvW1fAkqgoo6pAKP6Mw==
-X-Received: by 10.66.49.137 with SMTP id u9mr3528222pan.72.1472028134700;
-        Wed, 24 Aug 2016 01:42:14 -0700 (PDT)
-Received: from chrisp-dl.ws.atlnz.lc (2-163-36-202-static.alliedtelesis.co.nz. [202.36.163.2])
-        by smtp.gmail.com with ESMTPSA id x126sm11446249pfx.61.2016.08.24.01.42.12
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 24 Aug 2016 01:42:14 -0700 (PDT)
-From:   Chris Packham <judge.packham@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Chris Packham <judge.packham@gmail.com>
-Subject: [RFC PATCH] completion: support excluding refs
-Date:   Wed, 24 Aug 2016 20:41:52 +1200
-Message-Id: <20160824084152.2857-1-judge.packham@gmail.com>
-X-Mailer: git-send-email 2.9.2.518.ged577c6.dirty
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=xRQAulYJoislpIguV2ckibpnP+kBeVA7zRYuA1GIV6U=;
+        b=SqerT9cBEVgglhX5E83FhjOTPnFwpTkMwGY8MlEkx7ngkVRI6mI41FjnCK/wp7L11h
+         mY9yw0E3Hj3AB5UD1U+1zTDyqn0p9BGtcD6NuIc87aidSGdOISqzvQxNoY1tNyyK0NCv
+         i3YcDn6tmZ4dB4WicK0fNDklsmNL8MombVdkybCRt86rWWC1A6gP694r0o5SMyhsbz4G
+         LpyBkQMWg9IFAJ61qRJxpPp5XJ3ZpznjdaEUB0E9AzTeij92h04hGEHhNgSuYVzj3IO3
+         ur4Ar/udzofOItF6IXx4xIfFTrGlHxTlCXCgqQOLX4BBow8KThOCVnNgmtvi5YepuL9F
+         Wf/w==
+X-Gm-Message-State: AEkoouvyhWwkTltNrOaLLnbAiw6p7CneTYLwrHb7xB9BxravLqyjLvkuzZ1pjMbJhlqiqtfGMQFrSalLVsDJ3g==
+X-Received: by 10.36.84.135 with SMTP id t129mr3138136ita.63.1472031331034;
+ Wed, 24 Aug 2016 02:35:31 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.64.54.40 with HTTP; Wed, 24 Aug 2016 02:35:00 -0700 (PDT)
+In-Reply-To: <f55e70fa-5244-66a0-d3a7-c6479528039d@drmicha.warpmail.net>
+References: <CALqjkKZO_y0DNcRJjooyZ7Eso7yBMGhvZ6fE92oO4Su7JeCeng@mail.gmail.com>
+ <f55e70fa-5244-66a0-d3a7-c6479528039d@drmicha.warpmail.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 24 Aug 2016 16:35:00 +0700
+Message-ID: <CACsJy8CZf0O+uyQaeJ4gcx4XN8ivfFyni+3586WX_R2QM4XgVw@mail.gmail.com>
+Subject: Re: Bug with git worktrees and git init
+To:     Michael J Gruber <git@drmicha.warpmail.net>
+Cc:     Max Nordlund <max.nordlund@sqore.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Allow completion of refs with a ^ prefix. This allows completion of
-commands like 'git log HEAD ^origin/master'.
+On Tue, Aug 23, 2016 at 10:21 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> I've cc'ed the master of worktrees.
 
-Signed-off-by: Chris Packham <judge.packham@gmail.com>
----
-I often find myself using variations of 'git log HEAD ^origin/master' to
-see commits that I have locally that have not been pushed. It is also
-useful when reviewing changes before integrating them e.g. 'git fetch
-...; git log FETCH_HEAD ^origin/master'.
+Thanks for the analysis. I'll provide some patch as soon as possible.
+This git-init may also be a good place to repair broken worktrees too
+(e.g. because you moved a worktree manually)..
 
- contrib/completion/git-completion.bash | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 9c8f738..21016bf 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -338,7 +338,7 @@ __git_tags ()
- __git_refs ()
- {
- 	local i hash dir="$(__gitdir "${1-}")" track="${2-}"
--	local format refs
-+	local format refs pfx
- 	if [ -d "$dir" ]; then
- 		case "$cur" in
- 		refs|refs/*)
-@@ -347,14 +347,15 @@ __git_refs ()
- 			track=""
- 			;;
- 		*)
-+			[[ "$cur" == ^* ]] && pfx="^"
- 			for i in HEAD FETCH_HEAD ORIG_HEAD MERGE_HEAD; do
--				if [ -e "$dir/$i" ]; then echo $i; fi
-+				if [ -e "$dir/$i" ]; then echo $pfx$i; fi
- 			done
- 			format="refname:short"
- 			refs="refs/tags refs/heads refs/remotes"
- 			;;
- 		esac
--		git --git-dir="$dir" for-each-ref --format="%($format)" \
-+		git --git-dir="$dir" for-each-ref --format="$pfx%($format)" \
- 			$refs
- 		if [ -n "$track" ]; then
- 			# employ the heuristic used by git checkout
+PS. Master? Wheeee I'm a master!! :D
 -- 
-2.9.2.518.ged577c6.dirty
-
+Duy
