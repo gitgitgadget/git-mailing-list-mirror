@@ -7,92 +7,104 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE0531F859
-	for <e@80x24.org>; Wed, 24 Aug 2016 06:28:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 040E81F859
+	for <e@80x24.org>; Wed, 24 Aug 2016 06:30:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753269AbcHXG2r (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 02:28:47 -0400
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:36215 "EHLO
-        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751601AbcHXG2q (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 02:28:46 -0400
-Received: by mail-yw0-f195.google.com with SMTP id u134so394827ywg.3
-        for <git@vger.kernel.org>; Tue, 23 Aug 2016 23:28:46 -0700 (PDT)
+        id S1751042AbcHXGaT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 02:30:19 -0400
+Received: from mail-yb0-f175.google.com ([209.85.213.175]:36477 "EHLO
+        mail-yb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750954AbcHXGaT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 02:30:19 -0400
+Received: by mail-yb0-f175.google.com with SMTP id e31so2454607ybi.3
+        for <git@vger.kernel.org>; Tue, 23 Aug 2016 23:30:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=a/LQ3Yebmn/0536Nvj23gLIgFbjHYaPDcO7GN7HNVf0=;
-        b=TJfTWfTiz4Mib71Zq3+n/a5++xMo+mOL+ZbwLmD/WHJAq5RnfNBkiEuurfVUNWXm6u
-         4qs2y9pfCwAOXTsYzhVwxW2dMYaBba1FRi/fY7xu9gxnfn2AbgDmzbxYY7wzSZ323wt3
-         Wpwyoyhf2tWNJYF/98/+vi8tWZiN6JjaQjR16T8inAP+P5kAFBRclrnfxzsNBw/JlWrB
-         LHQ/9+6GyvrZT+QN9EHRTBMgxCvdSgAXimwmWoymLrpRRhCKTVy4ISIr8QDPa3ALqlM5
-         3XshOCyQm9f3sJ/9LUOnu9MkPa+dA0W8HHrbNRrDYzu4/sWPbFyeNs1QdbcB90PqliXS
-         rv/Q==
+        bh=HmhMoYlLgCWqi+j9AZiJwF6oXIaix+xJsdCXle60IGs=;
+        b=akbzq6E9/I7xUXjnYgJX3qWXzy2E3hdP3l80wAGvgiyTjkqPH1rliWZEwU+EBSi4L5
+         29mwo3vJ14gh5dCQjV3YRDh5CNE+/l9y1/RZH5Wzw3RwP4l0bUzmfPJrejGql776Myyg
+         UqWqez5FutFssSXbEGgKP5cnK6vaUiAhW3Nx7Ffp6ywevNMC9bu2tIoiDBEfMeNRbR8U
+         v4CF60dbmNYBCe9jI4yOKEh0wFfIgIzWpLqt+lBnPOtcN3S95x9vN5Kvdt2OLp/fUS+g
+         FsybNKPhhvq9gNpsr8hmiVkCKnvS81ayEUTgAJzG8BccgvGBSfJL0yZJGccHWcOkCSId
+         OpqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=a/LQ3Yebmn/0536Nvj23gLIgFbjHYaPDcO7GN7HNVf0=;
-        b=KTPfKqhJtvqpAakUfLO1gYa119PQAGyU+w+zOKpfZSim8fFRubDrNUotxWzu0vR1BT
-         FgCoQchPFsp+Xzpc1tVhxuWzGP7GFDjt6pfwPmEa6nhI+V6+BidH9uR+wJ2hSr4uSvZu
-         800KA3KdOgUWrYyUexxAc8qSBdU6BRB2Wo0A0YXQfBQB8/RzWkSiSqG+7QVUexLwDgUR
-         xc0TgMp/kiiBsmkG5myCIqw24bmL5kEAlKoeo/L9ujCZTH29dzrXb6lmc5AHY+C1N6ak
-         kdtaZXyzrBr199lRoIjeVJ/b6MPAPRphvQtKvWml1rF+VXTKSI++/Bxuc8FTznnjRIEm
-         xgtg==
-X-Gm-Message-State: AEkoouvxOdsOkwGBk90sTTnbrpPp3zCdeYWIrVN/XD72U/FNxpfol6hKwLrWJSuwLpY6k8rPcEDScgH+7i3csA==
-X-Received: by 10.129.95.70 with SMTP id t67mr1082914ywb.284.1472020125875;
- Tue, 23 Aug 2016 23:28:45 -0700 (PDT)
+        bh=HmhMoYlLgCWqi+j9AZiJwF6oXIaix+xJsdCXle60IGs=;
+        b=hL701QRLcFTwLCsB3NXH5H4uFkRdzDBkpi3yXuSha8GamwpmgZbkELekAi4xVkj6rl
+         7K/L8KrsxVWKfq+vhONtfVfX+bQnkDQ9ObEGkm8aiuiKGfdvBeuAxnaKBUB8GW6oJlI1
+         e00FNRZbLDdGT5kXw4VEnZ9eV3MJJStJAzlxCnLrnTI3GFlFLtJIfwqdH5UBnK2yE2z4
+         y8pa5/aGPl3sTCw32VQzeAEMOAhxnL3BAVivdDr6FEOz/Cy0VAwyAm64JSk93lO02kJ7
+         dL+YqgwWoowGuXjNgdZog0DbiXhV4UjjilsvaZrIZPXrHlPEMIcs4MEn7k8wQ1vvl9zn
+         cVvA==
+X-Gm-Message-State: AEkoouvfVpfjgzpwbtbQ2KVQ5gSRjrV9YaFQlCxXS3YFUI7xWuaJwCSYr7190WNBvBeoDM/qnK2bbAkmjSzEgg==
+X-Received: by 10.37.110.86 with SMTP id j83mr1078706ybc.136.1472020216189;
+ Tue, 23 Aug 2016 23:30:16 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.37.96.195 with HTTP; Tue, 23 Aug 2016 23:28:25 -0700 (PDT)
-In-Reply-To: <xmqqfupvt776.fsf@gitster.mtv.corp.google.com>
-References: <20160822234344.22797-1-jacob.e.keller@intel.com>
- <20160822234344.22797-9-jacob.e.keller@intel.com> <xmqqfupvt776.fsf@gitster.mtv.corp.google.com>
+Received: by 10.37.96.195 with HTTP; Tue, 23 Aug 2016 23:29:55 -0700 (PDT)
+In-Reply-To: <CAGZ79ka6nwYjBRcUKAxCqAodq=Hw6f86J0Mq6GWyKgMO_PNi4A@mail.gmail.com>
+References: <20160815215327.15682-1-sbeller@google.com> <20160815215327.15682-9-sbeller@google.com>
+ <CA+P7+xpDqkTFLUJBhSwWiVnXw-iy1fmGBWzVBLmybOcPOmevBw@mail.gmail.com> <CAGZ79ka6nwYjBRcUKAxCqAodq=Hw6f86J0Mq6GWyKgMO_PNi4A@mail.gmail.com>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 23 Aug 2016 23:28:25 -0700
-Message-ID: <CA+P7+xoae0vdMNd7zv7L7r68VcZ2zJPBoyvc6nzDDn-z9WUcFg@mail.gmail.com>
-Subject: Re: [PATCH v10 8/9] submodule: refactor show_submodule_summary with
- helper function
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
+Date:   Tue, 23 Aug 2016 23:29:55 -0700
+Message-ID: <CA+P7+xpmyx+QsdOpS7JC1i9Z6cdsy_=MK7J_rGYiukPsqAJBVQ@mail.gmail.com>
+Subject: Re: [PATCHv5 8/8] clone: recursive and reference option triggers
+ submodule alternates
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
         Git mailing list <git@vger.kernel.org>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jens Lehmann <Jens.Lehmann@web.de>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 23, 2016 at 4:07 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jacob Keller <jacob.e.keller@intel.com> writes:
->
->> From: Jacob Keller <jacob.keller@gmail.com>
+On Tue, Aug 23, 2016 at 4:03 PM, Stefan Beller <sbeller@google.com> wrote:
+>>> +
+>>> +       if (option_recursive) {
+>>> +               if (option_required_reference.nr &&
+>>> +                   option_optional_reference.nr)
+>>> +                       die(_("clone --recursive is not compatible with "
+>>> +                             "both --reference and --reference-if-able"));
 >>
->> A future patch is going to add a new submodule diff format which
->> displays an inline diff of the submodule changes. To make this easier,
->> and to ensure that both submodule diff formats use the same initial
->> header, factor out show_submodule_header() function which will print the
->> current submodule header line, and then leave the show_submodule_summary
->> function to lookup and print the submodule log format.
+>> So if you have multiple references that don't all match we basically
+>> just refuse to allow recursive?
 >>
->> This does create one format change in that "(revision walker failed)"
->> will now be displayed on its own line rather than as part of the message
->> because we no longer perform this step directly in the header display
->> flow. However, this is a rare case as most causes of the failure will be
->> due to a missing commit which we already check for and avoid previously.
->> flow. However, this is a rare case and shouldn't impact much.
+>> Would it be better to simply assume that we want to die on missing
+>> references instead of failing the clone here?
+>
+> The new config options are per repo (or even set globally), and not
+> per alternate. And as we communicate the [if-able] part via the config
+> options to the submodules it is not feasible to transport both
+> kinds of (reference-or-die and reference-but-ignore-misses).
+>
+> That is why I introduced this check in the first place. If we'd go back
+> to the drawing board and come up with a solution that is on a
+> "per alternate" basis we could allow such things.
+>
+>> That is, treat it so
+>> that multiple reference and reference-if-able will die, and only info
+>> if we got only reference-if-able?
 >>
->> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
->> ---
+>> Probably what's here is fine, and mixing reference and
+>> reference-if-able doesn't make much sense.
 >
-> Up to this step it all looked sensible.  I'll take a look at 9/9
-> later.
+> I think the reference-if-able doesn't make sense for one project alone
+> as you can easily script around that, but is only useful if you have
+> submodules in a partially checked out superproject that you want
+> to reference to.
 >
-> Thanks.
+> Thanks,
+> Stefan
 
-There is still some outstanding comments from Stefan that I am looking
-at, whether to use a die() or not in do_submodule_path.
+I'm not sure there is a better design.  How are alternates stored? In
+a config section? Or is there some way we can store the is-able per
+alternate and look it up when adding them to submodule?
 
 Thanks,
 Jake
