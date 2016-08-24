@@ -4,103 +4,106 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 446241F6C1
-	for <e@80x24.org>; Wed, 24 Aug 2016 15:40:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CC011F6C1
+	for <e@80x24.org>; Wed, 24 Aug 2016 15:41:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755302AbcHXPjz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 11:39:55 -0400
-Received: from mout.gmx.net ([212.227.15.15]:58492 "EHLO mout.gmx.net"
+        id S1755689AbcHXPlx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 11:41:53 -0400
+Received: from mout.gmx.net ([212.227.17.20]:52163 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754570AbcHXPjy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 11:39:54 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MWkep-1bf43818l1-00Xrsu; Wed, 24 Aug 2016 17:39:45
+        id S1752389AbcHXPlw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 11:41:52 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0Ma2Lr-1brD9u0jAl-00LrHX; Wed, 24 Aug 2016 17:34:05
  +0200
-Date:   Wed, 24 Aug 2016 17:39:43 +0200 (CEST)
+Date:   Wed, 24 Aug 2016 17:34:02 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Michael J Gruber <git@drmicha.warpmail.net>,
-        Duy Nguyen <pclouds@gmail.com>,
-        git-for-windows <git-for-windows@googlegroups.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [git-for-windows] Re: [ANNOUNCE] Git for Windows 2.9.3
-In-Reply-To: <xmqqzio3uw31.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1608241735520.4924@virtualbox>
-References: <alpine.DEB.2.20.1608131214070.4924@virtualbox> <xmqqshu8u0px.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608171507530.4924@virtualbox> <xmqqeg5nbehc.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608181022250.4924@virtualbox>
- <CACsJy8A3tkMY-iLPCDj9sqB4HpAK_cxsUu5Z7fsGcCQEORyxUg@mail.gmail.com> <alpine.DEB.2.20.1608231553030.4924@virtualbox> <2a6d2230-90ce-0f54-c7ae-a5aa595a2f73@drmicha.warpmail.net> <alpine.DEB.2.20.1608231736180.4924@virtualbox> <alpine.DEB.2.20.1608231758260.4924@virtualbox>
- <xmqqzio3uw31.fsf@gitster.mtv.corp.google.com>
+To:     Arif Khokar <arif_khokar@hotmail.com>
+cc:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+        "meta@public-inbox.org" <meta@public-inbox.org>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Eric Wong <e@80x24.org>
+Subject: Re: Working with public-inbox.org [Was: [PATCH] rev-parse: respect
+ core.hooksPath in --git-path]
+In-Reply-To: <DM5PR17MB1353EFB1F6FE3B05EFDF86DCD3EB0@DM5PR17MB1353.namprd17.prod.outlook.com>
+Message-ID: <alpine.DEB.2.20.1608241509200.4924@virtualbox>
+References: <CAGZ79kasebzJb=b2n=JQiVMrSfJKaVfZaaoaVJFkXWuqKjfYKw@mail.gmail.com> <alpine.DEB.2.20.1608181430280.4924@virtualbox> <20160819150340.725bejnps6474u2e@sigill.intra.peff.net> <46a5b9b6-f3f6-7650-8a5b-b0b52223e375@gmail.com>
+ <DM5PR17MB1353EFB1F6FE3B05EFDF86DCD3EB0@DM5PR17MB1353.namprd17.prod.outlook.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:uui7WtGw1GKEH31wa4c2R15CF85E7dM4Ry3loC1eQoexzKAaxWJ
- looRWVLqFzZUahzyEU98TogIHKqn0csvCXsd2T5plTW/NZQ/WJTtdpjjeILUrc+AQC2cHq5
- JK/mAP5goJIKopbyZYou4mVMt8sOx5coqgP4+Y0W8zseAfj6vgoSSwxRRK1vWY6/0wXvjs+
- MHw8Rv7wCTnGDPgaqgjTQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:pvzaqTEfo3A=:ljID+FtosSDCvsaGU9z1ZU
- msL5iL1riYpxmAFyZ0NcblASk0jkmfz1cQwHorwIN4Hg1adI1+P/5KUvMji2txvqKBkrdeU7B
- 72CWfDpT+g1SUsgziBWQi9g/YX7J5Iu3cedBhDxjpdlrHCabBdhNjNDA1qyd4WhapIjzKFK36
- xheNB+EfYB6Xs/r/VpcLZ7wOkQ81eVOtjIePk9T63+XzpTJvwnG88c8LbWfqVu/duV5kf4/5q
- PgDEt58g8trtoo7J3DK5v1qBKAg3hPH2SGtdoPMYeiFnnE8bVGJ7Q8YQpwtI0Yk63eGijWVXj
- YraWrAI5/rCQsN4MygosktFRp9/Sfp+RIRjW2jJKOnl8888F5KTscux5wWMHci7b5rcYRBFXI
- GmQXzpjoNZptK8p84QwP2+K6oPzVSIaYL4GTyi84mjheJZ6Zu1qX0QY24YW208y6ISwTIzNwx
- sNFW+7D74edvFOUl9zeuKuO0oduv1NMRHiFRus1zR7CBX4wh9x6omZTAqBR4hFxoqKfATX6rf
- nLoN0dBqXJFWVqNsm6tKomDpiOabenw7Gn+VFPhe+qJLuvOubRTJQyEbH7Z8CkOcqe7z5Osr3
- exAucWH6yU4KRXbLOtkHqddH+3wKRBBvU9+4T87Xe5+HD3u3qVpNuc7QOUrk6PDsVDCd6HWpD
- tl6DlaPBKYFclQ0l4qkCVLVUPkREhPLoc0ZzhsrtExL8ZvxrE9EQlLg1JA+dJHk00q0uVhABX
- NO0P2WFimaZqU/e8Z3kXJgybQDtyLRSaJnKIu2Ji47uCrTghNwYrYfyDUtGKSSh6WAiCoyNw0
- i+JohEI
+Content-Type: multipart/mixed; BOUNDARY="8323329-2144075108-1472052845=:4924"
+X-Provags-ID: V03:K0:WBeb2wYPps9mpasleUqx/AztYu8F7CmwTiBD5ECcZ+TMoG6GzjT
+ lJcg8CS2lHMbCmb8zyypVWKClJq45jUrq7ryNtZDL/CorrQFJjvZb9DZ7ruG8rZe0qbYHo2
+ KcDIJpgoVac77n7KPIWg6q1xO5stUVeNrPo0HM2a6V7IRgaMbioD9bxeNPQ4/GI4bJ7wVmA
+ m3tyAGNbJfDxbtceBq8uw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LY2lMdOWJL4=:iAaS9CFuzBnqjB73Adti54
+ uA7u5gZ/2+cZsemPoEAyv3H+VNEb2sKBMwQfz9f4YVs23iauH8ky51yG/M6+MqvilCDso2nKl
+ 1FilImQOZqc+N9nhK/vTbRSFsSwj6sAQzcagiD8gV7q0b9+WTLVSRzjpkBr+JUdqwz7vxS+lT
+ M5Gy95BwuyGqEu3aOHaLwk8MS8ZiDfUD8jr8AHcyzyok2MPshuCK7CDb+QdWw3OJSMlCGPK93
+ kyc1KOcM9GcNwKOL4mVYeGp6nn6uy7oFkSU5k4Vtspg8+U6DCLNqZq6KqqGBkDrhps2xyAI/F
+ BAtSIqDKLYkuZnU1uQpSCV4zo41dOqEaKkYtFsFcRRzGI2ZX2IAXeNYQ+0UqNnN8oaGJqU4E0
+ oa7+XqX2IPiv/wwsXe540a2pAfh0gJaaQTUiCrGg1Cqyd5ql4OoI6/hFBVwe7zVmjCPAkjMwm
+ 31U8A0qNKx8cGMP6jCefOgocYrwvaRG1gHYPS6IuQIyICRhgv+sNEzmWUFpncKg9xtBcn6a9n
+ 9A2hiA9kzIe2m0V9DL2jt1fPABI7FZoO0lQNSbX/FCR+fCo/EBAQtdZ9bNHL3Wb7GSSJjlpfE
+ dDg5AauzeVYXDgRV965NK/QoLoCj7H6sy10D0SplCVpMgHKcz6YaU7BHWP+xXCz+fMvPLDIrg
+ ahSRhlfcHtzlC9gwLbPvkRRwsDBOxc+kzOK3qHgI8SC4sTlNyhPZonM/lxjFgFtxjvaUvWWzD
+ KPl9M8/lOxszUU33p4gpqUVZTKG60tMfejdJ90qYgVnFjh5gPLk0qrU9zEn+TgGCCXxBEsDyQ
+ lPXdnYF
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Tue, 23 Aug 2016, Junio C Hamano wrote:
+--8323329-2144075108-1472052845=:4924
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > In case it is not crystal-clear, let me clarify one very important point.
-> > It seems that some people mistake the work I do for something I do on a
-> > whim. This is not so.
-> >
-> > The patch series that triggered this entire unfortunate discussion
-> > introduced the --smudge option, which I have subsequently renamed to
-> > --filters and submitted as a patch series to the Git project.
-> 
-> As the "--filters" is meant as a new feature, it will not land on
-> the maintenance track.  It is very likely that it won't be in 2.10,
-> so it won't appear in 2.10.x maintenance track, either.
+Hi Arif,
 
-Right. Which is even more a reason for me to decouple this feature from
-non-Windows Git.
+On Tue, 23 Aug 2016, Arif Khokar wrote:
 
-> [...] whatever new feature you unleash ahead of upstream to your Windows
-> port has cost to your end-users.  Its implementation or its external
-> interface may have to change when you upstream the new feature that has
-> already been in the field, and your end-users would have to adjust their
-> scripts and/or muscle memory.
+> On 08/20/2016 03:57 PM, Jakub Nar=C4=99bski wrote:
+>=20
+> > But perhaps the problem is current lack of tooling in the opposite
+> > direction, namely getting patches from mailing list and applying them
+> > to GitHub repo, or Bitbucket, or GitLab.  Though with working Git, it
+> > is something easier than sending patches via email; it is enough that
+> > email client can save email to a file (or better, whole sub-thread to
+> > file or files).
+>=20
+> Given that public-inbox provides an NNTP interface, couldn't the ARTICLE
+> <message-id> NNTP command be used to easily retrieve the messages in a
+> given patch series (at least compared to POP or IMAP).  Perhaps
+> git-send-email could be modified to include the message-id value of each
+> patch in the series that it sends to the mailing list and include it in
+> the cover letter.
 
-This is nothing new. As I said earlier, I have plenty of experience with
-this. Including the experience of worsimproving a feature that has been
-battle-tested for years, only to be broken in the process to appease
-reviewers on the Git mailing list.
+I am no expert in the NNTP protocol (I abandoned News long ago), but if
+you go from HTML, you can automate the process without requiring changes
+in format-patch.
 
-I talk about the core.hideDotFiles feature, of course, which in the
-process of being integrated into core Git lost its ability to respect the
-setting to be "false".
+> Then a script could be written (i.e., git-download-patch) which could
+> parse the cover letter message (specified using its message-id), and
+> download all the patches in series, which can then be applied using
+> git-am.  This would in fact take the email client out of the equation in
+> terms of saving patches.
 
-Git for Windows has a work-around already, of course, it's just ugly, so I
-am hesitating to "upstream it" yet.
+I recently adapted an old script I had to apply an entire patch series
+given the GMane link to its cover letter:
 
-As I said. All of this is old hat. Git for Windows has been, and probably
-will be for a long time to come, diverging from upstream Git. This is not
-something I wanted, or worked toward. It's just reality that happened and
-I have to deal with it and there is nothing to see here, please move on.
+https://github.com/git-for-windows/build-extra/blob/master/apply-from-gmane=
+=2Esh
+
+Maybe you find it in you to adapt that to work with public-inbox.org?
 
 Ciao,
-Dscho
+Johannes
+--8323329-2144075108-1472052845=:4924--
