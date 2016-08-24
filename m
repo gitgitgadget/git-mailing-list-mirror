@@ -2,139 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 213CB1F6C1
-	for <e@80x24.org>; Wed, 24 Aug 2016 22:52:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 225B01F6C1
+	for <e@80x24.org>; Wed, 24 Aug 2016 23:02:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932591AbcHXWw4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Aug 2016 18:52:56 -0400
-Received: from mail-it0-f54.google.com ([209.85.214.54]:37515 "EHLO
-        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932337AbcHXWwz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2016 18:52:55 -0400
-Received: by mail-it0-f54.google.com with SMTP id f6so61187986ith.0
-        for <git@vger.kernel.org>; Wed, 24 Aug 2016 15:52:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ukbvegAAWb2SYKq6xeQOZ+jQbGavdjlLWTcGbFIJEHA=;
-        b=h0bsEhcA5c+LpXSMuTbzdGVSL96qZMMA92N3jnu7x/P7sNTHV6Y2QuKS0Vz2yj3PDl
-         BsqCx7S8aYITupGnpwXs0P1p3OTkcLsjUswn5d2zQkY/GDkrig9jEM+tfYkyhKKlhV4T
-         yyCczQj2TC2zRRDnLLugqDsLRwyizdaiUpdZjatKtpq4Pl1423GWOwk2SqgvGS7QTSg1
-         U6TO8tSz8wglSu/hQgLXwGMNte9dBGuLJhB8PdXDg4ldlpqwnjQGbe1SXYopPVQaDyYB
-         vBBYj3PQOlckIPtiS3rkWtv0/TTz0xA1K17DUnJ7r/9oQdpLLEzgRSBWZpUvMfP36ben
-         5NHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ukbvegAAWb2SYKq6xeQOZ+jQbGavdjlLWTcGbFIJEHA=;
-        b=XjHi5OypuRXsX0j0LXr++DsHnmT0IG6/uML7uDwIPD7wrIyIyZZY++fpwD7p10eeBg
-         kk6NfNh3WjEnDUMyDIyhlqWhJFDWp1u8Qtdqmhc2Fr14m2x6TFC0J61hADa58B+0PaBO
-         5L+Ja21MGUfkO0mTRIbPQb9QEIxvlkVYbcUDL35quakG+MYsG3mHZg5dAf/h1yCAlXsV
-         QuOEbC8Yxl3uV2fzJrVdYMe/JhvXGe7RAuVXlm1DOBQ2Eopx5zSA+X8j5NOTWBGGbBrb
-         yYCfxDyoGSUmLeoz69SwvqKl3bMsSphKcImkqYUOj2fFLTA5ptS73GLTg1m0WM//1zHC
-         sgvA==
-X-Gm-Message-State: AEkoouuW/6oBuo74HQGhxyLFHxcZB/Isx3XJUgussHATuj1JXVuflR+KruX8aOTMeCCJA2BmBS01ebGwxAtaUVCJ
-X-Received: by 10.36.217.9 with SMTP id p9mr1613581itg.46.1472079174162; Wed,
- 24 Aug 2016 15:52:54 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Wed, 24 Aug 2016 15:52:53 -0700 (PDT)
-In-Reply-To: <CA+P7+xpmyx+QsdOpS7JC1i9Z6cdsy_=MK7J_rGYiukPsqAJBVQ@mail.gmail.com>
-References: <20160815215327.15682-1-sbeller@google.com> <20160815215327.15682-9-sbeller@google.com>
- <CA+P7+xpDqkTFLUJBhSwWiVnXw-iy1fmGBWzVBLmybOcPOmevBw@mail.gmail.com>
- <CAGZ79ka6nwYjBRcUKAxCqAodq=Hw6f86J0Mq6GWyKgMO_PNi4A@mail.gmail.com> <CA+P7+xpmyx+QsdOpS7JC1i9Z6cdsy_=MK7J_rGYiukPsqAJBVQ@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 24 Aug 2016 15:52:53 -0700
-Message-ID: <CAGZ79kah4sY0NJkaqDiUqcwsCHn0SECkMjN8SoXQ8vGi6zRkuw@mail.gmail.com>
-Subject: Re: [PATCHv5 8/8] clone: recursive and reference option triggers
- submodule alternates
-To:     Jacob Keller <jacob.keller@gmail.com>
+        id S1756682AbcHXXCK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Aug 2016 19:02:10 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60832 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1755523AbcHXXCJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2016 19:02:09 -0400
+Received: (qmail 517 invoked by uid 109); 24 Aug 2016 23:01:19 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Aug 2016 23:01:19 +0000
+Received: (qmail 8116 invoked by uid 111); 24 Aug 2016 23:01:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 Aug 2016 19:01:22 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Aug 2016 19:01:16 -0400
+Date:   Wed, 24 Aug 2016 19:01:16 -0400
+From:   Jeff King <peff@peff.net>
+To:     Stefan Beller <sbeller@google.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jens Lehmann <Jens.Lehmann@web.de>
-Content-Type: text/plain; charset=UTF-8
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Heiko Voigt <hvoigt@hvoigt.net>,
+        Jens Lehmann <Jens.Lehmann@web.de>,
+        Fredrik Gustafsson <iveqy@iveqy.com>,
+        Leandro Lucarella <leandro.lucarella@sociomantic.com>
+Subject: Re: [PATCHv2] push: change submodule default to check
+Message-ID: <20160824230115.jhmcr4r7wobj5ejb@sigill.intra.peff.net>
+References: <20160824173017.24782-1-sbeller@google.com>
+ <20160824183112.ceekegpzavnbybxp@sigill.intra.peff.net>
+ <xmqqh9aaot49.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kYOBqQ0FF4J-+KbefSD8HRrUeMqpO27m_jprhm93aB+LA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kYOBqQ0FF4J-+KbefSD8HRrUeMqpO27m_jprhm93aB+LA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 23, 2016 at 11:29 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> On Tue, Aug 23, 2016 at 4:03 PM, Stefan Beller <sbeller@google.com> wrote:
->>>> +
->>>> +       if (option_recursive) {
->>>> +               if (option_required_reference.nr &&
->>>> +                   option_optional_reference.nr)
->>>> +                       die(_("clone --recursive is not compatible with "
->>>> +                             "both --reference and --reference-if-able"));
->>>
->>> So if you have multiple references that don't all match we basically
->>> just refuse to allow recursive?
->>>
->>> Would it be better to simply assume that we want to die on missing
->>> references instead of failing the clone here?
->>
->> The new config options are per repo (or even set globally), and not
->> per alternate. And as we communicate the [if-able] part via the config
->> options to the submodules it is not feasible to transport both
->> kinds of (reference-or-die and reference-but-ignore-misses).
->>
->> That is why I introduced this check in the first place. If we'd go back
->> to the drawing board and come up with a solution that is on a
->> "per alternate" basis we could allow such things.
->>
->>> That is, treat it so
->>> that multiple reference and reference-if-able will die, and only info
->>> if we got only reference-if-able?
->>>
->>> Probably what's here is fine, and mixing reference and
->>> reference-if-able doesn't make much sense.
->>
->> I think the reference-if-able doesn't make sense for one project alone
->> as you can easily script around that, but is only useful if you have
->> submodules in a partially checked out superproject that you want
->> to reference to.
->>
->> Thanks,
->> Stefan
->
-> I'm not sure there is a better design.  How are alternates stored? In
-> a config section?
+On Wed, Aug 24, 2016 at 03:37:29PM -0700, Stefan Beller wrote:
 
-Alternates are stored in .git/objects/info/alternates
-with each alternate in a new line. On that file (from
-(man gitrepository-layout):
+> > That sounds massively ... broken.  So before even thinking about
+> > flipping it to default, this needs to be fixed first.
+> 
+> I agree. That sounds bad.
+> 
+> However having the --auto-check feels like papering over the
+> actual problem which to me sounds like a design problem.
+> However this may be a viable short term solution.
 
-objects/info/alternates
+Sort of...
 
-This file records paths to alternate object stores that this object store
-borrows objects from, one pathname per line. Note that not only native
-Git tools use it locally, but the HTTP fetcher also tries to use it remotely;
-this will usually work if you have relative paths (relative to the object
-database, not to the repository!) in your alternates file, but it will not work
-if you use absolute paths unless the absolute path in filesystem and web
-URL is the same. See also objects/info/http-alternates.
+I may not have been clear, but there are really a few things going on.
 
-So changing that file is out of question.
-Ideally we would have a flag for each path here, though.
+One is that the design of find_unpushed_submodules() is just brain-dead.
+It does one traversal per updated ref, which means a from-scratch mirror
+is O(nr_of_refs * nr_of_commits). That's just silly, and can easily be
+fixed behind the scenes to be O(nr_of_commits).
 
-> Or is there some way we can store the is-able per
-> alternate and look it up when adding them to submodule?
+And I _suspect_ it is what made Junio's earlier push so awful; he
+probably pushed up the same commits as part of many different branches,
+so he did the same diffs over and over.
 
-I guess we could invent a file as alternate-flags that is matches
-line by line to the alternates file.
+So clearing that up seems like an obvious first step, and dulls the pain
+to "if submodule recursion is on, the worst case is that you walk all
+the new objects you are sending". That's still _a_ traversal, but it's
+one we have to do anyway in pack-objects, so it's the same order of
+magnitude as the rest of the push[1].
 
-I don't think we'd want to go that way for now as it would really only
-help in an edge case?
+Then you've got two cases: the repo is using submodules at all, or they
+are not. The former is an easy case, if we can identify it; we can avoid
+the traversal at all, and people who do not use submodules are not
+regressed at all.
 
-If we later find out we need the flag on a per-alternate basis we can
-still come up with a solution and just not set these config variables,
-so I think we'll be fine for now with this approach.
+That leaves people who _are_ using submodules with paying the extra
+traversal cost. Not great, but only really a pain when you have a really
+big chunk of history to push. It may be lost in the noise for such a
+push in more normal circumstances (where bandwidth to push up the
+objects dominates, though it is unfortunate that we do not even start
+utilizing the bandwidth, the critical resource, until we are done with
+the submodule check).
 
-Thanks,
-Stefan
+[1] Of course with reachability bitmaps the pack-objects traversal goes
+    away, but the same cannot be accomplished here (because they do not
+    store the gitlink sha1s at all, because they do not imply
+    reachability).
+
+> We need to answer the question: Which submodule commits
+> are referenced by a given set of superproject commits.
+> 
+> This question is advancing a very similar question that we'd
+> have to ask in git-gc. In gc we would end up without having to
+> worry about a specific set, but rather the all reachable commits
+> of the superproject are in the given set.
+> 
+> So we could solve two issues at the same time if we had a quick
+> way to answer this question quickly.
+> [...]
+
+I snipped here because your solutions sound complicated (which isn't to
+say they're wrong, but that I am not willing to give them a lot of
+thought at this time in the evening ;) ).
+
+One opposite approach which appeals to me is not to remove the need for
+the traversal, but to make it much faster. E.g., by storing commits in a
+form that can be traversed more quickly, and possibly keeping a bitmap
+cache of which paths are touched in each commit (I have posted patches
+to the list for the former, but have only been considering experimenting
+with the latter).
+
+That's _also_ complicated, but it applies to way more things. Including
+normal log traversals, path-limiting for diffs, the "counting" traversal
+done by pack-object, etc.
+
+And while it is complicated in some ways, it's conceptually simple at
+the git data model layer. It's returning the same old answers about
+commits and trees, just faster.
+
+Anyway, food for thought.
+
+-Peff
