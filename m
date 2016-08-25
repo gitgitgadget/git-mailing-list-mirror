@@ -2,173 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8B7D1F859
-	for <e@80x24.org>; Thu, 25 Aug 2016 16:02:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1683F1F859
+	for <e@80x24.org>; Thu, 25 Aug 2016 17:25:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758159AbcHYQCA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Aug 2016 12:02:00 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:36305 "EHLO
-        mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756608AbcHYQB7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2016 12:01:59 -0400
-Received: by mail-pa0-f50.google.com with SMTP id di2so18076970pad.3
-        for <git@vger.kernel.org>; Thu, 25 Aug 2016 09:01:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=alexnauda-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=sGS5Pa7irksKFrRCACt7vuGe02MvURQVrD4NimE3Yf0=;
-        b=wd1UJC6gRoar3QKXYEkC3Kw/io526mDYQZNZosE0gwqT4tCVmBdaBNVD8k76FuUNAz
-         CoS9wSvsfTk+0MMIdGt7WNg8aJ+Se6monJEwo/TRHDb9SqZJt4qqZ39hERLt93Nff8sq
-         cGzQiyqG84srDKUIPHS3MjlhuHTSKV0IZwPtCYvfoIItMBjy4xwXdpE19EtyAViOt3/M
-         hsDX0iFvM3ehkNmiIehVMEKsBmbYvS2uB6+TiStODEkm1oqprsEY/KIXpY9OhZwhP/nV
-         5+RmQMi/ENXmFKUgPBIQrlUpYasP3bF56eA4DwOaeh0XK2FX3vWbb5IDY0MJEJgf85fC
-         G1Bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=sGS5Pa7irksKFrRCACt7vuGe02MvURQVrD4NimE3Yf0=;
-        b=ibTLNcGhmI7fFn/3QBNL8foJtWlpTFxJHgAPcLBW5bIWxYOSj+9cdJnoF1sZjLSvbN
-         tz9l5ZXPrY4MefmJH2BoZ2g9HeoCiNu/M0sE7Lp7AX3jOMtii+/vWPRNGQGGKdTJd17q
-         DfAv2WknHnm5HzblDQO6cLEVX7BZHgaTgEhZd5y4kHSEBQFKbyh0is2BGgdc9dpKVaGp
-         04hgriFYIkmwwAF4vfFnWnZ0ySWHxf13fI8GDRN23YD+4Qste2Q1dIzVUHoJx5C/9hkL
-         AYgV8LzuxKyrT2jVH8pVeSr69a1qnlViXQssygEAGSRd7ZljwdLSw7HaqHIbvhrNNSF4
-         ZyjQ==
-X-Gm-Message-State: AE9vXwNUadt182Xj5xzVEHsAI78wdeww9YkLmu5TMRNo+OcupLX39Te2Az3SrnyCfi+1CvKcX477AWXzm/3cbg==
-X-Received: by 10.66.221.229 with SMTP id qh5mr17483310pac.66.1472140918177;
- Thu, 25 Aug 2016 09:01:58 -0700 (PDT)
+        id S1753343AbcHYRZ0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Aug 2016 13:25:26 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65191 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753962AbcHYRZY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2016 13:25:24 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D42A4370A1;
+        Thu, 25 Aug 2016 13:19:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=nD40E1dir2H7
+        DslC+NAAaeuspbE=; b=wNOqkcv/TrmpOrftZCcB/603yH1diAIJ5TVjDQuw/tz2
+        nxqZ5cVg+VTvPjJ7+inezf1PCwHQI0gGmNEWlJBoeadqTrV3EeXuNkg9sCvZYsk3
+        V3kdNMh0wdhSw0FEMbwphV6RhHy7invyulYohTCJ8y3SAPaD83DG30gTTDK0PWU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=RCi0hR
+        07lLdU/vld6Gx+LKQMfG7wQZKudQJKvP91I9f2V5NF9D689v6C20Yp3P3lb83NNY
+        4oq++oHHY6c5a1lbocq6oHmyPut6YSUgbhZpmtCnhc40KhfwaozDVUtwjMaBKKJV
+        gjzPAfDlE8dLGUvduC12GECnFZL3UiJeW9J1Y=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CCE02370A0;
+        Thu, 25 Aug 2016 13:19:42 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 622CD3709F;
+        Thu, 25 Aug 2016 13:19:42 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] checkout: swap the order of ambiguity check for :/ syntax
+References: <20160822123502.3521-1-pclouds@gmail.com>
+        <xmqq7fb6rupa.fsf@gitster.mtv.corp.google.com>
+        <CACsJy8AnDoh-CZp8oa21YHcM3sxoTJZiK7fP+ecNyqd0-DBZAA@mail.gmail.com>
+Date:   Thu, 25 Aug 2016 10:19:40 -0700
+In-Reply-To: <CACsJy8AnDoh-CZp8oa21YHcM3sxoTJZiK7fP+ecNyqd0-DBZAA@mail.gmail.com>
+        (Duy Nguyen's message of "Thu, 25 Aug 2016 16:21:25 +0700")
+Message-ID: <xmqq60qoojf7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.67.4.229 with HTTP; Thu, 25 Aug 2016 09:01:57 -0700 (PDT)
-X-Originating-IP: [54.208.66.34]
-In-Reply-To: <67cde0aa-89fc-b574-d5f5-7e754d77b5bb@alum.mit.edu>
-References: <CAMQLHmAraXPL=8SmMG4X_424FAzx4q2Byk8pva5wEOg7vNSqLw@mail.gmail.com>
- <20160824213900.gcnwxu46zvgpjr5a@sigill.intra.peff.net> <67cde0aa-89fc-b574-d5f5-7e754d77b5bb@alum.mit.edu>
-From:   Alex Nauda <alex@alexnauda.com>
-Date:   Thu, 25 Aug 2016 12:01:57 -0400
-Message-ID: <CAMQLHmA=b0HMO9s0nt3VTdOYe51oE3UrrrCDH3Z_Tq0Nuhe-kQ@mail.gmail.com>
-Subject: Re: on Amazon EFS (NFS): "Reference directory conflict: refs/heads/"
- with status code 128
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 1C7AA902-6AE8-11E6-B5B7-F7BB12518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 25, 2016 at 2:28 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 08/24/2016 11:39 PM, Jeff King wrote:
->> On Wed, Aug 24, 2016 at 04:52:33PM -0400, Alex Nauda wrote:
+Duy Nguyen <pclouds@gmail.com> writes:
+
+> On Wed, Aug 24, 2016 at 11:35 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 >>
->>> Elastic File System (EFS) is Amazon's scalable filesystem product that
->>> is exposed to the OS as an NFS mount. We're using EFS to host the
->>> filesystem used by a Jenkins CI server. Sometimes when Jenkins tries
->>> to git fetch, we get this error:
->>> $ git -c core.askpass=true fetch --tags --progress
->>> git@github.com:mediasilo/dodo.git
->>> +refs/pull/*:refs/remotes/origin/pr/*
->>> fatal: Reference directory conflict: refs/heads/
->>> $ echo $? 128
->>>
->>> Has anyone seen anything like this before? Any tips on how to troubleshoot it?
+>>> It's not wonderful, but it's in line with how git-checkout stops cari=
+ng
+>>> about ambiguity after the first argument can be resolved as a ref
+>>> (there's even a test for it, t2010.6).
 >>
->> No, I haven't seen it before. That's an internal assertion in the refs
->> code that shouldn't ever happen. It looks like it happens when the loose
->> refs end up with duplicate directory entries. While a bug in git is an
->> obvious culprit, I wonder if it's possible that your filesystem might
->> expose the same name twice in one set of readdir() results.
->>
->> +cc Michael, who added this assertion long ago (and since this is the
->> first report in all these years, it does make me suspect that the
->> filesystem is a critical part of reproducing).
+>> But that is justifiable because checkout can only ever take one
+>> revision.  What follows, if there are any, must be paths, and more
+>> importantly, it would be perfectly reasonable if some of them were
+>> missing in the working tree ("ow, I accidentally removed that file,
+>> I need to resurrect it from the index").  Does the same justification
+>> apply to this change?
 >
-> Thanks for the CC.
->
-> I've never heard of this problem before.
->
-> What Git version are you using?
-Git client 2.7.4 against GitHub (Git 2.6.5)
+> I think there is a misunderstanding. My "after" is in "after the first
+> argument can be resolved, check if it exists in worktree too, if so
+> it's ambiguous and bail". This is usually how we detect ambiguation.
+> But git-checkout does not do the "check if it exists..." clause.
 
->
-> I tried to provoke the problem by hand-corrupting the packed-refs file,
-> but wasn't successful.
->
-> So Peff's suggestion that the problem originates in your filesystem
-> seems to be to be the most likely cause. A quick Google search found,
-> for example,
->
->     https://bugzilla.redhat.com/show_bug.cgi?id=739222
->
-> http://superuser.com/questions/640419/how-can-i-have-two-files-with-the-same-name-in-a-directory-when-mounted-with-nfs
->
-> though these reports seem connected with having lots of files in the
-> directory, which seems unlikely for `$GIT_DIR/refs/`. But I didn't do a
-> more careful search, and it is easily possible that there are other bugs
-> in NFS (or EFS) that could be affecting you.
->
-> If this were repeatable, you could run Git under strace to test Peff's
-> hypothesis. But I suppose it only happens rarely, right?
-Actually it seems to be reproducible. Here's the last portion of an strace:
+Hmph.  The "case 4" in the function you touched says
 
-[...]
-stat(".git/refs/remotes/origin/pr/7/head", {st_mode=S_IFREG|0644,
-st_size=41, ...}) = 0
-lstat(".git/refs/remotes/origin/pr/7/head", {st_mode=S_IFREG|0644,
-st_size=41, ...}) = 0
-open(".git/refs/remotes/origin/pr/7/head", O_RDONLY) = 4
-read(4, "5d82811a248900efd8e201c6d9232de5"..., 256) = 41
-read(4, "", 215)                        = 0
-close(4)                                = 0
-getdents(3, /* 0 entries */, 32768)     = 0
-close(3)                                = 0
-open(".git/refs/remotes/origin/pr/16/",
-O_RDONLY|O_NONBLOCK|O_DIRECTORY|O_CLOEXEC) = 3
-fstat(3, {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
-getdents(3, /* 3 entries */, 32768)     = 72
-stat(".git/refs/remotes/origin/pr/16/head", {st_mode=S_IFREG|0644,
-st_size=41, ...}) = 0
-lstat(".git/refs/remotes/origin/pr/16/head", {st_mode=S_IFREG|0644,
-st_size=41, ...}) = 0
-open(".git/refs/remotes/origin/pr/16/head", O_RDONLY) = 4
-read(4, "2886c4f3ba8c3b5c2306029f6e39498d"..., 256) = 41
-read(4, "", 215)                        = 0
-close(4)                                = 0
-getdents(3, /* 0 entries */, 32768)     = 0
-close(3)                                = 0
-open(".git/refs/tags/", O_RDONLY|O_NONBLOCK|O_DIRECTORY|O_CLOEXEC) = 3
-fstat(3, {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
-getdents(3, /* 2 entries */, 32768)     = 48
-getdents(3, /* 0 entries */, 32768)     = 0
-close(3)                                = 0
-open(".git/refs/bisect/", O_RDONLY|O_NONBLOCK|O_DIRECTORY|O_CLOEXEC) =
--1 ENOENT (No such file or directory)
-open(".git/packed-refs", O_RDONLY)      = -1 ENOENT (No such file or directory)
-fstat(2, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 3), ...}) = 0
-write(2, "fatal: Reference directory confl"..., 58fatal: Reference
-directory conflict: refs/remotes/origin/
-) = 58
-exit_group(128)                         = ?
-+++ exited with 128 +++
+         * case 4: git checkout <something> <paths>
+         *
+         *   The first argument must not be ambiguous.
+         *   - If it's *only* a reference, treat it like case (1).
+         *   - If it's only a path, treat it like case (2).
+         *   - else: fail.
 
->
-> Is it possible that multiple clients have the same NFS filesystem
-> mounted while Git is running? That would seem like an especially bad
-> idea and I could imagine it leading to problems like this.
->
-> It's surprising that you are seeing this problem in directory `refs`,
-> because (1) that directory is unlikely to have very many entries, and
-> (2) as far as I remember, Git will never delete the directories
-> `refs/heads` and `refs/tags`.
-Seems like sometimes it happens on other directories:
-refs/remotes/origin/ or refs/remotes/origin/pr/1
-Then as I was stracing it again, suddenly it succeeded. Some kind of
-race condition?
-
->
-> Michael
->
+Did we break it recently?
