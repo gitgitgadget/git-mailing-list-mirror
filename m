@@ -2,122 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 196441F859
-	for <e@80x24.org>; Thu, 25 Aug 2016 21:50:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 546011F859
+	for <e@80x24.org>; Thu, 25 Aug 2016 22:16:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754830AbcHYVuQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Aug 2016 17:50:16 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59072 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754447AbcHYVuP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2016 17:50:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DDC123774B;
-        Thu, 25 Aug 2016 17:50:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=r5ydNtWW6HKhy1NxAt+zpZYXHuA=; b=dZJX8C
-        z9WEgsQTijGEbEd9EOuGrx+ZllhLyalIgJWHVVzj/VH8Dnj7NYkDiiDYkHcvvygQ
-        KAvtnIh5giD47M1EY5/pKZEIaFLyBlhhQG4p1mq63HhhxnW7cXPyIBJvEiOLxiL9
-        ue1CUZWd+8twvFQ4dJE6R34A561zdxSpNoEH4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Qu7k2Qtm576bGsFn15TuKXW+CLSEidKM
-        p1Sc8bT77DGm0cvE4FxzXJHxTqSpL5UozT4Uy06JHEj75t7teLxYBvNFwWn+XjKd
-        0B7AJa+f5CQ6prbkz0hDbtP8GJ7r07qIms6VUAmRzQfNTvjgXg+somfnmKjj8WRc
-        UWbbkhQ34FY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D61E23774A;
-        Thu, 25 Aug 2016 17:50:13 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 44E2837748;
-        Thu, 25 Aug 2016 17:50:13 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     larsxschneider@gmail.com
-Cc:     git@vger.kernel.org, peff@peff.net, sbeller@google.com,
-        Johannes.Schindelin@gmx.de, jnareb@gmail.com, mlbright@gmail.com
-Subject: Re: [PATCH v6 05/13] pkt-line: add packet_write_gently()
-References: <20160825110752.31581-1-larsxschneider@gmail.com>
-        <20160825110752.31581-6-larsxschneider@gmail.com>
-Date:   Thu, 25 Aug 2016 14:50:11 -0700
-In-Reply-To: <20160825110752.31581-6-larsxschneider@gmail.com>
-        (larsxschneider@gmail.com's message of "Thu, 25 Aug 2016 13:07:44
-        +0200")
-Message-ID: <xmqq4m68ldrg.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1757331AbcHYWQ3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Aug 2016 18:16:29 -0400
+Received: from mail-yw0-f180.google.com ([209.85.161.180]:35820 "EHLO
+        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757243AbcHYWQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2016 18:16:27 -0400
+Received: by mail-yw0-f180.google.com with SMTP id j12so38344464ywb.2
+        for <git@vger.kernel.org>; Thu, 25 Aug 2016 15:16:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=B7zazbYsZpG7fk0/5IBXgU1ZszWoFu2VkZRX/fkqD1c=;
+        b=sx7d2PfzGBe4JtwC9TEygOuLuym5gLGR/3YujdjrIMehfKzwSjdpuCZN7kNsuUQGiV
+         MOd4P5kfuVAMLTSONUq/sdTvph5cm/UC8kraZE7NU7lpghap6kPiLa7F7waP+bo6dPQt
+         zeXY93+pNi21vpVRY5eK4FajjZeN21qYLg6B0g0FA6zTEUSkfE+DM7efPMAtuag//pvO
+         1tkHzHXXjzPHMbRdFLo1RXEfXyAb3b9uruW+unrtrb+Hmy50tmOsbf5lyMePxFzyXCfA
+         AjszoTxLmvzVZKwk0GI14hXJq0T120Hb4/W3y31xAPYGTNyhiPqxJkN7Mn+uSS78snD8
+         rZ6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=B7zazbYsZpG7fk0/5IBXgU1ZszWoFu2VkZRX/fkqD1c=;
+        b=NFDro95/ZpURbSDHj7L9SKgTDr0sgoKy+hNSLzTFh/Njyhj5cyXrNZEbwbRuksjJ1m
+         LE9wWadcHIX0eqIbdyt+5hIU2mzh3w8tTgch2LQZ3MPg4kCk1ZB8EQCkvXv73J57ACE5
+         IIOoSq07cRpgQOLDE+Wy69DVYSPI5MjNWLuGAgyE7jRQMHL3qjxP0twZicLqKvCxt59g
+         Lin4EtqOgEInV8SZqcwIymLNwLxMuMvj7PfQPIKgW6Z25Eg51p9lk8rmdrDslsvTkRjA
+         5bOJqtps3V0DcWCGxRMIa8AVJ/U3yHRArHbUerDknl/jmWZw7Ur3P7m/irim1FzLMIzb
+         9zbA==
+X-Gm-Message-State: AEkoouvCFFrpS0ceTuH+VYAObjY4xewnI8zZ0Tye9mbzLHxwPmogPz4lDSj3qB5FGBVsq5OFNFTBKo+L7McnAw==
+X-Received: by 10.129.46.136 with SMTP id u130mr9625403ywu.234.1472163386651;
+ Thu, 25 Aug 2016 15:16:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E6E05DFC-6B0D-11E6-93DE-51057B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.37.96.195 with HTTP; Thu, 25 Aug 2016 15:16:06 -0700 (PDT)
+In-Reply-To: <CAGZ79kb3tRU5vLDMWzEC=bx9Givd8pqFsAzTBy0unxXfKpNnUw@mail.gmail.com>
+References: <20160822234344.22797-1-jacob.e.keller@intel.com>
+ <CAGZ79kbKibe2RpQ9QWN1naY07feZLKbhc+dts3BD-4+y-pUOVw@mail.gmail.com>
+ <xmqqlgznwg6o.fsf@gitster.mtv.corp.google.com> <CAGZ79kbsq52Qh0Jtn5hpPPfHu_9r2CUHvAHOTh6Cgz8ODkzreg@mail.gmail.com>
+ <CA+P7+xrQy33gt8bnsagLVPAHhZPZx-3s0E_Aj7tOwXnHjOoCBg@mail.gmail.com> <CAGZ79kb3tRU5vLDMWzEC=bx9Givd8pqFsAzTBy0unxXfKpNnUw@mail.gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 25 Aug 2016 15:16:06 -0700
+Message-ID: <CA+P7+xqDUzuX2c4y3vpPEenBRbQ_mttDhDOviV1=k7H-LQVXmQ@mail.gmail.com>
+Subject: Re: [PATCH v10 0/9] submodule inline diff format
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.e.keller@intel.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-larsxschneider@gmail.com writes:
-
-> From: Lars Schneider <larsxschneider@gmail.com>
+On Thu, Aug 25, 2016 at 1:46 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Thu, Aug 25, 2016 at 1:39 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
+>> On Tue, Aug 23, 2016 at 10:47 AM, Stefan Beller <sbeller@google.com> wrote:
+>>> On Tue, Aug 23, 2016 at 10:25 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>> I am not so sure about that.  If there is an existing place that is
+>>>> buggy, shouldn't we fix that, instead of spreading the same bug
+>>>> (assuming that it is a bug in the first place, which I do not have a
+>>>> strong opinion on, at least not yet)?
+>>>>
+>>>> Can there be .git/modules/<foo>/ repository that is pointed at an
+>>>> in-tree .git file when there is no "name" defined?
+>>>
+>>> If you're holding it wrong we can come into that state.
+>>> * Checkout the submodule,
+>>> * then remove .gitmodules as well as relevant config in .git/config.
+>>> Result: Then we have a only a gitlink recorded as well as connected
+>>> working tree to a gitdir inside a superprojects .git/modules/.
+>>>
+>>
+>> Yea, but I think you're right that we shouldn't support that state.
+>> What I'm worried about is the case where we can get this state doing
+>> something sane/acceptable but I don't think we can.
+>>
+>> So we should support the gitlink to a repository stored at <path>
+>> without stuff inside the .git/modules, and we should support submodule
+>> gitlinks with a proper .gitmodules setup. I don't think we should
+>> die() but we should error properly so I will introduce a _gently()
+>> variant of these functions, and die properly in the regular flow.
 >
-> packet_write_fmt() has two shortcomings. First, it uses format_packet()
-> which lets the caller only send string data via "%s". That means it
-> cannot be used for arbitrary data that may contain NULs. Second, it will
-> always die on error.
+> ok, thanks!
 
-As you introduced _gently in 3/13, the latter is no longer a valid
-excuse to add this function.  Just remove the sentence "Second, ...".
 
-> Add packet_write_gently() which writes arbitrary data and returns `0`
-> for success and `-1` for an error. This function is used by other
-> pkt-line functions in a subsequent patch.
->
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
->  pkt-line.c | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
->
-> diff --git a/pkt-line.c b/pkt-line.c
-> index cad26df..7e8a803 100644
-> --- a/pkt-line.c
-> +++ b/pkt-line.c
-> @@ -3,6 +3,7 @@
->  #include "run-command.h"
->  
->  char packet_buffer[LARGE_PACKET_MAX];
-> +static char packet_write_buffer[LARGE_PACKET_MAX];
->  static const char *packet_trace_prefix = "git";
->  static struct trace_key trace_packet = TRACE_KEY_INIT(PACKET);
->  static struct trace_key trace_pack = TRACE_KEY_INIT(PACKFILE);
-> @@ -155,6 +156,17 @@ int packet_write_fmt_gently(int fd, const char *fmt, ...)
->  	return (write_in_full(fd, buf.buf, buf.len) == buf.len ? 0 : -1);
->  }
->  
-> +int packet_write_gently(const int fd_out, const char *buf, size_t size)
-> +{
-> +	if (size > sizeof(packet_write_buffer) - 4)
-> +		return -1;
-> +	packet_trace(buf, size, 1);
-> +	memmove(packet_write_buffer + 4, buf, size);
-> +	size += 4;
-> +	set_packet_header(packet_write_buffer, size);
+Ok so a die() doesn't really work. If you use submodule_from_path here
+on a newly checked out repository that has sub modules but you haven't
+yet initialized the repository, then the result is that
+submodule_from_path will fail.. Is that expected?
 
-It may not matter all that much, but from code-reader's point of
-view, when you know packet_write_buffer[] will contain things A and
-B in this order, and when you have enough information to compute A
-before stasrting to fill packet_write_buffer[], I would prefer to
-see you actually fill the buffer in that natural order.
+That causes us to die every time on a newly checked out repository.
 
-Do you anticipate future need of non-gently variant of this
-function?  If so, perhaps a helper that takes a boolean "am I
-working for the gently variant?" may help share more code.
+If we go with this behavior, then I have to refactor the whole set of
+path() functions to have a _gently() variant which handles this
+gracefully, and the regular revision code would still end up die()ing
+as well......
 
-> +	return (write_in_full(fd_out, packet_write_buffer, size) == size ? 0 : -1);
-> +}
-> +
->  void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
->  {
->  	va_list args;
+Thanks,
+Jake
