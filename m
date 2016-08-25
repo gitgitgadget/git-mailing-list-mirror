@@ -2,100 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 996F81F859
-	for <e@80x24.org>; Thu, 25 Aug 2016 21:04:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1BFFE2018E
+	for <e@80x24.org>; Thu, 25 Aug 2016 21:19:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757207AbcHYVEB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Aug 2016 17:04:01 -0400
-Received: from mail-it0-f51.google.com ([209.85.214.51]:36414 "EHLO
-        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751972AbcHYVD4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2016 17:03:56 -0400
-Received: by mail-it0-f51.google.com with SMTP id e63so296327422ith.1
-        for <git@vger.kernel.org>; Thu, 25 Aug 2016 14:03:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=PirFC6eLy+elIWwAJzpBla02v/mKlYxEJzK91mg6wQc=;
-        b=NEx+Y/WMCoIEbOYZDGhoRSM1gnM/NFYOw7tBI5gM+vGThKCNC3axAAZpZBckCdNKh8
-         hmiSvBWwM51LoTxSuUsRLPbD7aJD/Ahw6MUilgC35X6IvXx7TNyOjFYLEzkxgWeVzNte
-         R5gjxxgEN1/M0fw6lxqwZ5b2GNJAmY8wngwj5s7CDYSasdCXqZ9Ts5EgzoFA6PNAGCui
-         zBfU4taW4dRi1S7czC+SQgsUXcX2uSJmocUfmMPpNzfzL3zYJv1QvQz3BcTIqmMXztDf
-         PKk7xyu6BW7f1lcx/UQdaEcgSQA/HzOaiAlMjYAF4bp088zaamWLrI9CjdhheP1C58iN
-         14HA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=PirFC6eLy+elIWwAJzpBla02v/mKlYxEJzK91mg6wQc=;
-        b=Acx5Gze1TiwiYpNo5h2h2xwmGUYsfqUYhDlqSWzQnU+IotNe8NUrMhlowuts+YXSoN
-         PtUNCBcp2/926ziAffbF03cIpTa4jFDanIhrUkVjK2gVzr7M4+7wYa80lRb8iKchrDHv
-         u74gORYY9O7Z0Um9XiVrA557fKmK3NLyttvDj3dabAtoL9S9j6Phm5R2KieC3LHrkRJD
-         GsgsjpDpmltTkbU7M+/Qkwf4uJl+GKFJmUxVotVUZ50HX5BTaKXBbt24WJORa1frjtxW
-         Aew3tyMZ+M97td3ZQ5nc2FbhSy9Y/faigoJwElOg6KK2OX8dT6N/LyKj0FA9mqBWh79Q
-         X8XQ==
-X-Gm-Message-State: AE9vXwNfiZUUO5M6m8nr7fI3SoihWIGCBVXcJJYl73Fi6hca4fCxWD3TGjeSEOLL2H3egKW7oyy2iqAVCKIuv0FB
-X-Received: by 10.36.189.76 with SMTP id x73mr7020504ite.97.1472158560019;
- Thu, 25 Aug 2016 13:56:00 -0700 (PDT)
+        id S1754469AbcHYVSo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Aug 2016 17:18:44 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59329 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754406AbcHYVRi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2016 17:17:38 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E507D395DE;
+        Thu, 25 Aug 2016 17:17:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Bpg5yqBmPWNXgvd3sZis2vdJUXI=; b=goTRRx
+        zaBFTDT4685H5LM4n5jOUiOyqRmLdsQDw2n7uOhc1HlRk6RU868M5mfjXUXqzjVQ
+        q5tGqn+Y+KNI+Uh57ep1rs9/nKmox3bG3jqFU3VpaA5M8GZtGZOM2LejRs9N/ROt
+        gXGOuXNqHdzSlYRFpqyCSLfyKLGKmIU5J5COU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=mIFb+gk/Koc5X4dlV+6lEPxecan+UhR2
+        f+g6wqhhaPrkC1u/szxtLQe6UolQt+uE+VnOaFfmxSoCZdpviLrIvohLocIaHer0
+        Yft4SRMfgegPFPvyIVUIGTgeCAufSiESK61FAAieHY7VTD0HoB7PH5p52wjHrwfa
+        +BguH3WH2zI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DE8C4395DD;
+        Thu, 25 Aug 2016 17:17:36 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5FAB2395D9;
+        Thu, 25 Aug 2016 17:17:36 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 03/15] sequencer: lib'ify do_pick_commit()
+References: <cover.1471968378.git.johannes.schindelin@gmx.de>
+        <92fdb70f3db157f8a3d2442d872e989d81c6756e.1471968378.git.johannes.schindelin@gmx.de>
+Date:   Thu, 25 Aug 2016 14:17:34 -0700
+In-Reply-To: <92fdb70f3db157f8a3d2442d872e989d81c6756e.1471968378.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Tue, 23 Aug 2016 18:06:46 +0200
+        (CEST)")
+Message-ID: <xmqqh9a8lf9t.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Thu, 25 Aug 2016 13:55:59 -0700 (PDT)
-In-Reply-To: <xmqqlgzklgiy.fsf@gitster.mtv.corp.google.com>
-References: <7B5AD16B-9729-453E-839C-2A2FDB07F8E9@student.ethz.ch>
- <CAGZ79kbHfofmowHnwzFrumc1XJHE=ZMQEwNSeOSyF7YDG+aSjw@mail.gmail.com> <xmqqlgzklgiy.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 25 Aug 2016 13:55:59 -0700
-Message-ID: <CAGZ79ka60e2Y87k6oKtTN9e0ZexHx2GfJ7yfhvyQon_VgbUgNA@mail.gmail.com>
-Subject: Re: Feature Request: Branch-Aware Submodules
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Hedges Alexander <ahedges@student.ethz.ch>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5870C182-6B09-11E6-9D3F-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 25, 2016 at 1:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> +cc Jacob and Lars who work with submodules as well.
->>
->> On Thu, Aug 25, 2016 at 2:00 AM, Hedges  Alexander
->> <ahedges@student.ethz.ch> wrote:
->>>
->>> Right now updating a submodule in a topic branch and merging it into master
->>> will not change the submodule index in master leading to at least two commit
->>> for the same change (one in any active branch). This happened to me quite a few
->>> times. To a newcomer this behavior is confusing and it leads to unnecessary
->>> commits.
->>
->> So you roughly do
->>
->>     git checkout -b new-topic
->>     # change the submodule to point at the latest upstream version:
->>     git submodule update --remote <submodule-path>
->>     git commit -a -m "update submodule"
->>     git checkout master
->>     git merge new-topic
->>     # here seems to be your point of critic?
->>     # now the submodule pointer would still point to the latest
->> upstream version?
->
-> Isn't <submodule-path> subject to the usual 3-way merge when the
-> last step (i.e. a merge of new-topic branch into master in the
-> superproject) is made?  If 'master' hasn't changed <submodule-path>
-> since 'new-topic' forked from it, because 'new-topic' updated the
-> commit bound at <submodule-path>, doesn't "git merge new-topic" just
-> take that change as the normal "One side updated, the other did not
-> touch; take the update" merge?
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-Yes. I was unclear here.
-By "latest upstream version" I meant the version you pulled in in the new-topic
-branch via the "submodule update --remote" and that is preserved as is.
+> To be truly useful, the sequencer should never die() but always return
+> an error.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+
+Instead of dying there, you let the caller high up in the callchain
+to notice the error and handle it (by dying).  The eventual caller
+of do_pick_commit() is sequencer_pick_revisions(), which already
+relays an reported error from its helper functions (including this
+one), and both of its two callers know how to react to a negative
+return correctly.  So this makes do_pick_commit() callable from new
+callers that want it not to die, without changing the external
+behaviour of anything existing.
+
+Good.
+
+>  sequencer.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/sequencer.c b/sequencer.c
+> index 0c8c955..6ac2187 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -464,7 +464,7 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+>  		 * to work on.
+>  		 */
+>  		if (write_cache_as_tree(head, 0, NULL))
+> -			die (_("Your index file is unmerged."));
+> +			return error (_("Your index file is unmerged."));
+
+While you are touching the line, it is a good idea to correct an
+obvious style error like this one.  "Do one thing and one thing well
+in a commit" is a good discipline, but it is absurd to take it to
+the extreme.
+
+>  	} else {
+>  		unborn = get_sha1("HEAD", head);
+>  		if (unborn)
