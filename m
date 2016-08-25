@@ -4,53 +4,57 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=unavailable
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 651AE1F859
-	for <e@80x24.org>; Thu, 25 Aug 2016 13:39:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2CBA1F859
+	for <e@80x24.org>; Thu, 25 Aug 2016 13:58:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933454AbcHYNjr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Aug 2016 09:39:47 -0400
-Received: from mout.gmx.net ([212.227.17.20]:59702 "EHLO mout.gmx.net"
+        id S934270AbcHYN56 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Aug 2016 09:57:58 -0400
+Received: from mout.gmx.net ([212.227.17.21]:60383 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751774AbcHYNjq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2016 09:39:46 -0400
+        id S934212AbcHYN55 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2016 09:57:57 -0400
 Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0Las1k-1asYDg0KHw-00kOwB; Thu, 25 Aug 2016 15:21:36
+ ESMTPSA (Nemesis) id 0MM0bQ-1bVCtN0WJ2-007i7f; Thu, 25 Aug 2016 15:51:09
  +0200
-Date:   Thu, 25 Aug 2016 15:21:35 +0200 (CEST)
+Date:   Thu, 25 Aug 2016 15:50:53 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-cc:     Eric Wong <e@80x24.org>, Stefan Beller <sbeller@google.com>,
-        meta@public-inbox.org, git@vger.kernel.org
-Subject: Re: Working with public-inbox.org [Was: [PATCH] rev-parse: respect
- core.hooksPath in --git-path]
-In-Reply-To: <02c1c636-b0b4-8730-68a6-18f017ed3410@gmail.com>
-Message-ID: <alpine.DEB.2.20.1608251508280.4924@virtualbox>
-References: <CAGZ79kasebzJb=b2n=JQiVMrSfJKaVfZaaoaVJFkXWuqKjfYKw@mail.gmail.com> <alpine.DEB.2.20.1608181430280.4924@virtualbox> <20160818204902.GA1670@starla> <alpine.DEB.2.20.1608191720040.4924@virtualbox> <20160819223547.GB16646@dcvr>
- <alpine.DEB.2.20.1608221509010.4924@virtualbox> <02c1c636-b0b4-8730-68a6-18f017ed3410@gmail.com>
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Michael J Gruber <git@drmicha.warpmail.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        git-for-windows <git-for-windows@googlegroups.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: core.autocrlf, was Re: [git-for-windows] Re: [ANNOUNCE] Git for
+ Windows 2.9.3
+In-Reply-To: <8b3f92e5-0cac-ebb1-0f03-460ba3ad4d32@web.de>
+Message-ID: <alpine.DEB.2.20.1608251547510.4924@virtualbox>
+References: <alpine.DEB.2.20.1608131214070.4924@virtualbox> <xmqqshu8u0px.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608171507530.4924@virtualbox> <xmqqeg5nbehc.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608181022250.4924@virtualbox>
+ <CACsJy8A3tkMY-iLPCDj9sqB4HpAK_cxsUu5Z7fsGcCQEORyxUg@mail.gmail.com> <alpine.DEB.2.20.1608231553030.4924@virtualbox> <2a6d2230-90ce-0f54-c7ae-a5aa595a2f73@drmicha.warpmail.net> <alpine.DEB.2.20.1608231736180.4924@virtualbox> <alpine.DEB.2.20.1608231758260.4924@virtualbox>
+ <xmqqbn0iu50a.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608241743460.4924@virtualbox> <xmqq37luru7z.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608251343300.4924@virtualbox> <8b3f92e5-0cac-ebb1-0f03-460ba3ad4d32@web.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-184351075-1472131296=:4924"
-X-Provags-ID: V03:K0:ijoMtVCTlNlzRlJuLwBXGJpCUsVxrOiCma9S37O1Yx/4YHSsU56
- 0SP3XPzeKJKME0qiVInakWq2X468lcoDP9tX5rSKsPTima9FNueRBWJoXSo0flGxspzFMXR
- X0AURLvOwvnz8Kw2d+SdIOYJk7cH3AfJkAVYJQ8xMPSr+4KXTeoHV5r2Xj0aHHj2kTrokIA
- it6Zc1Oiumkh2+DlFLHsw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:AMw3IoQWgyc=:HBAzhwhGxYXnxEmM05zq2y
- ylbswjUuYAynhM19zDhLwu1NF+np9RPp43fr/ZuZjily+PdF+DaVSNV8vXVb4gmeJFNjHucGt
- WnDlOd/bcyrZxPchiYXIK0QiAcaOITn103FupQctZGt41liSKuKRL1QMHoepHpspjstty2t9l
- LJkRQP81L7u0MO+M1rkvUeoCaEK1YJJXDQgSB3wCS3YVFGXxpNpmzQbP+OGO0Fv5PUHMIy6eu
- dFyY2wvTL07azqyG9fpSeEJwnGJvUnwm599RpzYzgltXDsD5SLyelPKkixbCjF6pAC+tSJfVa
- Ao6fo51uL0jjmjYbd/ubZ+q9HiCG9r+tqwW9cIpapj7uMifpZAgCep+3WebScnWdzGfdWsSVe
- erFjpRE8YV7KEVr33DQsAAZWbIGbvjOb26heQg71PLzEB4pB3xZLai97WTAGbpC2d03WUayw4
- p3GcmkZSvDd7zXb/E1q4e0+iaIwqbyYr2/PIrM07zk9YdaN2ykFBCa/mS0zSGPaVCwAUHAyQL
- V4foB2E6jXfcjmC5fDydvtsthzjBRA85lsi2RRdgSdRwN1OuK4mPDV0XhmZkWosoCng+vPgVb
- i/kz6VayekH9JGBLjhC0fsj/PtLG3YT/3CqpyBiF5B73DlXW0Olh3dj31DueXIzm7wgjSEpmH
- evjaFH/K1WWHdGZX5K8oQks1DIG6bmOEyzSakkBa1FlGIdcFlQpxFiCC8c6LWcljg5E1zgrau
- NQwhe15hMODTlJapk5iJ5K/4fR+H1dUwrST99cLGLL1h518deIxMUS4rX4w9le5BGE7xGiEl0
- QVjZVGU
+Content-Type: multipart/mixed; BOUNDARY="8323329-237641899-1472133069=:4924"
+X-Provags-ID: V03:K0:Vo79MxE9EMH740bZRr5AIcaPfjKFhhOXqcpTO5V+xtnD5w0mt/g
+ +pCiMmBJqMswTDA7zU8bHOrTkhmz+TX4a0IG2L6I9uPv7YNH31HMdTWMMWYCO0bmi0v0MKn
+ d6UEcKL2bODJVWRJkBT6JKh/qEpXZpDHE07JSHCRbvN8j0RccBEpPAVSnf9R/+Ins7Wb/G2
+ dF7k8DlKByOo62gtZJ7fw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LY8d09E3xo0=:2fRvQKjIwXxsp0T3gnU78H
+ TYDE/NHqs7OFDYf7PuHkqv7rWUhkK+bZRsMf/kZVQYgJPoUVIu2DS4j2AzV4EMLEjiwvak8Us
+ gOSe51hMTk/xfsxlB4+/67HoCHlerJdS3FUV2NfmaiYQv/jZmKNxFE+tuewrjmoAjeemZJHlq
+ blXTcOfVsSV0j2rRsLc+nF3/jOBNueDLAUZXq8pBFcPYwMmql3mMfZCmPsYUMqoZCM14Sjnrm
+ sjDbF7yn3eEU1djs4e3/6rO1GLk0XXk/vTm8aNCR3gsBAulNoa1wPyDc8oVw2onEe7k4nxJpb
+ cI2NBidn0hFTUKMajjrOBhYjv2Ik5QRv5Ciq1zTiSvUI7TlWWQaiLKbPIr7+9PywB6DMHkjDC
+ iZx4yESvylXmdqNXERfvrETSHCfOfg/vFS9lHhkAMuSn0nVpZXoQwKjTVH/lOpdzIVVDVHTQV
+ XJOvKjjLhz6gVTSk0x2TFnkA+iD1wshvksI3hRho4xME+9g120NxVxD+R8qEz7RJ+HmUaIiXt
+ g665BM0+S7a/ngFYQWvgw9qm9Mqve/u0Pe0m6Ek3vem0J9oq5hS9M4EahKQEfTGKgM4G9TW1y
+ ItKmNDjFM5nWKDfNQVoc0kudEvHXgZ2otJFO+vb/eG06o5axkBewJPqwwVhvKqO0yKKNtdMG8
+ NNxuE5xu5VSicMhaED6Q1eiamt1DwCTqu8HUtEs1/NUcg6qu8dMmWL50iZKIaHpsHOZ6YlrN/
+ qaJUq4W/KrJPIrto8EQmOJlzN4yChaaE1mUUmlbaYjjpc2B7yalIanmA6bMJoUJMp3dqAuoEa
+ ZFDUuyM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -59,94 +63,38 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323329-184351075-1472131296=:4924
+--8323329-237641899-1472133069=:4924
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Hi Kuba,
+Hi Torsten,
 
-On Mon, 22 Aug 2016, Jakub Nar=C4=99bski wrote:
+On Thu, 25 Aug 2016, Torsten B=C3=B6gershausen wrote:
 
-> W dniu 22.08.2016 o 15:18, Johannes Schindelin pisze:
+> > I was not talking about the cost of correcting mistakes. Running --filt=
+ers
+> > is potentially very costly. Just so you understand what I am talking
+> > about: I have a report that says that checking out a sizeable worktree
+> > with core.autocrlf=3Dtrue is 58% slower than with core.autocrlf=3Dfalse=
+=2E That
+> > is horrible. []
 >=20
-> > So unfortunately this thread has devolved. Which is sad. Because all I
-> > wanted is to have a change in Git's submission process that would not
-> > exclude *so many* developers. That is really all I care about. Not abou=
-t
-> > tools. Not about open vs proprietary, or standards.
-> >=20
-> > I just want developers who are already familiar with Git, and come up w=
-ith
-> > an improvement to Git itself, to be able to contribute it without havin=
-g
-> > to pull out their hair in despair.
->=20
-> What is lacking in using submitGit tool for those that have problems
-> with sending patches via email?
+> Is this a public repo ?
 
-Where do I start? And where do I stop? Here is a *very* brief list of
-issues from the top of my head (and the history of my web browser):
+No.
 
-- You cannot open a PR on GitHub and include the PR's cover letter as
-  cover letter: https://github.com/rtyley/submitgit/issues/9
+> Or is there a benchmark repo somewhere ?
 
-- You cannot Cc: people explicitly:
-  https://github.com/rtyley/submitgit/issues/31
+Unfortunately not. The only information I have is that it contains
+gazillions of files and that most of that time was spent in figuring out
+whether the files contain CR/LF, LF, or both.
 
-- submitGit does not include any interdiff
+I hope to get back to some performance benchmarking soon. I have some
+experimental code to generate Git repositories of a specific size, and I
+hope to be able to replicate the issues with that infrastructure.
 
-- it is really hard to get back from mails to the corresponding commits
-
-- you have to register with yet another service to send mails on your
-  behalf. Would be nicer if the mails could be sent from a submitGit
-  address (moderated, of course) and did not need a separate registration
-  step with some scary permission granting.
-
-- submitGit requires you to go to a separate website to interact with the
-  submitGit web app. Would be so much nicer if it were a bot operating on
-  PRs.
-
-- comments sent as replies have no connection to the PR *nor* the commits
-  they refer to (making submitGit basically a pimped up git-send-email,
-  nothing more).
-
-- submitGit would require a substantial effort from me to learn how to
-  extend/fix it, to run the web app locally and run its tests. That is a
-  rather steep hurdle.
-
-This is an incomplete list, of course.
-
-> Submitting changes in Git comes in three phases:
->  - submit email with patches
->  - review and discuss patch
->  - apply patches from email
-
-You forgot a really crucial step. Maybe you did not go through dozens of
-iterations in your patch series as I regularly do, or something, so it is
-probably easy for you to forget:
-
-  - find the commit in question, run rebase -i and patch it as suggested
-
-This is something that costs me quite some time to do. It is easily the
-most annoying aspect of the mail list-based approach for me.
-
-> Pull request via GitHub / Bitbucket / GitLab is easier than sending
-> patches via email (pity that GitHub et al. do not have such submitGit-lik=
-e
-> automation built-in).  But I think email, with threaded view, careful
-> trimming of quoted contents, multi-level quotes is superior to exiting
-> web-based solutions.
-
-They are not exiting, but I know what you meant.
-
-The thing is: GitHub does not need such an automation. Because most
-projects are pretty happy with the process centered around the web app.
-
-It is only projects such as Linux, Cygwin and Git itself who refuse to
-allow for tools that would let the majority of potential contributors
-stick with their favorite way to read and write mails (I am talking about
-users of GMail and Outlook, of course).
+Should be fun.
 
 Ciao,
 Dscho
---8323329-184351075-1472131296=:4924--
+--8323329-237641899-1472133069=:4924--
