@@ -2,117 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD1AB1F859
-	for <e@80x24.org>; Thu, 25 Aug 2016 15:12:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DED41F859
+	for <e@80x24.org>; Thu, 25 Aug 2016 15:17:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759525AbcHYPLq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Aug 2016 11:11:46 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35969 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1759483AbcHYPLn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2016 11:11:43 -0400
-Received: by mail-wm0-f67.google.com with SMTP id i138so7819377wmf.3
-        for <git@vger.kernel.org>; Thu, 25 Aug 2016 08:11:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=bsbW1nvk5gldMiWjNbP84eST+mUI7WhErHv3gIo7uaA=;
-        b=kCgxD5UvLrQbd3OskjT0rMyN25FArh3ffm8WzWfzESbJr6k0fCdrHGT2CW3cwaDiXB
-         7d+nQX6c3AhhENfpI66pZPaITFCCmVvD746Zk/wES7y36u6qz5EdUkb+jOo+6nPh/SI0
-         BzV3Ur4puuRoQPukmIAy4XFLoaiSxVA17+J4aO7DGPFJYLY+Y7LEPKLUB+2tbCX2tmTl
-         SJn6IjoXsGa+OYzFSzARJY3I8YcpQacYCGJ6u3gMlTMSXCbosUqaEG43/Pgvb2YTBwB4
-         dzRvDXTbvpMI4pfHpb6KRGv1jC+LHUKOZd3r0VkMb5PPUYE8tgGTxZ1QBYyAvNuhNSKk
-         G3DA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=bsbW1nvk5gldMiWjNbP84eST+mUI7WhErHv3gIo7uaA=;
-        b=IoetIYE+L/kDn/NpV6EOHE4hlXHjEjuP6JcDrl9k0ApH0lZ8KG+1iJFHHFT1raT/Am
-         XQ4satIl+Q2xAtrKY3bl6SdHUfKc5fPwMHc5dRYZHs5/U0aj31ZrMXiMxUVnQ7/jIstc
-         mHq5A0t6Ad43YNhF86yhvcYCc74tKloZmziO/MRBXrL9JvtJg8jc/0Kn3nwvEF48qntj
-         WQLpRBBP/+0jD1/X7OvpJohoUdBW3+OvxQ9lVoRlL0uJbivpm5L9h0Pb/xA4IhzIMOh3
-         B/Goueke3ZcuUFw8OqMw5Xu8K34vaHdPHKP9exicv0iq1Hqfl/W17Id7GzxM4dfHexAC
-         GwMw==
-X-Gm-Message-State: AEkoouuwGUeMGOuioUg+x0wMNoQlaQm7YDT6iqXzH8uL2M48K0lsQMdc6X/1kSkV05VD/g==
-X-Received: by 10.28.183.135 with SMTP id h129mr32175636wmf.2.1472136789817;
-        Thu, 25 Aug 2016 07:53:09 -0700 (PDT)
-Received: from [192.168.1.26] (afj243.neoplus.adsl.tpnet.pl. [83.25.139.243])
-        by smtp.googlemail.com with ESMTPSA id lv9sm15531594wjb.22.2016.08.25.07.53.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Aug 2016 07:53:08 -0700 (PDT)
-Subject: Re: [RFC] Proposed questions for "Git User's Survey 2016"
-To:     Andrew Ardill <andrew.ardill@gmail.com>
-References: <91a2ffbe-a73b-fbb9-96da-9aea4d439e5a@gmail.com>
- <CAH5451n0=kmr9SeOKSH5iiJr5Lnr2TapfZrTUR6Pm90xUEKFxQ@mail.gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Doug Rathbone <doug@dougrathbone.com>,
-        David Bainbridge <david.bainbridge@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <90165dce-c508-4cb4-ec6e-c3d271181fe3@gmail.com>
-Date:   Thu, 25 Aug 2016 16:53:04 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S1759353AbcHYPPB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Aug 2016 11:15:01 -0400
+Received: from mout.gmx.net ([212.227.17.20]:51281 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1758952AbcHYPNw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2016 11:13:52 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0Ll0tl-1b2VQy3BMT-00ap5c; Thu, 25 Aug 2016 17:07:13
+ +0200
+Date:   Thu, 25 Aug 2016 17:06:59 +0200 (CEST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 4/6] require_clean_work_tree: ensure that the index was
+ read
+In-Reply-To: <cover.1472137582.git.johannes.schindelin@gmx.de>
+Message-ID: <4122fc996a0076c2426d5e1325f2ce2810ef4f9b.1472137582.git.johannes.schindelin@gmx.de>
+References: <cover.1472137582.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <CAH5451n0=kmr9SeOKSH5iiJr5Lnr2TapfZrTUR6Pm90xUEKFxQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:EJS7ov3WfARMFM7xVAdb6B4DZLqIEjluXMoT6PhZtRosfz19PZC
+ dQ2l2ZjauVKmF+MDT2eKb7XZ1zH9h/Jaf3zN3FpbT1aI4sQNSbFNmC72vHvPCHpiWsXHrhj
+ N8Tpkju9AI19NFpX+dg8LxX7QYeZrl4nn1H6MWEEepfUyao3M5wESp0LBUvOxW/HoqvZjBh
+ p78eXsuP6QzPMFsWah1bw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:RyC2+1c11cc=:51AnD3vpBKHYDZOEnDwUpE
+ /flvkOfA2tOpLNzWgCMwVDxAcvhW0VelEHmMGwKWKeCGG5gY5ofN0nKXAz3NP446fWAxx/6c3
+ CZ1endl7PRDBg0MCiRgLdcuONE+UsrOFV7FtzQDrKcWaf9lJfquNOieq53vl6acCJ2t+OH1qb
+ 63sCeMly9BEaD4qtHWv1TUf2UpNradoh9QAKWvuiWWMLlFSoc/pIC5dLpEKBIdBx0cqXqVwQj
+ eIdvY7jM7aCFBsaRSP1B5anoB39wmxH1f9O3yPDJ2nlWvNjiuE90hx8PtSaGWheI21hVBDmYI
+ OgNzy4fNoJ61PapoSPXz69okUW5PhAxxJwMQzo1EhKXvRKdtAktIWnq8dO5ePaZZCX/aN04hO
+ 69+HmjCUljShBY3tFIxTuWcgySwieRrkTPEvvbBNHC0XtAK87MOQ+uPLy4yKSeqm7Ht72s8lo
+ hfSyhiKsj83B0ApE4Boj3420QVYUPl+jKN8gf55P2AiLeGSkkD3DWYdTbHftTL+whRDHLplsS
+ ldopywSOhqRRH4Mj/VpVqh2gqx3ZPNUK+tWDj4u3QqLjEvVTnIbi/Gj59CWsSnKH5+9PowhwL
+ RRydj7CHHduxXGp9ODsteJvfA+vML3lVrVDUOfLsX6zSX/mnyISTIGzi6yBuuUHeJSU9/dxE1
+ pIulxNONFDDoq2jY72KIdaQapHjSKLNVvgEoi11SDUsaPb4K5IT3pi+qWj0rhdM5AEpv684Iu
+ gjWzLhNyGVhOda4PlOzfZqZhKRQ4GcfnO0ITULiUaGuryZi5eBNb9RvjUum9g9IoWp5VZLXne
+ dFFRy7c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 22.08.2016 o 01:59, Andrew Ardill pisze:
-> On 21 August 2016 at 04:56, Jakub Narębski <jnareb@gmail.com> wrote:
->> 25. What [channel(s)] do you use to request/get help about Git [(if any)]
-> 
-> It may also be useful to ask how people hear news about git, such as
-> when a new release comes out. Not sure if worth a separate question,
-> as there is a lot of crossover in the resources available for this and
-> for requesting help, but knowing this information would help us
-> understand what kinds of users are responding and which communication
-> channels are effective for git news.
+The function would otherwise pretend to work fine, but totally ignore
+the working directory.
 
-How would you propose such question would look like, and what proposed
-answers would be (if it were not a free-text / essay question)?
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ wt-status.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-Note that there might be a problem of severe bias: people who heard
-about Git User's Survey 2016 are probably ones that watch news about Git.
-Still, it would be useful to know if people read RelNotes...
+diff --git a/wt-status.c b/wt-status.c
+index 792dda9..33dd76f 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1804,6 +1804,13 @@ int require_clean_work_tree(const char *action, const char *hint, int gently)
+ 	struct lock_file *lock_file = xcalloc(1, sizeof(*lock_file));
+ 	int err = 0;
  
-> Related, it might be worth asking how often people upgrade their git
-> clients and servers, particularly in corporate/managed environments.
-> This question would ask two things, how long after a new release comes
-> out do you install it, and do you install every update that comes out
-> or do you skip versions. I suspect many would just use whatever is
-> released in their distro and update at the same time as they update
-> other packages, but it would be interesting to know if people, for
-> example, only upgrade their managed environments every year/6 months
-> or something to avoid introducing changes to their users.
-
-That is, if people have a pattern to their upgrade of Git, and can
-tell how often they upgrade.
-
-XX. How often you upgrade Git?
-    (multiple choice or single choice?)
-
- * as soon as new version is released
- * when there is new binary package / distribution package
- * when updating distribution / system
- * around every month, or more often
- * around every 6 months or more often
- * I use what is installed on system
-
-Something like that?
-
-Regards,
++	if (read_cache() < 0) {
++		error(_("Could not read index"));
++		if (gently)
++			return -1;
++		exit(1);
++	}
++
+ 	hold_locked_index(lock_file, 0);
+ 	refresh_cache(REFRESH_QUIET);
+ 	update_index_if_able(&the_index, lock_file);
 -- 
-Jakub Narębski
+2.10.0.rc1.99.gcd66998
+
 
