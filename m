@@ -2,84 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 337AA2018E
-	for <e@80x24.org>; Thu, 25 Aug 2016 12:44:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C0F42018E
+	for <e@80x24.org>; Thu, 25 Aug 2016 12:47:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757697AbcHYMoP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Aug 2016 08:44:15 -0400
-Received: from mout.web.de ([212.227.17.12]:49330 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751664AbcHYMoO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2016 08:44:14 -0400
-Received: from [192.168.209.54] ([195.252.60.88]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0M2MYq-1bJzZi3OZ2-00s46O; Thu, 25 Aug 2016 14:43:34
- +0200
-Subject: Re: core.autocrlf, was Re: [git-for-windows] Re: [ANNOUNCE] Git for
- Windows 2.9.3
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-References: <alpine.DEB.2.20.1608131214070.4924@virtualbox>
- <xmqqshu8u0px.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1608171507530.4924@virtualbox>
- <xmqqeg5nbehc.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1608181022250.4924@virtualbox>
- <CACsJy8A3tkMY-iLPCDj9sqB4HpAK_cxsUu5Z7fsGcCQEORyxUg@mail.gmail.com>
- <alpine.DEB.2.20.1608231553030.4924@virtualbox>
- <2a6d2230-90ce-0f54-c7ae-a5aa595a2f73@drmicha.warpmail.net>
- <alpine.DEB.2.20.1608231736180.4924@virtualbox>
- <alpine.DEB.2.20.1608231758260.4924@virtualbox>
- <xmqqbn0iu50a.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1608241743460.4924@virtualbox>
- <xmqq37luru7z.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1608251343300.4924@virtualbox>
-Cc:     Michael J Gruber <git@drmicha.warpmail.net>,
-        Duy Nguyen <pclouds@gmail.com>,
-        git-for-windows <git-for-windows@googlegroups.com>,
-        Git Mailing List <git@vger.kernel.org>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <8b3f92e5-0cac-ebb1-0f03-460ba3ad4d32@web.de>
-Date:   Thu, 25 Aug 2016 14:43:27 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
- Gecko/20100101 Thunderbird/45.2.0
-MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1608251343300.4924@virtualbox>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:xG2IxM6pbfbb7au67EVvehQe9ux/y4tZ6nR3n/C1BhL5pt3dlpJ
- ktZ1lk2Sbw500ZaP2HowN/r+1bEhLz16vEEVek6yV07gw98yL4WY4umAByASqBTTo7Z3efp
- sz7bHwP42bfPkRgs0EO3D4OCECyCTqKTIiUBEnVHXWckA4/m8XVmEtO3/52vqcZLCVOin/o
- T3bh4d+wVRnOG5/uOCpLQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3mLm4LiPCT8=:Lqdl/8TfnJKMe1m7zJD/cH
- tpZhaNX/9Tome9yE3ooCRFZ+exHPDZs2rG9xlaJKNJBs1HCsY+NSwqUCOjci7SHa8P+ss5+5Z
- lL4ABsT7cvzS5zEIULslkK7H/DaScPlNzTpuOtvYocjVe8L+2jxeiHFK++Uc7HwWYeIseDRo0
- faNghf4Uj5fU7NbP2TNuNTkaiwzj8QoLq+0zs0VYiFx4SR+wfy9Ma7bBcYgw32qDQm3KhXs8h
- yrW73hgFguygJbSgs3hQiyl3ZTh77nPmBkxMIYBmZuy2PtynO6XQ1laYH/DPt5zhn5reTZ0UM
- Z5P9Ecadyk15XyH262E6FlGQ0/SM0Lzjyh/6qjc+APijniZEjrfgabP1w+Iqp/EmbxxhKViRM
- dVSXKy2OCD44pTjqWqswLZOFbUT8GzLrMyVUcZJnA4MIhC9EF2fpO0URTHtxV6VPOkYsqRSYV
- nmfCp0/Z4H5Mfr3jHEQDxE59+IIFGUhtDRKystbKXlhuIkweMAqkN1ah+B2hqUie5trkFxvia
- JhjV/Q1s+YoKgEXO1fNyTkPftilLHo/K/ErJoT+9cIpCgJ99XfuhFdD0fDpIYXUvOiCVda3gc
- FPbhAPZdKgXlU7U9F86SPWIggaaeu5G9JOzOCjp/mhyqbWhk/nHrvNd3P0QbjQ42hRs4p7puj
- w01DTQCNrH7Zwj61ZFwVw19yt3XRvDSv4CVssb0mGisIEavjNQrpyOhFO8n4q9reUGgVxKEx+
- V09vGlBzwLoUfYdjjzNqzSvAe3woGcnDdCiJrlnB+siMr3vCiIPFWMl+owrWu8F3q7RWHETjv
- FPu3lYI
+        id S1753343AbcHYMrW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Aug 2016 08:47:22 -0400
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:36737 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752567AbcHYMrV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2016 08:47:21 -0400
+Received: by mail-wm0-f44.google.com with SMTP id q128so237694154wma.1
+        for <git@vger.kernel.org>; Thu, 25 Aug 2016 05:47:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=jfqw123V2ectRYsITEAMBV0ojTDwJ34Wvo3OsgWWtjY=;
+        b=GfsEktiYpzaqUtVxI7CBkDY2wY3c4nl2Qm1Iyx2B06E9M4eipsAFgb79o9nob6Drem
+         5qou//bt2yQeVTwBB0FfKDpRNjg8KN4XV+FFeb9HkpvgUb/frPo4qZ7GSJ6OgirNuA9r
+         p9n1SeSq6cBC2Uo5y0/TEyMC+lSxToGWa4c5Cm4BHFWbixIUGD04a7/ugbQw9uENrEqP
+         Oeva2g82HFcAoPFn+TyUyU5pCVlvItVx/9NPVovDYkLrC3uRC73CdTsTUbFhXcsBnwc8
+         I9z0OurZBikBfvVe0ZlN6o2eRq9CSVwSORHb/oQOkS1tHQT98aXiZ7KHUPqm8O+YrtCw
+         CojA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=jfqw123V2ectRYsITEAMBV0ojTDwJ34Wvo3OsgWWtjY=;
+        b=bRJ4qUbl9mFuNsOrJ1sWU5VQ7CScW4R3mLoSLjxzgq8gyil/8LTtiOCwY5CMMnhU3P
+         LKOYcKb3JAsLxCMJmQl7G2MOA6SCUuoibZlm0lV+TWDsN6oJSvO5hv8i9X0HnE/zaZ5r
+         JRh1rjOE9SLNkMWVvkoppC91tl2QsFoVBb9f6N9TzyCBK9kJP+TlbyA81EK6SzmV9mkd
+         umcrbEQOAaA5tTYm/zLzSlxCT4XDyofITUiVQqQo0G4vPGzzhsf3PLi5z/Q8zQtfbSh6
+         TRqQDefQuRqZp36TKz+QoKJkswdeMXCjaRdNIF9WSsWNUl24EVDyqX0AP7aFkvWU5FBn
+         QpLg==
+X-Gm-Message-State: AEkoouvaMyZhNsn3KYxHDzslVbBIUsB5EjJvb72P326XtpCw49v8GSAPPU2zhEbN0KakNw==
+X-Received: by 10.194.62.70 with SMTP id w6mr6902154wjr.130.1472123282160;
+        Thu, 25 Aug 2016 04:08:02 -0700 (PDT)
+Received: from bcnf9f9l32.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id p71sm38304839wmf.9.2016.08.25.04.08.00
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Thu, 25 Aug 2016 04:08:01 -0700 (PDT)
+From:   larsxschneider@gmail.com
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, gitster@pobox.com, sbeller@google.com,
+        Johannes.Schindelin@gmx.de, jnareb@gmail.com, mlbright@gmail.com,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: [PATCH v6 04/13] pkt-line: add packet_flush_gently()
+Date:   Thu, 25 Aug 2016 13:07:43 +0200
+Message-Id: <20160825110752.31581-5-larsxschneider@gmail.com>
+X-Mailer: git-send-email 2.9.2
+In-Reply-To: <20160825110752.31581-1-larsxschneider@gmail.com>
+References: <20160825110752.31581-1-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Lars Schneider <larsxschneider@gmail.com>
 
-> I was not talking about the cost of correcting mistakes. Running --filters
-> is potentially very costly. Just so you understand what I am talking
-> about: I have a report that says that checking out a sizeable worktree
-> with core.autocrlf=true is 58% slower than with core.autocrlf=false. That
-> is horrible. []
+packet_flush() would die in case of a write error even though for some
+callers an error would be acceptable. Add packet_flush_gently() which
+writes a pkt-line flush packet and returns `0` for success and `-1` for
+failure.
 
-Is this a public repo ?
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
+ pkt-line.c | 6 ++++++
+ pkt-line.h | 1 +
+ 2 files changed, 7 insertions(+)
 
-Or is there a benchmark repo somewhere ?
+diff --git a/pkt-line.c b/pkt-line.c
+index 3e8b2fb..cad26df 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -91,6 +91,12 @@ void packet_flush(int fd)
+ 	write_or_die(fd, "0000", 4);
+ }
+ 
++int packet_flush_gently(int fd)
++{
++	packet_trace("0000", 4, 1);
++	return (write_in_full(fd, "0000", 4) == 4 ? 0 : -1);
++}
++
+ void packet_buf_flush(struct strbuf *buf)
+ {
+ 	packet_trace("0000", 4, 1);
+diff --git a/pkt-line.h b/pkt-line.h
+index 3caea77..3fa0899 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -23,6 +23,7 @@ void packet_flush(int fd);
+ void packet_write_fmt(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ void packet_buf_flush(struct strbuf *buf);
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
++int packet_flush_gently(int fd);
+ int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ 
+ /*
+-- 
+2.9.2
 
