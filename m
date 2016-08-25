@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0601E2042F
-	for <e@80x24.org>; Thu, 25 Aug 2016 11:27:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E804B2018E
+	for <e@80x24.org>; Thu, 25 Aug 2016 11:27:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758157AbcHYL1C (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Aug 2016 07:27:02 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:33747 "EHLO
+        id S1757569AbcHYL0x (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Aug 2016 07:26:53 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34084 "EHLO
         mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758114AbcHYL1A (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2016 07:27:00 -0400
-Received: by mail-wm0-f67.google.com with SMTP id o80so6980647wme.0
-        for <git@vger.kernel.org>; Thu, 25 Aug 2016 04:26:59 -0700 (PDT)
+        with ESMTP id S1755553AbcHYL0v (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2016 07:26:51 -0400
+Received: by mail-wm0-f67.google.com with SMTP id q128so6965162wma.1
+        for <git@vger.kernel.org>; Thu, 25 Aug 2016 04:26:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=yfJrs5EEz88VZZAGgQfByjAmMWurMZ+SV5tNhU7O754=;
-        b=h6hdF2MZJsV6sBqGR2VVGwbbXPied9KczSnIvSSqTZnHG9r09P+E23Qu+LRYoS2ZRH
-         w9irdw+96YFxaMJ1SrTTgXixcEIQvXQ3UFlQuFjOgUOCsbqJPk6XM9Tz5gf4J4wFgTXS
-         dlARieg4EZaDOa11iaNB/4s6hZMbhsetq2RVUWVfHFfxiYfTorbME/ossOjQsU9+YrtO
-         AjbANtZjy06PQTuxJZAHYNc8VEqjPmto80bA5etTo2pPKd59exy5unlqiSO5GTbTO84j
-         CCntA8q/vqoSdb7HkM2PZqQqsKBb6ZAE/P1Lmm7kSJM4QgooezId3ta5OkcBkZCq91ms
-         eRdQ==
+        bh=XZF41fJHVb2A0ncQnbUkKEeNxKqyMswmkTm2Sluk9zE=;
+        b=zwnBj/lk+uxNmrHRNDX6CY5wZZcy/Y44ydCVvdt0PIDYbaUakU64C9cxh57HHYkiaQ
+         0s3tS73NjCQ42P1vxe/SxCPVBo8vh5lrQSwQI6k1KtlcOeQ0FLYnw7fdH6EszrnkSEb9
+         mcg/9Xzo53BWfbtTLJhGQ70UXGONUVrBEWyi3M3vsufRfCeHh8tZsO5+hkiU37YArjgL
+         gdiB5HM/h+83Xy4lL+dFRntlZAsPpbHwM8Oscm9dQFCZRUhtAnhrW2ySld2GYUo9vc1y
+         RKFWlIenZRgyuVKcAu3G2+LfsdPEXyWx3agWVHnHfTJ+RmW9rr7jAlZISODgYImmBLDP
+         ApgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=yfJrs5EEz88VZZAGgQfByjAmMWurMZ+SV5tNhU7O754=;
-        b=jrKjr61QgtyECJ+QKpydDICJnVApB1jbMhb7NmcnRZVQHoKCgw5EWfNRvdqstx4LE1
-         l0T/HXcK9t8KxSj96FuZ/iLNZI1Mtrb5OhSYZxlhOG1u8aejNkGag2zZ0JvkAfEawhKE
-         6WA1U6oUk11ysB74ViTBlqU8nCYqp33IcEAb6OdhD+MiwIESWzafLVruZ6MuSAf6Th1C
-         cUpRtvYPT7JU2t4Zuqbid8LYvW00BvsN4ogFPf1P38qe4D5sqj+8aiIs/QJbKdumW7lP
-         5rb96ZE2rWAmsFIV75bcPNXzibpG6JUithdMqOjMfw86dba4koJFpJNat/hXHc+CMFXO
-         /ghg==
-X-Gm-Message-State: AE9vXwPG/hZWjcFm8HbeEKADUARS81aNmOf+mRiiycpAQpNuY84j4UDuMgFL9CKUUHWC2A==
-X-Received: by 10.28.142.2 with SMTP id q2mr6457697wmd.119.1472123295658;
-        Thu, 25 Aug 2016 04:08:15 -0700 (PDT)
+        bh=XZF41fJHVb2A0ncQnbUkKEeNxKqyMswmkTm2Sluk9zE=;
+        b=bhuWf9SNuoulbA88oa16+D0K2C0xogtQS4vBlEm53pe5d2o6xDJUDdciqU/06dFc3c
+         E3BkV2HWkENme0PwEC+bOuuDLK9Pz4AfAc7T8IcMJlJ+ydBoSVTfSGJD9vpKBxJdj/d/
+         oSUNUSFXnP8IqQ5CutCWDOwJkefjr/ZzKP6XvROx9tbwEzNQrbrJzuYKlS33rgUNkF7F
+         rUUNwxB1uLsRz+DyGgS1sm5a1LXcf/IH4yAb6xR2nUgjZruPuZl6q7AFrcVssZcBHT4P
+         8+wX7/YFo9giexclMOMyhyUkRoQ66SyLL5/PZsc3ro3mcUkkHM3/0OXuQo6AIaIXWF1k
+         mNjg==
+X-Gm-Message-State: AE9vXwNaOxz3xBdfRH3UnyqGHar6K14xOSGAhob31ug24VGunk4js2RwV0naZ39chBm1KQ==
+X-Received: by 10.28.46.134 with SMTP id u128mr7792394wmu.41.1472123279441;
+        Thu, 25 Aug 2016 04:07:59 -0700 (PDT)
 Received: from bcnf9f9l32.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id p71sm38304839wmf.9.2016.08.25.04.08.14
+        by smtp.gmail.com with ESMTPSA id p71sm38304839wmf.9.2016.08.25.04.07.58
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Thu, 25 Aug 2016 04:08:14 -0700 (PDT)
+        Thu, 25 Aug 2016 04:07:58 -0700 (PDT)
 From:   larsxschneider@gmail.com
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, gitster@pobox.com, sbeller@google.com,
         Johannes.Schindelin@gmx.de, jnareb@gmail.com, mlbright@gmail.com,
         Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v6 13/13] read-cache: make sure file handles are not inherited by child processes
-Date:   Thu, 25 Aug 2016 13:07:52 +0200
-Message-Id: <20160825110752.31581-14-larsxschneider@gmail.com>
+Subject: [PATCH v6 02/13] pkt-line: extract set_packet_header()
+Date:   Thu, 25 Aug 2016 13:07:41 +0200
+Message-Id: <20160825110752.31581-3-larsxschneider@gmail.com>
 X-Mailer: git-send-email 2.9.2
 In-Reply-To: <20160825110752.31581-1-larsxschneider@gmail.com>
 References: <20160825110752.31581-1-larsxschneider@gmail.com>
@@ -64,53 +64,54 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-Consider the case of a file that requires filtering and is present in
-branch A but not in branch B. If A is the current HEAD and we checkout B
-then the following happens:
-
-1. ce_compare_data() opens the file
-2.   index_fd() detects that the file requires to run a clean filter and
-     calls index_stream_convert_blob()
-4.     index_stream_convert_blob() calls convert_to_git_filter_fd()
-5.       convert_to_git_filter_fd() calls apply_filter() which creates a
-         new long running filter process (in case it is the first file
-         of this kind to be filtered)
-6.       The new filter process inherits all file handles. This is the
-         default on Linux/OSX and is explicitly defined in the
-         `CreateProcessW` call in `mingw.c` on Windows.
-7. ce_compare_data() closes the file
-8. Git unlinks the file as it is not present in B
-
-The unlink operation does not work on Windows because the filter process
-has still an open handle to the file. Apparently that is no problem on
-Linux/OSX. Probably because "[...] the two file descriptors share open
-file status flags" (see fork(2)).
-
-Fix this problem by opening files in read-cache with the `O_CLOEXEC`
-flag to ensure that the file descriptor does not remain open in a newly
-spawned process. `O_CLOEXEC` is defined as `O_NOINHERIT` on Windows. A
-similar fix for temporary file handles was applied on Git for Windows
-already:
-https://github.com/git-for-windows/git/commit/667b8b51ec850c3e1c7d75dee69dc13c29d1f162
+set_packet_header() converts an integer to a 4 byte hex string. Make
+this function locally available so that other pkt-line functions can
+use it.
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- read-cache.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ pkt-line.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/read-cache.c b/read-cache.c
-index db27766..f481dee 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -159,7 +159,7 @@ void fill_stat_cache_info(struct cache_entry *ce, struct stat *st)
- static int ce_compare_data(const struct cache_entry *ce, struct stat *st)
- {
- 	int match = -1;
--	int fd = open(ce->name, O_RDONLY);
-+	int fd = open(ce->name, O_RDONLY | O_CLOEXEC);
+diff --git a/pkt-line.c b/pkt-line.c
+index 0a9b61c..e8adc0f 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -97,10 +97,20 @@ void packet_buf_flush(struct strbuf *buf)
+ 	strbuf_add(buf, "0000", 4);
+ }
  
- 	if (fd >= 0) {
- 		unsigned char sha1[20];
+-#define hex(a) (hexchar[(a) & 15])
+-static void format_packet(struct strbuf *out, const char *fmt, va_list args)
++static void set_packet_header(char *buf, const int size)
+ {
+ 	static char hexchar[] = "0123456789abcdef";
++
++	#define hex(a) (hexchar[(a) & 15])
++	buf[0] = hex(size >> 12);
++	buf[1] = hex(size >> 8);
++	buf[2] = hex(size >> 4);
++	buf[3] = hex(size);
++	#undef hex
++}
++
++static void format_packet(struct strbuf *out, const char *fmt, va_list args)
++{
+ 	size_t orig_len, n;
+ 
+ 	orig_len = out->len;
+@@ -111,10 +121,7 @@ static void format_packet(struct strbuf *out, const char *fmt, va_list args)
+ 	if (n > LARGE_PACKET_MAX)
+ 		die("protocol error: impossibly long line");
+ 
+-	out->buf[orig_len + 0] = hex(n >> 12);
+-	out->buf[orig_len + 1] = hex(n >> 8);
+-	out->buf[orig_len + 2] = hex(n >> 4);
+-	out->buf[orig_len + 3] = hex(n);
++	set_packet_header(&out->buf[orig_len], n);
+ 	packet_trace(out->buf + orig_len + 4, n - 4, 1);
+ }
+ 
 -- 
 2.9.2
 
