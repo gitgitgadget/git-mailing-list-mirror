@@ -2,80 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9EA6F1F859
-	for <e@80x24.org>; Thu, 25 Aug 2016 20:32:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0ADCB1F859
+	for <e@80x24.org>; Thu, 25 Aug 2016 20:36:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757772AbcHYUcG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Aug 2016 16:32:06 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51670 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1756438AbcHYUcD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2016 16:32:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8EFD038F42;
-        Thu, 25 Aug 2016 16:32:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=TXhlwQWbj+co
-        VydskymakBZ3o60=; b=uHrrKKYnXhPoH8m+bFrztLFP5J7wx9Jl0SgjBj9lF7AD
-        ufgjdGXf1JyEVs0HjqC2L/3XTijAMNphDa7PLzbyS3TBbhAolpCOf2uhFn/BzZ0O
-        tE99ughRzbhxIdnOFCTk6SrILWymRxJALIFTd5IywKqFUYwfacurUe6BkXqRawQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=DTlnEy
-        x2d9BBjZFJfdhmvrzLotMPUNmpi9V3JLcO6uPHiZK/ZmDMlzh0Ing+CI1wVD8CYG
-        +9wfeZWwDC+kKQPaNhr+53iqvHdDhwDCBSZ0wzvwyBdU02ehE/+n4yxvAVoCmhZ9
-        7ZbTk4445W0AZeBwS3LGUhsiubyvuhBcMERso=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8805C38F41;
-        Thu, 25 Aug 2016 16:32:02 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0D61438F3F;
-        Thu, 25 Aug 2016 16:32:01 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     tboegi@web.de
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v1 0/3] Update eol documentation
-References: <20160809114938.pcrvirrzrh6ldmnr@sigill.intra.peff.net>
-        <20160825155255.28929-1-tboegi@web.de>
-Date:   Thu, 25 Aug 2016 13:31:59 -0700
-In-Reply-To: <20160825155255.28929-1-tboegi@web.de> (tboegi@web.de's message
-        of "Thu, 25 Aug 2016 17:52:55 +0200")
-Message-ID: <xmqqy43klhds.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1757010AbcHYUgF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Aug 2016 16:36:05 -0400
+Received: from mail-yb0-f176.google.com ([209.85.213.176]:36703 "EHLO
+        mail-yb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754513AbcHYUgC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2016 16:36:02 -0400
+Received: by mail-yb0-f176.google.com with SMTP id e31so20535079ybi.3
+        for <git@vger.kernel.org>; Thu, 25 Aug 2016 13:35:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=7UQZzmmIA67PDLp0ByeKqU7DNyUlVS8cudEzugZ1v6c=;
+        b=00mj3MJjzb8AGN+NNlDKQkfnUPcgieZ48qzoCuZ1xCvuuMqiC2UceB4ZH3d5Mn/EDd
+         R/xQ0d/adW6EOpXf49E7fj5PUQBBeCFghlypoLOiqbWme/pOhAqsdsTqGQ2YtbChlaZ2
+         Z4sdKBeCDoW1vdhqgkRwyJzfE0I8rCFIfIIGHy1T8Q3iPXGSY4INIAeVgItVse1s/zL9
+         ZU1iZHTM0/wHEL43ASEdblP5nOMFgE2LruFKm0HwHjRF6Sgz24SZlVA4lItNXKjtUlKt
+         SGiPjzgpPgUpRcOjpnItv+Gg3kTbFBdunQgQiupEzK87JuygfduELF8dYgsYnKNGtCc7
+         GE1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=7UQZzmmIA67PDLp0ByeKqU7DNyUlVS8cudEzugZ1v6c=;
+        b=BH9aRBvhAJ6lcopcyHgOodefg2X0/qNALL0hlKwk65JFzddfLNiRZ4d3VcNao25w4h
+         2owAIfsafEtlSCQ4YztZXEeeONuZLPHaGIN/fqnJjVDunzTd0gktlQHybkE7FbDC5Hlu
+         2VOBwwicIH7lRdUl5TZdbJFQA3EvMjNgdHqECjL0b0YVwH+01+JTYIO3DuB1j2oZ6Z+r
+         3aNnJgy5WSnwjOdC1bIep5LW2jH23hRLBO8U8SAVJTwa9PUZfYBH7QUBljPrl6mZb7Zc
+         dPP4PI4icAl4qxHtoTX+KGU6EfNQ9QWKROruHX9aNKB7i70FlgPR0L84UA9b7cAFTNWx
+         Jnuw==
+X-Gm-Message-State: AEkooutllciIkV2/IuGX5ik8AbwAJ5IRdMpebcVatafDhxr9Mn5mjHOIJS+zwWYpeh60tDOrWTTWNCJ9cuUTtA==
+X-Received: by 10.37.110.86 with SMTP id j83mr8420671ybc.136.1472157354581;
+ Thu, 25 Aug 2016 13:35:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FAA6C142-6B02-11E6-9F27-F7BB12518317-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Received: by 10.37.96.195 with HTTP; Thu, 25 Aug 2016 13:35:34 -0700 (PDT)
+In-Reply-To: <xmqqlgznwg6o.fsf@gitster.mtv.corp.google.com>
+References: <20160822234344.22797-1-jacob.e.keller@intel.com>
+ <CAGZ79kbKibe2RpQ9QWN1naY07feZLKbhc+dts3BD-4+y-pUOVw@mail.gmail.com> <xmqqlgznwg6o.fsf@gitster.mtv.corp.google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 25 Aug 2016 13:35:34 -0700
+Message-ID: <CA+P7+xpiHmTBqF1RT8zUd=1g=nKtMiwpH19DyhwLi9ikLQ8t8A@mail.gmail.com>
+Subject: Re: [PATCH v10 0/9] submodule inline diff format
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Jacob Keller <jacob.e.keller@intel.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-tboegi@web.de writes:
-
-> From: Torsten B=C3=B6gershausen <tboegi@web.de>
+On Tue, Aug 23, 2016 at 10:25 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> I am not so sure about that.  If there is an existing place that is
+> buggy, shouldn't we fix that, instead of spreading the same bug
+> (assuming that it is a bug in the first place, which I do not have a
+> strong opinion on, at least not yet)?
 >
-> Sorry for posting this so late:
-> While reviewing another patch I realized that the eol related
-> documentation was not updated as it should be.
->
-> Torsten B=C3=B6gershausen (2):
->   git ls-files: text=3Dauto eol=3Dlf is supported in Git 2.10
->   gitattributes: Document the unified "auto" handling
->
->  Documentation/git-ls-files.txt  |  3 +--
->  Documentation/gitattributes.txt | 24 ++++++++++++++++--------
->  2 files changed, 17 insertions(+), 10 deletions(-)
 
-This [0/3] is meant to be a cover for [1/2] and [2/2]?
+I was saying that I'm not sure it is a bug so I sided with preserving
+behavior instead.
 
-I am trying to see if we broke format-patch recently, or it is a
-manual editing error.  The latter I do not care about; the former I
-do.
+If it is indeed a bug we should fix it, and I'm trying to determine
+whether it actually is a bug here, and what the best solution is.
+
+If there is a bug and we should die, should we also introduce a
+"_gently()" variant of these functions and thus fail properly if they
+don't work so that we can report an error in producing a diff instead
+of die()ing?
+
+Thanks,
+Jake
