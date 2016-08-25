@@ -2,113 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 546011F859
-	for <e@80x24.org>; Thu, 25 Aug 2016 22:16:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F03C1F859
+	for <e@80x24.org>; Thu, 25 Aug 2016 22:32:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757331AbcHYWQ3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Aug 2016 18:16:29 -0400
-Received: from mail-yw0-f180.google.com ([209.85.161.180]:35820 "EHLO
-        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757243AbcHYWQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2016 18:16:27 -0400
-Received: by mail-yw0-f180.google.com with SMTP id j12so38344464ywb.2
-        for <git@vger.kernel.org>; Thu, 25 Aug 2016 15:16:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=B7zazbYsZpG7fk0/5IBXgU1ZszWoFu2VkZRX/fkqD1c=;
-        b=sx7d2PfzGBe4JtwC9TEygOuLuym5gLGR/3YujdjrIMehfKzwSjdpuCZN7kNsuUQGiV
-         MOd4P5kfuVAMLTSONUq/sdTvph5cm/UC8kraZE7NU7lpghap6kPiLa7F7waP+bo6dPQt
-         zeXY93+pNi21vpVRY5eK4FajjZeN21qYLg6B0g0FA6zTEUSkfE+DM7efPMAtuag//pvO
-         1tkHzHXXjzPHMbRdFLo1RXEfXyAb3b9uruW+unrtrb+Hmy50tmOsbf5lyMePxFzyXCfA
-         AjszoTxLmvzVZKwk0GI14hXJq0T120Hb4/W3y31xAPYGTNyhiPqxJkN7Mn+uSS78snD8
-         rZ6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=B7zazbYsZpG7fk0/5IBXgU1ZszWoFu2VkZRX/fkqD1c=;
-        b=NFDro95/ZpURbSDHj7L9SKgTDr0sgoKy+hNSLzTFh/Njyhj5cyXrNZEbwbRuksjJ1m
-         LE9wWadcHIX0eqIbdyt+5hIU2mzh3w8tTgch2LQZ3MPg4kCk1ZB8EQCkvXv73J57ACE5
-         IIOoSq07cRpgQOLDE+Wy69DVYSPI5MjNWLuGAgyE7jRQMHL3qjxP0twZicLqKvCxt59g
-         Lin4EtqOgEInV8SZqcwIymLNwLxMuMvj7PfQPIKgW6Z25Eg51p9lk8rmdrDslsvTkRjA
-         5bOJqtps3V0DcWCGxRMIa8AVJ/U3yHRArHbUerDknl/jmWZw7Ur3P7m/irim1FzLMIzb
-         9zbA==
-X-Gm-Message-State: AEkoouvCFFrpS0ceTuH+VYAObjY4xewnI8zZ0Tye9mbzLHxwPmogPz4lDSj3qB5FGBVsq5OFNFTBKo+L7McnAw==
-X-Received: by 10.129.46.136 with SMTP id u130mr9625403ywu.234.1472163386651;
- Thu, 25 Aug 2016 15:16:26 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.37.96.195 with HTTP; Thu, 25 Aug 2016 15:16:06 -0700 (PDT)
-In-Reply-To: <CAGZ79kb3tRU5vLDMWzEC=bx9Givd8pqFsAzTBy0unxXfKpNnUw@mail.gmail.com>
-References: <20160822234344.22797-1-jacob.e.keller@intel.com>
- <CAGZ79kbKibe2RpQ9QWN1naY07feZLKbhc+dts3BD-4+y-pUOVw@mail.gmail.com>
- <xmqqlgznwg6o.fsf@gitster.mtv.corp.google.com> <CAGZ79kbsq52Qh0Jtn5hpPPfHu_9r2CUHvAHOTh6Cgz8ODkzreg@mail.gmail.com>
- <CA+P7+xrQy33gt8bnsagLVPAHhZPZx-3s0E_Aj7tOwXnHjOoCBg@mail.gmail.com> <CAGZ79kb3tRU5vLDMWzEC=bx9Givd8pqFsAzTBy0unxXfKpNnUw@mail.gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 25 Aug 2016 15:16:06 -0700
-Message-ID: <CA+P7+xqDUzuX2c4y3vpPEenBRbQ_mttDhDOviV1=k7H-LQVXmQ@mail.gmail.com>
-Subject: Re: [PATCH v10 0/9] submodule inline diff format
+        id S932724AbcHYWcD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Aug 2016 18:32:03 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64972 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932692AbcHYWcB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2016 18:32:01 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EB1F93410F;
+        Thu, 25 Aug 2016 18:31:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=KQx+wLg8Z2w9wiRa2owfEe+Vnsk=; b=T9I0ws
+        2OLva/CN+xuR0g38WdLGhBzW4QcnZsifHQ0pe1Lrk06xhEMQd48fzKFDVLvA0u0U
+        M3CvHN3h22La01mE6w6YyT+Y2TvBU9Cj79jPIc4r3DqElxbpwzlkqzSVFGA6BKER
+        iB+sq+YYs71T69vM+60j1+bfwJJ8cRzf7dZ4w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=RG0aMxBtNs6JFNFYQvYrKAx4XUlZNaAu
+        UQdgKo8FsD6BqAVhVv1xnwT5SbgsH0h51QYLY975EwtItmK+hGfCz55jjjuzvw0f
+        LJWdE4Wwv4fDcx/bUt5ovyYoF4cwMQGDY1PrIA2EXvITotHS6AJ+jPYGjR15CqY4
+        FQlkm7sHZ04=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E44533410E;
+        Thu, 25 Aug 2016 18:31:59 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6F22F3410D;
+        Thu, 25 Aug 2016 18:31:59 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.e.keller@intel.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset=UTF-8
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        Martin-Louis Bright <mlbright@gmail.com>
+Subject: Re: [PATCH v6 06/13] pkt-line: add functions to read/write flush terminated packet streams
+References: <20160825110752.31581-1-larsxschneider@gmail.com>
+        <20160825110752.31581-7-larsxschneider@gmail.com>
+        <CAGZ79kaVg40H-LeDtFfDYqDFDDbr+um3ZYj8oAaqGu+q6k5e+A@mail.gmail.com>
+Date:   Thu, 25 Aug 2016 15:31:57 -0700
+In-Reply-To: <CAGZ79kaVg40H-LeDtFfDYqDFDDbr+um3ZYj8oAaqGu+q6k5e+A@mail.gmail.com>
+        (Stefan Beller's message of "Thu, 25 Aug 2016 11:46:06 -0700")
+Message-ID: <xmqqvayojx9e.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: BCABC9C6-6B13-11E6-AFC0-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 25, 2016 at 1:46 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Thu, Aug 25, 2016 at 1:39 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
->> On Tue, Aug 23, 2016 at 10:47 AM, Stefan Beller <sbeller@google.com> wrote:
->>> On Tue, Aug 23, 2016 at 10:25 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>>> I am not so sure about that.  If there is an existing place that is
->>>> buggy, shouldn't we fix that, instead of spreading the same bug
->>>> (assuming that it is a bug in the first place, which I do not have a
->>>> strong opinion on, at least not yet)?
->>>>
->>>> Can there be .git/modules/<foo>/ repository that is pointed at an
->>>> in-tree .git file when there is no "name" defined?
->>>
->>> If you're holding it wrong we can come into that state.
->>> * Checkout the submodule,
->>> * then remove .gitmodules as well as relevant config in .git/config.
->>> Result: Then we have a only a gitlink recorded as well as connected
->>> working tree to a gitdir inside a superprojects .git/modules/.
->>>
->>
->> Yea, but I think you're right that we shouldn't support that state.
->> What I'm worried about is the case where we can get this state doing
->> something sane/acceptable but I don't think we can.
->>
->> So we should support the gitlink to a repository stored at <path>
->> without stuff inside the .git/modules, and we should support submodule
->> gitlinks with a proper .gitmodules setup. I don't think we should
->> die() but we should error properly so I will introduce a _gently()
->> variant of these functions, and die properly in the regular flow.
->
-> ok, thanks!
+Stefan Beller <sbeller@google.com> writes:
 
+> So the API provided by these read/write functions is intended
+> to move a huge chunks of data. And as it puts the data on the wire one
+> packet after the other without the possibility to intervene and e.g. send
+> a side channel progress bar update, I would question the design of this.
 
-Ok so a die() doesn't really work. If you use submodule_from_path here
-on a newly checked out repository that has sub modules but you haven't
-yet initialized the repository, then the result is that
-submodule_from_path will fail.. Is that expected?
+Hmph, I didn't think about it.
 
-That causes us to die every time on a newly checked out repository.
+But shouldn't one be able to set up sideband and channel one such
+large transfer on one band, while multiplexing other payload on
+other bands?
 
-If we go with this behavior, then I have to refactor the whole set of
-path() functions to have a _gently() variant which handles this
-gracefully, and the regular revision code would still end up die()ing
-as well......
+> If I understand correctly this will be specifically  used for large
+> files locally,
+> so e.g. a file of 5 GB (such as a virtual machine tracked in Git), would
+> require about 80k packets.
 
-Thanks,
-Jake
+What is wrong about that?  4*80k = 320kB overhead for length fields
+to transfer 5GB worth of data?  I do not think it is worth worrying
+about it.
+
+But I am more surprised by seeing that "why not a single huge
+packet" suggestion immediately after you talked about "without the
+possibility to intervene".  They do not seem to be remotely related;
+in fact, they are going into opposite directions.
+
+Puzzled.
