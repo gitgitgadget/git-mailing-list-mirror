@@ -2,94 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 160581F859
-	for <e@80x24.org>; Thu, 25 Aug 2016 18:14:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DECA2018E
+	for <e@80x24.org>; Thu, 25 Aug 2016 18:33:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754222AbcHYSOw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Aug 2016 14:14:52 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57457 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754179AbcHYSOv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2016 14:14:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EA32937820;
-        Thu, 25 Aug 2016 14:06:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9p3mqOBk8l7FLQyO2w7wMnlhCqI=; b=KCQVcr
-        DMDxw4NLDHyfumdeFyOHPuVv4E/vng7ftLPUaUK1SxoZzIlJEsgWAJRZTIAXtRwH
-        IRIsbjXVRAnMu+BhKwQdXpJpGcuaTS4y27za5nMYaIlCcGKpvKnQ9sOIlf7qR66P
-        eU9w73khOexXxVmTC72PvkZLYIe2JIo64u8oQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=roEFyn4HehVTJ9rFqBHhE1gtMFOzz59X
-        riqHa0agKoLlpjtzX/LZi2tggC2l7TWxkOTKpiWP8P85GFMKhHcCS1EDECOh5W/Y
-        BDK0uy9BcN7ishuhYlGi9LGAcUjyTcJdytiL0x+SnLEFFsLhhB5rCAjq1NXXWsRX
-        EUaLkv546S0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E13123781F;
-        Thu, 25 Aug 2016 14:06:01 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F008A3781C;
-        Thu, 25 Aug 2016 14:06:00 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Pranit Bauva <pranit.bauva@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v14 12/27] bisect--helper: `get_terms` & `bisect_terms` shell function in C
-References: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
-        <01020156b73fe6b3-3ccd9de5-604d-4e7d-919d-a3adae869ebf-000000@eu-west-1.amazonses.com>
-Date:   Thu, 25 Aug 2016 11:05:58 -0700
-In-Reply-To: <01020156b73fe6b3-3ccd9de5-604d-4e7d-919d-a3adae869ebf-000000@eu-west-1.amazonses.com>
-        (Pranit Bauva's message of "Tue, 23 Aug 2016 11:53:53 +0000")
-Message-ID: <xmqqmvk0n2pl.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1754087AbcHYSdf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Aug 2016 14:33:35 -0400
+Received: from smtp5.opentext.com ([205.211.178.41]:52834 "EHLO
+        smtp5.opentext.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753453AbcHYSdd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2016 14:33:33 -0400
+Received: from otwlxg12.opentext.net (otwlxg12.opentext.net [10.2.103.213])
+        by wldmzsvc05.dmz.opentext.com (8.14.4/8.14.4) with ESMTP id u7PIXvto031320
+        (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=FAIL);
+        Thu, 25 Aug 2016 14:33:57 -0400
+Received: from OTWLXG13.opentext.net (10.2.103.163) by otwlxg12.opentext.net
+ (10.2.103.213) with Microsoft SMTP Server (TLS) id 14.3.294.0; Thu, 25 Aug
+ 2016 14:33:07 -0400
+Received: from OTWLXG21.opentext.net ([169.254.3.76]) by otwlxg13.opentext.net
+ ([10.2.103.163]) with mapi id 14.03.0294.000; Thu, 25 Aug 2016 14:33:06 -0400
+From:   David McGough <dmcgough@opentext.com>
+To:     Jeff King <peff@peff.net>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: Smart HTTP push permissions failure
+Thread-Topic: Smart HTTP push permissions failure
+Thread-Index: AdH9UAqG/VuKfPWxRkeGHFrHOKkKBgA+oBEAAC0ebVA=
+Date:   Thu, 25 Aug 2016 18:33:06 +0000
+Message-ID: <89CBBBEBEE33F5469A9FA456B5F70625CCDC7A1B@otwlxg21.opentext.net>
+References: <89CBBBEBEE33F5469A9FA456B5F70625CCDB9BEB@otwlxg20.opentext.net>
+ <20160824170028.y4kr5jchsnb5xdge@sigill.intra.peff.net>
+In-Reply-To: <20160824170028.y4kr5jchsnb5xdge@sigill.intra.peff.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.2.111.33]
+X-TM-AS-Product-Ver: SMEX-11.0.0.1191-8.000.1202-22534.005
+X-TM-AS-Result: No--16.751300-8.000000-31
+X-TM-AS-User-Approved-Sender: No
+X-TM-AS-User-Blocked-Sender: No
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 94A4D514-6AEE-11E6-9A52-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pranit Bauva <pranit.bauva@gmail.com> writes:
-
-> +static int bisect_terms(struct bisect_terms *terms, const char **argv, int argc)
-> +{
-> +	int i;
-> +
-> +	if (get_terms(terms)) {
-> +		fprintf(stderr, _("no terms defined\n"));
-> +		return -1;
-> +	}
-> +	if (argc == 0) {
-> +		printf(_("Your current terms are %s for the old state\nand "
-> +		       "%s for the new state.\n"), terms->term_good.buf,
-> +		       terms->term_bad.buf);
-> +		return 0;
-> +	}
-> +
-> +	for (i = 0; i < argc; i++) {
-> +		if (!strcmp(argv[i], "--term-good"))
-> +			printf("%s\n", terms->term_good.buf);
-> +		else if (!strcmp(argv[i], "--term-bad"))
-> +			printf("%s\n", terms->term_bad.buf);
-> +		else
-> +			printf(_("invalid argument %s for 'git bisect "
-> +				  "terms'.\nSupported options are: "
-> +				  "--term-good|--term-old and "
-> +				  "--term-bad|--term-new."), argv[i]);
-> +	}
-
-The original took only one and gave one answer (and errored out when
-the user asked for more), but this one loops.  I can see either way
-is OK and do not think of a good reason to favor one over the other;
-unless there is a strong reason why you need this extended behaviour
-that allows users to ask multiple questions, I'd say we should keep
-the original behaviour.
-
+VGhhbmsgeW91IGZvciB5b3VyIHJlcGx5IEplZmYuICBJIGhhdmUgbW92ZWQgb24gdG8gaW5zdGFs
+bGluZyBHaXRMYWIuICBJdCBoYXMgYmVlbiBhIHN1Y2Nlc3Mgc28gZmFyLg0KDQpUaGFua3MsDQpE
+YXZlDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBKZWZmIEtpbmcgW21haWx0
+bzpwZWZmQHBlZmYubmV0XSANClNlbnQ6IFdlZG5lc2RheSwgQXVndXN0IDI0LCAyMDE2IDE6MDAg
+UE0NClRvOiBEYXZpZCBNY0dvdWdoIDxkbWNnb3VnaEBvcGVudGV4dC5jb20+DQpDYzogZ2l0QHZn
+ZXIua2VybmVsLm9yZw0KU3ViamVjdDogUmU6IFNtYXJ0IEhUVFAgcHVzaCBwZXJtaXNzaW9ucyBm
+YWlsdXJlDQoNCk9uIFR1ZSwgQXVnIDIzLCAyMDE2IGF0IDAzOjQ1OjMzUE0gKzAwMDAsIERhdmlk
+IE1jR291Z2ggd3JvdGU6DQoNCj4gV2hlbiBJIHRyeSB0byBwdXNoIHRvIHRoZSBzZXJ2ZXIgSSBn
+ZXQgdGhpcyBtZXNzYWdlOg0KPiByZW1vdGU6IGVycm9yOiBpbnN1ZmZpY2llbnQgcGVybWlzc2lv
+biBmb3IgYWRkaW5nIGFuIG9iamVjdCB0byANCj4gcmVwb3NpdG9yeSBkYXRhYmFzZSAuL29iamVj
+dHMNCj4gcmVtb3RlOiBmYXRhbDogZmFpbGVkIHRvIHdyaXRlIG9iamVjdA0KPiBbLi4uXQ0KPiBT
+byBJIGFtIHByZXR0eSBjb25mdXNlZCBhYm91dCB3aGF0IHRoZSBpc3N1ZS4gIFdoaWNoIE9TIHVz
+ZXIgaXMgZ2l0IA0KPiB1c2luZyB0byB3cml0ZSB0aGUgZmlsZXM/ICBJIGhvcGUgc29tZWJvZHkg
+Y2FuIGhlbHAgbWUgdW5kZXJzdGFuZCB3aHkgDQo+IHRoZSBwcm9qZWN0IGNhbm5vdCBiZSBwdXNo
+ZWQgdG8gdGhlIGdpdCBzZXJ2ZXIuDQoNCkZvciBhIHNtYXJ0LWh0dHAgcHVzaCwgaXQgd2lsbCBi
+ZSB3aGF0ZXZlciB1c2VyIHRoZSB3ZWIgc2VydmVyIGV4ZWNzIHRoZSBDR0kgYXMuIFNvIEknZCB0
+aGluayAiYXBhY2hlIiB3b3VsZCBiZSB0aGUgZGVmYXVsdCwgYnV0IGl0J3MgcG9zc2libGUgdGhh
+dCBpdCBydW5zIENHSXMgYXMgYSBkaWZmZXJlbnQgdXNlciwgZGVwZW5kaW5nIG9uIHlvdXIgY29u
+ZmlnLg0KDQpPbmUgcG9zc2liaWxpdHkgbWF5IGJlIHRvIGFkZCBhIHNpbXBsZSBzaGVsbCBzY3Jp
+cHQgQ0dJIHRoYXQgZG9lcyBzb21ldGhpbmcgbGlrZToNCg0KICAjIS9iaW4vc2gNCiAgZWNobyAi
+Q29udGVudC10eXBlOiB0ZXh0L3BsYWluIg0KICBlY2hvDQogIGlkDQoNCmp1c3QgdG8gc2VlIHdo
+YXQncyBoYXBwZW5pbmcuDQoNCkJhc2VkIG9uIHRoZSBkYXRhIHlvdSBzaG93ZWQsIGhlcmUgYXJl
+IHNvbWUgd2lsZCBwb3NzaWJpbGl0aWVzIEkgY2FuIHRoaW5rIG9mOg0KDQogIC0gdGhlIENHSSBy
+dW5zIGFzICJhcGFjaGUiLCBidXQgeW91ciBmaWxlcyBhcmUgb3duZWQgYnkgImdpdCIuDQogICAg
+ImFwYWNoZSIgaXMgaW4gdGhlICJzdGFmZiIgZ3JvdXAsIGFuZCB0aGUgZGlyZWN0b3JpZXMgYWxs
+IGhhdmUgd3JpdGUNCiAgICBwZXJtaXNzaW9uIGZvciB0aGF0IGdyb3VwLiBCdXQgYXJlIHdlIHN1
+cmUgdGhhdCBhcGFjaGUgZG9lcyBub3Qgc2hlZA0KICAgIGFueSBncm91cCBwZXJtaXNzaW9ucyB3
+aGVuIHJ1bm5pbmcgYSBDR0k/IFRoZSAiaWQiIHNjcmlwdCBhYm92ZQ0KICAgIHNob3VsZCBob3Bl
+ZnVsbHkgc2hvdyB0aGF0Lg0KDQogIC0gWW91IG1lbnRpb25lZCBDZW50T1MuIEl0IGhhcyBiZWVu
+IGEgd2hpbGUgc2luY2UgSSBkZWFsdCB3aXRoIFJIRUwNCiAgICBhbmQgaXRzIGRlcml2YXRpdmVz
+LCBidXQgSSB0aGluayBzZWxpbnV4IGlzIHR1cm5lZCBvbiBieSBkZWZhdWx0DQogICAgdGhlcmUu
+IElzIGl0IHBvc3NpYmxlIHRoYXQgdGhlIHdlYnNlcnZlciBydW5zIGluIGFuIHNlbGludXggcHJv
+ZmlsZQ0KICAgIHRoYXQgZG9lcyBub3QgYWxsb3cgd3JpdGluZyB0byB0aGUgcmVwb3NpdG9yeSBk
+aXJlY3Rvcnk/DQoNCiAgICBJIGRvbid0IHJlY2FsbCB0aGUgc3BlY2lmaWNzIG9mIGRlYnVnZ2lu
+ZyBzZWxpbnV4IHByb2JsZW1zLCBidXQNCiAgICB0aGVyZSBtYXkgYmUgbG9ncyB0aGVyZS4NCg0K
+U29ycnkgdGhvc2UgYXJlIGp1c3Qgc3RhYnMgaW4gdGhlIGRhcmssIGJ1dCBJIGRvbid0IHNlZSBh
+bnl0aGluZyBlbHNlIG9idmlvdXNseSB3cm9uZyB3aXRoIHdoYXQgeW91J3ZlIHBvc3RlZC4NCg0K
+LVBlZmYNCg==
