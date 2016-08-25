@@ -7,157 +7,78 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF17C1F859
-	for <e@80x24.org>; Thu, 25 Aug 2016 15:37:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58A922018E
+	for <e@80x24.org>; Thu, 25 Aug 2016 15:43:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759948AbcHYPhh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Aug 2016 11:37:37 -0400
-Received: from mout.gmx.net ([212.227.15.18]:57748 "EHLO mout.gmx.net"
+        id S1755716AbcHYPna (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Aug 2016 11:43:30 -0400
+Received: from mout.web.de ([217.72.192.78]:57784 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751063AbcHYPhB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2016 11:37:01 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0Lcj9b-1atC1r1yyt-00kBZJ; Thu, 25 Aug 2016 17:07:24
+        id S1755752AbcHYPn1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2016 11:43:27 -0400
+Received: from tor.lan ([195.252.60.88]) by smtp.web.de (mrweb101) with
+ ESMTPSA (Nemesis) id 0MORiL-1bXA3B1gQf-005pbN; Thu, 25 Aug 2016 17:42:56
  +0200
-Date:   Thu, 25 Aug 2016 17:07:22 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
+From:   tboegi@web.de
 To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 6/6] wt-status: teach has_{unstaged,uncommitted}_changes()
- about submodules
-In-Reply-To: <cover.1472137582.git.johannes.schindelin@gmx.de>
-Message-ID: <952098a37c704dd6e40912623d1a1fd600c37fe8.1472137582.git.johannes.schindelin@gmx.de>
-References: <cover.1472137582.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH v1 1/2] git ls-files: text=auto eol=lf is supported in Git 2.10
+Date:   Thu, 25 Aug 2016 17:52:57 +0200
+Message-Id: <20160825155257.28968-1-tboegi@web.de>
+X-Mailer: git-send-email 2.9.3.599.g2376d31.dirty
+In-Reply-To: <20160809114938.pcrvirrzrh6ldmnr@sigill.intra.peff.net>
+References: <20160809114938.pcrvirrzrh6ldmnr@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:35vVyMQprPtTpMAwxdS5XGtiYV+1uTI48uAlaJmdfLMnAbetnUf
- DG1abCctk07LCiZVTuIIn2zxVkTHZOXQjMC/SQo3cpqi+5t0PafIQUHFR8Ojc+bVx5tqgLq
- jBz7+Nf8PnPfZL59PpF6TfHTnSsSPUPuSRJSTE4dyIIuTe9eQhf6MnePjJQInZ7JdJMpAdK
- ZKv9N4LQOQ4k9aA96/wEA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:fb6qr3gfpRA=:oIyJ9/LQBbnMSysoZVzxkz
- cJ1tre6hrJas4Da8c6xujaqNIolUprBafIm79uqBuLaUMVtwO06vjwGe42pIVB9s4DB7CPtDa
- R89fKVJpcgGY70f0weMNl2m/0urw3GXPjyWIE4CgifjwxHiSQvhefdwlLlQyfdWdCm33VzHAp
- t3U+JhUDIZgLTWk+sBzi1gWcB/KmXRltz9c6LDBVwOE7nW5wf7EcLRZsltYiBLJqjl1OdoURl
- V/T/ypQe3VOg5uLPZF/p7LUchJn6qvMCDNEA+o6P6hwkF9yLh/HK4rjsN2WuheZJ1xqRrDlks
- udC7WICK1Im7v1RzIWEOqisYB5jO2BEqyzI/F2yjHsF390Jx1gdHy/4TiHc9z1XXUL3jPOo7+
- cDkzxKBRLZBHV0UBkP+9/WyaghH8fRIbcAz6KMD3Si2b/R3UgvCcWphfXbqt7mxGeszwEYEyt
- 64NwNA1MlXOn3K/BgIx/IoYztYFMq2vCZV2gbq76kPP/5+X+JxtaNQqzKVVw0N0nSTaPo52Wr
- aghjWnx+Cf9DTgahu0w6Iy0x7NmZ5CufFhcuFdcQ6zHujqFqcPK5cySY87Yn8szhAkTL+Bu3Y
- N/L6V/tEoslp46K6fNUmLO1jMxEJrjHMrb6fEwbDxiuOKUf8glNuvJht6J9RLm5simx473Idh
- 7v3//GgF0ziPFd5RBMQlogkthIeZCnm/BmZb24QwUesY+kGEcun1MbNPOC/GV4LLS4+sfLxMw
- /kotqoN8M95xsOsprdYQf/A2VGKVmMpNsS1gkBXwzR3n10IaglCX6mOsaDUObsDKf9zFVAzo3
- bAZN/sF
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:kVLrLYZ4vbau1aeCVMW3zEpwUS+lJOGXHAaEajWPIC+hCVDA6Jc
+ fyLdnT7t7zeYS8AR350U1SbEug4oLPOVwWV4YKI+in/JA/198izeH3C4fQKgWbKw24Rkap5
+ T/7LWrOHt1emGtPEMRSRB94k2x8s9s9D2ZZ7YScOKv+QjPOrnMKq6dYlPEI4RCTsoIJrLE3
+ Ms1OWdSXcxDWNSE1ckb0A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:tRk+Knalw9w=:Db2zHyNVe3sxyOBIqhi8jq
+ 73fv5J0hwlnb5l1CsypWxjbHmmhrR5Ff4BfIOywZxlT1PTOxQzs5fogh5LteQwlBK3GVYMs0J
+ 7Mw6JMcxCHdUcK8DQD/6qz8r1pygJqX3S3PTH2Ihu8yLy5GJs3pI6SWIKWNB6G5x0RjsOCyot
+ Mulr60sIlBRa3WaGBnifX6u388QPZaiR/I4GsTQKP9W6DXc/zFQP2/6qHgP90uvWmPsf31S6w
+ SIpkkoUKCr3ywfYHeG68k77lqnXgJcFHy9KBWzSgub4p2PymbVfrwSbcKtXPLCwmTgeIfCd3j
+ uznL9fKWFKdAUv9v0lW9Eps8ZAoa9MnWE2Vj2XBGpn7wJ3dKi+gmDdIbxHfYRNpz6pvheCRCz
+ bGCrWLA+43snVKZM1bQWUgfGH3DQaJBEcCqtxNlm/FCVur/d4U6rcsrVfBcqetzjCU/HSj9N/
+ r2k1UkiAnMPNVz74Y6JdwH4uwt62NsyQd0dAZ3kFPaJHyjup+jibb3wd3uEay76W1rijfS/z6
+ ZAxjn3CcbH5QNKm1UlxX6f8KogLe3Da3z8CUNorUEH2/UPA62MaR5b7Rgt1rANjrwMYi15T6j
+ /0UGo1WhbEQljW8BrSbn9T2T5jalZCsbWTMeOOwinBhNOwEV5KUqbNT+cUtQS5Zl/sm0JQwPk
+ Bulm2iZnFSOczYM4ctsyBPEqHsoNcaCpkAonKgAMMaRIPV2A8MbQ50zWD2UbENRotxIUlGVbM
+ vX0J9/j+JhF/1Q3n/2t55HhqTmF2M5/YBq4S05+Rec4HJKGPXKwpjtiLwdxYujIfCPTWWpuSo
+ 1Z1Dlre
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sometimes we are *actually* interested in those changes... For
-example when an interactive rebase wants to continue with a staged
-submodule update.
+From: Torsten Bögershausen <tboegi@web.de>
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+The man page for `git ls-files --eol` mentions the combination
+of text attributes "text=auto eol=lf" or "text=auto eol=crlf" as not
+supported yet, but may be in the future.
+Now they are supported
+
+Signed-off-by: Torsten Bögershausen <tboegi@web.de>
 ---
- builtin/pull.c |  2 +-
- wt-status.c    | 16 +++++++++-------
- wt-status.h    |  7 ++++---
- 3 files changed, 14 insertions(+), 11 deletions(-)
+ Documentation/git-ls-files.txt | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/builtin/pull.c b/builtin/pull.c
-index c35c6e8..843ff19 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -810,7 +810,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 
- 		if (!autostash)
- 			require_clean_work_tree("pull with rebase",
--				"Please commit or stash them.", 0);
-+				"Please commit or stash them.", 1, 0);
- 
- 		if (get_rebase_fork_point(rebase_fork_point, repo, *refspecs))
- 			hashclr(rebase_fork_point);
-diff --git a/wt-status.c b/wt-status.c
-index 1c3fabf..8ba0b4d 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1762,13 +1762,14 @@ void wt_porcelain_print(struct wt_status *s)
- /**
-  * Returns 1 if there are unstaged changes, 0 otherwise.
-  */
--int has_unstaged_changes(void)
-+int has_unstaged_changes(int ignore_submodules)
- {
- 	struct rev_info rev_info;
- 	int result;
- 
- 	init_revisions(&rev_info, NULL);
--	DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
-+	if (ignore_submodules)
-+		DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
- 	DIFF_OPT_SET(&rev_info.diffopt, QUICK);
- 	diff_setup_done(&rev_info.diffopt);
- 	result = run_diff_files(&rev_info, 0);
-@@ -1778,7 +1779,7 @@ int has_unstaged_changes(void)
- /**
-  * Returns 1 if there are uncommitted changes, 0 otherwise.
-  */
--int has_uncommitted_changes(void)
-+int has_uncommitted_changes(int ignore_submodules)
- {
- 	struct rev_info rev_info;
- 	int result;
-@@ -1787,7 +1788,8 @@ int has_uncommitted_changes(void)
- 		return 0;
- 
- 	init_revisions(&rev_info, NULL);
--	DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
-+	if (ignore_submodules)
-+		DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
- 	DIFF_OPT_SET(&rev_info.diffopt, QUICK);
- 	add_head_to_pending(&rev_info);
- 	diff_setup_done(&rev_info.diffopt);
-@@ -1799,7 +1801,7 @@ int has_uncommitted_changes(void)
-  * If the work tree has unstaged or uncommitted changes, dies with the
-  * appropriate message.
-  */
--int require_clean_work_tree(const char *action, const char *hint, int gently)
-+int require_clean_work_tree(const char *action, const char *hint, int ignore_submodules, int gently)
- {
- 	struct lock_file *lock_file = xcalloc(1, sizeof(*lock_file));
- 	int err = 0;
-@@ -1816,12 +1818,12 @@ int require_clean_work_tree(const char *action, const char *hint, int gently)
- 	update_index_if_able(&the_index, lock_file);
- 	rollback_lock_file(lock_file);
- 
--	if (has_unstaged_changes()) {
-+	if (has_unstaged_changes(ignore_submodules)) {
- 		error(_("Cannot %s: You have unstaged changes."), action);
- 		err = 1;
- 	}
- 
--	if (has_uncommitted_changes()) {
-+	if (has_uncommitted_changes(ignore_submodules)) {
- 		if (err)
- 			error(_("Additionally, your index contains uncommitted changes."));
- 		else
-diff --git a/wt-status.h b/wt-status.h
-index 75833c1..ba56c01 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -115,8 +115,9 @@ void status_printf_ln(struct wt_status *s, const char *color, const char *fmt, .
- __attribute__((format (printf, 3, 4)))
- void status_printf(struct wt_status *s, const char *color, const char *fmt, ...);
- 
--int has_unstaged_changes(void);
--int has_uncommitted_changes(void);
--int require_clean_work_tree(const char *action, const char *hint, int gently);
-+int has_unstaged_changes(int ignore_submodules);
-+int has_uncommitted_changes(int ignore_submodules);
-+int require_clean_work_tree(const char *action, const char *hint,
-+	int ignore_submodules, int gently);
- 
- #endif /* STATUS_H */
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+index 078b556..0d933ac 100644
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -159,8 +159,7 @@ not accessible in the working tree.
+ +
+ <eolattr> is the attribute that is used when checking out or committing,
+ it is either "", "-text", "text", "text=auto", "text eol=lf", "text eol=crlf".
+-Note: Currently Git does not support "text=auto eol=lf" or "text=auto eol=crlf",
+-that may change in the future.
++Since Git 2.10 "text=auto eol=lf" and "text=auto eol=crlf" are supported.
+ +
+ Both the <eolinfo> in the index ("i/<eolinfo>")
+ and in the working tree ("w/<eolinfo>") are shown for regular files,
 -- 
-2.10.0.rc1.99.gcd66998
+2.9.3.599.g2376d31.dirty
+
