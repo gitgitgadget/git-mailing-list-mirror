@@ -2,144 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 024A81F859
-	for <e@80x24.org>; Thu, 25 Aug 2016 23:05:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 317771F859
+	for <e@80x24.org>; Thu, 25 Aug 2016 23:31:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755308AbcHYXFL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Aug 2016 19:05:11 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63765 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754176AbcHYXFJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2016 19:05:09 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DE0AA344FE;
-        Thu, 25 Aug 2016 18:59:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=W4VdzzglPBkFY8YX8H2fSol6FXc=; b=TQVRqi
-        vNoE4YuKk1Ome3hOGoM95l/k09B3YvBoAyLRRmLWNHWpe3LMLRJjprUUrffPBBH9
-        wYHrTV2KnGWEnmRkwolw5EmKCZE9coRlFWVmTCZ2Xcc1Xlv/UWZzl9yc6TulvqKV
-        bg/MJ59yBl3Ex6AFDVtZYtpq+H2s1trLKloJw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HChLSV6q6DHimX9lTGRq2Wqy1K4H5X7q
-        DN5+xSO7t5ajwrtsRD1dt2bcDXEfXn2wl4xXRmXof7Hq5vsPXj7n4rxblvlDWWyz
-        CtoVMu/pSYKZrZ5OiQfue1txeNxnYCSYZ0fY7j/dGva5WFNgdfzvdsSYoVOVTNBP
-        aZKo52iQnuc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D73D8344FD;
-        Thu, 25 Aug 2016 18:59:11 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5054D344FC;
-        Thu, 25 Aug 2016 18:59:11 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 06/15] sequencer: lib'ify read_populate_todo()
-References: <cover.1471968378.git.johannes.schindelin@gmx.de>
-        <0de75bbce8ade0c6e5cf87d3647faa71a89c6275.1471968378.git.johannes.schindelin@gmx.de>
-Date:   Thu, 25 Aug 2016 15:59:09 -0700
-In-Reply-To: <0de75bbce8ade0c6e5cf87d3647faa71a89c6275.1471968378.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Tue, 23 Aug 2016 18:07:11 +0200
-        (CEST)")
-Message-ID: <xmqqeg5cjw02.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 894E901E-6B17-11E6-941F-F7BB12518317-77302942!pb-smtp1.pobox.com
+        id S1757243AbcHYXbA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Aug 2016 19:31:00 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34315 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756165AbcHYXas (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2016 19:30:48 -0400
+Received: by mail-wm0-f66.google.com with SMTP id q128so9266758wma.1
+        for <git@vger.kernel.org>; Thu, 25 Aug 2016 16:30:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=references:mime-version:in-reply-to:content-transfer-encoding
+         :message-id:cc:from:subject:date:to;
+        bh=ZWrNZL/8t7JKOUrij5VbxeCZU0bTbHtnrlbS3CXLkaw=;
+        b=QDk5vjqxglfogFh2dT8oqBs1Je2PehK1COxjRbszK2qOo5OTUjOvIhCOW5xK/GK/4g
+         tYJeA3jDzuzSumscaEUYhBXAgsfjp2PkOZmRA53paitTYIfIJU/KDHAODB+xzr68rJNv
+         imMCloka34xynI5hWSZGHcwLlRNCQc2/YokN2UVRhwWZT9ssRnODp3xCFZ/E/VVRNCcI
+         BT3983AxhPD5w+48zinLJ76XKqEzSok+gCps1UGtWNtWwACSdPsBe9O+Ua+aukrOybvW
+         fAsTtHvX6aYW/eHVKAH/EapQZyvuLjwcYlk7xqSG2gQL8y514w/XUpp5UMfUsgtzBS4x
+         RpmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:references:mime-version:in-reply-to
+         :content-transfer-encoding:message-id:cc:from:subject:date:to;
+        bh=ZWrNZL/8t7JKOUrij5VbxeCZU0bTbHtnrlbS3CXLkaw=;
+        b=O9Oe6kPVu3ut2KDdhX19RK9qx2/74+3YsS7oNh1bDRZoXzkMnb60cxb5xq1aEU9N5i
+         itvEUSsBm9QNZ89nnthyKUkwp/tIku0OAMYlosUl9XkJzMYB0uAU4kWj0Ljxjjhw5Bj4
+         v8/X55KcjbiOR2JH+xMcgTN7H7qt7pYQa5OeoicMqAVxt+9RmMFr+gNqbIxCA3ep8e7I
+         BMmTyTsN5Azaz3B1ejccLCwnUCsHq2P2Z+xIcnPsgr5ZUCEMlZXlB+2zcslRmObeRSKy
+         7/o/ERX8937vBgqgKTvKUjdl3jgzC0/PLM4MhNusbg3PPS115oTZ57RhJv/3lf0l8EYD
+         7VkA==
+X-Gm-Message-State: AEkoouvvWVvzAeK8KKDnwBPbn7KlRnSJkMfpSEiCO/hUXLPnjdthw9c9kOpnqP+WtdZk1Q==
+X-Received: by 10.28.148.148 with SMTP id w142mr32951591wmd.48.1472153659256;
+        Thu, 25 Aug 2016 12:34:19 -0700 (PDT)
+Received: from [10.20.236.170] (tmo-114-227.customers.d1-online.com. [80.187.114.227])
+        by smtp.gmail.com with ESMTPSA id r16sm40236501wme.16.2016.08.25.12.34.17
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 25 Aug 2016 12:34:18 -0700 (PDT)
+References: <20160825110752.31581-1-larsxschneider@gmail.com> <20160825110752.31581-7-larsxschneider@gmail.com> <CAGZ79kaVg40H-LeDtFfDYqDFDDbr+um3ZYj8oAaqGu+q6k5e+A@mail.gmail.com>
+Mime-Version: 1.0 (1.0)
+In-Reply-To: <CAGZ79kaVg40H-LeDtFfDYqDFDDbr+um3ZYj8oAaqGu+q6k5e+A@mail.gmail.com>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <269094FB-81F3-4220-BE7A-F957EDF6F808@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Martin-Louis Bright <mlbright@gmail.com>
+X-Mailer: iPhone Mail (13G35)
+From:   Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v6 06/13] pkt-line: add functions to read/write flush terminated packet streams
+Date:   Thu, 25 Aug 2016 21:33:34 +0200
+To:     Stefan Beller <sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> To be truly useful, the sequencer should never die() but always return
-> an error.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  sequencer.c | 14 +++++++++-----
->  1 file changed, 9 insertions(+), 5 deletions(-)
+> On 25 Aug 2016, at 20:46, Stefan Beller <sbeller@google.com> wrote:
+>=20
+>> On Thu, Aug 25, 2016 at 4:07 AM,  <larsxschneider@gmail.com> wrote:
+>> From: Lars Schneider <larsxschneider@gmail.com>
+>>=20
+>> packet_write_stream_with_flush_from_fd() and
+>> packet_write_stream_with_flush_from_buf() write a stream of packets. All
+>> content packets use the maximal packet size except for the last one.
+>> After the last content packet a `flush` control packet is written.
+>>=20
+>> packet_read_till_flush() reads arbitrary sized packets until it detects
+>> a `flush` packet.
+>=20
+> So the API provided by these read/write functions is intended
+> to move a huge chunks of data. And as it puts the data on the wire one
+> packet after the other without the possibility to intervene and e.g. send
+> a side channel progress bar update, I would question the design of this.
+> If I understand correctly this will be specifically  used for large
+> files locally,
+> so e.g. a file of 5 GB (such as a virtual machine tracked in Git), would
+> require about 80k packets.
 
-Instead of dying there, you let the caller high up in the callchain
-to notice the error and handle it (by dying).
+Peff suggested this approach arguing that the overhead is neglectable:
+http://public-inbox.org/git/20160720134916.GB19359@sigill.intra.peff.net/
 
-The only caller of read_populate_todo(), sequencer_continue() can
-already return errors, so its caller must be already prepared to
-handle error returns, and with this step, you make it notice an
-error return from this function.  So this is a safe conversion to
-make read_populate_todo() callable from new callers that want it not
-to die, without changing the external behaviour of anything
-existing.
 
-Good.
+> Instead of having many packets of max length and then a remainder,
+> I would suggest to invent larger packets for this use case. Then we can
+> just send one packet instead.
+>=20
+> Currently a packet consists of 4 bytes indicating the length in hex
+> and then the payload of length-4 bytes. As the length is in hex
+> the characters in the first 4 bytes are [0-9a-f], we can easily add anothe=
+r
+> meaning for the length, e.g.:
+>=20
+>  A packet starts with the overall length and then the payload.
+>  If the first character of the length is 'v' the length is encoded as a
+>  variable length quantity[1]. The high bit of the char indicates if
+>  the next char is still part of the length field. The length must not exce=
+ed
+>  LLONG_MAX (which results in a payload of 9223 Petabyte, so
+>  enough for the foreseeable future).
 
-By the way, I am writing these as review comments because I do not
-want to keep repeating this kind of analysis as a reviewer.  I am
-demonstrating what should have been in the commit log message
-instead, so that the reviewer does not have to spend extra time, if
-the reviewer trusts the author's diligence well enough, to see if
-the conversion makes sense.
+Eventually I would like to resurrect Joey's cleanFromFile/smudgeToFile idea:=
 
-Please follow the example when/if you have to reroll.  I want the
-patches to show the evidence of careful analysis to reviewers so
-that they can gauge the trustworthiness of the patches.  With this
-round of patches, honestly, I cannot tell if it is a mechanical
-substitution alone, or such a substitution followed by a careful
-verification of the callers.
 
-> diff --git a/sequencer.c b/sequencer.c
-> index a8c3a48..5f6b020 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -746,7 +746,7 @@ static int parse_insn_buffer(char *buf, struct commit_list **todo_list,
->  	return 0;
->  }
->  
-> -static void read_populate_todo(struct commit_list **todo_list,
-> +static int read_populate_todo(struct commit_list **todo_list,
->  			struct replay_opts *opts)
->  {
->  	struct strbuf buf = STRBUF_INIT;
-> @@ -754,18 +754,21 @@ static void read_populate_todo(struct commit_list **todo_list,
->  
->  	fd = open(git_path_todo_file(), O_RDONLY);
->  	if (fd < 0)
-> -		die_errno(_("Could not open %s"), git_path_todo_file());
-> +		return error(_("Could not open %s (%s)"),
-> +			git_path_todo_file(), strerror(errno));
->  	if (strbuf_read(&buf, fd, 0) < 0) {
->  		close(fd);
->  		strbuf_release(&buf);
-> -		die(_("Could not read %s."), git_path_todo_file());
-> +		return error(_("Could not read %s."), git_path_todo_file());
->  	}
->  	close(fd);
->  
->  	res = parse_insn_buffer(buf.buf, todo_list, opts);
->  	strbuf_release(&buf);
->  	if (res)
-> -		die(_("Unusable instruction sheet: %s"), git_path_todo_file());
-> +		return error(_("Unusable instruction sheet: %s"),
-> +			git_path_todo_file());
-> +	return 0;
->  }
->  
->  static int populate_opts_cb(const char *key, const char *value, void *data)
-> @@ -1015,7 +1018,8 @@ static int sequencer_continue(struct replay_opts *opts)
->  	if (!file_exists(git_path_todo_file()))
->  		return continue_single_pick();
->  	read_populate_opts(&opts);
-> -	read_populate_todo(&todo_list, opts);
-> +	if (read_populate_todo(&todo_list, opts))
-> +		return -1;
->  
->  	/* Verify that the conflict has been resolved */
->  	if (file_exists(git_path_cherry_pick_head()) ||
+http://public-inbox.org/git/1468277112-9909-3-git-send-email-joeyh@joeyh.nam=
+e/
+
+Then we would not need to transfer that much data over the pipes. However, I=
+ wonder if the large amount of packets would actually be a problem. Honestly=
+, I would prefer to not change Git's packet format in this already large ser=
+ies ;-)
+
+
+>  [1] A variable-length quantity (VLQ) is a universal code that uses
+>  an arbitrary number of bytes to represent an arbitrarily large integer.
+>  https://en.wikipedia.org/wiki/Variable-length_quantity
+>=20
+> The neat thing about the packet system is we can dedicate packets
+> to different channels (such as the side channels), but with the provided
+> API here this makes it impossible to later add in these side channel
+> as it is a pure streaming API now. So let's remove the complication
+> of having to send multiple packets and just go with one large packet
+> instead.
+
+I tried to design the protocol as flexible as possible for the future with a=
+ version negotiation and a capabilities list. Therefore, I would think it sh=
+ould be possible to implement these ideas in the future if they are required=
+.
+
+
+> --
+>    I understand that my proposal would require writing code again,
+>    but it has also some long term advantages in the networking stack
+>    of Git: There are some worries that a capabilities line in fetch/push
+>    might overflow in the far future, when there are lots of capabilities.
+>=20
+>    Also a few days ago there was a proposal to add all symbolic refs
+>    to a capabilities line, which Peff shot down as "the packet may be
+>    too small".
+>=20
+>    There is an incredible hack that allows transporting refs > 64kB IIRC.
+>=20
+>    All these things could go away with the variable length encoded
+>    packets. But to make them go away in the future we would need
+>    to start with these variable length packets today. ;)
+>=20
+> Just food for thought.
+
+Thanks for thinking it through that thoroughly! I understand your point of v=
+iew and I am curious what others thing.
+
+Cheers,
+Lars
+
