@@ -6,388 +6,76 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BF631F859
-	for <e@80x24.org>; Thu, 25 Aug 2016 20:30:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9EA6F1F859
+	for <e@80x24.org>; Thu, 25 Aug 2016 20:32:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752564AbcHYUaU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Aug 2016 16:30:20 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51984 "EHLO
+        id S1757772AbcHYUcG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Aug 2016 16:32:06 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51670 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751795AbcHYUaS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2016 16:30:18 -0400
+        with ESMTP id S1756438AbcHYUcD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2016 16:32:03 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7015E36C77;
-        Thu, 25 Aug 2016 16:30:17 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8EFD038F42;
+        Thu, 25 Aug 2016 16:32:02 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=HtFmusCH9BNMe/a+3u8yJnR3MKw=; b=VYXGfp
-        VjhDcVuPYqKQK2VgD/yl/wLOri2mClLUSwuEqlOgeM+ZcD7XZCgUnPOSI7+7B9oK
-        Kw4Gl+Chl8xw3ImASjdag/ZNWvV8yK94FsYpXE2N6miKIlhOypEGC0UKrjLAPx0W
-        v2NcCYFmjX/LR5m2pTBdJrSYWTB/lYeVv7Elw=
+        :content-type:content-transfer-encoding; s=sasl; bh=TXhlwQWbj+co
+        VydskymakBZ3o60=; b=uHrrKKYnXhPoH8m+bFrztLFP5J7wx9Jl0SgjBj9lF7AD
+        ufgjdGXf1JyEVs0HjqC2L/3XTijAMNphDa7PLzbyS3TBbhAolpCOf2uhFn/BzZ0O
+        tE99ughRzbhxIdnOFCTk6SrILWymRxJALIFTd5IywKqFUYwfacurUe6BkXqRawQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=LBBdgim1fA/VxBcpVX14lyXwEcXK5E4F
-        kcuBEUxZrAH0kcH+Pwr9U39+oOZj/WRQn2JXNTsXdlN0rf1LSbm2q9qMz3527LLi
-        D/tKxUeGYVwoN2PiKSEk2YIufb8pdCnEdZPs36sA/BO7Z0+hM+XNT7h6a5osRvrz
-        qtTrkBbtlfg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6878936C76;
-        Thu, 25 Aug 2016 16:30:17 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=DTlnEy
+        x2d9BBjZFJfdhmvrzLotMPUNmpi9V3JLcO6uPHiZK/ZmDMlzh0Ing+CI1wVD8CYG
+        +9wfeZWwDC+kKQPaNhr+53iqvHdDhwDCBSZ0wzvwyBdU02ehE/+n4yxvAVoCmhZ9
+        7ZbTk4445W0AZeBwS3LGUhsiubyvuhBcMERso=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8805C38F41;
+        Thu, 25 Aug 2016 16:32:02 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C806C36C74;
-        Thu, 25 Aug 2016 16:30:16 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0D61438F3F;
+        Thu, 25 Aug 2016 16:32:01 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Pranit Bauva <pranit.bauva@gmail.com>
+To:     tboegi@web.de
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v14 14/27] bisect--helper: `bisect_next` and `bisect_auto_next` shell function in C
-References: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
-        <01020156b73fe6ce-3b204354-849b-40fd-93ff-2ebcf77df91c-000000@eu-west-1.amazonses.com>
-Date:   Thu, 25 Aug 2016 13:30:14 -0700
-In-Reply-To: <01020156b73fe6ce-3b204354-849b-40fd-93ff-2ebcf77df91c-000000@eu-west-1.amazonses.com>
-        (Pranit Bauva's message of "Tue, 23 Aug 2016 11:53:53 +0000")
-Message-ID: <xmqq37lsmw15.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v1 0/3] Update eol documentation
+References: <20160809114938.pcrvirrzrh6ldmnr@sigill.intra.peff.net>
+        <20160825155255.28929-1-tboegi@web.de>
+Date:   Thu, 25 Aug 2016 13:31:59 -0700
+In-Reply-To: <20160825155255.28929-1-tboegi@web.de> (tboegi@web.de's message
+        of "Thu, 25 Aug 2016 17:52:55 +0200")
+Message-ID: <xmqqy43klhds.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BBED155A-6B02-11E6-8DA7-51057B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: FAA6C142-6B02-11E6-9F27-F7BB12518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pranit Bauva <pranit.bauva@gmail.com> writes:
+tboegi@web.de writes:
 
-> A lot of parts of bisect.c uses exit() and these signals are then
-> trapped in the `bisect_start` function. Since the shell script ceases
-> its existence it would be necessary to convert those exit() calls to
-> return statements so that errors can be reported efficiently in C code.
+> From: Torsten B=C3=B6gershausen <tboegi@web.de>
+>
+> Sorry for posting this so late:
+> While reviewing another patch I realized that the eol related
+> documentation was not updated as it should be.
+>
+> Torsten B=C3=B6gershausen (2):
+>   git ls-files: text=3Dauto eol=3Dlf is supported in Git 2.10
+>   gitattributes: Document the unified "auto" handling
+>
+>  Documentation/git-ls-files.txt  |  3 +--
+>  Documentation/gitattributes.txt | 24 ++++++++++++++++--------
+>  2 files changed, 17 insertions(+), 10 deletions(-)
 
-Is efficiency really an issue?  I think the real reason is that it
-would make it impossible for the callers to handle errors, if you do
-not convert and let the error codepaths exit().
+This [0/3] is meant to be a cover for [1/2] and [2/2]?
 
-> @@ -729,7 +735,7 @@ static struct commit **get_bad_and_good_commits(int *rev_nr)
->  	return rev;
->  }
->  
-> -static void handle_bad_merge_base(void)
-> +static int handle_bad_merge_base(void)
->  {
->  	if (is_expected_rev(current_bad_oid)) {
->  		char *bad_hex = oid_to_hex(current_bad_oid);
-> @@ -750,17 +756,18 @@ static void handle_bad_merge_base(void)
->  				"between %s and [%s].\n"),
->  				bad_hex, term_bad, term_good, bad_hex, good_hex);
->  		}
-> -		exit(3);
-> +		return 3;
->  	}
->  
->  	fprintf(stderr, _("Some %s revs are not ancestor of the %s rev.\n"
->  		"git bisect cannot work properly in this case.\n"
->  		"Maybe you mistook %s and %s revs?\n"),
->  		term_good, term_bad, term_good, term_bad);
-> -	exit(1);
-> +	bisect_clean_state();
-> +	return 1;
-
-What is the logic behind this function sometimes clean the state,
-and some other times do not, when it makes an error-return?  We see
-above that "return 3" codepath leaves the state behind.
-
-Either you forgot a necessary clean_state in "return 3" codepath,
-or you forgot to document why the distinction exists in the in-code
-comment for the function.  I cannot tell which, but I am leaning
-towards guessing that it is the former.
-
-> -static void check_good_are_ancestors_of_bad(const char *prefix, int no_checkout)
-> +static int check_good_are_ancestors_of_bad(const char *prefix, int no_checkout)
->  {
->  	char *filename = git_pathdup("BISECT_ANCESTORS_OK");
->  	struct stat st;
-> -	int fd;
-> +	int fd, res = 0;
->  
->  	if (!current_bad_oid)
->  		die(_("a %s revision is needed"), term_bad);
-
-Can you let it die yere?
-
-> @@ -873,8 +890,11 @@ static void check_good_are_ancestors_of_bad(const char *prefix, int no_checkout)
->  			      filename);
->  	else
->  		close(fd);
-> +
-> +	return 0;
->   done:
->  	free(filename);
-> +	return 0;
->  }
-
-Who owns "filename"?  The first "return 0" leaves it unfreed, and
-when "goto done" is done, it is freed.
-
-The above two may indicate that "perhaps 'retval + goto finish'
-pattern?" is a really relevant suggestion for the earlier steps in
-this series.
-
->  	if (!all) {
->  		fprintf(stderr, _("No testable commit found.\n"
->  			"Maybe you started with bad path parameters?\n"));
-> -		exit(4);
-> +		return 4;
->  	}
->  
->  	bisect_rev = revs.commits->item->object.oid.hash;
->  
->  	if (!hashcmp(bisect_rev, current_bad_oid->hash)) {
-> -		exit_if_skipped_commits(tried, current_bad_oid);
-> +		res = exit_if_skipped_commits(tried, current_bad_oid);
-> +		if (res)
-> +			return res;
-> +
->  		printf("%s is the first %s commit\n", sha1_to_hex(bisect_rev),
->  			term_bad);
->  		show_diff_tree(prefix, revs.commits->item);
->  		/* This means the bisection process succeeded. */
-> -		exit(10);
-> +		return 10;
->  	}
->  
->  	nr = all - reaches - 1;
-> @@ -1005,7 +1033,11 @@ int bisect_next_all(const char *prefix, int no_checkout)
->  		  "Bisecting: %d revisions left to test after this %s\n",
->  		  nr), nr, steps_msg);
->  
-> -	return bisect_checkout(bisect_rev, no_checkout);
-> +	res = bisect_checkout(bisect_rev, no_checkout);
-> +	if (res)
-> +		bisect_clean_state();
-> +
-> +	return res;
->  }
-
-There were tons of "exit_if" that was converted to "if (res) return
-res" above, instead of jumping here to cause clean_state to be
-called.  I cannot tell if this new call to clean_state() is wrong,
-or all the earlier "return res" should come here.  I am guessing the
-latter.
-
-> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-> index c64996a..ef7b3a1 100644
-> --- a/builtin/bisect--helper.c
-> +++ b/builtin/bisect--helper.c
-> @@ -8,6 +8,7 @@
->  #include "run-command.h"
->  #include "prompt.h"
->  #include "quote.h"
-> +#include "revision.h"
->  
->  static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
->  static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
-> @@ -29,6 +30,8 @@ static const char * const git_bisect_helper_usage[] = {
->  	N_("git bisect--helper --bisect-terms [--term-good | --term-old | --term-bad | --term-new]"),
->  	N_("git bisect--helper --bisect start [--term-{old,good}=<term> --term-{new,bad}=<term>]"
->  					      "[--no-checkout] [<bad> [<good>...]] [--] [<paths>...]"),
-> +	N_("git bisect--helper --bisect-next"),
-> +	N_("git bisect--helper --bisect-auto-next"),
->  	NULL
->  };
->  
-> @@ -396,6 +399,129 @@ static int bisect_terms(struct bisect_terms *terms, const char **argv, int argc)
->  	return 0;
->  }
->  
-> +static int register_good_ref(const char *refname,
-> +			     const struct object_id *oid, int flags,
-> +			     void *cb_data)
-> +{
-> +	struct string_list *good_refs = cb_data;
-> +	string_list_append(good_refs, oid_to_hex(oid));
-> +	return 0;
-> +}
-> +
-> +static int bisect_next(struct bisect_terms *terms, const char *prefix)
-> +{
-> +	int res, no_checkout;
-> +
-> +	/* In case of mistaken revs or checkout error, or signals received,
-
-That's an unbalanced comment.  You end the block with "*/" on its
-own line, so you should start the block with "/*" on its own line.
-There seems to be at least one more such comment in this patch but I
-won't repeat.
-
-> +	 * "bisect_auto_next" below may exit or misbehave.
-> +	 * We have to trap this to be able to clean up using
-> +	 * "bisect_clean_state".
-> +	 */
-
-"exit" meaning "call exit() to terminate the process", or something
-else?  If the latter, don't say "exit", but say "return error".
-
-> +	if (bisect_next_check(terms, terms->term_good.buf))
-> +		return -1;
-
-Mental note.  The "autostart" in the original is gone.  Perhaps it
-is done by next_check in this code, but we haven't seen that yet.
-
-> +	no_checkout = !is_empty_or_missing_file(git_path_bisect_head());
-> +
-> +	/* Perform all bisection computation, display and checkout */
-> +	res = bisect_next_all(prefix , no_checkout);
-> +
-> +	if (res == 10) {
-> +		FILE *fp;
-> +		unsigned char sha1[20];
-> +		struct commit *commit;
-> +		struct pretty_print_context pp = {0};
-> +		struct strbuf commit_name = STRBUF_INIT;
-> +		char *bad_ref = xstrfmt("refs/bisect/%s",
-> +					      terms->term_bad.buf);
-> +		read_ref(bad_ref, sha1);
-> +		commit = lookup_commit_reference(sha1);
-> +		format_commit_message(commit, "%s", &commit_name, &pp);
-> +		fp = fopen(git_path_bisect_log(), "a");
-> +		if (!fp) {
-> +			free(bad_ref);
-> +			strbuf_release(&commit_name);
-> +			return -1;
-> +		}
-> +		if (fprintf(fp, "# first %s commit: [%s] %s\n",
-> +			    terms->term_bad.buf, sha1_to_hex(sha1),
-> +			    commit_name.buf) < 1){
-> +			free(bad_ref);
-> +			strbuf_release(&commit_name);
-> +			fclose(fp);
-> +			return -1;
-> +		}
-> +		free(bad_ref);
-> +		strbuf_release(&commit_name);
-> +		fclose(fp);
-> +		return 0;
-
-Doesn't it bother you that you have to write free(bad_ref)...fclose(fp)
-repeatedly?
-
-> +	}
-> +	else if (res == 2) {
-> +		FILE *fp;
-> +		struct rev_info revs;
-> +		struct argv_array rev_argv = ARGV_ARRAY_INIT;
-> +		struct string_list good_revs = STRING_LIST_INIT_DUP;
-> +		struct pretty_print_context pp = {0};
-> +		struct commit *commit;
-> +		char *term_good = xstrfmt("%s-*", terms->term_good.buf);
-> +		int i;
-> +
-> +		fp = fopen(git_path_bisect_log(), "a");
-> +		if (!fp) {
-> +			free(term_good);
-> +			return -1;
-> +		}
-> +		if (fprintf(fp, "# only skipped commits left to test\n") < 1) {
-> +			free(term_good);
-> +			fclose(fp);
-> +			return -1;
-> +		}
-> +		for_each_glob_ref_in(register_good_ref, term_good,
-> +				     "refs/bisect/", (void *) &good_revs);
-> +
-> +		free(term_good);
-
-Doesn't it bother you that you have to write free(term_good) repeatedly?
-
-> +		argv_array_pushl(&rev_argv, "skipped_commits", "refs/bisect/bad", "--not", NULL);
-> +		for (i = 0; i < good_revs.nr; i++)
-> +			argv_array_push(&rev_argv, good_revs.items[i].string);
-> +
-> +		/* It is important to reset the flags used by revision walks
-> +		 * as the previous call to bisect_next_all() in turn
-> +		 * setups a revision walk.
-> +		 */
-> +		reset_revision_walk();
-> +		init_revisions(&revs, NULL);
-> +		rev_argv.argc = setup_revisions(rev_argv.argc, rev_argv.argv, &revs, NULL);
-> +		argv_array_clear(&rev_argv);
-> +		string_list_clear(&good_revs, 0);
-
-Are you sure that the revision walking machinery is prepared to see
-the argv[] and elements in it you have given to setup_revisions()
-gets cleared before it starts doing the real work in
-prepare_revision_walk()?  I am reasonably sure that the machinery
-borrows strings like pathspec elements from the caller and expects
-them to stay during revision traversal.
-
-You seem to have acquired a habit of freeing and clearing things
-early, which is bad.  Instead, make it a habit of free/clear at the
-end, and make sure all error paths go through that central freeing
-site.  That tends to future-proof your code better from leaking even
-when later other people change it.
-
-> +		if (prepare_revision_walk(&revs)) {
-> +			die(_("revision walk setup failed\n"));
-> +		}
-
-This one is still allowed to die, without clean_state?
-
-> +		while ((commit = get_revision(&revs)) != NULL) {
-> +			struct strbuf commit_name = STRBUF_INIT;
-> +			format_commit_message(commit, "%s",
-> +					      &commit_name, &pp);
-> +			fprintf(fp, "# possible first %s commit: "
-> +				    "[%s] %s\n", terms->term_bad.buf,
-> +				    oid_to_hex(&commit->object.oid),
-> +				    commit_name.buf);
-> +			strbuf_release(&commit_name);
-> +		}
-> +
-> +		fclose(fp);
-> +		return res;
-> +	}
-> +
-> +	return res;
-> +}
-
-> @@ -415,47 +541,67 @@ static int bisect_start(struct bisect_terms *terms, int no_checkout,
->  		no_checkout = 1;
->  
->  	for (i = 0; i < argc; i++) {
-> -		if (!strcmp(argv[i], "--")) {
-> +		const char *arg;
-> +		if (starts_with(argv[i], "'"))
-> +			arg = sq_dequote(xstrdup(argv[i]));
-> +		else
-> +			arg = argv[i];
-> +		if (!strcmp(arg, "--")) {
->  			has_double_dash = 1;
->  			break;
->  		}
->  	}
-
-This is really bad; you are blindly assuming that anything that
-begins with "'" begins with "'" because "git-bisect.sh" sq-quoted
-and it never directly came from the command line that _wanted_ to
-give you something that begins with a "'".
-
-I suspect that you should be able to dequote on the calling script
-side.  Then all these ugliness would disappear.
-
->  	for (i = 0; i < argc; i++) {
-> -		const char *commit_id = xstrfmt("%s^{commit}", argv[i]);
-> +		const char *arg, *commit_id;
-> +		if (starts_with(argv[i], "'"))
-> +			arg = sq_dequote(xstrdup(argv[i]));
-> +		else
-> +			arg = argv[i];
-
-Likewise.
-
-> +		commit_id = xstrfmt("%s^{commit}", arg);
-
-In any case, I think a separate "const char *arg" that is an alias
-to argv[i] in the loop is a very good idea to do from the very
-beginning (i.e. should be done in a much much earlier patch in this
-series).
+I am trying to see if we broke format-patch recently, or it is a
+manual editing error.  The latter I do not care about; the former I
+do.
