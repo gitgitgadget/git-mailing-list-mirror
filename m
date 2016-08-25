@@ -2,91 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DECA2018E
-	for <e@80x24.org>; Thu, 25 Aug 2016 18:33:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99AAD1F859
+	for <e@80x24.org>; Thu, 25 Aug 2016 18:46:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754087AbcHYSdf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Aug 2016 14:33:35 -0400
-Received: from smtp5.opentext.com ([205.211.178.41]:52834 "EHLO
-        smtp5.opentext.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753453AbcHYSdd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2016 14:33:33 -0400
-Received: from otwlxg12.opentext.net (otwlxg12.opentext.net [10.2.103.213])
-        by wldmzsvc05.dmz.opentext.com (8.14.4/8.14.4) with ESMTP id u7PIXvto031320
-        (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=FAIL);
-        Thu, 25 Aug 2016 14:33:57 -0400
-Received: from OTWLXG13.opentext.net (10.2.103.163) by otwlxg12.opentext.net
- (10.2.103.213) with Microsoft SMTP Server (TLS) id 14.3.294.0; Thu, 25 Aug
- 2016 14:33:07 -0400
-Received: from OTWLXG21.opentext.net ([169.254.3.76]) by otwlxg13.opentext.net
- ([10.2.103.163]) with mapi id 14.03.0294.000; Thu, 25 Aug 2016 14:33:06 -0400
-From:   David McGough <dmcgough@opentext.com>
-To:     Jeff King <peff@peff.net>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: Smart HTTP push permissions failure
-Thread-Topic: Smart HTTP push permissions failure
-Thread-Index: AdH9UAqG/VuKfPWxRkeGHFrHOKkKBgA+oBEAAC0ebVA=
-Date:   Thu, 25 Aug 2016 18:33:06 +0000
-Message-ID: <89CBBBEBEE33F5469A9FA456B5F70625CCDC7A1B@otwlxg21.opentext.net>
-References: <89CBBBEBEE33F5469A9FA456B5F70625CCDB9BEB@otwlxg20.opentext.net>
- <20160824170028.y4kr5jchsnb5xdge@sigill.intra.peff.net>
-In-Reply-To: <20160824170028.y4kr5jchsnb5xdge@sigill.intra.peff.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.2.111.33]
-X-TM-AS-Product-Ver: SMEX-11.0.0.1191-8.000.1202-22534.005
-X-TM-AS-Result: No--16.751300-8.000000-31
-X-TM-AS-User-Approved-Sender: No
-X-TM-AS-User-Blocked-Sender: No
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1755888AbcHYSqR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Aug 2016 14:46:17 -0400
+Received: from cloud.peff.net ([104.130.231.41]:32996 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1755743AbcHYSqN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2016 14:46:13 -0400
+Received: (qmail 6772 invoked by uid 109); 25 Aug 2016 18:39:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 25 Aug 2016 18:39:31 +0000
+Received: (qmail 15120 invoked by uid 111); 25 Aug 2016 18:39:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 25 Aug 2016 14:39:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 25 Aug 2016 14:39:28 -0400
+Date:   Thu, 25 Aug 2016 14:39:28 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ed Greenberg <edg@greenberg.org>, git@vger.kernel.org
+Subject: Re: git push origin BRANCHNAME question
+Message-ID: <20160825183928.jm7pihc4kzwuej6y@sigill.intra.peff.net>
+References: <6c4fbb7d-6f67-b454-2b4b-9f5fbeffae9b@greenberg.org>
+ <xmqqr39cn3fk.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqr39cn3fk.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-VGhhbmsgeW91IGZvciB5b3VyIHJlcGx5IEplZmYuICBJIGhhdmUgbW92ZWQgb24gdG8gaW5zdGFs
-bGluZyBHaXRMYWIuICBJdCBoYXMgYmVlbiBhIHN1Y2Nlc3Mgc28gZmFyLg0KDQpUaGFua3MsDQpE
-YXZlDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBKZWZmIEtpbmcgW21haWx0
-bzpwZWZmQHBlZmYubmV0XSANClNlbnQ6IFdlZG5lc2RheSwgQXVndXN0IDI0LCAyMDE2IDE6MDAg
-UE0NClRvOiBEYXZpZCBNY0dvdWdoIDxkbWNnb3VnaEBvcGVudGV4dC5jb20+DQpDYzogZ2l0QHZn
-ZXIua2VybmVsLm9yZw0KU3ViamVjdDogUmU6IFNtYXJ0IEhUVFAgcHVzaCBwZXJtaXNzaW9ucyBm
-YWlsdXJlDQoNCk9uIFR1ZSwgQXVnIDIzLCAyMDE2IGF0IDAzOjQ1OjMzUE0gKzAwMDAsIERhdmlk
-IE1jR291Z2ggd3JvdGU6DQoNCj4gV2hlbiBJIHRyeSB0byBwdXNoIHRvIHRoZSBzZXJ2ZXIgSSBn
-ZXQgdGhpcyBtZXNzYWdlOg0KPiByZW1vdGU6IGVycm9yOiBpbnN1ZmZpY2llbnQgcGVybWlzc2lv
-biBmb3IgYWRkaW5nIGFuIG9iamVjdCB0byANCj4gcmVwb3NpdG9yeSBkYXRhYmFzZSAuL29iamVj
-dHMNCj4gcmVtb3RlOiBmYXRhbDogZmFpbGVkIHRvIHdyaXRlIG9iamVjdA0KPiBbLi4uXQ0KPiBT
-byBJIGFtIHByZXR0eSBjb25mdXNlZCBhYm91dCB3aGF0IHRoZSBpc3N1ZS4gIFdoaWNoIE9TIHVz
-ZXIgaXMgZ2l0IA0KPiB1c2luZyB0byB3cml0ZSB0aGUgZmlsZXM/ICBJIGhvcGUgc29tZWJvZHkg
-Y2FuIGhlbHAgbWUgdW5kZXJzdGFuZCB3aHkgDQo+IHRoZSBwcm9qZWN0IGNhbm5vdCBiZSBwdXNo
-ZWQgdG8gdGhlIGdpdCBzZXJ2ZXIuDQoNCkZvciBhIHNtYXJ0LWh0dHAgcHVzaCwgaXQgd2lsbCBi
-ZSB3aGF0ZXZlciB1c2VyIHRoZSB3ZWIgc2VydmVyIGV4ZWNzIHRoZSBDR0kgYXMuIFNvIEknZCB0
-aGluayAiYXBhY2hlIiB3b3VsZCBiZSB0aGUgZGVmYXVsdCwgYnV0IGl0J3MgcG9zc2libGUgdGhh
-dCBpdCBydW5zIENHSXMgYXMgYSBkaWZmZXJlbnQgdXNlciwgZGVwZW5kaW5nIG9uIHlvdXIgY29u
-ZmlnLg0KDQpPbmUgcG9zc2liaWxpdHkgbWF5IGJlIHRvIGFkZCBhIHNpbXBsZSBzaGVsbCBzY3Jp
-cHQgQ0dJIHRoYXQgZG9lcyBzb21ldGhpbmcgbGlrZToNCg0KICAjIS9iaW4vc2gNCiAgZWNobyAi
-Q29udGVudC10eXBlOiB0ZXh0L3BsYWluIg0KICBlY2hvDQogIGlkDQoNCmp1c3QgdG8gc2VlIHdo
-YXQncyBoYXBwZW5pbmcuDQoNCkJhc2VkIG9uIHRoZSBkYXRhIHlvdSBzaG93ZWQsIGhlcmUgYXJl
-IHNvbWUgd2lsZCBwb3NzaWJpbGl0aWVzIEkgY2FuIHRoaW5rIG9mOg0KDQogIC0gdGhlIENHSSBy
-dW5zIGFzICJhcGFjaGUiLCBidXQgeW91ciBmaWxlcyBhcmUgb3duZWQgYnkgImdpdCIuDQogICAg
-ImFwYWNoZSIgaXMgaW4gdGhlICJzdGFmZiIgZ3JvdXAsIGFuZCB0aGUgZGlyZWN0b3JpZXMgYWxs
-IGhhdmUgd3JpdGUNCiAgICBwZXJtaXNzaW9uIGZvciB0aGF0IGdyb3VwLiBCdXQgYXJlIHdlIHN1
-cmUgdGhhdCBhcGFjaGUgZG9lcyBub3Qgc2hlZA0KICAgIGFueSBncm91cCBwZXJtaXNzaW9ucyB3
-aGVuIHJ1bm5pbmcgYSBDR0k/IFRoZSAiaWQiIHNjcmlwdCBhYm92ZQ0KICAgIHNob3VsZCBob3Bl
-ZnVsbHkgc2hvdyB0aGF0Lg0KDQogIC0gWW91IG1lbnRpb25lZCBDZW50T1MuIEl0IGhhcyBiZWVu
-IGEgd2hpbGUgc2luY2UgSSBkZWFsdCB3aXRoIFJIRUwNCiAgICBhbmQgaXRzIGRlcml2YXRpdmVz
-LCBidXQgSSB0aGluayBzZWxpbnV4IGlzIHR1cm5lZCBvbiBieSBkZWZhdWx0DQogICAgdGhlcmUu
-IElzIGl0IHBvc3NpYmxlIHRoYXQgdGhlIHdlYnNlcnZlciBydW5zIGluIGFuIHNlbGludXggcHJv
-ZmlsZQ0KICAgIHRoYXQgZG9lcyBub3QgYWxsb3cgd3JpdGluZyB0byB0aGUgcmVwb3NpdG9yeSBk
-aXJlY3Rvcnk/DQoNCiAgICBJIGRvbid0IHJlY2FsbCB0aGUgc3BlY2lmaWNzIG9mIGRlYnVnZ2lu
-ZyBzZWxpbnV4IHByb2JsZW1zLCBidXQNCiAgICB0aGVyZSBtYXkgYmUgbG9ncyB0aGVyZS4NCg0K
-U29ycnkgdGhvc2UgYXJlIGp1c3Qgc3RhYnMgaW4gdGhlIGRhcmssIGJ1dCBJIGRvbid0IHNlZSBh
-bnl0aGluZyBlbHNlIG9idmlvdXNseSB3cm9uZyB3aXRoIHdoYXQgeW91J3ZlIHBvc3RlZC4NCg0K
-LVBlZmYNCg==
+On Thu, Aug 25, 2016 at 10:50:23AM -0700, Junio C Hamano wrote:
+
+> Ed Greenberg <edg@greenberg.org> writes:
+> 
+> > I think I understand this from the git-push man page, but I want to
+> > make sure:
+> >
+> > I have two branches, master and develop.
+> >
+> > If I am (accidentally) sitting on master, and issue 'git push origin
+> > develop', does this properly push develop to remote develop, or does
+> > it push master to remote develop (which seems to be bad, in the most
+> > common use case.)  ?
+> 
+> You can find it out yourself quite easily, I would think.
+> 
+> $ git init src
+> $ git init dst
+> $ cd src
+> $ git commit --allow-empty -m initial
+> $ git checkout -b develop
+> $ git commit --allow-empty -m second
+> 
+> $ git checkout master
+> $ git push ../dst develop
+> Counting objects: 3, done.
+> Delta compression using up to 6 threads.
+> Compressing objects: 100% (2/2), done.
+> Writing objects: 100% (3/3), 226 bytes | 0 bytes/s, done.
+> Total 3 (delta 1), reused 0 (delta 0)
+> To ../dst
+>  * [new branch]      develop -> develop
+
+Yes, though I think the "why" is interesting here, too.
+
+And the answer is that "develop" is a shortened refspec, whose full form
+is more like "develop:develop". A name with no colon is always the local
+source, and the implied destination is usually the same name on the
+remote (though it can be changed via config). The third paragraph of
+"<refspec>..." under OPTIONS in "git help push" covers this, though I do
+think it is a little hard to follow.
+
+-Peff
