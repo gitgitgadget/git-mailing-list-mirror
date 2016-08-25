@@ -2,87 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27C582018E
-	for <e@80x24.org>; Thu, 25 Aug 2016 13:08:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD2742018E
+	for <e@80x24.org>; Thu, 25 Aug 2016 13:16:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753655AbcHYNIe (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Aug 2016 09:08:34 -0400
-Received: from mout.gmx.net ([212.227.17.22]:53622 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752917AbcHYNId (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2016 09:08:33 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MKcdH-1bbWwb1Xlf-0023HH; Thu, 25 Aug 2016 15:08:14
- +0200
-Date:   Thu, 25 Aug 2016 15:08:11 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Eric Wong <e@80x24.org>
-cc:     Philip Oakley <philipoakley@iee.org>,
-        Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>, meta@public-inbox.org,
-        git@vger.kernel.org,
-        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-        Arif Khokar <arif_khokar@hotmail.com>
-Subject: Re: Working with public-inbox.org [Was: [PATCH] rev-parse: respect
- core.hooksPath in --git-path]
-In-Reply-To: <20160824191651.GC8578@whir>
-Message-ID: <alpine.DEB.2.20.1608251504030.4924@virtualbox>
-References: <CAGZ79kasebzJb=b2n=JQiVMrSfJKaVfZaaoaVJFkXWuqKjfYKw@mail.gmail.com> <alpine.DEB.2.20.1608181430280.4924@virtualbox> <20160819150340.725bejnps6474u2e@sigill.intra.peff.net> <alpine.DEB.2.20.1608221450250.4924@virtualbox>
- <CACsJy8BG63oaLbw0f7try3OpzdphLC7UGAaJ=vgikEB36Pagqg@mail.gmail.com> <B21604E7033C458EAC5EA0651CFEA8E9@PhilipOakley> <alpine.DEB.2.20.1608241459360.4924@virtualbox> <20160824191651.GC8578@whir>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S933427AbcHYNQw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Aug 2016 09:16:52 -0400
+Received: from smtp98.iad3a.emailsrvr.com ([173.203.187.98]:33287 "EHLO
+        smtp98.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754479AbcHYNQv (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 25 Aug 2016 09:16:51 -0400
+Received: from smtp21.relay.iad3a.emailsrvr.com (localhost [127.0.0.1])
+        by smtp21.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id E232B404A4
+        for <git@vger.kernel.org>; Thu, 25 Aug 2016 09:16:50 -0400 (EDT)
+X-Auth-ID: edg@greenberg.org
+Received: by smtp21.relay.iad3a.emailsrvr.com (Authenticated sender: edg-AT-greenberg.org) with ESMTPSA id CB591404AA
+        for <git@vger.kernel.org>; Thu, 25 Aug 2016 09:16:50 -0400 (EDT)
+X-Sender-Id: edg@greenberg.org
+Received: from arthur.edgreenberg.net (cpe-69-204-130-58.nycap.res.rr.com [69.204.130.58])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+        by 0.0.0.0:465 (trex/5.7.7);
+        Thu, 25 Aug 2016 09:16:50 -0400
+To:     git@vger.kernel.org
+From:   Ed Greenberg <edg@greenberg.org>
+Subject: git push origin BRANCHNAME question
+Message-ID: <6c4fbb7d-6f67-b454-2b4b-9f5fbeffae9b@greenberg.org>
+Date:   Thu, 25 Aug 2016 09:16:50 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:ULANjYi7vCYuQpZCa7krffeQJV30WbEKCQK28splF+eZfuhmRAI
- VtTSp9cqRJQaDbnIf5OqQiM+vl3fSYGLDV56dBKoyxysg5jpyKWHTISm/Tg19J2I2997glJ
- a11i/IEYRvmCJyke1b8x5G7ODMKBMIya0LFGewJLwlhvvAwX6XSBhBN9omc1J44ol9HrLIG
- XyiX/uP7RYEUqEYEfZGfA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:GOwDxg4+nJI=:g7R56YutjOJA2UEqYRKOvQ
- Pzp/ClwRtt1wt//Qeanyx3gl3uJd0piMQ8LeaOZweCwFU2Px5RxAMpqsMxT4D4CDaLvm5p+qu
- CzqjTiVGy1x4cJbbXKnzTkgOr1RnH55VrzbS72vVfB57F//SF9cl0A2U7qhzo/BaQtSTWL8G8
- alZzQUgHX84C948U9g7/px+fDJR5+0bEbEb8+yu7x8KaLRsL06pVt8InYtgk+q26tqBh+Hr1W
- VKvsDoJS1DGlV0XAkXeCk+FQLPuc682ZhEAUY0UxX+hc6W88re2hm2tLqBCTmV8p/rq2Crdf8
- deFJP+iXNjdT1enMPLFIjWrYDGO9gHAqFKFQ7LJ8/Imvq5obel4d1cLCbovjUSovenyTGlPLM
- ClGzbSl9tiBydC54IwXvh9Ez4z2A8JygGcTXohEDGeJg+YCEOA8hdweSPo7QndbdNy4a7+6vF
- zepEQoRiRYJwvdpxpAwDtO9VoOpVJhkLHvQqZ7nogeD0nkFA3txSFsQ/E+g8wRD772zlAz0TL
- cttPzZ9JMh8nEpJcrIx1x74WheMZ/brTbcbK9g3yuz7NDkOUnCRGuXvZjniiTdzsX/aHMrauH
- wvWJnA0H6yuL0k96puwPx8AHqI4IJxWFE2YnPb9sbkqS4nVKfw3bq39sT2EEln/J/U/TWCcoA
- l+OJ13DcTlK4ULV7IBa08rRcCRs4Z2qkPuWRIA59IkB9AX+BWRO8COHPyh7wjOkARsqJa7RR/
- H2vGR4DObHy/ko/XMokg2m7362PKNDwJy8cvltOK3ooXf1V38ORciiYfIsm6i8AEUMq/0kc75
- nDUSVJo
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+I think I understand this from the git-push man page, but I want to make 
+sure:
 
-On Wed, 24 Aug 2016, Eric Wong wrote:
+I have two branches, master and develop.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> 
-> > Now, with somebody like me who would lose a lot when destroying trust,
-> > it is highly unlikely. But it is possible that in between the hundreds
-> > of sincere contributors a bad apple tries to sneak in bad stuff.
-> 
-> Yes, I would never mix reviews + patch applications of emails vs
-> git-fetched data.
+If I am (accidentally) sitting on master, and issue 'git push origin 
+develop', does this properly push develop to remote develop, or does it 
+push master to remote develop (which seems to be bad, in the most common 
+use case.)  ?
 
-Well, such a categorical statement seems to exclude all convenience I had
-in mind.
+Thanks,
 
-My idea was that, say, a web service running on a trusted server with a
-trusted code base could send mails that would be trusted to contain
-correct SHA-1 information, allowing for a review in the mail, but still
-use the much, much more convenient Git tools to actually work on the code.
+Ed
 
-I really hope that not everybody is so categorically against introducing
-much needed convenience.
 
-Ciao,
-Dscho
+-- 
+Ed Greenberg
+Glens Falls, NY USA
+
