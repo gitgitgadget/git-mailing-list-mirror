@@ -2,132 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 530392018E
-	for <e@80x24.org>; Thu, 25 Aug 2016 15:08:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD1AB1F859
+	for <e@80x24.org>; Thu, 25 Aug 2016 15:12:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934285AbcHYPIl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Aug 2016 11:08:41 -0400
-Received: from mout.gmx.net ([212.227.17.22]:51129 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933653AbcHYPIa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2016 11:08:30 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0LmfKJ-1b33OR1Vnn-00aHUC; Thu, 25 Aug 2016 17:06:52
- +0200
-Date:   Thu, 25 Aug 2016 17:06:48 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/6] pull: make code more similar to the shell script again
-In-Reply-To: <cover.1472137582.git.johannes.schindelin@gmx.de>
-Message-ID: <9a7cc36eee651fe8be280920587e1f83538caf77.1472137582.git.johannes.schindelin@gmx.de>
-References: <cover.1472137582.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1759525AbcHYPLq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Aug 2016 11:11:46 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:35969 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1759483AbcHYPLn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2016 11:11:43 -0400
+Received: by mail-wm0-f67.google.com with SMTP id i138so7819377wmf.3
+        for <git@vger.kernel.org>; Thu, 25 Aug 2016 08:11:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=bsbW1nvk5gldMiWjNbP84eST+mUI7WhErHv3gIo7uaA=;
+        b=kCgxD5UvLrQbd3OskjT0rMyN25FArh3ffm8WzWfzESbJr6k0fCdrHGT2CW3cwaDiXB
+         7d+nQX6c3AhhENfpI66pZPaITFCCmVvD746Zk/wES7y36u6qz5EdUkb+jOo+6nPh/SI0
+         BzV3Ur4puuRoQPukmIAy4XFLoaiSxVA17+J4aO7DGPFJYLY+Y7LEPKLUB+2tbCX2tmTl
+         SJn6IjoXsGa+OYzFSzARJY3I8YcpQacYCGJ6u3gMlTMSXCbosUqaEG43/Pgvb2YTBwB4
+         dzRvDXTbvpMI4pfHpb6KRGv1jC+LHUKOZd3r0VkMb5PPUYE8tgGTxZ1QBYyAvNuhNSKk
+         G3DA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=bsbW1nvk5gldMiWjNbP84eST+mUI7WhErHv3gIo7uaA=;
+        b=IoetIYE+L/kDn/NpV6EOHE4hlXHjEjuP6JcDrl9k0ApH0lZ8KG+1iJFHHFT1raT/Am
+         XQ4satIl+Q2xAtrKY3bl6SdHUfKc5fPwMHc5dRYZHs5/U0aj31ZrMXiMxUVnQ7/jIstc
+         mHq5A0t6Ad43YNhF86yhvcYCc74tKloZmziO/MRBXrL9JvtJg8jc/0Kn3nwvEF48qntj
+         WQLpRBBP/+0jD1/X7OvpJohoUdBW3+OvxQ9lVoRlL0uJbivpm5L9h0Pb/xA4IhzIMOh3
+         B/Goueke3ZcuUFw8OqMw5Xu8K34vaHdPHKP9exicv0iq1Hqfl/W17Id7GzxM4dfHexAC
+         GwMw==
+X-Gm-Message-State: AEkoouuwGUeMGOuioUg+x0wMNoQlaQm7YDT6iqXzH8uL2M48K0lsQMdc6X/1kSkV05VD/g==
+X-Received: by 10.28.183.135 with SMTP id h129mr32175636wmf.2.1472136789817;
+        Thu, 25 Aug 2016 07:53:09 -0700 (PDT)
+Received: from [192.168.1.26] (afj243.neoplus.adsl.tpnet.pl. [83.25.139.243])
+        by smtp.googlemail.com with ESMTPSA id lv9sm15531594wjb.22.2016.08.25.07.53.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 25 Aug 2016 07:53:08 -0700 (PDT)
+Subject: Re: [RFC] Proposed questions for "Git User's Survey 2016"
+To:     Andrew Ardill <andrew.ardill@gmail.com>
+References: <91a2ffbe-a73b-fbb9-96da-9aea4d439e5a@gmail.com>
+ <CAH5451n0=kmr9SeOKSH5iiJr5Lnr2TapfZrTUR6Pm90xUEKFxQ@mail.gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Doug Rathbone <doug@dougrathbone.com>,
+        David Bainbridge <david.bainbridge@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <90165dce-c508-4cb4-ec6e-c3d271181fe3@gmail.com>
+Date:   Thu, 25 Aug 2016 16:53:04 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:F6gIpTgXS1d3HJIZFH4SjAbckUEe+O2rwEy4YnNTka6J5YyhIy2
- OBTDhG5a3Pvx+q4x8DdxZbD2kUepsTCFOIuFu/LRV79LVjD5QWISrw9KvL2IZylWex2AfIv
- x+PqVhKwpzuP2vykNjt0j/ejlbHxykfODen3nKdAYao2zqCaddo7Ba6vEiTKVVzhR8RTb6M
- EfYElaqeO2lTDE6n7xWqQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:G9kv3qn8btc=:p2cNqk34WTmOcxMIZFS8M5
- cAbyNOgbFuqRwqjwiY3dbQj/C2QJk4Cfww8eidXhyS8a4IjE/RcOLswLQEz5BIdu4kJkR43M8
- qUgRzbwK4MY2BKeZ9MvfPjRhaxCD+VVWGRSz8d+V3RHQGV/u78+MotKi115rcLQKSry1UJWi6
- i0d9ctwMl5nxb4fwZ6LWLKXaW/nPaFuD+heH6T//fyfA0DNCYMtgeLE8/2Q0le9Q+gEYKSSR0
- n15d94MVVDIfyYnUUq0xPQX3VavswHbyML7FX1y66ZofaiUoUyW8T/XEyYkKqmNkjgT1mHJ4C
- rKI3c+C0NrNZm1nAQZ/RzH5hdlu1OPL0U/CqGIpzfX9tn6ykaNAYRBbStp7yuRyBChROV9B8Q
- Y5rppUyYBfaSIjy1DLyYiswpL2vaZl1NFkZFQDPujlBSQwCid7lDN87q91OpnxrqrRa3lohPS
- wVQVfQ9T4yDg4mlu1YRchdHaxpfLEjItAtGWG01VcYwPVA+0kJacUtglJOT4y6u8uLnIKS/re
- eJeB+83gWysL3WrxYMWepLwGjkg0gsC02TgGCAEdlqyDzHHdgZVuzbQJts5AvZ1nQZJoUhNRJ
- aeFEH7u68leFaw0+Ifc8wGYxPzr0s6Sec7IsCXbn63WCdMez6GtDl9tIYC/2/TLSYsTTnlPJM
- mJHO2AtAAMorlk63terN91GEKC2Y38+26hDQtnHq3LgVheen9gze6gjcEpK6rXwZd1t9iR4e2
- vP2Qqn888PPlC1zbUw6w3g/S6/JYKCC3XN6eOg4zelfyqRHBMRzIPjQiLh9XNY93R5LThvpwP
- cwfVylB
+In-Reply-To: <CAH5451n0=kmr9SeOKSH5iiJr5Lnr2TapfZrTUR6Pm90xUEKFxQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When converting the pull command to a builtin, the
-require_clean_work_tree() function was renamed and the pull-specific
-parts hard-coded.
+W dniu 22.08.2016 o 01:59, Andrew Ardill pisze:
+> On 21 August 2016 at 04:56, Jakub Narębski <jnareb@gmail.com> wrote:
+>> 25. What [channel(s)] do you use to request/get help about Git [(if any)]
+> 
+> It may also be useful to ask how people hear news about git, such as
+> when a new release comes out. Not sure if worth a separate question,
+> as there is a lot of crossover in the resources available for this and
+> for requesting help, but knowing this information would help us
+> understand what kinds of users are responding and which communication
+> channels are effective for git news.
 
-This makes it impossible to reuse the code, so let's modify the code to
-make it more similar to the original shell script again.
+How would you propose such question would look like, and what proposed
+answers would be (if it were not a free-text / essay question)?
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/pull.c | 28 ++++++++++++++++++----------
- 1 file changed, 18 insertions(+), 10 deletions(-)
+Note that there might be a problem of severe bias: people who heard
+about Git User's Survey 2016 are probably ones that watch news about Git.
+Still, it would be useful to know if people read RelNotes...
+ 
+> Related, it might be worth asking how often people upgrade their git
+> clients and servers, particularly in corporate/managed environments.
+> This question would ask two things, how long after a new release comes
+> out do you install it, and do you install every update that comes out
+> or do you skip versions. I suspect many would just use whatever is
+> released in their distro and update at the same time as they update
+> other packages, but it would be interesting to know if people, for
+> example, only upgrade their managed environments every year/6 months
+> or something to avoid introducing changes to their users.
 
-diff --git a/builtin/pull.c b/builtin/pull.c
-index d4bd635..4d1f9c8 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -365,10 +365,11 @@ static int has_uncommitted_changes(void)
-  * If the work tree has unstaged or uncommitted changes, dies with the
-  * appropriate message.
-  */
--static void die_on_unclean_work_tree(void)
-+static int require_clean_work_tree(const char *action, const char *hint,
-+		int gently)
- {
- 	struct lock_file *lock_file = xcalloc(1, sizeof(*lock_file));
--	int do_die = 0;
-+	int err = 0;
- 
- 	hold_locked_index(lock_file, 0);
- 	refresh_cache(REFRESH_QUIET);
-@@ -376,20 +377,26 @@ static void die_on_unclean_work_tree(void)
- 	rollback_lock_file(lock_file);
- 
- 	if (has_unstaged_changes()) {
--		error(_("Cannot pull with rebase: You have unstaged changes."));
--		do_die = 1;
-+		error(_("Cannot %s: You have unstaged changes."), action);
-+		err = 1;
- 	}
- 
- 	if (has_uncommitted_changes()) {
--		if (do_die)
-+		if (err)
- 			error(_("Additionally, your index contains uncommitted changes."));
- 		else
--			error(_("Cannot pull with rebase: Your index contains uncommitted changes."));
--		do_die = 1;
-+			error(_("Cannot %s: Your index contains uncommitted changes."), action);
-+		err = 1;
- 	}
- 
--	if (do_die)
--		exit(1);
-+	if (err) {
-+		if (hint)
-+			error("%s", hint);
-+		if (!gently)
-+			exit(err);
-+	}
-+
-+	return err;
- }
- 
- /**
-@@ -875,7 +882,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 			die(_("Updating an unborn branch with changes added to the index."));
- 
- 		if (!autostash)
--			die_on_unclean_work_tree();
-+			require_clean_work_tree("pull with rebase",
-+				"Please commit or stash them.", 0);
- 
- 		if (get_rebase_fork_point(rebase_fork_point, repo, *refspecs))
- 			hashclr(rebase_fork_point);
+That is, if people have a pattern to their upgrade of Git, and can
+tell how often they upgrade.
+
+XX. How often you upgrade Git?
+    (multiple choice or single choice?)
+
+ * as soon as new version is released
+ * when there is new binary package / distribution package
+ * when updating distribution / system
+ * around every month, or more often
+ * around every 6 months or more often
+ * I use what is installed on system
+
+Something like that?
+
+Regards,
 -- 
-2.10.0.rc1.99.gcd66998
-
+Jakub Narębski
 
