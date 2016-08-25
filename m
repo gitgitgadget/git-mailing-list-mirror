@@ -2,124 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25D801F859
-	for <e@80x24.org>; Thu, 25 Aug 2016 12:19:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 337AA2018E
+	for <e@80x24.org>; Thu, 25 Aug 2016 12:44:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757520AbcHYMTU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Aug 2016 08:19:20 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35842 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754049AbcHYMTS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2016 08:19:18 -0400
-Received: by mail-wm0-f65.google.com with SMTP id i138so7154833wmf.3
-        for <git@vger.kernel.org>; Thu, 25 Aug 2016 05:19:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=l2iQKCt2Zpya/LFK9OCZVoIyF3QQ2XMFUaLD4ngOXLY=;
-        b=cHLbzgg8eruIUMJYb/WStd402NydPveoBL+aSG5r8hssnyOM1tDK8lgjE89HEtcx9S
-         t0KNE/zd1V5LMcdRQC9z6Wxl6vgvN2RFuopFlpU4mz9gmiAOQOwAiJYIBEjwdO7s7P+B
-         Kv99EXU0lJa04i+hdxiG2UQoN4Uzp+dW+5tHCqmdieOAFWDLNzOWRHZM/fnNvuaqsH72
-         KL6lYjGZXnxkEqH8E1cP2yebxpROZnnT3AKEDrUo5qTJPmkY5DeucRaguZwA1A5QmZs+
-         p/Mh/Xo2Z77LFpAYUV0lCAXpzIoD7+3CDMf5Ju/CZAnaVG+zCzzl5f4ijJQxwY2RU6Yn
-         TbmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=l2iQKCt2Zpya/LFK9OCZVoIyF3QQ2XMFUaLD4ngOXLY=;
-        b=kd/S1AiGOYehmH9huUrD2A3ygN0LOakGjHj38n+9k7wkTa1nbkNfMhIu3Eyx/3+w9P
-         2UNNYNFX43Ab7DCpgIM6NjNTJ8+Mcnps5hp/vmYm2NLg/Ke95juht9AgCpA1zy2lnGAT
-         VF8GpD2htsRuZDxO59ByT4HakuB51Sp5SqnXSFT8LPaG6m0NwdvSfil8tQoZGilHIhT7
-         cjt6+bkR+o+nXR5gOta4+4quhPUqX7mtntDGoSo2/zmgvv+6tND6y4mRPytWFo19ZJ0G
-         RCNlNLUFAmWpW3tdkWwO3VElqNiq9CVqpMe2Oxn1I1rKKHo/KkR30YJIceXawdlcB9Vm
-         a8jQ==
-X-Gm-Message-State: AEkoouuFPrE6xKzDwG7FLcFg9RoMzUB9EQftwXNFJ39GaP8D7gUVW9rzCI13Vm+wcdPclQ==
-X-Received: by 10.28.174.11 with SMTP id x11mr30684652wme.41.1472123287740;
-        Thu, 25 Aug 2016 04:08:07 -0700 (PDT)
-Received: from bcnf9f9l32.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id p71sm38304839wmf.9.2016.08.25.04.08.06
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Thu, 25 Aug 2016 04:08:07 -0700 (PDT)
-From:   larsxschneider@gmail.com
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, gitster@pobox.com, sbeller@google.com,
-        Johannes.Schindelin@gmx.de, jnareb@gmail.com, mlbright@gmail.com,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v6 08/13] convert: quote filter names in error messages
-Date:   Thu, 25 Aug 2016 13:07:47 +0200
-Message-Id: <20160825110752.31581-9-larsxschneider@gmail.com>
-X-Mailer: git-send-email 2.9.2
-In-Reply-To: <20160825110752.31581-1-larsxschneider@gmail.com>
-References: <20160825110752.31581-1-larsxschneider@gmail.com>
+        id S1757697AbcHYMoP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Aug 2016 08:44:15 -0400
+Received: from mout.web.de ([212.227.17.12]:49330 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751664AbcHYMoO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2016 08:44:14 -0400
+Received: from [192.168.209.54] ([195.252.60.88]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0M2MYq-1bJzZi3OZ2-00s46O; Thu, 25 Aug 2016 14:43:34
+ +0200
+Subject: Re: core.autocrlf, was Re: [git-for-windows] Re: [ANNOUNCE] Git for
+ Windows 2.9.3
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <alpine.DEB.2.20.1608131214070.4924@virtualbox>
+ <xmqqshu8u0px.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1608171507530.4924@virtualbox>
+ <xmqqeg5nbehc.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1608181022250.4924@virtualbox>
+ <CACsJy8A3tkMY-iLPCDj9sqB4HpAK_cxsUu5Z7fsGcCQEORyxUg@mail.gmail.com>
+ <alpine.DEB.2.20.1608231553030.4924@virtualbox>
+ <2a6d2230-90ce-0f54-c7ae-a5aa595a2f73@drmicha.warpmail.net>
+ <alpine.DEB.2.20.1608231736180.4924@virtualbox>
+ <alpine.DEB.2.20.1608231758260.4924@virtualbox>
+ <xmqqbn0iu50a.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1608241743460.4924@virtualbox>
+ <xmqq37luru7z.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1608251343300.4924@virtualbox>
+Cc:     Michael J Gruber <git@drmicha.warpmail.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        git-for-windows <git-for-windows@googlegroups.com>,
+        Git Mailing List <git@vger.kernel.org>
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <8b3f92e5-0cac-ebb1-0f03-460ba3ad4d32@web.de>
+Date:   Thu, 25 Aug 2016 14:43:27 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
+ Gecko/20100101 Thunderbird/45.2.0
+MIME-Version: 1.0
+In-Reply-To: <alpine.DEB.2.20.1608251343300.4924@virtualbox>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:xG2IxM6pbfbb7au67EVvehQe9ux/y4tZ6nR3n/C1BhL5pt3dlpJ
+ ktZ1lk2Sbw500ZaP2HowN/r+1bEhLz16vEEVek6yV07gw98yL4WY4umAByASqBTTo7Z3efp
+ sz7bHwP42bfPkRgs0EO3D4OCECyCTqKTIiUBEnVHXWckA4/m8XVmEtO3/52vqcZLCVOin/o
+ T3bh4d+wVRnOG5/uOCpLQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:3mLm4LiPCT8=:Lqdl/8TfnJKMe1m7zJD/cH
+ tpZhaNX/9Tome9yE3ooCRFZ+exHPDZs2rG9xlaJKNJBs1HCsY+NSwqUCOjci7SHa8P+ss5+5Z
+ lL4ABsT7cvzS5zEIULslkK7H/DaScPlNzTpuOtvYocjVe8L+2jxeiHFK++Uc7HwWYeIseDRo0
+ faNghf4Uj5fU7NbP2TNuNTkaiwzj8QoLq+0zs0VYiFx4SR+wfy9Ma7bBcYgw32qDQm3KhXs8h
+ yrW73hgFguygJbSgs3hQiyl3ZTh77nPmBkxMIYBmZuy2PtynO6XQ1laYH/DPt5zhn5reTZ0UM
+ Z5P9Ecadyk15XyH262E6FlGQ0/SM0Lzjyh/6qjc+APijniZEjrfgabP1w+Iqp/EmbxxhKViRM
+ dVSXKy2OCD44pTjqWqswLZOFbUT8GzLrMyVUcZJnA4MIhC9EF2fpO0URTHtxV6VPOkYsqRSYV
+ nmfCp0/Z4H5Mfr3jHEQDxE59+IIFGUhtDRKystbKXlhuIkweMAqkN1ah+B2hqUie5trkFxvia
+ JhjV/Q1s+YoKgEXO1fNyTkPftilLHo/K/ErJoT+9cIpCgJ99XfuhFdD0fDpIYXUvOiCVda3gc
+ FPbhAPZdKgXlU7U9F86SPWIggaaeu5G9JOzOCjp/mhyqbWhk/nHrvNd3P0QbjQ42hRs4p7puj
+ w01DTQCNrH7Zwj61ZFwVw19yt3XRvDSv4CVssb0mGisIEavjNQrpyOhFO8n4q9reUGgVxKEx+
+ V09vGlBzwLoUfYdjjzNqzSvAe3woGcnDdCiJrlnB+siMr3vCiIPFWMl+owrWu8F3q7RWHETjv
+ FPu3lYI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Lars Schneider <larsxschneider@gmail.com>
 
-Git filter driver commands with spaces (e.g. `filter.sh foo`) are hard to
-read in error messages. Quote them to improve the readability.
+> I was not talking about the cost of correcting mistakes. Running --filters
+> is potentially very costly. Just so you understand what I am talking
+> about: I have a report that says that checking out a sizeable worktree
+> with core.autocrlf=true is 58% slower than with core.autocrlf=false. That
+> is horrible. []
 
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
- convert.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+Is this a public repo ?
 
-diff --git a/convert.c b/convert.c
-index b1614bf..522e2c5 100644
---- a/convert.c
-+++ b/convert.c
-@@ -397,7 +397,7 @@ static int filter_buffer_or_fd(int in, int out, void *data)
- 	child_process.out = out;
- 
- 	if (start_command(&child_process))
--		return error("cannot fork to run external filter %s", params->cmd);
-+		return error("cannot fork to run external filter '%s'", params->cmd);
- 
- 	sigchain_push(SIGPIPE, SIG_IGN);
- 
-@@ -415,13 +415,13 @@ static int filter_buffer_or_fd(int in, int out, void *data)
- 	if (close(child_process.in))
- 		write_err = 1;
- 	if (write_err)
--		error("cannot feed the input to external filter %s", params->cmd);
-+		error("cannot feed the input to external filter '%s'", params->cmd);
- 
- 	sigchain_pop(SIGPIPE);
- 
- 	status = finish_command(&child_process);
- 	if (status)
--		error("external filter %s failed %d", params->cmd, status);
-+		error("external filter '%s' failed %d", params->cmd, status);
- 
- 	strbuf_release(&cmd);
- 	return (write_err || status);
-@@ -462,15 +462,15 @@ static int apply_filter(const char *path, const char *src, size_t len, int fd,
- 		return 0;	/* error was already reported */
- 
- 	if (strbuf_read(&nbuf, async.out, len) < 0) {
--		error("read from external filter %s failed", cmd);
-+		error("read from external filter '%s' failed", cmd);
- 		ret = 0;
- 	}
- 	if (close(async.out)) {
--		error("read from external filter %s failed", cmd);
-+		error("read from external filter '%s' failed", cmd);
- 		ret = 0;
- 	}
- 	if (finish_async(&async)) {
--		error("external filter %s failed", cmd);
-+		error("external filter '%s' failed", cmd);
- 		ret = 0;
- 	}
- 
--- 
-2.9.2
+Or is there a benchmark repo somewhere ?
 
