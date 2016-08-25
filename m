@@ -2,135 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8CB081FD99
-	for <e@80x24.org>; Thu, 25 Aug 2016 09:18:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02B391FD99
+	for <e@80x24.org>; Thu, 25 Aug 2016 09:22:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754049AbcHYJRq convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 25 Aug 2016 05:17:46 -0400
-Received: from edge20.ethz.ch ([82.130.99.26]:1821 "EHLO edge20.ethz.ch"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751765AbcHYJRE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2016 05:17:04 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.3.301.0; Thu, 25 Aug
- 2016 11:00:44 +0200
-Received: from MBX115.d.ethz.ch ([fe80::444b:8481:c05f:ab21]) by
- CAS12.d.ethz.ch ([fe80::7861:4ecb:7c42:cad4%10]) with mapi id 14.03.0301.000;
- Thu, 25 Aug 2016 11:00:48 +0200
-From:   "Hedges  Alexander" <ahedges@student.ethz.ch>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Feature Request: Branch-Aware Submodules
-Thread-Topic: Feature Request: Branch-Aware Submodules
-Thread-Index: AQHR/q8rf5a9HIQAR0yvzVUFQ144Xw==
-Date:   Thu, 25 Aug 2016 09:00:47 +0000
-Message-ID: <7B5AD16B-9729-453E-839C-2A2FDB07F8E9@student.ethz.ch>
-Accept-Language: en-US, de-CH
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [85.3.63.164]
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <1A4574A589D1414DB1F37C340C109438@intern.ethz.ch>
-Content-Transfer-Encoding: 8BIT
+        id S1754693AbcHYJV5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Aug 2016 05:21:57 -0400
+Received: from mail-it0-f52.google.com ([209.85.214.52]:35813 "EHLO
+        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753995AbcHYJV4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2016 05:21:56 -0400
+Received: by mail-it0-f52.google.com with SMTP id x131so260229947ite.0
+        for <git@vger.kernel.org>; Thu, 25 Aug 2016 02:21:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=LR31LB40n6Gpu7Jef3R6FtoAkUGSqVjlq6tHDl+2L3Y=;
+        b=A5qSXvg0e92aeIFG9EQa5s3p7sFLjaRqo3KNlBKaC9RtdV2RosCsFK8OvIaNlp/2gd
+         sr2IW3GMsRd0r6fE1IMUJXOVCSny/5TKqajDYX8T+bZTRmtwKRYPtdvznq5AAD0pcNdt
+         0+99Q4gyEPnQZ4FNzGP00JRFyAj9r+VSon0fxWuihTcoOQagIpDLJOZZ12V6M2dE0tNa
+         xmN5uVKUX0lrWCvBinj7eN0OUjPUMLwbYqXq23jGbI6cBH1b2j5Y6nKgRRaXGz832lXd
+         aw1UoP5LCgtKCsiYTftHxgrs3w2szBbDMOvXYtaiK55usPqqUmuemL1xIXI6CPf4BHTU
+         jHvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=LR31LB40n6Gpu7Jef3R6FtoAkUGSqVjlq6tHDl+2L3Y=;
+        b=HeFAIvYGtHp7yUqm8tFHmfXkGogdb5zDC5cNiCZJCWMqo913DGt3qtcLKUab13b2b1
+         K1J8SKOE2uI3XXoO7lopovnYq6zpoExhSqf9SAALsp+Qyufz6ht2LoQFEX0o+numZoD5
+         8iZ/91GH+6faCtmqJXOI4RqxcWrmuBZn5/7kB83/HYkXbEvbS4ZRsDNZyfF4xbZa6pob
+         jPbeyCyM49D+eGMvFpX5shkxnm8F6FGLauuZi1sT+hzJzrVFdEnEkHXqlrJUUQTdxsDF
+         bWKTbZiwDbwI9h0Cmz42jZlbJwe6ZmYn6JjgTX+HthD6aLoF1svEwrBRYIpLiESfj7Dq
+         LnQQ==
+X-Gm-Message-State: AEkoousy9U/QhAz6fRT2mOu4l8IVaqHT1Ut+0rzzMOKpktEihB6r/kJRynnLQyU8T+o1SxXfsMjqmToUfrFC1w==
+X-Received: by 10.107.159.147 with SMTP id i141mr8966244ioe.29.1472116915766;
+ Thu, 25 Aug 2016 02:21:55 -0700 (PDT)
 MIME-Version: 1.0
+Received: by 10.64.54.40 with HTTP; Thu, 25 Aug 2016 02:21:25 -0700 (PDT)
+In-Reply-To: <xmqq7fb6rupa.fsf@gitster.mtv.corp.google.com>
+References: <20160822123502.3521-1-pclouds@gmail.com> <xmqq7fb6rupa.fsf@gitster.mtv.corp.google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 25 Aug 2016 16:21:25 +0700
+Message-ID: <CACsJy8AnDoh-CZp8oa21YHcM3sxoTJZiK7fP+ecNyqd0-DBZAA@mail.gmail.com>
+Subject: Re: [PATCH] checkout: swap the order of ambiguity check for :/ syntax
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git Developers,
+On Wed, Aug 24, 2016 at 11:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+>
+>> It's not wonderful, but it's in line with how git-checkout stops caring
+>> about ambiguity after the first argument can be resolved as a ref
+>> (there's even a test for it, t2010.6).
+>
+> But that is justifiable because checkout can only ever take one
+> revision.  What follows, if there are any, must be paths, and more
+> importantly, it would be perfectly reasonable if some of them were
+> missing in the working tree ("ow, I accidentally removed that file,
+> I need to resurrect it from the index").  Does the same justification
+> apply to this change?
 
-First of all, thanks for this great project, it has made my life a lot easier
-as a developer!
-
-I'm writing this email to suggest some improvements to git submodules. In my
-eyes how git handles submodules could be improved to be more intuitive to a
-novice and require less manual management.
-
-
-Right now updating a submodule in a topic branch and merging it into master
-will not change the submodule index in master leading to at least two commit
-for the same change (one in any active branch). This happened to me quite a few
-times. To a newcomer this behavior is confusing and it leads to unnecessary
-commits.
-
-
-The proposed change would be to have a submodule either ignored or tracked by
-the .gitmodules file.
-If it is ignored, as for instance after a clone of the superproject, git simply
-ignores all files in the submodule directory. The content of the gitmodules
-file is then also not updated by git.
-If it is not ignored, the .gitmodules is updated every time a commit happens in
-the submodule. On branch switches the revision shown in the gitmodules from
-that branch is checked out.
-This change would have submodules conceptually behave more like files to the
-superproject.
-
-
-Like current behavior, git status would display whether the submodule has
-uncommitted changes or is at a new commit. A repository is in a dirty state if
-there are changes to the gitmodules file or any tracked submodule is in a dirty
-state. Every time a commit happens in a submodule, the parents gitmodules is
-updated. Uncommitted changes are not reflected in the parent's gitmodules file.
-
-When the user manually edits the .gitmodules, git switches to that revision
-after commit. But the user would have to stash or commit all uncommitted
-changes in the submodule first.
-
-When checking out a commit in a submodule, if there is currently a branch
-pointing to that commit, HEAD could point to that branch instead (Is there a
-case where that doesn't make sense? What about multiple branches pointing to
-the commit?). It could also support branch names as references where the branch
-(or tag) would be checked out instead.
-
-With git submodule init you could have the submodule tracked. Using deinit
-would put the submodule into the ignored state.
-
-And while we're at it, it is quite some work to completely delete a submodule.
-You have to manually remove all the associated files in the git repository
-(StackOverflow lists 7 steps). Obviously it's not encouraged, as everything
-that removes data without recovery method, but it should be possible.
-git submodule rm --force could remove the repository and the associated nested
-.git tree. git submodule rm could keep the .git directory but move it to another
-location.
-
-The behavior of git submodule sync and git submodule update would stay the same.
-
-
-Migrating existing repositories to the new behavior should be quite straight
-forward. Submodules that are not init'ed yet would be ignored. All others
-behave accordingly to the new rules. Maybe a message with a note about the
-changes could be displayed by the appropriate git-submodule commands or even by
-git status.
-
-
-An alternative considered was to have submodules decoupled stronger from the
-superproject. That would mean having the .gitmodules only tracked by master and
-leaving the other behaviors unchanged. For consistency one could do the same
-thing for the .gitignore.
-
-The drawback of this option are obviously no per branch submodules, if you want
-to experiment with external libraries, topic branches would not be the place to
-go. Also there would be a lot of intricacies that would have to be worked out.
-
-
-I couldn't find any discussions on the initial implementation of git-submodule
-or any previous proposals related to this in nature due to gmane being down
-right now and the mailing list archives on the other sites are not great for
-searching. So please excuse me if I'm bringing up already discussed stuff.
-
-Until now I only worked on projects with few submodules. I expect the
-proposed changes to have a larger effect on projects containing lots of
-submodules. So it would be nice if maybe somebody with experience working on
-projects with lots of submodules could weigh into the discussion.
-
-
-Best Regards,
-Alexander Hedges
-
-
-
+I think there is a misunderstanding. My "after" is in "after the first
+argument can be resolved, check if it exists in worktree too, if so
+it's ambiguous and bail". This is usually how we detect ambiguation.
+But git-checkout does not do the "check if it exists..." clause.
+--=20
+Duy
