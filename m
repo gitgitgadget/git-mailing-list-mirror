@@ -2,75 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B8D51F859
-	for <e@80x24.org>; Thu, 25 Aug 2016 18:12:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 160581F859
+	for <e@80x24.org>; Thu, 25 Aug 2016 18:14:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753260AbcHYSM1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Aug 2016 14:12:27 -0400
-Received: from mail-it0-f44.google.com ([209.85.214.44]:36708 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751388AbcHYSMZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2016 14:12:25 -0400
-Received: by mail-it0-f44.google.com with SMTP id e63so287518778ith.1
-        for <git@vger.kernel.org>; Thu, 25 Aug 2016 11:12:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=f+MocNldeVyKRDX2kchLyai26bb5Lay5kgulfflLYtY=;
-        b=fVby5xu0YdaGtVewhNAut4SNPAa8ipD9DpA3X5GC94WhPdzrpt+iCsogm21wm5s1X1
-         el927hyrJYs1/7Pr3U3qN4LTk0TQqWiaFA7CR+afxaS+nwXQ5qn4QgUj25H22O709NGV
-         B/iFHPkAR3HsXJWyGbpL/aZXlZBOrQIm46x9Wy1hyNbh2t+IKtPdmHfkTwQwoc6hwsk6
-         S8WaPol3rurI8QR18JaH3SpNJQgBprTQ5rFZ+80oIsh3704hOS7Qx8qfGp1ynFgjlpU3
-         f7YfsE8x7FIALnGkP5JApq/cQCQUiFxGx/4TchfvOTFKNCpmT4iN7c/QEcG9AdYPRuMH
-         O6qg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=f+MocNldeVyKRDX2kchLyai26bb5Lay5kgulfflLYtY=;
-        b=Otb8UMNmnkCFuGv1VxO7CsqpW9Vq3QjtlgGkV/e6C4rIINbZtEH6ntwGNr4wHdTjUr
-         u/F6jVHSHz3HXSa8gdMGpsewvarKVG4awFnO1KxBAFWoPTq5dwuPHcjfaZdcbZzIVA0I
-         JEG2wNknWegk1je70SDEFJUSgQ8Z2L0dzmHGfI3HaO1z6VGXg2FP44zZXH8405CMRlk9
-         YCgXZlzzpM9pWiA4Iw7fXHPWzpIAVlUSNaSK05BqG2rrBqQqeksscR9mFIxOz43pnjR+
-         ufHqt0ceD7sGMI0HipKGAMwdayyrmlhJfTR7EC7H4srbeC0TOEmKNQYvzU2oHW/lnreb
-         wL4w==
-X-Gm-Message-State: AEkooutH855qNF27bO7UIxNTotoftT83dP+hW1JZGxgcl/WBRSsCUixvtjY4/nG8Z1bJaBEtEti7PV/Fh/raniLE
-X-Received: by 10.107.178.129 with SMTP id b123mr12167720iof.83.1472148734484;
- Thu, 25 Aug 2016 11:12:14 -0700 (PDT)
+        id S1754222AbcHYSOw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Aug 2016 14:14:52 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57457 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754179AbcHYSOv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2016 14:14:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EA32937820;
+        Thu, 25 Aug 2016 14:06:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9p3mqOBk8l7FLQyO2w7wMnlhCqI=; b=KCQVcr
+        DMDxw4NLDHyfumdeFyOHPuVv4E/vng7ftLPUaUK1SxoZzIlJEsgWAJRZTIAXtRwH
+        IRIsbjXVRAnMu+BhKwQdXpJpGcuaTS4y27za5nMYaIlCcGKpvKnQ9sOIlf7qR66P
+        eU9w73khOexXxVmTC72PvkZLYIe2JIo64u8oQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=roEFyn4HehVTJ9rFqBHhE1gtMFOzz59X
+        riqHa0agKoLlpjtzX/LZi2tggC2l7TWxkOTKpiWP8P85GFMKhHcCS1EDECOh5W/Y
+        BDK0uy9BcN7ishuhYlGi9LGAcUjyTcJdytiL0x+SnLEFFsLhhB5rCAjq1NXXWsRX
+        EUaLkv546S0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E13123781F;
+        Thu, 25 Aug 2016 14:06:01 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F008A3781C;
+        Thu, 25 Aug 2016 14:06:00 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Pranit Bauva <pranit.bauva@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v14 12/27] bisect--helper: `get_terms` & `bisect_terms` shell function in C
+References: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
+        <01020156b73fe6b3-3ccd9de5-604d-4e7d-919d-a3adae869ebf-000000@eu-west-1.amazonses.com>
+Date:   Thu, 25 Aug 2016 11:05:58 -0700
+In-Reply-To: <01020156b73fe6b3-3ccd9de5-604d-4e7d-919d-a3adae869ebf-000000@eu-west-1.amazonses.com>
+        (Pranit Bauva's message of "Tue, 23 Aug 2016 11:53:53 +0000")
+Message-ID: <xmqqmvk0n2pl.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Thu, 25 Aug 2016 11:12:14 -0700 (PDT)
-In-Reply-To: <20160825110752.31581-4-larsxschneider@gmail.com>
-References: <20160825110752.31581-1-larsxschneider@gmail.com> <20160825110752.31581-4-larsxschneider@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 25 Aug 2016 11:12:14 -0700
-Message-ID: <CAGZ79kbEoYVM_+MWkajT2pHN1OKZXATe5d+Dv_uSJ7dyPGxUeg@mail.gmail.com>
-Subject: Re: [PATCH v6 03/13] pkt-line: add packet_write_fmt_gently()
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-        Martin-Louis Bright <mlbright@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 94A4D514-6AEE-11E6-9A52-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> +int packet_write_fmt_gently(int fd, const char *fmt, ...)
-> +{
-> +       static struct strbuf buf = STRBUF_INIT;
-> +       va_list args;
-> +
-> +       strbuf_reset(&buf);
-> +       va_start(args, fmt);
-> +       format_packet(&buf, fmt, args);
+Pranit Bauva <pranit.bauva@gmail.com> writes:
 
-format_packet also takes care of tracing the contents,
-which was a bit unexpected to me.
-Do we also want to trace failure?
+> +static int bisect_terms(struct bisect_terms *terms, const char **argv, int argc)
+> +{
+> +	int i;
+> +
+> +	if (get_terms(terms)) {
+> +		fprintf(stderr, _("no terms defined\n"));
+> +		return -1;
+> +	}
+> +	if (argc == 0) {
+> +		printf(_("Your current terms are %s for the old state\nand "
+> +		       "%s for the new state.\n"), terms->term_good.buf,
+> +		       terms->term_bad.buf);
+> +		return 0;
+> +	}
+> +
+> +	for (i = 0; i < argc; i++) {
+> +		if (!strcmp(argv[i], "--term-good"))
+> +			printf("%s\n", terms->term_good.buf);
+> +		else if (!strcmp(argv[i], "--term-bad"))
+> +			printf("%s\n", terms->term_bad.buf);
+> +		else
+> +			printf(_("invalid argument %s for 'git bisect "
+> +				  "terms'.\nSupported options are: "
+> +				  "--term-good|--term-old and "
+> +				  "--term-bad|--term-new."), argv[i]);
+> +	}
+
+The original took only one and gave one answer (and errored out when
+the user asked for more), but this one loops.  I can see either way
+is OK and do not think of a good reason to favor one over the other;
+unless there is a strong reason why you need this extended behaviour
+that allows users to ask multiple questions, I'd say we should keep
+the original behaviour.
+
