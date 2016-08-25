@@ -2,102 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB55D1F859
-	for <e@80x24.org>; Thu, 25 Aug 2016 14:00:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78CE31F859
+	for <e@80x24.org>; Thu, 25 Aug 2016 15:00:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934455AbcHYOAJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Aug 2016 10:00:09 -0400
-Received: from mout.gmx.net ([212.227.15.15]:61661 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934202AbcHYOAI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2016 10:00:08 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MNIAz-1bWZPo0zH7-006tFD; Thu, 25 Aug 2016 16:00:05
- +0200
-Date:   Thu, 25 Aug 2016 16:00:04 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org
-Subject: [ANNOUNCE] Git for Windows 2.9.3(2)
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-644592451-1472133605=:4924"
-Message-ID: <0MGSgq-1bPfeP1Rmi-00DEuI@mail.gmx.com>
-X-Provags-ID: V03:K0:39DVVJldy4exy9x39hVkPmzjls1fku4iI3ybFNVxNnw+raImSMd
- CFQmdt1LT+tmdKHqQJaySVWJJQMlQInFD8j4e1H8gfm3P6vjuByQ0e24PJIuaHplVmnjghU
- qFq4ThtQf6MySm/ldb8pIt1LGQ/w5HI9A1u5gXDxRs7FfnTntSxWgi1p4WYa4Vzlux1hbvS
- KDaQFn7TyMwwq0TGD3+XA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:LnrkbdICJ5c=:zbqwLtIdeJIWVn2SlWiMMt
- e2YFlKiLf6i13oMqON50hmtVoWq3nDNlBV8l9gudRr3fAzs5AY/dwV/a6Tt7S0ZDSqLcP0MzS
- kbIfEdyO/kP8hvr7tngsFxt1Juz6Gpw2QONhP2bXxaLWDL5jq62HP9iKaoJDRF34tfa9HarEr
- rXYXNbrN4jjIBipQWEZmptokmqBt6Zyc0WHiwO++jQd3VR/rSmAIzmGDbpQa6CpqzA9jxKSZ2
- 5nPl8zjF1OwALKnw84OpkAJd6CeR/xEoWveQz7CEE01j25qoZQM3E6Aq8etWxk8H7WiCJyDmA
- HS6wk0PbFl7aEORRM4WyfeqXVoXXC+HhIsADgC4Og6fQppmDB7A8DHdUsUapfa9ZfNXlYkcfH
- FkJEPW3p02Vhln7rfXM1qzvVPv/pX8NS7WWqeX+Xmeyt8sYPg4WcQMtflY+UG7n6AOS7iJbza
- UxNtYdtI2XbK8rKoGuhxk+1AxsFAiedIVGH5z4V2/E8x7J28txvvH93jDu4HudKSsnuPH7eVJ
- qEGizLqpIIPjn3ju91SruaIpmNpN3jceNRBB6KNibL6lZa6TpNQT/hXloGwcOzb0vmRoY2PCb
- uiCuEOYYBSAFW6B8TBZuVNax8nJA3duyHnlV8OF/wjMSv5PeK7LJK8iBhs2FnuBW9pX9JV4Yp
- WnRdvd8whX3GtdEN+jtWBEwAUln2iP7aQxycDKwgGMOtttj5MXS45uCXzcvRJATDXx0aAcKR+
- 11cApPfGfA3WOZcWJPEGFKqXSamIHjO1WjITkll9V7p0+nTug5TgaaiNCAghH/3peT8ZqoNVy
- WqFYUsl
+        id S933442AbcHYPAU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Aug 2016 11:00:20 -0400
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:37937 "EHLO
+        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758724AbcHYPAR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2016 11:00:17 -0400
+Received: by mail-wm0-f42.google.com with SMTP id o80so76485352wme.1
+        for <git@vger.kernel.org>; Thu, 25 Aug 2016 07:58:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=IXbiukpVZJt3q54veub2fREJCT2A70RpjRHlTLxzNmk=;
+        b=TGnyZhtoz7OW4VWOXQiaUX5p+F+cbNQkt6yLb4Mi6rxbxXfJpsmsg8jLQRFKn+4Eq9
+         pjtMrOvTQv4CYPiKhknId4uVsvUMqq/6qoD9NTx1mMmv9q57r7VDl3w72r82GQt1J+pr
+         w64Gw0CMCgoFhyu/akJE/7JhVIvUrqV/B+oDjb0o0K79Nv3WAIs0W/l7Bzrbbo8l2SVf
+         1cxdUSZZAqGak+PjSPTuQ2Q537GetpEcp1pidCCgXR2MY7xeFvr162X3pkufYxXtBZQq
+         XAqtfqvUYmkM23w6z4dcojAkXvIXHFqn30Yh2scUXR8740sLswlCZNqqsO0PLi7un3++
+         oImg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=IXbiukpVZJt3q54veub2fREJCT2A70RpjRHlTLxzNmk=;
+        b=B25TgNSxibyPWOqeVBaLYjkeISHPxQBNjiT3wUgMGynr4S7G1t0zTY47FDgvzfxSsQ
+         Dn9Z36GJwkcOu4YE9nitbLJ+uNYNw8edfwtCsM5f4BFsdMO57xEpva6XDcDkRqVPDgEV
+         oYHEnRBqvVqSNaXHCC+xkOrOKLPyix6ivBrmiAPX3FmMnTLP7lSZ/dI1wxIhL6m5ttKy
+         T7dhbJpqC7k7ilx+pHRT0APpkjZwjZ/PZ0HBdyN8vXblzjzZ/lTZJ/H/AK36DaScSXcn
+         uMslMDZHwNLkbuJxWu+yx51mb5UY4eDber1UGuQUKgjPVx7VGTcVLnBeMKBJLC+9gGr2
+         qSRg==
+X-Gm-Message-State: AEkoout83IT1SBtJgPeTPNGT12XgSI3+88ExreKyi0k7LsvoXjw60BNQzDVqgvN8D/Gx1Q==
+X-Received: by 10.28.25.71 with SMTP id 68mr27855954wmz.19.1472123286365;
+        Thu, 25 Aug 2016 04:08:06 -0700 (PDT)
+Received: from bcnf9f9l32.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id p71sm38304839wmf.9.2016.08.25.04.08.05
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Thu, 25 Aug 2016 04:08:05 -0700 (PDT)
+From:   larsxschneider@gmail.com
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, gitster@pobox.com, sbeller@google.com,
+        Johannes.Schindelin@gmx.de, jnareb@gmail.com, mlbright@gmail.com,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: [PATCH v6 07/13] pack-protocol: fix maximum pkt-line size
+Date:   Thu, 25 Aug 2016 13:07:46 +0200
+Message-Id: <20160825110752.31581-8-larsxschneider@gmail.com>
+X-Mailer: git-send-email 2.9.2
+In-Reply-To: <20160825110752.31581-1-larsxschneider@gmail.com>
+References: <20160825110752.31581-1-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+From: Lars Schneider <larsxschneider@gmail.com>
 
---8323329-644592451-1472133605=:4924
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+According to LARGE_PACKET_MAX in pkt-line.h the maximal length of a
+pkt-line packet is 65520 bytes. The pkt-line header takes 4 bytes and
+therefore the pkt-line data component must not exceed 65516 bytes.
 
-Dear Git users,
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
+ Documentation/technical/protocol-common.txt | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-It is my pleasure to announce that Git for Windows 2.9.3(2) is available fr=
-om:
+diff --git a/Documentation/technical/protocol-common.txt b/Documentation/technical/protocol-common.txt
+index bf30167..ecedb34 100644
+--- a/Documentation/technical/protocol-common.txt
++++ b/Documentation/technical/protocol-common.txt
+@@ -67,9 +67,9 @@ with non-binary data the same whether or not they contain the trailing
+ LF (stripping the LF if present, and not complaining when it is
+ missing).
+ 
+-The maximum length of a pkt-line's data component is 65520 bytes.
+-Implementations MUST NOT send pkt-line whose length exceeds 65524
+-(65520 bytes of payload + 4 bytes of length data).
++The maximum length of a pkt-line's data component is 65516 bytes.
++Implementations MUST NOT send pkt-line whose length exceeds 65520
++(65516 bytes of payload + 4 bytes of length data).
+ 
+ Implementations SHOULD NOT send an empty pkt-line ("0004").
+ 
+-- 
+2.9.2
 
-=09https://git-for-windows.github.io/
-
-Changes since Git for Windows v2.9.3 (August 13th 2016)
-
-New Features
-
-  =E2=80=A2 Comes with Git Credential Manager v1.6.1.
-  =E2=80=A2 The feature introduced with Git for Windows v2.9.3 where cat-fi=
-le
-    can apply smudge filters was renamed to --filters and made
-    compatible with the --batch mode (the former option name --smudge
-    has been deprecated and will go away in v2.10.0).
-  =E2=80=A2 Comes with OpenSSH 7.3p1.
-  =E2=80=A2 Git's .exe files are now code-signed, helping with performance =
-when
-    being run with Windows File Protection.
-
-Filename | SHA-256
--------- | -------
-Git-2.9.3.2-64-bit.exe | d23629ec9f89a6bbddc0459108296b4fdfa08abd98e0748513=
-4a9a30ad40486a
-Git-2.9.3.2-32-bit.exe | 7d9645093925fee8de5308c7d6d53d9f6b070e95e4369fef02=
-b4493da782475f
-PortableGit-2.9.3.2-64-bit.7z.exe | 2115cbd45b20efc62dcfa57ce86d5b6f3f15e8a=
-887f253baeb43e3bff836810e
-PortableGit-2.9.3.2-32-bit.7z.exe | a173516ba51d7b1d926b78243911c55962c007c=
-c6ea822d1cca37963a4794c68
-MinGit-2.9.3.2-64-bit.zip | 4616ef2cef84d19ccc0325d6326107fe82a7c487dafbe7e=
-e2248878cea32ea1a
-MinGit-2.9.3.2-32-bit.zip | 7178963b663d91abc5d101eab6a24552fdbc2913a312eda=
-a8291266451bcf1d1
-Git-2.9.3.2-64-bit.tar.bz2 | 9cbb3019bc614fa2769b6d64298b339a2ef66d475602c1=
-d572b849283b62ad15
-Git-2.9.3.2-32-bit.tar.bz2 | be55791fbd02bd7d51b7b93eed0ac8193bbd996e8590f0=
-f0ac01b65c9a85e5b0
-
-Ciao,
-Johannes
---8323329-644592451-1472133605=:4924--
