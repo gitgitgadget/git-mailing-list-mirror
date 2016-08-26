@@ -2,125 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB29D1FD99
-	for <e@80x24.org>; Fri, 26 Aug 2016 17:35:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71C151FD99
+	for <e@80x24.org>; Fri, 26 Aug 2016 17:42:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751584AbcHZRfr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Aug 2016 13:35:47 -0400
-Received: from mail-it0-f42.google.com ([209.85.214.42]:37227 "EHLO
-        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751014AbcHZRfq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2016 13:35:46 -0400
-Received: by mail-it0-f42.google.com with SMTP id d65so2956751ith.0
-        for <git@vger.kernel.org>; Fri, 26 Aug 2016 10:35:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=FO9nujKkjIGVxVwtDEz2x0DvhhDTg48jkBTUN9+2sdU=;
-        b=PNw+G84664C9DVnYrTaPeyvBXlYY4/nXeQL2EgEFYL5/htt/+SjiYVm/h/jbXv17gW
-         U8rQ27C8kCTMXs6xgLbVAUuMfip7cRSgLUXMC1UwO61xPOoKTAdIj5kyDEuFvUz2qvaO
-         14qTIfxxs1WhxUInMi6pKtpQc/uxD8VM0c5Go4qEbhnDxrofDY0BR0WtF4/A7aw4VAhd
-         ycDfiGhoWTDRTpxCGleoJK9EQdMBCoSFfCQFeKMUwaErGnu2M3jPO/23LSMizoJ6najy
-         JZmgXxBG9TQjvqLe2NVFhqTWi5BkE2f9KOmFyJoC3hm5o4NqmHzlWFoGoq1BNjPC5t9z
-         6/2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=FO9nujKkjIGVxVwtDEz2x0DvhhDTg48jkBTUN9+2sdU=;
-        b=fzNhpvoLXWhONodtWLRNup7Phnt1hvvONYJ75UErFLK1TfJgWLK000plkRavrrgdCb
-         3oN9qD2QpCLcarWdvnpOhULkNer/Kjr29QTchdeDAAA+VaDEFLG0t+okiPJ9CUWJn8rG
-         bSB9svyd9XDhP8ZmXncmPsUvvuZdP/5yfKGricBYKk6xVjM1I3CH+tp4/dswFvdhvdKe
-         jHQS3CDNJvk89E1ss+jlcdjUrPa4vIYIhsvsvRx7F6nXQdKePM2EdYyfXxuDzQrSmunx
-         yZBlOoFUQuEJ6dFv4XoFc/Sb7nAvrqEYxMlPdEGbMIg9nOdfYGUDtxJvJo/G5IVikX0b
-         DGqA==
-X-Gm-Message-State: AE9vXwOOmXnvYUX+4Jep91nO2kVVTn3Qii73q/vEZYEELIv+t/uRS/QuVHZd4uodmwiq9fAqPIdj7ahZvCCX+NcM
-X-Received: by 10.36.249.5 with SMTP id l5mr95700ith.46.1472232945098; Fri, 26
- Aug 2016 10:35:45 -0700 (PDT)
+        id S1752439AbcHZRlx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Aug 2016 13:41:53 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54456 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751014AbcHZRlw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2016 13:41:52 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8E3463787A;
+        Fri, 26 Aug 2016 13:40:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=W9LGA72Nxh97efiMomsmiFLoTY8=; b=FlnDlS
+        T59J4U1yx4y11Yic2CffphdbIA2ND14Lr+wPLjlYa4OSvOX6+whyS4pL70rjW49w
+        cv4LPrTFPn26aXLPqeJcftYy0VI0Y/b0p6ulDRZxFUKdR5w5tlwXB5ZhgP5qxttS
+        ytsPm7qG25t5PIHuzWqbOckjkbPBhoYhXLvLQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=dPXPegqjQJT1MgHp9OZryZ4zXTduRTZJ
+        4V3eO6bA1bVba7E5dPU8ChbBNeAwNMMarmd7zRueHxXglhLQWj6zYzzXPOy9Um58
+        IbSspfaR2y+Dw3xyj/6zK11h29szR19A+NP73aW0e181cvSIzxUyo1LvE0gnpWt+
+        B/4ibehgvoE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8508C37878;
+        Fri, 26 Aug 2016 13:40:29 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 10F2D37875;
+        Fri, 26 Aug 2016 13:40:29 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 07/15] sequencer: lib'ify read_populate_opts()
+References: <cover.1471968378.git.johannes.schindelin@gmx.de>
+        <85a8ec8273994c599402c380abd383ad2f539777.1471968378.git.johannes.schindelin@gmx.de>
+Date:   Fri, 26 Aug 2016 10:40:27 -0700
+In-Reply-To: <85a8ec8273994c599402c380abd383ad2f539777.1471968378.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Tue, 23 Aug 2016 18:07:15 +0200
+        (CEST)")
+Message-ID: <xmqq1t1big38.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Fri, 26 Aug 2016 10:35:44 -0700 (PDT)
-In-Reply-To: <CA+P7+xqDRD4akNShqxs4D2dDUBK0E5Eyp2Y3-8xK6wEb5gCU6w@mail.gmail.com>
-References: <20160822234344.22797-1-jacob.e.keller@intel.com>
- <CAGZ79kbKibe2RpQ9QWN1naY07feZLKbhc+dts3BD-4+y-pUOVw@mail.gmail.com>
- <xmqqlgznwg6o.fsf@gitster.mtv.corp.google.com> <CAGZ79kbsq52Qh0Jtn5hpPPfHu_9r2CUHvAHOTh6Cgz8ODkzreg@mail.gmail.com>
- <CA+P7+xrQy33gt8bnsagLVPAHhZPZx-3s0E_Aj7tOwXnHjOoCBg@mail.gmail.com>
- <xmqqr39cjwxx.fsf@gitster.mtv.corp.google.com> <CA+P7+xqDRD4akNShqxs4D2dDUBK0E5Eyp2Y3-8xK6wEb5gCU6w@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 26 Aug 2016 10:35:44 -0700
-Message-ID: <CAGZ79kYbHz2E6-0qNS47KfA5Gs=Ew327LxhOyq+i3axwPVHKGQ@mail.gmail.com>
-Subject: Re: [PATCH v10 0/9] submodule inline diff format
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.e.keller@intel.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2DF6BFFA-6BB4-11E6-AB71-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 25, 2016 at 3:46 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> On Thu, Aug 25, 2016 at 3:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Jacob Keller <jacob.keller@gmail.com> writes:
->>
->>> So we should support the gitlink to a repository stored at <path>
->>> without stuff inside the .git/modules, and we should support submodule
->>> gitlinks with a proper .gitmodules setup. I don't think we should
->>> die() but we should error properly so I will introduce a _gently()
->>> variant of these functions, and die properly in the regular flow.
->>
->> Because "git diff [--cached] [<tree-ish>]" in the top-level is
->> driven by a gitlink in the index, immediately after adding a new
->> submodule to the index but before describing it in .gitmodules you
->> might not have a name (and you know in that case the path will
->> become the name when adding it to .gitmodules).  Also a gitlink in
->> the index may correspond to a submodule the user of the top-level is
->> not interested in, so there may not be anything in .git/modules/
->> that corresponds to it.  In these cases, I suspect that you do not
->> want to die, but you can just tell the user "I do not have enough
->> information to tell you a useful story yet".
->>
->
-> Right. submodule_from_path() fails to find a config. I don't think
-> die() is right here, because there is no easy way to make this into a
-> gently() variant.... I can still do it if we think a die() is
-> worthwhile otherwise for the other callers of do_submodule_path...
->
-> However, I think the safest thing is to just:
->
-> a) read_gitfile on <path>/.git
-> b) if read_gitfile succeeds, use it's contents, otherwise use
-> <path>/.git for next steps
-> c) check if the resulting file is a git directory, we're fine.. we
-> found a gitdir, so stop.
-> d) otherwise,  empty the buffer, then lookup submodules
-> e) when submodules lookup succeeds.. see if we found a name. If so, use that.
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-When the submodules lookup succeeds, we can assert the name exists.
-There is currently only one way the lookup is populated, and that is
-lookup_or_create_by_name in submodule-config.c:182, which fills in
-the name all the time.
+> -static void read_populate_opts(struct replay_opts **opts_ptr)
+> +static int read_populate_opts(struct replay_opts **opts)
+>  {
+>  	if (!file_exists(git_path_opts_file()))
+> -		return;
+> -	if (git_config_from_file(populate_opts_cb, git_path_opts_file(), *opts_ptr) < 0)
+> -		die(_("Malformed options sheet: %s"), git_path_opts_file());
+> +		return 0;
+> +	if (git_config_from_file(populate_opts_cb, git_path_opts_file(), *opts) < 0)
+> +		return error(_("Malformed options sheet: %s"),
+> +			git_path_opts_file());
+> +	return 0;
 
-> f) if we didn't just exit with an empty buffer.
->
-> That empty buffer *should* trigger  revision error codes since it
-> won't point to any valid path and it also triggers the regular error
-> code in add_submodule_odb so it handles that with showing not
-> initizlied.
->
-> This method is less work then re-implementing a _gently() variant for
-> all of these functions.
->
-> Stefan, does this make sense and seem reasonable?
+This may not be sufficient to avoid die(), unless we know that the
+file we are reading is syntactically sound.  git_config_from_file()
+will die in config.c::git_parse_source() when the config_source sets
+die_on_error, and it is set in config.c::do_config_from_file().
 
-Sounds reasonable to me.
+The source we are reading from is created when the sequencer
+machinery starts and is only written by save_opts() which is
+called by the sequencer machinery using git_config_set*() calls,
+so I think it is OK to assume that we won't hit errors that would
+cause git_config_from_file() to die, at least for now.
 
-Thanks for working on this!
-Stefan
+
