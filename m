@@ -2,94 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B22F1FD99
-	for <e@80x24.org>; Fri, 26 Aug 2016 15:31:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65AF81FD99
+	for <e@80x24.org>; Fri, 26 Aug 2016 16:04:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753562AbcHZPbI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Aug 2016 11:31:08 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:36260 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751085AbcHZPbH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2016 11:31:07 -0400
-Received: by mail-wm0-f46.google.com with SMTP id q128so284036097wma.1
-        for <git@vger.kernel.org>; Fri, 26 Aug 2016 08:31:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=ni8DRSxdyalm5ih0qrzaGwpxoedFwsBktg3UPDdVVAA=;
-        b=ulpVDkehbT4OCmHuT4wPwXXrRlPuB+MRUODCwSjDYcVN+bfnBWAvQ2MlXTKWBWF+k2
-         iP4gg0PMtl+B6nYqBmnkBQCRO+ZJ/I50ceeEOa1BZKEywexT5EXXIs6pDxbg4aeEwhPZ
-         WjIeB+rTG7KwN9r/OX+yuNT+RY4826rotResDUv6ZMRM3xgaWPRAbKkwPuPXw8t2Ma4W
-         xI1CPw7JKesq25QdJjAkNCISri/stYOZf7h9pmo+SalUfKiJ5wIt0WGOvGHhT6VYPKiw
-         SJa2uoUrhPTNKw+F/nGuNSJsGFKSuaw0AlqKJUGHcDFgUch6VVodiI1Thun2+P1+LMmx
-         0T9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=ni8DRSxdyalm5ih0qrzaGwpxoedFwsBktg3UPDdVVAA=;
-        b=K2WcpGVIwE5lGu9y/LCXotT5pLbjfVhOrs+tLMk+u2cp67GVAMgA6qwKUqaew+hvnO
-         Hvoo2CXJK/vJvRBNxgFa/t2rWP0gqgBMO9JPd2Yr1lAZouV9Y+YHQgOFxxm2w35RVBJ6
-         2SGrZqLyJGB/WY9EgkgGeNXxvLbN1wAxZ5j3ViHmakTmTuUqrCxgdITUAriKsbGrHpPO
-         wqP5TRv9CbnosDqr5ys0WKg7QCTky6im9Pu1muVQG1WMQN5P9S2CSgjvY6t0RHHk6KkO
-         1Uh3kbMn/iAdQeoqhBLvvxOMBL1NmTjq2NJlc+OxfaK4B7jYmo1EtxWwTegtpnA62O/6
-         g1jQ==
-X-Gm-Message-State: AE9vXwO8J41iyDa6XUqyNePvKhnlFLiXQ/HdcgHO5ZIiWgymjuLD3gIe99jGRf2tboR8sQ==
-X-Received: by 10.194.116.1 with SMTP id js1mr5053891wjb.183.1472225465850;
-        Fri, 26 Aug 2016 08:31:05 -0700 (PDT)
-Received: from [192.168.1.26] (afg6.neoplus.adsl.tpnet.pl. [83.25.136.6])
-        by smtp.googlemail.com with ESMTPSA id n2sm20521573wjd.1.2016.08.26.08.31.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Aug 2016 08:31:05 -0700 (PDT)
-Subject: Re: [PATCH v6 06/12] doc: revisions: single vs multi-parent notation
- comparison
-To:     Philip Oakley <philipoakley@iee.org>,
-        GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-References: <20160811215035.4108-1-philipoakley@iee.org>
- <20160812234522.7792-1-philipoakley@iee.org>
- <20160812234522.7792-3-philipoakley@iee.org>
-Cc:     Marc Branchaud <marcnarc@xiplink.com>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <6b37851f-0f2f-0379-c10e-52f7da6b7110@gmail.com>
-Date:   Fri, 26 Aug 2016 17:30:59 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S1754255AbcHZQEj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Aug 2016 12:04:39 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56634 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754029AbcHZQEi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2016 12:04:38 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CEEC436963;
+        Fri, 26 Aug 2016 12:04:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=BVxpl6RLflOdjwo5Qec151mcTpY=; b=QgFqEz
+        lkvh9w6hRGBaclcbG2TDU9HS87SDk+qUmgvf0XX0qW7cB4Cbh8fXUEQiMZnuP10e
+        EmwHUyiGqnJTpGFd95bhR8iIyCdM3TsEeWMZeEx7cYuHw0yXpb414xJzNej5Wtla
+        zXZZps+BiNEygbXVLMnKkD9mX8KVMcYuJX4QI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=mWdX5mUc8LGc66JYBUn4LtC6C1cGy2li
+        XBu9OjSAVmi7mB2Xme1wwMJQet1eWNh6sH3S2tSWpI3APmHvCqXWbezixaN4xDLG
+        9E2Uow5Nc7DDe3Dx3uYWClO11gL0DpwrP2mOfXLqYmPwc/KHXhz7PBfR+6VPcOQk
+        AByKFeCMkuY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C6FBD36962;
+        Fri, 26 Aug 2016 12:04:27 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 455C136961;
+        Fri, 26 Aug 2016 12:04:27 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Aug 2016, #08; Wed, 24)
+References: <xmqqy43lookt.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1608261607050.4924@virtualbox>
+Date:   Fri, 26 Aug 2016 09:04:25 -0700
+In-Reply-To: <alpine.DEB.2.20.1608261607050.4924@virtualbox> (Johannes
+        Schindelin's message of "Fri, 26 Aug 2016 16:09:17 +0200 (CEST)")
+Message-ID: <xmqqa8fzjz3q.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20160812234522.7792-3-philipoakley@iee.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: C3AC540A-6BA6-11E6-B670-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 13.08.2016 o 01:45, Philip Oakley pisze:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> --- a/Documentation/revisions.txt
-> +++ b/Documentation/revisions.txt
-> @@ -284,6 +284,10 @@ The 'r1{caret}@' notation means all parents of 'r1'.
->  The 'r1{caret}!' notation includes commit 'r1' but excludes all of its parents.
->  By itself, this notation denotes the single commit 'r1'.
->  
-> +While '<rev>{caret}<n>' was about specifying a single commit parent, these
-> +two notations consider all its parents. For example you can say
-> +'HEAD{caret}2{caret}@', however you cannot say 'HEAD{caret}@{caret}2'.
-> +
+> On Wed, 24 Aug 2016, Junio C Hamano wrote:
+>
+>> * rt/help-unknown (2016-08-18) 2 commits
+>>  - help: make option --help open man pages only for Git commands
+>>  - help: introduce option --command-only
+>> 
+>>  "git nosuchcommand --help" said "No manual entry for gitnosuchcommand",
+>>  which was not intuitive, given that "git nosuchcommand" said "git:
+>>  'nosuchcommand' is not a git command".
+>> 
+>>  Waiting for the review discussion to settle.
+>
+> Not only that. For a week now, two of my build jobs have been failing (the
+> one testing `pu` verbatim and the one testing Git for Windows' patches
+> rebased on top of `pu`) because the test does not actually test what was
+> just built, but relies on the Git man pages to be installed.
+>
+> So it needs more than just the review discussion to settle.
 
-That's good to have.
+Ah, sorry for being inaccurate.
 
-Though I do wonder if it is implementation limitation, or if it is something
-inherent in the notation, namely that <rev>^@ and <rev>^! resolve (the former
-at least in general, though not for every <rev>) to more than one revision
-specifier.
+A topic may not be ready to be merged down to the next integration
+branch before being re-rolled.  I say "Waiting for a reroll" when I
+saw review comments and responses have produced enough material to
+go into a reroll and the ball is in the submitter's court.  While
+the review is still ongoing, I just label it differently to as a
+reminder to myself that it is premature for me to jump up and down
+and demand "Can we have a reroll pretty-please now?"  This was in
+that latter kind when I labelled it.
 
-Anyway, good addition!
--- 
-Jakub Narębski
+I think the reviews on the topic has settled and I should have
+marked it as "Waiting for a reroll", but during the prerelease
+period, I do not have time to pay too much attention on things
+outside 'master' and fix-up topics that are moving through 'next'
+to 'master' aiming to become part of the upcoming release, so the
+marking was left behind [*1*].  My bad.
+
+
+[Footnotes]
+
+*1* It follows that it would not be unusual if the tip of 'pu' does
+    not even build during the time.  Being able to test it does not
+    contribute much to catching the remaining bug in the release
+    candidates and I'd really like to see all of us paying more
+    attention to the tip of 'master'.  A statement "With topic X
+    that is still in 'next', A works" is not all that interesting
+    unless it is accompanied by "And A used to work in the previous
+    release, but broken in 'master'." at this point in a development
+    cycle.
+
 
