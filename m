@@ -2,121 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 165CE2018E
-	for <e@80x24.org>; Fri, 26 Aug 2016 13:47:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 767191FD99
+	for <e@80x24.org>; Fri, 26 Aug 2016 13:48:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752988AbcHZNq7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Aug 2016 09:46:59 -0400
-Received: from mail-yw0-f169.google.com ([209.85.161.169]:32899 "EHLO
-        mail-yw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752802AbcHZNq5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2016 09:46:57 -0400
-Received: by mail-yw0-f169.google.com with SMTP id r9so48654054ywg.0
-        for <git@vger.kernel.org>; Fri, 26 Aug 2016 06:46:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=+G7qojbf21y3m6CNnoR39Z4/sQqM4NAB490nS5P8OeE=;
-        b=WhHa4NbyAGQ8DD4fNPJ6ah+IsfDxZRpQE+CytDPQvXaJYxfVGmr2G6ldp+EET24AE+
-         Yh6l1O6rzhRdbhm/XB4mB8K6LMixQ6EaW2uIqMe5++C2o0UJyf67xqf6QzqlHaOmbb48
-         FHn3kWTLYb9rEw4bgICo2/dX6UY9MJ5MsCMXkFp6uxXS6b7KYtRs+JswWscfirZpRUhF
-         tY7WFz2mrbR2xiyCJqApQbqqPgC+EVNMxi2I2sUle+nN8ImqFtyGo/EvFi0hPJCYRfzC
-         yRHI3RWKoAdRGyjV9Fd2YB64jmL62HoV8Or7gTmlCmlxT1LGLoq2jMjhQqUU8Vs2c1bR
-         n/WA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=+G7qojbf21y3m6CNnoR39Z4/sQqM4NAB490nS5P8OeE=;
-        b=FO4g6LlF2ioyTGwTXV1sQkxl6Dznit7FyzH720maLzRLLTLydZyWIe3CzxA0MityOr
-         DDXIxpzr1fEBg5RXljf/U9Gav0aEHPh6bhvukF/tZP86KFYGtf+YqM7AuVm9k6kUFtXy
-         zTgmioTAj4wXuwX0njahsWe9uLpGr/Qg93A1qtLbTElBfhbrbmbho2AcjtMlC67eC6W+
-         +jErcRhvFF84t4eBLQq5lsRLeqBsjMDzssglEoB8+zfOfuFyrtv3PrOgmTxTA8mcnNhJ
-         7PC/tlHogeTh3J4HiNSuIZ3nyB//j581CKu+W9HUooO66gHAuA154IsidKNvixIprX2R
-         Q0yA==
-X-Gm-Message-State: AE9vXwO/jrjhXd1i6I6JOXJyjSr+NGvEwVei9yRMpVcYtkzjdndga8KjtXieMH64tnp2tRS7TKJmWJ6Fi8Dx4w==
-X-Received: by 10.13.193.135 with SMTP id c129mr3099193ywd.302.1472219216558;
- Fri, 26 Aug 2016 06:46:56 -0700 (PDT)
+        id S1753008AbcHZNsj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Aug 2016 09:48:39 -0400
+Received: from mout.gmx.net ([212.227.15.15]:64588 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751569AbcHZNsh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2016 09:48:37 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MAgzj-1bp8N63Yuh-00BtLu; Fri, 26 Aug 2016 15:47:39
+ +0200
+Date:   Fri, 26 Aug 2016 15:47:39 +0200 (CEST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v2 05/14] sequencer: lib'ify do_pick_commit()
+In-Reply-To: <cover.1472219214.git.johannes.schindelin@gmx.de>
+Message-ID: <39d03662fc6ea81d737c0650bb9b7292e812ae02.1472219214.git.johannes.schindelin@gmx.de>
+References: <cover.1471968378.git.johannes.schindelin@gmx.de> <cover.1472219214.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.129.89.132 with HTTP; Fri, 26 Aug 2016 06:46:56 -0700 (PDT)
-In-Reply-To: <xmqq4m69q3b2.fsf@gitster.mtv.corp.google.com>
-References: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
- <01020156b73fe69a-13136cfb-4daa-4f5d-9b56-537adf2c6942-000000@eu-west-1.amazonses.com>
- <xmqq4m69q3b2.fsf@gitster.mtv.corp.google.com>
-From:   Pranit Bauva <pranit.bauva@gmail.com>
-Date:   Fri, 26 Aug 2016 19:16:56 +0530
-Message-ID: <CAFZEwPPfXvLUtcBR6cYAP2dT8FAePFPjDSnVm8BhpLN9cfR1uw@mail.gmail.com>
-Subject: Re: [PATCH v14 07/27] bisect--helper: `bisect_reset` shell function
- in C
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:NHMEbA76Oai8nRs1PuMpYzRhqtBnYSqfFZMd/nxTv7vjNaW1rcv
+ o0O1xXZZ/NZ2w+P/44yjKDYC2dyg/pMXCVQ5mPvyWGkUd7SdlZS92GWCLLOtmbJMAZYLXTa
+ /os61EMFBeD6ozwsMlrNZqV1i0DtfeAiuY8kTuSMKGObb1T/epaQBs4GeTZdum3zimyHWP7
+ NJtf6L5XrIhsvAszdpypA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Ju0H2u3PwwU=:C24KQnfVtxJEZUyp4Qh6G/
+ LXfm9Np3Q04pKNd3a2Hy3UxQX0TFzS4d7j1g10k3ucZ4HuPEG/27kIbo9JzJkjlTz0c9CIfJ3
+ JKFZNyXuYsUoGDGceOW0kjfEQkPop0EuuqfdHefXcESTw+lMTaeDZZaVNj7cQtuBE1X37mFjH
+ xHNtz5x7gTmq+1ysmLe0876lnbSMvKj1htz7JohIyELEPzfbX0aij0TQFTrOmZR2qsEXFmUEl
+ bgMyYs32QOUABHC1HMIjo+8liWGj/h5GY1R42WjC0TzHXRwpB+hxWNl0pSmCjLpK5i/0GlTpI
+ LNsoEPM4c9PPBGuC4W5Hep2sEOPqWGZBIKWAJ923areOZA7VypYStbS0cVIsfXkOb3clEWKVU
+ b0oHfy1E+x/FQl4rFWAG5mxP7AEEMAZ348Oy8tf6JzLN9aX7iYAP9EqwnQxTgKvcvKHWUdlh3
+ gJrxqz30hdX3+6u1rDvBjxaDISyr5BdomzaMByDrQfA35NKf/QAyuajdMIOM4eaybpbRkV+9P
+ yIVxKHLhdnOhRTNyoGpQWoE3YCYeDRwraPtLaV7Ppb7aLIkaGdn+/0qYfXItmyFLH3FlOAzHE
+ /EST7hWDRTlz8EhHzCMgwT36BGuEZD7aoybDGWq7EthmUchCHwnG67I0fBMRT/5TonOackyo9
+ WhDc13uZNIFKNViONWJsylYQXbSyzpVsFPEfsQGzOTpO2BoTRw2zesmUUeq2N9/niMkSdswBf
+ ke91G9sjoWzD6kb5S5jpMTr0Uv7rs2FvY5vBKSok5s2YRQOaMyCTNSGNw7gEjOHUperNRAFo/
+ 2np14Ie
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Junio,
+Instead of dying there, let the caller high up in the callchain notice
+the error and handle it (by dying, still).
 
-On Thu, Aug 25, 2016 at 2:42 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Pranit Bauva <pranit.bauva@gmail.com> writes:
->
-> > +static int bisect_reset(const char *commit)
-> > +{
-> > +     struct strbuf branch = STRBUF_INIT;
-> > +
-> > +     if (!commit) {
-> > +             if (strbuf_read_file(&branch, git_path_bisect_start(), 0) < 1) {
->
-> Hmm, tricky but correct to do the "< 1" comparison.  If the file
-> does not exist, you'd get -1; if it fails to read it, you'd get -1;
-> if it turns out to be empty, you'd get 0.
->
-> > +                     printf("We are not bisecting.\n");
-> > +                     return 0;
-> > +             }
-> > +             strbuf_rtrim(&branch);
-> > +     } else {
-> > +             struct object_id oid;
-> > +             if (get_oid(commit, &oid))
-> > +                     return error(_("'%s' is not a valid commit"), commit);
->
-> The original is
->
->         rev-parse --quiet --verify "$1^{commit}"
->
-> Unless the caller of this function already appended "^{commit}" to
-> whatever the user gave "bisect--helper bisect-reset", this
-> conversion is not equivalent.  If you said
->
->     git bisect reset HEAD:
->
-> get_oid() would tell you that the top-level tree object of the
-> current commit exists in the object store, but the original is
-> meant to catch "That's not a commit, it's a tree!" before attempting
-> to run "git checkout" on it.
->
-> I think get_sha1_committish() is what you want to use here.
->
-> > +             strbuf_addstr(&branch, commit);
-> > +     }
->
+The only two callers of do_pick_commit(), pick_commits() and
+single_pick() already check the return value and pass it on to their
+callers, so their callers must be already prepared to handle error
+returns, and with this step, we make it notice an error return from
+this function.
 
-Ya! get_sha1_committish() would be better. Thanks!
+So this is a safe conversion to make do_pick_commit() callable from
+new callers that want it not to die, without changing the external
+behaviour of anything existing.
 
->
-> Also this version fails to catch "bisect reset a b c" as an error, I
-> suspect.
+While at it, remove the superfluous space.
 
-It didn't when I tried it right now. Could you please elaborate on why
-you think it can fail? There might be a thing which I haven't tested.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ sequencer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Regards,
-Pranit Bauva
+diff --git a/sequencer.c b/sequencer.c
+index f6cdf65..7eef512 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -464,7 +464,7 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+ 		 * to work on.
+ 		 */
+ 		if (write_cache_as_tree(head, 0, NULL))
+-			die (_("Your index file is unmerged."));
++			return error(_("Your index file is unmerged."));
+ 	} else {
+ 		unborn = get_sha1("HEAD", head);
+ 		if (unborn)
+-- 
+2.10.0.rc1.99.gcd66998
+
+
