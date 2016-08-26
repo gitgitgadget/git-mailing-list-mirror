@@ -2,109 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55B891FD99
-	for <e@80x24.org>; Fri, 26 Aug 2016 16:58:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F5BF1FD99
+	for <e@80x24.org>; Fri, 26 Aug 2016 17:02:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754149AbcHZQ62 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Aug 2016 12:58:28 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57032 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754008AbcHZQ60 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2016 12:58:26 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1D56A3707C;
-        Fri, 26 Aug 2016 12:58:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CD4NtiwkYXBW+6t7/bd5vddhc2A=; b=X3iodN
-        eoWiXnA+Jpb+2IVqNE32k8iqpYmA8LaSUIePLBH+AB8iNmAPfKLN5zSj2B+LC3Bx
-        8FXn5OEoxLE2O91XUeceNxPDacNcGrLRg3PErKgHsmAwhpeoemSHu08hkmkCbgNs
-        qXZP+ZooPEUh4XuL61ccDIy8TvEUHdoCqWoCI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=JIwOC60Ek9IL/IMFLmnHwQ82HC9TZINU
-        4GQdZmrOIt7xsxLvz76X4t/J9raD7jelMgyBPAiY8DUGPAZrKHOV8oXBSOV+fd71
-        TtfHwJiUUENfzwJttkvI8e2aUidVclgsKSZm+r/mmvE45DlD+Z7E+OoVfg2vhxgw
-        /2SUxvZhCl0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0DEBC3707B;
-        Fri, 26 Aug 2016 12:58:25 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 85F9A3707A;
-        Fri, 26 Aug 2016 12:58:24 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 06/15] sequencer: lib'ify read_populate_todo()
-References: <cover.1471968378.git.johannes.schindelin@gmx.de>
-        <0de75bbce8ade0c6e5cf87d3647faa71a89c6275.1471968378.git.johannes.schindelin@gmx.de>
-        <xmqqeg5cjw02.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1608261540470.4924@virtualbox>
-Date:   Fri, 26 Aug 2016 09:58:22 -0700
-In-Reply-To: <alpine.DEB.2.20.1608261540470.4924@virtualbox> (Johannes
-        Schindelin's message of "Fri, 26 Aug 2016 15:45:07 +0200 (CEST)")
-Message-ID: <xmqqmvjzii1d.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1753151AbcHZRCy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Aug 2016 13:02:54 -0400
+Received: from mail-it0-f43.google.com ([209.85.214.43]:35706 "EHLO
+        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751014AbcHZRCx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2016 13:02:53 -0400
+Received: by mail-it0-f43.google.com with SMTP id x131so1410098ite.0
+        for <git@vger.kernel.org>; Fri, 26 Aug 2016 10:02:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=dUHaFkXZ8cQLIzIPyX5ntoQ6BDp9Tl95RS9tGvskNco=;
+        b=ag85MJbp9i9eqltrocfA7hYbnjtnjPKw4lIqMe8Stm6NjL0hqTREYjKP7MOdHsXl8Q
+         AdrX8rw2L3kTO+nLYExri+kxRy/sBsWA7H979xoFoL67kalhtdacHil6cXi2T7RXJcSt
+         V8NwwPDUMqf7Efxjm4wLeRvhrVG32Y0dZrvsJ04KxivD/0t+Gc8x4ESV8DE/ZmxcNyLY
+         6EUW5G5FaHfZcdIYzbe3JgxSwnse69UKYT73inapAzO4BbtO+lt2Yt+mJ1MyUsLHzFRS
+         PegVtASZEdDlG7GO/2E48uxTvppuwO1K/6hxPKUeruDITJXJNjDyZ7qSe2p6zaPB1wMx
+         YkYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=dUHaFkXZ8cQLIzIPyX5ntoQ6BDp9Tl95RS9tGvskNco=;
+        b=Vh0B+bSaMaTjovuxVP8mp5f4MWKfNo7aDSI1VvHzjwoDWFOaC5Ptxs669+01bHMy13
+         aW9AA21yGz6LOfdyZCA+jPBEotAbFPyQ80I2CfBG/iAfO5HUDlHWicmd5OVo/TStkYCT
+         //uLIGPPlqQ8tlVcjj75zo5+L3hir0THQ2bX2yxhr/7/eEkbiO8AWlvnlfw4h7U/TAhE
+         Msd10cJFwDPx6tIGhxAS44kgG2hQRBSHt8R8C+rj8nWbgNelZZ6HbYLUgabMyMyM9+3J
+         +WIxiudz6wiZjMk2fFm0kSqYp15NJczjFhsodWWEgDxwZgPb59DuIljt/evc8VqxIaKG
+         D2YQ==
+X-Gm-Message-State: AE9vXwN33rIuJlPSJlDchTTwyvVQqbqjJEC4nDHS7CfSiO9GfsYVErLvR2aRmVA52eP1J7pxiVObIFweukwAwdlX
+X-Received: by 10.107.178.129 with SMTP id b123mr5391285iof.83.1472230972883;
+ Fri, 26 Aug 2016 10:02:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4D3B7898-6BAE-11E6-AB1D-F7BB12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.107.128.66 with HTTP; Fri, 26 Aug 2016 10:02:52 -0700 (PDT)
+In-Reply-To: <CA+P7+xrYM_r+Q_27hWM2FwbreV90AqPgoiH-qPZN0hoPiHpKhQ@mail.gmail.com>
+References: <20160825110752.31581-1-larsxschneider@gmail.com>
+ <20160825110752.31581-7-larsxschneider@gmail.com> <CAGZ79kaVg40H-LeDtFfDYqDFDDbr+um3ZYj8oAaqGu+q6k5e+A@mail.gmail.com>
+ <xmqqvayojx9e.fsf@gitster.mtv.corp.google.com> <CA+P7+xrYM_r+Q_27hWM2FwbreV90AqPgoiH-qPZN0hoPiHpKhQ@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 26 Aug 2016 10:02:52 -0700
+Message-ID: <CAGZ79kYD7KSzdhe-60fs5iUKmYcMd6+V3fSN513+sr15q+g39Q@mail.gmail.com>
+Subject: Re: [PATCH v6 06/13] pkt-line: add functions to read/write flush
+ terminated packet streams
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Martin-Louis Bright <mlbright@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Thu, Aug 25, 2016 at 5:55 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
+> On Thu, Aug 25, 2016 at 3:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> What is wrong about that?  4*80k = 320kB overhead for length fields
+>> to transfer 5GB worth of data?  I do not think it is worth worrying
+>> about it.
+>>
+>> But I am more surprised by seeing that "why not a single huge
+>> packet" suggestion immediately after you talked about "without the
+>> possibility to intervene".  They do not seem to be remotely related;
+>> in fact, they are going into opposite directions.
+>>
+>> Puzzled.
+>
+> Stefan's argument to me is thus "If we're already going to ignore
+> sideband packets here, why not go all the way and make variable length
+> packets and send a single packet of a maximum length? Doing thus will
+> solve some set of future problems nicely and makes this code easier."
+>
+> I'm not sure I agree myself, but that's the logic as I understand it.
 
-> In short: I would really appreciate it if you could cut quoted text after
-> your last response.
+Yeah. To me it seems this design explicitly makes it hard for side bands.
+As we do not need sidebands for local transfers, this is fine for sure.
 
-I think you are referring to the patch part in this case.
+(If we wanted to make it sideband friendly, I'd expect you could register
+callbacks for either all packets or for a given sideband until the next
+flush comes.)
 
-As I was not making point-by-point comments on the proposed commit
-log message, quoting only that part and cutting the patch text would
-have been pointless.  I could have cut the proposed log message and
-left the patch in, though, because the comments were not about what
-was in the proposed log message, but about what was not in it [*1*].
+So as hinted by this design, we want a protocol that
+* doesn't care about sidebands
+* cares about large data (hence maybe throughput)
+* has easy/clean interface
 
-I left the patch part for other people's use, to make it easy for
-them to see what I was saying was correct and appropriate for what
-the patch does.  Removing that would not have made much sense.
+And one large packet would suffice for these three points as well
+and additionally has benefits for the network stuff.
 
-But that is only true in this case.  I try to see if I can trim
-quote more aggressively, but I would still err on the side of
-over-quoting than under-quoting [*2*].
+The 320kB additional transmission are negligible overhead, so I was not
+concerned about the size, but rather the code being bloated, i.e. we need
+one layer of additional code to cope with the repetitive packets.
 
+---
+My background is mostly submodule related, and whenever I come up
+with a shiny novel idea that would help submodules tremendously, someone
+(mostly Peff) comes along and suggests a broader more generic thing, that
+works just as well for submodules but is applicable to all of Git.
 
-[Footnote]
+So I picked up that way of thinking: If we write code here, that helps with a
+very special niche of things, can we make so, that the rest also benefits?
 
-*1* As to what was IN the proposed log message, I have one comment.
-I do not think "To be truly useful" adds any value, as there is
-nothing "truly" about what this series does.  The original was
-"truly" useful for the purpose of the sequencer machinery and its
-use in the current callers, just like with this series it becomes
-"truly" useful for envisioned new callers that want to handle error
-conditions themselves.  The change is making it "more useful" for
-one different use case.  It may not be "truly" useful for other use
-cases that sequencer machinery could be used even with the
-"eradicate die and exit" change and other people may bring a new use
-case that wants it to be even "more useful".  The fact that it may
-not be directly usable by a new use case without further change does
-not make the result of applying this proposed series less than
-"truly useful".  The "truly" adjective implies absolute, but there
-is nothing absolute in incremental improvements.  It is always
-relative to the context within which the machinery was designed to
-be used.  "To make it usable for callers that want to handle errors
-themselves (instead of just dying and the calling process handle
-it), let's turn die's and exit's to returning negative values." is
-probably closer to what I would have expected.
+I may not understand all the requirements in this case, but to me it looks like
+the "one packet" approach covers all requirements, but has the huge potential
+to make other parts better in the long run.
+-- 
 
-*2* As I read the quoted part before sending my response out, erring
-on the side not to underquote tends to avoid a mistake that invites:
-"I think you misunderstood what I wrote in the part you snipped from
-your quote; perhaps you skimmed it without fully reading."
+Thanks,
+Stefan
