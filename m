@@ -2,230 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C8591FD99
-	for <e@80x24.org>; Fri, 26 Aug 2016 19:07:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE4A71FD99
+	for <e@80x24.org>; Fri, 26 Aug 2016 19:16:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752389AbcHZTHN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Aug 2016 15:07:13 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51151 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752176AbcHZTHM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2016 15:07:12 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A571338414;
-        Fri, 26 Aug 2016 15:06:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=PNS3o4T6qUoAWZrXXyis7445Swo=; b=KJQ3Ou
-        Ne9oygIaR1I9PLBGV/PMVwZWBrzcof9TsOvcBh6c5xKxNuLZK6R757Ey/YQ+pada
-        /pKHYzdnJ0zo9+xeeWo3zgmcfSf5x5Drve/s5jTHCOEGFpt3R6SuM4x0fUTHl8mS
-        jPBrSs/oUOnnpdF8hOEmrdFmruwSpsvaRrFvY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ey/w6l4TciCswohZrVogE3AFr/WlAv2w
-        CEDcGyMRmk79ze0hHIGn5BDYiXSmtbSANnyh+9zzBUKP8TNzGUDuAU5JgUVTOFnk
-        hacXD1+3SMmBplhkF8J+tJacdHt8dOHjNOKkWSBTk0ZC8O4NIHiwqVWyhzxdbrTg
-        9S0b8G9xvMw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9DB3B38411;
-        Fri, 26 Aug 2016 15:06:47 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 106613840F;
-        Fri, 26 Aug 2016 15:06:47 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ralf Thielow <ralf.thielow@gmail.com>
-Cc:     git@vger.kernel.org, larsxschneider@gmail.com, me@jnm2.com,
-        philipoakley@iee.org, john@keeping.me.uk,
-        johannes.schindelin@gmx.de
-Subject: Re: [PATCH v2 2/3] help: introduce option --exclude-guides
-References: <20160818185719.4909-1-ralf.thielow@gmail.com>
-        <20160826175836.14073-1-ralf.thielow@gmail.com>
-        <20160826175836.14073-3-ralf.thielow@gmail.com>
-Date:   Fri, 26 Aug 2016 12:06:45 -0700
-In-Reply-To: <20160826175836.14073-3-ralf.thielow@gmail.com> (Ralf Thielow's
-        message of "Fri, 26 Aug 2016 19:58:35 +0200")
-Message-ID: <xmqq8tvjgxiy.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1752274AbcHZTQ0 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Aug 2016 15:16:26 -0400
+Received: from mail-it0-f53.google.com ([209.85.214.53]:38465 "EHLO
+        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752161AbcHZTQZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2016 15:16:25 -0400
+Received: by mail-it0-f53.google.com with SMTP id g62so7546654ith.1
+        for <git@vger.kernel.org>; Fri, 26 Aug 2016 12:16:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=KHizwIylZuxfmdwSJ+Fwx1FaW6rFkQfWe9DCYsizcFU=;
+        b=SC4Jc2hIpneHplcX7hdiMejZt8p2ahZ4qLHTLTzG9h2Rs1jg9nLO1nV7zpJOM/3VID
+         Kc3WtB9cn6iKApA4TVVwp6OYIqrdVWL7oW7dlLpaneXzvtSdHWcvi/J0YARrpaGXVP88
+         S/Dm2VfM2oraZDWQGhspBRwyOSo+hOG7kNClr3y4ElzvH5CYWn3vT6NDsAUF4aOGnttW
+         l0cC209GV+e9GYjFoVgKFfY88wYCS39CD7NVOdUOzSEXQJD1/k3jDYp5yfKkF7ibSScl
+         UwDgM7zytfmdGvjTh+a7MP2fiRuRQjuYDroAygJGVysNj7q1ETCBfG3v9odu8YmOqb1Z
+         Kqfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=KHizwIylZuxfmdwSJ+Fwx1FaW6rFkQfWe9DCYsizcFU=;
+        b=BJR2RIE4GELNI1EM2E7OFJTCj9lyEb6I2Mxuo78lmUgqAjK/eS9Oh6ye9T+E8OIJzM
+         MR+j2KvK1OQ4Kzmr9ukJAaLPvMkUcsWNnx5AGtCp4tPNIVTEXPsZvy3YTvMRRex0/AAA
+         GmWQSm7PfdAUbfuTwW3G1PkCFdpsxRRLdsFZod9gffsAebxhcOOppxa6qucEZ59l6BPu
+         fjtFCYT4fPro+IQO0AAqaIzKKrB4Tznqt5vjUXIdZxd7rH68vIkyriPIEJLdl75Z6/t8
+         0DJ8egO7zN+Fw7TBcnGdqek7tGAlOLhshJB6KR5T70E726c5c/3UC3z5W3M8XbiOk7Hj
+         Fp/w==
+X-Gm-Message-State: AE9vXwMKVW/0R+PUwjD+mIrApOZDd/NsiBXrMjUeSYLz8RZAFHnEMb1NjKeqOrRflSZcZCLZAOkEujl6yAxX2EtI
+X-Received: by 10.107.144.10 with SMTP id s10mr5754628iod.165.1472238984125;
+ Fri, 26 Aug 2016 12:16:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3C545470-6BC0-11E6-AF3E-F7BB12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.107.128.66 with HTTP; Fri, 26 Aug 2016 12:16:23 -0700 (PDT)
+In-Reply-To: <xmqqoa4fgzhv.fsf@gitster.mtv.corp.google.com>
+References: <1472230741-5161-1-git-send-email-dev+git@drbeat.li> <xmqqoa4fgzhv.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 26 Aug 2016 12:16:23 -0700
+Message-ID: <CAGZ79kbL13b=iZiFKW8a=G+2zXRSwjYDTzu2TS47Ppohgzm0Gg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] gitk: align the commit summary format to the documentation
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Beat Bolli <dev+git@drbeat.li>, Heiko Voigt <hvoigt@hvoigt.net>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Paul Mackerras <paulus@samba.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ralf Thielow <ralf.thielow@gmail.com> writes:
-
-> Introduce option --exclude-guides to the help command.  With this option
-> being passed, "git help" will open man pages only for actual commands.
-
-Let's hide this option from command help of "git help" itself, drop
-the short-and-sweet "-e", not command-line complete it, and leave it
-not-mentioned here.
-
-It is a different story if this option would really help the end
-users, but I do not think that is the case.  If this were to face
-the end users properly, we would need to worry about making sure
-that "git help -g -e" would error out, and getting all the other
-possible corner cases right.  I do not think the amount of effort
-required to do so (even the "trying to enumerate what other possible
-corner cases there may be" part) is worth it.
-
-> In the test script we do two things I'd like to point out:
+On Fri, Aug 26, 2016 at 11:24 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Beat Bolli <dev+git@drbeat.li> writes:
 >
->> +       test_config help.htmlpath test://html &&
+>> In 175d38c (SubmittingPatches: document how to reference previous commits,
+>> 2016-07-28) the format for referring to older commits was specified.
+>>
+>> Make the text generated by the "Copy commit summary" command match this
+>> format.
 >
-> As we pass a URL, Git won't check if the given path looks like
-> a documentation directory.  Another solution would be to create
-> a directory, add a file "git.html" to it and just use this path.
+> Hmph.  I didn't know gitk already had its own command to produce a
+> short string.  I actually think what it produces
 
-I think this is OK; with s|As we pass a URL|As we pass a string with
-:// in it|, the first sentence can be a in-code comment in the test
-that does this and will help readers of the code in the future.
+It was added in d835dbb91fe (gitk: Add a "Copy commit summary" command,
+2015-07-18), it doesn't seem to be in your tree yet, so maybe wait
+with this patch
+until you pulled gitk?
 
->> +       test_config help.browser firefox
 >
-> Git checks if the browser is known, so the "test-browser" needs to
-> pretend it is one of them.
+>> In 175d38c ("SubmittingPatches: document how to reference previous commits",
+>> 2016-07-28) the format for referring to older commits was specified.
+>
+> is easier to read when pasted into a sentence than what the recent
+> update 175d38ca ("SubmittingPatches: document how to reference
+> previous commits", 2016-07-28) suggests to do, i.e.
+>
+>> In 175d38c (SubmittingPatches: document how to reference previous commits,
+>> 2016-07-28) the format for referring to older commits was specified.
+>
+> Heiko, Stefan, I think you two were involved in adding that new
+> paragraph.   What do you think?
 
-Are you talking about the hardcoded list in valid_tool() helper
-function in git-web--browse.sh?  If we use the established escape
-hatch implemented by valid_custom_tool() helper there by setting
-browser.*.cmd, would that be sufficient to work around the "Git
-checks if the browser is known"?
+So the subtle difference is adding '"' around the commit message subject?
 
-> diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
-> index 40d328a..eeb1950 100644
-> --- a/Documentation/git-help.txt
-> +++ b/Documentation/git-help.txt
-> @@ -8,7 +8,7 @@ git-help - Display help information about Git
->  SYNOPSIS
->  --------
->  [verse]
-> -'git help' [-a|--all] [-g|--guide]
-> +'git help' [-a|--all] [-e|--exclude-guides] [-g|--guide]
->  	   [-i|--info|-m|--man|-w|--web] [COMMAND|GUIDE]
-
-So, let's not do this.
-
-> diff --git a/builtin/help.c b/builtin/help.c
-> index e8f79d7..40901a9 100644
-> --- a/builtin/help.c
-> +++ b/builtin/help.c
-> @@ -37,8 +37,10 @@ static int show_all = 0;
->  static int show_guides = 0;
->  static unsigned int colopts;
->  static enum help_format help_format = HELP_FORMAT_NONE;
-> +static int exclude_guides;
->  static struct option builtin_help_options[] = {
->  	OPT_BOOL('a', "all", &show_all, N_("print all available commands")),
-> +	OPT_BOOL('e', "exclude-guides", &exclude_guides, N_("exclude guides")),
-
-So I'd suggest using PARSE_OPT_HIDDEN for this one and drop 'e' shorthand.
-The only caller of this mode does not use it.
-
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index c1b2135..b148164 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1393,7 +1393,7 @@ _git_help ()
->  {
->  	case "$cur" in
->  	--*)
-> -		__gitcomp "--all --guides --info --man --web"
-> +		__gitcomp "--all --exclude-guides --guides --info --man --web"
->  		return
->  		;;
->  	esac
-
-So, let's not do this.
-
-> diff --git a/t/t0012-help.sh b/t/t0012-help.sh
-> new file mode 100755
-> index 0000000..fb1abd7
-> --- /dev/null
-> +++ b/t/t0012-help.sh
-> @@ -0,0 +1,33 @@
-> +#!/bin/sh
-> +
-> +test_description='help'
-> +
-> +. ./test-lib.sh
-> +
-> +configure_help () {
-> +	test_config help.format html &&
-> +	test_config help.htmlpath test://html &&
-> +	test_config help.browser firefox 
-> +}
-
-Would replacing the last line with:
-
-	test_config browser.test.cmd ./test-browser &&
-	test_config help.browser test
-
-and then writing to test-browser work just as well?  If so, that
-would be much cleaner and more preferrable.
-
-> +
-> +test_expect_success "setup" "
-> +	write_script firefox <<-\EOF
-> +	exit 0
-> +	EOF
-> +"
-
-Unless there is a good reason you MUST do so, avoid quoting the test
-body with double quotes, as it invites mistakes [*1*].
-
-Also, how about using something like:
-
-	write_script test-browser <<-\EOF
-	i=0
-	for arg
-        do
-		i=$(( $i + 1 ))
-		echo "$i: $arg"
-	done >test-browser.log
-        EOF
-
-instead?  That way, you can ensure that "git help status" attempts
-to call git-status.html with the expected path, not gitstatus.html
-or status.html, or somesuch, immediately after running "git help
-status" in the next test by inspecting test-browser.log ...
-
-> +test_expect_success "works for commands and guides by default" "
-> +	configure_help &&
-> +	git help status &&
-
-... right here.
-
-The output from the test-browser does not have to be multi-line;
-just doing
-
-	echo "$*"
-
-might be sufficient.
-
-> +	git help revisions
-> +"
-
-Thanks.
-
-[Footnote]
-
-*1* Can you immediately tell why this test is broken?
-
-test_expect_success "two commits do not have the same ID" "
-	git commit --allow-empty -m first &&
-	one=$(git rev-parse --verify HEAD) &&
-	test_tick &&
-	git commit --allow-empty -m second &&
-	two=$(git rev-parse --verify HEAD) &&
-	test $one != $two
-"
-
+I agree we should fix that.
