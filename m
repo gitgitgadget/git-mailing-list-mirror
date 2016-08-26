@@ -2,152 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 84FF51FD99
-	for <e@80x24.org>; Fri, 26 Aug 2016 23:46:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF0361FD99
+	for <e@80x24.org>; Fri, 26 Aug 2016 23:47:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754648AbcHZXq1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Aug 2016 19:46:27 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:32907 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753133AbcHZXq0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2016 19:46:26 -0400
-Received: by mail-wm0-f66.google.com with SMTP id o80so1357104wme.0
-        for <git@vger.kernel.org>; Fri, 26 Aug 2016 16:46:25 -0700 (PDT)
+        id S1754662AbcHZXrk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Aug 2016 19:47:40 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:34945 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753133AbcHZXrj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2016 19:47:39 -0400
+Received: by mail-wm0-f46.google.com with SMTP id f65so10873453wmi.0
+        for <git@vger.kernel.org>; Fri, 26 Aug 2016 16:47:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=LUa5fgnfM00teURc5OuTXMEiTA7t5m7IceuBEvw+KsU=;
-        b=L4ntiQCMN+wgOLLzzBHbSIaic0nFfRe954U1Ne7+tLvdRDOVm4ZiFopvwZljeBe+XE
-         SiwF7ZQS/hJg9KhBBD+LmggTdHJND1vrsE4DvPR+UD0th3osZaQ/BgoTf/8O8BXtBNHs
-         1AsWvrtSCruMYfaYzCZe0/bqzDjO8fscpmjifGTiAG8Ui2wurOZK5wCpmZ6/FMZa5wGp
-         2NNlH8sCQgbh86X4jgMcTpNVqU9/PIq1UgIdkmun8dhmbO0Lph62PA5ceLYEBhcsHkiV
-         xp6MjEk1b/o/7bifHDoAjphAz7fiBGAxk10ztn2xeGgZ8/XkwPsaCV6NxqF68j6PcuLZ
-         Z2MA==
+         :cc:content-transfer-encoding;
+        bh=PurgpFx05rfGLpICGFn80hRqlvetG1emT08mixBBuoo=;
+        b=U4R3BxAg7HAWG1PZiPyF48FQf+KPT+oQb1soCfCJ1lJZrha8SYgWAdxxpTgpGEMDWm
+         hrFWPBo7hbxo/7fccihiMgeDCGUgqDwA1Zk+6aUd8nzHSYNQNm+O361/l0A28gcYncyz
+         4Fmt/HAUKPjcQbtxi61Evi+qH7yEoWwLNPc02et+pFamYYXdVySxqiTG3Mucun0NqIZ1
+         b4U3EIpYrMvLbjyRJK8qWRBvPHG0HHkn4r40lL52Vk//LhNEjSUknYPEuKtmfG92mCim
+         oCV0JyHapLpkOSCvzzX7mxCwKB8B1q1gYknbaIHJssfhX0jGb5nVcs55jitZzanWAULi
+         2qkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=LUa5fgnfM00teURc5OuTXMEiTA7t5m7IceuBEvw+KsU=;
-        b=dkchwolwW+O1hXVdYkAwpwH6w/O9icv6KaTmIthVZ5fkxJaIv5zComGnuhj/wZFXYw
-         s5bbNKP08GZzD178f3KQbNohGcITS1QhUedqHw6SvH6ygcL+sUkTzkB3SZmKJRZN4SGn
-         6662+zAzPwWk4KM+e0sHTH4j8/7Lj9ENlPioMjC3eFD2IQm3CAwrdDGKsbZS+omiO39b
-         IcHUpvpmMVB+l4U4FJmXPhXa4JGcTdZFSGEEp++oDCR3G6QkNcWgF7msrUWz1mQRCAfC
-         J7CIOG9H7N91rfjenP4SAQkqraPI+uUP9p9YrmYbjRBkkuACjGkaRu8wcDr/WK6ukVav
-         vIiw==
-X-Gm-Message-State: AE9vXwNvwpqCOlc0EYSnI+chgvTin1GHdk7YUDfNVG0VkR2C7YpuH1cMTSQ1QgtPb+83YBjfOVea2TDjAc3nkw==
-X-Received: by 10.194.149.113 with SMTP id tz17mr6195441wjb.64.1472255184779;
- Fri, 26 Aug 2016 16:46:24 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=PurgpFx05rfGLpICGFn80hRqlvetG1emT08mixBBuoo=;
+        b=mgVZyRM5JibG/0mKfhWNM2lPaeBSS9Ku9RpaExUfu1bsFJu+HcTL6n46WAQik/bTWL
+         kAsUd1FVUukuL1djngIpA/v81drt+fmibsjlFsPXule79RtmZ1ZBvZE/12mf0/9BJdDB
+         Rtq+TdjJ52zqlQK98twGGbWHp6MlOQftvBrMkJ50XtQtPEzavlFkC4lvQ92VoKDmiMUe
+         RF0kCzBCbX+8NOcRrN9wL8mn0esxabMiu36/rF8djul4t+ix6R98JkVH0eP8PyeavFX8
+         6bOFqNgIukkKMLTRAA2rebiCTMhMsOPHwzrCWv/YC2Q2bcM7ZlkxrUyEwI2pSTmKhOSX
+         GPxQ==
+X-Gm-Message-State: AE9vXwNQTKZ/DUBcnXxwclu7KFedj+9ICn+5AqGgm8k12x2tpeOQ1ATHFezWJoKi61AgPv7b8l49Jb4ke7/rig==
+X-Received: by 10.28.51.210 with SMTP id z201mr1040965wmz.98.1472255257455;
+ Fri, 26 Aug 2016 16:47:37 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.194.227.163 with HTTP; Fri, 26 Aug 2016 16:46:24 -0700 (PDT)
-In-Reply-To: <xmqqvaz7ys9u.fsf@gitster.mtv.corp.google.com>
-References: <20160811184501.384-1-chriscool@tuxfamily.org> <20160811184501.384-13-chriscool@tuxfamily.org>
- <xmqqvaz7ys9u.fsf@gitster.mtv.corp.google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 27 Aug 2016 01:46:24 +0200
-Message-ID: <CAP8UFD0UxpRbbBeONETjMmdAeA64NoHXc+eAjasYQSCuc5=EyQ@mail.gmail.com>
-Subject: Re: [PATCH v12 12/13] apply: learn to use a different index file
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-        Karsten Blees <karsten.blees@gmail.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+Received: by 10.194.102.70 with HTTP; Fri, 26 Aug 2016 16:46:56 -0700 (PDT)
+In-Reply-To: <CAFO0PHfy_teFFMiuFdjKYohCgRZHNT+Cc8hXOjsPeRTi9gAHPQ@mail.gmail.com>
+References: <91a2ffbe-a73b-fbb9-96da-9aea4d439e5a@gmail.com>
+ <20160826061500.GA22213@dcvr> <6d171c23-65f6-5f67-7d80-051f2dfe8678@gmail.com>
+ <CAFO0PHfy_teFFMiuFdjKYohCgRZHNT+Cc8hXOjsPeRTi9gAHPQ@mail.gmail.com>
+From:   =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Date:   Sat, 27 Aug 2016 01:46:56 +0200
+Message-ID: <CANQwDwf7pWRh1PWizDZ4aFCcppbJCQcHj_qyNs0kCfK4NYddVg@mail.gmail.com>
+Subject: Re: [RFC] Proposed questions for "Git User's Survey 2016"
+To:     David Bainbridge <david.bainbridge@gmail.com>
+Cc:     Eric Wong <e@80x24.org>, git <git@vger.kernel.org>,
+        Doug Rathbone <doug@dougrathbone.com>,
         Stefan Beller <sbeller@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
-        Christian Couder <chriscool@tuxfamily.org>
+        Patrick Renaud <patrick.renaud@ericsson.com>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 11, 2016 at 10:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
+[for some reason this email is not yet present on GMane NNTP interface]
+
+On 26 August 2016 at 21:12, David Bainbridge <david.bainbridge@gmail.com> w=
+rote:
+> Hi Jakub,
 >
->> Sometimes we want to apply in a different index file.
->>
->> Before the apply functionality was libified it was possible to
->> use the GIT_INDEX_FILE environment variable, for this purpose.
->>
->> But now, as the apply functionality has been libified, it should
->> be possible to do that in a libified way.
->>
->> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->> ---
->>  apply.c | 10 ++++++++--
->>  apply.h |  1 +
->>  2 files changed, 9 insertions(+), 2 deletions(-)
->>
->> diff --git a/apply.c b/apply.c
->> index 2ec2a8a..7e561a4 100644
->> --- a/apply.c
->> +++ b/apply.c
->> @@ -4674,8 +4674,14 @@ static int apply_patch(struct apply_state *state,
->>               state->apply = 0;
->>
->>       state->update_index = state->check_index && state->apply;
->> -     if (state->update_index && state->newfd < 0)
->> -             state->newfd = hold_locked_index(state->lock_file, 1);
->> +     if (state->update_index && state->newfd < 0) {
->> +             if (state->index_file)
->> +                     state->newfd = hold_lock_file_for_update(state->lock_file,
->> +                                                              state->index_file,
->> +                                                              LOCK_DIE_ON_ERROR);
->> +             else
->> +                     state->newfd = hold_locked_index(state->lock_file, 1);
->> +     }
->>
->>       if (state->check_index && read_cache() < 0) {
->>               error(_("unable to read index file"));
+> This is excellent news!
 >
-> Here is a call to read_cache() that reads the default index file on
-> the filesystem into the default in-core index "the_index".
+> As when you last performed the survey it would be useful for us to be abl=
+e
+> to see what the users in our organization (Ericsson) think of Git, and th=
+ere
+> are many more than when the survey was last performed.
 >
-> Shouldn't it be reading from state->index_file instead?
+> Do any other organizations of any type have this need?
 
-Yes, it should.
+Yes, I will offer separate channels (that can be separately analyzed,
+and that you can get anonymous data for specific channel) for every
+organization and/or company that want's it (within reason)... this time
+with names anonymized from start (unless requested not to).
 
-> If we limit the review only to the context of your series, I think
+> As for the questions, it might be useful to have a question related to re=
+po
+> management systems being used.
+> Gerrit
+> Kallithea
+> Rhodecode
+> Atlassian Bitbucket
+> GitHub Enterprise
+> GitHub.com
+> GitLab
+> Deveo
+> etc.
 >
->     fall_back_threeway()
->      -> build_fake_ancestor() -- uses index_path to use custom index
->      -> discard_cache()
->      -> read_cache_from(index_path) -- reads back the fake ancestor
->      -> write_index_as_tree() -- writes the fake_ancestor
->      -> run_apply(index_path)
->         -> apply_all_patches()
->            -> apply_patch()
->
-> is the only codepath that uses a custom index file, so when the
-> control reaches this function with a custom index file, the in-core
-> index is already populated, making read_cache() a no-op, and that is
-> the only thing that makes the resulting code avoid triggering this
-> bug, but as part of a general "libified" codepath,
+> This is not directly about Git of course but seeing the extent to which
+> these are used, and the proportion of users using them might be useful.
 
-Yeah, I agree with this reasoning.
+This is somewhat present in current version of survey, namely
+there is question about *types* of tools (with git repository management,
+git hosting tools and code review tools included), and there is free-form
+question asking to enumerate tools one uses.  That is, as above, but
+more generic, and not multiple choice.
 
-> I think it should
-> be made to read from state->index_file using read_cache_from().
+I will think about adding such question.
 
-Yeah, I will change it.
-
-> I only noticed this call to read_cache(), but there may be others
-> lurking nearby.
-
-Yeah, there is another one in get_current_sha1() which is only called
-by build_fake_ancestor() (from apply.c not from builtin/am.c as there
-is a function with this name in both files), but this function is
-currently called only when --build-fake-ancestor is passed which is
-not the case in run_apply() in am.c. I will change it too.
-
-Thanks,
-Christian.
+Regards
+--=20
+Jakub Nar=C4=99bski
