@@ -2,90 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1CDB71FD99
-	for <e@80x24.org>; Fri, 26 Aug 2016 20:40:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02CA21FD99
+	for <e@80x24.org>; Fri, 26 Aug 2016 21:00:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752315AbcHZUku (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Aug 2016 16:40:50 -0400
-Received: from mx1.2b3w.ch ([92.42.186.250]:51272 "EHLO mx1.2b3w.ch"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750869AbcHZUkt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2016 16:40:49 -0400
-X-Greylist: delayed 717 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Aug 2016 16:40:49 EDT
-Received: from mx1.2b3w.ch (localhost [127.0.0.1])
-        by mx1.2b3w.ch (Postfix) with ESMTP id 219EFC3442;
-        Fri, 26 Aug 2016 22:28:15 +0200 (CEST)
-Received: from mcmini.bolli (215-243-153-5.dyn.cable.fcom.ch [5.153.243.215])
-        by mx1.2b3w.ch (Postfix) with ESMTPSA id E2BAFC3431;
-        Fri, 26 Aug 2016 22:28:14 +0200 (CEST)
-Subject: Re: [PATCH 1/2] gitk: align the commit summary format to the
- documentation
-To:     Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <1472230741-5161-1-git-send-email-dev+git@drbeat.li>
- <xmqqoa4fgzhv.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kbL13b=iZiFKW8a=G+2zXRSwjYDTzu2TS47Ppohgzm0Gg@mail.gmail.com>
-Cc:     Heiko Voigt <hvoigt@hvoigt.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Paul Mackerras <paulus@samba.org>
-From:   Beat Bolli <dev+git@drbeat.li>
-Message-ID: <6afee090-fbe1-5d05-1f7e-6f0fc4901418@drbeat.li>
-Date:   Fri, 26 Aug 2016 22:27:29 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
- Gecko/20100101 Thunderbird/45.2.0
+        id S1754100AbcHZU7w (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Aug 2016 16:59:52 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58346 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754030AbcHZU7v (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2016 16:59:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AA5913966D;
+        Fri, 26 Aug 2016 16:56:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=doNH4bnza4tsKtPykgOG9ldEKR8=; b=YQZPtH
+        zXldq8CXR0S0EIvoB7zV/DEWZN0TCybbsdmZE1lz5ekijdIu63GHJiBpErMpOl3n
+        P1GgTStwEPe/lpQEghM6jeKcmi/pW953TBnwa3o4p/ZiqcbPNk+br5XFchNuueI6
+        w0Hj40hHdLOcFcm4l60XKV36Q5SbXviUHVK5M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=SJj1qOCVg4/P56Un/8gJNjIP4zRaQ4hm
+        Bf/7abGzCrffPhBZj07qV0xlFAKaYN6gzaYCArCLQrVKEMcotmlmpDL6Ky5K2aP7
+        cZ6SFPtUOn+SZMHRconogaZlg+lBcnSpIkubYW+D6zaQ2RnFQhAxUnfPNXLruODz
+        5+W0VpFPozc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A1D283966C;
+        Fri, 26 Aug 2016 16:56:38 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2B26E3966B;
+        Fri, 26 Aug 2016 16:56:38 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Pranit Bauva <pranit.bauva@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v14 15/27] bisect--helper: retire `--bisect-clean-state` subcommand
+References: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
+        <01020156b73fe6c6-60f4f6c2-9c39-4840-bbbf-18902961d57f-000000@eu-west-1.amazonses.com>
+Date:   Fri, 26 Aug 2016 13:56:36 -0700
+In-Reply-To: <01020156b73fe6c6-60f4f6c2-9c39-4840-bbbf-18902961d57f-000000@eu-west-1.amazonses.com>
+        (Pranit Bauva's message of "Tue, 23 Aug 2016 11:53:53 +0000")
+Message-ID: <xmqq37lrfdvf.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kbL13b=iZiFKW8a=G+2zXRSwjYDTzu2TS47Ppohgzm0Gg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP
+Content-Type: text/plain
+X-Pobox-Relay-ID: 94E645BC-6BCF-11E6-85A1-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 26.08.16 21:16, Stefan Beller wrote:
-> On Fri, Aug 26, 2016 at 11:24 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Beat Bolli <dev+git@drbeat.li> writes:
->>
->>> In 175d38c (SubmittingPatches: document how to reference previous commits,
->>> 2016-07-28) the format for referring to older commits was specified.
->>>
->>> Make the text generated by the "Copy commit summary" command match this
->>> format.
->>
->> Hmph.  I didn't know gitk already had its own command to produce a
->> short string.  I actually think what it produces
-> 
-> It was added in d835dbb91fe (gitk: Add a "Copy commit summary" command,
-> 2015-07-18), it doesn't seem to be in your tree yet, so maybe wait
-> with this patch
-> until you pulled gitk?
+Pranit Bauva <pranit.bauva@gmail.com> writes:
 
-This commit was part of release 2.6.0.
+> The `bisect-clean-state` subcommand is no longer used in the shell
+> script while the C code uses `bisect_clean_state()` thus remove the
+> subcommand.
 
->>> In 175d38c ("SubmittingPatches: document how to reference previous commits",
->>> 2016-07-28) the format for referring to older commits was specified.
->>
->> is easier to read when pasted into a sentence than what the recent
->> update 175d38ca ("SubmittingPatches: document how to reference
->> previous commits", 2016-07-28) suggests to do, i.e.
->>
->>> In 175d38c (SubmittingPatches: document how to reference previous commits,
->>> 2016-07-28) the format for referring to older commits was specified.
->>
->> Heiko, Stefan, I think you two were involved in adding that new
->> paragraph.   What do you think?
-> 
-> So the subtle difference is adding '"' around the commit message subject?
-> 
-> I agree we should fix that.
-
-So would you prepare a amendment to your documentation commit so that
-Junio can disregard my two patches?
-
-Thanks,
-Beat
+Good.
