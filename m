@@ -2,259 +2,194 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE2AD1F859
-	for <e@80x24.org>; Thu, 25 Aug 2016 23:39:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98E6F1F859
+	for <e@80x24.org>; Fri, 26 Aug 2016 00:09:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758785AbcHYXil (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Aug 2016 19:38:41 -0400
-Received: from mga06.intel.com ([134.134.136.31]:42011 "EHLO mga06.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1758738AbcHYXig (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2016 19:38:36 -0400
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by orsmga104.jf.intel.com with ESMTP; 25 Aug 2016 16:32:46 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.28,578,1464678000"; 
-   d="scan'208";a="161062159"
-Received: from jekeller-desk.amr.corp.intel.com ([134.134.3.116])
-  by fmsmga004.fm.intel.com with ESMTP; 25 Aug 2016 16:32:45 -0700
-From:   Jacob Keller <jacob.e.keller@intel.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH v11 0/8] submodule inline diff format
-Date:   Thu, 25 Aug 2016 16:32:35 -0700
-Message-Id: <20160825233243.30700-1-jacob.e.keller@intel.com>
-X-Mailer: git-send-email 2.10.0.rc0.259.g83512d9
+        id S1756626AbcHZAJJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Aug 2016 20:09:09 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:48782 "EHLO
+        alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1755472AbcHZAJI (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 25 Aug 2016 20:09:08 -0400
+X-AuditID: 1207440f-e2bff70000000955-da-57bf8815481f
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        by  (Symantec Messaging Gateway) with SMTP id 4D.09.02389.5188FB75; Thu, 25 Aug 2016 20:06:46 -0400 (EDT)
+Received: from [192.168.69.190] (p57907590.dip0.t-ipconnect.de [87.144.117.144])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u7Q06huQ024134
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Thu, 25 Aug 2016 20:06:44 -0400
+Subject: Re: on Amazon EFS (NFS): "Reference directory conflict: refs/heads/"
+ with status code 128
+To:     Alex Nauda <alex@alexnauda.com>
+References: <CAMQLHmAraXPL=8SmMG4X_424FAzx4q2Byk8pva5wEOg7vNSqLw@mail.gmail.com>
+ <20160824213900.gcnwxu46zvgpjr5a@sigill.intra.peff.net>
+ <67cde0aa-89fc-b574-d5f5-7e754d77b5bb@alum.mit.edu>
+ <CAMQLHmA=b0HMO9s0nt3VTdOYe51oE3UrrrCDH3Z_Tq0Nuhe-kQ@mail.gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <1d783e10-c1ce-4f17-4a54-8798b16697b2@alum.mit.edu>
+Date:   Fri, 26 Aug 2016 02:06:43 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.2.0
+MIME-Version: 1.0
+In-Reply-To: <CAMQLHmA=b0HMO9s0nt3VTdOYe51oE3UrrrCDH3Z_Tq0Nuhe-kQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrCIsWRmVeSWpSXmKPExsUixO6iqCvWsT/cYM8LTos796cxW3Rd6Way
+        +NHSw+zA7PGn8SGTx7PePYwenzfJBTBHcdmkpOZklqUW6dslcGVsebeVpWCffkVL9xf2BsYj
+        ql2MHBwSAiYSc265dTFycQgJbGWU2H9iJyOEc4FJYv+5RSxdjJwcwgIpElff/GMDaRARUJa4
+        ea0KoqadSWLLnN+sIDXMAkYSd2ZuYAKx2QR0JRb1NDOB1PMK2EssPpsHEmYRUJXYPvsJG4gt
+        KhAi0b5sPVg5r4CgxMmZT8BWcQoESuxsWwE1Ul3iz7xLzBC2vMT2t3OYJzDyz0LSMgtJ2Swk
+        ZQsYmVcxyiXmlObq5iZm5hSnJusWJyfm5aUW6Zro5WaW6KWmlG5ihAQo/w7GrvUyhxgFOBiV
+        eHhnsO4PF2JNLCuuzD3EKMnBpCTK2+EBFOJLyk+pzEgszogvKs1JLT7EKMHBrCTCq1gPlONN
+        SaysSi3Kh0lJc7AoifOqL1H3ExJITyxJzU5NLUgtgslqcHAIXDl4ZDajFEtefl6qkgRvQhvQ
+        EMGi1PTUirTMnBKEUiYOTpBFPECLPFpBFhUXJOYWZ6ZD5E8xKkqJ80aBJARAEhmleXC9sMTy
+        ilEc6C1h3h8gK3iASQmu+xXQYCagwS33d4MMLklESEk1MDIt7j/ww/Lb3xlbAp7uMFm48wBL
+        wp5F3nNmbVt5eO9iEU9Ozj/nd6k1r1S7Wvx65jNl7n23/3GX7VjLE9z4WlG0fu5E1pTW6Otz
+        Fn2Z3ces01Kyf4twxu7z+iKSbmzunkdFTHfbTfgk/yDlnWLh0o/CAcaljPq7pHs8501dxiRe
+        XO4/ffqe5beUWIozEg21mIuKEwEN+oYSBwMAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jacob Keller <jacob.keller@gmail.com>
+On 08/25/2016 06:01 PM, Alex Nauda wrote:
+> On Thu, Aug 25, 2016 at 2:28 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> On 08/24/2016 11:39 PM, Jeff King wrote:
+>>> On Wed, Aug 24, 2016 at 04:52:33PM -0400, Alex Nauda wrote:
+>>>
+>>>> Elastic File System (EFS) is Amazon's scalable filesystem product that
+>>>> is exposed to the OS as an NFS mount. We're using EFS to host the
+>>>> filesystem used by a Jenkins CI server. Sometimes when Jenkins tries
+>>>> to git fetch, we get this error:
+>>>> $ git -c core.askpass=true fetch --tags --progress
+>>>> git@github.com:mediasilo/dodo.git
+>>>> +refs/pull/*:refs/remotes/origin/pr/*
+>>>> fatal: Reference directory conflict: refs/heads/
+>>>> $ echo $? 128
+>>>>
+>>>> Has anyone seen anything like this before? Any tips on how to troubleshoot it?
+>>>
+>>> No, I haven't seen it before. That's an internal assertion in the refs
+>>> code that shouldn't ever happen. It looks like it happens when the loose
+>>> refs end up with duplicate directory entries. While a bug in git is an
+>>> obvious culprit, I wonder if it's possible that your filesystem might
+>>> expose the same name twice in one set of readdir() results.
+>>>
+>>> +cc Michael, who added this assertion long ago (and since this is the
+>>> first report in all these years, it does make me suspect that the
+>>> filesystem is a critical part of reproducing).
+>>
+>> Thanks for the CC.
+>>
+>> I've never heard of this problem before.
+>>
+>> What Git version are you using?
+> Git client 2.7.4 against GitHub (Git 2.6.5)
+> 
+>>
+>> I tried to provoke the problem by hand-corrupting the packed-refs file,
+>> but wasn't successful.
+>>
+>> So Peff's suggestion that the problem originates in your filesystem
+>> seems to be to be the most likely cause. A quick Google search found,
+>> for example,
+>>
+>>     https://bugzilla.redhat.com/show_bug.cgi?id=739222
+>>
+>> http://superuser.com/questions/640419/how-can-i-have-two-files-with-the-same-name-in-a-directory-when-mounted-with-nfs
+>>
+>> though these reports seem connected with having lots of files in the
+>> directory, which seems unlikely for `$GIT_DIR/refs/`. But I didn't do a
+>> more careful search, and it is easily possible that there are other bugs
+>> in NFS (or EFS) that could be affecting you.
+>>
+>> If this were repeatable, you could run Git under strace to test Peff's
+>> hypothesis. But I suppose it only happens rarely, right?
+> Actually it seems to be reproducible. Here's the last portion of an strace:
+> 
+> [...]
+> stat(".git/refs/remotes/origin/pr/7/head", {st_mode=S_IFREG|0644,
+> st_size=41, ...}) = 0
+> lstat(".git/refs/remotes/origin/pr/7/head", {st_mode=S_IFREG|0644,
+> st_size=41, ...}) = 0
+> open(".git/refs/remotes/origin/pr/7/head", O_RDONLY) = 4
+> read(4, "5d82811a248900efd8e201c6d9232de5"..., 256) = 41
+> read(4, "", 215)                        = 0
+> close(4)                                = 0
+> getdents(3, /* 0 entries */, 32768)     = 0
+> close(3)                                = 0
+> open(".git/refs/remotes/origin/pr/16/",
+> O_RDONLY|O_NONBLOCK|O_DIRECTORY|O_CLOEXEC) = 3
+> fstat(3, {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+> getdents(3, /* 3 entries */, 32768)     = 72
+> stat(".git/refs/remotes/origin/pr/16/head", {st_mode=S_IFREG|0644,
+> st_size=41, ...}) = 0
+> lstat(".git/refs/remotes/origin/pr/16/head", {st_mode=S_IFREG|0644,
+> st_size=41, ...}) = 0
+> open(".git/refs/remotes/origin/pr/16/head", O_RDONLY) = 4
+> read(4, "2886c4f3ba8c3b5c2306029f6e39498d"..., 256) = 41
+> read(4, "", 215)                        = 0
+> close(4)                                = 0
+> getdents(3, /* 0 entries */, 32768)     = 0
+> close(3)                                = 0
+> open(".git/refs/tags/", O_RDONLY|O_NONBLOCK|O_DIRECTORY|O_CLOEXEC) = 3
+> fstat(3, {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+> getdents(3, /* 2 entries */, 32768)     = 48
+> getdents(3, /* 0 entries */, 32768)     = 0
+> close(3)                                = 0
+> open(".git/refs/bisect/", O_RDONLY|O_NONBLOCK|O_DIRECTORY|O_CLOEXEC) =
+> -1 ENOENT (No such file or directory)
+> open(".git/packed-refs", O_RDONLY)      = -1 ENOENT (No such file or directory)
+> fstat(2, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 3), ...}) = 0
+> write(2, "fatal: Reference directory confl"..., 58fatal: Reference
+> directory conflict: refs/remotes/origin/
+> ) = 58
+> exit_group(128)                         = ?
+> +++ exited with 128 +++
 
-Modify the changes to do_submodule_path so that we properly call
-gitmodules_config() before the lookup of submodule_from_path. This may
-need to be modified so that we only call it the first time as I'm not
-sure what sort of performance hit we'll see. Note that we only need this
-call if we no longer have the checkout so it may not be so bad.
+Thanks for the additional information.
 
-Also make the function propagate an error code up to the callers so that
-they don't try to use an invalid path. This is better than die()'ing
-because a failure can occur if the submodule configuration can't be
-found for some reason (such as committing the submodule but not the
-.gitmodules file which we previously did in the test).
+From the strace output it is clear that there is no packed-refs file at
+the time of the problem, so the problem must be among the loose refs.
 
-interdiff between v10 and v11:
-diff --git w/cache.h c/cache.h
-index 70428e92d7ed..4f6693afa387 100644
---- w/cache.h
-+++ c/cache.h
-@@ -819,8 +819,8 @@ extern void strbuf_git_common_path(struct strbuf *sb, const char *fmt, ...)
- 	__attribute__((format (printf, 2, 3)));
- extern char *git_path_buf(struct strbuf *buf, const char *fmt, ...)
- 	__attribute__((format (printf, 2, 3)));
--extern void strbuf_git_path_submodule(struct strbuf *sb, const char *path,
--				      const char *fmt, ...)
-+extern int strbuf_git_path_submodule(struct strbuf *sb, const char *path,
-+				     const char *fmt, ...)
- 	__attribute__((format (printf, 3, 4)));
- extern char *git_pathdup(const char *fmt, ...)
- 	__attribute__((format (printf, 1, 2)));
-diff --git w/path.c c/path.c
-index 07dd0f62eb82..e9369f75319d 100644
---- w/path.c
-+++ c/path.c
-@@ -469,13 +469,16 @@ const char *worktree_git_path(const struct worktree *wt, const char *fmt, ...)
- 	return pathname->buf;
- }
- 
--static void do_submodule_path(struct strbuf *buf, const char *path,
--			      const char *fmt, va_list args)
-+/* Returns 0 on success, non-zero on failure. */
-+#define SUBMODULE_PATH_ERR_NOT_CONFIGURED -1
-+static int do_submodule_path(struct strbuf *buf, const char *path,
-+			     const char *fmt, va_list args)
- {
- 	const char *git_dir;
- 	struct strbuf git_submodule_common_dir = STRBUF_INIT;
- 	struct strbuf git_submodule_dir = STRBUF_INIT;
- 	const struct submodule *sub;
-+	int err = 0;
- 
- 	strbuf_addstr(buf, path);
- 	strbuf_complete(buf, '/');
-@@ -487,12 +490,14 @@ static void do_submodule_path(struct strbuf *buf, const char *path,
- 		strbuf_addstr(buf, git_dir);
- 	}
- 	if (!is_git_directory(buf->buf)) {
-+		gitmodules_config();
- 		sub = submodule_from_path(null_sha1, path);
--		if (sub) {
--			strbuf_reset(buf);
--			strbuf_git_path(buf, "%s/%s", "modules",
--					sub->name);
-+		if (!sub) {
-+			err = SUBMODULE_PATH_ERR_NOT_CONFIGURED;
-+			goto cleanup;
- 		}
-+		strbuf_reset(buf);
-+		strbuf_git_path(buf, "%s/%s", "modules", sub->name);
- 	}
- 
- 	strbuf_addch(buf, '/');
-@@ -505,27 +510,36 @@ static void do_submodule_path(struct strbuf *buf, const char *path,
- 
- 	strbuf_cleanup_path(buf);
- 
-+cleanup:
- 	strbuf_release(&git_submodule_dir);
- 	strbuf_release(&git_submodule_common_dir);
-+
-+	return err;
- }
- 
- char *git_pathdup_submodule(const char *path, const char *fmt, ...)
- {
-+	int err;
- 	va_list args;
- 	struct strbuf buf = STRBUF_INIT;
- 	va_start(args, fmt);
--	do_submodule_path(&buf, path, fmt, args);
-+	err = do_submodule_path(&buf, path, fmt, args);
- 	va_end(args);
-+	if (err)
-+		return NULL;
- 	return strbuf_detach(&buf, NULL);
- }
- 
--void strbuf_git_path_submodule(struct strbuf *buf, const char *path,
--			       const char *fmt, ...)
-+int strbuf_git_path_submodule(struct strbuf *buf, const char *path,
-+			      const char *fmt, ...)
- {
-+	int err;
- 	va_list args;
- 	va_start(args, fmt);
--	do_submodule_path(buf, path, fmt, args);
-+	err = do_submodule_path(buf, path, fmt, args);
- 	va_end(args);
-+
-+	return err;
- }
- 
- static void do_git_common_path(struct strbuf *buf,
-diff --git w/refs/files-backend.c c/refs/files-backend.c
-index 12290d249643..1f34b444af8d 100644
---- w/refs/files-backend.c
-+++ c/refs/files-backend.c
-@@ -1225,13 +1225,19 @@ static void read_loose_refs(const char *dirname, struct ref_dir *dir)
- 	struct strbuf refname;
- 	struct strbuf path = STRBUF_INIT;
- 	size_t path_baselen;
-+	int err = 0;
- 
- 	if (*refs->name)
--		strbuf_git_path_submodule(&path, refs->name, "%s", dirname);
-+		err = strbuf_git_path_submodule(&path, refs->name, "%s", dirname);
- 	else
- 		strbuf_git_path(&path, "%s", dirname);
- 	path_baselen = path.len;
- 
-+	if (err) {
-+		strbuf_release(&path);
-+		return;
-+	}
-+
- 	d = opendir(path.buf);
- 	if (!d) {
- 		strbuf_release(&path);
-diff --git w/submodule.c c/submodule.c
-index 405fa9e4eb32..5a62aa296098 100644
---- w/submodule.c
-+++ c/submodule.c
-@@ -127,7 +127,9 @@ static int add_submodule_odb(const char *path)
- 	int ret = 0;
- 	size_t alloc;
- 
--	strbuf_git_path_submodule(&objects_directory, path, "objects/");
-+	ret = strbuf_git_path_submodule(&objects_directory, path, "objects/");
-+	if (ret)
-+		goto done;
- 	if (!is_directory(objects_directory.buf)) {
- 		ret = -1;
- 		goto done;
-diff --git w/t/t4059-diff-submodule-not-initialized.sh c/t/t4059-diff-submodule-not-initialized.sh
-index c8775854d3c2..bd6927578423 100755
---- w/t/t4059-diff-submodule-not-initialized.sh
-+++ c/t/t4059-diff-submodule-not-initialized.sh
-@@ -50,8 +50,8 @@ test_expect_success 'setup - submodules' '
- 
- test_expect_success 'setup - git submodule add' '
- 	git submodule add ./sm2 sm1 &&
--	commit_file sm1 &&
--	git diff-tree -p --no-commit-id --submodule=log HEAD >actual &&
-+	commit_file sm1 .gitmodules &&
-+	git diff-tree -p --no-commit-id --submodule=log HEAD -- sm1 >actual &&
- 	cat >expected <<-EOF &&
- 	Submodule sm1 0000000...$smhead1 (new submodule)
- 	EOF
-@@ -60,7 +60,7 @@ test_expect_success 'setup - git submodule add' '
- 
- test_expect_success 'submodule directory removed' '
- 	rm -rf sm1 &&
--	git diff-tree -p --no-commit-id --submodule=log HEAD >actual &&
-+	git diff-tree -p --no-commit-id --submodule=log HEAD -- sm1 >actual &&
- 	cat >expected <<-EOF &&
- 	Submodule sm1 0000000...$smhead1 (new submodule)
- 	EOF
+The error is a "Reference directory conflict", which suggests that
+"refs/remotes/origin/" appears in two entries; once as a reference
+directory and once as a reference. But in fact it could also mean that
+"refs/remotes/origin/" appears twice, both as directories. Neither one
+should happen in normal operation.
 
---------->8
+Unfortunately there is not enough strace output to see whether (in this
+case) path `refs/remotes/origin` was reported twice by `getdents()`. I
+think that is still the most likely hypothesis, especially since the
+reports of this problem all seem to be on NFS + EBS.
 
-Jacob Keller (7):
-  cache: add empty_tree_oid object and helper function
-  graph: add support for --line-prefix on all graph-aware output
-  diff: prepare for additional submodule formats
-  allow do_submodule_path to work even if submodule isn't checked out
-  submodule: convert show_submodule_summary to use struct object_id *
-  submodule: refactor show_submodule_summary with helper function
-  diff: teach diff to display submodule difference with an inline diff
+One other long shot:
 
-Junio C Hamano (1):
-  diff.c: remove output_prefix_length field
+I see that you are fetching into refs/remotes/origin/pr/*. What is the
+full refspec configuration for origin?
 
- Documentation/diff-config.txt                      |   9 +-
- Documentation/diff-options.txt                     |  20 +-
- builtin/rev-list.c                                 |  70 +-
- cache.h                                            |  29 +-
- diff.c                                             |  64 +-
- diff.h                                             |  11 +-
- graph.c                                            | 100 ++-
- graph.h                                            |  22 +-
- log-tree.c                                         |   5 +-
- path.c                                             |  37 +-
- refs/files-backend.c                               |   8 +-
- sha1_file.c                                        |   6 +
- submodule.c                                        | 190 +++++-
- submodule.h                                        |   8 +-
- t/t4013-diff-various.sh                            |   6 +
- ...diff.diff_--line-prefix=abc_master_master^_side |  29 +
- t/t4013/diff.diff_--line-prefix_--cached_--_file0  |  15 +
- t/t4059-diff-submodule-not-initialized.sh          | 127 ++++
- t/t4060-diff-submodule-option-diff-format.sh       | 749 +++++++++++++++++++++
- t/t4202-log.sh                                     | 323 +++++++++
- 20 files changed, 1664 insertions(+), 164 deletions(-)
- create mode 100644 t/t4013/diff.diff_--line-prefix=abc_master_master^_side
- create mode 100644 t/t4013/diff.diff_--line-prefix_--cached_--_file0
- create mode 100755 t/t4059-diff-submodule-not-initialized.sh
- create mode 100755 t/t4060-diff-submodule-option-diff-format.sh
+I know it used to be recommended to set up *two* refspecs when fetching
+from GitHub:
 
--- 
-2.10.0.rc0.259.g83512d9
+    +refs/heads/*:refs/remotes/origin/*
+    +refs/pull/*:refs/remotes/origin/pr/*
+
+This is not such a good idea (and I think it is no longer recommended)
+because, for example, a remote reference named `refs/heads/pr/5/head`
+would want to end up at the same path as a remote PR branch
+`refs/pull/5/head`, namely `refs/remotes/origin/pr/5/head`. That
+shouldn't be allowed by Git, but since this sounds a little bit similar
+to your problem I thought I'd ask anyway.
+
+Are you using such a configuration? If so, can you reproduce the problem
+with the `refs/pull/*` refspec disabled?
+
+Michael
 
