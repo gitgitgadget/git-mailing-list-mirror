@@ -2,81 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54CC22018E
-	for <e@80x24.org>; Fri, 26 Aug 2016 18:24:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA51D2018E
+	for <e@80x24.org>; Fri, 26 Aug 2016 18:27:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753088AbcHZSYz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Aug 2016 14:24:55 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63112 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751559AbcHZSYy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2016 14:24:54 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E76B737D89;
-        Fri, 26 Aug 2016 14:24:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=J/AneQuh2jo320oa89Zv5fNhTN4=; b=hhxRaP
-        y6m3pdwWoxDqfKHbSotUx/T1UrVW19ATb6r+5tTVXnIURvYth9PmWY6ZdKsWcnd+
-        1FrHQxZkJaJUhOAk4TueIrb2Mcoo1css4ee5dHk80K7Ltm7eXVsflRYeMPkLN16P
-        elaN9RcdtiZS7kZ6kuctCG+8p/1fzgTAeXZWk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ewB8HRE7iiFlIbVAHmJcMlDNrP57akPF
-        rQbypw0JUrfEy+8MZnWIaXRfH+OdSmQHZjeq1HcqXjJTxNW+Z+CHtE3SI6Efje5v
-        K8wNKoVYIVvZ3ug6ehvI3l1FRg7/ZRh9pLrWDzl1UeFe44jdXTt4J5xTGJIZxRMr
-        KAkpw2iauDk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DC3D737D88;
-        Fri, 26 Aug 2016 14:24:14 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5B3E937D85;
-        Fri, 26 Aug 2016 14:24:14 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Beat Bolli <dev+git@drbeat.li>, Heiko Voigt <hvoigt@hvoigt.net>,
-        Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH 1/2] gitk: align the commit summary format to the documentation
-References: <1472230741-5161-1-git-send-email-dev+git@drbeat.li>
-Date:   Fri, 26 Aug 2016 11:24:12 -0700
-In-Reply-To: <1472230741-5161-1-git-send-email-dev+git@drbeat.li> (Beat
-        Bolli's message of "Fri, 26 Aug 2016 18:59:00 +0200")
-Message-ID: <xmqqoa4fgzhv.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1753688AbcHZS06 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Aug 2016 14:26:58 -0400
+Received: from mga11.intel.com ([192.55.52.93]:33046 "EHLO mga11.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753109AbcHZS06 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2016 14:26:58 -0400
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga102.fm.intel.com with ESMTP; 26 Aug 2016 11:26:57 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.28,582,1464678000"; 
+   d="scan'208";a="161364906"
+Received: from orsmsx107.amr.corp.intel.com ([10.22.240.5])
+  by fmsmga004.fm.intel.com with ESMTP; 26 Aug 2016 11:26:57 -0700
+Received: from orsmsx112.amr.corp.intel.com (10.22.240.13) by
+ ORSMSX107.amr.corp.intel.com (10.22.240.5) with Microsoft SMTP Server (TLS)
+ id 14.3.248.2; Fri, 26 Aug 2016 11:26:56 -0700
+Received: from orsmsx115.amr.corp.intel.com ([169.254.4.215]) by
+ ORSMSX112.amr.corp.intel.com ([169.254.3.251]) with mapi id 14.03.0248.002;
+ Fri, 26 Aug 2016 11:26:56 -0700
+From:   "Keller, Jacob E" <jacob.e.keller@intel.com>
+To:     "sbeller@google.com" <sbeller@google.com>,
+        "jacob.keller@gmail.com" <jacob.keller@gmail.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "j6t@kdbg.org" <j6t@kdbg.org>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "peff@peff.net" <peff@peff.net>,
+        "stefanbeller@gmail.com" <stefanbeller@gmail.com>
+Subject: Re: [PATCH v10 0/9] submodule inline diff format
+Thread-Topic: [PATCH v10 0/9] submodule inline diff format
+Thread-Index: AQHR/yFzvg3BbrRPkUK1o75dHC4GwKBau/wAgAE7pQCAAA5NgA==
+Date:   Fri, 26 Aug 2016 18:26:55 +0000
+Message-ID: <1472236015.28343.3.camel@intel.com>
+References: <20160822234344.22797-1-jacob.e.keller@intel.com>
+         <CAGZ79kbKibe2RpQ9QWN1naY07feZLKbhc+dts3BD-4+y-pUOVw@mail.gmail.com>
+         <xmqqlgznwg6o.fsf@gitster.mtv.corp.google.com>
+         <CAGZ79kbsq52Qh0Jtn5hpPPfHu_9r2CUHvAHOTh6Cgz8ODkzreg@mail.gmail.com>
+         <CA+P7+xrQy33gt8bnsagLVPAHhZPZx-3s0E_Aj7tOwXnHjOoCBg@mail.gmail.com>
+         <xmqqr39cjwxx.fsf@gitster.mtv.corp.google.com>
+         <CA+P7+xqDRD4akNShqxs4D2dDUBK0E5Eyp2Y3-8xK6wEb5gCU6w@mail.gmail.com>
+         <CAGZ79kYbHz2E6-0qNS47KfA5Gs=Ew327LxhOyq+i3axwPVHKGQ@mail.gmail.com>
+In-Reply-To: <CAGZ79kYbHz2E6-0qNS47KfA5Gs=Ew327LxhOyq+i3axwPVHKGQ@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [134.134.3.116]
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <41A3DC9D78D1B14ABEA1DFC490BC0FE0@intel.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4ACE8062-6BBA-11E6-B0F9-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Beat Bolli <dev+git@drbeat.li> writes:
-
-> In 175d38c (SubmittingPatches: document how to reference previous commits,
-> 2016-07-28) the format for referring to older commits was specified.
->
-> Make the text generated by the "Copy commit summary" command match this
-> format.
-
-Hmph.  I didn't know gitk already had its own command to produce a
-short string.  I actually think what it produces
-
-> In 175d38c ("SubmittingPatches: document how to reference previous commits",
-> 2016-07-28) the format for referring to older commits was specified.
-
-is easier to read when pasted into a sentence than what the recent
-update 175d38ca ("SubmittingPatches: document how to reference
-previous commits", 2016-07-28) suggests to do, i.e.
-
-> In 175d38c (SubmittingPatches: document how to reference previous commits,
-> 2016-07-28) the format for referring to older commits was specified.
-
-Heiko, Stefan, I think you two were involved in adding that new
-paragraph.   What do you think?
+T24gRnJpLCAyMDE2LTA4LTI2IGF0IDEwOjM1IC0wNzAwLCBTdGVmYW4gQmVsbGVyIHdyb3RlOg0K
+PiA+IGEpIHJlYWRfZ2l0ZmlsZSBvbiA8cGF0aD4vLmdpdA0KPiA+IGIpIGlmIHJlYWRfZ2l0Zmls
+ZSBzdWNjZWVkcywgdXNlIGl0J3MgY29udGVudHMsIG90aGVyd2lzZSB1c2UNCj4gPiA8cGF0aD4v
+LmdpdCBmb3IgbmV4dCBzdGVwcw0KPiA+IGMpIGNoZWNrIGlmIHRoZSByZXN1bHRpbmcgZmlsZSBp
+cyBhIGdpdCBkaXJlY3RvcnksIHdlJ3JlIGZpbmUuLiB3ZQ0KPiA+IGZvdW5kIGEgZ2l0ZGlyLCBz
+byBzdG9wLg0KPiA+IGQpIG90aGVyd2lzZSzCoMKgZW1wdHkgdGhlIGJ1ZmZlciwgdGhlbiBsb29r
+dXAgc3VibW9kdWxlcw0KPiA+IGUpIHdoZW4gc3VibW9kdWxlcyBsb29rdXAgc3VjY2VlZHMuLiBz
+ZWUgaWYgd2UgZm91bmQgYSBuYW1lLiBJZiBzbywNCj4gPiB1c2UgdGhhdC4NCj4gDQo+IFdoZW4g
+dGhlIHN1Ym1vZHVsZXMgbG9va3VwIHN1Y2NlZWRzLCB3ZSBjYW4gYXNzZXJ0IHRoZSBuYW1lIGV4
+aXN0cy4NCj4gVGhlcmUgaXMgY3VycmVudGx5IG9ubHkgb25lIHdheSB0aGUgbG9va3VwIGlzIHBv
+cHVsYXRlZCwgYW5kIHRoYXQgaXMNCj4gbG9va3VwX29yX2NyZWF0ZV9ieV9uYW1lIGluIHN1Ym1v
+ZHVsZS1jb25maWcuYzoxODIsIHdoaWNoIGZpbGxzIGluDQo+IHRoZSBuYW1lIGFsbCB0aGUgdGlt
+ZS4NCg0KWWVzLCB0aGF0IHdhcyBob3cgSSB3YXMgdHJ5aW5nIHRvIHdvcmQgaXQsIGFuZCB0aGF0
+J3Mgd2hhdCBJJ3ZlIGRvbmUgaW4NCmNvZGUuDQoNCj4gDQo+ID4gDQo+ID4gZikgaWYgd2UgZGlk
+bid0IGp1c3QgZXhpdCB3aXRoIGFuIGVtcHR5IGJ1ZmZlci4NCj4gPiANCj4gPiBUaGF0IGVtcHR5
+IGJ1ZmZlciAqc2hvdWxkKiB0cmlnZ2VywqDCoHJldmlzaW9uIGVycm9yIGNvZGVzIHNpbmNlIGl0
+DQo+ID4gd29uJ3QgcG9pbnQgdG8gYW55IHZhbGlkIHBhdGggYW5kIGl0IGFsc28gdHJpZ2dlcnMg
+dGhlIHJlZ3VsYXINCj4gPiBlcnJvcg0KPiA+IGNvZGUgaW4gYWRkX3N1Ym1vZHVsZV9vZGIgc28g
+aXQgaGFuZGxlcyB0aGF0IHdpdGggc2hvd2luZyBub3QNCj4gPiBpbml0aXpsaWVkLg0KPiA+IA0K
+PiA+IFRoaXMgbWV0aG9kIGlzIGxlc3Mgd29yayB0aGVuIHJlLWltcGxlbWVudGluZyBhIF9nZW50
+bHkoKSB2YXJpYW50DQo+ID4gZm9yDQo+ID4gYWxsIG9mIHRoZXNlIGZ1bmN0aW9ucy4NCj4gPiAN
+Cj4gPiBTdGVmYW4sIGRvZXMgdGhpcyBtYWtlIHNlbnNlIGFuZCBzZWVtIHJlYXNvbmFibGU/DQo+
+IA0KPiBTb3VuZHMgcmVhc29uYWJsZSB0byBtZS4NCj4gDQo+IFRoYW5rcyBmb3Igd29ya2luZyBv
+biB0aGlzIQ0KPiBTdGVmYW4NCg0KVGhhbmtzIGZvciByZXZpZXchDQoNClJlZ2FyZHMsDQpKYWtl
+DQo=
