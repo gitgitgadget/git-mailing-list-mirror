@@ -2,103 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 700911FD99
-	for <e@80x24.org>; Fri, 26 Aug 2016 23:06:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABDD71FD99
+	for <e@80x24.org>; Fri, 26 Aug 2016 23:07:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754471AbcHZXG2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Aug 2016 19:06:28 -0400
-Received: from mail-yw0-f174.google.com ([209.85.161.174]:36416 "EHLO
-        mail-yw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754337AbcHZXG0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2016 19:06:26 -0400
-Received: by mail-yw0-f174.google.com with SMTP id u134so57244874ywg.3
-        for <git@vger.kernel.org>; Fri, 26 Aug 2016 16:05:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=JkysE0IWotxH/9US5HYQZM5UDmW4+ATuYWlSmn8HTPY=;
-        b=NSPg/BBnKxJCY+7skQx+n2sOOGiTsj0B8JVRbpJYTPnip1zMTDCmXfiq6YjSruPTv0
-         ZSPK7y4D3ON2qbLM8hAPahsdBYcEHCId5xn0r3z86Zc50nJLk8tB8C0Ode+euocgzoVi
-         ucn7k3hsBqgvmQvjoKStRQ88tAeU07MovBf7GFjvArtQn32A8C97ZGYzNGRpHr1QovsJ
-         D2uzTSnfMckomqOGoKiUHW3/cwhfbEWJoFwV829/5aKEV9cNq7uZGWYzdNCxofj/Wf7/
-         1nRVTv/3ymYHTo81Yx5xzLmYBW/eas7iPnullSET/hbzkMRBviuUnIVqxGdAV1FsW7u2
-         EWPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=JkysE0IWotxH/9US5HYQZM5UDmW4+ATuYWlSmn8HTPY=;
-        b=Fwfkwlkb3lYzSQZX90NQ9Z9Cn45depTqIlNDmOwyDVfNQYIu+qef2GczkIHyG16vOy
-         z0QG+uTYN/B6O7oeAdbrUPbk//m+BX4ZbhUbtqx3qRP7/+89k5oLADaCQVPr0wKFCNqI
-         15L+9l+4WHw7wdEFpVfTrIrJ8aZvF9CtN7/WEp+LmUQsL8hqZMuGsBCMnN+XMme8jiJ8
-         bPwChuvBE34L7NGm7mhgbfjdK5QprgAjcNwduWazqYgPVqn+GhPZqIvD2xG4Wd5DPGky
-         zFa9yY46hXE8KPuWMPUg8KtTMmufr5dOtRURmiruprvSZdXnep4qBlazsiNbDV6uxT6E
-         fGMA==
-X-Gm-Message-State: AE9vXwOG8ODRKdIFmqQdzW9cym26jL+KFP88yKrcs4kdhBnMWfVt5SNHOxV6qYIN+OZT0NkcEYiP/w19u2qL9Q==
-X-Received: by 10.129.168.9 with SMTP id f9mr5315767ywh.258.1472252749770;
- Fri, 26 Aug 2016 16:05:49 -0700 (PDT)
+        id S1754114AbcHZXHO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Aug 2016 19:07:14 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53323 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752161AbcHZXHN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2016 19:07:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A1843A645;
+        Fri, 26 Aug 2016 19:07:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=J+MrDttGvMOUy8kNcQIgC0hjr/k=; b=h64kSA
+        04bigOmL5HOwljm1mYj9FG7Uk1Irp7iOp31M+vvVp8FuY2jsGWTOXFwZbMo4SUfe
+        wc7fBTUv5IYGtE93FUGXZYTWHHomGMapI4xtbuX0Ro4m2yinnI+EP8jEJUgnOtSg
+        yRcIoewEGWVq7LQL22cCfpz8yToqmD3y4OoTY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xTNsvsdJu/ylRdlB6F5uibugeWVj/Gvu
+        /ItSbOcTteundid3ktxL3hMSte8yh2B18W4Ovbvme645DivY4w3bN81e6HyAfvO5
+        laMTXp7W51k7VM/ROUU1wQYen1SIUenPgtC2ipWQrMX3FWzQ8d1BVc0Gv/25NPg6
+        V/tIHFKSO0Q=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 334873A644;
+        Fri, 26 Aug 2016 19:07:12 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A5B253A643;
+        Fri, 26 Aug 2016 19:07:11 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Pranit Bauva <pranit.bauva@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v14 21/27] bisect--helper: `bisect_log` shell function in C
+References: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
+        <01020156b73fe6d5-6a363195-eb91-48a0-9a3c-3159fba6d327-000000@eu-west-1.amazonses.com>
+Date:   Fri, 26 Aug 2016 16:07:09 -0700
+In-Reply-To: <01020156b73fe6d5-6a363195-eb91-48a0-9a3c-3159fba6d327-000000@eu-west-1.amazonses.com>
+        (Pranit Bauva's message of "Tue, 23 Aug 2016 11:53:53 +0000")
+Message-ID: <xmqqbn0fdt9e.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.96.195 with HTTP; Fri, 26 Aug 2016 16:05:29 -0700 (PDT)
-In-Reply-To: <20160826200426.l3eu2mojgmjdz2ec@sigill.intra.peff.net>
-References: <20160825233243.30700-1-jacob.e.keller@intel.com>
- <CAGZ79kao12f8VTT3uxRvAUBhvbfSLjsYRjidTau3M-Kf81uXDQ@mail.gmail.com>
- <1472241486.28343.10.camel@intel.com> <20160826200426.l3eu2mojgmjdz2ec@sigill.intra.peff.net>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Fri, 26 Aug 2016 16:05:29 -0700
-Message-ID: <CA+P7+xpvtdoeK3uiSGAeNzQaYQhS7p0WT+nCcfKAS7FauFNftQ@mail.gmail.com>
-Subject: Re: [PATCH v11 0/8] submodule inline diff format
-To:     Jeff King <peff@peff.net>
-Cc:     "Keller, Jacob E" <jacob.e.keller@intel.com>,
-        "sbeller@google.com" <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "j6t@kdbg.org" <j6t@kdbg.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "stefanbeller@gmail.com" <stefanbeller@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: D207F082-6BE1-11E6-B261-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 26, 2016 at 1:04 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Aug 26, 2016 at 07:58:07PM +0000, Keller, Jacob E wrote:
->
->> > >  char *git_pathdup_submodule(const char *path, const char *fmt,
->> > > ...)
->> > >  {
->> > > +       int err;
->> > >         va_list args;
->> > >         struct strbuf buf = STRBUF_INIT;
->> > >         va_start(args, fmt);
->> > > -       do_submodule_path(&buf, path, fmt, args);
->> > > +       err = do_submodule_path(&buf, path, fmt, args);
->> > >         va_end(args);
->> > > +       if (err)
->> >
->> > Here we need a strbuf_release(&buf) to avoid a memory leak?
->>
->> No, cause we "strbuf_detach" after this to return the buffer? Or is
->> that not safe?
->
-> That code path is OK. I think the question is whether you need to
-> release the buffer in the "err" case where you return NULL and don't hit
-> the strbuf_detach.
->
-> IOW, does do_submodule_path() promise that when it returns an error,
-> "buf" has been left uninitialized? Some of our strbuf functions do, but
-> I do not know offhand about do_submodule_path().
->
-> -Peff
+Pranit Bauva <pranit.bauva@gmail.com> writes:
 
-We probably should release for the error case. I'll do that. I don't
-believe do_submodule_path ensures that the passed in argument is
-guaranteed to not be initialized or used.
+> +static int bisect_log(void)
+> +{
+> +	struct strbuf buf = STRBUF_INIT;
+> +
+> +	if (strbuf_read_file(&buf, git_path_bisect_log(), 256) < 0) {
+> +		strbuf_release(&buf);
+> +		return error(_("We are not bisecting.\n"));
+> +	}
+> +
+> +	printf("%s", buf.buf);
+> +	strbuf_release(&buf);
+> +
+> +	return 0;
+> +}
 
-Thanks,
-Jake
+Hmph, is it really necessary to slurp everything in a strbuf before
+sending it out to the standard output?  Wouldn't it be sufficient to
+open a file descriptor for reading on the log file and then hand it
+over to copy.c::copy_fd()?
+
