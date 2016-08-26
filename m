@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A55971FD99
-	for <e@80x24.org>; Fri, 26 Aug 2016 13:41:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05F3C1FD99
+	for <e@80x24.org>; Fri, 26 Aug 2016 13:47:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752274AbcHZNk6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Aug 2016 09:40:58 -0400
-Received: from mout.gmx.net ([212.227.17.22]:49221 "EHLO mout.gmx.net"
+        id S1752597AbcHZNqr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Aug 2016 09:46:47 -0400
+Received: from mout.gmx.net ([212.227.17.22]:61428 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751085AbcHZNk5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2016 09:40:57 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0La3c1-1bGdHK286f-00loMG; Fri, 26 Aug 2016 15:40:35
+        id S1751085AbcHZNqp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2016 09:46:45 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MWQSM-1bbcSs0n74-00XeVM; Fri, 26 Aug 2016 15:45:08
  +0200
-Date:   Fri, 26 Aug 2016 15:40:34 +0200 (CEST)
+Date:   Fri, 26 Aug 2016 15:45:07 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     git@vger.kernel.org
-Subject: Re: [PATCH 04/15] sequencer: lib'ify prepare_revs()
-In-Reply-To: <xmqqinuojwc4.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1608261534110.4924@virtualbox>
-References: <cover.1471968378.git.johannes.schindelin@gmx.de> <ce6a7cac9f0bd53e44129c8f72818adc4bb4a934.1471968378.git.johannes.schindelin@gmx.de> <xmqqinuojwc4.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 06/15] sequencer: lib'ify read_populate_todo()
+In-Reply-To: <xmqqeg5cjw02.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1608261540470.4924@virtualbox>
+References: <cover.1471968378.git.johannes.schindelin@gmx.de> <0de75bbce8ade0c6e5cf87d3647faa71a89c6275.1471968378.git.johannes.schindelin@gmx.de> <xmqqeg5cjw02.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:BHr/2sXChsRK9HanNceiewZyF2HBleGCoaSm8uy0yjpbPJT7zDm
- ujny325OZXK0BKFxu4LxnkcjSsV2+IyxTWAIbgFXup4ZqKnfL0TxI6gRnMaaIV+Dw/D8KZv
- DlKlyYyqDxRVUnxowrsXvhQdRMd+NETmVJXbVcNE4Sz2gQlrz0Kwt8iJnhhMWEB+5j5lFox
- YRa2dJy4mUfo8OQXsn2Sg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:yfyhkgn3vrY=:T50n10380Yy4JEyRl4Kpc1
- AHz88UjrLTVX0/iVV+sj+Qmo+Quz2mLMq16MaVmjqYCFOrs3SaeowE8rDaNNoL9GajubFJHrr
- vJ2tASnbeZOm3ZmpTYaYiDNLRIBeGOVhTU4izLNUZMVnUQ/w835oBwKUwAay8Ixltd8UHdxj6
- uJkngCrlQdCLzXNDb4wBjBV9VrunkIu5k6zLvcih72RbeBBttrrMDBzGf+DEZ2ICCdAOrTXYj
- XfmenZ//e3DvgS0KNjthHr9RRi7obPB6C95tKI5zC49N4ufZN0lehWZXInrP76nw2W7MOEIFg
- Rmn5MsePpN0oki0EXgpig8fkNZv3vZ5EZbyAx1fJqXw6s3dovOjJyBuquZXxMLP6eNW8Juoqf
- 2NxyxPN2WuEgli8E+XuuJed8CEdPHs8dzgMKxgS3JnmjVWE6zCZ95DWJy3wC78mwzIUedWnO0
- K1iEjdmJt1jBmtmq6On8n8x1mL9jrhgZYdXB0DGQhvbWnMIT54C71aPAnOLs/Ja9Lwbk1oP1Y
- csuxMweGa6GE30YUl5FCq1RRXHXw0kQImmENb7fe+WcVZGb2Mr7z/DB4BzpfK6E34HQdfQH8b
- ihJ1AluDrbh4ri8xB5aPbSYPMHP+l6Mf8glbptkJ9vXJUYsXQPdnT8fpdHQTOf2W4/mqrXS7/
- z0hhKOXkf30heL27m96qSOvJ2h2G9QX2KjV20ZLXpm0Z11dEKjDztDyGKquSCu/3CqDdRnzUt
- lcgmtyA5CGsfJbMD3Jl7ayMn01DImdr2UPZuk49JnTDlO12olnKAOfeHTYcNpHPxShycVcSaN
- fW37VDg
+X-Provags-ID: V03:K0:H+NCMgnlqPasAhzkTO2JW6czLu9VNw9yOjvJWR1OokAGlYm0C0Q
+ Zpw8oDtDUfg1oGEAmuIzx8cacnKPzvVAJOxom5zjJO+uhTcgEwJT3LVBisuuSb9i4pMy94x
+ 7uTsaZvrYQAJ6KiaqA18Yenh4KBlZmbYu+NgHeloeQzTtntNUkAPxSVRN0piUwiJslBufwT
+ zWnJ2ppNLN2e1+D/+YHFg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:nCHe6qDhqw8=:9t46z1yExx+zcrGC3l/OHl
+ 0rgFswKoIUtqUdI4i5Y21YpsjlsOZ8D+HbbPh7XLdZ+pR0xc93mVQ3xrFz/VSRnAtcOAkw+qK
+ stDctgD0Lnugxfb4d83Iy9rJFVPJ+TpmJaB1kql7zupzvIkBi9BdhjHyHTAgwdOhjr5Mm3WJd
+ kF/x2NuqXoEwvALx9Z+kofNcoboX2nwKNGWxmyPgMtZc6m8lDEr6EeFmm44Td+Cu+pJtabSyL
+ 6bVC7QmlLwYjXZ6YVMrxf1DwjWxw80wZDgENt8a9caVvBTg8JGk5CYWyESAadIwzhpkoFxKqE
+ DM56GuK/9qfnHI2CjFO0CNP5SEOs2Jn+1avyqUoCNqnM4k8pZ0F86/569Y1TGzicsEoxXaLF6
+ fqLipJNOljnMt2WP8haf7TSWSvyO6DF0ZEe/MVlQdvF4M0YzQZG/oRnDNU4sdy7CUVtU3K394
+ +CNOneoeRGegdKru1J7X+XwAWzud+s5EDEl33tgvEjp6kxZ6a/+P47bcdyXxMIpN7KVLrIKC7
+ Sl4TMujL2V1hxLoztbffUt/c4ySu2LTyI+wqiRkfewkIKPuOQL3gSS9ZWQVT215jHX+QsoBxx
+ zcVIBZRtuZS+UVWKWd0A0s8lsPhmU7UuWoeWJfAWaolzt6NRN/mYNtGffrWx7dhfjE9wJLn10
+ pCe5Xqoo9lDEOeDLqo0Wh2meBE/rdDDvmFfjSoxg20irKHhvv2pJDsod/CrbjkCXMW5eOdEgR
+ 862XxF3pFJrcDJG6sqZTx/cdfBL/Uq+m3zFVdZyBmtCZgZ85cDYS+cIOiteSZl2uT9d1SbUAT
+ L+XB9oK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -64,26 +64,52 @@ On Thu, 25 Aug 2016, Junio C Hamano wrote:
 > >
 > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > > ---
+> >  sequencer.c | 14 +++++++++-----
+> >  1 file changed, 9 insertions(+), 5 deletions(-)
 > 
-> I am still looking at sequencer.c in 'master', but I do not think
-> that the sole caller of this function, walk_revs_populate_todo(),
-> is prepared to act on an error return from this function and instead
-> it expects this to die() when in trouble.  And I do not think I saw
-> the function touched in the steps so far.
+> Instead of dying there, you let the caller high up in the callchain
+> to notice the error and handle it (by dying).
 > 
-> So this step smells like a fishy conversion to me.
+> The only caller of read_populate_todo(), sequencer_continue() can
+> already return errors, so its caller must be already prepared to
+> handle error returns, and with this step, you make it notice an
+> error return from this function.  So this is a safe conversion to
+> make read_populate_todo() callable from new callers that want it not
+> to die, without changing the external behaviour of anything
+> existing.
+> 
+> Good.
+> 
+> By the way, I am writing these as review comments because I do not
+> want to keep repeating this kind of analysis as a reviewer.  I am
+> demonstrating what should have been in the commit log message
+> instead, so that the reviewer does not have to spend extra time, if
+> the reviewer trusts the author's diligence well enough, to see if
+> the conversion makes sense.
+> 
+> Please follow the example when/if you have to reroll.  I want the
+> patches to show the evidence of careful analysis to reviewers so
+> that they can gauge the trustworthiness of the patches.  With this
+> round of patches, honestly, I cannot tell if it is a mechanical
+> substitution alone, or such a substitution followed by a careful
+> verification of the callers.
 
-The fishy part is, of course, that I managed not to realize that the patch
-libifiying walk_revs_populate_todo() came *after* this patch that libified
-one of its callees, prepare_revs().
+Duly noted.
 
-FWIW the same is true for sequencer_pick_revisions(), which was libified
-way too late in the game.
+I fixed up the patch order as well as the commit messages.
 
-This is once again a demonstration that a final patch series does *not*
-reflect the process of developing it: in this case, the order of the
-patches is the *opposite* of their development, as I libified functions
-from the lowest, deepest call depth up to the top-level functions.
+Now on to a request of my own: I am once again reminded that I have *no*
+good mail client to serve me. (Before you suggest it: no, emacs won't cut
+it for me, nor mutt. Thank you very much for your suggestion.) So it is
+really annoying for me to scroll through quoted text, page after page,
+only to find that none of it got a response after all.
 
-Fixed in v2,
+In short: I would really appreciate it if you could cut quoted text after
+your last response.
+
+Thanks,
 Dscho
+
+P.S.: It's this mailing list thing again. I would *love* to switch to a
+mail client more to my liking, but the ones I like all won't respect white
+space in patch files that are pasted verbatim into the mail body.
