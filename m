@@ -2,80 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5507A1FD99
-	for <e@80x24.org>; Fri, 26 Aug 2016 17:45:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C5581FD99
+	for <e@80x24.org>; Fri, 26 Aug 2016 17:58:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753428AbcHZRo5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Aug 2016 13:44:57 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63825 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753259AbcHZRoz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2016 13:44:55 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E1BC37742;
-        Fri, 26 Aug 2016 13:44:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Zl3uj+sIg0m5nNDrgqwpIj5iljg=; b=knRHgV
-        kDNb1xSLMwYLDbCJDnuLRXOFjvHGZ0hUtTHWh+DCr/7uWDIAo+HHOecEaNsQ4ESQ
-        5pXqWX6H/ltmZDEy/CRXMLrotLfHJQwuBlgkv1Knafe0R6dgIi+dF4HCIKoaRLEu
-        P4vUoCKEXYFV2kKc0SDDVZBKeQxdeshQVcDBM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=dSd9HS+buMLrUf036GcHy+/1vcQ12rR1
-        hxz7Z/4VX4/+cN/HIDZCzFHM9D7JtrZmAUyKm+XEWX7bo8BdODanti604YI09IRf
-        kfq3cFbKdO5+jFCXYhheMDwNlpBaXQ3Wt+k5rJyau1j82SpUCVJbYipOYS+2Q+q6
-        +qSmDICTJdQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 36B7437741;
-        Fri, 26 Aug 2016 13:44:54 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C7E3837740;
-        Fri, 26 Aug 2016 13:44:53 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 12/15] sequencer: lib'ify save_opts()
-References: <cover.1471968378.git.johannes.schindelin@gmx.de>
-        <7768b55e65c771a5615a6f1209b40395dc705425.1471968378.git.johannes.schindelin@gmx.de>
-Date:   Fri, 26 Aug 2016 10:44:51 -0700
-In-Reply-To: <7768b55e65c771a5615a6f1209b40395dc705425.1471968378.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Tue, 23 Aug 2016 18:07:33 +0200
-        (CEST)")
-Message-ID: <xmqqwpj3h1bg.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CBC4A21A-6BB4-11E6-8FD6-F7BB12518317-77302942!pb-smtp1.pobox.com
+        id S1753932AbcHZR6r (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Aug 2016 13:58:47 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:33272 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753910AbcHZR6q (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2016 13:58:46 -0400
+Received: by mail-wm0-f68.google.com with SMTP id o80so231101wme.0
+        for <git@vger.kernel.org>; Fri, 26 Aug 2016 10:58:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Mt/nmj0mwb9x0pJWuLP+qLNcgxJRnJj7yFSveS68WVo=;
+        b=YDxxYkAYfNbp3uBWZwt/lPA050E3wVgDvWahjKRHs11HZ905lRqh/V8hCzzFyp4CMn
+         3HtBLEo2R51H4Sgwf+x02dF57CAniXXjKAzXbxVeNAe5ghXoWqEajEOEv2KJinrs4jG5
+         P9bVzI3GGfSFa+v7VjAf/9/P1lglO9wd6j32Y3S9AQlHvy4yk9z4mQxNbfTGERK1dHre
+         ZKmv/FmR2xYP5S+mEtRsr3FGbK2p1IClmc551RmBabxsaE2o/lfh3JE+S3Mm3XzWF+0I
+         obq7C1WYk+PMbpxSO5kixNuq45vt1CMqgnKb74iWFp671YcGFsrNfcfWvHlP5OHyh6nF
+         +doQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Mt/nmj0mwb9x0pJWuLP+qLNcgxJRnJj7yFSveS68WVo=;
+        b=X5oAYi/sSThbWqyTftgY6nrMwAvp2wx/R3Psxhxgx01v65FlqxLpEPfx4DK9EVh45D
+         JpAivBf97/qBLvtlEGqMgAHpwYaazkAmNrrTX3PAb710d2b9WPwWHe95P1RC/Vsenopk
+         Cf2jNWpCfBXMyJTtLg29MmFQfYuskjEfsQRlwGT0ts72QOtuP8ZiYBdOR5A/DpIMaj2r
+         7brXhU+9izRcq1YfcMi9GIBBcWgLOIODWLYLerGPv3eKhMzqewC2jYlTA+dkLSnLBIfH
+         SnQ9JBQ934wG6+4Vy9g0bLblHB8cAjZhJH3thS1TYRFJ2YwBV+3XP31SOaIMLuqG+nHu
+         6ZRQ==
+X-Gm-Message-State: AE9vXwPQFymyP6G9pKjx2NsMT88yqBYADoDmwt6SE64YVyRcz7rD2XvDynNABjUJUAAKtQ==
+X-Received: by 10.28.142.2 with SMTP id q2mr81286wmd.119.1472234325299;
+        Fri, 26 Aug 2016 10:58:45 -0700 (PDT)
+Received: from localhost (cable-86-56-27-135.cust.telecolumbus.net. [86.56.27.135])
+        by smtp.gmail.com with ESMTPSA id d64sm112884wmc.22.2016.08.26.10.58.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 26 Aug 2016 10:58:44 -0700 (PDT)
+From:   Ralf Thielow <ralf.thielow@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, larsxschneider@gmail.com, me@jnm2.com,
+        philipoakley@iee.org, john@keeping.me.uk,
+        johannes.schindelin@gmx.de, Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH v2 0/3] help: make option --help open man pages only for Git commands
+Date:   Fri, 26 Aug 2016 19:58:33 +0200
+Message-Id: <20160826175836.14073-1-ralf.thielow@gmail.com>
+X-Mailer: git-send-email 2.9.2.912.gd0c0e83
+In-Reply-To: <20160818185719.4909-1-ralf.thielow@gmail.com>
+References: <20160818185719.4909-1-ralf.thielow@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Changes in v2 are:
+- add a patch from Dscho to make config variable 'help.browser' work on Windows again
+- rename option "--command-only" to "--exclude-guides" which is less ambiguous in 'help' context
+- improve test script
+- refactor usage of argv_array in handle_builtin
 
->  static int pick_commits(struct commit_list *todo_list, struct replay_opts *opts)
-> @@ -1128,9 +1130,9 @@ int sequencer_pick_revisions(struct replay_opts *opts)
->  		return -1;
->  	if (get_sha1("HEAD", sha1) && (opts->action == REPLAY_REVERT))
->  		return error(_("Can't revert as initial commit"));
-> -	if (save_head(sha1_to_hex(sha1)))
-> +	if (save_head(sha1_to_hex(sha1)) ||
-> +			save_opts(opts))
->  		return -1;
-> -	save_opts(opts);
+Johannes Schindelin (1):
+  Revert "display HTML in default browser using Windows' shell API"
 
-I think it is much easier to read to keep this on a single line.  It
-would be more verbose but an even easier would be to keep these two
-operations two separate steps, i.e.
+Ralf Thielow (2):
+  help: introduce option --exclude-guides
+  help: make option --help open man pages only for Git commands
 
-        if (save_head())
-                return -1;
-        if (save_opts())
-                return -1;
+ Documentation/git-help.txt             | 11 ++++++---
+ builtin/help.c                         | 37 ++++++++++++++++++------------
+ compat/mingw.c                         | 42 ----------------------------------
+ compat/mingw.h                         |  3 ---
+ contrib/completion/git-completion.bash |  2 +-
+ git.c                                  | 15 +++++++++++-
+ t/t0012-help.sh                        | 41 +++++++++++++++++++++++++++++++++
+ 7 files changed, 87 insertions(+), 64 deletions(-)
+ create mode 100755 t/t0012-help.sh
+
+-- 
+2.9.2.912.gd0c0e83
+
