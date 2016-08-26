@@ -2,68 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 737531FD99
-	for <e@80x24.org>; Fri, 26 Aug 2016 19:45:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61A471FD99
+	for <e@80x24.org>; Fri, 26 Aug 2016 19:58:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753531AbcHZTpX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Aug 2016 15:45:23 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62784 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753315AbcHZTpW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2016 15:45:22 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7FA5538B63;
-        Fri, 26 Aug 2016 15:45:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CiZE3i2ECM0HiJM8iEs0ZpLwrjo=; b=okN6hw
-        rRJXH2xsYZW+UE/Xxv0nhLGqapkuTiaiWIS00b87WH7kDfixZCtfxGKNl81TpRlH
-        IBssjWgJU4/r/Bb2/mrnxjXHdL3zlyFOcNt/ucO4inY5mSgOSK5b/qTpiTf8Gbo9
-        Y0iST2mInPvyzM0InInqKoUYz8m94JvcmZhE8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bXmUvjoEkTOFw06aoraDMUBY34IEZxi3
-        QCl1fAevSjSYZW3SfAe65U9K2p2rRZxEL9NMSuV0BJpvhv0eAdJV8b15iPey4czK
-        oYh453ETRQrED1fomKSXtkSn1dhw0yKgtKMBkm8JsgvfGq+s1Y1ymxBEWJjVD80C
-        DDWIm7926oM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7855738B62;
-        Fri, 26 Aug 2016 15:45:21 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F114138B61;
-        Fri, 26 Aug 2016 15:45:20 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     larsxschneider@gmail.com
-Cc:     git@vger.kernel.org, peff@peff.net, sbeller@google.com,
-        Johannes.Schindelin@gmx.de, jnareb@gmail.com, mlbright@gmail.com
-Subject: Re: [PATCH v6 08/13] convert: quote filter names in error messages
-References: <20160825110752.31581-1-larsxschneider@gmail.com>
-        <20160825110752.31581-9-larsxschneider@gmail.com>
-Date:   Fri, 26 Aug 2016 12:45:18 -0700
-In-Reply-To: <20160825110752.31581-9-larsxschneider@gmail.com>
-        (larsxschneider@gmail.com's message of "Thu, 25 Aug 2016 13:07:47
-        +0200")
-Message-ID: <xmqqoa4ffh69.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1753151AbcHZT6K (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Aug 2016 15:58:10 -0400
+Received: from mga02.intel.com ([134.134.136.20]:16607 "EHLO mga02.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751554AbcHZT6I (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2016 15:58:08 -0400
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by orsmga101.jf.intel.com with ESMTP; 26 Aug 2016 12:58:08 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.28,582,1464678000"; 
+   d="scan'208";a="871523125"
+Received: from orsmsx109.amr.corp.intel.com ([10.22.240.7])
+  by orsmga003.jf.intel.com with ESMTP; 26 Aug 2016 12:58:07 -0700
+Received: from orsmsx115.amr.corp.intel.com ([169.254.4.215]) by
+ ORSMSX109.amr.corp.intel.com ([169.254.11.150]) with mapi id 14.03.0248.002;
+ Fri, 26 Aug 2016 12:58:07 -0700
+From:   "Keller, Jacob E" <jacob.e.keller@intel.com>
+To:     "sbeller@google.com" <sbeller@google.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "j6t@kdbg.org" <j6t@kdbg.org>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "peff@peff.net" <peff@peff.net>,
+        "stefanbeller@gmail.com" <stefanbeller@gmail.com>,
+        "jacob.keller@gmail.com" <jacob.keller@gmail.com>
+Subject: Re: [PATCH v11 0/8] submodule inline diff format
+Thread-Topic: [PATCH v11 0/8] submodule inline diff format
+Thread-Index: AQHR/yneWTobHf5W70GnYEj7iJWf9qBcFAQAgAALUwA=
+Date:   Fri, 26 Aug 2016 19:58:07 +0000
+Message-ID: <1472241486.28343.10.camel@intel.com>
+References: <20160825233243.30700-1-jacob.e.keller@intel.com>
+         <CAGZ79kao12f8VTT3uxRvAUBhvbfSLjsYRjidTau3M-Kf81uXDQ@mail.gmail.com>
+In-Reply-To: <CAGZ79kao12f8VTT3uxRvAUBhvbfSLjsYRjidTau3M-Kf81uXDQ@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [134.134.3.116]
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <5157B6B7B128BB449B84200978DB3EE4@intel.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9F88DA66-6BC5-11E6-AD93-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-larsxschneider@gmail.com writes:
-
-> From: Lars Schneider <larsxschneider@gmail.com>
->
-> Git filter driver commands with spaces (e.g. `filter.sh foo`) are hard to
-> read in error messages. Quote them to improve the readability.
-
-Sounds good.  Thanks.
+T24gRnJpLCAyMDE2LTA4LTI2IGF0IDEyOjE3IC0wNzAwLCBTdGVmYW4gQmVsbGVyIHdyb3RlOg0K
+PiBPbiBUaHUsIEF1ZyAyNSwgMjAxNiBhdCA0OjMyIFBNLCBKYWNvYiBLZWxsZXIgPGphY29iLmUu
+a2VsbGVyQGludGVsLmMNCj4gb20+IHdyb3RlOg0KPiANCj4gPiANCj4gPiBAQCAtNDg3LDEyICs0
+OTAsMTQgQEAgc3RhdGljIHZvaWQgZG9fc3VibW9kdWxlX3BhdGgoc3RydWN0IHN0cmJ1Zg0KPiA+
+ICpidWYsIGNvbnN0IGNoYXIgKnBhdGgsDQo+ID4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqBzdHJidWZfYWRkc3RyKGJ1ZiwgZ2l0X2Rpcik7DQo+ID4gwqDCoMKgwqDCoMKgwqDCoH0N
+Cj4gPiDCoMKgwqDCoMKgwqDCoMKgaWYgKCFpc19naXRfZGlyZWN0b3J5KGJ1Zi0+YnVmKSkgew0K
+PiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBnaXRtb2R1bGVzX2NvbmZpZygpOw0K
+PiANCj4gV2UgZGV0ZXJtaW5lZCB2aWEgY2hhdCB0aGF0IGNhbGxpbmcgZ2l0bW9kdWxlc19jb25m
+aWcNCj4gaXMgbm90IGhhcm1mdWwgdy5yLnQuIGNvcnJlY3RuZXNzLCBidXQgbWlnaHQgcmVxdWly
+ZSBzb21lDQo+IGltcHJvdmVtZW50cyBpbiB0aGUgZnV0dXJlIGZvciBwZXJmb3JtYW5jZS4NCj4g
+KGkuZS4gd2UgbWF5IHdhbnQgdG8gYWRkIGluIGEgbGF0ZXIgc2VyaWVzIGENCj4gwqDCoMKgwqBp
+ZiAoYWxyZWFkeSBjYWxsZWQgZ2l0bW9kdWxlc19jb25maWcpDQo+IMKgwqDCoMKgwqDCoHNldCBm
+bGFnICJhbHJlYWR5IGNhbGxlZCBnaXRtb2R1bGVzX2NvbmZpZyI7DQo+IMKgwqDCoMKgwqDCoHJl
+dHVybjsNCj4gaW50byBnaXRtb2R1bGVzX2NvbmZpZykNCj4gDQo+ID4gDQo+ID4gDQo+ID4gwqBj
+aGFyICpnaXRfcGF0aGR1cF9zdWJtb2R1bGUoY29uc3QgY2hhciAqcGF0aCwgY29uc3QgY2hhciAq
+Zm10LA0KPiA+IC4uLikNCj4gPiDCoHsNCj4gPiArwqDCoMKgwqDCoMKgwqBpbnQgZXJyOw0KPiA+
+IMKgwqDCoMKgwqDCoMKgwqB2YV9saXN0IGFyZ3M7DQo+ID4gwqDCoMKgwqDCoMKgwqDCoHN0cnVj
+dCBzdHJidWYgYnVmID0gU1RSQlVGX0lOSVQ7DQo+ID4gwqDCoMKgwqDCoMKgwqDCoHZhX3N0YXJ0
+KGFyZ3MsIGZtdCk7DQo+ID4gLcKgwqDCoMKgwqDCoMKgZG9fc3VibW9kdWxlX3BhdGgoJmJ1Ziwg
+cGF0aCwgZm10LCBhcmdzKTsNCj4gPiArwqDCoMKgwqDCoMKgwqBlcnIgPSBkb19zdWJtb2R1bGVf
+cGF0aCgmYnVmLCBwYXRoLCBmbXQsIGFyZ3MpOw0KPiA+IMKgwqDCoMKgwqDCoMKgwqB2YV9lbmQo
+YXJncyk7DQo+ID4gK8KgwqDCoMKgwqDCoMKgaWYgKGVycikNCj4gDQo+IEhlcmUgd2UgbmVlZCBh
+IHN0cmJ1Zl9yZWxlYXNlKCZidWYpIHRvIGF2b2lkIGEgbWVtb3J5IGxlYWs/DQoNCk5vLCBjYXVz
+ZSB3ZSAic3RyYnVmX2RldGFjaCIgYWZ0ZXIgdGhpcyB0byByZXR1cm4gdGhlIGJ1ZmZlcj8gT3Ig
+aXMNCnRoYXQgbm90IHNhZmU/DQoNClRoYW5rcywNCkpha2UNCg0KPiAtLQ0KPiBUbyB1bnN1YnNj
+cmliZSBmcm9tIHRoaXMgbGlzdDogc2VuZCB0aGUgbGluZSAidW5zdWJzY3JpYmUgZ2l0IiBpbg0K
+PiB0aGUgYm9keSBvZiBhIG1lc3NhZ2UgdG8gbWFqb3Jkb21vQHZnZXIua2VybmVsLm9yZw0KPiBN
+b3JlIG1ham9yZG9tbyBpbmZvIGF0wqDCoGh0dHA6Ly92Z2VyLmtlcm5lbC5vcmcvbWFqb3Jkb21v
+LWluZm8uaHRtbA0K
