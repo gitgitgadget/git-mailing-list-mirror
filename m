@@ -2,110 +2,230 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC9842018E
-	for <e@80x24.org>; Fri, 26 Aug 2016 18:28:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C8591FD99
+	for <e@80x24.org>; Fri, 26 Aug 2016 19:07:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753824AbcHZS2b (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Aug 2016 14:28:31 -0400
-Received: from mga07.intel.com ([134.134.136.100]:24637 "EHLO mga07.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750869AbcHZS2b (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2016 14:28:31 -0400
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by orsmga105.jf.intel.com with ESMTP; 26 Aug 2016 11:28:30 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.28,582,1464678000"; 
-   d="scan'208";a="1599813"
-Received: from orsmsx101.amr.corp.intel.com ([10.22.225.128])
-  by orsmga004.jf.intel.com with ESMTP; 26 Aug 2016 11:28:30 -0700
-Received: from orsmsx115.amr.corp.intel.com ([169.254.4.215]) by
- ORSMSX101.amr.corp.intel.com ([169.254.8.239]) with mapi id 14.03.0248.002;
- Fri, 26 Aug 2016 11:28:29 -0700
-From:   "Keller, Jacob E" <jacob.e.keller@intel.com>
-To:     "gitster@pobox.com" <gitster@pobox.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "j6t@kdbg.org" <j6t@kdbg.org>, "peff@peff.net" <peff@peff.net>,
-        "stefanbeller@gmail.com" <stefanbeller@gmail.com>,
-        "jacob.keller@gmail.com" <jacob.keller@gmail.com>
-Subject: Re: [PATCH v11 5/8] allow do_submodule_path to work even if
- submodule isn't checked out
-Thread-Topic: [PATCH v11 5/8] allow do_submodule_path to work even if
- submodule isn't checked out
-Thread-Index: AQHR/8ZnP0x6iWKH20Olg6mvJqr6U6BcBRMA
-Date:   Fri, 26 Aug 2016 18:28:29 +0000
-Message-ID: <1472236108.28343.5.camel@intel.com>
-References: <20160825233243.30700-1-jacob.e.keller@intel.com>
-         <20160825233243.30700-6-jacob.e.keller@intel.com>
-         <xmqqshtrgzpi.fsf@gitster.mtv.corp.google.com>
-In-Reply-To: <xmqqshtrgzpi.fsf@gitster.mtv.corp.google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [134.134.3.116]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <B9726BE1F9DDF849B9BC4027884B9836@intel.com>
-Content-Transfer-Encoding: base64
+        id S1752389AbcHZTHN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Aug 2016 15:07:13 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51151 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752176AbcHZTHM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2016 15:07:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A571338414;
+        Fri, 26 Aug 2016 15:06:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=PNS3o4T6qUoAWZrXXyis7445Swo=; b=KJQ3Ou
+        Ne9oygIaR1I9PLBGV/PMVwZWBrzcof9TsOvcBh6c5xKxNuLZK6R757Ey/YQ+pada
+        /pKHYzdnJ0zo9+xeeWo3zgmcfSf5x5Drve/s5jTHCOEGFpt3R6SuM4x0fUTHl8mS
+        jPBrSs/oUOnnpdF8hOEmrdFmruwSpsvaRrFvY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ey/w6l4TciCswohZrVogE3AFr/WlAv2w
+        CEDcGyMRmk79ze0hHIGn5BDYiXSmtbSANnyh+9zzBUKP8TNzGUDuAU5JgUVTOFnk
+        hacXD1+3SMmBplhkF8J+tJacdHt8dOHjNOKkWSBTk0ZC8O4NIHiwqVWyhzxdbrTg
+        9S0b8G9xvMw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9DB3B38411;
+        Fri, 26 Aug 2016 15:06:47 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 106613840F;
+        Fri, 26 Aug 2016 15:06:47 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ralf Thielow <ralf.thielow@gmail.com>
+Cc:     git@vger.kernel.org, larsxschneider@gmail.com, me@jnm2.com,
+        philipoakley@iee.org, john@keeping.me.uk,
+        johannes.schindelin@gmx.de
+Subject: Re: [PATCH v2 2/3] help: introduce option --exclude-guides
+References: <20160818185719.4909-1-ralf.thielow@gmail.com>
+        <20160826175836.14073-1-ralf.thielow@gmail.com>
+        <20160826175836.14073-3-ralf.thielow@gmail.com>
+Date:   Fri, 26 Aug 2016 12:06:45 -0700
+In-Reply-To: <20160826175836.14073-3-ralf.thielow@gmail.com> (Ralf Thielow's
+        message of "Fri, 26 Aug 2016 19:58:35 +0200")
+Message-ID: <xmqq8tvjgxiy.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3C545470-6BC0-11E6-AF3E-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-T24gRnJpLCAyMDE2LTA4LTI2IGF0IDExOjE5IC0wNzAwLCBKdW5pbyBDIEhhbWFubyB3cm90ZToN
-Cj4gSmFjb2IgS2VsbGVyIDxqYWNvYi5lLmtlbGxlckBpbnRlbC5jb20+IHdyaXRlczoNCj4gDQo+
-ID4gDQo+ID4gQ3VycmVudGx5LCBkb19zdWJtb2R1bGVfcGF0aCB3aWxsIGF0dGVtcHQgbG9jYXRp
-bmcgdGhlIC5naXQNCj4gPiBkaXJlY3RvcnkgYnkNCj4gPiB1c2luZyByZWFkX2dpdGZpbGUgb24g
-PHBhdGg+Ly5naXQuIElmIHRoaXMgZmFpbHMgaXQganVzdCBhc3N1bWVzDQo+ID4gdGhlDQo+ID4g
-PHBhdGg+Ly5naXQgaXMgYWN0dWFsbHkgYSBnaXQgZGlyZWN0b3J5Lg0KPiA+IA0KPiA+IFRoaXMg
-aXMgZ29vZCBiZWNhdXNlIGl0IGFsbG93cyBmb3IgaGFuZGxpbmcgc3VibW9kdWxlcyB3aGljaCB3
-ZXJlDQo+ID4gY2xvbmVkDQo+ID4gaW4gYSByZWd1bGFyIG1hbm5lciBmaXJzdCBiZWZvcmUgYmVp
-bmcgYWRkZWQgdG8gdGhlIHBhcmVudCBwcm9qZWN0Lg0KPiANCj4gcy9wYXJlbnQgcHJvamVjdC9z
-dXBlcnByb2plY3QvOw0KPiANCg0KWWVwLg0KDQo+ID4gDQo+ID4gVW5mb3J0dW5hdGVseSB0aGlz
-IGZhaWxzIGlmIHRoZSA8cGF0aD4gaXMgbm90IGFjdHVhbGx5IGNoZWNrZWQgb3V0DQo+ID4gYW55
-DQo+ID4gbG9uZ2VyLCBzdWNoIGFzIGJ5IHJlbW92aW5nIHRoZSBkaXJlY3RvcnkuDQo+ID4gDQo+
-ID4gRml4IHRoaXMgYnkgY2hlY2tpbmcgaWYgdGhlIGRpcmVjdG9yeSB3ZSBmb3VuZCBpcyBhY3R1
-YWxseSBhDQo+ID4gZ2l0ZGlyLiBJbg0KPiA+IHRoZSBjYXNlIGl0IGlzIG5vdCwgYXR0ZW1wdCB0
-byBsb29rdXAgdGhlIHN1Ym1vZHVsZSBjb25maWd1cmF0aW9uDQo+ID4gYW5kDQo+ID4gZmluZCB0
-aGUgbmFtZSBvZiB3aGVyZSBpdCBpcyBzdG9yZWQgaW4gdGhlIC5naXQvbW9kdWxlcy8gZm9sZGVy
-IG9mDQo+ID4gdGhlDQo+ID4gcGFyZW50IHByb2plY3QuDQo+IA0KPiBBcyB5b3UgY29uc2lzdGVu
-dGx5IHNheSAiZGlyZWN0b3J5IiBpbiB0aGUgZWFybGllciBwYXJ0IG9mIHRoZSBsb2cNCj4gbWVz
-c2FnZSwNCj4gDQo+IHMvZm9sZGVyIG9mIHRoZSBwYXJlbnQgcHJvamVjdC9kaXJlY3Rvcnkgb2Yg
-dGhlIHN1cGVycHJvamVjdC87DQo+IA0KPiBpcyBkZXNpcmVkLg0KPiANCg0KWWVwLg0KDQo+ID4g
-DQo+ID4gDQo+ID4gSWYgd2UgY2FuJ3QgbG9jYXRlIHRoZSBzdWJtb2R1bGUgY29uZmlndXJhdGlv
-biB0aGlzIG1pZ2h0IG9jY3VyDQo+ID4gYmVjYXVzZQ0KPiANCj4gSSBhZGRlZCBzL2NvbmZpZ3Vy
-YXRpb24vJiwvIHRvIG1ha2UgaXQgYSBiaXQgZWFzaWVyIHRvIHJlYWQuDQo+IA0KDQpNYWtlcyBz
-ZW5zZS4NCg0KPiA+IA0KPiA+IGZvciBleGFtcGxlIGEgc3VibW9kdWxlIGdpdGxpbmsgd2FzIGFk
-ZGVkIGJ1dCB0aGUgY29ycmVzcG9uZGluZw0KPiA+IC5naXRtb2R1bGVzIGZpbGUgd2FzIG5vdCBw
-cm9wZXJseSB1cGRhdGVkLiBBIGRpZSgpIGhlcmUgd291bGQgbm90DQo+ID4gYmUNCj4gPiBwbGVh
-c2FudCB0byB0aGUgdXNlcnMgb2Ygc3VibW9kdWxlIGRpZmYgZm9ybWF0cywgc28gaW5zdGVhZCwg
-bW9kaWZ5DQo+ID4gZG9fc3VibW9kdWxlX3BhdGggdG8gcmV0dXJuIGFuIGVycm9yIGNvZGUuIEZv
-cg0KPiA+IGdpdF9wYXRoZHVwX3N1Ym1vZHVsZSwNCj4gPiBqdXN0IHJldHVybiBOVUxMIHdoZW4g
-d2UgZmFpbCB0byBmaW5kIGEgcGF0aC4gRm9yDQo+ID4gc3RyYnVmX2dpdF9wYXRoX3N1Ym1vZHVs
-ZQ0KPiA+IHByb3BhZ2F0ZSB0aGUgZXJyb3IgY29kZSB0byB0aGUgY2FsbGVyLg0KPiANCj4gU29t
-ZWhvdyBJIGhhZCB0byByZWFkIHRoZSBsYXR0ZXIgaGFsZiBvZiB0aGlzIHBhcmFncmFwaCB0d2lj
-ZSwNCj4gYmVmb3JlIEkgcmVhbGl6ZWQgdGhhdCB0aGUgbGFzdCB0d28gc2VudGVuY2UgdGFsa3Mg
-YWJvdXQgaG93IHRoZXNlDQo+IHR3byBmdW5jdGlvbnMgZXhhY3RseSBkbyAidG8gcmV0dXJuIGFu
-IGVycm9yIGNvZGUiLsKgwqBUZW50YXRpdmVseQ0KPiB3aGF0IEkgcXVldWVkIGhhczoNCj4gDQo+
-IMKgwqDCoMKgLi4uIHNvIGluc3RlYWQsIG1vZGlmeSBkb19zdWJtb2R1bGVfcGF0aCgpIHRvIHJl
-dHVybiBhbiBlcnJvcg0KPiBjb2RlOg0KPiANCj4gwqDCoMKgwqDCoC0gZ2l0X3BhdGhkdXBfc3Vi
-bW9kdWxlKCkgcmV0dXJucyBOVUxMIHdoZW4gd2UgZmFpbCB0byBmaW5kIGENCj4gcGF0aC4NCj4g
-wqDCoMKgwqDCoC0gc3RyYnVmX2dpdF9wYXRoX3N1Ym1vZHVsZSgpIHByb3BhZ2F0ZXMgdGhlIGVy
-cm9yIGNvZGUgdG8gdGhlDQo+IMKgwqDCoMKgwqDCoMKgY2FsbGVyLg0KPiANCj4gaW5zdGVhZCwg
-aG9waW5nIHRoYXQgd291bGQgYmUgZWFzaWVyIHRvIHVuZGVyc3RhbmQuDQo+IA0KDQpUaGF0J3Mg
-bXVjaCBiZXR0ZXIgYW5kIG1vcmUgY2xlYXIuIFRoYW5rcyENCg0KPiA+IA0KPiA+IC1zdGF0aWMg
-dm9pZCBkb19zdWJtb2R1bGVfcGF0aChzdHJ1Y3Qgc3RyYnVmICpidWYsIGNvbnN0IGNoYXINCj4g
-PiAqcGF0aCwNCj4gPiAtCQkJwqDCoMKgwqDCoMKgY29uc3QgY2hhciAqZm10LCB2YV9saXN0IGFy
-Z3MpDQo+ID4gKy8qIFJldHVybnMgMCBvbiBzdWNjZXNzLCBub24temVybyBvbiBmYWlsdXJlLiAq
-Lw0KPiANCj4gcy9ub24temVyby9uZWdhdGl2ZS87DQo+IA0KDQoNClRydWUuDQoNCj4gPiANCj4g
-PiArI2RlZmluZSBTVUJNT0RVTEVfUEFUSF9FUlJfTk9UX0NPTkZJR1VSRUQgLTENCj4gPiArc3Rh
-dGljIGludCBkb19zdWJtb2R1bGVfcGF0aChzdHJ1Y3Qgc3RyYnVmICpidWYsIGNvbnN0IGNoYXIg
-KnBhdGgsDQo+ID4gKwkJCcKgwqDCoMKgwqBjb25zdCBjaGFyICpmbXQsIHZhX2xpc3QgYXJncykN
-Cj4gPiDCoHsNCj4gDQo+IFRoaXMgNS84IGlzIHRoZSBvbmx5IGNoYW5nZWQgb25lIGluIHRoZSBl
-bnRpcmUgc2VyaWVzIGZyb20gdGhlDQo+IHByZXZpb3VzIHJvdW5kLCBJIHRoaW5rLsKgwqBJJ2xs
-IHJlcGxhY2Ugd2hhdCB3YXMgaW4gJ3B1JyBhbmQgd2FpdCBmb3INCj4gcmVzcG9uc2VzLg0KPiAN
-Cj4gVGhhbmtzLg0KDQpZZXAsIHRoYXQncyBjb3JyZWN0Lg0KDQpSZWdhcmRzLA0KSmFrZQ==
+Ralf Thielow <ralf.thielow@gmail.com> writes:
+
+> Introduce option --exclude-guides to the help command.  With this option
+> being passed, "git help" will open man pages only for actual commands.
+
+Let's hide this option from command help of "git help" itself, drop
+the short-and-sweet "-e", not command-line complete it, and leave it
+not-mentioned here.
+
+It is a different story if this option would really help the end
+users, but I do not think that is the case.  If this were to face
+the end users properly, we would need to worry about making sure
+that "git help -g -e" would error out, and getting all the other
+possible corner cases right.  I do not think the amount of effort
+required to do so (even the "trying to enumerate what other possible
+corner cases there may be" part) is worth it.
+
+> In the test script we do two things I'd like to point out:
+>
+>> +       test_config help.htmlpath test://html &&
+>
+> As we pass a URL, Git won't check if the given path looks like
+> a documentation directory.  Another solution would be to create
+> a directory, add a file "git.html" to it and just use this path.
+
+I think this is OK; with s|As we pass a URL|As we pass a string with
+:// in it|, the first sentence can be a in-code comment in the test
+that does this and will help readers of the code in the future.
+
+>> +       test_config help.browser firefox
+>
+> Git checks if the browser is known, so the "test-browser" needs to
+> pretend it is one of them.
+
+Are you talking about the hardcoded list in valid_tool() helper
+function in git-web--browse.sh?  If we use the established escape
+hatch implemented by valid_custom_tool() helper there by setting
+browser.*.cmd, would that be sufficient to work around the "Git
+checks if the browser is known"?
+
+> diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
+> index 40d328a..eeb1950 100644
+> --- a/Documentation/git-help.txt
+> +++ b/Documentation/git-help.txt
+> @@ -8,7 +8,7 @@ git-help - Display help information about Git
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git help' [-a|--all] [-g|--guide]
+> +'git help' [-a|--all] [-e|--exclude-guides] [-g|--guide]
+>  	   [-i|--info|-m|--man|-w|--web] [COMMAND|GUIDE]
+
+So, let's not do this.
+
+> diff --git a/builtin/help.c b/builtin/help.c
+> index e8f79d7..40901a9 100644
+> --- a/builtin/help.c
+> +++ b/builtin/help.c
+> @@ -37,8 +37,10 @@ static int show_all = 0;
+>  static int show_guides = 0;
+>  static unsigned int colopts;
+>  static enum help_format help_format = HELP_FORMAT_NONE;
+> +static int exclude_guides;
+>  static struct option builtin_help_options[] = {
+>  	OPT_BOOL('a', "all", &show_all, N_("print all available commands")),
+> +	OPT_BOOL('e', "exclude-guides", &exclude_guides, N_("exclude guides")),
+
+So I'd suggest using PARSE_OPT_HIDDEN for this one and drop 'e' shorthand.
+The only caller of this mode does not use it.
+
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index c1b2135..b148164 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1393,7 +1393,7 @@ _git_help ()
+>  {
+>  	case "$cur" in
+>  	--*)
+> -		__gitcomp "--all --guides --info --man --web"
+> +		__gitcomp "--all --exclude-guides --guides --info --man --web"
+>  		return
+>  		;;
+>  	esac
+
+So, let's not do this.
+
+> diff --git a/t/t0012-help.sh b/t/t0012-help.sh
+> new file mode 100755
+> index 0000000..fb1abd7
+> --- /dev/null
+> +++ b/t/t0012-help.sh
+> @@ -0,0 +1,33 @@
+> +#!/bin/sh
+> +
+> +test_description='help'
+> +
+> +. ./test-lib.sh
+> +
+> +configure_help () {
+> +	test_config help.format html &&
+> +	test_config help.htmlpath test://html &&
+> +	test_config help.browser firefox 
+> +}
+
+Would replacing the last line with:
+
+	test_config browser.test.cmd ./test-browser &&
+	test_config help.browser test
+
+and then writing to test-browser work just as well?  If so, that
+would be much cleaner and more preferrable.
+
+> +
+> +test_expect_success "setup" "
+> +	write_script firefox <<-\EOF
+> +	exit 0
+> +	EOF
+> +"
+
+Unless there is a good reason you MUST do so, avoid quoting the test
+body with double quotes, as it invites mistakes [*1*].
+
+Also, how about using something like:
+
+	write_script test-browser <<-\EOF
+	i=0
+	for arg
+        do
+		i=$(( $i + 1 ))
+		echo "$i: $arg"
+	done >test-browser.log
+        EOF
+
+instead?  That way, you can ensure that "git help status" attempts
+to call git-status.html with the expected path, not gitstatus.html
+or status.html, or somesuch, immediately after running "git help
+status" in the next test by inspecting test-browser.log ...
+
+> +test_expect_success "works for commands and guides by default" "
+> +	configure_help &&
+> +	git help status &&
+
+... right here.
+
+The output from the test-browser does not have to be multi-line;
+just doing
+
+	echo "$*"
+
+might be sufficient.
+
+> +	git help revisions
+> +"
+
+Thanks.
+
+[Footnote]
+
+*1* Can you immediately tell why this test is broken?
+
+test_expect_success "two commits do not have the same ID" "
+	git commit --allow-empty -m first &&
+	one=$(git rev-parse --verify HEAD) &&
+	test_tick &&
+	git commit --allow-empty -m second &&
+	two=$(git rev-parse --verify HEAD) &&
+	test $one != $two
+"
+
