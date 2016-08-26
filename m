@@ -6,91 +6,89 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE4A71FD99
-	for <e@80x24.org>; Fri, 26 Aug 2016 19:16:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 184841FD99
+	for <e@80x24.org>; Fri, 26 Aug 2016 19:17:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752274AbcHZTQ0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Aug 2016 15:16:26 -0400
-Received: from mail-it0-f53.google.com ([209.85.214.53]:38465 "EHLO
-        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752161AbcHZTQZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2016 15:16:25 -0400
-Received: by mail-it0-f53.google.com with SMTP id g62so7546654ith.1
-        for <git@vger.kernel.org>; Fri, 26 Aug 2016 12:16:24 -0700 (PDT)
+        id S1752643AbcHZTRg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Aug 2016 15:17:36 -0400
+Received: from mail-it0-f43.google.com ([209.85.214.43]:35326 "EHLO
+        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751610AbcHZTRg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2016 15:17:36 -0400
+Received: by mail-it0-f43.google.com with SMTP id x131so7981156ite.0
+        for <git@vger.kernel.org>; Fri, 26 Aug 2016 12:17:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=KHizwIylZuxfmdwSJ+Fwx1FaW6rFkQfWe9DCYsizcFU=;
-        b=SC4Jc2hIpneHplcX7hdiMejZt8p2ahZ4qLHTLTzG9h2Rs1jg9nLO1nV7zpJOM/3VID
-         Kc3WtB9cn6iKApA4TVVwp6OYIqrdVWL7oW7dlLpaneXzvtSdHWcvi/J0YARrpaGXVP88
-         S/Dm2VfM2oraZDWQGhspBRwyOSo+hOG7kNClr3y4ElzvH5CYWn3vT6NDsAUF4aOGnttW
-         l0cC209GV+e9GYjFoVgKFfY88wYCS39CD7NVOdUOzSEXQJD1/k3jDYp5yfKkF7ibSScl
-         UwDgM7zytfmdGvjTh+a7MP2fiRuRQjuYDroAygJGVysNj7q1ETCBfG3v9odu8YmOqb1Z
-         Kqfw==
+        bh=pPgWvzK9lquZ8XwVAceEqjd9fWo1fGPO0F+3WLG4NSU=;
+        b=hJJvhMIyXnzDlQlryrOvjhk/udWhvX3iez6eYKvv4N93KWCc1R2Ktr1+FmCJSbcBN5
+         BEmXQi+t53EvAF+KcFbswVvOkPSH9UDkJ5lCUIXtSuAg9d0vHrmSmGeGI7wU3WajrpJ+
+         PnuUg9Z6D8OlKUAQZ/fpzNy8xcfZHgR2CNgJQKXHz8lbazK+suvIK3C/gPGoL6X624HZ
+         4BUJzyof+8/qWwVAhjopp3vFq+o5EF86lSxPtEo07AWgwaRvORhuC0DqYvyWf7W6b72g
+         QoK6ZmMUU+DRnvWIAaQw0NKe1Jx9JZPbm6Eog2UItT4uDH767iZ3zeoXPCZTcEaQLPh+
+         C7dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=KHizwIylZuxfmdwSJ+Fwx1FaW6rFkQfWe9DCYsizcFU=;
-        b=BJR2RIE4GELNI1EM2E7OFJTCj9lyEb6I2Mxuo78lmUgqAjK/eS9Oh6ye9T+E8OIJzM
-         MR+j2KvK1OQ4Kzmr9ukJAaLPvMkUcsWNnx5AGtCp4tPNIVTEXPsZvy3YTvMRRex0/AAA
-         GmWQSm7PfdAUbfuTwW3G1PkCFdpsxRRLdsFZod9gffsAebxhcOOppxa6qucEZ59l6BPu
-         fjtFCYT4fPro+IQO0AAqaIzKKrB4Tznqt5vjUXIdZxd7rH68vIkyriPIEJLdl75Z6/t8
-         0DJ8egO7zN+Fw7TBcnGdqek7tGAlOLhshJB6KR5T70E726c5c/3UC3z5W3M8XbiOk7Hj
-         Fp/w==
-X-Gm-Message-State: AE9vXwMKVW/0R+PUwjD+mIrApOZDd/NsiBXrMjUeSYLz8RZAFHnEMb1NjKeqOrRflSZcZCLZAOkEujl6yAxX2EtI
-X-Received: by 10.107.144.10 with SMTP id s10mr5754628iod.165.1472238984125;
- Fri, 26 Aug 2016 12:16:24 -0700 (PDT)
+        bh=pPgWvzK9lquZ8XwVAceEqjd9fWo1fGPO0F+3WLG4NSU=;
+        b=AJpMky81+X9911msrUPFWb0SS7rvSO6HBagMR4gMh4/v78l1nfilOSQWf0Y6XuV8rG
+         0fGkVOQeo+3vbws7GB1IOVfp8NT5ulWwmUnz0+BCZxBUdZhrRqoYH+d5HwduCU+HaHVf
+         GeCgBX8/18RmyXhP6UT3xERDng62kq3phdu2Z9qjaKKL12evzO5/+DaGp8rBK/sId9Tq
+         MhHeib4LQU0FbwQLvh2jFtnaJbUmKee9bd2UEZBG7Qg5K718Ag42TaKmncqctrfSkiO0
+         GrcSf7+L9KJs33SA8Eu51ZtBI5dinnTGWRFf3uHmLY7BZJeN3xYRGgo6m0Q+d9EObnJ+
+         3hMg==
+X-Gm-Message-State: AE9vXwP5o9ETfx1UqTHpcMwHHqB3OyJqo5s5ALsgc+aZXXq08eghutz5Wvw/wmFioUNcMOWpoxyfREL3pBzi7WKt
+X-Received: by 10.107.131.38 with SMTP id f38mr5996968iod.173.1472239055184;
+ Fri, 26 Aug 2016 12:17:35 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Fri, 26 Aug 2016 12:16:23 -0700 (PDT)
-In-Reply-To: <xmqqoa4fgzhv.fsf@gitster.mtv.corp.google.com>
-References: <1472230741-5161-1-git-send-email-dev+git@drbeat.li> <xmqqoa4fgzhv.fsf@gitster.mtv.corp.google.com>
+Received: by 10.107.128.66 with HTTP; Fri, 26 Aug 2016 12:17:34 -0700 (PDT)
+In-Reply-To: <20160825233243.30700-1-jacob.e.keller@intel.com>
+References: <20160825233243.30700-1-jacob.e.keller@intel.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 26 Aug 2016 12:16:23 -0700
-Message-ID: <CAGZ79kbL13b=iZiFKW8a=G+2zXRSwjYDTzu2TS47Ppohgzm0Gg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] gitk: align the commit summary format to the documentation
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Beat Bolli <dev+git@drbeat.li>, Heiko Voigt <hvoigt@hvoigt.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Paul Mackerras <paulus@samba.org>
+Date:   Fri, 26 Aug 2016 12:17:34 -0700
+Message-ID: <CAGZ79kao12f8VTT3uxRvAUBhvbfSLjsYRjidTau3M-Kf81uXDQ@mail.gmail.com>
+Subject: Re: [PATCH v11 0/8] submodule inline diff format
+To:     Jacob Keller <jacob.e.keller@intel.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+        Jacob Keller <jacob.keller@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 26, 2016 at 11:24 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Beat Bolli <dev+git@drbeat.li> writes:
->
->> In 175d38c (SubmittingPatches: document how to reference previous commits,
->> 2016-07-28) the format for referring to older commits was specified.
->>
->> Make the text generated by the "Copy commit summary" command match this
->> format.
->
-> Hmph.  I didn't know gitk already had its own command to produce a
-> short string.  I actually think what it produces
+On Thu, Aug 25, 2016 at 4:32 PM, Jacob Keller <jacob.e.keller@intel.com> wrote:
 
-It was added in d835dbb91fe (gitk: Add a "Copy commit summary" command,
-2015-07-18), it doesn't seem to be in your tree yet, so maybe wait
-with this patch
-until you pulled gitk?
+> @@ -487,12 +490,14 @@ static void do_submodule_path(struct strbuf *buf, const char *path,
+>                 strbuf_addstr(buf, git_dir);
+>         }
+>         if (!is_git_directory(buf->buf)) {
+> +               gitmodules_config();
+
+We determined via chat that calling gitmodules_config
+is not harmful w.r.t. correctness, but might require some
+improvements in the future for performance.
+(i.e. we may want to add in a later series a
+    if (already called gitmodules_config)
+      set flag "already called gitmodules_config";
+      return;
+into gitmodules_config)
 
 >
->> In 175d38c ("SubmittingPatches: document how to reference previous commits",
->> 2016-07-28) the format for referring to older commits was specified.
->
-> is easier to read when pasted into a sentence than what the recent
-> update 175d38ca ("SubmittingPatches: document how to reference
-> previous commits", 2016-07-28) suggests to do, i.e.
->
->> In 175d38c (SubmittingPatches: document how to reference previous commits,
->> 2016-07-28) the format for referring to older commits was specified.
->
-> Heiko, Stefan, I think you two were involved in adding that new
-> paragraph.   What do you think?
+>  char *git_pathdup_submodule(const char *path, const char *fmt, ...)
+>  {
+> +       int err;
+>         va_list args;
+>         struct strbuf buf = STRBUF_INIT;
+>         va_start(args, fmt);
+> -       do_submodule_path(&buf, path, fmt, args);
+> +       err = do_submodule_path(&buf, path, fmt, args);
+>         va_end(args);
+> +       if (err)
 
-So the subtle difference is adding '"' around the commit message subject?
-
-I agree we should fix that.
+Here we need a strbuf_release(&buf) to avoid a memory leak?
