@@ -2,80 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABDD71FD99
-	for <e@80x24.org>; Fri, 26 Aug 2016 23:07:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8605F1FD99
+	for <e@80x24.org>; Fri, 26 Aug 2016 23:13:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754114AbcHZXHO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Aug 2016 19:07:14 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53323 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752161AbcHZXHN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2016 19:07:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A1843A645;
-        Fri, 26 Aug 2016 19:07:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=J+MrDttGvMOUy8kNcQIgC0hjr/k=; b=h64kSA
-        04bigOmL5HOwljm1mYj9FG7Uk1Irp7iOp31M+vvVp8FuY2jsGWTOXFwZbMo4SUfe
-        wc7fBTUv5IYGtE93FUGXZYTWHHomGMapI4xtbuX0Ro4m2yinnI+EP8jEJUgnOtSg
-        yRcIoewEGWVq7LQL22cCfpz8yToqmD3y4OoTY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xTNsvsdJu/ylRdlB6F5uibugeWVj/Gvu
-        /ItSbOcTteundid3ktxL3hMSte8yh2B18W4Ovbvme645DivY4w3bN81e6HyAfvO5
-        laMTXp7W51k7VM/ROUU1wQYen1SIUenPgtC2ipWQrMX3FWzQ8d1BVc0Gv/25NPg6
-        V/tIHFKSO0Q=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 334873A644;
-        Fri, 26 Aug 2016 19:07:12 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A5B253A643;
-        Fri, 26 Aug 2016 19:07:11 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Pranit Bauva <pranit.bauva@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v14 21/27] bisect--helper: `bisect_log` shell function in C
-References: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
-        <01020156b73fe6d5-6a363195-eb91-48a0-9a3c-3159fba6d327-000000@eu-west-1.amazonses.com>
-Date:   Fri, 26 Aug 2016 16:07:09 -0700
-In-Reply-To: <01020156b73fe6d5-6a363195-eb91-48a0-9a3c-3159fba6d327-000000@eu-west-1.amazonses.com>
-        (Pranit Bauva's message of "Tue, 23 Aug 2016 11:53:53 +0000")
-Message-ID: <xmqqbn0fdt9e.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D207F082-6BE1-11E6-B261-F7BB12518317-77302942!pb-smtp1.pobox.com
+        id S1754746AbcHZXNm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Aug 2016 19:13:42 -0400
+Received: from mga14.intel.com ([192.55.52.115]:57466 "EHLO mga14.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754720AbcHZXNl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2016 19:13:41 -0400
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmsmga103.fm.intel.com with ESMTP; 26 Aug 2016 16:13:23 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.28,583,1464678000"; 
+   d="scan'208";a="1047844866"
+Received: from jekeller-desk.amr.corp.intel.com ([134.134.3.116])
+  by fmsmga002.fm.intel.com with ESMTP; 26 Aug 2016 16:13:22 -0700
+From:   Jacob Keller <jacob.e.keller@intel.com>
+To:     jacob.keller@gmail.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, j6t@kdbg.org,
+        jacob.e.keller@intel.com, peff@peff.net, sbeller@google.com,
+        stefanbeller@gmail.com
+Subject: Re: [PATCH v11 0/8] submodule inline diff format
+Date:   Fri, 26 Aug 2016 16:13:20 -0700
+Message-Id: <20160826231320.7038-1-jacob.e.keller@intel.com>
+X-Mailer: git-send-email 2.10.0.rc0.259.g83512d9
+In-Reply-To: <CA+P7+xpvtdoeK3uiSGAeNzQaYQhS7p0WT+nCcfKAS7FauFNftQ@mail.gmail.com>
+References: <CA+P7+xpvtdoeK3uiSGAeNzQaYQhS7p0WT+nCcfKAS7FauFNftQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pranit Bauva <pranit.bauva@gmail.com> writes:
+From: Jacob Keller <jacob.keller@gmail.com>
 
-> +static int bisect_log(void)
-> +{
-> +	struct strbuf buf = STRBUF_INIT;
-> +
-> +	if (strbuf_read_file(&buf, git_path_bisect_log(), 256) < 0) {
-> +		strbuf_release(&buf);
-> +		return error(_("We are not bisecting.\n"));
-> +	}
-> +
-> +	printf("%s", buf.buf);
-> +	strbuf_release(&buf);
-> +
-> +	return 0;
-> +}
+> On Fri, Aug 26, 2016 at 1:04 PM, Jeff King <peff@peff.net> wrote:
+> > On Fri, Aug 26, 2016 at 07:58:07PM +0000, Keller, Jacob E wrote:
+> >
+> >> > >  char *git_pathdup_submodule(const char *path, const char *fmt,
+> >> > > ...)
+> >> > >  {
+> >> > > +       int err;
+> >> > >         va_list args;
+> >> > >         struct strbuf buf = STRBUF_INIT;
+> >> > >         va_start(args, fmt);
+> >> > > -       do_submodule_path(&buf, path, fmt, args);
+> >> > > +       err = do_submodule_path(&buf, path, fmt, args);
+> >> > >         va_end(args);
+> >> > > +       if (err)
+> >> >
+> >> > Here we need a strbuf_release(&buf) to avoid a memory leak?
+> >>
+> >> No, cause we "strbuf_detach" after this to return the buffer? Or is
+> >> that not safe?
+> >
+> > That code path is OK. I think the question is whether you need to
+> > release the buffer in the "err" case where you return NULL and don't hit
+> > the strbuf_detach.
+> >
+> > IOW, does do_submodule_path() promise that when it returns an error,
+> > "buf" has been left uninitialized? Some of our strbuf functions do, but
+> > I do not know offhand about do_submodule_path().
+> >
+> > -Peff
+> 
+> We probably should release for the error case. I'll do that. I don't
+> believe do_submodule_path ensures that the passed in argument is
+> guaranteed to not be initialized or used.
+> 
+> Thanks,
+> Jake
 
-Hmph, is it really necessary to slurp everything in a strbuf before
-sending it out to the standard output?  Wouldn't it be sufficient to
-open a file descriptor for reading on the log file and then hand it
-over to copy.c::copy_fd()?
+Here's the squash for this fix.
+
+Thanks,
+Jake
+
+---------->8
+
+From Jacob Keller <jacob.keller@gmail.com>
+From 9cf89634e6f2b0f3f90f43a553f55eb57bb2f662 Mon Sep 17 00:00:00 2001
+From: Jacob Keller <jacob.keller@gmail.com>
+Date: Fri, 26 Aug 2016 16:06:54 -0700
+Subject: [PATCH] squash! allow do_submodule_path to work even if submodule
+ isn't checked out
+
+Add a missing strbuf_release() when returning during the error flow of
+git_pathdup_submodule().
+
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+ path.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/path.c b/path.c
+index e9369f75319d..b8515973252c 100644
+--- a/path.c
++++ b/path.c
+@@ -525,8 +525,10 @@ char *git_pathdup_submodule(const char *path, const char *fmt, ...)
+ 	va_start(args, fmt);
+ 	err = do_submodule_path(&buf, path, fmt, args);
+ 	va_end(args);
+-	if (err)
++	if (err) {
++		strbuf_release(&buf);
+ 		return NULL;
++	}
+ 	return strbuf_detach(&buf, NULL);
+ }
+ 
+-- 
+2.10.0.rc0.259.g83512d9
 
