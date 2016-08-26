@@ -7,63 +7,60 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1144A1F6C1
-	for <e@80x24.org>; Fri, 26 Aug 2016 11:42:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65A721F6C1
+	for <e@80x24.org>; Fri, 26 Aug 2016 12:00:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753332AbcHZLmt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Aug 2016 07:42:49 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:36244 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753244AbcHZLmq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2016 07:42:46 -0400
-Received: by mail-wm0-f45.google.com with SMTP id q128so275800392wma.1
-        for <git@vger.kernel.org>; Fri, 26 Aug 2016 04:42:22 -0700 (PDT)
+        id S1751613AbcHZMAq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Aug 2016 08:00:46 -0400
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:38434 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750999AbcHZMAp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2016 08:00:45 -0400
+Received: by mail-wm0-f50.google.com with SMTP id o80so115800766wme.1
+        for <git@vger.kernel.org>; Fri, 26 Aug 2016 05:00:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=subject:to:references:cc:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding;
-        bh=Y9JXMZB05lIzFzJO/Hl9cgYntBOLgsOZKIy0Ll4psYM=;
-        b=GhnN7X2XWoktpHdAjGitUNQKaq1zu2ug7z8h+hNIxwxNbltvN64P/kDLc1+AnbT6zW
-         arZIBjkdGE987TwErhTVMdtH1i8VYPO/ZR0JMXllViHiwhci6llI3ZUjNMzxeo2J0Btu
-         mURPZ7eS9bsG7tWjJI2nBnkUiaF2+BatHaNUv3sUDiDJbA6RPXEmK+/zww6K0FW6rAQA
-         /AUhi457teM6lyG3xk3yvWpDuhxNUKubnAdxfWO6cKKE8VYHCNWL0N5U6milNkykVrbW
-         RmIXd5a79Z1sWi/v5qh9gwkRpMAD1oYKIBwp7HrF3vF2R6Cc32jDpbBVWM43B2KetQnP
-         qCxA==
+        bh=BTd63uneNEfHSOiLcicsAr8qf1B7BRMYB8cSKaeHxQE=;
+        b=pIgemSzVNYD+Hhgrpg/WeCT8Sc/bveRhtg5dgVJluvloJwBgdbbU7c+Wb2A2kRrQKC
+         dJeEt9mR3V+XdivXcqCM30J+DmEkZGgQbJJro01+QidU6CoMGQqb/eGh1e9xtcNurPtb
+         t9dSk2D/UzgPdlN8SM+0LAuVctd+9mCrQYB+LHEamooLbubRpb+VA7UZhAi4aGyNLCXN
+         ZlBHyoWJyQKEeYQZMHsNXz0SIJgF0MZ4lUN906Ujd1VkQkZ46cfd708UZlh9QPSGh9Ha
+         FrLKAUfzuL4ZZnWJx4xwFGxNfAfKgTCsTjwRmAc3YegJsDJhv16/7iUND6xKKxJajQxg
+         hnMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:subject:to:references:cc:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=Y9JXMZB05lIzFzJO/Hl9cgYntBOLgsOZKIy0Ll4psYM=;
-        b=loyXrTEKi5FoUiUV3f+Y/8ao1eIPM57RVVd1bZln0/ad5CRErN8298HBHfzRGGUvTk
-         9K8HUm4kol+wco4jVHtXTHBulD7X/XPteHufaMkDiUtwsILDLFDIwBvHr5ye9kABh9rH
-         wHvdrKcQm7+Cmdeosbq6gut9/nIJBKws7dWEyDgluDSQgGstaRcN4t4jUj8gmCFFOTzf
-         V9g2da8L7k16fwKlB5iXNJunQPQzNtW198v0kyBspsQpUIeLMQD/E78zEPK8jqxtw4b3
-         xckVCPddxB5RCZ26Kz7lAw8TSdIMzyqiKessPrDsqjlM0TdAFx0v/61V8iUq9CKtWkO2
-         oXkQ==
-X-Gm-Message-State: AE9vXwPS2Dc/pbhUEWEp6R8yHNY70mvFKBwOLxdtlSFutDKjfdU8UXoPPzGaTPFWomzFcQ==
-X-Received: by 10.28.22.6 with SMTP id 6mr3558747wmw.55.1472211741489;
-        Fri, 26 Aug 2016 04:42:21 -0700 (PDT)
+        bh=BTd63uneNEfHSOiLcicsAr8qf1B7BRMYB8cSKaeHxQE=;
+        b=UWii7auxqghAi1XjgeOXetT5ZH9neFI7gmIm5caU9EQ6r6TM9c/A9XLAwmrbLF7cOe
+         whhKF+55Vbm0h0efiFEsQIwXfniLdvr2LAKlcERjE26vMsr+GlQNKWGTDmw6un4N6g2H
+         EjTRRormOQy4veKrzjYoyOW6Si3sQhjv5PMsfTBBbNalC0AtMN3jHrslxqRdxVpNi/YW
+         vAbwYmieqMI3iEVyl3xapVC3eTijvnE6FMTVrJepTcwnz10lRunSZ1jUnkIncfvjQLk2
+         2JIxuTSsWS9BS/kl9t2jLG4t/ZDH4HFcetNSpQmRbstgTA1THkBhEZ1Q9kdmKyIYUdjQ
+         5fkg==
+X-Gm-Message-State: AE9vXwNnkC65rJH3AeJ1uVHe/sSSEuHfwcjKt/Wph1sJJeoUFutdQXmvwvkdaiGH6j9Scg==
+X-Received: by 10.28.48.71 with SMTP id w68mr3720246wmw.4.1472212375293;
+        Fri, 26 Aug 2016 04:52:55 -0700 (PDT)
 Received: from [192.168.1.26] (elj39.neoplus.adsl.tpnet.pl. [83.21.203.39])
-        by smtp.googlemail.com with ESMTPSA id i80sm20245075wmf.11.2016.08.26.04.42.20
+        by smtp.googlemail.com with ESMTPSA id jv9sm19681314wjb.45.2016.08.26.04.52.53
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Aug 2016 04:42:20 -0700 (PDT)
+        Fri, 26 Aug 2016 04:52:54 -0700 (PDT)
 Subject: Re: [RFC] Proposed questions for "Git User's Survey 2016"
-To:     Andrew Ardill <andrew.ardill@gmail.com>
+To:     Eric Wong <e@80x24.org>
 References: <91a2ffbe-a73b-fbb9-96da-9aea4d439e5a@gmail.com>
- <CAH5451n0=kmr9SeOKSH5iiJr5Lnr2TapfZrTUR6Pm90xUEKFxQ@mail.gmail.com>
- <90165dce-c508-4cb4-ec6e-c3d271181fe3@gmail.com>
- <CAH5451nMeuZttRgM8LK3JcPhfOYHieyawV2pJzp0jdh2KAf60Q@mail.gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Doug Rathbone <doug@dougrathbone.com>,
+ <20160826061500.GA22213@dcvr>
+Cc:     git@vger.kernel.org, Doug Rathbone <doug@dougrathbone.com>,
         David Bainbridge <david.bainbridge@gmail.com>,
         Stefan Beller <sbeller@google.com>
 From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <a1a45f00-ce11-6e7a-ad40-efe9a1158aa9@gmail.com>
-Date:   Fri, 26 Aug 2016 13:42:15 +0200
+Message-ID: <6d171c23-65f6-5f67-7d80-051f2dfe8678@gmail.com>
+Date:   Fri, 26 Aug 2016 13:52:49 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.2.0
 MIME-Version: 1.0
-In-Reply-To: <CAH5451nMeuZttRgM8LK3JcPhfOYHieyawV2pJzp0jdh2KAf60Q@mail.gmail.com>
+In-Reply-To: <20160826061500.GA22213@dcvr>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -71,73 +68,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 26.08.2016 o 08:58, Andrew Ardill pisze:
-> Jakub Narębski <jnareb@gmail.com> wrote:
->> Andrew Ardill pisze:
->>> Jakub Narębski <jnareb@gmail.com> wrote:
-[...]
->>>> 25. What [channel(s)] do you use to request/get help about Git [(if any)]
->>>
->>> It may also be useful to ask how people hear news about git, such as
->>> when a new release comes out. Not sure if worth a separate question,
->>> as there is a lot of crossover in the resources available for this and
->>> for requesting help, but knowing this information would help us
->>> understand what kinds of users are responding and which communication
->>> channels are effective for git news.
->>
->> How would you propose such question would look like, and what proposed
->> answers would be (if it were not a free-text / essay question)?
-> 
-> Something like:
-> 
-> XX. How do you hear about git related news 
->     (such as new releases and community events)?
->     (multiple choice or single choice?)
->  * I wasn't aware there was any news
->  * I don't read any news, but I'm aware of it
->  * through news aggregation sites (such as reddit or hacker news)
->  * from a newsletter (such as Git Rev News)
+W dniu 26.08.2016 o 08:15, Eric Wong pisze:
 
-I wonder if we should also add
+> Not directly-related to the survey questions, but can you ensure
+> it's accessible to folks without JavaScript/graphics, and
+> perhaps also ensure it is on a host that is Tor-friendly?
 
-   * through a watched blog (such as GitHub Blog)
-   * announcement section in news site (such as LWN.net)
+I plan on using Survs.com (where we have Premium account for free,
+thanks to Survs admins).  It has good online analysis tools, allows
+to download results in easy parseable format[1], and has support
+for multiple channels.
 
->  * from a mailing list (such as the git developer or the git for windows list)
+[1]: https://github.com/jnareb/GitSurvey-scripts
 
-Are there any other common channels that you (the people) watch for
-git news or software news?  Freshmeat / Freecode is defunct, and no
-replacement got popular enough...
 
->  * other
+It is possible to have a channel without JavaScript and without
+cookies (anonymous), at the cost of having to fill the survey
+in one go (without cookies and JavaScript you cannot go back
+to fill more questions, or change your mind about answers).
+The main page of survey would have a link to JavaScript-free
+version, and all announcements (by me) would include it.
 
-The last would be
+There would be no graphics that are not purely optional
+(decorative); probably there would be just a logo.
 
-   * other, please specify
+I'm not sure how Tor-friendly is this host.
+ 
+> Graphics setups often require non-Free firmware or drivers for
+> acceptable performance; and there are also visually-impaired
+> users who will need screen readers or Braille.
 
-> It would be good to allow a list of specific resources to be written
-> to capture things we don't know about, and specific instances of the
-> categories above, e.g.:
-> "hacker news, git mailing list, git rev news"
+A question: would it be better to have the whole survey one one
+large page, or have it split into pages (with fever questions
+per page)?
 
-On Survs.com it would require an additional question with free-form
-answer, I think.
 
->> Note that there might be a problem of severe bias: people who heard
->> about Git User's Survey 2016 are probably ones that watch news about Git.
->> Still, it would be useful to know if people read RelNotes...
-> 
-> Agreed, the intent behind the question is to work out what are the
-> effective communication channels so that they can be used more
-> effectively.
+P.S. With from 3k to 11k responses (I hope for at least 5k)
+Git User's Survey is outside of the free tier of most if not
+all web survey sites.  I guess I could cobble something together
+out of Google Forms, but we would loose online analysis (and
+probably some of data that Survs.com makes available in download).
 
-Right.
-
-Nb. I wonder if this question should not replace the one about
-how you heard about the survey (at least if there would be too many
-questions).  But I'll have to see how many questions we have now.
-
-Thanks for suggestions,
+Best regards,
 -- 
 Jakub Narębski
-
