@@ -2,133 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 774091FD99
-	for <e@80x24.org>; Fri, 26 Aug 2016 15:21:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B22F1FD99
+	for <e@80x24.org>; Fri, 26 Aug 2016 15:31:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751764AbcHZPVX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Aug 2016 11:21:23 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:18268 "EHLO edge10.ethz.ch"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751139AbcHZPVX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2016 11:21:23 -0400
-X-Greylist: delayed 477 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Aug 2016 11:21:22 EDT
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.3.301.0; Fri, 26 Aug
- 2016 17:12:43 +0200
-Received: from MBX115.d.ethz.ch ([fe80::444b:8481:c05f:ab21]) by
- CAS10.d.ethz.ch ([fe80::cce:fc66:7b56:a06a%10]) with mapi id 14.03.0301.000;
- Fri, 26 Aug 2016 17:12:50 +0200
-From:   "Hedges  Alexander" <ahedges@student.ethz.ch>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Feature Request: Branch-Aware Submodules
-Thread-Topic: Feature Request: Branch-Aware Submodules
-Thread-Index: AQHR/q8rhVL81GY7sUSbiDPBMOmPzw==
-Date:   Fri, 26 Aug 2016 15:12:49 +0000
-Message-ID: <51671371-C59A-4304-99B2-B2C2256C4001@student.ethz.ch>
-References: <5EA7D232-5D41-4653-9E35-21C502C79C92@student.ethz.ch>
-Accept-Language: en-US, de-CH
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [85.2.64.43]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <0A1E99EA208F6247A9DBDE93EEC30F42@intern.ethz.ch>
-Content-Transfer-Encoding: base64
+        id S1753562AbcHZPbI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Aug 2016 11:31:08 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:36260 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751085AbcHZPbH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2016 11:31:07 -0400
+Received: by mail-wm0-f46.google.com with SMTP id q128so284036097wma.1
+        for <git@vger.kernel.org>; Fri, 26 Aug 2016 08:31:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=ni8DRSxdyalm5ih0qrzaGwpxoedFwsBktg3UPDdVVAA=;
+        b=ulpVDkehbT4OCmHuT4wPwXXrRlPuB+MRUODCwSjDYcVN+bfnBWAvQ2MlXTKWBWF+k2
+         iP4gg0PMtl+B6nYqBmnkBQCRO+ZJ/I50ceeEOa1BZKEywexT5EXXIs6pDxbg4aeEwhPZ
+         WjIeB+rTG7KwN9r/OX+yuNT+RY4826rotResDUv6ZMRM3xgaWPRAbKkwPuPXw8t2Ma4W
+         xI1CPw7JKesq25QdJjAkNCISri/stYOZf7h9pmo+SalUfKiJ5wIt0WGOvGHhT6VYPKiw
+         SJa2uoUrhPTNKw+F/nGuNSJsGFKSuaw0AlqKJUGHcDFgUch6VVodiI1Thun2+P1+LMmx
+         0T9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=ni8DRSxdyalm5ih0qrzaGwpxoedFwsBktg3UPDdVVAA=;
+        b=K2WcpGVIwE5lGu9y/LCXotT5pLbjfVhOrs+tLMk+u2cp67GVAMgA6qwKUqaew+hvnO
+         Hvoo2CXJK/vJvRBNxgFa/t2rWP0gqgBMO9JPd2Yr1lAZouV9Y+YHQgOFxxm2w35RVBJ6
+         2SGrZqLyJGB/WY9EgkgGeNXxvLbN1wAxZ5j3ViHmakTmTuUqrCxgdITUAriKsbGrHpPO
+         wqP5TRv9CbnosDqr5ys0WKg7QCTky6im9Pu1muVQG1WMQN5P9S2CSgjvY6t0RHHk6KkO
+         1Uh3kbMn/iAdQeoqhBLvvxOMBL1NmTjq2NJlc+OxfaK4B7jYmo1EtxWwTegtpnA62O/6
+         g1jQ==
+X-Gm-Message-State: AE9vXwO8J41iyDa6XUqyNePvKhnlFLiXQ/HdcgHO5ZIiWgymjuLD3gIe99jGRf2tboR8sQ==
+X-Received: by 10.194.116.1 with SMTP id js1mr5053891wjb.183.1472225465850;
+        Fri, 26 Aug 2016 08:31:05 -0700 (PDT)
+Received: from [192.168.1.26] (afg6.neoplus.adsl.tpnet.pl. [83.25.136.6])
+        by smtp.googlemail.com with ESMTPSA id n2sm20521573wjd.1.2016.08.26.08.31.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 26 Aug 2016 08:31:05 -0700 (PDT)
+Subject: Re: [PATCH v6 06/12] doc: revisions: single vs multi-parent notation
+ comparison
+To:     Philip Oakley <philipoakley@iee.org>,
+        GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+References: <20160811215035.4108-1-philipoakley@iee.org>
+ <20160812234522.7792-1-philipoakley@iee.org>
+ <20160812234522.7792-3-philipoakley@iee.org>
+Cc:     Marc Branchaud <marcnarc@xiplink.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <6b37851f-0f2f-0379-c10e-52f7da6b7110@gmail.com>
+Date:   Fri, 26 Aug 2016 17:30:59 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
+In-Reply-To: <20160812234522.7792-3-philipoakley@iee.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-DQo+IE9uIDI1IEF1ZyAyMDE2LCBhdCAxOTo0NSwgU3RlZmFuIEJlbGxlciA8c2JlbGxlckBnb29n
-bGUuY29tPiB3cm90ZToNCj4gDQo+ICtjYyBKYWNvYiBhbmQgTGFycyB3aG8gd29yayB3aXRoIHN1
-Ym1vZHVsZXMgYXMgd2VsbC4NCj4gDQo+IE9uIFRodSwgQXVnIDI1LCAyMDE2IGF0IDI6MDAgQU0s
-IEhlZGdlcyAgQWxleGFuZGVyDQo+IDxhaGVkZ2VzQHN0dWRlbnQuZXRoei5jaD4gd3JvdGU6DQo+
-PiANCj4+IFJpZ2h0IG5vdyB1cGRhdGluZyBhIHN1Ym1vZHVsZSBpbiBhIHRvcGljIGJyYW5jaCBh
-bmQgbWVyZ2luZyBpdCBpbnRvIG1hc3Rlcg0KPj4gd2lsbCBub3QgY2hhbmdlIHRoZSBzdWJtb2R1
-bGUgaW5kZXggaW4gbWFzdGVyIGxlYWRpbmcgdG8gYXQgbGVhc3QgdHdvIGNvbW1pdA0KPj4gZm9y
-IHRoZSBzYW1lIGNoYW5nZSAob25lIGluIGFueSBhY3RpdmUgYnJhbmNoKS4gVGhpcyBoYXBwZW5l
-ZCB0byBtZSBxdWl0ZSBhIGZldw0KPj4gdGltZXMuIFRvIGEgbmV3Y29tZXIgdGhpcyBiZWhhdmlv
-ciBpcyBjb25mdXNpbmcgYW5kIGl0IGxlYWRzIHRvIHVubmVjZXNzYXJ5DQo+PiBjb21taXRzLg0K
-PiANCj4gU28geW91IHJvdWdobHkgZG8NCj4gDQo+ICAgZ2l0IGNoZWNrb3V0IC1iIG5ldy10b3Bp
-Yw0KPiAgICMgY2hhbmdlIHRoZSBzdWJtb2R1bGUgdG8gcG9pbnQgYXQgdGhlIGxhdGVzdCB1cHN0
-cmVhbSB2ZXJzaW9uOg0KPiAgIGdpdCBzdWJtb2R1bGUgdXBkYXRlIC0tcmVtb3RlIDxzdWJtb2R1
-bGUtcGF0aD4NCj4gICBnaXQgY29tbWl0IC1hIC1tICJ1cGRhdGUgc3VibW9kdWxlIg0KPiAgIGdp
-dCBjaGVja291dCBtYXN0ZXINCj4gICBnaXQgbWVyZ2UgbmV3LXRvcGljDQo+ICAgIyBoZXJlIHNl
-ZW1zIHRvIGJlIHlvdXIgcG9pbnQgb2YgY3JpdGljPw0KPiAgICMgbm93IHRoZSBzdWJtb2R1bGUg
-cG9pbnRlciB3b3VsZCBzdGlsbCBwb2ludCB0byB0aGUgbGF0ZXN0DQo+IHVwc3RyZWFtIHZlcnNp
-b24/DQo+IA0KDQpFeGN1c2UgbXkgcG9vciB3b3JkaW5nIGFib3ZlLiBUaGUgcHJvYmxlbSBpcyB0
-aGUgZm9sbG93aW5nOg0KDQojIGFzc3VtZSBhIHJlcG8gd2l0aCBhIGZldyBicmFuY2hlcyBhbmQg
-b25lIHN1Ym1vZHVsZXMNCmdpdCBjaGVja291dCAtYiBuZXdfZmVhdHVyZQ0KZ2l0IGNvbW1pdCAt
-YW0gInNvbWUgbmV3IGNvbW1pdHMiDQpjZCBzdWJtb2R1bGUvcGF0aA0KZ2l0IGNvbW1pdCAtYW0g
-ImRpcnR5IGhhY2tpbmcgb24gYSBsaWJyYXJ5Ig0KY2QgLi4vLi4NCmdpdCBjb21taXQgLWFtICJj
-aGFuZ2VzIGFuZCB1cGRhdGUgbGlicmFyeSINCmdpdCBzdGF0dXMNCiMgYWxsIGlzIHdlbGwNCmdp
-dCBjaGVja291dCBtYXN0ZXINCmdpdCBzdGF0dXMNCiMgaXQgc2F5cyBuZXcgc3VibW9kdWxlIGNv
-bW1pdHMgPz8NCmdpdCBjb21taXQgLWFtICJ1cGRhdGUgbGlicmFyeSBhZ2FpbuKApiINCmdpdCBt
-ZXJnZSBuZXdfZmVhdHVyZQ0KZ2l0IGNoZWNrb3V0IG9sZF9mZWF0dXJlX3RoYXRfbmV2ZXJfbWFk
-ZV9pdA0KZ2l0IHN0YXR1cw0KIyBzdGlsbCA/Pz8NCmdpdCBjb21taXQgLWFtIOKApg0KDQpOb3cg
-cmVhZGluZyB0aGUgY29tbWVudHMgYmVsb3csIEkgb3Zlcmxvb2tlZCBnaXQgc3VibW9kdWxlIHVw
-ZGF0ZS4gSSB1c2VkIHVwZGF0ZQ0Kb25seSB0aGUgZmlyc3QgdGltZSBhZnRlciBhIGNsb25lIHdp
-dGggdGhlIGluaXQgZmxhZy4gQXMgYSByZW1lZHkgSSBjb3VsZCBqdXN0DQpydW4gZ2l0IHN1Ym1v
-ZHVsZSB1cGRhdGUgYWZ0ZXIgZXZlcnkgbWVyZ2UsIGJ1dCB0aGVuIEkgYWx3YXlzIGdldCBhIGRl
-dGFjaGVkDQpoZWFkIHdoaWNoIGlzIGFsc28gbm90IGlkZWFsLg0KVGhlIHNlY29uZCB0aGluZyBJ
-IG92ZXJsb29rZWQgaXMganVzdCBtZXJnaW5nIHdpdGhvdXQgd29ycnlpbmcgYWJvdXQgdGhlIGdp
-dA0Kc3RhdHVzIHRlbGxpbmcgbWUgdGhlIHJlcG9zaXRvcnkgaXMgZGlydHkuIEJ1dCBoZXJlIG15
-IG11c2NsZSBtZW1vcnkgZG9lcyBhDQpjb21taXQgd2hlbiB0aGUgcmVwb3NpdG9yeSBpcyBkaXJ0
-eSwgYmVmb3JlIHJ1bm5pbmcgYW55IG90aGVyIGdpdCBjb21tYW5kcy4NCg0KT2J2aW91c2x5LCBp
-dHMgY29uZnVzaW5nIHRvIHBlb3BsZSB3aXRob3V0IGEgY2VydGFpbiBhbW91bnQgb2YgZXhwZXJp
-ZW5jZS4NCg0KPj4gVGhlIHByb3Bvc2VkIGNoYW5nZSB3b3VsZCBiZSB0byBoYXZlIGEgc3VibW9k
-dWxlIGVpdGhlciBpZ25vcmVkIG9yIHRyYWNrZWQgYnkNCj4+IHRoZSAuZ2l0bW9kdWxlcyBmaWxl
-Lg0KPj4gSWYgaXQgaXMgaWdub3JlZCwgYXMgZm9yIGluc3RhbmNlIGFmdGVyIGEgY2xvbmUgb2Yg
-dGhlIHN1cGVycHJvamVjdCwgZ2l0IHNpbXBseQ0KPj4gaWdub3JlcyBhbGwgZmlsZXMgaW4gdGhl
-IHN1Ym1vZHVsZSBkaXJlY3RvcnkuIFRoZSBjb250ZW50IG9mIHRoZSBnaXRtb2R1bGVzDQo+PiBm
-aWxlIGlzIHRoZW4gYWxzbyBub3QgdXBkYXRlZCBieSBnaXQuDQo+PiBJZiBpdCBpcyBub3QgaWdu
-b3JlZCwgdGhlIC5naXRtb2R1bGVzIGlzIHVwZGF0ZWQgZXZlcnkgdGltZSBhIGNvbW1pdCBoYXBw
-ZW5zIGluDQo+PiB0aGUgc3VibW9kdWxlLg0KPiANCj4gU28NCj4gDQo+ICAgZ2l0IC1DIDxzdWJt
-b2R1bGUtcGF0aD4gY29tbWl0DQo+IA0KPiBzaG91bGQgdHJpZ2dlciBhIGNvbW1pdCBpbiB0aGUg
-c3VwZXJwcm9qZWN0IGFzIHdlbGwsIHRoYXQgY2hhbmdlcyB0aGUgZ2l0bW9kdWxlcw0KPiBmaWxl
-PyBXaGF0IGRvIHlvdSByZWNvcmQgaW4gdGhlIGdpdCBtb2R1bGVzIGZpbGUgdGhhdCBuZWVkcyB1
-cGRhdGluZz8NCj4gQXMgdGhlIHZlcnNpb24gaXMgdHJhY2tlZCB2aWEgdGhlIGdpdGxpbmsgZW50
-cnksIEkgZG8gbm90IHNlZSB0aGUNCj4gaW5mb3JtYXRpb24gdGhhdA0KPiBuZWVkcyB0cmFja2lu
-ZyBoZXJlPw0KDQpJIGd1ZXNzIG5vdGhpbmcgaGFzIHRvIGJlIGRvbmUgaGVyZS4gSSBtaXN0YWtl
-bmx5IHRob3VnaHQgdGhlIC5naXRtb2R1bGVzIHN0b3Jlcw0KdGhlIFNIQS4NCg0KPiANCj4+IE9u
-IGJyYW5jaCBzd2l0Y2hlcyB0aGUgcmV2aXNpb24gc2hvd24gaW4gdGhlIGdpdG1vZHVsZXMgZnJv
-bQ0KPj4gdGhhdCBicmFuY2ggaXMgY2hlY2tlZCBvdXQuDQo+IA0KPiBTbyB5b3UgYXJlIHByb3Bv
-c2luZyB0byBwdXQgdGhlIHJldmlzaW9uIGludG8gdGhlIGdpdG1vZHVsZXMgZmlsZT8NCj4gVGhh
-dCB3b3VsZCBiZSByZWR1bmRhbnQgd2l0aCB0aGUgYWN0dWFsIGdpdGxpbmsgZW50cnkgaW4geW91
-ciB0cmVlLg0KPiAoYXMgc2hvd24gdmlhIGBnaXQgc3VibW9kdWxlIHN0YXR1c2ApDQo+IFdoYXQg
-d291bGQgaGFwcGVuIGlmIHRoZSByZWNvcmRlZCByZXZpc2lvbiBpbiB0aGUgZ2l0bW9kdWxlcyBm
-aWxlIGFuZCB0aGUNCj4gZ2l0bGluayBhcmUgb3V0IG9mIHN5bmM/DQo+IA0KPiBPaCwgYXJlIHlv
-dSBqdXN0IHByb3Bvc2luZyB0byBhY3R1YWxseSBtYWtlIGBnaXQgY2hlY2tvdXRgIGF3YXJlIG9m
-IHRoZQ0KPiBzdWJtb2R1bGVzPyBTZWVbMV0uIEkgd291bGQgd2VsY29tZSBzdWNoIGEgY2hhbmdl
-IGFuZCBiZSBoYXBweSB0aA0KPiANCj4gWzFdIGh0dHBzOi8vZ2l0aHViLmNvbS9qbGVobWFubi9n
-aXQtc3VibW9kLWVuaGFuY2VtZW50cw0KPiB3aGljaCBoYXMgc29tZSBhdHRlbXB0cyBmb3IgY2hl
-Y2tvdXQgaW5jbHVkaW5nIHRoZSBzdWJtb2R1bGVzLg0KPiBJIGFsc28gdHJpZWQgd3JpdGluZyBz
-b21lIHBhdGNoZXMgd2hpY2ggaW50ZWdyYXRlIGNoZWNraW5nIG91dCBzdWJtb2R1bGVzDQo+IHZp
-YSBjaGVja291dCBhcyB3ZWxsLiBBIHF1aWNrZXIgYHNvbHV0aW9uYCB3b3VsZCBiZSBhIGNvbmZp
-ZyBvcHRpb24gdGhhdA0KPiBqdXN0IHJ1bnMgYGdpdCBzdWJtb2R1bGUgdXBkYXRlYCBhZnRlciBl
-YWNoIGNoZWNrb3V0L3B1bGwgZXRjLg0KPiANCg0KSSBzZWUuIFRoZSBxdWljayBmaXggaXMgYWxt
-b3N0IHdoYXQgSeKAmW0gbG9va2luZyBmb3IsIGV4Y2VwdCB0aGF0IGl0IGxlYXZlcw0KdGhlIHJl
-cG8gaW4gYSBkZXRhY2hlZCBoZWFkIHN0YXRlLiBDb3VsZCB0aGUgc3VibW9kdWxlIHVwZGF0ZSBi
-ZSBtYWRlIA0KYXV0b21hdGljYWxseSBhbmQgaW50ZWxsaWdlbnRseSBwaWNrIHRoZSBicmFuY2g/
-DQoNCj4gDQo+PiBUaGlzIGNoYW5nZSB3b3VsZCBoYXZlIHN1Ym1vZHVsZXMgY29uY2VwdHVhbGx5
-IGJlaGF2ZSBtb3JlIGxpa2UgZmlsZXMgdG8gdGhlDQo+PiBzdXBlcnByb2plY3QuDQo+PiANCj4+
-IA0KPj4gTGlrZSBjdXJyZW50IGJlaGF2aW9yLCBnaXQgc3RhdHVzIHdvdWxkIGRpc3BsYXkgd2hl
-dGhlciB0aGUgc3VibW9kdWxlIGhhcw0KPj4gdW5jb21taXR0ZWQgY2hhbmdlcyBvciBpcyBhdCBh
-IG5ldyBjb21taXQuDQo+IA0KPiBTZWUgY29uZmlnIG9wdGlvbnMgZGlmZi5zdWJtb2R1bGUgYW5k
-IHN0YXR1cy5zdWJtb2R1bGVTdW1tYXJ5Lg0KPiANCg0KSSBtZWFudCB0aGF0IGdpdCBzdGF0dXMg
-d29ya3MgZmluZSB0aGUgd2F5IGl0IGlzIGltcGxlbWVudGVkIHJpZ2h0IG5vdy4NCg0KPiANCj4+
-IA0KPj4gSSBjb3VsZG4ndCBmaW5kIGFueSBkaXNjdXNzaW9ucyBvbiB0aGUgaW5pdGlhbCBpbXBs
-ZW1lbnRhdGlvbiBvZiBnaXQtc3VibW9kdWxlDQo+PiBvciBhbnkgcHJldmlvdXMgcHJvcG9zYWxz
-IHJlbGF0ZWQgdG8gdGhpcyBpbiBuYXR1cmUgZHVlIHRvIGdtYW5lIGJlaW5nIGRvd24NCj4+IHJp
-Z2h0IG5vdyBhbmQgdGhlIG1haWxpbmcgbGlzdCBhcmNoaXZlcyBvbiB0aGUgb3RoZXIgc2l0ZXMg
-YXJlIG5vdCBncmVhdCBmb3INCj4+IHNlYXJjaGluZy4gU28gcGxlYXNlIGV4Y3VzZSBtZSBpZiBJ
-J20gYnJpbmdpbmcgdXAgYWxyZWFkeSBkaXNjdXNzZWQgc3R1ZmYuDQo+IA0KPiBodHRwczovL3B1
-YmxpYy1pbmJveC5vcmcvZ2l0IGZvciByZWFkaW5nIG9uIHRoZSB3ZWIsIG9yDQo+IA0KPiAgIGdp
-dCBjbG9uZSBodHRwczovL3B1YmxpYy1pbmJveC5vcmcvZ2l0DQo+IA0KPiBmb3IgcmVhZGluZyBv
-ZmZsaW5lLg0KPiANCg0KVGhhbmtzLg0KDQpCZXN0IFJlZ2FyZHMsDQpBbGV4YW5kZXIgSGVkZ2Vz
-DQoNCg==
+W dniu 13.08.2016 o 01:45, Philip Oakley pisze:
+
+> --- a/Documentation/revisions.txt
+> +++ b/Documentation/revisions.txt
+> @@ -284,6 +284,10 @@ The 'r1{caret}@' notation means all parents of 'r1'.
+>  The 'r1{caret}!' notation includes commit 'r1' but excludes all of its parents.
+>  By itself, this notation denotes the single commit 'r1'.
+>  
+> +While '<rev>{caret}<n>' was about specifying a single commit parent, these
+> +two notations consider all its parents. For example you can say
+> +'HEAD{caret}2{caret}@', however you cannot say 'HEAD{caret}@{caret}2'.
+> +
+
+That's good to have.
+
+Though I do wonder if it is implementation limitation, or if it is something
+inherent in the notation, namely that <rev>^@ and <rev>^! resolve (the former
+at least in general, though not for every <rev>) to more than one revision
+specifier.
+
+Anyway, good addition!
+-- 
+Jakub Narębski
+
