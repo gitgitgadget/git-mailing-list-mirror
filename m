@@ -2,107 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9B511F859
-	for <e@80x24.org>; Sat, 27 Aug 2016 10:29:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0509C1F859
+	for <e@80x24.org>; Sat, 27 Aug 2016 10:52:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754274AbcH0K3j (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Aug 2016 06:29:39 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34881 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750746AbcH0K3i (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Aug 2016 06:29:38 -0400
-Received: by mail-wm0-f66.google.com with SMTP id i5so2718474wmg.2
-        for <git@vger.kernel.org>; Sat, 27 Aug 2016 03:29:37 -0700 (PDT)
+        id S1752068AbcH0KwZ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Aug 2016 06:52:25 -0400
+Received: from mail-yb0-f174.google.com ([209.85.213.174]:34353 "EHLO
+        mail-yb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750825AbcH0KwZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Aug 2016 06:52:25 -0400
+Received: by mail-yb0-f174.google.com with SMTP id d10so34770322ybi.1
+        for <git@vger.kernel.org>; Sat, 27 Aug 2016 03:52:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=7ic9y1gK/zxh0pXmqlhVduUFYAv60vAsrZR9JXzT5UM=;
-        b=nRAxwT0Tz/BFVuN2J35XaJ3cDpCMWwnFzF/AeytoDaBSNtk6hY/3iOvx6VezxNjJl6
-         kx5ziGw9hxop1nWmwmO1PO3srBPiOJU/Okpt9MpZ7SNwu9rHnBSFHXFK3FG7ggw8lHba
-         96b6rPi30l4tp+ItUNZ/lO8n7XrFi5IlRN8rsm+4kQlXyTN5qLlQ9eUo3FDc9TrTfv9Y
-         /43MUdkKHIcjwqV+iDbeFKzKv+vlhIquCGTq5hf3k+5qrO822borSWvs0sXXOgqglAxZ
-         FrBeUHorAr3PEaGRdiYBir4q63iY487JjFqrDYrVZysnHRTePo+eYAMzzTVtGCG1eK5a
-         CSRA==
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=jOrgB2VDMZo0riWzxbsZk/wDaUiWarE+Raim8KAy+ME=;
+        b=pwNpnAigATyP+4+SXF0QWur9Qy0tSxhYlFZphcJwOBSHCnYQ4QKnnuOmcfWlHcix9e
+         AOHFQckH5qfjsTAUN1XDbfwbjA3VfRGJep1EeBw3DEQEyKe9D2vq8NNiFcpPwVwnxWes
+         fUVzq07wXCQqFTcGSshCSjtW3USOa46UMskr/YWDqnJgYmAJRHurXnQnz065UvAPNKEl
+         AMVsKnZGafNACyzCJyHedIbe9rBeA0D0wCBMEZY5rh5HXoRk545s4MNI0kggUHyx2EnP
+         8R8poaW3VxsdZrs+L0pOc0XtMWvf9f3wlx09usWkdonEEwoh9sPbowHAzOiFQFhKuTRy
+         QvQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=7ic9y1gK/zxh0pXmqlhVduUFYAv60vAsrZR9JXzT5UM=;
-        b=WxRB7kZMhdAWw6jQLd4B95lX/H41MQddcXNmiGmn3maxGwdvmiIqEYnUITyxzygh6E
-         8JZjxKE8QBIsNw3AclHu8QA/Oj7gu/0bQv9Eccupunlzn0BBvBl4hgXOIo20SLq1PMEg
-         SctSLksGNgTxrQivFJroF0NWpk3g01J6h7WDSgt/8D1aG8x0j4wVBpCsBB+qOG6XBi5n
-         hm5RblzFQXIEj2GmGJPmBjG4rmu8khrQ/4ESrR6eBt04z7hZ4AuxMAZouRl7zfchTjyU
-         e9DlDWNaJ+wu/b0AmCqJA+ppIyk40jxW+PPHnP8e+V0jgwigfaPuxltAYbheYtfWnb2U
-         bfTw==
-X-Gm-Message-State: AE9vXwPLjXdp4zZWP65jASJ1XpXEmnOGGgxq1n1iYpqvEtvTO7L6IppkpMVIIpZlR8ZbDw==
-X-Received: by 10.28.125.80 with SMTP id y77mr2766926wmc.25.1472293776419;
-        Sat, 27 Aug 2016 03:29:36 -0700 (PDT)
-Received: from hurricane ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id s6sm24005245wjm.25.2016.08.27.03.29.35
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 27 Aug 2016 03:29:35 -0700 (PDT)
-Date:   Sat, 27 Aug 2016 12:29:33 +0200
-From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
-To:     git@vger.kernel.org
-Subject: [PATCH] make dist: allow using an installed version of git
-Message-ID: <20160827102929.GA11769@hurricane>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=jOrgB2VDMZo0riWzxbsZk/wDaUiWarE+Raim8KAy+ME=;
+        b=XJGBQVOvLfe2oKLajQ9+jWQuTXcTO2IDt4leDBd6LdPB+X4p/4ZddWoALqiA4CHaBV
+         k495h2PQtYGsymTcpzq9o35Wd72Se5kKhoBi3C+NWfXQP+DpEPy6vQJ4cL5cBS6jYj1g
+         PA0YV5Mt/oSsvfQ89xwnEBZtLDEoNCK2P/2S0WLPIY9vX8oxD2VPM9pYvAULxGLE1+X/
+         07Nx8tpWwW0rPFFVvm28+3igpCUhg9Bk1aWXgKB9BlKHAdlb5dPa8E5szqWLyK8jH8FI
+         JjORr1QvDVQg+xXgscuaovcLVz+HDQ+CtKzBPfZOd0RQiKVpCCH6uJzLAjxFJsasR+BX
+         GK5w==
+X-Gm-Message-State: AE9vXwNbPPUznbE5WWROTbpgFBqlC1Q3U48P9JVnK5YuqY/qgwh7yMVJpCkX0g7bGMO8DnReMHFKS8Qmf2aWhg==
+X-Received: by 10.37.215.211 with SMTP id o202mr6732878ybg.154.1472295143803;
+ Sat, 27 Aug 2016 03:52:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Received: by 10.129.89.132 with HTTP; Sat, 27 Aug 2016 03:52:23 -0700 (PDT)
+In-Reply-To: <xmqqshtrijdn.fsf@gitster.mtv.corp.google.com>
+References: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
+ <01020156b73fe69a-13136cfb-4daa-4f5d-9b56-537adf2c6942-000000@eu-west-1.amazonses.com>
+ <xmqq4m69q3b2.fsf@gitster.mtv.corp.google.com> <CAFZEwPPfXvLUtcBR6cYAP2dT8FAePFPjDSnVm8BhpLN9cfR1uw@mail.gmail.com>
+ <xmqqshtrijdn.fsf@gitster.mtv.corp.google.com>
+From:   Pranit Bauva <pranit.bauva@gmail.com>
+Date:   Sat, 27 Aug 2016 16:22:23 +0530
+Message-ID: <CAFZEwPMBy0Ovcq-pUJkhoLiVF+uvm5fC0PD0RGPKobZ83Ciy3A@mail.gmail.com>
+Subject: Re: [PATCH v14 07/27] bisect--helper: `bisect_reset` shell function
+ in C
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-b1de9de2 back in 2005 ensured that we could create a tarball with 'make
-dist' even if git wasn't installed yet. These days however, chances are
-higher that a git version is available. Add a config.mak knob to allow
-people to choose to use the installed version of git to create the
-tarball and avoid the overhead of building git-archive.
+Hey Junio,
 
-Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
----
- Makefile | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+On Fri, Aug 26, 2016 at 9:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Pranit Bauva <pranit.bauva@gmail.com> writes:
+>
+>>> Also this version fails to catch "bisect reset a b c" as an error, I
+>>> suspect.
+>>
+>> It didn't when I tried it right now. Could you please elaborate on why
+>> you think it can fail? There might be a thing which I haven't tested.
+>
+> My bad.  I just compared your bisect_reset() implementation that had
+>
+>     if (no specific commit) {
+>         reset to the branch
+>     } else {
+>         reset to the commit
+>     }
+>
+> with the original
+>
+>     case $# in
+>     0)  reset to the branch ;;
+>     1)  reset to the commit ;;
+>     *)  give usage and die ;;
+>     esac
+>
+> and took the difference and reacted "ah, excess parameters are not
+> diagnosed in this function".
+>
+> Your caller does complain about excess parameters without giving
+> usage, and that is what I missed.
+>
+> I am not sure if you intended to change the behaviour in this case
+> to avoid giving the usage string; I tend to think it is a good
+> change, but I didn't see it mentioned in the proposed commit log,
+> which also contributed to my not noticing the test in the caller.
 
-diff --git a/Makefile b/Makefile
-index d96ecb7..3dabb75 100644
---- a/Makefile
-+++ b/Makefile
-@@ -378,6 +378,9 @@ all::
- #
- # to say "export LESS=FRX (and LV=-c) if the environment variable
- # LESS (and LV) is not set, respectively".
-+#
-+# Define USE_INSTALLED_GIT_ARCHIVE if you don't want to build git-archive as
-+# part of 'make dist', but are happy to rely on a git version on you $PATH
- 
- GIT-VERSION-FILE: FORCE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
-@@ -2423,8 +2426,15 @@ quick-install-html:
- ### Maintainer's dist rules
- 
- GIT_TARNAME = git-$(GIT_VERSION)
--dist: git-archive$(X) configure
--	./git-archive --format=tar \
-+ifndef USE_INSTALLED_GIT_ARCHIVE
-+	GIT_ARCHIVE = ./git-archive$(X)
-+	GIT_ARCHIVE_DEP = git-archive$(X)
-+else
-+	GIT_ARCHIVE = git archive
-+	GIT_ARCHIVE_DEP =
-+endif
-+dist: $(GIT_ARCHIVE_DEP) configure
-+	$(GIT_ARCHIVE) --format=tar \
- 		--prefix=$(GIT_TARNAME)/ HEAD^{tree} > $(GIT_TARNAME).tar
- 	@mkdir -p $(GIT_TARNAME)
- 	@cp configure $(GIT_TARNAME)
--- 
-2.10.0-rc1-230-g8efea0f
+I could include this in the commit message. Its not really something
+which we would want to test in the function because to the function,
+we are not passing the raw arguments. Since we are removing that check
+from the function but including it in cmd_bisect__helper(), I will
+talk about it in the commit message.
+
+Regards,
+Pranit Bauva
