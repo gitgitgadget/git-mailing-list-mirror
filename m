@@ -2,114 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF0361FD99
-	for <e@80x24.org>; Fri, 26 Aug 2016 23:47:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFFC51FD99
+	for <e@80x24.org>; Sat, 27 Aug 2016 02:35:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754662AbcHZXrk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Aug 2016 19:47:40 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:34945 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753133AbcHZXrj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2016 19:47:39 -0400
-Received: by mail-wm0-f46.google.com with SMTP id f65so10873453wmi.0
-        for <git@vger.kernel.org>; Fri, 26 Aug 2016 16:47:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=PurgpFx05rfGLpICGFn80hRqlvetG1emT08mixBBuoo=;
-        b=U4R3BxAg7HAWG1PZiPyF48FQf+KPT+oQb1soCfCJ1lJZrha8SYgWAdxxpTgpGEMDWm
-         hrFWPBo7hbxo/7fccihiMgeDCGUgqDwA1Zk+6aUd8nzHSYNQNm+O361/l0A28gcYncyz
-         4Fmt/HAUKPjcQbtxi61Evi+qH7yEoWwLNPc02et+pFamYYXdVySxqiTG3Mucun0NqIZ1
-         b4U3EIpYrMvLbjyRJK8qWRBvPHG0HHkn4r40lL52Vk//LhNEjSUknYPEuKtmfG92mCim
-         oCV0JyHapLpkOSCvzzX7mxCwKB8B1q1gYknbaIHJssfhX0jGb5nVcs55jitZzanWAULi
-         2qkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=PurgpFx05rfGLpICGFn80hRqlvetG1emT08mixBBuoo=;
-        b=mgVZyRM5JibG/0mKfhWNM2lPaeBSS9Ku9RpaExUfu1bsFJu+HcTL6n46WAQik/bTWL
-         kAsUd1FVUukuL1djngIpA/v81drt+fmibsjlFsPXule79RtmZ1ZBvZE/12mf0/9BJdDB
-         Rtq+TdjJ52zqlQK98twGGbWHp6MlOQftvBrMkJ50XtQtPEzavlFkC4lvQ92VoKDmiMUe
-         RF0kCzBCbX+8NOcRrN9wL8mn0esxabMiu36/rF8djul4t+ix6R98JkVH0eP8PyeavFX8
-         6bOFqNgIukkKMLTRAA2rebiCTMhMsOPHwzrCWv/YC2Q2bcM7ZlkxrUyEwI2pSTmKhOSX
-         GPxQ==
-X-Gm-Message-State: AE9vXwNQTKZ/DUBcnXxwclu7KFedj+9ICn+5AqGgm8k12x2tpeOQ1ATHFezWJoKi61AgPv7b8l49Jb4ke7/rig==
-X-Received: by 10.28.51.210 with SMTP id z201mr1040965wmz.98.1472255257455;
- Fri, 26 Aug 2016 16:47:37 -0700 (PDT)
+        id S1754782AbcH0CfD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Aug 2016 22:35:03 -0400
+Received: from atl4mhfb01.myregisteredsite.com ([209.17.115.55]:46908 "EHLO
+        atl4mhfb01.myregisteredsite.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754241AbcH0CfC (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 26 Aug 2016 22:35:02 -0400
+X-Greylist: delayed 309 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Aug 2016 22:35:02 EDT
+Received: from atl4mhob21.registeredsite.com (atl4mhib21.registeredsite.com [209.17.115.115] (may be forged))
+        by atl4mhfb01.myregisteredsite.com (8.14.4/8.14.4) with ESMTP id u7R2Trxl014673
+        for <git@vger.kernel.org>; Fri, 26 Aug 2016 22:29:53 -0400
+Received: from mailpod.hostingplatform.com ([10.30.77.36])
+        by atl4mhob21.registeredsite.com (8.14.4/8.14.4) with ESMTP id u7R2TpXd082455
+        for <git@vger.kernel.org>; Fri, 26 Aug 2016 22:29:51 -0400
+Received: (qmail 4356 invoked by uid 0); 27 Aug 2016 02:29:51 -0000
+X-TCPREMOTEIP: 73.89.103.237
+X-Authenticated-UID: porter@devrts.com
+Received: from unknown (HELO ?192.168.1.14?) (porter@devrts.com@73.89.103.237)
+  by 0 with ESMTPA; 27 Aug 2016 02:29:50 -0000
+To:     git@vger.kernel.org
+From:   Brett Porter <porter@devrts.com>
+Subject: stable as subset of develop
+Message-ID: <57C0FB1D.9070206@devrts.com>
+Date:   Fri, 26 Aug 2016 22:29:49 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
+ Thunderbird/38.8.0
 MIME-Version: 1.0
-Received: by 10.194.102.70 with HTTP; Fri, 26 Aug 2016 16:46:56 -0700 (PDT)
-In-Reply-To: <CAFO0PHfy_teFFMiuFdjKYohCgRZHNT+Cc8hXOjsPeRTi9gAHPQ@mail.gmail.com>
-References: <91a2ffbe-a73b-fbb9-96da-9aea4d439e5a@gmail.com>
- <20160826061500.GA22213@dcvr> <6d171c23-65f6-5f67-7d80-051f2dfe8678@gmail.com>
- <CAFO0PHfy_teFFMiuFdjKYohCgRZHNT+Cc8hXOjsPeRTi9gAHPQ@mail.gmail.com>
-From:   =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Date:   Sat, 27 Aug 2016 01:46:56 +0200
-Message-ID: <CANQwDwf7pWRh1PWizDZ4aFCcppbJCQcHj_qyNs0kCfK4NYddVg@mail.gmail.com>
-Subject: Re: [RFC] Proposed questions for "Git User's Survey 2016"
-To:     David Bainbridge <david.bainbridge@gmail.com>
-Cc:     Eric Wong <e@80x24.org>, git <git@vger.kernel.org>,
-        Doug Rathbone <doug@dougrathbone.com>,
-        Stefan Beller <sbeller@google.com>,
-        Patrick Renaud <patrick.renaud@ericsson.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[for some reason this email is not yet present on GMane NNTP interface]
 
-On 26 August 2016 at 21:12, David Bainbridge <david.bainbridge@gmail.com> w=
-rote:
-> Hi Jakub,
->
-> This is excellent news!
->
-> As when you last performed the survey it would be useful for us to be abl=
-e
-> to see what the users in our organization (Ericsson) think of Git, and th=
-ere
-> are many more than when the survey was last performed.
->
-> Do any other organizations of any type have this need?
+In a small group, develop is the branch where all fixes/additions/... from topic
+branches are merged rather dynamically. Thorough testing of commits may lag behind,
+but when we think one is a pretty good commit we want to identify it as (at least
+relatively) the latest stable. We could tag it, but we would like these stable commits to
+be a branch in the sense that each commit points back to a previous commit.
 
-Yes, I will offer separate channels (that can be separately analyzed,
-and that you can get anonymous data for specific channel) for every
-organization and/or company that want's it (within reason)... this time
-with names anonymized from start (unless requested not to).
+Merging from a development branch commit to stable isn't quite what we want. It seems
+more like:
 
-> As for the questions, it might be useful to have a question related to re=
-po
-> management systems being used.
-> Gerrit
-> Kallithea
-> Rhodecode
-> Atlassian Bitbucket
-> GitHub Enterprise
-> GitHub.com
-> GitLab
-> Deveo
-> etc.
->
-> This is not directly about Git of course but seeing the extent to which
-> these are used, and the proportion of users using them might be useful.
+   checkout the new good development commit
+   change HEAD to the head of the stable branch
+   git add --all
+   git commit
+   (maybe tag the new commit with the hash of the chosen development commit)
 
-This is somewhat present in current version of survey, namely
-there is question about *types* of tools (with git repository management,
-git hosting tools and code review tools included), and there is free-form
-question asking to enumerate tools one uses.  That is, as above, but
-more generic, and not multiple choice.
+Will that work (one thing beyond my current understanding is if there are index complications)?
+Other ideas?
 
-I will think about adding such question.
-
-Regards
---=20
-Jakub Nar=C4=99bski
+This could help with applying successively more intense testing over time and chase down
+where problems arose.
