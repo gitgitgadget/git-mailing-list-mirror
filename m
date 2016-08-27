@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0AD52018E
-	for <e@80x24.org>; Sat, 27 Aug 2016 09:35:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5406A1F859
+	for <e@80x24.org>; Sat, 27 Aug 2016 09:49:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754928AbcH0JfI (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Aug 2016 05:35:08 -0400
-Received: from mail-yw0-f173.google.com ([209.85.161.173]:35058 "EHLO
-        mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753466AbcH0JfH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Aug 2016 05:35:07 -0400
-Received: by mail-yw0-f173.google.com with SMTP id j12so61867095ywb.2
-        for <git@vger.kernel.org>; Sat, 27 Aug 2016 02:35:07 -0700 (PDT)
+        id S1754587AbcH0JtD (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Aug 2016 05:49:03 -0400
+Received: from mail-yw0-f178.google.com ([209.85.161.178]:35799 "EHLO
+        mail-yw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750825AbcH0JtC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Aug 2016 05:49:02 -0400
+Received: by mail-yw0-f178.google.com with SMTP id j12so61955255ywb.2
+        for <git@vger.kernel.org>; Sat, 27 Aug 2016 02:48:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=m9ai4xNC16USLpHMuZWuw+gWvofBhz1RFkiA/VBr+Do=;
-        b=CPoFlrZ7gFdAUNVlq4Hw8TPThBUa5WzZkJrNygRt4u+dwn2jl1baxbPxNOzg6F3IMW
-         C32mJ7g+b0X6jdCuHx1HAIVNlGijG2m4IYnCBb9VgcKABgXvZ+ieI8v7XVHt+LQid3Ra
-         DInfBQ2JPVB5DN/RtWR8OV9QDg9+gYiHn0w1lqgGTjCRI4nPe46/kGiRjOu4J+JYYhgD
-         UlfFoPCDpN5lhv3yFHY42o+9WseRy5qhO01s2Y9c0ibX2JqeIsf21r037QCCTa8Os00u
-         avQtinVex4tSTlH8UOs2dVWTC13FtG+pF1MwZgIAQZFGOr/LJGwKis1wEWWKHZyna3zf
-         CNgg==
+        bh=iRBjZBR63vLPwSv+Lu3Jhlkddy+GEcFkMU2KgYzCtds=;
+        b=HlM1xSxdQ/WzEVpaESSuRvNTwKqYVp0oqSJYKg3UXOpU+U+Crpc7x1Nv3c6x22P4Ft
+         y8KgQBLtgewVaWQfcjpJ9Ma1GuZL9mhxYbrymsJYN5f1U4hHWA5F28+JkL61QuQFFxqf
+         do44g4GpdNSHoCTfwGlbzvWYqlpi/HfLaf3ftuWaIyDPKNC1l1TpYZpxM2X6gjh1jU7G
+         UtQEdoOSi06KCpgUN/5wtFpbN0wtfHCGrJzu+v/g2YwoC9hi/i4YyvFsfyVntTUcerL+
+         RB8abwicwoyaDiQ0680oT60rD3ADHJeFqiwb70cYHN0OCspKUYaDOORy8A2Bz3cqoC5M
+         aF9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=m9ai4xNC16USLpHMuZWuw+gWvofBhz1RFkiA/VBr+Do=;
-        b=Bo9TvTH592WlPEqU7vEP0G6wRcvQS4NW1YAYW78GLRojrPutOyDKAtWJQzCFaJudMh
-         aaqIdM8bgGFwc0IZRs8MdP2xwXWVr0Xj4krMWdcTY30cUKqYaiNrIt1BG+i6hhrf874c
-         o6iitjXlIPhVK/BLbxgx4OnRgeLFf9ZWQqehG8X5DUZpi9Xr4wjzZX9YV9zA7OdAjV0i
-         dprgAFQba3/duMvaVMm285SE2/aC835YYbidRrt+ew8iYBGuaFzOIqNazmoHvedlBm8r
-         ZP1qF2CmN8YkCdQ7S5cY5fJEERcMIgwBqasYc/l+LlRHDNakfSi6ZiI3TneaLppXfq4B
-         93lQ==
-X-Gm-Message-State: AE9vXwPpSTd4BDgN5Cr1y0LFdDZURMtgP19UNpDLaVzfLnv6TboJqoJWQdTqaYMLaX4qE7bQvbLjMIZXmm5YJA==
-X-Received: by 10.129.136.5 with SMTP id y5mr7357844ywf.30.1472290506889; Sat,
- 27 Aug 2016 02:35:06 -0700 (PDT)
+        bh=iRBjZBR63vLPwSv+Lu3Jhlkddy+GEcFkMU2KgYzCtds=;
+        b=ZMmtxq1+7Iele8h9SoNreuQ9tUNTdfgE+uK8dWb8MebO4Rj7yS1KrZnfTZ5eR83S1H
+         a3YzZssTuwFmVHQYER8qMyYM944wR8Vl3QAsR7DsBAFUf8e1MtJ0CWesSWxE1XZu6zrW
+         cx1jifkLm1hXK05nFvGIEf+MQEYIOyGUdnzJL9hIzh2bkyNZazrmiyRSuihyw/ykqJrU
+         Zm8SCiyE9sVJvErGOI7jn+h9Z3+ZYrTlk0hBTeQWA8XjpLSweGfwpvuZVI52mIKs3Z3S
+         RUm2vUd0bav64y0z2mm1gSCkSmWVG5FZ1A9Wk6NLcSWmI/aSEg1xJ+RYguC0hKgxMeLY
+         Prmw==
+X-Gm-Message-State: AE9vXwM31hBT8qHhjj6zLsTEFl3AjfT4G9wZXWj0jbeSmo+BdSf4oeGYpnXDJMAYgwzg9p8wmsKgcW6QqaX7eA==
+X-Received: by 10.129.76.79 with SMTP id z76mr7023900ywa.33.1472291295289;
+ Sat, 27 Aug 2016 02:48:15 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.129.89.132 with HTTP; Sat, 27 Aug 2016 02:35:06 -0700 (PDT)
-In-Reply-To: <xmqqbn0hoko0.fsf@gitster.mtv.corp.google.com>
+Received: by 10.129.89.132 with HTTP; Sat, 27 Aug 2016 02:48:14 -0700 (PDT)
+In-Reply-To: <xmqqmvk0n2pl.fsf@gitster.mtv.corp.google.com>
 References: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
- <01020156b73fe6ae-27df9d50-59b2-4ee2-8c5b-89e7e70a2dd0-000000@eu-west-1.amazonses.com>
- <xmqqbn0hoko0.fsf@gitster.mtv.corp.google.com>
+ <01020156b73fe6b3-3ccd9de5-604d-4e7d-919d-a3adae869ebf-000000@eu-west-1.amazonses.com>
+ <xmqqmvk0n2pl.fsf@gitster.mtv.corp.google.com>
 From:   Pranit Bauva <pranit.bauva@gmail.com>
-Date:   Sat, 27 Aug 2016 15:05:06 +0530
-Message-ID: <CAFZEwPOf=UBo9iCAQ+DfFmZTjSJuQ+v8KayUKpb+G19bUC+pmQ@mail.gmail.com>
-Subject: Re: [PATCH v14 11/27] bisect--helper: `bisect_next_check` &
- bisect_voc shell function in C
+Date:   Sat, 27 Aug 2016 15:18:14 +0530
+Message-ID: <CAFZEwPNTkgbFz-tcnLiaW9qvRSUoHgeNMzjnCjx7EwMHG71Niw@mail.gmail.com>
+Subject: Re: [PATCH v14 12/27] bisect--helper: `get_terms` & `bisect_terms`
+ shell function in C
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
@@ -64,102 +64,46 @@ X-Mailing-List: git@vger.kernel.org
 
 Hey Junio,
 
-On Thu, Aug 25, 2016 at 4:10 AM, Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, Aug 25, 2016 at 11:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > Pranit Bauva <pranit.bauva@gmail.com> writes:
 >
->> +static int mark_good(const char *refname, const struct object_id *oid,
->> +                  int flag, void *cb_data)
+>> +static int bisect_terms(struct bisect_terms *terms, const char **argv, int argc)
 >> +{
->> +     int *m_good = (int *)cb_data;
->> +     *m_good = 0;
->> +     return 1;
->> +}
+>> +     int i;
 >> +
->> +static char *bisect_voc(char *revision_type)
->> +{
->> +     if (!strcmp(revision_type, "bad"))
->> +             return "bad|new";
->> +     if (!strcmp(revision_type, "good"))
->> +             return "good|old";
->> +
->> +     return NULL;
->> +}
->> +
->> +static int bisect_next_check(const struct bisect_terms *terms,
->> +                          const char *current_term)
->> +{
->> +     int missing_good = 1, missing_bad = 1;
->> +     char *bad_ref = xstrfmt("refs/bisect/%s", terms->term_bad.buf);
->> +     char *good_glob = xstrfmt("%s-*", terms->term_good.buf);
->> +     char *bad_syn, *good_syn;
->> +
->> +     if (ref_exists(bad_ref))
->> +             missing_bad = 0;
->> +     free(bad_ref);
->> +
->> +     for_each_glob_ref_in(mark_good, good_glob, "refs/bisect/",
->> +                          (void *) &missing_good);
->> +     free(good_glob);
->> +
->> +     if (!missing_good && !missing_bad)
->> +             return 0;
->> +
->> +     if (!current_term)
+>> +     if (get_terms(terms)) {
+>> +             fprintf(stderr, _("no terms defined\n"));
 >> +             return -1;
->> +
->> +     if (missing_good && !missing_bad && current_term &&
->> +         !strcmp(current_term, terms->term_good.buf)) {
->> +             char *yesno;
->> +             /*
->> +              * have bad (or new) but not good (or old). We could bisect
->> +              * although this is less optimum.
->> +              */
->> +             fprintf(stderr, _("Warning: bisecting only with a %s commit\n"),
->> +                     terms->term_bad.buf);
->> +             if (!isatty(0))
->> +                     return 0;
->> +             /*
->> +              * TRANSLATORS: Make sure to include [Y] and [n] in your
->> +              * translation. The program will only accept English input
->> +              * at this point.
->> +              */
->> +             yesno = git_prompt(_("Are you sure [Y/n]? "), PROMPT_ECHO);
->> +             if (starts_with(yesno, "N") || starts_with(yesno, "n"))
->> +                     return -1;
->> +
+>> +     }
+>> +     if (argc == 0) {
+>> +             printf(_("Your current terms are %s for the old state\nand "
+>> +                    "%s for the new state.\n"), terms->term_good.buf,
+>> +                    terms->term_bad.buf);
 >> +             return 0;
 >> +     }
->> +     bad_syn = xstrdup(bisect_voc("bad"));
->> +     good_syn = xstrdup(bisect_voc("good"));
->> +     if (!is_empty_or_missing_file(git_path_bisect_start())) {
->> +             error(_("You need to give me at least one %s and "
->> +                     "%s revision. You can use \"git bisect %s\" "
->> +                     "and \"git bisect %s\" for that. \n"),
->> +                     bad_syn, good_syn, bad_syn, good_syn);
->> +             free(bad_syn);
->> +             free(good_syn);
->> +             return -1;
->> +     }
->> +     else {
->> +             error(_("You need to start by \"git bisect start\". You "
->> +                     "then need to give me at least one %s and %s "
->> +                     "revision. You can use \"git bisect %s\" and "
->> +                     "\"git bisect %s\" for that.\n"),
->> +                     good_syn, bad_syn, bad_syn, good_syn);
->> +             free(bad_syn);
->> +             free(good_syn);
->> +             return -1;
->> +     }
->> +     free(bad_syn);
->> +     free(good_syn);
 >> +
->> +     return 0;
+>> +     for (i = 0; i < argc; i++) {
+>> +             if (!strcmp(argv[i], "--term-good"))
+>> +                     printf("%s\n", terms->term_good.buf);
+>> +             else if (!strcmp(argv[i], "--term-bad"))
+>> +                     printf("%s\n", terms->term_bad.buf);
+>> +             else
+>> +                     printf(_("invalid argument %s for 'git bisect "
+>> +                               "terms'.\nSupported options are: "
+>> +                               "--term-good|--term-old and "
+>> +                               "--term-bad|--term-new."), argv[i]);
+>> +     }
 >
-> This one looks OK, but I think the same "Wouldn't it become cleaner
-> to have a 'finish:' label at the end and jump there?" comment
-> applies to this implementation, too.
+> The original took only one and gave one answer (and errored out when
+> the user asked for more), but this one loops.  I can see either way
+> is OK and do not think of a good reason to favor one over the other;
+> unless there is a strong reason why you need this extended behaviour
+> that allows users to ask multiple questions, I'd say we should keep
+> the original behaviour.
 
-For this goto can simply things. Will do!
+True! I can just use return error() instead of printf. Also I noticed
+that this is printing to stdout while the original printed it to
+stderr. Thanks!
 
 Regards,
 Pranit Bauva
