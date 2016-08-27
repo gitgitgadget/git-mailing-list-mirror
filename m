@@ -2,108 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5406A1F859
-	for <e@80x24.org>; Sat, 27 Aug 2016 09:49:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9B511F859
+	for <e@80x24.org>; Sat, 27 Aug 2016 10:29:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754587AbcH0JtD (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Aug 2016 05:49:03 -0400
-Received: from mail-yw0-f178.google.com ([209.85.161.178]:35799 "EHLO
-        mail-yw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750825AbcH0JtC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Aug 2016 05:49:02 -0400
-Received: by mail-yw0-f178.google.com with SMTP id j12so61955255ywb.2
-        for <git@vger.kernel.org>; Sat, 27 Aug 2016 02:48:15 -0700 (PDT)
+        id S1754274AbcH0K3j (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Aug 2016 06:29:39 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34881 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750746AbcH0K3i (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Aug 2016 06:29:38 -0400
+Received: by mail-wm0-f66.google.com with SMTP id i5so2718474wmg.2
+        for <git@vger.kernel.org>; Sat, 27 Aug 2016 03:29:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=iRBjZBR63vLPwSv+Lu3Jhlkddy+GEcFkMU2KgYzCtds=;
-        b=HlM1xSxdQ/WzEVpaESSuRvNTwKqYVp0oqSJYKg3UXOpU+U+Crpc7x1Nv3c6x22P4Ft
-         y8KgQBLtgewVaWQfcjpJ9Ma1GuZL9mhxYbrymsJYN5f1U4hHWA5F28+JkL61QuQFFxqf
-         do44g4GpdNSHoCTfwGlbzvWYqlpi/HfLaf3ftuWaIyDPKNC1l1TpYZpxM2X6gjh1jU7G
-         UtQEdoOSi06KCpgUN/5wtFpbN0wtfHCGrJzu+v/g2YwoC9hi/i4YyvFsfyVntTUcerL+
-         RB8abwicwoyaDiQ0680oT60rD3ADHJeFqiwb70cYHN0OCspKUYaDOORy8A2Bz3cqoC5M
-         aF9Q==
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=7ic9y1gK/zxh0pXmqlhVduUFYAv60vAsrZR9JXzT5UM=;
+        b=nRAxwT0Tz/BFVuN2J35XaJ3cDpCMWwnFzF/AeytoDaBSNtk6hY/3iOvx6VezxNjJl6
+         kx5ziGw9hxop1nWmwmO1PO3srBPiOJU/Okpt9MpZ7SNwu9rHnBSFHXFK3FG7ggw8lHba
+         96b6rPi30l4tp+ItUNZ/lO8n7XrFi5IlRN8rsm+4kQlXyTN5qLlQ9eUo3FDc9TrTfv9Y
+         /43MUdkKHIcjwqV+iDbeFKzKv+vlhIquCGTq5hf3k+5qrO822borSWvs0sXXOgqglAxZ
+         FrBeUHorAr3PEaGRdiYBir4q63iY487JjFqrDYrVZysnHRTePo+eYAMzzTVtGCG1eK5a
+         CSRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=iRBjZBR63vLPwSv+Lu3Jhlkddy+GEcFkMU2KgYzCtds=;
-        b=ZMmtxq1+7Iele8h9SoNreuQ9tUNTdfgE+uK8dWb8MebO4Rj7yS1KrZnfTZ5eR83S1H
-         a3YzZssTuwFmVHQYER8qMyYM944wR8Vl3QAsR7DsBAFUf8e1MtJ0CWesSWxE1XZu6zrW
-         cx1jifkLm1hXK05nFvGIEf+MQEYIOyGUdnzJL9hIzh2bkyNZazrmiyRSuihyw/ykqJrU
-         Zm8SCiyE9sVJvErGOI7jn+h9Z3+ZYrTlk0hBTeQWA8XjpLSweGfwpvuZVI52mIKs3Z3S
-         RUm2vUd0bav64y0z2mm1gSCkSmWVG5FZ1A9Wk6NLcSWmI/aSEg1xJ+RYguC0hKgxMeLY
-         Prmw==
-X-Gm-Message-State: AE9vXwM31hBT8qHhjj6zLsTEFl3AjfT4G9wZXWj0jbeSmo+BdSf4oeGYpnXDJMAYgwzg9p8wmsKgcW6QqaX7eA==
-X-Received: by 10.129.76.79 with SMTP id z76mr7023900ywa.33.1472291295289;
- Sat, 27 Aug 2016 02:48:15 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=7ic9y1gK/zxh0pXmqlhVduUFYAv60vAsrZR9JXzT5UM=;
+        b=WxRB7kZMhdAWw6jQLd4B95lX/H41MQddcXNmiGmn3maxGwdvmiIqEYnUITyxzygh6E
+         8JZjxKE8QBIsNw3AclHu8QA/Oj7gu/0bQv9Eccupunlzn0BBvBl4hgXOIo20SLq1PMEg
+         SctSLksGNgTxrQivFJroF0NWpk3g01J6h7WDSgt/8D1aG8x0j4wVBpCsBB+qOG6XBi5n
+         hm5RblzFQXIEj2GmGJPmBjG4rmu8khrQ/4ESrR6eBt04z7hZ4AuxMAZouRl7zfchTjyU
+         e9DlDWNaJ+wu/b0AmCqJA+ppIyk40jxW+PPHnP8e+V0jgwigfaPuxltAYbheYtfWnb2U
+         bfTw==
+X-Gm-Message-State: AE9vXwPLjXdp4zZWP65jASJ1XpXEmnOGGgxq1n1iYpqvEtvTO7L6IppkpMVIIpZlR8ZbDw==
+X-Received: by 10.28.125.80 with SMTP id y77mr2766926wmc.25.1472293776419;
+        Sat, 27 Aug 2016 03:29:36 -0700 (PDT)
+Received: from hurricane ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id s6sm24005245wjm.25.2016.08.27.03.29.35
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 27 Aug 2016 03:29:35 -0700 (PDT)
+Date:   Sat, 27 Aug 2016 12:29:33 +0200
+From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
+To:     git@vger.kernel.org
+Subject: [PATCH] make dist: allow using an installed version of git
+Message-ID: <20160827102929.GA11769@hurricane>
 MIME-Version: 1.0
-Received: by 10.129.89.132 with HTTP; Sat, 27 Aug 2016 02:48:14 -0700 (PDT)
-In-Reply-To: <xmqqmvk0n2pl.fsf@gitster.mtv.corp.google.com>
-References: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
- <01020156b73fe6b3-3ccd9de5-604d-4e7d-919d-a3adae869ebf-000000@eu-west-1.amazonses.com>
- <xmqqmvk0n2pl.fsf@gitster.mtv.corp.google.com>
-From:   Pranit Bauva <pranit.bauva@gmail.com>
-Date:   Sat, 27 Aug 2016 15:18:14 +0530
-Message-ID: <CAFZEwPNTkgbFz-tcnLiaW9qvRSUoHgeNMzjnCjx7EwMHG71Niw@mail.gmail.com>
-Subject: Re: [PATCH v14 12/27] bisect--helper: `get_terms` & `bisect_terms`
- shell function in C
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Junio,
+b1de9de2 back in 2005 ensured that we could create a tarball with 'make
+dist' even if git wasn't installed yet. These days however, chances are
+higher that a git version is available. Add a config.mak knob to allow
+people to choose to use the installed version of git to create the
+tarball and avoid the overhead of building git-archive.
 
-On Thu, Aug 25, 2016 at 11:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Pranit Bauva <pranit.bauva@gmail.com> writes:
->
->> +static int bisect_terms(struct bisect_terms *terms, const char **argv, int argc)
->> +{
->> +     int i;
->> +
->> +     if (get_terms(terms)) {
->> +             fprintf(stderr, _("no terms defined\n"));
->> +             return -1;
->> +     }
->> +     if (argc == 0) {
->> +             printf(_("Your current terms are %s for the old state\nand "
->> +                    "%s for the new state.\n"), terms->term_good.buf,
->> +                    terms->term_bad.buf);
->> +             return 0;
->> +     }
->> +
->> +     for (i = 0; i < argc; i++) {
->> +             if (!strcmp(argv[i], "--term-good"))
->> +                     printf("%s\n", terms->term_good.buf);
->> +             else if (!strcmp(argv[i], "--term-bad"))
->> +                     printf("%s\n", terms->term_bad.buf);
->> +             else
->> +                     printf(_("invalid argument %s for 'git bisect "
->> +                               "terms'.\nSupported options are: "
->> +                               "--term-good|--term-old and "
->> +                               "--term-bad|--term-new."), argv[i]);
->> +     }
->
-> The original took only one and gave one answer (and errored out when
-> the user asked for more), but this one loops.  I can see either way
-> is OK and do not think of a good reason to favor one over the other;
-> unless there is a strong reason why you need this extended behaviour
-> that allows users to ask multiple questions, I'd say we should keep
-> the original behaviour.
+Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+---
+ Makefile | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-True! I can just use return error() instead of printf. Also I noticed
-that this is printing to stdout while the original printed it to
-stderr. Thanks!
-
-Regards,
-Pranit Bauva
+diff --git a/Makefile b/Makefile
+index d96ecb7..3dabb75 100644
+--- a/Makefile
++++ b/Makefile
+@@ -378,6 +378,9 @@ all::
+ #
+ # to say "export LESS=FRX (and LV=-c) if the environment variable
+ # LESS (and LV) is not set, respectively".
++#
++# Define USE_INSTALLED_GIT_ARCHIVE if you don't want to build git-archive as
++# part of 'make dist', but are happy to rely on a git version on you $PATH
+ 
+ GIT-VERSION-FILE: FORCE
+ 	@$(SHELL_PATH) ./GIT-VERSION-GEN
+@@ -2423,8 +2426,15 @@ quick-install-html:
+ ### Maintainer's dist rules
+ 
+ GIT_TARNAME = git-$(GIT_VERSION)
+-dist: git-archive$(X) configure
+-	./git-archive --format=tar \
++ifndef USE_INSTALLED_GIT_ARCHIVE
++	GIT_ARCHIVE = ./git-archive$(X)
++	GIT_ARCHIVE_DEP = git-archive$(X)
++else
++	GIT_ARCHIVE = git archive
++	GIT_ARCHIVE_DEP =
++endif
++dist: $(GIT_ARCHIVE_DEP) configure
++	$(GIT_ARCHIVE) --format=tar \
+ 		--prefix=$(GIT_TARNAME)/ HEAD^{tree} > $(GIT_TARNAME).tar
+ 	@mkdir -p $(GIT_TARNAME)
+ 	@cp configure $(GIT_TARNAME)
+-- 
+2.10.0-rc1-230-g8efea0f
