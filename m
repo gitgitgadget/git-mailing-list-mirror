@@ -2,246 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_RED
-	shortcircuit=no autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E507F1F859
-	for <e@80x24.org>; Sun, 28 Aug 2016 18:24:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 416791F859
+	for <e@80x24.org>; Sun, 28 Aug 2016 19:43:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932187AbcH1SYy (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Aug 2016 14:24:54 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35174 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753756AbcH1SYw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Aug 2016 14:24:52 -0400
-Received: by mail-wm0-f65.google.com with SMTP id i5so6701574wmg.2
-        for <git@vger.kernel.org>; Sun, 28 Aug 2016 11:24:08 -0700 (PDT)
+        id S1755299AbcH1Tn0 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Aug 2016 15:43:26 -0400
+Received: from mail-lf0-f43.google.com ([209.85.215.43]:34290 "EHLO
+        mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751367AbcH1TnZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Aug 2016 15:43:25 -0400
+Received: by mail-lf0-f43.google.com with SMTP id l89so87933083lfi.1
+        for <git@vger.kernel.org>; Sun, 28 Aug 2016 12:43:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=7ZG10oXWw+Hl31lwIIB6RNoNEiDw2E3n1jqF5tcjyuE=;
-        b=A1SSYZEJji4AAm09pBVWyTqx34xRtSbhEd3h7ikVXQNC7TyZZsPUIW/b2V9vi+hSfG
-         khPdvL4Oua4EiaK0OSoUGzTPVU8xDzwRoO1DwLEnhEAxXQE3pzkDFE9Kpnb59p1/6aWe
-         EbBjSSJQe2DTy3yv8gEGbUvCZw1vmgKWR4JjwCr9MOnbf7Ph+pd4aJrfYI+YePoTpmI7
-         42CDgv7NJlfpMrlTTYh/46+YagumS6tf2KymUwfBQGLlDOUQvsifVEMtIE/6f4sjrwXy
-         zSQuFr2VL7BkPtZ2ssPZKCg+9daJ14qoVgOqigbRu9xxxmf+uuZlVJhOqifzbWRDCgR1
-         mVkg==
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=CEqNwrdeqmKFNBN5/AAoEIVlU57Ioou2TtDaa8OZSoY=;
+        b=wrwYlot5fERgi5pwFdkeN9LnWfsOF6eCET7zy5Bn/QX3m8OeenCmu0UYmwevHYPQaH
+         XcMk2O2uDLeXFaJSkEoJ2xyL4kGFy06Ju72lVBe70FhNjhQaY3Ry/WJrnd1qKItPUk0V
+         uE8F78dZ7kg92Ztt7uXHfUhcxHGzP0PUC4dLVqggS6F9pfSq292M2sCKrpPwi5p4s55r
+         GMvElhlKiRYlPYhbOJg57MOoDrPC8CqVyG/K1ciqO/LqHTJBkHHbAcDz0b7kGSbVBSnX
+         6M0+j1Pksg3gOhPWPEDJVZYtMrUgojgMN2Cw6xHaDljzU2lbfqpab8yTF/NK3Nqn5Jj0
+         /5xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=7ZG10oXWw+Hl31lwIIB6RNoNEiDw2E3n1jqF5tcjyuE=;
-        b=W/YHGr/E71bZEJTQRJpXdfbUgdKEa3hVfZ1D2YwWjlikT7PSMTBZEebSSWS6FD7NO4
-         PfMxBd3MZpH9u2J8w+9/nHetBJ7f2N9hpwkiyFya3Yeqq8iplo73RpsSANIkoX5oXjEY
-         esOWCO0Vxp/RaABx8ra/OAgt+Sd168yqM2nUpgm940kcsFffosd0LESOv2YgmauvGiiH
-         JWalCCmXnWzjhMqst4D470YSA89oOcFGwcEYC8O9ZtzLbKEaJrMlmUqCtbFvo9lCHcYF
-         oFS3bdjAOyRxuz6mk/e3UNGtO0jugC05cLldLFe+0pA/feZOaOmVzJ4IJfLMFTnjEL1H
-         mj6w==
-X-Gm-Message-State: AE9vXwMS7JbSTdjcWydSTGGHm3cVSZfgJiuPogYmeSgqHN6qaaAoEdV8JLaWjyY5R9FNtw==
-X-Received: by 10.28.129.137 with SMTP id c131mr6715729wmd.79.1472408647813;
-        Sun, 28 Aug 2016 11:24:07 -0700 (PDT)
-Received: from [192.168.1.26] (adby156.neoplus.adsl.tpnet.pl. [79.184.24.156])
-        by smtp.googlemail.com with ESMTPSA id us9sm30465041wjb.43.2016.08.28.11.24.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 28 Aug 2016 11:24:06 -0700 (PDT)
-Subject: Re: Working with public-inbox.org [Was: [PATCH] rev-parse: respect
- core.hooksPath in --git-path]
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <CAGZ79kasebzJb=b2n=JQiVMrSfJKaVfZaaoaVJFkXWuqKjfYKw@mail.gmail.com>
- <alpine.DEB.2.20.1608181430280.4924@virtualbox>
- <20160818204902.GA1670@starla>
- <alpine.DEB.2.20.1608191720040.4924@virtualbox> <20160819223547.GB16646@dcvr>
- <alpine.DEB.2.20.1608221509010.4924@virtualbox>
- <02c1c636-b0b4-8730-68a6-18f017ed3410@gmail.com>
- <alpine.DEB.2.20.1608251508280.4924@virtualbox>
-Cc:     Eric Wong <e@80x24.org>, Stefan Beller <sbeller@google.com>,
-        meta@public-inbox.org, git@vger.kernel.org
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <60e7feda-5376-e1f2-1797-9e6dedf3c0b0@gmail.com>
-Date:   Sun, 28 Aug 2016 20:23:58 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=CEqNwrdeqmKFNBN5/AAoEIVlU57Ioou2TtDaa8OZSoY=;
+        b=JtbJjZdC5TFLp95zmT0ZOvWeb2kyBxv9jQHekkQM/CtIizic8fubgFskZixkvqV6+n
+         SP7JTpNPG9Xqxl9zZ5V0lG9bX8/Its9/VyXUXe7nzJeVkxTAOTBhPfukJg6Ln4XXIK83
+         btuVZTMyrit7of4t+eNpGJrxB41XxVlRX/NZKighlglRmmW7YBHYVMjaPHAaOKhNx96k
+         C2K5xjBceU3gRWIJy4bBq+DH5uBF5r4xHvNIEZfUULHiWqwtqN3fpDon/ARMjgxxbgaF
+         6HVNrbizO0ZfzP+S6ISgSrykLpXwERbvrR7nVjLOyKszGPAlvC65tl1+1YQs91ETPsSw
+         JDrQ==
+X-Gm-Message-State: AE9vXwO1aKE4T1X4ZOtcUG6GOgjBaC1EDL7VC7LrDWyhkqOA3dj9lDsfcN6QbS7HmEAUNXWbpnwopcUjSKL5cQ==
+X-Received: by 10.25.161.12 with SMTP id k12mr3705963lfe.22.1472413403051;
+ Sun, 28 Aug 2016 12:43:23 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1608251508280.4924@virtualbox>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.114.78.226 with HTTP; Sun, 28 Aug 2016 12:42:52 -0700 (PDT)
+From:   "W. David Jarvis" <william.d.jarvis@gmail.com>
+Date:   Sun, 28 Aug 2016 12:42:52 -0700
+X-Google-Sender-Auth: RvaItFcXp3XLCw2H_t_2hGwVfxA
+Message-ID: <CAFMAO9y3LsrAb_jp8XVq2mexaA4bBqmWFwJu55r4S6Dxd2-zxw@mail.gmail.com>
+Subject: Reducing CPU load on git server
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Johannes,
+Hi all -
 
-W dniu 25.08.2016 o 15:21, Johannes Schindelin pisze:
-> On Mon, 22 Aug 2016, Jakub Narębski wrote:
->> W dniu 22.08.2016 o 15:18, Johannes Schindelin pisze:
->>
->>> So unfortunately this thread has devolved. Which is sad. Because all I
->>> wanted is to have a change in Git's submission process that would not
->>> exclude *so many* developers. That is really all I care about. Not about
->>> tools. Not about open vs proprietary, or standards.
->>>
->>> I just want developers who are already familiar with Git, and come up with
->>> an improvement to Git itself, to be able to contribute it without having
->>> to pull out their hair in despair.
->>
->> What is lacking in using submitGit tool for those that have problems
->> with sending patches via email?
-> 
-> Where do I start? And where do I stop? Here is a *very* brief list of
-> issues from the top of my head (and the history of my web browser):
+I've run into a problem that I'm looking for some help with. Let me
+describe the situation, and then some thoughts.
 
-Let me reorder those issues and group them into specific categories.
- 
-> - You cannot open a PR on GitHub and include the PR's cover letter as
->   cover letter: https://github.com/rtyley/submitgit/issues/9
-> 
-> - you have to register with yet another service to send mails on your
->   behalf. Would be nicer if the mails could be sent from a submitGit
->   address (moderated, of course) and did not need a separate registration
->   step with some scary permission granting.
-> 
-> - submitGit requires you to go to a separate website to interact with the
->   submitGit web app. Would be so much nicer if it were a bot operating on
->   PRs.
+The company I work for uses git. We use GitHub Enterprise as a
+frontend for our primary git server. We're using Chef solo to manage a
+fleet of upwards of 10,000 hosts, which regularly pull from our Chef
+git repository so as to converge.
 
-Those are issues about lack of integration (or need for better integration)
-with GitHub pull requests.  I don't know if tighter integration would be
-possible (without going the route of web browser plugin, like ZenHub) with
-current API.  Note that many integrations require you to go and use their
-separate site, like e.g. HuBoard.
+A few years ago, in order to reduce the load on the primary server,
+the firm set up a fleet of replication servers. This allowed the
+majority of our infrastructure to target the replication servers for
+all pull-based activity rather than the primary git server.
 
-Also, for some people registering on GitHub is "yet another service"... ;-)
+The actual replication process works as follows:
 
-> - You cannot Cc: people explicitly:
->   https://github.com/rtyley/submitgit/issues/31
-> 
-> - submitGit does not include any interdiff
+1. The primary git server receives a push and sends a webhook with the
+details of the push (repo, ref, sha, some metadata) to a "publisher"
+box
 
-These are, I think, mainly related to lack of support for series *iteration*,
-for sending new version of patch series / of pull request.
+2. The publisher enqueues the details of the webhook into a queue
 
-I don't know how well GitHub pull requests deal with iteration and
-refinement, and what is available as API to apps such as submitGit.
+3. A fleet of "subscriber" (replica) boxes each reads the payload of
+the enqueued message. Each of these then tries to either clone the
+repository if they don't already have it, or they run `git fetch`.
 
-> 
-> - it is really hard to get back from mails to the corresponding commits
-> 
-> - comments sent as replies have no connection to the PR *nor* the commits
->   they refer to (making submitGit basically a pimped up git-send-email,
->   nothing more).
+During the course of either of these operations we use a
+repository-level lockfile. If another request comes in while the repo
+is locked, we re-enqueue it. When that request comes in later, if the
+push event time is earlier than the most recent successful fetch, we
+don't do any further work.
 
-I guess that turning submitGit into two-way bridge between email and PR's
-would be quite difficult, if at all possible.  For one, it would have
-to parse emails to turn response as email into comment on diff in PR.
-For second, I'm not sure if all features of email workflow are possible
-to represent in PR's: cover letter, comments for individual commits,
-commits about commit messages, commits about changes, free-form comments.
-But maybe they are possible; the trouble would be in translating back
-and forth.
+---
 
-> - submitGit would require a substantial effort from me to learn how to
->   extend/fix it, to run the web app locally and run its tests. That is a
->   rather steep hurdle.
+The problem we've been running into has been that as we've continued
+to add developers, the CPU load on our primary instance has gone
+through the roof. We've upgraded the machine to some of the punchiest
+hardware we can get and it's regularly exceeding 70% CPU load. We know
+that the overwhelming drive of this CPU load is near-constant git
+operations on some of our larger and more active repositories.
 
-Well, you cannot extend/fix GitHub at all yourself, isn't it? ;-P
+Migrating off of Chef solo is essentially a non-starter at this point
+in time, and we've also added a considerable number of non-Chef git
+dependencies such that getting rid of the replication service would be
+a massive undertaking. Even if we were to kill the replication fleet,
+we'd have to figure out where to point that traffic in such a way that
+we didn't overwhelm the primary git server anyways.
 
-> 
-> This is an incomplete list, of course.
+So I'm looking for some help in figuring out what to do next. At the
+moment, I have two thoughts:
 
-Right.
+1. We currently run a blanket `git fetch` rather than specifically
+fetching the ref that was pushed. My understanding from poking around
+the git source code is that this causes the replication server to send
+a list of all of its ref tips to the primary server, and the primary
+server then has to verify and compare each of these tips to the ref
+tips residing on the server.
 
->> Submitting changes in Git comes in three phases:
->>  - submit email with patches
->>  - review and discuss patch
->>  - apply patches from email
-> 
-> You forgot a really crucial step. Maybe you did not go through dozens of
-> iterations in your patch series as I regularly do, or something, so it is
-> probably easy for you to forget:
-> 
->   - find the commit in question, run rebase -i and patch it as suggested
-> 
-> This is something that costs me quite some time to do. It is easily the
-> most annoying aspect of the mail list-based approach for me.
+That might not be a ton of work to do on an individual fetch
+operation, but some of our repositories have over 5,000 branches and
+are pushed to 1,000 times a day. Algorithmically, this would suggest
+that the cost of a fetch will go up in terms of both N -- branches and
+M -- pushes, so we're talking about a cost of N*M, both of which will
+increase when we hire developers. This implies exponential growth in
+load as we add engineers, which is...not good.
 
-I probably don't have as many topics in flight, and maybe the number of
-iterations is smaller, but I don't remember having troubles with that.
+Also worth noting - if we assume that the replication server should be
+reasonably up-to-date (see lockfile logic description, above), we're
+talking about typically packing objects for one ref, and at most a
+small number (<5).
 
-Well, when I was most active doung Git development I were using StGit
-patch management interface instead of rebase -i; I think it makes things
-easier.  Perhaps git-series could replace it, or augment it.
+My hypothesis is that moving to fetching the specific branch rather
+than doing a blanket fetch would have a significant and material
+impact on server load.
 
->> Pull request via GitHub / Bitbucket / GitLab is easier than sending
->> patches via email (pity that GitHub et al. do not have such submitGit-like
->> automation built-in).  But I think email, with threaded view, careful
->> trimming of quoted contents, multi-level quotes is superior to exiting
->> web-based solutions.
-> 
-> They are not exiting, but I know what you meant.
+If we do go down this route, we'll potentially need to do some
+refactoring around how we handle "failed fetches", which relates both
+to our locking logic and to the actual potential failure of a git
+fetch. Discussion of the locking mechanism follows:
 
-That was a typo: s/exiting/existing/
- 
-> The thing is: GitHub does not need such an automation. Because most
-> projects are pretty happy with the process centered around the web app.
+2. Our current locking mechanism seems to me to be un-necessary. I'm
+aware that git uses a few different locking mechanisms internally, and
+the use of a repo-level lockfile would seem to only guarantee that
+we're using coarser-grained locking than git actually supports. But I
+don't know if git supports specific fetch-level ref locking that would
+permit concurrent ref fetch operations. If it does, our current
+architecture would seem to prevent git from being able to take
+advantage of those mechanisms.
 
-It might be that they don't need features not available in a web app.
-It might be that it is only way they know.  Not all projects are happy
-to being on GitHub even if they are happy with using hosted git.
+In other words, let's imagine a world in which we ditch our current
+repo-level locking mechanism entirely. Let's also presume we move to
+fetching specific refs rather than using blanket fetches. Does that
+mean that if a fetch for ref A and a fetch for ref B are issued at
+roughly the exact same time, the two will be able to be executed at
+once without running into some git-internal locking mechanism on a
+granularity coarser than the ref? i.e. are fetch A and fetch B going
+to be blocked on the other's completion in any way? (let's presume
+that ref A and ref B are not parents of each other).
 
-And they were probably created after GitHub / GitLab / Bitbucket were
-here. Also - citation needed.
+---
 
-> It is only projects such as Linux, Cygwin and Git itself who refuse to
-> allow for tools that would let the majority of potential contributors
-> stick with their favorite way to read and write mails (I am talking about
-> users of GMail and Outlook, of course).
+I'm neither a contributor nor an expert in git, so my inferences thus
+far as based purely off of what I would describe as "stumbling around
+the source code like a drunken baby".
 
-Those are projects that started before GitHub (for obvious reasons), and
-which created a good enough workflow based on email.  It might be that
-they are ossified relics, or it might be that they don't want to trade
-advantages of email based workflow for advantages of web app based workflow.
+The ultimate goal for us is just figuring out how we can best reduce
+the CPU load on the primary instance so that we don't find ourselves
+in a situation where we're not able to run basic git operations
+anymore.
 
+If I'm barking up the wrong tree, or if there are other optimizations
+we should be considering, I'd be eager to learn about those as well.
+Of course, if what I'm describing sounds about right, I'd like
+confirmation of that from some people who actually know what they're
+talking about (i.e., not me :) ).
 
-First, email clients and Usenet news readers support threading.  I haven't
-found a good web app that supports threading well (though it might be
-a matter of small set of such apps examined by me).  They allow marking
-and labeling posts to return back later.
+Thanks.
 
-Second, email allows offline work, and handle well sporadic Internet
-connection.  As far as I know web apps do not handle breaks in net
-access well, but I might be mistaken.  Hopefully this problem would
-vanish with improving broadband... though there always would be places
-without constant always-on Internet connection.
+ - Venantius
 
-Third, email (or rather conventions around email) allows to provide
- - description of the whole series (in cover letter)
- - comments for each commit individually (outside of commit message)
- - make commit or series be a reply to discussion (useful with WIPs)
-For reviewer it allows to
- - comment on the whole series in response to cover letter
- - comment on individual commit
- - comment on the commit message
- - comment on the description of commit
- - comment on changes
- - start a discussion based on a commit
- - propose improvements as patches
-
-Are all of them possible in PR's?
-
-
-To reiterate what I have said elsewhere in this thread: while it is
-a good idea to lower barriers to contribution, especially for new classes
-of users (like MS Windows users, without a way to easily install and
-configure MTA so that git-send-email and/or git-imap-send just works,
-or with default email client without support for preserving whitespace
-and monospace fonts), it is reviewers and maintainers that are sparse
-resource.
-
-Best,
 -- 
-Jakub Narębski
-
+============
+venanti.us
+203.918.2328
+============
