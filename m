@@ -7,49 +7,52 @@ X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_RED shortcircuit=no
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 406941FD99
-	for <e@80x24.org>; Sun, 28 Aug 2016 08:36:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8937B1FD99
+	for <e@80x24.org>; Sun, 28 Aug 2016 08:38:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755243AbcH1Igu (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Aug 2016 04:36:50 -0400
-Received: from mout.gmx.net ([212.227.17.22]:50297 "EHLO mout.gmx.net"
+        id S1755275AbcH1Iit (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Aug 2016 04:38:49 -0400
+Received: from mout.gmx.net ([212.227.17.20]:52144 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755220AbcH1Igr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Aug 2016 04:36:47 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MXIGf-1baxav0N0P-00WFUO; Sun, 28 Aug 2016 10:36:40
+        id S1755220AbcH1Iis (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Aug 2016 04:38:48 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0LjN0F-1b7czh4Bxv-00daov; Sun, 28 Aug 2016 10:38:39
  +0200
-Date:   Sun, 28 Aug 2016 10:36:38 +0200 (CEST)
+Date:   Sun, 28 Aug 2016 10:38:36 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-cc:     Eric Wong <e@80x24.org>, Stefan Beller <sbeller@google.com>,
-        meta@public-inbox.org, git@vger.kernel.org
-Subject: Re: Working with public-inbox.org
-In-Reply-To: <d2c4d54f-e3be-8e17-860c-d9b8bacf68e0@gmail.com>
-Message-ID: <alpine.DEB.2.20.1608281033340.129229@virtualbox>
-References: <CAGZ79kasebzJb=b2n=JQiVMrSfJKaVfZaaoaVJFkXWuqKjfYKw@mail.gmail.com> <alpine.DEB.2.20.1608181430280.4924@virtualbox> <20160818204902.GA1670@starla> <alpine.DEB.2.20.1608191720040.4924@virtualbox> <20160819223547.GB16646@dcvr>
- <alpine.DEB.2.20.1608221509010.4924@virtualbox> <20160822225549.GA25383@starla> <alpine.DEB.2.20.1608251457310.4924@virtualbox> <d2c4d54f-e3be-8e17-860c-d9b8bacf68e0@gmail.com>
+cc:     Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+        Stefan Beller <sbeller@google.com>, meta@public-inbox.org,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Eric Wong <e@80x24.org>
+Subject: Re: Working with public-inbox.org [Was: [PATCH] rev-parse: respect
+ core.hooksPath in --git-path]
+In-Reply-To: <5e480a5b-3752-55c0-65ed-52ca5802851f@gmail.com>
+Message-ID: <alpine.DEB.2.20.1608281036460.129229@virtualbox>
+References: <CAGZ79kasebzJb=b2n=JQiVMrSfJKaVfZaaoaVJFkXWuqKjfYKw@mail.gmail.com> <alpine.DEB.2.20.1608181430280.4924@virtualbox> <20160819150340.725bejnps6474u2e@sigill.intra.peff.net> <alpine.DEB.2.20.1608221450250.4924@virtualbox>
+ <CACsJy8BG63oaLbw0f7try3OpzdphLC7UGAaJ=vgikEB36Pagqg@mail.gmail.com> <5e480a5b-3752-55c0-65ed-52ca5802851f@gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1261616707-1472373400=:129229"
-X-Provags-ID: V03:K0:7erH4fAA6fAOIGf1d0cmhrFrJ4AwVbnAM77DzvtcrrF2n3S6xnG
- Pd8wcdipaOUJwSCWsv0B0pWx1x+gud2ZL+cDy7i1zFWSDlkmzaURDbSOp+q+Ab7qgt7ZB+K
- qbI/0S5jY4nlh1ypZHaHsovPatQwQ4G7YLX9XtH1hRF57mVdlFfqp+QyG8LI/NI/YPb5CL/
- qUzdzMRullCctZUINSNjw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:dDzmxv5towo=:HTr1JFiFFeOJLu8RqiCdy2
- QbT/JKKyn5TIpwzt4eFaB1Rk3dVn6tcEC/z7022G66szWhTVT8PaYN0Pigo64vp9Nsn3JqlhV
- tmTMGU+UWqUL/4Doso01SzCBe3WghtODgMdZzIyxvjPjvIP3SZGoZoWflIMzj6yVBnkgdAnwh
- 7d8bN6iCrRla7mzLCJ1HHde+WyfwtrWC3Lqx1vsqMiM36JzYOMK/LKOBXV+fHn4R+KWXaKTP1
- +hnfVTyYfZShNRAxdN5Z3FYj5IGCsPSuGvCpjWbK5i2LAe1nLQ5AmyII5eEyToxjduyM8r/6M
- w3iaSp7PhLTsf2Rqh9I9DEckYoVyLsn0qhW7XiAKyQ3V7C0emofRLmFfJz/wC41b52mBLQ9ys
- Or0ywTfjDxpP9Q2CvAO5M07WPBAvnCtcrRx75JKL5XHfRGfOOFD2pp5Fk2VU9teNNM+/a2eNX
- rLh8fHuLr/Mdd1Xu4O5qOkmwfosYYrxRFtk3s1LTy+Xploo7OhhXcSte0BJK8EGmXRsyCTOSO
- fhAoeoHUWSBQJWWPdg9cL6Wb3+ZLu/2up90/CVtLwxomRcjMOn/m9FMNZh+Ec8AClhmnHHznB
- MSqhodaMtOn7M+lH/LwhX7kpzfBRJXETWnkLPyl43lWunwcB0x328Td5VZsgiFHOST653d8sL
- 7tyGEOrFSyZb+8hS+HkuGkfid21GcG+t2O4QEre43kCWYnzeS4LRRJaRqAuNPxuwYWEbhwxYV
- R015GJhaN7JTknho+fPb7jNwozSR78MXrJ1cDQunvUx6j7X0NFNsWugMwxoVSCXanPxuFc/Tt
- ezpyC1X
+Content-Type: multipart/mixed; BOUNDARY="8323329-615837168-1472373519=:129229"
+X-Provags-ID: V03:K0:CNoKLRIU2V1a3xsaedosGzqG8kDz3JMAYFP/b2m53UuHk3zHBO6
+ XlQ38yLr7lhDG2uJNzUmjxnOxqF62SHsQ/J5iv2eZKp3QGOLSTgRe8x16EOP7kO9C19C0iN
+ +FqZBhXw4AdohEJAyLdcWHuYpfS1eLhdyUYuM3lgCaQ28DrAEzrNg8kbA/yL9SXKGX/C9kU
+ eIR1BdLx8vbp32De9S7JQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:hzmhGYxgfAA=:5jDTFep8Z78Qci4KQH2vz/
+ X+x9Hgbq5MWJSx3OsXNFYT/sffP5ebhJqdS0CWxeQBOpiEi4eunfjSO21vfGtePpTkPB7rKGD
+ D8wCaXoRvoQUvmyLbUr3QPihLkPeW/9PB8LcJHvwe43fHg//BU03PTiiKCbyx6dKIBpZ2W0lY
+ zCeDJD832HwGkvrfw9gPisbDS5piqLSWgEj5hO8wYz0z0AI6s+XZb7C4JaxLmt/gisYU9t8LW
+ MzawfoD6JjOM3wTQcNIgRM0mnlYIZ5JBIg5DVgYtrF6haviOQ0PHmRnYGiZJ+3pmaI0u9ev/b
+ 8htozQJ7nMCo5VzHG2Ma6L6p8cS6SVhtOQnQK+3+d3eKhIdvOYgv1GL8fMpzWCAOL1jxLTojv
+ gbP9OXoqiy925W7KXQ/88YncsDn3kCCpyBYpbI7LalKYRAu1hk+LcE5rMHJqikJ0yjHws2ycB
+ +1thxlJQoQc6XrcV6cMlAjv56pKnrJ6os2vp8eifDoQ6+m9fEa4C5LuIt1KIZwKBm3bFScC6l
+ f5V0GaCps3VBuptSbXlpxHM8lNHpX8LK71LxQU4+5Qmhyzo5E7/YuRcW07CuC5Z9SCCKJqlYQ
+ UWQoa3QPAPjqNSiHZvyQM8RMfcV0N+CmZWOiTaDAUQ7mf57+0142w2dLL7CJouhipXJBBHvxU
+ r4bF74QBR9i1++XjuqGKorAXQDPMWQ7P/Sr8aQ3ZmCvIMMF6Ab+G1TvNKPcQDvgQoPLGfgxMh
+ gY+0/EaaZ5KsP5MgQ3eFIjaRb8xbC5BYwg3rbObwfnwjw02yoWOHWUvscIPrLiHgtjY+djROO
+ OUBYF5M
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,46 +61,38 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323329-1261616707-1472373400=:129229
+--8323329-615837168-1472373519=:129229
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Hi Kuba,
+Hi Kuba & Duy,
 
 On Sun, 28 Aug 2016, Jakub Nar=C4=99bski wrote:
 
-> W dniu 25.08.2016 o 14:58, Johannes Schindelin pisze:
-> > On Mon, 22 Aug 2016, Eric Wong wrote:
-> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> W dniu 22.08.2016 o 15:15, Duy Nguyen pisze:
+> > On Mon, Aug 22, 2016 at 8:06 PM, Johannes Schindelin
+> > <Johannes.Schindelin@gmx.de> wrote:
 > >>
-> >>> I just want developers who are already familiar with Git, and come up=
- with
-> >>> an improvement to Git itself, to be able to contribute it without hav=
-ing
-> >>> to pull out their hair in despair.
-> >>
-> >> We want the same thing.  I just want to go farther and get
-> >> people familiar with (federated|decentralized) tools instead of
-> >> proprietary and centralized ones.
+> >> My point stands. We are way more uninviting to contributors than
+> >> necessary. And a huge part of the problem is that we require contribut=
+ors
+> >> to send their patches inlined into whitespace-preserving mails.
 > >=20
-> > Why require users to get familiar with (federated|decentralized) tools
-> > *unless* they make things provably more convenient? So far, I only see
-> > that this would add to the hurdle, not improve things.
+> > We probably can settle this in the next git survey with a new
+> > question: what's stopping you from contributing to git?
 >=20
-> Arguably for some federated/decentralized tools are preferred
-> (for philosophical reasons), even if they do not achieve even feature
-> parity with centralized tools (c.f. FSF).
+> Added to second take on proposed questions for Git User's Survey 2016
+> https://public-inbox.org/git/ae804c55-d145-fc90-e1a9-6ebd6c60453a@gmail.c=
+om/T/#u
+> '[RFCv2] Proposed questions for "Git User's Survey 2016", take two'
+>=20
+> Message-ID: <91a2ffbe-a73b-fbb9-96da-9aea4d439e5a@gmail.com>
 
-This statement is false. If you had talked about *your* preference, it
-would be true. But to state that federated/decentralized tools are
-universally preferred is nonsense.
-
-You know as well as I do that most users/contributors go for convenience.
-
-And if you require an inconvenient step (e.g. subscribing to a
-federated/decentralized philosophy), most potential contributors simply
-stop being potential contributors. End of story.
+I would like to strongly caution against putting too much stock into this
+users' survey. It is the best we have, granted. Yet I have not heard from
+anybody that they participated in the survey, unless they were also
+subscribed to the Git mailing list.
 
 Ciao,
 Johannes
---8323329-1261616707-1472373400=:129229--
+--8323329-615837168-1472373519=:129229--
