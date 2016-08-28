@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74C071F859
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A5BA2018E
 	for <e@80x24.org>; Sun, 28 Aug 2016 23:28:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932346AbcH1X2I (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Aug 2016 19:28:08 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:40992 "EHLO
+        id S1756238AbcH1X2j (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Aug 2016 19:28:39 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:41078 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1756157AbcH1X2D (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 28 Aug 2016 19:28:03 -0400
+        by vger.kernel.org with ESMTP id S1756206AbcH1X2I (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 28 Aug 2016 19:28:08 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 2F6F6280AA;
-        Sun, 28 Aug 2016 23:28:02 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 8D5AC280A8;
+        Sun, 28 Aug 2016 23:28:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1472426882;
-        bh=n5P5eC/Mcw/q5xrRtmltX9c8NO9pdbzhc+VlK44ebO0=;
+        s=default; t=1472426885;
+        bh=0K4CQjll6ygpIkJFn2P2uBZp0RaUrZReQIaUqM/v8ZI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=YcCTi9H5cT7cQdyHeygkRc3m8wJ/dbqFqk6dO6HLGLnDqln2aIAAstb/zlDRJAjHb
-         P6nUxeMN5AonpiR/bnbo5ibQs/FahGsme6LhcwAdoaFsdl5hYglp94lsBrr4gKKfVU
-         YkGX9NTf6iEO1J2t9Dse0OwqlPQvLvbuYiciyB5QiYcukHqr6HGMLf9mBgCYk1SHvh
-         EVqJKLTB7jrLyf1opx4dO3bHxFmLQvwPMnjhDQ+FffQQOXByxs2dBZShShmtbo3gs3
-         9NNJEgzwqHT6lOkbiVy8pOXuBOaD3qXAQ99Y7hmuTnsoUMdPs7/FjBmQwEEv/vz77D
-         Qz+VEl+1m692o6/vZBTMlKWhmRTyEAScle4cE25TgLvxgm+V1vFyQ6KlU5dfqq1g5w
-         9z9L1Le8so55fzeAAeSBw/ie0PC49IHaxaCyXiBzTFu6ALs9AfBABPeZRNiiixwfuO
-         ULN+1EkUoJQIyyf5h2UESsCB/HqghaGLIV6pHgZ2EQTyA0Ia6Wv
+        b=wR8SgHeZg1RUlB8RgH7o+geEDAhsHdvmhlWMwyJjSZdnTG/PjrHLLTWOQYNoohRdz
+         LVa2pf2vhIFFcGYHr52Iv8XuHl/V0xT7Mnk17clOz93EHslQawhEIfeL4KyQPizoRJ
+         ZlNaU/tzgb+PuRZA95QLBrVwiXohxkw6KxReUjXCMh7gqB7HmVfpqrGXSXWYTGg1/K
+         +8zIA5iNyu7HzDNDH72YJa8edwY/VRxC0ypAansbzb5VVOkUlq+Oz7SplmlQgMdB34
+         vHDbW09H/SmBEsvt1FZsNeMaBpiEdSvl7+R5i0Rj7UkLqbliwbHC4hKFG8GWlGSB7M
+         BIr2sXmpFL1hvwG4jSMhAmJZ5lW+xqZkSBzxW5i10ZaazW/GwPMGuPOj2bJXZXiprV
+         iDpK7GU+84gIdJ24Jm99cg8FQ22xlAhqrKCpYQRMTEttu8iRXxJinTYO4/FiEXmvO+
+         +L4YoidNrfZtHlNYrmx57R/JbA7R/CLXvGtsX48qXHJ8Qb8yj6E
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Paul Tan <pyokagan@gmail.com>, Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Jeff King <peff@peff.net>
-Subject: [PATCH 04/20] builtin/log: convert some static functions to use struct object_id
-Date:   Sun, 28 Aug 2016 23:27:41 +0000
-Message-Id: <20160828232757.373278-5-sandals@crustytoothpaste.net>
+Subject: [PATCH 13/20] builtin/rm: convert to use struct object_id
+Date:   Sun, 28 Aug 2016 23:27:50 +0000
+Message-Id: <20160828232757.373278-14-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20160828232757.373278-1-sandals@crustytoothpaste.net>
 References: <20160828232757.373278-1-sandals@crustytoothpaste.net>
@@ -50,137 +50,62 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/log.c | 44 ++++++++++++++++++++++----------------------
- 1 file changed, 22 insertions(+), 22 deletions(-)
+ builtin/rm.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 92dc34dc..226212c9 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -464,9 +464,9 @@ static void show_tagger(char *buf, int len, struct rev_info *rev)
- 	strbuf_release(&out);
+diff --git a/builtin/rm.c b/builtin/rm.c
+index 109969d5..3f3e24eb 100644
+--- a/builtin/rm.c
++++ b/builtin/rm.c
+@@ -107,7 +107,7 @@ static int check_submodules_use_gitfiles(void)
+ 	return errs;
  }
  
--static int show_blob_object(const unsigned char *sha1, struct rev_info *rev, const char *obj_name)
-+static int show_blob_object(const struct object_id *oid, struct rev_info *rev, const char *obj_name)
+-static int check_local_mod(unsigned char *head, int index_only)
++static int check_local_mod(struct object_id *head, int index_only)
  {
--	unsigned char sha1c[20];
-+	struct object_id oidc;
- 	struct object_context obj_context;
- 	char *buf;
- 	unsigned long size;
-@@ -474,13 +474,13 @@ static int show_blob_object(const unsigned char *sha1, struct rev_info *rev, con
- 	fflush(rev->diffopt.file);
- 	if (!DIFF_OPT_TOUCHED(&rev->diffopt, ALLOW_TEXTCONV) ||
- 	    !DIFF_OPT_TST(&rev->diffopt, ALLOW_TEXTCONV))
--		return stream_blob_to_fd(1, sha1, NULL, 0);
-+		return stream_blob_to_fd(1, oid->hash, NULL, 0);
+ 	/*
+ 	 * Items in list are already sorted in the cache order,
+@@ -123,13 +123,13 @@ static int check_local_mod(unsigned char *head, int index_only)
+ 	struct string_list files_submodule = STRING_LIST_INIT_NODUP;
+ 	struct string_list files_local = STRING_LIST_INIT_NODUP;
  
--	if (get_sha1_with_context(obj_name, 0, sha1c, &obj_context))
-+	if (get_sha1_with_context(obj_name, 0, oidc.hash, &obj_context))
- 		die(_("Not a valid object name %s"), obj_name);
- 	if (!obj_context.path[0] ||
--	    !textconv_object(obj_context.path, obj_context.mode, sha1c, 1, &buf, &size))
--		return stream_blob_to_fd(1, sha1, NULL, 0);
-+	    !textconv_object(obj_context.path, obj_context.mode, oidc.hash, 1, &buf, &size))
-+		return stream_blob_to_fd(1, oid->hash, NULL, 0);
- 
- 	if (!buf)
- 		die(_("git show %s: bad file"), obj_name);
-@@ -489,15 +489,15 @@ static int show_blob_object(const unsigned char *sha1, struct rev_info *rev, con
- 	return 0;
- }
- 
--static int show_tag_object(const unsigned char *sha1, struct rev_info *rev)
-+static int show_tag_object(const struct object_id *oid, struct rev_info *rev)
- {
- 	unsigned long size;
- 	enum object_type type;
--	char *buf = read_sha1_file(sha1, &type, &size);
-+	char *buf = read_sha1_file(oid->hash, &type, &size);
- 	int offset = 0;
- 
- 	if (!buf)
--		return error(_("Could not read object %s"), sha1_to_hex(sha1));
-+		return error(_("Could not read object %s"), oid_to_hex(oid));
- 
- 	assert(type == OBJ_TAG);
- 	while (offset < size && buf[offset] != '\n') {
-@@ -574,7 +574,7 @@ int cmd_show(int argc, const char **argv, const char *prefix)
- 		const char *name = objects[i].name;
- 		switch (o->type) {
- 		case OBJ_BLOB:
--			ret = show_blob_object(o->oid.hash, &rev, name);
-+			ret = show_blob_object(&o->oid, &rev, name);
- 			break;
- 		case OBJ_TAG: {
- 			struct tag *t = (struct tag *)o;
-@@ -585,7 +585,7 @@ int cmd_show(int argc, const char **argv, const char *prefix)
- 					diff_get_color_opt(&rev.diffopt, DIFF_COMMIT),
- 					t->tag,
- 					diff_get_color_opt(&rev.diffopt, DIFF_RESET));
--			ret = show_tag_object(o->oid.hash, &rev);
-+			ret = show_tag_object(&o->oid, &rev);
- 			rev.shown_one = 1;
- 			if (ret)
- 				break;
-@@ -1248,11 +1248,11 @@ static struct commit *get_base_commit(const char *base_commit,
- 		if (upstream) {
- 			struct commit_list *base_list;
- 			struct commit *commit;
--			unsigned char sha1[20];
-+			struct object_id oid;
- 
--			if (get_sha1(upstream, sha1))
-+			if (get_oid(upstream, &oid))
- 				die(_("Failed to resolve '%s' as a valid ref."), upstream);
--			commit = lookup_commit_or_die(sha1, "upstream base");
-+			commit = lookup_commit_or_die(oid.hash, "upstream base");
- 			base_list = get_merge_bases_many(commit, total, list);
- 			/* There should be one and only one merge base. */
- 			if (!base_list || base_list->next)
-@@ -1339,15 +1339,15 @@ static void prepare_bases(struct base_tree_info *bases,
- 	 * and stuff them in bases structure.
- 	 */
- 	while ((commit = get_revision(&revs)) != NULL) {
+-	no_head = is_null_sha1(head);
++	no_head = is_null_oid(head);
+ 	for (i = 0; i < list.nr; i++) {
+ 		struct stat st;
+ 		int pos;
+ 		const struct cache_entry *ce;
+ 		const char *name = list.entry[i].name;
 -		unsigned char sha1[20];
 +		struct object_id oid;
- 		struct object_id *patch_id;
- 		if (commit->util)
- 			continue;
--		if (commit_patch_id(commit, &diffopt, sha1, 0))
-+		if (commit_patch_id(commit, &diffopt, oid.hash, 0))
- 			die(_("cannot get patch id"));
- 		ALLOC_GROW(bases->patch_id, bases->nr_patch_id + 1, bases->alloc_patch_id);
- 		patch_id = bases->patch_id + bases->nr_patch_id;
--		hashcpy(patch_id->hash, sha1);
-+		oidcpy(patch_id, &oid);
- 		bases->nr_patch_id++;
- 	}
- }
-@@ -1628,10 +1628,10 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			check_head = 1;
+ 		unsigned mode;
+ 		int local_changes = 0;
+ 		int staged_changes = 0;
+@@ -197,9 +197,9 @@ static int check_local_mod(unsigned char *head, int index_only)
+ 		 * way as changed from the HEAD.
+ 		 */
+ 		if (no_head
+-		     || get_tree_entry(head, name, sha1, &mode)
++		     || get_tree_entry(head->hash, name, oid.hash, &mode)
+ 		     || ce->ce_mode != create_ce_mode(mode)
+-		     || hashcmp(ce->oid.hash, sha1))
++		     || oidcmp(&ce->oid, &oid))
+ 			staged_changes = 1;
  
- 		if (check_head) {
--			unsigned char sha1[20];
-+			struct object_id oid;
- 			const char *ref, *v;
- 			ref = resolve_ref_unsafe("HEAD", RESOLVE_REF_READING,
--						 sha1, NULL);
-+						 oid.hash, NULL);
- 			if (ref && skip_prefix(ref, "refs/heads/", &v))
- 				branch_name = xstrdup(v);
- 			else
-@@ -1802,9 +1802,9 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 
- static int add_pending_commit(const char *arg, struct rev_info *revs, int flags)
- {
--	unsigned char sha1[20];
--	if (get_sha1(arg, sha1) == 0) {
--		struct commit *commit = lookup_commit_reference(sha1);
-+	struct object_id oid;
-+	if (get_oid(arg, &oid) == 0) {
-+		struct commit *commit = lookup_commit_reference(oid.hash);
- 		if (commit) {
- 			commit->object.flags |= flags;
- 			add_pending_object(revs, &commit->object, arg);
+ 		/*
+@@ -351,10 +351,10 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+ 	 * report no changes unless forced.
+ 	 */
+ 	if (!force) {
+-		unsigned char sha1[20];
+-		if (get_sha1("HEAD", sha1))
+-			hashclr(sha1);
+-		if (check_local_mod(sha1, index_only))
++		struct object_id oid;
++		if (get_oid("HEAD", &oid))
++			oidclr(&oid);
++		if (check_local_mod(&oid, index_only))
+ 			exit(1);
+ 	} else if (!index_only) {
+ 		if (check_submodules_use_gitfiles())
