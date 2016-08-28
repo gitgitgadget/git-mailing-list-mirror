@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D7361F859
-	for <e@80x24.org>; Sun, 28 Aug 2016 23:28:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED1331F859
+	for <e@80x24.org>; Sun, 28 Aug 2016 23:29:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932521AbcH1X2x (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Aug 2016 19:28:53 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:41016 "EHLO
+        id S932507AbcH1X2v (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Aug 2016 19:28:51 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:41046 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1756177AbcH1X2F (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 28 Aug 2016 19:28:05 -0400
+        by vger.kernel.org with ESMTP id S1756190AbcH1X2G (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 28 Aug 2016 19:28:06 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 099DD280AE;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 9E67C280B1;
         Sun, 28 Aug 2016 23:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1472426884;
-        bh=q+dH1vUodKqLnCgAERe7xxZ8qXATbbHKsYqoEEIEteE=;
+        bh=Kw5WIhJr4jJhx9DrMGlyMQGO3k3FsJBCyRsuf9lZUhc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=iiI3c13JgONaeslsbhc9wQDwg7FK8LWjmCTML+9mYuulhQ0/a6AEu4SZ/DrXt007r
-         IK1sL9uo4CCfzC2zcK8fEaQJoNHaY/xKRLr/mG5OhYmnfpod0dOrr/8vJNobV/IZ0h
-         Az+M3ZIJqOL/kuYcIyu5BdRWuK8kFVmgguNAWhiHPdEHmQH9Bc6oJBQUg1XipaQX1B
-         hba43bwWomhp+OQubBKAKaH+RzKfUFciZta53eEKrFcALnfndimw2FN3cCng0j4jT+
-         r+DZvzQ8cDuIO7nJfZVTTkrmp8JL3kllYy3kMXiLmJIzKSV7N8kVkeenzI9E1z9ehg
-         fm5OCKF6s0UMgR46XZEcdPqHnBMxJQ6OSmihHWQDMiitUcT0uWnypHKumhBJyyJL0O
-         Wx9h660nNoNLmpf65Djpxn6Ntr7ElHazCpBAlGom5bDLTDv5AG6HvuzrOWHaJzVFiC
-         aoYn4pyIjvvHdQtgv5ekL7EIPwI5BNUDAChj6RuCxugrruMFd1D
+        b=j2PuMu6VYSmmlJ9fULM7UvmPNXWfTJBp4R9y+FdbqYktQl0mmGBqnJKMNVFzn5ZCI
+         X9bPRTTVhzmVzMjX6VertOdG9qSfo48jV7/TXZsRKR3cnzZI9emFxLad7CIrJY5W8q
+         ZOrMuhJPa3c9zHfVE/MKkaTdfQSFN+pPkC+u5MPZ9kkeSQeof+0wCbSbjqOuWqlwOA
+         wQfyQukvDI1wBMI+eLSX9GCmV9hjqximZedsjYed3l+IS6aNqEpEQmNnw4DkSBOOfF
+         pIdglbb9vh8quV/kFJUwZvXyHGpyD9g2BIY2XvD44O0mmar+SxbU3delJCZm8OSsKG
+         54dYn9mEqsuJXWPv/1HKxWFP9BhNJn0i0YFL52RcsWpVlruyBGHkLT6/yp4pKhdzcR
+         ehH4nlnVd8yEq4oKoF682edlSvdK6m1iN1sJvEfKHtb2VJt3FLoD7zPg770QPx02q5
+         dq+o0LxGHNuOvhRVIp7pm56SfCqbSFuxxW6l/juX51i+OpT/ZZ0
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Paul Tan <pyokagan@gmail.com>, Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Jeff King <peff@peff.net>
-Subject: [PATCH 08/20] streaming: make stream_blob_to_fd take struct object_id
-Date:   Sun, 28 Aug 2016 23:27:45 +0000
-Message-Id: <20160828232757.373278-9-sandals@crustytoothpaste.net>
+Subject: [PATCH 10/20] notes-merge: convert struct notes_merge_pair to struct object_id
+Date:   Sun, 28 Aug 2016 23:27:47 +0000
+Message-Id: <20160828232757.373278-11-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20160828232757.373278-1-sandals@crustytoothpaste.net>
 References: <20160828232757.373278-1-sandals@crustytoothpaste.net>
@@ -48,127 +48,282 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since all of its callers have been updated, modify stream_blob_to_fd to
-take a struct object_id.
+Convert each of this structure's members from an unsigned char array to
+a struct object_id.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/cat-file.c | 6 +++---
- builtin/fsck.c     | 2 +-
- builtin/log.c      | 4 ++--
- entry.c            | 2 +-
- streaming.c        | 4 ++--
- streaming.h        | 2 +-
- 6 files changed, 10 insertions(+), 10 deletions(-)
+ notes-merge.c | 122 +++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 62 insertions(+), 60 deletions(-)
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 7b2e0537..49b8fa8e 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -83,7 +83,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+diff --git a/notes-merge.c b/notes-merge.c
+index 97fc42f6..68129cdb 100644
+--- a/notes-merge.c
++++ b/notes-merge.c
+@@ -12,7 +12,7 @@
+ #include "notes-utils.h"
+ 
+ struct notes_merge_pair {
+-	unsigned char obj[20], base[20], local[20], remote[20];
++	struct object_id obj, base, local, remote;
+ };
+ 
+ void init_notes_merge_options(struct notes_merge_options *o)
+@@ -75,7 +75,7 @@ static struct notes_merge_pair *find_notes_merge_pair_pos(
+ 	int i = last_index < len ? last_index : len - 1;
+ 	int prev_cmp = 0, cmp = -1;
+ 	while (i >= 0 && i < len) {
+-		cmp = hashcmp(obj, list[i].obj);
++		cmp = hashcmp(obj, list[i].obj.hash);
+ 		if (!cmp) /* obj belongs @ i */
+ 			break;
+ 		else if (cmp < 0 && prev_cmp <= 0) /* obj belongs < i */
+@@ -149,25 +149,25 @@ static struct notes_merge_pair *diff_tree_remote(struct notes_merge_options *o,
+ 		mp = find_notes_merge_pair_pos(changes, len, obj, 1, &occupied);
+ 		if (occupied) {
+ 			/* We've found an addition/deletion pair */
+-			assert(!hashcmp(mp->obj, obj));
++			assert(!hashcmp(mp->obj.hash, obj));
+ 			if (is_null_oid(&p->one->oid)) { /* addition */
+-				assert(is_null_sha1(mp->remote));
+-				hashcpy(mp->remote, p->two->oid.hash);
++				assert(is_null_oid(&mp->remote));
++				oidcpy(&mp->remote, &p->two->oid);
+ 			} else if (is_null_oid(&p->two->oid)) { /* deletion */
+-				assert(is_null_sha1(mp->base));
+-				hashcpy(mp->base, p->one->oid.hash);
++				assert(is_null_oid(&mp->base));
++				oidcpy(&mp->base, &p->one->oid);
+ 			} else
+ 				assert(!"Invalid existing change recorded");
+ 		} else {
+-			hashcpy(mp->obj, obj);
+-			hashcpy(mp->base, p->one->oid.hash);
+-			hashcpy(mp->local, uninitialized);
+-			hashcpy(mp->remote, p->two->oid.hash);
++			hashcpy(mp->obj.hash, obj);
++			oidcpy(&mp->base, &p->one->oid);
++			hashcpy(mp->local.hash, uninitialized);
++			oidcpy(&mp->remote, &p->two->oid);
+ 			len++;
+ 		}
+ 		trace_printf("\t\tStored remote change for %s: %.7s -> %.7s\n",
+-		       sha1_to_hex(mp->obj), sha1_to_hex(mp->base),
+-		       sha1_to_hex(mp->remote));
++		       oid_to_hex(&mp->obj), oid_to_hex(&mp->base),
++		       oid_to_hex(&mp->remote));
+ 	}
+ 	diff_flush(&opt);
+ 	clear_pathspec(&opt.pathspec);
+@@ -216,7 +216,7 @@ static void diff_tree_local(struct notes_merge_options *o,
+ 			continue;
  		}
  
- 		if (type == OBJ_BLOB)
--			return stream_blob_to_fd(1, oid.hash, NULL, 0);
-+			return stream_blob_to_fd(1, &oid, NULL, 0);
- 		buf = read_sha1_file(oid.hash, &type, &size);
- 		if (!buf)
- 			die("Cannot read object %s", obj_name);
-@@ -105,7 +105,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 				oidcpy(&blob_oid, &oid);
- 
- 			if (sha1_object_info(blob_oid.hash, NULL) == OBJ_BLOB)
--				return stream_blob_to_fd(1, blob_oid.hash, NULL, 0);
-+				return stream_blob_to_fd(1, &blob_oid, NULL, 0);
+-		assert(!hashcmp(mp->obj, obj));
++		assert(!hashcmp(mp->obj.hash, obj));
+ 		if (is_null_oid(&p->two->oid)) { /* deletion */
  			/*
- 			 * we attempted to dereference a tag to a blob
- 			 * and failed; there may be new dereference
-@@ -240,7 +240,7 @@ static void print_object_or_die(struct batch_options *opt, struct expand_data *d
- 	if (data->type == OBJ_BLOB) {
- 		if (opt->buffer_output)
- 			fflush(stdout);
--		if (stream_blob_to_fd(1, oid->hash, NULL, 0) < 0)
-+		if (stream_blob_to_fd(1, oid, NULL, 0) < 0)
- 			die("unable to stream %s to stdout", oid_to_hex(oid));
+ 			 * Either this is a true deletion (1), or it is part
+@@ -227,8 +227,8 @@ static void diff_tree_local(struct notes_merge_options *o,
+ 			 * (3) mp->local is uninitialized; set it to null_sha1
+ 			 *     (will be overwritten by following addition)
+ 			 */
+-			if (!hashcmp(mp->local, uninitialized))
+-				hashclr(mp->local);
++			if (!hashcmp(mp->local.hash, uninitialized))
++				oidclr(&mp->local);
+ 		} else if (is_null_oid(&p->one->oid)) { /* addition */
+ 			/*
+ 			 * Either this is a true addition (1), or it is part
+@@ -238,22 +238,22 @@ static void diff_tree_local(struct notes_merge_options *o,
+ 			 * (2) mp->local is uninitialized; set to p->two->sha1
+ 			 * (3) mp->local is null_sha1;     set to p->two->sha1
+ 			 */
+-			assert(is_null_sha1(mp->local) ||
+-			       !hashcmp(mp->local, uninitialized));
+-			hashcpy(mp->local, p->two->oid.hash);
++			assert(is_null_oid(&mp->local) ||
++			       !hashcmp(mp->local.hash, uninitialized));
++			oidcpy(&mp->local, &p->two->oid);
+ 		} else { /* modification */
+ 			/*
+ 			 * This is a true modification. p->one->sha1 shall
+ 			 * match mp->base, and mp->local shall be uninitialized.
+ 			 * Set mp->local to p->two->sha1.
+ 			 */
+-			assert(!hashcmp(p->one->oid.hash, mp->base));
+-			assert(!hashcmp(mp->local, uninitialized));
+-			hashcpy(mp->local, p->two->oid.hash);
++			assert(!oidcmp(&p->one->oid, &mp->base));
++			assert(!hashcmp(mp->local.hash, uninitialized));
++			oidcpy(&mp->local, &p->two->oid);
+ 		}
+ 		trace_printf("\t\tStored local change for %s: %.7s -> %.7s\n",
+-		       sha1_to_hex(mp->obj), sha1_to_hex(mp->base),
+-		       sha1_to_hex(mp->local));
++		       oid_to_hex(&mp->obj), oid_to_hex(&mp->base),
++		       oid_to_hex(&mp->local));
  	}
- 	else {
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index f604adff..055dfdcf 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -268,7 +268,7 @@ static void check_unreachable_object(struct object *obj)
- 			if (!(f = fopen(filename, "w")))
- 				die_errno("Could not open '%s'", filename);
- 			if (obj->type == OBJ_BLOB) {
--				if (stream_blob_to_fd(fileno(f), obj->oid.hash, NULL, 1))
-+				if (stream_blob_to_fd(fileno(f), &obj->oid, NULL, 1))
- 					die_errno("Could not write '%s'", filename);
- 			} else
- 				fprintf(f, "%s\n", describe_object(obj));
-diff --git a/builtin/log.c b/builtin/log.c
-index 48b9db51..0b427b67 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -474,13 +474,13 @@ static int show_blob_object(const struct object_id *oid, struct rev_info *rev, c
- 	fflush(rev->diffopt.file);
- 	if (!DIFF_OPT_TOUCHED(&rev->diffopt, ALLOW_TEXTCONV) ||
- 	    !DIFF_OPT_TST(&rev->diffopt, ALLOW_TEXTCONV))
--		return stream_blob_to_fd(1, oid->hash, NULL, 0);
-+		return stream_blob_to_fd(1, oid, NULL, 0);
+ 	diff_flush(&opt);
+ 	clear_pathspec(&opt.pathspec);
+@@ -343,11 +343,11 @@ static int ll_merge_in_worktree(struct notes_merge_options *o,
+ 	mmfile_t base, local, remote;
+ 	int status;
  
- 	if (get_sha1_with_context(obj_name, 0, oidc.hash, &obj_context))
- 		die(_("Not a valid object name %s"), obj_name);
- 	if (!obj_context.path[0] ||
- 	    !textconv_object(obj_context.path, obj_context.mode, &oidc, 1, &buf, &size))
--		return stream_blob_to_fd(1, oid->hash, NULL, 0);
-+		return stream_blob_to_fd(1, oid, NULL, 0);
+-	read_mmblob(&base, p->base);
+-	read_mmblob(&local, p->local);
+-	read_mmblob(&remote, p->remote);
++	read_mmblob(&base, p->base.hash);
++	read_mmblob(&local, p->local.hash);
++	read_mmblob(&remote, p->remote.hash);
  
- 	if (!buf)
- 		die(_("git show %s: bad file"), obj_name);
-diff --git a/entry.c b/entry.c
-index ce80d292..c6eea240 100644
---- a/entry.c
-+++ b/entry.c
-@@ -127,7 +127,7 @@ static int streaming_write_entry(const struct cache_entry *ce, char *path,
- 	if (fd < 0)
- 		return -1;
+-	status = ll_merge(&result_buf, sha1_to_hex(p->obj), &base, NULL,
++	status = ll_merge(&result_buf, oid_to_hex(&p->obj), &base, NULL,
+ 			  &local, o->local_ref, &remote, o->remote_ref, NULL);
  
--	result |= stream_blob_to_fd(fd, ce->oid.hash, filter, 1);
-+	result |= stream_blob_to_fd(fd, &ce->oid, filter, 1);
- 	*fstat_done = fstat_output(fd, state, statbuf);
- 	result |= close(fd);
+ 	free(base.ptr);
+@@ -357,7 +357,7 @@ static int ll_merge_in_worktree(struct notes_merge_options *o,
+ 	if ((status < 0) || !result_buf.ptr)
+ 		die("Failed to execute internal merge");
  
-diff --git a/streaming.c b/streaming.c
-index 811fcc24..3c48f049 100644
---- a/streaming.c
-+++ b/streaming.c
-@@ -497,7 +497,7 @@ static open_method_decl(incore)
-  * Users of streaming interface
-  ****************************************************************/
+-	write_buf_to_worktree(p->obj, result_buf.ptr, result_buf.size);
++	write_buf_to_worktree(p->obj.hash, result_buf.ptr, result_buf.size);
+ 	free(result_buf.ptr);
  
--int stream_blob_to_fd(int fd, unsigned const char *sha1, struct stream_filter *filter,
-+int stream_blob_to_fd(int fd, const struct object_id *oid, struct stream_filter *filter,
- 		      int can_seek)
- {
- 	struct git_istream *st;
-@@ -506,7 +506,7 @@ int stream_blob_to_fd(int fd, unsigned const char *sha1, struct stream_filter *f
- 	ssize_t kept = 0;
- 	int result = -1;
+ 	return status;
+@@ -372,51 +372,52 @@ static int merge_one_change_manual(struct notes_merge_options *o,
  
--	st = open_istream(sha1, &type, &sz, filter);
-+	st = open_istream(oid->hash, &type, &sz, filter);
- 	if (!st) {
- 		if (filter)
- 			free_stream_filter(filter);
-diff --git a/streaming.h b/streaming.h
-index 1d05c2a4..73c1d156 100644
---- a/streaming.h
-+++ b/streaming.h
-@@ -12,6 +12,6 @@ extern struct git_istream *open_istream(const unsigned char *, enum object_type
- extern int close_istream(struct git_istream *);
- extern ssize_t read_istream(struct git_istream *, void *, size_t);
+ 	trace_printf("\t\t\tmerge_one_change_manual(obj = %.7s, base = %.7s, "
+ 	       "local = %.7s, remote = %.7s)\n",
+-	       sha1_to_hex(p->obj), sha1_to_hex(p->base),
+-	       sha1_to_hex(p->local), sha1_to_hex(p->remote));
++	       oid_to_hex(&p->obj), oid_to_hex(&p->base),
++	       oid_to_hex(&p->local), oid_to_hex(&p->remote));
  
--extern int stream_blob_to_fd(int fd, const unsigned char *, struct stream_filter *, int can_seek);
-+extern int stream_blob_to_fd(int fd, const struct object_id *, struct stream_filter *, int can_seek);
+ 	/* add "Conflicts:" section to commit message first time through */
+ 	if (!o->has_worktree)
+ 		strbuf_addstr(&(o->commit_msg), "\n\nConflicts:\n");
  
- #endif /* STREAMING_H */
+-	strbuf_addf(&(o->commit_msg), "\t%s\n", sha1_to_hex(p->obj));
++	strbuf_addf(&(o->commit_msg), "\t%s\n", oid_to_hex(&p->obj));
+ 
+ 	if (o->verbosity >= 2)
+-		printf("Auto-merging notes for %s\n", sha1_to_hex(p->obj));
++		printf("Auto-merging notes for %s\n", oid_to_hex(&p->obj));
+ 	check_notes_merge_worktree(o);
+-	if (is_null_sha1(p->local)) {
++	if (is_null_oid(&p->local)) {
+ 		/* D/F conflict, checkout p->remote */
+-		assert(!is_null_sha1(p->remote));
++		assert(!is_null_oid(&p->remote));
+ 		if (o->verbosity >= 1)
+ 			printf("CONFLICT (delete/modify): Notes for object %s "
+ 				"deleted in %s and modified in %s. Version from %s "
+ 				"left in tree.\n",
+-				sha1_to_hex(p->obj), lref, rref, rref);
+-		write_note_to_worktree(p->obj, p->remote);
+-	} else if (is_null_sha1(p->remote)) {
++				oid_to_hex(&p->obj), lref, rref, rref);
++		write_note_to_worktree(p->obj.hash, p->remote.hash);
++	} else if (is_null_oid(&p->remote)) {
+ 		/* D/F conflict, checkout p->local */
+-		assert(!is_null_sha1(p->local));
++		assert(!is_null_oid(&p->local));
+ 		if (o->verbosity >= 1)
+ 			printf("CONFLICT (delete/modify): Notes for object %s "
+ 				"deleted in %s and modified in %s. Version from %s "
+ 				"left in tree.\n",
+-				sha1_to_hex(p->obj), rref, lref, lref);
+-		write_note_to_worktree(p->obj, p->local);
++				oid_to_hex(&p->obj), rref, lref, lref);
++		write_note_to_worktree(p->obj.hash, p->local.hash);
+ 	} else {
+ 		/* "regular" conflict, checkout result of ll_merge() */
+ 		const char *reason = "content";
+-		if (is_null_sha1(p->base))
++		if (is_null_oid(&p->base))
+ 			reason = "add/add";
+-		assert(!is_null_sha1(p->local));
+-		assert(!is_null_sha1(p->remote));
++		assert(!is_null_oid(&p->local));
++		assert(!is_null_oid(&p->remote));
+ 		if (o->verbosity >= 1)
+ 			printf("CONFLICT (%s): Merge conflict in notes for "
+-				"object %s\n", reason, sha1_to_hex(p->obj));
++				"object %s\n", reason,
++				oid_to_hex(&p->obj));
+ 		ll_merge_in_worktree(o, p);
+ 	}
+ 
+ 	trace_printf("\t\t\tremoving from partial merge result\n");
+-	remove_note(t, p->obj);
++	remove_note(t, p->obj.hash);
+ 
+ 	return 1;
+ }
+@@ -435,29 +436,29 @@ static int merge_one_change(struct notes_merge_options *o,
+ 	case NOTES_MERGE_RESOLVE_OURS:
+ 		if (o->verbosity >= 2)
+ 			printf("Using local notes for %s\n",
+-						sha1_to_hex(p->obj));
++						oid_to_hex(&p->obj));
+ 		/* nothing to do */
+ 		return 0;
+ 	case NOTES_MERGE_RESOLVE_THEIRS:
+ 		if (o->verbosity >= 2)
+ 			printf("Using remote notes for %s\n",
+-						sha1_to_hex(p->obj));
+-		if (add_note(t, p->obj, p->remote, combine_notes_overwrite))
++						oid_to_hex(&p->obj));
++		if (add_note(t, p->obj.hash, p->remote.hash, combine_notes_overwrite))
+ 			die("BUG: combine_notes_overwrite failed");
+ 		return 0;
+ 	case NOTES_MERGE_RESOLVE_UNION:
+ 		if (o->verbosity >= 2)
+ 			printf("Concatenating local and remote notes for %s\n",
+-							sha1_to_hex(p->obj));
+-		if (add_note(t, p->obj, p->remote, combine_notes_concatenate))
++							oid_to_hex(&p->obj));
++		if (add_note(t, p->obj.hash, p->remote.hash, combine_notes_concatenate))
+ 			die("failed to concatenate notes "
+ 			    "(combine_notes_concatenate)");
+ 		return 0;
+ 	case NOTES_MERGE_RESOLVE_CAT_SORT_UNIQ:
+ 		if (o->verbosity >= 2)
+ 			printf("Concatenating unique lines in local and remote "
+-				"notes for %s\n", sha1_to_hex(p->obj));
+-		if (add_note(t, p->obj, p->remote, combine_notes_cat_sort_uniq))
++				"notes for %s\n", oid_to_hex(&p->obj));
++		if (add_note(t, p->obj.hash, p->remote.hash, combine_notes_cat_sort_uniq))
+ 			die("failed to concatenate notes "
+ 			    "(combine_notes_cat_sort_uniq)");
+ 		return 0;
+@@ -475,20 +476,21 @@ static int merge_changes(struct notes_merge_options *o,
+ 	for (i = 0; i < *num_changes; i++) {
+ 		struct notes_merge_pair *p = changes + i;
+ 		trace_printf("\t\t%.7s: %.7s -> %.7s/%.7s\n",
+-		       sha1_to_hex(p->obj), sha1_to_hex(p->base),
+-		       sha1_to_hex(p->local), sha1_to_hex(p->remote));
++		       oid_to_hex(&p->obj), oid_to_hex(&p->base),
++		       oid_to_hex(&p->local),
++		       oid_to_hex(&p->remote));
+ 
+-		if (!hashcmp(p->base, p->remote)) {
++		if (!oidcmp(&p->base, &p->remote)) {
+ 			/* no remote change; nothing to do */
+ 			trace_printf("\t\t\tskipping (no remote change)\n");
+-		} else if (!hashcmp(p->local, p->remote)) {
++		} else if (!oidcmp(&p->local, &p->remote)) {
+ 			/* same change in local and remote; nothing to do */
+ 			trace_printf("\t\t\tskipping (local == remote)\n");
+-		} else if (!hashcmp(p->local, uninitialized) ||
+-			   !hashcmp(p->local, p->base)) {
++		} else if (!hashcmp(p->local.hash, uninitialized) ||
++			   !oidcmp(&p->local, &p->base)) {
+ 			/* no local change; adopt remote change */
+ 			trace_printf("\t\t\tno local change, adopted remote\n");
+-			if (add_note(t, p->obj, p->remote,
++			if (add_note(t, p->obj.hash, p->remote.hash,
+ 				     combine_notes_overwrite))
+ 				die("BUG: combine_notes_overwrite failed");
+ 		} else {
