@@ -2,97 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_RED shortcircuit=no
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8937B1FD99
-	for <e@80x24.org>; Sun, 28 Aug 2016 08:38:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 628461FD99
+	for <e@80x24.org>; Sun, 28 Aug 2016 09:49:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755275AbcH1Iit (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Aug 2016 04:38:49 -0400
-Received: from mout.gmx.net ([212.227.17.20]:52144 "EHLO mout.gmx.net"
+        id S1755292AbcH1Jts (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Aug 2016 05:49:48 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:40632 "EHLO dcvr.yhbt.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755220AbcH1Iis (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Aug 2016 04:38:48 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0LjN0F-1b7czh4Bxv-00daov; Sun, 28 Aug 2016 10:38:39
- +0200
-Date:   Sun, 28 Aug 2016 10:38:36 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-cc:     Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>, meta@public-inbox.org,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Eric Wong <e@80x24.org>
-Subject: Re: Working with public-inbox.org [Was: [PATCH] rev-parse: respect
- core.hooksPath in --git-path]
-In-Reply-To: <5e480a5b-3752-55c0-65ed-52ca5802851f@gmail.com>
-Message-ID: <alpine.DEB.2.20.1608281036460.129229@virtualbox>
-References: <CAGZ79kasebzJb=b2n=JQiVMrSfJKaVfZaaoaVJFkXWuqKjfYKw@mail.gmail.com> <alpine.DEB.2.20.1608181430280.4924@virtualbox> <20160819150340.725bejnps6474u2e@sigill.intra.peff.net> <alpine.DEB.2.20.1608221450250.4924@virtualbox>
- <CACsJy8BG63oaLbw0f7try3OpzdphLC7UGAaJ=vgikEB36Pagqg@mail.gmail.com> <5e480a5b-3752-55c0-65ed-52ca5802851f@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1755236AbcH1Jtr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Aug 2016 05:49:47 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id 7A5C01FD99;
+        Sun, 28 Aug 2016 09:49:46 +0000 (UTC)
+Date:   Sun, 28 Aug 2016 09:49:46 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
+Cc:     git@vger.kernel.org, Doug Rathbone <doug@dougrathbone.com>,
+        David Bainbridge <david.bainbridge@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC] Proposed questions for "Git User's Survey 2016"
+Message-ID: <20160828094946.GA11722@dcvr>
+References: <91a2ffbe-a73b-fbb9-96da-9aea4d439e5a@gmail.com>
+ <20160826061500.GA22213@dcvr>
+ <6d171c23-65f6-5f67-7d80-051f2dfe8678@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-615837168-1472373519=:129229"
-X-Provags-ID: V03:K0:CNoKLRIU2V1a3xsaedosGzqG8kDz3JMAYFP/b2m53UuHk3zHBO6
- XlQ38yLr7lhDG2uJNzUmjxnOxqF62SHsQ/J5iv2eZKp3QGOLSTgRe8x16EOP7kO9C19C0iN
- +FqZBhXw4AdohEJAyLdcWHuYpfS1eLhdyUYuM3lgCaQ28DrAEzrNg8kbA/yL9SXKGX/C9kU
- eIR1BdLx8vbp32De9S7JQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:hzmhGYxgfAA=:5jDTFep8Z78Qci4KQH2vz/
- X+x9Hgbq5MWJSx3OsXNFYT/sffP5ebhJqdS0CWxeQBOpiEi4eunfjSO21vfGtePpTkPB7rKGD
- D8wCaXoRvoQUvmyLbUr3QPihLkPeW/9PB8LcJHvwe43fHg//BU03PTiiKCbyx6dKIBpZ2W0lY
- zCeDJD832HwGkvrfw9gPisbDS5piqLSWgEj5hO8wYz0z0AI6s+XZb7C4JaxLmt/gisYU9t8LW
- MzawfoD6JjOM3wTQcNIgRM0mnlYIZ5JBIg5DVgYtrF6haviOQ0PHmRnYGiZJ+3pmaI0u9ev/b
- 8htozQJ7nMCo5VzHG2Ma6L6p8cS6SVhtOQnQK+3+d3eKhIdvOYgv1GL8fMpzWCAOL1jxLTojv
- gbP9OXoqiy925W7KXQ/88YncsDn3kCCpyBYpbI7LalKYRAu1hk+LcE5rMHJqikJ0yjHws2ycB
- +1thxlJQoQc6XrcV6cMlAjv56pKnrJ6os2vp8eifDoQ6+m9fEa4C5LuIt1KIZwKBm3bFScC6l
- f5V0GaCps3VBuptSbXlpxHM8lNHpX8LK71LxQU4+5Qmhyzo5E7/YuRcW07CuC5Z9SCCKJqlYQ
- UWQoa3QPAPjqNSiHZvyQM8RMfcV0N+CmZWOiTaDAUQ7mf57+0142w2dLL7CJouhipXJBBHvxU
- r4bF74QBR9i1++XjuqGKorAXQDPMWQ7P/Sr8aQ3ZmCvIMMF6Ab+G1TvNKPcQDvgQoPLGfgxMh
- gY+0/EaaZ5KsP5MgQ3eFIjaRb8xbC5BYwg3rbObwfnwjw02yoWOHWUvscIPrLiHgtjY+djROO
- OUBYF5M
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6d171c23-65f6-5f67-7d80-051f2dfe8678@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Jakub Narębski <jnareb@gmail.com> wrote:
+> W dniu 26.08.2016 o 08:15, Eric Wong pisze:
+> 
+> > Not directly-related to the survey questions, but can you ensure
+> > it's accessible to folks without JavaScript/graphics, and
+> > perhaps also ensure it is on a host that is Tor-friendly?
+> 
+> I plan on using Survs.com (where we have Premium account for free,
+> thanks to Survs admins).  It has good online analysis tools, allows
+> to download results in easy parseable format[1], and has support
+> for multiple channels.
+> 
+> [1]: https://github.com/jnareb/GitSurvey-scripts
+> 
+> 
+> It is possible to have a channel without JavaScript and without
+> cookies (anonymous), at the cost of having to fill the survey
+> in one go (without cookies and JavaScript you cannot go back
+> to fill more questions, or change your mind about answers).
+> The main page of survey would have a link to JavaScript-free
+> version, and all announcements (by me) would include it.
 
---8323329-615837168-1472373519=:129229
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Thanks.
 
-Hi Kuba & Duy,
+> There would be no graphics that are not purely optional
+> (decorative); probably there would be just a logo.
+> 
+> I'm not sure how Tor-friendly is this host.
 
-On Sun, 28 Aug 2016, Jakub Nar=C4=99bski wrote:
+I was able to get to Survs.com using Tor (maybe it was just luck
+with a new exit).
 
-> W dniu 22.08.2016 o 15:15, Duy Nguyen pisze:
-> > On Mon, Aug 22, 2016 at 8:06 PM, Johannes Schindelin
-> > <Johannes.Schindelin@gmx.de> wrote:
-> >>
-> >> My point stands. We are way more uninviting to contributors than
-> >> necessary. And a huge part of the problem is that we require contribut=
-ors
-> >> to send their patches inlined into whitespace-preserving mails.
-> >=20
-> > We probably can settle this in the next git survey with a new
-> > question: what's stopping you from contributing to git?
->=20
-> Added to second take on proposed questions for Git User's Survey 2016
-> https://public-inbox.org/git/ae804c55-d145-fc90-e1a9-6ebd6c60453a@gmail.c=
-om/T/#u
-> '[RFCv2] Proposed questions for "Git User's Survey 2016", take two'
->=20
-> Message-ID: <91a2ffbe-a73b-fbb9-96da-9aea4d439e5a@gmail.com>
+> > Graphics setups often require non-Free firmware or drivers for
+> > acceptable performance; and there are also visually-impaired
+> > users who will need screen readers or Braille.
+> 
+> A question: would it be better to have the whole survey one one
+> large page, or have it split into pages (with fever questions
+> per page)?
 
-I would like to strongly caution against putting too much stock into this
-users' survey. It is the best we have, granted. Yet I have not heard from
-anybody that they participated in the survey, unless they were also
-subscribed to the Git mailing list.
+I prefer single. One could get one page, take take time and let the
+connection drop/fail, and send it over all in one go.  With multiple
+pages, one would have to reconnect for every POST.
 
-Ciao,
-Johannes
---8323329-615837168-1472373519=:129229--
+(fittingly, my connection failed writing this message a few
+ days ago and I only got back around to it)
