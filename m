@@ -2,123 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F10ED1FD99
-	for <e@80x24.org>; Mon, 29 Aug 2016 22:25:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81DE51FD99
+	for <e@80x24.org>; Mon, 29 Aug 2016 22:42:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756774AbcH2WZV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 18:25:21 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:41340 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1756751AbcH2WZU (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 29 Aug 2016 18:25:20 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1756157AbcH2WmJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 18:42:09 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60808 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752043AbcH2WmI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2016 18:42:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EA0C03A140;
+        Mon, 29 Aug 2016 18:42:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=dVuHn02KXyoTfyiW0qjk7MtYObY=; b=wx3Wmp
+        aG9ycAl94n5NNwe0++rRRVCBwL4Sj4Wz1uyQUsSkqWopVFFaHmKFnd9Dw5KRfEJ7
+        Bs1gLtbyV6UQ3KvblfkdLIF4nZQ5DnonATl+ra2mwI6GmLWpLfgPS9ect5u7L49p
+        v/kqBwzEq+a7Id3Xi9FAffDEt7K4J6iiv9BNk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=JZiCX0RV7K7pGvYd42cFCzLPy+rDFHsY
+        A4Nuu3LOjseJNbqVIpnzYoJhmRrsIYH8ByUvj/+E9khHUfDN0kIm5/K9GV9eaS+u
+        J36ZGRdgqo2GoGUUJs6n0tN+ADLRU1l/dp8Oe7z9rTPGC4kuYXku3lfW4Ny736Dg
+        508a5Fy/RvU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E366B3A13F;
+        Mon, 29 Aug 2016 18:42:01 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 1C620280A6;
-        Mon, 29 Aug 2016 22:25:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1472509513;
-        bh=6zB6GAon/wlws+bZ5iAU6WxqXDdorcumXZzwBBeqIO8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZuuqyQneQXpmHWC/frRhHoR0UWYf0gF+xuSqJfGVTb4dz/7F9qYa1utpmUm0ROGvo
-         K/zhEP2Kn2OUIpET8wXcIepTCczuj83yxe/WoqGXwWvnQ669DBbfDABi9cnw+cjQBp
-         URRfV3/OuJSG3xHVvzUlTIm240ovofAOi6dpBK6NC0RiDFlex5PA5ig/0gfVGqoudN
-         5nTPWL+FvqZmKKru4dQI94TPffddt1uX0JZfyQZ5gITYzo1SvUyhzr5nrkw13jjRwc
-         r9KlsVXghpq+lgDptfJdmiBqZK5m9DnyOLllLpvP8tgXHDf+LnvX1hWbVGxhiaUaxf
-         l0kknIu9LcGsdjpmsqTzwhuCmzJAh5Q38AYE2veWdeAi4AHDHwIxX1Bdmq84KF56Z7
-         1aDhEOkp9mdoubrbkZ6aV0nPu5NazwkcfGJ+KKUysnH2rst4EVg1RJReXZXED1xXGu
-         6ZFPxCFtIn2FuN1QnheGmdpuxCRvWy1sLrxZV0E0esPfpnwCF4a
-Date:   Mon, 29 Aug 2016 22:25:09 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-        git@vger.kernel.org, Paul Tan <pyokagan@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 01/20] cache: convert struct cache_entry to use struct
- object_id
-Message-ID: <20160829222509.nyms2kexdilwe7y5@vauxhall.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-        git@vger.kernel.org, Paul Tan <pyokagan@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Jeff King <peff@peff.net>
-References: <20160828232757.373278-1-sandals@crustytoothpaste.net>
- <20160828232757.373278-2-sandals@crustytoothpaste.net>
- <577f6266-42ec-6c7b-8b21-1e4997f2b816@gmail.com>
- <alpine.DEB.2.20.1608291743060.129229@virtualbox>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C8FAE3A13D;
+        Mon, 29 Aug 2016 18:42:00 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/6] pull: drop confusing prefix parameter of die_on_unclean_work_tree()
+References: <cover.1472137582.git.johannes.schindelin@gmx.de>
+        <8fd43aabe0ee2427276b94928a4d9d8d2ef08613.1472137582.git.johannes.schindelin@gmx.de>
+Date:   Mon, 29 Aug 2016 15:41:58 -0700
+In-Reply-To: <8fd43aabe0ee2427276b94928a4d9d8d2ef08613.1472137582.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Thu, 25 Aug 2016 17:06:44 +0200
+        (CEST)")
+Message-ID: <xmqqvayj6vux.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="rozgqzxfbqynjq32"
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1608291743060.129229@virtualbox>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.7.0-rc7-amd64)
-User-Agent: Mutt/1.6.2-neo (2016-08-08)
+Content-Type: text/plain
+X-Pobox-Relay-ID: CCC71BCA-6E39-11E6-9A4A-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
---rozgqzxfbqynjq32
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> -static int has_unstaged_changes(const char *prefix)
+> +static int has_unstaged_changes(void)
+>  {
+>  	struct rev_info rev_info;
+>  	int result;
+>  
+> -	init_revisions(&rev_info, prefix);
+> +	init_revisions(&rev_info, NULL);
+>  	DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
+>  	DIFF_OPT_SET(&rev_info.diffopt, QUICK);
+>  	diff_setup_done(&rev_info.diffopt);
+> @@ -344,7 +344,7 @@ static int has_unstaged_changes(const char *prefix)
+>  /**
+>   * Returns 1 if there are uncommitted changes, 0 otherwise.
+>   */
+> -static int has_uncommitted_changes(const char *prefix)
+> +static int has_uncommitted_changes(void)
+>  {
+>  	struct rev_info rev_info;
+>  	int result;
+> @@ -352,7 +352,7 @@ static int has_uncommitted_changes(const char *prefix)
+>  	if (is_cache_unborn())
+>  		return 0;
+>  
+> -	init_revisions(&rev_info, prefix);
+> +	init_revisions(&rev_info, NULL);
 
-On Mon, Aug 29, 2016 at 05:43:41PM +0200, Johannes Schindelin wrote:
-> Hi Kuba,
->=20
-> On Mon, 29 Aug 2016, Jakub Nar=C4=99bski wrote:
->=20
-> > I wonder if writing this patch series (or rather the following one)
-> > would be helped by using one of semantic patch tools, such as
-> > Coccinelle[1], spdiff[2], or Undebt[3]...
-> >=20
-> > [1]: http://coccinelle.lip6.fr/
->=20
-> If previous work by Brian is any indication, he did use Coccinelle and the
-> commit message actually shows the definition used for the transformation.
+I agree these are good changes.  The prefix being ignored is a mere
+accident and a time-bomb waiting to go off.  As you mentioned in the
+log message, we do not even want to pass a pathspec to limit the "is
+there anything modified" check, which may be affected with prefix,
+but we want a full-tree diff no matter where we started in these two
+functions.
 
-Yes, that is the case.  I used Coccinelle because it's been used with
-success on LKML and it seems to work for the job.  I'll make a note in
-the future that it obviously the semantic patch doesn't include the
-actual struct change.
-
-My goal with using a tool is that it's less error-prone and it helps
-reviewers have more confidence in the changes.  Also, it makes large
-changes far less tedious.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---rozgqzxfbqynjq32
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.14 (GNU/Linux)
-
-iQIcBAEBCgAGBQJXxLZFAAoJEL9TXYEfUvaLwWIP/iQ9gRBBdK1FrsUCGBCVLw2V
-0tZKQ4363R1Iste1vYAFaWhy5gPFvXIIHIcUAOrFLth8m5FKQEA7Yb3GzdoGt3Fm
-BxIw/mUd2hjZJR0jRj8siPAzB1Gm90tIu13GcpCv81/Kkc4OBWfz/S9mBx9+PBbn
-pLc6Ew3tj4qrDTrX/Aobt09AitLTQ3Kqsa5xBvIsv9q08haIYl6Xx2oIY0W9qSB1
-bnTp75zh4BZszYxT9r27lhmNe0CKbgrvPJuff54k2zDi07W9YAhRHlyvLksg3rbN
-jGT6kIticNXNubtotJYEEr1nOWggeQJ4MHcXRm9Nu9KYVbTY9n2GGuB3G1BN5xRe
-EsCJGN80S2T9YwKF6Aadmd43dTRQlHSn5LuDmK2vBIaQVPTIQKCYidESJx+8rrm5
-k0VWJ2yNIfI2AaSrtxfmlKfiAF7KcjpxJJMQhCgfhhnp1+2CO73hmv7fP1thb2Jx
-PyD6LN+cJ8FqHDSaOQjTOVDP2hgTzlrTJFEDna1NLndivgHYsGHh3b1mHsCS7KBC
-qxgcnZcC4hiOnSRVeka1DnpSewzNu/xVuycUWpskcBWdEKz1r1XMNOBYHEzQQ2uH
-I4SxmwJBAC7NziElBO4y3lCy+bbBD9060Ulppe6nlAZuvkbjZfCF4bBYTCVn1E3q
-qWND/+ETCZxwLzLACtgv
-=JZeF
------END PGP SIGNATURE-----
-
---rozgqzxfbqynjq32--
+Good.
