@@ -7,111 +7,76 @@ X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC87E1F6C1
-	for <e@80x24.org>; Mon, 29 Aug 2016 08:06:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 753B41F6C1
+	for <e@80x24.org>; Mon, 29 Aug 2016 08:06:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756778AbcH2IGv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 04:06:51 -0400
-Received: from mout.gmx.net ([212.227.15.15]:60285 "EHLO mout.gmx.net"
+        id S1756763AbcH2IGs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 04:06:48 -0400
+Received: from mout.gmx.net ([212.227.15.15]:49582 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756764AbcH2IGu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2016 04:06:50 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MaqeA-1bOG6u3pEo-00KMbF; Mon, 29 Aug 2016 10:06:47
+        id S1756656AbcH2IGp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2016 04:06:45 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0Lw2Sj-1b3TQK3LiP-017lIE; Mon, 29 Aug 2016 10:06:41
  +0200
-Date:   Mon, 29 Aug 2016 10:06:46 +0200 (CEST)
+Date:   Mon, 29 Aug 2016 10:06:41 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 22/22] sequencer: refactor write_message()
+Subject: [PATCH 21/22] sequencer: left-trim the lines read from the script
 In-Reply-To: <cover.1472457609.git.johannes.schindelin@gmx.de>
-Message-ID: <cb4253698ae3eca066c031e0aec4e83ede1fa3e5.1472457609.git.johannes.schindelin@gmx.de>
+Message-ID: <8c30113a920e075e5ecd68ba31b4007de3e2dbc2.1472457609.git.johannes.schindelin@gmx.de>
 References: <cover.1472457609.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:mPvDrFQ8vFhe81ulKk6S1WqrbvabCGTTs1W53T4DkIInUvi8rsA
- oxUIZjCHbo2NnnJ6pZB0By/jyxyhvoTkBEQnTtNXTgaGd0j4dqPpHXbp4YGv7luJ+BWLhfd
- 5gWvPOuM3wC1/NkGUULP9pCG8pL68tOHMKW3Ofw+2PLpNMWYcg5WB68FwuP/UDWjrOhp8Qy
- j5FLXGyFd7u/eL96O2myw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:7HODeZTPYyo=:FkIa9K+4RvdYmphZm/bGnS
- vB3PjmaFhOvup/2YtPGgRZ/WeVkhU8E5x82ttzIcHpn2v0SlZsuRwSYwTx3KdQ0FxLswZVllK
- 0Y5F2fhByd9+rhj8m7cjQGNicNcAE7EL9M6GW3GfW/BelHTFiLJNc7WrfCky8wlwbwXxpD9Mk
- vi+330yNoV2j26iXzVwHBwFSfCewaNEHCjwsyog7am9MoycQJQoJ87zzxAUyPhPgES9ADvfRh
- 5aQR5T/eHhBN3IicLU7MQdrXaHmK2scGez2ThUmwGlwdyeYZshTUySiCEC1bXR0oPAm1d2Lac
- qtC0lcrxtS0p9zf9+8Q3jpUoNJvr3VYkXBaV1kOeN9NwOXQZTViDJvxH9Y0INjjlCT44mNrhR
- rZ+5yIiUFT9uEj30aVo93JluaFpqtey6OXrbMbjxWicDJUhos0Jao8sT5AkO6lddYb/RDMOVj
- VA+tvzS6RIGsuWxn4ouZrpq0xorUCMybD0Kz7IMRU+euZ7DvwO6ds8phUM9AloIGccX5UltX1
- H2TgRQ7jeU/yR0aEDfBwe+dTd6PEEncZdoA8vnO0YTkzHWk7lsducYwyXtOCykYbeN/ihtpNT
- cM6m7p/LyXmr/PykcM/dhhRzSLmUmFKydaANqMcBFe1DjzWa6L3q4Y8fXKlSN/sfOkVfQI3oL
- zBorZtuSMB1yDJiFpiUhC9KXj0fR7zYuJ9p4Hk/yCoZ4+XLjV9FP+LXh0t9IHdvFxQnwAz6j7
- WbkbHPH3uLaINDE02EQNNud+Ycefhxkmde/ZwtSkzQtI1/7coo3hxE29dA7cdTms/iYqEH5Ug
- 3wjOLJx
+X-Provags-ID: V03:K0:MzD/YWAz0m0vgP7qtNG6/f4wZDkJNyZAwf7JB8apCSAbxqwdcUO
+ r2kf6NsIDsgZ8c3dY0rvzkMh0S/IrN7Hv6YaM7zblLfUHlIrbWaH4hBLw60Mkfve7F7h/EU
+ NzBOcA7M/nfc6PfHIY3zjk0yf386y+itJF8cBBVHqL++isyQYINn9QHJTpF39/awdGNLGfS
+ o57+hYaRxK391/f8qa9/A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:TwoJ7l8XfNg=:w4R4CelRuQQPCvhu/Fqir6
+ 1S4qf7tWdbbdvaZynBE1IRe5ZjVV5bTmvG5n4fuGurEYZ59eTu89NL3FnB/IjB3rVSjQtgrMx
+ lQd++lK5RcEbLXIs2MLRJ+Y8sVP4WUua2ZoL6WMkOfqJ7UX1n8HE8kACW4oTszmNrwvae9/ZC
+ NhB68ByJQdj3XV+3UboFQpMTNfpMJmTk0cJpvUj7rh7+mqdWx0Lp9Nm4oNdU9RO3meHmE4klF
+ HzXUD2uRAMuhZ9jZ8KWb/A/nTfKcoIqbgIEiwK0Zwirecdo03kT6GJk86evEonJYw+3W5hax7
+ CjwG8pFweOXZfOo7vA5ASeYGYIKlBfzxtY1eiQoeT8qZB8bnDu3jwWrj8zBkRx0ie6bviVfNz
+ PuV44HgNVcqrNl/BykQFH63dif/Ww5N2tORDdhbQ4eV6geiVWF5mIWX3zDwtj9A/aza3vx0fs
+ tZQ88KxO7FIbGvMmnsXb1ddeHzF8SlS2Ys6sWMFNQs3svNg/0hPI6YoPW9O1IGf5U4AdmrofR
+ Fz06DzNJVAAzNn6OUNX0BnLLK+x3S2lZqGpDJrkwX4Ha/a5BP8xvEjrdWnWHtT3JjNEAX2sea
+ bmDVhblSHrqtgPou7bVuozlneEtGYJy3ngKIFb2LkN8yywudOcBJ2ZDbqLOww/+bjEziFeHFx
+ mOr7WA7W5AZl1TAYeVc9iHNDYr4T1YM3x5dZOEpkKLqj5bUN+7Nrb9xtnWafFh2I/e1gA4Mvg
+ IxZSQX24CJZP+R/N6zu2FgTqLLtpLEcT/jd51dMtWaZWOUfvt3Sz2vCxt38c/BoaXt8gxb8gQ
+ 0RehgjA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The write_message() function safely writes an strbuf to a file.
-Sometimes this is inconvenient, though: the text to be written may not
-be stored in a strbuf, or the strbuf should not be released after
-writing.
-
-Let's allow for such use cases by refactoring write_message() to allow
-for a convenience function write_file_gently(). As some of the upcoming
-callers of that new function will want to append a newline character,
-let's just add a flag for that, too.
+Interactive rebase's scripts may be indented; We need to handle this
+case, too, now that we prepare the sequencer to process interactive
+rebases.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ sequencer.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/sequencer.c b/sequencer.c
-index 5efed2e..f5b5e5e 100644
+index 0614b90..5efed2e 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -239,22 +239,37 @@ static void print_advice(int show_hint, struct replay_opts *opts)
- 	}
- }
+@@ -864,6 +864,9 @@ static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
+ 	char *end_of_object_name;
+ 	int i, saved, status, padding;
  
--static int write_message(struct strbuf *msgbuf, const char *filename)
-+static int write_with_lock_file(const char *filename,
-+				const void *buf, size_t len, int append_eol)
- {
- 	static struct lock_file msg_file;
- 
- 	int msg_fd = hold_lock_file_for_update(&msg_file, filename, 0);
- 	if (msg_fd < 0)
- 		return error_errno(_("Could not lock '%s'"), filename);
--	if (write_in_full(msg_fd, msgbuf->buf, msgbuf->len) < 0)
-+	if (write_in_full(msg_fd, buf, len) < 0)
- 		return error_errno(_("Could not write to %s"), filename);
--	strbuf_release(msgbuf);
-+	if (append_eol && write(msg_fd, "\n", 1) < 0)
-+		return error_errno(_("Could not write eol to %s"), filename);
- 	if (commit_lock_file(&msg_file) < 0)
- 		return error(_("Error wrapping up %s."), filename);
- 
- 	return 0;
- }
- 
-+static int write_message(struct strbuf *msgbuf, const char *filename)
-+{
-+	int res = write_with_lock_file(filename, msgbuf->buf, msgbuf->len, 0);
-+	strbuf_release(msgbuf);
-+	return res;
-+}
++	/* left-trim */
++	bol += strspn(bol, " \t");
 +
-+static int write_file_gently(const char *filename,
-+			     const char *text, int append_eol)
-+{
-+	return write_with_lock_file(filename, text, strlen(text), append_eol);
-+}
-+
- /*
-  * Reads a file that was presumably written by a shell script, i.e.
-  * with an end-of-line marker that needs to be stripped.
+ 	for (i = 0; i < ARRAY_SIZE(todo_command_strings); i++)
+ 		if (skip_prefix(bol, todo_command_strings[i], &bol)) {
+ 			item->command = i;
 -- 
 2.10.0.rc1.114.g2bd6b38
+
+
