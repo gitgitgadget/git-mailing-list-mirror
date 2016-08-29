@@ -2,154 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 332C31FD99
-	for <e@80x24.org>; Mon, 29 Aug 2016 22:15:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8758B1FD99
+	for <e@80x24.org>; Mon, 29 Aug 2016 22:21:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756520AbcH2WPo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 18:15:44 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:41330 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754476AbcH2WPn (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 29 Aug 2016 18:15:43 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1756694AbcH2WVV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 18:21:21 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62263 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755886AbcH2WVU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2016 18:21:20 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 32A3D38B0B;
+        Mon, 29 Aug 2016 18:21:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=7FmOqJXQ8Ba9jcMJUwazoEbrcWg=; b=OMYeve
+        LGl28z9GVWL2ekfnqhP9oBUI3rVHcgE6mKsIjjzr2hiUeNVV6/PvNl4K0ZPZ7C0U
+        2hsi/Pq7v6K+yYsLQyLxepH6TFfNEalIh+a+r4uyLqDpfEnPi5zgvLLC7jTBQqKc
+        ylmSuHNydDOCFIQZPocNrm/pkeSfY59GbJMg0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ts8KDE3QaD4jsb1KCQA3LMyTVksX7Ilx
+        mwM9oMIYke5b+O9wtklxWuuMhbtfOMQM0li4crq5VurtivQVg75tut2yAX/n1e3K
+        dAWYGbJPZ3bJHb1eZOFs3IcNbXnP3hj8Exlh1q/iNH4lASIpj0558NsMKHS6DwZV
+        x8n8PmR4gyk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2B49838B0A;
+        Mon, 29 Aug 2016 18:21:18 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 8375D280A6;
-        Mon, 29 Aug 2016 22:15:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1472508941;
-        bh=aB/wU1mW66rvMUfBXz8oqVgddIQ5/a5OeZfjinTZwX4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=068UhCPfPOvDj8Mi+AJUAAFjF0rJnR0fLODt3d8NIwLP31mQ1ck2RzZhUqCplt7Ax
-         dOPbEg3sniTCF7zOMTovcLu2XsYMECH3z+82FJg11AhmhAH736lB08ftXEbsaM+qQS
-         68EhkzIAQbamOOqYqmQnQQzpTBBL+dS6SuFvZ67PMKEwlfG87xhblqW3NzB1G7Vno7
-         XvRXWrGhQ1nmMUPyDoXUFVOafcCz0fMvsHkBHnlYwMeuLsVdEPxS9fGn7nhmZEjMFm
-         Dd7IA5Qve6PaESqEHPETdoEZnxAANMP32Qcf5SgCoflSOj1WYCus6B91vG3jSN9CCt
-         KItHtg/lqbL7yFFhnnsbSYoujSm7rm+zD1Knp+5rQ5HawhcK29gcXKpuTJyxE4EqSy
-         ACeh17KuAZ3lzKcglo3ONZN8ZmJqBVJR5PnrrHmqldFllCq5NmKamCZfL1H1EmDt/a
-         eISo7a43kwDnGoq24GZ78PnLtqtYkYychsBQwZKtdbpKMs/fqtc
-Date:   Mon, 29 Aug 2016 22:15:38 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Paul Tan <pyokagan@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 18/20] builtin/am: convert to struct object_id
-Message-ID: <20160829221537.kno6bsjgal4qqeid@vauxhall.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Paul Tan <pyokagan@gmail.com>, Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Jeff King <peff@peff.net>
-References: <20160828232757.373278-1-sandals@crustytoothpaste.net>
- <20160828232757.373278-19-sandals@crustytoothpaste.net>
- <CACRoPnQvdq3xaRF9niU-b0qLxVCvmbpv2_roxUaEaDFftt7_wQ@mail.gmail.com>
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A1B4538B09;
+        Mon, 29 Aug 2016 18:21:17 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     larsxschneider@gmail.com
+Cc:     git@vger.kernel.org, peff@peff.net, sbeller@google.com,
+        Johannes.Schindelin@gmx.de, jnareb@gmail.com, mlbright@gmail.com
+Subject: Re: [PATCH v6 12/13] convert: add filter.<driver>.process option
+References: <20160825110752.31581-1-larsxschneider@gmail.com>
+        <20160825110752.31581-13-larsxschneider@gmail.com>
+Date:   Mon, 29 Aug 2016 15:21:15 -0700
+In-Reply-To: <20160825110752.31581-13-larsxschneider@gmail.com>
+        (larsxschneider@gmail.com's message of "Thu, 25 Aug 2016 13:07:51
+        +0200")
+Message-ID: <xmqqzinv6wtg.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="q7jtth65nwhb3a47"
-Content-Disposition: inline
-In-Reply-To: <CACRoPnQvdq3xaRF9niU-b0qLxVCvmbpv2_roxUaEaDFftt7_wQ@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.7.0-rc7-amd64)
-User-Agent: Mutt/1.6.2-neo (2016-08-08)
+Content-Type: text/plain
+X-Pobox-Relay-ID: E7C96994-6E36-11E6-B8DB-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+larsxschneider@gmail.com writes:
 
---q7jtth65nwhb3a47
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> +In case the filter cannot or does not want to process the content,
+> +it is expected to respond with an "error" status. Depending on the
+> +`filter.<driver>.required` flag Git will interpret that as error
+> +but it will not stop or restart the filter process.
+> +------------------------
+> +packet:          git< status=error\n
+> +packet:          git< 0000
+> +------------------------
+> +
+> +In case the filter cannot or does not want to process the content
+> +as well as any future content for the lifetime of the Git process,
+> +it is expected to respond with an "error-all" status. Depending on
+> +the `filter.<driver>.required` flag Git will interpret that as error
+> +but it will not stop or restart the filter process.
+> +------------------------
+> +packet:          git< status=error-all\n
+> +packet:          git< 0000
+> +------------------------
 
-On Mon, Aug 29, 2016 at 03:02:56PM +0800, Paul Tan wrote:
-> Hi Brian,
->=20
-> On Mon, Aug 29, 2016 at 7:27 AM, brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> > ---
-> >  builtin/am.c | 138 +++++++++++++++++++++++++++++----------------------=
---------
-> >  1 file changed, 69 insertions(+), 69 deletions(-)
->=20
-> I looked through this patch, and the conversion looks faithful and
-> straightforward to me. Just two minor comments:
->=20
-> > diff --git a/builtin/am.c b/builtin/am.c
-> > index 739b34dc..632d4288 100644
-> > --- a/builtin/am.c
-> > +++ b/builtin/am.c
-> > @@ -1053,10 +1053,10 @@ static void am_setup(struct am_state *state, en=
-um patch_format patch_format,
-> >         else
-> >                 write_state_text(state, "applying", "");
-> >
-> > -       if (!get_sha1("HEAD", curr_head)) {
-> > -               write_state_text(state, "abort-safety", sha1_to_hex(cur=
-r_head));
-> > +       if (!get_oid("HEAD", &curr_head)) {
-> > +               write_state_text(state, "abort-safety", oid_to_hex(&cur=
-r_head));
-> >                 if (!state->rebasing)
-> > -                       update_ref("am", "ORIG_HEAD", curr_head, NULL, =
-0,
-> > +                       update_ref("am", "ORIG_HEAD", curr_head.hash, N=
-ULL, 0,
-> >                                         UPDATE_REFS_DIE_ON_ERR);
->=20
-> I noticed that you used update_ref_oid() in other places of this
-> patch. Perhaps this should use update_ref_oid() as well for
-> consistency?
+This part of the document is well-written to help filter-writers.
 
-I'll do that in a reroll.
+One thing that was unclear from the above to me, when read as a
+potential filter-writer, is when I am supposed to exit(2).  After I
+tell Git with error-all (I would have called it "abort", but that's
+OK) that I desire no further communication, am I free to go?  Or do
+I wait until Git somehow disconnects (perhaps by closing the packet
+stream I have been reading)?
 
-> > @@ -1665,9 +1665,8 @@ static int fall_back_threeway(const struct am_sta=
-te *state, const char *index_pa
-> >   */
-> >  static void do_commit(const struct am_state *state)
-> >  {
-> > -       unsigned char tree[GIT_SHA1_RAWSZ], parent[GIT_SHA1_RAWSZ],
-> > -                     commit[GIT_SHA1_RAWSZ];
-> > -       unsigned char *ptr;
-> > +       struct object_id tree, parent, commit;
-> > +       struct object_id *ptr;
->=20
-> Ah, I just noticed that this is a very poorly named variable. Whoops.
-> Since we are here, should we rename this to something like "old_oid"?
-> Also, this should probably be a "const struct object_id *" as well, I
-> think.
+> +If the filter dies during the communication or does not adhere to
+> +the protocol then Git will stop the filter process and restart it
+> +with the next file that needs to be processed.
 
-I'll fix that.  Thanks for the review.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+Hmph, is there a reason not to retry a half-converted-and-failed
+blob with the fresh process?  Note that this is not "you must do it
+that way", and it is not even "I think doing so may be a better
+idea".  I merely want to know the reason behind this decision.
 
---q7jtth65nwhb3a47
-Content-Type: application/pgp-signature; name="signature.asc"
+> +After the filter has processed a blob it is expected to wait for
+> +the next "key=value" list containing a command. When the Git process
+> +terminates, it will send a kill signal to the filter in that stage.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.14 (GNU/Linux)
+The "kill" may not be very nice.  As Git side _knows_ that the
+filter is waiting for the next command, having an explicit
+"shutdown" command would give the filter a chance to implement a
+clean exit--it may have some housekeeping tasks it wants to perform
+once it is done.  The "explicit shutdown" could just be "the pipe
+gets closed", so from the implementation point of view there may not
+be anything you need to further add to this patch (after all, when
+we exit, the pipes to them would be closed), but the shutdown
+protocol and the expectation on the behaviour of filter processes
+would need to be documented.
 
-iQIcBAEBCgAGBQJXxLQJAAoJEL9TXYEfUvaLM8kQAISVUmV0CLdQVXQrxV3vvpic
-XBcEidp2p/VBUmimJfiQDQnzRGdzR1Aa27tqIqwAxry6N5JmXvqRjCAti3DRkTEd
-A21xfHsVS5FthESR8YrWG3+nmef+81eYHVcEwjhaSKHWoBmcDbCLwYU7yFWndPpR
-Z0jo6ccWC6isSFyTT7P31FJ4j5Clk7NGFoIQd+8UuMGSAPsVdvfUF3bgYugNCqUH
-KXsOoD8mNNdNKXvVItkeHB9p2+ZuCoCLXbDSXc6RgVSKlTmSxyC9Gtg+x1PjLjwY
-SbUt2BxvWbeETaTjKP39Ii0xx+A+wtCjTIE40RrWssw8bQO5lqW9LMweVUu95veo
-fhddWtyNh4POa4vBWxHoPOUTJtxXVCcn3oByGBy1iyv7SdVlihA3WN77ONLXQwqA
-o7PYRxzig2+p/1deG3fjcVX/8KKKRa9b+hsvZjsI0Z26tD8NPrLBmthzB51a3ef6
-lac49zVI+WKPbxsfmyxDOxTKJvA9b7qgVP5TBL79sxwrsaXCVCWGR/1EcGmxxteM
-K8Drlvz3rpTjy2v/oukhv7L0IafCf1N7G8PmR2bpxs4GK/Nk2BJgkXVLTl3DlZQS
-2D/Qrtv2/IoHmOcMWHFkEpkwVN++Fc+42/sOCXDpo5S8kRSn4G9RfmK/ucgEj8AJ
-BKKOGZtC1V5mp7nLU3Mp
-=pu82
------END PGP SIGNATURE-----
+> +If a `filter.<driver>.clean` or `filter.<driver>.smudge` command
+> +is configured then these commands always take precedence over
+> +a configured `filter.<driver>.process` command.
 
---q7jtth65nwhb3a47--
+It may make more sense to give precedence to the .process (which is
+a late-comer) if defined, ignoring .clean and .smudge, than the
+other way around.
+
+> +Please note that you cannot use an existing `filter.<driver>.clean`
+> +or `filter.<driver>.smudge` command with `filter.<driver>.process`
+> +because the former two use a different inter process communication
+> +protocol than the latter one.
+
+Would it be a useful sample program we can ship in contrib/ if you
+created a "filter adapter" that reads these two configuration
+variables and act as a filter.<driver>.process?
+
+During an imaginary session of "git add .", I think I found where
+you start THE filter process upon the first path that needs to be
+filtered with one for the configured <driver>, and I think the same
+place is where you reuse THE filter process, but I am not sure where
+you are cleaning up by killing the filter once all paths are added.
+Wouldn't you need some hooks at strategic places after such bulk
+operation to tell the multi-file-filter machinery to walk all the
+entries in cmd_process_map and tell the remaining filter processes
+that they have no more tasks, or something?  Are you relying on
+these processes to exit upon a read failure after we exit and the
+pipe going to the filter is severed?
+
+Thanks.
