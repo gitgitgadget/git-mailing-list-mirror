@@ -7,103 +7,111 @@ X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDA071F6C1
-	for <e@80x24.org>; Mon, 29 Aug 2016 08:06:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4BEC51F6C1
+	for <e@80x24.org>; Mon, 29 Aug 2016 08:06:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756740AbcH2IG3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 04:06:29 -0400
-Received: from mout.gmx.net ([212.227.17.21]:50206 "EHLO mout.gmx.net"
+        id S1756748AbcH2IGf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 04:06:35 -0400
+Received: from mout.gmx.net ([212.227.17.20]:50061 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756656AbcH2IG2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2016 04:06:28 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MACmL-1boxlx3zcP-00BKI6; Mon, 29 Aug 2016 10:06:25
+        id S1756656AbcH2IGd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2016 04:06:33 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0LsTjw-1ayElK1oXg-0121nS; Mon, 29 Aug 2016 10:06:30
  +0200
-Date:   Mon, 29 Aug 2016 10:06:23 +0200 (CEST)
+Date:   Mon, 29 Aug 2016 10:06:29 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 18/22] sequencer: support amending commits
+Subject: [PATCH 19/22] sequencer: support cleaning up commit messages
 In-Reply-To: <cover.1472457609.git.johannes.schindelin@gmx.de>
-Message-ID: <c4e474af8e6237522f4c452ca90c2e2670059e60.1472457609.git.johannes.schindelin@gmx.de>
+Message-ID: <eeb3d11d235a0220a9a125a21d1b09a73d2c61dc.1472457609.git.johannes.schindelin@gmx.de>
 References: <cover.1472457609.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:L7RXa/iDOg/1GWLBF8OFnMnM1o1EDXEHTu6u/3ZZ9Bh7G31kc9z
- LC2ra4ZzL3+S5o4iAwQeK+WXVS4j042XQwPAIx5nsc+0H8TN0KFtwTrlxluYqsUZmLtOeut
- ukmu00JCcSoQbzRGimfHI0VlxuQ6byKziz9HRzAncpHMyK6LygnkLg9+yh3rKy5avFUkONm
- o1kHMAFg458W3KR7L5ucA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:DvVkJV4dpTk=:QPMGyRKmzK3JyUDrtU85TD
- NV539nxbKWOCbnuEMk/eEHLS9/UWXIk3empyU7kG5qdVJfNkyZ4/RfGGAxXHPWFso7K6qBjVL
- x8LPGhos5XP8uQBYb5g+XshO4kvrG6udx7iOXwNN0K4+gg3zUJO3Ixfs7nEePp1fm9dzHcnUS
- yst3W+1NtwdioLE+/p1ewmUOOkDbIDyn/wD3cgjGOUqAnY4vwMi78fWpCKf9ueAlfeukV53WZ
- NytUyudILXQfKYz405gDQ0vF2ZmHkiV+iFbGPVlclGmt3s3KQjN1eYG1Obvg2ROQ9ugg2WhgL
- B4xC3KT8Tej2YVyaETiNwMB+36wF4V6Mm6NTd30tY59ymoWBlzMfXrCTekz8Q2tqgBIesq7YM
- RFyeSfH6F84kOJXHDz4qEfhVS/9Adp8jcZtGOvVaed3zZNh2OdNitE6yLW20wn4qGjU7HyVsk
- 94inmvL09zpovgneoT/Up8vQg4/ue85rVjmM5+SgldbLgVyrT2wikmK4/We41/VxD2dZP0Y4Z
- H6EFR8K/BO+B9YqjjWAjZHlHahWpwuIZNk317sEvVsOyN61rn47cB7e8Ax7bQJA0qZ9I4wyhw
- jP9+X5SdcyOtenFZoO9aYPq3Mhwa83luMD8I7a3kfu5o9WXAU0QCVJq6dV3Aby2NDHOw9xszG
- UrZuL7f4zFFjGZajqW6yQFlQvvW+ICbFFT68irx2U0O/NX0TswUhAWos5Ck97Aw71sCHfRxsK
- 1JvcMMHaXNHX3Isa6pg1D7vS6cM0F0HUTrGQXIQgjz6VuZTvSuygToFDQduTJTF+oqFvmUTzW
- +mvLhc0
+X-Provags-ID: V03:K0:y7CwivFPXp5hV8HnxfQ5TW+JUSc56DFrPOhz0dt/0HmH1KfCSrI
+ tM7Iz1NRwx0jhpdw5+OWl9nypxLsjD/xSerCVjMhhX71TJPcLGWi+Qwcjguy4dfO6bTZNSo
+ ksQpClz/mdygydo++YMK+Wt6rJkNqBTekr54f24GCUFb7E3fcIYhIaJCIHxIMEL1s9k9U7S
+ oEdNGRAnpcTKDAbM9DRDw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:zTEh+7kplS0=:UpTBeuqNN8Y91JSQmlja5N
+ oPVxcWru2azVtvFg6p88eLlXrGmR2HuoQaQc5r2CYbShXMIDjH3NgdLnephzwzcRUZ/gPbp5h
+ pl9OwY3TCOXe3i8J4/NVVKNhirVQDqE00maYdY4eYb7lKIWP80KAOvRWSPaNPc9nrJRDHMwsj
+ iUZKhFPhR6kZkza/RgleMf/GS1KKAqmxNoRDtunCYpsdSJBHfMR5fdoNGLdb/+cxISEKENkQa
+ jIVWVGolCuT1Oa3QPgB8LcyYm8Cm+NNr0hbmSB/oIHMoeCfg9w/XaFLm8LhMF8fX2UV8nr0mG
+ ZJJh3D/rFcMpL3JBtE6p5G4x+FbznRIqHbZw70RuXBPTQhbC1AGIZTbZuW13lFs0hKOPJZR/1
+ FrpWsH/e7GvF2+/IYEghNEDl2mrmssw5epRK7qqoilv4JuJzXbPTVot/og1HJARuXruJ1R0od
+ 80c6ecvtdaSNvEs1SCt/m7JAcaEQhYqyzfcgvUQB5oIod5SddUeAr5pmYLR3zPyIB3kQHOYNA
+ DIGrzybC92APkjH3wiOe6W7VCBK160U2X5XAgw0wDqvOrEuUcr74CW9DNrvmIVlBZ5CaaaW3/
+ a6znApOQPwVmKcOCysphG6625PPlFkeD5up5KBbLyGGeuQl/MNoKR/pg8tIp6n/vEGkxwyCLl
+ gg39B0H3eT4kJxmnNilW5Qtk+fWtlcSzt5LfKuse+OFyV7SqE9IF52IqdaQETFcYRme+S3Hne
+ 5CozK+df6A/UZ7FWFBY0CC3olUbj6L6AMX72VAuOFMT9AabyDa/bABpqfUSOHHZXtAHwlXDZc
+ XUcwJ9S
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This teaches the sequencer_commit() function to take an argument that
-will allow us to implement "todo" commands that need to amend the commit
-messages ("fixup", "squash" and "reword").
+The sequencer_commit() function already knows how to amend commits, and
+with this new option, it can also clean up commit messages (i.e. strip
+out commented lines). This is needed to implement rebase -i's 'fixup'
+and 'squash' commands as sequencer commands.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 6 ++++--
- sequencer.h | 2 +-
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ sequencer.c | 10 +++++++---
+ sequencer.h |  3 ++-
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 7e17d14..20f7590 100644
+index 20f7590..5ec956f 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -478,7 +478,7 @@ static char **read_author_script(void)
+@@ -478,7 +478,8 @@ static char **read_author_script(void)
   * (except, of course, while running an interactive rebase).
   */
  int sequencer_commit(const char *defmsg, struct replay_opts *opts,
--			  int allow_empty, int edit)
-+			  int allow_empty, int edit, int amend)
+-			  int allow_empty, int edit, int amend)
++			  int allow_empty, int edit, int amend,
++			  int cleanup_commit_message)
  {
  	char **env = NULL;
  	struct argv_array array;
-@@ -507,6 +507,8 @@ int sequencer_commit(const char *defmsg, struct replay_opts *opts,
- 	argv_array_push(&array, "commit");
- 	argv_array_push(&array, "-n");
+@@ -515,9 +516,12 @@ int sequencer_commit(const char *defmsg, struct replay_opts *opts,
+ 		argv_array_push(&array, "-s");
+ 	if (defmsg)
+ 		argv_array_pushl(&array, "-F", defmsg, NULL);
++	if (cleanup_commit_message)
++		argv_array_push(&array, "--cleanup=strip");
+ 	if (edit)
+ 		argv_array_push(&array, "-e");
+-	else if (!opts->signoff && !opts->record_origin &&
++	else if (!cleanup_commit_message &&
++		 !opts->signoff && !opts->record_origin &&
+ 		 git_config_get_value("commit.cleanup", &value))
+ 		argv_array_push(&array, "--cleanup=verbatim");
  
-+	if (amend)
-+		argv_array_push(&array, "--amend");
- 	if (opts->gpg_sign)
- 		argv_array_pushf(&array, "-S%s", opts->gpg_sign);
- 	if (opts->signoff)
-@@ -779,7 +781,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+@@ -781,7 +785,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
  	}
  	if (!opts->no_commit)
  		res = sequencer_commit(opts->edit ? NULL : git_path_merge_msg(),
--			opts, allow, opts->edit);
-+			opts, allow, opts->edit, 0);
+-			opts, allow, opts->edit, 0);
++			opts, allow, opts->edit, 0, 0);
  
  leave:
  	free_message(commit, &msg);
 diff --git a/sequencer.h b/sequencer.h
-index fd02baf..2106c0d 100644
+index 2106c0d..e272549 100644
 --- a/sequencer.h
 +++ b/sequencer.h
-@@ -50,7 +50,7 @@ int sequencer_rollback(struct replay_opts *opts);
+@@ -50,7 +50,8 @@ int sequencer_rollback(struct replay_opts *opts);
  int sequencer_remove_state(struct replay_opts *opts);
  
  int sequencer_commit(const char *defmsg, struct replay_opts *opts,
--			  int allow_empty, int edit);
-+			  int allow_empty, int edit, int amend);
+-			  int allow_empty, int edit, int amend);
++			  int allow_empty, int edit, int amend,
++			  int cleanup_commit_message);
  
  extern const char sign_off_header[];
  
