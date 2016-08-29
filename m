@@ -7,69 +7,83 @@ X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E32A1F6C1
-	for <e@80x24.org>; Mon, 29 Aug 2016 11:27:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6B2D1FD99
+	for <e@80x24.org>; Mon, 29 Aug 2016 12:06:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757266AbcH2L1P (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 07:27:15 -0400
-Received: from mout.gmx.net ([212.227.15.18]:55038 "EHLO mout.gmx.net"
+        id S932754AbcH2MGe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 08:06:34 -0400
+Received: from mout.gmx.net ([212.227.15.15]:64133 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750909AbcH2L1O (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2016 07:27:14 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0M0QAP-1ap6y90UUH-00uVip; Mon, 29 Aug 2016 13:26:52
+        id S932628AbcH2MGe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2016 08:06:34 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0LkxLZ-1b4S9J0wAn-00amNE; Mon, 29 Aug 2016 14:06:28
  +0200
-Date:   Mon, 29 Aug 2016 13:26:49 +0200 (CEST)
+Date:   Mon, 29 Aug 2016 14:06:26 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-cc:     git@vger.kernel.org, Paul Tan <pyokagan@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 08/20] streaming: make stream_blob_to_fd take struct
- object_id
-In-Reply-To: <20160828232757.373278-9-sandals@crustytoothpaste.net>
-Message-ID: <alpine.DEB.2.20.1608291325140.129229@virtualbox>
-References: <20160828232757.373278-1-sandals@crustytoothpaste.net> <20160828232757.373278-9-sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH 07/15] sequencer: lib'ify read_populate_opts()
+In-Reply-To: <xmqq1t1big38.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1608291405080.129229@virtualbox>
+References: <cover.1471968378.git.johannes.schindelin@gmx.de> <85a8ec8273994c599402c380abd383ad2f539777.1471968378.git.johannes.schindelin@gmx.de> <xmqq1t1big38.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:RT9MKTIChaRxHaP9VoSs9RBLEbq1MEdxxByIF56XCkpqLaIPTbM
- cLxMPCgS9vB8WsSiYkdqGfRL64FhH+0RkGF797HlNPX3Iph84Iwb/q5NieE6cwfdsY33jRT
- S/8RKOHPT/v6HpSeCshGlYDA5WAgubaTlGF+RfOqC8nV1IQcRWYT/vV35tBFRxsa654BeNS
- 9LiGM/bAeHmYUQtORe6Cg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:mzD7fMxpuUg=:BjuQn41IP631336jpnlRPl
- XnwXKhJyq2lXYvKTbS96lLIdx9wO0f6UwowD0CsPW/msEiinELSs/6HrCv9Guaf6AT6W05l64
- 44aeAZg87bxYYYvJOeZ4xIYChrEMzoaktCGsLAM1Ihi/3CmJSeY+s4OTuWW3TFi1DC/fMxTaF
- 4zAHOfHXwC7NgpMbvDtYcbomfPUgHpgDsoVZR1Lli8FvVD/Z8zvQFLwp8F5fyWI/2uRXFMqkb
- Fv6kvFQgq7rQCthCBXJCSS5bm/7swHVPctXRokcGPlmERjA4sqUrv/Gvbax4uEl4YWvooEO9o
- ykDqfD3GuYDx1gBzSQ81zxMk49XllcxfX1W8MwqIwY/rwD1SxwAUWJuKv2PquZ6/iPN62+Va9
- PTHQ2zv7EM+8hKzMVZbLJjzh81YTB7wrzOc1gUk1HjLxc+n9ctuxv+x8huIxhA9Itckqn8/lB
- pmnSb/goHWhocso4nyCgfRhMdcA2XgOz6dtRZ3O3hyfBtZs6uJctvqCCv21KNZhQOGNWHrxww
- veKMxYALK3MwhbLTp9wtKEkyMAjqD0zlzHvwp0S+lRbWOAKlf8aEqoApGas2jvIyvmzCIdtSW
- d8mJv/bx3n1LmU2W7ggyQH8dHAq3N4FAp/MI+p8NubyLITcRERfknE7mxBo4G7REWnClokRLP
- tzKgx0HMH+xoBFKbWULFE/x9KPFDhSu/rTT5P0sL4tJdSG5bSM55PRdmZdt+G3Jj50qg+/SBp
- EV4mC+zrANCz+7Etq4hkr3xgHWBapWjFbGQtBb7QAtMwSY0XhqEO2DXW8hfhi/d5DRuz3TiP4
- mj+V3+m
+X-Provags-ID: V03:K0:ye7G4Gv0uA959MBFd75G5/hcWMjd5HCn3GFep6DGdvGAi3BXqbu
+ qh2R4v83RXquMGZPRxrV+ZA00VvE827VLgiG1VcbFhh0jb5GoXSephjeRzws6DKqVtRiDra
+ xlLvu5SM0AqqyUpJiNKGDwoa3yF+mM5DoEDuiCCRaPzIh8ZMLhPuaAphX9vhSLCK6EkocM2
+ LP0Ns6izvjv5hK5bwuFhg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:NxG9WyyScYU=:QLPvXG9Swj7YMDMc0mG/NY
+ merzHz1eVWuJSCC6qCK0eqvqTMBEZOBdwNf1FnVTXrjPZOMCtPb46vjVuQ76KEiAP5PKo9qg5
+ +IbJOdNeGSTFw/EEU6QgtNASVmz80kQg6vEPKSfPx2DOFyF82JAAiG8scANRXuh0uHTQ6hu13
+ t++dOCKpDS9BFFNLNkcINBAW1e+C5o3+/Z8gKIMGA5RKGojK6zDpazyvpiRWTDx2NfcivNiRn
+ jE7a4QR0MQP4UURNkcR96kVteXeBtpcbvBRuYgr6Cy6HHkDOvcc+Wy6EzSbRxvP2fVgHCVgCI
+ mb/Fr6qJRHKsoFr+o3KFFHnAMeYMPLU8q+alfXgZ7Tb6ZPrU907RfrRGQhyCn5OOFpDSGerma
+ Xrhp8vmgcfZqTGPIEkzy8lGlE5MpxzhwngYE1OzqlDG8FQWCEyDdE2YgrKtP1/qopI3Uo9dt1
+ eJ+mGoAxz04poA/J2KU9zxwk2Jsy15MI3bnOWqEeVKx8RCHpHqjY0Vp0LCCJ3Vr3vkJq1Uv+v
+ anhk+SPlpFg05eNycInIssTeGSbyTtT+IzeFn/s8fMC/yq8yB1Zsv05EaHxOLwT9vyeTQ4rf5
+ SXllWarQi9GB+Iyj7w7xzpyYOgsCDAOUkxqjFB3UaVvdc4VCGbKxb06zKfBpKY29uKq6Ofqoh
+ kFh/ctiv8XEqxuod0Q4H7w7hGCKUGAJ7HZqDL325yUHw6JzWs9ooPBb+Ct6U0kzPhpOb/+zTb
+ tIPTba73vyoRlchLlF+3y36sde5JCJfb2LLqpR2xmXGs1JvRqiMpQv95NllyC12qvt8Wz68hj
+ J7s79xB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Brian,
+Hi Junio,
 
-On Sun, 28 Aug 2016, brian m. carlson wrote:
+On Fri, 26 Aug 2016, Junio C Hamano wrote:
 
-> Since all of its callers have been updated, modify stream_blob_to_fd to
-> take a struct object_id.
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> > -static void read_populate_opts(struct replay_opts **opts_ptr)
+> > +static int read_populate_opts(struct replay_opts **opts)
+> >  {
+> >  	if (!file_exists(git_path_opts_file()))
+> > -		return;
+> > -	if (git_config_from_file(populate_opts_cb, git_path_opts_file(), *opts_ptr) < 0)
+> > -		die(_("Malformed options sheet: %s"), git_path_opts_file());
+> > +		return 0;
+> > +	if (git_config_from_file(populate_opts_cb, git_path_opts_file(), *opts) < 0)
+> > +		return error(_("Malformed options sheet: %s"),
+> > +			git_path_opts_file());
+> > +	return 0;
+> 
+> This may not be sufficient to avoid die(), unless we know that the
+> file we are reading is syntactically sound.  git_config_from_file()
+> will die in config.c::git_parse_source() when the config_source sets
+> die_on_error, and it is set in config.c::do_config_from_file().
+> 
+> The source we are reading from is created when the sequencer
+> machinery starts and is only written by save_opts() which is
+> called by the sequencer machinery using git_config_set*() calls,
+> so I think it is OK to assume that we won't hit errors that would
+> cause git_config_from_file() to die, at least for now.
 
-I reviewed the patches until here, and they all look very good to me.
-
-Will continue to review after clearing out my brain with other things (it
-is mesmerizing to sift through sha1->oid changes for too long).
+I amended the commit message.
 
 Ciao,
 Dscho
