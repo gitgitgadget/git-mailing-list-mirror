@@ -2,140 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFF741FD99
-	for <e@80x24.org>; Mon, 29 Aug 2016 17:18:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 981572018E
+	for <e@80x24.org>; Mon, 29 Aug 2016 17:34:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754013AbcH2RSz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 13:18:55 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34868 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752043AbcH2RSy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2016 13:18:54 -0400
-Received: (qmail 30953 invoked by uid 109); 29 Aug 2016 17:18:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Aug 2016 17:18:53 +0000
-Received: (qmail 21263 invoked by uid 111); 29 Aug 2016 17:18:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Aug 2016 13:18:58 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Aug 2016 13:18:49 -0400
-Date:   Mon, 29 Aug 2016 13:18:49 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-Cc:     "W. David Jarvis" <william.d.jarvis@gmail.com>, git@vger.kernel.org
-Subject: Re: Reducing CPU load on git server
-Message-ID: <20160829171849.psz5j3xy5kesql5e@sigill.intra.peff.net>
-References: <CAFMAO9y3LsrAb_jp8XVq2mexaA4bBqmWFwJu55r4S6Dxd2-zxw@mail.gmail.com>
- <20160829054725.r6pqf3xlusxi7ibq@sigill.intra.peff.net>
- <c1778c9b-2dd1-9cef-0330-204fe9d08d39@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c1778c9b-2dd1-9cef-0330-204fe9d08d39@gmail.com>
+        id S1751965AbcH2ReD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 13:34:03 -0400
+Received: from mail-pa0-f68.google.com ([209.85.220.68]:35411 "EHLO
+        mail-pa0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751083AbcH2ReC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2016 13:34:02 -0400
+Received: by mail-pa0-f68.google.com with SMTP id cf3so9274809pad.2
+        for <git@vger.kernel.org>; Mon, 29 Aug 2016 10:34:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=CfZmOEatMmB3iR6RGIrs9tSZsNyAj3UmdVeHo42q0y4=;
+        b=CS1z/nJ3euW4AeEhxlarSW7izz409dWCddejKXL2vvx4ctcTBX8GL4WZUl2uUECDeW
+         kTELh8NDfOnCXxm9Yztl+GmvErqE9OPwwg05HPy2Xj+0a5qd9viwvdYvdrcACSXKay7J
+         xLcSef1NrYDmzesdIPkayN/KarVlAL+adUhvM6NOPOD89WWbdDleajEYjCulccWDZbkT
+         CpEXUGOolfqSbF2HVR+2W3fo3n7GIGvX+YD4PbSXHwqQ8BXmQLlc3T11piDwC3zzo0Fh
+         zDk+qqAAp517c21zJi0qBwi67N4E/10Q+vxY8TRihmuyXrXvz6tzUZJctB2oQQ4jK/qf
+         NvnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=CfZmOEatMmB3iR6RGIrs9tSZsNyAj3UmdVeHo42q0y4=;
+        b=NLKO3ga/cjwGhwhg7thKY0VW4R81Z60WNaZsvwgcDhIxKPTRnM3HChWnWZjlMxQm2M
+         6HOQ1rYZ+gY2jd5ojqHDiZhcNk7ik8f5WszeQnvs5wGXR9iUoB8ATKhz/qBB4l1zPLGi
+         sR6xD2N2StjKKt7s6apcpg32evPe2KJ4SSv+pthIFtspun67EwdR8qxkc4A06JH+WdcD
+         xYEW7br0bQOKQTLeq9bW6maer5lwSdYRw3YKWyGbXX1ahvD9ap0VU8m5ZRqN9LxKrJPE
+         HwFvVXLABJH7HAzc/0x6QZeBp6/sF21/zTZ02OHz+nWP5V4bGF/bqUQWmrEplOBOS+lN
+         q7vA==
+X-Gm-Message-State: AE9vXwNu1ZwLk1NvITlTyTLjeFW9RP4/ySwecR7qOCPHHL0qQV2Dbf+ibZ4m5a2fjmAXqA==
+X-Received: by 10.66.49.67 with SMTP id s3mr35109326pan.100.1472492042077;
+        Mon, 29 Aug 2016 10:34:02 -0700 (PDT)
+Received: from tci.int.yp.com ([216.2.203.2])
+        by smtp.gmail.com with ESMTPSA id h125sm50721234pfg.54.2016.08.29.10.33.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 29 Aug 2016 10:34:00 -0700 (PDT)
+From:   Brian Henderson <henderson.bj@gmail.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, e@80x24.org, gitster@pobox.com,
+        Brian Henderson <henderson.bj@gmail.com>
+Subject: [PATCH v4 0/3] diff-highlight: add support for --graph option
+Date:   Mon, 29 Aug 2016 10:33:44 -0700
+Message-Id: <20160829173347.454-1-henderson.bj@gmail.com>
+X-Mailer: git-send-email 2.9.3
+In-Reply-To: <20160823041252.53ldwacgdey2euxt@sigill.intra.peff.net>
+References: <20160823041252.53ldwacgdey2euxt@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 29, 2016 at 12:46:27PM +0200, Jakub Narębski wrote:
+How does this look?
 
-> > So your load is probably really spiky, as you get thundering herds of
-> > fetchers after every push (the spikes may have a long flatline at the
-> > top, as it takes time to process the whole herd).
-> 
-> One solution I have heard about, in the context of web cache, to reduce
-> the thundering herd problem (there caused by cache expiring at the same
-> time in many clients) was to add some random or quasi-random distribution
-> to expiration time.  In your situation adding a random delay with some
-> specified deviation could help.
+Drawing the graph helped me a lot in figuring out what I was actually testing. thanks!
 
-That smooths the spikes, but you still have to serve all of the requests
-eventually. So if your problem is that the load spikes and the system
-slows to a crawl as a result (or runs out of RAM, etc), then
-distributing the load helps. But if you have enough load that your
-system is constantly busy, queueing the load in a different order just
-shifts it around.
+Brian Henderson (3):
+  diff-highlight: add some tests.
+  diff-highlight: add failing test for handling --graph output.
+  diff-highlight: add support for --graph output.
 
-GHE will also introduce delays into starting git when load spikes, but
-that's a separate system that coalescing identical requests.
+ contrib/diff-highlight/Makefile                  |   5 +
+ contrib/diff-highlight/diff-highlight            |  19 +-
+ contrib/diff-highlight/t/Makefile                |  22 +++
+ contrib/diff-highlight/t/t9400-diff-highlight.sh | 223 +++++++++++++++++++++++
+ 4 files changed, 263 insertions(+), 6 deletions(-)
+ create mode 100644 contrib/diff-highlight/Makefile
+ create mode 100644 contrib/diff-highlight/t/Makefile
+ create mode 100755 contrib/diff-highlight/t/t9400-diff-highlight.sh
 
-> I wonder if this system for coalescing multiple fetches is something
-> generic, or is it something specific to GitHub / GitHub Enterprise
-> architecture?  If it is the former, would it be considered for
-> upstreaming, and if so, when it would be in Git itself?
+-- 
+2.9.3
 
-I've already sent upstream the patch for a "hook" that sits between
-upload-pack and pack-objects (and it will be in v2.10). So that can call
-an arbitrary script which can then make scheduling policy for
-pack-objects, coalesce similar requests, etc.
-
-GHE has a generic tool for coalescing program invocations that is not
-Git-specific at all (it compares its stdin and command line arguments to
-decide when two requests are identical, runs the command on its
-arguments, and then passes the output to all members of the herd). That
-_might_ be open-sourced in the future, but I don't have a specific
-timeline.
-
-> One thing to note: if you have repositories which are to have the
-> same contents, you can distribute the pack-file to them and update
-> references without going through Git.  It can be done on push
-> (push to master, distribute to mirrors), or as part of fetch
-> (master fetches from central repository, distributes to mirrors).
-> I think; I have never managed large set of replicated Git repositories.
-
-Doing it naively has some gotchas, because you want to make sure you
-have all of the necessary objects. But if you are going this route,
-probably distributed a git-bundle is the simplest way.
-
-> > Generally no, they should not conflict. Writes into the object database
-> > can happen simultaneously. Ref updates take a per-ref lock, so you
-> > should generally be able to write two unrelated refs at once. The big
-> > exception is that ref deletion required taking a repo-wide lock, but
-> > that presumably wouldn't be a problem for your case.
-> 
-> Doesn't Git avoid taking locks, and use lockless synchronization
-> mechanisms (though possibly equivalent to locks)?  I think it takes
-> lockfile to update reflog together with reference, but if reflogs
-> are turned off (and I think they are off for bare repositories by
-> default), ref update uses "atomic file write" (write + rename)
-> and compare-and-swap primitive.  Updating repository is lock-free:
-> first update repository object database, then reference.
-
-There is a lockfile to make the compare-and-swap atomic, but yes, it's
-fundamentally based around the compare-and-swap. I don't think that
-matters to the end user though. Fundamentally they will see "I hoped to
-move from X to Y, but somebody else wrote Z, aborting", which is the
-same as "I did not win the lock race, aborting".
-
-The point is that updating two different refs is generally independent,
-and updating the same ref is not.
-
-> I guess that trying to replicate DGit approach that GitHub uses, see
-> "Introducing DGit" (http://githubengineering.com/introducing-dgit)
-> is currently out of question?
-
-Minor nitpick (that you don't even have any way of knowing about, so
-maybe more of a public service announcement). GitHub will stop using the
-"DGit" name because it's too confusingly similar to "Git" (and "Git" is
-trademarked by the project). There's a new blog post coming that
-mentions the name change, and that historic one will have a note added
-retroactively. The new name is "GitHub Spokes" (get it, Hub, Spokes?).
-
-But in response to your question, I'll caution that replicating it is a
-lot of work. :)
-
-Since the original problem report mentions GHE, I'll note that newer
-versions of GHE do support clustering and can share the git load across
-multiple Spokes servers. So in theory that could make the replica layer
-go away entirely, because it all happens behind the scenes.
-
--Peff
-
-PS Sorry, I generally try to avoid hawking GitHub wares on the list, but
-   since the OP mentioned GHE specifically, and because there aren't
-   really generic solutions to most of these things, I do think it's a
-   viable path for a solution for him.
