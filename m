@@ -7,99 +7,116 @@ X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 067DD1F6C1
+	by dcvr.yhbt.net (Postfix) with ESMTP id 171BA2018E
 	for <e@80x24.org>; Mon, 29 Aug 2016 08:04:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756558AbcH2IEV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 04:04:21 -0400
-Received: from mout.gmx.net ([212.227.17.21]:63878 "EHLO mout.gmx.net"
+        id S1756594AbcH2IEW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 04:04:22 -0400
+Received: from mout.gmx.net ([212.227.15.19]:49876 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756414AbcH2IEP (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1756124AbcH2IEP (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 29 Aug 2016 04:04:15 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0Lat5o-1bFu5D1bCq-00kQiP; Mon, 29 Aug 2016 10:04:03
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0LyEJp-1b1HcB0ng5-015ZRD; Mon, 29 Aug 2016 10:03:42
  +0200
-Date:   Mon, 29 Aug 2016 10:03:48 +0200 (CEST)
+Date:   Mon, 29 Aug 2016 10:03:41 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 01/22] sequencer: use static initializers for replay_opts
-In-Reply-To: <cover.1472457609.git.johannes.schindelin@gmx.de>
-Message-ID: <66d69469a64bd80d3bf2b99a250ae04a649d94d1.1472457609.git.johannes.schindelin@gmx.de>
-References: <cover.1472457609.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 00/22] Prepare the sequencer for the upcoming rebase -i
+ patches
+Message-ID: <cover.1472457609.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:eD9xF44HcG+doopsoLZ2NIyFqNybhPWRhnfW3zNzRLR+084isoJ
- JFpWFwY7d90QImgUdVaHorB0QsCBrpAl+iliRnhWvE9QutEpT7iHGqxhW/ZT6c9jMjq00Vz
- gIub/k8PqPIS65900guUjJdek0KVz+MWR8iFGsGv34beYxXqaTmdJ0iZyGHHBBG4+1FRkcx
- Hx9Kg3o1AwDx0pPwyLo1w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:mrXdOecLq70=:g0WiaZFGSn2fT1/2DXUiaJ
- zxTcN0sMrbbrpoplKNmkeGyTZYhNtfapBAPtLdXlsuEuawk6zzJmKAyMQr+iifpA59oXvIH8u
- URoL0uhFEAG4HzMEp7U9Ngj6bGsTyjk9ED29NZo4AGCMIqOo6C85LdCYST6RC+mU+BmcTfznD
- 2z/XDgrWKKk6SxfTp9GspNkfuVjkT1YlnC0kLN70A2z6tx/wOJf86wuJw9N8EwdlzTld3Kh5p
- +z74S553OKVI+gCWFY6YJFwCOh80TsqLm7pDn9rPG4YzEaHmj0DA6XRMo5Y7x8DVgZVCLZ1Nz
- dJwn2HfqRCow44/1WVfIpasvdpeIbcmW8thpna9TAO60EJfjT9GzWcv6tZ8ADLVtOzUrvQCI5
- E7KNMjkOeLtRUkGg4Y+NuoQD9t28rhmQRbGB0KnaCHVrZqLCdlbrqj+t6DDojqBpmNqo/GCXW
- Lb9juNXTDPD5ilG5spUAgJlq3INMHSL7YQ+lGhti3u1P0nYnf1SIWMc65wpsfay4nL56FVSc5
- 8HFH42EKT1rwxKh5R1JuYD7YnETDtk8XALrDOymYv+gEaZ0U/zZgate7Ej2opeXxh6CI6aRFW
- it2w6XZOEhYEKnNmSGTBiHBK7IfSW4x0cdnLwxxl18yEkFy4ekxYdvK4cuHKdtHCO10Se9L7+
- uEQx+AZ1bEaoD4/+1RWHZe7UDTldqC6B0vFlnaGL5MIFWUpOLLcJSLL94Vpj83ksB3UDM66iO
- at0vRnCq6vSYoFHdZ9aX4rCJVioQT4ALhHdmEURb2WwMxpHISPjTgEXUwoEF9garCtyUVDlFq
- PUyt9eL
+X-Provags-ID: V03:K0:EdSnqyJkxYmt8kleptZq2NNLDB1nrflHEKP18W5ZHmRz6bvI37b
+ xVQ6RcI6bhRPqrEFEjZmJs1hrpUhahux2Sku4fDnWh60cnebRjnfB1boIkh2AvPzzMGGbWt
+ avYa9MLwqS+I45IFLaC1nt3U5+KrrF1la1brmsoLPTuMPbG+AcGcMXbnzW2KtQmQUH+rCJ3
+ 46tWlmzr05BTZt+8vi/Lg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:J3EG7HPdPd4=:q5P1ENlfdsw1sJHJhZSAlo
+ tAw1zYtuHd57YbdnOyViZXLICvr/VJ+R4qlrOnhNSPF87dbb5eFtbSV+No7rrZ4RaFHCLtx8G
+ wrU9cAzINZNmxF75rh/yuxs4etBjJMlGhItG/6POlLDMdLcEFq5DycppxWkwlaQvkxqdPLsOU
+ bKqM1LdRwrdL4c1CL8CKbtLSn3tI0isdZRMNIcmphZv7yiLJ5MuWk+DWe5EinTxJZSd6AYrSX
+ 0pVDZCYki+38+QQTp2tj5HOepX7H2sgBxMu8PuwSSK3We3exaVMjsll7rmfJTmYHC+Kz8KeGy
+ cuCCikoich/c+4TqlC9lYSnPvDWdL3pE2gAUnBGNsrx1LLQHEOwaVnFzytxfdXwqyTTf4yId/
+ kHV5y3iv3TY2V1ykmWplEGp7pwkF1gDuqcquo9DQiZgXXDgouV1QgaB6uikSMTO+SHyoujiFu
+ X736VzAZyPO2O3B+svU8FFg/eVlM2zSrfXJ7tTdpw/3HXWF9IidyeeVZK3O38gz7zkI9IeIx+
+ J9U312X6fD0BYDBiefjwLJJxOaje64tVndiivtlnG9v7y8OlDY00+R32mLUKK+jBfErZSJ6Z5
+ kmMtPIZ1YAeNIwLdWvuXDsCDL/v5Id513nRZzWl2eo698AUUwcxWn803kPJvgE4LXyb7BY2GC
+ u9RNdUObKys8K3qRCvdEAGdIktTkN3N+iFBALCKTXeb5MjYyrKiIJ6mP/WXl5IgM4npDTLzXE
+ Us5UNLZ2dkiHzV0u52Bj505rBkkW0cepEzdt5zXKY8blJU4Cc/SGm+b4TDYt0tUkj5I6sEW6g
+ ENkVAcQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/revert.c | 6 ++----
- sequencer.h      | 1 +
- 2 files changed, 3 insertions(+), 4 deletions(-)
+This patch series marks the  '4' in the countdown to speed up rebase -i
+by implementing large parts in C. It is based on the `libify-sequencer`
+patch series that I submitted last week.
 
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 4e69380..7365559 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -178,10 +178,9 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 
- int cmd_revert(int argc, const char **argv, const char *prefix)
- {
--	struct replay_opts opts;
-+	struct replay_opts opts = REPLAY_OPTS_INIT;
- 	int res;
- 
--	memset(&opts, 0, sizeof(opts));
- 	if (isatty(0))
- 		opts.edit = 1;
- 	opts.action = REPLAY_REVERT;
-@@ -195,10 +194,9 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
- 
- int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
- {
--	struct replay_opts opts;
-+	struct replay_opts opts = REPLAY_OPTS_INIT;
- 	int res;
- 
--	memset(&opts, 0, sizeof(opts));
- 	opts.action = REPLAY_PICK;
- 	git_config(git_default_config, NULL);
- 	parse_args(argc, argv, &opts);
-diff --git a/sequencer.h b/sequencer.h
-index 5ed5cb1..2ca096b 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -47,6 +47,7 @@ struct replay_opts {
- 	/* Only used by REPLAY_NONE */
- 	struct rev_info *revs;
- };
-+#define REPLAY_OPTS_INIT { -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, 0, 0, NULL }
- 
- int sequencer_pick_revisions(struct replay_opts *opts);
- 
+The patches in this series merely prepare the sequencer code for the
+next patch series that actually teaches the sequencer to run an
+interactive rebase.
+
+The reason to split these two patch series is simple: to keep them at a
+sensible size.
+
+The two patch series after that are much smaller: a two-patch "series"
+that switches rebase -i to use the sequencer (except with --root or
+--preserve-merges), and a couple of patches to move several pretty
+expensive script processing steps to C (think: autosquash).
+
+The end game of this patch series is a git-rebase--helper that makes
+rebase -i 5x faster on Windows (according to t/perf/p3404). Travis says
+that even MacOSX and Linux benefit (4x and 3x, respectively).
+
+I have been working on this since early February, whenever time allowed,
+and it is time to put it into the users' hands. To that end, I will most
+likely submit the remaining three patch series in the next two days, and
+integrate the whole shebang into Git for Windows 2.10.0.
+
+Therefore I would be most grateful for every in-depth review.
+
+
+Johannes Schindelin (22):
+  sequencer: use static initializers for replay_opts
+  sequencer: use memoized sequencer directory path
+  sequencer: avoid unnecessary indirection
+  sequencer: future-proof remove_sequencer_state()
+  sequencer: allow the sequencer to take custody of malloc()ed data
+  sequencer: release memory that was allocated when reading options
+  sequencer: future-proof read_populate_todo()
+  sequencer: remove overzealous assumption
+  sequencer: completely revamp the "todo" script parsing
+  sequencer: avoid completely different messages for different actions
+  sequencer: get rid of the subcommand field
+  sequencer: refactor the code to obtain a short commit name
+  sequencer: remember the onelines when parsing the todo file
+  sequencer: prepare for rebase -i's commit functionality
+  sequencer: introduce a helper to read files written by scripts
+  sequencer: prepare for rebase -i's GPG settings
+  sequencer: allow editing the commit message on a case-by-case basis
+  sequencer: support amending commits
+  sequencer: support cleaning up commit messages
+  sequencer: remember do_recursive_merge()'s return value
+  sequencer: left-trim the lines read from the script
+  sequencer: refactor write_message()
+
+ builtin/commit.c                |   2 +-
+ builtin/revert.c                |  42 ++-
+ sequencer.c                     | 573 +++++++++++++++++++++++++++-------------
+ sequencer.h                     |  27 +-
+ t/t3510-cherry-pick-sequence.sh |  11 -
+ 5 files changed, 428 insertions(+), 227 deletions(-)
+
+Based-On: libify-sequencer at https://github.com/dscho/git
+Fetch-Base-Via: git fetch https://github.com/dscho/git libify-sequencer
+Published-As: https://github.com/dscho/git/releases/tag/prepare-sequencer-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git prepare-sequencer-v1
+
 -- 
 2.10.0.rc1.114.g2bd6b38
 
-
+base-commit: 2d6d71e2a2d410b12d783f0a8edd22791f303c12
