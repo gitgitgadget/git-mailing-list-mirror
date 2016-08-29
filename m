@@ -2,135 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EBC5B1FD99
-	for <e@80x24.org>; Mon, 29 Aug 2016 18:27:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49DDB1FD99
+	for <e@80x24.org>; Mon, 29 Aug 2016 18:30:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754207AbcH2S1S (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 14:27:18 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54495 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753566AbcH2S1R (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2016 14:27:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A00733A0D1;
-        Mon, 29 Aug 2016 14:27:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=S/mvGypxtb8724Bi78tLuA7iaWk=; b=bY7wvm
-        uBcm4wKB5NulV+HtErqaEFe4slO0+v9qiIsvfcGm/2JrYAKrhG2VOQtkztNBQbF6
-        cX+L+AEEj5W0a0o+2F1H42/jF+dhU/XJRuBIwc7+KUul7pX5FMp//Lj+slJEDnFX
-        0iLlq8Uz9ooDC+Tdb4KLqprgZAm7WDBSM4Huk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=RSPwvr9BOES5SLRSV2j/noNNVAZcvupP
-        jHRuOjsRNZ/uXBjbZB1Sr1TyAV/IUEfCmAe+AHa+MHKgE5jwQbaCuGlKI8AaWAcT
-        elH3TMIYc/NBxqhATpN+q0j+vU5+/YGf0jmPHw83QuVY9ZDIC1IVvRD5GQ8mYCWO
-        lcAPar0bhL0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9770A3A0D0;
-        Mon, 29 Aug 2016 14:27:15 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0AAB03A0CE;
-        Mon, 29 Aug 2016 14:27:14 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Simon Ruderich <simon@ruderich.org>, git@vger.kernel.org,
-        Mike Hommey <mh@glandium.org>
-Subject: Re: Crash when using git blame on untracked file
-References: <20160827175336.bphgkb6zclvwfntk@ruderich.org>
-        <20160827200150.GA18723@hank>
-Date:   Mon, 29 Aug 2016 11:27:13 -0700
-In-Reply-To: <20160827200150.GA18723@hank> (Thomas Gummerer's message of "Sat,
-        27 Aug 2016 21:01:50 +0100")
-Message-ID: <xmqqeg57bfcu.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1754719AbcH2SaV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 14:30:21 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34947 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1754207AbcH2SaU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2016 14:30:20 -0400
+Received: (qmail 3122 invoked by uid 109); 29 Aug 2016 18:30:19 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Aug 2016 18:30:19 +0000
+Received: (qmail 22255 invoked by uid 111); 29 Aug 2016 18:30:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Aug 2016 14:30:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Aug 2016 14:30:15 -0400
+Date:   Mon, 29 Aug 2016 14:30:15 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>, Beat Bolli <dev+git@drbeat.li>,
+        Heiko Voigt <hvoigt@hvoigt.net>,
+        Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+        Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH 1/2] gitk: align the commit summary format to the
+ documentation
+Message-ID: <20160829183015.2uqnfezekjfa3ott@sigill.intra.peff.net>
+References: <1472230741-5161-1-git-send-email-dev+git@drbeat.li>
+ <xmqqoa4fgzhv.fsf@gitster.mtv.corp.google.com>
+ <a9731f60-5c30-0bc6-f73a-f7ffb7bd4231@kdbg.org>
+ <xmqqpoorbftc.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 35B25E98-6E16-11E6-ACC3-F7BB12518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqpoorbftc.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+On Mon, Aug 29, 2016 at 11:17:19AM -0700, Junio C Hamano wrote:
 
-> Subject: [PATCH] blame: fix segfault on untracked files
->
-> Since 3b75ee9 ("blame: allow to blame paths freshly added to the index",
-> 2016-07-16) git blame also looks at the index to determine if there is a
-> file that was freshly added to the index.
->
-> cache_name_pos returns -pos - 1 in case there is no match is found, or
-> if the name matches, but the entry has a stage other than 0.  As git
-> blame should work for unmerged files, it uses strcmp to determine
-> whether the name of the returned position matches, in which case the
-> file exists, but is merely unmerged, or if the file actually doesn't
-> exist in the index.
->
-> If the repository is empty, or if the file would lexicographically be
-> sorted as the last file in the repository, -cache_name_pos - 1 is
-> outside of the length of the active_cache array, causing git blame to
-> segfault.  Guard against that, and die() normally to restore the old
-> behaviour.
->
-> Reported-by: Simon Ruderich <simon@ruderich.org>
-> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> ---
+> > While it may be easier to read due to the extra mark-up, the resulting
+> > text where such a quotation appears does not flow well, IMO. A commit
+> > message text that references another commit reads more fluently
+> > without the quotes around the summary line because the quoted text is
+> > not so much a quotation that must be marked, but a parenthetical
+> > statement.
+> >
+> > I absolutely welcome the proposed change to gitk, because I always
+> > edit out the double-quotes.
+> 
+> I think that is highly subjective, and as you very well may know,
+> I've been referring to commits without double-quote pair, and have
+> an obvious bias for something I am used to ;-)
+> 
+> I do not see the "" as introducing a quotation.  I just view it as
+> very similar to the "" in the following sentence:
+> 
+>     The commit whose title is "foo bar" did not consider there is
+>     also need to consider baz.
+> 
+> The whole thing is inside () pair, so I agree that with or without
+> "" pair, it is possible to see where the title ends.  So I do not
+> have a strong opinion either way.
 
-This is a recent regression and unfortunately is also in 2.9.3; the
-patch looks obviously correct.
+I have an alias which produces similar output, without the double-quotes
+(probably because I stole it from you originally).
 
->  builtin/blame.c  | 3 ++-
->  t/t8002-blame.sh | 7 +++++++
->  2 files changed, 9 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> index 7ec7823..a5bbf91 100644
-> --- a/builtin/blame.c
-> +++ b/builtin/blame.c
-> @@ -2244,7 +2244,8 @@ static void verify_working_tree_path(struct commit *work_tree, const char *path)
->  	pos = cache_name_pos(path, strlen(path));
->  	if (pos >= 0)
->  		; /* path is in the index */
-> -	else if (!strcmp(active_cache[-1 - pos]->name, path))
-> +	else if (-1 - pos < active_nr &&
-> +		 !strcmp(active_cache[-1 - pos]->name, path))
->  		; /* path is in the index, unmerged */
->  	else
->  		die("no such path '%s' in HEAD", path);
-> diff --git a/t/t8002-blame.sh b/t/t8002-blame.sh
-> index ff09ace..7983bb7 100755
-> --- a/t/t8002-blame.sh
-> +++ b/t/t8002-blame.sh
-> @@ -6,6 +6,13 @@ test_description='git blame'
->  PROG='git blame -c'
->  . "$TEST_DIRECTORY"/annotate-tests.sh
->  
-> +test_expect_success 'blame untracked file in empty repo' '
-> +	touch untracked &&
-> +	test_must_fail git blame untracked 2>actual.err &&
-> +	echo "fatal: no such path '\''untracked'\'' in HEAD" >expected.err &&
-> +	test_cmp expected.err actual.err
-> +'
+I have noticed over the years that the output is occasionally ugly when
+the commit names have parentheses themselves. E.g.:
 
-The point of this fix is not that we show the exact error message,
-but we fail in a controlled manner.  I think
+  $ git config alias.ll
+  !git --no-pager log -1 --pretty='tformat:%h (%s, %ad)' --date=short
 
-        test_expect_success 'blame untracked file in empty repo' '
-                >untracked &&
-                test_must_fail git blame untracked
-        '
+  $ git ll 7e97e10
+  7e97e10 (die(_("BUG")): avoid translating bug messages, 2016-07-26)
 
-is sufficient.
+  $ git ll fa90ab4
+  fa90ab4 (t3404: fix a grammo (commands are ran -> commands are run), 2016-06-29)
 
-Thanks.
+Adding quotes can help with that. OTOH, I think it just introduces the
+same problem with a different character. E.g.:
 
->  PROG='git blame -c -e'
->  test_expect_success 'blame --show-email' '
->  	check_count \
+  $ git ll be00b57
+  be00b57 (provide an initializer for "struct object_info", 2016-08-11)
+
+  $ git llq be00b57
+  be00b57 ("provide an initializer for "struct object_info"", 2016-08-11)
+
+Perhaps one could write a script to find a custom pretty non-conflicting
+delimiter for each case, but I don't know if it's worth the effort. :)
+
+-Peff
