@@ -7,133 +7,118 @@ X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA1D71F6C1
-	for <e@80x24.org>; Mon, 29 Aug 2016 08:04:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 94A701F6C1
+	for <e@80x24.org>; Mon, 29 Aug 2016 08:04:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756678AbcH2IEk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 04:04:40 -0400
-Received: from mout.gmx.net ([212.227.17.21]:52836 "EHLO mout.gmx.net"
+        id S1756660AbcH2IEj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 04:04:39 -0400
+Received: from mout.gmx.net ([212.227.15.15]:64413 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756487AbcH2IEh (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1756425AbcH2IEh (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 29 Aug 2016 04:04:37 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MCtLD-1bmE3C1UiB-009dn9; Mon, 29 Aug 2016 10:04:29
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0LmK3e-1b4Om30TfW-00ZyQe; Mon, 29 Aug 2016 10:04:33
  +0200
-Date:   Mon, 29 Aug 2016 10:04:28 +0200 (CEST)
+Date:   Mon, 29 Aug 2016 10:04:32 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 04/22] sequencer: future-proof remove_sequencer_state()
+Subject: [PATCH 05/22] sequencer: allow the sequencer to take custody of
+ malloc()ed data
 In-Reply-To: <cover.1472457609.git.johannes.schindelin@gmx.de>
-Message-ID: <2245e7db4d4c028f63b2f4c41097559f91756f2c.1472457609.git.johannes.schindelin@gmx.de>
+Message-ID: <e4e7eab3d0610faa9d3173a585902e50128d8e15.1472457609.git.johannes.schindelin@gmx.de>
 References: <cover.1472457609.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:RtGgO8bwERL404CaVZxRPfWN98goBNq/WQCfy/A/kI5D8Z2w5VQ
- cpkBLtm2531P2CUmNRIEAEYG0cuewesvj3JPY1gGghQieVf0NPZqrk7iwu8xkgeAXOz70Ls
- KXvK+5RpqVjuZBzK7PJ/M9GMAHURRcob4YdtQ4pCGNwhM9mh/+LR7Y7osTl0VX9aDmJYD5K
- gssjKpSZspj5CNum8zo/Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:FvXM4s38oUE=:lE0xUlGt0aOjSdvKlNWube
- mx4vPtAl5FoCbp8LDoxOwajySvr0Ly7NRFbHMmD5ZoaZZhRXzxfH7a600+nwuMYJ3pYp2utZX
- gSce9eVeKaDzfSrlF0ibIgAJ34PAnYjpBA+zaWPECOKI5MOfUW4k0KQpoTWhgFThbug/Dw2gb
- nB7+cxNpR/6ynQXeZq+ApoCKda4v3NS0Pz10WPMZMSDdUWxV7BSkHVndz5NNOLzmdxiahIFTP
- JYeQzTVYvF4T2UrmOyzia7ySy7wD4wRxjLL/RrwUuoeFvy14bxJVzzZS/zzxsvCwU7wa9UFA3
- TzyLRKIFk9KFdegjUwfFysejLPi26hDtwZnsfEJC2QcsXKIApMfgbV0dKudQdY3PDkY59iXi7
- aBRcMvPGuzCHkSR+YloaVntMHcecG9R4p4mXyywZqNoU+5r09VBdckK7cUY2xZcuEqofuc4KW
- KUxPKUqQPYWfmPGCR3x9ldYh4+T8jX7wFLUnuU1+dxSTUKPO4MqAS6EdbO36AbKFFvv1vWoDf
- ZRBMTN+SGFVLy7O4F+ZuJxxUtcm0gJEoFc4h1aC3m94CRMS9Xdoh/MYKgeW8wl1B0VQhWM2f/
- NClMWhQnOVmvK+kbd1OwlihJ7DVRXNQ7T2XeXJa0XTMl1y5Q8ECBsYi33OlxqZyZEiIck7PW7
- LbdyY95IzheqVJLys9E3/4U7O6EvHt7UvMkqbq+B06OwhZZuTDDjz0DBJJUMOO8Mef6GRZXf/
- ayQa2hHxhSLE6GoTIMwcORuSLrn/3kKG7ZfyJili9S5hp0vZEg87okMeeo3y+FdKyLNxp9K3n
- Sry6uQ4
+X-Provags-ID: V03:K0:QZhPWieS0g7vqF6fo48t0xUivvjNMIKwdlakaZzfseuJ7suqt9b
+ Z6RInnqYzhQdbYmXXMYJzpwPrHLVyCXuLgQrO+JF1HeE74TTlPr3RV1Sl+Kd3CFJ/4GvDH1
+ xNMcjud77/+ea03zqQ766OZcm2pEGPnxv9y3um+xW+ie/8VE5atg8L939mfavXcZczezliU
+ 1ezIRuG+LRtEpnpQnLMPg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:qEFOWWmYqCA=:inmKpHagse/VajjIRrVY+K
+ AQjQG1GpOxyjbAo+PjViK8kwW+2vX3Br255MA88OYcUw7EKRzJB7eW18CzMi+BHk3Vw6andyp
+ O91ExZsPSdLSzflCDE61SrQU0FB0gCwjfEG7+Bdlsz5y3PAeSyA34XMbuqjUQkH1bPPRLaAN9
+ T5nO00AzXSvVt1WgIVa7XJ4Y3vzAuWpuWQRveekuWzl/WhdpsQgZ5uDpuR7Ku+Wj5TjJX05Ch
+ DtuDS9L3nR+DvLiOBdEqjsaFQGeFvO3ogA/PINihbPrGZ14+v58ZpAJE49sW17BdHNpMApW7v
+ LBGlZ8ms+OS4EUOEVDE1l/05oGpRC++ByAehN/16mQ1lQEPOlkRDjBhaer39BJEsowlmCfWN1
+ eNWjO4SvEGqAXuhS7Ugoj4DALsmFmxaEMPtyhFCwacXvh9QmdaKn89Tu4zrpb/Kxo1pptvzX6
+ cmKMk8JYzFA4k9c693UHV8zkocJRtpAPZbElNqAyVXEw/aFFzutoZACKtnn/4KtkpoJUK6Wxo
+ fEG5PGy9WIlx2Jc7d/gGYNROtb9L3Gj89BT6OCYhT51nwqtTY0zdBHj14aFMnmuHlJfAeVgMi
+ MY+7hCOWZVBm62eIqMNCHMWmK6xQi/O44blTrkcqdW0l/AujE0VvCnAUaXRHjUFWj6wwXkCVo
+ eoUxcbwbPGtKMg3ZM1Uie4QIw8aONYTuR/o1ozuC2jO5isyY0YYQlpbHjflYUiTYEYfPWuAMj
+ 4XmTbYMF55WPUrd7azazrCKzfcNsdX+wc/mEBpV5DnhDEI4XFNKx7KHp5i3KMe5nJ+3Lt81xS
+ gra27ft
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a couple of commits, we will teach the sequencer to handle the
-nitty gritty of the interactive rebase, which keeps its state in a
-different directory.
+The sequencer is our attempt to lib-ify cherry-pick. Yet it behaves
+like a one-shot command when it reads its configuration: memory is
+allocated and released only when the command exits.
+
+This is kind of okay for git-cherry-pick, which *is* a one-shot
+command. All the work to make the sequencer its work horse was
+done to allow using the functionality as a library function, though,
+including proper clean-up after use.
+
+This patch introduces an API to pass the responsibility of releasing
+certain memory to the sequencer.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+ sequencer.c | 13 +++++++++++++
+ sequencer.h |  8 +++++++-
+ 2 files changed, 20 insertions(+), 1 deletion(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 14ef79b..c4b223b 100644
+index c4b223b..b5be0f9 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -27,6 +27,11 @@ static GIT_PATH_FUNC(git_path_todo_file, "sequencer/todo")
- static GIT_PATH_FUNC(git_path_opts_file, "sequencer/opts")
- static GIT_PATH_FUNC(git_path_head_file, "sequencer/head")
- 
-+static const char *get_dir(const struct replay_opts *opts)
-+{
-+	return git_path_seq_dir();
-+}
-+
- static int is_rfc2822_line(const char *buf, int len)
- {
- 	int i;
-@@ -109,13 +114,13 @@ static int has_conforming_footer(struct strbuf *sb, struct strbuf *sob,
+@@ -114,9 +114,22 @@ static int has_conforming_footer(struct strbuf *sb, struct strbuf *sob,
  	return 1;
  }
  
--static void remove_sequencer_state(void)
-+static void remove_sequencer_state(const struct replay_opts *opts)
- {
--	struct strbuf seq_dir = STRBUF_INIT;
-+	struct strbuf dir = STRBUF_INIT;
- 
--	strbuf_addstr(&seq_dir, git_path_seq_dir());
--	remove_dir_recursively(&seq_dir, 0);
--	strbuf_release(&seq_dir);
-+	strbuf_addf(&dir, "%s", get_dir(opts));
-+	remove_dir_recursively(&dir, 0);
-+	strbuf_release(&dir);
- }
- 
- static const char *action_name(const struct replay_opts *opts)
-@@ -895,6 +900,9 @@ static int sequencer_rollback(struct replay_opts *opts)
- 	unsigned char sha1[20];
- 	struct strbuf buf = STRBUF_INIT;
- 
-+	if (read_and_refresh_cache(opts))
-+		return -1;
++void *sequencer_entrust(struct replay_opts *opts, void *set_me_free_after_use)
++{
++	ALLOC_GROW(opts->owned, opts->owned_nr + 1, opts->owned_alloc);
++	opts->owned[opts->owned_nr++] = set_me_free_after_use;
 +
- 	f = fopen(git_path_head_file(), "r");
- 	if (!f && errno == ENOENT) {
- 		/*
-@@ -924,7 +932,7 @@ static int sequencer_rollback(struct replay_opts *opts)
- 	}
- 	if (reset_for_rollback(sha1))
- 		goto fail;
--	remove_sequencer_state();
-+	remove_sequencer_state(opts);
- 	strbuf_release(&buf);
- 	return 0;
- fail:
-@@ -1018,7 +1026,7 @@ static int pick_commits(struct commit_list *todo_list, struct replay_opts *opts)
- 	 * Sequence of picks finished successfully; cleanup by
- 	 * removing the .git/sequencer directory
- 	 */
--	remove_sequencer_state();
-+	remove_sequencer_state(opts);
- 	return 0;
- }
++	return set_me_free_after_use;
++}
++
+ static void remove_sequencer_state(const struct replay_opts *opts)
+ {
+ 	struct strbuf dir = STRBUF_INIT;
++	int i;
++
++	for (i = 0; i < opts->owned_nr; i++)
++		free(opts->owned[i]);
++	free(opts->owned);
  
-@@ -1079,7 +1087,7 @@ int sequencer_pick_revisions(struct replay_opts *opts)
- 	 * one that is being continued
- 	 */
- 	if (opts->subcommand == REPLAY_REMOVE_STATE) {
--		remove_sequencer_state();
-+		remove_sequencer_state(opts);
- 		return 0;
- 	}
- 	if (opts->subcommand == REPLAY_ROLLBACK)
+ 	strbuf_addf(&dir, "%s", get_dir(opts));
+ 	remove_dir_recursively(&dir, 0);
+diff --git a/sequencer.h b/sequencer.h
+index c955594..20b708a 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -43,8 +43,14 @@ struct replay_opts {
+ 
+ 	/* Only used by REPLAY_NONE */
+ 	struct rev_info *revs;
++
++	/* malloc()ed data entrusted to the sequencer */
++	void **owned;
++	int owned_nr, owned_alloc;
+ };
+-#define REPLAY_OPTS_INIT { -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, 0, 0, NULL }
++#define REPLAY_OPTS_INIT { -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, 0, 0, NULL, NULL, 0, 0 }
++
++void *sequencer_entrust(struct replay_opts *opts, void *set_me_free_after_use);
+ 
+ int sequencer_pick_revisions(struct replay_opts *opts);
+ 
 -- 
 2.10.0.rc1.114.g2bd6b38
 
