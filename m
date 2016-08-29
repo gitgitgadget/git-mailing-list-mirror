@@ -2,91 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DCE11FD99
-	for <e@80x24.org>; Mon, 29 Aug 2016 21:13:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2CA21FD99
+	for <e@80x24.org>; Mon, 29 Aug 2016 21:14:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754476AbcH2VNu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 17:13:50 -0400
-Received: from mail-oi0-f41.google.com ([209.85.218.41]:33967 "EHLO
-        mail-oi0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753436AbcH2VNt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2016 17:13:49 -0400
-Received: by mail-oi0-f41.google.com with SMTP id l203so176022oib.1
-        for <git@vger.kernel.org>; Mon, 29 Aug 2016 14:13:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twitter.com; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=NRNTGno+60QdgMMKoAi6ByECs8T89GAAyjOou8Sjv2g=;
-        b=ezB+f4vaiPUt5VsT27m9VWdPXIWOOB44rM0x8iUZUgACKhwjEPsSYDYEvhzTCptWPb
-         2f186oV7n/zv3h2QS27Hvqm4K9d+xbwbUa1MtNvfIOi20XEyi5ACmqkEDMgMYkKxzc8Y
-         uPHUWlvETjVw9c+8HeFY7XGoBNTF8augQAjKM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=NRNTGno+60QdgMMKoAi6ByECs8T89GAAyjOou8Sjv2g=;
-        b=CdYB/8oDIyiABZRTiVvX4qJAzMMbPXFgwCw6c0+5bXKmkkIf59Avw7BtRpr5tzMMAR
-         eAMkf2p0SQ2IXfHKhfk6NuNDf+5gnG5X4jeEg7aYTLVC/43Oh5dQToD9dwdt8V/L6dux
-         mCJNcsUxRe8boqgBP+Gyg5+kPACq7XcutFfNHoTuH5OACL1OGfFLCjIsctlGqw/953xq
-         fld3ZAwcXxREZ2LY0a+adHnHUFQfn4Fxb7pVjDGvrKW214nVeBnUssRwuapbj9aK1fE4
-         O1YzbCH+Zik9Y6UO3y9MALpFGrwzY21y2NwvgiGjFy3V993eD2iuF/g4fpx/Y25hAbuH
-         ayQA==
-X-Gm-Message-State: AE9vXwNDBULZOvZO9l76enwOwxefQmiTbkQxKWlvg4C1mlzIUjqcyErT2QbJckMaXHmNSwlJejgtV1yowYJ5M111
-X-Received: by 10.157.55.183 with SMTP id x52mr111829otb.68.1472505228871;
- Mon, 29 Aug 2016 14:13:48 -0700 (PDT)
+        id S1754981AbcH2VOd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 17:14:33 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58496 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753436AbcH2VOc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2016 17:14:32 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 258BE37F47;
+        Mon, 29 Aug 2016 17:14:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=XYAYCTz5xb9PnElqbwOKqSJrZxo=; b=FYnR03
+        PePV0D3J6qJ7iP5EBMyoMw4n1dslb3WN1B3sInOPzbiNfZ+Wk4rqlgZlQT3yZo3U
+        ydnA5z1k+o9t5eDDlPFIpWGZkTpc1tHLV/2cvjZ9oaQsiVjI0lMb36fdlxJt4z6X
+        pzIaP4vp8A+1mXzvNBJScfrk2WhmyX/f75OiE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=fjcIP1kab+hijcON9SYeq8ykc3QO9ard
+        +mgbrBEHDK/GJM2IdBEwykE4v09zd8c18148EOBvor8n9BvgXk5ioIeShjtTYSfp
+        IzxGbeNn2DSQ35xJQeLfrpn4NortCaWPQEduDWLxEgycBJpAGvX0qN09Yi3gc5y+
+        ZsGE+fj3gWs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1E94237F46;
+        Mon, 29 Aug 2016 17:14:31 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9C2EB37F43;
+        Mon, 29 Aug 2016 17:14:30 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 10/14] sequencer: lib'ify read_populate_opts()
+References: <cover.1471968378.git.johannes.schindelin@gmx.de>
+        <cover.1472219214.git.johannes.schindelin@gmx.de>
+        <0fde7522953f71bd07e6aa7a15081dbf069aa6b6.1472219214.git.johannes.schindelin@gmx.de>
+        <xmqq37ln9ubo.fsf@gitster.mtv.corp.google.com>
+Date:   Mon, 29 Aug 2016 14:14:28 -0700
+In-Reply-To: <xmqq37ln9ubo.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Mon, 29 Aug 2016 13:46:51 -0700")
+Message-ID: <xmqqh9a38eh7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.157.55.226 with HTTP; Mon, 29 Aug 2016 14:13:48 -0700 (PDT)
-In-Reply-To: <CAPc5daVhY6WdHkXGLYea48uOw0-rTzLLZ=7mNo=VPebZ9AG4jQ@mail.gmail.com>
-References: <CAN5XQftQH8B+hWVh4JQgZwAp+rkbz51P5NZDc_+Tfm0EB1zkew@mail.gmail.com>
- <xmqqlgzf9wch.fsf@gitster.mtv.corp.google.com> <CAN5XQft6S+LG0mBgRFPrMZiOxHSfRhjLmQdeMdBeHKoWQSRUEA@mail.gmail.com>
- <CAPc5daVhY6WdHkXGLYea48uOw0-rTzLLZ=7mNo=VPebZ9AG4jQ@mail.gmail.com>
-From:   Uma Srinivasan <usrinivasan@twitter.com>
-Date:   Mon, 29 Aug 2016 14:13:48 -0700
-Message-ID: <CAN5XQfty6Fshzf6kN7eXhFekU9+=VPwbzEPN1a92yVB=9nm0Vg@mail.gmail.com>
-Subject: Re: git submodules implementation question
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9360C3F6-6E2D-11E6-B696-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ok that makes sense. Thanks much.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Uma
-
-On Mon, Aug 29, 2016 at 2:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> On Mon, Aug 29, 2016 at 2:03 PM, Uma Srinivasan <usrinivasan@twitter.com> wrote:
->> On Mon, Aug 29, 2016 at 1:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>>
->>> A top-level superproject can have a submodule bound at its "dir/"
->>> directory, and "dir/.git" can either be a gitfile which you can read
->>> with read_gitfile() and point into somewhere in ".git/modules/" of
->>> the top-level superproject.  "dir/.git" can _ALSO_ be a fully valid
->>> Git directory.  So at the top of a superproject, you could do
->>>
->>>         git clone $URL ./dir2
->>>         git add dir2
->>>
->>> to clone an independent project into dir2 directory, and add it as a
->>> new submodule.  The fallback is to support such a layout.
->>>
->> Thanks for the reply. However, in this case....
->>
->>       git clone $URL ./dir2
->>       git add dir2
->>
->> how will "dir2" get ever get registered as a submodule?
+>> +	if (git_config_from_file(populate_opts_cb, git_path_opts_file(), *opts) < 0)
+>> +		return error(_("Malformed options sheet: %s"),
+>> +			git_path_opts_file());
+>> +	return 0;
 >
-> With a separate invocation of "git config -f .gitmodules", of course.
-> The layout to use gitfile to point into .git/modules/ is a more recent
-> invention than the submodule support itself that "git add" knows about.
-> The code needs to support both layout as well as it can, and that
-> is what the "can we read it as gitfile?  If not, that directory itself may
-> be a git repository" codepath you asked about is doing.
+> As discussed, perhaps have a comment immediately before calling
+> config-from-file that says that the call could die when it is fed a
+> syntactically broken file, but we ignore it for now because we will
+> be writing the file we have written, or something?
+
+Obviously we will be _READING_ here ;-)
