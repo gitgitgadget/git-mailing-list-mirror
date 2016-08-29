@@ -2,91 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE0E21FD99
-	for <e@80x24.org>; Mon, 29 Aug 2016 20:32:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 50D891FD99
+	for <e@80x24.org>; Mon, 29 Aug 2016 20:33:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754167AbcH2Ucx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 16:32:53 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33180 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753322AbcH2Ucw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2016 16:32:52 -0400
-Received: by mail-wm0-f66.google.com with SMTP id o80so304436wme.0
-        for <git@vger.kernel.org>; Mon, 29 Aug 2016 13:32:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=n1qKMabGRxC3pWTu5AuMOTJl+Ipzz0dtZgWHHmDOWOk=;
-        b=Z9Aj8B29h/gfbbU17q6F5SX5SRqyP9EyxpD6imprmItsdb/amcBtVczGr72ZmyXBgu
-         wUBkuu9ezZrZnrjYNfUAN+dp0Md667DzqQl9QBb2ekEqgAnPic4tiHXY6fMFrnlgIrYC
-         H7zovy4sik/TZElJsoimWYL4xCoihfDKW5sPx5+2u8lSZCeYN5Wf8UEMWyOoKOBN5NZW
-         7JB/lOwhxlxJYiXOuxjgGO3weFOwYoA2N758ore3IF1lQGFIKmuspz1UONVJWx9QOsUr
-         5yFd4YMb+eq9DvHR9Ww1xQcX3y3jDZ7PEL8ZkWuCRc13aIjXTpYxpLWLLhl0NaDH5QPD
-         Cmmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=n1qKMabGRxC3pWTu5AuMOTJl+Ipzz0dtZgWHHmDOWOk=;
-        b=VTfGp5ayEvpoMevzrjkxEf74B3TFbMdbMoQ2qg0G4GyXug2rGJftA6NaWncoVnwxyX
-         ykmv0mEGHzMTPRG66NtsGyR0rCWKruKW/UjGhfa+KJzQ63bEpb8Qkanb5YhbuYOXvT6o
-         d5OjzkRDDsIGfFFai9rvdTKn0mLPGtQGjWLBLeOGjDY5Bjfiu3NaDxmSBc4Hlbko69uf
-         ts8uB1TWsnCpvohhg5bAHcnE8eXHjuCk+JjOgm+W0Kt1JxTJmnq/+6+UtkQxZJd/eAzj
-         iYbjOgNWzTEl1PodaNdVIYK5uLAqK/WGIqeA2GBzZCkJJiBui5bChkK3zEUH68fz2o/Y
-         dMaw==
-X-Gm-Message-State: AE9vXwMRjzwfAMj7/AfWbSo9ca4aYpxYMJJypFK3ZaNqC7yDiftj4Kp1hpYWMGUyoRUO3g==
-X-Received: by 10.28.32.77 with SMTP id g74mr351917wmg.45.1472502771030;
-        Mon, 29 Aug 2016 13:32:51 -0700 (PDT)
-Received: from [192.168.1.26] (afz108.neoplus.adsl.tpnet.pl. [83.25.155.108])
-        by smtp.googlemail.com with ESMTPSA id 4sm15165545wmu.2.2016.08.29.13.32.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 29 Aug 2016 13:32:50 -0700 (PDT)
-Subject: Re: [PATCH 20/22] sequencer: remember do_recursive_merge()'s return
- value
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-References: <cover.1472457609.git.johannes.schindelin@gmx.de>
- <1f79d41e3417a0b1f0cffccc40e97f1a2c5ef987.1472457609.git.johannes.schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <99fd1126-53d1-36e4-facd-7e18ba06e3c0@gmail.com>
-Date:   Mon, 29 Aug 2016 22:32:40 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S1755269AbcH2Uc7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 16:32:59 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53006 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754321AbcH2Uc6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2016 16:32:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9F3793A997;
+        Mon, 29 Aug 2016 16:32:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=efVxXsT6saq+XPOFLwLqnJWt/Hw=; b=Koi2To
+        4Cemjjsp3sHHWQQF7PROr2HfzXJ3iPLURd01SxCG+Q0X7P2KjW99gdOz8R3SWxst
+        pAISs/LXT9WLDE8ZGsrXqd3MdkcQslzrkm0KMduUblm5hBSiufTy46S0h1bPJGed
+        q6WEknl9K4K3PIJ+swuYOG1IjXos3QMxg2Xsg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=v70EB4alKR07HVbb8MhB4IkMOcDfzd1b
+        jOIb3bMaXI3Vc3bC9MnltHQusjbsD8ypHeJKJlxJ6foacamaEpcq2HzrlYXti9Pq
+        dkU8oQcN/CapRKJTS2gXVFEOABs6GYaVMv8kqo2TBo227BLo2kJUs54a2XohG0UG
+        vq3bhNySLpM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 970933A995;
+        Mon, 29 Aug 2016 16:32:56 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 06D443A993;
+        Mon, 29 Aug 2016 16:32:55 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 05/14] sequencer: lib'ify do_pick_commit()
+References: <cover.1471968378.git.johannes.schindelin@gmx.de>
+        <cover.1472219214.git.johannes.schindelin@gmx.de>
+        <39d03662fc6ea81d737c0650bb9b7292e812ae02.1472219214.git.johannes.schindelin@gmx.de>
+Date:   Mon, 29 Aug 2016 13:32:54 -0700
+In-Reply-To: <39d03662fc6ea81d737c0650bb9b7292e812ae02.1472219214.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Fri, 26 Aug 2016 15:47:39 +0200
+        (CEST)")
+Message-ID: <xmqqbn0b9uyx.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <1f79d41e3417a0b1f0cffccc40e97f1a2c5ef987.1472457609.git.johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: C4792952-6E27-11E6-A611-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 29.08.2016 o 10:06, Johannes Schindelin pisze:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
+> Instead of dying there, let the caller high up in the callchain notice
+> the error and handle it (by dying, still).
+>
+> The only two callers of do_pick_commit(), pick_commits() and
+> single_pick() already check the return value and pass it on to their
+> callers, so their callers must be already prepared to handle error
+> returns, and with this step, we make it notice an error return from
+> this function.
+>
+> So this is a safe conversion to make do_pick_commit() callable from
+> new callers that want it not to die, without changing the external
+> behaviour of anything existing.
+>
+> While at it, remove the superfluous space.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  sequencer.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
 > diff --git a/sequencer.c b/sequencer.c
-> index 5ec956f..0614b90 100644
+> index f6cdf65..7eef512 100644
 > --- a/sequencer.c
 > +++ b/sequencer.c
-> @@ -623,7 +623,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
->  	const char *base_label, *next_label;
->  	struct commit_message msg = { NULL, NULL, NULL, NULL };
->  	struct strbuf msgbuf = STRBUF_INIT;
-> -	int res, unborn = 0, allow;
-> +	int res = 0, unborn = 0, allow;
+> @@ -464,7 +464,7 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+>  		 * to work on.
+>  		 */
+>  		if (write_cache_as_tree(head, 0, NULL))
+> -			die (_("Your index file is unmerged."));
+> +			return error(_("Your index file is unmerged."));
 
-Not that I am against this part of change, making initialization
-explicit, but why we are initializing automatic variables with 0,
-which would be the default value anyway?  I thought our coding
-guidelines discourage initializing with 0 or NULL...
+Makes sense.
 
-Puzzled,
--- 
-Jakub Narębski
-
+do_pick_commit() still calls fast_forward_to(), which was silently
+half libified in 3/14 but can still die in checkout_fast_forward(),
+though.
