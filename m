@@ -2,97 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0E1B1F6C1
-	for <e@80x24.org>; Mon, 29 Aug 2016 09:51:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 814761F6C1
+	for <e@80x24.org>; Mon, 29 Aug 2016 09:51:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756741AbcH2JvC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 05:51:02 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:33443 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756705AbcH2JvB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2016 05:51:01 -0400
-Received: by mail-wm0-f67.google.com with SMTP id o80so8754313wme.0
-        for <git@vger.kernel.org>; Mon, 29 Aug 2016 02:51:00 -0700 (PDT)
+        id S1757038AbcH2Jvi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 05:51:38 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35744 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757027AbcH2Jvg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2016 05:51:36 -0400
+Received: by mail-wm0-f68.google.com with SMTP id i5so8735088wmg.2
+        for <git@vger.kernel.org>; Mon, 29 Aug 2016 02:51:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding;
-        bh=PpBS2TFQShrYYqnPSKYnSmqbt3LkX3f/mHzL6YwXq4Q=;
-        b=Y6g2h8vijvXWcrlBInaour3meRBnHsYbpnGuDWziKBd/7ntzW6gs8F5OBqVjbbrAFH
-         pUTZhhMGWbI+OhsWapgq3kW4pig7m6ZNvu/8lUIzQ9TkIpKbhf6qlAq75QXeRoH5JWDy
-         TSb7Dc7HN1rCCRKs80DZtAWTORnD6dL5Ttryj0fXjznLdG9STmtzHGwU9R8xHgB0gYRs
-         JP7HSMhLjuffC+QueIrMCsYIGPeR3moQc2YRu3JH13TMQ11ApKinypnCR3UlYc0NSqnd
-         /dpR2OVDWe6j5J6YM9fok9/tOc/UA/m7robzD2r6k2qobllfxdWXhyArt5K7/HiW4u4L
-         kcnw==
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=wiNYZWLvETuZrCL3X6xiSlTpj+gSjw8jf0Crxf1tUO8=;
+        b=ditGpfvCV5TaB5rqLYVO0kEANwOtcnEE79b0toUk/qt37wnSl2yPQmuqen5vMYlnc1
+         SrsUEeAe9P+1rbCWYzUkCxu40xyj5KJwLWxTHM9CECYGX5nrtnTMMb0EUCHwdHdMCGjI
+         ClyUt4OMMr12cxSs3Q9iy/iYRhnsEkM6yVFwCUZ5b7aNaGCsJ9Ra2FhR1Pm/WbSvjrIN
+         YFqNWeTzFPbvV740GnfxNCdiS7AtaLyowwxnGni58HV1IQbv/lAUTWye5sVxJ9ulBfyK
+         6z0a8VCq274nQIuMrnfQgLSKWXCh9Ca2d1FmTISwlts46JqmWGvww/YecR7K7pjgmXdP
+         /cXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=PpBS2TFQShrYYqnPSKYnSmqbt3LkX3f/mHzL6YwXq4Q=;
-        b=PBLDLfibhWVZKpZBXIIaZWOIGS9QyCUHR7nQRo2VG6eAuuHCSE/Qmpnk7MJoQSvNwF
-         MOtwRJ6HKGLifBH0nDq2oG1I+p6h7Aim2eLTuhncWYhd2yG++hbYRDMjiNIc3CYrlevt
-         50kooz/jdqmJrqG/Z/4JoXymszDXjc5bWGwvuox/ukwg0PRJ/hkhIVdMmGeapP66P+fK
-         AuJkwZdex6ifk1QcoWhAumhUCTt1lyhARFfJYguh3+el4DHtcpLLeM1GUApY0AtXyYnK
-         Hz19NwAB5SQQHjnEcUDXWCQBkgOsTPhSQdVtKV9Q8O+Q3sZR9qicNfiOJc1ezZxVyQjw
-         GbTQ==
-X-Gm-Message-State: AE9vXwMGomtg4I5LqRNpRdBw5tVLZxTXVwHiikiio5WJz4JubX6NpyUZJKFQPwnZ5qD2xA==
-X-Received: by 10.28.168.83 with SMTP id r80mr10390272wme.44.1472464259278;
-        Mon, 29 Aug 2016 02:50:59 -0700 (PDT)
-Received: from [192.168.1.26] (abpp123.neoplus.adsl.tpnet.pl. [83.8.57.123])
-        by smtp.googlemail.com with ESMTPSA id g7sm33552554wjx.10.2016.08.29.02.50.57
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=wiNYZWLvETuZrCL3X6xiSlTpj+gSjw8jf0Crxf1tUO8=;
+        b=VSw1VLNrypZqC+CRbIJkyyqyjk9QuU73kF3Lh05wkFoVaNl8yGOAy/qVrRofhrHK+/
+         n/CRzKBYsgt1+NHDitZvL7gYf6bfpiGGr1xSF1wyKZVkzcMJqd/5MJEY6ohGDECOW8u5
+         ANVC7WHe0vrzogH6U63K7+5KsYyRG4Ix/GYSTQaDbjpJS+8d4cM6PA0hvCpc78CEFfi9
+         2MRXtP+sZrEreVzJWGph+dRS2AM5y/HFySXiLvoGmQ9whExyn+RyL/mc9yIjHVxEoh9P
+         vZV+jj+lPHqJVGfaGUWhxoOcagxcZVTDPfJj+QD4/nFYgp4htoMZlALOkhmc6MMiTZUZ
+         tMWQ==
+X-Gm-Message-State: AE9vXwOPA77IuumpsF9PWCfPf764dBkJjdZ/HbG89mhWeBJNE9IrajKvWZjMenX/Ac2B7g==
+X-Received: by 10.194.222.194 with SMTP id qo2mr14249403wjc.109.1472464295114;
+        Mon, 29 Aug 2016 02:51:35 -0700 (PDT)
+Received: from hurricane.home.kaarsemaker.net ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id n7sm33548785wjf.11.2016.08.29.02.51.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 29 Aug 2016 02:50:58 -0700 (PDT)
-Subject: Re: improve 'git pull' status message
-To:     KES <kes-kes@yandex.ru>, git <git@vger.kernel.org>
-References: <276561472461862@web6j.yandex.ru>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <88ad64e4-9c46-e3a9-7583-4556ae2ce1b3@gmail.com>
-Date:   Mon, 29 Aug 2016 11:50:49 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
-MIME-Version: 1.0
-In-Reply-To: <276561472461862@web6j.yandex.ru>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        Mon, 29 Aug 2016 02:51:34 -0700 (PDT)
+Message-ID: <1472464293.4265.28.camel@kaarsemaker.net>
+Subject: Re: [PATCH 20/22] sequencer: remember do_recursive_merge()'s return
+ value
+From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+Date:   Mon, 29 Aug 2016 11:51:33 +0200
+In-Reply-To: <1f79d41e3417a0b1f0cffccc40e97f1a2c5ef987.1472457609.git.johannes.schindelin@gmx.de>
+References: <cover.1472457609.git.johannes.schindelin@gmx.de>
+         <1f79d41e3417a0b1f0cffccc40e97f1a2c5ef987.1472457609.git.johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.18.5.2-0ubuntu3 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 29.08.2016 o 11:11, KES pisze:
-> 
-> When we do git pull -v --rebase
-> 
-> We got this:
-> remote: Counting objects: 7, done.
-> remote: Compressing objects: 100% (7/7), done.
-> remote: Total 7 (delta 5), reused 0 (delta 0)
-> Unpacking objects: 100% (7/7), done.
-> From ssh://slab/alexclear/ontico
->    2b541e2..2c17d76  master     -> origin/master
-> Changes from 2b541e2bbd23ab5c375c4ce1e0fae5255470a5e7 to 2c17d767934f7f6784d2e0411c7a3a9bfc9c4d08:
->  xxxxx | 37 ++++++++++++++++++++++---------------
->  1 file changed, 22 insertions(+), 15 deletions(-)
-> First, rewinding head to replay your work on top of it...
-> 
-> 
-> That will be better if this
-> 2b541e2bbd23ab5c375c4ce1e0fae5255470a5e7 to 2c17d767934f7f6784d2e0411c7a3a9bfc9c4d08
-> will be replaced by this
-> 2b541e2bbd23ab5c375c4ce1e0fae5255470a5e7..2c17d767934f7f6784d2e0411c7a3a9bfc9c4d08
-> 
-> This will allow us to copy/paste this string into 'diff' command
-> git diff 2b541e2bbd23ab5c375c4ce1e0fae5255470a5e7..2c17d767934f7f6784d2e0411c7a3a9bfc9c4d08
+On ma, 2016-08-29 at 10:06 +0200, Johannes Schindelin wrote:
 
-You can copy the fetch line, "2b541e2..2c17d76", it is
-the same range / set of revisions.
+> The return value of do_recursive_merge() may be positive (indicating merge
+> conflicts), se let's OR later error conditions so as not to overwrite them
+> with 0.
 
-Shortened SHA-1 works as well as full SHA-1.
+s/se/so/?
 
--- 
-Jakub Narębski
+D.
