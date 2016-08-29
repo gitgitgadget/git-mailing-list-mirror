@@ -2,168 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 885F01FD99
-	for <e@80x24.org>; Mon, 29 Aug 2016 21:59:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 332C31FD99
+	for <e@80x24.org>; Mon, 29 Aug 2016 22:15:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755784AbcH2V7w (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 17:59:52 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35123 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755123AbcH2V7u (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2016 17:59:50 -0400
-Received: by mail-wm0-f67.google.com with SMTP id i5so549036wmg.2
-        for <git@vger.kernel.org>; Mon, 29 Aug 2016 14:59:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=DiNRjLX4blitVPN6RbV+SN+fcPrOddRdQJupFkO1RgI=;
-        b=I9hZRbAvqsdcX/hkdW7Dp24wl7kbTa9dXliFCYeZeKpoCqvu6WYgWFjrGOPypcGUK2
-         Yity2dFr1d1gAuRBlJjg3gDhvvxDctYB5+oaP/BwISz6PCZPXgn6kFPeQb3hvrFF3Lx4
-         owqkJ9tSZimeYubieoEi614CIj+bvKG6YFidvCFCWPUIMEHq/RRkwYhm02bJFRSKkXDN
-         IB+/7sylnjz3gFLsZTCijYYpasAlmxYaBDzvjU5wl1eS6wSCZ8W4Hl1Urh+RpASShR58
-         9Qo2hoHuh4jFeFdB/5WE7gZ0h6lQHdx0+1jhaqyM1SLBU9F6G9qYsvuNC6nH9+Z+0tfs
-         7+0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=DiNRjLX4blitVPN6RbV+SN+fcPrOddRdQJupFkO1RgI=;
-        b=a17TeIkVx03NRsd4dU2gG29pZa5hhhKqcdf0Gf/zimgqv4Cg5u3DRwnnqlgVPNcWzc
-         VIs2BRD/dmnuCrPsKV8YgpgxAjmbQwkbeof70wIYTx5bsK8Zopt68wO28JaBeCHF77XL
-         tsz7nfyID5guyWaIbwqYrkiUmXsT11c1Mv+eooiqnI1LLWIvIJ664CTrBdqbC4zPor00
-         yWrEVuzCAzmVR8sNES6iMBgw7+GmI0myrhEEWdY75m7meN1cqqRNp8Gg1Ez/hSYiji59
-         +lsAnyaZlFPoNwPhIcfi8z6cPYbBZ4oleGUqndouRRiA17AOdfPPGHu1AjrmSgEvd6Y9
-         V9XA==
-X-Gm-Message-State: AE9vXwNWn/HqQKtIKRxfxg0RZ7PCn/1S0uKuKh2a1PwHvqyf3Y1omEUSRzh7+YK8QXzlag==
-X-Received: by 10.28.148.148 with SMTP id w142mr13033200wmd.48.1472507987268;
-        Mon, 29 Aug 2016 14:59:47 -0700 (PDT)
-Received: from [192.168.1.26] (afz108.neoplus.adsl.tpnet.pl. [83.25.155.108])
-        by smtp.googlemail.com with ESMTPSA id x203sm15428945wmg.0.2016.08.29.14.59.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 29 Aug 2016 14:59:46 -0700 (PDT)
-Subject: Re: [PATCH 05/22] sequencer: allow the sequencer to take custody of
- malloc()ed data
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-References: <cover.1472457609.git.johannes.schindelin@gmx.de>
- <e4e7eab3d0610faa9d3173a585902e50128d8e15.1472457609.git.johannes.schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <733a899a-470b-79b3-b059-b38313a7057d@gmail.com>
-Date:   Mon, 29 Aug 2016 23:59:36 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S1756520AbcH2WPo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 18:15:44 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:41330 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754476AbcH2WPn (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 29 Aug 2016 18:15:43 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 8375D280A6;
+        Mon, 29 Aug 2016 22:15:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1472508941;
+        bh=aB/wU1mW66rvMUfBXz8oqVgddIQ5/a5OeZfjinTZwX4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=068UhCPfPOvDj8Mi+AJUAAFjF0rJnR0fLODt3d8NIwLP31mQ1ck2RzZhUqCplt7Ax
+         dOPbEg3sniTCF7zOMTovcLu2XsYMECH3z+82FJg11AhmhAH736lB08ftXEbsaM+qQS
+         68EhkzIAQbamOOqYqmQnQQzpTBBL+dS6SuFvZ67PMKEwlfG87xhblqW3NzB1G7Vno7
+         XvRXWrGhQ1nmMUPyDoXUFVOafcCz0fMvsHkBHnlYwMeuLsVdEPxS9fGn7nhmZEjMFm
+         Dd7IA5Qve6PaESqEHPETdoEZnxAANMP32Qcf5SgCoflSOj1WYCus6B91vG3jSN9CCt
+         KItHtg/lqbL7yFFhnnsbSYoujSm7rm+zD1Knp+5rQ5HawhcK29gcXKpuTJyxE4EqSy
+         ACeh17KuAZ3lzKcglo3ONZN8ZmJqBVJR5PnrrHmqldFllCq5NmKamCZfL1H1EmDt/a
+         eISo7a43kwDnGoq24GZ78PnLtqtYkYychsBQwZKtdbpKMs/fqtc
+Date:   Mon, 29 Aug 2016 22:15:38 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Paul Tan <pyokagan@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 18/20] builtin/am: convert to struct object_id
+Message-ID: <20160829221537.kno6bsjgal4qqeid@vauxhall.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Paul Tan <pyokagan@gmail.com>, Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Jeff King <peff@peff.net>
+References: <20160828232757.373278-1-sandals@crustytoothpaste.net>
+ <20160828232757.373278-19-sandals@crustytoothpaste.net>
+ <CACRoPnQvdq3xaRF9niU-b0qLxVCvmbpv2_roxUaEaDFftt7_wQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <e4e7eab3d0610faa9d3173a585902e50128d8e15.1472457609.git.johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="q7jtth65nwhb3a47"
+Content-Disposition: inline
+In-Reply-To: <CACRoPnQvdq3xaRF9niU-b0qLxVCvmbpv2_roxUaEaDFftt7_wQ@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.7.0-rc7-amd64)
+User-Agent: Mutt/1.6.2-neo (2016-08-08)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 29.08.2016 o 10:04, Johannes Schindelin pisze:
 
-> The sequencer is our attempt to lib-ify cherry-pick. Yet it behaves
-> like a one-shot command when it reads its configuration: memory is
-> allocated and released only when the command exits.
-> 
-> This is kind of okay for git-cherry-pick, which *is* a one-shot
-> command. All the work to make the sequencer its work horse was
-> done to allow using the functionality as a library function, though,
-> including proper clean-up after use.
-> 
-> This patch introduces an API to pass the responsibility of releasing
-> certain memory to the sequencer.
+--q7jtth65nwhb3a47
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-So how this API would be / is meant to be used?  From the following
-patches (which I shouldn't have to read to understand this one)
-it looks like it is about strdup'ed strings from option parsing.
-Or would there be something more in the future?
+On Mon, Aug 29, 2016 at 03:02:56PM +0800, Paul Tan wrote:
+> Hi Brian,
+>=20
+> On Mon, Aug 29, 2016 at 7:27 AM, brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> > ---
+> >  builtin/am.c | 138 +++++++++++++++++++++++++++++----------------------=
+--------
+> >  1 file changed, 69 insertions(+), 69 deletions(-)
+>=20
+> I looked through this patch, and the conversion looks faithful and
+> straightforward to me. Just two minor comments:
+>=20
+> > diff --git a/builtin/am.c b/builtin/am.c
+> > index 739b34dc..632d4288 100644
+> > --- a/builtin/am.c
+> > +++ b/builtin/am.c
+> > @@ -1053,10 +1053,10 @@ static void am_setup(struct am_state *state, en=
+um patch_format patch_format,
+> >         else
+> >                 write_state_text(state, "applying", "");
+> >
+> > -       if (!get_sha1("HEAD", curr_head)) {
+> > -               write_state_text(state, "abort-safety", sha1_to_hex(cur=
+r_head));
+> > +       if (!get_oid("HEAD", &curr_head)) {
+> > +               write_state_text(state, "abort-safety", oid_to_hex(&cur=
+r_head));
+> >                 if (!state->rebasing)
+> > -                       update_ref("am", "ORIG_HEAD", curr_head, NULL, =
+0,
+> > +                       update_ref("am", "ORIG_HEAD", curr_head.hash, N=
+ULL, 0,
+> >                                         UPDATE_REFS_DIE_ON_ERR);
+>=20
+> I noticed that you used update_ref_oid() in other places of this
+> patch. Perhaps this should use update_ref_oid() as well for
+> consistency?
 
-Would sequencer as a library function be called multiple times,
-or only once?
+I'll do that in a reroll.
 
+> > @@ -1665,9 +1665,8 @@ static int fall_back_threeway(const struct am_sta=
+te *state, const char *index_pa
+> >   */
+> >  static void do_commit(const struct am_state *state)
+> >  {
+> > -       unsigned char tree[GIT_SHA1_RAWSZ], parent[GIT_SHA1_RAWSZ],
+> > -                     commit[GIT_SHA1_RAWSZ];
+> > -       unsigned char *ptr;
+> > +       struct object_id tree, parent, commit;
+> > +       struct object_id *ptr;
+>=20
+> Ah, I just noticed that this is a very poorly named variable. Whoops.
+> Since we are here, should we rename this to something like "old_oid"?
+> Also, this should probably be a "const struct object_id *" as well, I
+> think.
 
-I'm trying to find out how this is solved in other places of Git
-code, and I have stumbled upon free_util in string_list...
+I'll fix that.  Thanks for the review.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  sequencer.c | 13 +++++++++++++
->  sequencer.h |  8 +++++++-
->  2 files changed, 20 insertions(+), 1 deletion(-)
-> 
-> diff --git a/sequencer.c b/sequencer.c
-> index c4b223b..b5be0f9 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -114,9 +114,22 @@ static int has_conforming_footer(struct strbuf *sb, struct strbuf *sob,
->  	return 1;
->  }
->  
-> +void *sequencer_entrust(struct replay_opts *opts, void *set_me_free_after_use)
-> +{
-> +	ALLOC_GROW(opts->owned, opts->owned_nr + 1, opts->owned_alloc);
-> +	opts->owned[opts->owned_nr++] = set_me_free_after_use;
-> +
-> +	return set_me_free_after_use;
+--q7jtth65nwhb3a47
+Content-Type: application/pgp-signature; name="signature.asc"
 
-I was wondering what this 'set_me_free_after_use' parameter is about;
-wouldn't it be more readable if this parameter was called 'owned_data'
-or 'owned_ptr'?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.14 (GNU/Linux)
 
-> +}
-> +
->  static void remove_sequencer_state(const struct replay_opts *opts)
->  {
->  	struct strbuf dir = STRBUF_INIT;
-> +	int i;
-> +
-> +	for (i = 0; i < opts->owned_nr; i++)
-> +		free(opts->owned[i]);
+iQIcBAEBCgAGBQJXxLQJAAoJEL9TXYEfUvaLM8kQAISVUmV0CLdQVXQrxV3vvpic
+XBcEidp2p/VBUmimJfiQDQnzRGdzR1Aa27tqIqwAxry6N5JmXvqRjCAti3DRkTEd
+A21xfHsVS5FthESR8YrWG3+nmef+81eYHVcEwjhaSKHWoBmcDbCLwYU7yFWndPpR
+Z0jo6ccWC6isSFyTT7P31FJ4j5Clk7NGFoIQd+8UuMGSAPsVdvfUF3bgYugNCqUH
+KXsOoD8mNNdNKXvVItkeHB9p2+ZuCoCLXbDSXc6RgVSKlTmSxyC9Gtg+x1PjLjwY
+SbUt2BxvWbeETaTjKP39Ii0xx+A+wtCjTIE40RrWssw8bQO5lqW9LMweVUu95veo
+fhddWtyNh4POa4vBWxHoPOUTJtxXVCcn3oByGBy1iyv7SdVlihA3WN77ONLXQwqA
+o7PYRxzig2+p/1deG3fjcVX/8KKKRa9b+hsvZjsI0Z26tD8NPrLBmthzB51a3ef6
+lac49zVI+WKPbxsfmyxDOxTKJvA9b7qgVP5TBL79sxwrsaXCVCWGR/1EcGmxxteM
+K8Drlvz3rpTjy2v/oukhv7L0IafCf1N7G8PmR2bpxs4GK/Nk2BJgkXVLTl3DlZQS
+2D/Qrtv2/IoHmOcMWHFkEpkwVN++Fc+42/sOCXDpo5S8kRSn4G9RfmK/ucgEj8AJ
+BKKOGZtC1V5mp7nLU3Mp
+=pu82
+-----END PGP SIGNATURE-----
 
-I guess you can remove owned data in any order, regardless if you
-store struct or its members first...
-
-> +	free(opts->owned);
->  
->  	strbuf_addf(&dir, "%s", get_dir(opts));
->  	remove_dir_recursively(&dir, 0);
-> diff --git a/sequencer.h b/sequencer.h
-> index c955594..20b708a 100644
-> --- a/sequencer.h
-> +++ b/sequencer.h
-> @@ -43,8 +43,14 @@ struct replay_opts {
->  
->  	/* Only used by REPLAY_NONE */
->  	struct rev_info *revs;
-> +
-> +	/* malloc()ed data entrusted to the sequencer */
-> +	void **owned;
-> +	int owned_nr, owned_alloc;
-
-I'm not sure about naming conventions for those types of data, but
-wouldn't 'owned_data' be a better name?  I could be wrong here...
-
->  };
-> -#define REPLAY_OPTS_INIT { -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, 0, 0, NULL }
-> +#define REPLAY_OPTS_INIT { -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, 0, 0, NULL, NULL, 0, 0 }
-
-Nb. it is a pity that we cannot use named initializers for structs,
-so called designated inits.  It would make this macro more readable.
-
-> +
-> +void *sequencer_entrust(struct replay_opts *opts, void *set_me_free_after_use);
->  
->  int sequencer_pick_revisions(struct replay_opts *opts);
->  
-> 
-
+--q7jtth65nwhb3a47--
