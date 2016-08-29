@@ -7,65 +7,88 @@ X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BFD51F6C1
-	for <e@80x24.org>; Mon, 29 Aug 2016 11:11:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DD101F6C1
+	for <e@80x24.org>; Mon, 29 Aug 2016 11:20:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757234AbcH2LKj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 07:10:39 -0400
-Received: from mout.gmx.net ([212.227.17.22]:61695 "EHLO mout.gmx.net"
+        id S932295AbcH2LUG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 07:20:06 -0400
+Received: from mout.gmx.net ([212.227.15.18]:53302 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756914AbcH2LKh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2016 07:10:37 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0Mecqq-1bTNAv49cW-00OEyV; Mon, 29 Aug 2016 13:10:10
+        id S932346AbcH2LUE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2016 07:20:04 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0M5cMq-1auJaw1BZw-00xZ5J; Mon, 29 Aug 2016 13:19:34
  +0200
-Date:   Mon, 29 Aug 2016 13:10:08 +0200 (CEST)
+Date:   Mon, 29 Aug 2016 13:19:32 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
 cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/22] Prepare the sequencer for the upcoming rebase -i
- patches
-In-Reply-To: <1472464596.4265.29.camel@kaarsemaker.net>
-Message-ID: <alpine.DEB.2.20.1608291309480.129229@virtualbox>
-References: <cover.1472457609.git.johannes.schindelin@gmx.de> <1472464596.4265.29.camel@kaarsemaker.net>
+Subject: Re: [PATCH 04/22] sequencer: future-proof remove_sequencer_state()
+In-Reply-To: <alpine.DEB.2.20.1608291258280.129229@virtualbox>
+Message-ID: <alpine.DEB.2.20.1608291317370.129229@virtualbox>
+References: <cover.1472457609.git.johannes.schindelin@gmx.de>  <2245e7db4d4c028f63b2f4c41097559f91756f2c.1472457609.git.johannes.schindelin@gmx.de> <1472462696.4265.23.camel@kaarsemaker.net> <alpine.DEB.2.20.1608291258280.129229@virtualbox>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:tIvp0YfLvdWwED1CjI6Ds+iq7vuXj0+jvQxP06LKhhkr/1R43WZ
- oh+7iqyjob4LUJLumckaorUNRHWT7TCUp3jbGdiRfpS6Ne5xf7+vEFc4uEzjqXmoX7V++wf
- aSTGqJ6OiCRVy+p+jiZfEUlSMHrk+Q6a6d0on6GXF3w+nVFbuQfUYt05CTEsstQ/0HAfQhY
- qHnRbeVM+ubeH2zrBuy8g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:pJp1MkYDphM=:Z6NsENtyzOOzGXJGroyCYd
- M6qwjyKT5RkmdxFd2ES0SrIlkY7xogCzRIEXuL9X7vlcbyOgE41uXT4MVTffZZUIoMTeMDCvj
- QGT1KVrBD/Fx39W+mW0I/U/ko4wkIT5wxO4Iml5JwcpSZt0BuqvUURVzxsJZlFpI3Wo/6fNmc
- OGeqvQBQsbfy0m5RxCA7dJoyTUIg2D5v065Fr8Th0npKZP4QBfHFa9LZfbgrSlnmPhkTkBQxs
- vCQzxICk+qWNFd0cn+fNvIA+iH5kvvIjhVBO9tYZdEV7CQU2myU/H3JEC+aOeLKalANua5Wrq
- lSdbERT1VnxC6kivymWy72g/Syl4Ddkl/RQXpJC1jvz4+fNiQ3hF4Z7t4vKcnWAXKWCgVh/MV
- yuZiJsf6mn5vNp5E4I+rHUCoZ/nXYsvzY8C+MmAaqvPLsbiBjzbrjgm26yc0dW93CxlpQ//cc
- HKtvVyuFuP24IQ+dMtoKG9IkWbnd0DBQ3zUx0xur1uu6qqR2EgrLljoT13RN6/Efuqh94Tvla
- ARcExgwjLJEpV/oEdptG6479WH99YjWYYpkxYqPast+7IRx7mfkmQH8Kl+R0hRnOJ3zRm755Z
- OzIIDdbZnzkC1zTfC0Q/ck6fUlf7fq5Dtt8daD7ae4kSrHh3WoC5t5+OYR61xPRu0S+SvlIXZ
- LdC//OdoK6MRd4EMPwbQWQ16t8e4H/h4XXqQS/gnOcRJtxOVRQEwcy9/VlIL0TfK7wW/K80yF
- QBaXw3AJysMcwJeVVbtoSu2+9+5kKSivjMguTwIAbPAMw+k0KwgXAsZqw6iQjMO49OHbNzfWS
- FNEDnNu
+Content-Type: multipart/mixed; BOUNDARY="8323329-990687973-1472469574=:129229"
+X-Provags-ID: V03:K0:JuDTPrqtuwijqzqPMOtRIUWrGhaXRKAedLZGG6BHyxtSre4P+El
+ y6E44ybz0YChHVoGy4Avyph/kItGaDy3Lmlt0PyZg5/iDx4CqWp6I650GtbCh7mkluFC7U3
+ 9ociIr4IaN5fqJ93LotoeDGPPnDtCyKcR9p+twtWM+rkIcPe33C3Z5ao+Ot6IohYUOQi6QN
+ kvD/CMFgELO68VdED0Usw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:PTUb36PW994=:HGbdck+/T5xWCwBqoc/jAH
+ ze1RX/75Hvg1tLDlAVfC9b8VWr2/UA6KfpY7jV7yD/q5mk2Vso9ww1PAF48/a/uW7al6yMreB
+ cjlLNtpqukTo2xafvi0vlDKJlsbFiXjWUm9dbtc4Q2t5LyM+DaUeHB0tpZL12ERZNDqvjLqbB
+ 4S7n1LC7b3suKG48XZs7K/e/J/aoBUuFMllm5n8RuHktIABlgvEbdy+0pUwYMmtG+wdN7/kTw
+ 2GkrKWAl7KzyTfPu7guEys/N0cfBLCmuJvT7mlqjUp0vYeu0y+3qhJZu8piGeWKpGa+7XYohg
+ nimQHuH75lePQNjlIC1FWpNFdJ6+CsOh7nBlildd0lQPbxFxO7GjPEbwXAZW/UQIkNCaXr6ao
+ VDAHFHp6xTDIFcjuCQaq/Q+RsBLwFITeO9Wp8A49JzKldY6hMzaoPEDDZABDIBy+cFKyxPnzj
+ aYIkHSFYOfxMJkXbGv3UChIeJxZj4rEsoYJd4E1Gk1TTZtGVC4iFrNNp70RbbWgDQpxuaQdDl
+ oyTVRX0O93S0PoSoAcmai8IFg089OXF7rQsZxjPTPigEC/vjc/UZpRQkyf2M5yNynqapeI6yg
+ MKTB+gyovcWvh1Aw8JkK9hEzXgy3JV35frjjxFeaQGQLK3IPZaYN/xWQTkXyjlArdtOHv5jVS
+ bpqg9DeD8/Y3tN/+4j8/C05emUlGXG5TCVBmU24Geo9a96p6tZDVTw0KYf+ztHQYWNV2F3U5z
+ 6tgpUEsx7ooe7qMPazv5E+gUsDONTDXlTndVmHOac4uohRhGvdzYBWN0xKfE9A10qVWwMAypL
+ zMJVTsp
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323329-990687973-1472469574=:129229
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+
 Hi Dennis,
 
-On Mon, 29 Aug 2016, Dennis Kaarsemaker wrote:
+On Mon, 29 Aug 2016, Johannes Schindelin wrote:
 
-> On ma, 2016-08-29 at 10:03 +0200, Johannes Schindelin wrote:
-> 
-> > Therefore I would be most grateful for every in-depth review.
-> 
-> Tried to do that, but could come up only with a few nits. I think the
-> approach is sensible.
+> On Mon, 29 Aug 2016, Dennis Kaarsemaker wrote:
+>=20
+> > On ma, 2016-08-29 at 10:04 +0200, Johannes Schindelin wrote:
+> >=20
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if (read_and_refresh_cache=
+(opts))
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0return -1;
+> > > +
+> >=20
+> > This doesn't seem to be related to the get_dir changes?
+>=20
+> Good eyes.
+>=20
+> Let me investigate why I have it here...
 
-Thank you for the review!
+Unfortunately my reflogs got corrupted by the git-worktree
+implementations, so I cannot back that far.
 
-Ciao,
+Looking at the code, and after running the tests, I am convinced that it
+is a leftover of some misguided attempt to implement "git rebase -i
+--abort" in sequencer_rollback().
+
+I removed this hunk from the patch.
+
+Again, Thank you so much for your review!
 Dscho
+--8323329-990687973-1472469574=:129229--
