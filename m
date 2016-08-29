@@ -2,73 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 24EFD1FD99
-	for <e@80x24.org>; Mon, 29 Aug 2016 21:03:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 566E61FD99
+	for <e@80x24.org>; Mon, 29 Aug 2016 21:09:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754207AbcH2VDE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 17:03:04 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53090 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753436AbcH2VDD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2016 17:03:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A9C633AF80;
-        Mon, 29 Aug 2016 17:03:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=pW5whGorlvU7hjaWArEbbOiGNFQ=; b=nUQzu6
-        7bA0Gp72VeS2BtGqP3bbFxzW9dv+tbaspKsKNnpSIOfJI6b6sFotIOYEDRJ2rZcz
-        /F/+HlbRS2gc6T+rQGClZDH4P8SA1CvrHAQA57POqQtw3nP42Ah/Y3i6xY4fLctu
-        hPPACk+017jcgdDaZhrh6bsDplyKdipP0aDok=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=rSQsRs7U/RBsJaq7v/kVgF13ZZYbRwAn
-        C83ZYPFr2FQtaZgamTQbLSNeV9cOimS5qWu89uSPL8fq9oJZQ8dGOd6mmVdooQcz
-        y/jKiaLPNH70QTuT5Y/kjftZi+yYhsSawBSjdPnoNtv5CCn+PQ6r7aA2CQZXAvK+
-        8oI1IIX/eYQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 989DF3AF7F;
-        Mon, 29 Aug 2016 17:03:01 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BFAA23AF7E;
-        Mon, 29 Aug 2016 17:03:00 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/4] cat-file: optionally convert to worktree version
-References: <cover.1471524357.git.johannes.schindelin@gmx.de>
-        <cover.1472041389.git.johannes.schindelin@gmx.de>
-Date:   Mon, 29 Aug 2016 14:02:58 -0700
-In-Reply-To: <cover.1472041389.git.johannes.schindelin@gmx.de> (Johannes
-        Schindelin's message of "Wed, 24 Aug 2016 14:23:30 +0200 (CEST)")
-Message-ID: <xmqqpoor8f0d.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1756493AbcH2VJy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 17:09:54 -0400
+Received: from mail-qk0-f171.google.com ([209.85.220.171]:33032 "EHLO
+        mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756128AbcH2VJx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2016 17:09:53 -0400
+Received: by mail-qk0-f171.google.com with SMTP id z190so50471qkc.0
+        for <git@vger.kernel.org>; Mon, 29 Aug 2016 14:09:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=Ztb+LbvqIY0fIcaMYU5vfy0wu4Zjc/FUNj8Z7x4qvTw=;
+        b=06/Ec9YkvmfJm0x1K2fpmNdV4H/8s5yWu+h8bhY/uvwSoHC/JUS4UFPDZISCjfoFXn
+         cDg4zQCu4Vlp573/jvZmPGzaTUrqef00x18Xw4FcCtLQ8lM7Tp3vy5ZLOqJVlQiwwnMe
+         3Ay4vBdVeVILCufBw8398/JV0ML+T3iYXs8M/JwVUOhb/W/e1QZIvKW35Z4l1Rd+M4tP
+         Hf74AWtL598z9K+Hiv0nEVTgMZ/dOhD5W6pjsn6PXaH84kpNYnHp7w2EaFq6maRsgCVt
+         dWETDfndqleLg3eMZIpwmjxwf3olug/5gINNg26HOkkryitPD33VwtFlBkTVktzWGAlu
+         tmuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=Ztb+LbvqIY0fIcaMYU5vfy0wu4Zjc/FUNj8Z7x4qvTw=;
+        b=RHUO3f3/ej+t0XaENJ5FvjvKnVAsdaPXBfYCo2ugEzLEW5uUkjyqNRan4VWkU/auid
+         w4MCDCmfs8nZeUdkAvUXWc52SOgwM4sLnf7cLBsEbiYosJPQHK1F3+KKobEtqg9wsJvc
+         TETzIQNrhQXj8XPO8IqUEwXYk7irUa+pOH1FeF/3fHVhUeOz79UE4fnib7HjyC50+7Yj
+         0zPag5Fx5eL5AHTkUp6KnMpi9RtpETrURTy1wAOlC5ZP1JsORROmfOmsW3ECc0IaxdHD
+         2EonBG4OYk20GB9eOEra8oB4RFD29TXx7qx2YhkiPHDRnK8V5A/XOmDOolJGWWiMtFeK
+         ohIQ==
+X-Gm-Message-State: AE9vXwPo5o6qt1WB+1WnnMop+ao7UtYJ1sSUTwytzP6EUE285evjLttMQqK9YEgXXjK6PzZWgnMEOPA8TBXQ7Q==
+X-Received: by 10.55.101.10 with SMTP id z10mr88871qkb.186.1472504991103; Mon,
+ 29 Aug 2016 14:09:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F832AC56-6E2B-11E6-892C-F7BB12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.55.19.79 with HTTP; Mon, 29 Aug 2016 14:09:30 -0700 (PDT)
+In-Reply-To: <CAN5XQft6S+LG0mBgRFPrMZiOxHSfRhjLmQdeMdBeHKoWQSRUEA@mail.gmail.com>
+References: <CAN5XQftQH8B+hWVh4JQgZwAp+rkbz51P5NZDc_+Tfm0EB1zkew@mail.gmail.com>
+ <xmqqlgzf9wch.fsf@gitster.mtv.corp.google.com> <CAN5XQft6S+LG0mBgRFPrMZiOxHSfRhjLmQdeMdBeHKoWQSRUEA@mail.gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+Date:   Mon, 29 Aug 2016 14:09:30 -0700
+X-Google-Sender-Auth: s9oROazObPM2_3OSyS8eLpcYu4w
+Message-ID: <CAPc5daVhY6WdHkXGLYea48uOw0-rTzLLZ=7mNo=VPebZ9AG4jQ@mail.gmail.com>
+Subject: Re: git submodules implementation question
+To:     Uma Srinivasan <usrinivasan@twitter.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On Mon, Aug 29, 2016 at 2:03 PM, Uma Srinivasan <usrinivasan@twitter.com> wrote:
+> On Mon, Aug 29, 2016 at 1:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> A top-level superproject can have a submodule bound at its "dir/"
+>> directory, and "dir/.git" can either be a gitfile which you can read
+>> with read_gitfile() and point into somewhere in ".git/modules/" of
+>> the top-level superproject.  "dir/.git" can _ALSO_ be a fully valid
+>> Git directory.  So at the top of a superproject, you could do
+>>
+>>         git clone $URL ./dir2
+>>         git add dir2
+>>
+>> to clone an independent project into dir2 directory, and add it as a
+>> new submodule.  The fallback is to support such a layout.
+>>
+> Thanks for the reply. However, in this case....
+>
+>       git clone $URL ./dir2
+>       git add dir2
+>
+> how will "dir2" get ever get registered as a submodule?
 
-> When third-party tools need to access to contents of blobs in the
-> database, they might be more interested in the worktree version than in
-> the "clean" version of said contents.
-
-Just a friendly reminder before you completely shift your attention
-to unrelated topics.  I think this topic is almost there; let's not
-stretch ourselves too thin by nibbling-here-nibbling-there and leaving
-loose ends untied.
-
-Thanks.
-
+With a separate invocation of "git config -f .gitmodules", of course.
+The layout to use gitfile to point into .git/modules/ is a more recent
+invention than the submodule support itself that "git add" knows about.
+The code needs to support both layout as well as it can, and that
+is what the "can we read it as gitfile?  If not, that directory itself may
+be a git repository" codepath you asked about is doing.
