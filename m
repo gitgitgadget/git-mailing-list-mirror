@@ -2,102 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D45471F6C1
-	for <e@80x24.org>; Mon, 29 Aug 2016 07:15:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9BD41F6C1
+	for <e@80x24.org>; Mon, 29 Aug 2016 08:04:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756621AbcH2HP5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 03:15:57 -0400
-Received: from mail-it0-f41.google.com ([209.85.214.41]:33964 "EHLO
-        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751201AbcH2HP4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2016 03:15:56 -0400
-Received: by mail-it0-f41.google.com with SMTP id e63so14780112ith.1
-        for <git@vger.kernel.org>; Mon, 29 Aug 2016 00:15:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=xPhhMh5ud/UgSbac3fUiGhQ63WN8YXKJU6ZPEi5BFA8=;
-        b=MzmLSLT97sofT9YkwWbYYr2angR70XtMfy/kRAP0QzlN/9v29aZlm2J0sjPB+nOjJG
-         N47f4cLBRNN8rKbZu0BaCadvpnAkzbaUN9oB9bPaPTRRJZ41ote+Zostyp5E18E2PTzJ
-         OgqbAyue2OAcvC3GPQBwQXjkSUoeEOszdOqupPDhKzNswsITg1BXM086Y2GNjTV7ALN+
-         ZWyPHcHg+WHmYfwvw9lir6uzZYJ4gTKVnhxE0pLuEvLASEDwadkgX368hU4gv1nX+hLt
-         DIkqCjWzDuTx7UBX9CWm7u3DND0nKj/TKLOMJwgN4OLnoD8UxSFVP9e6ELcdszniFdPP
-         lxEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=xPhhMh5ud/UgSbac3fUiGhQ63WN8YXKJU6ZPEi5BFA8=;
-        b=QB3L67MjJg1mAOx2uAGbokHO8RttBaEjZqMpe/Cf31JrsdJwXDAI9WxyU/ZvrJzTaS
-         MsOD0zrUtyZcJa2rpr9M/QyvWCHaPG4Kl+MFaZOSn6gzun1lBR8k6OANW1y3Va9E/FB0
-         SL84qRW20ORME6KR4tN7E8lpaNl2AtTs2D1Olb5Nr9bysOexybuuN+vqH5FAGeuN5lgG
-         9I6GuBCBy6TN/ADKgrXCBFgBIiSeTJRDgz1ZQiocnR7DKbFy0+wqzfWdPfVCrSfGnyFD
-         psL6e6M1cM/Hb9w0R9AYwBgVHAMAs9fqyXF8ZM3AOQGqMUEu4b1wkze5yJwDQaWDC67V
-         IENg==
-X-Gm-Message-State: AE9vXwMTN6b2MdEySGJ3Gbcu6nzTyIQqp9ae1BezH0zU6dV1gGx5lpG6qgaGC6wxP/2G9qiYNeOaB+RwBC3v1Q==
-X-Received: by 10.36.118.193 with SMTP id z184mr13562770itb.9.1472454956006;
- Mon, 29 Aug 2016 00:15:56 -0700 (PDT)
+        id S1756616AbcH2IEX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 04:04:23 -0400
+Received: from mout.gmx.net ([212.227.17.21]:57876 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1756404AbcH2IEP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2016 04:04:15 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0M8mCe-1bqKlK2HCG-00C83B; Mon, 29 Aug 2016 10:04:10
+ +0200
+Date:   Mon, 29 Aug 2016 10:04:09 +0200 (CEST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 02/22] sequencer: use memoized sequencer directory path
+In-Reply-To: <cover.1472457609.git.johannes.schindelin@gmx.de>
+Message-ID: <d032a9d765aaca0655b1e363e67d9bf24864396c.1472457609.git.johannes.schindelin@gmx.de>
+References: <cover.1472457609.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.107.168.71 with HTTP; Mon, 29 Aug 2016 00:15:35 -0700 (PDT)
-In-Reply-To: <20160829050547.sv4rslwp2ocehvgx@sigill.intra.peff.net>
-References: <CAKUcBEDwbZ7aLsa2w4dqNCRg3QQMo_2hm7-O-6o0Fg58ANYv=A@mail.gmail.com>
- <20160829050547.sv4rslwp2ocehvgx@sigill.intra.peff.net>
-From:   "Jean-Marc B. van Schendel" <jeanmarc.vanschendel@gmail.com>
-Date:   Mon, 29 Aug 2016 09:15:35 +0200
-Message-ID: <CAKUcBEAmaALBQT9YdgCRcCBeALKJ1QTHtcVSDRWvMLQwrGFSHg@mail.gmail.com>
-Subject: Re: Suspected Bug in git install procedure [ git-daemon-run (version
- 1:2.9.3-1) ]
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:wrBSlMkSxIcJ4dyuFt/Vi2rkhWtA7kBfwQl3SI0Vw4nRnJdf+8m
+ RVHmH8RdaFl7+DmzORIP2qKy4fRO23mUufPrDEbtzCtP9Vpr1pKj+5G+BJZDfp7dmXiTgC3
+ A70Tyx+rzGWNGBX3YAVWTJJkw71i7pyyjxijzvxktjB0vbSfPoD6hrutZ6b8yS+Qc/4ZB+9
+ vpqswfszV3gcR+v5eKVlg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7qhSb03cW80=:kw1Yd7lZtOc5J/rVrDNAbS
+ lnIqki8HQkBBszQb6iAF+Y/ZO2cGkNjRJujbjUtrDbPep2Zc2ggVy59zJ6ZAv0AWIxF0pMhUO
+ WhB3XmvDldsQMQtKjewPu8s5jUw4dYUtcOxgqGYbpM0KDP42EGYaqXwQrR8BxuvvnyO7Hz0V9
+ uFyundO2YcvOYAofbwA7HpwgXvJP/6jZoDoYP6JDP2c1ews+Rwq8EwLQc+QID7nO3wCG272k0
+ CwGQNuNlXi/d499CgAvcm3jJbwu2Eygm2tOaQDrIG7jQ87YMuE+KThj+dPLo4N+MoVQQjYsAv
+ zjvvWKE6sa9VuRUpOmvZ4PgzS0/HPPyMWPrK8ga/yGUhhHOOaX8WQyiG/7hY6inzD90l+6Ptv
+ 4TeDSSN2FDpk3HRp7r4VQaYsyljzr9KAiehOA5CMyodl2hucEOIxc6NB4e52+fPGesIElgEIf
+ TMa5OePy3gNHkqFlDRqjQ2pHUGVnLqys7hl7zM185ZuaGZTIu0nHDUXDkHSTRHcufc9uhxiuD
+ U+NAWllASegbhFXbbl9GGUxIYmTKdWYlzVPQStdyXxqApna5nK0jiIWrOKdDe+J34FV306wXx
+ UMPEpmeOLamBhE+rqbM7Tlm5qBQYxGzaSGXe/DAFuzE9mc2YgpLpdfRAkl8vDrSCKI9F1fZJx
+ 3kU92ccwfucspeUoiyH50MJOcJ8tk53Rua9Fb8K5HLu9S5LfVFZW0lQlWlZUSlOvjCUFqXgAp
+ FK4TRoYoP6t5um9BaZwi70N72ERaYDXh8E1Exs3SKhgHV/RopsImVSiMhxhfpCKpyqQX+auvn
+ E47MHXw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for the reply...
-Indeed there was a problem with the runit package (2.1.2-5), which
-_should_ have created /etc/system/ as a link to (in my case)
-/etc/runit/runsvdir/current ...
-Upgrading to runit 2.1.2-6 clears this off.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin/commit.c |  2 +-
+ sequencer.c      | 11 ++++++-----
+ sequencer.h      |  5 +----
+ 3 files changed, 8 insertions(+), 10 deletions(-)
 
-Regards
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 77e3dc8..0221190 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -173,7 +173,7 @@ static void determine_whence(struct wt_status *s)
+ 		whence = FROM_MERGE;
+ 	else if (file_exists(git_path_cherry_pick_head())) {
+ 		whence = FROM_CHERRY_PICK;
+-		if (file_exists(git_path(SEQ_DIR)))
++		if (file_exists(git_path_seq_dir()))
+ 			sequencer_in_use = 1;
+ 	}
+ 	else
+diff --git a/sequencer.c b/sequencer.c
+index b6481bb..4d2b4e3 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -21,10 +21,11 @@
+ const char sign_off_header[] = "Signed-off-by: ";
+ static const char cherry_picked_prefix[] = "(cherry picked from commit ";
+ 
+-static GIT_PATH_FUNC(git_path_todo_file, SEQ_TODO_FILE)
+-static GIT_PATH_FUNC(git_path_opts_file, SEQ_OPTS_FILE)
+-static GIT_PATH_FUNC(git_path_seq_dir, SEQ_DIR)
+-static GIT_PATH_FUNC(git_path_head_file, SEQ_HEAD_FILE)
++GIT_PATH_FUNC(git_path_seq_dir, "sequencer")
++
++static GIT_PATH_FUNC(git_path_todo_file, "sequencer/todo")
++static GIT_PATH_FUNC(git_path_opts_file, "sequencer/opts")
++static GIT_PATH_FUNC(git_path_head_file, "sequencer/head")
+ 
+ static int is_rfc2822_line(const char *buf, int len)
+ {
+@@ -112,7 +113,7 @@ static void remove_sequencer_state(void)
+ {
+ 	struct strbuf seq_dir = STRBUF_INIT;
+ 
+-	strbuf_addstr(&seq_dir, git_path(SEQ_DIR));
++	strbuf_addstr(&seq_dir, git_path_seq_dir());
+ 	remove_dir_recursively(&seq_dir, 0);
+ 	strbuf_release(&seq_dir);
+ }
+diff --git a/sequencer.h b/sequencer.h
+index 2ca096b..c955594 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -1,10 +1,7 @@
+ #ifndef SEQUENCER_H
+ #define SEQUENCER_H
+ 
+-#define SEQ_DIR		"sequencer"
+-#define SEQ_HEAD_FILE	"sequencer/head"
+-#define SEQ_TODO_FILE	"sequencer/todo"
+-#define SEQ_OPTS_FILE	"sequencer/opts"
++const char *git_path_seq_dir(void);
+ 
+ #define APPEND_SIGNOFF_DEDUP (1u << 0)
+ 
+-- 
+2.10.0.rc1.114.g2bd6b38
 
---jmbvs
-Jean-Marc B. van Schendel
-email: jeanmarc.vanschendel@gmail.com
-voice: +32.(0)474.70.3885
-msn: jmbvs@hotmail.com
 
-
-On Mon, Aug 29, 2016 at 7:05 AM, Jeff King <peff@peff.net> wrote:
-> On Mon, Aug 29, 2016 at 06:29:04AM +0200, Jean-Marc B. van Schendel wrote:
->
->> Symptoms:
->> On a fresh new install of Debian "Stretch" (8.5 alpha7, dated 2016-06-30),
->> Trying to install a subset of Git packages (roughly, all those listed
->> in git-all, except CVS-related packages)
->> Install of package git-daemon-run (version 1:2.9.3-1) fails, dpkg
->> reporting error
->
-> The git-daemon-run package is entirely a Debian creation, and has more
-> to do with "runit" than it does with "git daemon" itself. In particular,
-> your problem:
->
->> Assumed cause:
->> The directory /etc/service does not exist, and the install procedure
->> does not create it, subsequently fails to create a symlink (git-daemon
->> --> /etc/sv/git-daemon)
->
-> looks like it's about the system runit setup. I didn't dig, but it's
-> probably related to:
->
->   https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=834087
->
-> -Peff
