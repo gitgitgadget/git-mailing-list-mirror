@@ -6,71 +6,71 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4121D1F6C1
-	for <e@80x24.org>; Mon, 29 Aug 2016 09:19:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 868561F6C1
+	for <e@80x24.org>; Mon, 29 Aug 2016 09:25:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932626AbcH2JTZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 05:19:25 -0400
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:37945 "EHLO
-        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932346AbcH2JTY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2016 05:19:24 -0400
-Received: by mail-wm0-f47.google.com with SMTP id o80so81385798wme.1
-        for <git@vger.kernel.org>; Mon, 29 Aug 2016 02:19:23 -0700 (PDT)
+        id S1756876AbcH2JZj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 05:25:39 -0400
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:37746 "EHLO
+        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756891AbcH2JZh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2016 05:25:37 -0400
+Received: by mail-wm0-f53.google.com with SMTP id i5so81695431wmg.0
+        for <git@vger.kernel.org>; Mon, 29 Aug 2016 02:24:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
         h=message-id:subject:from:to:cc:date:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=seDY+ZX7/kNtMf3PDvnYu9vsMbqYS/sf2FWIPVjZ70s=;
-        b=UOSOxAA4y5OUPuYLX9ga/eJdeSrE0hPULBykFS6DM3yAHMNCNR0/kKFT/fpxBy1pSU
-         h2C5aKEdupbDurl1DQTHpJ0RW0ybQoC6RP0Sic5uFbCyMhtKuSIMw2FiooQEF3Lan9LV
-         JD5LwO+sWw8/3njgvctk90q00OGEFIEiRofQWjNYskuZtRJR15DbB0H3Z6M3D+z0ygzl
-         ynYMBUdQQiwBDpOf1W0sETd1TuqyoPfot+81q5+mcPCVIP8EpaPsE4RMKSdpx70cFJL3
-         lhql7JvqA2GfC1qGJvfu2PE8srYo2sdRLA6Z9A0zQL+8sF2O9AO3BzXJUtsWMfhlCHWP
-         bLNw==
+        bh=rjen14l0Yz6lv7zOgfeqMbTG5nidlcYIGCzZZngEcIk=;
+        b=M8mF/iyuo5d8orSIi74kZdirwYeW/ITxPV3hlVU2LqlkQjLB/ew4wl6q1UofklAYDe
+         ZX07YmaFPlV6ikoYX8jNGCKRViCfpv9Cz4OPPlEQZIr/MDfghRUyl9075RCiVARxN8dU
+         h7hqIvSg12bisDV/r9QdjxDzfPUYcdm3ZTScSvXLsPq4qdtxS9EVFDUIPT0SUKk3Tviq
+         GahfpMK/qUUO7WwkRGBt9YG5DLEDiqNJrPti2QAnVz83OGwFDnRyJc1fAQf8lpqCAkOm
+         w4ay+/TJBdwNnPOct6LY3PWRzZ8+bORqgFEHes1tJGksjR9nf6hUgv8S5Mn7qlbwzYMf
+         JDbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=seDY+ZX7/kNtMf3PDvnYu9vsMbqYS/sf2FWIPVjZ70s=;
-        b=aNQO4V2lBaIobdYQyv2hR/8vInIX/jGlnFsqmXatQrSavWV6eiRHZYFUCej0ER+5PC
-         jC3Roe+HK5Rg4uMpsm/M+PH/hyZ3d+EBUZ3w2epRiuR0zEPl0LKJphEhgUESND4Xlaxe
-         8q5a45Zp5u4OZq3IFzJure9OZy7JnsD2eB5qJIbYxwuqZNfjpHG2RdPfUYXnp6mX0PAW
-         WnVlaEGO89lCEWEMM4l6uPjOFBz8tL6kb59npptc/BjZpYngAkehqXKuVRci1x8uErmJ
-         LI+wbttVxY5o4maIsqcTgn3HZr8fbVkNy9sNjiCVITwBPbcXAT3sdEVz0EoddxuPnPq+
-         /fPQ==
-X-Gm-Message-State: AE9vXwNIv2Zg6AqOf9uD9ddH+ATOYfoN7cUBgcASad1Lra0PW52UQOVLSMQ7NrjWwhDiww==
-X-Received: by 10.194.77.174 with SMTP id t14mr16020358wjw.146.1472462362616;
-        Mon, 29 Aug 2016 02:19:22 -0700 (PDT)
+        bh=rjen14l0Yz6lv7zOgfeqMbTG5nidlcYIGCzZZngEcIk=;
+        b=IjooyeK2fev/C6cIr+qDM7LHdGjdvFzEtASra0t02+x2rC2WSFgh/5+5/NLZKs7LNh
+         nbhQFDrLi8JcEc6zFbsRTOKcqkW3ArwAUmUJoclDvxyGXDSEZaYj3YXH3shCY8CZYngH
+         cZnxrOTbjH0th7hv0FVQ4rGugIFxaTBzLW+YCT9TBp+qebDt5gr0hmnJ61njjX9hcIzm
+         ZLwK43hbtnY544fqGVTZ8GEqpkUis7Dgz33rZbAplumyxQVS79zUJtfdW/sARwhMb1Y/
+         rdS7uLXt0dl6L22uBiPNATgJ4IqIhEokb82oTpFwB3yapH/2iOYtwOQYC+HtUxMUTpdM
+         q9ww==
+X-Gm-Message-State: AE9vXwMcJE4uakyguwu4FAc1Vet09DHCqdgkIpvOSX9yNWwDIUKVkcFa9vuBqrFekV6XlQ==
+X-Received: by 10.28.154.208 with SMTP id c199mr9871046wme.102.1472462697576;
+        Mon, 29 Aug 2016 02:24:57 -0700 (PDT)
 Received: from hurricane.home.kaarsemaker.net ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id m5sm13494988wmd.1.2016.08.29.02.19.21
+        by smtp.gmail.com with ESMTPSA id n7sm33432622wjf.11.2016.08.29.02.24.56
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 29 Aug 2016 02:19:21 -0700 (PDT)
-Message-ID: <1472462360.4265.21.camel@kaarsemaker.net>
-Subject: Re: [PATCH 01/22] sequencer: use static initializers for replay_opts
+        Mon, 29 Aug 2016 02:24:57 -0700 (PDT)
+Message-ID: <1472462696.4265.23.camel@kaarsemaker.net>
+Subject: Re: [PATCH 04/22] sequencer: future-proof remove_sequencer_state()
 From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
 To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>
-Date:   Mon, 29 Aug 2016 11:19:20 +0200
-In-Reply-To: <66d69469a64bd80d3bf2b99a250ae04a649d94d1.1472457609.git.johannes.schindelin@gmx.de>
+Date:   Mon, 29 Aug 2016 11:24:56 +0200
+In-Reply-To: <2245e7db4d4c028f63b2f4c41097559f91756f2c.1472457609.git.johannes.schindelin@gmx.de>
 References: <cover.1472457609.git.johannes.schindelin@gmx.de>
-         <66d69469a64bd80d3bf2b99a250ae04a649d94d1.1472457609.git.johannes.schindelin@gmx.de>
+         <2245e7db4d4c028f63b2f4c41097559f91756f2c.1472457609.git.johannes.schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.18.5.2-0ubuntu3 
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On ma, 2016-08-29 at 10:03 +0200, Johannes Schindelin wrote:
+On ma, 2016-08-29 at 10:04 +0200, Johannes Schindelin wrote:
 
-> +#define REPLAY_OPTS_INIT { -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, 0, 0, NULL }
+> +       if (read_and_refresh_cache(opts))
+> +               return -1;
+> +
 
-This looked off to me, as it replaces memset(..., 0, ...) so is not
-100% equivalent. But the changed functions both set opts.action and
-call parse_args which sets opts.subcommand.
+This doesn't seem to be related to the get_dir changes?
 
 D.
