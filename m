@@ -2,144 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8758B1FD99
-	for <e@80x24.org>; Mon, 29 Aug 2016 22:21:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F10ED1FD99
+	for <e@80x24.org>; Mon, 29 Aug 2016 22:25:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756694AbcH2WVV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 18:21:21 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62263 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755886AbcH2WVU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2016 18:21:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 32A3D38B0B;
-        Mon, 29 Aug 2016 18:21:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7FmOqJXQ8Ba9jcMJUwazoEbrcWg=; b=OMYeve
-        LGl28z9GVWL2ekfnqhP9oBUI3rVHcgE6mKsIjjzr2hiUeNVV6/PvNl4K0ZPZ7C0U
-        2hsi/Pq7v6K+yYsLQyLxepH6TFfNEalIh+a+r4uyLqDpfEnPi5zgvLLC7jTBQqKc
-        ylmSuHNydDOCFIQZPocNrm/pkeSfY59GbJMg0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ts8KDE3QaD4jsb1KCQA3LMyTVksX7Ilx
-        mwM9oMIYke5b+O9wtklxWuuMhbtfOMQM0li4crq5VurtivQVg75tut2yAX/n1e3K
-        dAWYGbJPZ3bJHb1eZOFs3IcNbXnP3hj8Exlh1q/iNH4lASIpj0558NsMKHS6DwZV
-        x8n8PmR4gyk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2B49838B0A;
-        Mon, 29 Aug 2016 18:21:18 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        id S1756774AbcH2WZV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 18:25:21 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:41340 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1756751AbcH2WZU (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 29 Aug 2016 18:25:20 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A1B4538B09;
-        Mon, 29 Aug 2016 18:21:17 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     larsxschneider@gmail.com
-Cc:     git@vger.kernel.org, peff@peff.net, sbeller@google.com,
-        Johannes.Schindelin@gmx.de, jnareb@gmail.com, mlbright@gmail.com
-Subject: Re: [PATCH v6 12/13] convert: add filter.<driver>.process option
-References: <20160825110752.31581-1-larsxschneider@gmail.com>
-        <20160825110752.31581-13-larsxschneider@gmail.com>
-Date:   Mon, 29 Aug 2016 15:21:15 -0700
-In-Reply-To: <20160825110752.31581-13-larsxschneider@gmail.com>
-        (larsxschneider@gmail.com's message of "Thu, 25 Aug 2016 13:07:51
-        +0200")
-Message-ID: <xmqqzinv6wtg.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 1C620280A6;
+        Mon, 29 Aug 2016 22:25:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1472509513;
+        bh=6zB6GAon/wlws+bZ5iAU6WxqXDdorcumXZzwBBeqIO8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ZuuqyQneQXpmHWC/frRhHoR0UWYf0gF+xuSqJfGVTb4dz/7F9qYa1utpmUm0ROGvo
+         K/zhEP2Kn2OUIpET8wXcIepTCczuj83yxe/WoqGXwWvnQ669DBbfDABi9cnw+cjQBp
+         URRfV3/OuJSG3xHVvzUlTIm240ovofAOi6dpBK6NC0RiDFlex5PA5ig/0gfVGqoudN
+         5nTPWL+FvqZmKKru4dQI94TPffddt1uX0JZfyQZ5gITYzo1SvUyhzr5nrkw13jjRwc
+         r9KlsVXghpq+lgDptfJdmiBqZK5m9DnyOLllLpvP8tgXHDf+LnvX1hWbVGxhiaUaxf
+         l0kknIu9LcGsdjpmsqTzwhuCmzJAh5Q38AYE2veWdeAi4AHDHwIxX1Bdmq84KF56Z7
+         1aDhEOkp9mdoubrbkZ6aV0nPu5NazwkcfGJ+KKUysnH2rst4EVg1RJReXZXED1xXGu
+         6ZFPxCFtIn2FuN1QnheGmdpuxCRvWy1sLrxZV0E0esPfpnwCF4a
+Date:   Mon, 29 Aug 2016 22:25:09 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+        git@vger.kernel.org, Paul Tan <pyokagan@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 01/20] cache: convert struct cache_entry to use struct
+ object_id
+Message-ID: <20160829222509.nyms2kexdilwe7y5@vauxhall.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+        git@vger.kernel.org, Paul Tan <pyokagan@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Jeff King <peff@peff.net>
+References: <20160828232757.373278-1-sandals@crustytoothpaste.net>
+ <20160828232757.373278-2-sandals@crustytoothpaste.net>
+ <577f6266-42ec-6c7b-8b21-1e4997f2b816@gmail.com>
+ <alpine.DEB.2.20.1608291743060.129229@virtualbox>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E7C96994-6E36-11E6-B8DB-51057B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="rozgqzxfbqynjq32"
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.20.1608291743060.129229@virtualbox>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.7.0-rc7-amd64)
+User-Agent: Mutt/1.6.2-neo (2016-08-08)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-larsxschneider@gmail.com writes:
 
-> +In case the filter cannot or does not want to process the content,
-> +it is expected to respond with an "error" status. Depending on the
-> +`filter.<driver>.required` flag Git will interpret that as error
-> +but it will not stop or restart the filter process.
-> +------------------------
-> +packet:          git< status=error\n
-> +packet:          git< 0000
-> +------------------------
-> +
-> +In case the filter cannot or does not want to process the content
-> +as well as any future content for the lifetime of the Git process,
-> +it is expected to respond with an "error-all" status. Depending on
-> +the `filter.<driver>.required` flag Git will interpret that as error
-> +but it will not stop or restart the filter process.
-> +------------------------
-> +packet:          git< status=error-all\n
-> +packet:          git< 0000
-> +------------------------
+--rozgqzxfbqynjq32
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This part of the document is well-written to help filter-writers.
+On Mon, Aug 29, 2016 at 05:43:41PM +0200, Johannes Schindelin wrote:
+> Hi Kuba,
+>=20
+> On Mon, 29 Aug 2016, Jakub Nar=C4=99bski wrote:
+>=20
+> > I wonder if writing this patch series (or rather the following one)
+> > would be helped by using one of semantic patch tools, such as
+> > Coccinelle[1], spdiff[2], or Undebt[3]...
+> >=20
+> > [1]: http://coccinelle.lip6.fr/
+>=20
+> If previous work by Brian is any indication, he did use Coccinelle and the
+> commit message actually shows the definition used for the transformation.
 
-One thing that was unclear from the above to me, when read as a
-potential filter-writer, is when I am supposed to exit(2).  After I
-tell Git with error-all (I would have called it "abort", but that's
-OK) that I desire no further communication, am I free to go?  Or do
-I wait until Git somehow disconnects (perhaps by closing the packet
-stream I have been reading)?
+Yes, that is the case.  I used Coccinelle because it's been used with
+success on LKML and it seems to work for the job.  I'll make a note in
+the future that it obviously the semantic patch doesn't include the
+actual struct change.
 
-> +If the filter dies during the communication or does not adhere to
-> +the protocol then Git will stop the filter process and restart it
-> +with the next file that needs to be processed.
+My goal with using a tool is that it's less error-prone and it helps
+reviewers have more confidence in the changes.  Also, it makes large
+changes far less tedious.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
-Hmph, is there a reason not to retry a half-converted-and-failed
-blob with the fresh process?  Note that this is not "you must do it
-that way", and it is not even "I think doing so may be a better
-idea".  I merely want to know the reason behind this decision.
+--rozgqzxfbqynjq32
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> +After the filter has processed a blob it is expected to wait for
-> +the next "key=value" list containing a command. When the Git process
-> +terminates, it will send a kill signal to the filter in that stage.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.14 (GNU/Linux)
 
-The "kill" may not be very nice.  As Git side _knows_ that the
-filter is waiting for the next command, having an explicit
-"shutdown" command would give the filter a chance to implement a
-clean exit--it may have some housekeeping tasks it wants to perform
-once it is done.  The "explicit shutdown" could just be "the pipe
-gets closed", so from the implementation point of view there may not
-be anything you need to further add to this patch (after all, when
-we exit, the pipes to them would be closed), but the shutdown
-protocol and the expectation on the behaviour of filter processes
-would need to be documented.
+iQIcBAEBCgAGBQJXxLZFAAoJEL9TXYEfUvaLwWIP/iQ9gRBBdK1FrsUCGBCVLw2V
+0tZKQ4363R1Iste1vYAFaWhy5gPFvXIIHIcUAOrFLth8m5FKQEA7Yb3GzdoGt3Fm
+BxIw/mUd2hjZJR0jRj8siPAzB1Gm90tIu13GcpCv81/Kkc4OBWfz/S9mBx9+PBbn
+pLc6Ew3tj4qrDTrX/Aobt09AitLTQ3Kqsa5xBvIsv9q08haIYl6Xx2oIY0W9qSB1
+bnTp75zh4BZszYxT9r27lhmNe0CKbgrvPJuff54k2zDi07W9YAhRHlyvLksg3rbN
+jGT6kIticNXNubtotJYEEr1nOWggeQJ4MHcXRm9Nu9KYVbTY9n2GGuB3G1BN5xRe
+EsCJGN80S2T9YwKF6Aadmd43dTRQlHSn5LuDmK2vBIaQVPTIQKCYidESJx+8rrm5
+k0VWJ2yNIfI2AaSrtxfmlKfiAF7KcjpxJJMQhCgfhhnp1+2CO73hmv7fP1thb2Jx
+PyD6LN+cJ8FqHDSaOQjTOVDP2hgTzlrTJFEDna1NLndivgHYsGHh3b1mHsCS7KBC
+qxgcnZcC4hiOnSRVeka1DnpSewzNu/xVuycUWpskcBWdEKz1r1XMNOBYHEzQQ2uH
+I4SxmwJBAC7NziElBO4y3lCy+bbBD9060Ulppe6nlAZuvkbjZfCF4bBYTCVn1E3q
+qWND/+ETCZxwLzLACtgv
+=JZeF
+-----END PGP SIGNATURE-----
 
-> +If a `filter.<driver>.clean` or `filter.<driver>.smudge` command
-> +is configured then these commands always take precedence over
-> +a configured `filter.<driver>.process` command.
-
-It may make more sense to give precedence to the .process (which is
-a late-comer) if defined, ignoring .clean and .smudge, than the
-other way around.
-
-> +Please note that you cannot use an existing `filter.<driver>.clean`
-> +or `filter.<driver>.smudge` command with `filter.<driver>.process`
-> +because the former two use a different inter process communication
-> +protocol than the latter one.
-
-Would it be a useful sample program we can ship in contrib/ if you
-created a "filter adapter" that reads these two configuration
-variables and act as a filter.<driver>.process?
-
-During an imaginary session of "git add .", I think I found where
-you start THE filter process upon the first path that needs to be
-filtered with one for the configured <driver>, and I think the same
-place is where you reuse THE filter process, but I am not sure where
-you are cleaning up by killing the filter once all paths are added.
-Wouldn't you need some hooks at strategic places after such bulk
-operation to tell the multi-file-filter machinery to walk all the
-entries in cmd_process_map and tell the remaining filter processes
-that they have no more tasks, or something?  Are you relying on
-these processes to exit upon a read failure after we exit and the
-pipe going to the filter is severed?
-
-Thanks.
+--rozgqzxfbqynjq32--
