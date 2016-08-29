@@ -2,140 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E12C31FD99
-	for <e@80x24.org>; Mon, 29 Aug 2016 13:46:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B44D01FD99
+	for <e@80x24.org>; Mon, 29 Aug 2016 13:50:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933376AbcH2Nqg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 09:46:36 -0400
-Received: from mout.gmx.net ([212.227.15.19]:62463 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932908AbcH2Nqe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2016 09:46:34 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0Lmqxo-1bAmDz1wVw-00h3BU; Mon, 29 Aug 2016 15:46:07
- +0200
-Date:   Mon, 29 Aug 2016 15:46:05 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v2] t/Makefile: add a rule to re-run previously-failed
- tests
-In-Reply-To: <b2d016e44fa04e8a318967c43762d6933faf7956.1467183740.git.johannes.schindelin@gmx.de>
-Message-ID: <0dfa96b17edfe84ba19c7e57fe0b017c77943e0c.1472478285.git.johannes.schindelin@gmx.de>
-References: <b2d016e44fa04e8a318967c43762d6933faf7956.1467183740.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S933677AbcH2Nt7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 09:49:59 -0400
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:37247 "EHLO
+        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933345AbcH2Nt5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2016 09:49:57 -0400
+Received: by mail-wm0-f48.google.com with SMTP id i5so93123186wmg.0
+        for <git@vger.kernel.org>; Mon, 29 Aug 2016 06:48:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=xPkEohFt/nK1FYu1cIj3GSo8tzD+2n6YHe8ApH0fDTM=;
+        b=bc6JZaGjny75SfdXQxzvhlvcdUQX3PzJ3ZUrwNpuVV7Xeb3vIv9r4wdrQMUz11TL7d
+         KyFoe3ETmORUcTpVH1+R4cjG01zunWYOaiTZ9SFm3M7Gn+cF1z2XzqWyU38Qud8RFKJX
+         EJ02fjyvYnLEMOpbrXqimpVwwwFtuBNblkcGVBEcGOqn7M66yXHH0UZZlSvQsXi7c9P9
+         FlCjkCUxT3HvaoMrOuD4T+NnxNCXcyjd59NowuKNK9EH0bbcrKldG8NS+IazyeIYemr6
+         h7iIRLrMxWjh1zexMVsP7EfJynJbGmVHaqI8g76Jf5l5tGZjIHgqEptb6InKTHlw/bef
+         tUzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=xPkEohFt/nK1FYu1cIj3GSo8tzD+2n6YHe8ApH0fDTM=;
+        b=MAycqsR6y1C/+qoPIj1wGKfB22Cc/0bKkO9hlO3WklcYwRNwSnuBEpiw1xgaI1SY4f
+         ciAcllaxazio2WaJxxR2+duFWq0oGqPLWEg8XtwB2mI/BTgp3RPhAwT8d6RUh6WuTSdp
+         aX0fzHydM7AQGx4Nls8hM7Iq4N0g/v/B69r5p6IQRm4dY/6IMY76u80vDKzLVOF959Un
+         nL5NM0+IGDI7Aj2wSrTIB9s/RN/wK38QOGbvIBy7CoVNEaud8sZ/fnK96EAp9I5NefBf
+         Cssa2PO7wiiLXpj7zVBNTgeckO5cXEItTGWAcgYi5YhhIXRrfCWUtBgOILb4VabYk7Ea
+         27IQ==
+X-Gm-Message-State: AE9vXwMftDXtEN9nx5YVplyBRC/SGBFOObJKVhbJGA12OkpZp1GMT4r+ge55xco6lgLyBA==
+X-Received: by 10.194.187.134 with SMTP id fs6mr15573822wjc.3.1472478501110;
+        Mon, 29 Aug 2016 06:48:21 -0700 (PDT)
+Received: from [192.168.1.26] (abpp123.neoplus.adsl.tpnet.pl. [83.8.57.123])
+        by smtp.googlemail.com with ESMTPSA id z18sm13637038wmz.6.2016.08.29.06.48.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 29 Aug 2016 06:48:20 -0700 (PDT)
+Subject: Re: [PATCH 01/20] cache: convert struct cache_entry to use struct
+ object_id
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+References: <20160828232757.373278-1-sandals@crustytoothpaste.net>
+ <20160828232757.373278-2-sandals@crustytoothpaste.net>
+Cc:     Paul Tan <pyokagan@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Jeff King <peff@peff.net>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <577f6266-42ec-6c7b-8b21-1e4997f2b816@gmail.com>
+Date:   Mon, 29 Aug 2016 15:48:10 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:hbJFML/gpBpUW/BUb2ibHV0dYKfq1YINfldHzWkoCGE4BRbJJgJ
- EJ+UpuFW0WK+LaCPPyX4+Sy+/iIhQMZbWL5dieW5A9C9rZ2BA3+8Ns0F/sKkZBU7a+xtyqI
- xqOi+6jGKNL//lYIPKSoVG+B+VGPuom/pyu4o5FX3G7XJUAAnJJCoXHbaSrIapYFjJUGeU4
- PrnqOav8LC8xmQx8gH1Zg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:b7F4JVaGXAk=:pbiIsL1eEDnlwdD7UfvtmX
- 2n/AE/qOxL/kU7BachSPe3Q6Wgt3aAmHzyWvqdPOArpDqmH1YTBxiFdpoVXlzPhRI2WX//m+3
- Wu9o9yd6cfoC/iXBEQOJ9TtAR54evppNMEH4thP5yUZbm1cKOyj5jVBklHKVNm642nalG/NMO
- g2hhem1RKbz7vH3HLENxrGVEzebHh0JGqK1MRtK+m0c5B43CRM7AYPqVqAVeCCHSrmfjcTE1g
- 2tX3LrvJ9Q415j21ILuYNaMI6LrrjyL2tbTrrzJo9tYVJ0Wx8oGtuHxfk5yNmL5OCE37APHty
- Ko6rryoA337XTbS0MNraiemoxDaAassKXu+usbrtxnuo1z0KOhbshKRuOtcW+4/EbmsbCpFdS
- AEeNvQJif1+bu1Dyg/j1i/nrqoCnb4g8c/3lY3zQKZVCdrFldwp4fQ6Dgs+Nl6TjZ9nWndJWm
- XuKS2nsm/fKGinMdXx2qchXjysPY3mEinZrCrhgd2h8mbulgLtdZuvuyapcrIWwqgUFo+rtIW
- aK6Z6Yq6cTeWrJUMnEq2l/hSCRLCYo9/yqC3BlQ3npyPnBAYazUBlWRkdla7dSgQCPEaP76hb
- BmWRV/2SXgInDluJ68k+ZGvfdakESpj69HlvpAEN/DmOTJR4L3QR3px25ettIisOb2wVBhpuz
- rrrv8u9QOko8/3AVn3/B5AkqMfIq71HmFh11RNdM4YWICVZMU9PGL8WY3pE/U9JPwsUu3BPf3
- dUq8vAkn+7jvc/TjVhWGl13GjB4TlwFjW+LBC2g+u04/SvXl81I6OPZ3pa99+MrFh7ZbidPCq
- ZbFtYJw
+In-Reply-To: <20160828232757.373278-2-sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While developing patch series, it is a good practice to run the test
-suite from time to time, just to make sure that obvious bugs are caught
-early.  With complex patch series, it is common to run `make -j15 -k
-test`, i.e.  run the tests in parallel and *not* stop at the first
-failing test but continue. This has the advantage of identifying
-possibly multiple problems in one big test run.
+W dniu 29.08.2016 o 01:27, brian m. carlson pisze:
 
-It is particularly important to reduce the turn-around time thusly on
-Windows, where the test suite spends 45 minutes on the computer on which
-this patch was developed.
+> Convert struct cache_entry to use struct object_id by applying the
+> following semantic patch and the object_id transforms from contrib:
+> 
+> @@
+> struct cache_entry E1;
+> @@
+> - E1.sha1
+> + E1.oid.hash
+> 
+> @@
+> struct cache_entry *E1;
+> @@
+> - E1->sha1
+> + E1->oid.hash
 
-It is the most convenient way to determine which tests failed after
-running the entire test suite, in parallel, to look for left-over "trash
-directory.t*" subdirectories in the t/ subdirectory. However, as was
-pointed out by Jeff King, those directories might live outside t/ when
-overridden using the --root=<directory> option, to which the Makefile
-has no access. The next best method is to grep explicitly for failed
-tests in the test-results/ directory, which the Makefile *can* access.
+I wonder if writing this patch series (or rather the following one)
+would be helped by using one of semantic patch tools, such as
+Coccinelle[1], spdiff[2], or Undebt[3]...
 
-This patch automates the process of determinig which tests failed
-previously and re-running them.
+[1]: http://coccinelle.lip6.fr/
+[2]: http://www.diku.dk/~jespera/doc.html
+[3]: http://engineeringblog.yelp.com/2016/08/undebt-how-we-refactored-3-million-lines-of-code.html
 
-Note that we need to be careful to inspect only the *newest* entries in
-test-results/: this directory contains files of the form
-tNNNN-<name>-<pid>.counts and is only removed wholesale when running the
-*entire* test suite, not when running individual tests. We ensure that
-with a little sed magic on `ls -t`'s output that simply skips lines
-when the file name was seen earlier.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-
-	The patch is unfortunately no longer as trivial as before, but it
-	now also works with --root=..., i.e. when the user overrode the
-	location of the trash directories.
-
-Published-As: https://github.com/dscho/git/releases/tag/failing-tests-v2
-Fetch-It-Via: git fetch https://github.com/dscho/git failing-tests-v2
-Interdiff vs v1:
-
- diff --git a/t/Makefile b/t/Makefile
- index c402a9ec..8aa6a72 100644
- --- a/t/Makefile
- +++ b/t/Makefile
- @@ -35,7 +35,12 @@ all: $(DEFAULT_TEST_TARGET)
-  test: pre-clean $(TEST_LINT)
-  	$(MAKE) aggregate-results-and-cleanup
-  
- -failed: $(patsubst trash,,$(patsubst directory.%,%.sh,$(wildcard trash\ directory.t[0-9]*)))
- +failed:
- +	@failed=$$(cd '$(TEST_RESULTS_DIRECTORY_SQ)' && \
- +		grep -l '^failed [1-9]' $$(ls -t *.counts | \
- +			sed 'G;h;/^\(t[^.]*\)-[0-9]*\..*\n\1-[0-9]*\./d;P;d') | \
- +		sed -n 's/-[0-9]*\.counts$$/.sh/p') && \
- +	test -z "$$failed" || $(MAKE) $$failed
-  
-  prove: pre-clean $(TEST_LINT)
-  	@echo "*** prove ***"; $(PROVE) --exec '$(SHELL_PATH_SQ)' $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
-
-
- t/Makefile | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/t/Makefile b/t/Makefile
-index d613935..8aa6a72 100644
---- a/t/Makefile
-+++ b/t/Makefile
-@@ -35,6 +35,13 @@ all: $(DEFAULT_TEST_TARGET)
- test: pre-clean $(TEST_LINT)
- 	$(MAKE) aggregate-results-and-cleanup
- 
-+failed:
-+	@failed=$$(cd '$(TEST_RESULTS_DIRECTORY_SQ)' && \
-+		grep -l '^failed [1-9]' $$(ls -t *.counts | \
-+			sed 'G;h;/^\(t[^.]*\)-[0-9]*\..*\n\1-[0-9]*\./d;P;d') | \
-+		sed -n 's/-[0-9]*\.counts$$/.sh/p') && \
-+	test -z "$$failed" || $(MAKE) $$failed
-+
- prove: pre-clean $(TEST_LINT)
- 	@echo "*** prove ***"; $(PROVE) --exec '$(SHELL_PATH_SQ)' $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
- 	$(MAKE) clean-except-prove-cache
+Best,
 -- 
-2.10.0.rc1.114.g2bd6b38
+Jakub Narębski
 
-base-commit: d5cb9cbd64165153a318e1049f8bf14b09a16b11
