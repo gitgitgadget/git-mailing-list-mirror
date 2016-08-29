@@ -7,111 +7,105 @@ X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF0C31F6C1
-	for <e@80x24.org>; Mon, 29 Aug 2016 08:06:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 059CE1F6C1
+	for <e@80x24.org>; Mon, 29 Aug 2016 08:06:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756755AbcH2IGk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 04:06:40 -0400
-Received: from mout.gmx.net ([212.227.15.15]:61676 "EHLO mout.gmx.net"
+        id S1756766AbcH2IGt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 04:06:49 -0400
+Received: from mout.gmx.net ([212.227.15.15]:63209 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756656AbcH2IGi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2016 04:06:38 -0400
+        id S932522AbcH2IF6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2016 04:05:58 -0400
 Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MRo6b-1bXIOY2HXt-00Sv0t; Mon, 29 Aug 2016 10:06:35
+ ESMTPSA (Nemesis) id 0Lmr1w-1bCeO02lrQ-00h8Xk; Mon, 29 Aug 2016 10:05:48
  +0200
-Date:   Mon, 29 Aug 2016 10:06:35 +0200 (CEST)
+Date:   Mon, 29 Aug 2016 10:05:48 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 20/22] sequencer: remember do_recursive_merge()'s return
- value
+Subject: [PATCH 12/22] sequencer: refactor the code to obtain a short commit
+ name
 In-Reply-To: <cover.1472457609.git.johannes.schindelin@gmx.de>
-Message-ID: <1f79d41e3417a0b1f0cffccc40e97f1a2c5ef987.1472457609.git.johannes.schindelin@gmx.de>
+Message-ID: <4b99922194d97f012459a473da48ec31d18c687f.1472457609.git.johannes.schindelin@gmx.de>
 References: <cover.1472457609.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:/RCGT8s0gzArQeA7ZMNNDlRShxeqfDtkgLp57RuHEOC782wfuYO
- eq+me8VL7uSkwqdTc5/9Nuaxn1eTnc4mWWUkDQtNPeXtnfhaMCmwQ851VJY5FqYHlQgPKxu
- xGeuv8evPs4GTi3vlB0uwpmV4KCAaGQYzxpW3BmuqRP45omDUXOA2vLJV6eIm13RBqrDkh9
- /DOwQ1l/HUSTwyai1J9gw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:6UHtXhzkWuY=:ZirqRR971CJx7q5G250cGm
- qCCjJ5+u0nr2jnXmy1KmhcHnEXxQgNKS8GfUjI5bASZpWjzDvikmyakteMpPpZ0IZ50MmR29f
- 2n6t08KCnG1DXDEK38UetHIBl22G6H5R9YKJTskoljcLRvb9M5gr8ikZHsuEs/PKrobrnSrx8
- HyWBharcy4gFEvcNuEVIpjbk92otmLqen+9Nwd1TxYbrHrRqAFUZIzGk6eYrRee7GjmJGZD7B
- B5puvmHq8Gxg6OJTejmv50tfMgTJC79DTuQsyHD8kUX02xTjUMJxhF95DPyEJFNH0CbwV1lat
- jXsfSESTQysFhKVUGDUpDhGyF/IvB/JtPSNERPmCi5FVm18DvUZUgkbemfR8SWO7WGW6QyQzX
- OdceTuCsmnyG0r8J0D+V8MxEdwZZphiTzQw3oS96CFBuDrHzYqnbmh8Nmss1pFdWXzt81STWA
- rYQoHsACJNiZ6EydNhJR6lNxr1SMTSOr8QNh8h43OUZ05MrJtN6nKQEhEE1c1J73/frud88S4
- elev/W9hDbIKHQjeM3e2YVtsu/cgzYMCpOaL8Vtow6eQiqdlIjtMcbLPluMdJeUu//ylVvZTD
- uRlg0O9PCnoyhMaHAG4s/mis2r8yOGQCnwzyjJGBX+9d+32KRVyTZh9944V3pRUmb1N7xv0qR
- Nolipd4HPGbKBpci+6QqZd4f8vr10D9tFA6gVFNNW2yegzGoXuK/3cwFm4ix+QWAWIVTjqjUr
- mKRsY+4ykMJX9V5+6vEsLfySAvsuDXasTMZRhhkQ53JwDCoZDx/Bz4oyRx5j/ohDSZotSVVDk
- 45rYJL6
+X-Provags-ID: V03:K0:/nng7pB4Kul4bJNqUMWvPAVtvVcGvdZMZfVL69nt8mPbyGR5Ae6
+ X3RIoAqxt01y3uCIgV+A/SpZ4cjbbQxdoOBgs2ZTU0OXe0o81qzpigDVQagDuyG8ILQoWtV
+ M0NmCSQ0UFf56srDuhs5F616lSl2oTWnk+sjqieTuP+pZJCMr6WNs8QyKY3c4OWoYTSnlgw
+ fPLTUFAC0bV02kCrj8VVA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:eO/D+RDp6l0=:yuxslsC05EUOPGgY3znCm4
+ iC8EVos1bhWTKL68MDFtaCiIpmbzPNqKi6km2nDdgDcmdnEDiHwbdJwuRltiiqcFyYaG8dxai
+ 7W0pFWmdSwlxkTtyRmT0p8OshtawqGYE7CjA077QbAroccQz/yDg5mGr2zMffTnzfLNU6DRNm
+ WU4KpNsEk0lG6HxusWMkddMCXn/+hjgDXDk9sYGyqZBP9ZkgqbnmXgOdTgh+uFdtDC2P9FDO0
+ Yur8y+ClAw0xPbfIJW3RT6tpIj0059pTnsWSFNPPIZ2LVc0miNwcXZEFV0wHORI2L6cNY63jX
+ VTvtQIAF5b54P0iIrfor0n0+qJoK2g00t2kGGN2zQHYEXpC1eLrN6ZzYcNxSggwCjqN8f211M
+ 2bqDaaeFHLkIeUbf0UI0iVuzs9TVMhOAGrUPezZ0dw8fa5Ev6WXRTSdCnLbclNjPaDq+gw4ee
+ s2V9pY0hPNaZ2Oziph5Fv1gesG8NXT8ULso9IwsiN+qK3ay3nYYWAnj60ULlHRV91fqQLMDv9
+ s9eUqlNPOF2D3guJJ9tYzrjF6SF9z4186Rb8HpAEJNdtiqBaI2MASshP+o8gW85LIcfPDo4WX
+ gaWKQkU6aFSkmlDm63tiWLA9geQ9vCa+ZlvymHLuwiS4o3Nx7XoHI3w4Wiq46/P6JyvEIVUg+
+ cGZOpCztHOb/F2AATqinPXTL77YFIPBXafoX+PZPqurFTm/wX8/I5jQJFgP4tp6ukgbSRcL9l
+ Pnk/HpCywyHLiTBuyvRGRzPF+cK0S839i7NQadr4CaA6xcqkuzAwr7tSSKE648p9NEv3MQHCW
+ g/sRAY5s6y0V52VDDpLaAVKv4ZcF74J0AbP+sOLK2ipFlpkXe/H8bWItAL4jZGR6ipiJx3Yl5
+ 843vd84dMN8j4Zfl/eBclIbo7ntfm7WOyKaj2nPkT30Utob1Qs/xU+veQcls0kJ63KesdDnF1
+ DDEuhSxackF+vqCgcZV9UR+5iukCtfD8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The return value of do_recursive_merge() may be positive (indicating merge
-conflicts), se let's OR later error conditions so as not to overwrite them
-with 0.
-
-This is not yet a problem, but preparing for the patches to come: we will
-teach the sequencer to do rebase -i's job.
-
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ sequencer.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 5ec956f..0614b90 100644
+index ba1fd05..06759d4 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -623,7 +623,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
- 	const char *base_label, *next_label;
- 	struct commit_message msg = { NULL, NULL, NULL, NULL };
- 	struct strbuf msgbuf = STRBUF_INIT;
--	int res, unborn = 0, allow;
-+	int res = 0, unborn = 0, allow;
+@@ -157,13 +157,18 @@ struct commit_message {
+ 	const char *message;
+ };
  
- 	if (opts->no_commit) {
- 		/*
-@@ -734,7 +734,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
- 	}
++static const char *short_commit_name(struct commit *commit)
++{
++	return find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV);
++}
++
+ static int get_message(struct commit *commit, struct commit_message *out)
+ {
+ 	const char *abbrev, *subject;
+ 	int subject_len;
  
- 	if (!opts->strategy || !strcmp(opts->strategy, "recursive") || command == TODO_REVERT) {
--		res = do_recursive_merge(base, next, base_label, next_label,
-+		res |= do_recursive_merge(base, next, base_label, next_label,
- 					 head, &msgbuf, opts);
- 		if (res < 0)
- 			return res;
-@@ -743,7 +743,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
- 		struct commit_list *common = NULL;
- 		struct commit_list *remotes = NULL;
+ 	out->message = logmsg_reencode(commit, NULL, get_commit_output_encoding());
+-	abbrev = find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV);
++	abbrev = short_commit_name(commit);
  
--		res = write_message(&msgbuf, git_path_merge_msg());
-+		res |= write_message(&msgbuf, git_path_merge_msg());
+ 	subject_len = find_commit_subject(out->message, &subject);
  
- 		commit_list_insert(base, &common);
- 		commit_list_insert(next, &remotes);
-@@ -780,11 +780,12 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
- 
- 	allow = allow_empty(opts, commit);
- 	if (allow < 0) {
--		res = allow;
-+		res |= allow;
+@@ -647,8 +652,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 		error(command == TODO_REVERT
+ 		      ? _("could not revert %s... %s")
+ 		      : _("could not apply %s... %s"),
+-		      find_unique_abbrev(commit->object.oid.hash, DEFAULT_ABBREV),
+-		      msg.subject);
++		      short_commit_name(commit), msg.subject);
+ 		print_advice(res == 1, opts);
+ 		rerere(opts->allow_rerere_auto);
  		goto leave;
+@@ -880,9 +884,7 @@ static int walk_revs_populate_todo(struct todo_list *todo_list,
+ 		subject_len = find_commit_subject(commit_buffer, &subject);
+ 		strbuf_addf(&todo_list->buf, "%s %s %.*s\n",
+ 			opts->action == REPLAY_PICK ?  "pick" : "revert",
+-			find_unique_abbrev(commit->object.oid.hash,
+-				DEFAULT_ABBREV),
+-			subject_len, subject);
++			short_commit_name(commit), subject_len, subject);
+ 		unuse_commit_buffer(commit, commit_buffer);
  	}
- 	if (!opts->no_commit)
--		res = sequencer_commit(opts->edit ? NULL : git_path_merge_msg(),
-+		res |= sequencer_commit(opts->edit ?
-+				NULL : git_path_merge_msg(),
- 			opts, allow, opts->edit, 0, 0);
- 
- leave:
+ 	return 0;
 -- 
 2.10.0.rc1.114.g2bd6b38
 
