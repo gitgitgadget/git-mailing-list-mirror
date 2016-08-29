@@ -2,93 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DD101F6C1
-	for <e@80x24.org>; Mon, 29 Aug 2016 11:20:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC2C41F6C1
+	for <e@80x24.org>; Mon, 29 Aug 2016 11:24:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932295AbcH2LUG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 07:20:06 -0400
-Received: from mout.gmx.net ([212.227.15.18]:53302 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932346AbcH2LUE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2016 07:20:04 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0M5cMq-1auJaw1BZw-00xZ5J; Mon, 29 Aug 2016 13:19:34
- +0200
-Date:   Mon, 29 Aug 2016 13:19:32 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 04/22] sequencer: future-proof remove_sequencer_state()
-In-Reply-To: <alpine.DEB.2.20.1608291258280.129229@virtualbox>
-Message-ID: <alpine.DEB.2.20.1608291317370.129229@virtualbox>
-References: <cover.1472457609.git.johannes.schindelin@gmx.de>  <2245e7db4d4c028f63b2f4c41097559f91756f2c.1472457609.git.johannes.schindelin@gmx.de> <1472462696.4265.23.camel@kaarsemaker.net> <alpine.DEB.2.20.1608291258280.129229@virtualbox>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1756705AbcH2LYc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 07:24:32 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:33459 "EHLO
+        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1756125AbcH2LYb (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 29 Aug 2016 07:24:31 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.nyi.internal (Postfix) with ESMTP id AC9E720372;
+        Mon, 29 Aug 2016 07:24:30 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute3.internal (MEProxy); Mon, 29 Aug 2016 07:24:30 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+        :content-transfer-encoding:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-sasl-enc
+        :x-sasl-enc; s=mesmtp; bh=NtNuGVkGAN+IN8Na6JgQ3crqB2w=; b=QfNIwz
+        MhE1pPZrvCwpKacwXkYnzyaOL9Xv4JECBbA7qaGef1erKD3JPc1vsb5LYm2kMk68
+        EqrLRAEiY72ZtZQxulDWu40CVTrP6nQ6O4k8s747AjTrvFcZ81/ILeAH6Lyq5mjs
+        E8mljC3cvVA2w9y2ftmaVnFQAfiVKxPvPguxc=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=NtNuGVkGAN+IN8N
+        a6JgQ3crqB2w=; b=iL1ADBi5R9pyqojAv7N+F96mHhp4WZujWujOxmCgFisJU82
+        McEKrwMy5Foi4OjI1zi67QJ+vZMk+1r7iRDGVTqvPgmo8KK3zJs7yZOelD3k3Z3g
+        4tgm6jcDoPT3GJlt5N6wzVVsZng+dQW411rnNGKWijiFud9WeAn0m+mSykDc=
+X-Sasl-enc: tjj53/v0AdIJYLCG8MbjJxhg1P2Uzm/ioajbYZO7+3Ss 1472469870
+Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+        by mail.messagingengine.com (Postfix) with ESMTPA id EC34CCCE7C;
+        Mon, 29 Aug 2016 07:24:29 -0400 (EDT)
+Subject: Re: [PATCH] Documentation/SubmittingPatches: add quotes to advised
+ commit reference
+To:     Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
+References: <20160826222714.31459-1-sbeller@google.com>
+ <xmqqk2f3duf2.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, hvoigt@hvoigt.net, dev+git@drbeat.li
+From:   Michael J Gruber <git@drmicha.warpmail.net>
+Message-ID: <389d314d-5f68-b195-3268-4234440ca4ba@drmicha.warpmail.net>
+Date:   Mon, 29 Aug 2016 13:24:28 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-990687973-1472469574=:129229"
-X-Provags-ID: V03:K0:JuDTPrqtuwijqzqPMOtRIUWrGhaXRKAedLZGG6BHyxtSre4P+El
- y6E44ybz0YChHVoGy4Avyph/kItGaDy3Lmlt0PyZg5/iDx4CqWp6I650GtbCh7mkluFC7U3
- 9ociIr4IaN5fqJ93LotoeDGPPnDtCyKcR9p+twtWM+rkIcPe33C3Z5ao+Ot6IohYUOQi6QN
- kvD/CMFgELO68VdED0Usw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:PTUb36PW994=:HGbdck+/T5xWCwBqoc/jAH
- ze1RX/75Hvg1tLDlAVfC9b8VWr2/UA6KfpY7jV7yD/q5mk2Vso9ww1PAF48/a/uW7al6yMreB
- cjlLNtpqukTo2xafvi0vlDKJlsbFiXjWUm9dbtc4Q2t5LyM+DaUeHB0tpZL12ERZNDqvjLqbB
- 4S7n1LC7b3suKG48XZs7K/e/J/aoBUuFMllm5n8RuHktIABlgvEbdy+0pUwYMmtG+wdN7/kTw
- 2GkrKWAl7KzyTfPu7guEys/N0cfBLCmuJvT7mlqjUp0vYeu0y+3qhJZu8piGeWKpGa+7XYohg
- nimQHuH75lePQNjlIC1FWpNFdJ6+CsOh7nBlildd0lQPbxFxO7GjPEbwXAZW/UQIkNCaXr6ao
- VDAHFHp6xTDIFcjuCQaq/Q+RsBLwFITeO9Wp8A49JzKldY6hMzaoPEDDZABDIBy+cFKyxPnzj
- aYIkHSFYOfxMJkXbGv3UChIeJxZj4rEsoYJd4E1Gk1TTZtGVC4iFrNNp70RbbWgDQpxuaQdDl
- oyTVRX0O93S0PoSoAcmai8IFg089OXF7rQsZxjPTPigEC/vjc/UZpRQkyf2M5yNynqapeI6yg
- MKTB+gyovcWvh1Aw8JkK9hEzXgy3JV35frjjxFeaQGQLK3IPZaYN/xWQTkXyjlArdtOHv5jVS
- bpqg9DeD8/Y3tN/+4j8/C05emUlGXG5TCVBmU24Geo9a96p6tZDVTw0KYf+ztHQYWNV2F3U5z
- 6tgpUEsx7ooe7qMPazv5E+gUsDONTDXlTndVmHOac4uohRhGvdzYBWN0xKfE9A10qVWwMAypL
- zMJVTsp
+In-Reply-To: <xmqqk2f3duf2.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Junio C Hamano venit, vidit, dixit 27.08.2016 00:42:
+> Stefan Beller <sbeller@google.com> writes:
+> 
+>> Junio finds it is easier to read text when the commit subject is quoted.
+>>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
+>>  Documentation/SubmittingPatches | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+>> index 500230c..a591229 100644
+>> --- a/Documentation/SubmittingPatches
+>> +++ b/Documentation/SubmittingPatches
+>> @@ -123,7 +123,7 @@ archive, summarize the relevant points of the discussion.
+>>  
+>>  If you want to reference a previous commit in the history of a stable
+>>  branch use the format "abbreviated sha1 (subject, date)". So for example
+>> -like this: "Commit f86a374 (pack-bitmap.c: fix a memleak, 2015-03-30)
+>> +like this: "Commit f86a374 ("pack-bitmap.c: fix a memleak", 2015-03-30)
+>>  noticed [...]".
+> 
+> Thanks, but it is not sufficient as you would not see the need for
+> quoting without the example.
+> 
+> My preference is not a main deciding factor in this case anyway.  A
+> more important reason why it makes sense to quote (aside from the
+> fact that it makes more sense when reading) is because we already
+> have a tool support for that.
+> 
+> Perhaps something like this instead?
+> 
+> -- >8 --
+> From: Beat Bolli <dev+git@drbeat.li>
+> Subject: SubmittingPatches: use gitk's "Copy commit summary" format
+> Date: Fri, 26 Aug 2016 18:59:01 +0200
+> 
+> Update the suggestion in 175d38ca ("SubmittingPatches: document how
+> to reference previous commits", 2016-07-28) on the format to refer
+> to a commit to match what gitk has been giving since last year with
+> its "Copy commit summary" command; also mention this as one of the
+> ways to obtain a commit reference in this format.
+> 
+> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+> ---
+>  Documentation/SubmittingPatches | 11 ++++++++---
+>  1 file changed, 8 insertions(+), 3 deletions(-)
+> 
+> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+> index 500230c..15adb86 100644
+> --- a/Documentation/SubmittingPatches
+> +++ b/Documentation/SubmittingPatches
+> @@ -122,9 +122,14 @@ without external resources. Instead of giving a URL to a mailing list
+>  archive, summarize the relevant points of the discussion.
+>  
+>  If you want to reference a previous commit in the history of a stable
+> -branch use the format "abbreviated sha1 (subject, date)". So for example
+> -like this: "Commit f86a374 (pack-bitmap.c: fix a memleak, 2015-03-30)
+> -noticed [...]".
+> +branch, use the format "abbreviated sha1 (subject, date)",
+> +with the subject enclosed in a pair of double-quotes, like this:
+> +
+> +    Commit f86a374 ("pack-bitmap.c: fix a memleak", 2015-03-30)
+> +    noticed that ...
+> +
+> +The "Copy commit summary" command of gitk can be used to obtain this
+> +format.
 
---8323329-990687973-1472469574=:129229
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+or (an alias for) the command
 
-Hi Dennis,
+git show -s --date=format:%F --pretty='tformat:%h ("%s", %ad)'
 
-On Mon, 29 Aug 2016, Johannes Schindelin wrote:
+>  
+>  (3) Generate your patch using Git tools out of your commits.
+> 
 
-> On Mon, 29 Aug 2016, Dennis Kaarsemaker wrote:
->=20
-> > On ma, 2016-08-29 at 10:04 +0200, Johannes Schindelin wrote:
-> >=20
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if (read_and_refresh_cache=
-(opts))
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0return -1;
-> > > +
-> >=20
-> > This doesn't seem to be related to the get_dir changes?
->=20
-> Good eyes.
->=20
-> Let me investigate why I have it here...
-
-Unfortunately my reflogs got corrupted by the git-worktree
-implementations, so I cannot back that far.
-
-Looking at the code, and after running the tests, I am convinced that it
-is a leftover of some misguided attempt to implement "git rebase -i
---abort" in sequencer_rollback().
-
-I removed this hunk from the patch.
-
-Again, Thank you so much for your review!
-Dscho
---8323329-990687973-1472469574=:129229--
