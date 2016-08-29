@@ -6,83 +6,92 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 831D81FD99
-	for <e@80x24.org>; Mon, 29 Aug 2016 18:09:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F4B91FD99
+	for <e@80x24.org>; Mon, 29 Aug 2016 18:17:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755381AbcH2SJ2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 14:09:28 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53558 "EHLO
+        id S1752958AbcH2SRY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 14:17:24 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51890 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755068AbcH2SJ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2016 14:09:27 -0400
+        with ESMTP id S1751983AbcH2SRX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2016 14:17:23 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ADD553AD9A;
-        Mon, 29 Aug 2016 14:09:26 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 741683AEB8;
+        Mon, 29 Aug 2016 14:17:22 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qABwdM9DTkRseRJZgkdqZtUANpU=; b=Jk1sF0
-        BmYR9XSTRHGhZjEH5PDhXpSxKbW7kwmzBwfzMpRUK/dZplebV7G+H5gA4zxLjhFz
-        Cv0NWwFcix1HjKyupw4KeB6SHZpFE1e2QXcqznicwxep63DsqYyxVwYyoN+SFLBd
-        LpBrNJ/GztI4dmuMmRzRzZmh28qP3x7rqzewk=
+        :content-type; s=sasl; bh=d4sDEDqeCFGgB6nxpPtZD7lCdms=; b=paLcwb
+        ZIQXwprvW7pTSfviTk2rtpe4IKILxD5G+Nv/EFMRIjX+u2RNH6xm0V/qsBOVllSL
+        LRVFSoyC8FZrD9NSLQViqh52Nqgtd6rsBHIIRmeHA7/FzjT3yAhswSqFLWdokC/b
+        EsvxOayAL6xYBhKmXWJfh7HC5xblh7SgXWDgY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xGyyniGqeowF5hL9Hrgy8QRdVPMYGZ9l
-        MZqBboD6XmF52L4EoU1wix0qiql/gdM5HfFOicD6tXBuOjgQMlSGis7wXWmpc0/7
-        Hx3xsJxmpM5RYGJ+hJHYr+U7WRYWke1YUUHAeBCc7Ak8t6k9wINbVDlQkjEiNUYZ
-        /5sq6+I49gY=
+        :content-type; q=dns; s=sasl; b=fzLHVVjYOiUMWBvJT1eYW9XQChkdVHXL
+        bO1BgjRuOIa9SHut610CI3NLiGnMFniXQ8XOPZ0G0zGETpqmSSSSAS4at4HLpBAb
+        CoIsomwQiUoHEX47NdIGRIOzVO6XnVsqOAGWCqFJOMt76psTR0n4mELCDFPwJmwX
+        A6VWiuww338=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A40963AD99;
-        Mon, 29 Aug 2016 14:09:26 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6B0DD3AEB7;
+        Mon, 29 Aug 2016 14:17:22 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2587A3AD97;
-        Mon, 29 Aug 2016 14:09:26 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E39283AEB6;
+        Mon, 29 Aug 2016 14:17:21 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>, Johannes.Schindelin@gmx.de,
-        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-        Martin-Louis Bright <mlbright@gmail.com>
-Subject: Re: [PATCH v6 00/13] Git filter protocol
-References: <20160825110752.31581-1-larsxschneider@gmail.com>
-        <D7C1480E-8FF4-4EA5-BA77-7A4672853614@gmail.com>
-Date:   Mon, 29 Aug 2016 11:09:24 -0700
-In-Reply-To: <D7C1480E-8FF4-4EA5-BA77-7A4672853614@gmail.com> (Lars
-        Schneider's message of "Mon, 29 Aug 2016 17:39:31 +0200")
-Message-ID: <xmqqtwe3bg6j.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Beat Bolli <dev+git@drbeat.li>, Heiko Voigt <hvoigt@hvoigt.net>,
+        Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+        Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH 1/2] gitk: align the commit summary format to the documentation
+References: <1472230741-5161-1-git-send-email-dev+git@drbeat.li>
+        <xmqqoa4fgzhv.fsf@gitster.mtv.corp.google.com>
+        <a9731f60-5c30-0bc6-f73a-f7ffb7bd4231@kdbg.org>
+Date:   Mon, 29 Aug 2016 11:17:19 -0700
+In-Reply-To: <a9731f60-5c30-0bc6-f73a-f7ffb7bd4231@kdbg.org> (Johannes Sixt's
+        message of "Sat, 27 Aug 2016 09:21:33 +0200")
+Message-ID: <xmqqpoorbftc.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: B8A06AD2-6E13-11E6-8114-F7BB12518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: D436158E-6E14-11E6-AE57-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lars Schneider <larsxschneider@gmail.com> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
->> On 25 Aug 2016, at 13:07, larsxschneider@gmail.com wrote:
->> 
->> From: Lars Schneider <larsxschneider@gmail.com>
->> 
->> The goal of this series is to avoid launching a new clean/smudge filter
->> process for each file that is filtered.
->> 
->> A short summary about v1 to v5 can be found here:
->> https://git.github.io/rev_news/2016/08/17/edition-18/
->> 
->> This series is also published on web:
->> https://github.com/larsxschneider/git/pull/10
+> Am 26.08.2016 um 20:24 schrieb Junio C Hamano:
+>> Beat Bolli <dev+git@drbeat.li> writes:
+>>> In 175d38c ("SubmittingPatches: document how to reference previous commits",
+>>> 2016-07-28) the format for referring to older commits was specified.
+>>
+>> is easier to read when pasted into a sentence than what the recent
+>> update 175d38ca ("SubmittingPatches: document how to reference
+>> previous commits", 2016-07-28) suggests to do, i.e.
 >
-> Hi Junio,
+> While it may be easier to read due to the extra mark-up, the resulting
+> text where such a quotation appears does not flow well, IMO. A commit
+> message text that references another commit reads more fluently
+> without the quotes around the summary line because the quoted text is
+> not so much a quotation that must be marked, but a parenthetical
+> statement.
 >
-> I am working on v7 of this patch series and I noticed that is does
-> not merge clean anymore (not even with git/git master). Should
-> I rebase my patch series? If yes, what would be the most
-> convenient base for you?
+> I absolutely welcome the proposed change to gitk, because I always
+> edit out the double-quotes.
 
-Depends on what you are conflicting with. I think you want to use
-something that has at least 05d1ed61 ("mingw: ensure temporary file
-handles are not inherited by child processes", 2016-08-22).  Perhaps
-2.10 final?
+I think that is highly subjective, and as you very well may know,
+I've been referring to commits without double-quote pair, and have
+an obvious bias for something I am used to ;-)
+
+I do not see the "" as introducing a quotation.  I just view it as
+very similar to the "" in the following sentence:
+
+    The commit whose title is "foo bar" did not consider there is
+    also need to consider baz.
+
+The whole thing is inside () pair, so I agree that with or without
+"" pair, it is possible to see where the title ends.  So I do not
+have a strong opinion either way.
+
