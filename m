@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4E311F6C1
-	for <e@80x24.org>; Mon, 29 Aug 2016 11:10:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0BFD51F6C1
+	for <e@80x24.org>; Mon, 29 Aug 2016 11:11:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932448AbcH2LJy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 07:09:54 -0400
-Received: from mout.gmx.net ([212.227.17.20]:54947 "EHLO mout.gmx.net"
+        id S1757234AbcH2LKj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 07:10:39 -0400
+Received: from mout.gmx.net ([212.227.17.22]:61695 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756927AbcH2LJx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2016 07:09:53 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MFR2O-1bqRNu34Ts-00EKn9; Mon, 29 Aug 2016 13:09:38
+        id S1756914AbcH2LKh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2016 07:10:37 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0Mecqq-1bTNAv49cW-00OEyV; Mon, 29 Aug 2016 13:10:10
  +0200
-Date:   Mon, 29 Aug 2016 13:09:38 +0200 (CEST)
+Date:   Mon, 29 Aug 2016 13:10:08 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
 cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 20/22] sequencer: remember do_recursive_merge()'s return
- value
-In-Reply-To: <1472464293.4265.28.camel@kaarsemaker.net>
-Message-ID: <alpine.DEB.2.20.1608291309280.129229@virtualbox>
-References: <cover.1472457609.git.johannes.schindelin@gmx.de>  <1f79d41e3417a0b1f0cffccc40e97f1a2c5ef987.1472457609.git.johannes.schindelin@gmx.de> <1472464293.4265.28.camel@kaarsemaker.net>
+Subject: Re: [PATCH 00/22] Prepare the sequencer for the upcoming rebase -i
+ patches
+In-Reply-To: <1472464596.4265.29.camel@kaarsemaker.net>
+Message-ID: <alpine.DEB.2.20.1608291309480.129229@virtualbox>
+References: <cover.1472457609.git.johannes.schindelin@gmx.de> <1472464596.4265.29.camel@kaarsemaker.net>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:IelYD5tel8jVMBZ8vK5uKsvP2qikTYjwMZJvzjxnZLQyupLmbxT
- yXHEov31fKL1oloMN6vB0Dhre7wwvodJZAALmMzp2qL5j0dXIoYONGAhITeJGF/HVaI6AOq
- iMBesrSxr+TcHHKVSEodF0pa8GVZmwN9eax2nDNG1IcDBfM17OmTcbJYfztXwQ/nzEG7y1x
- 0hInimzOfJdPD5j1IgtBw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:L30XzZjMlUQ=:PvKCMqw4owOC7MkUbVRSZl
- /gG6rWERQ53OFDy/lzwe2kSrOKpJs0bfsmzDDIM14eDXu3XLYNPqx7MwW817zaY6qn4AQaB37
- VwClVFivoMA+8gPfNAZj9RcIDLnL/tBAz242oScbxharoeXPDwtgV2qnU/W7wx+k/NcGgvMwT
- 2o4paiVaa2D6aECn16HNuCYgXuNfxgRBiZf+BqbcaKwutn415r29n3fOukTNENVcz65dvzCUI
- 6jUIjKbf23MQaIVboftT+Jqi7GEVDgbpoM4TbZuKnjD5NC2P4nDqpO0WIhF8gO8BlEm9CZ8ef
- hh/Fe3Y6uJhZk1FQ6L7ynjnyqGxaVdriHrEHJ1K89oTu13Tbp/hhLldzjQ0fgnWuhZ7xpn1pt
- XnPipdTet2f+cpW+EwoTRA9WfGuWKCclW6X15L8G3PwF019ebWWCNW2u2JCz10KqupRqQlr+J
- 3XEN+sUy2gmg9FjConIndlTfO/scaqZxTQ5Ub2Eluc/LOqbaBgu1lshc/luk0DnJDW+YMo4aJ
- IIPdf9eA1XAXZqQij4KC1oqO7Ql4frXVczeWvyFZD/bSoVaURIXrDvi52jL4XsCh1BhosL8/F
- rqHNW7oSh7Taw4wqAuCSSVWMfzF237iSHkMShPfFC4idt5bxsZdAMO/nzljBTg+Rx5qsRFHcz
- gw76wEXe/DUrYHCfa8zDRn4VINq/Xdak3CbtyrO3tjzIvW2FskmTFyOZP+tp2AHi9z6XA49m4
- yl5tPO9FfLeN5Zs1M/9HdkVBn3j4SfPX2qDf3WKHOKeJOk2KizkTx0gpfKnOVIXPFtKfMq5oO
- ZxfUkwS
+X-Provags-ID: V03:K0:tIvp0YfLvdWwED1CjI6Ds+iq7vuXj0+jvQxP06LKhhkr/1R43WZ
+ oh+7iqyjob4LUJLumckaorUNRHWT7TCUp3jbGdiRfpS6Ne5xf7+vEFc4uEzjqXmoX7V++wf
+ aSTGqJ6OiCRVy+p+jiZfEUlSMHrk+Q6a6d0on6GXF3w+nVFbuQfUYt05CTEsstQ/0HAfQhY
+ qHnRbeVM+ubeH2zrBuy8g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:pJp1MkYDphM=:Z6NsENtyzOOzGXJGroyCYd
+ M6qwjyKT5RkmdxFd2ES0SrIlkY7xogCzRIEXuL9X7vlcbyOgE41uXT4MVTffZZUIoMTeMDCvj
+ QGT1KVrBD/Fx39W+mW0I/U/ko4wkIT5wxO4Iml5JwcpSZt0BuqvUURVzxsJZlFpI3Wo/6fNmc
+ OGeqvQBQsbfy0m5RxCA7dJoyTUIg2D5v065Fr8Th0npKZP4QBfHFa9LZfbgrSlnmPhkTkBQxs
+ vCQzxICk+qWNFd0cn+fNvIA+iH5kvvIjhVBO9tYZdEV7CQU2myU/H3JEC+aOeLKalANua5Wrq
+ lSdbERT1VnxC6kivymWy72g/Syl4Ddkl/RQXpJC1jvz4+fNiQ3hF4Z7t4vKcnWAXKWCgVh/MV
+ yuZiJsf6mn5vNp5E4I+rHUCoZ/nXYsvzY8C+MmAaqvPLsbiBjzbrjgm26yc0dW93CxlpQ//cc
+ HKtvVyuFuP24IQ+dMtoKG9IkWbnd0DBQ3zUx0xur1uu6qqR2EgrLljoT13RN6/Efuqh94Tvla
+ ARcExgwjLJEpV/oEdptG6479WH99YjWYYpkxYqPast+7IRx7mfkmQH8Kl+R0hRnOJ3zRm755Z
+ OzIIDdbZnzkC1zTfC0Q/ck6fUlf7fq5Dtt8daD7ae4kSrHh3WoC5t5+OYR61xPRu0S+SvlIXZ
+ LdC//OdoK6MRd4EMPwbQWQ16t8e4H/h4XXqQS/gnOcRJtxOVRQEwcy9/VlIL0TfK7wW/K80yF
+ QBaXw3AJysMcwJeVVbtoSu2+9+5kKSivjMguTwIAbPAMw+k0KwgXAsZqw6iQjMO49OHbNzfWS
+ FNEDnNu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,15 +58,14 @@ Hi Dennis,
 
 On Mon, 29 Aug 2016, Dennis Kaarsemaker wrote:
 
-> On ma, 2016-08-29 at 10:06 +0200, Johannes Schindelin wrote:
+> On ma, 2016-08-29 at 10:03 +0200, Johannes Schindelin wrote:
 > 
-> > The return value of do_recursive_merge() may be positive (indicating merge
-> > conflicts), se let's OR later error conditions so as not to overwrite them
-> > with 0.
+> > Therefore I would be most grateful for every in-depth review.
 > 
-> s/se/so/?
+> Tried to do that, but could come up only with a few nits. I think the
+> approach is sensible.
 
-Good eyes.
+Thank you for the review!
 
-Fixed,
+Ciao,
 Dscho
