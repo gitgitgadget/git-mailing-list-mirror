@@ -2,99 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCA831FD99
-	for <e@80x24.org>; Mon, 29 Aug 2016 15:44:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 249271FD99
+	for <e@80x24.org>; Mon, 29 Aug 2016 17:07:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757637AbcH2PoK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 11:44:10 -0400
-Received: from mout.gmx.net ([212.227.17.20]:60017 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751559AbcH2PoK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2016 11:44:10 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0M9fLX-1bp9gO3KWt-00D1Z2; Mon, 29 Aug 2016 17:43:43
- +0200
-Date:   Mon, 29 Aug 2016 17:43:41 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Paul Tan <pyokagan@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 01/20] cache: convert struct cache_entry to use struct
- object_id
-In-Reply-To: <577f6266-42ec-6c7b-8b21-1e4997f2b816@gmail.com>
-Message-ID: <alpine.DEB.2.20.1608291743060.129229@virtualbox>
-References: <20160828232757.373278-1-sandals@crustytoothpaste.net> <20160828232757.373278-2-sandals@crustytoothpaste.net> <577f6266-42ec-6c7b-8b21-1e4997f2b816@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1751950AbcH2RHS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 13:07:18 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53020 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753500AbcH2RHR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2016 13:07:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3010E37B9C;
+        Mon, 29 Aug 2016 13:06:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=m+HW5uTHCLnrmMfJa/dqzI1vEX0=; b=pGYXf4
+        wfK+kfpGdZd9OjtT8JIXtuSSBmF/g1g5ZGm7y7EimASxbBj5OtoqoMkV24RWnrs4
+        2QiMXg0KMXs0WkIU5Te5JtbmJTulUZV2XHTCA8PJ7zSZxbzd1AGjOZzvzA9GMdsE
+        jsx6FIfkHNu1/hRg9LU9jidEJ5EIh4KwruGz4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=RDcPPYW+gAvq+kAeM5dh1sCMwty9hvk8
+        ydNsJIidmYLtgK6wgZBDp7ZoZ6KFScGkZtbHMT7BiQdXXL1egpogHoN6OTMsm4gy
+        0i6oUWo3ajgRbAQb0ATOwzBENBNL6NEWZRxmlHOzWbId5Noil2jIKiNrEECREC2r
+        o8Ad4yhbkhA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 279FE37B9B;
+        Mon, 29 Aug 2016 13:06:49 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9335137B9A;
+        Mon, 29 Aug 2016 13:06:48 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Pranit Bauva <pranit.bauva@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: [PATCH v14 07/27] bisect--helper: `bisect_reset` shell function in C
+References: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
+        <01020156b73fe69a-13136cfb-4daa-4f5d-9b56-537adf2c6942-000000@eu-west-1.amazonses.com>
+        <xmqq4m69q3b2.fsf@gitster.mtv.corp.google.com>
+        <CAFZEwPPfXvLUtcBR6cYAP2dT8FAePFPjDSnVm8BhpLN9cfR1uw@mail.gmail.com>
+        <xmqqshtrijdn.fsf@gitster.mtv.corp.google.com>
+        <CAFZEwPMBy0Ovcq-pUJkhoLiVF+uvm5fC0PD0RGPKobZ83Ciy3A@mail.gmail.com>
+Date:   Mon, 29 Aug 2016 10:06:46 -0700
+In-Reply-To: <CAFZEwPMBy0Ovcq-pUJkhoLiVF+uvm5fC0PD0RGPKobZ83Ciy3A@mail.gmail.com>
+        (Pranit Bauva's message of "Sat, 27 Aug 2016 16:22:23 +0530")
+Message-ID: <xmqqpoorcxnd.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1270475952-1472485423=:129229"
-X-Provags-ID: V03:K0:R7LXvOUlEignCVZgBAndDPBxHZw7UlZzTkRs70sB2tcthKRBNpS
- Jj/x0BM8GCQctc+U43VXYG9oALPWVQGIBNYApP9fQ04+Ddy+NHQIIfgMkBGgKKm+XhiwLCv
- Nz5W/jRx86R00/o//joqgwDLoU6x2N/g3CKffwxR+3fsLnkQzzxw3X6gxVCXroyhkeOSX2z
- 7siaWlDmhcAg0/tSskFxQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/4G89Tbb05M=:7PINNK4kpMT8ETNdAT5dA/
- Yh6o4aAtRNk5nKi/H8/10t1jvQCyg1LqsM+KZgak4e53dBEOH6YT34ZOb7tMqkxPNezrZznnT
- l6ugocTJttgaHwySwHwJk77KruUOPbdnA2pylidB3awcZo/lIUacO9WHyXNOC6AoXwBhABqsu
- OG9DaL7ZjW//cBDMvvrkf7naz7UW9X82ieE9kvSpVDV5O2I9K6PcdgSPPhaLjSeI8OZPzLok1
- 9/botKgUbGuppY0FXRBYjgyWNxgeItJJNcQ4gFZcK5mC4UV6bMH/Ito1HyVRxqZ3PCs1CJz0v
- 0G3aL8K0j2n8HN/Q04yyDIKFAXAM+G//l6cuBC20L0ZumxztZFaPNBeMfpD3d0lrqcV+GUDn4
- yZ8dWrs/nb30c9NcfxN5PLUE4ot0zmYjLKOuGL0zM1yZ3qEpma/df4FG23CASdpswF1yMC/Xs
- IdbF5biZ9t4Q/gCotQzMeih+c4TVBtEmhjA6zajIiOJ2dKUBC7p1AY15owD1eKXuwJdKOcvR3
- P0pqhNV4g7byGF8zgaveGBUG0yBf0qzfILYy27T75eEbRQan8EScobQUzumQNvSTwTn/6DzDo
- yL1Q/qLf3/av/VP+EotY7iwwCOsJY7SJGOzbchBZEsKobn2027haeuFlkzdVvpIjJpyydyVXI
- 60seZRDREsSqUmVQfJg+blDa020g2Sjd64XvHxjqv271TJgzEGeKn8yoGEEHlaWd67M8xdWyY
- TaCYmO9BYxwFKF9Xti8F1Hh81jBl98mYMNwehikG6TEivu40k1OfQwv1KHVkABCHaN0/AoUg9
- uJX71wt
+Content-Type: text/plain
+X-Pobox-Relay-ID: F8E9B200-6E0A-11E6-ABC2-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Pranit Bauva <pranit.bauva@gmail.com> writes:
 
---8323329-1270475952-1472485423=:129229
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+>> with the original
+>>
+>>     case $# in
+>>     0)  reset to the branch ;;
+>>     1)  reset to the commit ;;
+>>     *)  give usage and die ;;
+>>     esac
+>>
+>> and took the difference and reacted "ah, excess parameters are not
+>> diagnosed in this function".
+>>
+>> Your caller does complain about excess parameters without giving
+>> usage, and that is what I missed.
+>>
+>> I am not sure if you intended to change the behaviour in this case
+>> to avoid giving the usage string; I tend to think it is a good
+>> change, but I didn't see it mentioned in the proposed commit log,
+>> which also contributed to my not noticing the test in the caller.
+>
+> I could include this in the commit message.
 
-Hi Kuba,
+Nah, it was something anybody could notice with 2 more minutes of
+reading and pondering from the patch text alone.  Not worth spending
+more time on the log message on this one.
 
-On Mon, 29 Aug 2016, Jakub Nar=C4=99bski wrote:
-
-> W dniu 29.08.2016 o 01:27, brian m. carlson pisze:
->=20
-> > Convert struct cache_entry to use struct object_id by applying the
-> > following semantic patch and the object_id transforms from contrib:
-> >=20
-> > @@
-> > struct cache_entry E1;
-> > @@
-> > - E1.sha1
-> > + E1.oid.hash
-> >=20
-> > @@
-> > struct cache_entry *E1;
-> > @@
-> > - E1->sha1
-> > + E1->oid.hash
->=20
-> I wonder if writing this patch series (or rather the following one)
-> would be helped by using one of semantic patch tools, such as
-> Coccinelle[1], spdiff[2], or Undebt[3]...
->=20
-> [1]: http://coccinelle.lip6.fr/
-
-If previous work by Brian is any indication, he did use Coccinelle and the
-commit message actually shows the definition used for the transformation.
-
-Ciao,
-Johannes
---8323329-1270475952-1472485423=:129229--
+Thanks.
