@@ -7,87 +7,133 @@ X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35FF21F6C1
-	for <e@80x24.org>; Mon, 29 Aug 2016 08:04:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA1D71F6C1
+	for <e@80x24.org>; Mon, 29 Aug 2016 08:04:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756638AbcH2IEa (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 04:04:30 -0400
-Received: from mout.gmx.net ([212.227.15.18]:49817 "EHLO mout.gmx.net"
+        id S1756678AbcH2IEk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 04:04:40 -0400
+Received: from mout.gmx.net ([212.227.17.21]:52836 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756425AbcH2IEV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2016 04:04:21 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0Lqi70-1b8occ1O9C-00eNUW; Mon, 29 Aug 2016 10:04:16
+        id S1756487AbcH2IEh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2016 04:04:37 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MCtLD-1bmE3C1UiB-009dn9; Mon, 29 Aug 2016 10:04:29
  +0200
-Date:   Mon, 29 Aug 2016 10:04:15 +0200 (CEST)
+Date:   Mon, 29 Aug 2016 10:04:28 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 03/22] sequencer: avoid unnecessary indirection
+Subject: [PATCH 04/22] sequencer: future-proof remove_sequencer_state()
 In-Reply-To: <cover.1472457609.git.johannes.schindelin@gmx.de>
-Message-ID: <e5e6c27038c7db226a787da6b7ee343b2b310654.1472457609.git.johannes.schindelin@gmx.de>
+Message-ID: <2245e7db4d4c028f63b2f4c41097559f91756f2c.1472457609.git.johannes.schindelin@gmx.de>
 References: <cover.1472457609.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:rTlKUCTkz3P8s16NaFZKUQDDy/ka+5JRswlmMZD8e4cvdIOsSQP
- H2e/jQ/m9XGLklGoVW87ymGwS+Qg6xwuHAR65sRBq6NcAr7H7LdcVpk4QiWKqbDEzWhOk6P
- H5OtAL1F5MRv8LsA2MNpzNd9qi0cRG43SWa6VunTbWz2RkpJmLK3c8AhhM8N9/4WtUnhFGG
- z1HQTDrclVzgOxPVR3y2w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:bYVz4nx8PQ8=:M/ker9uf1htO/htTDTyxqO
- oS1JpcDhg4Z54avZVnhTcBTcI3WsQxPaeWmWMzA7KlTIzblTZdfBs+W8sEySzxtreNNRlDdW0
- idH298JvRym0bYhw5OTR7ZfohZJachKUa/gZ5V1CDZUOJlwPHri+Gx++Fonjr9ITBOXEUyPaS
- fEb7uYpfJZftnt4FUWNVb04RApQ0hiOgsnEV5olTAqsO2BdTmARXa/U1tcqXVdgYKdx4zs/Vy
- 9DXKyUIDhpL+pbQnrzwYMdvr6hfUDTBp1mZ6B9wQkBZoKSBWDIlVOUwA80otcXDqDVEaALR1b
- mBtPOErIJ6LHWig2aOx6BsMbJ46DcappFBDEqcRtFI4MciaEMCUxKTpERPhbPnoisVfz3vIOr
- 8Dvib7Nr6lPws1UHHnGkzLW4DvTqUyhtS8HCg0b835Cf++YrX7iWBa6DA/amMSoZjXjWNiqJB
- 2sVifvoAX9PN2NIqRqIYAnTpGgm7zXfs/ZhOIJ8tAMnOuFeIxZ9+CxIFN8xT3F4A5j97vwbbh
- LkFmynavyr9o+1wyRfXgh6waIiTZfj5MCXHTlFnzXumuQOqui/Mp8NmO3nU2IMhyBEmoKaHUI
- ZFScjThlwxb8s04+rz1qsxUDibD0GzhEPEAm1ytcGP+K4xgmHa6Uj5Ma0hx+9pPQqu0bkfFtx
- 6uSIvCg15u0gLD4vdWTZMnQvgqFlExSnbHnqQYYHranBRuhjLLwH0Kdiq+3j21cPbZlGKEyaM
- tLg7ehqoMG+pbcrUbTT116ukI5PixjNh20vS1hWsIRjrzxFk0GfVduApHNJBgsF1CqVazqEKm
- /Ya7UdW
+X-Provags-ID: V03:K0:RtGgO8bwERL404CaVZxRPfWN98goBNq/WQCfy/A/kI5D8Z2w5VQ
+ cpkBLtm2531P2CUmNRIEAEYG0cuewesvj3JPY1gGghQieVf0NPZqrk7iwu8xkgeAXOz70Ls
+ KXvK+5RpqVjuZBzK7PJ/M9GMAHURRcob4YdtQ4pCGNwhM9mh/+LR7Y7osTl0VX9aDmJYD5K
+ gssjKpSZspj5CNum8zo/Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:FvXM4s38oUE=:lE0xUlGt0aOjSdvKlNWube
+ mx4vPtAl5FoCbp8LDoxOwajySvr0Ly7NRFbHMmD5ZoaZZhRXzxfH7a600+nwuMYJ3pYp2utZX
+ gSce9eVeKaDzfSrlF0ibIgAJ34PAnYjpBA+zaWPECOKI5MOfUW4k0KQpoTWhgFThbug/Dw2gb
+ nB7+cxNpR/6ynQXeZq+ApoCKda4v3NS0Pz10WPMZMSDdUWxV7BSkHVndz5NNOLzmdxiahIFTP
+ JYeQzTVYvF4T2UrmOyzia7ySy7wD4wRxjLL/RrwUuoeFvy14bxJVzzZS/zzxsvCwU7wa9UFA3
+ TzyLRKIFk9KFdegjUwfFysejLPi26hDtwZnsfEJC2QcsXKIApMfgbV0dKudQdY3PDkY59iXi7
+ aBRcMvPGuzCHkSR+YloaVntMHcecG9R4p4mXyywZqNoU+5r09VBdckK7cUY2xZcuEqofuc4KW
+ KUxPKUqQPYWfmPGCR3x9ldYh4+T8jX7wFLUnuU1+dxSTUKPO4MqAS6EdbO36AbKFFvv1vWoDf
+ ZRBMTN+SGFVLy7O4F+ZuJxxUtcm0gJEoFc4h1aC3m94CRMS9Xdoh/MYKgeW8wl1B0VQhWM2f/
+ NClMWhQnOVmvK+kbd1OwlihJ7DVRXNQ7T2XeXJa0XTMl1y5Q8ECBsYi33OlxqZyZEiIck7PW7
+ LbdyY95IzheqVJLys9E3/4U7O6EvHt7UvMkqbq+B06OwhZZuTDDjz0DBJJUMOO8Mef6GRZXf/
+ ayQa2hHxhSLE6GoTIMwcORuSLrn/3kKG7ZfyJili9S5hp0vZEg87okMeeo3y+FdKyLNxp9K3n
+ Sry6uQ4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We really do not need the *pointer to a* pointer to the options in
-the read_populate_opts() function.
+In a couple of commits, we will teach the sequencer to handle the
+nitty gritty of the interactive rebase, which keeps its state in a
+different directory.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sequencer.c | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 4d2b4e3..14ef79b 100644
+index 14ef79b..c4b223b 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -809,11 +809,11 @@ static int populate_opts_cb(const char *key, const char *value, void *data)
+@@ -27,6 +27,11 @@ static GIT_PATH_FUNC(git_path_todo_file, "sequencer/todo")
+ static GIT_PATH_FUNC(git_path_opts_file, "sequencer/opts")
+ static GIT_PATH_FUNC(git_path_head_file, "sequencer/head")
+ 
++static const char *get_dir(const struct replay_opts *opts)
++{
++	return git_path_seq_dir();
++}
++
+ static int is_rfc2822_line(const char *buf, int len)
+ {
+ 	int i;
+@@ -109,13 +114,13 @@ static int has_conforming_footer(struct strbuf *sb, struct strbuf *sob,
+ 	return 1;
+ }
+ 
+-static void remove_sequencer_state(void)
++static void remove_sequencer_state(const struct replay_opts *opts)
+ {
+-	struct strbuf seq_dir = STRBUF_INIT;
++	struct strbuf dir = STRBUF_INIT;
+ 
+-	strbuf_addstr(&seq_dir, git_path_seq_dir());
+-	remove_dir_recursively(&seq_dir, 0);
+-	strbuf_release(&seq_dir);
++	strbuf_addf(&dir, "%s", get_dir(opts));
++	remove_dir_recursively(&dir, 0);
++	strbuf_release(&dir);
+ }
+ 
+ static const char *action_name(const struct replay_opts *opts)
+@@ -895,6 +900,9 @@ static int sequencer_rollback(struct replay_opts *opts)
+ 	unsigned char sha1[20];
+ 	struct strbuf buf = STRBUF_INIT;
+ 
++	if (read_and_refresh_cache(opts))
++		return -1;
++
+ 	f = fopen(git_path_head_file(), "r");
+ 	if (!f && errno == ENOENT) {
+ 		/*
+@@ -924,7 +932,7 @@ static int sequencer_rollback(struct replay_opts *opts)
+ 	}
+ 	if (reset_for_rollback(sha1))
+ 		goto fail;
+-	remove_sequencer_state();
++	remove_sequencer_state(opts);
+ 	strbuf_release(&buf);
+ 	return 0;
+ fail:
+@@ -1018,7 +1026,7 @@ static int pick_commits(struct commit_list *todo_list, struct replay_opts *opts)
+ 	 * Sequence of picks finished successfully; cleanup by
+ 	 * removing the .git/sequencer directory
+ 	 */
+-	remove_sequencer_state();
++	remove_sequencer_state(opts);
  	return 0;
  }
  
--static int read_populate_opts(struct replay_opts **opts)
-+static int read_populate_opts(struct replay_opts *opts)
- {
- 	if (!file_exists(git_path_opts_file()))
+@@ -1079,7 +1087,7 @@ int sequencer_pick_revisions(struct replay_opts *opts)
+ 	 * one that is being continued
+ 	 */
+ 	if (opts->subcommand == REPLAY_REMOVE_STATE) {
+-		remove_sequencer_state();
++		remove_sequencer_state(opts);
  		return 0;
--	if (git_config_from_file(populate_opts_cb, git_path_opts_file(), *opts) < 0)
-+	if (git_config_from_file(populate_opts_cb, git_path_opts_file(), opts) < 0)
- 		return error(_("Malformed options sheet: %s"),
- 			git_path_opts_file());
- 	return 0;
-@@ -1038,7 +1038,7 @@ static int sequencer_continue(struct replay_opts *opts)
- 
- 	if (!file_exists(git_path_todo_file()))
- 		return continue_single_pick();
--	if (read_populate_opts(&opts) ||
-+	if (read_populate_opts(opts) ||
- 			read_populate_todo(&todo_list, opts))
- 		return -1;
- 
+ 	}
+ 	if (opts->subcommand == REPLAY_ROLLBACK)
 -- 
 2.10.0.rc1.114.g2bd6b38
 
