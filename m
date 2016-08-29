@@ -2,100 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49DDB1FD99
-	for <e@80x24.org>; Mon, 29 Aug 2016 18:30:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFDEF1FD99
+	for <e@80x24.org>; Mon, 29 Aug 2016 19:03:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754719AbcH2SaV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 14:30:21 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34947 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1754207AbcH2SaU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2016 14:30:20 -0400
-Received: (qmail 3122 invoked by uid 109); 29 Aug 2016 18:30:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Aug 2016 18:30:19 +0000
-Received: (qmail 22255 invoked by uid 111); 29 Aug 2016 18:30:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 Aug 2016 14:30:25 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Aug 2016 14:30:15 -0400
-Date:   Mon, 29 Aug 2016 14:30:15 -0400
-From:   Jeff King <peff@peff.net>
+        id S1754805AbcH2TDP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 15:03:15 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34790 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751271AbcH2TDN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2016 15:03:13 -0400
+Received: by mail-wm0-f66.google.com with SMTP id q128so14689wma.1
+        for <git@vger.kernel.org>; Mon, 29 Aug 2016 12:03:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=/qpNw9RgKCmyln/fCW68NqHA2VeY5IWqVQOlIOrK+/c=;
+        b=YDUTYxzJHQsaWCSJPp+r+MGAURNhXhoytVSXVNXyu5yhEVyUK45I/FhCxCmivIwBxA
+         5dXcUOO7U8vSySNkiX1sQuCZcHRelcc0FXbuwMegh2/C4h++9Qn8DXtpBgx2Ex6wA35+
+         5ZUcpaHajA3ZPp+l72Pkh8MloDT1NHdeWr36rbXptVMJp71p6VyViQUwP8mA+lebcSR/
+         C8IKDTl8qRmCIteP4hB4OOKy7e+CIje/nActz4cWKTYTyj7wwRUyOG7a/0GDhBBgk6YO
+         GtCN8KhvIdzpCNFDpO4VnoJdYF3hhNIBheKPLLxUi7u+yUxSbKo9FYAudzmKWyt8p9u+
+         pc3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=/qpNw9RgKCmyln/fCW68NqHA2VeY5IWqVQOlIOrK+/c=;
+        b=hOO1ANNBdrOkRxiU42MDyT0iciXUWDYEYK/en0g4QaMGd+ArR3P1TKMGWEKvadJJdL
+         e3BNXUTN9fJjx23TohwYYnkuLC/alKfX4Ba6QwFNCO896vkvSgauleDdIZWWSr+ghaAh
+         a3bLnHlZyGx9b8tpPfC8rWko8EBs1O1SZCdBlvTWESCjGxKwVn/1PJRX3TwtkwyMazs+
+         YHUFAPAbXQd1oOGyPfyg3+m5W/9nkFmQeYDhowCziPPnQmgduZ4jUSFaIR7aILij5GoG
+         OYGtLAuo6NNMxSXEmnxuScdEd4Pd1GoBajSpJLXEgxSwGZ7pFy9WR/6Jmsu/OflXjITM
+         OiqA==
+X-Gm-Message-State: AE9vXwPem3rO2mZGhqgfi2Sxn5z4l+67gnx+yDE0Zznagl7CKHyzH7rUp/y0hhXieFXbTg==
+X-Received: by 10.194.41.194 with SMTP id h2mr16542271wjl.2.1472497392041;
+        Mon, 29 Aug 2016 12:03:12 -0700 (PDT)
+Received: from [10.32.248.244] (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id 4sm14858244wmu.2.2016.08.29.12.03.10
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 29 Aug 2016 12:03:11 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v6 13/13] read-cache: make sure file handles are not inherited by child processes
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqqy43fbgcj.fsf@gitster.mtv.corp.google.com>
+Date:   Mon, 29 Aug 2016 21:03:09 +0200
+Cc:     git@vger.kernel.org, peff@peff.net, sbeller@google.com,
+        Johannes.Schindelin@gmx.de, jnareb@gmail.com, mlbright@gmail.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <4D9E5AED-7003-4707-8791-1C25432DB558@gmail.com>
+References: <20160825110752.31581-1-larsxschneider@gmail.com> <20160825110752.31581-14-larsxschneider@gmail.com> <xmqqy43fbgcj.fsf@gitster.mtv.corp.google.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>, Beat Bolli <dev+git@drbeat.li>,
-        Heiko Voigt <hvoigt@hvoigt.net>,
-        Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-        Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH 1/2] gitk: align the commit summary format to the
- documentation
-Message-ID: <20160829183015.2uqnfezekjfa3ott@sigill.intra.peff.net>
-References: <1472230741-5161-1-git-send-email-dev+git@drbeat.li>
- <xmqqoa4fgzhv.fsf@gitster.mtv.corp.google.com>
- <a9731f60-5c30-0bc6-f73a-f7ffb7bd4231@kdbg.org>
- <xmqqpoorbftc.fsf@gitster.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqpoorbftc.fsf@gitster.mtv.corp.google.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 29, 2016 at 11:17:19AM -0700, Junio C Hamano wrote:
 
-> > While it may be easier to read due to the extra mark-up, the resulting
-> > text where such a quotation appears does not flow well, IMO. A commit
-> > message text that references another commit reads more fluently
-> > without the quotes around the summary line because the quoted text is
-> > not so much a quotation that must be marked, but a parenthetical
-> > statement.
-> >
-> > I absolutely welcome the proposed change to gitk, because I always
-> > edit out the double-quotes.
-> 
-> I think that is highly subjective, and as you very well may know,
-> I've been referring to commits without double-quote pair, and have
-> an obvious bias for something I am used to ;-)
-> 
-> I do not see the "" as introducing a quotation.  I just view it as
-> very similar to the "" in the following sentence:
-> 
->     The commit whose title is "foo bar" did not consider there is
->     also need to consider baz.
-> 
-> The whole thing is inside () pair, so I agree that with or without
-> "" pair, it is possible to see where the title ends.  So I do not
-> have a strong opinion either way.
+> On 29 Aug 2016, at 20:05, Junio C Hamano <gitster@pobox.com> wrote:
+>=20
+> larsxschneider@gmail.com writes:
+>=20
+>> From: Lars Schneider <larsxschneider@gmail.com>
+>>=20
+>> Consider the case of a file that requires filtering and is present in
+>> branch A but not in branch B. If A is the current HEAD and we =
+checkout B
+>> then the following happens:
+>>=20
+>> 1. ce_compare_data() opens the file
+>> 2.   index_fd() detects that the file requires to run a clean filter =
+and
+>>     calls index_stream_convert_blob()
+>> 4.     index_stream_convert_blob() calls convert_to_git_filter_fd()
+>> 5.       convert_to_git_filter_fd() calls apply_filter() which =
+creates a
+>>         new long running filter process (in case it is the first file
+>>         of this kind to be filtered)
+>> 6.       The new filter process inherits all file handles. This is =
+the
+>>         default on Linux/OSX and is explicitly defined in the
+>>         `CreateProcessW` call in `mingw.c` on Windows.
+>> 7. ce_compare_data() closes the file
+>> 8. Git unlinks the file as it is not present in B
+>>=20
+>> The unlink operation does not work on Windows because the filter =
+process
+>> has still an open handle to the file. Apparently that is no problem =
+on
+>> Linux/OSX. Probably because "[...] the two file descriptors share =
+open
+>> file status flags" (see fork(2)).
+>=20
+> Wait, a, minute.  "that is no problem" may be true as long as "that"
+> is "unlinking the now-gone file in the filesystem", but the reason
+> does not have anything to do with the "open-file status flags";
+> unlike Windows, you _can_ unlink file that has an open file
+> descriptor on it.
 
-I have an alias which produces similar output, without the double-quotes
-(probably because I stole it from you originally).
+I see. Thanks for the explanation.
 
-I have noticed over the years that the output is occasionally ugly when
-the commit names have parentheses themselves. E.g.:
+>=20
+> And even on POSIX systems, if you are doing a long-running helper
+> any open file descriptor in the parent process when the long-running
+> helper is spawned will become leaked fd.  CLOEXEC is a possible
+> solution (but not necessarily the only or the best one) to the fd
+> leak in this case.
+>=20
+> How much does the code that spawns these long-running helpers know
+> about the file descriptors that happen to be open?
 
-  $ git config alias.ll
-  !git --no-pager log -1 --pretty='tformat:%h (%s, %ad)' --date=short
+Nothing really.
 
-  $ git ll 7e97e10
-  7e97e10 (die(_("BUG")): avoid translating bug messages, 2016-07-26)
+>  The parent is
+> very likely to have pack windows open into .pack files and they need
+> to be closed on the child side after fork(2) starts the child
+> process but before execve(2) runs the helper, if we want to avoid
+> file descriptor leaks.
 
-  $ git ll fa90ab4
-  fa90ab4 (t3404: fix a grammo (commands are ran -> commands are run), 2016-06-29)
+I think I understand what you are saying. However, during my tests
+.pack file fd's were never a problem. I use start_command() [1]
+which wraps the fork() and exec calls [2].
 
-Adding quotes can help with that. OTOH, I think it just introduces the
-same problem with a different character. E.g.:
+How would I find the open .pack file fd's? Should I go through=20
+/proc/PID/fd? Why is this no problem for other longer running=20
+commands such as the git-credential-cache--daemon or git-daemon?
 
-  $ git ll be00b57
-  be00b57 (provide an initializer for "struct object_info", 2016-08-11)
+Thanks,
+Lars
 
-  $ git llq be00b57
-  be00b57 ("provide an initializer for "struct object_info"", 2016-08-11)
 
-Perhaps one could write a script to find a custom pretty non-conflicting
-delimiter for each case, but I don't know if it's worth the effort. :)
+[1] =
+https://github.com/larsxschneider/git/blob/protocol-filter/v6/convert.c#L5=
+66
+[2] =
+https://github.com/larsxschneider/git/blob/protocol-filter/v6/run-command.=
+c#L345-L412
 
--Peff
+
