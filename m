@@ -2,167 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B9CB1F6C1
-	for <e@80x24.org>; Tue, 30 Aug 2016 22:01:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FD751F6C1
+	for <e@80x24.org>; Tue, 30 Aug 2016 22:07:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751981AbcH3WBo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Aug 2016 18:01:44 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35445 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752116AbcH3WAH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Aug 2016 18:00:07 -0400
-Received: by mail-wm0-f68.google.com with SMTP id i5so4939300wmg.2
-        for <git@vger.kernel.org>; Tue, 30 Aug 2016 15:00:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=iKNLU8eI9M1aFwczyz8Ml+exesYO2SKCk0QcvBxGDQs=;
-        b=0Prue+2XoXDiiVZt+ZXMSLigl5dJBbJPUKfhiWdlYo1QxjnQmelL4P3CCOeKFWXLfv
-         TZ2LgnYPZJyXl6XoLFkxurxTkK282c716xS+zf1KsgRySA33RygVKtKW5oyKpsTlTyKy
-         eFclCEat6ZY5ccIMpxbFqey2PFjSE9K0cATguB41/ckHjDNAotJmwHE+L5bQj+Foixa+
-         qPkYV2XcQ82caKfUn4uLelbIjm/UlAvnqcsBg1UEk4bPpssf6Yvdvyrf3l8BwM/KqNf4
-         naDUqVIW461hiBFfSK/pOypNlgAn9TdO0D9EvGQ1AMPOdrQ0+mb6bS/iBoyXIWjaYH+T
-         4MVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=iKNLU8eI9M1aFwczyz8Ml+exesYO2SKCk0QcvBxGDQs=;
-        b=Lqhx+/Vumoi2aRUTbIIsB5rTcktk3Ckq5wiRABwK6wX4EybQjBVqQnIqhKys446hoW
-         9lRk3UFTUraC9o6w8znkZAvaAwB4egToDz/fsUJikG6o/sCDWt4MKAvn3hdsRF+sBvI5
-         9ZS+ynPN75boyhl/YF/L4A1g6iPAVa/oGjY/6jY2t3vSsVBstyBGGo1heqsVNgNzBoFc
-         VA5+hbGnuokeE8Rw8uIYiObXwituzVXOu1xsTcdxP+CtFmd6P920JOano4XDLpeU9G4Q
-         1s/HoW76sxWJGJI5Cy4jdvY/jeJ6pi0NWNSIu5p9TjQ7vkQOl1kG2excpA0njCb7EoaH
-         dmdQ==
-X-Gm-Message-State: AE9vXwNnEEA7Yfjvn92zVkMTnNlsil3n0ekrQcSmTCNoePN0WbWBmWoy++Qpkl1QQYigwA==
-X-Received: by 10.28.154.21 with SMTP id c21mr6114662wme.63.1472594405828;
-        Tue, 30 Aug 2016 15:00:05 -0700 (PDT)
-Received: from [192.168.1.26] (dam9.neoplus.adsl.tpnet.pl. [83.23.12.9])
-        by smtp.googlemail.com with ESMTPSA id vv2sm41369043wjc.29.2016.08.30.15.00.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 30 Aug 2016 15:00:05 -0700 (PDT)
-Subject: Re: [PATCH 06/22] sequencer: release memory that was allocated when
- reading options
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        id S1751025AbcH3WHK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Aug 2016 18:07:10 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57594 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750800AbcH3WHJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2016 18:07:09 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A2F573AA63;
+        Tue, 30 Aug 2016 18:07:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jOeKOzCvwu/uz2H2RY+iU5FEd2A=; b=M6X5WW
+        +RbZMs2pmEu86YFaWUMeUpG5uI2MPg6jG+m9mBOP+hSZUWrnE19G9hnrPYBQMI4e
+        xszO7pvEfKqZhClciVGAPIch0KZ/YBaoLLSy5tLqFNko0Ff3LIPWUZVWvsxzLx/Z
+        5F40Q1m+3X+3PeAyDuh9ugOCzdB93wotW1JUU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ESYZeEjSbDRnB33QIjIGnaGf/yx8GCuG
+        GhDeiA65fL6dueod15Pxe3zK0sPx1t5J8oW72Q3mBjjhVEXhR28wnvHB/k/8raSY
+        IZmQ1WT5Gl7FGyiVOqKRr1zhfEfbIaFaVUAAdYDv7/MXRH3T5p80+Use2Nzl0G6J
+        M6uIpmKymkE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9B0E43AA62;
+        Tue, 30 Aug 2016 18:07:07 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 26A953AA60;
+        Tue, 30 Aug 2016 18:07:07 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jakub =?utf-8?Q?Nar?= =?utf-8?Q?=C4=99bski?= <jnareb@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 06/22] sequencer: release memory that was allocated when reading options
 References: <cover.1472457609.git.johannes.schindelin@gmx.de>
- <e4b48a9a73ff33179556c0137caae85bfb4a48d9.1472457609.git.johannes.schindelin@gmx.de>
- <9797cb9e-115c-bbea-51d2-a5d686aca514@gmail.com>
- <alpine.DEB.2.20.1608301948310.129229@virtualbox>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <20bf659c-c081-a05f-f18a-bf0b43e0dbf3@gmail.com>
-Date:   Wed, 31 Aug 2016 00:00:02 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        <e4b48a9a73ff33179556c0137caae85bfb4a48d9.1472457609.git.johannes.schindelin@gmx.de>
+        <9797cb9e-115c-bbea-51d2-a5d686aca514@gmail.com>
+        <alpine.DEB.2.20.1608301948310.129229@virtualbox>
+        <e07303b5-028a-6804-7471-356e0b7293d0@kdbg.org>
+Date:   Tue, 30 Aug 2016 15:07:05 -0700
+In-Reply-To: <e07303b5-028a-6804-7471-356e0b7293d0@kdbg.org> (Johannes Sixt's
+        message of "Tue, 30 Aug 2016 22:46:58 +0200")
+Message-ID: <xmqqr3953o8m.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1608301948310.129229@virtualbox>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1738EFD4-6EFE-11E6-BC0E-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 30.08.2016 o 19:52, Johannes Schindelin pisze:
-> Hi Kuba,
-> 
-> On Tue, 30 Aug 2016, Jakub Narębski wrote:
-> 
->> W dniu 29.08.2016 o 10:04, Johannes Schindelin pisze:
->>
->>> The sequencer reads options from disk and stores them in its struct
->>> for use during sequencer's operations.
->>>
->>> With this patch, the memory is released afterwards, plugging a
->>> memory leak.
->>>
->>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->>> ---
->>>  sequencer.c | 13 ++++++++++---
->>>  1 file changed, 10 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/sequencer.c b/sequencer.c
->>> index b5be0f9..8d79091 100644
->>> --- a/sequencer.c
->>> +++ b/sequencer.c
->>> @@ -131,6 +131,8 @@ static void remove_sequencer_state(const struct replay_opts *opts)
->>>  		free(opts->owned[i]);
->>>  	free(opts->owned);
->>>  
->>> +	free(opts->xopts);
->>> +
->>
->> This looks like independent change, not related to using the
->> sequencer_entrust() to store options read from disk in replay_opts
->> struct to be able to free memory afterwards.
->>
->> I guess you wanted to avoid one line changes...
-> 
-> Actually, it is not an independent change, but it free()s memory that has
-> been allocated while reading the options, as the commit message says ;-)
-> 
->>> @@ -811,13 +813,18 @@ static int populate_opts_cb(const char *key, const char *value, void *data)
->>
->> Sidenote: this patch would be easier to read if lines were reordered
->> as below, but I don't think any slider heuristics could help achieve
->> that automatically.  Also, the patch might be invalid...
->>
->>>  		opts->allow_ff = git_config_bool_or_int(key, value, &error_flag);
->>>  	else if (!strcmp(key, "options.mainline"))
->>>  		opts->mainline = git_config_int(key, value);
->>> -	else if (!strcmp(key, "options.strategy"))
->>> +	else if (!strcmp(key, "options.strategy")) {
->>>  		git_config_string(&opts->strategy, key, value);
->>> +		sequencer_entrust(opts, (char *) opts->strategy);
->>
->> I wonder if the ability to free strings dup-ed by git_config_string()
->> be something that is part of replay_opts, or rather remove_sequencer_state(),
->> that is a list of
->>
->> 	free(opts->strategy);
->> 	free(opts->gpg_sign);
-> 
-> That is not necessarily possible because the way sequencer works, the
-> options may have not actually be read from the file, but may be populated
-> by the caller (in which case we do not necessarily want to require
-> strdup()ing the strings just so that the sequencer can clean stuff up
-> afterwards).
+Johannes Sixt <j6t@kdbg.org> writes:
 
-I guess from cursory browsing through the Git code that _currently_
-they are only read from the config file, where git_config_string()
-strdup's them, isn't it?  And we want to prepare for the future, where
-the caller would prepare replay_opts, and the caller would be responsible
-for freeing data if necessary?
+> Am 30.08.2016 um 19:52 schrieb Johannes Schindelin:
+>> Right, but that is exactly what I wanted to avoid, because it is rather
+>> inelegant to strdup() strings just so that we do not have to record what
+>> to free() and what not to free().
+>
+> Please, excuse, but when I have to choose what is more "elegant":
+>
+>  1. strdup() sometimes so that I can later free() always
+>  2. use sequencer_entrust()
+>
+> I would choose 1. at all times.
 
-Would there be any sane situation where some of data should be owned
-by caller (and freed by caller), and some of data should be owned by
-sequencer library API (and freed in remove_sequencer_state())?  If
-not, perhaps *_entrust() mechanism is overthinking it, and we simply
-need 'is_strdup' boolean flag or something like that...
+Let's not bring elegance or aesthetics in.  It is like asking if
+garbage collected systems are elegant.  I do not think it is a valid
+question.  GC is a good pragmatic compromise after (1) declaring
+that keeping track of allocation is too cumbersome and programmers'
+time is better spent elsewhere, and (2) making sure hiccups caused
+by GC can be minimized to keep the latency down to acceptable
+levels.  There are good compromises and bad ones.
 
->> The *_entrust() mechanism is more generic, but do we use this general-ness?
->> Well, it could be xstrdup or git_config_string doing entrust'ing...
-> 
-> Right, but that is exactly what I wanted to avoid, because it is rather
-> inelegant to strdup() strings just so that we do not have to record what
-> to free() and what not to free().
+Does the proposed entrust() thing qualify as a good pragmatic
+compromise like GC does?
 
-Maybe inelegant, but it might be easier than inventing and implementing
-*_entrust() mechanism, like Hannes wrote.
+> Particularly in this case: parsing options does not sound like a
+> major drain of resources, neither CPU- nor memory-wise.
 
-> 
-> BTW I have no objection at all to generalize this sequencer_entrust()
-> mechanism further (read: to other, similar use cases), should it withstand
-> the test of time.
+If entrust() does not have any CPU- or memory-cost, then comparing
+it with having to strdup() sometimes might be a useful comparison.
 
-Yeah, that's my take on it too.
+But the entrust() thing has the allocation cost in order to track of
+what needs to be done at runtime, and just like strdup() needs to be
+done on things that are being borrowed, entrust() needs to be
+avoided on things that are being borrowed (and the caller needs to
+be sure not to entrust() the same piece of memory twice), so it does
+not reduce the cost on programmers' and readers' mental burden--the
+programmer always has to know which piece of memory is borrowed and
+which are owned by the subsystem.
 
--- 
-Jakub Narębski
-
+So...
