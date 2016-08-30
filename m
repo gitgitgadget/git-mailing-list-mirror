@@ -2,149 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ECB9C1F6C1
-	for <e@80x24.org>; Tue, 30 Aug 2016 17:53:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C8F31F6C1
+	for <e@80x24.org>; Tue, 30 Aug 2016 17:53:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758286AbcH3RxK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Aug 2016 13:53:10 -0400
-Received: from mout.gmx.net ([212.227.15.18]:53674 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1757222AbcH3RxJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Aug 2016 13:53:09 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MF4eJ-1buWWN3gqJ-00GLtI; Tue, 30 Aug 2016 19:53:00
- +0200
-Date:   Tue, 30 Aug 2016 19:52:59 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 06/22] sequencer: release memory that was allocated when
- reading options
-In-Reply-To: <9797cb9e-115c-bbea-51d2-a5d686aca514@gmail.com>
-Message-ID: <alpine.DEB.2.20.1608301948310.129229@virtualbox>
-References: <cover.1472457609.git.johannes.schindelin@gmx.de> <e4b48a9a73ff33179556c0137caae85bfb4a48d9.1472457609.git.johannes.schindelin@gmx.de> <9797cb9e-115c-bbea-51d2-a5d686aca514@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S932441AbcH3Rxs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Aug 2016 13:53:48 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60402 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1758444AbcH3Rxr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2016 13:53:47 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E291A3A980;
+        Tue, 30 Aug 2016 13:53:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=nmvVLqrFsEbX1oYbZUI+KjLuAiI=; b=DWFqOT
+        /M1Hbt2Ws8e/0nOdnDTLMSeUsVcfDKWs9Pr39rSYxVWch0li9aASfIK/LTUIC6BG
+        I0ao5pWAZeMqPVdQ28wgI2D6ozwb1qaYrV5EUNYXJdWgoESm9WL1LLb8kGukJgFY
+        Ra8kzFNMB36H7yCu4bN0NmTTnWuFxjLhoDTkA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xp/6joo8XcrM9L4GLdneH2BCTLQ+EsT+
+        BrvQYyhfZN7bTU1HAnyIs42s5I1NblVZxI+U53UzIe896RSjJ+CgwEaR7P0T3eDs
+        dOECnUbaFEJGTElX5NByiUOkCT7K0HOheDA56HPS5L4ZRfbRdShqUBAemyvqUGgC
+        9lRJC63IL1Y=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DA6013A97F;
+        Tue, 30 Aug 2016 13:53:45 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5FDFA3A97E;
+        Tue, 30 Aug 2016 13:53:45 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Uma Srinivasan <usrinivasan@twitter.com>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jens Lehmann <Jens.Lehmann@web.de>,
+        Heiko Voigt <hvoigt@hvoigt.net>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: git submodules implementation question
+References: <CAN5XQftQH8B+hWVh4JQgZwAp+rkbz51P5NZDc_+Tfm0EB1zkew@mail.gmail.com>
+        <xmqqlgzf9wch.fsf@gitster.mtv.corp.google.com>
+        <CAN5XQft6S+LG0mBgRFPrMZiOxHSfRhjLmQdeMdBeHKoWQSRUEA@mail.gmail.com>
+        <CAPc5daVhY6WdHkXGLYea48uOw0-rTzLLZ=7mNo=VPebZ9AG4jQ@mail.gmail.com>
+        <CAN5XQfty6Fshzf6kN7eXhFekU9+=VPwbzEPN1a92yVB=9nm0Vg@mail.gmail.com>
+        <CAN5XQfsg_sJbyjfdc=-e85jiCQNUqagwgh6TVOXN+NskZ7KkVw@mail.gmail.com>
+        <xmqqbn0b6ua8.fsf@gitster.mtv.corp.google.com>
+        <CA+P7+xosGg955msq-gyKz_HyCZf7fPFQJdKZ3P8U3+poBBfuWA@mail.gmail.com>
+        <CAN5XQfsv+BEYDWR6Xjs4mCtYDVR12a2UzB1-_H4A_xfjUUOe2g@mail.gmail.com>
+        <CA+P7+xohfRsoV9VXgUrRaXPb9HvCc5gs4-KSWp38X_d_6EfkTA@mail.gmail.com>
+        <CA+P7+xpGnsKzBPLVgPNSmZ7K00vY7-eJp7kSHWMRHM+cOsL_XQ@mail.gmail.com>
+        <CAN5XQftCC+TUm2Jx4q3V9oFbXndtFx3H+daoB3TD3eWUs6s54A@mail.gmail.com>
+Date:   Tue, 30 Aug 2016 10:53:43 -0700
+In-Reply-To: <CAN5XQftCC+TUm2Jx4q3V9oFbXndtFx3H+daoB3TD3eWUs6s54A@mail.gmail.com>
+        (Uma Srinivasan's message of "Tue, 30 Aug 2016 10:40:36 -0700")
+Message-ID: <xmqqzinu3zyw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-842957034-1472579580=:129229"
-X-Provags-ID: V03:K0:Z/SJjRLmGaRkhYNuJaY4mkpit9XF4OOyZnJmwnJUqF3JpBTe3VE
- XDZpA8LbAQDujzA7GBlrYvxWhsUbQLFE5O4LAyYboM9PXTfMQ++xx0n6RhlmQTgc2e7MPzc
- 41dvpMuGDhsFWprsBJAMMWU6lfYcNIEht4EpVr6JbefWosmosPTqvVTRMt3Ndoz0qXCjnX/
- 1tSGiupdlCXJQgXCjFuMg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:4TDPnIWoiSQ=:DjZUJKaJ4mR27W06zky03N
- BVbljnGKgEo7/eRwquJyXTyX1jxI4dmDVNevB0usYiJt1RW9KzZANGqHhKfJTklZOjTxoWGn/
- Zfbz4w+kwGf7KzLwKP3swkwTNDB0Y4d/zlVhtHVWZKqOmB7W82dcsGx+s6AWzwApWk7Sze/fG
- cQsqwzpK+0lROCHOLcO3xAV7CYaqMboBiVyxr55tDwUC6tYNK7sq49Gu1sUTmlqcIGPfwobCz
- qI0bTvbUMBxvcqL/1yGyZRL7W/nI2mOrxyy/tEx4dPxOFB4QGPzo10/0JmoK5zkV284Z94wYB
- zA2v/zVMfQewR5WsNll5KIKpDQsWo3xxl8RkVwYIewYhQ0B1AH77Y5q4hkvp/rd7Qh3gVhUR+
- rys9LWxmMNhiKnTJsSVFPnhvvmoHBCkySmf/EjsNy2FKxLqpQQcPBCEkNBhfu+hUs4LzzwmTT
- 0HbPLuVTQ9R8TC0UsK3jGMWHERtgPRwB3VKVacudPvANfbfrYN5t9KWchJ4/7UsccBuWFq5p4
- kjzaSc7+mCuCcYTmXtMK90NGljsOnToBxdE20lD7ja75Nj2lu3UAJya1dG/A7PlF9wn7hh5+j
- 0ZJhEBtaLpRbZAvEYRTfNbiLWG+pQiJiRvxsNb1mDXQnaaQXE2lvuwEs/sVU45r5XewPyWlq8
- /t1QCvx64Aw2dS/bOTFWlTW+jTR5F2YvKlMv3w7mfiBB9ezUNtXZvegszeVN6Z09AE47J8aBk
- gOiRYsC5G1vWo5H5LcU/2EvcIJ/5vF9tYu10Rv9/bnTjEsfEKK6xPjR7PtPDxA+ON67BbhLyJ
- 84hALC6
+Content-Type: text/plain
+X-Pobox-Relay-ID: B24CD41E-6EDA-11E6-A7B5-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Uma Srinivasan <usrinivasan@twitter.com> writes:
 
---8323329-842957034-1472579580=:129229
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+> I think the following fix is still needed to is_submodule_modified():
+>
+>         strbuf_addf(&buf, "%s/.git", path);
+>         git_dir = read_gitfile(buf.buf);
+>         if (!git_dir) {
+>                 git_dir = buf.buf;
+>  ==>               if (!is_git_directory(git_dir)) {
+>  ==>                     die("Corrupted .git dir in submodule %s", path);
+>  ==>               }
+>         }
 
-Hi Kuba,
+If it is so important that git_dir is a valid Git
+repository after
 
-On Tue, 30 Aug 2016, Jakub Nar=C4=99bski wrote:
+	git_dir = read_gitfile(buf.buf);
+        if (!git_dir)
+        	git_dir = buf.buf;
 
-> W dniu 29.08.2016 o 10:04, Johannes Schindelin pisze:
->=20
-> > The sequencer reads options from disk and stores them in its struct
-> > for use during sequencer's operations.
-> >=20
-> > With this patch, the memory is released afterwards, plugging a
-> > memory leak.
-> >=20
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  sequencer.c | 13 ++++++++++---
-> >  1 file changed, 10 insertions(+), 3 deletions(-)
-> >=20
-> > diff --git a/sequencer.c b/sequencer.c
-> > index b5be0f9..8d79091 100644
-> > --- a/sequencer.c
-> > +++ b/sequencer.c
-> > @@ -131,6 +131,8 @@ static void remove_sequencer_state(const struct rep=
-lay_opts *opts)
-> >  =09=09free(opts->owned[i]);
-> >  =09free(opts->owned);
-> > =20
-> > +=09free(opts->xopts);
-> > +
->=20
-> This looks like independent change, not related to using the
-> sequencer_entrust() to store options read from disk in replay_opts
-> struct to be able to free memory afterwards.
->=20
-> I guess you wanted to avoid one line changes...
+is done to determine what "git_dir" to use, it seems to me that it
+does not make much sense to check ONLY dir/.git that is a directory
+and leave .git/modules/$name that dir/.git file points at unchecked.
 
-Actually, it is not an independent change, but it free()s memory that has
-been allocated while reading the options, as the commit message says ;-)
+But there is much bigger problem with the above addition, I think.
+There also can be a case where dir/ does not even have ".git" in it.
+A submodule the user is not interested in will just have an empty
+directory there, and immediately after the above three lines I
+reproduced above, we have this
 
-> > @@ -811,13 +813,18 @@ static int populate_opts_cb(const char *key, cons=
-t char *value, void *data)
->=20
-> Sidenote: this patch would be easier to read if lines were reordered
-> as below, but I don't think any slider heuristics could help achieve
-> that automatically.  Also, the patch might be invalid...
->=20
-> >  =09=09opts->allow_ff =3D git_config_bool_or_int(key, value, &error_fla=
-g);
-> >  =09else if (!strcmp(key, "options.mainline"))
-> >  =09=09opts->mainline =3D git_config_int(key, value);
-> > -=09else if (!strcmp(key, "options.strategy"))
-> > +=09else if (!strcmp(key, "options.strategy")) {
-> >  =09=09git_config_string(&opts->strategy, key, value);
-> > +=09=09sequencer_entrust(opts, (char *) opts->strategy);
->=20
-> I wonder if the ability to free strings dup-ed by git_config_string()
-> be something that is part of replay_opts, or rather remove_sequencer_stat=
-e(),
-> that is a list of
->=20
-> =09free(opts->strategy);
-> =09free(opts->gpg_sign);
+	if (!is_directory(git_dir)) {
+        	strbuf_release(&buf);
+                return 0;
+	}
 
-That is not necessarily possible because the way sequencer works, the
-options may have not actually be read from the file, but may be populated
-by the caller (in which case we do not necessarily want to require
-strdup()ing the strings just so that the sequencer can clean stuff up
-afterwards).
+The added check will break the use case.  If anything, that check,
+if this code needs to verify that "git_dir" points at a valid Git
+repository, should come _after_ that.
 
-> Though... free(NULL) is nop as per standard, but can we rely on it?
+Shouldn't "git-status --porcelain" run in the submodule notice that
+it is not a valid repository and quickly die anyway?  Why should we
+even check before spawning that process in the first place?
 
-We can, and we do.
+I might suggest to update prepare_submodule_repo_env() so that the
+spawned process will *NOT* have to guess where the working tree and
+repository by exporting GIT_DIR (set to "git_dir" we discover above)
+and GIT_WORK_TREE (set to "." as cp.dir is set to the path to the
+working tree of the submodule).  That would stop the "git status" to
+guess (and fooled by a corrupted dir/.git that is not a git
+repository).
 
-> The *_entrust() mechanism is more generic, but do we use this general-nes=
-s?
-> Well, it could be xstrdup or git_config_string doing entrust'ing...
-
-Right, but that is exactly what I wanted to avoid, because it is rather
-inelegant to strdup() strings just so that we do not have to record what
-to free() and what not to free().
-
-BTW I have no objection at all to generalize this sequencer_entrust()
-mechanism further (read: to other, similar use cases), should it withstand
-the test of time.
-
-Ciao,
-Johannes
---8323329-842957034-1472579580=:129229--
