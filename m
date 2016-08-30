@@ -7,48 +7,49 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C93071F859
-	for <e@80x24.org>; Tue, 30 Aug 2016 07:29:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4886D1F859
+	for <e@80x24.org>; Tue, 30 Aug 2016 07:31:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752187AbcH3H3p (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Aug 2016 03:29:45 -0400
-Received: from mout.gmx.net ([212.227.15.15]:51604 "EHLO mout.gmx.net"
+        id S1752803AbcH3HbH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Aug 2016 03:31:07 -0400
+Received: from mout.gmx.net ([212.227.17.22]:62579 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751501AbcH3H3o (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Aug 2016 03:29:44 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0Ltr89-1avQgO3O6f-011Eal; Tue, 30 Aug 2016 09:29:37
+        id S1751598AbcH3HbF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2016 03:31:05 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0M4B71-1aoJvr0yeZ-00rqnD; Tue, 30 Aug 2016 09:30:36
  +0200
-Date:   Tue, 30 Aug 2016 09:29:36 +0200 (CEST)
+Date:   Tue, 30 Aug 2016 09:30:21 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 05/22] sequencer: allow the sequencer to take custody of
  malloc()ed data
-In-Reply-To: <733a899a-470b-79b3-b059-b38313a7057d@gmail.com>
-Message-ID: <alpine.DEB.2.20.1608300915470.129229@virtualbox>
-References: <cover.1472457609.git.johannes.schindelin@gmx.de> <e4e7eab3d0610faa9d3173a585902e50128d8e15.1472457609.git.johannes.schindelin@gmx.de> <733a899a-470b-79b3-b059-b38313a7057d@gmail.com>
+In-Reply-To: <e0a00df7-d4e7-3809-ae93-b29b1f1c7ea4@kdbg.org>
+Message-ID: <alpine.DEB.2.20.1608300929420.129229@virtualbox>
+References: <cover.1472457609.git.johannes.schindelin@gmx.de> <e4e7eab3d0610faa9d3173a585902e50128d8e15.1472457609.git.johannes.schindelin@gmx.de> <733a899a-470b-79b3-b059-b38313a7057d@gmail.com> <e0a00df7-d4e7-3809-ae93-b29b1f1c7ea4@kdbg.org>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1654037498-1472542177=:129229"
-X-Provags-ID: V03:K0:JAAzx8F0V2jfo/ZyeQa7OLrQozgCuA/lnIN9byKqZOSrSc56+xL
- h3FsKB+hhee7F5is6V0kklcg8qUdo5AZ4CZITRQkotnE5xxd045iuNFCHdOagfRuOEMqeuv
- lSVmYYE4iozEm7w1IQJRr8ptryMs+Xwa7DrZSasqfAdQxyHmq0FJqpWIOGl1nDNMY+M9qqH
- ROnnuYcqWa51F6LnvI7iw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:NuvcbwQ+Y5A=:x/cQoofGF6uhZ9h+5tq2r0
- 3WrGq97PHbPXXf1LdMfmdmAeIzZCSI5tnvIrHfxL8Fgr/0B8iETMR/TeguRDs4K1WmC2T+4oY
- hk4kynxqWlS8ZjYRzkss4nmp7OhiFp53zO5NahD83aHDdbl+N6FTDg3kWJo2lSxtr91K0KE8E
- +a8kDTSEjrFo4JUrj7Bexu1Dw97AR+NWMnt0KaW9V9QIaRfBXPBrbxenFfUDuKLihviV+mxkG
- 1494bGLT8rFS7STz0AdFKmyJU3tPGMrCt1/HBmiHuXTyPfHpXEdnu089N1bZg9I1dnYtsu8T9
- rGoNb4PYFnaGNFRhEq9x9mkbwuwN8L8DgKtsc7sVMtBp+ZmpKvIw45gGtgDg+6F6IwhI5gvXc
- nr0YrKp+6HFk8hvI7U3Gh+smPw5X6lWKHH0TNdMC8bedmSaOJxZcdiXq+EqcMzAWIq8SCXAtF
- 891Sfo97WsbOzJk4u3RezIJsptJ71BrC7obFI7kv/HwpPS5q5Px+a9cdwu6OzRxbwClbsEeYf
- IIACVSRm+dHFolXiQ3AEFVAtLN2heJlW5fvYpRbqAlV2chlYo+A9Gh2/nBAvbGgjnN5CLrDte
- FhXeBbp5rWgPBAymXbkUJLL5d9vRjwaE1r0MpfV5YMaP2PoSgoI68KVZHC69NpM/CAT5zgksQ
- wKAmAMF0i9XJjlImBVc1wvWn/cmCxBmk0VpmEZYZk2Jh5bx2gOHoJ1Zhrc5E/Nf2GOuQJccm8
- RPLlyLK7UfZwxKccv3BGZTDKJgeN4ns865w7nK6vewBao06CTVpI1DTNqipeMb4ddNtKUMzrM
- mq3HfBQ
+Content-Type: multipart/mixed; BOUNDARY="8323329-317533294-1472542236=:129229"
+X-Provags-ID: V03:K0:fXs24sgYb22CSZic0gNfGp2bZ9ZBJUD+zw80f8MKUMn9mu1VTks
+ OO561eiDEQeYS8anH3Ebu4lRC/6rN5VQUvaMGTiEKBkHufBNgXwU1UwsL335zQV7y9E/Bkc
+ I8jhfRoG+LO8PX/UySK5vKrUynnPX4bX0I7c6V/WWMh9xNJLLx6KT7yAhsaviWyc/96D1/V
+ rxBCtDCO4mUM/eZWYtIFg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:odseY+TcO1E=:yTircc45/v+x1R0nZrFL4M
+ Flb3n6pP65DeXPplnqMK6QXMJKwGLKW6Z3hLQ3A3kj3Es8tq7D7kg/EAZgnnvrB+zZLTXNc+v
+ 1H3jyo6sbvjs8g7onXv4WBBtspLai9lhiL3F73JA47f2uu8jRKxFI5U47FYdR2OR6FKT24juv
+ vW/qkaqD0BeYNEItpmGZh8Y96ukyUmZjtAb1WS2sKk5bLoo9RipLVWPFhWYSSkrjJns2Oynd9
+ 4nFoVqrBx1qv7mnw8H/cBhQwtiR1ezU4VyzZT/cZyANkIWUFcNjAM6YSOWMze8sipbF+FZRyB
+ YnY00sEOxuSFDQSgF3sjUeSjGxsJhWQEag5AdBDR/1F6Elkt94682eKstCDNG1XYCHOvdY/0f
+ 6m+GA1qej2paQHqAKze/0j/RF6cgUvJlu7mjjWq1Ofd2VyLhXdLRuAPRpTDguCKQI7vqwARp1
+ oGGjF+mCa6IODuj4PetR75adJI8HgVoT3A78xKBPT6IzVw7rgajNdAghMfOGWtU09wz74KS7l
+ 1JNOUAcCx7uTaSR6M9skoc8/i+u2WP3yUyI0Z8C1y/JXT3PEkoHfQRZurxdhnSTGzaP4pZkI5
+ r1sHabP+ee4QqNXN24ibfLqmOidHyj20BtSZXE+WoU87Oc9jJrbLroiGpMy/fdGnh1GwRh0B/
+ dt33S90B78JFlvUb2PqXUCoD7tlUTbhEwenHpuPjk2A50jKx/4zJwOq87mV30mMY8mosqpA8m
+ CC6WStLdGuUZS+9LAn9UWLY32ZY0G0BF0K8pvYNJykimvSrUVVp1Pk2fWTAdLdVXAymICVaGz
+ vQPiC6J
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -57,97 +58,36 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323329-1654037498-1472542177=:129229
+--8323329-317533294-1472542236=:129229
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Hi Kuba,
+Hi Hannes,
 
-On Mon, 29 Aug 2016, Jakub Nar=C4=99bski wrote:
+On Tue, 30 Aug 2016, Johannes Sixt wrote:
 
-> W dniu 29.08.2016 o 10:04, Johannes Schindelin pisze:
+> Am 29.08.2016 um 23:59 schrieb Jakub Nar=C4=99bski:
+> > W dniu 29.08.2016 o 10:04, Johannes Schindelin pisze:
+> > > -#define REPLAY_OPTS_INIT { -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NUL=
+L,
+> > > NULL, NULL, 0, 0, NULL }
+> > > +#define REPLAY_OPTS_INIT { -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NUL=
+L,
+> > > NULL, NULL, 0, 0, NULL, NULL, 0, 0 }
+> >
+> > Nb. it is a pity that we cannot use named initializers for structs,
+> > so called designated inits.  It would make this macro more readable.
 >=20
-> > The sequencer is our attempt to lib-ify cherry-pick. Yet it behaves
-> > like a one-shot command when it reads its configuration: memory is
-> > allocated and released only when the command exits.
-> >=20
-> > This is kind of okay for git-cherry-pick, which *is* a one-shot
-> > command. All the work to make the sequencer its work horse was done to
-> > allow using the functionality as a library function, though, including
-> > proper clean-up after use.
-> >=20
-> > This patch introduces an API to pass the responsibility of releasing
-> > certain memory to the sequencer.
+> It is actually pointless to add the 0's and NULL's here. This should  be
+> sufficient:
 >=20
-> So how this API would be / is meant to be used?
-
-I added an example to the commit message.
-
-> Would sequencer as a library function be called multiple times,
-> or only once?
-
-The point of a library function is that it should not care.
-
-> I'm trying to find out how this is solved in other places of Git
-> code, and I have stumbled upon free_util in string_list...
-
-I wanted this to be flexible enough to take care of any type of data, not
-just strings.
-
-And while the string_list has a void *util field, it would be rather silly
-to add strings to a string list for the sole purpose of free()ing their
-util fields in the end.
-
-(That was the conclusion I came to after a search of my own.)
-
-> > +void *sequencer_entrust(struct replay_opts *opts, void *set_me_free_af=
-ter_use)
-> > +{
-> > +=09ALLOC_GROW(opts->owned, opts->owned_nr + 1, opts->owned_alloc);
-> > +=09opts->owned[opts->owned_nr++] =3D set_me_free_after_use;
-> > +
-> > +=09return set_me_free_after_use;
+> #define REPLAY_OPTS_INIT { -1, -1 }
 >=20
-> I was wondering what this 'set_me_free_after_use' parameter is about;
-> wouldn't it be more readable if this parameter was called 'owned_data'
-> or 'owned_ptr'?
+> because initialization with 0 (or NULL) is the default for any omitted
+> members.
 
-If I read "owned_ptr" as a function's parameter, I would assume that the
-associated memory is owned by the caller. So I would be puzzled reading
-that name.
+D'oh. You're right. The same applies to TODO_LIST_INIT, of course.
 
-> >  static void remove_sequencer_state(const struct replay_opts *opts)
-> >  {
-> >  =09struct strbuf dir =3D STRBUF_INIT;
-> > +=09int i;
-> > +
-> > +=09for (i =3D 0; i < opts->owned_nr; i++)
-> > +=09=09free(opts->owned[i]);
->=20
-> I guess you can remove owned data in any order, regardless if you
-> store struct or its members first...
-
-Indeed, this is not like a C++ destructor. It's free().
-
-> > diff --git a/sequencer.h b/sequencer.h
-> > index c955594..20b708a 100644
-> > --- a/sequencer.h
-> > +++ b/sequencer.h
-> > @@ -43,8 +43,14 @@ struct replay_opts {
-> > =20
-> >  =09/* Only used by REPLAY_NONE */
-> >  =09struct rev_info *revs;
-> > +
-> > +=09/* malloc()ed data entrusted to the sequencer */
-> > +=09void **owned;
-> > +=09int owned_nr, owned_alloc;
->=20
-> I'm not sure about naming conventions for those types of data, but
-> wouldn't 'owned_data' be a better name?  I could be wrong here...
-
-The convention seemed to be "void *X; int X_nr, X_alloc;", so I stuck with
-it.
-
-Thanks for your review!
+Fixed,
 Johannes
---8323329-1654037498-1472542177=:129229--
+--8323329-317533294-1472542236=:129229--
