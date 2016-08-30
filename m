@@ -2,123 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C8F31F6C1
-	for <e@80x24.org>; Tue, 30 Aug 2016 17:53:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 399B61F6C1
+	for <e@80x24.org>; Tue, 30 Aug 2016 17:56:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932441AbcH3Rxs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Aug 2016 13:53:48 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60402 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1758444AbcH3Rxr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Aug 2016 13:53:47 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E291A3A980;
-        Tue, 30 Aug 2016 13:53:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=nmvVLqrFsEbX1oYbZUI+KjLuAiI=; b=DWFqOT
-        /M1Hbt2Ws8e/0nOdnDTLMSeUsVcfDKWs9Pr39rSYxVWch0li9aASfIK/LTUIC6BG
-        I0ao5pWAZeMqPVdQ28wgI2D6ozwb1qaYrV5EUNYXJdWgoESm9WL1LLb8kGukJgFY
-        Ra8kzFNMB36H7yCu4bN0NmTTnWuFxjLhoDTkA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xp/6joo8XcrM9L4GLdneH2BCTLQ+EsT+
-        BrvQYyhfZN7bTU1HAnyIs42s5I1NblVZxI+U53UzIe896RSjJ+CgwEaR7P0T3eDs
-        dOECnUbaFEJGTElX5NByiUOkCT7K0HOheDA56HPS5L4ZRfbRdShqUBAemyvqUGgC
-        9lRJC63IL1Y=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DA6013A97F;
-        Tue, 30 Aug 2016 13:53:45 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5FDFA3A97E;
-        Tue, 30 Aug 2016 13:53:45 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Uma Srinivasan <usrinivasan@twitter.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jens Lehmann <Jens.Lehmann@web.de>,
-        Heiko Voigt <hvoigt@hvoigt.net>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: git submodules implementation question
-References: <CAN5XQftQH8B+hWVh4JQgZwAp+rkbz51P5NZDc_+Tfm0EB1zkew@mail.gmail.com>
-        <xmqqlgzf9wch.fsf@gitster.mtv.corp.google.com>
-        <CAN5XQft6S+LG0mBgRFPrMZiOxHSfRhjLmQdeMdBeHKoWQSRUEA@mail.gmail.com>
-        <CAPc5daVhY6WdHkXGLYea48uOw0-rTzLLZ=7mNo=VPebZ9AG4jQ@mail.gmail.com>
-        <CAN5XQfty6Fshzf6kN7eXhFekU9+=VPwbzEPN1a92yVB=9nm0Vg@mail.gmail.com>
-        <CAN5XQfsg_sJbyjfdc=-e85jiCQNUqagwgh6TVOXN+NskZ7KkVw@mail.gmail.com>
-        <xmqqbn0b6ua8.fsf@gitster.mtv.corp.google.com>
-        <CA+P7+xosGg955msq-gyKz_HyCZf7fPFQJdKZ3P8U3+poBBfuWA@mail.gmail.com>
-        <CAN5XQfsv+BEYDWR6Xjs4mCtYDVR12a2UzB1-_H4A_xfjUUOe2g@mail.gmail.com>
-        <CA+P7+xohfRsoV9VXgUrRaXPb9HvCc5gs4-KSWp38X_d_6EfkTA@mail.gmail.com>
-        <CA+P7+xpGnsKzBPLVgPNSmZ7K00vY7-eJp7kSHWMRHM+cOsL_XQ@mail.gmail.com>
-        <CAN5XQftCC+TUm2Jx4q3V9oFbXndtFx3H+daoB3TD3eWUs6s54A@mail.gmail.com>
-Date:   Tue, 30 Aug 2016 10:53:43 -0700
-In-Reply-To: <CAN5XQftCC+TUm2Jx4q3V9oFbXndtFx3H+daoB3TD3eWUs6s54A@mail.gmail.com>
-        (Uma Srinivasan's message of "Tue, 30 Aug 2016 10:40:36 -0700")
-Message-ID: <xmqqzinu3zyw.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1758384AbcH3R4I (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Aug 2016 13:56:08 -0400
+Received: from mout.gmx.net ([212.227.15.18]:49285 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1756356AbcH3R4H (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2016 13:56:07 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0Mgc0l-1bQj3O1rZH-00Nzp3; Tue, 30 Aug 2016 19:56:01
+ +0200
+Date:   Tue, 30 Aug 2016 19:56:00 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/6] pull: make code more similar to the shell script
+ again
+In-Reply-To: <xmqqr3976vcy.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1608301953340.129229@virtualbox>
+References: <cover.1472137582.git.johannes.schindelin@gmx.de> <9a7cc36eee651fe8be280920587e1f83538caf77.1472137582.git.johannes.schindelin@gmx.de> <xmqqr3976vcy.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B24CD41E-6EDA-11E6-A7B5-F7BB12518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:sedf1QxfCknhdKdixuEFydHphnBa1zOfqg5ZlHcD5ZNFSJMqwjM
+ t4IQ6eLADwDKPrOgToyDVMvPE4tFXi376w8VxFvExe9Vxb3voEJNxq/O+UFD4x5V/bBtQAC
+ GLEZAs27l++y71G/nK3aQwWXvTb1H2esg6Q7hhfgnipU8mLm28QEAbt534eMKpQPhkxT76a
+ fupW9UU16dqKMwJuGrktQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:15pQWWAgqU0=:nek82SzZ7BEZx8lyACckhq
+ uPd/OwtghOKBr9e/s3lKi8ZEDbKOun9D3cJtPc8gmsDhzCMjHtppGhfIoBJw5udZgDtp29ich
+ IjetgxU8r56/VQjtx5AnMH0LXl9LMWCJ1eIbVEBYDbv5eefGttZoOikh9yJEoqKSsrdxIFUox
+ LBWjO4S75VqI9y3kmJkUCqY6/C2y7JOuY4ZG6smOz24z9Oh1HZcuxYTxb0J7lOcLDlSL2a1Mr
+ O6ZSGPxWDZF4/JbBLJCe++yByYLPx6xIC2GC8OJqW4bKQjFoDbT0J2IDhTHqsLhK7esRdihQu
+ OoZXIpyNDU1UUph13TCT4qLk5cimCpwYsvjMPfu+x/UA0N/td+KS1tE5zTiHP+2/wjQD/luVW
+ NPpA9HcmZ9S5ugpRV3PXcDUHKKMhfpf24F3J0KL9uI0eChn1tYMPzJBWvDg1UN1mMN/R9v5uE
+ wSocu4tq8peqvG+VK5u85pYMRMR4b7m3yh69TlbS6MwMMXO77ibL/r/sczwaOsepJBvvH0UKA
+ u3VXYz3EGHcZKlMOVIHG7NvWW+CjkHObByGz9q0Mj/LyCwg6ZM0C0YJYznOCD8eJHA4DjJiSP
+ 2e6ArnKPBsTcxj+eJ4WQwBHaB+e6QcxJioRPEOfa0ovr8OBi+lSRzb9o/3juuV0zd7xmK5dM8
+ lCNU+g8CNshxR3sg8O61a8ln/LK3oVAlEYf3zAISf1HF6jSzpBMe7weJ3tghLiareinHK87Md
+ 3sig9x53+r7nYyfrh/traYtcx5PgABgMSyV3g1FOtBJIrZH+XSraE+ChE5sEsMAvuCLRn3XDD
+ ETykzTq
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Uma Srinivasan <usrinivasan@twitter.com> writes:
+Hi Junio,
 
-> I think the following fix is still needed to is_submodule_modified():
->
->         strbuf_addf(&buf, "%s/.git", path);
->         git_dir = read_gitfile(buf.buf);
->         if (!git_dir) {
->                 git_dir = buf.buf;
->  ==>               if (!is_git_directory(git_dir)) {
->  ==>                     die("Corrupted .git dir in submodule %s", path);
->  ==>               }
->         }
+On Mon, 29 Aug 2016, Junio C Hamano wrote:
 
-If it is so important that git_dir is a valid Git
-repository after
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > +static int require_clean_work_tree(const char *action, const char *hint,
+> > +		int gently)
+> >  {
+> >  	struct lock_file *lock_file = xcalloc(1, sizeof(*lock_file));
+> > -	int do_die = 0;
+> > +	int err = 0;
+> >  
+> >  	hold_locked_index(lock_file, 0);
+> >  	refresh_cache(REFRESH_QUIET);
+> > @@ -376,20 +377,26 @@ static void die_on_unclean_work_tree(void)
+> >  	rollback_lock_file(lock_file);
+> >  
+> >  	if (has_unstaged_changes()) {
+> > -		error(_("Cannot pull with rebase: You have unstaged changes."));
+> > -		do_die = 1;
+> > +		error(_("Cannot %s: You have unstaged changes."), action);
+> > ...
+> >  		if (!autostash)
+> > -			die_on_unclean_work_tree();
+> > +			require_clean_work_tree("pull with rebase",
+> > +				"Please commit or stash them.", 0);
+> >  
+> >  		if (get_rebase_fork_point(rebase_fork_point, repo, *refspecs))
+> >  			hashclr(rebase_fork_point);
+> 
+> Splicing an English/C phrase 'pull with rebase' into a
+> _("localizable %s string") makes the life of i18n team hard.
 
-	git_dir = read_gitfile(buf.buf);
-        if (!git_dir)
-        	git_dir = buf.buf;
+Hrm.
 
-is done to determine what "git_dir" to use, it seems to me that it
-does not make much sense to check ONLY dir/.git that is a directory
-and leave .git/modules/$name that dir/.git file points at unchecked.
+> Can we do this differently?
 
-But there is much bigger problem with the above addition, I think.
-There also can be a case where dir/ does not even have ".git" in it.
-A submodule the user is not interested in will just have an empty
-directory there, and immediately after the above three lines I
-reproduced above, we have this
+Sure, but not at this stage. Because...
 
-	if (!is_directory(git_dir)) {
-        	strbuf_release(&buf);
-                return 0;
-	}
+> If you are eventually going to expose this function as public API, I
+> think the right approach would be to enumerate the possible error
+> conditions this function can diagnose and return them to the caller,
+> i.e.
+> 
+>     #define WT_STATUS_DIRTY_WORKTREE 01
+>     #define WT_STATUS_DIRTY_INDEX    02
+> 
+>     static int require_clean_work_tree(void)
+>     {
+> 	int status = 0;
+> 	...
+>         if (has_unstaged_changes())
+>         	status |= WT_STATUS_DIRTY_WORKTREE;
+> 	if (has_uncommitted_changes())
+>         	status |= WT_STATUS_DIRTY_INDEX;
+> 	return status;
+>     }
+> 
+> Then die_on_unclean_work_tree() can be made as a thin-wrapper that
+> calls it and shows the pull-specific error message.
 
-The added check will break the use case.  If anything, that check,
-if this code needs to verify that "git_dir" points at a valid Git
-repository, should come _after_ that.
+This sounds like a good plan, if involved. At this stage, I am really
+unwilling to introduce such extensive changes, for fear of introducing
+regressions.
 
-Shouldn't "git-status --porcelain" run in the submodule notice that
-it is not a valid repository and quickly die anyway?  Why should we
-even check before spawning that process in the first place?
+I will keep it in mind and make those changes, once Git for Windows
+v2.10.0 is out.
 
-I might suggest to update prepare_submodule_repo_env() so that the
-spawned process will *NOT* have to guess where the working tree and
-repository by exporting GIT_DIR (set to "git_dir" we discover above)
-and GIT_WORK_TREE (set to "." as cp.dir is set to the path to the
-working tree of the submodule).  That would stop the "git status" to
-guess (and fooled by a corrupted dir/.git that is not a git
-repository).
-
+Ciao,
+Dscho
