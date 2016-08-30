@@ -2,61 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C39C1FD99
-	for <e@80x24.org>; Tue, 30 Aug 2016 00:02:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DC671FD99
+	for <e@80x24.org>; Tue, 30 Aug 2016 00:13:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756911AbcH3AC3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Aug 2016 20:02:29 -0400
-Received: from mail-yw0-f170.google.com ([209.85.161.170]:36856 "EHLO
-        mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755526AbcH3AC2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2016 20:02:28 -0400
-Received: by mail-yw0-f170.google.com with SMTP id u134so2051169ywg.3
-        for <git@vger.kernel.org>; Mon, 29 Aug 2016 17:02:27 -0700 (PDT)
+        id S1754167AbcH3ANP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Aug 2016 20:13:15 -0400
+Received: from mail-oi0-f41.google.com ([209.85.218.41]:36640 "EHLO
+        mail-oi0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751950AbcH3ANO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2016 20:13:14 -0400
+Received: by mail-oi0-f41.google.com with SMTP id f189so4957408oig.3
+        for <git@vger.kernel.org>; Mon, 29 Aug 2016 17:12:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=twitter.com; s=google;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=ZnBf8Pj37Tyg3DoGnJbH4Z+WN5wBGKd0zJ5vGxgpZYE=;
-        b=dg6VQqsgoAwsWJJa3pzUgM3XikJoO9L8cCcI0589uqyi6/oYv/ywr0oG9nAHd8qB66
-         YeRsyIWECaP4tkuG0O2FS5//q57Fi7NCgiWIjk625TxeQb+DpVbq1CvJ1dA7Bq4cZEXP
-         LJCF7/iPSTb/G7MU6t0CR3vA0ESfpICXWXnQyqfI9hCcPhqUZPgqNyAhC2ZnRK8zyk1b
-         eP1+2i9Kut094HWJBkTxlgESlZ2ayZx1TzCejKVoICptMBjbp0QaE7Zw1zOXUAuyEy7S
-         ECCvFAlmKrdjarwS9cRYF6qRfSJkuRqAnuFFhXuEvztT3q60N9QlSZjLuAO3GYzirUM2
-         bBIA==
+        bh=7bfr+DMumM+oLnkVjZSkSznaNHIQLIuWncKOLYLF+l0=;
+        b=QnMQPCMLQVKxAkuQynxavgNiiwmynXjUc3/fTWKpdTfj8zqG6ZyFR8AWUaNonnR4AW
+         Lz+cS9uN1G+/1oqHPCP83Bu1TdfV7Gl13LtXiobLFPukrhbOnO7q2f0L5qvruqDIDYUW
+         e4FwLxBmUXC7y7z0u2wQTFVGab9Whsu+JCRpI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=ZnBf8Pj37Tyg3DoGnJbH4Z+WN5wBGKd0zJ5vGxgpZYE=;
-        b=ECfTEgy6+9JM9n1W6PJoPe7RRELEj/jqu6TWT6GGClgxxguSHSwFSkRAkUz0yL076h
-         iBts2AP8fdjoDcVMTKZGA2YP3tXZRku3UWiYpUMSlfgdURDhiLF13+ZIp0AdEliMqEWJ
-         gF1/3wORKEeXGN8kYjDkn1hBelo+P8DL2ANLaNcvLk73QgNwTXC6yZynd19pwRY5bctX
-         vf1DjA1d6gXYwQC84kYqwfc4ASuFvA+MuVH3CxhDgN3mJfNcpDrI+Yj06BrB/lKI8tsF
-         x+rmz4Z/ka6SnhC2aSFz67w4ehawDheFo6pbVGzHRa5Ny3sg4sF1eZ6nS5Wf4J8zFph6
-         Ih7A==
-X-Gm-Message-State: AE9vXwPGABz0mNcRJgOB1zjoYB/kJE5hUPcyM+yv4NyyNV7gE4vAW23x8tSfOsBUB2+rpEU5PaCk5fj4wIeWvg==
-X-Received: by 10.129.135.2 with SMTP id x2mr573680ywf.310.1472515347072; Mon,
- 29 Aug 2016 17:02:27 -0700 (PDT)
+        bh=7bfr+DMumM+oLnkVjZSkSznaNHIQLIuWncKOLYLF+l0=;
+        b=VtE8ScJImeKnWdHM3TdZ7GWMSXW7uhipZ+nZt0EcT/BfDPIT9cfdn1zLPXMJ7HOTAC
+         Xbg6Ja7QpIMUtuX44CNQbEGds7lCrqAclYYXQkdVgpwx8SdyNhcuPXJkwGDDAu8iVcoy
+         qrfJ3hd3dKW3heyIEVWY54QBqNgxhTLG1CCQ7nO4IT/g5wgZL9x/YXelXZXH9KMoyXL/
+         AkS8Q3Mqll9H4q3t+jEbgk/H1g3taq3FRp6SD17bNpii6rdNn0x0BMCfjakWghU+zwuv
+         o9gh+d59pbVOIHnnqnql3jf9YDNpvGWHZyWybK/C034E7TIZ3eqkaubvikrs7Bwdr0eF
+         xFZA==
+X-Gm-Message-State: AE9vXwOsScQqSwRMwHZq5YVeYqmY0IFpO/2Vsdm+ywUIE6qMhyl3OG/DiI7JxF42ZRpNWrztSKlhHugCZ7VeOL8J
+X-Received: by 10.202.218.2 with SMTP id r2mr642578oig.177.1472515949722; Mon,
+ 29 Aug 2016 17:12:29 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.37.96.195 with HTTP; Mon, 29 Aug 2016 17:02:06 -0700 (PDT)
-In-Reply-To: <xmqqbn0b6ua8.fsf@gitster.mtv.corp.google.com>
+Received: by 10.157.55.226 with HTTP; Mon, 29 Aug 2016 17:12:28 -0700 (PDT)
+In-Reply-To: <CA+P7+xosGg955msq-gyKz_HyCZf7fPFQJdKZ3P8U3+poBBfuWA@mail.gmail.com>
 References: <CAN5XQftQH8B+hWVh4JQgZwAp+rkbz51P5NZDc_+Tfm0EB1zkew@mail.gmail.com>
  <xmqqlgzf9wch.fsf@gitster.mtv.corp.google.com> <CAN5XQft6S+LG0mBgRFPrMZiOxHSfRhjLmQdeMdBeHKoWQSRUEA@mail.gmail.com>
  <CAPc5daVhY6WdHkXGLYea48uOw0-rTzLLZ=7mNo=VPebZ9AG4jQ@mail.gmail.com>
  <CAN5XQfty6Fshzf6kN7eXhFekU9+=VPwbzEPN1a92yVB=9nm0Vg@mail.gmail.com>
- <CAN5XQfsg_sJbyjfdc=-e85jiCQNUqagwgh6TVOXN+NskZ7KkVw@mail.gmail.com> <xmqqbn0b6ua8.fsf@gitster.mtv.corp.google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Mon, 29 Aug 2016 17:02:06 -0700
-Message-ID: <CA+P7+xosGg955msq-gyKz_HyCZf7fPFQJdKZ3P8U3+poBBfuWA@mail.gmail.com>
+ <CAN5XQfsg_sJbyjfdc=-e85jiCQNUqagwgh6TVOXN+NskZ7KkVw@mail.gmail.com>
+ <xmqqbn0b6ua8.fsf@gitster.mtv.corp.google.com> <CA+P7+xosGg955msq-gyKz_HyCZf7fPFQJdKZ3P8U3+poBBfuWA@mail.gmail.com>
+From:   Uma Srinivasan <usrinivasan@twitter.com>
+Date:   Mon, 29 Aug 2016 17:12:28 -0700
+Message-ID: <CAN5XQfsv+BEYDWR6Xjs4mCtYDVR12a2UzB1-_H4A_xfjUUOe2g@mail.gmail.com>
 Subject: Re: git submodules implementation question
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Uma Srinivasan <usrinivasan@twitter.com>,
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
         Git Mailing List <git@vger.kernel.org>,
         Jens Lehmann <Jens.Lehmann@web.de>,
         Heiko Voigt <hvoigt@hvoigt.net>,
@@ -67,24 +64,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 29, 2016 at 4:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Uma Srinivasan <usrinivasan@twitter.com> writes:
->> This fixes my issue but what do you think? Is this the right way to
->> fix it? Is there a better way?
->
-> I think we already have a helper function that does a lot better
-> than "does it have a file called HEAD" to ask "is this a git
-> directory?" and its name I think is "is_git_directory" (I know, we
-> are not imaginative when naming our functions).
->
-> As to the check makes sense in the context of this function, I am
-> not an expert to judge.  I'd expect Jens, Heiko and/or Stefan to
-> know better than I do.
+This is great! Thanks Jake. If you happen to have the patch ID it
+would be helpful.
 
-One of my patches adds a "is_git_directory()" call to this, and if we
-fail falls back to checking the .gitmodules and git-config for
-information regarding the submodule should it no longer be checked
-out. I suspect this patch will address your concern.
+Uma
 
-Thanks,
-Jake
+On Mon, Aug 29, 2016 at 5:02 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
+> On Mon, Aug 29, 2016 at 4:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Uma Srinivasan <usrinivasan@twitter.com> writes:
+>>> This fixes my issue but what do you think? Is this the right way to
+>>> fix it? Is there a better way?
+>>
+>> I think we already have a helper function that does a lot better
+>> than "does it have a file called HEAD" to ask "is this a git
+>> directory?" and its name I think is "is_git_directory" (I know, we
+>> are not imaginative when naming our functions).
+>>
+>> As to the check makes sense in the context of this function, I am
+>> not an expert to judge.  I'd expect Jens, Heiko and/or Stefan to
+>> know better than I do.
+>
+> One of my patches adds a "is_git_directory()" call to this, and if we
+> fail falls back to checking the .gitmodules and git-config for
+> information regarding the submodule should it no longer be checked
+> out. I suspect this patch will address your concern.
+>
+> Thanks,
+> Jake
