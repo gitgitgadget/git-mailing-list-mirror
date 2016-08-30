@@ -2,111 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_12_24,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49BEB1F859
-	for <e@80x24.org>; Tue, 30 Aug 2016 06:29:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67AC71F859
+	for <e@80x24.org>; Tue, 30 Aug 2016 06:42:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751136AbcH3G34 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Aug 2016 02:29:56 -0400
-Received: from mout.gmx.net ([212.227.17.20]:61213 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750697AbcH3G3z (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Aug 2016 02:29:55 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MNIO5-1bkyCi1ZdZ-006uwZ; Tue, 30 Aug 2016 08:29:49
- +0200
-Date:   Mon, 29 Aug 2016 19:15:17 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 03/22] sequencer: avoid unnecessary indirection
-In-Reply-To: <90d26cba-0013-eb31-ba40-52f3e2f9d239@gmail.com>
-Message-ID: <alpine.DEB.2.20.1608291913270.129229@virtualbox>
-References: <cover.1472457609.git.johannes.schindelin@gmx.de> <e5e6c27038c7db226a787da6b7ee343b2b310654.1472457609.git.johannes.schindelin@gmx.de> <90d26cba-0013-eb31-ba40-52f3e2f9d239@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1752387AbcH3Gmt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Aug 2016 02:42:49 -0400
+Received: from mail-yw0-f176.google.com ([209.85.161.176]:35065 "EHLO
+        mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751598AbcH3Gms (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2016 02:42:48 -0400
+Received: by mail-yw0-f176.google.com with SMTP id j12so5894039ywb.2
+        for <git@vger.kernel.org>; Mon, 29 Aug 2016 23:42:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=BBTB6yYQFHfRIl3f2695hW1/ITMhuRZPgVFLvX7BC3A=;
+        b=bqL84fr7Bn5hTB4/bdKQKXDTmUO50iWViKKzjB3DkHmRns6wyeBiUogzK1mVSzb6eY
+         ec171ArfvCzvdGZ1Qiv/6SuTPdK4PwKZnduOzWurrTOezFA+nfNRBX5fMOSpFW6ashuE
+         NpzPCEgYOgxgmao3YYk2mDAK0glPeoW1dqlxMZLWBy7FwBoceYu+mysfZQpr0tc4Wq/B
+         SuUgg24A/tTPFsF0cDy7qyuGxXZJEocmCpYDFm67LXiSqP57/jLbRElNAIgqH1hSuCfb
+         +2zMJT+jXFWrdnKUWjklWj5HvyqyhMST5JnxBmhfqQNohNPA34hDujf5THPBFJNREVs7
+         vmuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=BBTB6yYQFHfRIl3f2695hW1/ITMhuRZPgVFLvX7BC3A=;
+        b=XusZFYBMjN1jeE7EKemHWm/zuz1aIpfL9B71UzOw4ZrdAlEhtHLDFyExpmAkWoMlLB
+         GpJGtoz3+QRXqO+JOg22CPDCWHmdKgBjRVdzcdF3Bo5HIlJJDl1JY5yFrivHjrH+8FUH
+         eZDGNVRE5776O/FFokbH4YDlp6LGT/DsU6D7+i7p6Kww6qAvjNimpD844TJbqq5O4yQS
+         ICZ7VehcHMYvLgcf6CK8+MWBDhGvqJIH5reNKnT78cmg3RExZvZUZcrOe/lfz6ztUJhv
+         YNq9OMQHRQey6nmeUoI413SvLpGgigzfjXIbGMUYInXqxHxrUzE6KXHElBwi6cv/VZpu
+         D2XA==
+X-Gm-Message-State: AE9vXwOSk26kq1kUfVvCt2fpRgHA3+vfkeIT5ciVywEesAeRgrM0jHsFcVE45ocK951Uv0/LLIs4D8kGvTlEwA==
+X-Received: by 10.129.136.5 with SMTP id y5mr1986242ywf.30.1472539367187; Mon,
+ 29 Aug 2016 23:42:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-743086972-1472490918=:129229"
-X-Provags-ID: V03:K0:rLW6AMsC7Yqw5Hw2nkUaweQ9M+tsfwgqXni38N5Ff54mEUAn2x9
- AQFasmI56r0Nh5HLjIMyqfGP8ufWRsfO5C0T2t/lGjPfffFLJOH26LEAr9ERUGhu/1IbvOL
- ef3UJ5Q6PZxvwxfX4dVIiA4mWfHfKN7ixXBpYu1eqenKKYsDiB3jDLkpneRGc5rme1Ytct+
- qru/XgKo0vsP7B/qlt5uA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:2W3UcGReIqE=:qtvxB/OWfjAQ0MlTtHh2Ha
- gs27fsK4zNTXploaSLGIPYa/j/r+V2jAPp51xjsDDxoch828Ive/zrZhLroiH5Jba0sHYNf2J
- pGiSmNFLa4Yvxovd/CzFvvmJHOGw3RvFadC81EvpUnOCc+iKOI8oAG1niGCz+OQ86YJaBEKm9
- y6TETZKdeVGGRL2QyQ62MiUYAjWnjY5buB6tra5KiG0tWQlXMjmLrKwwDTZTiahtJss+TbcTZ
- BGQfRuUvVVjx5eZC/nbpb4zSqs4NbngbR+uMnvk36HRMtrPMy0GrNXcc85AoKC4J49q2RjgMf
- 2qUvakB+pkpjnG/GvSpx3dPDQzlLrCAt3jqs8cXk2pPPbpbzjzU58xGzPakfjXsoU3RrJ4VOR
- BaMN4sefDZhVyleLXxGrR7SGLowo+/icb979ty1huOn5rcNVwwLHCEN0c8zLy992iS+fhI7io
- h6/Ku0xzFWSTK1RO75iILGj4EVz5TByQRNP1Ji+d5ZJJNjt8qnbmkhLIG0PqQZ579Nov3mVjs
- 81TrXgUGvzP05Z0l8E7bI7+I6/LqDNrrVrAr4EV7ELtPfh4ew1dt237p3Zs51JARFLmhSKzvZ
- UNKbigvGnzzr+4PTq2VuB9uCtUvfhgEOzf/PMEm0RkiC2iWqkh80xeR6iA/wIqoekwkAiOwa0
- EOXswRwiQgPaQHso6qdyxAMPw6NRfzMnPxIjRxIebt7Y2N3AFF1YGQojiIxGsMpaexhngKaNX
- VgTVeM3zr6CH82L9Z3tNp4bdG0GXQuzZPunFhU9L4Pzkp35u/cu/AAado4J699qSrj+Hio/6q
- 1q6b6sM
+Received: by 10.129.89.132 with HTTP; Mon, 29 Aug 2016 23:42:46 -0700 (PDT)
+In-Reply-To: <xmqqtwe5di02.fsf@gitster.mtv.corp.google.com>
+References: <01020156b73fe5b4-5dc768ab-b73b-4a21-ab92-018e2a7aa6f7-000000@eu-west-1.amazonses.com>
+ <01020156b73fe6a7-2e9df745-e3f4-4830-a1af-4acae7964c11-000000@eu-west-1.amazonses.com>
+ <xmqqfuptol4h.fsf@gitster.mtv.corp.google.com> <CAFZEwPMcUf-Tm_ijJbEG1Bh7F+7ML2fw6Vw2Gt94B9gyoGL1FQ@mail.gmail.com>
+ <xmqqtwe5di02.fsf@gitster.mtv.corp.google.com>
+From:   Pranit Bauva <pranit.bauva@gmail.com>
+Date:   Tue, 30 Aug 2016 12:12:46 +0530
+Message-ID: <CAFZEwPMz4n35x-g3cxM4KaADRJNmYmZBnwsDZD1wiiFPHJebew@mail.gmail.com>
+Subject: Re: [PATCH v14 09/27] bisect--helper: `bisect_write` shell function
+ in C
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hey Junio,
 
---8323329-743086972-1472490918=:129229
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Sun, Aug 28, 2016 at 2:52 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Pranit Bauva <pranit.bauva@gmail.com> writes:
+>
+> >>> +struct bisect_terms {
+> >>> +     struct strbuf term_good;
+> >>> +     struct strbuf term_bad;
+> >>> +};
+> >>
+> >> I think "struct strbuf" is overrated.  ...
+> >> I think you can just say "const char *" in this case.
+> >
+> > Using struct strbuf is not really overrated but in fact required. But
+>
+> Nothing is required.
+>
+> I can make your life easier by requiring you to never use struct
+> strbuf as a structure field type, though.  You will almost never
+> need it unless you are building something exotic anyway.
+>
+> Step back and think what "strbuf" is good for.  It holds a pointer
+> to a piece of memory the field owns, over-allocates and knows the
+> size of allocation and usage.  That is good if you need to
+>
+>  (1) frequently find out the length of the string; without a
+>      separate .len member you would have to run strlen().
+>
+>  (2) incrementally add to the string in-place; as it overallocates,
+>      appending to the string would not have to involve realloc()
+>      every time and the cost of it is amortized.
+>
+>  (3) make complex operations like splicing another string in,
+>      trimming substring out, etc.
+>
+> You need to do none of the above to these fields.  term.term_good is
+> either taken from an argv[] element, or you read from a line from a
+> file and set it.  You may do some trivial computation and set it to
+> the result, like "the other field uses 'old', so this one need to be
+> set to 'new'".  The user of the field either has the string and sets
+> it there, or reads the field's value as a whole string.  No string
+> manipulation in the field in-place is needed.
+>
+> > yes, for this patch it might seem as overrated. In the shell code
+> > initally TERM_GOOD is set to "good" while TERM_BAD is set to "bad".
+> > Now there are a lot of instances (one of which is bisect_start()
+> > function) where this can change. So if we keep it as "const char *",
+> > it would be right to change the value of it after wards. And we cannot
+> > keep it as "char []" because we don't know its size before hand.
+>
+> You are not making sense.  Nobody would suggest to use a fixed-size
+> char array in this structure.  That wouldn't even work in the case
+> where you are stuffing what comes in an argv[] element in there,
+> e.g.
+>
+>     terms.term_good = argv[3];
+>
+> And you can of course support changing the value of the field
+> without using strbuf.  Just update the pointer to point at the piece
+> of memory that holds the new value.
+>
+> In short, I do not see any good reason why the term_good field has
+> to be anything other than "char *term_good" or "const char *term_good".
+>
+> Now, what you need to consider choosing between the two depends on
+> where these strings can come from.  If they are known to be always
+> unchanging between the time you set it til the end of the program
+> (e.g. using an element in argv[]), you can just assign without
+> making any copy and you can use "const char *term_good".  All other
+> cases, the structure needs to take the ownership, and you would need
+> to make a copy if you don't have the ownership, e.g.
+>
+>         terms.term_good = xstrdup(argv[3]);
+>
+> You may be reading from a file, a line at a time and you may have a
+> line's content in a strbuf.  You do not (yet) own the buffer after
+> reading it, e.g.
+>
+>         strbuf_getline(&buf, fp);
+>         terms.term_good = strbuf_detach(&buf, NULL);
+>
+> Of course, if you need to take ownership of the memory, you would
+> need to free(3) it as needed, which means the pattern to set the
+> field would become
+>
+>         free(terms.term_good);
+>         terms.term_good = ... some new value ...;
+>
+> Using strbuf as a local variable is good.  It gives a higher level
+> of abstraction when you are actually performing string operations.
+> In most applications, however, a field in a struct is where the
+> result of a step of computation is kept, not a scratch-pad to
+> perform steps of computation in.  When you are ready to update the
+> value of a field, you _have_ a completed string, and you can just
+> use "char *" field to point at it.  There is no need for strbuf in
+> the field.
+>
+> Don't look at the data structure used in trailer.[ch] as a model; it
+> is an example of a terribly bad implementation taste, a pattern that
+> should not be followed.  Print it, not read it and burn it as a good
+> symbolic gesture.
 
-Hi Kuba,
+Thanks for explaining when to use strbuf. I am convinced that the
+thing I am aiming for can be done with the help of "const char *".
+Though I will have to use strbuf in get_terms() and detach the string
+buffer from there as you have mentioned previously.
 
-On Mon, 29 Aug 2016, Jakub Nar=C4=99bski wrote:
-
-> W dniu 29.08.2016 o 10:04, Johannes Schindelin pisze:
->=20
-> > We really do not need the *pointer to a* pointer to the options in
-> > the read_populate_opts() function.
->=20
-> Right.
-> =20
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  sequencer.c | 6 +++---
-> >  1 file changed, 3 insertions(+), 3 deletions(-)
-> >=20
-> > diff --git a/sequencer.c b/sequencer.c
-> > index 4d2b4e3..14ef79b 100644
-> > --- a/sequencer.c
-> > +++ b/sequencer.c
-> > @@ -809,11 +809,11 @@ static int populate_opts_cb(const char *key, cons=
-t char *value, void *data)
-> >  =09return 0;
-> >  }
-> > =20
-> > -static int read_populate_opts(struct replay_opts **opts)
-> > +static int read_populate_opts(struct replay_opts *opts)
->=20
-> Especially that other *_populate_*() use 'struct replay_opts *opts':
->=20
->    read_populate_todo(struct commit_list **todo_list, struct replay_opts =
-*opts)
->    walk_revs_populate_todo(struct commit_list **todo_list, struct replay_=
-opts *opts)
->=20
-> Though they use **todo_list, because they modify this list;
-> maybe that was why read_populate_opts was using **opts instead
-> of *opts?
-
-I won't speculate about the reasons why it was made so.
-
-About read_populate_todo(): it uses **todo_list, but still only *opts.
-
-In any case, in a later patch, the todo_list parsing is completely
-revamped anyway, so I did not want to "fix" anything that would get
-reverted later on.
-
-Ciao,
-Johannes
---8323329-743086972-1472490918=:129229--
+Regards,
+Pranit Bauva
