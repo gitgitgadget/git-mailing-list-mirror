@@ -2,91 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA3F01F6C1
-	for <e@80x24.org>; Tue, 30 Aug 2016 17:08:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 024DB1F6C1
+	for <e@80x24.org>; Tue, 30 Aug 2016 17:21:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932393AbcH3RHz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Aug 2016 13:07:55 -0400
-Received: from smtprelay0127.hostedemail.com ([216.40.44.127]:60611 "EHLO
-        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1758496AbcH3RHy (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 30 Aug 2016 13:07:54 -0400
-Received: from filter.hostedemail.com (unknown [216.40.38.60])
-        by smtprelay03.hostedemail.com (Postfix) with ESMTP id E9B046AB66;
-        Tue, 30 Aug 2016 17:07:51 +0000 (UTC)
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-HE-Tag: lead71_7ebcd24cfcb37
-X-Filterd-Recvd-Size: 3002
-Received: from XPS-9350.home (unknown [96.251.125.34])
-        (Authenticated sender: joe@perches.com)
-        by omf05.hostedemail.com (Postfix) with ESMTPA;
-        Tue, 30 Aug 2016 17:07:50 +0000 (UTC)
-Message-ID: <1472576869.5512.98.camel@perches.com>
-Subject: Re: git am and duplicate signatures
-From:   Joe Perches <joe@perches.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
-Date:   Tue, 30 Aug 2016 10:07:49 -0700
-In-Reply-To: <xmqqwpiy5haf.fsf@gitster.mtv.corp.google.com>
-References: <1472573556.5512.93.camel@perches.com>
-         <xmqqwpiy5haf.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="ISO-8859-1"
-X-Mailer: Evolution 3.18.5.2-0ubuntu3 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S932553AbcH3RVB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Aug 2016 13:21:01 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52501 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1758540AbcH3RVA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2016 13:21:00 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8CB373A3F1;
+        Tue, 30 Aug 2016 13:20:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=IAOvRgXZ+ugQUGeN1ZAQ3sseVFQ=; b=kI9Y2v
+        oz6sTk2gFwnLaXQc2T7Ualc4ghrg8z1Bn2l+SeLM1S0pYNIkm7xdWAG6dchtwQH2
+        nzU31HY4oV4rdlQQV7XTsnHeJVy77oTFatwHIgswoqoYYSRT6+New5h+fg5i5gIu
+        t9GomQw2dZVyMd5NOV7l943VNPZW4dLtZPV08=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=LCWpohjbbveIN9RI2O4aNj2HgDLKVJzZ
+        EkLtgaRxHAD2l6abm3i4meDF1jZjeBwjvQNLaJbCqw+Xp1iEUOWAw7wFZwypAUkn
+        BUttgK5ZlK4GPJMBqhTqlF2u64xi1zWwf7eI7oiAUTc4TXFdvnYItr1m2T4w6Ucz
+        GO8f0QUniJo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 842473A3EF;
+        Tue, 30 Aug 2016 13:20:53 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0BFF43A3EE;
+        Tue, 30 Aug 2016 13:20:52 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 08/14] sequencer: lib'ify read_and_refresh_cache()
+References: <cover.1471968378.git.johannes.schindelin@gmx.de>
+        <cover.1472219214.git.johannes.schindelin@gmx.de>
+        <99f3ab3a30a469b271300ff61309ac4c4a8af448.1472219214.git.johannes.schindelin@gmx.de>
+        <xmqq7faz9ufi.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1608301106220.129229@virtualbox>
+Date:   Tue, 30 Aug 2016 10:20:51 -0700
+In-Reply-To: <alpine.DEB.2.20.1608301106220.129229@virtualbox> (Johannes
+        Schindelin's message of "Tue, 30 Aug 2016 11:09:31 +0200 (CEST)")
+Message-ID: <xmqqoa4a5g24.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1AA79148-6ED6-11E6-9F27-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(adding lkml)
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Tue, 2016-08-30 at 09:54 -0700, Junio C Hamano wrote:
-> Joe Perches <joe@perches.com> writes:
-> > git-am -s will avoid duplicating the last signature
-> > in a patch.
-> > 
-> > But given a developer creates a patch, send it around for
-> > acks/other signoffs, collects signatures and then does
-> > a git am -s on a different branch, this sort of sign-off
-> > chain is possible:
-> > 
-> > 	Signed-off-by: Original Developer <od@domain.com>
-> > 	Acked-by: Random Developer <rd@domain.com>
-> > 	Signed-off-by: Original Developer <od@domain.com>
-> Both correct and allowing the earlier one duplicated as long as
-> there is somebody/something else in between is deliberate.
+>> With the current set of callers, a caller that notices an error from
+>> this function will immediately exit without doing any further
+>> damage.
+>> 
+>> So in that sense, this is a "safe" conversion.
+>> 
+>> But is it a sensible conversion?  When the caller wants to do
+>> anything else (e.g. clean-up and try something else, perhaps read
+>> the index again), the caller can't, as the index is still locked,
+>> because even though the code knows that the lock will not be
+>> released until the process exit, it chose to return error without
+>> releasing the lock.
+>
+> It depends what the caller wants to do. The case about which I care most
+> is when some helpful advice should be printed (see e.g. 3be18b4 (t5520:
+> verify that `pull --rebase` shows the helpful advice when failing,
+> 2016-07-26)). Those callers do not need to care, as the atexit() handler
+> will clean up the lock file.
+>
+> However, I am sympathetic to your angle, even if I do not expect any such
+> caller to arise anytime soon.
 
-linux-kernel has a script (scripts/checkpatch.pl) that
-looks for duplicate signatures (<foo>-by: [name] <address>)
-
-Should the last Signed-off-by: in the commit log be
-excluded from this check?
-
-> > Should there be an option to avoid duplicate signatures
-> > in a sequence where an author can git-am the same patch?
-> I dunno.  The way "Signed-off-by" is handled is designed
-> specifically to support the meaning of that footer, namely to record
-> where it originated and whose hands it passed, used in the kernel
-> and Git land.  Other projects certainly may have need for footers
-> that denote different things that want different semantics (e.g. Who
-> authored it and who cheered on it), but that is outside the scope of
-> the "Signed-off-by" supported by "am -s" and "commit -s".
-> 
-> Support for more generic footers was supposed to come when the
-> "interpret-trailers" topic started, but the author of the topic
-> seems to have lost interest before the mechanism has become ready to
-> be integrated in the workflow commands like "am", "commit", "rebase"
-> etc., which is unfortunate.
-> 
-> > 
-> > sequencer.c:append_signoff() has a flag for APPEND_SIGNOFF_DEDUP
-> Yes, I think this is one of the warts we talked about getting rid of
-> but haven't got around to it.  It is there because "format-patch -s"
-> was incorrectly written to dedup Signed-off-by: from anywhere in its
-> early implementation and to keep the same behaviour.  We should drop
-> that flag from append_signoff() function.
+We just fixed a similar "why are we allowing the 'if the_index
+hasn't been read, read unconditionally from $GIT_INDEX_FILE" that is
+reached by a codepath that is specifically designed to read from a
+temporary index file while reviewing a separate topic, and that is
+where my reaction "this is not very helpful for other callers" comes
+from.
