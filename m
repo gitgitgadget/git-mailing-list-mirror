@@ -2,89 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4B2F1F6C1
-	for <e@80x24.org>; Tue, 30 Aug 2016 14:19:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6267D1F6C1
+	for <e@80x24.org>; Tue, 30 Aug 2016 14:46:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753095AbcH3OTq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Aug 2016 10:19:46 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:37492 "EHLO
-        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752184AbcH3OTp (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 30 Aug 2016 10:19:45 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 9FCAF203C4;
-        Tue, 30 Aug 2016 10:19:44 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute3.internal (MEProxy); Tue, 30 Aug 2016 10:19:44 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=
-        content-transfer-encoding:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-sasl-enc
-        :x-sasl-enc; s=mesmtp; bh=CO8ciUBNaSABnItYyIMVRmGISPM=; b=SVkLij
-        BScsfEknj7KizPSYZHJuvn6YbcvMfQ7QN8jxqq47dp2KaH/s/TYOfxMg0ymlPlAQ
-        5sjUzaI3Ioq2X5d2lOx7sSlHZe+0HfZZW9xyW/oo/mU0ZLCIuPdbom9s7X8n31mS
-        d9CK7tSojmp4p5yLUDt1Ux6GSyV6/8PIgJwsc=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=CO8ciUBNaSABnIt
-        YyIMVRmGISPM=; b=ky0roFzBVhdzH09jgtzNnhx3xPMUGx23Qe10IjJSmKWx2Sj
-        0c7sGCNDSTp067Z2JEodSOZPEumcBh4rUgh16Q55ScuFV6XlCKtMwsSuU80grbvF
-        s4tSq6w9nlnuC8YtkP0dtKaBCpTWNVbbi3YhTPmjq1cS2nxyarnE9lXqH5RQ=
-X-Sasl-enc: G3jLaiqQIjOf6wrdcQFY8Eeyx3awIxNu2a+kYNaZhKAl 1472566784
-Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 1F9D0CCDB8;
-        Tue, 30 Aug 2016 10:19:44 -0400 (EDT)
-Subject: Re: how to showing a merge graph?
-To:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <CACsJy8CP+Jb=B5zvhJqtR3mZY3snP=o8Zi-df8bMOJTM_3z3Zg@mail.gmail.com>
-From:   Michael J Gruber <git@drmicha.warpmail.net>
-Message-ID: <e1156f36-51f0-17da-dcdb-36e6459fb178@drmicha.warpmail.net>
-Date:   Tue, 30 Aug 2016 16:19:43 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S1752798AbcH3Oqp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Aug 2016 10:46:45 -0400
+Received: from mout.gmx.net ([212.227.17.20]:60981 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751530AbcH3Oqo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2016 10:46:44 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0Me4Ly-1bTElx291C-00PrTz; Tue, 30 Aug 2016 16:46:27
+ +0200
+Date:   Tue, 30 Aug 2016 16:46:25 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH 4/6] require_clean_work_tree: ensure that the index was
+ read
+In-Reply-To: <alpine.DEB.2.20.1608301300010.129229@virtualbox>
+Message-ID: <alpine.DEB.2.20.1608301645170.129229@virtualbox>
+References: <cover.1472137582.git.johannes.schindelin@gmx.de>        <4122fc996a0076c2426d5e1325f2ce2810ef4f9b.1472137582.git.johannes.schindelin@gmx.de>        <xmqqmvjv6uxn.fsf@gitster.mtv.corp.google.com> <xmqq60qj6kmf.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1608301300010.129229@virtualbox>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8CP+Jb=B5zvhJqtR3mZY3snP=o8Zi-df8bMOJTM_3z3Zg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:hceg7YZdWbx4XJM81xXoOJFPCWW2Qtin9hdTihOTUDgGJn+DQHr
+ MrcYOR+xrERqyL01jWvV4fLvDicIPheMpjtJjw+IV1GtRwRyPs9yiuZ8IE+IS74x+5P0kOg
+ swYcCAqlC5XGHS/02eLMRCH63Ssd6+RZqQNoL0NCZMENUv2Do464kQOQxPuCPFnDldpyi2g
+ D08B4vX78ScDdhpOmw2ng==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:/ZPN/we5EWI=:mtC/yJI1LrnUL9vX7Onvxx
+ 2anKHFKeinedPP9HFtUIzk2ViXZlVtQMxlTVzAMbMmNqJQJI/b2rbRgJX/q/02slU6ZIRLFDt
+ RSODDuqMg7mYcNLJFY67Y/U28kUifakIXDvFLf7gqHg9QCE8SZX93tK0nVExGpOUPPvXS9+5x
+ GSN40oReioRVHuhmfllcleNvGATzzPjHL6THdt0sVOQaESEbfEFAslHIrEipYZ85jvelPuQ1I
+ 6Yl2uOkVHuf1KuJx8Six0qCO8ONBUr852GLTmzRTUKqKiqE78vUCDsCHUCDJqYiRhYj7jSXt7
+ YRRea7eYguDq9+SJxW9DkkvCiTYHFPqxr3uJjSrwL/YiBOzswgfJgCREIr8WYWaNSBrldqJeP
+ UoeWstv1hJEeE1FS/gb5nCWgmYuvO90E7+Li4r1azKZdQlXZ+SEBpivgQf0h3A9+wJI6zMYM/
+ +dpS1UeL4rkI8sbWKG8nVSandV6JzNmxi/L7pbTgrCK8eraV9FLg9FpjEtuAb+ZnM62x6Bm+j
+ 8RC2TiLWa6DYwqe8eRcTAJFy6o0RWD2xf1b5725wCvK57xQojlr8uJet04ER8js/Q8M1BObEm
+ bFZ4PIGelme1DMSZ2T25vOVOKydfhB6v0QTUfUVAxh9ZO8OguZ+6sdMlPrIY/OIbHzZWrBnPx
+ IgwSf4inneI3YxPQcftDGcyTrmAs//6KjqjO2WpXxruhkpoKC7zDbfIuv9vqZUJT1UWFNG015
+ HgKPsuj5pcaIm3rgr/MRB5uEf8HwNqkk4DVnr4x/MMZVf8JDGaOTxeamAa6ReYGWrYHdGoS7E
+ 7LIeKWP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen venit, vidit, dixit 30.08.2016 15:10:
-> I want to see a "git log --oneline --graph" with all non-merge commits
-> removed, but history is rewritten so that the merge commits represent
-> the entire topics and are shown to have all the parents of the base
-> commits. e.g. if the full graph is
-> 
-> *   8118403 Merge commit 'bbb2437'
-> |\
-> | * bbb2437 3p
-> | * dfde6b9 2p
-> * | 9c0aeb2 2
-> |/
-> * 8db1c06 1
-> 
-> I just want to see
-> 
-> *   8118403 Merge commit 'bbb2437'
-> |\
-> | |
-> |/
-> * 8db1c06 1
-> 
-> I had a quick look of rev-list-options.txt but couldn't find anything
-> that does that (--simplify-merges looks different), and revision.c is
-> not that familiar to me to figure this out by myself. Help?
+Hi Junio,
 
-I don't think anything (we have) would give you two lines connecting the
-same two commits directly, i.e. a double edge in the graph as you
-indicate above.
+On Tue, 30 Aug 2016, Johannes Schindelin wrote:
 
-Michael
+> On Mon, 29 Aug 2016, Junio C Hamano wrote:
+> 
+> > Junio C Hamano <gitster@pobox.com> writes:
+> > 
+> > > I am not sure if it should be left as the responsibility of the
+> > > caller (i.e. check the_index.initialized to bark at a caller that
+> > > forgets to read from an index) ...
+> > 
+> > Scatch that.  That would not work in a freshly created repository
+> > before doing any "git add".  An empty index is a normal state, so it
+> > would not just be annoying to warn "You called me without reading
+> > the index" but is simply wrong.
+> 
+> Fine. I changed it to assert that the_index.initialized was set.
 
+Alas, that does not work, either. If no .git/index exists, read_index()
+will not set the "initialized" flag.
+
+So it turns out that I can either get distracted in a major way, or drop
+the patch. I opt for the latter.
+
+Ciao,
+Dscho
