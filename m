@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C17EC1F6C1
-	for <e@80x24.org>; Tue, 30 Aug 2016 14:07:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2156A1F6C1
+	for <e@80x24.org>; Tue, 30 Aug 2016 14:07:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753036AbcH3OHk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Aug 2016 10:07:40 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:35230 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752408AbcH3OHi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Aug 2016 10:07:38 -0400
-Received: by mail-pf0-f195.google.com with SMTP id h186so1241766pfg.2
-        for <git@vger.kernel.org>; Tue, 30 Aug 2016 07:07:38 -0700 (PDT)
+        id S1753376AbcH3OHp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Aug 2016 10:07:45 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:35238 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752941AbcH3OHl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2016 10:07:41 -0400
+Received: by mail-pf0-f196.google.com with SMTP id h186so1241817pfg.2
+        for <git@vger.kernel.org>; Tue, 30 Aug 2016 07:07:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=NjGatVToT08Cch9qFzzVOYoi3iBRRVF/AsmXZl3DMKw=;
-        b=GB6WBWo/r2maIQ6gces9l3nl7e6cnXhek2UIhHRmkhlmevI82/c/o3Qzfoch2YSB4A
-         DaUsuBH0KyFYhWxlkFG4DLxYrMuztSs2Y9+2d6JwNAHSdiAWAqunrihuDyA2eQlLE/qR
-         DXGQb68n/+iDvUeK2BjEuIuRQfYORr0vhgclTcV8lPJMg8HWu59K03d7sLumfgj753v+
-         5kUuaYzjyFftZT2afAalx57zeN2O9YCOhuAMjPPs2QqN1+pW+9fZYBV26jkXpE14BHcV
-         z3v4ZE7kYIRQMRk2Tw0SIhalgHIuPUyys/iGN/ggqNlk88mtV3VcxWTsIOCP+ZoKoasW
-         OC/w==
+        bh=GuoXfDKiNnKxA7gZKJok09d0IYM7kkapz6V2UdLPmdY=;
+        b=NefqWBn57Mjzd/SsH6tGRHV6Lcp5Ez+HnyLo4ElFYPFgT05aS/USysiPvlz0tfBFpt
+         9CrfIKxwJ6cCHdydE/oRqOaIHZ/h1G6XT6PiT/yVkNOz4CypFo846fgblDJdLnnbphqw
+         n7/ArmSLC7CiE5VFY8+ks8x46QCLEHXgAX154wkmtkhJUzjwAXkwI1m+RMttv8vv0rUU
+         f145Q5s04zE7jjL0P7KkMgffUL7IpyyHSOfWIKf5BKuo+YFSZJY/Pl/JuFKNsqw3vbOk
+         8HxKAugMZrlHttqUC1m2uywSEd7dYy/dPU4/T8xo4pjtnIeJONIUeVCEV7SziUqt7MAs
+         /NQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=NjGatVToT08Cch9qFzzVOYoi3iBRRVF/AsmXZl3DMKw=;
-        b=XN4iq4s/vRAM8QPMV+sR+LT3EOkgsV4ycLtwIotDLAQXf/DD8kQoKIn9N7YGmdiIRr
-         zGRRT2lps08ETSkKvp3gGdtfz0+Pl5mqhXAK4wc2vztlgdCMS9DHO6RoZBidstStg8z4
-         Gh/Z0o7p5//RFN7iaLfg/Ytl9uI1OWTTK1IIzC7n0L9XKDmKwbMSkJUNAdmztaOH4PZl
-         hSdUO35bIHh03dGhwLyrHQbEi3YQrkco3OZvst5d080i5uDcT0dwpS2PmPm0umBQmPcN
-         cQrJ/4YusgDvEwNFFi3uz/fUHjQSWWEReNS1iZ6NlFAc7FkyjYU0KL27qFGV7QMFf2Y+
-         UPVQ==
-X-Gm-Message-State: AE9vXwMhhOzxPP79b1NITsHfYuuQGIjju7aQgZOGRFznlUovGQ98RT97IsLKyVm62DMomg==
-X-Received: by 10.98.81.1 with SMTP id f1mr6528950pfb.35.1472566057832;
-        Tue, 30 Aug 2016 07:07:37 -0700 (PDT)
+        bh=GuoXfDKiNnKxA7gZKJok09d0IYM7kkapz6V2UdLPmdY=;
+        b=kIO26dXvfjFaIa0J4ISiFAJiwZESv0xjgCjCfVXgWpFaJV62p2cOIAdTJcxQ/dMSmb
+         M3mWPVKnvPgG1pUZ02zhx0XhxmqD5m84GeriJhveE8KMipOxYom2rfWSZ9sDmwpweIYS
+         GHGYgSOFdEdOySUsxvmyWdB1/AS6MIwWeSSgNW00Z2xiyiMhsVyPahDPSBzHmGwqVvyp
+         nlj2vCojfbR8hd/QFiaeKYXEe4hcYqLPZ7fb79hpssQYwpaZvg0hECKZa+QSy6TW8NRC
+         uJQbfUbsrZyuai/FnLQ1Jwgz8qUbnLP05ydW6XTtpK3lZAXsjsiUFn6khmOvc2FFWsHR
+         xtbg==
+X-Gm-Message-State: AE9vXwOkYQGAwlbGEicGZu70VpwisDhF/UHpOuTQW2pLyNM9CVDdOilz5thTXLAv7LA7vg==
+X-Received: by 10.98.58.73 with SMTP id h70mr6397987pfa.125.1472566060221;
+        Tue, 30 Aug 2016 07:07:40 -0700 (PDT)
 Received: from tci.int.yp.com ([216.2.203.2])
-        by smtp.gmail.com with ESMTPSA id j2sm57711654paa.46.2016.08.30.07.07.37
+        by smtp.gmail.com with ESMTPSA id j2sm57711654paa.46.2016.08.30.07.07.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 30 Aug 2016 07:07:37 -0700 (PDT)
+        Tue, 30 Aug 2016 07:07:38 -0700 (PDT)
 From:   Brian Henderson <henderson.bj@gmail.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, e@80x24.org, gitster@pobox.com,
         Brian Henderson <henderson.bj@gmail.com>
-Subject: [PATCH v4 1/3] diff-highlight: add some tests
-Date:   Tue, 30 Aug 2016 07:07:12 -0700
-Message-Id: <20160830140714.19048-2-henderson.bj@gmail.com>
+Subject: [PATCH v4 3/3] diff-highlight: add support for --graph output
+Date:   Tue, 30 Aug 2016 07:07:14 -0700
+Message-Id: <20160830140714.19048-4-henderson.bj@gmail.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20160830140714.19048-1-henderson.bj@gmail.com>
 References: <xmqq4m638ded.fsf@gitster.mtv.corp.google.com>
@@ -64,222 +64,84 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Brian Henderson <henderson.bj@gmail.com>
 ---
- contrib/diff-highlight/Makefile                  |   5 +
- contrib/diff-highlight/t/Makefile                |  22 +++
- contrib/diff-highlight/t/t9400-diff-highlight.sh | 163 +++++++++++++++++++++++
- 3 files changed, 190 insertions(+)
- create mode 100644 contrib/diff-highlight/Makefile
- create mode 100644 contrib/diff-highlight/t/Makefile
- create mode 100755 contrib/diff-highlight/t/t9400-diff-highlight.sh
+ contrib/diff-highlight/diff-highlight            | 19 +++++++++++++------
+ contrib/diff-highlight/t/t9400-diff-highlight.sh |  2 +-
+ 2 files changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/contrib/diff-highlight/Makefile b/contrib/diff-highlight/Makefile
-new file mode 100644
-index 0000000..9018724
---- /dev/null
-+++ b/contrib/diff-highlight/Makefile
-@@ -0,0 +1,5 @@
-+# nothing to build
-+all:
+diff --git a/contrib/diff-highlight/diff-highlight b/contrib/diff-highlight/diff-highlight
+index ffefc31..9280c88 100755
+--- a/contrib/diff-highlight/diff-highlight
++++ b/contrib/diff-highlight/diff-highlight
+@@ -21,6 +21,10 @@ my $RESET = "\x1b[m";
+ my $COLOR = qr/\x1b\[[0-9;]*m/;
+ my $BORING = qr/$COLOR|\s/;
+ 
++# The patch portion of git log -p --graph should only ever have preceding | and
++# not / or \ as merge history only shows up on the commit line.
++my $GRAPH = qr/$COLOR?\|$COLOR?\s+/;
 +
-+test:
-+	$(MAKE) -C t
-diff --git a/contrib/diff-highlight/t/Makefile b/contrib/diff-highlight/t/Makefile
-new file mode 100644
-index 0000000..5ff5275
---- /dev/null
-+++ b/contrib/diff-highlight/t/Makefile
-@@ -0,0 +1,22 @@
-+-include ../../../config.mak.autogen
-+-include ../../../config.mak
-+
-+# copied from ../../t/Makefile
-+SHELL_PATH ?= $(SHELL)
-+SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
-+T = $(wildcard t[0-9][0-9][0-9][0-9]-*.sh)
-+
-+all: test
-+test: $(T)
-+
-+.PHONY: help clean all test $(T)
-+
-+help:
-+	@echo 'Run "$(MAKE) test" to launch test scripts'
-+	@echo 'Run "$(MAKE) clean" to remove trash folders'
-+
-+$(T):
-+	@echo "*** $@ ***"; '$(SHELL_PATH_SQ)' $@ $(GIT_TEST_OPTS)
-+
-+clean:
-+	$(RM) -r 'trash directory'.*
+ my @removed;
+ my @added;
+ my $in_hunk;
+@@ -32,12 +36,12 @@ $SIG{PIPE} = 'DEFAULT';
+ while (<>) {
+ 	if (!$in_hunk) {
+ 		print;
+-		$in_hunk = /^$COLOR*\@/;
++		$in_hunk = /^$GRAPH*$COLOR*\@/;
+ 	}
+-	elsif (/^$COLOR*-/) {
++	elsif (/^$GRAPH*$COLOR*-/) {
+ 		push @removed, $_;
+ 	}
+-	elsif (/^$COLOR*\+/) {
++	elsif (/^$GRAPH*$COLOR*\+/) {
+ 		push @added, $_;
+ 	}
+ 	else {
+@@ -46,7 +50,7 @@ while (<>) {
+ 		@added = ();
+ 
+ 		print;
+-		$in_hunk = /^$COLOR*[\@ ]/;
++		$in_hunk = /^$GRAPH*$COLOR*[\@ ]/;
+ 	}
+ 
+ 	# Most of the time there is enough output to keep things streaming,
+@@ -163,6 +167,9 @@ sub highlight_pair {
+ 	}
+ }
+ 
++# we split either by $COLOR or by character. This has the side effect of
++# leaving in graph cruft. It works because the graph cruft does not contain "-"
++# or "+"
+ sub split_line {
+ 	local $_ = shift;
+ 	return utf8::decode($_) ?
+@@ -211,8 +218,8 @@ sub is_pair_interesting {
+ 	my $suffix_a = join('', @$a[($sa+1)..$#$a]);
+ 	my $suffix_b = join('', @$b[($sb+1)..$#$b]);
+ 
+-	return $prefix_a !~ /^$COLOR*-$BORING*$/ ||
+-	       $prefix_b !~ /^$COLOR*\+$BORING*$/ ||
++	return $prefix_a !~ /^$GRAPH*$COLOR*-$BORING*$/ ||
++	       $prefix_b !~ /^$GRAPH*$COLOR*\+$BORING*$/ ||
+ 	       $suffix_a !~ /^$BORING*$/ ||
+ 	       $suffix_b !~ /^$BORING*$/;
+ }
 diff --git a/contrib/diff-highlight/t/t9400-diff-highlight.sh b/contrib/diff-highlight/t/t9400-diff-highlight.sh
-new file mode 100755
-index 0000000..7c303f7
---- /dev/null
+index 54e11fe..e42232d 100755
+--- a/contrib/diff-highlight/t/t9400-diff-highlight.sh
 +++ b/contrib/diff-highlight/t/t9400-diff-highlight.sh
-@@ -0,0 +1,163 @@
-+#!/bin/sh
-+
-+test_description='Test diff-highlight'
-+
-+CURR_DIR=$(pwd)
-+TEST_OUTPUT_DIRECTORY=$(pwd)
-+TEST_DIRECTORY="$CURR_DIR"/../../../t
-+DIFF_HIGHLIGHT="$CURR_DIR"/../diff-highlight
-+
-+CW="$(printf "\033[7m")"	# white
-+CR="$(printf "\033[27m")"	# reset
-+
-+. "$TEST_DIRECTORY"/test-lib.sh
-+
-+if ! test_have_prereq PERL
-+then
-+	skip_all='skipping diff-highlight tests; perl not available'
-+	test_done
-+fi
-+
-+# dh_test is a test helper function which takes 3 file names as parameters. The
-+# first 2 files are used to generate diff and commit output, which is then
-+# piped through diff-highlight. The 3rd file should contain the expected output
-+# of diff-highlight (minus the diff/commit header, ie. everything after and
-+# including the first @@ line).
-+dh_test () {
-+	a="$1" b="$2" &&
-+
-+	cat >patch.exp &&
-+
-+	{
-+		cat "$a" >file &&
-+		git add file &&
-+		git commit -m "Add a file" &&
-+
-+		cat "$b" >file &&
-+		git diff file >diff.raw &&
-+		git commit -am "Update a file" &&
-+		git show >commit.raw
-+	} >/dev/null &&
-+
-+	"$DIFF_HIGHLIGHT" <diff.raw | test_strip_patch_header >diff.act &&
-+	"$DIFF_HIGHLIGHT" <commit.raw | test_strip_patch_header >commit.act &&
-+	test_cmp patch.exp diff.act &&
-+	test_cmp patch.exp commit.act
-+}
-+
-+test_strip_patch_header () {
-+	sed -n '/^@@/,$p' $*
-+}
-+
-+test_expect_success 'diff-highlight highlights the beginning of a line' '
-+	cat >a <<-\EOF &&
-+		aaa
-+		bbb
-+		ccc
-+	EOF
-+
-+	cat >b <<-\EOF &&
-+		aaa
-+		0bb
-+		ccc
-+	EOF
-+
-+	dh_test a b <<-EOF
-+		@@ -1,3 +1,3 @@
-+		 aaa
-+		-${CW}b${CR}bb
-+		+${CW}0${CR}bb
-+		 ccc
-+	EOF
-+'
-+
-+test_expect_success 'diff-highlight highlights the end of a line' '
-+	cat >a <<-\EOF &&
-+		aaa
-+		bbb
-+		ccc
-+	EOF
-+
-+	cat >b <<-\EOF &&
-+		aaa
-+		bb0
-+		ccc
-+	EOF
-+
-+	dh_test a b <<-EOF
-+		@@ -1,3 +1,3 @@
-+		 aaa
-+		-bb${CW}b${CR}
-+		+bb${CW}0${CR}
-+		 ccc
-+	EOF
-+'
-+
-+test_expect_success 'diff-highlight highlights the middle of a line' '
-+	cat >a <<-\EOF &&
-+		aaa
-+		bbb
-+		ccc
-+	EOF
-+
-+	cat >b <<-\EOF &&
-+		aaa
-+		b0b
-+		ccc
-+	EOF
-+
-+	dh_test a b <<-EOF
-+		@@ -1,3 +1,3 @@
-+		 aaa
-+		-b${CW}b${CR}b
-+		+b${CW}0${CR}b
-+		 ccc
-+	EOF
-+'
-+
-+test_expect_success 'diff-highlight does not highlight whole line' '
-+	cat >a <<-\EOF &&
-+		aaa
-+		bbb
-+		ccc
-+	EOF
-+
-+	cat >b <<-\EOF &&
-+		aaa
-+		000
-+		ccc
-+	EOF
-+
-+	dh_test a b <<-EOF
-+		@@ -1,3 +1,3 @@
-+		 aaa
-+		-bbb
-+		+000
-+		 ccc
-+	EOF
-+'
-+
-+test_expect_failure 'diff-highlight highlights mismatched hunk size' '
-+	cat >a <<-\EOF &&
-+		aaa
-+		bbb
-+	EOF
-+
-+	cat >b <<-\EOF &&
-+		aaa
-+		b0b
-+		ccc
-+	EOF
-+
-+	dh_test a b <<-EOF
-+		@@ -1,3 +1,3 @@
-+		 aaa
-+		-b${CW}b${CR}b
-+		+b${CW}0${CR}b
-+		+ccc
-+	EOF
-+'
-+
-+# TODO add multi-byte test
-+
-+test_done
+@@ -209,7 +209,7 @@ test_expect_failure 'diff-highlight highlights mismatched hunk size' '
+ 
+ # TODO add multi-byte test
+ 
+-test_expect_failure 'diff-highlight works with the --graph option' '
++test_expect_success 'diff-highlight works with the --graph option' '
+ 	dh_test_setup_history &&
+ 
+ 	# topo-order so that the order of the commits is the same as with --graph
 -- 
 2.9.3
 
