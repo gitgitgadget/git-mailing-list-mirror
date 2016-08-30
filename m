@@ -7,61 +7,57 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D52B31F859
-	for <e@80x24.org>; Tue, 30 Aug 2016 11:47:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 936601F6C1
+	for <e@80x24.org>; Tue, 30 Aug 2016 12:32:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758301AbcH3Lr0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Aug 2016 07:47:26 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:37334 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757884AbcH3LrZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Aug 2016 07:47:25 -0400
-Received: by mail-wm0-f41.google.com with SMTP id i5so31262719wmg.0
-        for <git@vger.kernel.org>; Tue, 30 Aug 2016 04:47:25 -0700 (PDT)
+        id S1758219AbcH3Mc1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Aug 2016 08:32:27 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:32845 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758193AbcH3Mc0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2016 08:32:26 -0400
+Received: by mail-wm0-f68.google.com with SMTP id o80so2951678wme.0
+        for <git@vger.kernel.org>; Tue, 30 Aug 2016 05:32:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=wx+aLGJ9cqhyg1C5pbjNu5ZnhdQEqsniDjq6gzyZoPs=;
-        b=KLSHA8BAA+PC89Xdb1MFDPr4I/Wba+hv5L7QNnjJe02mv2VceqzBReqKYP4Z15uEWP
-         yYk2JWNIITazyUuYjI9obGKmN04hSkq3qdHzT8auehawJV9LDOHPTyyNbC8SRKwoOO1o
-         9oE4Xvd9CVgvj51w20QlhaNtBnC7U/sBL+rny5IhRhOsSnfYX98z+Jm231F0vsGlvURH
-         AfRA6GnUiXqGwrL1hhPAMyATmkBzke/DFmQN0uh931oPpxmfrLHWl1//lWI/T2aqViKw
-         nBxtZxUl5ARoLmjexRs1X9f5z4zaOAIN5AU3xRyvNcfe7kuLpRoiuiTlWQyyvcQO+dLm
-         2L5A==
+        bh=8hkg2rhTJ+RZNhSbHpOr0JsbamXBgq5umKFm5t8O5aU=;
+        b=LgxIrIcgfSaeaixxSQ57lKXWI2alokaIaDPfINKd1ZZCPnVY2z7ArxbJjj4BtHT1t1
+         niEYXKE4ymprqUrA2rrO2pNvZPjGn8WFfHvFGOSXcRjAfEvUQsS7kOo79C7g4ziWUIkR
+         u5/ZrEngBE9RH6cuvGPebXXGQ6zN0XMVZE8Clu76tqBY2qzdXuWjrM8/39noL4E3+1HF
+         l9Erv3eGZa4VKaXBJUE5BjF8f+iyLOX+aSS7s1FJqOKAnJ2JZ9riDtEQOPOaEi5X7LSO
+         ypdlxDw49RMqHLmJovaLl/Os5jBLggXtG1q82OJr/YJSILjx1KCo7+is4wCzFFRSGLp+
+         j4PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=wx+aLGJ9cqhyg1C5pbjNu5ZnhdQEqsniDjq6gzyZoPs=;
-        b=dMQ+eLnm1cyDeMA52oL/0pL+xJdajzs0KbXCLA/eMdSeBzQMitApbNbS7LzEnpJPYh
-         imYqR88PLmHlYCbCgtUYHsl0vz85ZdzQPk0EI+mkszclTmmZUCLnrdjel8m6Bkfh/9wB
-         /7sTNP6cs1ElIN2R0qPMRSBmqDNUlcL7p8i4zz0DZbyPlCXH1sRYb5LYEjKUAwgV3n5I
-         hSZE/tTVK/B7xIhUoFtCcRxaRrG4bIALvJOy4GU84olO9GzbDA0LYcFs5UUVS9V5788s
-         +v05Pj6PkvXeKZFfnwKqoL9iEQOjvy/nq30deZ4EjuLCTeUfWdJXxH44IKCn0bmFmTud
-         qm6w==
-X-Gm-Message-State: AE9vXwPj9eRCXaz+ROF2cZhcGFbQf6WgLwNy/wpnG3O7QSPM1dAvLqmjN6RkoRst4yGirQ==
-X-Received: by 10.28.148.148 with SMTP id w142mr15982648wmd.48.1472557644257;
-        Tue, 30 Aug 2016 04:47:24 -0700 (PDT)
+        bh=8hkg2rhTJ+RZNhSbHpOr0JsbamXBgq5umKFm5t8O5aU=;
+        b=crqMifsJM6FabKJaH7qcVdsLsH2ICQQ3CZPpEn9C8DG8BBL/YjjaEnRhaLTxPZFe/K
+         WFkq2yNo3/dsqKGVkSI5NXZfWHPhXuKm+uHjyUTjg5PwNo0eGznWOn4zHNks8s3pHyTp
+         FYcYa9SkvBoyRl9tZvQR8JDuehFq5B7+RNqBtoEqvGTrNjPqWwB3O9vBe6aFzO/Hjhrv
+         bMU4aNIRp9SyepkWSI4mxJ1ZGE60EpDOeBwx4TRK9JuRbMpoZm3NGMEEJ67gsam71DvZ
+         ULjSLAtxF1XALhPf4x4tVTXV8IAak/vHG/m+cMPelkF5NBapRGfUSUS3Y0ubEPtJ0uON
+         jTCg==
+X-Gm-Message-State: AE9vXwPpuxNWbL/TdV93ZrVm7QZ0+FZbFBnSTA3/lR9Pd8fOGdb1ik6vVGr1GDfuLHOfQQ==
+X-Received: by 10.194.5.230 with SMTP id v6mr3582016wjv.92.1472560344605;
+        Tue, 30 Aug 2016 05:32:24 -0700 (PDT)
 Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id e5sm18302689wma.13.2016.08.30.04.47.23
+        by smtp.gmail.com with ESMTPSA id i3sm39334101wjd.31.2016.08.30.05.32.23
         (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 30 Aug 2016 04:47:23 -0700 (PDT)
+        Tue, 30 Aug 2016 05:32:23 -0700 (PDT)
 Content-Type: text/plain; charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v6 10/13] convert: generate large test files only once
+Subject: Re: [PATCH v6 13/13] read-cache: make sure file handles are not inherited by child processes
 From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqq37lncvj6.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 30 Aug 2016 13:47:23 +0200
-Cc:     Stefan Beller <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-        Martin-Louis Bright <mlbright@gmail.com>
+In-Reply-To: <xmqq37lnbbpk.fsf@gitster.mtv.corp.google.com>
+Date:   Tue, 30 Aug 2016 14:32:22 +0200
+Cc:     git@vger.kernel.org, peff@peff.net, sbeller@google.com,
+        Johannes.Schindelin@gmx.de, jnareb@gmail.com, mlbright@gmail.com
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <49AB8322-E322-486E-AF36-2C46BC55C82A@gmail.com>
-References: <20160825110752.31581-1-larsxschneider@gmail.com> <20160825110752.31581-11-larsxschneider@gmail.com> <CAGZ79kZ5utc+0iXKPh=tu4rD9H6+AKZmc08_jLxQhgiuFUA+Yw@mail.gmail.com> <E574E25A-F87F-416C-88E5-E3CE1F6B54D0@gmail.com> <xmqq37lncvj6.fsf@gitster.mtv.corp.google.com>
+Message-Id: <4A177D61-AA25-415A-808D-B6BDA3BB5C47@gmail.com>
+References: <20160825110752.31581-1-larsxschneider@gmail.com> <20160825110752.31581-14-larsxschneider@gmail.com> <xmqqy43fbgcj.fsf@gitster.mtv.corp.google.com> <4D9E5AED-7003-4707-8791-1C25432DB558@gmail.com> <xmqq37lnbbpk.fsf@gitster.mtv.corp.google.com>
 To:     Junio C Hamano <gitster@pobox.com>
 X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
@@ -70,42 +66,82 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-> On 29 Aug 2016, at 19:52, Junio C Hamano <gitster@pobox.com> wrote:
+> On 29 Aug 2016, at 21:45, Junio C Hamano <gitster@pobox.com> wrote:
 >=20
 > Lars Schneider <larsxschneider@gmail.com> writes:
 >=20
->>> On 25 Aug 2016, at 21:17, Stefan Beller <sbeller@google.com> wrote:
->>>=20
->>>> On Thu, Aug 25, 2016 at 4:07 AM,  <larsxschneider@gmail.com> wrote:
->>>> From: Lars Schneider <larsxschneider@gmail.com>
->>>>=20
->>>> Generate more interesting large test files
->>>=20
->>> How are the large test files more interesting?
->>> (interesting in the notion of covering more potential bugs?
->>> easier to debug? better to maintain, or just a pleasant read?)
->>=20
->> The old large test file was 1MB of zeros and 1 byte with a one, =
-repeated 2048 times.
->>=20
->> Since the filter uses 64k packets we would test a large number of =
-equally looking packets.
->>=20
->> That's why I thought the pseudo random content is more interesting.
+>> I see. Thanks for the explanation.
 >=20
-> I guess my real question is why it is not just a single invocation
-> of test-genrandom that gives you the whole test file; if you are
-> using 20MB, the simplest would be to grab 20MB out of test-genrandom.
-> With that hopefully you won't see large number of equally looking
-> packets, no?
+> I expect the updated log message to explain the issue correctly
+> then.
 
-True, but applying rot13 (via tr ...) on 20+ MB takes quite a bit of
-time. That's why I came up with the 1M SP in between.
+Sure!
 
-However, I realized that testing a large amount of data is not really
-necessary for the final series. A single packet is 64k. A 500k pseudo =
-random
-test file should be sufficient. This will make the test way simpler.
+
+>>> The parent is
+>>> very likely to have pack windows open into .pack files and they need
+>>> to be closed on the child side after fork(2) starts the child
+>>> process but before execve(2) runs the helper, if we want to avoid
+>>> file descriptor leaks.
+>>=20
+>> I think I understand what you are saying. However, during my tests
+>> .pack file fd's were never a problem.
+>=20
+> I do not expect during the lifetime of your long-running helper
+> anybody would try to unlink an existing packfile, so it is unlikely
+> that "cannot unlink an open file on Windows" issue to come up.  And
+> the cross-platform problem I pointed out is a fd leak; leaks would
+> not show up until you run out of the resource, just like you
+> wouldn't notice small memory leak here and there UNLESS you actively
+> look for them.  I would be surprised if your "tests" found anything.
+>=20
+>> How would I find the open .pack file fd's?  Should I go through
+>> /proc/PID/fd? Why is this no problem for other longer running
+>> commands such as the git-credential-cache--daemon or git-daemon?
+>=20
+> Nobody said this is "no problem for others".  While discussing the
+> patch that started this thread, we noticed that any open file
+> descriptor the main process has when the long-running clean/smudge
+> helper is spawned _is_ a problem.  Other helpers may share the same
+> problem, and if they do, that is all the more reason that fixing the
+> file descriptor leak is a good thing.
+>=20
+> The primary thing I was wondering was if we should open the window
+> into packfiles with CLOEXEC, just like we recently started opening
+> the tempfiles and lockfiles with the flag.  The reason why I asked
+> if the site that spawns (i.e. run_command API) has an easy access to
+> the list of file descriptors that we opened ONLY for ourselves is
+> because that would make it possible to consider an alternative
+> approach close them before execve(2) in run_commands API.  That
+> would save us from having to sprinkle existing calls to open(2) with
+> CLOEXEC.  But if that is not the case, opening them with CLOEXEC is
+> a much better solution than going outside the program to "find" them
+> in non-portable ways.
+
+The pack files are opened before the filter process is forked. =
+Therefore,
+I think CLOEXEC makes sense for them. Should this change be part of this=20=
+
+series? If yes, would it look like below? Should I adjust the function =
+name?
 
 Thanks,
-Lars=
+Lars
+
+diff --git a/sha1_file.c b/sha1_file.c
+index d5e1121..759991e 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1485,7 +1485,7 @@ int check_sha1_signature(const unsigned char =
+*sha1, void *map,
+=20
+ int git_open_noatime(const char *name)
+ {
+-	static int sha1_file_open_flag =3D O_NOATIME;
++	static int sha1_file_open_flag =3D O_NOATIME | O_CLOEXEC;
+=20
+ 	for (;;) {
+ 		int fd;
+
+
+
