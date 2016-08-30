@@ -6,78 +6,93 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A93CB1F6C1
-	for <e@80x24.org>; Tue, 30 Aug 2016 18:26:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 169D11F6C1
+	for <e@80x24.org>; Tue, 30 Aug 2016 18:30:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751611AbcH3SZ6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Aug 2016 14:25:58 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52197 "EHLO
+        id S1758950AbcH3SaU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Aug 2016 14:30:20 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64995 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751166AbcH3SZ5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Aug 2016 14:25:57 -0400
+        with ESMTP id S1752902AbcH3SaT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2016 14:30:19 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6DD513AFBD;
-        Tue, 30 Aug 2016 14:25:56 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A5D5839A5C;
+        Tue, 30 Aug 2016 14:30:17 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=6GKrevNDJzix
-        b7i4Mqxjb/tdIZc=; b=BmJp4r7QitXg3IRZ33dtKr3VaJd6VhA4UJ0V/2L2lrMU
-        zGu9Up/IND/4XOfkJ5P1Gwb1Z+8Z1p8r4RYei5SPhBYsA1KlFqgvdaP3q0oFexqv
-        rEIsIQCLIL56UobiJOnHsiU3/NWaVsn8a1obxfRdqrm/7JUU7c9ybeBq7bRiCq8=
+        :content-type; s=sasl; bh=MCmZaK/C/dMNt4JgA8qQY6cUVJU=; b=Q/gXBC
+        m83WanplnJr1YVUYxYOropUYwA4QNLpHX6azjeeHGNcWfpw/kMA2wyqv5Ui1neyB
+        D9N9fGQj3d++IlsxIlgdREnd7BjKuAAesQV8kEASPKeGZNNr3tqPX+e5MlrG8jhq
+        ff0zK8cc15DLkjn3UdbSq3DNEBECzLJmI+JPc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=SqIyqv
-        yLd3E7hvQoNs1sjShgbBTsMRwETqfjfsFd1j1L9nb/6ygQFvGsiDELBy2eNzdrDl
-        qt5ASezwdfEliIZ7tdlcyMCpy4FtM7L2PSOFExQ3a7Ls1NLrUUncbFoRzJJddh/H
-        +/qLWMKWoYE44pnkjAsGvOWufCCuI2OD2b71c=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6398A3AFBC;
-        Tue, 30 Aug 2016 14:25:56 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=X8RYkVjxhu8rA4D8EJKK8+IoOcEGX5z2
+        z3Fyo+dH/k72TUl2jLluvZN8umP1Eu/25oBiDRMQZs3VhZHw9iKR3EB/MlcEMeQB
+        H5Hhdmf+kQUyGBGDAb9U6Zycjo39ACHgermbZqgEX23Z2zLh8fDYCvj8TxeaVtzj
+        T/SRXPc6Cow=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9E97439A5B;
+        Tue, 30 Aug 2016 14:30:17 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E14F43AFBB;
-        Tue, 30 Aug 2016 14:25:55 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2352639A5A;
+        Tue, 30 Aug 2016 14:30:17 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 05/22] sequencer: allow the sequencer to take custody of malloc()ed data
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 06/22] sequencer: release memory that was allocated when reading options
 References: <cover.1472457609.git.johannes.schindelin@gmx.de>
-        <e4e7eab3d0610faa9d3173a585902e50128d8e15.1472457609.git.johannes.schindelin@gmx.de>
-        <733a899a-470b-79b3-b059-b38313a7057d@gmail.com>
-        <alpine.DEB.2.20.1608300915470.129229@virtualbox>
-        <e1cebf74-1592-5ddc-9979-eeffcbf4d788@gmail.com>
-Date:   Tue, 30 Aug 2016 11:25:53 -0700
-In-Reply-To: <e1cebf74-1592-5ddc-9979-eeffcbf4d788@gmail.com> ("Jakub
-        =?utf-8?Q?Nar=C4=99bski=22's?= message of "Tue, 30 Aug 2016 13:08:12
- +0200")
-Message-ID: <xmqqk2ey3yha.fsf@gitster.mtv.corp.google.com>
+        <e4b48a9a73ff33179556c0137caae85bfb4a48d9.1472457609.git.johannes.schindelin@gmx.de>
+Date:   Tue, 30 Aug 2016 11:30:14 -0700
+In-Reply-To: <e4b48a9a73ff33179556c0137caae85bfb4a48d9.1472457609.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Mon, 29 Aug 2016 10:04:37 +0200
+        (CEST)")
+Message-ID: <xmqqfupm3ya1.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 30F2E692-6EDF-11E6-9955-F7BB12518317-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: CCA6130C-6EDF-11E6-8BFC-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> In my personal opinion 'set_me_free_after_use' is not the best name,
-> but I unfortunately do not have a better proposal.  Maybe 'entrust_ptr'=
-,
-> or 'entrusted_data' / 'entrusted_ptr' / 'entrusted'?
+> @@ -811,13 +813,18 @@ static int populate_opts_cb(const char *key, const char *value, void *data)
+>  		opts->allow_ff = git_config_bool_or_int(key, value, &error_flag);
+>  	else if (!strcmp(key, "options.mainline"))
+>  		opts->mainline = git_config_int(key, value);
+> -	else if (!strcmp(key, "options.strategy"))
+> +	else if (!strcmp(key, "options.strategy")) {
+>  		git_config_string(&opts->strategy, key, value);
+> -	else if (!strcmp(key, "options.gpg-sign"))
+> +		sequencer_entrust(opts, (char *) opts->strategy);
+> +	}
+> +	else if (!strcmp(key, "options.gpg-sign")) {
+>  		git_config_string(&opts->gpg_sign, key, value);
+> +		sequencer_entrust(opts, (char *) opts->gpg_sign);
+> +	}
+>  	else if (!strcmp(key, "options.strategy-option")) {
+>  		ALLOC_GROW(opts->xopts, opts->xopts_nr + 1, opts->xopts_alloc);
+> -		opts->xopts[opts->xopts_nr++] = xstrdup(value);
+> +		opts->xopts[opts->xopts_nr++] =
+> +			sequencer_entrust(opts, xstrdup(value));
+>  	} else
+>  		return error(_("Invalid key: %s"), key);
 
-Is this to accumulate to-be-freed pointers?
+Hmm.
 
-I think we often call a local variable that points at a piece of
-memory to be freed "to_free", and that is an appropriate name for
-what this function is trying to do.
+I would have expected a call to sequencer_opts_clear(&opts) once the
+machinery is done with the options structure, and among these places
+where an old value in opts->field is overwritten by a new one would
+get
 
-It is a bit surprising that the careless memory management in this
-codepath leaks only the dumb pieces of memory (as opposed to
-pointers to structures like string list that needs _clear()
-functions, in which case we cannot get away with list of
-to-be-freed).  I guess we were somewhat lucky ;-)
+	free(opt->field); opt->field = ... new value ...;
+
+Perhaps there was a good reason to do it this way (one valid reason
+may be that there is _no_ good place to declare that opts is now
+done and it is safe to call sequencer_opts_clear() on it), but this
+looks backwards from the way things are usually done.
+
