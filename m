@@ -2,143 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-1.7 required=3.0 tests=BAYES_40,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 012841F6C1
-	for <e@80x24.org>; Tue, 30 Aug 2016 20:18:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64C961F6C1
+	for <e@80x24.org>; Tue, 30 Aug 2016 20:23:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753071AbcH3USg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Aug 2016 16:18:36 -0400
-Received: from smtprelay0009.hostedemail.com ([216.40.44.9]:52826 "EHLO
-        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1750859AbcH3USe (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 30 Aug 2016 16:18:34 -0400
-Received: from filter.hostedemail.com (unknown [216.40.38.60])
-        by smtprelay01.hostedemail.com (Postfix) with ESMTP id 3878D2366C;
-        Tue, 30 Aug 2016 20:18:32 +0000 (UTC)
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-HE-Tag: tin97_2d46c4564c24b
-X-Filterd-Recvd-Size: 4965
-Received: from joe-laptop.perches.com (unknown [96.251.125.34])
-        (Authenticated sender: joe@perches.com)
-        by omf12.hostedemail.com (Postfix) with ESMTPA;
-        Tue, 30 Aug 2016 20:18:30 +0000 (UTC)
-From:   Joe Perches <joe@perches.com>
-To:     git@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Joe Perches <joe@perches.com>
-Subject: [PATCH] git-send-email: Add ability to cc: any "trailers" from commit message
-Date:   Tue, 30 Aug 2016 13:18:29 -0700
-Message-Id: <b2aa91d59a6cdd468bcbe85b45807cc1b82b23ed.1472588158.git.joe@perches.com>
-X-Mailer: git-send-email 2.10.0.rc2.1.gb2aa91d
+        id S1752340AbcH3UXA convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 30 Aug 2016 16:23:00 -0400
+Received: from mail1.bemta12.messagelabs.com ([216.82.251.17]:51162 "EHLO
+        mail1.bemta12.messagelabs.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752168AbcH3UW7 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 30 Aug 2016 16:22:59 -0400
+X-Greylist: delayed 403 seconds by postgrey-1.27 at vger.kernel.org; Tue, 30 Aug 2016 16:22:59 EDT
+Received: from [216.82.251.34] by server-17.bemta-12.messagelabs.com id 61/EA-15568-D89E5C75; Tue, 30 Aug 2016 20:16:13 +0000
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrAIsWRWlGSWpSXmKPExsVyYG+wh27vy6P
+  hBqeeqFl0XelmcmD0+LxJLoAxijUzLym/IoE1Y/rEHtaCqcwVjyeVNDDeYOpi5OIQEtjAKNH7
+  uJcZwlnOKLHoZBdjFyMnB5uAtsSCow2sXYwcHCIC+hJ9F0RBwswCuhKz575nBbGFBRQlvm5+w
+  g5iiwgoSTw8spoNwjaSWPiwjwnEZhFQlWiZ/RYszisQKLH24COwekYBMYnvp9YwQcwUl7j1ZD
+  6YLSEgILFkz3lmCFtU4uXjf6wQtpzE94+NzBD1ehI3pk5hg7C1JZYtfM0MMV9Q4uTMJywgthD
+  QPU92LGCbwCg8C8mKWUjaZyFpn4WkfQEjyypGjeLUorLUIl1DS72kosz0jJLcxMwcXUNDI73c
+  1OLixPTUnMSkYr3k/NxNjMDQr2dgYNzBOKXR6xCjJAeTkijvno6j4UJ8SfkplRmJxRnxRaU5q
+  cWHGGU4OJQkeE+8AMoJFqWmp1akZeYAoxAmLcHBoyTCewEkzVtckJhbnJkOkTrFqMux4MfttU
+  xCLHn5ealS4rwdIEUCIEUZpXlwI2AJ4RKjrJQwLyMDA4MQT0FqUW5mCar8K0ZxDkYlYV5fkCk
+  8mXklcJteAR3BBHREwZ3DIEeUJCKkpBoYi6/PfcuTdHv7l5+O6x9xHrzlP9GONfPP2TXdHnMj
+  JD50Cej++/zNzjz86PJFJ5qeMf9qvbvbOnOHovifCmPDNe4/05MWVL7rZ1zlp/7D0di3wXFF3
+  CThXo9ve16Inpt080P5zVWzPugzeHa5OTIbzblw2+/Fp7/6sql2oZPs5v6PnPxLM6VTXYmlOC
+  PRUIu5qDgRAEmmUrYDAwAA
+X-Env-Sender: Scott.Sobstad@jda.com
+X-Msg-Ref: server-8.tower-145.messagelabs.com!1472588172!49208693!1
+X-Originating-IP: [192.189.83.72]
+X-StarScan-Received: 
+X-StarScan-Version: 8.84; banners=-,-,-
+X-VirusChecked: Checked
+Received: (qmail 14033 invoked from network); 30 Aug 2016 20:16:13 -0000
+Received: from mx.jda.com (HELO mx.jda.com) (192.189.83.72)
+  by server-8.tower-145.messagelabs.com with AES256-SHA encrypted SMTP; 30 Aug 2016 20:16:13 -0000
+Received: from MD1PRDVHUB02.jda.corp.local (10.0.0.144) by
+ MD1PRDVEDGE01.jda.com (172.28.8.92) with Microsoft SMTP Server (TLS) id
+ 14.3.235.1; Tue, 30 Aug 2016 16:16:09 -0400
+Received: from MD1PRDMBX01.jda.corp.local ([169.254.1.58]) by
+ MD1PRDVHUB02.jda.corp.local ([10.0.0.144]) with mapi id 14.03.0235.001; Tue,
+ 30 Aug 2016 16:16:12 -0400
+From:   Scott Sobstad <Scott.Sobstad@jda.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     Patrick Richert <Patrick.Richert@jda.com>
+Subject: FW: GIT Support Partners
+Thread-Topic: GIT Support Partners
+Thread-Index: AdIC+IOgKS6+ZnjpR62IJWPA/ScXxQAArvPA
+Date:   Tue, 30 Aug 2016 20:16:11 +0000
+Message-ID: <5D0CBD0453308E42BA5B2DB51CAE2C6CE5AE5C91@MD1PRDMBX01.jda.corp.local>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.47.4.31]
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 8BIT
+MIME-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Many commits have various forms of trailers similar to
-     "Acked-by: Name <address>" and "Reported-by: Name <address>"
+Hi- I'm wondering if anyone could suggest a GIT support partner(s)?  The community is great, but I'm looking for a more personalized GIT support experience.  
 
-Add the ability to cc these trailers when using git send-email.
+Thanks!
 
-This can be suppressed with --suppress-cc=trailers.
+-Scott Sobstad
 
-Signed-off-by: Joe Perches <joe@perches.com>
----
- Documentation/git-send-email.txt | 10 ++++++----
- git-send-email.perl              | 16 +++++++++++-----
- 2 files changed, 17 insertions(+), 9 deletions(-)
+Scott Sobstad
+Director-Application Support,TSG
+JDA Software
+20700 Swenson Dr,
+Waukesha, WI 53186 / United States
+1.262.317.2185 / office
+1.480.308.3000 / worldwide
+Scott.Sobstad@jda.com
+visit us / jda.com 
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 642d0ef..999c842 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -278,9 +278,10 @@ Automating
- 	the value of `sendemail.identity`.
- 
- --[no-]signed-off-by-cc::
--	If this is set, add emails found in Signed-off-by: or Cc: lines to the
--	cc list. Default is the value of `sendemail.signedoffbycc` configuration
--	value; if that is unspecified, default to --signed-off-by-cc.
-+	If this is set, add emails found in Signed-off-by: or Cc: or any other
-+	trailer <foo>-by: lines to the cc list. Default is the value of
-+	`sendemail.signedoffbycc` configuration value; if that is unspecified,
-+	default to --signed-off-by-cc.
- 
- --[no-]cc-cover::
- 	If this is set, emails found in Cc: headers in the first patch of
-@@ -307,8 +308,9 @@ Automating
-   patch body (commit message) except for self (use 'self' for that).
- - 'sob' will avoid including anyone mentioned in Signed-off-by lines except
-    for self (use 'self' for that).
-+- 'trailers' will avoid including anyone mentioned in any "<foo>-by:" lines.
- - 'cccmd' will avoid running the --cc-cmd.
--- 'body' is equivalent to 'sob' + 'bodycc'
-+- 'body' is equivalent to 'sob' + 'bodycc' + 'trailers'
- - 'all' will suppress all auto cc values.
- --
- +
-diff --git a/git-send-email.perl b/git-send-email.perl
-index da81be4..255465a 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -84,7 +84,7 @@ git send-email --dump-aliases
-     --identity              <str>  * Use the sendemail.<id> options.
-     --to-cmd                <str>  * Email To: via `<str> \$patch_path`
-     --cc-cmd                <str>  * Email Cc: via `<str> \$patch_path`
--    --suppress-cc           <str>  * author, self, sob, cc, cccmd, body, bodycc, all.
-+    --suppress-cc           <str>  * author, self, sob, cc, cccmd, body, bodycc, trailers, all.
-     --[no-]cc-cover                * Email Cc: addresses in the cover letter.
-     --[no-]to-cover                * Email To: addresses in the cover letter.
-     --[no-]signed-off-by-cc        * Send to Signed-off-by: addresses. Default on.
-@@ -431,13 +431,13 @@ my(%suppress_cc);
- if (@suppress_cc) {
- 	foreach my $entry (@suppress_cc) {
- 		die "Unknown --suppress-cc field: '$entry'\n"
--			unless $entry =~ /^(?:all|cccmd|cc|author|self|sob|body|bodycc)$/;
-+			unless $entry =~ /^(?:all|cccmd|cc|author|self|sob|body|bodycc|trailers)$/;
- 		$suppress_cc{$entry} = 1;
- 	}
- }
- 
- if ($suppress_cc{'all'}) {
--	foreach my $entry (qw (cccmd cc author self sob body bodycc)) {
-+	foreach my $entry (qw (cccmd cc author self sob body bodycc trailers)) {
- 		$suppress_cc{$entry} = 1;
- 	}
- 	delete $suppress_cc{'all'};
-@@ -448,7 +448,7 @@ $suppress_cc{'self'} = $suppress_from if defined $suppress_from;
- $suppress_cc{'sob'} = !$signed_off_by_cc if defined $signed_off_by_cc;
- 
- if ($suppress_cc{'body'}) {
--	foreach my $entry (qw (sob bodycc)) {
-+	foreach my $entry (qw (sob bodycc trailers)) {
- 		$suppress_cc{$entry} = 1;
- 	}
- 	delete $suppress_cc{'body'};
-@@ -1545,7 +1545,7 @@ foreach my $t (@files) {
- 	# Now parse the message body
- 	while(<$fh>) {
- 		$message .=  $_;
--		if (/^(Signed-off-by|Cc): (.*)$/i) {
-+		if (/^(Signed-off-by|Cc|[^\s]+[_-]by): (.*)$/i) {
- 			chomp;
- 			my ($what, $c) = ($1, $2);
- 			chomp $c;
-@@ -1555,6 +1555,12 @@ foreach my $t (@files) {
- 			} else {
- 				next if $suppress_cc{'sob'} and $what =~ /Signed-off-by/i;
- 				next if $suppress_cc{'bodycc'} and $what =~ /Cc/i;
-+				next if $suppress_cc{'trailers'} and $what !~ /Signed-off-by/i && $what =~ /by$/i;
-+			}
-+			if ($c !~ /.+@.+/) {
-+				printf("(body) Ignoring %s from line '%s'\n",
-+				       $what, $_) unless $quiet;
-+				next;
- 			}
- 			push @cc, $c;
- 			printf("(body) Adding cc: %s from line '%s'\n",
--- 
-2.10.0.rc2.1.gb2aa91d
 
