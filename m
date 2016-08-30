@@ -2,67 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03EFB1F6C1
-	for <e@80x24.org>; Tue, 30 Aug 2016 14:55:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3F2F1F6C1
+	for <e@80x24.org>; Tue, 30 Aug 2016 16:07:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754821AbcH3Oy6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Aug 2016 10:54:58 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34235 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752703AbcH3Oy6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Aug 2016 10:54:58 -0400
-Received: by mail-wm0-f67.google.com with SMTP id q128so3538346wma.1
-        for <git@vger.kernel.org>; Tue, 30 Aug 2016 07:54:57 -0700 (PDT)
+        id S1755790AbcH3QH4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Aug 2016 12:07:56 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:34443 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754817AbcH3QHz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2016 12:07:55 -0400
+Received: by mail-wm0-f65.google.com with SMTP id q128so3820768wma.1
+        for <git@vger.kernel.org>; Tue, 30 Aug 2016 09:07:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=subject:to:references:cc:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding;
-        bh=KWA5qjps5B92PaFDW1qBNdSqV0zRPZ0Scbm6bZnd4s0=;
-        b=bXZ3dPWNyDqLdcGfQk8wsl40cRj/e/xpqZTRGWlo43BUl2b6HI/u0EIztMoQOnZ+BB
-         GpmusVJ+EYQSYgOKFUlGiRN4+AQ/iqJe9+1+q3GBK1jQFN8xbIbcY14S9LFxcoQQz86z
-         jJc1qoRjNumYjhXh3AJEhGbC7LALQJLo4xz6VIhEwREj8HacElF4X9Bz9fiJ0syNjFBm
-         fwyF0SKUUnoWO/01mO74CKi9e5KG5icWtQcpf1G7H+i2lE3XuDfsURYZe2qJberFoKo/
-         6ud4hKqcqW686r1d4noMp/x2c+QGyRxT4TXb6djoMptRjBRLXS87tIHO9IMoWWwo2guc
-         gxKQ==
+        bh=5WT+RluOI9YYzuGRaAshbSsQr82/04IRoVro8iOds58=;
+        b=J8WBsO+K+okYUkXwVFN6OViePCnHj68qSNl9O4qmuIORDCmM5eo5TpU3LIrP8Tl1RE
+         LqdOQUIStHHfUJ+KlQWWXA/mRr7Ntn1+J9EsoEtKOpDhJXYLfOzZ65q+2HdtfbVp1SZJ
+         5AQ7kK/GjmYaaBlYk9eZ5oUQFyBRHQjRTrSUs+UTzB/HHG07fxNu9SjH0k+pOmqtJcIC
+         4HGiedBqf/slMRhQk1WrCrAZb1CzSPZa/RUF7Y4egNLUGdbh0DBxbK1xjYgMGFtA6oGo
+         mxIQk9T5EeuWNPkfs81UE+/LwUYRk/NLg3JYqlqDY5HpLieDp2eS3JDtr4ot1RbLGMZ4
+         dGeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:subject:to:references:cc:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=KWA5qjps5B92PaFDW1qBNdSqV0zRPZ0Scbm6bZnd4s0=;
-        b=C7FbJhzLzVt25E1SCQfocV7uWru2TdNPsoedn2L+0XMclqlG+YUr+FBoXi0yygz/N6
-         ulHmXfWVheBURtYd94OQ6dU2vDnKkAk2yjeRW+5hY/Gl1/JL5rC8BJp3zgMkcVS4JVAi
-         ieg13cjMV5B7oJGeYeN0yoJ5HWmqQ3boTSW6DjGUwsYpqt9r6OzlHa4Nd3EeTCTyfYcE
-         kqcSfml80vJjWA+y3nTrYr2mWhWE0z2rPuBns7Z6mcpSRaPlSNcvC0SwN3y/CUTJpp6W
-         Oo7Ht6Ea4HGGlBLWD8LZ6AHrsKIAImBotSfXhacRlGiipOjJIY9rlRDfFVhNmvkSidhs
-         mQyA==
-X-Gm-Message-State: AE9vXwO8dZ/Ta8aHcNA6GD8yiqPQRVMEh0adICH4pEhKr4K+2GNBdLwHtaM0a6eC4zvWag==
-X-Received: by 10.194.75.225 with SMTP id f1mr3657694wjw.104.1472568895632;
-        Tue, 30 Aug 2016 07:54:55 -0700 (PDT)
-Received: from [192.168.1.26] (afz108.neoplus.adsl.tpnet.pl. [83.25.155.108])
-        by smtp.googlemail.com with ESMTPSA id z17sm4304712wmz.23.2016.08.30.07.54.53
+        bh=5WT+RluOI9YYzuGRaAshbSsQr82/04IRoVro8iOds58=;
+        b=M9XfqYF7N+cn8wcWHUVfK7H3507Dz10kfyHxUN0b9VE+wP9v8/mg7JFdaSM5FUnG7P
+         +A2s5egw8wTFYqa8iaQQkiBF6YCsLyn8ZQkQzU/LSua5KJjsLfxn0YOwohhUmgtJIOkw
+         xxjrVoFKB1hor951PwP+ieThDptOlaxFD/i2WZEC/ccVcRpacYd2T4nkRcnSr4IGV62b
+         Ns2uE+9V1TXSVIuOBONNLjTYBQM7dQe3sfGB6itZXxSRRa47GGiZu9GhmUDsscfF/S+M
+         5Q02uyb+IG52FI1cHwQit5InbU9vkBCF+6wjsx2ogvqJTe2/SF1aCsbWOdtTJdXsw++/
+         iLBg==
+X-Gm-Message-State: AE9vXwO20PD/SSiiA3vmT+d2NZ+7Juc+eNO4X0g1/do5Xay9lq8BhGdfxyReR8IbNGHvXg==
+X-Received: by 10.194.175.38 with SMTP id bx6mr3887646wjc.47.1472573273615;
+        Tue, 30 Aug 2016 09:07:53 -0700 (PDT)
+Received: from [192.168.1.26] (dam9.neoplus.adsl.tpnet.pl. [83.23.12.9])
+        by smtp.googlemail.com with ESMTPSA id o5sm4600816wmg.16.2016.08.30.09.07.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 30 Aug 2016 07:54:54 -0700 (PDT)
-Subject: Re: [PATCH 06/22] sequencer: release memory that was allocated when
- reading options
+        Tue, 30 Aug 2016 09:07:52 -0700 (PDT)
+Subject: Re: [PATCH 07/22] sequencer: future-proof read_populate_todo()
 To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         git@vger.kernel.org
 References: <cover.1472457609.git.johannes.schindelin@gmx.de>
- <e4b48a9a73ff33179556c0137caae85bfb4a48d9.1472457609.git.johannes.schindelin@gmx.de>
+ <4043fd4b955d6a3bed1b187d9529d5382db5b961.1472457609.git.johannes.schindelin@gmx.de>
 Cc:     Junio C Hamano <gitster@pobox.com>
 From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <9797cb9e-115c-bbea-51d2-a5d686aca514@gmail.com>
-Date:   Tue, 30 Aug 2016 16:54:52 +0200
+Message-ID: <cb4402e9-6765-961d-0d67-43b74db05ef1@gmail.com>
+Date:   Tue, 30 Aug 2016 18:07:50 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.2.0
 MIME-Version: 1.0
-In-Reply-To: <e4b48a9a73ff33179556c0137caae85bfb4a48d9.1472457609.git.johannes.schindelin@gmx.de>
+In-Reply-To: <4043fd4b955d6a3bed1b187d9529d5382db5b961.1472457609.git.johannes.schindelin@gmx.de>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -70,87 +69,94 @@ X-Mailing-List: git@vger.kernel.org
 
 W dniu 29.08.2016 o 10:04, Johannes Schindelin pisze:
 
-> The sequencer reads options from disk and stores them in its struct
-> for use during sequencer's operations.
-> 
-> With this patch, the memory is released afterwards, plugging a
-> memory leak.
+> Over the next commits, we will work on improving the sequencer to the
+> point where it can process the edit script of an interactive rebase. To
+> that end, we will need to teach the sequencer to read interactive
+> rebase's todo file. In preparation, we consolidate all places where
+> that todo file is needed to call a function that we will later extend.
 > 
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
->  sequencer.c | 13 ++++++++++---
->  1 file changed, 10 insertions(+), 3 deletions(-)
+>  sequencer.c | 18 +++++++++++-------
+>  1 file changed, 11 insertions(+), 7 deletions(-)
 > 
 > diff --git a/sequencer.c b/sequencer.c
-> index b5be0f9..8d79091 100644
+> index 8d79091..982b6e9 100644
 > --- a/sequencer.c
 > +++ b/sequencer.c
-> @@ -131,6 +131,8 @@ static void remove_sequencer_state(const struct replay_opts *opts)
->  		free(opts->owned[i]);
->  	free(opts->owned);
+> @@ -32,6 +32,11 @@ static const char *get_dir(const struct replay_opts *opts)
+>  	return git_path_seq_dir();
+>  }
 >  
-> +	free(opts->xopts);
+> +static const char *get_todo_path(const struct replay_opts *opts)
+> +{
+> +	return git_path_todo_file();
+> +}
+
+I guess that in the future commit the return value of get_todo_path()
+would change depending on what sequencer is used for, cherry-pick or
+interactive rebase, that is, contents of replay_opts...
+
 > +
+>  static int is_rfc2822_line(const char *buf, int len)
+>  {
+>  	int i;
+> @@ -772,25 +777,24 @@ static int parse_insn_buffer(char *buf, struct commit_list **todo_list,
+>  static int read_populate_todo(struct commit_list **todo_list,
+>  			struct replay_opts *opts)
+>  {
+> +	const char *todo_file = get_todo_path(opts);
 
-This looks like independent change, not related to using the
-sequencer_entrust() to store options read from disk in replay_opts
-struct to be able to free memory afterwards.
+...and that's why you have added this temporary variable here, to
+not repeat get_todo_path(opts) calculations...
 
-I guess you wanted to avoid one line changes...
-
->  	strbuf_addf(&dir, "%s", get_dir(opts));
->  	remove_dir_recursively(&dir, 0);
->  	strbuf_release(&dir);
-> @@ -811,13 +813,18 @@ static int populate_opts_cb(const char *key, const char *value, void *data)
-
-Sidenote: this patch would be easier to read if lines were reordered
-as below, but I don't think any slider heuristics could help achieve
-that automatically.  Also, the patch might be invalid...
-
->  		opts->allow_ff = git_config_bool_or_int(key, value, &error_flag);
->  	else if (!strcmp(key, "options.mainline"))
->  		opts->mainline = git_config_int(key, value);
-> -	else if (!strcmp(key, "options.strategy"))
-> +	else if (!strcmp(key, "options.strategy")) {
->  		git_config_string(&opts->strategy, key, value);
-> +		sequencer_entrust(opts, (char *) opts->strategy);
-
-I wonder if the ability to free strings dup-ed by git_config_string()
-be something that is part of replay_opts, or rather remove_sequencer_state(),
-that is a list of
-
-	free(opts->strategy);
-	free(opts->gpg_sign);
-
-And of course
-
-	for (i = 0; i < opts->xopts_nr; i++)
-		free(opts->xopts[i]);
-	free(opts->xopts);
-
-Though... free(NULL) is nop as per standard, but can we rely on it?
-If it is a problem, we can create xfree(ptr) being if(ptr)free(ptr);
-
-The *_entrust() mechanism is more generic, but do we use this general-ness?
-Well, it could be xstrdup or git_config_string doing entrust'ing...
-
-
-> +	}
-> -	else if (!strcmp(key, "options.gpg-sign"))
-> +	else if (!strcmp(key, "options.gpg-sign")) {
->  		git_config_string(&opts->gpg_sign, key, value);
-> +		sequencer_entrust(opts, (char *) opts->gpg_sign);
-> +	}
->  	else if (!strcmp(key, "options.strategy-option")) {
->  		ALLOC_GROW(opts->xopts, opts->xopts_nr + 1, opts->xopts_alloc);
-> -		opts->xopts[opts->xopts_nr++] = xstrdup(value);
-> +		opts->xopts[opts->xopts_nr++] =
-> +			sequencer_entrust(opts, xstrdup(value));
-
-Nice.
-
->  	} else
->  		return error(_("Invalid key: %s"), key);
+>  	struct strbuf buf = STRBUF_INIT;
+>  	int fd, res;
 >  
+> -	fd = open(git_path_todo_file(), O_RDONLY);
+> +	fd = open(todo_file, O_RDONLY);
+>  	if (fd < 0)
+> -		return error_errno(_("Could not open %s"),
+> -				   git_path_todo_file());
+> +		return error_errno(_("Could not open %s"), todo_file);
+
+... So that's why it is s/git_path_todo_file()/todo_file/ replacement,
+and not simply...
+
+>  	if (strbuf_read(&buf, fd, 0) < 0) {
+>  		close(fd);
+>  		strbuf_release(&buf);
+> -		return error(_("Could not read %s."), git_path_todo_file());
+> +		return error(_("Could not read %s."), todo_file);
+>  	}
+>  	close(fd);
+>  
+>  	res = parse_insn_buffer(buf.buf, todo_list, opts);
+>  	strbuf_release(&buf);
+>  	if (res)
+> -		return error(_("Unusable instruction sheet: %s"),
+> -			git_path_todo_file());
+> +		return error(_("Unusable instruction sheet: %s"), todo_file);
+>  	return 0;
+>  }
+>  
+> @@ -1064,7 +1068,7 @@ static int sequencer_continue(struct replay_opts *opts)
+>  {
+>  	struct commit_list *todo_list = NULL;
+>  
+> -	if (!file_exists(git_path_todo_file()))
+> +	if (!file_exists(get_todo_path(opts)))
+
+...the s/git_path_todo_file()/git_todo_path(opts)/, isn't it?
+
+>  		return continue_single_pick();
+>  	if (read_populate_opts(opts) ||
+>  			read_populate_todo(&todo_list, opts))
 > 
+
+Looks good; though I have not checked if all calling sites were converted.
+
+Good work,
+-- 
+Jakub Narębski
 
