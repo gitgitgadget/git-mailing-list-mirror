@@ -2,84 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDAFE1F6C1
-	for <e@80x24.org>; Tue, 30 Aug 2016 14:54:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03EFB1F6C1
+	for <e@80x24.org>; Tue, 30 Aug 2016 14:55:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754813AbcH3Oyv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Aug 2016 10:54:51 -0400
-Received: from mout.web.de ([212.227.15.3]:55795 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754779AbcH3Oyt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Aug 2016 10:54:49 -0400
-Received: from localhost ([195.252.60.88]) by smtp.web.de (mrweb001) with
- ESMTPSA (Nemesis) id 0MCqWJ-1bnr6K3Zdz-009d9z; Tue, 30 Aug 2016 16:54:31
- +0200
-Date:   Tue, 30 Aug 2016 14:54:29 +0000
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        peff@peff.net, sbeller@google.com, Johannes.Schindelin@gmx.de,
-        jnareb@gmail.com, mlbright@gmail.com
-Subject: Re: [PATCH v6 13/13] read-cache: make sure file handles are not
- inherited by child processes
-Message-ID: <20160830145429.GA11221@tb-raspi>
-References: <20160825110752.31581-1-larsxschneider@gmail.com>
- <20160825110752.31581-14-larsxschneider@gmail.com>
- <xmqqy43fbgcj.fsf@gitster.mtv.corp.google.com>
- <4D9E5AED-7003-4707-8791-1C25432DB558@gmail.com>
- <xmqq37lnbbpk.fsf@gitster.mtv.corp.google.com>
- <4A177D61-AA25-415A-808D-B6BDA3BB5C47@gmail.com>
+        id S1754821AbcH3Oy6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Aug 2016 10:54:58 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34235 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752703AbcH3Oy6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2016 10:54:58 -0400
+Received: by mail-wm0-f67.google.com with SMTP id q128so3538346wma.1
+        for <git@vger.kernel.org>; Tue, 30 Aug 2016 07:54:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=KWA5qjps5B92PaFDW1qBNdSqV0zRPZ0Scbm6bZnd4s0=;
+        b=bXZ3dPWNyDqLdcGfQk8wsl40cRj/e/xpqZTRGWlo43BUl2b6HI/u0EIztMoQOnZ+BB
+         GpmusVJ+EYQSYgOKFUlGiRN4+AQ/iqJe9+1+q3GBK1jQFN8xbIbcY14S9LFxcoQQz86z
+         jJc1qoRjNumYjhXh3AJEhGbC7LALQJLo4xz6VIhEwREj8HacElF4X9Bz9fiJ0syNjFBm
+         fwyF0SKUUnoWO/01mO74CKi9e5KG5icWtQcpf1G7H+i2lE3XuDfsURYZe2qJberFoKo/
+         6ud4hKqcqW686r1d4noMp/x2c+QGyRxT4TXb6djoMptRjBRLXS87tIHO9IMoWWwo2guc
+         gxKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=KWA5qjps5B92PaFDW1qBNdSqV0zRPZ0Scbm6bZnd4s0=;
+        b=C7FbJhzLzVt25E1SCQfocV7uWru2TdNPsoedn2L+0XMclqlG+YUr+FBoXi0yygz/N6
+         ulHmXfWVheBURtYd94OQ6dU2vDnKkAk2yjeRW+5hY/Gl1/JL5rC8BJp3zgMkcVS4JVAi
+         ieg13cjMV5B7oJGeYeN0yoJ5HWmqQ3boTSW6DjGUwsYpqt9r6OzlHa4Nd3EeTCTyfYcE
+         kqcSfml80vJjWA+y3nTrYr2mWhWE0z2rPuBns7Z6mcpSRaPlSNcvC0SwN3y/CUTJpp6W
+         Oo7Ht6Ea4HGGlBLWD8LZ6AHrsKIAImBotSfXhacRlGiipOjJIY9rlRDfFVhNmvkSidhs
+         mQyA==
+X-Gm-Message-State: AE9vXwO8dZ/Ta8aHcNA6GD8yiqPQRVMEh0adICH4pEhKr4K+2GNBdLwHtaM0a6eC4zvWag==
+X-Received: by 10.194.75.225 with SMTP id f1mr3657694wjw.104.1472568895632;
+        Tue, 30 Aug 2016 07:54:55 -0700 (PDT)
+Received: from [192.168.1.26] (afz108.neoplus.adsl.tpnet.pl. [83.25.155.108])
+        by smtp.googlemail.com with ESMTPSA id z17sm4304712wmz.23.2016.08.30.07.54.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 30 Aug 2016 07:54:54 -0700 (PDT)
+Subject: Re: [PATCH 06/22] sequencer: release memory that was allocated when
+ reading options
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+References: <cover.1472457609.git.johannes.schindelin@gmx.de>
+ <e4b48a9a73ff33179556c0137caae85bfb4a48d9.1472457609.git.johannes.schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <9797cb9e-115c-bbea-51d2-a5d686aca514@gmail.com>
+Date:   Tue, 30 Aug 2016 16:54:52 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4A177D61-AA25-415A-808D-B6BDA3BB5C47@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V03:K0:ZAtpr9oINYeJVlm4lpEBQVJ47WdvjIIIXkNVh04XTSZ4LB843DH
- vMYHsIbJZQ+htjjXOJniMAi9Sh9wfGLp0Z/bVtUYgUF891HcccMSZ14fslSwMMccAAQzxVg
- Edmo8P75ruZ+5DzEFuvBy3DyXJccmBgQ9WHV0TUziFplR0SCMJN08UBi/4R7B14G/a3QIT7
- aHBOm6JpGdpi3q72n0GvA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YZX9psk/+ko=:SyCYDm0RqdvkAVz3tt02R6
- htFw17en+Lrzy25//NRwMJc235Mn2M+eZW4YEObDF29eg5ZnEi9C7ezE5izd4ryX0B8o4WsEW
- CfxTNlVcd8o7nQ556HVsE0nGnmAmuzM3+EJQH68LcV1MJNuyrPnPQ4RpdvGHdnF5M7jYJN1nn
- 9hoPl76UPB3l+UjFqE+1ZxqYG4/3DBKxnloU4QTynbNiicabw/d60Rsp4l6cPUFDdFlWozqeW
- Pm9AjSCVeuRflJYsSZ2996QbLI3HD+OfzSNpLTPtuA/oQwveScgywm0xJbiNR2bgl625xcapR
- cRcK5N/VGmmdMoN6u9dxAnIuXvObCS8ekTkc66WzaPzJ6eddmAWCESsYcWQxXX+CH9bAcN//h
- PvRxG00MDTV0Cx2cQRGOYOTNSbanQ55JZ5larfVBo+OM1MeA/a8ZDLEJ52puSmoU5mDtSaq/n
- H2KKtjkROOJ9wC+lX6R9p4SWEO+H6CCKg01hByu/gzF1deXilWG8b/U8Ajo7xp8TMvc6OQrQf
- KGc1M/ogaOsELhm6JN536CWmCm7MB58NmwlUfQVfJlVCSMXDnuO0XAqO43XOwFRZmgohah8Ps
- biQePMKsLttSCf0ynsQ1kW7aY2hT85jE+T2xS5NDSx11UOu6OG7fIU2//FNOBTKX47A2nwoIH
- M7iBBxVnTTx0wlmM0pLDh358bnB94IM3NcrTKMcOTLMR6vJt4mfcrs5iGwZmYOVhv80140gpe
- hStdXHszvtqmiVuzbclQZOJrt9uIteCl/HinP0skNOqmPBlPNMkiyAkxRco=
+In-Reply-To: <e4b48a9a73ff33179556c0137caae85bfb4a48d9.1472457609.git.johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+W dniu 29.08.2016 o 10:04, Johannes Schindelin pisze:
 
+> The sequencer reads options from disk and stores them in its struct
+> for use during sequencer's operations.
 > 
-> diff --git a/sha1_file.c b/sha1_file.c
-> index d5e1121..759991e 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -1485,7 +1485,7 @@ int check_sha1_signature(const unsigned char *sha1, void *map,
+> With this patch, the memory is released afterwards, plugging a
+> memory leak.
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  sequencer.c | 13 ++++++++++---
+>  1 file changed, 10 insertions(+), 3 deletions(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index b5be0f9..8d79091 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -131,6 +131,8 @@ static void remove_sequencer_state(const struct replay_opts *opts)
+>  		free(opts->owned[i]);
+>  	free(opts->owned);
 >  
->  int git_open_noatime(const char *name)
+> +	free(opts->xopts);
+> +
 
-Hm, should the function then be renamed into
+This looks like independent change, not related to using the
+sequencer_entrust() to store options read from disk in replay_opts
+struct to be able to free memory afterwards.
 
-git_open_noatime_cloexec()
+I guess you wanted to avoid one line changes...
 
->  {
-> -	static int sha1_file_open_flag = O_NOATIME;
-> +	static int sha1_file_open_flag = O_NOATIME | O_CLOEXEC;
+>  	strbuf_addf(&dir, "%s", get_dir(opts));
+>  	remove_dir_recursively(&dir, 0);
+>  	strbuf_release(&dir);
+> @@ -811,13 +813,18 @@ static int populate_opts_cb(const char *key, const char *value, void *data)
+
+Sidenote: this patch would be easier to read if lines were reordered
+as below, but I don't think any slider heuristics could help achieve
+that automatically.  Also, the patch might be invalid...
+
+>  		opts->allow_ff = git_config_bool_or_int(key, value, &error_flag);
+>  	else if (!strcmp(key, "options.mainline"))
+>  		opts->mainline = git_config_int(key, value);
+> -	else if (!strcmp(key, "options.strategy"))
+> +	else if (!strcmp(key, "options.strategy")) {
+>  		git_config_string(&opts->strategy, key, value);
+> +		sequencer_entrust(opts, (char *) opts->strategy);
+
+I wonder if the ability to free strings dup-ed by git_config_string()
+be something that is part of replay_opts, or rather remove_sequencer_state(),
+that is a list of
+
+	free(opts->strategy);
+	free(opts->gpg_sign);
+
+And of course
+
+	for (i = 0; i < opts->xopts_nr; i++)
+		free(opts->xopts[i]);
+	free(opts->xopts);
+
+Though... free(NULL) is nop as per standard, but can we rely on it?
+If it is a problem, we can create xfree(ptr) being if(ptr)free(ptr);
+
+The *_entrust() mechanism is more generic, but do we use this general-ness?
+Well, it could be xstrdup or git_config_string doing entrust'ing...
+
+
+> +	}
+> -	else if (!strcmp(key, "options.gpg-sign"))
+> +	else if (!strcmp(key, "options.gpg-sign")) {
+>  		git_config_string(&opts->gpg_sign, key, value);
+> +		sequencer_entrust(opts, (char *) opts->gpg_sign);
+> +	}
+>  	else if (!strcmp(key, "options.strategy-option")) {
+>  		ALLOC_GROW(opts->xopts, opts->xopts_nr + 1, opts->xopts_alloc);
+> -		opts->xopts[opts->xopts_nr++] = xstrdup(value);
+> +		opts->xopts[opts->xopts_nr++] =
+> +			sequencer_entrust(opts, xstrdup(value));
+
+Nice.
+
+>  	} else
+>  		return error(_("Invalid key: %s"), key);
 >  
->  	for (;;) {
->  		int fd;
 > 
-> 
-> 
+
