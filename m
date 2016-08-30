@@ -2,90 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6DF11F859
-	for <e@80x24.org>; Tue, 30 Aug 2016 10:46:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97C1D1F859
+	for <e@80x24.org>; Tue, 30 Aug 2016 10:50:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758069AbcH3KqZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Aug 2016 06:46:25 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:38473 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758037AbcH3KqY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Aug 2016 06:46:24 -0400
-Received: by mail-wm0-f41.google.com with SMTP id o80so28562123wme.1
-        for <git@vger.kernel.org>; Tue, 30 Aug 2016 03:46:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=+GMRfzdzvPZwrddW4niwF6dk0xGuVf7cCWr85TJS/oA=;
-        b=DMCaivihBNJ9ws9X1G4EbtuN1TEIQoKuKEM8v2siuf9HOAS8Ub2Z83vhy8tuo1SFEv
-         21lX6OGFiua8JLpdxrk/NwPrvKIVup/NXfJElgNoI6UNAR4TdlsAKfwBXL3uUyEZsw87
-         zlooKxZj6ux9oQH2bNz943RMaHwZQE2HbBgu24tNZcivuTRBGE8anmvnr9ENNt0KLfFs
-         1HLjI5WxO4T3KucY/A7VhrbHxGjizBYFGozPcO/3o7lDiFcN3Z6kRnHZTopTv4nlMcYV
-         VXxurYVm652YOJbIw2wZpHAemzPcaVYd+zrR9zQHATg5MP3L7EgABdI8ohkaiHEtxa6U
-         25dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=+GMRfzdzvPZwrddW4niwF6dk0xGuVf7cCWr85TJS/oA=;
-        b=R82iz59Wp4JUChSBdGj9Ze6aZf8LV9sTP8EclfxOWNANCHpI52Nl+vUtrnOFsOdH2h
-         gU0eYG2+sLyKWxFS7gBe5sSCECW6QxQU72Tn62WhkJXWaGvsTrBaZGwboJoe+l2QdvpE
-         PpumFDwicHNw6DiZ6QoJNV4/2/WMt1RgLyil4OLCtdOykJ6jeQe1Lh/E/QrjPqaWMDB1
-         TSpmotHaRPyqe02XuO59OmcPrTdZY8Znal4YUUCKKzD2Xl6wVAB8OJvOW7Lv8yKW5cRn
-         1bjSOOFMj4h0Y6Y52xH5yZ62AhFO3FJQhbMi4g400+03xUFmcAW66NMacxx0BilQFN0R
-         ci4g==
-X-Gm-Message-State: AE9vXwMMmyu287LC19MS6ACOy6iuIwIc8qQKa0Y05INnlXZKj/jwtd+BSiGLbj3Scxb8rQ==
-X-Received: by 10.28.151.77 with SMTP id z74mr3025064wmd.117.1472553982795;
-        Tue, 30 Aug 2016 03:46:22 -0700 (PDT)
-Received: from [192.168.1.26] (afz108.neoplus.adsl.tpnet.pl. [83.25.155.108])
-        by smtp.googlemail.com with ESMTPSA id b203sm3291632wmh.20.2016.08.30.03.46.21
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 30 Aug 2016 03:46:22 -0700 (PDT)
-Subject: git blame <directory> [was: Reducing CPU load on git server]
-To:     Jeff King <peff@peff.net>,
-        "W. David Jarvis" <william.d.jarvis@gmail.com>
-References: <CAFMAO9y3LsrAb_jp8XVq2mexaA4bBqmWFwJu55r4S6Dxd2-zxw@mail.gmail.com>
- <20160829054725.r6pqf3xlusxi7ibq@sigill.intra.peff.net>
- <CAFMAO9yUMY5dqw-oWpKG1H-xska1AtDyt31_WaeJDyTieQLChw@mail.gmail.com>
- <20160829213101.3ulrw5hrh5pytjii@sigill.intra.peff.net>
-Cc:     git@vger.kernel.org
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <9fe5aa9b-5ba8-2b9a-7feb-58e115be3902@gmail.com>
-Date:   Tue, 30 Aug 2016 12:46:20 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S1757620AbcH3Kuo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Aug 2016 06:50:44 -0400
+Received: from mout.gmx.net ([212.227.17.21]:51118 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753282AbcH3Kun (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2016 06:50:43 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0ML6XF-1bePdq0Iuf-000K9C; Tue, 30 Aug 2016 12:50:35
+ +0200
+Date:   Tue, 30 Aug 2016 12:50:33 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH 4/6] require_clean_work_tree: ensure that the index was
+ read
+In-Reply-To: <xmqqmvjv6uxn.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1608301241590.129229@virtualbox>
+References: <cover.1472137582.git.johannes.schindelin@gmx.de> <4122fc996a0076c2426d5e1325f2ce2810ef4f9b.1472137582.git.johannes.schindelin@gmx.de> <xmqqmvjv6uxn.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <20160829213101.3ulrw5hrh5pytjii@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:gjoRW3p4iarNdG5zZYUKx//XFBhM32N7HA0JhHGv4n33XRY1kQD
+ COoAyBvouUiwS69WZ2s3SRmzKXd4NxORMW1bUCSNRdYekcUY8yX4CGli2aiSB/vuYPaK9Pg
+ l43qDvC7GZbyvT7IZ6BW7ZgAas9Td8aoGMK5XENtetEK/3yqfGXK17Iutr0+oI+sL8a1SKm
+ mIWok31NtfuvjtXXjFo6Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:3KRm0fZ/lj0=:O0zcgWLw7lDMysKkJPgm0I
+ I4EJCDD/Qdqw4eQHspb71RU8/DeIZ5UySidLxXEb6DKQq2IgCQvgKylsDIJwuF8O1zPXRrQOZ
+ cfjaU5LjNEiyXpoisthsFQb5plNm5CI+0dS9cV2d4WHzEPhy6O7nxP2J8i3/k9dGJESiRLi83
+ N8GHntf3Sc2UWx3Hcr1qZG/yFvTlfbL/uhSZN6sjHC7g8TSBvIy6tujTeC1LaPBgK7DkRl3M9
+ +v1WrbWNr0CoP4UNN7dvcrHdt4I91mAleMnhdwA3v4p56FACUrifSE+eHT3dbjiotXtl0IFGV
+ Eq7BTEuzkJc8pMhu1eX5zuunBlSejIar3aGrsn+yAyP3canOiy0H3w/woLYqevO78wbdKOp4S
+ CPX1nhaqfWGAmI7qe4rY5Hj2kndm28V3wbgvlf/LMCZmfNcNiRDnNGTekqMfYys6v8a86psDH
+ saxBkJ53DblaEnt7M+4zuRRHPBLnJtCKEJyE2Ogqe3df/Xi95sAiA11Nc8ssZrWTsFhzCMamE
+ slWjh+mV8foOvMpaY/cD4VBF2aL6NI0B2QDwjWqMsxH2IhRHOMlOROrSW3GTQ9uMJ0FwWlx+k
+ 9HybYKCHnXrCgxo714gYy6We3Qa71WUzvyAPN01z0dhagsCYigoNaoF5XvAb4szaDO/o3NzdR
+ zLdn8+Lh8ydcbwU9NRUukF7pV53ScbACXIWx7CJDMk06qz4o5dPQqgDf1UTpjowDYdO+SOGy+
+ BIX1gu5rO82OcDWsKfex1GZ2UVOLF8NQ+7rTZW8hezi2nqkKERP5rdbk7NtvUZnCpe0+seTGh
+ W4UTgF6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 29.08.2016 o 23:31, Jeff King pisze:
+Hi Junio,
 
-> Blame-tree is a GitHub-specific command (it feeds the main repository
-> view page), and is a known CPU hog. There's more clever caching for that
-> coming down the pipe, but it's not shipped yet.
+On Mon, 29 Aug 2016, Junio C Hamano wrote:
 
-I wonder if having support for 'git blame <directory>' in Git core would
-be something interesting to Git users.  I once tried to implement it,
-but it went nowhere.  Would it be hard to implement?
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > The function would otherwise pretend to work fine, but totally ignore
+> > the working directory.
+> 
+> s/^T/Unless the caller has already read the index, t/;
 
+Changed. (I also removed the "otherwise" which would sound funny
+otherwise.)
 
-I guess that GitHub offers this view as a part of the home page view
-for a repository is something of a historical artifact; namely that
-web interfaces for other version control systems used this.  But I
-wonder how useful it is.  Neither cgit nor gitweb offer such view,
-both GitLab and Bitbucket start with summary age with no blame-tree.
+> I am not sure if it should be left as the responsibility of the
+> caller (i.e. check the_index.initialized to bark at a caller that
+> forgets to read from an index) or it is OK to unconditionally read
+> from $GIT_INDEX_FILE in a truly libified function.  A caller that
+> wants to read from a custom (temporary) index file can choose to
+> make sure it does read_inddex_from() from its custom file before
+> calling this function, but if it forgets to do so, the penalty is
+> severe than ordinary callers who would have read from the normal
+> index file anyway.
+> 
+> Even though the word-lego issue would make this particular API not
+> yet suitable, "who is responsible for reading the index" is an
+> orthogonal issue that we can discuss even on this version, so I
+> thought I'd bring it up.
 
--- 
-Jakub Narębski
+It is orthogonal alright. So I won't act on it, but just add my thoughts:
 
+We might want to consider thinking about introducing a more consistent
+internal API. This is even more orthogonal to the patch under discussion
+than just teaching require_clean_work_tree() about different index files,
+of course.
+
+It might very well pay off in the future were we to design a more unified
+"look & feel" to the API e.g. by putting more restrictions on the order of
+parameters, required "int" return values for functions that may fail, a
+unified error handling that does not necessarily print to stderr.
+
+Having said that, I do not have time to take lead on that, either. :-)
+
+Ciao,
+Dscho
