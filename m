@@ -2,83 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6267D1F6C1
-	for <e@80x24.org>; Tue, 30 Aug 2016 14:46:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDAFE1F6C1
+	for <e@80x24.org>; Tue, 30 Aug 2016 14:54:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752798AbcH3Oqp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Aug 2016 10:46:45 -0400
-Received: from mout.gmx.net ([212.227.17.20]:60981 "EHLO mout.gmx.net"
+        id S1754813AbcH3Oyv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Aug 2016 10:54:51 -0400
+Received: from mout.web.de ([212.227.15.3]:55795 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751530AbcH3Oqo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Aug 2016 10:46:44 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0Me4Ly-1bTElx291C-00PrTz; Tue, 30 Aug 2016 16:46:27
+        id S1754779AbcH3Oyt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2016 10:54:49 -0400
+Received: from localhost ([195.252.60.88]) by smtp.web.de (mrweb001) with
+ ESMTPSA (Nemesis) id 0MCqWJ-1bnr6K3Zdz-009d9z; Tue, 30 Aug 2016 16:54:31
  +0200
-Date:   Tue, 30 Aug 2016 16:46:25 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH 4/6] require_clean_work_tree: ensure that the index was
- read
-In-Reply-To: <alpine.DEB.2.20.1608301300010.129229@virtualbox>
-Message-ID: <alpine.DEB.2.20.1608301645170.129229@virtualbox>
-References: <cover.1472137582.git.johannes.schindelin@gmx.de>        <4122fc996a0076c2426d5e1325f2ce2810ef4f9b.1472137582.git.johannes.schindelin@gmx.de>        <xmqqmvjv6uxn.fsf@gitster.mtv.corp.google.com> <xmqq60qj6kmf.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1608301300010.129229@virtualbox>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+Date:   Tue, 30 Aug 2016 14:54:29 +0000
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        peff@peff.net, sbeller@google.com, Johannes.Schindelin@gmx.de,
+        jnareb@gmail.com, mlbright@gmail.com
+Subject: Re: [PATCH v6 13/13] read-cache: make sure file handles are not
+ inherited by child processes
+Message-ID: <20160830145429.GA11221@tb-raspi>
+References: <20160825110752.31581-1-larsxschneider@gmail.com>
+ <20160825110752.31581-14-larsxschneider@gmail.com>
+ <xmqqy43fbgcj.fsf@gitster.mtv.corp.google.com>
+ <4D9E5AED-7003-4707-8791-1C25432DB558@gmail.com>
+ <xmqq37lnbbpk.fsf@gitster.mtv.corp.google.com>
+ <4A177D61-AA25-415A-808D-B6BDA3BB5C47@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:hceg7YZdWbx4XJM81xXoOJFPCWW2Qtin9hdTihOTUDgGJn+DQHr
- MrcYOR+xrERqyL01jWvV4fLvDicIPheMpjtJjw+IV1GtRwRyPs9yiuZ8IE+IS74x+5P0kOg
- swYcCAqlC5XGHS/02eLMRCH63Ssd6+RZqQNoL0NCZMENUv2Do464kQOQxPuCPFnDldpyi2g
- D08B4vX78ScDdhpOmw2ng==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/ZPN/we5EWI=:mtC/yJI1LrnUL9vX7Onvxx
- 2anKHFKeinedPP9HFtUIzk2ViXZlVtQMxlTVzAMbMmNqJQJI/b2rbRgJX/q/02slU6ZIRLFDt
- RSODDuqMg7mYcNLJFY67Y/U28kUifakIXDvFLf7gqHg9QCE8SZX93tK0nVExGpOUPPvXS9+5x
- GSN40oReioRVHuhmfllcleNvGATzzPjHL6THdt0sVOQaESEbfEFAslHIrEipYZ85jvelPuQ1I
- 6Yl2uOkVHuf1KuJx8Six0qCO8ONBUr852GLTmzRTUKqKiqE78vUCDsCHUCDJqYiRhYj7jSXt7
- YRRea7eYguDq9+SJxW9DkkvCiTYHFPqxr3uJjSrwL/YiBOzswgfJgCREIr8WYWaNSBrldqJeP
- UoeWstv1hJEeE1FS/gb5nCWgmYuvO90E7+Li4r1azKZdQlXZ+SEBpivgQf0h3A9+wJI6zMYM/
- +dpS1UeL4rkI8sbWKG8nVSandV6JzNmxi/L7pbTgrCK8eraV9FLg9FpjEtuAb+ZnM62x6Bm+j
- 8RC2TiLWa6DYwqe8eRcTAJFy6o0RWD2xf1b5725wCvK57xQojlr8uJet04ER8js/Q8M1BObEm
- bFZ4PIGelme1DMSZ2T25vOVOKydfhB6v0QTUfUVAxh9ZO8OguZ+6sdMlPrIY/OIbHzZWrBnPx
- IgwSf4inneI3YxPQcftDGcyTrmAs//6KjqjO2WpXxruhkpoKC7zDbfIuv9vqZUJT1UWFNG015
- HgKPsuj5pcaIm3rgr/MRB5uEf8HwNqkk4DVnr4x/MMZVf8JDGaOTxeamAa6ReYGWrYHdGoS7E
- 7LIeKWP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4A177D61-AA25-415A-808D-B6BDA3BB5C47@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V03:K0:ZAtpr9oINYeJVlm4lpEBQVJ47WdvjIIIXkNVh04XTSZ4LB843DH
+ vMYHsIbJZQ+htjjXOJniMAi9Sh9wfGLp0Z/bVtUYgUF891HcccMSZ14fslSwMMccAAQzxVg
+ Edmo8P75ruZ+5DzEFuvBy3DyXJccmBgQ9WHV0TUziFplR0SCMJN08UBi/4R7B14G/a3QIT7
+ aHBOm6JpGdpi3q72n0GvA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YZX9psk/+ko=:SyCYDm0RqdvkAVz3tt02R6
+ htFw17en+Lrzy25//NRwMJc235Mn2M+eZW4YEObDF29eg5ZnEi9C7ezE5izd4ryX0B8o4WsEW
+ CfxTNlVcd8o7nQ556HVsE0nGnmAmuzM3+EJQH68LcV1MJNuyrPnPQ4RpdvGHdnF5M7jYJN1nn
+ 9hoPl76UPB3l+UjFqE+1ZxqYG4/3DBKxnloU4QTynbNiicabw/d60Rsp4l6cPUFDdFlWozqeW
+ Pm9AjSCVeuRflJYsSZ2996QbLI3HD+OfzSNpLTPtuA/oQwveScgywm0xJbiNR2bgl625xcapR
+ cRcK5N/VGmmdMoN6u9dxAnIuXvObCS8ekTkc66WzaPzJ6eddmAWCESsYcWQxXX+CH9bAcN//h
+ PvRxG00MDTV0Cx2cQRGOYOTNSbanQ55JZ5larfVBo+OM1MeA/a8ZDLEJ52puSmoU5mDtSaq/n
+ H2KKtjkROOJ9wC+lX6R9p4SWEO+H6CCKg01hByu/gzF1deXilWG8b/U8Ajo7xp8TMvc6OQrQf
+ KGc1M/ogaOsELhm6JN536CWmCm7MB58NmwlUfQVfJlVCSMXDnuO0XAqO43XOwFRZmgohah8Ps
+ biQePMKsLttSCf0ynsQ1kW7aY2hT85jE+T2xS5NDSx11UOu6OG7fIU2//FNOBTKX47A2nwoIH
+ M7iBBxVnTTx0wlmM0pLDh358bnB94IM3NcrTKMcOTLMR6vJt4mfcrs5iGwZmYOVhv80140gpe
+ hStdXHszvtqmiVuzbclQZOJrt9uIteCl/HinP0skNOqmPBlPNMkiyAkxRco=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-On Tue, 30 Aug 2016, Johannes Schindelin wrote:
-
-> On Mon, 29 Aug 2016, Junio C Hamano wrote:
 > 
-> > Junio C Hamano <gitster@pobox.com> writes:
-> > 
-> > > I am not sure if it should be left as the responsibility of the
-> > > caller (i.e. check the_index.initialized to bark at a caller that
-> > > forgets to read from an index) ...
-> > 
-> > Scatch that.  That would not work in a freshly created repository
-> > before doing any "git add".  An empty index is a normal state, so it
-> > would not just be annoying to warn "You called me without reading
-> > the index" but is simply wrong.
+> diff --git a/sha1_file.c b/sha1_file.c
+> index d5e1121..759991e 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -1485,7 +1485,7 @@ int check_sha1_signature(const unsigned char *sha1, void *map,
+>  
+>  int git_open_noatime(const char *name)
+
+Hm, should the function then be renamed into
+
+git_open_noatime_cloexec()
+
+>  {
+> -	static int sha1_file_open_flag = O_NOATIME;
+> +	static int sha1_file_open_flag = O_NOATIME | O_CLOEXEC;
+>  
+>  	for (;;) {
+>  		int fd;
 > 
-> Fine. I changed it to assert that the_index.initialized was set.
-
-Alas, that does not work, either. If no .git/index exists, read_index()
-will not set the "initialized" flag.
-
-So it turns out that I can either get distracted in a major way, or drop
-the patch. I opt for the latter.
-
-Ciao,
-Dscho
+> 
+> 
