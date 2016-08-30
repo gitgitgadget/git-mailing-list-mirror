@@ -2,97 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD43D1F6C1
-	for <e@80x24.org>; Tue, 30 Aug 2016 16:37:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B7F81F6C1
+	for <e@80x24.org>; Tue, 30 Aug 2016 16:54:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758059AbcH3Qhz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Aug 2016 12:37:55 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35492 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1757715AbcH3Qhz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Aug 2016 12:37:55 -0400
-Received: (qmail 21724 invoked by uid 109); 30 Aug 2016 16:37:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 30 Aug 2016 16:37:53 +0000
-Received: (qmail 31066 invoked by uid 111); 30 Aug 2016 16:37:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 30 Aug 2016 12:37:59 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Aug 2016 12:37:49 -0400
-Date:   Tue, 30 Aug 2016 12:37:49 -0400
-From:   Jeff King <peff@peff.net>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>, sbeller@google.com,
-        Johannes.Schindelin@gmx.de, jnareb@gmail.com, mlbright@gmail.com
-Subject: Re: [PATCH v6 10/13] convert: generate large test files only once
-Message-ID: <20160830163749.it4nedannqzqeh5c@sigill.intra.peff.net>
-References: <20160825110752.31581-1-larsxschneider@gmail.com>
- <20160825110752.31581-11-larsxschneider@gmail.com>
- <xmqq7fazcvsk.fsf@gitster.mtv.corp.google.com>
- <F976C223-0CF3-43FB-ABF2-FFE7C600138E@gmail.com>
+        id S1758371AbcH3QyZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Aug 2016 12:54:25 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63775 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1758348AbcH3QyV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2016 12:54:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7132A39E6C;
+        Tue, 30 Aug 2016 12:54:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ABsZ9lxKzy9x7jLR0LeB0DsxLqk=; b=nzltB3
+        IGcjPPmlpdWBX5ZcfkV4Ov8E952AbHzvd9er9lRgSPmn9+yQLXesE88YcPGHdg+7
+        NAOx2IB8Ge9aWKVAlve/oagWGvtir/LGv84XXXnHgsXafpYSZt6ixe1oTZlx6YjP
+        SBzxIm4kNSFt3CXVf7Gj88ME5EUPDuq3LNWBA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=fM7g+ofsljHadx3hegU861f71rySrvzg
+        LlSi2uc/QVpdVUbQNJAPi8fQmIc1IwX7bfJ2UXLeeur0lvw0byn56RiDBh58hJMr
+        3JjtFX5Oiwxc/52relXPaGSC0X9j26vVDHHDPlWYF9fjotzPHYccOX0kfOSNjzmN
+        bw+XS2mRUlo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6A05939E6B;
+        Tue, 30 Aug 2016 12:54:19 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E541039E6A;
+        Tue, 30 Aug 2016 12:54:18 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Joe Perches <joe@perches.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: git am and duplicate signatures
+References: <1472573556.5512.93.camel@perches.com>
+Date:   Tue, 30 Aug 2016 09:54:16 -0700
+In-Reply-To: <1472573556.5512.93.camel@perches.com> (Joe Perches's message of
+        "Tue, 30 Aug 2016 09:12:36 -0700")
+Message-ID: <xmqqwpiy5haf.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <F976C223-0CF3-43FB-ABF2-FFE7C600138E@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 647DD9E8-6ED2-11E6-AAFB-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 30, 2016 at 01:41:59PM +0200, Lars Schneider wrote:
+Joe Perches <joe@perches.com> writes:
 
-> >> +	git checkout -- test test.t test.i &&
-> >> +
-> >> +	mkdir generated-test-data &&
-> >> +	for i in $(test_seq 1 $T0021_LARGE_FILE_SIZE)
-> >> +	do
-> >> +		RANDOM_STRING="$(test-genrandom end $i | tr -dc "A-Za-z0-9" )"
-> >> +		ROT_RANDOM_STRING="$(echo $RANDOM_STRING | ./rot13.sh )"
-> > 
-> > In earlier iteration of loop with lower $i, what guarantees that
-> > some bytes survive "tr -dc"?
-> 
-> Nothing really, good catch! The seed "end" produces as first character always a 
-> "S" which would survive "tr -dc". However, that is clunky. I will always set "1"
-> as first character in $RANDOM_STRING to mitigate the problem.
+> git-am -s will avoid duplicating the last signature
+> in a patch.
+>
+> But given a developer creates a patch, send it around for
+> acks/other signoffs, collects signatures and then does
+> a git am -s on a different branch, this sort of sign-off
+> chain is possible:
+>
+> 	Signed-off-by: Original Developer <od@domain.com>
+> 	Acked-by: Random Developer <rd@domain.com>
+> 	Signed-off-by: Original Developer <od@domain.com>
 
-It seems odd that you would generate a larger set of random bytes and
-then throw most of them away (about 1 in 5, on average). So you don't
-actually know how long your inputs are, and you're wasting time
-generating bytes which are discarded.
+Both correct and allowing the earlier one duplicated as long as
+there is somebody/something else in between is deliberate.
 
-The goal looks like it is just to clean up the string to only-ASCII
-characters. Perhaps converting to to base64 or hex would be conceptually
-simpler? Like:
+> Should there be an option to avoid duplicate signatures
+> in a sequence where an author can git-am the same patch?
 
-  test-genrandom ... |
-  perl -pe 's/./hex(ord($&))/sge'
+I dunno.  The way "Signed-off-by" is handled is designed
+specifically to support the meaning of that footer, namely to record
+where it originated and whose hands it passed, used in the kernel
+and Git land.  Other projects certainly may have need for footers
+that denote different things that want different semantics (e.g. Who
+authored it and who cheered on it), but that is outside the scope of
+the "Signed-off-by" supported by "am -s" and "commit -s".
 
-> > I do not quite get the point of this complexity.  You are using
-> > exactly the same seed "end" every time, so in the first round you
-> > have 1M of SP, letter '1', letter 'S' (from the genrandom), then
-> > in the second round you have 1M of SP, letter '1', letter 'S' and
-> > letter 'p' (the last two from the genrandom), and go on.  Is it
-> > significant for the purpose of your test that the cruft inserted
-> > between the repetition of 1M of SP gets longer by one byte but they
-> > all share the same prefix (e.g. "1S", "1Sp", "1SpZ", "1SpZT",
-> > ... are what you insert between a large run of spaces)?
-> 
-> The pktline packets have a constant size. If the cruft between 1M of SP 
-> has a constant size as well then the generated packets for the test data
-> would repeat themselves. That's why I increased the length after every 1M
-> of SP.
-> 
-> However, I realized that this test complexity is not necessary. I'll
-> simplify it in the next round.
+Support for more generic footers was supposed to come when the
+"interpret-trailers" topic started, but the author of the topic
+seems to have lost interest before the mechanism has become ready to
+be integrated in the workflow commands like "am", "commit", "rebase"
+etc., which is unfortunate.
 
-I was also confused by this, and wondered if other patterns (perhaps
-using a single longer genrandom) might be applicable. Simplification (or
-explanation in comments about what properties the content _needs_ to
-have) would be welcome. :)
+> sequencer.c:append_signoff() has a flag for APPEND_SIGNOFF_DEDUP
 
--Peff
+Yes, I think this is one of the warts we talked about getting rid of
+but haven't got around to it.  It is there because "format-patch -s"
+was incorrectly written to dedup Signed-off-by: from anywhere in its
+early implementation and to keep the same behaviour.  We should drop
+that flag from append_signoff() function.
