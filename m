@@ -7,72 +7,78 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2EB3D1F859
-	for <e@80x24.org>; Wed, 31 Aug 2016 20:35:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C9471F859
+	for <e@80x24.org>; Wed, 31 Aug 2016 20:37:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753618AbcHaUfM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 16:35:12 -0400
-Received: from mout.gmx.net ([212.227.17.22]:51413 "EHLO mout.gmx.net"
+        id S1753802AbcHaUhN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 16:37:13 -0400
+Received: from mout.gmx.net ([212.227.15.19]:63662 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752745AbcHaUfL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 16:35:11 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0LyS5K-1b065Z1hcU-015rEH; Wed, 31 Aug 2016 22:34:31
+        id S1753487AbcHaUhM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 16:37:12 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0LaFmY-1bFR4n16di-00m3O9; Wed, 31 Aug 2016 22:36:51
  +0200
-Date:   Wed, 31 Aug 2016 22:34:29 +0200 (CEST)
+Date:   Wed, 31 Aug 2016 22:36:49 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/4] cat-file: optionally convert to worktree
- version
-In-Reply-To: <xmqqpoor8f0d.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1608312233440.129229@virtualbox>
-References: <cover.1471524357.git.johannes.schindelin@gmx.de> <cover.1472041389.git.johannes.schindelin@gmx.de> <xmqqpoor8f0d.fsf@gitster.mtv.corp.google.com>
+To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 05/34] sequencer (rebase -i): learn about the 'verbose'
+ mode
+In-Reply-To: <1472668767.4265.73.camel@kaarsemaker.net>
+Message-ID: <alpine.DEB.2.20.1608312236210.129229@virtualbox>
+References: <cover.1472633606.git.johannes.schindelin@gmx.de>  <68118621a481d786dd57d5c7fd4c3ea0a8e61b07.1472633606.git.johannes.schindelin@gmx.de> <1472668767.4265.73.camel@kaarsemaker.net>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Oufd8Md6JgnEvMvZCrhAG8HGJKmOGNhqk5xK2w//q/XkK3JgrzZ
- MqzB8iuTmS/fLZ/lxtbGyQx6dkEGM9bC88KXFxW9BL/pfsTqQSCEqGAp6nYAQek5xvsVtye
- LzpXOF5W6UHLEp8G0lSoq/CPbPTjaq0KEiSWPGb6Uw9Xm+X0wVFbajkKQZruuPsol2sPXlL
- ESxUOLpvkoDJQ3bVrmZug==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vN33jw7E/gA=:XIGvxPJ+2S+N/S+oZLw6mZ
- i04iEdpsF7EJSYb1kT2qmscZ6y5tUV0ACreUYjgLl+Pd1TNqytlvmVLwu30NC4rfOE92R/bPL
- tshLw8fanN44+izEvcjIu7G6QE0LqeuH3I5zjb7dOdsSe+Kb7koSJb/oAw0Z8h+YKdTvhEIi6
- OMsYTBk2HG4VHs0MskkBFwONB2+lSvGpZAr12wbtAFNnKMSTqBaz4wNC25QJQPJt2Pv8ixHo2
- RErT/+ZNR51dSU/HnhjvBm8nRpgwHrDWlMgEnx3hYQFjyVwVG11VImnA+Aq8hiCYkNlVhAkuR
- COJi0JQgDBFQXZs9YQmDj0KbCzLFY/tX6sCOBIp47tSxlsRLOUjSE1+Cl/U5H50VZWiMvVmVj
- 25quzrPjfqF+osIswGDcdQb8mqfCi3B14P3xgio+Rz3LUr64HPvb3vI2517NgupyfumSfZrHN
- hqQe0VCdCP7PIKsaTScisxk3b2nqQfmkeytjhnCi174nubOXs6oXU0bMZt8osMJVtfRtu+gAq
- gQ2r6uSZtx4snn5T+iL5GNf4qkyyNYBsG03z84btACRI2tzh16JP1867FBn7f0dRKMPI2bx36
- A7gxn8CF1WIeVwSi6aWfdlD6Sv80ivwsMmLhQphpRddiF6pcHWYQDOXpce1wo9A7TRAPhqhtk
- 98zS27ayXcJONllIk216Psuh0iYnVxvp8q8MEsmBw77N2YoVnl0L1eW46WrDWoV7pZEpxQ9bz
- ySBD4O7keoL1tpHNFnw3MQbQo3owrSLxJpytG8PW0wjMr/jmsGvGILFgSWyyO9OHIPH+KWWRA
- ddSn1x4
+Content-Type: multipart/mixed; BOUNDARY="8323329-889169325-1472675811=:129229"
+X-Provags-ID: V03:K0:QHOSCDDdHdHGOEqg9fI/B3XQ/TrUalKIK/RwpcypXYGq2l8m2io
+ bG1k1Eb+c8DmE18EwJAWIqYZu8YQgN20sr7oiNHQU4sTu88HQobCySHoaceWo7wFu3nuX55
+ nNH9G/f2+3Zpb+wq/uTPEpufd8+bzPMckn+9bOVgMvill59xqXCjmSCZUGMGf5giTr7Ov5m
+ 118DHpSzZiRsD+TT/Gfkg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:nUnGNyYjNFc=:9tCdEs1VtGobYIWArB3qA6
+ OM8puFT4o9TlNREhLrccfrbBPhqWxl0bEvCm3XSXpDnZIVpn9kO2fN9dzLCK9qgWBPsjCvMRn
+ 8p8mhoDdpW2cMWCWGXhFmeQf4TMnkB1S7AJDyYQkMqBrW6a6RwX/nUwb80ic9mvLRCqpTBGca
+ bpP4FIzy9dJ6KZ7e/TrpxOqImoxcDz3QAyeIc1S8/BkSIFdQpaWiEhC+N6/JmT47c+mECmc1T
+ 77UICIBqruiQuWWRMWUu8R1mJBSiOYpyDsODEpvpgmCeLVpiPVlZ1gaMnuUK/bJOzqGitFK/6
+ Cte/XQraq4bajBSHmhWpbzVkZNra+ugtOuE/8pklOvR8gjpbn6l2QTkMSDpcFpXO6Jc9AlsXB
+ qvPFhfWcnLqEyKZw6DlGDbn+Ou0NIH6ufIKTE6xflqMjcX8KuBiZfggHSxJP92QQVe24PQPho
+ nuQ8lopqkKu7R7c9f47fIDuWZUPuv3RR2jj3ZA0dXYg7ZApb7ibAqJ3tCcm/4zyijk+GWh5xL
+ n0odcszbl9he9nh2Txk95Jt5jwAra4GxyL5kZMoftE2MYL+2jEECjj/J7MVw2U+dHsBILz4Jd
+ D0TqnvyhkKWlyzyxA3ZXldFDoNh/MB1uKihR/fnY5k6X0KnGUpl9Inxki/FqvR+gsSwQvKjp+
+ 69unpEN1i8aLX6w7iQQKDzTU/lQogVLTij9/6CTKKV/eq5qi/TV573l7HSHXY0ULsN3s7sWSD
+ 3mX5kVlKSuKxp7mxlc0s1BVv244Sr3jG2Q9LnYH264TXjV5D2m5bOtczhlFnVlpPdCPQZjuT/
+ 4rnVMRA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Mon, 29 Aug 2016, Junio C Hamano wrote:
+--8323329-889169325-1472675811=:129229
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > When third-party tools need to access to contents of blobs in the
-> > database, they might be more interested in the worktree version than in
-> > the "clean" version of said contents.
-> 
-> Just a friendly reminder before you completely shift your attention
-> to unrelated topics.  I think this topic is almost there; let's not
-> stretch ourselves too thin by nibbling-here-nibbling-there and leaving
-> loose ends untied.
+Hi Dennis,
 
-I answered the comments and changed one thing locally. Will send out v3
-tomorrow.
+On Wed, 31 Aug 2016, Dennis Kaarsemaker wrote:
+
+> On wo, 2016-08-31 at 10:54 +0200, Johannes Schindelin wrote:
+>=20
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0if (file_exists(rebase_path_verbose()))
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0opts->=
+verbose =3D 1;
+>=20
+> I don't see anything in this series that creates this file, will that
+> be part of a later series?
+
+No. The sequencer does not write that file, but just consumes it. `git
+rebase` writes it.
 
 Ciao,
 Dscho
+--8323329-889169325-1472675811=:129229--
