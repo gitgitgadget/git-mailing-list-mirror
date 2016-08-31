@@ -7,54 +7,55 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEFA31F6BF
-	for <e@80x24.org>; Wed, 31 Aug 2016 08:57:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B1441F6BF
+	for <e@80x24.org>; Wed, 31 Aug 2016 08:57:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759549AbcHaI45 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 04:56:57 -0400
-Received: from mout.gmx.net ([212.227.17.22]:56746 "EHLO mout.gmx.net"
+        id S933824AbcHaIzf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 04:55:35 -0400
+Received: from mout.gmx.net ([212.227.17.20]:59108 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1758979AbcHaI4w (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 04:56:52 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MNqcR-1blJeN3eZP-007T3Z; Wed, 31 Aug 2016 10:56:48
+        id S933795AbcHaIza (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 04:55:30 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MdXSC-1bSy3e40Z2-00PN7N; Wed, 31 Aug 2016 10:55:27
  +0200
-Date:   Wed, 31 Aug 2016 10:56:48 +0200 (CEST)
+Date:   Wed, 31 Aug 2016 10:55:26 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 34/34] sequencer (rebase -i): write out the final message
+Subject: [PATCH 15/34] sequencer (rebase -i): leave a patch upon error
 In-Reply-To: <cover.1472633606.git.johannes.schindelin@gmx.de>
-Message-ID: <02db26b4320bd9f8296358acd2a493555acae9aa.1472633606.git.johannes.schindelin@gmx.de>
+Message-ID: <cade51f893ed381ed03718439c7dba3f5dcebba3.1472633606.git.johannes.schindelin@gmx.de>
 References: <cover.1472633606.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:49XL3TVtAVeIYLwtNhyXbEZxiSpr/tAeUF0t0NmF8xHxRLetHuu
- MupUpM69HSdKwd6m093FuBi4I1+ZHI8qqbnehafvshawh1q/vOWi5i6WjCjl0B/9WCBUuLY
- 0CVXtcCXqL/rnfj/BmtMOmFIbr94me315Z8Pn4hcQegba7dziSB9WCWQ6b3jjqlu2wfu/C4
- OKzr6BPonGyhuBeikREyg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:8UojFtiFhSc=:9tVftT7HZ6j/MY65Yyuohx
- nOfJGu4+ERpec1xmqVvcwqTkoYYeW8Fahva4r96Uy/m2Jvr8dExMKIby9OwYHqIl0WUTrjUM1
- GW/7f4vX9Hwa9odxXSrDJqdVhLsK5mak/7qPup7f6UzNIpugbYZJoCY3hiXX7/7zQoBFYa//X
- qUHPh72dxbEO2LyYav4J1RP9WyzRbF8wcYJtCfrVqMiPtpsHz1USEkUER/w9SzSPKAo3aYiMW
- +9KBrQXnVgck55l363KroaNRSqvhkF8T7rKwyvcCVgtA87+/6AEEVk/6PVgrf2OfDQVC6jig1
- IejSxU9DIOCLwk6WJ70wRbMsf9+EXNjT82gBERTRUmmdsC0dfQI4iVFfe4wGReFKVKAOzHggQ
- 0p45bT1yqfsdggvOE9SogHW2tovvNpIrhN2+9dC0aesT/5/Y2KPxABgT4FzmhYpA8P1nhh/VH
- MdNUAYqz/aRwlPh0ZQv6sH20tW+bcciLpn8O/ut4okevgNuQU2gDXDMf8EFBzJxbREyVuomZj
- SyiBItZXRN0XQMK+GPtj4OL5jRltZWgpz5oBbyqjNPixphmKd+D/fdIXrJwXqzTeEFcw9+HQp
- XnWc69V8VrpVVx/N79R26n1KPunE0nL+4F/dpTej5p1WUoKRyTagaB45aYUH1nCJkVxtSemnZ
- QwV0jmuGeklqAL379mzOJZ+u095/RTAJRGEp1+KaBOSYqxmXMxsqBrIZPqJ1ScRYBQDx9cI0X
- G3VxOjfHWHG4tvhi690FovqJS0/P0F8YgYW9ou2szcS7M3GUn0Ej9EOwiQPImGpKQyqjoeTeD
- G0Bx1S0
+X-Provags-ID: V03:K0:AtmbhcScCUHfMFkrEsnRVAAFBy9fjEt8cccJ3GQOtxs0ab/jtrl
+ cnV1XhWe3cCCe1fpipaSzXs0+MlmtVa5DaBEIOg2NswFh/Q2rIKUsKGUZyVs9A9Bj3tRJ1X
+ T4YhdmWT0WP4Sr5EM0CY2GKqaUL5gMaoffGV7qhbeMpDdBB0JVwtuvPMQEFtTT0oGvhe2dK
+ y44QyTdJzgoa6GmHPbKbg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:WiB/zwVwVps=:Cj7/qIEHMlRcqxew25l1yn
+ RvPVw7DkQuRPkdfWhLtS7Ywnl5qTbdqWvcBfS4ZEo23xuryfcr7/hHE7ByP1Zqx/uMVrHjUb5
+ xQXDLHglKBOPdqL1bvo3QNAbqKQyVeYbOz1cUnuW/g9+tlmRxBQ+g9LK4QNYbXPEik827gtKX
+ izjTUSMtLEfRRmAAB9BE8nDXow9/e74b14Y2vMZYPJMAbZDtSIj929v4gznOaMjlo8DKRFvt6
+ VKK/6sesGvBhabQ9TyXb6B3ZEX+bnYCqchVg7khj9ODCNR7INrsAwTutXxndQmc8kVOs7sNL+
+ 6HpgOZ3Axb/iq9I7rMk0lFl7S2rgVBL7RjSwh+HIOPu9eBN828nJte1JnheeMvHRJL1TN+c/2
+ ycxPuOp50Q9w4lywnaz98oiQCd0o0hvQq+ui2nLO0SVdzIK/ifE/gBl//JU0NG1MFmGLMpYnU
+ T9YiXH5yB7i1uUIcOe10nGfJF6gQw2VMCFQz5tB7PJ9t6NvSYnbl/nGDx+9/WWb1ehPIpB9RI
+ egJC/haFQCNEvO9cq4k6dWxexihcB/KkztYPpldZQ2YOWTsG2CL7aD73tD1F6kFyS9+v3TP7F
+ Wf8HIKIulKN+X8gk3neKBErmNV9GNJyFMZD5ygZKQB8rgnbVbWLCFql2pttAdRdfj8gopoM/w
+ cUL+VyVUAPdfpuFMKQdvViB8c8cNuyNbk771N4HoKjWwI/b+znwBTm8+XXf/VbkB7jU+ojJ45
+ V6hjRdhVK/E6OpXRceHr3q4balDYtII8gYVZ0leY7E/VoswJc2FQJCkskY1+uEGHj+G9Qj/KD
+ v2vYsut
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The shell script version of the interactive rebase has a very specific
-final message. Teach the sequencer to print the same.
+Just like the interactive rebase, we want to leave a 'patch' file for
+further inspection by the user (even if we never tried to actually apply
+that patch, since we're cherry-picking instead).
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
@@ -62,18 +63,20 @@ Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
  1 file changed, 3 insertions(+)
 
 diff --git a/sequencer.c b/sequencer.c
-index 9a8069e..6064018 100644
+index 7662222..9a06b40 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -2090,6 +2090,9 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
+@@ -1753,6 +1753,9 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
+ 				return error_failed_squash(item->commit, opts,
+ 					item->arg_len, item->arg);
+ 			}
++			else if (res && is_rebase_i(opts))
++				return res | error_with_patch(item->commit,
++					item->arg, item->arg_len, opts, res, 0);
  		}
- 		apply_autostash(opts);
- 
-+		fprintf(stderr, "Successfully rebased and updated %s.\n",
-+			head_ref.buf);
-+
- 		strbuf_release(&buf);
- 		strbuf_release(&head_ref);
- 	}
+ 		else if (item->command == TODO_EXEC) {
+ 			char *end_of_arg = (char *)(item->arg + item->arg_len);
 -- 
 2.10.0.rc2.102.g5c102ec
+
+
