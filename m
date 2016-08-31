@@ -2,107 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F5021FBB0
-	for <e@80x24.org>; Wed, 31 Aug 2016 05:03:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 814631FBB0
+	for <e@80x24.org>; Wed, 31 Aug 2016 05:04:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755809AbcHaFDP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 01:03:15 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35725 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751202AbcHaFDO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 01:03:14 -0400
-Received: (qmail 4920 invoked by uid 109); 31 Aug 2016 05:03:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 31 Aug 2016 05:03:14 +0000
-Received: (qmail 2999 invoked by uid 111); 31 Aug 2016 05:03:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 31 Aug 2016 01:03:19 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 31 Aug 2016 01:03:10 -0400
-Date:   Wed, 31 Aug 2016 01:03:10 -0400
-From:   Jeff King <peff@peff.net>
-To:     Brian Henderson <henderson.bj@gmail.com>
-Cc:     git@vger.kernel.org, e@80x24.org, gitster@pobox.com
-Subject: [PATCH 2/3] diff-highlight: add multi-byte tests
-Message-ID: <20160831050309.3k43nn737ztcajiz@sigill.intra.peff.net>
-References: <20160831050229.cabhfzqcpcpvkugl@sigill.intra.peff.net>
+        id S1752234AbcHaFEJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 01:04:09 -0400
+Received: from mail-it0-f52.google.com ([209.85.214.52]:38887 "EHLO
+        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751136AbcHaFEI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 01:04:08 -0400
+Received: by mail-it0-f52.google.com with SMTP id g62so76586336ith.1
+        for <git@vger.kernel.org>; Tue, 30 Aug 2016 22:04:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Os1eRGqJGWs593ceobEroChZM1F+8lTDRacbTVCDhAk=;
+        b=Thlp0tnaN2+9m4h7MueulLPxXiibHz0FN+mnDWCRO94xTLLQVaqjc9TwRQxniE3/8W
+         U0tUQNc6mS+kqw5TA8/7Jk4PMRHY1y+/qXo6axsbEQ2NRbbeOEZDqEWysp1fCtj61ncw
+         eID+dFc/x7KqVE9aPKSaknJH6N80QtGHg/2nPEVguQceMX8auxuO2r3OlRMKNPuy9QIb
+         ZVQ7gFtf5wctPibp6CQwyWYlCgPOG6WnCG887n6/M14N9ArSab39KmPc2NtIT97aoqZU
+         wj+VLIJcyXZodxo3yxEnK4B7pO5o/uFO6Uq+owkrNvzDg1P41aQgp33IURXZ6tvM1W0e
+         rEbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Os1eRGqJGWs593ceobEroChZM1F+8lTDRacbTVCDhAk=;
+        b=Q9m7lqHYb+UQaUrfrardagMLL0vVQBKsjasgR3LhclOha4Bm3QimSleJBzFZxJavOS
+         l2rWBqP+5Tv/Dfw+DXuu1Ziz+HsQlPlqhn6dDk7gGHfMfv2XbQ6w2z87UH0kRtbcejMW
+         8ArnCzfWeLYqmsnS93id7zI/x9Uu5p1eVEs+YwaxgmrSXP8JUXFMDjPqor7g+Hq5g1mB
+         3jCTSVyx0MBtaMfP7lzwMCad3hHXmTRri8RzLZOJY8KFElHIK4TiRpgqJfXBOdbt6FGp
+         J+IAwt3Sp69/bEvx1Hls80NgGDfZFbGTUlFuPdcC7wkmQfyfngBpYDan1G2XjPVF+TEf
+         IW3Q==
+X-Gm-Message-State: AE9vXwOkazeBIYoSVQH/KFAy2gYNEGDYmS5h62Dlb5vjTeO9c+5JTk968qQzjDPXwhRrEFiHNgQn72EDM1/Q/vIr
+X-Received: by 10.36.88.131 with SMTP id f125mr9724973itb.46.1472619847900;
+ Tue, 30 Aug 2016 22:04:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160831050229.cabhfzqcpcpvkugl@sigill.intra.peff.net>
+Received: by 10.107.128.66 with HTTP; Tue, 30 Aug 2016 22:04:07 -0700 (PDT)
+In-Reply-To: <CA+P7+xrokr0ZGidQFuvpN+-J_WDjkaUropcnPGVjZHafc12AnQ@mail.gmail.com>
+References: <20160815215327.15682-1-sbeller@google.com> <20160815215327.15682-9-sbeller@google.com>
+ <CA+P7+xpDqkTFLUJBhSwWiVnXw-iy1fmGBWzVBLmybOcPOmevBw@mail.gmail.com>
+ <CAGZ79ka6nwYjBRcUKAxCqAodq=Hw6f86J0Mq6GWyKgMO_PNi4A@mail.gmail.com>
+ <CA+P7+xpmyx+QsdOpS7JC1i9Z6cdsy_=MK7J_rGYiukPsqAJBVQ@mail.gmail.com>
+ <CAGZ79kah4sY0NJkaqDiUqcwsCHn0SECkMjN8SoXQ8vGi6zRkuw@mail.gmail.com> <CA+P7+xrokr0ZGidQFuvpN+-J_WDjkaUropcnPGVjZHafc12AnQ@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 30 Aug 2016 22:04:07 -0700
+Message-ID: <CAGZ79kYAHXct0Fz-sw0-FbN5-Mij-C4Qwak_S0mxKHyW=U5jWQ@mail.gmail.com>
+Subject: Re: [PATCHv5 8/8] clone: recursive and reference option triggers
+ submodule alternates
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jens Lehmann <Jens.Lehmann@web.de>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Now that we have a test suite for diff highlight, we can
-show off the improvements from 8d00662 (diff-highlight: do
-not split multibyte characters, 2015-04-03).
+On Wed, Aug 24, 2016 at 4:37 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
 
-While we're at it, we can also add another case that
-_doesn't_ work: combining code points are treated as their
-own unit, which means that we may stick colors between them
-and the character they are modifying (with the result that
-the color is not shown in an xterm, though it's possible
-that other terminals err the other way, and show the color
-but not the accent).  There's no fix here, but let's
-document it as a failure.
+> Yes that seems reasonable.
+>
+> Thanks,
+> Jake
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- contrib/diff-highlight/t/t9400-diff-highlight.sh | 36 +++++++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
+I reviewed all your comments and you seem to be ok with including this
+series as it is queued currently?
 
-diff --git a/contrib/diff-highlight/t/t9400-diff-highlight.sh b/contrib/diff-highlight/t/t9400-diff-highlight.sh
-index e42232d..7d034aa 100755
---- a/contrib/diff-highlight/t/t9400-diff-highlight.sh
-+++ b/contrib/diff-highlight/t/t9400-diff-highlight.sh
-@@ -207,7 +207,41 @@ test_expect_failure 'diff-highlight highlights mismatched hunk size' '
- 	EOF
- '
- 
--# TODO add multi-byte test
-+# These two code points share the same leading byte in UTF-8 representation;
-+# a naive byte-wise diff would highlight only the second byte.
-+#
-+#   - U+00f3 ("o" with acute)
-+o_accent=$(printf '\303\263')
-+#   - U+00f8 ("o" with stroke)
-+o_stroke=$(printf '\303\270')
-+
-+test_expect_success 'diff-highlight treats multibyte utf-8 as a unit' '
-+	echo "unic${o_accent}de" >a &&
-+	echo "unic${o_stroke}de" >b &&
-+	dh_test a b <<-EOF
-+		@@ -1 +1 @@
-+		-unic${CW}${o_accent}${CR}de
-+		+unic${CW}${o_stroke}${CR}de
-+	EOF
-+'
-+
-+# Unlike the UTF-8 above, these are combining code points which are meant
-+# to modify the character preceding them:
-+#
-+#   - U+0301 (combining acute accent)
-+combine_accent=$(printf '\314\201')
-+#   - U+0302 (combining circumflex)
-+combine_circum=$(printf '\314\202')
-+
-+test_expect_failure 'diff-highlight treats combining code points as a unit' '
-+	echo "unico${combine_accent}de" >a &&
-+	echo "unico${combine_circum}de" >b &&
-+	dh_test a b <<-EOF
-+		@@ -1 +1 @@
-+		-unic${CW}o${combine_accent}${CR}de
-+		+unic${CW}o${combine_circum}${CR}de
-+	EOF
-+'
- 
- test_expect_success 'diff-highlight works with the --graph option' '
- 	dh_test_setup_history &&
--- 
-2.10.0.rc2.125.gcfb3d08
-
+Thanks,
+Stefan
