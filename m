@@ -2,81 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6CE81F859
-	for <e@80x24.org>; Wed, 31 Aug 2016 14:32:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59A721F859
+	for <e@80x24.org>; Wed, 31 Aug 2016 15:05:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935267AbcHaOcB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 10:32:01 -0400
-Received: from mail-it0-f49.google.com ([209.85.214.49]:37955 "EHLO
-        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933960AbcHaOcB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 10:32:01 -0400
-Received: by mail-it0-f49.google.com with SMTP id g62so99219632ith.1
-        for <git@vger.kernel.org>; Wed, 31 Aug 2016 07:32:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sometimesfood-org.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=uvl9ctcpczCPT2WgsXLlm7UFythnnWY4Pf44y+9o7JY=;
-        b=QSu8dUL6AwPKLyeOkMiA0dZqGvEkM36oIbmxSvU5kSONEEuTDQK2/LMGolbnqw4TPP
-         qzAOiJ7kB67aFdGVX4QJ57an70IRo2mfLN+n8ydM1l5erG7qS/EjN1Nu2XNSeR2Iu6We
-         oXX9VXzOS3UxdAvpf84djVEeKwW+GoiJOSTO8iJU0TERsAfOXMj+tXj6IP3GCk0lqfHf
-         QAfuq8yFUIT2u0jU2RdlVLWAFIwYOBPe7hOE5F+63G733RBPF4fIPI0VlrFk15nZjb+7
-         fFzKDLNVx8sLghwJLGM34TQovpeeLidJjRVFOHX0M7jZgYK4O01VyEczzlUra6Yuh7fw
-         1t7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=uvl9ctcpczCPT2WgsXLlm7UFythnnWY4Pf44y+9o7JY=;
-        b=HAQCoVBH64nW93s4U5yMp9Hi5tP6glRRcdGtuIRzhsxz8OyYAQ5QanylbmH+FQ+0tD
-         OZM6cB+Btd2akQlnxfCGxRrNJdqIXMhVKxYTeFOYnXu5Y0F4xcHvc5uZv1bpmlfWU0rO
-         GWw1rjGYRsKBxFFG2OoeZmnSNYTVdVpMhFkx/Vteo+zY6dx4wSGYEcd8pMu4Xw8Bwbd5
-         XEf1Q9bou/toCymvR/Gc7CeEDRb30ob2P6anXVRWqQGzMbvMuHCC4/ZnR3pT++c7QGRK
-         6Pom1o5I6GiUzqUTcXao/l1IUyP+miQpI1bfbIDpTVUVeAosdZSUC8g/Z1DZiAXQG9PK
-         697A==
-X-Gm-Message-State: AE9vXwOXE5PxpWuYRSdnwim1UzHV/C4yXB5AbhYxfLyFOFM/omTXOg4ylLS4kh6SkKgeSOxqMYzDLNe8ph0oHg==
-X-Received: by 10.36.189.1 with SMTP id x1mr882831ite.97.1472653920185; Wed,
- 31 Aug 2016 07:32:00 -0700 (PDT)
+        id S935574AbcHaPFq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 11:05:46 -0400
+Received: from mout.gmx.net ([212.227.15.15]:60116 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S933887AbcHaPFp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 11:05:45 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0M8leW-1bozUu2nYy-00C9qp; Wed, 31 Aug 2016 17:05:32
+ +0200
+Date:   Wed, 31 Aug 2016 17:05:31 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Jeff King <peff@peff.net>, Git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] t/Makefile: add a rule to re-run previously-failed
+ tests
+In-Reply-To: <CACBZZX6exynt_9_wVtEN19HQt_rPJdo5Ck3jujdQ-hLdMAGdmg@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1608311702440.129229@virtualbox>
+References: <b2d016e44fa04e8a318967c43762d6933faf7956.1467183740.git.johannes.schindelin@gmx.de> <0dfa96b17edfe84ba19c7e57fe0b017c77943e0c.1472478285.git.johannes.schindelin@gmx.de> <CACBZZX6iEmbb68tzRKNAryp5qmt=iU9FMuOe2ONV=2ojcazoEg@mail.gmail.com>
+ <20160830205151.k6ufhfzl6gh4uuog@sigill.intra.peff.net> <CACBZZX4NyjkK0Nf1JVGFRhc0xnLYg2YX6ctO5OxK3Pi60r5KaA@mail.gmail.com> <alpine.DEB.2.20.1608311227150.129229@virtualbox> <CACBZZX6exynt_9_wVtEN19HQt_rPJdo5Ck3jujdQ-hLdMAGdmg@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.107.34.82 with HTTP; Wed, 31 Aug 2016 07:31:59 -0700 (PDT)
-X-Originating-IP: [84.113.132.202]
-From:   Sebastian Boehm <sebastian@sometimesfood.org>
-Date:   Wed, 31 Aug 2016 16:31:59 +0200
-Message-ID: <CAH4qiVc-KZCjcnxfxicO85ocjFhpXpobfZLvcVniLkz5EJoW4A@mail.gmail.com>
-Subject: git-completion.zsh does not escape spaces in filenames
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/mixed; BOUNDARY="8323329-665518694-1472655932=:129229"
+X-Provags-ID: V03:K0:LkMTkKlO+g3jWtsuoW3AviHBi8bIttsGu5xqfbtB8azSvhV2JQc
+ a2EclQNWzIxfHo2IDfdWQsh0vKk1h7ZkZGD6goAYShgu8eIxInbFxy6/nS2+gdHQYng4CKI
+ Ah8kK7+nZ8PiSuyPZQ0x+pNUhtC/04tUm25+Qk27tMeSKfT+YuonbfU3aeGoDD8oiFu8zvX
+ wo6Eg8VbUucSskBi5TO3Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:PvkOiIuaMDY=:Ijimb8CT3HeHb0q7E8xhz0
+ 91Wi1+r+P5sZhcWDSvzxUoJvDcpfr9Qrm6c88+PgRhPQ2dOWrHo+6qfnmL73t+4W8ojz5jYxd
+ gQUk0Zih+Ig2hOxbglyF5G8AL3fQXuMpcwEFQOSlCWeOhxeYyT0U/tIBMtJCDJz774SJZO+3w
+ BXdDI0J28Auc8fKSZssAVvkD2wCSViB+R4NM08viTZFrxK3XG8o1/hO74JTFRjKAaluWKUYZs
+ Gl07fFTlfZpqgWOFgxt/97w8ed5LINjiiLrbBHtyaD9dprGy/4FJfECTBuuP3XmiPbPC7ErzH
+ wN5y1IVUPEISdsjy3ihBkdZi6F8FKhx8DAhy7L/4iJmRk5r+w7mJ0asCaGgGIAg7+iEqy0U8f
+ L+VN5fPuBb3eie63yJoUJkJxsQ7namlOJwECSprCFgfoHv6epXZgk6WLm8th5f8mBox5JPTfe
+ LRfGURDHay1qZWRnMZE0vgOqULvznQeUGYl1884EVEAOks8j7UqvhxNaNlWRBuTWU3L6ImR3j
+ 9x7ZGlqNPQdTI1JW4tAx7gWHaZW3iM1XcXJFt5PWtLa6ct2ZgAO676t78yulNlKjwCAQQQsar
+ As5yJ7ie3gV5213ec9V5T5+9o8dhWG6hpaNdffK5F2hGj8DGb92tx/geZYxyyMW5s4yi4MXOg
+ WfuWJg5Wbmyoy+/FZBAxTgTUCsRb+mMIvYRirgxm1uINvOdSjA1Aw+cyOTL8vQcr3MWQuKKw7
+ X2gRVwRyikZOxZ04yi4fGLu2S/gF/9NZ4YAbrETJElcLC3AVXr6XfAcL54DcNze8iOHtE+Uc6
+ 23qFau6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-git-completion.zsh does not seem to properly escape spaces in filenames.
+--8323329-665518694-1472655932=:129229
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-My git version: 2.9.2
-My zsh version: 5.0.8
+Hi =C3=86var,
 
-Expected behaviour: When completing filenames that contain spaces, for
-example "foo bar", I would expect the git completion to complete "git
-add foo<TAB>" to "git add foo\ bar".
+On Wed, 31 Aug 2016, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-Actual behaviour:
+> I haven't used it myself (or any Windows thing) but people say good
+> things about http://strawberryperl.com
 
-touch "foo bar"
-git add foo<TAB>
+Ah yes. This comes up frequently. Many a Git for Windows user pointed me
+into that direction.
 
-results in:
-git add foo bar
+The biggest problem with Strawberry Perl is that it is virtually
+impossible to build the Subversion-Perl bindings using the Git for Windows
+SDK when using Strawberry Perl.
 
-I am not a zsh expert, but apparently the usage of "compadd -Q" in
-contrib/complete/git-completion.zsh prevents zsh from escaping spaces.
+Which pretty much precludes it from being used in Git for Windows.
 
-Is this behaviour intentional, or is this a bug?
+And then there are the path issues... Git's Perl scripts are pretty
+certain that they live in a POSIX-y environment. Which MSYS2 Perl
+provides. Strawberry Perl not.
 
-Best,
-Sebastian
+Ciao,
+Johannes
+--8323329-665518694-1472655932=:129229--
