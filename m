@@ -7,21 +7,21 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA5F61F859
-	for <e@80x24.org>; Wed, 31 Aug 2016 12:33:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB6EA1F859
+	for <e@80x24.org>; Wed, 31 Aug 2016 12:33:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933955AbcHaMdG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 08:33:06 -0400
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:42614 "EHLO sapo.pt"
+        id S933969AbcHaMdJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 08:33:09 -0400
+Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:36735 "EHLO sapo.pt"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S932516AbcHaMdG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 08:33:06 -0400
-Received: (qmail 13213 invoked from network); 31 Aug 2016 12:33:04 -0000
-Received: (qmail 7770 invoked from network); 31 Aug 2016 12:33:04 -0000
+        id S932516AbcHaMdI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 08:33:08 -0400
+Received: (qmail 13731 invoked from network); 31 Aug 2016 12:33:06 -0000
+Received: (qmail 8348 invoked from network); 31 Aug 2016 12:33:06 -0000
 Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
-          for <gitster@pobox.com>; 31 Aug 2016 12:32:59 -0000
+          for <gitster@pobox.com>; 31 Aug 2016 12:33:04 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -31,9 +31,9 @@ Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
         Jiang Xin <worldhello.net@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, David Aguilar <davvid@gmail.com>
-Subject: [PATCH v2 05/11] i18n: add--interactive: mark message for translation
-Date:   Wed, 31 Aug 2016 12:31:24 +0000
-Message-Id: <1472646690-9699-6-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH v2 06/11] i18n: add--interactive: i18n of help_patch_cmd
+Date:   Wed, 31 Aug 2016 12:31:25 +0000
+Message-Id: <1472646690-9699-7-git-send-email-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1472646690-9699-1-git-send-email-vascomalmeida@sapo.pt>
 References: <1472646690-9699-1-git-send-email-vascomalmeida@sapo.pt>
@@ -42,156 +42,98 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark message assembled in place for translation, unfolding each use case
-for each entry in the %patch_modes hash table.
-
-Previously, this script relied on whether $patch_mode was set to run the
-command patch_update_cmd() or show status and loop the main loop. Now,
-it uses $cmd to indicate we must run patch_update_cmd() and $patch_mode
-is used to tell which flavor of the %patch_modes are we on.  This is
-introduced in order to be able to mark and unfold the message prompt
-knowing in which context we are.
-
-The tracking of context was done previously by point %patch_mode_flavour
-hash table to the correct entry of %patch_modes, focusing only on value
-of %patch_modes. Now, we are also interested in the key ('staged',
-'stash', 'checkout_head', ...).
+Mark help message of help_patch_cmd for translation.  The message must
+be unfolded to be free of variables so we can have high quality
+translations.
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- git-add--interactive.perl | 91 ++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 83 insertions(+), 8 deletions(-)
+ git-add--interactive.perl | 65 +++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 54 insertions(+), 11 deletions(-)
 
 diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 08badfa..5b89b97 100755
+index 5b89b97..acbfa4e 100755
 --- a/git-add--interactive.perl
 +++ b/git-add--interactive.perl
-@@ -91,6 +91,7 @@ sub colored {
+@@ -1179,15 +1179,58 @@ sub edit_hunk_loop {
  }
  
- # command line options
-+my $cmd;
- my $patch_mode;
- my $patch_mode_revision;
- 
-@@ -171,7 +172,8 @@ my %patch_modes = (
- 	},
- );
- 
--my %patch_mode_flavour = %{$patch_modes{stage}};
-+$patch_mode = 'stage';
-+my %patch_mode_flavour = %{$patch_modes{$patch_mode}};
- 
- sub run_cmd_pipe {
- 	if ($^O eq 'MSWin32') {
-@@ -1372,12 +1374,84 @@ sub patch_update_file {
- 		for (@{$hunk[$ix]{DISPLAY}}) {
- 			print;
- 		}
--		print colored $prompt_color, $patch_mode_flavour{VERB},
--		  ($hunk[$ix]{TYPE} eq 'mode' ? ' mode change' :
--		   $hunk[$ix]{TYPE} eq 'deletion' ? ' deletion' :
--		   ' this hunk'),
--		  $patch_mode_flavour{TARGET},
--		  " [y,n,q,a,d,/$other,?]? ";
-+		if ($patch_mode eq 'stage') {
-+			if ($hunk[$ix]{TYPE} eq 'mode') {
-+			  print colored $prompt_color,
-+			    sprintf(__("Stage mode change [y,n,q,a,d,/%s,?]? "), $other);
-+			} elsif ($hunk[$ix]{TYPE} eq 'deletion') {
-+			  print colored $prompt_color,
-+			    sprintf(__("Stage deletion [y,n,q,a,d,/%s,?]? "), $other);
-+			} else {
-+			  print colored $prompt_color,
-+			    sprintf(__("Stage this hunk [y,n,q,a,d,/%s,?]? "), $other);
-+			}
-+		} elsif ($patch_mode eq 'stash') {
-+			if ($hunk[$ix]{TYPE} eq 'mode') {
-+			  print colored $prompt_color,
-+			    sprintf(__("Stash mode change [y,n,q,a,d,/%s,?]? "), $other);
-+			} elsif ($hunk[$ix]{TYPE} eq 'deletion') {
-+			  print colored $prompt_color,
-+			    sprintf(__("Stash deletion [y,n,q,a,d,/%s,?]? "), $other);
-+			} else {
-+			  print colored $prompt_color,
-+			    sprintf(__("Stash this hunk [y,n,q,a,d,/%s,?]? "), $other);
-+			}
-+		} elsif ($patch_mode eq 'reset_head') {
-+			if ($hunk[$ix]{TYPE} eq 'mode') {
-+			  print colored $prompt_color,
-+			    sprintf(__("Unstage mode change [y,n,q,a,d,/%s,?]? "), $other);
-+			} elsif ($hunk[$ix]{TYPE} eq 'deletion') {
-+			  print colored $prompt_color,
-+			    sprintf(__("Unstage deletion [y,n,q,a,d,/%s,?]? "), $other);
-+			} else {
-+			  print colored $prompt_color,
-+			    sprintf(__("Unstage this hunk [y,n,q,a,d,/%s,?]? "), $other);
-+			}
-+		} elsif ($patch_mode eq 'reset_nothead') {
-+			if ($hunk[$ix]{TYPE} eq 'mode') {
-+			  print colored $prompt_color,
-+			    sprintf(__("Apply mode change to index [y,n,q,a,d,/%s,?]? "), $other);
-+			} elsif ($hunk[$ix]{TYPE} eq 'deletion') {
-+			  print colored $prompt_color,
-+			    sprintf(__("Apply deletion to index [y,n,q,a,d,/%s,?]? "), $other);
-+			} else {
-+			  print colored $prompt_color,
-+			    sprintf(__("Apply this hunk to index [y,n,q,a,d,/%s,?]? "), $other);
-+			}
-+		} elsif ($patch_mode eq 'checkout_index') {
-+			if ($hunk[$ix]{TYPE} eq 'mode') {
-+			  print colored $prompt_color,
-+			    sprintf(__("Discard mode change from worktree [y,n,q,a,d,/%s,?]? "), $other);
-+			} elsif ($hunk[$ix]{TYPE} eq 'deletion') {
-+			  print colored $prompt_color,
-+			    sprintf(__("Discard deletion from worktree [y,n,q,a,d,/%s,?]? "), $other);
-+			} else {
-+			  print colored $prompt_color,
-+			    sprintf(__("Discard this hunk from worktree [y,n,q,a,d,/%s,?]? "), $other);
-+			}
-+		} elsif ($patch_mode eq 'checkout_head') {
-+			if ($hunk[$ix]{TYPE} eq 'mode') {
-+			  print colored $prompt_color,
-+			    sprintf(__("Discard mode change from index and worktree [y,n,q,a,d,/%s,?]? "), $other);
-+			} elsif ($hunk[$ix]{TYPE} eq 'deletion') {
-+			  print colored $prompt_color,
-+			    sprintf(__("Discard deletion from index and worktree [y,n,q,a,d,/%s,?]? "), $other);
-+			} else {
-+			  print colored $prompt_color,
-+			    sprintf(__("Discard this hunk from index and worktree [y,n,q,a,d,/%s,?]? "), $other);
-+			}
-+		} elsif ($patch_mode eq 'checkout_nothead') {
-+			if ($hunk[$ix]{TYPE} eq 'mode') {
-+			  print colored $prompt_color,
-+			    sprintf(__("Apply mode change to index and worktree [y,n,q,a,d,/%s,?]? "), $other);
-+			} elsif ($hunk[$ix]{TYPE} eq 'deletion') {
-+			  print colored $prompt_color,
-+			    sprintf(__("Apply deletion to index and worktree [y,n,q,a,d,/%s,?]? "), $other);
-+			} else {
-+			  print colored $prompt_color,
-+			    sprintf(__("Apply this hunk to index and worktree [y,n,q,a,d,/%s,?]? "), $other);
-+			}
-+		}
- 		my $line = prompt_single_character;
- 		last unless defined $line;
- 		if ($line) {
-@@ -1631,6 +1705,7 @@ sub process_args {
- 		die sprintf(__("invalid argument %s, expecting --"),
- 			       $arg) unless $arg eq "--";
- 		%patch_mode_flavour = %{$patch_modes{$patch_mode}};
-+		$cmd = 1;
- 	}
- 	elsif ($arg ne "--") {
- 		die sprintf(__("invalid argument %s, expecting --"), $arg);
-@@ -1667,7 +1742,7 @@ sub main_loop {
- 
- process_args();
- refresh();
--if ($patch_mode) {
-+if ($cmd) {
- 	patch_update_cmd();
+ sub help_patch_cmd {
+-	my $verb = lc $patch_mode_flavour{VERB};
+-	my $target = $patch_mode_flavour{TARGET};
+-	print colored $help_color, <<EOF ;
+-y - $verb this hunk$target
+-n - do not $verb this hunk$target
+-q - quit; do not $verb this hunk or any of the remaining ones
+-a - $verb this hunk and all later hunks in the file
+-d - do not $verb this hunk or any of the later hunks in the file
+-g - select a hunk to go to
++	if ($patch_mode eq 'stage') {
++		print colored $help_color, __(
++"y - stage this hunk
++n - do not stage this hunk
++q - quit; do not stage this hunk or any of the remaining ones
++a - stage this hunk and all later hunks in the file
++d - do not stage this hunk or any of the later hunks in the file");
++	} elsif ($patch_mode eq 'stash') {
++		print colored $help_color, __(
++"y - stash this hunk
++n - do not stash this hunk
++q - quit; do not stash this hunk or any of the remaining ones
++a - stash this hunk and all later hunks in the file
++d - do not stash this hunk or any of the later hunks in the file");
++	} elsif ($patch_mode eq 'reset_head') {
++		print colored $help_color, __(
++"y - unstage this hunk
++n - do not unstage this hunk
++q - quit; do not unstage this hunk or any of the remaining ones
++a - unstage this hunk and all later hunks in the file
++d - do not unstage this hunk or any of the later hunks in the file");
++	} elsif ($patch_mode eq 'reset_nothead') {
++		print colored $help_color, __(
++"y - apply this hunk to index
++n - do not apply this hunk to index
++q - quit; do not apply this hunk or any of the remaining ones
++a - apply this hunk and all later hunks in the file
++d - do not apply this hunk or any of the later hunks in the file");
++	} elsif ($patch_mode eq 'checkout_index') {
++		print colored $help_color, __(
++"y - discard this hunk from worktree
++n - do not discard this hunk from worktree
++q - quit; do not discard this hunk or any of the remaining ones
++a - discard this hunk and all later hunks in the file
++d - do not discard this hunk or any of the later hunks in the file");
++	} elsif ($patch_mode eq 'checkout_head') {
++		print colored $help_color, __(
++"y - discard this hunk from index and worktree
++n - do not discard this hunk from index and worktree
++q - quit; do not discard this hunk or any of the remaining ones
++a - discard this hunk and all later hunks in the file
++d - do not discard this hunk or any of the later hunks in the file");
++	} elsif ($patch_mode eq 'checkout_nothead') {
++		print colored $help_color, __(
++"y - apply this hunk to index and worktree
++n - do not apply this hunk to index and worktree
++q - quit; do not apply this hunk or any of the remaining ones
++a - apply this hunk and all later hunks in the file
++d - do not apply this hunk or any of the later hunks in the file");
++	}
++	print colored $help_color, "\n", __(
++"g - select a hunk to go to
+ / - search for a hunk matching the given regex
+ j - leave this hunk undecided, see next undecided hunk
+ J - leave this hunk undecided, see next hunk
+@@ -1195,8 +1238,8 @@ k - leave this hunk undecided, see previous undecided hunk
+ K - leave this hunk undecided, see previous hunk
+ s - split the current hunk into smaller hunks
+ e - manually edit the current hunk
+-? - print help
+-EOF
++? - print help"),
++"\n";
  }
- else {
+ 
+ sub apply_patch {
 -- 
 2.7.4
 
