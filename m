@@ -2,103 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10D791F859
-	for <e@80x24.org>; Wed, 31 Aug 2016 18:58:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 892641F859
+	for <e@80x24.org>; Wed, 31 Aug 2016 19:03:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754958AbcHaS6G (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 14:58:06 -0400
-Received: from mail-oi0-f46.google.com ([209.85.218.46]:33938 "EHLO
-        mail-oi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754044AbcHaS6F (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 14:58:05 -0400
-Received: by mail-oi0-f46.google.com with SMTP id l203so84026483oib.1
-        for <git@vger.kernel.org>; Wed, 31 Aug 2016 11:58:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twitter.com; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=cFrE7r3uoRhDEa2uoYfQZmK1WynkS2yXzWNwcfvpA10=;
-        b=VvMqW4krRUaTw4kdXc50WFrxIOJ8jbUNHGQts4u493prPNPM5BddZ58O/kFR4gYtuc
-         DkWZ/GGdSb5k0cTDSJ/mV1OKmgvY1dJeeS11pw5o/UBUakbx4R6Z7ZIepQnvhqphrheM
-         NiypGfa5u6TshlEwKScNa+iMswgrlDu3N7CuA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=cFrE7r3uoRhDEa2uoYfQZmK1WynkS2yXzWNwcfvpA10=;
-        b=guWNDACwKhUuenY/BKGPVbbukTncbYX7NeDck6FI29ai20Y4Igb37dFDaRbQXnvR8m
-         lynNImjeEdGMELdWSWHKAdaAziE+wXVf9VxkJ7JLvmtfBBnCWe3H3IlsaR43YJ2DRzYe
-         ewHHu+i0iKaAGu/qvKhofboGRH8DHFLpJliQJMAiCdZ7tTfjztZTlAg29fNeMBgT1jm9
-         zfWmwYnAJxfXDi78oQrI5L4O7qiUCxNHJJlOWZo3FfiJP0DLs1uHEl6QENDmbTnLWpf/
-         rUDj5GZWMt/zIs6QRRkVr/pE4tFR/1dhkoZ5MRqvGIAvGIOCn0+vfmbuLA22QqErs2Nw
-         8cBA==
-X-Gm-Message-State: AE9vXwMZMWkYGh/vmQXWw82kDhXey+a6etlJ+T13m6L23C8BCP3nNlZ7siFEc/CLdPDIHzPFHuwKxupxvjfDY4m0
-X-Received: by 10.157.29.1 with SMTP id m1mr11522318otm.113.1472669883922;
- Wed, 31 Aug 2016 11:58:03 -0700 (PDT)
+        id S1759000AbcHaTC5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 15:02:57 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57590 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753198AbcHaTC4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 15:02:56 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D4A39371EB;
+        Wed, 31 Aug 2016 15:01:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=z+5fG1w4+UmnPxrxkln6b11I93c=; b=BUtSDi
+        6vhRsAUc4I8J+Nl3GZxj3qrbE8fMlhLlcLjzAOOkm9wBU0B8CC8pvPlzy1VxQPGu
+        ET5D6281tE7GzMxpZxcPUPtJkAiBNsSUW8ab9AyZMhlGnJK5BHhpFmMut4VP8/o7
+        HnKi7D4pIiLIsE04awvXq5EvN/rmhJrG9Z+Tc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=RUxrT6XXkxAvKcrbEiSPE1Coxc76ZNDS
+        TJrVYO0/tXMCAFSehmscHF7EPAC0NM0JYAlcKjEbLw3BywyBYqCn9agr0X3zubGA
+        qVYaVHnTj65wp/dSJS9P8n0ikKjXUJbsfwzrL+b90ktEtp9iZl+Znq4Z19++S6cu
+        qZQhpmwFv5U=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CD34B371EA;
+        Wed, 31 Aug 2016 15:01:33 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 53F2F371E5;
+        Wed, 31 Aug 2016 15:01:33 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 08/22] sequencer: remove overzealous assumption
+References: <cover.1472457609.git.johannes.schindelin@gmx.de>
+        <3c8c60e0799fdf176c72e7e17c257d33b2a362bc.1472457609.git.johannes.schindelin@gmx.de>
+        <09fd1436-301a-b0e1-c32a-81a47e4eb351@gmail.com>
+        <alpine.DEB.2.20.1608311706400.129229@virtualbox>
+Date:   Wed, 31 Aug 2016 12:01:31 -0700
+In-Reply-To: <alpine.DEB.2.20.1608311706400.129229@virtualbox> (Johannes
+        Schindelin's message of "Wed, 31 Aug 2016 20:36:32 +0200 (CEST)")
+Message-ID: <xmqqd1ko225w.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.157.55.226 with HTTP; Wed, 31 Aug 2016 11:58:03 -0700 (PDT)
-In-Reply-To: <xmqqh9a022xt.fsf@gitster.mtv.corp.google.com>
-References: <CAN5XQftQH8B+hWVh4JQgZwAp+rkbz51P5NZDc_+Tfm0EB1zkew@mail.gmail.com>
- <xmqqlgzf9wch.fsf@gitster.mtv.corp.google.com> <CAN5XQft6S+LG0mBgRFPrMZiOxHSfRhjLmQdeMdBeHKoWQSRUEA@mail.gmail.com>
- <CAPc5daVhY6WdHkXGLYea48uOw0-rTzLLZ=7mNo=VPebZ9AG4jQ@mail.gmail.com>
- <CAN5XQfty6Fshzf6kN7eXhFekU9+=VPwbzEPN1a92yVB=9nm0Vg@mail.gmail.com>
- <CAN5XQfsg_sJbyjfdc=-e85jiCQNUqagwgh6TVOXN+NskZ7KkVw@mail.gmail.com>
- <xmqqbn0b6ua8.fsf@gitster.mtv.corp.google.com> <CA+P7+xosGg955msq-gyKz_HyCZf7fPFQJdKZ3P8U3+poBBfuWA@mail.gmail.com>
- <CAN5XQfsv+BEYDWR6Xjs4mCtYDVR12a2UzB1-_H4A_xfjUUOe2g@mail.gmail.com>
- <CA+P7+xohfRsoV9VXgUrRaXPb9HvCc5gs4-KSWp38X_d_6EfkTA@mail.gmail.com>
- <CA+P7+xpGnsKzBPLVgPNSmZ7K00vY7-eJp7kSHWMRHM+cOsL_XQ@mail.gmail.com>
- <CAN5XQftCC+TUm2Jx4q3V9oFbXndtFx3H+daoB3TD3eWUs6s54A@mail.gmail.com>
- <xmqqzinu3zyw.fsf@gitster.mtv.corp.google.com> <CAN5XQfuoq6MV4e98RzUCG02KvZO6VZAbs1oxAzpdg5zswqpHGw@mail.gmail.com>
- <xmqq7faw3n5w.fsf@gitster.mtv.corp.google.com> <CAN5XQfvK7M5eSkMfz5iRTnE_va9VGjONAPO5hmF+iQg-i3XEpQ@mail.gmail.com>
- <xmqqh9a022xt.fsf@gitster.mtv.corp.google.com>
-From:   Uma Srinivasan <usrinivasan@twitter.com>
-Date:   Wed, 31 Aug 2016 11:58:03 -0700
-Message-ID: <CAN5XQfujk2HpRGCeeGgDeeHJV3amEX=gSGva0Zot6LfEBv4CVg@mail.gmail.com>
-Subject: Re: git submodules implementation question
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jens Lehmann <Jens.Lehmann@web.de>,
-        Heiko Voigt <hvoigt@hvoigt.net>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 555D622C-6FAD-11E6-9556-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> We want to affect only the process we are going to spawn to work
-> inside the submodule, not ourselves, which is what this call does;
-> this does not sound like a good idea.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Okay, in that case I would have to pass the "git_dir" as a new
-argument to prepare_submodule_repo_env(). I know what to pass from the
-is_submodule_modified() caller. I don't think it's all that obvious
-for the other callers.
+> The problem is that the `git-rebase-todo` most definitely does *not* want
+> to be restricted to a single command.
 
-Thanks,
-Uma
+Looking at the test in question, it is about what happens when "git
+cherry-pick A..B" runs, and the test assumes it gets a sequence of
+"pick".  It would be a bug to see any "revert" in there if you are
+doing a multi cherry-pick.
 
-On Wed, Aug 31, 2016 at 11:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Uma Srinivasan <usrinivasan@twitter.com> writes:
->
->> diff --git a/submodule.c b/submodule.c
->> index 5a62aa2..23443a7 100644
->> --- a/submodule.c
->> +++ b/submodule.c
->> @@ -960,6 +960,9 @@ unsigned is_submodule_modified(const char *path,
->> int ignore_untracked)
->>                 return 0;
->>
->>         }
->> +       /* stuff submodule git dir into env var */
->> +       set_git_dir(git_dir);
->
-> We want to affect only the process we are going to spawn to work
-> inside the submodule, not ourselves, which is what this call does;
-> this does not sound like a good idea.
->
+And what is checked is if "cherry-pick --continue" notices a
+malformed instruction that has something other than "pick".
+
+If the final invocation were "sequencer --continue", then I
+perfectly well understand why it is not a good idea to limit the set
+of instructions only to "pick" (or "revert").  But I do not think
+the test performed here is for that general case.  The user knows
+Git stopped in the middle of cherry-pick and expects cherry-pick to
+continue.
+
+> So if you must have a patch that disagrees with this overzealous check,
+> the "revamp todo parsing" one is probably the first. But it is better to
+> think of this at a higher level than just patches: it is wrong to limit
+> the todo script to contain only identical commands.
+
+So if you think of this at even higher level, the check done in
+parse_insn_line() that _assumes_ that opts->action must match the
+actions on each line is _WRONG_, but what this test expects to see
+is perfectly reasonable, I would think.
+
+It is a different matter if it makes sense to _verify_ that the user
+didn't make nonsensical change to the generated insn and error out
+when s/he did.  I tend to think it is pointless, and I wouldn't object
+if this test is removed due to that reason.
+
