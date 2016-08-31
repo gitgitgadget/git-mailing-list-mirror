@@ -2,68 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8A971F6BF
-	for <e@80x24.org>; Wed, 31 Aug 2016 10:48:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 618CE1F6BF
+	for <e@80x24.org>; Wed, 31 Aug 2016 10:52:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760159AbcHaKsc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 06:48:32 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35916 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1759929AbcHaKsb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 06:48:31 -0400
-Received: (qmail 26862 invoked by uid 109); 31 Aug 2016 10:48:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 31 Aug 2016 10:48:29 +0000
-Received: (qmail 6022 invoked by uid 111); 31 Aug 2016 10:48:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 31 Aug 2016 06:48:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 31 Aug 2016 06:48:26 -0400
-Date:   Wed, 31 Aug 2016 06:48:26 -0400
-From:   Jeff King <peff@peff.net>
-To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Cc:     doak <doak@gmx.de>, "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: bug: 'core.logallrefupdates' is not set by default in non-bare
- repository
-Message-ID: <20160831104825.quyqb54bo5k7fdxs@sigill.intra.peff.net>
-References: <c46d36ef-3c2e-374f-0f2e-ffe31104e023@gmx.de>
- <1472634746.4265.47.camel@kaarsemaker.net>
+        id S1760153AbcHaKwV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 06:52:21 -0400
+Received: from mout.gmx.net ([212.227.17.20]:50890 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1759408AbcHaKwS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 06:52:18 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0Lj4xG-1b6GWo1u2w-00dCzH; Wed, 31 Aug 2016 12:51:40
+ +0200
+Date:   Wed, 31 Aug 2016 12:51:38 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+cc:     git@vger.kernel.org, Paul Tan <pyokagan@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 10/20] notes-merge: convert struct notes_merge_pair to
+ struct object_id
+In-Reply-To: <20160828232757.373278-11-sandals@crustytoothpaste.net>
+Message-ID: <alpine.DEB.2.20.1608311250170.129229@virtualbox>
+References: <20160828232757.373278-1-sandals@crustytoothpaste.net> <20160828232757.373278-11-sandals@crustytoothpaste.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1472634746.4265.47.camel@kaarsemaker.net>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:coaR4vocmmx9tz5gJs/picm6gUGvOj2YSpybd3K2qXfiZC/LREy
+ WKBsWv64/SVZli+0LvO1JJq7iRk9FTQI/GhXa+cXaTiPsYmS5sO+8EJGpttkxDb8TcTJkaa
+ tkfKbODxxYqKGBvFx9dLiHHEVGjkVk2omksJD0tHxfgNWlg58bmGlziNXTS1y+IdZ/Giy2M
+ O1h6SjStPVwK2A6HKH9EA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Hyr/yoPqXTI=:iUgXagAB8ELEfnt6I1rJVa
+ biSptogU7xCIIXrNqO+ZO/PuaAjJi5UHtcA0byzb/XSqIQ/pRrh9Hbk5FxUyRseuzzOzLJmTh
+ DmJlk14W61UZnxxYTo7t7q1ZR8vy/2cMDwFPWJ9tlMnbfZuh+HuT31DZ90y8ZH/ggfHp3ZIR4
+ BXUGVzpHsAusWkROkrw8U/A6y106lFVAV5g32GiaSzwmM/2G67JFW3OjwHkZ5NnatAqQ/lmcu
+ NzvE7mtAEowI9Ho3kAdAGUAxdjaYofdSdlT8ryEe65p+RfM8cMAM2MlxBDqlJv0FMcbWYQ4E3
+ W2BUa7ZbVDt703iCQGnN2OcFMCBCl1iNKNwbRCbzModDrMMP3+WuFS5rHxiA9gerOIqQA/zvn
+ hqG/yabVmQVQZJfJwHWpTQ+bM1yhOsFB7v+xWa1C57zaew1DmvZhOgwYzx6GvCANDNgs6kmV5
+ WY09CX/su4nEMMRWrRuuqbq6AWI0NBX2sCuIDBfxZjB0rSl65O6wuaZAS6pZEEK2ZS4aCKga/
+ lucmnSvIKIM5yc4TEYBQdBc5MljodGE9EL/eGSD9Fyv9T7Z2Ozhdz+KdgV770RJ1bTM9crH3h
+ vf282aSaS+6jSkMcHDOTS6r7oCdjTpd9Niv3dqOvHiDlW8l3YqO0YOxIhnbUFF7kH+1yBBaS5
+ 5zJ33fwLvGz8Cd4TKsWgmiUegKu/xZ2dhcejdv3b6pozX6asuL8lpuNkS4BfhMJhD9r4jNlN+
+ gqYADxlsxuuFVCiFHuCKTgLk/TtSC64ZEsLsVqXaJ6h3JZi0BZSF9GDzd2MfyiUWtQzWLidtL
+ KRcs2f1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 31, 2016 at 11:12:26AM +0200, Dennis Kaarsemaker wrote:
+Hi Brian,
 
-> That is indeed a bug. git reads the config of t1 and then thinks a
-> template config has set that value, so it won't override it.
+On Sun, 28 Aug 2016, brian m. carlson wrote:
 
-This is a regression in v2.9.0 due to my ae5f677 (lazily load
-core.sharedrepository, 2016-03-11).
+>  				assert(!"Invalid existing change recorded");
+>  		} else {
+> -			hashcpy(mp->obj, obj);
+> -			hashcpy(mp->base, p->one->oid.hash);
+> -			hashcpy(mp->local, uninitialized);
+> -			hashcpy(mp->remote, p->two->oid.hash);
+> +			hashcpy(mp->obj.hash, obj);
+> +			oidcpy(&mp->base, &p->one->oid);
+> +			hashcpy(mp->local.hash, uninitialized);
+> +			oidcpy(&mp->remote, &p->two->oid);
+>  			len++;
 
-> This is caused by git init reading the config via
-> get_shared_repository. The comment above it indicates that this may not
-> be needed, and indeed not doing it makes this bug go away.
+This puzzled me at first, and a little bit of digging revealed that obj
+is a local variable and uninitialized is a file-local variable. I would
+have thought that these would be converted to object_id's, too...
 
-Hrm. I'm not sure if that will work, though, because we may call
-get_shared_repository() from other code-paths (e.g., anything that calls
-adjust_shared_perm(), like safe_create_leading_directories).
+I guess that's left for later?
 
-We may need to do something like turn off the
-need_shared_repository_from_config in init-db, since I think it would
-not want to ever read from the default config sources in most of its
-code-paths (OTOH, it should in theory respect core.sharedRepository in
-~/.gitconfig, so maybe there is another more elegant way of handling
-this).
-
-I'm out of time for the day, so it will be a while before I can dig
-further. Please feel free to figure it out while I am sleeping. :)
-
--Peff
+Ciao,
+Dscho
