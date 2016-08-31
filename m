@@ -7,21 +7,21 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB6EA1F859
-	for <e@80x24.org>; Wed, 31 Aug 2016 12:33:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33EC41F859
+	for <e@80x24.org>; Wed, 31 Aug 2016 12:33:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933969AbcHaMdJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 08:33:09 -0400
-Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:36735 "EHLO sapo.pt"
+        id S934010AbcHaMdM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 08:33:12 -0400
+Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:51938 "EHLO sapo.pt"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S932516AbcHaMdI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 08:33:08 -0400
-Received: (qmail 13731 invoked from network); 31 Aug 2016 12:33:06 -0000
-Received: (qmail 8348 invoked from network); 31 Aug 2016 12:33:06 -0000
+        id S933992AbcHaMdL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 08:33:11 -0400
+Received: (qmail 3208 invoked from network); 31 Aug 2016 12:33:08 -0000
+Received: (qmail 8869 invoked from network); 31 Aug 2016 12:33:08 -0000
 Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
-          for <gitster@pobox.com>; 31 Aug 2016 12:33:04 -0000
+          for <gitster@pobox.com>; 31 Aug 2016 12:33:06 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -31,9 +31,9 @@ Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
         Jiang Xin <worldhello.net@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, David Aguilar <davvid@gmail.com>
-Subject: [PATCH v2 06/11] i18n: add--interactive: i18n of help_patch_cmd
-Date:   Wed, 31 Aug 2016 12:31:25 +0000
-Message-Id: <1472646690-9699-7-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH v2 07/11] i18n: add--interactive: mark edit_hunk_manually message for translation
+Date:   Wed, 31 Aug 2016 12:31:26 +0000
+Message-Id: <1472646690-9699-8-git-send-email-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1472646690-9699-1-git-send-email-vascomalmeida@sapo.pt>
 References: <1472646690-9699-1-git-send-email-vascomalmeida@sapo.pt>
@@ -42,98 +42,95 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark help message of help_patch_cmd for translation.  The message must
-be unfolded to be free of variables so we can have high quality
-translations.
+Mark message of edit_hunk_manually displayed in the editing file when
+user chooses 'e' option.  The message had to be unfolded to allow
+translation of the $participle verb.
+
+Some messages end up being exactly the same for some uses cases, but
+left it for easier change in the future, e.g., wanting to change wording
+of one particular use case.
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- git-add--interactive.perl | 65 +++++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 54 insertions(+), 11 deletions(-)
+ git-add--interactive.perl | 60 ++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 49 insertions(+), 11 deletions(-)
 
 diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 5b89b97..acbfa4e 100755
+index acbfa4e..235142c 100755
 --- a/git-add--interactive.perl
 +++ b/git-add--interactive.perl
-@@ -1179,15 +1179,58 @@ sub edit_hunk_loop {
- }
- 
- sub help_patch_cmd {
--	my $verb = lc $patch_mode_flavour{VERB};
--	my $target = $patch_mode_flavour{TARGET};
--	print colored $help_color, <<EOF ;
--y - $verb this hunk$target
--n - do not $verb this hunk$target
--q - quit; do not $verb this hunk or any of the remaining ones
--a - $verb this hunk and all later hunks in the file
--d - do not $verb this hunk or any of the later hunks in the file
--g - select a hunk to go to
-+	if ($patch_mode eq 'stage') {
-+		print colored $help_color, __(
-+"y - stage this hunk
-+n - do not stage this hunk
-+q - quit; do not stage this hunk or any of the remaining ones
-+a - stage this hunk and all later hunks in the file
-+d - do not stage this hunk or any of the later hunks in the file");
-+	} elsif ($patch_mode eq 'stash') {
-+		print colored $help_color, __(
-+"y - stash this hunk
-+n - do not stash this hunk
-+q - quit; do not stash this hunk or any of the remaining ones
-+a - stash this hunk and all later hunks in the file
-+d - do not stash this hunk or any of the later hunks in the file");
-+	} elsif ($patch_mode eq 'reset_head') {
-+		print colored $help_color, __(
-+"y - unstage this hunk
-+n - do not unstage this hunk
-+q - quit; do not unstage this hunk or any of the remaining ones
-+a - unstage this hunk and all later hunks in the file
-+d - do not unstage this hunk or any of the later hunks in the file");
-+	} elsif ($patch_mode eq 'reset_nothead') {
-+		print colored $help_color, __(
-+"y - apply this hunk to index
-+n - do not apply this hunk to index
-+q - quit; do not apply this hunk or any of the remaining ones
-+a - apply this hunk and all later hunks in the file
-+d - do not apply this hunk or any of the later hunks in the file");
-+	} elsif ($patch_mode eq 'checkout_index') {
-+		print colored $help_color, __(
-+"y - discard this hunk from worktree
-+n - do not discard this hunk from worktree
-+q - quit; do not discard this hunk or any of the remaining ones
-+a - discard this hunk and all later hunks in the file
-+d - do not discard this hunk or any of the later hunks in the file");
-+	} elsif ($patch_mode eq 'checkout_head') {
-+		print colored $help_color, __(
-+"y - discard this hunk from index and worktree
-+n - do not discard this hunk from index and worktree
-+q - quit; do not discard this hunk or any of the remaining ones
-+a - discard this hunk and all later hunks in the file
-+d - do not discard this hunk or any of the later hunks in the file");
-+	} elsif ($patch_mode eq 'checkout_nothead') {
-+		print colored $help_color, __(
-+"y - apply this hunk to index and worktree
-+n - do not apply this hunk to index and worktree
-+q - quit; do not apply this hunk or any of the remaining ones
-+a - apply this hunk and all later hunks in the file
-+d - do not apply this hunk or any of the later hunks in the file");
-+	}
-+	print colored $help_color, "\n", __(
-+"g - select a hunk to go to
- / - search for a hunk matching the given regex
- j - leave this hunk undecided, see next undecided hunk
- J - leave this hunk undecided, see next hunk
-@@ -1195,8 +1238,8 @@ k - leave this hunk undecided, see previous undecided hunk
- K - leave this hunk undecided, see previous hunk
- s - split the current hunk into smaller hunks
- e - manually edit the current hunk
--? - print help
--EOF
-+? - print help"),
+@@ -1057,22 +1057,60 @@ sub edit_hunk_manually {
+ 	my $fh;
+ 	open $fh, '>', $hunkfile
+ 		or die sprintf(__("failed to open hunk edit file for writing: %s"), $!);
+-	print $fh "# Manual hunk edit mode -- see bottom for a quick guide\n";
++	print $fh __("# Manual hunk edit mode -- see bottom for a quick guide\n");
+ 	print $fh @$oldtext;
+-	my $participle = $patch_mode_flavour{PARTICIPLE};
+ 	my $is_reverse = $patch_mode_flavour{IS_REVERSE};
+ 	my ($remove_plus, $remove_minus) = $is_reverse ? ('-', '+') : ('+', '-');
+-	print $fh <<EOF;
+-# ---
+-# To remove '$remove_minus' lines, make them ' ' lines (context).
+-# To remove '$remove_plus' lines, delete them.
++	print $fh sprintf(__(
++"# ---
++# To remove '%s' lines, make them ' ' lines (context).
++# To remove '%s' lines, delete them.
+ # Lines starting with # will be removed.
+-#
+-# If the patch applies cleanly, the edited hunk will immediately be
+-# marked for $participle. If it does not apply cleanly, you will be given
++#"), $remove_minus, $remove_plus),
 +"\n";
- }
++	if ($patch_mode eq 'stage') {
++		print $fh __(
++"# If the patch applies cleanly, the edited hunk will immediately be
++# marked for staging. If it does not apply cleanly, you will be given
++# an opportunity to edit again. If all lines of the hunk are removed,
++# then the edit is aborted and the hunk is left unchanged.");
++	} elsif ($patch_mode eq 'stash') {
++		print $fh __(
++"# If the patch applies cleanly, the edited hunk will immediately be
++# marked for stashing. If it does not apply cleanly, you will be given
++# an opportunity to edit again. If all lines of the hunk are removed,
++# then the edit is aborted and the hunk is left unchanged.");
++	} elsif ($patch_mode eq 'reset_head') {
++		print $fh __(
++"# If the patch applies cleanly, the edited hunk will immediately be
++# marked for unstaging. If it does not apply cleanly, you will be given
++# an opportunity to edit again. If all lines of the hunk are removed,
++# then the edit is aborted and the hunk is left unchanged.");
++	} elsif ($patch_mode eq 'reset_nothead') {
++		print $fh __(
++"# If the patch applies cleanly, the edited hunk will immediately be
++# marked for applying. If it does not apply cleanly, you will be given
+ # an opportunity to edit again. If all lines of the hunk are removed,
+-# then the edit is aborted and the hunk is left unchanged.
+-EOF
++# then the edit is aborted and the hunk is left unchanged.");
++	} elsif ($patch_mode eq 'checkout_index') {
++		print $fh __(
++"# If the patch applies cleanly, the edited hunk will immediately be
++# marked for discarding. If it does not apply cleanly, you will be given
++# an opportunity to edit again. If all lines of the hunk are removed,
++# then the edit is aborted and the hunk is left unchanged.");
++	} elsif ($patch_mode eq 'checkout_head') {
++		print $fh __(
++"# If the patch applies cleanly, the edited hunk will immediately be
++# marked for discarding. If it does not apply cleanly, you will be given
++# an opportunity to edit again. If all lines of the hunk are removed,
++# then the edit is aborted and the hunk is left unchanged.");
++	} elsif ($patch_mode eq 'checkout_nothead') {
++		print $fh __(
++"# If the patch applies cleanly, the edited hunk will immediately be
++# marked for applying. If it does not apply cleanly, you will be given
++# an opportunity to edit again. If all lines of the hunk are removed,
++# then the edit is aborted and the hunk is left unchanged.");
++	}
+ 	close $fh;
  
- sub apply_patch {
+ 	chomp(my $editor = run_cmd_pipe(qw(git var GIT_EDITOR)));
 -- 
 2.7.4
 
