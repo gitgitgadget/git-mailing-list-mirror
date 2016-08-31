@@ -6,108 +6,109 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DDE82035F
-	for <e@80x24.org>; Wed, 31 Aug 2016 23:31:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B78D1F859
+	for <e@80x24.org>; Wed, 31 Aug 2016 23:32:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933166AbcHaXbR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 19:31:17 -0400
-Received: from mga05.intel.com ([192.55.52.43]:22370 "EHLO mga05.intel.com"
+        id S1761117AbcHaXcN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 19:32:13 -0400
+Received: from mga05.intel.com ([192.55.52.43]:26661 "EHLO mga05.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754571AbcHaX3j (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 19:29:39 -0400
+        id S1760925AbcHaXcM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 19:32:12 -0400
 Received: from orsmga004.jf.intel.com ([10.7.209.38])
   by fmsmga105.fm.intel.com with ESMTP; 31 Aug 2016 16:27:29 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.30,264,1470726000"; 
-   d="scan'208";a="3559538"
+   d="scan'208";a="3559536"
 Received: from jekeller-desk.amr.corp.intel.com ([134.134.3.116])
   by orsmga004.jf.intel.com with ESMTP; 31 Aug 2016 16:27:29 -0700
 From:   Jacob Keller <jacob.e.keller@intel.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <stefanbeller@gmail.com>,
-        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v12 2/8] diff.c: remove output_prefix_length field
-Date:   Wed, 31 Aug 2016 16:27:19 -0700
-Message-Id: <20160831232725.28205-3-jacob.e.keller@intel.com>
+        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: [PATCH v12 0/8] submodule inline diff format
+Date:   Wed, 31 Aug 2016 16:27:17 -0700
+Message-Id: <20160831232725.28205-1-jacob.e.keller@intel.com>
 X-Mailer: git-send-email 2.10.0.rc2.311.g2bd286e
-In-Reply-To: <20160831232725.28205-1-jacob.e.keller@intel.com>
-References: <20160831232725.28205-1-jacob.e.keller@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Junio C Hamano <gitster@pobox.com>
+From: Jacob Keller <jacob.keller@gmail.com>
 
-"diff/log --stat" has a logic that determines the display columns
-available for the diffstat part of the output and apportions it for
-pathnames and diffstat graph automatically.
+Hopefully the final revision here. I've squashed in the memory leak fix
+suggested by Stefan, and the suggested changes from Junio, including his
+re-worded commit messages.
 
-5e71a84a (Add output_prefix_length to diff_options, 2012-04-16)
-added the output_prefix_length field to diff_options structure to
-allow this logic to subtract the display columns used for the
-history graph part from the total "terminal width"; this matters
-when the "git log --graph -p" option is in use.
-
-The field must be set to the number of display columns needed to
-show the output from the output_prefix() callback, which is error
-prone.  As there is only one user of the field, and the user has the
-actual value of the prefix string, let's get rid of the field and
-have the user count the display width itself.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- diff.c  | 2 +-
- diff.h  | 1 -
- graph.c | 2 --
- 3 files changed, 1 insertion(+), 4 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index b43d3dd2ecb7..ae069c303077 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1625,7 +1625,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 	 */
- 
- 	if (options->stat_width == -1)
--		width = term_columns() - options->output_prefix_length;
-+		width = term_columns() - strlen(line_prefix);
- 	else
- 		width = options->stat_width ? options->stat_width : 80;
- 	number_width = decimal_width(max_change) > number_width ?
-diff --git a/diff.h b/diff.h
-index 125447be09eb..49e4aaafb2da 100644
---- a/diff.h
-+++ b/diff.h
-@@ -174,7 +174,6 @@ struct diff_options {
- 	diff_format_fn_t format_callback;
- 	void *format_callback_data;
- 	diff_prefix_fn_t output_prefix;
--	int output_prefix_length;
- 	void *output_prefix_data;
- 
- 	int diff_path_counter;
-diff --git a/graph.c b/graph.c
-index dd1720148dc5..a46803840511 100644
---- a/graph.c
-+++ b/graph.c
-@@ -197,7 +197,6 @@ static struct strbuf *diff_output_prefix_callback(struct diff_options *opt, void
- 	assert(opt);
- 	assert(graph);
- 
--	opt->output_prefix_length = graph->width;
- 	strbuf_reset(&msgbuf);
- 	graph_padding_line(graph, &msgbuf);
- 	return &msgbuf;
-@@ -245,7 +244,6 @@ struct git_graph *graph_init(struct rev_info *opt)
- 	 */
- 	opt->diffopt.output_prefix = diff_output_prefix_callback;
- 	opt->diffopt.output_prefix_data = graph;
--	opt->diffopt.output_prefix_length = 0;
- 
- 	return graph;
+interdiff between v11 and v12
+diff --git c/path.c w/path.c
+index 3dbc4478a4aa..ba60c9849ef7 100644
+--- c/path.c
++++ w/path.c
+@@ -467,7 +467,7 @@ const char *worktree_git_path(const struct worktree *wt, const char *fmt, ...)
+ 	return pathname->buf;
  }
+ 
+-/* Returns 0 on success, non-zero on failure. */
++/* Returns 0 on success, negative on failure. */
+ #define SUBMODULE_PATH_ERR_NOT_CONFIGURED -1
+ static int do_submodule_path(struct strbuf *buf, const char *path,
+ 			     const char *fmt, va_list args)
+@@ -523,8 +523,10 @@ char *git_pathdup_submodule(const char *path, const char *fmt, ...)
+ 	va_start(args, fmt);
+ 	err = do_submodule_path(&buf, path, fmt, args);
+ 	va_end(args);
+-	if (err)
++	if (err) {
++		strbuf_release(&buf);
+ 		return NULL;
++	}
+ 	return strbuf_detach(&buf, NULL);
+ }
+ 
+-------->8
+
+Jacob Keller (7):
+  cache: add empty_tree_oid object and helper function
+  graph: add support for --line-prefix on all graph-aware output
+  diff: prepare for additional submodule formats
+  allow do_submodule_path to work even if submodule isn't checked out
+  submodule: convert show_submodule_summary to use struct object_id *
+  submodule: refactor show_submodule_summary with helper function
+  diff: teach diff to display submodule difference with an inline diff
+
+Junio C Hamano (1):
+  diff.c: remove output_prefix_length field
+
+ Documentation/diff-config.txt                      |   9 +-
+ Documentation/diff-options.txt                     |  20 +-
+ builtin/rev-list.c                                 |  70 +-
+ cache.h                                            |  29 +-
+ diff.c                                             |  64 +-
+ diff.h                                             |  11 +-
+ graph.c                                            | 100 ++-
+ graph.h                                            |  22 +-
+ log-tree.c                                         |   5 +-
+ path.c                                             |  39 +-
+ refs/files-backend.c                               |   8 +-
+ sha1_file.c                                        |   6 +
+ submodule.c                                        | 190 +++++-
+ submodule.h                                        |   8 +-
+ t/t4013-diff-various.sh                            |   6 +
+ ...diff.diff_--line-prefix=abc_master_master^_side |  29 +
+ t/t4013/diff.diff_--line-prefix_--cached_--_file0  |  15 +
+ t/t4059-diff-submodule-not-initialized.sh          | 127 ++++
+ t/t4060-diff-submodule-option-diff-format.sh       | 749 +++++++++++++++++++++
+ t/t4202-log.sh                                     | 323 +++++++++
+ 20 files changed, 1666 insertions(+), 164 deletions(-)
+ create mode 100644 t/t4013/diff.diff_--line-prefix=abc_master_master^_side
+ create mode 100644 t/t4013/diff.diff_--line-prefix_--cached_--_file0
+ create mode 100755 t/t4059-diff-submodule-not-initialized.sh
+ create mode 100755 t/t4060-diff-submodule-option-diff-format.sh
+
 -- 
 2.10.0.rc2.311.g2bd286e
 
