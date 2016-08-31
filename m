@@ -7,75 +7,100 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B1441F6BF
-	for <e@80x24.org>; Wed, 31 Aug 2016 08:57:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 951AF1F6BF
+	for <e@80x24.org>; Wed, 31 Aug 2016 08:57:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933824AbcHaIzf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 04:55:35 -0400
-Received: from mout.gmx.net ([212.227.17.20]:59108 "EHLO mout.gmx.net"
+        id S933761AbcHaIz3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 04:55:29 -0400
+Received: from mout.gmx.net ([212.227.17.20]:52242 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933795AbcHaIza (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 04:55:30 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MdXSC-1bSy3e40Z2-00PN7N; Wed, 31 Aug 2016 10:55:27
+        id S1759169AbcHaIyt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 04:54:49 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0Lg5kl-1bKoZY1YLb-00pfgw; Wed, 31 Aug 2016 10:54:39
  +0200
-Date:   Wed, 31 Aug 2016 10:55:26 +0200 (CEST)
+Date:   Wed, 31 Aug 2016 10:54:38 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 15/34] sequencer (rebase -i): leave a patch upon error
+Subject: [PATCH 06/34] sequencer (rebase -i): write the 'done' file
 In-Reply-To: <cover.1472633606.git.johannes.schindelin@gmx.de>
-Message-ID: <cade51f893ed381ed03718439c7dba3f5dcebba3.1472633606.git.johannes.schindelin@gmx.de>
+Message-ID: <516d2aaf8837c8675141cf9c330c18c44765b69d.1472633606.git.johannes.schindelin@gmx.de>
 References: <cover.1472633606.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:AtmbhcScCUHfMFkrEsnRVAAFBy9fjEt8cccJ3GQOtxs0ab/jtrl
- cnV1XhWe3cCCe1fpipaSzXs0+MlmtVa5DaBEIOg2NswFh/Q2rIKUsKGUZyVs9A9Bj3tRJ1X
- T4YhdmWT0WP4Sr5EM0CY2GKqaUL5gMaoffGV7qhbeMpDdBB0JVwtuvPMQEFtTT0oGvhe2dK
- y44QyTdJzgoa6GmHPbKbg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:WiB/zwVwVps=:Cj7/qIEHMlRcqxew25l1yn
- RvPVw7DkQuRPkdfWhLtS7Ywnl5qTbdqWvcBfS4ZEo23xuryfcr7/hHE7ByP1Zqx/uMVrHjUb5
- xQXDLHglKBOPdqL1bvo3QNAbqKQyVeYbOz1cUnuW/g9+tlmRxBQ+g9LK4QNYbXPEik827gtKX
- izjTUSMtLEfRRmAAB9BE8nDXow9/e74b14Y2vMZYPJMAbZDtSIj929v4gznOaMjlo8DKRFvt6
- VKK/6sesGvBhabQ9TyXb6B3ZEX+bnYCqchVg7khj9ODCNR7INrsAwTutXxndQmc8kVOs7sNL+
- 6HpgOZ3Axb/iq9I7rMk0lFl7S2rgVBL7RjSwh+HIOPu9eBN828nJte1JnheeMvHRJL1TN+c/2
- ycxPuOp50Q9w4lywnaz98oiQCd0o0hvQq+ui2nLO0SVdzIK/ifE/gBl//JU0NG1MFmGLMpYnU
- T9YiXH5yB7i1uUIcOe10nGfJF6gQw2VMCFQz5tB7PJ9t6NvSYnbl/nGDx+9/WWb1ehPIpB9RI
- egJC/haFQCNEvO9cq4k6dWxexihcB/KkztYPpldZQ2YOWTsG2CL7aD73tD1F6kFyS9+v3TP7F
- Wf8HIKIulKN+X8gk3neKBErmNV9GNJyFMZD5ygZKQB8rgnbVbWLCFql2pttAdRdfj8gopoM/w
- cUL+VyVUAPdfpuFMKQdvViB8c8cNuyNbk771N4HoKjWwI/b+znwBTm8+XXf/VbkB7jU+ojJ45
- V6hjRdhVK/E6OpXRceHr3q4balDYtII8gYVZ0leY7E/VoswJc2FQJCkskY1+uEGHj+G9Qj/KD
- v2vYsut
+X-Provags-ID: V03:K0:trOXUwM10FSU6guyo0wLqV0wb9M7875U9mgsxGH0TBQHH1frPVq
+ H+pYWi/htktwNeyzDN2qpu3Oz5CvkvVjGeQh4toktXLItmNQ7n5BMiRARcW0QteCK77CujC
+ J7iI1wim5KdfhUCk7WugCRsMnpgGm0I5tBKf0Sme40yTtzJL7TCcFQ1l+tZnIMTSiLfy2pI
+ RCp2t+QQQ6DVjawNtZnpg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:wAGVrEnnsiE=:5owruXBIR0Zi/72/DKA8d4
+ RdD7RZDnQxi9m7toLP3YySDTEuoxxEKzyQ65+/4oUhlDrwInyM0RrrU0LYpdN9bPI+B5GENys
+ auzaN6+gVrN7jLmixSoa4PIOKqhRedeJiaoPygVIRBS1UJ5IZZie3qGr/hWZALK4UbweMaBAK
+ QHSRPP1dV/6jpcdNXGp+d1JqYy9ws61YzFPz8i6yIY3O61+1TItx+qY7H1hYTtwe3p3Pkrpzq
+ X9rdHOa/k1MdABtQt8RWtkhBOHwg5O4fOVkWgLIJFP78y6jkbyNb5Sqz1jTku2jTYIaBM6clu
+ Q30m/sRMIWL+yTDr12cbwhfYcMSL/noxNPqmNVBBdXKjEVFe5AlywFPzYjgV9fMdFAA7R3Crs
+ wSzgN2ygfu2ug+a4UC+sLt10YFH1erF7/vlI9l/QblipQOAMBnUN8bNAHXLEX+g/9VbHL5iCk
+ ohlNuLUIYJFpcY8635OQfqKAYi3HzuR5oLuoOIj4I4d/HpxUJ/dvxq+sSVn0Vq+u55zXrl39+
+ 5relET1+1qQXGEfcNFbRefW1l+isDJN9YCoNuvmp/GGWGPoxGh6LnCZ1055O5dgqRW9iSDz5D
+ rsJ7gu0uKiCRgAp9z93vt3kbeWyMDyVMcAg/WKhGPcurCRSs8jCjbKqvH8fOs6SSsq4JjX60Q
+ JUSts/VV8Ir8gLVezJrAdW3mPxNI872h5qZmiBg0RA3eDkCmcsFd5NmQCeFIoNT58yjtUix3N
+ Ra3DvGODoB51lzAagUcKERwHhZEOL56D4i7ANpMkJOKoHzuMEpNCWhFn4hcQVQqZgdpEkQUMv
+ N1IOkP4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Just like the interactive rebase, we want to leave a 'patch' file for
-further inspection by the user (even if we never tried to actually apply
-that patch, since we're cherry-picking instead).
+In the interactive rebase, commands that were successfully processed are
+not simply discarded, but appended to the 'done' file instead. This is
+used e.g. to display the current state to the user in the output of
+`git status` or the progress.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sequencer.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
 diff --git a/sequencer.c b/sequencer.c
-index 7662222..9a06b40 100644
+index 95c31bb..3bff3d9 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -1753,6 +1753,9 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
- 				return error_failed_squash(item->commit, opts,
- 					item->arg_len, item->arg);
- 			}
-+			else if (res && is_rebase_i(opts))
-+				return res | error_with_patch(item->commit,
-+					item->arg, item->arg_len, opts, res, 0);
- 		}
- 		else if (item->command == TODO_EXEC) {
- 			char *end_of_arg = (char *)(item->arg + item->arg_len);
+@@ -39,6 +39,12 @@ static GIT_PATH_FUNC(rebase_path, "rebase-merge")
+  */
+ static GIT_PATH_FUNC(rebase_path_todo, "rebase-merge/git-rebase-todo")
+ /*
++ * The rebase command lines that have already been processed. A line
++ * is moved here when it is first handled, before any associated user
++ * actions.
++ */
++static GIT_PATH_FUNC(rebase_path_done, "rebase-merge/done")
++/*
+  * A script to set the GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, and
+  * GIT_AUTHOR_DATE that will be used for the commit that is currently
+  * being rebased.
+@@ -1272,6 +1278,20 @@ static int save_todo(struct todo_list *todo_list, struct replay_opts *opts)
+ 			todo_path, strerror(errno));
+ 	if (commit_lock_file(&todo_lock) < 0)
+ 		return error(_("Error wrapping up %s."), todo_path);
++
++	if (is_rebase_i(opts)) {
++		const char *done_path = rebase_path_done();
++		int fd = open(done_path, O_CREAT | O_WRONLY | O_APPEND, 0666);
++		int prev_offset = !next ? 0 :
++			todo_list->items[next - 1].offset_in_buf;
++
++		if (offset > prev_offset && write_in_full(fd,
++				todo_list->buf.buf + prev_offset,
++				offset - prev_offset) < 0)
++			return error(_("Could not write to %s (%s)"),
++				done_path, strerror(errno));
++		close(fd);
++	}
+ 	return 0;
+ }
+ 
 -- 
 2.10.0.rc2.102.g5c102ec
 
