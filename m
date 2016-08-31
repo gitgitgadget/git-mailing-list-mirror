@@ -7,160 +7,166 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B3101F6BF
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95AC01F6BF
 	for <e@80x24.org>; Wed, 31 Aug 2016 08:55:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759407AbcHaIy7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 04:54:59 -0400
-Received: from mout.gmx.net ([212.227.15.19]:59017 "EHLO mout.gmx.net"
+        id S933726AbcHaIzA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 04:55:00 -0400
+Received: from mout.gmx.net ([212.227.15.18]:58033 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933571AbcHaIyI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 04:54:08 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0M8m7Q-1bowti39o4-00CCIk; Wed, 31 Aug 2016 10:54:02
+        id S933773AbcHaIyF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 04:54:05 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MAgzj-1bpla22aB1-00BsqM; Wed, 31 Aug 2016 10:53:57
  +0200
-Date:   Wed, 31 Aug 2016 10:54:02 +0200 (CEST)
+Date:   Wed, 31 Aug 2016 10:53:41 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 01/34] sequencer: support a new action: 'interactive
- rebase'
-In-Reply-To: <cover.1472633606.git.johannes.schindelin@gmx.de>
-Message-ID: <5ffec2e588a4edc4902e1ab3a2ec3a73a7c3625b.1472633606.git.johannes.schindelin@gmx.de>
-References: <cover.1472633606.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 00/34] Teach the sequencer to act as rebase -i's backend
+Message-ID: <cover.1472633606.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:G4RgPlZ/Tk5pMlUltSS4i20ELoW8xz+YgwMtVqnu/rWK5aB0Lg8
- 0vLlo+o35t3YXiM7YCCCasCGR+kbG2WKZyVBImPWyHi8hIJtCgDxQr0Vyr7LvP+ddWo37RF
- HP0QLVXmgsQPEZozQ0VdRNKeKx2i2eJxV6XsmqVyCbj8O9Sgfs3Z9EK/t6yJZSGECZUyhR8
- /5NpSpOc4zhVVB+t6yGUA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+WlAuujwVtg=:6VmvSbQ5X9VXYj+HoYO/hd
- P9bLP7fF4ZQ8ukf7i8/a7AU5yx/uXJeT6TCIQfsDB7DYuZzI+EEp2e0nkWrAMBrxgO7LpEFjx
- RuLItMA6hdcSo4H9OmGYP5jFVpRgS2csyOZRXwcUKUPx8BKK45G9WECaU3AbkJIDsvUj2ffU5
- rvmncvIZpiwpRGp7hbXdk0rDVwpKcbNsCDb/apslwEz6PDsw/5fNgMIK2Nmc/DGVD4CPZuTny
- qAjKMUwmRb+bCbEFhAMlRDtRIwDax7h4gtn6Z8upnFpoY3iadKOvoEn/KH10ts1l5eIL2ukjp
- A+2OssP86l2mQNkv2xJm0dQ6I33GNAaArXcn5cdhN2ComgG9woYrreXiPfr7vC3PYY1tJXvNY
- slzay9KHvpFs7Sf0FhdRKPBh3cJD/BFi5LR1Brm2tt29ZJYnNGFBegAObxJcDSwm6lYpj6jlJ
- ipszAAFLxm0aq6QSZVK0F6rvvyAOY3713t8fYgakRRH1I2An6YAMFn6glc9/S9UbfqreuDDLl
- GB5rfk3LzYdNxNELrJorNHooZC7C+tPkESxj5eNTq3/gGcItv34IdgS0UCG0X02D9zmxp0de/
- 0Rjb7EbiEihac7S4Gba36eaSfDWzgJKVFBZzRyemT3hB7YlfnQKTEG5/95UfddJQcC61sbx9u
- PPHKDyT/lTCZCRAGfc295qNMI92nktL7k4Bz2NaYCIxxCdRzIvyye7jtAQ7GR8+At6/8zGZaW
- 8oOnBehCuwDyIs1Ta7TGeCG7sAenXcKMSElkeMZpOkxJo4ZCB0zQFU85UUPpBg/gvnyah+SmH
- 64JR9jk
+X-Provags-ID: V03:K0:JT+k5RWy34RZ2z6Gw357EKArNt/RV9hheeAFYFoymxJq0iNEJQT
+ HSABcQziKMFwnY8FZLMQtZ4t6V5QJ20Qek+ep53tmzZsv7uJXfOu4aJbI4SyA5uUo2meS6/
+ uiBDhrYoTK3fSgcQfyI58Ex2W1THCtk1Nd8qT8+NsSgPRqXLzkJXoVcHmQQfJfts+pxHV5I
+ tUCNFPZ55ouqb5zUItlwQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7J76gHovxmg=:1pWpMzowrZdoczNb3qeNvT
+ kM6kNXnB3pMK5YhLbRcPB17ktZ7/JHbEkSsnde7zEjumIjj2BVsZnQRhMCrAiUP3I+Ik/S71I
+ pEharXFksJ8xSLJLLk8UCq7MhzyeBfaIqlhZb/uSM+x9/jiFiQuyycuBTGWAwt7VNueAyI78a
+ Ox3L5GjjmX4Q++OO4r8Uxo1d0wwQiLPl1EA2vDfdhX5LDt/rsLtIMtTZBJK2DNMtw6laBs5H9
+ /OWQImkPxQX7WVa444JwDVyb7xZ2bfN5aRrwPu4QmbuHrH7MITjaVEGhzXxfucOTPXSpl7jXw
+ EM14J4Ans33e+6E4c6HkwTa9PcdFsgEixfWxdMeTqJp58WsWWJBLXI7lCnqFCJvRnlmwTAKMC
+ uUA+tM5T5oCN95+KuH2Je9190K8nmcz+oDKG0+XAVjwHasunstwhuhXOcKVUzLt4EeuOgK5UT
+ WqW+F2z4NWqsrLHVkkViKWx1Er+j9joI5yeYFZhfq7bojN7qhTMtBzDctbBSP8SJFDgpsia1/
+ PoNAwjm4g5Ql7tiElSvGnDYuW9OHjK2Meq/KBHkxPVSmKrfTWy5ccGwxnHs7swXhppsWFdQaG
+ rNyuMU+cHFZZgjpxFiBX1JgagCTWq/94PE5ada5U6VmQtHicfYqT5jwUoTNZ0HhfQ/dbtbv2v
+ 2CiucQtD91dHItD7vbKX7fKkbgpE7vMnDvZ1eN3SDth/vJsUgjVGGa7oRA2DRVZzj/UYa3vyD
+ JDWr9bZCXvPwLs9jgM0s2tn8FmNnG+bWcVSvR1zKtSCaGr5lV99fryf49p8fKtR/WfgCGKRux
+ y+HbDpn
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch introduces a new action for the sequencer. It really does not
-do a whole lot of its own right now, but lays the ground work for
-patches to come. The intention, of course, is to finally make the
-sequencer the work horse of the interactive rebase (the original idea
-behind the "sequencer" concept).
+This marks the count down to '3': two more patch series after this
+(really tiny ones) and we have a faster rebase -i.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- sequencer.c | 32 +++++++++++++++++++++++++++++---
- sequencer.h |  3 ++-
- 2 files changed, 31 insertions(+), 4 deletions(-)
+The idea of this patch series is to teach the sequencer to understand
+all of the commands in `git-rebase-todo` scripts, to execute them and to
+behave pretty much very the same as `git rebase -i --continue` when
+called with the newly-introduced REPLAY_INTERACTIVE_REBASE setting.
 
-diff --git a/sequencer.c b/sequencer.c
-index a89ef27..5598534 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -28,6 +28,14 @@ static GIT_PATH_FUNC(git_path_todo_file, "sequencer/todo")
- static GIT_PATH_FUNC(git_path_opts_file, "sequencer/opts")
- static GIT_PATH_FUNC(git_path_head_file, "sequencer/head")
- 
-+static GIT_PATH_FUNC(rebase_path, "rebase-merge")
-+/*
-+ * The file containing rebase commands, comments, and empty lines.
-+ * This file is created by "git rebase -i" then edited by the user. As
-+ * the lines are processed, they are removed from the front of this
-+ * file and written to the tail of 'done'.
-+ */
-+static GIT_PATH_FUNC(rebase_path_todo, "rebase-merge/git-rebase-todo")
- /*
-  * A script to set the GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, and
-  * GIT_AUTHOR_DATE that will be used for the commit that is currently
-@@ -43,16 +51,20 @@ static GIT_PATH_FUNC(rebase_path_gpg_sign_opt, "rebase-merge/gpg_sign_opt")
- /* We will introduce the 'interactive rebase' mode later */
- static inline int is_rebase_i(const struct replay_opts *opts)
- {
--	return 0;
-+	return opts->action == REPLAY_INTERACTIVE_REBASE;
- }
- 
- static const char *get_dir(const struct replay_opts *opts)
- {
-+	if (is_rebase_i(opts))
-+		return rebase_path();
- 	return git_path_seq_dir();
- }
- 
- static const char *get_todo_path(const struct replay_opts *opts)
- {
-+	if (is_rebase_i(opts))
-+		return rebase_path_todo();
- 	return git_path_todo_file();
- }
- 
-@@ -176,7 +188,15 @@ int sequencer_remove_state(struct replay_opts *opts)
- 
- static const char *action_name(const struct replay_opts *opts)
- {
--	return opts->action == REPLAY_REVERT ? "revert" : "cherry-pick";
-+	switch (opts->action) {
-+	case REPLAY_REVERT:
-+		return "revert";
-+	case REPLAY_PICK:
-+		return "cherry-pick";
-+	case REPLAY_INTERACTIVE_REBASE:
-+		return "rebase -i";
-+	}
-+	die("Unknown action: %d", opts->action);
- }
- 
- struct commit_message {
-@@ -407,7 +427,10 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
- 
- 	if (active_cache_changed &&
- 	    write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
--		/* TRANSLATORS: %s will be "revert" or "cherry-pick" */
-+		/*
-+		 * TRANSLATORS: %s will be "revert", "cherry-pick" or
-+		 * "rebase -i".
-+		 */
- 		return error(_("%s: Unable to write new index file"),
- 			action_name(opts));
- 	rollback_lock_file(&index_lock);
-@@ -1186,6 +1209,9 @@ static int save_todo(struct todo_list *todo_list, struct replay_opts *opts)
- 	const char *todo_path = get_todo_path(opts);
- 	int next = todo_list->current, offset, fd;
- 
-+	if (is_rebase_i(opts))
-+		next++;
-+
- 	fd = hold_lock_file_for_update(&todo_lock, todo_path, 0);
- 	if (fd < 0)
- 		return error_errno(_("Could not lock '%s'"),
-diff --git a/sequencer.h b/sequencer.h
-index 688fff1..edd7d4a 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -7,7 +7,8 @@ const char *git_path_seq_dir(void);
- 
- enum replay_action {
- 	REPLAY_REVERT,
--	REPLAY_PICK
-+	REPLAY_PICK,
-+	REPLAY_INTERACTIVE_REBASE
- };
- 
- struct replay_opts {
+Most of these patches should be pretty much straight-forward. When not,
+I tried to make a point of describing enough background in the commit
+message. Please feel free to point out where my explanations fall short.
+
+Note that even after this patch series is applied, rebase -i is still
+unaffected. It will require the next patch series which introduces the
+rebase--helper that essentially implements `git rebase -i --continue` by
+calling the sequencer with the appropriate options.
+
+The final patch series will move a couple of pre- and post-processing
+steps into the rebase--helper/sequencer (such as expanding/shrinking the
+SHA-1s, reordering the fixup!/squash! lines, etc). This might sound like
+a mere add-on, but it is essential for the speed improvements: those
+stupid little processing steps really dominated the execution time in my
+tests.
+
+Apart from mostly cosmetic patches (and the occasional odd bug that I
+fixed promptly), I used these patches since mid May to perform all of my
+interactive rebases. In mid June, I had the idea to teach rebase -i to
+run *both* scripted rebase and rebase--helper and to cross-validate the
+results. This slowed down all my interactive rebases since, but helped
+me catch three rather obscure bugs (e.g. that git commit --fixup unfolds
+long onelines and rebase -i still finds the correct original commit).
+
+This is all only to say that I am rather confident that the current code
+does the job.
+
+As stated earlier, my plan is to integrate all of these patch series
+into Git for Windows v2.10.0. And then be mostly offline during the
+second half of September ;-) There are multiple reasons why I want to
+pull through with this: I have been working on these patches since mid
+February and it is high time that they benefit users other than me.
+Also: I got a bit tired of postponing the integration for a couple of
+Git for Windows versions already. Originally, I had planned it for
+v2.9.0, but then I wanted to give the patches some review, regretting
+that idea when it took one of the 14 patch series over a month to
+stabilize.
+
+This means that I will not perform any major refactoring at this stage,
+but postpone any such work, if necessary at all.
+
+Just to reiterate why I do all this: it speeds up the interactive rebase
+substantially. Even with a not yet fully builtin rebase -i, but just the
+part after the user edited the `git-rebase-todo` script.
+
+The performance test I introduced to demonstrate this (p3404) shows a
+speed-up of +380% here (i.e. roughly 5x), from ~8.8 seconds to ~1.8
+seconds. This is on Windows, where the performance impact of avoiding
+shell scripting is most noticable.
+
+On MacOSX and on Linux, the speed-up is less pronounced, but still
+noticable, at least if you trust Travis CI, which I abused to perform
+that test for me. Check for yourself (searching for "3404.2") here:
+https://travis-ci.org/git/git/builds/156295227. According to those logs,
+p3404 is speeded up from ~0.45 seconds to ~0.12 seconds on Linux (read:
+about 3.5x) and from ~1.7 seconds to ~0.5 seconds on MacOSX (read:
+almost 4x).
+
+
+Johannes Schindelin (34):
+  sequencer: support a new action: 'interactive rebase'
+  sequencer (rebase -i): implement the 'noop' command
+  sequencer (rebase -i): implement the 'edit' command
+  sequencer (rebase -i): implement the 'exec' command
+  sequencer (rebase -i): learn about the 'verbose' mode
+  sequencer (rebase -i): write the 'done' file
+  sequencer (rebase -i): add support for the 'fixup' and 'squash'
+    commands
+  sequencer (rebase -i): implement the short commands
+  sequencer (rebase -i): write an author-script file
+  sequencer (rebase -i): allow continuing with staged changes
+  sequencer (rebase -i): remove CHERRY_PICK_HEAD when no longer needed
+  sequencer (rebase -i): skip some revert/cherry-pick specific code path
+  sequencer (rebase -i): the todo can be empty when continuing
+  sequencer (rebase -i): update refs after a successful rebase
+  sequencer (rebase -i): leave a patch upon error
+  sequencer (rebase -i): implement the 'reword' command
+  sequencer (rebase -i): allow fast-forwarding for edit/reword
+  sequencer (rebase -i): refactor setting the reflog message
+  sequencer (rebase -i): set the reflog message consistently
+  sequencer (rebase -i): copy commit notes at end
+  sequencer (rebase -i): record interrupted commits in rewritten, too
+  sequencer (rebase -i): run the post-rewrite hook, if needed
+  sequencer (rebase -i): respect the rebase.autostash setting
+  sequencer (rebase -i): respect strategy/strategy_opts settings
+  sequencer (rebase -i): allow rescheduling commands
+  sequencer (rebase -i): implement the 'drop' command
+  sequencer (rebase -i): differentiate between comments and 'noop'
+  run_command_opt(): optionally hide stderr when the command succeeds
+  sequencer (rebase -i): show only failed `git commit`'s output
+  sequencer (rebase -i): show only failed cherry-picks' output
+  sequencer (rebase -i): suggest --edit-todo upon unknown command
+  sequencer (rebase -i): show the progress
+  sequencer (rebase -i): write the progress into files
+  sequencer (rebase -i): write out the final message
+
+ run-command.c |  23 ++
+ run-command.h |   1 +
+ sequencer.c   | 990 +++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ sequencer.h   |   4 +-
+ 4 files changed, 971 insertions(+), 47 deletions(-)
+
+Based-On: prepare-sequencer-and-wt_status at https://github.com/dscho/git
+Fetch-Base-Via: git fetch https://github.com/dscho/git prepare-sequencer-and-wt_status
+Published-As: https://github.com/dscho/git/releases/tag/sequencer-i-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git sequencer-i-v1
+
 -- 
 2.10.0.rc2.102.g5c102ec
 
-
+base-commit: 45bfeb0c4044dfcf090ad97e839d250d62308fac
