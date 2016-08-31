@@ -7,111 +7,134 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFAFB1F6BF
+	by dcvr.yhbt.net (Postfix) with ESMTP id C42D81F6BF
 	for <e@80x24.org>; Wed, 31 Aug 2016 08:56:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759521AbcHaI4M (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 04:56:12 -0400
-Received: from mout.gmx.net ([212.227.17.22]:61134 "EHLO mout.gmx.net"
+        id S933884AbcHaI4F (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 04:56:05 -0400
+Received: from mout.gmx.net ([212.227.17.22]:61112 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1759421AbcHaI4J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 04:56:09 -0400
+        id S933876AbcHaIz7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 04:55:59 -0400
 Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0M2FhY-1an3iL3AFI-00s8El; Wed, 31 Aug 2016 10:56:05
+ ESMTPSA (Nemesis) id 0M3d9B-1aoQck3Eq9-00rIrW; Wed, 31 Aug 2016 10:55:55
  +0200
-Date:   Wed, 31 Aug 2016 10:56:05 +0200 (CEST)
+Date:   Wed, 31 Aug 2016 10:55:55 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 26/34] sequencer (rebase -i): implement the 'drop' command
+Subject: [PATCH 23/34] sequencer (rebase -i): respect the rebase.autostash
+ setting
 In-Reply-To: <cover.1472633606.git.johannes.schindelin@gmx.de>
-Message-ID: <34bb14c610acc230d55d41c440c5763768c51814.1472633606.git.johannes.schindelin@gmx.de>
+Message-ID: <7329458d8dafa92e7d7a6275ff03b90b1035a72f.1472633606.git.johannes.schindelin@gmx.de>
 References: <cover.1472633606.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:DxfvsMDeQhPAioOO0r95Y+fuAxxkbhQsl92UqxyxhzclglgnDHv
- sDCQkR89IR+xnrg07v/ma5g9FpVe6sVejs0hm8RBxb8yqhfach96cbyWVsP6q2UhFE4kzdY
- j6e8aXOkABa/flPvn3lw9ED+yTVZ+L7P2isFjELKjpGwlZjAB0b0Dpj4Ty8uCeWphBeSdl5
- y5gL8YMz1zbhq0RYfFajQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:hCgMTkdu754=:Howu36vZzYCXzf3Svb3gFh
- piC+rolDmiZqhoVt6Z79pbddO6rQlID1+E5YjNo3p4s1l3CRlJyff0B1IKViHkikFhfe9Vw6X
- sMLKJNIng+C/8PjhYsp50ahvqaavTRaUr1Zk9DoWc7mQy6pJBpw8qUtNECFiZx+eXij8bg7px
- dRYhJSVFWg3YE4Vo+IG5+VEvya0W/199XjWrhAuogMvb8P/VNqS3LS8vJ9miBjkAOix+OrYMv
- dkK4GEWGOBbBf/LSTXNgYFQICzuoObbbl8cvBHfUYvS62pEU1olk/1Fb6VdaKiIP7P9Cpr3cH
- vjqspamaj5nI/jYrsPPT4ElAVBFCXaduDuWog9coNmBDA/5JN9O3bRc/XTUziQLXtysZm+W3s
- 6n0o5X34qBUnxDqzL77vKAaAh45ibWWKrkpJ4OCv2ekV1s+8si00UkPpJowLD3/qTNJhSYS5B
- oCDUI6WTvFCOKYQTIwu3DmuIvr0a++/3DYKfLD+xtOtEFTGFN1ZyIWNSQwdACU8gADxPn7Ktp
- rouJrY6NSkVi4sp9427oiE9p/2KTyVvaYCISiPGVKG4sXdz/sztCN6+CdTs1OCnptTUCRUkL5
- ebG8lTMaG6Rylpy96HTggL3jDz3dV10IkCkj1Rc+PZO/VDHV0SqZyfoUClzpF00ZW5PDjoPSe
- 88wnkksWqhz2A5FE2XKnW+i2JDDqvKZPJOYRYP1EfjnPVpNeXwp18bd+P8+jGOYuhBybC6Dob
- KjRr/wCKI2p7Wye1GW/r1vhmedoWjQ9pJvXQkGgw60EECpnCUnWyn0VPmhHML0hGI0nFWtTWw
- 6sCqsxt
+X-Provags-ID: V03:K0:r/EKnW/+F8MaQM+/wiEFqOCNzdb7pJFnBVJ+MDLnsrJjYWZwZ2+
+ CFanhmQTftWiiHrUEzXlE3R3akFNNY2aotOTkvR3M1fpZpRkODr26p2oa3jf8nCAe5VDNV0
+ gX3C3FNAmqZGQYWcS3Z9xRL29Q3J1lPEaI8WSw9tbDF+G/d0aEmS4EXQoScKt8xR+Uu7bBw
+ wYQaBSAmSlXnMdZ3oEGHw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:wUFmmuAbCPg=:Guw1pwRrbOSAv6HX1QYOS5
+ FmSg5ItkbmCV0/6wgqTbhrnfyYWDlCZTykyN1IwOasSz1IeyN/R9O57uIhFPXgVI17mdDq1tE
+ 8JYEXM0DFqb3uPoC3DJIrdo+ztibT7ksC8x1NgbzrJzbLGa0UN1xmKkyBRIo9LWBzDoWVsfy1
+ DTlDJ/VrHhgWj9DyXGN6QXchXw87YLQ04lY9xJxaI1sAfh3b+HJJP0iOMIoWuQsTzfDj5ppnp
+ dw9WqCnQHNc44hUYXNtddp8Qa5zfpO3x/CdDmSPcWWLPG+P1NNEcwDdLZzrPsZyBiX2VXccwx
+ g2H2KUhDdV1j1fzIEatHO/5PRRhhhvxX2OHSozqZQIJ5edLCteFQzxQfQqieDjPl2qAx7lcfR
+ +m8MhBe9/RMFxxW0W9SPQQX0gF1HMWyrGLusEyVFVKLbFkxKjEOmr5dAsDc89WbqVhWlIe/U+
+ 9NPq2JSuOQTm16JQmvUWYig9tDtxQ9/40pDVAWpgTdYCcklgGcuwjC+pSF1uziHbtO9r5YeR4
+ ZoLb+dMiQImvpwsVuq/eWQ20797gANujQNm7OHT12RGcX+JT1PK/sWMUBfjFStXn/rRRjDnnc
+ Fpn9LEUZtsO1zR/BaHJMQnLvdhtKLB+lbaRpQt4SyKIfrq9K1BnRNtlkwkr19XwVj+83U2VZa
+ a7Kp89ysvx0RPB+OmznKm/LJfenea0O/LnGFxC1ORjLH6KDjaG7pqZDs5xWuQgPcGQGovhvgr
+ jWCxwp9dBWSjYFuRk/iscNPWmRDsRNkiNbh6ClrGoZ8ia62+WmKREQssK1UR5Di8yyRwPn8br
+ NlAiIhU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The parsing part of a 'drop' command is almost identical to parsing a
-'pick', while the operation is the same as that of a 'noop'.
+Git's `rebase` command inspects the `rebase.autostash` config setting
+to determine whether it should stash any uncommitted changes before
+rebasing and re-apply them afterwards.
+
+As we introduce more bits and pieces to let the sequencer act as
+interactive rebase's backend, here is the part that adds support for
+the autostash feature.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ sequencer.c | 43 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
 diff --git a/sequencer.c b/sequencer.c
-index 366ee78..51c2f76 100644
+index 153116e..2922837 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -762,7 +762,8 @@ enum todo_command {
- 	TODO_FIXUP,
- 	TODO_SQUASH,
- 	TODO_EXEC,
--	TODO_NOOP
-+	TODO_NOOP,
-+	TODO_DROP
- };
+@@ -111,6 +111,7 @@ static GIT_PATH_FUNC(rebase_path_orig_head, "rebase-merge/orig-head")
+ static GIT_PATH_FUNC(rebase_path_verbose, "rebase-merge/verbose")
+ static GIT_PATH_FUNC(rebase_path_head_name, "rebase-merge/head-name")
+ static GIT_PATH_FUNC(rebase_path_onto, "rebase-merge/onto")
++static GIT_PATH_FUNC(rebase_path_autostash, "rebase-merge/autostash")
  
- static struct {
-@@ -776,7 +777,8 @@ static struct {
- 	{ 'f', "fixup" },
- 	{ 's', "squash" },
- 	{ 'x', "exec" },
--	{ 0,   "noop" }
-+	{ 0,   "noop" },
-+	{ 'd', "drop" }
- };
- 
- static const char *command_to_string(const enum todo_command command)
-@@ -1309,7 +1311,7 @@ static int parse_insn_buffer(char *buf, struct todo_list *todo_list)
- 		else if (is_fixup(item->command))
- 			return error("Cannot '%s' without a previous commit",
- 				command_to_string(item->command));
--		else if (item->command != TODO_NOOP)
-+		else if (item->command < TODO_NOOP)
- 			fixup_okay = 1;
- 		p = *eol ? eol + 1 : eol;
- 	}
-@@ -1800,7 +1802,7 @@ static enum todo_command peek_command(struct todo_list *todo_list, int offset)
- 	int i;
- 
- 	for (i = todo_list->current + offset; i < todo_list->nr; i++)
--		if (todo_list->items[i].command != TODO_NOOP)
-+		if (todo_list->items[i].command < TODO_NOOP)
- 			return todo_list->items[i].command;
- 
+ /* We will introduce the 'interactive rebase' mode later */
+ static inline int is_rebase_i(const struct replay_opts *opts)
+@@ -1783,6 +1784,47 @@ static enum todo_command peek_command(struct todo_list *todo_list, int offset)
  	return -1;
-@@ -1933,7 +1935,7 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
- 			res = do_exec(item->arg);
- 			*end_of_arg = saved;
- 		}
--		else if (item->command != TODO_NOOP)
-+		else if (item->command < TODO_NOOP)
- 			return error("Unknown command %d", item->command);
+ }
  
- 		todo_list->current++;
++static int apply_autostash(struct replay_opts *opts)
++{
++	struct strbuf stash_sha1 = STRBUF_INIT;
++	struct child_process child = CHILD_PROCESS_INIT;
++	int ret = 0;
++
++	if (!read_oneliner(&stash_sha1, rebase_path_autostash(), 1)) {
++		strbuf_release(&stash_sha1);
++		return 0;
++	}
++	strbuf_trim(&stash_sha1);
++
++	child.git_cmd = 1;
++	argv_array_push(&child.args, "stash");
++	argv_array_push(&child.args, "apply");
++	argv_array_push(&child.args, stash_sha1.buf);
++	if (!run_command(&child))
++		printf(_("Applied autostash."));
++	else {
++		struct child_process store = CHILD_PROCESS_INIT;
++
++		store.git_cmd = 1;
++		argv_array_push(&store.args, "stash");
++		argv_array_push(&store.args, "store");
++		argv_array_push(&store.args, "-m");
++		argv_array_push(&store.args, "autostash");
++		argv_array_push(&store.args, "-q");
++		argv_array_push(&store.args, stash_sha1.buf);
++		if (run_command(&store))
++			ret = error(_("Cannot store %s"), stash_sha1.buf);
++		else
++			printf(_("Applying autostash resulted in conflicts.\n"
++				"Your changes are safe in the stash.\n"
++				"You can run \"git stash pop\" or"
++				" \"git stash drop\" at any time.\n"));
++	}
++
++	strbuf_release(&stash_sha1);
++	return ret;
++}
++
+ static const char *reflog_message(struct replay_opts *opts,
+ 	const char *sub_action, const char *fmt, ...)
+ {
+@@ -1944,6 +1986,7 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
+ 				run_command(&hook);
+ 			}
+ 		}
++		apply_autostash(opts);
+ 
+ 		strbuf_release(&buf);
+ 		strbuf_release(&head_ref);
 -- 
 2.10.0.rc2.102.g5c102ec
 
