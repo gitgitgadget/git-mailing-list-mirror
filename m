@@ -2,130 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 304201FBB0
-	for <e@80x24.org>; Wed, 31 Aug 2016 06:02:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33E9F1FBB0
+	for <e@80x24.org>; Wed, 31 Aug 2016 06:22:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752641AbcHaGCq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 02:02:46 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35758 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751302AbcHaGCq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 02:02:46 -0400
-Received: (qmail 8668 invoked by uid 109); 31 Aug 2016 06:02:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 31 Aug 2016 06:02:45 +0000
-Received: (qmail 3582 invoked by uid 111); 31 Aug 2016 06:02:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 31 Aug 2016 02:02:51 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 31 Aug 2016 02:02:41 -0400
-Date:   Wed, 31 Aug 2016 02:02:41 -0400
-From:   Jeff King <peff@peff.net>
-To:     "W. David Jarvis" <william.d.jarvis@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Reducing CPU load on git server
-Message-ID: <20160831060240.xg6axpqnlclys7ic@sigill.intra.peff.net>
-References: <CAFMAO9y3LsrAb_jp8XVq2mexaA4bBqmWFwJu55r4S6Dxd2-zxw@mail.gmail.com>
- <20160829054725.r6pqf3xlusxi7ibq@sigill.intra.peff.net>
- <CAFMAO9yUMY5dqw-oWpKG1H-xska1AtDyt31_WaeJDyTieQLChw@mail.gmail.com>
- <20160829213101.3ulrw5hrh5pytjii@sigill.intra.peff.net>
- <CAFMAO9zfMtF6Vc+Uyt+UdgOVf4hzOqMN3o8QLf8pRHx3_U4DPQ@mail.gmail.com>
+        id S1752708AbcHaGWE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 02:22:04 -0400
+Received: from mail-yb0-f172.google.com ([209.85.213.172]:36153 "EHLO
+        mail-yb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752273AbcHaGWD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 02:22:03 -0400
+Received: by mail-yb0-f172.google.com with SMTP id 125so14064310ybe.3
+        for <git@vger.kernel.org>; Tue, 30 Aug 2016 23:22:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=PCJ3wskX5Sc6eN1+3oLMuoDlsUwWyGHs7KZogcQYKMc=;
+        b=Txn6RAK5p5lWP5/MciON7/cva/QZDqdjpp9KI/ThEtrNWpjVGPahSTgxKXX74tYxaX
+         g9JFf6Ve4R9S9nUOHMiG8pgl0YZTSPMPSm8vIF+zLM96Bl+YN9dDTxq0vMc+Ale0R9/1
+         QdxBswPecET4sGiD3/NG3w/K/dU9qU2IMvI28Ny98ZfuHGBqrBVQEXtb00T9lS1FvIQ0
+         /HA3TSorK+Z6ji6fRE7re0TgptuKIJ04UDgtT/tRENifU0i2CNohYENWcoSbczf2D52h
+         D1k0tTZxcTmPiCibjs7kaLm1g2OjTWRnzBsZ/eNdCu+DEWgQHAwZAlScyvWcjpNY15sM
+         gVxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=PCJ3wskX5Sc6eN1+3oLMuoDlsUwWyGHs7KZogcQYKMc=;
+        b=mumFYcvUb7oeMP3kaghCgw3wETG5p9mGJvpFCzTBeQf3POzyvh6IDo1zOj/+CZRY6T
+         vUYQOlv46cHtHIlqCwIXiOgU9nuVIPi7LQdT5FmdGceL9whWhHiM5M42n0bQHO1QhxYy
+         UIN4n2KE5djTVw293Ea/AZQKBr0B1zsKKa2uClAhxel/aD64TJ/cuTziKjBBKj0sV1tc
+         3wYxkS+bL2ROKncjiCqrA68ykBnkrJ/n1HGR+LtvFln8QmT1NCwRo38PcjU4T4ncKaFW
+         NflSl7j3jENcSQn3osQWXeeCJ3wJ18r6jUyF31oEVjImdmZdH5LbEq9CYEH257YrWXsO
+         ZhQg==
+X-Gm-Message-State: AE9vXwP8Bvrq5uq649P6UzAyNk4rM95uZGDGD2ym0/3Y0mfKq9EjkNGotbWze0L+AyZlBe8/1O+XO1RgxcEnSA==
+X-Received: by 10.37.60.67 with SMTP id j64mr6344541yba.111.1472624522682;
+ Tue, 30 Aug 2016 23:22:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFMAO9zfMtF6Vc+Uyt+UdgOVf4hzOqMN3o8QLf8pRHx3_U4DPQ@mail.gmail.com>
+Received: by 10.37.96.195 with HTTP; Tue, 30 Aug 2016 23:21:42 -0700 (PDT)
+In-Reply-To: <CAGZ79kYAHXct0Fz-sw0-FbN5-Mij-C4Qwak_S0mxKHyW=U5jWQ@mail.gmail.com>
+References: <20160815215327.15682-1-sbeller@google.com> <20160815215327.15682-9-sbeller@google.com>
+ <CA+P7+xpDqkTFLUJBhSwWiVnXw-iy1fmGBWzVBLmybOcPOmevBw@mail.gmail.com>
+ <CAGZ79ka6nwYjBRcUKAxCqAodq=Hw6f86J0Mq6GWyKgMO_PNi4A@mail.gmail.com>
+ <CA+P7+xpmyx+QsdOpS7JC1i9Z6cdsy_=MK7J_rGYiukPsqAJBVQ@mail.gmail.com>
+ <CAGZ79kah4sY0NJkaqDiUqcwsCHn0SECkMjN8SoXQ8vGi6zRkuw@mail.gmail.com>
+ <CA+P7+xrokr0ZGidQFuvpN+-J_WDjkaUropcnPGVjZHafc12AnQ@mail.gmail.com> <CAGZ79kYAHXct0Fz-sw0-FbN5-Mij-C4Qwak_S0mxKHyW=U5jWQ@mail.gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Tue, 30 Aug 2016 23:21:42 -0700
+Message-ID: <CA+P7+xoc12ns8OriSQQwhKJPSTuG8hniOcUkbGbW3fZYZiqViw@mail.gmail.com>
+Subject: Re: [PATCHv5 8/8] clone: recursive and reference option triggers
+ submodule alternates
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jens Lehmann <Jens.Lehmann@web.de>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 29, 2016 at 03:41:59PM -0700, W. David Jarvis wrote:
+On Tue, Aug 30, 2016 at 10:04 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Wed, Aug 24, 2016 at 4:37 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
+>
+>> Yes that seems reasonable.
+>>
+>> Thanks,
+>> Jake
+>
+> I reviewed all your comments and you seem to be ok with including this
+> series as it is queued currently?
+>
+> Thanks,
+> Stefan
 
-> We have an open support thread with the GHE support folks, but the
-> only feedback we've gotten so far on this subject is that they believe
-> our CPU load is being driven by the quantity of fetch operations (an
-> average of 16 fetch requests per second during normal business hours,
-> so 4 requests per second per subscriber box). About 4,000 fetch
-> requests on our main repository per day.
+Yea based on what's in Junio's tree, I think we've squashed in all the
+suggested changes, unless there have been more suggestions I missed.
 
-Hmm. That might well be, but I'd have to see the numbers to say more. At
-this point I think we're exhausting what is useful to talk about on the
-Git list.  I'll point GHE Support at this thread, which might help your
-conversation with them (and they might pull me in behind the scenes).
-
-I'll try to answer any Git-specific questions here, though.
-
-> > None of those operations is triggered by client fetches. You'll see
-> > "rev-list" for a variety of operations, so that's hard to pinpoint. But
-> > I'm surprised that "prune" is a common one for you. It is run as part of
-> > the post-push, but I happen to know that the version that ships on GHE
-> > is optimized to use bitmaps, and to avoid doing any work when there are
-> > no loose objects that need pruning in the first place.
-> 
-> Would regular force-pushing trigger prune operations? Our engineering
-> body loves to force-push.
-
-No, it shouldn't make a difference. For stock git, "prune" will only be
-run occasionally as part of "git gc". On GitHub Enterprise, every push
-kicks off a "sync" job that moves objects from a specific fork into
-storage shared by all of the related forks. So GHE will run prune more
-often than stock git would, but force-pushing wouldn't have any effect
-on that.
-
-There are also some custom patches to optimize prune on GHE, so it
-shouldn't generally be very expensive. Unless perhaps for some reason
-the reachability bitmaps on your repository aren't performing very well.
-
-You could try something like comparing:
-
-  time git rev-list --objects --all >/dev/null
-
-and
-
-  time git rev-list --objects --all --use-bitmap-index >/dev/null
-
-on your server. The second should be a lot faster. If it's not, that may
-be an indication that Git could be doing a better job of selecting
-bitmap commits (that code is not GitHub-specific at all).
-
-> >> I might be misunderstanding this, but if the subscriber is already "up
-> >> to date" modulo a single updated ref tip, then this problem shouldn't
-> >> occur, right? Concretely: if ref A is built off of ref B, and the
-> >> subscriber already has B when it requests A, that shouldn't cause this
-> >> behavior, but it would cause this behavior if the subscriber didn't
-> >> have B when it requested A.
-> >
-> > Correct. So this shouldn't be a thing you are running into now, but it's
-> > something that might be made worse if you switch to fetching only single
-> > refs.
-> 
-> But in theory if we were always up-to-date (since we'd always fetch
-> any updated ref) we wouldn't run into this problem? We could have a
-> cron job to ensure that we run a full git fetch every once in a while
-> but I'd hope that if this was written properly we'd almost always have
-> the most recent commit for any dependency ref.
-
-It's a little more complicated than that. What you're really going for
-is letting git reuse on-disk deltas when serving fetches. But depending
-on when the last repack was run, we might be cobbling together the fetch
-from multiple packs on disk, in which case there will still be some
-delta search. In my experience that's not _generally_ a big deal,
-though. Small fetches don't have that many deltas to find.
-
-> Our primary repository is fairly busy. It has about 1/3 the commits of
-> Linux and about 1/3 the refs, but seems otherwise to be on the same
-> scale. And, of course, it both hasn't been around for as long as Linux
-> has and has been experiencing exponential growth, which means its
-> current activity is higher than it has ever been before -- might put
-> it on a similar scale to Linux's current activity.
-
-Most of the work for repacking scales with the number of total objects
-(not quite linearly, though).  For torvalds/linux (and its forks),
-that's around 16 million objects. You might try "git count-objects -v"
-on your server for comparison (but do it in the "network.git" directory,
-as that's the shared object storage).
-
--Peff
+Regards,
+Jake
