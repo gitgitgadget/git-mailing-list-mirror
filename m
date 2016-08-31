@@ -7,108 +7,91 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 773B82035F
+	by dcvr.yhbt.net (Postfix) with ESMTP id D61BF1F6BF
 	for <e@80x24.org>; Wed, 31 Aug 2016 08:56:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933888AbcHaI4c (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 04:56:32 -0400
-Received: from mout.gmx.net ([212.227.17.20]:55272 "EHLO mout.gmx.net"
+        id S933760AbcHaI4o (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 04:56:44 -0400
+Received: from mout.gmx.net ([212.227.17.22]:52817 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933760AbcHaI42 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 04:56:28 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MLvLE-1bkUxZ0ZIq-007kLC; Wed, 31 Aug 2016 10:56:25
+        id S933889AbcHaI4l (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 04:56:41 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MH5Sw-1brgUR3Bbe-00Dmth; Wed, 31 Aug 2016 10:56:29
  +0200
-Date:   Wed, 31 Aug 2016 10:56:10 +0200 (CEST)
+Date:   Wed, 31 Aug 2016 10:56:29 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 28/34] run_command_opt(): optionally hide stderr when the
- command succeeds
+Subject: [PATCH 29/34] sequencer (rebase -i): show only failed `git commit`'s
+ output
 In-Reply-To: <cover.1472633606.git.johannes.schindelin@gmx.de>
-Message-ID: <6383b7afcdeb6c999862aa32ba437997f2dd3d4e.1472633606.git.johannes.schindelin@gmx.de>
+Message-ID: <2b8220c24c1c9094783f7626f5f40dc2db8855c1.1472633606.git.johannes.schindelin@gmx.de>
 References: <cover.1472633606.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:LScO9xcUPBxp1tMHr692Qb6aLM3ZJTkIKax5IlM4pVr8LLt4GMd
- tbz47Nr+VwCzxzTrdmwYRZIoaomlKL5vgFYyb8RO2Adyo7rO1vTahCk6FLhdpEWY6icKxbl
- MTOoZEg17GK8eAree+Npfyy7duMyx5OZhOmoYvFPreRE3bzYyYnNDjsYxkscTYJibEn1kSj
- g68/KNPy/BHh3tdNVgwLw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:SvPFH3JjwyU=:STDvjcmsbEYh9cee6SwG80
- Qy0TfbknPTsBtC5eQqQB4f0C4+c8Ic9RXBdx9k3yqCGDggD3EQwCgonJleoL/7Y2qYaIcuD/J
- TGiKqWUTbMcJwA77hJBn+Xxq+ObrFWWjo+tzHiTQbfu5W8z4EuR8ZN260QThSCuPGFB+F/bAX
- WX40KFHPXyUrjikxfHmwwfcqTnia+9CyMkJ/HZWtQc6CRR+CL9KuC4QFBiTnpnvqOthm2lYU/
- BqZQvgyPUEZR/g+2sG/PaxIbE3WHE1ZwYFqo7Ifh4FCDwgMO5J85rtNjeHu1tusNlSjnmqIQG
- rdp3R2KWFnCPn784bwYsHJHUn+XDEwI7AtdJeDzmkr3+pyEeGyJKkMrE/UhP4lGOB1m2uSiap
- 1JBophLmg745WIL6dt1lZiQar4+SYdP1R9P0VEH7Nh/bwygMaiOoP0I10zB+nb06HhXJc7wgY
- fjWMOiKVYtTmN4a875iL3izvv4nN3cpa7qylEGVPTwHXaQKeOsstOt+ooVrjDO3KLA1KsfeFG
- eYyDcY8g8TrTfKO8O56GWAcfJZmZSlSgHvYFnE9vaJ3syp8bQq4kBpSIpYIq2ohhaJawGn9pl
- eqmS0n60l98eGcctpfANOHc7g8l2Mz0lcElvfKgpCVIMkuiGcIFrHhNBw2khL/7Rqs2I3lgSc
- NXCeSx2pX1tvG0LFUVZ39nfbYI5p79ZAHCsdhkzJ4qwA3/oGG6vGor4hmfHVix8oTU2TKrBmW
- uQM8DIjOTxu4bo2/7Vn3kDEIMoYGZeKkXmJMmHnTeAAhjopy7SYU7mtvbNR72f/GEYRsc0XlE
- 3RVKpuM
+X-Provags-ID: V03:K0:O09a9t48StolUOvfCCVJjA2YhdpR1OE/jwbmgwDEh2FL+/aT3K7
+ W0EAEQaWdcHLYXHCMXx5yjs+XWR5uzDWL+2JRd3vWBlHQdOMAxEN3mb7/Ok8oobSAueESjB
+ 8yBiYYXmFsKQMQMbQmF+sRUqSCoaAKr3VV3dv3etBn1KLxL0y0E7vAKc3NX9fm9q83mw91c
+ 3COt7yOWhlNjdo6VVY/oQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ZbG5nOPOj8Q=:dFRkr5mlpZsNRIuT6gwdEd
+ fIq0bpzeV0wluDZhW8tb12mYM1WnK7rCOCJV1wA3e2oDQqcmD9VRm6wpeSm3TcXxaisAVlX5f
+ Y+QUTEk3LE40OWuJCH3yz07PBP/fvQAx+uRPBzPFrQBBpvEE7vzUIPkkSPddkT71KVAP4n11p
+ d12Rhi3diy4UZ0CTcRk8ZXpXMIjEodXLgEyuDPfiBF/Fa/M1vFZj1A0tHJWkOGgcSH5ls0M7L
+ Q5NFmEXs5TjXw6323wRcezKcrMP2cfNhXcnBLR6xE4n54PrYBRlPhtl46uRufbCC1VG0MkFGW
+ o3Y6zbIcR0tbsNmweNv87naM/nsG6RawBQzvw3sjlgGBxkgRXi/xgPzZhwYgccRQPcUmPJsEf
+ /X+GNgrsuxwDrLPnp1AByCpDkcBngHIaauYuer4Th+CYzB1AY7RHuxohHRuwVqY8qy5NvGDPF
+ Z8otbNHuqnAUSXs2EtvZpNBJH4ARC5TyFogTlVxKaECGHcASbzrbXrtFHE7F4ZANQgZDfqeL3
+ nfaYeCwgYICBjXFx1fTkzhDYLjZj9/LdvsHlR3dVzM493N4kcG9nukso2czbhEyCTRMuDIp2X
+ zpjJys4i9lfB8Ma69KnwYCVkVjuoRjrkiTgPvm6a2tdJl6NRsZBcWGqzijrpo8GcIvp3p4zML
+ N2zqFNf013XR72XwEu3yAeDYUsTOfE3QXOGElVzRnRN2OJBfn3P/j4uR06mwYNpnV10LuR37h
+ vw0OhzHTfr3tijByGHf4S7lcPwMyOUiFEt05PDidi3UIgE/rK2A6vVmRP2HPrtiZ0txv4ad6z
+ Sn9EKhF
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This will be needed to hide the output of `git commit` when the
-sequencer handles an interactive rebase's script.
+This is the behavior of the shell script version of the interactive
+rebase, by using the `output` function defined in `git-rebase.sh`.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- run-command.c | 23 +++++++++++++++++++++++
- run-command.h |  1 +
- 2 files changed, 24 insertions(+)
+ sequencer.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/run-command.c b/run-command.c
-index 5a4dbb6..921e43c 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -575,6 +575,29 @@ int run_command_v_opt_cd_env(const char **argv, int opt, const char *dir, const
- 	cmd.clean_on_exit = opt & RUN_CLEAN_ON_EXIT ? 1 : 0;
- 	cmd.dir = dir;
- 	cmd.env = env;
-+
-+	if (opt & RUN_HIDE_STDERR_ON_SUCCESS) {
-+		struct strbuf buf = STRBUF_INIT;
-+		int res;
-+
-+		cmd.err = -1;
-+		if (start_command(&cmd) < 0)
-+			return -1;
-+
-+		if (strbuf_read(&buf, cmd.err, 0) < 0) {
-+			close(cmd.err);
-+			finish_command(&cmd); /* throw away exit code */
-+			return -1;
+diff --git a/sequencer.c b/sequencer.c
+index 4c902e5..22568d2 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -640,10 +640,15 @@ int sequencer_commit(const char *defmsg, struct replay_opts *opts,
+ {
+ 	char **env = NULL;
+ 	struct argv_array array;
+-	int rc;
++	int opt = RUN_GIT_CMD, rc;
+ 	const char *value;
+ 
+ 	if (is_rebase_i(opts)) {
++		if (!edit) {
++			opt |= RUN_COMMAND_STDOUT_TO_STDERR;
++			opt |= RUN_HIDE_STDERR_ON_SUCCESS;
 +		}
 +
-+		close(cmd.err);
-+		res = finish_command(&cmd);
-+		if (res)
-+			fputs(buf.buf, stderr);
-+		strbuf_release(&buf);
-+		return res;
-+	}
-+
- 	return run_command(&cmd);
- }
+ 		env = read_author_script();
+ 		if (!env) {
+ 			const char *gpg_opt = gpg_sign_opt_quoted(opts);
+@@ -688,7 +693,7 @@ int sequencer_commit(const char *defmsg, struct replay_opts *opts,
+ 	if (opts->allow_empty_message)
+ 		argv_array_push(&array, "--allow-empty-message");
  
-diff --git a/run-command.h b/run-command.h
-index 5066649..f87d01a 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -70,6 +70,7 @@ extern int run_hook_ve(const char *const *env, const char *name, va_list args);
- #define RUN_SILENT_EXEC_FAILURE 8
- #define RUN_USING_SHELL 16
- #define RUN_CLEAN_ON_EXIT 32
-+#define RUN_HIDE_STDERR_ON_SUCCESS 64
- int run_command_v_opt(const char **argv, int opt);
- 
- /*
+-	rc = run_command_v_opt_cd_env(array.argv, RUN_GIT_CMD, NULL,
++	rc = run_command_v_opt_cd_env(array.argv, opt, NULL,
+ 			(const char *const *)env);
+ 	argv_array_clear(&array);
+ 	free(env);
 -- 
 2.10.0.rc2.102.g5c102ec
 
