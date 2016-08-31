@@ -2,79 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 814631FBB0
-	for <e@80x24.org>; Wed, 31 Aug 2016 05:04:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB3001FBB0
+	for <e@80x24.org>; Wed, 31 Aug 2016 05:05:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752234AbcHaFEJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 01:04:09 -0400
-Received: from mail-it0-f52.google.com ([209.85.214.52]:38887 "EHLO
-        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751136AbcHaFEI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 01:04:08 -0400
-Received: by mail-it0-f52.google.com with SMTP id g62so76586336ith.1
-        for <git@vger.kernel.org>; Tue, 30 Aug 2016 22:04:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Os1eRGqJGWs593ceobEroChZM1F+8lTDRacbTVCDhAk=;
-        b=Thlp0tnaN2+9m4h7MueulLPxXiibHz0FN+mnDWCRO94xTLLQVaqjc9TwRQxniE3/8W
-         U0tUQNc6mS+kqw5TA8/7Jk4PMRHY1y+/qXo6axsbEQ2NRbbeOEZDqEWysp1fCtj61ncw
-         eID+dFc/x7KqVE9aPKSaknJH6N80QtGHg/2nPEVguQceMX8auxuO2r3OlRMKNPuy9QIb
-         ZVQ7gFtf5wctPibp6CQwyWYlCgPOG6WnCG887n6/M14N9ArSab39KmPc2NtIT97aoqZU
-         wj+VLIJcyXZodxo3yxEnK4B7pO5o/uFO6Uq+owkrNvzDg1P41aQgp33IURXZ6tvM1W0e
-         rEbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Os1eRGqJGWs593ceobEroChZM1F+8lTDRacbTVCDhAk=;
-        b=Q9m7lqHYb+UQaUrfrardagMLL0vVQBKsjasgR3LhclOha4Bm3QimSleJBzFZxJavOS
-         l2rWBqP+5Tv/Dfw+DXuu1Ziz+HsQlPlqhn6dDk7gGHfMfv2XbQ6w2z87UH0kRtbcejMW
-         8ArnCzfWeLYqmsnS93id7zI/x9Uu5p1eVEs+YwaxgmrSXP8JUXFMDjPqor7g+Hq5g1mB
-         3jCTSVyx0MBtaMfP7lzwMCad3hHXmTRri8RzLZOJY8KFElHIK4TiRpgqJfXBOdbt6FGp
-         J+IAwt3Sp69/bEvx1Hls80NgGDfZFbGTUlFuPdcC7wkmQfyfngBpYDan1G2XjPVF+TEf
-         IW3Q==
-X-Gm-Message-State: AE9vXwOkazeBIYoSVQH/KFAy2gYNEGDYmS5h62Dlb5vjTeO9c+5JTk968qQzjDPXwhRrEFiHNgQn72EDM1/Q/vIr
-X-Received: by 10.36.88.131 with SMTP id f125mr9724973itb.46.1472619847900;
- Tue, 30 Aug 2016 22:04:07 -0700 (PDT)
+        id S1751118AbcHaFFo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 01:05:44 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35733 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750708AbcHaFFn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 01:05:43 -0400
+Received: (qmail 5106 invoked by uid 109); 31 Aug 2016 05:05:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 31 Aug 2016 05:05:43 +0000
+Received: (qmail 3047 invoked by uid 111); 31 Aug 2016 05:05:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 31 Aug 2016 01:05:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 31 Aug 2016 01:05:38 -0400
+Date:   Wed, 31 Aug 2016 01:05:38 -0400
+From:   Jeff King <peff@peff.net>
+To:     Brian Henderson <henderson.bj@gmail.com>
+Cc:     git@vger.kernel.org, e@80x24.org, gitster@pobox.com
+Subject: [PATCH 3/3] diff-highlight: avoid highlighting combined diffs
+Message-ID: <20160831050538.53fki52cvwlmkd6y@sigill.intra.peff.net>
+References: <20160831050229.cabhfzqcpcpvkugl@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Tue, 30 Aug 2016 22:04:07 -0700 (PDT)
-In-Reply-To: <CA+P7+xrokr0ZGidQFuvpN+-J_WDjkaUropcnPGVjZHafc12AnQ@mail.gmail.com>
-References: <20160815215327.15682-1-sbeller@google.com> <20160815215327.15682-9-sbeller@google.com>
- <CA+P7+xpDqkTFLUJBhSwWiVnXw-iy1fmGBWzVBLmybOcPOmevBw@mail.gmail.com>
- <CAGZ79ka6nwYjBRcUKAxCqAodq=Hw6f86J0Mq6GWyKgMO_PNi4A@mail.gmail.com>
- <CA+P7+xpmyx+QsdOpS7JC1i9Z6cdsy_=MK7J_rGYiukPsqAJBVQ@mail.gmail.com>
- <CAGZ79kah4sY0NJkaqDiUqcwsCHn0SECkMjN8SoXQ8vGi6zRkuw@mail.gmail.com> <CA+P7+xrokr0ZGidQFuvpN+-J_WDjkaUropcnPGVjZHafc12AnQ@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 30 Aug 2016 22:04:07 -0700
-Message-ID: <CAGZ79kYAHXct0Fz-sw0-FbN5-Mij-C4Qwak_S0mxKHyW=U5jWQ@mail.gmail.com>
-Subject: Re: [PATCHv5 8/8] clone: recursive and reference option triggers
- submodule alternates
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jens Lehmann <Jens.Lehmann@web.de>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20160831050229.cabhfzqcpcpvkugl@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 24, 2016 at 4:37 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
+The algorithm in diff-highlight only understands how to look
+at two sides of a diff; it cannot correctly handle combined
+diffs with multiple preimages. Often highlighting does not
+trigger at all for these diffs because the line counts do
+not match up.  E.g., if we see:
 
-> Yes that seems reasonable.
->
-> Thanks,
-> Jake
+  - ours
+   -theirs
+  ++resolved
 
-I reviewed all your comments and you seem to be ok with including this
-series as it is queued currently?
+we would not bother highlighting; it naively looks like a
+single line went away, and then a separate hunk added
+another single line.
 
-Thanks,
-Stefan
+But of course there are exceptions. E.g., if the other side
+deleted the line, we might see:
+
+  - ours
+  ++resolved
+
+which looks like we dropped " ours" and added "+resolved".
+This is only a small highlighting glitch (we highlight the
+space and the "+" along with the content), but it's also the
+tip of the iceberg. Even if we learned to find the true
+content here (by noticing we are in a 3-way combined diff
+and marking _two_ characters from the front of the line as
+uninteresting), there are other more complicated cases where
+we really do need to handle a 3-way hunk.
+
+Let's just punt for now; we can recognize combined diffs by
+the presence of extra "@" symbols in the hunk header, and
+treat them as non-diff content.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ contrib/diff-highlight/diff-highlight            |  2 +-
+ contrib/diff-highlight/t/t9400-diff-highlight.sh | 37 ++++++++++++++++++++++++
+ 2 files changed, 38 insertions(+), 1 deletion(-)
+
+diff --git a/contrib/diff-highlight/diff-highlight b/contrib/diff-highlight/diff-highlight
+index 9280c88..81bd804 100755
+--- a/contrib/diff-highlight/diff-highlight
++++ b/contrib/diff-highlight/diff-highlight
+@@ -36,7 +36,7 @@ $SIG{PIPE} = 'DEFAULT';
+ while (<>) {
+ 	if (!$in_hunk) {
+ 		print;
+-		$in_hunk = /^$GRAPH*$COLOR*\@/;
++		$in_hunk = /^$GRAPH*$COLOR*\@\@ /;
+ 	}
+ 	elsif (/^$GRAPH*$COLOR*-/) {
+ 		push @removed, $_;
+diff --git a/contrib/diff-highlight/t/t9400-diff-highlight.sh b/contrib/diff-highlight/t/t9400-diff-highlight.sh
+index 7d034aa..64dd9f7 100755
+--- a/contrib/diff-highlight/t/t9400-diff-highlight.sh
++++ b/contrib/diff-highlight/t/t9400-diff-highlight.sh
+@@ -254,4 +254,41 @@ test_expect_success 'diff-highlight works with the --graph option' '
+ 	test_cmp graph.exp graph.act
+ '
+ 
++# Most combined diffs won't meet diff-highlight's line-number filter. So we
++# create one here where one side drops a line and the other modifies it. That
++# should result in a diff like:
++#
++#    - modified content
++#    ++resolved content
++#
++# which naively looks like one side added "+resolved".
++test_expect_success 'diff-highlight ignores combined diffs' '
++	echo "content" >file &&
++	git add file &&
++	git commit -m base &&
++
++	>file &&
++	git commit -am master &&
++
++	git checkout -b other HEAD^ &&
++	echo "modified content" >file &&
++	git commit -am other &&
++
++	test_must_fail git merge master &&
++	echo "resolved content" >file &&
++	git commit -am resolved &&
++
++	cat >expect <<-\EOF &&
++	--- a/file
++	+++ b/file
++	@@@ -1,1 -1,0 +1,1 @@@
++	- modified content
++	++resolved content
++	EOF
++
++	git show -c | "$DIFF_HIGHLIGHT" >actual.raw &&
++	sed -n "/^---/,\$p" <actual.raw >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+2.10.0.rc2.125.gcfb3d08
