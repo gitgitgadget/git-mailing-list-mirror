@@ -7,85 +7,118 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBBBE1F6BF
-	for <e@80x24.org>; Wed, 31 Aug 2016 08:55:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8505F1F6BF
+	for <e@80x24.org>; Wed, 31 Aug 2016 08:55:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933734AbcHaIzQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 04:55:16 -0400
-Received: from mout.gmx.net ([212.227.17.22]:53259 "EHLO mout.gmx.net"
+        id S933785AbcHaIzX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 04:55:23 -0400
+Received: from mout.gmx.net ([212.227.17.20]:61630 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933217AbcHaIzJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 04:55:09 -0400
+        id S1756381AbcHaIy6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 04:54:58 -0400
 Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0Lw2dd-1b2jyu3i1d-017nMU; Wed, 31 Aug 2016 10:55:05
+ ESMTPSA (Nemesis) id 0M4o41-1atuHT1AFR-00z1aF; Wed, 31 Aug 2016 10:54:54
  +0200
-Date:   Wed, 31 Aug 2016 10:55:05 +0200 (CEST)
+Date:   Wed, 31 Aug 2016 10:54:53 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 13/34] sequencer (rebase -i): the todo can be empty when
- continuing
+Subject: [PATCH 10/34] sequencer (rebase -i): allow continuing with staged
+ changes
 In-Reply-To: <cover.1472633606.git.johannes.schindelin@gmx.de>
-Message-ID: <1ed867cdbca0351265f2b0fcc8d10366a6b94411.1472633606.git.johannes.schindelin@gmx.de>
+Message-ID: <31b30111bc29fd7362824034857df87b551c725a.1472633606.git.johannes.schindelin@gmx.de>
 References: <cover.1472633606.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:6ePoRGpLpsH+TmzVf48XOm6YLOzuLN8BjhWtVHHlGJ2Hpyh0At/
- F90SzdfoFhd3MBbmcE+RcRm9k7blUchie2EsWSsH9JA8fu8uli7FkkYogPg7MWTfCDILW5h
- KCgvMPhwmT0D1A9CeAJMCuJ44DHYuv8TGLlRpLMT17oYZJKx8sK9X5ImScWQFAAJgTBDI0M
- BF7alLzNHLReh5ckbPQNQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:wvH7JbiiUHU=:USW4VlOAAnY3hn2HTbNni6
- yj9ZnDZkbQ6FevCVmLLvl0dFBnLh3Zmm6E9CSiDt/NcMCukViYRven20lW1XWrJp94q5W7uC3
- cWPkrYD3FdSiwWeGB/W3IsfvsBrC21LbJDb/A+xCuQtshYVW23KBQuate1deb1gmXl8W/MlTY
- yuamk7A9Os4jQYNbO0Bx/HOVbYSWsGIYgO/KQie1+nUy/VpIfmRlBBQ7QmDYD9yj8yP3iQJwg
- E8/24SP3oG8a/NxbvB5cCYbLYqMYDd1vaxId/qHDzqG4uWBbaA5y6aXQUdXXeRedR5+E3WIO+
- P3J+dJBd8Qpb0gyghURK8vzmkcG88DKxhEl9lrhbv8lZHiOE2NdTFGjStJeXaRCnHozivcnnb
- Mcj41BbVIgbGcD115PiLQ02CEG1sPdj+WH7tIG68MAKuApVVn/iiprGt3Xl1CAOb6fcB5jOOF
- DAUA8LM+FYIxD/YoPnx6ZAXN4U//nztoFDRlabI4PTJ61KW9zeDAv1foTvTHQ2DseCOm6SEcK
- MWZSB6m5cwanNFu7MQNiONaF7q1Xy77to5tFZxoUwvromQ4K9PdF8fwQJR64SzVp6g2hINry4
- AskhS+D8ScIz8E1pv6FWlHXrxKnb8zzPwfN5YUZN/SUXz1Y8/p9s1+/v8qvZw4ekeHutlJMEg
- g/pNgpK7zjp6olJIY5OOS339RPj2Jg9oEaify8O3n0JUfYWFL2l0ptAbfsBG4+eXElQoumEmX
- FOrfLtMQekQV284P8dWfu4GBPaRfIgofItRQMyqK/TAMbRK57yq2Pb9Y//MqvA5OCRfddF5O0
- vrw7Xib
+X-Provags-ID: V03:K0:PN8bWCdfb7Rs4/04/zh8QvxLFANH8TCpQAEEX+N0CRokAlX2/oh
+ iIQ7K+2bKRxLBXLQ8B2aAkj6xHdhKJPUU7lbDGEr9Kskvy0/rH5VIuFYbNaIG2jef5KOhcT
+ +cWUSFfUUC8ar4pXchNTP30HJUntjw0kkeebHkXGg01Ju8fHhsNz5pUc8iNS2Rm3s40S/F4
+ ALIMUumtap9Ofir8tGt1g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:3Qm1j6L1W8A=:ibauHXF3NOwnGb1Cn8TzAi
+ uy28a3acrhUxIgs98HBb9ImxWX5g9JCj54CMxSXFegZRVosSEMVW2GshTAcyaajVcvZ05Jgju
+ 3uCNaYQo3MgSCiQ4BoX1cj8ZXaJrbE5WovslYNaJwRgzxnV7h1+n/bLyofZ0otKaXBiIHgy5v
+ kx6EqxHA3C2P5mrZWmZHbQfZ6EE0uohcTToQFfgPp2hVyF6992fbOzNS3z4tpEG6la65aR5nH
+ 1+JaKMV/ROgEZPjzky2hP7hJQ5N2+XFDe5twSILGEHEAYqBa2XWbG2muC2kYPKNwXJ7zVh0g8
+ UNCKAo2nsbkjQFqIps6+b4TrSyqZ9oAhjI9x5ZPx3wGUqGzWhI+Ft9Wl9P7K1DNOe54hL4Szm
+ IAJYBeZNGGQW1zp0hyF9xXh7so2BnoeQYbIqoxYNJngvfSOp1ldTSoNN0sgXtQSKlKLMv/COE
+ M4pMNDu+th40uCKUgH9wciN9UsCLoa+Nd6CuAPktFybTprcr3jUuDSAtNKnbOIQuNNWy1JI2G
+ lC2ZGwZKjbpvIqKerGWa1rk8H4r7N9fjOhANcf6DvRIzv54pz+YKcI7L85cSQ7Xt9U7Rn2EMc
+ GcdMbZ9KmaW1jcQoos3Bdyo8naqP3k3Bp1KL/jw/GtQbWQXSyJoyMwRXP+4/FoMjT1wWqawQC
+ jUUnGkkLCSGxfwAvcG6jdZ96bN7HxcJZu5eLokYQ4MEZCxrGCACY63o3JPe26Gw6DQzEVha34
+ DVHkHb7YGyuS6y1ggvhurZyCywh51Bje4k7gF1GiUprwO8sEjpIYR0SWelgcT8Wl6G6jHyt7Z
+ SptkzjV
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the last command of an interactive rebase fails, the user needs to
-resolve the problem and then continue the interactive rebase. Naturally,
-the todo script is empty by then. So let's not complain about that!
+When an interactive rebase is interrupted, the user may stage changes
+before continuing, and we need to commit those changes in that case.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sequencer.c | 39 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
 diff --git a/sequencer.c b/sequencer.c
-index 7f017a8..d4437f5 100644
+index ef818a2..4ddb12e 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -1249,8 +1249,6 @@ static int parse_insn_buffer(char *buf, struct todo_list *todo_list)
- 			fixup_okay = 1;
- 		p = *eol ? eol + 1 : eol;
- 	}
--	if (!todo_list->nr)
--		return error(_("No commits parsed."));
- 	return res;
+@@ -1807,6 +1807,41 @@ static int continue_single_pick(void)
+ 	return run_command_v_opt(argv, RUN_GIT_CMD);
  }
  
-@@ -1273,6 +1271,9 @@ static int read_populate_todo(struct todo_list *todo_list,
- 	res = parse_insn_buffer(todo_list->buf.buf, todo_list);
- 	if (res)
- 		return error(_("Unusable instruction sheet: %s"), todo_file);
-+	if (!todo_list->nr &&
-+	    (!is_rebase_i(opts) || !file_exists(rebase_path_done())))
-+		return error(_("No commits parsed."));
- 	return 0;
- }
++static int commit_staged_changes(struct replay_opts *opts)
++{
++	int amend = 0;
++
++	if (has_unstaged_changes(1))
++		return error(_("Cannot rebase: You have unstaged changes."));
++	if (!has_uncommitted_changes(0))
++		return 0;
++
++	if (file_exists(rebase_path_amend())) {
++		struct strbuf rev = STRBUF_INIT;
++		unsigned char head[20], to_amend[20];
++
++		if (get_sha1("HEAD", head))
++			return error("Cannot amend non-existing commit");
++		if (!read_oneliner(&rev, rebase_path_amend(), 0))
++			return error("Invalid file: %s", rebase_path_amend());
++		if (get_sha1_hex(rev.buf, to_amend))
++			return error("Invalid contents: %s",
++				rebase_path_amend());
++		if (hashcmp(head, to_amend))
++			return error("\nYou have uncommitted changes in your "
++				"working tree. Please, commit them\nfirst and "
++				"then run 'git rebase --continue' again.");
++
++		strbuf_release(&rev);
++		amend = 1;
++	}
++
++	if (sequencer_commit(rebase_path_message(), opts, 1, 1, amend, 0))
++		return error("Could not commit staged changes.");
++	unlink(rebase_path_amend());
++	return 0;
++}
++
+ int sequencer_continue(struct replay_opts *opts)
+ {
+ 	struct todo_list todo_list = TODO_LIST_INIT;
+@@ -1815,6 +1850,10 @@ int sequencer_continue(struct replay_opts *opts)
+ 	if (read_and_refresh_cache(opts))
+ 		return -1;
  
++	if (is_rebase_i(opts)) {
++		if (commit_staged_changes(opts))
++			return -1;
++	}
+ 	if (!file_exists(get_todo_path(opts)))
+ 		return continue_single_pick();
+ 	if (read_populate_opts(opts) ||
 -- 
 2.10.0.rc2.102.g5c102ec
 
