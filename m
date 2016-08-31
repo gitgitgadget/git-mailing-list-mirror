@@ -7,83 +7,88 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33E9F1FBB0
-	for <e@80x24.org>; Wed, 31 Aug 2016 06:22:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0ABB620229
+	for <e@80x24.org>; Wed, 31 Aug 2016 06:25:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752708AbcHaGWE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 02:22:04 -0400
-Received: from mail-yb0-f172.google.com ([209.85.213.172]:36153 "EHLO
-        mail-yb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752273AbcHaGWD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 02:22:03 -0400
-Received: by mail-yb0-f172.google.com with SMTP id 125so14064310ybe.3
-        for <git@vger.kernel.org>; Tue, 30 Aug 2016 23:22:03 -0700 (PDT)
+        id S1757682AbcHaGZk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 02:25:40 -0400
+Received: from mail-yw0-f171.google.com ([209.85.161.171]:33159 "EHLO
+        mail-yw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752600AbcHaGZj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 02:25:39 -0400
+Received: by mail-yw0-f171.google.com with SMTP id r9so25187202ywg.0
+        for <git@vger.kernel.org>; Tue, 30 Aug 2016 23:25:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=PCJ3wskX5Sc6eN1+3oLMuoDlsUwWyGHs7KZogcQYKMc=;
-        b=Txn6RAK5p5lWP5/MciON7/cva/QZDqdjpp9KI/ThEtrNWpjVGPahSTgxKXX74tYxaX
-         g9JFf6Ve4R9S9nUOHMiG8pgl0YZTSPMPSm8vIF+zLM96Bl+YN9dDTxq0vMc+Ale0R9/1
-         QdxBswPecET4sGiD3/NG3w/K/dU9qU2IMvI28Ny98ZfuHGBqrBVQEXtb00T9lS1FvIQ0
-         /HA3TSorK+Z6ji6fRE7re0TgptuKIJ04UDgtT/tRENifU0i2CNohYENWcoSbczf2D52h
-         D1k0tTZxcTmPiCibjs7kaLm1g2OjTWRnzBsZ/eNdCu+DEWgQHAwZAlScyvWcjpNY15sM
-         gVxQ==
+        bh=K53bRLblpZ2egvHxxDyNalwdWhnO5mXs2wa22kcd+Sw=;
+        b=N6G7zYVvzk4GbzRqyBFtg71/sDQjAqtjjNXZ/r3Ex2mRe6iqufQBgZCWwqE+gIbPsz
+         NGQq19XAJ0cWP8kdFDbKCMxmXNGHcg1V4BOJFuxIwqsrf4qVwNQABc63dldTr107VySj
+         K2IJ5Y85hddWjTQP4agKR6arHSUmXcyjqf1w1O6i0ssXjxSI7iIfW9lbIKX220cyaWgG
+         obW3GQyEaBoKpBAckjiyx1Sp/sv0cFNhIULaN4PIRq7dfIW5/REswAFQWhYV9rtp0kx6
+         oT4YD/09NhbBZyKjbUDDR0kLSM5EGFwyg/ViC/kHZuNPJp/fnCU6v168szdITYth+NNa
+         qVqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=PCJ3wskX5Sc6eN1+3oLMuoDlsUwWyGHs7KZogcQYKMc=;
-        b=mumFYcvUb7oeMP3kaghCgw3wETG5p9mGJvpFCzTBeQf3POzyvh6IDo1zOj/+CZRY6T
-         vUYQOlv46cHtHIlqCwIXiOgU9nuVIPi7LQdT5FmdGceL9whWhHiM5M42n0bQHO1QhxYy
-         UIN4n2KE5djTVw293Ea/AZQKBr0B1zsKKa2uClAhxel/aD64TJ/cuTziKjBBKj0sV1tc
-         3wYxkS+bL2ROKncjiCqrA68ykBnkrJ/n1HGR+LtvFln8QmT1NCwRo38PcjU4T4ncKaFW
-         NflSl7j3jENcSQn3osQWXeeCJ3wJ18r6jUyF31oEVjImdmZdH5LbEq9CYEH257YrWXsO
-         ZhQg==
-X-Gm-Message-State: AE9vXwP8Bvrq5uq649P6UzAyNk4rM95uZGDGD2ym0/3Y0mfKq9EjkNGotbWze0L+AyZlBe8/1O+XO1RgxcEnSA==
-X-Received: by 10.37.60.67 with SMTP id j64mr6344541yba.111.1472624522682;
- Tue, 30 Aug 2016 23:22:02 -0700 (PDT)
+        bh=K53bRLblpZ2egvHxxDyNalwdWhnO5mXs2wa22kcd+Sw=;
+        b=Zy1Czt5NEvQXbMPq82tlV2dhVVMULKg6oKNStuiU7581nM6aqXFMPY8sGpm+8fVePb
+         IXzs5og33JxMTQUWoo9vw4Mzmv6CWskAMas65wa6y84JDWCioUkuADAWBnxjjaXxGT7T
+         HQIzhOCmi3TSH8FGwpgvZY99ZlxRFy0s06BPeYXPw7lTVJYeDFthM/2kCaySNPnyXvMU
+         v14ilS+DEF+LN3IwbPgxr1PwqPXT4u7SxDLlkTzQuEqO6Q67mq+AbpQRjcKlrH8ZhktP
+         /Ken666Ybn71Udi0ngYM9CA1KVGgxq3AgA6c85YHEdsu9eBWs4lHSGznEAFLkdDx7u9+
+         QfDA==
+X-Gm-Message-State: AE9vXwNK/hbYQsEr0oJI4LdpvZLaTWsIHe/pjDbSHQzR4DLtjDHgCl9CHm9T3ZkvkmQ5IATywvrKyS4juMHiHw==
+X-Received: by 10.129.95.70 with SMTP id t67mr6621168ywb.284.1472624738399;
+ Tue, 30 Aug 2016 23:25:38 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.37.96.195 with HTTP; Tue, 30 Aug 2016 23:21:42 -0700 (PDT)
-In-Reply-To: <CAGZ79kYAHXct0Fz-sw0-FbN5-Mij-C4Qwak_S0mxKHyW=U5jWQ@mail.gmail.com>
-References: <20160815215327.15682-1-sbeller@google.com> <20160815215327.15682-9-sbeller@google.com>
- <CA+P7+xpDqkTFLUJBhSwWiVnXw-iy1fmGBWzVBLmybOcPOmevBw@mail.gmail.com>
- <CAGZ79ka6nwYjBRcUKAxCqAodq=Hw6f86J0Mq6GWyKgMO_PNi4A@mail.gmail.com>
- <CA+P7+xpmyx+QsdOpS7JC1i9Z6cdsy_=MK7J_rGYiukPsqAJBVQ@mail.gmail.com>
- <CAGZ79kah4sY0NJkaqDiUqcwsCHn0SECkMjN8SoXQ8vGi6zRkuw@mail.gmail.com>
- <CA+P7+xrokr0ZGidQFuvpN+-J_WDjkaUropcnPGVjZHafc12AnQ@mail.gmail.com> <CAGZ79kYAHXct0Fz-sw0-FbN5-Mij-C4Qwak_S0mxKHyW=U5jWQ@mail.gmail.com>
+Received: by 10.37.96.195 with HTTP; Tue, 30 Aug 2016 23:25:18 -0700 (PDT)
+In-Reply-To: <CAGZ79kYVgCy95Pf14my_pq1qW=MB-3gF=FPf+S-VqO8k-8yf5A@mail.gmail.com>
+References: <xmqqy43lookt.fsf@gitster.mtv.corp.google.com> <CAGZ79kYVgCy95Pf14my_pq1qW=MB-3gF=FPf+S-VqO8k-8yf5A@mail.gmail.com>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 30 Aug 2016 23:21:42 -0700
-Message-ID: <CA+P7+xoc12ns8OriSQQwhKJPSTuG8hniOcUkbGbW3fZYZiqViw@mail.gmail.com>
-Subject: Re: [PATCHv5 8/8] clone: recursive and reference option triggers
- submodule alternates
+Date:   Tue, 30 Aug 2016 23:25:18 -0700
+Message-ID: <CA+P7+xpjyhdNEMJuP6HB60Sj1uomsNRnZ9tAdcCKAwuRCbgOLQ@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2016, #08; Wed, 24)
 To:     Stefan Beller <sbeller@google.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jens Lehmann <Jens.Lehmann@web.de>
+        "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 30, 2016 at 10:04 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Wed, Aug 24, 2016 at 4:37 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
->
->> Yes that seems reasonable.
+On Tue, Aug 30, 2016 at 10:10 PM, Stefan Beller <sbeller@google.com> wrote:
 >>
->> Thanks,
->> Jake
+>> * sb/submodule-clone-rr (2016-08-17) 8 commits
+>>  - clone: recursive and reference option triggers submodule alternates
+>>  - clone: implement optional references
+>>  - clone: clarify option_reference as required
+>>  - clone: factor out checking for an alternate path
+>>  - submodule--helper update-clone: allow multiple references
+>>  - submodule--helper module-clone: allow multiple references
+>>  - t7408: merge short tests, factor out testing method
+>>  - t7408: modernize style
+>>
+>>  I spotted a last-minute bug in v5, which is not a very good sign
+>>  (it shows that nobody is reviewing).  Any more comments?
+>>
+>>
 >
-> I reviewed all your comments and you seem to be ok with including this
-> series as it is queued currently?
+> Jacob Keller reviewed that series as announced in
+>
+> https://public-inbox.org/git/CA+P7+xpE=GoFWfdzmT+k=Zku8+YjEH-aOMsFUtJJJwFHa1hKDQ@mail.gmail.com/#t
+>
+> and concluded it is fine as in
+>
+> https://public-inbox.org/git/CA+P7+xrokr0ZGidQFuvpN+-J_WDjkaUropcnPGVjZHafc12AnQ@mail.gmail.com/
 >
 > Thanks,
 > Stefan
 
-Yea based on what's in Junio's tree, I think we've squashed in all the
-suggested changes, unless there have been more suggestions I missed.
+Yep.
 
-Regards,
+Thanks,
 Jake
