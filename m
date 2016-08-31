@@ -2,93 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0ABB620229
-	for <e@80x24.org>; Wed, 31 Aug 2016 06:25:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F42331FD99
+	for <e@80x24.org>; Wed, 31 Aug 2016 07:28:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757682AbcHaGZk (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 02:25:40 -0400
-Received: from mail-yw0-f171.google.com ([209.85.161.171]:33159 "EHLO
-        mail-yw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752600AbcHaGZj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 02:25:39 -0400
-Received: by mail-yw0-f171.google.com with SMTP id r9so25187202ywg.0
-        for <git@vger.kernel.org>; Tue, 30 Aug 2016 23:25:38 -0700 (PDT)
+        id S1755713AbcHaH2m (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 03:28:42 -0400
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:38472 "EHLO
+        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758110AbcHaH2c (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 03:28:32 -0400
+Received: by mail-wm0-f42.google.com with SMTP id 1so23929009wmz.1
+        for <git@vger.kernel.org>; Wed, 31 Aug 2016 00:28:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=K53bRLblpZ2egvHxxDyNalwdWhnO5mXs2wa22kcd+Sw=;
-        b=N6G7zYVvzk4GbzRqyBFtg71/sDQjAqtjjNXZ/r3Ex2mRe6iqufQBgZCWwqE+gIbPsz
-         NGQq19XAJ0cWP8kdFDbKCMxmXNGHcg1V4BOJFuxIwqsrf4qVwNQABc63dldTr107VySj
-         K2IJ5Y85hddWjTQP4agKR6arHSUmXcyjqf1w1O6i0ssXjxSI7iIfW9lbIKX220cyaWgG
-         obW3GQyEaBoKpBAckjiyx1Sp/sv0cFNhIULaN4PIRq7dfIW5/REswAFQWhYV9rtp0kx6
-         oT4YD/09NhbBZyKjbUDDR0kLSM5EGFwyg/ViC/kHZuNPJp/fnCU6v168szdITYth+NNa
-         qVqQ==
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=jSo1uID0kSK6iDs/furTQoicwsaB7Earzigyl/DJrrQ=;
+        b=MKn7pII8ePPOSlbWhhzJ56wqhvP3eU1WYDvVThM4D2acDp9Y/dcnedsMIpRbAnPsth
+         prtSIZwYXHEUmqXDQW81OhtmZR8W43a2yOUeq90HFjgHNQ3RVD0Nsz08iHx+QK7A7odX
+         Yv/7XLgHAJHAXQg5+MqL0AjL8tDPxL+lX5oxhwETei3C7ef+0ZL8zhr8S4vG3h7TF4OQ
+         6z2uw3UGQkCXqjrNJ7r/Q/GzPgECGlRdqg8C02JUzb+A3JdtluzTU7MDWvoWn4bD2zK2
+         SweV+aRbp2jnqDWWUlLtNKZl/570PV42kTRhAFzY3oGBil5vaaKa8yXw5fPhCR4kJR8H
+         5cXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=K53bRLblpZ2egvHxxDyNalwdWhnO5mXs2wa22kcd+Sw=;
-        b=Zy1Czt5NEvQXbMPq82tlV2dhVVMULKg6oKNStuiU7581nM6aqXFMPY8sGpm+8fVePb
-         IXzs5og33JxMTQUWoo9vw4Mzmv6CWskAMas65wa6y84JDWCioUkuADAWBnxjjaXxGT7T
-         HQIzhOCmi3TSH8FGwpgvZY99ZlxRFy0s06BPeYXPw7lTVJYeDFthM/2kCaySNPnyXvMU
-         v14ilS+DEF+LN3IwbPgxr1PwqPXT4u7SxDLlkTzQuEqO6Q67mq+AbpQRjcKlrH8ZhktP
-         /Ken666Ybn71Udi0ngYM9CA1KVGgxq3AgA6c85YHEdsu9eBWs4lHSGznEAFLkdDx7u9+
-         QfDA==
-X-Gm-Message-State: AE9vXwNK/hbYQsEr0oJI4LdpvZLaTWsIHe/pjDbSHQzR4DLtjDHgCl9CHm9T3ZkvkmQ5IATywvrKyS4juMHiHw==
-X-Received: by 10.129.95.70 with SMTP id t67mr6621168ywb.284.1472624738399;
- Tue, 30 Aug 2016 23:25:38 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.37.96.195 with HTTP; Tue, 30 Aug 2016 23:25:18 -0700 (PDT)
-In-Reply-To: <CAGZ79kYVgCy95Pf14my_pq1qW=MB-3gF=FPf+S-VqO8k-8yf5A@mail.gmail.com>
-References: <xmqqy43lookt.fsf@gitster.mtv.corp.google.com> <CAGZ79kYVgCy95Pf14my_pq1qW=MB-3gF=FPf+S-VqO8k-8yf5A@mail.gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 30 Aug 2016 23:25:18 -0700
-Message-ID: <CA+P7+xpjyhdNEMJuP6HB60Sj1uomsNRnZ9tAdcCKAwuRCbgOLQ@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Aug 2016, #08; Wed, 24)
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=jSo1uID0kSK6iDs/furTQoicwsaB7Earzigyl/DJrrQ=;
+        b=KMjUUWhqc1EbD7Bh0z56cRUo7tCYgvZjtROAjT3mqpSI51qs6z+q1ss5WFivV5NPR+
+         hiSQ1M2WSngLaCzZEOk2kaJdKD3jo9jCXp2v5mNTG3Zpc66YEAEzXPq3QpahlQhJxap5
+         nrtx9JrjREIyu0IIdNF8jwAU3w1wXgFpEfpaVuaH1ZSnKtEW2HrHtLTGu7tQVouSn347
+         QQk5Bs+2PurgV1Cn/5Z8UsJ9+Wbtz05vD+ewJ8ga030nfhtZW0gL/LsN/xlpofIpqDEp
+         HxmuhiDwiu7HecNIrHIAlbE0rJUBlLJSPf4vtEfFihf0vyY1HRahjUaYC1uEIgqLMHXS
+         8iUQ==
+X-Gm-Message-State: AE9vXwP8HAVZkjWIQRmBZtc+kal8ODiSuMKsyeFkrQxkAp5XQjDTPfCFh0egiN462TFJxQ==
+X-Received: by 10.194.173.35 with SMTP id bh3mr6745948wjc.86.1472628510695;
+        Wed, 31 Aug 2016 00:28:30 -0700 (PDT)
+Received: from hurricane.home.kaarsemaker.net ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id f4sm22200541wmf.8.2016.08.31.00.28.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 31 Aug 2016 00:28:29 -0700 (PDT)
+Message-ID: <1472628509.4265.43.camel@kaarsemaker.net>
+Subject: Re: git blame <directory> [was: Reducing CPU load on git server]
+From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
+To:     Jeff King <peff@peff.net>,
+        Jakub =?UTF-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+Cc:     git@vger.kernel.org
+Date:   Wed, 31 Aug 2016 09:28:29 +0200
+In-Reply-To: <20160831054201.ldlwptlmcndjmfwu@sigill.intra.peff.net>
+References: <CAFMAO9y3LsrAb_jp8XVq2mexaA4bBqmWFwJu55r4S6Dxd2-zxw@mail.gmail.com>
+         <20160829054725.r6pqf3xlusxi7ibq@sigill.intra.peff.net>
+         <CAFMAO9yUMY5dqw-oWpKG1H-xska1AtDyt31_WaeJDyTieQLChw@mail.gmail.com>
+         <20160829213101.3ulrw5hrh5pytjii@sigill.intra.peff.net>
+         <9fe5aa9b-5ba8-2b9a-7feb-58e115be3902@gmail.com>
+         <20160831054201.ldlwptlmcndjmfwu@sigill.intra.peff.net>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.18.5.2-0ubuntu3 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 30, 2016 at 10:10 PM, Stefan Beller <sbeller@google.com> wrote:
->>
->> * sb/submodule-clone-rr (2016-08-17) 8 commits
->>  - clone: recursive and reference option triggers submodule alternates
->>  - clone: implement optional references
->>  - clone: clarify option_reference as required
->>  - clone: factor out checking for an alternate path
->>  - submodule--helper update-clone: allow multiple references
->>  - submodule--helper module-clone: allow multiple references
->>  - t7408: merge short tests, factor out testing method
->>  - t7408: modernize style
->>
->>  I spotted a last-minute bug in v5, which is not a very good sign
->>  (it shows that nobody is reviewing).  Any more comments?
->>
->>
+On wo, 2016-08-31 at 01:42 -0400, Jeff King wrote:
+> On Tue, Aug 30, 2016 at 12:46:20PM +0200, Jakub Narębski wrote:
+> 
+> > I wonder if having support for 'git blame ' in Git core would
+> > be something interesting to Git users.  I once tried to implement it,
+> > but it went nowhere.  Would it be hard to implement?
+> I think there's some interest; I have received a few off-list emails
+> over the years about it. There was some preliminary discussion long ago:
+> 
+>8 <snip>
 >
-> Jacob Keller reviewed that series as announced in
->
-> https://public-inbox.org/git/CA+P7+xpE=GoFWfdzmT+k=Zku8+YjEH-aOMsFUtJJJwFHa1hKDQ@mail.gmail.com/#t
->
-> and concluded it is fine as in
->
-> https://public-inbox.org/git/CA+P7+xrokr0ZGidQFuvpN+-J_WDjkaUropcnPGVjZHafc12AnQ@mail.gmail.com/
->
-> Thanks,
-> Stefan
+> Here's a snippet from an off-list conversation I had with Dennis (cc'd)
+> in 2014 (I think he uses that blame-tree code as part of a custom git
+> web interface):
 
-Yep.
+I still do, but haven't worked on that webinterface in a while. I also
+still build git with blame-tree merged in (which does occasionally
+require a rebase with some tinkering).
 
-Thanks,
-Jake
+> That's all I could dig out of my archives. I'd be happy if somebody> wanted to pick it up and run with it. Polishing for upstream has been on
+> my list for several years now, but there's usually something more
+> important (or interesting) to work on at any given moment.
+
+Same here. I've been meaning to pick this up, but it touches some parts
+of git I'm still not too familiar with and there are always other
+things to do :)
+
+D.
