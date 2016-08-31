@@ -2,98 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F42331FD99
-	for <e@80x24.org>; Wed, 31 Aug 2016 07:28:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 787351F6BF
+	for <e@80x24.org>; Wed, 31 Aug 2016 08:06:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755713AbcHaH2m (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 03:28:42 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:38472 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758110AbcHaH2c (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 03:28:32 -0400
-Received: by mail-wm0-f42.google.com with SMTP id 1so23929009wmz.1
-        for <git@vger.kernel.org>; Wed, 31 Aug 2016 00:28:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=jSo1uID0kSK6iDs/furTQoicwsaB7Earzigyl/DJrrQ=;
-        b=MKn7pII8ePPOSlbWhhzJ56wqhvP3eU1WYDvVThM4D2acDp9Y/dcnedsMIpRbAnPsth
-         prtSIZwYXHEUmqXDQW81OhtmZR8W43a2yOUeq90HFjgHNQ3RVD0Nsz08iHx+QK7A7odX
-         Yv/7XLgHAJHAXQg5+MqL0AjL8tDPxL+lX5oxhwETei3C7ef+0ZL8zhr8S4vG3h7TF4OQ
-         6z2uw3UGQkCXqjrNJ7r/Q/GzPgECGlRdqg8C02JUzb+A3JdtluzTU7MDWvoWn4bD2zK2
-         SweV+aRbp2jnqDWWUlLtNKZl/570PV42kTRhAFzY3oGBil5vaaKa8yXw5fPhCR4kJR8H
-         5cXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=jSo1uID0kSK6iDs/furTQoicwsaB7Earzigyl/DJrrQ=;
-        b=KMjUUWhqc1EbD7Bh0z56cRUo7tCYgvZjtROAjT3mqpSI51qs6z+q1ss5WFivV5NPR+
-         hiSQ1M2WSngLaCzZEOk2kaJdKD3jo9jCXp2v5mNTG3Zpc66YEAEzXPq3QpahlQhJxap5
-         nrtx9JrjREIyu0IIdNF8jwAU3w1wXgFpEfpaVuaH1ZSnKtEW2HrHtLTGu7tQVouSn347
-         QQk5Bs+2PurgV1Cn/5Z8UsJ9+Wbtz05vD+ewJ8ga030nfhtZW0gL/LsN/xlpofIpqDEp
-         HxmuhiDwiu7HecNIrHIAlbE0rJUBlLJSPf4vtEfFihf0vyY1HRahjUaYC1uEIgqLMHXS
-         8iUQ==
-X-Gm-Message-State: AE9vXwP8HAVZkjWIQRmBZtc+kal8ODiSuMKsyeFkrQxkAp5XQjDTPfCFh0egiN462TFJxQ==
-X-Received: by 10.194.173.35 with SMTP id bh3mr6745948wjc.86.1472628510695;
-        Wed, 31 Aug 2016 00:28:30 -0700 (PDT)
-Received: from hurricane.home.kaarsemaker.net ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id f4sm22200541wmf.8.2016.08.31.00.28.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 31 Aug 2016 00:28:29 -0700 (PDT)
-Message-ID: <1472628509.4265.43.camel@kaarsemaker.net>
-Subject: Re: git blame <directory> [was: Reducing CPU load on git server]
-From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
-To:     Jeff King <peff@peff.net>,
-        Jakub =?UTF-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-Cc:     git@vger.kernel.org
-Date:   Wed, 31 Aug 2016 09:28:29 +0200
-In-Reply-To: <20160831054201.ldlwptlmcndjmfwu@sigill.intra.peff.net>
-References: <CAFMAO9y3LsrAb_jp8XVq2mexaA4bBqmWFwJu55r4S6Dxd2-zxw@mail.gmail.com>
-         <20160829054725.r6pqf3xlusxi7ibq@sigill.intra.peff.net>
-         <CAFMAO9yUMY5dqw-oWpKG1H-xska1AtDyt31_WaeJDyTieQLChw@mail.gmail.com>
-         <20160829213101.3ulrw5hrh5pytjii@sigill.intra.peff.net>
-         <9fe5aa9b-5ba8-2b9a-7feb-58e115be3902@gmail.com>
-         <20160831054201.ldlwptlmcndjmfwu@sigill.intra.peff.net>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.18.5.2-0ubuntu3 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1758906AbcHaIGa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 04:06:30 -0400
+Received: from mout.gmx.net ([212.227.15.18]:63417 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1757955AbcHaIG0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 04:06:26 -0400
+Received: from [192.168.1.9] ([92.227.144.23]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MLvGW-1bkVm61PBM-007ofL for <git@vger.kernel.org>; Wed,
+ 31 Aug 2016 10:06:22 +0200
+From:   doak <doak@gmx.de>
+Subject: bug: 'core.logallrefupdates' is not set by default in non-bare
+ repository
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Message-ID: <c46d36ef-3c2e-374f-0f2e-ffe31104e023@gmx.de>
+Date:   Wed, 31 Aug 2016 10:09:44 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:V1UHgwI7+3IOhNTX2C4k9gGRldx8d7wcQri8LohwaS/p5TQFyOd
+ xLWjiKmhptwBaQ6lnmyY/jQ3o3Xo22wsjqdbtiUVbkPod4zKDvXpWKEjYOFHEWFxnSgEd4X
+ vQjnOw6zlvcW1KWADxzCVDDowYn1G+9paLRUOIzfS5cBNTQY4f0G+CcQSWos0Go+Fl5gIJQ
+ QKVxneCXrBQuBxnk0QkVA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:th+i8pJOJUI=:bb44LRYe/gh3RmIa0cfRNS
+ Z5pRsMQy/wtBusK+Wa6EjmvGAu/PyKo7KGr6MvVQqcMtQNizdflEQ5fao3IB7ZK/+GxFFakI2
+ JVR1BKGNrsUAv2ixlnCYcV9CydBpG8LYogh28HgBG87SJJIt4kzcglUcthn1M7XP41iaIyOBP
+ W1qX1aiNf9RwSvlyghPiKO5P6bCvtYKBshZVwJDMmKhDzuCS62xnkSQ8TdeP9ttw8MlVj0WD7
+ Is/0osLqKJUJ1ZtrXyiHwO2SBOXgZOSGXG4IkaZIph/9Vbe6o42LBpD/S9eBLjF8wMto93NTl
+ ro+6bc9mUVSrAwWZ5F8Y7KRNsiaqj8hYNxf1e4y9ZURUE3UryUoUC5dvzDBc5BMirMzOjDkGx
+ 3pUN2XbEE06ti9leGxqlditTrRMMRPS6mw+PEkXhL25AX3ZNuXzqay8qQy+IkCeC1ge+fTvb4
+ LMzJwCtBnB1uHYB4q78eoyRAebgtx6A3M+fsViHt6ekL6ammI0IbtkZAo/qDJjeGT21rpAImH
+ M+kw/3M5qwYTYJPGeKOK4/8LoZWukhNxQ7xiqi/e/WRSZ0dqy7tGftWvtUA0Zuyc5XWZyV6pO
+ iG34+xSlFYTkFwZneDq4aubXosyAHJwtj3AVBx5FJ3fICyYBcgL0sdwe3o15G1qikSk42jLc0
+ CtNu2w/z11Z4gvNADYsNxSrqFgYSu1chaXqt8tyWCpWkhB8pYHTBtBDJxRHuBZrrmX2LLGkBo
+ sNxgKjACDrqTcUHAYXyAWr/H6wa+oOhX3/Hf7Bxo+K/2eCn+FivmY6Xpw+XwWoI20JqwmbqpD
+ gBXDOPY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On wo, 2016-08-31 at 01:42 -0400, Jeff King wrote:
-> On Tue, Aug 30, 2016 at 12:46:20PM +0200, Jakub Narębski wrote:
-> 
-> > I wonder if having support for 'git blame ' in Git core would
-> > be something interesting to Git users.  I once tried to implement it,
-> > but it went nowhere.  Would it be hard to implement?
-> I think there's some interest; I have received a few off-list emails
-> over the years about it. There was some preliminary discussion long ago:
-> 
->8 <snip>
->
-> Here's a snippet from an off-list conversation I had with Dennis (cc'd)
-> in 2014 (I think he uses that blame-tree code as part of a custom git
-> web interface):
+Hi there,
 
-I still do, but haven't worked on that webinterface in a while. I also
-still build git with blame-tree merged in (which does occasionally
-require a rebase with some tinkering).
+If 'git init /path/to/repo' is called inside another repository with 'core.logallrefupdates' set to true, it will be not set by default in the created repository.
+This seems to be a bug.
+I am using Git v2.9.3 (Arch).
 
-> That's all I could dig out of my archives. I'd be happy if somebody> wanted to pick it up and run with it. Polishing for upstream has been on
-> my list for several years now, but there's usually something more
-> important (or interesting) to work on at any given moment.
+Steps to reproduce:
+    ---------------------
+    git init t1
+    cd t1
+    # 'core.logallrefupdates' will not be set for 't2'.
+    git init ../t2
+    ---------------------
 
-Same here. I've been meaning to pick this up, but it touches some parts
-of git I'm still not too familiar with and there are always other
-things to do :)
+Stated from 'git-config(1)':
+    ---------------------
+    core.logAllRefUpdates
+        [...]
+        This value is true by default in a repository that has a working directory associated with it, and false by default in a bare repository.
+    ---------------------
 
-D.
+
+With best regards,
+doak
+
+
