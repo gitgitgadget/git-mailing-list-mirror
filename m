@@ -7,118 +7,102 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8505F1F6BF
-	for <e@80x24.org>; Wed, 31 Aug 2016 08:55:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F6FB1F6BF
+	for <e@80x24.org>; Wed, 31 Aug 2016 08:56:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933785AbcHaIzX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 04:55:23 -0400
-Received: from mout.gmx.net ([212.227.17.20]:61630 "EHLO mout.gmx.net"
+        id S933748AbcHaIzi (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 04:55:38 -0400
+Received: from mout.gmx.net ([212.227.17.21]:56328 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756381AbcHaIy6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 04:54:58 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0M4o41-1atuHT1AFR-00z1aF; Wed, 31 Aug 2016 10:54:54
+        id S933746AbcHaIzf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 04:55:35 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MJWAZ-1bgvur1yo7-0033VK; Wed, 31 Aug 2016 10:55:30
  +0200
-Date:   Wed, 31 Aug 2016 10:54:53 +0200 (CEST)
+Date:   Wed, 31 Aug 2016 10:55:30 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 10/34] sequencer (rebase -i): allow continuing with staged
- changes
+Subject: [PATCH 16/34] sequencer (rebase -i): implement the 'reword'
+ command
 In-Reply-To: <cover.1472633606.git.johannes.schindelin@gmx.de>
-Message-ID: <31b30111bc29fd7362824034857df87b551c725a.1472633606.git.johannes.schindelin@gmx.de>
+Message-ID: <76ab1103be1a3414e200cb3766a00be049bbf03f.1472633606.git.johannes.schindelin@gmx.de>
 References: <cover.1472633606.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:PN8bWCdfb7Rs4/04/zh8QvxLFANH8TCpQAEEX+N0CRokAlX2/oh
- iIQ7K+2bKRxLBXLQ8B2aAkj6xHdhKJPUU7lbDGEr9Kskvy0/rH5VIuFYbNaIG2jef5KOhcT
- +cWUSFfUUC8ar4pXchNTP30HJUntjw0kkeebHkXGg01Ju8fHhsNz5pUc8iNS2Rm3s40S/F4
- ALIMUumtap9Ofir8tGt1g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3Qm1j6L1W8A=:ibauHXF3NOwnGb1Cn8TzAi
- uy28a3acrhUxIgs98HBb9ImxWX5g9JCj54CMxSXFegZRVosSEMVW2GshTAcyaajVcvZ05Jgju
- 3uCNaYQo3MgSCiQ4BoX1cj8ZXaJrbE5WovslYNaJwRgzxnV7h1+n/bLyofZ0otKaXBiIHgy5v
- kx6EqxHA3C2P5mrZWmZHbQfZ6EE0uohcTToQFfgPp2hVyF6992fbOzNS3z4tpEG6la65aR5nH
- 1+JaKMV/ROgEZPjzky2hP7hJQ5N2+XFDe5twSILGEHEAYqBa2XWbG2muC2kYPKNwXJ7zVh0g8
- UNCKAo2nsbkjQFqIps6+b4TrSyqZ9oAhjI9x5ZPx3wGUqGzWhI+Ft9Wl9P7K1DNOe54hL4Szm
- IAJYBeZNGGQW1zp0hyF9xXh7so2BnoeQYbIqoxYNJngvfSOp1ldTSoNN0sgXtQSKlKLMv/COE
- M4pMNDu+th40uCKUgH9wciN9UsCLoa+Nd6CuAPktFybTprcr3jUuDSAtNKnbOIQuNNWy1JI2G
- lC2ZGwZKjbpvIqKerGWa1rk8H4r7N9fjOhANcf6DvRIzv54pz+YKcI7L85cSQ7Xt9U7Rn2EMc
- GcdMbZ9KmaW1jcQoos3Bdyo8naqP3k3Bp1KL/jw/GtQbWQXSyJoyMwRXP+4/FoMjT1wWqawQC
- jUUnGkkLCSGxfwAvcG6jdZ96bN7HxcJZu5eLokYQ4MEZCxrGCACY63o3JPe26Gw6DQzEVha34
- DVHkHb7YGyuS6y1ggvhurZyCywh51Bje4k7gF1GiUprwO8sEjpIYR0SWelgcT8Wl6G6jHyt7Z
- SptkzjV
+X-Provags-ID: V03:K0:k5OcAb12WQ9q0r8ZLgFWunnVMZo1FYkTh7wZHJnkLZU/5yi5Dfv
+ Eg31CteQcapxXkYGpUdSNr1zeQE9XBLnO7DMaEPE0ugMzGx1Og0XpJZc1b1nDkaseGVM13G
+ xCXHPShSterwLQ+JylFjlwaXwEpWMIDi7yM7mgz3u8dOsCuCm1MxvNVzm1BRdTgn1FT0syp
+ aNplqM9vQZgvWj/x7B67g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:HfaJ5OFLRSg=:5o6PHS+p+ewMU0ey428gQg
+ ZwPzaIfObZ6nluUfKylWnCALDKvUGajuLA9dEzZS4qeDq7c5o0jYzt7ygbEM0AGyFXvrTFeMw
+ umaB7dhg5JB6awnnUTVPWswjsFAnCqhB3iJqOYSMwmE8b84vw/1COg6D+CJMlK++N1BGM2Sbu
+ DCi0G73cQ5/+qgz3IEa3BWDD8Q/uCIYZnMZjLhTeJFrLPyGHdManM7sie9nMyi+NR0AUIC4WE
+ xHJqCwvE//L92XcJ+26I5gC6BK8+j/HpA3zWdMygsgDgXJybv4aqIaf8Kn/so2xGA/FXvY+wz
+ S1POrdacqlsDs4RvdgqFgYwzta7sOM36LCwmrRKU5QT+6EQ54wrsPaa4U63qhmMDie5LRyIlq
+ Jn8hWJ+63+4lWS7pZwDxNLPcYApc4GkIPUBrBaIzk2VRmng1WyUwaFVmdhLf+vlpC2Vqqrd1M
+ j4okiB9X80Wn1XF/9kEw24ngae2r1ZV7KdDpVuyjMrD1QPnJu6ivQiMC9KgxrdB+p9evINxR+
+ DRTN5pthPWrDf0LYH3XjUdrswmV7/+ih6qY03UvNfjK9tKBzXotNsMLlMoxSUuVuA5ZwGPmVy
+ fsgXqgA+rSgX25k3nfCRqwiOgJ+j4DNVHvZXhK2rSm0zAlnt0cVGN1cblN+S4RSo2huxSoK5n
+ 4hhl/HzC1yqEg+ppuuwSxX/DwSKfrVR/CO9j7gzo7SZ8a1xjCkCdEEECiMbPc8/1Pd3c8N4qv
+ wokhkqIqIsTW2r0RQRYE2pgur523tSRKPkXgAQ7qOKFp3oJpjsTAovPRyjKsL80w6YQ/bla5Q
+ 41nbwjj
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When an interactive rebase is interrupted, the user may stage changes
-before continuing, and we need to commit those changes in that case.
+This is now trivial, as all the building blocks are in place: all we need
+to do is to flip the "edit" switch when committing.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 39 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ sequencer.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index ef818a2..4ddb12e 100644
+index 9a06b40..64fec47 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -1807,6 +1807,41 @@ static int continue_single_pick(void)
- 	return run_command_v_opt(argv, RUN_GIT_CMD);
- }
+@@ -746,6 +746,7 @@ enum todo_command {
+ 	TODO_PICK,
+ 	TODO_REVERT,
+ 	TODO_EDIT,
++	TODO_REWORD,
+ 	TODO_FIXUP,
+ 	TODO_SQUASH,
+ 	TODO_EXEC,
+@@ -759,6 +760,7 @@ static struct {
+ 	{ 'p', "pick" },
+ 	{ 0,   "revert" },
+ 	{ 'e', "edit" },
++	{ 'r', "reword" },
+ 	{ 'f', "fixup" },
+ 	{ 's', "squash" },
+ 	{ 'x', "exec" },
+@@ -1004,7 +1006,9 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 		}
+ 	}
  
-+static int commit_staged_changes(struct replay_opts *opts)
-+{
-+	int amend = 0;
-+
-+	if (has_unstaged_changes(1))
-+		return error(_("Cannot rebase: You have unstaged changes."));
-+	if (!has_uncommitted_changes(0))
-+		return 0;
-+
-+	if (file_exists(rebase_path_amend())) {
-+		struct strbuf rev = STRBUF_INIT;
-+		unsigned char head[20], to_amend[20];
-+
-+		if (get_sha1("HEAD", head))
-+			return error("Cannot amend non-existing commit");
-+		if (!read_oneliner(&rev, rebase_path_amend(), 0))
-+			return error("Invalid file: %s", rebase_path_amend());
-+		if (get_sha1_hex(rev.buf, to_amend))
-+			return error("Invalid contents: %s",
-+				rebase_path_amend());
-+		if (hashcmp(head, to_amend))
-+			return error("\nYou have uncommitted changes in your "
-+				"working tree. Please, commit them\nfirst and "
-+				"then run 'git rebase --continue' again.");
-+
-+		strbuf_release(&rev);
-+		amend = 1;
-+	}
-+
-+	if (sequencer_commit(rebase_path_message(), opts, 1, 1, amend, 0))
-+		return error("Could not commit staged changes.");
-+	unlink(rebase_path_amend());
-+	return 0;
-+}
-+
- int sequencer_continue(struct replay_opts *opts)
- {
- 	struct todo_list todo_list = TODO_LIST_INIT;
-@@ -1815,6 +1850,10 @@ int sequencer_continue(struct replay_opts *opts)
- 	if (read_and_refresh_cache(opts))
- 		return -1;
- 
-+	if (is_rebase_i(opts)) {
-+		if (commit_staged_changes(opts))
-+			return -1;
-+	}
- 	if (!file_exists(get_todo_path(opts)))
- 		return continue_single_pick();
- 	if (read_populate_opts(opts) ||
+-	if (is_fixup(command)) {
++	if (command == TODO_REWORD)
++		edit = 1;
++	else if (is_fixup(command)) {
+ 		if (update_squash_messages(command, commit, opts))
+ 			return -1;
+ 		amend = 1;
+@@ -1755,7 +1759,8 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
+ 			}
+ 			else if (res && is_rebase_i(opts))
+ 				return res | error_with_patch(item->commit,
+-					item->arg, item->arg_len, opts, res, 0);
++					item->arg, item->arg_len, opts, res,
++					item->command == TODO_REWORD);
+ 		}
+ 		else if (item->command == TODO_EXEC) {
+ 			char *end_of_arg = (char *)(item->arg + item->arg_len);
 -- 
 2.10.0.rc2.102.g5c102ec
 
