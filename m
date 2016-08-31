@@ -7,166 +7,121 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 95AC01F6BF
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFC641F6BF
 	for <e@80x24.org>; Wed, 31 Aug 2016 08:55:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933726AbcHaIzA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 04:55:00 -0400
-Received: from mout.gmx.net ([212.227.15.18]:58033 "EHLO mout.gmx.net"
+        id S933777AbcHaIzD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 04:55:03 -0400
+Received: from mout.gmx.net ([212.227.15.19]:60663 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933773AbcHaIyF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 04:54:05 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MAgzj-1bpla22aB1-00BsqM; Wed, 31 Aug 2016 10:53:57
+        id S933545AbcHaIyx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 04:54:53 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MRXzM-1bYVyR0mqG-00ScmO; Wed, 31 Aug 2016 10:54:47
  +0200
-Date:   Wed, 31 Aug 2016 10:53:41 +0200 (CEST)
+Date:   Wed, 31 Aug 2016 10:54:46 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 00/34] Teach the sequencer to act as rebase -i's backend
-Message-ID: <cover.1472633606.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 08/34] sequencer (rebase -i): implement the short commands
+In-Reply-To: <cover.1472633606.git.johannes.schindelin@gmx.de>
+Message-ID: <41ccb12044cd26fa8aa919b537cd396b983f4e31.1472633606.git.johannes.schindelin@gmx.de>
+References: <cover.1472633606.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:JT+k5RWy34RZ2z6Gw357EKArNt/RV9hheeAFYFoymxJq0iNEJQT
- HSABcQziKMFwnY8FZLMQtZ4t6V5QJ20Qek+ep53tmzZsv7uJXfOu4aJbI4SyA5uUo2meS6/
- uiBDhrYoTK3fSgcQfyI58Ex2W1THCtk1Nd8qT8+NsSgPRqXLzkJXoVcHmQQfJfts+pxHV5I
- tUCNFPZ55ouqb5zUItlwQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:7J76gHovxmg=:1pWpMzowrZdoczNb3qeNvT
- kM6kNXnB3pMK5YhLbRcPB17ktZ7/JHbEkSsnde7zEjumIjj2BVsZnQRhMCrAiUP3I+Ik/S71I
- pEharXFksJ8xSLJLLk8UCq7MhzyeBfaIqlhZb/uSM+x9/jiFiQuyycuBTGWAwt7VNueAyI78a
- Ox3L5GjjmX4Q++OO4r8Uxo1d0wwQiLPl1EA2vDfdhX5LDt/rsLtIMtTZBJK2DNMtw6laBs5H9
- /OWQImkPxQX7WVa444JwDVyb7xZ2bfN5aRrwPu4QmbuHrH7MITjaVEGhzXxfucOTPXSpl7jXw
- EM14J4Ans33e+6E4c6HkwTa9PcdFsgEixfWxdMeTqJp58WsWWJBLXI7lCnqFCJvRnlmwTAKMC
- uUA+tM5T5oCN95+KuH2Je9190K8nmcz+oDKG0+XAVjwHasunstwhuhXOcKVUzLt4EeuOgK5UT
- WqW+F2z4NWqsrLHVkkViKWx1Er+j9joI5yeYFZhfq7bojN7qhTMtBzDctbBSP8SJFDgpsia1/
- PoNAwjm4g5Ql7tiElSvGnDYuW9OHjK2Meq/KBHkxPVSmKrfTWy5ccGwxnHs7swXhppsWFdQaG
- rNyuMU+cHFZZgjpxFiBX1JgagCTWq/94PE5ada5U6VmQtHicfYqT5jwUoTNZ0HhfQ/dbtbv2v
- 2CiucQtD91dHItD7vbKX7fKkbgpE7vMnDvZ1eN3SDth/vJsUgjVGGa7oRA2DRVZzj/UYa3vyD
- JDWr9bZCXvPwLs9jgM0s2tn8FmNnG+bWcVSvR1zKtSCaGr5lV99fryf49p8fKtR/WfgCGKRux
- y+HbDpn
+X-Provags-ID: V03:K0:CLYoKAwg3mO18lQPZP8zmFIBC5AuKE2a+/ba/NQsgORtBZNi+5L
+ xBxaITzxAeByymmgXKI0m3SIhvRIYDx8VNaV2uE03dN1HegT14XU7zSNAeLAJCEO5aGH7lR
+ TV106X8jEz5SKTztpjhacMuOT7B1yFhQDYI4vu6d7Dpb2VMMS/gvLy53nI4CbA/dKoxDmAW
+ YeDsdNWLASkqX2Dkwo6og==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:rkFm+K/kYik=:Dh1UhN+9BYwWqrm0eAFibk
+ OVh2B7PF7IHMaU84mu1ftYLRkt7Tbk5/y4ps8eCfyaXzJwJ5EhIcq53/t2lLNSldVmlD/Hoox
+ bVsUgzY2LTvL69vgzhlLDxpVFriYIPb0NM9yO+/NGMMRor9FtD6+1fqpHn6nlR7btE+PvqI0k
+ mf8bNg9MBYiybOXIQKu0UNvDo4pvQGqN8Fr2A9E9jbnp2pbbg7R88MlDqBbXEH1RTD1Mm1AvS
+ EDvjhm60PQJtWtCKBUf0z0eixhKsqegDLgOWG58BB3Uto+8IP3otol/aZ9oITe72gMzMipoG5
+ XGsmjfx3kYxjgT7F3S3FfP5M86ZDBgfGpqADX2a+PjRdNMqIhmVDGAAnze20WFoSNxhckS2qs
+ V+UWI6n3U+nDm3ly8dL6TtYL3T8gr2Io3CISWgc3BdT/JRbpusVHCfnP1Xb4REQLlYtHm5pZ9
+ OR/xWGookniGJC6cOg9/mJEgWoZe2oy89zLdb9QE/ObQMdJNUBCA5FOUaFso+lWKhW2gWZC0C
+ nY7ONvWdWb/HLVcajC+gNUuF3cwd38X9O9jfqOEbRvftj6Gri/jfGq7A3na8wCEzFWJ7LcUTJ
+ 9hwzwbBk9YkaFpwDCXYsUTdcz3ivzoezKNBh8mOFoBQnfP7NqXpNLABy7HptRJrH1SwtZI7vW
+ H3Xu5F+nwyTQpOfg8OIWAlQntWS8OucSlov6GF/NxqeAgALIsXvrL7895o+BlneFiL9WM+pE5
+ XbG4/9ZSaEl9qoZo/rpWLLlJy3ofZgiAWrqD702l3NkRSwIDLk0ULNBpzxNQV4QhqjwmB7A7w
+ Sdqsckk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This marks the count down to '3': two more patch series after this
-(really tiny ones) and we have a faster rebase -i.
+For users' convenience, most rebase commands can be abbreviated, e.g.
+'p' instead of 'pick' and 'x' instead of 'exec'. Let's teach the
+sequencer to handle those abbreviated commands just fine.
 
-The idea of this patch series is to teach the sequencer to understand
-all of the commands in `git-rebase-todo` scripts, to execute them and to
-behave pretty much very the same as `git rebase -i --continue` when
-called with the newly-introduced REPLAY_INTERACTIVE_REBASE setting.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ sequencer.c | 34 +++++++++++++++++++++-------------
+ 1 file changed, 21 insertions(+), 13 deletions(-)
 
-Most of these patches should be pretty much straight-forward. When not,
-I tried to make a point of describing enough background in the commit
-message. Please feel free to point out where my explanations fall short.
-
-Note that even after this patch series is applied, rebase -i is still
-unaffected. It will require the next patch series which introduces the
-rebase--helper that essentially implements `git rebase -i --continue` by
-calling the sequencer with the appropriate options.
-
-The final patch series will move a couple of pre- and post-processing
-steps into the rebase--helper/sequencer (such as expanding/shrinking the
-SHA-1s, reordering the fixup!/squash! lines, etc). This might sound like
-a mere add-on, but it is essential for the speed improvements: those
-stupid little processing steps really dominated the execution time in my
-tests.
-
-Apart from mostly cosmetic patches (and the occasional odd bug that I
-fixed promptly), I used these patches since mid May to perform all of my
-interactive rebases. In mid June, I had the idea to teach rebase -i to
-run *both* scripted rebase and rebase--helper and to cross-validate the
-results. This slowed down all my interactive rebases since, but helped
-me catch three rather obscure bugs (e.g. that git commit --fixup unfolds
-long onelines and rebase -i still finds the correct original commit).
-
-This is all only to say that I am rather confident that the current code
-does the job.
-
-As stated earlier, my plan is to integrate all of these patch series
-into Git for Windows v2.10.0. And then be mostly offline during the
-second half of September ;-) There are multiple reasons why I want to
-pull through with this: I have been working on these patches since mid
-February and it is high time that they benefit users other than me.
-Also: I got a bit tired of postponing the integration for a couple of
-Git for Windows versions already. Originally, I had planned it for
-v2.9.0, but then I wanted to give the patches some review, regretting
-that idea when it took one of the 14 patch series over a month to
-stabilize.
-
-This means that I will not perform any major refactoring at this stage,
-but postpone any such work, if necessary at all.
-
-Just to reiterate why I do all this: it speeds up the interactive rebase
-substantially. Even with a not yet fully builtin rebase -i, but just the
-part after the user edited the `git-rebase-todo` script.
-
-The performance test I introduced to demonstrate this (p3404) shows a
-speed-up of +380% here (i.e. roughly 5x), from ~8.8 seconds to ~1.8
-seconds. This is on Windows, where the performance impact of avoiding
-shell scripting is most noticable.
-
-On MacOSX and on Linux, the speed-up is less pronounced, but still
-noticable, at least if you trust Travis CI, which I abused to perform
-that test for me. Check for yourself (searching for "3404.2") here:
-https://travis-ci.org/git/git/builds/156295227. According to those logs,
-p3404 is speeded up from ~0.45 seconds to ~0.12 seconds on Linux (read:
-about 3.5x) and from ~1.7 seconds to ~0.5 seconds on MacOSX (read:
-almost 4x).
-
-
-Johannes Schindelin (34):
-  sequencer: support a new action: 'interactive rebase'
-  sequencer (rebase -i): implement the 'noop' command
-  sequencer (rebase -i): implement the 'edit' command
-  sequencer (rebase -i): implement the 'exec' command
-  sequencer (rebase -i): learn about the 'verbose' mode
-  sequencer (rebase -i): write the 'done' file
-  sequencer (rebase -i): add support for the 'fixup' and 'squash'
-    commands
-  sequencer (rebase -i): implement the short commands
-  sequencer (rebase -i): write an author-script file
-  sequencer (rebase -i): allow continuing with staged changes
-  sequencer (rebase -i): remove CHERRY_PICK_HEAD when no longer needed
-  sequencer (rebase -i): skip some revert/cherry-pick specific code path
-  sequencer (rebase -i): the todo can be empty when continuing
-  sequencer (rebase -i): update refs after a successful rebase
-  sequencer (rebase -i): leave a patch upon error
-  sequencer (rebase -i): implement the 'reword' command
-  sequencer (rebase -i): allow fast-forwarding for edit/reword
-  sequencer (rebase -i): refactor setting the reflog message
-  sequencer (rebase -i): set the reflog message consistently
-  sequencer (rebase -i): copy commit notes at end
-  sequencer (rebase -i): record interrupted commits in rewritten, too
-  sequencer (rebase -i): run the post-rewrite hook, if needed
-  sequencer (rebase -i): respect the rebase.autostash setting
-  sequencer (rebase -i): respect strategy/strategy_opts settings
-  sequencer (rebase -i): allow rescheduling commands
-  sequencer (rebase -i): implement the 'drop' command
-  sequencer (rebase -i): differentiate between comments and 'noop'
-  run_command_opt(): optionally hide stderr when the command succeeds
-  sequencer (rebase -i): show only failed `git commit`'s output
-  sequencer (rebase -i): show only failed cherry-picks' output
-  sequencer (rebase -i): suggest --edit-todo upon unknown command
-  sequencer (rebase -i): show the progress
-  sequencer (rebase -i): write the progress into files
-  sequencer (rebase -i): write out the final message
-
- run-command.c |  23 ++
- run-command.h |   1 +
- sequencer.c   | 990 +++++++++++++++++++++++++++++++++++++++++++++++++++++++---
- sequencer.h   |   4 +-
- 4 files changed, 971 insertions(+), 47 deletions(-)
-
-Based-On: prepare-sequencer-and-wt_status at https://github.com/dscho/git
-Fetch-Base-Via: git fetch https://github.com/dscho/git prepare-sequencer-and-wt_status
-Published-As: https://github.com/dscho/git/releases/tag/sequencer-i-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git sequencer-i-v1
-
+diff --git a/sequencer.c b/sequencer.c
+index 3ae5978..919698b 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -705,20 +705,23 @@ enum todo_command {
+ 	TODO_NOOP
+ };
+ 
+-static const char *todo_command_strings[] = {
+-	"pick",
+-	"revert",
+-	"edit",
+-	"fixup",
+-	"squash",
+-	"exec",
+-	"noop"
++static struct {
++	char c;
++	const char *str;
++} todo_command_info[] = {
++	{ 'p', "pick" },
++	{ 0,   "revert" },
++	{ 'e', "edit" },
++	{ 'f', "fixup" },
++	{ 's', "squash" },
++	{ 'x', "exec" },
++	{ 0,   "noop" }
+ };
+ 
+ static const char *command_to_string(const enum todo_command command)
+ {
+-	if (command < ARRAY_SIZE(todo_command_strings))
+-		return todo_command_strings[command];
++	if (command < ARRAY_SIZE(todo_command_info))
++		return todo_command_info[command].str;
+ 	die("Unknown command: %d", command);
+ }
+ 
+@@ -1126,12 +1129,17 @@ static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
+ 		return 0;
+ 	}
+ 
+-	for (i = 0; i < ARRAY_SIZE(todo_command_strings); i++)
+-		if (skip_prefix(bol, todo_command_strings[i], &bol)) {
++	for (i = 0; i < ARRAY_SIZE(todo_command_info); i++)
++		if (skip_prefix(bol, todo_command_info[i].str, &bol)) {
+ 			item->command = i;
+ 			break;
+ 		}
+-	if (i >= ARRAY_SIZE(todo_command_strings))
++		else if (bol[1] == ' ' && *bol == todo_command_info[i].c) {
++			bol++;
++			item->command = i;
++			break;
++		}
++	if (i >= ARRAY_SIZE(todo_command_info))
+ 		return -1;
+ 
+ 	if (item->command == TODO_NOOP) {
 -- 
 2.10.0.rc2.102.g5c102ec
 
-base-commit: 45bfeb0c4044dfcf090ad97e839d250d62308fac
+
