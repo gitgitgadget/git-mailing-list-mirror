@@ -2,82 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 671051F859
-	for <e@80x24.org>; Wed, 31 Aug 2016 20:18:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B6961F859
+	for <e@80x24.org>; Wed, 31 Aug 2016 20:29:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759532AbcHaUSB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 16:18:01 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52126 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1759482AbcHaUSA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 16:18:00 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2D46C3BF92;
-        Wed, 31 Aug 2016 16:17:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=V50byFBPzpedBHMr7DXxp16Ls4M=; b=kZMtXz
-        Wr7467BBt+v+lEtHz6/F7LQ0i1CJdjwk7hBqSkQDVkfw5NiJwZ6VlRRKxkz86zsO
-        am0ULh/bujEnuSi58ujAsA0sBPip8dliIf3DqmbyKmLspyF74hW5eEp6VX9CctM5
-        ewGePWdpGxby3kZBihdUxK+35cBekgAVys+nY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qE7DVpi3buYK68yjnC9Nk2gd6CAIKY/u
-        KkLW8CzsCjbePQHlMnwPQJBaQYLPtor8OoKuPfRV6z6uZumavDlfRvnn4oU6IKbn
-        LOyWzGlEiF33nysuAaWJiMCTz9G/DypkY4MbahGZQyWyQCeg+/qs8ZJi/B8jT6L+
-        D0H6XsDDhtE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 243D03BF91;
-        Wed, 31 Aug 2016 16:17:59 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9184B3BF90;
-        Wed, 31 Aug 2016 16:17:58 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 3/4] cat-file --textconv/--filters: allow specifying the path separately
-References: <cover.1471524357.git.johannes.schindelin@gmx.de>
-        <cover.1472041389.git.johannes.schindelin@gmx.de>
-        <d9e9d8b111efd161986aee32bb3ae0baec0dcf34.1472041389.git.johannes.schindelin@gmx.de>
-        <xmqqinuqqcor.fsf@gitster.mtv.corp.google.com>
-        <xmqqwpj6owgg.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1608312133150.129229@virtualbox>
-Date:   Wed, 31 Aug 2016 13:17:56 -0700
-In-Reply-To: <alpine.DEB.2.20.1608312133150.129229@virtualbox> (Johannes
-        Schindelin's message of "Wed, 31 Aug 2016 21:49:57 +0200 (CEST)")
-Message-ID: <xmqqinugzo97.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S932200AbcHaU3z (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 16:29:55 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:37606 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753618AbcHaU3z (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 16:29:55 -0400
+Received: by mail-wm0-f46.google.com with SMTP id d196so7597948wmd.0
+        for <git@vger.kernel.org>; Wed, 31 Aug 2016 13:29:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=IPfoTs2wq2CEKyRHFZaoiwl1eO+vLEQF/n45GPgf74w=;
+        b=jK8YZs3JEQNtKrYkdkccd75Y9kO+6HmBDzcAwMT+ntBIrmmM0tQs4EC6n190oMO3P6
+         3Gvz9YgpQOqKTsdIdMaL1PgB/7CCjwcR3rbn1xgjyki4bh/nVMpvyymMxPyzJGWwg0sv
+         St9chTCBHwKBYdjFVH2n5q39gybQEvlimLAdh1PVYF6ccHW4Z8X0Yzo9IN+1+dhvijnl
+         UxXs3BXvcyG4xjXhwQYM8H8v1tRi4GEMSDO89T/pBnIZcok7vUUepUjGzr/ACHCbNHtx
+         Pg8Z+4QhABEO4nbD7OX0saMxC5eP18UHG5n2P3p1DXzXj17y33xDig0KOuKMD1OP8FjB
+         AQbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=IPfoTs2wq2CEKyRHFZaoiwl1eO+vLEQF/n45GPgf74w=;
+        b=MGBvKoW5+FgAi8B6UamTIQv/CgblSkyRvQMnd35nwOqyzNpL/l91k90UwrHUjm6nYS
+         PwV7do+5TFqwb977loOpUD5yM5+BE5s1v74B+wMSGvebMdpHNPzW8fdzIyzrgJ5eURQb
+         dR3ZGu2noyflmy5T/BhAaRLjucFWUGky5JyRlABGnLJ2kLxOcjSff87LDL6gCSU+Z2VC
+         YblJ2Nbj9x06Ey4kBgRc8BTDPTVEVrqH6XyUf6h5rw6PJbjh1PGMMup+srwWwXeiX8Oa
+         u33qKhdNC4Eth68sJIBxQrnZRtQNPhQLIo7A3+85oTS7wVO8CRXUkNW9FoJdh/pRTtS/
+         RSQg==
+X-Gm-Message-State: AE9vXwOQBsXtSWoAgTLMJC3PID3F3ljtewXrMadeptgXYI4Poi/cSEwfkSxR5+OUD8IvYw==
+X-Received: by 10.28.111.213 with SMTP id c82mr23973801wmi.47.1472675393280;
+        Wed, 31 Aug 2016 13:29:53 -0700 (PDT)
+Received: from [192.168.1.26] (enu134.neoplus.adsl.tpnet.pl. [83.20.10.134])
+        by smtp.googlemail.com with ESMTPSA id o142sm25441160wme.20.2016.08.31.13.29.52
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 31 Aug 2016 13:29:52 -0700 (PDT)
+Subject: Re: [PATCH 16/22] sequencer: prepare for rebase -i's GPG settings
+To:     Junio C Hamano <gitster@pobox.com>
+References: <cover.1472457609.git.johannes.schindelin@gmx.de>
+ <c6a37af958f59390c00429a5b38b34d34c9a5b95.1472457609.git.johannes.schindelin@gmx.de>
+ <104de15c-77e8-9474-9579-4934ca8a4323@gmail.com>
+ <xmqqmvjszoia.fsf@gitster.mtv.corp.google.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <a948ad4f-2145-bacb-0ec6-7edac14c4d4c@gmail.com>
+Date:   Wed, 31 Aug 2016 22:29:48 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0262E924-6FB8-11E6-9B7E-F7BB12518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <xmqqmvjszoia.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+W dniu 31.08.2016 o 22:12, Junio C Hamano pisze:
+> Jakub Narębski <jnareb@gmail.com> writes:
+>> Johannes Schindelin wrote:
 
-> However, I do not want to hold this patch series up just by being
-> stubborn.
+>>> +			else {
+>>> +				opts->gpg_sign = buf.buf + 2;
+>>> +				strbuf_detach(&buf, NULL);
+>>
+>> Wouldn't we leak 2 characters that got skipped?  Maybe xstrdup would
+>> be better (if it is leaked, and not reattached)?
+> 
+> An attempt to avoid leaking by calling free(opts->gpg_sign) would
+> make it crash, which would be even worse ;-).
+ 
+Actually, from C standard:
 
-Peff and I disussed this further in the thread in which the message
-<xmqqa8g2qcf3.fsf@gitster.mtv.corp.google.com> appears, and agreed
-that it does not matter that much either way.
+"If ptr [in free(ptr)] does not point to a block of memory allocated
+ with the above functions [malloc(), etc.], it causes undefined behavior."
+                                                      ^^^^^^^^^
 
-The comment to [v2 2/4] would be more important than this one, I
-would think.  What should happen when a blob that is not ISREG is
-given to filter_object()?  Giving a symlink contents as-is without
-filtering would be OK.  Erroring out saying "regular file blob
-expected" just like the function reacts to non-blob is also OK.
-Just being silent and not doing anything is probably not.
+Which is even worse if it does not lead to crash.
 
-Thanks.
+
+Note that if the last line was
+
+    +				sequencer_entrust(opts, strbuf_detach(&buf, NULL));
+
+we can make it not leak.  A bit tricksy, though.
+
+
+Though xstrdup(buf.buf + 2) followed by strbuf_release(&buf) would
+make free(opts->gpg_sign) possible without crash.  That is we can
+work without *_entrust() mechanism at the cost of strdups.
+
+-- 
+Jakub Narębski
 
