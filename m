@@ -2,111 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99E031F859
-	for <e@80x24.org>; Wed, 31 Aug 2016 20:53:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 735991F859
+	for <e@80x24.org>; Wed, 31 Aug 2016 20:56:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933993AbcHaUxf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 16:53:35 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55227 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752745AbcHaUxb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 16:53:31 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B5B97395B2;
-        Wed, 31 Aug 2016 16:53:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4lJM+bhsaeqCeoWf13BF4oPwak4=; b=S7c0u4
-        axPW82mCXkanJBhaJmtUZ0oLO/GYjW/36zSf5fLZvtjNfNTXbA86WtzsvHduSD9Z
-        upYLuoiYYiVkXykN8cBnz1+2h17uygYrjMMBZkPfaPReOSX/Os2vFSKT9Ehl6tIi
-        upEcDCmQGGSISgoMhemyJYvBER/zzhftFNaJo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=aUSMzO25RwUQ9A/Lj3RFaoWIx2SgMB6D
-        D4rc1i6QW+OqM8dcwE74ojmNrApI9JEm5MpUQcgOOYzeCIi+gz4Zmvk8rAKWzmy1
-        cvPfTY5JFahH1adwKBfB8ZI/4SdSGDi6NTkx8riemgTHGipmkO/JYyi6/a+YvHR6
-        75mtiSpxBrE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A1B90395B1;
-        Wed, 31 Aug 2016 16:53:29 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 201F2395B0;
-        Wed, 31 Aug 2016 16:53:29 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 2/4] cat-file: introduce the --filters option
-References: <cover.1471524357.git.johannes.schindelin@gmx.de>
-        <cover.1472041389.git.johannes.schindelin@gmx.de>
-        <320f5e862e8df12bbd1d918f0b347aeacbd25d17.1472041389.git.johannes.schindelin@gmx.de>
-        <xmqqmvk2qcv8.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1608312153030.129229@virtualbox>
-Date:   Wed, 31 Aug 2016 13:53:27 -0700
-In-Reply-To: <alpine.DEB.2.20.1608312153030.129229@virtualbox> (Johannes
-        Schindelin's message of "Wed, 31 Aug 2016 22:31:55 +0200 (CEST)")
-Message-ID: <xmqqa8fszmm0.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S932362AbcHaU4Z (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 16:56:25 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:36332 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1761117AbcHaU4W (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 16:56:22 -0400
+Received: by mail-wm0-f68.google.com with SMTP id i138so9476980wmf.3
+        for <git@vger.kernel.org>; Wed, 31 Aug 2016 13:56:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=048LAkblBKxSQcrhYPLB/sRR7T0tqYO/yqrqsHZOcPM=;
+        b=YbI6nDZ4vbslJAgKcmr9eW/dz471tSQ105jflixrLyGYCQy40l709FVS9aDht2HJ3d
+         0pZdyhML3rLKOeKqSp1ApbuVoEq8r9w7HPa+u8u1LNZT1PBP2tvaF4gNKi0ex3NZ1q1G
+         8KQxtiK3J+VEo3cG7+/4flfFiFL32bs1xTsiouAsamka/dSWbFJ9LYdzCgOp1kpA2RE1
+         7npDokNGL4frJEXENaujQ8dx2WOibZNEofSDqAXe72pIlvVRpjn8unAJYMlgGq6dkTef
+         cV6U+Jmg8GC7KO7AoyW3x4l/GPmAqFxdWvF4SKKLqKnCTR73ixfLCS92ugHVhwbKNkdf
+         ml6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=048LAkblBKxSQcrhYPLB/sRR7T0tqYO/yqrqsHZOcPM=;
+        b=Qe02Do9OrGj0Clk7x/CezF+MuJHTNsAO/849R+npVeDXI8ufOhpRGGQ1r1pnxB5/IH
+         Yre0D77pvJgjF0HcYi0IyU0qUQuz6BOfYwaF5cO/0M55jgs9h3F2wI9j5coGxwM+NGzc
+         2NmUxVVoWnMG1ArgrFcv5yxdeG53WiRWuL2GVW0Qs2pZzaOwYELljoa2gMFicn4DNJ3e
+         DKUDWx04sbV/AlpraOTV4gRxUqdeYVlyxLAgh1HkvQ1d9KANyqbLg3/9TaFlXtZknpiu
+         3FRalxz42hYN5slI6Z6u5LRU23ygzodJCFwHy8FB0AURahnSDJPdTSOO+joZQWyjV63L
+         Y/Lw==
+X-Gm-Message-State: AE9vXwNLa/11HiRtNtjlyV9HtRzP2i1OzqPuyFdyYVkqbNh20s5z+XpM0Xqtn0H4+s3Qdg==
+X-Received: by 10.194.149.113 with SMTP id tz17mr10674789wjb.64.1472676980999;
+        Wed, 31 Aug 2016 13:56:20 -0700 (PDT)
+Received: from [192.168.1.26] (enu134.neoplus.adsl.tpnet.pl. [83.20.10.134])
+        by smtp.googlemail.com with ESMTPSA id 4sm25457961wmu.2.2016.08.31.13.56.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 31 Aug 2016 13:56:20 -0700 (PDT)
+Subject: Re: [PATCH 17/22] sequencer: allow editing the commit message on a
+ case-by-case basis
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+References: <cover.1472457609.git.johannes.schindelin@gmx.de>
+ <96adba0eee05a7b2b46b726f7e231b6732e80882.1472457609.git.johannes.schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <fa2a0783-afaa-0aa5-877c-24b3513d4bae@gmail.com>
+Date:   Wed, 31 Aug 2016 22:56:15 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F8494E1A-6FBC-11E6-871B-F7BB12518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <96adba0eee05a7b2b46b726f7e231b6732e80882.1472457609.git.johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+W dniu 29.08.2016 o 10:06, Johannes Schindelin pisze:
 
->> > +	if (S_ISREG(mode)) {
->> > +		struct strbuf strbuf = STRBUF_INIT;
->> > +		if (convert_to_working_tree(path, *buf, *size, &strbuf)) {
->> > +			free(*buf);
->> > +			*size = strbuf.len;
->> > +			*buf = strbuf_detach(&strbuf, NULL);
->> > +		}
->> > +	}
->> 
->> When we see a blob that is not ISREG, what is expected to happen?
->> Is it an error?
->
-> This is not a user-facing command, therefore we have to trust the caller
-> that they know what they are doing.
+> In the upcoming commits, we will implement more and more of rebase
+> -i's functionality. One particular feature of the commands to come is
+> that some of them allow editing the commit message while others don't,
+> i.e. we cannot define in the replay_opts whether the commit message
+> should be edited or not.
 
-The caller that knows what s/he is doing would rely on a documented
-behaviour out of the command.  That behaviour hopefully is an
-intuitive and useful one for script writers.
+It's a nice, pretty and self contained refactoring step.  Small
+enough that it is easy to review.
 
-You say
+I would like to have in the commit message that it is sequencer_commit()
+function that needs to rely on new parameter, instead of on a property
+of command (of its replay_opts).  And that currently it simply passes
+the buck to caller, which uses opts->edit, but in the future the
+caller that is rebase -i would use todo_item and replay_opts based
+expression.
 
-> Quite frankly, as cat-file is not an end-user-facing command, I think it
-> is serious overkill to add more testing here.
-
-and I think you would need a serious attitude adjustment here.
-Scriptors are also an important class of end-users and cat-file
-directly faces them.
-
-Thinking about this one a bit more, as 'cat-file' especially with
-the "--filters" option is the lowest-level way for scriptors to
-externalize the data stored in Git object database to the
-representation used in the outside world (in other words, it would
-be a good ingredient if they want to implement what "checkout"
-does), I would expect that an intuitive behaviour for
-
-	git cat-file --filters HEAD:Makefile >Makefile
-	git cat-file --filters HEAD:RelNotes >Relnotes
-	git cat-file --filters HEAD:t >t
-
-to send the requested contents to the standard output stream, but
-error out when the result of the command shown above would not
-mimick what "checkout" would leave in the filesystem.  IOW, the
-first one should succeed, the second and the third ones should fail
-the same way to signal what is requested cannot be performed to the
-script that is calling these commands.
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  sequencer.c | 6 +++---
+>  sequencer.h | 2 +-
+>  2 files changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index e094ac2..7e17d14 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -478,7 +478,7 @@ static char **read_author_script(void)
+>   * (except, of course, while running an interactive rebase).
+>   */
+>  int sequencer_commit(const char *defmsg, struct replay_opts *opts,
+> -			  int allow_empty)
+> +			  int allow_empty, int edit)
+>  {
+>  	char **env = NULL;
+>  	struct argv_array array;
+> @@ -513,7 +513,7 @@ int sequencer_commit(const char *defmsg, struct replay_opts *opts,
+>  		argv_array_push(&array, "-s");
+>  	if (defmsg)
+>  		argv_array_pushl(&array, "-F", defmsg, NULL);
+> -	if (opts->edit)
+> +	if (edit)
+>  		argv_array_push(&array, "-e");
+>  	else if (!opts->signoff && !opts->record_origin &&
+>  		 git_config_get_value("commit.cleanup", &value))
+> @@ -779,7 +779,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+>  	}
+>  	if (!opts->no_commit)
+>  		res = sequencer_commit(opts->edit ? NULL : git_path_merge_msg(),
+> -			opts, allow);
+> +			opts, allow, opts->edit);
+>  
+>  leave:
+>  	free_message(commit, &msg);
+> diff --git a/sequencer.h b/sequencer.h
+> index 9f63c31..fd02baf 100644
+> --- a/sequencer.h
+> +++ b/sequencer.h
+> @@ -50,7 +50,7 @@ int sequencer_rollback(struct replay_opts *opts);
+>  int sequencer_remove_state(struct replay_opts *opts);
+>  
+>  int sequencer_commit(const char *defmsg, struct replay_opts *opts,
+> -			  int allow_empty);
+> +			  int allow_empty, int edit);
+>  
+>  extern const char sign_off_header[];
+>  
+> 
 
