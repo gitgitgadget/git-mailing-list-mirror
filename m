@@ -2,83 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C9471F859
-	for <e@80x24.org>; Wed, 31 Aug 2016 20:37:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C60D2035F
+	for <e@80x24.org>; Wed, 31 Aug 2016 20:41:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753802AbcHaUhN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 16:37:13 -0400
-Received: from mout.gmx.net ([212.227.15.19]:63662 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753487AbcHaUhM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 16:37:12 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LaFmY-1bFR4n16di-00m3O9; Wed, 31 Aug 2016 22:36:51
- +0200
-Date:   Wed, 31 Aug 2016 22:36:49 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 05/34] sequencer (rebase -i): learn about the 'verbose'
- mode
-In-Reply-To: <1472668767.4265.73.camel@kaarsemaker.net>
-Message-ID: <alpine.DEB.2.20.1608312236210.129229@virtualbox>
-References: <cover.1472633606.git.johannes.schindelin@gmx.de>  <68118621a481d786dd57d5c7fd4c3ea0a8e61b07.1472633606.git.johannes.schindelin@gmx.de> <1472668767.4265.73.camel@kaarsemaker.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1759800AbcHaUlt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Aug 2016 16:41:49 -0400
+Received: from mail-it0-f49.google.com ([209.85.214.49]:36699 "EHLO
+        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753487AbcHaUlf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2016 16:41:35 -0400
+Received: by mail-it0-f49.google.com with SMTP id i184so31523490itf.1
+        for <git@vger.kernel.org>; Wed, 31 Aug 2016 13:41:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=redfrontdoor-org.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=sPqdvE8/+cHeM7MrIa/Z48F8ngxjTdSV51VXt4MOIh4=;
+        b=DSSktPkGRml8GGc4oKBgpx2+3MjqKd+9kpNyrlKWXO3Q3dm1Qc4EHqoBtYsXOpmNTv
+         u7pqt4a0Ybbguw+Tf4KUSmuOPLnc3CH5dr+wJnZYhHYOYEFRt6bStMS6N5ypFNLJt3K5
+         QAkVHq7WtCnhGaLUQJRzKDVptzFC93JdcgCqgs8Wn1vG00+H3BdTnaowBWgr62ITPKUt
+         7DfVyrU9pmVMsUwa0c9mblhcctzFVcp63celW5DMXPULMstxKzEdYYyyXot5aOlE9Rjg
+         zwghAFpvZDHpoAqm5+SajmOV5nm9uO07W4EOc2wNHUkyM/0Ug1gEhksMfX/hT8StreYZ
+         Nqzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=sPqdvE8/+cHeM7MrIa/Z48F8ngxjTdSV51VXt4MOIh4=;
+        b=Uqgj5uH5lVCTQOR/+yyVEbO9OkhBK20PcPk4niNYX4LjHuurx53oGleoJClAdlhUWq
+         EO5iwvnEqbC4qpmxW9x4u8v7dYNUli1zFbXlLx0NcW8ySekJmziEDOHEmUe3Emvniw/S
+         aDcoJMBW8VApsGld5oMWZQMG2fjztr0AAsuaUcWdd2J5gjmYnCcab0BhLovhBAlCzA6f
+         Haq1qnl6PuSN9e+TdC4glpAd5HO7MccZUqA8pkXfL6uAT5h0nvkkTRrqi3gkJHcLlG5N
+         9vDO9yOxj6sagd8rmZ8RZg35moI7jWqarxMFAJ0Fkr8Hx1MaRwKHWroYUU7eAlqGMW3Z
+         /ZkQ==
+X-Gm-Message-State: AE9vXwOlSYdtrZ3fs2OVhgPbKxAxb5aF3bJuOSP++Zdish29r5Wy3Xj+ZjBol1k1EIFCcRNb2VnZOYW9p7nFvA==
+X-Received: by 10.36.23.142 with SMTP id 136mr16408994ith.73.1472676093984;
+ Wed, 31 Aug 2016 13:41:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-889169325-1472675811=:129229"
-X-Provags-ID: V03:K0:QHOSCDDdHdHGOEqg9fI/B3XQ/TrUalKIK/RwpcypXYGq2l8m2io
- bG1k1Eb+c8DmE18EwJAWIqYZu8YQgN20sr7oiNHQU4sTu88HQobCySHoaceWo7wFu3nuX55
- nNH9G/f2+3Zpb+wq/uTPEpufd8+bzPMckn+9bOVgMvill59xqXCjmSCZUGMGf5giTr7Ov5m
- 118DHpSzZiRsD+TT/Gfkg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:nUnGNyYjNFc=:9tCdEs1VtGobYIWArB3qA6
- OM8puFT4o9TlNREhLrccfrbBPhqWxl0bEvCm3XSXpDnZIVpn9kO2fN9dzLCK9qgWBPsjCvMRn
- 8p8mhoDdpW2cMWCWGXhFmeQf4TMnkB1S7AJDyYQkMqBrW6a6RwX/nUwb80ic9mvLRCqpTBGca
- bpP4FIzy9dJ6KZ7e/TrpxOqImoxcDz3QAyeIc1S8/BkSIFdQpaWiEhC+N6/JmT47c+mECmc1T
- 77UICIBqruiQuWWRMWUu8R1mJBSiOYpyDsODEpvpgmCeLVpiPVlZ1gaMnuUK/bJOzqGitFK/6
- Cte/XQraq4bajBSHmhWpbzVkZNra+ugtOuE/8pklOvR8gjpbn6l2QTkMSDpcFpXO6Jc9AlsXB
- qvPFhfWcnLqEyKZw6DlGDbn+Ou0NIH6ufIKTE6xflqMjcX8KuBiZfggHSxJP92QQVe24PQPho
- nuQ8lopqkKu7R7c9f47fIDuWZUPuv3RR2jj3ZA0dXYg7ZApb7ibAqJ3tCcm/4zyijk+GWh5xL
- n0odcszbl9he9nh2Txk95Jt5jwAra4GxyL5kZMoftE2MYL+2jEECjj/J7MVw2U+dHsBILz4Jd
- D0TqnvyhkKWlyzyxA3ZXldFDoNh/MB1uKihR/fnY5k6X0KnGUpl9Inxki/FqvR+gsSwQvKjp+
- 69unpEN1i8aLX6w7iQQKDzTU/lQogVLTij9/6CTKKV/eq5qi/TV573l7HSHXY0ULsN3s7sWSD
- 3mX5kVlKSuKxp7mxlc0s1BVv244Sr3jG2Q9LnYH264TXjV5D2m5bOtczhlFnVlpPdCPQZjuT/
- 4rnVMRA
+Received: by 10.107.17.207 with HTTP; Wed, 31 Aug 2016 13:41:33 -0700 (PDT)
+From:   Ben North <ben@redfrontdoor.org>
+Date:   Wed, 31 Aug 2016 21:41:33 +0100
+Message-ID: <CAHG0eJVk6HF5Mz3wz08sjgL05zB4cAjmZ=FR=jf5G4kh-ChV8A@mail.gmail.com>
+Subject: Literate programming with git
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---8323329-889169325-1472675811=:129229
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+I've recently been experimenting with using git to make software more
+human-readable.  Presenting software for humans to read is not a new
+idea (Knuth's 'literate programming'), but I think git can be a new
+tool for showing the development of code in a structured way.
+Merge-commits can break a flat sequence of commits into sections and
+subsections, in the same way that a document's paragraphs are
+arranged.  The hierarchical organisation is helpful when reading the
+history, and also allows that history to be rendered into a structured
+document explaining the code's development.
 
-Hi Dennis,
+As a demo, I've created:
 
-On Wed, 31 Aug 2016, Dennis Kaarsemaker wrote:
+    http://www.redfrontdoor.org/20160813-literate-git-demo/index.html
 
-> On wo, 2016-08-31 at 10:54 +0200, Johannes Schindelin wrote:
->=20
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0if (file_exists(rebase_path_verbose()))
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0opts->=
-verbose =3D 1;
->=20
-> I don't see anything in this series that creates this file, will that
-> be part of a later series?
+This was generated directly from the git repo of the project, using
+tools I wrote:
 
-No. The sequencer does not write that file, but just consumes it. `git
-rebase` writes it.
+    https://github.com/bennorth/literate-git
 
-Ciao,
-Dscho
---8323329-889169325-1472675811=:129229--
+For working with hierarchical git histories, I wrote another tool:
+
+    https://github.com/bennorth/git-dendrify
+
+The READMEs of the two projects give more details of these ideas.
+
+This is at the prototype / proof-of-concept stage --- any feedback welcome!
+
+Thanks,
+
+Ben.
