@@ -6,99 +6,92 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E870C20193
-	for <e@80x24.org>; Thu,  1 Sep 2016 20:55:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07E6B2035F
+	for <e@80x24.org>; Thu,  1 Sep 2016 20:55:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754333AbcIAUyz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 16:54:55 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60200 "EHLO
+        id S1755007AbcIAUy6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 16:54:58 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59547 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752974AbcIAUyv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 16:54:51 -0400
+        with ESMTP id S1753629AbcIAUyw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 16:54:52 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3522F3B200;
-        Thu,  1 Sep 2016 15:19:47 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E4D7C3AA96;
+        Thu,  1 Sep 2016 14:37:07 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=dCPAJaCEo9uXt+Ep+j8YbGsvvTQ=; b=d5MkUT
-        1Biz3nO7up283Jwh9YhknPmSAoG62JRKjxc95STjSCsbFnhPV3V7uMdIbccndO88
-        hElfRUXUCmr79JTIitjMp93e45vj5j1tigrih9BKV07vit6PSQBbdsSeFQDI/+qq
-        7j3QmE1Uc1qz0HtMlRa72ygtIG6bKSBI3e9Zw=
+        :content-type; s=sasl; bh=tAve5lITxVXdBYzBj+KV4vbxPaw=; b=VZWPpw
+        oI6BqaVooEnPHfWoTDiHYFV2562uziS0inTpBP9kowLpejE952FLkXbDmYCfH3Ui
+        5F02EZSdI/pAvxsmsyL3xhWZqS9VWaWJYGjq6gXn0wxtKIKPe/bTS6tF+KUnoJMM
+        zh+V1KqrvJ2l9IVV6QpxacWhcORceb38bemtM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=lTPYABtY+BSiHM0hKLtfKjt60ZH+bYnK
-        g0lKrDA9iZd4gaHLr6/L3bfzv4L5IlpQvPIAyC0M3gePv2y1RAgUnW/Dzsl3uP9+
-        6mx+zY3xGGy1VolSIlshVY33WzWEngZXxb/8RXJF3oxBXWe/Wu0DOeBy0bIn1hvk
-        XhlZWA5WNxI=
+        :content-type; q=dns; s=sasl; b=wZMraKswBT4ZHIfqVNExslXZtCQ5KrTf
+        qhZH4SsCMr0VzxpBrk/JtAQFc9D7jxgho7ljkeozVFJYf4nYFe+ogrQ54+slIT2o
+        sYYN7D7Zr+NoKxnfe67NbZtDcbWHzAC7Y57qXrCrVO2kBCHIMnHf0ORC5ACu5btm
+        LTvxDFLFaAM=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2CBCD3B1FE;
-        Thu,  1 Sep 2016 15:19:47 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DBBC83AA95;
+        Thu,  1 Sep 2016 14:37:07 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A61C33B1FD;
-        Thu,  1 Sep 2016 15:19:46 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 64DCE3AA94;
+        Thu,  1 Sep 2016 14:37:07 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Uma Srinivasan <usrinivasan@twitter.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jens Lehmann <Jens.Lehmann@web.de>,
-        Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: git submodules implementation question
-References: <CAN5XQftQH8B+hWVh4JQgZwAp+rkbz51P5NZDc_+Tfm0EB1zkew@mail.gmail.com>
-        <xmqqlgzf9wch.fsf@gitster.mtv.corp.google.com>
-        <CAN5XQft6S+LG0mBgRFPrMZiOxHSfRhjLmQdeMdBeHKoWQSRUEA@mail.gmail.com>
-        <CAPc5daVhY6WdHkXGLYea48uOw0-rTzLLZ=7mNo=VPebZ9AG4jQ@mail.gmail.com>
-        <CAN5XQfty6Fshzf6kN7eXhFekU9+=VPwbzEPN1a92yVB=9nm0Vg@mail.gmail.com>
-        <CAN5XQfsg_sJbyjfdc=-e85jiCQNUqagwgh6TVOXN+NskZ7KkVw@mail.gmail.com>
-        <xmqqbn0b6ua8.fsf@gitster.mtv.corp.google.com>
-        <CA+P7+xosGg955msq-gyKz_HyCZf7fPFQJdKZ3P8U3+poBBfuWA@mail.gmail.com>
-        <CAN5XQfsv+BEYDWR6Xjs4mCtYDVR12a2UzB1-_H4A_xfjUUOe2g@mail.gmail.com>
-        <CA+P7+xohfRsoV9VXgUrRaXPb9HvCc5gs4-KSWp38X_d_6EfkTA@mail.gmail.com>
-        <CA+P7+xpGnsKzBPLVgPNSmZ7K00vY7-eJp7kSHWMRHM+cOsL_XQ@mail.gmail.com>
-        <CAN5XQftCC+TUm2Jx4q3V9oFbXndtFx3H+daoB3TD3eWUs6s54A@mail.gmail.com>
-        <xmqqzinu3zyw.fsf@gitster.mtv.corp.google.com>
-        <CAN5XQfuoq6MV4e98RzUCG02KvZO6VZAbs1oxAzpdg5zswqpHGw@mail.gmail.com>
-        <xmqq7faw3n5w.fsf@gitster.mtv.corp.google.com>
-        <xmqqk2ewxnui.fsf@gitster.mtv.corp.google.com>
-        <CAN5XQftt3qVoU9gB2oyimY328VK0W6xq5FSCQYvcB9dEgkxVWA@mail.gmail.com>
-        <xmqqmvjrwjwm.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kZnhNVBy6Oqt=x8m0jZj_tGNkMPPBBr+aL6DToOYtv9vQ@mail.gmail.com>
-Date:   Thu, 01 Sep 2016 12:19:44 -0700
-In-Reply-To: <CAGZ79kZnhNVBy6Oqt=x8m0jZj_tGNkMPPBBr+aL6DToOYtv9vQ@mail.gmail.com>
-        (Stefan Beller's message of "Thu, 1 Sep 2016 11:37:30 -0700")
-Message-ID: <xmqqa8frwhpr.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH 09/22] sequencer: completely revamp the "todo" script parsing
+References: <cover.1472457609.git.johannes.schindelin@gmx.de>
+        <163aaa2a64ddf6dfb28c77c821726e14cc78619e.1472457609.git.johannes.schindelin@gmx.de>
+        <135c9ac7-49a6-8aa1-fc10-02c2a1fd0b1a@gmail.com>
+        <CAGZ79kYP6jYyuEOwQPC6pcOxCMVNNQ24pVLoQVrv6nNrGsDTKA@mail.gmail.com>
+        <alpine.DEB.2.20.1609010830110.129229@virtualbox>
+Date:   Thu, 01 Sep 2016 11:37:05 -0700
+In-Reply-To: <alpine.DEB.2.20.1609010830110.129229@virtualbox> (Johannes
+        Schindelin's message of "Thu, 1 Sep 2016 08:35:50 +0200 (CEST)")
+Message-ID: <xmqqinufwjou.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 0B74DE66-7079-11E6-B7CE-F7BB12518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 160374E2-7073-11E6-9B83-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> The final version needs to be accompanied with tests to show the
->> effect of this change for callers.  A test would set up a top-level
->> and submodule, deliberately break submodule/.git/ repository and
->> show what breaks and how without this change.
+>> git continue as a shorthand for `git <relevant-cmd> --continue` sounds great.
 >
-> Tests are really good at providing this context as well, or to communicate
-> the actual underlying problem, which is not quite clear to me.
-> That is why I refrained from jumping into the discussion as I think the
-> first few emails were dropped from the mailing list and I am missing context.
+> Before we get ahead of ourselves:
+>
+> 1) this has nothing to do with the patch series at hand, and
+>
+> 2) if we were to introduce `git continue`, we would need to think long and
+>    hard about the following issues:
+>
+> 	I) are there potentially ambiguous <relevant-cmd>s that the user
+> 	   may want to continue?
+>
+> 	II) what about options? You can say `git rebase --continue
+> 	    --no-ff`, for example, but not `git cherry-pick --continue
+> 	    --no-ff`...
+>
+> 	III) Would it not be confusing to have a subcommand `continue`
+> 	     that does *not* serve a *single* purpose? It's kinda flying
+> 	     into the face of the Unix philosophy.
 
-I do not know where you started reading, but the gist of it is that
-submodule.c spawns subprocess to run in the submodule's context by
-assuming that chdir'ing into the <path> of the submodule and running
-it (i.e. cp.dir set to <path> to drive start_command(&cp)) is
-sufficient.  When <path>/.git (either it is a directory itself or it
-points at a directory in .git/module/<name> in the superproject) is
-a corrupt repository, running "git -C <path> command" would try to
-auto-detect the repository, because it thinks <path>/.git is not a
-repository and it thinks it is not at the top-level of the working
-tree, and instead finds the repository of the top-level, which is
-almost never what we want.
+The above reasoning applies equally to "git abort".  I do not think
+"git continue" would help.
 
+If it were that anything you can do with Git can be --continue'ed
+the same way (e.g. all uses one sequencer to rule them all), it
+might be achievable, but I do not think it isn't, and will never be.
+
+"git commit" may say "You haven't added anything yet" and refuse to
+do anything.  Should "git continue" do "git commit -a" by noticing
+that the last thing you tried to do was "git commit" and guess that
+it is likely you wanted to commit all changes?  I think not.
