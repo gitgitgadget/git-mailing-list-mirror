@@ -2,115 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A39B1F6BF
-	for <e@80x24.org>; Thu,  1 Sep 2016 16:08:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C429120193
+	for <e@80x24.org>; Thu,  1 Sep 2016 16:15:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934199AbcIAQIG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 12:08:06 -0400
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:34167 "EHLO
-        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933949AbcIAQIF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 12:08:05 -0400
-Received: by mail-wm0-f53.google.com with SMTP id w207so5536959wmw.1
-        for <git@vger.kernel.org>; Thu, 01 Sep 2016 09:08:05 -0700 (PDT)
+        id S934015AbcIAQP2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 12:15:28 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34650 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933736AbcIAQP1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 12:15:27 -0400
+Received: by mail-wm0-f67.google.com with SMTP id v143so2694229wmv.1
+        for <git@vger.kernel.org>; Thu, 01 Sep 2016 09:15:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=3OpjZgFXxH0il2OwZBjim92uhCD955daydYwX+8vVvk=;
-        b=bAfPlyWDEw0KhCAAdYKY3uCPyv6X3YPwn93nz+7OUWE6PBo+uQ6+kl8QQFKr+agJbv
-         HYxSZjw70DjDUMRJKKzTTeKbe7NA5bVdZwNyRATSvTyMCnxXbH+7JXgEzjCoeLw4nRCN
-         yIvHZJ4SLOqFbJBgi1mxXBdV8fq0hv4Ff0KaDIrgldOtRO8pffmmRuje3vsDSoZDQGUw
-         5D8HkNBvF1JhlKnagYSGMXIVtEpgpeLdpE5+AVSwfth980B9eywY0sRNZFzsY6H2PNg0
-         rA8q4mR2W+WaQZ4TKzT+3r6cykNjHr/l4fsx4lem7kDsRWVUjZVFUOXBgNdNrgT6De3c
-         TAKg==
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=58gZMk9yx9w+Z1GFbHXrDGQErcV91Zyi8zURwID6a+4=;
+        b=elYQDpjYtTpSg5FvWVXml4emQWualhk0EE3T32D5dkAlTxM1+xlX1VLBG6r1EZki6P
+         dhd7zYfU2ly/hKIGItNbwyrETf0jxypC4VbiKr3xX9w2qONwSrRaQNChJ10vcvhWzxvx
+         pTt3lPKv4aDk92Ei79qfMpeD2BgoO51QAuRx+bHDVsuEB5vGeoGMEXhnCCV/OIhvrzns
+         U5RpQGoYhwGnHrDqF7ycW/HHcgMTrlhOzf5xmGtE7CcVnbjYzYWos/WrtuBVGTUg7pfB
+         44pfMAagkCcy+hkSJ7EHsaJBxYZnwwAFj0FIA2XQ7fb+JhDz+6XeO23ZKJUpw8LU5sq/
+         V1Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=3OpjZgFXxH0il2OwZBjim92uhCD955daydYwX+8vVvk=;
-        b=Q5xoGFWjGMBrdFQxqcNQzZNUPy6LEfom+a7AWWW06Sy6YagSGK4V9teykTkfua9BDC
-         kApa6uPHcgEwDSttdF7860uad6q6Hyx3xgFqWahTVv5W4sNRX2j1W9iKADA069KnqZxM
-         LtjW2RsV0XRZkiP1w6yr7DZz8aJ2RWZ78bzBG7REDCPMorNRvCgOOWEPSpJCzErYo90q
-         Bz0UCfAk3EbuM5VK8r74GxjAIJs0B1NgHRYt/+4jKr+wDV0XbqlfqHNIRGQ9oAHQQUN8
-         uGof6yJQt6n/FuPb/tLp1sfS65D6RbQ7evVk8COly71YiE/+DR34Twe7YSC4fz18JJep
-         ZezA==
-X-Gm-Message-State: AE9vXwOxlDVAevlBajQWZJ/h28tNqAzasGaIiPzX8bp9EYxW1VoFIvlYPnXrkM6B74cOyn4Xg8yOE3UlC6cJ0Q==
-X-Received: by 10.194.134.234 with SMTP id pn10mr14549637wjb.35.1472746083974;
- Thu, 01 Sep 2016 09:08:03 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.28.96.137 with HTTP; Thu, 1 Sep 2016 09:08:02 -0700 (PDT)
-From:   Jan Keromnes <janx@linux.com>
-Date:   Thu, 1 Sep 2016 18:08:02 +0200
-X-Google-Sender-Auth: yxmzWNjovhFc0wCcT3a3FO2F3IQ
-Message-ID: <CAA6PgK7C18F1WGyZMTEUAWEVsUWqiZND5Ne_0SH-rUEm8u5dNg@mail.gmail.com>
-Subject: `make profile-install` fails in 2.9.3
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=58gZMk9yx9w+Z1GFbHXrDGQErcV91Zyi8zURwID6a+4=;
+        b=AIX1a0v9iv7yxQAVKS5gy4xtrzSoqhqTkc/lQHNd3J3Gtc6VRVHFTVsGj97QP2CfUo
+         QPVrB2x9IS+nMGz7+zmorGelr+ojNAJUuEjf0ik+qV+t2KKaSmBu1vgVRv50QJOwUZLL
+         rAj8Iv3h9j+Pt9fUzREUrhQKYdw9yfImzdAImfU9Z+eG2yUtFLI+WVoBkvzKrZKpq2ZV
+         UhY7D0AGOjQwfIfTMRgKoimV3Br66wbEHWHs83iYYgH+z3i5p8akparX9eBc6TPQE825
+         kgo4muZiCxKEPQL9gnhcyzitP/WIGbLVEkRadcBHszodzZWZYQ0IidDQzia11LZRbwzA
+         pZ2A==
+X-Gm-Message-State: AE9vXwMwT8091K5aKfmS2D7fp6GsGG8sYb6vsvccKGqjxkZ281+wxRCAva0luwpfgSQB/A==
+X-Received: by 10.194.120.37 with SMTP id kz5mr16465837wjb.196.1472746525941;
+        Thu, 01 Sep 2016 09:15:25 -0700 (PDT)
+Received: from hurricane.home.kaarsemaker.net ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id h7sm6053454wjd.17.2016.09.01.09.15.24
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 01 Sep 2016 09:15:25 -0700 (PDT)
+Message-ID: <1472746523.4680.30.camel@kaarsemaker.net>
+Subject: Re: [PATCH 27/34] sequencer (rebase -i): differentiate between
+ comments and 'noop'
+From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Date:   Thu, 01 Sep 2016 18:15:23 +0200
+In-Reply-To: <alpine.DEB.2.20.1609011720160.129229@virtualbox>
+References: <cover.1472633606.git.johannes.schindelin@gmx.de>
+          <736bcb8e860c876e32e8f89f68b0b901abedc187.1472633606.git.johannes.schindelin@gmx.de>
+         <1472718815.4680.21.camel@kaarsemaker.net>
+         <alpine.DEB.2.20.1609011720160.129229@virtualbox>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.18.5.2-0ubuntu3 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On do, 2016-09-01 at 17:32 +0200, Johannes Schindelin wrote:
+> Hi Dennis,
+> 
+> On Thu, 1 Sep 2016, Dennis Kaarsemaker wrote:
+> 
+> > 
+> > On wo, 2016-08-31 at 10:56 +0200, Johannes Schindelin wrote:
+> > > 
+> > > diff --git a/sequencer.c b/sequencer.c
+> > > index 51c2f76..4c902e5 100644
+> > > --- a/sequencer.c
+> > > +++ b/sequencer.c
+> > > @@ -763,7 +763,8 @@ enum todo_command {
+> > >         TODO_SQUASH,
+> > >         TODO_EXEC,
+> > >         TODO_NOOP,
+> > > -       TODO_DROP
+> > > +       TODO_DROP,
+> > > +       TODO_COMMENT
+> > >  };
+> > (picking a random commit that touches this enum)
+> > 
+> > In a few places you now make comparisons like "< TODO_NOOP", so I
+> > think
+> > it would be good to have a comment near the definition of this enum
+> > that says that ordering matters and why, so people don't attempt to
+> > add
+> > a new TODO_FOOBAR at the end.
+> True.
+> 
+> It does not seem that we have a precedent for that. The closest is
+> what I
+> had in an early iteration of the fsck message IDs, and subsequently
+> things
+> were refactored so that it is not the order, but a flag, that
+> determines
+> what the command does.
+> 
+> Not sure how to do this elegantly. Maybe like this?
+> 
+> 	enum todo_command {
+> 		TODO_PICK_COMMANDS = 0,
+> 		TODO_PICK = TODO_PICK_COMMANDS,
+> 		TODO_SQUASH,
+> 
+> 		TODO_NON_PICK_COMMANDS,
+> 		TODO_EXEC = TODO_NON_PICK_COMMANDS,
+> 
+> 		TODO_NOOP_COMMANDS,
+> 		TODO_NOOP = TODO_NOOP_COMMANDS,
+> 		TODO_DROP
+> 		TODO_DROP,
+> 
+> 		TODO_LAST_COMMAND,
+> 		TODO_COMMENT = TODO_LAST_COMMAND
+> 	};
+> 
+> But that is so god-awful to read.
 
-I'm trying to `profile-install` Git from source on Ubuntu 16.04, to
-have the latest stable Git optimized for my machine.
+Agreed, that sure is awful.
 
-However, this fails (and has failed in previous versions), because it
-runs the whole test-suite to get the profile, but bails out if there
-were test failures (which happens often).
+How about something like
 
-Problem: Is there a way to `make profile-install` but ignore
-occasional test failures, as they're not problematic to get a useful
-profile?
-
-Related problem: `t3700-add.sh` currently fails in 2.9.3. I can
-provide more debug information if you don't already know this problem.
-
-Thanks,
-Jan Keromnes
-
----
-
-Steps to reproduce:
-
-    curl https://www.kernel.org/pub/software/scm/git/git-2.9.3.tar.xz | tar xJ \
-     && cd git-2.9.3 \
-     && make prefix=/usr profile-install install-man -j18
-
-Expected result:
-
-    - runs all tests to get a profile (ignoring occasional failures)
-    - rebuilds Git with the profile
-    - installs Git
-
-Actual result:
-
-    - runs all tests to get a profile
-    - at least one test fails, interrupting the whole process
-    - Git is not installed
-
-Failure log:
-
-    # failed 1 among 40 test(s)
-    1..40
-    Makefile:43: recipe for target 't3700-add.sh' failed
-    make[3]: *** [t3700-add.sh] Error 1
-    make[3]: Leaving directory '/tmp/git/git-2.9.3/t'
-    Makefile:36: recipe for target 'test' failed
-    make[2]: Leaving directory '/tmp/git/git-2.9.3/t'
-    make[2]: *** [test] Error 2
-    Makefile:2221: recipe for target 'test' failed
-    make[1]: *** [test] Error 2
-    make[1]: Leaving directory '/tmp/git/git-2.9.3'
-    Makefile:1633: recipe for target 'profile' failed
-    make: *** [profile] Error 2
-    The command '/bin/sh -c mkdir /tmp/git  && cd /tmp/git  && curl
-https://www.kernel.org/pub/software/scm/git/git-2.9.3.tar.xz | tar xJ
-&& cd git-2.9.3  && make prefix=/usr profile-install install-man -j18
-&& rm -rf /tmp/git' returned a non-zero code: 2
+/*
+ * Note that ordering matters in this enum. Not only must it match the
+ * mapping below, it is also divided into several sections that matter.
+ * When adding new commands, make sure you add it in the right section.
+ */
+enum todo_command {
+	/* All commands that handle commits */
+	TODO_PICK,
+	...
+	/* All commands that do something else than pick */
+	TODO_EXEC,
+	...
+	/* All commands that do nothing but are counted for reporting progress */
+	TODO_NOOP,
+	...
+	/* Comments, which are not counted
+	TODO_COMMENT
+}
