@@ -2,137 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52DE41F6BF
-	for <e@80x24.org>; Thu,  1 Sep 2016 21:45:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B96091F6BF
+	for <e@80x24.org>; Thu,  1 Sep 2016 21:58:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753356AbcIAVpf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 17:45:35 -0400
-Received: from mail-oi0-f42.google.com ([209.85.218.42]:33843 "EHLO
-        mail-oi0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753335AbcIAVpb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 17:45:31 -0400
-Received: by mail-oi0-f42.google.com with SMTP id m11so10269512oif.1
-        for <git@vger.kernel.org>; Thu, 01 Sep 2016 14:45:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=twitter.com; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=/dzpuUBUh74rO6j6IKqiPxXxKCeKPrFrKf5kibczFWY=;
-        b=ZVQIn2U3TMslmFqPr/eHwZsp4YNAo0xq3ZAyeAF2fjg8xMz9NouurpJuh2hUJvRwFG
-         BoxefzQ+Bx1QtoG315fbtKVE/agl07rgzYB3o1wkYrGCsqlTeReMErBEQQANMkBgOa22
-         UNR6iIEXytcf74DDzjWh60Sj1oNf3s8z2cF6A=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=/dzpuUBUh74rO6j6IKqiPxXxKCeKPrFrKf5kibczFWY=;
-        b=looYEppa0xk5R4/OYYJOHbSb+9JQH/HrsHO5T6/RLqS72CInXFAcNCWFiH1bHWPMtV
-         ZuVWj5Fws4IdS4dSHiJYN4TwTROkUeCmFWVVmM7KIQ9Sh/olzlqp90+10QLBBp2vd3l9
-         jaQxGT7+b4uxPc4buWVpFxP9wRfbJCfG1Ts64Xxb7+M6Jz9vV0hSLphxnqnfgr0Gdh3y
-         Snsg5eiFppQmiftDQ0chdXeWv6Pku+O76LGsRub3d2ITEnmgC4kINRD7mlgwmKVYQffD
-         5wmejAl6smpPfKpEa8lNx6SLThB6+qqbd49eLGh40ZPu3PiZ8qlSMXxqZ8z4OBNg5QzH
-         BglA==
-X-Gm-Message-State: AE9vXwPI7wjqGIJQzFDThK6aeIz0c38YC8c7BvU0e2VtsR4dPFPAhhR4lGf0KjiGOvyaNZvUTPS4gNnBOuxXD0/z
-X-Received: by 10.202.97.198 with SMTP id v189mr15210550oib.54.1472759778543;
- Thu, 01 Sep 2016 12:56:18 -0700 (PDT)
+        id S1754484AbcIAV6R (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 17:58:17 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36810 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1754329AbcIAV6P (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 17:58:15 -0400
+Received: (qmail 559 invoked by uid 109); 1 Sep 2016 21:58:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Sep 2016 21:58:15 +0000
+Received: (qmail 19750 invoked by uid 111); 1 Sep 2016 21:58:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Sep 2016 17:58:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Sep 2016 17:58:10 -0400
+Date:   Thu, 1 Sep 2016 17:58:10 -0400
+From:   Jeff King <peff@peff.net>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Jan Keromnes <janx@linux.com>, git@vger.kernel.org,
+        Ingo =?utf-8?Q?Br=C3=BCckl?= <ib@wupperonline.de>,
+        Edward Thomson <ethomson@edwardthomson.com>
+Subject: Re: `make profile-install` fails in 2.9.3
+Message-ID: <20160901215810.ez47lqwmfmahyvc7@sigill.intra.peff.net>
+References: <CAA6PgK7C18F1WGyZMTEUAWEVsUWqiZND5Ne_0SH-rUEm8u5dNg@mail.gmail.com>
+ <20160901200700.GA8254@hank>
 MIME-Version: 1.0
-Received: by 10.157.55.226 with HTTP; Thu, 1 Sep 2016 12:56:17 -0700 (PDT)
-In-Reply-To: <xmqqa8frwhpr.fsf@gitster.mtv.corp.google.com>
-References: <CAN5XQftQH8B+hWVh4JQgZwAp+rkbz51P5NZDc_+Tfm0EB1zkew@mail.gmail.com>
- <xmqqlgzf9wch.fsf@gitster.mtv.corp.google.com> <CAN5XQft6S+LG0mBgRFPrMZiOxHSfRhjLmQdeMdBeHKoWQSRUEA@mail.gmail.com>
- <CAPc5daVhY6WdHkXGLYea48uOw0-rTzLLZ=7mNo=VPebZ9AG4jQ@mail.gmail.com>
- <CAN5XQfty6Fshzf6kN7eXhFekU9+=VPwbzEPN1a92yVB=9nm0Vg@mail.gmail.com>
- <CAN5XQfsg_sJbyjfdc=-e85jiCQNUqagwgh6TVOXN+NskZ7KkVw@mail.gmail.com>
- <xmqqbn0b6ua8.fsf@gitster.mtv.corp.google.com> <CA+P7+xosGg955msq-gyKz_HyCZf7fPFQJdKZ3P8U3+poBBfuWA@mail.gmail.com>
- <CAN5XQfsv+BEYDWR6Xjs4mCtYDVR12a2UzB1-_H4A_xfjUUOe2g@mail.gmail.com>
- <CA+P7+xohfRsoV9VXgUrRaXPb9HvCc5gs4-KSWp38X_d_6EfkTA@mail.gmail.com>
- <CA+P7+xpGnsKzBPLVgPNSmZ7K00vY7-eJp7kSHWMRHM+cOsL_XQ@mail.gmail.com>
- <CAN5XQftCC+TUm2Jx4q3V9oFbXndtFx3H+daoB3TD3eWUs6s54A@mail.gmail.com>
- <xmqqzinu3zyw.fsf@gitster.mtv.corp.google.com> <CAN5XQfuoq6MV4e98RzUCG02KvZO6VZAbs1oxAzpdg5zswqpHGw@mail.gmail.com>
- <xmqq7faw3n5w.fsf@gitster.mtv.corp.google.com> <xmqqk2ewxnui.fsf@gitster.mtv.corp.google.com>
- <CAN5XQftt3qVoU9gB2oyimY328VK0W6xq5FSCQYvcB9dEgkxVWA@mail.gmail.com>
- <xmqqmvjrwjwm.fsf@gitster.mtv.corp.google.com> <CAGZ79kZnhNVBy6Oqt=x8m0jZj_tGNkMPPBBr+aL6DToOYtv9vQ@mail.gmail.com>
- <xmqqa8frwhpr.fsf@gitster.mtv.corp.google.com>
-From:   Uma Srinivasan <usrinivasan@twitter.com>
-Date:   Thu, 1 Sep 2016 12:56:17 -0700
-Message-ID: <CAN5XQft1YFEdxcB8Q_qFG4iYmSaSX_JXDCESzeEyYqPO0BUbaw@mail.gmail.com>
-Subject: Re: git submodules implementation question
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jens Lehmann <Jens.Lehmann@web.de>,
-        Heiko Voigt <hvoigt@hvoigt.net>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20160901200700.GA8254@hank>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->>> The final version needs to be accompanied with tests to show the
->>> effect of this change for callers.  A test would set up a top-level
->>> and submodule, deliberately break submodule/.git/ repository and
->>> show what breaks and how without this change.
+On Thu, Sep 01, 2016 at 09:07:00PM +0100, Thomas Gummerer wrote:
 
-Agreed!
+> > Related problem: `t3700-add.sh` currently fails in 2.9.3. I can
+> > provide more debug information if you don't already know this problem.
+> 
+> I noticed this problem as well, when I'm compiling with USE_NSEC = 1
+> in my config.mak.
 
-The repo where the original problem surfaced is huge and in fact "git
-status" appears to go into an infinite loop forking a zillion
-processes on the system. If the dev system is small, it brings it to a
-standstill. However, the good news is that I could build myself a
-smaller reproducer by doing the following:
+I can replicate this even without USE_NSEC with my stress-tester[1].
+That makes sense why it would show up with the profiling run; git runs
+slower and therefore increases the chances of crossing the 1-second
+boundary and losing the race.
 
-1) mkdir sm_test
-2) cd sm_test
-3) git clone git://git.mysociety.org/commonlib commonlib
-4) git init
-5) git submodule add ./commonlib/
-6) cd commonlib/.git
-7) rm -f all files
+[1] https://github.com/peff/git/blob/meta/stress
 
-After this "git status" will fork several thousand processes but it
-will ultimately fail as it runs into the path length max limit. I
-still don't know why this doesn't happen with my original problem
-repo. Perhaps I have to let it run overnight or perhaps it runs into
-other system limitations before then....
+> Tracking this problem down a bit, it happens because the --chmod=[+-]x
+> option introduced in 4e55ed32 ("add: add --chmod=+x / --chmod=-x
+> options") only works if the file on disk is modified.  When the test
+> was changed to work on one single file, instead of doing chmod=+x on
+> one file and chmod=-x on another file in b38ab197c ("t3700: merge two
+> tests into one"), this test started breaking when the mtime of the
+> file and the index file weren't the same (in other words, if the file
+> was not racily clean and thus was not smudged).
 
-Anyway, with the fix "git status" fails quickly both in my reproducer
-(and original repo) with the following message.....
-fatal: Not a git repository: '.git'
-fatal: 'git status --porcelain' failed in submodule commonlib
+That certainly sounds buggy. A less racy way of verifying this is just:
 
-Hope this helps.
+  # guarantee not-racy state
+  echo content >file
+  test-chmtime -60 file
+  git add file
 
-Uma
+  # now check --chmod; file will still be 100644!
+  git add --chmod=+x file
+  git ls-files -s
 
+> One possible fix for the test is to smudge the entry as showed below,
+> though I'm not sure it's the right fix.  The other way I can think of
+> is to change the file in the index regardless of whether the file was
+> changed in some other way before issuing the git add command, as that
+> might fit the user expectation better.  Thoughts?
 
-On Thu, Sep 1, 2016 at 12:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->>> The final version needs to be accompanied with tests to show the
->>> effect of this change for callers.  A test would set up a top-level
->>> and submodule, deliberately break submodule/.git/ repository and
->>> show what breaks and how without this change.
->>
->> Tests are really good at providing this context as well, or to communicate
->> the actual underlying problem, which is not quite clear to me.
->> That is why I refrained from jumping into the discussion as I think the
->> first few emails were dropped from the mailing list and I am missing context.
->
-> I do not know where you started reading, but the gist of it is that
-> submodule.c spawns subprocess to run in the submodule's context by
-> assuming that chdir'ing into the <path> of the submodule and running
-> it (i.e. cp.dir set to <path> to drive start_command(&cp)) is
-> sufficient.  When <path>/.git (either it is a directory itself or it
-> points at a directory in .git/module/<name> in the superproject) is
-> a corrupt repository, running "git -C <path> command" would try to
-> auto-detect the repository, because it thinks <path>/.git is not a
-> repository and it thinks it is not at the top-level of the working
-> tree, and instead finds the repository of the top-level, which is
-> almost never what we want.
->
+Yeah, I think we should _always_ act on the --chmod, no matter if the
+file is racy or not, or whether it has a content change or not. I.e.,
+the race is not the problem, but rather the behavior of 4e55ed32. Your
+second proposal there sounds more like the right approach.
+
+-Peff
