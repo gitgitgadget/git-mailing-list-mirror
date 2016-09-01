@@ -2,74 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F3E71F6BF
-	for <e@80x24.org>; Thu,  1 Sep 2016 22:20:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 610491F6BF
+	for <e@80x24.org>; Thu,  1 Sep 2016 22:21:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752397AbcIAWUW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 18:20:22 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36833 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752180AbcIAWUU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 18:20:20 -0400
-Received: (qmail 2066 invoked by uid 109); 1 Sep 2016 22:20:20 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Sep 2016 22:20:20 +0000
-Received: (qmail 19988 invoked by uid 111); 1 Sep 2016 22:20:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Sep 2016 18:20:26 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Sep 2016 18:20:15 -0400
-Date:   Thu, 1 Sep 2016 18:20:15 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
-        Jan Keromnes <janx@linux.com>, git@vger.kernel.org,
-        Ingo =?utf-8?Q?Br=C3=BCckl?= <ib@wupperonline.de>,
-        Edward Thomson <ethomson@edwardthomson.com>
-Subject: Re: `make profile-install` fails in 2.9.3
-Message-ID: <20160901222015.wqhrerudnwddbyhz@sigill.intra.peff.net>
-References: <CAA6PgK7C18F1WGyZMTEUAWEVsUWqiZND5Ne_0SH-rUEm8u5dNg@mail.gmail.com>
- <20160901200700.GA8254@hank>
- <20160901215810.ez47lqwmfmahyvc7@sigill.intra.peff.net>
- <xmqqh99zuuyh.fsf@gitster.mtv.corp.google.com>
+        id S1752117AbcIAWVC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 18:21:02 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60157 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750771AbcIAWVB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 18:21:01 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 536673A0E4;
+        Thu,  1 Sep 2016 18:21:00 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=wQkXrqthOvAojVyIuCLS5L7OMxc=; b=DEfZWd
+        0PcZcRB9qU2sXFJ1OXdj8799qnAbAZqtWZajRo+bE44ppnzWj+l4/YzZIbHqFEwQ
+        popY2HuiocBFgShxs58JXBuV349WI0QJ31WHMKh7lgpvofBr61uYiR2MkaXNUhIC
+        3EwRMBLhxaoOQk1RVnvlo9Qygk/z53MEUQ4fY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=RV5RKKdrHWEZqfbmPgN0mgLSNhgqVGNa
+        LSQbVZHmbYXvOQl9q0cZ2V7DUzKqr9RDhL8Re6nuvJG90WISzZwIJoVRrvhejg+j
+        N3vcdu0iseGsKdkFSOH99obUsdoZpJqWEl0zxJGdvWvnv2REP/R8+9Mcp9cNmb1h
+        zni0G4XN4VY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4B0873A0E3;
+        Thu,  1 Sep 2016 18:21:00 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C17BC3A0E2;
+        Thu,  1 Sep 2016 18:20:59 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Philip Oakley" <philipoakley@iee.org>
+Cc:     "Git List" <git@vger.kernel.org>
+Subject: Re: Are --first-parent and --ancestry-path compatible rev-list options?
+References: <2FA1998250474E76A386B82AD635E56A@PhilipOakley>
+        <xmqqfuprdtwh.fsf@gitster.mtv.corp.google.com>
+        <CD6AE25418644EB688D4488F8AB40155@PhilipOakley>
+        <xmqq8tvby19a.fsf@gitster.mtv.corp.google.com>
+        <1BC836ACA8C741AD9732122B3B198752@PhilipOakley>
+Date:   Thu, 01 Sep 2016 15:20:57 -0700
+In-Reply-To: <1BC836ACA8C741AD9732122B3B198752@PhilipOakley> (Philip Oakley's
+        message of "Thu, 1 Sep 2016 21:48:14 +0100")
+Message-ID: <xmqqd1knuura.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqh99zuuyh.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5C55BA58-7092-11E6-ACD7-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 01, 2016 at 03:16:38PM -0700, Junio C Hamano wrote:
+"Philip Oakley" <philipoakley@iee.org> writes:
 
-> Which means that piggybacking this on the "run 'git diff' limited to
-> the pathspec to find the paths that needs updating" logic usually
-> done in "git add" can not be reused [*1*].
-> 
-> What was I thinking while reviewing the patch X-<.  Sigh.
-> 
-> 
-> [Footnote]
-> 
-> *1* I guess we _could_, by first flipping all the regular file
->     blob's executable bit for paths that are inside the pathspec and
->     then by running "git diff" against that modified index, limited
->     to the pathspec, to find the paths that need to be added.
-> 
->     It sounds ugly, but may conceptually be cleaner.  We first start
->     from an ideal end-result, and then re-hash what needs to be
->     updated to match the ideal.
+> The user question was, given a commit 'J', and a future commit 'H'
+> (typically a branch tip such as 'master'), find those commits that are
+> :
+> A) merges
+> B) on the first parent DAG chain of the future commit 'H'
+> C) children of the given commit 'J'
 
-Yeah, I had a similar thought, but it just feels so hacky. Is there
-anything wrong with making this completely separate from the content
-update. I.e., just applying the pathspec to the index as a separate step
-and adding "+x" to each entry?
+The answer then is that there is no such single step operation.
 
-This really is just a more convenient interface around "update-index
---chmod", isn't it? We should be able to do the same thing it does.
+In the picture, if D or E were a merge from a side branch that does
+not have anything to do with 'J', "log --first-parent --merges" will
+not exclude it (i.e. C won't be fulfilled by --first-parent --merges).
 
--Peff
