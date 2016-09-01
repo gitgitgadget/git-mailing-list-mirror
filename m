@@ -2,133 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61C151F6BF
-	for <e@80x24.org>; Thu,  1 Sep 2016 22:33:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF97F1F6BF
+	for <e@80x24.org>; Thu,  1 Sep 2016 22:38:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753890AbcIAWdk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 18:33:40 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:36078 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753050AbcIAWdi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 18:33:38 -0400
-Received: by mail-wm0-f67.google.com with SMTP id i138so489287wmf.3
-        for <git@vger.kernel.org>; Thu, 01 Sep 2016 15:33:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=KSnFVU6KcIJFdQF3Ea38o5IfITeNkHcfui7GHcPmBzo=;
-        b=K2OvS+un92Hr4OJhzU7Nf8xHUvKBp4Ar1w+oZpAAfpBJvNJVH2uR4IDHk6aiRgXGQM
-         wqsjB4KkGoG2MIywVpO3yr2M26K/oz2j96aRpf9gsvqn+KLdhSznf7hZFQe1/QjyHHro
-         lq5B2+awomAGvN5Se83egM52z56E86RiQNtPkUPqORtSuej1aPNAAg+q5kIC/RI4yg1j
-         QDvcrP8ONjVET0VrpPej0s07TqvsCwbdgoNtsQqFg3TXOIDtscQGSfnPADKzgaE6uPdz
-         d6uyId6+hFNQAccH4AqrjbcKyP75Zc19pySdgR7LVp1+aGd1ozvPQHn5diPqNkarBlRc
-         9VBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=KSnFVU6KcIJFdQF3Ea38o5IfITeNkHcfui7GHcPmBzo=;
-        b=PtFg9bXJaAEbXupYUcH8n4AqC7H8keFU4iOTmPIHNLAg9FMgIZrh/sOxGiHhbObSxN
-         mTssBOu/kfORZSLMbzoT7xXRv7knpYSQ1Dxhlff0yQ1+nqCjFx0yslz9ww6Cz2ql0jCr
-         4gN14m9AQzHERqmnIygqzV9Ojw+/1OQBYeNmnqh/YgkUnJ0zeSe8ojd1ENhIyiWqZ7Jl
-         UFOYDflSyEgqKZ0mrIz5UN4H+GYzjBXJdNcLxjDxyZogtobnYc3xWwWE74Zy7B7SUeAM
-         3uAYTnFmJcFQI7sLX7iw2LYltjU0AKkvWyrRuVgtygp5Yi0oOIVxJf7zyAD7E0PUZR5A
-         boBQ==
-X-Gm-Message-State: AE9vXwOfGGnjILta4x0C5XaQGKwPAYiUueUQ1mRoo6q/GkkLl1TVv5tCqZzGV0sZf/gHSA==
-X-Received: by 10.194.87.169 with SMTP id az9mr2179738wjb.81.1472769215694;
-        Thu, 01 Sep 2016 15:33:35 -0700 (PDT)
-Received: from [192.168.1.26] (abrf30.neoplus.adsl.tpnet.pl. [83.8.99.30])
-        by smtp.googlemail.com with ESMTPSA id va3sm7402812wjb.18.2016.09.01.15.33.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 01 Sep 2016 15:33:34 -0700 (PDT)
-Subject: Re: [PATCH 10/22] sequencer: avoid completely different messages for
- different actions
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <cover.1472457609.git.johannes.schindelin@gmx.de>
- <1e940c58329ff5f224ec5bc48927a28ff4d1bf66.1472457609.git.johannes.schindelin@gmx.de>
- <30b04497-dfb8-914b-42c4-8bc66347d347@gmail.com>
- <alpine.DEB.2.20.1609010950150.129229@virtualbox>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jiang Xin <worldhello.net@gmail.com>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <198780d4-dbef-c0cc-fb4c-fc8986a33002@gmail.com>
-Date:   Fri, 2 Sep 2016 00:33:29 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S1751282AbcIAWiX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 18:38:23 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55099 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750958AbcIAWiX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 18:38:23 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AF0E63A395;
+        Thu,  1 Sep 2016 18:38:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=hizXUxYmN5VxZdWoSPlVSLocOwI=; b=qA6nbi
+        U7I/qP6Z12XAIVO8NwFAPbt4Hd50Um3WeOVwTtsRCz/mD6QsQ657oCWD78yBSwla
+        JmE7Of5vDCogxiF/PueawDu06bPkJ5dqWCiih3d26nMpOfnB16McBZ7ZlgDg7vb1
+        Jxur70bjs27X7jRF8rsuCGNi5J8fgqdyc39gU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=MBtoJUUv2PtTbKcQ8qyQiml3LjvsGPrN
+        ex+v+qR/SSxmZARJiu9tuUcdEsoBa5kT36Afo/GroFj90LTlMrpXdNJz1+hDsQdd
+        ozEDJT47OfdLgBjU8EEg46m94lxpKKq6taBeHTKW/EtCJ5/kmZ4w9C8M3lPBoeNE
+        e4gzPAa8AJM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A68EC3A394;
+        Thu,  1 Sep 2016 18:38:21 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 285E93A393;
+        Thu,  1 Sep 2016 18:38:21 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
+        Jan Keromnes <janx@linux.com>, git@vger.kernel.org,
+        Ingo =?utf-8?Q?Br=C3=BCckl?= <ib@wupperonline.de>,
+        Edward Thomson <ethomson@edwardthomson.com>
+Subject: Re: `make profile-install` fails in 2.9.3
+References: <CAA6PgK7C18F1WGyZMTEUAWEVsUWqiZND5Ne_0SH-rUEm8u5dNg@mail.gmail.com>
+        <20160901200700.GA8254@hank>
+        <20160901215810.ez47lqwmfmahyvc7@sigill.intra.peff.net>
+        <xmqqh99zuuyh.fsf@gitster.mtv.corp.google.com>
+        <20160901222015.wqhrerudnwddbyhz@sigill.intra.peff.net>
+Date:   Thu, 01 Sep 2016 15:38:19 -0700
+In-Reply-To: <20160901222015.wqhrerudnwddbyhz@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 1 Sep 2016 18:20:15 -0400")
+Message-ID: <xmqq4m5zutyc.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1609010950150.129229@virtualbox>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: C914AA26-7094-11E6-8FA7-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Johannes
+Jeff King <peff@peff.net> writes:
 
-W dniu 01.09.2016 o 09:52, Johannes Schindelin pisze:
-> On Wed, 31 Aug 2016, Jakub Narębski wrote:
->> CC-ed to Jiang Xin, L10N coordinator.
->> W dniu 29.08.2016 o 10:05, Johannes Schindelin pisze:
+> Yeah, I had a similar thought, but it just feels so hacky. Is there
+> anything wrong with making this completely separate from the content
+> update. I.e., just applying the pathspec to the index as a separate step
+> and adding "+x" to each entry?
+>
+> This really is just a more convenient interface around "update-index
+> --chmod", isn't it? We should be able to do the same thing it does.
 
-[...]
->>> -	/* Different translation strings for cherry-pick and revert */
->>> -	if (opts->action == REPLAY_PICK)
->>> -		error(_("Your local changes would be overwritten by cherry-pick."));
->>> -	else
->>> -		error(_("Your local changes would be overwritten by revert."));
->>> +	error(_("Your local changes would be overwritten by %s."),
->>> +		action_name(opts));
->>
->> If I understand it correctly, it would make "revert" or "cherry-pick"
->> untranslated part of error message.  You would need to use translation
->> on the result with "_(action_name(opts))", you would have to mark
->> todo_command_strings elements for gettext lexicon with N_(...).
->>
->> I am rather against this change (see also below).
-> 
-> Okay.
-> 
-> Unfortunately, I have to focus on the correctness of the code at the
-> moment (and Git for Windows does ship *without* translations for the time
-> being anyway, mostly to save on space, but also because users complained).
+Sure, the simplest and the most straight-forward way may look dumb,
+but it would be the safest.
 
-Users complained about having translations, or not having easy way to
-switch them or switch them off?
-
-> 
-> So I will take care of this after v2.10.0.
-> 
-> For the record, how is this supposed to be handled, in particular when I
-> introduce a new action whose action_name(opts) will be "rebase -i"? Do I
-> really need to repeat myself three times?
-
-I think you should be able to mark strings to be translated,
-without translating them at the time of definition,
-
-  static const char *todo_command_strings[] = {
-  	N_("pick"),
-  	N_("revert")
-  };
-
-then translate at the point of use
-
-  	error(_("Your local changes would be overwritten by %s."),
-		_(action_name(opts)));
-
-I assume that action_name(opts) returns one of todo_command_strings.
-If not, there should be array with possible actions.
-
-
-Assuming that such lego l10n is preferable to multiple translations,
-more free-formt.
-
--- 
-Jakub Narębski
 
