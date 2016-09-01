@@ -2,174 +2,192 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF6DC1F6BF
-	for <e@80x24.org>; Thu,  1 Sep 2016 20:59:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 645F820193
+	for <e@80x24.org>; Thu,  1 Sep 2016 21:00:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753154AbcIAU7u (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 16:59:50 -0400
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:38038 "EHLO
-        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755315AbcIAU7u (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 16:59:50 -0400
-Received: by mail-wm0-f51.google.com with SMTP id 1so2408601wmz.1
-        for <git@vger.kernel.org>; Thu, 01 Sep 2016 13:59:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=wdqlKodO774Y6qVTrms95IZ4cQCDRuEVSL9mw8UCss0=;
-        b=dqv5AOkeHqrpfylir7ZqpZjKYrO8Qp24nTf6o6/W9ZYvzaqZi6G9cuuh2mxe/NdYnq
-         c1MhSbP/LZw3OyFNTsVwK4v0fDIsPJG91YsmKo96uv6tRMnbL40GWO+niQA4MQTIeGLu
-         AUEr5QCZwhEiVOszVFsJAUh8nUORsVuXvOVK5wh9OgiSOQSj12R38y+z3Hm7fHaCJ3P4
-         +212dy+UzTI47AlhIvtMnm/0bzDhFBeThY1ATVwkhtLadyDiWglcZbCTiDeOgKZnxuL4
-         DTPL4TEJRoIF9x3BawZFsTPAvGY71+wOKw2AhfZCCHDu0ISwvrdLI3oeVqIVfB6BKoFi
-         Oyyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=wdqlKodO774Y6qVTrms95IZ4cQCDRuEVSL9mw8UCss0=;
-        b=LopQoMwlQhcZ+W1fOce5E3yLhtoGIp1v8LeHSfc5grMoNfVWkp7dK+V/yKJ+/BnAA9
-         ki9B63H2GDP4BG6S61FyUW2PxffhBcjNHme814+s5Bm+HgwQxQWm/r854kT+f/BBNFiQ
-         jHTp93epBxhrV/l425eR2t6dV95AXis/4HHG5l+uxszqunJOXvwVkZ4IVTb6Y2iO9L7g
-         syataxJWB9aY+SSXHtWvQAGUq1X259LimfEKDALWa9zL3jcdcRPqVh1ysFFkIn6k3w93
-         CJpzAEMFpdSiETjpREnRcyeHMDn3VRV43ZTUCzGacrvuxGcWrY2N5qcUZt4IDIhWAqkd
-         eKYQ==
-X-Gm-Message-State: AE9vXwMjKKECRm1Hppv+mtD2PVLry+eOICZzpKHursmVy50hBiErqTyLSfpeMsiLZ2Qp0w==
-X-Received: by 10.194.97.17 with SMTP id dw17mr15932592wjb.8.1472760419471;
-        Thu, 01 Sep 2016 13:06:59 -0700 (PDT)
-Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
-        by smtp.gmail.com with ESMTPSA id i3sm6888265wjd.31.2016.09.01.13.06.57
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 01 Sep 2016 13:06:57 -0700 (PDT)
-Date:   Thu, 1 Sep 2016 21:07:00 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Jan Keromnes <janx@linux.com>
-Cc:     git@vger.kernel.org,
-        Ingo =?iso-8859-1?Q?Br=FCckl?= <ib@wupperonline.de>,
-        Edward Thomson <ethomson@edwardthomson.com>
-Subject: Re: `make profile-install` fails in 2.9.3
-Message-ID: <20160901200700.GA8254@hank>
-References: <CAA6PgK7C18F1WGyZMTEUAWEVsUWqiZND5Ne_0SH-rUEm8u5dNg@mail.gmail.com>
+        id S1755459AbcIAVAS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 17:00:18 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64457 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754675AbcIAVAR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 17:00:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0686F389D5;
+        Thu,  1 Sep 2016 16:21:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jahvCsEE1nIVfWHq/yR3BUNP1j8=; b=exhIYX
+        6gk00+3WQQdknEHZcUBhsJ4oTdH/1kxvvaqh47O3nP08S7qhzlhxn30XpuaASyqV
+        ar0EmoaWvcGNhMt6cnNHKRB5DJ7uJf0LZVwqC+fwtfCo31dYKDgSySG9T68oHXA6
+        4v+Qa/CNDfUyYvub24ksO5D20omyth3/gUxmA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=qAesR+RkvqSb7yhK+0xokbP5rppfrY2/
+        4cf5ruEc8xR0szWwh0GPxdT5ChgFcchBTcpJTMGtCUgwJ1XWFTc+06iv8dmeG/n7
+        KOhx54xAjeINnRTBwrftlO02h2PXdMlY9ijzabDhV2Rrw4X6+WDbRHIfJMaCiu3Z
+        P0eft8JXkRg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F3490389D4;
+        Thu,  1 Sep 2016 16:21:04 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6E119389D1;
+        Thu,  1 Sep 2016 16:21:04 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Uma Srinivasan <usrinivasan@twitter.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jens Lehmann <Jens.Lehmann@web.de>,
+        Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: git submodules implementation question
+References: <CAN5XQftQH8B+hWVh4JQgZwAp+rkbz51P5NZDc_+Tfm0EB1zkew@mail.gmail.com>
+        <xmqqlgzf9wch.fsf@gitster.mtv.corp.google.com>
+        <CAN5XQft6S+LG0mBgRFPrMZiOxHSfRhjLmQdeMdBeHKoWQSRUEA@mail.gmail.com>
+        <CAPc5daVhY6WdHkXGLYea48uOw0-rTzLLZ=7mNo=VPebZ9AG4jQ@mail.gmail.com>
+        <CAN5XQfty6Fshzf6kN7eXhFekU9+=VPwbzEPN1a92yVB=9nm0Vg@mail.gmail.com>
+        <CAN5XQfsg_sJbyjfdc=-e85jiCQNUqagwgh6TVOXN+NskZ7KkVw@mail.gmail.com>
+        <xmqqbn0b6ua8.fsf@gitster.mtv.corp.google.com>
+        <CA+P7+xosGg955msq-gyKz_HyCZf7fPFQJdKZ3P8U3+poBBfuWA@mail.gmail.com>
+        <CAN5XQfsv+BEYDWR6Xjs4mCtYDVR12a2UzB1-_H4A_xfjUUOe2g@mail.gmail.com>
+        <CA+P7+xohfRsoV9VXgUrRaXPb9HvCc5gs4-KSWp38X_d_6EfkTA@mail.gmail.com>
+        <CA+P7+xpGnsKzBPLVgPNSmZ7K00vY7-eJp7kSHWMRHM+cOsL_XQ@mail.gmail.com>
+        <CAN5XQftCC+TUm2Jx4q3V9oFbXndtFx3H+daoB3TD3eWUs6s54A@mail.gmail.com>
+        <xmqqzinu3zyw.fsf@gitster.mtv.corp.google.com>
+        <CAN5XQfuoq6MV4e98RzUCG02KvZO6VZAbs1oxAzpdg5zswqpHGw@mail.gmail.com>
+        <xmqq7faw3n5w.fsf@gitster.mtv.corp.google.com>
+        <xmqqk2ewxnui.fsf@gitster.mtv.corp.google.com>
+        <CAN5XQftt3qVoU9gB2oyimY328VK0W6xq5FSCQYvcB9dEgkxVWA@mail.gmail.com>
+        <xmqqmvjrwjwm.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kZnhNVBy6Oqt=x8m0jZj_tGNkMPPBBr+aL6DToOYtv9vQ@mail.gmail.com>
+        <xmqqa8frwhpr.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 01 Sep 2016 13:21:02 -0700
+In-Reply-To: <xmqqa8frwhpr.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Thu, 01 Sep 2016 12:19:44 -0700")
+Message-ID: <xmqq4m5zwevl.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAA6PgK7C18F1WGyZMTEUAWEVsUWqiZND5Ne_0SH-rUEm8u5dNg@mail.gmail.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9B9D9F70-7081-11E6-8144-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[+cc Edward Thomson, Ingo Brückl]
+Junio C Hamano <gitster@pobox.com> writes:
 
-Hi,
+> Stefan Beller <sbeller@google.com> writes:
+>
+>>> The final version needs to be accompanied with tests to show the
+>>> effect of this change for callers.  A test would set up a top-level
+>>> and submodule, deliberately break submodule/.git/ repository and
+>>> show what breaks and how without this change.
+>>
+>> Tests are really good at providing this context as well, or to communicate
+>> the actual underlying problem, which is not quite clear to me.
+>> That is why I refrained from jumping into the discussion as I think the
+>> first few emails were dropped from the mailing list and I am missing context.
+>
+> I do not know where you started reading, but the gist of it is that
+> submodule.c spawns subprocess to run in the submodule's context by
+> assuming that chdir'ing into the <path> of the submodule and running
+> it (i.e. cp.dir set to <path> to drive start_command(&cp)) is
+> sufficient.  When <path>/.git (either it is a directory itself or it
+> points at a directory in .git/module/<name> in the superproject) is
+> a corrupt repository, running "git -C <path> command" would try to
+> auto-detect the repository, because it thinks <path>/.git is not a
+> repository and it thinks it is not at the top-level of the working
+> tree, and instead finds the repository of the top-level, which is
+> almost never what we want.
 
-On 09/01, Jan Keromnes wrote:
+This is with a test that covers the call in get_next_submodule() for
+the parallel fetch callback.  I think many of the codepaths will end
+up recursing forever the same way without the fix in a submodule
+repository that is broken in a similar way, but I didn't check, so
+I do not consider this to be completed.
 
-[.. snip the parts others are more qualified to answer ..]
-> 
-> Related problem: `t3700-add.sh` currently fails in 2.9.3. I can
-> provide more debug information if you don't already know this problem.
+-- >8 --
+Subject: submodule: avoid auto-discovery in prepare_submodule_repo_env()
 
-I noticed this problem as well, when I'm compiling with USE_NSEC = 1
-in my config.mak.
+The function is used to set up the environment variable used in a
+subprocess we spawn in a submodule directory.  The callers set up a
+child_process structure, find the working tree path of one submodule 
+and set .dir field to it, and then use start_command() API to spawn
+the subprocess like "status", "fetch", etc.
 
-Tracking this problem down a bit, it happens because the --chmod=[+-]x
-option introduced in 4e55ed32 ("add: add --chmod=+x / --chmod=-x
-options") only works if the file on disk is modified.  When the test
-was changed to work on one single file, instead of doing chmod=+x on
-one file and chmod=-x on another file in b38ab197c ("t3700: merge two
-tests into one"), this test started breaking when the mtime of the
-file and the index file weren't the same (in other words, if the file
-was not racily clean and thus was not smudged).
+When this happens, we expect that the ".git" (either a directory or
+a gitfile that points at the real location) in the current working
+directory of the subprocess MUST be the repository for the submodule.
 
-When the file is racily clean, git detects that the contents changed,
-and everything is happy, but if it isn't, git incorectly thinks the
-file wasn't modified (which it wasn't, but from gits view it should be
-viewed as modified because the mode does not match up anymore).
+If this ".git" thing is a corrupt repository, however, because
+prepare_submodule_repo_env() unsets GIT_DIR and GIT_WORK_TREE, the
+subprocess will see ".git", thinks it is not a repository, and
+attempt to find one by going up, likely to end up in finding the
+repository of the superproject.  In some codepaths, this will cause
+a command run with the "--recurse-submodules" option to recurse
+forever.
 
-One possible fix for the test is to smudge the entry as showed below,
-though I'm not sure it's the right fix.  The other way I can think of
-is to change the file in the index regardless of whether the file was
-changed in some other way before issuing the git add command, as that
-might fit the user expectation better.  Thoughts?
+By exporting GIT_DIR=.git, disable the auto-discovery logic in the
+subprocess, which would instead stop it and report an error.
 
-diff --git a/read-cache.c b/read-cache.c
-index 491e52d..f2e7986 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -656,11 +656,13 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
- 	else
- 		ce->ce_flags |= CE_INTENT_TO_ADD;
+Not-signed-off-yet.
+---
+ submodule.c                 |  1 +
+ t/t5526-fetch-submodules.sh | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 30 insertions(+)
+
+diff --git a/submodule.c b/submodule.c
+index 1b5cdfb..e8258f0 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1160,4 +1160,5 @@ void prepare_submodule_repo_env(struct argv_array *out)
+ 		if (strcmp(*var, CONFIG_DATA_ENVIRONMENT))
+ 			argv_array_push(out, *var);
+ 	}
++	argv_array_push(out, "GIT_DIR=.git");
+ }
+diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+index 954d0e4..b2dee30 100755
+--- a/t/t5526-fetch-submodules.sh
++++ b/t/t5526-fetch-submodules.sh
+@@ -485,4 +485,33 @@ test_expect_success 'fetching submodules respects parallel settings' '
+ 	)
+ '
  
--	if (S_ISREG(st_mode) && force_mode)
-+	if (S_ISREG(st_mode) && force_mode) {
- 		ce->ce_mode = create_ce_mode(force_mode);
--	else if (trust_executable_bit && has_symlinks)
-+		ce->ce_stat_data.sd_size = 0;
-+	} else if (trust_executable_bit && has_symlinks) {
- 		ce->ce_mode = create_ce_mode(st_mode);
--	else {
-+	} else {
- 		/* If there is an existing entry, pick the mode bits and type
- 		 * from it, otherwise assume unexecutable regular file.
- 		 */
++test_expect_success 'fetching submodule into a broken repository' '
++	# Prepare src and src/sub nested in it
++	git init src &&
++	(
++		cd src &&
++		git init sub &&
++		git -C sub commit --allow-empty -m "initial in sub" &&
++		git submodule add -- ./sub sub &&
++		git commit -m "initial in top"
++	) &&
++
++	# Clone the old-fashoned way
++	git clone src dst &&
++	git -C dst clone ../src/sub sub &&
++
++	# Make sure that old-fashoned layout is still supported
++	git -C dst status &&
++
++	# Recursive-fetch works fine
++	git -C dst fetch --recurse-submodules &&
++
++	# Break the receiving submodule
++	rm -f dst/sub/.git/HEAD &&
++
++	# Recursive-fetch must terminate
++	# NOTE: without fix this will recurse forever!
++	test_must_fail git -C dst fetch --recurse-submodules
++'
++
+ test_done
 
-								           
 
-
-
-> Thanks,
-> Jan Keromnes
-> 
-> ---
-> 
-> Steps to reproduce:
-> 
->     curl https://www.kernel.org/pub/software/scm/git/git-2.9.3.tar.xz | tar xJ \
->      && cd git-2.9.3 \
->      && make prefix=/usr profile-install install-man -j18
-> 
-> Expected result:
-> 
->     - runs all tests to get a profile (ignoring occasional failures)
->     - rebuilds Git with the profile
->     - installs Git
-> 
-> Actual result:
-> 
->     - runs all tests to get a profile
->     - at least one test fails, interrupting the whole process
->     - Git is not installed
-> 
-> Failure log:
-> 
->     # failed 1 among 40 test(s)
->     1..40
->     Makefile:43: recipe for target 't3700-add.sh' failed
->     make[3]: *** [t3700-add.sh] Error 1
->     make[3]: Leaving directory '/tmp/git/git-2.9.3/t'
->     Makefile:36: recipe for target 'test' failed
->     make[2]: Leaving directory '/tmp/git/git-2.9.3/t'
->     make[2]: *** [test] Error 2
->     Makefile:2221: recipe for target 'test' failed
->     make[1]: *** [test] Error 2
->     make[1]: Leaving directory '/tmp/git/git-2.9.3'
->     Makefile:1633: recipe for target 'profile' failed
->     make: *** [profile] Error 2
->     The command '/bin/sh -c mkdir /tmp/git  && cd /tmp/git  && curl
-> https://www.kernel.org/pub/software/scm/git/git-2.9.3.tar.xz | tar xJ
-> && cd git-2.9.3  && make prefix=/usr profile-install install-man -j18
-> && rm -rf /tmp/git' returned a non-zero code: 2
-
--- 
-Thomas
