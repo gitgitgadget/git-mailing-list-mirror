@@ -7,47 +7,48 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 052571F6BF
-	for <e@80x24.org>; Thu,  1 Sep 2016 13:56:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F09201F6BF
+	for <e@80x24.org>; Thu,  1 Sep 2016 14:14:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933098AbcIAN4f (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 09:56:35 -0400
-Received: from mout.gmx.net ([212.227.15.19]:59489 "EHLO mout.gmx.net"
+        id S1753428AbcIAOON (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 10:14:13 -0400
+Received: from mout.gmx.net ([212.227.15.15]:56208 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933023AbcIAN4e (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 09:56:34 -0400
+        id S1753066AbcIAOOM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 10:14:12 -0400
 Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MSuMn-1bY4SR1fS1-00Rmdo; Thu, 01 Sep 2016 15:56:06
+ ESMTPSA (Nemesis) id 0MO77c-1bkwOw3fts-005d7R; Thu, 01 Sep 2016 16:13:58
  +0200
-Date:   Thu, 1 Sep 2016 15:56:05 +0200 (CEST)
+Date:   Thu, 1 Sep 2016 16:13:57 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
 cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 19/22] sequencer: support cleaning up commit messages
-In-Reply-To: <9f2cbc74-3e4d-e7f1-d2dd-e85e0b9168b1@gmail.com>
-Message-ID: <alpine.DEB.2.20.1609011543290.129229@virtualbox>
-References: <cover.1472457609.git.johannes.schindelin@gmx.de> <eeb3d11d235a0220a9a125a21d1b09a73d2c61dc.1472457609.git.johannes.schindelin@gmx.de> <9f2cbc74-3e4d-e7f1-d2dd-e85e0b9168b1@gmail.com>
+Subject: Re: [PATCH 21/22] sequencer: left-trim the lines read from the
+ script
+In-Reply-To: <7996a963-52b5-5f3c-f686-f5cf22573573@gmail.com>
+Message-ID: <alpine.DEB.2.20.1609011608440.129229@virtualbox>
+References: <cover.1472457609.git.johannes.schindelin@gmx.de> <8c30113a920e075e5ecd68ba31b4007de3e2dbc2.1472457609.git.johannes.schindelin@gmx.de> <7996a963-52b5-5f3c-f686-f5cf22573573@gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-352110144-1472738166=:129229"
-X-Provags-ID: V03:K0:n2P7tSSJX8RWChL6Yk5sZHrJS6Gvtz5xqgISwy9uJqkaaHPsZSk
- jz/d2bVN/JKrQQAVes7B8G524vPQ2X8md7CLzEtDMbIKczkKCkyjPMYnppeEWONIl8tN0Fa
- t7MuUS80SlH9P8HUAuALu4PZpe7XTrL8u6GxZQA9/7e+GeArfti3n6deJ8OylLjvhlNbV0M
- 33zz71MpPm4NxVLmbumXQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:cMdjc7+uyZo=:Aj3mq2hNn3vZQ2rApFTUFP
- I9pAYO/Q+E+SvTq//HhbcIzj2pOxkb6RjHma0ggZWfZuL7LTUzSvFZkb0cJvdqppqgqN9/ElT
- Qf+3jW1I6GeWDQfnJNEIAamcsflefkOWaB9kUdofYH0CuG1vZ9x1DTtp4z0DwyqgD6rAORBJJ
- AgZ5+X4QrDCwkn0qhjReICLOkU3xEbYFLUp4PcoOhAef2/q1fc6UOVvsat9/YdZdS5Or+7BeY
- PL8fmPIzDQaF5xP9lugELD86WmeLtidqZYJhDTueN+aeMlbgAYQnOUTRctTQnNUZUKsWXPNHY
- UQAz4LKxQtHDkrWdK75dkVToYdTIKWKzcySPR4Mva74AsRD8Ux3pG2h3+FUqVY7T0B+J/4j/3
- 6KgM3o3d07PvYSR7aS8LbmzQiMcRhSb7SjeArBj8IqSnp0H4QAbK6bHHnWdlXwp4mJQ7yj5Cz
- 2Y8buEYvRynpER4yI29XMELEEtjbq4OwbF2I2NsvI05IOwEJWtYG+p2yIzV3v6lW3wJq8/mmE
- V71zNE9/yqvFSIrO17NVtGlj6FOZX5OLl6FQs1mQSWhX1v/2b31ZiKQ/qUd3owqcihQNGYis2
- BxRMx1pEg5BDn1QpHmOpc/ghLIeWOKeqDBNTAhPgB+PG9GDQ8Tuc/ygCTl8S/a7inH3y4K9Tk
- nprhbMgyGcKBvq7/Uta0hopRv+vczJSWpeckML1X21PKV8AgCLZepG9wXolBBih4jCzVKPhVo
- 4WUfgOUKYYoJ4nGYqWK5gY4nv0P/5ajeMtMc8PpvrcwbhHRCXDzSmoC8o9oPRoN39Vh9HwedG
- CsKOAQQ
+Content-Type: multipart/mixed; BOUNDARY="8323329-1858442267-1472739238=:129229"
+X-Provags-ID: V03:K0:TOZXm4CdUI+tvlcACTmbGuq6I7Oq2hekPnDhhh4Tfc4hFdcWzgr
+ 8lpGU9UFHhqFaXuzfmqx1DYZO/ilwinHisn9n6ZK9rHJ2r1PZH/4MaqPDer5h1uk2uD0ooq
+ pOhQm3PmNUldelyHkRtCeawrnbm/eU1j/Wn6dFYMmyqrNjyMNO9eLcUkMLzInVyjp4uJl54
+ Dzu9NJiEtyoccdNZJnQgg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:J99LZsHH+e4=:J2oI+yxaTC4LL0aM7jQrMs
+ DrXcveUX8rl3apRbeTV7hDW1js4o0RsY9VyTB+EIne/JpX6soBUwOTfBz/WSs/wEbNdi4wimu
+ 8QxuqVkpOOTlMZgEOTu9mhyTz5/CzyGVHV9n5iSopVsf7ONP/Y8JuzL+gpOfeTykmwLtL+odp
+ s1gh8mtpFOVmc87xVuyXyQizuWj7Yf3LUAUCWBar+DceY91j1UlGH9pR932NhLdfrpBPUWC4L
+ 6uv2InCcp7UzAL1TDAlNVKw1fmlKnzKaPUZlWC1vkdsexEpX0rQEafdmV+dKfgP8xxD1/ufLE
+ s86zc7RKDyJkdatuDvMmwki70KbWqY8NTRe/eYeIAs/0XM7MBuU5ha1Nxc36pFcsoHmYBPlaU
+ H8eciNzP8TWJRaZgJI5OL3uSv6vEDAfi/TWBklq+rTJP1bOwMYJ6TSTyIQpv8DJDarejlk8fR
+ 1mVGhiPWL5XNG+jZJCb25hnD+2nxLYHZqbLiNaKuMrzft8JKV2xrnaf1bQE2STWS7s68SEcMP
+ Q2hGNIcZsLf1mVpl668xvSFlFv+aN0PPuo2OpM4OxJN2H0obzN+3dB9l56048rRWMIu5YYCB6
+ dCPdzFELj/+KOdjzgN7YcfRHEAKgNrtjM134WS5ZD6F4E5ekfp86dWHXYEIZObYi1Xuvhenu1
+ 0QYImHa+/4yRnxyEVAKJr4VvKIMQjLZhT6NL4vpNEFyHz9DckuCvaQH5Ed2Bk5+QMtfvUx5uK
+ 3rRNquH9PjA+7RmNkT9UBQCzwBubRL6CP3dsMxEtrOMlpFpDmD4Zkq5O5SUTMIKehopXiCZ5e
+ m/Xk/rl
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -56,7 +57,7 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323329-352110144-1472738166=:129229
+--8323329-1858442267-1472739238=:129229
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 
@@ -66,46 +67,46 @@ On Thu, 1 Sep 2016, Jakub Nar=C4=99bski wrote:
 
 > W dniu 29.08.2016 o 10:06, Johannes Schindelin pisze:
 >=20
-> > @@ -781,7 +785,7 @@ static int do_pick_commit(enum todo_command command=
-, struct commit *commit,
-> >  =09}
-> >  =09if (!opts->no_commit)
-> >  =09=09res =3D sequencer_commit(opts->edit ? NULL : git_path_merge_msg(=
-),
-> > -=09=09=09opts, allow, opts->edit, 0);
-> > +=09=09=09opts, allow, opts->edit, 0, 0);
+> Subject: [PATCH 21/22] sequencer: left-trim the lines read from the scrip=
+t
 >=20
-> The calling convention begins to look unwieldy, but we have only
-> a single such callsite, and there are quite a bit callsites in
-> Git code that have similar API ("git grep ', 0, 0' -- '*.c'").
-> So we don't need to think about alternatives.  Yet.
-
-Right.
-
-Please note that it will make much more sense in the end, too, as the 0s
-will be replaced by appropriate variables.
-
-> It's a pity that emulation of named parameters in C requires
-> relying on designated inits from C99
+> In the subject, it should probably be without "the", as "lines"
+> are plural.
 >=20
->   typedef struct {
->     double pressure, moles, temp;
->   } ideal_struct;
->=20
->   #define ideal_pressure(...) ideal_pressure_base((ideal_struct){.pressur=
-e=3D1,   \
->                                         .moles=3D1, .temp=3D273.15, __VA_=
-ARGS__})
->=20
->   double ideal_pressure_base(ideal_struct in)
->   {
->     return 8.314 * in.moles*in.temp/in.pressure;
->   }
->=20
->   ... ideal_pressure(.moles=3D2, .temp=3D373.15) ...
+> s/left-trim the lines/left-trim lines/
 
-Yeah, that looks unwieldy ;-)
+I am happy that we stepped outside of the "code correctness" land into
+"grammar fix" land, as it surely means that you are convinced the code is
+correct? ;-)
 
-Thanks for the review,
+Fixed.
+
+> > Interactive rebase's scripts may be indented; We need to handle this
+> > case, too, now that we prepare the sequencer to process interactive
+> > rebases.
+>=20
+> s/; We need/; we need/
+
+Hrmpf. From http://grammar.ccc.commnet.edu/grammar/marks/colon.htm:
+
+=09There is some disagreement among writing reference manuals about
+=09when you should capitalize an independent clause following a
+=09colon. Most of the manuals advise that when you have more than one
+=09sentence in your explanation or when your sentence(s) is a formal
+=09quotation, a capital is a good idea. The NYPL Writer's Guide urges
+=09consistency within a document; the Chicago Manual of Style says
+=09you may begin an independent clause with a lowercase letter unless it's
+=09one of those two things (a quotation or more than one sentence).
+=09The APA Publication Manual is the most extreme: it advises us to
+=09always capitalize an independent clause following a colon. The advice
+=09given above is consistent with the Gregg Reference Manual.
+
+Based on that, I think that a capital is the correct case here.
+
+> 'bol' is beginning-of-line, isn't it (a complement to eol)?
+
+Yep. How did you guess? :-)
+
+Ciao,
 Dscho
---8323329-352110144-1472738166=:129229--
+--8323329-1858442267-1472739238=:129229--
