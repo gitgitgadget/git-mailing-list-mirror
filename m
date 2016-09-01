@@ -2,89 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52E1C1FBB0
-	for <e@80x24.org>; Thu,  1 Sep 2016 08:33:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 695791FBB0
+	for <e@80x24.org>; Thu,  1 Sep 2016 08:46:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752523AbcIAIdo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 04:33:44 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33766 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752452AbcIAIdn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 04:33:43 -0400
-Received: by mail-wm0-f68.google.com with SMTP id w207so7278689wmw.0
-        for <git@vger.kernel.org>; Thu, 01 Sep 2016 01:33:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=IUgaZzZpfPH/QjQji6o995xI0DuqaCbyETb0whQWoYU=;
-        b=mnPSVq4Gqtt5PDuXXkEhp93+72qhQd15fb+R7+cA8vb8pYqfdmdEicpH6iEZdE4bxz
-         OKd/2Rdb2tCNU/pKSx//OlVMkmRC/eQd0NmN9IKNSgOfDTYNRq//J0JngZbipm6rro7t
-         +9GbZFNB6qLGtMeLUhk+Cl/yvbNWUAlWzs2ZUlWRpAyifWGRTtxt9geRcXfjc0HkWR/S
-         nXWyD7AEedHBfpVVahs/DuQBZsYAk9d+oFUDbaUqxJzS4fLdUJFs6EUrATS4eHYOMbl2
-         oq64jp2r+eEBzJHk3+bcMgqUDRveNRnNE22zDPsc6URpvBmjN+3vPo0o4mDQWNaECD7n
-         7Rhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=IUgaZzZpfPH/QjQji6o995xI0DuqaCbyETb0whQWoYU=;
-        b=hebc2YC4Q7o2QY46m4tBuq5jK0MXDBTzTj5mTgrHlhPPvWGTBZCG8yIRZ8vG/VM1Fa
-         L4faT2tmz+nOD5pt/wMiPrW9ytkxprfLN69yhAG0SX6rdrkCq6y6T2j6u6TaVOdAZuNL
-         3mzcikqB2LpnYs1/sb59CxPyrgRAnUJSAKPbYGxAwmbzTgCRuMY2Pfb3jDLQCQdpbO4A
-         cvaquPg4N2FHV1X8BhbjCYgFE2cNOaxAggyLgxO0wPHY/kvourHuN3z9zTw40Dtliye7
-         wwMdUfSjdyai9WXPSmx7iO9BsWdc69TgfJTREW1CVznaPbn9iEJ3wkhHmxXUczGxciuk
-         BUEg==
-X-Gm-Message-State: AE9vXwMbjaqRMnXcj+sP96NyA0jPqrdG/INGHj3staeD7y5d8TK36/LPD/2laxx+OcGbYQ==
-X-Received: by 10.194.176.69 with SMTP id cg5mr12491048wjc.52.1472718816718;
-        Thu, 01 Sep 2016 01:33:36 -0700 (PDT)
-Received: from [10.42.1.91] ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id 4sm27821672wmu.2.2016.09.01.01.33.36
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 01 Sep 2016 01:33:36 -0700 (PDT)
-Message-ID: <1472718815.4680.21.camel@kaarsemaker.net>
-Subject: Re: [PATCH 27/34] sequencer (rebase -i): differentiate between
- comments and 'noop'
-From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-Date:   Thu, 01 Sep 2016 10:33:35 +0200
-In-Reply-To: <736bcb8e860c876e32e8f89f68b0b901abedc187.1472633606.git.johannes.schindelin@gmx.de>
-References: <cover.1472633606.git.johannes.schindelin@gmx.de>
-         <736bcb8e860c876e32e8f89f68b0b901abedc187.1472633606.git.johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.18.5.2-0ubuntu3 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1750957AbcIAIqU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 04:46:20 -0400
+Received: from mout.gmx.net ([212.227.15.19]:51050 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753891AbcIAIp7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 04:45:59 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0Mbxdm-1bM43y3fFO-00JLXp; Thu, 01 Sep 2016 10:45:52
+ +0200
+Date:   Thu, 1 Sep 2016 10:45:51 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 13/22] sequencer: remember the onelines when parsing the
+ todo file
+In-Reply-To: <52d61bef-668b-fdc4-30b3-a34c11b39f81@gmail.com>
+Message-ID: <alpine.DEB.2.20.1609011038430.129229@virtualbox>
+References: <cover.1472457609.git.johannes.schindelin@gmx.de> <12bffd6ca4eb7acc00a102d13348bb96ad08371d.1472457609.git.johannes.schindelin@gmx.de> <52d61bef-668b-fdc4-30b3-a34c11b39f81@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: multipart/mixed; BOUNDARY="8323329-843252816-1472719552=:129229"
+X-Provags-ID: V03:K0:f/BuKMbOmhQMfiX0OuiDNNNWzf/E5UuI0lgm5lW+Ad/OGdgzWVv
+ hNkZ+SUb+9/eQ8h1jaoF1W17WqbDzoIPf+5hkN17/w6X+ytY/wLe4VXPvAthRRa7BuMbOnQ
+ /85IEQHhFhjYX6j/sRtbGZ3l+lEOdZElzwhtIdkVCv7GsE6X3N2d50c9BYMTXOShwy16+88
+ lYgC96utVnI8msNVWSKig==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:5/UmAVpoilk=:8uqfAazs6L08Vonzr3GoGY
+ FL9LV1oJ6mktIzs8NYHGWIUesR1d2V6s7+SgVFKBhCUOMZmotkQWOE/vZT868IUsDCXZeAw7T
+ yQbUspeZbiYmhS0NUvhPFQCKpXv77tLxhu1P2ZTXkkhBLKEVR4TCePlX0+yt0pd9r9opdZwNL
+ uJMNeKoH87lNnZa3JehlprWEONYpBHVjNZgb3o1aSefm4wKYPB65HsBxtRic4s9DhFXLrRDXA
+ fK2bZqw6NrcWAt/sAOHdHrQJRjchWx8xjjLEAt0704OzIL4QpnkN64wcaY2Ghtf1QcHTve1hk
+ +i5yBWL+eqQ01h1oiFHl6mLzJU7hsBnpQxXZG2W8W8P+OcDuy0dxmJkYdr8ko6fRJwNCxSi6Z
+ fN+5ZT1YmKlJzFKWynFgmEKqVurb0u2kteeDDK7T8gJNoq5dHOxX6aFdTdppFxG1d7ndeBh5H
+ BZG/ltvGkAMASD9FQ5GHmOFOgMuKLX/78+s5k2LWYxBWCq8W6U85BOO6ZCCwnyUpkMWMZ35Me
+ 6jgsua4yI3wPxB7CN/JaqZaiuNEHL83d2i/lJz2t2E7/qbZyJT0TlQ8upTY15cpwT/n0QGCPY
+ XJlvuqXZ5NF7d2PF6TWbsv6kOpHSZCloKKjVUc+8f1VbMQeqisikdlhvPTL7C33XsuGGmycCe
+ 6fwLo4KqiYh6IROEs+XnCYnA3bzy6oa0WwdNCBF+cyvkE02dqNCDT164OcLDkVR4epgw4Wtd1
+ b6seTEJ3Dz+rOiIxsymhfeCt/M1wewJPj+5syOq2Um3IpJgSwcUX2WJx3Aodz4cU9B6bXGaAg
+ OjP5S86
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On wo, 2016-08-31 at 10:56 +0200, Johannes Schindelin wrote:
-> diff --git a/sequencer.c b/sequencer.c
-> index 51c2f76..4c902e5 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -763,7 +763,8 @@ enum todo_command {
->         TODO_SQUASH,
->         TODO_EXEC,
->         TODO_NOOP,
-> -       TODO_DROP
-> +       TODO_DROP,
-> +       TODO_COMMENT
->  };
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-(picking a random commit that touches this enum)
+--8323329-843252816-1472719552=:129229
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-In a few places you now make comparisons like "< TODO_NOOP", so I think
-it would be good to have a comment near the definition of this enum
-that says that ordering matters and why, so people don't attempt to add
-a new TODO_FOOBAR at the end.
+Hi Kuba,
 
-D. 
+On Wed, 31 Aug 2016, Jakub Nar=C4=99bski wrote:
+
+> W dniu 29.08.2016 o 10:05, Johannes Schindelin pisze:
+>=20
+> > The `git-rebase-todo` file contains a list of commands. Most of those
+> > commands have the form
+> >=20
+> > =09<verb> <sha1> <oneline>
+> >=20
+> > The <oneline> is displayed primarily for the user's convenience, as
+> > rebase -i really interprets only the <verb> <sha1> part. However, there
+> > are *some* places in interactive rebase where the <oneline> is used to
+> > display messages, e.g. for reporting at which commit we stopped.
+> >=20
+> > So let's just remember it when parsing the todo file; we keep a copy of
+> > the entire todo file anyway (to write out the new `done` and
+> > `git-rebase-todo` file just before processing each command), so all we
+> > need to do is remember the begin and end offsets.
+>=20
+> Actually what we remember is pointer and length, or begin offset and leng=
+th,
+> not offset and offset.
+
+Right. Fixed.
+
+> > diff --git a/sequencer.c b/sequencer.c
+> > index 06759d4..3398774 100644
+> > --- a/sequencer.c
+> > +++ b/sequencer.c
+> > @@ -709,6 +709,8 @@ static int read_and_refresh_cache(struct replay_opt=
+s *opts)
+> >  struct todo_item {
+> >  =09enum todo_command command;
+> >  =09struct commit *commit;
+> > +=09const char *arg;
+> > +=09int arg_len;
+>=20
+> Why 'arg', and not 'oneline', or 'subject'?
+> I'm not saying it is bad name.
+
+Because we will use it for `exec` commands' args, too. Clarified in the
+commit message.
+
+> > @@ -760,6 +762,9 @@ static int parse_insn_line(struct todo_item *item, =
+const char *bol, char *eol)
+> >  =09status =3D get_sha1(bol, commit_sha1);
+> >  =09*end_of_object_name =3D saved;
+> > =20
+> > +=09item->arg =3D end_of_object_name + strspn(end_of_object_name, " \t"=
+);
+> > +=09item->arg_len =3D (int)(eol - item->arg);
+> > +
+>=20
+> Does it work correctly for line without <oneline>, that is
+>=20
+>   =09<verb> <sha1>
+>=20
+> I think it does, but I not entirely sure.
+
+It does work correctly: in the example, *end_of_object_name would be '\n',
+and strspn(end_of_object_name, " \t") would return 0.
+
+Thanks for the review!
+Dscho
+--8323329-843252816-1472719552=:129229--
