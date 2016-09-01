@@ -2,103 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6BF91FBB0
-	for <e@80x24.org>; Thu,  1 Sep 2016 08:28:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65D392035F
+	for <e@80x24.org>; Thu,  1 Sep 2016 08:28:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751258AbcIAI2O (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 04:28:14 -0400
-Received: from mout.gmx.net ([212.227.15.15]:56891 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750841AbcIAI2M (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 04:28:12 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MEFIm-1bulZD2zM0-00FR43; Thu, 01 Sep 2016 10:27:55
- +0200
-Date:   Thu, 1 Sep 2016 10:27:53 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Sverre Rabbelier <srabbelier@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Git <git@vger.kernel.org>
-Subject: Re: [PATCH v2] t/Makefile: add a rule to re-run previously-failed
- tests
-In-Reply-To: <CAGdFq_iJeziyXBPL2GVHNXZcjGAwQVN2EhJs4AtJCSx7ghn32Q@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1609011027210.129229@virtualbox>
-References: <b2d016e44fa04e8a318967c43762d6933faf7956.1467183740.git.johannes.schindelin@gmx.de> <0dfa96b17edfe84ba19c7e57fe0b017c77943e0c.1472478285.git.johannes.schindelin@gmx.de> <20160830084357.rdmt2ehngrz6rqaq@sigill.intra.peff.net>
- <xmqq37lm3w6u.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1608311233440.129229@virtualbox> <CAGdFq_iJeziyXBPL2GVHNXZcjGAwQVN2EhJs4AtJCSx7ghn32Q@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1751134AbcIAI25 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 04:28:57 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:38879 "EHLO
+        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750841AbcIAI2z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 04:28:55 -0400
+Received: by mail-wm0-f49.google.com with SMTP id 1so81123670wmz.1
+        for <git@vger.kernel.org>; Thu, 01 Sep 2016 01:28:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Fm06HxsdfIDqsb7TuCc1lALAKl3AwDdPHuT1PgWsR4E=;
+        b=D4A7pFgX4dG087waxfkLYmJizMb+1wvjZ19vR309yZAUbnhRk+IT6bF7PpvXm3DReM
+         UR/sG2c58RpzwPRH3IRMN5ZOTWlPXaQrDwntpzP1qOwFIBPozXVfOINjR58K9/CqMD1C
+         A/4UXCyHg3wY3qNbJakdr5yG6KKRwbgmEiy0LMjSoB/IfOITsQd5nIHJrDCiSuQFI9Bs
+         ZGMSBwdhsMzq86LBI6psloTZMRoqiv0HuiC87+jm20Z/uW9sk5IzWKAqfox60ARaUdQm
+         m02FqLYCWgCnN1qJLcXBJ6kGnrtuzJrPmWOQSAcBm77NjRaK47EpJlpKZnLKzuHOCzy4
+         4G6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Fm06HxsdfIDqsb7TuCc1lALAKl3AwDdPHuT1PgWsR4E=;
+        b=gtgDhiSQ7UU6x3NWkAuFYCHGXcg6bOxKTKdWQGHJ0En2D1ymH/s9ZfWd3o+C7qRN7i
+         q4UiLVBPuLaQDTxs+j/SY6IAFMval5AvvJfvmbhOanijYMo5qt98dUwbhf+/b3fzV2K5
+         +OBFpttXgWuvghWH9mxiNnKA3gjKKHIIRVVW/2eX01LHPxrfKaog6yHShHx88Ft7vVqp
+         Q21E8IIMFqoTvbWmRbUv7hs39/P7BHxeXrYm3RpJJJlUme5n0BxPuO3E9sxIFcZVIWHR
+         anmDPoTWk8V7R99iXILQTrJYnDIbhqHUL1bVfMAKnkHZ+N4DzzkuONI0SvtT02+AeSaC
+         2SRA==
+X-Gm-Message-State: AE9vXwOLthyeydQIXLmgA0gKHHvRJbb0yfsvy8YJZoq+7U4gHW64vDz2ASvwtt0A9VlvNHkWzmfKSlju2VDITQ==
+X-Received: by 10.28.61.11 with SMTP id k11mr13095231wma.34.1472718533795;
+ Thu, 01 Sep 2016 01:28:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:6N0dax7GLu+7zgC5EtuEf5IkzDVNwXJRWDikF8LWsrr4+pBCE3O
- Tt/w+qYsBoXBJpdJBxMEoGZ+HJeojv3ccqPvsGh2oJLbcsxdwpWZ5naXnd1962U6Pgq9VvW
- gMHJ1juugLK8QZ8QHMDZkmPOynPGGXRobaiRx70u/dydMNDDzRo7iYnCo85L19y2lmHa3vn
- 4b7v3spapx+fxpx3xp1tA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:mi5/Nm4LPj8=:9QC8rRoq7auc1ASylmBREY
- 2GNUTuDOg1XNEpR8i7O2uKeuVzEbJtK69HRhepTnh/W7TK53ENSvA07qbleuR0/Y9W28rwu9Y
- KCriXBPDFokGFlF1OsuRcsowmxyMVe+G5K9F+SR+qZ8iDhRF23Z3yTCRTITrOIChasH5ihPVB
- BNo6tAg7cOWKuFZddUxtYwm2ATJXwlUGo8n3YnI/biYLJ6oF8dCQuGBoMbJFHijOCRLuYZZs3
- xtt2o9Id2WoyulUGDUM0BZjkSN5v5rtDn+9uMKlixdMnIHTW2SjKwi3ptJqV4xYXV2Bji++JI
- 67xbLLoJ3wrcaOa4pTbrOtKEoraZEhIyAYPAXYCGgPpLylzqewn4s8Whgi0FDxLjR8lvY1CwI
- VG5R694uwQuqYxDWjJXfrRLF2ut8N/K5yCmCPs+b7MSpnuDsMwmRE3mTO6FHHd4RxI6o5vuFl
- NqLyBSgG+aY/Z+0KygvMGskV470cMHNprESRfv//9rg9pq+xEtIEjDkm72r5egVeHhDklXN6F
- Dz1xbjf9aXBxaXINPIZ8ty4BS91QjrGHN3Tb3zyb/S5mHrONOp+n/Voolo3n9VeGrvEmc+fL0
- pfN4YXMqYzFrR2LBluy8P80MMlAc46jWGGjP3Efj07ZdmQc66c2MB0zhglg8Umxa8HM+Ec3C0
- DMCU7ts9MiKTep28vrQval8Lcy1sdVyvJ/Kbse0CHnwlDgFVie76XXDPwk1MWh7tbX3i5fz10
- AkNA40iyTsDUE4UXEVTSOoHDmymMG+267eNmjuRmoIwYKcRD9POyBQFnv9/NEP4NUqR3rVlrQ
- nbY8Xk2
+Received: by 10.194.222.132 with HTTP; Thu, 1 Sep 2016 01:28:53 -0700 (PDT)
+In-Reply-To: <xmqq1t14zit7.fsf@gitster.mtv.corp.google.com>
+References: <20160827184547.4365-1-chriscool@tuxfamily.org>
+ <xmqq7fazbdmk.fsf@gitster.mtv.corp.google.com> <CAP8UFD20GY0h8n-7oJp8zhjHPUeKSkcEkNrOMuyGBrtS8JE6Jg@mail.gmail.com>
+ <xmqq1t14zit7.fsf@gitster.mtv.corp.google.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 1 Sep 2016 10:28:53 +0200
+Message-ID: <CAP8UFD3wA32eXYq3F4=KS-9SkV48Yh45TKgFnn3AmGVfpjwWjA@mail.gmail.com>
+Subject: Re: [PATCH v13 00/14] libify apply and use lib in am, part 3
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Karsten Blees <karsten.blees@gmail.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Sverre,
+On Thu, Sep 1, 2016 at 12:15 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+>> On Mon, Aug 29, 2016 at 9:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Christian Couder <christian.couder@gmail.com> writes:
+>>>
+>>>> Highlevel view of the patches in the series
+>>>> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>>>>
+>>>> This is "part 3" of the full patch series. I am resending only the
+>>>> last 14 patches of the full series as "part 3", because I don't want
+>>>> to resend the first 27 patches of v10 nearly as is.
+>>>
+>>> Just to make sure, you are sending the first 11 of these 14 exactly
+>>> as-is, right?  I didn't spot anything different other than 12 and 13
+>>> that replaced the "alternate index" step from the previous round.
+>>
+>> Yeah, the first 11 of the 14 patches have no change compared to v12.
+>> I didn't want to create a "part 4" as that could be confusing, and
+>> sending the first 11 patches gives them another chance to be reviewed
+>> again.
+>
+> Hmph.
+>
+> But most likely, you made sure that those who _could_ review the
+> first 11 are miniscule minority by omitting the earlier steps before
+> these 14 patches -- unless they are familiar with them, the first 11
+> patches are not much use to them.  And those who are familiar have
+> already seen the first 11, too.  That was why I wondered who the
+> target audience was when seeing only the last 14, among which 11 of
+> them were identical to the previous.
 
-On Wed, 31 Aug 2016, Sverre Rabbelier wrote:
-
-> On Wed, Aug 31, 2016 at 3:36 AM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > On Tue, 30 Aug 2016, Junio C Hamano wrote:
-> > > Jeff King <peff@peff.net> writes:
-> > > > Hmm, interesting. Your approach seems reasonable, but I have to wonder
-> > > > if writing the pid in the first place is sane.
-> > > >
-> > > > I started to write up my reasoning in this email, but realized it was
-> > > > rapidly becoming the content of a commit message. So here is that
-> > > > commit.
-> > >
-> > > Sounds sensible; if this makes Dscho's "which ones failed in the
-> > > previous run" simpler, that is even better ;-)
-> >
-> > I did not have the time to dig further before now. There must have been a
-> > good reason why we append the PID.
-> >
-> > Sverre, you added that code in 2d84e9f (Modify test-lib.sh to output stats
-> > to t/test-results/*, 2008-06-08): any idea why the -<pid> suffix was
-> > needed?
-> 
-> I can't really recall, but I think it may have been related to me
-> doing something like this:
-> 1. Make a change, and start running tests (this takes a long time)
-> 2. Notice a failure, start fixing it, leave tests running to find
-> further failures
-> 3. Finish fix, first tests are still running, start another run in a
-> new terminal (possibly of just the one failed test I was fixing) to
-> see if the fix worked.
-> 
-> Without the pid, the second run would clobber the results from the first run.
-> 
-> 
-> If only past-me was more rigorous about writing good commit messages :P.
-
-:-)
-
-Would present-you disagree with stripping off the -<pid> suffix, based on
-your recollections?
-
-Ciao,
-Dscho
+Following Stefan's review, it looks like I will need to resend at
+least 02/14, 10/14 and 14/14.
+What do you prefer me to resend:
+1) all the last 40 or so patches
+2) the last 14 patches
+3) only the few patches that changed
+?
