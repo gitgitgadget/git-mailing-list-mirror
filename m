@@ -2,74 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D43D82035F
-	for <e@80x24.org>; Thu,  1 Sep 2016 01:08:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 137811F859
+	for <e@80x24.org>; Thu,  1 Sep 2016 04:00:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754737AbcIABIf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Aug 2016 21:08:35 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56442 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753793AbcIABIc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2016 21:08:32 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C64B73BD42;
-        Wed, 31 Aug 2016 21:08:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=AykAHFRxe2FbSOJabDC3MQDomvI=; b=pRD8XM
-        iqCNI1SqAJW6hLXMaq15+lcLjPHT47ZQ1fYOVAxQsCiSz22gUOOkdm1ijYvJihCX
-        6bOdJ37TINLWdo9GHnPiCUH77XM+U9ryU00nqsO9KRjPp3drOQs6CRpjHIyQmf4+
-        ONYPoDS6oAHwcIX3aXlW7b2SJ7qUNABbYTu5Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=miwZQ9AF4/ECf8RjATbPdG7Ti+JvLBVv
-        JF1K7j3lOdK04lD602q6QFfSkI7eJW++OIFFQcDWWUcmpMZfJoM4oNdTt+07xnNt
-        w6z3DySAHyZDUCXS9FGOTci3PK9qiQ6aPl18hcpGDi5Nq3XakkJamcO/buBXvIfw
-        qYWg38IGABU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BF5B83BD41;
-        Wed, 31 Aug 2016 21:08:30 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 43A593BD3F;
-        Wed, 31 Aug 2016 21:08:30 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.e.keller@intel.com>
-Cc:     git@vger.kernel.org, Stefan Beller <stefanbeller@gmail.com>,
-        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v12 0/8] submodule inline diff format
-References: <20160831232725.28205-1-jacob.e.keller@intel.com>
-Date:   Wed, 31 Aug 2016 18:08:28 -0700
-In-Reply-To: <20160831232725.28205-1-jacob.e.keller@intel.com> (Jacob Keller's
-        message of "Wed, 31 Aug 2016 16:27:17 -0700")
-Message-ID: <xmqqoa48xw8j.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1750762AbcIAEAc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 00:00:32 -0400
+Received: from mail-qt0-f177.google.com ([209.85.216.177]:35550 "EHLO
+        mail-qt0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750696AbcIAEAb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 00:00:31 -0400
+Received: by mail-qt0-f177.google.com with SMTP id 93so36052917qtg.2
+        for <git@vger.kernel.org>; Wed, 31 Aug 2016 21:00:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=vObVAs9sYnDfXZfM8QaFjZ0DcgSaSiWIvOZjum0ovKc=;
+        b=gmCH1DI0MskBZbIBlyI34gcfDtrdHF7DPF1tYKHnkfcv2seQ2X2hkA0rNwro4dmSAi
+         be/TvNuKxHuIJT26UYyCtivO4nihcam6pwa1fGiRjuanYdvOQWaBLyNHN8yPx09MlODv
+         7SspuFO99q4GY/zQuUHWqsTvNWx8CaneDCUVOmuLfYnoG/enGgJG+iWmTjbcf9k/2wkJ
+         UIzVioz81gi0CJVCu4hijyGl+WmDvZnn/XfGkGFzTDPPUiPgTjvYO+k3apWRgftUWjoN
+         MCvDuiNDfi8sq+0wP2EUeBKED+iui6BWiv27QOKixmpz/DvPKfzhdaDEBW6V2l46I823
+         9L5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=vObVAs9sYnDfXZfM8QaFjZ0DcgSaSiWIvOZjum0ovKc=;
+        b=K5giHS69JnLiPeob0yAkOAiZjQNGs3KkAWa6PcBeN+eMWOf5Z6R+j1GH1AH33jwzJd
+         WjzIJV1HStN9mvEGL99ai8rvZmHgVloX8thPtEG4B5+znB8NQSxvbmrThF/7bpROMIyt
+         jY/Q3yC1EzsW/V2uEYWcR2irWwZeg5p42WuUMnHfcXj617twMz0accXxNscM65+wQcAK
+         09coUE9c0nxZ77D0+toW11F5W9EcWEQMCob3M6kx2C8IEiKGpsccth1jAuHFt1NAalms
+         +6BnIQL0Q94mkGaBcli9WHQAjNk+C4X+VRSD8lUx6PM16fss+kof4/8tButJ/39PZQFu
+         qQQQ==
+X-Gm-Message-State: AE9vXwOyokkRnkUFcc7bnwkadw0o07mOSsMkJiA1FykX6P0yTuepdyyx7vZ8lGK3YHtpmKJUdxkb681/j3F2bg==
+X-Received: by 10.200.36.243 with SMTP id t48mr15047380qtt.125.1472702430640;
+ Wed, 31 Aug 2016 21:00:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 987A8368-6FE0-11E6-AE70-F7BB12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.55.195.20 with HTTP; Wed, 31 Aug 2016 20:59:50 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1608311233440.129229@virtualbox>
+References: <b2d016e44fa04e8a318967c43762d6933faf7956.1467183740.git.johannes.schindelin@gmx.de>
+ <0dfa96b17edfe84ba19c7e57fe0b017c77943e0c.1472478285.git.johannes.schindelin@gmx.de>
+ <20160830084357.rdmt2ehngrz6rqaq@sigill.intra.peff.net> <xmqq37lm3w6u.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1608311233440.129229@virtualbox>
+From:   Sverre Rabbelier <srabbelier@gmail.com>
+Date:   Wed, 31 Aug 2016 20:59:50 -0700
+Message-ID: <CAGdFq_iJeziyXBPL2GVHNXZcjGAwQVN2EhJs4AtJCSx7ghn32Q@mail.gmail.com>
+Subject: Re: [PATCH v2] t/Makefile: add a rule to re-run previously-failed tests
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+On Wed, Aug 31, 2016 at 3:36 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Tue, 30 Aug 2016, Junio C Hamano wrote:
+> > Jeff King <peff@peff.net> writes:
+> > > Hmm, interesting. Your approach seems reasonable, but I have to wonder
+> > > if writing the pid in the first place is sane.
+> > >
+> > > I started to write up my reasoning in this email, but realized it was
+> > > rapidly becoming the content of a commit message. So here is that
+> > > commit.
+> >
+> > Sounds sensible; if this makes Dscho's "which ones failed in the
+> > previous run" simpler, that is even better ;-)
+>
+> I did not have the time to dig further before now. There must have been a
+> good reason why we append the PID.
+>
+> Sverre, you added that code in 2d84e9f (Modify test-lib.sh to output stats
+> to t/test-results/*, 2008-06-08): any idea why the -<pid> suffix was
+> needed?
 
-> @@ -523,8 +523,10 @@ char *git_pathdup_submodule(const char *path, const char *fmt, ...)
->  	va_start(args, fmt);
->  	err = do_submodule_path(&buf, path, fmt, args);
->  	va_end(args);
-> -	if (err)
-> +	if (err) {
-> +		strbuf_release(&buf);
->  		return NULL;
-> +	}
->  	return strbuf_detach(&buf, NULL);
->  }
+I can't really recall, but I think it may have been related to me
+doing something like this:
+1. Make a change, and start running tests (this takes a long time)
+2. Notice a failure, start fixing it, leave tests running to find
+further failures
+3. Finish fix, first tests are still running, start another run in a
+new terminal (possibly of just the one failed test I was fixing) to
+see if the fix worked.
 
-Thanks.  My copy was lacking this hunk.  Will replace.
+Without the pid, the second run would clobber the results from the first run.
+
+
+If only past-me was more rigorous about writing good commit messages :P.
