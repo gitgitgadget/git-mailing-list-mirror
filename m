@@ -6,105 +6,186 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B7FA20193
-	for <e@80x24.org>; Thu,  1 Sep 2016 21:00:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9904F1F6BF
+	for <e@80x24.org>; Thu,  1 Sep 2016 21:03:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755522AbcIAVAU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 17:00:20 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56642 "EHLO
+        id S1755845AbcIAVCg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 17:02:36 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60335 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755315AbcIAVAR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 17:00:17 -0400
+        with ESMTP id S1752344AbcIAVCc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 17:02:32 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4C1C03706D;
-        Thu,  1 Sep 2016 13:43:41 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D5FDE3905F;
+        Thu,  1 Sep 2016 17:02:30 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=B0yckXUfFGoSCWpHUW2qSE6Al5M=; b=UgUyZ3
-        TgNBWa+sFM8fodMKlziNct4ngC5M+Yq3wN1bknV2/FPvygg748bM38x25SAVhoJ5
-        Sej6JmoX6oHWHvYoDqHwW9gPfgTwAOWjTmFtEBKbG9HQo1NpWGoqTJ7GAoN4wz/6
-        bWpSHlfhrwmk831lTSG7CF5oS46eoSpqwtXZE=
+        :content-type; s=sasl; bh=6xCLX8m8YGLvlhRmKFMaXDj/brU=; b=j38RIc
+        3Ofi4tjinSaosz6PdiVycq/cc99cNWuNRjv3NSOIstgVKTM3hL5g9Fw1yckxDb3m
+        6fh+PUiVI/BJ5GBFhBSAMXKBmAgoyYiGYOp7mCEj9JLIKGkqzcJgzZ+lmNSVmkXg
+        GzePNzMT/FHyKTskjr4PNyatruIBDDE1ZJkM4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=M0DOgxwV9ApvaOOFmuiFmAOeuypOmrS0
-        lb6AfMagmy9PzbT7eeNmwej2Gsb31oT/wzg9hMasTz/EwPBd1ry8QZ622OJOUt6B
-        9IUbmgNKeD3bxt+8Ztun6e8XXSyWxVC4gbHmq/LHJd3GVKm2T3707l0Vp7QN8D63
-        99wGyckSZv8=
+        :content-type; q=dns; s=sasl; b=wqdS9Caz2N6Af3PFR5GD6NUrdFmoS3q/
+        GCOfoqAdbUmaBYM65VrMz3ZZW/DILBuw1GmoaTgcN+2e0rWh2IAgDYCLj+KhNbUi
+        Jc4U7yRQKuZQAg8eMSrsIBdXnZPisX9C0MSMa2Yja6RCRFtzx+gvLz/wuOj4Bblk
+        H6zG0dkdsyU=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 44D623706C;
-        Thu,  1 Sep 2016 13:43:41 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CC5A03905D;
+        Thu,  1 Sep 2016 17:02:30 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BB85B3706A;
-        Thu,  1 Sep 2016 13:43:40 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4518B3905C;
+        Thu,  1 Sep 2016 17:02:30 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] make dist: allow using an installed version of git
-References: <20160827102929.GA11769@hurricane>
-Date:   Thu, 01 Sep 2016 10:43:38 -0700
-In-Reply-To: <20160827102929.GA11769@hurricane> (Dennis Kaarsemaker's message
-        of "Sat, 27 Aug 2016 12:29:33 +0200")
-Message-ID: <xmqq4m5zy0qd.fsf@gitster.mtv.corp.google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Uma Srinivasan <usrinivasan@twitter.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jens Lehmann <Jens.Lehmann@web.de>,
+        Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: git submodules implementation question
+References: <CAN5XQftQH8B+hWVh4JQgZwAp+rkbz51P5NZDc_+Tfm0EB1zkew@mail.gmail.com>
+        <xmqqlgzf9wch.fsf@gitster.mtv.corp.google.com>
+        <CAN5XQft6S+LG0mBgRFPrMZiOxHSfRhjLmQdeMdBeHKoWQSRUEA@mail.gmail.com>
+        <CAPc5daVhY6WdHkXGLYea48uOw0-rTzLLZ=7mNo=VPebZ9AG4jQ@mail.gmail.com>
+        <CAN5XQfty6Fshzf6kN7eXhFekU9+=VPwbzEPN1a92yVB=9nm0Vg@mail.gmail.com>
+        <CAN5XQfsg_sJbyjfdc=-e85jiCQNUqagwgh6TVOXN+NskZ7KkVw@mail.gmail.com>
+        <xmqqbn0b6ua8.fsf@gitster.mtv.corp.google.com>
+        <CA+P7+xosGg955msq-gyKz_HyCZf7fPFQJdKZ3P8U3+poBBfuWA@mail.gmail.com>
+        <CAN5XQfsv+BEYDWR6Xjs4mCtYDVR12a2UzB1-_H4A_xfjUUOe2g@mail.gmail.com>
+        <CA+P7+xohfRsoV9VXgUrRaXPb9HvCc5gs4-KSWp38X_d_6EfkTA@mail.gmail.com>
+        <CA+P7+xpGnsKzBPLVgPNSmZ7K00vY7-eJp7kSHWMRHM+cOsL_XQ@mail.gmail.com>
+        <CAN5XQftCC+TUm2Jx4q3V9oFbXndtFx3H+daoB3TD3eWUs6s54A@mail.gmail.com>
+        <xmqqzinu3zyw.fsf@gitster.mtv.corp.google.com>
+        <CAN5XQfuoq6MV4e98RzUCG02KvZO6VZAbs1oxAzpdg5zswqpHGw@mail.gmail.com>
+        <xmqq7faw3n5w.fsf@gitster.mtv.corp.google.com>
+        <xmqqk2ewxnui.fsf@gitster.mtv.corp.google.com>
+        <CAN5XQftt3qVoU9gB2oyimY328VK0W6xq5FSCQYvcB9dEgkxVWA@mail.gmail.com>
+        <xmqqmvjrwjwm.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kZnhNVBy6Oqt=x8m0jZj_tGNkMPPBBr+aL6DToOYtv9vQ@mail.gmail.com>
+        <xmqqa8frwhpr.fsf@gitster.mtv.corp.google.com>
+        <xmqq4m5zwevl.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 01 Sep 2016 14:02:28 -0700
+In-Reply-To: <xmqq4m5zwevl.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Thu, 01 Sep 2016 13:21:02 -0700")
+Message-ID: <xmqqtwdzuye3.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 9EB47CEE-706B-11E6-B7C7-51057B1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 65409904-7087-11E6-9409-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> b1de9de2 back in 2005 ensured that we could create a tarball with 'make
-> dist' even if git wasn't installed yet. These days however, chances are
-> higher that a git version is available. Add a config.mak knob to allow
-> people to choose to use the installed version of git to create the
-> tarball and avoid the overhead of building git-archive.
+If we add
 
-Thanks, but not interested.
+	# "git diff" should terminate with an error.
+	# NOTE: without fix this will recurse forever!
+	test_must_fail git -C dst diff &&
 
-We do not know what vintage of "git" happens to be installed on the
-platform, but we know how "git archive" we ship with the source
-ought to behave.
+after breaking the repository, we can also see "git diff" recurse
+forever, because it wants to know if "sub" submodule is modified,
+attempts to run "git status" in there, and ends up running that
+command in the context of the parent repository.
 
->
-> Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-> ---
->  Makefile | 14 ++++++++++++--
->  1 file changed, 12 insertions(+), 2 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index d96ecb7..3dabb75 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -378,6 +378,9 @@ all::
->  #
->  # to say "export LESS=FRX (and LV=-c) if the environment variable
->  # LESS (and LV) is not set, respectively".
-> +#
-> +# Define USE_INSTALLED_GIT_ARCHIVE if you don't want to build git-archive as
-> +# part of 'make dist', but are happy to rely on a git version on you $PATH
->  
->  GIT-VERSION-FILE: FORCE
->  	@$(SHELL_PATH) ./GIT-VERSION-GEN
-> @@ -2423,8 +2426,15 @@ quick-install-html:
->  ### Maintainer's dist rules
->  
->  GIT_TARNAME = git-$(GIT_VERSION)
-> -dist: git-archive$(X) configure
-> -	./git-archive --format=tar \
-> +ifndef USE_INSTALLED_GIT_ARCHIVE
-> +	GIT_ARCHIVE = ./git-archive$(X)
-> +	GIT_ARCHIVE_DEP = git-archive$(X)
-> +else
-> +	GIT_ARCHIVE = git archive
-> +	GIT_ARCHIVE_DEP =
-> +endif
-> +dist: $(GIT_ARCHIVE_DEP) configure
-> +	$(GIT_ARCHIVE) --format=tar \
->  		--prefix=$(GIT_TARNAME)/ HEAD^{tree} > $(GIT_TARNAME).tar
->  	@mkdir -p $(GIT_TARNAME)
->  	@cp configure $(GIT_TARNAME)
+I am tempted to cheat and commit this, even though this test is no
+longer about fetching submodules.
+
+-- >8 --
+[PATCH] submodule: avoid auto-discovery in prepare_submodule_repo_env()
+
+The function is used to set up the environment variable used in a
+subprocess we spawn in a submodule directory.  The callers set up a
+child_process structure, find the working tree path of one submodule
+and set .dir field to it, and then use start_command() API to spawn
+the subprocess like "status", "fetch", etc.
+
+When this happens, we expect that the ".git" (either a directory or
+a gitfile that points at the real location) in the current working
+directory of the subprocess MUST be the repository for the submodule.
+
+If this ".git" thing is a corrupt repository, however, because
+prepare_submodule_repo_env() unsets GIT_DIR and GIT_WORK_TREE, the
+subprocess will see ".git", thinks it is not a repository, and
+attempt to find one by going up, likely to end up in finding the
+repository of the superproject.  In some codepaths, this will cause
+a command run with the "--recurse-submodules" option to recurse
+forever.
+
+By exporting GIT_DIR=.git, disable the auto-discovery logic in the
+subprocess, which would instead stop it and report an error.
+
+The test illustrates existing problems in a few callsites of this
+function.  Without this fix, "git fetch --recurse-submodules", "git
+status" and "git diff" keep recursing forever.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ submodule.c                 |  1 +
+ t/t5526-fetch-submodules.sh | 35 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+)
+
+diff --git a/submodule.c b/submodule.c
+index 4532b11..2801fbb 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1160,4 +1160,5 @@ void prepare_submodule_repo_env(struct argv_array *out)
+ 		if (strcmp(*var, CONFIG_DATA_ENVIRONMENT))
+ 			argv_array_push(out, *var);
+ 	}
++	argv_array_push(out, "GIT_DIR=.git");
+ }
+diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+index 954d0e4..f3b0a8d 100755
+--- a/t/t5526-fetch-submodules.sh
++++ b/t/t5526-fetch-submodules.sh
+@@ -485,4 +485,39 @@ test_expect_success 'fetching submodules respects parallel settings' '
+ 	)
+ '
+ 
++test_expect_success 'fetching submodule into a broken repository' '
++	# Prepare src and src/sub nested in it
++	git init src &&
++	(
++		cd src &&
++		git init sub &&
++		git -C sub commit --allow-empty -m "initial in sub" &&
++		git submodule add -- ./sub sub &&
++		git commit -m "initial in top"
++	) &&
++
++	# Clone the old-fashoned way
++	git clone src dst &&
++	git -C dst clone ../src/sub sub &&
++
++	# Make sure that old-fashoned layout is still supported
++	git -C dst status &&
++
++	# "diff" would find no change
++	git -C dst diff --exit-code &&
++
++	# Recursive-fetch works fine
++	git -C dst fetch --recurse-submodules &&
++
++	# Break the receiving submodule
++	rm -f dst/sub/.git/HEAD &&
++
++	# NOTE: without the fix the following tests will recurse forever!
++	# They should terminate with an error.
++
++	test_must_fail git -C dst status &&
++	test_must_fail git -C dst diff &&
++	test_must_fail git -C dst fetch --recurse-submodules
++'
++
+ test_done
+-- 
+2.10.0-rc2-314-g775ea9a
+
+
+
