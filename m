@@ -2,88 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2AC0F1FBB0
-	for <e@80x24.org>; Thu,  1 Sep 2016 11:34:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5E301F6BF
+	for <e@80x24.org>; Thu,  1 Sep 2016 13:03:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932939AbcIALeh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 07:34:37 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:12882 "EHLO edge10.ethz.ch"
+        id S1754595AbcIANDt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 09:03:49 -0400
+Received: from mout.gmx.net ([212.227.15.19]:61674 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932240AbcIALed (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 07:34:33 -0400
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.3.301.0; Thu, 1 Sep
- 2016 13:34:25 +0200
-Received: from MBX115.d.ethz.ch ([fe80::444b:8481:c05f:ab21]) by
- CAS11.d.ethz.ch ([fe80::ecc9:4e2d:b26b:1614%10]) with mapi id 14.03.0301.000;
- Thu, 1 Sep 2016 13:34:29 +0200
-From:   "Hedges  Alexander" <ahedges@student.ethz.ch>
-To:     Jacob Keller <jacob.keller@gmail.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Feature Request: Branch-Aware Submodules
-Thread-Topic: Feature Request: Branch-Aware Submodules
-Thread-Index: AQHR/q8rhVL81GY7sUSbiDPBMOmPz6BfGCmAgAVSigA=
-Date:   Thu, 1 Sep 2016 11:34:28 +0000
-Message-ID: <AAED3CA2-3BDA-49CF-8930-FBC96F1EFE34@student.ethz.ch>
-References: <5EA7D232-5D41-4653-9E35-21C502C79C92@student.ethz.ch>
- <51671371-C59A-4304-99B2-B2C2256C4001@student.ethz.ch>
- <CA+P7+xqA_3a8EPZ=2Y5pgkL+N=_F1v5pfyzErwest9aoKZC37w@mail.gmail.com>
-In-Reply-To: <CA+P7+xqA_3a8EPZ=2Y5pgkL+N=_F1v5pfyzErwest9aoKZC37w@mail.gmail.com>
-Accept-Language: en-US, de-CH
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [85.2.67.2]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <6F26A14DD46B0D4496564FD5FD6C9A81@intern.ethz.ch>
-Content-Transfer-Encoding: base64
+        id S1753839AbcIANDr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 09:03:47 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0M7Xi3-1avBpT227j-00xJmc; Thu, 01 Sep 2016 15:03:40
+ +0200
+Date:   Thu, 1 Sep 2016 15:03:39 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 15/34] sequencer (rebase -i): leave a patch upon error
+In-Reply-To: <1472668778.4265.76.camel@kaarsemaker.net>
+Message-ID: <alpine.DEB.2.20.1609011500340.129229@virtualbox>
+References: <cover.1472633606.git.johannes.schindelin@gmx.de>  <cade51f893ed381ed03718439c7dba3f5dcebba3.1472633606.git.johannes.schindelin@gmx.de> <1472668778.4265.76.camel@kaarsemaker.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
+Content-Type: multipart/mixed; BOUNDARY="8323329-1362406214-1472735020=:129229"
+X-Provags-ID: V03:K0:wH7L4wMXPiEiet5tPMgEtQ6f86jRxVcoibWRre4WlCeYBzJEwCV
+ clbipp8KjZ1ajCmtnS2Q52yjBMa6SyJJ4TuyOMAhuSzVhv26nISP2P2tNvvT9bYll+pcoct
+ 1ClQWM6OThurSc47fVmDhe2N2PRycMIha6okjlt0wkbrevAsQuEnMc6TLI4wOOfISNp8JC7
+ 1ejfXHTRfp8+YJ/GHPIBg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:3Wlz/MtgfY0=:aCHbUXTs1wXmLFU4sBQ8G7
+ D5ChNROZfXdoEe/FGlOHlfaa0KVQMn5NO61X2iXyDwUrg0sH+TY25r2TPhJKgyKyOQUDUf1RK
+ Y2Sx6rZ76SW4H2e7VgrND30AwkgJoliqOGw7FDH9igNJ/zB06QB6wgGzdxZJRPreo/03HfTVQ
+ O+mUS3FI6Zrq4D8kSMuop+IHDSLMXLjgVIPiPXe/94dPyOTeChs1eUBYbdtIkELQ8FLmurZOA
+ 88QU8KbaZTPuARMqnzfYJMdDrX9TawbzLShoRW2Fbc6rAA9jTnxYBE4tJVvAbqvxPMIWz/mzm
+ 3Q77DzozZa8ZOx3MbBGPCemtcL4170XbfI7ygw1zdCeqAGfV25ZllHLp7O0P6kXWwxQZcazHn
+ BeuBDKju/KkD+/NJ3P09G+6QCbxIstaGZ9EizQJw6bOyHVuW1actxY+4fwjq7a7oFXL9YhrR1
+ JuBCMZ1iRn4GBEOEUyAwi0a5EJ2X4X6A/l3eEBR4YXf/DdpHr52cj56E6/5ad57/uX9WX9aZo
+ wQJPNdyi08HmDBTTz0p5K4bbebLtcexjPHUfUQADwX/VsFNJGycF+/DBuaa5ZKnK/nvFh1qI+
+ BUzWQn7VehjJUKR1xY3FBW9k83zx3PV1NlTFSxNfXkd2TN7G3TBypaPj9dQqbeTZb8+55mQVR
+ 5yc6frlBlo1SjvuCtQYf41ItYyqMjmqMplJrXgaMqP3u5ySP7krZLGvuJCv6muiBomLuVdnbp
+ 6W5cpxvQNMieZSkXSF3g2ohUV7jqb6vpnCNPeUzKVsRZB7cflxGOfBuETrjLGoQDBRiRnNlAn
+ lPQ19uq
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-U2luY2UgSSBkb27igJl0IHdhbnQgdG8gY2hhbmdlIGFueSBoaXN0b3J5IGluIHRoZSBzdWJwcm9q
-ZWN0LCB0byBtZSB0aGUgbW9zdCANCmV4cGVjdGVkIGJlaGF2aW9yIHdvdWxkIGJlOg0KDQpnaXQg
-c3VibW9kdWxlIHVwZGF0ZSDigJQtcmVjdXJzaXZlDQoNCndpdGggc3VibW9kdWxlLioudXBkYXRl
-IHNldCB0byB0aGUgY29tbWFuZDoNCg0KYGBgDQojIS9iaW4vYmFzaA0KDQpicmFuY2hlcz1gZ2l0
-IGJyYW5jaCAtLXBvaW50cy1hdCAiJDEiYA0KDQppZiBbICEgJGJyYW5jaGVzIF0gOyB0aGVuDQog
-ICAgZ2l0IGNoZWNrb3V0ICIkMSINCiAgICBlY2hvICJkbyBub3JtYWwgY2hlY2tvdXQiDQplbHNl
-DQogICAgcG9pbnRzX3RvX21hc3Rlcj0NCiAgICBvdGhlcl9icmFuY2g9DQogICAgZm9yIGIgaW4g
-JGJyYW5jaGVzIDsgZG8NCiAgICAgICAgaWYgWyAiJGIiID0gIm1hc3RlciIgXSA7IHRoZW4NCiAg
-ICAgICAgICAgIHBvaW50c190b19tYXN0ZXI9InRydWUiDQogICAgICAgIGVsc2UNCiAgICAgICAg
-ICAgIG90aGVyX2JyYW5jaD0iJGIiDQogICAgICAgIGZpDQogICAgZG9uZQ0KICAgIGlmIFsgcG9p
-bnRzX3RvX21hc3RlciBdIDsgdGhlbg0KICAgICAgICBnaXQgY2hlY2tvdXQgbWFzdGVyDQogICAg
-ZWxzZQ0KICAgICAgICBnaXQgY2hlY2tvdXQgIiRvdGhlcl9icmFuY2giDQogICAgZmkNCmZpDQpg
-YGANCg0KTm93LCB0aGlzIGlzIG5vdCBwZXJmZWN0IGFuZCBJ4oCZbSBzdXJlIEnigJlsbCByZWZp
-bmUgaXQgd2hlbmV2ZXIgSSBmaW5kIGl0IGRvZXNu4oCZdA0Kc3VpdCBteSBuZWVkcywgYnV0IEni
-gJltIHN1cmUgeW91IGNhbiBzZWUgdGhlIGludGVudGlvbnMgaGVyZS4gSeKAmW0gYWxzbyBub3Qg
-cXVpdGUNCnN1cmUgd2hldGhlciB0byBwcmlvcml0aXplIHRhZ3Mgb3ZlciBicmFuY2hlcyBvciB0
-aGUgb3RoZXIgd2F5IGFyb3VuZC4NCg0KVGhhbmtzIGZvciB0aGUgc3VnZ2VzdGlvbi4gSSBob3Bl
-IHRoaXMgb3IgYSBzaW1pbGFyIGJlaGF2aW9yIGNvdWxkIHNvbWV0aW1lDQpiZWNvbWUgdGhlIGRl
-ZmF1bHQgaW4gZ2l0LiBVbnRpbCB0aGUgc3VnZ2VzdGVkIHF1aWNrIGZpeCB3aWxsIGRvIGZvciBt
-ZS4NCg0KQmVzdCBSZWdhcmRzLA0KQWxleGFuZGVyIEhlZGdlcw0KDQo+IE9uIDI5IEF1ZyAyMDE2
-LCBhdCAwNDoxNywgSmFjb2IgS2VsbGVyIDxqYWNvYi5rZWxsZXJAZ21haWwuY29tPiB3cm90ZToN
-Cj4gDQo+IE9uIEZyaSwgQXVnIDI2LCAyMDE2IGF0IDg6MTIgQU0sIEhlZGdlcyAgQWxleGFuZGVy
-DQo+IDxhaGVkZ2VzQHN0dWRlbnQuZXRoei5jaD4gd3JvdGU6DQo+Pj4gT24gMjUgQXVnIDIwMTYs
-IGF0IDE5OjQ1LCBTdGVmYW4gQmVsbGVyIDxzYmVsbGVyQGdvb2dsZS5jb20+IHdyb3RlOg0KPj4+
-IFsxXSBodHRwczovL2dpdGh1Yi5jb20vamxlaG1hbm4vZ2l0LXN1Ym1vZC1lbmhhbmNlbWVudHMN
-Cj4+PiB3aGljaCBoYXMgc29tZSBhdHRlbXB0cyBmb3IgY2hlY2tvdXQgaW5jbHVkaW5nIHRoZSBz
-dWJtb2R1bGVzLg0KPj4+IEkgYWxzbyB0cmllZCB3cml0aW5nIHNvbWUgcGF0Y2hlcyB3aGljaCBp
-bnRlZ3JhdGUgY2hlY2tpbmcgb3V0IHN1Ym1vZHVsZXMNCj4+PiB2aWEgY2hlY2tvdXQgYXMgd2Vs
-bC4gQSBxdWlja2VyIGBzb2x1dGlvbmAgd291bGQgYmUgYSBjb25maWcgb3B0aW9uIHRoYXQNCj4+
-PiBqdXN0IHJ1bnMgYGdpdCBzdWJtb2R1bGUgdXBkYXRlYCBhZnRlciBlYWNoIGNoZWNrb3V0L3B1
-bGwgZXRjLg0KPj4+IA0KPj4gDQo+PiBJIHNlZS4gVGhlIHF1aWNrIGZpeCBpcyBhbG1vc3Qgd2hh
-dCBJ4oCZbSBsb29raW5nIGZvciwgZXhjZXB0IHRoYXQgaXQgbGVhdmVzDQo+PiB0aGUgcmVwbyBp
-biBhIGRldGFjaGVkIGhlYWQgc3RhdGUuIENvdWxkIHRoZSBzdWJtb2R1bGUgdXBkYXRlIGJlIG1h
-ZGUNCj4+IGF1dG9tYXRpY2FsbHkgYW5kIGludGVsbGlnZW50bHkgcGljayB0aGUgYnJhbmNoPw0K
-Pj4gDQo+IA0KPiBZb3UgcHJvYmFibHkgd2FudCAiZ2l0IHN1Ym1vZHVsZSB1cGRhdGUgLS1yZWJh
-c2UiIG9yICJnaXQgc3VibW9kdWxlDQo+IHVwZGF0ZSAtLW1lcmdlIiBTZWUgZ2l0IGhlbHAgc3Vi
-bW9kdWxlIHVuZGVyIHRoZSB1cGRhdGUgc2VjdGlvbiwgb3INCj4gZXZlbiBhIGN1c3RvbSBjb21t
-YW5kIHZhcmlhbnQgd2hlcmUgeW91IGNhbiB3cml0ZSB5b3VyIG93biBiaXQgb2YNCj4gc2hlbGwg
-dGhhdCBkb2VzIHdoYXQgeW91ciBwcm9qZWN0IGV4cGVjdHMuDQo+IA0KPiBUaGFua3MsDQo+IEph
-a2UNCg0K
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323329-1362406214-1472735020=:129229
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+
+Hi Dennis,
+
+On Wed, 31 Aug 2016, Dennis Kaarsemaker wrote:
+
+> On wo, 2016-08-31 at 10:55 +0200, Johannes Schindelin wrote:
+> > Just like the interactive rebase, we want to leave a 'patch' file for
+> > further inspection by the user (even if we never tried to actually appl=
+y
+> > that patch, since we're cherry-picking instead).
+> >=20
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>=20
+> This commit message confuses me. Did you mean s/Just like the/When
+> doing an/?=C2=A0
+
+What I meant is this: when calling `git rebase -i` right now, i.e. before
+any of my rebase--helper work, a failing rebase will leave a `patch` file
+in the `.git/rebase-merge/` directory. Since the sequencer is in the
+process of learning how to do an interactive rebase, it needs to learn the
+same trick.
+
+But I guess that your suggested edit makes things much clearer.
+
+Thanks,
+Dscho
+--8323329-1362406214-1472735020=:129229--
