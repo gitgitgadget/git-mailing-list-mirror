@@ -2,158 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B95641F6BF
-	for <e@80x24.org>; Thu,  1 Sep 2016 20:56:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF6DC1F6BF
+	for <e@80x24.org>; Thu,  1 Sep 2016 20:59:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752143AbcIAU4l (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 16:56:41 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:35002 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752104AbcIAU4k (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 16:56:40 -0400
-Received: by mail-wm0-f43.google.com with SMTP id w2so2252107wmd.0
-        for <git@vger.kernel.org>; Thu, 01 Sep 2016 13:56:40 -0700 (PDT)
+        id S1753154AbcIAU7u (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 16:59:50 -0400
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:38038 "EHLO
+        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755315AbcIAU7u (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 16:59:50 -0400
+Received: by mail-wm0-f51.google.com with SMTP id 1so2408601wmz.1
+        for <git@vger.kernel.org>; Thu, 01 Sep 2016 13:59:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=UEQwpseBGrPEsM2ikvQvb/92gPtL0tBcdLG83e+7ZYk=;
-        b=jSaP8tQCsAuMkd/lP0U8ZjT0ZHpqo0WS0VLNp5U/lWtcv99L8AbBvaH3eRjDU/DW36
-         qMh9zr986VRVpPt9SxhtSrMkOZZe1Tsd4OhN3ZXPe5EamcNGOFbyPfku/9bKhitN8TFn
-         /kvYoWmd3yQtsYdJgPIpIHB+0ZaY6bPwGFZMHUXJbWz6nRb1+XpCO1qoLmF9unwkI4fZ
-         O+gVE6ly6KW6L+Y875YN1Dofjepv7zOHxXKToiRnaLmF8cw4SvvZ+au6ivOD0kcEKOET
-         IS6kOvXekf+OiYcDk3R0mLbU/mdQHqMD68Xw3mf7tZC04Uuc1S+TVDeh0QFXfxZe8TYz
-         EH7Q==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=wdqlKodO774Y6qVTrms95IZ4cQCDRuEVSL9mw8UCss0=;
+        b=dqv5AOkeHqrpfylir7ZqpZjKYrO8Qp24nTf6o6/W9ZYvzaqZi6G9cuuh2mxe/NdYnq
+         c1MhSbP/LZw3OyFNTsVwK4v0fDIsPJG91YsmKo96uv6tRMnbL40GWO+niQA4MQTIeGLu
+         AUEr5QCZwhEiVOszVFsJAUh8nUORsVuXvOVK5wh9OgiSOQSj12R38y+z3Hm7fHaCJ3P4
+         +212dy+UzTI47AlhIvtMnm/0bzDhFBeThY1ATVwkhtLadyDiWglcZbCTiDeOgKZnxuL4
+         DTPL4TEJRoIF9x3BawZFsTPAvGY71+wOKw2AhfZCCHDu0ISwvrdLI3oeVqIVfB6BKoFi
+         Oyyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=UEQwpseBGrPEsM2ikvQvb/92gPtL0tBcdLG83e+7ZYk=;
-        b=GAPxidBiZ7wU4XqHgYkkZOvK/yQcaYQnEXRluXvXx7YSm1dB8o0raMnEJB+p63MOgd
-         N3f0D5dEF5sBfUN4Kw2uglZfgc7KgOAhny3Hx4rD70yb1PKEv7JYQEKebwD6dQj5awOh
-         P2yrEufcZzAMh9hIA5b0MuW4vTJHnE0dI93iO1oJM9ltK0RUa4jZkba2qq7fBqFFzLph
-         k2xbksmlQql5av+JJ3qIbsvHI1Fcos++O+Nl1vmaGCeIrv1reY9NUq1YRW44XMNyxJ/e
-         xMrIArgU0BnzdaSfFz8IhpHmKpFgw+7jsGG/MTuSD/BOyPghgINpP+vJx6zUC4pP5zfb
-         JcLw==
-X-Gm-Message-State: AE9vXwMpxfFwv0urKHGrgfo0UB+amcmWEUiNw/ZnqBg3+Jbsz+U6T4ahzhFWEEz1GEs//Q==
-X-Received: by 10.28.22.6 with SMTP id 6mr17095531wmw.55.1472760047231;
-        Thu, 01 Sep 2016 13:00:47 -0700 (PDT)
-Received: from [192.168.1.26] (abrf30.neoplus.adsl.tpnet.pl. [83.8.99.30])
-        by smtp.googlemail.com with ESMTPSA id 3sm35656wms.1.2016.09.01.13.00.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 01 Sep 2016 13:00:46 -0700 (PDT)
-Subject: Re: [PATCH 08/22] sequencer: remove overzealous assumption
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <cover.1472457609.git.johannes.schindelin@gmx.de>
- <3c8c60e0799fdf176c72e7e17c257d33b2a362bc.1472457609.git.johannes.schindelin@gmx.de>
- <09fd1436-301a-b0e1-c32a-81a47e4eb351@gmail.com>
- <alpine.DEB.2.20.1608311706400.129229@virtualbox>
- <18293d15-0a83-d7aa-78fb-14891efd6ea4@gmail.com>
- <alpine.DEB.2.20.1609010957300.129229@virtualbox>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <486c22a4-9334-4c83-746e-7ff6663ce4ab@gmail.com>
-Date:   Thu, 1 Sep 2016 22:00:40 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=wdqlKodO774Y6qVTrms95IZ4cQCDRuEVSL9mw8UCss0=;
+        b=LopQoMwlQhcZ+W1fOce5E3yLhtoGIp1v8LeHSfc5grMoNfVWkp7dK+V/yKJ+/BnAA9
+         ki9B63H2GDP4BG6S61FyUW2PxffhBcjNHme814+s5Bm+HgwQxQWm/r854kT+f/BBNFiQ
+         jHTp93epBxhrV/l425eR2t6dV95AXis/4HHG5l+uxszqunJOXvwVkZ4IVTb6Y2iO9L7g
+         syataxJWB9aY+SSXHtWvQAGUq1X259LimfEKDALWa9zL3jcdcRPqVh1ysFFkIn6k3w93
+         CJpzAEMFpdSiETjpREnRcyeHMDn3VRV43ZTUCzGacrvuxGcWrY2N5qcUZt4IDIhWAqkd
+         eKYQ==
+X-Gm-Message-State: AE9vXwMjKKECRm1Hppv+mtD2PVLry+eOICZzpKHursmVy50hBiErqTyLSfpeMsiLZ2Qp0w==
+X-Received: by 10.194.97.17 with SMTP id dw17mr15932592wjb.8.1472760419471;
+        Thu, 01 Sep 2016 13:06:59 -0700 (PDT)
+Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
+        by smtp.gmail.com with ESMTPSA id i3sm6888265wjd.31.2016.09.01.13.06.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 01 Sep 2016 13:06:57 -0700 (PDT)
+Date:   Thu, 1 Sep 2016 21:07:00 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Jan Keromnes <janx@linux.com>
+Cc:     git@vger.kernel.org,
+        Ingo =?iso-8859-1?Q?Br=FCckl?= <ib@wupperonline.de>,
+        Edward Thomson <ethomson@edwardthomson.com>
+Subject: Re: `make profile-install` fails in 2.9.3
+Message-ID: <20160901200700.GA8254@hank>
+References: <CAA6PgK7C18F1WGyZMTEUAWEVsUWqiZND5Ne_0SH-rUEm8u5dNg@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1609010957300.129229@virtualbox>
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAA6PgK7C18F1WGyZMTEUAWEVsUWqiZND5Ne_0SH-rUEm8u5dNg@mail.gmail.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Johannes,
+[+cc Edward Thomson, Ingo Br�ckl]
 
-W dniu 01.09.2016 o 10:01, Johannes Schindelin pisze:
-> On Wed, 31 Aug 2016, Jakub Narębski wrote:
->> W dniu 31.08.2016 o 20:36, Johannes Schindelin pisze:
->>
->> I wonder: would 'git cherry-pick --continue' be able to finish
->> 'git revert', and vice versa, then?  Or 'git sequencer --continue'?
+Hi,
+
+On 09/01, Jan Keromnes wrote:
+
+[.. snip the parts others are more qualified to answer ..]
 > 
-> I just tested this, via
+> Related problem: `t3700-add.sh` currently fails in 2.9.3. I can
+> provide more debug information if you don't already know this problem.
+
+I noticed this problem as well, when I'm compiling with USE_NSEC = 1
+in my config.mak.
+
+Tracking this problem down a bit, it happens because the --chmod=[+-]x
+option introduced in 4e55ed32 ("add: add --chmod=+x / --chmod=-x
+options") only works if the file on disk is modified.  When the test
+was changed to work on one single file, instead of doing chmod=+x on
+one file and chmod=-x on another file in b38ab197c ("t3700: merge two
+tests into one"), this test started breaking when the mtime of the
+file and the index file weren't the same (in other words, if the file
+was not racily clean and thus was not smudged).
+
+When the file is racily clean, git detects that the contents changed,
+and everything is happy, but if it isn't, git incorectly thinks the
+file wasn't modified (which it wasn't, but from gits view it should be
+viewed as modified because the mode does not match up anymore).
+
+One possible fix for the test is to smudge the entry as showed below,
+though I'm not sure it's the right fix.  The other way I can think of
+is to change the file in the index regardless of whether the file was
+changed in some other way before issuing the git add command, as that
+might fit the user expectation better.  Thoughts?
+
+diff --git a/read-cache.c b/read-cache.c
+index 491e52d..f2e7986 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -656,11 +656,13 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
+ 	else
+ 		ce->ce_flags |= CE_INTENT_TO_ADD;
+ 
+-	if (S_ISREG(st_mode) && force_mode)
++	if (S_ISREG(st_mode) && force_mode) {
+ 		ce->ce_mode = create_ce_mode(force_mode);
+-	else if (trust_executable_bit && has_symlinks)
++		ce->ce_stat_data.sd_size = 0;
++	} else if (trust_executable_bit && has_symlinks) {
+ 		ce->ce_mode = create_ce_mode(st_mode);
+-	else {
++	} else {
+ 		/* If there is an existing entry, pick the mode bits and type
+ 		 * from it, otherwise assume unexecutable regular file.
+ 		 */
+
+								           
+
+
+
+> Thanks,
+> Jan Keromnes
 > 
-> 	diff --git a/t/t3510-cherry-pick-sequence.sh
-> 	b/t/t3510-cherry-pick-sequence.sh
-> 	index 96c7640..085d8bc 100755
-> 	--- a/t/t3510-cherry-pick-sequence.sh
-> 	+++ b/t/t3510-cherry-pick-sequence.sh
-> 	@@ -55,7 +55,7 @@ test_expect_success 'cherry-pick
-> 	mid-cherry-pick-sequence' '
-> 		git checkout HEAD foo &&
-> 		git cherry-pick base &&
-> 		git cherry-pick picked &&
-> 	-       git cherry-pick --continue &&
-> 	+       git revert --continue &&
-> 		git diff --exit-code anotherpick
+> ---
 > 
-> (Danger! Whitespace corrupted!!!)
+> Steps to reproduce:
 > 
-> It appears that this passes now.
-
-I'm now not sure if it is such a great idea.  As was said somewhere else
-in this thread, different sequencer-based commands sports different
-options, and you can add options to the "git <command> --continue".
-For example you can say "git cherry-pick --continue -x", but you
-cannot say "git revert --continue -x", as '-x' is a cherry-pick only
-option.  Or you can, theoretically, use "git am --continue --no-3way".
-
-One option is to temporarily relax the test (test_expect_failure),
-then fix it at the end.
-
-
-BTW. how git-am uses sequencer?  I have seen "revert" etc., and "pick"
-etc., but no git-am related constants or strings...
-
-> Probably `git sequencer --continue` would work, too, if there was a `git
-> sequencer`. :0)
-
-Right.
-
+>     curl https://www.kernel.org/pub/software/scm/git/git-2.9.3.tar.xz | tar xJ \
+>      && cd git-2.9.3 \
+>      && make prefix=/usr profile-install install-man -j18
 > 
->>> On Wed, 31 Aug 2016, Jakub Narębski wrote: 
->>>> W dniu 29.08.2016 o 10:04, Johannes Schindelin pisze:
->>  
->>>>> diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
->>>>> index 7b7a89d..6465edf 100755
->>>>> --- a/t/t3510-cherry-pick-sequence.sh
->>>>> +++ b/t/t3510-cherry-pick-sequence.sh
->>>>> @@ -459,17 +459,6 @@ test_expect_success 'malformed instruction sheet 1' '
->>>>>  	test_expect_code 128 git cherry-pick --continue
->>>>>  '
->>>>>  
->>>>> -test_expect_success 'malformed instruction sheet 2' '
->>>>
->>>> Hmmm... the description is somewhat lacking (especially compared to
->>>> the rest of test), anyway.
->>>>
->>>> BTW. we should probably rename 'malformed instruction sheet 2'
->>>> to 'malformed instruction sheet' if there are no further such
->>>> tests after this removal, isn't it?
->>>
->>> No, we cannot rename it after this patch because the patch removes it ;-)
->>> (It is not a file name but really a label for a test case.)
->>
->> Ooops.  What I wanted to say that after removing the test case named
->> 'malformed instruction sheet 2' we should also rename *earlier* test
->> case from 'malformed instruction sheet 1' to 'malformed instruction sheet',
->> as it is now the only 'malformed instruction sheet *' test case.
+> Expected result:
 > 
-> Actually, you know, I completely missed the fact that there was a
-> "malformed instruction sheet 3". I renumbered it.
+>     - runs all tests to get a profile (ignoring occasional failures)
+>     - rebuilds Git with the profile
+>     - installs Git
+> 
+> Actual result:
+> 
+>     - runs all tests to get a profile
+>     - at least one test fails, interrupting the whole process
+>     - Git is not installed
+> 
+> Failure log:
+> 
+>     # failed 1 among 40 test(s)
+>     1..40
+>     Makefile:43: recipe for target 't3700-add.sh' failed
+>     make[3]: *** [t3700-add.sh] Error 1
+>     make[3]: Leaving directory '/tmp/git/git-2.9.3/t'
+>     Makefile:36: recipe for target 'test' failed
+>     make[2]: Leaving directory '/tmp/git/git-2.9.3/t'
+>     make[2]: *** [test] Error 2
+>     Makefile:2221: recipe for target 'test' failed
+>     make[1]: *** [test] Error 2
+>     make[1]: Leaving directory '/tmp/git/git-2.9.3'
+>     Makefile:1633: recipe for target 'profile' failed
+>     make: *** [profile] Error 2
+>     The command '/bin/sh -c mkdir /tmp/git  && cd /tmp/git  && curl
+> https://www.kernel.org/pub/software/scm/git/git-2.9.3.tar.xz | tar xJ
+> && cd git-2.9.3  && make prefix=/usr profile-install install-man -j18
+> && rm -rf /tmp/git' returned a non-zero code: 2
 
-Ooops.  I have missed it too, having looked only at the test after the
-one removed (which is not about malformed instruction sheet).
-
-Best,
 -- 
-Jakub Narębski
-
+Thomas
