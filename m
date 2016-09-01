@@ -6,96 +6,83 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F18B1F6BF
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60AC920193
 	for <e@80x24.org>; Thu,  1 Sep 2016 20:55:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754597AbcIAUy4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 16:54:56 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56378 "EHLO
+        id S1753427AbcIAUzF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 16:55:05 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64944 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753423AbcIAUyw (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1754036AbcIAUyw (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 1 Sep 2016 16:54:52 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4E4E339B8A;
-        Thu,  1 Sep 2016 13:15:59 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CB40B3A3D2;
+        Thu,  1 Sep 2016 13:58:43 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=tElkoyKrE+yc
-        uDPw1D6KBNo+Bug=; b=f7WR0TXuOiAVsCAt3IP+BN4Th9pwhWHS4DGRvsLf2fgd
-        mE0bQVVq0xLcPkfqKaKDTK9gkldp/1KHPdIGndTxchwCZIF/qKznBgGarNrn2BB5
-        VpI1bcYtyn22rFIkFaVnYDso0UUOxY+EHwhNVL9tnWwo4FfLlWEyrei/hPqO2WE=
+        :content-type; s=sasl; bh=1zcoRNHXR1aBFc8rtXjQ4zAX25w=; b=ZZjQW3
+        FE+bRkd/IrfXmtybLVKaq7+JRFRP1Xr1w4uMKETj6OZEwkqDLS++hXsbJzZ8i7do
+        BOpqV1tGtd8dL2RGm102ZTsHDgA3ilyb+yWRYAm+YekuYWUIiCMX2cNcmlwr6gRT
+        BqhvAFuT0byk88PPQ9ZBCbZZtaxKqJuI0TBlY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=WEpvcj
-        SKlqeexstF49U+IC1fvO3/MdGBMb8WHrH4S57r6rQLEOPxIDzKT5KTfFGMJCxrHL
-        Yx5sDdpdeL6kCy8HIdtKSWO4BIPQq3AnsKHgxiCm+1SELjFxKBvy0h/rWRg37Rjv
-        qUj+Qd8AJqKD6CaMetD+/pmOvaDrNbPhMAfV8=
+        :content-type; q=dns; s=sasl; b=IbdLf4fyMJm9du3zyqJZmNo7hELDLLVf
+        dVso/3aWR6M8LNRmJex1DpuRfVZ7/XsyI6NvpivtA6ecpcZxpNKvVZ5nwHOTTdJj
+        /QJh05AjIq5jZ2MWp0zqpdZF297/v/HKtcxahHHBrLGvDLn7LZneueas7uGTidlR
+        V04JFlSplh4=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 462D639B89;
-        Thu,  1 Sep 2016 13:15:59 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C05153A3D1;
+        Thu,  1 Sep 2016 13:58:43 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B59E339B88;
-        Thu,  1 Sep 2016 13:15:58 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 442C33A3D0;
+        Thu,  1 Sep 2016 13:58:43 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org,
-        peff@peff.net, sbeller@google.com, Johannes.Schindelin@gmx.de,
-        jnareb@gmail.com, mlbright@gmail.com
-Subject: Re: [PATCH v6 13/13] read-cache: make sure file handles are not inherited by child processes
-References: <20160825110752.31581-1-larsxschneider@gmail.com>
-        <20160825110752.31581-14-larsxschneider@gmail.com>
-        <xmqqy43fbgcj.fsf@gitster.mtv.corp.google.com>
-        <4D9E5AED-7003-4707-8791-1C25432DB558@gmail.com>
-        <xmqq37lnbbpk.fsf@gitster.mtv.corp.google.com>
-        <4A177D61-AA25-415A-808D-B6BDA3BB5C47@gmail.com>
-        <20160830145429.GA11221@tb-raspi>
-Date:   Thu, 01 Sep 2016 10:15:55 -0700
-In-Reply-To: <20160830145429.GA11221@tb-raspi> ("Torsten =?utf-8?Q?B=C3=B6?=
- =?utf-8?Q?gershausen=22's?=
-        message of "Tue, 30 Aug 2016 14:54:29 +0000")
-Message-ID: <xmqqd1kny20k.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 21/22] sequencer: left-trim the lines read from the script
+References: <cover.1472457609.git.johannes.schindelin@gmx.de>
+        <8c30113a920e075e5ecd68ba31b4007de3e2dbc2.1472457609.git.johannes.schindelin@gmx.de>
+        <7996a963-52b5-5f3c-f686-f5cf22573573@gmail.com>
+        <alpine.DEB.2.20.1609011608440.129229@virtualbox>
+Date:   Thu, 01 Sep 2016 10:58:41 -0700
+In-Reply-To: <alpine.DEB.2.20.1609011608440.129229@virtualbox> (Johannes
+        Schindelin's message of "Thu, 1 Sep 2016 16:13:57 +0200 (CEST)")
+Message-ID: <xmqqvayfwlgu.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: C00FD48C-7067-11E6-A6E6-F7BB12518317-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: B8A4E984-706D-11E6-90EF-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->>=20
->> diff --git a/sha1_file.c b/sha1_file.c
->> index d5e1121..759991e 100644
->> --- a/sha1_file.c
->> +++ b/sha1_file.c
->> @@ -1485,7 +1485,7 @@ int check_sha1_signature(const unsigned char *sh=
-a1, void *map,
->> =20
->>  int git_open_noatime(const char *name)
+>> > Interactive rebase's scripts may be indented; We need to handle this
+>> > case, too, now that we prepare the sequencer to process interactive
+>> > rebases.
+>> 
+>> s/; We need/; we need/
 >
-> Hm, should the function then be renamed into
+> Hrmpf. From http://grammar.ccc.commnet.edu/grammar/marks/colon.htm:
 >
-> git_open_noatime_cloexec()
+> 	There is some disagreement among writing reference manuals about
+> 	when you should capitalize an independent clause following a
+> 	colon. Most of the manuals advise that when you have more than one
+> 	sentence in your explanation or when your sentence(s) is a formal
+> 	quotation, a capital is a good idea. The NYPL Writer's Guide urges
+> 	consistency within a document; the Chicago Manual of Style says
+> 	you may begin an independent clause with a lowercase letter unless it's
+> 	one of those two things (a quotation or more than one sentence).
+> 	The APA Publication Manual is the most extreme: it advises us to
+> 	always capitalize an independent clause following a colon. The advice
+> 	given above is consistent with the Gregg Reference Manual.
 >
->>  {
->> -	static int sha1_file_open_flag =3D O_NOATIME;
->> +	static int sha1_file_open_flag =3D O_NOATIME | O_CLOEXEC;
+> Based on that, I think that a capital is the correct case here.
 
-Perhaps.
-
-In any case, this is probably something that can and should be done
-outside this series.
-
-I am tempted to suggest that the patch 13/13 under discussion may
-also want to be done outside the scope of, and before, this series.
-Even though with the current system an inherited file descriptor to
-v1 filter processes would cause issues, there is no good reason to
-expose this file desciptor to them.
-
-Thanks.
-
+Does that manual have anything to say about semicolons, which is a
+different thing?
