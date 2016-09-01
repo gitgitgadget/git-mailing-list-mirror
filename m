@@ -2,123 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5B251F6BF
-	for <e@80x24.org>; Thu,  1 Sep 2016 22:46:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 703E81F6BF
+	for <e@80x24.org>; Thu,  1 Sep 2016 22:52:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750858AbcIAWq2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 18:46:28 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33285 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750698AbcIAWq2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 18:46:28 -0400
-Received: by mail-wm0-f66.google.com with SMTP id w207so535617wmw.0
-        for <git@vger.kernel.org>; Thu, 01 Sep 2016 15:46:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=lj2KpvGxx12q3uYh+3QCrPASr9QhlOGSvIfw7m3NMSY=;
-        b=z+rYbF+vgNGVLeJihqiexpBdYTmJ0LcIkpRPYzETqm39DVcRig9z8620EOb2iHzo78
-         rP68jDtBFYJpWhpfswNQMdwXN1ym/1JwlroPguUMFYAGq/zeENWDChVgfT3jMjshmjPv
-         bJ2QCL/gvb5EHJNj1MlFrXOKalCnB2+O7Xw2UR943EGwi0MynTfmtWD/sT2aW+KSuVmy
-         A2rC1PHmVVHQqsKABqvCs/R9Hcyxi+tf9F+PIY7m+QBidCgar4CRc89WcVOVWvAO8FbT
-         pudz3IbxbGDvwddO5c4KTV0KHWI10bbDd1kghMvVHJOnPIkJL4ik9HSwygcdEQMI9TN7
-         u7fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=lj2KpvGxx12q3uYh+3QCrPASr9QhlOGSvIfw7m3NMSY=;
-        b=aCPOsGUoFLMqUtoO10sbg2wScPdVkicHfaveUNZ39X/fO2b1XpCVzSQUrM2b7ca7gn
-         eJuV0E+opBNn655Dpf5LBHDAmFIdMjAX6Gamw75WbrRk+LiSXkwI2uvl1Iow0lVns2xP
-         bjUGRDHyvSAC7lJVQdA8IwuSVIMFoHv3LXoni/24ZnRrUI0LzAhRTSn0bnAglGb4KOKv
-         2Biwo+k7awijkK+kBLdDLokDbzJkiNV2v1u3KEdzhQzc7pqrhhazb+fssHJHVUr8xkYM
-         RDeep7Okb1kUVmrWgggKvqUYDqbaPTzuPn+OI7ATc+TRhYTg16f8VeRaXMTuW6br8crU
-         2dcQ==
-X-Gm-Message-State: AE9vXwOX7JOfqgZG4pHyw9L8rwzOi/MPyY2h/9VkEcNx9F2KqEQ/AAc5txRSXv4nyk8dJQ==
-X-Received: by 10.28.20.77 with SMTP id 74mr77879wmu.1.1472769986063;
-        Thu, 01 Sep 2016 15:46:26 -0700 (PDT)
-Received: from [192.168.1.26] (abrf30.neoplus.adsl.tpnet.pl. [83.8.99.30])
-        by smtp.googlemail.com with ESMTPSA id c8sm7407481wjm.19.2016.09.01.15.46.24
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 01 Sep 2016 15:46:25 -0700 (PDT)
-Subject: Re: [PATCH 13/22] sequencer: remember the onelines when parsing the
- todo file
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-References: <cover.1472457609.git.johannes.schindelin@gmx.de>
- <12bffd6ca4eb7acc00a102d13348bb96ad08371d.1472457609.git.johannes.schindelin@gmx.de>
- <52d61bef-668b-fdc4-30b3-a34c11b39f81@gmail.com>
- <xmqq8tvc21re.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1609011052260.129229@virtualbox>
-Cc:     git@vger.kernel.org
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <63004be3-04de-00c5-a94d-1b600201bc6f@gmail.com>
-Date:   Fri, 2 Sep 2016 00:46:19 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S1752426AbcIAWwX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 18:52:23 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57794 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752092AbcIAWwW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 18:52:22 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 60954381A9;
+        Thu,  1 Sep 2016 18:52:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=JLZi5wYdsFlZLzjPHqYP/VpEzH8=; b=qkYpZ4
+        Xrr7CiAt+WCYf063v3WmIUjpEsdHingAOLj84I9SV5EbUS7v30Gt/golgLxVhA7b
+        f7rGt9YXpt8GQKG1/duPwlKG1dY1smTId6HACEoc/LKfgJy116lH0W9hva7uEM+l
+        fCvOW7lX6PwrMoAifLHLKewSBN5zEQGfqeAf4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=wDi/KHFXC2sCnxXsbgdjLfwYMABwCwVy
+        eBxfLjCz+8mTYZyU5+eIvGuZClx/s3jWSZBcVSTdzGt5dSwCmcnkexkpJEAAjhqE
+        Lf/je8i+eO2wy9Ipi3CR39gcWr3r1O4Lvn2x1UAJtpGqt+tD8DB3F3eaS2oI++rX
+        Ltf+4ejIWrs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 598A2381A8;
+        Thu,  1 Sep 2016 18:52:21 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D9C17381A6;
+        Thu,  1 Sep 2016 18:52:20 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sverre Rabbelier <srabbelier@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>, Git <git@vger.kernel.org>
+Subject: Re: [PATCH v2] t/Makefile: add a rule to re-run previously-failed tests
+References: <b2d016e44fa04e8a318967c43762d6933faf7956.1467183740.git.johannes.schindelin@gmx.de>
+        <0dfa96b17edfe84ba19c7e57fe0b017c77943e0c.1472478285.git.johannes.schindelin@gmx.de>
+        <20160830084357.rdmt2ehngrz6rqaq@sigill.intra.peff.net>
+        <xmqq37lm3w6u.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1608311233440.129229@virtualbox>
+        <CAGdFq_iJeziyXBPL2GVHNXZcjGAwQVN2EhJs4AtJCSx7ghn32Q@mail.gmail.com>
+        <alpine.DEB.2.20.1609011027210.129229@virtualbox>
+        <CAGdFq_h3UuW7wX0-=SuS22mX_C086HRZZ=i1sYVya80dd+qMYQ@mail.gmail.com>
+Date:   Thu, 01 Sep 2016 15:52:18 -0700
+In-Reply-To: <CAGdFq_h3UuW7wX0-=SuS22mX_C086HRZZ=i1sYVya80dd+qMYQ@mail.gmail.com>
+        (Sverre Rabbelier's message of "Thu, 1 Sep 2016 09:57:04 -0700")
+Message-ID: <xmqqzinrteql.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1609011052260.129229@virtualbox>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: BD8F3E08-7096-11E6-94C5-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 01.09.2016 o 11:37, Johannes Schindelin pisze:
-> On Wed, 31 Aug 2016, Junio C Hamano wrote:
->> Jakub Narębski <jnareb@gmail.com> writes:
->>
->>>> diff --git a/sequencer.c b/sequencer.c
->>>> index 06759d4..3398774 100644
->>>> --- a/sequencer.c
->>>> +++ b/sequencer.c
->>>> @@ -709,6 +709,8 @@ static int read_and_refresh_cache(struct replay_opts *opts)
->>>>  struct todo_item {
->>>>  	enum todo_command command;
->>>>  	struct commit *commit;
->>>> +	const char *arg;
->>>> +	int arg_len;
+Sverre Rabbelier <srabbelier@gmail.com> writes:
+
+>>> I can't really recall, but I think it may have been related to me
+>>> doing something like this:
+>>> 1. Make a change, and start running tests (this takes a long time)
+>>> 2. Notice a failure, start fixing it, leave tests running to find
+>>> further failures
+>>> 3. Finish fix, first tests are still running, start another run in a
+>>> new terminal (possibly of just the one failed test I was fixing) to
+>>> see if the fix worked.
 >>>
->>> Why 'arg', and not 'oneline', or 'subject'?
->>> I'm not saying it is bad name.
->>
->> I am not sure what the "commit" field of type "struct commit *" is
->> for.  It is not needed until it is the commit's turn to be picked or
->> reverted; if we end up stopping in the middle, parsing the commit
->> object for later steps will end up being wasted effort.
-> 
-> No, it won't be wasted effort, as we *validate* the todo script this way.
-> And since we may very well need the info later (most rebases do not fail
-> in the middle), we store it, too.
+>>> Without the pid, the second run would clobber the results from the first run.
+>>>
+>> Would present-you disagree with stripping off the -<pid> suffix, based on
+>> your recollections?
+>
+> No objections, I think it should be fine. If anyone uncovers a
+> particularly compelling reason later on, it's only a commit away :).
 
-The question was (I think) whether we should do eager parsing of
-commits, or whether we can do lazy parsing by postponing full parsing
-"until it is the commit's turn to be picked or reverted", and possibly
-when saving todo file.
+OK, especially with the earlier observation made by Peff in the log
+message:
 
-I wonder how probable is situation where we save instruction sheet
-for interactive rebase, with shortened SHA-1, and during rebase
-shortened SHA-1 stops being unambiguous...
+    ... we can see that other files we write to test-results (like
+    *.exit and *.out) do _not_ have the PID included. So the
+    presence of the PID does not meaningfully allow one to store the
+    results from multiple runs anyway.
 
->                                [...] after parsing the todo_list, we will
-> have to act on the information contained therein. For example we will have
-> to cherry-pick some of the indicated commits (requiring a struct commit *
-> for use in do_pick_commit()). Another example: we may need to determine
-> the oneline for use in fixup!/squash! reordering.
-> 
-> So: keeping *that* aspect of the previous todo_list parsing, i.e. store a
-> pointer to the already-parsed commit, is the right thing to do.
+even if we wanted to, keeping the current code with suffix is not
+sufficient, so I suspect it won't be just "a commit" away, but we
+should be able to lose it for now.  Hopefully that would help making
+Dscho's "what are the failed tests?" logic simpler.
 
-The above probably means that eager eval is better
-
-Best,
--- 
-Jakub Narębski
+Thanks.
 
