@@ -2,111 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65D392035F
-	for <e@80x24.org>; Thu,  1 Sep 2016 08:28:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30FF11FBB0
+	for <e@80x24.org>; Thu,  1 Sep 2016 08:33:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751134AbcIAI25 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 04:28:57 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:38879 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750841AbcIAI2z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 04:28:55 -0400
-Received: by mail-wm0-f49.google.com with SMTP id 1so81123670wmz.1
-        for <git@vger.kernel.org>; Thu, 01 Sep 2016 01:28:54 -0700 (PDT)
+        id S1752371AbcIAIdf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 04:33:35 -0400
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:36811 "EHLO
+        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752185AbcIAIdc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 04:33:32 -0400
+Received: by mail-wm0-f53.google.com with SMTP id c133so66014903wmd.1
+        for <git@vger.kernel.org>; Thu, 01 Sep 2016 01:33:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Fm06HxsdfIDqsb7TuCc1lALAKl3AwDdPHuT1PgWsR4E=;
-        b=D4A7pFgX4dG087waxfkLYmJizMb+1wvjZ19vR309yZAUbnhRk+IT6bF7PpvXm3DReM
-         UR/sG2c58RpzwPRH3IRMN5ZOTWlPXaQrDwntpzP1qOwFIBPozXVfOINjR58K9/CqMD1C
-         A/4UXCyHg3wY3qNbJakdr5yG6KKRwbgmEiy0LMjSoB/IfOITsQd5nIHJrDCiSuQFI9Bs
-         ZGMSBwdhsMzq86LBI6psloTZMRoqiv0HuiC87+jm20Z/uW9sk5IzWKAqfox60ARaUdQm
-         m02FqLYCWgCnN1qJLcXBJ6kGnrtuzJrPmWOQSAcBm77NjRaK47EpJlpKZnLKzuHOCzy4
-         4G6w==
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=fmhO71iZVrIkmvOEdbBKlR4+neAS6OP7XnWXwDe4IX0=;
+        b=LHQbpwT3D/OFKXCK0xmr4VkZi+iIcdePyOvW+4/VaCoINBHB/NuhtS4MGN87R+Zyv/
+         /RHlSFei2Y6lyBcrlCc1QkYahZjfEzjD/EYjjAoH58hDOWXDKSJuTNUkLQM0q2TwqSNo
+         dEOSuZGVV7pNtSRAMUoyhxTNFjbRpRZ6k4oh/6E6goHxtd8k617jASYnzhzNym3WY/m1
+         EdYpjXo97YpIS3PpIAA5PIE/0yMOyWuQ4tRWXNy5hgV7QAGWrKjoEHqb3m/E1gjF7j6e
+         AOopfP78S8vP3pscs8ATmDv0nHWNb8/APkENj9ED4AMVZX3yUHsjna7T76axPLV3I7SS
+         dvYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Fm06HxsdfIDqsb7TuCc1lALAKl3AwDdPHuT1PgWsR4E=;
-        b=gtgDhiSQ7UU6x3NWkAuFYCHGXcg6bOxKTKdWQGHJ0En2D1ymH/s9ZfWd3o+C7qRN7i
-         q4UiLVBPuLaQDTxs+j/SY6IAFMval5AvvJfvmbhOanijYMo5qt98dUwbhf+/b3fzV2K5
-         +OBFpttXgWuvghWH9mxiNnKA3gjKKHIIRVVW/2eX01LHPxrfKaog6yHShHx88Ft7vVqp
-         Q21E8IIMFqoTvbWmRbUv7hs39/P7BHxeXrYm3RpJJJlUme5n0BxPuO3E9sxIFcZVIWHR
-         anmDPoTWk8V7R99iXILQTrJYnDIbhqHUL1bVfMAKnkHZ+N4DzzkuONI0SvtT02+AeSaC
-         2SRA==
-X-Gm-Message-State: AE9vXwOLthyeydQIXLmgA0gKHHvRJbb0yfsvy8YJZoq+7U4gHW64vDz2ASvwtt0A9VlvNHkWzmfKSlju2VDITQ==
-X-Received: by 10.28.61.11 with SMTP id k11mr13095231wma.34.1472718533795;
- Thu, 01 Sep 2016 01:28:53 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.194.222.132 with HTTP; Thu, 1 Sep 2016 01:28:53 -0700 (PDT)
-In-Reply-To: <xmqq1t14zit7.fsf@gitster.mtv.corp.google.com>
-References: <20160827184547.4365-1-chriscool@tuxfamily.org>
- <xmqq7fazbdmk.fsf@gitster.mtv.corp.google.com> <CAP8UFD20GY0h8n-7oJp8zhjHPUeKSkcEkNrOMuyGBrtS8JE6Jg@mail.gmail.com>
- <xmqq1t14zit7.fsf@gitster.mtv.corp.google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 1 Sep 2016 10:28:53 +0200
-Message-ID: <CAP8UFD3wA32eXYq3F4=KS-9SkV48Yh45TKgFnn3AmGVfpjwWjA@mail.gmail.com>
-Subject: Re: [PATCH v13 00/14] libify apply and use lib in am, part 3
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Karsten Blees <karsten.blees@gmail.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=fmhO71iZVrIkmvOEdbBKlR4+neAS6OP7XnWXwDe4IX0=;
+        b=mit/iY/gPXc5HO4O8FWY9xKH64Rk0bUI/P2X4MKZBmzqvr/XwQC4kQC+9HRIul/9wQ
+         VHTXNqrp4C0yInY0dB2pkJ0ISt+ED36CYYpxx5F/CaUSVKhEY4cfcl6malKXyBM/gWdl
+         NH+WHbW0DV/lnbC5HhlkcmIUhTuxrlZAPZR6meN+EpZH3UoGL8PDYhb/0gBYop7ut0vU
+         emn37ZRJHKHUiWGmB/hhwvUDDubuULmTvN4/P23M3y+TudMSRoQtigxozE7LJYSlh0Fk
+         KRhleJ6CP5KznvUDMEZzeoLrB0cawdXQndhy3ajd9hCzZcp4FO/d/0EJrSKp+9BcWYVW
+         JOfQ==
+X-Gm-Message-State: AE9vXwMKWIC/Lu20CzeameRbaB/wlqro6okE6A0w2A+acf4blE1nrVrdhOBXgsMuE2Wu8g==
+X-Received: by 10.28.95.67 with SMTP id t64mr26836120wmb.99.1472718810740;
+        Thu, 01 Sep 2016 01:33:30 -0700 (PDT)
+Received: from [10.42.1.91] ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id lv9sm4003376wjb.22.2016.09.01.01.33.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 01 Sep 2016 01:33:30 -0700 (PDT)
+Message-ID: <1472718808.4680.19.camel@kaarsemaker.net>
+Subject: Re: [PATCH 07/34] sequencer (rebase -i): add support for the
+ 'fixup' and 'squash' commands
+From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+Date:   Thu, 01 Sep 2016 10:33:28 +0200
+In-Reply-To: <5488a031ffe14373b7434d497b7fd2f2e5fe55bd.1472633606.git.johannes.schindelin@gmx.de>
+References: <cover.1472633606.git.johannes.schindelin@gmx.de>
+         <5488a031ffe14373b7434d497b7fd2f2e5fe55bd.1472633606.git.johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.18.5.2-0ubuntu3 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 1, 2016 at 12:15 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
->
->> On Mon, Aug 29, 2016 at 9:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Christian Couder <christian.couder@gmail.com> writes:
->>>
->>>> Highlevel view of the patches in the series
->>>> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->>>>
->>>> This is "part 3" of the full patch series. I am resending only the
->>>> last 14 patches of the full series as "part 3", because I don't want
->>>> to resend the first 27 patches of v10 nearly as is.
->>>
->>> Just to make sure, you are sending the first 11 of these 14 exactly
->>> as-is, right?  I didn't spot anything different other than 12 and 13
->>> that replaced the "alternate index" step from the previous round.
->>
->> Yeah, the first 11 of the 14 patches have no change compared to v12.
->> I didn't want to create a "part 4" as that could be confusing, and
->> sending the first 11 patches gives them another chance to be reviewed
->> again.
->
-> Hmph.
->
-> But most likely, you made sure that those who _could_ review the
-> first 11 are miniscule minority by omitting the earlier steps before
-> these 14 patches -- unless they are familiar with them, the first 11
-> patches are not much use to them.  And those who are familiar have
-> already seen the first 11, too.  That was why I wondered who the
-> target audience was when seeing only the last 14, among which 11 of
-> them were identical to the previous.
+On wo, 2016-08-31 at 10:54 +0200, Johannes Schindelin wrote:
 
-Following Stefan's review, it looks like I will need to resend at
-least 02/14, 10/14 and 14/14.
-What do you prefer me to resend:
-1) all the last 40 or so patches
-2) the last 14 patches
-3) only the few patches that changed
-?
+> +static int is_fixup(enum todo_command command)
+> +{
+> +	return command == TODO_FIXUP || command == TODO_SQUASH;
+> +}
+
+It sounds wrong to have a function named is_fixup return true when the
+command isn't a fixup but a squash. Maybe name it
+changes_previous_commit or something?
+
+> +static const char *nth_for_number(int n)
+> +{
+> +	int n1 = n % 10, n10 = n % 100;
+> +
+> +	if (n1 == 1 && n10 != 11)
+> +		return "st";
+> +	if (n1 == 2 && n10 != 12)
+> +		return "nd";
+> +	if (n1 == 3 && n10 != 13)
+> +		return "rd";
+> +	return "th";
+> +}
+
+>8---
+
+> +	if (command == TODO_SQUASH) {
+> +		unlink(rebase_path_fixup_msg());
+> +		strbuf_addf(&buf, "\n%c This is the %d%s commit message:\n\n%s",
+> +			comment_line_char,
+> +			count, nth_for_number(count), body);
+> +	}
+> +	else if (command == TODO_FIXUP) {
+> +		strbuf_addf(&buf,
+> +			"\n%c The %d%s commit message will be skipped:\n\n",
+> +			comment_line_char, count, nth_for_number(count));
+> +		strbuf_add_commented_lines(&buf, body, strlen(body));
+> +	}
+
+This way of handling numbers is not translatable, and I really think we
+should mark these strings for translation, like they are in the .sh
+version.
+
+D.
