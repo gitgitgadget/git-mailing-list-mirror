@@ -2,102 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_03_06,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 78CF61F6BF
-	for <e@80x24.org>; Thu,  1 Sep 2016 22:13:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86AEE1F6BF
+	for <e@80x24.org>; Thu,  1 Sep 2016 22:16:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752995AbcIAWNB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 18:13:01 -0400
-Received: from mail-it0-f49.google.com ([209.85.214.49]:37346 "EHLO
-        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751014AbcIAWNA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 18:13:00 -0400
-Received: by mail-it0-f49.google.com with SMTP id e124so6487649ith.0
-        for <git@vger.kernel.org>; Thu, 01 Sep 2016 15:13:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=evVTC6Fe7CGYVvdm+USDIMttF8a0ZW7E6WrZAsUSqkE=;
-        b=Zxu8jg7D20ggSi2wI5SqHOZfRx0OhnfQ6W0f78VYmz3zgFi5sldW0rCLnPVF+jBR63
-         VbvoSEWqP6oYf6qj6QoAVbnJeBXJu+1LdnCrgr9I2Zf77DJ2ABOAGT1PE4EhURXsjlOq
-         23AEKN1Xyb1Mmnz8IGtfEjb4uqY96YJRvOX4xJng0JJqSdSSs1AI3GJ9/BIoXQQ+Y/D1
-         AuuUmxcPqGlQwORr/bTB49zBYZVX8Uvb3wMOaTcCXVJOVHqhX8wg7/gQpAkKtHztdDVB
-         wGSICxqZqo8gxX3psKiTlbHrjmZebvOpTFo/Sfpb0/LhuobjU9Y9hLkXeBZV1Oa5k2Hl
-         ZcFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=evVTC6Fe7CGYVvdm+USDIMttF8a0ZW7E6WrZAsUSqkE=;
-        b=mZRGbgClWE/+H7ACWJrLOFjj/GgGVg7fKTVuh5OQ8GG90tPAxk7ItHmCVWpumhGUoy
-         BLgSG8FQkDfky7h2eK79azLTgNaitVKpB1X6KGdGPH3z1/klmo1A1SI03Ol6aUJUExpL
-         GBMzPw+79Nz6GUdTyzHnvDNDzgul13B7dh238B7HzBVwtPbFp+9IF+YvV2trm6j/QucO
-         MJOfYjdM18r/pc8JQfEYvIwErAp7yc8jiFGqxP74OjxzCinTf1x8qd7sxC/hKUdeG1Bl
-         7ZTadm4+ZeWRryqlZAu3EGaJobpil+ibkKJKDoi1bHVgu9MQPAe486QPSszduIT8bmQk
-         hEpA==
-X-Gm-Message-State: AE9vXwO+2WE1Kabl95uPlMWAYCFUquUTVjv0NuZh9hOdeCgZ7Lg3KqooNgijHNp4qKFv/x6P/vsW4NP7MEcUbdyL
-X-Received: by 10.36.137.9 with SMTP id s9mr21722267itd.58.1472749076072; Thu,
- 01 Sep 2016 09:57:56 -0700 (PDT)
+        id S1752724AbcIAWQo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 18:16:44 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62357 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751540AbcIAWQn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 18:16:43 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 310F239CE9;
+        Thu,  1 Sep 2016 18:16:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ekTpUA7raE9LwLF3ES2xNznzqQ4=; b=nXZsGR
+        SxC0fMxrVhQ/3IXXEESMhcZ1KIEKLoBQXM/ykIU9klauqmStdP2NqwivhFyii2s4
+        /kRpji9vnnv6SXRYYDYWCXWBWZmsE+oGcvL9NEq+t+UzMz58P8dOCiKtLlAIsZbC
+        13UDVmEk019nIdSEBlthJdl0cIh7JIdu6/tw8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=BRWYPLeaZhmUjO/ha42Ghzfj/+opSU4R
+        Me33wlJgdmEavR9OrR9Yw7S7yswusinnbLZ7cbC9WECfFc8uM9RY1iwSSKcLbWcE
+        wY0mrAL2HA/tXsi99my5vA6FwStcrd+MA7/yYMYRbHywGfDsX6EuNJXDW7Spv7Jw
+        h0Q4kIWf30Y=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2733139CE8;
+        Thu,  1 Sep 2016 18:16:41 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 95F5A39CE3;
+        Thu,  1 Sep 2016 18:16:40 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
+        Jan Keromnes <janx@linux.com>, git@vger.kernel.org,
+        Ingo =?utf-8?Q?Br=C3=BCckl?= <ib@wupperonline.de>,
+        Edward Thomson <ethomson@edwardthomson.com>
+Subject: Re: `make profile-install` fails in 2.9.3
+References: <CAA6PgK7C18F1WGyZMTEUAWEVsUWqiZND5Ne_0SH-rUEm8u5dNg@mail.gmail.com>
+        <20160901200700.GA8254@hank>
+        <20160901215810.ez47lqwmfmahyvc7@sigill.intra.peff.net>
+Date:   Thu, 01 Sep 2016 15:16:38 -0700
+In-Reply-To: <20160901215810.ez47lqwmfmahyvc7@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 1 Sep 2016 17:58:10 -0400")
+Message-ID: <xmqqh99zuuyh.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Thu, 1 Sep 2016 09:57:55 -0700 (PDT)
-In-Reply-To: <CAP8UFD3RE6L17nQmvZTkx6wycsdG7EA9eM=tYQD8nrS445zg1w@mail.gmail.com>
-References: <20160827184547.4365-1-chriscool@tuxfamily.org>
- <20160827184547.4365-7-chriscool@tuxfamily.org> <CAGZ79kYnp_8iew33KQJK1TB0ROLthHBtvHqf3wVzFkh_JSq5MA@mail.gmail.com>
- <CAP8UFD3RE6L17nQmvZTkx6wycsdG7EA9eM=tYQD8nrS445zg1w@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 1 Sep 2016 09:57:55 -0700
-Message-ID: <CAGZ79kZT-t_NZZJcdMEB8E1y_u0=LHGWOxbdEeYMjgFHZYtHHQ@mail.gmail.com>
-Subject: Re: [PATCH v13 06/14] apply: make it possible to silently apply
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Karsten Blees <karsten.blees@gmail.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: C1E49066-7091-11E6-AA38-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 1, 2016 at 1:01 AM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> On Thu, Sep 1, 2016 at 12:07 AM, Stefan Beller <sbeller@google.com> wrote:
->>> Printing on stdout, and calls to warning() or error() are not
->>> taken care of in this patch, as that will be done in following
->>> patches.
->>
->>> -               if (state->apply_verbosely)
->>> +               if (state->apply_verbosity > verbosity_normal)
->>>                         error(_("while searching for:\n%.*s"),
->>>                               (int)(old - oldlines), oldlines);
->>
->> But this is an error(..) ?
->
-> Do you mean that it was a bug in the original code to print this error
-> only in verbose mode?
+Jeff King <peff@peff.net> writes:
 
-Oh never mind.
+> Yeah, I think we should _always_ act on the --chmod, no matter if the
+> file is racy or not, or whether it has a content change or not. I.e.,
+> the race is not the problem, but rather the behavior of 4e55ed32. Your
+> second proposal there sounds more like the right approach.
 
-I meant to point out the inconsistency between the commit message, that
-said: "error() are not taken care of in this patch" and modifying a
-condition for
-an error call. However we need to fix them as you renamed apply_verbosely
-to apply_verbosity and made it an enum. So I spoke too early.
+Yeah, you two are absolutely right.  The second "git add --chmod=+x"
+in
 
->
-> Anyway I don't think such a refactoring is needed.
+    $ git add .
+    $ git add --chmod=+x .
 
-great :)
+should still find _all_ the non-executable paths and flip their
+executable bit in the index, making them all up-to-date in the
+index.
+
+Which means that piggybacking this on the "run 'git diff' limited to
+the pathspec to find the paths that needs updating" logic usually
+done in "git add" can not be reused [*1*].
+
+What was I thinking while reviewing the patch X-<.  Sigh.
+
+
+[Footnote]
+
+*1* I guess we _could_, by first flipping all the regular file
+    blob's executable bit for paths that are inside the pathspec and
+    then by running "git diff" against that modified index, limited
+    to the pathspec, to find the paths that need to be added.
+
+    It sounds ugly, but may conceptually be cleaner.  We first start
+    from an ideal end-result, and then re-hash what needs to be
+    updated to match the ideal.
+
+
