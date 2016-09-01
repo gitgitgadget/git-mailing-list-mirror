@@ -2,64 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7177B1FBB0
-	for <e@80x24.org>; Thu,  1 Sep 2016 10:50:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE41B1FBB0
+	for <e@80x24.org>; Thu,  1 Sep 2016 11:10:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932724AbcIAKuj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 06:50:39 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:34453 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750957AbcIAKui (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 06:50:38 -0400
-Received: by mail-lf0-f65.google.com with SMTP id k135so3930991lfb.1
-        for <git@vger.kernel.org>; Thu, 01 Sep 2016 03:50:37 -0700 (PDT)
+        id S1753187AbcIALKg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 07:10:36 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:32862 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753231AbcIALKf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 07:10:35 -0400
+Received: by mail-wm0-f67.google.com with SMTP id w207so7888027wmw.0
+        for <git@vger.kernel.org>; Thu, 01 Sep 2016 04:10:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=subject:to:references:cc:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding;
-        bh=MWZAUyEGQgpQN59P81ZJ8+rmUhZZOXh+tW4hpDyZ2Ss=;
-        b=lDHFFWDEg6SsqyadrCIpTMgAnYvI8j7vdmRjYKuDlp59f7+HX8sU87KqhQJ8G8PlAR
-         XLpnxHt7tz2543ufLQ6E4v4beTDOqCS5l/AGEbfVhSbl2Si5HVUx8Gob+l4h7LzrLmlt
-         VQ75JYw/hQHK8IBtHDrVvmsgM935ENTe5ABbx5t1DPDheqx61KsCBUpF/fV3v98U9IlY
-         tbZHZCq3uXEarl1iE4RFUsJfMZ6WTMwW1maWnreOjNaB5A9cgarPuyUc6TPZm6FzpScP
-         2A8GJXM931ExFl/4yc0jeS/jjuW9NXouajZ3QweygyI55MYgocbAx5SxYOelfoc9NaZl
-         ejWg==
+        bh=rs1H7anykA8vDMLNjWEE7e4FfNZIgkRxMy1397czzRU=;
+        b=wih4oOiay0nTDPwN+KoHF2iEUqPhfU2vCYrey13mu/CE8wUAuWps3SjMrRE5xoKGbU
+         waYvk7L/k3GmDt571ImjgYqYrTsx5RAo9TxDq5lf5wYF7gIZcoJuy7YLbCYBpO0gQtrB
+         Yabw+otUjP8/DeSkc0ABTPxp68QPSwivGd53GRan12mBRacFxRRkq3Due6L680JReEhM
+         4KKEfrVmVg67N7ICqSxHzaF6bP4ir13UCg1wU/ug7+RAfx9JEWZOofInlQdv86ziiEzr
+         hlnqB0DtNizj2SsmeJgSZRnq60YjTc9EqfZorms5OtScJ4+YWzLy+58emMnxTugZp3hB
+         nDhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:subject:to:references:cc:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=MWZAUyEGQgpQN59P81ZJ8+rmUhZZOXh+tW4hpDyZ2Ss=;
-        b=DnOLcwYSoQCj6ZhEGnoeie31pllTwuqjOqcofAbsruzvZTWEdvtd4DHrs7RBYymk1/
-         ZIKfCEl40TB6i6NNCvrd9WiSetRmfypS2K92lSYK2I1tUa7wmrDCM8TscgRr6rPK+P7s
-         9a4StLpXhvgylDVgY8moCO+NeNbXXioBuZjZ5czfVJnx718vMOj7FlGZdMQG7SGcG9Hm
-         48xawihWnawfsWbv/cLSMh+WUxjauOmb5coj/VT/ebwcBX0r/b9BG32/Liyd81KfN2Pz
-         LUn72a24DiI6MiwlJ6KH2SbZSQu6HIjdUP/1Fo6mcGb7mSAXJxsQAiOOQbYtSTsSZNO8
-         bPuQ==
-X-Gm-Message-State: AE9vXwNLl6j73vhuDVMrfL6bkE29oq8UbUcAAHqWsgmXzN+zKLL1H8Po+q0Zx5imgWHYAw==
-X-Received: by 10.46.5.6 with SMTP id 6mr4645333ljf.66.1472727036037;
-        Thu, 01 Sep 2016 03:50:36 -0700 (PDT)
+        bh=rs1H7anykA8vDMLNjWEE7e4FfNZIgkRxMy1397czzRU=;
+        b=gIm3V8T4BVXfzAqWJ70luKT0z/wTJFCzUd+o02vXDhPAAu8lGX2jEWprYVhnuXx9kE
+         OvUqt+b0QS8f9Xxxk3dG6yrea4W9ItltXaHreKcn0y46f9lRPiKOxHItF9LnPLqmko+f
+         E71FufPshWC94Adglbt1/8Da1RiRmCt3XdRVOtHruNbMTMYMuKj5z8iAQ6xD1gunyIWx
+         BGb1Xx+J9fF6r6UkNWmCFQHc7x/pQV7NtAeh4lCpJcGakmXnlMxuaMO7kAIOVYFwfd1V
+         qErzloog3D8uBxzNQ89aq6jh6CBNkoTIeIVJHdxIfmuC4bD9KsZ2ji2lJfgUnchcFM8P
+         eA0w==
+X-Gm-Message-State: AE9vXwPSGu3VgySyRG35Sf4/dK+BCLdwHjKe67CPeA+XaCPJwbV1aJ27il+n3TaxJF3LOg==
+X-Received: by 10.28.61.11 with SMTP id k11mr13798119wma.34.1472728227935;
+        Thu, 01 Sep 2016 04:10:27 -0700 (PDT)
 Received: from [192.168.1.26] (enu134.neoplus.adsl.tpnet.pl. [83.20.10.134])
-        by smtp.googlemail.com with ESMTPSA id k63sm815401lfe.48.2016.09.01.03.50.34
+        by smtp.googlemail.com with ESMTPSA id u124sm8922579wmu.10.2016.09.01.04.10.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 01 Sep 2016 03:50:34 -0700 (PDT)
-Subject: Re: [PATCH 21/22] sequencer: left-trim the lines read from the script
+        Thu, 01 Sep 2016 04:10:26 -0700 (PDT)
+Subject: Re: [PATCH 22/22] sequencer: refactor write_message()
 To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         git@vger.kernel.org
 References: <cover.1472457609.git.johannes.schindelin@gmx.de>
- <8c30113a920e075e5ecd68ba31b4007de3e2dbc2.1472457609.git.johannes.schindelin@gmx.de>
+ <cb4253698ae3eca066c031e0aec4e83ede1fa3e5.1472457609.git.johannes.schindelin@gmx.de>
 Cc:     Junio C Hamano <gitster@pobox.com>
 From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <7996a963-52b5-5f3c-f686-f5cf22573573@gmail.com>
-Date:   Thu, 1 Sep 2016 12:50:30 +0200
+Message-ID: <4c0ee8f6-1302-1dcc-602d-7a84150ec39d@gmail.com>
+Date:   Thu, 1 Sep 2016 13:10:23 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.2.0
 MIME-Version: 1.0
-In-Reply-To: <8c30113a920e075e5ecd68ba31b4007de3e2dbc2.1472457609.git.johannes.schindelin@gmx.de>
+In-Reply-To: <cb4253698ae3eca066c031e0aec4e83ede1fa3e5.1472457609.git.johannes.schindelin@gmx.de>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -71,51 +71,120 @@ Hello Johannes,
 
 W dniu 29.08.2016 o 10:06, Johannes Schindelin pisze:
 
-Subject: [PATCH 21/22] sequencer: left-trim the lines read from the script
+> The write_message() function safely writes an strbuf to a file.
+> Sometimes this is inconvenient, though: the text to be written may not
+> be stored in a strbuf, or the strbuf should not be released after
+> writing.
 
-In the subject, it should probably be without "the", as "lines"
-are plural.
+By "this" you mean "using strbuf", isn't it?  It is not very obvious,
+and I think it would be better to say it explicitly.
 
-s/left-trim the lines/left-trim lines/
+>
+> Let's allow for such use cases by refactoring write_message() to allow
+> for a convenience function write_file_gently(). As some of the upcoming
+> callers of that new function will want to append a newline character,
+> let's just add a flag for that, too.
 
-> Interactive rebase's scripts may be indented; We need to handle this
-> case, too, now that we prepare the sequencer to process interactive
-> rebases.
+This paragraph feels a bit convoluted.
 
-s/; We need/; we need/
+As I understand it, you refactor "safely writing string to a file"
+into write_with_lock_file(), and make write_message() use it.  The
+new function makes it easy to create new convenience function 
+write_file_gently(); as some of the upcoming callers of this new
+function would want to append a newline character, add a flag for
+it in write_file_gently(), and thus in write_with_lock_file().
 
-Nice little bit of scaffolding for sequencer-izing rebase -i.
+Isn't it better / easier to understand?
 
 > 
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
->  sequencer.c | 3 +++
->  1 file changed, 3 insertions(+)
-
-Small change, easy to review.
-
+>  sequencer.c | 21 ++++++++++++++++++---
+>  1 file changed, 18 insertions(+), 3 deletions(-)
 > 
 > diff --git a/sequencer.c b/sequencer.c
-> index 0614b90..5efed2e 100644
+> index 5efed2e..f5b5e5e 100644
 > --- a/sequencer.c
 > +++ b/sequencer.c
-> @@ -864,6 +864,9 @@ static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
->  	char *end_of_object_name;
->  	int i, saved, status, padding;
+> @@ -239,22 +239,37 @@ static void print_advice(int show_hint, struct replay_opts *opts)
+>  	}
+>  }
 >  
-> +	/* left-trim */
-> +	bol += strspn(bol, " \t");
+> -static int write_message(struct strbuf *msgbuf, const char *filename)
+> +static int write_with_lock_file(const char *filename,
+> +				const void *buf, size_t len, int append_eol)
+>  {
+>  	static struct lock_file msg_file;
+>  
+>  	int msg_fd = hold_lock_file_for_update(&msg_file, filename, 0);
+>  	if (msg_fd < 0)
+>  		return error_errno(_("Could not lock '%s'"), filename);
+> -	if (write_in_full(msg_fd, msgbuf->buf, msgbuf->len) < 0)
+> +	if (write_in_full(msg_fd, buf, len) < 0)
+>  		return error_errno(_("Could not write to %s"), filename);
+
+You could have, for consistency, add quotes around filename (see previous
+error_errno callsite), *while at it*:
+
+  		return error_errno(_("Could not write to '%s'"), filename);
+
+
+> -	strbuf_release(msgbuf);
+> +	if (append_eol && write(msg_fd, "\n", 1) < 0)
+> +		return error_errno(_("Could not write eol to %s"), filename);
+
+Same here, and it wouldn't even be 'while at it'
+
+  +		return error_errno(_("Could not write eol to '%s'"), filename);
+
+
+>  	if (commit_lock_file(&msg_file) < 0)
+>  		return error(_("Error wrapping up %s."), filename);
+
+Another "while at it"... though the one that can be safely postponed
+(well, the make message easier to understand part, not the quote
+filename part):
+
+  		return error(_("Error wrapping up writing to '%s'."), filename);
+
+
+>  
+>  	return 0;
+>  }
+>  
+> +static int write_message(struct strbuf *msgbuf, const char *filename)
+> +{
+> +	int res = write_with_lock_file(filename, msgbuf->buf, msgbuf->len, 0);
+> +	strbuf_release(msgbuf);
+> +	return res;
+> +}
+
+Nice.
+
 > +
+> +static int write_file_gently(const char *filename,
+> +			     const char *text, int append_eol)
+> +{
+> +	return write_with_lock_file(filename, text, strlen(text), append_eol);
+> +}
 
-Nice.  Thanks for the comment.  "left-trim" is better than "de-indent".
+Nice.  And it is static function, so we don't need to come up
+with a better function name (to describe its function better).
 
-'bol' is beginning-of-line, isn't it (a complement to eol)?
-
->  	for (i = 0; i < ARRAY_SIZE(todo_command_strings); i++)
->  		if (skip_prefix(bol, todo_command_strings[i], &bol)) {
->  			item->command = i;
+> +
+>  /*
+>   * Reads a file that was presumably written by a shell script, i.e.
+>   * with an end-of-line marker that needs to be stripped.
 > 
 
+And thus we got to the last patch in this series.  I have skipped
+patches that already got reviewed; are there some that you would
+like to have second review of?  Is there patch series that needs
+to be applied earlier that needs a review?
+
+P.S. I'll try to respond to your comments later today.
+
+Regards,
 -- 
 Jakub Narębski
 
