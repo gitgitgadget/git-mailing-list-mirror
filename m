@@ -2,93 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0AD591F6BF
-	for <e@80x24.org>; Thu,  1 Sep 2016 21:21:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C31B01F6BF
+	for <e@80x24.org>; Thu,  1 Sep 2016 21:28:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753979AbcIAVVR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 17:21:17 -0400
-Received: from mail-it0-f51.google.com ([209.85.214.51]:35802 "EHLO
-        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933465AbcIAVVF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 17:21:05 -0400
-Received: by mail-it0-f51.google.com with SMTP id e124so4207274ith.0
-        for <git@vger.kernel.org>; Thu, 01 Sep 2016 14:21:05 -0700 (PDT)
+        id S934040AbcIAV22 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 17:28:28 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:38524 "EHLO
+        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932849AbcIAV2X (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 17:28:23 -0400
+Received: by mail-wm0-f49.google.com with SMTP id 1so3323132wmz.1
+        for <git@vger.kernel.org>; Thu, 01 Sep 2016 14:28:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=6+iawVDhcS8AxaCFvWGASW+Q8giK1sBI181M/GHjj74=;
-        b=Njuuibu5B0H95U/rGV2SAtZKxeES35Gl/ow23ZrnwciG3qyjSh5bBw6u9JuTWRJT3e
-         b5jGwQLWgO5zpcgHNbTcDlgZTVS/2q/L8u8ITRrmkZnd8W8PaOxE/bsezWRJ8Q+PfsT3
-         8NWlvvcLBTbSf2Hy+Fiuol9JAvnU0cpH/z2UjvG94ncV8Dv1cWcdtUmIOZJ+UJBlSUkU
-         H70YHdJGMVIaYgknHjnKqqJ7Xa+WngE4OLqRv4gaDAAsKZ6bWdzZ3AbY4344vra172U1
-         X65UPDmDXjjYvHi7WGWaBNFI4vjHpw/RtNDZo/B1rodKJ5UB6u/YlOQ1fNIbe0uHClUk
-         Ah3Q==
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=fbYZei86Ip0teBUoz4QI9Ms+Hl6etJTJat49RfXYShQ=;
+        b=Vud4V/lmjhfEdI6gOGGqLPZEpz/rPy6/WlET6Etyy1JXG6v/MkGXVbwxwgiK8eWZNr
+         rxj8UxUlwjYe73N4mfbQ8++07SggCqpzERxsLUvVmCWhjfQlSg57vzC55fxxlaaInG73
+         TNGJlISu8GcA0MAqvbWCydss40jJhirp1XnFWIUb5vVcTIQsQ7cuPj4YahCQ4XDFB4g9
+         6hpyh9PGBGVxsEFiqIbdp40sWubOpBeeCF0AJnMYAitQDBbJkRMScv7TkgcmrRZqxrYC
+         uGo/lQ9N3NLHJkpdzVMw5cxQZByEp+YAqf/lakvWCCKo4VCs1Vg8PDUuBCZ4O8pgihyN
+         h33g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=6+iawVDhcS8AxaCFvWGASW+Q8giK1sBI181M/GHjj74=;
-        b=GzkM88auGYw1DINCHDMHj0acq7vdoX9l+3sXXms4FGsmrvyOXPBaNMJHLgDz+MIMh+
-         BdheHBj5X8m1OfHndkXe8Dl/MtlHK7wEQ3Rhd6Ek6/akW4HUoOkhJwgzkRUx5QDPYdM1
-         0PPKzwFK8wYjhE7M0vthuqKUEoZ+W2US9/M2ugTmOFYmwZ6S4iOGaxBRnAu+pf82wXwe
-         l3zH7lciBcM+UlRNht+Pf7mnTzgrdaz74BY4Rpp+jZdPJH9KXT3+gXwi/MOtAll0UbmK
-         A22ylF3Vm3kREutfoh3gcVJM9XGtgQPUDqsn9e0Z1u/tb38rSUElnz9he1aUS2/h1JH+
-         SgFw==
-X-Gm-Message-State: AE9vXwO8IZdpKplbSKe3GSrvrS8Pi2Z0JFVqQcTUkL5yKpdeM8Od6l9oMkjwBUShPfDA+aw/LbDeeMB+J6JisAet
-X-Received: by 10.36.93.201 with SMTP id w192mr16859929ita.52.1472755050884;
- Thu, 01 Sep 2016 11:37:30 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Thu, 1 Sep 2016 11:37:30 -0700 (PDT)
-In-Reply-To: <xmqqmvjrwjwm.fsf@gitster.mtv.corp.google.com>
-References: <CAN5XQftQH8B+hWVh4JQgZwAp+rkbz51P5NZDc_+Tfm0EB1zkew@mail.gmail.com>
- <xmqqlgzf9wch.fsf@gitster.mtv.corp.google.com> <CAN5XQft6S+LG0mBgRFPrMZiOxHSfRhjLmQdeMdBeHKoWQSRUEA@mail.gmail.com>
- <CAPc5daVhY6WdHkXGLYea48uOw0-rTzLLZ=7mNo=VPebZ9AG4jQ@mail.gmail.com>
- <CAN5XQfty6Fshzf6kN7eXhFekU9+=VPwbzEPN1a92yVB=9nm0Vg@mail.gmail.com>
- <CAN5XQfsg_sJbyjfdc=-e85jiCQNUqagwgh6TVOXN+NskZ7KkVw@mail.gmail.com>
- <xmqqbn0b6ua8.fsf@gitster.mtv.corp.google.com> <CA+P7+xosGg955msq-gyKz_HyCZf7fPFQJdKZ3P8U3+poBBfuWA@mail.gmail.com>
- <CAN5XQfsv+BEYDWR6Xjs4mCtYDVR12a2UzB1-_H4A_xfjUUOe2g@mail.gmail.com>
- <CA+P7+xohfRsoV9VXgUrRaXPb9HvCc5gs4-KSWp38X_d_6EfkTA@mail.gmail.com>
- <CA+P7+xpGnsKzBPLVgPNSmZ7K00vY7-eJp7kSHWMRHM+cOsL_XQ@mail.gmail.com>
- <CAN5XQftCC+TUm2Jx4q3V9oFbXndtFx3H+daoB3TD3eWUs6s54A@mail.gmail.com>
- <xmqqzinu3zyw.fsf@gitster.mtv.corp.google.com> <CAN5XQfuoq6MV4e98RzUCG02KvZO6VZAbs1oxAzpdg5zswqpHGw@mail.gmail.com>
- <xmqq7faw3n5w.fsf@gitster.mtv.corp.google.com> <xmqqk2ewxnui.fsf@gitster.mtv.corp.google.com>
- <CAN5XQftt3qVoU9gB2oyimY328VK0W6xq5FSCQYvcB9dEgkxVWA@mail.gmail.com> <xmqqmvjrwjwm.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 1 Sep 2016 11:37:30 -0700
-Message-ID: <CAGZ79kZnhNVBy6Oqt=x8m0jZj_tGNkMPPBBr+aL6DToOYtv9vQ@mail.gmail.com>
-Subject: Re: git submodules implementation question
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=fbYZei86Ip0teBUoz4QI9Ms+Hl6etJTJat49RfXYShQ=;
+        b=R2ivYteHYcQXWujysdE8rcK4NC7H2VQPBh5wcPPw/icCHQYwudvNy8cN8U7MrZMJlm
+         SSBttTToKaPUeKMPP5FKY8tOPx66dUeq6xp6W/gKTD1KXS4VQn3u7BMz7IzBjX7Sj/LT
+         dZhl5FZt89QsZep+5/oTRasqfaTF0vN96iug5OHaj45LTxVrEInW/f6rL58Z/LfJtWpr
+         JXb+SjW2y6CJndr1e2BAYwbhUATmjWiAQguLd7xVepmKz/0RDHBKbGxt3JBNzEeKu5ZO
+         4ve+f/vFMbPTQGxxHiqm2SMnL8EtMCShMtVnuXmvWivUfOiVpSdDAs24A49OsbDj7Lr7
+         M0dw==
+X-Gm-Message-State: AE9vXwPXfLOBMQmV7zZyg3sUmbrVFlNAq4OO8orlh2/2KMwI5IkKAbirWBbA1zunI/EN3g==
+X-Received: by 10.28.9.194 with SMTP id 185mr27384391wmj.37.1472762081022;
+        Thu, 01 Sep 2016 13:34:41 -0700 (PDT)
+Received: from hurricane.home.kaarsemaker.net ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id x6sm6986953wjk.26.2016.09.01.13.34.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 01 Sep 2016 13:34:40 -0700 (PDT)
+Message-ID: <1472762079.4680.44.camel@kaarsemaker.net>
+Subject: Re: [PATCH] make dist: allow using an installed version of git
+From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Uma Srinivasan <usrinivasan@twitter.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jens Lehmann <Jens.Lehmann@web.de>,
-        Heiko Voigt <hvoigt@hvoigt.net>
-Content-Type: text/plain; charset=UTF-8
+Cc:     git@vger.kernel.org
+Date:   Thu, 01 Sep 2016 22:34:39 +0200
+In-Reply-To: <xmqq4m5zy0qd.fsf@gitster.mtv.corp.google.com>
+References: <20160827102929.GA11769@hurricane>
+         <xmqq4m5zy0qd.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.18.5.2-0ubuntu3 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> The final version needs to be accompanied with tests to show the
-> effect of this change for callers.  A test would set up a top-level
-> and submodule, deliberately break submodule/.git/ repository and
-> show what breaks and how without this change.
+On do, 2016-09-01 at 10:43 -0700, Junio C Hamano wrote:
+> Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+> 
+> > b1de9de2 back in 2005 ensured that we could create a tarball with 'make
+> > dist' even if git wasn't installed yet. These days however, chances are
+> > higher that a git version is available. Add a config.mak knob to allow
+> > people to choose to use the installed version of git to create the
+> > tarball and avoid the overhead of building git-archive.
+> 
+> Thanks, but not interested.
 
-Tests are really good at providing this context as well, or to communicate
-the actual underlying problem, which is not quite clear to me.
-That is why I refrained from jumping into the discussion as I think the
-first few emails were dropped from the mailing list and I am missing context.
+Pity. Would save me quite a bit of tarball build time.
 
->
-> So it is a bit more involved than just a single liner patch with one
-> paragraph log message.  I may be able to find or make some time
-> after I tag the 2.10 final this weekend to do so myself.
+> We do not know what vintage of "git" happens to be installed on the
+> platform, but we know how "git archive" we ship with the source
+> ought to behave.
 
-Thanks,
-Stefan
+That's why I didn't want to make it the default, but merely make it an
+available option for saving some build time for people who know their
+git is up-to-date enough.
+
+D.
