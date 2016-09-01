@@ -7,48 +7,47 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 695791FBB0
-	for <e@80x24.org>; Thu,  1 Sep 2016 08:46:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17CD51FBB0
+	for <e@80x24.org>; Thu,  1 Sep 2016 08:53:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750957AbcIAIqU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 04:46:20 -0400
-Received: from mout.gmx.net ([212.227.15.19]:51050 "EHLO mout.gmx.net"
+        id S1751725AbcIAIwm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 04:52:42 -0400
+Received: from mout.gmx.net ([212.227.17.20]:50183 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753891AbcIAIp7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 04:45:59 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0Mbxdm-1bM43y3fFO-00JLXp; Thu, 01 Sep 2016 10:45:52
+        id S1751324AbcIAIwD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 04:52:03 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0LwF9u-1b26J01ORS-0181wk; Thu, 01 Sep 2016 10:51:56
  +0200
-Date:   Thu, 1 Sep 2016 10:45:51 +0200 (CEST)
+Date:   Thu, 1 Sep 2016 10:51:40 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
 cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 13/22] sequencer: remember the onelines when parsing the
- todo file
-In-Reply-To: <52d61bef-668b-fdc4-30b3-a34c11b39f81@gmail.com>
-Message-ID: <alpine.DEB.2.20.1609011038430.129229@virtualbox>
-References: <cover.1472457609.git.johannes.schindelin@gmx.de> <12bffd6ca4eb7acc00a102d13348bb96ad08371d.1472457609.git.johannes.schindelin@gmx.de> <52d61bef-668b-fdc4-30b3-a34c11b39f81@gmail.com>
+Subject: Re: [PATCH 06/34] sequencer (rebase -i): write the 'done' file
+In-Reply-To: <1472668771.4265.74.camel@kaarsemaker.net>
+Message-ID: <alpine.DEB.2.20.1609011046420.129229@virtualbox>
+References: <cover.1472633606.git.johannes.schindelin@gmx.de>  <516d2aaf8837c8675141cf9c330c18c44765b69d.1472633606.git.johannes.schindelin@gmx.de> <1472668771.4265.74.camel@kaarsemaker.net>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-843252816-1472719552=:129229"
-X-Provags-ID: V03:K0:f/BuKMbOmhQMfiX0OuiDNNNWzf/E5UuI0lgm5lW+Ad/OGdgzWVv
- hNkZ+SUb+9/eQ8h1jaoF1W17WqbDzoIPf+5hkN17/w6X+ytY/wLe4VXPvAthRRa7BuMbOnQ
- /85IEQHhFhjYX6j/sRtbGZ3l+lEOdZElzwhtIdkVCv7GsE6X3N2d50c9BYMTXOShwy16+88
- lYgC96utVnI8msNVWSKig==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:5/UmAVpoilk=:8uqfAazs6L08Vonzr3GoGY
- FL9LV1oJ6mktIzs8NYHGWIUesR1d2V6s7+SgVFKBhCUOMZmotkQWOE/vZT868IUsDCXZeAw7T
- yQbUspeZbiYmhS0NUvhPFQCKpXv77tLxhu1P2ZTXkkhBLKEVR4TCePlX0+yt0pd9r9opdZwNL
- uJMNeKoH87lNnZa3JehlprWEONYpBHVjNZgb3o1aSefm4wKYPB65HsBxtRic4s9DhFXLrRDXA
- fK2bZqw6NrcWAt/sAOHdHrQJRjchWx8xjjLEAt0704OzIL4QpnkN64wcaY2Ghtf1QcHTve1hk
- +i5yBWL+eqQ01h1oiFHl6mLzJU7hsBnpQxXZG2W8W8P+OcDuy0dxmJkYdr8ko6fRJwNCxSi6Z
- fN+5ZT1YmKlJzFKWynFgmEKqVurb0u2kteeDDK7T8gJNoq5dHOxX6aFdTdppFxG1d7ndeBh5H
- BZG/ltvGkAMASD9FQ5GHmOFOgMuKLX/78+s5k2LWYxBWCq8W6U85BOO6ZCCwnyUpkMWMZ35Me
- 6jgsua4yI3wPxB7CN/JaqZaiuNEHL83d2i/lJz2t2E7/qbZyJT0TlQ8upTY15cpwT/n0QGCPY
- XJlvuqXZ5NF7d2PF6TWbsv6kOpHSZCloKKjVUc+8f1VbMQeqisikdlhvPTL7C33XsuGGmycCe
- 6fwLo4KqiYh6IROEs+XnCYnA3bzy6oa0WwdNCBF+cyvkE02dqNCDT164OcLDkVR4epgw4Wtd1
- b6seTEJ3Dz+rOiIxsymhfeCt/M1wewJPj+5syOq2Um3IpJgSwcUX2WJx3Aodz4cU9B6bXGaAg
- OjP5S86
+Content-Type: multipart/mixed; BOUNDARY="8323329-760690558-1472719916=:129229"
+X-Provags-ID: V03:K0:4uLz4Ew269119c9MPhjxDOZqdElvkKDJPxPqGDG4nN2r/3YaEjV
+ scUxPv3TAPKocKlBRufu1xQjhnpwyFNMxrfc2SNThUhJuDavcpRzrtUCAxnu7FFF9RYDipM
+ bqDwq8pwsSUQxfC+e3Jv2VbcsDe0SlZ38ZVhqjE4EVjZiRjFEWBiaWFT7SAS6QZpIZ3gaVR
+ PtA+DXfBpUvR/SBWRhovg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:A33H1GmIVBs=:WrpBNxwmPBbOkoGDH9YyvE
+ NmqoaoR/BD7TQAeWQXD2XiXh+iIeOYH/9Wuq1oTG5DSzbl3KtFydC1pWMDOaHMptOgR1ea9p6
+ uobglxHyMiGp2ewcqqC2Vvae5Oi+OZM07qw7+Ug2kahv7ySrF4SRxAqxN0eruC+HhvYxCt+XM
+ aM/ZFUVWYaoOuy5JtKSKb6wa2bwzHyKu3ie4DavwTlyAn2n1epoMQDPyHIKqsYMq2c17dK2ZG
+ 7v+N/r+Mt/VkyYQEH+wghgjGkpJYucsFeQTvuEmLYDcuAaxJIgpzHzvC4ndh58XZHAKOSKk2w
+ IRJ5Pqk6qX1RM0bVDvK1vQ3UexchLIGrLdhhfOJaJ4RC6BalY/Id4BYbtHDu7eMT2v/N2ZsMg
+ 8RbeNYuOG2OmA21PCrHCZWWe2LKF2oH3gAHrP+5A5q+0F8E0TmNO7cJa2CFWov6kFuGgWajFH
+ NxHAqIp5LCTs1j6nc/JCY80LDV7671P2LzrRpy/FV4wfuWtuQMpmDVIFllu9ngaDV26Pa+iZj
+ dCOflaDjwLb2e0h04L2M9Vr3JKERFpd5x/49LqcDqdmqKfI1Rv2Fm8ZjJErP1/3zPFDnhZuoB
+ VfD3/UmaxPiewmELuH6Xsf65816+vdzdGXBgZJrA10nVw08yzlKJ7Ln5wOxycWZ0+II6c/vEq
+ a/n8NdN9YfwN5wVr1hixoooF2LeAccPCeNFz9OCLYHJU4e1DH2fqwx1RcG1yA9Tjqg21sLgIw
+ tNi9tRqUgVMWtIhc3MqbqLzT5otWWuwyBZO5EC3FYPfOJK03yU9UQAY5XB0JwAecLdYMbId4k
+ y79O2Tz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -57,74 +56,50 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323329-843252816-1472719552=:129229
+--8323329-760690558-1472719916=:129229
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Hi Kuba,
+Hi Dennis,
 
-On Wed, 31 Aug 2016, Jakub Nar=C4=99bski wrote:
+On Wed, 31 Aug 2016, Dennis Kaarsemaker wrote:
 
-> W dniu 29.08.2016 o 10:05, Johannes Schindelin pisze:
+> On wo, 2016-08-31 at 10:54 +0200, Johannes Schindelin wrote:
+> > In the interactive rebase, commands that were successfully processed ar=
+e
+> > not simply discarded, but appended to the 'done' file instead. This is
+> > used e.g. to display the current state to the user in the output of
+> > `git status` or the progress.
 >=20
-> > The `git-rebase-todo` file contains a list of commands. Most of those
-> > commands have the form
-> >=20
-> > =09<verb> <sha1> <oneline>
-> >=20
-> > The <oneline> is displayed primarily for the user's convenience, as
-> > rebase -i really interprets only the <verb> <sha1> part. However, there
-> > are *some* places in interactive rebase where the <oneline> is used to
-> > display messages, e.g. for reporting at which commit we stopped.
-> >=20
-> > So let's just remember it when parsing the todo file; we keep a copy of
-> > the entire todo file anyway (to write out the new `done` and
-> > `git-rebase-todo` file just before processing each command), so all we
-> > need to do is remember the begin and end offsets.
->=20
-> Actually what we remember is pointer and length, or begin offset and leng=
-th,
-> not offset and offset.
+> Wouldn't it make more sense to have this patch before the ones that
+> implement the actual rebase commands?
 
-Right. Fixed.
+I waffled about the order so many times that I don't know anymore. The
+thing is, while the sequencer is taught incrementally to understand all of
+the rebase -i functionality, rebase -i itself is not touched, on purpose.
 
-> > diff --git a/sequencer.c b/sequencer.c
-> > index 06759d4..3398774 100644
-> > --- a/sequencer.c
-> > +++ b/sequencer.c
-> > @@ -709,6 +709,8 @@ static int read_and_refresh_cache(struct replay_opt=
-s *opts)
-> >  struct todo_item {
-> >  =09enum todo_command command;
-> >  =09struct commit *commit;
-> > +=09const char *arg;
-> > +=09int arg_len;
->=20
-> Why 'arg', and not 'oneline', or 'subject'?
-> I'm not saying it is bad name.
+In the case of the "done" file, my thoughts were: the commands do not need
+this file *at all*. In fact, if we did not write the "done" file at all,
+the only two types of test failures in the test suite would be 1) git
+status' output and 2) the prompt testing for the progress.
 
-Because we will use it for `exec` commands' args, too. Clarified in the
-commit message.
+So you see, functionally, the "done" file is only relevant to the progress
+part of the patch series.
 
-> > @@ -760,6 +762,9 @@ static int parse_insn_line(struct todo_item *item, =
-const char *bol, char *eol)
-> >  =09status =3D get_sha1(bol, commit_sha1);
-> >  =09*end_of_object_name =3D saved;
-> > =20
-> > +=09item->arg =3D end_of_object_name + strspn(end_of_object_name, " \t"=
-);
-> > +=09item->arg_len =3D (int)(eol - item->arg);
-> > +
->=20
-> Does it work correctly for line without <oneline>, that is
->=20
->   =09<verb> <sha1>
->=20
-> I think it does, but I not entirely sure.
+As such, I'd rather keep this patch in the current place, just before
+introducing the progress.
 
-It does work correctly: in the example, *end_of_object_name would be '\n',
-and strspn(end_of_object_name, " \t") would return 0.
+> Hmm, and after reading more of this series, I think the same applies to
+> some other patches too, e.g. 08/34 and 14/34, so I'm probably missing
+> something. So before I make a fool of myself and suggest that the
+> implementation of the actual commands should come at the end, maybe you
+> could tell me what I'm missing :)=C2=A0
 
-Thanks for the review!
+No, no, don't hesitate to suggest reorderings. I am really thankful for
+the discussion we are having, so that the outcome is better than what I
+have right now. If the outcome would be the very same patches, but with
+more confidence, it would still be better than what I have right now ;-)
+
+Ciao,
 Dscho
---8323329-843252816-1472719552=:129229--
+--8323329-760690558-1472719916=:129229--
