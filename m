@@ -2,82 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1BB891F6BF
-	for <e@80x24.org>; Thu,  1 Sep 2016 16:25:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E870C20193
+	for <e@80x24.org>; Thu,  1 Sep 2016 20:55:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754608AbcIAQZ3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 12:25:29 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:36121 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750957AbcIAQZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 12:25:29 -0400
-Received: by mail-wm0-f45.google.com with SMTP id c133so86929891wmd.1
-        for <git@vger.kernel.org>; Thu, 01 Sep 2016 09:25:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=3EzDO/7Nqbt9w4ZTJwAvTh5nCm/TJbOh3Qt31jGob84=;
-        b=CJQ2qLaSQS65rSVlN7Mtb0f/YlmOXzhySCnSlg7z0wZPm5Q4LDgCK86P4Gspgyg9sg
-         TvXAqwnrYjeLW8vx06T9oNAVHv4NNCAKCcDBpeTYPzj96sVpTz7tZv+f1WBDCe2b69Qk
-         cnU2TS51mFfBOzixPiq7jbH/PknlpKifdI3f5XLsYmbSPREf/5yvfFgfSTcfEDHlu24A
-         6OQhy3D1yjUwWIMDeOF3cO+GQgQOxUg7mzIg2l4RIGSdxQSXKwnlWJrzM+FLciuMKhCJ
-         ib6Lr05hZa3f9pKp0bs/arxWnrRzriwk8R8bbJvBavHkZ9N3vz+5nnob47Ziulw/NbM4
-         DC4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=3EzDO/7Nqbt9w4ZTJwAvTh5nCm/TJbOh3Qt31jGob84=;
-        b=OWgFM94mQIvBI4ERxUT3CaYKxjtHWCdyPzZ+pV3L2bWcXOS3bBY+oWDuzE3uewNh1F
-         4uTQLarJEFA3KZCNiWyYFKJ+E/nnxAijKIraI4/iiXeje00WjtFP5nPwe+Idf4PyIvWn
-         n8fStthIyVAIEqg4MZwEmnhCFZrx3OiP/yOKFR5EhhyCpnKPtfkbkNGb8E/7OOBVpGaP
-         3f4ROagD46IW5cCLSRyv5FvrXSszZJX4w/NNCXjoc0mxr35YbDfX7fNopRct0eVWQIfd
-         bpGPIQYAj3VnFiuK8t1RBB39LeTYvgpAXACMiqAUhSdcRohQtSbvIWPH/P8FnEttH7TO
-         VfdQ==
-X-Gm-Message-State: AE9vXwPkf1l40iZhd8HYm7rE/8rr7LyqnOV0gqAeaT2oaahSVQwMjIIh6IfZV2eR0Gw8Ew==
-X-Received: by 10.28.182.84 with SMTP id g81mr29147205wmf.20.1472747127304;
-        Thu, 01 Sep 2016 09:25:27 -0700 (PDT)
-Received: from [10.42.1.91] ([145.132.209.114])
-        by smtp.gmail.com with ESMTPSA id c139sm29944880wme.4.2016.09.01.09.25.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 01 Sep 2016 09:25:26 -0700 (PDT)
-Message-ID: <1472747125.4680.38.camel@kaarsemaker.net>
-Subject: Re: `make profile-install` fails in 2.9.3
-From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
-To:     Jan Keromnes <janx@linux.com>, git@vger.kernel.org
-Date:   Thu, 01 Sep 2016 18:25:25 +0200
-In-Reply-To: <CAA6PgK7C18F1WGyZMTEUAWEVsUWqiZND5Ne_0SH-rUEm8u5dNg@mail.gmail.com>
-References: <CAA6PgK7C18F1WGyZMTEUAWEVsUWqiZND5Ne_0SH-rUEm8u5dNg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.18.5.2-0ubuntu3 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+        id S1754333AbcIAUyz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 16:54:55 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60200 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752974AbcIAUyv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 16:54:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3522F3B200;
+        Thu,  1 Sep 2016 15:19:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=dCPAJaCEo9uXt+Ep+j8YbGsvvTQ=; b=d5MkUT
+        1Biz3nO7up283Jwh9YhknPmSAoG62JRKjxc95STjSCsbFnhPV3V7uMdIbccndO88
+        hElfRUXUCmr79JTIitjMp93e45vj5j1tigrih9BKV07vit6PSQBbdsSeFQDI/+qq
+        7j3QmE1Uc1qz0HtMlRa72ygtIG6bKSBI3e9Zw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=lTPYABtY+BSiHM0hKLtfKjt60ZH+bYnK
+        g0lKrDA9iZd4gaHLr6/L3bfzv4L5IlpQvPIAyC0M3gePv2y1RAgUnW/Dzsl3uP9+
+        6mx+zY3xGGy1VolSIlshVY33WzWEngZXxb/8RXJF3oxBXWe/Wu0DOeBy0bIn1hvk
+        XhlZWA5WNxI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2CBCD3B1FE;
+        Thu,  1 Sep 2016 15:19:47 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A61C33B1FD;
+        Thu,  1 Sep 2016 15:19:46 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Uma Srinivasan <usrinivasan@twitter.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jens Lehmann <Jens.Lehmann@web.de>,
+        Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: git submodules implementation question
+References: <CAN5XQftQH8B+hWVh4JQgZwAp+rkbz51P5NZDc_+Tfm0EB1zkew@mail.gmail.com>
+        <xmqqlgzf9wch.fsf@gitster.mtv.corp.google.com>
+        <CAN5XQft6S+LG0mBgRFPrMZiOxHSfRhjLmQdeMdBeHKoWQSRUEA@mail.gmail.com>
+        <CAPc5daVhY6WdHkXGLYea48uOw0-rTzLLZ=7mNo=VPebZ9AG4jQ@mail.gmail.com>
+        <CAN5XQfty6Fshzf6kN7eXhFekU9+=VPwbzEPN1a92yVB=9nm0Vg@mail.gmail.com>
+        <CAN5XQfsg_sJbyjfdc=-e85jiCQNUqagwgh6TVOXN+NskZ7KkVw@mail.gmail.com>
+        <xmqqbn0b6ua8.fsf@gitster.mtv.corp.google.com>
+        <CA+P7+xosGg955msq-gyKz_HyCZf7fPFQJdKZ3P8U3+poBBfuWA@mail.gmail.com>
+        <CAN5XQfsv+BEYDWR6Xjs4mCtYDVR12a2UzB1-_H4A_xfjUUOe2g@mail.gmail.com>
+        <CA+P7+xohfRsoV9VXgUrRaXPb9HvCc5gs4-KSWp38X_d_6EfkTA@mail.gmail.com>
+        <CA+P7+xpGnsKzBPLVgPNSmZ7K00vY7-eJp7kSHWMRHM+cOsL_XQ@mail.gmail.com>
+        <CAN5XQftCC+TUm2Jx4q3V9oFbXndtFx3H+daoB3TD3eWUs6s54A@mail.gmail.com>
+        <xmqqzinu3zyw.fsf@gitster.mtv.corp.google.com>
+        <CAN5XQfuoq6MV4e98RzUCG02KvZO6VZAbs1oxAzpdg5zswqpHGw@mail.gmail.com>
+        <xmqq7faw3n5w.fsf@gitster.mtv.corp.google.com>
+        <xmqqk2ewxnui.fsf@gitster.mtv.corp.google.com>
+        <CAN5XQftt3qVoU9gB2oyimY328VK0W6xq5FSCQYvcB9dEgkxVWA@mail.gmail.com>
+        <xmqqmvjrwjwm.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kZnhNVBy6Oqt=x8m0jZj_tGNkMPPBBr+aL6DToOYtv9vQ@mail.gmail.com>
+Date:   Thu, 01 Sep 2016 12:19:44 -0700
+In-Reply-To: <CAGZ79kZnhNVBy6Oqt=x8m0jZj_tGNkMPPBBr+aL6DToOYtv9vQ@mail.gmail.com>
+        (Stefan Beller's message of "Thu, 1 Sep 2016 11:37:30 -0700")
+Message-ID: <xmqqa8frwhpr.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0B74DE66-7079-11E6-B7CE-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On do, 2016-09-01 at 18:08 +0200, Jan Keromnes wrote:
+Stefan Beller <sbeller@google.com> writes:
 
-> However, this fails (and has failed in previous versions), because it
-> runs the whole test-suite to get the profile, but bails out if there
-> were test failures (which happens often).
+>> The final version needs to be accompanied with tests to show the
+>> effect of this change for callers.  A test would set up a top-level
+>> and submodule, deliberately break submodule/.git/ repository and
+>> show what breaks and how without this change.
+>
+> Tests are really good at providing this context as well, or to communicate
+> the actual underlying problem, which is not quite clear to me.
+> That is why I refrained from jumping into the discussion as I think the
+> first few emails were dropped from the mailing list and I am missing context.
 
-Working around failing tests is fixing a symptom, not the root cause. I
-run the testsuite for master, next and pu very regularly and test
-failures on master are extremely rare. I think I've seen one or so in
-the last year, might even be 0. So let's focus on that instead.
+I do not know where you started reading, but the gist of it is that
+submodule.c spawns subprocess to run in the submodule's context by
+assuming that chdir'ing into the <path> of the submodule and running
+it (i.e. cp.dir set to <path> to drive start_command(&cp)) is
+sufficient.  When <path>/.git (either it is a directory itself or it
+points at a directory in .git/module/<name> in the superproject) is
+a corrupt repository, running "git -C <path> command" would try to
+auto-detect the repository, because it thinks <path>/.git is not a
+repository and it thinks it is not at the top-level of the working
+tree, and instead finds the repository of the top-level, which is
+almost never what we want.
 
-> Related problem: `t3700-add.sh` currently fails in 2.9.3. I can
-> provide more debug information if you don't already know this problem.
-
-It should not fail, and for me does not fail on ubuntu 16.04. Please
-run that test in verbose mode and share its output, as well as your
-build configuration.
-
-D.
