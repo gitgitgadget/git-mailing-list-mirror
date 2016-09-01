@@ -2,151 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 298ED1F6BF
-	for <e@80x24.org>; Thu,  1 Sep 2016 22:32:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61C151F6BF
+	for <e@80x24.org>; Thu,  1 Sep 2016 22:33:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754510AbcIAWcw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 18:32:52 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60801 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754099AbcIAWbh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 18:31:37 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 273A239EDA;
-        Thu,  1 Sep 2016 18:31:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Egv7KVNQeIFKNJt4f1/PXUi505I=; b=nMs9Yv
-        gCMI+5Nrx+8lvd9erfuXx6A5l73HY4iEHFxvmj1GYGE+1MW4wIg7cx7owiJ2n1yt
-        A7VhJMGtNpYqTOuP9fs2PlKXVGteOaq9uNLW3G++WCLRQU5cNOdKEgJKIfnX4SOV
-        bMHnpxb7Fry6vX7FHd2mTSq5GyplcJ5V7sWz4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=P9aTtE6GEriIu+oXY4eLxD+0jJWZ1d4z
-        7A+vIGhNWEIJU3pX9wb0zjZPlKtzcj9u8YdVldI29w+vFBvnagpLcRxemHw1t1ex
-        DmbbPzEIKvO6Frj15coFlTT4Rjw1URs4eUSAwHliBIJbVBruayGlQpxvBHzdDJHK
-        w/zzGHPQ4YY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2087039ED9;
-        Thu,  1 Sep 2016 18:31:31 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B151439ED8;
-        Thu,  1 Sep 2016 18:31:30 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: Should "git symbolic-ref -d HEAD" be forbidden?
-References: <xmqqpoonuy4n.fsf@gitster.mtv.corp.google.com>
-        <20160901211907.iivokwu3yjuxz3qf@sigill.intra.peff.net>
-Date:   Thu, 01 Sep 2016 15:31:28 -0700
-In-Reply-To: <20160901211907.iivokwu3yjuxz3qf@sigill.intra.peff.net> (Jeff
-        King's message of "Thu, 1 Sep 2016 17:19:07 -0400")
-Message-ID: <xmqq8tvbuu9r.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1753890AbcIAWdk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 18:33:40 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36078 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753050AbcIAWdi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 18:33:38 -0400
+Received: by mail-wm0-f67.google.com with SMTP id i138so489287wmf.3
+        for <git@vger.kernel.org>; Thu, 01 Sep 2016 15:33:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=KSnFVU6KcIJFdQF3Ea38o5IfITeNkHcfui7GHcPmBzo=;
+        b=K2OvS+un92Hr4OJhzU7Nf8xHUvKBp4Ar1w+oZpAAfpBJvNJVH2uR4IDHk6aiRgXGQM
+         wqsjB4KkGoG2MIywVpO3yr2M26K/oz2j96aRpf9gsvqn+KLdhSznf7hZFQe1/QjyHHro
+         lq5B2+awomAGvN5Se83egM52z56E86RiQNtPkUPqORtSuej1aPNAAg+q5kIC/RI4yg1j
+         QDvcrP8ONjVET0VrpPej0s07TqvsCwbdgoNtsQqFg3TXOIDtscQGSfnPADKzgaE6uPdz
+         d6uyId6+hFNQAccH4AqrjbcKyP75Zc19pySdgR7LVp1+aGd1ozvPQHn5diPqNkarBlRc
+         9VBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=KSnFVU6KcIJFdQF3Ea38o5IfITeNkHcfui7GHcPmBzo=;
+        b=PtFg9bXJaAEbXupYUcH8n4AqC7H8keFU4iOTmPIHNLAg9FMgIZrh/sOxGiHhbObSxN
+         mTssBOu/kfORZSLMbzoT7xXRv7knpYSQ1Dxhlff0yQ1+nqCjFx0yslz9ww6Cz2ql0jCr
+         4gN14m9AQzHERqmnIygqzV9Ojw+/1OQBYeNmnqh/YgkUnJ0zeSe8ojd1ENhIyiWqZ7Jl
+         UFOYDflSyEgqKZ0mrIz5UN4H+GYzjBXJdNcLxjDxyZogtobnYc3xWwWE74Zy7B7SUeAM
+         3uAYTnFmJcFQI7sLX7iw2LYltjU0AKkvWyrRuVgtygp5Yi0oOIVxJf7zyAD7E0PUZR5A
+         boBQ==
+X-Gm-Message-State: AE9vXwOfGGnjILta4x0C5XaQGKwPAYiUueUQ1mRoo6q/GkkLl1TVv5tCqZzGV0sZf/gHSA==
+X-Received: by 10.194.87.169 with SMTP id az9mr2179738wjb.81.1472769215694;
+        Thu, 01 Sep 2016 15:33:35 -0700 (PDT)
+Received: from [192.168.1.26] (abrf30.neoplus.adsl.tpnet.pl. [83.8.99.30])
+        by smtp.googlemail.com with ESMTPSA id va3sm7402812wjb.18.2016.09.01.15.33.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 01 Sep 2016 15:33:34 -0700 (PDT)
+Subject: Re: [PATCH 10/22] sequencer: avoid completely different messages for
+ different actions
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <cover.1472457609.git.johannes.schindelin@gmx.de>
+ <1e940c58329ff5f224ec5bc48927a28ff4d1bf66.1472457609.git.johannes.schindelin@gmx.de>
+ <30b04497-dfb8-914b-42c4-8bc66347d347@gmail.com>
+ <alpine.DEB.2.20.1609010950150.129229@virtualbox>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jiang Xin <worldhello.net@gmail.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <198780d4-dbef-c0cc-fb4c-fc8986a33002@gmail.com>
+Date:   Fri, 2 Sep 2016 00:33:29 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D466B1D6-7093-11E6-94E8-51057B1B28F4-77302942!pb-smtp2.pobox.com
+In-Reply-To: <alpine.DEB.2.20.1609010950150.129229@virtualbox>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hello Johannes
 
-> On Thu, Sep 01, 2016 at 02:08:08PM -0700, Junio C Hamano wrote:
->
->> I think we should.
->> 
->> t1401 expects to be able to, but if you really do it:
->> 
->> 	$ cd /tmp
->> 	$ git init throwaway
->>         $ cd throwaway
->>         $ git symbolic-ref -d HEAD
->> 
->> the setup machinery considers that you are no longer in a working
->> tree that is controlled by a repository at .git/ because .git/ is
->> no longer a valid repository, so you cannot even do
->> 
->> 	$ git symbolic-ref HEAD refs/heads/master
->> 
->> to recover.
->
-> Yes, I think we should, too. The same reasoning from afe5d3d (symbolic
-> ref: refuse non-ref targets in HEAD, 2009-01-29) applies.
+W dniu 01.09.2016 o 09:52, Johannes Schindelin pisze:
+> On Wed, 31 Aug 2016, Jakub Narębski wrote:
+>> CC-ed to Jiang Xin, L10N coordinator.
+>> W dniu 29.08.2016 o 10:05, Johannes Schindelin pisze:
 
--- >8 --
-Subject: symbolic-ref -d: do not allow removal of HEAD
+[...]
+>>> -	/* Different translation strings for cherry-pick and revert */
+>>> -	if (opts->action == REPLAY_PICK)
+>>> -		error(_("Your local changes would be overwritten by cherry-pick."));
+>>> -	else
+>>> -		error(_("Your local changes would be overwritten by revert."));
+>>> +	error(_("Your local changes would be overwritten by %s."),
+>>> +		action_name(opts));
+>>
+>> If I understand it correctly, it would make "revert" or "cherry-pick"
+>> untranslated part of error message.  You would need to use translation
+>> on the result with "_(action_name(opts))", you would have to mark
+>> todo_command_strings elements for gettext lexicon with N_(...).
+>>
+>> I am rather against this change (see also below).
+> 
+> Okay.
+> 
+> Unfortunately, I have to focus on the correctness of the code at the
+> moment (and Git for Windows does ship *without* translations for the time
+> being anyway, mostly to save on space, but also because users complained).
 
-If you delete the symbolic-ref HEAD from a repository, Git no longer
-considers it valid, and even "git symbolic-ref HEAD refs/heads/master"
-would not be able to recover from that state.
+Users complained about having translations, or not having easy way to
+switch them or switch them off?
 
-In the spirit similar to afe5d3d5 ("symbolic ref: refuse non-ref
-targets in HEAD", 2009-01-29), forbid removal of HEAD.
+> 
+> So I will take care of this after v2.10.0.
+> 
+> For the record, how is this supposed to be handled, in particular when I
+> introduce a new action whose action_name(opts) will be "rebase -i"? Do I
+> really need to repeat myself three times?
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+I think you should be able to mark strings to be translated,
+without translating them at the time of definition,
 
- I decided against it for now for no good reason, other than I am a
- bit superstitious, but it may be a good idea to move these safety
- checks to delete_ref() and create_symref() in the longer term.
+  static const char *todo_command_strings[] = {
+  	N_("pick"),
+  	N_("revert")
+  };
 
- builtin/symbolic-ref.c  |  2 ++
- t/t1401-symbolic-ref.sh | 19 ++++++++++++-------
- 2 files changed, 14 insertions(+), 7 deletions(-)
+then translate at the point of use
 
-diff --git a/builtin/symbolic-ref.c b/builtin/symbolic-ref.c
-index 9c29a64..96eed94 100644
---- a/builtin/symbolic-ref.c
-+++ b/builtin/symbolic-ref.c
-@@ -56,6 +56,8 @@ int cmd_symbolic_ref(int argc, const char **argv, const char *prefix)
- 		ret = check_symref(argv[0], 1, 0, 0);
- 		if (ret)
- 			die("Cannot delete %s, not a symbolic ref", argv[0]);
-+		if (!strcmp(argv[0], "HEAD"))
-+			die("deleting '%s' is not allowed", argv[0]);
- 		return delete_ref(argv[0], NULL, REF_NODEREF);
- 	}
- 
-diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
-index ca3fa40..5c30f94 100755
---- a/t/t1401-symbolic-ref.sh
-+++ b/t/t1401-symbolic-ref.sh
-@@ -33,18 +33,23 @@ test_expect_success 'symbolic-ref refuses bare sha1' '
- '
- reset_to_sane
- 
--test_expect_success 'symbolic-ref deletes HEAD' '
--	git symbolic-ref -d HEAD &&
-+test_expect_success 'HEAD cannot be removed' '
-+	test_must_fail git symbolic-ref -d HEAD
-+'
-+
-+test_expect_success 'symbolic-ref can be deleted' '
-+	git symbolic-ref NOTHEAD refs/heads/foo &&
-+	git symbolic-ref -d NOTHEAD &&
- 	test_path_is_file .git/refs/heads/foo &&
--	test_path_is_missing .git/HEAD
-+	test_path_is_missing .git/NOTHEAD
- '
- reset_to_sane
- 
--test_expect_success 'symbolic-ref deletes dangling HEAD' '
--	git symbolic-ref HEAD refs/heads/missing &&
--	git symbolic-ref -d HEAD &&
-+test_expect_success 'symbolic-ref can delete dangling symref' '
-+	git symbolic-ref NOTHEAD refs/heads/missing &&
-+	git symbolic-ref -d NOTHEAD &&
- 	test_path_is_missing .git/refs/heads/missing &&
--	test_path_is_missing .git/HEAD
-+	test_path_is_missing .git/NOTHEAD
- '
- reset_to_sane
- 
+  	error(_("Your local changes would be overwritten by %s."),
+		_(action_name(opts)));
+
+I assume that action_name(opts) returns one of todo_command_strings.
+If not, there should be array with possible actions.
+
+
+Assuming that such lego l10n is preferable to multiple translations,
+more free-formt.
+
+-- 
+Jakub Narębski
+
