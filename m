@@ -2,52 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18FF81F6BF
-	for <e@80x24.org>; Thu,  1 Sep 2016 13:42:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 052571F6BF
+	for <e@80x24.org>; Thu,  1 Sep 2016 13:56:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932589AbcIANmj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 09:42:39 -0400
-Received: from mout.gmx.net ([212.227.15.18]:57484 "EHLO mout.gmx.net"
+        id S933098AbcIAN4f (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 09:56:35 -0400
+Received: from mout.gmx.net ([212.227.15.19]:59489 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932577AbcIANmi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 09:42:38 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LqzIJ-1bBbcx3HUZ-00efAO; Thu, 01 Sep 2016 15:42:32
+        id S933023AbcIAN4e (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 09:56:34 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MSuMn-1bY4SR1fS1-00Rmdo; Thu, 01 Sep 2016 15:56:06
  +0200
-Date:   Thu, 1 Sep 2016 15:42:30 +0200 (CEST)
+Date:   Thu, 1 Sep 2016 15:56:05 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
 cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 18/22] sequencer: support amending commits
-In-Reply-To: <dd7e4c82-cedb-6cde-a186-8b52bac3a5b8@gmail.com>
-Message-ID: <alpine.DEB.2.20.1609011540550.129229@virtualbox>
-References: <cover.1472457609.git.johannes.schindelin@gmx.de> <c4e474af8e6237522f4c452ca90c2e2670059e60.1472457609.git.johannes.schindelin@gmx.de> <dd7e4c82-cedb-6cde-a186-8b52bac3a5b8@gmail.com>
+Subject: Re: [PATCH 19/22] sequencer: support cleaning up commit messages
+In-Reply-To: <9f2cbc74-3e4d-e7f1-d2dd-e85e0b9168b1@gmail.com>
+Message-ID: <alpine.DEB.2.20.1609011543290.129229@virtualbox>
+References: <cover.1472457609.git.johannes.schindelin@gmx.de> <eeb3d11d235a0220a9a125a21d1b09a73d2c61dc.1472457609.git.johannes.schindelin@gmx.de> <9f2cbc74-3e4d-e7f1-d2dd-e85e0b9168b1@gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-892349001-1472737352=:129229"
-X-Provags-ID: V03:K0:yN9dz/UflfJ14+zyWGkjg+DocJsHe6lMh4mLTXeEInZkFz7cltN
- 4ghIJp2e958eGwBrDimXJjRWltw0lCi4M8MzB/nU+BIEIno2rtZdcD0VaT8q/QCsFuN11CX
- bRONYEjvsIKE/QfdR8g4yqLFWgnNwC9LeAw/Lma5IPPt2uAeGA98vY0vJE/q0OeT4jJHj7K
- ncQMu4z/e3z2/zLksmVIA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:wE7sB2SPW3M=:tJSCliLOU6Rnte2KSy35Lr
- gRAT1jCMxwjayqxzoCLq7ccYcW+qeABL0vCtpWwn1/K0ERC2G3bBkj2BdNwYoQQrAxxyO66Wz
- pAfXLN8WTmPf2seT8Sd2HdMt9E0+FotmU0Bf2v+tFw2yOybJwZBsu7wH92hwu3k9uZbqhyRya
- fNWjBUAKwl9QqUiowebqQB/beQqG1wHrWn1Ly8nPhIFa3X/pGZANO1k7n9CciAuqRRDbCtN4q
- SR5HJp1m92hAO0oz2XULZWxQs+bvAG7qWStxRCml0D06HHPXP6Ek2Np2GgAgImL/VzwyFvtln
- e91jYCVhANpwKunkaZty3krNjXPLimXR89xUREp/24ndXpFlXNoxisrsGZR5apbgCQMD59SPs
- EeEUBF2brAfpypo4NQrTWcI0IzQF6jF+A1XA/nt+iMu2q3ImeyfPde5mjA+7HV1HlhaXN7jcI
- FDtwb9IMXVcY4EHLEEU2hNcrlxIrgtCJxn0qYGOQ1uDUm7nQpEljh4YiXkx5s4c2Kw+mRkCOD
- qI4YpIDj96wGkWwjZyUx1ylUNXS+vf0J/HMnvv+9HNLSR91c277w9oN7ETBhGVGlMkdQL12nj
- fsWpI6H3LpjQF6GMNTbUIV/2PLgE1LzbIpMZy946gxRiBYHrCLzzPcSZ3h9fisT9iIi2s5w8q
- V20qWbgOCjk3GYGLCE/J/Cm8d0iP0Edz9R8gzFdq4Jtb3T7usbLyWv0AaQkb8bfQDyYnqPgWr
- yhkQ1efPUeaREnGnk/HZJ1JdOdnNAJqP8S2eQW1dJk4TmcsDe6TxYG1BOCQpxvQHYSaqiqcC3
- zwnzraQ
+Content-Type: multipart/mixed; BOUNDARY="8323329-352110144-1472738166=:129229"
+X-Provags-ID: V03:K0:n2P7tSSJX8RWChL6Yk5sZHrJS6Gvtz5xqgISwy9uJqkaaHPsZSk
+ jz/d2bVN/JKrQQAVes7B8G524vPQ2X8md7CLzEtDMbIKczkKCkyjPMYnppeEWONIl8tN0Fa
+ t7MuUS80SlH9P8HUAuALu4PZpe7XTrL8u6GxZQA9/7e+GeArfti3n6deJ8OylLjvhlNbV0M
+ 33zz71MpPm4NxVLmbumXQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:cMdjc7+uyZo=:Aj3mq2hNn3vZQ2rApFTUFP
+ I9pAYO/Q+E+SvTq//HhbcIzj2pOxkb6RjHma0ggZWfZuL7LTUzSvFZkb0cJvdqppqgqN9/ElT
+ Qf+3jW1I6GeWDQfnJNEIAamcsflefkOWaB9kUdofYH0CuG1vZ9x1DTtp4z0DwyqgD6rAORBJJ
+ AgZ5+X4QrDCwkn0qhjReICLOkU3xEbYFLUp4PcoOhAef2/q1fc6UOVvsat9/YdZdS5Or+7BeY
+ PL8fmPIzDQaF5xP9lugELD86WmeLtidqZYJhDTueN+aeMlbgAYQnOUTRctTQnNUZUKsWXPNHY
+ UQAz4LKxQtHDkrWdK75dkVToYdTIKWKzcySPR4Mva74AsRD8Ux3pG2h3+FUqVY7T0B+J/4j/3
+ 6KgM3o3d07PvYSR7aS8LbmzQiMcRhSb7SjeArBj8IqSnp0H4QAbK6bHHnWdlXwp4mJQ7yj5Cz
+ 2Y8buEYvRynpER4yI29XMELEEtjbq4OwbF2I2NsvI05IOwEJWtYG+p2yIzV3v6lW3wJq8/mmE
+ V71zNE9/yqvFSIrO17NVtGlj6FOZX5OLl6FQs1mQSWhX1v/2b31ZiKQ/qUd3owqcihQNGYis2
+ BxRMx1pEg5BDn1QpHmOpc/ghLIeWOKeqDBNTAhPgB+PG9GDQ8Tuc/ygCTl8S/a7inH3y4K9Tk
+ nprhbMgyGcKBvq7/Uta0hopRv+vczJSWpeckML1X21PKV8AgCLZepG9wXolBBih4jCzVKPhVo
+ 4WUfgOUKYYoJ4nGYqWK5gY4nv0P/5ajeMtMc8PpvrcwbhHRCXDzSmoC8o9oPRoN39Vh9HwedG
+ CsKOAQQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -56,60 +56,56 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323329-892349001-1472737352=:129229
+--8323329-352110144-1472738166=:129229
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 
 Hi Kuba,
 
-On Wed, 31 Aug 2016, Jakub Nar=C4=99bski wrote:
+On Thu, 1 Sep 2016, Jakub Nar=C4=99bski wrote:
 
 > W dniu 29.08.2016 o 10:06, Johannes Schindelin pisze:
 >=20
-> > diff --git a/sequencer.c b/sequencer.c
-> > index 7e17d14..20f7590 100644
-> > --- a/sequencer.c
-> > +++ b/sequencer.c
-> > @@ -478,7 +478,7 @@ static char **read_author_script(void)
-> >   * (except, of course, while running an interactive rebase).
-> >   */
-> >  int sequencer_commit(const char *defmsg, struct replay_opts *opts,
-> > -=09=09=09  int allow_empty, int edit)
-> > +=09=09=09  int allow_empty, int edit, int amend)
->=20
-> I guess we won't get much more parameters; it would get unwieldy
-> (and hard to remember).  Five is all right.
-
-It will eventually get a sixth, cleanup_commit_message.
-
-> >  {
-> >  =09char **env =3D NULL;
-> >  =09struct argv_array array;
-> > @@ -507,6 +507,8 @@ int sequencer_commit(const char *defmsg, struct rep=
-lay_opts *opts,
-> >  =09argv_array_push(&array, "commit");
-> >  =09argv_array_push(&array, "-n");
-> > =20
-> > +=09if (amend)
-> > +=09=09argv_array_push(&array, "--amend");
-> >  =09if (opts->gpg_sign)
-> >  =09=09argv_array_pushf(&array, "-S%s", opts->gpg_sign);
-> >  =09if (opts->signoff)
-> > @@ -779,7 +781,7 @@ static int do_pick_commit(enum todo_command command=
+> > @@ -781,7 +785,7 @@ static int do_pick_commit(enum todo_command command=
 , struct commit *commit,
 > >  =09}
 > >  =09if (!opts->no_commit)
 > >  =09=09res =3D sequencer_commit(opts->edit ? NULL : git_path_merge_msg(=
 ),
-> > -=09=09=09opts, allow, opts->edit);
-> > +=09=09=09opts, allow, opts->edit, 0);
+> > -=09=09=09opts, allow, opts->edit, 0);
+> > +=09=09=09opts, allow, opts->edit, 0, 0);
 >=20
-> ... even of this makes one need to check the calling convention,
-> what does this 0 mean.
+> The calling convention begins to look unwieldy, but we have only
+> a single such callsite, and there are quite a bit callsites in
+> Git code that have similar API ("git grep ', 0, 0' -- '*.c'").
+> So we don't need to think about alternatives.  Yet.
 
-Yeah, but it will not remain "0", but be replaced by a variable named
-"amend"...
+Right.
+
+Please note that it will make much more sense in the end, too, as the 0s
+will be replaced by appropriate variables.
+
+> It's a pity that emulation of named parameters in C requires
+> relying on designated inits from C99
+>=20
+>   typedef struct {
+>     double pressure, moles, temp;
+>   } ideal_struct;
+>=20
+>   #define ideal_pressure(...) ideal_pressure_base((ideal_struct){.pressur=
+e=3D1,   \
+>                                         .moles=3D1, .temp=3D273.15, __VA_=
+ARGS__})
+>=20
+>   double ideal_pressure_base(ideal_struct in)
+>   {
+>     return 8.314 * in.moles*in.temp/in.pressure;
+>   }
+>=20
+>   ... ideal_pressure(.moles=3D2, .temp=3D373.15) ...
+
+Yeah, that looks unwieldy ;-)
 
 Thanks for the review,
 Dscho
---8323329-892349001-1472737352=:129229--
+--8323329-352110144-1472738166=:129229--
