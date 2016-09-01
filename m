@@ -6,97 +6,79 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E112F1F6BF
-	for <e@80x24.org>; Thu,  1 Sep 2016 21:16:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 115171F6BF
+	for <e@80x24.org>; Thu,  1 Sep 2016 21:18:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753637AbcIAVNK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 17:13:10 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36760 "HELO cloud.peff.net"
+        id S1756327AbcIAVRr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 17:17:47 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36780 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1757039AbcIAVIu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 17:08:50 -0400
-Received: (qmail 25788 invoked by uid 109); 1 Sep 2016 20:08:41 -0000
+        id S1753131AbcIAVRo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 17:17:44 -0400
+Received: (qmail 26396 invoked by uid 109); 1 Sep 2016 20:17:43 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Sep 2016 20:08:41 +0000
-Received: (qmail 18542 invoked by uid 111); 1 Sep 2016 20:08:48 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Sep 2016 20:17:43 +0000
+Received: (qmail 18770 invoked by uid 111); 1 Sep 2016 20:17:49 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Sep 2016 16:08:48 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Sep 2016 16:08:37 -0400
-Date:   Thu, 1 Sep 2016 16:08:37 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Sep 2016 16:17:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Sep 2016 16:17:39 -0400
+Date:   Thu, 1 Sep 2016 16:17:39 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/2] squelch some "gcc -O3 -Wmaybe-uninitialized" warnings
-Message-ID: <20160901200837.jbuoay7lf4r7f67x@sigill.intra.peff.net>
-References: <20160831033934.m2at7ci5f6lty5nb@sigill.intra.peff.net>
- <xmqqvaygzpbe.fsf@gitster.mtv.corp.google.com>
+To:     Olaf Hering <olaf@aepfle.de>
+Cc:     Michael J Gruber <git@drmicha.warpmail.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: implement a stable 'Last updated' in Documentation
+Message-ID: <20160901201738.qmitnvzo43wh6a6s@sigill.intra.peff.net>
+References: <20150126172409.GA15204@aepfle.de>
+ <xmqqd25zkeg7.fsf@gitster.dls.corp.google.com>
+ <20150128080214.GA18851@aepfle.de>
+ <xmqqbnlif6t9.fsf@gitster.dls.corp.google.com>
+ <54CB5770.8030503@drmicha.warpmail.net>
+ <20150130150758.GA3683@peff.net>
+ <20150210151747.GA8965@aepfle.de>
+ <20150210184318.GA20090@peff.net>
+ <20160901143736.GA26242@aepfle.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqvaygzpbe.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20160901143736.GA26242@aepfle.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 31, 2016 at 12:55:01PM -0700, Junio C Hamano wrote:
+On Thu, Sep 01, 2016 at 04:37:36PM +0200, Olaf Hering wrote:
 
-> Interesting.  Here is for "gcc -Os" on top to appease gcc 4.8.4 that
-> I probably am NOT going to apply.  These are all false positives.
-> 
-> The ones on config.c is the most curious as these two "ret" needs a
-> false initialization, but the one that comes after them
-> git_config_ulong() that has the same code structure does not get any
-> warning, which made absolutely no sense to me.
+> Hey, asciidoc made a move, so this patch is good to go:
+> https://github.com/asciidoc/asciidoc/pull/9
 
-Yeah, I'd agree that is really odd. I wondered if perhaps the signedness
-of the argument mattered (e.g., if we were somehow provoking undefined
-behavior which caused the compiler to make some assumption), but I just
-don't see it.
+Sine this thread is 18 months old, I needed some recap to remember what
+we were talking about. :)
 
->  builtin/update-index.c | 2 +-
->  config.c               | 4 ++--
->  diff.c                 | 2 +-
->  fast-import.c          | 1 +
->  4 files changed, 5 insertions(+), 4 deletions(-)
+It's here:
 
-FWIW, all but the fast-import one have gone away in gcc 6.2.0 (using
--Os).
+  http://public-inbox.org/git/20150126172409.GA15204@aepfle.de/T/#u
 
-For that one:
+and the gist of it is that we'd like to drop the "Last updated" footer
+from the HTML version of the manpages, but older versions of asciidoc
+did not provide a mechanism.
 
-> diff --git a/fast-import.c b/fast-import.c
-> index bf53ac9..abc4519 100644
-> --- a/fast-import.c
-> +++ b/fast-import.c
-> @@ -1377,6 +1377,7 @@ static const char *get_mode(const char *str, uint16_t *modep)
->  	unsigned char c;
->  	uint16_t mode = 0;
->  
-> +	*modep = 0;
->  	while ((c = *str++) != ' ') {
->  		if (c < '0' || c > '7')
->  			return NULL;
+The patch you quoted adds "footer-style=none", which would do the trick.
+But I have two open questions:
 
-The complaint actually comes from the caller, who doesn't realize that
-modep will be set.
+  1. What does this do on older versions of asciidoc? Is it silently
+     ignored (ok), or does it generate an error (bad)?
 
-It pretty clearly seems to be a false positive, but I don't understand
-it. If get_mode() is not inlined (or otherwise examined when considering
-the caller), then it presumably should be treated as a block box that we
-assume sets "modep".  And if it is inlined, then it's pretty obvious
-that "modep" is initialized in any code path that does not return NULL,
-and we have:
+  2. This covers the HTML versions, but not the roff manpages (which
+     are generated by docbook). Do we have a way to tweak the date in
+     the latter?
 
-	p = get_mode(p, &mode);
-	if (!p)
-		die("Corrupt mode: %s", command_buf.buf);
+     I don't think that's necessarily a requirement for this patch, but
+     it is worth thinking about at the same time.
 
-in the caller (and "die" is marked as NORETURN). So it seems like a
-pretty easy case to get right, and one that the compiler presumably gets
-right elsewhere (otherwise we'd have a lot more of these false
-positives).
-
-Weird.
+Assuming the answer to (1) is "ok" and (2) is "no, but it's hard because
+docbook is scary, so let's punt", then somebody needs to write up the
+commit message and send the actual patch to the list. Would you like to
+try that?
 
 -Peff
