@@ -2,132 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A8041FBB0
-	for <e@80x24.org>; Thu,  1 Sep 2016 08:02:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8146F1FBB0
+	for <e@80x24.org>; Thu,  1 Sep 2016 08:04:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754817AbcIAICB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 04:02:01 -0400
-Received: from mout.gmx.net ([212.227.17.22]:56404 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753420AbcIAICA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 04:02:00 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MJFBe-1bh1tP2HWM-002oPO; Thu, 01 Sep 2016 10:01:17
- +0200
-Date:   Thu, 1 Sep 2016 10:01:16 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 08/22] sequencer: remove overzealous assumption
-In-Reply-To: <18293d15-0a83-d7aa-78fb-14891efd6ea4@gmail.com>
-Message-ID: <alpine.DEB.2.20.1609010957300.129229@virtualbox>
-References: <cover.1472457609.git.johannes.schindelin@gmx.de> <3c8c60e0799fdf176c72e7e17c257d33b2a362bc.1472457609.git.johannes.schindelin@gmx.de> <09fd1436-301a-b0e1-c32a-81a47e4eb351@gmail.com> <alpine.DEB.2.20.1608311706400.129229@virtualbox>
- <18293d15-0a83-d7aa-78fb-14891efd6ea4@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1755135AbcIAIEB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 04:04:01 -0400
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:35403 "EHLO
+        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755114AbcIAID4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 04:03:56 -0400
+Received: by mail-wm0-f53.google.com with SMTP id w2so63341452wmd.0
+        for <git@vger.kernel.org>; Thu, 01 Sep 2016 01:03:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=UXp5phL9CLy5Unj5Jf00q5JnkPehYg10PNMWMrtFlWs=;
+        b=w0m1XdeDo+5o5/pD1l4H+WTYX+KsIB2bp8keDercfcqOTAIMSJuS10EwQQEoxdCGT8
+         K8sDk0Z/HsrbB1aMZT1N68Z5aHhM0XRfi/VEpa/bNp1WM/a9h9S5iPJTvPIKyGjKPYVA
+         Vw76xiJ6u/c5IdAlBxOip3QTPWFartHAFyDjuVnfzgxdQFI2e8mcKJ9mmP3ptqVZLu56
+         F2ynlkwv/j3iUxK1hnnC89I3WcDdYD+BS+5rrZfzTHrtLR9CWtbwhCpfnESdc52Cvyth
+         ofspbElNda9d8VP8Ws3MaC20p6Keldy5MOUDJXzt0tFRrfqaI13t4IF/vxnFMHqgpfFJ
+         qSEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=UXp5phL9CLy5Unj5Jf00q5JnkPehYg10PNMWMrtFlWs=;
+        b=UARuUAKcAJGgC980geAtXn02c4uXsd0sAp0QG9RafNkMU/ojxfSN1mEz/+JCww/Iq0
+         6gLNIBxxL/pB/Trlso110H5xkum+mDRgzoJMAN2NHinpniuk+ufSTurcKhxi1os9ZGuF
+         5pjNL5/SsHp0CYVY4xigk9zAJenjiJ7GL0Qzy1/Y+zF2rXzZWCDe9SGrTmxbYLF/3LAA
+         GC/pX5DDqWQ+E9NYsv4CZkQkRodJc6hRc4tNXm/ULblxYII2jqvZuzUSOZVmtChs0OXZ
+         t/Q+B0SMbD94gLj0UHzHyx5fy4vNao3FInbL7o+ElijcrLDuh3e25dKt2j5YY8QEOEjh
+         Q7bg==
+X-Gm-Message-State: AE9vXwPJYKYDr7wuYC/lGRRV5ML1O/Si4JoUae5vA4H5y7EN1NcO8FDhIVgedb35pxprTHq2xluql/I9MNXflQ==
+X-Received: by 10.194.89.73 with SMTP id bm9mr14102584wjb.76.1472717029947;
+ Thu, 01 Sep 2016 01:03:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-799293237-1472716877=:129229"
-X-Provags-ID: V03:K0:iAilDHH1LfDR/hZCrW5e6x3QChG0rE0ekBrFNpXNkHNTjqW+rCJ
- joiQYIXaWJbrUIR7tVoqYVOK90cdgDwwfrW+ntqWpzh2dLjAYgeEFN/WdJIMJZLjdFI7uaF
- j8v9cZKFxvWo+Jc5RSpw5aH/6qtI9XGlEOr369BRLZoN7PZu1UuThmdeLwNEKjGAoGEEk9t
- Cx4sBgtK0YPYDdx2yX7Uw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:QCwqizZIkO0=:qXxQBcTICCd5tJvUaoiaTM
- FcAXqdS+UhETpXF2Ac9j30TlBPKKcI27MIR/gY7ecCURbQU6ebqFzHGDgpsluhoNKzmRffTYk
- KV0AND2Wgdvy9YPNoz8iSAfEUzyt+MUC2n7/rl2JTER17P0JIyBrYOn0POu6DZaxU0bAMvego
- x7KWEh3mVUmAbP0YswY+ugOVhAZ6OnaGiuaoPdy0LzHwGFsKuadx0piH/4JsJQ9kMEUPEC3pe
- dOfFjxyf16feWLslOMajRfA2EX51cnEJFJbb+xwmYpLcXIBdYtbSvsqZLBTsTSLMVfI4vSDDX
- 2Ef3lW7okgy/5H3PDGwwdJ4PDyYcSml5tHMcUjva3hPD78tQklwYU4d/43Oaw+CJGJZNLA51i
- 4Fdg9w4A+JKQV/n4oPz32WrBz+GW6GOAU55TMG44UEPsLbJSDD2dYPEXHRJGTB6jQ7Oydr2rH
- sGWdOSZ5uf+7VIZj2wZCl90rZmId5H9bxf3oZ6tng9GSww7QnYSRPEhLfew4ODeT5vKcxJzy0
- WpdD4PCcUoB8dXhJYQedFhJWiq66GFUiEuJNV0HCQ1hDE0/hMCF3BlPFOC4AXKA6Ww6efC6rO
- hFyhtL1rlMONtfE4KEvncagBid396JV+K0Bl+RjQ/aRSg+HNGkr6++fZEonbAm8R/1LCG8sMm
- veGxtNaLg/OGYEXppV4r7IX5sUSGhuzx4qAp+3ZFwtF+3F6qElHb+2InUrZdB2nVYTrzGY0vn
- +VN4ajGn0fXdhT+Hi9K7Z8vJIEXaLiAQNrjXcHCJ9i0UEX2btYaEcSuQcSlBqQKltV6IIM130
- JSorK87
+Received: by 10.194.222.132 with HTTP; Thu, 1 Sep 2016 01:03:49 -0700 (PDT)
+In-Reply-To: <CAGZ79kYzOh-trnnc2JH9QX21DX=6nz=q0M99tbpU_Q68tmH0Qw@mail.gmail.com>
+References: <20160827184547.4365-1-chriscool@tuxfamily.org>
+ <20160827184547.4365-3-chriscool@tuxfamily.org> <CAGZ79kYzOh-trnnc2JH9QX21DX=6nz=q0M99tbpU_Q68tmH0Qw@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 1 Sep 2016 10:03:49 +0200
+Message-ID: <CAP8UFD3DS_AV_ATH8Z9v0f0y4zFjhjhD0h9LfHwnJ2R0Fm5EqQ@mail.gmail.com>
+Subject: Re: [PATCH v13 02/14] apply: rename and move opt constants to apply.h
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Karsten Blees <karsten.blees@gmail.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Wed, Aug 31, 2016 at 11:46 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Sat, Aug 27, 2016 at 11:45 AM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>>  extern int check_apply_state(struct apply_state *state, int force_apply);
+>>
+>
+> With greater scope comes greater responsibility. Nit of the day:
+> In case a reroll is necessary, consider putting a comment here.
+> (What are these constants? what do they control? How/where do I use them?)
+>
+>> +#define APPLY_OPT_INACCURATE_EOF       (1<<0)
+>> +#define APPLY_OPT_RECOUNT              (1<<1)
 
---8323329-799293237-1472716877=:129229
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-
-Hi Kuba,
-
-On Wed, 31 Aug 2016, Jakub Nar=C4=99bski wrote:
-
-> W dniu 31.08.2016 o 20:36, Johannes Schindelin pisze:
->=20
-> I wonder: would 'git cherry-pick --continue' be able to finish
-> 'git revert', and vice versa, then?  Or 'git sequencer --continue'?
-
-I just tested this, via
-
-=09diff --git a/t/t3510-cherry-pick-sequence.sh
-=09b/t/t3510-cherry-pick-sequence.sh
-=09index 96c7640..085d8bc 100755
-=09--- a/t/t3510-cherry-pick-sequence.sh
-=09+++ b/t/t3510-cherry-pick-sequence.sh
-=09@@ -55,7 +55,7 @@ test_expect_success 'cherry-pick
-=09mid-cherry-pick-sequence' '
-=09=09git checkout HEAD foo &&
-=09=09git cherry-pick base &&
-=09=09git cherry-pick picked &&
-=09-       git cherry-pick --continue &&
-=09+       git revert --continue &&
-=09=09git diff --exit-code anotherpick
-
-(Danger! Whitespace corrupted!!!)
-
-It appears that this passes now.
-
-Probably `git sequencer --continue` would work, too, if there was a `git
-sequencer`. :0)
-
-> > On Wed, 31 Aug 2016, Jakub Nar=C4=99bski wrote:=20
-> >> W dniu 29.08.2016 o 10:04, Johannes Schindelin pisze:
-> =20
-> >>> diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-se=
-quence.sh
-> >>> index 7b7a89d..6465edf 100755
-> >>> --- a/t/t3510-cherry-pick-sequence.sh
-> >>> +++ b/t/t3510-cherry-pick-sequence.sh
-> >>> @@ -459,17 +459,6 @@ test_expect_success 'malformed instruction sheet=
- 1' '
-> >>>  =09test_expect_code 128 git cherry-pick --continue
-> >>>  '
-> >>> =20
-> >>> -test_expect_success 'malformed instruction sheet 2' '
-> >>
-> >> Hmmm... the description is somewhat lacking (especially compared to
-> >> the rest of test), anyway.
-> >>
-> >> BTW. we should probably rename 'malformed instruction sheet 2'
-> >> to 'malformed instruction sheet' if there are no further such
-> >> tests after this removal, isn't it?
-> >=20
-> > No, we cannot rename it after this patch because the patch removes it ;=
--)
-> > (It is not a file name but really a label for a test case.)
->=20
-> Ooops.  What I wanted to say that after removing the test case named
-> 'malformed instruction sheet 2' we should also rename *earlier* test
-> case from 'malformed instruction sheet 1' to 'malformed instruction sheet=
-',
-> as it is now the only 'malformed instruction sheet *' test case.
-
-Actually, you know, I completely missed the fact that there was a
-"malformed instruction sheet 3". I renumbered it.
-
-Thanks,
-Dscho
---8323329-799293237-1472716877=:129229--
+Ok I will reroll with some added comments.
