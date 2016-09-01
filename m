@@ -2,116 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	DATE_IN_PAST_03_06,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4F451F6BF
-	for <e@80x24.org>; Thu,  1 Sep 2016 22:11:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78CF61F6BF
+	for <e@80x24.org>; Thu,  1 Sep 2016 22:13:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752559AbcIAWL1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 18:11:27 -0400
-Received: from mail-qk0-f182.google.com ([209.85.220.182]:35230 "EHLO
-        mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752167AbcIAWL0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 18:11:26 -0400
-Received: by mail-qk0-f182.google.com with SMTP id v123so100403992qkh.2
-        for <git@vger.kernel.org>; Thu, 01 Sep 2016 15:11:00 -0700 (PDT)
+        id S1752995AbcIAWNB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 18:13:01 -0400
+Received: from mail-it0-f49.google.com ([209.85.214.49]:37346 "EHLO
+        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751014AbcIAWNA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 18:13:00 -0400
+Received: by mail-it0-f49.google.com with SMTP id e124so6487649ith.0
+        for <git@vger.kernel.org>; Thu, 01 Sep 2016 15:13:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=XlbFf+OFfdzODzPO6DSgU2daULr8+SAJYVtor9FB+hk=;
-        b=P6xNfDPaypGa+iVdc+D6nJZ0S+YkCM5P7MFU01J+qIGgKYilKnjzcfgSHbchKSTy0R
-         UKO+OetQ8OiZ3FnnPd/ctGvwpJOv2VDVPD243NVZNE9XhJtCQNB1TJm4fzr1Jzrmvo0w
-         xaVajuxf8bjTH8H4tMpElTEbuGDntxdy/F+ZOAX2NxAoMYZtpIGRigKgYStj6QvJOUwz
-         uqsvygiHI8g09W3fyqJF1aHjNChLHg8MhCXLPhddqezTBBp3yZoAa7yVQE299v6ZGlda
-         9tlyi61V1ql9v118MwpftesBa+MgP70bIvKQg6gnLADnQ9kACjlKIudgUZfd0lGW8O9S
-         Q1RA==
+        bh=evVTC6Fe7CGYVvdm+USDIMttF8a0ZW7E6WrZAsUSqkE=;
+        b=Zxu8jg7D20ggSi2wI5SqHOZfRx0OhnfQ6W0f78VYmz3zgFi5sldW0rCLnPVF+jBR63
+         VbvoSEWqP6oYf6qj6QoAVbnJeBXJu+1LdnCrgr9I2Zf77DJ2ABOAGT1PE4EhURXsjlOq
+         23AEKN1Xyb1Mmnz8IGtfEjb4uqY96YJRvOX4xJng0JJqSdSSs1AI3GJ9/BIoXQQ+Y/D1
+         AuuUmxcPqGlQwORr/bTB49zBYZVX8Uvb3wMOaTcCXVJOVHqhX8wg7/gQpAkKtHztdDVB
+         wGSICxqZqo8gxX3psKiTlbHrjmZebvOpTFo/Sfpb0/LhuobjU9Y9hLkXeBZV1Oa5k2Hl
+         ZcFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=XlbFf+OFfdzODzPO6DSgU2daULr8+SAJYVtor9FB+hk=;
-        b=jAUu1pPhpAgDKJLklj9kEFiDYHCjojjVtvNYY8bOCoAcdFjCTl7EyPup7qrQS29ZQ1
-         AE4kEbdnh/RnlTBD1Y8/QGZYRu3bv56dG1Wrp1gnkpuUDaRk8cR0Shn+eiXdbVTjwRCG
-         P7VjS60btOnD0/dBv77cGsYLGxyOKfCXBq8K+AOFwKJGtzkc9qXMXkgKGktujNT3FBLz
-         AYVyqJSjzWaPn8BwxMffv9z4V/RDkWNPmut2uKxAV4svQSYr9o3996zA91kL+31x3L9X
-         VONaatN9YcxP9r5Rvw89+dOMO30w3DKMDEmYOpWO9hOiE6/0mK6A30clNGdVo8UL/Pwf
-         x85g==
-X-Gm-Message-State: AE9vXwPN5o6MLHiOPLzcGyZQEl7L05FAyp3rJVb1Qp2nQ9RS+TrTHl79FELE9SLmX3zXOu8n+zlFK8jcDJaEZQ==
-X-Received: by 10.55.106.2 with SMTP id f2mr19185271qkc.124.1472749065070;
- Thu, 01 Sep 2016 09:57:45 -0700 (PDT)
+        bh=evVTC6Fe7CGYVvdm+USDIMttF8a0ZW7E6WrZAsUSqkE=;
+        b=mZRGbgClWE/+H7ACWJrLOFjj/GgGVg7fKTVuh5OQ8GG90tPAxk7ItHmCVWpumhGUoy
+         BLgSG8FQkDfky7h2eK79azLTgNaitVKpB1X6KGdGPH3z1/klmo1A1SI03Ol6aUJUExpL
+         GBMzPw+79Nz6GUdTyzHnvDNDzgul13B7dh238B7HzBVwtPbFp+9IF+YvV2trm6j/QucO
+         MJOfYjdM18r/pc8JQfEYvIwErAp7yc8jiFGqxP74OjxzCinTf1x8qd7sxC/hKUdeG1Bl
+         7ZTadm4+ZeWRryqlZAu3EGaJobpil+ibkKJKDoi1bHVgu9MQPAe486QPSszduIT8bmQk
+         hEpA==
+X-Gm-Message-State: AE9vXwO+2WE1Kabl95uPlMWAYCFUquUTVjv0NuZh9hOdeCgZ7Lg3KqooNgijHNp4qKFv/x6P/vsW4NP7MEcUbdyL
+X-Received: by 10.36.137.9 with SMTP id s9mr21722267itd.58.1472749076072; Thu,
+ 01 Sep 2016 09:57:56 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.55.195.20 with HTTP; Thu, 1 Sep 2016 09:57:04 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1609011027210.129229@virtualbox>
-References: <b2d016e44fa04e8a318967c43762d6933faf7956.1467183740.git.johannes.schindelin@gmx.de>
- <0dfa96b17edfe84ba19c7e57fe0b017c77943e0c.1472478285.git.johannes.schindelin@gmx.de>
- <20160830084357.rdmt2ehngrz6rqaq@sigill.intra.peff.net> <xmqq37lm3w6u.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1608311233440.129229@virtualbox> <CAGdFq_iJeziyXBPL2GVHNXZcjGAwQVN2EhJs4AtJCSx7ghn32Q@mail.gmail.com>
- <alpine.DEB.2.20.1609011027210.129229@virtualbox>
-From:   Sverre Rabbelier <srabbelier@gmail.com>
-Date:   Thu, 1 Sep 2016 09:57:04 -0700
-Message-ID: <CAGdFq_h3UuW7wX0-=SuS22mX_C086HRZZ=i1sYVya80dd+qMYQ@mail.gmail.com>
-Subject: Re: [PATCH v2] t/Makefile: add a rule to re-run previously-failed tests
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Git <git@vger.kernel.org>
+Received: by 10.107.128.66 with HTTP; Thu, 1 Sep 2016 09:57:55 -0700 (PDT)
+In-Reply-To: <CAP8UFD3RE6L17nQmvZTkx6wycsdG7EA9eM=tYQD8nrS445zg1w@mail.gmail.com>
+References: <20160827184547.4365-1-chriscool@tuxfamily.org>
+ <20160827184547.4365-7-chriscool@tuxfamily.org> <CAGZ79kYnp_8iew33KQJK1TB0ROLthHBtvHqf3wVzFkh_JSq5MA@mail.gmail.com>
+ <CAP8UFD3RE6L17nQmvZTkx6wycsdG7EA9eM=tYQD8nrS445zg1w@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 1 Sep 2016 09:57:55 -0700
+Message-ID: <CAGZ79kZT-t_NZZJcdMEB8E1y_u0=LHGWOxbdEeYMjgFHZYtHHQ@mail.gmail.com>
+Subject: Re: [PATCH v13 06/14] apply: make it possible to silently apply
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Karsten Blees <karsten.blees@gmail.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
+        Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 1, 2016 at 1:27 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> On Wed, 31 Aug 2016, Sverre Rabbelier wrote:
->> On Wed, Aug 31, 2016 at 3:36 AM Johannes Schindelin
->> <Johannes.Schindelin@gmx.de> wrote:
->> > On Tue, 30 Aug 2016, Junio C Hamano wrote:
->> > > Jeff King <peff@peff.net> writes:
->> > > > Hmm, interesting. Your approach seems reasonable, but I have to wonder
->> > > > if writing the pid in the first place is sane.
->> > > >
->> > > > I started to write up my reasoning in this email, but realized it was
->> > > > rapidly becoming the content of a commit message. So here is that
->> > > > commit.
->> > >
->> > > Sounds sensible; if this makes Dscho's "which ones failed in the
->> > > previous run" simpler, that is even better ;-)
->> >
->> > I did not have the time to dig further before now. There must have been a
->> > good reason why we append the PID.
->> >
->> > Sverre, you added that code in 2d84e9f (Modify test-lib.sh to output stats
->> > to t/test-results/*, 2008-06-08): any idea why the -<pid> suffix was
->> > needed?
+On Thu, Sep 1, 2016 at 1:01 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> On Thu, Sep 1, 2016 at 12:07 AM, Stefan Beller <sbeller@google.com> wrote:
+>>> Printing on stdout, and calls to warning() or error() are not
+>>> taken care of in this patch, as that will be done in following
+>>> patches.
 >>
->> I can't really recall, but I think it may have been related to me
->> doing something like this:
->> 1. Make a change, and start running tests (this takes a long time)
->> 2. Notice a failure, start fixing it, leave tests running to find
->> further failures
->> 3. Finish fix, first tests are still running, start another run in a
->> new terminal (possibly of just the one failed test I was fixing) to
->> see if the fix worked.
+>>> -               if (state->apply_verbosely)
+>>> +               if (state->apply_verbosity > verbosity_normal)
+>>>                         error(_("while searching for:\n%.*s"),
+>>>                               (int)(old - oldlines), oldlines);
 >>
->> Without the pid, the second run would clobber the results from the first run.
->>
->>
->> If only past-me was more rigorous about writing good commit messages :P.
+>> But this is an error(..) ?
 >
-> :-)
+> Do you mean that it was a bug in the original code to print this error
+> only in verbose mode?
+
+Oh never mind.
+
+I meant to point out the inconsistency between the commit message, that
+said: "error() are not taken care of in this patch" and modifying a
+condition for
+an error call. However we need to fix them as you renamed apply_verbosely
+to apply_verbosity and made it an enum. So I spoke too early.
+
 >
-> Would present-you disagree with stripping off the -<pid> suffix, based on
-> your recollections?
+> Anyway I don't think such a refactoring is needed.
 
-No objections, I think it should be fine. If anyone uncovers a
-particularly compelling reason later on, it's only a commit away :).
-
--- 
-Cheers,
-
-Sverre Rabbelier
+great :)
