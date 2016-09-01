@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B7BE01F6BF
-	for <e@80x24.org>; Thu,  1 Sep 2016 13:35:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9768C1F6BF
+	for <e@80x24.org>; Thu,  1 Sep 2016 13:40:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755296AbcIANfQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 09:35:16 -0400
-Received: from mout.gmx.net ([212.227.17.21]:56376 "EHLO mout.gmx.net"
+        id S932469AbcIANk0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 09:40:26 -0400
+Received: from mout.gmx.net ([212.227.17.21]:50904 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755289AbcIANfP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 09:35:15 -0400
+        id S1753225AbcIANkZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 09:40:25 -0400
 Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MLR30-1bg06u3zXe-000bSd; Thu, 01 Sep 2016 15:35:11
+ ESMTPSA (Nemesis) id 0Lb90f-1bDDxc026j-00kdT9; Thu, 01 Sep 2016 15:40:21
  +0200
-Date:   Thu, 1 Sep 2016 15:35:09 +0200 (CEST)
+Date:   Thu, 1 Sep 2016 15:40:19 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 16/22] sequencer: prepare for rebase -i's GPG settings
-In-Reply-To: <a948ad4f-2145-bacb-0ec6-7edac14c4d4c@gmail.com>
-Message-ID: <alpine.DEB.2.20.1609011534300.129229@virtualbox>
-References: <cover.1472457609.git.johannes.schindelin@gmx.de> <c6a37af958f59390c00429a5b38b34d34c9a5b95.1472457609.git.johannes.schindelin@gmx.de> <104de15c-77e8-9474-9579-4934ca8a4323@gmail.com> <xmqqmvjszoia.fsf@gitster.mtv.corp.google.com>
- <a948ad4f-2145-bacb-0ec6-7edac14c4d4c@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 17/22] sequencer: allow editing the commit message on a
+ case-by-case basis
+In-Reply-To: <fa2a0783-afaa-0aa5-877c-24b3513d4bae@gmail.com>
+Message-ID: <alpine.DEB.2.20.1609011540050.129229@virtualbox>
+References: <cover.1472457609.git.johannes.schindelin@gmx.de> <96adba0eee05a7b2b46b726f7e231b6732e80882.1472457609.git.johannes.schindelin@gmx.de> <fa2a0783-afaa-0aa5-877c-24b3513d4bae@gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1291225525-1472736910=:129229"
-X-Provags-ID: V03:K0:u5Xv/nFfmwPnL7CBU1Dl5F2wvAJg/Upz8lPOuLXwLWTdmBbBKZ6
- AlUyMS0FHK4BtV/MIeuRVe/1DO7ub1rWXl5hTD2cwkjNj2tvGMLl8BBsn82NS35zq9T3tz/
- FMRrjHx+3KbGpg8elMcW2xOYXo8csfzRkE7ef8Nxv12xhdHaHJfI93KlNB6BILGDDGqfRfV
- TsSdKwAzJNxePRK1GTZIQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+aBAyfMrfNU=:2RarU8VUgo3k0WGrKTtVg8
- EyAUf2A2Qn+SaaD2h69hcX/YQ/orM+vxyUaZ7oBn6Q+7GG6AIppOvdF/uf8bTU/C5aFBx5rLy
- srBsdT63Guy6H4mc5OnQN3BckabHE9hDfwlvPXTeLrKV+MZQdeDMqSZCwNUbvean1cR5DoHHo
- p8D+CVV9rEungLBS5JzEg7HIHGxija3kXkV2Tqyf8iF5Z6LWNE5Sod5tCs9xVeKQC+DxfL+MR
- dUmkge6SxzeC9Ajj6NuA8bqzX8cafKJSRm/VnfUitlV2cYbVDkAEb37eWu27RVYR9tkJuGPjj
- 9H2fiGJ+U49DtWnamxqcHKJ+qDjS5Z8p+PwFBSOKwf59Ot2wF/4uKxHPdSBgyWETvgOLcYBqM
- YZ6QOYSne7ISRnxLl54BaMiMe2hjZ04VzW8PDvxXa9SnnjQl76iduv3F+/0WRmbKst0cbjyKS
- br6yK3BhHA/oj26uCerNrBN923y0G4PTL3eZWmIWRTnrxPhFRe6jKNUUjCVRfA2vzFft6LXil
- w83iAO6dpgY8whBq2YK7Yb8LnkIC577fAQjJuUtJcIyVP5T7F8otCBHefmH4wm9q+ZRzYbfyc
- qgZq8UOZySMGPFEigNIj3NBum5GrBBrw2IzIVVulC5woBIlssRBZ8PhZKsfiC815o2zlO13M4
- ZnovKNo2qyErGmoV3rmfeQvpgza2Pu5110LQp2uXeUoWqH3MKGZ+h6rEXT5yyhxQ5J5FCKUwA
- EFvHq60l/rdv+HiJlC7dCD3jR9w0PUFZ1yVEmdIvJCNVnyeo6ad4CFLB91eRGFC9HDvT2/HnF
- BC0NsrK
+Content-Type: multipart/mixed; BOUNDARY="8323329-1322969985-1472737221=:129229"
+X-Provags-ID: V03:K0:4DZZhWwMY3Ko9Z2p/x/r56kJOn1gwYJ/P7zYKNcmacGBBxRwI2j
+ 0mFPbPzb/jSyTsLlo7VUKMhgBi9SWnfr2VOQWpFKFVVBY1vEMLDGkdT94VcXizX0HCGe2xU
+ KCzpWWaSFW7fW9N6teko/vZDwMafQoevGRnLaTIbOrgUXNkR4XtwyJryy1XpNJLyM07gA1E
+ Scj32EtXiJAFrUYgTeKjg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ELail5XA4zE=:3IP49JC6h/KtV7sTgFXvLw
+ STT+WlxJ89G1FdgQfUWZu7irpPsOc0sd1becmvtaJP/+cOGTiEt+/fIs18Njjwq85UsdW804W
+ tHvAjorLvcaF2UBBhrblX9P4I3l6YAYQ6arJ+VCJDRCDiTy3Bc32G8IhZkDxhHuHm+TUR3FtI
+ umnJWiIuyu+UKg04Bpqd0cqykri29m1dgTzX7D1Zxbjg80PYpJp/bshTPcYFiV7eVvY+prV3o
+ SFfWLUGWig80I6ZiqJA3L7eUN09XjUH6gFGsh3at6CvqEXuHgVQzveR3qqxItiQ52qMW1/JJt
+ bxXEn4Rw5uOeCjPRxVKpL4cefB9f6dkl9ym1tYif0FCG591DJM0HLBjyql47Pd7td0awxGdC4
+ PQRZVfjyFOyPFiSER/3impLuHusUD/E1Kt5bi2HxrMCdm7grkyGh6vhv6C7BiD9PMeYJ1EqY6
+ SKZUjPIcuBbQAblDzOT7bKiPOqBKmUHEuyOcKu0I4gXbqc9O+f2uzxc+IbY+fMk10mKmum1P/
+ YV/IvgvuLi1AJNRwN5Evxq6PnuEnhPNAJfNoljCUvsex5DO+eztDq0oqj5x98y+GtgPQlwzzG
+ AMVu7LQnZYNf1QkJr4IvQKd9ojpkPmuIQjEh4crUYqi+U8r/cwHARRBDVvm1OBFThr4sYztU5
+ 70bM9GL4t8cfNl//fRr1h5Il2yNM4y8kTwGQoUTRSY5g4LodGlI4HpCEoGGX4ZBJ+V8v3rT5Q
+ bYxc+GsMUZluzkiYKswjP9BHVTR5bznGSob/V6arQhMljTDm1EULFXPbY9m6bB7z/HROT0w4r
+ llU2q/s
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -57,7 +57,7 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323329-1291225525-1472736910=:129229
+--8323329-1322969985-1472737221=:129229
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 
@@ -65,14 +65,26 @@ Hi Kuba,
 
 On Wed, 31 Aug 2016, Jakub Nar=C4=99bski wrote:
 
-> Note that if the last line was
+> W dniu 29.08.2016 o 10:06, Johannes Schindelin pisze:
 >=20
->     +=09=09=09=09sequencer_entrust(opts, strbuf_detach(&buf, NULL));
+> > In the upcoming commits, we will implement more and more of rebase
+> > -i's functionality. One particular feature of the commands to come is
+> > that some of them allow editing the commit message while others don't,
+> > i.e. we cannot define in the replay_opts whether the commit message
+> > should be edited or not.
 >=20
-> we can make it not leak.  A bit tricksy, though.
+> It's a nice, pretty and self contained refactoring step.  Small
+> enough that it is easy to review.
+>=20
+> I would like to have in the commit message that it is sequencer_commit()
+> function that needs to rely on new parameter, instead of on a property
+> of command (of its replay_opts).  And that currently it simply passes
+> the buck to caller, which uses opts->edit, but in the future the
+> caller that is rebase -i would use todo_item and replay_opts based
+> expression.
 
-Heh... I made it that tricksy, then.
+I enhanced the commit message.
 
-Ciao,
+Thanks for the review,
 Dscho
---8323329-1291225525-1472736910=:129229--
+--8323329-1322969985-1472737221=:129229--
