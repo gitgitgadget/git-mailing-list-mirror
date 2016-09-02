@@ -2,106 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B647A1FBB0
-	for <e@80x24.org>; Fri,  2 Sep 2016 22:11:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDE0D1FBB0
+	for <e@80x24.org>; Fri,  2 Sep 2016 22:24:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751540AbcIBWLU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Sep 2016 18:11:20 -0400
-Received: from mail-pf0-f175.google.com ([209.85.192.175]:33236 "EHLO
-        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750989AbcIBWLT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Sep 2016 18:11:19 -0400
-Received: by mail-pf0-f175.google.com with SMTP id g202so23033613pfb.0
-        for <git@vger.kernel.org>; Fri, 02 Sep 2016 15:11:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=4ICkJCiyfGuRhI4JEVhPr8VWNuuGVYaHYT9JqzH9I4E=;
-        b=glIFzP4CEm1h+xMMB4kR6c7M2yqrWme3tU/SYSuD+NRRTDgLJZGWkwqzoRyGEYZtN7
-         FG0x6r3uXr+/avIIqQNfAq8YS7szHz3GZAfExc5isMbZQ6VFBvTASUZDvcGX/t4hBZFv
-         yOUsUENeYqzoy/SzCJ5tpEx0IoXygVsY8OA7ZHsxCAJ6vGSVF2LDZXrNRW0ngc7lRz7i
-         KwIZlSKnZntzPsBj+lMcC5rkfrki8+Wl2RA6nYZExfdK0xe4DCaZ8oYaZ9Xi2dsnkb5j
-         qA4sozQ/ooNp+FBCAtkV+nzKstptbqHZVVkXD+TCqG6/ByAvDdwmL1ro0ivVv5IHvu1h
-         5X/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=4ICkJCiyfGuRhI4JEVhPr8VWNuuGVYaHYT9JqzH9I4E=;
-        b=G/oZv/C2nZfkWuIlPpSQ+BYxkP/YBcNDu+Df+zWuL5oIITKyuvxT35924ZRC3FTloK
-         DCk3Y1qbyBgNxohC/h64Lc9hlb8SroWFHsbOnzTAu+TV0RaF91KTl70oSvJ8cSmhd1KX
-         zMnbzYCMgOHp4YGhlvLkD3xmTLK1ZQxQU6XhU9KOL+LPEfhNvVsNNg/rzZfqR9skUAba
-         NMLOjfziB/0EbvOXwAmdx/ESTzdksLFOfKDoYXSL5zr2MEjfgngoOomQKWx2CxdTiLZw
-         SYDl78MjXcIsG4sYKhgqChP2ZZr/jpgtVd5HoeL9ZDmh5kobCoqRSKuByxeqODlMvv0A
-         bkGA==
-X-Gm-Message-State: AE9vXwOGF+q0ie8027fVGgtJXndyTCAl6gvO0Ge2sAnTLpChBYrNr38H3gN1INA0SrJyGeyg
-X-Received: by 10.98.100.67 with SMTP id y64mr40408888pfb.84.1472854278559;
-        Fri, 02 Sep 2016 15:11:18 -0700 (PDT)
-Received: from twelve2.mtv.corp.google.com ([2620:0:1000:5b10:5d3b:bbd9:4200:b5b1])
-        by smtp.gmail.com with ESMTPSA id h86sm17017460pfh.46.2016.09.02.15.11.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 02 Sep 2016 15:11:17 -0700 (PDT)
-Subject: Re: [PATCH 2/2] connect: know that zero-ID is not a ref
-To:     Jeff King <peff@peff.net>
-References: <cover.1472836026.git.jonathantanmy@google.com>
- <2bea354c6218a33db3972e42baa75676fdcbc598.1472836026.git.jonathantanmy@google.com>
- <20160902201321.35egsg5l6r2fvrtw@sigill.intra.peff.net>
-Cc:     git@vger.kernel.org
-From:   Jonathan Tan <jonathantanmy@google.com>
-Message-ID: <84df7985-6c87-9485-261c-e8e9a3bbab7b@google.com>
-Date:   Fri, 2 Sep 2016 15:11:16 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S1753340AbcIBWYT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Sep 2016 18:24:19 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:28765 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752625AbcIBWYS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2016 18:24:18 -0400
+Received: from PhilipOakley ([92.22.49.238])
+        by smtp.talktalk.net with SMTP
+        id fwshb0jUjxR4bfwshbo3DS; Fri, 02 Sep 2016 23:24:16 +0100
+X-Originating-IP: [92.22.49.238]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=JNN5iICb c=1 sm=1 tr=0 a=txR83ole7ZIDfyRmTcr8FA==:117
+ a=txR83ole7ZIDfyRmTcr8FA==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=by_K5aTjz1vVX1IXSdcA:9 a=QEXdDO2ut3YA:10 a=6kGIvZw6iX1k4Y-7sg4_:22
+Message-ID: <55512A8927384A0790DDC7F526B09053@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Robert Dailey" <rcdailey.lists@gmail.com>,
+        "Git" <git@vger.kernel.org>
+References: <CAHd499AQFDRps6POF2xuUjbYv5DJYxt3DA8aFFArXF=qQEz_CA@mail.gmail.com>
+Subject: Re: Fixup of a fixup not working right
+Date:   Fri, 2 Sep 2016 23:24:16 +0100
+Organization: OPDS
 MIME-Version: 1.0
-In-Reply-To: <20160902201321.35egsg5l6r2fvrtw@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain;
+        format=flowed;
+        charset="UTF-8";
+        reply-type=original
 Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfLQYGUHD3HLDCmeFKAOd8OHZwEWM8QCELFqheVBgLsxuLNQI3lYoIOzul/Po9/dk7PUgxCohmjXpd9ptzJPd859TM9Bj2rBLy0Jca3Zire0/JwXDmLIV
+ aP/gXzvmfQ/OdyQxcrZnyYw1el011OE1yoalYFYTQu0JEgegVwfJE6muVRRQ3Ns69rVO2pyOubXEes92J2XNFxMOAzAr/jxpvjQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/02/2016 01:13 PM, Jeff King wrote:
-> On Fri, Sep 02, 2016 at 10:15:39AM -0700, Jonathan Tan wrote:
->> (git-daemon should probably also be changed to serve zero IDs, but such
->> a change can be considered independently from this change; even if both
->> the client and server changes were made in one commit, it is nearly
->> impossible that all Git installations are updated at the same time - an
->> updated client would still need to deal with unupdated servers and vice
->> versa.)
+From: "Robert Dailey" <rcdailey.lists@gmail.com>
+> Suppose I have a branch with 4 commits, in the following order (as you
+> might see during interactive rebase):
 >
-> I'm really not sure what you mean here. How does git-daemon enter into
-> this at all?
-
-I was comparing the behavior of git daemon and jgit daemon - when 
-serving the same repository, the former does not send the zero ID and 
-capabilities^{} line, whereas the latter does; and I was stating that 
-git daemon's behavior should be changed to JGit's behavior, but not 
-necessarily immediately.
-
-(In one of the replies to that email, Jonathan Nieder has suggested a 
-more detailed transition plan.)
-
->> diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
->> index 819b9dd..c6f8b6f 100755
->> --- a/t/t5512-ls-remote.sh
->> +++ b/t/t5512-ls-remote.sh
->> @@ -207,5 +207,27 @@ test_expect_success 'ls-remote --symref omits filtered-out matches' '
->>  	test_cmp expect actual
->>  '
->>
->> +test_lazy_prereq GIT_DAEMON '
->> +	test_have_prereq JGIT &&
->> +	test_tristate GIT_TEST_GIT_DAEMON &&
->> +	test "$GIT_TEST_GIT_DAEMON" != false
->> +'
+> pick 123 Original Change
+> pick 789 fixup! Original Change
+> pick 456 Some Other Thing
+> pick abc fixup! fixup! Original Change
 >
-> GIT_DAEMON depends on JGIT? Should this really be the JGIT_DAEMON
-> prerequisite?
+> However, let's say the first commit is already pushed upstream on a
+> topic branch. Since there are multiple developers on this topic
+> branch, I do not want to rebase right now. Instead, I want to document
+> future fixups via fixup commits and then when we're ready to merge, do
+> a final rebase prior to the merge to master to clean things up after
+> we're all done collaborating.
+>
+> For this specific situation, since the first commit is already pushed,
+> I want to perform a fixup on the 1st fixup commit. When I perform an
+> interactive rebase against upstream topic, I get the following:
+>
+> pick 789 fixup! Original Change
+> pick 456 Some Other Thing
+> pick abc fixup! fixup! Original Change
+>
+> The tip commit (abc in this case) is not marked as a fixup. What I
+> expect to see is:
+>
+> pick 789 fixup! Original Change
+> fixup abc fixup! fixup! Original Change
+> pick 456 Some Other Thing
+>
+> Is this by design, or a defect? I assumed that Git would only look at
+> the first occurrence of "fixup!" and treat everything else after as
+> the commit description to match. But it seems in this case that it
+> stops at the last occurrence of "fixup!", which would explain why it
+> isn't matching in the interactive rebase. I haven't looked at the
+> code, though.
 
-The JGIT line shouldn't be there - thanks for catching this.
+As I understand this it's implied by design. The issue is that the rebase is 
+looking for that named commit within its current rebase range, and can't 
+find it, so ignores it.
+
+There is a separate issue that all the fixup! fixup! messages are 
+essentially treated as being concatenations of the original fixup!, no 
+matter how many time the fiup is present.
+
+In the mean time you should reword those commit messages as being 
+'bug-fixes' as they are (you say) already upstream and hence published. You 
+can make the first as a bug-fix and the following ones a fixup!s.
+
+>
+> Thoughts? Also I'm perfectly willing to accept feedback involving me
+> just using the feature wrong or as not intended. Thanks in advance.
+> 
+
