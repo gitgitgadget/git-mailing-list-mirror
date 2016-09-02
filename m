@@ -2,95 +2,201 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9A001F859
-	for <e@80x24.org>; Fri,  2 Sep 2016 10:25:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12A6E1F859
+	for <e@80x24.org>; Fri,  2 Sep 2016 11:41:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753024AbcIBKZo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Sep 2016 06:25:44 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:35847 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752676AbcIBKZn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Sep 2016 06:25:43 -0400
-Received: by mail-qk0-f193.google.com with SMTP id v123so7595039qkh.3
-        for <git@vger.kernel.org>; Fri, 02 Sep 2016 03:25:42 -0700 (PDT)
+        id S1752785AbcIBLlN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Sep 2016 07:41:13 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:33398 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752723AbcIBLlL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2016 07:41:11 -0400
+Received: by mail-wm0-f65.google.com with SMTP id w207so2513081wmw.0
+        for <git@vger.kernel.org>; Fri, 02 Sep 2016 04:41:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=UpdB9QHx8O/ms2RnmSJ/n6zOMfXvS6XMxs4YryaZaV0=;
-        b=bZ/Oy6f3wI1LFzNzXzMfpOtElMV4mpsW6pU/r82VGAyMXb3+Tqr23GbKCDABEesU6N
-         9M5WYi+ImAjdgZO2lZs40JzlZwd9liWGzM2WWVVh91eidOHqg9lMv3pYDeKLDJunMZT2
-         I+fisL5eNdKRSEE4ZfxWfjHYUKchzZYfO+Q+wHILer1eZUY6oF79Mam4L2zmcx2A1OxU
-         kWApJBp1KOHZNhEEPTk/JDer6EbLIOQhgBy+HZUB5hTUer9WLwPnhjIuKX5RIYCEJrwT
-         FGX8RA//C3klrNzcdKyQ/AwKCL9fzenLVtdjhPwiQFDM6p1M3AtHkEegkrmRm4CIwFXG
-         gUOw==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=/SXzOOyuHcrbES9u5UonDIOe1G87fFJe3qkqnASSxN4=;
+        b=B4HSIIftIfzFNXnBLEywuR4fxwJWZQxWIPYZSEr0dBQVainkhjkuBU9v4x82CFdUYO
+         kXSfCp8cAPUc7+AhOhq/knr5onPOH6G17OSzkayxc4v1enqNDBGka3iyrAW3v9atqwNn
+         2WUNgWkyGwn2os9ypewPbqgQUYbc4BjGEDfGOGcGIuBQ2j64fhpdStOz6Qw6aqdwr1jd
+         bpo9R/BdsNXNccGDWx+/IEHySid/2mWocltHCjtoxv3MiX+6qbCLNlI9cEWOilOS0cIb
+         oaTV82PHOwMmgdHpaxrdQfP0VlVl9fiAunTQFqI7fP7INBwWAt0HKAt909pjGRwCfhsd
+         p4Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=UpdB9QHx8O/ms2RnmSJ/n6zOMfXvS6XMxs4YryaZaV0=;
-        b=kwQvZ8jwWDtYmLmMkf1oH/mOH4BI8XsLxdPInvNUv6Akb2NTQ7r6PPgKP5pDKN3aaS
-         600+eXXv9tq+JtCJVLNrP36bWyT/oyoNSS3mbTTZ3HjNiDkwtvUeBSi9+NtFbIi+v4mc
-         WMy3yIcBsX9a6nWXjsBt+JfCKvkijUXM7Z4dbnbMZ97dcoEywObT2AGfhxRGHNo0LF8L
-         ggW/CBW9FJ2d9z6zCXPH5q3QBWEj5otFjE6pGqRshWNoMZoJeOckP6/ezexLX5uVM7Jz
-         pLnJQGjH7u6ww1Ap2KKzDPJgh07cV5Ho2rHmnxNtgcmJBcbouGMQ3Rgp0hjmJPh4jZxl
-         lc/A==
-X-Gm-Message-State: AE9vXwMrSkyvF55Io3Z98BzDPsunSgmPT8VfpFN01cJD9PxZXf38LgwLitFF67AThdxXKz8Q79vCLdmjmFGb3g==
-X-Received: by 10.55.20.28 with SMTP id e28mr9051843qkh.269.1472811942388;
- Fri, 02 Sep 2016 03:25:42 -0700 (PDT)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=/SXzOOyuHcrbES9u5UonDIOe1G87fFJe3qkqnASSxN4=;
+        b=jPojYhMyyMmsJ+Se6xtVLkuS216fwnC758SVcKGrgTIV83zDOUeqYY8BQHXgYb3RhN
+         DsyEdEr58Rk3GHx4dFj5hKbEqzrvlBwjw4qTGU31as60tWObhsu/C8wRJCZ5faGh761A
+         vq6uOxSYmFVkFkKF4SZhCHZgvEdrQIAaAiEq2CKMCGomyH8PKRUiWp/3n9sucRdIq6XA
+         wiX/cEyZeLjVroLGIv2fpyXafysWdmfi0k6oSqwRAtxKxbE56Z2mKLzshNhD2QPXzz3z
+         dMBp/pz+n6xry8dt8JFivtBPjsQ6iZdGrcoGv9BF1CWZfgomBG+V8Arnfu6RbGM3q6yG
+         lD6Q==
+X-Gm-Message-State: AE9vXwOPs4VkDkbEOzEkh431VIZdPq6EsEDZr2OaDi478irJALLar32fIxKG0QI6y2sEPw==
+X-Received: by 10.28.104.6 with SMTP id d6mr2669537wmc.73.1472816469026;
+        Fri, 02 Sep 2016 04:41:09 -0700 (PDT)
+Received: from [192.168.1.26] (elz182.neoplus.adsl.tpnet.pl. [83.21.219.182])
+        by smtp.googlemail.com with ESMTPSA id ka5sm9389612wjb.7.2016.09.02.04.41.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 02 Sep 2016 04:41:08 -0700 (PDT)
+Subject: Re: [PATCH 00/22] Prepare the sequencer for the upcoming rebase -i
+ patches
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+References: <cover.1472457609.git.johannes.schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+        Johannes Sixt <j6t@kdbg.org>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <ced4a190-6a79-e608-ca0b-3815267c5f93@gmail.com>
+Date:   Fri, 2 Sep 2016 13:41:02 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Received: by 10.55.87.193 with HTTP; Fri, 2 Sep 2016 03:25:21 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1608311702440.129229@virtualbox>
-References: <b2d016e44fa04e8a318967c43762d6933faf7956.1467183740.git.johannes.schindelin@gmx.de>
- <0dfa96b17edfe84ba19c7e57fe0b017c77943e0c.1472478285.git.johannes.schindelin@gmx.de>
- <CACBZZX6iEmbb68tzRKNAryp5qmt=iU9FMuOe2ONV=2ojcazoEg@mail.gmail.com>
- <20160830205151.k6ufhfzl6gh4uuog@sigill.intra.peff.net> <CACBZZX4NyjkK0Nf1JVGFRhc0xnLYg2YX6ctO5OxK3Pi60r5KaA@mail.gmail.com>
- <alpine.DEB.2.20.1608311227150.129229@virtualbox> <CACBZZX6exynt_9_wVtEN19HQt_rPJdo5Ck3jujdQ-hLdMAGdmg@mail.gmail.com>
- <alpine.DEB.2.20.1608311702440.129229@virtualbox>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Fri, 2 Sep 2016 12:25:21 +0200
-Message-ID: <CACBZZX56fjJZydnBrWUYtU6V3xyQyaLL4MYzVVF0yD4dRdducw@mail.gmail.com>
-Subject: Re: [PATCH v2] t/Makefile: add a rule to re-run previously-failed tests
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>, Git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <cover.1472457609.git.johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 31, 2016 at 5:05 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi =C3=86var,
->
-> On Wed, 31 Aug 2016, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
->> I haven't used it myself (or any Windows thing) but people say good
->> things about http://strawberryperl.com
->
-> Ah yes. This comes up frequently. Many a Git for Windows user pointed me
-> into that direction.
->
-> The biggest problem with Strawberry Perl is that it is virtually
-> impossible to build the Subversion-Perl bindings using the Git for Window=
-s
-> SDK when using Strawberry Perl.
->
-> Which pretty much precludes it from being used in Git for Windows.
->
-> And then there are the path issues... Git's Perl scripts are pretty
-> certain that they live in a POSIX-y environment. Which MSYS2 Perl
-> provides. Strawberry Perl not.
+W dniu 29.08.2016 o 10:03, Johannes Schindelin pisze:
 
-This might be me missing the point, and I'm really just trying to be
-helpful here and make "prove" work for you because it's awesome, but
-as far as just you running this for development purposes does any of
-this SVN stuff matter? I.e. you can build Git itself not with
-Strawberry, but just use Strawberry to get a working copy of "prove".
+> This patch series marks the  '4' in the countdown to speed up rebase -i
+> by implementing large parts in C. It is based on the `libify-sequencer`
+> patch series that I submitted last week.
+
+Which of those got reviewed (and perhaps accepted), and which of those
+needs review still?  What is subject of their cover letter?
+
+> 
+> The patches in this series merely prepare the sequencer code for the
+> next patch series that actually teaches the sequencer to run an
+> interactive rebase.
+> 
+> The reason to split these two patch series is simple: to keep them at a
+> sensible size.
+
+That's good.
+
+> 
+> The two patch series after that are much smaller: a two-patch "series"
+> that switches rebase -i to use the sequencer (except with --root or
+> --preserve-merges), and a couple of patches to move several pretty
+> expensive script processing steps to C (think: autosquash).
+
+I can understand --preserve-merges, but what is the problem with --root?
+
+> 
+> The end game of this patch series is a git-rebase--helper that makes
+> rebase -i 5x faster on Windows (according to t/perf/p3404). Travis says
+> that even MacOSX and Linux benefit (4x and 3x, respectively).
+
+So do I understand correctly that end goal for *this* series is to move
+most of processing to git-rebase--helper, but full builtin-ification
+(and retiring git-rebase.sh to contrib/examples/) would have to wait
+for later?
+
+[...]
+
+I'd like here to summarize the discussion (my review, Dennis review,
+Johannes Sixt and Junio comments).
+
+If there are no comments, it means no problems or minor changes.
+
+> Johannes Schindelin (22):
+>   sequencer: use static initializers for replay_opts
+There is no need for putting zeros in static initializer.  Commit
+message expanded.
+
+>   sequencer: use memoized sequencer directory path
+>   sequencer: avoid unnecessary indirection
+>   sequencer: future-proof remove_sequencer_state()
+Leftover unrelated chunk removed.
+
+>   sequencer: allow the sequencer to take custody of malloc()ed data
+Is introducing new *_entrust() mechanism (which needs docs, at least
+as comments) worth it, instead of just strdup everything and free?
+If it is: naming of function parameter + example in commit message.
+
+>   sequencer: release memory that was allocated when reading options
+See above.
+
+>   sequencer: future-proof read_populate_todo()
+Possibly mention which functions were not future-proofed because
+of planned for the subsequent patch full rewrite.
+
+>   sequencer: remove overzealous assumption
+Overzealous assumptions, or a worthy check?  Perhaps just remove check
+for rebase -i in future commit, and keep test.  Perhaps remove test
+temporarily.
+
+>   sequencer: completely revamp the "todo" script parsing
+This removes check; it should return if it was worthy.  Some discussion
+about eager versus lazy parsing of commits, but IMHO it should be left
+for later, if considered worth it.
+
+>   sequencer: avoid completely different messages for different actions
+Fix l10n or drop (and not introduce lego translation).
+
+>   sequencer: get rid of the subcommand field
+>   sequencer: refactor the code to obtain a short commit name
+Explain reason behind this change in the commit mesage.
+
+>   sequencer: remember the onelines when parsing the todo file
+Lazy or eager again; "exec", "noop" and --preserve-merges.
+
+>   sequencer: prepare for rebase -i's commit functionality
+Add helper function, possibly extract helper function.  Rephrase block
+comment.
+
+"[PATCH] am: refactor read_author_script()" from Junio.
+
+>   sequencer: introduce a helper to read files written by scripts
+Perhaps add why not use open + strbuf_getline to commit message...
+
+>   sequencer: prepare for rebase -i's GPG settings
+Possibly fixes bug.  Use *_entrust() or strdup to not leak memory
+(and to not crash when freeing memory).
+
+>   sequencer: allow editing the commit message on a case-by-case basis
+Enhance the commit message.
+
+>   sequencer: support amending commits
+>   sequencer: support cleaning up commit messages
+>   sequencer: remember do_recursive_merge()'s return value
+>   sequencer: left-trim the lines read from the script
+>   sequencer: refactor write_message()
+Enhance the commit message.  Quote path in messages while at it.
+
+
+HTH
+
+> 
+>  builtin/commit.c                |   2 +-
+>  builtin/revert.c                |  42 ++-
+>  sequencer.c                     | 573 +++++++++++++++++++++++++++-------------
+>  sequencer.h                     |  27 +-
+>  t/t3510-cherry-pick-sequence.sh |  11 -
+>  5 files changed, 428 insertions(+), 227 deletions(-)
+> 
+> Based-On: libify-sequencer at https://github.com/dscho/git
+> Fetch-Base-Via: git fetch https://github.com/dscho/git libify-sequencer
+> Published-As: https://github.com/dscho/git/releases/tag/prepare-sequencer-v1
+> Fetch-It-Via: git fetch https://github.com/dscho/git prepare-sequencer-v1
+
+An unrelated question: Dscho, how are you generating above lines?
+
+-- 
+Jakub Narębski
+ 
+
