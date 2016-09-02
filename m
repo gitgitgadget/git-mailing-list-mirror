@@ -2,113 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 267EB20193
-	for <e@80x24.org>; Fri,  2 Sep 2016 19:17:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BDA701FBB0
+	for <e@80x24.org>; Fri,  2 Sep 2016 19:22:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755228AbcIBTOq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Sep 2016 15:14:46 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37198 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1755244AbcIBTO2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Sep 2016 15:14:28 -0400
-Received: (qmail 17646 invoked by uid 109); 2 Sep 2016 19:14:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 02 Sep 2016 19:14:27 +0000
-Received: (qmail 26946 invoked by uid 111); 2 Sep 2016 19:14:34 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 02 Sep 2016 15:14:34 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Sep 2016 15:14:25 -0400
-Date:   Fri, 2 Sep 2016 15:14:25 -0400
-From:   Jeff King <peff@peff.net>
-To:     Beau Martinez <beau@beaumartinez.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git add =?utf-8?Q?-p=E2=80=94splittin?= =?utf-8?Q?g?= hunks,
- limit is too large
-Message-ID: <20160902191425.ki7nfhlqgnihoqpw@sigill.intra.peff.net>
-References: <CAEtDOuV+0CKRSu9mJa27+yQKJ-QRyNmwecrZKaaCh0St+VagZg@mail.gmail.com>
+        id S932250AbcIBTW2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Sep 2016 15:22:28 -0400
+Received: from mail-vk0-f41.google.com ([209.85.213.41]:33146 "EHLO
+        mail-vk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932179AbcIBTW2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2016 15:22:28 -0400
+Received: by mail-vk0-f41.google.com with SMTP id f76so31748379vke.0
+        for <git@vger.kernel.org>; Fri, 02 Sep 2016 12:22:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=YeKra38Etu7R09X6+wPYGLTfV+x66hDcWqJvAvDJRLU=;
+        b=h2UxLjeQ8R+87z0PZfWofgFwjjXuTHGCWcFkTlXvXUx8bATHvdqdlNyd8rjq1q0WRZ
+         /d2L+5TDAv43mn+gIxag8YFORAHp9F61+d7Py6oVCvnOhasws7GbBIs4WXT9ib+lzh93
+         w+yvOk0irsGTq8ycgNwhYXHhay+meVVqO2ipccPgjNkCTk4JV3HFMIDATrG1SobQXsuR
+         pr7PKWitDImRHd+l7lCpKyjhOagIINCFJcZfOCnddfxdCkjCkc2dpq/GEtDqQUg0WT5f
+         pUUE+xkBUHy/Qal8HqcaMjFsHKyO7E71gxR0596rRyGxUo6ZyO+uMls2iW6IPMla6qPw
+         6G7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=YeKra38Etu7R09X6+wPYGLTfV+x66hDcWqJvAvDJRLU=;
+        b=Qvy6xnV8qqaY5GolLvC03IxnLBmXpPCqt6OzYYLGxmXn9PXo9m9sLZ+80cW8B6Lqw3
+         4hsgsjWmDMg+WWoHQPktlVRy1zPf++8p5/87P3l6mEws1H6B5t3eCcp7RThvrFc6MiFv
+         C56Qb6poiPmWt6TEPrIs6I2LXyInJodV78G+zbhsTyeQSakNQihQoTDYorONddEcD5HE
+         wq3kEmfcTY/jX+8N0Sg7CFWAk4JeuloMtAIGJQtAXXLdpoEDQeUIh9dQ6+t81w92wpee
+         efqwzY3BnKfytqFW+MEwzod0ptX6dzidr+Gq3yp9IaCurtk8VyIr8/KSUhBRL4bgfZJB
+         AxmA==
+X-Gm-Message-State: AE9vXwP4IML9az9H3DzWMeiJj8DrX4vqYgD1T7NqgKiqBL107VUea2VDQHXHVspzdAAn1RDSeYNbPl5bkHf+ww==
+X-Received: by 10.31.174.69 with SMTP id x66mr14890656vke.45.1472844146974;
+ Fri, 02 Sep 2016 12:22:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAEtDOuV+0CKRSu9mJa27+yQKJ-QRyNmwecrZKaaCh0St+VagZg@mail.gmail.com>
+Received: by 10.103.31.19 with HTTP; Fri, 2 Sep 2016 12:22:26 -0700 (PDT)
+From:   Dakota Hawkins <dakotahawkins@gmail.com>
+Date:   Fri, 2 Sep 2016 15:22:26 -0400
+Message-ID: <CAG0BQX=wvpkJ=PQWV-NbmhuPV8yzvd_KYKzJmsfWq9xStZ2bnQ@mail.gmail.com>
+Subject: If a branch moves a submodule, "merge --ff[-only]" succeeds while
+ "merge --no-ff" fails with conflicts
+To:     Git Mailing List <git@vger.kernel.org>, mwitte@ara.com
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 02, 2016 at 03:36:58PM +0100, Beau Martinez wrote:
+Below is a simple reproduction of the issue.
 
-> I'd like to inquire as to why `git add -p` can only split hunks so
-> much. The limit is too large; why can't you split until each hunk is
-> only a line? I often have to run `edit` and split them manually
-> myself.
+The _real_ problem is that this is how our pull request merges work,
+they're not allowed to do fast-forward merges. To work around this we
+are having to split this up into two pull requests/merges: One that
+copies the submodules to the new location and includes any fixes
+required to support the move, and a second that removes the old
+locations.
 
-There's some previous discussion in this thread:
+## Setup steps
+git clone https://github.com/dakotahawkins/submodule-move-merge-bug-main-repo.git
+cd submodule-move-merge-bug-main-repo
+    ## How it was initially constructed
+    # git submodule add ../submodule-move-merge-bug-submodule-repo.git
+./submodule-location-1
+    # git commit -m "Added submodule in its initial location"
+    # git push
+    # git checkout -b move-submodule
+    # git mv ./submodule-location-1 ./submodule-location-2
+    # git commit -m "Moved submodule"
+    # git push --set-upstream origin move-submodule
+git branch move-submodule origin/move-submodule
 
-  http://public-inbox.org/git/200805232221.45406.trast@student.ethz.ch/t/#u
+## Test fast-forward merge, this will work
+git checkout -b merge-ff-test master # warning: unable to rmdir
+submodule-location-2: Directory not empty
+rm -rf ./submodule-location-2
+git merge --ff-only move-submodule
 
-and further back, this message:
-
-  http://public-inbox.org/git/7vbq8v7cdx.fsf@gitster.siamese.dyndns.org/
-
-I think one problem is that in a given contiguous hunk, not all of the
-lines are independent, because edits are represented as a pair of -/+
-lines. E.g., if the preimage is:
-
-  one
-  two
-  four
-
-and the postimage is:
-
-  one
-  two modified
-  three
-  four
-
-your diff will be:
-
-   one
-  -two
-  +two modified
-  +three
-   four
-
-The ideal split is two groups:
-
-  -two
-  +two modified
-
-  +three
-
-So you could possibly achieve that by specifying the exact line to split
-at. But let's imagine "two" was the missing item, and we modified
-"three". Then your diff is:
-
-   one
-  -three
-  +two
-  +three modified
-   four
-
-Now the related lines are non-adjacent! I don't think there's a general
-solution, and of course it can get arbitrarily complicated, with many
-interleaved pairs. I don't think we can rely on figuring out which lines
-form a pair. In this toy example it's obvious, but in real diffs the
-lines might not bear any resemblance.
-
-Splitting to single lines means you need to remember to add the matched
-pairs, which might be arbitrarily far apart.  That's not really any
-different than dumping the hunk in your editor, but I find there that
-it's easy to rearrange and group things as appropriate.
-
-> I'd like to contribute a patch to change it, although my C is rusty.
-> Are there resources that will help me to do this?
-
-The good news (or maybe the bad) is that "add -p" is implemented
-entirely in Perl. :) It's in git-add--interactive.perl.
-
--Peff
+## Test no-fast-forward merge, this will fail with conflicts:
+git checkout -b merge-no-ff-test master
+git merge --no-ff move-submodule
+    # Auto-merging submodule-location-2
+    # Adding as submodule-location-2~move-submodule instead
+    # Automatic merge failed; fix conflicts and then commit the result.
+git status
+    # On branch merge-no-ff-test
+    # You have unmerged paths.
+    #   (fix conflicts and run "git commit")
+    #   (use "git merge --abort" to abort the merge)
+    #
+    # Changes to be committed:
+    #
+    #         modified:   .gitmodules
+    #         deleted:    submodule-location-1
+    #
+    # Unmerged paths:
+    #   (use "git add <file>..." to mark resolution)
+    #
+    #         added by us:     submodule-location-2
+    #
+    # fatal: Not a git repository: 'submodule-location-1/.git'
+    # Submodule changes to be committed:
+    #
+    # * submodule-location-1 07fec24...0000000:
