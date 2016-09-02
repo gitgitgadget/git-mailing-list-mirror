@@ -2,111 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BDA701FBB0
-	for <e@80x24.org>; Fri,  2 Sep 2016 19:22:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA7081FBB0
+	for <e@80x24.org>; Fri,  2 Sep 2016 19:24:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932250AbcIBTW2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Sep 2016 15:22:28 -0400
-Received: from mail-vk0-f41.google.com ([209.85.213.41]:33146 "EHLO
-        mail-vk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932179AbcIBTW2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Sep 2016 15:22:28 -0400
-Received: by mail-vk0-f41.google.com with SMTP id f76so31748379vke.0
-        for <git@vger.kernel.org>; Fri, 02 Sep 2016 12:22:27 -0700 (PDT)
+        id S1753307AbcIBTYb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Sep 2016 15:24:31 -0400
+Received: from mail-ua0-f177.google.com ([209.85.217.177]:33005 "EHLO
+        mail-ua0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752142AbcIBTYb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2016 15:24:31 -0400
+Received: by mail-ua0-f177.google.com with SMTP id l94so186374968ual.0
+        for <git@vger.kernel.org>; Fri, 02 Sep 2016 12:24:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=YeKra38Etu7R09X6+wPYGLTfV+x66hDcWqJvAvDJRLU=;
-        b=h2UxLjeQ8R+87z0PZfWofgFwjjXuTHGCWcFkTlXvXUx8bATHvdqdlNyd8rjq1q0WRZ
-         /d2L+5TDAv43mn+gIxag8YFORAHp9F61+d7Py6oVCvnOhasws7GbBIs4WXT9ib+lzh93
-         w+yvOk0irsGTq8ycgNwhYXHhay+meVVqO2ipccPgjNkCTk4JV3HFMIDATrG1SobQXsuR
-         pr7PKWitDImRHd+l7lCpKyjhOagIINCFJcZfOCnddfxdCkjCkc2dpq/GEtDqQUg0WT5f
-         pUUE+xkBUHy/Qal8HqcaMjFsHKyO7E71gxR0596rRyGxUo6ZyO+uMls2iW6IPMla6qPw
-         6G7Q==
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=zr6EXg/1oMNOvbMmeJkRaF3j11EjfAZs2A4wwr5Q108=;
+        b=NzInlU/Jc263mB8iXYsEfiSjKo5EZ55Q7IibwBb3l8zkyVve5OBDlM3ARbbuFWjoTb
+         5XZdB8XkOQ8ah34ZdYPnlLbLuC2ofpn2xINk6VVsBjon+sYkQFMifjWHrsVwykQTn7SO
+         s95rz+oCmtTc4BbxOuQiuWdQlo9VmXI/wAuz3rktMLrAw+YZrj3uyF/Wf0C+ovcREase
+         5MRHPAZ3oooRm1MWDd6ekYtgCo8mDWEM3O+nY0yL0QnWD6UmSmI9b7wMS6Z+ArC2OSmk
+         +CM6dop2tCPbECnQdYhUC0X+tULNME7kKqqmlxndAtA2ohEumaasYXzVD1VxkMg4aeXb
+         UZKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=YeKra38Etu7R09X6+wPYGLTfV+x66hDcWqJvAvDJRLU=;
-        b=Qvy6xnV8qqaY5GolLvC03IxnLBmXpPCqt6OzYYLGxmXn9PXo9m9sLZ+80cW8B6Lqw3
-         4hsgsjWmDMg+WWoHQPktlVRy1zPf++8p5/87P3l6mEws1H6B5t3eCcp7RThvrFc6MiFv
-         C56Qb6poiPmWt6TEPrIs6I2LXyInJodV78G+zbhsTyeQSakNQihQoTDYorONddEcD5HE
-         wq3kEmfcTY/jX+8N0Sg7CFWAk4JeuloMtAIGJQtAXXLdpoEDQeUIh9dQ6+t81w92wpee
-         efqwzY3BnKfytqFW+MEwzod0ptX6dzidr+Gq3yp9IaCurtk8VyIr8/KSUhBRL4bgfZJB
-         AxmA==
-X-Gm-Message-State: AE9vXwP4IML9az9H3DzWMeiJj8DrX4vqYgD1T7NqgKiqBL107VUea2VDQHXHVspzdAAn1RDSeYNbPl5bkHf+ww==
-X-Received: by 10.31.174.69 with SMTP id x66mr14890656vke.45.1472844146974;
- Fri, 02 Sep 2016 12:22:26 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=zr6EXg/1oMNOvbMmeJkRaF3j11EjfAZs2A4wwr5Q108=;
+        b=k/uKsVA0+zjXXlWfKhDOmtVYa6DkbZMN+jajzmhJ0g8pVVFYra4Ion9hfJyQm3LvAf
+         Ltv+ce9V6zRqff70M0OugXtY+I9/dXhV8oBy9HS0dHQkApKZUq5D1zi6Klvb8yWd97jQ
+         e5iLmB9fwV978Gb1vA4tZ8qLCi4G19aD7Oe7Hr6B+OccgZ4OMO6utiWk9GeP4ne4tdeZ
+         jMcwrFflPuNZ8kX+LLs4QFVbcc+g33ZTzuyFCdYTQVR7q6AZF2TH/kdUFiq0CSisIPtX
+         IkJdLf+fEGUEgJRPqt3f7JjWIiE4G1Qg7YcER15CqT5yqUVefzI2CVU70v7b0+kyFd8S
+         HlfA==
+X-Gm-Message-State: AE9vXwMROQJBEbypXCkn5pN+BSp+qppb67CW957+aZT+aOpM6v2EN8wRJmQOpdvqBE9gTFRwAw+Ft2BgDRj+vg==
+X-Received: by 10.159.55.199 with SMTP id q65mr14903435uaq.12.1472844269098;
+ Fri, 02 Sep 2016 12:24:29 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.103.31.19 with HTTP; Fri, 2 Sep 2016 12:22:26 -0700 (PDT)
-From:   Dakota Hawkins <dakotahawkins@gmail.com>
-Date:   Fri, 2 Sep 2016 15:22:26 -0400
-Message-ID: <CAG0BQX=wvpkJ=PQWV-NbmhuPV8yzvd_KYKzJmsfWq9xStZ2bnQ@mail.gmail.com>
-Subject: If a branch moves a submodule, "merge --ff[-only]" succeeds while
- "merge --no-ff" fails with conflicts
-To:     Git Mailing List <git@vger.kernel.org>, mwitte@ara.com
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.176.4.230 with HTTP; Fri, 2 Sep 2016 12:24:28 -0700 (PDT)
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Fri, 2 Sep 2016 14:24:28 -0500
+X-Google-Sender-Auth: -pcHJCA1JHC8tXvANw3YswGRLlw
+Message-ID: <CAHd499AQFDRps6POF2xuUjbYv5DJYxt3DA8aFFArXF=qQEz_CA@mail.gmail.com>
+Subject: Fixup of a fixup not working right
+To:     Git <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Below is a simple reproduction of the issue.
+Suppose I have a branch with 4 commits, in the following order (as you
+might see during interactive rebase):
 
-The _real_ problem is that this is how our pull request merges work,
-they're not allowed to do fast-forward merges. To work around this we
-are having to split this up into two pull requests/merges: One that
-copies the submodules to the new location and includes any fixes
-required to support the move, and a second that removes the old
-locations.
+pick 123 Original Change
+pick 789 fixup! Original Change
+pick 456 Some Other Thing
+pick abc fixup! fixup! Original Change
 
-## Setup steps
-git clone https://github.com/dakotahawkins/submodule-move-merge-bug-main-repo.git
-cd submodule-move-merge-bug-main-repo
-    ## How it was initially constructed
-    # git submodule add ../submodule-move-merge-bug-submodule-repo.git
-./submodule-location-1
-    # git commit -m "Added submodule in its initial location"
-    # git push
-    # git checkout -b move-submodule
-    # git mv ./submodule-location-1 ./submodule-location-2
-    # git commit -m "Moved submodule"
-    # git push --set-upstream origin move-submodule
-git branch move-submodule origin/move-submodule
+However, let's say the first commit is already pushed upstream on a
+topic branch. Since there are multiple developers on this topic
+branch, I do not want to rebase right now. Instead, I want to document
+future fixups via fixup commits and then when we're ready to merge, do
+a final rebase prior to the merge to master to clean things up after
+we're all done collaborating.
 
-## Test fast-forward merge, this will work
-git checkout -b merge-ff-test master # warning: unable to rmdir
-submodule-location-2: Directory not empty
-rm -rf ./submodule-location-2
-git merge --ff-only move-submodule
+For this specific situation, since the first commit is already pushed,
+I want to perform a fixup on the 1st fixup commit. When I perform an
+interactive rebase against upstream topic, I get the following:
 
-## Test no-fast-forward merge, this will fail with conflicts:
-git checkout -b merge-no-ff-test master
-git merge --no-ff move-submodule
-    # Auto-merging submodule-location-2
-    # Adding as submodule-location-2~move-submodule instead
-    # Automatic merge failed; fix conflicts and then commit the result.
-git status
-    # On branch merge-no-ff-test
-    # You have unmerged paths.
-    #   (fix conflicts and run "git commit")
-    #   (use "git merge --abort" to abort the merge)
-    #
-    # Changes to be committed:
-    #
-    #         modified:   .gitmodules
-    #         deleted:    submodule-location-1
-    #
-    # Unmerged paths:
-    #   (use "git add <file>..." to mark resolution)
-    #
-    #         added by us:     submodule-location-2
-    #
-    # fatal: Not a git repository: 'submodule-location-1/.git'
-    # Submodule changes to be committed:
-    #
-    # * submodule-location-1 07fec24...0000000:
+pick 789 fixup! Original Change
+pick 456 Some Other Thing
+pick abc fixup! fixup! Original Change
+
+The tip commit (abc in this case) is not marked as a fixup. What I
+expect to see is:
+
+pick 789 fixup! Original Change
+fixup abc fixup! fixup! Original Change
+pick 456 Some Other Thing
+
+Is this by design, or a defect? I assumed that Git would only look at
+the first occurrence of "fixup!" and treat everything else after as
+the commit description to match. But it seems in this case that it
+stops at the last occurrence of "fixup!", which would explain why it
+isn't matching in the interactive rebase. I haven't looked at the
+code, though.
+
+Thoughts? Also I'm perfectly willing to accept feedback involving me
+just using the feature wrong or as not intended. Thanks in advance.
