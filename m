@@ -2,97 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 011691FBB0
-	for <e@80x24.org>; Fri,  2 Sep 2016 12:08:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4317A1FBB0
+	for <e@80x24.org>; Fri,  2 Sep 2016 13:52:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752737AbcIBMIW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Sep 2016 08:08:22 -0400
-Received: from mout.gmx.net ([212.227.15.19]:63710 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752248AbcIBMIV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Sep 2016 08:08:21 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0LngRb-1bAJjb1tqp-00hykC; Fri, 02 Sep 2016 14:08:08
- +0200
-Date:   Fri, 2 Sep 2016 14:08:06 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Jeff King <peff@peff.net>, Git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] t/Makefile: add a rule to re-run previously-failed
- tests
-In-Reply-To: <CACBZZX56fjJZydnBrWUYtU6V3xyQyaLL4MYzVVF0yD4dRdducw@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1609021406340.129229@virtualbox>
-References: <b2d016e44fa04e8a318967c43762d6933faf7956.1467183740.git.johannes.schindelin@gmx.de> <0dfa96b17edfe84ba19c7e57fe0b017c77943e0c.1472478285.git.johannes.schindelin@gmx.de> <CACBZZX6iEmbb68tzRKNAryp5qmt=iU9FMuOe2ONV=2ojcazoEg@mail.gmail.com>
- <20160830205151.k6ufhfzl6gh4uuog@sigill.intra.peff.net> <CACBZZX4NyjkK0Nf1JVGFRhc0xnLYg2YX6ctO5OxK3Pi60r5KaA@mail.gmail.com> <alpine.DEB.2.20.1608311227150.129229@virtualbox> <CACBZZX6exynt_9_wVtEN19HQt_rPJdo5Ck3jujdQ-hLdMAGdmg@mail.gmail.com>
- <alpine.DEB.2.20.1608311702440.129229@virtualbox> <CACBZZX56fjJZydnBrWUYtU6V3xyQyaLL4MYzVVF0yD4dRdducw@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1752906AbcIBNwC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Sep 2016 09:52:02 -0400
+Received: from mail-qt0-f172.google.com ([209.85.216.172]:33338 "EHLO
+        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751711AbcIBNwB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2016 09:52:01 -0400
+Received: by mail-qt0-f172.google.com with SMTP id 11so46131676qtc.0
+        for <git@vger.kernel.org>; Fri, 02 Sep 2016 06:52:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=7lPSoczNddnPy0GfBQmx8Rt/7t2JEUtbu2C9iMf5Qw0=;
+        b=WFux3HtunTQzyGeD6QFGKVwgKtKdTf1+47Swd4shfCIfrKAEnpoFdW1zAF/1S7C0Fr
+         vjayze0pXMA+xZHZktE0LV+98WS0158qsIwFvIsB/ZHpxVRimSUCJrM4/rat4+8yKKHF
+         aT9dTBqRrRr8Zil+LD7HCt7JtYjyeoJtlLSI3x2EcZHxXI3f8+Cx/2GAr/3IpdM+SOlU
+         kMSWjz6MRlq6Us99LjQhXyobBm5/30Zdo4KS9PYrjwNhVdGwXsV6IZFbsHq1AMeK/a5V
+         FlldY3KaovJ3rnTaYOCaOCDAcTSfaUL9Nqgewwnty2qQBfhxf2+LJMYmPOUSTCnRl8y0
+         huTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=7lPSoczNddnPy0GfBQmx8Rt/7t2JEUtbu2C9iMf5Qw0=;
+        b=TBdZG3pRAXctwRK8mJmL9ifBrfrW4Z04COPsRgdq3lb6VSkKbk0YeIjJRMx3sk8wrd
+         2s5sQ1peDfXC5KQ7lAENqhoC850qyt0u67aaRFIGAO3iPO/IYsHcner5bMpKmlsTs0Hw
+         Op9AlQYovw1ei0cmSrOWHM2PCkldOG92eD5FLY1XanG9ybFKBKYIGcvaJASdPA8mmI2K
+         1hIbr/lLQwuQfNCcTrfPoMR0ZGble5NQo3SLWD44LFidpeO5KyCLu2RuMoCZemd3RQAG
+         V1dvFbTl3HKeTRqihrCgZvGpmF/JXs9tPCsHF/tAC0cFOwOGvWP7C1Fl3xK0MzcoJ+A6
+         ijHg==
+X-Gm-Message-State: AE9vXwOAq5Z2EffeTlkiZoK4d3B0o8S1Jl3Ncjlry8UPNWiO2lNGR35N7s7tGWo77+4rXVw49SVPxU69fiNLLg==
+X-Received: by 10.200.48.56 with SMTP id f53mr3318207qte.99.1472824320475;
+ Fri, 02 Sep 2016 06:52:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1607746542-1472818088=:129229"
-X-Provags-ID: V03:K0:kLTUhWlykKXWgz8diceKDuOVG5n8tltsYMj91H2rTKNLcC0sjXv
- 3+bReCxj6/uefoT3Hzgta2cPjaHH40A06OxT/fBflqP9LZUWeZHUdh9txz4tfNIvbDLOupl
- zNM0gsizZKuwkxl+nGX0zST3CynRV+lCJVIY0xCoXmN5ZM6Oh/OFc9pyfK13jTulsHUauLG
- nAoNO4Z9JYZd3OvC6bZ6A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:7RsrhGFKEmY=:73iiPHJP4YoiML8Cq1Wdhm
- tx4j6kPPjWWajy41UT0LfJwW6GUNStZxBd40rm2jEPkN+H7+Lj83iXtbo03zvPg53PHCO8z3G
- MbFmo8wJDzzm973yTzmo9N47WMJ2v3SU9BvtJ2kes3GwjvLGunV39+sN9XY2bvtbQIdqmghQD
- G0U6Ndsd6ItQLhPV1HHj3/fO/+EuwThIi+UIOOSdAdXY14CinIquuk847PPBcVhTWe+rlKLZ1
- 5cH5VNCcgtIciuW14K/TqNWCV1DzxDoxAxzjcdPGGcVeaS6h3uQPVLVfkjzVJ6w0YPzKBE2zn
- n/L22+1K3FfKhQsTKjT66Zin+N6G3f0meoW6f1FWKOz2OsiOiO5XNct+4xrXLfS8OUR5EPSHJ
- G3XpHHVGZTsNWBvWiiP99lJSkKBbKHbMhop66q3Vf3Pn44xsBSZWFU02PJuixSh1YpJ2gWXCR
- eK5q3Lqmqp7FMmv7UAqVZImQI9e/giEMeX4HCFbN6zLdf6pJPbAf97VdICtjvsfTJoL7UUULU
- CCD8rEnXddIiFoPW/FgJZm84BKvtyBfuGly7NsIGuchZjjtmpopvkcUMQ6QPoH9o2sDM3HMQD
- 2CYHP7P3uKA8bD+tYxuxmyNUtu3wGEqxlBk+Wqf8AEcruOmOJwN/Z6JcISr0gU4+KZc70pdW+
- rI+gdOSwL+9dH0Rd61yCcfTmHOEoSdTDuwOdgxDq4tzjKFC7M8hO3fjm9xPYojQpYrxL3StzJ
- eRuhQJlhSklHNNG4/7ojyk0s3+ngxqv0zhPwaddIHoRruT83Pb7veoybEBMWwFwC98dOwJLGr
- blJUHk3
+Received: by 10.55.106.66 with HTTP; Fri, 2 Sep 2016 06:51:59 -0700 (PDT)
+In-Reply-To: <xmqqr393t4k5.fsf@gitster.mtv.corp.google.com>
+References: <CANYiYbGLzg6+pK85gdp3bH7qyrA3BaX1PmjbnbK8Q+23HWuotw@mail.gmail.com>
+ <b656bb11-680d-b20b-7aeb-99dc4afcb4b1@gmail.com> <xmqqr393t4k5.fsf@gitster.mtv.corp.google.com>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Fri, 2 Sep 2016 21:51:59 +0800
+Message-ID: <CANYiYbGu=Nqa+1TZ6d8EuJoWcc9h0cZoFkw3JFQ810C8OXb2zw@mail.gmail.com>
+Subject: Re: [GIT PULL] l10n updates for 2.10.0 round 2
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323329-1607746542-1472818088=:129229
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Another update comes, please pull.
 
-Hi =C3=86var,
+The following changes since commit 5b18e70009487bb156cac18546d6f91105338f4c=
+:
 
-On Fri, 2 Sep 2016, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+  A few more fixes before the final 2.10 (2016-08-31 10:21:05 -0700)
 
-> On Wed, Aug 31, 2016 at 5:05 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
+are available in the git repository at:
+
+  git://github.com/git-l10n/git-po tags/l10n-2.10.0-rnd2.2
+
+for you to fetch changes up to e8e349249c86550d3505c4abfac28caf3d13df46:
+
+  Merge branch 'master' of https://github.com/vnwildman/git
+(2016-09-02 21:29:48 +0800)
+
+----------------------------------------------------------------
+l10n-2.10.0-rnd2.2
+
+----------------------------------------------------------------
+Jiang Xin (1):
+      Merge branch 'master' of https://github.com/vnwildman/git
+
+Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n (1):
+      l10n: Updated Vietnamese translation for v2.10.0-rc2 (2757t)
+
+ po/vi.po | 691 +++++++++++++++++++++++++++++------------------------------=
+----
+ 1 file changed, 317 insertions(+), 374 deletions(-)
+
+2016-09-02 10:32 GMT+08:00 Junio C Hamano <gitster@pobox.com>:
+> Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n <vnwildman@gmail.com> writes:
 >
-> > The biggest problem with Strawberry Perl is that it is virtually
-> > impossible to build the Subversion-Perl bindings using the Git for
-> > Windows SDK when using Strawberry Perl.
-> >
-> > Which pretty much precludes it from being used in Git for Windows.
-> >
-> > And then there are the path issues... Git's Perl scripts are pretty
-> > certain that they live in a POSIX-y environment. Which MSYS2 Perl
-> > provides. Strawberry Perl not.
->=20
-> This might be me missing the point, and I'm really just trying to be
-> helpful here and make "prove" work for you because it's awesome, but
-> as far as just you running this for development purposes does any of
-> this SVN stuff matter? I.e. you can build Git itself not with
-> Strawberry, but just use Strawberry to get a working copy of "prove".
-
-Yes, the SVN stuff matters, because of the many t9*svn* tests (which, BTW
-take a substantial time to run). So if I run the test suite, I better do
-it with a perl.exe in the PATH that can run the SVN tests. Otherwise I
-might just as well not bother with running the entire test suite...
-
-Ciao,
-Dscho
---8323329-1607746542-1472818088=:129229--
+>> On 31/08/2016 21:14, Jiang Xin wrote:
+>>> Hi Junio,
+>>>
+>>> Would you please pull the following git l10n updates.
+>> Please wait! Jiang Xin probably missing pull my one commit[1].
+>>
+>> [1]
+>> <https://github.com/vnwildman/git/commit/800d88e2b3dde41ebf34e2e00955bba=
+892419555>
+>
+> Jiang, I do not mind another update from you before the final.
+>
+> Thanks.
