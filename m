@@ -2,98 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,URI_HEX shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E3361F6BF
-	for <e@80x24.org>; Thu,  1 Sep 2016 23:37:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81B061F6BF
+	for <e@80x24.org>; Fri,  2 Sep 2016 00:55:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752805AbcIAXhL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Sep 2016 19:37:11 -0400
-Received: from mail-it0-f48.google.com ([209.85.214.48]:37773 "EHLO
-        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750929AbcIAXhK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2016 19:37:10 -0400
-Received: by mail-it0-f48.google.com with SMTP id e124so9459613ith.0
-        for <git@vger.kernel.org>; Thu, 01 Sep 2016 16:37:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=c3J3LDI3YP14nWiiKA4Xa8Hn0e3IJySemA6GtzhFkS0=;
-        b=WLWrw6mN/mpZiELLAJyhcRUsUYB5A2OLaACpHaIxD/nZ0VXHpRDB7S3gf7ooq/Dxj4
-         oASmPJZ2anLj2OCup0G28FMoWVVyhJ5UE0K8iPRKDo22E531BQRkZmbRU6+p/VL2Nx1k
-         BVDMknbzYE2uy0KzgRw4juTeX4+DMJUcfd16vdwZjMZf+JO6okUHIyba0lWm7DxMb3cH
-         UloCfcmh3YavrmO2anaA2UmbRFjubEWbo7oqN7RN/c5bPXw6+V0NtmmLnO8fLsjB9Iqo
-         O5IIrMWvtvxLEzqOOOY6o6MEZBHS7HnVctbpCmmgvvX+S7bm5fHT3VfldOvKfLZhRMFI
-         wgjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=c3J3LDI3YP14nWiiKA4Xa8Hn0e3IJySemA6GtzhFkS0=;
-        b=m4rtDmt2jGa9xfLVlJ208KGSrz9b5V3L/+rVDfswxzvxhDquDvs7BmKIpOElphD05K
-         ZI6JLcziOkQSXgstkboCTQr2zutj+TgeNzD/QpoiMib+vOtDINIS/63/JRbkS4RhWZpR
-         qhTgJNHlhfadXAKmrQULMpd4eVQms0/C6ebjwoIdZdTbfuem7K1RcWpbmc2LJp8Yx1Gl
-         vKaqX+bap26uOF6NwU03Q3/yxT4Ft5AgQWJwNSBfGYYI4+FUKMlKYTkR6dRerx1cDfNk
-         K5m8Z95fDlelDIPLFdZ+zLzdrNNVAPM/WRj5Dv1vpqycWrJ2EYXz8I3yFNLvCs0R7AjF
-         FSYQ==
-X-Gm-Message-State: AE9vXwMkrD2fXElJii4g/eEHXfasx5AFDV/LX6FG/vG+yidlvu6Dr/ifpcgMA3phO4cSbroOjb7uEqeMtUY0HNfM
-X-Received: by 10.36.189.68 with SMTP id x65mr428687ite.97.1472773029301; Thu,
- 01 Sep 2016 16:37:09 -0700 (PDT)
+        id S1751085AbcIBAzw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Sep 2016 20:55:52 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36916 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750980AbcIBAzv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2016 20:55:51 -0400
+Received: (qmail 12109 invoked by uid 109); 2 Sep 2016 00:55:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 02 Sep 2016 00:55:50 +0000
+Received: (qmail 21063 invoked by uid 111); 2 Sep 2016 00:55:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Sep 2016 20:55:56 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Sep 2016 20:55:45 -0400
+Date:   Thu, 1 Sep 2016 20:55:45 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Should "git symbolic-ref -d HEAD" be forbidden?
+Message-ID: <20160902005545.rbfxxdcv7nekzqku@sigill.intra.peff.net>
+References: <xmqqpoonuy4n.fsf@gitster.mtv.corp.google.com>
+ <20160901211907.iivokwu3yjuxz3qf@sigill.intra.peff.net>
+ <xmqq8tvbuu9r.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Thu, 1 Sep 2016 16:37:08 -0700 (PDT)
-In-Reply-To: <1472753809733-7657450.post@n2.nabble.com>
-References: <1472753809733-7657450.post@n2.nabble.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 1 Sep 2016 16:37:08 -0700
-Message-ID: <CAGZ79kZdk0rkmryTQzJgXvX8Jxm2=iYfB1ttPq0qRHbPgS4UsQ@mail.gmail.com>
-Subject: Re: bitmap creation failed
-To:     gjarms <gjarms@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq8tvbuu9r.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 1, 2016 at 11:16 AM, gjarms <gjarms@gmail.com> wrote:
-> Hi Git Experts,
->
-> We have been exploring various ways to improve git cloning time, one among
-> them is using bitmap which is suppose to save time "counting objects".  but
-> i have problem creating bitmap since the repository contains 100's of pack
-> files. the bitmap file is not created when i use "git gc".
->
-> I have the following entries in my .gitconfig.
->
-> [pack]
->         packSizeLimit = 10m
->         writebitmaps = on
->         writeBitmapHashCache = on
->
-> If i just dont use "packSizeLimit = 10m", then bitmap is created just by
-> running git gc
->
-> Can you please make me understand ?, What i understood is that the bitmap is
-> created when there is a single pack file, but if i split it into multiple
-> pack file, the bitmap generation fails with the warning
-> "warning: disabling bitmap writing, as some objects are not being packed".
+On Thu, Sep 01, 2016 at 03:31:28PM -0700, Junio C Hamano wrote:
 
-So I guess your single pack is larger than 10m, so it tries to create
-multiple packs,
-and that is not supported as bitmaps only operate on one pack.
+> -- >8 --
+> Subject: symbolic-ref -d: do not allow removal of HEAD
+> 
+> If you delete the symbolic-ref HEAD from a repository, Git no longer
+> considers it valid, and even "git symbolic-ref HEAD refs/heads/master"
+> would not be able to recover from that state.
+> 
+> In the spirit similar to afe5d3d5 ("symbolic ref: refuse non-ref
+> targets in HEAD", 2009-01-29), forbid removal of HEAD.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
 
-Stefan
+Makes sense. You might want to change "it" in "no longer considers it
+valid" to "the repository". At first I thought "it" referred to the
+symref. Which obviously shouldn't be valid after being deleted. :)
 
->
-> Regards,
-> Arumuga
->
->
->
-> --
-> View this message in context: http://git.661346.n2.nabble.com/bitmap-creation-failed-tp7657450.html
-> Sent from the git mailing list archive at Nabble.com.
+>  I decided against it for now for no good reason, other than I am a
+>  bit superstitious, but it may be a good idea to move these safety
+>  checks to delete_ref() and create_symref() in the longer term.
+
+Yeah, that somehow feels weird and too low-level to me. After all, we
+_do_ want to drop HEAD as a symref when we turn it into a detached HEAD.
+The point of this (and afe5d3d5) is to prevent people from shooting
+themselves in the foot. Internal Git code should know to avoid this
+foot-shooting itself.
+
+OTOH, I think "git update-ref --no-deref -d HEAD" is another user-facing
+hole-in-foot opportunity, and it would be blocked by putting this into
+delete_ref().
+
+> -test_expect_success 'symbolic-ref deletes HEAD' '
+> -	git symbolic-ref -d HEAD &&
+> +test_expect_success 'HEAD cannot be removed' '
+> +	test_must_fail git symbolic-ref -d HEAD
+> +'
+> +
+> +test_expect_success 'symbolic-ref can be deleted' '
+> +	git symbolic-ref NOTHEAD refs/heads/foo &&
+> +	git symbolic-ref -d NOTHEAD &&
+>  	test_path_is_file .git/refs/heads/foo &&
+> -	test_path_is_missing .git/HEAD
+> +	test_path_is_missing .git/NOTHEAD
+>  '
+>  reset_to_sane
+
+Do you want another "reset_to_sane" call after your new test? Otherwise
+if it fails the "symbolic-ref can be deleted" test will start operating
+on the parent repository.
+
+-Peff
