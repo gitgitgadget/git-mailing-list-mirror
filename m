@@ -2,112 +2,191 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5CAF520193
-	for <e@80x24.org>; Fri,  2 Sep 2016 08:36:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3758A1F859
+	for <e@80x24.org>; Fri,  2 Sep 2016 08:36:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752428AbcIBIgK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Sep 2016 04:36:10 -0400
-Received: from mout.gmx.net ([212.227.15.18]:64415 "EHLO mout.gmx.net"
+        id S1751225AbcIBIgV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Sep 2016 04:36:21 -0400
+Received: from mout.gmx.net ([212.227.17.21]:54867 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752289AbcIBIfn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Sep 2016 04:35:43 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0M5cpk-1arK6744KG-00xalL; Fri, 02 Sep 2016 10:34:36
+        id S1751756AbcIBIgT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2016 04:36:19 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MgbvP-1bTyN52gqd-00Nx9Z; Fri, 02 Sep 2016 10:34:32
  +0200
-Date:   Fri, 2 Sep 2016 10:34:34 +0200 (CEST)
+Date:   Fri, 2 Sep 2016 10:34:31 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] rebase -i: use the rebase--helper builtin
+Subject: [PATCH 1/2] Add a builtin helper for interactive rebases
 In-Reply-To: <cover.1472805251.git.johannes.schindelin@gmx.de>
-Message-ID: <5a174968fa6410acc2f7987f3cb526d8d1ce6082.1472805251.git.johannes.schindelin@gmx.de>
+Message-ID: <501540c2c1cba7ad0f22d00825a2fd4b71c0b417.1472805251.git.johannes.schindelin@gmx.de>
 References: <cover.1472805251.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:yVpbqDTrWvs3hMYhOvYGFDDxPXXoj8EUktBfxetY2npMyRBMpU6
- ahgdW9of4VIEwkTfLPHeNsl2oR8/K8X6aa3ejiL4pEbgfSQ+A/bWnWjRtb9NYBOQeLnWMmn
- Oe8TTeQ0nczhVF7jPdGO5XWR+XG5EoCgSiAvmWrn7K1Oad769XAsCKWkotG/IIFJm6fcyZG
- thiXkZKNQv7WolJhwKYNA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:txTrNfyL3Lo=:GVbG8Z8lcs8BPr2R/pPTDr
- AKMxYQ9bXvZu6K9Pbhoms3ZkFuw/ckb+mZm1mYjlB1VuevZoJgDzs35DwjzhwMJ7NlUZ93KVY
- /3LmEtFM/PQKqO0O24t7QRrqbpf2ONubGQ/SO5aP9x4sxY+wouFm/SZFolrhGJ05DiV5TRCgx
- uU/9RsJh5lX3o7fz7Ra5Gct2Rb1Dyp+v6acTYl5q4oZh4f6c/ya+NTBOiey/1xVNe2JjomAbu
- y0oUuxbjmSqBnjI//frEGIHAcxMuQsJYFmEt3n0v2mpwuowAHfhjXtZonz6EmRRmmDY6bzlCh
- ZI2CZbsGwTPB4RBmiDaxMijJMVU8HVqbWx9TtVbAl0dFt1K+9qB/7rX2JckY4L5pfMmuzE0+X
- 33FnVdQ8w0riJe+MHsrwK3SVQWsGgVD9L5CGNoBnMah2p3SqMGl6QuJmIPqxdeeicsgfZRgWo
- /rDV7Agjtq2EG1HRTxhcL//7fSvm9AMkXEPzLQpaFJ+vGMbQbqtKflKQKA0hpefUfPoW1K48i
- 7nqVQGeL7PYpJO7DdTZzp/4zIKN6yo5UwsMsPTN+UC+PCxmF6Gaik27tk1A+ml8qoefRQVWOh
- qjzqZxEHzQIYQkka5AXKtHr2qLpAlPrC3Ht6RepLA7oy5hnw9bbdZmSszUiYDJkwcqLnb3KD7
- LbYDUNN6qfMejMeyNnZcMbqFwBjFDJMy+2Of4VbBj2HQQo3UGcDNqkBirYMMi9VJf8nZ37Lwx
- YY42w53IXIinnLP4SNcaGgeGjDit6auBSX+Z4J6WkVg2bASVcrAC1Jze4GWSX+TLMVr+oDRiY
- lyN197z
+X-Provags-ID: V03:K0:2V1UDmU+9NXtBPdqmfTuMHQeLFLQk1ni/4lQYkwsvXkEJ7yCz0x
+ PKi8/LgxkODr+qw3xRtMY/CRwkZFmHRxg5UIOTimRqr59kM+ylFYSzddixUlXGbQJEFbyTR
+ DSeOU950Sq6Mdq7YEQPPH3ZIsQ9wtQeHLIScWZOiI+fe2gQYujo/Oj1BXFWx9koFXl+B8be
+ oU/zssyasnyoJSyTWyTKA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:DecPTRCZbV0=:dyW57BsJf3fOu7tudTN912
+ fnsQ00w2Nr6EK1MbWR9iBSPMKvC+u8EBjGTUFDFHRwJesZ8OvQMIJ5SK60Xm4gsoMbQkbOGxn
+ 6U7jaUP9TmOd68JYsrCNMs8F0HddOgtMN80NwlWsjQwpbCkIR3u8rJYGV9HLD/rpHrvJ1ynA4
+ ZlCzKBC84zWq79qYeRW7uPKtlg4yX63iB3XGzrmoWVVlDSYaRJ1K3PfJfhGjxCYUTLWgCsuYm
+ f6MeoGSZmWolM+ft0t77Wxac/LnA5L7YL2hoYgpb8NrS+PtIbAkxXJIZs7kbdNmOmYKtCp6OH
+ eJDXNu3I48JI+rc+BuuADr+pK333RyCwv+MMWQEgzmeSY8cRlfiwHTRSbri6FdWT5icMOBroX
+ qFGXgjwFbHQWRNtIB985M+sB/Qwb79ROqRl6bWxOw3kaymWmgP4mgTDtNjHKSd9RwshXTpna+
+ cHSoOzcZ7GH7xPozTiN0lJVuhDEDWaaHvSyxi80o6KO4xX476sL5tofQO9vn0vU4TvjMlm6g1
+ l9gCp4yJVRFUa0DB2Odery1HA5kgX2ycC5pBsNxmFm7skpUleUI3kDPWkVZ9D5SycRXfViaY1
+ ZCww+Kjo43R+5N7q0+MY2abAsGcFgWtBNGFA4QNtYMT9zs18/GrfSBZG9x96X508jGH0vR9qp
+ V3bGzCU1T2TnPwku+A9MDZpD93vIyQ5nRZ9N4V7R2E5Q2fylqQ1WAqWGs7b/N37rl+gH7tDK8
+ n7LNaX/Kh+dNi3YXS4YjsP3XLUDCFR87GfSHu+hxLKEgwKhgj+k3UHy/WP8BXUTmyLSGBXz5F
+ oNFk3kx
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Now that the sequencer learned to process a "normal" interactive rebase,
-we use it. The original shell script is still used for "non-normal"
-interactive rebases, i.e. when --root or --preserve-merges was passed.
+Git's interactive rebase is still implemented as a shell script, despite
+its complexity. This implies that it suffers from the portability point
+of view, from lack of expressibility, and of course also from
+performance. The latter issue is particularly serious on Windows, where
+we pay a hefty price for relying so much on POSIX.
 
-Please note that the --root option (via the $squash_onto variable) needs
-special handling only for the very first command, hence it is still okay
-to use the helper upon continue/skip.
+Unfortunately, being such a huge shell script also means that we missed
+the train when it would have been relatively easy to port it to C, and
+instead piled feature upon feature onto that poor script that originally
+never intended to be more than a slightly pimped cherry-pick in a loop.
 
-Also please note that the --no-ff setting is volatile, i.e. when the
-interactive rebase is interrupted at any stage, there is no record of
-it. Therefore, we have to pass it from the shell script to the
-rebase--helper.
+To open the road toward better performance (in addition to all the other
+benefits of C over shell scripts), let's just start *somewhere*.
+
+The approach taken here is to add a builtin helper that at first intends
+to take care of the parts of the interactive rebase that are most
+affected by the performance penalties mentioned above.
+
+In particular, after we spent all those efforts on preparing the sequencer
+to process rebase -i's git-rebase-todo scripts, we implement the `git
+rebase -i --continue` functionality as a new builtin, git-rebase--helper.
+
+Once that is in place, we can work gradually on tackling the rest of the
+technical debt.
+
+Note that the rebase--helper needs to learn about the transient
+--ff/--no-ff options of git-rebase, as the corresponding flag is not
+persisted to, and re-read from, the state directory.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- git-rebase--interactive.sh | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ .gitignore               |  1 +
+ Makefile                 |  1 +
+ builtin.h                |  1 +
+ builtin/rebase--helper.c | 40 ++++++++++++++++++++++++++++++++++++++++
+ git.c                    |  1 +
+ 5 files changed, 44 insertions(+)
+ create mode 100644 builtin/rebase--helper.c
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 7e558b0..022766b 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -1059,6 +1059,10 @@ git_rebase__interactive () {
- 
- case "$action" in
- continue)
-+	if test ! -d "$rewritten"
-+	then
-+		exec git rebase--helper ${force_rebase:+--no-ff} --continue
-+	fi
- 	# do we have anything to commit?
- 	if git diff-index --cached --quiet HEAD --
- 	then
-@@ -1118,6 +1122,10 @@ first and then run 'git rebase --continue' again.")"
- skip)
- 	git rerere clear
- 
-+	if test ! -d "$rewritten"
-+	then
-+		exec git rebase--helper ${force_rebase:+--no-ff} --continue
-+	fi
- 	do_rest
- 	return 0
- 	;;
-@@ -1307,6 +1315,11 @@ expand_todo_ids
- test -d "$rewritten" || test -n "$force_rebase" || skip_unnecessary_picks
- 
- checkout_onto
-+if test -z "$rebase_root" && test ! -d "$rewritten"
-+then
-+	require_clean_work_tree "rebase"
-+	exec git rebase--helper ${force_rebase:+--no-ff} --continue
-+fi
- do_rest
- 
- }
+diff --git a/.gitignore b/.gitignore
+index 05cb58a..a9b8c96 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -114,6 +114,7 @@
+ /git-read-tree
+ /git-rebase
+ /git-rebase--am
++/git-rebase--helper
+ /git-rebase--interactive
+ /git-rebase--merge
+ /git-receive-pack
+diff --git a/Makefile b/Makefile
+index d96ecb7..980e1dc 100644
+--- a/Makefile
++++ b/Makefile
+@@ -919,6 +919,7 @@ BUILTIN_OBJS += builtin/prune.o
+ BUILTIN_OBJS += builtin/pull.o
+ BUILTIN_OBJS += builtin/push.o
+ BUILTIN_OBJS += builtin/read-tree.o
++BUILTIN_OBJS += builtin/rebase--helper.o
+ BUILTIN_OBJS += builtin/receive-pack.o
+ BUILTIN_OBJS += builtin/reflog.o
+ BUILTIN_OBJS += builtin/remote.o
+diff --git a/builtin.h b/builtin.h
+index 6b95006..2e5de14 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -102,6 +102,7 @@ extern int cmd_prune_packed(int argc, const char **argv, const char *prefix);
+ extern int cmd_pull(int argc, const char **argv, const char *prefix);
+ extern int cmd_push(int argc, const char **argv, const char *prefix);
+ extern int cmd_read_tree(int argc, const char **argv, const char *prefix);
++extern int cmd_rebase__helper(int argc, const char **argv, const char *prefix);
+ extern int cmd_receive_pack(int argc, const char **argv, const char *prefix);
+ extern int cmd_reflog(int argc, const char **argv, const char *prefix);
+ extern int cmd_remote(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
+new file mode 100644
+index 0000000..ca1ebb2
+--- /dev/null
++++ b/builtin/rebase--helper.c
+@@ -0,0 +1,40 @@
++#include "builtin.h"
++#include "cache.h"
++#include "parse-options.h"
++#include "sequencer.h"
++
++static const char * const builtin_rebase_helper_usage[] = {
++	N_("git rebase--helper [<options>]"),
++	NULL
++};
++
++int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
++{
++	struct replay_opts opts = REPLAY_OPTS_INIT;
++	enum {
++		CONTINUE = 1, ABORT
++	} command = 0;
++	struct option options[] = {
++		OPT_BOOL(0, "ff", &opts.allow_ff, N_("allow fast-forward")),
++		OPT_CMDMODE(0, "continue", &command, N_("continue rebase"),
++				CONTINUE),
++		OPT_CMDMODE(0, "abort", &command, N_("abort rebase"),
++				ABORT),
++		OPT_END()
++	};
++
++	git_config(git_default_config, NULL);
++
++	opts.action = REPLAY_INTERACTIVE_REBASE;
++	opts.allow_ff = 1;
++	opts.allow_empty = 1;
++
++	argc = parse_options(argc, argv, NULL, options,
++			builtin_rebase_helper_usage, PARSE_OPT_KEEP_ARGV0);
++
++	if (command == CONTINUE && argc == 1)
++		return !!sequencer_continue(&opts);
++	if (command == ABORT && argc == 1)
++		return !!sequencer_remove_state(&opts);
++	usage_with_options(builtin_rebase_helper_usage, options);
++}
+diff --git a/git.c b/git.c
+index 0f1937f..26b4ad3 100644
+--- a/git.c
++++ b/git.c
+@@ -451,6 +451,7 @@ static struct cmd_struct commands[] = {
+ 	{ "pull", cmd_pull, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "push", cmd_push, RUN_SETUP },
+ 	{ "read-tree", cmd_read_tree, RUN_SETUP },
++	{ "rebase--helper", cmd_rebase__helper, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "receive-pack", cmd_receive_pack },
+ 	{ "reflog", cmd_reflog, RUN_SETUP },
+ 	{ "remote", cmd_remote, RUN_SETUP },
 -- 
 2.9.3.windows.3
+
+
