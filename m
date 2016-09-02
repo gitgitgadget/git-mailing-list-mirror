@@ -2,97 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 244DD1FBB0
-	for <e@80x24.org>; Fri,  2 Sep 2016 23:52:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 148021FBB0
+	for <e@80x24.org>; Fri,  2 Sep 2016 23:58:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752924AbcIBXwD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Sep 2016 19:52:03 -0400
-Received: from mail-pa0-f66.google.com ([209.85.220.66]:35422 "EHLO
-        mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752509AbcIBXwD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Sep 2016 19:52:03 -0400
-Received: by mail-pa0-f66.google.com with SMTP id cf3so6078758pad.2
-        for <git@vger.kernel.org>; Fri, 02 Sep 2016 16:51:49 -0700 (PDT)
+        id S1753123AbcIBX6R (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Sep 2016 19:58:17 -0400
+Received: from mail-it0-f42.google.com ([209.85.214.42]:35553 "EHLO
+        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752509AbcIBX6Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2016 19:58:16 -0400
+Received: by mail-it0-f42.google.com with SMTP id e124so65242982ith.0
+        for <git@vger.kernel.org>; Fri, 02 Sep 2016 16:58:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=SwMzLi+FIFv7Hk3rzxLyPWQCX4LhozFW5gItfOjQFgE=;
-        b=XqGNx/sUnAOFrIMMrPaNfUyyAhDMSPxDegz/hsOTqiJZsdjoLf5UYBsNHlsbzSK7Kw
-         v0Mm0CGZV+tZtH96KMkNYipZS+zTNPFb9356B4Jx2N7wbc2A+o5TTjD0n0h9biBphjLh
-         uPd3i5wAnWbAdzbWl+VUrc1DXDQGYyKctEx7PaDeA29760OagWqj63j2H5m8xEkhXPJa
-         cG/3O23hFpoopY333tAin1ekdNPtTqj8ujjx/mA/iher3TZ+0lciNMhUq+nK5mRCA4gB
-         e2JgeDyLClaI+pSNjDVmtOreNcAZshqFaGoPYI2TLfyz+rkc57K+42T/po3PIQITx2v4
-         8vYQ==
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=i/mr5xVGd7OLpM5xBz3/7MpguKUfzuOrMjdwoKbdG60=;
+        b=KUYp+gp4ERa6dzi9JjPxX6GZBcRojBRFKQFCQoMhQ0pjEaAPIcESE2jl4MNi4ul3ll
+         P1n8zW8j4wWBKG4/uzlVqNhWoJrh6KjBnkMGOvv4HZMmNynxqfminSXDwEIUfLQ9EvaF
+         nGmu8DylK6h/mj7L/u5vEKDWn2KgsaGVZw0lIDvyJvIox+Nn7aeLYv79J1RgW/z8oVZB
+         8G99nX4QtfPeupFlcYH1F2JphQXPBRrp68uv3j7tTGvtGN1yJii9Tys/v0ysuVRA1K3H
+         iDTFZCCzVDj2ha5jT2lwF64kjSPqaA/3rPJCqZpcxuXsOidXmh5uIh4CfJDGeTx/A+AU
+         T+RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=SwMzLi+FIFv7Hk3rzxLyPWQCX4LhozFW5gItfOjQFgE=;
-        b=KsiLdGDOcG+PqNPqJUdOUckB6ZcwD35FLyOcm5RsdpQ0SuAnJWdUYk1JXyYXal9Lhb
-         h+fCudCE+qt6gJW8sBXdnUySpwC9Id+uUO4N1nJSCYYAeIAcct7SzQSnP16ebUqJ+n9Q
-         PlrVN/oOuZQZJIcck7p/sm28fHQueE2fuJzuwUoaePDNvUDnM20wX2HQzt6oEQpW8tVU
-         Kd6qPJrALrTLOETvTcVFIW/bGmxLmEelDnfURuDbSdAEbM7xW9fdg3xpQUxRqoSxMdI8
-         kJNpg1855+oSoQBS2XzZH2TBV2SqcOQ0dm0E8l5VCSXnLyra5I8sV0kI4IolIHstIqyU
-         qrUQ==
-X-Gm-Message-State: AE9vXwPcN8rhTZ3uk6mqHoVtJrLlU6h3sBI11uGd9xjNI8rkEUTi5eGfH3z0bp+aUcCLeQ==
-X-Received: by 10.66.76.9 with SMTP id g9mr40305832paw.51.1472860308924;
-        Fri, 02 Sep 2016 16:51:48 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b10:34:ec2f:e9e8:7f87])
-        by smtp.gmail.com with ESMTPSA id d72sm17261904pfj.15.2016.09.02.16.51.47
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 02 Sep 2016 16:51:47 -0700 (PDT)
-Date:   Fri, 2 Sep 2016 16:51:45 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        spearce@spearce.org, sbeller@google.com
-Subject: Re: [PATCH v2 2/2] connect: advertized capability is not a ref
-Message-ID: <20160902235145.GI14758@google.com>
-References: <cover.1472836026.git.jonathantanmy@google.com>
- <cover.1472853827.git.jonathantanmy@google.com>
- <174c8ca6638f1cd3145a628925e65655b56af366.1472853827.git.jonathantanmy@google.com>
- <20160902233547.mzgluioc7hhabalw@sigill.intra.peff.net>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=i/mr5xVGd7OLpM5xBz3/7MpguKUfzuOrMjdwoKbdG60=;
+        b=G3HxvJ1ViQjqc4ImB4Le0pKqNklww681/pGr0gdBzUqVvyxnNwuOPJvgk7Uxd80vcd
+         zTJxMPBOlXDBnrIrm7Gam8xJZ4NkUL2cpMldscrn8gjY0X24lcv1i7DFAvXHoGcUUGwX
+         +b9i842OGhlbY2/DOeZsl9zi1RMLiuR5GUyONQrf4rIqvfdCa239ZF8p9gr/Vcqx864N
+         7vDTyCMBXqTiv4szBK/4PL9bBU73NCymPvAFjOv90xCaHngbFUJZbLUSy+YcDrCgSO72
+         dc8oohFgQBJ5PTUFQHXgus55UbCwCPdr/FHqUVyHPwNxd3AViZi4QwgZWY/AGQT/XHN5
+         PMuA==
+X-Gm-Message-State: AE9vXwOsEn4dBsjXCrAAC1YX+6Wr4MfQz1HEOsB+QOqM1t3K2F6mK0vAwj9nH/XjSJoEEAHYnC3x8T3CBt3RFLoF
+X-Received: by 10.107.134.87 with SMTP id i84mr2060431iod.165.1472860695357;
+ Fri, 02 Sep 2016 16:58:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160902233547.mzgluioc7hhabalw@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.107.128.66 with HTTP; Fri, 2 Sep 2016 16:58:14 -0700 (PDT)
+In-Reply-To: <CAMbP-nS_MM0QXgw183DLQPx1YU1BH8ytKCv86p-JSxzdb2jpQA@mail.gmail.com>
+References: <CAMbP-nS_MM0QXgw183DLQPx1YU1BH8ytKCv86p-JSxzdb2jpQA@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 2 Sep 2016 16:58:14 -0700
+Message-ID: <CAGZ79kYhV30AuXUKtp3oewMpnEk5vD=HvRUJTTFaEdsacu3tGw@mail.gmail.com>
+Subject: Re: Bug Report: Too many untracked files (gitignore)
+To:     Brian Levinstein <blevinstein@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
-> On Fri, Sep 02, 2016 at 03:06:12PM -0700, Jonathan Tan wrote:
+On Fri, Sep 2, 2016 at 4:06 PM, Brian Levinstein <blevinstein@gmail.com> wrote:
+> The relevant repo is here:
+> https://github.com/blevinstein/dotfiles
+>
+> My gitignore file looks like this:
+> https://github.com/blevinstein/dotfiles/blob/2400ca8642a7b454a2bfc54e8402343d008836aa/.gitignore
+> It basically ignores all files, except for specifically whitelisted
+> files. However, when I run "git status" (git version
+> 2.8.0.rc3.226.g39d4020), I see the following untracked files:
+>
+> #       .bash_history
+> #       .bash_logout
+> #       .cache/
+> #       [private]
+> #       [private]
+> #       .profile
+> #       .viminfo
+> #       dev/
 
->                                  But combining hideRefs with
-> allowTipSHA1InWant could trigger this case.
+For the specific files to be exclued, I'd recommend starting with a slash, e.g.
 
-Yes.
+    !/.bashrc
+    !/.vim/colors/*
 
-[...]
-> I'd be more interested in the pain of this transition if there was a
-> concrete use case for "hide literally all refs, but still allow
-> fetches". Is that a thing that people do?
+If the pattern does not contain a slash /, Git treats it as a shell
+glob pattern and checks
+for a match against the pathname relative to the location of the
+.gitignore file (relative
+to the toplevel of the work tree if not from a .gitignore file).
 
-Sure, it is a thing that people do.  For example I've seen replication
-systems that learn what SHA-1s to fetch out-of-band and then use this
-approach to avoid the overhead of a long ref advertisement.
+See the notes section of https://git-scm.com/docs/gitignore
 
-However, that is not my motivation.  My motivation is being able to
-extend the protocol in the future.  The capabilities line has been
-important for that historically.
+So I do not quite see the bug?
 
-Do you have any objection to the server gaining support for this
-guarded by a configuration option?  Then when the time comes to
-consider flipping the default we can use real-world statistics about
-what git client versions people use to make an informed decision.
-
-Thanks,
-Jonathan
+Stefan
