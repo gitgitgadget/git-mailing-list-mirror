@@ -7,81 +7,99 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D46220193
-	for <e@80x24.org>; Fri,  2 Sep 2016 16:23:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B5861FBB0
+	for <e@80x24.org>; Fri,  2 Sep 2016 16:23:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754273AbcIBQXO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Sep 2016 12:23:14 -0400
-Received: from mout.gmx.net ([212.227.17.22]:62313 "EHLO mout.gmx.net"
+        id S1754286AbcIBQXQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Sep 2016 12:23:16 -0400
+Received: from mout.gmx.net ([212.227.15.18]:63165 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754240AbcIBQXL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Sep 2016 12:23:11 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MYsEZ-1bbmU61uRH-00Vf6H; Fri, 02 Sep 2016 18:22:57
+        id S1754257AbcIBQXO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2016 12:23:14 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0MGAdz-1buPIh2mlb-00FDdd; Fri, 02 Sep 2016 18:23:08
  +0200
-Date:   Fri, 2 Sep 2016 18:22:56 +0200 (CEST)
+Date:   Fri, 2 Sep 2016 18:23:08 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/9] The final building block for a faster rebase -i
-Message-ID: <cover.1472833365.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 3/9] rebase -i: do not invent onelines when expanding/collapsing
+ SHA-1s
+In-Reply-To: <cover.1472833365.git.johannes.schindelin@gmx.de>
+Message-ID: <943801411097f3f68004423bc8a78725c8023dc2.1472833365.git.johannes.schindelin@gmx.de>
+References: <cover.1472833365.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:55TjWxdtC1/8KqW23tKFHcww4dsPFn3jqDQGnkFQb2SUfd98tWE
- UKLBRMitOKoQptMkuwqlkGtSb7BBqzwRK5NO9KFtTnrW8sjys1ah36oyK7EVBoKird7z1kB
- VHrBo54YVBybC02oDhRmC98vYzlMP8s9Jycb+u9rmmRNc9RKrCQxtXyXp2xM/z/klde5iSL
- 5YhTsV1DNZx8z64/6oQMg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Udnr8M3hh80=:RF19zzNTgmeN1ObFOxhvzZ
- NbrR/s2tKWcYEBijuV/JkzYEGUi0AjisVnJ6oR+oWQyTZUnuG8VW/8jQa1f6Q2Y+nzsnNb/IJ
- 739gMD/V4aWBFlhRVTXBfmZGrJ2U6MwBbmMcdvAMGW5i8+chJKcbehAtT7inxagqjTVQrM9xg
- Wc/7kKofUHNA1xqGNyRN3vz4ZGCtYWENrz4D06wuOYebELugKUE2mou49sQBt7Vjymxe/G5AZ
- B4QjQR3/2thskzwTuZc1Dwjj8lFOgXD9FKF5x5aQQ1sJQGdX8LlNE5CU7wQbwughg3PMxrXQk
- VMV6pTW3vM9PFNhQtupQT8kwLO04LWyO/cMs4j2F4ppvvpB+0yMzXWW7yu6WvPv+YCDRXu+QK
- pIwkagONm1ziwqt0kCD0tysUcQsnpEqe5K2eUR0xrQ6/FdCMBu/7L0Ba5xM4DaYa5W4NCJvYH
- PALDZcW+Sx/2xgqZ/Zp60Lljf52+Af2dJUf7soNweVG0qp/BzZJzBfG3VBPnilvSNqe3v8Wt+
- wYykIglpjzsQp4ZZqzF/A0CMiE+62jsfiBpz0Qmpvky5azjf923F9uWfjBhbx3Dn+sJr59vn2
- DshNDvQYCSjIkd2/gDsm/GwhyIFxVBJ0UyXK1YjQMxuduV8lQ4FzmSUu278nsT85llfHQwxWZ
- aNLTDDtpaaRIgxU1MsG1j6Wus6uio2pjlo/v90lm81OJjBccl85hLbE/bhavRqBEYGcvjahXz
- HlfbUMEQXBg4Y0UCnxPMfZK6Pb7fK+71hOoS7LRDRqzf5Zae4OnM7Lg6+2GxYGwsTu1eVuKnb
- F0PyAU9
+X-Provags-ID: V03:K0:M9F25QNPWnzz4yEqvDZcPCFfLJfxMjNmHj6zEfDJMrtmrreNrUJ
+ CbTq3iTDi286kVyMo+XMJq7RpWqIixSSq94H4OLNndadrHrQEu4aYjMjJOtWyBdqZG9V58g
+ 1CtDnYQjVzM8J2RR6Ma9z/nyoDUoqDPrMSrAeq1+NkechuQcYx8NjrIZDKxGl/uLhtrGw/t
+ zrhX0OkXmD9h/3zx+DGhQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:nFj7gcUB6Eo=:76WQ2h7mzXC2/KB28mtN26
+ lDQ4Re4AIEJRouV3/pQQSBZDVZTFSL+k90GEAg9q1hHF9XABoReTVXqcPYL1WUqmzhd9JBVmV
+ V12WSLhmO6wqKEF1mcniidWSufOaTyv4rjH96oJX4a+nIJ7XELOVaZ04/8SGNK0itLIYwsaef
+ mHbka/EZqVdiswMI2iz5PmV545SEudDA0EJO3VvQP8+h0EyAd5YsxnJpKQRv1eRdr7IIBJ/TB
+ Mt3tOlBgK0KaORQr+SU0UTvVzuYzvZ2TKOQ5Yba5IgNleogaxTwOjR4xtlNg4/L3hnikfQ7nx
+ qpW+CXZghXhEP6jrz6Kg46+UxWrWMg036MvxqnqeU2km1wA77C0Qv+CfOVt0Rv62iL1W7JRY6
+ +KMkJTUhSBYlneXw2YHauGxrjhz1qaCv8JgCUSMMiot26Wf0RAYqoYxmSvkgFTHQ01nEJtU36
+ X0AVUGSZgIMSAM9fHm20Zr9QIvgwI3uMYBmNdxTHOjortGMLo8nRkf8rdxvrkvTioi19fqPp5
+ GJ/0KqsPq1cWvMLCMk3gFgf68eo5zmV0PB64TNBrlyUUsxEt64KcCI0mJYvPxJIYHAMVlooce
+ 3Ecgvi72vx3tIT2/jrnyDFDpR2VNFCEe7G7Dm8lZgrHvSdywnlgOn/IUy45nscfaacC+NlonL
+ OHyyGCiZRyP4Rto/Vlc08OFyDx179c4/8IbjTeRBaRzzlRoeMa+FSO8f5Oczo0n0FrhJktYul
+ rAKCNvekwc0S64CHNvXKgfbh4rkk/y0VjM5QE+L3Door+0QfaqHMUvQLvRudG2hQljFCiY8vf
+ yuOGQ8g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch series reimplements the expensive pre- and post-processing of
-the todo script in C.
+To avoid problems with short SHA-1s that become non-unique during the
+rebase, we rewrite the todo script with short/long SHA-1s before and
+after letting the user edit the script. Since SHA-1s are not intuitive
+for humans, rebase -i also provides the onelines (commit message
+subjects) in the script, purely for the user's convenience.
 
-And it concludes the work I did to accelerate rebase -i.
+It is very possible to generate a todo script via different means than
+rebase -i and then to let rebase -i run with it; In this case, these
+onelines are not required.
 
+And this is where the expand/collapse machinery has a bug: it *expects*
+that oneline, and failing to find one reuses the previous SHA-1 as
+"oneline".
 
-Johannes Schindelin (9):
-  rebase -i: generate the script via rebase--helper
-  rebase -i: remove useless indentation
-  rebase -i: do not invent onelines when expanding/collapsing SHA-1s
-  rebase -i: also expand/collapse the SHA-1s via the rebase--helper
-  t3404: relax rebase.missingCommitsCheck tests
-  rebase -i: check for missing commits in the rebase--helper
-  rebase -i: skip unnecessary picks using the rebase--helper
-  t3415: test fixup with wrapped oneline
-  rebase -i: rearrange fixup/squash lines using the rebase--helper
+It was most likely an oversight, and made implementation in the (quite
+limiting) shell script language less convoluted. However, we are about
+to reimplement performance-critical parts in C (and due to spawning a
+git.exe process for every single line of the todo script, the
+expansion/collapsing of the SHA-1s *is* performance-hampering on
+Windows), therefore let's fix this bug to make cross-validation with the
+C version of that functionality possible.
 
- builtin/rebase--helper.c      |  29 ++-
- git-rebase--interactive.sh    | 362 ++++-------------------------
- sequencer.c                   | 514 ++++++++++++++++++++++++++++++++++++++++++
- sequencer.h                   |   7 +
- t/t3404-rebase-interactive.sh |  22 +-
- t/t3415-rebase-autosquash.sh  |  16 +-
- 6 files changed, 614 insertions(+), 336 deletions(-)
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ git-rebase--interactive.sh | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-Based-On: rebase--helper at https://github.com/dscho/git
-Fetch-Base-Via: git fetch https://github.com/dscho/git rebase--helper
-Published-As: https://github.com/dscho/git/releases/tag/rebase-i-extra-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git rebase-i-extra-v1
-
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 5df5850..0eb5583 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -750,7 +750,12 @@ transform_todo_ids () {
+ 			;;
+ 		*)
+ 			sha1=$(git rev-parse --verify --quiet "$@" ${rest%%[	 ]*}) &&
+-			rest="$sha1 ${rest#*[	 ]}"
++			if test "a$rest" = "a${rest#*[	 ]}"
++			then
++				rest=$sha1
++			else
++				rest="$sha1 ${rest#*[	 ]}"
++			fi
+ 			;;
+ 		esac
+ 		printf '%s\n' "$command${rest:+ }$rest"
 -- 
 2.9.3.windows.3
 
-base-commit: 4c39918f42eb8228ea4241073f86f2ac851f4636
+
