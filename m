@@ -2,76 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32FFC1F859
-	for <e@80x24.org>; Fri,  2 Sep 2016 07:15:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 445A51F859
+	for <e@80x24.org>; Fri,  2 Sep 2016 07:32:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751644AbcIBHP6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Sep 2016 03:15:58 -0400
-Received: from mout.gmx.net ([212.227.17.21]:51965 "EHLO mout.gmx.net"
+        id S1751302AbcIBHcQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Sep 2016 03:32:16 -0400
+Received: from mout.gmx.net ([212.227.17.22]:52676 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751040AbcIBHP4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Sep 2016 03:15:56 -0400
+        id S1751124AbcIBHcP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2016 03:32:15 -0400
 Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0M8qOm-1bnOCV0Kaa-00CEZk; Fri, 02 Sep 2016 09:15:47
+ ESMTPSA (Nemesis) id 0Ld4xA-1bFQc42fnk-00iGFH; Fri, 02 Sep 2016 09:32:08
  +0200
-Date:   Fri, 2 Sep 2016 09:15:46 +0200 (CEST)
+Date:   Fri, 2 Sep 2016 09:32:07 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Dennis Kaarsemaker <dennis@kaarsemaker.net>, git@vger.kernel.org
-Subject: Re: [PATCH 07/34] sequencer (rebase -i): add support for the 'fixup'
- and 'squash' commands
-In-Reply-To: <xmqqr393wkof.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1609020914320.129229@virtualbox>
-References: <cover.1472633606.git.johannes.schindelin@gmx.de> <5488a031ffe14373b7434d497b7fd2f2e5fe55bd.1472633606.git.johannes.schindelin@gmx.de> <1472718808.4680.19.camel@kaarsemaker.net> <xmqqr393wkof.fsf@gitster.mtv.corp.google.com>
+To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 27/34] sequencer (rebase -i): differentiate between
+ comments and 'noop'
+In-Reply-To: <1472746523.4680.30.camel@kaarsemaker.net>
+Message-ID: <alpine.DEB.2.20.1609020931450.129229@virtualbox>
+References: <cover.1472633606.git.johannes.schindelin@gmx.de>   <736bcb8e860c876e32e8f89f68b0b901abedc187.1472633606.git.johannes.schindelin@gmx.de>  <1472718815.4680.21.camel@kaarsemaker.net>  <alpine.DEB.2.20.1609011720160.129229@virtualbox>
+ <1472746523.4680.30.camel@kaarsemaker.net>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:3WTB78mRmNEHyTwbyOyeDOuV5OHFGkWHH9Z5QpDIpISxtf7e+l+
- GP2iJ0GFQVkzirnFQ091iuhEDt36z2S2oW37d2H3yzI34of6eIhwSc+lfi1masoxG1qVEq7
- 1Mfa9momCug9P0j8W3SEozNL7bVX200YnIZdDWCNH5YYQfTGcu2yS4fd4hYM7h8L8o9DyWo
- I8wJ5+5fOWv2XHbFk6eUw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:fXxKdKzqNnI=:ndmhpejvHmkQLIJtoUuQAw
- Sf/7jZXuyS1R4KnzIJEj7BQZidNmVf/KNqXrI6oG//EejnGGNhD/ZKn75p3P/zCmepGm5SjXp
- NDqlLjlojlL66uLOjVD1rHAdI1cfNTLxdtBhIWJQqwQHo5w9elaMp3d5LwGQcV3KhDmeu7L/b
- Sp2ASNWyv1eHO66SvD+TIXMp/yMUpfpVmvmBSZzk2v2Eq7DkQrkH6Hsvswdhz2QZcudMt3N13
- 4DFVJkJx7RlOed6CWF4I1hRDZNuBbIh89DNsPZxjsQohnJKwrpdT/MuRWcvh670jrRj6hlryF
- LdR7fLdQHUmQBNIsBC3mr42jxDGmpmcIi7ip83wp1wyrFlSExplKOJf7gL7zRhbaoiTZT2hOn
- u7D1XxUozQJ9jLWAjAgo6imMgOKoMy8Z2ess5ryDmd3ix24egAeIyaBRAQVa/HjetVQQIJvSR
- nicVAqDuEnZNmDLY4MemNoGcAb/Ld+t+UXPRNNfL97tMqWi9TXMq+iBTfiSP8KtIDcrkDc3Pt
- F3wc/JWoC98iBYGPd5WYbOlzyV+XOeDGpjd2w93nMsUp2mKGhow82d2Ch3v7mp06i96FYlEXL
- iv+Hpy6ezWRtSd0In0C00fadJsx/nTIvBv+ld/HSYwh8NN4ljGEEnjCFLOSgKVSaGiGAueGXi
- 2F77p1ULwGFgYUw9qAJXroJLxOj1fmhBRjHA0wvdRMA4lP+ZU8IN8p2ducz2q8M2LZXJWfvKQ
- glf6sYPWnzU9qZnsMtSUbwir6zCujk9OyTMIg0b3foff7LM+X9U4rPjDGEvyOAc4YSkDH0Eic
- xD4piON
+Content-Type: multipart/mixed; BOUNDARY="8323329-1191959027-1472801528=:129229"
+X-Provags-ID: V03:K0:2wTPTrjcSnbHUOCT0n4OGxbLtNN3zA5A07ZD4Mn1IB0iDe+jH4a
+ uERDUOs14XiM43puPzK23sr7srhC2vjkBLBi6/WQXN/k5JMPJzivxX5tgkP3LbInTaiPA0X
+ wUQp9xnB6y5TJgirHG7jcniryxpzAa9i8WN8B5rtD9E9u1xk9tujpJK74CAVwkepP3pL1pH
+ 5O67CY7ILb0VmPWKli9ng==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:hUH2d+rQ39I=:s6QZ5R3/eKoNr13fk83mgP
+ bCqQTqgrJCBYeYcsy6hcrijLJ1bdqn0XtQGa7rZL1R7O2PtKDtWDmxjeXWOUfCxcMDkF3MiN0
+ 58NLamcQdruO2H+x1B992qfPD2COewH6TAHFo+gjS26CtC9aI3/rYDKlij0TBHYOJrg9AvDfx
+ mjiFCRUMzAhrQhJl31NTTbAlhpfpOnuqo97Wp2oi29E/eRXSxyo1mY0jrV0rFVOuldPZ7mGG+
+ N+JD8ue25bzej172pDj88HqHJGlDPZgIdWXLdj3ZwEAceM3YiIkrdrB769NVAGQg5STxNFtjW
+ KM9MQfZVAyZDFY5PehERHhcX/TfeEbOpi6ZP5T5aj9aSKKCj2i89gHgUN5woEZH5YmZCCP2zc
+ cJ3in7/Tj+wExz2W1X/LVm4Gd64vcoSOO/9yDTVDupGhyWz9nKAR0iRrsOeqlyDAELyCmgSg5
+ YJgRFeqyn7d7hDxMAWwch/yngXkGg8sFVlNHkTcf5qshD80wR0iEqCwwY6gEw7nFpshqXjtoq
+ MFoN2QTK0BvPE4Lg35g5BBtnUijBK97YnXycquQTyraN786LCpWvcMPNs7SOAmBijdNez5RnG
+ mddG1WIhfG0piEjngezGzLvJLSapOIy4+kAMUt5xgZbNHTDk3OhZ7BQoZ3D7qAQHtEZ5bNRAf
+ WeG6uEL/h2g4N6GUEsItxZaxJRlZwmadMZhY/lwEnIJWlHl0bbMdM+c6lHVl7vEsSBzu2Nlnf
+ 67caMw2Gu5Tg+xI9v1RxdV1AES+ov7rZyTz0LobjpCdAcXY+ZroaV2d/rt7ZQ1jsUxviQyYNp
+ DSDhAMg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Thu, 1 Sep 2016, Junio C Hamano wrote:
+--8323329-1191959027-1472801528=:129229
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> For those who were not paying attention on the 'master' front during
-> this pre-release period [*1*], I have to point out that the scripted
-> Porcelain has been updated to lose the Anglo-centric st/nd/rd/th and
-> this series would want to get updated to match.
-> 
-> 
-> [Footnote]
-> 
-> *1* Why weren't you?  Repent! ;-)
+Hi Dennis,
 
-I tried to. But, you know, I was kinda busy with a couple of patch series.
+On Thu, 1 Sep 2016, Dennis Kaarsemaker wrote:
 
-In any case, I changed the code this morning. Can't say that I like those
-forced last-minute changes.
+> /*
+> =C2=A0* Note that ordering matters in this enum. Not only must it match t=
+he
+> =C2=A0* mapping below, it is also divided into several sections that matt=
+er.
+> =C2=A0* When adding new commands, make sure you add it in the right secti=
+on.
+> =C2=A0*/
+> enum todo_command {
+> =09/* All commands that handle commits */
+> =09TODO_PICK,
+> =09...
+> =09/* All commands that do something else than pick */
+> =09TODO_EXEC,
+> =09...
+> =09/* All commands that do nothing but are counted for reporting progress=
+ */
+> =09TODO_NOOP,
+> =09...
+> =09/* Comments, which are not counted
+> =09TODO_COMMENT
+> }
 
-Ciao,
-Johannes
+I like it! Changed accordingly.
+
+Thanks!
+Dscho
+--8323329-1191959027-1472801528=:129229--
