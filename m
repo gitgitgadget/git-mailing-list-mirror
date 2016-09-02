@@ -2,79 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65BDE1FBB0
-	for <e@80x24.org>; Fri,  2 Sep 2016 22:40:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26E8D1FBB0
+	for <e@80x24.org>; Fri,  2 Sep 2016 23:06:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754039AbcIBWkW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Sep 2016 18:40:22 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:35220 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752864AbcIBWkV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Sep 2016 18:40:21 -0400
-Received: by mail-pf0-f194.google.com with SMTP id h186so6269631pfg.2
-        for <git@vger.kernel.org>; Fri, 02 Sep 2016 15:40:21 -0700 (PDT)
+        id S1753411AbcIBXGs (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Sep 2016 19:06:48 -0400
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:33651 "EHLO
+        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752879AbcIBXGs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2016 19:06:48 -0400
+Received: by mail-qk0-f174.google.com with SMTP id z190so136180200qkc.0
+        for <git@vger.kernel.org>; Fri, 02 Sep 2016 16:06:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=RWuxvvlgc+W/JjUZIs+3s3ohuiaDZTIugjj3xbT0XHU=;
-        b=dUDi72leFwp+VhP/wvSrHqHc/H/D2vkG1cJCrMyKJUcpz0lY13wC98+MgR8aNytGTs
-         r+6vIRb4ckr56hutP/rN2LK/vvpLWSlLwhfMZ0429RMXh6S+lvqQrVeh9UWxQEkaqfm+
-         vQfQnlV+eY8UN7t7hbD71BpKs+QHvZqlKQ1AfZ0OM/IfbE/Twit5XNRynzDROQVEGPuH
-         JBpyH8zkVaRFLI+PiqrWudfI2lPScTf2Ee3ikjqWH1mPGsb0x/cUFA370KWcGMFPGMvx
-         pSJBWQVWqc4LCb1KJWxkcm9jADRJwYy4uDpLjRQ/jUjqVFvJChhCUiv8AzIqTtXHxuGP
-         C/1Q==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=Ca8142v0OdRyspNF/pNL5Wg+mnxWmp8/VtSkh6VbVqs=;
+        b=UHB+43GduZuklEGjBkYb4wfvpXt7fGXamSJiu1bltfwtdGVxVduBo7eRphcI6c+u8n
+         1BXie7uBY2P8leHleKEU5iF6i1VOoYkCidsX0fiNUpsw4e5PV2fJ3kvyeobk3kJZ3MPX
+         ZP+Ydg4OZdbc3hJ/YYy2Db88Yec81tGWmSIKMoSr+g5VRa0dpsoksxkNT18Vx+U51oOf
+         Cvdh4zjeHcVU/6nAq9w84ydI0g3EQg7z93pqdlKIwiqEdS0/LbHMD0wC/n2I7wntPNGp
+         2Fda3aRwzBkVQqXa60yYCi6+dzQd67XxI+eTCjj/d0KDHaKjvE8ol154L9a0Bd/0PTZS
+         3/gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=RWuxvvlgc+W/JjUZIs+3s3ohuiaDZTIugjj3xbT0XHU=;
-        b=IV8WUCTxPt8WzSQR7qop/vlRKFyaiLmkiaTkQq1ze3BlDb77J/XR6MZmy6m/9Yl2jG
-         zaUa/7n5MYnpJw7iowqCMzQeKY4V7UDyFMIWfwyth2u2utqR8PcoC5u8eMZ/hIqDb1Jv
-         OgRQPiz7S1qQD6ShBqpQTm7HfZGZfEAsMEIj76t8862rc8KvAcJadNQnxdSTEMu1lfGP
-         gRh7xKtzT+ZcOjJ4K3hhXZJduXTmgNwS6YCe7a1EGEq211/ra0CqqYMPy61lWgLMB5xM
-         nvWxCLxbzp93a8DB61xPsLxusFwtlnq3rgJTGxauIG8X2gCeEnIh8vpg8GsQkYLsn0QD
-         Cmhg==
-X-Gm-Message-State: AE9vXwPMb34/6mK7oIfFpDGB0tTvTPhIrDOsXbkg6feTohbZ2Z9Zq9gmrSPwBTpRj1R9tw==
-X-Received: by 10.98.95.129 with SMTP id t123mr40578112pfb.148.1472856021109;
-        Fri, 02 Sep 2016 15:40:21 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b10:34:ec2f:e9e8:7f87])
-        by smtp.gmail.com with ESMTPSA id a20sm17105846pfa.27.2016.09.02.15.40.19
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 02 Sep 2016 15:40:20 -0700 (PDT)
-Date:   Fri, 2 Sep 2016 15:40:18 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, spearce@spearce.org, sbeller@google.com,
-        peff@peff.net
-Subject: Re: [PATCH v2 2/2] connect: advertized capability is not a ref
-Message-ID: <20160902224018.GH14758@google.com>
-References: <cover.1472836026.git.jonathantanmy@google.com>
- <cover.1472853827.git.jonathantanmy@google.com>
- <174c8ca6638f1cd3145a628925e65655b56af366.1472853827.git.jonathantanmy@google.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Ca8142v0OdRyspNF/pNL5Wg+mnxWmp8/VtSkh6VbVqs=;
+        b=Y1PcVloitMbZUMGhWEv2woWLSlnG/EqKVUfKfOXycie+Nx6fjTz+75vPSc2ncT0drE
+         0KLQeRlDXAKYjNhrKspPqVwRpHlb4Qr908lrsASpmRal/qHj0TJiEY+iN7/wREet1kuq
+         G+PsPqh7W9a5syhWZ+IwXGo7puSu+VVKdHPwOC9pOL3Gi/Axpm3jWmxvhj7L3sKaV4Ta
+         7qrj2nvjhMSU3Q8UfUPdi88sHBrfLGPZoX1OYwfe28rz8YWVJYiZIOwd/Jw8TOpX/+sM
+         VDDiISuTa91fTSS4HlZ+YjeMAU3SvTjOVDyHVVgnndrZyylZ7e1lHHLRAwdkRg60RGNE
+         Jm2w==
+X-Gm-Message-State: AE9vXwNAB0edgsXbuaWf4rWmakEU0rPSQacy75plbDXPbxMDusJY3m1QSJM129a870D7xKM3LH1EkzammRPNYw==
+X-Received: by 10.55.201.151 with SMTP id m23mr26033520qkl.268.1472857606980;
+ Fri, 02 Sep 2016 16:06:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <174c8ca6638f1cd3145a628925e65655b56af366.1472853827.git.jonathantanmy@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.200.57.115 with HTTP; Fri, 2 Sep 2016 16:06:26 -0700 (PDT)
+From:   Brian Levinstein <blevinstein@gmail.com>
+Date:   Fri, 2 Sep 2016 16:06:26 -0700
+Message-ID: <CAMbP-nS_MM0QXgw183DLQPx1YU1BH8ytKCv86p-JSxzdb2jpQA@mail.gmail.com>
+Subject: Bug Report: Too many untracked files (gitignore)
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan wrote:
+The relevant repo is here:
+https://github.com/blevinstein/dotfiles
 
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->  connect.c            |  3 +++
->  t/t5512-ls-remote.sh | 39 +++++++++++++++++++++++++++++++++++++++
->  2 files changed, 42 insertions(+)
+My gitignore file looks like this:
+https://github.com/blevinstein/dotfiles/blob/2400ca8642a7b454a2bfc54e8402343d008836aa/.gitignore
+It basically ignores all files, except for specifically whitelisted
+files. However, when I run "git status" (git version
+2.8.0.rc3.226.g39d4020), I see the following untracked files:
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+#       .bash_history
+#       .bash_logout
+#       .cache/
+#       [private]
+#       [private]
+#       .profile
+#       .viminfo
+#       dev/
 
-Thanks.
+I can fix this by removing the following line from my gitignore:
+
+!.vim/colors/*
+after which all the untracked files disappear. I also tried changing
+that line to:
+
+!.vim/colors/twilight256.vim
+
+but it had no effect.
+
+The same effect can be achieved with any directory name starting with a period:
+
+!.tmux/asdf
+
+!.vim/asdf
+
+where .tmux and .vim are real directories. It does not seem to matter
+whether the "asdf" subdirectory exists at all.
+
+Brian Levinstein
+
+blevinstein@gmail.com | bpl4ab@virginia.edu
+(703) 673-8711
+Google | Software Engineer
+University of Virginia | MS Commerce 2014
+University of Virginia | BS Computer Science 2013
+Alpha Tau Omega | Delta Chapter
+http://www.linkedin.com/pub/brian-levinstein/14/620/6ba
+https://github.com/blevinstein
