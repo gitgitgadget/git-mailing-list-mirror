@@ -2,99 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB6071FBB0
-	for <e@80x24.org>; Fri,  2 Sep 2016 16:36:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E7DE1FBB0
+	for <e@80x24.org>; Fri,  2 Sep 2016 17:04:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932642AbcIBQgf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Sep 2016 12:36:35 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:53591 "EHLO mx2.imag.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932554AbcIBQge (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Sep 2016 12:36:34 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-        by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u82GaF3I025939
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-        Fri, 2 Sep 2016 18:36:15 +0200
-Received: from anie (anie.imag.fr [129.88.42.32])
-        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u82GaHSf019037;
-        Fri, 2 Sep 2016 18:36:17 +0200
-From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+        id S932845AbcIBREk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Sep 2016 13:04:40 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:36810 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932236AbcIBREj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2016 13:04:39 -0400
+Received: by mail-wm0-f66.google.com with SMTP id i138so3628362wmf.3
+        for <git@vger.kernel.org>; Fri, 02 Sep 2016 10:04:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=LgliB9D/rXT/KWjWUBFRhLL27o+5GpkO/xl74YRGh8Q=;
+        b=lltyEYrgA3QRZsgFaGP8NP0YJeIahA2ejyvm3k9CORoXgz7Zkynq+Usv/Rt3A7qMNQ
+         DPt6MepwI2H/0nvW+RaphpwMCtCKbOd9N7jADPRoyLd0YDmbslogIXvbPACuVpSmu+O7
+         eYaQ4i7lYgnXPHfkMNx3Lwm0IlHI7dow9W5yyCWXugzTEbkMGKi3Eq6iFK8/ByO9hj2H
+         iy6k94INSydoH6CwaKDEmnbPBWdmRiRBSw3+fSH98jSijzLKykY+qhavZwfP3bux4alR
+         /uOUtjnMsV/CpqktW/5pzmz1cudwPV7WoxvmHstxaf4+BiERUXYrnJHxM7O7MHQX3to2
+         tLLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=LgliB9D/rXT/KWjWUBFRhLL27o+5GpkO/xl74YRGh8Q=;
+        b=d+GcbhyUIIekrL56HeN1/NuChdV14n4Q2BkZn4bL4a2YQFZ9stE5T/YuwDL05E9J8t
+         YrtXXVr+/v5VlfwFgc2rJFk7U+b+D1ujPsgShgLmKOme/UDU9ggBplm/Y25CkUEwhaLT
+         /4EzgQya9FSj5Hn0KrZf/SPCZpzElaXRP4vMatZDk/vVdCh7FXwh+WOPpwye8sVZV+qR
+         bG2hG7aFkjW+0VuBZ4tJGeMwpkXieGjWgDtCI2bhNe0LarJsKnjIc4yd6zTehPzIBBpY
+         jj7PwOtjRJVZ9yEAvhyB8wpvsQRZbTT4JEOAlyzE/SB8zcIXUJ5ue+aSoBCaOaaI7Bdd
+         hqcg==
+X-Gm-Message-State: AE9vXwPeqj3YQNU1u6o3L2RzFvmxvUCIOtdOrLjhIX2EF8QDxfzj00VNtlq4rZCM0ReAkw==
+X-Received: by 10.28.47.7 with SMTP id v7mr4356924wmv.38.1472835877314;
+        Fri, 02 Sep 2016 10:04:37 -0700 (PDT)
+Received: from hurricane.home.kaarsemaker.net ([145.132.209.114])
+        by smtp.gmail.com with ESMTPSA id bw9sm11334192wjc.33.2016.09.02.10.04.36
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 02 Sep 2016 10:04:36 -0700 (PDT)
+Message-ID: <1472835875.4680.58.camel@kaarsemaker.net>
+Subject: Re: [PATCH 07/34] sequencer (rebase -i): add support for the
+ 'fixup' and 'squash' commands
+From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>, Git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] t/Makefile: add a rule to re-run previously-failed tests
-References: <b2d016e44fa04e8a318967c43762d6933faf7956.1467183740.git.johannes.schindelin@gmx.de>
-        <0dfa96b17edfe84ba19c7e57fe0b017c77943e0c.1472478285.git.johannes.schindelin@gmx.de>
-        <CACBZZX6iEmbb68tzRKNAryp5qmt=iU9FMuOe2ONV=2ojcazoEg@mail.gmail.com>
-        <20160830205151.k6ufhfzl6gh4uuog@sigill.intra.peff.net>
-        <CACBZZX4NyjkK0Nf1JVGFRhc0xnLYg2YX6ctO5OxK3Pi60r5KaA@mail.gmail.com>
-        <alpine.DEB.2.20.1608311227150.129229@virtualbox>
-        <CACBZZX6exynt_9_wVtEN19HQt_rPJdo5Ck3jujdQ-hLdMAGdmg@mail.gmail.com>
-        <alpine.DEB.2.20.1608311702440.129229@virtualbox>
-        <CACBZZX56fjJZydnBrWUYtU6V3xyQyaLL4MYzVVF0yD4dRdducw@mail.gmail.com>
-        <alpine.DEB.2.20.1609021406340.129229@virtualbox>
-Date:   Fri, 02 Sep 2016 18:36:17 +0200
-In-Reply-To: <alpine.DEB.2.20.1609021406340.129229@virtualbox> (Johannes
-        Schindelin's message of "Fri, 2 Sep 2016 14:08:06 +0200 (CEST)")
-Message-ID: <vpq8tva1cou.fsf@anie.imag.fr>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 8bit
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Fri, 02 Sep 2016 18:36:16 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u82GaF3I025939
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1473438981.07827@SYHWiGeyyrMiJXqLLkdlLw
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Date:   Fri, 02 Sep 2016 19:04:35 +0200
+In-Reply-To: <alpine.DEB.2.20.1609021557060.129229@virtualbox>
+References: <cover.1472633606.git.johannes.schindelin@gmx.de>
+            <5488a031ffe14373b7434d497b7fd2f2e5fe55bd.1472633606.git.johannes.schindelin@gmx.de>
+           <1472718808.4680.19.camel@kaarsemaker.net>
+           <alpine.DEB.2.20.1609011658300.129229@virtualbox>
+          <1472746749.4680.33.camel@kaarsemaker.net>
+          <alpine.DEB.2.20.1609012009070.129229@virtualbox>
+         <1472818007.4680.53.camel@kaarsemaker.net>
+         <alpine.DEB.2.20.1609021557060.129229@virtualbox>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.18.5.2-0ubuntu3 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On vr, 2016-09-02 at 16:22 +0200, Johannes Schindelin wrote:
+> I hope this clarifies why I am not so concerned about some issues
+> such as translation, or commit messages, or grammar, and more so
+> about others, such as incorrect code.
 
-> Hi Ævar,
->
-> On Fri, 2 Sep 2016, Ævar Arnfjörð Bjarmason wrote:
->
->> On Wed, Aug 31, 2016 at 5:05 PM, Johannes Schindelin
->> <Johannes.Schindelin@gmx.de> wrote:
->>
->> > The biggest problem with Strawberry Perl is that it is virtually
->> > impossible to build the Subversion-Perl bindings using the Git for
->> > Windows SDK when using Strawberry Perl.
->> >
->> > Which pretty much precludes it from being used in Git for Windows.
->> >
->> > And then there are the path issues... Git's Perl scripts are pretty
->> > certain that they live in a POSIX-y environment. Which MSYS2 Perl
->> > provides. Strawberry Perl not.
->> 
->> This might be me missing the point, and I'm really just trying to be
->> helpful here and make "prove" work for you because it's awesome, but
->> as far as just you running this for development purposes does any of
->> this SVN stuff matter? I.e. you can build Git itself not with
->> Strawberry, but just use Strawberry to get a working copy of "prove".
->
-> Yes, the SVN stuff matters, because of the many t9*svn* tests (which, BTW
-> take a substantial time to run). So if I run the test suite, I better do
-> it with a perl.exe in the PATH that can run the SVN tests. Otherwise I
-> might just as well not bother with running the entire test suite...
+It does, thanks!
 
-Maybe something like
-
-\path\to\strawberry-perl\perl.exe \path\to\prove ...
-
-without changing the PATH would work. I wouldn't call that convenient
-though.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+D.
