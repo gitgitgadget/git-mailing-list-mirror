@@ -6,79 +6,81 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FB061FBB0
-	for <e@80x24.org>; Sat,  3 Sep 2016 02:23:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 530E31FBB0
+	for <e@80x24.org>; Sat,  3 Sep 2016 03:16:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752857AbcICCXJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Sep 2016 22:23:09 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54620 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751917AbcICCXH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Sep 2016 22:23:07 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 92ECD3C366;
-        Fri,  2 Sep 2016 22:23:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=/rNCDRnbCzimo+bKr/fwnxyocNU=; b=xIF+cIrkBaLMZX48w1u4
-        JuemYv/PalrNTeKBD9CpRwv1nV6F1bAOZm9nKlzO4QCcH+ONKLkHXN+9vlWo7KAy
-        rBnBxPidBC2bXubaNASIr8MdR2Ka+SZLMl2n2tUxu3szFOJ2KMUiioDBUQMWVf5z
-        s521V2aj/uBGMkUWnRw1/Xk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=PgA0I1XdVL5rPEHe6Y8QxKA7jeoen6fnXvrgYw9ImJ38JG
-        3mK04dkALTYzCs/YB3huozW71QwtNqX2a1eox10xOHxzXQBzaFATZG3pn/81vyvR
-        cMBiTuCSMuBWeiTzF2HDwPjxr+s8BRKLq1Qmg6zlwveIuV5BIC9/rJQ3nfpnA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8A82F3C365;
-        Fri,  2 Sep 2016 22:23:06 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 11F833C364;
-        Fri,  2 Sep 2016 22:23:06 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] sequencer: support folding in rfc2822 footer
-References: <1472846322-5592-1-git-send-email-jonathantanmy@google.com>
-Date:   Fri, 02 Sep 2016 19:23:04 -0700
-Message-ID: <xmqqy439rabb.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5916B496-717D-11E6-9CF4-F7BB12518317-77302942!pb-smtp1.pobox.com
+        id S1752924AbcICDQy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Sep 2016 23:16:54 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:34525 "EHLO
+        mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752827AbcICDQy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2016 23:16:54 -0400
+Received: by mail-pa0-f45.google.com with SMTP id to9so7171009pac.1
+        for <git@vger.kernel.org>; Fri, 02 Sep 2016 20:16:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=jQsSWlc66PI14SyUbjB4bHsfKRGPsSswPgKxEwgUhTQ=;
+        b=hqg2mReLEuQQ3wucBaTFdY3e8Vj1rnuS2gsLx6arul25ha37aOKbQaT3uFLbq4vvYS
+         U5CWNZIdzf2RKnqQ31iX2s8kGx8MHvVsTj3W+hvRTDRSXqLs7u3aOIzxGT/X8ebhyDXk
+         vCXoSYk2PRXtnycPOE1F0nXGnDapNU0z7f1aPTLzkXN2A7Z8eDe85Qi8v80aJaRwB/ul
+         OghGSVXstywcEN/ggBinIm7MGq2q0m7y/k4boUmP9BRIPlgg1ykSyqprgoLwC7N1GoWI
+         ObvGAKvCIkLyvNGs4GdX7R4/p6sHwfLflUITemF7ZcJiE+0amcXBNYrWIPK2KVJr6ClV
+         jxvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=jQsSWlc66PI14SyUbjB4bHsfKRGPsSswPgKxEwgUhTQ=;
+        b=gwYBBiV/DSNd/Vl8xo23Aq19YAPCy+ZQfW4de7lJe2qU2zVeRWhZGor5KtL6OtmDO+
+         CyZT9CB8GNefVdwhHFc03kWWUur2mGsSGw7e/R9qnRLuEEbS7wJRt+7Ojau5qorZBayb
+         szNKky5dhK9CEtfa/cDumzei4pxRJqHOztMYtBfmi/4Ot1AywvNQq8La6Mou2y+RlnY2
+         9mnrtfBtXSh1078eSy2DTwjZxdSRgA2VDaMSAvIBd80goiCL94qB2zDoETwBhvojIqqL
+         1ftfutJsWkGk66k5zU2jjQy+DXtn6N4ph0xrPDyrrDa4db1uO/PBF3qlnRAJ81YalmIl
+         Fkng==
+X-Gm-Message-State: AE9vXwPlsjNHGIoUbXnznWVoo1E3Y0JHfKFeKfRkriUL/knY/zpANYSJa0LN20wwDXbIp/WG
+X-Received: by 10.66.242.166 with SMTP id wr6mr41773939pac.147.1472872613093;
+        Fri, 02 Sep 2016 20:16:53 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:29f6:f946:ae72:afdc])
+        by smtp.gmail.com with ESMTPSA id tr1sm17769172pab.19.2016.09.02.20.16.51
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 02 Sep 2016 20:16:51 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: [PATCH] xdiff: remove unneeded declarations
+Date:   Fri,  2 Sep 2016 20:16:48 -0700
+Message-Id: <20160903031648.14465-1-sbeller@google.com>
+X-Mailer: git-send-email 2.10.0.rc2.22.g25cb54d.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ xdiff/xemit.c | 9 ---------
+ 1 file changed, 9 deletions(-)
 
-> Sample-field: multiple-line field body
->  that causes a blank line below
+diff --git a/xdiff/xemit.c b/xdiff/xemit.c
+index 49aa16f..b52b4b9 100644
+--- a/xdiff/xemit.c
++++ b/xdiff/xemit.c
+@@ -22,15 +22,6 @@
+ 
+ #include "xinclude.h"
+ 
+-
+-
+-
+-static long xdl_get_rec(xdfile_t *xdf, long ri, char const **rec);
+-static int xdl_emit_record(xdfile_t *xdf, long ri, char const *pre, xdemitcb_t *ecb);
+-
+-
+-
+-
+ static long xdl_get_rec(xdfile_t *xdf, long ri, char const **rec) {
+ 
+ 	*rec = xdf->recs[ri]->ptr;
+-- 
+2.10.0.rc2.22.g25cb54d.dirty
 
-I am not sure this is unconditionally good, or may cause problems to
-those with workflows you did not consider when you wrote this patch.
-
-Not being too lenient here historically has been a deliberate
-decision to avoid misidentification of non "footers".  Does Git
-itself produce some folded footer line?  If Git itself produced such
-folded lines, I'd be a lot more receptive to this change, but I do
-not think that is the case here.
-
-A slightly related tangent.  An unconditionally good change you
-could make is to allow folding of in-body headers.  I.e. you can
-have e.g.
-
-	-- >8 --
-	Subject: [PATCH] sequencer: support in-body headers that are
-         folded according to RFC2822 rules
-
-	The first paragraph after the above long title begins
-	here...
-
-in the body of the msssage, and I _think_ we do not fold it properly
-when applying such a patch.  We should, as that is something that
-appears in format-patch output (i.e. something Git itself produces,
-unlike the folded "footer").
