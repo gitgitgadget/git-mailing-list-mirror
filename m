@@ -2,63 +2,51 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,TVD_SPACE_RATIO shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B57A11F6BF
-	for <e@80x24.org>; Sat,  3 Sep 2016 18:03:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8C4F1F6BF
+	for <e@80x24.org>; Sat,  3 Sep 2016 20:33:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753535AbcICSDy (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Sep 2016 14:03:54 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:43403 "EHLO
-        relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753372AbcICSDx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Sep 2016 14:03:53 -0400
-Received: from mfilter46-d.gandi.net (mfilter46-d.gandi.net [217.70.178.177])
-        by relay4-d.mail.gandi.net (Postfix) with ESMTP id 48378172097;
-        Sat,  3 Sep 2016 20:03:51 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter46-d.gandi.net
-Received: from relay4-d.mail.gandi.net ([IPv6:::ffff:217.70.183.196])
-        by mfilter46-d.gandi.net (mfilter46-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-        with ESMTP id HbjBGxJ5Ky_u; Sat,  3 Sep 2016 20:03:49 +0200 (CEST)
-X-Originating-IP: 50.39.163.18
-Received: from x (50-39-163-18.bvtn.or.frontiernet.net [50.39.163.18])
-        (Authenticated sender: josh@joshtriplett.org)
-        by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id B32B41720A9;
-        Sat,  3 Sep 2016 20:03:47 +0200 (CEST)
-Date:   Sat, 3 Sep 2016 11:03:45 -0700
-From:   Josh Triplett <josh@joshtriplett.org>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 9/9] rebase -i: rearrange fixup/squash lines using the
- rebase--helper
-Message-ID: <20160903180344.truur5ey6j6ah2wh@x>
-References: <cover.1472833365.git.johannes.schindelin@gmx.de>
- <3810bd4bddb3b850a78e5d960207157de64a2e56.1472833365.git.johannes.schindelin@gmx.de>
+        id S932109AbcICUdb (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Sep 2016 16:33:31 -0400
+Received: from nm37-vm9.bullet.mail.gq1.yahoo.com ([98.136.217.45]:46773 "EHLO
+        nm37-vm9.bullet.mail.gq1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753684AbcICUdb (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 3 Sep 2016 16:33:31 -0400
+X-Greylist: delayed 792 seconds by postgrey-1.27 at vger.kernel.org; Sat, 03 Sep 2016 16:33:31 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=btinternet.com; s=s2048; t=1472934008; bh=lv1iBStmNGICaf+PSQlTyVDY16s+t/TW1/iYUYUvBnU=; h=Date:From:To:Subject:References:From:Subject; b=fPSOqnTsSljmTLJVAFiF1ONe3oRSa1zyv/FGtWp4eNJE3PG2ga+FCsq0DD1GUteklyHCBpeLirTwJ2USbDEBvBMYJdT7nQekCVc6tdbRbIC2KjKXc39t8o98Dpq3d1oVDvJDYIXF2tpO3lsmjnFuhlV7rwjhYoQzUmZq2Y2Oe22hV58hDckyMeq9EFAgTcZQs1BMGBz6a43xdxXUpONqoaaY7mF80+Aw5uOtqz8WSGxYi0OIWiQLPyo27lZepAwBCdMVQ/2RfmdynKOObfE8uZfIKPNLDXVp63Jq/TH5wZKWWXqrEmiwQYN2jy8yU1bb5S5hItiL8NXSKHthZxRgyA==
+Received: from [127.0.0.1] by nm37.bullet.mail.gq1.yahoo.com with NNFMP; 03 Sep 2016 20:20:08 -0000
+Received: from [98.137.12.60] by nm37.bullet.mail.gq1.yahoo.com with NNFMP; 03 Sep 2016 20:17:08 -0000
+Received: from [212.82.98.57] by tm5.bullet.mail.gq1.yahoo.com with NNFMP; 03 Sep 2016 20:17:08 -0000
+Received: from [212.82.98.106] by tm10.bullet.mail.ir2.yahoo.com with NNFMP; 03 Sep 2016 20:17:07 -0000
+Received: from [127.0.0.1] by omp1043.mail.ir2.yahoo.com with NNFMP; 03 Sep 2016 20:17:07 -0000
+X-Yahoo-Newman-Property: ymail-4
+X-Yahoo-Newman-Id: 782808.38164.bm@omp1043.mail.ir2.yahoo.com
+X-YMail-OSG: v6X4cMkVM1l2_8VxfynEcvxlLSN1q3MY_m2abnYVt5LIa5oQopzr5aqlqFPtVZe
+ CDt6KaAI4rbpojibyzwYZh7bbFhwrUuGecdwUc5N5_p0Ziix2vz1xjyaxeIPSaWa920W_jWcgD0x
+ UV6hguF7.0Ko.n._kgjeSL7ncRo4KRgGjdoLp1oa4Doq_ugC1ywHVgaD7SsQafBHeeQac.J042Ao
+ 5xeKpWGDpYzmqwO5jC4de.nEhVyJLO2_4F36ll_xtXHwgJMAvB7KX.tMIcMa2EdAhGSzhqQN0fsw
+ YMyLxJ1Lj.ULeDscQ0cg7VAPxWR_nyN9OqY4VVog0WpeBbf4RKGxwycAzXD_JSz4sJ0FQPPMraeD
+ SH73dyL6d5UAixn58bUS3CGe.2FZLvChjChJ2F3ERaaK61z2o57lQZ0Sh4qAuhkJ0IsfqhUif3Zn
+ W.5r7sxoJl7Wl0sxmWlHYtA5wQPG.tXUX0A9kGBU3iP_S7qbtX0q2ygNJLVv1b0dzb3luzspDfcO
+ uo4B7p53_IyMD2mlC_P_3173YQ9Ql6LCiri_F_OJVrhqbV7ZdoPASm.eYBHdL52OFs_3xgtQlPml
+ 8FbGWH3dB77P.GVjLsI7VkPlQTwaCvtWQumbk_oS.
+Received: from jws11166.mail.ir2.yahoo.com by sendmailws108.mail.ir2.yahoo.com; Sat, 03 Sep 2016 20:17:07 +0000; 1472933827.351
+Date:   Sat, 3 Sep 2016 20:17:05 +0000 (UTC)
+From:   <admoss1980@btinternet.com>
+To:     <git@vger.kernel.org>
+Message-ID: <213477534.1556627.1472933825496@mail.yahoo.com>
+Subject: !!!
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3810bd4bddb3b850a78e5d960207157de64a2e56.1472833365.git.johannes.schindelin@gmx.de>
-User-Agent: NeoMutt/ (1.7.0)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+References: <213477534.1556627.1472933825496.ref@mail.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 02, 2016 at 06:23:42PM +0200, Johannes Schindelin wrote:
-> Let's reimplement this with linear complexity (using a hash map to
-> match the commits' subject lines) for the common case; Sadly, the
-> fixup/squash feature's design neglected performance considerations,
-> allowing arbitrary prefixes (read: `fixup! hell` will match the
-> commit subject `hello world`), which means that we are stuck with
-> quadratic performance in the worst case.
-
-If the performance of that case matters enough, we can do better than
-quadratic complexity: maintain a trie of the subjects, allowing prefix
-lookups.  (Or hash all the prefixes, which you can do in linear time on
-a string: hash next char, save hash, repeat.)  However, that would
-pessimize the normal case of either a complete subject or a sha1, due to
-the extra time taken constructing the data structure.  Probably not
-worth it, if you assume that most "fixup!" subjects come from `git
-commit --fixup` or similar automated means.
+http://www.baidu.com/link?url=DsqnrRyBjH64xj2HvdqZKR4I8iRgR7o9Is6IOc8EiYC#680=ivevjp&4049&hezjgjp==97698091
