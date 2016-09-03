@@ -2,113 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D05A1F6BF
-	for <e@80x24.org>; Sat,  3 Sep 2016 12:25:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17F551F6BF
+	for <e@80x24.org>; Sat,  3 Sep 2016 13:17:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754105AbcICMZZ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Sep 2016 08:25:25 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:36371 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754100AbcICMZW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Sep 2016 08:25:22 -0400
-Received: by mail-wm0-f67.google.com with SMTP id i138so6314489wmf.3
-        for <git@vger.kernel.org>; Sat, 03 Sep 2016 05:25:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding;
-        bh=3sLm25jIQSk7rDswJ7nm7MzjIjpQ5GTpDt2LVp0DOeM=;
-        b=k9QuDyByDxZ/IUbIh/iJFKLa0mOsfW8gAVTkqfOeWg5/VmuuSFEG+5VQEd4fRWSqsA
-         iAfJ3EoPl0WJWGwuSFGh48Pp9B+c7rxqix7/N1f9TSj7Kz03DFxRJsZE8ganeYjWcMWP
-         TovvFWg6jR5lOHQlBzVhFEv2rM92TT9K7Yi68Gu6tZB3o9zL0xAeX/SDjJqiU8voDOnZ
-         hmGceVeZzb5fkiQtySpEwcS0X6rUrnsnLRzmddO7btYf1gWE6dh0XGQUb3I7XWVRRlk3
-         PApqJ9/9g5tnYlUVgx1yX3YIb0gFbhcdIXiQpKbzlInj59AbnuLesVhCX57Iq634i1BH
-         gXdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=3sLm25jIQSk7rDswJ7nm7MzjIjpQ5GTpDt2LVp0DOeM=;
-        b=E8SN0JbGBxMSkBgtNTKY2eyHZDajQ9Z4I2NCMQrBkWdQDNoaY8ZVsqk1hRyaxLcmhn
-         LkMfYAUCpRZEoRwUA5JdlV0Z3G9vKOKYOCck+MQGBIa2ZoUP5x1iQ66N7vksIVAaQlvT
-         y1mEhY5hxIUkAa8kQFn/rnTJWrL0IGGfaHmNanpW9NJxpSKXb/u8zcZWEdfEH8UJMjrq
-         n0Gje798anc5dd6NZ1PQ9fHXMeHuF+RDLQoy+19OQCHxKNz1PUKuF8+RDdHHOFseaGH3
-         ayEwVijy43efXkzIXKF/N9HzODaKC0f2ltAYfdXeSMPGhcmTMj23h4cKNKW8jpHNWIFh
-         Gs3w==
-X-Gm-Message-State: AE9vXwPsP3WC37auHjITPwgqencOLn361EjjZ1h9IxGkMpf2lC78ncwkX58XCx9kcEbKbw==
-X-Received: by 10.194.80.34 with SMTP id o2mr19201456wjx.61.1472905516108;
-        Sat, 03 Sep 2016 05:25:16 -0700 (PDT)
-Received: from [192.168.1.26] (ewi71.neoplus.adsl.tpnet.pl. [83.20.232.71])
-        by smtp.googlemail.com with ESMTPSA id id1sm15199451wjb.21.2016.09.03.05.25.14
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 03 Sep 2016 05:25:15 -0700 (PDT)
-Subject: Re: [RFC/PATCH 2/2] WIP xdiff: markup duplicates differently
-To:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-References: <20160903033120.20511-1-sbeller@google.com>
- <20160903033120.20511-3-sbeller@google.com>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <eb88af2c-d7b1-295e-5f23-a85045bde753@gmail.com>
-Date:   Sat, 3 Sep 2016 14:25:08 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S1753541AbcICNRv (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Sep 2016 09:17:51 -0400
+Received: from mout.gmx.net ([212.227.17.22]:65487 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753910AbcICNRu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Sep 2016 09:17:50 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MKpQ4-1bgAp739KS-0004wr; Sat, 03 Sep 2016 15:17:29
+ +0200
+Date:   Sat, 3 Sep 2016 15:17:28 +0200 (CEST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org
+Subject: [ANNOUNCE] Git for Windows 2.10.0
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <20160903033120.20511-3-sbeller@google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; BOUNDARY="8323329-993968711-1472908649=:129229"
+Message-ID: <0MZD0K-1bNOQ13s6O-00Ku7h@mail.gmx.com>
+X-Provags-ID: V03:K0:UITREIGZnyiS/aVGoDLKpDzyCQSygbRdj+PtBiPrmd2OhrGlv3L
+ es5pys3xKX72ik5UbmBk84fq1jVJOXZrvgrpcymq1Q4huAOyeOSOi8Qdw5wEUEhvzF6x5Cv
+ cw3aMLrZAQBlHDyzhrUdv2QQ/pqfPBjcu9Q5DrRVTVu51ojfHk1D4SZQXNBMqIEwsNNhCYc
+ 4ufhQNdC5B4UXAgc+gdWQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:JOYoSzF/tMM=:SQTEwatVKm3sFoirbED31u
+ Yw75uvQlQ4/wsqM0/jkOm+kJ63xOyVst0uPixGaDXzOJkEDtkzNXxTo2TxagZDbvGYTGO6dd9
+ dnKiK4dAbp9q3xV4EJXwzBHcnCUr2yf8W0ECpnaJ7x0XCcuVNjX+DRe00gDSry9qh94vU1H5x
+ lcIJQmgk0rNgJ6/XLD3FO3lceEXDXwrHDwNWVWnxxlFID7Zgh/RjGUPAA5idS8zuN1H6OTqA4
+ 6+aR0dgXtsjGx1NQga9WyCd5yGXHhtSYzuEmtw9mghU5SOE9Eq6QEZHEPDb8q2B8ODmA1c3pJ
+ yaXoQduWLTn6F9bAkGNhZU1jlBvtuol1c/vObAcXkwg246tWGlGuhaOR5iqLajmnZ0v9u4UJy
+ hU0AwLh4CYpB8C4HVf9JoNWGjBXhu3/SXh9LmC3H9XMe6t+cVjyLrqsgcdxRPmN6KsKWsucUV
+ t70IR0YoUJUBgKLLCnU/ceArOtMuYQ0SHAQCr9aKvQ803q/7UW15GVQH/1CvJ1G6/sPIJZ0Gf
+ Gj9SAahswXzfbZKtm85gGuBwSo2b+37Pzc/agRTG/QRAKsh2adsnT3G1goRw0Raas6YWI7GDj
+ F4MzL2zuWed1xbK3gXZ/ySOu9ZuNLECGy1c5IPHOl7KWQV8yu+INWixnKEn8xpffY6cVO3qi8
+ JjbP8jD24SoqAlUbinlrNvQdQoEXlzU8VHR6Q4NymOJq5XlH8xvpM/bSInKzIniXgjSJF3oaD
+ GnHvAG4Oz3dp1y6J12btETtHGXXxI549gxlWl31tdL3zOsBULx3eAU9vkTHcTxPAaQzKBwhiV
+ vMzoZJt
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 03.09.2016 o 05:31, Stefan Beller pisze:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> When moving code (e.g. a function is moved to another part of the file or
-> to a different file), the review process is different than reviewing new
-> code. When reviewing moved code we are only interested in the diff as
-> where there are differences in the moved code, e.g. namespace changes.
-> 
-> However the inner part of these moved texts should not change.
-> To aid a developer reviewing such code, emit it with a different prefix
-> than the usual +,- to indicate it is overlapping code.
+--8323329-993968711-1472908649=:129229
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-What would be this different prefix?
+Dear Git users,
 
+It is my pleasure to announce that Git for Windows 2.10.0 is available.
+This time, I even blogged about it, primarily because I am so excited
+about the speed improvements of rebase -i:
 
-Side note: I wonder if the cousin of unified diff, namely context diff[1],
-is something that we can and should support.
+https://blogs.msdn.microsoft.com/visualstudioalm/2016/09/03/whats-new-in-gi=
+t-for-windows-2-10/
 
-[1]: https://www.gnu.org/software/diffutils/manual/html_node/Context-Format.html
-     https://www.gnu.org/software/diffutils/manual/html_node/Detailed-Context.html
+As always, you can download it from: https://git-for-windows.github.io/
 
-*** lao	2002-02-21 23:30:39.942229878 -0800
---- tzu	2002-02-21 23:30:50.442260588 -0800
-***************
-*** 1,7 ****
-- The Way that can be told of is not the eternal Way;
-- The name that can be named is not the eternal name.
-  The Nameless is the origin of Heaven and Earth;
-! The Named is the mother of all things.
-  Therefore let there always be non-being,
-    so we may see their subtlety,
-  And let there always be being,
---- 1,6 ----
-  The Nameless is the origin of Heaven and Earth;
-! The named is the mother of all things.
-! 
-  Therefore let there always be non-being,
-    so we may see their subtlety,
-  And let there always be being,
-***************
-*** 9,11 ****
---- 8,13 ----
-  The two are the same,
-  But after they are produced,
-    they have different names.
-+ They both may be called deep and profound.
-+ Deeper and more profound,
-+ The door of all subtleties!
+Changes since Git for Windows v2.9.3(2) (August 25th 2016)
+
+New Features
+
+  =E2=80=A2 Comes with Git v2.10.0.
+  =E2=80=A2 The git rebase -i command was made faster by reimplementing lar=
+ge
+    parts in C.
+  =E2=80=A2 After helping the end-users to use the new defaults for PATH an=
+d
+    FSCache, the installer now respects the saved settings again.
+  =E2=80=A2 git version --build-options now also reports the architecture.
+
+Bug Fixes
+
+  =E2=80=A2 When upgrading Git for Windows, the installer no longer opens a
+    second window while uninstalling the previous version.
+  =E2=80=A2 Git for Windows' SDK can build an installer out of the box agai=
+n,
+    without requiring an extra package to be installed.
+
+Filename | SHA-256
+-------- | -------
+Git-2.10.0-64-bit.exe | d624e08991a7a28b7156e384503228273e2da4c74c20b21152a=
+97f4a304886da
+Git-2.10.0-32-bit.exe | 5d565da086a0b7aca46face8439146826ddd51ffeb286845be8=
+9fe4c2713d63c
+PortableGit-2.10.0-64-bit.7z.exe | d23b81e88949042d34e97bfd1e5b579d4b6aadec=
+085c6ff6b05c4579da1d49e4
+PortableGit-2.10.0-32-bit.7z.exe | 89940cca2a8e1b18b5ed6e3d46c97ea4fcfe1628=
+cda3ae452cd2a8984a3c25c8
+MinGit-2.10.0-64-bit.zip | 2e1101ec57da526728704c04792293613f3c5aa18e65f13a=
+4129d00b54de2087
+MinGit-2.10.0-32-bit.zip | 36f890870126dcf840d87eaec7e55b8a483bc336ebf8970d=
+e2f9d549a3cfc195
+Git-2.10.0-64-bit.tar.bz2 | 4c98383ed38ba6000cad9d80c1819f686692d90e0042077=
+26085e823f6928ebc
+Git-2.10.0-32-bit.tar.bz2 | 0b132212b858743934d47f40f38e29eef0c1a06c735b0e9=
+889ab6e0d9c195d81
+
+Ciao,
+Johannes
+--8323329-993968711-1472908649=:129229--
