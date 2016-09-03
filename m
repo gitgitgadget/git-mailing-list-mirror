@@ -6,90 +6,79 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8FAF1FBB0
-	for <e@80x24.org>; Sat,  3 Sep 2016 02:22:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FB061FBB0
+	for <e@80x24.org>; Sat,  3 Sep 2016 02:23:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752804AbcICCWF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Sep 2016 22:22:05 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50152 "EHLO
+        id S1752857AbcICCXJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Sep 2016 22:23:09 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54620 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751917AbcICCWE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Sep 2016 22:22:04 -0400
+        with ESMTP id S1751917AbcICCXH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2016 22:23:07 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D5F1D3A4E6;
-        Fri,  2 Sep 2016 22:22:02 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 92ECD3C366;
+        Fri,  2 Sep 2016 22:23:06 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=SiOJS69PgdAAXDzCvNGU44LdiFM=; b=tIFkvC1WcGE7TBuGsXNt
-        DtcxjXZwKAxciWzuIach2r0qRmhlircNwhvAK90pPFS8kZLGcbTi9NQblpysvv+q
-        udaNGa90Z/Jo3L2jhuOkgSQC00LcVHGXUK5y1zaFuxVwaGZHVm5xFIMuj6i6CKdc
-        S+5vgr8U5BBgaW+1h3AJOfo=
+         s=sasl; bh=/rNCDRnbCzimo+bKr/fwnxyocNU=; b=xIF+cIrkBaLMZX48w1u4
+        JuemYv/PalrNTeKBD9CpRwv1nV6F1bAOZm9nKlzO4QCcH+ONKLkHXN+9vlWo7KAy
+        rBnBxPidBC2bXubaNASIr8MdR2Ka+SZLMl2n2tUxu3szFOJ2KMUiioDBUQMWVf5z
+        s521V2aj/uBGMkUWnRw1/Xk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=jipkAZIsDZLtK3uOiR7smp8TXFzQOLNpxg22BGMkSTt52F
-        +lcgW0bQHb2M1jXdH/zSAS3GaHuiAkxkhtCOZTRlLL/wsyIV19Tfvn26Lt9ReRi6
-        zu/f/A9L3NECJFwHxNwjbhMLvfdiguYy5CGiSBQT/h4w86pM4PDXtffngn0w0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CA26A3A4E5;
-        Fri,  2 Sep 2016 22:22:02 -0400 (EDT)
+         q=dns; s=sasl; b=PgA0I1XdVL5rPEHe6Y8QxKA7jeoen6fnXvrgYw9ImJ38JG
+        3mK04dkALTYzCs/YB3huozW71QwtNqX2a1eox10xOHxzXQBzaFATZG3pn/81vyvR
+        cMBiTuCSMuBWeiTzF2HDwPjxr+s8BRKLq1Qmg6zlwveIuV5BIC9/rJQ3nfpnA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8A82F3C365;
+        Fri,  2 Sep 2016 22:23:06 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 476993A4E4;
-        Fri,  2 Sep 2016 22:22:02 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 11F833C364;
+        Fri,  2 Sep 2016 22:23:06 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Philip Oakley" <philipoakley@iee.org>
-Cc:     "Robert Dailey" <rcdailey.lists@gmail.com>,
-        "Git" <git@vger.kernel.org>
-Subject: Re: Fixup of a fixup not working right
-References: <CAHd499AQFDRps6POF2xuUjbYv5DJYxt3DA8aFFArXF=qQEz_CA@mail.gmail.com>
-        <55512A8927384A0790DDC7F526B09053@PhilipOakley>
-Date:   Fri, 02 Sep 2016 19:22:00 -0700
-Message-ID: <xmqq60qdsoxj.fsf@gitster.mtv.corp.google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] sequencer: support folding in rfc2822 footer
+References: <1472846322-5592-1-git-send-email-jonathantanmy@google.com>
+Date:   Fri, 02 Sep 2016 19:23:04 -0700
+Message-ID: <xmqqy439rabb.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 331230B8-717D-11E6-BFA7-51057B1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 5916B496-717D-11E6-9CF4-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> As I understand this it's implied by design. The issue is that the
-> rebase is looking for that named commit within its current rebase
-> range, and can't find it, so ignores it.
->
-> There is a separate issue that all the fixup! fixup! messages are
-> essentially treated as being concatenations of the original fixup!, no
-> matter how many time the fiup is present.
+> Sample-field: multiple-line field body
+>  that causes a blank line below
 
-They can be handled separately, but they come from the same "design"
-that could be improved.  When the "original" is not in the range to
-be rebased for whatever reason (including the most likely one, i.e.
-it has already graduated to become part of the public history), the
-best thing the user could do at that point may be, as you suggested
-to Robert in your message, to turn the "fixup! original" that did
-not make in time before "original" hit the public record into a
-standalone "fix original" follow-up change, and then to squash
-subsequent "fixup! fixup! original" (and other "fixup! original",
-too) into that commit.  And a good direction forward may be to see
-if "rebase -i" can be taught to be more helpful for the user who
-wants to do that.
+I am not sure this is unconditionally good, or may cause problems to
+those with workflows you did not consider when you wrote this patch.
 
-Perhaps a change like this to "rebase -i":
+Not being too lenient here historically has been a deliberate
+decision to avoid misidentification of non "footers".  Does Git
+itself produce some folded footer line?  If Git itself produced such
+folded lines, I'd be a lot more receptive to this change, but I do
+not think that is the case here.
 
- - The search for "original" when handling "pick fixup! original",
-   when it does not find "original", could turn it into "reword
-   fixup! original" without changing its position in the instruction
-   sequence.
+A slightly related tangent.  An unconditionally good change you
+could make is to allow folding of in-body headers.  I.e. you can
+have e.g.
 
- - The search for "original" when handling "pick fixup! fixup!
-   original", could be (probably unconditionally) changed to look
-   for "fixup! original" to amend, instead of looking for "original"
-   as the current code (this is your "separate issue").  The same
-   "if the commit to be amended is not found, turn it into reword"
-   rule from the above applies to this one, too.
+	-- >8 --
+	Subject: [PATCH] sequencer: support in-body headers that are
+         folded according to RFC2822 rules
 
-may be an improvement?
+	The first paragraph after the above long title begins
+	here...
+
+in the body of the msssage, and I _think_ we do not fold it properly
+when applying such a patch.  We should, as that is something that
+appears in format-patch output (i.e. something Git itself produces,
+unlike the folded "footer").
