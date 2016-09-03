@@ -5,20 +5,19 @@ X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,TVD_SPACE_RATIO shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8C4F1F6BF
-	for <e@80x24.org>; Sat,  3 Sep 2016 20:33:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D93B1F6BF
+	for <e@80x24.org>; Sat,  3 Sep 2016 20:33:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932109AbcICUdb (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Sep 2016 16:33:31 -0400
-Received: from nm37-vm9.bullet.mail.gq1.yahoo.com ([98.136.217.45]:46773 "EHLO
+        id S932111AbcICUdd (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Sep 2016 16:33:33 -0400
+Received: from nm37-vm9.bullet.mail.gq1.yahoo.com ([98.136.217.45]:60457 "EHLO
         nm37-vm9.bullet.mail.gq1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753684AbcICUdb (ORCPT
+        by vger.kernel.org with ESMTP id S1753791AbcICUdb (ORCPT
         <rfc822;git@vger.kernel.org>); Sat, 3 Sep 2016 16:33:31 -0400
-X-Greylist: delayed 792 seconds by postgrey-1.27 at vger.kernel.org; Sat, 03 Sep 2016 16:33:31 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=btinternet.com; s=s2048; t=1472934008; bh=lv1iBStmNGICaf+PSQlTyVDY16s+t/TW1/iYUYUvBnU=; h=Date:From:To:Subject:References:From:Subject; b=fPSOqnTsSljmTLJVAFiF1ONe3oRSa1zyv/FGtWp4eNJE3PG2ga+FCsq0DD1GUteklyHCBpeLirTwJ2USbDEBvBMYJdT7nQekCVc6tdbRbIC2KjKXc39t8o98Dpq3d1oVDvJDYIXF2tpO3lsmjnFuhlV7rwjhYoQzUmZq2Y2Oe22hV58hDckyMeq9EFAgTcZQs1BMGBz6a43xdxXUpONqoaaY7mF80+Aw5uOtqz8WSGxYi0OIWiQLPyo27lZepAwBCdMVQ/2RfmdynKOObfE8uZfIKPNLDXVp63Jq/TH5wZKWWXqrEmiwQYN2jy8yU1bb5S5hItiL8NXSKHthZxRgyA==
-Received: from [127.0.0.1] by nm37.bullet.mail.gq1.yahoo.com with NNFMP; 03 Sep 2016 20:20:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=btinternet.com; s=s2048; t=1472934007; bh=lv1iBStmNGICaf+PSQlTyVDY16s+t/TW1/iYUYUvBnU=; h=Date:From:To:Subject:References:From:Subject; b=BJpulm+5PMG1uF2jHQYv1pfrNktwLOO2Eu+gNzrALSAamcIq3zdLJcZOIRQ2Gr/+5mYjWnzKmuO5BadJiDjS45p3W8b5NRm+wGwTHAcnrlIlEQ/HLYMCosjWLRvCaS3/KSBHI92NqtAMdKSR3nnPVTxW6EkJ5t336OB7f5XiMX9eQiK+y6Pkh8UR762XeavuLeyr5OhoF8/fMYsjQIIYnlcKhvFgkVrTu1rgd13IRWW8PUAspYSCorRtQKB7COwfYByb0lozvQ4b2C0cwz9gO+XFjPrjV7n/IgwG16KdbXlm21vMGXpcoYMwk4SLTYauu5SLtc0V+fqg6Dvt/vKpYA==
+Received: from [127.0.0.1] by nm37.bullet.mail.gq1.yahoo.com with NNFMP; 03 Sep 2016 20:20:07 -0000
 Received: from [98.137.12.60] by nm37.bullet.mail.gq1.yahoo.com with NNFMP; 03 Sep 2016 20:17:08 -0000
 Received: from [212.82.98.57] by tm5.bullet.mail.gq1.yahoo.com with NNFMP; 03 Sep 2016 20:17:08 -0000
 Received: from [212.82.98.106] by tm10.bullet.mail.ir2.yahoo.com with NNFMP; 03 Sep 2016 20:17:07 -0000
