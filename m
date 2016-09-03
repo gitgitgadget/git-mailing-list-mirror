@@ -2,102 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C5561F6BF
-	for <e@80x24.org>; Sat,  3 Sep 2016 07:00:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD5391F6BF
+	for <e@80x24.org>; Sat,  3 Sep 2016 07:02:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753471AbcICHA0 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Sep 2016 03:00:26 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54061 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752463AbcICHAZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Sep 2016 03:00:25 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 17BD12F6D8;
-        Sat,  3 Sep 2016 03:00:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zh83qpV5Kx9Hz9IPmk3b8SWzLc8=; b=xiuxwM
-        qdxH/NDvOveR4/9kNEvF3fBgtWBStNa37d2ceoqB3Hu6Cs0j5eoB4UKqSSl5APqR
-        QrLCrA4dy4GUd0ckORNsphyoZH4HMtI3sLpR60YGnj8tvwJrH8z8s6QmrvP2Mv1D
-        GH1aNdHWXgLRv2BiuzUzHftKjTnF2+H6rrd6U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IhNUxFOxQ84+AMfjWTv4nxnfCMn2M2sh
-        xrOikARXFiRZBS2O/TLzJmTObmVQOIleLd5ffr2Xh++XyJCsouopacMhb2VqqfFU
-        ox0b/CxOHH/jgtKNrwqEKM1CGSed2VrBVbQ0bSNdr3iUj1RPmhAm379NeoIJ5Zth
-        Xg+h3YhENqc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0FAFD2F6D6;
-        Sat,  3 Sep 2016 03:00:24 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8A2562F6D3;
-        Sat,  3 Sep 2016 03:00:23 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC/PATCH 0/2] Color moved code differently
-References: <20160903033120.20511-1-sbeller@google.com>
-Date:   Sat, 03 Sep 2016 00:00:21 -0700
-In-Reply-To: <20160903033120.20511-1-sbeller@google.com> (Stefan Beller's
-        message of "Fri, 2 Sep 2016 20:31:18 -0700")
-Message-ID: <xmqqtwdxqxh6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1753276AbcICHCh (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Sep 2016 03:02:37 -0400
+Received: from mout.gmx.net ([212.227.17.20]:62890 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752463AbcICHCg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Sep 2016 03:02:36 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MGB7j-1bu33f3uh5-00FG56; Sat, 03 Sep 2016 09:02:01
+ +0200
+Date:   Sat, 3 Sep 2016 09:01:59 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/9] rebase -i: also expand/collapse the SHA-1s via the
+ rebase--helper
+In-Reply-To: <1472849798.4680.63.camel@kaarsemaker.net>
+Message-ID: <alpine.DEB.2.20.1609030857480.129229@virtualbox>
+References: <cover.1472833365.git.johannes.schindelin@gmx.de>  <fe53c109c757ede9cd1b0d2944d2b5e16575c49b.1472833365.git.johannes.schindelin@gmx.de> <1472849798.4680.63.camel@kaarsemaker.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 15CE16D0-71A4-11E6-A88F-51057B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:4VdriZmZm5hpJ1wkoxaqk/+hUUP0GQPVsrUzFDhrd6btsi6dAik
+ WoOM3aHG9lYlANSxX8xkh8fFrOg3L9YhpvEJAIKhNB6y6DXYMu1urfnwDMyKaOvcLLc5l2B
+ 484g1Q0jQaZ9b6ulRQuRaHtekwHiS2FqRXme7j1T797WVPie/qrFnXvm9yWUa3lLCzv2Vva
+ wFMSDk0pXC2SxaNL7ehqA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:bK1sLEORZXw=:Sa8P7L0RXxYqsYaPH8mtiw
+ Djos2aDWHip+j/AfHTzXb4f2lSjswaAsvEu1V22DS7NM3IVODQS10SxCpMPwFj8um+kpLt0Q0
+ r066IXCXeYfIWaRKto5uqNGJZkGJIhEm9xUOUEnaJ5FO/Wi8P31Ec2vuLG9R4h0eGyKcHIqgt
+ swzqZ/6ub0L1zh1EhhBPs84UHirmhptcB3mp002RR2DEsCONwQ0bP+33HHpmeol7seiwYYEpk
+ fFOejneeHSj6/utsFfJIuzjGnVyb+5wONSHIfyHZzcj4kWrzowhd0+kfghJ4oxT8Q+qU4Amsq
+ bPuxeHt9KevE+Odb7tIyQEt9SOQv+ZJxs5PRBi/VN1SIjqk9dzMWBol1wkD3OA3zGOpJFFe/L
+ ieqleMCyqchpoNfzXc4ZbtEFH1DCkS1JiDkqWa249l5DxTpeONReaqSQ+mTuAKwfKA/wINgWp
+ yc9mvNaFwe9kKmcLuLelADJ1mkKf4e0cM6uPiiPF2VNwGlETyAf3qUM9n3POf8WncZIV9nbab
+ Zad39ZKVEfBJ4II5ZVRd13JExyIFhlislqgnhxGlelFUsAsGOuAgRJ+hmLH90UpiKWMMi3837
+ pY0uAV6NFoB4Q1a3dlfwe0eZvzagqGwsNtW/KhwVcKgsPpEHgfUccnxz9nbf3nFTHJT0hExdt
+ TGQVX515R1zgjPEUjHGbarY5cVtk/qXLlJ/PO82osEhogRjX/AKMR26Cmrho4Ifow+FLODmuW
+ w14Kywfg8mcUlcKCzYmO6j64u6J6R3AMdLf+tcLdAl3LtMowc18ACF7o8F916pX6nOgc4SNMy
+ +491rHV
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Hi Dennis,
 
-> A line is colored differently if that line and the surroundign 2 lines
-> appear as-is in the opposite part of the diff.
->
-> Example:
-> http://i.imgur.com/ay84q0q.png
->
-> Or apply these patches and 
->     git show e28eae3184b26d3cf3293e69403babb5c575342c
->     git show bc9204d4ef6e0672389fdfb0d398fa9a39dba3d5
->     git show 8465541e8ce8eaf16e66ab847086779768c18f2d
+On Fri, 2 Sep 2016, Dennis Kaarsemaker wrote:
 
-I like this as a concept.  Two quick comments are
+> On vr, 2016-09-02 at 18:23 +0200, Johannes Schindelin wrote:
+> > This is crucial to improve performance on Windows, as the speed is now
+> > mostly dominated by the SHA-1 transformation (because it spawns a new
+> > rev-parse process for *every* line, and spawning processes is pretty
+> > slow from Git for Windows' MSYS2 Bash).
+> 
+> I see these functions only used as part of an shorten-edit-expand
+> sequence. Why not do a git rebase-helper --edit-todo instead? Saves
+> another few process spawnings.
 
- * On 1/2, you would also need to teach diff-color-slot the
-   correspondence between the name used by configuration and the
-   enum used as the index into the diff_colors[] array.  I think
-   these are not "DUPLICATE", but "MOVE", so I'd suggest renaming
-   dup-new and dup-old to some words or phrases that have "MOVED"
-   and "TO" or "FROM" in them (e.g. "DIFF_MOVED_FROM",
-   "DIFF_MOVED_TO").
+It would make sense to consolidate the steps, yes. I just tried to be
+careful in my incremental approach and am fairly certain about the current
+revision faithfully replicating the previous behavior.
 
- * On 2/2, doing it at xdiff.c level may be limiting this good idea
-   to flourish to its full potential, as the interface is fed only
-   one diff_filepair at a time.  All the examples you pointed at
-   above have line movement within a single path because of this
-   design limitation.  I do not think 2/2 would serve as a small but
-   good first step to build on top of to enhance the feature to
-   notice line movements across files and the design (not the
-   implementation) needs rethinking.
+> Something for yet another later followup patch?
 
-The idea has a potential to help reviewing inter-file movement of
-lines in 3b0c4200 ("apply: move libified code from builtin/apply.c
-to apply.{c,h}", 2016-08-08).  You can see what was _changed_ in the
-part that has been moved across files with "show -B -M", and
-sometimes that is useful, but at the same time, you cannot see what
-was moved without changing, which often is necessary to understand
-the changes and notice things like "you moved this across files
-without changing, but this and that you did not change need to be
-adjusted".
+Sure. Probably more than one patch, though: I could imagine that a minor
+refactoring would allow us to read in the todo script once, then apply the
+individual processing steps in-memory, and then write out the new todo
+script.
 
-The coloring of "these are moved verbatim" in the style this series
-gives would be very helpful for reviewing such a change.
+And then we can implement an --edit-todo with an optional --initial flag
+that triggers the check for validity and the rearranging of the
+fixup/squash commands (when the user calls `git rebase --edit-todo`,
+neither of those steps should be run).
 
+Maybe you will want to have a look into that while I am mostly offline?
+
+Ciao,
+Dscho
