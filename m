@@ -2,109 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F07071F6BF
-	for <e@80x24.org>; Sat,  3 Sep 2016 06:57:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C5561F6BF
+	for <e@80x24.org>; Sat,  3 Sep 2016 07:00:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752827AbcICG5z (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Sep 2016 02:57:55 -0400
-Received: from mout.gmx.net ([212.227.17.21]:64135 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752463AbcICG5z (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Sep 2016 02:57:55 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MCOdh-1bp7Ry2V73-0095h8; Sat, 03 Sep 2016 08:57:31
- +0200
-Date:   Sat, 3 Sep 2016 08:57:29 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Kevin Daudt <me@ikke.info>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 01/34] sequencer: support a new action: 'interactive
- rebase'
-In-Reply-To: <20160902211332.GA28305@ikke.info>
-Message-ID: <alpine.DEB.2.20.1609030845490.129229@virtualbox>
-References: <cover.1472633606.git.johannes.schindelin@gmx.de> <5ffec2e588a4edc4902e1ab3a2ec3a73a7c3625b.1472633606.git.johannes.schindelin@gmx.de> <20160902211332.GA28305@ikke.info>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1753471AbcICHA0 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Sep 2016 03:00:26 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54061 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752463AbcICHAZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Sep 2016 03:00:25 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 17BD12F6D8;
+        Sat,  3 Sep 2016 03:00:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=zh83qpV5Kx9Hz9IPmk3b8SWzLc8=; b=xiuxwM
+        qdxH/NDvOveR4/9kNEvF3fBgtWBStNa37d2ceoqB3Hu6Cs0j5eoB4UKqSSl5APqR
+        QrLCrA4dy4GUd0ckORNsphyoZH4HMtI3sLpR60YGnj8tvwJrH8z8s6QmrvP2Mv1D
+        GH1aNdHWXgLRv2BiuzUzHftKjTnF2+H6rrd6U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=IhNUxFOxQ84+AMfjWTv4nxnfCMn2M2sh
+        xrOikARXFiRZBS2O/TLzJmTObmVQOIleLd5ffr2Xh++XyJCsouopacMhb2VqqfFU
+        ox0b/CxOHH/jgtKNrwqEKM1CGSed2VrBVbQ0bSNdr3iUj1RPmhAm379NeoIJ5Zth
+        Xg+h3YhENqc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0FAFD2F6D6;
+        Sat,  3 Sep 2016 03:00:24 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8A2562F6D3;
+        Sat,  3 Sep 2016 03:00:23 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC/PATCH 0/2] Color moved code differently
+References: <20160903033120.20511-1-sbeller@google.com>
+Date:   Sat, 03 Sep 2016 00:00:21 -0700
+In-Reply-To: <20160903033120.20511-1-sbeller@google.com> (Stefan Beller's
+        message of "Fri, 2 Sep 2016 20:31:18 -0700")
+Message-ID: <xmqqtwdxqxh6.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:bo8ol9TQ+dflaYQZ+YZw6a1PW7r3S+jsqJM6agc7RV8Z/awxSd4
- DBxCcD/eDiLzRtIUKq2nPbSKh4j1Cg9iLW/wcXz4niRMkk5v4CcFVNY34v3g/gf+6stvDCo
- AGJj73s5LQ5yF7MhAg1t06dAaPR7iSxGugTJHkmA/tlcwqQKZJJ7divGK/TUrdidSLolU+U
- 1cRHDvv3THep1EZbH7G6A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3FMLxyEfD/Q=:jDBB7maf9vHbiKa/piMtRu
- 0iWdQUSxaWULp7tyLdCeVSE3SulV4qxDwDZtwa+T/ZkC/RcCruXBMtnuJlJcQZ6XukLg+Im1b
- puiN8fccAOmGR1ERa0GjULWoAAWJfEfhF2kh303r3UYfL4ar8uQc5hchxssCfU2SOCmksQloF
- TfQgyd7wzOrC0iPCzyFWh+aofFhw0L0LHLGZDunOBy56vqxN/pgjIa5GC7DOHQ9dm7e384ZFA
- M6+LMDy/CLhIeRiLbI6qVQagGBvleQX9UAuBVveuBjrpFUGZEB2/MgCulgwHglUK/98wGySzL
- zYXDE57sK5NBHIccIZNAwB9DxtBuQwgD/re4yp3zTLWTuH6vZru1PXlhFz0vC9KtfKDcQl3ky
- 17rO9oWwsd2+n+88iXkS3eFEddgfe2hDR7PfzeLet3b+dGL6ellhMNkLuFWp5u4R8ncMN2asW
- dFNaavOfP6qE/8l/K1QWsnT0iEdAwSTNehl1iRpetTSklkTsnxMR8ILC2x4lGcQxDnmvbzsdT
- 7/aGdacBRJLvLqrtW5SeX6IUOpTZa5yZlnxcO3+avQIMtyFiDmQlS+PUP8Tlxb+roCZYI7Zq1
- aQzleo7WuM1hOrexLUfhwxIAdiTTWotBVqhaCWLzKR7BS/QzFJEvs0d2S5NVZvYvgegvI79xp
- SmidS5nNXI5iZ2mejeKA3Q1qJWLeE3KfCrSwuNBfb0bm+9sOA98XxRRZ2PtFRDzSXbzvRjaLr
- FaS3S1/yEjO6RxU7oY4AH0G/Ze75JiRXksPGzU4kXK2DvpymKCs+14iHEzbbmAAtL+vvlXtP1
- HFXUpfk
+Content-Type: text/plain
+X-Pobox-Relay-ID: 15CE16D0-71A4-11E6-A88F-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Kevin,
+Stefan Beller <sbeller@google.com> writes:
 
-On Fri, 2 Sep 2016, Kevin Daudt wrote:
+> A line is colored differently if that line and the surroundign 2 lines
+> appear as-is in the opposite part of the diff.
+>
+> Example:
+> http://i.imgur.com/ay84q0q.png
+>
+> Or apply these patches and 
+>     git show e28eae3184b26d3cf3293e69403babb5c575342c
+>     git show bc9204d4ef6e0672389fdfb0d398fa9a39dba3d5
+>     git show 8465541e8ce8eaf16e66ab847086779768c18f2d
 
-> On Wed, Aug 31, 2016 at 10:54:02AM +0200, Johannes Schindelin wrote:
-> > @@ -43,16 +51,20 @@ static GIT_PATH_FUNC(rebase_path_gpg_sign_opt, "rebase-merge/gpg_sign_opt")
-> >  /* We will introduce the 'interactive rebase' mode later */
-> >  static inline int is_rebase_i(const struct replay_opts *opts)
-> >  {
-> > -	return 0;
-> > +	return opts->action == REPLAY_INTERACTIVE_REBASE;
-> >  }
-> >  
-> >  static const char *get_dir(const struct replay_opts *opts)
-> >  {
-> > +	if (is_rebase_i(opts))
-> > +		return rebase_path();
-> >  	return git_path_seq_dir();
-> >  }
-> >  
-> >  static const char *get_todo_path(const struct replay_opts *opts)
-> >  {
-> > +	if (is_rebase_i(opts))
-> > +		return rebase_path_todo();
-> >  	return git_path_todo_file();
-> >  }
-> 
-> This patch fails to apply for me because function is_rebase_i has never
-> been introduced before (no record of it anywhere). Currently, only
-> IS_REBASE_I macro is present.
+I like this as a concept.  Two quick comments are
 
-I did not send out a new iteration of the prepare-sequencer patch series
-(mostly because I wanted reviewers to look at the later patch series,
-rather than re-review a 2nd iteration of something they already saw).
+ * On 1/2, you would also need to teach diff-color-slot the
+   correspondence between the name used by configuration and the
+   enum used as the index into the diff_colors[] array.  I think
+   these are not "DUPLICATE", but "MOVE", so I'd suggest renaming
+   dup-new and dup-old to some words or phrases that have "MOVED"
+   and "TO" or "FROM" in them (e.g. "DIFF_MOVED_FROM",
+   "DIFF_MOVED_TO").
 
-But I did address the concerns mentioned in the review already, of course,
-because part of the reason to show those patch series was to get valuable
-feedback before including the work in Git for Windows v2.10.0.
+ * On 2/2, doing it at xdiff.c level may be limiting this good idea
+   to flourish to its full potential, as the interface is fed only
+   one diff_filepair at a time.  All the examples you pointed at
+   above have line movement within a single path because of this
+   design limitation.  I do not think 2/2 would serve as a small but
+   good first step to build on top of to enhance the feature to
+   notice line movements across files and the design (not the
+   implementation) needs rethinking.
 
-You can find the current iteration of the prepare-sequencer here:
-https://github.com/dscho/git/compare/libify-sequencer...prepare-sequencer
+The idea has a potential to help reviewing inter-file movement of
+lines in 3b0c4200 ("apply: move libified code from builtin/apply.c
+to apply.{c,h}", 2016-08-08).  You can see what was _changed_ in the
+part that has been moved across files with "show -B -M", and
+sometimes that is useful, but at the same time, you cannot see what
+was moved without changing, which often is necessary to understand
+the changes and notice things like "you moved this across files
+without changing, but this and that you did not change need to be
+adjusted".
 
-Please note that I will most likely try to address some l10n concerns
-before sending out the next iteration of the patch series.
+The coloring of "these are moved verbatim" in the style this series
+gives would be very helpful for reviewing such a change.
 
-The patch introducing is_rebase_i() (and no longer IS_REBASE_I()) is:
-https://github.com/dscho/git/commit/76d272020bb72618957308f06083c807efe59aca
-
-If you want to have the latest iteration of the entire patch thicket, just
-`git fetch https://github.com/dscho/git interactive-rebase`. I update that
-more frequently than I send out updates via mail.
-
-Ciao,
-Johannes
