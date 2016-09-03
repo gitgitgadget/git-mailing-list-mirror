@@ -2,117 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A7BB41FBB0
-	for <e@80x24.org>; Sat,  3 Sep 2016 00:52:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 283E01FBB0
+	for <e@80x24.org>; Sat,  3 Sep 2016 00:56:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752335AbcICAwz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Sep 2016 20:52:55 -0400
-Received: from mail-qk0-f179.google.com ([209.85.220.179]:34036 "EHLO
-        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751917AbcICAwz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Sep 2016 20:52:55 -0400
-Received: by mail-qk0-f179.google.com with SMTP id t7so138098361qkh.1
-        for <git@vger.kernel.org>; Fri, 02 Sep 2016 17:52:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=/24lzIGjm8bv+FxC8FOY2DRnkLc5dK0UwqEp8s4svhM=;
-        b=Mrwp0itjDt2II6fmJJfdlQMbmFq4VHzqANzQ03MFPG4toccCXaZAohou8cnq5TACsg
-         2rcAEISwmSlPSYIW2L4OoFJLbkHvos96YfonbIQ7N8OnD7Phf/2/Hh4bqmizi6YtcmuR
-         +j5XY2PS+Arh+5da9DB4UWRbKdJ3Gr8cLa3/bsREnFsixQCs7osOxyLe1ISK7lATQSdV
-         qcTzm3nBMEGKnOcr6Pss5+JXtfS2upYB+oKjP3V7UVE25c0zvgH6IhWeZ166C1DFenoa
-         WgNiDFmaLAmrS9tlvavw3dElAKwQ5oxtU/9jUtxw5EJMGO4srWbFjZNbuGBRWlD7bPGi
-         kIYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=/24lzIGjm8bv+FxC8FOY2DRnkLc5dK0UwqEp8s4svhM=;
-        b=Lxm68JCjm0xgWfuNULrHXnsplX1JoHWXdv45v7eJPw6oqHovlvt2ujOihJ+pg0OblK
-         iGmh9ZDWNvdSzv7WsRFJotZYzSQ1Np9fsK2EzwmMOYma+jUpJyk3W8R6VdixGUS8Pv9Q
-         GmscYKCCTBLKmNnbCETh8xKOjm6gbxSuXry6KYn+jEof/IDb/tUJgxuW793cnii1BiwB
-         OExAFTxz9EW0eUU3m2s89Z/fk5Sk1gFlzmE3ZLNRd72Ehdu1TNwOaYySlq9yiKTw9orq
-         usU4psdtPP25qtg8BAtDZjaEEJZzfKUM9Da1cbIjz7Nl9b1tRvgc3HF0XEZvQnFbJlMZ
-         0Osg==
-X-Gm-Message-State: AE9vXwPilFiYkYzmGtgs2q1TQrcLD6l7coy4AA13ZGtNX4V6xra6lyU3Dho/F2YhUFjl2Q8MJJU1evyhoWmxxw==
-X-Received: by 10.55.78.17 with SMTP id c17mr25071657qkb.168.1472863974000;
- Fri, 02 Sep 2016 17:52:54 -0700 (PDT)
+        id S1752384AbcICA45 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Sep 2016 20:56:57 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37333 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751765AbcICA44 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2016 20:56:56 -0400
+Received: (qmail 6750 invoked by uid 109); 3 Sep 2016 00:56:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 03 Sep 2016 00:56:56 +0000
+Received: (qmail 30633 invoked by uid 111); 3 Sep 2016 00:57:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 02 Sep 2016 20:57:02 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Sep 2016 20:56:53 -0400
+Date:   Fri, 2 Sep 2016 20:56:53 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        spearce@spearce.org, sbeller@google.com
+Subject: Re: [PATCH v2 2/2] connect: advertized capability is not a ref
+Message-ID: <20160903005653.vzt3vel25vino7yk@sigill.intra.peff.net>
+References: <cover.1472836026.git.jonathantanmy@google.com>
+ <cover.1472853827.git.jonathantanmy@google.com>
+ <174c8ca6638f1cd3145a628925e65655b56af366.1472853827.git.jonathantanmy@google.com>
+ <20160902233547.mzgluioc7hhabalw@sigill.intra.peff.net>
+ <20160902235145.GI14758@google.com>
 MIME-Version: 1.0
-Received: by 10.200.41.241 with HTTP; Fri, 2 Sep 2016 17:52:33 -0700 (PDT)
-In-Reply-To: <CAGZ79kYhV30AuXUKtp3oewMpnEk5vD=HvRUJTTFaEdsacu3tGw@mail.gmail.com>
-References: <CAMbP-nS_MM0QXgw183DLQPx1YU1BH8ytKCv86p-JSxzdb2jpQA@mail.gmail.com>
- <CAGZ79kYhV30AuXUKtp3oewMpnEk5vD=HvRUJTTFaEdsacu3tGw@mail.gmail.com>
-From:   Brian Levinstein <blevinstein@gmail.com>
-Date:   Fri, 2 Sep 2016 17:52:33 -0700
-Message-ID: <CAMbP-nR9fE0FBaFof6ajMbDFViKwpi4iX3mD0i6cReFveOB2zw@mail.gmail.com>
-Subject: Re: Bug Report: Too many untracked files (gitignore)
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20160902235145.GI14758@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The patterns in question do contain a slash, although they don't start
-with a slash.
+On Fri, Sep 02, 2016 at 04:51:45PM -0700, Jonathan Nieder wrote:
 
-I tried changing it to "!/.vim/colors/*" as you recommended, with no
-change in behavior. I even tried adding a leading slash to every
-pattern in gitignore, with no effect.
+> > I'd be more interested in the pain of this transition if there was a
+> > concrete use case for "hide literally all refs, but still allow
+> > fetches". Is that a thing that people do?
+> 
+> Sure, it is a thing that people do.  For example I've seen replication
+> systems that learn what SHA-1s to fetch out-of-band and then use this
+> approach to avoid the overhead of a long ref advertisement.
 
-Removing the line with "!/.vim/colors/*" still fixes the problem.
+I know that's how those features work. I was more wondering if it ever
+comes up that somebody actually has hidden refs, but _no_ non-hidden
+ones. Do the systems you've seen hide all the refs?
 
-Brian Levinstein
-blevinstein@gmail.com | bpl4ab@virginia.edu
-(703) 673-8711
-Google | Software Engineer
-University of Virginia | MS Commerce 2014
-University of Virginia | BS Computer Science 2013
-Alpha Tau Omega | Delta Chapter
-http://www.linkedin.com/pub/brian-levinstein/14/620/6ba
-https://github.com/blevinstein
+> However, that is not my motivation.  My motivation is being able to
+> extend the protocol in the future.  The capabilities line has been
+> important for that historically.
 
+Sure, I agree it's a nice move forward for compatibility. But that
+argues for teaching the clients to handle it (for the future), and then
+turning it on in the server only when it becomes useful (i.e., the "in a
+year or so" can become "when we find a use for it").
 
-On Fri, Sep 2, 2016 at 4:58 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Fri, Sep 2, 2016 at 4:06 PM, Brian Levinstein <blevinstein@gmail.com> wrote:
->> The relevant repo is here:
->> https://github.com/blevinstein/dotfiles
->>
->> My gitignore file looks like this:
->> https://github.com/blevinstein/dotfiles/blob/2400ca8642a7b454a2bfc54e8402343d008836aa/.gitignore
->> It basically ignores all files, except for specifically whitelisted
->> files. However, when I run "git status" (git version
->> 2.8.0.rc3.226.g39d4020), I see the following untracked files:
->>
->> #       .bash_history
->> #       .bash_logout
->> #       .cache/
->> #       [private]
->> #       [private]
->> #       .profile
->> #       .viminfo
->> #       dev/
->
-> For the specific files to be exclued, I'd recommend starting with a slash, e.g.
->
->     !/.bashrc
->     !/.vim/colors/*
->
-> If the pattern does not contain a slash /, Git treats it as a shell
-> glob pattern and checks
-> for a match against the pathname relative to the location of the
-> .gitignore file (relative
-> to the toplevel of the work tree if not from a .gitignore file).
->
-> See the notes section of https://git-scm.com/docs/gitignore
->
-> So I do not quite see the bug?
->
-> Stefan
+In a similar vein, I'd think that a config to enable this in upload-pack
+today could have an "auto" mode, which enables it _only_ when you know
+something productive might come of it (namely that you have hidden refs,
+one of the uploadpack.allow* features is enabled, and the ref
+advertisement is empty). Then requests which could not benefit from it
+at all do not have to pay the potential compatibility cost.
+
+> Do you have any objection to the server gaining support for this
+> guarded by a configuration option?  Then when the time comes to
+> consider flipping the default we can use real-world statistics about
+> what git client versions people use to make an informed decision.
+
+Guarded by config, no. It's the flipping of the default I care more
+about. The config is not necessary in the meantime for getting
+real-world statistics; you can add the config and flip the default as
+one unit at any time (the thing that is time-critical is teaching the
+client to handle _both_ cases gracefully).
+
+The config is useful in the meantime if there are people who could
+benefit from it immediately, and don't mind paying the compatibility
+cost. With an "auto" as I described above, using that as the default
+seems like a decent interim behavior (i.e., why would you set up such a
+repository if you didn't expect most clients to use the allowTipSHA1
+feature?). I'd still probably give some lag between shipping the client,
+and flipping the server default to "auto".
+
+I hoped to share some numbers on what versions people are currently
+using against GitHub, to get a sense of how far back most people are.
+But I haven't been actively involved in keeping those numbers for a
+while, and I'm not sure what we have readily stored. I did show some
+numbers a few years ago[1], and it looks like about 2/3 of people were
+within 6-12 months of the latest version, but the rest was a long tail.
+
+I don't know if that will have changed with the advent of more client
+versions (e.g., lots more people are using libgit2 now via GUI clients,
+Visual Studio, etc; how does it fare with the proposed change?).
+
+-Peff
+
+[1] http://public-inbox.org/git/20120531114801.GA21367@sigill.intra.peff.net/
