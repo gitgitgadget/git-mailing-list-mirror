@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,BODY_8BITS,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6854F1F6BF
-	for <e@80x24.org>; Sat,  3 Sep 2016 14:44:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 940511F6BF
+	for <e@80x24.org>; Sat,  3 Sep 2016 14:45:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753296AbcICOou (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Sep 2016 10:44:50 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:36498 "EHLO
-        mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753146AbcICOot (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Sep 2016 10:44:49 -0400
-Received: by mail-pa0-f54.google.com with SMTP id fu3so41130131pad.3
-        for <git@vger.kernel.org>; Sat, 03 Sep 2016 07:44:49 -0700 (PDT)
+        id S1753487AbcICOp2 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Sep 2016 10:45:28 -0400
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:33073 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753146AbcICOp1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Sep 2016 10:45:27 -0400
+Received: by mail-pf0-f175.google.com with SMTP id g202so28257416pfb.0
+        for <git@vger.kernel.org>; Sat, 03 Sep 2016 07:44:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=518sPJzdnpVs7u7ehEkDni6fVFq2o5UoOwDdmBgGeWA=;
-        b=wBEVFFbpVYj+HgvYI5HqI5UiX7AarKd6UNsdfmK261EN8B2/ERStzdv/w9vJ9ZnuGK
-         0QQPp/r1SkoyCP2tactI8sDorfaiW/TdX9uY03sh2kmZooIb+Bz5YUVA1YP+8rGeCE6q
-         837knRfjTeZ5LVifaXKDNhpELDiEVygvUyaxCl5vuH0R738BC3iy3+FCA6ExcChQp7TK
-         +Vy1lOJvoDpVme/mfQT1pPjnusFZ48YSCr+Eg38/nBdQNNvuReBhbcNoZ8WVKgUMih8m
-         AUpaTc1tq4mzDbRWrt6EiPbr0yLfgwKTrvnloHtXu51YkTvFGIfMLl1Tyv4cD8WcF1ux
-         klVw==
+        bh=PA90qJSn3RRJqZ3NcgbeSMfJk2T1nmcF9xgM4XFhV9M=;
+        b=ZvjFNVLnLoVMvDmH5URIFOczvKLEOmmnXUkYJYAgNXh/cUjvzDyivZsXPBX2l7BVFW
+         1eS1vt1P1C0rrQwZLh4do3TJN4r4fLScNpeXVpz0f2xWalIajy6UpuO9W88Y1ztpsQ6D
+         AyBDO+PDsVI1EXFCmN/iADsYRgobS3Z4jWbgpXlLu8y6q9RAXK1hABpA/aJE21jcu4ho
+         Crp+oJyp3k8G/+V8wP4km7VjlMXgNumyz0aoX86mVWZJ71mrF4SCtbN/Sz6dnThDiY+F
+         sRk9+XtdJe+nI8ZFf/to/mm2qx5q6YQorM4vNHeiLXB0l16QpLdWdnUQxDzcG+BAOu9b
+         wV0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=518sPJzdnpVs7u7ehEkDni6fVFq2o5UoOwDdmBgGeWA=;
-        b=V9ExaD6iYPAccKOozGn5LgfUtxXtnHyVIk6tdfUJmoaANb+u0L2OpQo/8m705y492T
-         +Q3FXkJbqyJBgwL3mrvnb2tknJjx3k16uFv2xM8mqwoDxWtmCZ2Iu8zTbTI/MZjFNdvn
-         qz07zgLFgf/GrJn2/OaB7fVIF89RfxG6wesop821t/gtwmUxJFzVB2piyS9nfxB8xtBd
-         WXdaa7SIcGSo42kOf1nBuY2Xbz7ZWmKqKtwLkwPW7PcAJ1d+KklMt2PTBFRCRKeH3Icy
-         olMz7OWLT1ne9WPkihrtiraaCn9plc2xe6aaUdG6/UqO/A9/NwqkdefxIHad2/6Ag1Vw
-         r+YQ==
-X-Gm-Message-State: AE9vXwMSIuHOSsMjJNPvqx4Yms4SRoRYYClKEsfU8G5VcSXdL0cJvb3Bnvra8FHDPci9dw==
-X-Received: by 10.66.193.163 with SMTP id hp3mr46706427pac.73.1472913889065;
-        Sat, 03 Sep 2016 07:44:49 -0700 (PDT)
+        bh=PA90qJSn3RRJqZ3NcgbeSMfJk2T1nmcF9xgM4XFhV9M=;
+        b=gETl1qE6Fb5RxOpSXbQpRHIz6weWVZMqmr8GZFvQCYV4QTv/Q6ifi8MGDzxqdiM5dY
+         r63qP5oEdrThqlpzdBUMati5/rUUcFh6piV9HKw9WXf6zrrWp3YylZiED2PVj0mFA9Eh
+         Cw1m4jlJ3KVS/HYO7qi2DQATquonFUkdbDmQKQt0zP92eYaCrdXeIzcNUlxoo9m2HbEy
+         /w6LTezN23tKmL+37FOtjYa1aLEWUenrxJAAeROaZPkz7plyaU/3mDe1MoJKfIKKq/Ob
+         Fvn89dZmEv4Oj9U7PeSfsEa2pKIzTRWSpHxI6+KIM0G1ecvs9kNXf0C/3BhQDb5VNbiL
+         kK6Q==
+X-Gm-Message-State: AE9vXwOvAWBaJ9lvwFJJslx4nurZRJ/aDy8DYC2XQoMK6YwLT1DRFbr1LIn9H4XsV2OiMQ==
+X-Received: by 10.98.79.27 with SMTP id d27mr46231578pfb.127.1472913894513;
+        Sat, 03 Sep 2016 07:44:54 -0700 (PDT)
 Received: from localhost.localdomain (i60-35-214-133.s41.a017.ap.plala.or.jp. [60.35.214.133])
-        by smtp.gmail.com with ESMTPSA id p74sm6755840pfk.68.2016.09.03.07.44.46
+        by smtp.gmail.com with ESMTPSA id p74sm6755840pfk.68.2016.09.03.07.44.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 03 Sep 2016 07:44:48 -0700 (PDT)
+        Sat, 03 Sep 2016 07:44:53 -0700 (PDT)
 From:   Satoshi Yasushima <s.yasushima@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Pat Thoyts <patthoyts@users.sourceforge.net>,
         Satothi Yasushima <s.yasushima@gmail.com>
-Subject: [PATCH 2/6] git-gui: The term unified for blame in Japanese
-Date:   Sat,  3 Sep 2016 23:43:38 +0900
-Message-Id: <1472913822-9088-2-git-send-email-s.yasushima@gmail.com>
+Subject: [PATCH 4/6] git-gui: Add Japanese language code
+Date:   Sat,  3 Sep 2016 23:43:40 +0900
+Message-Id: <1472913822-9088-4-git-send-email-s.yasushima@gmail.com>
 X-Mailer: git-send-email 2.8.2.windows.1
 In-Reply-To: <1472913822-9088-1-git-send-email-s.yasushima@gmail.com>
 References: <1472913822-9088-1-git-send-email-s.yasushima@gmail.com>
@@ -67,31 +67,22 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Satoshi Yasushima <s.yasushima@gmail.com>
 ---
- po/ja.po | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ po/ja.po | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/po/ja.po b/po/ja.po
-index 8a2c16f..b692b5c 100644
+index b140e8b..23974cc 100644
 --- a/po/ja.po
 +++ b/po/ja.po
-@@ -598,7 +598,7 @@ msgstr "文脈を見せる"
- 
- #: lib/blame.tcl:291
- msgid "Blame Parent Commit"
--msgstr "親コミットを註釈"
-+msgstr "親コミットを注釈"
- 
- #: lib/blame.tcl:450
- #, tcl-format
-@@ -2052,7 +2052,7 @@ msgstr "コピーを検知する最少文字数"
- 
- #: lib/option.tcl:151
- msgid "Blame History Context Radius (days)"
--msgstr "註釈する履歴半径（日数）"
-+msgstr "注釈する履歴半径（日数）"
- 
- #: lib/option.tcl:152
- msgid "Number of Diff Context Lines"
+@@ -11,7 +11,7 @@ msgstr ""
+ "PO-Revision-Date: 2010-02-02 19:03+0900\n"
+ "Last-Translator: しらいし ななこ <nanako3@lavabit.com>\n"
+ "Language-Team: Japanese\n"
+-"Language: \n"
++"Language: ja\n"
+ "MIME-Version: 1.0\n"
+ "Content-Type: text/plain; charset=UTF-8\n"
+ "Content-Transfer-Encoding: 8bit\n"
 -- 
 2.8.2.windows.1
 
