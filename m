@@ -2,103 +2,285 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,URIBL_RED shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D0DD1FBB0
-	for <e@80x24.org>; Sat,  3 Sep 2016 02:03:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1F941FBB0
+	for <e@80x24.org>; Sat,  3 Sep 2016 02:17:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753149AbcICCDw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Sep 2016 22:03:52 -0400
-Received: from mail-vk0-f53.google.com ([209.85.213.53]:33867 "EHLO
-        mail-vk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752805AbcICCDw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Sep 2016 22:03:52 -0400
-Received: by mail-vk0-f53.google.com with SMTP id v189so38183138vkv.1
-        for <git@vger.kernel.org>; Fri, 02 Sep 2016 19:03:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=pA1mIRLtJwcqqjQoUKTAyESSlO8JxF3IBw8jADUDNOc=;
-        b=fD1DL52weekwpBInsXPo4mWZUZKaBjVn+ptFcXrDtrhjBsRxvX2HvxD0zRKhBE47OB
-         dmYzTJPltN2BfSlbaqlfbPOASNnc2pnV+3BjzoAB0DI2fgMStKAYsa+wbajeR7ndKsCe
-         WCKqRAr9+tlQFJXT9xk6hbSpaMcpoySE1TIpM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=pA1mIRLtJwcqqjQoUKTAyESSlO8JxF3IBw8jADUDNOc=;
-        b=LsIwtC7lXFfc8zpuleHfkhL2+UEzBgGY27RHSAMNXHqHUufjZBKij98RV7aTrhL/1r
-         na7jiHM6i4W6gJL8WzAlNzGHUEqoAdlijxMZ+SiN4mkkHs7U9l8Wzln5OmJYuJDQb3DD
-         zFQK+R6tyMZI8oJ8CDyZgx3iMs9TJrlZNl5NsUS4PbiWdGp6sQA5QJcZzrSLaV/stk3V
-         gfxfPEGZ/c0JgY+k1Stm111XqM7tU0W0O3sMq5aN/yWgcScRSYRR/oQf3gBXaxQPY1DG
-         UhJupmEixvs3qHauEDw6pjt+PxSvIvKhtKEMu8+c9YAyzA5CqFBqZFhO+dg65IMVDVo2
-         WGRg==
-X-Gm-Message-State: AE9vXwP13eNb4++MwTPwM07nepTeBEt+mOppD0c8FEgQHiv6jIz2MrwDYJlZxBwmeKKv0Jtmjt8cZUIp3IRBUA==
-X-Received: by 10.31.158.200 with SMTP id h191mr16135087vke.127.1472868231248;
- Fri, 02 Sep 2016 19:03:51 -0700 (PDT)
+        id S1753269AbcICCR3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Sep 2016 22:17:29 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55231 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753250AbcICCRS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2016 22:17:18 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CE0B33A463;
+        Fri,  2 Sep 2016 22:17:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=K
+        5lP041kGZAwjIvZbW84A5oPVPQ=; b=NhH7MijKNpbk63Us3O8kKTJuqHkHJ8oSw
+        e7kurrN8cdQ7xD1pJOgrWoJB3PZzE7jSJFaRxJXxEPPpgLx4gUWW49hMipn8T0UD
+        D3y+dXAEAzBQZmk27mFVK+09s4GSGwCiXCjLF7PIhVzAwNe8IaYnoHIgrrG71Uus
+        RS3/utRsfc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=GLZ
+        G9hAmBQgcAGieA5KevYjs+6kQGmk3OVtrimesFlm7zx88goggAc2oPDgaMNLyaSx
+        xutCsc11yRJQwbjv0S4EBziF1JN+Xbd/Xy0ZFRreEURxWYQOLTyEvGNdPk1f7eYw
+        DTW7VXPK8jmPnNaR2YS6qVmRRFdqep1sm2KeYFTU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C6FEB3A462;
+        Fri,  2 Sep 2016 22:17:16 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 342B73A461;
+        Fri,  2 Sep 2016 22:17:16 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: A note from the maintainer
+Date:   Fri, 02 Sep 2016 19:17:14 -0700
+Message-ID: <xmqqmvjpsp5h.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.103.133.210 with HTTP; Fri, 2 Sep 2016 19:03:30 -0700 (PDT)
-In-Reply-To: <20160902201321.35egsg5l6r2fvrtw@sigill.intra.peff.net>
-References: <cover.1472836026.git.jonathantanmy@google.com>
- <2bea354c6218a33db3972e42baa75676fdcbc598.1472836026.git.jonathantanmy@google.com>
- <20160902201321.35egsg5l6r2fvrtw@sigill.intra.peff.net>
-From:   Shawn Pearce <spearce@spearce.org>
-Date:   Fri, 2 Sep 2016 19:03:30 -0700
-Message-ID: <CAJo=hJtg1h1Zvu-TjMtDYVjPB2n0pihA18q3sHBPQ_ZA4dWRKg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] connect: know that zero-ID is not a ref
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 888E54F0-717C-11E6-A505-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 2, 2016 at 1:13 PM, Jeff King <peff@peff.net> wrote:
->
-> Hmm. So since this is backwards-compatible, I'm not overly concerned
-> with changing the client. But I wonder if you considered that the
-> documentation is wrong, and that JGit should stop sending the extra
-> capabilities line?
+Welcome to the Git development community.
 
-No, JGit needs to keep sending the capabilities^{} line in upload-pack
-if there were no refs advertised to the client. (If it advertises at
-least one ref it does not send this capabilities^{} line.)
+This message is written by the maintainer and talks about how Git
+project is managed, and how you can work with it.
 
-> In either case, there will still be breakage until _somebody_ upgrades
-> (with your patch, until clients upgrade; with a JGit patch, until the
-> server upgrades). So perhaps an interesting question would be: if we
-> were writing this now, what is the correct behavior?
->
-> For pushing, it is obviously useful to send capabilities even though
-> there are no refs (because the client is going to send _you_ something).
-> And that is why "capabilities^{}" exists; it is a receive-pack feature
-> (that is actually implemented!), and the documentation (which came after
-> the implementation) blindly mentioned it for upload-pack, as well.
->
-> Is it useful for upload-pack? If we have no refs, there's traditionally
-> been nothing to fetch. Perhaps that's something that could change,
-> though. For example, there could be a capability to allow fetching
-> arbitrary sha1s (we have allowTIPSH1InWant and allowReachableSHA1InWant,
-> which obviously both require some refs, but allowArbitrarySHA1 does not
-> seem outside the realm of possibility).
+* Mailing list and the community
 
-Its exactly these sort of extra capabilities. We run JGit in modes
-where "out of band" (e.g. URL or higher level protocol framing like an
-undocumented HTTP header) allows the fetch-pack client to say "do not
-send me advertisements, but I want to learn your capabilities". The
-fetch-pack client typically activates the allow-reachable-sha1-in-want
-feature and names specific SHA-1s it wants.
+The development is primarily done on the Git mailing list. Help
+requests, feature proposals, bug reports and patches should be sent to
+the list address <git@vger.kernel.org>.  You don't have to be
+subscribed to send messages.  The convention on the list is to keep
+everybody involved on Cc:, so it is unnecessary to say "Please Cc: me,
+I am not subscribed".
 
-This allows the fetch-pack client to bypass a very large advertisement
-if it wants only a specific SHA-1 and doesn't care about the ref name
-its bound to, or reachable through.
+Before sending patches, please read Documentation/SubmittingPatches
+and Documentation/CodingGuidelines to familiarize yourself with the
+project convention.
+
+If you sent a patch and you did not hear any response from anybody for
+several days, it could be that your patch was totally uninteresting,
+but it also is possible that it was simply lost in the noise.  Please
+do not hesitate to send a reminder message in such a case.  Messages
+getting lost in the noise may be a sign that those who can evaluate
+your patch don't have enough mental/time bandwidth to process them
+right at the moment, and it often helps to wait until the list traffic
+becomes calmer before sending such a reminder.
+
+The list archive is available at a few public sites:
+
+        http://public-inbox.org/git/
+        http://marc.info/?l=git
+        http://www.spinics.net/lists/git/
+
+For those who prefer to read it over NNTP:
+
+	nntp://news.gmane.org/gmane.comp.version-control.git
+        nntp://news.public-inbox.org/inbox.comp.version-control.git
+
+are available.
+
+When you point at a message in a mailing list archive, using its
+message ID is often the most robust (if not very friendly) way to do
+so, like this:
+
+	http://public-inbox.org/git/Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org
+
+Often these web interfaces accept the message ID with enclosing <>
+stripped (like the above example to point at one of the most important
+message in the Git list).
+
+Some members of the development community can sometimes be found on
+the #git and #git-devel IRC channels on Freenode.  Their logs are
+available at:
+
+        http://colabti.org/irclogger/irclogger_log/git
+        http://colabti.org/irclogger/irclogger_log/git-devel
+
+There is a volunteer-run newsletter to serve our community ("Git Rev
+News" http://git.github.io/rev_news/rev_news.html).
+
+Git is a member project of software freedom conservancy, a non-profit
+organization (https://sfconservancy.org/).  To reach a committee of
+liaisons to the conservancy, contact them at <git@sfconservancy.org>.
 
 
-This is also perhaps a stepping stone towards "client speaks first".
-If we can later standardize an HTTP query parameter or extra HTTP
-header, the server may be able to avoid sending a lot of ref
-advertisements, but would still need to advertise capabilities.
+* Reporting bugs
+
+When you think git does not behave as you expect, please do not stop
+your bug report with just "git does not work".  "I used git in this
+way, but it did not work" is not much better, neither is "I used git
+in this way, and X happend, which is broken".  It often is that git is
+correct to cause X happen in such a case, and it is your expectation
+that is broken. People would not know what other result Y you expected
+to see instead of X, if you left it unsaid.
+
+Please remember to always state
+
+ - what you wanted to achieve;
+
+ - what you did (the version of git and the command sequence to reproduce
+   the behavior);
+
+ - what you saw happen (X above);
+
+ - what you expected to see (Y above); and
+
+ - how the last two are different.
+
+See http://www.chiark.greenend.org.uk/~sgtatham/bugs.html for further
+hints.
+
+If you think you found a security-sensitive issue and want to disclose
+it to us without announcing it to wider public, please contact us at
+our security mailing list <git-security@googlegroups.com>.  This is
+a closed list that is limited to people who need to know early about
+vulnerabilities, including:
+
+  - people triaging and fixing reported vulnerabilities
+  - people operating major git hosting sites with many users
+  - people packaging and distributing git to large numbers of people
+
+where these issues are discussed without risk of the information
+leaking out before we're ready to make public announcements.
+
+
+* Repositories and documentation.
+
+My public git.git repositories are at:
+
+  git://git.kernel.org/pub/scm/git/git.git/
+  https://kernel.googlesource.com/pub/scm/git/git
+  git://repo.or.cz/alt-git.git/
+  https://github.com/git/git/
+  git://git.sourceforge.jp/gitroot/git-core/git.git/
+  git://git-core.git.sourceforge.net/gitroot/git-core/git-core/
+
+A few web interfaces are found at:
+
+  http://git.kernel.org/cgit/git/git.git
+  https://kernel.googlesource.com/pub/scm/git/git
+  http://repo.or.cz/w/alt-git.git
+
+Preformatted documentation from the tip of the "master" branch can be
+found in:
+
+  git://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
+  git://repo.or.cz/git-{htmldocs,manpages}.git/
+  https://github.com/gitster/git-{htmldocs,manpages}.git/
+
+The manual pages formatted in HTML for the tip of 'master' can be
+viewed online at:
+
+  https://git.github.io/htmldocs/git.html
+
+
+* How various branches are used.
+
+There are four branches in git.git repository that track the source tree
+of git: "master", "maint", "next", and "pu".
+
+The "master" branch is meant to contain what are very well tested and
+ready to be used in a production setting.  Every now and then, a
+"feature release" is cut from the tip of this branch.  They used to be
+named with three dotted decimal digits (e.g. "1.8.5"), but recently we
+switched the versioning scheme and "feature releases" are named with
+three-dotted decimal digits that ends with ".0" (e.g. "1.9.0").
+
+The last such release was 2.10 done on Sep 2nd, 2016. You can expect
+that the tip of the "master" branch is always more stable than any of
+the released versions.
+
+Whenever a feature release is made, "maint" branch is forked off from
+"master" at that point.  Obvious and safe fixes after a feature
+release are applied to this branch and maintenance releases are cut
+from it.  Usually the fixes are merged to the "master" branch first,
+several days before merged to the "maint" branch, to reduce the chance
+of last-minute issues.  The maintenance releases used to be named with
+four dotted decimal, named after the feature release they are updates
+to (e.g. "1.8.5.1" was the first maintenance release for "1.8.5"
+feature release).  These days, maintenance releases are named by
+incrementing the last digit of three-dotted decimal name (e.g. "2.9.3"
+is the third maintenance release for the "2.9" series).
+
+New features never go to the 'maint' branch.  This branch is also
+merged into "master" to propagate the fixes forward as needed.
+
+A new development does not usually happen on "master". When you send a
+series of patches, after review on the mailing list, a separate topic
+branch is forked from the tip of "master" and your patches are queued
+there, and kept out of "master" while people test it out. The quality of
+topic branches are judged primarily by the mailing list discussions.
+
+Topic branches that are in good shape are merged to the "next" branch. In
+general, the "next" branch always contains the tip of "master".  It might
+not be quite rock-solid, but is expected to work more or less without major
+breakage. The "next" branch is where new and exciting things take place. A
+topic that is in "next" is expected to be polished to perfection before it
+is merged to "master".  Please help this process by building & using the
+"next" branch for your daily work, and reporting any new bugs you find to
+the mailing list, before the breakage is merged down to the "master".
+
+The "pu" (proposed updates) branch bundles all the remaining topic
+branches the maintainer happens to have seen.  There is no guarantee that
+the maintainer has enough bandwidth to pick up any and all topics that
+are remotely promising from the list traffic, so please do not read
+too much into a topic being on (or not on) the "pu" branch.  This
+branch is mainly to remind the maintainer that the topics in them may
+turn out to be interesting when they are polished, nothing more.  The
+topics on this branch aren't usually complete, well tested, or well
+documented and they often need further work.  When a topic that was
+in "pu" proves to be in a testable shape, it is merged to "next".
+
+You can run "git log --first-parent master..pu" to see what topics are
+currently in flight.  Sometimes, an idea that looked promising turns out
+to be not so good and the topic can be dropped from "pu" in such a case.
+
+The two branches "master" and "maint" are never rewound, and "next"
+usually will not be either.  After a feature release is made from
+"master", however, "next" will be rebuilt from the tip of "master"
+using the topics that didn't make the cut in the feature release.
+
+Note that being in "next" is not a guarantee to appear in the next
+release, nor even in any future release.  There were cases that topics
+needed reverting a few commits in them before graduating to "master",
+or a topic that already was in "next" was reverted from "next" because
+fatal flaws were found in it after it was merged to "next".
+
+
+* Other people's trees.
+
+Documentation/SubmittingPatches outlines to whom your proposed changes
+should be sent.  As described in contrib/README, I would delegate fixes
+and enhancements in contrib/ area to the primary contributors of them.
+
+Although the following are included in git.git repository, they have their
+own authoritative repository and maintainers:
+
+ - git-gui/ comes from git-gui project, maintained by Pat Thoyts:
+
+        git://repo.or.cz/git-gui.git
+
+ - gitk-git/ comes from Paul Mackerras's gitk project:
+
+        git://ozlabs.org/~paulus/gitk
+
+ - po/ comes from the localization coordinator, Jiang Xin:
+
+	https://github.com/git-l10n/git-po/
+
+When sending proposed updates and fixes to these parts of the system,
+please base your patches on these trees, not git.git (the former two
+even have different directory structures).
