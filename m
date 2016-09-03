@@ -2,123 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5C051FBB0
-	for <e@80x24.org>; Sat,  3 Sep 2016 00:37:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7BB41FBB0
+	for <e@80x24.org>; Sat,  3 Sep 2016 00:52:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752336AbcICAhN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Sep 2016 20:37:13 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:34693 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751211AbcICAhM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Sep 2016 20:37:12 -0400
-Received: by mail-pf0-f193.google.com with SMTP id g202so6388011pfb.1
-        for <git@vger.kernel.org>; Fri, 02 Sep 2016 17:37:12 -0700 (PDT)
+        id S1752335AbcICAwz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Sep 2016 20:52:55 -0400
+Received: from mail-qk0-f179.google.com ([209.85.220.179]:34036 "EHLO
+        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751917AbcICAwz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2016 20:52:55 -0400
+Received: by mail-qk0-f179.google.com with SMTP id t7so138098361qkh.1
+        for <git@vger.kernel.org>; Fri, 02 Sep 2016 17:52:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=T5dS4RAJd+eDgYmEzAW4z6erkPwVtGZYp95K1DHmb3A=;
-        b=czHQ0805jkEXEH9m3V6uMowvzpgF9s6G42guahEJKWJ4GgKgReZ3PRwc2F3fkdY3SQ
-         jMrTaL71n9c7O69+5fPhW49taXUUOapoxr9TFEMZCpV5KaL/ACZ8gcM38FQ6SMXiSV/8
-         idK3Q9eDeGriBLRT6RUiJRmycTZpkYL/WYnq+H5TmjbGqVY/RgKIXyqH4yWPqDiV3I6D
-         Pc5jH6Ugxz4xfPX6L5KeArz8uuQYcmhIb8vQ2FwFYuvOnIg6WPZVzbjzsYh9XRsCBAxJ
-         Mtlt6LRGSlfMax/Qe+02GG7vs4pO4BvqfYSd+i62JvdpjqxOax+bFQF+8jd9bxvkg1rp
-         zQlQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=/24lzIGjm8bv+FxC8FOY2DRnkLc5dK0UwqEp8s4svhM=;
+        b=Mrwp0itjDt2II6fmJJfdlQMbmFq4VHzqANzQ03MFPG4toccCXaZAohou8cnq5TACsg
+         2rcAEISwmSlPSYIW2L4OoFJLbkHvos96YfonbIQ7N8OnD7Phf/2/Hh4bqmizi6YtcmuR
+         +j5XY2PS+Arh+5da9DB4UWRbKdJ3Gr8cLa3/bsREnFsixQCs7osOxyLe1ISK7lATQSdV
+         qcTzm3nBMEGKnOcr6Pss5+JXtfS2upYB+oKjP3V7UVE25c0zvgH6IhWeZ166C1DFenoa
+         WgNiDFmaLAmrS9tlvavw3dElAKwQ5oxtU/9jUtxw5EJMGO4srWbFjZNbuGBRWlD7bPGi
+         kIYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=T5dS4RAJd+eDgYmEzAW4z6erkPwVtGZYp95K1DHmb3A=;
-        b=hYmIiq/d4L3ag9zTp1fg4AxIi4kCJFczMqmEQqQILSqWErqX0mWIb5ZiOgKYMMrQEn
-         h/sS0OumtocR9xlSWmO3DdOloAdINezl3a8CPGC/Z830/wJj4E3e6r8m348zdtlONJR0
-         hQZn48+msGQqyu7Aa9MrS7BniJN9Nkwho6C62psMh38g/FrgyRoKQzIgoNFFv0tY/FdE
-         JJb6ufKBaCw9SqFFSLMbJMOufLlqNZu5FxEZVvKUGAjxfE6SzN+3RecOvhdwIgKSO683
-         J+/n0QPHEx21bOYdT9vk7jotQU/tO+KONhGYJ6DonxBWazR8vziT7LozT1wV7qWz6Ky0
-         VpoQ==
-X-Gm-Message-State: AE9vXwPejAeDlrf0l4RHPigFQbRLyo7xM+jDOPX78aqaRhPTisKQPutrTAaqKgYd/F0Uyw==
-X-Received: by 10.98.108.4 with SMTP id h4mr41405339pfc.128.1472863031966;
-        Fri, 02 Sep 2016 17:37:11 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b10:34:ec2f:e9e8:7f87])
-        by smtp.gmail.com with ESMTPSA id p64sm17362792pfd.11.2016.09.02.17.37.10
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 02 Sep 2016 17:37:10 -0700 (PDT)
-Date:   Fri, 2 Sep 2016 17:37:08 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jeff King <peff@peff.net>, Jonathan Tan <jonathantanmy@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH v2 2/2] connect: advertized capability is not a ref
-Message-ID: <20160903003708.GJ14758@google.com>
-References: <cover.1472836026.git.jonathantanmy@google.com>
- <cover.1472853827.git.jonathantanmy@google.com>
- <174c8ca6638f1cd3145a628925e65655b56af366.1472853827.git.jonathantanmy@google.com>
- <20160902233547.mzgluioc7hhabalw@sigill.intra.peff.net>
- <CAGZ79ka0VvXbkR+JYJwK9oyRzcsDXDoqKXyp4F+moDc4qDuv7w@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=/24lzIGjm8bv+FxC8FOY2DRnkLc5dK0UwqEp8s4svhM=;
+        b=Lxm68JCjm0xgWfuNULrHXnsplX1JoHWXdv45v7eJPw6oqHovlvt2ujOihJ+pg0OblK
+         iGmh9ZDWNvdSzv7WsRFJotZYzSQ1Np9fsK2EzwmMOYma+jUpJyk3W8R6VdixGUS8Pv9Q
+         GmscYKCCTBLKmNnbCETh8xKOjm6gbxSuXry6KYn+jEof/IDb/tUJgxuW793cnii1BiwB
+         OExAFTxz9EW0eUU3m2s89Z/fk5Sk1gFlzmE3ZLNRd72Ehdu1TNwOaYySlq9yiKTw9orq
+         usU4psdtPP25qtg8BAtDZjaEEJZzfKUM9Da1cbIjz7Nl9b1tRvgc3HF0XEZvQnFbJlMZ
+         0Osg==
+X-Gm-Message-State: AE9vXwPilFiYkYzmGtgs2q1TQrcLD6l7coy4AA13ZGtNX4V6xra6lyU3Dho/F2YhUFjl2Q8MJJU1evyhoWmxxw==
+X-Received: by 10.55.78.17 with SMTP id c17mr25071657qkb.168.1472863974000;
+ Fri, 02 Sep 2016 17:52:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79ka0VvXbkR+JYJwK9oyRzcsDXDoqKXyp4F+moDc4qDuv7w@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.200.41.241 with HTTP; Fri, 2 Sep 2016 17:52:33 -0700 (PDT)
+In-Reply-To: <CAGZ79kYhV30AuXUKtp3oewMpnEk5vD=HvRUJTTFaEdsacu3tGw@mail.gmail.com>
+References: <CAMbP-nS_MM0QXgw183DLQPx1YU1BH8ytKCv86p-JSxzdb2jpQA@mail.gmail.com>
+ <CAGZ79kYhV30AuXUKtp3oewMpnEk5vD=HvRUJTTFaEdsacu3tGw@mail.gmail.com>
+From:   Brian Levinstein <blevinstein@gmail.com>
+Date:   Fri, 2 Sep 2016 17:52:33 -0700
+Message-ID: <CAMbP-nR9fE0FBaFof6ajMbDFViKwpi4iX3mD0i6cReFveOB2zw@mail.gmail.com>
+Subject: Re: Bug Report: Too many untracked files (gitignore)
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller wrote:
-> On Fri, Sep 2, 2016 at 4:35 PM, Jeff King <peff@peff.net> wrote:
+The patterns in question do contain a slash, although they don't start
+with a slash.
 
->> I'd be more interested in the pain of this transition if there was a
->> concrete use case for "hide literally all refs, but still allow
->> fetches". Is that a thing that people do?
-[...]
-> Not to derail the discussion to much, but let's talk about protocol v2
-> for a second:
+I tried changing it to "!/.vim/colors/*" as you recommended, with no
+change in behavior. I even tried adding a leading slash to every
+pattern in gitignore, with no effect.
 
-Uh oh. ;-)
+Removing the line with "!/.vim/colors/*" still fixes the problem.
 
->     One of the ideas we floated around for protocol v2 would be exactly
->     that: the server advertises only a small portion (could be just master
->     or no branch eventually) with a capability "v2" and then the client
->     selects that capability and after that there comes protocol 2.
+Brian Levinstein
+blevinstein@gmail.com | bpl4ab@virginia.edu
+(703) 673-8711
+Google | Software Engineer
+University of Virginia | MS Commerce 2014
+University of Virginia | BS Computer Science 2013
+Alpha Tau Omega | Delta Chapter
+http://www.linkedin.com/pub/brian-levinstein/14/620/6ba
+https://github.com/blevinstein
 
-Sounds scary to me.  What would happen when I try to clone a
-repository with a v1 client?  I'd see nothing.  I'd want at least a
-"master" branch with a README file (or an ERR packet?) saying "please
-update your client".
 
->     The advantage of this approach would be have a functional
->     v1 server still running, but the meat is found only in v2: e.g. via
->     v2 you can obtain all pull requests/changes or even wiki/meta
->     information stuff that would be too large to advertise in v1.
-
-This sounds less scary, but it doesn't answer the question Peff
-raised.  Wouldn't it still be typical to advertise at least one ref,
-which can contain a capabilities line?
-
-However, another idea I think you've mentioned before on-list about
-changing the ref advertisement could answer it.  Suppose that I always
-include the ref advertisement in my first reply, but I provide a
-capability saying that further requests to this server can use a
-different mechanism that skips the long advertisement.
-
-Normally that would work great --- I only pay the cost of the large
-advertisement once, and from then on I can cache what the server told
-me about how it prefers to be contacted.  Except what happens if this
-was a new repository and my first contact with the server was to clone
-that empty repository?
-
-In that case, getting capabilities with the ref advertisement would
-benefit me.
-
-Likewise for other capabilities that may come with such an empty
-fetch: for example the server could tell which unborn branch the HEAD
-symref points to.
-
-Thanks,
-Jonathan
+On Fri, Sep 2, 2016 at 4:58 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Fri, Sep 2, 2016 at 4:06 PM, Brian Levinstein <blevinstein@gmail.com> wrote:
+>> The relevant repo is here:
+>> https://github.com/blevinstein/dotfiles
+>>
+>> My gitignore file looks like this:
+>> https://github.com/blevinstein/dotfiles/blob/2400ca8642a7b454a2bfc54e8402343d008836aa/.gitignore
+>> It basically ignores all files, except for specifically whitelisted
+>> files. However, when I run "git status" (git version
+>> 2.8.0.rc3.226.g39d4020), I see the following untracked files:
+>>
+>> #       .bash_history
+>> #       .bash_logout
+>> #       .cache/
+>> #       [private]
+>> #       [private]
+>> #       .profile
+>> #       .viminfo
+>> #       dev/
+>
+> For the specific files to be exclued, I'd recommend starting with a slash, e.g.
+>
+>     !/.bashrc
+>     !/.vim/colors/*
+>
+> If the pattern does not contain a slash /, Git treats it as a shell
+> glob pattern and checks
+> for a match against the pathname relative to the location of the
+> .gitignore file (relative
+> to the toplevel of the work tree if not from a .gitignore file).
+>
+> See the notes section of https://git-scm.com/docs/gitignore
+>
+> So I do not quite see the bug?
+>
+> Stefan
