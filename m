@@ -2,117 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD6251FBB0
-	for <e@80x24.org>; Sun,  4 Sep 2016 06:43:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7B491FBB0
+	for <e@80x24.org>; Sun,  4 Sep 2016 06:48:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752152AbcIDGnK (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Sep 2016 02:43:10 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62975 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752163AbcIDGnI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Sep 2016 02:43:08 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CF14732DD5;
-        Sun,  4 Sep 2016 02:41:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=NbTqHkiUrmDp6Ak5G398FqS4k30=; b=qIVWsL
-        GT7N0Hxvwwwh/G6tLT1rpTa0FXW2c+NCOR+sCUwaADyii3H7ZtWS2kiUKqx25dZb
-        CzL3QgctESM7DHSVYlJacX+kSQ+3nsdM9ejZmE5zvg/mGf1zHHVOrbcIzoRLY1r5
-        Jc4ZT6CORIlm/8qLPA+6kaaIkPWVJ6f9CYllI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=wPbsPAnNwJ0zk/ZHhjNXDL+6EusBdBDB
-        W5BXse5Dtzdv7etpHJrcU+GnOERBYaNuF0O+pu36phhefDnlsONF1mlnf2eeOCiT
-        bd7Q1223Pb7oBEC/nqHe21r9KFFK+WqOYVOlnUBvEbUeJISrrCx/WBSe6JuIAG/m
-        a/CBT2+IAWo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C847532DD4;
-        Sun,  4 Sep 2016 02:41:49 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4CB3A32DD3;
-        Sun,  4 Sep 2016 02:41:49 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [RFC/PATCH 0/2] Color moved code differently
-References: <20160903033120.20511-1-sbeller@google.com>
-        <xmqqtwdxqxh6.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kYGnkcOxviukj9a8gyaERip5aunXcvsdH-UpBCb=vrVeQ@mail.gmail.com>
-Date:   Sat, 03 Sep 2016 23:41:47 -0700
-In-Reply-To: <CAGZ79kYGnkcOxviukj9a8gyaERip5aunXcvsdH-UpBCb=vrVeQ@mail.gmail.com>
-        (Stefan Beller's message of "Sat, 3 Sep 2016 22:23:35 -0700")
-Message-ID: <xmqqpookqi8k.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1752899AbcIDGs2 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Sep 2016 02:48:28 -0400
+Received: from mout.gmx.net ([212.227.17.22]:53221 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750747AbcIDGs1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Sep 2016 02:48:27 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0Li1hG-1bJniN2csM-00n5Rs; Sun, 04 Sep 2016 08:48:09
+ +0200
+Date:   Sun, 4 Sep 2016 08:47:54 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Josh Triplett <josh@joshtriplett.org>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 9/9] rebase -i: rearrange fixup/squash lines using the
+ rebase--helper
+In-Reply-To: <20160903180344.truur5ey6j6ah2wh@x>
+Message-ID: <alpine.DEB.2.20.1609031548540.129229@virtualbox>
+References: <cover.1472833365.git.johannes.schindelin@gmx.de> <3810bd4bddb3b850a78e5d960207157de64a2e56.1472833365.git.johannes.schindelin@gmx.de> <20160903180344.truur5ey6j6ah2wh@x>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A812D186-726A-11E6-81A9-51057B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:z9II9YJnhnQzubLBMsJsf6F1SNOUqLtyD4ygPEve04nUD/j6kV/
+ Io4HR+2yl5Ol61rzhoAdOVB+1Y/mSFcgEEhjboftiu6zxOKoZ/ROl2tsQLWljPmXvmlJIzw
+ MTmDxDWbU1BHWlYZ01Ci1i5caOrYCD8rLZk1s8mT8D/8TXJQIXKZAX8eTgWBnWJf4W4WC4o
+ vufSN6qhqdknUHKFKapJw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jFZ9sqZkiek=:JD4Cago744VsOQJQQ46zHJ
+ yfFdol5klNC4Z1cmP3MP06a6y3tr8ZLOu7Wz5i8dsWvEZZHjfUVrxcw0IfWRKsyZWBTI17qoJ
+ coLPeYlkNI2eQxSeOHj1tcqMpWEzMkDCgQ4Q+BrLdpAZflY/Za9QY5DfvDLKbg/lFUfIdMaW7
+ SHX2u6nK/gQE5+DBsZCftFooUVvRmUuiIsavLwxEQlU67zo6OHIW2JJ+r+aYfsDZAbRG8DVAM
+ L3Z7cmpJ/4bzX6agSOyKPqy1FW9q0CHDKUtfTwKmuLP0t8ytkQI7I9KJilngczpC5c50F0nBr
+ bIf9HdqUdZ3b4OlTepdvXw1MSzGnjZMdEUxDR2UkTcxa5FvtxGVp+wsdIR/WMOl6aUR/Gzmzp
+ t+prGj4H6I/hQVqe0y2XQ18qg5IDtqp02+yYepstB43YS0gn08o7YYntHlkKC75zeeoFKMcfX
+ 53zF1sxmwhCNeueIgejyO5lccZw9PESHz8smAjA1F5bGDSIVLXfryZ8+zx+tm2PRLl+Wd3MNe
+ TefKfjqm7IQWa06o2gEmvKDT5rPk4JiaRdWbazu/bZfGuLrOrSST7xGV46SglB4RpbIQcciNW
+ 5SrCGgY6CuRAoEDI6uBhmNypEzA7LL52cNbmD4NbuCu6+bjeHUKIKe/NSObYpYc2S3AZmohC/
+ VluAZ/4De+1MeiZNtcEN4s+4faBRm3US1YIdDLcwwegJLOrbO9ve7TXL0tgT7H4D1+9BPFhan
+ 8iasIISYRYpfkMCqnjiMs0ZOmcqToU4tQGQ4J+yqbMUyJ9iD9KWa6i1FT259PgGzSlhpeAF35
+ z8+VYWn
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Hi Josh,
 
->>  * On 2/2, doing it at xdiff.c level may be limiting this good idea
->>    to flourish to its full potential, as the interface is fed only
->>    one diff_filepair at a time.
->
-> I realized that after I implemented it. I agree we would want to have
-> it function cross file.
->
-> So from my current understanding of the code,
-> * diffcore_std would call a new function diffcore_detect_moved(void)
->    just before diffcore_apply_filter is called.
-> * The new function diffcore_detect_moved would then check if the
->    diff is a valid textual diff (i.e. real files, not submodules, but
->    deletion/creation of one file is allowed)
->    If so we generate the diff internally and as in 2/2 would
->    hash all added/removed lines with context and store it.
+On Sat, 3 Sep 2016, Josh Triplett wrote:
 
-I do not think you should step outside diff_flush().  Only when
-producing textual diff, you would have to run the textual diff
-twice by going over the q twice:
+> On Fri, Sep 02, 2016 at 06:23:42PM +0200, Johannes Schindelin wrote:
+> > Let's reimplement this with linear complexity (using a hash map to
+> > match the commits' subject lines) for the common case; Sadly, the
+> > fixup/squash feature's design neglected performance considerations,
+> > allowing arbitrary prefixes (read: `fixup! hell` will match the
+> > commit subject `hello world`), which means that we are stuck with
+> > quadratic performance in the worst case.
+> 
+> If the performance of that case matters enough, we can do better than
+> quadratic complexity: maintain a trie of the subjects, allowing prefix
+> lookups.  (Or hash all the prefixes, which you can do in linear time on
+> a string: hash next char, save hash, repeat.)  However, that would
+> pessimize the normal case of either a complete subject or a sha1, due to
+> the extra time taken constructing the data structure.  Probably not
+> worth it, if you assume that most "fixup!" subjects come from `git
+> commit --fixup` or similar automated means.
 
- * The first pass would run diff_flush_patch(), which would call
-   into xdiff the usual way, but the callback from xdiff would
-   capture the removed lines and the added lines without making any
-   output.
+Right. My reaction to finding our that subject prefixes were allowed, too,
+was "WTF?". And then: who uses that? And then: that's gonna hurt
+performance! And then: but I can optimize for the common case!
 
- * The second pass would run diff_flush_patch(), but the callback
-   from xdiff would be called with additional information, namely,
-   the removed and the added lines captured in the first pass.
+The point is: only when people specify a strict prefix will the
+performance be hurt. Meaning that the performance is linear in the most
+common cases.
 
- * I suspect that the fn_out_consume() function that is used for a
-   normal case (i.e. when we are not doing this more expensive
-   "moved to/moved from" coloring) can be used for the second pass
-   above (i.e. the "priv" aka "ecbdata" may need to be extended so
-   that it can tell which mode of operation it is asked to perform),
-   but if there is not enough similarity between the second pass of
-   this "moved from/moved to" mode and the normal mode of output, it
-   is also OK to have two different callback functions, i.e. the
-   original one to be used in the normal mode, the second one that
-   knows the "these are moved without modification" coloring.  The
-   callback for the first pass is sufficiently different and I think
-   it is better to invent a new callback function to be used in the
-   first pass, instead of reusing fn_out_consume().
+That is good enough for me, and probably good enough for the vast majority
+of the users. If it ain't broke, don't fix it.
 
-   The fn_out_consume() function working in the "second pass of
-   moved from/moved to mode" would inspect line[] and see if it is
-   an added or a removed line, and then:
+In the case that somebody needs strict prefixes to be handled more
+efficiently, which I do not expect, the "hash all prefixes" approach may
+work well, but it would slow down the common case, so I'd suggest doing
+that only as a fallback (i.e. if a fixup! could not be matched up, fall
+back to hashing the prefixes, re-hashing the commit subjects that were
+already seen so far). If this needs to be implemented at all, I would also
+suggest that the person in need of that improvement also needs to take
+charge of this: I will not spend more time thinking about this.
 
-   - if it is an added line, and it appears as a removed line
-     elsewhere in the patchset (you obtained the information in the
-     first pass), you show it as "this was moved from elsewhere".
-
-   - if it is a removed line, and it appears as an added line
-     elsewhere in the patchset (you obtained the information in the
-     first pass), you show it as "this was moved to elsewhere".
-
-Or something like that.
+Ciao,
+Johannes
