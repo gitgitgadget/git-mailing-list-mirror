@@ -6,24 +6,24 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4C821F859
-	for <e@80x24.org>; Sun,  4 Sep 2016 16:12:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C6BC1F859
+	for <e@80x24.org>; Sun,  4 Sep 2016 16:13:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754512AbcIDQM2 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Sep 2016 12:12:28 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:54584 "EHLO
-        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754387AbcIDQLz (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 4 Sep 2016 12:11:55 -0400
-X-AuditID: 1207440d-be3ff700000008af-33-57cc47553a2e
+        id S1754535AbcIDQND (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Sep 2016 12:13:03 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:45909 "EHLO
+        alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754517AbcIDQNB (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 4 Sep 2016 12:13:01 -0400
+X-AuditID: 1207440c-22bff700000008d5-53-57cc472c2fb5
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        by  (Symantec Messaging Gateway) with SMTP id B7.86.02223.5574CC75; Sun,  4 Sep 2016 12:09:57 -0400 (EDT)
+        by  (Symantec Messaging Gateway) with SMTP id 7A.0A.02261.C274CC75; Sun,  4 Sep 2016 12:09:16 -0400 (EDT)
 Received: from bagpipes.fritz.box (p57906AC6.dip0.t-ipconnect.de [87.144.106.198])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u84G8n5u026955
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u84G8n5Y026955
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Sun, 4 Sep 2016 12:09:55 -0400
+        Sun, 4 Sep 2016 12:09:15 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     David Turner <novalis@novalis.org>,
@@ -32,111 +32,73 @@ Cc:     David Turner <novalis@novalis.org>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, git@vger.kernel.org,
-        David Turner <dturner@twopensource.com>,
         Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 34/38] refs: make delete_refs() virtual
-Date:   Sun,  4 Sep 2016 18:08:40 +0200
-Message-Id: <dabafdf7ac61460fd0b0edbaf40e655b1f60a222.1473003903.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 12/38] resolve_packed_ref(): rename function from resolve_missing_loose_ref()
+Date:   Sun,  4 Sep 2016 18:08:18 +0200
+Message-Id: <ddf220e2f0a79cef2642c05209d87fbd7d135912.1473003903.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <cover.1473003902.git.mhagger@alum.mit.edu>
 References: <cover.1473003902.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrJIsWRmVeSWpSXmKPExsUixO6iqBvqfibcYFOXssX8TScYLbqudDNZ
-        NPReYba4vWI+s8WSh6+ZLbqnvGW0+NHSw2wx86q1xZk3jYwOnB5/339g8tg56y67R1f7ETaP
-        Z717GD0uXlL22L90G5vH4gdeHgue32f3+LxJLoAzissmJTUnsyy1SN8ugSvj1fMtzAV3RCt+
-        PP/E3MD4VbCLkZNDQsBEYs/jXaxdjFwcQgJbGSXW/3vFAuGcZJJYd3AZE0gVm4CuxKKeZjBb
-        REBNYmLbIbAiZoHfTBIXtj5n72Lk4BAWsJI4fiYRpIZFQFXi75+tjCBhXoEoiQ3PlCCWyUlc
-        2vaFGcTmFLCQOLN7LjNIiZCAuUT7i+wJjDwLGBlWMcol5pTm6uYmZuYUpybrFicn5uWlFuka
-        6eVmluilppRuYoSEIO8Oxv/rZA4xCnAwKvHwWmifCRdiTSwrrsw9xCjJwaQkyjvr4MlwIb6k
-        /JTKjMTijPii0pzU4kOMEhzMSiK82i5A5bwpiZVVqUX5MClpDhYlcV61Jep+QgLpiSWp2amp
-        BalFMFkZDg4lCd7rrkCNgkWp6akVaZk5JQhpJg5OkOE8QMNvgtTwFhck5hZnpkPkTzEqSonz
-        vgRJCIAkMkrz4HphKeIVozjQK8K8im5AVTzA9ALX/QpoMBPQ4HW7T4MMLklESEk1MBaxtOnL
-        KMkfbDtue3K1QLtz5Ul1Yeej2hejL064xSV+QCCCiSm9rtotKm9HxcF1lR8/pOxZeSij8mzc
-        1p3XxOac/XOKTyiBcX7WUh8rlbbtco+fzzRUU7Rq611Q8Hkao6dArP3cx+dmPIvo/LOxaRVP
-        5N8638igXfzxuqw3Y5nXMfLOXvthvhJLcUaioRZzUXEiAKy9kxvsAgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrIIsWRmVeSWpSXmKPExsUixO6iqKvjfibc4H6ruUXXlW4mi4beK8wW
+        t1fMZ7ZY8vA1s0X3lLeMFj9aepgtZl61tjjzppHRgcPj7/sPTB47Z91l9+hqP8Lm8ax3D6PH
+        xUvKHvuXbmPzWPzAy+PzJrkAjigum5TUnMyy1CJ9uwSujINNU5gK3nJXLNzym7mBcRFnFyMn
+        h4SAicSizl8sXYxcHEICWxklzv77xw7hnGSSuLVkORNIFZuArsSinmYwW0RATWJi2yGwDmaQ
+        olkTZ7KDJIQFEiTW3djBCmKzCKhKtN6dyQZi8wpESdza188CsU5O4tK2L8wgNqeAhcSZ3XOB
+        bA6gbeYS7S+yJzDyLGBkWMUol5hTmqubm5iZU5yarFucnJiXl1qka6iXm1mil5pSuokREnI8
+        Oxi/rZM5xCjAwajEw2uhfSZciDWxrLgy9xCjJAeTkijvrIMnw4X4kvJTKjMSizPii0pzUosP
+        MUpwMCuJ8Gq7AJXzpiRWVqUW5cOkpDlYlMR5VZeo+wkJpCeWpGanphakFsFkZTg4lCR4o9yA
+        GgWLUtNTK9Iyc0oQ0kwcnCDDeYCG94HU8BYXJOYWZ6ZD5E8xKkqJ8750BUoIgCQySvPgemEp
+        4RWjONArwryKIO08wHQC1/0KaDAT0OB1u0+DDC5JREhJNTCKn4u6L3plXd6MW4/CufQWGRyx
+        mFGawfV38/E9Mj2tDUtEO3K6jbsc1Vrfcs0877HPfK2uXMnb4rcV6jflFnZtKnxfaTQxItbN
+        pyg4bO6Nc8wL5K+fyMxp3BWj++Gflr/8ef0/Tlf5j+TOd3sjPUl/ksndfTJhQg7iJVV7zG0s
+        Jrlf2HBJ30WJpTgj0VCLuag4EQDxmSkP5AIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: David Turner <dturner@twopensource.com>
-
-In the file-based backend, delete_refs has some special optimization
-to deal with packed refs.  In other backends, we might be able to make
-ref deletion faster by putting all deletions into a single
-transaction.  So we need a special backend function for this.
-
-Signed-off-by: David Turner <dturner@twopensource.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- refs.c               | 7 +++++++
- refs/files-backend.c | 6 ++++--
- refs/refs-internal.h | 3 +++
- 3 files changed, 14 insertions(+), 2 deletions(-)
+ refs/files-backend.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 3830918..6efa859 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1532,3 +1532,10 @@ int initial_ref_transaction_commit(struct ref_transaction *transaction,
- 
- 	return refs->be->initial_transaction_commit(refs, transaction, err);
- }
-+
-+int delete_refs(struct string_list *refnames, unsigned int flags)
-+{
-+	struct ref_store *refs = get_ref_store(NULL);
-+
-+	return refs->be->delete_refs(refs, refnames, flags);
-+}
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 81008d7..bcaa958 100644
+index 7673342..32ca5ff 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -2451,10 +2451,11 @@ static int delete_ref_loose(struct ref_lock *lock, int flag, struct strbuf *err)
- 	return 0;
- }
- 
--int delete_refs(struct string_list *refnames, unsigned int flags)
-+static int files_delete_refs(struct ref_store *ref_store,
-+			     struct string_list *refnames, unsigned int flags)
- {
- 	struct files_ref_store *refs =
--		get_files_ref_store(NULL, "delete_refs");
-+		files_downcast(ref_store, 0, "delete_refs");
- 	struct strbuf err = STRBUF_INIT;
- 	int i, result = 0;
- 
-@@ -4077,6 +4078,7 @@ struct ref_storage_be refs_be_files = {
- 	files_pack_refs,
- 	files_peel_ref,
- 	files_create_symref,
-+	files_delete_refs,
- 
- 	files_ref_iterator_begin,
- 	files_read_raw_ref,
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 08c8586..ade6501 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -490,6 +490,8 @@ typedef int create_symref_fn(struct ref_store *ref_store,
- 			     const char *ref_target,
- 			     const char *refs_heads_master,
- 			     const char *logmsg);
-+typedef int delete_refs_fn(struct ref_store *ref_store,
-+			   struct string_list *refnames, unsigned int flags);
- 
+@@ -1329,10 +1329,9 @@ static struct ref_entry *get_packed_ref(struct files_ref_store *refs,
  /*
-  * Iterate over the references in the specified ref_store that are
-@@ -587,6 +589,7 @@ struct ref_storage_be {
- 	pack_refs_fn *pack_refs;
- 	peel_ref_fn *peel_ref;
- 	create_symref_fn *create_symref;
-+	delete_refs_fn *delete_refs;
+  * A loose ref file doesn't exist; check for a packed ref.
+  */
+-static int resolve_missing_loose_ref(struct files_ref_store *refs,
+-				     const char *refname,
+-				     unsigned char *sha1,
+-				     unsigned int *flags)
++static int resolve_packed_ref(struct files_ref_store *refs,
++			      const char *refname,
++			      unsigned char *sha1, unsigned int *flags)
+ {
+ 	struct ref_entry *entry;
  
- 	ref_iterator_begin_fn *iterator_begin;
- 	read_raw_ref_fn *read_raw_ref;
+@@ -1383,7 +1382,7 @@ int read_raw_ref(const char *refname, unsigned char *sha1,
+ 	if (lstat(path, &st) < 0) {
+ 		if (errno != ENOENT)
+ 			goto out;
+-		if (resolve_missing_loose_ref(refs, refname, sha1, type)) {
++		if (resolve_packed_ref(refs, refname, sha1, type)) {
+ 			errno = ENOENT;
+ 			goto out;
+ 		}
+@@ -1417,7 +1416,7 @@ int read_raw_ref(const char *refname, unsigned char *sha1,
+ 		 * ref is supposed to be, there could still be a
+ 		 * packed ref:
+ 		 */
+-		if (resolve_missing_loose_ref(refs, refname, sha1, type)) {
++		if (resolve_packed_ref(refs, refname, sha1, type)) {
+ 			errno = EISDIR;
+ 			goto out;
+ 		}
 -- 
 2.9.3
 
