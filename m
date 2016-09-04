@@ -4,48 +4,48 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45A9D1F859
+	by dcvr.yhbt.net (Postfix) with ESMTP id 575F620193
 	for <e@80x24.org>; Sun,  4 Sep 2016 20:20:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932406AbcIDUT7 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Sep 2016 16:19:59 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:32991 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932366AbcIDUTr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Sep 2016 16:19:47 -0400
-Received: by mail-wm0-f68.google.com with SMTP id w207so10457338wmw.0
-        for <git@vger.kernel.org>; Sun, 04 Sep 2016 13:19:46 -0700 (PDT)
+        id S932409AbcIDUUC (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Sep 2016 16:20:02 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:34088 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932282AbcIDUT0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Sep 2016 16:19:26 -0400
+Received: by mail-wm0-f65.google.com with SMTP id w12so959677wmf.1
+        for <git@vger.kernel.org>; Sun, 04 Sep 2016 13:19:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=bGsfZE9+4WP5G1A08n9y8qbZQiWOnPVIKXYpk8bKtqw=;
-        b=YANiKZAi1GwuTE0hBFWLySjL4ApRS3kGMKfJUasXd5eAZuMXTh5LllxIwtvUD9S40E
-         7VO2QYSZboTz8cwuEEp17sZOdKgHsZ4jM7ffERdNY0M5mBcsn0Kr9l6/CQhM0p+NX7tp
-         +ceTEw69WblwiraHNaAz9C3PvTxFBhgHulIBQVMyWL+36gG4IJm0Te7McGX6j05ycefY
-         42xdevfyEp3SXNatJ4BSSOOUE53NNq1cGPd4MF/S665ENIgNu5BJ5lyfWmJAlHybWB/n
-         RZKXRLUaG9Pt159gy+GlFdWCy3h/GairD2SuUYOx23MKauagATmQfPY8aPeVKQMFoLCp
-         JkJA==
+        bh=3UQRzwWzxzpAv7XZGVTucApJzZa9yc2Bqr6OLlbJqFQ=;
+        b=Ymp5/bX8GjvMuB9tcxH7FT4hfkNHmImvIJ9yIyG59+2EDyV5czpC57RmgBKJTu/klP
+         8qtunJa3aihFwuvaV6cnmrq8e4C65JHLujsJCMjuBN2Zu1TU4uF3tnmsPHcORCbtzgTR
+         +5DrJHWOjrxylB2TiU2MaYviCkwAnYHJoxOAbEdPjd6ZBgLBLZD3TscTWpZyiyoq+axy
+         G7QGfJSou4bPbh0AqN/6WO7gXiwr9oFGYF4vUmOMhNVSqNvz28Nr1K1+AQyK0d34qSay
+         Ef4iY9eLe7+MxkZSqeXYe6tbXBRAKjiQxYbl/KjqXHkkIZQbGC+VxbfUHirpxEyYkoAL
+         PCVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=bGsfZE9+4WP5G1A08n9y8qbZQiWOnPVIKXYpk8bKtqw=;
-        b=K477tCtTvSrxwKHppO6SLNxjoDN5RQOalnx1UBQr11bpbPQBUQ+rR3VSl3Z9YhqOBV
-         UmgOkQA5hUkpu6XI0jT1A3KQ1EYddvL635uuqEKYHLCQh1CHoktM+CZq88byIBciFNk3
-         OaEyNVYD0JKT5MKP1sLmp/uAWtorLw56nj5SoItoFJQXxvZ95p+7YkscWyJn3sUIAnDN
-         ETiZJ8GemEyKiEqURSJbsmzINV3p/rivqyGHpCrTW5nl/oyRL7N6f2e0rPrDp4yz3A/X
-         SD/JLyrJFXNHA76qmCase/B2pL6/eMvtUXY/rf3rgFmZnBzrNomgluTbkesXYOzu1nNI
-         /h9g==
-X-Gm-Message-State: AE9vXwNVGGjGk8hNULYLi2ZYtDKEB6y78VMaCqR2dsnD/kiszUfWPmyeRSBb5y/UepwRBA==
-X-Received: by 10.194.216.233 with SMTP id ot9mr28759404wjc.166.1473020386041;
-        Sun, 04 Sep 2016 13:19:46 -0700 (PDT)
+        bh=3UQRzwWzxzpAv7XZGVTucApJzZa9yc2Bqr6OLlbJqFQ=;
+        b=aSUWVykN4r1/j1OxFm1lYAOC9dLpcF5r7x1WWIUqqCQLl5MeRnsGNzOiPT4BlIhp92
+         W/o4EzJRNO/39lN6LCsdWkx975uVMP/SrNS2qH4qnOLe2MaQGmqv6vdjRU4NORSTbnjV
+         fNls39qwPZ8ERnvnDR8jE9Lgczm9yyIBKQcdVno+OldqZDdXXVT8o4nATySu6c2NysDM
+         4mkzIVKVp+3HRo6akN0vHY4XLhJlcEbTG22Z4SoXp8MiWqLe4KCwct0mQB5fDyJ6YFEg
+         oJ1RaniNd/rscN94Hjg44guoiLl3zaQvzoc8inF6V24137rAzZKtlx4UhUyPl59OD7O/
+         I4TA==
+X-Gm-Message-State: AE9vXwPk7Q5tlHNomY4AHHzyQo+ffhABng8tdKEkGZ9xyEqxXfO2krpGGuitFGfRY9sLsg==
+X-Received: by 10.194.236.68 with SMTP id us4mr27303092wjc.12.1473020364618;
+        Sun, 04 Sep 2016 13:19:24 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id n7sm23178805wjf.11.2016.09.04.13.19.44
+        by smtp.gmail.com with ESMTPSA id n7sm23178805wjf.11.2016.09.04.13.19.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 04 Sep 2016 13:19:45 -0700 (PDT)
+        Sun, 04 Sep 2016 13:19:23 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v14 34/41] apply: don't print on stdout in verbosity_silent mode
-Date:   Sun,  4 Sep 2016 22:18:26 +0200
-Message-Id: <20160904201833.21676-35-chriscool@tuxfamily.org>
+Subject: [PATCH v14 26/41] builtin/apply: make try_create_file() return -1 on error
+Date:   Sun,  4 Sep 2016 22:18:18 +0200
+Message-Id: <20160904201833.21676-27-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.10.0.41.g9df52c3
 In-Reply-To: <20160904201833.21676-1-chriscool@tuxfamily.org>
 References: <20160904201833.21676-1-chriscool@tuxfamily.org>
@@ -71,53 +71,124 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When apply_verbosity is set to verbosity_silent nothing should be
-printed on both stderr and stdout.
+To libify `git apply` functionality we have to signal errors to the
+caller instead of die()ing.
 
-To avoid printing on stdout, we can just skip calling the following
-functions:
+To do that in a compatible manner with the rest of the error handling
+in "builtin/apply.c", try_create_file() should return -1 in case of
+error.
 
-	- stat_patch_list(),
-	- numstat_patch_list(),
-	- summary_patch_list().
+Unfortunately try_create_file() currently returns -1 to signal a
+recoverable error. To fix that, let's make it return 1 in case of
+a recoverable error and -1 in case of an unrecoverable error.
 
-It is safe to do that because the above functions have no side
-effects other than printing:
-
-- stat_patch_list() only computes some local values and then call
-show_stats() and print_stat_summary(), those two functions only
-compute local values and call printing functions,
-- numstat_patch_list() also only computes local values and calls
-printing functions,
-- summary_patch_list() calls show_file_mode_name(), printf(),
-show_rename_copy(), show_mode_change() that are only printing.
-
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- apply.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ builtin/apply.c | 44 +++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 33 insertions(+), 11 deletions(-)
 
-diff --git a/apply.c b/apply.c
-index df85cbc..ddbb0a2 100644
---- a/apply.c
-+++ b/apply.c
-@@ -4702,13 +4702,13 @@ static int apply_patch(struct apply_state *state,
- 		goto end;
+diff --git a/builtin/apply.c b/builtin/apply.c
+index c787ead..3145e03 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -4150,38 +4150,48 @@ static int add_index_file(struct apply_state *state,
+ 	return 0;
+ }
+ 
++/*
++ * Returns:
++ *  -1 if an unrecoverable error happened
++ *   0 if everything went well
++ *   1 if a recoverable error happened
++ */
+ static int try_create_file(const char *path, unsigned int mode, const char *buf, unsigned long size)
+ {
+-	int fd;
++	int fd, res;
+ 	struct strbuf nbuf = STRBUF_INIT;
+ 
+ 	if (S_ISGITLINK(mode)) {
+ 		struct stat st;
+ 		if (!lstat(path, &st) && S_ISDIR(st.st_mode))
+ 			return 0;
+-		return mkdir(path, 0777);
++		return !!mkdir(path, 0777);
  	}
  
--	if (state->diffstat)
-+	if (state->diffstat && state->apply_verbosity > verbosity_silent)
- 		stat_patch_list(state, list);
+ 	if (has_symlinks && S_ISLNK(mode))
+ 		/* Although buf:size is counted string, it also is NUL
+ 		 * terminated.
+ 		 */
+-		return symlink(buf, path);
++		return !!symlink(buf, path);
  
--	if (state->numstat)
-+	if (state->numstat && state->apply_verbosity > verbosity_silent)
- 		numstat_patch_list(state, list);
+ 	fd = open(path, O_CREAT | O_EXCL | O_WRONLY, (mode & 0100) ? 0777 : 0666);
+ 	if (fd < 0)
+-		return -1;
++		return 1;
  
--	if (state->summary)
-+	if (state->summary && state->apply_verbosity > verbosity_silent)
- 		summary_patch_list(list);
+ 	if (convert_to_working_tree(path, buf, size, &nbuf)) {
+ 		size = nbuf.len;
+ 		buf  = nbuf.buf;
+ 	}
+-	write_or_die(fd, buf, size);
++
++	res = write_in_full(fd, buf, size) < 0;
++	if (res)
++		error_errno(_("failed to write to '%s'"), path);
+ 	strbuf_release(&nbuf);
  
- end:
+-	if (close(fd) < 0)
+-		die_errno(_("closing file '%s'"), path);
+-	return 0;
++	if (close(fd) < 0 && !res)
++		return error_errno(_("closing file '%s'"), path);
++
++	return res ? -1 : 0;
+ }
+ 
+ /*
+@@ -4195,15 +4205,24 @@ static void create_one_file(struct apply_state *state,
+ 			    const char *buf,
+ 			    unsigned long size)
+ {
++	int res;
++
+ 	if (state->cached)
+ 		return;
+-	if (!try_create_file(path, mode, buf, size))
++
++	res = try_create_file(path, mode, buf, size);
++	if (res < 0)
++		exit(128);
++	if (!res)
+ 		return;
+ 
+ 	if (errno == ENOENT) {
+ 		if (safe_create_leading_directories(path))
+ 			return;
+-		if (!try_create_file(path, mode, buf, size))
++		res = try_create_file(path, mode, buf, size);
++		if (res < 0)
++			exit(128);
++		if (!res)
+ 			return;
+ 	}
+ 
+@@ -4222,7 +4241,10 @@ static void create_one_file(struct apply_state *state,
+ 		for (;;) {
+ 			char newpath[PATH_MAX];
+ 			mksnpath(newpath, sizeof(newpath), "%s~%u", path, nr);
+-			if (!try_create_file(newpath, mode, buf, size)) {
++			res = try_create_file(newpath, mode, buf, size);
++			if (res < 0)
++				exit(128);
++			if (!res) {
+ 				if (!rename(newpath, path))
+ 					return;
+ 				unlink_or_warn(newpath);
 -- 
 2.10.0.41.g9df52c3
 
