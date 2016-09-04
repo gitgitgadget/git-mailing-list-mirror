@@ -2,132 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D83BF1F6BF
-	for <e@80x24.org>; Sun,  4 Sep 2016 05:31:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD6251FBB0
+	for <e@80x24.org>; Sun,  4 Sep 2016 06:43:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751439AbcIDFbf (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Sep 2016 01:31:35 -0400
-Received: from mail-it0-f44.google.com ([209.85.214.44]:38035 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751129AbcIDFbe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Sep 2016 01:31:34 -0400
-Received: by mail-it0-f44.google.com with SMTP id c198so103202145ith.1
-        for <git@vger.kernel.org>; Sat, 03 Sep 2016 22:31:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=5VxijY6Gf8SaKqzrwgpG4MRgiZY8jOS6McEjgmxWonY=;
-        b=WcdUmY9RQZZg1KtvXQpXeSQrCifyoOSnAsWPEvRU7cBHtDYU7m0Xl5zGnpaumBKEd4
-         CDvv3S6LSkveC1DNOzreh/Wnp/Js0WWHjrHKi/HnhM/V2Lw6vmr6iFFU29bOgcQ6B63/
-         0E6K/TB+pSCtmQn6LFrOGr2nJAzvxBJNB28LReuC/XIka11D+zddS4+9oClvfTJGeyiu
-         V8u3WLbzzzxX2TvGDafXEWzk7RSmsdeGPGmX9S69gxHgw4A6seVMmTSQoqWwYYQ13DOO
-         sA+gXCowSmzs6H1HW4blHvZRpYXj0EXMLr4LduGEQlYEvFmCk6w6n6+QZh+Lwie3INmQ
-         JTlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=5VxijY6Gf8SaKqzrwgpG4MRgiZY8jOS6McEjgmxWonY=;
-        b=S33JravKXjGS9ZdT+DVtiTqWuJKjhbgQG6qHrQNLNf8wfBoC1QlDZxvyuiQKsuDu8w
-         0Q6NKCjqWDXcMvASnIqeQrWHA+FCnzlt4cm9PXsgpwMlWn6EcDigBQ2a1Ttt6i3JahcO
-         63YDtsb9bLDZ+w9oHTjek9cuR37IA3DNrPzazF9ABA0iAF1MGtjYTtVqSrXv9ds8jyx9
-         0PSRw+USbcvbB8NVAPNoZC1tgxHB7Ir5YnMZoeqYf25PJw/7OIMtscXJhkpUi2lg97uG
-         pFCLVv5AJfxU5/hjZAKOpwVzyTHX5OZhQICA2vvJqjKeeCffdlcDewAxZeDuiMPgU3lV
-         Qg2A==
-X-Gm-Message-State: AE9vXwMYTMzm/3xyHNUY6ofu0IbrE5MYvHpMRSNsVQa0cf46ODKlYtVPMYdkg0G5eLbWQoZd3a76XiZ4LhqzDGz3
-X-Received: by 10.36.217.131 with SMTP id p125mr14981994itg.46.1472967093610;
- Sat, 03 Sep 2016 22:31:33 -0700 (PDT)
+        id S1752152AbcIDGnK (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Sep 2016 02:43:10 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62975 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752163AbcIDGnI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Sep 2016 02:43:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CF14732DD5;
+        Sun,  4 Sep 2016 02:41:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=NbTqHkiUrmDp6Ak5G398FqS4k30=; b=qIVWsL
+        GT7N0Hxvwwwh/G6tLT1rpTa0FXW2c+NCOR+sCUwaADyii3H7ZtWS2kiUKqx25dZb
+        CzL3QgctESM7DHSVYlJacX+kSQ+3nsdM9ejZmE5zvg/mGf1zHHVOrbcIzoRLY1r5
+        Jc4ZT6CORIlm/8qLPA+6kaaIkPWVJ6f9CYllI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=wPbsPAnNwJ0zk/ZHhjNXDL+6EusBdBDB
+        W5BXse5Dtzdv7etpHJrcU+GnOERBYaNuF0O+pu36phhefDnlsONF1mlnf2eeOCiT
+        bd7Q1223Pb7oBEC/nqHe21r9KFFK+WqOYVOlnUBvEbUeJISrrCx/WBSe6JuIAG/m
+        a/CBT2+IAWo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C847532DD4;
+        Sun,  4 Sep 2016 02:41:49 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4CB3A32DD3;
+        Sun,  4 Sep 2016 02:41:49 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [RFC/PATCH 0/2] Color moved code differently
+References: <20160903033120.20511-1-sbeller@google.com>
+        <xmqqtwdxqxh6.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kYGnkcOxviukj9a8gyaERip5aunXcvsdH-UpBCb=vrVeQ@mail.gmail.com>
+Date:   Sat, 03 Sep 2016 23:41:47 -0700
+In-Reply-To: <CAGZ79kYGnkcOxviukj9a8gyaERip5aunXcvsdH-UpBCb=vrVeQ@mail.gmail.com>
+        (Stefan Beller's message of "Sat, 3 Sep 2016 22:23:35 -0700")
+Message-ID: <xmqqpookqi8k.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Sat, 3 Sep 2016 22:31:33 -0700 (PDT)
-In-Reply-To: <eb88af2c-d7b1-295e-5f23-a85045bde753@gmail.com>
-References: <20160903033120.20511-1-sbeller@google.com> <20160903033120.20511-3-sbeller@google.com>
- <eb88af2c-d7b1-295e-5f23-a85045bde753@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Sat, 3 Sep 2016 22:31:33 -0700
-Message-ID: <CAGZ79kYEieYGFAgORc8yaF3=8-L1E7K4afNGxDH5AgM5nHFgFw@mail.gmail.com>
-Subject: Re: [RFC/PATCH 2/2] WIP xdiff: markup duplicates differently
-To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: A812D186-726A-11E6-81A9-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 3, 2016 at 5:25 AM, Jakub Nar=C4=99bski <jnareb@gmail.com> wrot=
-e:
-> W dniu 03.09.2016 o 05:31, Stefan Beller pisze:
+Stefan Beller <sbeller@google.com> writes:
+
+>>  * On 2/2, doing it at xdiff.c level may be limiting this good idea
+>>    to flourish to its full potential, as the interface is fed only
+>>    one diff_filepair at a time.
 >
->> When moving code (e.g. a function is moved to another part of the file o=
-r
->> to a different file), the review process is different than reviewing new
->> code. When reviewing moved code we are only interested in the diff as
->> where there are differences in the moved code, e.g. namespace changes.
->>
->> However the inner part of these moved texts should not change.
->> To aid a developer reviewing such code, emit it with a different prefix
->> than the usual +,- to indicate it is overlapping code.
+> I realized that after I implemented it. I agree we would want to have
+> it function cross file.
 >
-> What would be this different prefix?
+> So from my current understanding of the code,
+> * diffcore_std would call a new function diffcore_detect_moved(void)
+>    just before diffcore_apply_filter is called.
+> * The new function diffcore_detect_moved would then check if the
+>    diff is a valid textual diff (i.e. real files, not submodules, but
+>    deletion/creation of one file is allowed)
+>    If so we generate the diff internally and as in 2/2 would
+>    hash all added/removed lines with context and store it.
 
-I will discard the part of the different prefix as the design of 2/2
-will change.
+I do not think you should step outside diff_flush().  Only when
+producing textual diff, you would have to run the textual diff
+twice by going over the q twice:
 
+ * The first pass would run diff_flush_patch(), which would call
+   into xdiff the usual way, but the callback from xdiff would
+   capture the removed lines and the added lines without making any
+   output.
 
+ * The second pass would run diff_flush_patch(), but the callback
+   from xdiff would be called with additional information, namely,
+   the removed and the added lines captured in the first pass.
 
->
->
-> Side note: I wonder if the cousin of unified diff, namely context diff[1]=
-,
-> is something that we can and should support.
+ * I suspect that the fn_out_consume() function that is used for a
+   normal case (i.e. when we are not doing this more expensive
+   "moved to/moved from" coloring) can be used for the second pass
+   above (i.e. the "priv" aka "ecbdata" may need to be extended so
+   that it can tell which mode of operation it is asked to perform),
+   but if there is not enough similarity between the second pass of
+   this "moved from/moved to" mode and the normal mode of output, it
+   is also OK to have two different callback functions, i.e. the
+   original one to be used in the normal mode, the second one that
+   knows the "these are moved without modification" coloring.  The
+   callback for the first pass is sufficiently different and I think
+   it is better to invent a new callback function to be used in the
+   first pass, instead of reusing fn_out_consume().
 
+   The fn_out_consume() function working in the "second pass of
+   moved from/moved to mode" would inspect line[] and see if it is
+   an added or a removed line, and then:
 
+   - if it is an added line, and it appears as a removed line
+     elsewhere in the patchset (you obtained the information in the
+     first pass), you show it as "this was moved from elsewhere".
 
->
-> [1]: https://www.gnu.org/software/diffutils/manual/html_node/Context-Form=
-at.html
->      https://www.gnu.org/software/diffutils/manual/html_node/Detailed-Con=
-text.html
->
-> *** lao 2002-02-21 23:30:39.942229878 -0800
-> --- tzu 2002-02-21 23:30:50.442260588 -0800
-> ***************
-> *** 1,7 ****
-> - The Way that can be told of is not the eternal Way;
-> - The name that can be named is not the eternal name.
->   The Nameless is the origin of Heaven and Earth;
-> ! The Named is the mother of all things.
->   Therefore let there always be non-being,
->     so we may see their subtlety,
->   And let there always be being,
-> --- 1,6 ----
->   The Nameless is the origin of Heaven and Earth;
-> ! The named is the mother of all things.
-> !
+   - if it is a removed line, and it appears as an added line
+     elsewhere in the patchset (you obtained the information in the
+     first pass), you show it as "this was moved to elsewhere".
 
-So the line moved here?
-Is it intentional that the line differs though?
-(capitalisation of 'named")
-Not sure I can read this diff correctly.
-
-I think for this small side project I'd rather want
-to 'just' support colors of moved code;)
-
->   Therefore let there always be non-being,
->     so we may see their subtlety,
->   And let there always be being,
-> ***************
-> *** 9,11 ****
-> --- 8,13 ----
->   The two are the same,
->   But after they are produced,
->     they have different names.
-> + They both may be called deep and profound.
-> + Deeper and more profound,
-> + The door of all subtleties!
+Or something like that.
