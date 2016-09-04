@@ -2,97 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48A131FBB0
-	for <e@80x24.org>; Sun,  4 Sep 2016 10:57:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71C321FBB0
+	for <e@80x24.org>; Sun,  4 Sep 2016 11:40:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753265AbcIDK5x (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Sep 2016 06:57:53 -0400
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:2604 "EHLO
-        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752791AbcIDK5w (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Sep 2016 06:57:52 -0400
-Received: from PhilipOakley ([92.22.24.43])
-        by smtp.talktalk.net with SMTP
-        id gV7Vb4GxpxR4bgV7Vboy1q; Sun, 04 Sep 2016 11:57:50 +0100
-X-Originating-IP: [92.22.24.43]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=JNN5iICb c=1 sm=1 tr=0 a=ZBOQwd+zDMuFpFo4vDT3kw==:117
- a=ZBOQwd+zDMuFpFo4vDT3kw==:17 a=8nJEP1OIZ-IA:10 a=Zuqv9LRU0NVfUEFy61cA:9
- a=j7vvuKjHx3Ervkvb:21 a=BOLkJdh1ndbkzNHh:21 a=wPNLvfGTeEIA:10
-Message-ID: <B8553589D87B4CFAB94CFB22027B9E7D@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-        "Jeff King" <peff@peff.net>
-Cc:     "Aaron M Watson" <watsona4@gmail.com>, <git@vger.kernel.org>,
-        "Jon Seymour" <jon.seymour@gmail.com>,
-        "David Caldwell" <david@porkrind.org>,
-        =?iso-8859-1?Q?=D8ystein_Walle?= <oystwa@gmail.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-        "David Aguilar" <davvid@gmail.com>,
-        "Alex Henrie" <alexhenrie24@gmail.com>
-References: <1472944878.19860.4.camel@gmail.com> <20160904015209.ba6arov46ntr2ouq@sigill.intra.peff.net> <alpine.DEB.2.20.1609040914200.129229@virtualbox>
-Subject: Re: [PATCH] stash: allow ref of a stash by index
-Date:   Sun, 4 Sep 2016 11:57:51 +0100
-Organization: OPDS
-MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfBo9sNSelRtnk1ftB0Hs47fTU18gX6w4P6nxq+q/VfrsinrSaCk6ki54hij8M0POKT8DajjMBTdWbEj7/sVlFWk0s2WbXeZqurbtDHvYeOW52lw1qZVa
- Z2fe6vez3/x8n7OfLKEhn/SuTwIecjWnHv9+mcIiGn2nxATcLGiIMC32vnJ1MCi4UetX3ZDVZJ16tJAB+VKNVzWJoXlqPQEw0I3BtzP+D1qCJLEgvp88PaYo
- ctXIZvdOA2FgdCvZh6lnUM+JlcupfH7/7FB1qqZJqyedG3oVhOxmz6soUf2ehn0/Be+NGSYq6HL7OiONz8sECFlPMn4V3cJ2scKPdEqMkOJtNZQH47KSddhY
- 6cOJ6w7uAMb7U0mbGsJdRUR6uchZ1MR0r4+gTKqF3pLgQ7+jqR1g85gbR+CYsamto8oTqvoadX7n4CC0XkRnncyeG01x0g==
+        id S1752797AbcIDLkK (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Sep 2016 07:40:10 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34508 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752535AbcIDLkJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Sep 2016 07:40:09 -0400
+Received: by mail-wm0-f66.google.com with SMTP id v143so9135793wmv.1
+        for <git@vger.kernel.org>; Sun, 04 Sep 2016 04:40:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=h+fWyzbHRdTHw47mKsF8F+4oMcLfNoVA4vbqajyDaYY=;
+        b=ZNDoKMpx8PBM+cNqeIZk1FC49z0CFxKRVgNU2RIZ5VbLaABWUb5TK1eHNZYm420zfO
+         bDd/WX6/8/H0iWEvd7jrjx48yM0SZIjITIjLTxe4G8J9JfwJKfCLkEgyfoInax8FJJLM
+         /uV1pQNFfWqqkxwnJt0cu9T31oA/GN7dofcHMOLZ3o2t3igsNlEcZAMCMJu0Xc1aIlaL
+         Ogvf9ErD0cKu8ia7Qa4TQxjgsInkzWJjSNDKrcjn4AT4g+LEn/UrSA75DqEp0UgUoSq4
+         4PpZfH0/s3080MXip9RYQGYH0p0IZsTF85NNsWo4IEmYvmRFhlxZV2ilfroVL/uHZkXX
+         e0cQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=h+fWyzbHRdTHw47mKsF8F+4oMcLfNoVA4vbqajyDaYY=;
+        b=k8lderramWY7eK0RnvK5qiX1+hB/3H70b7Rby7ycLLIXM2+lPM1OQePc2HNJqyrhZZ
+         Ok2NxBgQVwNCV017B6uvN1K4EC7xPJJ4/Pt/TyhB3tz2kV9BaVaFHXetAXyblhngCQPm
+         vpn43eLa4gNsaHLe8Nc2k0WyhJlde6dPk/y9UzmUEyeVRbyTV4TRGNhMN86JER6d8Q8J
+         lBBzoquf6ahdMGd6QTctwr6AB9MAwymby86LJBJiAF4ytaO4kpuhaVTRkIg+Xcu0PrSQ
+         ct6JomRHoSBtic81V2F/JpyOTi7ofu+Dt22tngkZuKqRVI+Afid8Gk1aSlCpR7cRtGX5
+         vHAQ==
+X-Gm-Message-State: AE9vXwPRoP0FBsGpSIZhWHTZi942qNsrKz8ibtPPmM2jX+GmujNE42yFiX52jYiQCUA+WA==
+X-Received: by 10.28.2.84 with SMTP id 81mr10381446wmc.72.1472989207840;
+        Sun, 04 Sep 2016 04:40:07 -0700 (PDT)
+Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
+        by smtp.gmail.com with ESMTPSA id bc5sm14146077wjb.37.2016.09.04.04.40.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 04 Sep 2016 04:40:06 -0700 (PDT)
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Jan Keromnes <janx@linux.com>,
+        git@vger.kernel.org,
+        =?UTF-8?q?Ingo=20Br=C3=BCckl?= <ib@wupperonline.de>,
+        Edward Thomson <ethomson@edwardthomson.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [PATCH 0/4] git add --chmod: always change the file
+Date:   Sun,  4 Sep 2016 12:39:50 +0100
+Message-Id: <20160904113954.21697-1-t.gummerer@gmail.com>
+X-Mailer: git-send-email 2.10.0.304.gf2ff484
+In-Reply-To: <xmqq4m5zutyc.fsf@gitster.mtv.corp.google.com>
+References: <xmqq4m5zutyc.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-> Hi,
->
-> On Sat, 3 Sep 2016, Jeff King wrote:
->
->> On Sat, Sep 03, 2016 at 07:21:18PM -0400, Aaron M Watson wrote:
->>
->> > Allows stashes to be referenced by index only. Instead of referencing
->> > "stash@{n}" explicitly, it can simply be referenced as "n".
->>
->> This says "what" but not "why". I assume it is "because the former is
->> more annoying to type".
->>
->> Are there any backwards-compatibility issues you can think of?
->>
->> I think that "123456" could be a sha1, but I do not see much point in
->> referencing a sha1 as the argument of "stash show". And it looks like
->> this code path is called only from is_stash_like(), so presumably the
->> same logic would apply to other callers.
->
-> Maybe we could make it unambiguous, e.g. by using #<n> instead: #123456
-> cannot refer to a SHA-1.
+Thanks to Peff and Junio for your inputs on the best way to solve this
+problem.
 
-The alternative is to limit the length to less that the shortest ambiguous 
-sha1 length that has been used (by Git users - 5, 6, 7? )? Which is probably 
-allowing 1-4 characters, which is a reasonbly deep stash index...
+The patch series is made up as follows:
 
-If you need to refer to stash@{9362} you have bigger problems.
+[1/4]: Documentation for the chmod option
+[2,3/4]: Small refactoring to simplify the final step
+[4/4]: The actual change that introduces the new behaviour.
 
-> But then, '#' are comment-starting in shells, so they would have to by
-> escaped. Maybe the best option would be to introduce a -n <n> option,
-> with the shortcut -<n> thanks to e0319ff (parseopt: add
-> OPT_NUMBER_CALLBACK, 2009-05-07).
->
-> Ciao,
-> Johannes
-> 
+Thomas Gummerer (4):
+  add: document the chmod option
+  update-index: use the same structure for chmod as add
+  read-cache: introduce chmod_index_entry
+  add: modify already added files when --chmod is given
+
+ Documentation/git-add.txt |  7 +++++-
+ builtin/add.c             | 36 +++++++++++++++++++++----------
+ builtin/checkout.c        |  2 +-
+ builtin/commit.c          |  2 +-
+ builtin/update-index.c    | 55 ++++++++++++++++++-----------------------------
+ cache.h                   | 12 ++++++-----
+ read-cache.c              | 33 +++++++++++++++++++++-------
+ t/t3700-add.sh            | 21 ++++++++++++++++++
+ 8 files changed, 107 insertions(+), 61 deletions(-)
+
+-- 
+2.10.0.304.gf2ff484
 
