@@ -2,97 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C4D31FBB0
-	for <e@80x24.org>; Sun,  4 Sep 2016 10:51:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7440F1FBB0
+	for <e@80x24.org>; Sun,  4 Sep 2016 10:55:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751524AbcIDKu6 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Sep 2016 06:50:58 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34173 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752502AbcIDKu4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Sep 2016 06:50:56 -0400
-Received: by mail-wm0-f66.google.com with SMTP id v143so9023165wmv.1
-        for <git@vger.kernel.org>; Sun, 04 Sep 2016 03:50:29 -0700 (PDT)
+        id S1752855AbcIDKzB (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Sep 2016 06:55:01 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:33691 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752398AbcIDKzA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Sep 2016 06:55:00 -0400
+Received: by mail-wm0-f68.google.com with SMTP id w207so9051911wmw.0
+        for <git@vger.kernel.org>; Sun, 04 Sep 2016 03:54:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=E1TaO2evNMUscMgrjA6WZfcQZoUP97jmlM5KKzRpvrc=;
-        b=pQhrP1f/a0/GKVGsjBxRLI8vbV98SsJs9DiFqdOctBDg9vbK1jhsQXKrAunSuHQ3/R
-         MCrJh7VCRuAVNhmn7AnNnnDhO3IBYcGuXP7I4bhsp+0SYq//LcI+P7M7pPvrHyXezy8u
-         KjRPSVwqCPRD19q2uLqsxYTju9SR8tpOwa1ufCDIcQ5RehMftWp3DuzHOHY/9wfUbOI9
-         yFNfqyR/Z30c9w4sjsroWVXW7Z2spO+TsBt80fqxZsCE6wwpaWx2VP6zdf8Gtslw8H4R
-         HLAP+tjBUo6vYvs0cL+KgbxJzNIpAVwPcctxue9yJ991qGo69kdye5HSYorNFetrDVdS
-         LBog==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=btr+RijBOchgzjhpsp+knSdr+IHSWreuicR93sns0Sw=;
+        b=o/iA4Ou/802ST0UroG4YOGckJtVy0ja1Ja+VC77seFqoS57nmVvr700PEycs+yeFSR
+         cDxJ9UZCB7DAPNLTKUSvFoIeJWjdBjjfqai+fKXcdMYbWEBrN7SO/Fn3RNM2TlfFAqcL
+         TSVDo3pnKxQvH51FDfCXLZo7o+e8fhmWEqdrmgCkO9PLEaSQVJluAmyCWRx9ip0FjRgz
+         qIMwQbfs7eNex1+s6Pn0Z2xRv/PA/CoOxs27KiMEujseSZrzBHYDhp6D4GMwctRY6CNS
+         zjPQTP/lzsgXuEdo0iBc0QIcqEK+cPFOknEOpc3joCgdO9lEmKfucLkSHTYFYbJAH5Ks
+         ALAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=E1TaO2evNMUscMgrjA6WZfcQZoUP97jmlM5KKzRpvrc=;
-        b=iJ51RgR3OfjTUKUIiRxTtoT4EgynJGXOTvmtphdMXddUe17wJokmeSEKVEuFQ6lTsf
-         jUuii9lcoqKqIDYlxJq6IpmcmkZcE+px3L+/hEKPufP3wCBhBuD4WWe8fntR2hoQv6FL
-         hqMMHRrrMg7Doe1kz4p7QNMAQQP58KTKicnAp3wrjGPwcMoSzOXwwDYsZHkMFRwX5T9m
-         tmxkzQF9/BLBMUJlwFJjpAjlU65vBgv/pz0vhwoXoXHWBO7l44ABqyAKotv8iy44udS2
-         Zbgc6VHKejT919jxE3AjSXvVa42hZbyWN+SXUZhUsEIiNUIx+hO8ZzeYhnznWOXAPuEx
-         u8ew==
-X-Gm-Message-State: AE9vXwO3dcy28SGxoW6DP1RbScA2mw6WBHGKMOBhQ4MmcHrOKXGimjdn+UttOZsEjTadzg==
-X-Received: by 10.194.107.163 with SMTP id hd3mr6118170wjb.60.1472985324407;
-        Sun, 04 Sep 2016 03:35:24 -0700 (PDT)
-Received: from [192.168.1.26] (elm244.neoplus.adsl.tpnet.pl. [83.21.206.244])
-        by smtp.googlemail.com with ESMTPSA id vh6sm20492214wjb.0.2016.09.04.03.35.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 04 Sep 2016 03:35:23 -0700 (PDT)
-Subject: Re: [RFC/PATCH 2/2] WIP xdiff: markup duplicates differently
-To:     Stefan Beller <sbeller@google.com>
-References: <20160903033120.20511-1-sbeller@google.com>
- <20160903033120.20511-3-sbeller@google.com>
- <eb88af2c-d7b1-295e-5f23-a85045bde753@gmail.com>
- <CAGZ79kYEieYGFAgORc8yaF3=8-L1E7K4afNGxDH5AgM5nHFgFw@mail.gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <2001e1f2-7ba5-6084-292b-aa97f9b99c90@gmail.com>
-Date:   Sun, 4 Sep 2016 12:35:14 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=btr+RijBOchgzjhpsp+knSdr+IHSWreuicR93sns0Sw=;
+        b=A8MKNWDmLWKFdy2EerFJIWyZExwgFvQ5gmmUJ2UG+0k/Jr+JSGtYQqXhfYsluJ7Qoj
+         ne9585tN6INZLR5dtmZmjuIBOPUOUWQwVpcBUBtDdD17IbbPrTFfys3094e1Xbt12od1
+         /wg6nwbPG0rRKV0Qk0SfgOswTgeeTdE6hj26diAfcV9sLWpATWLSO7LrFRODFKGrh3OI
+         EOt60soxVqgIpL0T+LPQnoA0O7+PEb2RuWLopjGGw1BwOKBEguhOWXnGZ/DpaOX0jKzt
+         CYw2Zw3NmI3oJk8YC3+SxyQSr0r96tX2amihNpwL+7yQVK1QoXWar8QOyYhBMOyQquDL
+         Ce9A==
+X-Gm-Message-State: AE9vXwNrIG7dOWrHQICInewS96MF8MKGEilyaOhOQdBa2xwulblZU6DiPmp1QC7NIuJfZ2IUTP19lFAfYaVN7A==
+X-Received: by 10.28.51.210 with SMTP id z201mr11092047wmz.98.1472986465739;
+ Sun, 04 Sep 2016 03:54:25 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kYEieYGFAgORc8yaF3=8-L1E7K4afNGxDH5AgM5nHFgFw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.194.222.132 with HTTP; Sun, 4 Sep 2016 03:54:25 -0700 (PDT)
+In-Reply-To: <CAP8UFD2Lwd_1+cWT702deF8=iFmBRKCi9gLSOizPbyLmeKepsw@mail.gmail.com>
+References: <20160827184547.4365-1-chriscool@tuxfamily.org>
+ <20160827184547.4365-11-chriscool@tuxfamily.org> <CAGZ79kbdoF-1=ZBZG8y3sEz6LVaNP4Ou+KVk+=M7y9PSzQ1J0Q@mail.gmail.com>
+ <CAP8UFD2Lwd_1+cWT702deF8=iFmBRKCi9gLSOizPbyLmeKepsw@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sun, 4 Sep 2016 12:54:25 +0200
+Message-ID: <CAP8UFD38CC-Ah9zVcnU3a4nGH2CzOn74Adx=42pmckjPv=e_Bg@mail.gmail.com>
+Subject: Re: [PATCH v13 10/14] apply: change error_routine when silent
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Karsten Blees <karsten.blees@gmail.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 04.09.2016 o 07:31, Stefan Beller pisze:
-> On Sat, Sep 3, 2016 at 5:25 AM, Jakub Narębski <jnareb@gmail.com> wrote:
->> W dniu 03.09.2016 o 05:31, Stefan Beller pisze:
->>
->>> When moving code (e.g. a function is moved to another part of the file or
->>> to a different file), the review process is different than reviewing new
->>> code. When reviewing moved code we are only interested in the diff as
->>> where there are differences in the moved code, e.g. namespace changes.
+On Thu, Sep 1, 2016 at 10:19 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> On Thu, Sep 1, 2016 at 12:20 AM, Stefan Beller <sbeller@google.com> wrote=
+:
+>> On Sat, Aug 27, 2016 at 11:45 AM, Christian Couder
+>> <christian.couder@gmail.com> wrote:
+>>> To avoid printing anything when applying with
+>>> `state->apply_verbosity =3D=3D verbosity_silent`, let's save the
+>>> existing warn and error routines before applying, and let's
+>>> replace them with a routine that does nothing.
 >>>
->>> However the inner part of these moved texts should not change.
->>> To aid a developer reviewing such code, emit it with a different prefix
->>> than the usual +,- to indicate it is overlapping code.
+>>> Then after applying, let's restore the saved routines.
+>>>
+>>> Helped-by: Stefan Beller <sbeller@google.com>
+>>> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>>> ---
+>>>  apply.c | 21 ++++++++++++++++++++-
+>>>  apply.h |  8 ++++++++
+>>>  2 files changed, 28 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/apply.c b/apply.c
+>>> index ddbb0a2..bf81b70 100644
+>>> --- a/apply.c
+>>> +++ b/apply.c
+>>> @@ -112,6 +112,11 @@ void clear_apply_state(struct apply_state *state)
+>>>         /* &state->fn_table is cleared at the end of apply_patch() */
+>>>  }
+>>>
+>>> +static void mute_routine(const char *bla, va_list params)
 >>
->> What would be this different prefix?
-> 
-> I will discard the part of the different prefix as the design of 2/2
-> will change.
+>> Instead of 'bla' you could go with 'format' as the man page for
+>> [f]printf puts it.
+>> Or you could leave it empty, i.e.
+>>
+>>     static void mute_routine(const char *, va_list)
+>>     ...
+>
+> Ok to do that.
 
-It would be nice to have at least an option of using different prefix
-(or pair of prefixes), as not always it is possible to use color to
-markup duplicates.
+Actually I get the following error when doing that:
 
-P.S. BTW. does this work with word-diff?
+apply.c: In function =E2=80=98mute_routine=E2=80=99:
+apply.c:115:1: error: parameter name omitted
+ static void mute_routine(const char *, va_list)
+ ^
+apply.c:115:1: error: parameter name omitted
+make: *** [apply.o] Error 1
 
-Best regards,
--- 
-Jakub Narębski
-
+So I will leave it as is.
