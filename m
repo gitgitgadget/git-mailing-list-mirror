@@ -2,111 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 972261FBB0
-	for <e@80x24.org>; Sun,  4 Sep 2016 09:20:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 93B061FBB0
+	for <e@80x24.org>; Sun,  4 Sep 2016 09:58:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752535AbcIDJUb (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Sep 2016 05:20:31 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:58580 "EHLO mx2.imag.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752436AbcIDJU3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Sep 2016 05:20:29 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-        by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u849JIYZ006619
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-        Sun, 4 Sep 2016 11:19:18 +0200
-Received: from anie (anie.imag.fr [129.88.42.32])
-        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u849JJcR004507;
-        Sun, 4 Sep 2016 11:19:19 +0200
-From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>, Git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] t/Makefile: add a rule to re-run previously-failed tests
-References: <b2d016e44fa04e8a318967c43762d6933faf7956.1467183740.git.johannes.schindelin@gmx.de>
-        <0dfa96b17edfe84ba19c7e57fe0b017c77943e0c.1472478285.git.johannes.schindelin@gmx.de>
-        <CACBZZX6iEmbb68tzRKNAryp5qmt=iU9FMuOe2ONV=2ojcazoEg@mail.gmail.com>
-        <20160830205151.k6ufhfzl6gh4uuog@sigill.intra.peff.net>
-        <CACBZZX4NyjkK0Nf1JVGFRhc0xnLYg2YX6ctO5OxK3Pi60r5KaA@mail.gmail.com>
-        <alpine.DEB.2.20.1608311227150.129229@virtualbox>
-        <CACBZZX6exynt_9_wVtEN19HQt_rPJdo5Ck3jujdQ-hLdMAGdmg@mail.gmail.com>
-        <alpine.DEB.2.20.1608311702440.129229@virtualbox>
-        <CACBZZX56fjJZydnBrWUYtU6V3xyQyaLL4MYzVVF0yD4dRdducw@mail.gmail.com>
-        <alpine.DEB.2.20.1609021406340.129229@virtualbox>
-        <vpq8tva1cou.fsf@anie.imag.fr>
-        <alpine.DEB.2.20.1609040952110.129229@virtualbox>
-Date:   Sun, 04 Sep 2016 11:19:19 +0200
-In-Reply-To: <alpine.DEB.2.20.1609040952110.129229@virtualbox> (Johannes
-        Schindelin's message of "Sun, 4 Sep 2016 09:55:39 +0200 (CEST)")
-Message-ID: <vpqoa44xbs8.fsf@anie.imag.fr>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1753897AbcIDJ6W (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Sep 2016 05:58:22 -0400
+Received: from mail-yw0-f180.google.com ([209.85.161.180]:34152 "EHLO
+        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753767AbcIDJ6U (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Sep 2016 05:58:20 -0400
+Received: by mail-yw0-f180.google.com with SMTP id g192so34894500ywh.1
+        for <git@vger.kernel.org>; Sun, 04 Sep 2016 02:58:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=MMKCZQNT13bz/HAbvKtWUXJOntw6soD/5EMpKLyONY8=;
+        b=N6zYSkigp8WeuBIcFnz6AKVswxuTTImRTa8YjP+2HU+QiQMr+mbVEPjk+FsuTFXH5O
+         5rme3aEQZ8+dBcYKxBbrZis/m9j3naDkm3IPh3n1LdhY/eVYWV6Lmr+1e8vFtb7X/ohr
+         Eyg2Ss6Naf6sChFV8lO2g92mZQMlKG9t8JMt8CSQYuqFvlcQZr0t1fer2rRDFQy57MeH
+         W7cZEAB3nnSnPBy2hOhj+D9SDJ/qgpwt9jrk17orlrS5vvIISFcnWd2q056UXRSj6KwC
+         1t/dfdnIoLE3SHT6sDValCMpzc8qOl5qh5p43hF8tqMw6feCWcpD45q0P0WTTplPVKls
+         pv5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=MMKCZQNT13bz/HAbvKtWUXJOntw6soD/5EMpKLyONY8=;
+        b=etzsvgbtx+h9H6X2De0rpA1ocT+SQIPS3iBp3iVj3ecJ42w31RDaCISQ+7BGf4MLk0
+         sN+fGcR9kkx6NkRNJk//Azxmvg9YrBu6D3z8L7BkBF1DfIugSCLMpIQcmGTrF5IV3xWF
+         lPA6qBJKYRqxsCDBHtJbSrqjZFWcy92m3jjnisHc2ppcLIJfTJDfBz3bp7fSpNhPtRxS
+         p5cCumhkOH0TaEZsU05AfAUwjIWU0+W6wljTehEiiuoGCHlU9ExDPGuVqjydkcNRIuvO
+         eee6F6RkSr5DGDokzlCdIzHTvFvAg7YEJDAU1MQTCJDPOtcONy0tXnLglKRqzwsela7o
+         CpUA==
+X-Gm-Message-State: AE9vXwNzAws3Ap/qSjpxZNbZiKgFT1heHjG2yU75DkK0Ec/D3DqO4LKZK8L+E9rA3CCXAGlBR1+6o7ywMWLJbA==
+X-Received: by 10.129.168.9 with SMTP id f9mr24763062ywh.258.1472983100064;
+ Sun, 04 Sep 2016 02:58:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 8bit
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Sun, 04 Sep 2016 11:19:19 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u849JIYZ006619
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1473585563.60289@LoZ/jeWG/zXyzSwdJnM+xA
+Received: by 10.37.96.195 with HTTP; Sun, 4 Sep 2016 02:57:59 -0700 (PDT)
+In-Reply-To: <20160903033120.20511-1-sbeller@google.com>
+References: <20160903033120.20511-1-sbeller@google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Sun, 4 Sep 2016 02:57:59 -0700
+Message-ID: <CA+P7+xp=s4uOvqTS0wuduE0WmxOsWo_EYT5zW0U_2gfcHT7mGg@mail.gmail.com>
+Subject: Re: [RFC/PATCH 0/2] Color moved code differently
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> Hi,
+On Fri, Sep 2, 2016 at 8:31 PM, Stefan Beller <sbeller@google.com> wrote:
+> When moving code (e.g. a function is moved to another part of the file or
+> to a different file), the review process is different than reviewing new
+> code. When reviewing moved code we are only interested in the diff as
+> where there are differences in the moved code, e.g. namespace changes.
 >
-> On Fri, 2 Sep 2016, Matthieu Moy wrote:
+> However the inner part of these moved texts should not change.
+> To aid a developer reviewing such code, we'll color pure moved stuff
+> differently.
 >
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> 
->> > Hi Ævar,
->> >
->> > On Fri, 2 Sep 2016, Ævar Arnfjörð Bjarmason wrote:
->> >
->> >> This might be me missing the point, and I'm really just trying to be
->> >> helpful here and make "prove" work for you because it's awesome, but
->> >> as far as just you running this for development purposes does any of
->> >> this SVN stuff matter? I.e. you can build Git itself not with
->> >> Strawberry, but just use Strawberry to get a working copy of "prove".
->> >
->> > Yes, the SVN stuff matters, because of the many t9*svn* tests (which, BTW
->> > take a substantial time to run). So if I run the test suite, I better do
->> > it with a perl.exe in the PATH that can run the SVN tests. Otherwise I
->> > might just as well not bother with running the entire test suite...
->> 
->> Maybe something like
->> 
->> \path\to\strawberry-perl\perl.exe \path\to\prove ...
->> 
->> without changing the PATH would work. I wouldn't call that convenient
->> though.
+> A line is colored differently if that line and the surroundign 2 lines
+> appear as-is in the opposite part of the diff.
 >
-> Wouldn't Perl-specific environment variables set by Strawberry Perl (such
-> as PERL_PATH bleed through to the spawned child processes?
+> Example:
+> http://i.imgur.com/ay84q0q.png
 >
-> We're dancing around the issue, really. Rather than piling workaround on
-> workaround with no end in sight, I think it is time to admit that using
-> prove(1) on Windows is just not a good solution for the problem to re-run
-> failed tests.
 
-I didn't re-add Ævar's disclaimer, but my message was really not
-intended to be an objection to your patch, just a (not necessarily good)
-idea in case you or someone else on windows wanted to give one more
-chance to prove.
+In the example, the first and last lines of duplicate copies don't get
+colored differently, and that threw  me off. I feel like that was
+maybe not intentional? If it was, can you explain why?
 
-I'm all for adding "make failed". Actually, we could even make the
-feature more discoverable by echoing "You may run 'make failed' to
-re-run failed tests" at the end of the tests when one of them failed.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thanks,
+Jake
