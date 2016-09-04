@@ -2,131 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4770F1FBB0
-	for <e@80x24.org>; Sun,  4 Sep 2016 07:02:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D955120193
+	for <e@80x24.org>; Sun,  4 Sep 2016 07:21:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752147AbcIDHCA (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Sep 2016 03:02:00 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59446 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750881AbcIDHB7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Sep 2016 03:01:59 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 22D9F33093;
-        Sun,  4 Sep 2016 03:01:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=vXL9oK1L2+WJ
-        OvAMFaLDPjBTVP0=; b=j/4JbNsLw+gt2M/CCyYdEJ5tEj1JbrKnlpmWih2mPSkh
-        XYg3Su2lFJD1rfm2Um8IYOZAAiNnFFbU5uw/vZutnMSungiFH8vh94ObxwmwuBaK
-        xvUEaga2E8woJiFU3m50wjqmkSjRDF06X7nOS0fGPIaLQDZTOpGFco8ktnRTkfc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=JloRcz
-        mV+7ADBtyor/8DQLsA5ALtbF52rfGD9xjyAJTbIa1FXSV46mzn/7O5kIIVg12R1x
-        AgyI3OfJcJZh3XN4lM5VyyumpDvh1CYbmLHWZkQiCpuaFiUDc8fZXraKYIkDiYsS
-        GYdKzY3WkYScEj0P9bd2icsWyO8HLz23xIJUM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1A5C633091;
-        Sun,  4 Sep 2016 03:01:58 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9691433090;
-        Sun,  4 Sep 2016 03:01:57 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1751986AbcIDHVn (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Sep 2016 03:21:43 -0400
+Received: from mout.gmx.net ([212.227.17.22]:50346 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751539AbcIDHVm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Sep 2016 03:21:42 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MFu0Y-1buFVK0DCQ-00EyxE; Sun, 04 Sep 2016 09:21:24
+ +0200
+Date:   Sun, 4 Sep 2016 09:21:22 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
 To:     Jeff King <peff@peff.net>
-Cc:     Aaron M Watson <watsona4@gmail.com>, git@vger.kernel.org,
+cc:     Aaron M Watson <watsona4@gmail.com>, git@vger.kernel.org,
         Jon Seymour <jon.seymour@gmail.com>,
         David Caldwell <david@porkrind.org>,
-        =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
-        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
+        =?UTF-8?Q?=C3=98ystein_Walle?= <oystwa@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
         <avarab@gmail.com>, David Aguilar <davvid@gmail.com>,
         Alex Henrie <alexhenrie24@gmail.com>
 Subject: Re: [PATCH] stash: allow ref of a stash by index
-References: <1472944878.19860.4.camel@gmail.com>
-        <20160904015209.ba6arov46ntr2ouq@sigill.intra.peff.net>
-Date:   Sun, 04 Sep 2016 00:01:55 -0700
-In-Reply-To: <20160904015209.ba6arov46ntr2ouq@sigill.intra.peff.net> (Jeff
-        King's message of "Sat, 3 Sep 2016 21:52:09 -0400")
-Message-ID: <xmqqd1kkqhb0.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+In-Reply-To: <20160904015209.ba6arov46ntr2ouq@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1609040914200.129229@virtualbox>
+References: <1472944878.19860.4.camel@gmail.com> <20160904015209.ba6arov46ntr2ouq@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 7850CF4A-726D-11E6-B0FA-51057B1B28F4-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:kwXWaejiSaM0HCqujDPK/KU8uZo8vcwJcedRd4N2CPEA25epRKl
+ 0rSuFizofOta1StrMPPl0gRg/hStgTksx+eWn6sNnQlVOR9UZLGtJbCoQn4lBQj13H20gn6
+ 3fw5NZHHMmIRH31kiSAEdfUsiNtsziiR/Yy2aXq5lEowQCivHZ60FbQkq+26Z6R1uYH+rJj
+ ci3/MavFAHPCYpwLNLacw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Aay47EWpHy4=:7Ex6Jo2R0gRwmlaSbZRLjp
+ TrXLy4fcYpM5HDKBQ+xxNV+TthaqnuLg+KBMpvd+a1t858usBbH2ByDZrleVe75oGdn+80In2
+ DjRPBJkISBS0yOc3DV2I3QP6irBbE+g8BJUBjVPJoP8nT25v8waZ0F8SgpS4vt60qjLUV4Rhy
+ Ht0Zwm5hbknA5ZczkaJQcUbDeoSGL6zLwCXvMRq0ihTtFHOyZJh8cXhjzPL1yTFNQZ8z1CMZW
+ DuwwXWJYXYHlazTClkng5ivHm67bfUyMoNkvDYbC+IZlHAZxIIfcLdivtRmOpzi5Ul8bzWQyT
+ G4Oa87Bb+jg31Ug83VD8hDuxZlPAX2zCfQ0Y0fCkDWX3PeNO8beIIMXCgtOKikjFQIV/62zDr
+ /rs3G5/XDFqcAHUYMxvottFP6g/Xx1Kbkg0JBOIHj2U7fkvL/hhtQvZKXOkKbXyHSdtyfoNrC
+ 1I26AOMTuhVV5UyN/7sgokHFYEtWYqPphPiUeKZdI8PHXbEMVmheM7S11rAJ0LD32k6BdCAOk
+ /QneoTwF/zxoB/vXM1HiOZbbpbxl5hbl3a2unHOjp/4Yyi0eYfzrB09cdlf+t2BC0zNpLsVRI
+ 3FMEWnwmF/iNC7sTh3ev9UIxR0Cp2Z/xrOn/34i/hjx5YGZ2mw9GhwfTk1z9tfN11q6Htkx4m
+ GLg/+E7rU3q2Wz8K9UhfwxGtRbl1jceW3BxzKnxITWI4Mi7cz8zXyMdT+sxgPeKXWWx2b9i3/
+ laFezfIuaiZg81faPyCbZeyUTUaXEMyv+KbHTtZBK4/yJ4BWLJB3DvzTbiPqopI0Pf3FGLOFg
+ HdEnEKW
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
->> diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
->> index 92df596..af11cff 100644
->> --- a/Documentation/git-stash.txt
->> +++ b/Documentation/git-stash.txt
->> @@ -35,11 +35,12 @@ A stash is by default listed as "WIP on
->> 'branchname' ...", but
->> =C2=A0you can give a more descriptive message on the command line when
->> =C2=A0you create one.
->> =C2=A0
->> -The latest stash you created is stored in `refs/stash`; older
->> -stashes are found in the reflog of this reference and can be named us=
-ing
->> -the usual reflog syntax (e.g. `stash@{0}` is the most recently
->> -created stash, `stash@{1}` is the one before it, `stash@{2.hours.ago}=
-`
->> -is also possible).
->> +The latest stash you created is stored in `refs/stash`; older stashes
->> +are found in the reflog of this reference and can be named using the
->> +usual reflog syntax (e.g. `stash@{0}` is the most recently created
->> +stash, `stash@{1}` is the one before it, `stash@{2.hours.ago}` is als=
-o
->> +possible). Stashes may also be references by specifying just the stas=
-h
->> +index (e.g. the integer `n` is equivalent to `stash@{n}`).
->
-> Yay, a documentation update. Should it be s/references/referenced/ in
-> the second-to-last line?
+On Sat, 3 Sep 2016, Jeff King wrote:
 
-This seems whitespace damaged, though.   I see a few &nbsp; at the
-beginning of lines.
+> On Sat, Sep 03, 2016 at 07:21:18PM -0400, Aaron M Watson wrote:
+> 
+> > Allows stashes to be referenced by index only. Instead of referencing
+> > "stash@{n}" explicitly, it can simply be referenced as "n".
+> 
+> This says "what" but not "why". I assume it is "because the former is
+> more annoying to type".
+> 
+> Are there any backwards-compatibility issues you can think of?
+> 
+> I think that "123456" could be a sha1, but I do not see much point in
+> referencing a sha1 as the argument of "stash show". And it looks like
+> this code path is called only from is_stash_like(), so presumably the
+> same logic would apply to other callers.
 
-Also, Aaron, next time please refrain from reflowing the paragraph
-unnecessarily.  I am guessing that you only added one sentence at
-the end of an existing paragraph, and such a patch should clearly
-show that the only change it did is to append at the end.  Reflowing
-will force reviewers to compare the preimage and postimage word by
-word to spot what other things were changed.
+Maybe we could make it unambiguous, e.g. by using #<n> instead: #123456
+cannot refer to a SHA-1.
 
-> So I don't think this is technically a regression in any
-> currently-functioning behavior, but it seems like a step in the wrong
-> direction to add yet another layer of blind parsing.
+But then, '#' are comment-starting in shells, so they would have to by
+escaped. Maybe the best option would be to introduce a -n <n> option,
+with the shortcut -<n> thanks to e0319ff (parseopt: add
+OPT_NUMBER_CALLBACK, 2009-05-07).
 
-Yes.  I agree that the implementation of this patch goes in the
-wrong direction, even though it means well.
-
->> diff --git a/t/t3907-stash-index.sh b/t/t3907-stash-index.sh
->> new file mode 100755
->> index 0000000..72a1838
->> --- /dev/null
->> +++ b/t/t3907-stash-index.sh
->
-> Double yay, tests.
->
-> Do we really need a whole new script for this, though? There are alread=
-y
-> "stash show" tests in t3903. We should be able to repeat one of them
-> using "2" instead of "stash@{2}" (for example).
-
-Yes, it seems a lot better direction to go.  The existing script
-t3903 may want to see a bit of modernization clean-up before that to
-happen, though.
-
-Thanks for a review.
-
+Ciao,
+Johannes
