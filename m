@@ -6,24 +6,24 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E5E71F859
-	for <e@80x24.org>; Sun,  4 Sep 2016 16:10:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 378151F859
+	for <e@80x24.org>; Sun,  4 Sep 2016 16:11:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754264AbcIDQK3 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Sep 2016 12:10:29 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:61523 "EHLO
-        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753981AbcIDQKN (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 4 Sep 2016 12:10:13 -0400
-X-AuditID: 12074413-ab7ff70000000955-7b-57cc472548ff
+        id S1754363AbcIDQLv (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Sep 2016 12:11:51 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:56457 "EHLO
+        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754128AbcIDQLt (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 4 Sep 2016 12:11:49 -0400
+X-AuditID: 12074411-a07ff70000000932-8f-57cc474f5ead
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        by  (Symantec Messaging Gateway) with SMTP id 06.21.02389.5274CC75; Sun,  4 Sep 2016 12:09:09 -0400 (EDT)
+        by  (Symantec Messaging Gateway) with SMTP id B0.ED.02354.F474CC75; Sun,  4 Sep 2016 12:09:51 -0400 (EDT)
 Received: from bagpipes.fritz.box (p57906AC6.dip0.t-ipconnect.de [87.144.106.198])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u84G8n5U026955
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u84G8n5r026955
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Sun, 4 Sep 2016 12:09:07 -0400
+        Sun, 4 Sep 2016 12:09:49 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     David Turner <novalis@novalis.org>,
@@ -33,25 +33,25 @@ Cc:     David Turner <novalis@novalis.org>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, git@vger.kernel.org,
         Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 08/38] resolve_missing_loose_ref(): add a files_ref_store argument
-Date:   Sun,  4 Sep 2016 18:08:14 +0200
-Message-Id: <abc7326c53a018854d4e9cddf2fec9e0922d9787.1473003903.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 31/38] refs: add method iterator_begin
+Date:   Sun,  4 Sep 2016 18:08:37 +0200
+Message-Id: <61aae94372a352f6048ea22132ec78d5891f41a0.1473003903.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <cover.1473003902.git.mhagger@alum.mit.edu>
 References: <cover.1473003902.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrAIsWRmVeSWpSXmKPExsUixO6iqKvqfibcYPkZGYuuK91MFg29V5gt
-        bq+Yz2yx5OFrZovuKW8ZLX609DBbzLxqbXHmTSOjA4fH3/cfmDx2zrrL7tHVfoTN41nvHkaP
-        i5eUPfYv3cbmsfiBl8fnTXIBHFFcNimpOZllqUX6dglcGbMONrIV/Oer2LxFtYHxH3cXIyeH
-        hICJxI7mucxdjFwcQgJbGSX6Lz1lh3BOMknsvvecDaSKTUBXYlFPMxOILSKgJjGx7RALSBEz
-        SNGsiTPZQRLCAqES2zetZQaxWQRUJZb9+ADWzCsQJbGufSErxDo5iUvbvoDVcApYSJzZDbKa
-        A2ibuUT7i+wJjDwLGBlWMcol5pTm6uYmZuYUpybrFicn5uWlFuma6+VmluilppRuYoQEnPAO
-        xl0n5Q4xCnAwKvHwTtA9Ey7EmlhWXJl7iFGSg0lJlHfWwZPhQnxJ+SmVGYnFGfFFpTmpxYcY
-        JTiYlUR4tV2AynlTEiurUovyYVLSHCxK4rxqS9T9hATSE0tSs1NTC1KLYLIyHBxKErzXXYEa
-        BYtS01Mr0jJzShDSTBycIMN5gIbfBKnhLS5IzC3OTIfIn2JUlBLnfQmSEABJZJTmwfXCEsIr
-        RnGgV4R5E9yAqniAyQSu+xXQYCagwet2nwYZXJKIkJJqYNRc9avFwzW/YMeCwjMl9/iDmrOy
-        Klm+vcvr+2YisTTQ6qHO8svb7nBPTSnoCyt/ub/oeCDXQauLxhyty/ctPxAgMtdIYMZ6pp6i
-        Jw/fWzzy6U9e3Bd8aGbnRlaJU6cNRR+sPe9/8mvdqf/1XzTWuu5Qudj7T+/bHKMvs7VjtkYG
-        aP/aIbbuh6USS3FGoqEWc1FxIgDvo74p4wIAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrPIsWRmVeSWpSXmKPExsUixO6iqOvvfibcoP+zmEXXlW4mi4beK8wW
+        t1fMZ7ZY8vA1s0X3lLeMFj9aepgtZl61tjjzppHRgcPj7/sPTB47Z91l9+hqP8Lm8ax3D6PH
+        xUvKHvuXbmPzWPzAy+PzJrkAjigum5TUnMyy1CJ9uwSujKaTv5kK5ktVnDq/hrWBcaFoFyMn
+        h4SAicSUmzdYQGwhga2MEnfbtLsYuYDsk0wSLy+sZANJsAnoSizqaWYCsUUE1CQmth1iASli
+        BimaNXEmexcjB4ewgKXEyTdJIDUsAqoSc/dOYwWxeQWiJHZsmcsMsUxO4tK2L2A2p4CFxJnd
+        IHEOoGXmEu0vsicw8ixgZFjFKJeYU5qrm5uYmVOcmqxbnJyYl5dapGuql5tZopeaUrqJERJu
+        gjsYZ5yUO8QowMGoxMM7QfdMuBBrYllxZe4hRkkOJiVR3lkHT4YL8SXlp1RmJBZnxBeV5qQW
+        H2KU4GBWEuHVdgEq501JrKxKLcqHSUlzsCiJ8/ItUfcTEkhPLEnNTk0tSC2CycpwcChJ8Ea5
+        ATUKFqWmp1akZeaUIKSZODhBhvMADe8DqeEtLkjMLc5Mh8ifYlSUEud96QqUEABJZJTmwfXC
+        0sErRnGgV4R5E0DaeYCpBK77FdBgJqDB63afBhlckoiQkmpgdK9S7gvRyFLeVWvxvrB3+dT/
+        qifNj91rPMVyMOanxMHl1sdF/lb9c3aIvZPmaDcxs8FBft6L26/4n56/seylVPf0+p3WwTWX
+        NsVv9rR1eDrVe8Yd6frt1/lD3nyKqz45zfPypUaj6nWTmA6ri8Uv+j7nhfEXx6kierIXiswN
+        fu60f+7s16dpr8RSnJFoqMVcVJwIAI4lgcjiAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,56 +60,101 @@ X-Mailing-List: git@vger.kernel.org
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- refs/files-backend.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ refs.c               |  2 +-
+ refs/files-backend.c |  3 ++-
+ refs/refs-internal.h | 24 ++++++++++++------------
+ 3 files changed, 15 insertions(+), 14 deletions(-)
 
+diff --git a/refs.c b/refs.c
+index d00126b..798b08a 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1157,7 +1157,7 @@ static int do_for_each_ref(const char *submodule, const char *prefix,
+ 	if (!refs)
+ 		return 0;
+ 
+-	iter = files_ref_iterator_begin(refs, prefix, flags);
++	iter = refs->be->iterator_begin(refs, prefix, flags);
+ 	iter = prefix_ref_iterator_begin(iter, prefix, trim);
+ 
+ 	return do_for_each_ref_iterator(iter, fn, cb_data);
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 2fc8ec9..0c92ace 100644
+index f521b5d..4451e13 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -1412,13 +1412,11 @@ static struct ref_entry *get_packed_ref(struct files_ref_store *refs,
- /*
-  * A loose ref file doesn't exist; check for a packed ref.
-  */
--static int resolve_missing_loose_ref(const char *refname,
-+static int resolve_missing_loose_ref(struct files_ref_store *refs,
-+				     const char *refname,
- 				     unsigned char *sha1,
- 				     unsigned int *flags)
- {
--	struct files_ref_store *refs =
--		get_files_ref_store(NULL, "resolve_missing_loose_ref");
--
- 	struct ref_entry *entry;
+@@ -1862,7 +1862,7 @@ static struct ref_iterator_vtable files_ref_iterator_vtable = {
+ 	files_ref_iterator_abort
+ };
  
- 	/*
-@@ -1438,6 +1436,8 @@ static int resolve_missing_loose_ref(const char *refname,
- int read_raw_ref(const char *refname, unsigned char *sha1,
- 		 struct strbuf *referent, unsigned int *type)
+-struct ref_iterator *files_ref_iterator_begin(
++static struct ref_iterator *files_ref_iterator_begin(
+ 		struct ref_store *ref_store,
+ 		const char *prefix, unsigned int flags)
  {
-+	struct files_ref_store *refs =
-+		get_files_ref_store(NULL, "read_raw_ref");
- 	struct strbuf sb_contents = STRBUF_INIT;
- 	struct strbuf sb_path = STRBUF_INIT;
- 	const char *path;
-@@ -1466,7 +1466,7 @@ int read_raw_ref(const char *refname, unsigned char *sha1,
- 	if (lstat(path, &st) < 0) {
- 		if (errno != ENOENT)
- 			goto out;
--		if (resolve_missing_loose_ref(refname, sha1, type)) {
-+		if (resolve_missing_loose_ref(refs, refname, sha1, type)) {
- 			errno = ENOENT;
- 			goto out;
- 		}
-@@ -1500,7 +1500,7 @@ int read_raw_ref(const char *refname, unsigned char *sha1,
- 		 * ref is supposed to be, there could still be a
- 		 * packed ref:
- 		 */
--		if (resolve_missing_loose_ref(refname, sha1, type)) {
-+		if (resolve_missing_loose_ref(refs, refname, sha1, type)) {
- 			errno = EISDIR;
- 			goto out;
- 		}
+@@ -4054,6 +4054,7 @@ struct ref_storage_be refs_be_files = {
+ 	files_peel_ref,
+ 	files_create_symref,
+ 
++	files_ref_iterator_begin,
+ 	files_read_raw_ref,
+ 	files_verify_refname_available
+ };
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 0af1079..5be62a2 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -404,18 +404,6 @@ struct ref_iterator *prefix_ref_iterator_begin(struct ref_iterator *iter0,
+ 					       const char *prefix,
+ 					       int trim);
+ 
+-struct ref_store;
+-
+-/*
+- * Iterate over the packed and loose references in the specified
+- * ref_store that are within find_containing_dir(prefix). If prefix is
+- * NULL or the empty string, iterate over all references in the
+- * submodule.
+- */
+-struct ref_iterator *files_ref_iterator_begin(struct ref_store *ref_store,
+-					      const char *prefix,
+-					      unsigned int flags);
+-
+ /*
+  * Iterate over the references in the main ref_store that have a
+  * reflog. The paths within a directory are iterated over in arbitrary
+@@ -488,6 +476,8 @@ int do_for_each_ref_iterator(struct ref_iterator *iter,
+ 
+ /* refs backends */
+ 
++struct ref_store;
++
+ /*
+  * Initialize the ref_store for the specified submodule, or for the
+  * main repository if submodule == NULL. These functions should call
+@@ -509,6 +499,15 @@ typedef int create_symref_fn(struct ref_store *ref_store,
+ 			     const char *logmsg);
+ 
+ /*
++ * Iterate over the references in the specified ref_store that are
++ * within find_containing_dir(prefix). If prefix is NULL or the empty
++ * string, iterate over all references in the submodule.
++ */
++typedef struct ref_iterator *ref_iterator_begin_fn(
++		struct ref_store *ref_store,
++		const char *prefix, unsigned int flags);
++
++/*
+  * Read a reference from the specified reference store, non-recursively.
+  * Set type to describe the reference, and:
+  *
+@@ -566,6 +565,7 @@ struct ref_storage_be {
+ 	peel_ref_fn *peel_ref;
+ 	create_symref_fn *create_symref;
+ 
++	ref_iterator_begin_fn *iterator_begin;
+ 	read_raw_ref_fn *read_raw_ref;
+ 	verify_refname_available_fn *verify_refname_available;
+ };
 -- 
 2.9.3
 
