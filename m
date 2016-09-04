@@ -6,24 +6,24 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0537020193
-	for <e@80x24.org>; Sun,  4 Sep 2016 16:12:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D5D320193
+	for <e@80x24.org>; Sun,  4 Sep 2016 16:12:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754468AbcIDQML (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Sep 2016 12:12:11 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:61504 "EHLO
-        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754332AbcIDQLu (ORCPT
+        id S1754484AbcIDQMT (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Sep 2016 12:12:19 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:54246 "EHLO
+        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754329AbcIDQLu (ORCPT
         <rfc822;git@vger.kernel.org>); Sun, 4 Sep 2016 12:11:50 -0400
-X-AuditID: 12074413-aa3ff70000000955-92-57cc473ea668
+X-AuditID: 12074412-1c3ff70000000931-7f-57cc4732ffca
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        by  (Symantec Messaging Gateway) with SMTP id 29.21.02389.E374CC75; Sun,  4 Sep 2016 12:09:34 -0400 (EDT)
+        by  (Symantec Messaging Gateway) with SMTP id 48.47.02353.2374CC75; Sun,  4 Sep 2016 12:09:22 -0400 (EDT)
 Received: from bagpipes.fritz.box (p57906AC6.dip0.t-ipconnect.de [87.144.106.198])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u84G8n5i026955
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u84G8n5b026955
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Sun, 4 Sep 2016 12:09:33 -0400
+        Sun, 4 Sep 2016 12:09:20 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     David Turner <novalis@novalis.org>,
@@ -33,111 +33,79 @@ Cc:     David Turner <novalis@novalis.org>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, git@vger.kernel.org,
         Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 22/38] refs: make create_symref() virtual
-Date:   Sun,  4 Sep 2016 18:08:28 +0200
-Message-Id: <b7399efde555f056c736bcc1c07a685290bc796e.1473003903.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 15/38] resolve_ref_recursively(): new function
+Date:   Sun,  4 Sep 2016 18:08:21 +0200
+Message-Id: <ee72c2f9d2019a5348748964e715c2037c3d05e5.1473003903.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <cover.1473003902.git.mhagger@alum.mit.edu>
 References: <cover.1473003902.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrPIsWRmVeSWpSXmKPExsUixO6iqGvnfibcYH63qUXXlW4mi4beK8wW
-        t1fMZ7ZY8vA1s0X3lLeMFj9aepgtZl61tjjzppHRgcPj7/sPTB47Z91l9+hqP8Lm8ax3D6PH
-        xUvKHvuXbmPzWPzAy+PzJrkAjigum5TUnMyy1CJ9uwSujM2v+1kK9ohUTGvZxtrAeEygi5GD
-        Q0LAROLCrpAuRk4OIYGtjBIznmZ3MXIB2SeZJOYsbmIFSbAJ6Eos6mlmArFFBNQkJrYdYgEp
-        YgYpmjVxJjtIQljARmLbrHVsIDaLgKrEgUt9LCA2r0CUxK8nS8FqJATkJC5t+8IMYnMKWEic
-        2T2XGeQIIQFzifYX2RMYeRYwMqxilEvMKc3VzU3MzClOTdYtTk7My0st0jXXy80s0UtNKd3E
-        CAk34R2Mu07KHWIU4GBU4uGdoHsmXIg1say4MvcQoyQHk5Io76yDJ8OF+JLyUyozEosz4otK
-        c1KLDzFKcDArifBquwCV86YkVlalFuXDpKQ5WJTEedWWqPsJCaQnlqRmp6YWpBbBZGU4OJQk
-        eK+7AjUKFqWmp1akZeaUIKSZODhBhvMADb8JUsNbXJCYW5yZDpE/xagoJc77EiQhAJLIKM2D
-        64Wlg1eM4kCvCPMmuAFV8QBTCVz3K6DBTECD1+0+DTK4JBEhJdXAGFjsZmR6q9gpZHri0ket
-        eUlmlgFBOkeW1r5yf3agP5zNQn0el6fT7aIZS98x+qnMN2PqTHrLsKz/T1DqX4VbOx4u1d+V
-        JC1Y+/z6yeDVuyw2HOtIW31+W//yzY+KtTMPqPvxvVp+94bZdPMTtVG55Z4LdB8ac64/M6na
-        Q25O0LXWYx0mfpYJSizFGYmGWsxFxYkAe4LGv+ICAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrAIsWRmVeSWpSXmKPExsUixO6iqGvkfibc4MBtAYuuK91MFg29V5gt
+        bq+Yz2yx5OFrZovuKW8ZLX609DBbzLxqbXHmTSOjA4fH3/cfmDx2zrrL7tHVfoTN41nvHkaP
+        i5eUPfYv3cbmsfiBl8fnTXIBHFFcNimpOZllqUX6dglcGQv6tjAW/OapONx9maWBcQNXFyMn
+        h4SAiUR/1yeWLkYuDiGBrYwSR68fYIVwTjJJTFk6nxmkik1AV2JRTzMTiC0ioCYxse0QWAcz
+        SNGsiTPZQRLCAo4SD/48ZgOxWQRUJZ7/WAYU5+DgFYiS+Lc2D2KbnMSlbV/AZnIKWEic2T2X
+        GaRESMBcov1F9gRGngWMDKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKLdM30cjNL9FJTSjcxQgJO
+        aAfj+pNyhxgFOBiVeHgttM+EC7EmlhVX5h5ilORgUhLlnXXwZLgQX1J+SmVGYnFGfFFpTmrx
+        IUYJDmYlEV5tF6By3pTEyqrUonyYlDQHi5I478/F6n5CAumJJanZqakFqUUwWRkODiUJ3ig3
+        oEbBotT01Iq0zJwShDQTByfIcB6g4X0gNbzFBYm5xZnpEPlTjIpS4rwvXYESAiCJjNI8uF5Y
+        QnjFKA70ijCvIkg7DzCZwHW/AhrMBDR43e7TIINLEhFSUg2Mu1O6NHX97fqjNwTF2Gk5TTrk
+        0Z2T9mdiyqPV7M4LlIM+HL09Qfz+gZn/vvw4+Hg+g9VPrsRF/Z/uXFuZfOfVhBlvPiwvf8BQ
+        It91it369dbPlfGpz/cnmp/5nta49fBnpkMvezUmXrjl0+JRPbuFa9cs1kWmFXkM2Q3OazxK
+        BB/kBBxZsezYJiWW4oxEQy3mouJEADUsaLHjAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Add a new function, resolve_ref_recursively(), which is basically like
+the old resolve_ref_unsafe() except that it takes a (ref_store *)
+argument and also works for submodules.
+
+Re-implement resolve_ref_unsafe() as a thin wrapper around
+resolve_ref_recursively().
+
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- refs.c               | 9 +++++++++
- refs/files-backend.c | 7 ++++++-
- refs/refs-internal.h | 5 +++++
- 3 files changed, 20 insertions(+), 1 deletion(-)
+ refs.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 961927a..74874e5 100644
+index 9e6b005..3723169 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1428,6 +1428,15 @@ int pack_refs(unsigned int flags)
- 	return refs->be->pack_refs(refs, flags);
+@@ -1216,13 +1216,14 @@ int for_each_rawref(each_ref_fn fn, void *cb_data)
  }
  
-+int create_symref(const char *ref_target, const char *refs_heads_master,
-+		  const char *logmsg)
+ /* This function needs to return a meaningful errno on failure */
+-const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
+-			       unsigned char *sha1, int *flags)
++static const char *resolve_ref_recursively(struct ref_store *refs,
++					   const char *refname,
++					   int resolve_flags,
++					   unsigned char *sha1, int *flags)
+ {
+ 	static struct strbuf sb_refname = STRBUF_INIT;
+ 	int unused_flags;
+ 	int symref_count;
+-	struct ref_store *refs = get_ref_store(NULL);
+ 
+ 	if (!flags)
+ 		flags = &unused_flags;
+@@ -1291,6 +1292,13 @@ const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
+ 	return NULL;
+ }
+ 
++const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
++			       unsigned char *sha1, int *flags)
 +{
-+	struct ref_store *refs = get_ref_store(NULL);
-+
-+	return refs->be->create_symref(refs, ref_target, refs_heads_master,
-+				       logmsg);
++	return resolve_ref_recursively(get_ref_store(NULL), refname,
++				       resolve_flags, sha1, flags);
 +}
 +
- int ref_transaction_commit(struct ref_transaction *transaction,
- 			   struct strbuf *err)
- {
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 7ad8821..bf53670 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -3011,12 +3011,16 @@ static int create_symref_locked(struct ref_lock *lock, const char *refname,
- 	return 0;
- }
+ /* A pointer to the ref_store for the main repository: */
+ static struct ref_store *main_ref_store;
  
--int create_symref(const char *refname, const char *target, const char *logmsg)
-+static int files_create_symref(struct ref_store *ref_store,
-+			       const char *refname, const char *target,
-+			       const char *logmsg)
- {
- 	struct strbuf err = STRBUF_INIT;
- 	struct ref_lock *lock;
- 	int ret;
- 
-+	files_downcast(ref_store, 0, "create_symref");
-+
- 	lock = lock_ref_sha1_basic(refname, NULL, NULL, NULL, REF_NODEREF, NULL,
- 				   &err);
- 	if (!lock) {
-@@ -4033,6 +4037,7 @@ struct ref_storage_be refs_be_files = {
- 	files_transaction_commit,
- 
- 	files_pack_refs,
-+	files_create_symref,
- 
- 	files_read_raw_ref,
- 	files_verify_refname_available
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 256f7f5..bf96503 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -501,6 +501,10 @@ typedef int ref_transaction_commit_fn(struct ref_store *refs,
- 				      struct strbuf *err);
- 
- typedef int pack_refs_fn(struct ref_store *ref_store, unsigned int flags);
-+typedef int create_symref_fn(struct ref_store *ref_store,
-+			     const char *ref_target,
-+			     const char *refs_heads_master,
-+			     const char *logmsg);
- 
- /*
-  * Read a reference from the specified reference store, non-recursively.
-@@ -557,6 +561,7 @@ struct ref_storage_be {
- 	ref_transaction_commit_fn *transaction_commit;
- 
- 	pack_refs_fn *pack_refs;
-+	create_symref_fn *create_symref;
- 
- 	read_raw_ref_fn *read_raw_ref;
- 	verify_refname_available_fn *verify_refname_available;
 -- 
 2.9.3
 
