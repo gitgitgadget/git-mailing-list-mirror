@@ -2,123 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7440F1FBB0
-	for <e@80x24.org>; Sun,  4 Sep 2016 10:55:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48A131FBB0
+	for <e@80x24.org>; Sun,  4 Sep 2016 10:57:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752855AbcIDKzB (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Sep 2016 06:55:01 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33691 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752398AbcIDKzA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Sep 2016 06:55:00 -0400
-Received: by mail-wm0-f68.google.com with SMTP id w207so9051911wmw.0
-        for <git@vger.kernel.org>; Sun, 04 Sep 2016 03:54:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=btr+RijBOchgzjhpsp+knSdr+IHSWreuicR93sns0Sw=;
-        b=o/iA4Ou/802ST0UroG4YOGckJtVy0ja1Ja+VC77seFqoS57nmVvr700PEycs+yeFSR
-         cDxJ9UZCB7DAPNLTKUSvFoIeJWjdBjjfqai+fKXcdMYbWEBrN7SO/Fn3RNM2TlfFAqcL
-         TSVDo3pnKxQvH51FDfCXLZo7o+e8fhmWEqdrmgCkO9PLEaSQVJluAmyCWRx9ip0FjRgz
-         qIMwQbfs7eNex1+s6Pn0Z2xRv/PA/CoOxs27KiMEujseSZrzBHYDhp6D4GMwctRY6CNS
-         zjPQTP/lzsgXuEdo0iBc0QIcqEK+cPFOknEOpc3joCgdO9lEmKfucLkSHTYFYbJAH5Ks
-         ALAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=btr+RijBOchgzjhpsp+knSdr+IHSWreuicR93sns0Sw=;
-        b=A8MKNWDmLWKFdy2EerFJIWyZExwgFvQ5gmmUJ2UG+0k/Jr+JSGtYQqXhfYsluJ7Qoj
-         ne9585tN6INZLR5dtmZmjuIBOPUOUWQwVpcBUBtDdD17IbbPrTFfys3094e1Xbt12od1
-         /wg6nwbPG0rRKV0Qk0SfgOswTgeeTdE6hj26diAfcV9sLWpATWLSO7LrFRODFKGrh3OI
-         EOt60soxVqgIpL0T+LPQnoA0O7+PEb2RuWLopjGGw1BwOKBEguhOWXnGZ/DpaOX0jKzt
-         CYw2Zw3NmI3oJk8YC3+SxyQSr0r96tX2amihNpwL+7yQVK1QoXWar8QOyYhBMOyQquDL
-         Ce9A==
-X-Gm-Message-State: AE9vXwNrIG7dOWrHQICInewS96MF8MKGEilyaOhOQdBa2xwulblZU6DiPmp1QC7NIuJfZ2IUTP19lFAfYaVN7A==
-X-Received: by 10.28.51.210 with SMTP id z201mr11092047wmz.98.1472986465739;
- Sun, 04 Sep 2016 03:54:25 -0700 (PDT)
+        id S1753265AbcIDK5x (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Sep 2016 06:57:53 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:2604 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752791AbcIDK5w (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Sep 2016 06:57:52 -0400
+Received: from PhilipOakley ([92.22.24.43])
+        by smtp.talktalk.net with SMTP
+        id gV7Vb4GxpxR4bgV7Vboy1q; Sun, 04 Sep 2016 11:57:50 +0100
+X-Originating-IP: [92.22.24.43]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=JNN5iICb c=1 sm=1 tr=0 a=ZBOQwd+zDMuFpFo4vDT3kw==:117
+ a=ZBOQwd+zDMuFpFo4vDT3kw==:17 a=8nJEP1OIZ-IA:10 a=Zuqv9LRU0NVfUEFy61cA:9
+ a=j7vvuKjHx3Ervkvb:21 a=BOLkJdh1ndbkzNHh:21 a=wPNLvfGTeEIA:10
+Message-ID: <B8553589D87B4CFAB94CFB22027B9E7D@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+        "Jeff King" <peff@peff.net>
+Cc:     "Aaron M Watson" <watsona4@gmail.com>, <git@vger.kernel.org>,
+        "Jon Seymour" <jon.seymour@gmail.com>,
+        "David Caldwell" <david@porkrind.org>,
+        =?iso-8859-1?Q?=D8ystein_Walle?= <oystwa@gmail.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+        "David Aguilar" <davvid@gmail.com>,
+        "Alex Henrie" <alexhenrie24@gmail.com>
+References: <1472944878.19860.4.camel@gmail.com> <20160904015209.ba6arov46ntr2ouq@sigill.intra.peff.net> <alpine.DEB.2.20.1609040914200.129229@virtualbox>
+Subject: Re: [PATCH] stash: allow ref of a stash by index
+Date:   Sun, 4 Sep 2016 11:57:51 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.194.222.132 with HTTP; Sun, 4 Sep 2016 03:54:25 -0700 (PDT)
-In-Reply-To: <CAP8UFD2Lwd_1+cWT702deF8=iFmBRKCi9gLSOizPbyLmeKepsw@mail.gmail.com>
-References: <20160827184547.4365-1-chriscool@tuxfamily.org>
- <20160827184547.4365-11-chriscool@tuxfamily.org> <CAGZ79kbdoF-1=ZBZG8y3sEz6LVaNP4Ou+KVk+=M7y9PSzQ1J0Q@mail.gmail.com>
- <CAP8UFD2Lwd_1+cWT702deF8=iFmBRKCi9gLSOizPbyLmeKepsw@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 4 Sep 2016 12:54:25 +0200
-Message-ID: <CAP8UFD38CC-Ah9zVcnU3a4nGH2CzOn74Adx=42pmckjPv=e_Bg@mail.gmail.com>
-Subject: Re: [PATCH v13 10/14] apply: change error_routine when silent
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Karsten Blees <karsten.blees@gmail.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfBo9sNSelRtnk1ftB0Hs47fTU18gX6w4P6nxq+q/VfrsinrSaCk6ki54hij8M0POKT8DajjMBTdWbEj7/sVlFWk0s2WbXeZqurbtDHvYeOW52lw1qZVa
+ Z2fe6vez3/x8n7OfLKEhn/SuTwIecjWnHv9+mcIiGn2nxATcLGiIMC32vnJ1MCi4UetX3ZDVZJ16tJAB+VKNVzWJoXlqPQEw0I3BtzP+D1qCJLEgvp88PaYo
+ ctXIZvdOA2FgdCvZh6lnUM+JlcupfH7/7FB1qqZJqyedG3oVhOxmz6soUf2ehn0/Be+NGSYq6HL7OiONz8sECFlPMn4V3cJ2scKPdEqMkOJtNZQH47KSddhY
+ 6cOJ6w7uAMb7U0mbGsJdRUR6uchZ1MR0r4+gTKqF3pLgQ7+jqR1g85gbR+CYsamto8oTqvoadX7n4CC0XkRnncyeG01x0g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 1, 2016 at 10:19 AM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> On Thu, Sep 1, 2016 at 12:20 AM, Stefan Beller <sbeller@google.com> wrote=
-:
->> On Sat, Aug 27, 2016 at 11:45 AM, Christian Couder
->> <christian.couder@gmail.com> wrote:
->>> To avoid printing anything when applying with
->>> `state->apply_verbosity =3D=3D verbosity_silent`, let's save the
->>> existing warn and error routines before applying, and let's
->>> replace them with a routine that does nothing.
->>>
->>> Then after applying, let's restore the saved routines.
->>>
->>> Helped-by: Stefan Beller <sbeller@google.com>
->>> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->>> ---
->>>  apply.c | 21 ++++++++++++++++++++-
->>>  apply.h |  8 ++++++++
->>>  2 files changed, 28 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/apply.c b/apply.c
->>> index ddbb0a2..bf81b70 100644
->>> --- a/apply.c
->>> +++ b/apply.c
->>> @@ -112,6 +112,11 @@ void clear_apply_state(struct apply_state *state)
->>>         /* &state->fn_table is cleared at the end of apply_patch() */
->>>  }
->>>
->>> +static void mute_routine(const char *bla, va_list params)
->>
->> Instead of 'bla' you could go with 'format' as the man page for
->> [f]printf puts it.
->> Or you could leave it empty, i.e.
->>
->>     static void mute_routine(const char *, va_list)
->>     ...
+From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+> Hi,
 >
-> Ok to do that.
+> On Sat, 3 Sep 2016, Jeff King wrote:
+>
+>> On Sat, Sep 03, 2016 at 07:21:18PM -0400, Aaron M Watson wrote:
+>>
+>> > Allows stashes to be referenced by index only. Instead of referencing
+>> > "stash@{n}" explicitly, it can simply be referenced as "n".
+>>
+>> This says "what" but not "why". I assume it is "because the former is
+>> more annoying to type".
+>>
+>> Are there any backwards-compatibility issues you can think of?
+>>
+>> I think that "123456" could be a sha1, but I do not see much point in
+>> referencing a sha1 as the argument of "stash show". And it looks like
+>> this code path is called only from is_stash_like(), so presumably the
+>> same logic would apply to other callers.
+>
+> Maybe we could make it unambiguous, e.g. by using #<n> instead: #123456
+> cannot refer to a SHA-1.
 
-Actually I get the following error when doing that:
+The alternative is to limit the length to less that the shortest ambiguous 
+sha1 length that has been used (by Git users - 5, 6, 7? )? Which is probably 
+allowing 1-4 characters, which is a reasonbly deep stash index...
 
-apply.c: In function =E2=80=98mute_routine=E2=80=99:
-apply.c:115:1: error: parameter name omitted
- static void mute_routine(const char *, va_list)
- ^
-apply.c:115:1: error: parameter name omitted
-make: *** [apply.o] Error 1
+If you need to refer to stash@{9362} you have bigger problems.
 
-So I will leave it as is.
+> But then, '#' are comment-starting in shells, so they would have to by
+> escaped. Maybe the best option would be to introduce a -n <n> option,
+> with the shortcut -<n> thanks to e0319ff (parseopt: add
+> OPT_NUMBER_CALLBACK, 2009-05-07).
+>
+> Ciao,
+> Johannes
+> 
+
