@@ -7,46 +7,45 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2ADB82021E
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B03820193
 	for <e@80x24.org>; Sun,  4 Sep 2016 20:19:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932243AbcIDUTP (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Sep 2016 16:19:15 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:34031 "EHLO
+        id S932254AbcIDUTR (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Sep 2016 16:19:17 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:32807 "EHLO
         mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932235AbcIDUTM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Sep 2016 16:19:12 -0400
-Received: by mail-wm0-f65.google.com with SMTP id w12so959176wmf.1
-        for <git@vger.kernel.org>; Sun, 04 Sep 2016 13:19:11 -0700 (PDT)
+        with ESMTP id S932230AbcIDUTK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Sep 2016 16:19:10 -0400
+Received: by mail-wm0-f65.google.com with SMTP id w207so10455755wmw.0
+        for <git@vger.kernel.org>; Sun, 04 Sep 2016 13:19:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=YuBs/UMneaUAjTuM/ZFgmBcTWBHUsWDbeJq/wKintvM=;
-        b=SkP9GwBr7m60EsvCIxHySHYrNNV8dmcF6fqxl5e6Xn6AhsYX/MSNZVs7sSW/ajZNvb
-         zkXO5tdWJcz+ZzlkTY8Ub+6ecffXT7bvjjqKQeakC3bTmXq3hh9U4Z//KvL2BjYGFqel
-         fpDcjTEOLGz+0faAeezDMinUbymHQ26hiHQWCfg2rnrIASseajZTB8MTNNwbtXfHhCfM
-         AO5LdimGXd8HZLMOa8yeVKuNfbos94QdZLg8cOL7kEmrV3pfSsAeXQQtNXcS2SR2xYzc
-         tKhxdt7HQNFHJ39DKzo+zoc/C3N9EvET7hYI8lMPMZ076L/tq1EoC9P4iLe1KCvI5nRz
-         gMtQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=TlesdSrgGv0pU4ElSy2qCv3u1qVdTsZgpYxHaFjUKrE=;
+        b=VUND3+m/yYOuf+ALurZsdMu41H8ufYWwzisMUYxV9mQU9RhbqXh3i2iwULM67sQNjg
+         GuQVoztXG/JCDW9tSfDLGyZeAexagbkxmCw/j/aQZRvFJM4p8ANjVp5htY5OVbyKXGST
+         ltBPuhcnAtJZNcXIP/EsVtYImrGVe+M+HWriTlJzp9yVgeqSuaTnNdKzJGWlD4V0OWFa
+         ogSrYOspot7A7VtckJuucbsnRrfBMr3eE+s7dOohkLjYLPx3GSI2pdnDOn8Nh77X9vvv
+         vGNGwZ5hQbnDTD0XuvXAURAom2cMzsHHAIkK4z5Pc8c/8yWMzP7GCm1gkwicdJD0/4nn
+         LhTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=YuBs/UMneaUAjTuM/ZFgmBcTWBHUsWDbeJq/wKintvM=;
-        b=g8DS9NNTq5LFtU6YDfRizZ+0L65rY/PBbvG4JX//zAkdAo2V4GR7dQm4+Lv4LomjOB
-         lHj66RQM2Xr3Tgz1flySy2BsB90zRLhowwaVwsOzyGXYpj5bkssSjpBTFguSXHVa/eX4
-         rWpzl0TVEEGEW5AYpfPn1md+xlhEdlfWzB5k2STXnvrNsWPwSl5uD8ew2orlfMlhWwfb
-         YAI9EqkV+XQHQOXtukKbxXdW6f5Xp6OlhqEwaChhGfHIMFosD8JskR7aiYSU82puH/Or
-         L4uiwmDb3H4QGVPer6KPB5g/QnBXMUUYmmqjND/Cm8IGae3cE/wHPYpEum9SWT1hLBlg
-         7xbA==
-X-Gm-Message-State: AE9vXwN7BJJg/I21L8Pix0JrQQ7k3BQyioDPRJj04bx9VF1qqvxTQwrARRpmNH5ogaUKrA==
-X-Received: by 10.28.141.76 with SMTP id p73mr11715369wmd.118.1473020350886;
-        Sun, 04 Sep 2016 13:19:10 -0700 (PDT)
+         :references;
+        bh=TlesdSrgGv0pU4ElSy2qCv3u1qVdTsZgpYxHaFjUKrE=;
+        b=Pt46MW4A09ca0iBZ2bKOOjAjuljlJ0H2pdCXptg5C7rB16KV05mFMoMLKlhqoEpvU6
+         txRSvcL/EBlp7p/iI9fvBn7dZ7YwTUtDeRWfdkINU2PmKCf9tOy86qOA9K6GE3KwZX8D
+         3G/i48yzW3pWUmYv1Qasbbr/Q6v7JNS+WDqvw5DuAL/cK1+9VUoWv2wxoUIo8d1efDWU
+         Bi4cubuV896uyiPq//nD/s1hH3MNfDai8EkUBop6G/7YV+Bb3YgvvmfyNhhiVV2nrG7K
+         V2WKrJrPNLcyw3RnbKarIBGdCrf5h4OwjxN1dokIfyjkHTJ+ltkq2ucL1nHT8DpB/X+2
+         FmNQ==
+X-Gm-Message-State: AE9vXwN7L7Eo6bprFmvp/zRxnMyl+dazM8T7T23nOKgVWotGJC1cSoyRCWWnGUGx/sqsIQ==
+X-Received: by 10.28.28.70 with SMTP id c67mr12668475wmc.8.1473020344365;
+        Sun, 04 Sep 2016 13:19:04 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id n7sm23178805wjf.11.2016.09.04.13.19.09
+        by smtp.gmail.com with ESMTPSA id n7sm23178805wjf.11.2016.09.04.13.19.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 04 Sep 2016 13:19:10 -0700 (PDT)
+        Sun, 04 Sep 2016 13:19:03 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -61,119 +60,123 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v14 17/41] builtin/apply: make gitdiff_*() return -1 on error
-Date:   Sun,  4 Sep 2016 22:18:09 +0200
-Message-Id: <20160904201833.21676-18-chriscool@tuxfamily.org>
+Subject: [PATCH v14 13/41] builtin/apply: move check_apply_state() to apply.c
+Date:   Sun,  4 Sep 2016 22:18:05 +0200
+Message-Id: <20160904201833.21676-14-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.10.0.41.g9df52c3
 In-Reply-To: <20160904201833.21676-1-chriscool@tuxfamily.org>
 References: <20160904201833.21676-1-chriscool@tuxfamily.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To libify `git apply` functionality we have to signal errors to the
-caller instead of die()ing.
+To libify `git apply` functionality we must make check_apply_state()
+usable outside "builtin/apply.c".
 
-To do that in a compatible manner with the rest of the error handling
-in "builtin/apply.c", gitdiff_*() functions should return -1 instead
-of calling die().
+Let's do that by moving it into "apply.c".
 
-A previous patch made it possible for gitdiff_*() functions to
-return -1 in case of error. Let's take advantage of that to
-make gitdiff_verify_name() return -1 on error, and to have
-gitdiff_oldname() and gitdiff_newname() directly return
-what gitdiff_verify_name() returns.
-
-Helped-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/apply.c | 40 +++++++++++++++++++++-------------------
- 1 file changed, 21 insertions(+), 19 deletions(-)
+ apply.c         | 32 ++++++++++++++++++++++++++++++++
+ apply.h         |  1 +
+ builtin/apply.c | 32 --------------------------------
+ 3 files changed, 33 insertions(+), 32 deletions(-)
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index eb918e5..6b16173 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -827,54 +827,56 @@ static int gitdiff_hdrend(struct apply_state *state,
- #define DIFF_OLD_NAME 0
- #define DIFF_NEW_NAME 1
+diff --git a/apply.c b/apply.c
+index 6e0e992..2eac3e3 100644
+--- a/apply.c
++++ b/apply.c
+@@ -93,3 +93,35 @@ void clear_apply_state(struct apply_state *state)
  
--static void gitdiff_verify_name(struct apply_state *state,
--				const char *line,
--				int isnull,
--				char **name,
--				int side)
-+static int gitdiff_verify_name(struct apply_state *state,
-+			       const char *line,
-+			       int isnull,
-+			       char **name,
-+			       int side)
- {
- 	if (!*name && !isnull) {
- 		*name = find_name(state, line, NULL, state->p_value, TERM_TAB);
--		return;
-+		return 0;
- 	}
- 
- 	if (*name) {
- 		int len = strlen(*name);
- 		char *another;
- 		if (isnull)
--			die(_("git apply: bad git-diff - expected /dev/null, got %s on line %d"),
--			    *name, state->linenr);
-+			return error(_("git apply: bad git-diff - expected /dev/null, got %s on line %d"),
-+				     *name, state->linenr);
- 		another = find_name(state, line, NULL, state->p_value, TERM_TAB);
--		if (!another || memcmp(another, *name, len + 1))
--			die((side == DIFF_NEW_NAME) ?
-+		if (!another || memcmp(another, *name, len + 1)) {
-+			free(another);
-+			return error((side == DIFF_NEW_NAME) ?
- 			    _("git apply: bad git-diff - inconsistent new filename on line %d") :
- 			    _("git apply: bad git-diff - inconsistent old filename on line %d"), state->linenr);
-+		}
- 		free(another);
- 	} else {
- 		/* expect "/dev/null" */
- 		if (memcmp("/dev/null", line, 9) || line[9] != '\n')
--			die(_("git apply: bad git-diff - expected /dev/null on line %d"), state->linenr);
-+			return error(_("git apply: bad git-diff - expected /dev/null on line %d"), state->linenr);
- 	}
+ 	/* &state->fn_table is cleared at the end of apply_patch() */
+ }
++
++int check_apply_state(struct apply_state *state, int force_apply)
++{
++	int is_not_gitdir = !startup_info->have_repository;
++
++	if (state->apply_with_reject && state->threeway)
++		return error("--reject and --3way cannot be used together.");
++	if (state->cached && state->threeway)
++		return error("--cached and --3way cannot be used together.");
++	if (state->threeway) {
++		if (is_not_gitdir)
++			return error(_("--3way outside a repository"));
++		state->check_index = 1;
++	}
++	if (state->apply_with_reject)
++		state->apply = state->apply_verbosely = 1;
++	if (!force_apply && (state->diffstat || state->numstat || state->summary || state->check || state->fake_ancestor))
++		state->apply = 0;
++	if (state->check_index && is_not_gitdir)
++		return error(_("--index outside a repository"));
++	if (state->cached) {
++		if (is_not_gitdir)
++			return error(_("--cached outside a repository"));
++		state->check_index = 1;
++	}
++	if (state->check_index)
++		state->unsafe_paths = 0;
++	if (!state->lock_file)
++		return error("BUG: state->lock_file should not be NULL");
 +
 +	return 0;
++}
+diff --git a/apply.h b/apply.h
+index e18a18a..53f09b5 100644
+--- a/apply.h
++++ b/apply.h
+@@ -106,5 +106,6 @@ extern int init_apply_state(struct apply_state *state,
+ 			    const char *prefix,
+ 			    struct lock_file *lock_file);
+ extern void clear_apply_state(struct apply_state *state);
++extern int check_apply_state(struct apply_state *state, int force_apply);
+ 
+ #endif
+diff --git a/builtin/apply.c b/builtin/apply.c
+index bb89e07..075ada4 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -4551,38 +4551,6 @@ static int option_parse_directory(const struct option *opt,
+ 	return 0;
  }
  
- static int gitdiff_oldname(struct apply_state *state,
- 			   const char *line,
- 			   struct patch *patch)
- {
--	gitdiff_verify_name(state, line,
--			    patch->is_new, &patch->old_name,
--			    DIFF_OLD_NAME);
+-static int check_apply_state(struct apply_state *state, int force_apply)
+-{
+-	int is_not_gitdir = !startup_info->have_repository;
+-
+-	if (state->apply_with_reject && state->threeway)
+-		return error("--reject and --3way cannot be used together.");
+-	if (state->cached && state->threeway)
+-		return error("--cached and --3way cannot be used together.");
+-	if (state->threeway) {
+-		if (is_not_gitdir)
+-			return error(_("--3way outside a repository"));
+-		state->check_index = 1;
+-	}
+-	if (state->apply_with_reject)
+-		state->apply = state->apply_verbosely = 1;
+-	if (!force_apply && (state->diffstat || state->numstat || state->summary || state->check || state->fake_ancestor))
+-		state->apply = 0;
+-	if (state->check_index && is_not_gitdir)
+-		return error(_("--index outside a repository"));
+-	if (state->cached) {
+-		if (is_not_gitdir)
+-			return error(_("--cached outside a repository"));
+-		state->check_index = 1;
+-	}
+-	if (state->check_index)
+-		state->unsafe_paths = 0;
+-	if (!state->lock_file)
+-		return error("BUG: state->lock_file should not be NULL");
+-
 -	return 0;
-+	return gitdiff_verify_name(state, line,
-+				   patch->is_new, &patch->old_name,
-+				   DIFF_OLD_NAME);
- }
- 
- static int gitdiff_newname(struct apply_state *state,
- 			   const char *line,
- 			   struct patch *patch)
- {
--	gitdiff_verify_name(state, line,
--			    patch->is_delete, &patch->new_name,
--			    DIFF_NEW_NAME);
--	return 0;
-+	return gitdiff_verify_name(state, line,
-+				   patch->is_delete, &patch->new_name,
-+				   DIFF_NEW_NAME);
- }
- 
- static int gitdiff_oldmode(struct apply_state *state,
+-}
+-
+ static int apply_all_patches(struct apply_state *state,
+ 			     int argc,
+ 			     const char **argv,
 -- 
 2.10.0.41.g9df52c3
 
