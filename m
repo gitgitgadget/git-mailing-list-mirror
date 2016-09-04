@@ -6,24 +6,24 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8569F20193
-	for <e@80x24.org>; Sun,  4 Sep 2016 16:10:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E5E71F859
+	for <e@80x24.org>; Sun,  4 Sep 2016 16:10:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754208AbcIDQKk (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Sep 2016 12:10:40 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:55340 "EHLO
-        alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754111AbcIDQKN (ORCPT
+        id S1754264AbcIDQK3 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Sep 2016 12:10:29 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:61523 "EHLO
+        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753981AbcIDQKN (ORCPT
         <rfc822;git@vger.kernel.org>); Sun, 4 Sep 2016 12:10:13 -0400
-X-AuditID: 12074414-c8fff70000000931-32-57cc47379cb9
+X-AuditID: 12074413-ab7ff70000000955-7b-57cc472548ff
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        by  (Symantec Messaging Gateway) with SMTP id 06.9A.02353.7374CC75; Sun,  4 Sep 2016 12:09:27 -0400 (EDT)
+        by  (Symantec Messaging Gateway) with SMTP id 06.21.02389.5274CC75; Sun,  4 Sep 2016 12:09:09 -0400 (EDT)
 Received: from bagpipes.fritz.box (p57906AC6.dip0.t-ipconnect.de [87.144.106.198])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u84G8n5e026955
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u84G8n5U026955
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Sun, 4 Sep 2016 12:09:26 -0400
+        Sun, 4 Sep 2016 12:09:07 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     David Turner <novalis@novalis.org>,
@@ -33,25 +33,25 @@ Cc:     David Turner <novalis@novalis.org>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, git@vger.kernel.org,
         Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 18/38] resolve_gitlink_ref(): rename path parameter to submodule
-Date:   Sun,  4 Sep 2016 18:08:24 +0200
-Message-Id: <1f8eae1b5920dbe464bb52cc4b54bc26b7f0ec2d.1473003903.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 08/38] resolve_missing_loose_ref(): add a files_ref_store argument
+Date:   Sun,  4 Sep 2016 18:08:14 +0200
+Message-Id: <abc7326c53a018854d4e9cddf2fec9e0922d9787.1473003903.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <cover.1473003902.git.mhagger@alum.mit.edu>
 References: <cover.1473003902.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrIIsWRmVeSWpSXmKPExsUixO6iqGvufibcoGWJpkXXlW4mi4beK8wW
-        t1fMZ7ZY8vA1s0X3lLeMFj9aepgtZl61tjjzppHRgcPj7/sPTB47Z91l9+hqP8Lm8ax3D6PH
-        xUvKHvuXbmPzWPzAy+PzJrkAjigum5TUnMyy1CJ9uwSujBcvT7MWLBeoaDl9gamB8R1PFyMn
-        h4SAicTCmxdYuxi5OIQEtjJK9C3pZYNwTjJJzP+/nQWkik1AV2JRTzMTiC0ioCYxse0QC0gR
-        M0jRrIkz2UESwgLBEnf6VoAVsQioSvzvngEW5xWIktjed5kZYp2cxKVtX8BsTgELiTO75wLZ
-        HEDbzCXaX2RPYORZwMiwilEuMac0Vzc3MTOnODVZtzg5MS8vtUjXQi83s0QvNaV0EyMk5ER2
-        MB45KXeIUYCDUYmH10L7TLgQa2JZcWXuIUZJDiYlUd5ZB0+GC/El5adUZiQWZ8QXleakFh9i
-        lOBgVhLh1XYBKudNSaysSi3Kh0lJc7AoifN+W6zuJySQnliSmp2aWpBaBJOV4eBQkuC97grU
-        KFiUmp5akZaZU4KQZuLgBBnOAzT8JkgNb3FBYm5xZjpE/hSjopQ470uQhABIIqM0D64XlhJe
-        MYoDvSLMm+AGVMUDTCdw3a+ABjMBDV63+zTI4JJEhJRUA2NCTZXI7M7qBbb6fiLXk3ymOSar
-        3Zp+tG61ir7DzmkrkxI+WS70vSJ0bsYyk1n8wrbGD7uWNbydUvhvclrgpK9h9/l9rHeHL3RN
-        2HRZw+mgEWvsM6N9RsVFSxoX/pnLHLt/8qUjZjd3pEWy+veav3uoeUZrm9ZvPeFSUQYt5oMH
-        X5y7uiLi+AMlluKMREMt5qLiRABfAwYE5AIAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrAIsWRmVeSWpSXmKPExsUixO6iqKvqfibcYPkZGYuuK91MFg29V5gt
+        bq+Yz2yx5OFrZovuKW8ZLX609DBbzLxqbXHmTSOjA4fH3/cfmDx2zrrL7tHVfoTN41nvHkaP
+        i5eUPfYv3cbmsfiBl8fnTXIBHFFcNimpOZllqUX6dglcGbMONrIV/Oer2LxFtYHxH3cXIyeH
+        hICJxI7mucxdjFwcQgJbGSX6Lz1lh3BOMknsvvecDaSKTUBXYlFPMxOILSKgJjGx7RALSBEz
+        SNGsiTPZQRLCAqES2zetZQaxWQRUJZb9+ADWzCsQJbGufSErxDo5iUvbvoDVcApYSJzZDbKa
+        A2ibuUT7i+wJjDwLGBlWMcol5pTm6uYmZuYUpybrFicn5uWlFuma6+VmluilppRuYoQEnPAO
+        xl0n5Q4xCnAwKvHwTtA9Ey7EmlhWXJl7iFGSg0lJlHfWwZPhQnxJ+SmVGYnFGfFFpTmpxYcY
+        JTiYlUR4tV2AynlTEiurUovyYVLSHCxK4rxqS9T9hATSE0tSs1NTC1KLYLIyHBxKErzXXYEa
+        BYtS01Mr0jJzShDSTBycIMN5gIbfBKnhLS5IzC3OTIfIn2JUlBLnfQmSEABJZJTmwfXCEsIr
+        RnGgV4R5E9yAqniAyQSu+xXQYCagwet2nwYZXJKIkJJqYNRc9avFwzW/YMeCwjMl9/iDmrOy
+        Klm+vcvr+2YisTTQ6qHO8svb7nBPTSnoCyt/ub/oeCDXQauLxhyty/ctPxAgMtdIYMZ6pp6i
+        Jw/fWzzy6U9e3Bd8aGbnRlaJU6cNRR+sPe9/8mvdqf/1XzTWuu5Qudj7T+/bHKMvs7VjtkYG
+        aP/aIbbuh6USS3FGoqEWc1FxIgDvo74p4wIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,69 +60,56 @@ X-Mailing-List: git@vger.kernel.org
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- refs.c | 13 +++++++------
- refs.h |  9 +++++----
- 2 files changed, 12 insertions(+), 10 deletions(-)
+ refs/files-backend.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 34c0c5e..e881874 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1299,26 +1299,27 @@ const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
- 				       resolve_flags, sha1, flags);
- }
- 
--int resolve_gitlink_ref(const char *path, const char *refname, unsigned char *sha1)
-+int resolve_gitlink_ref(const char *submodule, const char *refname,
-+			unsigned char *sha1)
- {
--	size_t len = strlen(path);
-+	size_t len = strlen(submodule);
- 	struct ref_store *refs;
- 	int flags;
- 
--	while (len && path[len - 1] == '/')
-+	while (len && submodule[len - 1] == '/')
- 		len--;
- 
- 	if (!len)
- 		return -1;
- 
--	if (path[len]) {
-+	if (submodule[len]) {
- 		/* We need to strip off one or more trailing slashes */
--		char *stripped = xmemdupz(path, len);
-+		char *stripped = xmemdupz(submodule, len);
- 
- 		refs = get_ref_store(stripped);
- 		free(stripped);
- 	} else {
--		refs = get_ref_store(path);
-+		refs = get_ref_store(submodule);
- 	}
- 
- 	if (!refs)
-diff --git a/refs.h b/refs.h
-index 9a29f1b..17e8cfb 100644
---- a/refs.h
-+++ b/refs.h
-@@ -77,11 +77,12 @@ int is_branch(const char *refname);
- int peel_ref(const char *refname, unsigned char *sha1);
- 
- /**
-- * Resolve refname in the nested "gitlink" repository that is located
-- * at path.  If the resolution is successful, return 0 and set sha1 to
-- * the name of the object; otherwise, return a non-zero value.
-+ * Resolve refname in the nested "gitlink" repository in the specified
-+ * submodule (which must be non-NULL). If the resolution is
-+ * successful, return 0 and set sha1 to the name of the object;
-+ * otherwise, return a non-zero value.
-  */
--int resolve_gitlink_ref(const char *path, const char *refname,
-+int resolve_gitlink_ref(const char *submodule, const char *refname,
- 			unsigned char *sha1);
- 
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 2fc8ec9..0c92ace 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1412,13 +1412,11 @@ static struct ref_entry *get_packed_ref(struct files_ref_store *refs,
  /*
+  * A loose ref file doesn't exist; check for a packed ref.
+  */
+-static int resolve_missing_loose_ref(const char *refname,
++static int resolve_missing_loose_ref(struct files_ref_store *refs,
++				     const char *refname,
+ 				     unsigned char *sha1,
+ 				     unsigned int *flags)
+ {
+-	struct files_ref_store *refs =
+-		get_files_ref_store(NULL, "resolve_missing_loose_ref");
+-
+ 	struct ref_entry *entry;
+ 
+ 	/*
+@@ -1438,6 +1436,8 @@ static int resolve_missing_loose_ref(const char *refname,
+ int read_raw_ref(const char *refname, unsigned char *sha1,
+ 		 struct strbuf *referent, unsigned int *type)
+ {
++	struct files_ref_store *refs =
++		get_files_ref_store(NULL, "read_raw_ref");
+ 	struct strbuf sb_contents = STRBUF_INIT;
+ 	struct strbuf sb_path = STRBUF_INIT;
+ 	const char *path;
+@@ -1466,7 +1466,7 @@ int read_raw_ref(const char *refname, unsigned char *sha1,
+ 	if (lstat(path, &st) < 0) {
+ 		if (errno != ENOENT)
+ 			goto out;
+-		if (resolve_missing_loose_ref(refname, sha1, type)) {
++		if (resolve_missing_loose_ref(refs, refname, sha1, type)) {
+ 			errno = ENOENT;
+ 			goto out;
+ 		}
+@@ -1500,7 +1500,7 @@ int read_raw_ref(const char *refname, unsigned char *sha1,
+ 		 * ref is supposed to be, there could still be a
+ 		 * packed ref:
+ 		 */
+-		if (resolve_missing_loose_ref(refname, sha1, type)) {
++		if (resolve_missing_loose_ref(refs, refname, sha1, type)) {
+ 			errno = EISDIR;
+ 			goto out;
+ 		}
 -- 
 2.9.3
 
