@@ -6,24 +6,24 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 236C01F859
+	by dcvr.yhbt.net (Postfix) with ESMTP id 39AAB20193
 	for <e@80x24.org>; Sun,  4 Sep 2016 16:12:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754421AbcIDQL5 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Sep 2016 12:11:57 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:61523 "EHLO
-        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754367AbcIDQLw (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 4 Sep 2016 12:11:52 -0400
-X-AuditID: 12074413-aa3ff70000000955-a2-57cc4757e819
+        id S1754426AbcIDQL7 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Sep 2016 12:11:59 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:55340 "EHLO
+        alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754346AbcIDQLu (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 4 Sep 2016 12:11:50 -0400
+X-AuditID: 12074414-c8fff70000000931-58-57cc475d51d2
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        by  (Symantec Messaging Gateway) with SMTP id AA.21.02389.7574CC75; Sun,  4 Sep 2016 12:10:00 -0400 (EDT)
+        by  (Symantec Messaging Gateway) with SMTP id 6B.9A.02353.D574CC75; Sun,  4 Sep 2016 12:10:05 -0400 (EDT)
 Received: from bagpipes.fritz.box (p57906AC6.dip0.t-ipconnect.de [87.144.106.198])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u84G8n5v026955
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u84G8n60026955
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Sun, 4 Sep 2016 12:09:57 -0400
+        Sun, 4 Sep 2016 12:10:03 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     David Turner <novalis@novalis.org>,
@@ -34,25 +34,25 @@ Cc:     David Turner <novalis@novalis.org>,
         <pclouds@gmail.com>, git@vger.kernel.org,
         David Turner <dturner@twopensource.com>,
         Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 35/38] refs: add methods to init refs db
-Date:   Sun,  4 Sep 2016 18:08:41 +0200
-Message-Id: <2bf161a94fa06317c95c5336ec384c7a7d262741.1473003903.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 38/38] refs: implement iteration over only per-worktree refs
+Date:   Sun,  4 Sep 2016 18:08:44 +0200
+Message-Id: <d4e799241de9186f05187d820707c103bc5b4e8e.1473003903.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <cover.1473003902.git.mhagger@alum.mit.edu>
 References: <cover.1473003902.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrJIsWRmVeSWpSXmKPExsUixO6iqBvhfibc4M80ZYv5m04wWnRd6Way
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrNIsWRmVeSWpSXmKPExsUixO6iqBvrfibcYO9DCYv5m04wWnRd6Way
         aOi9wmxxe8V8ZoslD18zW3RPecto8aOlh9li5lVrizNvGhkdOD3+vv/A5LFz1l12j672I2we
-        z3r3MHpcvKTssX/pNjaPxQ+8PBY8v8/u8XmTXABnFJdNSmpOZllqkb5dAlfGmYYGtoLLyhXL
-        T7o0MM6S7WLk5JAQMJG49f0aYxcjF4eQwFZGieN3zrNAOCeZJPqmHWECqWIT0JVY1NMMZosI
-        qElMbDsEVsQs8JtJ4sLW5+wgCWEBa4lPMy8ydzFycLAIqEp03lYBCfMKREnMODWLEWKbnMSl
-        bV+YQWxOAQuJM7vngpULCZhLtL/InsDIs4CRYRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRrrle
-        bmaJXmpK6SZGSAgK72DcdVLuEKMAB6MSD+8E3TPhQqyJZcWVuYcYJTmYlER5Zx08GS7El5Sf
-        UpmRWJwRX1Sak1p8iFGCg1lJhFfbBaicNyWxsiq1KB8mJc3BoiTOq7ZE3U9IID2xJDU7NbUg
-        tQgmK8PBoSTBe8ENqFGwKDU9tSItM6cEIc3EwQkynAdoeB9IDW9xQWJucWY6RP4Uo6KUOO9L
-        V6CEAEgiozQPrheWIl4xigO9IsybANLOA0wvcN2vgAYzAQ1et/s0yOCSRISUVAOjQYzPxZXX
-        ji6xiPY9fkrvXMH175Ma+Z6WLurs9bXxOZqzuH7jv+qLNV3hbosYtrtvWH9ijurz0GtyfOoc
-        Pj/n7UnNXFd736bH54ZV3sUtqbJNXA7/zCW/9V/K+OFbljlvyhqG2tnK9hVeFwUP1R7MZ5B9
-        vCgtpCv/550X0xuTc9YXt+pv/75IiaU4I9FQi7moOBEAP2UsvewCAAA=
+        z3r3MHpcvKTssX/pNjaPxQ+8PBY8v8/u8XmTXABnFJdNSmpOZllqkb5dAlfGp8WvWQr2CFQ8
+        e/WAsYHxKm8XIyeHhICJxJrHV1m6GLk4hAS2Mkqc+7eaGcI5ySSx8NsMRpAqNgFdiUU9zUwg
+        toiAmsTEtkNgHcwCv5kkLmx9zg6SEBbwl+j9+xKsgUVAVeLqoWtgDbwCURLrZnewQqyTk7i0
+        7QsziM0pYCFxZvdcIJsDaJu5RPuL7AmMPAsYGVYxyiXmlObq5iZm5hSnJusWJyfm5aUW6Vro
+        5WaW6KWmlG5ihIShyA7GIyflDjEKcDAq8fBaaJ8JF2JNLCuuzD3EKMnBpCTKO+vgyXAhvqT8
+        lMqMxOKM+KLSnNTiQ4wSHMxKIrzaLkDlvCmJlVWpRfkwKWkOFiVx3m+L1f2EBNITS1KzU1ML
+        UotgsjIcHEoSvNddgRoFi1LTUyvSMnNKENJMHJwgw3mAht8EqeEtLkjMLc5Mh8ifYlSUEud9
+        CZIQAElklObB9cLSxCtGcaBXhHkT3ICqeIApBq77FdBgJqDB63afBhlckoiQkmpgXLb1mP/s
+        8ksPip/nb715/iyf8nE7SYUgp3vH30raamh/Oish7BA6b09ZzPd3r+QPz9iV/YYllDXhhXja
+        58BvlRsn8McGVh5PSqkT6f1q/X1qZuKjVWle+bvnmdyr0NgV6XLyjdDSfFdfRdHNYfPm1p8L
+        tRXu6byR9eP/hY5JKddTRHXe/00rV2Ipzkg01GIuKk4EAI4NoH3uAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,149 +60,59 @@ X-Mailing-List: git@vger.kernel.org
 
 From: David Turner <dturner@twopensource.com>
 
-Alternate refs backends might not need the refs/heads directory and so
-on, so we make ref db initialization part of the backend.
+Alternate refs backends might still use files to store per-worktree
+refs. So provide a way to iterate over only the per-worktree references
+in a ref_store. The other backend can set up a files ref_store and
+iterate using the new DO_FOR_EACH_PER_WORKTREE_ONLY flag when iterating.
 
 Signed-off-by: David Turner <dturner@twopensource.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/init-db.c    | 21 +++++++++++----------
- refs.c               |  8 ++++++++
- refs.h               |  2 ++
- refs/files-backend.c | 18 ++++++++++++++++++
- refs/refs-internal.h |  3 +++
- 5 files changed, 42 insertions(+), 10 deletions(-)
+ refs/files-backend.c |  4 ++++
+ refs/refs-internal.h | 10 +++++++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 3a45f0b..80192f6 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -180,13 +180,7 @@ static int create_default_files(const char *template_path)
- 	char junk[2];
- 	int reinit;
- 	int filemode;
--
--	/*
--	 * Create .git/refs/{heads,tags}
--	 */
--	safe_create_dir(git_path_buf(&buf, "refs"), 1);
--	safe_create_dir(git_path_buf(&buf, "refs/heads"), 1);
--	safe_create_dir(git_path_buf(&buf, "refs/tags"), 1);
-+	struct strbuf err = STRBUF_INIT;
- 
- 	/* Just look for `init.templatedir` */
- 	git_config(git_init_db_config, NULL);
-@@ -210,12 +204,19 @@ static int create_default_files(const char *template_path)
- 	 */
- 	if (get_shared_repository()) {
- 		adjust_shared_perm(get_git_dir());
--		adjust_shared_perm(git_path_buf(&buf, "refs"));
--		adjust_shared_perm(git_path_buf(&buf, "refs/heads"));
--		adjust_shared_perm(git_path_buf(&buf, "refs/tags"));
- 	}
- 
- 	/*
-+	 * We need to create a "refs" dir in any case so that older
-+	 * versions of git can tell that this is a repository.
-+	 */
-+	safe_create_dir(git_path("refs"), 1);
-+	adjust_shared_perm(git_path("refs"));
-+
-+	if (refs_init_db(&err))
-+		die("failed to set up refs db: %s", err.buf);
-+
-+	/*
- 	 * Create the default symlink from ".git/HEAD" to the "master"
- 	 * branch, if it does not exist yet.
- 	 */
-diff --git a/refs.c b/refs.c
-index 6efa859..fcaf3ba 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1292,6 +1292,14 @@ static const char *resolve_ref_recursively(struct ref_store *refs,
- 	return NULL;
- }
- 
-+/* backend functions */
-+int refs_init_db(struct strbuf *err)
-+{
-+	struct ref_store *refs = get_ref_store(NULL);
-+
-+	return refs->be->init_db(refs, err);
-+}
-+
- const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
- 			       unsigned char *sha1, int *flags)
- {
-diff --git a/refs.h b/refs.h
-index 17e8cfb..d42458c 100644
---- a/refs.h
-+++ b/refs.h
-@@ -66,6 +66,8 @@ int ref_exists(const char *refname);
- 
- int is_branch(const char *refname);
- 
-+extern int refs_init_db(struct strbuf *err);
-+
- /*
-  * If refname is a non-symbolic reference that refers to a tag object,
-  * and the tag can be (recursively) dereferenced to a non-tag object,
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index bcaa958..56397af 100644
+index 0714c3f..2644792 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -4068,10 +4068,28 @@ static int files_reflog_expire(struct ref_store *ref_store,
- 	return -1;
- }
+@@ -1798,6 +1798,10 @@ static int files_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 	int ok;
  
-+static int files_init_db(struct ref_store *ref_store, struct strbuf *err)
-+{
-+	/* Check validity (but we don't need the result): */
-+	files_downcast(ref_store, 0, "init_db");
+ 	while ((ok = ref_iterator_advance(iter->iter0)) == ITER_OK) {
++		if (iter->flags & DO_FOR_EACH_PER_WORKTREE_ONLY &&
++		    ref_type(iter->iter0->refname) != REF_TYPE_PER_WORKTREE)
++			continue;
 +
-+	/*
-+	 * Create .git/refs/{heads,tags}
-+	 */
-+	safe_create_dir(git_path("refs/heads"), 1);
-+	safe_create_dir(git_path("refs/tags"), 1);
-+	if (get_shared_repository()) {
-+		adjust_shared_perm(git_path("refs/heads"));
-+		adjust_shared_perm(git_path("refs/tags"));
-+	}
-+	return 0;
-+}
-+
- struct ref_storage_be refs_be_files = {
- 	NULL,
- 	"files",
- 	files_ref_store_create,
-+	files_init_db,
- 	files_transaction_commit,
- 	files_initial_transaction_commit,
- 
+ 		if (!(iter->flags & DO_FOR_EACH_INCLUDE_BROKEN) &&
+ 		    !ref_resolves_to_object(iter->iter0->refname,
+ 					    iter->iter0->oid,
 diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index ade6501..b3a2095 100644
+index 681982b..708b260 100644
 --- a/refs/refs-internal.h
 +++ b/refs/refs-internal.h
-@@ -479,6 +479,8 @@ struct ref_store;
-  */
- typedef struct ref_store *ref_store_init_fn(const char *submodule);
+@@ -467,10 +467,18 @@ extern struct ref_iterator *current_ref_iter;
+ int do_for_each_ref_iterator(struct ref_iterator *iter,
+ 			     each_ref_fn fn, void *cb_data);
  
-+typedef int ref_init_db_fn(struct ref_store *refs, struct strbuf *err);
+-/* refs backends */
++/*
++ * Only include per-worktree refs in a do_for_each_ref*() iteration.
++ * Normally this will be used with a files ref_store, since that's
++ * where all reference backends will presumably store their
++ * per-worktree refs.
++ */
++#define DO_FOR_EACH_PER_WORKTREE_ONLY 0x02
+ 
+ struct ref_store;
+ 
++/* refs backends */
 +
- typedef int ref_transaction_commit_fn(struct ref_store *refs,
- 				      struct ref_transaction *transaction,
- 				      struct strbuf *err);
-@@ -583,6 +585,7 @@ struct ref_storage_be {
- 	struct ref_storage_be *next;
- 	const char *name;
- 	ref_store_init_fn *init;
-+	ref_init_db_fn *init_db;
- 	ref_transaction_commit_fn *transaction_commit;
- 	ref_transaction_commit_fn *initial_transaction_commit;
- 
+ /*
+  * Initialize the ref_store for the specified submodule, or for the
+  * main repository if submodule == NULL. These functions should call
 -- 
 2.9.3
 
