@@ -2,92 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45DD220193
-	for <e@80x24.org>; Mon,  5 Sep 2016 07:53:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 843DE1F6BF
+	for <e@80x24.org>; Mon,  5 Sep 2016 09:45:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754935AbcIEHx5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Sep 2016 03:53:57 -0400
-Received: from mout.gmx.net ([212.227.15.19]:62391 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753280AbcIEHx4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Sep 2016 03:53:56 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0MEWPx-1brX983f6v-00FiEX; Mon, 05 Sep 2016 09:53:31
- +0200
-Date:   Mon, 5 Sep 2016 09:53:30 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Philip Oakley <philipoakley@iee.org>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Robert Dailey <rcdailey.lists@gmail.com>,
-        Git <git@vger.kernel.org>
-Subject: Re: Fixup of a fixup not working right
-In-Reply-To: <8F7471262D1C45D9A7BD1C29277004AD@PhilipOakley>
-Message-ID: <alpine.DEB.2.20.1609050950130.129229@virtualbox>
-References: <CAHd499AQFDRps6POF2xuUjbYv5DJYxt3DA8aFFArXF=qQEz_CA@mail.gmail.com>        <55512A8927384A0790DDC7F526B09053@PhilipOakley> <xmqq60qdsoxj.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1609040923390.129229@virtualbox>
- <8F7471262D1C45D9A7BD1C29277004AD@PhilipOakley>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:7U5mUCqrhKMOLiVvdW9AxV1/mdxkbqFfbCbrtzHMp4SEJnDdYSa
- SsBc1BDvnz1bzBQaX92I2XIz3kDhAg1EYJCeWjV/YyAG7c5s5X/XOmtFYrD1NSLGfJ8J061
- hr+IAjGihvcnnSigTz/pfkJPTMQqtlUUNVn5BARQJRG2fTZcRq1EKTbFApskC/lFI6bll8T
- GKc4XDabS6wvPCkPTMbDg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:qD9mnihS6AM=:LFStbvE07RuZ7HnIXEewQ+
- jQB7Nr+kFkYnq4JNddDcCOtH1djpdttYjOxv71p2EtNznrpQ7T31/qZUTQpDxubOcF+JSIQki
- 5p1Jg3Tmls3ho7Y+orQN0waJ8NQfgf9vSpILY5XB2YW1+ouKNpch4+HmMIQTLa4XSv+6gNtYR
- b5+XBsxWZYQBZqM/txq350J/q1KfHGoCJXnNuelC8TTRdZ1UvvmKXOjU/yZjxk7CATOcYzo1K
- f9JB/unfWOYkTadpilLF0b6zc0JqO90NeUq9rHWVGhDExjKqJPHlFoVqms8AUERKLwfwWP4yh
- R7RYQ79D94elH579Ps1Qz0gA2LLINW8SPJLXF1LGePkSh8oZKQ8vMlE5Qum/jLWBeP1d22tqB
- Unbv6N1fZAHiLY94QVODYRys5ALt3+pAwRxvM7udAbe/XVLbpye4vKjJRvBlcrN7aaJMqMM/N
- i54E5FQiFvHRHN2MTtwJMhrFMP688hIrYonlkwU69+pMtg2NRQ7/vERzXy3c10N4yPezdvAXq
- fDxSyD7g3UctlpARPQtKLmMac7/wXCW92xs/WlA+sZ+1o6c+O0JfYUhNedZMzyfD9fKFlC9iI
- SPY4iUHF+zJBWFHFCf3Zx1Tpg3SAev383jCF1LoPdMS7AoTn8j9sdNnC1cawNTDEr3RbDLhUL
- SGkGfaGmJwxgJJzpGJAEOzW5ZqZMawbU/W7b0q7ASVFiPPk427DrfkMorjigPnb22WCX6EEC5
- 6uMkH3CGTnjLC6LJU4fDQfn4tuhN67lSNXvcRfX74K+xWV8FGX8jTIUoSA7l1QT2rUOGQo4hc
- bToyq7L
+        id S932444AbcIEJpb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Sep 2016 05:45:31 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:50176 "EHLO
+        alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932395AbcIEJpa (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 5 Sep 2016 05:45:30 -0400
+X-AuditID: 1207440c-217ff700000008d5-c9-57cd3ea0b4e2
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        by  (Symantec Messaging Gateway) with SMTP id 62.69.02261.0AE3DC75; Mon,  5 Sep 2016 05:45:04 -0400 (EDT)
+Received: from bagpipes.fritz.box (p57907BC3.dip0.t-ipconnect.de [87.144.123.195])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u859iwtO008788
+        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+        Mon, 5 Sep 2016 05:45:02 -0400
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+To:     git@vger.kernel.org
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v3 1/8] xdl_change_compact(): fix compaction heuristic to adjust ixo
+Date:   Mon,  5 Sep 2016 11:44:46 +0200
+Message-Id: <119c03e74c022ccdd6ebd8661a98b43917f8e966.1473068229.git.mhagger@alum.mit.edu>
+X-Mailer: git-send-email 2.9.3
+In-Reply-To: <cover.1473068229.git.mhagger@alum.mit.edu>
+References: <cover.1473068229.git.mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrGIsWRmVeSWpSXmKPExsUixO6iqLvA7my4wZkv2hZdV7qZLBp6rzBb
+        7F7cz2yx4uocZoszW4Gs2yvmM1v8aOlhtph51dpi8+Z2FgdOj7/vPzB57Jx1l91jwaZSj2e9
+        exg9Ll5S9ti/dBubx+dNch63n21jCeCI4rJJSc3JLEst0rdL4MroXyBVMJGnYu2uoywNjEc5
+        uxg5OSQETCRenHzB1sXIxSEksJVR4s7tCUwQzkkmieZJi1lAqtgEdCUW9TQzgdgiAuISb4/P
+        ZAcpYhb4yySx+NFdNpCEsECIREPnO7AGFgFViYN7l4LZvAJRErcv7GGGWCcncWnbFzCbU8BC
+        YsmXPnYQW0jAXGLevGbmCYw8CxgZVjHKJeaU5urmJmbmFKcm6xYnJ+blpRbpGurlZpbopaaU
+        bmKEBB/PDsZv62QOMQpwMCrx8FponwkXYk0sK67MPcQoycGkJMpboHo2XIgvKT+lMiOxOCO+
+        qDQntfgQowQHs5IIb44tUI43JbGyKrUoHyYlzcGiJM6rukTdT0ggPbEkNTs1tSC1CCYrw8Gh
+        JMGrBtIoWJSanlqRlplTgpBm4uAEGc4DNNzZBmR4cUFibnFmOkT+FKOilDhvCkhCACSRUZoH
+        1wtLDq8YxYFeEeadD7KCB5hY4LpfAQ1mAhq8bvdpkMEliQgpqQZGBq1fF6ceia36Elu3U0ut
+        6sb/62uUC7NrpV6855UQ3bSlSunN1qia9L7Vh1/dbV+aFNy+PXnJlqdzMyoyzyX474nfnBqg
+        bJzHtPdG/Zy3tvdZ1+Zd3Hf/7mLmsJaiktPtX3cnJJyRMrmYPWt9o+XtjeseHoy7fFisO523
+        bEGPwn5TlYLopy5KSizFGYmGWsxFxYkA/i0AnekCAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philip,
+The code branch used for the compaction heuristic forgot to keep ixo in
+sync while the group was shifted. This is certainly wrong, as it causes
+the two counters to get out of sync.
 
-On Sun, 4 Sep 2016, Philip Oakley wrote:
+I *think* that this bug could also have caused the function to read past
+the end of the rchgo array, though I haven't done the work to prove it
+for sure. Here is my reasoning:
 
-> From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-> 
-> > The point is that fixup! messages are really special, and are always
-> > intended to be squashed into the referenced commit *before* the latter
-> > hits `master`.
-> 
-> I think it's here that we have the hidden use case. I agree that all fixups
-> should be squashed before they hit the blessed golden  repository.
-> 
-> I suspect that some use cases have intermediate repositories that
-> contain a 'master' branch (it's just a name ;-) that isn't blessed and
-> golden, e.g. at the team review repo level. In such cases it is possible
-> for a fixup! to be passed up as part of the review, though it's not the
-> current norm/expectation.
+If ixo is not decremented correctly during one iteration of the outer
+while loop, then it will loose sync with the ix counter. In particular,
+ixo will be too large.
 
-In such a case (which can totally arise when criss-crossing Pull Requests
-on GitHub, for example, where a Pull Request's purpose may be to fix up
-commits in another Pull Request before the latter is merged), the most
-appropriate course of action is... to not reorder the fixup!s prematurely.
+Suppose that the next iterations of the outer while loop (i.e.,
+processing the next block of add/delete lines) don't have any sliders.
+Then the ixo counter would be incremented by the number of non-changed
+lines in xdf, which is the same as the number of non-changed lines in
+xdfo that *should have* followed the group that experienced the
+malfunction. But since ixo was too large at the end of that iteration,
+it will be incremented past the end of the xdfo->rchg array, and will
+try to read that memory illegally.
 
-> > In short, I am opposed to this change.
-> 
-> It's not like G4W doesn't need fixup!s on the side branches e.g. 5eaffe9
-> ("fixup! Handle new t1501 test case properly with MinGW", 2016-07-12)
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ xdiff/xdiffi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Yeah, well, Git for Windows' `master` branch is special, in that it is
-constantly rebased (as "merging rebases", to keep fast-forwardability). I
-would not necessarily use Git for Windows as a role model in this respect.
+diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
+index b3c6848..95b037e 100644
+--- a/xdiff/xdiffi.c
++++ b/xdiff/xdiffi.c
+@@ -528,6 +528,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 			       recs_match(recs, ixs - 1, ix - 1, flags)) {
+ 				rchg[--ixs] = 1;
+ 				rchg[--ix] = 0;
++				while (rchgo[--ixo]);
+ 			}
+ 		}
+ 	}
+-- 
+2.9.3
 
-Ciao,
-Dscho
