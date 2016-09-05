@@ -2,79 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,STOX_REPLY_TYPE shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCC9020193
-	for <e@80x24.org>; Mon,  5 Sep 2016 16:16:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5B371FBB0
+	for <e@80x24.org>; Mon,  5 Sep 2016 16:34:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932546AbcIEQQ5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Sep 2016 12:16:57 -0400
-Received: from sub3.mail.dreamhost.com ([69.163.253.7]:39745 "EHLO
-        homiemail-a22.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932286AbcIEQQ4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 5 Sep 2016 12:16:56 -0400
-Received: from homiemail-a22.g.dreamhost.com (localhost [127.0.0.1])
-        by homiemail-a22.g.dreamhost.com (Postfix) with ESMTP id DC25311406A;
-        Mon,  5 Sep 2016 09:16:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=message-id
-        :subject:from:to:cc:date:in-reply-to:references:content-type
-        :mime-version:content-transfer-encoding; s=novalis.org; bh=eirII
-        /vKgctJPFMU0YsYhWR6CsA=; b=oHHOS2q4yWuTvDkpMTQhVrRidTMfqvJZyMajX
-        HzGrWDySQ8y++rvcvKcSYc1+DOg7r1ZxrrXH4JEdhE9C2vwsBW/T4lY+DUmlZKme
-        Xtx9apzpjQOjKNhESuZ/RThlChTyLqww1d4pchKYy6DznjOE01la27I+YcGgKpTo
-        CXzjfg=
-Received: from [10.0.1.180] (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com [207.38.164.98])
-        (using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: novalis@novalis.org)
-        by homiemail-a22.g.dreamhost.com (Postfix) with ESMTPSA id E2E05114065;
-        Mon,  5 Sep 2016 09:16:54 -0700 (PDT)
-Message-ID: <1473092212.6035.30.camel@frank>
-Subject: Re: [PATCH v2 05/38] refs: create a base class "ref_store" for
- files_ref_store
-From:   David Turner <novalis@novalis.org>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
-        <pclouds@gmail.com>, git@vger.kernel.org,
-        Stefan Beller <sbeller@google.com>
-Date:   Mon, 05 Sep 2016 12:16:52 -0400
-In-Reply-To: <c6ae77bf-e2e2-c108-648d-75b5164b7ba2@alum.mit.edu>
-References: <cover.1473003902.git.mhagger@alum.mit.edu>
-         <39277c75122a374b360057d6e1f6d889a90f6fb4.1473003902.git.mhagger@alum.mit.edu>
-         <1473021637.6035.27.camel@frank>
-         <c6ae77bf-e2e2-c108-648d-75b5164b7ba2@alum.mit.edu>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.10.4-0ubuntu2 
-Mime-Version: 1.0
+        id S932793AbcIEQdz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Sep 2016 12:33:55 -0400
+Received: from mail-pa0-f68.google.com ([209.85.220.68]:36338 "EHLO
+        mail-pa0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933743AbcIEQc5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Sep 2016 12:32:57 -0400
+Received: by mail-pa0-f68.google.com with SMTP id ez1so9579620pab.3
+        for <git@vger.kernel.org>; Mon, 05 Sep 2016 09:32:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:from:to:cc:references:in-reply-to:subject:date
+         :mime-version:content-transfer-encoding:importance;
+        bh=s4nuYAtZ0E9MhvbnhBPfLq7zKtDOW6HlJJYquy8vxNY=;
+        b=NslaqKMKx64dqDLNpkPESChWB708JJ4a5eVTiyFuR0wStyY61OO6oqklZnekMPVyGq
+         hjn9NkveTFilOiugJBp+GxpBi5Tby3SAowtLAsfFwKIEPq9sGxyvdh9VWbyePLaRM5PC
+         mVlPm8VuLpeGtCsXb1hawEDf2FLo/ZiA0DGPy5M5UjpHUkBlfCpfbyPfbwpjr+6gZIsM
+         azfaVqrPUHGvIHyag5mZKnIMSY7lLXjimLDoEnmjDvYdqHShOf+F42x+zLZ9zvbQ1/0k
+         ycuf1AapP/gDWiw3FQJdaY25SfEi5oEp72wm7j+PoptpTp+0IqZ0Mkoq7TzrLGPk80Hl
+         AWcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:from:to:cc:references:in-reply-to
+         :subject:date:mime-version:content-transfer-encoding:importance;
+        bh=s4nuYAtZ0E9MhvbnhBPfLq7zKtDOW6HlJJYquy8vxNY=;
+        b=LVxSXV+M+V+g7eUa/jRY5Nncr0VbxNaGfSJp2duGecVsy8VFf9iVPkEDF+JTcomJSp
+         MCb7t+TRJfgcmKdPZsPH/YhcxMqoTO2/wUy84PZIvgOFQ8VAvMVxl2bgEtWeqXBVHSRR
+         hfdggsqJnnd26JVnLrIZ8ucJ5qRfQqSUcHExfTUWzhyFKO141eXAxClwSkG69rD8aVov
+         fwgjKKTf/Ty8NMQi55ZqFVoFVF3Kb4pctqyLcnf8iUMoVvL8FPKbmGNWn/+uyaISlTPi
+         kcBI7Od5bhQkfZJkBtpSVhsqknb9dwj6v1wkhFovnNdY8ISW/IciHZ+Fr1bwk++31+mq
+         Y47A==
+X-Gm-Message-State: AE9vXwMt8ohN9BZRAINQGroUhgrucygZ3w7acRDd8FqlBuZiXLvyer8FLaMYq1b+WBUWfQ==
+X-Received: by 10.66.216.130 with SMTP id oq2mr65142374pac.89.1473093176670;
+        Mon, 05 Sep 2016 09:32:56 -0700 (PDT)
+Received: from Yasushima (i60-35-214-133.s41.a017.ap.plala.or.jp. [60.35.214.133])
+        by smtp.gmail.com with ESMTPSA id si8sm31931891pab.8.2016.09.05.09.32.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 05 Sep 2016 09:32:55 -0700 (PDT)
+Message-ID: <191E6E09AD6B40489CE24D53666C5EA6@Yasushima>
+From:   "Satoshi Yasushima" <s.yasushima@gmail.com>
+To:     "Junio C Hamano" <gitster@pobox.com>
+Cc:     <git@vger.kernel.org>,
+        "Pat Thoyts" <patthoyts@users.sourceforge.net>
+References: <1472913822-9088-1-git-send-email-s.yasushima@gmail.com> <xmqqh99wqhn7.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqqh99wqhn7.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 1/6] git-gui: The term unified for remote in Japanese
+Date:   Tue, 6 Sep 2016 01:32:43 +0900
+MIME-Version: 1.0
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-2022-jp";
+        reply-type=original
 Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+Importance: Normal
+X-Mailer: Microsoft Windows Live Mail 16.4.3564.1216
+X-MimeOLE: Produced By Microsoft MimeOLE V16.4.3564.1216
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2016-09-05 at 05:53 +0200, Michael Haggerty wrote:
-> On 09/04/2016 10:40 PM, David Turner wrote:
-> > On Sun, 2016-09-04 at 18:08 +0200, Michael Haggerty wrote:
-> > 
-> >> +/* A linked list of ref_stores for submodules: */
-> >> +static struct ref_store *submodule_ref_stores;
-> > 
-> > I don't like the per-submodule stores being in a linked list, which
-> > requires a linear search.  Stefan has, I think, been doing a bunch of
-> > work to scale git to support on the order of thousands of submodules,
-> > which this potentially breaks.  What about a hashmap?
+On Sat, 03 Sep 2016 23:54:36 -0700 Junio C Hamano wrote:
+> I couldn't quite read/parse the title, but luckily I read Japanese ;-)
 > 
-> I agree it's not ideal, but this linked list is not new. Before this
-> patch the same code was in `files-backend.c`, and before patch [03/38]
-> essentially the same linked list was stored as `submodule_ref_caches`.
-> So this is not a regression, and I'd rather not address it in this patch
-> series.
+> You saw different Japanese words used to translate the same original
+> word "remote" in different message strings, and you chose one of
+> them and use it everywhere.  And you did the same for "blame" in
+> your patch 2/6.
+> 
+> I would have described them like so:
+> 
+>   Subject: git-gui: consistently use the same word for "remote" in Japanese
+>   Subject: git-gui: consistently use the same word for "blame" in Japanese
 
-Fair enough!
+Thank you for your title patch.
+My English is so poor as with many of Japanese.
 
+Resend patches in a little while.
