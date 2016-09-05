@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F01A820705
-	for <e@80x24.org>; Mon,  5 Sep 2016 20:10:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0EA7C2070F
+	for <e@80x24.org>; Mon,  5 Sep 2016 20:10:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964937AbcIEUJ7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Sep 2016 16:09:59 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:42998 "EHLO
+        id S964940AbcIEUKB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Sep 2016 16:10:01 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:42990 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S964897AbcIEUI3 (ORCPT
+        by vger.kernel.org with ESMTP id S964896AbcIEUI3 (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 5 Sep 2016 16:08:29 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 0C560280B3;
-        Mon,  5 Sep 2016 20:08:29 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id CD740280B2;
+        Mon,  5 Sep 2016 20:08:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1473106109;
-        bh=0K4CQjll6ygpIkJFn2P2uBZp0RaUrZReQIaUqM/v8ZI=;
+        s=default; t=1473106108;
+        bh=J1wr6a+S2zH7JeYUYsAGcX2GOMGlLfHwie+hqpkD49I=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=qon1WdwZMVkMyuZmstYK4onyIqQf06T1KMUAzJf83OlvdSmgDYlwCMf1baditwKdz
-         LLnxG4oLLxJG2XsivRxntBEgs7lxwJEh9A3tba8wVlkgIBvJzQ1T6EyRg6kHMaETlj
-         tesMofCJ3bEFVyhjTMcmkcT+SHX9Ci6REF/3y0Ifw1J69L7+2unciV+KiqWRM1qJzj
-         Ae8Ka+Dcs1rjCltHoIo029TNITEzcW33XQkuu4oR1xjJEKY4CB9ut/dfRG0JGSttUQ
-         ojh2CawaifpnpW0OBfmvZBmqj/B4QFNn0lHfgP/PKV7OILjOD7iXCnRYY5pyqEs8gb
-         F3yy3K6htcvfXcIzTy7zODQFQe9jJaFOONQgGYjtr7UscSQrn1NT6hvawjEnos73zi
-         YC3pRwuYbhP/UY3FZJxZAQuMcIS3GQLidbURSuyYtrjrgE7a588U0XZGY+l5csqONT
-         gNrgFZc6mqnMOMs22xDYjM1+679lkwPj560w/aXtMys4YZy40n/
+        b=PlVhg0OKEuwAOeuHf2KJjSn3P+qj703k+HscWdnObK7fq+RWIAvJ81rDM8dfs0ei6
+         3AyJrOaL6dkLb8b0it7chuiIhA0WEHij3QDThG2uTiW/gozLby6dcKW9KP40F5xV9d
+         NLEoQ3s2B3aVO4MTAh6t8+30k/z6yk2uR15+flHt2pLXIiN1OQ/YMW/Qr2TH+PFbEd
+         /mlU5fz7ez2E6p56RdmXrOSZiP2ukzJ67USQjgmkVB7VxitJYdp+1FG9d+cmG07buH
+         jpI9Yutjro8+hsJBlfHS0wmIn3/uJLmJlBxJpjkuLmjkcJT1MYPR2oJYmHpDXirtAV
+         HxVJ9s5m4y/mckh87PykNQ35Pl94sPrhv3wPsGW5ZSLQx/Hq7ms1SLAgdT2ct9uJXI
+         tBJUgk2ffyUIF+pPJrvPoDmgZYT4CfMx7ssXeXT2+xFjY1rmoiakviq+ZX7BUz2NZO
+         hA6FFNbT9p/4+vC7WOegI2LBqeDhLoZ7r9jDJJQ1vFXIw+1G+7b
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Paul Tan <pyokagan@gmail.com>, Junio C Hamano <gitster@pobox.com>,
@@ -39,9 +39,9 @@ Cc:     Paul Tan <pyokagan@gmail.com>, Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: [PATCH v2 13/20] builtin/rm: convert to use struct object_id
-Date:   Mon,  5 Sep 2016 20:08:04 +0000
-Message-Id: <20160905200811.697889-14-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 12/20] builtin/blame: convert file to use struct object_id
+Date:   Mon,  5 Sep 2016 20:08:03 +0000
+Message-Id: <20160905200811.697889-13-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20160905200811.697889-1-sandals@crustytoothpaste.net>
 References: <20160905200811.697889-1-sandals@crustytoothpaste.net>
@@ -50,64 +50,94 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Convert this file to use struct object_id, and additionally convert some
+uses of the constant 40 to GIT_SHA1_HEXSZ.
+
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/rm.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ builtin/blame.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 109969d5..3f3e24eb 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -107,7 +107,7 @@ static int check_submodules_use_gitfiles(void)
- 	return errs;
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 0e10e302..ccaf8be5 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -1941,7 +1941,7 @@ static void emit_other(struct scoreboard *sb, struct blame_entry *ent, int opt)
+ 	cp = nth_line(sb, ent->lno);
+ 	for (cnt = 0; cnt < ent->num_lines; cnt++) {
+ 		char ch;
+-		int length = (opt & OUTPUT_LONG_OBJECT_NAME) ? 40 : abbrev;
++		int length = (opt & OUTPUT_LONG_OBJECT_NAME) ? GIT_SHA1_HEXSZ : abbrev;
+ 
+ 		if (suspect->commit->object.flags & UNINTERESTING) {
+ 			if (blank_boundary)
+@@ -2232,12 +2232,12 @@ static void verify_working_tree_path(struct commit *work_tree, const char *path)
+ 	int pos;
+ 
+ 	for (parents = work_tree->parents; parents; parents = parents->next) {
+-		const unsigned char *commit_sha1 = parents->item->object.oid.hash;
+-		unsigned char blob_sha1[20];
++		const struct object_id *commit_oid = &parents->item->object.oid;
++		struct object_id blob_oid;
+ 		unsigned mode;
+ 
+-		if (!get_tree_entry(commit_sha1, path, blob_sha1, &mode) &&
+-		    sha1_object_info(blob_sha1, NULL) == OBJ_BLOB)
++		if (!get_tree_entry(commit_oid->hash, path, blob_oid.hash, &mode) &&
++		    sha1_object_info(blob_oid.hash, NULL) == OBJ_BLOB)
+ 			return;
+ 	}
+ 
+@@ -2251,13 +2251,13 @@ static void verify_working_tree_path(struct commit *work_tree, const char *path)
+ 		die("no such path '%s' in HEAD", path);
  }
  
--static int check_local_mod(unsigned char *head, int index_only)
-+static int check_local_mod(struct object_id *head, int index_only)
+-static struct commit_list **append_parent(struct commit_list **tail, const unsigned char *sha1)
++static struct commit_list **append_parent(struct commit_list **tail, const struct object_id *oid)
  {
- 	/*
- 	 * Items in list are already sorted in the cache order,
-@@ -123,13 +123,13 @@ static int check_local_mod(unsigned char *head, int index_only)
- 	struct string_list files_submodule = STRING_LIST_INIT_NODUP;
- 	struct string_list files_local = STRING_LIST_INIT_NODUP;
+ 	struct commit *parent;
  
--	no_head = is_null_sha1(head);
-+	no_head = is_null_oid(head);
- 	for (i = 0; i < list.nr; i++) {
- 		struct stat st;
- 		int pos;
- 		const struct cache_entry *ce;
- 		const char *name = list.entry[i].name;
--		unsigned char sha1[20];
-+		struct object_id oid;
- 		unsigned mode;
- 		int local_changes = 0;
- 		int staged_changes = 0;
-@@ -197,9 +197,9 @@ static int check_local_mod(unsigned char *head, int index_only)
- 		 * way as changed from the HEAD.
- 		 */
- 		if (no_head
--		     || get_tree_entry(head, name, sha1, &mode)
-+		     || get_tree_entry(head->hash, name, oid.hash, &mode)
- 		     || ce->ce_mode != create_ce_mode(mode)
--		     || hashcmp(ce->oid.hash, sha1))
-+		     || oidcmp(&ce->oid, &oid))
- 			staged_changes = 1;
+-	parent = lookup_commit_reference(sha1);
++	parent = lookup_commit_reference(oid->hash);
+ 	if (!parent)
+-		die("no such commit %s", sha1_to_hex(sha1));
++		die("no such commit %s", oid_to_hex(oid));
+ 	return &commit_list_insert(parent, tail)->next;
+ }
  
- 		/*
-@@ -351,10 +351,10 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 	 * report no changes unless forced.
- 	 */
- 	if (!force) {
+@@ -2274,10 +2274,10 @@ static void append_merge_parents(struct commit_list **tail)
+ 	}
+ 
+ 	while (!strbuf_getwholeline_fd(&line, merge_head, '\n')) {
 -		unsigned char sha1[20];
--		if (get_sha1("HEAD", sha1))
--			hashclr(sha1);
--		if (check_local_mod(sha1, index_only))
+-		if (line.len < 40 || get_sha1_hex(line.buf, sha1))
 +		struct object_id oid;
-+		if (get_oid("HEAD", &oid))
-+			oidclr(&oid);
-+		if (check_local_mod(&oid, index_only))
- 			exit(1);
- 	} else if (!index_only) {
- 		if (check_submodules_use_gitfiles())
++		if (line.len < GIT_SHA1_HEXSZ || get_oid_hex(line.buf, &oid))
+ 			die("unknown line in '%s': %s", git_path_merge_head(), line.buf);
+-		tail = append_parent(tail, sha1);
++		tail = append_parent(tail, &oid);
+ 	}
+ 	close(merge_head);
+ 	strbuf_release(&line);
+@@ -2306,7 +2306,7 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
+ 	struct commit *commit;
+ 	struct origin *origin;
+ 	struct commit_list **parent_tail, *parent;
+-	unsigned char head_sha1[20];
++	struct object_id head_oid;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	const char *ident;
+ 	time_t now;
+@@ -2322,10 +2322,10 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
+ 	commit->date = now;
+ 	parent_tail = &commit->parents;
+ 
+-	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, head_sha1, NULL))
++	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, head_oid.hash, NULL))
+ 		die("no such ref: HEAD");
+ 
+-	parent_tail = append_parent(parent_tail, head_sha1);
++	parent_tail = append_parent(parent_tail, &head_oid);
+ 	append_merge_parents(parent_tail);
+ 	verify_working_tree_path(commit, path);
+ 
