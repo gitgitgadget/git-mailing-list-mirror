@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59ABC20705
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FBCB2070F
 	for <e@80x24.org>; Mon,  5 Sep 2016 20:10:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964951AbcIEUKW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Sep 2016 16:10:22 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:42998 "EHLO
+        id S964955AbcIEUKY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Sep 2016 16:10:24 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:42990 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S964888AbcIEUI2 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 5 Sep 2016 16:08:28 -0400
+        by vger.kernel.org with ESMTP id S964885AbcIEUI1 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 5 Sep 2016 16:08:27 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 910B9280AD;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 2DE02280AB;
         Mon,  5 Sep 2016 20:08:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1473106106;
-        bh=uD8WFy2sRY5DMOhNRWD3aRNwG0sKe8gemuzvRDnUmSE=;
+        bh=+XqRZR6VHfEP8kyVSv0BVaoqxN+XufIkTYESS05DFDs=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ZdZ9ZqOLK61+o3t4S+an+excSC0xjvmI/WV2BnMGh3Rgn544IzkffMFNOYgqTtaPd
-         wMqKzDs8I/dg3gjfEj2o6m/DWbEY+tpqCfV59fBeenzMesGZBfx0SHZab9PSF/tBLK
-         BDdM1MWydKz6eEqTGkozi4GMGD8A4GaUR+ER/TLvVx5ftaL6qw68GhnmQok7AFoT7v
-         Zcz8ZpntWy8V9NvJBaoyxyuQFuZmpQ7srSMk+XHkRW8XcbZJLOYUEms849//0NnthH
-         xX3l13yauBSN/1aaJ/HLkVbBb3SBlIE2QtCob9nU4MDfqfwrhpWJnQLzwEO8uO8x54
-         hRqRyZ9z3U6o6eDZkNWgJrL+H5cco1c+pMAE6HRdG9FtebLUWJxqW2O3wq1hXfDtZ5
-         sN+8+6G19pjY6yg+uw4vho//nEQVSppBVDd3ckYJOFebmEQ7Rh+C5AacwKeyHMfdYd
-         VHglUM811S/H38Tz3rbmhQ0tOOAMaf8hJrEQfxhENKVj//DXvAC
+        b=S+gE0qLkpI5hMo5q5E4+Dfipm/azKvw91D0d4WXPPt6flBuX8BbFxhdYkdM05fqbT
+         RV9bqsA9TMdyXzpVXxpmCJReIGNB94rBucCxfnTzZMpLStFVJAyyTLnug8R18+lrqL
+         H9V/8kqkkGE1EI1yeiaBomRDUsdGSGwGXixNbaRFbjzuCYkmFbKE9NodF3FLZUBZ32
+         g7f81MosPc/QyM/XJEmJTBJ5DNCiMYp5eAdu1ZJKFQmUMyY/km1i4xJP9h0tVNW36/
+         Y3t+xOSlA3w2Y5xEczWiSSYEgUqHXiNKAXbNvm1t0/iAXfiF2CceWz5lFCI/VwXxx/
+         Nan+fewfWbV4z/oIjW1VrZEc1zS1b6g0up+6s/mglDjHhwqJfLmPUcrBALz7jzTnry
+         +lmeT8J8w9uZePUrxUxSBLxTQ6jOCrN2yNpdVUBaWg7bEEVJkTCeF3xRZvS6SbE+QA
+         yrV1DPf37+ej41Z4qYbvbXI7el4rBmo9XUIIxXk/puF9ydXEFlP
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Paul Tan <pyokagan@gmail.com>, Junio C Hamano <gitster@pobox.com>,
@@ -39,9 +39,9 @@ Cc:     Paul Tan <pyokagan@gmail.com>, Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: [PATCH v2 07/20] builtin: convert textconv_object to use struct object_id
-Date:   Mon,  5 Sep 2016 20:07:58 +0000
-Message-Id: <20160905200811.697889-8-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 05/20] builtin/cat-file: convert struct expand_data to use struct object_id
+Date:   Mon,  5 Sep 2016 20:07:56 +0000
+Message-Id: <20160905200811.697889-6-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20160905200811.697889-1-sandals@crustytoothpaste.net>
 References: <20160905200811.697889-1-sandals@crustytoothpaste.net>
@@ -50,104 +50,116 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since all of its callers have been updated, make textconv_object take a
-struct object_id.
+Convert struct cache_entry to use struct object_id by applying the
+following semantic patch and the object_id transforms from contrib,
+plus the actual change to the struct:
+
+@@
+struct expand_data E1;
+@@
+- E1.sha1
++ E1.oid.hash
+
+@@
+struct expand_data *E1;
+@@
+- E1->sha1
++ E1->oid.hash
+
+@@
+struct expand_data E1;
+@@
+- E1.delta_base_sha1
++ E1.delta_base_oid.hash
+
+@@
+struct expand_data *E1;
+@@
+- E1->delta_base_sha1
++ E1->delta_base_oid.hash
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin.h          |  2 +-
- builtin/blame.c    | 12 ++++++------
- builtin/cat-file.c |  2 +-
- builtin/log.c      |  2 +-
- 4 files changed, 9 insertions(+), 9 deletions(-)
+ builtin/cat-file.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/builtin.h b/builtin.h
-index 6b95006a..b9122bc5 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -25,7 +25,7 @@ struct fmt_merge_msg_opts {
- extern int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
- 			 struct fmt_merge_msg_opts *);
- 
--extern int textconv_object(const char *path, unsigned mode, const unsigned char *sha1, int sha1_valid, char **buf, unsigned long *buf_size);
-+extern int textconv_object(const char *path, unsigned mode, const struct object_id *oid, int oid_valid, char **buf, unsigned long *buf_size);
- 
- extern int is_builtin(const char *s);
- 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 9c09d464..0e10e302 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -154,8 +154,8 @@ static int diff_hunks(mmfile_t *file_a, mmfile_t *file_b,
-  */
- int textconv_object(const char *path,
- 		    unsigned mode,
--		    const unsigned char *sha1,
--		    int sha1_valid,
-+		    const struct object_id *oid,
-+		    int oid_valid,
- 		    char **buf,
- 		    unsigned long *buf_size)
- {
-@@ -163,7 +163,7 @@ int textconv_object(const char *path,
- 	struct userdiff_driver *textconv;
- 
- 	df = alloc_filespec(path);
--	fill_filespec(df, sha1, sha1_valid, mode);
-+	fill_filespec(df, oid->hash, oid_valid, mode);
- 	textconv = get_textconv(df);
- 	if (!textconv) {
- 		free_filespec(df);
-@@ -188,7 +188,7 @@ static void fill_origin_blob(struct diff_options *opt,
- 
- 		num_read_blob++;
- 		if (DIFF_OPT_TST(opt, ALLOW_TEXTCONV) &&
--		    textconv_object(o->path, o->mode, o->blob_oid.hash, 1, &file->ptr, &file_size))
-+		    textconv_object(o->path, o->mode, &o->blob_oid, 1, &file->ptr, &file_size))
- 			;
- 		else
- 			file->ptr = read_sha1_file(o->blob_oid.hash, &type,
-@@ -2366,7 +2366,7 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
- 		switch (st.st_mode & S_IFMT) {
- 		case S_IFREG:
- 			if (DIFF_OPT_TST(opt, ALLOW_TEXTCONV) &&
--			    textconv_object(read_from, mode, null_sha1, 0, &buf_ptr, &buf_len))
-+			    textconv_object(read_from, mode, &null_oid, 0, &buf_ptr, &buf_len))
- 				strbuf_attach(&buf, buf_ptr, buf_len, buf_len + 1);
- 			else if (strbuf_read_file(&buf, read_from, st.st_size) != st.st_size)
- 				die_errno("cannot open or read '%s'", read_from);
-@@ -2793,7 +2793,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 			die("no such path %s in %s", path, final_commit_name);
- 
- 		if (DIFF_OPT_TST(&sb.revs->diffopt, ALLOW_TEXTCONV) &&
--		    textconv_object(path, o->mode, o->blob_oid.hash, 1, (char **) &sb.final_buf,
-+		    textconv_object(path, o->mode, &o->blob_oid, 1, (char **) &sb.final_buf,
- 				    &sb.final_buf_size))
- 			;
- 		else
 diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 8b773787..7b2e0537 100644
+index 2dfe6265..16b0b8c9 100644
 --- a/builtin/cat-file.c
 +++ b/builtin/cat-file.c
-@@ -66,7 +66,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 			die("git cat-file --textconv %s: <object> must be <sha1:path>",
- 			    obj_name);
+@@ -128,12 +128,12 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+ }
  
--		if (textconv_object(obj_context.path, obj_context.mode, oid.hash, 1, &buf, &size))
-+		if (textconv_object(obj_context.path, obj_context.mode, &oid, 1, &buf, &size))
- 			break;
+ struct expand_data {
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	enum object_type type;
+ 	unsigned long size;
+ 	off_t disk_size;
+ 	const char *rest;
+-	unsigned char delta_base_sha1[20];
++	struct object_id delta_base_oid;
  
- 	case 'p':
-diff --git a/builtin/log.c b/builtin/log.c
-index 226212c9..48b9db51 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -479,7 +479,7 @@ static int show_blob_object(const struct object_id *oid, struct rev_info *rev, c
- 	if (get_sha1_with_context(obj_name, 0, oidc.hash, &obj_context))
- 		die(_("Not a valid object name %s"), obj_name);
- 	if (!obj_context.path[0] ||
--	    !textconv_object(obj_context.path, obj_context.mode, oidc.hash, 1, &buf, &size))
-+	    !textconv_object(obj_context.path, obj_context.mode, &oidc, 1, &buf, &size))
- 		return stream_blob_to_fd(1, oid->hash, NULL, 0);
+ 	/*
+ 	 * If mark_query is true, we do not expand anything, but rather
+@@ -176,7 +176,7 @@ static void expand_atom(struct strbuf *sb, const char *atom, int len,
  
- 	if (!buf)
+ 	if (is_atom("objectname", atom, len)) {
+ 		if (!data->mark_query)
+-			strbuf_addstr(sb, sha1_to_hex(data->sha1));
++			strbuf_addstr(sb, oid_to_hex(&data->oid));
+ 	} else if (is_atom("objecttype", atom, len)) {
+ 		if (data->mark_query)
+ 			data->info.typep = &data->type;
+@@ -199,9 +199,10 @@ static void expand_atom(struct strbuf *sb, const char *atom, int len,
+ 			strbuf_addstr(sb, data->rest);
+ 	} else if (is_atom("deltabase", atom, len)) {
+ 		if (data->mark_query)
+-			data->info.delta_base_sha1 = data->delta_base_sha1;
++			data->info.delta_base_sha1 = data->delta_base_oid.hash;
+ 		else
+-			strbuf_addstr(sb, sha1_to_hex(data->delta_base_sha1));
++			strbuf_addstr(sb,
++				      oid_to_hex(&data->delta_base_oid));
+ 	} else
+ 		die("unknown format element: %.*s", len, atom);
+ }
+@@ -232,7 +233,7 @@ static void batch_write(struct batch_options *opt, const void *data, int len)
+ 
+ static void print_object_or_die(struct batch_options *opt, struct expand_data *data)
+ {
+-	const unsigned char *sha1 = data->sha1;
++	const unsigned char *sha1 = data->oid.hash;
+ 
+ 	assert(data->info.typep);
+ 
+@@ -266,8 +267,9 @@ static void batch_object_write(const char *obj_name, struct batch_options *opt,
+ 	struct strbuf buf = STRBUF_INIT;
+ 
+ 	if (!data->skip_object_info &&
+-	    sha1_object_info_extended(data->sha1, &data->info, LOOKUP_REPLACE_OBJECT) < 0) {
+-		printf("%s missing\n", obj_name ? obj_name : sha1_to_hex(data->sha1));
++	    sha1_object_info_extended(data->oid.hash, &data->info, LOOKUP_REPLACE_OBJECT) < 0) {
++		printf("%s missing\n",
++		       obj_name ? obj_name : oid_to_hex(&data->oid));
+ 		fflush(stdout);
+ 		return;
+ 	}
+@@ -290,7 +292,7 @@ static void batch_one_object(const char *obj_name, struct batch_options *opt,
+ 	int flags = opt->follow_symlinks ? GET_SHA1_FOLLOW_SYMLINKS : 0;
+ 	enum follow_symlinks_result result;
+ 
+-	result = get_sha1_with_context(obj_name, flags, data->sha1, &ctx);
++	result = get_sha1_with_context(obj_name, flags, data->oid.hash, &ctx);
+ 	if (result != FOUND) {
+ 		switch (result) {
+ 		case MISSING_OBJECT:
+@@ -336,7 +338,7 @@ struct object_cb_data {
+ static void batch_object_cb(const unsigned char sha1[20], void *vdata)
+ {
+ 	struct object_cb_data *data = vdata;
+-	hashcpy(data->expand->sha1, sha1);
++	hashcpy(data->expand->oid.hash, sha1);
+ 	batch_object_write(NULL, data->opt, data->expand);
+ }
+ 
