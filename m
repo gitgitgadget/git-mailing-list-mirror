@@ -2,113 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 761AB20193
-	for <e@80x24.org>; Mon,  5 Sep 2016 05:17:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E42D1F6BF
+	for <e@80x24.org>; Mon,  5 Sep 2016 07:44:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754159AbcIEFR4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Sep 2016 01:17:56 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:35423 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753023AbcIEFRz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Sep 2016 01:17:55 -0400
-Received: by mail-it0-f67.google.com with SMTP id c198so7914000ith.2
-        for <git@vger.kernel.org>; Sun, 04 Sep 2016 22:17:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=fDsnsSg6J4NI1JBxDPJMmeNQjlmgH1piIM10bRjFWjU=;
-        b=gzJCtXpIeTyodDk6me5hT8/IrCtcJpe0yOAhBnhPTBhiVQWJH5hs5+2wCIDjgC9eQO
-         9QcAJBwgYuN4xZh3XDsoH2lCdi7iwIJ58h2vOhDhjtaNRjj1/SpwMY2TvGUywzfzPugu
-         /vEueyKW4NZr8r8k4ZfCFkDId54iALoLo62RzztGsE40GQra6m2MCZ5kDjA6s1JGd5Ox
-         SWvpnCUjFekZKs5wYqM91ay2JYRWV1ot6t46AGqAUjh5i4MdqgNueNZG0D5Cv9DAqvHD
-         R0MjsE+U7YUDc9gMKuRsWDq/cOoIBTSfbjERLtclLFNcObmlxa+Hz0XmS117L8+RGD7B
-         K0oQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=fDsnsSg6J4NI1JBxDPJMmeNQjlmgH1piIM10bRjFWjU=;
-        b=L6L/C/MxtnC6tySHnxx7AxwEV1KMBAyLFZZGTWpyrrJZRauL7lTHoT9POspcCK6bw4
-         X4dd1Y6m6aqcyLBAFgaMDrB5NuBsrj0wlpo8ys9FqC0I3+sAFLg0bI4N6hh0/9MjOnfO
-         TBbltXZ3iwkfHbS5mowbIJJ8g/zL4rVpPQGLd5VWoqeU7kbZUcQ7PvmCKsDinoscWcdw
-         hOur1Da03gF4GE8bm6zsGYpWROV6U+eFeoefry+6AJ3EcQw9wySXlFtpMYGy4lTG4a2v
-         7DjGx8U2N4WMrhrYS5Oa8y/+ST7dhs/ycgIKxE+BJ2qUeuw3T/he39tspEmgqAURUP/I
-         NKgw==
-X-Gm-Message-State: AE9vXwPTZEPEqUWiNRufDWGe34tqy9kwrT/hjnJcJrA3K+OA93Z+GiPY+B+j5mUTQBHYzQ==
-X-Received: by 10.36.208.68 with SMTP id m65mr19885603itg.20.1473052674938;
-        Sun, 04 Sep 2016 22:17:54 -0700 (PDT)
-Received: from [192.168.2.2] (c-67-188-214-183.hsd1.ca.comcast.net. [67.188.214.183])
-        by smtp.googlemail.com with ESMTPSA id x203sm9299025itb.11.2016.09.04.22.17.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 04 Sep 2016 22:17:54 -0700 (PDT)
-Subject: Re: [PATCH v2 05/38] refs: create a base class "ref_store" for
- files_ref_store
-To:     Michael Haggerty <mhagger@alum.mit.edu>,
-        David Turner <novalis@novalis.org>
-References: <cover.1473003902.git.mhagger@alum.mit.edu>
- <39277c75122a374b360057d6e1f6d889a90f6fb4.1473003902.git.mhagger@alum.mit.edu>
- <1473021637.6035.27.camel@frank>
- <c6ae77bf-e2e2-c108-648d-75b5164b7ba2@alum.mit.edu>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, git@vger.kernel.org,
-        Stefan Beller <sbeller@google.com>
-From:   Stefan Beller <stefanbeller@gmail.com>
-Message-ID: <d04e8a6c-15c8-a39a-2200-ef20b0cd3a42@gmail.com>
-Date:   Sun, 4 Sep 2016 22:17:53 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S1752342AbcIEHoj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Sep 2016 03:44:39 -0400
+Received: from mout.gmx.net ([212.227.17.21]:65526 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750945AbcIEHoi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Sep 2016 03:44:38 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0Ld3t6-1bGWJn3xaK-00i9Zb; Mon, 05 Sep 2016 09:44:28
+ +0200
+Date:   Mon, 5 Sep 2016 09:44:25 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Jan Keromnes <janx@linux.com>, git@vger.kernel.org,
+        =?UTF-8?Q?Ingo_Br=C3=BCckl?= <ib@wupperonline.de>,
+        Edward Thomson <ethomson@edwardthomson.com>
+Subject: Re: [PATCH 1/4] add: document the chmod option
+In-Reply-To: <20160904113954.21697-2-t.gummerer@gmail.com>
+Message-ID: <alpine.DEB.2.20.1609050944070.129229@virtualbox>
+References: <xmqq4m5zutyc.fsf@gitster.mtv.corp.google.com> <20160904113954.21697-1-t.gummerer@gmail.com> <20160904113954.21697-2-t.gummerer@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <c6ae77bf-e2e2-c108-648d-75b5164b7ba2@alum.mit.edu>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:QjWK5IC3YfyGz+Kd2MGKegmu7faPyFYOm7grag9O+X4vbpzDvtl
+ 5OFCANphCyWiJ7NAAVka+j2yXp7l5+QmbTI2we6ZVkyWWGMT2XOdsB44I6PNeUqyAzJCCZW
+ GqaTptNBSui9duYIpCDL+h/IHPsj69xG41qeszngadlCHioYqAeQurOTpE9GU1DufoiidOA
+ e60EJwZcN1tH6uRnXxBAA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:OwrhwE0iQVc=:sxaz9apWaL2Z4KeBj5nSe6
+ GjjDUkEaXODsoULpv8sqCGPyNPPEEp+GISVRKyvxCQE6qI95/4a2uKjd6JN7MSDbHu4mCnsNE
+ XoKXVrm4grW+Yvo2nbXKAxEtQT6xLIkKS9v23Q9t8OQc31yHzMHNXYNFt408oQ93Ya5Q4ItDf
+ 7X5qWHrxM5fCkSWpWt0Vh239YY5nclIz+Zc43UE/6O+3zojsWuX+72MkoHbC3FK8a2GKJ0pL6
+ WF8JmkNOOLMIZ4KcI2tM9501e1YAeNJ4sHjV118Ds8XT67G+mYKqbqwKhvgRbNA5EMBXgz9iT
+ k/C5ITv3xBIfLGF9CLRnKPuR85EZNUhJg1/K4rm2grT+f0DcEO4GJM2QtS0B1Abefi2p4uupO
+ 3v8h5i+narf8tElLCWnr/6oSvP89p+z9xgflCK1SdpmBB+PvzuWo2HEHs1bzvdYksbS/X2PLW
+ wY6xnqpHgwF+jfdF0RKusB5DaVVGs55kyt2C2jBK+59E/146Nix7bkvIUQ7O5lsvK+iVdmcj3
+ NrnVUuwtnwvBlwj7Rg5oWXrxYFUUf5fmaT58XVD90sa6N0KiWiP2vZIdhrh3X+6eIT/WNEJrd
+ neD49OKSdQJtxjudPQynFVLf8KyLSbYy8+GCrYbn7iSA1Ebamler8uIGons3tAFOPKximBIl1
+ JQWECOFWRrF4P3MUANoOnmThwIOLwHwkJwhTB7V0aUqI4inGxX1wNeFSDYn/KBi+FZ4BT0+KY
+ t9HeRH3NYymCqNcVi+v1olxmzH0u+r7vwQaOTLzDlA7a/plMrxaA/7RSNETQ56ZwBrEEiN3KV
+ KJ6HFA+
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04.09.2016 20:53, Michael Haggerty wrote:
-> On 09/04/2016 10:40 PM, David Turner wrote:
->> On Sun, 2016-09-04 at 18:08 +0200, Michael Haggerty wrote:
->>
->>> +/* A linked list of ref_stores for submodules: */
->>> +static struct ref_store *submodule_ref_stores;
->>
->> I don't like the per-submodule stores being in a linked list, which
->> requires a linear search.  Stefan has, I think, been doing a bunch of
->> work to scale git to support on the order of thousands of submodules,
->> which this potentially breaks.  What about a hashmap?
+Hi Thomas,
 
-Well I did mostly usability up to this point, not efficiency in terms
-of fast execution.
+On Sun, 4 Sep 2016, Thomas Gummerer wrote:
 
-> 
-> I agree it's not ideal, but this linked list is not new. Before this
-> patch the same code was in `files-backend.c`, and before patch [03/38]
-> essentially the same linked list was stored as `submodule_ref_caches`.
-> So this is not a regression, and I'd rather not address it in this patch
-> series.
-> 
-> CC Stefan in case he'd like to put it on his radar. Honestly, I've never
-> checked how often the submodule reference cache is used in real life.
+> +--chmod=(+|-)::
 
-I think I need to spend some time on the data structures eventually.
+There is an "x" missing ;-)
 
-Thanks for cc'ing
-
-Stefan
-
-
-> 
-> Michael
-> 
-
+Ciao,
+Dscho
