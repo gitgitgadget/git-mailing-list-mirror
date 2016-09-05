@@ -2,117 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B689A20193
-	for <e@80x24.org>; Mon,  5 Sep 2016 09:46:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBBBD1F6BF
+	for <e@80x24.org>; Mon,  5 Sep 2016 10:24:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932702AbcIEJpm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Sep 2016 05:45:42 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:60354 "EHLO
-        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932301AbcIEJpb (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 5 Sep 2016 05:45:31 -0400
-X-AuditID: 12074411-a07ff70000000932-c2-57cd3ea6d0a5
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        by  (Symantec Messaging Gateway) with SMTP id 62.9A.02354.6AE3DC75; Mon,  5 Sep 2016 05:45:10 -0400 (EDT)
-Received: from bagpipes.fritz.box (p57907BC3.dip0.t-ipconnect.de [87.144.123.195])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u859iwtR008788
-        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Mon, 5 Sep 2016 05:45:08 -0400
-From:   Michael Haggerty <mhagger@alum.mit.edu>
+        id S933227AbcIEKYv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Sep 2016 06:24:51 -0400
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:36376 "EHLO
+        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932444AbcIEKYu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Sep 2016 06:24:50 -0400
+Received: by mail-wm0-f42.google.com with SMTP id b187so12741834wme.1
+        for <git@vger.kernel.org>; Mon, 05 Sep 2016 03:24:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=jJJOOXV3xn9VcZpuMOqe2f9LpYeU1oixB/XUBRlVvLY=;
+        b=0YpYW762z0Zfm/U9S3eg/BWExLhTfpkWQIMJ1dygl2Qpiyuy58ydpuP/C2TC6HuCqL
+         EnCQqoH4XnCgST/d9xeYrs+WOHLrWaeuRsIgycrI5cDnCuB4llE/+yW3EDPhmhM7mXJM
+         i9acx2nJM4VfSZ2tyYvCUpASy2UssbH7zdAe9EaTxUzyWq/0Vu0I/nlWoAdg1h9Otoma
+         PuP/hsEEX1Hm98KuN/EyDoh/RTWF9crjdyduoxna/jDCDmtj2IZ7cadKTsgMPopTsQWT
+         EGTLN2K9qTFsj8tGcctpNaT2Uk0vC/EETohFjr7avNjrm+pQXj1gY7ihBLC8yG2042cd
+         lpAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=jJJOOXV3xn9VcZpuMOqe2f9LpYeU1oixB/XUBRlVvLY=;
+        b=bKHWGo0Dccp4qUNjJp443mUvGOQvUGmhKF3hqDbTskYqAGa60BlS3ONaMDTNbCLmsR
+         sZpJx1P+wNauqFQY+LUK3SKgFBUxhTCjE25HZzEyVt3xhETO2iESnRV9imBkalVtLUOz
+         0cmLl9h8BT6+NT1iWI4UQ2QLYLuNr1g7bToQHRo+BdNlwj9pb2myhq7lcsBcryXzY3A6
+         soyZzk46EIgPWdhikRw0P6KwNSLjhPr5Fg1TxDKGn0RHrsbqhrzQRdsPvXFz5hAaXCKY
+         QL11ntey41CCZPyFec43zFIuIV/XtLdjN/ve64uN358ntdRZrvL99Jlf4Tg/g0xbPxRB
+         5JqQ==
+X-Gm-Message-State: AE9vXwPfCYVWyoBFQXZUh59iU0FzhaShYp4g7wELrOSDYBWz0PT1x+GybTXAgc2JfULlyQ==
+X-Received: by 10.28.10.21 with SMTP id 21mr15435496wmk.3.1473071088761;
+        Mon, 05 Sep 2016 03:24:48 -0700 (PDT)
+Received: from ubuntu2pinto.pd5x2phgis1evm2itoce0l41ib.ax.internal.cloudapp.net ([23.101.69.192])
+        by smtp.gmail.com with ESMTPSA id gg10sm27001666wjd.4.2016.09.05.03.24.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 05 Sep 2016 03:24:47 -0700 (PDT)
+From:   Elia Pinto <gitter.spiros@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 4/8] recs_match(): take two xrecord_t pointers as arguments
-Date:   Mon,  5 Sep 2016 11:44:49 +0200
-Message-Id: <1f7f17cc1b2434ab5dfc4fea95a09597e61a4886.1473068229.git.mhagger@alum.mit.edu>
-X-Mailer: git-send-email 2.9.3
-In-Reply-To: <cover.1473068229.git.mhagger@alum.mit.edu>
-References: <cover.1473068229.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrOIsWRmVeSWpSXmKPExsUixO6iqLvM7my4wZwDnBZdV7qZLBp6rzBb
-        7F7cz2yx4uocZoszW4Gs2yvmM1v8aOlhtph51dpi8+Z2FgdOj7/vPzB57Jx1l91jwaZSj2e9
-        exg9Ll5S9ti/dBubx+dNch63n21jCeCI4rJJSc3JLEst0rdL4Mr4veY9S8FigYrvvXvZGxi3
-        8XQxcnJICJhIfJ1wnKWLkYtDSGAro8Td2ztZIZyTTBKH5q5kBqliE9CVWNTTzARiiwiIS7w9
-        PpMdpIhZ4C+TxOJHd9lAEsICfhKfPp9mBbFZBFQl9n1/wghi8wpESax99YMVYp2cxKVtX8CG
-        cgpYSCz50scOYgsJmEvMm9fMPIGRZwEjwypGucSc0lzd3MTMnOLUZN3i5MS8vNQiXVO93MwS
-        vdSU0k2MkPAT3ME446TcIUYBDkYlHt4JumfChVgTy4orcw8xSnIwKYnyFqieDRfiS8pPqcxI
-        LM6ILyrNSS0+xCjBwawkwptjC5TjTUmsrEotyodJSXOwKInz8i1R9xMSSE8sSc1OTS1ILYLJ
-        ynBwKEnwqoE0ChalpqdWpGXmlCCkmTg4QYbzAA13tgEZXlyQmFucmQ6RP8WoKCXOmwKSEABJ
-        ZJTmwfXC0sMrRnGgV4R554Os4AGmFrjuV0CDmYAGr9t9GmRwSSJCSqqBsTTB49eHp2fdo15f
-        9LjX77W84qbetqJCnaXe2zxOWx9ulp6y+31XReCROUFSgT/6thREMTycfky88MLD56+3FNrk
-        Hdm94PHV0h/MM5mdcuvXxa2et1VBP3qS7G+R2epNtYKHJvI90Lme+yKNZ/9WPin9DI0DXVN2
-        yu5om37t3/q/qvZHFi+tMVZiKc5INNRiLipOBAAn4P4R6gIAAA==
+Cc:     Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH 0/4] test suite: use the GIT_TRACE_CURL environment var
+Date:   Mon,  5 Sep 2016 10:24:40 +0000
+Message-Id: <20160905102444.3586-1-gitter.spiros@gmail.com>
+X-Mailer: git-send-email 2.10.0.308.gf73994d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There is no reason for it to take an array and two indexes as argument,
-as it only accesses two elements of the array.
+Use the new GIT_TRACE_CURL environment variable in the test suite 
+instead of the deprecated GIT_CURL_VERBOSE.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- xdiff/xdiffi.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+Elia Pinto (4):
+  t5541-http-push-smart.sh: use the GIT_TRACE_CURL environment var
+  test-lib.sh: preserve GIT_TRACE_CURL from the environment
+  t5550-http-fetch-dumb.sh: use the GIT_TRACE_CURL environment var
+  t5551-http-fetch-smart.sh: use the GIT_TRACE_CURL environment var
 
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index ed2df64..8a5832a 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -405,11 +405,11 @@ static int is_blank_line(xrecord_t *rec, long flags)
- 	return xdl_blankline(rec->ptr, rec->size, flags);
- }
- 
--static int recs_match(xrecord_t **recs, long ixs, long ix, long flags)
-+static int recs_match(xrecord_t *rec1, xrecord_t *rec2, long flags)
- {
--	return (recs[ixs]->ha == recs[ix]->ha &&
--		xdl_recmatch(recs[ixs]->ptr, recs[ixs]->size,
--			     recs[ix]->ptr, recs[ix]->size,
-+	return (rec1->ha == rec2->ha &&
-+		xdl_recmatch(rec1->ptr, rec1->size,
-+			     rec2->ptr, rec2->size,
- 			     flags));
- }
- 
-@@ -457,7 +457,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
- 			 * the last line of the current change group, shift backward
- 			 * the group.
- 			 */
--			while (ixs > 0 && recs_match(recs, ixs - 1, ix - 1, flags)) {
-+			while (ixs > 0 && recs_match(recs[ixs - 1], recs[ix - 1], flags)) {
- 				rchg[--ixs] = 1;
- 				rchg[--ix] = 0;
- 
-@@ -484,7 +484,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
- 			 * the line next of the current change group, shift forward
- 			 * the group.
- 			 */
--			while (ix < nrec && recs_match(recs, ixs, ix, flags)) {
-+			while (ix < nrec && recs_match(recs[ixs], recs[ix], flags)) {
- 				blank_lines += is_blank_line(recs[ix], flags);
- 
- 				rchg[ixs++] = 0;
-@@ -525,7 +525,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
- 			 */
- 			while (ixs > 0 &&
- 			       !is_blank_line(recs[ix - 1], flags) &&
--			       recs_match(recs, ixs - 1, ix - 1, flags)) {
-+			       recs_match(recs[ixs - 1], recs[ix - 1], flags)) {
- 				rchg[--ixs] = 1;
- 				rchg[--ix] = 0;
- 				while (rchgo[--ixo]);
+ t/t5541-http-push-smart.sh  |  2 +-
+ t/t5550-http-fetch-dumb.sh  | 13 ++++++++-----
+ t/t5551-http-fetch-smart.sh | 15 ++++++++++++---
+ t/test-lib.sh               |  1 +
+ 4 files changed, 22 insertions(+), 9 deletions(-)
+
 -- 
-2.9.3
+2.10.0.308.gf73994d
 
