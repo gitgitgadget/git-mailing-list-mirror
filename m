@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 470DC20705
-	for <e@80x24.org>; Mon,  5 Sep 2016 20:10:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8AB6620705
+	for <e@80x24.org>; Mon,  5 Sep 2016 20:10:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964949AbcIEUKK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Sep 2016 16:10:10 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:43000 "EHLO
+        id S964907AbcIEUJq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Sep 2016 16:09:46 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:42990 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S964889AbcIEUI2 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 5 Sep 2016 16:08:28 -0400
+        by vger.kernel.org with ESMTP id S964906AbcIEUIb (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 5 Sep 2016 16:08:31 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id DA159280AE;
-        Mon,  5 Sep 2016 20:08:26 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id CE799280B9;
+        Mon,  5 Sep 2016 20:08:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1473106106;
-        bh=q+dH1vUodKqLnCgAERe7xxZ8qXATbbHKsYqoEEIEteE=;
+        s=default; t=1473106110;
+        bh=jamlDcTzPt732txDiH+bJYB1kBHZyTJLSnbvT4UG8Vc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ZuwhaFSXfUlqDyZvnP8oirKgcTKHEjcdan/zDvxccxVHsxM0fhGArLIPYQyf2//U9
-         Wev0sUHpbjndgc8+Tn8oJ5dfUoIbmPLU/oZdfVdTMi4h/DwK2gHxaMKylz6n876FGC
-         ATLnOpiMwr00YJzjdva6fYsNKdl12ybtdw/H0TdNRveox51cFJJ0q2xrQDRSTEOtKw
-         3mzhJLBwa+kERxqJcp0KlXfa51RGvY5q49y5ZFTcwndrH5QPOsb+rhybPu4qOYGNP3
-         Nccq3Fd7sQwz2/B/1e3CO8Pek6/c7dftfu9uLxUnFYiUlvMg8D3z4JXlJSqSI9C9cL
-         B3BTbTfRk2bCWj1DfE76GCYawuIKI6pz2ajmd4zXxbluTcdbWHvRGgvOCHz7+ER6sb
-         v/pgGlCmHtvN3EDCIxnaiz9KBqcLP9YyykkTvgnFiq9tr3qk/jCcVnPbqFA/epE9V3
-         XfF82QZRqqAvh4UtkiI94/K536u+j6g0vIztwfLubv5eFLe+LZG
+        b=0vUc7IzUX2LkAdkPAOl3jKiCXfAoQ6yFHweTG3PJ3BA9/YvhBkgsLHD961gOI7UZW
+         8U9+XXBZ/6BsEoD66aN6dGdjbfQINBKfZSj1e44OL1Dghcv/3IFDJ/vSQ7P657o6w0
+         VF5zUQt1/Bt6oviVmMD5WaMLL/0lv/tckNQfEBwjHD91bR5cst82wxQuY0bp20TOLi
+         LZinfBV0zd5a+xTXUFXwyv117ghfAEiRdOp2ezxGQpPgxkxFxtRsDKEIdBBCRcCNGH
+         j+IhzUqUS5jAZ6ZlgiYRVR2wiwJqz5WcSv1SdcRz13tiOiuYGf4m2oIUJna5NahugW
+         KIzleBCCO75hAmBrg8oLV8gktJTyuZjTrtH6xsWSSpm0EOxAL1z7Ff7QoA5420M9dC
+         5fqoly3C6Ut1NP8RXQ5e7LvYSsVbqlU9MME42QuC73PuoJfnyPTm3os3Kh8tm3XmnM
+         VeSRFbH1DMBby3C519m+8cf7JSv5LOzVW/F7+zkeBFi5rJsDQBH
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Paul Tan <pyokagan@gmail.com>, Junio C Hamano <gitster@pobox.com>,
@@ -39,9 +39,9 @@ Cc:     Paul Tan <pyokagan@gmail.com>, Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: [PATCH v2 08/20] streaming: make stream_blob_to_fd take struct object_id
-Date:   Mon,  5 Sep 2016 20:07:59 +0000
-Message-Id: <20160905200811.697889-9-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 20/20] builtin/reset: convert to use struct object_id
+Date:   Mon,  5 Sep 2016 20:08:11 +0000
+Message-Id: <20160905200811.697889-21-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20160905200811.697889-1-sandals@crustytoothpaste.net>
 References: <20160905200811.697889-1-sandals@crustytoothpaste.net>
@@ -50,127 +50,151 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since all of its callers have been updated, modify stream_blob_to_fd to
-take a struct object_id.
-
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/cat-file.c | 6 +++---
- builtin/fsck.c     | 2 +-
- builtin/log.c      | 4 ++--
- entry.c            | 2 +-
- streaming.c        | 4 ++--
- streaming.h        | 2 +-
- 6 files changed, 10 insertions(+), 10 deletions(-)
+ builtin/reset.c | 52 ++++++++++++++++++++++++++--------------------------
+ 1 file changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 7b2e0537..49b8fa8e 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -83,7 +83,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 		}
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 9020ec66..5aa86079 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -39,7 +39,7 @@ static inline int is_merge(void)
+ 	return !access(git_path_merge_head(), F_OK);
+ }
  
- 		if (type == OBJ_BLOB)
--			return stream_blob_to_fd(1, oid.hash, NULL, 0);
-+			return stream_blob_to_fd(1, &oid, NULL, 0);
- 		buf = read_sha1_file(oid.hash, &type, &size);
- 		if (!buf)
- 			die("Cannot read object %s", obj_name);
-@@ -105,7 +105,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 				oidcpy(&blob_oid, &oid);
+-static int reset_index(const unsigned char *sha1, int reset_type, int quiet)
++static int reset_index(const struct object_id *oid, int reset_type, int quiet)
+ {
+ 	int nr = 1;
+ 	struct tree_desc desc[2];
+@@ -69,22 +69,22 @@ static int reset_index(const unsigned char *sha1, int reset_type, int quiet)
+ 	read_cache_unmerged();
  
- 			if (sha1_object_info(blob_oid.hash, NULL) == OBJ_BLOB)
--				return stream_blob_to_fd(1, blob_oid.hash, NULL, 0);
-+				return stream_blob_to_fd(1, &blob_oid, NULL, 0);
- 			/*
- 			 * we attempted to dereference a tag to a blob
- 			 * and failed; there may be new dereference
-@@ -240,7 +240,7 @@ static void print_object_or_die(struct batch_options *opt, struct expand_data *d
- 	if (data->type == OBJ_BLOB) {
- 		if (opt->buffer_output)
- 			fflush(stdout);
--		if (stream_blob_to_fd(1, oid->hash, NULL, 0) < 0)
-+		if (stream_blob_to_fd(1, oid, NULL, 0) < 0)
- 			die("unable to stream %s to stdout", oid_to_hex(oid));
+ 	if (reset_type == KEEP) {
+-		unsigned char head_sha1[20];
+-		if (get_sha1("HEAD", head_sha1))
++		struct object_id head_oid;
++		if (get_oid("HEAD", &head_oid))
+ 			return error(_("You do not have a valid HEAD."));
+-		if (!fill_tree_descriptor(desc, head_sha1))
++		if (!fill_tree_descriptor(desc, head_oid.hash))
+ 			return error(_("Failed to find tree of HEAD."));
+ 		nr++;
+ 		opts.fn = twoway_merge;
  	}
- 	else {
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index f604adff..055dfdcf 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -268,7 +268,7 @@ static void check_unreachable_object(struct object *obj)
- 			if (!(f = fopen(filename, "w")))
- 				die_errno("Could not open '%s'", filename);
- 			if (obj->type == OBJ_BLOB) {
--				if (stream_blob_to_fd(fileno(f), obj->oid.hash, NULL, 1))
-+				if (stream_blob_to_fd(fileno(f), &obj->oid, NULL, 1))
- 					die_errno("Could not write '%s'", filename);
- 			} else
- 				fprintf(f, "%s\n", describe_object(obj));
-diff --git a/builtin/log.c b/builtin/log.c
-index 48b9db51..0b427b67 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -474,13 +474,13 @@ static int show_blob_object(const struct object_id *oid, struct rev_info *rev, c
- 	fflush(rev->diffopt.file);
- 	if (!DIFF_OPT_TOUCHED(&rev->diffopt, ALLOW_TEXTCONV) ||
- 	    !DIFF_OPT_TST(&rev->diffopt, ALLOW_TEXTCONV))
--		return stream_blob_to_fd(1, oid->hash, NULL, 0);
-+		return stream_blob_to_fd(1, oid, NULL, 0);
  
- 	if (get_sha1_with_context(obj_name, 0, oidc.hash, &obj_context))
- 		die(_("Not a valid object name %s"), obj_name);
- 	if (!obj_context.path[0] ||
- 	    !textconv_object(obj_context.path, obj_context.mode, &oidc, 1, &buf, &size))
--		return stream_blob_to_fd(1, oid->hash, NULL, 0);
-+		return stream_blob_to_fd(1, oid, NULL, 0);
- 
- 	if (!buf)
- 		die(_("git show %s: bad file"), obj_name);
-diff --git a/entry.c b/entry.c
-index ce80d292..c6eea240 100644
---- a/entry.c
-+++ b/entry.c
-@@ -127,7 +127,7 @@ static int streaming_write_entry(const struct cache_entry *ce, char *path,
- 	if (fd < 0)
+-	if (!fill_tree_descriptor(desc + nr - 1, sha1))
+-		return error(_("Failed to find tree of %s."), sha1_to_hex(sha1));
++	if (!fill_tree_descriptor(desc + nr - 1, oid->hash))
++		return error(_("Failed to find tree of %s."), oid_to_hex(oid));
+ 	if (unpack_trees(nr, desc, &opts))
  		return -1;
  
--	result |= stream_blob_to_fd(fd, ce->oid.hash, filter, 1);
-+	result |= stream_blob_to_fd(fd, &ce->oid, filter, 1);
- 	*fstat_done = fstat_output(fd, state, statbuf);
- 	result |= close(fd);
+ 	if (reset_type == MIXED || reset_type == HARD) {
+-		tree = parse_tree_indirect(sha1);
++		tree = parse_tree_indirect(oid->hash);
+ 		prime_cache_tree(&the_index, tree);
+ 	}
  
-diff --git a/streaming.c b/streaming.c
-index 811fcc24..3c48f049 100644
---- a/streaming.c
-+++ b/streaming.c
-@@ -497,7 +497,7 @@ static open_method_decl(incore)
-  * Users of streaming interface
-  ****************************************************************/
+@@ -143,7 +143,7 @@ static void update_index_from_diff(struct diff_queue_struct *q,
+ }
  
--int stream_blob_to_fd(int fd, unsigned const char *sha1, struct stream_filter *filter,
-+int stream_blob_to_fd(int fd, const struct object_id *oid, struct stream_filter *filter,
- 		      int can_seek)
+ static int read_from_tree(const struct pathspec *pathspec,
+-			  unsigned char *tree_sha1,
++			  struct object_id *tree_oid,
+ 			  int intent_to_add)
  {
- 	struct git_istream *st;
-@@ -506,7 +506,7 @@ int stream_blob_to_fd(int fd, unsigned const char *sha1, struct stream_filter *f
- 	ssize_t kept = 0;
- 	int result = -1;
+ 	struct diff_options opt;
+@@ -154,7 +154,7 @@ static int read_from_tree(const struct pathspec *pathspec,
+ 	opt.format_callback = update_index_from_diff;
+ 	opt.format_callback_data = &intent_to_add;
  
--	st = open_istream(sha1, &type, &sz, filter);
-+	st = open_istream(oid->hash, &type, &sz, filter);
- 	if (!st) {
- 		if (filter)
- 			free_stream_filter(filter);
-diff --git a/streaming.h b/streaming.h
-index 1d05c2a4..73c1d156 100644
---- a/streaming.h
-+++ b/streaming.h
-@@ -12,6 +12,6 @@ extern struct git_istream *open_istream(const unsigned char *, enum object_type
- extern int close_istream(struct git_istream *);
- extern ssize_t read_istream(struct git_istream *, void *, size_t);
+-	if (do_diff_cache(tree_sha1, &opt))
++	if (do_diff_cache(tree_oid->hash, &opt))
+ 		return 1;
+ 	diffcore_std(&opt);
+ 	diff_flush(&opt);
+@@ -191,7 +191,7 @@ static void parse_args(struct pathspec *pathspec,
+ 		       const char **rev_ret)
+ {
+ 	const char *rev = "HEAD";
+-	unsigned char unused[20];
++	struct object_id unused;
+ 	/*
+ 	 * Possible arguments are:
+ 	 *
+@@ -216,8 +216,8 @@ static void parse_args(struct pathspec *pathspec,
+ 		 * has to be unambiguous. If there is a single argument, it
+ 		 * can not be a tree
+ 		 */
+-		else if ((!argv[1] && !get_sha1_committish(argv[0], unused)) ||
+-			 (argv[1] && !get_sha1_treeish(argv[0], unused))) {
++		else if ((!argv[1] && !get_sha1_committish(argv[0], unused.hash)) ||
++			 (argv[1] && !get_sha1_treeish(argv[0], unused.hash))) {
+ 			/*
+ 			 * Ok, argv[0] looks like a commit/tree; it should not
+ 			 * be a filename.
+@@ -241,24 +241,24 @@ static void parse_args(struct pathspec *pathspec,
+ 		       prefix, argv);
+ }
  
--extern int stream_blob_to_fd(int fd, const unsigned char *, struct stream_filter *, int can_seek);
-+extern int stream_blob_to_fd(int fd, const struct object_id *, struct stream_filter *, int can_seek);
+-static int reset_refs(const char *rev, const unsigned char *sha1)
++static int reset_refs(const char *rev, const struct object_id *oid)
+ {
+ 	int update_ref_status;
+ 	struct strbuf msg = STRBUF_INIT;
+-	unsigned char *orig = NULL, sha1_orig[20],
+-		*old_orig = NULL, sha1_old_orig[20];
++	struct object_id *orig = NULL, oid_orig,
++		*old_orig = NULL, oid_old_orig;
  
- #endif /* STREAMING_H */
+-	if (!get_sha1("ORIG_HEAD", sha1_old_orig))
+-		old_orig = sha1_old_orig;
+-	if (!get_sha1("HEAD", sha1_orig)) {
+-		orig = sha1_orig;
++	if (!get_oid("ORIG_HEAD", &oid_old_orig))
++		old_orig = &oid_old_orig;
++	if (!get_oid("HEAD", &oid_orig)) {
++		orig = &oid_orig;
+ 		set_reflog_message(&msg, "updating ORIG_HEAD", NULL);
+-		update_ref(msg.buf, "ORIG_HEAD", orig, old_orig, 0,
++		update_ref_oid(msg.buf, "ORIG_HEAD", orig, old_orig, 0,
+ 			   UPDATE_REFS_MSG_ON_ERR);
+ 	} else if (old_orig)
+-		delete_ref("ORIG_HEAD", old_orig, 0);
++		delete_ref("ORIG_HEAD", old_orig->hash, 0);
+ 	set_reflog_message(&msg, "updating HEAD", rev);
+-	update_ref_status = update_ref(msg.buf, "HEAD", sha1, orig, 0,
++	update_ref_status = update_ref_oid(msg.buf, "HEAD", oid, orig, 0,
+ 				       UPDATE_REFS_MSG_ON_ERR);
+ 	strbuf_release(&msg);
+ 	return update_ref_status;
+@@ -357,15 +357,15 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 		hold_locked_index(lock, 1);
+ 		if (reset_type == MIXED) {
+ 			int flags = quiet ? REFRESH_QUIET : REFRESH_IN_PORCELAIN;
+-			if (read_from_tree(&pathspec, oid.hash, intent_to_add))
++			if (read_from_tree(&pathspec, &oid, intent_to_add))
+ 				return 1;
+ 			if (get_git_work_tree())
+ 				refresh_index(&the_index, flags, NULL, NULL,
+ 					      _("Unstaged changes after reset:"));
+ 		} else {
+-			int err = reset_index(oid.hash, reset_type, quiet);
++			int err = reset_index(&oid, reset_type, quiet);
+ 			if (reset_type == KEEP && !err)
+-				err = reset_index(oid.hash, MIXED, quiet);
++				err = reset_index(&oid, MIXED, quiet);
+ 			if (err)
+ 				die(_("Could not reset index file to revision '%s'."), rev);
+ 		}
+@@ -377,7 +377,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 	if (!pathspec.nr && !unborn) {
+ 		/* Any resets without paths update HEAD to the head being
+ 		 * switched to, saving the previous head in ORIG_HEAD before. */
+-		update_ref_status = reset_refs(rev, oid.hash);
++		update_ref_status = reset_refs(rev, &oid);
+ 
+ 		if (reset_type == HARD && !update_ref_status && !quiet)
+ 			print_new_head_line(lookup_commit_reference(oid.hash));
