@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEB6520705
+	by dcvr.yhbt.net (Postfix) with ESMTP id F38422070F
 	for <e@80x24.org>; Mon,  5 Sep 2016 20:10:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964944AbcIEUKG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Sep 2016 16:10:06 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:42992 "EHLO
+        id S964946AbcIEUKJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Sep 2016 16:10:09 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:43008 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S964894AbcIEUI3 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 5 Sep 2016 16:08:29 -0400
+        by vger.kernel.org with ESMTP id S964891AbcIEUI2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 5 Sep 2016 16:08:28 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 82B51280B1;
-        Mon,  5 Sep 2016 20:08:28 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id C7740280AF;
+        Mon,  5 Sep 2016 20:08:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1473106108;
-        bh=Pmgjuetd0HiJJ3iD/K41+i+YxozniVshjkRiK46cKsA=;
+        s=default; t=1473106107;
+        bh=QNkaRLzm6DJ5e3XyeoUYILbolXS5n6vYC9Yc0oJZD+0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=w0JB0baMDl95n2gHkYOCpR5Tv/p/mVTxlcpHIaODt0B5HZMZuXi+zTi/ZMzDkreig
-         Pwb+XkGskW7ClRr6zsJRJ1tmP7qeYfnSy73Mes20f/KslDxbZYC5ByPqmRWdPPyz/4
-         Tk8JMQN4S3mx7c1I4aZpmNmySW+HuN8yBVnxap/LPvQCFi2FHFq5Nl/HC1rrRWQ/9L
-         ss358//fvIr+etNVnGr8VoeoylAx/pT2SKLXqaP7C/u4bdo7k9AWKoRKlXNmS19o7U
-         D9JDlNtkIBjiDbd42dVXgFbvG+RrEkp6yPwJULJqXSmyFFqLjd0txUa4WLTA+gQPVn
-         FIBIjw/L+qprFqeEvUMKYrxkpXqfyphbzuvYwEnC234uvZSbkBwXt+qts+UXQTJuGL
-         VFMLfX+6dOtlgifNfg5VxdmLWUNjBCp9whdewZonQDA53aJfFIH9Yz1wwi3zHG/0ng
-         O2vnV155pUmplzzGRIf8FYOs4eFGR6Q4naaRc4IXX3PVfhY9KFv
+        b=Jy1m+USNFE6/1KyrjCz1B4Zuvons+ZcgBc00LUnkKjsh2/WxKUx9ADcUeQFkWPZKT
+         srL3ZgckAJHek39wTBKj/0kwgu+Nz9Km8ySinXncAr7bTqLkrI4+/JY7AmksMT6WEp
+         a8Cy2yjbTzweFtjZgIRTnr0fJKZmVy2uYTte41QE1A2XF4QbCS/H4Kqw7HaKpyqXfY
+         43YmVrly6OvnzJ6/jeOLHeHXqD2KGWCWNxRC5cX2j/99XmMM3anAVmYFpH4e1+rcTY
+         KDSNGpLml6cyk67gzsF20oVyHVca6qHSSNcCUh3vHPSxxmYGVm/C9d1cw0yT01boR7
+         dL36l5NgZlSAfwcg3NNCqNmIOQ55lp+O6r+j+BUQZuY5MQxDhT9fl90zJmgtM/f1gk
+         N7vZHjppVZTl+XFsTCWrAgIfqH44vkaKnUMnGTFPiQ5y/HwNgjWPd3sGehLAQ37f3G
+         Y4YtacHKFygkzQrT+16Kgli5V0dL+ra7SpGs/dDbIJHe5nBAKP3
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Paul Tan <pyokagan@gmail.com>, Junio C Hamano <gitster@pobox.com>,
@@ -39,9 +39,9 @@ Cc:     Paul Tan <pyokagan@gmail.com>, Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: [PATCH v2 11/20] Convert read_mmblob to take struct object_id.
-Date:   Mon,  5 Sep 2016 20:08:02 +0000
-Message-Id: <20160905200811.697889-12-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 09/20] builtin/checkout: convert some static functions to struct object_id
+Date:   Mon,  5 Sep 2016 20:08:00 +0000
+Message-Id: <20160905200811.697889-10-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20160905200811.697889-1-sandals@crustytoothpaste.net>
 References: <20160905200811.697889-1-sandals@crustytoothpaste.net>
@@ -50,134 +50,220 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since all of its callers have been updated, convert read_mmblob to take
-a pointer to struct object_id.
+Convert all the static functions that are not callbacks to struct
+object_id.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/apply.c    | 6 +++---
- builtin/checkout.c | 6 +++---
- merge-recursive.c  | 6 +++---
- notes-merge.c      | 6 +++---
- xdiff-interface.c  | 8 ++++----
- xdiff-interface.h  | 3 ++-
- 6 files changed, 18 insertions(+), 17 deletions(-)
+ builtin/checkout.c | 66 +++++++++++++++++++++++++++---------------------------
+ 1 file changed, 33 insertions(+), 33 deletions(-)
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 76b16121..df2c95d3 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -3435,9 +3435,9 @@ static int three_way_merge(struct image *image,
- 	mmbuffer_t result = { NULL };
- 	int status;
- 
--	read_mmblob(&base_file, base->hash);
--	read_mmblob(&our_file, ours->hash);
--	read_mmblob(&their_file, theirs->hash);
-+	read_mmblob(&base_file, base);
-+	read_mmblob(&our_file, ours);
-+	read_mmblob(&their_file, theirs);
- 	status = ll_merge(&result, path,
- 			  &base_file, "base",
- 			  &our_file, "ours",
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index ec85af56..13169221 100644
+index a9523ffa..ec85af56 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -195,9 +195,9 @@ static int checkout_merged(int pos, struct checkout *state)
- 	if (is_null_oid(&threeway[1]) || is_null_oid(&threeway[2]))
+@@ -175,9 +175,9 @@ static int checkout_merged(int pos, struct checkout *state)
+ 	const char *path = ce->name;
+ 	mmfile_t ancestor, ours, theirs;
+ 	int status;
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	mmbuffer_t result_buf;
+-	unsigned char threeway[3][20];
++	struct object_id threeway[3];
+ 	unsigned mode = 0;
+ 
+ 	memset(threeway, 0, sizeof(threeway));
+@@ -186,18 +186,18 @@ static int checkout_merged(int pos, struct checkout *state)
+ 		stage = ce_stage(ce);
+ 		if (!stage || strcmp(path, ce->name))
+ 			break;
+-		hashcpy(threeway[stage - 1], ce->oid.hash);
++		oidcpy(&threeway[stage - 1], &ce->oid);
+ 		if (stage == 2)
+ 			mode = create_ce_mode(ce->ce_mode);
+ 		pos++;
+ 		ce = active_cache[pos];
+ 	}
+-	if (is_null_sha1(threeway[1]) || is_null_sha1(threeway[2]))
++	if (is_null_oid(&threeway[1]) || is_null_oid(&threeway[2]))
  		return error(_("path '%s' does not have necessary versions"), path);
  
--	read_mmblob(&ancestor, threeway[0].hash);
--	read_mmblob(&ours, threeway[1].hash);
--	read_mmblob(&theirs, threeway[2].hash);
-+	read_mmblob(&ancestor, &threeway[0]);
-+	read_mmblob(&ours, &threeway[1]);
-+	read_mmblob(&theirs, &threeway[2]);
+-	read_mmblob(&ancestor, threeway[0]);
+-	read_mmblob(&ours, threeway[1]);
+-	read_mmblob(&theirs, threeway[2]);
++	read_mmblob(&ancestor, threeway[0].hash);
++	read_mmblob(&ours, threeway[1].hash);
++	read_mmblob(&theirs, threeway[2].hash);
  
  	/*
  	 * NEEDSWORK: re-create conflicts from merges with
-diff --git a/merge-recursive.c b/merge-recursive.c
-index e3db594d..3750d253 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -910,9 +910,9 @@ static int merge_3way(struct merge_options *o,
- 		name2 = mkpathdup("%s", branch2);
+@@ -226,9 +226,9 @@ static int checkout_merged(int pos, struct checkout *state)
+ 	 * object database even when it may contain conflicts).
+ 	 */
+ 	if (write_sha1_file(result_buf.ptr, result_buf.size,
+-			    blob_type, sha1))
++			    blob_type, oid.hash))
+ 		die(_("Unable to add merge result for '%s'"), path);
+-	ce = make_cache_entry(mode, sha1, path, 2, 0);
++	ce = make_cache_entry(mode, oid.hash, path, 2, 0);
+ 	if (!ce)
+ 		die(_("make_cache_entry failed for path '%s'"), path);
+ 	status = checkout_entry(ce, state, NULL);
+@@ -241,7 +241,7 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 	int pos;
+ 	struct checkout state;
+ 	static char *ps_matched;
+-	unsigned char rev[20];
++	struct object_id rev;
+ 	struct commit *head;
+ 	int errs = 0;
+ 	struct lock_file *lock_file;
+@@ -374,8 +374,8 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 	if (write_locked_index(&the_index, lock_file, COMMIT_LOCK))
+ 		die(_("unable to write new index file"));
+ 
+-	read_ref_full("HEAD", 0, rev, NULL);
+-	head = lookup_commit_reference_gently(rev, 1);
++	read_ref_full("HEAD", 0, rev.hash, NULL);
++	head = lookup_commit_reference_gently(rev.hash, 1);
+ 
+ 	errs |= post_checkout_hook(head, head, 0);
+ 	return errs;
+@@ -808,11 +808,11 @@ static int switch_branches(const struct checkout_opts *opts,
+ 	int ret = 0;
+ 	struct branch_info old;
+ 	void *path_to_free;
+-	unsigned char rev[20];
++	struct object_id rev;
+ 	int flag, writeout_error = 0;
+ 	memset(&old, 0, sizeof(old));
+-	old.path = path_to_free = resolve_refdup("HEAD", 0, rev, &flag);
+-	old.commit = lookup_commit_reference_gently(rev, 1);
++	old.path = path_to_free = resolve_refdup("HEAD", 0, rev.hash, &flag);
++	old.commit = lookup_commit_reference_gently(rev.hash, 1);
+ 	if (!(flag & REF_ISSYMREF))
+ 		old.path = NULL;
+ 
+@@ -860,7 +860,7 @@ static int git_checkout_config(const char *var, const char *value, void *cb)
+ struct tracking_name_data {
+ 	/* const */ char *src_ref;
+ 	char *dst_ref;
+-	unsigned char *dst_sha1;
++	struct object_id *dst_oid;
+ 	int unique;
+ };
+ 
+@@ -871,7 +871,7 @@ static int check_tracking_name(struct remote *remote, void *cb_data)
+ 	memset(&query, 0, sizeof(struct refspec));
+ 	query.src = cb->src_ref;
+ 	if (remote_find_tracking(remote, &query) ||
+-	    get_sha1(query.dst, cb->dst_sha1)) {
++	    get_oid(query.dst, cb->dst_oid)) {
+ 		free(query.dst);
+ 		return 0;
  	}
- 
--	read_mmblob(&orig, one->oid.hash);
--	read_mmblob(&src1, a->oid.hash);
--	read_mmblob(&src2, b->oid.hash);
-+	read_mmblob(&orig, &one->oid);
-+	read_mmblob(&src1, &a->oid);
-+	read_mmblob(&src2, &b->oid);
- 
- 	merge_status = ll_merge(result_buf, a->path, &orig, base_name,
- 				&src1, name1, &src2, name2, &ll_opts);
-diff --git a/notes-merge.c b/notes-merge.c
-index cb36b43c..b3536284 100644
---- a/notes-merge.c
-+++ b/notes-merge.c
-@@ -344,9 +344,9 @@ static int ll_merge_in_worktree(struct notes_merge_options *o,
- 	mmfile_t base, local, remote;
- 	int status;
- 
--	read_mmblob(&base, p->base.hash);
--	read_mmblob(&local, p->local.hash);
--	read_mmblob(&remote, p->remote.hash);
-+	read_mmblob(&base, &p->base);
-+	read_mmblob(&local, &p->local);
-+	read_mmblob(&remote, &p->remote);
- 
- 	status = ll_merge(&result_buf, oid_to_hex(&p->obj), &base, NULL,
- 			  &local, o->local_ref, &remote, o->remote_ref, NULL);
-diff --git a/xdiff-interface.c b/xdiff-interface.c
-index f34ea762..3bfc69ca 100644
---- a/xdiff-interface.c
-+++ b/xdiff-interface.c
-@@ -178,20 +178,20 @@ int read_mmfile(mmfile_t *ptr, const char *filename)
+@@ -884,13 +884,13 @@ static int check_tracking_name(struct remote *remote, void *cb_data)
  	return 0;
  }
  
--void read_mmblob(mmfile_t *ptr, const unsigned char *sha1)
-+void read_mmblob(mmfile_t *ptr, const struct object_id *oid)
+-static const char *unique_tracking_name(const char *name, unsigned char *sha1)
++static const char *unique_tracking_name(const char *name, struct object_id *oid)
  {
- 	unsigned long size;
- 	enum object_type type;
+ 	struct tracking_name_data cb_data = { NULL, NULL, NULL, 1 };
+ 	char src_ref[PATH_MAX];
+ 	snprintf(src_ref, PATH_MAX, "refs/heads/%s", name);
+ 	cb_data.src_ref = src_ref;
+-	cb_data.dst_sha1 = sha1;
++	cb_data.dst_oid = oid;
+ 	for_each_remote(check_tracking_name, &cb_data);
+ 	if (cb_data.unique)
+ 		return cb_data.dst_ref;
+@@ -902,12 +902,12 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 				int dwim_new_local_branch_ok,
+ 				struct branch_info *new,
+ 				struct checkout_opts *opts,
+-				unsigned char rev[20])
++				struct object_id *rev)
+ {
+ 	struct tree **source_tree = &opts->source_tree;
+ 	const char **new_branch = &opts->new_branch;
+ 	int argcount = 0;
+-	unsigned char branch_rev[20];
++	struct object_id branch_rev;
+ 	const char *arg;
+ 	int dash_dash_pos;
+ 	int has_dash_dash = 0;
+@@ -973,7 +973,7 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 	if (!strcmp(arg, "-"))
+ 		arg = "@{-1}";
  
--	if (!hashcmp(sha1, null_sha1)) {
-+	if (!oidcmp(oid, &null_oid)) {
- 		ptr->ptr = xstrdup("");
- 		ptr->size = 0;
- 		return;
+-	if (get_sha1_mb(arg, rev)) {
++	if (get_sha1_mb(arg, rev->hash)) {
+ 		/*
+ 		 * Either case (3) or (4), with <something> not being
+ 		 * a commit, or an attempt to use case (1) with an
+@@ -1022,15 +1022,15 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 	setup_branch_path(new);
+ 
+ 	if (!check_refname_format(new->path, 0) &&
+-	    !read_ref(new->path, branch_rev))
+-		hashcpy(rev, branch_rev);
++	    !read_ref(new->path, branch_rev.hash))
++		oidcpy(rev, &branch_rev);
+ 	else
+ 		new->path = NULL; /* not an existing branch */
+ 
+-	new->commit = lookup_commit_reference_gently(rev, 1);
++	new->commit = lookup_commit_reference_gently(rev->hash, 1);
+ 	if (!new->commit) {
+ 		/* not a commit */
+-		*source_tree = parse_tree_indirect(rev);
++		*source_tree = parse_tree_indirect(rev->hash);
+ 	} else {
+ 		parse_commit_or_die(new->commit);
+ 		*source_tree = new->commit->tree;
+@@ -1108,9 +1108,9 @@ static int checkout_branch(struct checkout_opts *opts,
+ 
+ 	if (new->path && !opts->force_detach && !opts->new_branch &&
+ 	    !opts->ignore_other_worktrees) {
+-		unsigned char sha1[20];
++		struct object_id oid;
+ 		int flag;
+-		char *head_ref = resolve_refdup("HEAD", 0, sha1, &flag);
++		char *head_ref = resolve_refdup("HEAD", 0, oid.hash, &flag);
+ 		if (head_ref &&
+ 		    (!(flag & REF_ISSYMREF) || strcmp(head_ref, new->path)))
+ 			die_if_checked_out(new->path, 1);
+@@ -1118,11 +1118,11 @@ static int checkout_branch(struct checkout_opts *opts,
  	}
  
--	ptr->ptr = read_sha1_file(sha1, &type, &size);
-+	ptr->ptr = read_sha1_file(oid->hash, &type, &size);
- 	if (!ptr->ptr || type != OBJ_BLOB)
--		die("unable to read blob object %s", sha1_to_hex(sha1));
-+		die("unable to read blob object %s", oid_to_hex(oid));
- 	ptr->size = size;
- }
+ 	if (!new->commit && opts->new_branch) {
+-		unsigned char rev[20];
++		struct object_id rev;
+ 		int flag;
  
-diff --git a/xdiff-interface.h b/xdiff-interface.h
-index fbb5a1c3..6f6ba909 100644
---- a/xdiff-interface.h
-+++ b/xdiff-interface.h
-@@ -1,6 +1,7 @@
- #ifndef XDIFF_INTERFACE_H
- #define XDIFF_INTERFACE_H
- 
-+#include "cache.h"
- #include "xdiff/xdiff.h"
- 
- /*
-@@ -20,7 +21,7 @@ int parse_hunk_header(char *line, int len,
- 		      int *ob, int *on,
- 		      int *nb, int *nn);
- int read_mmfile(mmfile_t *ptr, const char *filename);
--void read_mmblob(mmfile_t *ptr, const unsigned char *sha1);
-+void read_mmblob(mmfile_t *ptr, const struct object_id *oid);
- int buffer_is_binary(const char *ptr, unsigned long size);
- 
- extern void xdiff_set_find_func(xdemitconf_t *xecfg, const char *line, int cflags);
+-		if (!read_ref_full("HEAD", 0, rev, &flag) &&
+-		    (flag & REF_ISSYMREF) && is_null_sha1(rev))
++		if (!read_ref_full("HEAD", 0, rev.hash, &flag) &&
++		    (flag & REF_ISSYMREF) && is_null_oid(&rev))
+ 			return switch_unborn_to_new_branch(opts);
+ 	}
+ 	return switch_branches(opts, new);
+@@ -1232,14 +1232,14 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 	 * remote branches, erroring out for invalid or ambiguous cases.
+ 	 */
+ 	if (argc) {
+-		unsigned char rev[20];
++		struct object_id rev;
+ 		int dwim_ok =
+ 			!opts.patch_mode &&
+ 			dwim_new_local_branch &&
+ 			opts.track == BRANCH_TRACK_UNSPECIFIED &&
+ 			!opts.new_branch;
+ 		int n = parse_branchname_arg(argc, argv, dwim_ok,
+-					     &new, &opts, rev);
++					     &new, &opts, &rev);
+ 		argv += n;
+ 		argc -= n;
+ 	}
