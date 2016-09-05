@@ -2,115 +2,188 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC9541FBB0
-	for <e@80x24.org>; Mon,  5 Sep 2016 19:41:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1092F1FBB0
+	for <e@80x24.org>; Mon,  5 Sep 2016 19:47:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754788AbcIETlZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Sep 2016 15:41:25 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:42922 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754360AbcIETlY (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 5 Sep 2016 15:41:24 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id D01BB280A6;
-        Mon,  5 Sep 2016 19:41:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1473104481;
-        bh=WIbcUlFgssBCciHCaURY2pcSjbS6dzY0QIWlAWrKmDI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=CX3o3+u0MI2TUkqZ4hYOHJpvetQm9NEGSDE1P/y6OcuZYvc4zxXIymSx7SMyJS+hy
-         Njpj3/i+Nackwbn84G5BgNlplMewG+9pn71aEJUkKctv3cw5zhKmbd2XLzJxrCZKOQ
-         bZ32gAIGwJUmlygLoasPy54IYu5K1bptbSZGpAV/hIzZ0W2G05JRBIw5l9+9T8C6wj
-         l4GrIbvrQ2yxY//Tud4wdHk0NUcoGCqPGagxQ8+Aj/IcvZYVrDCBNNveL0x1cx1dIG
-         zIJGNKwtg9idswaXrxb1ekCZd+MYK/Yk/3M8lRiVhsjekEcbo3nOKQpSMKqRzMIdvH
-         S4zArFQsECnxNwp3/jCEWt/gfWaybB+AjrEOkRNOEs26bA8oysHaNT9Oh8tpuouv7P
-         qET9I34hjiRZNgdIyHHhW9frhgPVOmCLMKWj+msARiMADJ7j9+oaqDIdhB8v8qux6m
-         v2MDVAHmf9QVzBU90AJUAyKZCYUzC3Kc7v6TC2hwxqtvY/wBcZi
-Date:   Mon, 5 Sep 2016 19:41:15 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     iblis <iblis@hs.ntnu.edu.tw>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Avoid hard-coded perl path in sha-bang
-Message-ID: <20160905194115.wn7uo2fnzolms6uy@vauxhall.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        iblis <iblis@hs.ntnu.edu.tw>, git@vger.kernel.org
-References: <01020156faf163db-3a2e9796-3b12-43d2-90dd-2b843896a5b7-000000@eu-west-1.amazonses.com>
- <ddf84da5-036f-6e4f-839d-cef1f7ede4be@hs.ntnu.edu.tw>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="hpky7qxsvtxw6n7s"
-Content-Disposition: inline
-In-Reply-To: <ddf84da5-036f-6e4f-839d-cef1f7ede4be@hs.ntnu.edu.tw>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.7.0-1-amd64)
-User-Agent: NeoMutt/ (1.7.0)
+        id S933557AbcIETr5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Sep 2016 15:47:57 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:33906 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932319AbcIETrz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Sep 2016 15:47:55 -0400
+Received: by mail-wm0-f45.google.com with SMTP id w207so29099974wmw.1
+        for <git@vger.kernel.org>; Mon, 05 Sep 2016 12:47:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=Shluen3XOHaTJ+xRNMKbTPUCHuPdNnvo8SZT8DpFIJ4=;
+        b=yviBGcgj2qG+4QrQ+BKs0TfBqdgYxboU26PDsy+ZQwqZaW90/PIU0sz/15VbcyGY6I
+         h6f5BbsHNBhClXRn3eV3R3FAOQr4DQL9pqwvqu+ZAIV8x8KEQC1BFFAZT9G7bjZ1y3c+
+         iIpFYy8O371Jys65/rfCFCRvw4eUjaiKJ5N5KpaB90sHVee5r1abMT+VYSmaH4mT9+yo
+         yAnJbl3DE8eDeiB1xqgeI3LvkQDvOcU5iLiayrau2sJ2M70cT4HLvhFOO1zMggZnMrUL
+         j8ZjIfcWJxgROmBg7ZHwobkK3xTZm18+8P4gFptd5KdlvJVXsD2V0OILLaSBPlRg6786
+         wSow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=Shluen3XOHaTJ+xRNMKbTPUCHuPdNnvo8SZT8DpFIJ4=;
+        b=PSN8mAP4pKl90+6rjqrz84yPgisPCTiMIlgXhjLwPeMQ0eIcCXV0r7SJwbuZj2R4si
+         YC2wcF2gzCW4rQn9utwchnmf04Vf50NilzC9XPjmPrm7rxnMdp7Yr/o2D0BYoLbBKbTO
+         1N0d1q12tqIaQMi2Y6h4C2Gw67VudsjxdgaczgiCbN68YSfk3zjRPnJb3gyHA2VK1JrL
+         4JbV7O+6hCl9Uhf6TqXDoWiGRSxzge+yYOcg3MGldZPqxtxlvYW+z1oLO/iZSCdzjskY
+         7qeeQ7Z/W+y64nQYr8EeS2gbyw0yNEX7TO4KKTTw9KSweTHKZ819oNFGDWITkwlZpsKM
+         00YQ==
+X-Gm-Message-State: AE9vXwPrbPkGzDbzunbM9vkKe1UEive6zhwJY+uICRu4JoAy9iuRr8q87+rfUviesNdIcw==
+X-Received: by 10.28.50.199 with SMTP id y190mr17791436wmy.61.1473104874033;
+        Mon, 05 Sep 2016 12:47:54 -0700 (PDT)
+Received: from far1pr3662.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id f187sm22477398wmf.15.2016.09.05.12.47.52
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 05 Sep 2016 12:47:53 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v6 12/13] convert: add filter.<driver>.process option
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <7fbd02a1-ad62-7391-df2a-835aae8a62a7@gmail.com>
+Date:   Mon, 5 Sep 2016 21:47:50 +0200
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        peff@peff.net, sbeller@google.com, Johannes.Schindelin@gmx.de,
+        mlbright@gmail.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <CCFE4E4A-0724-4AE0-9356-6E95B7C331AF@gmail.com>
+References: <20160825110752.31581-1-larsxschneider@gmail.com> <20160825110752.31581-13-larsxschneider@gmail.com> <xmqqzinv6wtg.fsf@gitster.mtv.corp.google.com> <7A378528-58DE-4C17-9F00-9708947716DD@gmail.com> <xmqqbn0a3wy3.fsf@gitster.mtv.corp.google.com> <7fbd02a1-ad62-7391-df2a-835aae8a62a7@gmail.com>
+To:     =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---hpky7qxsvtxw6n7s
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Sep 05, 2016 at 11:28:18PM +0800, iblis wrote:
-> Signed-off-by: Iblis Lin <iblis@hs.ntnu.edu.tw>
+> On 30 Aug 2016, at 22:46, Jakub Nar=C4=99bski <jnareb@gmail.com> =
+wrote:
 >=20
-> ---
->  contrib/diff-highlight/diff-highlight | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>>> The filter can exit right after the "error-all". If the filter does
+>>> not exit then Git will kill the filter. I'll add this to the docs.
+>>=20
+>> OK.
 >=20
-> diff --git a/contrib/diff-highlight/diff-highlight b/contrib/diff-highlig=
-ht/diff-highlight
-> index ffefc31..b57b0fd 100755
-> --- a/contrib/diff-highlight/diff-highlight
-> +++ b/contrib/diff-highlight/diff-highlight
-> @@ -1,4 +1,4 @@
-> -#!/usr/bin/perl
-> +#!/usr/bin/env perl
->  use 5.008;
->  use warnings FATAL =3D> 'all';
+> Is it explicit kill, or implicit kill: close pipe and end process?
 
-This isn't consistent with what the other contrib scripts do, and
-/usr/bin/env perl isn't always the right perl for all situations.  What
-you probably want is to do something like this, which is listed in the
-Makefile.
+I close the pipe and call "finish_command".
 
-# Individual rules to allow e.g.
-# "make -C ../.. SCRIPT_PERL=3Dcontrib/foo/bar.perl build-perl-script"
-# from subdirectories like contrib/*/
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
 
---hpky7qxsvtxw6n7s
-Content-Type: application/pgp-signature; name="signature.asc"
+>>> "abort" could be ambiguous because it could be read as "abort only
+>>> this file". "abort-all" would work, though. Would you prefer to see
+>>> "error" replaced by "abort" and "error-all" by "abort-all"?
+>>=20
+>> No.
+>>=20
+>> I was primarily reacting to "-all" part, so anything that ends with
+>> "-all" is equally ugly from my point of view and not an improvement.
+>>=20
+>> As I said, "error-all" as long as other reviewers are happy with is
+>> OK by me, too.
+>=20
+> I'm rather partial to "abort" instead of "error-all", or "quit"/"exit"
+> (but I prefer "abort" or "bail-out"), as it better reflects what this
+> response is about - ending filter process.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.15 (GNU/Linux)
+After some thinking I agree with "abort" instead of "error-all".
 
-iQIcBAEBCgAGBQJXzcpbAAoJEL9TXYEfUvaLN5UP/i8WyJuLnO0OzL5VGIo2hV9C
-ehNWZkRV15kULZrQfkU6FPnhuEGoep4/8z9VQhPlPoQNbQrSe4VCLrWl/DYiRdtO
-9vmGHbov8RHZYvZDRg9uL4lNZ9x2klv9qT0VtSf5uXrgi7Vd6RXltEaUMoOh1gjd
-0zF3Boled8ag+5h6Q+3YJmQQ7Bp9vgPaeMhd5DT0HGkQ271U2SOJvEKQIcjwfdT3
-5vWP7W84tPd2+yJ63i9H8Qc1IjiXNmXwb4HqbwC6cDrsSufjyMId7XLM+wH1kBNF
-IOHDNF6zL+KryL+Z4mOwlL0VxoqpKAQZD/la8FPX//D3TjC4bT8WMbdYcVGHWTcw
-ybRm5JBkHrnBpO3S91HA/jlnpQ0yzxOohWlC14zy3Wl0gw4+E+bXm00r/eMA6bR4
-e4qw3SBM/nzMjDktY/3KmuQRXw7y/eHZXJcMIJ3JnOJGmYdtL2hcEi3ZBzd1TJhO
-nFqvBkb+DJZIkG6qxYq/ZczOQEWU3Qmnk1/JotPQOMrcQ59GsTppJHayeoGNoZEb
-+Ce0OMci/yTzohe8E51Am6UFQfOMiIQ3tBLVQDEQSjk5TcQBENtBPak+Qg9Imr5/
-y4nDgimDQ8xIWfonb83evrql7brvL+JTIksEOqb9KDZt/UMcMS6im/fPq8c8nY97
-ADQet4Y4c40hp5hbEikd
-=sZ/w
------END PGP SIGNATURE-----
 
---hpky7qxsvtxw6n7s--
+>>> A filter that dies during communication or does not adhere to the =
+protocol
+>>> is a faulty filter. Feeding the faulty filter after restart with the =
+same=20
+>>> blob would likely cause the same error.=20
+>>=20
+>> Why does Git restart it and continue with the rest of the blobs
+>> then?  Is there a reason to believe it may produce correct results
+>> for other blobs if you run it again?
+>=20
+> I guess the idea is that single filter can be run on different types
+> of blobs, and it could fail on some types (some files) and not others.
+> Like LFS-type filter failing on files with size larger than 2 GiB,
+> or iconv-like filter to convert UTF-16 to UTF-8 failing on invalid
+> byte sequences.
+
+This mimics the v1 behavior and I will explain that in the =
+documentation.
+
+
+>>> B) If we communicate "shutdown" to the filter then we need to give =
+the
+>>>   filter some time to perform the exit before the filter is killed =
+on
+>>>   Git exit. I wasn't able to come up with a good answer how long Git=20=
+
+>>>   should wait for the exit.
+>>=20
+>> Would that be an issue?  A filter is buggy if told to shutdown,
+>> ignores the request and hangs around forever.  I do not think we
+>> even need to kill it.  It is not Git's problem.
+>=20
+> I think the idea was for Git to request shutdown, and filter to tell
+> when it finished (or just exiting, and Git getting SIGCHLD, I guess).
+> It is hard to tell how much to wait, for example for filter process
+> to send "sync" command, or finish unmounting, or something...
+
+I like Junios approach because then we don't need to wait at all...
+
+
+>> I personally would be reluctant to become a filter process writer if
+>> the system it will be talking to can kill it without giving it a
+>> chance to do a graceful exit, but perhaps that is just me.  I don't
+>> know if closing the pipe going there where you are having Git to
+>> kill the process on the other end is any more involved than what you
+>> have without extra patches.
+>=20
+> Isn't it the same problem with v1 filters being killed on Git process
+> exit?  Unless v2 filter wants to do something _after_ writing output
+> to Git, it should be safe... unless Git process is killed, but it
+> is not different from filter being stray-killed.
+
+Yes, it should be safe. However, I think it is probably nicer if the =
+filter
+process can shutdown gracefully instead of being killed.
+
+
+>>>>> +Please note that you cannot use an existing =
+`filter.<driver>.clean`
+>>>>> +or `filter.<driver>.smudge` command with =
+`filter.<driver>.process`
+>>>>> +because the former two use a different inter process =
+communication
+>>>>> +protocol than the latter one.
+>>>>=20
+>>>> Would it be a useful sample program we can ship in contrib/ if you
+>>>> created a "filter adapter" that reads these two configuration
+>>>> variables and act as a filter.<driver>.process?
+>>>=20
+>>> You mean a v2 filter that would use v1 filters under the hood?
+>>> If we would drop v1, then this would be useful. Otherwise I don't
+>>> see any need for such a thing.
+>>=20
+>> I meant it as primarily an example people can learn from when they
+>> want to write their own.
+>=20
+> Errr... if it were any v1 filter, it would be useless (as bad or
+> worse performance than ordinary v1 clean or smudge filter).  It
+> might make sense if v1 filter and v2 wrapper were written in the
+> same [dynamic] language, and wrapper could just load / require
+> filter as a function / procedure, [compile it], and use it.
+> For example smudge/clean filter in Perl (e.g. rot13), and v2 wrapper
+> in Perl too.
+
+I'll provide a simple Perl rot13 v2 filter in contrib.
+
+Thanks,
+Lars=
