@@ -2,104 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3879C1FBB0
-	for <e@80x24.org>; Mon,  5 Sep 2016 18:57:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C376B1FBB0
+	for <e@80x24.org>; Mon,  5 Sep 2016 19:00:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934391AbcIES5S (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Sep 2016 14:57:18 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52567 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S933659AbcIES5R (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Sep 2016 14:57:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 74E7D3ABE6;
-        Mon,  5 Sep 2016 14:57:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=yOeUTQdqFznsNWORc/r6s2Tb7SU=; b=P4rEN7
-        EGoZpNbFXh5+e/QIe12WNrIOc0Yik7xRdyNSE/X7xD5CBWiO5O99Cw8KyzFqdKiA
-        jNqkpDCl7swdVBNd967Xw4QJm2ho2lMfuav+wgik8yoQsBnKRKNLz1btwe/xnvZe
-        26a5psy0B6kIV93vov4lF2cCH150clhuuZ9xs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=g7NH2Kf+cqhT8E+pELh1umd2/JX8SGCY
-        HT3yeueRH2olntmxtdeEA9KZ1EKHyM2ZWuEjQjxLIQoj0hbf8A41qcFZkUQenQF/
-        uh3rJ8FnIxH8K4Fhr8HvX7PALxAuly6n5DSg6BcjLe8ZFVOE1u6NRPxyjWfB9pKp
-        66XyNhEMWoI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6CFB63ABE5;
-        Mon,  5 Sep 2016 14:57:15 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EC94B3ABE4;
-        Mon,  5 Sep 2016 14:57:14 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <stefanbeller@gmail.com>
-Cc:     git@vger.kernel.org, jnareb@gmail.com, jacob.keller@gmail.com,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [WIP PATCH v2] diff.c: emit moved lines with a different color
-References: <20160904191435.14144-1-stefanbeller@gmail.com>
-Date:   Mon, 05 Sep 2016 11:57:12 -0700
-In-Reply-To: <20160904191435.14144-1-stefanbeller@gmail.com> (Stefan Beller's
-        message of "Sun, 4 Sep 2016 12:14:35 -0700")
-Message-ID: <xmqq1t0yqinr.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S933713AbcIETAv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Sep 2016 15:00:51 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:13731 "EHLO bsmtp3.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932400AbcIETAv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Sep 2016 15:00:51 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp3.bon.at (Postfix) with ESMTPSA id 3sSfFX5nmHz5tlC
+        for <git@vger.kernel.org>; Mon,  5 Sep 2016 21:00:48 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 19E02523B
+        for <git@vger.kernel.org>; Mon,  5 Sep 2016 21:00:48 +0200 (CEST)
+To:     Git Mailing List <git@vger.kernel.org>
+From:   Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH] t9903: fix broken && chain
+Message-ID: <61de943c-df93-58e9-ca48-c469a71a1d43@kdbg.org>
+Date:   Mon, 5 Sep 2016 21:00:47 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8F6D9F54-739A-11E6-9877-F7BB12518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <stefanbeller@gmail.com> writes:
+We might wonder why our && chain check does not catch this case:
+The && chain check uses a strange exit code with the expectation that
+the second or later part of a broken && chain would not exit with this
+particular code.
 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 0bcb679..f4f51c2 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -980,8 +980,9 @@ color.diff.<slot>::
->  	of `context` (context text - `plain` is a historical synonym),
->  	`meta` (metainformation), `frag`
->  	(hunk header), 'func' (function in hunk header), `old` (removed lines),
-> -	`new` (added lines), `commit` (commit headers), or `whitespace`
-> -	(highlighting whitespace errors).
-> +	`new` (added lines), `commit` (commit headers), `whitespace`
-> +	(highlighting whitespace errors), `moved-old` (removed lines that
-> +	reappear), `moved-new` (added lines that were removed elsewhere).
+This expectation does not work in this case because __git_ps1, being
+the first command in the second part of the broken && chain, records
+the current exit code, does its work, and finally returns to the caller
+with the recorded exit code. This fools our && chain check.
 
-Could we have a config to disable this rather costly new feature,
-too?
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+  t/t9903-bash-prompt.sh | 2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Also the first and the third level configuration names (the <slot>
-is at the third level) used by the core-git do not use dashed-words
-format.  Please adhere to the current convention.
-
-> diff --git a/diff.c b/diff.c
-> index 534c12e..d37cb4f 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -18,6 +18,7 @@
->  #include "ll-merge.h"
->  #include "string-list.h"
->  #include "argv-array.h"
-> +#include "git-compat-util.h"
->  
->  #ifdef NO_FAST_WORKING_DIRECTORY
->  #define FAST_WORKING_DIRECTORY 0
-> @@ -42,6 +43,11 @@ static int diff_dirstat_permille_default = 30;
->  static struct diff_options default_diff_options;
->  static long diff_algorithm;
->  
-> +static struct hashmap *duplicates_added;
-> +static struct hashmap *duplicates_removed;
-> +static int hash_previous_line_added;
-> +static int hash_previous_line_removed;
-
-I think these should be added as new fields to diff_options
-structure.
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index 0db4469..97c9b32 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -177,7 +177,7 @@ test_expect_success 'prompt - interactive rebase' '
+  	git checkout b1 &&
+  	test_when_finished "git checkout master" &&
+  	git rebase -i HEAD^ &&
+-	test_when_finished "git rebase --abort"
++	test_when_finished "git rebase --abort" &&
+  	__git_ps1 >"$actual" &&
+  	test_cmp expected "$actual"
+  '
+-- 
+2.10.0.85.gea34e30
