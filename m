@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FBCB2070F
-	for <e@80x24.org>; Mon,  5 Sep 2016 20:10:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD4A620705
+	for <e@80x24.org>; Mon,  5 Sep 2016 20:10:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964955AbcIEUKY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Sep 2016 16:10:24 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:42990 "EHLO
+        id S964958AbcIEUK1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Sep 2016 16:10:27 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:42992 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S964885AbcIEUI1 (ORCPT
+        by vger.kernel.org with ESMTP id S964883AbcIEUI1 (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 5 Sep 2016 16:08:27 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 2DE02280AB;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 59A13280AC;
         Mon,  5 Sep 2016 20:08:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1473106106;
-        bh=+XqRZR6VHfEP8kyVSv0BVaoqxN+XufIkTYESS05DFDs=;
+        bh=/GhMcNPPqT4Ig35HoSF0/Qt8gtTLi0TpDadKjFpUZWk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=S+gE0qLkpI5hMo5q5E4+Dfipm/azKvw91D0d4WXPPt6flBuX8BbFxhdYkdM05fqbT
-         RV9bqsA9TMdyXzpVXxpmCJReIGNB94rBucCxfnTzZMpLStFVJAyyTLnug8R18+lrqL
-         H9V/8kqkkGE1EI1yeiaBomRDUsdGSGwGXixNbaRFbjzuCYkmFbKE9NodF3FLZUBZ32
-         g7f81MosPc/QyM/XJEmJTBJ5DNCiMYp5eAdu1ZJKFQmUMyY/km1i4xJP9h0tVNW36/
-         Y3t+xOSlA3w2Y5xEczWiSSYEgUqHXiNKAXbNvm1t0/iAXfiF2CceWz5lFCI/VwXxx/
-         Nan+fewfWbV4z/oIjW1VrZEc1zS1b6g0up+6s/mglDjHhwqJfLmPUcrBALz7jzTnry
-         +lmeT8J8w9uZePUrxUxSBLxTQ6jOCrN2yNpdVUBaWg7bEEVJkTCeF3xRZvS6SbE+QA
-         yrV1DPf37+ej41Z4qYbvbXI7el4rBmo9XUIIxXk/puF9ydXEFlP
+        b=x+u12QrLgSUXuESfN4o7pmx7FYOGhuVJxyLvZpuDKCrt16dbLJzYRwmOklVCmiHRD
+         W0sACkkUJsyFeVSiy5vRAnEAzYGHMmTj8dK1TuiOBLPr7nDTRdM7esiE2Y4TJRDdEE
+         6Sobyn7oekoXdmbmIlVW0z0xLYKpB8dphDQYrcqjh92fnc1HRGuG6gXJ86iPaW20cN
+         8a0dAecHZGwD6YxrzYwIanQltG1V90vsIRv25M8iE3rOukWwtMyxm6z3RKAagIxAD/
+         /a+i+OfvtpQrIybymYvlnVTUNEiUlFpQTycSRfGnnS1vWN58PtEaSL/V3+duWY9Vx3
+         vzb/wmdFQb2/HzRbPof17mmhE/v4Oyg2R8IYHVF3aFKz1qLxscC15GEXUF//yic5p0
+         oPqARXC/yEvA7FJLwe7Gq6LwSAYVlSC4/tNtmHRHF0ct9PCyxpNUsn0hslNBL2OcQr
+         l2DrJjwCclbixMXy/jdW46LYpl9dOI5fSagwmdx9vEbotwg7dE6
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Paul Tan <pyokagan@gmail.com>, Junio C Hamano <gitster@pobox.com>,
@@ -39,9 +39,9 @@ Cc:     Paul Tan <pyokagan@gmail.com>, Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: [PATCH v2 05/20] builtin/cat-file: convert struct expand_data to use struct object_id
-Date:   Mon,  5 Sep 2016 20:07:56 +0000
-Message-Id: <20160905200811.697889-6-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 06/20] builtin/cat-file: convert some static functions to struct object_id
+Date:   Mon,  5 Sep 2016 20:07:57 +0000
+Message-Id: <20160905200811.697889-7-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20160905200811.697889-1-sandals@crustytoothpaste.net>
 References: <20160905200811.697889-1-sandals@crustytoothpaste.net>
@@ -50,116 +50,154 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert struct cache_entry to use struct object_id by applying the
-following semantic patch and the object_id transforms from contrib,
-plus the actual change to the struct:
-
-@@
-struct expand_data E1;
-@@
-- E1.sha1
-+ E1.oid.hash
-
-@@
-struct expand_data *E1;
-@@
-- E1->sha1
-+ E1->oid.hash
-
-@@
-struct expand_data E1;
-@@
-- E1.delta_base_sha1
-+ E1.delta_base_oid.hash
-
-@@
-struct expand_data *E1;
-@@
-- E1->delta_base_sha1
-+ E1->delta_base_oid.hash
+Convert all of the static functions that are not callbacks to use struct
+object_id.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/cat-file.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ builtin/cat-file.c | 50 +++++++++++++++++++++++++-------------------------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
 diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 2dfe6265..16b0b8c9 100644
+index 16b0b8c9..8b773787 100644
 --- a/builtin/cat-file.c
 +++ b/builtin/cat-file.c
-@@ -128,12 +128,12 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- }
- 
- struct expand_data {
+@@ -23,7 +23,7 @@ struct batch_options {
+ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+ 			int unknown_type)
+ {
 -	unsigned char sha1[20];
 +	struct object_id oid;
  	enum object_type type;
+ 	char *buf;
  	unsigned long size;
- 	off_t disk_size;
- 	const char *rest;
--	unsigned char delta_base_sha1[20];
-+	struct object_id delta_base_oid;
+@@ -35,14 +35,14 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+ 	if (unknown_type)
+ 		flags |= LOOKUP_UNKNOWN_OBJECT;
  
- 	/*
- 	 * If mark_query is true, we do not expand anything, but rather
-@@ -176,7 +176,7 @@ static void expand_atom(struct strbuf *sb, const char *atom, int len,
+-	if (get_sha1_with_context(obj_name, 0, sha1, &obj_context))
++	if (get_sha1_with_context(obj_name, 0, oid.hash, &obj_context))
+ 		die("Not a valid object name %s", obj_name);
  
- 	if (is_atom("objectname", atom, len)) {
- 		if (!data->mark_query)
--			strbuf_addstr(sb, sha1_to_hex(data->sha1));
-+			strbuf_addstr(sb, oid_to_hex(&data->oid));
- 	} else if (is_atom("objecttype", atom, len)) {
- 		if (data->mark_query)
- 			data->info.typep = &data->type;
-@@ -199,9 +199,10 @@ static void expand_atom(struct strbuf *sb, const char *atom, int len,
- 			strbuf_addstr(sb, data->rest);
- 	} else if (is_atom("deltabase", atom, len)) {
- 		if (data->mark_query)
--			data->info.delta_base_sha1 = data->delta_base_sha1;
-+			data->info.delta_base_sha1 = data->delta_base_oid.hash;
- 		else
--			strbuf_addstr(sb, sha1_to_hex(data->delta_base_sha1));
-+			strbuf_addstr(sb,
-+				      oid_to_hex(&data->delta_base_oid));
- 	} else
- 		die("unknown format element: %.*s", len, atom);
- }
-@@ -232,7 +233,7 @@ static void batch_write(struct batch_options *opt, const void *data, int len)
+ 	buf = NULL;
+ 	switch (opt) {
+ 	case 't':
+ 		oi.typename = &sb;
+-		if (sha1_object_info_extended(sha1, &oi, flags) < 0)
++		if (sha1_object_info_extended(oid.hash, &oi, flags) < 0)
+ 			die("git cat-file: could not get object info");
+ 		if (sb.len) {
+ 			printf("%s\n", sb.buf);
+@@ -53,24 +53,24 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+ 
+ 	case 's':
+ 		oi.sizep = &size;
+-		if (sha1_object_info_extended(sha1, &oi, flags) < 0)
++		if (sha1_object_info_extended(oid.hash, &oi, flags) < 0)
+ 			die("git cat-file: could not get object info");
+ 		printf("%lu\n", size);
+ 		return 0;
+ 
+ 	case 'e':
+-		return !has_sha1_file(sha1);
++		return !has_object_file(&oid);
+ 
+ 	case 'c':
+ 		if (!obj_context.path[0])
+ 			die("git cat-file --textconv %s: <object> must be <sha1:path>",
+ 			    obj_name);
+ 
+-		if (textconv_object(obj_context.path, obj_context.mode, sha1, 1, &buf, &size))
++		if (textconv_object(obj_context.path, obj_context.mode, oid.hash, 1, &buf, &size))
+ 			break;
+ 
+ 	case 'p':
+-		type = sha1_object_info(sha1, NULL);
++		type = sha1_object_info(oid.hash, NULL);
+ 		if (type < 0)
+ 			die("Not a valid object name %s", obj_name);
+ 
+@@ -83,8 +83,8 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+ 		}
+ 
+ 		if (type == OBJ_BLOB)
+-			return stream_blob_to_fd(1, sha1, NULL, 0);
+-		buf = read_sha1_file(sha1, &type, &size);
++			return stream_blob_to_fd(1, oid.hash, NULL, 0);
++		buf = read_sha1_file(oid.hash, &type, &size);
+ 		if (!buf)
+ 			die("Cannot read object %s", obj_name);
+ 
+@@ -93,19 +93,19 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+ 
+ 	case 0:
+ 		if (type_from_string(exp_type) == OBJ_BLOB) {
+-			unsigned char blob_sha1[20];
+-			if (sha1_object_info(sha1, NULL) == OBJ_TAG) {
+-				char *buffer = read_sha1_file(sha1, &type, &size);
++			struct object_id blob_oid;
++			if (sha1_object_info(oid.hash, NULL) == OBJ_TAG) {
++				char *buffer = read_sha1_file(oid.hash, &type, &size);
+ 				const char *target;
+ 				if (!skip_prefix(buffer, "object ", &target) ||
+-				    get_sha1_hex(target, blob_sha1))
+-					die("%s not a valid tag", sha1_to_hex(sha1));
++				    get_oid_hex(target, &blob_oid))
++					die("%s not a valid tag", oid_to_hex(&oid));
+ 				free(buffer);
+ 			} else
+-				hashcpy(blob_sha1, sha1);
++				oidcpy(&blob_oid, &oid);
+ 
+-			if (sha1_object_info(blob_sha1, NULL) == OBJ_BLOB)
+-				return stream_blob_to_fd(1, blob_sha1, NULL, 0);
++			if (sha1_object_info(blob_oid.hash, NULL) == OBJ_BLOB)
++				return stream_blob_to_fd(1, blob_oid.hash, NULL, 0);
+ 			/*
+ 			 * we attempted to dereference a tag to a blob
+ 			 * and failed; there may be new dereference
+@@ -113,7 +113,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+ 			 * fall-back to the usual case.
+ 			 */
+ 		}
+-		buf = read_object_with_reference(sha1, exp_type, &size, NULL);
++		buf = read_object_with_reference(oid.hash, exp_type, &size, NULL);
+ 		break;
+ 
+ 	default:
+@@ -233,28 +233,28 @@ static void batch_write(struct batch_options *opt, const void *data, int len)
  
  static void print_object_or_die(struct batch_options *opt, struct expand_data *data)
  {
--	const unsigned char *sha1 = data->sha1;
-+	const unsigned char *sha1 = data->oid.hash;
+-	const unsigned char *sha1 = data->oid.hash;
++	const struct object_id *oid = &data->oid;
  
  	assert(data->info.typep);
  
-@@ -266,8 +267,9 @@ static void batch_object_write(const char *obj_name, struct batch_options *opt,
- 	struct strbuf buf = STRBUF_INIT;
- 
- 	if (!data->skip_object_info &&
--	    sha1_object_info_extended(data->sha1, &data->info, LOOKUP_REPLACE_OBJECT) < 0) {
--		printf("%s missing\n", obj_name ? obj_name : sha1_to_hex(data->sha1));
-+	    sha1_object_info_extended(data->oid.hash, &data->info, LOOKUP_REPLACE_OBJECT) < 0) {
-+		printf("%s missing\n",
-+		       obj_name ? obj_name : oid_to_hex(&data->oid));
- 		fflush(stdout);
- 		return;
+ 	if (data->type == OBJ_BLOB) {
+ 		if (opt->buffer_output)
+ 			fflush(stdout);
+-		if (stream_blob_to_fd(1, sha1, NULL, 0) < 0)
+-			die("unable to stream %s to stdout", sha1_to_hex(sha1));
++		if (stream_blob_to_fd(1, oid->hash, NULL, 0) < 0)
++			die("unable to stream %s to stdout", oid_to_hex(oid));
  	}
-@@ -290,7 +292,7 @@ static void batch_one_object(const char *obj_name, struct batch_options *opt,
- 	int flags = opt->follow_symlinks ? GET_SHA1_FOLLOW_SYMLINKS : 0;
- 	enum follow_symlinks_result result;
+ 	else {
+ 		enum object_type type;
+ 		unsigned long size;
+ 		void *contents;
  
--	result = get_sha1_with_context(obj_name, flags, data->sha1, &ctx);
-+	result = get_sha1_with_context(obj_name, flags, data->oid.hash, &ctx);
- 	if (result != FOUND) {
- 		switch (result) {
- 		case MISSING_OBJECT:
-@@ -336,7 +338,7 @@ struct object_cb_data {
- static void batch_object_cb(const unsigned char sha1[20], void *vdata)
- {
- 	struct object_cb_data *data = vdata;
--	hashcpy(data->expand->sha1, sha1);
-+	hashcpy(data->expand->oid.hash, sha1);
- 	batch_object_write(NULL, data->opt, data->expand);
- }
+-		contents = read_sha1_file(sha1, &type, &size);
++		contents = read_sha1_file(oid->hash, &type, &size);
+ 		if (!contents)
+-			die("object %s disappeared", sha1_to_hex(sha1));
++			die("object %s disappeared", oid_to_hex(oid));
+ 		if (type != data->type)
+-			die("object %s changed type!?", sha1_to_hex(sha1));
++			die("object %s changed type!?", oid_to_hex(oid));
+ 		if (data->info.sizep && size != data->size)
+-			die("object %s changed size!?", sha1_to_hex(sha1));
++			die("object %s changed size!?", oid_to_hex(oid));
  
+ 		batch_write(opt, contents, size);
+ 		free(contents);
