@@ -2,188 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1092F1FBB0
-	for <e@80x24.org>; Mon,  5 Sep 2016 19:47:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E79720705
+	for <e@80x24.org>; Mon,  5 Sep 2016 20:09:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933557AbcIETr5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Sep 2016 15:47:57 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:33906 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932319AbcIETrz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Sep 2016 15:47:55 -0400
-Received: by mail-wm0-f45.google.com with SMTP id w207so29099974wmw.1
-        for <git@vger.kernel.org>; Mon, 05 Sep 2016 12:47:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Shluen3XOHaTJ+xRNMKbTPUCHuPdNnvo8SZT8DpFIJ4=;
-        b=yviBGcgj2qG+4QrQ+BKs0TfBqdgYxboU26PDsy+ZQwqZaW90/PIU0sz/15VbcyGY6I
-         h6f5BbsHNBhClXRn3eV3R3FAOQr4DQL9pqwvqu+ZAIV8x8KEQC1BFFAZT9G7bjZ1y3c+
-         iIpFYy8O371Jys65/rfCFCRvw4eUjaiKJ5N5KpaB90sHVee5r1abMT+VYSmaH4mT9+yo
-         yAnJbl3DE8eDeiB1xqgeI3LvkQDvOcU5iLiayrau2sJ2M70cT4HLvhFOO1zMggZnMrUL
-         j8ZjIfcWJxgROmBg7ZHwobkK3xTZm18+8P4gFptd5KdlvJVXsD2V0OILLaSBPlRg6786
-         wSow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Shluen3XOHaTJ+xRNMKbTPUCHuPdNnvo8SZT8DpFIJ4=;
-        b=PSN8mAP4pKl90+6rjqrz84yPgisPCTiMIlgXhjLwPeMQ0eIcCXV0r7SJwbuZj2R4si
-         YC2wcF2gzCW4rQn9utwchnmf04Vf50NilzC9XPjmPrm7rxnMdp7Yr/o2D0BYoLbBKbTO
-         1N0d1q12tqIaQMi2Y6h4C2Gw67VudsjxdgaczgiCbN68YSfk3zjRPnJb3gyHA2VK1JrL
-         4JbV7O+6hCl9Uhf6TqXDoWiGRSxzge+yYOcg3MGldZPqxtxlvYW+z1oLO/iZSCdzjskY
-         7qeeQ7Z/W+y64nQYr8EeS2gbyw0yNEX7TO4KKTTw9KSweTHKZ819oNFGDWITkwlZpsKM
-         00YQ==
-X-Gm-Message-State: AE9vXwPrbPkGzDbzunbM9vkKe1UEive6zhwJY+uICRu4JoAy9iuRr8q87+rfUviesNdIcw==
-X-Received: by 10.28.50.199 with SMTP id y190mr17791436wmy.61.1473104874033;
-        Mon, 05 Sep 2016 12:47:54 -0700 (PDT)
-Received: from far1pr3662.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id f187sm22477398wmf.15.2016.09.05.12.47.52
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 05 Sep 2016 12:47:53 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v6 12/13] convert: add filter.<driver>.process option
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <7fbd02a1-ad62-7391-df2a-835aae8a62a7@gmail.com>
-Date:   Mon, 5 Sep 2016 21:47:50 +0200
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        peff@peff.net, sbeller@google.com, Johannes.Schindelin@gmx.de,
-        mlbright@gmail.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <CCFE4E4A-0724-4AE0-9356-6E95B7C331AF@gmail.com>
-References: <20160825110752.31581-1-larsxschneider@gmail.com> <20160825110752.31581-13-larsxschneider@gmail.com> <xmqqzinv6wtg.fsf@gitster.mtv.corp.google.com> <7A378528-58DE-4C17-9F00-9708947716DD@gmail.com> <xmqqbn0a3wy3.fsf@gitster.mtv.corp.google.com> <7fbd02a1-ad62-7391-df2a-835aae8a62a7@gmail.com>
-To:     =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-X-Mailer: Apple Mail (2.3124)
+        id S964909AbcIEUJr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Sep 2016 16:09:47 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:43028 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S964905AbcIEUIb (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 5 Sep 2016 16:08:31 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id A7420280B8;
+        Mon,  5 Sep 2016 20:08:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1473106110;
+        bh=UHeZum9QKOMBcTRjICG2SnQ/csx+90xN8TtgPZXLTLY=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=fdsqUdhg+CzbkyBZQUsjp/M8u8RRc3bj0UbAZ8gbjqzYKQ1qU3FVppijH82w3bPUm
+         bx7v+AZlaKLjSyx75DIg36GJRkzxGl5YocMiuqp0CVxe7LoSump6ik9mQFkHzk+5m5
+         3XT5vE0UH6GsPF8bk3AuraG8cSDmN9bph6o77Ya8psAbENzd7rSjldnzTalfkZOGh6
+         zbqwbSw3wps78WVZnZ7Swxh5pnf6ubQOaU/v9q5UWMJjWHZji7Luf1PIZeHWCHuc5s
+         MRx7NGvn9iMnldXY8/WkJg5eMzrGXYQ9lYjxrDBtB04d0eF1EfnMR5Wpq/OYKvwe3t
+         +5FIZ0bEcvbgOPS/7EMUQ2TdsX68mcBZ6Y5qIDzPlblOKGTxmiAf52eqnCsz5rS6T8
+         H9UU3ErEZ6W1eId0v8K22GDvVs/TrGHxIDYPJqfvzfb9voH4SZV88258BGDardm4l1
+         s3UKFeE3QCQEUWCUcfzKElq5DOj/7/fXFwF2OcxiDK7EGucNVer
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     git@vger.kernel.org
+Cc:     Paul Tan <pyokagan@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: [PATCH v2 19/20] builtin/commit-tree: convert to struct object_id
+Date:   Mon,  5 Sep 2016 20:08:10 +0000
+Message-Id: <20160905200811.697889-20-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.9.3
+In-Reply-To: <20160905200811.697889-1-sandals@crustytoothpaste.net>
+References: <20160905200811.697889-1-sandals@crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ builtin/commit-tree.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-> On 30 Aug 2016, at 22:46, Jakub Nar=C4=99bski <jnareb@gmail.com> =
-wrote:
->=20
->>> The filter can exit right after the "error-all". If the filter does
->>> not exit then Git will kill the filter. I'll add this to the docs.
->>=20
->> OK.
->=20
-> Is it explicit kill, or implicit kill: close pipe and end process?
-
-I close the pipe and call "finish_command".
-
-
->>> "abort" could be ambiguous because it could be read as "abort only
->>> this file". "abort-all" would work, though. Would you prefer to see
->>> "error" replaced by "abort" and "error-all" by "abort-all"?
->>=20
->> No.
->>=20
->> I was primarily reacting to "-all" part, so anything that ends with
->> "-all" is equally ugly from my point of view and not an improvement.
->>=20
->> As I said, "error-all" as long as other reviewers are happy with is
->> OK by me, too.
->=20
-> I'm rather partial to "abort" instead of "error-all", or "quit"/"exit"
-> (but I prefer "abort" or "bail-out"), as it better reflects what this
-> response is about - ending filter process.
-
-After some thinking I agree with "abort" instead of "error-all".
-
-
->>> A filter that dies during communication or does not adhere to the =
-protocol
->>> is a faulty filter. Feeding the faulty filter after restart with the =
-same=20
->>> blob would likely cause the same error.=20
->>=20
->> Why does Git restart it and continue with the rest of the blobs
->> then?  Is there a reason to believe it may produce correct results
->> for other blobs if you run it again?
->=20
-> I guess the idea is that single filter can be run on different types
-> of blobs, and it could fail on some types (some files) and not others.
-> Like LFS-type filter failing on files with size larger than 2 GiB,
-> or iconv-like filter to convert UTF-16 to UTF-8 failing on invalid
-> byte sequences.
-
-This mimics the v1 behavior and I will explain that in the =
-documentation.
-
-
->>> B) If we communicate "shutdown" to the filter then we need to give =
-the
->>>   filter some time to perform the exit before the filter is killed =
-on
->>>   Git exit. I wasn't able to come up with a good answer how long Git=20=
-
->>>   should wait for the exit.
->>=20
->> Would that be an issue?  A filter is buggy if told to shutdown,
->> ignores the request and hangs around forever.  I do not think we
->> even need to kill it.  It is not Git's problem.
->=20
-> I think the idea was for Git to request shutdown, and filter to tell
-> when it finished (or just exiting, and Git getting SIGCHLD, I guess).
-> It is hard to tell how much to wait, for example for filter process
-> to send "sync" command, or finish unmounting, or something...
-
-I like Junios approach because then we don't need to wait at all...
-
-
->> I personally would be reluctant to become a filter process writer if
->> the system it will be talking to can kill it without giving it a
->> chance to do a graceful exit, but perhaps that is just me.  I don't
->> know if closing the pipe going there where you are having Git to
->> kill the process on the other end is any more involved than what you
->> have without extra patches.
->=20
-> Isn't it the same problem with v1 filters being killed on Git process
-> exit?  Unless v2 filter wants to do something _after_ writing output
-> to Git, it should be safe... unless Git process is killed, but it
-> is not different from filter being stray-killed.
-
-Yes, it should be safe. However, I think it is probably nicer if the =
-filter
-process can shutdown gracefully instead of being killed.
-
-
->>>>> +Please note that you cannot use an existing =
-`filter.<driver>.clean`
->>>>> +or `filter.<driver>.smudge` command with =
-`filter.<driver>.process`
->>>>> +because the former two use a different inter process =
-communication
->>>>> +protocol than the latter one.
->>>>=20
->>>> Would it be a useful sample program we can ship in contrib/ if you
->>>> created a "filter adapter" that reads these two configuration
->>>> variables and act as a filter.<driver>.process?
->>>=20
->>> You mean a v2 filter that would use v1 filters under the hood?
->>> If we would drop v1, then this would be useful. Otherwise I don't
->>> see any need for such a thing.
->>=20
->> I meant it as primarily an example people can learn from when they
->> want to write their own.
->=20
-> Errr... if it were any v1 filter, it would be useless (as bad or
-> worse performance than ordinary v1 clean or smudge filter).  It
-> might make sense if v1 filter and v2 wrapper were written in the
-> same [dynamic] language, and wrapper could just load / require
-> filter as a function / procedure, [compile it], and use it.
-> For example smudge/clean filter in Perl (e.g. rot13), and v2 wrapper
-> in Perl too.
-
-I'll provide a simple Perl rot13 v2 filter in contrib.
-
-Thanks,
-Lars=
+diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
+index 8a674bc9..60501726 100644
+--- a/builtin/commit-tree.c
++++ b/builtin/commit-tree.c
+@@ -40,8 +40,8 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
+ {
+ 	int i, got_tree = 0;
+ 	struct commit_list *parents = NULL;
+-	unsigned char tree_sha1[20];
+-	unsigned char commit_sha1[20];
++	struct object_id tree_oid;
++	struct object_id commit_oid;
+ 	struct strbuf buffer = STRBUF_INIT;
+ 
+ 	git_config(commit_tree_config, NULL);
+@@ -52,13 +52,13 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+ 		if (!strcmp(arg, "-p")) {
+-			unsigned char sha1[20];
++			struct object_id oid;
+ 			if (argc <= ++i)
+ 				usage(commit_tree_usage);
+-			if (get_sha1_commit(argv[i], sha1))
++			if (get_sha1_commit(argv[i], oid.hash))
+ 				die("Not a valid object name %s", argv[i]);
+-			assert_sha1_type(sha1, OBJ_COMMIT);
+-			new_parent(lookup_commit(sha1), &parents);
++			assert_sha1_type(oid.hash, OBJ_COMMIT);
++			new_parent(lookup_commit(oid.hash), &parents);
+ 			continue;
+ 		}
+ 
+@@ -105,7 +105,7 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
+ 			continue;
+ 		}
+ 
+-		if (get_sha1_tree(arg, tree_sha1))
++		if (get_sha1_tree(arg, tree_oid.hash))
+ 			die("Not a valid object name %s", arg);
+ 		if (got_tree)
+ 			die("Cannot give more than one trees");
+@@ -117,13 +117,13 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
+ 			die_errno("git commit-tree: failed to read");
+ 	}
+ 
+-	if (commit_tree(buffer.buf, buffer.len, tree_sha1, parents,
+-			commit_sha1, NULL, sign_commit)) {
++	if (commit_tree(buffer.buf, buffer.len, tree_oid.hash, parents,
++			commit_oid.hash, NULL, sign_commit)) {
+ 		strbuf_release(&buffer);
+ 		return 1;
+ 	}
+ 
+-	printf("%s\n", sha1_to_hex(commit_sha1));
++	printf("%s\n", oid_to_hex(&commit_oid));
+ 	strbuf_release(&buffer);
+ 	return 0;
+ }
