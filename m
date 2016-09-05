@@ -2,68 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F36D71FBB0
-	for <e@80x24.org>; Mon,  5 Sep 2016 18:03:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3879C1FBB0
+	for <e@80x24.org>; Mon,  5 Sep 2016 18:57:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933891AbcIESDa (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Sep 2016 14:03:30 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:37411 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752686AbcIESD2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Sep 2016 14:03:28 -0400
-Received: by mail-wm0-f43.google.com with SMTP id w12so53667919wmf.0
-        for <git@vger.kernel.org>; Mon, 05 Sep 2016 11:03:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=a4qobqYBRD2m/6QM0IZ94wb7kHNqEN1SFGnFYeAacf0=;
-        b=HEGaT4sr/ignLRCXMmExPA9YPhjd49V2qVIXbygsrSEdFAlIPydY2D50kPhFhfibT9
-         EIWVLhvjrgtwk/8AY1Ee6RXBpsaEy+evxT5TNHcvrihtEVps8ClDOJgE2e5fH286dieZ
-         MNN+3AgN3O+OEPUEeOd3PobpNmXbS5E+HpBR0r/DPZIJ2P0HexJo4xGty2XomD9ypyU8
-         07aZ9IWFZbx+Y90M0IF7eRDl2VvaqtursB3vl7eYTLQlEr8r1jUEznHLtIL+/CVYz80I
-         Kz3KA4BPSpodpsmHCv/5i/bJ1mQpIqrl4KCOj/o8GfnPZLT9DPDAKk40y1vg/n1YGlpG
-         lgNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=a4qobqYBRD2m/6QM0IZ94wb7kHNqEN1SFGnFYeAacf0=;
-        b=dDcGJ737fx6p06qoWWln/xF9brF+nGD9JC3njhdNYZqPdV6+92TQnA4LRSQeYK1MA5
-         nApJMxhhSz4qlofw5XDS3U55QJCdU0TK4vX7tpdrQ7Ly2yKKBIFri4b4gOBmnRG7x5yg
-         INd2rNXID490Qqla9DNKr2VGevk0rLOxbgB4LnObJAdL3CepcewJoAiBk+GUPzKXFISD
-         nYkoRYLVu/mL2Zo7AGCyWh9WZXiHbgWVH2XIIlsXpwW0hou2v+ZqiCBflUMVlKE2N0p+
-         mWu7qoDbkUkjBWEzDmHWmE1JEjzH72X69vrQYrnHkdJ3TRCfZCsfWn8YLWbDoz+JDMy9
-         SRDA==
-X-Gm-Message-State: AE9vXwNh6iWTwgPtHwhFeRFnMbUOss84of9gBBag3J3ZZM/kATeCzDk5n+WHZ22GmtH1uMUuBvfyTcGANgHFEQ==
-X-Received: by 10.28.105.65 with SMTP id e62mr17227143wmc.99.1473098606724;
- Mon, 05 Sep 2016 11:03:26 -0700 (PDT)
+        id S934391AbcIES5S (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Sep 2016 14:57:18 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52567 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S933659AbcIES5R (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Sep 2016 14:57:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 74E7D3ABE6;
+        Mon,  5 Sep 2016 14:57:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=yOeUTQdqFznsNWORc/r6s2Tb7SU=; b=P4rEN7
+        EGoZpNbFXh5+e/QIe12WNrIOc0Yik7xRdyNSE/X7xD5CBWiO5O99Cw8KyzFqdKiA
+        jNqkpDCl7swdVBNd967Xw4QJm2ho2lMfuav+wgik8yoQsBnKRKNLz1btwe/xnvZe
+        26a5psy0B6kIV93vov4lF2cCH150clhuuZ9xs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=g7NH2Kf+cqhT8E+pELh1umd2/JX8SGCY
+        HT3yeueRH2olntmxtdeEA9KZ1EKHyM2ZWuEjQjxLIQoj0hbf8A41qcFZkUQenQF/
+        uh3rJ8FnIxH8K4Fhr8HvX7PALxAuly6n5DSg6BcjLe8ZFVOE1u6NRPxyjWfB9pKp
+        66XyNhEMWoI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6CFB63ABE5;
+        Mon,  5 Sep 2016 14:57:15 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EC94B3ABE4;
+        Mon,  5 Sep 2016 14:57:14 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <stefanbeller@gmail.com>
+Cc:     git@vger.kernel.org, jnareb@gmail.com, jacob.keller@gmail.com,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [WIP PATCH v2] diff.c: emit moved lines with a different color
+References: <20160904191435.14144-1-stefanbeller@gmail.com>
+Date:   Mon, 05 Sep 2016 11:57:12 -0700
+In-Reply-To: <20160904191435.14144-1-stefanbeller@gmail.com> (Stefan Beller's
+        message of "Sun, 4 Sep 2016 12:14:35 -0700")
+Message-ID: <xmqq1t0yqinr.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.28.225.6 with HTTP; Mon, 5 Sep 2016 11:03:26 -0700 (PDT)
-In-Reply-To: <DD45D15018014CB483E07425A5E4072E@Yasushima>
-References: <1472913822-9088-1-git-send-email-s.yasushima@gmail.com>
- <32ec2698-7730-a088-6a76-ec6f2d379987@gmail.com> <DD45D15018014CB483E07425A5E4072E@Yasushima>
-From:   Satoshi Yasushima <s.yasushima@gmail.com>
-Date:   Tue, 6 Sep 2016 03:03:26 +0900
-Message-ID: <CADiQsSbOgU+VhbppwfbSm_pzGAcu=v7wepkeZZ0uuC-rsPjprg@mail.gmail.com>
-Subject: Re: [PATCH 1/6] git-gui: The term unified for remote in Japanese
-To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Cc:     git@vger.kernel.org, Pat Thoyts <patthoyts@users.sourceforge.net>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8F6D9F54-739A-11E6-9877-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 6 Sep 2016 2:16 +0900 Satoshi Yasushima wrote:
->But now, doesn't make empty string by apply msgmerge this commit.
+Stefan Beller <stefanbeller@gmail.com> writes:
 
-Oops.
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 0bcb679..f4f51c2 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -980,8 +980,9 @@ color.diff.<slot>::
+>  	of `context` (context text - `plain` is a historical synonym),
+>  	`meta` (metainformation), `frag`
+>  	(hunk header), 'func' (function in hunk header), `old` (removed lines),
+> -	`new` (added lines), `commit` (commit headers), or `whitespace`
+> -	(highlighting whitespace errors).
+> +	`new` (added lines), `commit` (commit headers), `whitespace`
+> +	(highlighting whitespace errors), `moved-old` (removed lines that
+> +	reappear), `moved-new` (added lines that were removed elsewhere).
 
-Now, I was a rebase work, msgmerge changed with empty string.
-Hence I think this commit keeps with empty string.
+Could we have a config to disable this rather costly new feature,
+too?
+
+Also the first and the third level configuration names (the <slot>
+is at the third level) used by the core-git do not use dashed-words
+format.  Please adhere to the current convention.
+
+> diff --git a/diff.c b/diff.c
+> index 534c12e..d37cb4f 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -18,6 +18,7 @@
+>  #include "ll-merge.h"
+>  #include "string-list.h"
+>  #include "argv-array.h"
+> +#include "git-compat-util.h"
+>  
+>  #ifdef NO_FAST_WORKING_DIRECTORY
+>  #define FAST_WORKING_DIRECTORY 0
+> @@ -42,6 +43,11 @@ static int diff_dirstat_permille_default = 30;
+>  static struct diff_options default_diff_options;
+>  static long diff_algorithm;
+>  
+> +static struct hashmap *duplicates_added;
+> +static struct hashmap *duplicates_removed;
+> +static int hash_previous_line_added;
+> +static int hash_previous_line_removed;
+
+I think these should be added as new fields to diff_options
+structure.
