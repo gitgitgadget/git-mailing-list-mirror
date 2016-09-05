@@ -7,62 +7,87 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E42D1F6BF
-	for <e@80x24.org>; Mon,  5 Sep 2016 07:44:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45DD220193
+	for <e@80x24.org>; Mon,  5 Sep 2016 07:53:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752342AbcIEHoj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Sep 2016 03:44:39 -0400
-Received: from mout.gmx.net ([212.227.17.21]:65526 "EHLO mout.gmx.net"
+        id S1754935AbcIEHx5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Sep 2016 03:53:57 -0400
+Received: from mout.gmx.net ([212.227.15.19]:62391 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750945AbcIEHoi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Sep 2016 03:44:38 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0Ld3t6-1bGWJn3xaK-00i9Zb; Mon, 05 Sep 2016 09:44:28
+        id S1753280AbcIEHx4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Sep 2016 03:53:56 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MEWPx-1brX983f6v-00FiEX; Mon, 05 Sep 2016 09:53:31
  +0200
-Date:   Mon, 5 Sep 2016 09:44:25 +0200 (CEST)
+Date:   Mon, 5 Sep 2016 09:53:30 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Jan Keromnes <janx@linux.com>, git@vger.kernel.org,
-        =?UTF-8?Q?Ingo_Br=C3=BCckl?= <ib@wupperonline.de>,
-        Edward Thomson <ethomson@edwardthomson.com>
-Subject: Re: [PATCH 1/4] add: document the chmod option
-In-Reply-To: <20160904113954.21697-2-t.gummerer@gmail.com>
-Message-ID: <alpine.DEB.2.20.1609050944070.129229@virtualbox>
-References: <xmqq4m5zutyc.fsf@gitster.mtv.corp.google.com> <20160904113954.21697-1-t.gummerer@gmail.com> <20160904113954.21697-2-t.gummerer@gmail.com>
+To:     Philip Oakley <philipoakley@iee.org>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Robert Dailey <rcdailey.lists@gmail.com>,
+        Git <git@vger.kernel.org>
+Subject: Re: Fixup of a fixup not working right
+In-Reply-To: <8F7471262D1C45D9A7BD1C29277004AD@PhilipOakley>
+Message-ID: <alpine.DEB.2.20.1609050950130.129229@virtualbox>
+References: <CAHd499AQFDRps6POF2xuUjbYv5DJYxt3DA8aFFArXF=qQEz_CA@mail.gmail.com>        <55512A8927384A0790DDC7F526B09053@PhilipOakley> <xmqq60qdsoxj.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1609040923390.129229@virtualbox>
+ <8F7471262D1C45D9A7BD1C29277004AD@PhilipOakley>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:QjWK5IC3YfyGz+Kd2MGKegmu7faPyFYOm7grag9O+X4vbpzDvtl
- 5OFCANphCyWiJ7NAAVka+j2yXp7l5+QmbTI2we6ZVkyWWGMT2XOdsB44I6PNeUqyAzJCCZW
- GqaTptNBSui9duYIpCDL+h/IHPsj69xG41qeszngadlCHioYqAeQurOTpE9GU1DufoiidOA
- e60EJwZcN1tH6uRnXxBAA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:OwrhwE0iQVc=:sxaz9apWaL2Z4KeBj5nSe6
- GjjDUkEaXODsoULpv8sqCGPyNPPEEp+GISVRKyvxCQE6qI95/4a2uKjd6JN7MSDbHu4mCnsNE
- XoKXVrm4grW+Yvo2nbXKAxEtQT6xLIkKS9v23Q9t8OQc31yHzMHNXYNFt408oQ93Ya5Q4ItDf
- 7X5qWHrxM5fCkSWpWt0Vh239YY5nclIz+Zc43UE/6O+3zojsWuX+72MkoHbC3FK8a2GKJ0pL6
- WF8JmkNOOLMIZ4KcI2tM9501e1YAeNJ4sHjV118Ds8XT67G+mYKqbqwKhvgRbNA5EMBXgz9iT
- k/C5ITv3xBIfLGF9CLRnKPuR85EZNUhJg1/K4rm2grT+f0DcEO4GJM2QtS0B1Abefi2p4uupO
- 3v8h5i+narf8tElLCWnr/6oSvP89p+z9xgflCK1SdpmBB+PvzuWo2HEHs1bzvdYksbS/X2PLW
- wY6xnqpHgwF+jfdF0RKusB5DaVVGs55kyt2C2jBK+59E/146Nix7bkvIUQ7O5lsvK+iVdmcj3
- NrnVUuwtnwvBlwj7Rg5oWXrxYFUUf5fmaT58XVD90sa6N0KiWiP2vZIdhrh3X+6eIT/WNEJrd
- neD49OKSdQJtxjudPQynFVLf8KyLSbYy8+GCrYbn7iSA1Ebamler8uIGons3tAFOPKximBIl1
- JQWECOFWRrF4P3MUANoOnmThwIOLwHwkJwhTB7V0aUqI4inGxX1wNeFSDYn/KBi+FZ4BT0+KY
- t9HeRH3NYymCqNcVi+v1olxmzH0u+r7vwQaOTLzDlA7a/plMrxaA/7RSNETQ56ZwBrEEiN3KV
- KJ6HFA+
+X-Provags-ID: V03:K0:7U5mUCqrhKMOLiVvdW9AxV1/mdxkbqFfbCbrtzHMp4SEJnDdYSa
+ SsBc1BDvnz1bzBQaX92I2XIz3kDhAg1EYJCeWjV/YyAG7c5s5X/XOmtFYrD1NSLGfJ8J061
+ hr+IAjGihvcnnSigTz/pfkJPTMQqtlUUNVn5BARQJRG2fTZcRq1EKTbFApskC/lFI6bll8T
+ GKc4XDabS6wvPCkPTMbDg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:qD9mnihS6AM=:LFStbvE07RuZ7HnIXEewQ+
+ jQB7Nr+kFkYnq4JNddDcCOtH1djpdttYjOxv71p2EtNznrpQ7T31/qZUTQpDxubOcF+JSIQki
+ 5p1Jg3Tmls3ho7Y+orQN0waJ8NQfgf9vSpILY5XB2YW1+ouKNpch4+HmMIQTLa4XSv+6gNtYR
+ b5+XBsxWZYQBZqM/txq350J/q1KfHGoCJXnNuelC8TTRdZ1UvvmKXOjU/yZjxk7CATOcYzo1K
+ f9JB/unfWOYkTadpilLF0b6zc0JqO90NeUq9rHWVGhDExjKqJPHlFoVqms8AUERKLwfwWP4yh
+ R7RYQ79D94elH579Ps1Qz0gA2LLINW8SPJLXF1LGePkSh8oZKQ8vMlE5Qum/jLWBeP1d22tqB
+ Unbv6N1fZAHiLY94QVODYRys5ALt3+pAwRxvM7udAbe/XVLbpye4vKjJRvBlcrN7aaJMqMM/N
+ i54E5FQiFvHRHN2MTtwJMhrFMP688hIrYonlkwU69+pMtg2NRQ7/vERzXy3c10N4yPezdvAXq
+ fDxSyD7g3UctlpARPQtKLmMac7/wXCW92xs/WlA+sZ+1o6c+O0JfYUhNedZMzyfD9fKFlC9iI
+ SPY4iUHF+zJBWFHFCf3Zx1Tpg3SAev383jCF1LoPdMS7AoTn8j9sdNnC1cawNTDEr3RbDLhUL
+ SGkGfaGmJwxgJJzpGJAEOzW5ZqZMawbU/W7b0q7ASVFiPPk427DrfkMorjigPnb22WCX6EEC5
+ 6uMkH3CGTnjLC6LJU4fDQfn4tuhN67lSNXvcRfX74K+xWV8FGX8jTIUoSA7l1QT2rUOGQo4hc
+ bToyq7L
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Thomas,
+Hi Philip,
 
-On Sun, 4 Sep 2016, Thomas Gummerer wrote:
+On Sun, 4 Sep 2016, Philip Oakley wrote:
 
-> +--chmod=(+|-)::
+> From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+> 
+> > The point is that fixup! messages are really special, and are always
+> > intended to be squashed into the referenced commit *before* the latter
+> > hits `master`.
+> 
+> I think it's here that we have the hidden use case. I agree that all fixups
+> should be squashed before they hit the blessed golden  repository.
+> 
+> I suspect that some use cases have intermediate repositories that
+> contain a 'master' branch (it's just a name ;-) that isn't blessed and
+> golden, e.g. at the team review repo level. In such cases it is possible
+> for a fixup! to be passed up as part of the review, though it's not the
+> current norm/expectation.
 
-There is an "x" missing ;-)
+In such a case (which can totally arise when criss-crossing Pull Requests
+on GitHub, for example, where a Pull Request's purpose may be to fix up
+commits in another Pull Request before the latter is merged), the most
+appropriate course of action is... to not reorder the fixup!s prematurely.
+
+> > In short, I am opposed to this change.
+> 
+> It's not like G4W doesn't need fixup!s on the side branches e.g. 5eaffe9
+> ("fixup! Handle new t1501 test case properly with MinGW", 2016-07-12)
+
+Yeah, well, Git for Windows' `master` branch is special, in that it is
+constantly rebased (as "merging rebases", to keep fast-forwardability). I
+would not necessarily use Git for Windows as a role model in this respect.
 
 Ciao,
 Dscho
