@@ -2,110 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5EF621FBB0
-	for <e@80x24.org>; Mon,  5 Sep 2016 19:09:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 101601FBB0
+	for <e@80x24.org>; Mon,  5 Sep 2016 19:10:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934325AbcIETJZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Sep 2016 15:09:25 -0400
-Received: from mail-it0-f41.google.com ([209.85.214.41]:34407 "EHLO
-        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932265AbcIETJY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Sep 2016 15:09:24 -0400
-Received: by mail-it0-f41.google.com with SMTP id i184so25320958itf.1
-        for <git@vger.kernel.org>; Mon, 05 Sep 2016 12:09:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=FvD4V4dcQWDFIlnAlhZy+Ux2UwWIgLE7ppHUchB0eDg=;
-        b=PT8IX2zTUdJ+PQkSOKCYq0mzL4ysVbjl+ds0QTQ6mJdTGs3vrzXZ7aphUFiy1e/2z3
-         7s8dVhm0ErP3Nml7GXLSbQQxzjcEOgzsl0qkdtxDt8dkX8j4nj8TjxaffdRD6MxPevig
-         guuYgYsEWYTEzNbE81jmnRHiJKiB5ftjBWibhegWdKLVBLgaM7U/+g+N0+RDGEoWrQsA
-         eMBQqCnrG2g0H/XZpCGkRJ2kNOtW4rNqWgCkP4TwRPQYxeI6rGybY/g4+ZMgwQXe2e7m
-         nunO5YIQQqnqDrIXboy4Sy5feTgIaDSkBIhXWeAiMGt5lMy4LcPl4mZBYnbhI1MY5dIM
-         lETw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=FvD4V4dcQWDFIlnAlhZy+Ux2UwWIgLE7ppHUchB0eDg=;
-        b=YG1qz+vQfrmoegD8jq6kE/1mB8pSfLVTQ8Ha2cs4eLmkVMbZnDr8UVFTtpoUi0pEx9
-         Yvm31TvAaKTmgeuHtlipR2OInoJDrn97XZv5QRMJHBE4m0u80U4klTN/0XAh0dG1hCiK
-         qYoIYHukktlaXhVhOJcD9yEFHzyz3cRXYw8Ngi9je+ihaxX8uOOcF0NVwUKVdcCFHSYn
-         tOCRFLtTO7Q+taPHrXaMtvfxUpUQ4uQdBlA4kNc08w/ZvXDSxgoAFvgVGEAyWjoTffYq
-         BPaUOMLHDuVy2/g2cspNIEzFkHo+WPUAhT/Wp9BhmNialzwaiT3aL827mzF6tjwF/Efa
-         iiFg==
-X-Gm-Message-State: AE9vXwNdPY8YOoDEI+3yhU1kugyS03pJeywEeQOZy/GB1OSqya8BkHf0M8gKzNBgm21RPlUQG4heAh/edoCwQg==
-X-Received: by 10.107.20.11 with SMTP id 11mr784227iou.70.1473102563625; Mon,
- 05 Sep 2016 12:09:23 -0700 (PDT)
+        id S934448AbcIETKQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Sep 2016 15:10:16 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57349 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932226AbcIETKP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Sep 2016 15:10:15 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DD4F63BBD6;
+        Mon,  5 Sep 2016 15:10:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=pBMW9yGqp7EHMKaMw5fv/wZEqgA=; b=jvmeSM
+        /yqUJ6NLmWn7IpagXOuZL9eGOhYFVwJM9Er36rajL3whty1uc9TCoWMm5V36CU4D
+        3kPnBvrcUvyC4Fqpjl5hnMus0ydXnkjnfZAv/D85AJg9/+tAlcLpN169WVm8lR1w
+        2tLXz7NqTINp+GXz3wqu7LNhnryfwfWWgrpdk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=BpD8ILxBLN5XbKsL1pOm2RX0dCJbqTKT
+        LKuucjEQoyCLmHy7+WXy76K6ZfhWrpY4fvTPzNxKvpTyODufPi9Yj971SwN5z1zw
+        FmY44zXWfPyzdjIwHCVps4tFfvZDbLchX+4NrpZmL1jWdZjJky3QmTv4sufSTm68
+        5i54CnKDADo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D5C883BBD5;
+        Mon,  5 Sep 2016 15:10:13 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 552C63BBD4;
+        Mon,  5 Sep 2016 15:10:13 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/3] Fix a segfault caused by regexec() being called on mmap()ed data
+References: <cover.1473090278.git.johannes.schindelin@gmx.de>
+Date:   Mon, 05 Sep 2016 12:10:11 -0700
+In-Reply-To: <cover.1473090278.git.johannes.schindelin@gmx.de> (Johannes
+        Schindelin's message of "Mon, 5 Sep 2016 17:44:57 +0200 (CEST)")
+Message-ID: <xmqqwpiqp3ho.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.15.28 with HTTP; Mon, 5 Sep 2016 12:09:23 -0700 (PDT)
-In-Reply-To: <CAPig+cTsCDpCQ9j82OEa13YBYswDKfYd_dc1QbxRSRk3wiOhHw@mail.gmail.com>
-References: <20160905102444.3586-1-gitter.spiros@gmail.com>
- <20160905102444.3586-4-gitter.spiros@gmail.com> <CAPig+cTsCDpCQ9j82OEa13YBYswDKfYd_dc1QbxRSRk3wiOhHw@mail.gmail.com>
-From:   Elia Pinto <gitter.spiros@gmail.com>
-Date:   Mon, 5 Sep 2016 21:09:23 +0200
-Message-ID: <CA+EOSBki1E8HJ1DMuAuQaB6sBcUjvQLA5xUWdF9G+6+HRQUD7g@mail.gmail.com>
-Subject: Re: [PATCH 3/4] t5550-http-fetch-dumb.sh: use the GIT_TRACE_CURL
- environment var
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5F60A124-739C-11E6-9D8C-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2016-09-05 15:43 GMT+02:00 Eric Sunshine <sunshine@sunshineco.com>:
-> On Mon, Sep 5, 2016 at 6:24 AM, Elia Pinto <gitter.spiros@gmail.com> wrote:
->> Use the new GIT_TRACE_CURL environment variable instead
->> of the deprecated GIT_CURL_VERBOSE.
->>
->> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
->> ---
->> diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
->> @@ -263,15 +263,18 @@ check_language () {
->>                 >expect
->>                 ;;
->>         ?*)
->> -               echo "Accept-Language: $1" >expect
->> +               echo "=> Send header: Accept-Language: $1" >expect
->>                 ;;
->>         esac &&
->> -       GIT_CURL_VERBOSE=1 \
->> +       GIT_TRACE_CURL=true \
->>         LANGUAGE=$2 \
->>         git ls-remote "$HTTPD_URL/dumb/repo.git" >output 2>&1 &&
->>         tr -d '\015' <output |
->>         sort -u |
->> -       sed -ne '/^Accept-Language:/ p' >actual &&
->> +       sed -ne '/^=> Send header: Accept-Language:/ p' >actual &&
->> +       cp expect expect.$$ &&
->> +       cp actual actual.$$ &&
->> +       cp output output.$$ &&
->
-> What are these three cp's about? They don't seem to be related to the
-> stated changes. Are they leftover debugging gunk?
-Yes, i am very sorry. My bad. I will repost. Thanks
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
+> This patch series addresses a problem where `git diff` is called using
+> `-G` or `-S --pickaxe-regex` on new-born files that are configured
+> without user diff drivers, and that hence get mmap()ed into memory.
 
->
->>         test_cmp expect actual
->>  }
->>
->> @@ -295,8 +298,8 @@ ja;q=0.95, zh;q=0.94, sv;q=0.93, pt;q=0.92, nb;q=0.91, *;q=0.90" \
->>  '
->>
->>  test_expect_success 'git client does not send an empty Accept-Language' '
->> -       GIT_CURL_VERBOSE=1 LANGUAGE= git ls-remote "$HTTPD_URL/dumb/repo.git" 2>stderr &&
->> -       ! grep "^Accept-Language:" stderr
->> +       GIT_TRACE_CURL=true LANGUAGE= git ls-remote "$HTTPD_URL/dumb/repo.git" 2>stderr &&
->> +       ! grep "^=> Send header: Accept-Language:" stderr
->>  '
->>
->>  stop_httpd
+Good spotting.  This has been with us almost forever; I do not think
+the original pickaxe had it, but I am sure it is broken after the
+"--pickaxe-regex" enhancement.
+
+I am somehow surprised that this is a problem on Windows, though.
+Wouldn't we be at least running CRLF conversions, and causing diff
+or grep machinery to work on a NUL-terminated buffer?  The convesion
+code would have to look at mmap'ed memory but I do not think it
+assumes NUL-termination.  Perhaps people on Windows do not usually
+use straight-through and that is why this was discovered after many
+years, or something?  In any case, that is a digression.
+
+> Windows (the bug does not trigger a segmentation fault for me on Linux,
+> strangely enough, but it is really a problem on Windows).
+
+I think it is an issue on all platforms that lets us use mmap().
+When the size of a file is multiple of pagesize, the byte past the
+end of the file can very well fall on an unmapped address.
+
+> So at least I have a workaround in place. Ideally, though, we would
+> NUL-terminate the buffers only when needed, or somehow call regexec() on
+> ptr/size parameters instead of passing a supposedly NUL-terminated
+> string to it?
+
+I see two reasonable approaches.
+
+ * We may want to revisit the performance numbers to see if using
+   mmap() to read from the working tree files still buys us much.
+   If not, we should stop borrowing from the working tree using
+   mmap(); instead just slurp in and NUL-terminate it.
+
+ * We could use <ptr,len> variant of regexp engine as you proposed,
+   which I think is a preferrable solution.  Do people know of a
+   widely accepted implementation that we can throw into compat/ as
+   fallback that is compatible with GPLv2?
+
