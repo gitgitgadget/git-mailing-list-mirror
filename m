@@ -2,78 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 806041F6BF
-	for <e@80x24.org>; Tue,  6 Sep 2016 16:44:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 89E541F6BF
+	for <e@80x24.org>; Tue,  6 Sep 2016 16:48:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965032AbcIFQoM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Sep 2016 12:44:12 -0400
-Received: from mout.gmx.net ([212.227.17.20]:51521 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S935033AbcIFQoJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Sep 2016 12:44:09 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0M3ARX-1aowGq0WkZ-00ssAz; Tue, 06 Sep 2016 18:43:55
- +0200
-Date:   Tue, 6 Sep 2016 18:43:53 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Michael J Gruber <git@drmicha.warpmail.net>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gpg-interface: reflect stderr to stderr
-In-Reply-To: <alpine.DEB.2.20.1609061839370.129229@virtualbox>
-Message-ID: <alpine.DEB.2.20.1609061843120.129229@virtualbox>
-References: <ced7502d-0095-bd90-19e3-c14d0e4d4f07@drmicha.warpmail.net> <18a7e2984121d988137c135ec560fee56506981b.1473167263.git.git@drmicha.warpmail.net> <alpine.DEB.2.20.1609061827290.129229@virtualbox> <alpine.DEB.2.20.1609061839370.129229@virtualbox>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S938711AbcIFQr5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Sep 2016 12:47:57 -0400
+Received: from mail-oi0-f48.google.com ([209.85.218.48]:36424 "EHLO
+        mail-oi0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S938709AbcIFQry (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Sep 2016 12:47:54 -0400
+Received: by mail-oi0-f48.google.com with SMTP id w78so109571378oie.3
+        for <git@vger.kernel.org>; Tue, 06 Sep 2016 09:47:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=6/kBxTf7xx1sfRX77MJ03OU/xFTIYghy43bkRE9uHbk=;
+        b=bTw9OA8xCrN96bjCQ8lhCYN2R5SFoklml0IB9zNetdBvlJ3y8WaNcuoBrwAwdoC0dV
+         ZPOLjqpQ3eomlJ/G7uutjRGW8Fe3pGNgRzQbSXAmiP+gSrkrFOTRZMXSgKr9U70jt2rd
+         nXjyPTXbOZsU2FofYiBIcwduQpL6ZPEpR6G1yrnolHka5R3JMkYyVsLRYFZxHsoM7tyy
+         pelGvTteWnjXgl6FC5gxgCCh3HdYkmpm8Z57vgpdPTGNzGzNxuhkzaltQGWPQQuWWl+s
+         /4dDKC2V3XOTblDQM77kGvlpwMiitbf1Hvs8Xg7dcxwStPrBMb2CgMYucxtjsieHTlhO
+         9fgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=6/kBxTf7xx1sfRX77MJ03OU/xFTIYghy43bkRE9uHbk=;
+        b=SVxAUv8kcoc0hLm2sHChr/JwAuBWTdEd6rq+YYtb6O3/eJKiSCa5UL3NekZex72WKQ
+         rOdh0Cf9PNJ3I325MXYSMWIp9YBXuEzgDEqgzlZbqpopJHj0zAxL1urZEIApfcYOPZjX
+         nF46FtYMItDyOG8gdn4FqMWFKKx15a3Sd8oGaGdUAjThYJSnSlaBXyPblX8P4HnerCM+
+         23Lue2EEHjObS+9rw8yas/Yo6+6jb0czInLLPWIbG0EJfVdDKkkgXwk1yC8Bj20EJ48O
+         kVKaRd5nXZEugOmqFXg04xfUdTbkEELxNzDL1VrfgySqOq5CSYT63HS78tKdgpe6oDxU
+         /qDw==
+X-Gm-Message-State: AE9vXwMB8u/oTmI6LnLPRm/qsRtlgQex0xcuPVk3EvH1VQb66Jmh+WLRUj4qYHcuf0p2Sm+ifxLuaqZNLoP12cmO
+X-Received: by 10.36.227.73 with SMTP id d70mr28759673ith.97.1473180473734;
+ Tue, 06 Sep 2016 09:47:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:KWvAnJjM0JcJfwTEuXAeP/ycI1c0hbWpOxmrRtOzNO+7ntW1VBa
- 7a3hzCP84IDusSIF/tadb43Bhva4HBn6V9sfb/2/c74OkMvAX1Kw4wQQSIZKq1JGSsiGysW
- 4ZQ9udsFp9OFLKWQUBdjsmsN19u22/H07rrNQiXpSdsaJ7SbRqgKQ8XyZZ+CU3ElXCF+snp
- +gIQy/KDy/3wZsNb5NL0w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:RSRr3BfeeZo=:0n5JiCM0b5+2vH1tSzs6Qj
- a6UnvbZfpkzEgyqlsiS5h79uQ1o6MJHOFTE2LoxtxrmlgFDTMPsylToCjrzg1TwPL+ocQJ2+0
- EvcGDLHhZKsB6rnOvlx/J4zT6sIUVWMU6H6RYXWnv4u4+XWziR15heaBWNm+OF9/eBOTubBce
- cmkRIrENEWXlt5czt2lhG5I+IfTziJhNx+FQx8lq1zcgPjCtzcPRW4Q0EeVb22q02lZDHD1MF
- KajfLbwPS0vyPfSZuhiiVbFSxVaUsb/+ajI9gOazRLWjRbEE/ANxcFhu4ggsFjDZ4nPH7jQsf
- 56F6me6cb4DWKuRC8NFxfMu3NliQbIdetC+x9lkyzzwy4RDFsJlL4eqoGPkmJ9MmaX7Qzobsm
- POZnDnaxZ6roypkGdYpVKuYhhIis27PYaHoUfRW3Vnsq6o2qIA8CLjyCAAVz2cS/6bv34Br5M
- cpjmefzQAi4CtdL0SwW6e6gCg+JnLMiZdPts2oxhQB/m4KVgxadkoJKUrQoGkIvt+T2/1p17i
- Al8OrLET7NirvVrCs8MSRY3WAUQl0goEmlhOmzC0t+OigpOv3/iQjJDeP7FreSxKblKoXI65J
- aTXbG4I6AZY+fUptiCEOkSAmw0l1AoRmK6UsEHsuUMFOleeHA3uiWMxQhL7XRtbs+Aoq2Y4LJ
- HcFzmrX3YYFVy2mHh2o5UjbVHd+QNSbth3rE1JS98zIQnVXMKijdpj6MQpkWT4OHsAs3Yt1na
- ILz6KUFwf8OYSfEu16CTHLW9hJTLoLOPIypGEbjF+eiN9MpBHWJTgF9KPClnZO2sTnDm/M9Gd
- rIRIOzt
+Received: by 10.107.128.66 with HTTP; Tue, 6 Sep 2016 09:47:53 -0700 (PDT)
+In-Reply-To: <xmqqoa41p59i.fsf@gitster.mtv.corp.google.com>
+References: <20160904191435.14144-1-stefanbeller@gmail.com>
+ <xmqq1t0yqinr.fsf@gitster.mtv.corp.google.com> <CA+P7+xqx4PHHoKT_PK5s5eOtZMG9QJTSHED_=+BHZ=U330AQtw@mail.gmail.com>
+ <CAGZ79kYPtvJ7iF8G5ihUCa5NwvDFa_Rzh+N7ar9QA2x74p2Z9g@mail.gmail.com> <xmqqoa41p59i.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 6 Sep 2016 09:47:53 -0700
+Message-ID: <CAGZ79kZXbWUg8vQaPWCxjf=hfRH3k=cZwvC3o_D9gN4WmnyhUA@mail.gmail.com>
+Subject: Re: [WIP PATCH v2] diff.c: emit moved lines with a different color
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Michael,
+On Tue, Sep 6, 2016 at 5:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> By the way, not running xdiff twice would also remove another worry
+> I have about correctness, in that the approach depends on xdiff
+> machinery to produce byte-for-byte identical result given the same
+> pair of input.
 
-okay, final mail on this issue today:
+As we use different parameters to the xdiff machinery (e.g. context = 1 line)
+the output is not  byte-for-byte identical.
 
-On Tue, 6 Sep 2016, Johannes Schindelin wrote:
+> The output may currently be reproducible, but that
+> is an unnecessary and an expensive thing to rely on.
 
-> Your original issue seemed to be that the gpg command could succeed, but
-> still no signature be seen. There *must* be a way to test whether the
-> called program added a signature, simply by testing whether *any*
-> characters were written.
-> 
-> And if characters were written that were not actually a GPG signature,
-> maybe the enterprisey user who configured the gpg command to be her magic
-> script actually meant something else than a GPG signature to be added?
+My original design was to not store the lines in the hashmap but
+only pointers to them, such that the additional memory pressure was
+assumed less than storing the whole output of the xdiff machinery.
 
-I actually just saw that this is *precisely* what the code does already:
+That point is moot though in the current implementation, so it
+would be better indeed if we run the xdiff machinery once and store
+all its output and then operate on that, even from a memory perspective.
 
-        if (ret || signature->len == bottom)
-                return error(_("gpg failed to sign the data"));
+>
+> You may be able to save tons of memory if you do not store the line
+> contents duplicated.  The first pass callback can tell the line
+> numbers in preimage and postimage [*1*], so your record for a
+> removed line could be a pair <struct diff_filespec *, long lineno>
+> with whatever hash value you need to throw it into the hash bucket.
 
-Why is this not good enough?
+Yeah I guess I'll go that way in the next patch then.
 
-Ciao,
-Dscho
+>
+> I know we use a hash function and a line comparison function that
+> are aware of -b/-w comparison in xdiff machinery, but I didn't see
+> you use them in your hashtable.  Can you match moved lines when
+> operating under various whitespace-change-ignoring modes?
+
+Not yet.
+
+Thanks,
+Stefan
+
+>
+> Thanks.
+>
+>
+> [Footnote]
+>
+> *1* You can learn all sort of things from emit_callback structure;
+>     if you need to pass more data from the caller of xdi_diff_outf()
+>     to the callback, you can even add new fields to it.
+>
