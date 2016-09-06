@@ -2,97 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C2101F859
-	for <e@80x24.org>; Tue,  6 Sep 2016 11:59:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D7591F6BF
+	for <e@80x24.org>; Tue,  6 Sep 2016 12:32:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753949AbcIFL7N (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Sep 2016 07:59:13 -0400
-Received: from mout.gmx.net ([212.227.17.22]:60401 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753186AbcIFL7M (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Sep 2016 07:59:12 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MI8iw-1bdNPW3Azu-003swW; Tue, 06 Sep 2016 13:59:08
- +0200
-Date:   Tue, 6 Sep 2016 13:59:07 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Idan Shimoni <idan@grabcad.com>
-cc:     stefan.naewe@atlas-elektronik.com, git@vger.kernel.org
-Subject: Re: Context Menu is missing
-In-Reply-To: <CAFfNYUmH4-Em++kJzdd-V8sDU-OrWp5Qy8kqMtfD7UmaQABg5Q@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1609061352040.129229@virtualbox>
-References: <CAFfNYUmMdamkW=Ca-iRDJ35ucr=S8A_qLTmjoD5j1M_ohdCgSg@mail.gmail.com> <dd6180a8-8719-e87b-26c1-e73d43167f84@atlas-elektronik.com> <CAFfNYUk4QWii7AyG7u2B8G-JGT1Dn0OTopM=FTgaA7DBjYPhfA@mail.gmail.com> <939e5f85-341e-cca5-a818-0e8a43f7a88b@atlas-elektronik.com>
- <CAFfNYUmBaydosF8vYwfj1+px3uUfiH4F=jgdCYBdzEw3-5FUGQ@mail.gmail.com> <89b6f6a2-a793-011b-7351-581be0ee8128@atlas-elektronik.com> <CAFfNYUkUpaCo8uYv=fofPRyCgg7db4M2fh7BJRc4WCHZdbxvsw@mail.gmail.com> <50fc49a6-68a2-040b-beb1-feb162c458d2@atlas-elektronik.com>
- <CAFfNYUmH4-Em++kJzdd-V8sDU-OrWp5Qy8kqMtfD7UmaQABg5Q@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1755794AbcIFMcw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Sep 2016 08:32:52 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:38262 "EHLO
+        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753617AbcIFMcv (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 6 Sep 2016 08:32:51 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.nyi.internal (Postfix) with ESMTP id E252B20699;
+        Tue,  6 Sep 2016 08:32:49 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute3.internal (MEProxy); Tue, 06 Sep 2016 08:32:49 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+        :content-transfer-encoding:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-sasl-enc
+        :x-sasl-enc; s=mesmtp; bh=AYtyQprgGb0AXQ3RPXyzBbsdr3A=; b=i2Bfzl
+        0tl9Epy4rZN2wbx37XKxpP9eflOiisGhbVsYfWwaeMjlHTEhLZvcXxwRWH/z8vYB
+        X3XbaMCEShQrhKA/mJBT9ylxHj51e57uK/7O4QzXfPh9cqDgimYmOA/RMsvf0tLS
+        CoEOvca1ECSTzWEL0ipE+cAejEd0Pdr9gMjBw=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=AYtyQprgGb0AXQ3
+        RPXyzBbsdr3A=; b=tqmWL1smgrQT9cfC7weS+4ZnCCFinBJEPE4EZvIu1Ppyx/V
+        EQAnQafj6mYZ7osJET7h3r6uPTaJmSuFxKnUAgj97YoXo7YD9ocfI0ZY0LaQx6/h
+        z/2ol87AXNeJxPOas3XSgomv+y9toX0ZmWnUsgLExokwXl5Lhwy76sRy3YYw=
+X-Sasl-enc: M34hU4ys5j7+bWlMAR0avohGRTyxH0nzyHUbCfpj+cD+ 1473165169
+Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+        by mail.messagingengine.com (Postfix) with ESMTPA id E32DACCE97;
+        Tue,  6 Sep 2016 08:32:46 -0400 (EDT)
+Subject: Re: [PATCH] Unbreak interactive GPG prompt upon signing
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+References: <0b8196564ac9f1db7c59b42d7e0973ba1399ec52.1473148900.git.johannes.schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   Michael J Gruber <git@drmicha.warpmail.net>
+Message-ID: <ced7502d-0095-bd90-19e3-c14d0e4d4f07@drmicha.warpmail.net>
+Date:   Tue, 6 Sep 2016 14:32:40 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:uAhLgxi/qP+N9RrqmCUsvJToOU9fzLXrfnImQlOC6pRioN7WmNB
- 74R7qQCNps5ZNncWR3M5bz7SOvxfGxGmN2OMu2E1/7u3z7haq5ykuntyXpK9qbe34UOdGku
- GkV/QW9D96NB+rqI7q25gPH5HHl9qbG47rHGFfEqNfeDCgMpUWomw0NnW+/AgyhcX9ddrqo
- XXZ2XF0YLxWhhPGMQpS6A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:KYAaPc5oH4U=:IVv4SsbO7CFbBgijYpzxwi
- DncwTlmzzhrlOpwZmbXdumwKSuVqhtUHFzX3adT0e/Anfx5o5SwGZYZBWwULxtywwMQo7GLd1
- bwTkBm2u+8X4N/SwlPmjXoEd2zOMJJiAVdVqhTTHw7+l6tt7IQpjxSdX+VnRXlJzaM1lY2NqY
- ObTpeCzVAN5jljxFzEMZ3OnXpChxC+DzCC+tLk18SwlZWzpFG4v9ciD3oJJmaB+mpveo3vXQC
- Ghc3uhiuVln3kSoJWrP+mqm6GzgF/lvBUQB9m1xzTKkjVx+loBHxeI5h0ay8htMg2zivpnfeb
- S6De8nNHheyAOOWIkP59IB5uffuYC1Z6+/vq7m3ahIyv88HMDqZKXGubV0HCCaumI0OKnNMlL
- QTl1P63k4bcW0m2yR2iGl4cucrZN+DR2Bc018W8H5W/dMe569DF6OsDy5PY0QVY7kawii0VgW
- zcCW02CSUZprD8XYRIStUaoeeHnLDvfV6ez28MZVAXeAOKhX5QM6yZpqGlVczjYhzcjE1jaL6
- l2Cz0HplZZUiBl7aJ5GOqIzDCB82ljLKQhBiTEueci9feUwadUxyxo2ar3FEANf3xviNYz1Hw
- kijOj+dzFH0qrRJmLslQtY70VW6Ho39SRJRXChbtL2M9Pm5OHdTuq3jXcBTXhbcvj3U4ZcoTd
- LtmHaY+/PcWBC7HVT6MjjbkVwb9jOwZSKSQWAFUwmrOQXd+o54JqjrG0E5IwfmvnEhPSfsg3t
- iOVvAJpV6RBjCHbky+9pSKJRSYM9KiQXbr6pXGJ3skQcNAjGC/47hq/29RClWwMDLFPF1CkNu
- WluFbFJ
+In-Reply-To: <0b8196564ac9f1db7c59b42d7e0973ba1399ec52.1473148900.git.johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Idan,
+Johannes Schindelin venit, vidit, dixit 06.09.2016 10:01:
+> With the recent update in efee955 (gpg-interface: check gpg signature
+> creation status, 2016-06-17), we ask GPG to send all status updates to
+> stderr, and then catch the stderr in an strbuf.
+> 
+> But GPG might fail, and send error messages to stderr. And we simply
+> do not show them to the user.
+> 
+> Even worse: this swallows any interactive prompt for a passphrase. And
+> detaches stderr from the tty so that the passphrase cannot be read.
+> 
+> So while the first problem could be fixed (by printing the captured
+> stderr upon error), the second problem cannot be easily fixed, and
+> presents a major regression.
 
-On Tue, 6 Sep 2016, Idan Shimoni wrote:
+My Git has that commit and does ask me for the passphrase on the tty.
+Also, I do get error messages:
 
-> ???
+git tag -u pebcak -s testt -m m
+error: gpg failed to sign the data
+error: unable to sign the tag
 
-Please understand that you continue to annoy Stefan, who is only trying to
-help you, by adding your replies *above* the quoted email. This is called
-top-posting and considered very, very rude on this mailing list.
+which we could (maybe should) amend by gpg's stderr.
 
-Also, your replies are very succinct, to the point of being incomplete. So
-Stefan required a couple of back-and-forths until he finally found out
-what your problem is. You could have volunteered more information (as you
-did in the issue https://github.com/git-for-windows/git/issues/875 that
-you opened in the correct place: you mentioned the Windows version as well
-as the Git version, although the answer to which options were chosen
-("All") was most likely incorrect, because you have to decide e.g. whether
-you want CR/LF line endings, LF line endings, or the same line endings as
-are stored in the Git repositories, you cannot choose all of them at the
-same time).
+> So let's just revert commit efee9553a4f97b2ecd8f49be19606dd4cf7d9c28.
 
-Unfortunately, the information given in that ticket is still too succinct:
-it does not mention from which version you upgraded. You force us, once
-again, to guess. My guess is: Git for Windows 1.9.5.
+That "just" reintroduces the problem that the orignal patch solves.
 
-So now to your real question, which is: why is Git Cheetah no longer
-bundled with Git for Windows 2.x?
+The passphrase/tty issue must be Windows specific - or the non-issue
+Linux-specific, if you prefer.
 
-The answer to that is easy: it was too cumbersome to maintain, there have
-been almost no contributions, and most users chose to opt for TortoiseGit
-or GitExternals (both of which are much, much larger than Git Cheetah, but
-at the same time they happen to be maintained).
+> This fixes https://github.com/git-for-windows/git/issues/871
+> 
+> Cc: Michael J Gruber <git@drmicha.warpmail.net>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+> Published-As: https://github.com/dscho/git/releases/tag/fix-gpg-v1
+> Fetch-It-Via: git fetch https://github.com/dscho/git fix-gpg-v1
+> 
+>  gpg-interface.c | 8 ++------
+>  t/t7004-tag.sh  | 9 +--------
+>  2 files changed, 3 insertions(+), 14 deletions(-)
+> 
+> diff --git a/gpg-interface.c b/gpg-interface.c
+> index 8672eda..3f3a3f7 100644
+> --- a/gpg-interface.c
+> +++ b/gpg-interface.c
+> @@ -153,11 +153,9 @@ int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *sig
+>  	struct child_process gpg = CHILD_PROCESS_INIT;
+>  	int ret;
+>  	size_t i, j, bottom;
+> -	struct strbuf gpg_status = STRBUF_INIT;
+>  
+>  	argv_array_pushl(&gpg.args,
+>  			 gpg_program,
+> -			 "--status-fd=2",
+>  			 "-bsau", signing_key,
+>  			 NULL);
+>  
+> @@ -169,12 +167,10 @@ int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *sig
+>  	 */
+>  	sigchain_push(SIGPIPE, SIG_IGN);
+>  	ret = pipe_command(&gpg, buffer->buf, buffer->len,
+> -			   signature, 1024, &gpg_status, 0);
+> +			   signature, 1024, NULL, 0);
+>  	sigchain_pop(SIGPIPE);
+>  
+> -	ret |= !strstr(gpg_status.buf, "\n[GNUPG:] SIG_CREATED ");
+> -	strbuf_release(&gpg_status);
+> -	if (ret)
+> +	if (ret || signature->len == bottom)
+>  		return error(_("gpg failed to sign the data"));
+>  
+>  	/* Strip CR from the line endings, in case we are on Windows. */
+> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+> index 8b0f71a..f9b7d79 100755
+> --- a/t/t7004-tag.sh
+> +++ b/t/t7004-tag.sh
+> @@ -1202,17 +1202,10 @@ test_expect_success GPG,RFC1991 \
+>  # try to sign with bad user.signingkey
+>  git config user.signingkey BobTheMouse
+>  test_expect_success GPG \
+> -	'git tag -s fails if gpg is misconfigured (bad key)' \
+> +	'git tag -s fails if gpg is misconfigured' \
+>  	'test_must_fail git tag -s -m tail tag-gpg-failure'
+>  git config --unset user.signingkey
+>  
+> -# try to produce invalid signature
+> -test_expect_success GPG \
+> -	'git tag -s fails if gpg is misconfigured (bad signature format)' \
+> -	'test_config gpg.program echo &&
+> -	 test_must_fail git tag -s -m tail tag-gpg-failure'
+> -
+> -
+>  # try to verify without gpg:
+>  
+>  rm -rf gpghome
+> 
 
-So there you go.
-
-Next time you report a bug, please spend a little more time on the bug
-report. It would certainly be appreciated by the people you ask to help
-you.
-
-Ciao,
-Johannes
