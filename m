@@ -7,103 +7,83 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 235D91F6BF
-	for <e@80x24.org>; Tue,  6 Sep 2016 16:27:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D0671F6BF
+	for <e@80x24.org>; Tue,  6 Sep 2016 16:30:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935024AbcIFQ1J (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Sep 2016 12:27:09 -0400
-Received: from mout.gmx.net ([212.227.15.18]:62091 "EHLO mout.gmx.net"
+        id S935920AbcIFQa3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Sep 2016 12:30:29 -0400
+Received: from mout.gmx.net ([212.227.17.22]:54701 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933357AbcIFQ1I (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Sep 2016 12:27:08 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LjIel-1b4NxY3xNf-00dTsk; Tue, 06 Sep 2016 18:27:04
+        id S933333AbcIFQa2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Sep 2016 12:30:28 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0LzKQf-1b3lP92jDd-014TR3; Tue, 06 Sep 2016 18:30:18
  +0200
-Date:   Tue, 6 Sep 2016 18:27:03 +0200 (CEST)
+Date:   Tue, 6 Sep 2016 18:30:16 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Idan Shimoni <idan@grabcad.com>
-cc:     git@vger.kernel.org
-Subject: Re: Your email
-In-Reply-To: <CAFfNYUmFPBvYLk4c4N-rAH-huDi0QsEsXA-Z9gN5pMiuwejVhQ@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1609061823110.129229@virtualbox>
-References: <CAFfNYUmFPBvYLk4c4N-rAH-huDi0QsEsXA-Z9gN5pMiuwejVhQ@mail.gmail.com>
+To:     Michael J Gruber <git@drmicha.warpmail.net>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gpg-interface: reflect stderr to stderr
+In-Reply-To: <18a7e2984121d988137c135ec560fee56506981b.1473167263.git.git@drmicha.warpmail.net>
+Message-ID: <alpine.DEB.2.20.1609061827290.129229@virtualbox>
+References: <ced7502d-0095-bd90-19e3-c14d0e4d4f07@drmicha.warpmail.net> <18a7e2984121d988137c135ec560fee56506981b.1473167263.git.git@drmicha.warpmail.net>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:bAXMo5o+N+dduuM1DIeaMeNA1y9ylUP/KXAISHMGNmPQPU2jJQ+
- gDQ49twtGUi6lTOVsFK9u600Wi+lL2Sua1CyJ379uYLK86TQWIrMiIbGkUECExrtmkzRp9Q
- H8bYpp4A6o3RvMXz7NV2EIjsk2Xmf44tJmupOkqtijvs6gRAq+yZFRvVnYxMaCTCFxE19hJ
- afTH7Bi/VnsOGzADe5W2Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vXhDtUj2Faw=:9yj5bbRh819F3Tfk3+J9bL
- R5omTSf+SjiYqf5VtCj0MWqpuVlLtS9YyKYEcctPAHU1vgqYwJSZWUB2qyoc+RaYND8nuvd59
- 3CrUGHlewkZ5xYtCegzyNkEYi5Fs3osa+GAOU4kKuL0726jWmSF7/SVXGLOVpkXzoNZj+aVVn
- myJrWy1jG705zJkBaZcIxgMwlyJXsm9mQX+iwGR2T8Z6dM0kDjS31FK3svSJqpO5giy7szqf0
- JcAfI+HVjWqstlmwpSdhhVYiRxXLhHsXeAFICIA8xslt/TYJGyBCMpFn8TMRtscQHaBq4Ma9Y
- ejr8cJY7Kmn0WA9sI01brnTDYH16C0RJdHWrXJmOeEz/UNkIvDMDfbX88yrWsQYBxOYg147ud
- tfhuduzmr8+9XEpQ17sO22jl/HKQ1+2hvzbPt0MgbbXrkHWQ6jEWj9RuzdTKPEyhpheqPk42e
- UEmoZ8GOQ5tgiu5NEC/MMy6PPrU9n2xvlLMzAzyUiYnAlZirrGMElVfea0Bz3JVmZSyVDnJmg
- 1UXw4ncYQYxcJ5DDvmiPaTJR+Q/6bDBWChyeBV2htP3n2wkRzZrDrVI+GrBTMykke1+AWWCFG
- mCRxI5Hf56OJ+M0GVVKFKxXd2xw7yO+DgRRu35UNX1WOSQv826fFU0PFotWV/JPc3bJVHD7X1
- B+g9kWW1AT3ijBEggNPCITfRznJsTzBE9Q8DJQmHkMDpYX0LFB02HbRRsO88rnR986Y3ipJQQ
- 8SIEzIBa93zGvKhiU7m+afu4RacNEYv0A6GH1/kFamyyPcB3KdzDPxQUGeEz0cka8GWsljJsI
- NciEXIP
+X-Provags-ID: V03:K0:0eGiQteZKnAr5su2c+E2ZnGXK8zlBYodRdZcR34u/d579iJ36+S
+ MtGySI+7+xPnC11U4UOk5MvAlsK9nNhgsYIeclmayimlz3eNoEnamnonlYPBOko3MAtO2nT
+ SBYsvw+JBTUvP5D1kJne3Q4WnewV6EO4VNeybuCyOy52BD4PmWVv/7w7HeZFWj2LWfPtNHr
+ iqxdg7osXQjXTVY8+MZVQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:1pM8QitmWOo=:wAKe/Wu/aLkWN1q2lAvG4m
+ VlS20Z6Ml08RbLxgsdv1yiQU6SjyZun7tlg0eebbHzy0SO4NHguCnr/mj85VajhsuGgwYXggq
+ KMTuVnBLr3JaxYeRcgKVrXk7kLdTI1N7GX6uqX7s0cOiI/o1gfk+j8yYp1C5EzH0cjDu/XbGn
+ D2hvEH8w4tGN08yNP+uj+st0Fi04er9AXlgV1ek1lHrlIA+l/63rP9/nOMf56qgfqflKyCPgh
+ WA5Vc4b665ME4sGLPmMmIM+QUJHajAFkaqpqC4OpSi5Bq+j6uSsEfgy3P8o1o8Iqe2mawyTXw
+ UqL+7UEMBUq0Y5LCUVwayP4cvG9YUh/YetKlWv3dc2Fl5I9yviPtVvvjaYWMRJwPcOsq6lJFJ
+ ZMS4QDA4AyQiWU2DaseuClvfYYuhnKQgC1T8l9AY+HruBWxwM7uEoJjUEaW2oADihc3RBoJm0
+ 1saHWzvbLLNlU1QpHbvQeIhiNI7AQJ+CNKegt+xxTdtSWFd2lBPilmpzXyyr+623HceM22DOx
+ OC9oFtBPbXcYTjujz7+P9eX8eyt5M+Hfrba+Daz/Ivv2cAmTJYjC+jeQnjTXBiXWmsPoXZoOE
+ /ACtY3xJezoKqed/x8zsJM+TVD4XxeDoAidvseozpDdQq93zMhvsj/R37GnjLbTc2oJdFRaLE
+ JxCxpcVDR89A77zsPax4RVIz6MsrtiCbvbPISqsF6uccLoos8AVzbauB1ptLOdD6RQ4E0ELum
+ V1lS0TgmQxIvL0zcz+Kv7o8rnltMrvVWP9KBiNSneQs2RoYBmXfM41kUYuKt2OK2efPIuVwIf
+ tyobdTZ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Idan,
+Hi Michael,
 
-please only write public mails when discussing Open Source.
+On Tue, 6 Sep 2016, Michael J Gruber wrote:
 
-On Tue, 6 Sep 2016, Idan Shimoni wrote:
-
-> "This" top-posting is auto generated when hitting on the magic button
-> called "Reply", and it is the generic way that the industry works.  How
-> do you expect me to know that this is considered "very very rude on this
-> emailing list" if it is not mention in any place on your page.
-
-The top-posting is actually not auto-generated at all. It is your decision
-to write on top of the quoted text, or not.
-
-> When I sent my email in the first time I did not sent it to Stefan, I
-> found this email (git@vger.kernel.org) at one of the pages as a
-> "support" for Git for Windows.
-
-You probably also saw the note that this is an Open Source project, where
-that support is handled by volunteers. You did not pay anything, after
-all.
-
-> When I sent my email I did not think that the support is also for
-> different operating systems, as I found it on a "Git for Windows"
-> page, and as for the version from which I upgraded or from what I
-> upgraded to it is not really matter as you now understand now because
-> Git for Windows removed the Git-Cheetah.
+> efee955 ("gpg-interface: check gpg signature creation status",
+> 2016-06-17) used stderr to capture gpg's status output, which is the
+> only reliable way for status checks. As a side effect, stderr was not
+> shown to the user any more.
 > 
-> On the other end in my terms and my colleagues here, Stefan last email
-> and yours are considered very very rude, if you WANT to help people
-> then help them, do not attack them as you did.
+> In case of a gpg error, reflect the whole captured buffer to stderr.
+> 
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> ---
+> A full blown approach would use --status-fd=4 or such rather than hijacking stderr.
+> This would require an extension of pipe_command() etc. to handle yet another fd.
 
-You know, replies like these I could do without. I do try to help. I even
-explain to you why your replies are met with such hostility, and how you
-could avoid that in the future. And what do I get in return?
+As I indicated in my patch, this is not enough on Windows. In fact, my
+first version of a patch tried to do exactly what you presented here, and
+all it did was make the error message a bit more verbose:
 
-> And lastly as for the ticket at
-> https://github.com/git-for-windows/git/issues/875 I was not sure if it
-> is the repository for this, as later on I understood that it is
-> related to a different product.
-> 
-> So, there you go.
-> 
-> I am very very very sorry for disturbing and annoying both of you and
-> will not address you or your colleagues in the future any more.
-> 
-> 
-> * Sure not use any of your products as well
+-- snip --
+error: gpg failed to sign the data:
+[GNUPG:] USERID_HINT <key> Johannes Schindelin <johannes.schindelin@gmx.de>
+[GNUPG:] NEED_PASSPHRASE <key> <key2> 1 0
+gpg: cannot open tty `no tty': No such file or directory
 
-That is your choice, of course. You will have to live with the choices
-Stefan and I make on our end, too.
+error: unable to sign the tag
+-- snap --
+
+This is not a fix for the issue reported on the Git for Windows, but only
+half a fix.
 
 Ciao,
-Johannes
+Dscho
