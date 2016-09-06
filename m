@@ -2,135 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,URIBL_RED shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5F3A1F6BF
-	for <e@80x24.org>; Tue,  6 Sep 2016 18:29:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CEF91F6BF
+	for <e@80x24.org>; Tue,  6 Sep 2016 18:30:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S940542AbcIFS3c (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Sep 2016 14:29:32 -0400
-Received: from mail-yb0-f176.google.com ([209.85.213.176]:35403 "EHLO
-        mail-yb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S939089AbcIFS3a (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Sep 2016 14:29:30 -0400
-Received: by mail-yb0-f176.google.com with SMTP id g5so31735064yba.2
-        for <git@vger.kernel.org>; Tue, 06 Sep 2016 11:29:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=JxQxfqS6Zoya0EZpJWM8tt311C5GGTeXpacuDMGVVBA=;
-        b=nTqRcEh9OQfgIp7InPNbv6BeED7yNoRN4vIhaFQ2xygbCyCHcDqKYprplDQsSmHe4N
-         PqrU/HujrApxcN8qLGp4H5vnqC6CQLS+1cthGEvz9mlXRXzmqzwgRGYJnz5eCiqFcI3f
-         YHhCAT/d0HtENJH0tkxduU1cSHpKBwfkPyu3WpW5V4Bu6yyuWqzCzFibIS0DC5bvVMud
-         JPCDRSJomZgqkE7BjamUU4LmKuURfbZqDeFWu06YSkW8mJyfSDetrXMndLMz6K3txZ6h
-         aLIZEh8yjoNGJ0TL5wfO28KC3aGcrriX0C+faCtefkTVJBv/tyE+o3cD5JULfnmNJfch
-         FUxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=JxQxfqS6Zoya0EZpJWM8tt311C5GGTeXpacuDMGVVBA=;
-        b=XrFeZMefFiuSg+tYN4sNzLcD6FOzDDBywvs1yPedO9uEnGfSjHc/XyiZ54GL/FH2gw
-         Fw8ihS0LY00O3rfjazJLhfjJRluLREWkUieMp+ckGsMemhnXdBPMxjbmJBDJ/itzZIeM
-         R3v/jSaEzdqEJDiyF3+05+zRHe2zGq14Cgvo4P7eBE3nnlhxlA6idIOkpR6q38BjpDUL
-         UoiyeApjYbfuKgBCpjTAS7KWET7L8+tojCjulhn2ca5tN9pN7eEpj02BjEWgLdFzFEwt
-         WeQaoPRC3y1V/xKwl3hQlM1yNk4tgfY4YDdrW7E0vJqQ2rSF5qLeuO+vfjA4G//1LHzh
-         L2hw==
-X-Gm-Message-State: AE9vXwNDwcz64ICgWts9tbRI2leD4iKczZEXF9TACM+CwZ8MVW+Of9/+LsugncgL1PSO711LuWOv58DMz3DoiUBQ
-X-Received: by 10.36.107.82 with SMTP id v79mr140074itc.52.1473186552138; Tue,
- 06 Sep 2016 11:29:12 -0700 (PDT)
+        id S965153AbcIFS3u (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Sep 2016 14:29:50 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38950 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S965144AbcIFS3q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Sep 2016 14:29:46 -0400
+Received: (qmail 23975 invoked by uid 109); 6 Sep 2016 18:29:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Sep 2016 18:29:45 +0000
+Received: (qmail 28795 invoked by uid 111); 6 Sep 2016 18:29:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Sep 2016 14:29:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Sep 2016 14:29:43 -0400
+Date:   Tue, 6 Sep 2016 14:29:43 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/3] Fix a segfault caused by regexec() being called on
+ mmap()ed data
+Message-ID: <20160906182942.s2mlge2vg65f5sy4@sigill.intra.peff.net>
+References: <cover.1473090278.git.johannes.schindelin@gmx.de>
+ <xmqqwpiqp3ho.fsf@gitster.mtv.corp.google.com>
+ <20160906071255.ggsoj2lh2f3kubhj@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1609061521410.129229@virtualbox>
 MIME-Version: 1.0
-Received: by 10.107.43.140 with HTTP; Tue, 6 Sep 2016 11:29:11 -0700 (PDT)
-In-Reply-To: <20160904201833.21676-31-chriscool@tuxfamily.org>
-References: <20160904201833.21676-1-chriscool@tuxfamily.org> <20160904201833.21676-31-chriscool@tuxfamily.org>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 6 Sep 2016 11:29:11 -0700
-Message-ID: <CAGZ79kb5jOpMXhLe_7tGdCAq51p5F07=fv2pR7FohCZ53SFswA@mail.gmail.com>
-Subject: Re: [PATCH v14 30/41] Move libified code from builtin/apply.c to apply.{c,h}
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Karsten Blees <karsten.blees@gmail.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.20.1609061521410.129229@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 4, 2016 at 1:18 PM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> As most of the apply code in builtin/apply.c has been libified by a numbe=
-r of
-> previous commits, it can now be moved to apply.{c,h}, so that more code c=
-an
-> use it.
->
-> Helped-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
-> Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  apply.c         | 4731 +++++++++++++++++++++++++++++++++++++++++++++++++=
-+++++
->  apply.h         |   19 +
->  builtin/apply.c | 4733 +------------------------------------------------=
-------
->  3 files changed, 4751 insertions(+), 4732 deletions(-)
+On Tue, Sep 06, 2016 at 04:06:32PM +0200, Johannes Schindelin wrote:
 
-So I wanted to review this patch, so I wrote a patch to review this patch. =
-;)
-https://public-inbox.org/git/82367750-adea-6dee-198a-e39ac7a84b31@gmail.com=
-/T/#t
+> > I think re_search() the correct replacement function but it's been a
+> > while since I've looked into it.
+> 
+> The segfault I investigated happened in a call to strlen(). I see many
+> calls to strlen() in compat/regex/... The one that triggers the segfault
+> is in regexec(), compat/regex/regexec.c:241.
 
-> +                       if (!state->apply_in_reverse &&
-> +                           state->ws_error_action !=3D nowarn_ws_error)
-> +                               check_whitespace(state, line, len, patch-=
->ws_rule);
-> +                       added++;
-> +                       newlines--;
-> +                       trailing =3D 0;
-> +                       break;
-> +
-> +               /*
-> +                * We allow "\ No newline at end of file". Depending
-> +                 * on locale settings when the patch was produced we
-> +                 * don't know what this line looks like. The only
-> +                 * thing we do know is that it begins with "\ ".
+Yes, that is the important one, I think. The others are for patterns,
+error msgs, etc. Of course strlen() is not the only function that cares
+about NUL delimiters (and there might even be a "while (*p)" somewhere
+in the code).
 
-The previous three lines are white space broken AFAICT. The seem to be
-white space broken in the original location as well, so no need for a rerol=
-l
-just for this. But in case you do a reroll, you may want to fix these
-on the fly?
+I always assumed the _point_ of re_search taking a ptr/len pair was
+exactly to handle this case. The documentation[1] says:
 
-> +
-> +int apply_option_parse_exclude(const struct option *opt,
-> +                              const char *arg, int unset)
-> +
-> +int apply_option_parse_include(const struct option *opt,
-> +                              const char *arg, int unset)
-> +int apply_option_parse_p(const struct option *opt,
-> +                        const char *arg,
-> +                        int unset)
+   `string` is the string you want to match; it can contain newline and
+   null characters. `size` is the length of that string.
 
-These three functions seem slightly different, not just moved.
-Oh you removed the static key word!
+Which seems pretty definitive to me (that's for re_match(), but
+re_search() is defined in the docs in terms of re_match()).
 
-Apart from the one minor nit and the removal of the static keyword,
-the rest is just moved code.
+[1] http://www.delorie.com/gnu/docs/regex/regex_47.html
 
-Thanks,
-Stefan
+> As to re_search(): I have not been able to reason about its callees in a
+> reasonable amount of time. I agree that they *should* not run over the
+> buffer, but I cannot easily verify it.
+
+Between the documentation above, and the fact that your new test passes
+when we switch to it (see below), I feel pretty good about it.
+
+> The bigger problem is that re_search() is defined in the __USE_GNU section
+> of regex.h, and I do not think it is appropriate to universally #define
+> said constant before #include'ing regex.h. So it would appear that major
+> surgery would be required if we wanted to use regular expressions on
+> strings that are not NUL-terminated.
+
+We can contain this to the existing compat/regexec/regexec.c, and just
+provide a wrapper that is similar to regexec but takes a ptr/len pair.
+
+Like:
+
+diff --git a/compat/regex/regex.h b/compat/regex/regex.h
+index 61c9683..b2dd0b7 100644
+--- a/compat/regex/regex.h
++++ b/compat/regex/regex.h
+@@ -569,6 +569,11 @@ extern int regexec (const regex_t *__restrict __preg,
+ 		    regmatch_t __pmatch[__restrict_arr],
+ 		    int __eflags);
+ 
++extern int regexecn (const regex_t *__restrict __preg,
++		     const char *__restrict __cstring, size_t __length,
++		     size_t __nmatch, regmatch_t __pmatch[__restrict_arr],
++		     int __eflags);
++
+ extern size_t regerror (int __errcode, const regex_t *__restrict __preg,
+ 			char *__restrict __errbuf, size_t __errbuf_size);
+ 
+diff --git a/compat/regex/regexec.c b/compat/regex/regexec.c
+index eb5e1d4..8afe26b 100644
+--- a/compat/regex/regexec.c
++++ b/compat/regex/regexec.c
+@@ -217,15 +217,16 @@ static reg_errcode_t extend_buffers (re_match_context_t *mctx)
+    We return 0 if we find a match and REG_NOMATCH if not.  */
+ 
+ int
+-regexec (
++regexecn (
+ 	const regex_t *__restrict preg,
+ 	const char *__restrict string,
++	size_t length,
+ 	size_t nmatch,
+ 	regmatch_t pmatch[],
+ 	int eflags)
+ {
+   reg_errcode_t err;
+-  int start, length;
++  int start;
+ 
+   if (eflags & ~(REG_NOTBOL | REG_NOTEOL | REG_STARTEND))
+     return REG_BADPAT;
+@@ -238,7 +239,7 @@ regexec (
+   else
+     {
+       start = 0;
+-      length = strlen (string);
++      /* length already passed in */
+     }
+ 
+   __libc_lock_lock (dfa->lock);
+@@ -252,6 +253,17 @@ regexec (
+   return err != REG_NOERROR;
+ }
+ 
++int
++regexec (
++	const regex_t *__restrict preg,
++	const char *__restrict string,
++	size_t nmatch,
++	regmatch_t pmatch[],
++	int eflags)
++{
++  return regexecn(preg, string, strlen(string), nmatch, pmatch, eflags);
++}
++
+ #ifdef _LIBC
+ # include <shlib-compat.h>
+ versioned_symbol (libc, __regexec, regexec, GLIBC_2_3_4);
+diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
+index 55067ca..fdd08dd 100644
+--- a/diffcore-pickaxe.c
++++ b/diffcore-pickaxe.c
+@@ -50,9 +50,9 @@ static int diff_grep(mmfile_t *one, mmfile_t *two,
+ 	xdemitconf_t xecfg;
+ 
+ 	if (!one)
+-		return !regexec(regexp, two->ptr, 1, &regmatch, 0);
++		return !regexecn(regexp, two->ptr, two->size, 1, &regmatch, 0);
+ 	if (!two)
+-		return !regexec(regexp, one->ptr, 1, &regmatch, 0);
++		return !regexecn(regexp, one->ptr, one->size, 1, &regmatch, 0);
+ 
+ 	/*
+ 	 * We have both sides; need to run textual diff and see if
