@@ -2,118 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFCED1F6BF
-	for <e@80x24.org>; Tue,  6 Sep 2016 14:05:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C50241F6BF
+	for <e@80x24.org>; Tue,  6 Sep 2016 14:07:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756357AbcIFOFx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Sep 2016 10:05:53 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:33362 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754815AbcIFOFw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Sep 2016 10:05:52 -0400
-Received: by mail-wm0-f67.google.com with SMTP id w207so18700058wmw.0
-        for <git@vger.kernel.org>; Tue, 06 Sep 2016 07:05:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=o9/Lpx5GWH7d8Tn/Xp0DegToFkIw3pZ6KWcc6oRk/GQ=;
-        b=VLzhzSMh/4Bo7cT2yYTIHtD3jm8ZbqrggEkMVP/TgUC3x/w5F4j9DV/aOJJoNI6nhL
-         v2zKc8mu22Umq1kBqoj4Vg1541xaTsgbFxKzcNTa7nt13AoNBBcJzWKY/Y51XK2/RceZ
-         Wb7JuzLVvRiGh0qplGTmI6PBq82Qsf96hiStHG94PUYE0KF1bZ1i8KN4NQxKpM6FX1mj
-         lvFf8R97sY+OoAWi5GZw+CgZkvmkzX5z7hXgq9bDJUgWn8iriUI/Ucuk99u7ZE53civp
-         fTPe+5JmVOYNrncevnFEKvK5oGADnA2WkxacVl6F7Qb5Y2ar0epvSJQaFQvts8R5TCHG
-         yECg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=o9/Lpx5GWH7d8Tn/Xp0DegToFkIw3pZ6KWcc6oRk/GQ=;
-        b=IHODhsoZy3hvbCFIoGcVeVR26XLYb454So4y8jYe5ejj76RKIF6dn3Hy/PBNAE6kj1
-         VT+XYQIedz07dUk7opdnIwKctYQGlIAb040GAHYjvIpacnOY6/4SeOuPmLrHiAU9r73k
-         CE9hO5ew3GRzfuUFvyJVlEVNIYwfsYGYvqjN2tq3W1Rqv4iytGVzPi3h7B2UAPGSsW97
-         XPvFoWtgBywRvdohgvlS2iOLCZjOGSN2CfkLUPzGdfcaFKnuc0b4OYBvz8aHpTtVtlsv
-         ySjWGcL8vETST3/M/EI7e3/NGFDqO4w/dSQRRtmziAYH3uHCBiQnXVyvOKvHBUGQRDbz
-         sb6Q==
-X-Gm-Message-State: AE9vXwOPbyK2ytAMVLQ50TEH/fCGREtcdXj1TAlPCDkGJIbzd8lUJzTS+/SAGol6t/SE2g==
-X-Received: by 10.194.150.40 with SMTP id uf8mr3868877wjb.119.1473170751044;
-        Tue, 06 Sep 2016 07:05:51 -0700 (PDT)
-Received: from [192.168.1.26] (epw136.neoplus.adsl.tpnet.pl. [83.20.64.136])
-        by smtp.googlemail.com with ESMTPSA id g141sm5167516wmd.1.2016.09.06.07.05.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 Sep 2016 07:05:50 -0700 (PDT)
-Subject: Re: [PATCHv4] diff.c: emit moved lines with a different color
-To:     Stefan Beller <stefanbeller@gmail.com>, git@vger.kernel.org
-References: <20160906070151.15163-1-stefanbeller@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <15618224-a9f3-bbe7-3556-8fd8aab2a2a4@gmail.com>
-Date:   Tue, 6 Sep 2016 16:05:39 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S1756624AbcIFOHN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Sep 2016 10:07:13 -0400
+Received: from mout.gmx.net ([212.227.17.22]:64521 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1756586AbcIFOGu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Sep 2016 10:06:50 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0LjdS8-1b5jLH2EYa-00bauS; Tue, 06 Sep 2016 16:06:35
+ +0200
+Date:   Tue, 6 Sep 2016 16:06:32 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jeff King <peff@peff.net>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/3] Fix a segfault caused by regexec() being called on
+ mmap()ed data
+In-Reply-To: <20160906071255.ggsoj2lh2f3kubhj@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1609061521410.129229@virtualbox>
+References: <cover.1473090278.git.johannes.schindelin@gmx.de> <xmqqwpiqp3ho.fsf@gitster.mtv.corp.google.com> <20160906071255.ggsoj2lh2f3kubhj@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <20160906070151.15163-1-stefanbeller@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:KovgMgcroJhCc7kJ5NwXXrZBa99A6+x69ULAKc+CMlfopjsCPEh
+ MyAMLRyZtFnh23KqPOzLEW0KVMJHeZ8mwXraQ6j+ARlltipXYkYb3gdxWW7XrUl8nvcG1V7
+ xWWjRpC8YCp0q31uucuKvB4imbdXHCIn7qjYqgdkzfz8c1CbKYfTZTaIc/MxjRb8obESK+E
+ gxElkn4OIowUDtM/DT4hQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:UsEEd/Q4Oqs=:5jTCe2lTHHuGaWxJ0Xe9Cf
+ rXOep2E4jnOqccCvV1sXyuFR1NQwcX9S6P7IH/wFbnG+HvOctPM5KCY9tLcFj0PVvARMyBv2t
+ mmKqeOxKMF9KAyqot1xLjPXo8pXHYoM6fJBXQNkfG6zA4IZ/WcuD8qqoULPb8CMW8crJn7Pn2
+ PHQLCcUofhIESwNsdn8lN4SpLHEIN7/Vn3Y5+A1FrKx/HgghrH5+qnsNfgIxkdl7QzcTDvyCq
+ kTOb8Eldgdsb+gduANW5KOj02UwIeHGW9pKhuWLFrcXVo2hFV8uiCrmNERB2zHyNghofPES4c
+ sEyV55OkBRYqUbDk/z8yrw2xiIUJ6zXsbCtYt1ZGz3bhubz2RnQGUCdIXORv9J/lnnYV0bL52
+ /3T+a0Ai3SIjO7+VpshtRphIAUcTweOnTsoDD0ehwr/JZTtkU29k3OnOECNNQ0UyR/3S/jYoL
+ Bz8tHVOVlZUgi4rEmkBRZHQtJCORthXazc97CSY8Yy+X1m9qIF/x59yDOJobiDi6WYm0oQ8ST
+ SrSJiZZ/b5s0Lt2UvBrigGpaLBmaBmw/HpV4COl4Wv1NIRMrKYkz+C2CLtJ4qGSbcOrHcM/Wd
+ 4FQKJ2pH8Rc1eAJvKsF8EdBKo47Iuve4yEEcsqGFNjm+OLp9IPsEHFbNwDigz8fxakgnFwEGz
+ +KbcK7VAfyhrQ5NasJ6GyIYwRR2gYCQ7QKgrWwxUI+swT64sEMKrGT50ELUbfZENwQK0RmrRm
+ +pDj4brHiAPNcRuBpCYRTVCbc5MWWLOBdpYvQ6bvJwoEyI/baVcrjcvc82oZK16Ehi9BzR+EW
+ xrybkT9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 06.09.2016 o 09:01, Stefan Beller pisze:
+Hi Peff & Junio,
 
-> ---
+On Tue, 6 Sep 2016, Jeff King wrote:
+
+> On Mon, Sep 05, 2016 at 12:10:11PM -0700, Junio C Hamano wrote:
 > 
->  * moved new data structures into struct diff_options
->  * color.moved=bool as well as --[no-]color-moved to {dis,en}able the new feature
->  * color.diff.movedfrom and color.diff.movedto to control the colors
->  * added a test
-[...]
+> >  * We could use <ptr,len> variant of regexp engine as you proposed,
+> >    which I think is a preferrable solution.  Do people know of a
+> >    widely accepted implementation that we can throw into compat/ as
+> >    fallback that is compatible with GPLv2?
+> 
+> Maybe the one already in compat/regex? ;P
 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 0bcb679..5daf77a 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -974,14 +974,22 @@ This does not affect linkgit:git-format-patch[1] or the
->  'git-diff-{asterisk}' plumbing commands.  Can be overridden on the
->  command line with the `--color[=<when>]` option.
->  
-> +color.moved::
-> +	A boolean value, whether a diff should color moved lines
-> +	differently. The moved lines are searched for in the diff only.
-> +	Duplicated lines from somewhere in the project that are not
-> +	part of the diff are not colored as moved.
-> +	Defaults to true.
+Indeed. That happens to be the implementation used by Git for Windows,
+anyway.
 
-[...]
-> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-> index 705a873..13b6a2a 100644
-> --- a/Documentation/diff-options.txt
-> +++ b/Documentation/diff-options.txt
-> @@ -234,6 +234,13 @@ ifdef::git-diff[]
->  endif::git-diff[]
->  	It is the same as `--color=never`.
->  
-> +--[no-]color-moved::
-> +	Show moved blocks in a different color.
-> +ifdef::git-diff[]
-> +	It can be changed by the `diff.ui` and `color.diff`
-> +	configuration settings.
-> +endif::git-diff[]
+> I think re_search() the correct replacement function but it's been a
+> while since I've looked into it.
 
-If not for `color.moved`, I would have thought that instead of adding
-new command line option `--color-moved` (and the fact that it is on
-by default), we could simply reuse duplication of code movement
-detection as a signal of stronger detection, namely "-M -M" (and also
-"-C -C" to handle copy detection) that git-blame uses...
+The segfault I investigated happened in a call to strlen(). I see many
+calls to strlen() in compat/regex/... The one that triggers the segfault
+is in regexec(), compat/regex/regexec.c:241.
 
--- 
-Jakub Narębski
+As to re_search(): I have not been able to reason about its callees in a
+reasonable amount of time. I agree that they *should* not run over the
+buffer, but I cannot easily verify it.
 
+The bigger problem is that re_search() is defined in the __USE_GNU section
+of regex.h, and I do not think it is appropriate to universally #define
+said constant before #include'ing regex.h. So it would appear that major
+surgery would be required if we wanted to use regular expressions on
+strings that are not NUL-terminated.
+
+So I agree that a better idea may be to simply ensure NUL-terminated
+buffers when we require them, although that still might be tricky. More on
+that in a reply to your comment to that end.
+
+Ciao,
+Dscho
