@@ -2,93 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_RED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9978A1F859
-	for <e@80x24.org>; Tue,  6 Sep 2016 09:36:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 188461F859
+	for <e@80x24.org>; Tue,  6 Sep 2016 11:38:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933751AbcIFJgr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Sep 2016 05:36:47 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35493 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933143AbcIFJgq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Sep 2016 05:36:46 -0400
-Received: by mail-wm0-f66.google.com with SMTP id a6so6266688wmc.2
-        for <git@vger.kernel.org>; Tue, 06 Sep 2016 02:36:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=BCvfkKXETmEZJgehKL0RVOEfq6YknGBGkGV1RsU+7bE=;
-        b=t8+QtVBLzRngu2jSDfeqzQXxG8Kd9d65akIu2i4JmD7FrZ7kwBZPwI+WexDdAPO5c7
-         IzE/yHf4Io00cn7vjbrSlicQyCrzRIcdjbsvlMqmSwOIbc19qVi/ueB3BeYYaNMJrh2U
-         7MDjWrshqKrUFMwe3wfhLmtdunQpd8Xv38+WGSogHv6Np9g5kFAryWC9ZTQHyjb7UrhP
-         pJU9anTrW5VOj4Jec0W7eChzvjnZ7KTp4g3pblQxROrioJPIBhd6R4rKSG1HCFKSqoud
-         wd7bpa14VBR29xNnGhTlRAp01/Vap91PSlrk/cmPQYkbi9XUoMziIPAHYw5QFMKNp1Ji
-         sQxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=BCvfkKXETmEZJgehKL0RVOEfq6YknGBGkGV1RsU+7bE=;
-        b=MEbGrj17hZyECBcA22e9U98l/JeWc9m3zpA4c46OTn80XECCd0KY2ZTE0psm1fhKe2
-         bBWg88Xv8lKqtd4GR/dIK9qYgTjzxuCp/kvZ5vy5XSbUBEEjJoQoU+NaHlwEswNBAHOk
-         G8CTQl2I4/BNuXz0N9/UDN6TUgJB/kKwOcR5Jgk3bcv+ch+hME9wql0zT31I3whnP3Ks
-         K5U14AV9QsX9a76PUmdlgot3fCeTRDaw2K6whxCAwYayJuH5yKXUluvPprz9wWyOiB2Q
-         GNQCvo1jfnuQ7hW++4CkRd1jSqb2o3B9qO5zIZvf4KsMMWTZml+rv1JCh/potRf9+dSO
-         rk2Q==
-X-Gm-Message-State: AE9vXwOlRp+AUWHszjoc2xhh/J/Q8ik2tTvy7uHvbmfMBHJWqCxKuY0x8wljzfdSjGW/zg==
-X-Received: by 10.194.90.239 with SMTP id bz15mr23075033wjb.146.1473154604890;
-        Tue, 06 Sep 2016 02:36:44 -0700 (PDT)
-Received: from [192.168.1.26] (epw136.neoplus.adsl.tpnet.pl. [83.20.64.136])
-        by smtp.googlemail.com with ESMTPSA id a194sm25510876wmd.24.2016.09.06.02.36.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 Sep 2016 02:36:44 -0700 (PDT)
-Subject: Re: [PATCH v1 1/2] sha1_file: open window into packfiles with CLOEXEC
-To:     Eric Wong <e@80x24.org>, larsxschneider@gmail.com
-References: <20160905211111.72956-1-larsxschneider@gmail.com>
- <20160905211111.72956-2-larsxschneider@gmail.com>
- <20160905222715.GA30031@starla>
-Cc:     git@vger.kernel.org, gitster@pobox.com, tboegi@web.de,
-        Johannes.Schindelin@gmx.de
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <bd9fc74b-b9b0-7c09-9c22-02b6f0f3cec9@gmail.com>
-Date:   Tue, 6 Sep 2016 11:36:33 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
-MIME-Version: 1.0
+        id S933350AbcIFLig (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Sep 2016 07:38:36 -0400
+Received: from mout.gmx.net ([212.227.17.20]:57725 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932843AbcIFLif (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Sep 2016 07:38:35 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0Mb8HX-1bNDop2FsB-00Kcu3; Tue, 06 Sep 2016 13:38:24
+ +0200
+Date:   Tue, 6 Sep 2016 13:38:23 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Eric Wong <e@80x24.org>
+cc:     larsxschneider@gmail.com, git@vger.kernel.org, gitster@pobox.com,
+        tboegi@web.de
+Subject: Re: [PATCH v1 1/2] sha1_file: open window into packfiles with
+ CLOEXEC
 In-Reply-To: <20160905222715.GA30031@starla>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Message-ID: <alpine.DEB.2.20.1609061333030.129229@virtualbox>
+References: <20160905211111.72956-1-larsxschneider@gmail.com> <20160905211111.72956-2-larsxschneider@gmail.com> <20160905222715.GA30031@starla>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:t8kcf6uteGWIx7YyQIlPSoo1wdR0vjNBP7vZf0KFfvg85HvqtqZ
+ U0FRhHVkVdfE7MNFopV7iGoT3iyaNL3XG7ekV+EJ0oxAtvguVIUJ+RkXsRoUk3EeLfTg788
+ 2dl5MVLx81S8PVPvwX9xcRgeXVGcz/liYf4g5bRYMjwPLzOHPmIn84gKKyC9iRcpSE/AJMT
+ uOnyD7D47w2Vf3rdYs19g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ZV4QxomIWmE=:lw57cvI6CahLygdl0QXSEC
+ B8+dJE5IVue8/MvZIItFApUTeaghZN/Umv+eHkl1hRwts0CGORyb4EsQ5jDimvERVOE08sQNs
+ Bf7fCZShX6ok3RPXRxcwwSYvP7F40eYGcBVukmIo8bhJnOeb06WSjq1ky26Ptpd1byecy3u9w
+ ngZv+nquNADSzshcrsvrjVIvQLds1pztQpy/5hbRKnUKvkjv2c8A8XXn7mv2cZfZQ4TkBcV61
+ gLN8uqGRRgrX9Bmf2ep9nBB7cC5Hsb+S6lhV4b6eKS3ttPop1kWkz6BDjjriqXuh1HkXUoHCK
+ OFXQ67TZrznVK+Guqt+2vUStoTqYZPsv7zx0Wa59ITWsBHiseGRad+7qB/+9s0tntuBTo1ivO
+ FtTuOlf2npfue3kDbtYgMDFGnvgo9gSbH5V+kJCsSpY5h+GBI+OJ6458Qcn77dYXoe7Txdj1b
+ d2npfnERYzuzwklXRMFCHSV0IG8yKIYdnZpq8VUS8h9xJeCNU7viANrUG8OijInDQDoQ3HHsR
+ cPhz3SeAIv2X1CZE9VVo5o7R2bQxhsLSxvao7UnVJw5a7MqCMPX4HnDUZZqo72UPoyqxOTLpq
+ dxyVFfyloJAxgGOIQbel3xQH72YpfkynO+cUh9D30BnOK/mupd/mo/mvocCSLsSiJR3lqjWgY
+ g1kZ/h5aaKLnCvEWruRHp0wAY/NEg1ujP3E49KlbCGPRFtgL4yCFKw/S2TKcdJm0Sw74rB31b
+ 4VKEEoVXFhymSzUezr95yTcuhSORhcq08laA0W5GNfVHcZLvTjOJa0T0Tn3E7SgueIsbrHUQX
+ NQMlLEj
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 06.09.2016 o 00:27, Eric Wong pisze:
-> larsxschneider@gmail.com wrote:
+Hi Eric & Lars,
 
->> -int git_open_noatime(const char *name)
->> +int git_open_noatime_cloexec(const char *name)
-[...]
+On Mon, 5 Sep 2016, Eric Wong wrote:
+
+> larsxschneider@gmail.com wrote:
+> > All processes that the Git main process spawns inherit the open file
+> > descriptors of the main process. These leaked file descriptors can
+> > cause problems.
 > 
+> 
+> > -int git_open_noatime(const char *name)
+> > +int git_open_noatime_cloexec(const char *name)
+> >  {
+> > -	static int sha1_file_open_flag = O_NOATIME;
+> > +	static int sha1_file_open_flag = O_NOATIME | O_CLOEXEC;
+> >  
+> >  	for (;;) {
+> >  		int fd;
+> 
+> If there's real problems being caused by lack of cloexec
+> today, I think the F_SETFD fallback I proposed in
+> https://public-inbox.org/git/20160818173555.GA29253@starla/
+> will be necessary.
+
+Yes, it is good to have that patch available to go if we need it. I do not
+think that we will need it, though, as the biggest problems that are
+solved through the CLOEXEC flag are ones caused on Windows, when files
+cannot be deleted or renamed because there are still (uselessly) open
+handles referencing them.
+
 > I question the need for the "_cloexec" suffixing in the
 > function name since the old function is going away entirely.
 
-On the other hand the new name is descriptive...
+Me, too. While it is correct, it makes things harder to read, so it may
+even cause more harm than it does good.
 
-> 
 > I prefer all FD-creating functions set cloexec by default
 > for FD > 2 to avoid inadvertantly leaking FDs.  So we
 > ought to use pipe2, accept4, socket(..., SOCK_CLOEXEC), etc...
 > and fallback to the racy+slower F_SETFD when not available.
-> 
-> 
-> Fwiw, Perl has been setting cloexec on FDs above $^F
-> (2, $SYSTEM_FD_MAX) for decades, and Ruby started
-> doing it a few years ago, too.
- 
 
+In the original Pull Request where the change was contributed to Git for
+Windows, this was tested (actually, the code did not see whether fd > 2,
+but simply assumed that all newly opened file descriptors would be > 2
+anyway), and it failed:
+
+https://github.com/git-for-windows/git/pull/755#issuecomment-220247972
+
+So it appears that we would have to exclude at least the code path to `git
+upload-pack` from that magic.
+
+Ciao,
+Dscho
