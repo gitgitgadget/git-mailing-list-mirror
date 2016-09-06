@@ -2,61 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38ADC1F6BF
-	for <e@80x24.org>; Tue,  6 Sep 2016 18:43:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9832D1F6BF
+	for <e@80x24.org>; Tue,  6 Sep 2016 18:50:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756612AbcIFSnY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Sep 2016 14:43:24 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38969 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1755486AbcIFSnX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Sep 2016 14:43:23 -0400
-Received: (qmail 24863 invoked by uid 109); 6 Sep 2016 18:43:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Sep 2016 18:43:23 +0000
-Received: (qmail 28937 invoked by uid 111); 6 Sep 2016 18:43:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Sep 2016 14:43:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Sep 2016 14:43:20 -0400
-Date:   Tue, 6 Sep 2016 14:43:20 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] Demonstrate a problem: our pickaxe code assumes
- NUL-terminated buffers
-Message-ID: <20160906184320.lzg5jizpw2kbzf72@sigill.intra.peff.net>
-References: <cover.1473090278.git.johannes.schindelin@gmx.de>
- <ca678535c64570add58cfff95709c3c67384139d.1473090278.git.johannes.schindelin@gmx.de>
+        id S1755718AbcIFSuN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Sep 2016 14:50:13 -0400
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:36046 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755253AbcIFSuM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Sep 2016 14:50:12 -0400
+Received: by mail-wm0-f54.google.com with SMTP id b187so79617411wme.1
+        for <git@vger.kernel.org>; Tue, 06 Sep 2016 11:50:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=bErmHj6H+1Ovc5ZxPcvlW+9z7dthslvGG77gQwPmDno=;
+        b=BC3xMpTlMnr/oo8UPN0qwQhsvK6TF+0mDyCVDPqpqguucX3F1PJIq0IcpjQERiJo9Y
+         v1+JYHFKNZVBQRpJ6C8sLRsdAasu96+Ek9Eb/bwnM6nCR05PCGM1qFKdRDQclbizid0H
+         0+4vM91KA3EViPb7fKmcGQk2/2iGGbd/LT9pco8909sOY5ir2K/F4p4gCfTb7mRDq6Ho
+         0aD5TlZ3ZdQO5EEhVHB1sjRBPnCNB9XhzKqzmKUaUYUFG89ZN3jTl9PA1lPv6H9KvN3J
+         3F9aknsKNZMMJ8vHvDzLJnfx0U873wC1AG2pT7Rc26cD8BviTNsnvNEfCXQdcugqtiZe
+         mhfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=bErmHj6H+1Ovc5ZxPcvlW+9z7dthslvGG77gQwPmDno=;
+        b=Wl8Rx7LSFq7dsXksHZ2yJ0mD8IxkJ+dOppxcnxSUNUdlfARalXZZ6uJQVtMBhSTs3S
+         IPKGcFfWIKnkO7VirEKdBi+17VKVSm3ynRLv25BWhiPKBJmGaET0lpOO4Mvv50jrkW5e
+         eMEAdCyN4j6lE3qA3iQoYPg/37PtpJvxcwGCUyh6FpxrN8+SswpJmNxPXrP2u0+aW/iJ
+         OGXd4/tFSfJ0UWOWdDpz0YHbtQr6kWdg2vmhi1WSMmcLAdGT6668MwxxUNe3AzGqHj9x
+         f4X6rO7I4DD0ZHGkPpqK2Fx9SCw4xmJfrQNezLDcskk0URE3a1F3maNEYj4Fl4ZbRYe5
+         CuzQ==
+X-Gm-Message-State: AE9vXwNxgP6ZwlWYtNKvVvEKKgfOPhQ2lClTcPpj8V0YpROIlzA+K4piq8iMkMqBIyP7k3tV93DPKZ4yQoM2AA==
+X-Received: by 10.28.93.20 with SMTP id r20mr113608wmb.89.1473187811179; Tue,
+ 06 Sep 2016 11:50:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ca678535c64570add58cfff95709c3c67384139d.1473090278.git.johannes.schindelin@gmx.de>
+Received: by 10.28.234.212 with HTTP; Tue, 6 Sep 2016 11:50:10 -0700 (PDT)
+In-Reply-To: <20160906180838.865-1-ralf.thielow@gmail.com>
+References: <20160906180838.865-1-ralf.thielow@gmail.com>
+From:   Ralf Thielow <ralf.thielow@gmail.com>
+Date:   Tue, 6 Sep 2016 20:50:10 +0200
+Message-ID: <CAN0XMOJofQwsPJvoHLZJ-fT6SudtquatYV=GwpGb6FkF4aXcxg@mail.gmail.com>
+Subject: Re: [PATCH] rebase -i: improve advice on bad instruction lines
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Ralf Thielow <ralf.thielow@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 05, 2016 at 05:45:02PM +0200, Johannes Schindelin wrote:
+2016-09-06 20:08 GMT+02:00 Ralf Thielow <ralf.thielow@gmail.com>:
+> -               warn "$(gettext "You can fix this with 'git rebase --edit-todo'.")"
+> +               warn "$(gettext "You can fix this with 'git rebase --edit-todo' and then run 'git rebase --continue'.")"
+>                 die "$(gettext "Or you can abort the rebase with 'git rebase --abort'.")"
 
-> Typically, on Linux the test passes. On Windows, it fails virtually
-> every time due to an access violation (that's a segmentation fault for
-> you Unix-y people out there). And Windows would be correct: the
-> regexec() call wants to operate on a regular, NUL-terminated string,
-> there is no NUL in the mmap()ed memory range, and it is undefined
-> whether the next byte is even legal to access.
-> 
-> When run with --valgrind it demonstrates quite clearly the breakage, of
-> course.
-> 
-> So we simply mark it with `test_expect_success` for now.
-
-I'd prefer if this were marked as expect_failure. It fails reliably for
-me on Linux, even without --valgrind. But even if that were not so,
-there is no reason to hurt bisectability of somebody running with
-"--valgrind" (not when it costs so little to mark it correctly).
-
--Peff
+Please don't apply as is. There are some test failures due to the text change.
+I'll send an updated version.
