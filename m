@@ -2,120 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFC101F6BF
-	for <e@80x24.org>; Tue,  6 Sep 2016 19:45:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8B5F1F6BF
+	for <e@80x24.org>; Tue,  6 Sep 2016 19:49:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755801AbcIFTpy convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 6 Sep 2016 15:45:54 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:38168 "EHLO
-        iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754593AbcIFTpy (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 6 Sep 2016 15:45:54 -0400
-Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail)
-        by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-        iface 141.3.10.81 id 1bhMJa-0002d0-Sm; Tue, 06 Sep 2016 21:45:50 +0200
-Received: from apache by webmail with local (Exim 4.84_2)
-        (envelope-from <szeder@ira.uka.de>)
-        id 1bhMJa-0003Bx-Py; Tue, 06 Sep 2016 21:45:50 +0200
-Received: from x590cf886.dyn.telefonica.de (x590cf886.dyn.telefonica.de
- [89.12.248.134]) by webmail.informatik.kit.edu (Horde Framework) with HTTPS;
- Tue, 06 Sep 2016 21:45:50 +0200
-Date:   Tue, 06 Sep 2016 21:45:50 +0200
-Message-ID: <20160906214550.Horde.ducOghtmsQb9pQ6lixxddVz@webmail.informatik.kit.edu>
-From:   SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, leho@conversionready.com
-Subject: Re: 2.10.0: multiple versionsort.prereleasesuffix buggy?
-References: <20160905232145.fr46rgfb66eeymwp@sigill.intra.peff.net>
- <20160906010759.14883-1-szeder@ira.uka.de>
- <20160906040739.37otpk3l2wt7qfbb@sigill.intra.peff.net>
-In-Reply-To: <20160906040739.37otpk3l2wt7qfbb@sigill.intra.peff.net>
-User-Agent: Horde Application Framework 5
-Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
+        id S933579AbcIFTtI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Sep 2016 15:49:08 -0400
+Received: from mout.web.de ([212.227.15.4]:54630 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932904AbcIFTtH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Sep 2016 15:49:07 -0400
+Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb004) with
+ ESMTPSA (Nemesis) id 0LocJe-1b9vQT1bbO-00gbEC; Tue, 06 Sep 2016 21:49:03
+ +0200
+Subject: Re: How to simulate a real checkout to test a new smudge filter?
+To:     john smith <wempwer@gmail.com>, git@vger.kernel.org
+References: <CAKmQUfa_U-g6vC+SjbQSicEUwO+WofNfzezEEwikeOAeL31W5g@mail.gmail.com>
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <b71adc54-2ae6-ef8e-1dca-0883cd617e6e@web.de>
+Date:   Tue, 6 Sep 2016 21:48:57 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
+ Gecko/20100101 Thunderbird/45.3.0
 MIME-Version: 1.0
-Content-Disposition: inline
-Content-Transfer-Encoding: 8BIT
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1473191150.
+In-Reply-To: <CAKmQUfa_U-g6vC+SjbQSicEUwO+WofNfzezEEwikeOAeL31W5g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:LUCaXBZ3jvdU6Karq0E+WtmKlDFZ/RqXWKDsYKSmMPsiPU6AN9i
+ 9Ix4Q0YkKxRCxrz3gRG0XRV09kaV+/1IPFT8/ubNOURqekuxTQkqGHYQOLxTmikyWJ1JSsF
+ rAEhS6RQniQw7WuMc0Y33H9Z2CXCwrz4ofzeXNjneozm0R2OznMeGHWyXAAZSY6io07UK4c
+ PAO4iL6YOleN+lHMeoPBA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:I5A9V0+bIpY=:aCvSNJqZyifMHDoxJmal0Z
+ rdw/2fIWcS+DvIEJpZ7nLWZq4tQdjqj+waiYumWioEtTckm4/ouqWBRH2jmRwrT6zs22I+mhc
+ 1yTuwypnauwo8yELAKP70T0NmHRVWHAsIP/ds6uGRaOnVduYfTLdT/Tq4tL/0CDo7/S7uGaB6
+ exQpHE+bSkdRmDD5ssvVKCc7f0guK5N90VwuzOfdPogpfVwaqSvXmPbfEbaqaKmwoDnYrrw7d
+ 9Vc2BrApCKqZUUrUel2Q25C5KzvusQXyy4sd2MB/InpElZra7MbWJqs74eWOotqaPN7FeAMfx
+ SqOZkdVGHOoTmyEv9Irw1g08EV6z8AnYQGjr08JpuVVKuRNxxw2eyuu8L2/VlXq16Agt3WfaS
+ 0rQbbC8pXZIC2dUTEFc2gJaFGFnKZHESOQT8FF/5+KRCGveZ00506EsSb9YAtTK6BY+gFcxJz
+ faiNDzese31Y+cxdqDr9ulJHUrJx8QNawMBZYtlLP88dRsuakLQtPfzQuR7rt7y4MBl0dl//Y
+ 6I5ELdjAg+Nj8n4LvOBa7VWvA9xv8GxgazyC67VnQ8vyMvbOlfmobqDAth9CMaoMwGuKKDO7x
+ Bd0C3ijQ+fB1PFz7w4e+/BWvFiqIEPHjuenf7yTgJxNsbTC3cuyIAF/o7nxAwjje0672e2HjC
+ s5N+vpZp8FQzCL/R61alAWnmAOMq9jlIgys1duPmJuTeNoUv5T7MwuMnTWJuKnCvUwCPTcAvZ
+ GMPn+NKTyjfgBDTs2R60an+7c2Ravg+u3k5EkTlPrnPpmPdVd4zuZTPlxKmyxMK4nzEVXULQp
+ tWORqg5kEssln1z/P0r7LOwONvPHAE9/BuY5NWzzY5E9cupOrv6B0I7gwi4XgHA6D0PK+N7+R
+ cwAVK4H7fVXvzldhQrxw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-Hi,
-
-
-Quoting Jeff King <peff@peff.net>:
-
-> On Tue, Sep 06, 2016 at 03:07:59AM +0200, SZEDER Gábor wrote:
+On 06.09.16 19:47, john smith wrote:
+> I am looking for a way to force smudge filter to run by simulating a
+> real life checkout. Let's say I just created a new branch and did not
+> modify any files but want to test my new smudge filter. According to
+> some answers such as
+> https://stackoverflow.com/questions/22909620/git-smudge-clean-filter-between-branches
+> and
+> https://stackoverflow.com/questions/21652242/git-re-checkout-files-after-creating-smudge-filter
+> it should be possible by running:
 >
->>> So that seems wrong. Even weirder, if I set _only_ "-beta", I get:
->>>
->>>  $ git tag -l --sort=version:refname | grep -v ^2.6.0
->>>  2.6.0-beta-2
->>>  2.6.0-beta-3
->>>  2.6.0-beta-4
->>>  2.6.0
->>>  2.6.0-RC1
->>>  2.6.0-RC2
->>>  2.6.0-beta-1
->>>
->>> Umm...what? beta-1 is sorted away from its companions? That's weird.
->>>
->>> I wondered if the presence of "-" after the suffix ("beta-1" rather than
->>> "beta1") would matter. It looks like that shouldn't matter, though; it's
->>> purely doing a prefix match on "do these names differ at a prerelease
->>> suffix".
->>>
->>> But something certainly seems wrong.
->>
->> Some of the weirdness is caused by the '-' at the _beginning_ of the
->> suffixes, because versioncmp() gets confused by suffixes starting with
->> the same character(s).
+> git checkout HEAD --
 >
-> Oh, right, that makes sense. So it's effectively not finding _any_
-> suffix between X-RC1 and X-beta-1, because we only start looking after
-> "X-", and none of them match.
+> but in doesn't work with git 2.9.0. Method suggested in accepted
+> answer here
+> https://stackoverflow.com/questions/17223527/how-do-i-force-git-to-checkout-the-master-branch-and-remove-carriage-returns-aft
+> works but I don't like because it seems fragile. Is there a safe way
+> to do what I want to do in Git still today?
 >
-> I am still confused why "2.6.0-beta-1" doesn't get sorted with its
-> peers. I'd guess that the comparison function doesn't actually provide a
-> strict ordering, so the results depend on the actual sort algorithm, and
-> which pairs it ends up comparing.
+It depends what you mean with "safe way".
 
-Turns out that this weirdness is caused by that leading '-' in the suffix,
-too.
+git checkout, git checkout -f or other combinations will only
 
-Here is a manageably small recipe to reproduce:
+overwrite/rewrite the files in the working tree, if, and only if,
 
-     $ git -c versionsort.prereleasesuffix=-beta tag -l  
---sort=version:refname v2.1.0* v2.1.{1,2}
-     v2.1.0-beta-2
-     v2.1.0-beta-3
-     v2.1.0
-     v2.1.0-RC1
-     v2.1.0-RC2
-     v2.1.0-beta-1
-     v2.1.1
-     v2.1.2
+git comes to the conclusion that "git add" will do something,
 
-Tracing which pairs of tagnames are compared, I found that somewhere along
-the line "v2.1.0-beta-1" happens to be compared to "v2.1.0-RC2", and the
-issue described in my previous email strikes again: the '-' is part of the
-common part of the two tagnames, swap_prereleases() gets only "beta-1" and
-"RC2", thus it can't match the configured "-beta" suffix, and since the
-byte value of 'b' is higher than that of 'R', "-beta-1" is sorted after
-"-RC2".  OTOH, "v2.1.0-beta-2" and "v2.1.0-beta-3" are only compared to
-each other or to final release tags, but never to any "-RCx" tags, hence
-they are sorted properly.
+like replace a blob for a file in the index.
 
-Once I finish teaching versioncmp() and swap_prereleases() to cope with
-leading characters of a prereleaseSuffix being part of the common part of
-two tagnames, this out-of-order "beta-1" issue will be gone as well.
+(And by running "rm .git/index git will evaluate the "clean" filters,
 
-Best,
-Gábor
+and the CRLF->LF conversion).
+
+
+If you want to test a smudge filter, simply remove the file:
+
+mv file /tmp && git checkout file
+
+
+
+
