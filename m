@@ -2,168 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CEF91F6BF
-	for <e@80x24.org>; Tue,  6 Sep 2016 18:30:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27B921F6BF
+	for <e@80x24.org>; Tue,  6 Sep 2016 18:41:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965153AbcIFS3u (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Sep 2016 14:29:50 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38950 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S965144AbcIFS3q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Sep 2016 14:29:46 -0400
-Received: (qmail 23975 invoked by uid 109); 6 Sep 2016 18:29:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Sep 2016 18:29:45 +0000
-Received: (qmail 28795 invoked by uid 111); 6 Sep 2016 18:29:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Sep 2016 14:29:53 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Sep 2016 14:29:43 -0400
-Date:   Tue, 6 Sep 2016 14:29:43 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 0/3] Fix a segfault caused by regexec() being called on
- mmap()ed data
-Message-ID: <20160906182942.s2mlge2vg65f5sy4@sigill.intra.peff.net>
-References: <cover.1473090278.git.johannes.schindelin@gmx.de>
- <xmqqwpiqp3ho.fsf@gitster.mtv.corp.google.com>
- <20160906071255.ggsoj2lh2f3kubhj@sigill.intra.peff.net>
- <alpine.DEB.2.20.1609061521410.129229@virtualbox>
+        id S1756411AbcIFSlK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Sep 2016 14:41:10 -0400
+Received: from mail-vk0-f42.google.com ([209.85.213.42]:33518 "EHLO
+        mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756394AbcIFSlJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Sep 2016 14:41:09 -0400
+Received: by mail-vk0-f42.google.com with SMTP id f76so108303900vke.0
+        for <git@vger.kernel.org>; Tue, 06 Sep 2016 11:40:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=GTpqeRTbRZbpCQYqpjkBgOtnGQlqXbbQ38kox5sqV6Q=;
+        b=v7bh1Xu/llIgvY2XEBW3XyRNj3eTkQtD20PoPo6a0tzIM9/lpQIWyrwrhAdUHEIoc1
+         LM3NZRwU0PZD7DXI3+2KsY7FzDuFlj3fa1Xzukz42aCqY4Ubu/66slF0oAT+4EPhPlqp
+         UDDeyFkiIbfKBXh+r6pzIB7ZGtOP/XbDZRujoTOnWECZ0gN84CDb8E9E7BZTX8PdZYwE
+         9s8Pq7V9OYQDCpIU/nAJeMpRVxxIAhX/WK7M+qdEX4J5qZlYJW5uM6vWI9lzQovTH22R
+         uwT+Pic8KxCN1u1aVfiyD2CiUpTQqH4AelE0rKKvjqRQIPGCleswIuQzmbL9WD8UFm9v
+         XhIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=GTpqeRTbRZbpCQYqpjkBgOtnGQlqXbbQ38kox5sqV6Q=;
+        b=d61lYGPrreEiOMepgoDey+9PCuyGLdzx11k+5146TH98xEAbDgDrQ2zJpzDWLmeDgV
+         EugkrZQFc+AWdVlQozC+BlNuBcIdYx+jv3lpRHE5gZF9f9DUmB9+j/zb+AHIHxsjpdnp
+         mNm+/m+fAO8dC4a5txFcHSmOW1QV7Bu8k1W1Y71z9z3SoOv1Od6kri0shk/+ZyGQQK8d
+         7UFff3wTtMJkrf3ejw6hzaZ71a/Pi3Sj0wcrdLq78Fejsdi5STvX69ESW4tm3jCHAqcg
+         m2jk/3a7URnU/VyFZWxkgHRN8TX1JvCoVd6WesdDK0BzOgk8rxWYt6G1JtDj6nNl77LE
+         Sz0g==
+X-Gm-Message-State: AE9vXwOymk/8pINqQtgjOyReo25oAX6Vaxjpcs+vAhHM/8OdCkUkttFsUzjvtvy5kh8j+U0WjFPDHx9C6vqmQA==
+X-Received: by 10.31.87.194 with SMTP id l185mr26582613vkb.32.1473187235644;
+ Tue, 06 Sep 2016 11:40:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1609061521410.129229@virtualbox>
+Received: by 10.103.50.213 with HTTP; Tue, 6 Sep 2016 11:40:35 -0700 (PDT)
+In-Reply-To: <CAG0BQX=wvpkJ=PQWV-NbmhuPV8yzvd_KYKzJmsfWq9xStZ2bnQ@mail.gmail.com>
+References: <CAG0BQX=wvpkJ=PQWV-NbmhuPV8yzvd_KYKzJmsfWq9xStZ2bnQ@mail.gmail.com>
+From:   Dakota Hawkins <dakotahawkins@gmail.com>
+Date:   Tue, 6 Sep 2016 14:40:35 -0400
+Message-ID: <CAG0BQX=i6gcA0ba5T7vcnaDPucZDcTOZUEGr=fhgpcDrbvQ1+g@mail.gmail.com>
+Subject: Re: If a branch moves a submodule, "merge --ff[-only]" succeeds while
+ "merge --no-ff" fails with conflicts
+To:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 06, 2016 at 04:06:32PM +0200, Johannes Schindelin wrote:
+Is there any additional information I could provide that would be helpful?
 
-> > I think re_search() the correct replacement function but it's been a
-> > while since I've looked into it.
-> 
-> The segfault I investigated happened in a call to strlen(). I see many
-> calls to strlen() in compat/regex/... The one that triggers the segfault
-> is in regexec(), compat/regex/regexec.c:241.
+Dakota
 
-Yes, that is the important one, I think. The others are for patterns,
-error msgs, etc. Of course strlen() is not the only function that cares
-about NUL delimiters (and there might even be a "while (*p)" somewhere
-in the code).
-
-I always assumed the _point_ of re_search taking a ptr/len pair was
-exactly to handle this case. The documentation[1] says:
-
-   `string` is the string you want to match; it can contain newline and
-   null characters. `size` is the length of that string.
-
-Which seems pretty definitive to me (that's for re_match(), but
-re_search() is defined in the docs in terms of re_match()).
-
-[1] http://www.delorie.com/gnu/docs/regex/regex_47.html
-
-> As to re_search(): I have not been able to reason about its callees in a
-> reasonable amount of time. I agree that they *should* not run over the
-> buffer, but I cannot easily verify it.
-
-Between the documentation above, and the fact that your new test passes
-when we switch to it (see below), I feel pretty good about it.
-
-> The bigger problem is that re_search() is defined in the __USE_GNU section
-> of regex.h, and I do not think it is appropriate to universally #define
-> said constant before #include'ing regex.h. So it would appear that major
-> surgery would be required if we wanted to use regular expressions on
-> strings that are not NUL-terminated.
-
-We can contain this to the existing compat/regexec/regexec.c, and just
-provide a wrapper that is similar to regexec but takes a ptr/len pair.
-
-Like:
-
-diff --git a/compat/regex/regex.h b/compat/regex/regex.h
-index 61c9683..b2dd0b7 100644
---- a/compat/regex/regex.h
-+++ b/compat/regex/regex.h
-@@ -569,6 +569,11 @@ extern int regexec (const regex_t *__restrict __preg,
- 		    regmatch_t __pmatch[__restrict_arr],
- 		    int __eflags);
- 
-+extern int regexecn (const regex_t *__restrict __preg,
-+		     const char *__restrict __cstring, size_t __length,
-+		     size_t __nmatch, regmatch_t __pmatch[__restrict_arr],
-+		     int __eflags);
-+
- extern size_t regerror (int __errcode, const regex_t *__restrict __preg,
- 			char *__restrict __errbuf, size_t __errbuf_size);
- 
-diff --git a/compat/regex/regexec.c b/compat/regex/regexec.c
-index eb5e1d4..8afe26b 100644
---- a/compat/regex/regexec.c
-+++ b/compat/regex/regexec.c
-@@ -217,15 +217,16 @@ static reg_errcode_t extend_buffers (re_match_context_t *mctx)
-    We return 0 if we find a match and REG_NOMATCH if not.  */
- 
- int
--regexec (
-+regexecn (
- 	const regex_t *__restrict preg,
- 	const char *__restrict string,
-+	size_t length,
- 	size_t nmatch,
- 	regmatch_t pmatch[],
- 	int eflags)
- {
-   reg_errcode_t err;
--  int start, length;
-+  int start;
- 
-   if (eflags & ~(REG_NOTBOL | REG_NOTEOL | REG_STARTEND))
-     return REG_BADPAT;
-@@ -238,7 +239,7 @@ regexec (
-   else
-     {
-       start = 0;
--      length = strlen (string);
-+      /* length already passed in */
-     }
- 
-   __libc_lock_lock (dfa->lock);
-@@ -252,6 +253,17 @@ regexec (
-   return err != REG_NOERROR;
- }
- 
-+int
-+regexec (
-+	const regex_t *__restrict preg,
-+	const char *__restrict string,
-+	size_t nmatch,
-+	regmatch_t pmatch[],
-+	int eflags)
-+{
-+  return regexecn(preg, string, strlen(string), nmatch, pmatch, eflags);
-+}
-+
- #ifdef _LIBC
- # include <shlib-compat.h>
- versioned_symbol (libc, __regexec, regexec, GLIBC_2_3_4);
-diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-index 55067ca..fdd08dd 100644
---- a/diffcore-pickaxe.c
-+++ b/diffcore-pickaxe.c
-@@ -50,9 +50,9 @@ static int diff_grep(mmfile_t *one, mmfile_t *two,
- 	xdemitconf_t xecfg;
- 
- 	if (!one)
--		return !regexec(regexp, two->ptr, 1, &regmatch, 0);
-+		return !regexecn(regexp, two->ptr, two->size, 1, &regmatch, 0);
- 	if (!two)
--		return !regexec(regexp, one->ptr, 1, &regmatch, 0);
-+		return !regexecn(regexp, one->ptr, one->size, 1, &regmatch, 0);
- 
- 	/*
- 	 * We have both sides; need to run textual diff and see if
+On Fri, Sep 2, 2016 at 3:22 PM, Dakota Hawkins <dakotahawkins@gmail.com> wrote:
+> Below is a simple reproduction of the issue.
+>
+> The _real_ problem is that this is how our pull request merges work,
+> they're not allowed to do fast-forward merges. To work around this we
+> are having to split this up into two pull requests/merges: One that
+> copies the submodules to the new location and includes any fixes
+> required to support the move, and a second that removes the old
+> locations.
+>
+> ## Setup steps
+> git clone https://github.com/dakotahawkins/submodule-move-merge-bug-main-repo.git
+> cd submodule-move-merge-bug-main-repo
+>     ## How it was initially constructed
+>     # git submodule add ../submodule-move-merge-bug-submodule-repo.git
+> ./submodule-location-1
+>     # git commit -m "Added submodule in its initial location"
+>     # git push
+>     # git checkout -b move-submodule
+>     # git mv ./submodule-location-1 ./submodule-location-2
+>     # git commit -m "Moved submodule"
+>     # git push --set-upstream origin move-submodule
+> git branch move-submodule origin/move-submodule
+>
+> ## Test fast-forward merge, this will work
+> git checkout -b merge-ff-test master # warning: unable to rmdir
+> submodule-location-2: Directory not empty
+> rm -rf ./submodule-location-2
+> git merge --ff-only move-submodule
+>
+> ## Test no-fast-forward merge, this will fail with conflicts:
+> git checkout -b merge-no-ff-test master
+> git merge --no-ff move-submodule
+>     # Auto-merging submodule-location-2
+>     # Adding as submodule-location-2~move-submodule instead
+>     # Automatic merge failed; fix conflicts and then commit the result.
+> git status
+>     # On branch merge-no-ff-test
+>     # You have unmerged paths.
+>     #   (fix conflicts and run "git commit")
+>     #   (use "git merge --abort" to abort the merge)
+>     #
+>     # Changes to be committed:
+>     #
+>     #         modified:   .gitmodules
+>     #         deleted:    submodule-location-1
+>     #
+>     # Unmerged paths:
+>     #   (use "git add <file>..." to mark resolution)
+>     #
+>     #         added by us:     submodule-location-2
+>     #
+>     # fatal: Not a git repository: 'submodule-location-1/.git'
+>     # Submodule changes to be committed:
+>     #
+>     # * submodule-location-1 07fec24...0000000:
