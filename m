@@ -2,61 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E08ED1F859
-	for <e@80x24.org>; Tue,  6 Sep 2016 07:12:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00BE41F859
+	for <e@80x24.org>; Tue,  6 Sep 2016 07:12:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755179AbcIFHMD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Sep 2016 03:12:03 -0400
-Received: from mail-yb0-f179.google.com ([209.85.213.179]:36157 "EHLO
-        mail-yb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754870AbcIFHMD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Sep 2016 03:12:03 -0400
-Received: by mail-yb0-f179.google.com with SMTP id 125so67339063ybe.3
-        for <git@vger.kernel.org>; Tue, 06 Sep 2016 00:12:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=grabcad.com; s=gc130320;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=N4FFeYF16MkzFSMSGqEiZi69M2Imkp9b1KpXz4EaGko=;
-        b=eq5jIlUPaeK6e+sT/MDKXH9CGQhPzt8CMYvky/dqkIqGwucgDNMZt6RAqIRFlvZT5h
-         X9KCqk7FMXc1WQoNDvrAtZNHZZ9efDMeLlHGHROTNEGyu18rAzUTyySluF8Ey5M3PKYS
-         EpkSyJtOIFXHmLxT9ksnkEdZSa6GwN28DDRvM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=N4FFeYF16MkzFSMSGqEiZi69M2Imkp9b1KpXz4EaGko=;
-        b=KaALUJpPzO1ViIQH0yMe10IaK3fHLCoq+qyphufIBKevE/sPqswWykPs62v1SAr676
-         6lde3pyNHMYmqJwh9J8bXM5W5Sv3kvCH8Jg1hG7qZvlNOKIZJaUnqmXZy1drmAz0SWEz
-         pBjgD39p/uhT3+9AVYO3IT+rryvAcl8Rjxt82GnWlWs4BdUfGIvRsXqHlM8/NElr1j4W
-         fOf+ledQXn7B2VvLKQhME1VrLhDUapHrqh3ybVkugeZP8xO6/89EonR9767EZlJVg3fG
-         0EaSOnheSXtDkbH+/fPnnOvAnfUtff1SKKof3XCH6mUtr4nVZldkTIAl+0dXr2qMP5IC
-         52RQ==
-X-Gm-Message-State: AE9vXwPSxb9KhrGWn8jZBZ1aRzzSkpsS01RRcR96YahJJwzWlXLLuM9/tTmooUgRWffVbyGqFIODXYFtR6H11JDN
-X-Received: by 10.36.200.86 with SMTP id w83mr26695190itf.74.1473145922098;
- Tue, 06 Sep 2016 00:12:02 -0700 (PDT)
+        id S1755217AbcIFHMd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Sep 2016 03:12:33 -0400
+Received: from mail-out.elkdata.ee ([195.250.189.24]:41419 "EHLO
+        mail-out.elkdata.ee" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754870AbcIFHMc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Sep 2016 03:12:32 -0400
+Received: from mail-relay.elkdata.ee (mail-relay.elkdata.ee [195.250.189.180])
+        by mail-out.elkdata.ee (Postfix) with ESMTP id F033C64EACCD;
+        Tue,  6 Sep 2016 10:12:26 +0300 (EEST)
+Received: from mail-relay.elkdata.ee (unknown [195.250.189.180])
+        by mail-relay.elkdata.ee (Postfix) with ESMTP id 959B2124E7A6;
+        Tue,  6 Sep 2016 10:12:24 +0300 (EEST)
+X-Virus-Scanned: amavisd-new at elkdata.ee
+Received: from mail-relay.elkdata.ee ([195.250.189.180])
+        by mail-relay.elkdata.ee (mail-relay.elkdata.ee [195.250.189.180]) (amavisd-new, port 10024)
+        with ESMTP id sI-1fx0j4jUa; Tue,  6 Sep 2016 10:12:22 +0300 (EEST)
+Received: from mail.elkdata.ee (mail.elkdata.ee [194.106.101.168])
+        by mail-relay.elkdata.ee (Postfix) with ESMTP id 44143124E77D;
+        Tue,  6 Sep 2016 10:12:20 +0300 (EEST)
+Received: from mail.meie.biz (unknown [90.190.182.21])
+        (using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: leho@jaanalind.ee)
+        by mail.elkdata.ee (Postfix) with ESMTPSA id 8E08E67BF415;
+        Tue,  6 Sep 2016 10:12:18 +0300 (EEST)
+Received: from [192.168.1.111] (papaya.meie.biz [192.168.1.111])
+        by mail.meie.biz (Postfix) with ESMTPSA id EC75E145C9D;
+        Tue,  6 Sep 2016 10:12:17 +0300 (EEST)
+Subject: Re: 2.10.0: multiple versionsort.prereleasesuffix buggy?
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder@ira.uka.de>, peff@peff.net
+References: <20160905232145.fr46rgfb66eeymwp@sigill.intra.peff.net>
+ <20160906010759.14883-1-szeder@ira.uka.de>
+Cc:     git@vger.kernel.org
+From:   "Leho Kraav (Conversion Ready)" <leho@conversionready.com>
+Organization: Conversion Ready - Lead Generation, E-commerce Website
+ Development & Conversion Care
+Message-ID: <d95c133b-7d8d-b9f1-7f3b-bcdd4b24aca1@conversionready.com>
+Date:   Tue, 6 Sep 2016 10:12:15 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:47.0) Gecko/20100101
+ Thunderbird/47.0
 MIME-Version: 1.0
-Received: by 10.107.130.37 with HTTP; Tue, 6 Sep 2016 00:12:01 -0700 (PDT)
-From:   Idan Shimoni <idan@grabcad.com>
-Date:   Tue, 6 Sep 2016 10:12:01 +0300
-Message-ID: <CAFfNYUmMdamkW=Ca-iRDJ35ucr=S8A_qLTmjoD5j1M_ohdCgSg@mail.gmail.com>
-Subject: Context Menu is missing
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20160906010759.14883-1-szeder@ira.uka.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On 06.09.2016 04:07, SZEDER Gábor wrote:
+>
+> [versionsort]
+> 	prereleasesuffix = beta
+> 	prereleasesuffix = -beta
+> 	prereleasesuffix = RC
+> 	prereleasesuffix = -RC
+>
+> Best,
+> Gábor
 
-The last install removed the old good context menu I used to work with.
+Yes, yes you are the best. Workaround works, tyvm. I was heading in that 
+direction, too, but never thought to remove leading dash on the 
+alternates - instead I tried "-b", "-R" and similar just to see what 
+happens.
 
-Is that on purpose or is it a bug? is there any way to get it back?
-
--- 
--Best
-Idan
