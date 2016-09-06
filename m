@@ -2,109 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9548B20705
-	for <e@80x24.org>; Tue,  6 Sep 2016 01:08:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01E6820705
+	for <e@80x24.org>; Tue,  6 Sep 2016 01:09:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751556AbcIFBI1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Sep 2016 21:08:27 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:57516 "EHLO
-        iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750784AbcIFBI0 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 5 Sep 2016 21:08:26 -0400
-Received: from x590cf886.dyn.telefonica.de ([89.12.248.134] helo=localhost.localdomain)
-        by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
-        iface 141.3.10.81 id 1bh4s7-0003ky-LE; Tue, 06 Sep 2016 03:08:21 +0200
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To:     peff@peff.net
-Cc:     git@vger.kernel.org, leho@conversionready.com,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: Re: 2.10.0: multiple versionsort.prereleasesuffix buggy?
-Date:   Tue,  6 Sep 2016 03:07:59 +0200
-Message-Id: <20160906010759.14883-1-szeder@ira.uka.de>
-X-Mailer: git-send-email 2.10.0.74.g6632b1b
-In-Reply-To: <20160905232145.fr46rgfb66eeymwp@sigill.intra.peff.net>
-References: <20160905232145.fr46rgfb66eeymwp@sigill.intra.peff.net>
+        id S1752072AbcIFBJh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Sep 2016 21:09:37 -0400
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:33561 "EHLO
+        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751884AbcIFBJg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Sep 2016 21:09:36 -0400
+Received: by mail-yw0-f193.google.com with SMTP id g192so4139943ywh.0
+        for <git@vger.kernel.org>; Mon, 05 Sep 2016 18:09:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=pHbyI8ci0Mv+N1qLsod4TcM/Bx2sY1WITQx3wAaPRI8=;
+        b=MJCRVr09nIudqsqSQHUSmjviHeVyUmAFYHYSqRBSw3dm8NP5Jl1IRSkGMIt1i+L3oW
+         fK54JbiOBrAz7d7pofcjG3ayPSqurrqy6+PACK2daU4LuGYEFfKCw3GfSxYBoKSNay+k
+         qUs33hTVO97jBmi4EKHnvzb3MrSSLgwEnVzLBTDUfjhXESg3uBUghffYjcPxrTx7hBMV
+         w+jkYKI/oIZbVsfOxov387EOpkgijJG/4torlB/6aB1IqsgVHuZkfQ8ogLaYDZY2y3tZ
+         TUTT8Tnu+hLPpUo/M40kiR13sLVd3pQIEFvvLoZJJCrMgB+jzWBoHrBjRGAFnFB/PSYp
+         xzzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=pHbyI8ci0Mv+N1qLsod4TcM/Bx2sY1WITQx3wAaPRI8=;
+        b=lAe+gC77L/ffQeawJysuJzQbIaKn9FBa08oWptvb1ht1o4oko4mQfGoyHzAEZWBlit
+         ij84yUUjrBpWQSMyH4lFRs9ygZwuwmEnO4xbrWdKLc//dK7DA9pPFIz5wJeqfblPTz4T
+         tm8dxlf/fYtt4Ulle1IDLqo5FSoeM+lD29oEu0ssHGTqVKTh0zfI+LwyV0nqZ93IZ0HL
+         UQz08BaaWWm2GBOurSysEHtYUloxy4Q+14rChDkhUDfrZz+ddkMo47P7pgykOTNqoJfL
+         f5KbW8Xkl3PAzgjwU2MmqMQ51Kz81F2XtYlKOHBS2PrOKgP32LN+JTT/6qfygdDNSLZ7
+         LKFg==
+X-Gm-Message-State: AE9vXwM6uqutopQtHx2HnZp5lihrNcH1nhlLtotrJ9PiAoF6CxzmaqAa/S2ppHe0hTAXmo3c69rEWNpYI6Ctqg==
+X-Received: by 10.13.249.135 with SMTP id j129mr32094924ywf.267.1473124175588;
+ Mon, 05 Sep 2016 18:09:35 -0700 (PDT)
 MIME-Version: 1.0
+Received: by 10.37.96.195 with HTTP; Mon, 5 Sep 2016 18:09:15 -0700 (PDT)
+In-Reply-To: <xmqq1t0yqinr.fsf@gitster.mtv.corp.google.com>
+References: <20160904191435.14144-1-stefanbeller@gmail.com> <xmqq1t0yqinr.fsf@gitster.mtv.corp.google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Mon, 5 Sep 2016 18:09:15 -0700
+Message-ID: <CA+P7+xqx4PHHoKT_PK5s5eOtZMG9QJTSHED_=+BHZ=U330AQtw@mail.gmail.com>
+Subject: Re: [WIP PATCH v2] diff.c: emit moved lines with a different color
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <stefanbeller@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Stefan Beller <sbeller@google.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1473124101.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Sep 5, 2016 at 11:57 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <stefanbeller@gmail.com> writes:
+>
+>> diff --git a/Documentation/config.txt b/Documentation/config.txt
+>> index 0bcb679..f4f51c2 100644
+>> --- a/Documentation/config.txt
+>> +++ b/Documentation/config.txt
+>> @@ -980,8 +980,9 @@ color.diff.<slot>::
+>>       of `context` (context text - `plain` is a historical synonym),
+>>       `meta` (metainformation), `frag`
+>>       (hunk header), 'func' (function in hunk header), `old` (removed lines),
+>> -     `new` (added lines), `commit` (commit headers), or `whitespace`
+>> -     (highlighting whitespace errors).
+>> +     `new` (added lines), `commit` (commit headers), `whitespace`
+>> +     (highlighting whitespace errors), `moved-old` (removed lines that
+>> +     reappear), `moved-new` (added lines that were removed elsewhere).
+>
+> Could we have a config to disable this rather costly new feature,
+> too?
 
-> On Tue, Sep 06, 2016 at 01:42:28AM +0300, Leho Kraav (Conversion Ready) wrote:
-> 
-> > Here's the testing tree https://github.com/woothemes/woocommerce
-> > 
-> > .git/config has:
-> > 
-> > [versionsort]
-> > 
-> > 
-> >     prereleasesuffix = -beta
-> >     prereleasesuffix = -RC
-> > 
-> > $ git tag -l --sort=version:refname
-> > [...]
-> > 2.6.0-RC1
-> > 2.6.0-RC2
-> > 2.6.0-beta-1
-> > 2.6.0-beta-2
-> > 2.6.0-beta-3
-> > 2.6.0-beta-4
-> 
-> So that seems wrong. Even weirder, if I set _only_ "-beta", I get:
-> 
->   $ git tag -l --sort=version:refname | grep -v ^2.6.0
->   2.6.0-beta-2
->   2.6.0-beta-3
->   2.6.0-beta-4
->   2.6.0
->   2.6.0-RC1
->   2.6.0-RC2
->   2.6.0-beta-1
-> 
-> Umm...what? beta-1 is sorted away from its companions? That's weird.
-> 
-> I wondered if the presence of "-" after the suffix ("beta-1" rather than
-> "beta1") would matter. It looks like that shouldn't matter, though; it's
-> purely doing a prefix match on "do these names differ at a prerelease
-> suffix".
-> 
-> But something certainly seems wrong.
+That seems entirely reasonable, though we *do* have a configuration
+for disabling color altogether.. is there any numbers on how much more
+this costs to compute?
 
-Some of the weirdness is caused by the '-' at the _beginning_ of the
-suffixes, because versioncmp() gets confused by suffixes starting with
-the same character(s).
+>> +static struct hashmap *duplicates_added;
+>> +static struct hashmap *duplicates_removed;
+>> +static int hash_previous_line_added;
+>> +static int hash_previous_line_removed;
+>
+> I think these should be added as new fields to diff_options
+> structure.
 
-versioncmp() consumes two tagnames up to the first different character
-and then calls swap_prereleases() to try to match prerelease suffixes
-starting at those characters.  This works fine when comparing a
-release with a prerelease, e.g. "2.6.0" and "2.6.0-RC1", because
-swap_prereleases() gets "" and "-RC1" and the latter does match one of
-the configured suffixes.  However, when comparing two prereleases,
-e.g. "2.6.0-beta1" and "2.6.0-RC1", then the '-' is consumed from both
-tagnames because the first differing characters are 'b' and 'R', thus
-swap_prereleases() gets "beta1" and "RC1", which, of course, don't
-match any of the configured suffixes without the leading '-'.
+Agreed, those seem like good choices for diff_options.
 
-It's way past my bedtime, so for the time being I can only come up
-with a hacky configuration workaround that seems to deliver the
-expected results:
-
-[versionsort]
-	prereleasesuffix = beta
-	prereleasesuffix = -beta
-	prereleasesuffix = RC
-	prereleasesuffix = -RC
-
-Best,
-Gábor
-
+Thanks,
+Jake
