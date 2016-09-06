@@ -2,95 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8B5F1F6BF
-	for <e@80x24.org>; Tue,  6 Sep 2016 19:49:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE26F1F6BF
+	for <e@80x24.org>; Tue,  6 Sep 2016 20:02:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933579AbcIFTtI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Sep 2016 15:49:08 -0400
-Received: from mout.web.de ([212.227.15.4]:54630 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932904AbcIFTtH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Sep 2016 15:49:07 -0400
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb004) with
- ESMTPSA (Nemesis) id 0LocJe-1b9vQT1bbO-00gbEC; Tue, 06 Sep 2016 21:49:03
- +0200
-Subject: Re: How to simulate a real checkout to test a new smudge filter?
-To:     john smith <wempwer@gmail.com>, git@vger.kernel.org
-References: <CAKmQUfa_U-g6vC+SjbQSicEUwO+WofNfzezEEwikeOAeL31W5g@mail.gmail.com>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <b71adc54-2ae6-ef8e-1dca-0883cd617e6e@web.de>
-Date:   Tue, 6 Sep 2016 21:48:57 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
- Gecko/20100101 Thunderbird/45.3.0
+        id S1756094AbcIFUCP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Sep 2016 16:02:15 -0400
+Received: from mail-ua0-f174.google.com ([209.85.217.174]:32854 "EHLO
+        mail-ua0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753288AbcIFUCM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Sep 2016 16:02:12 -0400
+Received: by mail-ua0-f174.google.com with SMTP id 31so58744652uao.0
+        for <git@vger.kernel.org>; Tue, 06 Sep 2016 13:02:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Hz7vD/h1o4zvuG4UvnOIhzzckuVVuwVnOlXdiPCfV9E=;
+        b=TSHbfXRcQwkUjzfVx/UpG+JcOFo28XEotmg5VQIIraLPfTxmXTLAc4WNOD0sklR+gb
+         yZXHcPnFR0AiIhjy+rvcbt0i+4XFKDRHJNjH4HQV4kl/czFhYCfivH7BkmyWFm75KDFp
+         rmHLoEJD+GhZT9vqmrmCyU8lnOcG7TlN6418TlqwgRxgpYIf+uwfvNaKBW49YZPOWEtX
+         7/NgxeMlFCxNH1wxfcZW1/7BXkDbCwCnUj6dnaGx0oRFw7ZZoIeoITzHoVQpSIFFBmU7
+         IIte7squZIOUd9jPQZ+BJzMaCz1td5HzeJffm3XwTXwyLl27r3ZDlfzLgjM2bA5l7GeB
+         mRvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Hz7vD/h1o4zvuG4UvnOIhzzckuVVuwVnOlXdiPCfV9E=;
+        b=meim48b+VmvgIkK0O4u7s+CpFYDaO+N5PycBtJN2cZ6FdJQl7TCB2H+20dtjqCKM2j
+         v9MgHjvLc1Jx/Mzp+0nL4QLQGw+N5ulwYKHSrpipwGxa1LItcCwax6sVSc3q/YePsX8K
+         E2DruhOKdkvkMfoQdfAOdtWiM5ZEekBUrSkfoK4iCi4sj28xLtFTP+YgQ5z+wXrWhd+r
+         CsK21HSTXtYDLHdqIqRehuC7O+8aDsNsVoNxq6iitzh2Xy3TE3N4uFuFHYKNSC3n+YLy
+         O3SFOuJocOdqX9PMllmnBBAEu7xSB1KDtQcA5EwGyi6IJFrIGDGZOOg46UZFI4gwa+6M
+         NA5w==
+X-Gm-Message-State: AE9vXwPCMvPWqhQItWbSUrfMEd+qd6MfjFgRPJRWJKyI98s7Usf08P4Go+4ALOFySNUV5pN9xF6gom+UmkSqng==
+X-Received: by 10.159.33.214 with SMTP id 80mr7641054uac.32.1473192131530;
+ Tue, 06 Sep 2016 13:02:11 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAKmQUfa_U-g6vC+SjbQSicEUwO+WofNfzezEEwikeOAeL31W5g@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:LUCaXBZ3jvdU6Karq0E+WtmKlDFZ/RqXWKDsYKSmMPsiPU6AN9i
- 9Ix4Q0YkKxRCxrz3gRG0XRV09kaV+/1IPFT8/ubNOURqekuxTQkqGHYQOLxTmikyWJ1JSsF
- rAEhS6RQniQw7WuMc0Y33H9Z2CXCwrz4ofzeXNjneozm0R2OznMeGHWyXAAZSY6io07UK4c
- PAO4iL6YOleN+lHMeoPBA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:I5A9V0+bIpY=:aCvSNJqZyifMHDoxJmal0Z
- rdw/2fIWcS+DvIEJpZ7nLWZq4tQdjqj+waiYumWioEtTckm4/ouqWBRH2jmRwrT6zs22I+mhc
- 1yTuwypnauwo8yELAKP70T0NmHRVWHAsIP/ds6uGRaOnVduYfTLdT/Tq4tL/0CDo7/S7uGaB6
- exQpHE+bSkdRmDD5ssvVKCc7f0guK5N90VwuzOfdPogpfVwaqSvXmPbfEbaqaKmwoDnYrrw7d
- 9Vc2BrApCKqZUUrUel2Q25C5KzvusQXyy4sd2MB/InpElZra7MbWJqs74eWOotqaPN7FeAMfx
- SqOZkdVGHOoTmyEv9Irw1g08EV6z8AnYQGjr08JpuVVKuRNxxw2eyuu8L2/VlXq16Agt3WfaS
- 0rQbbC8pXZIC2dUTEFc2gJaFGFnKZHESOQT8FF/5+KRCGveZ00506EsSb9YAtTK6BY+gFcxJz
- faiNDzese31Y+cxdqDr9ulJHUrJx8QNawMBZYtlLP88dRsuakLQtPfzQuR7rt7y4MBl0dl//Y
- 6I5ELdjAg+Nj8n4LvOBa7VWvA9xv8GxgazyC67VnQ8vyMvbOlfmobqDAth9CMaoMwGuKKDO7x
- Bd0C3ijQ+fB1PFz7w4e+/BWvFiqIEPHjuenf7yTgJxNsbTC3cuyIAF/o7nxAwjje0672e2HjC
- s5N+vpZp8FQzCL/R61alAWnmAOMq9jlIgys1duPmJuTeNoUv5T7MwuMnTWJuKnCvUwCPTcAvZ
- GMPn+NKTyjfgBDTs2R60an+7c2Ravg+u3k5EkTlPrnPpmPdVd4zuZTPlxKmyxMK4nzEVXULQp
- tWORqg5kEssln1z/P0r7LOwONvPHAE9/BuY5NWzzY5E9cupOrv6B0I7gwi4XgHA6D0PK+N7+R
- cwAVK4H7fVXvzldhQrxw==
+Received: by 10.103.50.213 with HTTP; Tue, 6 Sep 2016 13:02:11 -0700 (PDT)
+In-Reply-To: <CAGZ79kb=LyusFH6tGirGP9qK1k-cov2UubEbKPfeyPRThUsa-Q@mail.gmail.com>
+References: <CAG0BQX=wvpkJ=PQWV-NbmhuPV8yzvd_KYKzJmsfWq9xStZ2bnQ@mail.gmail.com>
+ <CAGZ79kb=LyusFH6tGirGP9qK1k-cov2UubEbKPfeyPRThUsa-Q@mail.gmail.com>
+From:   Dakota Hawkins <dakotahawkins@gmail.com>
+Date:   Tue, 6 Sep 2016 16:02:11 -0400
+Message-ID: <CAG0BQX=FFWqR=45g6buujzK2jknx8aZnQoiV_m-QZhcx4Dd52g@mail.gmail.com>
+Subject: Re: If a branch moves a submodule, "merge --ff[-only]" succeeds while
+ "merge --no-ff" fails with conflicts
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, mwitte@ara.com
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06.09.16 19:47, john smith wrote:
-> I am looking for a way to force smudge filter to run by simulating a
-> real life checkout. Let's say I just created a new branch and did not
-> modify any files but want to test my new smudge filter. According to
-> some answers such as
-> https://stackoverflow.com/questions/22909620/git-smudge-clean-filter-between-branches
-> and
-> https://stackoverflow.com/questions/21652242/git-re-checkout-files-after-creating-smudge-filter
-> it should be possible by running:
+On Tue, Sep 6, 2016 at 3:00 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Fri, Sep 2, 2016 at 12:22 PM, Dakota Hawkins <dakotahawkins@gmail.com> wrote:
+>> Below is a simple reproduction of the issue.
+>>
+>> The _real_ problem is that this is how our pull request merges work,
 >
-> git checkout HEAD --
+> So your workflow is the problem or is the actual bug just exposed in
+> your workflow?
+
+I believe the workflow just exposes the problem, which is that
+generically for this case a fast-forward merge works without conflicts
+while a non-fast-forward merge fails with conflicts. Sorry if this
+confuses the issue, it's just how we experienced it so I wanted to add
+that background.
+
+>> ## Test fast-forward merge, this will work
+>> git checkout -b merge-ff-test master # warning: unable to rmdir
+>> submodule-location-2: Directory not empty
+>> rm -rf ./submodule-location-2
+>> git merge --ff-only move-submodule
+>>
 >
-> but in doesn't work with git 2.9.0. Method suggested in accepted
-> answer here
-> https://stackoverflow.com/questions/17223527/how-do-i-force-git-to-checkout-the-master-branch-and-remove-carriage-returns-aft
-> works but I don't like because it seems fragile. Is there a safe way
-> to do what I want to do in Git still today?
->
-It depends what you mean with "safe way".
+> And no reset/rm in between, i.e. we still have
+> submodule-location-2 from  merge-ff-test still around?
 
-git checkout, git checkout -f or other combinations will only
+That is true in that example, but somewhat immaterial. The first merge
+was only to demonstrate that a fast-forward merge works without
+conflict. The simplest reproduction is to skip that and get straight
+to the failure case:
 
-overwrite/rewrite the files in the working tree, if, and only if,
+## Clone and setup branches
+git clone https://github.com/dakotahawkins/submodule-move-merge-bug-main-repo.git
+cd submodule-move-merge-bug-main-repo
+git branch move-submodule origin/move-submodule
+git checkout -b merge-no-ff-test master
 
-git comes to the conclusion that "git add" will do something,
+## This will fail
+git merge --no-ff move-submodule
+# Auto-merging submodule-location-2
+# Adding as submodule-location-2~move-submodule instead
+# Automatic merge failed; fix conflicts and then commit the result.
 
-like replace a blob for a file in the index.
+Does that make things a little bit clearer?
 
-(And by running "rm .git/index git will evaluate the "clean" filters,
-
-and the CRLF->LF conversion).
-
-
-If you want to test a smudge filter, simply remove the file:
-
-mv file /tmp && git checkout file
-
-
-
-
+Dakota
