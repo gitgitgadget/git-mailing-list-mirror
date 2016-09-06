@@ -2,66 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4AE31F6BF
-	for <e@80x24.org>; Tue,  6 Sep 2016 20:53:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8797E1F6BF
+	for <e@80x24.org>; Tue,  6 Sep 2016 21:01:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935362AbcIFUw7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Sep 2016 16:52:59 -0400
-Received: from mail-oi0-f46.google.com ([209.85.218.46]:33351 "EHLO
-        mail-oi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935096AbcIFUw6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Sep 2016 16:52:58 -0400
-Received: by mail-oi0-f46.google.com with SMTP id y2so94140074oie.0
-        for <git@vger.kernel.org>; Tue, 06 Sep 2016 13:52:58 -0700 (PDT)
+        id S934564AbcIFVBJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Sep 2016 17:01:09 -0400
+Received: from mail-qt0-f172.google.com ([209.85.216.172]:35764 "EHLO
+        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932538AbcIFVBI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Sep 2016 17:01:08 -0400
+Received: by mail-qt0-f172.google.com with SMTP id 93so112781138qtg.2
+        for <git@vger.kernel.org>; Tue, 06 Sep 2016 14:01:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=grabcad.com; s=gc130320;
+        d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=AG7zhJIvxzskJlq2o4LKIgaQI6tSEgzQ3J470g+5NMo=;
-        b=H+eMZ47v07/8XE1c6C3WALoGoj0MfYj7JaT8NvtBZlHkfYYGB+SlyDTVGY5dGfiBl/
-         i9DZXi7ZuEe0UN06Uwvv5b0JHuhCJvUF2+FxVvKHvmJEk+Th+QqqbuMVQqeUaHK+Ls+G
-         a72bL1Spk9KNzjwyF/OMf5fNYWL6jm8LhBovE=
+         :cc:content-transfer-encoding;
+        bh=oDMVxMbtC2zqPXD+1cECNAC27HH9otmHivvRxx35Wbw=;
+        b=P4Xbk2IlvvKDZI+7YfiT5Qcc2aC41u/77BaiKHJaKw23Z1qWp2XtMXlftkAHsDSxsB
+         85BDRFNDMzBIXMzHVHsTyphrJpmcWMu49aYer5TstgFd1KDL32/2wJ3Z7EIQYAr49dXt
+         tun7yDMXwW2KJdrHn6gdcDB9AKMiPLx1T6Tpxm+hSDZrEv5vMv/jYfy+1dAJk9YGvZGk
+         sXwSFGju/n6+7It7OoIRcUFHeT9FrIL/sMMuYv3laQ5c4QEyMAjBFDLUN4g9Y2wSTYXO
+         IfrV8ITBWqyafHmyZymx1slsDxgjmFLsv0a4GPujldAtO92VUh9T55hC4y8llm6cuYo7
+         qMyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=AG7zhJIvxzskJlq2o4LKIgaQI6tSEgzQ3J470g+5NMo=;
-        b=gIl6VLqRTrzpXgGt2t3LEbfPKJ0R/+naPzyE5duhuGIzjjs9G3czpDVkQAGEShqt21
-         snKscpW/EdHkMB/reUfFVk0EAxufvrij05qh8hVT1TETp5Dh/WzsmD9QWGSbN4xLO2q8
-         8T4MJsAbjEdMRvbtQfqvnGjtYaZPWB5fZHpyaXr3bwmQ54UXnDRrPRlPMFvm6COO72SZ
-         Ffo9YuXuBHqRCVksJHLhXdYdnls4sUjdtBIqMoKz5MX0jjwzthFgbrEYWHjKjSFJIJIk
-         dIt6hVeqsbuniq07KHzmyuQTYI8ImeUYDXg68EyFq/PzJLud6Im9z3sYXjHzy+TebYy7
-         fRqA==
-X-Gm-Message-State: AE9vXwOpk3iBJ+JHqkwUWcMSgKHYDiC4R+Qy5+y4hku5vz8Kq0SkqgC/r5Et1ykfo8kx8hZCDgCrA5gOZCqWT/+R
-X-Received: by 10.36.200.86 with SMTP id w83mr1090289itf.74.1473195177806;
- Tue, 06 Sep 2016 13:52:57 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=oDMVxMbtC2zqPXD+1cECNAC27HH9otmHivvRxx35Wbw=;
+        b=Bl6yUjynVZu2cJruHmLurMAPhVzA9p/GzV4kcD5bdffd6BRyDh5DpPljsbJN/lb3g/
+         jUobCOwplM2CK1G/dRM7sin9VVZSMk5D73l5MY7SlwMpr6i3Uplh0eoTa7v4OF3y/9LG
+         /+Tj18Xo3dJB6i07cHDThi9YB8GsG7C/RpwnO8KZ4AAoqFhLRdwWA4CXmUaFfYLJsmjt
+         7GTIfyuCxkMMqFM5KwDeJ6MLTupXVVeBT4RqFYopUddTGaYYUOuNPOwg1ODI8rYt35wE
+         wtIWdgVrYYu5NFLPYpL6hMVc4wZfBWaCTBeXv41FNYCDxzJs+pGYBhnuNhwnleA3/2Lw
+         SFvQ==
+X-Gm-Message-State: AE9vXwPcLAMInmBJVCIqRyylvGaj0B2SY/9CNyyAFUQMPPsspuhupx3x/nIroDbxbFPvDeB71aNm/F64bWMYXg==
+X-Received: by 10.237.35.6 with SMTP id h6mr35292869qtc.37.1473195667694; Tue,
+ 06 Sep 2016 14:01:07 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.130.37 with HTTP; Tue, 6 Sep 2016 13:52:57 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1609061823110.129229@virtualbox>
-References: <CAFfNYUmFPBvYLk4c4N-rAH-huDi0QsEsXA-Z9gN5pMiuwejVhQ@mail.gmail.com>
- <alpine.DEB.2.20.1609061823110.129229@virtualbox>
-From:   Idan Shimoni <idan@grabcad.com>
-Date:   Tue, 6 Sep 2016 23:52:57 +0300
-Message-ID: <CAFfNYUmWdfSAVnKZvPD0jWdSu40Rzb8ADZGJ0X3bnHZCvm9ryg@mail.gmail.com>
-Subject: Re: Your email
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Received: by 10.237.49.227 with HTTP; Tue, 6 Sep 2016 14:01:07 -0700 (PDT)
+In-Reply-To: <b71adc54-2ae6-ef8e-1dca-0883cd617e6e@web.de>
+References: <CAKmQUfa_U-g6vC+SjbQSicEUwO+WofNfzezEEwikeOAeL31W5g@mail.gmail.com>
+ <b71adc54-2ae6-ef8e-1dca-0883cd617e6e@web.de>
+From:   john smith <wempwer@gmail.com>
+Date:   Tue, 6 Sep 2016 23:01:07 +0200
+Message-ID: <CAKmQUfbemaid61xPyvNheLM2jVGXGjiyF_x=NZnxkZ=5wccQ=Q@mail.gmail.com>
+Subject: Re: How to simulate a real checkout to test a new smudge filter?
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
 Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes,
-You know what, lets end it.
-You are right and I am sorry.
-Have a great life.
+On 9/6/16, Torsten B=C3=B6gershausen <tboegi@web.de> wrote:
+> On 06.09.16 19:47, john smith wrote:
+>> I am looking for a way to force smudge filter to run by simulating a
+>> real life checkout. Let's say I just created a new branch and did not
+>> modify any files but want to test my new smudge filter. According to
+>> some answers such as
+>> https://stackoverflow.com/questions/22909620/git-smudge-clean-filter-bet=
+ween-branches
+>> and
+>> https://stackoverflow.com/questions/21652242/git-re-checkout-files-after=
+-creating-smudge-filter
+>> it should be possible by running:
+>>
+>> git checkout HEAD --
+>>
+>> but in doesn't work with git 2.9.0. Method suggested in accepted
+>> answer here
+>> https://stackoverflow.com/questions/17223527/how-do-i-force-git-to-check=
+out-the-master-branch-and-remove-carriage-returns-aft
+>> works but I don't like because it seems fragile. Is there a safe way
+>> to do what I want to do in Git still today?
+>>
+> It depends what you mean with "safe way".
 
--- 
--Best
-Idan
+I want to store all my dotfiles in a single repoitory.  The problem is
+that that some specific pieces of these files are different on
+different machines.  I have a special .conf file that is different on
+every branch and contains machine-specific definitions of some
+variables such as EMAIL or SMTP server.  In my smudge filter I call a
+script which parses .conf file and replace all template variable
+definitions saved in the given file with correct definitions.  For
+example in my ~/.bashrc I have this on all branches:
+
+export EMAIL=3D"@EMAIL@"
+
+and in my .conf file on `home' branch
+
+EMAIL=3Dhome@address.com
+
+and on `work' branch:
+
+EMAIL=3Dwork@address.com
+
+And in .gitattributes on both branches:
+
+bash/.bashrc     filter=3Dmake-usable
+
+I also have single `master' branch that only contains template
+dotfiles and no .conf.  When setting up a new machine I could just
+create a new branch off master branch and add a new .conf.
+
+In turn, clean filter replace all correct definitions in the given
+dotfiles back into template definitions.
+
+I'd prefer smudge/clean filters instead of `make' scripts etc. to
+convert template dotfiles into something usable and back because
+filters:
+
+1. could be run automatically
+
+2. do not modify files as shown by `git show HEAD:<file>' and
+therefore no files are reported as modified by git status and also
+there are not conflicts when merging master into work/home branch.
+
+I have problems because with point 1 because apparently smudge filter
+is not run automatically every time when branch is changed if files
+listed in .gitattributes do not change. As the last resort I could
+force smudge/clean filter to run just to keep advantage specified in
+point 2.
+
+--=20
+<wempwer@gmail.com>
