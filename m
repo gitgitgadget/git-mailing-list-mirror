@@ -2,73 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,FAKE_REPLY_C,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC5E11F859
-	for <e@80x24.org>; Wed,  7 Sep 2016 16:48:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5239F1F859
+	for <e@80x24.org>; Wed,  7 Sep 2016 17:01:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935242AbcIGQrL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Sep 2016 12:47:11 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53335 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S934101AbcIGQrJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2016 12:47:09 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D31D2389FF;
-        Wed,  7 Sep 2016 12:47:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DkP23m3MjEMAqiDZJ5rjDsi7w18=; b=GiG+nA
-        qkAIRXHdN+jn0WO9Ku6Aw13k7bT3+4i6iixLWbYgserVEvnZxGNgFezoj0cCpLXH
-        ZoFnYbyDwZTQwj25EQo4FfjKf6bALPGkCXQaX8ve07MuOMH2txpnGg+5ixThIvgQ
-        NK8XDc80pGSYysHFIWaefyVkNXc2S4/OOuASk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=f+7qe7HNxQGCau55Kv3ayKEjzRFvsU0H
-        VbDztjHFZuEWurMLIHXLXkUqjyd7MosOQqm0alqKP67aE9XugSx7u/NFUFuxEvZl
-        60wN0GYqN2QMN3JrgJsR7X1pSX+uxq3ZKnymnMCtaSWXbpa5KfA1Pxt/ltqMsmDj
-        tNXD1upuFXw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CBA7A389FE;
-        Wed,  7 Sep 2016 12:47:07 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 50464389FD;
-        Wed,  7 Sep 2016 12:47:07 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, spearce@spearce.org,
-        sbeller@google.com, peff@peff.net
-Subject: Re: [PATCH v2 1/2] tests: move test_lazy_prereq JGIT to test-lib.sh
-References: <cover.1472853827.git.jonathantanmy@google.com>
-        <cover.1472836026.git.jonathantanmy@google.com>
-        <cover.1472853827.git.jonathantanmy@google.com>
-        <360866f27d0bfcefca99b79c33daa9df2b82cee9.1472853827.git.jonathantanmy@google.com>
-Date:   Wed, 07 Sep 2016 09:47:05 -0700
-In-Reply-To: <360866f27d0bfcefca99b79c33daa9df2b82cee9.1472853827.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Fri, 2 Sep 2016 15:06:11 -0700")
-Message-ID: <xmqqwpinodx2.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1756999AbcIGRBA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Sep 2016 13:01:00 -0400
+Received: from relay3-d.mail.gandi.net ([217.70.183.195]:36709 "EHLO
+        relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754723AbcIGRA7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2016 13:00:59 -0400
+Received: from cloud (joshtriplett.org [IPv6:2604:3400:dc1:41:216:3eff:fe9f:2070])
+        (Authenticated sender: josh@joshtriplett.org)
+        by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id BEF2CA80E6;
+        Wed,  7 Sep 2016 19:00:56 +0200 (CEST)
+Date:   Wed, 7 Sep 2016 10:00:55 -0700
+From:   Josh Triplett <josh@joshtriplett.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: format-patch base-commit: moving to above the patch?
+Message-ID: <20160907170055.GA23347@cloud>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B69337E8-751A-11E6-92A8-51057B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqh99rpud4.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Wed, Sep 07, 2016 at 09:06:31AM -0700, Junio C Hamano wrote:
+> Josh Triplett <josh@joshtriplett.org> writes:
+> 
+> > Currently, format-patch puts base-commit and prerequisite-patch-id
+> > information below the patch, and below the email signature.  Most mail
+> > clients automatically trim everything below the signature marker as
+> > unimportant when quoting a mail for a reply, which would make it
+> > difficult for someone to reply, quote the base-commit, and say something
+> > like "I don't have this commit, where did it come from?" or "Can you
+> > please rebase this on ...".
+> >
+> > Might it make sense to move this information adjacent to the diffstat,
+> > instead?  Or, at least, above the email signature?
+> 
+> I personally feel that it would be annoying to have them near
+> diffstat, especially given that unbounded many prereq patches can be
+> listed.  It would not be too bad to flip the order between the call
+> to print_signature() and print_bases(), though.
 
-> This enables JGIT to be used as a prereq in invocations of
-> test_expect_success (and other functions) in other test scripts.
->
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->  t/t5310-pack-bitmaps.sh | 4 ----
->  t/test-lib.sh           | 4 ++++
->  2 files changed, 4 insertions(+), 4 deletions(-)
+I can live with that; having it above the signature was a much bigger
+concern for me than moving it above the patch.
 
-Makes sense.  Thanks.
+> The extent of the change needed to (note: not even compile-tested)
+> does does not look too bad, either.
+> 
+> I did not carefully think what the right adjustment for the MIME
+> case is, though.
+
+Seems plausible to me.
+
+> I would expect some tests that expect the current order of the tail
+> end of the output to break, which you would need to adjust.  And if
+> there is no such test right now, you should add one, as your inquiry
+> and this patch _sets_ a concrete expectation as to what should come
+> before the signature line, which future updates should not break.
+
+I can do that; arguably we should also have a test that nothing *except*
+the git version appears after the signature line.
+
+> 
+>  builtin/log.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/builtin/log.c b/builtin/log.c
+> index 92dc34d..d69d5e6 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -1042,7 +1042,6 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+>  	diff_flush(&opts);
+>  
+>  	fprintf(rev->diffopt.file, "\n");
+> -	print_signature(rev->diffopt.file);
+>  }
+>  
+>  static const char *clean_message_id(const char *msg_id)
+> @@ -1720,6 +1719,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+>  		make_cover_letter(&rev, use_stdout,
+>  				  origin, nr, list, branch_name, quiet);
+>  		print_bases(&bases, rev.diffopt.file);
+> +		print_signature(rev.diffopt.file);
+>  		total++;
+>  		start_number--;
+>  	}
+> @@ -1779,13 +1779,13 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+>  		if (!use_stdout)
+>  			rev.shown_one = 0;
+>  		if (shown) {
+> +			print_bases(&bases, rev.diffopt.file);
+>  			if (rev.mime_boundary)
+>  				fprintf(rev.diffopt.file, "\n--%s%s--\n\n\n",
+>  				       mime_boundary_leader,
+>  				       rev.mime_boundary);
+>  			else
+>  				print_signature(rev.diffopt.file);
+> -			print_bases(&bases, rev.diffopt.file);
+>  		}
+>  		if (!use_stdout)
+>  			fclose(rev.diffopt.file);
