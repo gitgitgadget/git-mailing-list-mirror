@@ -2,93 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URIBL_RED
-	shortcircuit=no autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72A051F859
-	for <e@80x24.org>; Wed,  7 Sep 2016 01:08:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78F621F6BF
+	for <e@80x24.org>; Wed,  7 Sep 2016 04:32:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755322AbcIGBIW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Sep 2016 21:08:22 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:41066 "EHLO dcvr.yhbt.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755253AbcIGBIV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Sep 2016 21:08:21 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 89F8D1F6BF;
-        Wed,  7 Sep 2016 01:08:20 +0000 (UTC)
-Date:   Wed, 7 Sep 2016 01:08:20 +0000
-From:   Eric Wong <e@80x24.org>
-To:     Josh Triplett <josh@joshtriplett.org>
-Cc:     Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>,
-        Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-        Nicola Paolucci <durden@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
+        id S1751936AbcIGEcO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Sep 2016 00:32:14 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:46804 "EHLO
+        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751093AbcIGEcN (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 7 Sep 2016 00:32:13 -0400
+X-AuditID: 12074412-1c3ff70000000931-37-57cf98483892
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        by  (Symantec Messaging Gateway) with SMTP id 89.DE.02353.8489FC75; Wed,  7 Sep 2016 00:32:11 -0400 (EDT)
+Received: from [192.168.69.190] (p57907A20.dip0.t-ipconnect.de [87.144.122.32])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u874W42H003515
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Wed, 7 Sep 2016 00:32:05 -0400
+Subject: Re: [PATCH v2 02/38] rename_ref_available(): add docstring
+To:     =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <cover.1473003902.git.mhagger@alum.mit.edu>
+ <f89d56ef0841a3cc35689436c0b9473c6773d22d.1473003902.git.mhagger@alum.mit.edu>
+ <236a95a0-59d4-3788-9104-5ca299119e66@gmail.com>
+Cc:     David Turner <novalis@novalis.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        remi galan-alfonso <remi.galan-alfonso@ensimag.grenoble-inp.fr>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        meta@public-inbox.org
-Subject: Re: Draft of Git Rev News edition 18
-Message-ID: <20160907010820.GA26951@dcvr>
-References: <CAP8UFD1iveotLsMOBnpa=hU4ohcQjZ-X7tjnzY4k+xz5KJvqBw@mail.gmail.com>
- <D5A2E231FFE74D1C891A1653E1C2D797@PhilipOakley>
- <9f3b254f-451e-4f6d-233c-7e995d8e369e@gmail.com>
- <20160816093027.GA27347@dcvr>
- <20160816093412.v3tenw4vyxipunah@x>
- <20160816212704.GA25034@dcvr>
- <20160816223215.GC17195@cloud>
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, git@vger.kernel.org,
+        David Turner <dturner@twopensource.com>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <8a13500c-55a0-a069-4b69-a651c218ded5@alum.mit.edu>
+Date:   Wed, 7 Sep 2016 06:32:03 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160816223215.GC17195@cloud>
+In-Reply-To: <236a95a0-59d4-3788-9104-5ca299119e66@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprDKsWRmVeSWpSXmKPExsUixO6iqOs943y4QfcOA4v5m04wWnRd6Way
+        aOi9wmyx4uocZoslD18zW3RPecto8aOlh9li5lVrizNvGhkdOD12zrrL7tHVfoTN41nvHkaP
+        i5eUPfYv3cbmsfiBl8eC5/fZPT5vkgvgiOKySUnNySxLLdK3S+DKuH4mtWAyT8XL+3ENjNc5
+        uxg5OSQETCQWz13F3MXIxSEksJVR4lvrREaQhJDAOSaJM3t0QWxhAWeJfw3zmUFsEYFkiSP7
+        37JANOxmlGictgGsm1lgH5PEuTuP2UCq2AR0JRb1NDOB2LwC9hIHmy6wgNgsAioSr17sApsk
+        KhAi0b5sPVSNoMTJmU+Aajg4OAVsJV6dKAAJMwuoS/yZd4kZwpaXaN46m3kCI/8sJB2zkJTN
+        QlK2gJF5FaNcYk5prm5uYmZOcWqybnFyYl5eapGumV5uZoleakrpJkZIJAjtYFx/Uu4QowAH
+        oxIP74W958KFWBPLiitzDzFKcjApifJunXQ+XIgvKT+lMiOxOCO+qDQntfgQowQHs5II7zyQ
+        HG9KYmVValE+TEqag0VJnPfnYnU/IYH0xJLU7NTUgtQimKwMB4eSBK/odKBGwaLU9NSKtMyc
+        EoQ0EwcnyHAeoOE2IDW8xQWJucWZ6RD5U4yKUuK8zSAJAZBERmkeXC8sUb1iFAd6RZi3FqSK
+        B5jk4LpfAQ1mAhq8bvdpkMEliQgpqQbGfctS2DYsXpT1UWbGOUc9h8jpUh+XOVbPykoXz4zR
+        vMQT9Mj07mHziit9RxWexF3nEs/Ysqyrln85t57eixsR+2abHr37VtY67BX78fk/FZVf7dkS
+        8lB+VnHfkUDz2+uelLbqPGDPZVD6/1iDU1D6/vIXzsbeHh852l/U2qVZLhNJyXNuiD2nxFKc
+        kWioxVxUnAgAi70Yqi8DAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Triplett <josh@joshtriplett.org> wrote:
-> On Tue, Aug 16, 2016 at 09:27:04PM +0000, Eric Wong wrote:
-> > As for other projects, I'm not aware of anybody else using it,
-> > yet.  I have some small projects using it, but most of those are
-> > one-off throwaways and I'm not comfortable promoting those along
-> > with public-inbox.  I admit: I'm not comfortable promoting
-> > anything I do, really.
+On 09/06/2016 04:25 PM, Jakub Narębski wrote:
+> W dniu 04.09.2016 o 18:08, Michael Haggerty pisze:
 > 
-> Please take this as encouragement to do so.  I'd love to see the
-> public-inbox equivalent to the main page of https://lists.debian.org/ ,
-> as an example.  (And I'd love to have public-inbox archives of Debian
-> mailing lists.)
+>> +/*
+>> + * Check whether an attempt to rename old_refname to new_refname would
+>> + * cause a D/F conflict with any existing reference (other than
+>> + * possibly old_refname). If there would be a conflict, emit an error
+>> + * message and return false; otherwise, return true.
+>> + *
+>> + * Note that this function is not safe against all races with other
+>> + * processes (though rename_ref() catches some races that might get by
+>> + * this check).
+>> + */
+>> +int rename_ref_available(const char *old_refname, const char *new_refname);
+> 
+> Just a sidenote: does Git have a naming convention for query functions
+> returning a boolean, for example using is_* as a prefix?
 
-Just pushed out some POD (which should build to manpages),
-so maybe early adopters can start hosting mirrors themselves(*).
+I've never heard of an official convention like that, and don't see it
+documented anywhere. But there are a lot of functions (and variables)
+whose names start with `is_`, and it seems like a reasonable idea.
 
-   https://public-inbox.org/meta/20160907004907.1479-1-e@80x24.org/
+> That is, shouldn't it be
+> 
+>   int is_rename_ref_available(const char *old_refname, const char *new_refname);
 
-I hope public-inbox-overview(7) is a good starting point
-(along with the existing INSTALL) and there'll be more docs
-coming at some point...
+I agree, that would be a better name.
 
+But that naming change is orthogonal to this patch series, which only
+adds a docstring to the function. I don't think it's worth rerolling
+this 38-patch series to add it. So I suggest that we keep your idea in
+mind for the next time this code is touched (or feel free to submit a
+patch yourself, preferably on top of this patch series to avoid conflicts).
 
-Writing documentation tends to make my attention span drift all
-over the place; so maybe parts don't make sense or were glossed
-over, but I'll be glad to help clarify anything.  (Responding
-to emails is generally easier for me since I can answer things
-specifically, tough to do for generic docs)
+Thanks,
+Michael
 
-
-I'll try to get a tarball release out soonish,
-but my schedule is unpredictable.
-
-
-(*) None of the code has had any security audit, yet;
-    and there's no warranty of course.
