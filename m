@@ -2,83 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAABC1F859
-	for <e@80x24.org>; Wed,  7 Sep 2016 19:46:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4BEB21F859
+	for <e@80x24.org>; Wed,  7 Sep 2016 19:51:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757174AbcIGTqQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Sep 2016 15:46:16 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39570 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753974AbcIGTpq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2016 15:45:46 -0400
-Received: (qmail 20757 invoked by uid 109); 7 Sep 2016 19:45:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 07 Sep 2016 19:45:45 +0000
-Received: (qmail 7156 invoked by uid 111); 7 Sep 2016 19:45:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 07 Sep 2016 15:45:53 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Sep 2016 15:45:42 -0400
-Date:   Wed, 7 Sep 2016 15:45:42 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 5/5] pack-objects: walk tag chains for --include-tag
-Message-ID: <20160907194542.rubdx37mwnho6lrr@sigill.intra.peff.net>
-References: <20160905215141.b6unqtjqko7775is@sigill.intra.peff.net>
- <20160905215226.m6vv2tk5pe2qt4ui@sigill.intra.peff.net>
- <20160905215939.hriu6ev3m332qhp6@sigill.intra.peff.net>
- <xmqqzinjlf47.fsf@gitster.mtv.corp.google.com>
+        id S1753806AbcIGTvH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Sep 2016 15:51:07 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51887 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752040AbcIGTvG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2016 15:51:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9AA3038C44;
+        Wed,  7 Sep 2016 15:51:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=oIY0WXYKxyBN7sqGZosV8FUFj70=; b=sTshYK
+        tS/YsF7TY4EMAvHn9tgGmOgo18ZvAp+CU6zOf9u4tTzseQyeOmZB5QfJudTSSVzX
+        FykOCTHNPLTzwRgAs+kSxzhZoe3grwyw4wsN99WNS57SvNb0dxMYVBJRbgzA5BYj
+        dzT/uKENNDP4Tm8F6wHmUnJcsSC8AIlPqF64U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=X3itPEXgArPN53I7aMy7WCai7ZXlQ50G
+        9kmJmI/y1HfPate4X+sdkHPD7VdAI6gqMk4F9/LMme/Q9zIwknCAqxevW6rOPhKd
+        AvoqU4fKBoDhFxZWULxDfxLDVdFV9H3t1J+EoPQMKEZEr3uMmcn/4A5LcwImU9q0
+        BaxUxtgA4dE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 91BCE38C43;
+        Wed,  7 Sep 2016 15:51:04 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EDB7538C42;
+        Wed,  7 Sep 2016 15:51:03 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>, Karsten Blees <karsten.blees@gmail.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v14 00/41] libify apply and use lib in am, part 2
+References: <20160904201833.21676-1-chriscool@tuxfamily.org>
+Date:   Wed, 07 Sep 2016 12:51:01 -0700
+In-Reply-To: <20160904201833.21676-1-chriscool@tuxfamily.org> (Christian
+        Couder's message of "Sun, 4 Sep 2016 22:17:52 +0200")
+Message-ID: <xmqqinu7lc9m.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqzinjlf47.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 68EDFFC2-7534-11E6-93C1-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 07, 2016 at 11:49:28AM -0700, Junio C Hamano wrote:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > As explained further in the commit message, "fetch" is robust to this,
-> > because it does a real connectivity check and follow-on fetch before
-> > writing anything it thinks it got via include-tag. So perhaps one could
-> > argue that pack-objects is correct; include-tag is best-effort, and it
-> > is the client's job to make sure it has everything it needs. And that
-> > would mean the bug is in git-clone, which should be doing the
-> > connectivity check and follow-on fetch.
-> 
-> I think that is probably a more technically correct interpretation
-> of the history.
-> 
-> I think upgrading "best-effort" to "guarantee" like you did is a
-> right approach nevertheless.  I think the "best-effort" we initially
-> did was merely us being lazy.
+> In patch 29/41 I added some comments in apply.h above the definition
+> of APPLY_OPT_INACCURATE_EOF and APPLY_OPT_RECOUNT, as suggested by
+> Stefan. This is the only change compared to v13.
 
-Yeah, after sleeping on it, the conclusion I came to was that it does
-not _hurt_ to have include-tag be a bit more careful.
+OK.
 
-I also wondered about the corner case I noted in the commit message.  If
-you have a tag chain of A->B->C, and you already have "C" (a commit),
-but are fetching "B" (a tag), then include-tag does not notice "A".
 
-That's OK for git-fetch. It will collect "A" during its backfill phase
-(not because of "B" at all, but because it knows that "A" eventually
-peels to "C", which it already has). "git-clone" does not have a
-backfill, of course. But neither can it "already have" a commit. So
-either we get "C" as part of the clone (in which case include-tag will
-include "A"), or it does not (in which case we cannot be getting "B"
-either, because "C" is reachable from it).
+>   - Patches 33/41 to 37/41 were in v10, v12 and v13.
+>
+> They implement a way to make the libified apply code silent by
+> changing the bool `apply_verbosely` into a tristate enum called
+> `apply_verbosity`, that can be one of `verbosity_verbose`,
+> `verbosity_normal` or `verbosity_silent`.
 
-And of course that's only when single-branch is in use. Normally
-git-clone just grabs all the tags blindly. :)
+This is a reasonable approach.
 
-So I think everything Just Works after my patch, though we do still rely
-on fetch backfill to pick up some obscure cases.
+> The only changes since v13 are in 37/41. The name of the first
+> argument to mute_routine() is changed from "bla" to "msg" as suggested
+> by Ramsey, and the commit message is improved as suggested by Stefan.
 
--Peff
+;-)
+
+>   - Patch 40/41 was in v12 and v13, and hasn't changed.
+>
+> It adds a "const char *index_file" into "struct apply_state", to make
+> it possible to use a special index file instead of the default one.
+
+Looks sensible.
