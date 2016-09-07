@@ -2,89 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08BCA1F859
-	for <e@80x24.org>; Wed,  7 Sep 2016 22:51:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 998931F859
+	for <e@80x24.org>; Wed,  7 Sep 2016 23:02:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751724AbcIGWvP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Sep 2016 18:51:15 -0400
-Received: from relay6-d.mail.gandi.net ([217.70.183.198]:33901 "EHLO
-        relay6-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751099AbcIGWvO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2016 18:51:14 -0400
-Received: from mfilter18-d.gandi.net (mfilter18-d.gandi.net [217.70.178.146])
-        by relay6-d.mail.gandi.net (Postfix) with ESMTP id 64104FB882;
-        Thu,  8 Sep 2016 00:51:11 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter18-d.gandi.net
-Received: from relay6-d.mail.gandi.net ([IPv6:::ffff:217.70.183.198])
-        by mfilter18-d.gandi.net (mfilter18-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-        with ESMTP id 8RrQ-Wt8LLk2; Thu,  8 Sep 2016 00:51:09 +0200 (CEST)
-X-Originating-IP: 50.39.163.18
-Received: from x (50-39-163-18.bvtn.or.frontiernet.net [50.39.163.18])
-        (Authenticated sender: josh@joshtriplett.org)
-        by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id E3356FB877;
-        Thu,  8 Sep 2016 00:51:06 +0200 (CEST)
-Date:   Wed, 7 Sep 2016 15:51:04 -0700
-From:   Josh Triplett <josh@joshtriplett.org>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-        Kevin Willford <kewillf@microsoft.com>,
-        Xiaolong Ye <xiaolong.ye@intel.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC/PATCH v2 0/3] patch-id for merges
-Message-ID: <20160907225104.f5wi2yo4d2f26tti@x>
-References: <20160907075346.z6wtmqnfc6bsunjb@sigill.intra.peff.net>
- <20160907220101.hwwutkiagfottbdd@sigill.intra.peff.net>
+        id S1752266AbcIGXCX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Sep 2016 19:02:23 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64135 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751400AbcIGXCU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2016 19:02:20 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 975EA3AD99;
+        Wed,  7 Sep 2016 19:02:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3zYCbb89fRt0x/fE6Mno5RHp2Ko=; b=hGf4SD
+        7N0UazAehYyQewbBZDsaPHMrcDEr+wE7KWA1AOZiA2lEsfMtBEHWi9OyeC3gBCrK
+        rgX2HARbKulX9GWrskc/rBqCw2+j0KqGyupjlUbr8Nu2xCPnQBKhW12Ha37h6JlV
+        aoX2/6fEsnvN4iNvd/yxSvm3PPkx+IhYKjEAY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=hmqp9WPXdVMG28dnpywTSK9Zj0r08rHe
+        P16kyV3OSYISMFgmjRqchP9mFwaF4cSgI+HkMqR7W5VBka1R/ZeAHrrtznG0G7Q9
+        BTrx9n+avUtNS5yGyTz0HGhkJIDIzffXvh2Fx9zqRnCw4driR+Hy8H46sAeVMdpX
+        POfkCzqULrk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8FEB13AD98;
+        Wed,  7 Sep 2016 19:02:19 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 14C5C3AD97;
+        Wed,  7 Sep 2016 19:02:19 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        spearce@spearce.org, sbeller@google.com, peff@peff.net
+Subject: Re: [PATCH v2 2/2] connect: advertized capability is not a ref
+References: <cover.1472853827.git.jonathantanmy@google.com>
+        <cover.1472836026.git.jonathantanmy@google.com>
+        <cover.1472853827.git.jonathantanmy@google.com>
+        <174c8ca6638f1cd3145a628925e65655b56af366.1472853827.git.jonathantanmy@google.com>
+        <xmqqoa3zocud.fsf@gitster.mtv.corp.google.com>
+        <20160907203836.GB25016@google.com>
+Date:   Wed, 07 Sep 2016 16:02:16 -0700
+In-Reply-To: <20160907203836.GB25016@google.com> (Jonathan Nieder's message of
+        "Wed, 7 Sep 2016 13:38:36 -0700")
+Message-ID: <xmqq1t0vl3ev.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160907220101.hwwutkiagfottbdd@sigill.intra.peff.net>
-User-Agent: NeoMutt/ (1.7.0)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 20A1212A-754F-11E6-94F7-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 07, 2016 at 06:01:01PM -0400, Jeff King wrote:
-> Here's a re-roll of the series I posted at:
-> 
->   http://public-inbox.org/git/20160907075346.z6wtmqnfc6bsunjb@sigill.intra.peff.net/
-> 
-> Basically, it drops the time for "format-patch --cherry-pick" on a
-> particular case from 3 minutes down to 3 seconds, by avoiding diffs
-> on merge commits. Compared to v1, it fixes the totally-broken handling
-> of commit_patch_id() pointed out by Johannes.
-> 
-> We can drop the diffs on the merge commits because they're quite broken,
-> as discussed in the commit message of patch 3 (they don't take into
-> account any parent except the first). So what do we do when somebody
-> asks for the patch-id of a merge commit?
-> 
-> This is still marked RFC, because there are really two approaches here,
-> and I'm not sure which one is better for "format-patch --base". I'd like
-> to get input from Xiaolong Ye (who worked on --base), and Josh Triplett
-> (who has proposed some patches in that area, and is presumably using
-> them).
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Thanks.
+> Given that there aren't any servers that are going to produce this
+> kind of bad input anyway, I prefer a die().
 
-I'd love to see a more resilient patch-id mechanism, to make it easier
-to match up patches between branches.  I don't think it makes sense to
-talk about the patch-id of a merge commit (though it might make sense
-for a merge which makes additional changes not present in any of the
-parents).  Even if someone wants to match up merge commits with merge
-commits, I don't think that should happen via patch-id; I think that
-should happen in terms of "what patches does this merge introduce",
-without constructing a merge-patch-id via a Merkle tree of commit
-patch-ids.
+That would certainly put bigger pressure on the folks who write
+buggy stuff in the future.  If we know that nobody produces such
+output, I'd prefer to forbid it, of course.  It's just that is not
+what this 2/2 implements ;-).
 
-So, I think this patch series makes sense (modulo the comments about the
-commit message in patch 3).  We already don't respect merge commits when
-doing format-patch; this seems consistent with that.  If we ever make it
-possible for format-patch to handle merge commits, then we should also
-allow it to have merge commits as prerequisites.
-
-- Josh Triplett
