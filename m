@@ -2,85 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3E771F859
-	for <e@80x24.org>; Wed,  7 Sep 2016 18:49:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 94E631F859
+	for <e@80x24.org>; Wed,  7 Sep 2016 18:49:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758049AbcIGStP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Sep 2016 14:49:15 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39522 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1756632AbcIGStP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2016 14:49:15 -0400
-Received: (qmail 17145 invoked by uid 109); 7 Sep 2016 18:49:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 07 Sep 2016 18:49:14 +0000
-Received: (qmail 6571 invoked by uid 111); 7 Sep 2016 18:49:22 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 07 Sep 2016 14:49:22 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Sep 2016 14:49:11 -0400
-Date:   Wed, 7 Sep 2016 14:49:11 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-        Kevin Willford <kewillf@microsoft.com>
-Subject: Re: [RFC/PATCH 0/2] more patch-id speedups
-Message-ID: <20160907184911.sqwukfasnjjkr5gz@sigill.intra.peff.net>
-References: <20160907075346.z6wtmqnfc6bsunjb@sigill.intra.peff.net>
- <alpine.DEB.2.20.1609071453240.129229@virtualbox>
+        id S932260AbcIGStd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Sep 2016 14:49:33 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60522 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1756632AbcIGStc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2016 14:49:32 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A79173806B;
+        Wed,  7 Sep 2016 14:49:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=eeILAKHfE3yaaULX0CFTZxGoQTM=; b=p9WadK
+        R8wwfEVz0g8SXzi2Cmd0PJSlR/9SkszzQwt2HRckBkL7XbB2rP4XziifYIoNN3UO
+        Y+AHo2nRjAXiw+RrWoURSmQu776qKmzjmrAE53kp+DYv+KPk1jNfhfOhikBkxaB3
+        /d4+kLq2+kDEvu99tmTO2fyQ1Yj35hWYS2hBE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=NX8qmNO+EEwMKsBXThfrXpPHODhItBk7
+        pae8SRl6gEXaSVsBxERdFX2HxA47AMAbgHnJCYB/HJJklrD14+T9l9hxLMVIYZSs
+        G0dfu0yWfMKTo45gKhHTJ1cvmvghawjK4WDFbHfl05N1/rjLXwUTSXYk5flRzi8D
+        OfwfIU+4CiM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9E1F73806A;
+        Wed,  7 Sep 2016 14:49:31 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 28AB038068;
+        Wed,  7 Sep 2016 14:49:30 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 5/5] pack-objects: walk tag chains for --include-tag
+References: <20160905215141.b6unqtjqko7775is@sigill.intra.peff.net>
+        <20160905215226.m6vv2tk5pe2qt4ui@sigill.intra.peff.net>
+        <20160905215939.hriu6ev3m332qhp6@sigill.intra.peff.net>
+Date:   Wed, 07 Sep 2016 11:49:28 -0700
+In-Reply-To: <20160905215939.hriu6ev3m332qhp6@sigill.intra.peff.net> (Jeff
+        King's message of "Mon, 5 Sep 2016 17:59:39 -0400")
+Message-ID: <xmqqzinjlf47.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1609071453240.129229@virtualbox>
+Content-Type: text/plain
+X-Pobox-Relay-ID: CF3594A6-752B-11E6-9AB7-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 07, 2016 at 03:06:36PM +0200, Johannes Schindelin wrote:
+Jeff King <peff@peff.net> writes:
 
-> > This is marked as "RFC" because I don't feel entirely confident that I'm
-> > not missing some clever need for these options. But in both cases my gut
-> > feeling is that they are simply unintended effects that nobody ever
-> > noticed, because it would be very rare that they would affect the
-> > output. And that if they _did_ affect the output, they would probably be
-> > doing the wrong thing.
-> 
-> Given that the patch ID is *wrong* for merge commits (it only looks at the
-> first parent, so each "-s ours" merge will have the same patch ID!), I
-> would say that we can get away with re-defining the patch ID of merge
-> commits.
-> 
-> The only case where it might change things that I can think of would be a
-> `git rebase --preserve-merges`: it would probably have worked *by chance*
-> before (or not, in case of "-s ours" merges), and now it would try to pick
-> the merge commits even if rebased versions were already merged upstream.
-> 
-> If I read the --preserve-merges code correctly, that would result in the
-> merge commit's parents to be 'rewritten' to HEAD. And as both parents
-> would be rewritten to HEAD, they would be condensed into a single new
-> parent, resulting in a cherry-pick that fails (because it tries to
-> cherry-pick a merge commit without any -n option).
-> 
-> Of course, what we could do is to introduce a modifier, e.g.
-> --cherry-pick=first-parent, that would trigger the old behavior and would
-> be asked-for in the --preserve-merges mode.
-> 
-> But quite frankly, personally I would not worry about it *that* much. As
-> you pointed out, the patch ID for merge commits is incorrect to begin
-> with, and we may just redeclare all merge commits to be incomparable to
-> one another when it comes to patch IDs.
-> 
-> In short: I would be fine with the change of behavior.
+> As explained further in the commit message, "fetch" is robust to this,
+> because it does a real connectivity check and follow-on fetch before
+> writing anything it thinks it got via include-tag. So perhaps one could
+> argue that pack-objects is correct; include-tag is best-effort, and it
+> is the client's job to make sure it has everything it needs. And that
+> would mean the bug is in git-clone, which should be doing the
+> connectivity check and follow-on fetch.
 
-Thanks for this explanation; it matches what I was thinking, but you
-went through it in a lot more detail.
+I think that is probably a more technically correct interpretation
+of the history.
 
-So it sounds like this is the right thing, but as you pointed out, the
-implementation is just silly. I'll see if I can come up with a working
-v2.
-
--Peff
+I think upgrading "best-effort" to "guarantee" like you did is a
+right approach nevertheless.  I think the "best-effort" we initially
+did was merely us being lazy.
