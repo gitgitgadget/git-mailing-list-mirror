@@ -2,94 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44E1E1F859
-	for <e@80x24.org>; Wed,  7 Sep 2016 13:44:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E26791F859
+	for <e@80x24.org>; Wed,  7 Sep 2016 14:50:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752829AbcIGNoP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Sep 2016 09:44:15 -0400
-Received: from smtp.gentoo.org ([140.211.166.183]:39492 "EHLO smtp.gentoo.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752437AbcIGNoO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2016 09:44:14 -0400
-Received: from abudhabi.paradoxon.rec (p4FDA9DB0.dip0.t-ipconnect.de [79.218.157.176])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: polynomial-c)
-        by smtp.gentoo.org (Postfix) with ESMTPSA id BAD583407AF;
-        Wed,  7 Sep 2016 13:44:12 +0000 (UTC)
-Date:   Wed, 7 Sep 2016 15:44:04 +0200
-From:   Lars Wendler <polynomial-c@gentoo.org>
+        id S1753591AbcIGOu0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Sep 2016 10:50:26 -0400
+Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:39137 "EHLO sapo.pt"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1756878AbcIGOuY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2016 10:50:24 -0400
+Received: (qmail 15504 invoked from network); 7 Sep 2016 14:50:18 -0000
+Received: (qmail 28483 invoked from network); 7 Sep 2016 14:50:18 -0000
+Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
+          (envelope-sender <vascomalmeida@sapo.pt>)
+          by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
+          for <git@vger.kernel.org>; 7 Sep 2016 14:50:16 -0000
+X-PTMail-RemoteIP: 85.246.157.91
+X-PTMail-AllowedSender-Action: 
+X-PTMail-Service: default
+From:   Vasco Almeida <vascomalmeida@sapo.pt>
 To:     git@vger.kernel.org
-Cc:     "Robin H. Johnson" <robbat2@gentoo.org>, lekto@o2.pl
-Subject: segfault in http.c when https URL is mistyped
-Message-ID: <20160907154404.107fe6e6@abudhabi.paradoxon.rec>
-In-Reply-To: <20160907151607.2b288034@abudhabi.paradoxon.rec>
-References: <20160907151607.2b288034@abudhabi.paradoxon.rec>
-Organization: Gentoo
-X-Mailer: Claws Mail 3.14.0 (GTK+ 2.24.30; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- boundary="Sig_/T/5Cx1QJ1if7GwhUhJQnGwy"; protocol="application/pgp-signature"
+Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 01/13] i18n: apply: mark plural string for translation
+Date:   Wed,  7 Sep 2016 14:49:05 +0000
+Message-Id: <1473259758-11836-1-git-send-email-vascomalmeida@sapo.pt>
+X-Mailer: git-send-email 2.7.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---Sig_/T/5Cx1QJ1if7GwhUhJQnGwy
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+Mark plural string for translation using Q_().
 
-Hi,
+Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
+---
+ builtin/apply.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-we at Gentoo got a bug report [1] about git-remote-https segfaulting
-when the URL has been mistyped.=20
-This seems to only be triggered when git was compiled with curl
-support:
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 1a488f9..ef03c74 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -4768,10 +4768,12 @@ static int apply_all_patches(struct apply_state *state,
+ 			       state->whitespace_error),
+ 			    state->whitespace_error);
+ 		if (state->applied_after_fixing_ws && state->apply)
+-			warning("%d line%s applied after"
+-				" fixing whitespace errors.",
+-				state->applied_after_fixing_ws,
+-				state->applied_after_fixing_ws == 1 ? "" : "s");
++			warning(Q_("%d line applied after"
++				   " fixing whitespace errors.",
++				   "%d lines applied after"
++				   " fixing whitespace errors.",
++				   state->applied_after_fixing_ws),
++				state->applied_after_fixing_ws);
+ 		else if (state->whitespace_error)
+ 			warning(Q_("%d line adds whitespace errors.",
+ 				   "%d lines add whitespace errors.",
+-- 
+2.7.4
 
-  git clone https::/some.example-site.net/test.git
-
-Observe the "https::/" instead of "https://". As soon as you run such a
-command, syslog receives a message like:
-
-  kernel: git-remote-http[8766]: segfault at 0 ip 0000000000408abd sp
-  00007ffd70adf7c0 error 4 in git-remote-https[400000+103000]
-
-Kind regards
-Lars
-
-[1] https://bugs.gentoo.org/592522
-
---=20
-Lars Wendler
-Gentoo package maintainer
-GPG: 21CC CF02 4586 0A07 ED93  9F68 498F E765 960E 9B39
-
-Attention! New gpg key! See
-https://www.gentoofan.org/blog/index.php?/archives/9-New-gpg-keys.html
-
---Sig_/T/5Cx1QJ1if7GwhUhJQnGwy
-Content-Type: application/pgp-signature
-Content-Description: Digitale Signatur von OpenPGP
-
------BEGIN PGP SIGNATURE-----
-
-iQIcBAEBCgAGBQJX0BmkAAoJEFcd0tA0PGA55OoP/i+GtCiySWZkn7AAJurbH3b8
-YKgBey/Z54Gb5uelAEp1iT/UOf62hvF4nrLa7UeEnFhmFO981NeOZ5Iv5CelSBiA
-vdTffBdLput3Q8FJ5bbaKaj4DtSe/C2tTXeJRo0kda6L+JgXsHMw9xBgRaQT1ACl
-eJWCS4aQVFHmcEJWCSpfFR5DjkLF7jhBuUoN/KL/2AUr/D/hF3ZEyuf4tVLgLWq5
-7OBqp4A9hRpjPPdWRK/x5VlhK4jvpMPVtyI4FeN9N9LYMqpb6heI3pppz2lAx1it
-X15GEIza+U9b17S4ATBLBMUIEP2WGSc7i4QFpwAl9YS9CNSpKt74NHfv3UFcBIyM
-eWeBSVJkTHVMz8edPlexbod47ipA/TTlADzhHz3ayRd2lEdKdBQL1wZ0tqg09vZp
-s10QANPs0sIpl4ewCIsos7AH25oH9IpKDBt9URiPbCHbXt0TN0vuU+wjPnjPnsnV
-aMjM3wiL57xrpXpmWShVXuNXcrYtPqG08VpA5vA1Ays5d/5kug6SfcX14KjJuTgH
-H/rt8mYOkvFTuWNhbZKVYx4SOfJ11yaIOLtfscalowWX14CyDgc1Hcg7Z1J3rGtH
-vhcgfuz227g9R7Bn3lFiLyaV3u5fcw1+jMiZYdOpiC/2k1qauMQW1efWsQcz6TG+
-xxL4caWIcN/9BXZgAXXc
-=Tg55
------END PGP SIGNATURE-----
-
---Sig_/T/5Cx1QJ1if7GwhUhJQnGwy--
