@@ -2,86 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0ADCB1F859
-	for <e@80x24.org>; Wed,  7 Sep 2016 06:10:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1801120705
+	for <e@80x24.org>; Wed,  7 Sep 2016 06:38:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752079AbcIGGKp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Sep 2016 02:10:45 -0400
-Received: from bsmtp3.bon.at ([213.33.87.17]:57698 "EHLO bsmtp3.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751790AbcIGGKp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2016 02:10:45 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp3.bon.at (Postfix) with ESMTPSA id 3sTY42557cz5tlY;
-        Wed,  7 Sep 2016 08:10:42 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 99F795148;
-        Wed,  7 Sep 2016 08:10:41 +0200 (CEST)
-Subject: [PATCH v2] t6026-merge-attr: clean up background process at end of
- test case
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <3fd38b71-26bd-bdb3-fe5c-e7038abf51e0@kdbg.org>
- <alpine.DEB.2.20.1609060909420.129229@virtualbox>
-Cc:     Git Mailing List <git@vger.kernel.org>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <1953cc16-7577-16dd-fe7e-f557e7a74f58@kdbg.org>
-Date:   Wed, 7 Sep 2016 08:10:41 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2
+        id S1754746AbcIGGiY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Sep 2016 02:38:24 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39140 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1754591AbcIGGiX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2016 02:38:23 -0400
+Received: (qmail 4083 invoked by uid 109); 7 Sep 2016 06:38:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 07 Sep 2016 06:38:21 +0000
+Received: (qmail 774 invoked by uid 111); 7 Sep 2016 06:38:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 07 Sep 2016 02:38:30 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Sep 2016 02:38:19 -0400
+Date:   Wed, 7 Sep 2016 02:38:19 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] sequencer: support folding in rfc2822 footer
+Message-ID: <20160907063819.dd7aulnlsytcuyqj@sigill.intra.peff.net>
+References: <1472846322-5592-1-git-send-email-jonathantanmy@google.com>
+ <xmqqy439rabb.fsf@gitster.mtv.corp.google.com>
+ <29cb0f55-f729-80af-cdca-64e927fa97c0@google.com>
+ <fbdda11c-c53e-f9fc-8b3a-934810215c5f@google.com>
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1609060909420.129229@virtualbox>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <fbdda11c-c53e-f9fc-8b3a-934810215c5f@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The process spawned in the hook uses the test's trash directory as CWD.
-As long as it is alive, the directory cannot be removed on Windows.
-Although the test succeeds, the 'test_done' that follows produces an
-error message and leaves the trash directory around. Kill the process
-before the test case advances.
+On Tue, Sep 06, 2016 at 04:30:24PM -0700, Jonathan Tan wrote:
 
-Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
-Am 06.09.2016 um 09:25 schrieb Johannes Schindelin:
-> Maybe we should write a pid file in the sleep command instead, and kill it
-> in the end? Something like this, maybe?
+> On 09/06/2016 03:08 PM, Jonathan Tan wrote:
+> > On 09/02/2016 07:23 PM, Junio C Hamano wrote:
+> > > A slightly related tangent.  An unconditionally good change you
+> > > could make is to allow folding of in-body headers.  I.e. you can
+> > > have e.g.
+> > > 
+> > >     -- >8 --
+> > >     Subject: [PATCH] sequencer: support in-body headers that are
+> > >          folded according to RFC2822 rules
+> > > 
+> > >     The first paragraph after the above long title begins
+> > >     here...
+> > > 
+> > > in the body of the msssage, and I _think_ we do not fold it properly
+> > > when applying such a patch.  We should, as that is something that
+> > > appears in format-patch output (i.e. something Git itself produces,
+> > > unlike the folded "footer").
+> > 
+> > OK, I'll take a look at this.
+> 
+> It turns out that Git seems to already do this, at least for Subject.
 
-Yes, that is much better, thank you!
+Right, because "Subject" is actually a real RFC 2822 header in the
+generated email message. Not only do we expect things like mail readers
+to handle this, but we _have_ to wrap at a certain point to meet the
+standard[1].
 
-I did not extend the sleep time because it requires to change the file name
-in the same patch.
+I don't think any part of Git ever shunts "Subject" to an in-body
+header, though I'd guess people do it manually all the time. 
 
-I did experiment with 'while sleep 1; do :; done &' to spin indefinitely,
-but the loop did not terminate in time in my tests on Windows for some
-unknown reason (most likely because the killed process does not exit with
-a non-zero code -- remember, Windows is not POSIX, particularly, when it
-comes to signal handling).
+> $ git format-patch HEAD^
+> 0001-this-is-a-very-long-subject-to-test-line-wrapping-th.patch
+> $ cat 0001-this-is-a-very-long-subject-to-test-line-wrapping-th.patch
+> <snip>
+> Subject: [PATCH] this is a very long subject to test line wrapping this is a
+>  very long subject to test line wrapping
+> <snip>
 
-t/t6026-merge-attr.sh | 2 ++
- 1 file changed, 2 insertions(+)
+So the interesting bit is what happens with:
 
-diff --git a/t/t6026-merge-attr.sh b/t/t6026-merge-attr.sh
-index dd8f88d..7a6e33e 100755
---- a/t/t6026-merge-attr.sh
-+++ b/t/t6026-merge-attr.sh
-@@ -185,7 +185,9 @@ test_expect_success 'custom merge does not lock index' '
- 	git reset --hard anchor &&
- 	write_script sleep-one-second.sh <<-\EOF &&
- 		sleep 1 &
-+		echo $! >sleep.pid
- 	EOF
-+	test_when_finished "kill \$(cat sleep.pid)" &&
- 
- 	test_write_lines >.gitattributes \
- 		"* merge=ours" "text merge=sleep-one-second" &&
--- 
-2.10.0.85.gea34e30
+  git checkout master^
+  git am 0001-*
 
+and with:
+
+  perl -lpe '
+    # Bump subject down to in-body header.
+    if (/^Subject:/) {
+	print "Subject: real subject";
+	print "";
+    }
+  ' 0001-* >patch
+  git checkout master^
+  git am patch
+
+It looks like we get the first one right, but not the second.
+
+-Peff
+
+[1] A careful reader may note that arbitrarily-long body lines,
+    including in-body headers and footers, may _also_ run afoul of
+    the body line-length limits. The "right" solution there is
+    probably quoted-printable, but it's ugly enough that I wouldn't do
+    so unless we see a real-world case where the line lengths are a
+    problem.
