@@ -2,150 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CD4C2070F
-	for <e@80x24.org>; Wed,  7 Sep 2016 11:21:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1DAE2070F
+	for <e@80x24.org>; Wed,  7 Sep 2016 11:31:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757364AbcIGLVO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Sep 2016 07:21:14 -0400
-Received: from mail-pa0-f66.google.com ([209.85.220.66]:35032 "EHLO
-        mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757367AbcIGLVE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2016 07:21:04 -0400
-Received: by mail-pa0-f66.google.com with SMTP id pp5so794304pac.2
-        for <git@vger.kernel.org>; Wed, 07 Sep 2016 04:20:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ThDv+FGMNa4eB98LJfNVT2Ez/YnCAG5Gje16SzUMnSE=;
-        b=Q6Hmiuxd26NLiGj2bYYV70AKpZlpsOxRhqZA5MmYg3RfLe6s0M2l3CAjmvJ8c4ZRd7
-         6gBo6ojPzhXrlo2wR0V9mQjWDUUMsZNy1KzB1OKRzjdxXLaJUf6kFhjVNvIBCbkhE1cc
-         di9f+qtWe1EGg3SLUVYzGU2N2tP+ljSqakdtQwOrLsS6X0WfaDje+ivkGsVJ4Stj4aOf
-         ycvcTAI7jX1Ebke9B+RoJY1drROz5lS/3O44h1xYCozDosxxvLJNE2WWWAzw6G7T4fAh
-         fMkD/EloXhlVd/lQt/yIpkiZf6s9ZWyCVB2xM5rLK4SPe5li51P1icxhNaC8J2KnvB5x
-         S7BQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ThDv+FGMNa4eB98LJfNVT2Ez/YnCAG5Gje16SzUMnSE=;
-        b=U2Wt9H/XEm8gP0y4TLiaHoXLNDjKmF8CV623IpNCUn2L2gHl8TqPuvxyfWoavVCv2A
-         tojTa7SfM43TBuXj7s6Yu4VK0R+IuibKo72POGbDhrNdZ82N32iwEpa0lhnUXBGX00a7
-         0XuIAawrK7VHOUAgNG5sHFW8nUXvXv1RrAtfhOwUxKWMSJVmz8t+f/zRYJ11vhV5iIk9
-         20YhaFplhr6rngG1s2gBm7duq4oUTHRLMEvJcU/ytiETur2tinKcBaxzU9FD9Kh68KAD
-         NiKDu2H6jFjVYCbreayrI6jVgSS3ZvYOJZorxsMUT7tdwvux5Y9UP1lrPw3l4IFJC4kF
-         3ktw==
-X-Gm-Message-State: AE9vXwPA4kJantbeOAxg7FALSyHgVfxDks8j/I/6suKHGozQ3PwalSDzp2+mKcK04z0uuw==
-X-Received: by 10.66.26.113 with SMTP id k17mr6669680pag.100.1473247258491;
-        Wed, 07 Sep 2016 04:20:58 -0700 (PDT)
-Received: from ash ([115.76.139.213])
-        by smtp.gmail.com with ESMTPSA id ty6sm48280608pac.18.2016.09.07.04.20.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 07 Sep 2016 04:20:57 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 07 Sep 2016 18:20:54 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH 3/3] checkout: fix ambiguity check in subdir
-Date:   Wed,  7 Sep 2016 18:19:41 +0700
-Message-Id: <20160907111941.2342-4-pclouds@gmail.com>
-X-Mailer: git-send-email 2.8.2.524.g6ff3d78
-In-Reply-To: <20160907111941.2342-1-pclouds@gmail.com>
-References: <20160822123502.3521-1-pclouds@gmail.com>
- <20160907111941.2342-1-pclouds@gmail.com>
+        id S938610AbcIGLbt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Sep 2016 07:31:49 -0400
+Received: from mout.gmx.net ([212.227.17.21]:57404 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S937716AbcIGLbs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2016 07:31:48 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0ME33j-1bqcAI1OrH-00HRGr; Wed, 07 Sep 2016 13:31:37
+ +0200
+Date:   Wed, 7 Sep 2016 13:31:35 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Philip Oakley <philipoakley@iee.org>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Robert Dailey <rcdailey.lists@gmail.com>,
+        Git <git@vger.kernel.org>
+Subject: Re: Fixup of a fixup not working right
+In-Reply-To: <6C5AB39424064692A416A490B861D330@PhilipOakley>
+Message-ID: <alpine.DEB.2.20.1609071327290.129229@virtualbox>
+References: <CAHd499AQFDRps6POF2xuUjbYv5DJYxt3DA8aFFArXF=qQEz_CA@mail.gmail.com>        <55512A8927384A0790DDC7F526B09053@PhilipOakley> <xmqq60qdsoxj.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1609040923390.129229@virtualbox>
+ <8F7471262D1C45D9A7BD1C29277004AD@PhilipOakley> <alpine.DEB.2.20.1609050950130.129229@virtualbox> <6C5AB39424064692A416A490B861D330@PhilipOakley>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:gn/QIlAT/ZaAoxXKekt2a+6QUh8/6PUYUJLuuhgGEdNYO9jiGu9
+ nqacRQLGqAY9NsGz3YsRtIz6xNAhm9hJRU+LY+7Vr+7EdOM93bEokvR0e9mo+K7D9ijUha0
+ O31dAHCT5PyTuKyWmjpi6HFrC57hTayBAupFr3PFkiTmZwh2BzR+f9Ft6DvjeXM6rkxBQ99
+ L51JChClqEth5n7A05IKA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:1aTqxnvn8Tw=:A+Wx2SplhudCkQzM8pfIWB
+ ydCLwlnKP+pfWFrpVBsQZWTKiljivtEnbPRhu1rQT8bj9QbUgrudW0l1AfCN9GqOoAKbmkZkK
+ woJ/PcXccUb351xEI+dCy0M4lUdnDmCp0Xj1VLO8U6Cz+UhiMIjPfdKqE7Y25pAxDBtkAMVAk
+ neIYM2qJ2GvwdjFer42Y5+1FewsUr/WPq13dKkXxm4g8kdyMwm81zT6Ur49Z4Hfvk2az67Cui
+ wZ/+3E6NAXMb1F/HffLq8GBRgTLX4wm81IooOfa2scQrf/WBUGVWYurJ8/q6H6Ui6GNzFBXf2
+ Z2vmb+cYBy9DMwBizeISiB/4Xm8eNLlTA8WNsus8qp2PMpYr8Z/z5UOh2z1B2TSA8IFoVocBv
+ 3e3N938PjDb3Yygg/5zxRrn3YnfSu5ZVNVqxxmdwKWd71jlOt5ijmNZDuyFtU5ILdJyM7rdtU
+ Nb3VpiXVzdIknd8DF6ppybMw1pe3dSA4N102uqxvISaRK7d7Xbsp/Hr8OHn44rBUowcw5S6vz
+ +fsmaOec8ktwVftp9jQ7lJDcZxJu5+/7ybDVo3Gl/1d/oVYo4usAOn0pq0ro033GoBuVhq9xZ
+ HI1Ag1FrXryspCMlQdVmBq6K2avjq6DjgRoz0UMpP7pPZACNSHCl1QsoLGcDXeyRQcDtUMI0P
+ nUz+62II3S7gHjnH/xgp9bu8cZ+rFpI+dQ07qClobvw2XDDemwFNLOEDE1XQUaeGBn/zFIFXF
+ tgHEWuND7Bt11stjosyubqWjaARJsSXNlE+3yC2sk2HuRFGuL4OymdRniAvaqd00NT9kdpdmI
+ thGzpxW
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The two functions in parse_branchname_arg(), verify_non_filename and
-check_filename, need correct prefix in order to reconstruct the paths
-and check for their existence. With NULL prefix, they just check paths
-at top dir instead.
+Hi Philip,
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- builtin/checkout.c            |  4 ++--
- t/t2010-checkout-ambiguous.sh |  9 +++++++++
- t/t2024-checkout-dwim.sh      | 12 ++++++++++++
- 3 files changed, 23 insertions(+), 2 deletions(-)
+On Tue, 6 Sep 2016, Philip Oakley wrote:
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 1f71d06..53c7284 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -985,7 +985,7 @@ static int parse_branchname_arg(int argc, const char **argv,
- 		int recover_with_dwim = dwim_new_local_branch_ok;
- 
- 		if (!has_dash_dash &&
--		    (check_filename(NULL, arg) || !no_wildcard(arg)))
-+		    (check_filename(opts->prefix, arg) || !no_wildcard(arg)))
- 			recover_with_dwim = 0;
- 		/*
- 		 * Accept "git checkout foo" and "git checkout foo --"
-@@ -1046,7 +1046,7 @@ static int parse_branchname_arg(int argc, const char **argv,
- 		 * it would be extremely annoying.
- 		 */
- 		if (argc)
--			verify_non_filename(NULL, arg);
-+			verify_non_filename(opts->prefix, arg);
- 	} else {
- 		argcount++;
- 		argv++;
-diff --git a/t/t2010-checkout-ambiguous.sh b/t/t2010-checkout-ambiguous.sh
-index e76e84a..2e47fe0 100755
---- a/t/t2010-checkout-ambiguous.sh
-+++ b/t/t2010-checkout-ambiguous.sh
-@@ -41,6 +41,15 @@ test_expect_success 'check ambiguity' '
- 	test_must_fail git checkout world all
- '
- 
-+test_expect_success 'check ambiguity in subdir' '
-+	mkdir sub &&
-+	# not ambiguous because sub/world does not exist
-+	git -C sub checkout world ../all &&
-+	echo hello >sub/world &&
-+	# ambiguous because sub/world does exist
-+	test_must_fail git -C sub checkout world ../all
-+'
-+
- test_expect_success 'disambiguate checking out from a tree-ish' '
- 	echo bye > world &&
- 	git checkout world -- world &&
-diff --git a/t/t2024-checkout-dwim.sh b/t/t2024-checkout-dwim.sh
-index 468a000..3e5ac81 100755
---- a/t/t2024-checkout-dwim.sh
-+++ b/t/t2024-checkout-dwim.sh
-@@ -174,6 +174,18 @@ test_expect_success 'checkout of branch with a file having the same name fails'
- 	test_branch master
- '
- 
-+test_expect_success 'checkout of branch with a file in subdir having the same name fails' '
-+	git checkout -B master &&
-+	test_might_fail git branch -D spam &&
-+
-+	>spam &&
-+	mkdir sub &&
-+	mv spam sub/spam &&
-+	test_must_fail git -C sub checkout spam &&
-+	test_must_fail git rev-parse --verify refs/heads/spam &&
-+	test_branch master
-+'
-+
- test_expect_success 'checkout <branch> -- succeeds, even if a file with the same name exists' '
- 	git checkout -B master &&
- 	test_might_fail git branch -D spam &&
--- 
-2.8.2.524.g6ff3d78
+> From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+> >
+> > On Sun, 4 Sep 2016, Philip Oakley wrote:
+> >
+> > > I suspect that some use cases have intermediate repositories that
+> > > contain a 'master' branch (it's just a name ;-) that isn't blessed
+> > > and golden, e.g. at the team review repo level. In such cases it is
+> > > possible for a fixup! to be passed up as part of the review, though
+> > > it's not the current norm/expectation.
+> >
+> > In such a case (which can totally arise when criss-crossing Pull
+> > Requests on GitHub, for example, where a Pull Request's purpose may be
+> > to fix up commits in another Pull Request before the latter is
+> > merged), the most appropriate course of action is... to not reorder
+> > the fixup!s prematurely.
+> 
+> We just need to be careful about that plural just there.
+> 
+> If it is multiple fixup!s for the same commit, then I believe they should be
+> grouped together at the same point as the first fixup! commit (in their
+> original order).
 
+We should they be grouped together? In the final rebase (the one that
+actually also includes the commit that is to be rewritten), they will be
+grouped together anyway.
+
+And it is not like users cannot regroup manually if they choose to perform
+an intermediate rebase. In that case, the user will also choose whether
+she wants to simply regroup the fixups, or squash them into a single
+fixup, too.
+
+> > > > In short, I am opposed to this change.
+> > >
+> > > It's not like G4W doesn't need fixup!s on the side branches e.g.
+> > > 5eaffe9 ("fixup! Handle new t1501 test case properly with MinGW",
+> > > 2016-07-12)
+> 
+> I note that you don't have two fixup!s for that commit
+
+Not for that one, no. But there have been cases where I had to add two or
+more fixups for the same commit, in preparation for the next merging
+rebase.
+
+> > Yeah, well, Git for Windows' `master` branch is special, in that it is
+> > constantly rebased (as "merging rebases", to keep
+> > fast-forwardability). I would not necessarily use Git for Windows as a
+> > role model in this respect.
+> 
+> I don't see GfW as 'special', rather as being a representative of a
+> broader realpolitik where some of the rugged individualism of open
+> source is moderated in some way or another.
+
+Sure, it is an example of a project that needs to solve the problem where
+patch series are accumulated, to be submitted to an upstream project, and
+so we have to keep fast-forwardability at the same time as we have to
+rebase.
+
+But Git for Windows is special in the way it solves the problem. I am not
+aware of anybody else performing merging rebases.
+
+Ciao,
+Dscho
