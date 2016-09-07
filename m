@@ -3,82 +3,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1BCD71F859
-	for <e@80x24.org>; Wed,  7 Sep 2016 20:13:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51B1F1F859
+	for <e@80x24.org>; Wed,  7 Sep 2016 20:38:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755490AbcIGUNc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Sep 2016 16:13:32 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51018 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750877AbcIGUMN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2016 16:12:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 666A13B4D3;
-        Wed,  7 Sep 2016 16:12:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=GhvuzUjF6iTaOoQ0bTO5Hn2Her0=; b=bdS/TS
-        tprj7oqDIGk2jIQavP9HfqEwlF8irWU8jlCwxXu7O7RRSwxIgGBmkUnvD5/Sjj3/
-        wxReKcG6EtOw+jVtYTeytxceWcnBnT9NPK+jekVcVQ0o9viAJHiQ67FQku9cUlfg
-        D3/9vpjSscqKtHtlyVW9SC3c+eau3iY3vTR7U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=WRNHGgM3r/sREpc7xfrL7XC9yspkt9SO
-        XqQV428D1UwmkZpoq7djmKKajGk4pZYvmbkfxmaq2slpYMfuEaWAucbwk/xhmBzO
-        r4ZGE45pYOG0K+J5M1j5U3mUd1WaFHF9qE/RhEkytsRRNCjStBktqpGi0FYSujC+
-        FmEF3TJCSt4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5D4E83B4D2;
-        Wed,  7 Sep 2016 16:12:12 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D3EF13B4D1;
-        Wed,  7 Sep 2016 16:12:11 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Paul Tan <pyokagan@gmail.com>,
-        =?utf-8?B?Tmd1?= =?utf-8?B?eeG7hW4gVGjDoWkgTmfhu41j?= Duy 
-        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH v2 00/20] object_id part 5
-References: <20160905200811.697889-1-sandals@crustytoothpaste.net>
-Date:   Wed, 07 Sep 2016 13:12:09 -0700
-In-Reply-To: <20160905200811.697889-1-sandals@crustytoothpaste.net> (brian
-        m. carlson's message of "Mon, 5 Sep 2016 20:07:51 +0000")
-Message-ID: <xmqq60q7lbae.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1753528AbcIGUir (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Sep 2016 16:38:47 -0400
+Received: from mail-pa0-f65.google.com ([209.85.220.65]:33847 "EHLO
+        mail-pa0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754975AbcIGUio (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2016 16:38:44 -0400
+Received: by mail-pa0-f65.google.com with SMTP id gi6so1374326pac.1
+        for <git@vger.kernel.org>; Wed, 07 Sep 2016 13:38:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=2zHUTqe2BEDIfFjPflZSAEmKVxDCQvJVIM+QjgnJGck=;
+        b=M0UbWXdDgIlfOYA9SsWL6F8THG2H2UBfahyVoDkiQOypOoqH8LLDR/tHNcMOSmKvqX
+         om7cqbov02O394WRcNXyyeBq4wZGDMH4b/lpygjl6QjvYl7EpvzvDjH1ll39bPL0gDoz
+         YBGsc+f9eec7nIqZOWpTO7bA7YUj1V+96JeQDFb7/MVAr3tmGjEH+S7Jn/X1NbE6QK7R
+         RTu/I5NavFThWDdoC95si5OZVUSNm1i1Tx4DsNFS4yx8k0VqmC0sSr7cqUjeOUpQ2aiC
+         iAZHbTkZZFb8Wq5cdO4i2Rn2KQM7rstleb+aemORvvwWVYe/PMlHHSgMPimfp46/q9ie
+         EnXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=2zHUTqe2BEDIfFjPflZSAEmKVxDCQvJVIM+QjgnJGck=;
+        b=CnPO7wbwpyHQ9tuzStXZDhbqmyGgPN3cev0GAa4G6pyogXLjYJzpdJlswBLxXtyqMc
+         BBZjOmi0EwE7FQq7e7TkrHU4joZD8pXuvpCYyLRoA5TNl/TJ9uSKTT4A06MEviFXvo3e
+         JkcAOthAGRqPgqud3cpNF0P1d7XFlZ/ZJH+OFxF8htAaJd0gWXnCPcY///g7S0g7pPXy
+         4HVEZVqt7bvP1ZXNUqX/mzmcilWhZeRFtb60+86p1Rp+1YvJzZxy2l0b4wgymHSWWr1i
+         mhCqKvcsX476ZYu3bc7OwmJlFk9/pGKd3GO45PvJtPiaNHstdB1J5JLoEzJwcz8ex/hn
+         gmTg==
+X-Gm-Message-State: AE9vXwMj72DbkyhStQqMRE6NE6KJBcVXPK6VvOye71XTsfbTKJA7yYMpHS2+2V1XIjfq/A==
+X-Received: by 10.66.194.196 with SMTP id hy4mr52112802pac.63.1473280718649;
+        Wed, 07 Sep 2016 13:38:38 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:60fa:bcd3:3f9b:dd2])
+        by smtp.gmail.com with ESMTPSA id f11sm486506pfe.1.2016.09.07.13.38.37
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 07 Sep 2016 13:38:37 -0700 (PDT)
+Date:   Wed, 7 Sep 2016 13:38:36 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        spearce@spearce.org, sbeller@google.com, peff@peff.net
+Subject: Re: [PATCH v2 2/2] connect: advertized capability is not a ref
+Message-ID: <20160907203836.GB25016@google.com>
+References: <cover.1472853827.git.jonathantanmy@google.com>
+ <cover.1472836026.git.jonathantanmy@google.com>
+ <cover.1472853827.git.jonathantanmy@google.com>
+ <174c8ca6638f1cd3145a628925e65655b56af366.1472853827.git.jonathantanmy@google.com>
+ <xmqqoa3zocud.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5CA6D02E-7537-11E6-A7CF-F7BB12518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqoa3zocud.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Junio C Hamano wrote:
+> Jonathan Tan <jonathantanmy@google.com> writes:
 
-> This is the fifth in a series of series to convert from unsigned char [20] to
-> struct object_id.
+>> diff --git a/connect.c b/connect.c
+>> index 722dc3f..0c2221e 100644
+>> --- a/connect.c
+>> +++ b/connect.c
+>> @@ -165,6 +165,9 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
+>>  			continue;
+>>  		}
+>>  
+>> +		if (!strcmp(name, "capabilities^{}"))
+>> +			continue;
 >
-> This series converts many of the files in the builtin directory to use struct
-> object_id.  This gets us almost to the point where we can convert get_tree_entry
-> to use struct object_id, but not quite.  That function is used indirectly by
-> get_sha1, meaning that get_oid would have to completely replace it in order for
-> get_tree_entry to be converted.
->
-> However, this series tackles one of two major sources of object ID values: the
-> command line (the other, of course, being the refs code).  Converting several of
-> the builtin commands to use struct object_id as much as possible makes it easier
-> to convert other functions down the line.
+> While it is true that ignoring this line anywhere in the ref
+> advertisement is safe, it feels a bit strange to do so, when we know
+> that it can appear _only_ when there is no other ref advertised.  I
+> guess you can argue that it is good to be lenient to accept what
+> others produce, but on the other hand, it can also be argued that
+> having this among real ref advertisement would be a protocol
+> violation that we may want to diagnose and prod the other side to
+> fix their software (but still not fail).
 
-It is a bit unfortunate that this conflicts somewhat in builtin/cat-file.c
-and heavily with builtin/apply.c with other topics in flight.
+By "it can also be argued", do you mean that you would prefer that
+behavior?
 
-Let me see how bad the conflict resolution is and report back later.
+It sounds like the worst of both worlds to me --- git would allow the
+buggy server behavior, leading people not to fix their servers, but it
+would print an ugly error message, so end-users would associate git
+with confusing messages.
 
-Thanks.
+Given that there aren't any servers that are going to produce this
+kind of bad input anyway, I prefer a die().
+
+Thanks,
+Jonathan
