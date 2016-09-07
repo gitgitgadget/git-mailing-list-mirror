@@ -2,83 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B9E12070F
-	for <e@80x24.org>; Wed,  7 Sep 2016 19:59:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A1CF1F859
+	for <e@80x24.org>; Wed,  7 Sep 2016 20:08:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755335AbcIGT6r (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Sep 2016 15:58:47 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60074 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753696AbcIGT6I (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2016 15:58:08 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2E7C938D54;
-        Wed,  7 Sep 2016 15:58:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=bOplq7OKLQNfAmTPo7HbpOYoNCo=; b=W5/od4
-        RotCUKogyIoC+8TlWkqmuySJ7fzQuoIlRnbUOzRB7YoYkU7Lq3iXdNdxvHywIx1a
-        ZW7mOKnLaeolJS2R0bRIQVboNkULXDO+tINqkfoye28qmao225ddVeimis/tGjiA
-        Kuhxac5wPKMLuCrutJicZ4IDhY54BQAuZFh2M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fpJM7S25wCVeSgdk4ENBlt5qbdeLK9Q5
-        DMPPghDZuiC4ujqIPiL7PgHINUNZk+0KxJfe6RX/2GxKOs/6EFvFJRwUBm6qNDzK
-        Yj+pO7jZ5nVWe3O5+ziJENEOh17xZ1qtuS0YmUiCEm+guc6okKu1q8nPPjhw3OtK
-        1FYwKeez9Xw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2656838D53;
-        Wed,  7 Sep 2016 15:58:07 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9E24B38D52;
-        Wed,  7 Sep 2016 15:58:06 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elia Pinto <gitter.spiros@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 3/4] t5550-http-fetch-dumb.sh: use the GIT_TRACE_CURL environment var
-References: <20160905102444.3586-1-gitter.spiros@gmail.com>
-        <20160905102444.3586-4-gitter.spiros@gmail.com>
-        <CAPig+cTsCDpCQ9j82OEa13YBYswDKfYd_dc1QbxRSRk3wiOhHw@mail.gmail.com>
-        <CA+EOSBki1E8HJ1DMuAuQaB6sBcUjvQLA5xUWdF9G+6+HRQUD7g@mail.gmail.com>
-        <xmqqpoofmuru.fsf@gitster.mtv.corp.google.com>
-Date:   Wed, 07 Sep 2016 12:58:04 -0700
-In-Reply-To: <xmqqpoofmuru.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Wed, 07 Sep 2016 11:25:57 -0700")
-Message-ID: <xmqqeg4vlbxv.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1755461AbcIGUIL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Sep 2016 16:08:11 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39599 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S932677AbcIGUGp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2016 16:06:45 -0400
+Received: (qmail 22108 invoked by uid 109); 7 Sep 2016 20:06:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 07 Sep 2016 20:06:45 +0000
+Received: (qmail 7516 invoked by uid 111); 7 Sep 2016 20:06:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 07 Sep 2016 16:06:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Sep 2016 16:06:42 -0400
+Date:   Wed, 7 Sep 2016 16:06:42 -0400
+From:   Jeff King <peff@peff.net>
+To:     Lars Wendler <polynomial-c@gentoo.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Knut Franke <k.franke@science-computing.de>,
+        git@vger.kernel.org, "Robin H. Johnson" <robbat2@gentoo.org>,
+        lekto@o2.pl
+Subject: Re: segfault in http.c when https URL is mistyped
+Message-ID: <20160907200642.5o3otxxt7ybw6x4c@sigill.intra.peff.net>
+References: <20160907151607.2b288034@abudhabi.paradoxon.rec>
+ <20160907154404.107fe6e6@abudhabi.paradoxon.rec>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 64D24910-7535-11E6-8D1A-51057B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20160907154404.107fe6e6@abudhabi.paradoxon.rec>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Sep 07, 2016 at 03:44:04PM +0200, Lars Wendler wrote:
 
-> Elia Pinto <gitter.spiros@gmail.com> writes:
->
->>>> +       cp expect expect.$$ &&
->>>> +       cp actual actual.$$ &&
->>>> +       cp output output.$$ &&
->>>
->>> What are these three cp's about? They don't seem to be related to the
->>> stated changes. Are they leftover debugging gunk?
->> Yes, i am very sorry. My bad. I will repost. Thanks
->
-> Nevertheless, thanks for these clean-ups.  Will discard this round
-> waiting for a reroll.
+> we at Gentoo got a bug report [1] about git-remote-https segfaulting
+> when the URL has been mistyped. 
+> This seems to only be triggered when git was compiled with curl
+> support:
+> 
+>   git clone https::/some.example-site.net/test.git
 
-Nevermind.  I see you rerolled only this one labeled as "v1 3/4";
-picked up the rest from this series and combined with that reroll.
+Thanks, this was easy to reproduce. It's a regression in v2.8.0. The fix
+is below.
 
-Thanks.
+-- >8 --
+Subject: [PATCH] remote-curl: handle URLs without protocol
 
+Generally remote-curl would never see a URL that did not
+have "proto:" at the beginning, as that is what tells git to
+run the "git-remote-proto" helper (and git-remote-http, etc,
+are aliases for git-remote-curl).
+
+However, the special syntax "proto::something" will run
+git-remote-proto with only "something" as the URL. So a
+malformed URL like:
+
+  http::/example.com/repo.git
+
+will feed the URL "/example.com/repo.git" to
+git-remote-http. The resulting URL has no protocol, but the
+code added by 372370f (http: use credential API to handle
+proxy authentication, 2016-01-26) does not handle this case
+and segfaults.
+
+For the purposes of this code, we don't really care what the
+exact protocol; only whether or not it is https. So let's
+just assume that a missing protocol is not, and curl will
+handle the real error (which is that the URL is nonsense).
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I looked around for other similar over-assumptions about the URL parsing
+but didn't see any.
+
+ http.c                     | 2 +-
+ t/t5550-http-fetch-dumb.sh | 8 ++++++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/http.c b/http.c
+index cd40b01..edce47c 100644
+--- a/http.c
++++ b/http.c
+@@ -723,7 +723,7 @@ static CURL *get_curl_handle(void)
+ 	 * precedence here, as in CURL.
+ 	 */
+ 	if (!curl_http_proxy) {
+-		if (!strcmp(http_auth.protocol, "https")) {
++		if (http_auth.protocol && !strcmp(http_auth.protocol, "https")) {
+ 			var_override(&curl_http_proxy, getenv("HTTPS_PROXY"));
+ 			var_override(&curl_http_proxy, getenv("https_proxy"));
+ 		} else {
+diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
+index 3484b6f..01bb633 100755
+--- a/t/t5550-http-fetch-dumb.sh
++++ b/t/t5550-http-fetch-dumb.sh
+@@ -299,5 +299,13 @@ test_expect_success 'git client does not send an empty Accept-Language' '
+ 	! grep "^Accept-Language:" stderr
+ '
+ 
++test_expect_success 'remote-http complains cleanly about malformed urls' '
++	# do not actually issue "list" or other commands, as we do not
++	# want to rely on what curl would actually do with such a broken
++	# URL. This is just about making sure we do not segfault during
++	# initialization.
++	test_must_fail git remote-http http::/example.com/repo.git
++'
++
+ stop_httpd
+ test_done
+-- 
+2.10.0.rc2.154.gb4a4b8b
 
