@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74AA91F859
-	for <e@80x24.org>; Wed,  7 Sep 2016 13:20:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D0BC1F859
+	for <e@80x24.org>; Wed,  7 Sep 2016 13:39:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754667AbcIGNUd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Sep 2016 09:20:33 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:34040 "EHLO
+        id S1757443AbcIGNjy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Sep 2016 09:39:54 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:32773 "EHLO
         mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752699AbcIGNUc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2016 09:20:32 -0400
-Received: by mail-wm0-f65.google.com with SMTP id w12so2980843wmf.1
-        for <git@vger.kernel.org>; Wed, 07 Sep 2016 06:20:31 -0700 (PDT)
+        with ESMTP id S1751499AbcIGNjw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2016 09:39:52 -0400
+Received: by mail-wm0-f65.google.com with SMTP id j136so1321954wmj.0
+        for <git@vger.kernel.org>; Wed, 07 Sep 2016 06:39:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=vx1oMNUAaofIYtS5AuBmSdCvLZ7Z8kIxhciBci3k8pA=;
-        b=fg201qQVK+/Z3XK3Q03VMdgSfniJlG/7d6x8VXTkz/KN2UW8tpahaUIHpCnOalTt9B
-         q1zSmElRtsnYttMWq1fCfQ/X2MBqqdrTU2w8OGQdJOFUBAZ9VRTq9q+6YRHhlC/N+mRk
-         9CRa2dNDS5vp6nn7EFkQcaTnR97EqQrIPG9LAzPnNf2yZD+H4EfltIA8O8NuFWnqH0lW
-         6lGC1EsSVtU6pewl7MxoGBm+/XxH4rJPkcjylsXSlBrC5AHme2jeV+Cvd51cA3kIOiJb
-         z4vDpmrjWUI5c8Yn9q/dWfMfKoNSPmH3fN9aLpg0A1b6af8+xXDQOPhFtxPIPTzUIwrz
-         oKpA==
+        bh=Y94XdPXEhuQXEQJFgLv1SgRJjeXKSjZjdoUWbxmgYhg=;
+        b=MqFS2hCkgrLY8OohE6VmDodkMI4UZ1UkCCCkWFsjHy7ZdGYRgJB/iaP7winEkNdgef
+         JJi6oyp9QKV59HTG543L1MtfsOusaklsLF8lJIvcQfgi2XyT6Dytr4SeMKMc0D+8qsS5
+         VegvCXyWi+aWt9TmOsaw2O4IS7tQTWfpqDjz+yZfbN/thhlwUCRqSpvkcudOuXZ88B+T
+         WXSxdoX7bBuR3bT4QXm1cXLWQThpqj9kU4/X47t+8TDZGtewNCZq9m1LdaN2+RAWJa/u
+         wxjjEu76uv6Z8mLpflgg2dnnYpkAx3kmO7VZR3kvoAVJzrJfFFZAZ81KV6Yj4JML8a9z
+         DNLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=vx1oMNUAaofIYtS5AuBmSdCvLZ7Z8kIxhciBci3k8pA=;
-        b=aQLu5BzKNnKhewl+4looUzIxDm8+LmPLAeHFaZuGtlbSMbMUeFcAUSQXBrrxyWokrE
-         gKUXP58Fr4RboJzfIkSGxa7TgLqvspqq9L8JZSA42GsD8+BqbqCZYpkv3Apj0/uWan5X
-         v8ZxtpbfNTid7QJQtpvxeNCSQ1p9MKaAcojjPE68Z7NwKXI6Moi79qgDpDR0OZt26k60
-         uGqd6ITOtNb8leADdue1R6YcUK9Gpng0YcYzER3TnJunpTzzDvRZ9B0VFbkQg02Ebf6v
-         u67Obcm16i9AG6rGoLNPNCOpmwg8Xgqn9BWndorcN/vImLIza+KFiXgjiLP9yc7K2bWD
-         iW4Q==
-X-Gm-Message-State: AE9vXwPwVLWsvpHkjMZd1LOb4dB/RPqIaEV2x0ThfsAe1PScChqMgNGb7NmarAVNwDNvDg==
-X-Received: by 10.194.189.229 with SMTP id gl5mr40377394wjc.168.1473254430607;
-        Wed, 07 Sep 2016 06:20:30 -0700 (PDT)
+        bh=Y94XdPXEhuQXEQJFgLv1SgRJjeXKSjZjdoUWbxmgYhg=;
+        b=iXlHnvlQ/5BJ9o9Zfzp31tpI/AgJVpkhqYZQrcKmtaU4+YnNMf7t270AfPViNr+1uw
+         n5fpcqdsdu73ZRoIkGHrXS+2WBYJMNwXrT0XJHaoNeerVP/LRITlqjkj2oxPdxCTth6X
+         k72ZShgtRlg6hfrXVUuYWkrpCRsotQBqj3quPXmt4qhL2R43X74D2mym7Doy26MIpPxx
+         n8rAxLtJRMo5+k5wGgG+JTMxBu+lofaJ2quQCwJ6iU1c3513UF05er2TG+uOQXYf9Ydu
+         f9OfUV9FIykPm+xTgkD6WQyTNzqjKQlU2h3euM1tpE87mqK0Ub92KD77imJ3kSkUcpFC
+         dPrg==
+X-Gm-Message-State: AE9vXwOsDGkvC827jevI9DfmzPOU6VgE6x/dni9Wz1lZTE6OBoaQZsS4P36ehRdqpQlO2A==
+X-Received: by 10.194.65.35 with SMTP id u3mr21055580wjs.189.1473255591606;
+        Wed, 07 Sep 2016 06:39:51 -0700 (PDT)
 Received: from [10.32.250.72] (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id 188sm4304850wmo.4.2016.09.07.06.20.29
+        by smtp.gmail.com with ESMTPSA id e5sm4369259wma.13.2016.09.07.06.39.50
         (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 07 Sep 2016 06:20:29 -0700 (PDT)
+        Wed, 07 Sep 2016 06:39:51 -0700 (PDT)
 Content-Type: text/plain; charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v1 1/2] sha1_file: open window into packfiles with CLOEXEC
+Subject: Re: [PATCH v1 2/2] read-cache: make sure file handles are not inherited by child processes
 From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <alpine.DEB.2.20.1609061333030.129229@virtualbox>
-Date:   Wed, 7 Sep 2016 15:20:28 +0200
-Cc:     Eric Wong <e@80x24.org>, git@vger.kernel.org, gitster@pobox.com,
-        tboegi@web.de
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <F8E7B7CE-1177-4CBD-999E-21C593A8ACD2@gmail.com>
-References: <20160905211111.72956-1-larsxschneider@gmail.com> <20160905211111.72956-2-larsxschneider@gmail.com> <20160905222715.GA30031@starla> <alpine.DEB.2.20.1609061333030.129229@virtualbox>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+In-Reply-To: <20160906210632.GA28263@starla>
+Date:   Wed, 7 Sep 2016 15:39:49 +0200
+Cc:     Git Mailing List <git@vger.kernel.org>, gitster@pobox.com,
+        tboegi@web.de, Johannes.Schindelin@gmx.de
+Content-Transfer-Encoding: 7bit
+Message-Id: <7B903664-0324-4375-A81C-1317020CBE9B@gmail.com>
+References: <20160905211111.72956-1-larsxschneider@gmail.com> <20160905211111.72956-3-larsxschneider@gmail.com> <20160906210632.GA28263@starla>
+To:     Eric Wong <e@80x24.org>
 X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -66,91 +66,30 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-> On 06 Sep 2016, at 13:38, Johannes Schindelin =
-<johannes.schindelin@gmx.de> wrote:
->=20
-> Hi Eric & Lars,
->=20
-> On Mon, 5 Sep 2016, Eric Wong wrote:
->=20
->> larsxschneider@gmail.com wrote:
->>> All processes that the Git main process spawns inherit the open file
->>> descriptors of the main process. These leaked file descriptors can
->>> cause problems.
->>=20
->>=20
->>> -int git_open_noatime(const char *name)
->>> +int git_open_noatime_cloexec(const char *name)
->>> {
->>> -	static int sha1_file_open_flag =3D O_NOATIME;
->>> +	static int sha1_file_open_flag =3D O_NOATIME | O_CLOEXEC;
->>>=20
->>> 	for (;;) {
->>> 		int fd;
->=20
->> I question the need for the "_cloexec" suffixing in the
->> function name since the old function is going away entirely.
->=20
-> Me, too. While it is correct, it makes things harder to read, so it =
-may
-> even cause more harm than it does good.
+> On 06 Sep 2016, at 23:06, Eric Wong <e@80x24.org> wrote:
+> 
+> larsxschneider@gmail.com wrote:
+>> static int ce_compare_data(const struct cache_entry *ce, struct stat *st)
+>> {
+>> 	int match = -1;
+>> -	int fd = open(ce->name, O_RDONLY);
+>> +	int fd = open(ce->name, O_RDONLY | O_CLOEXEC);
+>> 
+>> 	if (fd >= 0) {
+>> 		unsigned char sha1[20];
+> 
+> Also, this needs to check EINVAL when O_CLOEXEC != 0 the same
+> way create_tempfile currently does.  Somebody could be building
+> with modern headers but running an old kernel that doesn't
+> understand O_CLOEXEC.
+> 
+> There should probably be a open() wrapper for handling this case
+> since we're now up to 3 places where open(... O_CLOEXEC) is
+> used.
 
-What name would you suggest? Leaving the name as-is seems misleading to =
-me.
-Maybe just "git_open()" ?
-
-
->> I prefer all FD-creating functions set cloexec by default
->> for FD > 2 to avoid inadvertantly leaking FDs.  So we
->> ought to use pipe2, accept4, socket(..., SOCK_CLOEXEC), etc...
->> and fallback to the racy+slower F_SETFD when not available.
->=20
-> In the original Pull Request where the change was contributed to Git =
-for
-> Windows, this was tested (actually, the code did not see whether fd > =
-2,
-> but simply assumed that all newly opened file descriptors would be > 2
-> anyway), and it failed:
->=20
-> https://github.com/git-for-windows/git/pull/755#issuecomment-220247972
->=20
-> So it appears that we would have to exclude at least the code path to =
-`git
-> upload-pack` from that magic.
-
-
-I just realized that Dscho improved his original patch in GfW with a
-fallback if CLOEXEC is not present.
-
-I applied the same mechanism here. Would that be OK?
+Right! Actually "sha1_file.c:git_open_noatime()" is already a wrapper, no?
+Can't we use this here? The O_NOATIME flag shouldn't hurt, right?
 
 Thanks,
 Lars
-
--       static int sha1_file_open_flag =3D O_NOATIME;
-+       static int sha1_file_open_flag =3D O_NOATIME | O_CLOEXEC;
-
-        for (;;) {
-                int fd;
-@@ -1471,12 +1471,17 @@ int git_open_noatime(const char *name)
-                if (fd >=3D 0)
-                        return fd;
-
--               /* Might the failure be due to O_NOATIME? */
--               if (errno !=3D ENOENT && sha1_file_open_flag) {
--                       sha1_file_open_flag =3D 0;
-+               /* Try again w/o O_CLOEXEC: the kernel might not support =
-it */
-+               if (O_CLOEXEC && errno =3D=3D EINVAL && =
-(sha1_file_open_flag & O_CLOEXEC)) {
-+                       sha1_file_open_flag &=3D ~O_CLOEXEC;
-                        continue;
-                }
-
-+               /* Might the failure be due to O_NOATIME? */
-+               if (errno !=3D ENOENT && (sha1_file_open_flag & =
-O_NOATIME)) {
-+                       sha1_file_open_flag &=3D ~O_NOATIME;
-+                       continue;
-+               }
 
