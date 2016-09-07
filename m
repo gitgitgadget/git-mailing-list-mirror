@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B9581F859
-	for <e@80x24.org>; Wed,  7 Sep 2016 12:53:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82E6A1F859
+	for <e@80x24.org>; Wed,  7 Sep 2016 13:06:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932705AbcIGMxb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Sep 2016 08:53:31 -0400
-Received: from mout.gmx.net ([212.227.15.15]:61480 "EHLO mout.gmx.net"
+        id S1757436AbcIGNGx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Sep 2016 09:06:53 -0400
+Received: from mout.gmx.net ([212.227.17.22]:54742 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1757343AbcIGMx1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2016 08:53:27 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MH07e-1bmcYA3EbS-00Doq9; Wed, 07 Sep 2016 14:53:16
+        id S1757224AbcIGNGw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2016 09:06:52 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0M0tr1-1avAdW0dbz-00v5QZ; Wed, 07 Sep 2016 15:06:37
  +0200
-Date:   Wed, 7 Sep 2016 14:53:15 +0200 (CEST)
+Date:   Wed, 7 Sep 2016 15:06:36 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Jeff King <peff@peff.net>
 cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
         Kevin Willford <kewillf@microsoft.com>
-Subject: Re: [PATCH 1/2] patch-ids: turn off rename detection
-In-Reply-To: <20160907075411.cr67cbvmy7gxv2om@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1609071452580.129229@virtualbox>
-References: <20160907075346.z6wtmqnfc6bsunjb@sigill.intra.peff.net> <20160907075411.cr67cbvmy7gxv2om@sigill.intra.peff.net>
+Subject: Re: [RFC/PATCH 0/2] more patch-id speedups
+In-Reply-To: <20160907075346.z6wtmqnfc6bsunjb@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1609071453240.129229@virtualbox>
+References: <20160907075346.z6wtmqnfc6bsunjb@sigill.intra.peff.net>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:b7n+dCQ6IYOj1/TMrQ6bLap7RGZQOIsgZLXzvepojSGmV05Z3MY
- SF8d6vX+zx390/PvyRXxRwyWmVxaBSA7FAGggd6ewtni1hqFtbVH8vXgbwjy5LfPm6SC9Mi
- E57MLdfAqCod1B8/U6pfndeSgYLq8GF2d6qGIrEpiZWM8DdQXW+CQb/XaAfjFhbVaELwDpg
- ex7/a5A1ibrQ+N8nKfFog==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:V1u2ovr6ctQ=:GiJZie8Z6HgVWFv5CAty+a
- HDyjywrLHsmsmevpS2cvx/F6ULpHq0P96kEcYkRjhHemlzm/6mJDa82lJ/E5F9qeb7nKv8c1+
- 6qtsT1dls6sUa8LtziRnrs4QWosbERuaPMwBQgAjn4prerBaGJsBnz6TWlk+04Eh01TCluvRZ
- QK8MUk5OENO8JdUbVpOncFWn9vT4tkgj9L4KPpE1Y51r/LWB6Q26jNgx1FDwjyrO4IZbkIPFM
- idyDQf0AgTe0QAv7JGp7ZwbxpWpjLd9Lhp9J+x6KYc6NDLGIPa5hMAKEbGSlmAZnJT0Nw/YRV
- 3wzXKAl3VphLHojpDMViXURS1/REMtQA6bzjReEgyY31rVSZX23uYzjHzCyrXYzBB46C7GMAf
- Wxt9rWpJyGGB8a5N65HIFbqO+E2G0C4v5khpNGSM4M39LVP6pugOiPEAQgOfYC44sG0ikuoOB
- MSaPHLqxhTXmgWKY6jPeZw+hjy6zJhIp2qLowak66RVOXTCAB3UcMYLd468cUfOMP28bbI4d4
- Y1rJ45hPmLaFqD7M4Qi+bVe2sxasv483QNH1g6srboUuFwESLDGuPw1mQYNqZuNWpPPTf66ui
- fMUKHtznzYfUsgnhjdYtXtrkyIUUyCjlXTH0j/7SSkAVVLN8AB8rhaShq/QSRjt8Kkh0xyBOH
- I6W5SVECG6hMZtLuB2V7OIit9jrJ8gBjB+nz57y7eoiOw+Di3f/4+EXlAefwS75WuV45+FedZ
- TuMkoEsebiDoRHs6/uqFy1fqnPoCtm76obyRc8PjJCFYE1LKa0kbjSAcnetgkNVghHXmKtbuZ
- fmv2l2O
+X-Provags-ID: V03:K0:VAEZ+oFaz6XkumhYM5JF1RsuIaXPTTAHqakkEoHXLQ46+kk21CG
+ UwBHiMkWkbIl9wq9Nty9Zmz4ZthhdUoFQya2Hs4Tp+5G5shwUn9IuLo1CxKTQzBbNE6g2I4
+ sp5rI2i2tYJu71a0e9kPb+Fc+ozO26iVZuSmXuaXDvZ2N+ct7Sv1E1iyaBz2G+MXIU0WUge
+ e5H0wfr8N83Oh3Gi6Edmg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:R/QjJlrW5xs=:Q1819EU+SkS8wFr0nvc6+p
+ ON2jzLpbNxB8QwovEGGu+leMm/retj7zZSbrDnR4hzMr48nlJ3/OXs+2aR+smMdTy4QXM8IqI
+ Z8lvS/kKThsYyzYBZphuUacFI4RwW4YqEyyBBczhe94cd/cDyIOUC6gvLUiATRGRwYtWDIweR
+ y9JSvvSG39RTLA5VP+Inny9+X4Cs7FCP+GuSlui1XMPAr/Wf5Oe6KWHUobH46XgAzdAyJVOZY
+ uiSog4FQoBPHk1fwO+XlTIvYmmkgjNeRNNNtWsIs5UqVoRMH2lodP91FXz1sy4p7wey1WuEdM
+ V9pVc1K4NlpCFLENjU+0aNFt/rhce9VTXlcA2EhD+uaJ1RNL+VhpJtodXFhtxbS/v5gnU/Zaa
+ V/51/QQfVCEvxflT6lttDF9rSJbJfDVVfs4fCaD9wdgkxTdCXUG8RGPOQgAAZYFiNnTjjV/o8
+ pnjVJY1c2pb+y9RMLgajTdKYHpCWXNKZJv1Q1gPQYKpukJ0r5/knMC1eJn7rs5xVSY9NMf/4q
+ nFd7jVOgTdgd8e0L7x7se+Ft8ZYmCN1JJjWDiaDUE2hjuV/PqF7bHjPdMoXy3pze4MrNe+Iz6
+ /8bsEUfnTOcfz3mDQWmklp6h1++bWcgBmplODcbbufPTmhnlpmgTowbeMVWPDXm74ddceRTyW
+ ImBNwNA8liVK7FLdCetkyzwOt+IaOAEj6s2j2EuImXIjpBU91u2sEtt1okJpxLc40ZTSN+X3J
+ 917mDxHQ5oIujav+tKxWGm7zltXUzDVKiv6S4WkmPImNfvBxTJU/t4J9l506ql+nuW5xJZ2gr
+ X86qGjt
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,31 +58,63 @@ Hi Peff,
 
 On Wed, 7 Sep 2016, Jeff King wrote:
 
-> The patch-id code may be running inside another porcelain
-> like "git log" or "git format-patch", and therefore may have
-> set diff_detect_rename_default, either via the diff-ui
-> config, or by default since 5404c11 (diff: activate
-> diff.renames by default, 2016-02-25). This is the case even
-> if a command is run with `--no-renames`, as that is applied
-> only to the diff-options used by the command itself.
+> Michael and I found a case where the "format-patch --cherry-pick A...B"
+> command for a rebase took over 7 minutes to run with git v2.9.3. Yikes.
 > 
-> Rename detection doesn't help the patch-id results. It
-> _may_ actually hurt, as minor differences in the files that
-> would be overlooked by patch-id's canonicalization might
-> result in different renames (though I'd doubt that it ever
-> comes up in practice).
-> 
-> But mostly it is just a waste of CPU to compute these
-> renames.
-> 
-> Note that we don't have to worry about compatibility here.
-> This patch disables renames just for the internal patch-id
-> comparison run by "log --cherry-pick", etc. The user-visible
-> "git patch-id" output depends on the patch that it is fed
-> (so it is up to the diff generator to use --no-renames if
-> they wish).
+> Switching to v2.10 dropped that to a bit over 3 minutes (due to the
+> kw/patch-ids-optim topic). Better, but not great.
 
-Sounds obviously good to me.
+I agree: not great, but better...
+
+> The culprit turned out to be merge commits; the patch-id code will
+> happily diff a merge against its first parent, and ignore the rest. This
+> _seems_ like a bad idea, but maybe there is something clever going on
+> that I don't know about. I couldn't find anything useful in the history,
+> and given that this code was adapted from rebase, my guess is that it
+> was never really intended to handle merge commits in the first place (of
+> course we weren't trying to rebase merge commits; but it has to generate
+> patch-ids for everything that happened on "A" to compare against).
+> 
+> Dropping the computation of the merge commits got it down to about 4
+> seconds. I also noticed that it was doing rename detection (which also
+> seems like a bad idea). Disabling renames dropped another half second or
+> so.
+
+That makes for a really nice improvement!
+
+> This is marked as "RFC" because I don't feel entirely confident that I'm
+> not missing some clever need for these options. But in both cases my gut
+> feeling is that they are simply unintended effects that nobody ever
+> noticed, because it would be very rare that they would affect the
+> output. And that if they _did_ affect the output, they would probably be
+> doing the wrong thing.
+
+Given that the patch ID is *wrong* for merge commits (it only looks at the
+first parent, so each "-s ours" merge will have the same patch ID!), I
+would say that we can get away with re-defining the patch ID of merge
+commits.
+
+The only case where it might change things that I can think of would be a
+`git rebase --preserve-merges`: it would probably have worked *by chance*
+before (or not, in case of "-s ours" merges), and now it would try to pick
+the merge commits even if rebased versions were already merged upstream.
+
+If I read the --preserve-merges code correctly, that would result in the
+merge commit's parents to be 'rewritten' to HEAD. And as both parents
+would be rewritten to HEAD, they would be condensed into a single new
+parent, resulting in a cherry-pick that fails (because it tries to
+cherry-pick a merge commit without any -n option).
+
+Of course, what we could do is to introduce a modifier, e.g.
+--cherry-pick=first-parent, that would trigger the old behavior and would
+be asked-for in the --preserve-merges mode.
+
+But quite frankly, personally I would not worry about it *that* much. As
+you pointed out, the patch ID for merge commits is incorrect to begin
+with, and we may just redeclare all merge commits to be incomparable to
+one another when it comes to patch IDs.
+
+In short: I would be fine with the change of behavior.
 
 Ciao,
 Dscho
