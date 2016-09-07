@@ -2,119 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82E6A1F859
-	for <e@80x24.org>; Wed,  7 Sep 2016 13:06:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74AA91F859
+	for <e@80x24.org>; Wed,  7 Sep 2016 13:20:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757436AbcIGNGx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Sep 2016 09:06:53 -0400
-Received: from mout.gmx.net ([212.227.17.22]:54742 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1757224AbcIGNGw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2016 09:06:52 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0M0tr1-1avAdW0dbz-00v5QZ; Wed, 07 Sep 2016 15:06:37
- +0200
-Date:   Wed, 7 Sep 2016 15:06:36 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jeff King <peff@peff.net>
-cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-        Kevin Willford <kewillf@microsoft.com>
-Subject: Re: [RFC/PATCH 0/2] more patch-id speedups
-In-Reply-To: <20160907075346.z6wtmqnfc6bsunjb@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1609071453240.129229@virtualbox>
-References: <20160907075346.z6wtmqnfc6bsunjb@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:VAEZ+oFaz6XkumhYM5JF1RsuIaXPTTAHqakkEoHXLQ46+kk21CG
- UwBHiMkWkbIl9wq9Nty9Zmz4ZthhdUoFQya2Hs4Tp+5G5shwUn9IuLo1CxKTQzBbNE6g2I4
- sp5rI2i2tYJu71a0e9kPb+Fc+ozO26iVZuSmXuaXDvZ2N+ct7Sv1E1iyaBz2G+MXIU0WUge
- e5H0wfr8N83Oh3Gi6Edmg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:R/QjJlrW5xs=:Q1819EU+SkS8wFr0nvc6+p
- ON2jzLpbNxB8QwovEGGu+leMm/retj7zZSbrDnR4hzMr48nlJ3/OXs+2aR+smMdTy4QXM8IqI
- Z8lvS/kKThsYyzYBZphuUacFI4RwW4YqEyyBBczhe94cd/cDyIOUC6gvLUiATRGRwYtWDIweR
- y9JSvvSG39RTLA5VP+Inny9+X4Cs7FCP+GuSlui1XMPAr/Wf5Oe6KWHUobH46XgAzdAyJVOZY
- uiSog4FQoBPHk1fwO+XlTIvYmmkgjNeRNNNtWsIs5UqVoRMH2lodP91FXz1sy4p7wey1WuEdM
- V9pVc1K4NlpCFLENjU+0aNFt/rhce9VTXlcA2EhD+uaJ1RNL+VhpJtodXFhtxbS/v5gnU/Zaa
- V/51/QQfVCEvxflT6lttDF9rSJbJfDVVfs4fCaD9wdgkxTdCXUG8RGPOQgAAZYFiNnTjjV/o8
- pnjVJY1c2pb+y9RMLgajTdKYHpCWXNKZJv1Q1gPQYKpukJ0r5/knMC1eJn7rs5xVSY9NMf/4q
- nFd7jVOgTdgd8e0L7x7se+Ft8ZYmCN1JJjWDiaDUE2hjuV/PqF7bHjPdMoXy3pze4MrNe+Iz6
- /8bsEUfnTOcfz3mDQWmklp6h1++bWcgBmplODcbbufPTmhnlpmgTowbeMVWPDXm74ddceRTyW
- ImBNwNA8liVK7FLdCetkyzwOt+IaOAEj6s2j2EuImXIjpBU91u2sEtt1okJpxLc40ZTSN+X3J
- 917mDxHQ5oIujav+tKxWGm7zltXUzDVKiv6S4WkmPImNfvBxTJU/t4J9l506ql+nuW5xJZ2gr
- X86qGjt
+        id S1754667AbcIGNUd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Sep 2016 09:20:33 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:34040 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752699AbcIGNUc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2016 09:20:32 -0400
+Received: by mail-wm0-f65.google.com with SMTP id w12so2980843wmf.1
+        for <git@vger.kernel.org>; Wed, 07 Sep 2016 06:20:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=vx1oMNUAaofIYtS5AuBmSdCvLZ7Z8kIxhciBci3k8pA=;
+        b=fg201qQVK+/Z3XK3Q03VMdgSfniJlG/7d6x8VXTkz/KN2UW8tpahaUIHpCnOalTt9B
+         q1zSmElRtsnYttMWq1fCfQ/X2MBqqdrTU2w8OGQdJOFUBAZ9VRTq9q+6YRHhlC/N+mRk
+         9CRa2dNDS5vp6nn7EFkQcaTnR97EqQrIPG9LAzPnNf2yZD+H4EfltIA8O8NuFWnqH0lW
+         6lGC1EsSVtU6pewl7MxoGBm+/XxH4rJPkcjylsXSlBrC5AHme2jeV+Cvd51cA3kIOiJb
+         z4vDpmrjWUI5c8Yn9q/dWfMfKoNSPmH3fN9aLpg0A1b6af8+xXDQOPhFtxPIPTzUIwrz
+         oKpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=vx1oMNUAaofIYtS5AuBmSdCvLZ7Z8kIxhciBci3k8pA=;
+        b=aQLu5BzKNnKhewl+4looUzIxDm8+LmPLAeHFaZuGtlbSMbMUeFcAUSQXBrrxyWokrE
+         gKUXP58Fr4RboJzfIkSGxa7TgLqvspqq9L8JZSA42GsD8+BqbqCZYpkv3Apj0/uWan5X
+         v8ZxtpbfNTid7QJQtpvxeNCSQ1p9MKaAcojjPE68Z7NwKXI6Moi79qgDpDR0OZt26k60
+         uGqd6ITOtNb8leADdue1R6YcUK9Gpng0YcYzER3TnJunpTzzDvRZ9B0VFbkQg02Ebf6v
+         u67Obcm16i9AG6rGoLNPNCOpmwg8Xgqn9BWndorcN/vImLIza+KFiXgjiLP9yc7K2bWD
+         iW4Q==
+X-Gm-Message-State: AE9vXwPwVLWsvpHkjMZd1LOb4dB/RPqIaEV2x0ThfsAe1PScChqMgNGb7NmarAVNwDNvDg==
+X-Received: by 10.194.189.229 with SMTP id gl5mr40377394wjc.168.1473254430607;
+        Wed, 07 Sep 2016 06:20:30 -0700 (PDT)
+Received: from [10.32.250.72] (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id 188sm4304850wmo.4.2016.09.07.06.20.29
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 07 Sep 2016 06:20:29 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v1 1/2] sha1_file: open window into packfiles with CLOEXEC
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <alpine.DEB.2.20.1609061333030.129229@virtualbox>
+Date:   Wed, 7 Sep 2016 15:20:28 +0200
+Cc:     Eric Wong <e@80x24.org>, git@vger.kernel.org, gitster@pobox.com,
+        tboegi@web.de
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <F8E7B7CE-1177-4CBD-999E-21C593A8ACD2@gmail.com>
+References: <20160905211111.72956-1-larsxschneider@gmail.com> <20160905211111.72956-2-larsxschneider@gmail.com> <20160905222715.GA30031@starla> <alpine.DEB.2.20.1609061333030.129229@virtualbox>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
 
-On Wed, 7 Sep 2016, Jeff King wrote:
+> On 06 Sep 2016, at 13:38, Johannes Schindelin =
+<johannes.schindelin@gmx.de> wrote:
+>=20
+> Hi Eric & Lars,
+>=20
+> On Mon, 5 Sep 2016, Eric Wong wrote:
+>=20
+>> larsxschneider@gmail.com wrote:
+>>> All processes that the Git main process spawns inherit the open file
+>>> descriptors of the main process. These leaked file descriptors can
+>>> cause problems.
+>>=20
+>>=20
+>>> -int git_open_noatime(const char *name)
+>>> +int git_open_noatime_cloexec(const char *name)
+>>> {
+>>> -	static int sha1_file_open_flag =3D O_NOATIME;
+>>> +	static int sha1_file_open_flag =3D O_NOATIME | O_CLOEXEC;
+>>>=20
+>>> 	for (;;) {
+>>> 		int fd;
+>=20
+>> I question the need for the "_cloexec" suffixing in the
+>> function name since the old function is going away entirely.
+>=20
+> Me, too. While it is correct, it makes things harder to read, so it =
+may
+> even cause more harm than it does good.
 
-> Michael and I found a case where the "format-patch --cherry-pick A...B"
-> command for a rebase took over 7 minutes to run with git v2.9.3. Yikes.
-> 
-> Switching to v2.10 dropped that to a bit over 3 minutes (due to the
-> kw/patch-ids-optim topic). Better, but not great.
+What name would you suggest? Leaving the name as-is seems misleading to =
+me.
+Maybe just "git_open()" ?
 
-I agree: not great, but better...
 
-> The culprit turned out to be merge commits; the patch-id code will
-> happily diff a merge against its first parent, and ignore the rest. This
-> _seems_ like a bad idea, but maybe there is something clever going on
-> that I don't know about. I couldn't find anything useful in the history,
-> and given that this code was adapted from rebase, my guess is that it
-> was never really intended to handle merge commits in the first place (of
-> course we weren't trying to rebase merge commits; but it has to generate
-> patch-ids for everything that happened on "A" to compare against).
-> 
-> Dropping the computation of the merge commits got it down to about 4
-> seconds. I also noticed that it was doing rename detection (which also
-> seems like a bad idea). Disabling renames dropped another half second or
-> so.
+>> I prefer all FD-creating functions set cloexec by default
+>> for FD > 2 to avoid inadvertantly leaking FDs.  So we
+>> ought to use pipe2, accept4, socket(..., SOCK_CLOEXEC), etc...
+>> and fallback to the racy+slower F_SETFD when not available.
+>=20
+> In the original Pull Request where the change was contributed to Git =
+for
+> Windows, this was tested (actually, the code did not see whether fd > =
+2,
+> but simply assumed that all newly opened file descriptors would be > 2
+> anyway), and it failed:
+>=20
+> https://github.com/git-for-windows/git/pull/755#issuecomment-220247972
+>=20
+> So it appears that we would have to exclude at least the code path to =
+`git
+> upload-pack` from that magic.
 
-That makes for a really nice improvement!
 
-> This is marked as "RFC" because I don't feel entirely confident that I'm
-> not missing some clever need for these options. But in both cases my gut
-> feeling is that they are simply unintended effects that nobody ever
-> noticed, because it would be very rare that they would affect the
-> output. And that if they _did_ affect the output, they would probably be
-> doing the wrong thing.
+I just realized that Dscho improved his original patch in GfW with a
+fallback if CLOEXEC is not present.
 
-Given that the patch ID is *wrong* for merge commits (it only looks at the
-first parent, so each "-s ours" merge will have the same patch ID!), I
-would say that we can get away with re-defining the patch ID of merge
-commits.
+I applied the same mechanism here. Would that be OK?
 
-The only case where it might change things that I can think of would be a
-`git rebase --preserve-merges`: it would probably have worked *by chance*
-before (or not, in case of "-s ours" merges), and now it would try to pick
-the merge commits even if rebased versions were already merged upstream.
+Thanks,
+Lars
 
-If I read the --preserve-merges code correctly, that would result in the
-merge commit's parents to be 'rewritten' to HEAD. And as both parents
-would be rewritten to HEAD, they would be condensed into a single new
-parent, resulting in a cherry-pick that fails (because it tries to
-cherry-pick a merge commit without any -n option).
+-       static int sha1_file_open_flag =3D O_NOATIME;
++       static int sha1_file_open_flag =3D O_NOATIME | O_CLOEXEC;
 
-Of course, what we could do is to introduce a modifier, e.g.
---cherry-pick=first-parent, that would trigger the old behavior and would
-be asked-for in the --preserve-merges mode.
+        for (;;) {
+                int fd;
+@@ -1471,12 +1471,17 @@ int git_open_noatime(const char *name)
+                if (fd >=3D 0)
+                        return fd;
 
-But quite frankly, personally I would not worry about it *that* much. As
-you pointed out, the patch ID for merge commits is incorrect to begin
-with, and we may just redeclare all merge commits to be incomparable to
-one another when it comes to patch IDs.
+-               /* Might the failure be due to O_NOATIME? */
+-               if (errno !=3D ENOENT && sha1_file_open_flag) {
+-                       sha1_file_open_flag =3D 0;
++               /* Try again w/o O_CLOEXEC: the kernel might not support =
+it */
++               if (O_CLOEXEC && errno =3D=3D EINVAL && =
+(sha1_file_open_flag & O_CLOEXEC)) {
++                       sha1_file_open_flag &=3D ~O_CLOEXEC;
+                        continue;
+                }
 
-In short: I would be fine with the change of behavior.
++               /* Might the failure be due to O_NOATIME? */
++               if (errno !=3D ENOENT && (sha1_file_open_flag & =
+O_NOATIME)) {
++                       sha1_file_open_flag &=3D ~O_NOATIME;
++                       continue;
++               }
 
-Ciao,
-Dscho
