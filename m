@@ -6,23 +6,23 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0AABB1F859
-	for <e@80x24.org>; Wed,  7 Sep 2016 22:04:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF8E61F859
+	for <e@80x24.org>; Wed,  7 Sep 2016 22:04:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753838AbcIGWEO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Sep 2016 18:04:14 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39698 "HELO cloud.peff.net"
+        id S1754014AbcIGWEo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Sep 2016 18:04:44 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39706 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752563AbcIGWEN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2016 18:04:13 -0400
-Received: (qmail 29615 invoked by uid 109); 7 Sep 2016 22:04:12 -0000
+        id S1752563AbcIGWEn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2016 18:04:43 -0400
+Received: (qmail 29638 invoked by uid 109); 7 Sep 2016 22:04:43 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 07 Sep 2016 22:04:12 +0000
-Received: (qmail 8507 invoked by uid 111); 7 Sep 2016 22:04:20 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 07 Sep 2016 22:04:43 +0000
+Received: (qmail 8529 invoked by uid 111); 7 Sep 2016 22:04:51 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 07 Sep 2016 18:04:20 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Sep 2016 18:04:09 -0400
-Date:   Wed, 7 Sep 2016 18:04:09 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 07 Sep 2016 18:04:51 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Sep 2016 18:04:40 -0400
+Date:   Wed, 7 Sep 2016 18:04:40 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
@@ -30,8 +30,8 @@ Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
         Xiaolong Ye <xiaolong.ye@intel.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Josh Triplett <josh@joshtriplett.org>
-Subject: [PATCH 2/3] diff_flush_patch_id: stop returning error result
-Message-ID: <20160907220409.oowxymhvkof2xsk5@sigill.intra.peff.net>
+Subject: [PATCH 3/3] patch-ids: use commit sha1 as patch-id for merge commits
+Message-ID: <20160907220439.ukbqnj5biaro2lxv@sigill.intra.peff.net>
 References: <20160907220101.hwwutkiagfottbdd@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -42,128 +42,110 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-All of our errors come from diff_get_patch_id(), which has
-exactly three error conditions. The first is an internal
-assertion, which should be a die("BUG") in the first place.
+The patch-ids code which powers "log --cherry-pick" doesn't
+look at whether each commit is a merge or not. It just feeds
+the commit's first parent to the diff, and ignores any
+additional parents.
 
-The other two are caused by an inability to two diff blobs,
-which is an indication of a serious problem (probably
-repository corruption). All the rest of the diff subsystem
-dies immediately on these conditions. By passing up the
-error, in theory we can keep going even if patch-id is
-unable to function. But in practice this means we may
-generate subtly wrong results (e.g., by failing to correlate
-two commits). Let's just die(), as we're better off making
-it clear to the user that their repository is not
-functional.
+In theory, this might be useful if you wanted to find
+equivalence between, say, a merge commit and a squash-merge
+that does the same thing.  But it also promotes a false
+equivalence between distinct merges; for example, every
+"merge -s ours" would look like an empty commit (which is
+true in a sense, but presumably there was a value in merging
+in the discarded history). Since patch-ids are meant for
+throwing away duplicates, we should err on the side of _not_
+matching such merges.
 
-As a result, we can simplify the calling code.
+Moreover, we may spend a lot of extra time computing these
+merge diffs. In the case that inspired this patch, a "git
+format-patch --cherry-pick" dropped from over 3 minutes to
+less than 4 seconds.
 
+This seems pretty drastic, but is easily explained. The
+command was invoked by a "git rebase" of an older topic
+branch; there had been tens of thousands of commits on the
+upstream branch in the meantime. In addition, this project
+used a topic-branch workflow with occasional "back-merges"
+from "master" to each topic (to resolve conflicts on the
+topics rather than in the merge commits). So there were not
+only extra merges, but the diffs for these back-merges were
+generally quite large (because they represented _everything_
+that had been merged to master since the topic branched).
+
+This patch defines the patch-id of a merge commit as
+essentially "null"; it has no patch-id. As a result,
+merges cannot match patch-ids via "--cherry-pick", and
+"format-patch --base" will not list merges in its list of
+prerequisite patch ids.
+
+We can signal the null patch-id by returning "-1" from
+commit_patch_id(), as it no longer returns any meaningful
+errors (and as a result, its callers are updated to handle
+"-1" differently).
+
+Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-This is a prerequisite for patch 3, since it means that
-commit_patch_id() stops returning "real" errors. But obviously if this
-is distasteful (and it does feel a little weird to convert error() to
-die(), even though the rest of the diff code-base behaves this way), we
-can teach commit_patch_id() to distinguish between "this has no
-patch-id" and "a real error occured" in its return value.
+ builtin/log.c |  2 +-
+ patch-ids.c   | 14 +++++++-------
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
- diff.c      | 18 ++++++++----------
- diff.h      |  2 +-
- patch-ids.c |  3 ++-
- 3 files changed, 11 insertions(+), 12 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 534c12e..d0594f6 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4462,7 +4462,7 @@ static void patch_id_consume(void *priv, char *line, unsigned long len)
- }
- 
- /* returns 0 upon success, and writes result into sha1 */
--static int diff_get_patch_id(struct diff_options *options, unsigned char *sha1, int diff_header_only)
-+static void diff_get_patch_id(struct diff_options *options, unsigned char *sha1, int diff_header_only)
- {
- 	struct diff_queue_struct *q = &diff_queued_diff;
- 	int i;
-@@ -4484,7 +4484,7 @@ static int diff_get_patch_id(struct diff_options *options, unsigned char *sha1,
- 		memset(&xpp, 0, sizeof(xpp));
- 		memset(&xecfg, 0, sizeof(xecfg));
- 		if (p->status == 0)
--			return error("internal diff status error");
-+			die("BUG: diff status unset while computing patch_id");
- 		if (p->status == DIFF_STATUS_UNKNOWN)
+diff --git a/builtin/log.c b/builtin/log.c
+index 92dc34d..e660034 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1344,7 +1344,7 @@ static void prepare_bases(struct base_tree_info *bases,
+ 		if (commit->util)
  			continue;
- 		if (diff_unmodified_pair(p))
-@@ -4536,7 +4536,7 @@ static int diff_get_patch_id(struct diff_options *options, unsigned char *sha1,
- 
- 		if (fill_mmfile(&mf1, p->one) < 0 ||
- 		    fill_mmfile(&mf2, p->two) < 0)
--			return error("unable to read files to diff");
-+			die("unable to read files to diff");
- 
- 		if (diff_filespec_is_binary(p->one) ||
- 		    diff_filespec_is_binary(p->two)) {
-@@ -4552,27 +4552,25 @@ static int diff_get_patch_id(struct diff_options *options, unsigned char *sha1,
- 		xecfg.flags = 0;
- 		if (xdi_diff_outf(&mf1, &mf2, patch_id_consume, &data,
- 				  &xpp, &xecfg))
--			return error("unable to generate patch-id diff for %s",
--				     p->one->path);
-+			die("unable to generate patch-id diff for %s",
-+			    p->one->path);
- 	}
- 
- 	git_SHA1_Final(sha1, &ctx);
--	return 0;
- }
- 
--int diff_flush_patch_id(struct diff_options *options, unsigned char *sha1, int diff_header_only)
-+void diff_flush_patch_id(struct diff_options *options, unsigned char *sha1, int diff_header_only)
- {
- 	struct diff_queue_struct *q = &diff_queued_diff;
- 	int i;
--	int result = diff_get_patch_id(options, sha1, diff_header_only);
-+
-+	diff_get_patch_id(options, sha1, diff_header_only);
- 
- 	for (i = 0; i < q->nr; i++)
- 		diff_free_filepair(q->queue[i]);
- 
- 	free(q->queue);
- 	DIFF_QUEUE_CLEAR(q);
--
--	return result;
- }
- 
- static int is_summary_empty(const struct diff_queue_struct *q)
-diff --git a/diff.h b/diff.h
-index 7883729..f4dcfe1 100644
---- a/diff.h
-+++ b/diff.h
-@@ -342,7 +342,7 @@ extern int run_diff_files(struct rev_info *revs, unsigned int option);
- extern int run_diff_index(struct rev_info *revs, int cached);
- 
- extern int do_diff_cache(const unsigned char *, struct diff_options *);
--extern int diff_flush_patch_id(struct diff_options *, unsigned char *, int);
-+extern void diff_flush_patch_id(struct diff_options *, unsigned char *, int);
- 
- extern int diff_result_code(struct diff_options *, int);
- 
+ 		if (commit_patch_id(commit, &diffopt, sha1, 0))
+-			die(_("cannot get patch id"));
++			continue;
+ 		ALLOC_GROW(bases->patch_id, bases->nr_patch_id + 1, bases->alloc_patch_id);
+ 		patch_id = bases->patch_id + bases->nr_patch_id;
+ 		hashcpy(patch_id->hash, sha1);
 diff --git a/patch-ids.c b/patch-ids.c
-index 77e4663..0e95220 100644
+index 0e95220..197c70b 100644
 --- a/patch-ids.c
 +++ b/patch-ids.c
-@@ -13,7 +13,8 @@ int commit_patch_id(struct commit *commit, struct diff_options *options,
- 	else
+@@ -7,10 +7,12 @@
+ int commit_patch_id(struct commit *commit, struct diff_options *options,
+ 		    unsigned char *sha1, int diff_header_only)
+ {
+-	if (commit->parents)
++	if (commit->parents) {
++		if (commit->parents->next)
++			return -1;
+ 		diff_tree_sha1(commit->parents->item->object.oid.hash,
+ 			       commit->object.oid.hash, "", options);
+-	else
++	} else
  		diff_root_tree_sha1(commit->object.oid.hash, "", options);
  	diffcore_std(options);
--	return diff_flush_patch_id(options, sha1, diff_header_only);
-+	diff_flush_patch_id(options, sha1, diff_header_only);
-+	return 0;
- }
+ 	diff_flush_patch_id(options, sha1, diff_header_only);
+@@ -19,7 +21,7 @@ int commit_patch_id(struct commit *commit, struct diff_options *options,
  
  /*
+  * When we cannot load the full patch-id for both commits for whatever
+- * reason, the function returns -1 (i.e. return error(...)). Despite
++ * reason, the function returns -1. Despite
+  * the "cmp" in the name of this function, the caller only cares about
+  * the return value being zero (a and b are equivalent) or non-zero (a
+  * and b are different), and returning non-zero would keep both in the
+@@ -33,12 +35,10 @@ static int patch_id_cmp(struct patch_id *a,
+ {
+ 	if (is_null_sha1(a->patch_id) &&
+ 	    commit_patch_id(a->commit, opt, a->patch_id, 0))
+-		return error("Could not get patch ID for %s",
+-			oid_to_hex(&a->commit->object.oid));
++		return -1;
+ 	if (is_null_sha1(b->patch_id) &&
+ 	    commit_patch_id(b->commit, opt, b->patch_id, 0))
+-		return error("Could not get patch ID for %s",
+-			oid_to_hex(&b->commit->object.oid));
++		return -1;
+ 	return hashcmp(a->patch_id, b->patch_id);
+ }
+ 
 -- 
 2.10.0.rc2.154.gb4a4b8b
-
