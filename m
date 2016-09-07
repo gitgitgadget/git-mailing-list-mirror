@@ -2,67 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1CB0620705
-	for <e@80x24.org>; Wed,  7 Sep 2016 11:35:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A87720705
+	for <e@80x24.org>; Wed,  7 Sep 2016 11:48:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S938654AbcIGLfT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Sep 2016 07:35:19 -0400
-Received: from mout.gmx.net ([212.227.15.15]:58845 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934982AbcIGLfP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2016 07:35:15 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0Mgt3g-1bUJRf1q2C-00M510; Wed, 07 Sep 2016 13:35:11
- +0200
-Date:   Wed, 7 Sep 2016 13:35:09 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Johannes Sixt <j6t@kdbg.org>
-cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v2] t6026-merge-attr: clean up background process at end
- of test case
-In-Reply-To: <1953cc16-7577-16dd-fe7e-f557e7a74f58@kdbg.org>
-Message-ID: <alpine.DEB.2.20.1609071334340.129229@virtualbox>
-References: <3fd38b71-26bd-bdb3-fe5c-e7038abf51e0@kdbg.org> <alpine.DEB.2.20.1609060909420.129229@virtualbox> <1953cc16-7577-16dd-fe7e-f557e7a74f58@kdbg.org>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1756574AbcIGLr6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Sep 2016 07:47:58 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:32925 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753957AbcIGLr5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2016 07:47:57 -0400
+Received: by mail-pf0-f193.google.com with SMTP id 128so867966pfb.0
+        for <git@vger.kernel.org>; Wed, 07 Sep 2016 04:47:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:from:to:cc:references:in-reply-to:subject:date
+         :mime-version:content-transfer-encoding:importance;
+        bh=raK5UhzSxImXOY74d9M+0u5pS5geHUyB/EiEsYTyAkU=;
+        b=WuPmaEzVkVXSGbdmDG9PylYofwu5r5O3Qgsa+coF7KNrpxBSPvEBzJEFbqnKImFu3V
+         0TSuQSFFiMF910mLrkLnIj2cLM/t6+Nh/s885FSfHfOW9IE+M+D8xjLYbDRyTpg7/uj1
+         4roF5lCbc5oa8aYrTlYbjFyd3IsnGy0udpeK4aeEktILiiTp0yQlv3YOOTaP74k7vmu9
+         fh9xyeZcEQNXC9VigYD4tGWReEj/R1nr7/M0VeN/wY66C+ZhtyUisUNxD/cFXf2aOZo6
+         jVJyN09iHVv+5gUVto28ZGIRRSIW+f11umkencS72gYo4fSmRV4j6LfAcLZ5uPQjT5ZA
+         Lbvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:from:to:cc:references:in-reply-to
+         :subject:date:mime-version:content-transfer-encoding:importance;
+        bh=raK5UhzSxImXOY74d9M+0u5pS5geHUyB/EiEsYTyAkU=;
+        b=czKnQIbPZEpmVqwg+E8oYT/BbBDlWSBs9hNHa+8xLj/xFVcTdCSzlrCK2rnwFnQ6kM
+         ewk0yWSeOwtQkkgFpYDISNjj9LnSip4uIBHkCzKEczdtK7seWCurz428/umDtHEZMEQJ
+         oBAnI19FQsAvEfKFQbKFP4hzbnUiXdkw+Vd5AO9kufpTstFBjXHA9P+XEXs30aHcsJqN
+         jZim1VM5l5aTRrCt4Q6Ca1HAD+UN7TquH/HJTZRNcJZvnhxJ7Kavn6pU5nUIfG9+EmvJ
+         hZKGk0MUOFVUrbB+h+xpgBgrSXkMvYE0O3khWTi+D2QQBB/H63Y1pIoMPAXHZzBlcrOW
+         bcug==
+X-Gm-Message-State: AE9vXwOMcSUPSGb96vdQT+lU8ARbxImUPzMgEpz6VN501lZHqLIGawo7aoR8RR0h+takUw==
+X-Received: by 10.98.36.216 with SMTP id k85mr29247367pfk.73.1473248876504;
+        Wed, 07 Sep 2016 04:47:56 -0700 (PDT)
+Received: from Yasushima (i60-35-214-133.s41.a017.ap.plala.or.jp. [60.35.214.133])
+        by smtp.gmail.com with ESMTPSA id wa9sm48452381pac.35.2016.09.07.04.47.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 07 Sep 2016 04:47:55 -0700 (PDT)
+Message-ID: <048AF5D4DC044BDC9F3A75A3BABD00F1@Yasushima>
+From:   "Satoshi Yasushima" <s.yasushima@gmail.com>
+To:     <git@vger.kernel.org>
+Cc:     "Junio C Hamano" <gitster@pobox.com>,
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        "Pat Thoyts" <patthoyts@users.sourceforge.net>,
+        "Satoshi Yasushima" <s.yasushima@gmail.com>
+References: <1472913822-9088-1-git-send-email-s.yasushima@gmail.com> <1473177741-9576-1-git-send-email-s.yasushima@gmail.com> <1473177741-9576-6-git-send-email-s.yasushima@gmail.com>
+In-Reply-To: <1473177741-9576-6-git-send-email-s.yasushima@gmail.com>
+Subject: Re: [PATCH v2 6/6] git-gui: Update Japanese information
+Date:   Wed, 7 Sep 2016 20:47:37 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Q1Pmxu2uE/O7brscyy6znoc1VFwZ9ch8kpdEdDflonQ9fBxqCTr
- qhWd888vWP+SI/6R1qRIzdtqa4E5ZEfnzEML8TRxJRV+gGW9SoaiapxImi7pmE7J+ZI/Czw
- 8xVb0isZfPUU25q9qEguF1EMKUf2Dq96avqcxAbr5Eu9gJl5vc0PAN6HXP1oAgKmO5okcbf
- 5aHoShFyrD4EHVxa+wc5Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:NJG0sG/zAYY=:KSzz0QN1TEIHpg6L5iQMCP
- 7GFhIglG5OEQ8L8EtfEiugt9C6OVTkp9ZUciIpp+IjlYNoHhgzb8s9DedsAdVQBg8R+EB14cq
- TxXdueB/1s+DNCq/9br5WW6Wf7L9jUZjfhcIOxTqOd4jf6TxWQrk2cWmdIiU3WtfeViHibHuN
- Gacb8VuMJMGsbx+DGlraJCvDwI5yZ3BzgOwV/msGymMskyT5ujkTu5ZU8O3q/KPckEEb+WRp8
- 5kHoOr9DMfD7vq3xQus9GjJYyWczKb33rYK/A6FZvDevuW4+6Ojs8HcSgxMIMwOl8A5Ma7JPm
- z5/by+zjreVCjaPlpryGbT46ZTGbczVHHIl+a5E9w/OlV1zur3kkjEQ6FcN9fDr60qod/tOvM
- 4hypf5h2w3jkg2kP4Uy53MlIlFQLAoy/cjuRZvpUMzZ3sP8zJpudCUjt97hR1STMFHMxaKEP9
- zjdICzIUP6VCIhwOQXJaUgshoSn6aEWvGgPYEzHEdmQ7LSOR2LsggaTc1LboXswSO7YAg+XO7
- jJG1kblRYrAuYpjh1b9GrpJWhpwhBP2AzX0V8LDcqfTEJLHgJ21SuMVv9EgJyMYHH3KeqJrUM
- OiUnG/LrEiA67gdNqnbpHlobkvse1oxh1HrxBDOH5BWo5mEWAxUyJ4ifMeuGjJu4U/2LiYPQ7
- X98Bs+BTHZTmi6/Fmqk+lUA29nu0P/y719qk+3rzr1jXvI7CAbo3wAz2X0yfs+RyUbqg5h45g
- oWi2mWfHab5eNRqqVhs9iAFREW4AIGUjwV+95739Md0bJa6csD8GMqKZgHfZ7tqee2qolN9lh
- fx7ccgo
+Content-Type: text/plain;
+        format=flowed;
+        charset="UTF-8";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+Importance: Normal
+X-Mailer: Microsoft Windows Live Mail 16.4.3564.1216
+X-MimeOLE: Produced By Microsoft MimeOLE V16.4.3564.1216
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Hannes,
+Hmmm.
+Although I noticed now become PATCH 3/6 has lost.
 
-On Wed, 7 Sep 2016, Johannes Sixt wrote:
+There seems to be a cause in the following taboo.
+Sure, PATCH 3/6 is little too great.
+ http://vger.kernel.org/majordomo-info.html#taboo
+  >Taboo things to be done when discussing at VGER lists
+   : (abbr.)
+  > * Message size exceeding 100 000 characters causes blocking.
 
-> I did not extend the sleep time because it requires to change the file name
-> in the same patch.
-
-Yeah, I was just concerned that maybe we would take longer than that
-second to finish the test. But I guess I am just too paranoid here.
-
-Thanks for the patch!
-Dscho
+To somehow.
