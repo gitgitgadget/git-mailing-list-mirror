@@ -7,59 +7,60 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B64820705
-	for <e@80x24.org>; Wed,  7 Sep 2016 11:21:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 831D020705
+	for <e@80x24.org>; Wed,  7 Sep 2016 11:21:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757362AbcIGLVF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Sep 2016 07:21:05 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:35152 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752232AbcIGLVE (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1757375AbcIGLVJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Sep 2016 07:21:09 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:36647 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757363AbcIGLVE (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 7 Sep 2016 07:21:04 -0400
-Received: by mail-pf0-f177.google.com with SMTP id w87so5857803pfk.2
-        for <git@vger.kernel.org>; Wed, 07 Sep 2016 04:20:44 -0700 (PDT)
+Received: by mail-pf0-f193.google.com with SMTP id x24so827235pfa.3
+        for <git@vger.kernel.org>; Wed, 07 Sep 2016 04:20:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+xtFbn1OFknUZHBjrw/CTsCSu/HmSgpF81bX6/fhTHU=;
-        b=yAcs3qJ+Ch/xq/Beb+4yjGGwB0vqv/eKVBnkOvV7nIVWOx69DaUfdGUE/7lRzhBcwu
-         Sf/JSXGMNgx0JfsEBbhwEFwVyEluwIyW2e+BNXKWk87LoTCRqNBjOh7R4mWYZgHIDtB+
-         yzETMSYJOVGCcYEfoGYP5KqQKZ4OnRLBmA+gITH8O9E2i6HT7DXuAuljyCC4P90bxRjf
-         b1XRmooghnnZ8bLE/a9MOCcwjkAoCYs/Day2kmlb8J+PboExyGQkyLA6eAs1XUqnBeg8
-         +qUBEhWs9N3azl6+zpCWJnEXIwXVGvijnCC58mbLoTLp+fxkAjukuyAf2MdzfSphW1sx
-         1rfw==
+        bh=5Zqzy+8oYBJOJiLi7tUmCNEiWa3XVY41P7oWLrTd2jw=;
+        b=jV07IJyUCGBMSRdRJD4U+24XAZZMfWvySu8LAWyHwTg2cUvsNZUT8woReJp7TlH7vg
+         Df7/RXtUDTOQh3/Gf4pUaeXNpHHyKsTT0kFBxhykfbq+ffENCI6LSvy3eYB1RKR1f8/+
+         JjpeFykSaW8yvuTWAKJgMVIzzpcAhixgg+tQpjCDktfPXdIzPy2kCdmagdD93eLlYG1L
+         VAQGDSc+83Rgj/ATuRl5GuZ0dQ2QmXMNFxbGWKgOivrFAqPsg+2hyosUnFjNQh6PKSd6
+         3plbg428oOB6/pBnvGf1URKzOOIioo4Othxt5LyvrAmzQxvmD1TjqsiuN9bShD7XQmZk
+         JWng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+xtFbn1OFknUZHBjrw/CTsCSu/HmSgpF81bX6/fhTHU=;
-        b=m4cZhTIujPr3mPxKwzgOvONFGw4UOy/tZZUcTvEHE9B+7JoXJDj5gKw17IQ4AX+KOK
-         mkXHcEkfvAa6Y7zsGVK5VSzVvoG9SB8U8SakVeW+uWcGHwftVCu0VeQTcw558dc7Tz1p
-         3F1qR2rL52rOsSKg9tZGc/IMUcdxRngyY/tt03l1vhG0jH6jlBWBK/R9W6bVyXXvNFuA
-         fEJ9X6XXxKVKiYr0LEHjuESV7E/kXx8oV5A5tWo76CCRHBiBL0luVb3fNfHlOP6v2HtA
-         NNoJC1epqZ0V1nFhe9UpwQelPMvt+WHYEx46zcgag2SrImx9gGxMcwVCEjHTm+MIppL2
-         ftXQ==
-X-Gm-Message-State: AE9vXwMGAEsEgANMpEm6gb9UGYQfElNA2IXBKFwLt6yoMb2M3R/bBnrglTpnDmHPk0zUig==
-X-Received: by 10.98.107.198 with SMTP id g189mr43975648pfc.14.1473247244468;
-        Wed, 07 Sep 2016 04:20:44 -0700 (PDT)
+        bh=5Zqzy+8oYBJOJiLi7tUmCNEiWa3XVY41P7oWLrTd2jw=;
+        b=D583tMZFiA8lMWyE5dFJHz6y135vjY6XFFPjOWYrQ91VhWlkXFNCwOunodltvbqENU
+         //ZONs+0OkU88UlykmP/VHEK2UDBcKBGd7+pdS26UbIE+brwKO5SeIiH36uzbG3Dy1VA
+         qaNSyL4H7aVf0w2q7j5y3JK4kPNjC9INunhABcn0NqDfvz6uM5hvy5Tgw/6ctVNDyov3
+         Inv5q7jP0rQNCYl8Z3jsp8OScsy1TnJolAIF+3lmAgzLb86czunm+2zH1QYKOIxFt/mf
+         R5p8C+K4apTp5pe4HFZ5LHaManXQKbZX7SFU/kBdvD+IDevjjpAwb5Ny4py4++ZPWMtO
+         /zAA==
+X-Gm-Message-State: AE9vXwNR3xrnxFUrpFyH6+S4qBGbfOEsmpP7RI1wukO/lJ0pPNKoYMpLkkc2s+bEX+RmgQ==
+X-Received: by 10.98.141.219 with SMTP id p88mr48538394pfk.153.1473247248955;
+        Wed, 07 Sep 2016 04:20:48 -0700 (PDT)
 Received: from ash ([115.76.139.213])
-        by smtp.gmail.com with ESMTPSA id n80sm33723184pfi.25.2016.09.07.04.20.41
+        by smtp.gmail.com with ESMTPSA id n3sm48272118paf.13.2016.09.07.04.20.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 07 Sep 2016 04:20:43 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 07 Sep 2016 18:20:39 +0700
+        Wed, 07 Sep 2016 04:20:48 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Wed, 07 Sep 2016 18:20:44 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 0/3] fix checkout ambiguation in subdir
-Date:   Wed,  7 Sep 2016 18:19:38 +0700
-Message-Id: <20160907111941.2342-1-pclouds@gmail.com>
+Subject: [PATCH 1/3] checkout: add some spaces between code and comment
+Date:   Wed,  7 Sep 2016 18:19:39 +0700
+Message-Id: <20160907111941.2342-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.8.2.524.g6ff3d78
-In-Reply-To: <20160822123502.3521-1-pclouds@gmail.com>
+In-Reply-To: <20160907111941.2342-1-pclouds@gmail.com>
 References: <20160822123502.3521-1-pclouds@gmail.com>
+ <20160907111941.2342-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,21 +69,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I need some more time (which I don't have) to convince myself about
-the "git checkout :/abc" patch. But these look like good bug
-fix/improvement.
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ builtin/checkout.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Nguyễn Thái Ngọc Duy (3):
-  checkout: add some spaces between code and comment
-  checkout.txt: document a common case that ignores ambiguation rules
-  checkout: fix ambiguity check in subdir
-
- Documentation/git-checkout.txt |  9 +++++++++
- builtin/checkout.c             |  6 +++---
- t/t2010-checkout-ambiguous.sh  |  9 +++++++++
- t/t2024-checkout-dwim.sh       | 12 ++++++++++++
- 4 files changed, 33 insertions(+), 3 deletions(-)
-
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 8672d07..1f71d06 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1038,7 +1038,7 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 
+ 	if (!*source_tree)                   /* case (1): want a tree */
+ 		die(_("reference is not a tree: %s"), arg);
+-	if (!has_dash_dash) {/* case (3).(d) -> (1) */
++	if (!has_dash_dash) {	/* case (3).(d) -> (1) */
+ 		/*
+ 		 * Do not complain the most common case
+ 		 *	git checkout branch
 -- 
 2.8.2.524.g6ff3d78
 
