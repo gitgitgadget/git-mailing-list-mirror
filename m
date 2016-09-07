@@ -2,84 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A2011F859
-	for <e@80x24.org>; Wed,  7 Sep 2016 17:58:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 008BE1F859
+	for <e@80x24.org>; Wed,  7 Sep 2016 18:02:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934812AbcIGR6P (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Sep 2016 13:58:15 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51184 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932255AbcIGR6O (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2016 13:58:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6DBE537761;
-        Wed,  7 Sep 2016 13:58:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=FgJsAtQlmKb3CxBTb8MIbjJXU28=; b=gviIEm
-        8diR80XMdEdTgocPbU2dmKOlS6EKAI6sCQ38zQFcFAKSbtDcEgHquEBR3pIsu3wy
-        5qPOV8lA26TjdlsgPou4diBiPI9UjY2wUzryRWnktdndcHUaBfcTk+XE+rw4vd//
-        cgMtgJwbNHHd8UGVgByob75Xg/uH/41w1aCCA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mnferx4NRqjf8lXeVOPbZ9h9FSu/CS/y
-        wLpjjQU3ehM0kvBDq4/kpgNL/3Gg5i4VQm5pg8frHpqMVOs8M7fRsYCZwTRnG2Yh
-        csviPA0+Xk4UiOFgOoEAse/94YU79dNfZLHv2irc9ezQDW6YGVyPonJPGxTCCam1
-        ekqhcJQ4ej0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 658783775F;
-        Wed,  7 Sep 2016 13:58:13 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E33833775E;
-        Wed,  7 Sep 2016 13:58:12 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>, git@vger.kernel.org,
-        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v2 7/7] blame: actually use the diff opts parsed from the command line
-References: <cover.1471864378.git.mhagger@alum.mit.edu>
-        <8192012a6bf725e0460522f9e67bab83b613127a.1471864378.git.mhagger@alum.mit.edu>
-        <fe96d9e6-b306-0b57-8f24-6106b7e285cb@web.de>
-        <a6d9e9a7-76c4-5b26-0b49-55698369180d@alum.mit.edu>
-Date:   Wed, 07 Sep 2016 10:58:10 -0700
-In-Reply-To: <a6d9e9a7-76c4-5b26-0b49-55698369180d@alum.mit.edu> (Michael
-        Haggerty's message of "Mon, 5 Sep 2016 06:12:41 +0200")
-Message-ID: <xmqq37lboaml.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1756354AbcIGSCU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Sep 2016 14:02:20 -0400
+Received: from mail-it0-f44.google.com ([209.85.214.44]:36487 "EHLO
+        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756288AbcIGSCT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2016 14:02:19 -0400
+Received: by mail-it0-f44.google.com with SMTP id i184so212651882itf.1
+        for <git@vger.kernel.org>; Wed, 07 Sep 2016 11:02:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=UIZ69lWfFcgg4cukUyT8zp7fACKEXdjZAznzju+BAJk=;
+        b=ID5vdEjITuVF2V+qnQ4QPXoKWmj4PAB1bFIIg1mRWRyFUAfQWqlcImgWZuQyzwmwop
+         WtDeCTde09bBYsdqie8KVE6fykfrFFPIf3Zv2KOwR2sloX3dTivBE9TWVASRx8sE2FUh
+         h8BMK/avpGoyWvBkc2qGI1UX62ZdccmdyCjRZmnk/FbTmKA7C0hTaPWNNQCd7Tzofogv
+         afA7K3otE061xpDFT9WVsyLVb0QNU3t8cVG9V738NRhruq4yImaOZg9npaRSkTF7ykCQ
+         otoaa97H5FcSWdkWVEPgesj+VcRB3dT9hG4pze5s24HKPbMngyeZS5GValRxi0FplYHD
+         9wyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=UIZ69lWfFcgg4cukUyT8zp7fACKEXdjZAznzju+BAJk=;
+        b=QlZ7Xr39kpJb0cMSnesrFSBup5lbrJomhdq/hQWvcw8c/KnlhlUOBnZQXwLUmKXIHB
+         E1Xi3OdNPusk5x7HigvCkrNUevO5RLEtSWQQPaaHYg1Oq9yLV+vgw7culzcJGm8gudFw
+         gb8/cLPaQWGp9RMGfIAY6mW3rz0cfsVMHKMJvXSLOzk8Gv4p1jj/UTYUNEq4nIDzVtTp
+         z3Ue8b4dYncTRMOr/2plaSb6UuxFi6JRw+LKr/sy54Vna8sts4yKRuapxNaPa5eIh0uY
+         dLRGj9u+sfZanYxQN3GBwjgt5ryCtlCuOus2MXKQFu8EmRETs35CryLVTQEJzMWdIFHV
+         SepQ==
+X-Gm-Message-State: AE9vXwO1hgmLey3A1b/K1vgtB1cP2UWX6+dYaK1mhmbu1TlM9+MvYtum1F9fqULvHFWkhevJ1wDvsZmyDlKmO56l
+X-Received: by 10.36.189.15 with SMTP id x15mr497046ite.97.1473271337932; Wed,
+ 07 Sep 2016 11:02:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A5123780-7524-11E6-818A-51057B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.107.128.66 with HTTP; Wed, 7 Sep 2016 11:02:17 -0700 (PDT)
+In-Reply-To: <xmqq7fanoas6.fsf@gitster.mtv.corp.google.com>
+References: <20160904234237.10548-1-stefanbeller@gmail.com>
+ <CA+P7+xr=Lp36wDw2BRuhQ9Genv4q6iu9beGQe5hzOn5PJYDPfw@mail.gmail.com>
+ <CAGZ79ka7VV6Pqw-rcVFv0xU4J4D9dHWPg-oocPPWJdY5JVhT+A@mail.gmail.com> <xmqq7fanoas6.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 7 Sep 2016 11:02:17 -0700
+Message-ID: <CAGZ79kbSG-9xdmG3LWEsVoJnhEr5pcL8D-95E99a+=JaXGOXCA@mail.gmail.com>
+Subject: Re: [PATCHv3] diff.c: emit moved lines with a different color
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Wed, Sep 7, 2016 at 10:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> as we do not want to see dashes ('moved-old'), I think I'l go with
+>> "movedfrom" and "movedto".
+>
+> OK.  They would be color.diff.movedFrom and color.diff.movedTo in
+> the doc, and "movedfrom" and "movedto" in the code (as the caller
+> already downcased them for you to strcmp()).
+>
+>> When going through the second pass and actually emitting colored lines
+>> we only find matches in the hash map if the current line AND the previous line
+>> match as we lookup by hash code, i.e. if we have a moved line, but the
+>> previous line
+>> changed we do not find it in the hashmap and we don't color it, such
+>> that the reviewer
+>> can spot a permutation.
+>
+> Hmph.  Does this have impact on a line that was at the beginning or
+> the end of a file that got moved to the beginning or the end of a
+> file (four permutations, of 9 if you throw in "middle"), because
+> some cases it does not have a "previous" line?
 
-> The reason that I would prefer to change `blame` as part of this patch
-> series is that I think it would be disconcerting for `git diff` and `git
-> blame` to use different heuristics when computing diffs. It would make
-> their output inconsistent.
+I spotted that problem as well. We need to adapt the algorithm a bit more:
 
-I do think it is the right thing to do.  With your shifting heuristics,
-"git diff" would attribute an addition of a whole block more
-correctly, e.g.
+  If the previous line is of the same kind (i.e. starting with + or -),
+    then we have to take it into account,
+  otherwise (i.e. previous line is different, such as header, hunk header,
+  or different sign)
+    then ignore previous line, as the previous line is already
+    having a different color.
 
-	 }
-
-        +foo {
-        +	bar
-        +       baz
-	+}
-
-instead of attributing the tail of the new thing to the old author,
-and the "blame" should take advantage of the better heuristics as
-well.
+That works for the very first line of a file as well.
