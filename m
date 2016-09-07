@@ -2,109 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79B201F859
-	for <e@80x24.org>; Wed,  7 Sep 2016 15:49:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2049B1F859
+	for <e@80x24.org>; Wed,  7 Sep 2016 16:06:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751260AbcIGPtL convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 7 Sep 2016 11:49:11 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:48834 "EHLO
-        iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753560AbcIGPtH (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 7 Sep 2016 11:49:07 -0400
-Received: from irawebmail.ira.uni-karlsruhe.de ([141.3.10.230] helo=webmail)
-        by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
-        iface 141.3.10.81 id 1bhf5d-0000CB-SV; Wed, 07 Sep 2016 17:48:41 +0200
-Received: from apache by webmail with local (Exim 4.84_2)
-        (envelope-from <szeder@ira.uka.de>)
-        id 1bhf5d-0004Mr-Py; Wed, 07 Sep 2016 17:48:41 +0200
-Received: from x590d6d43.dyn.telefonica.de (x590d6d43.dyn.telefonica.de
- [89.13.109.67]) by webmail.informatik.kit.edu (Horde Framework) with HTTPS;
- Wed, 07 Sep 2016 17:48:41 +0200
-Date:   Wed, 07 Sep 2016 17:48:41 +0200
-Message-ID: <20160907174841.Horde.Ru1LBEeLKomznlWVG-ZnS-Q@webmail.informatik.kit.edu>
-From:   SZEDER =?utf-8?b?R8OhYm9y?= <szeder@ira.uka.de>
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc:     Leho Kraav <leho@conversionready.com>,
-        =?utf-8?b?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 5/5] versioncmp: cope with common leading parts in
- versionsort.prereleaseSuffix
-References: <20160906214550.Horde.ducOghtmsQb9pQ6lixxddVz@webmail.informatik.kit.edu>
- <20160907151251.30978-1-szeder@ira.uka.de>
- <20160907151251.30978-6-szeder@ira.uka.de>
-In-Reply-To: <20160907151251.30978-6-szeder@ira.uka.de>
-User-Agent: Horde Application Framework 5
-Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
+        id S1757149AbcIGQGi (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Sep 2016 12:06:38 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58716 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1757040AbcIGQGg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2016 12:06:36 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 54269382CD;
+        Wed,  7 Sep 2016 12:06:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0GD+sWfj9g/4Qv9Vkdk+k4QeXYw=; b=i9GGMF
+        nDyyelh/ih+Ca3JetNT+eNASRV8kKxpkEKNolU1Fcpy5XPEvLXci6Ix71QIDFS5z
+        O+ZciAGpG+mA6L3mXcEd4M1OvN1rX1vdNxxqmL0ko0X6dOTF58XFmLTB3gem6htD
+        b5o5pQTUduiobo5wjRARZfPGipS0j/MghJQHc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=SCr7r9O5kB3Vy2AyrRCjPvcE3vB8t5y+
+        bN2iPyP/7zKNZ1JJgdLc7LhiAmmeVHYdWWGyPtSvpoUV37DSn5s7qsfBLe04DNMk
+        Ct24CsaErbfy++/eKdz0SWVwzuei/SU51WukGZaWUUWofQRu63YcdxgJ4GK6OyRa
+        odzYRK+e7rg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 49C17382CC;
+        Wed,  7 Sep 2016 12:06:34 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BF855382CB;
+        Wed,  7 Sep 2016 12:06:33 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Josh Triplett <josh@joshtriplett.org>
+Cc:     git@vger.kernel.org
+Subject: Re: format-patch base-commit: moving to above the patch?
+References: <20160901152912.uhxapgd3isdjc4mn@x>
+Date:   Wed, 07 Sep 2016 09:06:31 -0700
+In-Reply-To: <20160901152912.uhxapgd3isdjc4mn@x> (Josh Triplett's message of
+        "Thu, 1 Sep 2016 08:29:14 -0700")
+Message-ID: <xmqqh99rpud4.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Disposition: inline
-Content-Transfer-Encoding: 8BIT
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1473263322.
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0C07E0F8-7515-11E6-8F87-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Josh Triplett <josh@joshtriplett.org> writes:
 
-Quoting SZEDER Gábor <szeder@ira.uka.de>:
-
-> Version sort with prerelease reordering sometimes puts tagnames in the
-> wrong order, when the common part of two compared tagnames ends with
-> the leading character(s) of one or more configured prerelease
-> suffixes.
+> Currently, format-patch puts base-commit and prerequisite-patch-id
+> information below the patch, and below the email signature.  Most mail
+> clients automatically trim everything below the signature marker as
+> unimportant when quoting a mail for a reply, which would make it
+> difficult for someone to reply, quote the base-commit, and say something
+> like "I don't have this commit, where did it come from?" or "Can you
+> please rebase this on ...".
 >
->   $ git config --get-all versionsort.prereleaseSuffix
->   -beta
->   $ git tag -l --sort=version:refname v2.1.*
->   v2.1.0-beta-2
->   v2.1.0-beta-3
->   v2.1.0
->   v2.1.0-RC1
->   v2.1.0-RC2
->   v2.1.0-beta-1
->   v2.1.1
->   v2.1.2
->
-> The reason is that when comparing a pair of tagnames, first
-> versioncmp() looks for the first different character in a pair of
-> tagnames, and then the swap_prereleases() helper function checks for
-> prerelease suffixes _starting at_ that character.  Thus, when in the
-> above example the sorting algorithm happens to compare the tagnames
-> "v2.1.0-beta-1" and "v2.1.0-RC2", swap_prereleases() will try to match
-> the suffix "-beta" against "beta-1" to no avail, and the two tagnames
-> erroneously end up being ordered lexicographically.
->
-> To fix this issue change swap_prereleases() to look for configured
-> prerelease suffixes containing that first different character.
+> Might it make sense to move this information adjacent to the diffstat,
+> instead?  Or, at least, above the email signature?
 
-Now, while I believe this is the right thing to do to fix this bug,
-there is a corner case, where multiple configured prerelease suffixes
-might match the same tagname:
+I personally feel that it would be annoying to have them near
+diffstat, especially given that unbounded many prereq patches can be
+listed.  It would not be too bad to flip the order between the call
+to print_signature() and print_bases(), though.  The extent of the
+change needed to (note: not even compile-tested) does does not look
+too bad, either.
 
-   $ git config --get-all versionsort.prereleaseSuffix
-   -bar
-   -baz
-   -foo-bar
-   $ ~/src/git/git tag -l --sort=version:refname
-   v1.0-foo-bar
-   v1.0-foo-baz
+I did not carefully think what the right adjustment for the MIME
+case is, though.
 
-I.e. when comparing these two tags, both "-bar" and "-foo-bar" would
-match "v1.0-foo-bar", and as "-bar" comes first in the config file,
-it wins, and "v1.0-foo-bar" is ordered first.  An argument could be
-made to prefer longer matches, in which case "v1.0-foo-bar" would be
-ordered according to "-foo-bar", i.e. as second.  However, I don't
-know what that argument could be, to me neither behavior is better
-than the other, but the implementation of the "longest match counts"
-would certainly be more complicated.
-
-The argument I would make is that this is a pathological corner case
-that doesn't worth worrying about.
+I would expect some tests that expect the current order of the tail
+end of the output to break, which you would need to adjust.  And if
+there is no such test right now, you should add one, as your inquiry
+and this patch _sets_ a concrete expectation as to what should come
+before the signature line, which future updates should not break.
 
 
-Best,
-Gábor
+ builtin/log.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/log.c b/builtin/log.c
+index 92dc34d..d69d5e6 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1042,7 +1042,6 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 	diff_flush(&opts);
+ 
+ 	fprintf(rev->diffopt.file, "\n");
+-	print_signature(rev->diffopt.file);
+ }
+ 
+ static const char *clean_message_id(const char *msg_id)
+@@ -1720,6 +1719,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		make_cover_letter(&rev, use_stdout,
+ 				  origin, nr, list, branch_name, quiet);
+ 		print_bases(&bases, rev.diffopt.file);
++		print_signature(rev.diffopt.file);
+ 		total++;
+ 		start_number--;
+ 	}
+@@ -1779,13 +1779,13 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		if (!use_stdout)
+ 			rev.shown_one = 0;
+ 		if (shown) {
++			print_bases(&bases, rev.diffopt.file);
+ 			if (rev.mime_boundary)
+ 				fprintf(rev.diffopt.file, "\n--%s%s--\n\n\n",
+ 				       mime_boundary_leader,
+ 				       rev.mime_boundary);
+ 			else
+ 				print_signature(rev.diffopt.file);
+-			print_bases(&bases, rev.diffopt.file);
+ 		}
+ 		if (!use_stdout)
+ 			fclose(rev.diffopt.file);
