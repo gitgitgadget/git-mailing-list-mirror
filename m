@@ -2,95 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A5AB1F859
-	for <e@80x24.org>; Wed,  7 Sep 2016 14:52:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB89F1F859
+	for <e@80x24.org>; Wed,  7 Sep 2016 15:13:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757160AbcIGOwP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Sep 2016 10:52:15 -0400
-Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:59454 "EHLO sapo.pt"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1757035AbcIGOuq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2016 10:50:46 -0400
-Received: (qmail 31089 invoked from network); 7 Sep 2016 14:50:42 -0000
-Received: (qmail 1995 invoked from network); 7 Sep 2016 14:50:40 -0000
-Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
-          (envelope-sender <vascomalmeida@sapo.pt>)
-          by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 7 Sep 2016 14:50:38 -0000
-X-PTMail-RemoteIP: 85.246.157.91
-X-PTMail-AllowedSender-Action: 
-X-PTMail-Service: default
-From:   Vasco Almeida <vascomalmeida@sapo.pt>
-To:     git@vger.kernel.org
-Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 07/13] i18n: merge-recursive: mark error messages for translation
-Date:   Wed,  7 Sep 2016 14:49:11 +0000
-Message-Id: <1473259758-11836-7-git-send-email-vascomalmeida@sapo.pt>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1473259758-11836-1-git-send-email-vascomalmeida@sapo.pt>
-References: <1473259758-11836-1-git-send-email-vascomalmeida@sapo.pt>
+        id S934347AbcIGPNP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Sep 2016 11:13:15 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:48024 "EHLO
+        iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S933183AbcIGPNP (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 7 Sep 2016 11:13:15 -0400
+Received: from x590d6d43.dyn.telefonica.de ([89.13.109.67] helo=localhost.localdomain)
+        by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
+        iface 141.3.10.81 id 1bheXB-0006Yc-22; Wed, 07 Sep 2016 17:13:08 +0200
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     Leho Kraav <leho@conversionready.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [PATCH 0/5] Fix version sort prerelease reordering bug
+Date:   Wed,  7 Sep 2016 17:12:46 +0200
+Message-Id: <20160907151251.30978-1-szeder@ira.uka.de>
+X-Mailer: git-send-email 2.10.0.74.g6632b1b
+In-Reply-To: <20160906214550.Horde.ducOghtmsQb9pQ6lixxddVz@webmail.informatik.kit.edu>
+References: <20160906214550.Horde.ducOghtmsQb9pQ6lixxddVz@webmail.informatik.kit.edu>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1473261188.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lowercase first word of such error messages following the usual style.
+(Sorry for double post, forgot to Cc: the mailing list...)
 
-Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
----
- builtin/merge-recursive.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+This series fixes a bug, where version sort with prerelease reordering
+puts tagnames in the wrong order, when the common part of two compared
+tagnames ends with the leading character(s) of one or more configured
+prerelease suffixes.  More details in the final patch.
 
-diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
-index fd2c455..0bc88a7 100644
---- a/builtin/merge-recursive.c
-+++ b/builtin/merge-recursive.c
-@@ -42,30 +42,30 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
- 			if (!arg[2])
- 				break;
- 			if (parse_merge_opt(&o, arg + 2))
--				die("Unknown option %s", arg);
-+				die(_("unknown option %s"), arg);
- 			continue;
- 		}
- 		if (bases_count < ARRAY_SIZE(bases)-1) {
- 			struct object_id *oid = xmalloc(sizeof(struct object_id));
- 			if (get_oid(argv[i], oid))
--				die("Could not parse object '%s'", argv[i]);
-+				die(_("could not parse object '%s'"), argv[i]);
- 			bases[bases_count++] = oid;
- 		}
- 		else
--			warning("Cannot handle more than %d bases. "
--				"Ignoring %s.",
-+			warning(_("cannot handle more than %d bases. "
-+				  "Ignoring %s."),
- 				(int)ARRAY_SIZE(bases)-1, argv[i]);
- 	}
- 	if (argc - i != 3) /* "--" "<head>" "<remote>" */
--		die("Not handling anything other than two heads merge.");
-+		die(_("not handling anything other than two heads merge."));
- 
- 	o.branch1 = argv[++i];
- 	o.branch2 = argv[++i];
- 
- 	if (get_oid(o.branch1, &h1))
--		die("Could not resolve ref '%s'", o.branch1);
-+		die(_("could not resolve ref '%s'"), o.branch1);
- 	if (get_oid(o.branch2, &h2))
--		die("Could not resolve ref '%s'", o.branch2);
-+		die(_("could not resolve ref '%s'"), o.branch2);
- 
- 	o.branch1 = better_branch_name(o.branch1);
- 	o.branch2 = better_branch_name(o.branch2);
+The first two patches are test cleanups, the first is an independent
+"while at it", but the second one touches tests that are modified by
+later patches of this series.  The rest is rather straightforward: add
+failing tests, do some refactoring, and finally fix the bug.
+
+SZEDER Gábor (5):
+  t7004-tag: delete unnecessary tags with test_when_finished
+  t7004-tag: use test_config helper
+  t7004-tag: add version sort tests to show prerelease reordering issues
+  versioncmp: pass full tagnames to swap_prereleases()
+  versioncmp: cope with common leading parts in
+    versionsort.prereleaseSuffix
+
+ t/t7004-tag.sh | 83 ++++++++++++++++++++++++++++++++++++++++------------------
+ versioncmp.c   | 46 +++++++++++++++++++++-----------
+ 2 files changed, 87 insertions(+), 42 deletions(-)
+
 -- 
-2.7.4
+2.10.0.74.g6632b1b
 
