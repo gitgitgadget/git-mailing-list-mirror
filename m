@@ -2,97 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C31520705
-	for <e@80x24.org>; Wed,  7 Sep 2016 07:54:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 285D32070F
+	for <e@80x24.org>; Wed,  7 Sep 2016 08:20:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756644AbcIGHy3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Sep 2016 03:54:29 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39164 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1756482AbcIGHy2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2016 03:54:28 -0400
-Received: (qmail 8803 invoked by uid 109); 7 Sep 2016 07:54:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 07 Sep 2016 07:54:27 +0000
-Received: (qmail 1184 invoked by uid 111); 7 Sep 2016 07:54:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 07 Sep 2016 03:54:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Sep 2016 03:54:25 -0400
-Date:   Wed, 7 Sep 2016 03:54:25 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Kevin Willford <kewillf@microsoft.com>
-Subject: [PATCH 2/2] patch-ids: skip merge commits
-Message-ID: <20160907075425.6jgamuwm66xbklu3@sigill.intra.peff.net>
-References: <20160907075346.z6wtmqnfc6bsunjb@sigill.intra.peff.net>
+        id S934626AbcIGIUm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Sep 2016 04:20:42 -0400
+Received: from forward19p.cmail.yandex.net ([77.88.31.22]:34796 "EHLO
+        forward19p.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S934111AbcIGIUj (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 7 Sep 2016 04:20:39 -0400
+X-Greylist: delayed 443 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 Sep 2016 04:20:39 EDT
+Received: from mxback2j.mail.yandex.net (mxback2j.mail.yandex.net [5.45.198.16])
+        by forward19p.cmail.yandex.net (Yandex) with ESMTP id 7E170217C3
+        for <git@vger.kernel.org>; Wed,  7 Sep 2016 11:13:09 +0300 (MSK)
+Received: from web8j.yandex.ru (web8j.yandex.ru [5.45.198.49])
+        by mxback2j.mail.yandex.net (nwsmtp/Yandex) with ESMTP id c980T1TUEF-D9xS5RsO;
+        Wed, 07 Sep 2016 11:13:09 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1473235989;
+        bh=Y/NVdOZkmftNZCiMNbA7cu5P4sEYOx7/kPfgX/7xznw=;
+        h=From:To:Subject:Message-Id:Date;
+        b=n3rapGHrsFCO2/3c1odc2ts2+5MB+A6IvyXQEMsj22hwKD9r9a5V0dvyeKOL5yeJ3
+         bCzcWyckvnfvK+PRb/6iLM0030EnIDpPEe9y6TZQuINDeZOM+gGsY97ekCOcxnugIn
+         AmLCP8bewEi98qH67WQ1/Zr28UGNg1mN1XZ19uTc=
+Authentication-Results: mxback2j.mail.yandex.net; dkim=pass header.i=@yandex.ru
+Received: by web8j.yandex.ru with HTTP;
+        Wed, 07 Sep 2016 11:13:09 +0300
+From:   KES <kes-kes@yandex.ru>
+Envelope-From: kes-kes@yandex.ua
+To:     git <git@vger.kernel.org>
+Subject: Why patch is not showed at log?
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160907075346.z6wtmqnfc6bsunjb@sigill.intra.peff.net>
+Message-Id: <46301473235989@web8j.yandex.ru>
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date:   Wed, 07 Sep 2016 11:13:09 +0300
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The patch-ids code which powers "log --cherry-pick" doesn't
-look at whether each commit is a merge or not. It just feeds
-the commit's first parent to the diff, and ignores any
-additional parents.
+I have patch:
+diff --git a/t b/t
+index ced22c4..992533b 100644
+--- a/t
++++ b/t
+@@ -1,2 +1,2 @@
+ asdf
+-asdf
+\ No newline at end of file
++asdf
 
-In theory, this might be useful if you wanted to find
-equivalence between, say, a merge commit and a squash-merge
-that does the same thing.  But that may also be the wrong
-thing; the diffs may be the same, but the meaning of the two
-commits is definitely not identical. We should err on the
-side of _not_ matching such commits.
+When I commit it I do not see it at log:
 
-Moreover, we may spend a lot of extra time computing these
-merge diffs. In the case that inspired this patch, a "git
-format-patch --cherry-pick" dropped from over 3 minutes to
-less than 4 seconds. This seems pretty drastic, but is
-easily explained. The command was invoked by a "git rebase"
-of an older topic branch; there had been tens of thousands
-of commits on the upstream branch in the meantime. In
-addition, this project used a topic-branch workflow with
-occasional "back-merges" from "master" to each topic (to
-resolve conflicts on the topics rather than in the merge
-commits). So there were not only extra merges, but the diffs
-for these back-merges were generally quite large (because
-they represented _everything_ that had been merged to master
-since the topic branched).
+commit 1efee9908a734c40194ffc07e7793afd2e386fbc
+Author: x
+Date:   Wed Sep 7 11:09:04 2016 +0300
 
-This patch just ignores merge commits entirely when
-generating patch-ids, meaning they will never be matched
-(from either side of a symmetric-diff traversal).
+    asdf
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- patch-ids.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/patch-ids.c b/patch-ids.c
-index 77e4663..b1f8514 100644
---- a/patch-ids.c
-+++ b/patch-ids.c
-@@ -7,10 +7,12 @@
- int commit_patch_id(struct commit *commit, struct diff_options *options,
- 		    unsigned char *sha1, int diff_header_only)
- {
--	if (commit->parents)
-+	if (commit->parents) {
-+		if (commit->parents->next)
-+			return 0;
- 		diff_tree_sha1(commit->parents->item->object.oid.hash,
- 			       commit->object.oid.hash, "", options);
--	else
-+	} else
- 		diff_root_tree_sha1(commit->object.oid.hash, "", options);
- 	diffcore_std(options);
- 	return diff_flush_patch_id(options, sha1, diff_header_only);
--- 
-2.10.0.rc2.154.gb4a4b8b
+commit 4f429665850cb929f73f1463bedd978dd8b68009
+Author: x
+Date:   Wed Sep 7 11:05:20 2016 +0300
+
+    asdf
+
+diff --git a/t b/t
+new file mode 100644
+index 0000000..ced22c4
+--- /dev/null
++++ b/t
+@@ -0,0 +1,2 @@
++asdf
++asdf
+\ No newline at end of file
+
+Why I do not see changes at log when 'new line' was added at the end of file?
