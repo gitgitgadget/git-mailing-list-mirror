@@ -7,21 +7,21 @@ X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E26791F859
-	for <e@80x24.org>; Wed,  7 Sep 2016 14:50:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F5491F859
+	for <e@80x24.org>; Wed,  7 Sep 2016 14:50:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753591AbcIGOu0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Sep 2016 10:50:26 -0400
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:39137 "EHLO sapo.pt"
+        id S1757133AbcIGOub (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Sep 2016 10:50:31 -0400
+Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:35771 "EHLO sapo.pt"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1756878AbcIGOuY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2016 10:50:24 -0400
-Received: (qmail 15504 invoked from network); 7 Sep 2016 14:50:18 -0000
-Received: (qmail 28483 invoked from network); 7 Sep 2016 14:50:18 -0000
+        id S1757104AbcIGOuZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2016 10:50:25 -0400
+Received: (qmail 6592 invoked from network); 7 Sep 2016 14:50:23 -0000
+Received: (qmail 29881 invoked from network); 7 Sep 2016 14:50:23 -0000
 Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 7 Sep 2016 14:50:16 -0000
+          for <git@vger.kernel.org>; 7 Sep 2016 14:50:21 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -31,43 +31,58 @@ Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
         Jiang Xin <worldhello.net@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 01/13] i18n: apply: mark plural string for translation
-Date:   Wed,  7 Sep 2016 14:49:05 +0000
-Message-Id: <1473259758-11836-1-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH 03/13] i18n: apply: mark info messages for translation
+Date:   Wed,  7 Sep 2016 14:49:07 +0000
+Message-Id: <1473259758-11836-3-git-send-email-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1473259758-11836-1-git-send-email-vascomalmeida@sapo.pt>
+References: <1473259758-11836-1-git-send-email-vascomalmeida@sapo.pt>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark plural string for translation using Q_().
+Mark messages for translation printed to stderr.
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- builtin/apply.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ builtin/apply.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 1a488f9..ef03c74 100644
+index ef2c084..43ab7c5 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -4768,10 +4768,12 @@ static int apply_all_patches(struct apply_state *state,
- 			       state->whitespace_error),
- 			    state->whitespace_error);
- 		if (state->applied_after_fixing_ws && state->apply)
--			warning("%d line%s applied after"
--				" fixing whitespace errors.",
--				state->applied_after_fixing_ws,
--				state->applied_after_fixing_ws == 1 ? "" : "s");
-+			warning(Q_("%d line applied after"
-+				   " fixing whitespace errors.",
-+				   "%d lines applied after"
-+				   " fixing whitespace errors.",
-+				   state->applied_after_fixing_ws),
-+				state->applied_after_fixing_ws);
- 		else if (state->whitespace_error)
- 			warning(Q_("%d line adds whitespace errors.",
- 				   "%d lines add whitespace errors.",
+@@ -3525,7 +3525,7 @@ static int try_threeway(struct apply_state *state,
+ 		 read_blob_object(&buf, pre_sha1, patch->old_mode))
+ 		return error(_("repository lacks the necessary blob to fall back on 3-way merge."));
+ 
+-	fprintf(stderr, "Falling back to three-way merge...\n");
++	fprintf(stderr, _("Falling back to three-way merge...\n"));
+ 
+ 	img = strbuf_detach(&buf, &len);
+ 	prepare_image(&tmp_image, img, len, 1);
+@@ -3555,7 +3555,7 @@ static int try_threeway(struct apply_state *state,
+ 	status = three_way_merge(image, patch->new_name,
+ 				 pre_sha1, our_sha1, post_sha1);
+ 	if (status < 0) {
+-		fprintf(stderr, "Failed to fall back on three-way merge...\n");
++		fprintf(stderr, _("Failed to fall back on three-way merge...\n"));
+ 		return status;
+ 	}
+ 
+@@ -3567,9 +3567,9 @@ static int try_threeway(struct apply_state *state,
+ 			hashcpy(patch->threeway_stage[0].hash, pre_sha1);
+ 		hashcpy(patch->threeway_stage[1].hash, our_sha1);
+ 		hashcpy(patch->threeway_stage[2].hash, post_sha1);
+-		fprintf(stderr, "Applied patch to '%s' with conflicts.\n", patch->new_name);
++		fprintf(stderr, _("Applied patch to '%s' with conflicts.\n"), patch->new_name);
+ 	} else {
+-		fprintf(stderr, "Applied patch to '%s' cleanly.\n", patch->new_name);
++		fprintf(stderr, _("Applied patch to '%s' cleanly.\n"), patch->new_name);
+ 	}
+ 	return 0;
+ }
 -- 
 2.7.4
 
