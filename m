@@ -2,74 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0FE31F6BF
-	for <e@80x24.org>; Thu,  8 Sep 2016 08:04:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C46B71F6BF
+	for <e@80x24.org>; Thu,  8 Sep 2016 08:06:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758256AbcIHIEw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Sep 2016 04:04:52 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40020 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1757650AbcIHIEv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Sep 2016 04:04:51 -0400
-Received: (qmail 2780 invoked by uid 109); 8 Sep 2016 08:04:50 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 08 Sep 2016 08:04:50 +0000
-Received: (qmail 12931 invoked by uid 111); 8 Sep 2016 08:04:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 08 Sep 2016 04:04:58 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Sep 2016 04:04:47 -0400
-Date:   Thu, 8 Sep 2016 04:04:47 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/3] Introduce a function to run regexec() on
- non-NUL-terminated buffers
-Message-ID: <20160908080447.adquu2e5d7bbeorn@sigill.intra.peff.net>
-References: <cover.1473090278.git.johannes.schindelin@gmx.de>
- <cover.1473319844.git.johannes.schindelin@gmx.de>
- <94ee698b2736929d37640012a1b1735b134dd3d6.1473319844.git.johannes.schindelin@gmx.de>
+        id S934099AbcIHIG0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Sep 2016 04:06:26 -0400
+Received: from mout.gmx.net ([212.227.17.20]:49559 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S936176AbcIHIGL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Sep 2016 04:06:11 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0LikyX-1bBrmU31J7-00czBd; Thu, 08 Sep 2016 10:05:59
+ +0200
+Date:   Thu, 8 Sep 2016 10:05:58 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jeff King <peff@peff.net>
+cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] t6026-merge-attr: wait for process to release trash
+ directory
+In-Reply-To: <20160907190004.dw3p6fxkdaubwuvu@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1609081002490.129229@virtualbox>
+References: <3fd38b71-26bd-bdb3-fe5c-e7038abf51e0@kdbg.org> <20160906072707.goysliw32xgwmlol@sigill.intra.peff.net> <xmqq4m5rmu4i.fsf@gitster.mtv.corp.google.com> <20160907190004.dw3p6fxkdaubwuvu@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <94ee698b2736929d37640012a1b1735b134dd3d6.1473319844.git.johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:JyGmxlRq34Jm6yO0m0CXzmz6yxKivCUSMy8ChG6ukcj8yXhDRhU
+ ljHOp9oSrTsLDcyCgjgL+UNUd2GIal0wM/bY5kEzAcclpwC9Hen3LV3LLZQ5b7aKr09czp4
+ AUKv5VsfUntrqNLGJZg4TRtvHvMeQ0QJ0GQHOIuVcfgylJOb4hOwthsHMbkErEpEqFdeZlI
+ GKqStle1sRGSCD3DRvvSg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:bYxrXtSE5r8=:Ra3QqvyyavDcHnZc0ZKLwB
+ zc4xp0gPhqG3BCICXZ3DLjgRqWkbFqV1aGlFkGrdfvpDqlvNgIYXo6V/nyNvSYBd1puDb7jFy
+ DHSlv4RV6V1jxaXq2DxpwVfaWkPzf4x4sZUQkO253sE9R4QositRJTTP+MSMo0wLRF/QHiU1V
+ fPK1N89VfpaIXGhF1C0WgfpzfMa5o6y1a7+mBVJ7D8QdfzITnDGEeWU6oY/Uy59ZSo5wiwVif
+ Vj+pLmcWcOL9PvBuP43IjdiKP8/x6Wg/PuKO9veU7YRKSuf892KJpqGb9AuG+GVeGw1UvV7sf
+ rQMZ3YMwi5ObRoMmEX/bzmDjSXkJBEI73HAIxoYmFGKCBrMbwVKFrEQJdB6f9Rik8ilDVF2Wb
+ wyK6wPDb1vW0hs47cd05xowLCFRT1KvUjclNgTSFBbobltQaMM9PXX1T/I+xpNs+L08lx2mCX
+ GqiIib1XX/agyYOkE94ZbaIPes49Q0wqo/T+dU3Q6lpk8rewtQ8YzjOdcTGdD76K5WEIVfYJh
+ HFZ6JHUaxljF0eQaK6yiMQOeRpOizNQy/LwFnLJ3f8zWNhC1UaZbVKqjv7DWntlRH0Xh/zesu
+ LJ6KVGvDpOSUbmqVcBBS6bvYhCnZx150MK9L6vwIDVdcUynr0/znGaPqhUDQiYUIwfTQWYnnX
+ LoSyrGjZEfhel+G6YHD4oIn3m9DkRPTSi54bN0BaqgjtWYkXlcxJa7Fiu5GL0XPWMsDgJ6YT3
+ gxGVuTIqkak2zIkFmF/bgvtkXEa+0HolZO/smqMc5y4pLbI3IpD1RjOgcEObwKWAqSBLfyyIB
+ hTINkso
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 08, 2016 at 09:31:11AM +0200, Johannes Schindelin wrote:
+Hi Peff & Junio,
 
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index db89ba7..19128b3 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -965,6 +965,27 @@ void git_qsort(void *base, size_t nmemb, size_t size,
->  #define qsort git_qsort
->  #endif
->  
-> +static inline int regexec_buf(const regex_t *preg, const char *buf, size_t size,
-> +			      size_t nmatch, regmatch_t pmatch[], int eflags)
-> +{
-> +#ifdef REG_STARTEND
-> +	assert(nmatch > 0 && pmatch);
-> +	pmatch[0].rm_so = 0;
-> +	pmatch[0].rm_eo = size;
-> +	return regexec(preg, buf, nmatch, pmatch, eflags | REG_STARTEND);
-> +#else
-> +	char *buf2 = xmalloc(size + 1);
-> +	int ret;
-> +
-> +	memcpy(buf2, buf, size);
-> +	buf2[size] = '\0';
+On Wed, 7 Sep 2016, Jeff King wrote:
 
-I mentioned elsewhere that I'd prefer we just push people into using
-compat/regex if they don't have REG_STARTEND. But if we _do_ keep this
-fallback, note that the above has a buffer overflow (think what happens
-when "size" is the maximum value for a size_t).  You can avoid it by
-using xmallocz().
+> On Wed, Sep 07, 2016 at 11:39:57AM -0700, Junio C Hamano wrote:
+> 
+> > > Can we do some signaling with fifos to tell the hook when it is safe to
+> > > exit? Then we would just need to `wait` for its parent process.
+> > 
+> > Is fifo safe on Windows, though?
+> 
+> No clue. We seem to use mkfifo unconditionally in lib-daemon, but
+> perhaps people do not run that test on Windows. Other invocations seem
+> to be protected by the PIPE prerequisite. But...
 
--Peff
+AFAICT we do not use mkfifo on Windows. Let's see what t/test-lib.sh has
+to say about the matter:
+
+	test_lazy_prereq PIPE '
+		# test whether the filesystem supports FIFOs
+		case $(uname -s) in
+		CYGWIN*|MINGW*)
+			false
+			;;
+		*)
+			rm -f testfifo && mkfifo testfifo
+			;;
+		esac
+	'
+
+So there you go.
+
+The reason it is disabled is that Cygwin/MSYS2 do have a concept of a
+FIFO. But `git.exe` won't be able to access such a FIFO because it is
+emulated by the POSIX emulation layer, which Git cannot access.
+
+> > With v2 that explicitly kills, I guess we can make the sleep longer
+> > without slowing down in the optimistic case?
+> 
+> Yeah, I think the v2 one is non-racy (I thought at first we might race
+> with the "echo", but it should be synchronous; the hook will not exit
+> until we have written the pid file, and git will not exit until the hook
+> is done running).
+
+Please note that Hannes and I discussed this (as I originally suggested to
+increase it to 10 seconds, and Hannes rightfully pointed out that we would
+have to change the script name, too, as it says sleep-one-second.sh, and
+that would have made the patch less readable) and we came to the same
+conclusion: it's not necessary.
+
+Ciao,
+Dscho
