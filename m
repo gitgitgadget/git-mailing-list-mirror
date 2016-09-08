@@ -6,55 +6,54 @@ X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DF4520705
-	for <e@80x24.org>; Thu,  8 Sep 2016 17:03:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 522C420705
+	for <e@80x24.org>; Thu,  8 Sep 2016 17:09:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966199AbcIHRDz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Sep 2016 13:03:55 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64729 "EHLO
+        id S965875AbcIHRJv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Sep 2016 13:09:51 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65133 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S966061AbcIHRDy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Sep 2016 13:03:54 -0400
+        with ESMTP id S965152AbcIHRJu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Sep 2016 13:09:50 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A8A7E3C5CD;
-        Thu,  8 Sep 2016 13:03:53 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8BB523B36F;
+        Thu,  8 Sep 2016 13:09:49 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=jkq8GopacOaDh7Vwtv+vuk2c09M=; b=JVRx5b
-        iEjm7e1qY9Xnn4Lat4MexgHs6A8/I0j0yWUPtQdJ/sDzUzz0XMlMXcGaRN4c5qMI
-        idCLOA+80W499WlqW+gaYnl2Jn1pUzZLl/Fnlv8ePWSsVYTU/s01b0mw/82rche/
-        jQzK4lQbcAn9QshVFSOQNn2dFXKW6APcBaxpo=
+        :content-type; s=sasl; bh=BPRKuZP3nDfeDoThd0H1bzaXsBk=; b=WfIG/G
+        G4EzdPC/C3/a/4OCIUVoA7H2V4qj9brBmCUaiVzSZLCCg3rUEw+v7MrvxR3+hryi
+        40aTb1aOAAZe6dqex4xeOmEeETgrjPVV09WWj4h4Li1HOkbdzP/NUr6cND9jY0tM
+        PFoJXWEzvsJqhu91MDq4yIj2JN4tK8ptl1gUA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=uciRyvZx4+M+3SPTcahQoS2Yc6G5fwK4
-        /4uvWP85dKd2p/ZVnnpQ5IFrSfh/9H+ZmhvIKyi3ai/pDeAZlqTtwtBV3yXr75Y3
-        DK959yZGRV9nfCpDDLELZ/0dwvPK85Y07NyGJmT2w3aS3wD1I2/JyDoSxXBDURjO
-        k8rjvV5y0o0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A011C3C5CC;
-        Thu,  8 Sep 2016 13:03:53 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=IJ+1XqWNDQ7jCy6Wwd2NVJz7cnUFc1RP
+        WM7WBbDtBPX2dbgmEtefELN69eTdoEVkLmDIDUKmtdqH1kmYLxCFQUE1rZkSHmX2
+        KVnJevLSuxy8nD7hk47UwuCn6TaQDB3CBX0zPmBgdKm7GLKXQxgwfAEHDBMwPxxW
+        JtNvawuN7ek=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 833523B36E;
+        Thu,  8 Sep 2016 13:09:49 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 22FED3C5CB;
-        Thu,  8 Sep 2016 13:03:53 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 018703B36D;
+        Thu,  8 Sep 2016 13:09:48 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Johannes Schindelin <johannes.schindelin@gmx.de>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 2/3] Introduce a function to run regexec() on non-NUL-terminated buffers
+Subject: Re: [PATCH v3 3/3] Use the newly-introduced regexec_buf() function
 References: <cover.1473319844.git.johannes.schindelin@gmx.de>
         <cover.1473321437.git.johannes.schindelin@gmx.de>
-        <94ee698b2736929d37640012a1b1735b134dd3d6.1473321437.git.johannes.schindelin@gmx.de>
-Importance: high
-Date:   Thu, 08 Sep 2016 10:03:51 -0700
-In-Reply-To: <94ee698b2736929d37640012a1b1735b134dd3d6.1473321437.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Thu, 8 Sep 2016 09:58:35 +0200
+        <d0537819a3676fda6928e7ad3282aa71643f0755.1473321437.git.johannes.schindelin@gmx.de>
+Date:   Thu, 08 Sep 2016 10:09:44 -0700
+In-Reply-To: <d0537819a3676fda6928e7ad3282aa71643f0755.1473321437.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Thu, 8 Sep 2016 09:59:06 +0200
         (CEST)")
-Message-ID: <xmqq60q6jpc8.fsf@gitster.mtv.corp.google.com>
+Message-ID: <xmqq1t0ujp2f.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 38760D0A-75E6-11E6-B155-F7BB12518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 0C92BC96-75E7-11E6-A540-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -62,29 +61,43 @@ X-Mailing-List: git@vger.kernel.org
 
 Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> We just introduced a test that demonstrates that our sloppy use of
-> regexec() on a mmap()ed area can result in incorrect results or even
-> hard crashes.
->
-> So what we need to fix this is a function that calls regexec() on a
-> length-delimited, rather than a NUL-terminated, string.
->
-> Happily, there is an extension to regexec() introduced by the NetBSD
-> project and present in all major regex implementation including
-> Linux', MacOSX' and the one Git includes in compat/regex/: by using
-> the (non-POSIX) REG_STARTEND flag, it is possible to tell the
-> regexec() function that it should only look at the offsets between
-> pmatch[0].rm_so and pmatch[0].rm_eo.
->
-> That is exactly what we need.
+> @@ -33,11 +32,8 @@ static void diffgrep_consume(void *priv, char *line, unsigned long len)
+>  		 * caller early.
+>  		 */
+>  		return;
+> -	/* Yuck -- line ought to be "const char *"! */
+> -	hold = line[len];
+> -	line[len] = '\0';
+> -	data->hit = !regexec(data->regexp, line + 1, 1, &regmatch, 0);
+> -	line[len] = hold;
+> +	data->hit = !regexec_buf(data->regexp, line + 1, len - 1, 1,
+> +				 &regmatch, 0);
 
-Yes, that is good.
+This is an unexpected happy surprise.  It really feels good to see
+that "Yuck" line go.
 
-> Since support for REG_STARTEND is so widespread by now, let's just
-> introduce a helper function that uses it, and fall back to allocating
-> and constructing a NUL-terminated when REG_STARTEND is not available.
+> @@ -228,18 +227,16 @@ static long ff_regexp(const char *line, long len,
+>  			len--;
+>  	}
+>  
+> -	line_buffer = xstrndup(line, len); /* make NUL terminated */
+> -
+>  	for (i = 0; i < regs->nr; i++) {
+>  		struct ff_reg *reg = regs->array + i;
+> -		if (!regexec(&reg->re, line_buffer, 2, pmatch, 0)) {
+> +		if (!regexec_buf(&reg->re, line, len, 2, pmatch, 0)) {
 
-I do not think this fallback is good; we do ship a compat/ fallback
-that does support REG_STARTEND and you'd want to use that.  Not
-having the copying fallback means you do not even have to worry
-about the size+1 overflow and fix it with xmallocz() ;-)
+So is this hunk.  Removing unnecessary copying is a very good thing.
+
+Please give these three patches a common prefix, e.g.
+
+	regex: -G<pattern> feeds a non NUL-terminated string to	regexec() and fails
+        regex: add regexec_buf() that can work on a non NUL-terminated string
+	regex: use regexec_buf()
+
+or something like that.
+
+Also I agree with Peff that a test with an embedded NUL would be a
+good thing.
+
+This round is so close to perfect.
