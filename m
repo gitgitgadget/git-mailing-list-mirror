@@ -2,103 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6929E2070F
-	for <e@80x24.org>; Thu,  8 Sep 2016 06:17:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 80D031F6BF
+	for <e@80x24.org>; Thu,  8 Sep 2016 06:32:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752883AbcIHGQh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Sep 2016 02:16:37 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36851 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752040AbcIHGQK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Sep 2016 02:16:10 -0400
-Received: by mail-wm0-f66.google.com with SMTP id l65so6206338wmf.3
-        for <git@vger.kernel.org>; Wed, 07 Sep 2016 23:16:10 -0700 (PDT)
+        id S1754773AbcIHGcD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Sep 2016 02:32:03 -0400
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:33312 "EHLO
+        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754231AbcIHGcC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Sep 2016 02:32:02 -0400
+Received: by mail-yw0-f193.google.com with SMTP id g192so1558238ywh.0
+        for <git@vger.kernel.org>; Wed, 07 Sep 2016 23:32:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=k43qmSnquTl+u7AtbLhZEWuaI1nSlAfSkiwDB9HdrL0=;
-        b=qGPGxB4FOYsbK19lLvTwgCLz4JEOraFS4xR9VbAiIXsQ3hPcWWSJg8mZf+I00Xqps/
-         lgvqXlosbJeJ5De6NXFXw+lZrkZ/CxQHQCqf3Tladth/nJp+gCJDXF/dHSaDL9TBFNXT
-         R7KjKqPUoWrY8kSfTzl3p9pL1+5b0Cupb6/NE6weqVAaZ/5Ffu5B5yCnCwoVJHhU0LwX
-         h1cBcG6pZPTdSpZKRM25KJhlgsrHdtuEry5fDHNDBggOzb8tVYDrUtw1VPqMBTTihCqd
-         TWLZz4VosGpA1f/6ucS95sxAOUfme7PYI/pIyXTtDBVJLJLct+1VcCF7VJmQLucc4ypc
-         nb6Q==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=c0x5SEXmommE0pJjR13FpiV7JNpsBHThG6rTArwJaNg=;
+        b=RuOnKqfhIAMbuboGJKSVqa3jUH62VyBla3mCyMg578nc32h7nBMJoXPSczAJQ9lmjg
+         2moXtoX7P7RS7sLbZqAwcOnAtOqG+qD3K0BhJ1NA7NlDyT8KqThcuooQGWcLJdevyXIo
+         2boFJw9u5m/G0VaMS7daqZCiTqnDWWBVgdAS6ag7foQ7FtrmzRG6x5HwsAZztPhfYaJh
+         AMzPd/UajCqNCIFG4XpUNajYtvjvY7j0J/gFj3TBvfaNcGUuwku+kC327fY5udxqQrgo
+         UzPPbA127IabvV2emQP6BxdzKLWRjiMu+sk/K+pWD600QEWgSNgx2Q49OyO3yOEcRnSw
+         H6/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=k43qmSnquTl+u7AtbLhZEWuaI1nSlAfSkiwDB9HdrL0=;
-        b=QG2DVBMU6Pb7dggW05gX7hZ5rwITsWwou2xFSHYEY30xVHz4X2MhF6YMA6rSrphwKl
-         C/9B/HaK4/bRaeRS7igFeg9KJdgPzk+jwgSK1woeQhOs3dnwoF5oYrdM2kH4ugzPcGPF
-         rFyKM3qI1KOXy1B6A1Jnm6zTP8P92NRWEi/iRuz6Se6E0Rb7HJIFfGVqtVQRBvmXclJr
-         7XNz1Fd2kqsRqvHJF6ofpwWEdayroQQ2lAPyLHaz/NxIF+UN16FRbQra08f7QYsr5dC2
-         Gggc46VWz7UrbXVWTWZJQhO+tobeoOExct2XoThtdJPMtA5lE5lQ6RjhqPieY8y3tr0T
-         xipw==
-X-Gm-Message-State: AE9vXwP6Xj63CPlwNquXwpb7T3hdQHmmcsEJUMWjQUnduFClMKLqIAAQ38KYtETC8AGX6A==
-X-Received: by 10.194.106.73 with SMTP id gs9mr513332wjb.160.1473314275494;
-        Wed, 07 Sep 2016 22:57:55 -0700 (PDT)
-Received: from [192.168.0.185] (HSI-KBW-085-216-063-210.hsi.kabelbw.de. [85.216.63.210])
-        by smtp.gmail.com with ESMTPSA id v203sm7746061wmv.2.2016.09.07.22.57.47
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 07 Sep 2016 22:57:54 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v1 2/2] read-cache: make sure file handles are not inherited by child processes
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqtwdrmuvo.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 8 Sep 2016 07:57:39 +0200
-Cc:     Eric Wong <e@80x24.org>, Git Mailing List <git@vger.kernel.org>,
-        tboegi@web.de, Johannes.Schindelin@gmx.de
-Content-Transfer-Encoding: 7bit
-Message-Id: <F33245FC-C53A-4977-8E72-68AF3D2BB8BB@gmail.com>
-References: <20160905211111.72956-1-larsxschneider@gmail.com> <20160905211111.72956-3-larsxschneider@gmail.com> <20160906210632.GA28263@starla> <7B903664-0324-4375-A81C-1317020CBE9B@gmail.com> <20160907181036.GA14931@starla> <xmqqtwdrmuvo.fsf@gitster.mtv.corp.google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=c0x5SEXmommE0pJjR13FpiV7JNpsBHThG6rTArwJaNg=;
+        b=WzGdB+geiz5JIHi1btmYv3oSwGpDGwdWJOT83U6tIvyP80a/VTSQ1+w6LavMTOydqq
+         Kh/9AO1sLpPn146YFKgHOGZViCDzuwUDjHWaFrhrG2zAdtFSiwME7iSUDo+m2HaupRrO
+         47vHkutvTPVZrL4f+epRc+nuKSn6/GEel+W4W7/wAiVV5J9hOV/CQgvpKJpB8wsYCFl6
+         wJPbQNJ9+XZ6PoMpWLPuaIryTqQMcmCTmBM69ytiKBUqsFEHGzxvh0tyAb7dN8/k6gri
+         mpes54LYKj3yka67xBH2X7pz+g/qfnfXhW0IhEo51WQfipoYzH79fOLYdZAhLfEq6Ma9
+         +5PA==
+X-Gm-Message-State: AE9vXwNxq3TFng7GcEfs7ZNmu4GYRUhG1+vPyY1z4v6WkdxbHwUZGo95/Fp7fgjNc5bzNekh/z2QrFZd4diagQ==
+X-Received: by 10.13.197.195 with SMTP id h186mr40818976ywd.54.1473312852817;
+ Wed, 07 Sep 2016 22:34:12 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.37.96.195 with HTTP; Wed, 7 Sep 2016 22:33:52 -0700 (PDT)
+In-Reply-To: <20160907233648.5162-2-sbeller@google.com>
+References: <20160907233648.5162-1-sbeller@google.com> <20160907233648.5162-2-sbeller@google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Wed, 7 Sep 2016 22:33:52 -0700
+Message-ID: <CA+P7+xrdtwAQkmHGkL37rZMJLWAn1ezAophn+QASz354eL8MqQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] diff.c: use diff_options directly
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Sep 7, 2016 at 4:36 PM, Stefan Beller <sbeller@google.com> wrote:
+> The value of `ecbdata->opt` is accessible via the short variable `o`
+> already, so let's use that instead.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
 
-> On 07 Sep 2016, at 20:23, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> Eric Wong <e@80x24.org> writes:
-> 
->> We probably should be using O_NOATIME for all O_RDONLY cases
->> to get the last bit of performance out (especially since
->> non-modern-Linux systems probably still lack relatime).
-> 
-> No, please do not go there.
-> 
-> The user can read from a file in a working tree using "less",
-> "grep", etc., and they all update the atime, so should "git grep".
-> We do not use atime ourselves on these files but we should let
-> outside tools rely on the validity of atime (e.g. "what are the
-> files that were looked at yesterday?").
-> 
-> If you grep for noatime in our current codebase, you'd notice that
-> we use it only for files in objects/ hierarchy, and that makes very
-> good sense.  These files are what we create for our _sole_ use and
-> no other tools can peek at them and expect to get any useful
-> information out of them (we hear from time to time that virus
-> scanners leaving open file descriptors on them causing trouble, but
-> that is an example of a useless access), and that makes a file in
-> objects/ hierarchy a fair game for noatime optimization.
+Seems reasonable.
 
-How do we deal with read-cache:ce_compare_data, though?
-
-By your definition above we shouldn't use NOATIME since the read file
-is not in objects/. However, the file read is not something the user
-explicitly triggers. The read is part of the Git internal "clean"
-machinery.
-
-What would you suggest? Should I open the file with or without NOATIME?
-
-Thanks,
-Lars
+> ---
+>  diff.c | 21 ++++++++++-----------
+>  1 file changed, 10 insertions(+), 11 deletions(-)
+>
+> diff --git a/diff.c b/diff.c
+> index 534c12e..4a6501c 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -1217,7 +1217,7 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+>         const char *line_prefix = diff_line_prefix(o);
+>
+>         if (ecbdata->header) {
+> -               fprintf(ecbdata->opt->file, "%s", ecbdata->header->buf);
+> +               fprintf(o->file, "%s", ecbdata->header->buf);
+>                 strbuf_reset(ecbdata->header);
+>                 ecbdata->header = NULL;
+>         }
+> @@ -1229,9 +1229,9 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+>                 name_a_tab = strchr(ecbdata->label_path[0], ' ') ? "\t" : "";
+>                 name_b_tab = strchr(ecbdata->label_path[1], ' ') ? "\t" : "";
+>
+> -               fprintf(ecbdata->opt->file, "%s%s--- %s%s%s\n",
+> +               fprintf(o->file, "%s%s--- %s%s%s\n",
+>                         line_prefix, meta, ecbdata->label_path[0], reset, name_a_tab);
+> -               fprintf(ecbdata->opt->file, "%s%s+++ %s%s%s\n",
+> +               fprintf(o->file, "%s%s+++ %s%s%s\n",
+>                         line_prefix, meta, ecbdata->label_path[1], reset, name_b_tab);
+>                 ecbdata->label_path[0] = ecbdata->label_path[1] = NULL;
+>         }
+> @@ -1249,15 +1249,15 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+>                 find_lno(line, ecbdata);
+>                 emit_hunk_header(ecbdata, line, len);
+>                 if (line[len-1] != '\n')
+> -                       putc('\n', ecbdata->opt->file);
+> +                       putc('\n', o->file);
+>                 return;
+>         }
+>
+>         if (len < 1) {
+> -               emit_line(ecbdata->opt, reset, reset, line, len);
+> +               emit_line(o, reset, reset, line, len);
+>                 if (ecbdata->diff_words
+>                     && ecbdata->diff_words->type == DIFF_WORDS_PORCELAIN)
+> -                       fputs("~\n", ecbdata->opt->file);
+> +                       fputs("~\n", o->file);
+>                 return;
+>         }
+>
+> @@ -1282,8 +1282,8 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+>                 }
+>                 diff_words_flush(ecbdata);
+>                 if (ecbdata->diff_words->type == DIFF_WORDS_PORCELAIN) {
+> -                       emit_line(ecbdata->opt, context, reset, line, len);
+> -                       fputs("~\n", ecbdata->opt->file);
+> +                       emit_line(o, context, reset, line, len);
+> +                       fputs("~\n", o->file);
+>                 } else {
+>                         /*
+>                          * Skip the prefix character, if any.  With
+> @@ -1294,7 +1294,7 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+>                               line++;
+>                               len--;
+>                         }
+> -                       emit_line(ecbdata->opt, context, reset, line, len);
+> +                       emit_line(o, context, reset, line, len);
+>                 }
+>                 return;
+>         }
+> @@ -1316,8 +1316,7 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+>         default:
+>                 /* incomplete line at the end */
+>                 ecbdata->lno_in_preimage++;
+> -               emit_line(ecbdata->opt,
+> -                         diff_get_color(ecbdata->color_diff, DIFF_CONTEXT),
+> +               emit_line(o, diff_get_color(ecbdata->color_diff, DIFF_CONTEXT),
+>                           reset, line, len);
+>                 break;
+>         }
+> --
+> 2.10.0.2.g0676c79.dirty
+>
