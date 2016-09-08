@@ -7,111 +7,192 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A165D1F6BF
-	for <e@80x24.org>; Thu,  8 Sep 2016 07:31:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B8DF1F6BF
+	for <e@80x24.org>; Thu,  8 Sep 2016 07:31:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757519AbcIHHbb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Sep 2016 03:31:31 -0400
-Received: from mout.gmx.net ([212.227.15.19]:62993 "EHLO mout.gmx.net"
+        id S1757535AbcIHHbf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Sep 2016 03:31:35 -0400
+Received: from mout.gmx.net ([212.227.15.18]:62892 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1757516AbcIHHba (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Sep 2016 03:31:30 -0400
+        id S1752676AbcIHHbc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Sep 2016 03:31:32 -0400
 Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MY86C-1bUmmH1Vvk-00UpaQ; Thu, 08 Sep 2016 09:31:13
+ ESMTPSA (Nemesis) id 0MFdDB-1bn90c3RvJ-00EeM1; Thu, 08 Sep 2016 09:31:19
  +0200
-Date:   Thu, 8 Sep 2016 09:31:11 +0200 (CEST)
+Date:   Thu, 8 Sep 2016 09:31:19 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v2 2/3] Introduce a function to run regexec() on non-NUL-terminated
- buffers
+Subject: [PATCH v2 3/3] Use the newly-introduced regexec_buf() function
 In-Reply-To: <cover.1473319844.git.johannes.schindelin@gmx.de>
-Message-ID: <94ee698b2736929d37640012a1b1735b134dd3d6.1473319844.git.johannes.schindelin@gmx.de>
+Message-ID: <324ecba64eb0436988aca846fb444eafda290d13.1473319844.git.johannes.schindelin@gmx.de>
 References: <cover.1473090278.git.johannes.schindelin@gmx.de> <cover.1473319844.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:QthCk8Bm0M0YmcSGAHhERkSn+PRm31To16uo1jjO6euPimHkqC0
- FY3wvVKTsTHhoWk58AW3Zv9hVKiY3wXiBFC8XXOgM4UliRwCjWU/nIr+DmB+6LxCSqDPwuk
- dE3c6x/va2aLdZJe0NWNL7QH+WyatkoBO21OqlL2/gFQso8waasSfliz8NODB9ow3Tzq2YT
- 4va7pbm9TMcRGXEdgISsA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:8pUtp0E/0lw=:a+EgKs1K6v1H5eTUTQIAm0
- +DSV6YjOl+o1BMICZUvECuFMqoXCnnxRnCrVyOKZprzTDHxw2RqlqQZ8dgBSxUGShHTKcMPzX
- hOaSLvHw83O3fBLevXIcCDKIO95MYsujflaulYPwUryoLPgSnrVgJ3GDomC305aIZToZS8vyU
- gJrSHCGgqLot66hYyCIFTEXsg673RPSnDD8Tb1BUDUcx1bxSrUDivHyvKGjdncUWQYSTmMr2d
- kSHKT1iTTXOWpxPknvV4KVYCfdyi6KaUOUY+nbmGW5Ce0JpUX1ODHUDKLCS5bLoSpwyQGyf2t
- ebdkbHBIBAqoqZixPpy8Pp6UvfC27Ay0S5BoaLDFJXDflqtYJWmm8zSDA+pW9qz2d4GtkRyML
- 1LEHjUAk/SbE0NeZbFnuB7OPHEY/opmTEr4dQGppLFjbuFDtzc4ZvbzkYq+aG8xyDQ/vDmYvO
- p/dkQAagF5XsbBgnr2VnNiEB14Pr57P7NWYlnWTvfK+xyEP9jMesTl57pt9fyQKQuY2PIYJap
- cZCNfQyvkLeZW/97JMhkO1aMG76uXgdyhxiDfYU+Dq+MCizdICqFQSTw6axaipq5V5ikT8R3F
- xuI4Ynlv2guHm01Df474hWMPrG8V9qeo//OFRLr+KAHmg5CpYu6px+yZhtzNokUl4stdBBsEw
- ooESRu3zfrvKhz4+YPsQLQunSgAqD3wxhP+CuQuzbno/cpyxGYookJn9Cicb1KJ+0Y6TUWY0D
- Y+sxaf4Aj7Yu7xeoF0LwOPxZ0H25qTiVc9pRC82As2LEfEPddNdgVIAT9qk0cMUHa61PJnZ+H
- ttRXPlW
+X-Provags-ID: V03:K0:UCd/lw1R/BU63UjdQpx12OKYaXOoxALyu/SLOMX79jcIpTjqkwC
+ 33RqZHVu8Nh7UDsqZgUHO31TcrxwvlKY1RK80Y8ty7im7XQcNyPR9CZC1LR0hUsNubQqaWP
+ pn3DuspyNxJJb1hngJBrWiHF31SMBxJSabcJ5oxbJY5wNF8ADHZb2ZVzhQ2T9B6vbS1BUct
+ qQwwKLzmLPpOyZHBSL77w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:AbhkCyuvG1M=:GS3e34UQsR8Aas/0G35ljJ
+ rRSbm/ec2W1pIBw9mvpU3TdbAW+abYAhLMSNHtQC9Fl35JsmzeoChHzK5YVHCFApDyWPau7kD
+ JGVsizxGPkleXEm6qF5k+oAD+NI56b05YeqzcUV+reM+ZRzffME7RtkmMT1Z0Er088S1Ji5Zo
+ GMtdsboRriYVVRx6yZDX/Vf9s7w5+TvcaJr2giZJpvJS2KJEF1kZDe52eILn1yGdEHEBFfVh4
+ 7BA+Ti9Ie8+Q1W5IXEhWIleooSaQ5XzXMrmTQAOoAtsTKg9I20ci3+PqylSFtEgy6koJQOhZO
+ Y+004ZmW1tfYadMDuunuZLtPK6qcyELV3IpvnNFjZk3eTHVuDIHxdaZHdAKn8w69DB0v/2jvo
+ HOS/QcAsLVMTn8A6baLZTHYUbB3c2tnCvKEjrY4U5+NPK1Z6IHQ2BXWmLlMOw3XjiC/Dbl95o
+ tn3n8JGb/OcjW6AJDz2CZdUf2OjfDzBCL/8BzvSBuJnQAMlcgo8Sq7zh5SBj0aM3DP4c9jUAg
+ iAHoSOq/1jJcFvBkGCWh4wPEGZoi270JYBqXrzkONLJVNSarDEd45xqaqa7tBhrIVlVtgfEMB
+ 4C7UjFq4dNrnWH3jJmV4xth9VBtxhq2XX93XBfgV1r9zuvAh7voSDWAmPkfWV5yd3lbJHpXGn
+ VFzD78rVtuEFsjNobjXra/HQQZ/rfScqu93oB9rUij1W/zetMazrH3diPRm+3ghKPCBbLjIjj
+ udQ2/5Ti1ok6gDYXVQl4+uU2cXTphnuJnn+uCy9tiewgLhBAaDfIn3EdLas48Sz1T64kX7fg6
+ ciGXflj
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We just introduced a test that demonstrates that our sloppy use of
-regexec() on a mmap()ed area can result in incorrect results or even
-hard crashes.
+The new regexec_buf() function operates on buffers with an explicitly
+specified length, rather than NUL-terminated strings.
 
-So what we need to fix this is a function that calls regexec() on a
-length-delimited, rather than a NUL-terminated, string.
+We need to use this function whenever the buffer we want to pass to
+regexec() may have been mmap()ed (and is hence not NUL-terminated).
 
-Happily, there is an extension to regexec() introduced by the NetBSD
-project and present in all major regex implementation including
-Linux', MacOSX' and the one Git includes in compat/regex/: by using
-the (non-POSIX) REG_STARTEND flag, it is possible to tell the
-regexec() function that it should only look at the offsets between
-pmatch[0].rm_so and pmatch[0].rm_eo.
+Note: the original motivation for this patch was to fix a bug where
+`git diff -G <regex>` would crash. This patch converts more callers,
+though, some of which explicitly allocated and constructed
+NUL-terminated strings (or worse: modified read-only buffers to insert
+NULs).
 
-That is exactly what we need.
+Some of the buffers actually may be NUL-terminated. As regexec_buf()
+uses REG_STARTEND where available, but has to fall back to allocating
+and constructing NUL-terminated strings where REG_STARTEND is not
+available, this makes the code less efficient in the latter case.
 
-Since support for REG_STARTEND is so widespread by now, let's just
-introduce a helper function that uses it, and fall back to allocating
-and constructing a NUL-terminated when REG_STARTEND is not available.
+However, given the widespread support for REG_STARTEND, combined with
+the improved ease of code maintenance, we strike the balance in favor
+of REG_STARTEND.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- git-compat-util.h | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ diff.c             |  3 ++-
+ diffcore-pickaxe.c | 18 ++++++++----------
+ xdiff-interface.c  | 13 ++++---------
+ 3 files changed, 14 insertions(+), 20 deletions(-)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index db89ba7..19128b3 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -965,6 +965,27 @@ void git_qsort(void *base, size_t nmemb, size_t size,
- #define qsort git_qsort
- #endif
+diff --git a/diff.c b/diff.c
+index 534c12e..526775a 100644
+--- a/diff.c
++++ b/diff.c
+@@ -951,7 +951,8 @@ static int find_word_boundaries(mmfile_t *buffer, regex_t *word_regex,
+ {
+ 	if (word_regex && *begin < buffer->size) {
+ 		regmatch_t match[1];
+-		if (!regexec(word_regex, buffer->ptr + *begin, 1, match, 0)) {
++		if (!regexec_buf(word_regex, buffer->ptr + *begin,
++				 buffer->size - *begin, 1, match, 0)) {
+ 			char *p = memchr(buffer->ptr + *begin + match[0].rm_so,
+ 					'\n', match[0].rm_eo - match[0].rm_so);
+ 			*end = p ? p - buffer->ptr : match[0].rm_eo + *begin;
+diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
+index 55067ca..9795ca1 100644
+--- a/diffcore-pickaxe.c
++++ b/diffcore-pickaxe.c
+@@ -23,7 +23,6 @@ static void diffgrep_consume(void *priv, char *line, unsigned long len)
+ {
+ 	struct diffgrep_cb *data = priv;
+ 	regmatch_t regmatch;
+-	int hold;
  
-+static inline int regexec_buf(const regex_t *preg, const char *buf, size_t size,
-+			      size_t nmatch, regmatch_t pmatch[], int eflags)
-+{
-+#ifdef REG_STARTEND
-+	assert(nmatch > 0 && pmatch);
-+	pmatch[0].rm_so = 0;
-+	pmatch[0].rm_eo = size;
-+	return regexec(preg, buf, nmatch, pmatch, eflags | REG_STARTEND);
-+#else
-+	char *buf2 = xmalloc(size + 1);
-+	int ret;
-+
-+	memcpy(buf2, buf, size);
-+	buf2[size] = '\0';
-+	ret = regexec(preg, buf2, nmatch, pmatch, eflags);
-+	free(buf2);
-+
-+	return ret;
-+#endif
-+}
-+
- #ifndef DIR_HAS_BSD_GROUP_SEMANTICS
- # define FORCE_DIR_SET_GID S_ISGID
- #else
+ 	if (line[0] != '+' && line[0] != '-')
+ 		return;
+@@ -33,11 +32,8 @@ static void diffgrep_consume(void *priv, char *line, unsigned long len)
+ 		 * caller early.
+ 		 */
+ 		return;
+-	/* Yuck -- line ought to be "const char *"! */
+-	hold = line[len];
+-	line[len] = '\0';
+-	data->hit = !regexec(data->regexp, line + 1, 1, &regmatch, 0);
+-	line[len] = hold;
++	data->hit = !regexec_buf(data->regexp, line + 1, len - 1, 1,
++				 &regmatch, 0);
+ }
+ 
+ static int diff_grep(mmfile_t *one, mmfile_t *two,
+@@ -50,9 +46,11 @@ static int diff_grep(mmfile_t *one, mmfile_t *two,
+ 	xdemitconf_t xecfg;
+ 
+ 	if (!one)
+-		return !regexec(regexp, two->ptr, 1, &regmatch, 0);
++		return !regexec_buf(regexp, two->ptr, two->size,
++				    1, &regmatch, 0);
+ 	if (!two)
+-		return !regexec(regexp, one->ptr, 1, &regmatch, 0);
++		return !regexec_buf(regexp, one->ptr, one->size,
++				    1, &regmatch, 0);
+ 
+ 	/*
+ 	 * We have both sides; need to run textual diff and see if
+@@ -83,8 +81,8 @@ static unsigned int contains(mmfile_t *mf, regex_t *regexp, kwset_t kws)
+ 		regmatch_t regmatch;
+ 		int flags = 0;
+ 
+-		assert(data[sz] == '\0');
+-		while (*data && !regexec(regexp, data, 1, &regmatch, flags)) {
++		while (*data &&
++		       !regexec_buf(regexp, data, sz, 1, &regmatch, flags)) {
+ 			flags |= REG_NOTBOL;
+ 			data += regmatch.rm_eo;
+ 			if (*data && regmatch.rm_so == regmatch.rm_eo)
+diff --git a/xdiff-interface.c b/xdiff-interface.c
+index f34ea76..50702a2 100644
+--- a/xdiff-interface.c
++++ b/xdiff-interface.c
+@@ -214,11 +214,10 @@ struct ff_regs {
+ static long ff_regexp(const char *line, long len,
+ 		char *buffer, long buffer_size, void *priv)
+ {
+-	char *line_buffer;
+ 	struct ff_regs *regs = priv;
+ 	regmatch_t pmatch[2];
+ 	int i;
+-	int result = -1;
++	int result;
+ 
+ 	/* Exclude terminating newline (and cr) from matching */
+ 	if (len > 0 && line[len-1] == '\n') {
+@@ -228,18 +227,16 @@ static long ff_regexp(const char *line, long len,
+ 			len--;
+ 	}
+ 
+-	line_buffer = xstrndup(line, len); /* make NUL terminated */
+-
+ 	for (i = 0; i < regs->nr; i++) {
+ 		struct ff_reg *reg = regs->array + i;
+-		if (!regexec(&reg->re, line_buffer, 2, pmatch, 0)) {
++		if (!regexec_buf(&reg->re, line, len, 2, pmatch, 0)) {
+ 			if (reg->negate)
+-				goto fail;
++				return -1;
+ 			break;
+ 		}
+ 	}
+ 	if (regs->nr <= i)
+-		goto fail;
++		return -1;
+ 	i = pmatch[1].rm_so >= 0 ? 1 : 0;
+ 	line += pmatch[i].rm_so;
+ 	result = pmatch[i].rm_eo - pmatch[i].rm_so;
+@@ -248,8 +245,6 @@ static long ff_regexp(const char *line, long len,
+ 	while (result > 0 && (isspace(line[result - 1])))
+ 		result--;
+ 	memcpy(buffer, line, result);
+- fail:
+-	free(line_buffer);
+ 	return result;
+ }
+ 
 -- 
 2.10.0.windows.1.10.g803177d
-
-
