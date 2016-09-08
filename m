@@ -7,68 +7,85 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 207E71F6BF
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30DBA2070F
 	for <e@80x24.org>; Thu,  8 Sep 2016 06:59:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933747AbcIHG7a (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Sep 2016 02:59:30 -0400
-Received: from mout.gmx.net ([212.227.15.15]:53739 "EHLO mout.gmx.net"
+        id S933792AbcIHG7d (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Sep 2016 02:59:33 -0400
+Received: from mout.gmx.net ([212.227.15.19]:55152 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932529AbcIHG72 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Sep 2016 02:59:28 -0400
+        id S932529AbcIHG7b (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Sep 2016 02:59:31 -0400
 Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0Ledpu-1bH7aC1NIE-00qQDx; Thu, 08 Sep 2016 08:59:03
+ ESMTPSA (Nemesis) id 0MMT1y-1bhLbl3vgc-008FnV; Thu, 08 Sep 2016 08:59:28
  +0200
-Date:   Thu, 8 Sep 2016 08:59:01 +0200 (CEST)
+Date:   Thu, 8 Sep 2016 08:59:27 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     Satoshi Yasushima <s.yasushima@gmail.com>,
-        Pat Thoyts <patthoyts@users.sourceforge.net>,
-        git@vger.kernel.org,
-        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: git-gui, was Re: [PATCH v2 6/6] git-gui: Update Japanese
- information
-In-Reply-To: <xmqqk2enobol.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1609080857460.129229@virtualbox>
-References: <1472913822-9088-1-git-send-email-s.yasushima@gmail.com>        <1473177741-9576-1-git-send-email-s.yasushima@gmail.com>        <1473177741-9576-6-git-send-email-s.yasushima@gmail.com>        <048AF5D4DC044BDC9F3A75A3BABD00F1@Yasushima>
- <xmqqk2enobol.fsf@gitster.mtv.corp.google.com>
+cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] compat: move strdup(3) replacement to its own file
+In-Reply-To: <xmqqfupbob9c.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1609080859160.129229@virtualbox>
+References: <89725a44-8afa-1eb1-732a-23b1e264616c@web.de> <alpine.DEB.2.20.1609040941210.129229@virtualbox> <6926b39c-4448-c463-33f7-d9eae841c635@web.de> <xmqqfupbob9c.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Ywyou78qbBpfp1nFrv8DeL4LgwRuXEKFOLTX+Xu+9br72hufkfx
- AaUxTfooOkozCx8pAdbx9+4Ym7D44H9zIa1j5aqKJvElJGN/szoZ+wtJXT3eR4ccwOZDoB2
- eiN3f5QeWF6G5zpWhMbrGcjxKYsIxLb1VL+82LaKiQCSo5nWIwBH9zHDENcIjqAH21EigGV
- OrstXj4FIYL40uqXs/3yg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:gKcFUhcpa0Y=:UA1XZEq7PqKjAWJ7cG0HQt
- UxWBiFlo+6UldDv0nHdNqzJLS1pW9viRW4SD4lj2c1IxVKP693x5I5vwTjsZ/8Gi3y4VrlByI
- 5ZxtplVLmbyhOmu8pWaFcoTUQ/ZMVhItPlFHZ5msUnrRrmEnK8eNx7Cq2wYpGGj8L8pm6LqbZ
- k+cUTnSHvl6GfO5oj/rsXblgEdIDFtjZXKsh/SLFeMSFplGz5mB6DQbysWaeLH4UAjhQmdLE7
- 9CmuivkqZt/aiPv8HkxhUmSblpCmvnbcwI0S+7sna2hWQyX/2vkZXQVEkPahf3eG+29CRBDam
- 4j+G1jR795u9kaSeYcPe9ntMK6BkLJdasF1JhY6TiLBnMQ7hnFpAVbnElJe0W+/AuxQBiwO2L
- tvc++Gk1ONULk6G9yEaPF24Q4USbQK58eCaxL+yC2iAIJjBxtwBcUUFZ5/ybcLJPv/do0IcZw
- 96rPv8JfWHsKWvNgMkz8/Mf4JYx2u4vYzENJ6PWsxRkie00OC/q3neKsoN2C/FfoFQW9f9yGn
- b0t7KDkAz5Qogf/iQeYbZXDI9k/oUAQGThdxoOWtiANxcUpXICMMSggB5jtwNGzev4oZDEhkO
- nu42jllagMdQVoeoTU6UuWk74kAKlWr/9xeWd56lfAmxZ9f8kwrF68CKQhbtIpqrrhj+bY+Ym
- +58mQrM0VrwpSc6/mys3IdD90il68+9S0RQAMU1MfDx9bSoqYs2dBU+7NXtaXs8prlqEGKPhe
- L7pYmBllUXsc+TI8fovMN+rZYVqDVi1g1kQ7fCPHxYwbzMfuoInlTzWjuBT/n+So6bOGEYoxA
- UOTH5u7
+Content-Type: multipart/mixed; BOUNDARY="8323329-303377715-1473317968=:129229"
+X-Provags-ID: V03:K0:wVs3v/pgDaexAsbVaJQVg9ct2pwfA7udkVc8X0OX2ftZZb3is1V
+ R/75PBnjfW355Eoet0mAEoeJa87dDCkWwpRTK9s7E5JM0r/FEQNm+M85//krKQNIJdoo5A9
+ Nvf7raaji6OCLiiGyZTt6XuXRCI2K9ZXd8j1juCTYqktll/FOi09XOx18RMI1JpNtRMK+Lx
+ ZUnT8sGDua6ISgBSfuA3Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:l6eSpn1gRbU=:u8cFeb6sfhrfdu5y9AaNtW
+ g0b1BGuOADNjg2RNgbxUlwjsDYzg9Mu84Wc4lP9Om3WbQ/A464id/bff9xFngyXs5zYywpSys
+ Ucq2QlK6dJuYl5F5e0fGXF/FxcFHaXtX8SNYfPkbzGEgDEB5SVdB2M9+Wg92OpQqC9OMCAYaJ
+ gv36HbP6+9s3oLmHks6eQppUIWkdjW22PZM2MAUlrc618JiqKir5a9xbUNZClzFOocdJicTja
+ BBcAdoHq+Mpfieo8fVglDj6h/r1XgkGdnL8HRyrW1nut5C5HR6ucVZZbFZz3ppdL+aLM3BfoH
+ dqiSANrAgPPFGbpWaFUamUGT1iKi3ZVARdB3kqehT4ibjuQfNLNj6kf4WllIxPMXdZ0Dx+XXR
+ /zc0No8+8khEKMtGccoZyurWPrYSfLpzab1VL9ThKNdiWX2TqEqTp3FND+J72lP121FCM15po
+ XgnCDmTSsQ2s4bFdX9RMlCN7NYywR6XLawvUrUVBGQUg20vlH6Er933a1y7c8n74VJ7kTtKYv
+ x3mHlG4hC2lAcr0J9VryXV6e5RnemT/yZpbBT39HnA7u2QSVK0jzAMHZV/k/tYeX9bO0Qv7Yh
+ jT5LgiA3u9uChFVwdUKLhIHWhrsSxpF5VlPVsJ5f/nAcsUoAIUJHMxBqB6AeowJfJKb3rtzrE
+ oTMcAjlgHbNZRKF/h6o9Y3ES9PUsxUgqOXElw5e0ainzAFADLH+NXW6Hssbkd+oOWvtW9e1sC
+ VyscgCDoYkiH9R42vIAc5MB5C2nCmQbCD03ySCAdpYCBPE/oBp/yZsgAQ3anfP8kLQhxL9RA6
+ /yEaenv
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323329-303377715-1473317968=:129229
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+
+Hi,
 
 On Wed, 7 Sep 2016, Junio C Hamano wrote:
 
-> Pat, we haven't heard from you for a long time.
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>=20
+> > Well, OK.  I think the missing point is that the original nedmalloc
+> > doesn't come with strdup() and doesn't need it.  Only _users_ of
+> > nedmalloc need it.  Marius added it in nedmalloc.c, but strdup.c is a
+> > better place for it.
+>=20
+> Thanks.  I'll add these lines like so:
+>=20
+>     Move our implementation of strdup(3) out of compat/nedmalloc/ and
+>     allow it to be used independently from USE_NED_ALLOCATOR.  The
+>     original nedmalloc doesn't come with strdup() and doesn't need it.
+>     Only _users_ of nedmalloc need it, which was added when we imported
+>     it to our compat/ hierarchy.
+>=20
+>     This reduces the difference of our copy of nedmalloc from the
+>     original, making it easier to update, and allows for easier testing
+>     and reusing of our version of strdup().
 
-Indeed. There are a couple of git-gui patches in Git for Windows that have
-been contributed a long time ago and not been picked up.
+Excellent!
 
-Maybe it is time to just accept git-gui patches directly into Git, after
-some other Tcl/Tk savvy people ACKed them?
-
-Ciao,
+Thanks,
 Dscho
+--8323329-303377715-1473317968=:129229--
