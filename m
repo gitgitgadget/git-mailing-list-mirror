@@ -2,101 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 391EE1F6BF
-	for <e@80x24.org>; Thu,  8 Sep 2016 11:04:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D1982070F
+	for <e@80x24.org>; Thu,  8 Sep 2016 12:56:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966479AbcIHLEG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Sep 2016 07:04:06 -0400
-Received: from mail-it0-f43.google.com ([209.85.214.43]:38543 "EHLO
-        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932372AbcIHLEF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Sep 2016 07:04:05 -0400
-Received: by mail-it0-f43.google.com with SMTP id c198so73031041ith.1
-        for <git@vger.kernel.org>; Thu, 08 Sep 2016 04:04:04 -0700 (PDT)
+        id S933974AbcIHM4R (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Sep 2016 08:56:17 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:33113 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932338AbcIHM4Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Sep 2016 08:56:16 -0400
+Received: by mail-pf0-f194.google.com with SMTP id 128so2500434pfb.0
+        for <git@vger.kernel.org>; Thu, 08 Sep 2016 05:56:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=PaMLm66h5qJoCI36JTZY3XNsw1WoKSzIVLDyz2Y1WWU=;
-        b=cgcr1mgDF6Lp646l3a+djGIV2Y9JdiH/OU6Z5bKuoL6f4mTVlS3/r8/oxlZd5biTkl
-         pb3Tr//yDApXPwheX/RFFlFAEe10pk5E9hCbnqgTLkBO1aAItCqZ5+mXeXfACiYcVzDa
-         BbCNx/tBZs+X5QDD0O8gHqycLSWk3dqh3twAYgFo9QyoXfoD5TnPBYMAGLJ4suXG+6pN
-         TlCx34N6mMsnC+TmgLL+KpBc2VeuuGwbQAvCnUSVUtZbect2OyHctMr2HaMFy7ieSHG0
-         F75Fg21j11TJtPwRAWjDRTW3qS1VQZ+IA8z+ZsyNLxycwixp5kpAoLUp2YiHeuW9NC6R
-         DlNw==
+        h=message-id:from:to:cc:references:in-reply-to:subject:date
+         :mime-version:content-transfer-encoding:importance;
+        bh=vFSaYQCD1N9Yw2AdFLcVqNC/M8ilmB0KNZnYnaEwZOk=;
+        b=O234wg1eF43ibBxqySAE8wpx6X7nzjO+5bmqMorbT/oEXwTDp5NsWHQeFf3whNj1f/
+         i2nj7ls1z3G0oYgoTvAovW3INYHJc+iNOa8zDpgK3745mq0r67LLaalR/gwM2T8snrRF
+         8xWpb001LWdd9JK7F/o8EdvFrv/VqyGHQWEDLYShJas0o3NXJhDUoEvucQpvV9oDmAXu
+         5Z2pDScrLppEqnm0TbnEvYT5V3EF5GhMmUzyIe/F05R0bGDA450HRE9bHEY2Am6LU+le
+         07y0zpb39GTvK2FO9gPswhpLyuzx5TIwHeByl69ydSoZQpeSPsto6sJiIuEjwYFMzK4M
+         AnYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=PaMLm66h5qJoCI36JTZY3XNsw1WoKSzIVLDyz2Y1WWU=;
-        b=bVCiIriEjlvyN9aZxsZOCU5f0WH5VhZESby8EHCZ2KLIYWUfwShVnZNb2DCFo1uGoj
-         PUK2dFiHevmPMc/COPHFydaY+ij4U0UUt1LU/P21+RZFpt7/s5gZHpvQVgyGlGUWOsgq
-         lz+Lx4Q0a++Xt5iXF+nsLlUxCtqhih+djLPQSefTj+Su7Jwuf/kzNXFqXznS7+iG94QD
-         wl3t1fV0BLssXT/sjGfo72rErvzhJU6a5g2D1g6LXmlO0DNEgqEo2aUJRaxwisQu7Fai
-         veodgWCovRvYCgGF6CN5/M1iDi7QUffecxc/bkHxBpZfb0ypLB7NPF8o+O7w1u0+oDMM
-         do4w==
-X-Gm-Message-State: AE9vXwPSvVhn/WDdqqMZbI6W/v7HrJBK537K1oQIzNDpeuFyH4H70ckoolUIse8UsQC6TezxtGP3kjLTV3B2Cw==
-X-Received: by 10.36.3.76 with SMTP id e73mr14860397ite.42.1473332644167; Thu,
- 08 Sep 2016 04:04:04 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:to:cc:references:in-reply-to
+         :subject:date:mime-version:content-transfer-encoding:importance;
+        bh=vFSaYQCD1N9Yw2AdFLcVqNC/M8ilmB0KNZnYnaEwZOk=;
+        b=Y9hB5d7lOfkVsB4birVc0rhEdrZtKuuupBizGM484lAp8w1WR7D7+pck4rRqET5Gc/
+         7JG5QInIgShPPClbIZE4LoDLC0IgdGjYWalDpfYYsfv+KEmRL7zUyxYPaHvrHXGGI0wS
+         7LPxD+TJGcNZCXpIAN7eKLUgT+9G9SRJomCIvnWkVfpH0ij55DuK+njj4usNOyD7eZsr
+         6bVuN+5MlrzSPwrV6CbaqKWrOwFMEy9k1n4f+l40he9q+LtVuBUQPqox6kccDXCmvqYD
+         LalSH+8sQQFuLZGQOeFOiFxxgiK4hhweZsy0hpPKpBS1GX3EXvrV0HxXDZO+sVp09PPS
+         HyXw==
+X-Gm-Message-State: AE9vXwM5e/SeLRgK/GFTyGxSVkR1iyMhFhOxv/JVlKgEOvGvEDHxZ2H+bETD+T5fNiLI7A==
+X-Received: by 10.98.196.130 with SMTP id h2mr50777593pfk.140.1473339375929;
+        Thu, 08 Sep 2016 05:56:15 -0700 (PDT)
+Received: from Yasushima (i60-35-214-133.s41.a017.ap.plala.or.jp. [60.35.214.133])
+        by smtp.gmail.com with ESMTPSA id an11sm56420813pac.26.2016.09.08.05.56.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 08 Sep 2016 05:56:14 -0700 (PDT)
+Message-ID: <9F5449944F884C4AA333D4E756B71BA4@Yasushima>
+From:   "Satoshi Yasushima" <s.yasushima@gmail.com>
+To:     "Junio C Hamano" <gitster@pobox.com>
+Cc:     <git@vger.kernel.org>,
+        "Pat Thoyts" <patthoyts@users.sourceforge.net>,
+        "JakubNar?bski" <jnareb@gmail.com>,
+        "Satoshi Yasushima" <s.yasushima@gmail.com>
+References: <1472913822-9088-1-git-send-email-s.yasushima@gmail.com><1473177741-9576-1-git-send-email-s.yasushima@gmail.com><1473177741-9576-6-git-send-email-s.yasushima@gmail.com><048AF5D4DC044BDC9F3A75A3BABD00F1@Yasushima> <xmqqk2enobol.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqqk2enobol.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v2 6/6] git-gui: Update Japanese information
+Date:   Thu, 8 Sep 2016 21:55:56 +0900
 MIME-Version: 1.0
-Received: by 10.64.54.40 with HTTP; Thu, 8 Sep 2016 04:03:33 -0700 (PDT)
-In-Reply-To: <20160908012553.q2aubze4qggfzjxz@sigill.intra.peff.net>
-References: <CACsJy8BF_mnSUcEeH=RBMyfh8RrQGJ4dwm_svsC4TciJtECn_w@mail.gmail.com>
- <20160908012553.q2aubze4qggfzjxz@sigill.intra.peff.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 8 Sep 2016 18:03:33 +0700
-Message-ID: <CACsJy8DW1-EsfgGkbnD3LgiygAu2JV9vs_8e+oQbenXERUA6hw@mail.gmail.com>
-Subject: Re: "fatal error in commit_refs" from pushing to github
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-2022-jp";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+Importance: Normal
+X-Mailer: Microsoft Windows Live Mail 16.4.3564.1216
+X-MimeOLE: Produced By Microsoft MimeOLE V16.4.3564.1216
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 8, 2016 at 8:25 AM, Jeff King <peff@peff.net> wrote:
-> On Thu, Sep 08, 2016 at 07:49:12AM +0700, Duy Nguyen wrote:
->
->> I got the message in the subject when pushing to github today. Yes I
->> know it's github, not git. But according to stackoveflow [1] it's a
->> local problem. Which makes me think, if we know exactly what this is
->> (or at least roughly the problem area), maybe we could improve git to
->> catch it locally in the first place (and because other git servers may
->> not have the same protection as github).  Jeff maybe you can reveal
->> something about this "fatal error in commit_refs"? I'm sure it's not
->> in git code. But I would understand if the answer is "no".
->
-> The short answer is that it's nothing to do with Git or the client; it's
-> GitHub-specific code running on the server that is outside of Git
-> entirely.
->
-> The long answer is that pushes to GitHub don't hit Git directly these
-> days. They hit a proxy layer that speaks just enough of the Git protocol
-> to relay to N separate receives spread across N replica servers[1]. Those
-> receive-packs take in the pack and verify it, but don't actually update
-> any refs[2]. Then the proxy layer runs its own set of policy hooks, and
-> speaks a commit-protocol to each of the replicas so that they all agree
-> on the new ref state. That last step is called "commit_refs" internally.
->
-> So this is really an internal failure at the ref-update stage. There
-> _should_ be a reasonable error message, but I think "fatal error in
-> commit_refs" is the generic last-ditch fallback. I'll pass this along to
-> people in charge of that code, as we should be generating a more useful
-> error message.
+On Wed, 07 Sep 2016 10:35:22 -0700 Junio C Hamano wrote:
+>Since I received the patch directly bypassing vger, I queued it on
+>gitgui-0.20.0 from Pat and tentatively merged it to my 'pu'.
 
-Hmm.. I'm interested in this because the "fix" is from client side. I
-did "git gc" and "git fetch" and the problem was gone. From this
-description, I suppose C Git sends a good pack (phew!), but probably
-with some stale ref or something that upsets this this last stage.
-It's hard to make a connection back to either gc or fetch. Maybe gc
-does ref trimming or something (that should probably be done by
-git-push as well). Oh well.. maybe next time I see it, I'll get a nice
-and clear message :)
--- 
-Duy
+wow, thanks so much.
