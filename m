@@ -2,109 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74C7B1F856
-	for <e@80x24.org>; Thu,  8 Sep 2016 21:22:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 261991F856
+	for <e@80x24.org>; Thu,  8 Sep 2016 21:24:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753151AbcIHVWg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Sep 2016 17:22:36 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60858 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751455AbcIHVWf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Sep 2016 17:22:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 399693BDFA;
-        Thu,  8 Sep 2016 17:22:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=D1X1KP0zTwAbAlryZZ6xsawk6rY=; b=xAuOiO
-        Rt5/0rxCc6+esrMJIfTjnGpqr1fsUyjcEWLQKS+9n1K4EkDAjmwX8ty1+8l5p+kf
-        OFdvMP3DthtQstlViJSzminrJLtho4gPBWFaNQkAEg/DcrNeLOocivD7BPWGiStg
-        GsrR5fG7T2Phf+wRoZIG2TeYyA6YB238dYphE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=lxBZPg/ZUXR6OYMsQC0ApTl5KLpmmGkq
-        A9wXXwy6MgdsuUpsxpJ/fZRfZypsNgbEGA6QDtR/VPAZOQPtqhrMNpdAatFIxbkr
-        M+iRmwRmIO/8Ej0CKh6qgYQ9ILtDVmq5zXs0htqhFVE0Hx7Ipr471bg3zryjwST9
-        hSD1pewNfgY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 31CEE3BDF9;
-        Thu,  8 Sep 2016 17:22:34 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EE6183BDF8;
-        Thu,  8 Sep 2016 17:22:28 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, pclouds@gmail.com, =peartben@gmail.com,
-        Ben Peart <benpeart@microsoft.com>
-Subject: Re: [PATCH] checkout: eliminate unnecessary merge for trivial checkout
-References: <20160908204431.14612-1-benpeart@microsoft.com>
-Date:   Thu, 08 Sep 2016 14:22:16 -0700
-In-Reply-To: <20160908204431.14612-1-benpeart@microsoft.com> (Ben Peart's
-        message of "Thu, 8 Sep 2016 16:44:31 -0400")
-Message-ID: <xmqqh99qf5o7.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1753306AbcIHVYF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Sep 2016 17:24:05 -0400
+Received: from mail-oi0-f42.google.com ([209.85.218.42]:33378 "EHLO
+        mail-oi0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751000AbcIHVYE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Sep 2016 17:24:04 -0400
+Received: by mail-oi0-f42.google.com with SMTP id y2so93995168oie.0
+        for <git@vger.kernel.org>; Thu, 08 Sep 2016 14:24:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=czyqhAP3/6F1i5zno7O1BJ16Ddo5lJ/jsYCQZLRRptM=;
+        b=nUKhu2krtE47zW+4Q4BYNc6niE32kdjJuZLjLmpq+vH5bvWY3THQIwiUm6scD1EEvy
+         IMnNhrFQjlCfsq5ny9GZQUARB1js5l7Pcohy+JqECp/mbfnwQQQ6CgzWYWReITlakfaK
+         KRIogngtW9aQk6lZPM0szO9VcBtIXoO2X6pp4nuVRThGowR+F7Pi2Ckn6KY3eGnVjl51
+         9Nwrjfcuo58DFZjZa95J1qZX9oqCma8h8MzmbGxE77ezT5Qepw4j+btZk6zvTy0NZRtj
+         u/gqXvbRRt2IxqRL7z8lk5soNVUwv8538TPqPslZL66oRk9d/XFk5Ggj/SQsMWZKS+3a
+         mZlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=czyqhAP3/6F1i5zno7O1BJ16Ddo5lJ/jsYCQZLRRptM=;
+        b=ERGwkNFLVCBrHIEisJCTtRII7mbJtPgB6iRlW4F5l9jsMNoWDS3fj+ZDbR4ymVSRjb
+         VyvhTDpLYVInD1YOG0U5jhaxwYzHZEESBKVS/+6RcCmETgljHkHe0xuzJguHLGYU5vus
+         u6NyyQez3ou7D7RnYHWDsELhdyuVZCTJtjmPY5VCz+Rh5QQe/Qdgt8TkLXfzQ+q9rXYK
+         81EYFN//TLl++iLacjwCgWZiBJEojS9xIJM6QJ03ZaZa5NQ1seqPwTcFZvrp+lZUnWvn
+         MLlHG1ZvaKeqIes+x5q0az6wBKSg0Ztq30SGOkFjWCp4nIIAEcfd1GF+OvCW4QxzKFVU
+         sZXQ==
+X-Gm-Message-State: AE9vXwP6hfwa04Th/5sC1DbLuAYUxaVOMtzC64Zrvkeu0EBhOfUQY8WVHX5IsGnaXIkfLmqASQovNsC2fH/JlXVq
+X-Received: by 10.202.195.1 with SMTP id t1mr157725oif.144.1473369843396; Thu,
+ 08 Sep 2016 14:24:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 594BD450-760A-11E6-959A-51057B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.107.128.66 with HTTP; Thu, 8 Sep 2016 14:24:02 -0700 (PDT)
+In-Reply-To: <20160908182132.50788-6-larsxschneider@gmail.com>
+References: <20160908182132.50788-1-larsxschneider@gmail.com> <20160908182132.50788-6-larsxschneider@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 8 Sep 2016 14:24:02 -0700
+Message-ID: <CAGZ79kZdroDdD5SHP+-9svSTYbJfn2vsFXAwC4aen3hMVEOOPA@mail.gmail.com>
+Subject: Re: [PATCH v7 05/10] pkt-line: add packet_write_gently()
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Martin-Louis Bright <mlbright@gmail.com>,
+        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        Jacob Keller <jacob.keller@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
+On Thu, Sep 8, 2016 at 11:21 AM,  <larsxschneider@gmail.com> wrote:
+> From: Lars Schneider <larsxschneider@gmail.com>
+>
+> packet_write_fmt_gently() uses format_packet() which lets the caller
+> only send string data via "%s". That means it cannot be used for
+> arbitrary data that may contain NULs.
 
-> Teach git to avoid unnecessary merge during trivial checkout.  When
-> running 'git checkout -b foo' git follows a common code path through
-> the expensive merge_working_tree even when it is unnecessary.
+Makes sense.
 
-I would be lying if I said I am not sympathetic to the cause, but...
+>
+> Add packet_write_gently() which writes arbitrary data and returns `0`
+> for success and `-1` for an error.
 
-> +	/*
-> +	 * Optimize the performance of checkout when the current and
-> +	 * new branch have the same OID and avoid the trivial merge.
-> +	 * For example, a "git checkout -b foo" just needs to create
-> +	 * the new ref and report the stats.
-> +	 */
-> +	if (!old.commit || !new->commit
-> +		|| oidcmp(&old.commit->object.oid, &new->commit->object.oid)
-> +		|| !opts->new_branch || opts->new_branch_force || opts->new_orphan_branch
-> +		|| opts->patch_mode || opts->merge || opts->force || opts->force_detach
-> +		|| opts->writeout_stage || !opts->overwrite_ignore
-> +		|| opts->ignore_skipworktree || opts->ignore_other_worktrees
-> +		|| opts->new_branch_log || opts->branch_exists || opts->prefix
-> +		|| opts->source_tree) {
+I think documenting the return code is better done in either the header file
+or in a commend preceding the implementation instead of the commit message?
 
-... this is a maintenance nightmare in that any new option we will
-add later will need to consider what this "optimization" is trying
-(not) to skip.  The first two lines (i.e. we need a real checkout if
-we cannot positively say that old and new commits are the same
-object) are clear, but no explanation was given for all the other
-random conditions this if condition checks.  What if opts->something
-was not listed (or "listed" for that matter) in the list above--it
-is totally unclear if it was missed by mistake (or "added by
-mistake") or deliberately excluded (or "deliberately added").
-
-For example, why is opts->prefix there?  If
-
-	git checkout -b new-branch HEAD
-
-should be able to omit the two-way merge, shouldn't
-
-	cd t && git checkout -b new-branch HEAD
-
-also be able to?
-
-Even the main condition is unclear.  It wants to see that old and
-new have exactly the same commit, but shouldn't the "the result of
-the two-way merge is known to be no-op" logic equally apply if the
-old and two trees are the same?
+Maybe just a generic comment for *_gently is good enough, maybe even no
+comment. So the commit is fine, too. I dunno.
 
 
+> This function is used by other
+> pkt-line functions in a subsequent patch.
 
+That's what I figured. Do we also need to mention that in the preceding patch
+for packet_flush_gently ?
 
+>
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+> ---
+>  pkt-line.c | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+>
+> diff --git a/pkt-line.c b/pkt-line.c
+> index 37345ca..1d3d725 100644
+> --- a/pkt-line.c
+> +++ b/pkt-line.c
+> @@ -181,6 +181,25 @@ int packet_write_fmt_gently(int fd, const char *fmt, ...)
+>         return status;
+>  }
+>
+> +int packet_write_gently(const int fd_out, const char *buf, size_t size)
+> +{
+> +       static char packet_write_buffer[LARGE_PACKET_MAX];
+> +
+> +       if (size > sizeof(packet_write_buffer) - 4) {
+> +               error("packet write failed");
+> +               return -1;
+> +       }
+> +       packet_trace(buf, size, 1);
+> +       size += 4;
+> +       set_packet_header(packet_write_buffer, size);
+> +       memcpy(packet_write_buffer + 4, buf, size - 4);
+> +       if (write_in_full(fd_out, packet_write_buffer, size) == size)
+> +               return 0;
+> +
+> +       error("packet write failed");
+> +       return -1;
+> +}
+> +
+>  void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
+>  {
+>         va_list args;
+> --
+> 2.10.0
+>
