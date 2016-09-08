@@ -6,98 +6,188 @@ X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 522C420705
-	for <e@80x24.org>; Thu,  8 Sep 2016 17:09:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0487720705
+	for <e@80x24.org>; Thu,  8 Sep 2016 17:38:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965875AbcIHRJv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Sep 2016 13:09:51 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65133 "EHLO
+        id S1752858AbcIHRiB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Sep 2016 13:38:01 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59630 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S965152AbcIHRJu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Sep 2016 13:09:50 -0400
+        with ESMTP id S1752669AbcIHRiA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Sep 2016 13:38:00 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8BB523B36F;
-        Thu,  8 Sep 2016 13:09:49 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5FAE63CAF9;
+        Thu,  8 Sep 2016 13:37:58 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BPRKuZP3nDfeDoThd0H1bzaXsBk=; b=WfIG/G
-        G4EzdPC/C3/a/4OCIUVoA7H2V4qj9brBmCUaiVzSZLCCg3rUEw+v7MrvxR3+hryi
-        40aTb1aOAAZe6dqex4xeOmEeETgrjPVV09WWj4h4Li1HOkbdzP/NUr6cND9jY0tM
-        PFoJXWEzvsJqhu91MDq4yIj2JN4tK8ptl1gUA=
+        :content-type; s=sasl; bh=kOUZRoT+7KqwmvL+2/es3VwbwOU=; b=cebmnR
+        icy3JDabzOSFIVg0oQU7yReCHCZharD/dTs9d1HxIGYXuKt/yTumk9+wEdlRyi7t
+        57VmIaCemz+cZZdhSGIYDTTAeu/Mu6x1HIiZHedic05bHWHnFX9Zui7M3QR2VhBA
+        aUxgZVVW4IvrzijhP8vWZxABPjViSMNo3Fi4M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IJ+1XqWNDQ7jCy6Wwd2NVJz7cnUFc1RP
-        WM7WBbDtBPX2dbgmEtefELN69eTdoEVkLmDIDUKmtdqH1kmYLxCFQUE1rZkSHmX2
-        KVnJevLSuxy8nD7hk47UwuCn6TaQDB3CBX0zPmBgdKm7GLKXQxgwfAEHDBMwPxxW
-        JtNvawuN7ek=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 833523B36E;
-        Thu,  8 Sep 2016 13:09:49 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=sWNzxI6y/kalmcw9KZ9MnXYrzp2Y1Lu/
+        K8Kvyi1Ul1duvDFmvBo7nRE2Q1aZEruUcAAm4RKod++7zQUa+HGwqc4CAH/lbUrZ
+        TqiFY0nSQH28kfYpGPQrdQoIhtMNUNP+P8q39pee0a8W1gVRdcHIYliTKgYQiLPo
+        QQxQktUuRq8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4E6F73CAF8;
+        Thu,  8 Sep 2016 13:37:58 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 018703B36D;
-        Thu,  8 Sep 2016 13:09:48 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C7E853CAF7;
+        Thu,  8 Sep 2016 13:37:57 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 3/3] Use the newly-introduced regexec_buf() function
-References: <cover.1473319844.git.johannes.schindelin@gmx.de>
-        <cover.1473321437.git.johannes.schindelin@gmx.de>
-        <d0537819a3676fda6928e7ad3282aa71643f0755.1473321437.git.johannes.schindelin@gmx.de>
-Date:   Thu, 08 Sep 2016 10:09:44 -0700
-In-Reply-To: <d0537819a3676fda6928e7ad3282aa71643f0755.1473321437.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Thu, 8 Sep 2016 09:59:06 +0200
-        (CEST)")
-Message-ID: <xmqq1t0ujp2f.fsf@gitster.mtv.corp.google.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Eric Wong <e@80x24.org>, Git Mailing List <git@vger.kernel.org>,
+        tboegi@web.de, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v1 2/2] read-cache: make sure file handles are not inherited by child processes
+References: <20160905211111.72956-1-larsxschneider@gmail.com>
+        <20160905211111.72956-3-larsxschneider@gmail.com>
+        <20160906210632.GA28263@starla>
+        <7B903664-0324-4375-A81C-1317020CBE9B@gmail.com>
+        <20160907181036.GA14931@starla>
+        <xmqqtwdrmuvo.fsf@gitster.mtv.corp.google.com>
+        <F33245FC-C53A-4977-8E72-68AF3D2BB8BB@gmail.com>
+Date:   Thu, 08 Sep 2016 10:37:53 -0700
+In-Reply-To: <F33245FC-C53A-4977-8E72-68AF3D2BB8BB@gmail.com> (Lars
+        Schneider's message of "Thu, 8 Sep 2016 07:57:39 +0200")
+Message-ID: <xmqqbmzyi972.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 0C92BC96-75E7-11E6-A540-51057B1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: FB2F6874-75EA-11E6-876D-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-> @@ -33,11 +32,8 @@ static void diffgrep_consume(void *priv, char *line, unsigned long len)
->  		 * caller early.
->  		 */
->  		return;
-> -	/* Yuck -- line ought to be "const char *"! */
-> -	hold = line[len];
-> -	line[len] = '\0';
-> -	data->hit = !regexec(data->regexp, line + 1, 1, &regmatch, 0);
-> -	line[len] = hold;
-> +	data->hit = !regexec_buf(data->regexp, line + 1, len - 1, 1,
-> +				 &regmatch, 0);
+>>> We probably should be using O_NOATIME for all O_RDONLY cases
+>>> to get the last bit of performance out (especially since
+>>> non-modern-Linux systems probably still lack relatime).
+>> 
+>> No, please do not go there.
+>> 
+>> The user can read from a file in a working tree using "less",
+>> "grep", etc., and they all update the atime, so should "git grep".
+>> We do not use atime ourselves on these files but we should let
+>> outside tools rely on the validity of atime (e.g. "what are the
+>> files that were looked at yesterday?").
+>> 
+>> If you grep for noatime in our current codebase, you'd notice that
+>> we use it only for files in objects/ hierarchy, and that makes very
+>> good sense.  These files are what we create for our _sole_ use and
+>> no other tools can peek at them and expect to get any useful
+>> information out of them (we hear from time to time that virus
+>> scanners leaving open file descriptors on them causing trouble, but
+>> that is an example of a useless access), and that makes a file in
+>> objects/ hierarchy a fair game for noatime optimization.
+>
+> How do we deal with read-cache:ce_compare_data, though?
 
-This is an unexpected happy surprise.  It really feels good to see
-that "Yuck" line go.
+We are using open() in our current code in that codepath, without
+NOATIME.  We shouldn't start using git_open_noatime() merely for
+convenience.
 
-> @@ -228,18 +227,16 @@ static long ff_regexp(const char *line, long len,
->  			len--;
->  	}
->  
-> -	line_buffer = xstrndup(line, len); /* make NUL terminated */
-> -
->  	for (i = 0; i < regs->nr; i++) {
->  		struct ff_reg *reg = regs->array + i;
-> -		if (!regexec(&reg->re, line_buffer, 2, pmatch, 0)) {
-> +		if (!regexec_buf(&reg->re, line, len, 2, pmatch, 0)) {
+We would probably want to do a preliminary refactoring so that we
+can say "we want only CLOEXEC and not NOATIME".  Perhaps we would
+want to make the existing one in sha1_file.c to something like:
 
-So is this hunk.  Removing unnecessary copying is a very good thing.
+	int git_open_noatime(const char *name)
+        {
+		return git_open(name, GIT_OPEN_NOATIME);
+	}
 
-Please give these three patches a common prefix, e.g.
+and then add
 
-	regex: -G<pattern> feeds a non NUL-terminated string to	regexec() and fails
-        regex: add regexec_buf() that can work on a non NUL-terminated string
-	regex: use regexec_buf()
+	#define GIT_OPEN_NOATIME 01
 
-or something like that.
+to cache.h and add
 
-Also I agree with Peff that a test with an embedded NUL would be a
-good thing.
+	int git_open(const char *name, unsigned int flag)
+        {
+        	static int open_noatime = O_NOATIME;
 
-This round is so close to perfect.
+		for (;;) {
+                	int fd, open_flag;
+
+                        open_flag = 0;
+                        if (flag & GIT_OPEN_NOATIME)
+                                open_flag |= open_noatime;
+
+			errno = 0;
+                        fd = open(name, O_RDONLY | open_flag);
+                        if (fd >= 0)
+                        	return fd;
+
+			if (errno == ENOENT || !open_flag)
+				return -1;
+
+			/* The failure may be due to additional	flags */
+                       	if ((flag & GIT_OPEN_NOATIME) &&
+			    (open_flag & O_NOATIME)) {
+				flag &= ~GIT_OPEN_NOATIME;
+				open_noatime = 0;
+			}
+		}
+	}
+
+to wrapper.c in the first step, which is a "no-op refactoring" step.
+
+Then add
+
+	#define GIT_OPEN_CLOEXEC 02
+
+and update git_open(), perhaps like so:
+
+	int git_open(const char *name, unsigned int flag)
+        {
+        	static int open_noatime = O_NOATIME;
+        	static int open_cloexec = O_CLOEXEC;
+
+		for (;;) {
+                	int fd, open_flag;
+
+                        open_flag = 0;
+                        if (flag & GIT_OPEN_NOATIME)
+                                open_flag |= open_noatime;
+                        if (flag & GIT_OPEN_CLOEXEC)
+                                open_flag |= open_cloexec;
+
+			errno = 0;
+                        fd = open(name, O_RDONLY | open_flag);
+                        if (fd >= 0)
+                        	return fd;
+
+			if (errno == ENOENT || !open_flag)
+				return -1;
+
+			/* The failure may be due to additional	flags */
+                       	if ((flag & GIT_OPEN_NOATIME) &&
+			    (open_flag & O_NOATIME)) {
+				flag &= ~GIT_OPEN_NOATIME;
+                                open_noatime = 0;
+			}
+                       	if ((flag & GIT_OPEN_CLOEXEC) &&
+			    (open_flag & O_CLOEXEC)) {
+				flag &= ~GIT_OPEN_CLOEXEC;
+                                open_cloexec = 0;
+			}
+		}
+	}
+
+The retry logic is "if we were asked to do this flag, and if we did
+pass that flag, then we know open() with that flag fails here, so we
+won't waste time trying with it again", which came from the NOATIME
+codepath we already have, but it may not match what we use CLOEXEC
+for and may need to be adjusted.  I didn't think that part of the
+code through.
+
+Then the ce codepath that reads from the working tree would use
+
+	git_open(ce->name, GIT_OPEN_CLOEXEC);
+
+to obtain the file descriptor for reading, perhaps?
