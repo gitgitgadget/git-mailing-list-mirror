@@ -2,96 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 631E81F856
-	for <e@80x24.org>; Thu,  8 Sep 2016 20:03:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 401801F856
+	for <e@80x24.org>; Thu,  8 Sep 2016 20:03:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753462AbcIHUDI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Sep 2016 16:03:08 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65064 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752115AbcIHUDH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Sep 2016 16:03:07 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5F2423C293;
-        Thu,  8 Sep 2016 16:03:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=hFvEHyn1jZhc
-        CaWCHZ7JfH7BFaE=; b=VniNCGuWXmqqNb9eFzCWf/TcPs3Kbwn5HZ+K5VxKunp+
-        4oVabXxzYpnGvdjEJw+QrQTFfRrwivHhTPOU6/MRKibhtSFWui8pk10Wv3Aa91wd
-        Alqctqs07QvZf04pto7b+vIDWQQmWaSQWu+s3m6l/KlM/oxuIZyD6g+LvhfbdDI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=LgxsU+
-        0XMzvx/y323sT5TKXrWWpr2ViQnibOOVIfYScMscDGvUSZKaFdR+SVSjvoXNolDq
-        KbMfiwIFLfy2CRBjlj5qQYEN7TF/JnYjfA1mBRU/4Eb6iQT3rKnadxYoTLQWWCPE
-        +tDVjL2x5oAprOpSHmYyX5Ds1XapAWvy5Mnfc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 583343C292;
-        Thu,  8 Sep 2016 16:03:06 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D3FCD3C291;
-        Thu,  8 Sep 2016 16:03:05 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/3] checkout.txt: document a common case that ignores ambiguation rules
-References: <20160822123502.3521-1-pclouds@gmail.com>
-        <20160907111941.2342-1-pclouds@gmail.com>
-        <20160907111941.2342-3-pclouds@gmail.com>
-Date:   Thu, 08 Sep 2016 13:03:03 -0700
-In-Reply-To: <20160907111941.2342-3-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
- =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
-        Duy"'s message of "Wed, 7 Sep 2016 18:19:40 +0700")
-Message-ID: <xmqq7famgnwo.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1753533AbcIHUDM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Sep 2016 16:03:12 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40366 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752115AbcIHUDK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Sep 2016 16:03:10 -0400
+Received: (qmail 14390 invoked by uid 109); 8 Sep 2016 20:03:08 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 08 Sep 2016 20:03:08 +0000
+Received: (qmail 17888 invoked by uid 111); 8 Sep 2016 20:03:17 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 08 Sep 2016 16:03:17 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Sep 2016 16:03:05 -0400
+Date:   Thu, 8 Sep 2016 16:03:05 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Michael J Gruber <git@drmicha.warpmail.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] gpg-interface: reflect stderr to stderr
+Message-ID: <20160908200305.okeeh35xmrvcveyg@sigill.intra.peff.net>
+References: <ced7502d-0095-bd90-19e3-c14d0e4d4f07@drmicha.warpmail.net>
+ <18a7e2984121d988137c135ec560fee56506981b.1473167263.git.git@drmicha.warpmail.net>
+ <alpine.DEB.2.20.1609061827290.129229@virtualbox>
+ <alpine.DEB.2.20.1609061839370.129229@virtualbox>
+ <alpine.DEB.2.20.1609061843120.129229@virtualbox>
+ <655b42d8-baa9-e649-2b3c-5b7bfc914bc5@drmicha.warpmail.net>
+ <20160907083947.b7q7ebe62xsr6447@sigill.intra.peff.net>
+ <xmqqwpimgso6.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 419615A6-75FF-11E6-A6BB-F7BB12518317-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqqwpimgso6.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On Thu, Sep 08, 2016 at 11:20:09AM -0700, Junio C Hamano wrote:
 
-> Normally we err on the safe side: if something can be seen as both an
-> SHA1 and a pathspec, we stop and scream. In checkout, there is one
-> exception added in 859fdab (git-checkout: improve error messages, detec=
-t
-> ambiguities. - 2008-07-23), to allow the common case "git checkout
-> branch". Let's document this exception.
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Wed, Sep 07, 2016 at 10:27:34AM +0200, Michael J Gruber wrote:
+> >
+> >> Now, I can't reproduce C on Linux[*], so there is more involved. It
+> >> could be that my patch just exposes a problem in our start_command()
+> >> etc.: run-command.c contains a lot of ifdefing, so possibly quite
+> >> different code is run on different platforms.
+> >
+> > Maybe, though my blind guess is that it is simply that on Linux we can
+> > open /dev/tty directly, and console-IO on Windows is a bit more
+> > complicated.
+> 
+> True.
+> 
+> Even though this patch is fixing only one of the two issues, I am
+> tempted to say that we should queue it for now, as it does so
+> without breaking a bigger gain made by the original, i.e. we learn
+> the status of verification in a way the authors of GPG wants us to,
+> while somebody figuires out what the best way is to show the prompt
+> to the console on Windows.
 
-Good idea, but...
+That's OK by me, but I don't know if we can put off the "best way to
+show the prompt" fix. It seems like a pretty serious regression for
+people on Windows.
 
-> +ARGUMENT AMBIGUATION
-> +--------------------
-> +
-> +When there is only one argument given and it is not `--` (e.g. "git
-> +checkout abc"), "abc" could be seen as either a `<tree-ish>` or a
-> +`<pathspec>`, but Git will assume the argument is a `<tree-ish>`, whic=
-h is
-> +a common case for switching branches. Use `git checkout -- <pathspec>`
-> +form if you mean it to be a pathspec.
-
-... this is far from reasonable.  I'd read "but Git will assume the
-argument is a tree-ish" to mean "git checkout Makefile" would
-attempt to checkout the Makefile branch and fail.
-
-    When there is only one argument given and it is not `--` (e.g. "git
-    checkout abc"), and when the argument is both a valid `<tree-ish>`
-    (e.g. a branch "abc" exists) and a valid `<pathspec>` (e.g. a file
-    or a directory whose name is "abc" exists), Git would usually ask
-    you to disambiguate.  Because checking out a branch is so common an
-    operation, however, "git checkout abc" takes "abc" as a `<tree-ish>`
-    in such situation.  Use `git checkout -- <pathspec>` if you want to
-    checkout these paths out of the index.
-
-or something like that?
+-Peff
