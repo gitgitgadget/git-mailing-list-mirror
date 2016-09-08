@@ -2,122 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1B3020705
-	for <e@80x24.org>; Thu,  8 Sep 2016 18:54:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2AF5A20705
+	for <e@80x24.org>; Thu,  8 Sep 2016 19:06:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932882AbcIHSyP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Sep 2016 14:54:15 -0400
-Received: from relay6-d.mail.gandi.net ([217.70.183.198]:42499 "EHLO
-        relay6-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932787AbcIHSyP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Sep 2016 14:54:15 -0400
-Received: from mfilter47-d.gandi.net (mfilter47-d.gandi.net [217.70.178.178])
-        by relay6-d.mail.gandi.net (Postfix) with ESMTP id 20242FB887;
-        Thu,  8 Sep 2016 20:54:13 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mfilter47-d.gandi.net
-Received: from relay6-d.mail.gandi.net ([IPv6:::ffff:217.70.183.198])
-        by mfilter47-d.gandi.net (mfilter47-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
-        with ESMTP id i0tYs6U1x64g; Thu,  8 Sep 2016 20:54:11 +0200 (CEST)
-X-Originating-IP: 50.39.163.18
-Received: from x (50-39-163-18.bvtn.or.frontiernet.net [50.39.163.18])
-        (Authenticated sender: josh@joshtriplett.org)
-        by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id 7B774FB8BF;
-        Thu,  8 Sep 2016 20:54:10 +0200 (CEST)
-Date:   Thu, 8 Sep 2016 11:54:08 -0700
-From:   Josh Triplett <josh@joshtriplett.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Move format-patch base commit and prerequisites before
- email signature
-Message-ID: <20160908185408.5qtfnztjbastlrtw@x>
-References: <20160908011200.qzvbdt4wjwiji4h5@x>
- <xmqqshtags0o.fsf@gitster.mtv.corp.google.com>
+        id S938937AbcIHTGr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Sep 2016 15:06:47 -0400
+Received: from avasout08.plus.net ([212.159.14.20]:40026 "EHLO
+        avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S937116AbcIHTGq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Sep 2016 15:06:46 -0400
+Received: from [10.0.2.15] ([209.93.82.95])
+        by avasout08 with smtp
+        id h76d1t00423PrXV0176eQA; Thu, 08 Sep 2016 20:06:39 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=Y6S6iVWN c=1 sm=1 tr=0
+ a=MrGUH+yfTxdMEvUZuMmDjA==:117 a=MrGUH+yfTxdMEvUZuMmDjA==:17
+ a=IkcTkHD0fZMA:10 a=pW1bYtSW8WSpXtOenQkA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v2 3/3] Use the newly-introduced regexec_buf() function
+To:     Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <cover.1473090278.git.johannes.schindelin@gmx.de>
+ <cover.1473319844.git.johannes.schindelin@gmx.de>
+ <324ecba64eb0436988aca846fb444eafda290d13.1473319844.git.johannes.schindelin@gmx.de>
+ <alpine.DEB.2.20.1609080954010.129229@virtualbox>
+ <20160908081024.yku2xlb3jj4rplkp@sigill.intra.peff.net>
+ <20160908081446.zlcmz6ci4cw4vc2e@sigill.intra.peff.net>
+ <20160908083509.ygh4flpunyyp4hua@sigill.intra.peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <ac0f3441-d28f-fc5c-0273-f614b2cd4e07@ramsayjones.plus.com>
+Date:   Thu, 8 Sep 2016 20:06:35 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqshtags0o.fsf@gitster.mtv.corp.google.com>
-User-Agent: NeoMutt/ (1.7.0)
+In-Reply-To: <20160908083509.ygh4flpunyyp4hua@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 08, 2016 at 11:34:15AM -0700, Junio C Hamano wrote:
-> Josh Triplett <josh@joshtriplett.org> writes:
+
+
+On 08/09/16 09:35, Jeff King wrote:
+> On Thu, Sep 08, 2016 at 04:14:46AM -0400, Jeff King wrote:
 > 
-> > Any text below the "-- " for the email signature gets treated as part of
-> > the signature, and many mail clients will trim it from the quoted text
-> > for a reply.  Move it above the signature, so people can reply to it
-> > more easily.
-> >
-> > Add tests for the exact format of the email signature, and add tests to
-> > ensure the email signature appears last.
-> >
-> > (Patch by Junio Hamano; tests by Josh Triplett.)
-> > Signed-off-by: Josh Triplett <josh@joshtriplett.org>
-> > ---
-> >
-> > Does the above seem reasonable, for a patch that incorporates the
-> > proposed patch from Message-Id
-> > xmqqh99rpud4.fsf@gitster.mtv.corp.google.com and adds tests?
+>> On Thu, Sep 08, 2016 at 04:10:24AM -0400, Jeff King wrote:
+>>
+>>> On Thu, Sep 08, 2016 at 09:54:51AM +0200, Johannes Schindelin wrote:
+>>>
+>>>>>  diff.c             |  3 ++-
+>>>>>  diffcore-pickaxe.c | 18 ++++++++----------
+>>>>>  xdiff-interface.c  | 13 ++++---------
+>>>>>  3 files changed, 14 insertions(+), 20 deletions(-)
+>>>>
+>>>> I just realized that this should switch the test_expect_failure from 1/3
+>>>> to a test_expect_success.
+>>>
+>>> Yep. I wonder if we also would want to test that we correctly find
+>>> regexes inside binary files.
+>>>
+>>> E.g., given a mixed binary/text file like:
+>>>
+>>>   printf 'binary\0text' >file &&
+>>>   git add file &&
+>>>   git commit -m file
+>>>
+>>> then "git log -Stext" will find that file, but "--pickaxe-regex" will
+>>> not (using stock git). Ditto for "-Gtext".
+>>>
+>>> Your patch should fix that.
+>>
+>> Of course if I had actually _looked carefully_ at your patch, I would
+>> have seen that your test doesn't just check that we don't segfault, but
+>> actually confirms that we find the entry.
+>>
+>> Sorry for the noise.
 > 
-> Other than that I'd probably retitle it,
+> Actually, I take it back again. Your test case doesn't have an embedded
+> NUL in it (so we check that git finds it, but aside from the lack of
+> segfault, stock git would already find it).
 
-Ah, true, I should have titled it "format-patch: move base commit ...".
+This reminds me ... despite the native cygwin regex library no longer
+having the 'regex bug' (ie t0070.5 now passes), I still have NO_REGEX
+set on cygwin. This is because, when building with the native library,
+we have an "unexpected pass" for t7008.12, which looks like:
 
-> your problem description
-> looks perfect.  I am still not sure if the code does a reasonable
-> thing in MIME case, though.
+test_expect_failure 'git grep .fi a' '
+        git grep .fi a
+'
+[where the file a is set up earlier by: echo 'binaryQfile' | q_to_nul >a]
 
-It *looks* correct to me.
+commit f96e5673 ("grep: use REG_STARTEND for all matching if available",
+22-05-2010) introduced this test and expects ".. NUL characters themselves
+are not matched in any way". With the native library on cygwin they are
+matched, with the compat/regex they are not. Indeed, if you use the system
+'grep' command (rather than 'git grep'), then it will also not match ... :-D
 
-> Thanks for tying the loose ends anyway.
-> 
-> > diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-> > index b0579dd..a4af275 100755
-> > --- a/t/t4014-format-patch.sh
-> > +++ b/t/t4014-format-patch.sh
-> > @@ -754,9 +754,22 @@ test_expect_success 'format-patch --ignore-if-in-upstream HEAD' '
-> >  	git format-patch --ignore-if-in-upstream HEAD
-> >  '
-> >  
-> > +git_version="$(git --version | sed "s/.* //")"
-> > +
-> > +signature() {
-> > +	printf "%s\n%s\n\n" "-- " "${1:-$git_version}"
-> > +}
-> 
-> Hmph.  I would actually have expected that you would force a fixed
-> and an easily noticeable string via format.signature for the purpose
-> of the test,
+Slightly off topic, but ...
 
-One of the git tests already did that.  I just modified that test to
-test the exact signature format and that it appears at the end, rather
-than just grepping to check that the signature string appears somewhere.
-Then when doing so, I realized that I should check the default case too
-(at which point that test change probably should have gone in a separate
-patch).
+ATB,
+Ramsay Jones
 
-> but I guess this test covers a lot more than what the
-> purpose of the main part of the patch does (i.e. enforces that the
-> default signature must be made from the version string of Git).  It
-> is not a bad thing to test, but it probably does not belong to this
-> change.  If you _were_ to split the patch in two, that is where I
-> probably would split, i.e. "we didn't test what the default signature
-> looks like, or we didn't make sure --signature option overrides the
-> default signature, so let's test it" as the preliminary preparation,
-> followed by "having base info after sig is inconvenient, let's move
-> it and make sure base info stays before sig with additional test" as
-> the second (and primary) patch.
->
-> But a single patch is fine.
-> 
-> Thanks.
 
-If any other change ends up being necessary, I'll split the patch in v2.
-
-- Josh Triplett
