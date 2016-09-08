@@ -7,96 +7,80 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E04F1F6BF
-	for <e@80x24.org>; Thu,  8 Sep 2016 07:52:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B8291F6BF
+	for <e@80x24.org>; Thu,  8 Sep 2016 07:54:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758134AbcIHHwu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Sep 2016 03:52:50 -0400
-Received: from mout.gmx.net ([212.227.17.21]:59438 "EHLO mout.gmx.net"
+        id S1758218AbcIHHyC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Sep 2016 03:54:02 -0400
+Received: from mout.gmx.net ([212.227.15.15]:65353 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753751AbcIHHws (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Sep 2016 03:52:48 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MXDo1-1bVcaq3CQH-00WCsH; Thu, 08 Sep 2016 09:52:41
+        id S1753751AbcIHHyA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Sep 2016 03:54:00 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
+ ESMTPSA (Nemesis) id 0LhOO8-1bDGIz2dbk-00mbRr; Thu, 08 Sep 2016 09:53:53
  +0200
-Date:   Thu, 8 Sep 2016 09:52:39 +0200 (CEST)
+Date:   Thu, 8 Sep 2016 09:53:52 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH 2/3] diff_populate_filespec: NUL-terminate buffers
-In-Reply-To: <xmqqinu7muic.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1609080950090.129229@virtualbox>
-References: <cover.1473090278.git.johannes.schindelin@gmx.de> <f899957fa71537aa2686f17ce18aaf16f2fea2ac.1473090278.git.johannes.schindelin@gmx.de> <20160906070604.i5rojh3kyc7x7kso@sigill.intra.peff.net> <alpine.DEB.2.20.1609061613270.129229@virtualbox>
- <20160906184143.55a5zoa2mj6c2e5m@sigill.intra.peff.net> <xmqqinu7muic.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] Demonstrate a problem: our pickaxe code assumes
+ NUL-terminated buffers
+In-Reply-To: <20160906184320.lzg5jizpw2kbzf72@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1609080953070.129229@virtualbox>
+References: <cover.1473090278.git.johannes.schindelin@gmx.de> <ca678535c64570add58cfff95709c3c67384139d.1473090278.git.johannes.schindelin@gmx.de> <20160906184320.lzg5jizpw2kbzf72@sigill.intra.peff.net>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:RQm+FK2CLg8mC9lXIzo0yYATnsvneuriT3QdeDHTT7K/sYvdzZC
- QdqCrSk0mx6V/lLSw+HWj8qgtn4MyohDah+b54XmuktKHPnztFdGMBdmjkS+suauDSdmrVo
- qzic9zDTM+Aznbmn7dzHVImmpEdutWfP4Y6HWuTGk4ynJmDGxiO5fHArgnbuY856qnPdaxQ
- JikhLK05uarRtQc7c2G0g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ydwYkOlM+Z0=:9OXlPg7esCpJI6Rjqd/9bq
- +lwdUUvQ3RWzzWsgzj1iyOPvq1HXlGmuaps0vxwIVbdMOY4HSQgWHTbRW+izpWKrIe6tpZ/xl
- vJADqv5Mtiu4CkuxeZVI+KcKXdeIuBnHBK4jCRb+x4hKPtuOlCaeOeolEuovhLqRoedBHh6xn
- 855tmyEGKrTSxCA7ZDKm5aBRGhGcEUqfTodQzuFnrrPy8LAw4VLKhk50RccS37F83OVVFQ0Ze
- IfJOMqlSbKk8yftmM6YvvctkfKoA+lQzYmgHGUus0N9skI+PgxzsvpATvhaZq99ivVW1avswg
- LCEfp7YpNq0nm2eoYhf2Wx26/G9Ts6WUPENnlbPSELOkmYhb70OTVOFzf+LURj8X5CAN5KdgS
- qRLmInuSXFzJ09uEEGmX4wS9enm4VlY28FNWcmiQ2Af+UYR8lirhxpw2c03+lGNuiaTAkhAvh
- My87zYNnD1hcaJKHWdrFAGxXoS1PdqDzvA+ont4Rj8bK0zdb+4+D1/dxq1tgFPQAAZQMn2A8f
- h+JEpCek32Q5xmj+qRAB1XwEcRIAae2Zg0X5j/646l8xJ3wIjBrfCpTPhA2xN5DuC8M6C3oT0
- mzOLJo2kuI43OKQxPjm4dPStzC3p+ypE9dNE7R0VqKoi+XffMt2YsqLZD+IoTTTwfFfSbh81M
- BqJcG6Ae7VpejxBOfNlT6RfWAJN7ZozcwhQk1/JULJMbxNSUXVlw+gCfXkjLQwTWcn6gaVgJp
- oOZSrJCbUfxztDx9M64mACNN/lOy9rd98ECDzABHckRu037tD9jQA+f/cvknZx4VvRuJHlbYe
- bkBupSb
+X-Provags-ID: V03:K0:dqVGjO9LIWKsrl8fX9i/kvlCBnY8Vdj+Lfk9G0h7j/hTFPWZFXX
+ iPaiuQ/Q/iL75ru7GC7nmtpvt56dPHKCHOoyzT4uSUF2EXA5FBQbkXd+qvqaHIXYECpUYt+
+ R9gseeeXUe0NtriAcR7F3MZlmCh7vko7LVLzp3c+jX8fj4WjWkWzulq5eCIdu06DlLTJpVA
+ zArFwsS95+T6ys3cbMBKQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:63jMk2BzmA0=:ne4pNFncr5Vo9BWE6sHKO2
+ Pz0mjADhYzHfIYHs44bf4VVzqaBURIQ4CfvOdjWNaBY2G3UX6d88rCi4TLeUX5r38/2xvumk1
+ RJJMMKNpkInDFAtTXaNRJQr+H6uO4BOAkWFs8COsY+DUP3TsO33Uqp1dvISL7mmb3z6OU9PzJ
+ m5vpc1j2kUUp1vkDkLKO3bfm0ST6j8H+EFkueCLYr5jZkE2xVBOa1hiyhEEe5kQMzka24wE9N
+ sB0CO4OYMdWf7RaEIxAg6oFEPPs3SHwQk8ceQjaVgToyNENCXfX7/mh9fWfGl3OrYgbuX1cIv
+ nzeoviCf8Nagdgy+Inq6NT2hwvmdm6s0XnE0JJgAyheQ32OVshGerDKRgG0DdC9RC0xA/7pMZ
+ 8mQbbvxHpPgjvLuOxT+Hw2Ha8+ibPGAXal8LC4LcNQkfMoXLqbyZz50bVJXQdvDWwQGrRx/3T
+ cvAWvGELUD21bkFoDGRhkJpWGDCyERYFaH10JZWjG4YCEJeh/AmuRmWIa+xiRRsOtMVEdtuFu
+ aqKFcr2T4/VUnPnH6W4qkvAlhKStF/10ABbMdVAZLlYYb32ye0X1e7sb9UdCmPQYavJPuzrJi
+ 3Y6XjfIHmUIVgIqaFXImw17nOfm1Ggchi9F/NlYIhben635nlxJq2aNx2ucR034uj8lDqoDdD
+ X09+SAmN+L7L2p9nsREa+v5OWremOrZ248suyQJWvzNaOJ6TLKxSOYlsMulnby8xG/XfJRGBg
+ PtrDq0AkCO4xoZTTSmJTjEfcxBHNvIV6VJNbNT1WDz0KbxNYIaIDCVTmvHOt/wtnTgsoO9GRI
+ 3a4Es0y
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Peff,
 
-On Wed, 7 Sep 2016, Junio C Hamano wrote:
+On Tue, 6 Sep 2016, Jeff King wrote:
 
-> Jeff King <peff@peff.net> writes:
+> On Mon, Sep 05, 2016 at 05:45:02PM +0200, Johannes Schindelin wrote:
 > 
-> > What happens to those poor souls on systems without REG_STARTEND? Do
-> > they get to keep segfaulting?
-> >
-> > I think the solution is to push them into setting NO_REGEX. So looking
-> > at this versus a "regexecn", it seems:
-> >
-> >   - this lets people keep using their native regexec if it supports
-> >     STARTEND
-> >
-> >   - this is a bit more clunky to use at the callsites (though we could
-> >     _create_ a portable regexecn wrapper that uses this technique on top
-> >     of the native regex library)
-> >
-> > But I much prefer this approach to copying the data just to add a NUL.
+> > Typically, on Linux the test passes. On Windows, it fails virtually
+> > every time due to an access violation (that's a segmentation fault for
+> > you Unix-y people out there). And Windows would be correct: the
+> > regexec() call wants to operate on a regular, NUL-terminated string,
+> > there is no NUL in the mmap()ed memory range, and it is undefined
+> > whether the next byte is even legal to access.
+> > 
+> > When run with --valgrind it demonstrates quite clearly the breakage, of
+> > course.
+> > 
+> > So we simply mark it with `test_expect_success` for now.
 > 
-> I first thought "push them to NO_REGEX" to mean "they live with
-> crippled Git that does not do regexp" and went "Huh?", but it merely
-> means "let's avoid platform regex library and use on from the
-> compat/ hierarchy", which would solve the STARTEND portability issue
-> for everybody.
-> 
-> Which is very good.
-> 
-> The idea to create a thin regexecn() wrapper also sounds like a good
-> idea, too.  The changes to the callsites in the demonstration patch
-> does look a bit clunky to me, too.
+> I'd prefer if this were marked as expect_failure. It fails reliably for
+> me on Linux, even without --valgrind. But even if that were not so,
+> there is no reason to hurt bisectability of somebody running with
+> "--valgrind" (not when it costs so little to mark it correctly).
 
-The demonstration patch was only meant as a mere demonstration where this
-leads us. I DRY'd it up quite a bit (which was my plan all along, but it
-was faster to make the changes in place, to avoid a full-sale
-recompilation due to a central header change; you might not care because
-you use Linux with its native POSIX, while I have to use MSYS2, making
-even my builds slower).
+Forgot to say in the cover letter: I did change this from
+test_expect_success to test_expect_failure.
 
-And I really do not think that it would be a good idea to use
-compat/regex/ for everybody, even if they already have a working regex.h
-on their system.
+But of course, now I remember that I failed to change it back in 3/3. Bah.
 
 Ciao,
 Dscho
