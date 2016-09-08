@@ -2,93 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73E801F856
-	for <e@80x24.org>; Thu,  8 Sep 2016 21:36:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1B791F856
+	for <e@80x24.org>; Thu,  8 Sep 2016 21:37:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936478AbcIHVgy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Sep 2016 17:36:54 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57995 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S935667AbcIHVgx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Sep 2016 17:36:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5083E3BFFC;
-        Thu,  8 Sep 2016 17:36:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=2zlAOSeUJeb89/15M7Y8a6amVp0=; b=kA/ESz
-        ChJKzG65pYTp9sTqO47HqrLE5J88u7k+ANgACZvUoWN8H6TWcpvONnrfBGEVWcIX
-        A7+TpcZG5X8HKE3lHRVNyVJcfTyVa2Bl1mhWUf33HopA2D0SS1ytOoUcMTq7DnSO
-        sIBOyu+zLtT0zrHToSVVxwIOuiT4APHr5YhWc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=pw9vr0YlcO1Gnws+Gr939Q0/x/gkdaXN
-        IWYavSHIiWXjYDxSV13vLseHzCkWXQ+3gDzXEBvVipaSDh/S0PCX35+sS5U7c1lG
-        jxH7TPuVHljbvW6Bp2YbyvFGgopdCf9+AbotXQJN+uTCyhIvapPe8K8/IAGWbw3j
-        v3FVrLRIbjc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4996D3BFFB;
-        Thu,  8 Sep 2016 17:36:52 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C82A33BFFA;
-        Thu,  8 Sep 2016 17:36:51 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Michael J Gruber <git@drmicha.warpmail.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] gpg-interface: reflect stderr to stderr
-References: <ced7502d-0095-bd90-19e3-c14d0e4d4f07@drmicha.warpmail.net>
-        <18a7e2984121d988137c135ec560fee56506981b.1473167263.git.git@drmicha.warpmail.net>
-        <alpine.DEB.2.20.1609061827290.129229@virtualbox>
-        <alpine.DEB.2.20.1609061839370.129229@virtualbox>
-        <alpine.DEB.2.20.1609061843120.129229@virtualbox>
-        <655b42d8-baa9-e649-2b3c-5b7bfc914bc5@drmicha.warpmail.net>
-        <20160907083947.b7q7ebe62xsr6447@sigill.intra.peff.net>
-        <xmqqwpimgso6.fsf@gitster.mtv.corp.google.com>
-        <20160908200305.okeeh35xmrvcveyg@sigill.intra.peff.net>
-Date:   Thu, 08 Sep 2016 14:36:49 -0700
-In-Reply-To: <20160908200305.okeeh35xmrvcveyg@sigill.intra.peff.net> (Jeff
-        King's message of "Thu, 8 Sep 2016 16:03:05 -0400")
-Message-ID: <xmqqzinidqfi.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S936517AbcIHVhm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Sep 2016 17:37:42 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40448 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S935667AbcIHVhm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Sep 2016 17:37:42 -0400
+Received: (qmail 20142 invoked by uid 109); 8 Sep 2016 21:37:41 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 08 Sep 2016 21:37:41 +0000
+Received: (qmail 18948 invoked by uid 111); 8 Sep 2016 21:37:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 08 Sep 2016 17:37:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Sep 2016 17:37:38 -0400
+Date:   Thu, 8 Sep 2016 17:37:38 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ben Peart <peartben@gmail.com>, git@vger.kernel.org,
+        pclouds@gmail.com, =peartben@gmail.com,
+        Ben Peart <benpeart@microsoft.com>
+Subject: Re: [PATCH] checkout: eliminate unnecessary merge for trivial
+ checkout
+Message-ID: <20160908213738.zgwgfy3nybkam3hk@sigill.intra.peff.net>
+References: <20160908204431.14612-1-benpeart@microsoft.com>
+ <xmqqh99qf5o7.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5AE9D6F2-760C-11E6-ADD2-51057B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqh99qf5o7.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Thu, Sep 08, 2016 at 02:22:16PM -0700, Junio C Hamano wrote:
 
->> Even though this patch is fixing only one of the two issues, I am
->> tempted to say that we should queue it for now, as it does so
->> without breaking a bigger gain made by the original, i.e. we learn
->> the status of verification in a way the authors of GPG wants us to,
->> while somebody figuires out what the best way is to show the prompt
->> to the console on Windows.
->
-> That's OK by me, but I don't know if we can put off the "best way to
-> show the prompt" fix. It seems like a pretty serious regression for
-> people on Windows.
+> > +	/*
+> > +	 * Optimize the performance of checkout when the current and
+> > +	 * new branch have the same OID and avoid the trivial merge.
+> > +	 * For example, a "git checkout -b foo" just needs to create
+> > +	 * the new ref and report the stats.
+> > +	 */
+> > +	if (!old.commit || !new->commit
+> > +		|| oidcmp(&old.commit->object.oid, &new->commit->object.oid)
+> > +		|| !opts->new_branch || opts->new_branch_force || opts->new_orphan_branch
+> > +		|| opts->patch_mode || opts->merge || opts->force || opts->force_detach
+> > +		|| opts->writeout_stage || !opts->overwrite_ignore
+> > +		|| opts->ignore_skipworktree || opts->ignore_other_worktrees
+> > +		|| opts->new_branch_log || opts->branch_exists || opts->prefix
+> > +		|| opts->source_tree) {
+> 
+> ... this is a maintenance nightmare in that any new option we will
+> add later will need to consider what this "optimization" is trying
+> (not) to skip.  The first two lines (i.e. we need a real checkout if
+> we cannot positively say that old and new commits are the same
+> object) are clear, but no explanation was given for all the other
+> random conditions this if condition checks.  What if opts->something
+> was not listed (or "listed" for that matter) in the list above--it
+> is totally unclear if it was missed by mistake (or "added by
+> mistake") or deliberately excluded (or "deliberately added").
+> 
+> For example, why is opts->prefix there?  If
+> 
+> 	git checkout -b new-branch HEAD
+> 
+> should be able to omit the two-way merge, shouldn't
+> 
+> 	cd t && git checkout -b new-branch HEAD
+> 
+> also be able to?
 
-Yes, I am not saying that it is OK to keep Windows users broken.
+I was just writing another reply, but I think our complaints may have
+dovetailed.
 
-As I understand what Dscho said correctly, his users are covered by
-a reversion of the "read the GPG status correctly" patch, i.e. with
-a different trade-off between the correctness of GPG status vs
-usability of the prompt, he will ship with Git for Windows, and that
-stop-gap measure will last only until developers who can do Windows
-(which excludes you, me, and Michael it seems) comes up with a
-solution that satisfies both.
+My issue is that the condition above is an unreadable mass.  It would be
+really nice to pull it out into a helper function, and then all of the
+items could be split out and commented independently, like:
 
-I consider that an approach that is perfectly fine.
+  static int needs_working_tree_merge(const struct checkout_opts *opts,
+                                      const struct branch_info *old,
+				      const struct branch_info *new)
+  {
+	/*
+	 * We must do the merge if we are actually moving to a new
+	 * commit.
+	 */
+	if (!old->commit || !new->commit ||
+	    oidcmp(&old.commit->object.oid, &new->commit->object.oid))
+		return 1;
 
+	/* Option "foo" is not compatible because of... */
+	if (opts->foo)
+		return 1;
+
+	... etc ...
+  }
+
+That still leaves your "what if opts->something is not listed" question
+open, but at least it makes it easier to comment on it in the code.
+
+-Peff
+
+PS I didn't think hard on whether the conditions above make _sense_. My
+   first goal would be to get more communication about them individually,
+   and then we can evaluate them.
 
