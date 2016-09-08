@@ -2,131 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 261991F856
-	for <e@80x24.org>; Thu,  8 Sep 2016 21:24:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA5881F856
+	for <e@80x24.org>; Thu,  8 Sep 2016 21:24:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753306AbcIHVYF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Sep 2016 17:24:05 -0400
-Received: from mail-oi0-f42.google.com ([209.85.218.42]:33378 "EHLO
-        mail-oi0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751000AbcIHVYE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Sep 2016 17:24:04 -0400
-Received: by mail-oi0-f42.google.com with SMTP id y2so93995168oie.0
-        for <git@vger.kernel.org>; Thu, 08 Sep 2016 14:24:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=czyqhAP3/6F1i5zno7O1BJ16Ddo5lJ/jsYCQZLRRptM=;
-        b=nUKhu2krtE47zW+4Q4BYNc6niE32kdjJuZLjLmpq+vH5bvWY3THQIwiUm6scD1EEvy
-         IMnNhrFQjlCfsq5ny9GZQUARB1js5l7Pcohy+JqECp/mbfnwQQQ6CgzWYWReITlakfaK
-         KRIogngtW9aQk6lZPM0szO9VcBtIXoO2X6pp4nuVRThGowR+F7Pi2Ckn6KY3eGnVjl51
-         9Nwrjfcuo58DFZjZa95J1qZX9oqCma8h8MzmbGxE77ezT5Qepw4j+btZk6zvTy0NZRtj
-         u/gqXvbRRt2IxqRL7z8lk5soNVUwv8538TPqPslZL66oRk9d/XFk5Ggj/SQsMWZKS+3a
-         mZlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=czyqhAP3/6F1i5zno7O1BJ16Ddo5lJ/jsYCQZLRRptM=;
-        b=ERGwkNFLVCBrHIEisJCTtRII7mbJtPgB6iRlW4F5l9jsMNoWDS3fj+ZDbR4ymVSRjb
-         VyvhTDpLYVInD1YOG0U5jhaxwYzHZEESBKVS/+6RcCmETgljHkHe0xuzJguHLGYU5vus
-         u6NyyQez3ou7D7RnYHWDsELhdyuVZCTJtjmPY5VCz+Rh5QQe/Qdgt8TkLXfzQ+q9rXYK
-         81EYFN//TLl++iLacjwCgWZiBJEojS9xIJM6QJ03ZaZa5NQ1seqPwTcFZvrp+lZUnWvn
-         MLlHG1ZvaKeqIes+x5q0az6wBKSg0Ztq30SGOkFjWCp4nIIAEcfd1GF+OvCW4QxzKFVU
-         sZXQ==
-X-Gm-Message-State: AE9vXwP6hfwa04Th/5sC1DbLuAYUxaVOMtzC64Zrvkeu0EBhOfUQY8WVHX5IsGnaXIkfLmqASQovNsC2fH/JlXVq
-X-Received: by 10.202.195.1 with SMTP id t1mr157725oif.144.1473369843396; Thu,
- 08 Sep 2016 14:24:03 -0700 (PDT)
+        id S1754791AbcIHVYt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Sep 2016 17:24:49 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61531 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751143AbcIHVYt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Sep 2016 17:24:49 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 945F93D23B;
+        Thu,  8 Sep 2016 17:24:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=LTwKKUO8d1ZrDf8jfy3ZMO1BrtY=; b=j3QwKJ
+        +knYukYUq6cZrtC51zeZmviHv0DHekIGldI/S7jaSr4BqbI8Uk0kITZMYHz5a9wO
+        Uk4aOcbgdFOr+0/U0T5hUitoJSM8hzBRYOsGRsG2+9CKsMexsZnY+/UDfPDweCQ4
+        ELUj49/EBJP1gMEwRjjcqY9DFj+nAzXm0IKvA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=tk+S02fuPsUOsWd/9JHs1Q4G7AIZKAdZ
+        FuB3vJqUtIRx4Hh7rUU1Pw8RxLRM16XxTq7OuoY2gtEcVXj61ZCmbLdrOWQuJE3z
+        4PWShyPP6rZ44WOpO0nEBGQOgbNFzM4b5Q6Hhu8hOXMFa8jCfdB4Tr5ZmLh5R9gR
+        j/ouR/BzqYo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8C16C3D23A;
+        Thu,  8 Sep 2016 17:24:47 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C91073D239;
+        Thu,  8 Sep 2016 17:24:46 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Josh Triplett <josh@joshtriplett.org>, git@vger.kernel.org
+Subject: Re: [PATCH] Move format-patch base commit and prerequisites before email signature
+References: <20160908011200.qzvbdt4wjwiji4h5@x>
+        <xmqqshtags0o.fsf@gitster.mtv.corp.google.com>
+        <20160908185408.5qtfnztjbastlrtw@x>
+        <20160908200819.pkg7jqcvxjpdqr3a@sigill.intra.peff.net>
+Date:   Thu, 08 Sep 2016 14:24:42 -0700
+In-Reply-To: <20160908200819.pkg7jqcvxjpdqr3a@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 8 Sep 2016 16:08:20 -0400")
+Message-ID: <xmqqd1kef5k5.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Thu, 8 Sep 2016 14:24:02 -0700 (PDT)
-In-Reply-To: <20160908182132.50788-6-larsxschneider@gmail.com>
-References: <20160908182132.50788-1-larsxschneider@gmail.com> <20160908182132.50788-6-larsxschneider@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 8 Sep 2016 14:24:02 -0700
-Message-ID: <CAGZ79kZdroDdD5SHP+-9svSTYbJfn2vsFXAwC4aen3hMVEOOPA@mail.gmail.com>
-Subject: Re: [PATCH v7 05/10] pkt-line: add packet_write_gently()
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-        Martin-Louis Bright <mlbright@gmail.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Jacob Keller <jacob.keller@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: AAC83364-760A-11E6-AFE5-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 8, 2016 at 11:21 AM,  <larsxschneider@gmail.com> wrote:
-> From: Lars Schneider <larsxschneider@gmail.com>
+Jeff King <peff@peff.net> writes:
+
+> On Thu, Sep 08, 2016 at 11:54:08AM -0700, Josh Triplett wrote:
 >
-> packet_write_fmt_gently() uses format_packet() which lets the caller
-> only send string data via "%s". That means it cannot be used for
-> arbitrary data that may contain NULs.
+>> > your problem description
+>> > looks perfect.  I am still not sure if the code does a reasonable
+>> > thing in MIME case, though.
+>> 
+>> It *looks* correct to me.
+> 
+> Hmm. It looks correct to me, too; ...
+> ...
+> So this is actually fixing a bug,...
 
-Makes sense.
-
->
-> Add packet_write_gently() which writes arbitrary data and returns `0`
-> for success and `-1` for an error.
-
-I think documenting the return code is better done in either the header file
-or in a commend preceding the implementation instead of the commit message?
-
-Maybe just a generic comment for *_gently is good enough, maybe even no
-comment. So the commit is fine, too. I dunno.
-
-
-> This function is used by other
-> pkt-line functions in a subsequent patch.
-
-That's what I figured. Do we also need to mention that in the preceding patch
-for packet_flush_gently ?
-
->
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
->  pkt-line.c | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
->
-> diff --git a/pkt-line.c b/pkt-line.c
-> index 37345ca..1d3d725 100644
-> --- a/pkt-line.c
-> +++ b/pkt-line.c
-> @@ -181,6 +181,25 @@ int packet_write_fmt_gently(int fd, const char *fmt, ...)
->         return status;
->  }
->
-> +int packet_write_gently(const int fd_out, const char *buf, size_t size)
-> +{
-> +       static char packet_write_buffer[LARGE_PACKET_MAX];
-> +
-> +       if (size > sizeof(packet_write_buffer) - 4) {
-> +               error("packet write failed");
-> +               return -1;
-> +       }
-> +       packet_trace(buf, size, 1);
-> +       size += 4;
-> +       set_packet_header(packet_write_buffer, size);
-> +       memcpy(packet_write_buffer + 4, buf, size - 4);
-> +       if (write_in_full(fd_out, packet_write_buffer, size) == size)
-> +               return 0;
-> +
-> +       error("packet write failed");
-> +       return -1;
-> +}
-> +
->  void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
->  {
->         va_list args;
-> --
-> 2.10.0
->
+Yes, I actually wanted to hear that from Josh and have that in the
+proposed log message ;-).
