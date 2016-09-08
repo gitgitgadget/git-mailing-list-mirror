@@ -2,77 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F4291F6BF
-	for <e@80x24.org>; Thu,  8 Sep 2016 10:06:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 391EE1F6BF
+	for <e@80x24.org>; Thu,  8 Sep 2016 11:04:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966136AbcIHKFu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Sep 2016 06:05:50 -0400
-Received: from mail96.atlas.de ([194.156.172.86]:23990 "EHLO mail96.atlas.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S966134AbcIHKFs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Sep 2016 06:05:48 -0400
-X-IPAS-Result: =?us-ascii?q?A2B/CgCkN9FX/wXKxApdGwEBAQMBAQGDLQEBAQEBdSpStjO?=
- =?us-ascii?q?EEiaFdgIcgXsQAQIBAQEBAQEBgQWEYgEBBCMRVQIBCBoCJgICAioGFQIBDQIEA?=
- =?us-ascii?q?QwIAQGIVLBVjBMBAQEBAQUBAQEBAQEcBYEGhyIIgk6EQBeCa4JaBYgwkS6GIpJ?=
- =?us-ascii?q?5hgKJBYNMg3s1hHNxh1QBAQE?=
-Received: from scesrv02.atlas.de ([10.196.202.5])
-  by MGW102FE.atlas.de with ESMTP/TLS/DHE-RSA-AES128-GCM-SHA256; 08 Sep 2016 12:05:45 +0200
-Received: by SCESRV02.atlas.de (Postfix, from userid 600)
-        id 3sVGDn1zwsz2MGjL; Thu,  8 Sep 2016 10:05:14 +0000 (UTC)
-Received: from MGW202PAR.atlas.de (unknown [10.206.101.61])
-        by SCESRV02.atlas.de (Postfix) with ESMTPS id 3sVGDB472Xz2MGjP
-        for <git@vger.kernel.org>; Thu,  8 Sep 2016 10:05:14 +0000 (UTC)
-Received: from msexsrv3.atlas.de ([10.200.102.58])
-  by MGW202DAT.atlas.de with ESMTP/TLS/DHE-RSA-AES256-SHA; 08 Sep 2016 12:05:14 +0200
-Received: from MSEXSRV5.atlas.de ([169.254.3.150]) by MSEXSRV3.atlas.de
- ([10.200.102.58]) with mapi id 14.03.0301.000; Thu, 8 Sep 2016 12:05:15 +0200
-From:   <stefan.naewe@atlas-elektronik.com>
-To:     <johannes.schindelin@gmx.de>, <git-for-windows@googlegroups.com>,
-        <git@vger.kernel.org>
-Subject: Re: [ANNOUNCE] Git for Windows 2.10.0
-Thread-Topic: [ANNOUNCE] Git for Windows 2.10.0
-Thread-Index: AQHSBeWUt3atMPZqgE+ZP927B82KvKBvQ6UA
-Date:   Thu, 8 Sep 2016 10:05:15 +0000
-Message-ID: <3ed6f32f-6330-3453-1581-3a2d4008bbfa@atlas-elektronik.com>
-References: <0MZD0K-1bNOQ13s6O-00Ku7h@mail.gmx.com>
-In-Reply-To: <0MZD0K-1bNOQ13s6O-00Ku7h@mail.gmx.com>
-Accept-Language: de-DE, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <2E104955D96B2B4583FD9985B8767B45@atlas.de>
-Content-Transfer-Encoding: base64
+        id S966479AbcIHLEG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Sep 2016 07:04:06 -0400
+Received: from mail-it0-f43.google.com ([209.85.214.43]:38543 "EHLO
+        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932372AbcIHLEF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Sep 2016 07:04:05 -0400
+Received: by mail-it0-f43.google.com with SMTP id c198so73031041ith.1
+        for <git@vger.kernel.org>; Thu, 08 Sep 2016 04:04:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=PaMLm66h5qJoCI36JTZY3XNsw1WoKSzIVLDyz2Y1WWU=;
+        b=cgcr1mgDF6Lp646l3a+djGIV2Y9JdiH/OU6Z5bKuoL6f4mTVlS3/r8/oxlZd5biTkl
+         pb3Tr//yDApXPwheX/RFFlFAEe10pk5E9hCbnqgTLkBO1aAItCqZ5+mXeXfACiYcVzDa
+         BbCNx/tBZs+X5QDD0O8gHqycLSWk3dqh3twAYgFo9QyoXfoD5TnPBYMAGLJ4suXG+6pN
+         TlCx34N6mMsnC+TmgLL+KpBc2VeuuGwbQAvCnUSVUtZbect2OyHctMr2HaMFy7ieSHG0
+         F75Fg21j11TJtPwRAWjDRTW3qS1VQZ+IA8z+ZsyNLxycwixp5kpAoLUp2YiHeuW9NC6R
+         DlNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=PaMLm66h5qJoCI36JTZY3XNsw1WoKSzIVLDyz2Y1WWU=;
+        b=bVCiIriEjlvyN9aZxsZOCU5f0WH5VhZESby8EHCZ2KLIYWUfwShVnZNb2DCFo1uGoj
+         PUK2dFiHevmPMc/COPHFydaY+ij4U0UUt1LU/P21+RZFpt7/s5gZHpvQVgyGlGUWOsgq
+         lz+Lx4Q0a++Xt5iXF+nsLlUxCtqhih+djLPQSefTj+Su7Jwuf/kzNXFqXznS7+iG94QD
+         wl3t1fV0BLssXT/sjGfo72rErvzhJU6a5g2D1g6LXmlO0DNEgqEo2aUJRaxwisQu7Fai
+         veodgWCovRvYCgGF6CN5/M1iDi7QUffecxc/bkHxBpZfb0ypLB7NPF8o+O7w1u0+oDMM
+         do4w==
+X-Gm-Message-State: AE9vXwPSvVhn/WDdqqMZbI6W/v7HrJBK537K1oQIzNDpeuFyH4H70ckoolUIse8UsQC6TezxtGP3kjLTV3B2Cw==
+X-Received: by 10.36.3.76 with SMTP id e73mr14860397ite.42.1473332644167; Thu,
+ 08 Sep 2016 04:04:04 -0700 (PDT)
 MIME-Version: 1.0
+Received: by 10.64.54.40 with HTTP; Thu, 8 Sep 2016 04:03:33 -0700 (PDT)
+In-Reply-To: <20160908012553.q2aubze4qggfzjxz@sigill.intra.peff.net>
+References: <CACsJy8BF_mnSUcEeH=RBMyfh8RrQGJ4dwm_svsC4TciJtECn_w@mail.gmail.com>
+ <20160908012553.q2aubze4qggfzjxz@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 8 Sep 2016 18:03:33 +0700
+Message-ID: <CACsJy8DW1-EsfgGkbnD3LgiygAu2JV9vs_8e+oQbenXERUA6hw@mail.gmail.com>
+Subject: Re: "fatal error in commit_refs" from pushing to github
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-QW0gMDMuMDkuMjAxNiB1bSAxNToxNyBzY2hyaWViIEpvaGFubmVzIFNjaGluZGVsaW46DQo+IERl
-YXIgR2l0IHVzZXJzLA0KPiANCj4gSXQgaXMgbXkgcGxlYXN1cmUgdG8gYW5ub3VuY2UgdGhhdCBH
-aXQgZm9yIFdpbmRvd3MgMi4xMC4wIGlzIGF2YWlsYWJsZS4NCj4gVGhpcyB0aW1lLCBJIGV2ZW4g
-YmxvZ2dlZCBhYm91dCBpdCwgcHJpbWFyaWx5IGJlY2F1c2UgSSBhbSBzbyBleGNpdGVkDQo+IGFi
-b3V0IHRoZSBzcGVlZCBpbXByb3ZlbWVudHMgb2YgcmViYXNlIC1pOg0KPiANCj4gaHR0cHM6Ly9i
-bG9ncy5tc2RuLm1pY3Jvc29mdC5jb20vdmlzdWFsc3R1ZGlvYWxtLzIwMTYvMDkvMDMvd2hhdHMt
-bmV3LWluLWdpdC1mb3Itd2luZG93cy0yLTEwLw0KPiANCj4gQXMgYWx3YXlzLCB5b3UgY2FuIGRv
-d25sb2FkIGl0IGZyb206IGh0dHBzOi8vZ2l0LWZvci13aW5kb3dzLmdpdGh1Yi5pby8NCj4gDQo+
-IENoYW5nZXMgc2luY2UgR2l0IGZvciBXaW5kb3dzIHYyLjkuMygyKSAoQXVndXN0IDI1dGggMjAx
-NikNCj4gDQo+IE5ldyBGZWF0dXJlcw0KPiANCj4gICDigKIgQ29tZXMgd2l0aCBHaXQgdjIuMTAu
-MC4NCj4gICDigKIgVGhlIGdpdCByZWJhc2UgLWkgY29tbWFuZCB3YXMgbWFkZSBmYXN0ZXIgYnkg
-cmVpbXBsZW1lbnRpbmcgbGFyZ2UNCj4gICAgIHBhcnRzIGluIEMuDQoNCkkgZmluYWxseSBoYWQg
-dGhlIGNoYW5jZSB0byBkbyBhICJiaWdnZXIiIHJlYmFzZSBhbmQgd2hhdCBzaGFsbCBJIHNheS4u
-Lg0KRioqKmssIGhhcyB0aGlzIHRoaW5nIGJlY29tZSBmYXN0LCBvciB3aGF0IQ0KDQpUaGFuayB5
-b3Ugc28gbXVjaCBmb3IgZG9pbmcgdGhpcyEhISENCg0KU3RlZmFuDQotLSANCi0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCi9k
-ZXYvcmFuZG9tIHNheXM6IEEgQ2F0J3MgY291cmFnZSBpcyBhcyBzdHJvbmcgYXMgYSBkb2cncyBj
-aGFpbg0KcHl0aG9uIC1jICJwcmludCAnNzM3NDY1NjY2MTZlMmU2ZTYxNjU3NzY1NDA2MTc0NmM2
-MTczMmQ2NTZjNjU2Yjc0NzI2ZjZlNjk2YjJlNjM2ZjZkJy5kZWNvZGUoJ2hleCcpIiANCkdQRyBL
-ZXkgZmluZ2VycHJpbnQgPSAyREY1IEUwMUIgMDlDMyA3NTAxIEJDQTkgIDk2NjYgODI5QiA0OUM1
-IDkyMjEgMjdBRg==
+On Thu, Sep 8, 2016 at 8:25 AM, Jeff King <peff@peff.net> wrote:
+> On Thu, Sep 08, 2016 at 07:49:12AM +0700, Duy Nguyen wrote:
+>
+>> I got the message in the subject when pushing to github today. Yes I
+>> know it's github, not git. But according to stackoveflow [1] it's a
+>> local problem. Which makes me think, if we know exactly what this is
+>> (or at least roughly the problem area), maybe we could improve git to
+>> catch it locally in the first place (and because other git servers may
+>> not have the same protection as github).  Jeff maybe you can reveal
+>> something about this "fatal error in commit_refs"? I'm sure it's not
+>> in git code. But I would understand if the answer is "no".
+>
+> The short answer is that it's nothing to do with Git or the client; it's
+> GitHub-specific code running on the server that is outside of Git
+> entirely.
+>
+> The long answer is that pushes to GitHub don't hit Git directly these
+> days. They hit a proxy layer that speaks just enough of the Git protocol
+> to relay to N separate receives spread across N replica servers[1]. Those
+> receive-packs take in the pack and verify it, but don't actually update
+> any refs[2]. Then the proxy layer runs its own set of policy hooks, and
+> speaks a commit-protocol to each of the replicas so that they all agree
+> on the new ref state. That last step is called "commit_refs" internally.
+>
+> So this is really an internal failure at the ref-update stage. There
+> _should_ be a reasonable error message, but I think "fatal error in
+> commit_refs" is the generic last-ditch fallback. I'll pass this along to
+> people in charge of that code, as we should be generating a more useful
+> error message.
+
+Hmm.. I'm interested in this because the "fix" is from client side. I
+did "git gc" and "git fetch" and the problem was gone. From this
+description, I suppose C Git sends a good pack (phew!), but probably
+with some stale ref or something that upsets this this last stage.
+It's hard to make a connection back to either gc or fetch. Maybe gc
+does ref trimming or something (that should probably be done by
+git-push as well). Oh well.. maybe next time I see it, I'll get a nice
+and clear message :)
+-- 
+Duy
