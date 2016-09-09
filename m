@@ -2,96 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 747011F859
-	for <e@80x24.org>; Fri,  9 Sep 2016 10:43:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 634CA1F859
+	for <e@80x24.org>; Fri,  9 Sep 2016 10:50:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753943AbcIIKn5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 06:43:57 -0400
-Received: from mail-oi0-f50.google.com ([209.85.218.50]:36685 "EHLO
-        mail-oi0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753935AbcIIKn4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 06:43:56 -0400
-Received: by mail-oi0-f50.google.com with SMTP id q188so17823571oia.3
-        for <git@vger.kernel.org>; Fri, 09 Sep 2016 03:43:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=y4PO60LBwVYeS++cs85wa/aNu1Br3F7BjnXERfyfJJo=;
-        b=rV+5JM8nuClh6AsqFb/pTvWKffTDnlwoZIk70Is4D/NjVEERIajHtQkFeL1NIBzLDr
-         c1GejrVlm7u2mfCZiZDKcvLzDgTjIXuFf255Ba25YH7m8qnXuWqPlbyQVDyt7J9Bm/4P
-         2WTY/5SMc90gCr21ZoxQLBh+GQBctfTbzwUQt8NtuRwwpJLqDBs8n4OKnAgabRuigEG7
-         fpKrcWoDlKl7dQ1NU84rDXWJ8ikGZolo87oMJTocgsSbWl0m1FmwLhoomnSJF7rof2ia
-         JraheHNeACX/SmQBTDcYRqzFcCiNQm4rs53C7BiKa0EBEtKQPszO2AhJ766lAY2ZB26i
-         eMwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=y4PO60LBwVYeS++cs85wa/aNu1Br3F7BjnXERfyfJJo=;
-        b=X2xSpSlaG476EaUPKAIqK2m8UTX/f2F3dXHob7AOt2E/h9nac8Bg4zILv0Dsm7UT0S
-         owUHcjXK4oGUkblfqQxiU9ZJy760Gu8GNUynmB7Xh2mh+1ZYrxlmAtDYYNZ6G4hCuwn0
-         5N+BlJUz/J40X4t9cSugplgHd5hl0hLPtQ2E0be+vC+TUxeGt5qACY5Ahv+wesQy6zBd
-         T792bz2wBvh7gXQcjyJioXXJ/HphxWwQT4Kaj04ud8akvayMuDGuGXOx+IhFS/7xv977
-         GryDI2UCz9JL1tQTnlfq87B589zD520qkO0out7eZMXqDlMVhd/M9GPz6WDZx4G0icKl
-         oFIw==
-X-Gm-Message-State: AE9vXwOQg7BS33a/Hcp0tsbfju4xiFkmvN6HyRQKcMVFQtDjKwFuqfTSWNh0u7EZxQMkVGnimh3q/BMuMLczMA==
-X-Received: by 10.157.29.131 with SMTP id y3mr3726503otd.62.1473417835943;
- Fri, 09 Sep 2016 03:43:55 -0700 (PDT)
+        id S1753593AbcIIKuF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 06:50:05 -0400
+Received: from mout.gmx.net ([212.227.15.18]:62829 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752462AbcIIKuE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 06:50:04 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0M2Ldk-1asY8g39FM-00s8TQ; Fri, 09 Sep 2016 12:49:58
+ +0200
+Date:   Fri, 9 Sep 2016 12:49:57 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/6] pull: make code more similar to the shell script
+ again
+In-Reply-To: <xmqqr3976vcy.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1609091244500.129229@virtualbox>
+References: <cover.1472137582.git.johannes.schindelin@gmx.de> <9a7cc36eee651fe8be280920587e1f83538caf77.1472137582.git.johannes.schindelin@gmx.de> <xmqqr3976vcy.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.64.54.40 with HTTP; Fri, 9 Sep 2016 03:43:25 -0700 (PDT)
-In-Reply-To: <20160907174841.Horde.Ru1LBEeLKomznlWVG-ZnS-Q@webmail.informatik.kit.edu>
-References: <20160906214550.Horde.ducOghtmsQb9pQ6lixxddVz@webmail.informatik.kit.edu>
- <20160907151251.30978-1-szeder@ira.uka.de> <20160907151251.30978-6-szeder@ira.uka.de>
- <20160907174841.Horde.Ru1LBEeLKomznlWVG-ZnS-Q@webmail.informatik.kit.edu>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 9 Sep 2016 17:43:25 +0700
-Message-ID: <CACsJy8DZtAOL9OA_6eqKN7bfS2up+LLEYOWDg=Nh0Quy3coAVQ@mail.gmail.com>
-Subject: Re: [PATCH 5/5] versioncmp: cope with common leading parts in versionsort.prereleaseSuffix
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Leho Kraav <leho@conversionready.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:iQ8eMspDZp/jwZrIoNtsdvPX4FpvzFFCQqB91Ewcr/7t9cZ59ET
+ NQvfOqAeRCTFkCQ+PjeaMYtp0K8u6K1o2pIA2Yn41fbk5kdRxmw4QKaP6AzlbFc1fs3vltG
+ MCx3ch4Gmw94HtDkgRmc7YwbiXFZ7oFvrirS3DgRKlaVIuC5WqNxLwAq9IW1QG9GC61IlCH
+ aCgSH9yVwcwSh99vWJ27A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:tagTcepkRDA=:0DyDzHWWYoFcxd1kTUE+aQ
+ p8r5QWwbDyaCLdmMe7Bega6qqkcSRDzissx8fqR/sfA4tNJ3cpTJaSZVNc/803cCbdCqI1S/T
+ lGciXBdIYjVGA8g4+hUdn8b6LDE+lxPECBztYl24SGByS0CHhjQGbVUwoW4azLlMrzxNppkBt
+ QKzUQoHpSiGM8UF1h28ZeC3ymA1aBtEKKIXqttnOGgAbo4fRqM0cZLV4xZw5tR87RfRhhQV6l
+ yQ/Oa7USFv5DGOArfzbFyrqrrSfcrzvSSwizU9cz+7X2aPPiqKkDM+h2Ju6HGPqwIcF1Dts4r
+ qTQcRvwmJd1YvWc7s8CYpSTPzH+BTWrsAauA8mwQvVYuoUEwkZp4v70YgmYpCNObYxU5ZNS1L
+ RCc5xfMpGimSq0Nq1MRuKaL9vBF35DjJBeECAwdi6ZIeAociVVNA+VysM/hp3RuLK2Wzb3Jnn
+ /QZCY7yxkxUqiaTInY6gmuY5WD98jGXzknB5G+m2g97l4QFt6KoA23REbS4uCkUhzCzt25R2b
+ CIDu6gL3Gr0rLO7qirkqboKFFHwWi8iGD/KUiEJ4ePqXptUzRcVQ0avavfiIEOBVxU27ytDzQ
+ DN1WP2zipioxeedl4wWQeRJMBhgOr4ZO/86zb7n+KfIETtG3W81b0HNZdYO26kN1zF9RUGZ8S
+ 7HTl9tZnodj763KbPxAM0aCE8AU8VlFeX/Ssps/JIAQKp1jT97LunqHIUOtE3+ERUSRbOxBHx
+ szYWRQDVyxJV4Kx1t5L3eJbxdT9/yjRPGLpCHxLTKVaYJgxtg9huXHzzPMBLwjQXi+/MMdLW0
+ 8+JoYcb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 7, 2016 at 10:48 PM, SZEDER G=C3=A1bor <szeder@ira.uka.de> wrot=
-e:
-> Now, while I believe this is the right thing to do to fix this bug,
-> there is a corner case, where multiple configured prerelease suffixes
-> might match the same tagname:
->
->   $ git config --get-all versionsort.prereleaseSuffix
->   -bar
->   -baz
->   -foo-bar
->   $ ~/src/git/git tag -l --sort=3Dversion:refname
->   v1.0-foo-bar
->   v1.0-foo-baz
->
-> I.e. when comparing these two tags, both "-bar" and "-foo-bar" would
-> match "v1.0-foo-bar", and as "-bar" comes first in the config file,
-> it wins, and "v1.0-foo-bar" is ordered first.  An argument could be
-> made to prefer longer matches, in which case "v1.0-foo-bar" would be
-> ordered according to "-foo-bar", i.e. as second.  However, I don't
-> know what that argument could be, to me neither behavior is better
-> than the other, but the implementation of the "longest match counts"
-> would certainly be more complicated.
->
-> The argument I would make is that this is a pathological corner case
-> that doesn't worth worrying about.
+Hi Junio,
 
-Maybe we should keep a note about this in config.txt? If it's not
-worth bothering/scaring the users about, I suggest you keep this in
-the commit message.
---=20
-Duy
+On Mon, 29 Aug 2016, Junio C Hamano wrote:
+
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > +static int require_clean_work_tree(const char *action, const char *hint,
+> > +		int gently)
+> >  {
+> >  	struct lock_file *lock_file = xcalloc(1, sizeof(*lock_file));
+> > -	int do_die = 0;
+> > +	int err = 0;
+> >  
+> >  	hold_locked_index(lock_file, 0);
+> >  	refresh_cache(REFRESH_QUIET);
+> > @@ -376,20 +377,26 @@ static void die_on_unclean_work_tree(void)
+> >  	rollback_lock_file(lock_file);
+> >  
+> >  	if (has_unstaged_changes()) {
+> > -		error(_("Cannot pull with rebase: You have unstaged changes."));
+> > -		do_die = 1;
+> > +		error(_("Cannot %s: You have unstaged changes."), action);
+> > ...
+> >  		if (!autostash)
+> > -			die_on_unclean_work_tree();
+> > +			require_clean_work_tree("pull with rebase",
+> > +				"Please commit or stash them.", 0);
+> >  
+> >  		if (get_rebase_fork_point(rebase_fork_point, repo, *refspecs))
+> >  			hashclr(rebase_fork_point);
+> 
+> Splicing an English/C phrase 'pull with rebase' into a
+> _("localizable %s string") makes the life of i18n team hard.
+> 
+> Can we do this differently?
+> 
+> If you are eventually going to expose this function as public API, I
+> think the right approach would be to enumerate the possible error
+> conditions this function can diagnose and return them to the caller,
+> i.e.
+> 
+>     #define WT_STATUS_DIRTY_WORKTREE 01
+>     #define WT_STATUS_DIRTY_INDEX    02
+> 
+>     static int require_clean_work_tree(void)
+>     {
+> 	int status = 0;
+> 	...
+>         if (has_unstaged_changes())
+>         	status |= WT_STATUS_DIRTY_WORKTREE;
+> 	if (has_uncommitted_changes())
+>         	status |= WT_STATUS_DIRTY_INDEX;
+> 	return status;
+>     }
+> 
+> Then die_on_unclean_work_tree() can be made as a thin-wrapper that
+> calls it and shows the pull-specific error message.
+
+Hrm. After thinking about this for over a week, I think that this is the
+wrong approach.
+
+To introduce new wrapper functions just for the sake of being able to
+provide possibly dozens of different error messages seems quite a bit
+wrong.
+
+I agree, however, that it may be a better idea to add a "gently" flag to
+require_clean_work_tree() that lets it print out a (localizable) error
+message and return -1 instead of die()ing.
+
+The result would be that a failed `git pull --rebase` would then print out
+*two* lines: one explaining that there are unstaged changes, and one that
+explains that the pull did not even start due to an unclean work tree.
+
+That solution would scale better, and I may get a chance to make those
+changes and send out another iteration of this patch series before
+October.
+
+Ciao,
+Johannes
