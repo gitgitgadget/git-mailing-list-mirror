@@ -2,117 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 13A3F207DF
-	for <e@80x24.org>; Fri,  9 Sep 2016 22:58:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 450BB207DF
+	for <e@80x24.org>; Fri,  9 Sep 2016 23:01:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755556AbcIIW6V (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 18:58:21 -0400
-Received: from washoe.dartmouth.edu ([129.170.30.229]:44517 "EHLO
-        smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754666AbcIIW6U (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 18:58:20 -0400
-X-Greylist: delayed 2312 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Sep 2016 18:58:20 EDT
-Received: from smtp.onerussian.com ([192.168.100.6] helo=washoe.onerussian.com)
-        by smtp.onerussian.com with esmtps (TLS1.2:RSA_AES_128_CBC_SHA1:128)
-        (Exim 4.80)
-        (envelope-from <yoh@onerussian.com>)
-        id 1biU98-0005Jf-Dy
-        for git@vger.kernel.org; Fri, 09 Sep 2016 18:19:42 -0400
-Received: from yoh by washoe.onerussian.com with local (Exim 4.84)
-        (envelope-from <yoh@onerussian.com>)
-        id 1biU98-0005Ja-8e
-        for git@vger.kernel.org; Fri, 09 Sep 2016 18:19:42 -0400
-Date:   Fri, 9 Sep 2016 18:19:42 -0400
-From:   Yaroslav Halchenko <yoh@onerussian.com>
-To:     git@vger.kernel.org
-Subject: git clone http://  fails some times with "Request for d53.. aborted"
-Message-ID: <20160909221942.GS9830@onerussian.com>
+        id S1755557AbcIIXB3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 19:01:29 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65145 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755338AbcIIXB2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 19:01:28 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 91E5D3CAB5;
+        Fri,  9 Sep 2016 19:01:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=qr+IiKGY0UKsyRkAR0EVGDVoYsU=; b=dohLgx
+        pfWlvXTCxAiYMauEKhdeIxG13K/R3kMEGJcqGQwFF81nNMcIPJ0TkItdqpbQO13a
+        F3lO/hpz2AYSV3HNT5AnzFOBeB5iaWkaSx4JRdfdzeLiciQmfRg/eFUtCWOi+bxp
+        9oVwhLc0htBWgnKJjOm+8/28DCi6e+ioMemSo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=fegA61FyhjaQeucUYNYLUx2dbPqPULVW
+        EWMrw4o7k4qNX1strzi0fK+26giTNjLCcFiLBWTWGjXtEl0RCx1S4zfjGjRkGH+G
+        sONIonFsBNDldu33ekAayPJt0x1YyX4Vnd6V0p3e0DXAT0UbiEdQLyWyFIDgMJbd
+        4hCEkYQ4y+8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8ABB53CAB4;
+        Fri,  9 Sep 2016 19:01:27 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 103CF3CAB3;
+        Fri,  9 Sep 2016 19:01:26 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC/PATCH] ls-files: adding support for submodules
+References: <1473458004-41460-1-git-send-email-bmwill@google.com>
+Date:   Fri, 09 Sep 2016 16:01:25 -0700
+In-Reply-To: <1473458004-41460-1-git-send-email-bmwill@google.com> (Brandon
+        Williams's message of "Fri, 9 Sep 2016 14:53:24 -0700")
+Message-ID: <xmqqh99o8ypm.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-X-URL:  http://www.onerussian.com
-X-Image-Url: http://www.onerussian.com/img/yoh.png
-X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
-X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-SA-Exim-Connect-IP: 192.168.100.6
-X-SA-Exim-Rcpt-To: git@vger.kernel.org
-X-SA-Exim-Mail-From: yoh@onerussian.com
-X-SA-Exim-Scanned: No (on smtp.onerussian.com); SAEximRunCond expanded to false
+Content-Type: text/plain
+X-Pobox-Relay-ID: 56690938-76E1-11E6-857A-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-even when (v 2.7.0) ran on the box where the server is, so
-unlikely to be network issue
+Brandon Williams <bmwill@google.com> writes:
 
-or from my laptop (v 2.9.3) with ok but wifi with a weakish signal to the
-access point:
+> Allow ls-files to recognize submodules in order to retrieve a list of
+> files from a repository's submodules.  This is done by forking off a
+> process to recursively call ls-files on all submodules.
 
-$> ( set -e; for s in {1..100}; do rm -rf fbirn_phaseIII ; git clone http://datasets.datalad.org/nidm/fbirn_phaseIII/.git; done; )
-Cloning into 'fbirn_phaseIII'...
-Checking connectivity... done.
-Cloning into 'fbirn_phaseIII'...
-error: Request for d53302dfc7ad13b786923927021039d21a10d5bd aborted
-error: Unable to find d53302dfc7ad13b786923927021039d21a10d5bd under http://datasets.datalad.org/nidm/fbirn_phaseIII/.git
-Cannot obtain needed tree d53302dfc7ad13b786923927021039d21a10d5bd
-while processing commit 22dd4c49417cad6f4082ac2aebef45da8b6e473d.
-error: fetch failed.
+While I see why "ls-files --recurse-submodules" sounds nice ("hey, I
+can get list of _all_ the files here"), and I am quite happy with
+the quality of implementation (not just the code but its
+documentation and test) especially from a first-time contributor, I
+am not quite sure what the utility of this new feature would be,
+especially given that the command is a plumbing, i.e. meant to be a
+useful building block for scripts.
 
-even if I build fresh 2.10.0, discovered that we can trace now CURL calls
+If I get
 
-$> export PATH=$HOME/proj/misc/git:$PATH
-$> git version
-git version 2.10.0
-$> ( set -e; for s in {1..100}; do rm -rf fbirn_phaseIII ; GIT_TRACE_CURL=/tmp/git-trace-curl-failed.log git clone http://datasets.datalad.org/nidm/fbirn_phaseIII/.git &&  mv /tmp/git-trace-curl-failed.log /tmp/git-trace-curl-good.log || exit 1; done; ) 
-Cloning into 'fbirn_phaseIII'...
-warning: templates not found /home/yoh/share/git-core/templates
-... a few more ...
-Cloning into 'fbirn_phaseIII'...
-warning: templates not found /home/yoh/share/git-core/templates
-error: Request for d53302dfc7ad13b786923927021039d21a10d5bd aborted
-error: Unable to find d53302dfc7ad13b786923927021039d21a10d5bd under http://datasets.datalad.org/nidm/fbirn_phaseIII/.git
-Cannot obtain needed tree d53302dfc7ad13b786923927021039d21a10d5bd
-while processing commit 22dd4c49417cad6f4082ac2aebef45da8b6e473d.
-error: fetch failed.
-( set -e; for s in {1..100}; do; rm -rf fbirn_phaseIII; GIT_TRACE_CURL= git  )  18.70s user 8.01s system 34% cpu 1:16.84 total
+	$ git ls-files --recurse-submodules
+	Makefile
+        lib/Makefile
+        lib/hello.py
+	main.py
+	goodbye.py
 
-NB 
-- note that it is d53302dfc7ad13b786923927021039d21a10d5bd all the time!
-- that one corresponds to a tree
-$> git show d53302dfc7ad13b786923927021039d21a10d5bd
-tree d53302dfc7ad13b786923927021039d21a10d5bd
+out of the command, what can I do with it without knowing where the
+submodule boundaries are?  It's not like I can just do
 
-1ec/
-da9/
-- I do not see that object being reported as failed to be found on the server:
+	git ls-files --recurse-submodule |
+        while read path
+        do
+        	git update-index --add "$path"
+	done
 
-$> grep d5/3302dfc7ad13b786923927021039d21a10d5bd /var/log/apache2/datasets.datalad.org-error.log
-$> grep d5/3302dfc7ad13b786923927021039d21a10d5bd /var/log/apache2/datasets.datalad.org-access.log
-129.170.31.34 - - [09/Sep/2016:14:14:25 -0400] "GET /nidm/fbirn_phaseIII/.git/objects/d5/3302dfc7ad13b786923927021039d21a10d5bd HTTP/1.1" 200 72
-...
-- and the logs say that only "good" run had it requested:
+when "lib/" is a submodule.  Instead, I'd need to go to "lib/" and
+then add "Makefile" and "hello.py" from there.
 
-$> zgrep 3302dfc7ad13b786923927021039d21a10d5bd git-trace-curl-*.log.gz     
-git-trace-curl-good.log.gz:18:09:13.749268 http.c:517              => Send header: GET /nidm/fbirn_phaseIII/.git/objects/d5/3302dfc7ad13b786923927021039d21a10d5bd HTTP/1.1
+> diff --git a/t/t3007-ls-files-recurse-submodules.sh b/t/t3007-ls-files-recurse-submodules.sh
+> new file mode 100644
+> index 0000000..78deded
+> --- /dev/null
+> +++ b/t/t3007-ls-files-recurse-submodules.sh
+> @@ -0,0 +1,103 @@
+> +...
+> +test_expect_success 'setup directory structure and submodules' '
+> +...
+> +'
+> +
+> +cat >expect <<EOF
+> +.gitmodules
+> +a
+> +b/b
+> +submodule/c
+> +EOF
 
+We used to do that when we didn't know better.
 
-and here are those two GIT_TRACE_CURL traces from good and bad runs -- may be
-someone with a better clue could figure it out or any other information I
-should provide to help pin point why that "request for d5... aborted" ;)
-
-http://www.onerussian.com/tmp/git-trace-curl-good.log.gz
-http://www.onerussian.com/tmp/git-trace-curl-failed.log.gz
-
-Thanks in advance and please CC me in replies
--- 
-Yaroslav O. Halchenko
-Center for Open Neuroscience     http://centerforopenneuroscience.org
-Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
-Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
-WWW:   http://www.linkedin.com/in/yarik        
+Please don't do things outside test_expect_* block, especially in a
+new script.
