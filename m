@@ -7,93 +7,95 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D276B1F859
-	for <e@80x24.org>; Fri,  9 Sep 2016 07:28:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 015441F859
+	for <e@80x24.org>; Fri,  9 Sep 2016 09:45:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752595AbcIIH2o (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 03:28:44 -0400
-Received: from mout.gmx.net ([212.227.17.22]:54082 "EHLO mout.gmx.net"
+        id S932105AbcIIJpY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 05:45:24 -0400
+Received: from mout.gmx.net ([212.227.17.22]:59195 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751657AbcIIH2n (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 03:28:43 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MPZuP-1be9dM0jcf-004k09; Fri, 09 Sep 2016 09:28:13
+        id S932088AbcIIJpU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 05:45:20 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0Ldcv0-1bHFHx0qaQ-00ioN7; Fri, 09 Sep 2016 11:45:03
  +0200
-Date:   Fri, 9 Sep 2016 09:28:11 +0200 (CEST)
+Date:   Fri, 9 Sep 2016 11:45:01 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Jeff King <peff@peff.net>,
-        Michael J Gruber <git@drmicha.warpmail.net>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] gpg-interface: reflect stderr to stderr
-In-Reply-To: <xmqqwpimgso6.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1609090925150.129229@virtualbox>
-References: <ced7502d-0095-bd90-19e3-c14d0e4d4f07@drmicha.warpmail.net> <18a7e2984121d988137c135ec560fee56506981b.1473167263.git.git@drmicha.warpmail.net> <alpine.DEB.2.20.1609061827290.129229@virtualbox> <alpine.DEB.2.20.1609061839370.129229@virtualbox>
- <alpine.DEB.2.20.1609061843120.129229@virtualbox> <655b42d8-baa9-e649-2b3c-5b7bfc914bc5@drmicha.warpmail.net> <20160907083947.b7q7ebe62xsr6447@sigill.intra.peff.net> <xmqqwpimgso6.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/3] Introduce a function to run regexec() on
+ non-NUL-terminated buffers
+In-Reply-To: <20160908080447.adquu2e5d7bbeorn@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1609091140420.129229@virtualbox>
+References: <cover.1473090278.git.johannes.schindelin@gmx.de> <cover.1473319844.git.johannes.schindelin@gmx.de> <94ee698b2736929d37640012a1b1735b134dd3d6.1473319844.git.johannes.schindelin@gmx.de> <20160908080447.adquu2e5d7bbeorn@sigill.intra.peff.net>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:2BSs6DKAg1UDbo2cr+0aRdCf8Lf4LSgOyu+31YkbWiMetbhNGKf
- Neq0fbRQet7UwAmt6RSQEB0u1z6s9Eu4eB8Cqra2AQFaMrCmsQlCCy4PPXHPxp0HEmgSd46
- 2kNefTyIBzs3mQjOp3rFUI7N/6haksOieOWkCJDDJt/RPPu7g2WnvuYgd6D1VhZV11J9GgP
- NiP4wAn6l3eDsWDePNirw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:G0CizULN0Eo=:A8CJfqnVAJSoXIafFL+948
- 1gkBh8Sn3sBRjXJqppc69Nu+xL8CpeIajbgEkAdd4/XNjXYxWtgwkir0C0zsRAzdTx+BUi4Kt
- TgU3PHbtquL8TFrU/sXNg70MzmPvw9/+iWZohPJTp+i3rYE5Sc4Yt1QQJkz3dc5jvOrpU57eC
- stgXmBun39lYU2DPLJrkreSteH3aRd1V/S9JAoHY1g072kwdhzWh1iRV17Z/qUTWsDJhseQ3W
- tnKQnbTFQuRt/MwmlIpZPDFQnRiuiht0+vp240Jew5ML3z1/aA24CkSQRJ2pAeBBrysvDEE3q
- lg5g37eYVBycWpDe4tfSzg6Qk2HXisSPvxCrrifR1TcLSsXdfQfXW+vgjFOonVfTxurTDBAT/
- 82qUZ+8BwYycbZy39VRj4gSymH5KARsleUNIBGjEdWwMi5nby+VLqNqA/NP7XWDl5YAKdUJKt
- Q8wgGxBTknE8osUc2xoOWCBwDuXGR/160MJgaCdxyxhRbk71+Foeji0V0HqbAOTwtpE+eAmBe
- DgImKkVK0TYdOa6HImiWJiAEddHfxqMlLeHoAKoFd/zHTLSJ/SAvSYdsUZug87FVNMDTbA9G7
- ThWqPXsu/SDordtNLQoXqZbhR4VS74q/SXEzf/3FwdQZpHbCwIYdpeeoQ+vYsTPRX6C0FGuTN
- RHvfOap6p5C7zEyWRGG2YcZlNxvCxj+EVieWZ1tMUNIIWjN43m61HDtsw7hhG7+dxSvzOSOLO
- I/knykewzY1DVonRGFauMWyYj4oFDJMVqapphhGnYllfES+6XzNzJ40MSZLnfiQDAuHBChGRt
- WB1ADsn
+X-Provags-ID: V03:K0:Efh1PPHiDBLN2WA+G/Pc69crAUscOsN0UJqPUiSAlyCVMIIbxZk
+ 0Yugr9iqoJxjQAKRwa2v81WaluOI4qamISUtPreioxogqP7KqT3FnESyLb7vpMrIrTIcwEh
+ /eGrQBff8hEC75zlpVj/csG6bQy5ml/RqgaBiEyLXusXLIm/6xkEmQvrN23OAslhgwJAHQg
+ ca5IpJhUOT7KbF6rsgb8A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:5NQVRTbbc64=:V/EcFYvuf8smqaelRUkZqk
+ 4V0vSsm7qqd0NwarDNnO4Hd728of3x7W8KQKuGfw0ZqZUVeLOPxk1y3WproD8+rruTFE10Nz+
+ 1DbLbF7yHZRtThZLTSxTz6EaOFgP4DmN7jVBuLjOMN3OWbQ/lFsdx8X+ak9UJYC4p6i4OUVLi
+ Fx83ZiUbTOljkiKatzgN2pDXYr3mo9QHO42dhVrri7jpQgdiRRc1qlMSlfDCSDSbNJvY8v3S3
+ e9u31uEjweK0p9lTHSvzzX/a4cOResJ7JGQxOXT4sXHvrEqJ5bRdkEXnQr8+0+u30Xdt9AnjG
+ oQq3Evl5xELmb1pskhHrhoGTJCv1g61GFD38GXz8dJtvPtJBGhODq9l1fO8YRm+UTvNrXUNkQ
+ LEFIg15XWzQ79o2f+rWR161XhR4uvrwSynaJPBcghlCyyB6gOQNUhYW/RV+PDHnxclYVMqqMn
+ sfgPcqWRLhBRZy1bhoKD2b1Z7XxEhqxlIgF5n37D7SvKOztNKgfdj4HoWuhluNr/6xMECqhPC
+ y+6Rx/pU069vsBSWiXFBw2/jRTyYB3bl+jJytMdMlloQ5Az3hCIMizOjvxXA9LrIuVUUAqSgv
+ irNjfPD7zrwBvONtxzFEE/b0PBG9CcdlIdNiBjiC5MwNym3yA089Df3CMmyCR521k4koYQSOs
+ QDo08ncK0rk2mlBdLlB4/aZUtNtwqct8RIKZ34rND5IyN9zfDT9Yo2OjDTCrSZpQ099DbT7uH
+ ykX/aqBiQDw2HxP0rNo/QipAF5OZCqdFbw6NoXnyXMeot8jR7DBi7cMxy8L/b47/d/WuxkPMa
+ gpQGHDU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Peff,
 
-On Thu, 8 Sep 2016, Junio C Hamano wrote:
+On Thu, 8 Sep 2016, Jeff King wrote:
 
-> Jeff King <peff@peff.net> writes:
+> On Thu, Sep 08, 2016 at 09:31:11AM +0200, Johannes Schindelin wrote:
 > 
-> > On Wed, Sep 07, 2016 at 10:27:34AM +0200, Michael J Gruber wrote:
-> >
-> >> Now, I can't reproduce C on Linux[*], so there is more involved. It
-> >> could be that my patch just exposes a problem in our start_command()
-> >> etc.: run-command.c contains a lot of ifdefing, so possibly quite
-> >> different code is run on different platforms.
-> >
-> > Maybe, though my blind guess is that it is simply that on Linux we can
-> > open /dev/tty directly, and console-IO on Windows is a bit more
-> > complicated.
+> > diff --git a/git-compat-util.h b/git-compat-util.h
+> > index db89ba7..19128b3 100644
+> > --- a/git-compat-util.h
+> > +++ b/git-compat-util.h
+> > @@ -965,6 +965,27 @@ void git_qsort(void *base, size_t nmemb, size_t size,
+> >  #define qsort git_qsort
+> >  #endif
+> >  
+> > +static inline int regexec_buf(const regex_t *preg, const char *buf, size_t size,
+> > +			      size_t nmatch, regmatch_t pmatch[], int eflags)
+> > +{
+> > +#ifdef REG_STARTEND
+> > +	assert(nmatch > 0 && pmatch);
+> > +	pmatch[0].rm_so = 0;
+> > +	pmatch[0].rm_eo = size;
+> > +	return regexec(preg, buf, nmatch, pmatch, eflags | REG_STARTEND);
+> > +#else
+> > +	char *buf2 = xmalloc(size + 1);
+> > +	int ret;
+> > +
+> > +	memcpy(buf2, buf, size);
+> > +	buf2[size] = '\0';
 > 
-> True.
-> 
-> Even though this patch is fixing only one of the two issues, I am
-> tempted to say that we should queue it for now, as it does so
-> without breaking a bigger gain made by the original, i.e. we learn
-> the status of verification in a way the authors of GPG wants us to,
-> while somebody figuires out what the best way is to show the prompt
-> to the console on Windows.
+> I mentioned elsewhere that I'd prefer we just push people into using
+> compat/regex if they don't have REG_STARTEND. But if we _do_ keep this
+> fallback, note that the above has a buffer overflow (think what happens
+> when "size" is the maximum value for a size_t).  You can avoid it by
+> using xmallocz().
 
-Between protecting users from their own mis-configurations and allowing
-them to enter their passphrase interactively on Windows, I would argue
-that the more important thing to have working is the latter, because it is
-not at all the user's fault that they cannot enter their passphrase
-currently, and they cannot fix it by fixing their mis-configuration.
+That buffer overflow does not exist: If size were the maximum value for
+size_t, then buf->ptr would point at a buffer that occupies the entire
+available memory, meaning that there is no space left for buf->ptr, let
+alone for buf.
 
-Unfortunately, you obviously disagree with this assessement.
+But I get your point. It is better to be consistent and use the same logic
+for *all* allocations.
 
-As I *need* to fix this *major* bug for Windows users, you basically put
-an additional burden on me by applying Michael's patch, which not only
-does not fix the problem for Windows users, but conflicts with my
-work-around.
-
-Pity,
+Ciao,
 Dscho
