@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D4BF1F6BF
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DBE420705
 	for <e@80x24.org>; Fri,  9 Sep 2016 14:37:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753077AbcIIOhX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 10:37:23 -0400
-Received: from mout.gmx.net ([212.227.17.21]:53842 "EHLO mout.gmx.net"
+        id S1753153AbcIIOh2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 10:37:28 -0400
+Received: from mout.gmx.net ([212.227.17.20]:63739 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753038AbcIIOhT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 10:37:19 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0LpObx-1b61ts2M5N-00fBX4; Fri, 09 Sep 2016 16:37:13
+        id S1752105AbcIIOhV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 10:37:21 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0M1zFf-1atHfz1Cm3-00u5dL; Fri, 09 Sep 2016 16:37:16
  +0200
-Date:   Fri, 9 Sep 2016 16:37:12 +0200 (CEST)
+Date:   Fri, 9 Sep 2016 16:37:15 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 05/17] sequencer: lib'ify do_pick_commit()
+Subject: [PATCH v3 06/17] sequencer: lib'ify walk_revs_populate_todo()
 In-Reply-To: <cover.1473431645.git.johannes.schindelin@gmx.de>
-Message-ID: <bc896e5c4611422d4d269c960dc3a33282de688e.1473431645.git.johannes.schindelin@gmx.de>
+Message-ID: <70b3840e62c8eaf2e2af829b65c746971694bec0.1473431645.git.johannes.schindelin@gmx.de>
 References: <cover.1472219214.git.johannes.schindelin@gmx.de> <cover.1473431645.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:9awu/rn2GZgCAZ7iDBn9sCqtVcgsbtyWkVo4V5Ad4CeHCoydGKw
- s6wvY5Yqxh1lBP9tZDdo1zFPSfg0QIbWFeYn3qi6mnBCFbpQQrFFCZZ8IqvgrHy+IIrtWJe
- CcpYT5gVHWwP0Z9bP1YSzEUkFv/9iucGAhsZe/IIt+wIwUwJSGYnULyLx9m0GP2A2ORrRFU
- zrkEkwU7Fi3BbujNZ7snA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:NyEGUU6p71g=:SKhKOezkjND+tUUE1Seein
- DSuW6il3tUpp917VcX7ihwz2d4TmtUg5YNXMTaRKu3a6+DpooJeui+EHPlcYhgNT2WIXLvYAq
- PwuAdiHyBnOvqfT6ZNa/YV5EA1OijaOGOENFZsk2u9PWXDFFSj1LwKZ6CL7SFwVFvVf8c4Ozy
- cC50V7TUq5vxqdj4oh22y47HilQI8gdSxHTbJufsrlXvpOVZ5BYW5XTjZXlLRtcnxLsiZp7ym
- Dko4NdZ9vpsFucRUYJHHvSwNMCqA8Se0TP4tUsz8+cOMKfZUWCNscsRNInoowaDwwYGGAf5bj
- KasVnjINbSPzvdRVdiylJtP9meaB2r2GnIGFZkNuap9h1jL8aJHQhMR4onZl3zloMe6cNzRKT
- AVYJ/mGseXuvc6/BcqCp26+FSGR+nv8UdOEr70u17XHFFJzqYYA5XZjZHLfJ0y2rXlokpur0z
- EaSwEoE9CGTJdANg+XpG/nTWQS97dLv4nd0hHyG9HygledSrtsYO7UCV4NyriyrU9QdHIzjRN
- EDiZK8kPOJnZm2yYlpClhMToDEuVunCT8D73zopU+Unw7sJ5LZEQjKS6M95+krmaPbkPVasda
- 4O2em+bPu+uLyqP9dfhz39yX95B1amwJm+j/vk6e82UzuiqaKYGRP1v5WZED4Zhys29Hrv5Ir
- wudo53a9JEs+yKrCHj4HuykDIDPAqQOAGHDK5UjdgSeIpSWwagVdMYiPZRcqP4llVp+U5b/IO
- m6srVQMrTirWm5GgGCs1HdV48rZTWg6pcjFYmJvFCVfMuTg+pJymUrHlkiRR91yGIxwunqH7C
- GxgTywk
+X-Provags-ID: V03:K0:tohgwka32+pj9uaDbzptP3uDlMozv7HLn5xRig3TSqJX3j0w8mr
+ B0I3XfvWBH1CdvgI7M6KHgdGLWLDbk0x39/3PuWkOWr428UXW1KC6WNXjtn2a3LQQNUJHJ+
+ sYDPn0ASn+3MVYQeKl8qrJah/7MmoW6zJXHoZdy93SZ1zubrcpTymc73KkmLxM71el4ceLs
+ DcV6s3qQdRj9RrjhtAXUQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:vrVVsBOnS28=:vAncmDgx5aBBklf1EnEkd8
+ 8XfQBgDk43iX9YyztB8hyn653+xW23HSAckeS46rBjqLILgaTPmHVjCWBSsOvd7NptkuLRuX7
+ r2ceVv6YaWQoFEBPo9aGm0ci51f0tl64O3wII7FFBM6CHW8WSFadZk3eudRgTwG5+o2d/LVkk
+ MrqhkmaoCHovRXHeOvnDAfFlVSVGAOFXYbGjot/JMDrLFhXXg3dQ1Cimkufg9y9ABlkOWUMHF
+ E5MDqtGQAS+A0b1Xy0f+L3QTkKXaT/gR0gWGHnhpLep36T8ZbwESaCGx2ZJSLgLB96hRJNDwk
+ SeBeHTiuGWU0V6KNIIRbwG9/OxzH84/LcapjzSWfNsuOpkFnWNrJUCATJQrjw6fak+K+VVKm9
+ g0wj/1MHFp/Ta9+NMq8TKtBYrqbX9T3+ybFSUiNrIA7rgRYNMRVh57BlqGqow5K+pT2Nlix0n
+ WkyR0+VPbBcarhSMsTN66lmo5+var0Z0vtlKtLO3aGYDsX1xsb9JafZwGQZzEmFDwtfMmflr4
+ JI5BtLCtYPz0hd7WwkemBfYGtJov15/3HpJzGEWF2HDSWwPvZR/bzLglpREs9ZFqbFVy3fguA
+ /mqVg3fM/qQF237Rk/XSpmrieU4+QYheyhPYgrfKvjISLEZax+ETQAwHh2z+aZaWmpQSt05MM
+ UKfpakBXZ2v37WfEPHfzDFfRlfFTmOgx7Yfm2KtkyntMFG7HJ0XDTW/JvsRUbhwkhwhCCaTje
+ BesQ8NYE0AVYNxImo6KrCzPkhrugmTGT4bScXm9w0xWhepT3aRuX5/ojq/3lVMPYBSEu/qnXc
+ iZbhdsw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -57,36 +57,58 @@ X-Mailing-List: git@vger.kernel.org
 Instead of dying there, let the caller high up in the callchain notice
 the error and handle it (by dying, still).
 
-The only two callers of do_pick_commit(), pick_commits() and
-single_pick() already check the return value and pass it on to their
-callers, so their callers must be already prepared to handle error
+The function sequencer_pick_revisions() is the only caller of
+walk_revs_populate_todo(), and it already returns errors
+appropriately, so its caller must be already prepared to handle error
 returns, and with this step, we make it notice an error return from
 this function.
 
-So this is a safe conversion to make do_pick_commit() callable from
-new callers that want it not to die, without changing the external
-behaviour of anything existing.
-
-While at it, remove the superfluous space.
+So this is a safe conversion to make walk_revs_populate_todo()
+callable from new callers that want it not to die, without changing
+the external behaviour of anything existing.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sequencer.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index eb70091..96b9ae1 100644
+index 96b9ae1..ab599e0 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -464,7 +464,7 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
- 		 * to work on.
- 		 */
- 		if (write_cache_as_tree(head, 0, NULL))
--			die (_("Your index file is unmerged."));
-+			return error(_("Your index file is unmerged."));
- 	} else {
- 		unborn = get_sha1("HEAD", head);
- 		if (unborn)
+@@ -809,17 +809,19 @@ static void read_populate_opts(struct replay_opts **opts_ptr)
+ 		die(_("Malformed options sheet: %s"), git_path_opts_file());
+ }
+ 
+-static void walk_revs_populate_todo(struct commit_list **todo_list,
++static int walk_revs_populate_todo(struct commit_list **todo_list,
+ 				struct replay_opts *opts)
+ {
+ 	struct commit *commit;
+ 	struct commit_list **next;
+ 
+-	prepare_revs(opts);
++	if (prepare_revs(opts))
++		return -1;
+ 
+ 	next = todo_list;
+ 	while ((commit = get_revision(opts->revs)))
+ 		next = commit_list_append(commit, next);
++	return 0;
+ }
+ 
+ static int create_seq_dir(void)
+@@ -1102,8 +1104,8 @@ int sequencer_pick_revisions(struct replay_opts *opts)
+ 	 * progress
+ 	 */
+ 
+-	walk_revs_populate_todo(&todo_list, opts);
+-	if (create_seq_dir() < 0)
++	if (walk_revs_populate_todo(&todo_list, opts) ||
++			create_seq_dir() < 0)
+ 		return -1;
+ 	if (get_sha1("HEAD", sha1) && (opts->action == REPLAY_REVERT))
+ 		return error(_("Can't revert as initial commit"));
 -- 
 2.10.0.windows.1.10.g803177d
 
