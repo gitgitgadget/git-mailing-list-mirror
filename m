@@ -2,195 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D9BA20705
-	for <e@80x24.org>; Fri,  9 Sep 2016 20:18:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 21A151F6BF
+	for <e@80x24.org>; Fri,  9 Sep 2016 20:21:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754811AbcIIURy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 16:17:54 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:36212 "EHLO
-        mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754721AbcIIURr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 16:17:47 -0400
-Received: by mail-pa0-f42.google.com with SMTP id id6so31399273pad.3
-        for <git@vger.kernel.org>; Fri, 09 Sep 2016 13:17:46 -0700 (PDT)
+        id S1753966AbcIIUVM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 16:21:12 -0400
+Received: from mail-oi0-f53.google.com ([209.85.218.53]:35565 "EHLO
+        mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753192AbcIIUVK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 16:21:10 -0400
+Received: by mail-oi0-f53.google.com with SMTP id c192so2831139oih.2
+        for <git@vger.kernel.org>; Fri, 09 Sep 2016 13:21:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references;
-        bh=qt649A2xdqcUdXUvF+zcmr8mJcSfxUutsu0ixGQw2vc=;
-        b=isFYHHFt5t47Zul124IOB/eg1IY04Q0tjN+gSflUJCLXtQOiqyScmko0WE4lElfERm
-         FfA314TMAYmnwwjT9wWJkXWumJOd+mllwWUkDGXw91F4cLsbiX4wSdh4Qwt8dXYL6sz0
-         OcW517lmJqc0+G3bb7bPVOQGZPLFtQB1SZ5SQwij3jlHL0W8cbYrI2qDCNsU5aXgPkap
-         aHSnjhmfS/HNy7Wa+XBD6+jg8QggtSqY7PwcDI9UEUQOqTLBp+VKwFA6Z1cWRHziRC06
-         HYE8UCOGtYv5m70p+uZ9Px3YncheMK6OY0+WglBoM43NSzxAkrMTyHBilG3R0AvCYYk+
-         i38A==
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Gzbkd9m6H2CuEeQf01RQ3SmrpbXby8ZaQuIGtPhjDI0=;
+        b=x0QNvMMVGVuIDwNoQwCf44SVZUyuxjEF/5xJcfv6pXCdGCfR5UZAnz+xYsJbN3dQ+K
+         Mwzz0+8yjP4UFEraWYEI2QcfzGoa/Y+b2cVbTwrsUNYzUSG9V3NDzcueR5mzvDnF0R3R
+         9cVhtBpfgiDCkBTy+SEzw2xckY5FoA8msBPwlw6WZ8uSpUr58F33dCBArPuiAg4oy7eR
+         vPbNSiRyVC/qeDVX94KLmF0usxBf+GSHb7MolqVuyG5gWklHLw9jYIcHyEN66/ld1uch
+         Xdm9H1Z3f3QXvEKGmvqiW3Fehr7EiJ+v/9yPTAK+shYvFPdnSd4k5kZBeNszlNhPXkFA
+         EGbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references;
-        bh=qt649A2xdqcUdXUvF+zcmr8mJcSfxUutsu0ixGQw2vc=;
-        b=mhrtHfWurrILiGDxvyNazJNr7tgrYHfXm/TXvL03EDNAc/IdcwqmaxM0JhzdaKBCUH
-         9VgNp1eD9k6pwbKdJakXR+de3ywhZaceP+6DIQAKR5DFI/fVPfzWSO/DMbwW8fZGhpik
-         z+PNdr3V79FKikp3ZU7gh+fSnmUkDjNDDDKmHEINLtx3Ra4mwsN8YLM/U36kz2946wtH
-         lxOYR8QBmtEP5DfpUCnYILeesNLLH1zZdI7U043FIYR59tHpxWb46QYXn48RGb/mAgaA
-         2yv7/lG4JiW/9GMzAxjOJBd+bUj6AeUbKhuZ7K9C+ZcgPV+xgInKVpiTHdMBHUYPJyKq
-         e8sA==
-X-Gm-Message-State: AE9vXwM9Yhh/6Kh04ckua/HfSU4VgqpB7HCuboczBNKyWl46OukKhSKfllhnPaWnXnFT6Gm9
-X-Received: by 10.66.148.202 with SMTP id tu10mr9812564pab.52.1473452266303;
-        Fri, 09 Sep 2016 13:17:46 -0700 (PDT)
-Received: from twelve2.mtv.corp.google.com ([100.96.238.21])
-        by smtp.gmail.com with ESMTPSA id s1sm7203690paz.47.2016.09.09.13.17.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 09 Sep 2016 13:17:45 -0700 (PDT)
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, jrnieder@gmail.com,
-        gitster@pobox.com
-Subject: [PATCH v5 3/3] connect: advertized capability is not a ref
-Date:   Fri,  9 Sep 2016 13:17:37 -0700
-Message-Id: <f2ccb239ba1f85b434c3dfa60e86b89c414dfffa.1473452153.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
-In-Reply-To: <cover.1473452153.git.jonathantanmy@google.com>
-References: <cover.1473452153.git.jonathantanmy@google.com>
-In-Reply-To: <cover.1473452153.git.jonathantanmy@google.com>
-References: <cover.1472836026.git.jonathantanmy@google.com> <cover.1473452153.git.jonathantanmy@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Gzbkd9m6H2CuEeQf01RQ3SmrpbXby8ZaQuIGtPhjDI0=;
+        b=EpcozwszrpBWlsS3bJnGTE9U5Bm85bwgHGnCBeJm8RVljOTJXeG1U95yJYYq1BCKnb
+         FPm+l2LJvqvPwsIYa0s/ktfD8Ig3xZrbXazWJWkOCQ+Kx6QnyrmFA2hy9Qp4nt6gpcZ1
+         qv9EPyeqFOH0/7psrUAP5z584aIHn5OviAtgy9RjtmvE07uFtZKZN/tVfKOoPShsL2F1
+         6WQG6uu081t6FUTLEX6bQ5u/8OaTSySk2dobS4NWqrQh/kGgwwWeBVq2AlPBHpoLMBp5
+         GO5o+z1TyQxOjjFCXr2h1jcsPtMAqZS5hQHfcN8afWSHikrsZ8XHxRTbehYQME5LLovs
+         oPEw==
+X-Gm-Message-State: AE9vXwOpFRgZAUc1iEbSKYAFFG0em3xxenorMvZrMA4+nDSXNmzEZgg1k3JJp/cCXMt5OtmwrnFvDO/aVaWNcQ==
+X-Received: by 10.157.5.169 with SMTP id 38mr6962332otd.104.1473452469926;
+ Fri, 09 Sep 2016 13:21:09 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.107.8.226 with HTTP; Fri, 9 Sep 2016 13:20:29 -0700 (PDT)
+In-Reply-To: <CAFO0PHdGppfgSSYW4YB-0LEsuohyzSCkrk48fovppNfDYZx78w@mail.gmail.com>
+References: <91a2ffbe-a73b-fbb9-96da-9aea4d439e5a@gmail.com>
+ <ae804c55-d145-fc90-e1a9-6ebd6c60453a@gmail.com> <ccb678e4-d91a-1ef0-90e3-0a507ea0ee25@gmail.com>
+ <CAFO0PHc48OmWNcRrh2Wu30L6Oarqyw+co+zNPpsPEWerCiqanw@mail.gmail.com> <CAFO0PHdGppfgSSYW4YB-0LEsuohyzSCkrk48fovppNfDYZx78w@mail.gmail.com>
+From:   =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Date:   Fri, 9 Sep 2016 22:20:29 +0200
+Message-ID: <CANQwDwem4HdiRiFY5a3M5_teRiPmf68ZsjPhXTiddh9MQ9i-0Q@mail.gmail.com>
+Subject: Re: [RFCv3] Proposed questions for "Git User's Survey 2016", take three
+To:     David Bainbridge <david.bainbridge@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When cloning an empty repository served by standard git, "git clone" produces
-the following reassuring message:
+Hello David,
 
-	$ git clone git://localhost/tmp/empty
-	Cloning into 'empty'...
-	warning: You appear to have cloned an empty repository.
-	Checking connectivity... done.
+On 7 September 2016 at 20:49, David Bainbridge
+<david.bainbridge@gmail.com> wrote:
+> Hi Jakub,
+>
+> I guess we could keep polishing this forever!
+>
+> Anyway, a couple of last comments from me:
+> 1. Could you use the new Git logo instead of the +++/---- ? It would show
+> some clear relationship with the Git community. The new logo has been in =
+use
+> for a few years now so I guess many people will recognise this.
 
-Meanwhile when cloning an empty repository served by JGit, the output is more
-haphazard:
+Good idea. Done.
 
-	$ git clone git://localhost/tmp/empty
-	Cloning into 'empty'...
-	Checking connectivity... done.
-	warning: remote HEAD refers to nonexistent ref, unable to checkout.
+Though I say I like old logo one better...
 
-This is a common command to run immediately after creating a remote repository
-as preparation for adding content to populate it and pushing. The warning is
-confusing and needlessly worrying.
+> 2. If survs have dropdowns for countries and ages (integers) it might be
+> worth using those instead of free text fields. Countries in particular
+> should have a drop-down if available. It could probably avoid some
+> post-survey correction.
 
-The cause is that, since v3.1.0.201309270735-rc1~22 (Advertise capabilities
-with no refs in upload service., 2013-08-08), JGit's ref advertisement includes
-a ref named capabilities^{} to advertise its capabilities on (following the
-specification in pack-protocol.txt), while git's ref advertisement is empty in
-this case. This allows the client to learn about the server's capabilities and
-is needed, for example, for fetch-by-sha1 to work when no refs are advertised.
+Unfortunately Survs.com do not offer pre-made dropdowns for countries.
+It offers a way to provide answers for a question by copy'n'paste of a plai=
+n
+text file, for example with list of countries.
 
-This also affects "ls-remote". For example, against an empty repository served
-by JGit:
+Coming up with correct list of countries is not easy, as I wrote:
 
-	$ git ls-remote git://localhost/tmp/empty
-	0000000000000000000000000000000000000000        capabilities^{}
+JN> Survs.com do not offer list of countries as a pre-defined drop-down
+JN> list (select, with search), and it looks like it is not as easy as
+JN> I thought (though I could push responsibility to Locale::Country ;-):
+JN>
+JN>   https://en.wikipedia.org/wiki/List_of_sovereign_states
+JN>
+JN> This question originally read "What country are you from?"
+JN> which might be thought as country of birth... which may not
+JN> exist any longer.
 
-Git advertises the same capabilities^{} ref in its ref advertisement for push
-but since it never did so for fetch, the client didn't need to handle this
-case. Handle it.
+Though perhaps I make it harder that it really is:
+$ perl -MLocale::Country -e 'print join "\n", all_country_names();'
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
- connect.c            | 14 ++++++++++++++
- t/t5512-ls-remote.sh | 40 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 54 insertions(+)
+> 3. The comment: Both question "3. Have you found Git easy to learn?" and =
+"4.
+> Have you found Git easy to use?" are about being it easy or hard in gener=
+al;
+> for mathematically inclined you can think about it as a weighted average.=
+"
+> Not sure that this adds anything useful to the survey and could be remove=
+d,
+> or at least needs correcting to mention the correct questions.
 
-diff --git a/connect.c b/connect.c
-index 0c01a49..7224b5e 100644
---- a/connect.c
-+++ b/connect.c
-@@ -123,6 +123,7 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
- 	 * response does not necessarily mean an ACL problem, though.
- 	 */
- 	int saw_response;
-+	int got_dummy_ref_with_capabilities_declaration = 0;
- 
- 	*list = NULL;
- 	for (saw_response = 0; ; saw_response = 1) {
-@@ -172,8 +173,21 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
- 			continue;
- 		}
- 
-+		if (!strcmp(name, "capabilities^{}")) {
-+			if (saw_response)
-+				die("protocol error: unexpected capabilities^{}");
-+			if (got_dummy_ref_with_capabilities_declaration)
-+				die("protocol error: multiple capabilities^{}");
-+			got_dummy_ref_with_capabilities_declaration = 1;
-+			continue;
-+		}
-+
- 		if (!check_ref(name, flags))
- 			continue;
-+
-+		if (got_dummy_ref_with_capabilities_declaration)
-+			die("protocol error: unexpected ref after capabilities^{}");
-+
- 		ref = alloc_ref(buffer + GIT_SHA1_HEXSZ + 1);
- 		oidcpy(&ref->old_oid, &old_oid);
- 		*list = ref;
-diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-index 819b9dd..befdfee 100755
---- a/t/t5512-ls-remote.sh
-+++ b/t/t5512-ls-remote.sh
-@@ -207,5 +207,45 @@ test_expect_success 'ls-remote --symref omits filtered-out matches' '
- 	test_cmp expect actual
- '
- 
-+test_lazy_prereq GIT_DAEMON '
-+	test_tristate GIT_TEST_GIT_DAEMON &&
-+	test "$GIT_TEST_GIT_DAEMON" != false
-+'
-+
-+# This test spawns a daemon, so run it only if the user would be OK with
-+# testing with git-daemon.
-+test_expect_success PIPE,JGIT,GIT_DAEMON 'indicate no refs in standards-compliant empty remote' '
-+	JGIT_DAEMON_PORT=${JGIT_DAEMON_PORT-${this_test#t}} &&
-+	JGIT_DAEMON_PID= &&
-+	git init --bare empty.git &&
-+	>empty.git/git-daemon-export-ok &&
-+	mkfifo jgit_daemon_output &&
-+	{
-+		jgit daemon --port="$JGIT_DAEMON_PORT" . >jgit_daemon_output &
-+		JGIT_DAEMON_PID=$!
-+	} &&
-+	test_when_finished kill "$JGIT_DAEMON_PID" &&
-+	{
-+		read line &&
-+		case $line in
-+		Exporting*)
-+			;;
-+		*)
-+			echo "Expected: Exporting" &&
-+			false;;
-+		esac &&
-+		read line &&
-+		case $line in
-+		"Listening on"*)
-+			;;
-+		*)
-+			echo "Expected: Listening on" &&
-+			false;;
-+		esac
-+	} <jgit_daemon_output &&
-+	# --exit-code asks the command to exit with 2 when no
-+	# matching refs are found.
-+	test_expect_code 2 git ls-remote --exit-code git://localhost:$JGIT_DAEMON_PORT/empty.git
-+'
- 
- test_done
--- 
-2.8.0.rc3.226.g39d4020
+Fixed question numbers, removed unnecessary and not useful note about
+"weighted average".
 
+> OK, that's it from me!
+
+Thanks!
+
+Regards,
+--=20
+Jakub Nar=C4=99bski
