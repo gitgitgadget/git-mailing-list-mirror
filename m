@@ -6,70 +6,77 @@ X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A8BD1F6BF
-	for <e@80x24.org>; Fri,  9 Sep 2016 17:49:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F4601F6BF
+	for <e@80x24.org>; Fri,  9 Sep 2016 18:03:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751521AbcIIRtF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 13:49:05 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50213 "EHLO
+        id S1753999AbcIISD1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 14:03:27 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64559 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751438AbcIIRtE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 13:49:04 -0400
+        with ESMTP id S1753935AbcIISDY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 14:03:24 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BB04A3AA41;
-        Fri,  9 Sep 2016 13:49:03 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AE1523BC40;
+        Fri,  9 Sep 2016 14:03:22 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4Q24UxXFMVM1uUyxN9priKI1k2Y=; b=p7Yoqm
-        qe43m4OqPVlLLQ8kOBJeJpM1iIS4vViR4TqCutTuQltwOEeL9oIlKkceNzgqpdgV
-        KRiPiOhown8fgmYvUDsT+1bsiA9GcUCYz5qkn/5sH6hJsiL45XBynCdZPcLD8UIt
-        e9ZXQDDiq2l8zAMcz470DIA4497v3w1Tkol70=
+        :content-type; s=sasl; bh=UpZ5+9tVfTrvbRp+Q+m6pMP9ktA=; b=VrqkyA
+        66kEQ2EBxfb+3gEO+zaX54JFuXDDkNAvDviJI8PrqJ8nShbG+WuT1ENa3lKmTXm8
+        j/ZqHzw222ZgX+u0n3S7End5vz0c0AA1InnhTXTeYejKLjEsiZNI7le1t/ijBc+4
+        mj1AplDw7fc3j1tqvfRkYXeOE3m7WVR6bTi1U=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=jVeMbfM4XUXwcuTdpVpj24wxQNUdNRxo
-        9rs62fObd3gwx2BUy4dK2KdFKTTCi/3EmAmXxJz58aDr9bTQDmH78ST0Eue5yEkw
-        s2KNcy/99w7Ezi4AL84r6j6QZALFo6vvmoAvQxmB9Xwl9MtprxR74cBvVeB0A0Lw
-        pv20jfi0h68=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B51833AA40;
-        Fri,  9 Sep 2016 13:49:03 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=KjxSWnzNg1tBnuZYtlO6vtAuYTeRmjYq
+        zdXSaRO6gqrbnL+fara9l0FxrJwZfggeUH1ZdfCGei9AYZ+pAkSzBkaxlMeX3cz7
+        2B18kNBj4Y7ro/uEdSoBI9I5xcrnjfmAwEWMy4QATudw7rxZNpi/tDrA/8B6iPUI
+        IBg39painMk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A63F73BC3F;
+        Fri,  9 Sep 2016 14:03:22 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 442C03AA3E;
-        Fri,  9 Sep 2016 13:49:03 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 29A063BC3B;
+        Fri,  9 Sep 2016 14:03:22 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 3/3] Use the newly-introduced regexec_buf() function
-References: <cover.1473319844.git.johannes.schindelin@gmx.de>
-        <cover.1473321437.git.johannes.schindelin@gmx.de>
-        <d0537819a3676fda6928e7ad3282aa71643f0755.1473321437.git.johannes.schindelin@gmx.de>
-        <xmqq1t0ujp2f.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1609091151510.129229@virtualbox>
-Date:   Fri, 09 Sep 2016 10:49:01 -0700
-In-Reply-To: <alpine.DEB.2.20.1609091151510.129229@virtualbox> (Johannes
-        Schindelin's message of "Fri, 9 Sep 2016 11:52:50 +0200 (CEST)")
-Message-ID: <xmqqfup9c6b6.fsf@gitster.mtv.corp.google.com>
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Christian Neukirchen <chneukirchen@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: git commit -p with file arguments
+References: <87zinmhx68.fsf@juno.home.vuxu.org>
+        <CA+P7+xoN+q_Kst=qXG_HRznxbN7cbyi5uZe15zq1c16EifeK1Q@mail.gmail.com>
+Date:   Fri, 09 Sep 2016 11:03:20 -0700
+In-Reply-To: <CA+P7+xoN+q_Kst=qXG_HRznxbN7cbyi5uZe15zq1c16EifeK1Q@mail.gmail.com>
+        (Jacob Keller's message of "Fri, 9 Sep 2016 09:57:44 -0700")
+Message-ID: <xmqq8tv1c5nb.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: B23D9EB2-76B5-11E6-8A01-F7BB12518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: B22E02D4-76B7-11E6-9F16-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Jacob Keller <jacob.keller@gmail.com> writes:
 
->> Also I agree with Peff that a test with an embedded NUL would be a
->> good thing.
+> It wants to commit bar too because you already added bar before. It works like:
 >
-> This is something I will leave to somebody else, as it was not my
-> intention to fix this and I *really* have more pressing things to do right
-> now... Sorry!
+> "git add bar && git add -p foo && git commit" does it not?
+>
+> I fail to see why "git commit -p <path>" would unstage the bar you
+> already added? Or am I missing some assumption here?
 
-As I said a few minutes ago, I think we can stop _before_ worrying
-about an embedded NUL, which is something we haven't handled before
-anyway so it is a new feature that can be built later outside the
-scope of this series.
+Yes.
+
+"git commit -p <pathspec>" were added originally for lazy people who
+do not want to type "git add -p <pathspec> && git commit", which
+matches your expectation.  If you already added "bar" that is
+outside of the <pathspec> given to "add -p", the final "git commit"
+step would record the latest contents of "bar" in it.
+
+For obvious reasons, "git commit -p <pathspec>" cannot be a
+short-hand to "git add -p <pathspec> && git commit <pathspec>", so
+the current behaviour was the best they could do for those who aded
+"commit -p", I guess.
+
