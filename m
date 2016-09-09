@@ -2,68 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0383520705
-	for <e@80x24.org>; Fri,  9 Sep 2016 18:29:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 061BF1F6BF
+	for <e@80x24.org>; Fri,  9 Sep 2016 18:51:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752193AbcIIS3o (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 14:29:44 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56332 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751463AbcIIS3n (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 14:29:43 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4DEAB3910C;
-        Fri,  9 Sep 2016 14:29:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DLA5xfhF9h/VSDML4akeZUflB14=; b=Mvt96x
-        vkdlAsaKyM/uZkItAEz1K8eLNhIAE9eV/oL13ga5dno/NY5ESkR7OSAgTRjpA2s6
-        ZV/aTFwONntB/XZzjYnpwgOytklzf1gQYPgSClE4dKVZJh3lkYH57ZPPFS2vvwz9
-        MNhiIHTW6mzntUvmU1l6GjnLQYyV6J4n01yHk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UXHVsVB2QCU3KqBQQlF1dUbuRYLInS3/
-        kVsgwivBYV4LlHTDXJQB2ZmuTb51dt0Tgsafvr78IS5yYbI2XEXijlJvLYlcVLVI
-        ZtZUmt45XWl6RHlQlRpE7kqPwKUDc7M7Rl2XgRS6XbNrmC+O3kkpbM33kfBgae3z
-        YbP5AkFtZPc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 466473910B;
-        Fri,  9 Sep 2016 14:29:42 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C302A3910A;
-        Fri,  9 Sep 2016 14:29:41 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: [PATCH] git-gui: respect commit.gpgsign again
-References: <550e7de5e08e53b5893e1ce021bffee468adfc9d.1473424091.git.johannes.schindelin@gmx.de>
-Date:   Fri, 09 Sep 2016 11:29:39 -0700
-In-Reply-To: <550e7de5e08e53b5893e1ce021bffee468adfc9d.1473424091.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Fri, 9 Sep 2016 14:28:24 +0200
-        (CEST)")
-Message-ID: <xmqqr38tapv0.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1754386AbcIISvn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 14:51:43 -0400
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:33488 "EHLO
+        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752039AbcIISvm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 14:51:42 -0400
+Received: by mail-wm0-f53.google.com with SMTP id w12so14452015wmf.0
+        for <git@vger.kernel.org>; Fri, 09 Sep 2016 11:51:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=f/UDPGBkQkbwCkf5sHQz/ANI6qck5R5YjQFDAcfaakM=;
+        b=un0o0Av7u11ZrBq/W37Ecsvh5wFPu3YpMJZJXhhjqlgaYqdWfHmN81SCyvM+rZA9RY
+         orqTN9E+knUkf+j6OVlNVpZyX58xj0w/vKtVgytsAtXcK4ifFOzF7Sid9zLD22isO98E
+         0dL3utd1C5NW8Rc2r8LJgzLtYOpS8A33IDPaYVudd+cmNtiocFs8GpLj4qEfl0kahbam
+         9ORaRVdu4NB4blA6I5tpGVuHOj8Hq5k9ZAsySU3Ep6O/C1dC6G1XNYZxSCBT0bcPmPZ7
+         MnmhSsb+7oX0zOC+FBeUlp6gzpMcpABkdizU/BTVaGkt1GDisW6GZltvtHfntZWm/xzp
+         weaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=f/UDPGBkQkbwCkf5sHQz/ANI6qck5R5YjQFDAcfaakM=;
+        b=LyBTRfK9p+XLiHA3IXpFsn1A0NLmkORwipilKOSKrQtUoCTkY8A8zIRCSPq/JzG2WR
+         W7+m3lNm9pYE1n9ZwcIyZurfAjMGLDWWrZYyPZfsKUkI7vRHiVnd07G9zTR4sz6Z1M7q
+         WCjkt7V+i4VFQRo19/p6qv8nt7lEwoOrM4B5RXN6Z6YmDW8uGFySE7OMxLe/Zetr0ZO/
+         h3u0I3f3w+xAArEBTrlPuTY859AcYN/53UMzUeuXhLhEK7jh81K8cYBN+SBt7e0j+Q4E
+         0rX3i+5WGLHTp5D6jpi5zSgaM5YP+MteUW6DOxNwzHx1AZXz7ArAoK+G3vP3n4jjg9ok
+         ukhQ==
+X-Gm-Message-State: AE9vXwNaT+AaH731wiTjoBWow0PmqQ916ZuSlJYITuUTncpCrG9h8CbeW7Q3JlYeOW2vMg==
+X-Received: by 10.194.107.69 with SMTP id ha5mr4415649wjb.100.1473447100784;
+        Fri, 09 Sep 2016 11:51:40 -0700 (PDT)
+Received: from [192.168.1.26] (adby20.neoplus.adsl.tpnet.pl. [79.184.24.20])
+        by smtp.googlemail.com with ESMTPSA id n7sm4698853wjf.11.2016.09.09.11.51.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 09 Sep 2016 11:51:39 -0700 (PDT)
+Subject: Re: Announcing Git User's Survey 2016 [was: Working with
+ public-inbox.org]
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <CAGZ79kasebzJb=b2n=JQiVMrSfJKaVfZaaoaVJFkXWuqKjfYKw@mail.gmail.com>
+ <alpine.DEB.2.20.1608181430280.4924@virtualbox>
+ <20160819150340.725bejnps6474u2e@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1608221450250.4924@virtualbox>
+ <CACsJy8BG63oaLbw0f7try3OpzdphLC7UGAaJ=vgikEB36Pagqg@mail.gmail.com>
+ <5e480a5b-3752-55c0-65ed-52ca5802851f@gmail.com>
+ <alpine.DEB.2.20.1608281036460.129229@virtualbox>
+ <bb1ee52f-c4b6-ded3-19af-ddb7b65b376d@gmail.com>
+ <alpine.DEB.2.20.1609091503410.129229@virtualbox>
+Cc:     Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+        Stefan Beller <sbeller@google.com>, meta@public-inbox.org,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Eric Wong <e@80x24.org>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <feae2490-8d53-ed3a-d9a5-cc8907bc91d6@gmail.com>
+Date:   Fri, 9 Sep 2016 20:51:23 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5FB604C6-76BB-11E6-8A92-F7BB12518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <alpine.DEB.2.20.1609091503410.129229@virtualbox>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Hello Johannes,
 
-> As of v2.9.0, `git commit-tree` no longer heeds the `commit.gpgsign`
-> config setting. This broke committing in Git GUI.
+W dniu 09.09.2016 o 15:06, Johannes Schindelin napisał:
+> On Sun, 28 Aug 2016, Jakub Narębski wrote:
+>> W dniu 28.08.2016 o 10:38, Johannes Schindelin pisze:
+>>
+>>> I would like to strongly caution against putting too much stock into
+>>> this users' survey. It is the best we have, granted. Yet I have not
+>>> heard from anybody that they participated in the survey, unless they
+>>> were also subscribed to the Git mailing list.
+>>
+>> I tried in past and will try for this year Git User's Survey to be
+>> announced more widely than just Git mailing list (git@vger.kernel.org).
+> 
+> I did not mean to criticise you. I think you are doing the best you can,
+> and it is valuable.
+[...]
+> 
+> The question is not so much how to advertise the survey. I skip almost all
+> surveys I am asked to participate in, because I am just a little bit busy
+> all the time. I feel that my colleagues do the same. Unless forced to take
+> a survey, they skip it.
 
-Thanks.  Will shift it up to apply to my copy of git-gui project and
-then pull in the result.
+Right, that's a problem.  Thanks for reminding me.
 
->  git-gui/lib/commit.tcl | 3 +++
->  1 file changed, 3 insertions(+)
+I hope that the fact that by default (via the use of cookies) you can
+return to Survs.com survey at later time (assuming that you do it from the
+same computer and the same web browser), and continue responding.  Taking
+30 minutes or more at once may be a problem, taking 10 x 3 minutes may
+not be.
+
+But I won't have too much hope...
+-- 
+Jakub Narębski
