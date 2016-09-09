@@ -2,134 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 634CA1F859
-	for <e@80x24.org>; Fri,  9 Sep 2016 10:50:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0AEAD1F859
+	for <e@80x24.org>; Fri,  9 Sep 2016 10:55:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753593AbcIIKuF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 06:50:05 -0400
-Received: from mout.gmx.net ([212.227.15.18]:62829 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752462AbcIIKuE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 06:50:04 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0M2Ldk-1asY8g39FM-00s8TQ; Fri, 09 Sep 2016 12:49:58
- +0200
-Date:   Fri, 9 Sep 2016 12:49:57 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/6] pull: make code more similar to the shell script
- again
-In-Reply-To: <xmqqr3976vcy.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1609091244500.129229@virtualbox>
-References: <cover.1472137582.git.johannes.schindelin@gmx.de> <9a7cc36eee651fe8be280920587e1f83538caf77.1472137582.git.johannes.schindelin@gmx.de> <xmqqr3976vcy.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1754023AbcIIKzD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 06:55:03 -0400
+Received: from mail-oi0-f42.google.com ([209.85.218.42]:36455 "EHLO
+        mail-oi0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753820AbcIIKzC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 06:55:02 -0400
+Received: by mail-oi0-f42.google.com with SMTP id q188so18364592oia.3
+        for <git@vger.kernel.org>; Fri, 09 Sep 2016 03:55:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ru3jvSRoIbIFffcr/Q6Fqa6AEptoKJhiLhwCv9cLpww=;
+        b=A9KuDoN+OTGMdnaaAjKIvhRpXO+UTijE0M23c5X13Jm+A5c0YR/pEGyMA09CD6WVIm
+         PusL34+Nj/dtObr9aqbAFAQqIXPkixvoHvWsFqZ6xLyG6TJbplIhda1nXcCDs8ajAHb8
+         A5fMD+qHEq5qls/qQ4FVo1VC3cfpyQHTg/LaXAv4xlI29YlZZR3KIvwxxGsqJHVNa7wa
+         Lmjr5+dEAnY3KLsSXyAe/VpGpFghwUAdG8k0Gizzdoa2xXNZNEc+VToDISdkX/7eJ3FM
+         FlvAnQItDKPmcoUfslTXEMwQt+yngPCWIA+gyk2WLkCblN9KvMj2T/a8F/Vl8AdB+diD
+         X+OQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ru3jvSRoIbIFffcr/Q6Fqa6AEptoKJhiLhwCv9cLpww=;
+        b=fiir+WPnHN9qJ9fGd9TGYWCp951A63/YyHyLjMv01sBsLU0eJhjDk+E7Ob6DB8lNGQ
+         I8iYSXBLANOiLNbvN1AWJpmipdD30Hus0EY6BUAEJ5rl7UUzBqG6Q5PzN/9bdPCsvrKs
+         54v+hkkbCanf09QMlNPfZ3TzJOefHUoKjjvsCLMNNyHD/4elMHqFNxAQnigVzw/mPI1M
+         QgLf8x4RGilaHOjJy8VNZNTPM4EBAdgtMhbRvXSPKrq19QeJ07w4QjVjqJ4ywTxG8bwZ
+         LGE1GVPgxfCdAwNiy0mwFmRAz4EKqlTUjJsuoDJN4J9L7tsm6Qb4sf+pmE+KTlUViASs
+         RFig==
+X-Gm-Message-State: AE9vXwOI9rZ3HbkXvSuhzkWtIAhrBGNOg+eiN15MNYfS417qd18oUcK5hBSdFeTAzsPNKmGraQzsNvMaof4bjg==
+X-Received: by 10.202.235.9 with SMTP id j9mr4780308oih.103.1473418501395;
+ Fri, 09 Sep 2016 03:55:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:iQ8eMspDZp/jwZrIoNtsdvPX4FpvzFFCQqB91Ewcr/7t9cZ59ET
- NQvfOqAeRCTFkCQ+PjeaMYtp0K8u6K1o2pIA2Yn41fbk5kdRxmw4QKaP6AzlbFc1fs3vltG
- MCx3ch4Gmw94HtDkgRmc7YwbiXFZ7oFvrirS3DgRKlaVIuC5WqNxLwAq9IW1QG9GC61IlCH
- aCgSH9yVwcwSh99vWJ27A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:tagTcepkRDA=:0DyDzHWWYoFcxd1kTUE+aQ
- p8r5QWwbDyaCLdmMe7Bega6qqkcSRDzissx8fqR/sfA4tNJ3cpTJaSZVNc/803cCbdCqI1S/T
- lGciXBdIYjVGA8g4+hUdn8b6LDE+lxPECBztYl24SGByS0CHhjQGbVUwoW4azLlMrzxNppkBt
- QKzUQoHpSiGM8UF1h28ZeC3ymA1aBtEKKIXqttnOGgAbo4fRqM0cZLV4xZw5tR87RfRhhQV6l
- yQ/Oa7USFv5DGOArfzbFyrqrrSfcrzvSSwizU9cz+7X2aPPiqKkDM+h2Ju6HGPqwIcF1Dts4r
- qTQcRvwmJd1YvWc7s8CYpSTPzH+BTWrsAauA8mwQvVYuoUEwkZp4v70YgmYpCNObYxU5ZNS1L
- RCc5xfMpGimSq0Nq1MRuKaL9vBF35DjJBeECAwdi6ZIeAociVVNA+VysM/hp3RuLK2Wzb3Jnn
- /QZCY7yxkxUqiaTInY6gmuY5WD98jGXzknB5G+m2g97l4QFt6KoA23REbS4uCkUhzCzt25R2b
- CIDu6gL3Gr0rLO7qirkqboKFFHwWi8iGD/KUiEJ4ePqXptUzRcVQ0avavfiIEOBVxU27ytDzQ
- DN1WP2zipioxeedl4wWQeRJMBhgOr4ZO/86zb7n+KfIETtG3W81b0HNZdYO26kN1zF9RUGZ8S
- 7HTl9tZnodj763KbPxAM0aCE8AU8VlFeX/Ssps/JIAQKp1jT97LunqHIUOtE3+ERUSRbOxBHx
- szYWRQDVyxJV4Kx1t5L3eJbxdT9/yjRPGLpCHxLTKVaYJgxtg9huXHzzPMBLwjQXi+/MMdLW0
- 8+JoYcb
+Received: by 10.64.54.40 with HTTP; Fri, 9 Sep 2016 03:54:30 -0700 (PDT)
+In-Reply-To: <87zinmhx68.fsf@juno.home.vuxu.org>
+References: <87zinmhx68.fsf@juno.home.vuxu.org>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 9 Sep 2016 17:54:30 +0700
+Message-ID: <CACsJy8DOqoW8quz-6qSVR2+3aJau2V=qXCx_SoZvBpmU+9+Oxw@mail.gmail.com>
+Subject: Re: git commit -p with file arguments
+To:     Christian Neukirchen <chneukirchen@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Tue, Sep 6, 2016 at 4:08 AM, Christian Neukirchen
+<chneukirchen@gmail.com> wrote:
+> Hi,
+>
+> I noticed the following suprising behavior:
+>
+> % git --version
+> git version 2.10.0
+>
+> % git add bar
+> % git status -s
+> A  bar
+>  M foo
+>
+> % git commit -p foo
+> [stage a hunk]
+> ...
+> # Explicit paths specified without -i or -o; assuming --only paths...
+> # On branch master
+> # Changes to be committed:
+> #       new file:   bar
+> #       modified:   foo
+> #
+>
+> So why does it want to commit bar too, when I explicitly wanted to
+> commit foo only?
+>
+> This is not how "git commit files..." works, and the man page says
+>
+>             3.by listing files as arguments to the commit command, in which
+>            case the commit will ignore changes staged in the index, and
+>            instead record the current content of the listed files (which must
+>            already be known to Git);
+>
+> I'd expect "git commit -p files..." to work like
+> "git add -p files... && git commit files...".
 
-On Mon, 29 Aug 2016, Junio C Hamano wrote:
+The paths after '-p' could mean two things, either as a filter (e.g.
+like in "git add -p") to help save your time going through all changed
+files, or as "git commit files...". I think the paths were meant to be
+filter when '-p' was added. There's a separate bullet point git-commit
+man page, number 5, in about --patch, so that paragraph you quoted is
+probably _not_ about --patch. Either way changing its behavior now
+might surprise users used to it.
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > +static int require_clean_work_tree(const char *action, const char *hint,
-> > +		int gently)
-> >  {
-> >  	struct lock_file *lock_file = xcalloc(1, sizeof(*lock_file));
-> > -	int do_die = 0;
-> > +	int err = 0;
-> >  
-> >  	hold_locked_index(lock_file, 0);
-> >  	refresh_cache(REFRESH_QUIET);
-> > @@ -376,20 +377,26 @@ static void die_on_unclean_work_tree(void)
-> >  	rollback_lock_file(lock_file);
-> >  
-> >  	if (has_unstaged_changes()) {
-> > -		error(_("Cannot pull with rebase: You have unstaged changes."));
-> > -		do_die = 1;
-> > +		error(_("Cannot %s: You have unstaged changes."), action);
-> > ...
-> >  		if (!autostash)
-> > -			die_on_unclean_work_tree();
-> > +			require_clean_work_tree("pull with rebase",
-> > +				"Please commit or stash them.", 0);
-> >  
-> >  		if (get_rebase_fork_point(rebase_fork_point, repo, *refspecs))
-> >  			hashclr(rebase_fork_point);
-> 
-> Splicing an English/C phrase 'pull with rebase' into a
-> _("localizable %s string") makes the life of i18n team hard.
-> 
-> Can we do this differently?
-> 
-> If you are eventually going to expose this function as public API, I
-> think the right approach would be to enumerate the possible error
-> conditions this function can diagnose and return them to the caller,
-> i.e.
-> 
->     #define WT_STATUS_DIRTY_WORKTREE 01
->     #define WT_STATUS_DIRTY_INDEX    02
-> 
->     static int require_clean_work_tree(void)
->     {
-> 	int status = 0;
-> 	...
->         if (has_unstaged_changes())
->         	status |= WT_STATUS_DIRTY_WORKTREE;
-> 	if (has_uncommitted_changes())
->         	status |= WT_STATUS_DIRTY_INDEX;
-> 	return status;
->     }
-> 
-> Then die_on_unclean_work_tree() can be made as a thin-wrapper that
-> calls it and shows the pull-specific error message.
-
-Hrm. After thinking about this for over a week, I think that this is the
-wrong approach.
-
-To introduce new wrapper functions just for the sake of being able to
-provide possibly dozens of different error messages seems quite a bit
-wrong.
-
-I agree, however, that it may be a better idea to add a "gently" flag to
-require_clean_work_tree() that lets it print out a (localizable) error
-message and return -1 instead of die()ing.
-
-The result would be that a failed `git pull --rebase` would then print out
-*two* lines: one explaining that there are unstaged changes, and one that
-explains that the pull did not even start due to an unclean work tree.
-
-That solution would scale better, and I may get a chance to make those
-changes and send out another iteration of this patch series before
-October.
-
-Ciao,
-Johannes
+At the least I think we should clarify this in the document. Maybe we
+could add --patch-only as well, which commits just what you select in
+--patch mode, ignoring anything in existing index.
+-- 
+Duy
