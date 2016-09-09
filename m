@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A59C020705
-	for <e@80x24.org>; Fri,  9 Sep 2016 14:37:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC2441F6BF
+	for <e@80x24.org>; Fri,  9 Sep 2016 14:38:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753190AbcIIOhp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 10:37:45 -0400
-Received: from mout.gmx.net ([212.227.17.20]:54982 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752400AbcIIOh1 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1753127AbcIIOh1 (ORCPT <rfc822;e@80x24.org>);
         Fri, 9 Sep 2016 10:37:27 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0LjquD-1bBV1P04Mb-00bsYR; Fri, 09 Sep 2016 16:37:22
+Received: from mout.gmx.net ([212.227.17.20]:57872 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752989AbcIIOhN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 10:37:13 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0LnTjW-1b7OoP3A2I-00hfEZ; Fri, 09 Sep 2016 16:37:07
  +0200
-Date:   Fri, 9 Sep 2016 16:37:21 +0200 (CEST)
+Date:   Fri, 9 Sep 2016 16:37:05 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 08/17] sequencer: lib'ify read_and_refresh_cache()
+Subject: [PATCH v3 03/17] sequencer: lib'ify write_message()
 In-Reply-To: <cover.1473431645.git.johannes.schindelin@gmx.de>
-Message-ID: <cfe6288ab534c859d385e3abec64ca06bf5e35f1.1473431645.git.johannes.schindelin@gmx.de>
+Message-ID: <cdd0b6551b11171b4173ce4252078aa806f4a942.1473431645.git.johannes.schindelin@gmx.de>
 References: <cover.1472219214.git.johannes.schindelin@gmx.de> <cover.1473431645.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:yViMe92sRnM6gVm/34I2156BmJiHlAE6uiwIVEEjvikN7z7SD4f
- 9dT8kxQKCcpAoehqWZ2LMkVM0mn0zEGxf2UHbHApKddBauqfdDa2HUVR6dlM8twDPW7m+WK
- XCI58oPZqZ+dD/vza2SPjQoVR3RcW+qeuYMxPjdXh5cYqzODjj3ZazvjNjo4CTvZTXK3w9/
- kg38+YjSUHJBhf/pUTMug==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:MZaG5d2+5FI=:pNxsTGHrAKkbN1YiQ72vkF
- HLTAxNaj8MqoHHJCalvk8tqgVMwkyB9RKCVHqPq83I8qmiNrVTEFw+Mj2J7RjVjTid2cYPCg2
- 2vsLz8rMY4y+6tWhXZ3s0ub8DlViB0UU4eWtpzZWJhtUEFxSzyuNn1l0b3aqE8avOrUdGUzzy
- Kkw8EQpulm3SgpUD0fDWO35UyL0Axokm1+NIT7zbcmS94cYJJcBcxvi9kCuL/FwvazthWtjxb
- Az8qHCO5hc0AkstngbUW2WZ9JcfNB0Fd1ZI39AgTyX1jk3r5xFZq5cPwiKR95oIvO17fGA/1a
- 5Xu6SZtMyREr+2ZqFryKav2rxSWMyYIfFV5sBUAvyf91hag7zks4esZm33DTyfnsJpsDYURIg
- 8GoQBrAmPPN1eLUxsxAmwhEejlYtBpPZqC7mpk2Fyu//oiwDAFH4knij+hk0likU0w5MogaD4
- 3KqBtXPyRPfPIRLCXj/slRQbWRe5ifMAdRSuD3HN3w9FSbmwbhlU+oGP2FOWdshW5uAG+PkBZ
- B59PASGHKSEftB1R6NBw8Gc+kH8s9oTSiMvgaXkrM+Vq8cHFtnrdvWZeoeJY4q2bltOMHDxng
- LOW69VZZJJB9twDMsVSfwaSa/19f829DOm+3p4vdhFsqfk6Kxn5jWHJ+hdAW2vMlI7J7EJgG2
- xykp8P2sU3b5f2D/blT7LY8Q9pirZjX3t73JcAI36bdJue2rbZskil6JWwB4ntrTJM5WlYdy0
- +KDE85NJVPZchWBKUYV/b/6xBa4up80vqR8I7eJ1N61iGEPux0gDHOZzy5UhC4wdh+ctNB/gZ
- JJLuGhY
+X-Provags-ID: V03:K0:gxlcpPlzXjO1qGjaXyAWppMDW/+QlpLDE1f3pq1sBKZoCpEFhct
+ TtjYiK7pnoBn54hwOk/2aQUx+h8bo020nSa8eNNMjDHHD3MmazXnEfyEtmTd/Xz8R5tG58d
+ AaD3uaEgCmW0DpTgCCNFppKdBcMvIwa5KybXCSlaBmoq6UN6J8VDvxYc86aYCFBw4r16htB
+ EeFJdP9BtumRC70qUP9QA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:31rM2CH7ThA=:ikATwL08SvYws0/ExMrYSm
+ 4nM5PthfAm6PF4kAcghM66eL/T0XCSeXHxc/wDowpjQiH6Kox4w+wvM9+ooCWoUsSwhm4hGUt
+ /J2BgZ4MBMKuqM0d+QR6AKz5ezCmlwVbiTfbmSSUJAUJWajstaISL8EUVQzoWY881czwHqsWI
+ i+fm6lx4nX6cSngaD2GCSfJXx8xlABfVtcfjcrKujR/bgUjERdddOZvLvddLBPWnPpiYlV9LU
+ cxqYFvTIM9euMXdJ/8mh3LFcFM4mBX8vF5xrwaiuY2g7h60oRk6xhNhsgoiQzD9vbX/1WJhFH
+ mpjThEtg1jGQCjqIfbnimCr+tSfwjLkiulSGTKHq4ey9KcNl29hco9nfwHsA8XxfUZkldwftg
+ IrjRD5aeVreQBclOcwHejn67RtWJoS08jhVaaSn6rgoVq9PtVP4Q6AM38jeSx2cVkGdLjJzph
+ f1q1ByFfZSFv/amWBPkUfO4OSaxGBvGrHHydMyUvovLXbBdv+gLXDaENer3GYFD9l0B+oe011
+ T0kX79VWE65KqJNu5GAT78KKG0IKhywZ2N+eHoEFB7+mYMyPF7waGoTFK/oqqotw/6FFTKJZX
+ VPDEJ92+P4pbC7R8av6Yv6f2+IiEUDniJn8zuGVCx4E2J+niIXIoYIxrb7tla2TlhzJd8VrCN
+ W8dBJ9jmhroEk76XijwssEgKMRJdTMM/r7G0y2m8Q5TJdAFScfRl05Gl2Jp7xD5phjA3C4YYv
+ WhK/CJfaLixqZrux2qncUpdfkm//zExm4mJjXAJ/Lry06Z4PdpL02zOUXz6q34K0sYnmv+TTy
+ TMjK7PO
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -57,69 +57,70 @@ X-Mailing-List: git@vger.kernel.org
 Instead of dying there, let the caller high up in the callchain
 notice the error and handle it (by dying, still).
 
-There are two call sites of read_and_refresh_cache(), one of which is
-pick_commits(), whose callers were already prepared to do the right
-thing given an "error" return from it by an earlier patch, so the
-conversion is safe.
+The only caller of write_message(), do_pick_commit() already checks
+the return value and passes it on to its callers, so its caller must
+be already prepared to handle error returns, and with this step, we
+make it notice an error return from this function.
 
-The other one, sequencer_pick_revisions() was also prepared to relay
-an error return back to its caller in all remaining cases in an
-earlier patch.
+So this is a safe conversion to make write_message() callable
+from new callers that want it not to die, without changing the
+external behaviour of anything existing.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ sequencer.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 7fd0f99..631b75d 100644
+index baf6b40..ec85fe7 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -640,18 +640,21 @@ static int prepare_revs(struct replay_opts *opts)
- 	return 0;
+@@ -180,17 +180,20 @@ static void print_advice(int show_hint, struct replay_opts *opts)
+ 	}
  }
  
--static void read_and_refresh_cache(struct replay_opts *opts)
-+static int read_and_refresh_cache(struct replay_opts *opts)
+-static void write_message(struct strbuf *msgbuf, const char *filename)
++static int write_message(struct strbuf *msgbuf, const char *filename)
  {
- 	static struct lock_file index_lock;
- 	int index_fd = hold_locked_index(&index_lock, 0);
- 	if (read_index_preload(&the_index, NULL) < 0)
--		die(_("git %s: failed to read the index"), action_name(opts));
-+		return error(_("git %s: failed to read the index"),
-+			action_name(opts));
- 	refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, NULL, NULL, NULL);
- 	if (the_index.cache_changed && index_fd >= 0) {
- 		if (write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
--			die(_("git %s: failed to refresh the index"), action_name(opts));
-+			return error(_("git %s: failed to refresh the index"),
-+				action_name(opts));
- 	}
- 	rollback_lock_file(&index_lock);
+ 	static struct lock_file msg_file;
+ 
+-	int msg_fd = hold_lock_file_for_update(&msg_file, filename,
+-					       LOCK_DIE_ON_ERROR);
++	int msg_fd = hold_lock_file_for_update(&msg_file, filename, 0);
++	if (msg_fd < 0)
++		return error_errno(_("Could not lock '%s'"), filename);
+ 	if (write_in_full(msg_fd, msgbuf->buf, msgbuf->len) < 0)
+-		die_errno(_("Could not write to %s"), filename);
++		return error_errno(_("Could not write to %s"), filename);
+ 	strbuf_release(msgbuf);
+ 	if (commit_lock_file(&msg_file) < 0)
+-		die(_("Error wrapping up %s."), filename);
++		return error(_("Error wrapping up %s."), filename);
++
 +	return 0;
  }
  
- static int format_todo(struct strbuf *buf, struct commit_list *todo_list,
-@@ -981,7 +984,8 @@ static int pick_commits(struct commit_list *todo_list, struct replay_opts *opts)
- 	if (opts->allow_ff)
- 		assert(!(opts->signoff || opts->no_commit ||
- 				opts->record_origin || opts->edit));
--	read_and_refresh_cache(opts);
-+	if (read_and_refresh_cache(opts))
-+		return -1;
+ static struct tree *empty_tree(void)
+@@ -564,16 +567,16 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+ 					 head, &msgbuf, opts);
+ 		if (res < 0)
+ 			return res;
+-		write_message(&msgbuf, git_path_merge_msg());
++		res |= write_message(&msgbuf, git_path_merge_msg());
+ 	} else {
+ 		struct commit_list *common = NULL;
+ 		struct commit_list *remotes = NULL;
  
- 	for (cur = todo_list; cur; cur = cur->next) {
- 		save_todo(cur, opts);
-@@ -1045,7 +1049,8 @@ int sequencer_pick_revisions(struct replay_opts *opts)
- 	if (opts->subcommand == REPLAY_NONE)
- 		assert(opts->revs);
+-		write_message(&msgbuf, git_path_merge_msg());
++		res = write_message(&msgbuf, git_path_merge_msg());
  
--	read_and_refresh_cache(opts);
-+	if (read_and_refresh_cache(opts))
-+		return -1;
- 
- 	/*
- 	 * Decide what to do depending on the arguments; a fresh
+ 		commit_list_insert(base, &common);
+ 		commit_list_insert(next, &remotes);
+-		res = try_merge_command(opts->strategy, opts->xopts_nr, opts->xopts,
++		res |= try_merge_command(opts->strategy, opts->xopts_nr, opts->xopts,
+ 					common, sha1_to_hex(head), remotes);
+ 		free_commit_list(common);
+ 		free_commit_list(remotes);
 -- 
 2.10.0.windows.1.10.g803177d
 
