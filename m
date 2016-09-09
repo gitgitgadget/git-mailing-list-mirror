@@ -2,191 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD72F1F6BF
-	for <e@80x24.org>; Fri,  9 Sep 2016 13:29:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E62ED1F6BF
+	for <e@80x24.org>; Fri,  9 Sep 2016 14:12:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750998AbcIIN3v (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 09:29:51 -0400
-Received: from mail-oi0-f44.google.com ([209.85.218.44]:33003 "EHLO
-        mail-oi0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750768AbcIIN3t (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 09:29:49 -0400
-Received: by mail-oi0-f44.google.com with SMTP id y2so141492197oie.0
-        for <git@vger.kernel.org>; Fri, 09 Sep 2016 06:29:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:references:in-reply-to:subject:date:message-id
-         :mime-version:content-transfer-encoding:thread-index
-         :content-language;
-        bh=7OUSj4roR9Zxfqsg78KjDabHcNJNoNeIqOsItPdmP40=;
-        b=U8cS8Q7iYH3l9iKRJ6aulLznbZ9jtSl/capHaKVoBBVKhybgr6llI9jAxnyOALdaPg
-         5B/M2/5VP6jCu9KZb8HcM6x6LhnRx0pWXUljPLMoAYLkTRqZwSW+oRAGhrQR4WxTNsGX
-         78OHmlQKVEPlGRmJodpBCT2Wrxj3Gg9kfQt2VjcxnKQc+u7dum6xhnpXFHdA/Zq+3ZE5
-         2XMSMoHr5+q+FhYyHJcTsf6uR9ypyVFPhaf3tmB3g8OC/I6ujMVS44+gOhPSkP7eN/cm
-         KPUmf5Zs82gn9k+r+wjNnQyCnKpnI/0X4thTyS/DetZKp5ieZJcYXIiTX17XK+eg+nMS
-         ZDJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
-         :message-id:mime-version:content-transfer-encoding:thread-index
-         :content-language;
-        bh=7OUSj4roR9Zxfqsg78KjDabHcNJNoNeIqOsItPdmP40=;
-        b=c5zg94sDxS+Us0AThpWTatg3TMxgRdaI/B4SRLENuBBfAPgxhCJjlfCnnXdsaY+2Mc
-         4gctO8bnTS/LRqB/QhPW39pMZuTREWvuh2aGo0zDzSRHDPzbRD1jv3Z0H296RlQWqt4g
-         Ob08nMHIMSRAZVuraqTDJs3iAWsYPdjZS2URRUc8U23AbpPeNeuQBzfS5ULT6HKKO0Gs
-         hJ30v7qNNKwo0WdEX2HzwhxkTUuTJqOgnqNGeL620XG5pJzAxnePqbgC/gBvWVAwl4C5
-         oCnHAK/Aanz5rC6HlFKSZNWSqCcfd5328YkPPNUFrvq2f8yOlkIUmLIPGr9aQUwaKzDl
-         QoSA==
-X-Gm-Message-State: AE9vXwOljFj8oYyrd/7oAZIB3RJpSvLUBRR4WM4UOBCslaD3DWLXU/CQ4b/c7Nc5FoBJZQ==
-X-Received: by 10.202.77.206 with SMTP id a197mr5465459oib.178.1473427788109;
-        Fri, 09 Sep 2016 06:29:48 -0700 (PDT)
-Received: from BenPeartHP ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id b133sm1371726iti.21.2016.09.09.06.29.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Sep 2016 06:29:47 -0700 (PDT)
-From:   "Ben Peart" <peartben@gmail.com>
-To:     "'Jeff King'" <peff@peff.net>,
-        "'Junio C Hamano'" <gitster@pobox.com>
-Cc:     <git@vger.kernel.org>, <pclouds@gmail.com>, <peartben@gmail.com>,
-        "'Ben Peart'" <benpeart@microsoft.com>
-References: <20160908204431.14612-1-benpeart@microsoft.com> <xmqqh99qf5o7.fsf@gitster.mtv.corp.google.com> <20160908213738.zgwgfy3nybkam3hk@sigill.intra.peff.net>
-In-Reply-To: <20160908213738.zgwgfy3nybkam3hk@sigill.intra.peff.net>
-Subject: RE: [PATCH] checkout: eliminate unnecessary merge for trivial checkout
-Date:   Fri, 9 Sep 2016 09:29:45 -0400
-Message-ID: <002501d20a9e$3c7de5c0$b579b140$@gmail.com>
+        id S1752078AbcIIOMT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 10:12:19 -0400
+Received: from mout.gmx.net ([212.227.15.19]:64166 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751696AbcIIOMS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 10:12:18 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MK17F-1bjjyw04Sj-001PHP; Fri, 09 Sep 2016 16:12:11
+ +0200
+Date:   Fri, 9 Sep 2016 16:12:10 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 09/22] sequencer: completely revamp the "todo" script
+ parsing
+In-Reply-To: <d8112b27-8de3-0860-e902-fb271b80a0e7@gmail.com>
+Message-ID: <alpine.DEB.2.20.1609091608090.129229@virtualbox>
+References: <cover.1472457609.git.johannes.schindelin@gmx.de> <163aaa2a64ddf6dfb28c77c821726e14cc78619e.1472457609.git.johannes.schindelin@gmx.de> <135c9ac7-49a6-8aa1-fc10-02c2a1fd0b1a@gmail.com> <alpine.DEB.2.20.1609010836010.129229@virtualbox>
+ <d8112b27-8de3-0860-e902-fb271b80a0e7@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQG+K9JOoUyszGeD3Yq7D9s9RK55AQFbwa6AAaxBwBSggKEVgA==
-Content-Language: en-us
+Content-Type: multipart/mixed; BOUNDARY="8323329-1972324869-1473430331=:129229"
+X-Provags-ID: V03:K0:vyh8k0OLfKh/h1WI8yaJx82ojcZxdoe4W0pd3K2ks3dqRY7pga5
+ JJHW9MCBZqbEJ96D0GEVMR89/kXEM/Qt2xaBrKRNlx8/iTNf9pjvNQ8PBqWXXBxFKp0Ceuy
+ WoyFHCOD7UthakBifpDZeswAYYaKvfN249x9Vd6FKGFeK6z6ez8ZxOIPuimNOj6p02avWBx
+ Zmvfe1VqpA6yCWLmNI+tQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xwJinv2z/dE=:Bwcvx2BXXYeEQ9C7e1Op8r
+ HqzBwVfPN3/RmpuQP01zfZLlD8FI0KxljYGEblP2xRjrm1OHNkYka2po2KG1PqQ+AIvbPLF6G
+ 1NSBt7kAWZaN60AlfJBQSZs8YLGujErIeCk4R+vKQtTJZQ6f1/mzeIBgcQGmt8XgHzWNvR2J/
+ df/u8hb3i7hmIi2DtWa1raDimGYir9J0oD8KAzp8LlLqXGnDFYG8U//Ib5jcyq4UI1HK1GYzj
+ lKbp1jiHmidtM4P+KPhnhbg7sHfFDHrgHxeIECQh/E+JH3UfAIlD2sGvJ+TwOa3VUm/ARH/2w
+ DvqEoVfFKNFpAFJlgeWb7hl5LgF2yqf+Uij7sFVEBJY4THE2onJnVF3lA/MvuB/cDWVqZEcA1
+ hDcIMdMd2waKZbwoOhxlm5TSKcrv7k9AdE0blPzd9ShZTIfdfXkA8vIJSDvaSIPcK8gI/0vm7
+ J7xnAsUTaIK/7YPoDIBZxuYRUIka0hTCGBV21nI5KPlLjzjL6yElkYu6rKmmKG9PsHl+exRZt
+ tRLoDdm38op5gBt2jC1Ayx1B19uefVScTqVKQQZ3r02AkKI5PksJwwVxP/TCMukxgyQMuDSfg
+ UHzpvampP/UHKavGhWJYtL0EOj0h8JFknBUwdH9NQFIgw/oOUlIKTk/ryNrJSohhP2rFOM1Mo
+ B0yVGaquSoNFSZPgzaSl+qHC6i6/m+bFc4B5s9IaNLXbiMAtcMnJQBdQu6Fgnb0ihhLHW2YnS
+ 45O0/WltsJCSZDu6+c1xAtXv3YI/1Us1hpKlo4z9EKh5Y/fVpSbGAJxJnbscdocTGl0GBokct
+ Sw9IicB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
+--8323329-1972324869-1473430331=:129229
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> -----Original Message-----
-> From: Jeff King [mailto:peff@peff.net]
-> Sent: Thursday, September 8, 2016 5:38 PM
-> To: Junio C Hamano <gitster@pobox.com>
-> Cc: Ben Peart <peartben@gmail.com>; git@vger.kernel.org;
-> pclouds@gmail.com; =3Dpeartben@gmail.com; Ben Peart
-> <benpeart@microsoft.com>
-> Subject: Re: [PATCH] checkout: eliminate unnecessary merge for trivial
-> checkout
->=20
-> On Thu, Sep 08, 2016 at 02:22:16PM -0700, Junio C Hamano wrote:
->=20
-> > > +	/*
-> > > +	 * Optimize the performance of checkout when the current and
-> > > +	 * new branch have the same OID and avoid the trivial merge.
-> > > +	 * For example, a "git checkout -b foo" just needs to create
-> > > +	 * the new ref and report the stats.
-> > > +	 */
-> > > +	if (!old.commit || !new->commit
-> > > +		|| oidcmp(&old.commit->object.oid, &new->commit-
-> >object.oid)
-> > > +		|| !opts->new_branch || opts->new_branch_force || opts-
-> >new_orphan_branch
-> > > +		|| opts->patch_mode || opts->merge || opts->force || opts-
-> >force_detach
-> > > +		|| opts->writeout_stage || !opts->overwrite_ignore
-> > > +		|| opts->ignore_skipworktree || opts-
-> >ignore_other_worktrees
-> > > +		|| opts->new_branch_log || opts->branch_exists || opts-
-> >prefix
-> > > +		|| opts->source_tree) {
-> >
-> > ... this is a maintenance nightmare in that any new option we will =
-add
-> > later will need to consider what this "optimization" is trying
-> > (not) to skip.  The first two lines (i.e. we need a real checkout if
-> > we cannot positively say that old and new commits are the same
-> > object) are clear, but no explanation was given for all the other
-> > random conditions this if condition checks.  What if opts->something
-> > was not listed (or "listed" for that matter) in the list above--it =
-is
-> > totally unclear if it was missed by mistake (or "added by
-> > mistake") or deliberately excluded (or "deliberately added").
-> >
-> > For example, why is opts->prefix there?  If
-> >
-> > 	git checkout -b new-branch HEAD
-> >
-> > should be able to omit the two-way merge, shouldn't
-> >
-> > 	cd t && git checkout -b new-branch HEAD
-> >
-> > also be able to?
+Hi Kuba,
 
-Because this induces a behavior change (the optimized path will no=20
-longer do a "soft reset" and regenerate the index for example) I was
-attempting to make it as restrictive as possible but still enable the
-fast path in the most common case.  If everyone is OK with the behavior
-change, I can make the optimization more inclusive by removing those
-tests that are not absolutely required (like opts->prefix).
+On Fri, 2 Sep 2016, Jakub Nar=C4=99bski wrote:
 
-To help ensure the optimization is updated when new checkout options are
-added I could add a comment into the checkout_opts structure and/or put
-a pseudo version check into the code so if the size of the structure
-changes, the fast path fails.  That feels a little hacky and I haven't
-seen that in other areas so I'd rather stick with splitting it out into
-a helper function and add comments.
+> W dniu 01.09.2016 o 09:49, Johannes Schindelin pisze:
+> > On Wed, 31 Aug 2016, Jakub Nar=C4=99bski wrote:=20
+>=20
+> >> Here todo_list uses growable array implementation of list.  Which is
+> >> I guess better on current CPU architecture, with slow memory,
+> >> limited-size caches, and adjacency prefetching.
+> >=20
+> > That is not the reason that an array is used here. The array allows us
+> > much more flexibility.
+>=20
+> It would be nice if this reasoning (behind the change from linked list
+> to growable array) was mentioned in appropriate commit message, and
+> perhaps also in the cover letter for the series.  It is IMVHO quite
+> important information (that you thought obvious).
 
->=20
-> I was just writing another reply, but I think our complaints may have
-> dovetailed.
->=20
-> My issue is that the condition above is an unreadable mass.  It would =
-be
-> really nice to pull it out into a helper function, and then all of the =
-items could
-> be split out and commented independently, like:
->=20
->   static int needs_working_tree_merge(const struct checkout_opts =
-*opts,
->                                       const struct branch_info *old,
-> 				      const struct branch_info *new)
->   {
-> 	/*
-> 	 * We must do the merge if we are actually moving to a new
-> 	 * commit.
-> 	 */
-> 	if (!old->commit || !new->commit ||
-> 	    oidcmp(&old.commit->object.oid, &new->commit->object.oid))
-> 		return 1;
->=20
-> 	/* Option "foo" is not compatible because of... */
-> 	if (opts->foo)
-> 		return 1;
->=20
-> 	... etc ...
->   }
+Amended.
 
-That is a great suggestion.  Splitting this out into a helper function=20
-with comments will definitely make this more readable/maintainable and=20
-provide more information on why each test is there.  I'll do that and
-reroll the patch.
-
+> >>> +struct todo_item *append_todo(struct todo_list *todo_list)
+> >>
+> >> Errr... I don't quite understand the name of this function.
+> >> What are you appending here to the todo_list?
+> >=20
+> > A new item.
+> >=20
+> >> Compare string_list_append() and string_list_append_nodup(),
+> >> where the second parameter is item to append.
+> >=20
+> > Yes, that is correct. In the case of a todo_item, things are a lot more
+> > complicated, though. Some of the values have to be determined tediously
+> > (such as the offset and length of the oneline after the "pick <oid>"
+> > command). I just put those values directly into the newly allocated ite=
+m,
+> > is all.
 >=20
-> That still leaves your "what if opts->something is not listed" =
-question open,
-> but at least it makes it easier to comment on it in the code.
+> I would expect sth_append command to take a list (or other collection),
+> an element, and return [modified] collection with the new element added.
+> Such API would require temporary variable in caller and memcopy in the
+> sth_append() function.
 >=20
-> -Peff
+> This is not it.  It creates a new element, expanding a list (a collection=
+),
+> and then expose this element.  Which spares us memcopy... on non-critical
+> path.
 >=20
-> PS I didn't think hard on whether the conditions above make _sense_. =
-My
->    first goal would be to get more communication about them =
-individually,
->    and then we can evaluate them.
+> I don't know how to name operation "grow list and return new element".
+> But "append" it is not.
 
+I renamed it to append_new_todo().
 
+> >>> -=09end_of_object_name =3D bol + strcspn(bol, " \t\n");
+> >>> +=09end_of_object_name =3D (char *) bol + strcspn(bol, " \t\n");
+> >>
+> >> Why is this cast needed?
+> >=20
+> > Because bol is a "const char *" and we need to put "NUL" temporarily to
+> > *end_of_object_name:
+>=20
+> Would compiler complain without this const'ness-stripping cast?
+
+Yes. I would not have added it otherwise.
+
+Please note that this is only necessary because I changed the parameter
+from "char *" to "const char *" (which was The Right Thing To Do).
+
+> >>>  =09saved =3D *end_of_object_name;
+> >>>  =09*end_of_object_name =3D '\0';
+> >>>  =09status =3D get_sha1(bol, commit_sha1);
+> >>>  =09*end_of_object_name =3D saved;
+> >=20
+> > Technically, this would have made a fine excuse to teach get_sha1() a
+> > mode where it expects a length parameter instead of relying on a
+> > NUL-terminated string.
+> >=20
+> > Practically, such fine excuses cost me months in this rebase--helper
+> > project already, and I need to protect my time better.
+>=20
+> Put it in TODO list (and perhaps add a TODO comment) ;-).
+
+I am also a realist: I won't be able to do anything about this. If you
+care enough, please go right to town.
+
+Thanks again,
+Dscho
+--8323329-1972324869-1473430331=:129229--
