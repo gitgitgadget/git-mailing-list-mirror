@@ -2,87 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C3D21F859
-	for <e@80x24.org>; Fri,  9 Sep 2016 10:40:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 624B71F859
+	for <e@80x24.org>; Fri,  9 Sep 2016 10:41:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753511AbcIIKkM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 06:40:12 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40630 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751596AbcIIKkL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 06:40:11 -0400
-Received: (qmail 2063 invoked by uid 109); 9 Sep 2016 10:40:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 09 Sep 2016 10:40:10 +0000
-Received: (qmail 23208 invoked by uid 111); 9 Sep 2016 10:40:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 09 Sep 2016 06:40:19 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 09 Sep 2016 06:40:08 -0400
-Date:   Fri, 9 Sep 2016 06:40:08 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-        Kevin Willford <kewillf@microsoft.com>,
-        Xiaolong Ye <xiaolong.ye@intel.com>,
-        Josh Triplett <josh@joshtriplett.org>
-Subject: Re: [PATCH 2/3] diff_flush_patch_id: stop returning error result
-Message-ID: <20160909104007.pwki2ir6et3vvk55@sigill.intra.peff.net>
-References: <20160907220101.hwwutkiagfottbdd@sigill.intra.peff.net>
- <20160907220409.oowxymhvkof2xsk5@sigill.intra.peff.net>
- <alpine.DEB.2.20.1609091219350.129229@virtualbox>
+        id S1753941AbcIIKlN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 06:41:13 -0400
+Received: from mout.gmx.net ([212.227.15.15]:49506 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753460AbcIIKlM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 06:41:12 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MPE7E-1bdtOB2fZ2-004VHT; Fri, 09 Sep 2016 12:41:03
+ +0200
+Date:   Fri, 9 Sep 2016 12:41:01 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jeff King <peff@peff.net>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH v3 3/3] Use the newly-introduced regexec_buf() function
+In-Reply-To: <20160909095735.zen2ynpsn7azqfss@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1609091238020.129229@virtualbox>
+References: <cover.1473319844.git.johannes.schindelin@gmx.de> <cover.1473321437.git.johannes.schindelin@gmx.de> <d0537819a3676fda6928e7ad3282aa71643f0755.1473321437.git.johannes.schindelin@gmx.de> <xmqq1t0ujp2f.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1609091151510.129229@virtualbox> <20160909095735.zen2ynpsn7azqfss@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1609091219350.129229@virtualbox>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:YpOQpBHeRfYBhIMKM5jlyjeixlcK0vqbIn3x5B3J9CO7ExWB3sm
+ jY+Uo5JCFAexDvJQugskNK8vQa+R35xfM8khfYNTNy2ncLPmmDrPOPbST0ihh7DqycLaiRU
+ WPBTwB6xwPyPVBlLTgzB2GFTufESQIVqj9bzSYTpjzHlbQ8916kLOiKdL6ew72o5qwaypM1
+ joczdOOjgrqk8yZIQGtcw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:DSQKO3O7rx4=:dMTcqCiYyI4Uo9AOOvI3mS
+ yHtsGzCtu0qp4k1SN35rFdF9ADcwpWCWvQW+SvqikrAArDIdUFCHdyMEmiI0+7DbwIiLFZg2w
+ SiYqvwZmud5fuj5ru9YARX4ZIERQJMasZywagg08xD9h6weeoc2SM4G9A3wFKnkfgJluxqL6y
+ GtAwQ5yq8baVo8A+cHQViPUkWZSA37NFZRISzrHuUrQuit2Pis7hRzWtUSEmm34wKXVtrCsOC
+ 7fJekSMYF2yQ/6FINRHzm35cWpafkxdXvhnYsB8HQM4lch0zoEcQ8CLnTAIFb9fDPkhEJZg8D
+ vjjbfmEhXyfJZjjqZN3LwZAD7SBYiKiujv/h9pjmN5FkhU5FNUgL7JONOjzAhR3AkDGdUo0Ec
+ ZE34dzGFEnJuI/wbMEQMylkamFR4V7FyBZ2RLpsH6rENqoDubopy9Z6cPpEHthmhG1oH+FfY9
+ 7Xfr3L0uaaInvie1HA0hBTHqQduD/mChUGmMVt3mUtkNDZAfmHeWlUEulQAjJjrvnAmDPKPf7
+ C7yR2mPZ2eAJKYAcc+hq+QbPcsllhbSz9rD92uZDddFz+H3ujNG9nf5Lj9NWS+auvHAujeGFr
+ UUtOdU73VO/yyYv6nUyo3DSIwduqr5e7ar6Z73WolLbvDR9vnC2RsUyuRQZtPmJ4LV0t4dEHF
+ vs3U2qgZI6GPEstoIJ1QYBwzvgxl28A+nS8+v2pWmxbWsVXl7huTvV43O6nJ0etl6MJ8Py1WK
+ +fI8kgCv+fhUVDMPoJfay6GC0xcGdSE9QIB9dh+4L8fr+eX+PQUPwxPu6Eu5eOXd1iPvmgArb
+ Z9Ch17U
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 09, 2016 at 12:28:38PM +0200, Johannes Schindelin wrote:
+Hi Peff,
 
-> I like the simplification, but I *hate* the fact that the calling code has
-> *no way* to inform the user about the proper next steps.
+On Fri, 9 Sep 2016, Jeff King wrote:
+
+> On Fri, Sep 09, 2016 at 11:52:50AM +0200, Johannes Schindelin wrote:
 > 
-> You are touching code that is really quite at the bottom of a lot of call
-> chains. For example in the one of `git pull --rebase`. I just spent an
-> insane amount of time trying to make sure that this command will not
-> simply die() somewhere deep in the code, leaving the user puzzled.
+> > > Also I agree with Peff that a test with an embedded NUL would be a
+> > > good thing.
+> > 
+> > This is something I will leave to somebody else, as it was not my
+> > intention to fix this and I *really* have more pressing things to do right
+> > now... Sorry!
 > 
-> Please see 3be18b4 (t5520: verify that `pull --rebase` shows the helpful
-> advice when failing, 2016-07-26) for more details.
+> I think it is literally just squashing this into your final patch:
+> 
+> diff --git a/t/t4061-diff-pickaxe.sh b/t/t4061-diff-pickaxe.sh
+> index f0bf50b..37b8dde 100755
+> --- a/t/t4061-diff-pickaxe.sh
+> +++ b/t/t4061-diff-pickaxe.sh
+> @@ -19,4 +19,13 @@ test_expect_success '-G matches' '
+>  	test 4096-zeroes.txt = "$(cat out)"
+>  '
+>  
+> +test_expect_success '-G matches after embedded NUL' '
+> +	printf "one\0two" >file &&
+> +	git add file &&
+> +	git commit -m embedded &&
+> +	echo embedded >expect &&
+> +	git log -Gtwo --format=%s >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_done
 
-Yes, I agree that this is the opposite direction of libification. And I
-agree that the current message is not very helpful.
+Thank you for providing me with the patch.
 
-But I am not sure that returning the error up the stack will actually
-help somebody move forward. The reason these are all die() calls in the
-rest of the diff code is that they are generally indicative of
-unrecoverable repository corruption. So any advice does not really
-depend on what operation you are performing; it is always "stop what you
-are doing immediately, run fsck, and try to get the broken objects from
-somebody else".
+However, the whole idea of supporting regular expressions on buffers with
+embedded NULs *is* different from the purpose of this patch series.
 
-So IMHO, on balance this is not hurting anything.
+And in my quick web search, I got the impression that the presence of
+REG_STARTEND really does not guarantee that regexec() won't stop at the
+first NUL when rm_eo points after it.
 
-> A much better way, in my opinion, would be to introduce a new flag, say,
-> skip_merges, and pass that to the diff_flush_patch_id() function. You
-> could also consider consolidating that flag with the diff_header_only flag
-> into a "flags" argument via something like
+So yeah, the patch would be easy to squash in, but the entire "rat's tail"
+of making sure that this works everywhere, *in addition* to making sure
+that the crash on mmap()ed buffers no longer occurs, would just delay this
+patch series.
 
-diff_flush_patch_id() doesn't care about merges; that's too late. The
-change has to happen in commit_patch_id(). And the problem is not one of
-passing in "skip merges" (we _always_ want to skip merges). It is rather
-distinguishing the reason that commit_patch_id() told us it did not fill
-in the sha1: because it was an error, or because the patch id is
-undefined (one triggers a die(), the other a silent continue).
+And unfortunately I do not have time for that right now.
 
-I think I laid out that path already in the cover letter of the
-original. If the consensus is that this is too ugly, I can implement
-that approach.
-
--Peff
+Ciao,
+Dscho
