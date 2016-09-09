@@ -7,219 +7,107 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 067F81F859
-	for <e@80x24.org>; Fri,  9 Sep 2016 10:11:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0760A1F859
+	for <e@80x24.org>; Fri,  9 Sep 2016 10:29:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753457AbcIIKLE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 06:11:04 -0400
-Received: from mout.gmx.net ([212.227.17.20]:56965 "EHLO mout.gmx.net"
+        id S1753582AbcIIK3X (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 06:29:23 -0400
+Received: from mout.gmx.net ([212.227.15.18]:64395 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752035AbcIIKK7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 06:10:59 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0M9bYB-1bu9f51mQh-00D26F; Fri, 09 Sep 2016 12:10:48
+        id S1751685AbcIIK3Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 06:29:16 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0M4Gup-1arAEY44SB-00rr2U; Fri, 09 Sep 2016 12:28:54
  +0200
-Date:   Fri, 9 Sep 2016 12:10:47 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+Date:   Fri, 9 Sep 2016 12:28:38 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Jeff King <peff@peff.net>
-Subject: [PATCH v3 2/4] cat-file: introduce the --filters option
-In-Reply-To: <cover.1473415827.git.johannes.schindelin@gmx.de>
-Message-ID: <084088ba86c0af3636d960276c0bfdf7f5d2cfde.1473415827.git.johannes.schindelin@gmx.de>
-References: <cover.1472041389.git.johannes.schindelin@gmx.de> <cover.1473415827.git.johannes.schindelin@gmx.de>
+To:     Jeff King <peff@peff.net>
+cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+        Kevin Willford <kewillf@microsoft.com>,
+        Xiaolong Ye <xiaolong.ye@intel.com>,
+        Josh Triplett <josh@joshtriplett.org>
+Subject: Re: [PATCH 2/3] diff_flush_patch_id: stop returning error result
+In-Reply-To: <20160907220409.oowxymhvkof2xsk5@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1609091219350.129229@virtualbox>
+References: <20160907220101.hwwutkiagfottbdd@sigill.intra.peff.net> <20160907220409.oowxymhvkof2xsk5@sigill.intra.peff.net>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:S9KyXPlEbgrlmEoh+Yj9WX7oWmfWs8Wz8Km9sR70aEK2QS6rljM
- E0FiH0H2eXCorV9hFzWfaSF8ga3BrP1AHZtEl5efoD5lEVVyfgGoKuB4XxAYKBZd4XJOSHZ
- l4po1AID3iENQNwv5/weluddRk/nXlMJ6Vw1jJBVZTiRNvBfSPn0OB/eFweRsnMAAmTSKSV
- SC8QNvZ1VQr1+jnSHi/sw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:AurG1BXPfP0=:YXlpZrYCXEnI9xHz1nvgsq
- quXkYEq+RyTY15Ze8jqX/Q1hmwVWKjtA2HoYH2vQVLzk64aTa47B+eWzK1P0xWpbtBZTSqEVG
- eHscwFaoGCb2SjPODntsX99VcQJFZdHsMd+LivmGLTKXsBng9fYcyM2GzLjpG91J0nTsAFSVp
- s6dgaJ4WXqClmfGMQjtK0rguNHdMtolDGJ+BbuJUtNDGDAwk7eJuPxOYM64Aj/8H/x3DUTrlx
- Ox3L9TSaLqAwOVgoP6GPaQL/Q/fqUcAO5RF3iYBW4ZfL+HM7BXEvdY/PSinyZyt1eVnsLqrvs
- EW9hq553rf3nav7LhdLwFE/cOSWS7ixl235rZsTLIPQmhuzmH1IxbE1Qx+e9gwP5BvfcO0MbW
- Bd6ZJkH3N0CjF0ZRdJPqeXvrpQVWpzktH5PJbLl4iekdt2PAwXuTo5yIiXEZ5tT9zApVjRYR2
- 42v3X3Sl9D0ljzhhlhFD7ffGlcR7nl25QxhEmuEBTwoTTnK7JytYsJHb+FtZx37m8mSOh6smS
- piZxwM70VhsMJewsToNbhR1zyfEbctu9u9hTPAdUxp/pse68IDiV+ReZ/MpFIpkSF5YH+6ljD
- v7wQG1ebZHmlqvSy/8cteHlQiBvgOJQPSrehNntXYxWYVUKwwPtUwHB1WBJbvHUmq7hGVG2uX
- rZPk/nDct8dtggi1arpfI1neLYWZNrcc+BFXB0I2ixyEx5NfRdydp5W9WXIgCnDajH9H0HU47
- D6L3ClwOaaStfPZmxBtSgVcNxe96wAopFy09uaEph89OY9p7NI8WZubkwkEUDJNexBJPEaHPd
- T/m69NL
+X-Provags-ID: V03:K0:BACKHVbQjGZR9BCweIyHr0JOGPQ3OdNQ/MFPsOLuDSGw3yiFmlX
+ ncSHxOmOxIyBPBcwDgqEDYz8Na5D9YxyYpmC0w3tvhjI9swsDDwLnVVHY0nzDhLxrT8htwz
+ rVS+CPT3MAxpX2SRgkoW46uei8Zvu7648ck0W4rdVGo6q1qvHdvH43Ew23zt5ABvACIuwRM
+ ajm+sRa3xP8nV4FdzLCtw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:HU78w/Zx0Q0=:0z3HSEzirJfX+gnMZj9F2g
+ gK/Db1BtTJP2W5ss7nDnrbGY4hcwFw5IDyenw55QpvFKDlcx+h7TeEk0lUFxJjUyAVV0A0v59
+ iV4vemAs0m2PQKyAkDh6QXrhzcZz6UFLmMfZFakp7ul66RIsPslQY3bVGH4XFNuWuI40E/K2N
+ N/eFsmgRgeutWaUy+jBigT25rXvCe0161/UWNmEkrvMyGUg4TjIm3e4J/955EsH8tAV3A/moQ
+ VRG7COFaKRweq3ib3Fe234xBW1HFHbe3Aiw60Wm7JYhZtAtE0o8rSIQ01qn783PHiWxVxIW3L
+ Ye8KtsVyZldiLASV6oE8VSTyLVvmhiUtVUBczVH97Xavi+QJwhefKbkvlpeMgBzV7XLpHRReM
+ Setjl+RfwftbGv6PDADOSaU93/NLbRaJwZNAl/LE6kA9ZZ7AqSL/fYD5KlvrDbK36ztxf48qx
+ mfsM1QNAGJIfSwdVjn5KBz4+0vdYqHlI40ZkJuKeGC6y+dABiCNz074XL+vYJrvkXfZrr0Pfs
+ rUy31yfkHMPcJuN56qiTBOjzRVkr9FwSV7Gp2b+wdfhT5GY1h2o+Z/cNMZ0WLYW1PT4T2RH8d
+ 4En3OEy7nVdBU9WNw48F8+IMUODyk1ahd+P8XtYsVWVK1on3yb6T60U0NvPGiwm6jMqjn58QU
+ Dz2hnZQT9pG9S9jGnVYftLB5P8zUtCxEI9cAv6VKbCUKHc74r0lk1oX5mWqwTDCp+6kCA2guJ
+ vcWTTSxRD5Zy59ECI23Iba7Xv25mxQkdoY4cBopX/8gnz1KdHWq6zwbjfkoutDHQjCjNS0it2
+ vtS5ebg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The --filters option applies the convert_to_working_tree() filter for
-the path when showing the contents of a regular file blob object.
+Hi Peff,
 
-This feature comes in handy when a 3rd-party tool wants to work with
-the contents of files from past revisions as if they had been checked
-out, but without detouring via temporary files.
+On Wed, 7 Sep 2016, Jeff King wrote:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/git-cat-file.txt | 12 +++++++++---
- builtin/cat-file.c             | 41 ++++++++++++++++++++++++++++++++++++++++-
- t/t8010-cat-file-filters.sh    | 34 ++++++++++++++++++++++++++++++++++
- 3 files changed, 83 insertions(+), 4 deletions(-)
- create mode 100755 t/t8010-cat-file-filters.sh
+> All of our errors come from diff_get_patch_id(), which has
+> exactly three error conditions. The first is an internal
+> assertion, which should be a die("BUG") in the first place.
+> 
+> The other two are caused by an inability to two diff blobs,
+> which is an indication of a serious problem (probably
+> repository corruption). All the rest of the diff subsystem
+> dies immediately on these conditions. By passing up the
+> error, in theory we can keep going even if patch-id is
+> unable to function. But in practice this means we may
+> generate subtly wrong results (e.g., by failing to correlate
+> two commits). Let's just die(), as we're better off making
+> it clear to the user that their repository is not
+> functional.
+> 
+> As a result, we can simplify the calling code.
 
-diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-index 071029b..537d02c 100644
---- a/Documentation/git-cat-file.txt
-+++ b/Documentation/git-cat-file.txt
-@@ -9,15 +9,15 @@ git-cat-file - Provide content or type and size information for repository objec
- SYNOPSIS
- --------
- [verse]
--'git cat-file' (-t [--allow-unknown-type]| -s [--allow-unknown-type]| -e | -p | <type> | --textconv ) <object>
-+'git cat-file' (-t [--allow-unknown-type]| -s [--allow-unknown-type]| -e | -p | <type> | --textconv | --filters ) <object>
- 'git cat-file' (--batch | --batch-check) [--follow-symlinks]
- 
- DESCRIPTION
- -----------
- In its first form, the command provides the content or the type of an object in
- the repository. The type is required unless `-t` or `-p` is used to find the
--object type, or `-s` is used to find the object size, or `--textconv` is used
--(which implies type "blob").
-+object type, or `-s` is used to find the object size, or `--textconv` or
-+`--filters` is used (which imply type "blob").
- 
- In the second form, a list of objects (separated by linefeeds) is provided on
- stdin, and the SHA-1, type, and size of each object is printed on stdout.
-@@ -58,6 +58,12 @@ OPTIONS
- 	order to apply the filter to the content recorded in the index at
- 	<path>.
- 
-+--filters::
-+	Show the content as converted by the filters configured in
-+	the current working tree for the given <path> (i.e. smudge filters,
-+	end-of-line conversion, etc). In this case, <object> has to be of
-+	the form <tree-ish>:<path>, or :<path>.
-+
- --batch::
- --batch=<format>::
- 	Print object information and contents for each object provided
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 2dfe626..0b74afa 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -20,6 +20,33 @@ struct batch_options {
- 	const char *format;
- };
- 
-+static int filter_object(const char *path, unsigned mode,
-+			 const unsigned char *sha1,
-+			 char **buf, unsigned long *size)
-+{
-+	enum object_type type;
-+
-+	*buf = read_sha1_file(sha1, &type, size);
-+	if (!*buf)
-+		return error(_("cannot read object %s '%s'"),
-+			sha1_to_hex(sha1), path);
-+	if (type != OBJ_BLOB) {
-+		free(*buf);
-+		return error(_("blob expected for %s '%s'"),
-+			sha1_to_hex(sha1), path);
-+	}
-+	if (S_ISREG(mode)) {
-+		struct strbuf strbuf = STRBUF_INIT;
-+		if (convert_to_working_tree(path, *buf, *size, &strbuf)) {
-+			free(*buf);
-+			*size = strbuf.len;
-+			*buf = strbuf_detach(&strbuf, NULL);
-+		}
-+	}
-+
-+	return 0;
-+}
-+
- static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 			int unknown_type)
- {
-@@ -61,6 +88,16 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 	case 'e':
- 		return !has_sha1_file(sha1);
- 
-+	case 'w':
-+		if (!obj_context.path[0])
-+			die("git cat-file --filters %s: <object> must be "
-+			    "<sha1:path>", obj_name);
-+
-+		if (filter_object(obj_context.path, obj_context.mode,
-+				  sha1, &buf, &size))
-+			return -1;
-+		break;
-+
- 	case 'c':
- 		if (!obj_context.path[0])
- 			die("git cat-file --textconv %s: <object> must be <sha1:path>",
-@@ -440,7 +477,7 @@ static int batch_objects(struct batch_options *opt)
- }
- 
- static const char * const cat_file_usage[] = {
--	N_("git cat-file (-t [--allow-unknown-type]|-s [--allow-unknown-type]|-e|-p|<type>|--textconv) <object>"),
-+	N_("git cat-file (-t [--allow-unknown-type]|-s [--allow-unknown-type]|-e|-p|<type>|--textconv|--filters) <object>"),
- 	N_("git cat-file (--batch | --batch-check) [--follow-symlinks]"),
- 	NULL
- };
-@@ -486,6 +523,8 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 		OPT_CMDMODE('p', NULL, &opt, N_("pretty-print object's content"), 'p'),
- 		OPT_CMDMODE(0, "textconv", &opt,
- 			    N_("for blob objects, run textconv on object's content"), 'c'),
-+		OPT_CMDMODE(0, "filters", &opt,
-+			    N_("for blob objects, run filters on object's content"), 'w'),
- 		OPT_BOOL(0, "allow-unknown-type", &unknown_type,
- 			  N_("allow -s and -t to work with broken/corrupt objects")),
- 		OPT_BOOL(0, "buffer", &batch.buffer_output, N_("buffer --batch output")),
-diff --git a/t/t8010-cat-file-filters.sh b/t/t8010-cat-file-filters.sh
-new file mode 100755
-index 0000000..e466634
---- /dev/null
-+++ b/t/t8010-cat-file-filters.sh
-@@ -0,0 +1,34 @@
-+#!/bin/sh
-+
-+test_description='git cat-file filters support'
-+. ./test-lib.sh
-+
-+test_expect_success 'setup ' '
-+	echo "*.txt eol=crlf diff=txt" >.gitattributes &&
-+	echo "hello" | append_cr >world.txt &&
-+	git add .gitattributes world.txt &&
-+	test_tick &&
-+	git commit -m "Initial commit"
-+'
-+
-+has_cr () {
-+	tr '\015' Q <"$1" | grep Q >/dev/null
-+}
-+
-+test_expect_success 'no filters with `git show`' '
-+	git show HEAD:world.txt >actual &&
-+	! has_cr actual
-+
-+'
-+
-+test_expect_success 'no filters with cat-file' '
-+	git cat-file blob HEAD:world.txt >actual &&
-+	! has_cr actual
-+'
-+
-+test_expect_success 'cat-file --filters converts to worktree version' '
-+	git cat-file --filters HEAD:world.txt >actual &&
-+	has_cr actual
-+'
-+
-+test_done
--- 
-2.10.0.windows.1.10.g803177d
+I like the simplification, but I *hate* the fact that the calling code has
+*no way* to inform the user about the proper next steps.
 
+You are touching code that is really quite at the bottom of a lot of call
+chains. For example in the one of `git pull --rebase`. I just spent an
+insane amount of time trying to make sure that this command will not
+simply die() somewhere deep in the code, leaving the user puzzled.
 
+Please see 3be18b4 (t5520: verify that `pull --rebase` shows the helpful
+advice when failing, 2016-07-26) for more details.
+
+A much better way, in my opinion, would be to introduce a new flag, say,
+skip_merges, and pass that to the diff_flush_patch_id() function. You
+could also consider consolidating that flag with the diff_header_only flag
+into a "flags" argument via something like
+
+	enum diff_flush_patch_id {
+		DIFF_HEADER_ONLY = 1,
+		SKIP_MERGES = 2
+	}
+
+But it is definitely not a good idea to reintroduce the bad practice of
+die()ing deep down in library code. I know, you want proper exception
+handling. We cannot have that. We use C. But die() is not a solution: it
+introduces new problems.
+
+Mind you: I agree that there are serious problems in the cases you
+illustrated. But none of those problems give us license to leave the user
+utterly puzzled by not even telling them what is going on: spouting
+internals such as "unable to read files to diff" is *most definitely* not
+helping users who simply want to run a `git pull --rebase`.
+
+Ciao,
+Dscho
