@@ -2,89 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF1521F6BF
-	for <e@80x24.org>; Fri,  9 Sep 2016 16:42:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A17131F6BF
+	for <e@80x24.org>; Fri,  9 Sep 2016 16:42:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752295AbcIIQmj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 12:42:39 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60198 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750938AbcIIQmj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 12:42:39 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 86CE139EA6;
-        Fri,  9 Sep 2016 12:42:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=kGbJSw7Hyqdi
-        f8wJkHpdzSMpbcY=; b=rrZWyunBRw0ydc9SPoKJ3WbKnqXzZzdneaJgZx3gkQGT
-        cce0l0oQEf0f4WR6Cdir5MLi5aftCk4BQmQzZ6+WfIg5XbAQ7JbACxxkpHtCvuzu
-        DgisEFgPJGbnqWhK3XEjelul0AlwfJTAgXd4/ebFRJYC7PmySP4I5YjqX3iim44=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=JZ/muO
-        O8fr8fSgJOLSBs4r6n9pXUUpGk+oiyK7FshE2LdysfpCAWtdP39HdwI9NRmxKd/M
-        e7H2yU+DDNsUsRHYtMc0fFhdGhW3pO1vLzA4cnI2G2y5Qas0PNA5chtEU2Egt7Di
-        DmD/3F53BH+iYlFIgslPcfKksUIo47m+or2Vs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7FC1F39EA5;
-        Fri,  9 Sep 2016 12:42:37 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E15D439EA4;
-        Fri,  9 Sep 2016 12:42:36 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergio =?utf-8?Q?Mart=C3=ADn?= Turiel <sergio.martin@accelya.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Missing RPM spec file in tarball
-References: <4c42a1f4-4f03-0fdf-8bd2-8a7f1f978073@accelya.com>
-Date:   Fri, 09 Sep 2016 09:42:34 -0700
-In-Reply-To: <4c42a1f4-4f03-0fdf-8bd2-8a7f1f978073@accelya.com> ("Sergio
-        =?utf-8?Q?Mart=C3=ADn?= Turiel"'s message of "Fri, 9 Sep 2016 18:19:38
- +0200")
-Message-ID: <xmqq37l9dnyd.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1752634AbcIIQmr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 12:42:47 -0400
+Received: from mail-oi0-f50.google.com ([209.85.218.50]:36798 "EHLO
+        mail-oi0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752151AbcIIQmq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 12:42:46 -0400
+Received: by mail-oi0-f50.google.com with SMTP id q188so36752364oia.3
+        for <git@vger.kernel.org>; Fri, 09 Sep 2016 09:42:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=IlllhD/YWW023vnaRE8MsGCWmRCjAaRiNkGao2Ri+3w=;
+        b=KgdS7QAmzqFSc7ATQBYEH5A1zstwMPEA6NuF945WWFLyojNn6pE1BsH8+EDWy9JF+R
+         nsObpBmjwPGnCJ4dPCVjxRW9dJF3UhZJopdaKbsE94oJQrgO0dvCiTW4ys9LEApKBda3
+         VV9eMThgE8Lgc7hJYMShi99kq0BTN5v1Kjk0yQXsankI2xveTJ7riMjRK+5W0PjYMMvz
+         kVPpApCkPpO7VmfqKpLc5fWz5Hfg8yOBWVEFJxEtmfpCyIWRLVNaMDcsnk0/GinOTN5z
+         Jp8zjwoq5vDTr/8LsJxRF7bCMfz6yVYDAI0kj/qPW+xufPDjnafactHQ4Mrv98X3nQcX
+         90jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=IlllhD/YWW023vnaRE8MsGCWmRCjAaRiNkGao2Ri+3w=;
+        b=baVON9qGNx+WptdWzKAHI8rDGfqDfwPwd2l66e9b7NwnYwfTchOawyvDvSTp132gqy
+         mch2wpMycPULrOYvLwXQtdIPouuLxk27NDvaOjeqhbYpLqR5MkplYWLxZMcxcX3cog4a
+         /2VAg/ieM5AHo8Dd4Qhm5kyJ5nR/IfHXTn0tpnSOx2KJEifjfoAe+SOmDVefvwM6Y/Kr
+         iB6dj7pSZ9zMx796BNrMYXIL0YqgMoa/Ie1Irpdj4iwEFcbcQHFWGcznuVpDZO2smHFj
+         dpubFQ5H3DUoQ/h5LBzHcZrGOaNeAkoq54H49XKHAawTcRCMr23ES1bJkO8jsvdHkGEW
+         fQNg==
+X-Gm-Message-State: AE9vXwOmC17TwZi3xeIK3KvCOa9VCJYEwaav7axVHQaPfninfqy2is7QZMlkwzXU7As/gcKUu83Q3svAUqIfTwRt
+X-Received: by 10.202.195.1 with SMTP id t1mr7443670oif.144.1473439365871;
+ Fri, 09 Sep 2016 09:42:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 6A2FFAF6-76AC-11E6-ABE5-F7BB12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.107.128.66 with HTTP; Fri, 9 Sep 2016 09:42:45 -0700 (PDT)
+In-Reply-To: <4c42a1f4-4f03-0fdf-8bd2-8a7f1f978073@accelya.com>
+References: <4c42a1f4-4f03-0fdf-8bd2-8a7f1f978073@accelya.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 9 Sep 2016 09:42:45 -0700
+Message-ID: <CAGZ79kYu=0ik9W9g5yCbc5142_a2fb1er45TFEZ6RrekZRZM9w@mail.gmail.com>
+Subject: Re: Missing RPM spec file in tarball
+To:     =?UTF-8?Q?Sergio_Mart=C3=ADn_Turiel?= <sergio.martin@accelya.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergio Mart=C3=ADn Turiel <sergio.martin@accelya.com> writes:
-
->  I am trying to build RPM packages from tarball (release 2.9.3 and
-> 2.10.0), and i do not find git.spec file, in previous releases i can
-> found it (e.g. 2.8.3).
+On Fri, Sep 9, 2016 at 9:19 AM, Sergio Mart=C3=ADn Turiel
+<sergio.martin@accelya.com> wrote:
+> Hello,
+>
+>
+>  I am trying to build RPM packages from tarball (release 2.9.3 and 2.10.0=
+),
+> and i do not find git.spec file, in previous releases i can found it (e.g=
+.
+> 2.8.3).
 >
 > O.S.: CentOS 7.2
 > Command: rpmbuild -ta git-2.9.3.tar.gz
 > Response: error: Failed to read spec file from git-2.9.3.tar.gz
+>
 
-Since ab214331 ("Makefile: stop pretending to support rpmbuild",
-2016-04-04) that is used in Git 2.9 and later, i.e.
+We deleted the rpm target as it was breaking all the time and not reported
+in a timely manner, i.e. the impression was it was always broken.
 
-    Makefile: stop pretending to support rpmbuild
-   =20
-    Nobody in the active development community seems to watch breakages
-    in the rpmbuild target.  As most major RPM based distros use their
-    own specfile when packaging us, they aren't looking after us as
-    their pristine upstream tree, either.  At this point, it is turning
-    to be a disservice to the users to pretend that our tree natively
-    supports "make rpmbuild" target when we do not properly maintain it.
-   =20
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+See https://kernel.googlesource.com/pub/scm/git/git/+/ab214331cf8c73f8f7754=
+0aa996eb8b4938237f2
 
-we no longer ship an outdated git.spec and git.spec.in files.  This
-was done after finding out that nobody noticed that git.spec has
-been left broken since around Git 2.8.0 (i.e. we stopped shipping
-README without adjusting the reference to it from the git.spec
-file).
 
+> Can you tell me what I'm doing wrong?
+
+Not crying out loud when that commit was discussed on the
+mailing list. ;)
+
+>
+>
+> Thank you very much and best regards, Sergio Mart=C3=ADn.
+
+Thanks,
+Stefan
