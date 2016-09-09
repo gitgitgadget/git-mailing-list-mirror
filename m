@@ -6,109 +6,88 @@ X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6BEC1F6BF
-	for <e@80x24.org>; Fri,  9 Sep 2016 20:40:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 521601F6BF
+	for <e@80x24.org>; Fri,  9 Sep 2016 20:51:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754826AbcIIUkc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 16:40:32 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63558 "EHLO
+        id S1754676AbcIIUvJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 16:51:09 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59338 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752299AbcIIUkb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 16:40:31 -0400
+        with ESMTP id S1751120AbcIIUvI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 16:51:08 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0AEE23A85B;
-        Fri,  9 Sep 2016 16:40:30 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B10803D7F7;
+        Fri,  9 Sep 2016 16:51:06 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=aMdPQnpXhyE9Fpmo1fjKv5S3KMY=; b=gCXj/V
-        q+2JnpZGaqtIpfJZIbVNw9MvNBlLktfX4hTbusUneObmuIOQYHsCJBXQi0Dvqpne
-        d0LtOUjc8fLisDvCxJg2irdyIT4IOeHCpABaLGJ1yUKHGOrddaUXu0ya9C/TZOJC
-        SEDWUxvPFsvrbVuHPvmYn1EyrTpHRP0jkzbLw=
+        :content-type; s=sasl; bh=dg65+0cADA4YvGakK6zjnAK5KvI=; b=mrtREO
+        J8yt7kzKaC/t5IkW2laqbzUyKf2yFBc7b21Bnyw1wVquMHMBxhK1nl5QL4eXqSqC
+        tkOmnRaNOz7zlXmKVe3KGFLlCgdj33PhWnxyyQaRw69g+NUWT/v3XhZwfZbZ9ay7
+        4roqV8Pj/lSzbw0Jek71QoNOE6BKAAcWC/mvQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=TU0IZlT3TKZoZ6tJA+iRtVbjKPP4jcvr
-        jxd+N4sO7c0k+ts2MiPunCRJ+K2T3PHIzX5bqR544DZB9DLD4OQezAW0nKOLck3a
-        7jw0Ck3UNTLkUXweZX48BFKyq7JnFAS/FeiShR8lxMJGpj5hsUcAsDuZk3KfnT83
-        44O2wTUrmYY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 020663A85A;
-        Fri,  9 Sep 2016 16:40:30 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=eAk3Bb2U7PVkvOEmfaITqTfJ21uCCFkH
+        mOHPWJTHrq5vizEuJj7QwRdmtdadpw8lZUHUyT6JEGKDG3ggUU7L2c2Vifg4peiO
+        RSnuK5R1d4j8pY+C+5bVJG8hQpnePxKzuetd4VWX1625mIAGEFnEOmlGGpkbRKJ5
+        LnCL4a1X6h0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A9E4D3D7F6;
+        Fri,  9 Sep 2016 16:51:06 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 71E783A859;
-        Fri,  9 Sep 2016 16:40:29 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3FE6D3D7F5;
+        Fri,  9 Sep 2016 16:51:06 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        spearce@spearce.org, sbeller@google.com, peff@peff.net
-Subject: Re: [PATCH v4 3/3] connect: advertized capability is not a ref
-References: <cover.1472836026.git.jonathantanmy@google.com>
-        <cover.1473441620.git.jonathantanmy@google.com>
-        <ac55dc281e6875df8abcc6ed06d5f258a53dd251.1473441620.git.jonathantanmy@google.com>
-        <20160909194037.GG25016@google.com>
-Date:   Fri, 09 Sep 2016 13:40:27 -0700
-In-Reply-To: <20160909194037.GG25016@google.com> (Jonathan Nieder's message of
-        "Fri, 9 Sep 2016 12:40:37 -0700")
-Message-ID: <xmqqtwdoajt0.fsf@gitster.mtv.corp.google.com>
+To:     Josh Triplett <josh@joshtriplett.org>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH] Move format-patch base commit and prerequisites before email signature
+References: <20160908011200.qzvbdt4wjwiji4h5@x>
+        <xmqqshtags0o.fsf@gitster.mtv.corp.google.com>
+        <20160908185408.5qtfnztjbastlrtw@x>
+        <20160908200819.pkg7jqcvxjpdqr3a@sigill.intra.peff.net>
+        <xmqqd1kef5k5.fsf@gitster.mtv.corp.google.com>
+        <xmqq7fakc12z.fsf@gitster.mtv.corp.google.com>
+        <20160909200721.xfkbud377ja4wkrt@x>
+Date:   Fri, 09 Sep 2016 13:51:04 -0700
+In-Reply-To: <20160909200721.xfkbud377ja4wkrt@x> (Josh Triplett's message of
+        "Fri, 9 Sep 2016 13:07:21 -0700")
+Message-ID: <xmqqpoocajbb.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: A552B7B0-76CD-11E6-97FF-F7BB12518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 20D852E0-76CF-11E6-A17B-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Josh Triplett <josh@joshtriplett.org> writes:
 
-> Jonathan Tan wrote:
+> On Fri, Sep 09, 2016 at 12:41:56PM -0700, Junio C Hamano wrote:
+>> So here is a suggested replacement.  I notice that in the MIME case,
+>> we do not leave any blank line between the last line of the patch
+>> and the baseinfo, which makes it look a bit strange, e.g. output of
+>> "format-patch --attach=mimemime -1" may end like this:
+>> 
+>>     +       test_write_lines 1 2 >expect &&
+>>     +       test_cmp expect actual
+>>     +'
+>>     +
+>>      test_expect_success 'format-patch --pretty=mboxrd' '
+>>             sp=" " &&
+>>             cat >msg <<-INPUT_END &&
+>>     base-commit: 6ebdac1bab966b720d776aa43ca188fe378b1f4b
+>> 
+>>     --------------mimemime--
+>> 
+>> We may want to tweak it a bit further.
+>>  ...
 >
->> --- a/connect.c
->> +++ b/connect.c
->> @@ -172,8 +173,24 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
->>  			continue;
->>  		}
->>  
->> +		if (!strcmp(name, "capabilities^{}")) {
->> +			if (saw_response)
->> +				warning("protocol error: unexpected capabilities^{}, "
->> +					"continuing anyway");
->
-> Please use die() for these.
-> ...
-> The rest looks good.
+> Looks good to me.
 
-Will squash this in, then.
+Thanks.
 
- connect.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
-
-diff --git a/connect.c b/connect.c
-index df25d21..5ccbd10 100644
---- a/connect.c
-+++ b/connect.c
-@@ -175,11 +175,9 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
- 
- 		if (!strcmp(name, "capabilities^{}")) {
- 			if (saw_response)
--				warning("protocol error: unexpected capabilities^{}, "
--					"continuing anyway");
-+				die("protocol error: unexpected capabilities^{}");
- 			if (got_dummy_ref_with_capabilities_declaration)
--				warning("protocol error: multiple capabilities^{}, "
--					"continuing anyway");
-+				die("protocol error: multiple capabilities^{}");
- 			got_dummy_ref_with_capabilities_declaration = 1;
- 			continue;
- 		}
-@@ -188,8 +186,7 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
- 			continue;
- 
- 		if (got_dummy_ref_with_capabilities_declaration)
--			warning("protocol error: unexpected ref after capabilities^{}, "
--				"using this ref and continuing anyway");
-+			die("protocol error: unexpected ref after capabilities^{}");
- 
- 		ref = alloc_ref(buffer + GIT_SHA1_HEXSZ + 1);
- 		oidcpy(&ref->old_oid, &old_oid);
+Do you mean that the base information that appears immediately after
+the patch text (either for MIME case or plain-text) does not bother
+you, though?
