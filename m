@@ -2,85 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5AA38207DF
-	for <e@80x24.org>; Fri,  9 Sep 2016 23:15:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0953F207DF
+	for <e@80x24.org>; Fri,  9 Sep 2016 23:31:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754929AbcIIXM5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 19:12:57 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65234 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754666AbcIIXM5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 19:12:57 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C309F3C1C5;
-        Fri,  9 Sep 2016 19:12:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=vobcQ1ntLNZbFoSy4QF016x7te4=; b=hcCLhJ
-        Nex4TiF2wQ1L4M86gkCjSo/ccxqOoqypaksak0MKLBc7itb+iMFAtqCJik1dsAhf
-        wj8y2bpRQqL5ip5qradvI08bCjMeg7GSDUkTVouZnUHNfqUDsJSMiiEZbSy+jfHy
-        6bUD38OC7rfsNSYaSwRKWNZ2CPAK270QMTb+s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=f3zQxwCdmWo41v45WEJLEMyIM6tcI9BV
-        hVLslNWbRzuRYahsgh1dF3pfiaPCmYQdb6fqmyd3H6JlxuqF4vQEOp04AMMmfk1Z
-        19Lvpu4fu2h+Mj8nCFw/0jJR3Ux8VFsXwa0IrhSxnYdWVk8Nwfew/vbR+b1YjEL5
-        4iDT/MI4Iy0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BABDB3C1C4;
-        Fri,  9 Sep 2016 19:12:55 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3BB733C1C3;
-        Fri,  9 Sep 2016 19:12:55 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     john smith <wempwer@gmail.com>
-Cc:     Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        git@vger.kernel.org
-Subject: Re: How to simulate a real checkout to test a new smudge filter?
-References: <CAKmQUfa_U-g6vC+SjbQSicEUwO+WofNfzezEEwikeOAeL31W5g@mail.gmail.com>
-        <b71adc54-2ae6-ef8e-1dca-0883cd617e6e@web.de>
-        <CAKmQUfbemaid61xPyvNheLM2jVGXGjiyF_x=NZnxkZ=5wccQ=Q@mail.gmail.com>
-        <e17a88cd-2de7-dc84-2262-743e82d8b047@gmail.com>
-        <CAKmQUfafCP6ZwUm7Ec5n2PzvNzBHnFWEJL1usMTFB6Ef0m=8pw@mail.gmail.com>
-        <xmqqwpik8zy3.fsf@gitster.mtv.corp.google.com>
-        <CAKmQUfYCUq=kUTau1-3NjjPVBk6WkP3KdTjgMC8sZtU8h=H4iQ@mail.gmail.com>
-Date:   Fri, 09 Sep 2016 16:12:53 -0700
-In-Reply-To: <CAKmQUfYCUq=kUTau1-3NjjPVBk6WkP3KdTjgMC8sZtU8h=H4iQ@mail.gmail.com>
-        (john smith's message of "Sat, 10 Sep 2016 01:07:00 +0200")
-Message-ID: <xmqqd1kc8y6i.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1755559AbcIIXbE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 19:31:04 -0400
+Received: from mail-ua0-f179.google.com ([209.85.217.179]:33643 "EHLO
+        mail-ua0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754738AbcIIXbD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 19:31:03 -0400
+Received: by mail-ua0-f179.google.com with SMTP id 31so80729504uao.0
+        for <git@vger.kernel.org>; Fri, 09 Sep 2016 16:31:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=m53sDujQQl3gLArYeu8+ZgeHOAWiBJeicp+CZWqES9s=;
+        b=0Rg94SY6VhPZl8DU0Ot/Latn5UaTGvQuhHrVyi3in7inyPhQxjM8OndXAngiCD3g1o
+         FK1X7r2K5I4oLd0H5hJe1kEMgbUpy/c20f0BS0UFodcAr5UxLyGGFuTI6bdC7v6mpiZX
+         VrF7MbGwDmtGggtf5BOJNcaOpD9xTDSVcwsaa5CCoDICjzVCMVzn0U6CQoPVoRuevmv9
+         q09uduZek1t1OCFRApJpG0oT0nB1qWOdul0odjdJ65kWfBqdVHN7shDc+d21kAfuCl9S
+         Rt/g49+Blvw/DB8m1M3TB/vwd+9BWhQzKU+U7Wyi3ghKM0aCVvRfSDdnZpxe3WE5U9hR
+         KPrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=m53sDujQQl3gLArYeu8+ZgeHOAWiBJeicp+CZWqES9s=;
+        b=a3Bacj/Qx66MFHSoY7UxoYBIB6fpGtIPmkdIJlOWRazrELn0Mro2azh2SySfo2TIc8
+         b2iYjzYSeynUV/5M6ASbgU06bs4sEYnN9L3XHWs9OnC9DVu28aJzARxJNllmen7L6j4o
+         9IBKnMc0svyHcifBw/cBezVOoiai0YrbgehtwlmTxehyiQfDyuZY+ihWDzZiyWqPNgiL
+         CUZQDTla+3F3vCD+1tDuxTLTJJC8UfKyp0Dve0msE+n8OI5Ea+cOj9//Pes2K64+CjLY
+         0xASM1QHg38up2wYetzXNkSavzGG/SzDkpfQHvc++MycBoLNE7LlUoVAM5ZfTk8w/qJe
+         wHVg==
+X-Gm-Message-State: AE9vXwPxjAwQot++3BwlU4XWrT3SsjUyenlz718dSJFDDXokcSChcg8CIdgbU6uCCZ+nuGDEm33WuWTfre3Uog==
+X-Received: by 10.176.65.68 with SMTP id j62mr4411718uad.6.1473463862307; Fri,
+ 09 Sep 2016 16:31:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F0989C02-76E2-11E6-913B-F7BB12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.103.50.213 with HTTP; Fri, 9 Sep 2016 16:31:01 -0700 (PDT)
+In-Reply-To: <xmqqk2ekc2zl.fsf@gitster.mtv.corp.google.com>
+References: <CAG0BQXnVAYdpk9EM_uiD+=UKSKmK=z1YEar5MresTr5XfDCxHw@mail.gmail.com>
+ <xmqqoa5gnxow.fsf@gitster.mtv.corp.google.com> <20160729181121.GB14953@sigill.intra.peff.net>
+ <xmqq1t2cnvco.fsf@gitster.mtv.corp.google.com> <20160729223134.GA22591@sigill.intra.peff.net>
+ <xmqqvaz7x6vv.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1609091731540.129229@virtualbox>
+ <xmqq7faldpgp.fsf@gitster.mtv.corp.google.com> <xmqqk2ekc2zl.fsf@gitster.mtv.corp.google.com>
+From:   Dakota Hawkins <dakotahawkins@gmail.com>
+Date:   Fri, 9 Sep 2016 19:31:01 -0400
+Message-ID: <CAG0BQXmNyh-5pcCudobRpG=2bTHibDYkXJEBdWBx4HUgH4Ysqg@mail.gmail.com>
+Subject: Re: Issue with global config defaults "user.useConfigOnly = true" +
+ "pull.rebase = preserve" - "user.email"
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-john smith <wempwer@gmail.com> writes:
+You guys are the best, I'm really impressed with all of the responses
+to this issue! Thank you all for all of your hard work!
 
-> ... get it.  The problem is that in the scenario presented in my last
-> e-mail clean filter is run in the situation which doesn't like a
-> checkin to me.  Is `git checkout <PATH>' doing a *checkin*" under the
-> hood so that the clean filter is called?  What does actually `checkin'
-> mean in Git?  I thought that checkin it's the same as committing a
-> file into the repository.
+Dakota
 
-I do not know what Jakub meant.
-
-When we need to see if we need to update a working tree file, and
-when we cannot tell if you modified the working tree file since you
-checked it out, we may have to run the clean filter (and other
-conversions collectively called "convert-to-git") on the contents in
-it and see if the resulting blob matches what is recorded in the
-index (if they match, there is no need to update the working tree
-file; if they don't match, we either report that you have a local
-modification, or we overwrite it with the contents, depending on
-what operation we are doing for the user).
+On Fri, Sep 9, 2016 at 3:00 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>
+>>> On Thu, 11 Aug 2016, Junio C Hamano wrote:
+>>>>
+>>>> Do you have a preference either way to help us decide if we want to
+>>>> take this change or not?
+>>>
+>>> I have no strong preference. I guess that it does not hurt to go with the
+>>> patch, and it would probably help in a few cases.
+>>
+>> OK.  Let me dig the change back and how well it still fits ;-)
+>
+> Ah, I already had it in my tree lest I forget.  Let me mark it for
+> merging down to 'master'.
+>
+> Thanks.
