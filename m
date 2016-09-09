@@ -7,70 +7,79 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B7C121F6BF
-	for <e@80x24.org>; Fri,  9 Sep 2016 12:21:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C9AF1F6BF
+	for <e@80x24.org>; Fri,  9 Sep 2016 12:28:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753524AbcIIMVy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 08:21:54 -0400
-Received: from mout.gmx.net ([212.227.15.18]:49522 "EHLO mout.gmx.net"
+        id S1752966AbcIIM2q (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 08:28:46 -0400
+Received: from mout.gmx.net ([212.227.15.15]:60588 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751441AbcIIMVx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 08:21:53 -0400
+        id S1751441AbcIIM2p (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 08:28:45 -0400
 Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MHH6Z-1bmRYH0WJP-00E7gW; Fri, 09 Sep 2016 14:21:46
+ ESMTPSA (Nemesis) id 0MSuMn-1bax2K24UX-00RnLi; Fri, 09 Sep 2016 14:28:25
  +0200
-Date:   Fri, 9 Sep 2016 14:21:45 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:   Fri, 9 Sep 2016 14:28:24 +0200 (CEST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Ralf Thielow <ralf.thielow@gmail.com>
-cc:     Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] rebase -i: improve advice on bad instruction lines
-In-Reply-To: <CAN0XMO+diDLXUrxjNGnUi6oUEwkcGavEX8vyGWy2+Wju-N4WJQ@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1609091421010.129229@virtualbox>
-References: <20160906180838.865-1-ralf.thielow@gmail.com> <20160906185918.21286-1-ralf.thielow@gmail.com> <1473240491.20551.1.camel@kaarsemaker.net> <CAN0XMO+diDLXUrxjNGnUi6oUEwkcGavEX8vyGWy2+Wju-N4WJQ@mail.gmail.com>
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: [PATCH] git-gui: respect commit.gpgsign again
+Message-ID: <550e7de5e08e53b5893e1ce021bffee468adfc9d.1473424091.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:FR3hVKO/Wi/iySYbz0r7gfXsztq/vwy/6AROd2f4F3iSTSbs3YN
- HnXpSx6ba/LKXJNWESHZqDWzpDb/Kl6QiVkjKgnSIu9F7es8d39LJ6P+tRt4PeuY8GPbyHj
- aotLrgysKYi3GYZflYWOdvzgqYNIQmQwRi23fXunjshvQbfFNNX/TMpbdG4QvHydgSOKzVk
- WavWCKmid4gY1h4sxb6MQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:bXMnsAbruLM=:MQQQ95Su7iZN+jaKlX9iTY
- b6fmVAKNDhgXhoBYmFkKqvkp4XoQucZuY0vdgz+U0j/F1OIaziITHZebxR7M+C0F6J66/YSDq
- fW8HlrCcPhZzycpiNwKgMua/wxq+GI6z8qQHXGuUOe+9qhinhKOQ7VwRPK49NEFY5HA50gU0t
- LKrlNSIOVlxfi9SKj7yQ2xwhDas8unBV4RfSNXYh4i8Iruu8EXnpAQZIfado3ISWY17DAXEp5
- uMf78UjZ8VOUJfaEzW0YQZlcEpi7sC+2XcI5LqsYr0cyXq+rlnCUsLBdrA+rzDeddZwCMPhUy
- 96kk5Ux+YrfP5D8SDcm40QBbDVR1bfq+PrB3uRCqwX6xkvqkYyiPuya7f4IhC2DsES3WAwu4O
- PWdAMtTX5AsVrVchueARrUYNEyH5CDAjX173/SEdUBBmtkYzFfvoCJg3BxyHjXy+AaNQVC8J1
- SMrpCfcpv2X+Hhp+gO36k5Z3jPyazj4Hu3FUICBHW/cj0D6jwA8a62WQlaUgheAedrYexLXkd
- koDrlXYS6bZ5liXjZuzBrL4qUB3EFFYP/HGCYd7O8eNnuW+dksLfgeAcS8YGJCtcptoFC4EvD
- X5zmGVIma/tVzaGW2cZKOrHX8QI8QYVhqMR1hdU5NbdOB5IyD/t6YwhrJfbYfrxBaaCU4gVsx
- jg3VmrVFvCr/6PoagF8YGjWlJn0fEghwWPYJkUG9XRQhBJs3eQj73EukfZnqD3GzID+c8RvQr
- pbqQsWVJWGLE9e0G5EMfATJ68X1q4H6a3KI9r5Fr6y3PZRgvyEY1OYU7Z9/L3PVoh0cb9ZK0+
- CGOZndC
+X-Provags-ID: V03:K0:0FnWOun8TLl85GgsExuuUxESiIJ1JAFUbfP1klAj99Mt79wF1mK
+ NknFMXx96kvIF6h5vps5OHDzgrWwo6809/HZlkO+3eNRtXx+MY22lfj3/T8EN3kBKnp2fpO
+ jJ1lNg7h1GJ8YGEwIHjqV3h1GcPiG5/urNcV55S5j9Sx7AkQIBe9c0TJiWeMaQDU52HrnBv
+ Bz5voB+PdOymkFhCcJR4g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:P4ai/SoUgvY=:epshiz8B1m9qmd0Ge4N4I0
+ TfObvV7FMIOtSWiLRjl7Ruf5okAPU/xw/I8WJFBk2Ee/1CfrhSvMKyC1iprAxJwHltuhV91ZI
+ q65pborQUEJnt0cFnRu0Mj03yIH1hySdeByqd71HbfX2qG7pPTyjVXcpumcLyCSuh2UG4Jtmr
+ xHfqjSRMPZH6G26FJhQmKzJ4esyDMdAk5kadasOzRyaoI/Kf41t36vkSC4fBPmTWmHPlCPVKj
+ vRm4titz283XJJs5MBC2tX8bXoJ2tP3HOlNF8khNayLhpcP5H5L6g/zPndTUp1YoqlXE3hUIm
+ Ag/Hgd8MKRnAMiOtgaFHmq9efQ+7kA6osBpjFRrr+QuIJXCBPz/FZvgI+91/sKmIHMAfZGE7a
+ ubDYbZIc6AwemPrGJj0mObZevtPZ8UwqcvFs+gJJeCK3htEEZGW3WlQh/GmqCYLw/ktjyDpPd
+ izO4+EFNpDRVdNVuGZiAu7Cg3nmISy2dqgrw8/G7CzIWM+psLCzmvIvVt+raURsIr9VWBF8jE
+ gJTefEYT6VfHCM/J+P3hpwVj0sXW8t9ORiXvlqYZMcGAcIi2H2Xp4PUII+jx0BCgNVXkUmc5M
+ rYBPzSThJfBYuBww5LoUu5yGSy40fZhJzK+EewLMNABYmGL4WP0R5i2oZFPLhicPJsls3aPFm
+ XF8GrQYb/eYrFqDwEyog87fDDsSmzCGCOjVOQ8SabUqPQkMI3Zlp7V+ud7X46lw/mrO/0cR5G
+ HsTwDI8cJQw+NqUz/fN30tg7PI86+jKdZVI/+kP8J4JdVscS8OcAzWD4h6D6dPiQNzMA4KLzv
+ dFEiNK8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ralf,
+As of v2.9.0, `git commit-tree` no longer heeds the `commit.gpgsign`
+config setting. This broke committing in Git GUI.
 
-On Wed, 7 Sep 2016, Ralf Thielow wrote:
+This fixes https://github.com/git-for-windows/git/issues/850
 
-> 2016-09-07 11:28 GMT+02:00 Dennis Kaarsemaker <dennis@kaarsemaker.net>:
-> > Hi Ralf,
-> >
-> > There are quite a few patch series in flight these days around
-> > interactive rebase. Have you checked for conflicts with those?
-> >
-> 
-> Thanks. I did not check against 'pu' when I created this patch but I'm able
-> to apply without any conflicts.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+Published-As: https://github.com/dscho/git/releases/tag/git-gui-gpgsign-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git git-gui-gpgsign-v1
 
-Yeah, rewrites in C won't conflict with your patches. If you rebase
-interactively, the worst that will happen is that you update code that was
-moved into contrib/...
+ git-gui/lib/commit.tcl | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Ciao,
-Johannes
+diff --git a/git-gui/lib/commit.tcl b/git-gui/lib/commit.tcl
+index 864b687..01d2cc2 100644
+--- a/git-gui/lib/commit.tcl
++++ b/git-gui/lib/commit.tcl
+@@ -369,6 +369,9 @@ A rescan will be automatically started now.
+ 	# -- Create the commit.
+ 	#
+ 	set cmd [list commit-tree $tree_id]
++	if {[is_config_true commit.gpgsign]} {
++		lappend cmd -S
++	}
+ 	foreach p [concat $PARENT $MERGE_HEAD] {
+ 		lappend cmd -p $p
+ 	}
+-- 
+2.10.0.windows.1.10.g803177d
+
+base-commit: 6ebdac1bab966b720d776aa43ca188fe378b1f4b
