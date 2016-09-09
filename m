@@ -2,318 +2,190 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A1141F6BF
-	for <e@80x24.org>; Fri,  9 Sep 2016 21:54:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 713DC1F6BF
+	for <e@80x24.org>; Fri,  9 Sep 2016 21:55:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754927AbcIIVy1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 17:54:27 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:34478 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754746AbcIIVy0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 17:54:26 -0400
-Received: by mail-pf0-f173.google.com with SMTP id p64so33239780pfb.1
-        for <git@vger.kernel.org>; Fri, 09 Sep 2016 14:54:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=S5RgRhkp2DwEw68ii/o8jEylo0ZRYRWLWZxZoYlqItc=;
-        b=OSVdGxYqk+4qsOA4PSrFHPfeG/iOkQHV97gC8C0k4VzH3xT0jUN7SSvmm504FWT71/
-         NvRWDjwjCO1gROToNOFm4UQxfNEDxAr57G8NpvvAdqM/i1uiOYRd+hHVT917lIFRcRhj
-         xJ+3Y1eZS+T5uMT0mdfTn50Aalyz4Rwi1tSCFEqw7aGm66vEtgBvGVLqrI2jT/Gf/HaY
-         eeJNmh+hziyJAKKFi1iX/PERFX1DSIT6QHBtgO6b5v79jgq28sPOPlYpuPi/Myc8YgAl
-         ELovi98MJcsVXzEzbMPNoIFmlnI3qTei5baKU5iQdLRsdxPiMg/K2jbFUHpiNtr1p4UK
-         Dd+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=S5RgRhkp2DwEw68ii/o8jEylo0ZRYRWLWZxZoYlqItc=;
-        b=mojGhxuVPTXDGjH9Wvudxt4vXQCgw+O33QfJwN6AaqpiSmctfCNGKkQtGBMN6SJKLD
-         Cb4tA2lirU08dvXskLrvnLw7n8kYTwpnDkgyWks37gPLNiLuV1rEj5y+PuqaKBtvDS+L
-         zrIBB/k64iJ9ryxuvsX8AA7lZamSEHb1x7Xej8QWXfD3XBVaGaMeHjMmtCCsDTEFuJ4a
-         moM5MvjYAuZp0HpM8ktNgK8qrSfr9guoXtqFQEHGYN91yFRmwyclX73lMlzgRCtQmoWU
-         hkz4gAluLQEg5z+iMWsUCSKBJ1T0rc/ym0cj4N2Ton+/BUTAtODd0S+UicU/iZ9MN5VT
-         a37Q==
-X-Gm-Message-State: AE9vXwPdFPOMVddRFLlPMzjF80MKY1byAPUH0e3uD+O+cy+QjkIxHjN5pDx1ZPvMjOxRchdt
-X-Received: by 10.98.89.91 with SMTP id n88mr10270667pfb.119.1473458065655;
-        Fri, 09 Sep 2016 14:54:25 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b00:4449:1c2f:1897:e2e4])
-        by smtp.gmail.com with ESMTPSA id f16sm3337830pfd.84.2016.09.09.14.54.24
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 09 Sep 2016 14:54:24 -0700 (PDT)
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     Brandon Williams <bmwill@google.com>
-Subject: [RFC/PATCH] ls-files: adding support for submodules
-Date:   Fri,  9 Sep 2016 14:53:24 -0700
-Message-Id: <1473458004-41460-1-git-send-email-bmwill@google.com>
-X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
+        id S1753367AbcIIVzK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 17:55:10 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56679 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751120AbcIIVzJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 17:55:09 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E372A3B60B;
+        Fri,  9 Sep 2016 17:55:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=AXpecekTMgApiGhJY8wpjbXpZ+g=; b=HQ7sGp
+        lUdG+9SvqbUVvoXT2yws77njZv1x2zU1tRDWnZZ2TRQJ4EcoAkwc+dpspndt9pCF
+        0drJx43O0rsZ6RKPH4YMjIAaXzTIDMedAxeFHmmA9/KazXhXtWcPgiRyjY+syCEH
+        wl1QyHUsXTQnW5N0Q5xgdx80CuR7M7U8gT9G4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=gx+IRYl6dcPNV1pOlUl48WJz8fedZcAy
+        /tgnm1hKlSEcscw6zqBF+JHq13FVZzdv8jU6/3l7DUsOtpVRk78wMYJPDHFKMgrK
+        S6QNkJCdF+t1GBBrIcEJHpdJZMxguRvHp0NkLfV6w5aCtqQauXnx/wFCfGg+BnZM
+        tUhkhhBb92A=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D9C823B608;
+        Fri,  9 Sep 2016 17:55:07 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 296353B607;
+        Fri,  9 Sep 2016 17:55:07 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ben Peart <peartben@gmail.com>
+Cc:     git@vger.kernel.org, pclouds@gmail.com,
+        Ben Peart <benpeart@microsoft.com>
+Subject: Re: [PATCH v2] checkout: eliminate unnecessary merge for trivial checkout
+References: <20160909192520.4812-1-benpeart@microsoft.com>
+Date:   Fri, 09 Sep 2016 14:55:05 -0700
+In-Reply-To: <20160909192520.4812-1-benpeart@microsoft.com> (Ben Peart's
+        message of "Fri, 9 Sep 2016 15:25:20 -0400")
+Message-ID: <xmqq1t0sagcm.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 123E7EC2-76D8-11E6-8A9D-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Allow ls-files to recognize submodules in order to retrieve a list of
-files from a repository's submodules.  This is done by forking off a
-process to recursively call ls-files on all submodules.
+Ben Peart <peartben@gmail.com> writes:
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
-Hey git developers!
+> @@ -802,6 +806,87 @@ static void orphaned_commit_warning(struct commit *old, struct commit *new)
+>  	free(refs.objects);
+>  }
+>  
+> +static int needs_working_tree_merge(const struct checkout_opts *opts,
+> +	const struct branch_info *old,
+> +	const struct branch_info *new)
+> +{
+> +	/*
+> +	 * We must do the merge if we are actually moving to a new
+> +	 * commit tree.
+> +	 */
+> +	if (!old->commit || !new->commit ||
+> +		oidcmp(&old->commit->tree->object.oid, &new->commit->tree->object.oid))
+> +		return 1;
 
-I'm new to the community and this is the first patch for an open source project
-that I have worked on.
+A huge helper function helps it somewhat, compared with the earlier
+unreadable mess ;-).
 
-I'm looking forward to working on the project!
-Brandon Williams
+Are we certain that at this point the commit objects are both parsed
+and their tree->object.oid are both valid?
 
- Documentation/git-ls-files.txt         |   7 ++-
- builtin/ls-files.c                     |  58 +++++++++++++++++++
- t/t3007-ls-files-recurse-submodules.sh | 103 +++++++++++++++++++++++++++++++++
- 3 files changed, 167 insertions(+), 1 deletion(-)
- create mode 100644 t/t3007-ls-files-recurse-submodules.sh
+> +	/*
+> +	 * Honor the explicit request for a three-way merge or to throw away
+> +	 * local changes
+> +	 */
+> +	if (opts->merge || opts->force)
+> +		return 1;
 
-diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-index 0d933ac..446209e 100644
---- a/Documentation/git-ls-files.txt
-+++ b/Documentation/git-ls-files.txt
-@@ -18,7 +18,8 @@ SYNOPSIS
- 		[--exclude-per-directory=<file>]
- 		[--exclude-standard]
- 		[--error-unmatch] [--with-tree=<tree-ish>]
--		[--full-name] [--abbrev] [--] [<file>...]
-+		[--full-name] [--recurse-submodules]
-+		[--abbrev] [--] [<file>...]
- 
- DESCRIPTION
- -----------
-@@ -137,6 +138,10 @@ a space) at the start of each line:
- 	option forces paths to be output relative to the project
- 	top directory.
- 
-+--recurse-submodules::
-+	Recursively calls ls-files on each submodule in the repository.
-+	Currently there is only support for the --cached mode.
-+
- --abbrev[=<n>]::
- 	Instead of showing the full 40-byte hexadecimal object
- 	lines, show only a partial prefix.
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 00ea91a..c428a51 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -14,6 +14,7 @@
- #include "resolve-undo.h"
- #include "string-list.h"
- #include "pathspec.h"
-+#include "run-command.h"
- 
- static int abbrev;
- static int show_deleted;
-@@ -28,6 +29,7 @@ static int show_valid_bit;
- static int line_terminator = '\n';
- static int debug_mode;
- static int show_eol;
-+static int recurse_submodules;
- 
- static const char *prefix;
- static int max_prefix_len;
-@@ -152,6 +154,45 @@ static void show_killed_files(struct dir_struct *dir)
- 	}
- }
- 
-+/**
-+ *  Recursively call ls-files on a submodule
-+ */
-+static void show_gitlink(const struct cache_entry *ce)
-+{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	struct strbuf buf = STRBUF_INIT;
-+	struct strbuf name = STRBUF_INIT;
-+	int submodule_name_len;
-+	FILE *fp;
-+
-+	argv_array_push(&cp.args, "ls-files");
-+	argv_array_push(&cp.args, "--recurse-submodules");
-+	cp.git_cmd = 1;
-+	cp.dir = ce->name;
-+	cp.out = -1;
-+	start_command(&cp);
-+	fp = fdopen(cp.out, "r");
-+
-+	/*
-+	 * The ls-files child process produces filenames relative to
-+	 * the submodule. Prefix each line with the submodule path
-+	 * to make it relative to the current repository.
-+	 */
-+	strbuf_addstr(&name, ce->name);
-+	strbuf_addch(&name, '/');
-+	submodule_name_len = name.len;
-+	while (strbuf_getline(&buf, fp) != EOF) {
-+		strbuf_addbuf(&name, &buf);
-+		write_name(name.buf);
-+		strbuf_setlen(&name, submodule_name_len);
-+	}
-+
-+	finish_command(&cp);
-+	strbuf_release(&buf);
-+	strbuf_release(&name);
-+	fclose(fp);
-+}
-+
- static void show_ce_entry(const char *tag, const struct cache_entry *ce)
- {
- 	int len = max_prefix_len;
-@@ -163,6 +204,10 @@ static void show_ce_entry(const char *tag, const struct cache_entry *ce)
- 			    len, ps_matched,
- 			    S_ISDIR(ce->ce_mode) || S_ISGITLINK(ce->ce_mode)))
- 		return;
-+	if (recurse_submodules && S_ISGITLINK(ce->ce_mode)) {
-+		show_gitlink(ce);
-+		return;
-+	}
- 
- 	if (tag && *tag && show_valid_bit &&
- 	    (ce->ce_flags & CE_VALID)) {
-@@ -468,6 +513,8 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 		{ OPTION_SET_INT, 0, "full-name", &prefix_len, NULL,
- 			N_("make the output relative to the project top directory"),
- 			PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL },
-+		OPT_BOOL(0, "recurse-submodules", &recurse_submodules,
-+			N_("recurse through submodules")),
- 		OPT_BOOL(0, "error-unmatch", &error_unmatch,
- 			N_("if any <file> is not in the index, treat this as an error")),
- 		OPT_STRING(0, "with-tree", &with_tree, N_("tree-ish"),
-@@ -519,6 +566,17 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 	if (require_work_tree && !is_inside_work_tree())
- 		setup_work_tree();
- 
-+	if (recurse_submodules &&
-+	    (show_stage || show_deleted || show_others || show_unmerged ||
-+	     show_killed || show_modified || show_resolve_undo ||
-+	     show_valid_bit || show_tag || show_eol))
-+		die("ls-files --recurse-submodules can only be used in "
-+		    "--cached mode");
-+
-+	if (recurse_submodules && argc)
-+		die("ls-files --recurse-submodules does not support path "
-+		    "arguments");
-+
- 	parse_pathspec(&pathspec, 0,
- 		       PATHSPEC_PREFER_CWD |
- 		       PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP,
-diff --git a/t/t3007-ls-files-recurse-submodules.sh b/t/t3007-ls-files-recurse-submodules.sh
-new file mode 100644
-index 0000000..78deded
---- /dev/null
-+++ b/t/t3007-ls-files-recurse-submodules.sh
-@@ -0,0 +1,103 @@
-+#!/bin/sh
-+
-+test_description='Test ls-files recurse-submodules feature
-+
-+This test verifies the recurse-submodules feature correctly lists files from
-+submodules.
-+'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup directory structure and submodules' '
-+	echo a >a &&
-+	mkdir b &&
-+	echo b >b/b &&
-+	git add a b &&
-+	git commit -m "add a and b" &&
-+	mkdir submodule &&
-+	(
-+		cd submodule &&
-+		git init &&
-+		echo c >c &&
-+		git add c &&
-+		git commit -m "add c"
-+	) &&
-+	git submodule add ./submodule &&
-+	git commit -m "added submodule"
-+'
-+
-+cat >expect <<EOF
-+.gitmodules
-+a
-+b/b
-+submodule/c
-+EOF
-+
-+test_expect_success 'ls-files correctly outputs files in submodule' '
-+	git ls-files --recurse-submodules >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'ls-files does not output files not added to a repo' '
-+	echo a >not_added &&
-+	echo b >b/not_added &&
-+	(
-+		cd submodule &&
-+		echo c >not_added
-+	) &&
-+	git ls-files --recurse-submodules >actual &&
-+	test_cmp expect actual
-+'
-+
-+cat >expect <<EOF
-+.gitmodules
-+a
-+b/b
-+submodule/.gitmodules
-+submodule/c
-+submodule/subsub/d
-+EOF
-+
-+test_expect_success 'ls-files recurses more than 1 level' '
-+	(
-+		cd submodule &&
-+		mkdir subsub &&
-+		(
-+			cd subsub &&
-+			git init &&
-+			echo d >d &&
-+			git add d &&
-+			git commit -m "add d"
-+		) &&
-+		git submodule add ./subsub &&
-+		git commit -m "added subsub"
-+	) &&
-+	git ls-files --recurse-submodules >actual &&
-+	test_cmp expect actual
-+'
-+
-+cat >expect_error <<EOF
-+fatal: ls-files --recurse-submodules does not support path arguments
-+EOF
-+
-+test_expect_success 'error when using path arguments' '
-+	test_must_fail git ls-files --recurse-submodules b 2>actual &&
-+	test_cmp expect_error actual
-+'
-+
-+cat >expect_error <<EOF
-+fatal: ls-files --recurse-submodules can only be used in --cached mode
-+EOF
-+
-+test_expect_success 'error when using different modes' '
-+	for opt in {v,t}; do
-+		test_must_fail git ls-files --recurse-submodules -$opt 2>actual &&
-+		test_cmp expect_error actual
-+	done &&
-+	for opt in {deleted,modified,others,ignored,stage,killed,unmerged,eol}; do
-+		test_must_fail git ls-files --recurse-submodules --$opt 2>actual &&
-+		test_cmp expect_error actual
-+	done
-+'
-+
-+test_done
--- 
-2.8.0.rc3.226.g39d4020
+Hmph, "git checkout -m HEAD" wouldn't have to do anything wrt the
+index status, no?
+
+For that matter, neither "git checkout -f HEAD".  Unless we rely on
+unpack_trees() to write over the working tree files.
+
+    ... me goes and looks, and finds that merge_working_tree()
+    indeed does have a logic to do quite different thing when
+    "--force" is given.
+
+This makes me wonder if the "merge_working_tree() is expensive, so
+selectively skip calling it" approach is working at a wrong level.
+Wouldn't the merge_working_tree() function itself a better place to
+do this kind of "we may not have to do the full two-way merge"
+optimization?  It already looks at opts and does things differently
+(e.g. when running with "--force", it does not even call unpack).
+If you can optimize even more by looking at other fields in opts to
+avoid unpack, that would fit better with the structure of the code
+that we already have.
+
+> +	/*
+> +	 * Checking out the requested commit may require updating the working
+> +	 * directory and index, let the merge handle it.
+> +	 */
+> +	if (opts->force_detach)
+> +		return 1;
+
+This does not make much sense to me.  After "git branch -f foo
+HEAD", there is no difference in what is done to the index and the
+working directory between "git checkout --detach HEAD" and "git
+checkout foo", is there?
+
+> +	/*
+> +	 * opts->writeout_stage cannot be used with switching branches so is
+> +	 * not tested here
+> +	 */
+> +
+> +	 /*
+> +	  * Honor the explicit ignore requests
+> +	  */
+> +	if (!opts->overwrite_ignore || opts->ignore_skipworktree
+> +		|| opts->ignore_other_worktrees)
+> +		return 1;
+
+Style.  I think you earlier had
+
+	if (a || b ||
+            c)
+
+and here you are doing
+
+	if (a || b
+            || c)
+
+Please pick one and stick to it (I'd pick the former).
+
+> +	 /*
+> +	 * If we're not creating a new branch, by definition we're changing
+> +	 * the existing one so need to do the merge
+> +	 */
+> +	if (!opts->new_branch)
+> +		return 1;
+
+Sorry, but I fail to follow that line of thought.  Starting from a
+state where your HEAD points at commit A,
+
+ - switching to a detached HEAD pointing at a commit A,
+ - switching to an existing branch that already points at the same
+   commit A, and
+ - force updating an existing branch that was pointing at something
+   else to point at the same commit A,
+
+would have the same effect as creating a new branch at commit A and
+switching to it, no?  The same comment applies to the remainder of
+this function.
+
+More importantly, merge_working_tree() checks things other than what
+this function is checking.  For example, it prevents you from
+branch-switching (whether it is to switch to an existing branch that
+has the same commit as the current HEAD, to switch to detached HEAD
+state at the same commit as the current HEAD, or to switch to a new
+branch that points at the same commit as the current HEAD) if your
+index is unmerged (i.e. you are in the middle of a mergy operation).
+
+So my gut feeling is that this:
+
+> +	/*
+> +	 * Optimize the performance of "git checkout foo" by skipping the call
+> +	 * to merge_working_tree where possible.
+> +	 */
+> +	if (needs_working_tree_merge(opts, &old, new)) {
+> +		ret = merge_working_tree(opts, &old, new, &writeout_error);
+
+works at the wrong level.  The comment up to 'Optimize the
+performance of "git checkout foo"' may correctly state what we want
+to achieve, but I think we should do so not with "by skipping the
+call to", but with "by optimizing merge_working_tree()".
+
+Thanks.
+
 
