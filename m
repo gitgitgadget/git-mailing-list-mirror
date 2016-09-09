@@ -2,112 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0760A1F859
-	for <e@80x24.org>; Fri,  9 Sep 2016 10:29:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20E4E1F859
+	for <e@80x24.org>; Fri,  9 Sep 2016 10:33:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753582AbcIIK3X (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 06:29:23 -0400
-Received: from mout.gmx.net ([212.227.15.18]:64395 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751685AbcIIK3Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 06:29:16 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0M4Gup-1arAEY44SB-00rr2U; Fri, 09 Sep 2016 12:28:54
- +0200
-Date:   Fri, 9 Sep 2016 12:28:38 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jeff King <peff@peff.net>
-cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-        Kevin Willford <kewillf@microsoft.com>,
-        Xiaolong Ye <xiaolong.ye@intel.com>,
-        Josh Triplett <josh@joshtriplett.org>
-Subject: Re: [PATCH 2/3] diff_flush_patch_id: stop returning error result
-In-Reply-To: <20160907220409.oowxymhvkof2xsk5@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1609091219350.129229@virtualbox>
-References: <20160907220101.hwwutkiagfottbdd@sigill.intra.peff.net> <20160907220409.oowxymhvkof2xsk5@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1753193AbcIIKc5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 06:32:57 -0400
+Received: from mail-oi0-f42.google.com ([209.85.218.42]:36684 "EHLO
+        mail-oi0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751120AbcIIKcw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 06:32:52 -0400
+Received: by mail-oi0-f42.google.com with SMTP id q188so17267551oia.3
+        for <git@vger.kernel.org>; Fri, 09 Sep 2016 03:32:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=kNAMeptkS21X1UipKNqSno2MtUEkslVr0VJPk38JguM=;
+        b=RTRWAH3Nwkp1WR2lHNJ2eBIRqzlQsrj25tmeH+8h1gxowkBAhTyfg3HNnIaGJeyHY7
+         bq9/roRZ1MTAAdTS9/nwbwBYCouUyxm9auSD+ncusrPFqfoU2hBm67Xx2fUUTqUwFQs/
+         88YsRIuhRE3S1dxkSU4idHI5GDn6Xi6P8bCP5fGcCCv//P6YQC1osQCTbwFwLnr0YOss
+         K24BIvyQrSvgd1hC5R90r5AgE8PHjJElg6vlIE/Zxu/Rq+On4mep1wl8BZrjprngI2uc
+         LU7ks8LfoaxxMLrD0E92PXg+RBEDmwnwuZ2XIt8aLTH6oZEM0YJwBOMEx4FyEEi1SBhe
+         XPZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=kNAMeptkS21X1UipKNqSno2MtUEkslVr0VJPk38JguM=;
+        b=UMZoDEFHNzYTsjOBrZ8N6D/K9e06mDocPFuF5PZ2hj41YPoga0m9mLYRDF1LR7z8kD
+         1xsBfK98Bqb7a0r1+iRG768+hDkLvEa9lBUmKOPfxewgBY/gyLC/f+aKm93fnv7wa3rk
+         P64ggCtDbvPmU1Zu4RW/er3DYVIB5DqaVVTNHNBwt4ETD/YdcYPd4UaTb14sZ6BE26QD
+         jMad68LVHMWvYUaMO0vATFOQwRd1fGve/2ZUM7yef4qmtP9VgiYDIBY/5kIfB/wHWSsj
+         BBjMeU+RmwTffWf2+V3Ux7aKzFU6xeA4W5T9tR5UgS8Sn2QTIVfs3uumNfLx8yJGz+rP
+         mcEQ==
+X-Gm-Message-State: AE9vXwMJz2OWDrUXqdRqEKz9KyUKK6VqUvr1Dz5DGMHFGUJChIp3z8mWUaVU8GvxP+sQqB6mUfDNvwjsk5I6jw==
+X-Received: by 10.202.223.215 with SMTP id w206mr4696858oig.78.1473417171786;
+ Fri, 09 Sep 2016 03:32:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:BACKHVbQjGZR9BCweIyHr0JOGPQ3OdNQ/MFPsOLuDSGw3yiFmlX
- ncSHxOmOxIyBPBcwDgqEDYz8Na5D9YxyYpmC0w3tvhjI9swsDDwLnVVHY0nzDhLxrT8htwz
- rVS+CPT3MAxpX2SRgkoW46uei8Zvu7648ck0W4rdVGo6q1qvHdvH43Ew23zt5ABvACIuwRM
- ajm+sRa3xP8nV4FdzLCtw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:HU78w/Zx0Q0=:0z3HSEzirJfX+gnMZj9F2g
- gK/Db1BtTJP2W5ss7nDnrbGY4hcwFw5IDyenw55QpvFKDlcx+h7TeEk0lUFxJjUyAVV0A0v59
- iV4vemAs0m2PQKyAkDh6QXrhzcZz6UFLmMfZFakp7ul66RIsPslQY3bVGH4XFNuWuI40E/K2N
- N/eFsmgRgeutWaUy+jBigT25rXvCe0161/UWNmEkrvMyGUg4TjIm3e4J/955EsH8tAV3A/moQ
- VRG7COFaKRweq3ib3Fe234xBW1HFHbe3Aiw60Wm7JYhZtAtE0o8rSIQ01qn783PHiWxVxIW3L
- Ye8KtsVyZldiLASV6oE8VSTyLVvmhiUtVUBczVH97Xavi+QJwhefKbkvlpeMgBzV7XLpHRReM
- Setjl+RfwftbGv6PDADOSaU93/NLbRaJwZNAl/LE6kA9ZZ7AqSL/fYD5KlvrDbK36ztxf48qx
- mfsM1QNAGJIfSwdVjn5KBz4+0vdYqHlI40ZkJuKeGC6y+dABiCNz074XL+vYJrvkXfZrr0Pfs
- rUy31yfkHMPcJuN56qiTBOjzRVkr9FwSV7Gp2b+wdfhT5GY1h2o+Z/cNMZ0WLYW1PT4T2RH8d
- 4En3OEy7nVdBU9WNw48F8+IMUODyk1ahd+P8XtYsVWVK1on3yb6T60U0NvPGiwm6jMqjn58QU
- Dz2hnZQT9pG9S9jGnVYftLB5P8zUtCxEI9cAv6VKbCUKHc74r0lk1oX5mWqwTDCp+6kCA2guJ
- vcWTTSxRD5Zy59ECI23Iba7Xv25mxQkdoY4cBopX/8gnz1KdHWq6zwbjfkoutDHQjCjNS0it2
- vtS5ebg
+Received: by 10.64.54.40 with HTTP; Fri, 9 Sep 2016 03:32:21 -0700 (PDT)
+In-Reply-To: <20160908200202.gmvpqrwwjavxmojb@sigill.intra.peff.net>
+References: <CACsJy8CZf0O+uyQaeJ4gcx4XN8ivfFyni+3586WX_R2QM4XgVw@mail.gmail.com>
+ <20160908134719.27955-1-pclouds@gmail.com> <20160908134719.27955-3-pclouds@gmail.com>
+ <20160908200202.gmvpqrwwjavxmojb@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 9 Sep 2016 17:32:21 +0700
+Message-ID: <CACsJy8DmbdGODY+qT38OSkaegSpdO7yAt6e67sHB=_BT8Y7=_Q@mail.gmail.com>
+Subject: Re: [PATCH 2/3] t0001: work around the bug that reads config file
+ before repo setup
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Michael J Gruber <git@drmicha.warpmail.net>,
+        Max Nordlund <max.nordlund@sqore.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+On Fri, Sep 9, 2016 at 3:02 AM, Jeff King <peff@peff.net> wrote:
+> On Thu, Sep 08, 2016 at 08:47:18PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
+>
+>> git-init somehow reads '.git/config' at current directory and sets
+>> log_all_ref_updates based on this file. Because log_all_ref_updates is
+>> not unspecified (-1) any more. It will not be written to the new repo's
+>> config file (see create_default_files() function).
+>>
+>> This will affect our tests in the next patch as we will compare the
+>> config file and expect that core.logallrefupdates is already set to true
+>> by "git init main-worktree".
+>
+> This is a bug for more than worktrees, and is something I'm working on
+> fixing
 
-On Wed, 7 Sep 2016, Jeff King wrote:
-
-> All of our errors come from diff_get_patch_id(), which has
-> exactly three error conditions. The first is an internal
-> assertion, which should be a die("BUG") in the first place.
-> 
-> The other two are caused by an inability to two diff blobs,
-> which is an indication of a serious problem (probably
-> repository corruption). All the rest of the diff subsystem
-> dies immediately on these conditions. By passing up the
-> error, in theory we can keep going even if patch-id is
-> unable to function. But in practice this means we may
-> generate subtly wrong results (e.g., by failing to correlate
-> two commits). Let's just die(), as we're better off making
-> it clear to the user that their repository is not
-> functional.
-> 
-> As a result, we can simplify the calling code.
-
-I like the simplification, but I *hate* the fact that the calling code has
-*no way* to inform the user about the proper next steps.
-
-You are touching code that is really quite at the bottom of a lot of call
-chains. For example in the one of `git pull --rebase`. I just spent an
-insane amount of time trying to make sure that this command will not
-simply die() somewhere deep in the code, leaving the user puzzled.
-
-Please see 3be18b4 (t5520: verify that `pull --rebase` shows the helpful
-advice when failing, 2016-07-26) for more details.
-
-A much better way, in my opinion, would be to introduce a new flag, say,
-skip_merges, and pass that to the diff_flush_patch_id() function. You
-could also consider consolidating that flag with the diff_header_only flag
-into a "flags" argument via something like
-
-	enum diff_flush_patch_id {
-		DIFF_HEADER_ONLY = 1,
-		SKIP_MERGES = 2
-	}
-
-But it is definitely not a good idea to reintroduce the bad practice of
-die()ing deep down in library code. I know, you want proper exception
-handling. We cannot have that. We use C. But die() is not a solution: it
-introduces new problems.
-
-Mind you: I agree that there are serious problems in the cases you
-illustrated. But none of those problems give us license to leave the user
-utterly puzzled by not even telling them what is going on: spouting
-internals such as "unable to read files to diff" is *most definitely* not
-helping users who simply want to run a `git pull --rebase`.
-
-Ciao,
-Dscho
+Great! test_expect_failure it is. But I'll make a separate patch,
+independent from this series though.
+--=20
+Duy
