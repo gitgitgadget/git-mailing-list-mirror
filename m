@@ -7,87 +7,87 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D23501F6BF
-	for <e@80x24.org>; Fri,  9 Sep 2016 14:40:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED75A1F6BF
+	for <e@80x24.org>; Fri,  9 Sep 2016 15:08:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751092AbcIIOkv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 10:40:51 -0400
-Received: from mout.gmx.net ([212.227.17.20]:60777 "EHLO mout.gmx.net"
+        id S1751998AbcIIPIN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 11:08:13 -0400
+Received: from mout.gmx.net ([212.227.15.15]:49751 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750796AbcIIOku (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 10:40:50 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0LeiJ8-1bGEUd3OQg-00qUvE; Fri, 09 Sep 2016 16:40:45
+        id S1751618AbcIIPIM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 11:08:12 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0LiDnn-1bDBf42IlP-00nOwZ; Fri, 09 Sep 2016 17:08:05
  +0200
-Date:   Fri, 9 Sep 2016 16:40:31 +0200 (CEST)
+Date:   Fri, 9 Sep 2016 17:08:04 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 22/22] sequencer: refactor write_message()
-In-Reply-To: <dbc1b08c-a151-29ab-a5a2-45343ca556d6@gmail.com>
-Message-ID: <alpine.DEB.2.20.1609091639430.129229@virtualbox>
-References: <cover.1472457609.git.johannes.schindelin@gmx.de> <cb4253698ae3eca066c031e0aec4e83ede1fa3e5.1472457609.git.johannes.schindelin@gmx.de> <4c0ee8f6-1302-1dcc-602d-7a84150ec39d@gmail.com> <alpine.DEB.2.20.1609011619220.129229@virtualbox>
- <dbc1b08c-a151-29ab-a5a2-45343ca556d6@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 21/22] sequencer: left-trim the lines read from the
+ script
+In-Reply-To: <xmqqvayfwlgu.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1609091707470.129229@virtualbox>
+References: <cover.1472457609.git.johannes.schindelin@gmx.de> <8c30113a920e075e5ecd68ba31b4007de3e2dbc2.1472457609.git.johannes.schindelin@gmx.de> <7996a963-52b5-5f3c-f686-f5cf22573573@gmail.com> <alpine.DEB.2.20.1609011608440.129229@virtualbox>
+ <xmqqvayfwlgu.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-116441008-1473432045=:129229"
-X-Provags-ID: V03:K0:KIL3SFHNlXg+Wjw/EJBQBrzUKErPwSjFhJ7mxlAsNRSIv0GQfNX
- luQ3UkOlavlaFl9sHvQc4MUr0ujIsL5VzICMbXZ/Tat+OG6ll1T8/Dw+g+qHRLuD3G5g50Y
- y0uAM4xPy8ZZxOJk1i7RDcrBDZ4O/DH0iYy+xna4y4qBfvknmNwRTQFoS+W0xR56qv4RK1l
- AEjHNWKinTGTq85k7lTOA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:15ilF8zsQOM=:gyWMwEWZ0mZvB9lyXVSoNU
- Runsg1ucTklS3s8WpLPRIWFS1Sg5GeDViMx+TzU1A+nYrrfzLRW9UTCdei8XVFAUs2xdYKZg8
- ZunqkdRTcAXRsQHSYeNPLkXh6sKf6WXJiKiwMtchPYvCp6uLcxtf0VRWokZZXnhn0VRHtjPK1
- araBuQN0wREf+mG4iSFoiJsuqqcQkONSX8KBo1IEa3UIM2jb+leGu7+OGunPP07Ih5m2w5IkF
- mC/1BZcCgvspau4inYY91bomnV93tX052cw6nT953NH/BSuirXHWCmv4goqEy+IQrrtJQSBpA
- QYMWMlskQq/Y7cfrROkNi6Iw4DBsVGcz4FFZMCirCed5SfIKr1ReanjH1H8GuzPEm95YhF6Qe
- gqbN71D/6O2ByLlMFs6Wm6qBm/eu1A8r1nh4NCafn0fN0MrwY+jQXCDDr7fYxFKgWxJMkM5ut
- c1h6+rez4wWcRPkk0QV2fh35mKXAfLWXfvdMhnAXV49cTR9lozeiQODAawU1xtuEfVKMXZpY2
- TQJPSAziUpfazE9reYS4JHvGn3UFfjdXxiYeyCllAbr29Xd40v8iy27o5nCqVdgDpBBKhvyNs
- GH5M69eC+aY359BE65QRPZ0eQd5nwCY9rAWlDk2uOEK/bQTfDs8HL/95C+qRL010g660FipjU
- 0GgEgVRwAqsNHClzW3JWgbQoWD81FVpTleZtchHRQ2Oky8gEzTir3ucH3aXHjgHcPozQ1f/a+
- t1zyQ3tZ/6iRMj31K6k1RQs+b1sakORbXiSuli3RYyAgpIQn4zk42ZsjW+mZscZ2ERz54e/CM
- Pe7MVHy
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:+GJLnHFIDK7mVu+PWO36rETrEQKFKxtt+ccFUOOYdWTCPCtxRSj
+ w8gyWuuU2/zlZvXwugno1TACwpIzgMeWfsl3hconv4E2kmgcjaO7Ux0MpICyei4+uCNqbNF
+ ZXqS7iC5zmc+6OKSUgjvGS1fZM8UJHvl33J61VpLMxvHjcqa/4kbr7VVKmVFynx7vGqdIBs
+ W7h64cm53n+hfrl8kf3ww==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:es5WkMup6Ow=:j8sU5MTSHddbDhePELeyrV
+ OFnclNCR1YkAH5w/eGqZOkfOmUp/ckyUImcaJJizgy/01aSXKpK/UvDNWy2NowBgQwApCGIHi
+ XTWLrBUmS0a1o1eF+9zKiMOU0+VM31I3XlGm9+LX3dZ1n2HjfYt/7h/lPGtl6DngEzXYpxQq+
+ G4fJOYt1nuwYNUv04j9u/uhHciH1n7E7KNMw9HFMXnLHk++cOnoF8L3Sgx1SBfuvJJSR9HMKy
+ 8VD63se4bGRo5I0lO31IOC4SQjZoZH1KDAjRJweGJkmMK82qTn9bxZy4B/39TiccKnL1egSxt
+ bkyTsiWSAV6cr9BOW/mfncw/JzL59N6+X07rHKADql23Ezw/KD63GxtJyWw43uYFbdeS0orWv
+ mNSOFiRzOLNDbZH7HCEO0JQa23d9dIOVMyQU2guVgyLWAAdcapB77A2PqSSniisPqlVbMHq5Z
+ DvW5k0wpjda1e0qFw1CTH6JvL0th/MtcAR/E3lfjkxKdEvqSLDMVVtZv002KGo3IZTEBtoIgj
+ XDEBr9elkvKGFTsIY+nZnIw/QpDQxU+IQrtrACVGw5KSeNAY++FAzy4qmPAnynNB5SZ2d40GC
+ xJCYyJE6cb15+zIlpa+NxSl3i+5K6IwXv2hvmUVw9YA3VNKsYTL7JhkELQWVv7gnyUfqreM04
+ 4w2IV9YVHZOYzEinPq1/BZ3dogBwXlCboAL7ozZZqm1v6CTOs9mevvbzGhrMoJCMSdYWa5SHd
+ Z7f+vrZnucXCmiRe2/tklvuioTM53TCL4pkCwEg5t4fZ0bC6Ss2zWecRDkSqeNVK6ldbVFRMN
+ LzaOJtW
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323329-116441008-1473432045=:129229
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Thu, 1 Sep 2016, Junio C Hamano wrote:
 
-Hi Kuba,
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> > Interactive rebase's scripts may be indented; We need to handle this
+> >> > case, too, now that we prepare the sequencer to process interactive
+> >> > rebases.
+> >> 
+> >> s/; We need/; we need/
+> >
+> > Hrmpf. From http://grammar.ccc.commnet.edu/grammar/marks/colon.htm:
+> >
+> > 	There is some disagreement among writing reference manuals about
+> > 	when you should capitalize an independent clause following a
+> > 	colon. Most of the manuals advise that when you have more than one
+> > 	sentence in your explanation or when your sentence(s) is a formal
+> > 	quotation, a capital is a good idea. The NYPL Writer's Guide urges
+> > 	consistency within a document; the Chicago Manual of Style says
+> > 	you may begin an independent clause with a lowercase letter unless it's
+> > 	one of those two things (a quotation or more than one sentence).
+> > 	The APA Publication Manual is the most extreme: it advises us to
+> > 	always capitalize an independent clause following a colon. The advice
+> > 	given above is consistent with the Gregg Reference Manual.
+> >
+> > Based on that, I think that a capital is the correct case here.
+> 
+> Does that manual have anything to say about semicolons, which is a
+> different thing?
 
-On Fri, 2 Sep 2016, Jakub Nar=C4=99bski wrote:
+You're correct, I overlooked that.
 
-> W dniu 01.09.2016 o 16:20, Johannes Schindelin pisze:
-> > On Thu, 1 Sep 2016, Jakub Nar=C4=99bski wrote:=20
-> >> W dniu 29.08.2016 o 10:06, Johannes Schindelin pisze:
->=20
-> >>>  =09if (commit_lock_file(&msg_file) < 0)
-> >>>  =09=09return error(_("Error wrapping up %s."), filename);
-> >>
-> >> Another "while at it"... though the one that can be safely postponed
-> >> (well, the make message easier to understand part, not the quote
-> >> filename part):
-> >>
-> >>   =09=09return error(_("Error wrapping up writing to '%s'."), filename=
-);
-> >=20
-> > As I inherited this message, I'll keep it.
->=20
-> Well, please then add quotes while at it, at least, for consistency
->=20
->   =09=09return error(_("Error wrapping up '%s'."), filename);
-
-I may do that as a final patch, once all the other concerns are addressed.
-I really do not want to change the error message during the conversion.
-
-Ciao,
+Fixed,
 Dscho
---8323329-116441008-1473432045=:129229--
