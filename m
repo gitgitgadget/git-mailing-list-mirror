@@ -2,80 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6474D1F6BF
-	for <e@80x24.org>; Fri,  9 Sep 2016 16:26:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF1521F6BF
+	for <e@80x24.org>; Fri,  9 Sep 2016 16:42:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751936AbcIIQ0Z convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 9 Sep 2016 12:26:25 -0400
-Received: from mail1.bemta12.messagelabs.com ([216.82.251.11]:50696 "EHLO
-        mail1.bemta12.messagelabs.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751463AbcIIQ0Y (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 9 Sep 2016 12:26:24 -0400
-X-Greylist: delayed 387 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Sep 2016 12:26:24 EDT
-Received: from [216.82.249.211] by server-11.bemta-12.messagelabs.com id A6/72-28088-F11E2D75; Fri, 09 Sep 2016 16:19:43 +0000
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFIsWRWlGSWpSXmKPExsVS+YHdVlf+4aV
-  wg96rLBZdV7qZHBg9Pm+SC2CMYs3MS8qvSGDNODv3MWNBN3NF/6VXrA2MR5i6GDk5hAS2Mkr0
-  NOiA2BICuhIftnxihYg/YZRofiPRxcgFZN9glGhpOMcIkhAREJd4e3wmexcjBwebgLvE2RWxI
-  GFhAU2JnZNbWUBsXgE7iWvdS8BKWARUJDadUgMJiwrESOyf1c4KUSIocXLmE7ByZgEziXmbHz
-  JD2NoSyxa+Zp7AyDsLSdksJGWzkJQtYGRexahenFpUllqka6KXVJSZnlGSm5iZo2toaKSXm1p
-  cnJiempOYVKyXnJ+7iREYTgxAsINx1ULnQ4ySHExKoryb9l4KF+JLyk+pzEgszogvKs1JLT7E
-  KMPBoSTBq/8AKCdYlJqeWpGWmQMMbJi0BAePkgjv1/tAad7igsTc4sx0iNQpRl2OBT9ur2USY
-  snLz0uVEud9AVIkAFKUUZoHNwIWZZcYZaWEeRmBjhLiKUgtys0sQZV/xSjOwagkzCsAcglPZl
-  4J3KZXQEcwAR0hdOo8yBEliQgpqQZGwfRfV//uNmUVFdphK7/u9B22C6typ/I2x+8tYPzzWiI
-  84NKNxEWnwpfIzXw079oxFYFKh/nNqxYXn2xNZ/r8wvmMVGP5IyfZJw7OPNmeDS/vi2pH+Mb+
-  83U7cXP6ysuKv6P2cU2STDu1a4Gb7c33xX+XrbteIBiwl33J3EUmhxX6FX7Z9pyqU2Ipzkg01
-  GIuKk4EAHh9wrOtAgAA
-X-Env-Sender: sergio.martin@accelya.com
-X-Msg-Ref: server-10.tower-53.messagelabs.com!1473437981!15064619!1
-X-Originating-IP: [121.240.7.61]
-X-StarScan-Received: 
-X-StarScan-Version: 8.84; banners=-,-,-
-X-VirusChecked: Checked
-Received: (qmail 51802 invoked from network); 9 Sep 2016 16:19:42 -0000
-Received: from bkc61.logix.in (HELO accelya-ldmtp.logix.local) (121.240.7.61)
-  by server-10.tower-53.messagelabs.com with DHE-RSA-AES256-GCM-SHA384 encrypted SMTP; 9 Sep 2016 16:19:42 -0000
-Received: from localhost (localhost [127.0.0.1])
-        by accelya-ldmtp.logix.local (Postfix) with ESMTP id AA6B350E1420
-        for <git@vger.kernel.org>; Fri,  9 Sep 2016 21:49:40 +0530 (IST)
-X-Virus-Scanned: amavisd-new at accelya.local
-Received: from accelya-ldmtp.logix.local ([127.0.0.1])
-        by localhost (accelya-ldmtp.logix.local [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id ohNuVFHgeqFl for <git@vger.kernel.org>;
-        Fri,  9 Sep 2016 21:49:40 +0530 (IST)
-Received: from [10.124.8.144] (107.pool85-59-34.dynamic.orange.es [85.59.34.107])
-        by accelya-ldmtp.logix.local (Postfix) with ESMTPSA id 4546450E04E5
-        for <git@vger.kernel.org>; Fri,  9 Sep 2016 21:49:40 +0530 (IST)
-To:     git@vger.kernel.org
-From:   =?UTF-8?Q?Sergio_Mart=c3=adn_Turiel?= <sergio.martin@accelya.com>
-Subject: Missing RPM spec file in tarball
-Message-ID: <4c42a1f4-4f03-0fdf-8bd2-8a7f1f978073@accelya.com>
-Date:   Fri, 9 Sep 2016 18:19:38 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
+        id S1752295AbcIIQmj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 12:42:39 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60198 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750938AbcIIQmj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 12:42:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 86CE139EA6;
+        Fri,  9 Sep 2016 12:42:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=kGbJSw7Hyqdi
+        f8wJkHpdzSMpbcY=; b=rrZWyunBRw0ydc9SPoKJ3WbKnqXzZzdneaJgZx3gkQGT
+        cce0l0oQEf0f4WR6Cdir5MLi5aftCk4BQmQzZ6+WfIg5XbAQ7JbACxxkpHtCvuzu
+        DgisEFgPJGbnqWhK3XEjelul0AlwfJTAgXd4/ebFRJYC7PmySP4I5YjqX3iim44=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=JZ/muO
+        O8fr8fSgJOLSBs4r6n9pXUUpGk+oiyK7FshE2LdysfpCAWtdP39HdwI9NRmxKd/M
+        e7H2yU+DDNsUsRHYtMc0fFhdGhW3pO1vLzA4cnI2G2y5Qas0PNA5chtEU2Egt7Di
+        DmD/3F53BH+iYlFIgslPcfKksUIo47m+or2Vs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7FC1F39EA5;
+        Fri,  9 Sep 2016 12:42:37 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E15D439EA4;
+        Fri,  9 Sep 2016 12:42:36 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sergio =?utf-8?Q?Mart=C3=ADn?= Turiel <sergio.martin@accelya.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Missing RPM spec file in tarball
+References: <4c42a1f4-4f03-0fdf-8bd2-8a7f1f978073@accelya.com>
+Date:   Fri, 09 Sep 2016 09:42:34 -0700
+In-Reply-To: <4c42a1f4-4f03-0fdf-8bd2-8a7f1f978073@accelya.com> ("Sergio
+        =?utf-8?Q?Mart=C3=ADn?= Turiel"'s message of "Fri, 9 Sep 2016 18:19:38
+ +0200")
+Message-ID: <xmqq37l9dnyd.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 6A2FFAF6-76AC-11E6-ABE5-F7BB12518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Sergio Mart=C3=ADn Turiel <sergio.martin@accelya.com> writes:
 
+>  I am trying to build RPM packages from tarball (release 2.9.3 and
+> 2.10.0), and i do not find git.spec file, in previous releases i can
+> found it (e.g. 2.8.3).
+>
+> O.S.: CentOS 7.2
+> Command: rpmbuild -ta git-2.9.3.tar.gz
+> Response: error: Failed to read spec file from git-2.9.3.tar.gz
 
-  I am trying to build RPM packages from tarball (release 2.9.3 and 
-2.10.0), and i do not find git.spec file, in previous releases i can 
-found it (e.g. 2.8.3).
+Since ab214331 ("Makefile: stop pretending to support rpmbuild",
+2016-04-04) that is used in Git 2.9 and later, i.e.
 
-O.S.: CentOS 7.2
-Command: rpmbuild -ta git-2.9.3.tar.gz
-Response: error: Failed to read spec file from git-2.9.3.tar.gz
+    Makefile: stop pretending to support rpmbuild
+   =20
+    Nobody in the active development community seems to watch breakages
+    in the rpmbuild target.  As most major RPM based distros use their
+    own specfile when packaging us, they aren't looking after us as
+    their pristine upstream tree, either.  At this point, it is turning
+    to be a disservice to the users to pretend that our tree natively
+    supports "make rpmbuild" target when we do not properly maintain it.
+   =20
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-Can you tell me what I'm doing wrong?
+we no longer ship an outdated git.spec and git.spec.in files.  This
+was done after finding out that nobody noticed that git.spec has
+been left broken since around Git 2.8.0 (i.e. we stopped shipping
+README without adjusting the reference to it from the git.spec
+file).
 
-
-Thank you very much and best regards, Sergio Martín.
