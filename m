@@ -2,93 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB64E1F6BF
-	for <e@80x24.org>; Fri,  9 Sep 2016 19:38:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE97B20705
+	for <e@80x24.org>; Fri,  9 Sep 2016 19:40:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754624AbcIITiB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 15:38:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40958 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1754619AbcIITiA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 15:38:00 -0400
-Received: (qmail 2454 invoked by uid 109); 9 Sep 2016 19:37:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 09 Sep 2016 19:37:59 +0000
-Received: (qmail 27615 invoked by uid 111); 9 Sep 2016 19:38:08 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 09 Sep 2016 15:38:08 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 09 Sep 2016 15:37:56 -0400
-Date:   Fri, 9 Sep 2016 15:37:56 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-        Kevin Willford <kewillf@microsoft.com>,
-        Xiaolong Ye <xiaolong.ye@intel.com>,
-        Josh Triplett <josh@joshtriplett.org>
-Subject: Re: [PATCH 2/3] diff_flush_patch_id: stop returning error result
-Message-ID: <20160909193756.okvgzjiqcr5jo6hf@sigill.intra.peff.net>
-References: <20160907220101.hwwutkiagfottbdd@sigill.intra.peff.net>
- <20160907220409.oowxymhvkof2xsk5@sigill.intra.peff.net>
- <alpine.DEB.2.20.1609091219350.129229@virtualbox>
- <20160909104007.pwki2ir6et3vvk55@sigill.intra.peff.net>
- <alpine.DEB.2.20.1609091455180.129229@virtualbox>
+        id S1754628AbcIITkl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 15:40:41 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:33751 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753226AbcIITkk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 15:40:40 -0400
+Received: by mail-pf0-f194.google.com with SMTP id 128so4413794pfb.0
+        for <git@vger.kernel.org>; Fri, 09 Sep 2016 12:40:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=qk4/7Gehg3glvTNufccW1Qb2Z8ZonmRjjHXUDGrSJwo=;
+        b=cx5JdT341oZ3YwJsdYyO3oNABdrVwkdPKqjXJGGTC2ltkZKSjFjdtt7/tK5u/VSnPi
+         ToVr/IeMf4CTqe8Z+AGkwZbSZlXrC0ZF/npqiHSLRhx/lkpAe7yNoPU+ukMJoQNk3Zoi
+         6ySjQiakJ9Vb63qri2m18mKf+VCnVRoxoDp5dBr2C7WJLF9Hnv+4sZZpIwGJlzhcfs9/
+         VI6cyZ91zAmFQECmr60i9c9KhiXz7LCxjz8Pg7qnH22MoJjTRE8GIuDjokEj7n6cuH/V
+         qW1hakpaFSmn4udmnM+gnK3lk+62nl2KaMrLwpQmJND7J1bh7iLq3SgcZBaaQfm5hCX/
+         YuSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=qk4/7Gehg3glvTNufccW1Qb2Z8ZonmRjjHXUDGrSJwo=;
+        b=Rcn7zJws7dbYKUr4omI0ohW5AafT7GYlFNDp8O6STUiOUPc7JbZdOvpytaOJ4tVuTm
+         7HUhR7i/3nYLKTjv0XRJsL+w5SEhHlfBUYKc9bagdYylyOSDrpPGn2iYqTMrlkUJQvLR
+         J1MQIfJO0E2Q3dbXmqMKz12TYWlegFpbe+m3MTuT5QVXrG0g+gp01ZRiFF4kzstnsrAD
+         fGUIZtIGb5WVa8imCSNhHH3eIT6l3jlB8/tvYibCm4HC9mqcazH3+kQDiezjGXEKGUa6
+         G1LqKAMnDBaiYwlLO09v0GE5qxaaQsdlJMB0w1sHvu8WSh3Cy8GM60IpU2TwWVHDn6Yb
+         sfNA==
+X-Gm-Message-State: AE9vXwN+8e7fUF9esyxS/PLx31jvdClta9zOh9p3FdEGOJe87NucebXUl7ktrPyMiMOKXA==
+X-Received: by 10.98.74.201 with SMTP id c70mr4277474pfj.1.1473450039892;
+        Fri, 09 Sep 2016 12:40:39 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:2c45:4dc:f98f:e9ed])
+        by smtp.gmail.com with ESMTPSA id l128sm7142987pfl.21.2016.09.09.12.40.38
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 09 Sep 2016 12:40:39 -0700 (PDT)
+Date:   Fri, 9 Sep 2016 12:40:37 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, spearce@spearce.org, sbeller@google.com,
+        gitster@pobox.com, peff@peff.net
+Subject: Re: [PATCH v4 3/3] connect: advertized capability is not a ref
+Message-ID: <20160909194037.GG25016@google.com>
+References: <cover.1472836026.git.jonathantanmy@google.com>
+ <cover.1473441620.git.jonathantanmy@google.com>
+ <ac55dc281e6875df8abcc6ed06d5f258a53dd251.1473441620.git.jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1609091455180.129229@virtualbox>
+In-Reply-To: <ac55dc281e6875df8abcc6ed06d5f258a53dd251.1473441620.git.jonathantanmy@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 09, 2016 at 02:58:25PM +0200, Johannes Schindelin wrote:
+Jonathan Tan wrote:
 
-> > Yes, I agree that this is the opposite direction of libification. And I
-> > agree that the current message is not very helpful.
-> > 
-> > But I am not sure that returning the error up the stack will actually
-> > help somebody move forward. The reason these are all die() calls in the
-> > rest of the diff code is that they are generally indicative of
-> > unrecoverable repository corruption. So any advice does not really
-> > depend on what operation you are performing; it is always "stop what you
-> > are doing immediately, run fsck, and try to get the broken objects from
-> > somebody else".
-> > 
-> > So IMHO, on balance this is not hurting anything.
-> 
-> Well, you make such a situation even worse than it already is.
-> 
-> It would be one thing to change the code to actually say "stop what you
-> are doing immediately, run `git fsck` and try to get the broken objects
-> from somewhere else", *before* saying how to proceed after that.
-> 
-> But that is not what your patch does.
-> 
-> What your patch does is to remove *even the possibility* of saying how to
-> proceed after getting the repository corruption fixed. And instead of
-> saying how the corruption could be fixed, it outputs a terse "cannot read
-> files to diff".
-> 
-> I do not think that is a wise direction.
+> --- a/connect.c
+> +++ b/connect.c
+> @@ -172,8 +173,24 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
+>  			continue;
+>  		}
+>  
+> +		if (!strcmp(name, "capabilities^{}")) {
+> +			if (saw_response)
+> +				warning("protocol error: unexpected capabilities^{}, "
+> +					"continuing anyway");
 
-First, do not blame me for the terse "cannot read files to diff". That
-is the current message. And my patch does not make changing that message
-any more difficult. You are welcome to change it in its error() form.
-You are welcome to change it in the resulting die().
+Please use die() for these.
 
-The quality of that message is totally orthogonal to what the patch is
-doing.
+The warning is directed at the wrong user.  The end-user isn't going
+to be able to fix the server.  The server owner is going to say "Git
+works fine --- I'll ignore this".  Client authors are going to
+*eventually* discover the bad server and have to work around it.  So
+everyone suffers.
 
-The _only_ thing it is losing is the ability to for the caller to then
-additionally say "once you have finished uncorrupting the repository,
-you can resume your operation with ...".
+I feel strongly about this: because there are no servers that violate
+this, it should be a fatal error.  If we find a server that violates
+this, we should weaken the spec and make all violations of the spec
+still a fatal error.
 
-My point is that this is not useful advice. No callers give it, and I
-don't foresee other callers giving it. My argument above was basically
-that it is such an exceptional condition it is not worth worrying about.
+The rest looks good.
 
--Peff
+Thanks for your patience,
+Jonathan
