@@ -7,115 +7,225 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 648F41F859
-	for <e@80x24.org>; Fri,  9 Sep 2016 10:11:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5B701F859
+	for <e@80x24.org>; Fri,  9 Sep 2016 10:11:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753257AbcIIKK5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 06:10:57 -0400
-Received: from mout.gmx.net ([212.227.15.15]:59874 "EHLO mout.gmx.net"
+        id S1753380AbcIIKLB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 06:11:01 -0400
+Received: from mout.gmx.net ([212.227.15.15]:54662 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752035AbcIIKKz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 06:10:55 -0400
+        id S1753179AbcIIKK5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 06:10:57 -0400
 Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
- ESMTPSA (Nemesis) id 0LoVBq-1b6Drn1yqQ-00gUT3; Fri, 09 Sep 2016 12:10:41
+ ESMTPSA (Nemesis) id 0LyWAQ-1awRJ72p0w-015tgd; Fri, 09 Sep 2016 12:10:51
  +0200
-Date:   Fri, 9 Sep 2016 12:10:39 +0200 (CEST)
+Date:   Fri, 9 Sep 2016 12:10:50 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
         Jeff King <peff@peff.net>
-Subject: [PATCH v3 0/4] cat-file: optionally convert to worktree version
-In-Reply-To: <cover.1472041389.git.johannes.schindelin@gmx.de>
-Message-ID: <cover.1473415827.git.johannes.schindelin@gmx.de>
-References: <cover.1472041389.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v3 3/4] cat-file --textconv/--filters: allow specifying the
+ path separately
+In-Reply-To: <cover.1473415827.git.johannes.schindelin@gmx.de>
+Message-ID: <9e01395c0732b47b382d2363a2ef6f4bf361666e.1473415827.git.johannes.schindelin@gmx.de>
+References: <cover.1472041389.git.johannes.schindelin@gmx.de> <cover.1473415827.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:IUUT2A82anKP5bY2trST6kYWgjDlHjqht9PeKc/mqf+B6DB6TPb
- 13742AVbd0r/fs5wNCmYCYKAEy94KZd9FM9rspEta7medKPgupn3VvwJo7n8gwM9JM0a7N1
- YWpmoPaH0UjaI2WSbefYel/k/2TmPiiqRItvJYmZfeyCO6EKPpu7dXkF1D+8V28PK3ZSokD
- 10do0fMJ50vTcErLWXTig==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:8i756fIGg+M=:tZrYxnlPiRWDolVov+q/Gd
- TpQwQxSN7lmGuVpOU8g71rlk2zQhMaRvHjU6tJAlo6DNANfWvkrUighgQVj7MmQ0qtbAnbEOM
- x5041kGdCW1WWlaSrLmPqG5An8H86iSJkokAKC4SEna8uR981lm18Gh98lniGtGPodPD588Yz
- mvL4ID62N6OyHMYa6wOff1EtWZzD5manz3uIKTTWgXVFNgpXqwwuRJd6hOcUNhHAuJYbbbP1S
- UyrZ2W9nhLG9e5fIOWM8GksuRbVulR0npmugz48VDL9WQ0Bk7c8JxC8kNEJx9Dk8ZxmFO5klB
- aGouEHy3q+Pz987uMEIx1XHlniEleJaVmDN/EQpRJsVw3XnajZkV2K4MEb60tP3+fQwjqc7wf
- X7mGCSN0Oj8XB2zbNwEVEtu2OO0H2XVb1eT841C/O/ibxd/zqz0gfhlkH3oHjvBE0acPwyAMC
- xpTb3wf/LNGTDVgpSKyn7XsrI0KBte7j/rjsCHbdGVwOe/0edkfGruPcP233nIF2mkZRGVELw
- ee0xMcZC/id8cq1F/+a5U2c4QOksXh5sdhlrpTlpJVFrOYwB2cXqEmrAdlliddvqVYY9bkIXs
- QFHwxoUxPjjAX0ZGl3U+wMcbqrkTvwXkgeLX+FPPjmmT3TkgUg1uC1hMotgR5PcHTqJWiZrak
- GD6UmmkT5sgvwrgpSvJrVGtij92ibHM1PMuq6gy65t4+uTEbCaQJ2ESNBAxQZmbT/W2sCcmx0
- yYmVE7E4buztVyFqPEmkKUVBI9AMCs6FShLGIbNITgmIwraHEWqv9BZ10EH8/KkwP67CDvnXl
- zCLkfwf
+X-Provags-ID: V03:K0:7M36DGhb9Knij1VjWpdfSzT+KeMpwVawWOKD7bMejQRD+nxLXf+
+ 3hHyunzacz/fY0hkFDF3ujkFsJ0YE1IB0tKkBEd63+IYg2Y+5s2x0XRjqw1ZiTVZ07oNoG7
+ noUlXD8RavtqmJoj8wFrg3Os03Ogs7+VR6IS5gDaZcLAay25vn9J0tXnyOfHR+lWgmEwzEH
+ V0rFnvgx7i8yB0BOmTuSw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:J45mhG493mQ=:ZQil3W7uEWiZ6ATcZZ0sP8
+ naSlz5xAGNtrMinzUabsxnAad73fcig87pqrbcCNCaxolIz7YTZEYSRMh3QIEbn+OsAbucQWM
+ xuREe9iXYEpZr6gEDUZqHq6GonWwy75yBAFswg82todxi/HjqwBl1KjQYwGphEK6CLxPsS/cm
+ 1wWUe/xqElJgMSigEpnrktqpQD52orymYSxk2hOAEKF2JzZvlTNtBT4sVNcns/sc4aRXoijrW
+ W/jo8mMpFCyRQ+mOlZrqpj6MW4hZPeIYe8O4FXtCyvNxEOjl1P6Lk+bwZS/YTIEUYUoaX66oe
+ 0TpfO1A+hOhmgn2vEqZrrCprK5a05aju6gMMrEV8gEU3eNkvmwoG5nL5VJjfpeBLASLyW7Fi8
+ pFuoDBPfofE98kydvJgaCPk9SVj1LjlZW4kCmWAOJSdx5GSrIT033Kh+dpO1/EXbGkdncIBgT
+ mJs/hTPzofi7EhY1gOkK/YziAXanckx1jQAhEgZdbDFz0m271s6SWkNHBBfhn4V0ERVT4hkLB
+ l+IMM9cajQhDeSSbgnze4OgYP62HW+igCv7PAMa1ufMpXUGXDBp3eSeUC26E9NbPjDYWMFIsX
+ ItBXmMOMcWiejHeIB3gS/0t5OdNJv7fpU8ycpjP9YnlKShQemfa+HY15KXG1EK/yyJBAYdlOG
+ 0IqXCq4gj2e3qr+OecQEKWtkySJ4gCRl8weHAcGqSRt705jwOA8aH9WpwZ2DOrZZcFmP23WQW
+ +pN8OUY68ikAhvREI3jER0G/zbon12U2/4jtKnFdNTpsYvmZEG1EU82udxuWOmeN62IWxRuqq
+ 4qKC7/B
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When third-party tools need to access to contents of blobs in the
-database, they might be more interested in the worktree version than in
-the "clean" version of said contents.
+There are circumstances when it is relatively easy to figure out the
+object name for a given path, but not the name of the containing tree.
+For example, when looking at a diff generated by Git, the object names
+are recorded, but not the revision. As a matter of fact, the revisions
+from which the diff was generated may not even exist locally.
 
-This branch introduces the --filters option to make that happen, the
---use-path option to provide the path separately if the blob name rather
-than the tree name is availale, and offers batch support in which case
-it expects the object names and the path on its input lines, separated
-by white space.
+In such a case, the user would have to generate a fake revision just to
+be able to use --textconv or --filters.
 
-The new --filters option is an obvious sibling of --textconv, and shares
-the peculiar feature that the drivers (and end-of-line convention) are
-determined from the current worktree, not from the attributes stored in
-the revision that may have been part of the object name.
+Let's simplify this dramatically, because we do not really need that
+revision at all: all we care about is that we know the path. In the
+scenario described above, we do know the path, and we just want to
+specify it separately from the object name.
 
-As --textconv is so similar to --filters, it was taught to understand
-the --use-path option and it was made compatible with batch mode, too.
+Example usage:
 
-I briefly considered teaching the batch mode to extract the path from
-object names if they are specified as <tree-ish>:<path>. The changes
-would be quite intrusive, though, and uglify the code substanitially. So
-I decided against that.
+	git cat-file --textconv --path=main.c 0f1937fd
 
-Changes vs v2:
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ Documentation/git-cat-file.txt |  7 ++++++-
+ builtin/cat-file.c             | 26 +++++++++++++++++++++-----
+ t/t8010-cat-file-filters.sh    | 20 ++++++++++++++++++++
+ 3 files changed, 47 insertions(+), 6 deletions(-)
 
-- always override unknown mode to imply 0100644, even if the user did
-  not specify the --path option.
-
-
-Johannes Schindelin (4):
-  cat-file: fix a grammo in the man page
-  cat-file: introduce the --filters option
-  cat-file --textconv/--filters: allow specifying the path separately
-  cat-file: support --textconv/--filters in batch mode
-
- Documentation/git-cat-file.txt |  40 +++++++++++----
- builtin/cat-file.c             | 110 ++++++++++++++++++++++++++++++++++++++---
- t/t8010-cat-file-filters.sh    |  64 ++++++++++++++++++++++++
- 3 files changed, 196 insertions(+), 18 deletions(-)
- create mode 100755 t/t8010-cat-file-filters.sh
-
-Published-As: https://github.com/dscho/git/releases/tag/cat-file-filters-v3
-Fetch-It-Via: git fetch https://github.com/dscho/git cat-file-filters-v3
-
-Interdiff vs v2:
-
- diff --git a/builtin/cat-file.c b/builtin/cat-file.c
- index f8a3a08..4461153 100644
- --- a/builtin/cat-file.c
- +++ b/builtin/cat-file.c
- @@ -71,7 +71,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
-  
-  	if (!path)
-  		path = obj_context.path;
- -	else if (obj_context.mode == S_IFINVALID)
- +	if (obj_context.mode == S_IFINVALID)
-  		obj_context.mode = 0100644;
-  
-  	buf = NULL;
-
+diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+index 537d02c..4fa9041 100644
+--- a/Documentation/git-cat-file.txt
++++ b/Documentation/git-cat-file.txt
+@@ -9,7 +9,7 @@ git-cat-file - Provide content or type and size information for repository objec
+ SYNOPSIS
+ --------
+ [verse]
+-'git cat-file' (-t [--allow-unknown-type]| -s [--allow-unknown-type]| -e | -p | <type> | --textconv | --filters ) <object>
++'git cat-file' (-t [--allow-unknown-type]| -s [--allow-unknown-type]| -e | -p | <type> | --textconv | --filters ) [--path=<path>] <object>
+ 'git cat-file' (--batch | --batch-check) [--follow-symlinks]
+ 
+ DESCRIPTION
+@@ -64,6 +64,11 @@ OPTIONS
+ 	end-of-line conversion, etc). In this case, <object> has to be of
+ 	the form <tree-ish>:<path>, or :<path>.
+ 
++--path=<path>::
++	For use with --textconv or --filters, to allow specifying an object
++	name and a path separately, e.g. when it is difficult to figure out
++	the revision from which the blob came.
++
+ --batch::
+ --batch=<format>::
+ 	Print object information and contents for each object provided
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 0b74afa..b648056 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -20,6 +20,8 @@ struct batch_options {
+ 	const char *format;
+ };
+ 
++static const char *force_path;
++
+ static int filter_object(const char *path, unsigned mode,
+ 			 const unsigned char *sha1,
+ 			 char **buf, unsigned long *size)
+@@ -58,6 +60,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+ 	struct object_info oi = {NULL};
+ 	struct strbuf sb = STRBUF_INIT;
+ 	unsigned flags = LOOKUP_REPLACE_OBJECT;
++	const char *path = force_path;
+ 
+ 	if (unknown_type)
+ 		flags |= LOOKUP_UNKNOWN_OBJECT;
+@@ -65,6 +68,11 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+ 	if (get_sha1_with_context(obj_name, 0, sha1, &obj_context))
+ 		die("Not a valid object name %s", obj_name);
+ 
++	if (!path)
++		path = obj_context.path;
++	if (obj_context.mode == S_IFINVALID)
++		obj_context.mode = 0100644;
++
+ 	buf = NULL;
+ 	switch (opt) {
+ 	case 't':
+@@ -89,21 +97,22 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+ 		return !has_sha1_file(sha1);
+ 
+ 	case 'w':
+-		if (!obj_context.path[0])
++		if (!path[0])
+ 			die("git cat-file --filters %s: <object> must be "
+ 			    "<sha1:path>", obj_name);
+ 
+-		if (filter_object(obj_context.path, obj_context.mode,
++		if (filter_object(path, obj_context.mode,
+ 				  sha1, &buf, &size))
+ 			return -1;
+ 		break;
+ 
+ 	case 'c':
+-		if (!obj_context.path[0])
++		if (!path[0])
+ 			die("git cat-file --textconv %s: <object> must be <sha1:path>",
+ 			    obj_name);
+ 
+-		if (textconv_object(obj_context.path, obj_context.mode, sha1, 1, &buf, &size))
++		if (textconv_object(path, obj_context.mode,
++				    sha1, 1, &buf, &size))
+ 			break;
+ 
+ 	case 'p':
+@@ -477,7 +486,7 @@ static int batch_objects(struct batch_options *opt)
+ }
+ 
+ static const char * const cat_file_usage[] = {
+-	N_("git cat-file (-t [--allow-unknown-type]|-s [--allow-unknown-type]|-e|-p|<type>|--textconv|--filters) <object>"),
++	N_("git cat-file (-t [--allow-unknown-type]|-s [--allow-unknown-type]|-e|-p|<type>|--textconv|--filters) [--path=<path>] <object>"),
+ 	N_("git cat-file (--batch | --batch-check) [--follow-symlinks]"),
+ 	NULL
+ };
+@@ -525,6 +534,8 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+ 			    N_("for blob objects, run textconv on object's content"), 'c'),
+ 		OPT_CMDMODE(0, "filters", &opt,
+ 			    N_("for blob objects, run filters on object's content"), 'w'),
++		OPT_STRING(0, "path", &force_path, N_("blob"),
++			   N_("use a specific path for --textconv/--filters")),
+ 		OPT_BOOL(0, "allow-unknown-type", &unknown_type,
+ 			  N_("allow -s and -t to work with broken/corrupt objects")),
+ 		OPT_BOOL(0, "buffer", &batch.buffer_output, N_("buffer --batch output")),
+@@ -567,6 +578,11 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(cat_file_usage, options);
+ 	}
+ 
++	if (force_path && opt != 'c' && opt != 'w') {
++		error("--path=<path> needs --textconv or --filters");
++		usage_with_options(cat_file_usage, options);
++	}
++
+ 	if (batch.buffer_output < 0)
+ 		batch.buffer_output = batch.all_objects;
+ 
+diff --git a/t/t8010-cat-file-filters.sh b/t/t8010-cat-file-filters.sh
+index e466634..0d5c33e 100755
+--- a/t/t8010-cat-file-filters.sh
++++ b/t/t8010-cat-file-filters.sh
+@@ -31,4 +31,24 @@ test_expect_success 'cat-file --filters converts to worktree version' '
+ 	has_cr actual
+ '
+ 
++test_expect_success 'cat-file --filters --path=<path> works' '
++	sha1=$(git rev-parse -q --verify HEAD:world.txt) &&
++	git cat-file --filters --path=world.txt $sha1 >actual &&
++	has_cr actual
++'
++
++test_expect_success 'cat-file --textconv --path=<path> works' '
++	sha1=$(git rev-parse -q --verify HEAD:world.txt) &&
++	test_config diff.txt.textconv "tr A-Za-z N-ZA-Mn-za-m <" &&
++	git cat-file --textconv --path=hello.txt $sha1 >rot13 &&
++	test uryyb = "$(cat rot13 | remove_cr)"
++'
++
++test_expect_success '----path=<path> complains without --textconv/--filters' '
++	sha1=$(git rev-parse -q --verify HEAD:world.txt) &&
++	test_must_fail git cat-file --path=hello.txt blob $sha1 >actual 2>err &&
++	test ! -s actual &&
++	grep "path.*needs.*filters" err
++'
++
+ test_done
 -- 
 2.10.0.windows.1.10.g803177d
 
-base-commit: 6ebdac1bab966b720d776aa43ca188fe378b1f4b
+
