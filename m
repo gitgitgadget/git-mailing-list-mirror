@@ -7,79 +7,99 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C9AF1F6BF
-	for <e@80x24.org>; Fri,  9 Sep 2016 12:28:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 112141F6BF
+	for <e@80x24.org>; Fri,  9 Sep 2016 12:59:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752966AbcIIM2q (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 08:28:46 -0400
-Received: from mout.gmx.net ([212.227.15.15]:60588 "EHLO mout.gmx.net"
+        id S1754725AbcIIM7C (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 08:59:02 -0400
+Received: from mout.gmx.net ([212.227.17.20]:60743 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751441AbcIIM2p (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 08:28:45 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0MSuMn-1bax2K24UX-00RnLi; Fri, 09 Sep 2016 14:28:25
+        id S1752102AbcIIM7B (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 08:59:01 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0LfC4q-1bFZAA1RUG-00orEA; Fri, 09 Sep 2016 14:58:42
  +0200
-Date:   Fri, 9 Sep 2016 14:28:24 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+Date:   Fri, 9 Sep 2016 14:58:25 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: [PATCH] git-gui: respect commit.gpgsign again
-Message-ID: <550e7de5e08e53b5893e1ce021bffee468adfc9d.1473424091.git.johannes.schindelin@gmx.de>
+To:     Jeff King <peff@peff.net>
+cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+        Kevin Willford <kewillf@microsoft.com>,
+        Xiaolong Ye <xiaolong.ye@intel.com>,
+        Josh Triplett <josh@joshtriplett.org>
+Subject: Re: [PATCH 2/3] diff_flush_patch_id: stop returning error result
+In-Reply-To: <20160909104007.pwki2ir6et3vvk55@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1609091455180.129229@virtualbox>
+References: <20160907220101.hwwutkiagfottbdd@sigill.intra.peff.net> <20160907220409.oowxymhvkof2xsk5@sigill.intra.peff.net> <alpine.DEB.2.20.1609091219350.129229@virtualbox> <20160909104007.pwki2ir6et3vvk55@sigill.intra.peff.net>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:0FnWOun8TLl85GgsExuuUxESiIJ1JAFUbfP1klAj99Mt79wF1mK
- NknFMXx96kvIF6h5vps5OHDzgrWwo6809/HZlkO+3eNRtXx+MY22lfj3/T8EN3kBKnp2fpO
- jJ1lNg7h1GJ8YGEwIHjqV3h1GcPiG5/urNcV55S5j9Sx7AkQIBe9c0TJiWeMaQDU52HrnBv
- Bz5voB+PdOymkFhCcJR4g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:P4ai/SoUgvY=:epshiz8B1m9qmd0Ge4N4I0
- TfObvV7FMIOtSWiLRjl7Ruf5okAPU/xw/I8WJFBk2Ee/1CfrhSvMKyC1iprAxJwHltuhV91ZI
- q65pborQUEJnt0cFnRu0Mj03yIH1hySdeByqd71HbfX2qG7pPTyjVXcpumcLyCSuh2UG4Jtmr
- xHfqjSRMPZH6G26FJhQmKzJ4esyDMdAk5kadasOzRyaoI/Kf41t36vkSC4fBPmTWmHPlCPVKj
- vRm4titz283XJJs5MBC2tX8bXoJ2tP3HOlNF8khNayLhpcP5H5L6g/zPndTUp1YoqlXE3hUIm
- Ag/Hgd8MKRnAMiOtgaFHmq9efQ+7kA6osBpjFRrr+QuIJXCBPz/FZvgI+91/sKmIHMAfZGE7a
- ubDYbZIc6AwemPrGJj0mObZevtPZ8UwqcvFs+gJJeCK3htEEZGW3WlQh/GmqCYLw/ktjyDpPd
- izO4+EFNpDRVdNVuGZiAu7Cg3nmISy2dqgrw8/G7CzIWM+psLCzmvIvVt+raURsIr9VWBF8jE
- gJTefEYT6VfHCM/J+P3hpwVj0sXW8t9ORiXvlqYZMcGAcIi2H2Xp4PUII+jx0BCgNVXkUmc5M
- rYBPzSThJfBYuBww5LoUu5yGSy40fZhJzK+EewLMNABYmGL4WP0R5i2oZFPLhicPJsls3aPFm
- XF8GrQYb/eYrFqDwEyog87fDDsSmzCGCOjVOQ8SabUqPQkMI3Zlp7V+ud7X46lw/mrO/0cR5G
- HsTwDI8cJQw+NqUz/fN30tg7PI86+jKdZVI/+kP8J4JdVscS8OcAzWD4h6D6dPiQNzMA4KLzv
- dFEiNK8
+X-Provags-ID: V03:K0:mRUW/hLJmuO7ORQLz/h1rgmeqlN2ajCT43+Cz8PveMSLPBcL90S
+ tPjqcsumSXb6+TxnIKF7eSNuUQIYP0K2q/+3oKehbd2m3QulOvb+fs+2dzs1kWywGbCJNgR
+ UapzbkHXxsDbrDvCZRMqsvQRLhYLOLbk7aw2iqjyZEnfgVHKGK25BjpcvOOyG+i9Uj9xmeE
+ 4YsMCyFRoSyA1hPdNB4hA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:R4dALtMTgQ8=:zxcFcxzswizzLxXBG0lnRQ
+ 7ZLVK2Ucv/yazkTCw1DiaE6TTgQmPSmZGf0LHf3eLhHP1hwUhByxNIxkExM+xauj1uRt8Aqjk
+ 0bZLPGIYA6MlGExoe8X7o8v7DBnyw8lLwcJU3EfeAYftbJo2yzcnpobX7rebnIhQTxbVsMJUO
+ 2auUjlU3GRoFeu14qa0WHmpRBgVqWfLuv9yqlj3jOSdYGH9LzOpFDhcDFGJluLAnNmEWg1wvK
+ H8y3a2JFjo7SKfzPhqYRQda9jo+NJlMJ2J5WoorlcvRb6mbOYIfCOEbAGBTIER+u08pfakNyQ
+ RoO6x/dsUS7/oUgZ0YIi76lYESGdQHrkBV7qedUX1d8BmKvaa1vi/f7bVRnHQbiPB2GtdeM9l
+ oWPIUPzWYPwBT6UngyBMfELZ/owoUpGF7UGqj26EVPp1jTTl1lrYzy05scnonhF+qf9P3Bn6x
+ 8ndvCyX569vbRspwjXVN2xAwJAyD11+79ZDqMTGwZbUzXMF0JxjypxO3nJbZRVvk/CszWbXTN
+ fyIZKO8QKsWrLe6XhKf1SiyOljVyK4rzFLAbo6+vn0N6o+GoAmbErQiDkl6KUFnTk8sZOPIvI
+ twXI17h9bBRNGxz8smpYCr19GumtznvmP/NRzLuW4driQ6Bf12umoK5eOIfvwvKjqzeLN/k3Q
+ kRpkcM+1pMKD2ipWPC24T5Enpsxo3tBA1onftlpQb03SdqfGg5KrQPRTM9AWYr0W+A0/5dWsW
+ 8WCwx3sGDmv3aBmtC8Ae8UyxDlIwAE9/Oyh9Ds/Lel3+HW7SlmDYRtxrie/ZvEmPx6GGIaUa0
+ zBsenRK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As of v2.9.0, `git commit-tree` no longer heeds the `commit.gpgsign`
-config setting. This broke committing in Git GUI.
+Hi Peff,
 
-This fixes https://github.com/git-for-windows/git/issues/850
+On Fri, 9 Sep 2016, Jeff King wrote:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-Published-As: https://github.com/dscho/git/releases/tag/git-gui-gpgsign-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git git-gui-gpgsign-v1
+> On Fri, Sep 09, 2016 at 12:28:38PM +0200, Johannes Schindelin wrote:
+> 
+> > I like the simplification, but I *hate* the fact that the calling code has
+> > *no way* to inform the user about the proper next steps.
+> > 
+> > You are touching code that is really quite at the bottom of a lot of call
+> > chains. For example in the one of `git pull --rebase`. I just spent an
+> > insane amount of time trying to make sure that this command will not
+> > simply die() somewhere deep in the code, leaving the user puzzled.
+> > 
+> > Please see 3be18b4 (t5520: verify that `pull --rebase` shows the helpful
+> > advice when failing, 2016-07-26) for more details.
+> 
+> Yes, I agree that this is the opposite direction of libification. And I
+> agree that the current message is not very helpful.
+> 
+> But I am not sure that returning the error up the stack will actually
+> help somebody move forward. The reason these are all die() calls in the
+> rest of the diff code is that they are generally indicative of
+> unrecoverable repository corruption. So any advice does not really
+> depend on what operation you are performing; it is always "stop what you
+> are doing immediately, run fsck, and try to get the broken objects from
+> somebody else".
+> 
+> So IMHO, on balance this is not hurting anything.
 
- git-gui/lib/commit.tcl | 3 +++
- 1 file changed, 3 insertions(+)
+Well, you make such a situation even worse than it already is.
 
-diff --git a/git-gui/lib/commit.tcl b/git-gui/lib/commit.tcl
-index 864b687..01d2cc2 100644
---- a/git-gui/lib/commit.tcl
-+++ b/git-gui/lib/commit.tcl
-@@ -369,6 +369,9 @@ A rescan will be automatically started now.
- 	# -- Create the commit.
- 	#
- 	set cmd [list commit-tree $tree_id]
-+	if {[is_config_true commit.gpgsign]} {
-+		lappend cmd -S
-+	}
- 	foreach p [concat $PARENT $MERGE_HEAD] {
- 		lappend cmd -p $p
- 	}
--- 
-2.10.0.windows.1.10.g803177d
+It would be one thing to change the code to actually say "stop what you
+are doing immediately, run `git fsck` and try to get the broken objects
+from somewhere else", *before* saying how to proceed after that.
 
-base-commit: 6ebdac1bab966b720d776aa43ca188fe378b1f4b
+But that is not what your patch does.
+
+What your patch does is to remove *even the possibility* of saying how to
+proceed after getting the repository corruption fixed. And instead of
+saying how the corruption could be fixed, it outputs a terse "cannot read
+files to diff".
+
+I do not think that is a wise direction.
+
+Ciao,
+Dscho
