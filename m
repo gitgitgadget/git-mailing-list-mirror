@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B34161F6BF
+	by dcvr.yhbt.net (Postfix) with ESMTP id C372820705
 	for <e@80x24.org>; Fri,  9 Sep 2016 14:37:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753028AbcIIOhP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 10:37:15 -0400
-Received: from mout.gmx.net ([212.227.17.20]:52491 "EHLO mout.gmx.net"
+        id S1753039AbcIIOhR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 10:37:17 -0400
+Received: from mout.gmx.net ([212.227.17.20]:61229 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752936AbcIIOhK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 10:37:10 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MX19U-1bWG0A3qeC-00Vxoc; Fri, 09 Sep 2016 16:37:03
+        id S1752936AbcIIOhQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 10:37:16 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0LzGV3-1aw5lX2jYH-014Rx6; Fri, 09 Sep 2016 16:37:10
  +0200
-Date:   Fri, 9 Sep 2016 16:37:02 +0200 (CEST)
+Date:   Fri, 9 Sep 2016 16:37:10 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 02/17] sequencer: do not die() in do_pick_commit()
+Subject: [PATCH v3 04/17] sequencer: lib'ify do_recursive_merge()
 In-Reply-To: <cover.1473431645.git.johannes.schindelin@gmx.de>
-Message-ID: <5a090b8f817bbe5a9b32b3af556416b2e341d221.1473431645.git.johannes.schindelin@gmx.de>
+Message-ID: <6d105cab003f2a28108557e889ddbbea70b1c453.1473431645.git.johannes.schindelin@gmx.de>
 References: <cover.1472219214.git.johannes.schindelin@gmx.de> <cover.1473431645.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:wX2c7p8lsNjb1JckpjrG6lUMnUYu44oC6tX47RsFJzixY+ajO8H
- VwBwmnYB4KhPnKXl94Pxw6IpWJtJn2I0CphnGHeeY3SYMuKiTlnlNMMHJvtdBph7Rqv/kfZ
- k1DsymCtpxQw/MXhxlsBgSIR2mpup7ORsPXhfODg7cWfn9imjA23yHx4rHKlA05+Z6bQgHk
- C86/RJiunycGEVRbxDLGw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+7+DXbFb+iY=:US7gQEw6PBWf4AiB4rG6vK
- hEkr/3iLuDWXrH/BfOa7NoHod52ug9U+Hnyn5SyyPA0ZLu/q+EFhMPiDFXhmKVxh+EOQ8OPHy
- sgrTPwh1N85gB3wpNCe0PS71KSi01bPs23u8gW51j/3drcEdCiZ+/sFnhtIrIHIzeIjRCu+FT
- oPH/JNjG110/noH6uMqQcSGG5Od+OHCLpvftIsmaS8cABiQZEVB8zDEuzaO+wP/58o7GcAJLi
- WWUmLfVNG0Gen+Au8Gw10yjxihCMNRCuBAZ/ZYYIqB7zWMQy44h0vcYOkemoK0s8OoDvgndO+
- w3iBkNgKIzLqz3f4VXLL69F6G1oD2rF9E7r5kY6EnzomTlzCReuo3qdqt+ljlhRFV1jaG7s9V
- allwByLmPNitWgqqKd3QvMGQeKmNbC68VgdQRzLMiIvoXwdRQM0ZZLaAiMg+5A+jc8AWqRkCe
- Ks7UnCVoECpYwCMFSEzmBXkBSYq43chzzzr4oI5r77KUY5MYiFDV6k4qW/jSPGB9rt9bhVzwf
- v7ThX0Kdd4Lb/vMMX+8z6mUm310QJES8DFgoldt1N6pARwmISF4pwdqH0wwyiiVXJarJLBfha
- AEd9Hodd21CRJsFghS3fIAUFXPwwLtz1Pot6bGSqBRk70YSt4uum+fK0Pnbn0+/YaQkV8rrmo
- 7KzhKb0qM8NEP5bBBSeF7PCiG9sAYLFNmBbC6Jd2z3+YZx3hhdeVbf/V0C0T9hczjI02eGXz3
- Do20pPv/PnEY+B65MvZbWACePjzg6AlT/dIN2ugUZIZLMnlc50riiWfGZW7wL0xzOSxyeZThq
- OcuATle
+X-Provags-ID: V03:K0:5gTlVPNndcGy0QyRA27yD1QSuwZjiZrOXFtGl8w8OKeD3sJFT+G
+ Mwpz9TM7yaNRjG6HR5vkvbmfyYtA3jLygngSdAkxM5JZSc2z02gd0k9ZBNM9fMTh/6oefGl
+ N30QP0nf/eRselIMpOkS5cnzz5xmtHd07tp3dfWUbXJXgJTFNhTMU48EEWkLqAKpKsDK415
+ 200NZ663voNPkgNKUMThA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Wq6nqIl8vhk=:29XVbzbmP/s1SYsHdRqnm6
+ CQXDWMX3byjtS/8P4gRTEd/OxHOX8UlnCX43iqjHkRaOaLoICaszD9VYB3klOQpYP0KrbM/MH
+ mkTZz6pT5trjGwhH2qoqbAuomJochQg3VsfhYLDsYq/EJY1p637tqHPEGHqb8DborriKlppRF
+ YCy8mw/hW1bPirQZfh48/lXtXlZDAgvWrx5Rl99G1PnnULsKcyvX/gZzMjIozAdnaIrzU96ah
+ Evhz4ABoBQ2jBIrYkIlCPj1ngur1iujVxhcXD+0F6m+AFp6e2O+u9yft+KeE6AOR1AvlaVAzG
+ F3l3Uf0BZy95U7lYxLP+x6VPMYInCIC+9OrusQ2FqHbE1OBDHKsDQBIQtVW5wKL5R8FipfI89
+ i8Qp/kdNQWhzq058/+RfL8sjuREYMR6VFn4mJ/yLQhHSf1EBd46jvdVJd7WA4uXJ5uCGZDhMT
+ hZA2AZRkWL0gzgtGmsG36WfrYo/8TTZoY6mW/5d2I5ARF3lNrDWL/HlF1e6rPcw1GkGAlgHs+
+ D9IAbn4iJW5iWvIwhgEmQ6YuGqItdQH+go04NP+H2aixXTbqi0bjWl38034De9ES5/o10amRx
+ 3i+4Am9DectClBsAJlXtIGlAZ9Zafrw6hkYfC+jexpZXX+EsiILHUCTHO8ILJv1rL3I1E1XyG
+ ND1ZAm3H94vwlXJP0rWHsfJbZ79jvaUVGSwNgZDjoXOsAPFMRvS/TcmzR6oLAKqSesgOmNLqj
+ 2qlM5T6c3tOunigmvZRiDEAe2cbY6QILaLEBNmZnLTmL0OJfmRdc4tbK1m+G0tYKyO8cOoukP
+ 2oygApI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -57,45 +57,34 @@ X-Mailing-List: git@vger.kernel.org
 Instead of dying there, let the caller high up in the callchain
 notice the error and handle it (by dying, still).
 
-The eventual caller of do_pick_commit() is sequencer_pick_revisions(),
-which already relays a reported error from its helper functions
-(including this one), and both of its two callers know how to react to
-a negative return correctly.
+The only caller of do_recursive_merge(), do_pick_commit() already
+checks the return value and passes it on to its callers, so its caller
+must be already prepared to handle error returns, and with this step,
+we make it notice an error return from this function.
 
-So this makes do_pick_commit() callable from new callers that want it
-not to die, without changing the external behaviour of anything
-existing.
+So this is a safe conversion to make do_recursive_merge() callable
+from new callers that want it not to die, without changing the
+external behaviour of anything existing.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ sequencer.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 76b1c52..baf6b40 100644
+index ec85fe7..eb70091 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -585,12 +585,14 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
- 	 * However, if the merge did not even start, then we don't want to
- 	 * write it at all.
- 	 */
--	if (opts->action == REPLAY_PICK && !opts->no_commit && (res == 0 || res == 1))
--		update_ref(NULL, "CHERRY_PICK_HEAD", commit->object.oid.hash, NULL,
--			   REF_NODEREF, UPDATE_REFS_DIE_ON_ERR);
--	if (opts->action == REPLAY_REVERT && ((opts->no_commit && res == 0) || res == 1))
--		update_ref(NULL, "REVERT_HEAD", commit->object.oid.hash, NULL,
--			   REF_NODEREF, UPDATE_REFS_DIE_ON_ERR);
-+	if (opts->action == REPLAY_PICK && !opts->no_commit && (res == 0 || res == 1) &&
-+	    update_ref(NULL, "CHERRY_PICK_HEAD", commit->object.oid.hash, NULL,
-+		       REF_NODEREF, UPDATE_REFS_MSG_ON_ERR))
-+		res = -1;
-+	if (opts->action == REPLAY_REVERT && ((opts->no_commit && res == 0) || res == 1) &&
-+	    update_ref(NULL, "REVERT_HEAD", commit->object.oid.hash, NULL,
-+		       REF_NODEREF, UPDATE_REFS_MSG_ON_ERR))
-+		res = -1;
+@@ -303,7 +303,8 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+ 	if (active_cache_changed &&
+ 	    write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
+ 		/* TRANSLATORS: %s will be "revert" or "cherry-pick" */
+-		die(_("%s: Unable to write new index file"), action_name(opts));
++		return error(_("%s: Unable to write new index file"),
++			action_name(opts));
+ 	rollback_lock_file(&index_lock);
  
- 	if (res) {
- 		error(opts->action == REPLAY_REVERT
+ 	if (opts->signoff)
 -- 
 2.10.0.windows.1.10.g803177d
 
