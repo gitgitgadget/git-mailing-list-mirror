@@ -7,134 +7,96 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A0F591F6BF
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFA211F6BF
 	for <e@80x24.org>; Fri,  9 Sep 2016 14:38:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752632AbcIIOiD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 10:38:03 -0400
-Received: from mout.gmx.net ([212.227.17.22]:51884 "EHLO mout.gmx.net"
+        id S1753312AbcIIOi0 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 10:38:26 -0400
+Received: from mout.gmx.net ([212.227.17.22]:58943 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750882AbcIIOh6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 10:37:58 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0LsD9n-1b3Dp83Dmp-013th9; Fri, 09 Sep 2016 16:37:53
+        id S1753285AbcIIOiV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 10:38:21 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0MbKXI-1bRnzn1ETE-00IipI; Fri, 09 Sep 2016 16:38:15
  +0200
-Date:   Fri, 9 Sep 2016 16:37:53 +0200 (CEST)
+Date:   Fri, 9 Sep 2016 16:38:00 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 14/17] sequencer: lib'ify save_opts()
+Subject: [PATCH v3 16/17] lib'ify checkout_fast_forward_to()
 In-Reply-To: <cover.1473431645.git.johannes.schindelin@gmx.de>
-Message-ID: <15198727511147562a86610ae8894284a13b652c.1473431645.git.johannes.schindelin@gmx.de>
+Message-ID: <f624be21280cb2f7624ed7bb4d890903cccf1c7d.1473431645.git.johannes.schindelin@gmx.de>
 References: <cover.1472219214.git.johannes.schindelin@gmx.de> <cover.1473431645.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:M9BPz7wv9LJ0JIrNe1bAYGUtVAOGvnIpGuw4TDhLhgL790xGTuB
- VmyuEeMTG+KWOF6GlfwbgYG8zFwC3QH3cI120nFd4805UTMqAFrw7r90HPnnHN4mq5n2uk2
- c9NjIhGNpFtHAJipW8su6LF6/npwMd/NQOvUX4nzbJMY4xFbPSJUvcd9EGg8s4+bgeJtZcL
- YUIVH8Bdl9/UHZKxdqC3w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:S6jDQz7dNRc=:ZPS4x9wrvUGuOQgr31Xq5v
- IfMJWAzaurdO8bfGtJ/i9t3//3hSZcukFrhhfVEea3G+rgmrn10i+w5OUs2yCg+NIUw35T95S
- Yj1FyNfJ+zFomETqmRmOGcg4PQJ+cxocGNle74DUZfYEu6g+QZjPDwT6XCqIPDkQV4PYyGsLl
- V145JiFxk87L9pN9i8Sk6QyCe4ECq7oirVjLgUlqvEjD5Pdv3OtpWvq3goB0NMCSRFei/ZyIE
- TpiifMnOl7fH4e6bRoJ7PTPWUyt9uWd64W5Ui+EY0cBvI3L/XxDBR9r1W6rWAgKk/9jEqMnxD
- WD/ntZuFagxD/RuKSzT4by+mnmigZVG3LPW5fb91CmPnNrXi/B1d7Zu7o8F8CSd6JVe/7+1Ib
- VZBX6fBl8f29/xrk/uKjsNB9qmjs3AKMJF5KnPRSeb0X8V+f4Hy/pag1c54NEYDfiKZjOa/IF
- aPesNvYmCh+9fdzhXINF3GOgKsMGbO4PzIsUfTwj1ntaW7aVA96/mDENPy0LQ+/JcqOrYwAbf
- EBqS/X0ObvVr1FO4p/gr9W3psBI0PUPoGXGEP7BTrkObPhaDwHDc+6MBpriHbAMsXxjBNYhkP
- ztO8RsFSc9SAQKgghIH6pVR0XOD5nNdqXsDzYKvbUJXwEVPSyTqzMdfKG2w5ooa5Nso2LEp9M
- Kv1WeL2elRKwr8yuy6XXopuNb4WKrU0TI6cwNEb/IqIK7klE9Qq7I2Uo1qrAn9oxzfd/0Y+wE
- hOtDNGFEXtY4WSXPwMgeNlobjmBDYxP+nwjt+qMQpOB3juZovSPiA/ZJKlq4vTCccrMopl25s
- cEUnKZe
+X-Provags-ID: V03:K0:WyujOWrOf1F4OGc6TXeAipS8AW3GJh6H3CG7BLZA/aBk3VK2Oni
+ HyAJ12/2oYkJPLFmECdOGWkXV9lkx2YJrEcveYp6+yhso+AucyvD+p/Rxc31gFpaIPKR3yS
+ VDc3kBp+pUFt8jhe8+tPMFRsOetkvW4govesjM7MXdnNLSTynp96FU3py1Kdvso2vjvbftQ
+ Alb57A0eZbhtWeBKacDzw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6bEddmysGdg=:ht0GfA/5gUrwD8/XUnvTl0
+ nIvgjUvEgw8BPfQ90Af8TAEp09+0wdp3Y5c6gxzMF/WVf7ssQZg1NE7D8NCwAwHoIBRqm2R2C
+ Ck4AsVhZzrevTJ7dblWj5RNIahm4i3lTgtn5957mHQIZiGal5NYBKzzgZ9sgS+MwXvS7y3Et5
+ fEskNPzwbZkJb6YuSkcjVoU2L8/PT5xG8TzOpo57Ccj7xM+Dyx4ehEkp+JObQEPLUvbgy+7Cw
+ eq4xcu4a1Hl066cBiOqgXP+NvJ76tr2NdjVBvVieVzirrQXzeZ/sRddNz+JVvV81FzcfoyaY5
+ xbkoiaa3Kr05T2fV5CvJ/o+YTGgD96+x4DP9YgimZE5A1rwsHNyMQ8GIk/lQZCYw0WUWRWRO+
+ eJvdHhu3J9pyi4nHftWcl8HxGKy/bizgaMZPog/P8exV/0qUM5+0ebAYjNre0ChRyerMTO2mp
+ Ask6+5edTvNzKdhh6Y4oXoQUN+VtYDCGBK5rVs85pNBbqyRBfXq/RLHDRji//PUEKvkizTYng
+ zqQKqlCanr6S9wmjgz6CrxLd2L8oqi/dHepumaXZKUDM1OsYh6Vz2+u3vyyhH6hlHFlOqj9Je
+ LVBlut2QgLkL0Zp5JcCoHfSylIPtkanFL42UAztzhFFX9EgAg0ywD9SuZtpyyVqNwye22uH0y
+ CCMNe5JJEvnayIsBk4Nx/WSTUFC2E/NsDnEne1yJD0WjTtet49RswmkUzp2awmh11fP/kJyfx
+ i4szTi7UvQyp9kuuPNDbfelg3jwnoBq5mWArx9YBHJ1WxuVVSy5GKk+EOsv1Uv/Pplja9kLj+
+ GMfWw/u
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of dying there, let the caller high up in the callchain notice
-the error and handle it (by dying, still).
+Instead of dying there, let the caller high up in the callchain
+notice the error and handle it (by dying, still).
 
-The only caller of save_opts(), sequencer_pick_revisions() can already
-return errors, so its caller must be already prepared to handle error
-returns, and with this step, we make it notice an error return from
-this function.
+The only callers of checkout_fast_forward_to(), cmd_merge(),
+pull_into_void(), cmd_pull() and sequencer's fast_forward_to(),
+already check the return value and handle it appropriately. With this
+step, we make it notice an error return from this function.
 
-So this is a safe conversion to make save_opts() callable from new
-callers that want it not to die, without changing the external
-behaviour of anything existing.
+So this is a safe conversion to make checkout_fast_forward_to()
+callable from new callers that want it not to die, without changing
+the external behaviour of anything existing.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 25 ++++++++++++++-----------
- 1 file changed, 14 insertions(+), 11 deletions(-)
+ merge.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 32c53bb..021ddf3 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -970,37 +970,39 @@ static int save_todo(struct commit_list *todo_list, struct replay_opts *opts)
+diff --git a/merge.c b/merge.c
+index 5db7d56..23866c9 100644
+--- a/merge.c
++++ b/merge.c
+@@ -57,7 +57,8 @@ int checkout_fast_forward(const unsigned char *head,
+ 
+ 	refresh_cache(REFRESH_QUIET);
+ 
+-	hold_locked_index(lock_file, 1);
++	if (hold_locked_index(lock_file, 0) < 0)
++		return -1;
+ 
+ 	memset(&trees, 0, sizeof(trees));
+ 	memset(&opts, 0, sizeof(opts));
+@@ -90,7 +91,9 @@ int checkout_fast_forward(const unsigned char *head,
+ 	}
+ 	if (unpack_trees(nr_trees, t, &opts))
+ 		return -1;
+-	if (write_locked_index(&the_index, lock_file, COMMIT_LOCK))
+-		die(_("unable to write new index file"));
++	if (write_locked_index(&the_index, lock_file, COMMIT_LOCK)) {
++		rollback_lock_file(lock_file);
++		return error(_("unable to write new index file"));
++	}
  	return 0;
  }
- 
--static void save_opts(struct replay_opts *opts)
-+static int save_opts(struct replay_opts *opts)
- {
- 	const char *opts_file = git_path_opts_file();
-+	int res = 0;
- 
- 	if (opts->no_commit)
--		git_config_set_in_file(opts_file, "options.no-commit", "true");
-+		res |= git_config_set_in_file_gently(opts_file, "options.no-commit", "true");
- 	if (opts->edit)
--		git_config_set_in_file(opts_file, "options.edit", "true");
-+		res |= git_config_set_in_file_gently(opts_file, "options.edit", "true");
- 	if (opts->signoff)
--		git_config_set_in_file(opts_file, "options.signoff", "true");
-+		res |= git_config_set_in_file_gently(opts_file, "options.signoff", "true");
- 	if (opts->record_origin)
--		git_config_set_in_file(opts_file, "options.record-origin", "true");
-+		res |= git_config_set_in_file_gently(opts_file, "options.record-origin", "true");
- 	if (opts->allow_ff)
--		git_config_set_in_file(opts_file, "options.allow-ff", "true");
-+		res |= git_config_set_in_file_gently(opts_file, "options.allow-ff", "true");
- 	if (opts->mainline) {
- 		struct strbuf buf = STRBUF_INIT;
- 		strbuf_addf(&buf, "%d", opts->mainline);
--		git_config_set_in_file(opts_file, "options.mainline", buf.buf);
-+		res |= git_config_set_in_file_gently(opts_file, "options.mainline", buf.buf);
- 		strbuf_release(&buf);
- 	}
- 	if (opts->strategy)
--		git_config_set_in_file(opts_file, "options.strategy", opts->strategy);
-+		res |= git_config_set_in_file_gently(opts_file, "options.strategy", opts->strategy);
- 	if (opts->gpg_sign)
--		git_config_set_in_file(opts_file, "options.gpg-sign", opts->gpg_sign);
-+		res |= git_config_set_in_file_gently(opts_file, "options.gpg-sign", opts->gpg_sign);
- 	if (opts->xopts) {
- 		int i;
- 		for (i = 0; i < opts->xopts_nr; i++)
--			git_config_set_multivar_in_file(opts_file,
-+			res |= git_config_set_multivar_in_file_gently(opts_file,
- 							"options.strategy-option",
- 							opts->xopts[i], "^$", 0);
- 	}
-+	return res;
- }
- 
- static int pick_commits(struct commit_list *todo_list, struct replay_opts *opts)
-@@ -1147,7 +1149,8 @@ int sequencer_pick_revisions(struct replay_opts *opts)
- 		return error(_("Can't revert as initial commit"));
- 	if (save_head(sha1_to_hex(sha1)))
- 		return -1;
--	save_opts(opts);
-+	if (save_opts(opts))
-+		return -1;
- 	return pick_commits(todo_list, opts);
- }
- 
 -- 
 2.10.0.windows.1.10.g803177d
 
