@@ -2,94 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDEDE1F6BF
-	for <e@80x24.org>; Fri,  9 Sep 2016 15:09:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01D4F1F6BF
+	for <e@80x24.org>; Fri,  9 Sep 2016 15:12:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752677AbcIIPJ2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 11:09:28 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59910 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751332AbcIIPJ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 11:09:27 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5C5093B951;
-        Fri,  9 Sep 2016 11:09:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=TSDLkj912ui+28wGGMJwbLjLIqE=; b=AntT3k
-        a0KWfEayELkYov7uYhGIHnDf3FtDFE//P7aSUHmhZYPehwTwbyeiHmtC/MlybTxN
-        klU3c6Q8YDp+tIXdQZHEODgg1QaJeFdJcW+N3KxEkAg+16VfD+z/Isse+Hkxuzjc
-        rgD5LkXwf/Um/NCGl3KGsmYUHMehYi5r2F1V4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=k35RwFjaDDuNcNC5RslEQQW5rYACIwdm
-        Ne+cjagoQGhtGOhzkZxwDBB+88Iy4hOKV+rxfZWpKtlf7j4re5EAvonycuEx1OGo
-        yuYxUkIM2rLQBLwjjOy7lvKrHicxKkpA5SOPO+72K30XbIQU79i1ssmel8JNnMec
-        cpcYY0bBvTs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 552FE3B950;
-        Fri,  9 Sep 2016 11:09:25 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CE0483B94F;
-        Fri,  9 Sep 2016 11:09:24 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 2/4] cat-file: introduce the --filters option
-References: <cover.1472041389.git.johannes.schindelin@gmx.de>
-        <cover.1473415827.git.johannes.schindelin@gmx.de>
-        <084088ba86c0af3636d960276c0bfdf7f5d2cfde.1473415827.git.johannes.schindelin@gmx.de>
-Date:   Fri, 09 Sep 2016 08:09:22 -0700
-In-Reply-To: <084088ba86c0af3636d960276c0bfdf7f5d2cfde.1473415827.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Fri, 9 Sep 2016 12:10:47 +0200
-        (CEST)")
-Message-ID: <xmqqfup9ds9p.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1751836AbcIIPMX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 11:12:23 -0400
+Received: from mout.gmx.net ([212.227.17.22]:51392 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750848AbcIIPMW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 11:12:22 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0LlV4F-1b9sCl2D5j-00bLAo; Fri, 09 Sep 2016 17:12:16
+ +0200
+Date:   Fri, 9 Sep 2016 17:12:15 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 13/22] sequencer: remember the onelines when parsing the
+ todo file
+In-Reply-To: <xmqqeg53wj7a.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1609091708480.129229@virtualbox>
+References: <cover.1472457609.git.johannes.schindelin@gmx.de> <12bffd6ca4eb7acc00a102d13348bb96ad08371d.1472457609.git.johannes.schindelin@gmx.de> <52d61bef-668b-fdc4-30b3-a34c11b39f81@gmail.com> <xmqq8tvc21re.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1609011052260.129229@virtualbox> <xmqqeg53wj7a.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 650C7516-769F-11E6-A651-51057B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:B6Y3o0kzqbxfiKyv5WO99cT6aphjABYVAJGKBpC84lTcuxFjYw+
+ pd8meg9jUIJReFcLOVS7gQh/RZhdunNCAdblYTcNabX8QxTKrMhziffH6Xzt/toqk/JpOlW
+ nppV/s35Ch15Js5RPqKKge1nz2924UQNkAEKWYbDW5oHEiTM5FlaygZghJTsXg8sjdEcGFV
+ wh1GWhykL1R0NowMXDCVw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:iXr5+VnYODk=:EqrKCPQac6ZL3Ac+6BGiDc
+ nYnKt1SQ3hkJA1EQ+CpBet3mUw2BwxX1OKYuNgQxw2ZyoMPiu2j/rULlc5G/jh6124MZhbj7k
+ UJeMTsq/Z7G+yg+8rCYxRhxFcTDq5xAfk0WrSidjwYT/xUH2+qJ/F4DAwWNJVxDCjMNtPFqDT
+ Vl+muWmZEs2uDYjA3X5w68NuqD+FyqxJzMv75TKaJyuoRKzI5dpJ36tzm+FWXWrsv5PTzWzxC
+ 8SuPSYa2IjIoDNVJ/DN8qwz/FK39c3exSU1fy7CbAFUnrCSErXAYf2EgXf8R6thSch0Q7yT2Y
+ oO4a+fDQb5DRBDwOneEgCapO2mlWgN1UPFpS1axgo2qpt0WLOwEoF+0H9OPOaLjq9opaWrr0f
+ uZ5mBH5AbqgXDZnncwIP8gVJV08/O6zhPPzs60v+TfJNo7A2/UiPhrt4IBJFFFiKpYc30l9Yy
+ JiN5J+QDV2nWNpQLiPo/QETAK5kOEICe4TkJgl1ilbg6D+PFYIQW1JNBw4JDozaaP+9Ov3P2o
+ 4EW6plxrL5eKXp7TEI+vMGSoCaGNLBQQfCDnKr76PmYvt0fvam8D4feOWZyFE7ZWibl97ALi0
+ Tbi57nR07Uyp6y2t+jDECqChj65F27Koo7WULx2zmwEMmGCbJbiPLNYCun9IgcY3ItbySfKh/
+ 5M6FBuwhECQudOkbSXdfdkjXNQypOlfv114Kdf54dyG80L4LuxRsrdkgSPk34je4aPiIFmpWe
+ YQsvVHNYMtwPh+/HBw67ha5/KLeMdRqpsmoFDQlbtqPmDF2VSCKVaSg71m7jBBTL3SeLvU7bZ
+ 2RbUaZs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Hi Junio,
 
-> +static int filter_object(const char *path, unsigned mode,
-> +			 const unsigned char *sha1,
-> +			 char **buf, unsigned long *size)
-> +{
-> +	enum object_type type;
-> +
-> +	*buf = read_sha1_file(sha1, &type, size);
-> +	if (!*buf)
-> +		return error(_("cannot read object %s '%s'"),
-> +			sha1_to_hex(sha1), path);
-> +	if (type != OBJ_BLOB) {
-> +		free(*buf);
-> +		return error(_("blob expected for %s '%s'"),
-> +			sha1_to_hex(sha1), path);
-> +	}
-> +	if (S_ISREG(mode)) {
-> +		struct strbuf strbuf = STRBUF_INIT;
-> +		if (convert_to_working_tree(path, *buf, *size, &strbuf)) {
-> +			free(*buf);
-> +			*size = strbuf.len;
-> +			*buf = strbuf_detach(&strbuf, NULL);
-> +		}
-> +	}
+On Thu, 1 Sep 2016, Junio C Hamano wrote:
 
-This needs to error out when mode is not ISREG just like it errors
-out when type is not BLOB.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> though).  The "one sequencer to rule them all" may even have to say
+> >> "now give name ':1' to the result of the previous operation" in one
+> >> step and in another later step have an instruction "merge ':1'".
+> >> When that happens, you cannot even pre-populate the commit object
+> >> when the sequencer reads the file, as the commit has not yet been
+> >> created at that point.
+> >
+> > These considerations are pretty hypothetical. I would even place a bet
+> > that we will *never* have ":1" as names, not if I have anything to say...
+> > ;-)
+> 
+> If you can always work with pre-existing commit, then you can
+> validate all object references that appear in the instructions
+> upfront.
 
-Other than that, I think these four patches are good to go.
+Or if *some* of the commands work with pre-existing commits, *those*
+commands can be validated up-front.
 
-Thanks.
+Which is exactly what my code does.
+
+> I was sort of expecting that, when you do the preserve-merges mode
+> of "rebase -i", you would need to jump around, doing "we have
+> reconstructed the side branch on a new 'onto', let's give the result
+> this temporary name ':1', and then switch to the trunk (which would
+> call for 'reset <commit>' instruction) and merge that thing (which
+> would be 'merge :1' or perhaps called 'pick :1')", and at that point
+> you no longer validate the object references upfront.
+
+Except that is not how --preserve-merges works: it *still* uses the SHA-1s
+as identifiers, even when the SHA-1 may have changed in the meantime.
+
+That is part of why it was a bad design.
+
+> If you do not have to have such a "mark this point" and a "refer to
+> that point we previously marked", then I agree that you should be
+> able to pre-validate and keep the result in the structure.
+
+Even then, those markers should *still* be validated. They, too, need to
+be created and later used, usage before creation would be an error.
+
+But...
+
+1) this is not yet a problem, so why are we discussing it here? Do we not
+   have actual problems with these patches to discuss anymore?
+
+2) the SHA-1s that *can* be validated *should* be validated, so I find the
+   objection a little bogus.
+
+Ciao,
+Dscho
