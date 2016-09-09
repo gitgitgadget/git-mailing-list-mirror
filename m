@@ -2,95 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A17131F6BF
-	for <e@80x24.org>; Fri,  9 Sep 2016 16:42:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A46A1F6BF
+	for <e@80x24.org>; Fri,  9 Sep 2016 16:58:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752634AbcIIQmr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 12:42:47 -0400
-Received: from mail-oi0-f50.google.com ([209.85.218.50]:36798 "EHLO
-        mail-oi0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752151AbcIIQmq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 12:42:46 -0400
-Received: by mail-oi0-f50.google.com with SMTP id q188so36752364oia.3
-        for <git@vger.kernel.org>; Fri, 09 Sep 2016 09:42:46 -0700 (PDT)
+        id S1751581AbcIIQ6G (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 12:58:06 -0400
+Received: from mail-yw0-f181.google.com ([209.85.161.181]:35657 "EHLO
+        mail-yw0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751386AbcIIQ6F (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 12:58:05 -0400
+Received: by mail-yw0-f181.google.com with SMTP id j1so50551968ywb.2
+        for <git@vger.kernel.org>; Fri, 09 Sep 2016 09:58:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
+        d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=IlllhD/YWW023vnaRE8MsGCWmRCjAaRiNkGao2Ri+3w=;
-        b=KgdS7QAmzqFSc7ATQBYEH5A1zstwMPEA6NuF945WWFLyojNn6pE1BsH8+EDWy9JF+R
-         nsObpBmjwPGnCJ4dPCVjxRW9dJF3UhZJopdaKbsE94oJQrgO0dvCiTW4ys9LEApKBda3
-         VV9eMThgE8Lgc7hJYMShi99kq0BTN5v1Kjk0yQXsankI2xveTJ7riMjRK+5W0PjYMMvz
-         kVPpApCkPpO7VmfqKpLc5fWz5Hfg8yOBWVEFJxEtmfpCyIWRLVNaMDcsnk0/GinOTN5z
-         Jp8zjwoq5vDTr/8LsJxRF7bCMfz6yVYDAI0kj/qPW+xufPDjnafactHQ4Mrv98X3nQcX
-         90jw==
+         :cc;
+        bh=2xyfhr7GQYTl6hjxvNL7c84/AaqFsudtIUtDLDjCq9c=;
+        b=cEz9vipd4pPCp0vhAqr1rixG9L7wMa/DVmBlLK/oKP+Awwh/apWdZSrvgHp5X2x9xu
+         UElUVhBHWAYUO7XNoCseoK1XBy4w6Gsq+5LRnlHBBYUm87nnVyWaa/v1I323bRDALAHy
+         gS5liakWL8RMZKaGEd4XI0FNMCM6mSXbp6Uczpmy7mflpXlIBq9G7JtiUAQUz7tG44EE
+         +M5DjUJm18Qm0WrvnekwAQ0W4X/OeO8CMiXKoppvkq5RLxTWn4YbbCSyO4tBUfOLFWHd
+         1/dlgkVHvfr6c9oWmB0YGE5Q54OYpWSUYz+3G6tIarXYPy3teYlGMNZp2pwrPvm0Bmjc
+         Y2KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=IlllhD/YWW023vnaRE8MsGCWmRCjAaRiNkGao2Ri+3w=;
-        b=baVON9qGNx+WptdWzKAHI8rDGfqDfwPwd2l66e9b7NwnYwfTchOawyvDvSTp132gqy
-         mch2wpMycPULrOYvLwXQtdIPouuLxk27NDvaOjeqhbYpLqR5MkplYWLxZMcxcX3cog4a
-         /2VAg/ieM5AHo8Dd4Qhm5kyJ5nR/IfHXTn0tpnSOx2KJEifjfoAe+SOmDVefvwM6Y/Kr
-         iB6dj7pSZ9zMx796BNrMYXIL0YqgMoa/Ie1Irpdj4iwEFcbcQHFWGcznuVpDZO2smHFj
-         dpubFQ5H3DUoQ/h5LBzHcZrGOaNeAkoq54H49XKHAawTcRCMr23ES1bJkO8jsvdHkGEW
-         fQNg==
-X-Gm-Message-State: AE9vXwOmC17TwZi3xeIK3KvCOa9VCJYEwaav7axVHQaPfninfqy2is7QZMlkwzXU7As/gcKUu83Q3svAUqIfTwRt
-X-Received: by 10.202.195.1 with SMTP id t1mr7443670oif.144.1473439365871;
- Fri, 09 Sep 2016 09:42:45 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=2xyfhr7GQYTl6hjxvNL7c84/AaqFsudtIUtDLDjCq9c=;
+        b=TEkR6o1mLplOug/mHvqSW1uWsL3i1j+gM7fu3YMdlkiY8PbNoRAlADLXovJBo6fsCX
+         zd11t8aUTPmy4IKrP259WfCd7LBcu4Ezlz0zRHWay78mFptd9jCp90g4l6lMu3/1S/y3
+         t4sB8f0APQc1jkayNqoCNEoMkgb9QlfIsAxytsf7LSUNJlRzrpKgeXsmPTieAav64Yvb
+         pp/Zd4vNiqO4o4H/gLTrreNDs6Sd3lFD7yTz3oWhiXE8eVz8xr9d9Hak0hvp1AvIzMuZ
+         e5WomyU0u1D2P9Waby9Ja9ttQpykKayZc32cW95/FRh8MZ4vK37bjYjMbdqihnoMBVlO
+         gGFg==
+X-Gm-Message-State: AE9vXwPZIofvyE58fr111cik3JgN4uX+ITPpCZUDujFS5aYNIzxnSdE0gH+LH3/RCWej++E3N6ZsvGKho4EnRw==
+X-Received: by 10.129.125.84 with SMTP id y81mr4407340ywc.234.1473440284499;
+ Fri, 09 Sep 2016 09:58:04 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Fri, 9 Sep 2016 09:42:45 -0700 (PDT)
-In-Reply-To: <4c42a1f4-4f03-0fdf-8bd2-8a7f1f978073@accelya.com>
-References: <4c42a1f4-4f03-0fdf-8bd2-8a7f1f978073@accelya.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 9 Sep 2016 09:42:45 -0700
-Message-ID: <CAGZ79kYu=0ik9W9g5yCbc5142_a2fb1er45TFEZ6RrekZRZM9w@mail.gmail.com>
-Subject: Re: Missing RPM spec file in tarball
-To:     =?UTF-8?Q?Sergio_Mart=C3=ADn_Turiel?= <sergio.martin@accelya.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Received: by 10.37.96.195 with HTTP; Fri, 9 Sep 2016 09:57:44 -0700 (PDT)
+In-Reply-To: <87zinmhx68.fsf@juno.home.vuxu.org>
+References: <87zinmhx68.fsf@juno.home.vuxu.org>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Fri, 9 Sep 2016 09:57:44 -0700
+Message-ID: <CA+P7+xoN+q_Kst=qXG_HRznxbN7cbyi5uZe15zq1c16EifeK1Q@mail.gmail.com>
+Subject: Re: git commit -p with file arguments
+To:     Christian Neukirchen <chneukirchen@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 9, 2016 at 9:19 AM, Sergio Mart=C3=ADn Turiel
-<sergio.martin@accelya.com> wrote:
-> Hello,
+On Mon, Sep 5, 2016 at 2:08 PM, Christian Neukirchen
+<chneukirchen@gmail.com> wrote:
+> Hi,
 >
+> I noticed the following suprising behavior:
 >
->  I am trying to build RPM packages from tarball (release 2.9.3 and 2.10.0=
-),
-> and i do not find git.spec file, in previous releases i can found it (e.g=
-.
-> 2.8.3).
+> % git --version
+> git version 2.10.0
 >
-> O.S.: CentOS 7.2
-> Command: rpmbuild -ta git-2.9.3.tar.gz
-> Response: error: Failed to read spec file from git-2.9.3.tar.gz
+> % git add bar
+> % git status -s
+> A  bar
+>  M foo
 >
-
-We deleted the rpm target as it was breaking all the time and not reported
-in a timely manner, i.e. the impression was it was always broken.
-
-See https://kernel.googlesource.com/pub/scm/git/git/+/ab214331cf8c73f8f7754=
-0aa996eb8b4938237f2
-
-
-> Can you tell me what I'm doing wrong?
-
-Not crying out loud when that commit was discussed on the
-mailing list. ;)
-
+> % git commit -p foo
+> [stage a hunk]
+> ...
+> # Explicit paths specified without -i or -o; assuming --only paths...
+> # On branch master
+> # Changes to be committed:
+> #       new file:   bar
+> #       modified:   foo
+> #
 >
->
-> Thank you very much and best regards, Sergio Mart=C3=ADn.
+> So why does it want to commit bar too, when I explicitly wanted to
+> commit foo only?
+
+It wants to commit bar too because you already added bar before. It works like:
+
+"git add bar && git add -p foo && git commit" does it not?
+
+I fail to see why "git commit -p <path>" would unstage the bar you
+already added? Or am I missing some assumption here?
 
 Thanks,
-Stefan
+Jake
+
+>
+> This is not how "git commit files..." works, and the man page says
+>
+>             3.by listing files as arguments to the commit command, in which
+>            case the commit will ignore changes staged in the index, and
+>            instead record the current content of the listed files (which must
+>            already be known to Git);
+>
+> I'd expect "git commit -p files..." to work like
+> "git add -p files... && git commit files...".
+>
+
+I guess the part about "git commit files" is different from "git
+commit -p files", which is confusing.
+
+> Thanks,
+> --
+> Christian Neukirchen  <chneukirchen@gmail.com>  http://chneukirchen.org
+>
