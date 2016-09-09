@@ -2,190 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 713DC1F6BF
-	for <e@80x24.org>; Fri,  9 Sep 2016 21:55:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3585F1F6BF
+	for <e@80x24.org>; Fri,  9 Sep 2016 22:03:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753367AbcIIVzK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 17:55:10 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56679 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751120AbcIIVzJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 17:55:09 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E372A3B60B;
-        Fri,  9 Sep 2016 17:55:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=AXpecekTMgApiGhJY8wpjbXpZ+g=; b=HQ7sGp
-        lUdG+9SvqbUVvoXT2yws77njZv1x2zU1tRDWnZZ2TRQJ4EcoAkwc+dpspndt9pCF
-        0drJx43O0rsZ6RKPH4YMjIAaXzTIDMedAxeFHmmA9/KazXhXtWcPgiRyjY+syCEH
-        wl1QyHUsXTQnW5N0Q5xgdx80CuR7M7U8gT9G4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=gx+IRYl6dcPNV1pOlUl48WJz8fedZcAy
-        /tgnm1hKlSEcscw6zqBF+JHq13FVZzdv8jU6/3l7DUsOtpVRk78wMYJPDHFKMgrK
-        S6QNkJCdF+t1GBBrIcEJHpdJZMxguRvHp0NkLfV6w5aCtqQauXnx/wFCfGg+BnZM
-        tUhkhhBb92A=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D9C823B608;
-        Fri,  9 Sep 2016 17:55:07 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 296353B607;
-        Fri,  9 Sep 2016 17:55:07 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, pclouds@gmail.com,
-        Ben Peart <benpeart@microsoft.com>
-Subject: Re: [PATCH v2] checkout: eliminate unnecessary merge for trivial checkout
-References: <20160909192520.4812-1-benpeart@microsoft.com>
-Date:   Fri, 09 Sep 2016 14:55:05 -0700
-In-Reply-To: <20160909192520.4812-1-benpeart@microsoft.com> (Ben Peart's
-        message of "Fri, 9 Sep 2016 15:25:20 -0400")
-Message-ID: <xmqq1t0sagcm.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1754720AbcIIWD3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 18:03:29 -0400
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:36266 "EHLO
+        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754231AbcIIWD2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 18:03:28 -0400
+Received: by mail-qk0-f174.google.com with SMTP id z190so81709454qkc.3
+        for <git@vger.kernel.org>; Fri, 09 Sep 2016 15:03:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=+W0/BWr+3QoyBxn3RGvExnc2hGOCGQA3t6x1rv98o7A=;
+        b=NkCZOjC7uwc2s4VqaDXwYHbJoag4IqG5UcLIwk1FqRxlgWfMizA4nIVB2xAowrjn2J
+         vQxUYVB3I0/AxXjPx306j2mLnp31KZUKGuF5OoyS06So64ra1eMmHhch/i4kmGIaHmsx
+         5QSR0mi+mTlX1qOGYT54K/OKeL+F2lb+MzQYX/fxMWTENjUGQ4ScqFR7KlBJpxteq1Xw
+         OLwuZF2RiOk8jv1x8Ka9WsV/nP4i6VuxJU9Maszl7QwjTNoypsSIV9yr/bnGlOvV4Qut
+         CQFN9jCdl+sIwbJzVJDRTPmMwVPZFMc/8xvxuBUEbk7gnTNeifdP+COGKBlbn8NVxCK0
+         9VoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=+W0/BWr+3QoyBxn3RGvExnc2hGOCGQA3t6x1rv98o7A=;
+        b=HqzZcfQFnh0XZj8IpMkaC4Upwfm5+wet0m+C7PIKMtP5nzKpBWG2tkLwGGMZNI6ts3
+         IPqCDGqNZLwEU8i+3IBIBX9kJhLeqyCMU6unoNlFTCKBt9BnElCNboj6ImACAgoS/Jtt
+         LBkIa8V2D3zvQfdsw4ntAGfUW+/+5gxLwguL1Lw+HBl34581XbBwZ1q8zFGV9r5X9Oq1
+         6F+ykElNzGzHgYAxZFc4VRk49hvXT/35FxPToRG0dP0g4o/EVAS7LQgLZGqtNwYIk5QJ
+         xyZYX6cSinZjLjLV1zLeYeglo5sWdV1MvRlT/ftcKHnMDVohrEaSrh4SFAoxZXGOQick
+         FFXg==
+X-Gm-Message-State: AE9vXwNi08U5d+Mu9iX7PbJatcd/DXlrrWiAjoI6TORwcZTX9vrseDWm1FgUtmUWEeReGQv53VxZ36k2vK9ARg==
+X-Received: by 10.55.5.13 with SMTP id 13mr6410778qkf.112.1473458607144; Fri,
+ 09 Sep 2016 15:03:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 123E7EC2-76D8-11E6-8A9D-F7BB12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.237.49.227 with HTTP; Fri, 9 Sep 2016 15:03:26 -0700 (PDT)
+In-Reply-To: <e17a88cd-2de7-dc84-2262-743e82d8b047@gmail.com>
+References: <CAKmQUfa_U-g6vC+SjbQSicEUwO+WofNfzezEEwikeOAeL31W5g@mail.gmail.com>
+ <b71adc54-2ae6-ef8e-1dca-0883cd617e6e@web.de> <CAKmQUfbemaid61xPyvNheLM2jVGXGjiyF_x=NZnxkZ=5wccQ=Q@mail.gmail.com>
+ <e17a88cd-2de7-dc84-2262-743e82d8b047@gmail.com>
+From:   john smith <wempwer@gmail.com>
+Date:   Sat, 10 Sep 2016 00:03:26 +0200
+Message-ID: <CAKmQUfafCP6ZwUm7Ec5n2PzvNzBHnFWEJL1usMTFB6Ef0m=8pw@mail.gmail.com>
+Subject: Re: How to simulate a real checkout to test a new smudge filter?
+To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Cc:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
+On 9/8/16, Jakub Nar=C4=99bski <jnareb@gmail.com> wrote:
+> W dniu 06.09.2016 o 23:01, john smith pisze:
+>
+>> I'd prefer smudge/clean filters instead of `make' scripts etc. to
+>> convert template dotfiles into something usable and back because
+>> filters:
+>>
+>> 1. could be run automatically
+>>
+>> 2. do not modify files as shown by `git show HEAD:<file>' and
+>> therefore no files are reported as modified by git status and also
+>> there are not conflicts when merging master into work/home branch.
+>>
+>> I have problems because with point 1 because apparently smudge filter
+>> is not run automatically every time when branch is changed if files
+>> listed in .gitattributes do not change. As the last resort I could
+>> force smudge/clean filter to run just to keep advantage specified in
+>> point 2.
+>
+> Couldn't you use post-checkout hook plus clean filter instead of
+> clean/smudge filter pair, if the smudge part depends on the branch?
+>
+> Or make post-checkout hook invoke smudge filter... though
+> `git cat-file --filters` is not in any released version, I think...
 
-> @@ -802,6 +806,87 @@ static void orphaned_commit_warning(struct commit *old, struct commit *new)
->  	free(refs.objects);
->  }
->  
-> +static int needs_working_tree_merge(const struct checkout_opts *opts,
-> +	const struct branch_info *old,
-> +	const struct branch_info *new)
-> +{
-> +	/*
-> +	 * We must do the merge if we are actually moving to a new
-> +	 * commit tree.
-> +	 */
-> +	if (!old->commit || !new->commit ||
-> +		oidcmp(&old->commit->tree->object.oid, &new->commit->tree->object.oid))
-> +		return 1;
+I moved smudge-filter functionality to post-checkout hook and only
+left clean filter. Now post-checkout hooks is called every time when
+changing branches but it's not working together with clean filter when
+changing branches.  For example, when I have this on master in
+bash/.bashrc:
 
-A huge helper function helps it somewhat, compared with the earlier
-unreadable mess ;-).
+export EMAIL=3D"@EMAIL@"
 
-Are we certain that at this point the commit objects are both parsed
-and their tree->object.oid are both valid?
+After moving to `work' it becomes this thanks to post-checkout hook
+which replaces @EMAIL@ with correct definition:
 
-> +	/*
-> +	 * Honor the explicit request for a three-way merge or to throw away
-> +	 * local changes
-> +	 */
-> +	if (opts->merge || opts->force)
-> +		return 1;
+export EMAIL=3D"work@address.com"
 
-Hmph, "git checkout -m HEAD" wouldn't have to do anything wrt the
-index status, no?
+But when I move to `home' branch from `work' I still get this:
 
-For that matter, neither "git checkout -f HEAD".  Unless we rely on
-unpack_trees() to write over the working tree files.
+export EMAIL=3D"work@address.com"
 
-    ... me goes and looks, and finds that merge_working_tree()
-    indeed does have a logic to do quite different thing when
-    "--force" is given.
+post-checkout didn't work here because it can't see @EMAIL@ part in
+bash/.bashrc because clean filter has not been run. I need to run this
+single command to force `clean' filter to run to replace
+work@address.com with @EMAIL@ and let post-checkout replace it with
+correct value:
 
-This makes me wonder if the "merge_working_tree() is expensive, so
-selectively skip calling it" approach is working at a wrong level.
-Wouldn't the merge_working_tree() function itself a better place to
-do this kind of "we may not have to do the full two-way merge"
-optimization?  It already looks at opts and does things differently
-(e.g. when running with "--force", it does not even call unpack).
-If you can optimize even more by looking at other fields in opts to
-avoid unpack, that would fit better with the structure of the code
-that we already have.
+git checkout .
 
-> +	/*
-> +	 * Checking out the requested commit may require updating the working
-> +	 * directory and index, let the merge handle it.
-> +	 */
-> +	if (opts->force_detach)
-> +		return 1;
+And now I get the correct definition:
 
-This does not make much sense to me.  After "git branch -f foo
-HEAD", there is no difference in what is done to the index and the
-working directory between "git checkout --detach HEAD" and "git
-checkout foo", is there?
+export EMAIL=3D"home@address.com"
 
-> +	/*
-> +	 * opts->writeout_stage cannot be used with switching branches so is
-> +	 * not tested here
-> +	 */
-> +
-> +	 /*
-> +	  * Honor the explicit ignore requests
-> +	  */
-> +	if (!opts->overwrite_ignore || opts->ignore_skipworktree
-> +		|| opts->ignore_other_worktrees)
-> +		return 1;
-
-Style.  I think you earlier had
-
-	if (a || b ||
-            c)
-
-and here you are doing
-
-	if (a || b
-            || c)
-
-Please pick one and stick to it (I'd pick the former).
-
-> +	 /*
-> +	 * If we're not creating a new branch, by definition we're changing
-> +	 * the existing one so need to do the merge
-> +	 */
-> +	if (!opts->new_branch)
-> +		return 1;
-
-Sorry, but I fail to follow that line of thought.  Starting from a
-state where your HEAD points at commit A,
-
- - switching to a detached HEAD pointing at a commit A,
- - switching to an existing branch that already points at the same
-   commit A, and
- - force updating an existing branch that was pointing at something
-   else to point at the same commit A,
-
-would have the same effect as creating a new branch at commit A and
-switching to it, no?  The same comment applies to the remainder of
-this function.
-
-More importantly, merge_working_tree() checks things other than what
-this function is checking.  For example, it prevents you from
-branch-switching (whether it is to switch to an existing branch that
-has the same commit as the current HEAD, to switch to detached HEAD
-state at the same commit as the current HEAD, or to switch to a new
-branch that points at the same commit as the current HEAD) if your
-index is unmerged (i.e. you are in the middle of a mergy operation).
-
-So my gut feeling is that this:
-
-> +	/*
-> +	 * Optimize the performance of "git checkout foo" by skipping the call
-> +	 * to merge_working_tree where possible.
-> +	 */
-> +	if (needs_working_tree_merge(opts, &old, new)) {
-> +		ret = merge_working_tree(opts, &old, new, &writeout_error);
-
-works at the wrong level.  The comment up to 'Optimize the
-performance of "git checkout foo"' may correctly state what we want
-to achieve, but I think we should do so not with "by skipping the
-call to", but with "by optimizing merge_working_tree()".
-
-Thanks.
-
-
+So it seems that clean filter is only run when checking out paths but
+not when checking out branches.  Is my thinking correct?
+--=20
+<wempwer@gmail.com>
