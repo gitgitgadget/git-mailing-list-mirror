@@ -2,97 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D48661F6BF
-	for <e@80x24.org>; Fri,  9 Sep 2016 17:46:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C68A11F6BF
+	for <e@80x24.org>; Fri,  9 Sep 2016 17:46:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754001AbcIIRqR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 13:46:17 -0400
-Received: from mail-yb0-f182.google.com ([209.85.213.182]:36203 "EHLO
-        mail-yb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751463AbcIIRqR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 13:46:17 -0400
-Received: by mail-yb0-f182.google.com with SMTP id u125so31069308ybg.3
-        for <git@vger.kernel.org>; Fri, 09 Sep 2016 10:46:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=wZM1TitSR7ik5bgnyxQaN2cA8CNQd5badg5mNy/pyHg=;
-        b=eqL3PjHakObmdtShHpUpV3BNjepUFRopxnbHSNy+9fNQ1BMyMbolD1f+AAutpYqd0S
-         nlTo1ITUj6jWXgTF2xpiNjCe7mw6WcZW7WbCBh19V8fN/GBu+SCg6irhDmEcI3clvRhX
-         wCA+DA21kX/RhjNmBT1sP10iF1tQ3upCvfR943mxp5wkbIruV4hm5Sj/IimdOrZ4nurR
-         +jqrveg00o6sz4ZEQFSQjB1veK6F7XQHwdxFRtOV5mtV76p43R8IBNJrEeio/TnpTJZ1
-         BXZXQi7y/Rf5ALQLhCz3qQbOhscgdduVGjRXHbVqGhCfdzoeq6WDx8fT7GGZmvDDwZtZ
-         1mkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=wZM1TitSR7ik5bgnyxQaN2cA8CNQd5badg5mNy/pyHg=;
-        b=ieNQB8LgwU86phdh9yEvBjHuts+kf0NIFmlrF8BWdTKEpkdFGr13wyYm0v/C9RJ+N5
-         HI2h7lFWzm1TzXoJZa2FlvBx/GGJ+H+DqPEa5sZvJM3+bhAE/oHZq2LV7zpRtgvYT5Rc
-         NljUGfXSElv9ORpZtnG/UDxzMGXWN54gyB4D6ZV2SwiI0OWl+1/YG6nlUKprmcxeLNo0
-         F2rvYAVlrcWZgwQeOMe+b9VW3Pg7sVYZy2kfLpTnkAymkIyR22czOkxGysg5BXccr6q2
-         UmFgmL/V+7vjn/C7QjJF184C/FDXjrV+23vg7SfPHPEOZ2h8S8YwbBMxvzo3ZujA0Lv4
-         FnOw==
-X-Gm-Message-State: AE9vXwOmhLbVGR/P7mpC51QJ7o9kqo9Dv1Jfw5pPmYpNArFvKvvujIsMs5ZyqYj4Toqq1sQ7sh83eyawsCf1fg==
-X-Received: by 10.37.200.132 with SMTP id y126mr5694313ybf.5.1473443176157;
- Fri, 09 Sep 2016 10:46:16 -0700 (PDT)
+        id S1754025AbcIIRqZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 13:46:25 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53325 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754006AbcIIRqZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 13:46:25 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AD3DF3B895;
+        Fri,  9 Sep 2016 13:46:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=zvBUPBig4FLF
+        yIyK5ooEsEYuMyM=; b=akfmmtSt4wL4a7f7klbNosqydosK40mJunlg51PExMcT
+        MeK4I13wi6X5FvFi6goQOwuy3KvK9BXBnvMbesudNWDHEm+hljheKtJaTY2IarK3
+        b9yxb8/JNvmSAQwM6uVbvuWe4A3sR+SXqNm8qV/QUgwbm49qTzsuVWvVi5pDXwU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=LDFHAZ
+        jrn2nJ1CjNRaNa328WYb1NneY157we2KHK1mG+BfsxoIbolLPKggNEjpEovUyS4g
+        WgPUD8TM9TD4w8P0oWrAvPEh56uhsk3K6XlZYQNuB9eORnMwLxB/BnqdWXtzGrBI
+        xYIdIhv2k8QQ5EkvAo2qbAVrI++YXauLT+h2s=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A5BBB3B894;
+        Fri,  9 Sep 2016 13:46:23 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2959E3B893;
+        Fri,  9 Sep 2016 13:46:23 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH 0/3] Fix a segfault caused by regexec() being called on mmap()ed data
+References: <cover.1473090278.git.johannes.schindelin@gmx.de>
+        <xmqqwpiqp3ho.fsf@gitster.mtv.corp.google.com>
+        <20160906071255.ggsoj2lh2f3kubhj@sigill.intra.peff.net>
+        <alpine.DEB.2.20.1609061521410.129229@virtualbox>
+        <20160906182942.s2mlge2vg65f5sy4@sigill.intra.peff.net>
+        <alpine.DEB.2.20.1609080921030.129229@virtualbox>
+        <20160908080035.czwn5y3re5bp5vkg@sigill.intra.peff.net>
+        <alpine.DEB.2.20.1609091158550.129229@virtualbox>
+Date:   Fri, 09 Sep 2016 10:46:21 -0700
+In-Reply-To: <alpine.DEB.2.20.1609091158550.129229@virtualbox> (Johannes
+        Schindelin's message of "Fri, 9 Sep 2016 12:09:18 +0200 (CEST)")
+Message-ID: <xmqqmvjhc6fm.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.96.195 with HTTP; Fri, 9 Sep 2016 10:45:55 -0700 (PDT)
-In-Reply-To: <20160909112217.gfalcbtiy2tzzhm5@sigill.intra.peff.net>
-References: <CACsJy8CZf0O+uyQaeJ4gcx4XN8ivfFyni+3586WX_R2QM4XgVw@mail.gmail.com>
- <20160908134719.27955-1-pclouds@gmail.com> <20160908134719.27955-3-pclouds@gmail.com>
- <20160908200202.gmvpqrwwjavxmojb@sigill.intra.peff.net> <CACsJy8DmbdGODY+qT38OSkaegSpdO7yAt6e67sHB=_BT8Y7=_Q@mail.gmail.com>
- <20160909112217.gfalcbtiy2tzzhm5@sigill.intra.peff.net>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Fri, 9 Sep 2016 10:45:55 -0700
-Message-ID: <CA+P7+xqDGjmSNdRjsMtBdZrXLeA2OfntgEELxgG5eSd6G2uwJA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] t0001: work around the bug that reads config file
- before repo setup
-To:     Jeff King <peff@peff.net>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Michael J Gruber <git@drmicha.warpmail.net>,
-        Max Nordlund <max.nordlund@sqore.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 52CED3D8-76B5-11E6-A5A2-51057B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 9, 2016 at 4:22 AM, Jeff King <peff@peff.net> wrote:
-> If you're curious what the fix looks like, it's in:
->
->   https://github.com/peff/git jk/config-repo-setup
->
-> The actual fix is in the final patch, but it needed a lot of preparatory
-> work to avoid breaking various programs that made bad assumptions (and
-> in the process, I uncovered a ton of other minor bugs).
->
-> This is just a preview in case you're interested, for two reasons:
->
->   1. I literally _just_ put the finishing touches on it, and it's
->      extensive and tricky enough that I really should give it one more
->      proofread.
->
->   2. There may be other related fallouts from the bug related to running
->      "git init /path/to/foo" when "/path/to/foo" already exists (and in
->      that case we _do_ want to read its config, but not the config from
->      an existing repository). This may all just work fine, but I need to
->      think about some tests.
->
-> -Peff
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-I looked over the series and it all seems like solid improvements to
-me, and I agree with the reasoning and logic. It's nice to also read
-very descriptive commit messages that clearly explain each
-improvement.
+>> Besides avoiding a segfault, one of the benefits of regcomp_buf() is
+>> that we will now find pickaxe-regex strings inside mixed binary/text
+>> files. But it's not clear to me that NetBSD's implementation does this=
+.
+>>=20
+>> I guess we can assume it is fine (it is certainly no _worse_ than the
+>> current behavior), and if people's platforms do not handle it, they ca=
+n
+>> build with NO_REGEX.
+>
+> Ren=C3=A9 mentioned in f96e567 (grep: use REG_STARTEND for all matching=
+ if
+> available, 2010-05-22) something along the lines of REG_STARTEND being
+> able to parse beyond NULs. My interpretation of NetBSD's documentation
+> agrees with your interpretation, though, that the buffers are still
+> thought of as being NUL-terminated, even if rm_eo makes the code *not*
+> look at that particular NUL.
+>
+> Be that as it may: it is completely outside the purpose of my patch ser=
+ies
+> to take care of making it possible for Git's regex functions to match
+> buffers with embedded NULs.
 
-Regards,
-Jake
+I think you two have agreed that regexec_buf() wrapper that always
+relies on REG_STARTEND is a good first step whether we want to do an
+embedded NUL, that we just need that good first step for now, and
+that that good first step would not block future progress, i.e. our
+wanting to handle embedded NUL.
+
+So let's see how well the first step flies in practice.  We tell
+people to build with NO_REGEX if their platform's regexp does not do
+(any form of) REG_STARTEND.  We _might_ later have to tell them to
+set NO_REGX even if they are on NetBSD and has REG_STARTEND that may
+not handle embedded NUL the way we want, but that can safely be left
+to the future.
+
+Thanks.
