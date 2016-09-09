@@ -2,114 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 450BB207DF
-	for <e@80x24.org>; Fri,  9 Sep 2016 23:01:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A9610207DF
+	for <e@80x24.org>; Fri,  9 Sep 2016 23:07:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755557AbcIIXB3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 19:01:29 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65145 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755338AbcIIXB2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 19:01:28 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 91E5D3CAB5;
-        Fri,  9 Sep 2016 19:01:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qr+IiKGY0UKsyRkAR0EVGDVoYsU=; b=dohLgx
-        pfWlvXTCxAiYMauEKhdeIxG13K/R3kMEGJcqGQwFF81nNMcIPJ0TkItdqpbQO13a
-        F3lO/hpz2AYSV3HNT5AnzFOBeB5iaWkaSx4JRdfdzeLiciQmfRg/eFUtCWOi+bxp
-        9oVwhLc0htBWgnKJjOm+8/28DCi6e+ioMemSo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fegA61FyhjaQeucUYNYLUx2dbPqPULVW
-        EWMrw4o7k4qNX1strzi0fK+26giTNjLCcFiLBWTWGjXtEl0RCx1S4zfjGjRkGH+G
-        sONIonFsBNDldu33ekAayPJt0x1YyX4Vnd6V0p3e0DXAT0UbiEdQLyWyFIDgMJbd
-        4hCEkYQ4y+8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8ABB53CAB4;
-        Fri,  9 Sep 2016 19:01:27 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 103CF3CAB3;
-        Fri,  9 Sep 2016 19:01:26 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC/PATCH] ls-files: adding support for submodules
-References: <1473458004-41460-1-git-send-email-bmwill@google.com>
-Date:   Fri, 09 Sep 2016 16:01:25 -0700
-In-Reply-To: <1473458004-41460-1-git-send-email-bmwill@google.com> (Brandon
-        Williams's message of "Fri, 9 Sep 2016 14:53:24 -0700")
-Message-ID: <xmqqh99o8ypm.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1755195AbcIIXHC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 19:07:02 -0400
+Received: from mail-qk0-f171.google.com ([209.85.220.171]:35848 "EHLO
+        mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755069AbcIIXHB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 19:07:01 -0400
+Received: by mail-qk0-f171.google.com with SMTP id z190so82882578qkc.3
+        for <git@vger.kernel.org>; Fri, 09 Sep 2016 16:07:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=jUnBmn/4cYUvChyK/uVVZuxvbXrqHkvaaQYJT2u/8vQ=;
+        b=JdQm2doeyDeiQe0sTpganjL9vF6tT6hxotPKBtsh4l2bzvomzu3NXzvMBuZyWgVvhy
+         25LItEb3rsJZULgntjoNXa7A8UAzDndsjyap1fRk+aTiiB70r7HOQ+J0VRWGT88tF2Pm
+         AWBh50a2bOrWrYn9opz2FGG6BnKQLq4Wdm4Hq3umVk3VH7rfA3JDhxleMHsPwzIIOto5
+         gQfykOrwfU8C499CoFbflRe0vG9KCyl3sptaSzMuNSFnuQ6PgWYIFqdrjOKMRG2emBJf
+         GNauErLo+gAwshqYWIxxDl7wdFcH2I5hYzkRFF3oxW6Pab6ZiwgLOjplXp/DXcF0kBeK
+         HlBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=jUnBmn/4cYUvChyK/uVVZuxvbXrqHkvaaQYJT2u/8vQ=;
+        b=GPHX2UyKdrcTL73fudmZH/M+vz7EOLs5jysl5gBLx450HiSQk9WYOrzj4Fa3Lm+Z5d
+         XsU98hBtI6bWHIeyCTqqXf7GKbWB6PLegJKVNH8ZRTk5mHiJXXP1fERzAZDVusYmJeJV
+         TSVx0CHGHbb0DcM2Wwr4At057+8RvA6nF2uDNWstu/Dz5yZff9llUTPd2ObOLUjH5gDo
+         XAiATBLtp/NZr3HEyeOsuZZgwp9Ii7+7Nt3ysVVGuc5dOCzRXFTWmc40VvbtOI182Qqk
+         WhVFhBVDLMFQwo2TwZfyxBxnH+ztAp43h6XFvMSWBjYjo4apDuEvDo0otH92Ip+fDKyB
+         Fi7A==
+X-Gm-Message-State: AE9vXwOqifJBCTLdIKQChVsWBi9S4JI/G4lbmY1jGiN66LjJVu10m5PdRDQZgW9A1lakRoE1B1n6ahco0MC6AA==
+X-Received: by 10.55.18.1 with SMTP id c1mr7509008qkh.27.1473462421027; Fri,
+ 09 Sep 2016 16:07:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 56690938-76E1-11E6-857A-51057B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.237.49.227 with HTTP; Fri, 9 Sep 2016 16:07:00 -0700 (PDT)
+In-Reply-To: <xmqqwpik8zy3.fsf@gitster.mtv.corp.google.com>
+References: <CAKmQUfa_U-g6vC+SjbQSicEUwO+WofNfzezEEwikeOAeL31W5g@mail.gmail.com>
+ <b71adc54-2ae6-ef8e-1dca-0883cd617e6e@web.de> <CAKmQUfbemaid61xPyvNheLM2jVGXGjiyF_x=NZnxkZ=5wccQ=Q@mail.gmail.com>
+ <e17a88cd-2de7-dc84-2262-743e82d8b047@gmail.com> <CAKmQUfafCP6ZwUm7Ec5n2PzvNzBHnFWEJL1usMTFB6Ef0m=8pw@mail.gmail.com>
+ <xmqqwpik8zy3.fsf@gitster.mtv.corp.google.com>
+From:   john smith <wempwer@gmail.com>
+Date:   Sat, 10 Sep 2016 01:07:00 +0200
+Message-ID: <CAKmQUfYCUq=kUTau1-3NjjPVBk6WkP3KdTjgMC8sZtU8h=H4iQ@mail.gmail.com>
+Subject: Re: How to simulate a real checkout to test a new smudge filter?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+On 9/10/16, Junio C Hamano <gitster@pobox.com> wrote:
+> The clean and smudge operations should look _only_ at the contents
+> they are filtering, and nothing else, and the clean/smudge filtering
+> mechanism is designed to support that use case.  It is not designed
+> to do things like embedding the name of the branch that is being
+> checked out into the result.
 
-> Allow ls-files to recognize submodules in order to retrieve a list of
-> files from a repository's submodules.  This is done by forking off a
-> process to recursively call ls-files on all submodules.
+Ok, I think I get it. It was actually my original problem with smudge
+filters because I wanted them to be run after *every* checkout even if
+file contents stayed the same (hence the subject).
 
-While I see why "ls-files --recurse-submodules" sounds nice ("hey, I
-can get list of _all_ the files here"), and I am quite happy with
-the quality of implementation (not just the code but its
-documentation and test) especially from a first-time contributor, I
-am not quite sure what the utility of this new feature would be,
-especially given that the command is a plumbing, i.e. meant to be a
-useful building block for scripts.
+Now Jakub suggested post-checkout hook in conjunction with only clean
+filter for my problem of managing dotfiles but I think I don't fully
+get it.  The problem is that in the scenario presented in my last
+e-mail clean filter is run in the situation which doesn't like a
+checkin to me.  Is `git checkout <PATH>' doing a *checkin*" under the
+hood so that the clean filter is called?  What does actually `checkin'
+mean in Git?  I thought that checkin it's the same as committing a
+file into the repository.
 
-If I get
-
-	$ git ls-files --recurse-submodules
-	Makefile
-        lib/Makefile
-        lib/hello.py
-	main.py
-	goodbye.py
-
-out of the command, what can I do with it without knowing where the
-submodule boundaries are?  It's not like I can just do
-
-	git ls-files --recurse-submodule |
-        while read path
-        do
-        	git update-index --add "$path"
-	done
-
-when "lib/" is a submodule.  Instead, I'd need to go to "lib/" and
-then add "Makefile" and "hello.py" from there.
-
-> diff --git a/t/t3007-ls-files-recurse-submodules.sh b/t/t3007-ls-files-recurse-submodules.sh
-> new file mode 100644
-> index 0000000..78deded
-> --- /dev/null
-> +++ b/t/t3007-ls-files-recurse-submodules.sh
-> @@ -0,0 +1,103 @@
-> +...
-> +test_expect_success 'setup directory structure and submodules' '
-> +...
-> +'
-> +
-> +cat >expect <<EOF
-> +.gitmodules
-> +a
-> +b/b
-> +submodule/c
-> +EOF
-
-We used to do that when we didn't know better.
-
-Please don't do things outside test_expect_* block, especially in a
-new script.
+-- 
+<wempwer@gmail.com>
