@@ -7,88 +7,87 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30DD81F6BF
-	for <e@80x24.org>; Fri,  9 Sep 2016 14:38:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D23501F6BF
+	for <e@80x24.org>; Fri,  9 Sep 2016 14:40:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753341AbcIIOie (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 10:38:34 -0400
-Received: from mout.gmx.net ([212.227.17.21]:57431 "EHLO mout.gmx.net"
+        id S1751092AbcIIOkv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 10:40:51 -0400
+Received: from mout.gmx.net ([212.227.17.20]:60777 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752850AbcIIOib (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 10:38:31 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MDn8s-1bpZHX16wY-00H3qG; Fri, 09 Sep 2016 16:38:21
+        id S1750796AbcIIOku (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 10:40:50 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
+ ESMTPSA (Nemesis) id 0LeiJ8-1bGEUd3OQg-00qUvE; Fri, 09 Sep 2016 16:40:45
  +0200
-Date:   Fri, 9 Sep 2016 16:38:20 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+Date:   Fri, 9 Sep 2016 16:40:31 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 17/17] sequencer: ensure to release the lock when we could
- not read the index
-In-Reply-To: <cover.1473431645.git.johannes.schindelin@gmx.de>
-Message-ID: <4c7876d88eac80d9cf05847477d4d468a7c01acc.1473431645.git.johannes.schindelin@gmx.de>
-References: <cover.1472219214.git.johannes.schindelin@gmx.de> <cover.1473431645.git.johannes.schindelin@gmx.de>
+To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 22/22] sequencer: refactor write_message()
+In-Reply-To: <dbc1b08c-a151-29ab-a5a2-45343ca556d6@gmail.com>
+Message-ID: <alpine.DEB.2.20.1609091639430.129229@virtualbox>
+References: <cover.1472457609.git.johannes.schindelin@gmx.de> <cb4253698ae3eca066c031e0aec4e83ede1fa3e5.1472457609.git.johannes.schindelin@gmx.de> <4c0ee8f6-1302-1dcc-602d-7a84150ec39d@gmail.com> <alpine.DEB.2.20.1609011619220.129229@virtualbox>
+ <dbc1b08c-a151-29ab-a5a2-45343ca556d6@gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:PjQ534GvY3UL07KDLrT4wYMPsTUfvkapkVoyW4flSRxVVEhiqsX
- sECOXW2fGo+kpirf70dHQYS7DbaAABhIsOkVU4VhLlmB5a4voCCkw9eux1tAWSkscKcdxxS
- F5H9z3CMPdvJ4qk63lUpodug1byEFC4ZxcI6dEH/63E26EWL0D0SHU6b/atX6rroEmlaoUa
- I1hWH7dC5+71YMG4v9c9g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:nbisFnsAAz4=:UlAw9nRR4THK9muZCEgS5n
- Tktw25XeIURwDwHKlcWEUDl2l0hKG3aCkJopfonTyZVuGHlYY29hIK1MSjAgny6O/lib4BqJR
- cd3B/5b6XIgtkVgRnkHkLPAxs9JLP+uzjIpES3RZt0pPAjM2xItjyrZNkoHdqHgCNWhrczBfC
- LYpsROCmif0Puqcc7g1cqj1UwC+fjldNkDVU96E7ff7k3UEOvSXdPzKd64UYUH1qojGvXHN5Q
- IoAib8cQZvSTz72JqRYGd8ereyhXF+YV3V4VO1+4GJOqaWmdk0i+hi88sA7kKgsv3V/dBMFWN
- gG+PENFsO0j5ljsB6byhtm9ojJsjbpjql3SzvvV6DePHc8V1F+jveSz1B1NjyZFh8X8TMyzIS
- p8xw/Zdqx7e6I4loIzcKo2X/Jirim6MhKylFBjFOjYncDkFza/TJyuReNekN69K5B6rP2vcSG
- LmheZSP9WTDlPHdkEP16Q6qym21M2lLc/2IeKtlERFlzvdBnZYEqfNesMsIuZaCijZByX9iab
- mC9NZb39KY3gydpilysLZssb6F40B1gGQ7scbWXyE/EtjyuHFmD6ansd2aVUZm1yz1tbR57Zk
- 9FzR2lHuuAxG962PsxMvUIrNFpo8V6tUrmhtjlAS/aomoBodE4e9C8Kvrwh0hfJAAAQaHZVwQ
- ga6tpafVm5ntOA9xNQGuys39Y/HdVdCPFzfMvkLSXiMA6MBMCNM5MyOfLbLKt1Iav7+OKIZPq
- 1Zepi7FXvyz14EkmjtB5/F2PYdxFt0P3NztuHmJ22hL+jC5vBpWhHAWOgFXakHgxVFtQqpF+A
- nvs+tj+
+Content-Type: multipart/mixed; BOUNDARY="8323329-116441008-1473432045=:129229"
+X-Provags-ID: V03:K0:KIL3SFHNlXg+Wjw/EJBQBrzUKErPwSjFhJ7mxlAsNRSIv0GQfNX
+ luQ3UkOlavlaFl9sHvQc4MUr0ujIsL5VzICMbXZ/Tat+OG6ll1T8/Dw+g+qHRLuD3G5g50Y
+ y0uAM4xPy8ZZxOJk1i7RDcrBDZ4O/DH0iYy+xna4y4qBfvknmNwRTQFoS+W0xR56qv4RK1l
+ AEjHNWKinTGTq85k7lTOA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:15ilF8zsQOM=:gyWMwEWZ0mZvB9lyXVSoNU
+ Runsg1ucTklS3s8WpLPRIWFS1Sg5GeDViMx+TzU1A+nYrrfzLRW9UTCdei8XVFAUs2xdYKZg8
+ ZunqkdRTcAXRsQHSYeNPLkXh6sKf6WXJiKiwMtchPYvCp6uLcxtf0VRWokZZXnhn0VRHtjPK1
+ araBuQN0wREf+mG4iSFoiJsuqqcQkONSX8KBo1IEa3UIM2jb+leGu7+OGunPP07Ih5m2w5IkF
+ mC/1BZcCgvspau4inYY91bomnV93tX052cw6nT953NH/BSuirXHWCmv4goqEy+IQrrtJQSBpA
+ QYMWMlskQq/Y7cfrROkNi6Iw4DBsVGcz4FFZMCirCed5SfIKr1ReanjH1H8GuzPEm95YhF6Qe
+ gqbN71D/6O2ByLlMFs6Wm6qBm/eu1A8r1nh4NCafn0fN0MrwY+jQXCDDr7fYxFKgWxJMkM5ut
+ c1h6+rez4wWcRPkk0QV2fh35mKXAfLWXfvdMhnAXV49cTR9lozeiQODAawU1xtuEfVKMXZpY2
+ TQJPSAziUpfazE9reYS4JHvGn3UFfjdXxiYeyCllAbr29Xd40v8iy27o5nCqVdgDpBBKhvyNs
+ GH5M69eC+aY359BE65QRPZ0eQd5nwCY9rAWlDk2uOEK/bQTfDs8HL/95C+qRL010g660FipjU
+ 0GgEgVRwAqsNHClzW3JWgbQoWD81FVpTleZtchHRQ2Oky8gEzTir3ucH3aXHjgHcPozQ1f/a+
+ t1zyQ3tZ/6iRMj31K6k1RQs+b1sakORbXiSuli3RYyAgpIQn4zk42ZsjW+mZscZ2ERz54e/CM
+ Pe7MVHy
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A future caller of read_and_refresh_cache() may want to do more than just
-print some helpful advice in case of failure.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Suggested by Junio Hamano.
+--8323329-116441008-1473432045=:129229
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- sequencer.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+Hi Kuba,
 
-diff --git a/sequencer.c b/sequencer.c
-index d92a632..eec8a60 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -644,14 +644,18 @@ static int read_and_refresh_cache(struct replay_opts *opts)
- {
- 	static struct lock_file index_lock;
- 	int index_fd = hold_locked_index(&index_lock, 0);
--	if (read_index_preload(&the_index, NULL) < 0)
-+	if (read_index_preload(&the_index, NULL) < 0) {
-+		rollback_lock_file(&index_lock);
- 		return error(_("git %s: failed to read the index"),
- 			action_name(opts));
-+	}
- 	refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, NULL, NULL, NULL);
- 	if (the_index.cache_changed && index_fd >= 0) {
--		if (write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
-+		if (write_locked_index(&the_index, &index_lock, COMMIT_LOCK)) {
-+			rollback_lock_file(&index_lock);
- 			return error(_("git %s: failed to refresh the index"),
- 				action_name(opts));
-+		}
- 	}
- 	rollback_lock_file(&index_lock);
- 	return 0;
--- 
-2.10.0.windows.1.10.g803177d
+On Fri, 2 Sep 2016, Jakub Nar=C4=99bski wrote:
+
+> W dniu 01.09.2016 o 16:20, Johannes Schindelin pisze:
+> > On Thu, 1 Sep 2016, Jakub Nar=C4=99bski wrote:=20
+> >> W dniu 29.08.2016 o 10:06, Johannes Schindelin pisze:
+>=20
+> >>>  =09if (commit_lock_file(&msg_file) < 0)
+> >>>  =09=09return error(_("Error wrapping up %s."), filename);
+> >>
+> >> Another "while at it"... though the one that can be safely postponed
+> >> (well, the make message easier to understand part, not the quote
+> >> filename part):
+> >>
+> >>   =09=09return error(_("Error wrapping up writing to '%s'."), filename=
+);
+> >=20
+> > As I inherited this message, I'll keep it.
+>=20
+> Well, please then add quotes while at it, at least, for consistency
+>=20
+>   =09=09return error(_("Error wrapping up '%s'."), filename);
+
+I may do that as a final patch, once all the other concerns are addressed.
+I really do not want to change the error message during the conversion.
+
+Ciao,
+Dscho
+--8323329-116441008-1473432045=:129229--
