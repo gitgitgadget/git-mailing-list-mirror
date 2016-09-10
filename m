@@ -2,132 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B71DE1FCA9
-	for <e@80x24.org>; Sat, 10 Sep 2016 09:41:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8703E1FCA9
+	for <e@80x24.org>; Sat, 10 Sep 2016 09:52:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752723AbcIJJlh (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Sep 2016 05:41:37 -0400
-Received: from smtp1-g21.free.fr ([212.27.42.1]:7467 "EHLO smtp1-g21.free.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752375AbcIJJlg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Sep 2016 05:41:36 -0400
-Received: from cayenne.localnet (unknown [IPv6:2a01:e35:2ef1:f910:86a6:c8ff:fe05:d3e0])
-        by smtp1-g21.free.fr (Postfix) with ESMTPS id D7331B0051E;
-        Sat, 10 Sep 2016 11:41:28 +0200 (CEST)
-From:   =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
-To:     Vasco Almeida <vascomalmeida@sapo.pt>
-Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 04/13] i18n: blame: mark error messages for translation
-Date:   Sat, 10 Sep 2016 11:41:28 +0200
-Message-ID: <2532042.KMOOJ8STkh@cayenne>
-User-Agent: KMail/5.2.3 (Linux/4.6.0-1-amd64; KDE/5.25.0; x86_64; ; )
-In-Reply-To: <1473259758-11836-4-git-send-email-vascomalmeida@sapo.pt>
-References: <1473259758-11836-1-git-send-email-vascomalmeida@sapo.pt> <1473259758-11836-4-git-send-email-vascomalmeida@sapo.pt>
+        id S1755553AbcIJJwI (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Sep 2016 05:52:08 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33191 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752538AbcIJJwF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Sep 2016 05:52:05 -0400
+Received: by mail-wm0-f66.google.com with SMTP id b187so6011866wme.0
+        for <git@vger.kernel.org>; Sat, 10 Sep 2016 02:52:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=8pgx7HRANoSNkPD+01shfKgK5D90xcvhYyfbMANM8EU=;
+        b=rFId3IqnNtBAC5Jsis/2FfXA/NL+EbdFahCeJ4luA2qy2rNTdvgQ8kdVL+Ryr1GN9X
+         eswtdcQBw1Y8EMhQT6ieVXbKJsE8yFL4Us7amCcMXwm9FH5Ci56uubxkrURXRoLtiepr
+         XpJA/3YNwNikvtswLdvKS1GNGIVeBnfjydye4uKAhaFj/nt+ema+idclsHX2Dv8YyVPs
+         BxFlhzQDyiA7Nif4SpxEwi8tQx9bfctSmBA6bpf9R12c7WOT1TW1yNLjk873tR0WQ9hm
+         S/0qm0CK9d8i6PWYoV+1dkUOpkDBM2xEx7diyKHaP/C5dWJvujudo0gsEU9txNxq4in6
+         Rm+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=8pgx7HRANoSNkPD+01shfKgK5D90xcvhYyfbMANM8EU=;
+        b=SXawfqCJrUSb7D3Yf2ajKS01stIwnAGtsQz5svwn/RAxTEcIb8Z68/YlpFeh1UZN4V
+         vYtkS9IVcSodwnTizdesl4bCATRIOqW7SIo1fEu1saSBNbkYESiNEcp44w75Yq1MZ6bf
+         m9+BGXFtMr86FJJ2jyKl0vx/N8jaRKEG0KRyz/1LOtZUUqJ9Yn5dKqAuAzj5uNA8Cae7
+         tkbXFuYF7pRNPh41lLSBbSFaXf9nkI1R8h8FSUx+68XhBWSccui7pxY8Tv/88/6DZLCP
+         7RtcDywCZ9pL76SWbvrBPiVKwipQ38G9huFJfPJ3ElJRtPdSyVe+s5rDo7ETEBbDUb7K
+         w8VA==
+X-Gm-Message-State: AE9vXwO1N3hqWAEDMiZbVoU6Nd09VxLE7pO7EoiyXGEKhfpqn3J33qAihJU6PxlMlNceHQ==
+X-Received: by 10.194.114.100 with SMTP id jf4mr6553801wjb.87.1473501124171;
+        Sat, 10 Sep 2016 02:52:04 -0700 (PDT)
+Received: from [192.168.1.26] (adby20.neoplus.adsl.tpnet.pl. [79.184.24.20])
+        by smtp.googlemail.com with ESMTPSA id bo7sm7558481wjb.28.2016.09.10.02.52.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 10 Sep 2016 02:52:03 -0700 (PDT)
+Subject: Re: git commit -p with file arguments
+To:     Christian Neukirchen <chneukirchen@gmail.com>
+References: <87zinmhx68.fsf@juno.home.vuxu.org>
+ <CA+P7+xoN+q_Kst=qXG_HRznxbN7cbyi5uZe15zq1c16EifeK1Q@mail.gmail.com>
+ <xmqq8tv1c5nb.fsf@gitster.mtv.corp.google.com>
+ <23de5ffe-eaf8-2d62-2202-f1bf6087d44b@gmail.com>
+ <87inu4bxt7.fsf@juno.home.vuxu.org>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <b9d63103-011a-9486-2fa1-dcf3a82cbe64@gmail.com>
+Date:   Sat, 10 Sep 2016 11:52:01 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+In-Reply-To: <87inu4bxt7.fsf@juno.home.vuxu.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On mercredi 7 septembre 2016 14:49:08 CEST Vasco Almeida wrote:
-> Mark error messages for translation passed to die() function.
-> Change "Cannot" to lowercase following the usual style.
+W dniu 09.09.2016 o 22:52, Christian Neukirchen napisał:
+> Jakub Narębski <jnareb@gmail.com> writes:
 > 
-> Reflect changes to test by using test_i18ngrep.
+>> Which means that with "git add -p <pathspec> && git commit <pathspec>",
+>> the "git add -p <pathspec>" would carefully craft the <pathspec> state
+>> in the index... and "git commit <pathspec>" would take worktree version
+>> of <pathspec> for commit, ignoring what was in the index :-(
+>>
+>> Currently there is no way to create commit out of subset of the index,
+>> e.g. with "git commit :0:<path>"
 > 
-> Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
-> ---
->  builtin/blame.c               | 12 ++++++------
->  t/t8003-blame-corner-cases.sh |  4 ++--
->  2 files changed, 8 insertions(+), 8 deletions(-)
+> I played around with creating a new index just for "add -p" and then
+> committing that one.  Seems to have worked...
 > 
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> index a5bbf91..3fee197 100644
-> --- a/builtin/blame.c
-> +++ b/builtin/blame.c
-> @@ -2601,7 +2601,7 @@ int cmd_blame(int argc, const char **argv, const char
-> *prefix)
-> 
->  	if (incremental || (output_option & OUTPUT_PORCELAIN)) {
->  		if (show_progress > 0)
-> -			die("--progress can't be used with --incremental or porcelain 
-formats");
-> +			die(_("--progress can't be used with --incremental or porcelain
-> formats")); show_progress = 0;
->  	} else if (show_progress < 0)
->  		show_progress = isatty(2);
-> @@ -2727,7 +2727,7 @@ int cmd_blame(int argc, const char **argv, const char
-> *prefix) sb.commits.compare = compare_commits_by_commit_date;
->  	}
->  	else if (contents_from)
-> -		die("--contents and --reverse do not blend well.");
-> +		die(_("--contents and --reverse do not blend well."));
->  	else {
->  		final_commit_name = prepare_initial(&sb);
->  		sb.commits.compare = compare_commits_by_reverse_commit_date;
-> @@ -2747,12 +2747,12 @@ int cmd_blame(int argc, const char **argv, const
-> char *prefix) add_pending_object(&revs, &(sb.final->object), ":");
->  	}
->  	else if (contents_from)
-> -		die("Cannot use --contents with final commit object name");
-> +		die(_("cannot use --contents with final commit object name"));
-> 
->  	if (reverse && revs.first_parent_only) {
->  		final_commit = find_single_final(sb.revs, NULL);
->  		if (!final_commit)
-> -			die("--reverse and --first-parent together require specified latest
-> commit"); +			die(_("--reverse and --first-parent together require
-> specified latest commit")); }
-> 
->  	/*
-> @@ -2779,7 +2779,7 @@ int cmd_blame(int argc, const char **argv, const char
-> *prefix) }
-> 
->  		if (oidcmp(&c->object.oid, &sb.final->object.oid))
-> -			die("--reverse --first-parent together require range along first-
-parent
-> chain"); +			die(_("--reverse --first-parent together require range along
-> first-parent chain")); }
-> 
->  	if (is_null_oid(&sb.final->object.oid)) {
-> @@ -2820,7 +2820,7 @@ int cmd_blame(int argc, const char **argv, const char
-> *prefix) &bottom, &top, sb.path))
->  			usage(blame_usage);
->  		if (lno < top || ((lno || bottom) && lno < bottom))
-> -			die("file %s has only %lu lines", path, lno);
-> +			die(_("file %s has only %lu lines"), path, lno);
+> Perhaps I'll just wrap git-commit myself then.
 
-Here a plural version is needed.
+What I wanted to say is that there is no built-in way to create commit
+out of subset of the index.  You can of course do what "git commit <file>"
+does, that is use temporary index file (GIT_INDEX_FILE etc.; see
+contrib/examples/git-commit.sh).
 
->  		if (bottom < 1)
->  			bottom = 1;
->  		if (top < 1)
-> diff --git a/t/t8003-blame-corner-cases.sh b/t/t8003-blame-corner-cases.sh
-> index e48370d..661f9d4 100755
-> --- a/t/t8003-blame-corner-cases.sh
-> +++ b/t/t8003-blame-corner-cases.sh
-> @@ -212,12 +212,12 @@ EOF
-> 
->  test_expect_success 'blame -L with invalid start' '
->  	test_must_fail git blame -L5 tres 2>errors &&
-> -	grep "has only 2 lines" errors
-> +	test_i18ngrep "has only 2 lines" errors
->  '
-> 
->  test_expect_success 'blame -L with invalid end' '
->  	test_must_fail git blame -L1,5 tres 2>errors &&
-> -	grep "has only 2 lines" errors
-> +	test_i18ngrep "has only 2 lines" errors
->  '
-> 
->  test_expect_success 'blame parses <end> part of -L' '
+I wonder, if git-commit is to acquire such feature, what would be the
+best interface.  "git commit :0:./<path>"?  "git commit -o -p <path>"
+(that is, "git commit --only --patch <pathspec>")?
 
+-- 
+Jakub Narębski
 
