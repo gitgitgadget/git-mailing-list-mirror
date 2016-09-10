@@ -7,178 +7,72 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 141901F856
-	for <e@80x24.org>; Sat, 10 Sep 2016 06:29:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D511C1F856
+	for <e@80x24.org>; Sat, 10 Sep 2016 07:05:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751321AbcIJG3i (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Sep 2016 02:29:38 -0400
-Received: from mout.web.de ([212.227.15.14]:58063 "EHLO mout.web.de"
+        id S1751561AbcIJHFx (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Sep 2016 03:05:53 -0400
+Received: from mout.gmx.net ([212.227.17.22]:58585 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751129AbcIJG3h (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Sep 2016 02:29:37 -0400
-Received: from localhost ([195.252.60.88]) by smtp.web.de (mrweb002) with
- ESMTPSA (Nemesis) id 0LsyBm-1b29UW1jsg-012XST; Sat, 10 Sep 2016 08:29:22
+        id S1750861AbcIJHFx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Sep 2016 03:05:53 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0LiDHj-1bCoA91gKx-00nUN1; Sat, 10 Sep 2016 09:05:34
  +0200
-Date:   Sat, 10 Sep 2016 06:29:20 +0000
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     larsxschneider@gmail.com
-Cc:     git@vger.kernel.org, peff@peff.net, gitster@pobox.com,
-        sbeller@google.com, Johannes.Schindelin@gmx.de, jnareb@gmail.com,
-        mlbright@gmail.com, jacob.keller@gmail.com
-Subject: Re: [PATCH v7 10/10] convert: add filter.<driver>.process option
-Message-ID: <20160910062919.GB11001@tb-raspi>
-References: <20160908182132.50788-1-larsxschneider@gmail.com>
- <20160908182132.50788-11-larsxschneider@gmail.com>
+Date:   Sat, 10 Sep 2016 09:05:32 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org, Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: [PATCH] git-gui: respect commit.gpgsign again
+In-Reply-To: <xmqqr38tapv0.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1609100903010.129229@virtualbox>
+References: <550e7de5e08e53b5893e1ce021bffee468adfc9d.1473424091.git.johannes.schindelin@gmx.de> <xmqqr38tapv0.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160908182132.50788-11-larsxschneider@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V03:K0:x6MBHyUYruFHS7hysKrHzKcFzQBjgg6WR5QUiz1jcYlRPlsREhI
- sirsHcYkurqJHgZpwEF7eFvcnF8kMT9uoAvdaHSETYtnSVZE8aKOvtg71EuD/PJPG6NR3nH
- 7Fsu3A2U5L1EiKDisZlcyaZ4XiJBXc2gLtSS2rikyNbwBFIxTHKjoeoC5e1dty0eGzsmRFj
- m2qnJjrZtRoIBGQmY0wUg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:9yHkOWYF6Hc=:tMPd2b87/7aF2d2TbpX92e
- q/+Ez4+nWUTw0EG/XtUqtQYMx542UosqRqvoorPD5l3awdqELmBWfBcfFGuGwb4rF4kfNqgxZ
- +3j3H2eblME5GWUVBT9GVVYOUcAZX2tlBwL9Mj5FulnmLOt4elGHmPGFYhQbYQc0mToRBqd17
- uP87hHPQ+4HfTPh/MUWTg5O4EWQdmxr4yXi9zPgZN+RVmGw7uOPLXzsrzCQXdGJTX9gvFHoZu
- eP1Je5OgiHk2xywUAJP9AwJtaEKgfgl6R61azHdRM0kqvLn+3fI91Icohl6c5B8fUIB5cOXbC
- VIJ7yY4cEDaDjnoexeQA4bjoFa1UPbWQ4y5h0qxtGT1UBIZdlNJ7cvFsdxOs/DWMGY3NEyACY
- nu6vhmKTuMsQxs+VQhtzFp0tXfWF/qU3Mt6565XLcbUMZbPfa1BR7InPS0XxBmpLyFdMrdSQJ
- AX6bJ3b5Hh+0r6AfhkIYHrm/O6INKxvMyLTK6EcGJ+fYN+/RnlOLqtoqhE6Sa9N25Xi0+HD1H
- zxvasAOAjh2jsAYNCw87gYtIblrk/4YSJFLelC1/o7oNJUVrlrFNs1Q2WcjFrgRJ6XgDtoC6t
- yXg6/AzVhgXlKO+TJK3QQFfe0vuFwvwmBIh73my6qY8GW/fpxyAQrbX3i1pLD7S3ArhVmluyQ
- rynL1vVWtpiDSXuW9d/8+RNfqK4a6iDSZdow/2SVulkVXTN50gX+BG0lgB+7Y3w+vZ7hrcHDF
- XTDl96+HN5rfgE6yhB1Ytq45FGlb1bVI6AoZbT6b3EGgxuI7yH10rseqo40=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:GxKFukifYN711osA2Sa44+2Ex5nLGDi2kugx4d72BayyDm56B1T
+ 4BkXD5jYY25ftBthZTgxBtTT7QjsvHuhbtJb3HXAl7nGcZwoI7Z59onU/YG936y6FczMB7r
+ SOh9IjyUr93ybejesUOr4tdEDYF+o3NwHntfxZsGlY9qVUSnnam1Q5U6+mOu0g2XvD3Q3XR
+ YBc+1ZO2dQ3YNp9Skqdpg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:QkeSCA1iygE=:fmU/NTDJcXOex0Lt0ZE6tv
+ jeNgxfP3KeXdYlAYWwCW4lXUnNWx3TGnOG0X8lSgRCustsBu4PcWEjoQDg2MFGBuXJpyyXvLc
+ W5BgTWLq6IWs9SSBlygCNHlula7j6Vc6aTBa1+t7BOZbYbcY691xBzjWWKBKA5t2LqjnmfOah
+ 9sLaSOTALrsxmauKIfq4cGACJGl4+p0YvveR8ewlPNwVh/tLTJQt2NWOHgIu4a5zyrdOHo0Rc
+ Fy0vJzrF4Dwa6ITYCVRwtieQQgdQSW+MpE7RscQwPbTXmGpYO7zNB0nLg2dgdyLrqB4dZBZIh
+ Ck29P4OyMTwqw9u0LoEbdDpke+ZLq/lp4MfQSCGdsImmaWqfLRULxr0kctKEnTFYyBUdC3QET
+ jXGft0PCdVHDW2A957mQ5WhbtGrHm0/j342+6gMB2bmqOxQdeNo842A276OxzK9jS++CuZQ41
+ Y0EGzJLiIcGZqxX/V/IGGvmePwGnvnunAcc0nVBmknp7Y2dLQWDD6brOGA2tzSOPl36nwq/67
+ 4jyLtt1I/0WwP6yJ7Ij/+uNrl72AmOqmRk+lCJs1eHic7ktotYJD/VAUFVfEWusgEUa6CUDaT
+ lk65/4PvQHaotR77fPDWCFrBVRCYcvR4CagNxpYQ30D73EUK9SOOHSPq+rMjhzTPdfg4Ww0iV
+ zNCdaQdJCVtKPvpXSEt+ulF1tClEzChcc7jgkkvoTDeUJR7bWJ0Y5HOxlwJDR8a4K1sJZFEQb
+ gepnPKTwj2YYejbqj8Nux9ZRUL+TI4SKGhLeXgno9Tr/a7P+L5eyxDYTS37BmtcChAue9C02w
+ GYLeAZ3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 08, 2016 at 08:21:32PM +0200, larsxschneider@gmail.com wrote:
-[]
-> +packet:          git> git-filter-client
-> +packet:          git> version=2
-> +packet:          git> version=42
-> +packet:          git> 0000
-> +packet:          git< git-filter-server
-> +packet:          git< version=2
-> +packet:          git> clean=true
-> +packet:          git> smudge=true
-> +packet:          git> not-yet-invented=true
-> +packet:          git> 0000
-> +packet:          git< clean=true
-> +packet:          git< smudge=true
-> +packet:          git< 0000
+Hi Junio,
 
-It's probalby only me who has difficulties to distinguish
-'>' from '<'.
+On Fri, 9 Sep 2016, Junio C Hamano wrote:
 
-packet:          git> git-filter-client
-packet:          git> version=2
-packet:          git> version=42
-packet:          git> 0000
-packet:       filter> git-filter-server
-packet:       filter> version=2
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > As of v2.9.0, `git commit-tree` no longer heeds the `commit.gpgsign`
+> > config setting. This broke committing in Git GUI.
+> 
+> Thanks.  Will shift it up to apply to my copy of git-gui project and
+> then pull in the result.
 
-(Otherwise the dialoge description is nice)
+Thanks. There are a couple more git-gui patches waiting for quite a long
+time. So you prefer them still as patches to git-gui.git?
 
-> +------------------------
-> +Supported filter capabilities in version 2 are "clean" and
-> +"smudge".
-> +
-> +Afterwards Git sends a list of "key=value" pairs terminated with
-> +a flush packet. The list will contain at least the filter command
-> +(based on the supported capabilities) and the pathname of the file
-> +to filter relative to the repository root. Right after these packets
-> +Git sends the content split in zero or more pkt-line packets and a
-> +flush packet to terminate content.
-> +------------------------
-> +packet:          git> command=smudge\n
-> +packet:          git> pathname=path/testfile.dat\n
+Also, I just noticed poor wording. Would you mind fixing it up by
 
-How do we send pathnames the have '\n' ?
-Not really recommended, but allowed.
-And here I am a little bit lost, is each of the lines packed into
-a pkt-line ?
-command=smudge is packet as pkt-line and pathname= is packed into
-another one ? (The we don't need the '\n' at all)
-Or go both lines into one pkt-line (thats what I think), then
-we don't need the '\n' afther the pathname.
-And in this case the pathname is always the last element, and a '\n'
-may occur in the pathname, since we know the length of the packet
-we know how long the pathname must be.
+	s/committing/& with GPG signature/
 
+?
 
-
-> +packet:          git> 0000
-> +packet:          git> CONTENT
-> +packet:          git> 0000
-> +------------------------
-> +
-
-
-> +The filter is expected to respond with a list of "key=value" pairs
-> +terminated with a flush packet. If the filter does not experience
-> +problems then the list must contain a "success" status. Right after
-> +these packets the filter is expected to send the content in zero
-> +or more pkt-line packets and a flush packet at the end. Finally, a
-> +second list of "key=value" pairs terminated with a flush packet
-> +is expected. The filter can change the status in the second list.
-> +------------------------
-> +packet:          git< status=success\n
-> +packet:          git< 0000
-> +packet:          git< SMUDGED_CONTENT
-> +packet:          git< 0000
-> +packet:          git< 0000  # empty list!
-> +------------------------
-> +
-> +If the result content is empty then the filter is expected to respond
-> +with a success status and an empty list.
-> +------------------------
-> +packet:          git< status=success\n
-> +packet:          git< 0000
-> +packet:          git< 0000  # empty content!
-> +packet:          git< 0000  # empty list!
-> +------------------------
-> +
-> +In case the filter cannot or does not want to process the content,
-
-Does not want ? 
-I can see something like "I read through the file, there is nothing
-to do. So Git, I don't send anything back, you know where the file is.
-
-> +it is expected to respond with an "error" status. Depending on the
-> +`filter.<driver>.required` flag Git will interpret that as error
-> +but it will not stop or restart the filter process.
-> +------------------------
-> +packet:          git< status=error\n
-> +packet:          git< 0000
-> +------------------------
-> +
-> +If the filter experiences an error during processing, then it can
-> +send the status "error" after the content was (partially or
-> +completely) sent. Depending on the `filter.<driver>.required` flag
-> +Git will interpret that as error but it will not stop or restart the
-> +filter process.
-> +------------------------
-> +packet:          git< status=success\n
-> +packet:          git< 0000
-> +packet:          git< HALF_WRITTEN_ERRONEOUS_CONTENT
-> +packet:          git< 0000
-> +packet:          git< status=error\n
-> +packet:          git< 0000
-> +------------------------
-> +
-> +If the filter dies during the communication or does not adhere to
-> +the protocol then Git will stop the filter process and restart it
-
-My personal comment:
-When a filter is mis-behaving, Git should say so loud and clear, and
-die(). 
-The filter process can be left running, so that it can be debugged.
-
-Here I stopped the review for a moment, 
-I still think that Git shouldn't kill anything, because we loose
-the ability to debug these processes.
-
+Thanks,
+Dscho
