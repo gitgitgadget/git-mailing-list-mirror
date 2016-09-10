@@ -2,26 +2,26 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB04F1F859
-	for <e@80x24.org>; Sat, 10 Sep 2016 14:57:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0742E1F859
+	for <e@80x24.org>; Sat, 10 Sep 2016 14:59:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755239AbcIJO5r (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Sep 2016 10:57:47 -0400
-Received: from mail2.tiolive.com ([94.23.229.207]:47613 "EHLO
+        id S1754524AbcIJO73 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Sep 2016 10:59:29 -0400
+Received: from mail2.tiolive.com ([94.23.229.207]:47620 "EHLO
         mail2.tiolive.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755216AbcIJO5q (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Sep 2016 10:57:46 -0400
+        with ESMTP id S1754237AbcIJO73 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Sep 2016 10:59:29 -0400
 Received: from teco.navytux.spb.ru (unknown [178.70.98.236])
-        by mail2.tiolive.com (Postfix) with ESMTPSA id 8F5B4BF0327;
-        Sat, 10 Sep 2016 16:57:42 +0200 (CEST)
+        by mail2.tiolive.com (Postfix) with ESMTPSA id 97C4EBF0319;
+        Sat, 10 Sep 2016 16:59:26 +0200 (CEST)
 Received: from kirr by teco.navytux.spb.ru with local (Exim 4.87)
         (envelope-from <kirr@teco.navytux.spb.ru>)
-        id 1bijit-0004s1-2m; Sat, 10 Sep 2016 17:57:39 +0300
-Date:   Sat, 10 Sep 2016 17:57:39 +0300
+        id 1bijkb-0004sQ-TA; Sat, 10 Sep 2016 17:59:25 +0300
+Date:   Sat, 10 Sep 2016 17:59:25 +0300
 From:   Kirill Smelkov <kirr@nexedi.com>
 To:     Jeff King <peff@peff.net>
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -30,286 +30,207 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Isabelle Vallet <isabelle.vallet@nexedi.com>,
         Kazuhiko Shiozaki <kazuhiko@nexedi.com>,
         Julien Muchembled <jm@nexedi.com>, git@vger.kernel.org
-Subject: Re: [PATCH 1/2 v5] pack-objects: respect
- --local/--honor-pack-keep/--incremental when bitmap is in use
-Message-ID: <20160910145738.x6ihp2gqzpk7dbi3@teco.navytux.spb.ru>
+Subject: Re: [PATCH 2/2 v7] pack-objects: use reachability bitmap index when
+ generating non-stdout pack
+Message-ID: <20160910145925.xbbus7eck5ineika@teco.navytux.spb.ru>
 References: <20160809192858.GA25822@teco.navytux.spb.ru>
- <20160809193143.32213-1-kirr@nexedi.com>
- <20160818175222.bmm3ivjheokf2qzl@sigill.intra.peff.net>
+ <20160809193217.32389-1-kirr@nexedi.com>
+ <20160818180615.q25p57v35m2xxtww@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20160818175222.bmm3ivjheokf2qzl@sigill.intra.peff.net>
+In-Reply-To: <20160818180615.q25p57v35m2xxtww@sigill.intra.peff.net>
 User-Agent: NeoMutt/ (1.7.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 18, 2016 at 01:52:22PM -0400, Jeff King wrote:
-> On Tue, Aug 09, 2016 at 10:31:43PM +0300, Kirill Smelkov wrote:
+On Thu, Aug 18, 2016 at 02:06:15PM -0400, Jeff King wrote:
+> On Tue, Aug 09, 2016 at 10:32:17PM +0300, Kirill Smelkov wrote:
 > 
-> > Since 6b8fda2d (pack-objects: use bitmaps when packing objects) there
-> > are two codepaths in pack-objects: with & without using bitmap
-> > reachability index.
+> > Subject: Re: [PATCH 2/2 v7] pack-objects: use reachability bitmap index when
+> >    generating non-stdout pack
 > 
-> Sorry, I got distracted from reviewing these patches. I'll give them a
-> detailed look now and hopefully we can finalize the topic.
+> This is v7, but as I understand your numbering, it goes with v5 of patch
+> 1/2 that I just reviewed (usually we just increment the version number
+> on the whole series and treat it as a unit, even if some patches didn't
+> change from version to version).
 
-Jeff, thanks for feedback. On my side I'm sorry for the delay because I
-was travelling and only recently got back to work.
+The reason those patches are having their own numbers is that they are
+orthogonal to each other and can be applied / rejected independently.
+Since I though Junio might want to pick them up as separate topics they
+were versioned separately.
 
-> > In want_object_in_pack() we care to start the checks from already found
-> > pack, if we have one, this way determining the answer right away
-> > in case neither --local nor --honour-pack-keep are active. In
-> > particular, as p5310-pack-bitmaps.sh shows, we do not do harm to
-> > served-with-bitmap clones performance-wise:
+But ok, since now we have them considered both together, their next
+versions posted will be uniform v8.
+
+
+> > So we can teach pack-objects to use bitmap index for initial object
+> > counting phase when generating resultant pack file too:
 > > 
-> >     Test                      56dfeb62          this tree
-> >     -----------------------------------------------------------------
-> >     5310.2: repack to disk    9.63(8.67+0.33)   9.47(8.55+0.28) -1.7%
-> >     5310.3: simulated clone   2.07(2.17+0.12)   2.03(2.14+0.12) -1.9%
-> >     5310.4: simulated fetch   0.78(1.03+0.02)   0.76(1.00+0.03) -2.6%
-> >     5310.6: partial bitmap    1.97(2.43+0.15)   1.92(2.36+0.14) -2.5%
+> > - if we care it is not activated under git-repack:
+> 
+> Do you mean "if we take care that it is not..." here?
+> 
+> (I think you might just be getting tripped up in the English idioms;
+> "care" means that we have a preference; "to take care" means that we are
+> being careful).
+
+Ok, I've might have been tripped and thanks for the catch up. I've changed to
+
+	"if we take care to not let it be activated under git-repack"
+
+> 
+> > - if we know bitmap index generation is not enabled for resultant pack:
 > > 
-> > with all differences strangely showing we are a bit faster now, but
-> > probably all being within noise.
+> >   Current code has singleton bitmap_git so cannot work simultaneously
+> >   with two bitmap indices.
 > 
-> Good to know there is no regression. It is curious that there is a
-> slight _improvement_ across the board. Do we have an explanation for
-> that? It seems odd that noise would be so consistent.
-
-Yes, I too thought it and it turned out to be t/perf/run does not copy
-config.mak.autogen & friends to build/ and I'm using autoconf with
-CFLAGS="-march=native -O3 ..."
-
-Junio, I could not resist to the following:
-
----- 8< ----
-From: Kirill Smelkov <kirr@nexedi.com>
-Subject: [PATCH] t/perf/run: Don't forget to copy config.mak.autogen & friends
- to build area
-
-Otherwise for people who use autotools-based configure in main worktree,
-the performance testing results will be inconsistent as work and build
-trees could be using e.g. different optimization levels.
-
-See e.g.
-
-	http://public-inbox.org/git/20160818175222.bmm3ivjheokf2qzl@sigill.intra.peff.net/
-
-for example.
-
-NOTE config.status has to be copied because otherwise without it the build
-would want to run reconfigure this way loosing just copied config.mak.autogen.
-
-Signed-off-by: Kirill Smelkov <kirr@nexedi.com>
----
- t/perf/run | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/t/perf/run b/t/perf/run
-index cfd7012..aa383c2 100755
---- a/t/perf/run
-+++ b/t/perf/run
-@@ -30,7 +30,7 @@ unpack_git_rev () {
- }
- build_git_rev () {
- 	rev=$1
--	cp ../../config.mak build/$rev/config.mak
-+	cp -t build/$rev ../../{config.mak,config.mak.autogen,config.status}
- 	(cd build/$rev && make $GIT_PERF_MAKE_OPTS) ||
- 	die "failed to build revision '$mydir'"
- }
--- 
-2.9.2.701.gf965a18.dirty
----- 8< ----
-
-With corrected t/perf/run the timings are more realistic - e.g. 3
-consecutive runs of `./run 56dfeb62 . ./p5310-pack-bitmaps.sh`:
-
-Test                      56dfeb62          this tree
------------------------------------------------------------------
-5310.2: repack to disk    9.08(8.20+0.25)   9.09(8.14+0.32) +0.1%
-5310.3: simulated clone   1.92(2.12+0.08)   1.93(2.12+0.09) +0.5%
-5310.4: simulated fetch   0.82(1.07+0.04)   0.82(1.06+0.04) +0.0%
-5310.6: partial bitmap    1.96(2.42+0.13)   1.95(2.40+0.15) -0.5%
-
-Test                      56dfeb62          this tree
------------------------------------------------------------------
-5310.2: repack to disk    9.11(8.16+0.32)   9.11(8.19+0.28) +0.0%
-5310.3: simulated clone   1.93(2.14+0.07)   1.92(2.11+0.10) -0.5%
-5310.4: simulated fetch   0.82(1.06+0.04)   0.82(1.04+0.05) +0.0%
-5310.6: partial bitmap    1.95(2.38+0.16)   1.94(2.39+0.14) -0.5%
-
-Test                      56dfeb62          this tree
------------------------------------------------------------------
-5310.2: repack to disk    9.13(8.17+0.31)   9.07(8.13+0.28) -0.7%
-5310.3: simulated clone   1.92(2.13+0.07)   1.91(2.12+0.06) -0.5%
-5310.4: simulated fetch   0.82(1.08+0.03)   0.82(1.08+0.03) +0.0%
-5310.6: partial bitmap    1.96(2.43+0.14)   1.96(2.42+0.14) +0.0%
-
-
-
-> > And in the general case we care not to have duplicate
-> > find_pack_entry_one(*found_pack) calls. Worst what can happen is we can
-> > call want_found_object(*found_pack) -- newly introduced helper for
-> > checking whether we want object -- twice, but since want_found_object()
-> > is very lightweight it does not make any difference.
+> Minor English fixes:
 > 
-> I had trouble parsing this. I think maybe:
+>   The current code has a singleton bitmap_git, so it cannot work
+>   simultaneously with two bitmap indices.
+
+ok.
+
+> > - if we keep pack reuse enabled still only for "send-to-stdout" case:
+> > 
+> >   Because on pack reuse raw entries are directly written out to destination
+> >   pack by write_reused_pack() bypassing needed for pack index generation
+> >   bookkeeping done by regular codepath in write_one() and friends.
 > 
->   In the general case we do not want to call find_pack_entry_one() more
->   than once, because it is expensive. This patch splits the loop in
->   want_object_in_pack() into two parts: finding the object and seeing if
->   it impacts our choice to include it in the pack. We may call the
->   inexpensive want_found_object() twice, but we will never call
->   find_pack_entry_one() if we do not need to.
-
-Ok, thanks for the advice.
-
+> Ditto on English:
 > 
-> > +static int want_found_object(int exclude, struct packed_git *p)
-> > +{
-> > +	if (exclude)
-> > +		return 1;
-> > +	if (incremental)
-> > +		return 0;
-> > +
-> > +	/*
-> > +	 * When asked to do --local (do not include an object that appears in a
-> > +	 * pack we borrow from elsewhere) or --honor-pack-keep (do not include
-> > +	 * an object that appears in a pack marked with .keep), finding a pack
-> > +	 * that matches the criteria is sufficient for us to decide to omit it.
-> > +	 * However, even if this pack does not satisfy the criteria, we need to
-> > +	 * make sure no copy of this object appears in _any_ pack that makes us
-> > +	 * to omit the object, so we need to check all the packs. Signal that by
-> > +	 * returning -1 to the caller.
-> > +	 */
-> > +	if (!ignore_packed_keep &&
-> > +	    (!local || !have_non_local_packs))
-> > +		return 1;
+>   On pack reuse raw entries are directly written out to the destination
+>   pack by write_reused_pack(), bypassing the need for pack index
+>   generation bookkeeping done by the regular code path in write_one()
+>   and friends.
 > 
-> Hmm. The comment says "-1", but the return says "1". That is because the
-> comment is describing the return that happens at the end. :)
-> 
-> I wonder if the last sentence should be:
-> 
->   We can check here whether these options can possibly matter; if not,
->   we can return early from the function here. Otherwise, we signal "-1"
->   at the end to tell the caller that we do not know either way, and it
->   needs to check more packs.
+> I think this is missing the implication. Why wouldn't we want to reuse
+> in this case? Certainly we don't when doing a "careful" on-disk repack.
+> I suspect the answer is that we cannot write a ".idx" off of the result
+> of write_reused_pack(), and write-to-disk always includes the .idx.
 
-Thanks for the catch and hint. I've changed it to the following:
+Yes, mentioning pack-to-file needs to generate .idx makes it more clear
+and thanks for pointing this out. I've changed this item to the
+following (picking some of your English corrections):
 
-	We can however first check whether these options can possible matter;
-	if they do not matter we know we want the object in generated pack.
-	Otherwise, we signal "-1" at the end to tell the caller that we do
-	not know either way, and it needs to check more packs.
+    - if we keep pack reuse enabled still only for "send-to-stdout" case:
 
-full version:
+      Because pack-to-file needs to generate index for destination pack, and
+      currently on pack reuse raw entries are directly written out to the
+      destination pack by write_reused_pack(), bypassing needed for pack index
+      generation bookkeeping done by regular codepath in write_one() and
+      friends.
 
-        /*
-         * When asked to do --local (do not include an object that appears in a
-         * pack we borrow from elsewhere) or --honor-pack-keep (do not include
-         * an object that appears in a pack marked with .keep), finding a pack
-         * that matches the criteria is sufficient for us to decide to omit it.
-         * However, even if this pack does not satisfy the criteria, we need to
-         * make sure no copy of this object appears in _any_ pack that makes us
-         * to omit the object, so we need to check all the packs.
-         *
-         * We can however first check whether these options can possible matter;
-         * if they do not matter we know we want the object in generated pack.
-         * Otherwise, we signal "-1" at the end to tell the caller that we do
-         * not know either way, and it needs to check more packs.
-         */
+      ( In the future we might teach pack-reuse code about cases when index
+        also needs to be generated for resultant pack and remove
+        pack-reuse-only-for-stdout limitation )
 
 Hope it is ok.
 
-> > -	*found_pack = NULL;
-> > -	*found_offset = 0;
-> > +	/*
-> > +	 * If we already know the pack object lives in, start checks from that
-> > +	 * pack - in the usual case when neither --local was given nor .keep files
-> > +	 * are present we will determine the answer right now.
-> > +	 */
-> > +	if (*found_pack) {
-> > +		want = want_found_object(exclude, *found_pack);
-> > +		if (want != -1)
-> > +			return want;
-> > +	}
+> > More context:
+> > 
+> >     http://marc.info/?t=146792101400001&r=1&w=2
 > 
-> Looks correct. Though it is not really "start checks from..." anymore,
-> but rather "do a quick check to see if we can quit early, and otherwise
-> start the loop". That might be nitpicking, though.
+> Can we turn this into a link to public-inbox? We have just been bit by
+> all of our old links to gmane dying, and they cannot easily be replaced
+> because they use a gmane-specific article number. public-inbox URLs use
+> message-ids, which should be usable for other archives if public-inbox
+> goes away.
 
-I see. Your version is ok, but to me 'start checks from ...' is a bit
-more natural and explaining (yes, all subjective and depending on
-taste), so if possible I'd prefer to leave it as is.
+Yes, makes sense to put msgid here. I've added
 
+	http://public-inbox.org/git/20160707190917.20011-1-kirr@nexedi.com/T/#t
+
+
+> > diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> > index b1007f2..c92d7fc 100644
+> > --- a/builtin/pack-objects.c
+> > +++ b/builtin/pack-objects.c
 > 
-> >  	for (p = packed_git; p; p = p->next) {
-> > -		off_t offset = find_pack_entry_one(sha1, p);
-> > +		off_t offset;
-> > +
-> > +		if (p == *found_pack)
-> > +			offset = *found_offset;
-> > +		else
-> > +			offset = find_pack_entry_one(sha1, p);
-> > +
-> 
-> This hunk will conflict with the MRU optimizations in 'next', but I
-> think the resolution should be pretty trivial.
+> The code here looks fine.
 
-Yes.
-
-> >  static int add_object_entry(const unsigned char *sha1, enum object_type type,
-> >  			    const char *name, int exclude)
-> >  {
-> > -	struct packed_git *found_pack;
-> > -	off_t found_offset;
-> > +	struct packed_git *found_pack = NULL;
-> > +	off_t found_offset = 0;
-> 
-> I think technically we don't need to initialize found_offset here (it is
-> considered only if *found_pack is not NULL), but it doesn't hurt to make
-> our starting assumptions clear.
-
-Yes, found_pack != NULL is indicator whether we have found_pack /
-found_offset info, but it makes it much clear and defending from
-mistakes to set both found_{pack,offset} into known initial state.
-
-> > @@ -1073,6 +1097,9 @@ static int add_object_entry_from_bitmap(const unsigned char *sha1,
-> >  	if (have_duplicate_entry(sha1, 0, &index_pos))
-> >  		return 0;
-> >  
-> > +	if (!want_object_in_pack(sha1, 0, &pack, &offset))
-> > +		return 0;
-> > +
-> 
-> And this caller doesn't need to worry about initialization, because of
-> course it knows it has a pack/offset already. Good.
-
-Yes, we have this info from bitmap walker calling us.
-
+Thanks.
 
 > > diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-> > index 3893afd..a278d30 100755
+> > index a278d30..9602e9a 100755
 > > --- a/t/t5310-pack-bitmaps.sh
 > > +++ b/t/t5310-pack-bitmaps.sh
+> > @@ -196,6 +196,18 @@ test_expect_success 'pack-objects respects --local (non-local bitmapped pack)' '
+> >  	! has_any packbitmap.objects 3b.objects
+> >  '
+> >  
+> > +test_expect_success 'pack-objects to file can use bitmap' '
+> > +	# make sure we still have 1 bitmap index from previous tests
+> > +	ls .git/objects/pack/ | grep bitmap >output &&
+> > +	test_line_count = 1 output &&
+> > +	# verify equivalent packs are generated with/without using bitmap index
+> > +	packasha1=$(git pack-objects --no-use-bitmap-index --all packa </dev/null) &&
+> > +	packbsha1=$(git pack-objects --use-bitmap-index --all packb </dev/null) &&
+> > +	list_packed_objects <packa-$packasha1.idx >packa.objects &&
+> > +	list_packed_objects <packb-$packbsha1.idx >packb.objects &&
+> > +	test_cmp packa.objects packb.objects
+> > +'
 > 
-> Tests look OK. I saw a few style nitpicks, but I think they are not even
-> against our style guide but more "I would have written it like this" and
-> are not even worth quibbling over.
-> 
-> So I think the code here is fine, and I just had a few minor complaints
-> on comment and commit message clarity.
+> Of course we can't know if bitmaps were actually used, or if they were
+> turned off under the hood. But at least this exercises the code a bit.
 
-Thanks for feedback. Yes tastes can differ but your comments regarding
-commit message and want_found_object() were objectively (imho) worth it
-and there I've made the adjustments.
+Yes, I was thinking how to know the bitmap codepath was actually active,
+and without adding debugging points there is no way (at least I could
+not find it).
 
-Please expect updated patch to be send as reply to this mail.
+> You could possibly add a perf test which shows off the improvement, but
+> I don't think it's strictly necessary.
 
-Thanks again for feedback,
+Good idea. I've added this
+
+---- 8< ----
+diff --git a/t/perf/p5310-pack-bitmaps.sh b/t/perf/p5310-pack-bitmaps.sh
+index de2a224..bb91dbb 100755
+--- a/t/perf/p5310-pack-bitmaps.sh
++++ b/t/perf/p5310-pack-bitmaps.sh
+@@ -32,6 +32,14 @@ test_perf 'simulated fetch' '
+        } | git pack-objects --revs --stdout >/dev/null
+ '
+ 
++test_perf 'pack to file' '
++       git pack-objects --all pack1 </dev/null >/dev/null
++'
++
++test_perf 'pack to file (bitmap)' '
++       git pack-objects --use-bitmap-index --all pack1b </dev/null >/dev/null
++'
++
+ test_expect_success 'create partial bitmap state' '
+        # pick a commit to represent the repo tip in the past
+        cutoff=$(git rev-list HEAD~100 -1) &&
+@@ -53,8 +61,12 @@ test_expect_success 'create partial bitmap state' '
+        git update-ref HEAD $orig_tip
+ '
+ 
+-test_perf 'partial bitmap' '
++test_perf 'clone (partial bitmap)' '
+        git pack-objects --stdout --all </dev/null >/dev/null
+ '
+ 
++test_perf 'pack to file (partial bitmap)' '
++       git pack-objects --use-bitmap-index --all pack2b </dev/null >/dev/null
++'
++
+ test_done
+---- 8< ----
+
+    Test                                    56dfeb62          this tree
+    --------------------------------------------------------------------------------
+    5310.2: repack to disk                  8.98(8.05+0.29)   9.05(8.08+0.33) +0.8%
+    5310.3: simulated clone                 2.02(2.27+0.09)   2.01(2.25+0.08) -0.5%
+    5310.4: simulated fetch                 0.81(1.07+0.02)   0.81(1.05+0.04) +0.0%
+    5310.5: pack to file                    7.58(7.04+0.28)   7.60(7.04+0.30) +0.3%
+    5310.6: pack to file (bitmap)           7.55(7.02+0.28)   3.25(2.82+0.18) -57.0%
+    5310.8: clone (partial bitmap)          1.83(2.26+0.12)   1.82(2.22+0.14) -0.5%
+    5310.9: pack to file (partial bitmap)   6.86(6.58+0.30)   2.87(2.74+0.20) -58.2%
+    
+
 Kirill
