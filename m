@@ -2,98 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF74B207DF
-	for <e@80x24.org>; Sat, 10 Sep 2016 00:17:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5477207E0
+	for <e@80x24.org>; Sat, 10 Sep 2016 00:21:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750976AbcIJARU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 20:17:20 -0400
-Received: from mail-ua0-f178.google.com ([209.85.217.178]:35345 "EHLO
-        mail-ua0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750760AbcIJART (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 20:17:19 -0400
-Received: by mail-ua0-f178.google.com with SMTP id 35so2404996uaq.2
-        for <git@vger.kernel.org>; Fri, 09 Sep 2016 17:17:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=TXyP6hsWNfdxFfaJydertCmRrCt6huhniGJBz2DVfRc=;
-        b=ot2l+2Kqwz/G5KqAlbvuqv679007+alycgft6ytUHK6u++MuAYfVndSwTSxplxDZk1
-         SE7RL4HdpDV+5zt5w5by6pgs4QdY2JghUxPy87kjWRTu32rHZPPoTdtHmEs3a2hVRQU8
-         +ZOmpMajhyLFpGH8vNRaQfvTYDdNrNRfViP4b+Gf31WACSxktYgRXn5OnMXhTu1ZJAVo
-         MmRzXtOVDV6scLyg2h7KJpfu0vMypAAbb9UjaVjVbCQS5wA749XwRxE5oFrFKq3AxZ2M
-         DugsOAg1GL7O7b+5L8U9Wfxb3AATJV3oA28TXMgt/QIieQB+xCyzh5C2OAg8masdj9Ka
-         CsKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=TXyP6hsWNfdxFfaJydertCmRrCt6huhniGJBz2DVfRc=;
-        b=lsChRgvaVjtw5esKWBKiRue5MPezJfxgxXqtzAyjkzoTBlHKSVpSUHi9KyQmk7rqqd
-         oPLRVjG3HIABBcxHX0YWxYyEfASSRm/ynkGljBbyqVzY07PrnWtWNJa6HKnOOSLHVoSa
-         dH7qY3i65WMAPhBxGJGWxnQmykDbiK7flOohxSvSvNgfPWGt1klCX8hocQZvx3lHZaq+
-         Y9Zh2jyO0WyA8HOcBZGOQ0aJ9CTsV50Vt5RP0LHwJvoqZFtWlz/N7GRUCqTXqT6U9zuQ
-         QVuyg+hSbnRWcrIo6rKcT6zZtyT2C0fbz25KggatpF40Zy+6UfeVL9lbEa3haOKmAtp8
-         DFxA==
-X-Gm-Message-State: AE9vXwMr9pc4IR9PR3anIKnFRSkh5gOattFZsIOM5ZfuHMkmptIzuIsZiMqpHDAbsbWPE51oM8/ykeuhtFinPg==
-X-Received: by 10.176.64.229 with SMTP id i92mr4476720uad.122.1473466638842;
- Fri, 09 Sep 2016 17:17:18 -0700 (PDT)
+        id S1750940AbcIJAVw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Sep 2016 20:21:52 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:40562 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750760AbcIJAVw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2016 20:21:52 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id 54536207DF;
+        Sat, 10 Sep 2016 00:21:51 +0000 (UTC)
+Date:   Sat, 10 Sep 2016 00:21:51 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Yaroslav Halchenko <yoh@onerussian.com>
+Cc:     git@vger.kernel.org
+Subject: Re: git clone http://  fails some times with "Request for d53..
+ aborted"
+Message-ID: <20160910002151.GA8476@dcvr>
+References: <20160909221942.GS9830@onerussian.com>
 MIME-Version: 1.0
-Received: by 10.103.50.213 with HTTP; Fri, 9 Sep 2016 17:17:18 -0700 (PDT)
-In-Reply-To: <CAGZ79kapz7PR7vO2oyWE8WygXr+hTSJeZfZgpyeERv+Z1jTjCQ@mail.gmail.com>
-References: <CAG0BQX=wvpkJ=PQWV-NbmhuPV8yzvd_KYKzJmsfWq9xStZ2bnQ@mail.gmail.com>
- <CAGZ79kb=LyusFH6tGirGP9qK1k-cov2UubEbKPfeyPRThUsa-Q@mail.gmail.com>
- <CAG0BQX=FFWqR=45g6buujzK2jknx8aZnQoiV_m-QZhcx4Dd52g@mail.gmail.com>
- <CAG0BQXmyW-Hzdyj4rTviToEVbJ73d94P9GcfFVR6P2XCsA2t-g@mail.gmail.com> <CAGZ79kapz7PR7vO2oyWE8WygXr+hTSJeZfZgpyeERv+Z1jTjCQ@mail.gmail.com>
-From:   Dakota Hawkins <dakotahawkins@gmail.com>
-Date:   Fri, 9 Sep 2016 20:17:18 -0400
-Message-ID: <CAG0BQX=ym399NzJZWk=emKfsPqKztDBeYS4+GXpYKhcTmtkJTQ@mail.gmail.com>
-Subject: Re: If a branch moves a submodule, "merge --ff[-only]" succeeds while
- "merge --no-ff" fails with conflicts
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, mwitte@ara.com
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20160909221942.GS9830@onerussian.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> As you know currently the checkout doesn't touch submodules, i.e.
-> you have to run "git submodule update" whenever the submodule
-> changes. So when you checkout a different part of history, that moved
-> a submodule, this will fail as the submodule still resides at the old
-> place (and may have path name conflict with another thing)
-> and is not there at the new place.
+(Not sure how much time I'll have to continue in the next few weeks,
+ just jotting down my debugging progress so far...)
 
-I _think_ (may be wrong) that you can reproduce this without ever
-updating the submodules at all. I may be missing/forgetting something
-in my config: I normally have global post-checkout and post-merge
-hooks to run a submodule update, however I realized that and (I think)
-disabled them for the second more concise reproduction I sent. I moved
-them to a "no" subdirectory in my hook directory -- git doesn't
-recursively look for hooks, does it? Anyway, I don't think that's a
-difference in my case. It may be, I agree, if you happen to be
-reproducing this issue locally in your working repository for some
-reason.
+Yaroslav Halchenko <yoh@onerussian.com> wrote:
+> even when (v 2.7.0) ran on the box where the server is, so
+> unlikely to be network issue
+> 
+> or from my laptop (v 2.9.3) with ok but wifi with a weakish signal to the
+> access point:
+> 
+> $> ( set -e; for s in {1..100}; do rm -rf fbirn_phaseIII ; git clone http://datasets.datalad.org/nidm/fbirn_phaseIII/.git; done; )
+> Cloning into 'fbirn_phaseIII'...
+> Checking connectivity... done.
+> Cloning into 'fbirn_phaseIII'...
+> error: Request for d53302dfc7ad13b786923927021039d21a10d5bd aborted
+> error: Unable to find d53302dfc7ad13b786923927021039d21a10d5bd under http://datasets.datalad.org/nidm/fbirn_phaseIII/.git
+> Cannot obtain needed tree d53302dfc7ad13b786923927021039d21a10d5bd
+> while processing commit 22dd4c49417cad6f4082ac2aebef45da8b6e473d.
+> error: fetch failed.
+> 
+> even if I build fresh 2.10.0, discovered that we can trace now CURL calls
 
-That thought process makes sense to me because as I mentioned
-initially these failures presented on our remote (bitbucket server, if
-it matters) for a pull-request merge. I don't know for certain but I
-don't believe the server's copy of the repo would need to update the
-submodules at all, ever.
+Also, GIT_CURL_VERBOSE=1 is useful, too
 
->>
->> Also, I'm not too familiar/comfortable with mailing list etiquette,
->> and I don't want to be a bother by continuing to ping this thread.
->
-> Pinging is fine, as it is rather easy to ignore mails on a mailing list. ;)
-> I just don't know if it increases likelihood of someone responding.
+And GIT_HTTP_MAX_REQUESTS=1 (default 5) can be used to limit concurrency
+if there's a suspected concurrency bug.
 
-Apparently it got you on the hook! Thanks for taking the bait :)
+Initially, I was worried some of my 2.10.0 http-walker speedups were
+responsible, but it does not seem to be the case since it happens on old
+versions, too...
 
-Dakota
+I'm trying with the following to track state==ABORTED requests:
+
+diff --git a/http-walker.c b/http-walker.c
+index 0b24255..4f25b07 100644
+--- a/http-walker.c
++++ b/http-walker.c
+@@ -56,6 +56,7 @@ static void start_object_request(struct walker *walker,
+ 
+ 	req = new_http_object_request(obj_req->repo->base, obj_req->sha1);
+ 	if (req == NULL) {
++		warning("obj aborted at %d", __LINE__);
+ 		obj_req->state = ABORTED;
+ 		return;
+ 	}
+diff --git a/http.c b/http.c
+index cd40b01..cac5db9 100644
+--- a/http.c
++++ b/http.c
+@@ -1022,6 +1022,8 @@ int start_active_slot(struct active_request_slot *slot)
+ 
+ 	if (curlm_result != CURLM_OK &&
+ 	    curlm_result != CURLM_CALL_MULTI_PERFORM) {
++		warning("curl_multi_add_handle failed: %s",
++			curl_multi_strerror(curlm_result));
+ 		active_requests--;
+ 		slot->in_use = 0;
+ 		return 0;
+
+
+And getting a few of the following:
+
+	warning: curl_multi_add_handle failed: The easy handle is already added to a multi handle
+
+	(error code: CURLM_ADDED_ALREADY)
+
+I suspect there is some state management bug.   And yes, it's
+intermittent, I'm testing from my server (dcvr.yhbt.net) with good
+connectivity and it does not happen all the time.
+
+It also happens regardless of GIT_HTTP_MAX_REQUESTS being 1 or 5
+(default), too.
+
+So yeah, hopefully this info is helpful to someone else on the list
+in case I don't return soon.
