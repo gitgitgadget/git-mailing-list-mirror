@@ -2,111 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5477207E0
-	for <e@80x24.org>; Sat, 10 Sep 2016 00:21:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C561207DF
+	for <e@80x24.org>; Sat, 10 Sep 2016 05:51:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750940AbcIJAVw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Sep 2016 20:21:52 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:40562 "EHLO dcvr.yhbt.net"
+        id S1751567AbcIJFvq (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Sep 2016 01:51:46 -0400
+Received: from mout.web.de ([212.227.15.3]:63402 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750760AbcIJAVw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2016 20:21:52 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 54536207DF;
-        Sat, 10 Sep 2016 00:21:51 +0000 (UTC)
-Date:   Sat, 10 Sep 2016 00:21:51 +0000
-From:   Eric Wong <e@80x24.org>
-To:     Yaroslav Halchenko <yoh@onerussian.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git clone http://  fails some times with "Request for d53..
- aborted"
-Message-ID: <20160910002151.GA8476@dcvr>
-References: <20160909221942.GS9830@onerussian.com>
+        id S1751389AbcIJFvp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Sep 2016 01:51:45 -0400
+Received: from localhost ([195.252.60.88]) by smtp.web.de (mrweb003) with
+ ESMTPSA (Nemesis) id 0Ljahc-1bBSIk02Mi-00bY2a; Sat, 10 Sep 2016 07:51:22
+ +0200
+Date:   Sat, 10 Sep 2016 05:51:19 +0000
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com, spearce@spearce.org,
+        sbeller@google.com, gitster@pobox.com, peff@peff.net
+Subject: Re: [PATCH v4 1/3] tests: move test_lazy_prereq JGIT to test-lib.sh
+Message-ID: <20160910055119.GA11001@tb-raspi>
+References: <cover.1472836026.git.jonathantanmy@google.com>
+ <cover.1473441620.git.jonathantanmy@google.com>
+ <37c4e775948b88b2d5af1caee3a70e36f00bc88a.1473441620.git.jonathantanmy@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20160909221942.GS9830@onerussian.com>
+In-Reply-To: <37c4e775948b88b2d5af1caee3a70e36f00bc88a.1473441620.git.jonathantanmy@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V03:K0:U5cQDzodS741rep5hEjSJTGdwSrokU99MPVe8Lae8GTDOFZGD8x
+ f84SJfOZNysP3jm1qLArCivQBgTheQ31gzUhyLiIu9Gh+94tdEV9dQ1Ubdru8gH5ihyDdcE
+ /AVP/fKG8HiDofCUkLBmPsWcw5Px84fGKlx9Yt5v1XMYDDGPcBI7sQVba7Nrm/RK75Phwna
+ giB2UxkqbKwqyjYMlsdsw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:sLRTNOQCpTc=:/5MEjvjiqM6G0FK0LXbceB
+ yZm6CRnCXYwxk/bWSd5N5NHxROXzog/oq6H5Eo3LWWtUK0uA4bl5PVKHj8KOmKH9MVrkplQrH
+ gJ7dbiQw59nzKZqypKI2qQJhch00sPGMW27r5W1gHNhpQUtWLUF3hAIygDNoTJ6pZQRl8b2yD
+ HxUuFJF0o6SxcFTor6gZ6qvJ/VAfPLjWDB2zeFbYenQYTSTc3zr3/Oc4odXUmHk0RCApGAohs
+ LdlFu4QKgLKq6/1eppDtP4LSvBnAWnnB69rzEN6c20r6YTz/08ogNtp1Pa61VX9ufiLU0pLwD
+ CEbdkEDgzZZkvMgpaC5Oc3kFyWiFca/5QQZ9MXdKv5v1MzcMj+wjkwkFbAWVDz/XKUd3qyAFi
+ oc6J4LHRRovLreFDep/tjeLIk5YucixeE1mvg41PS13LcmmfI5e6j/KmsWY7z3Vw8DlYx0B1r
+ M+lYpefVH8j9yFTn618ZYHsnLMxgA9NyuA9llTIegh3+jh0JD/Cx7/9kr+iYjJHxbfmK66L3P
+ 4z+981sImGz0bi4c5al7u4IA606QtRuVMakf2jTEM1jfxGjLzmcYJsGtc1YdgE3ThR7/8/8Am
+ F/CZ31xb9GmCQTy49kAZLWanjPcO49i9IEbeoVYxDEzcRFgziv1cXnVcZUfWWvtu2D/+oB07u
+ xild6Fd5v2jRcj0eZYojqLSLYJg9b3V03BKsYREPhnOBkXEZLKZmjfL8XuSzMYSbtmUhrudLF
+ npI02aamu1LWPyVYubrCH8lR79CP+RXByQBxKZgoGi0ubtqZXTPXhfNUptk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(Not sure how much time I'll have to continue in the next few weeks,
- just jotting down my debugging progress so far...)
+On Fri, Sep 09, 2016 at 10:36:28AM -0700, Jonathan Tan wrote:
+[]
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index d731d66..c9c1037 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -1072,6 +1072,10 @@ test_lazy_prereq NOT_ROOT '
+>  	test "$uid" != 0
+>  '
+>  
+> +test_lazy_prereq JGIT '
+> +	type jgit
+> +'
+> +
 
-Yaroslav Halchenko <yoh@onerussian.com> wrote:
-> even when (v 2.7.0) ran on the box where the server is, so
-> unlikely to be network issue
-> 
-> or from my laptop (v 2.9.3) with ok but wifi with a weakish signal to the
-> access point:
-> 
-> $> ( set -e; for s in {1..100}; do rm -rf fbirn_phaseIII ; git clone http://datasets.datalad.org/nidm/fbirn_phaseIII/.git; done; )
-> Cloning into 'fbirn_phaseIII'...
-> Checking connectivity... done.
-> Cloning into 'fbirn_phaseIII'...
-> error: Request for d53302dfc7ad13b786923927021039d21a10d5bd aborted
-> error: Unable to find d53302dfc7ad13b786923927021039d21a10d5bd under http://datasets.datalad.org/nidm/fbirn_phaseIII/.git
-> Cannot obtain needed tree d53302dfc7ad13b786923927021039d21a10d5bd
-> while processing commit 22dd4c49417cad6f4082ac2aebef45da8b6e473d.
-> error: fetch failed.
-> 
-> even if I build fresh 2.10.0, discovered that we can trace now CURL calls
+Minor note: 
+Typically the stdout of `which` is suppressed like this:
 
-Also, GIT_CURL_VERBOSE=1 is useful, too
-
-And GIT_HTTP_MAX_REQUESTS=1 (default 5) can be used to limit concurrency
-if there's a suspected concurrency bug.
-
-Initially, I was worried some of my 2.10.0 http-walker speedups were
-responsible, but it does not seem to be the case since it happens on old
-versions, too...
-
-I'm trying with the following to track state==ABORTED requests:
-
-diff --git a/http-walker.c b/http-walker.c
-index 0b24255..4f25b07 100644
---- a/http-walker.c
-+++ b/http-walker.c
-@@ -56,6 +56,7 @@ static void start_object_request(struct walker *walker,
- 
- 	req = new_http_object_request(obj_req->repo->base, obj_req->sha1);
- 	if (req == NULL) {
-+		warning("obj aborted at %d", __LINE__);
- 		obj_req->state = ABORTED;
- 		return;
- 	}
-diff --git a/http.c b/http.c
-index cd40b01..cac5db9 100644
---- a/http.c
-+++ b/http.c
-@@ -1022,6 +1022,8 @@ int start_active_slot(struct active_request_slot *slot)
- 
- 	if (curlm_result != CURLM_OK &&
- 	    curlm_result != CURLM_CALL_MULTI_PERFORM) {
-+		warning("curl_multi_add_handle failed: %s",
-+			curl_multi_strerror(curlm_result));
- 		active_requests--;
- 		slot->in_use = 0;
- 		return 0;
-
-
-And getting a few of the following:
-
-	warning: curl_multi_add_handle failed: The easy handle is already added to a multi handle
-
-	(error code: CURLM_ADDED_ALREADY)
-
-I suspect there is some state management bug.   And yes, it's
-intermittent, I'm testing from my server (dcvr.yhbt.net) with good
-connectivity and it does not happen all the time.
-
-It also happens regardless of GIT_HTTP_MAX_REQUESTS being 1 or 5
-(default), too.
-
-So yeah, hopefully this info is helpful to someone else on the list
-in case I don't return soon.
+if ! type cvs >/dev/null 2>&1
