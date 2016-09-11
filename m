@@ -7,116 +7,113 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CB6E207DF
-	for <e@80x24.org>; Sun, 11 Sep 2016 10:55:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24399207DF
+	for <e@80x24.org>; Sun, 11 Sep 2016 10:55:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755932AbcIKKzj (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Sep 2016 06:55:39 -0400
-Received: from mout.gmx.net ([212.227.17.20]:58711 "EHLO mout.gmx.net"
+        id S1755935AbcIKKzs (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Sep 2016 06:55:48 -0400
+Received: from mout.gmx.net ([212.227.17.20]:59617 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755457AbcIKKzi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Sep 2016 06:55:38 -0400
+        id S1755778AbcIKKzr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Sep 2016 06:55:47 -0400
 Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MTSmp-1bZSJW3iWF-00SMz2; Sun, 11 Sep 2016 12:55:34
+ ESMTPSA (Nemesis) id 0MYwQh-1bW8Oz2uAt-00VgXb; Sun, 11 Sep 2016 12:55:42
  +0200
-Date:   Sun, 11 Sep 2016 12:55:33 +0200 (CEST)
+Date:   Sun, 11 Sep 2016 12:55:41 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v2 18/25] sequencer: support cleaning up commit messages
+Subject: [PATCH v2 19/25] sequencer: remember do_recursive_merge()'s return
+ value
 In-Reply-To: <cover.1473590966.git.johannes.schindelin@gmx.de>
-Message-ID: <773ba280e64c2dfabff0d6e6a0a0808482461677.1473590966.git.johannes.schindelin@gmx.de>
+Message-ID: <44c455710fd9c420a3f759d021c4864f3a83c97a.1473590966.git.johannes.schindelin@gmx.de>
 References: <cover.1472457609.git.johannes.schindelin@gmx.de> <cover.1473590966.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:BriN3/v9heQTknGbrOKtOSOGJKCzdiExSlDo4fuG24Ql55EPFwx
- sorbj/Iuhnb5vPKStWr4ded+iwUPek01guKMcXXEtVDn2rzYdY8UEo2BZpZFtUebwUC/m/s
- driuj7+RoWnNMf/7+atNDNYQA+1uafgekE2Lq+2uP4LfYMPC+m9AlAacK2kCsiApNlJ49ws
- Ft7Ta4CzzuoEqcLSPLDxA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Uz3OAnZ3Rvc=:5xhaiWgY/wOl38z5T+f6/E
- K1TNiFzMYHgm6V13UbnlQ8EE8kwoI+gG5A1SyCeTTOqNLziwXO6ZF/VPQUrCgKZvbdglfeGKO
- OLGKXsywgmz6BgFyc+a4sw6Mp1UXPVVVicAsDymBBucw2fJIl7Wdewk+X0vB0+CHZrc5UZek/
- NTGM0r8YOrWe7xOYbbqDgmU1QJdbLFiMQCrULUQKpFQftHrCwA4A6w4f1nZEQgSqqgBkenj1Z
- FJcrYZ4sjOCg1v0zAX2SGsjjZsOYvrcPGUoEPrkhfWvYnN5qZi95DNpq4LV1q0HsOjgeFhBfK
- k7C0gHMm7/FBhoyIc5scLWQZ2m93GdvRkVTstqDlUbflvnfbUwUjKjj2W3WVJ48CJzFxx7gOs
- 9vJCfDXvX5cHLfOwXQFeRff00NkkEIYmiMxQfGdRevf7EkJjUlu8LmVVd7Y3iLkUvmP2Kurda
- avycVZY/YFQRKbjgPct/sTtICjjeNFlm97IDKZJMvgGuW2/IdNK02ZnNQdqYMAPbf+1PNNlM6
- PSYXvi+wYG44q9M6m35C8KnKD84xXue2hHdULO3jszQrDcuxwCRgqlgpHSTm/NpWUo2K9uCI/
- 69Yp1ukXMDcAOpnsH1yP2fIAdfYd8Vtkw7KPskBOOBNHIrdHbCvU6o1rVaJp3Qx30moZMlD5e
- 5aj7Bw7ijsbT78aFBOhW/RvRejxD+Pkx/FqL5XFA1QPo1JpONrycqzf1YYS04afRfHpVCUnou
- Q7QPGiKxXVmXM0+wtkdUrQxVdWmBcBdDiZB4x5O5ZYvdNicekdP6NW+MtQxZScs52hq36kP75
- 4AmtGKU
+X-Provags-ID: V03:K0:MeSGB34ms4pXOMDMd9c/XD6etCUwknKhU9ZrWUNMv1tDkVQGc+N
+ KRo5MQy98okBeb8N2CFcJY72uSkkKfupdKUkqEhI/6kh01lvmvG6RYTo4kXGUFdJv84WXXS
+ fkOPGS5vsQ1xG82JEmzcjq03q8W9umJjSBUIFZLV5OPh1Eglaj7tOp7tWEFaGDTTRP0S39y
+ t0ywOhjYSHugRorZdGbhw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:OrlFE3iJlig=:NoCDnaGXnAH4N/l4V7nBrY
+ yQdjyCYqWBp8sPr+hkswqx+RiDNIreZ+7GcYtoYQpI1I6GF8BZCpBKnjPVj51PzxXTTtC38PE
+ t/+zK34C3Vg71vVLWqaNfdqLDuNLMGjCE887g8+bXSk3qTWNpVnqCQHi2QC+lYzptCCREqpPf
+ yB2Ccj2DjCtf910+6DOkHiuKFuFNlnqBM+4fr+yUFaqyi9ds8m4B2kSNZCW+r39wBwS4O/R9e
+ hs0O0I90RQPhONr4dIhZRBuVwHMDBFa/ji7sDwupig8wqBUFZqOvhHF0ebJEDxkjJRvG2KVvR
+ KuAW91N5DoKXM9u2iYyx0YkXqgc2wihdGiRJdFYNF5J7z5W9/NBGtGXCygB719QVdnLv+19QB
+ 8WN7l3sxe5BKJglp67VOfCInE4wiQyZ4bEapJPnJyyAXZrjSHLSEjQtAY7XROPmJtzWuJOb8T
+ x1A6eRtLlLzlMEpUOlqcNZBGPpH3xRsjXr0KFMElKUorVLnk9PGf5VeKCLyvVd2Ab5Amm+w65
+ 8JLuTheV+ul8nFtDiit+blgTPT3tqZChTX/PhxyKzT18nvRdFPWStZPh9oXnzqVkTjCocE1z5
+ kjZpHFfuUcsQQxVhSe2xep1sFxkwtQiOxNQ+9ZYqpaOhCQNxxrNjUdT4Qklmn09JWgDD61Utg
+ F3cZOZXlBGlZ6t8mhxAENIy3A0y/CPFwaeP+dN/8h93NMwaBKXzE56FqHFEYU2PJ1tUn87d7B
+ LHtoO/7tploG2kxguh0lmSl3jLJuyGda9YX6NIDjx8VxkxI/Wn1tAyBWgXP7P8P1wKYnTDmBA
+ P58Xy4v
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The sequencer_commit() function already knows how to amend commits, and
-with this new option, it can also clean up commit messages (i.e. strip
-out commented lines). This is needed to implement rebase -i's 'fixup'
-and 'squash' commands as sequencer commands.
+The return value of do_recursive_merge() may be positive (indicating merge
+conflicts), so let's OR later error conditions so as not to overwrite them
+with 0.
+
+This is not yet a problem, but preparing for the patches to come: we will
+teach the sequencer to do rebase -i's job.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 10 +++++++---
- sequencer.h |  3 ++-
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ sequencer.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 60b522e..75772b8 100644
+index 75772b8..7953a05 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -485,7 +485,8 @@ static char **read_author_script(void)
-  * author metadata.
-  */
- int sequencer_commit(const char *defmsg, struct replay_opts *opts,
--			  int allow_empty, int edit, int amend)
-+			  int allow_empty, int edit, int amend,
-+			  int cleanup_commit_message)
- {
- 	char **env = NULL;
- 	struct argv_array array;
-@@ -522,9 +523,12 @@ int sequencer_commit(const char *defmsg, struct replay_opts *opts,
- 		argv_array_push(&array, "-s");
- 	if (defmsg)
- 		argv_array_pushl(&array, "-F", defmsg, NULL);
-+	if (cleanup_commit_message)
-+		argv_array_push(&array, "--cleanup=strip");
- 	if (edit)
- 		argv_array_push(&array, "-e");
--	else if (!opts->signoff && !opts->record_origin &&
-+	else if (!cleanup_commit_message &&
-+		 !opts->signoff && !opts->record_origin &&
- 		 git_config_get_value("commit.cleanup", &value))
- 		argv_array_push(&array, "--cleanup=verbatim");
+@@ -630,7 +630,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 	const char *base_label, *next_label;
+ 	struct commit_message msg = { NULL, NULL, NULL, NULL };
+ 	struct strbuf msgbuf = STRBUF_INIT;
+-	int res, unborn = 0, allow;
++	int res = 0, unborn = 0, allow;
  
-@@ -788,7 +792,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 	if (opts->no_commit) {
+ 		/*
+@@ -741,7 +741,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 	}
+ 
+ 	if (!opts->strategy || !strcmp(opts->strategy, "recursive") || command == TODO_REVERT) {
+-		res = do_recursive_merge(base, next, base_label, next_label,
++		res |= do_recursive_merge(base, next, base_label, next_label,
+ 					 head, &msgbuf, opts);
+ 		if (res < 0)
+ 			return res;
+@@ -750,7 +750,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 		struct commit_list *common = NULL;
+ 		struct commit_list *remotes = NULL;
+ 
+-		res = write_message(&msgbuf, git_path_merge_msg());
++		res |= write_message(&msgbuf, git_path_merge_msg());
+ 
+ 		commit_list_insert(base, &common);
+ 		commit_list_insert(next, &remotes);
+@@ -787,11 +787,12 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 
+ 	allow = allow_empty(opts, commit);
+ 	if (allow < 0) {
+-		res = allow;
++		res |= allow;
+ 		goto leave;
  	}
  	if (!opts->no_commit)
- 		res = sequencer_commit(opts->edit ? NULL : git_path_merge_msg(),
--			opts, allow, opts->edit, 0);
-+			opts, allow, opts->edit, 0, 0);
+-		res = sequencer_commit(opts->edit ? NULL : git_path_merge_msg(),
++		res |= sequencer_commit(opts->edit ?
++				NULL : git_path_merge_msg(),
+ 			opts, allow, opts->edit, 0, 0);
  
  leave:
- 	free_message(commit, &msg);
-diff --git a/sequencer.h b/sequencer.h
-index c45f5c4..688fff1 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -54,7 +54,8 @@ int sequencer_rollback(struct replay_opts *opts);
- int sequencer_remove_state(struct replay_opts *opts);
- 
- int sequencer_commit(const char *defmsg, struct replay_opts *opts,
--			  int allow_empty, int edit, int amend);
-+			  int allow_empty, int edit, int amend,
-+			  int cleanup_commit_message);
- 
- extern const char sign_off_header[];
- 
 -- 
 2.10.0.windows.1.10.g803177d
 
