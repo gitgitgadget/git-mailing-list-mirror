@@ -7,93 +7,130 @@ X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BAD14207DF
-	for <e@80x24.org>; Sun, 11 Sep 2016 10:53:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82327207DF
+	for <e@80x24.org>; Sun, 11 Sep 2016 10:53:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755755AbcIKKxE (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Sep 2016 06:53:04 -0400
-Received: from mout.gmx.net ([212.227.17.21]:54812 "EHLO mout.gmx.net"
+        id S1754576AbcIKKxN (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Sep 2016 06:53:13 -0400
+Received: from mout.gmx.net ([212.227.17.21]:52666 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755741AbcIKKxD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Sep 2016 06:53:03 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MLA45-1bilGV12GX-000KMg; Sun, 11 Sep 2016 12:52:58
+        id S1755546AbcIKKxL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Sep 2016 06:53:11 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MJjUO-1bhvvD39KW-001BRm; Sun, 11 Sep 2016 12:53:07
  +0200
-Date:   Sun, 11 Sep 2016 12:52:57 +0200 (CEST)
+Date:   Sun, 11 Sep 2016 12:53:07 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v2 03/25] sequencer: avoid unnecessary indirection
+Subject: [PATCH v2 05/25] sequencer: allow the sequencer to take custody of
+ malloc()ed data
 In-Reply-To: <cover.1473590966.git.johannes.schindelin@gmx.de>
-Message-ID: <2587881a45d5a81cda4b2eb40e2d7d8d55b7931c.1473590966.git.johannes.schindelin@gmx.de>
+Message-ID: <942aa559a0af9b52e079c5c78fa313f49b87d50d.1473590966.git.johannes.schindelin@gmx.de>
 References: <cover.1472457609.git.johannes.schindelin@gmx.de> <cover.1473590966.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:aXTy1Xr8zudV0FeC0PSRcQRr5DDGv0yM8uq92njWJKEyuvFxOYK
- q44QRf1kOsm2YETcDNVCAz445txRD5zaI0a+rsdScOuFrgaSxxwcKEf+rctIJ1FTnZvpc/v
- x1P11JncRYtvt1S2wTWYOLc9fDDSBsiRogenJMpcOkQjYsitPnsGiqyl6KCe5WOnERGUrLy
- y6eyIlfovI+e/NoiqiuUg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:spZ3CwEbCuE=:VELcczULkvjSCzJ7MwgSuG
- 9naXRvQNeGsjwY7GNjVR6utXhyXBWHoxvQbbkiqM98AgGclCANI7Hej04gcQF1Poa+F8avn3L
- 9VlDGQyZmALUOH3MsbczG5HY87UOaa+YLL6/QBtcuyJza2yo5qJzPxy8UlqDbfdPCEFofb43R
- e0k6ChjLAtWKE3TozZUFPGtqc33BAKodXSDUz0EbcyTpR8hd6WEtzyAP2NhkpXlm9qettW+oa
- w0RgO7ppR5Rg+Qzosee2a3086lJ+nJEvryFQ2fOUoHKi+S1h3GMCsKlRKuKB2Yu8tinJmXmj8
- HtfUt+pcrXxWTFwvC5fbhvL+C1P53ssLOovoIZFNh0VJ1Nc94cvjmPtsICKD8Tx3DmvyzcT/L
- SRuS89iXwIIMovyEX0PdXnEzpquX25a35CB0t/VeRPM4jaCK6c8/HAZLEo7Ofm5pvBYRUw4jV
- bQ8/OZra0SEPgocBkLoEu4lzo22PfUsgwW9nwPgy4cLp34BLs+CbWtpbBLNT6y2YOxCEmpGEJ
- a4/ngLfwCfrr5GTdNxK+SNVvN7D/hOd1nf4EO1dAzA/6IeZ4pRt064pDeCaRYQw/aDSu3wnzH
- A7q1WniYwGi2aaNeMIDQkjdGKtf3rYwtB36161M6PpbKfkau7c/qzH/kvRVrkf6DI2kyyzEVe
- 56WbqKJUcCjJcMjg7Fbu8+cWKOVga7HEDCR9bTpmJldPPk2U2oUM+m/mXyHXaWzD8zmkcE/MF
- Piodlav/YAbUEs5txSfkDfx/qNxSuYn97wOfVS5rxU9WsqjkeAmFYORCSith+LrELiR4eX1N1
- lVK4TnP
+X-Provags-ID: V03:K0:sGkrpMMLWbkG5WXDTt/riSsCxpxBMPHtNM3iD3akJPedbeP8fan
+ vTxumg6d64xZqNCx5IU9NQe90jlVBfXBHokFceewn5b6hVExrkepq1EmH0Brnwr5y1dW5aW
+ +5TE4ZremHKqOws6wPjaT44lNFOG97TI5pP18jvLH61v2xdT0GcfN8T13h2o74RQw3LEe6A
+ zePs+Wr9GcU+4KPqCUA0w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+emOhrtyeqk=:lhABM1V0R47nRo3QqNlwk9
+ ne3z3gjfAqognFTqNrYTq5b12uOYZmIvLYcTxa5kxg9YnmkL6C+wVSeuONcmrNtJBBewTrns0
+ lmgkERE9VMhMfKqi9fdJWpsHvndJ8Qvi6xuEAM6NwawEXBW6gx5YCxCrPMSpZwBNg4vRwy6Xj
+ e8g2VLqc2Re4NRfRcZBei97CMA+gsTo99/xvu+Gfl20Ec7YvDHGiyBNEd/SuvFQj7TCjUB8lz
+ NBCE5V2eKW45sxxpykKMGDXmW+2henmgffyTFOB2j/Ohl6adzguP218ljneGXBXb1/nygsIIS
+ Yw5jCgY7F3DJYxOl2jYrwo4Q6BGdwlTNDjbf0lIPwjqy4mYlasrWMVWkW3uCDJzKEa9fHkqlJ
+ mflCTFFN25SdN9h1AyssCbgg4q2hadA7yC/USFnnixbcctbuvmtqt1Vod0EBFZRFS/V6UoBlH
+ afxIxn+RVB/fXz8JlArxdQDQLFX4lTZ/ZyU4/uuHqwH6VBOdjLnVjdcyiILZdwyPKcJXyNJW9
+ PHQcoBJo2n+SxIW6xW4TfUXifqnsz4/P/HON7uw+rfOoT8K4F3+v+S446WHWtL11dmPctO3EC
+ FYNSAU1+VIu4DUx+a7/+/61oOcz7SIHhbu6U6ZKDZqwBQ502qIqrgbDms4XOV85zyL3t7tvjj
+ 8zHbLuIsBFW2fpHkBhpah8Y7iA65npw7yZMl18r94W8W0S/QiOT2ytvOJwjVatrtQP/r9zKd1
+ 9dcFlW2ucBL8R/7RCFVmYcCohgsdAcW959vTGUJdDHbTkmgGNMhBXYj/Dg9AMUZBRSqt+SjvC
+ fsoibdk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We really do not need the *pointer to a* pointer to the options in
-the read_populate_opts() function.
+The sequencer is our attempt to lib-ify cherry-pick. Yet it behaves
+like a one-shot command when it reads its configuration: memory is
+allocated and released only when the command exits.
+
+This is kind of okay for git-cherry-pick, which *is* a one-shot
+command. All the work to make the sequencer its work horse was
+done to allow using the functionality as a library function, though,
+including proper clean-up after use.
+
+This patch introduces an API to pass the responsibility of releasing
+certain memory to the sequencer. Example:
+
+	const char *label =
+		sequencer_entrust(opts, xstrfmt("From: %s", email));
+
+The entrusted memory will remain valid until sequencer_remove_state() is
+called, or the program exits, whichever comes first.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sequencer.c | 13 +++++++++++++
+ sequencer.h | 10 ++++++++++
+ 2 files changed, 23 insertions(+)
 
 diff --git a/sequencer.c b/sequencer.c
-index cb16cbd..c2fbf6f 100644
+index 8d272fb..8d56a05 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -813,7 +813,7 @@ static int populate_opts_cb(const char *key, const char *value, void *data)
- 	return 0;
+@@ -114,9 +114,22 @@ static int has_conforming_footer(struct strbuf *sb, struct strbuf *sob,
+ 	return 1;
  }
  
--static int read_populate_opts(struct replay_opts **opts)
-+static int read_populate_opts(struct replay_opts *opts)
++void *sequencer_entrust(struct replay_opts *opts, void *to_free)
++{
++	ALLOC_GROW(opts->owned, opts->owned_nr + 1, opts->owned_alloc);
++	opts->owned[opts->owned_nr++] = to_free;
++
++	return to_free;
++}
++
+ static void remove_sequencer_state(const struct replay_opts *opts)
  {
- 	if (!file_exists(git_path_opts_file()))
- 		return 0;
-@@ -823,7 +823,7 @@ static int read_populate_opts(struct replay_opts **opts)
- 	 * about this case, though, because we wrote that file ourselves, so we
- 	 * are pretty certain that it is syntactically correct.
- 	 */
--	if (git_config_from_file(populate_opts_cb, git_path_opts_file(), *opts) < 0)
-+	if (git_config_from_file(populate_opts_cb, git_path_opts_file(), opts) < 0)
- 		return error(_("Malformed options sheet: %s"),
- 			git_path_opts_file());
- 	return 0;
-@@ -1054,7 +1054,7 @@ static int sequencer_continue(struct replay_opts *opts)
+ 	struct strbuf dir = STRBUF_INIT;
++	int i;
++
++	for (i = 0; i < opts->owned_nr; i++)
++		free(opts->owned[i]);
++	free(opts->owned);
  
- 	if (!file_exists(git_path_todo_file()))
- 		return continue_single_pick();
--	if (read_populate_opts(&opts) ||
-+	if (read_populate_opts(opts) ||
- 			read_populate_todo(&todo_list, opts))
- 		return -1;
+ 	strbuf_addf(&dir, "%s", get_dir(opts));
+ 	remove_dir_recursively(&dir, 0);
+diff --git a/sequencer.h b/sequencer.h
+index dd4d33a..04892a9 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -43,9 +43,19 @@ struct replay_opts {
  
+ 	/* Only used by REPLAY_NONE */
+ 	struct rev_info *revs;
++
++	/* malloc()ed data entrusted to the sequencer */
++	void **owned;
++	int owned_nr, owned_alloc;
+ };
+ #define REPLAY_OPTS_INIT { -1, -1 }
+ 
++/*
++ * Make it the duty of sequencer_remove_state() to release the memory;
++ * For ease of use, return the same pointer.
++ */
++void *sequencer_entrust(struct replay_opts *opts, void *to_free);
++
+ int sequencer_pick_revisions(struct replay_opts *opts);
+ 
+ extern const char sign_off_header[];
 -- 
 2.10.0.windows.1.10.g803177d
 
