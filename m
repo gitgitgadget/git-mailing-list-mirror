@@ -2,110 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DC92207DF
-	for <e@80x24.org>; Sun, 11 Sep 2016 10:55:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CB6E207DF
+	for <e@80x24.org>; Sun, 11 Sep 2016 10:55:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755897AbcIKKzR (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Sep 2016 06:55:17 -0400
-Received: from mout.gmx.net ([212.227.15.18]:54219 "EHLO mout.gmx.net"
+        id S1755932AbcIKKzj (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Sep 2016 06:55:39 -0400
+Received: from mout.gmx.net ([212.227.17.20]:58711 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755457AbcIKKzQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Sep 2016 06:55:16 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0LjZhg-1bCAZF0laK-00bfET; Sun, 11 Sep 2016 12:55:05
+        id S1755457AbcIKKzi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Sep 2016 06:55:38 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx103) with
+ ESMTPSA (Nemesis) id 0MTSmp-1bZSJW3iWF-00SMz2; Sun, 11 Sep 2016 12:55:34
  +0200
-Date:   Sun, 11 Sep 2016 12:55:02 +0200 (CEST)
+Date:   Sun, 11 Sep 2016 12:55:33 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v2 17/25] sequencer: support amending commits
+Subject: [PATCH v2 18/25] sequencer: support cleaning up commit messages
 In-Reply-To: <cover.1473590966.git.johannes.schindelin@gmx.de>
-Message-ID: <68f995eaaad2448f5793f0030f96aa501b985ed5.1473590966.git.johannes.schindelin@gmx.de>
+Message-ID: <773ba280e64c2dfabff0d6e6a0a0808482461677.1473590966.git.johannes.schindelin@gmx.de>
 References: <cover.1472457609.git.johannes.schindelin@gmx.de> <cover.1473590966.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:je6vP4dUwbKxWCvUk+uKIO5cli0nKIBpZCbeQsq4Gt7wRyi+h/P
- K4esqKWNTHV64xMM4lReDRiUPwkC02yrGKSEAqLrnUxVjo6WG+XUyD4DmLHd0Faz7PIxLF9
- dU+xW6f2YDigRHWY4VBvCt0N/JkcyTylcD45Byxl6GDIfoEPdVA+AVlkrn9oEy/Jhg8NBTe
- yYL306tK1ih4lMc10syow==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vo4BotZ/BGQ=:g1RjoOD5vygxfTg1Xw9xm3
- V25BaM9Tw9XfLQNClIp8dnglU3hfjFIlL9zoJcTmLr5j3caZuPrOCdZrgeHS1CYmUFlQUrmAK
- 2etODh/BpfFU3Ma6LELl5IPolHYXCpPK8eeSFekUudk7uNVnoYqHy04gXM5lnyfuDTRRU0uWD
- 0QVU4moqSB2xHJLhddu4QTYRa+983JBCQgBMLYPYFTi5Fg7NHxOhbjTKmYb8wXCSOaR45kno8
- 1CoyVhlEgHnoOCGXzhV8RLJJwqPotjJRO858KZ5R4pjx1KSzpDhB7HvV0c7W9ZqZ3hpRNv6Yo
- 4an8dBqbralPzRebxsZtVrSCQPj40+/syqqqHgsCNRyk9wsrGkGfOYFtaIdOIKCgcnNkW1rYj
- k8JOLvEBfRTgzpMt1TV6M7dgPPoBxYsExzpPt5uxhrz4fiWuDF5epU2rawXNyYNU6R3Kejf4a
- f3lqVCHYS+qxPqWH5u8PYB5pgKG8peqn0jgScPM35LC2fPPlmDIonBwaMPLq6ft5PG0SnWCoU
- PJstNi51GLIvf3wQLMkT5Ut3siTfU58cempn/lXnm3K7kpPHLW9sNjRWW703VPi+w+puRrtwc
- gEcZ6TIobpMX0tHQpbTbqzCPVTgL+94BaZO8vRnMaOfJ1pHyNIfRcGnUhiWs7fPW5WBeAvoXJ
- jm1t2vuvkDhDuAmC0jWzDCCddIk5NcwtyFctdgA/zefPnqEv0cKvdX17faRIREMkpxeC3elBF
- 7tE/1HkX0uojU6Uwlpl3cy2lg77Z4XXC01etZVvDAN1D3Y3UoPCZo9GvrRCD0pe4u+BEhLplz
- zgT6xmC
+X-Provags-ID: V03:K0:BriN3/v9heQTknGbrOKtOSOGJKCzdiExSlDo4fuG24Ql55EPFwx
+ sorbj/Iuhnb5vPKStWr4ded+iwUPek01guKMcXXEtVDn2rzYdY8UEo2BZpZFtUebwUC/m/s
+ driuj7+RoWnNMf/7+atNDNYQA+1uafgekE2Lq+2uP4LfYMPC+m9AlAacK2kCsiApNlJ49ws
+ Ft7Ta4CzzuoEqcLSPLDxA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Uz3OAnZ3Rvc=:5xhaiWgY/wOl38z5T+f6/E
+ K1TNiFzMYHgm6V13UbnlQ8EE8kwoI+gG5A1SyCeTTOqNLziwXO6ZF/VPQUrCgKZvbdglfeGKO
+ OLGKXsywgmz6BgFyc+a4sw6Mp1UXPVVVicAsDymBBucw2fJIl7Wdewk+X0vB0+CHZrc5UZek/
+ NTGM0r8YOrWe7xOYbbqDgmU1QJdbLFiMQCrULUQKpFQftHrCwA4A6w4f1nZEQgSqqgBkenj1Z
+ FJcrYZ4sjOCg1v0zAX2SGsjjZsOYvrcPGUoEPrkhfWvYnN5qZi95DNpq4LV1q0HsOjgeFhBfK
+ k7C0gHMm7/FBhoyIc5scLWQZ2m93GdvRkVTstqDlUbflvnfbUwUjKjj2W3WVJ48CJzFxx7gOs
+ 9vJCfDXvX5cHLfOwXQFeRff00NkkEIYmiMxQfGdRevf7EkJjUlu8LmVVd7Y3iLkUvmP2Kurda
+ avycVZY/YFQRKbjgPct/sTtICjjeNFlm97IDKZJMvgGuW2/IdNK02ZnNQdqYMAPbf+1PNNlM6
+ PSYXvi+wYG44q9M6m35C8KnKD84xXue2hHdULO3jszQrDcuxwCRgqlgpHSTm/NpWUo2K9uCI/
+ 69Yp1ukXMDcAOpnsH1yP2fIAdfYd8Vtkw7KPskBOOBNHIrdHbCvU6o1rVaJp3Qx30moZMlD5e
+ 5aj7Bw7ijsbT78aFBOhW/RvRejxD+Pkx/FqL5XFA1QPo1JpONrycqzf1YYS04afRfHpVCUnou
+ Q7QPGiKxXVmXM0+wtkdUrQxVdWmBcBdDiZB4x5O5ZYvdNicekdP6NW+MtQxZScs52hq36kP75
+ 4AmtGKU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This teaches the sequencer_commit() function to take an argument that
-will allow us to implement "todo" commands that need to amend the commit
-messages ("fixup", "squash" and "reword").
+The sequencer_commit() function already knows how to amend commits, and
+with this new option, it can also clean up commit messages (i.e. strip
+out commented lines). This is needed to implement rebase -i's 'fixup'
+and 'squash' commands as sequencer commands.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 6 ++++--
- sequencer.h | 2 +-
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ sequencer.c | 10 +++++++---
+ sequencer.h |  3 ++-
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 6e9732c..60b522e 100644
+index 60b522e..75772b8 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -485,7 +485,7 @@ static char **read_author_script(void)
+@@ -485,7 +485,8 @@ static char **read_author_script(void)
   * author metadata.
   */
  int sequencer_commit(const char *defmsg, struct replay_opts *opts,
--			  int allow_empty, int edit)
-+			  int allow_empty, int edit, int amend)
+-			  int allow_empty, int edit, int amend)
++			  int allow_empty, int edit, int amend,
++			  int cleanup_commit_message)
  {
  	char **env = NULL;
  	struct argv_array array;
-@@ -514,6 +514,8 @@ int sequencer_commit(const char *defmsg, struct replay_opts *opts,
- 	argv_array_push(&array, "commit");
- 	argv_array_push(&array, "-n");
+@@ -522,9 +523,12 @@ int sequencer_commit(const char *defmsg, struct replay_opts *opts,
+ 		argv_array_push(&array, "-s");
+ 	if (defmsg)
+ 		argv_array_pushl(&array, "-F", defmsg, NULL);
++	if (cleanup_commit_message)
++		argv_array_push(&array, "--cleanup=strip");
+ 	if (edit)
+ 		argv_array_push(&array, "-e");
+-	else if (!opts->signoff && !opts->record_origin &&
++	else if (!cleanup_commit_message &&
++		 !opts->signoff && !opts->record_origin &&
+ 		 git_config_get_value("commit.cleanup", &value))
+ 		argv_array_push(&array, "--cleanup=verbatim");
  
-+	if (amend)
-+		argv_array_push(&array, "--amend");
- 	if (opts->gpg_sign)
- 		argv_array_pushf(&array, "-S%s", opts->gpg_sign);
- 	if (opts->signoff)
-@@ -786,7 +788,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+@@ -788,7 +792,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
  	}
  	if (!opts->no_commit)
  		res = sequencer_commit(opts->edit ? NULL : git_path_merge_msg(),
--			opts, allow, opts->edit);
-+			opts, allow, opts->edit, 0);
+-			opts, allow, opts->edit, 0);
++			opts, allow, opts->edit, 0, 0);
  
  leave:
  	free_message(commit, &msg);
 diff --git a/sequencer.h b/sequencer.h
-index 7f5222f..c45f5c4 100644
+index c45f5c4..688fff1 100644
 --- a/sequencer.h
 +++ b/sequencer.h
-@@ -54,7 +54,7 @@ int sequencer_rollback(struct replay_opts *opts);
+@@ -54,7 +54,8 @@ int sequencer_rollback(struct replay_opts *opts);
  int sequencer_remove_state(struct replay_opts *opts);
  
  int sequencer_commit(const char *defmsg, struct replay_opts *opts,
--			  int allow_empty, int edit);
-+			  int allow_empty, int edit, int amend);
+-			  int allow_empty, int edit, int amend);
++			  int allow_empty, int edit, int amend,
++			  int cleanup_commit_message);
  
  extern const char sign_off_header[];
  
