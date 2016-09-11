@@ -7,52 +7,53 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F4C41FCA9
-	for <e@80x24.org>; Sun, 11 Sep 2016 16:01:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 36EB51FCA9
+	for <e@80x24.org>; Sun, 11 Sep 2016 16:04:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755962AbcIKQBS (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Sep 2016 12:01:18 -0400
-Received: from mail-oi0-f54.google.com ([209.85.218.54]:33587 "EHLO
-        mail-oi0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755875AbcIKQBR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Sep 2016 12:01:17 -0400
-Received: by mail-oi0-f54.google.com with SMTP id y2so257885716oie.0
-        for <git@vger.kernel.org>; Sun, 11 Sep 2016 09:01:17 -0700 (PDT)
+        id S1755982AbcIKQD6 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Sep 2016 12:03:58 -0400
+Received: from mail-oi0-f44.google.com ([209.85.218.44]:36150 "EHLO
+        mail-oi0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755606AbcIKQD5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Sep 2016 12:03:57 -0400
+Received: by mail-oi0-f44.google.com with SMTP id q188so142599253oia.3
+        for <git@vger.kernel.org>; Sun, 11 Sep 2016 09:03:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=HJUHL10vxMeHVgK3qzQkkFun0X84n3gDdSTVoEnduwA=;
-        b=DZJA9AIc+16i4iqWxvYmpI4opvcUGPyVIpYPVeJ1PWLloGPCLQ6tf6u0xfuha8Bn19
-         fY/2ILfm0O9c6izrHjMvAi2eFrAQVHxV2cRuHCIUgzf/SgxM3a3tFkpoTNLWmuzkleYW
-         pm6DrV9K/rIapKtSKu3TQ00yUAFauxthh89s//kmSYMaYDdX4sYn0JzJ6k/sJztNzsv2
-         QG1980C5kCxMgygHajasisk+IhguB5hEelxZo1qJdWH3c8ySWtu5xyzBJG3l8E2Fmzam
-         vzWGWYLvGvBgoTKW1Zp00/Dg6twAYA7jSpKfg19eZKY2vrbCnYIamt9Rz7dqlnG+9iVp
-         Xe2Q==
+        bh=PGW/qpPTHVa+NFWDUogkf/Ccc89yGGjUWc2DQTN01DU=;
+        b=HuaylG4uyiEobf8h74Z5hxmHKrO/Z/tTUh7JQ3QcPr3v6eUWCtHibWA9n1TQCyRJGa
+         1XilPctGczh3zs4QNiEovF8DyxudwbSBa8HVd7S7RZAI4yGQhG9T4N2B+Y8dFjvctP/c
+         KLUdGX+h93g6rcoT4bGZvRpkPQTf/VKMB1d++FSQ74I0BAE5ZF+GKzWJxuGMFe8b600a
+         XArkoX4icVD2esFYol5mdAbulPWGXxkLwr8lkKY/PcsT5U7N7EesLRDso04VTDgsx7XQ
+         t5ZASqpKDNbYll3Cg7ryEkkilOouICYhsUuneKQZJQOOBhXzhV3PrEaLmCze7UHP9ysW
+         tw7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=HJUHL10vxMeHVgK3qzQkkFun0X84n3gDdSTVoEnduwA=;
-        b=hxWLl0I7Mlua/rJCok05gjDvwq5paC02e3/ai3x7Qz2NEQzoGl4BjTn4Yu1hQZQZzR
-         U+VCWoPfbWx5qEe1owMdNB8rAzo7utqiWfRQ/gVrXeGxQXY48XcVjsWFk6FO+ndkxpAk
-         QTWeJ4LR7cMujaV9zh38ULF7YxPlqg+kR5D8V2VNex0mzX442HVvUHOHf8HEWyfPxZVU
-         riNsNyeE99tKErMjHWB68uNVZk3YsjpUHM7U2Fajo672FnCvuin3WzHZPU6ER9KH7Y0P
-         EMPnnmfFbAnCwxVAnViavpHDJP2qqb94A+xLBemWe/vzMDLHO1eT4/AAG2/fQUwml3K3
-         i0Kg==
-X-Gm-Message-State: AE9vXwNc1qpACt8+dY5Tm7WxIdirC4Zwsj1r43hYopiJ9Qx7j8kpkx767WPP3KzQjav7k2alPqE87yIqccOi8vxi
-X-Received: by 10.202.227.148 with SMTP id a142mr18971980oih.50.1473609676504;
- Sun, 11 Sep 2016 09:01:16 -0700 (PDT)
+        bh=PGW/qpPTHVa+NFWDUogkf/Ccc89yGGjUWc2DQTN01DU=;
+        b=bIVJpYmKANiSpQb3dD1o3CPrfOALPEYZ/e0VFMG7mfmWmzoPA1dPMzY3gyXiIcP2xI
+         sXL53DmNQfNqr/80RH5lCu36rU7iYbDnLsW8AWw5cgGoE4qFzl0HYKgK1tNRGiVr+j6J
+         mmh3//rB4NoCGrt5LbzOwR5y23eqaIuv21se7PEK/Fzs4sQsRE7ORd7593w1RMVEnT8Y
+         vUICtDJlPbmjBGdbdkcy4Lby+p2mi1blSv/DZleUG2350APS1GpKFbvjqZzXcGF9Xp8v
+         vS/uxuJhQGFGbyNJ1WqeNTfhmSFHjZBcXazRwYh2ILKOgHL+fPgVZGw+UCvjG2M83dsp
+         y1Nw==
+X-Gm-Message-State: AE9vXwMASA/fVXt5aCQxxsATPr7ZGV7paskgwkOhTTVWenkeufXCdyozDkQCl81J2rc9niOt8QYNw5jsIdg+xrvG
+X-Received: by 10.202.108.21 with SMTP id h21mr812655oic.172.1473609836648;
+ Sun, 11 Sep 2016 09:03:56 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.128.66 with HTTP; Sun, 11 Sep 2016 09:01:16 -0700 (PDT)
-In-Reply-To: <714C1346-6A7D-4A8B-AAA2-BA936EB6B739@gmail.com>
+Received: by 10.107.128.66 with HTTP; Sun, 11 Sep 2016 09:03:56 -0700 (PDT)
+In-Reply-To: <6CCFB3A0-2C3B-4142-8E62-47C3DD6AE7A3@gmail.com>
 References: <20160908182132.50788-1-larsxschneider@gmail.com>
- <20160908182132.50788-4-larsxschneider@gmail.com> <CAGZ79kY0GaWuuh_MzKL6FZ7KWF2Kwhfh9qnEYd-qX8VDQWNmCQ@mail.gmail.com>
- <714C1346-6A7D-4A8B-AAA2-BA936EB6B739@gmail.com>
+ <20160908182132.50788-7-larsxschneider@gmail.com> <CAGZ79kYHX6-hhKW_6JEd1hBNi8R+sBY-RjZARfHDMnyLKFZnsQ@mail.gmail.com>
+ <6CCFB3A0-2C3B-4142-8E62-47C3DD6AE7A3@gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Sun, 11 Sep 2016 09:01:16 -0700
-Message-ID: <CAGZ79kZaRdJqbjfacdxT5eqOaK-RObJo+AddZ8heaU-KzWCOwQ@mail.gmail.com>
-Subject: Re: [PATCH v7 03/10] pkt-line: add packet_write_fmt_gently()
+Date:   Sun, 11 Sep 2016 09:03:56 -0700
+Message-ID: <CAGZ79kY4_ASUopbXg3AgtGu-hJ87thD46NgzggeB1635Yvk5dA@mail.gmail.com>
+Subject: Re: [PATCH v7 06/10] pkt-line: add functions to read/write flush
+ terminated packet streams
 To:     Lars Schneider <larsxschneider@gmail.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
@@ -67,27 +68,16 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 11, 2016 at 4:36 AM, Lars Schneider
+On Sun, Sep 11, 2016 at 5:33 AM, Lars Schneider
 <larsxschneider@gmail.com> wrote:
 
->>
->>    call check_pipe from write_or_die here instead of
->>    reproducing that function?
->
-> Yes, might be better. I wasn't sure because the check_pipe is
-> not public.
->
-> Where would you declare check_pipe? In cache.h?
+> Does this convince you to keep the proposed error handling? If yes, then
+> I would add a comment to the function to document that behavior explicitly!
 
-IIRC, once upon a time the community decided to not
-clutter cache.h any more as it is like a dirty kitchen sink,
-piling up all unrelated things, but on the other hand that
-would be handy.
+oops. I should read the docs more carefully.
 
-> Maybe it would be more suitable to move check_pipe to
-> run-command.h/c?
+Thanks for pointing out.
+Then I'd be happy with the patch as is.
 
-That's certainly possible.
-I don't have a strong opinion, where the code actually
-resides, but I do have a strong-ish opinion on code
-duplication. ;)
+Thanks,
+Stefan
