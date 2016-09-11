@@ -2,317 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D72CA207DF
-	for <e@80x24.org>; Sun, 11 Sep 2016 10:30:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFB1E207DF
+	for <e@80x24.org>; Sun, 11 Sep 2016 10:52:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755617AbcIKKas (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Sep 2016 06:30:48 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:36150 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755606AbcIKKar (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Sep 2016 06:30:47 -0400
-Received: by mail-wm0-f67.google.com with SMTP id d7so1659765wmi.3
-        for <git@vger.kernel.org>; Sun, 11 Sep 2016 03:30:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=UsCB1FysxgmO1jrJ6VmrQ2iyCaezXo7tZRlTp1OJjRo=;
-        b=Kj5ZmC/FD0oegNWBdjCCg+QdzCpuvcN1FtmmCxyOCToAf6aLKPD6RJjjQF8QtZ9TO3
-         DZZk2YOR/SpulfcusVUdG1joi8JgibwnoZZSF4dQGHB0zbq0+qFmK320j/2LCzRC97GO
-         P7FBubA2d/KWBdA/wxnIKLyt7NokPL6sQ1CoPTXkJrjSNimcY1s+bBl5C0bIaHv9O3fP
-         zVs4t3lqnOlf4m0JpW9NZ1WQkhgadkSJyhXArbvc30X+QU8c8BEV8xjgf56otRS/87UU
-         e9QiiNvwSVpg44XclTPrZTRIxD8WRHnTBFDlf6U2C5E2Q5O++YxN9AL+Lg1UqoJIUXGy
-         l2vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=UsCB1FysxgmO1jrJ6VmrQ2iyCaezXo7tZRlTp1OJjRo=;
-        b=cCYTYvArp9nB2QYFVJVJQpcMTdEW9+NBPQhVRj2zC3o/F21kESXLzRQ/JbxX9bFqhW
-         t0MFQvbbDunAl1jslEr+8gj9iMdQuulVQ43kxkmKICBWC5tZZZ1cXmsYx9NOBjA15mDY
-         3TKosTNyFLWnBKkkjqsG/FNcfrngFbMGXIGuTyHKDXuN1DGi3H+mPmltUnZ+KlRl/4Yi
-         gs9wgHZkKRmsdjm5MaFDmcLqNoiBPz6k3H0AkXO32F1k50grTMUSGignbs+hmjjybvpg
-         lQaGfmHluDL13aai2/+PjObjgC1thuDSmS9eMQ90qeb+HwmQVmx6F1QlWGfZfUcQwx/j
-         rgpg==
-X-Gm-Message-State: AE9vXwNhAIgBuZFuCnFUUaDw1hKETD465eA+DrE+mY5uQGTSq38otp425raBOw1rCkb1Fg==
-X-Received: by 10.28.25.71 with SMTP id 68mr6389354wmz.91.1473589831633;
-        Sun, 11 Sep 2016 03:30:31 -0700 (PDT)
-Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
-        by smtp.gmail.com with ESMTPSA id ub8sm12326820wjc.39.2016.09.11.03.30.30
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 11 Sep 2016 03:30:30 -0700 (PDT)
-From:   Thomas Gummerer <t.gummerer@gmail.com>
+        id S1755598AbcIKKwn (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Sep 2016 06:52:43 -0400
+Received: from mout.gmx.net ([212.227.15.19]:57915 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1755542AbcIKKwm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Sep 2016 06:52:42 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0MTSrf-1bZRIs1WWl-00SLah; Sun, 11 Sep 2016 12:52:34
+ +0200
+Date:   Sun, 11 Sep 2016 12:52:30 +0200 (CEST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Jan Keromnes <janx@linux.com>,
-        =?UTF-8?q?Ingo=20Br=C3=BCckl?= <ib@wupperonline.de>,
-        Edward Thomson <ethomson@edwardthomson.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v2 4/4] add: modify already added files when --chmod is given
-Date:   Sun, 11 Sep 2016 11:30:28 +0100
-Message-Id: <20160911103028.5492-5-t.gummerer@gmail.com>
-X-Mailer: git-send-email 2.10.0.304.gf2ff484
-In-Reply-To: <20160911103028.5492-1-t.gummerer@gmail.com>
-References: <20160904113954.21697-1-t.gummerer@gmail.com>
- <20160911103028.5492-1-t.gummerer@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH v2 01/25] sequencer: use static initializers for
+ replay_opts
+In-Reply-To: <cover.1473590966.git.johannes.schindelin@gmx.de>
+Message-ID: <666493d3f166d839deb817042ed7d1636b11f19e.1473590966.git.johannes.schindelin@gmx.de>
+References: <cover.1472457609.git.johannes.schindelin@gmx.de> <cover.1473590966.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:aFn8x4bNPk0l3gGV/fQO1rte5nlhn5NeXwqtZf60BK/bTz/Y6AW
+ gfIBxZx7aHZAWFPYrv0Ikaz+cAH3P5gNsMZhwmLJOk5Q0Gc7y0f6TbdRiWRQr+wy/58qP4o
+ Z+Ib+wS8Cc1T/sOKTSYiE6TwKPDZ1PKMSFAvzCJgrBUqbAU7GibD8voc7ttQLzFdrUYpP02
+ QUMK/YAvwbQlXnL0yA6gw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:3TsOhq1gJAs=:xkN/eKSPh9o39TmpqzAkvR
+ eZ9aRDSSdNXFaDGRQFrdbrXF/vF2EP7kCBQ5PcCV5wtgsKf7Ne7u05a8P0u0A364JMM3AF2Zf
+ rmtsoyt3+8+953IVUNaigFMeCrZ5JVZ3KA/M/ID+8b7u/fsqZxSM2q7FG8LH278S84xFXty7m
+ 39tNrKti2rx/vx3tqQzfe1fVqKNmvGZGVOywz57WRlHHuHaHbzSxazM1IHQBnRAyMSYUxwnxa
+ TmBIozEKgPEOAKNT19tqr00rQGSzYrnC/OSCJGLnhKsFhnJbPhsocBPjxNPbsH1y0YFsrDpsy
+ tXN0h+rIRqPWuPV3MFz9ejt+Lwrdkl6plDlZhVGXgYgInyxpknVw2HjBkuhJWm5I8N9WnhXGa
+ jRpP3cc/anxzhqON0esOVjeOfFBjJQQgNGT5ZIvK8cymddLVxl9I+y0ht/5vBrS2sx23/TNph
+ mMrJbpi18NFJZBQEF2tA1Nd62FeMGAounYV7ji64jNrQdJllXbdIKXXEMG9FdVoFagU9d3WZY
+ CHIUPY0q/rxhnONQioxXGoCTqGksbLcbpiuL619CEeW8bfoOKIm6rhcud7p0wty3xG0VK78Wi
+ 3T4MWNgNhT6P+7aISLfJk/ejaP7hrW4cKCEU4WJEhOE6XU4KFDX4xjj2glLE/Q8oS2LvTH6NQ
+ +U5WxTPXR/IGlrFXK31p4udBvft4EIQpGtJz7XRsjdUtlt/xU4EO3IDUeYnEFzzGjCZ51icIx
+ 91jooTGDU8Y2LdVl/cHRh2KasC8FM+NmuNzyZUthqnb95TxBasahW0ppd3aUMOnyJvhv1WErR
+ WK8aoHW
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the chmod option was added to git add, it was hooked up to the diff
-machinery, meaning that it only works when the version in the index
-differs from the version on disk.
+This change is not completely faithful: instead of initializing all fields
+to 0, we choose to initialize command and subcommand to -1 (instead of
+defaulting to REPLAY_REVERT and REPLAY_NONE, respectively). Practically,
+it makes no difference at all, but future-proofs the code to require
+explicit assignments for both fields.
 
-As the option was supposed to mirror the chmod option in update-index,
-which always changes the mode in the index, regardless of the status of
-the file, make sure the option behaves the same way in git add.
-
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/add.c      | 36 +++++++++++++++++++++++++-----------
- builtin/checkout.c |  2 +-
- builtin/commit.c   |  2 +-
- cache.h            | 10 +++++-----
- read-cache.c       | 14 ++++++--------
- t/t3700-add.sh     | 21 +++++++++++++++++++++
- 6 files changed, 59 insertions(+), 26 deletions(-)
+ builtin/revert.c | 6 ++----
+ sequencer.h      | 1 +
+ 2 files changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/add.c b/builtin/add.c
-index b1dddb4..892198a 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -26,10 +26,25 @@ static int patch_interactive, add_interactive, edit_interactive;
- static int take_worktree_changes;
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 4e69380..7365559 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -178,10 +178,9 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
  
- struct update_callback_data {
--	int flags, force_mode;
-+	int flags;
- 	int add_errors;
+ int cmd_revert(int argc, const char **argv, const char *prefix)
+ {
+-	struct replay_opts opts;
++	struct replay_opts opts = REPLAY_OPTS_INIT;
+ 	int res;
+ 
+-	memset(&opts, 0, sizeof(opts));
+ 	if (isatty(0))
+ 		opts.edit = 1;
+ 	opts.action = REPLAY_REVERT;
+@@ -195,10 +194,9 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
+ 
+ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
+ {
+-	struct replay_opts opts;
++	struct replay_opts opts = REPLAY_OPTS_INIT;
+ 	int res;
+ 
+-	memset(&opts, 0, sizeof(opts));
+ 	opts.action = REPLAY_PICK;
+ 	git_config(git_default_config, NULL);
+ 	parse_args(argc, argv, &opts);
+diff --git a/sequencer.h b/sequencer.h
+index 5ed5cb1..db425ad 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -47,6 +47,7 @@ struct replay_opts {
+ 	/* Only used by REPLAY_NONE */
+ 	struct rev_info *revs;
  };
++#define REPLAY_OPTS_INIT { -1, -1 }
  
-+static void chmod_pathspec(struct pathspec *pathspec, int force_mode)
-+{
-+	int i;
-+	
-+	for (i = 0; i < active_nr; i++) {
-+		struct cache_entry *ce = active_cache[i];
-+
-+		if (pathspec && !ce_path_match(ce, pathspec, NULL))
-+			continue;
-+
-+		if (chmod_cache_entry(ce, force_mode) < 0)
-+			fprintf(stderr, "cannot chmod '%s'", ce->name);
-+	}
-+}
-+
- static int fix_unmerged_status(struct diff_filepair *p,
- 			       struct update_callback_data *data)
- {
-@@ -65,8 +80,7 @@ static void update_callback(struct diff_queue_struct *q,
- 			die(_("unexpected diff status %c"), p->status);
- 		case DIFF_STATUS_MODIFIED:
- 		case DIFF_STATUS_TYPE_CHANGED:
--			if (add_file_to_index(&the_index, path,
--					data->flags, data->force_mode)) {
-+			if (add_file_to_index(&the_index, path,	data->flags)) {
- 				if (!(data->flags & ADD_CACHE_IGNORE_ERRORS))
- 					die(_("updating files failed"));
- 				data->add_errors++;
-@@ -84,15 +98,14 @@ static void update_callback(struct diff_queue_struct *q,
- 	}
- }
+ int sequencer_pick_revisions(struct replay_opts *opts);
  
--int add_files_to_cache(const char *prefix, const struct pathspec *pathspec,
--	int flags, int force_mode)
-+int add_files_to_cache(const char *prefix,
-+		       const struct pathspec *pathspec, int flags)
- {
- 	struct update_callback_data data;
- 	struct rev_info rev;
- 
- 	memset(&data, 0, sizeof(data));
- 	data.flags = flags;
--	data.force_mode = force_mode;
- 
- 	init_revisions(&rev, prefix);
- 	setup_revisions(0, NULL, &rev, NULL);
-@@ -281,7 +294,7 @@ static int add_config(const char *var, const char *value, void *cb)
- 	return git_default_config(var, value, cb);
- }
- 
--static int add_files(struct dir_struct *dir, int flags, int force_mode)
-+static int add_files(struct dir_struct *dir, int flags)
- {
- 	int i, exit_status = 0;
- 
-@@ -294,8 +307,7 @@ static int add_files(struct dir_struct *dir, int flags, int force_mode)
- 	}
- 
- 	for (i = 0; i < dir->nr; i++)
--		if (add_file_to_index(&the_index, dir->entries[i]->name,
--				flags, force_mode)) {
-+		if (add_file_to_index(&the_index, dir->entries[i]->name, flags)) {
- 			if (!ignore_add_errors)
- 				die(_("adding files failed"));
- 			exit_status = 1;
-@@ -441,11 +453,13 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 
- 	plug_bulk_checkin();
- 
--	exit_status |= add_files_to_cache(prefix, &pathspec, flags, force_mode);
-+	exit_status |= add_files_to_cache(prefix, &pathspec, flags);
- 
- 	if (add_new_files)
--		exit_status |= add_files(&dir, flags, force_mode);
-+		exit_status |= add_files(&dir, flags);
- 
-+	if (force_mode)
-+		chmod_pathspec(&pathspec, force_mode);
- 	unplug_bulk_checkin();
- 
- finish:
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 8672d07..a83c78f 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -548,7 +548,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 			 * entries in the index.
- 			 */
- 
--			add_files_to_cache(NULL, NULL, 0, 0);
-+			add_files_to_cache(NULL, NULL, 0);
- 			/*
- 			 * NEEDSWORK: carrying over local changes
- 			 * when branches have different end-of-line
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 77e3dc8..7a1ade0 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -387,7 +387,7 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
- 	 */
- 	if (all || (also && pathspec.nr)) {
- 		hold_locked_index(&index_lock, 1);
--		add_files_to_cache(also ? prefix : NULL, &pathspec, 0, 0);
-+		add_files_to_cache(also ? prefix : NULL, &pathspec, 0);
- 		refresh_cache_or_die(refresh_flags);
- 		update_main_cache_tree(WRITE_TREE_SILENT);
- 		if (write_locked_index(&the_index, &index_lock, CLOSE_LOCK))
-diff --git a/cache.h b/cache.h
-index 44a4f76..eb6d6b8 100644
---- a/cache.h
-+++ b/cache.h
-@@ -367,8 +367,8 @@ extern void free_name_hash(struct index_state *istate);
- #define rename_cache_entry_at(pos, new_name) rename_index_entry_at(&the_index, (pos), (new_name))
- #define remove_cache_entry_at(pos) remove_index_entry_at(&the_index, (pos))
- #define remove_file_from_cache(path) remove_file_from_index(&the_index, (path))
--#define add_to_cache(path, st, flags) add_to_index(&the_index, (path), (st), (flags), 0)
--#define add_file_to_cache(path, flags) add_file_to_index(&the_index, (path), (flags), 0)
-+#define add_to_cache(path, st, flags) add_to_index(&the_index, (path), (st), (flags))
-+#define add_file_to_cache(path, flags) add_file_to_index(&the_index, (path), (flags))
- #define chmod_cache_entry(ce, force_mode) chmod_index_entry(&the_index, (ce), (force_mode))
- #define refresh_cache(flags) refresh_index(&the_index, (flags), NULL, NULL, NULL)
- #define ce_match_stat(ce, st, options) ie_match_stat(&the_index, (ce), (st), (options))
-@@ -582,8 +582,8 @@ extern int remove_file_from_index(struct index_state *, const char *path);
- #define ADD_CACHE_IGNORE_ERRORS	4
- #define ADD_CACHE_IGNORE_REMOVAL 8
- #define ADD_CACHE_INTENT 16
--extern int add_to_index(struct index_state *, const char *path, struct stat *, int flags, int force_mode);
--extern int add_file_to_index(struct index_state *, const char *path, int flags, int force_mode);
-+extern int add_to_index(struct index_state *, const char *path, struct stat *, int flags);
-+extern int add_file_to_index(struct index_state *, const char *path, int flags);
- extern struct cache_entry *make_cache_entry(unsigned int mode, const unsigned char *sha1, const char *path, int stage, unsigned int refresh_options);
- extern int chmod_index_entry(struct index_state *, struct cache_entry *ce, int force_mode);
- extern int ce_same_name(const struct cache_entry *a, const struct cache_entry *b);
-@@ -1820,7 +1820,7 @@ void packet_trace_identity(const char *prog);
-  * return 0 if success, 1 - if addition of a file failed and
-  * ADD_FILES_IGNORE_ERRORS was specified in flags
-  */
--int add_files_to_cache(const char *prefix, const struct pathspec *pathspec, int flags, int force_mode);
-+int add_files_to_cache(const char *prefix, const struct pathspec *pathspec, int flags);
- 
- /* diff.c */
- extern int diff_auto_refresh_index;
-diff --git a/read-cache.c b/read-cache.c
-index 367be57..b92d72e 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -627,7 +627,7 @@ void set_object_name_for_intent_to_add_entry(struct cache_entry *ce)
- 	hashcpy(ce->sha1, sha1);
- }
- 
--int add_to_index(struct index_state *istate, const char *path, struct stat *st, int flags, int force_mode)
-+int add_to_index(struct index_state *istate, const char *path, struct stat *st, int flags)
- {
- 	int size, namelen, was_same;
- 	mode_t st_mode = st->st_mode;
-@@ -656,11 +656,10 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
- 	else
- 		ce->ce_flags |= CE_INTENT_TO_ADD;
- 
--	if (S_ISREG(st_mode) && force_mode)
--		ce->ce_mode = create_ce_mode(force_mode);
--	else if (trust_executable_bit && has_symlinks)
-+
-+	if (trust_executable_bit && has_symlinks) {
- 		ce->ce_mode = create_ce_mode(st_mode);
--	else {
-+	} else {
- 		/* If there is an existing entry, pick the mode bits and type
- 		 * from it, otherwise assume unexecutable regular file.
- 		 */
-@@ -719,13 +718,12 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
- 	return 0;
- }
- 
--int add_file_to_index(struct index_state *istate, const char *path,
--	int flags, int force_mode)
-+int add_file_to_index(struct index_state *istate, const char *path, int flags)
- {
- 	struct stat st;
- 	if (lstat(path, &st))
- 		die_errno("unable to stat '%s'", path);
--	return add_to_index(istate, path, &st, flags, force_mode);
-+	return add_to_index(istate, path, &st, flags);
- }
- 
- struct cache_entry *make_cache_entry(unsigned int mode,
-diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-index 2978cb9..62c7f71 100755
---- a/t/t3700-add.sh
-+++ b/t/t3700-add.sh
-@@ -349,4 +349,25 @@ test_expect_success POSIXPERM,SYMLINKS 'git add --chmod=+x with symlinks' '
- 	test_mode_in_index 100755 foo2
- '
- 
-+test_expect_success 'git add --chmod=[+-]x changes index with already added file' '
-+	echo foo >foo3 &&
-+	git add foo3 &&
-+	git add --chmod=+x foo3 &&
-+	test_mode_in_index 100755 foo3 &&
-+	echo foo >xfoo3 &&
-+	chmod 755 xfoo3 &&
-+	git add xfoo3 &&
-+	git add --chmod=-x xfoo3 &&
-+	test_mode_in_index 100644 xfoo3
-+'
-+
-+test_expect_success 'file status is changed after git add --chmod=+x' '
-+	echo "AM foo4" >expected &&
-+	echo foo >foo4 &&
-+	git add foo4 &&
-+	git add --chmod=+x foo4 &&
-+	git status -s foo4 >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
 -- 
-2.10.0.304.gf2ff484
+2.10.0.windows.1.10.g803177d
+
 
