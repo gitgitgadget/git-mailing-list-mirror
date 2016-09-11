@@ -2,82 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1D9B1FCA9
-	for <e@80x24.org>; Sun, 11 Sep 2016 22:05:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A034C1FCA9
+	for <e@80x24.org>; Sun, 11 Sep 2016 22:10:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754334AbcIKWFc (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Sep 2016 18:05:32 -0400
-Received: from mail-yb0-f179.google.com ([209.85.213.179]:34294 "EHLO
-        mail-yb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750912AbcIKWFb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Sep 2016 18:05:31 -0400
-Received: by mail-yb0-f179.google.com with SMTP id x93so44344293ybh.1
-        for <git@vger.kernel.org>; Sun, 11 Sep 2016 15:05:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=wcEDF5sO1ykiiZ5uf/8ZBl4z74DXZsX0ZoYjaqVJusw=;
-        b=XKsWqFUXZzVfR7JT6Q4veqSJaT2cE0YxhQYC3r8TFKSSbvJ00/FecsDqVbNg+y3epb
-         XhNdmAqXU7IoRODquFivmu3AEWnOCzaKAEqUbMu1PXVEmGQOkKKZyuYxrsj5jeeFwOYj
-         A3afFZfgPqdggq5p0EhAtyCYbGyE0CwA/Zj8CRj1RtZRgqftj2QDz7cfiWIlTHWItXBp
-         ikMCRpkEE6hhR1P6pVCyChoUHIHa8DnfAWFQcXUCO5I6FHJcIIL3XCdDO/Dz7YzmvLdq
-         ZtaE9ajwuVAKA6ieaIC1ou8MtzW0ZXaqqZ68ywOTCTWWYoZIFUBmRGvvaVJbkY3qlCYf
-         ojEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=wcEDF5sO1ykiiZ5uf/8ZBl4z74DXZsX0ZoYjaqVJusw=;
-        b=NVTsARTqlOcrlEOo+q6+x5yZBCSzTqTncZc9Am6gk2wwNzPXFy2ouMuzK8rEpoOCfZ
-         +SiR02t7GzUUyIskpscqEMgliSsQjcqAJRUqDck2OWtj+PbJ8bkWWqR20df14+Ot33Nj
-         2LPPd9HPd7S9dBgnXpX/aTjSS0XMeYrcwMRYACLgbMzdUlZIrGzruzmIE/8yV2Ax0hkY
-         QbiUU8iyHFgmRFisoCtLzOGLnaklWQubY+ExBZ8B87FqAXdgzwzrkXv+3GLdsy48JL7E
-         wMW4ZF9ggBhHUeKnSWcp5d5pgX/nOHdpo5CMcpsaL1milHRiSt2b9zKFoz7opeieZ7nT
-         p1aw==
-X-Gm-Message-State: AE9vXwPK58/eTsNh46JItHo6fzQ6ez64dJO6eKF0O6Ku7H4kzkz87rWKQ7zcyFG2Eh0+9DLeaxonPW6fGgLABg==
-X-Received: by 10.37.20.8 with SMTP id 8mr15535802ybu.103.1473631530350; Sun,
- 11 Sep 2016 15:05:30 -0700 (PDT)
+        id S1754634AbcIKWKS (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Sep 2016 18:10:18 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57092 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750912AbcIKWKR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Sep 2016 18:10:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 555493B76D;
+        Sun, 11 Sep 2016 18:10:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=HyK8hsBkmiRmHQR2p4RftHFqeg4=; b=wDKZcD
+        IxhvWQxvIEdymdDb3fvgywB+gortsF1myN5cJ43ilWwPE17TMnXP+kMPSCcKHP+p
+        42vIfhD7bMN4cbnF8+mbXOgg+H1vPToqqqC3MRHikd1qL0JrwEXioExsqjmEGVQa
+        l4ES5Y2nj8GiMy0Yp6GKHX4FKj/aftz9MOrOc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZQugktwA2mQQWHjPNUKPC2ZKksXRtAUX
+        lFTwnFyRcwzREkcBNEPd0bHZj0PCNf90BPBdmz8FQ1UEfzG/sj7R8UTavkfhgc/b
+        d168kScqLId51zLrhlBK2ufsQoehtiwhDrM1vr5hHjrtpkaRGIKe9hPKpaWj/MoU
+        w4VCel9TI+Y=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4EFD33B76C;
+        Sun, 11 Sep 2016 18:10:16 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CD1AD3B769;
+        Sun, 11 Sep 2016 18:10:15 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [RFC/PATCH] ls-files: adding support for submodules
+References: <1473458004-41460-1-git-send-email-bmwill@google.com>
+        <xmqqh99o8ypm.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kaWNykEAZcjZ2Y19j2_3TF+qcz+vb8zSi1U+me3k+06LA@mail.gmail.com>
+Date:   Sun, 11 Sep 2016 15:10:13 -0700
+In-Reply-To: <CAGZ79kaWNykEAZcjZ2Y19j2_3TF+qcz+vb8zSi1U+me3k+06LA@mail.gmail.com>
+        (Stefan Beller's message of "Fri, 9 Sep 2016 16:47:45 -0700")
+Message-ID: <xmqqmvje6qbe.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.96.195 with HTTP; Sun, 11 Sep 2016 15:05:09 -0700 (PDT)
-In-Reply-To: <xmqqvay26r8u.fsf@gitster.mtv.corp.google.com>
-References: <87zinmhx68.fsf@juno.home.vuxu.org> <CA+P7+xoN+q_Kst=qXG_HRznxbN7cbyi5uZe15zq1c16EifeK1Q@mail.gmail.com>
- <xmqq8tv1c5nb.fsf@gitster.mtv.corp.google.com> <23de5ffe-eaf8-2d62-2202-f1bf6087d44b@gmail.com>
- <87inu4bxt7.fsf@juno.home.vuxu.org> <b9d63103-011a-9486-2fa1-dcf3a82cbe64@gmail.com>
- <xmqqvay26r8u.fsf@gitster.mtv.corp.google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Sun, 11 Sep 2016 15:05:09 -0700
-Message-ID: <CA+P7+xqdWbERVQenZJTLyirBy2VFrKV2-uBOxB1CwcWs+gy43A@mail.gmail.com>
-Subject: Re: git commit -p with file arguments
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-        Christian Neukirchen <chneukirchen@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 84A412F2-786C-11E6-A4DA-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 11, 2016 at 2:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
->
->> I wonder, if git-commit is to acquire such feature, what would be the
->> best interface.  "git commit :0:./<path>"?  "git commit -o -p <path>"
->> (that is, "git commit --only --patch <pathspec>")?
->
-> Just do "git reset && git commit -p <pathspec>", I would say.
-> Anything more elaborate would just confuse the end users.
->
+Stefan Beller <sbeller@google.com> writes:
 
-Yes, I'm actually confused by "git commit <files>" *not* usinng what's
-in the index already, so I think that isn't intuitive as is.
+> The plan is to hook the ls-files machinery into
+> git-grep as the way of obtaining files to grep for a pattern.
 
-Thanks,
-Jake
+That does not make much sense to me for exactly the same reason why
+the "grab the list of paths and run 'git add' on them" example in
+the message you are responding to does not make sense.  The use of
+the thread-pool would still need to honor the submodule boundary so
+that one thread may be assigned files in the top-level superproject
+while another may be assigned files in lib/ submodule repository,
+and the latter would be doing a rough equivalent of "git -C lib
+grep" perhaps with a new option "--output-path-prefix=lib/" that
+makes any and all paths that are reported from the command prefixed
+with the specified string, so the result of its grepping in Makefile
+may be reported as findings in lib/Makefile.
+
+For that, it is not sufficient for the enumeration of paths done in
+the top-level to just list lib/Makefile and lib/hello.py along with
+Makefile and main.py, is it?  You would somehow need to have a way
+to tell that 'lib/' and everything in there is inside a separate
+repository.  Without knowing that "lib/" is its own repository, you
+would not even know which files under "lib/" hierarchy in the
+filesystem are actually tracked files, which you would learn only by
+reading lib/.git/index, or what textconv filtering needs to be done
+on them, which you would learn only by reading lib/.gitattributes
+and/or lib/.git/config.
+
+So a "ls-files" that is done internally in the end-user facing "git
+grep --recurse-submodules" needs to be run _without_ recursing
+itself at least once to learn "lib/" is a submodule.  A flat "here
+are everything we have" does not sound like a good building block.
