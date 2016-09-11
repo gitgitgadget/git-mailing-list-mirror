@@ -2,115 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC13C207DF
-	for <e@80x24.org>; Sun, 11 Sep 2016 10:54:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4633207DF
+	for <e@80x24.org>; Sun, 11 Sep 2016 10:54:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755705AbcIKKyj (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Sep 2016 06:54:39 -0400
-Received: from mout.gmx.net ([212.227.15.18]:54669 "EHLO mout.gmx.net"
+        id S1755751AbcIKKyv (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Sep 2016 06:54:51 -0400
+Received: from mout.gmx.net ([212.227.17.22]:52003 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755470AbcIKKyi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Sep 2016 06:54:38 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0MA91t-1btjdb3lEX-00BN4r; Sun, 11 Sep 2016 12:54:35
+        id S1755034AbcIKKyu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Sep 2016 06:54:50 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0M1zFf-1auvWu08uR-00u5cz; Sun, 11 Sep 2016 12:54:47
  +0200
-Date:   Sun, 11 Sep 2016 12:54:19 +0200 (CEST)
+Date:   Sun, 11 Sep 2016 12:54:46 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v2 14/25] sequencer: introduce a helper to read files written
- by scripts
+Subject: [PATCH v2 15/25] sequencer: prepare for rebase -i's GPG settings
 In-Reply-To: <cover.1473590966.git.johannes.schindelin@gmx.de>
-Message-ID: <9787d4599f09e78880ee5328485c1ceb4c375cea.1473590966.git.johannes.schindelin@gmx.de>
+Message-ID: <fa4ea9fdacaa91454361de66a5a6cd7f94f66518.1473590966.git.johannes.schindelin@gmx.de>
 References: <cover.1472457609.git.johannes.schindelin@gmx.de> <cover.1473590966.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:pkfwj/Cw8H9S6aOVIrERfGQutr6ub+P4uBjgGmVWHiA8dQMCEuc
- ankhZBI8bS3QQlZMORs2nvq9LgEutD/pVOQ6k/uSepCzyaHx7u56HZj2LqGo6ue2NoGjEqR
- cLSwU/wV7F6T48VbGZ+AvSGkuiNQHUSuQuSPNWMHk7oQjdwCyPrcJ2cO2BKpaPXHvOXQfrH
- NA8N8BFv528iR9Ffnoq0A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:kZFo2NKDHXY=:K1H5fDQ3LKgWV01OhKrKnI
- pKQFRfngHEuzgC1ui+2fzzZ35srOVqn6LyM+U5326v3FOpFGW4C54fsI0hgiDs3EfG1v9HzdM
- Qbsi0dktZEokSAu84hH/5RMPXiAAivyurXi8K5SDMemVIHlr1heZADhQPWMBlhtrlQhis5A4e
- 9mCMaYKrZ0redA9OY++2ti/rMOsAO0ZpzPhwCn0QZePg2n59UgO8JbCAcjwon+T4Tk5NrEf+x
- ulCV8tuT3q++eM3HPxrE+2uscpMrsau2CJZztGpdzZNy3pAH2i0HtBzl6fhtIjZrn8HqB5IC+
- WvrQ0FR/S3wNpmrjrilAbB/6hzbk0PqGE0NxyBHUOLA8L6kQMBVV8/GsdirOAUCtDQW6beq1b
- hXZNSkO9PT/imxYgtNr4cHyiuuCiFbL48em6q0myp7xDzHW6XwT+kRrs8cI5rTL7ab8DZnNA/
- 07ui7t/R4yOINAUKCsowXxaI23PwSj9L0eDltik9WhE7As1O/CbQ5urMjEGDVfzfwe2vb/EVu
- tOLRNEXpC72G2o6To91d4xOtK+wVZ8EWfgg5t3G6YWxos/nBLJ7XR3EM7Bm9v7ckr7B6Esc80
- z6FnHG9h9n7hFBZS3mHRQqo9UtrrUgo6U9z/0DMY+QkRcNyJD+IkvxmG6CCISMhddtji4upym
- ObU6D88PNgvRIwKUb2/VZMLAvrLzeVYrOubrXpPwm6WhVVO9ztyEctesUjMWw9/odLrJc+M0O
- PCY/I+vyRv+TREF93KxI615X1GpmsHp5eYSubJ6+UeFYulReRHV5pyJOzaW62C5gxO40KNTF6
- k7YEcQr
+X-Provags-ID: V03:K0:2f0n+1zHuHkw67P6unOJCat5xRMpbgetcST9HTq8HCqKQXNF6kp
+ 2aXfnMmCm5SRxaFYSgkHr719D5FDjlbX/Pwh6ozVC/nVZDp3FtQNlyuMKLHzHmom6o4MtCg
+ 2xwJPrm7dO0WeJ7F7lSIWtYl/OXWsFPVXgeaiDNV9/KbZ+e2sueznYX7EVus91T1Sex+mr6
+ UDOkYQHqUH4Za3z16N2dQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:iJYjibTE15A=:LbUJvUt34PTr1NHoSAfj+h
+ lTgynlbycAD1Pu/oyiD1DOHMXDbjW/1cPlJI3Kv0zVXzTJfeX7v87n6EidLqh6pHZaaJKFbQw
+ Y0zZJgjRvpNN3em3H8mjHc6DZKpO6Xj0hCmlgS3Aqbyt3itE3IgWqw1aAAfs4t9ErDxN4cbnJ
+ FB4GMO7TAUTuxtxiPbRJ5wT3W0ycFsilt4/Qi7S8Ov0HNmTrCOKt9V/ceLkLTS2vUBz/qiVFv
+ sJ/DQjifxSaijtltd6/DNpQCwtHxJsXtfyDA2RflF1kMoS/+Cx2uBI1j7DfKdx7F/dG3ziqtW
+ 0HzNbsZJ6ivv38IXGbpcoXi7AHMkU5+Ry/Ro6NswCwWzhHezKsWsAb/c22F5ZuqTSzKISiVfb
+ WZOCYZOTGIJ2Rf4enkQLG/a1BuAxPQo5gn+BctXVGlgJh39nLLN7Ta9sHvTNVTSOsP+l6Lu5h
+ YyM8YkD0zXzX+jnrnnDRzo54+936weFJQLQDqT8bIJ1xpTHPAI1WZFj1As0TD78ayelmLp9Rl
+ Ut51OSRJeO9Lir0RzwxwC2yGh7y4O8K28GbUl7JXHq6QKE7UIElhl6v/b7a+tpAunUtzzrKO3
+ 4F0fohi0+Msg405o8m+Tm/d8Uw38b3A/mg+2C3k8HGp7ED//1bk0hHggCh80uegwlVVWi477v
+ A4zXOnpwryKOwU549NWNU8H0Ajqe2w/0Tdz+juL0HxQ+5TgYy9FPv9WXTz2bGDY4Lb52+nIF2
+ cjhK7hWHp6zbU0rzdxXN3/L0TD14DKxgTnHi9ioAFSSpMBJ3Lg9Evj2fn2BfzeGdnpM3qPZU9
+ FPzt/Im
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As we are slowly teaching the sequencer to perform the hard work for
-the interactive rebase, we need to read files that were written by
-shell scripts.
+The rebase command sports a `--gpg-sign` option that is heeded by the
+interactive rebase.
 
-These files typically contain a single line and are invariably ended
-by a line feed (and possibly a carriage return before that). Let's use
-a helper to read such files and to remove the line ending.
+This patch teaches the sequencer that trick, as part of the bigger
+effort to make the sequencer the work horse of the interactive rebase.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ sequencer.c | 42 +++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 37 insertions(+), 5 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 6c35fe8..086cd0b 100644
+index 086cd0b..bf02565 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -242,6 +242,37 @@ static int write_message(struct strbuf *msgbuf, const char *filename)
- 	return 0;
+@@ -15,6 +15,7 @@
+ #include "merge-recursive.h"
+ #include "refs.h"
+ #include "argv-array.h"
++#include "quote.h"
+ 
+ #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+ 
+@@ -33,6 +34,11 @@ static GIT_PATH_FUNC(git_path_head_file, "sequencer/head")
+  * being rebased.
+  */
+ static GIT_PATH_FUNC(rebase_path_author_script, "rebase-merge/author-script")
++/*
++ * The following files are written by git-rebase just after parsing the
++ * command-line (and are only consumed, not modified, by the sequencer).
++ */
++static GIT_PATH_FUNC(rebase_path_gpg_sign_opt, "rebase-merge/gpg_sign_opt")
+ 
+ /* We will introduce the 'interactive rebase' mode later */
+ static inline int is_rebase_i(const struct replay_opts *opts)
+@@ -132,6 +138,16 @@ static int has_conforming_footer(struct strbuf *sb, struct strbuf *sob,
+ 	return 1;
  }
  
-+/*
-+ * Reads a file that was presumably written by a shell script, i.e.
-+ * with an end-of-line marker that needs to be stripped.
-+ *
-+ * Returns 1 if the file was read, 0 if it could not be read or does not exist.
-+ */
-+static int read_oneliner(struct strbuf *buf,
-+	const char *path, int skip_if_empty)
++static const char *gpg_sign_opt_quoted(struct replay_opts *opts)
 +{
-+	int orig_len = buf->len;
++	static struct strbuf buf = STRBUF_INIT;
 +
-+	if (!file_exists(path))
-+		return 0;
-+
-+	if (strbuf_read_file(buf, path, 0) < 0) {
-+		warning_errno("could not read '%s'", path);
-+		return 0;
-+	}
-+
-+	if (buf->len > orig_len && buf->buf[buf->len - 1] == '\n') {
-+		if (--buf->len > orig_len && buf->buf[buf->len - 1] == '\r')
-+			--buf->len;
-+		buf->buf[buf->len] = '\0';
-+	}
-+
-+	if (skip_if_empty && buf->len == orig_len)
-+		return 0;
-+
-+	return 1;
++	strbuf_reset(&buf);
++	if (opts->gpg_sign)
++		sq_quotef(&buf, "-S%s", opts->gpg_sign);
++	return buf.buf;
 +}
 +
- static struct tree *empty_tree(void)
+ void *sequencer_entrust(struct replay_opts *opts, void *to_free)
  {
- 	return lookup_tree(EMPTY_TREE_SHA1_BIN);
+ 	ALLOC_GROW(opts->owned, opts->owned_nr + 1, opts->owned_alloc);
+@@ -478,17 +494,20 @@ int sequencer_commit(const char *defmsg, struct replay_opts *opts,
+ 
+ 	if (is_rebase_i(opts)) {
+ 		env = read_author_script();
+-		if (!env)
++		if (!env) {
++			const char *gpg_opt = gpg_sign_opt_quoted(opts);
++
+ 			return error("You have staged changes in your working "
+ 				"tree. If these changes are meant to be\n"
+ 				"squashed into the previous commit, run:\n\n"
+-				"  git commit --amend $gpg_sign_opt_quoted\n\n"
++				"  git commit --amend %s\n\n"
+ 				"If they are meant to go into a new commit, "
+ 				"run:\n\n"
+-				"  git commit $gpg_sign_opt_quoted\n\n"
++				"  git commit %s\n\n"
+ 				"In both cases, once you're done, continue "
+ 				"with:\n\n"
+-				"  git rebase --continue\n");
++				"  git rebase --continue\n", gpg_opt, gpg_opt);
++		}
+ 	}
+ 
+ 	argv_array_init(&array);
+@@ -980,8 +999,21 @@ static int populate_opts_cb(const char *key, const char *value, void *data)
+ 
+ static int read_populate_opts(struct replay_opts *opts)
+ {
+-	if (is_rebase_i(opts))
++	if (is_rebase_i(opts)) {
++		struct strbuf buf = STRBUF_INIT;
++
++		if (read_oneliner(&buf, rebase_path_gpg_sign_opt(), 1)) {
++			if (!starts_with(buf.buf, "-S"))
++				strbuf_reset(&buf);
++			else {
++				opts->gpg_sign = buf.buf + 2;
++				sequencer_entrust(opts,
++					strbuf_detach(&buf, NULL));
++			}
++		}
++
+ 		return 0;
++	}
+ 
+ 	if (!file_exists(git_path_opts_file()))
+ 		return 0;
 -- 
 2.10.0.windows.1.10.g803177d
 
