@@ -2,82 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A783207DF
-	for <e@80x24.org>; Sun, 11 Sep 2016 10:25:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE509207DF
+	for <e@80x24.org>; Sun, 11 Sep 2016 10:30:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753633AbcIKKZI (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Sep 2016 06:25:08 -0400
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:38252 "EHLO
-        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752381AbcIKKZH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Sep 2016 06:25:07 -0400
-Received: by mail-wm0-f47.google.com with SMTP id 1so99773487wmz.1
-        for <git@vger.kernel.org>; Sun, 11 Sep 2016 03:25:06 -0700 (PDT)
+        id S1755468AbcIKKa2 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Sep 2016 06:30:28 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35723 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755383AbcIKKa1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Sep 2016 06:30:27 -0400
+Received: by mail-wm0-f66.google.com with SMTP id a6so9372578wmc.2
+        for <git@vger.kernel.org>; Sun, 11 Sep 2016 03:30:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=F1lkvHxbsXYTgQmaY7YhbSh9xlTz+jp1pm2YlKbdrkQ=;
-        b=JKWWKD/npZboVq7KCD/Qp4SdOrDb2dwypiYUEE6W/iUAKmC2niVAApcQ/sbxQXiWSs
-         7mg5orPVd3avjUnTnSlMuw8/urjxHlCujEuB2LNPIOBxAe0WfCuv4F7lrW4c1r4JhkTS
-         bWGFuTK6DjDuctSJGva8sXiASjay0rVwb7W6qcnzIGp5p0yNp8/CnEd0wYO3iaQDOwfD
-         xORu68X1afzjPhQPTEvXlZ26d/YoWv4BRFgBNR9lGuECYD3E8tp77TjCrsKl5qsZtisf
-         LjFqL5hSqzjB3Rc7CJRGCcrSkERiRWYWBzhjSeSR4zxIwCB7usUGE0Y0xVJ5jlDNZj1P
-         Ozpg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=P73vk8LnP6xvxNw3dm/wVWEGScJGGNp1VKld98XL8Fw=;
+        b=rt7i7EJPnvktmHnCaGWw1GuzZ4iwy452/9a5x2Iz6RMyXYZlL97lAotA4rc90hxI8d
+         6vfveowNXNE0uQBzYh9SYcq3JYSrfSj/qPuPniaM9C/wFrWOaKoAn/C7qiC/0oqE0jRj
+         qDAJLTVnhAnLhrpDwG011ELwWzJ4Awh5vkbwmZgA1m/wIFLyKuF7W3z5wmE1KAD0D+nJ
+         vxo++O2oT/XI0A/e5ePoejp5vgpODY1diXfJ8JmXBHH0oID2Q1sj6yzPuqOxz/eBXCtA
+         EfLmMTqx5IgYvC+y5C02HSdP/6oXd8r02CkYXUhu02ZtTLj5K169BIIA/OcR3s0zDN4S
+         016w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=F1lkvHxbsXYTgQmaY7YhbSh9xlTz+jp1pm2YlKbdrkQ=;
-        b=jA2Qf0F/3avtQxxsgpR6zCRjSrJI+VQUBvzhzR844Sbr8+obub/tz3UfaTHbNEt3x7
-         +NFRhjQrd/ZR5jC4bFWq28UoSeEpEVo0+be2iQt0XrTE1rSHS33g4CVbuRGGOlq2VqiJ
-         HFVDfg6B1IE+7W+FP3LRR3L0lTzwULgQkz4V+1E0CMtXbSEplHnxQ5KmJpkHuiOs8w0V
-         rZgmqrC/z/+c4EWW9CCjPQxDl4I/CvcolYk9QvwZ9XaaKGSI4RfbDKY6veuavxp0xggI
-         TTKKjWal39/Epyoz+7OANpbfnxGb2x6gykK+ez9M13kiK4kxZ3d2t2cyVmOkI8x84r+D
-         adog==
-X-Gm-Message-State: AE9vXwPmlkxo+5QPsmGh9XfjDpc3KfraMa/bO7bTIg1hdDIAtdoaxzqRDgD+rJVbmAJkmHFzekaSdZS+Xr12dg==
-X-Received: by 10.28.86.8 with SMTP id k8mr6123640wmb.33.1473589505559; Sun,
- 11 Sep 2016 03:25:05 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.194.222.132 with HTTP; Sun, 11 Sep 2016 03:25:04 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 11 Sep 2016 12:25:04 +0200
-Message-ID: <CAP8UFD3MyKVOdQEjPJuxcVK9NVBY5uoRjN30KR_c4PP6Nf=VQQ@mail.gmail.com>
-Subject: Draft of Git Rev News edition 19
-To:     git <git@vger.kernel.org>
-Cc:     Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=P73vk8LnP6xvxNw3dm/wVWEGScJGGNp1VKld98XL8Fw=;
+        b=U/h2CH5SRZUTjzEgLEzGjhO6rP2OU01Cl+IVwHsznd2cvWJPdBl7wHzzBSZRVs8+Wo
+         QMD8VQldq+91A5DA5wGNK7rxZYGRJvF/c0zAxN7OgahGjs+GvHeE8KiiPn3IczsuQbko
+         /H/ula5ppQUZQnbhJ+GX/ShYWqYZ1kpsMERhRLTMWaHS+VaaZE98/P5MV9rw3Genb7ev
+         5AS1PlVpAoMPv2arhvd9MkLUeGPCkcA9shN16A1SVd3DhPkmax/3Kq/MjNYht5fgZmJZ
+         BQnHf/jA68Z0ziF8LCt1bn5rg7U7cr6vfxUQQK2/F0jcF2rIhKNmQiq3MvsVjIJv697B
+         BuzA==
+X-Gm-Message-State: AE9vXwPtmkFTWwH1vC2impKw4xDDjjHBS7EfszQZtj3cM0RxIcPPyAvVbqzZ6I5DeHUJTQ==
+X-Received: by 10.194.44.69 with SMTP id c5mr10390158wjm.80.1473589826002;
+        Sun, 11 Sep 2016 03:30:26 -0700 (PDT)
+Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
+        by smtp.gmail.com with ESMTPSA id kq2sm12291916wjc.41.2016.09.11.03.30.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 11 Sep 2016 03:30:24 -0700 (PDT)
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>, Jan Keromnes <janx@linux.com>,
+        =?UTF-8?q?Ingo=20Br=C3=BCckl?= <ib@wupperonline.de>,
+        Edward Thomson <ethomson@edwardthomson.com>,
         Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Josh Triplett <josh@joshtriplett.org>,
-        Kevin Willford <kcwillford@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [PATCH v2 0/4] git add --chmod: always change the file
+Date:   Sun, 11 Sep 2016 11:30:24 +0100
+Message-Id: <20160911103028.5492-1-t.gummerer@gmail.com>
+X-Mailer: git-send-email 2.10.0.304.gf2ff484
+In-Reply-To: <20160904113954.21697-1-t.gummerer@gmail.com>
+References: <20160904113954.21697-1-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Changes since v1:
+Added missing x in the documentation.
 
-A draft of a new Git Rev News edition is available here:
+The changes since v1 are only minor, but as it's been a week, this is
+as much a ping as a fixup of my error :)
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-19.md
+Thomas Gummerer (4):
+  add: document the chmod option
+  update-index: use the same structure for chmod as add
+  read-cache: introduce chmod_index_entry
+  add: modify already added files when --chmod is given
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
+ Documentation/git-add.txt |  7 +++++-
+ builtin/add.c             | 36 +++++++++++++++++++++----------
+ builtin/checkout.c        |  2 +-
+ builtin/commit.c          |  2 +-
+ builtin/update-index.c    | 55 ++++++++++++++++++-----------------------------
+ cache.h                   | 12 ++++++-----
+ read-cache.c              | 33 +++++++++++++++++++++-------
+ t/t3700-add.sh            | 21 ++++++++++++++++++
+ 8 files changed, 107 insertions(+), 61 deletions(-)
 
-  https://github.com/git/git.github.io/issues/179
+-- 
+2.10.0.304.gf2ff484
 
-You can also reply to this email.
-
-I tried to cc everyone who appears in this edition but maybe I missed
-some people, sorry about that.
-
-Thomas and myself plan to publish this edition on Wednesday
-September 14.
-
-Thanks,
-Christian.
