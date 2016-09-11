@@ -2,112 +2,244 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA23F207DF
-	for <e@80x24.org>; Sun, 11 Sep 2016 08:02:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E083A207DF
+	for <e@80x24.org>; Sun, 11 Sep 2016 08:02:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754617AbcIKICs (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Sep 2016 04:02:48 -0400
-Received: from mout.gmx.net ([212.227.15.18]:62499 "EHLO mout.gmx.net"
+        id S1754653AbcIKICz (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Sep 2016 04:02:55 -0400
+Received: from mout.gmx.net ([212.227.17.20]:57399 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753741AbcIKICp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Sep 2016 04:02:45 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx001) with
- ESMTPSA (Nemesis) id 0McVGq-1bRSs51Bo0-00HeBK; Sun, 11 Sep 2016 10:02:41
+        id S1753808AbcIKICw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Sep 2016 04:02:52 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0MFR2O-1bmLEq4BPQ-00EIpO; Sun, 11 Sep 2016 10:02:49
  +0200
-Date:   Sun, 11 Sep 2016 10:02:23 +0200 (CEST)
+Date:   Sun, 11 Sep 2016 10:02:47 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 2/5] pull: make code more similar to the shell script
- again
+Subject: [PATCH v2 3/5] Make the require_clean_work_tree() function truly
+ reusable
 In-Reply-To: <cover.1473580914.git.johannes.schindelin@gmx.de>
-Message-ID: <c448851c24599d73143bce90984b9efc43d4a7aa.1473580914.git.johannes.schindelin@gmx.de>
+Message-ID: <0e1ec34e45fea5bae60e65f316072cb2c89b024a.1473580914.git.johannes.schindelin@gmx.de>
 References: <cover.1472137582.git.johannes.schindelin@gmx.de> <cover.1473580914.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:AhskJcmog5bWBwIa0UR5mjNI2M73mGOoXdvnWAIKugwzC1AuiiR
- uKH5vKgQL+avS0VnMEpn2KUV02YlL7r0B4/zoET9JEFhuuykwXAwNjkaWxlByjEo3oJB/FG
- rCIoE/g/Id9MN7yEzOZkf9rdaIxgfSHnOht785UkH/ktnxWzeiV6JObLxJl9YVpCMarCRw9
- z9vqqQM/K4AuUgPiYw/gQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:GTenvZH8Oi0=:mqyOwnwjmJ8Eid/e8R2YIJ
- PGI8x54/d/bNvKTukjpMpq0UC3iTSdYAU27B8YoomDI1y9f5r70dscO1yCnLGAJmE/NEUdd77
- 4wCR4jF4gbfnHwXcfzugptHppavrHFR6CcNxBKB8aJ4wH1RPhWHLaRX91V/kY1Sw655bXajyo
- 1uLVGHYnWbn1fov1/vV7IFVLwI8+mpzuC8XAHTPMYnrxpclEG83sbsR0GXWCjxdfTbxbdhCKA
- qn5IJIyQi20RAQH+/loyPrDLu9dE/OIk2uwHh/jBWaKZqhEpXHfuo6nBNiKXoSUhj/6+mepYJ
- uYEh6yCto7wnZN32BKN2b73cquzQJOlyKnh9Bv8nLmUwx9rzG51xB7Fl9ol6kdKChXJZ12z+j
- 19kZjt5LKDIr7qWGtg3I1U21b4ZO3AbfXjOYtuWeJI8mM3TaW284eR2UZ4bcgsWhTNUoxKC72
- 4PwW6j515uHXrea5jX0O8svTPpy8TLZ6ew4PvSmVb2XMLj/LuRt8uPphycKq3yhjmdrsS5Psj
- t8A1LpmcqlOIAixK9CGFeeo3HIQqAZ/LqaTIZjoKwZicFg69dTOnDMZk3P1tUzd7XdeddwPxz
- VI5a2EG1WFM0ZxjImMzS+PVqB+bfwOIrRSu3eJGY8+SKAYS9ksC9lB/HlLOMTZwTzDkDwbwfJ
- jUm4He5djLPTbEgGrxFXmN1ycRg9uCSz9Fh9pIBM4KRuu87+vSqt4XU5cqeAf8XNXGXZ+DBql
- DLlaUiJ49kUEhtpwoNfAD/bjKtIf0rJxy8tplD8mzzEIafogZG0cWMDP1R5rmc6KrkAOgrXsW
- x4WZrbr
+X-Provags-ID: V03:K0:yRhUL0NwXJU2kJzYJZ8ZrhER4nIJqMImXxU8N24vAq/HVv5Tis0
+ CBb0AtoPguK6vTwPOd/ke04gaqJ49ukXwgTG43r/+sZ+bRr0CYHXnMNT6GHQTB49M/21Cmh
+ +YboWTNUpDiVGb+v2F83AZeXahoCeUU6TLmO75X+xVrIBCEN2xxLcaL4p1YglZk3aCSR5uq
+ U9tehPBztI1qCwoYiNwKQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:A1pXVfmowHw=:ZKesfO5skb8JzJtLu8m8Jt
+ W74H2Jh9s7Tb45fh2HJuDFoUxKh9pgcRIjkLajhFNCM8QywMb/vjucco+D34glwSSnHrYTTWD
+ RB5oWwY8oTwtddI34j2K30R24Gvk/8t4v16ld4M4eKzkQl50rFz16wCNMkdc/6PLxLjQaiEBA
+ +WP6JGA/JvJiIWq+eZbfDLlEIfCo67k6f/WncipgQYutn+Fb3QLX7lJqMIIj8xJGbxSM6hAVN
+ WTp7TG8OeX/OpXoR2PPu13264QIMxOz6kmMUOpITauQQDVEx+emS8FUMp8zbYEJe2fA4NESd7
+ 1PDsMNdhpa2g6QrspGktIuJhegJJmdfkHiS2JAs0l0kdEAGvdgyMRryg13pgqyhLWWDN6EonW
+ uj1G4DaBRRuexzMyU6nSCfLQBWbGy1g2f3cxWtC/ghgu5+Q6GjB2XRBy7uFVkKYK8L964/qxU
+ E7IrcF1A0J3hISvyCbvK+yIRPT4IMmHkWlhDehd4Vx/cTpB2gn/yCq5sm3leNrJQSyJ6PdGE0
+ 1cOCQMbdA1XqXwFIVcLcDFQLXS9t4KqL6nel/J6G/ruvL3YoejMuJZUyz+MdKPO+T6k/s4boo
+ 0Zf6kA/wFcPf2sglYz+H91fsLwWbe7+lHdGCisGbfEdGYatKkH2uOJZc+S+YgpeDLWKskBdaa
+ +sWFALEFdIyzduSvcO7exHu2koWy4/nmIPphY2VEkD3Tx2R0ZrCYRcP1MzGeaA/c1p9d/sJFN
+ 1iPnPiHm7jfLiQNdKWbvgJ6pYBZxMf3b4SjtYo0Zm6xN1QJNJ/R5lXaN6Rc0pWAobecLKnEjp
+ 2TQ4zOa
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When converting the pull command to a builtin, the
-require_clean_work_tree() function was renamed and the pull-specific
-parts hard-coded.
-
-This makes it impossible to reuse the code, so let's modify the code to
-make it more similar to the original shell script again.
+It is remarkable that libgit.a did not sport this function yet... Let's
+move it into a more prominent (and into an actually reusable) spot:
+wt-status.[ch].
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/pull.c | 29 +++++++++++++++++++----------
- 1 file changed, 19 insertions(+), 10 deletions(-)
+ builtin/pull.c | 76 +---------------------------------------------------------
+ wt-status.c    | 75 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ wt-status.h    |  3 +++
+ 3 files changed, 79 insertions(+), 75 deletions(-)
 
 diff --git a/builtin/pull.c b/builtin/pull.c
-index d4bd635..a3ed054 100644
+index a3ed054..14ef8b5 100644
 --- a/builtin/pull.c
 +++ b/builtin/pull.c
-@@ -365,10 +365,11 @@ static int has_uncommitted_changes(void)
-  * If the work tree has unstaged or uncommitted changes, dies with the
-  * appropriate message.
+@@ -17,6 +17,7 @@
+ #include "revision.h"
+ #include "tempfile.h"
+ #include "lockfile.h"
++#include "wt-status.h"
+ 
+ enum rebase_type {
+ 	REBASE_INVALID = -1,
+@@ -326,81 +327,6 @@ static int git_pull_config(const char *var, const char *value, void *cb)
+ }
+ 
+ /**
+- * Returns 1 if there are unstaged changes, 0 otherwise.
+- */
+-static int has_unstaged_changes(void)
+-{
+-	struct rev_info rev_info;
+-	int result;
+-
+-	init_revisions(&rev_info, NULL);
+-	DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
+-	DIFF_OPT_SET(&rev_info.diffopt, QUICK);
+-	diff_setup_done(&rev_info.diffopt);
+-	result = run_diff_files(&rev_info, 0);
+-	return diff_result_code(&rev_info.diffopt, result);
+-}
+-
+-/**
+- * Returns 1 if there are uncommitted changes, 0 otherwise.
+- */
+-static int has_uncommitted_changes(void)
+-{
+-	struct rev_info rev_info;
+-	int result;
+-
+-	if (is_cache_unborn())
+-		return 0;
+-
+-	init_revisions(&rev_info, NULL);
+-	DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
+-	DIFF_OPT_SET(&rev_info.diffopt, QUICK);
+-	add_head_to_pending(&rev_info);
+-	diff_setup_done(&rev_info.diffopt);
+-	result = run_diff_index(&rev_info, 1);
+-	return diff_result_code(&rev_info.diffopt, result);
+-}
+-
+-/**
+- * If the work tree has unstaged or uncommitted changes, dies with the
+- * appropriate message.
+- */
+-static int require_clean_work_tree(const char *action, const char *hint,
+-		int gently)
+-{
+-	struct lock_file *lock_file = xcalloc(1, sizeof(*lock_file));
+-	int err = 0;
+-
+-	hold_locked_index(lock_file, 0);
+-	refresh_cache(REFRESH_QUIET);
+-	update_index_if_able(&the_index, lock_file);
+-	rollback_lock_file(lock_file);
+-
+-	if (has_unstaged_changes()) {
+-		error(_("Cannot %s: You have unstaged changes."), _(action));
+-		err = 1;
+-	}
+-
+-	if (has_uncommitted_changes()) {
+-		if (err)
+-			error(_("Additionally, your index contains uncommitted changes."));
+-		else
+-			error(_("Cannot %s: Your index contains uncommitted changes."),
+-			      _(action));
+-		err = 1;
+-	}
+-
+-	if (err) {
+-		if (hint)
+-			error("%s", hint);
+-		if (!gently)
+-			exit(err);
+-	}
+-
+-	return err;
+-}
+-
+-/**
+  * Appends merge candidates from FETCH_HEAD that are not marked not-for-merge
+  * into merge_heads.
   */
--static void die_on_unclean_work_tree(void)
-+static int require_clean_work_tree(const char *action, const char *hint,
-+		int gently)
- {
- 	struct lock_file *lock_file = xcalloc(1, sizeof(*lock_file));
--	int do_die = 0;
+diff --git a/wt-status.c b/wt-status.c
+index 539aac1..9ab9adc 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -16,6 +16,7 @@
+ #include "strbuf.h"
+ #include "utf8.h"
+ #include "worktree.h"
++#include "lockfile.h"
+ 
+ static const char cut_line[] =
+ "------------------------ >8 ------------------------\n";
+@@ -2209,3 +2210,77 @@ void wt_status_print(struct wt_status *s)
+ 		break;
+ 	}
+ }
++
++/**
++ * Returns 1 if there are unstaged changes, 0 otherwise.
++ */
++static int has_unstaged_changes(void)
++{
++	struct rev_info rev_info;
++	int result;
++
++	init_revisions(&rev_info, NULL);
++	DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
++	DIFF_OPT_SET(&rev_info.diffopt, QUICK);
++	diff_setup_done(&rev_info.diffopt);
++	result = run_diff_files(&rev_info, 0);
++	return diff_result_code(&rev_info.diffopt, result);
++}
++
++/**
++ * Returns 1 if there are uncommitted changes, 0 otherwise.
++ */
++static int has_uncommitted_changes(void)
++{
++	struct rev_info rev_info;
++	int result;
++
++	if (is_cache_unborn())
++		return 0;
++
++	init_revisions(&rev_info, NULL);
++	DIFF_OPT_SET(&rev_info.diffopt, IGNORE_SUBMODULES);
++	DIFF_OPT_SET(&rev_info.diffopt, QUICK);
++	add_head_to_pending(&rev_info);
++	diff_setup_done(&rev_info.diffopt);
++	result = run_diff_index(&rev_info, 1);
++	return diff_result_code(&rev_info.diffopt, result);
++}
++
++/**
++ * If the work tree has unstaged or uncommitted changes, dies with the
++ * appropriate message.
++ */
++int require_clean_work_tree(const char *action, const char *hint, int gently)
++{
++	struct lock_file *lock_file = xcalloc(1, sizeof(*lock_file));
 +	int err = 0;
- 
- 	hold_locked_index(lock_file, 0);
- 	refresh_cache(REFRESH_QUIET);
-@@ -376,20 +377,27 @@ static void die_on_unclean_work_tree(void)
- 	rollback_lock_file(lock_file);
- 
- 	if (has_unstaged_changes()) {
--		error(_("Cannot pull with rebase: You have unstaged changes."));
--		do_die = 1;
++
++	hold_locked_index(lock_file, 0);
++	refresh_cache(REFRESH_QUIET);
++	update_index_if_able(&the_index, lock_file);
++	rollback_lock_file(lock_file);
++
++	if (has_unstaged_changes()) {
 +		error(_("Cannot %s: You have unstaged changes."), _(action));
 +		err = 1;
- 	}
- 
- 	if (has_uncommitted_changes()) {
--		if (do_die)
++	}
++
++	if (has_uncommitted_changes()) {
 +		if (err)
- 			error(_("Additionally, your index contains uncommitted changes."));
- 		else
--			error(_("Cannot pull with rebase: Your index contains uncommitted changes."));
--		do_die = 1;
++			error(_("Additionally, your index contains uncommitted changes."));
++		else
 +			error(_("Cannot %s: Your index contains uncommitted changes."),
 +			      _(action));
 +		err = 1;
- 	}
- 
--	if (do_die)
--		exit(1);
++	}
++
 +	if (err) {
 +		if (hint)
 +			error("%s", hint);
@@ -116,19 +248,19 @@ index d4bd635..a3ed054 100644
 +	}
 +
 +	return err;
- }
++}
+diff --git a/wt-status.h b/wt-status.h
+index e401837..03ecf53 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -128,4 +128,7 @@ void status_printf_ln(struct wt_status *s, const char *color, const char *fmt, .
+ __attribute__((format (printf, 3, 4)))
+ void status_printf(struct wt_status *s, const char *color, const char *fmt, ...);
  
- /**
-@@ -875,7 +883,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 			die(_("Updating an unborn branch with changes added to the index."));
- 
- 		if (!autostash)
--			die_on_unclean_work_tree();
-+			require_clean_work_tree(N_("pull with rebase"),
-+				"Please commit or stash them.", 0);
- 
- 		if (get_rebase_fork_point(rebase_fork_point, repo, *refspecs))
- 			hashclr(rebase_fork_point);
++/* The following function expect that the caller took care of reading the index. */
++int require_clean_work_tree(const char *action, const char *hint, int gently);
++
+ #endif /* STATUS_H */
 -- 
 2.10.0.windows.1.10.g803177d
 
