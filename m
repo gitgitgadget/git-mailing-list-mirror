@@ -7,131 +7,163 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FA0D20985
-	for <e@80x24.org>; Sun, 11 Sep 2016 10:56:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA1FC207DF
+	for <e@80x24.org>; Sun, 11 Sep 2016 10:56:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755983AbcIKK4A (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Sep 2016 06:56:00 -0400
-Received: from mout.gmx.net ([212.227.17.22]:50114 "EHLO mout.gmx.net"
+        id S1755991AbcIKK4E (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Sep 2016 06:56:04 -0400
+Received: from mout.gmx.net ([212.227.15.19]:52516 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755972AbcIKKz6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Sep 2016 06:55:58 -0400
-Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx101) with
- ESMTPSA (Nemesis) id 0MADqP-1btij40Nz7-00BPKo; Sun, 11 Sep 2016 12:55:55
+        id S1755853AbcIKK4C (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Sep 2016 06:56:02 -0400
+Received: from virtualbox ([37.24.141.250]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MGBdv-1bmZJp0ppH-00FAW3; Sun, 11 Sep 2016 12:55:58
  +0200
-Date:   Sun, 11 Sep 2016 12:55:54 +0200 (CEST)
+Date:   Sun, 11 Sep 2016 12:55:57 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v2 23/25] sequencer: mark action_name() for translation
+Subject: [PATCH v2 24/25] sequencer: quote filenames in error messages
 In-Reply-To: <cover.1473590966.git.johannes.schindelin@gmx.de>
-Message-ID: <379463a47285b3e59fc4b0894fd74b939c399483.1473590966.git.johannes.schindelin@gmx.de>
+Message-ID: <db1816339ba9e259e929a45d644c33160f57c5bb.1473590966.git.johannes.schindelin@gmx.de>
 References: <cover.1472457609.git.johannes.schindelin@gmx.de> <cover.1473590966.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:9gT2sJD7jVOtXgHkWts1WnKZarH74dV54HKfFuRySbocicbPSoS
- g74vXbJvxb1nunVk4r5cifTtoqTtyUEd9TG57Og3fBNjBW17XLJqWOLJIvo1vjXJp6auDnb
- vkiRV2MP1V1ebCOetCB1CMaNSXnOsxgAPEFTW00pOYTm+bbd5G2huFpjNL+m1+rBtAsyLAb
- 3GbB6laudMcipmD/+yUYw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:VP6PsUUbJzU=:zhfumI3sesiOQ+FtYfdFPP
- Z1IxhmGGEbiO/ZSKn99KsPlbK5/+xzLGsxdBp++6a619ZAXh9uCM8WLG8TIyPis9Wpm9YCq46
- lkNtZ6g+vgBYbuJp2NQcYnivtaUq8mCSO+/jEr63Om8CCHComDjB6Tu/mEb6icvMSklZHQa3T
- C1qlfxLA1M+UgeB86JSERUFBiyA1zEKDZVQ3yHN/jJJpPmb1q5uStbcVn3jmgH4LDDacNZ7Xv
- SILImM6S9nh0RmCnDwEahfGbzjd8AStxcafZzPBOF7DF4b5V0L0v3pWDHwX1dKcrdvvBDSddQ
- TU/bHn5LS0sYBI/eorNyy+lfCgxk1goeVJgbiF3pjaZPkEe2vUYWNNvAZlHrODg1yyst1VeTY
- ONeGQqKbIffceeshWK8nCHSuexqIHB9YL0/Ov935RQ32arZtsYy9+C97pwNLZiuUXIeGWHpzn
- Oiz8UUbvQnDGBDwqjPHmLE3hRUQVLvJdJHRUyF0Z2ffl/DhHRAc8l1zH1CF2aezn9pAQ4ovkD
- GrL5Zg/r3iPmbj0tg30O28tjQWT6o3FvRtgwbum+8N7haADD9FRgylMy3RDoJwvxKPW2Gvy2f
- U3qeXX+duXYR+tY90Uq2NyUtdINNx3KbRgEPyKQ+jfR9WzEltdX+iKLcJfuBMcsMjhnTrkwmZ
- ZtBEQUmwOYOydDTe+xphBg/nEx8QYkT/T9GAy9ToBOj3xq+bU9li/z5hUNZHWToY63luHSntR
- sh6xFC/vp6EYMT4CKDNCj1G8+ObB7VYjzleONsLHP8wAsOEWPzi/BAKdhYbS2e0t4xXjFaBwn
- 4ZsQ8Wg
+Content-Type: multipart/mixed; BOUNDARY="8323329-1467825476-1473591358=:129229"
+X-Provags-ID: V03:K0:eYIKnsELMk8QIsAiGxUKvqoF8kVfTssghqOMSOz1G3jpE5JuNfA
+ 0ndrZ83io6uWXlfwirNSD3NeT2O5pjP5f3hF0/QyTygK4/Mqki8qkbwKriEfPfbaFF6PMML
+ 9YHnVIZpgg6P/cdOlEq+EFPkrWoMlbuoQtBRQrh4Dly3n+sT4Zp/ubr5XbRge2XtpOORLl5
+ kr4D5uGpohFOxYYiUl6Bw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LEXyo+cnhAQ=:S+QifySJu7WmtgBh4npYnN
+ 8WNWmE8F4VOZjwAoIrPyFuJSFMPji9i+BXNTorrTd4JzkDwsB1uJ2EdewPpACE/o8G2VwyJne
+ xzb1Qi4S1Rm/CK/plVJJOlbpEA9x5qhgKAg81VeOoz5oa5SPUwlYmFs4voX1JBzH2zkIPW0Kg
+ rdpAJRl+QQ+P1/Kg7sxpW37nE37Hj3XblivFczf8jkpE+XStXTJGwmTIezN05i2/pilEuKH3T
+ OEvKqNK64CSPcTDi10dOlaYu/w2zvYNKIRXz0IXcFObs45vHkEjTTqk56CKIJNAz+pESY5gnP
+ UzjSHBt1PoEVfyI1PgYu7fjCLfykFQmMOXPDU5jPnYhfsUINF6o0SSls6ZgxOmc4jBAmzYVfR
+ h2zB74AXv68mnejWFgo6WXiPptFeoQuAKxlto9fq62UvDnZCHaL1VvvOBflP3XvOYBkRU8x3C
+ A6Pywu7enJW0/e3/mRVqreYu008i0VdgGnVDiX6qwWihxQfHfQ+3CxWOCCXQYGyp+ggzer7uv
+ O8FzUUO4QXxz+2gNwtbk2vXSiFQw6pcQ78sSokKVsT+m+4VPxplirZBe/byCX7mdvTwkjNplR
+ SM/UBywqhmZkM+Y28einIiJZdw9Hv+EbvpdANAEXNriNpjWDLNb7ArBHUNLl+ucp2JN54HMk4
+ xAbtHM88PfOzawE2mM0WzWRFVKqCZcE2tCcX8SmXgaRgxlGBfdTPNkoU28SA7VdHYt4+V68Wp
+ 8kuo0Us5UhPREeE0KOWbK5nOrnf0Kat1wodAoDMSVoykaIxkLpPjDFj9CN1HtADVHWctQsXZR
+ PxGUo5E
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The definition of this function goes back all the way to 043a449
-(sequencer: factor code out of revert builtin, 2012-01-11), long before a
-serious effort was made to translate all the error messages.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-It is slightly out of the context of the current patch series (whose
-purpose it is to re-implement the performance critical parts of the
-interactive rebase in C) to make the error messages in the sequencer
-translatable, but what the heck. We'll just do it while we're looking at
-this part of the code.
+--8323329-1467825476-1473591358=:129229
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+
+This makes the code consistent by fixing quite a couple of error messages.
+
+Suggested by Jakub Nar=C4=99bski.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ sequencer.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 5144245..1e7f29e 100644
+index 1e7f29e..465e018 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -176,7 +176,7 @@ int sequencer_remove_state(struct replay_opts *opts)
- 
- static const char *action_name(const struct replay_opts *opts)
- {
--	return opts->action == REPLAY_REVERT ? "revert" : "cherry-pick";
-+	return opts->action == REPLAY_REVERT ? N_("revert") : N_("cherry-pick");
+@@ -255,7 +255,7 @@ static int write_with_lock_file(const char *filename,
+ =09if (append_eol && write(msg_fd, "\n", 1) < 0)
+ =09=09return error_errno(_("Could not write eol to '%s"), filename);
+ =09if (commit_lock_file(&msg_file) < 0)
+-=09=09return error(_("Error wrapping up %s."), filename);
++=09=09return error(_("Error wrapping up '%s'."), filename);
+=20
+ =09return 0;
  }
- 
- struct commit_message {
-@@ -312,10 +312,10 @@ static struct tree *empty_tree(void)
- static int error_dirty_index(struct replay_opts *opts)
- {
- 	if (read_cache_unmerged())
--		return error_resolve_conflict(action_name(opts));
-+		return error_resolve_conflict(_(action_name(opts)));
- 
- 	error(_("Your local changes would be overwritten by %s."),
--		action_name(opts));
-+		_(action_name(opts)));
- 
- 	if (advice_commit_before_merge)
- 		advise(_("Commit your changes or stash them to proceed."));
-@@ -333,7 +333,7 @@ static int fast_forward_to(const unsigned char *to, const unsigned char *from,
- 	if (checkout_fast_forward(from, to, 1))
- 		return -1; /* the callee should have complained already */
- 
--	strbuf_addf(&sb, _("%s: fast-forward"), action_name(opts));
-+	strbuf_addf(&sb, _("%s: fast-forward"), _(action_name(opts)));
- 
- 	transaction = ref_transaction_begin(&err);
- 	if (!transaction ||
-@@ -409,7 +409,7 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
- 	    write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
- 		/* TRANSLATORS: %s will be "revert" or "cherry-pick" */
- 		return error(_("%s: Unable to write new index file"),
--			action_name(opts));
-+			_(action_name(opts)));
- 	rollback_lock_file(&index_lock);
- 
- 	if (opts->signoff)
-@@ -840,14 +840,14 @@ static int read_and_refresh_cache(struct replay_opts *opts)
- 	if (read_index_preload(&the_index, NULL) < 0) {
- 		rollback_lock_file(&index_lock);
- 		return error(_("git %s: failed to read the index"),
--			action_name(opts));
-+			_(action_name(opts)));
- 	}
- 	refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, NULL, NULL, NULL);
- 	if (the_index.cache_changed && index_fd >= 0) {
- 		if (write_locked_index(&the_index, &index_lock, COMMIT_LOCK)) {
- 			rollback_lock_file(&index_lock);
- 			return error(_("git %s: failed to refresh the index"),
--				action_name(opts));
-+				_(action_name(opts)));
- 		}
- 	}
- 	rollback_lock_file(&index_lock);
--- 
+@@ -955,16 +955,16 @@ static int read_populate_todo(struct todo_list *todo_=
+list,
+ =09strbuf_reset(&todo_list->buf);
+ =09fd =3D open(todo_file, O_RDONLY);
+ =09if (fd < 0)
+-=09=09return error_errno(_("Could not open %s"), todo_file);
++=09=09return error_errno(_("Could not open '%s'"), todo_file);
+ =09if (strbuf_read(&todo_list->buf, fd, 0) < 0) {
+ =09=09close(fd);
+-=09=09return error(_("Could not read %s."), todo_file);
++=09=09return error(_("Could not read '%s'."), todo_file);
+ =09}
+ =09close(fd);
+=20
+ =09res =3D parse_insn_buffer(todo_list->buf.buf, todo_list);
+ =09if (res)
+-=09=09return error(_("Unusable instruction sheet: %s"), todo_file);
++=09=09return error(_("Unusable instruction sheet: '%s'"), todo_file);
+=20
+ =09if (!is_rebase_i(opts)) {
+ =09=09enum todo_command valid =3D
+@@ -1050,7 +1050,7 @@ static int read_populate_opts(struct replay_opts *opt=
+s)
+ =09 * are pretty certain that it is syntactically correct.
+ =09 */
+ =09if (git_config_from_file(populate_opts_cb, git_path_opts_file(), opts) =
+< 0)
+-=09=09return error(_("Malformed options sheet: %s"),
++=09=09return error(_("Malformed options sheet: '%s'"),
+ =09=09=09git_path_opts_file());
+ =09return 0;
+ }
+@@ -1093,7 +1093,7 @@ static int create_seq_dir(void)
+ =09=09return -1;
+ =09}
+ =09else if (mkdir(git_path_seq_dir(), 0777) < 0)
+-=09=09return error_errno(_("Could not create sequencer directory %s"),
++=09=09return error_errno(_("Could not create sequencer directory '%s'"),
+ =09=09=09=09   git_path_seq_dir());
+ =09return 0;
+ }
+@@ -1112,12 +1112,12 @@ static int save_head(const char *head)
+ =09strbuf_addf(&buf, "%s\n", head);
+ =09if (write_in_full(fd, buf.buf, buf.len) < 0) {
+ =09=09rollback_lock_file(&head_lock);
+-=09=09return error_errno(_("Could not write to %s"),
++=09=09return error_errno(_("Could not write to '%s'"),
+ =09=09=09=09   git_path_head_file());
+ =09}
+ =09if (commit_lock_file(&head_lock) < 0) {
+ =09=09rollback_lock_file(&head_lock);
+-=09=09return error(_("Error wrapping up %s."), git_path_head_file());
++=09=09return error(_("Error wrapping up '%s'."), git_path_head_file());
+ =09}
+ =09return 0;
+ }
+@@ -1162,9 +1162,9 @@ int sequencer_rollback(struct replay_opts *opts)
+ =09=09return rollback_single_pick();
+ =09}
+ =09if (!f)
+-=09=09return error_errno(_("cannot open %s"), git_path_head_file());
++=09=09return error_errno(_("cannot open '%s'"), git_path_head_file());
+ =09if (strbuf_getline_lf(&buf, f)) {
+-=09=09error(_("cannot read %s: %s"), git_path_head_file(),
++=09=09error(_("cannot read '%s': %s"), git_path_head_file(),
+ =09=09      ferror(f) ?  strerror(errno) : _("unexpected end of file"));
+ =09=09fclose(f);
+ =09=09goto fail;
+@@ -1203,7 +1203,7 @@ static int save_todo(struct todo_list *todo_list, str=
+uct replay_opts *opts)
+ =09=09=09todo_list->buf.len - offset) < 0)
+ =09=09return error_errno(_("Could not write to '%s'"), todo_path);
+ =09if (commit_lock_file(&todo_lock) < 0)
+-=09=09return error(_("Error wrapping up %s."), todo_path);
++=09=09return error(_("Error wrapping up '%s'."), todo_path);
+ =09return 0;
+ }
+=20
+--=20
 2.10.0.windows.1.10.g803177d
 
 
+--8323329-1467825476-1473591358=:129229--
