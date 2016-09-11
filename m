@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2070F20984
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4394020984
 	for <e@80x24.org>; Sun, 11 Sep 2016 05:42:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755398AbcIKFmf (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Sep 2016 01:42:35 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34446 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755386AbcIKFmd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Sep 2016 01:42:33 -0400
-Received: by mail-pf0-f196.google.com with SMTP id g202so6283048pfb.1
-        for <git@vger.kernel.org>; Sat, 10 Sep 2016 22:42:33 -0700 (PDT)
+        id S1755434AbcIKFmi (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Sep 2016 01:42:38 -0400
+Received: from mail-pa0-f67.google.com ([209.85.220.67]:33514 "EHLO
+        mail-pa0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755371AbcIKFme (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Sep 2016 01:42:34 -0400
+Received: by mail-pa0-f67.google.com with SMTP id h5so6030588pao.0
+        for <git@vger.kernel.org>; Sat, 10 Sep 2016 22:42:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=sVwguNuvbqhgAIv6+0yLktEso0sh6KrX2Dv+h2Gid0M=;
-        b=qTukMyKnNua4VhlAHf4UIBRO9xfoua+WxPXapZ5kstmRZhPmGt4GGkhw0GBiy90I27
-         USvHagII6Oj1qCZZqVEjr6Otoi7+HimYhEvig3GPmrJYZz5KeJCA/cAmZP3xkKu8W4Ny
-         YL0vI5Ej44t1bvbEgs9Pgj0NDO6iULtG5YEcrrTP1C5Z4Itjun1n9fT434eei6FWqZwJ
-         dmZWJawUpw1bsPv6PrRdsKafOlrf/vezlBccDpykQPcsUM1vscgLkq4WiWE4brKJ/mji
-         Xy9+Q83dmUp7I7NSsyHDAeObtgqdu/G7kQJvpVIDHP46ctmDpiGc0MllXatz11DVvGbS
-         tW4Q==
+        bh=jgXitO9M8L07DsW/6r6kE8IkPxeJUDDMuvH/6xHGnnQ=;
+        b=yDaTgieB5aFmWVYhvnNArByYSNvTyxl2iZ9B8TCxXpLwMXjhr5AM7OP8Vk10pzCcBq
+         qFz7qzoUcIEQJO5lFdGwacHMX5m8Z6NKBnOKRtbu1bL1mFi8SU+axNGTnad4VD2L9D39
+         n+6nTLtnCN7pyH5yQGMjnekzXHdr2VZidM+xFBQZw7KK4WD88RoM0ii0scYVfWJnvRAS
+         wzsdq3m+2PB5AYy2mqzMNVVvJ4e6mpBReeuyBmFzAvnbVnjMjyUJLT9WKaf5nSf+/80W
+         q1cxsW4CaipscRsLvOog734bhQuiLn+lt2oWsnsOBxEj0xB/k+n8w5eW6jOpiUgwK4bR
+         D90A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=sVwguNuvbqhgAIv6+0yLktEso0sh6KrX2Dv+h2Gid0M=;
-        b=Bqjhg+Zu3oKjBYXTybTNnzZg0rCTK+ND9a0WC9IS14dZdEhCctXe3DIrdk97EvGao8
-         9i7cQtmmky79KwqiiBZkDVWxLmI3kmxdNc6TBzbXNl9Ei2TeDe3QgvEPlokUc88+6W2j
-         ad9+XoW9EYA+OOmacNanyW471RynPGB1S8AooODZSNfqI5nverRYBtnWlU7ExRoSpCQ3
-         p0t+pEoJ5396/VLDvHjgUdEDDAyyUCLLnDlK8DvFHdDtHOmpmvYFO19dxQRqKrK/2v7w
-         NnQpMduxq5GYOZeXD5vwCRiX9bi/Tu7O5kjEE9E8vJYeQoWxu/0EdNBv/XcWu+FoJ9ss
-         BZMA==
-X-Gm-Message-State: AE9vXwNZuuRSTXQG8tIwlaTMHt93JgZtpdURWOLDODwmVJC0DDR4VhyHxCyLnv0u/vh28Q==
-X-Received: by 10.98.79.27 with SMTP id d27mr21831718pfb.127.1473572552676;
-        Sat, 10 Sep 2016 22:42:32 -0700 (PDT)
+        bh=jgXitO9M8L07DsW/6r6kE8IkPxeJUDDMuvH/6xHGnnQ=;
+        b=USgnvAfs+ffjr3mRAFaEeHjlCImwfMxYBkfV2IFYIN0T92gshORYnOopA1jy6iIBFZ
+         SN0CNeFNlwPNB4o4nqyVlAbNYBUMSReJCfS7klLQyiEMcQrJzNrQNnGBQpP0nAztIZNh
+         zdA/BZN3tAjoyVoEMqIh93NKQmc90u3T0Dns0yNzP+XD2GBjoImrcrVhjNNucf+Er6l7
+         PxXaASS+ScrUTgVdh1VkUtYiwztD1Dw7w5gQonqh9teeeEXKlmfhJ148ke09aOtI5XWM
+         dh7NY7ADkKeFKTsBCX/1kWBIce8y/SheE0+gWTcUS3P3NPBN1BTJtSiF0WGTobXwlHGV
+         OG2g==
+X-Gm-Message-State: AE9vXwMLB6ITfGsr1amT8YOJikC5rZjCES8qGwiDGS4LSMwTZycBAU3jlLF3QbRnPAoMZw==
+X-Received: by 10.66.19.201 with SMTP id h9mr21646715pae.45.1473572553984;
+        Sat, 10 Sep 2016 22:42:33 -0700 (PDT)
 Received: from localhost (c-67-188-214-183.hsd1.ca.comcast.net. [67.188.214.183])
-        by smtp.gmail.com with ESMTPSA id bv6sm15483926pab.46.2016.09.10.22.42.32
+        by smtp.gmail.com with ESMTPSA id tj5sm15485247pab.37.2016.09.10.22.42.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 10 Sep 2016 22:42:32 -0700 (PDT)
+        Sat, 10 Sep 2016 22:42:33 -0700 (PDT)
 From:   Stefan Beller <stefanbeller@gmail.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 01/10] diff: move line ending check into emit_hunk_header
-Date:   Sat, 10 Sep 2016 22:42:01 -0700
-Message-Id: <1473572530-25764-2-git-send-email-stefanbeller@gmail.com>
+Subject: [PATCH 02/10] diff: emit_{add, del, context}_line to increase {pre,post}image line count
+Date:   Sat, 10 Sep 2016 22:42:02 -0700
+Message-Id: <1473572530-25764-3-git-send-email-stefanbeller@gmail.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1473572530-25764-1-git-send-email-stefanbeller@gmail.com>
 References: <1473572530-25764-1-git-send-email-stefanbeller@gmail.com>
@@ -62,34 +62,77 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Stefan Beller <sbeller@google.com>
 
+At all call sites of emit_{add, del, context}_line we increment the line
+count, so move it into the respective functions to make the code at the
+calling site a bit clearer.
+
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- diff.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ diff.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index cc8e812..aa50b2d 100644
+index aa50b2d..156c2aa 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -610,6 +610,9 @@ static void emit_hunk_header(struct emit_callback *ecbdata,
- 	}
- 
- 	strbuf_add(&msgbuf, line + len, org_len - len);
-+	if (line[org_len - 1] != '\n')
-+		strbuf_addch(&msgbuf, '\n');
-+
- 	emit_line(ecbdata->opt, "", "", msgbuf.buf, msgbuf.len);
- 	strbuf_release(&msgbuf);
+@@ -536,6 +536,7 @@ static void emit_add_line(const char *reset,
+ 			  struct emit_callback *ecbdata,
+ 			  const char *line, int len)
+ {
++	ecbdata->lno_in_postimage++;
+ 	emit_line_checked(reset, ecbdata, line, len,
+ 			  DIFF_FILE_NEW, WSEH_NEW, '+');
  }
-@@ -1247,8 +1250,6 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
- 		len = sane_truncate_line(ecbdata, line, len);
- 		find_lno(line, ecbdata);
- 		emit_hunk_header(ecbdata, line, len);
--		if (line[len-1] != '\n')
--			putc('\n', o->file);
- 		return;
- 	}
+@@ -544,6 +545,7 @@ static void emit_del_line(const char *reset,
+ 			  struct emit_callback *ecbdata,
+ 			  const char *line, int len)
+ {
++	ecbdata->lno_in_preimage++;
+ 	emit_line_checked(reset, ecbdata, line, len,
+ 			  DIFF_FILE_OLD, WSEH_OLD, '-');
+ }
+@@ -552,6 +554,8 @@ static void emit_context_line(const char *reset,
+ 			      struct emit_callback *ecbdata,
+ 			      const char *line, int len)
+ {
++	ecbdata->lno_in_postimage++;
++	ecbdata->lno_in_preimage++;
+ 	emit_line_checked(reset, ecbdata, line, len,
+ 			  DIFF_CONTEXT, WSEH_CONTEXT, ' ');
+ }
+@@ -662,13 +666,10 @@ static void emit_rewrite_lines(struct emit_callback *ecb,
  
+ 		endp = memchr(data, '\n', size);
+ 		len = endp ? (endp - data + 1) : size;
+-		if (prefix != '+') {
+-			ecb->lno_in_preimage++;
++		if (prefix != '+')
+ 			emit_del_line(reset, ecb, data, len);
+-		} else {
+-			ecb->lno_in_postimage++;
++		else
+ 			emit_add_line(reset, ecb, data, len);
+-		}
+ 		size -= len;
+ 		data += len;
+ 	}
+@@ -1293,16 +1294,12 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 
+ 	switch (line[0]) {
+ 	case '+':
+-		ecbdata->lno_in_postimage++;
+ 		emit_add_line(reset, ecbdata, line + 1, len - 1);
+ 		break;
+ 	case '-':
+-		ecbdata->lno_in_preimage++;
+ 		emit_del_line(reset, ecbdata, line + 1, len - 1);
+ 		break;
+ 	case ' ':
+-		ecbdata->lno_in_postimage++;
+-		ecbdata->lno_in_preimage++;
+ 		emit_context_line(reset, ecbdata, line + 1, len - 1);
+ 		break;
+ 	default:
 -- 
 2.7.4
 
