@@ -2,66 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1FBE51FCA9
-	for <e@80x24.org>; Sun, 11 Sep 2016 19:10:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A93F1FCA9
+	for <e@80x24.org>; Sun, 11 Sep 2016 19:34:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756237AbcIKTK3 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Sep 2016 15:10:29 -0400
-Received: from mail-oi0-f46.google.com ([209.85.218.46]:35090 "EHLO
-        mail-oi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756085AbcIKTK2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Sep 2016 15:10:28 -0400
-Received: by mail-oi0-f46.google.com with SMTP id d191so48616745oih.2
-        for <git@vger.kernel.org>; Sun, 11 Sep 2016 12:10:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=mgJeMaZi4CKnixnF/b2bK2hSdkrZamaU6mFwkxWvTHA=;
-        b=lMuU2qvvUr72L3r66oi+L8W5ydGpTDEeMMqjqDl2+eW0S9vHCf4iQHBiq4okkjvyfy
-         LQanmtGdR1TvcAe27WMs7Hg648M86nZexMjZdb2PTiMbMepP5pCvjyGC/vGyCjhCzbEL
-         hkYBQImRaonFGeYYjTud9uWxZWTBqI/675UM/z4Y+X3YmZrVrLbB/91jXltBynTGqIED
-         28iV52nXqvsPHrp1CpomM3dn6TSf4Bvf/zXzN1aINzm5RvF9/Miv+kfyIsRUa5UyDVLW
-         ogX4QYgvboqTfpzJUwbNwt6MmNTXo8SIbyHIbKZXTkPR4zf1Ip7/BEkfRh/KQXB+HgK7
-         9Lbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=mgJeMaZi4CKnixnF/b2bK2hSdkrZamaU6mFwkxWvTHA=;
-        b=ecCl+PIrSNkD7bjffY9k5zwzbjddaBE8RGGoTAnFY/AqW0qEn64hpfs8s6HaSInBiN
-         fCXfM6qzQUPprC9rNtAylre1On70qBuKxtXFUEIR8L888bhUEEKl4YN/gE8+x3XXSA/1
-         L27K71EKf2nOPRrQSZWu8vMHsI5aJ3rn3OKOIRC24VVurFE5EbgW7cHIzZrfEJ27vzQs
-         ROCsloBhF6IpIc8yi0p5zUIaAiZcCuVgRYVO9MGFJcQunoMcJzqiMGE33Y3nC735RVBd
-         /tyqMAG64ljwuvese3dRcl+18OvRIFGvpDFgaiPZbjdOxtxk7jWTD2a+lpxhP2Ebj9tI
-         9eCA==
-X-Gm-Message-State: AE9vXwMVeK3Mt9o1gtng8LJNk4sxeCJ+/hjB5+SguofCYVnpqlOOAR6zXOcN634aV5TQBngLr546Qbk8ItqjoA==
-X-Received: by 10.157.14.72 with SMTP id n8mr8931050otd.55.1473621027840; Sun,
- 11 Sep 2016 12:10:27 -0700 (PDT)
+        id S1756408AbcIKTex (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Sep 2016 15:34:53 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:48202 "EHLO
+        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756197AbcIKTex (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Sep 2016 15:34:53 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+        by mail-out.m-online.net (Postfix) with ESMTP id 3sXLk20XMTz3hjg7;
+        Sun, 11 Sep 2016 21:34:50 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+        by mail.m-online.net (Postfix) with ESMTP id 3sXLk20KKZzvkTp;
+        Sun, 11 Sep 2016 21:34:50 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+        by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+        with ESMTP id L8WudrEGIjYv; Sun, 11 Sep 2016 21:34:49 +0200 (CEST)
+X-Auth-Info: ijGEWwOdV8fHcvUeA2IJKGlfC5TmtamEkdABSu7pFhBHmD0y3Swu5jrY+kvxB236
+Received: from igel.home (ppp-88-217-19-108.dynamic.mnet-online.de [88.217.19.108])
+        by mail.mnet-online.de (Postfix) with ESMTPA;
+        Sun, 11 Sep 2016 21:34:49 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+        id D58662C3910; Sun, 11 Sep 2016 21:34:48 +0200 (CEST)
+From:   Andreas Schwab <schwab@linux-m68k.org>
+To:     Pranit Bauva <pranit.bauva@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: Bug: git-add .* errors out
+References: <CAFZEwPPSiy1dxZgxWg1saPcw2QWgHtZKx26oSN3g1mCv25=0AA@mail.gmail.com>
+X-Yow:  I just had a NOSE JOB!!
+Date:   Sun, 11 Sep 2016 21:34:48 +0200
+In-Reply-To: <CAFZEwPPSiy1dxZgxWg1saPcw2QWgHtZKx26oSN3g1mCv25=0AA@mail.gmail.com>
+        (Pranit Bauva's message of "Mon, 12 Sep 2016 00:40:27 +0530")
+Message-ID: <87h99m8c2v.fsf@linux-m68k.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.79.33.202 with HTTP; Sun, 11 Sep 2016 12:10:27 -0700 (PDT)
-From:   Pranit Bauva <pranit.bauva@gmail.com>
-Date:   Mon, 12 Sep 2016 00:40:27 +0530
-Message-ID: <CAFZEwPPSiy1dxZgxWg1saPcw2QWgHtZKx26oSN3g1mCv25=0AA@mail.gmail.com>
-Subject: Bug: git-add .* errors out
-To:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey everyone,
+On Sep 12 2016, Pranit Bauva <pranit.bauva@gmail.com> wrote:
 
-One of my friend was trying to add files using the command `git add
-.*` and got an error that "fatal: ..: '..' is outside repository"
-which did seem a little obvious to me. But then I tried to reproduce
-it in my machine with `git add ".*"` and it didn't error out. I am
-currently using git 2.9.3 on Ubuntu 15.04 while he is using git 1.9.1
-on Ubuntu 16.04. What might have gone wrong?
+> One of my friend was trying to add files using the command `git add
+> .*` and got an error that "fatal: ..: '..' is outside repository"
+> which did seem a little obvious to me. But then I tried to reproduce
+> it in my machine with `git add ".*"` and it didn't error out.
 
-Regards,
-Pranit Bauva
+Probably you were running it in a subdirectory.
+
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
