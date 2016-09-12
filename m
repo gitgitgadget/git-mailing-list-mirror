@@ -2,305 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F29020984
-	for <e@80x24.org>; Mon, 12 Sep 2016 11:31:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0BFA20984
+	for <e@80x24.org>; Mon, 12 Sep 2016 11:35:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757910AbcILLb4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Sep 2016 07:31:56 -0400
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:47531 "EHLO sapo.pt"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1754771AbcILLbz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2016 07:31:55 -0400
-Received: (qmail 28062 invoked from network); 12 Sep 2016 11:31:53 -0000
-Received: (qmail 20773 invoked from network); 12 Sep 2016 11:31:38 -0000
-Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
-          (envelope-sender <vascomalmeida@sapo.pt>)
-          by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 12 Sep 2016 11:31:35 -0000
-X-PTMail-RemoteIP: 85.246.157.91
-X-PTMail-AllowedSender-Action: 
-X-PTMail-Service: default
-From:   Vasco Almeida <vascomalmeida@sapo.pt>
+        id S1757955AbcILLfG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 07:35:06 -0400
+Received: from forward11o.cmail.yandex.net ([37.9.109.178]:50843 "EHLO
+        forward11o.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1757918AbcILLfG (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 12 Sep 2016 07:35:06 -0400
+X-Greylist: delayed 647 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 Sep 2016 07:35:05 EDT
+Received: from smtp2o.mail.yandex.net (smtp2o.mail.yandex.net [IPv6:2a02:6b8:0:1a2d::26])
+        by forward11o.cmail.yandex.net (Yandex) with ESMTP id 945F820AD0
+        for <git@vger.kernel.org>; Mon, 12 Sep 2016 14:24:16 +0300 (MSK)
+Received: from smtp2o.mail.yandex.net (localhost.localdomain [127.0.0.1])
+        by smtp2o.mail.yandex.net (Yandex) with ESMTP id 6DDAA5080F6E;
+        Mon, 12 Sep 2016 14:24:14 +0300 (MSK)
+Received: by smtp2o.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id cBrC1GAfOB-ODZ8Cc6x;
+        Mon, 12 Sep 2016 14:24:13 +0300
+        (using TLSv1 with cipher ECDHE-RSA-AES128-SHA (128/128 bits))
+        (Client certificate not present)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=filippov.me; s=mail; t=1473679453;
+        bh=WmYhWvQgS+xurIFIFq+o1ec9ylF0Qy4FKreYJqhEb8U=;
+        h=From:To:Cc:Subject:Date:Message-Id;
+        b=An5K/YhLjqedQnvEYADsphGm9rljB+blnqVXnLo2EQQC/Le3JzAlw5wRDua+mazdD
+         SLA+iPbd4aDI7rk+LtMcdCuHeFEDqVreWdFgBGvIMjN+hK3W6rYV7sgIZZyUvObRvQ
+         vntaPyQpOYtZtIcgV3i1NnyWmZdcCee9sdY4QlKo=
+Authentication-Results: smtp2o.mail.yandex.net; dkim=pass header.i=@filippov.me
+X-Yandex-Suid-Status: 1 0,1 1130000020865541
+From:   Mikhail Filippov <mikhail@filippov.me>
 To:     git@vger.kernel.org
-Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20AVILA?= <jn.avila@free.fr>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 10/14] notes: lowercase first word of error messages
-Date:   Mon, 12 Sep 2016 11:29:58 +0000
-Message-Id: <1473679802-31381-10-git-send-email-vascomalmeida@sapo.pt>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1473679802-31381-1-git-send-email-vascomalmeida@sapo.pt>
-References: <1473679802-31381-1-git-send-email-vascomalmeida@sapo.pt>
-In-Reply-To: <1473259758-11836-1-git-send-email-vascomalmeida@sapo.pt>
-References: <1473259758-11836-1-git-send-email-vascomalmeida@sapo.pt>
+Cc:     Mikhail Filippov <mikhail@filippov.me>
+Subject: [PATCH] Do not record unstaged deleted file upon recursive merge if file was moved outside of working tree with enabled sparse-checkout.
+Date:   Mon, 12 Sep 2016 14:24:11 +0300
+Message-Id: <1473679451-4591-1-git-send-email-mikhail@filippov.me>
+X-Mailer: git-send-email 2.7.4 (Apple Git-66)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Follow the usual case style.
-
-Update one test to reflect these changes.
-
-Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
+It's a very unexpected behaviour when a user sees a deleted file after a merge with enabled sparse-checkout. Moreover, when the user resolves merge conflicts and commits the changes with the command "git commit -am xxx", a repository can be broken because all the moved files will be deleted. Finally, it's really hard to find a user who deleted these files because "git log file" doesn't show any merge commits by default. I'm not sure that my fix is correct but I checked all tests and I didn't find a better way to prevent files deleting.
 ---
- builtin/notes.c                  | 64 ++++++++++++++++++++--------------------
- t/t3320-notes-merge-worktrees.sh |  2 +-
- 2 files changed, 33 insertions(+), 33 deletions(-)
+ merge-recursive.c                    |  9 +++++---
+ t/t6042-merge-rename-corner-cases.sh | 41 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 47 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/notes.c b/builtin/notes.c
-index abacae2..14488ba 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -191,7 +191,7 @@ static void prepare_note_data(const unsigned char *object, struct note_data *d,
- 		strbuf_reset(&d->buf);
- 
- 		if (launch_editor(d->edit_path, &d->buf, NULL)) {
--			die(_("Please supply the note contents using either -m or -F option"));
-+			die(_("please supply the note contents using either -m or -F option"));
+diff --git a/merge-recursive.c b/merge-recursive.c
+index e349126..25dc701 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1724,9 +1724,12 @@ static int merge_content(struct merge_options *o,
+ 		 */
+ 		path_renamed_outside_HEAD = !path2 || !strcmp(path, path2);
+ 		if (!path_renamed_outside_HEAD) {
+-			add_cacheinfo(o, mfi.mode, &mfi.oid, path,
+-				      0, (!o->call_depth), 0);
+-			return mfi.clean;
++			struct stat st;
++			if (lstat(path, &st) == 0) {
++				add_cacheinfo(o, mfi.mode, &mfi.oid, path,
++					      0, (!o->call_depth), 0);
++				return mfi.clean;
++			}
  		}
- 		strbuf_stripspace(&d->buf, 1);
- 	}
-@@ -202,7 +202,7 @@ static void write_note_data(struct note_data *d, unsigned char *sha1)
- 	if (write_sha1_file(d->buf.buf, d->buf.len, blob_type, sha1)) {
- 		error(_("unable to write note object"));
- 		if (d->edit_path)
--			error(_("The note contents have been left in %s"),
-+			error(_("the note contents have been left in %s"),
- 				d->edit_path);
- 		exit(128);
- 	}
-@@ -251,14 +251,14 @@ static int parse_reuse_arg(const struct option *opt, const char *arg, int unset)
- 		strbuf_addch(&d->buf, '\n');
- 
- 	if (get_sha1(arg, object))
--		die(_("Failed to resolve '%s' as a valid ref."), arg);
-+		die(_("failed to resolve '%s' as a valid ref."), arg);
- 	if (!(buf = read_sha1_file(object, &type, &len))) {
- 		free(buf);
--		die(_("Failed to read object '%s'."), arg);
-+		die(_("failed to read object '%s'."), arg);
- 	}
- 	if (type != OBJ_BLOB) {
- 		free(buf);
--		die(_("Cannot read note data from non-blob object '%s'."), arg);
-+		die(_("cannot read note data from non-blob object '%s'."), arg);
- 	}
- 	strbuf_add(&d->buf, buf, len);
- 	free(buf);
-@@ -298,13 +298,13 @@ static int notes_copy_from_stdin(int force, const char *rewrite_cmd)
- 
- 		split = strbuf_split(&buf, ' ');
- 		if (!split[0] || !split[1])
--			die(_("Malformed input line: '%s'."), buf.buf);
-+			die(_("malformed input line: '%s'."), buf.buf);
- 		strbuf_rtrim(split[0]);
- 		strbuf_rtrim(split[1]);
- 		if (get_sha1(split[0]->buf, from_obj))
--			die(_("Failed to resolve '%s' as a valid ref."), split[0]->buf);
-+			die(_("failed to resolve '%s' as a valid ref."), split[0]->buf);
- 		if (get_sha1(split[1]->buf, to_obj))
--			die(_("Failed to resolve '%s' as a valid ref."), split[1]->buf);
-+			die(_("failed to resolve '%s' as a valid ref."), split[1]->buf);
- 
- 		if (rewrite_cmd)
- 			err = copy_note_for_rewrite(c, from_obj, to_obj);
-@@ -313,7 +313,7 @@ static int notes_copy_from_stdin(int force, const char *rewrite_cmd)
- 					combine_notes_overwrite);
- 
- 		if (err) {
--			error(_("Failed to copy notes from '%s' to '%s'"),
-+			error(_("failed to copy notes from '%s' to '%s'"),
- 			      split[0]->buf, split[1]->buf);
- 			ret = 1;
- 		}
-@@ -340,7 +340,7 @@ static struct notes_tree *init_notes_check(const char *subcommand,
- 
- 	ref = (flags & NOTES_INIT_WRITABLE) ? t->update_ref : t->ref;
- 	if (!starts_with(ref, "refs/notes/"))
--		die(_("Refusing to %s notes in %s (outside of refs/notes/)"),
-+		die(_("refusing to %s notes in %s (outside of refs/notes/)"),
- 		    subcommand, ref);
- 	return t;
- }
-@@ -367,13 +367,13 @@ static int list(int argc, const char **argv, const char *prefix)
- 	t = init_notes_check("list", 0);
- 	if (argc) {
- 		if (get_sha1(argv[0], object))
--			die(_("Failed to resolve '%s' as a valid ref."), argv[0]);
-+			die(_("failed to resolve '%s' as a valid ref."), argv[0]);
- 		note = get_note(t, object);
- 		if (note) {
- 			puts(sha1_to_hex(note));
- 			retval = 0;
- 		} else
--			retval = error(_("No note found for object %s."),
-+			retval = error(_("no note found for object %s."),
- 				       sha1_to_hex(object));
  	} else
- 		retval = for_each_note(t, 0, list_each_note, NULL);
-@@ -422,7 +422,7 @@ static int add(int argc, const char **argv, const char *prefix)
- 	object_ref = argc > 1 ? argv[1] : "HEAD";
- 
- 	if (get_sha1(object_ref, object))
--		die(_("Failed to resolve '%s' as a valid ref."), object_ref);
-+		die(_("failed to resolve '%s' as a valid ref."), object_ref);
- 
- 	t = init_notes_check("add", NOTES_INIT_WRITABLE);
- 	note = get_note(t, object);
-@@ -508,12 +508,12 @@ static int copy(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (get_sha1(argv[0], from_obj))
--		die(_("Failed to resolve '%s' as a valid ref."), argv[0]);
-+		die(_("failed to resolve '%s' as a valid ref."), argv[0]);
- 
- 	object_ref = 1 < argc ? argv[1] : "HEAD";
- 
- 	if (get_sha1(object_ref, object))
--		die(_("Failed to resolve '%s' as a valid ref."), object_ref);
-+		die(_("failed to resolve '%s' as a valid ref."), object_ref);
- 
- 	t = init_notes_check("copy", NOTES_INIT_WRITABLE);
- 	note = get_note(t, object);
-@@ -532,7 +532,7 @@ static int copy(int argc, const char **argv, const char *prefix)
- 
- 	from_note = get_note(t, from_obj);
- 	if (!from_note) {
--		retval = error(_("Missing notes on source object %s. Cannot "
-+		retval = error(_("missing notes on source object %s. Cannot "
- 			       "copy."), sha1_to_hex(from_obj));
- 		goto out;
- 	}
-@@ -591,7 +591,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 	object_ref = 1 < argc ? argv[1] : "HEAD";
- 
- 	if (get_sha1(object_ref, object))
--		die(_("Failed to resolve '%s' as a valid ref."), object_ref);
-+		die(_("failed to resolve '%s' as a valid ref."), object_ref);
- 
- 	t = init_notes_check(argv[0], NOTES_INIT_WRITABLE);
- 	note = get_note(t, object);
-@@ -654,13 +654,13 @@ static int show(int argc, const char **argv, const char *prefix)
- 	object_ref = argc ? argv[0] : "HEAD";
- 
- 	if (get_sha1(object_ref, object))
--		die(_("Failed to resolve '%s' as a valid ref."), object_ref);
-+		die(_("failed to resolve '%s' as a valid ref."), object_ref);
- 
- 	t = init_notes_check("show", 0);
- 	note = get_note(t, object);
- 
- 	if (!note)
--		retval = error(_("No note found for object %s."),
-+		retval = error(_("no note found for object %s."),
- 			       sha1_to_hex(object));
- 	else {
- 		const char *show_args[3] = {"show", sha1_to_hex(note), NULL};
-@@ -680,11 +680,11 @@ static int merge_abort(struct notes_merge_options *o)
- 	 */
- 
- 	if (delete_ref("NOTES_MERGE_PARTIAL", NULL, 0))
--		ret += error(_("Failed to delete ref NOTES_MERGE_PARTIAL"));
-+		ret += error(_("failed to delete ref NOTES_MERGE_PARTIAL"));
- 	if (delete_ref("NOTES_MERGE_REF", NULL, REF_NODEREF))
--		ret += error(_("Failed to delete ref NOTES_MERGE_REF"));
-+		ret += error(_("failed to delete ref NOTES_MERGE_REF"));
- 	if (notes_merge_abort(o))
--		ret += error(_("Failed to remove 'git notes merge' worktree"));
-+		ret += error(_("failed to remove 'git notes merge' worktree"));
- 	return ret;
- }
- 
-@@ -704,11 +704,11 @@ static int merge_commit(struct notes_merge_options *o)
- 	 */
- 
- 	if (get_sha1("NOTES_MERGE_PARTIAL", sha1))
--		die(_("Failed to read ref NOTES_MERGE_PARTIAL"));
-+		die(_("failed to read ref NOTES_MERGE_PARTIAL"));
- 	else if (!(partial = lookup_commit_reference(sha1)))
--		die(_("Could not find commit from NOTES_MERGE_PARTIAL."));
-+		die(_("could not find commit from NOTES_MERGE_PARTIAL."));
- 	else if (parse_commit(partial))
--		die(_("Could not parse commit from NOTES_MERGE_PARTIAL."));
-+		die(_("could not parse commit from NOTES_MERGE_PARTIAL."));
- 
- 	if (partial->parents)
- 		hashcpy(parent_sha1, partial->parents->item->object.oid.hash);
-@@ -721,10 +721,10 @@ static int merge_commit(struct notes_merge_options *o)
- 	o->local_ref = local_ref_to_free =
- 		resolve_refdup("NOTES_MERGE_REF", 0, sha1, NULL);
- 	if (!o->local_ref)
--		die(_("Failed to resolve NOTES_MERGE_REF"));
-+		die(_("failed to resolve NOTES_MERGE_REF"));
- 
- 	if (notes_merge_commit(o, t, partial, sha1))
--		die(_("Failed to finalize notes merge"));
-+		die(_("failed to finalize notes merge"));
- 
- 	/* Reuse existing commit message in reflog message */
- 	memset(&pretty_ctx, 0, sizeof(pretty_ctx));
-@@ -794,7 +794,7 @@ static int merge(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (do_merge && argc != 1) {
--		error(_("Must specify a notes ref to merge"));
-+		error(_("must specify a notes ref to merge"));
- 		usage_with_options(git_notes_merge_usage, options);
- 	} else if (!do_merge && argc) {
- 		error(_("too many parameters"));
-@@ -818,7 +818,7 @@ static int merge(int argc, const char **argv, const char *prefix)
- 
- 	if (strategy) {
- 		if (parse_notes_merge_strategy(strategy, &o.strategy)) {
--			error(_("Unknown -s/--strategy: %s"), strategy);
-+			error(_("unknown -s/--strategy: %s"), strategy);
- 			usage_with_options(git_notes_merge_usage, options);
- 		}
- 	} else {
-@@ -855,10 +855,10 @@ static int merge(int argc, const char **argv, const char *prefix)
- 		/* Store ref-to-be-updated into .git/NOTES_MERGE_REF */
- 		wt = find_shared_symref("NOTES_MERGE_REF", default_notes_ref());
- 		if (wt)
--			die(_("A notes merge into %s is already in-progress at %s"),
-+			die(_("a notes merge into %s is already in-progress at %s"),
- 			    default_notes_ref(), wt->path);
- 		if (create_symref("NOTES_MERGE_REF", default_notes_ref(), NULL))
--			die(_("Failed to store link to current notes ref (%s)"),
-+			die(_("failed to store link to current notes ref (%s)"),
- 			    default_notes_ref());
- 		printf(_("Automatic notes merge failed. Fix conflicts in %s and "
- 			 "commit the result with 'git notes merge --commit', or "
-@@ -1014,7 +1014,7 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
- 	else if (!strcmp(argv[0], "get-ref"))
- 		result = get_ref(argc, argv, prefix);
- 	else {
--		result = error(_("Unknown subcommand: %s"), argv[0]);
-+		result = error(_("unknown subcommand: %s"), argv[0]);
- 		usage_with_options(git_notes_usage, options);
- 	}
- 
-diff --git a/t/t3320-notes-merge-worktrees.sh b/t/t3320-notes-merge-worktrees.sh
-index 6e05115..b9c3bc2 100755
---- a/t/t3320-notes-merge-worktrees.sh
-+++ b/t/t3320-notes-merge-worktrees.sh
-@@ -52,7 +52,7 @@ test_expect_success 'merge z into y while mid-merge in another workdir fails' '
- 		cd worktree &&
- 		git config core.notesRef refs/notes/y &&
- 		test_must_fail git notes merge z 2>err &&
--		test_i18ngrep "A notes merge into refs/notes/y is already in-progress at" err
-+		test_i18ngrep "a notes merge into refs/notes/y is already in-progress at" err
- 	) &&
- 	test_path_is_missing .git/worktrees/worktree/NOTES_MERGE_REF
+ 		output(o, 2, _("Auto-merging %s"), path);
+diff --git a/t/t6042-merge-rename-corner-cases.sh b/t/t6042-merge-rename-corner-cases.sh
+index 411550d..5d84418 100755
+--- a/t/t6042-merge-rename-corner-cases.sh
++++ b/t/t6042-merge-rename-corner-cases.sh
+@@ -575,4 +575,45 @@ test_expect_success 'rename/rename/add-dest merge still knows about conflicting
+ 	test ! -f c
  '
+ 
++test_expect_success 'move file/sparse-checkout/merge should not delete moved file' '
++	git rm -rf . &&
++	git clean -fdqx &&
++	rm -rf .git &&
++	git init &&
++
++	echo output >.gitignore &&
++	echo .gitignore >>.gitignore &&
++
++	echo b1 >b1 &&
++	git add b1 &&
++	git commit -m b1 &&
++
++	mkdir excluded &&
++	echo problem >excluded/to-be-moved.txt &&
++	git add excluded/to-be-moved.txt &&
++	git commit -m to-be-moved &&
++	git tag split_point &&
++
++	echo b2 >b2 &&
++	git add b2 &&
++	git commit -m b2 &&
++	git tag b2 &&
++
++	git reset --hard split_point &&
++
++	git mv excluded/to-be-moved.txt excluded/moved.txt &&
++	git commit -m move &&
++	git tag b1 &&
++
++	git config core.sparsecheckout true &&
++	echo "/*" >.git/info/sparse-checkout &&
++	echo "!excluded/" >>.git/info/sparse-checkout &&
++	git read-tree -mu HEAD &&
++
++	git merge -m merge b2 &&
++
++	git status >output &&
++	test_i18ngrep "nothing to commit" output
++'
++
+ test_done
 -- 
-2.7.4
+2.7.4 (Apple Git-66)
 
