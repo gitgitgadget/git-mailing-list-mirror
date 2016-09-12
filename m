@@ -2,93 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69F0A207DF
-	for <e@80x24.org>; Mon, 12 Sep 2016 16:46:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 830A4207DF
+	for <e@80x24.org>; Mon, 12 Sep 2016 17:02:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753819AbcILQqW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Sep 2016 12:46:22 -0400
-Received: from cloud.peff.net ([104.130.231.41]:41969 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751120AbcILQqV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2016 12:46:21 -0400
-Received: (qmail 15652 invoked by uid 109); 12 Sep 2016 16:46:20 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 12 Sep 2016 16:46:20 +0000
-Received: (qmail 14421 invoked by uid 111); 12 Sep 2016 16:46:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 12 Sep 2016 12:46:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Sep 2016 12:46:17 -0400
-Date:   Mon, 12 Sep 2016 12:46:17 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Sep 2016, #03; Fri, 9)
-Message-ID: <20160912164616.vg33kldazuthff3d@sigill.intra.peff.net>
-References: <xmqqoa3w8zco.fsf@gitster.mtv.corp.google.com>
+        id S1754910AbcILRCp (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 13:02:45 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57098 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751389AbcILRBk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2016 13:01:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A94983D133;
+        Mon, 12 Sep 2016 13:01:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=4me7GWY4Q0dw
+        k0ij8CpAsssFvXg=; b=XhJOk+m6T1eYT8AqUjVdBtgqyUoW+UnfGqWktdSiIaem
+        SK2bMbQuxDBlGsx8OOPZWOckiJARO5XkDOhcWU+6FESUtRD8XRYGPQWcGM5MCc9i
+        MO7ruz9/7lPh1kIYRNZdZ/2Sc9OzzkIIjMpAOC/VxdchYYdutN5QKVBLKK1jMxY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=TPSB5B
+        UoCVFmYbsTrLxWzbHFrPHYIYxVXYEatHwFmpI0uW9RIzP8ILOHj5ow/bKK6J04r+
+        jKRgCmSjWFGMC6y0sBELsvBIUOCSXyweB+tsckCpxsPLceHTofS8rLXIX62z4xRR
+        eJp2ni47HbmrltpS1xHO4009zFPyKOLykoWx8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A1CD53D132;
+        Mon, 12 Sep 2016 13:01:38 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 284423D130;
+        Mon, 12 Sep 2016 13:01:38 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <avila.jn@gmail.com>
+Cc:     Vasco Almeida <vascomalmeida@sapo.pt>, git@vger.kernel.org,
+        Jiang Xin <worldhello.net@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
+Subject: Re: [PATCH v2 07/14] i18n: merge-recursive: mark error messages for translation
+References: <1473679802-31381-1-git-send-email-vascomalmeida@sapo.pt>
+        <1473679802-31381-7-git-send-email-vascomalmeida@sapo.pt>
+        <882dcaf3-fd9b-0d83-2756-f3315dd6bb4e@gmail.com>
+Date:   Mon, 12 Sep 2016 10:01:36 -0700
+In-Reply-To: <882dcaf3-fd9b-0d83-2756-f3315dd6bb4e@gmail.com>
+ (=?utf-8?Q?=22Jean-No=C3=ABl?=
+        Avila"'s message of "Mon, 12 Sep 2016 13:47:43 +0200")
+Message-ID: <xmqqeg4p3vdb.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqoa3w8zco.fsf@gitster.mtv.corp.google.com>
+X-Pobox-Relay-ID: 91A9A1B2-790A-11E6-8435-51057B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 09, 2016 at 03:47:35PM -0700, Junio C Hamano wrote:
+Jean-No=C3=ABl Avila <avila.jn@gmail.com> writes:
 
-> * jk/delta-base-cache (2016-08-23) 7 commits
->   (merged to 'next' on 2016-08-25 at f1c141a)
->  + t/perf: add basic perf tests for delta base cache
->  + delta_base_cache: use hashmap.h
->  + delta_base_cache: drop special treatment of blobs
->  + delta_base_cache: use list.h for LRU
->  + release_delta_base_cache: reuse existing detach function
->  + clear_delta_base_cache_entry: use a more descriptive name
->  + cache_or_unpack_entry: drop keep_cache parameter
-> 
->  The delta-base-cache mechanism has been a key to the performance in
->  a repository with a tightly packed packfile, but it did not scale
->  well even with a larger value of core.deltaBaseCacheLimit.
+> Le 12/09/2016 =C3=A0 13:29, Vasco Almeida a =C3=A9crit :
+>> -			warning("Cannot handle more than %d bases. "
+>> -				"Ignoring %s.",
+>> +			warning(_("cannot handle more than %d bases. "
+>> +				  "Ignoring %s."),
+>>  				(int)ARRAY_SIZE(bases)-1, argv[i]);
+>>  	}
+>
+> This one is also missing the plural form.
 
-I happened to notice today that this topic needs a minor tweak:
+That is technically correct, but I do not think it matters, as we
+won't be making bases[] array smaller than it currently is, so the
+"more than %d bases" part of the message will always be in the
+plural form and never be singular.
 
--- >8 --
-Subject: [PATCH] add_delta_base_cache: use list_for_each_safe
-
-We may remove elements from the list while we are iterating,
-which requires using a second temporary pointer. Otherwise
-stepping to the next element of the list might involve
-looking at freed memory (which generally works in practice,
-as we _just_ freed it, but of course is wrong to rely on;
-valgrind notices it).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- sha1_file.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/sha1_file.c b/sha1_file.c
-index a57b71d..132c861 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2187,11 +2187,11 @@ static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
- 	void *base, unsigned long base_size, enum object_type type)
- {
- 	struct delta_base_cache_entry *ent = xmalloc(sizeof(*ent));
--	struct list_head *lru;
-+	struct list_head *lru, *tmp;
- 
- 	delta_base_cached += base_size;
- 
--	list_for_each(lru, &delta_base_cache_lru) {
-+	list_for_each_safe(lru, tmp, &delta_base_cache_lru) {
- 		struct delta_base_cache_entry *f =
- 			list_entry(lru, struct delta_base_cache_entry, lru);
- 		if (delta_base_cached <= delta_base_cache_limit)
--- 
-2.10.0.230.g6f8d04b
+Thanks.
 
