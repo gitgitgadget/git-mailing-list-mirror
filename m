@@ -7,21 +7,21 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6E0D20985
-	for <e@80x24.org>; Mon, 12 Sep 2016 11:38:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6225A20984
+	for <e@80x24.org>; Mon, 12 Sep 2016 11:38:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758058AbcILLiE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Sep 2016 07:38:04 -0400
-Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:54348 "EHLO sapo.pt"
+        id S1758064AbcILLiM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 07:38:12 -0400
+Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:51809 "EHLO sapo.pt"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1758012AbcILLiD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2016 07:38:03 -0400
-Received: (qmail 29224 invoked from network); 12 Sep 2016 11:38:02 -0000
-Received: (qmail 15129 invoked from network); 12 Sep 2016 11:31:20 -0000
+        id S1758012AbcILLiK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2016 07:38:10 -0400
+Received: (qmail 10919 invoked from network); 12 Sep 2016 11:38:08 -0000
+Received: (qmail 17102 invoked from network); 12 Sep 2016 11:31:26 -0000
 Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 12 Sep 2016 11:31:18 -0000
+          for <git@vger.kernel.org>; 12 Sep 2016 11:31:23 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -33,9 +33,9 @@ Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
         <avarab@gmail.com>,
         =?UTF-8?q?Jean-No=C3=ABl=20AVILA?= <jn.avila@free.fr>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 07/14] i18n: merge-recursive: mark error messages for translation
-Date:   Mon, 12 Sep 2016 11:29:55 +0000
-Message-Id: <1473679802-31381-7-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH v2 08/14] i18n: merge-recursive: mark verbose message for translation
+Date:   Mon, 12 Sep 2016 11:29:56 +0000
+Message-Id: <1473679802-31381-8-git-send-email-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1473679802-31381-1-git-send-email-vascomalmeida@sapo.pt>
 References: <1473679802-31381-1-git-send-email-vascomalmeida@sapo.pt>
@@ -46,55 +46,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lowercase first word of such error messages following the usual style.
-
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- builtin/merge-recursive.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ builtin/merge-recursive.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
-index fd2c455..0bc88a7 100644
+index 0bc88a7..1c21802 100644
 --- a/builtin/merge-recursive.c
 +++ b/builtin/merge-recursive.c
-@@ -42,30 +42,30 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
- 			if (!arg[2])
- 				break;
- 			if (parse_merge_opt(&o, arg + 2))
--				die("Unknown option %s", arg);
-+				die(_("unknown option %s"), arg);
- 			continue;
- 		}
- 		if (bases_count < ARRAY_SIZE(bases)-1) {
- 			struct object_id *oid = xmalloc(sizeof(struct object_id));
- 			if (get_oid(argv[i], oid))
--				die("Could not parse object '%s'", argv[i]);
-+				die(_("could not parse object '%s'"), argv[i]);
- 			bases[bases_count++] = oid;
- 		}
- 		else
--			warning("Cannot handle more than %d bases. "
--				"Ignoring %s.",
-+			warning(_("cannot handle more than %d bases. "
-+				  "Ignoring %s."),
- 				(int)ARRAY_SIZE(bases)-1, argv[i]);
- 	}
- 	if (argc - i != 3) /* "--" "<head>" "<remote>" */
--		die("Not handling anything other than two heads merge.");
-+		die(_("not handling anything other than two heads merge."));
- 
- 	o.branch1 = argv[++i];
- 	o.branch2 = argv[++i];
- 
- 	if (get_oid(o.branch1, &h1))
--		die("Could not resolve ref '%s'", o.branch1);
-+		die(_("could not resolve ref '%s'"), o.branch1);
- 	if (get_oid(o.branch2, &h2))
--		die("Could not resolve ref '%s'", o.branch2);
-+		die(_("could not resolve ref '%s'"), o.branch2);
- 
- 	o.branch1 = better_branch_name(o.branch1);
+@@ -71,7 +71,7 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
  	o.branch2 = better_branch_name(o.branch2);
+ 
+ 	if (o.verbosity >= 3)
+-		printf("Merging %s with %s\n", o.branch1, o.branch2);
++		printf(_("Merging %s with %s\n"), o.branch1, o.branch2);
+ 
+ 	failed = merge_recursive_generic(&o, &h1, &h2, bases_count, bases, &result);
+ 	if (failed < 0)
 -- 
 2.7.4
 
