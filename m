@@ -7,21 +7,21 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D567520984
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6E0D20985
 	for <e@80x24.org>; Mon, 12 Sep 2016 11:38:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758054AbcILLiA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Sep 2016 07:38:00 -0400
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:54660 "EHLO sapo.pt"
+        id S1758058AbcILLiE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 07:38:04 -0400
+Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:54348 "EHLO sapo.pt"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1758012AbcILLh7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2016 07:37:59 -0400
-Received: (qmail 14037 invoked from network); 12 Sep 2016 11:37:52 -0000
-Received: (qmail 12413 invoked from network); 12 Sep 2016 11:31:12 -0000
+        id S1758012AbcILLiD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2016 07:38:03 -0400
+Received: (qmail 29224 invoked from network); 12 Sep 2016 11:38:02 -0000
+Received: (qmail 15129 invoked from network); 12 Sep 2016 11:31:20 -0000
 Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 12 Sep 2016 11:31:07 -0000
+          for <git@vger.kernel.org>; 12 Sep 2016 11:31:18 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -33,9 +33,9 @@ Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
         <avarab@gmail.com>,
         =?UTF-8?q?Jean-No=C3=ABl=20AVILA?= <jn.avila@free.fr>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 05/14] i18n: branch: mark option description for translation
-Date:   Mon, 12 Sep 2016 11:29:53 +0000
-Message-Id: <1473679802-31381-5-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH v2 07/14] i18n: merge-recursive: mark error messages for translation
+Date:   Mon, 12 Sep 2016 11:29:55 +0000
+Message-Id: <1473679802-31381-7-git-send-email-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1473679802-31381-1-git-send-email-vascomalmeida@sapo.pt>
 References: <1473679802-31381-1-git-send-email-vascomalmeida@sapo.pt>
@@ -46,24 +46,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Lowercase first word of such error messages following the usual style.
+
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- builtin/branch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/merge-recursive.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 7df0543..d5d93a8 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -657,7 +657,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		OPT_SET_INT( 0, "set-upstream",  &track, N_("change upstream info"),
- 			BRANCH_TRACK_OVERRIDE),
- 		OPT_STRING('u', "set-upstream-to", &new_upstream, N_("upstream"), N_("change the upstream info")),
--		OPT_BOOL(0, "unset-upstream", &unset_upstream, "Unset the upstream info"),
-+		OPT_BOOL(0, "unset-upstream", &unset_upstream, N_("Unset the upstream info")),
- 		OPT__COLOR(&branch_use_color, N_("use colored output")),
- 		OPT_SET_INT('r', "remotes",     &filter.kind, N_("act on remote-tracking branches"),
- 			FILTER_REFS_REMOTES),
+diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
+index fd2c455..0bc88a7 100644
+--- a/builtin/merge-recursive.c
++++ b/builtin/merge-recursive.c
+@@ -42,30 +42,30 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
+ 			if (!arg[2])
+ 				break;
+ 			if (parse_merge_opt(&o, arg + 2))
+-				die("Unknown option %s", arg);
++				die(_("unknown option %s"), arg);
+ 			continue;
+ 		}
+ 		if (bases_count < ARRAY_SIZE(bases)-1) {
+ 			struct object_id *oid = xmalloc(sizeof(struct object_id));
+ 			if (get_oid(argv[i], oid))
+-				die("Could not parse object '%s'", argv[i]);
++				die(_("could not parse object '%s'"), argv[i]);
+ 			bases[bases_count++] = oid;
+ 		}
+ 		else
+-			warning("Cannot handle more than %d bases. "
+-				"Ignoring %s.",
++			warning(_("cannot handle more than %d bases. "
++				  "Ignoring %s."),
+ 				(int)ARRAY_SIZE(bases)-1, argv[i]);
+ 	}
+ 	if (argc - i != 3) /* "--" "<head>" "<remote>" */
+-		die("Not handling anything other than two heads merge.");
++		die(_("not handling anything other than two heads merge."));
+ 
+ 	o.branch1 = argv[++i];
+ 	o.branch2 = argv[++i];
+ 
+ 	if (get_oid(o.branch1, &h1))
+-		die("Could not resolve ref '%s'", o.branch1);
++		die(_("could not resolve ref '%s'"), o.branch1);
+ 	if (get_oid(o.branch2, &h2))
+-		die("Could not resolve ref '%s'", o.branch2);
++		die(_("could not resolve ref '%s'"), o.branch2);
+ 
+ 	o.branch1 = better_branch_name(o.branch1);
+ 	o.branch2 = better_branch_name(o.branch2);
 -- 
 2.7.4
 
