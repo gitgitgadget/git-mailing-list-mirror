@@ -2,83 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D200A207DF
-	for <e@80x24.org>; Mon, 12 Sep 2016 19:21:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59BA620985
+	for <e@80x24.org>; Mon, 12 Sep 2016 19:28:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757023AbcILTVl (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Sep 2016 15:21:41 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59364 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1756703AbcILTVi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2016 15:21:38 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C587F3C22F;
-        Mon, 12 Sep 2016 15:21:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ykkFYS7qG8RgSseflqe1PKBc2DE=; b=cIvPz2
-        N5as8ZRlHO33B/t/ngke5Cw5v/eMsQ9rJz772rGYmED8X6K675sqGhcXwqbXsKUQ
-        5Jb8qP2q3/Fr2E/UmpUO9Lvjvzu6/giVthG+dceJXheMDDDSGpIISBeVTMzflLs7
-        Mo9lcCU6LAmOrD9zdR3lXgB13NFZZCLLl6xqI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=XsPeN7SrwXuQrB2FKs0Gw4S+IEt0YPui
-        xJ312YgKdAKqPxmMroEJELC233tQFJ+vypG7F21FCXtOW+ymt8xBY4hzyURyYP2V
-        HlRq4VbvxmjDKZiEiX8f3aKEWrYf5p8vy1aI5s0DPIVVaopSbpB3cwuwyK8t0OGb
-        IZBvZV4+y3s=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BC8243C22E;
-        Mon, 12 Sep 2016 15:21:37 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3FEA93C22D;
-        Mon, 12 Sep 2016 15:21:37 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kirill Smelkov <kirr@nexedi.com>
-Cc:     Jeff King <peff@peff.net>, Vicent Marti <tanoku@gmail.com>,
-        =?utf-8?Q?J=C3=A9rome?= Perrin <jerome@nexedi.com>,
-        Isabelle Vallet <isabelle.vallet@nexedi.com>,
-        Kazuhiko Shiozaki <kazuhiko@nexedi.com>,
-        Julien Muchembled <jm@nexedi.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2 v7] pack-objects: use reachability bitmap index when generating non-stdout pack
-References: <20160809192858.GA25822@teco.navytux.spb.ru>
-        <20160809193217.32389-1-kirr@nexedi.com>
-        <20160818180615.q25p57v35m2xxtww@sigill.intra.peff.net>
-        <20160910145925.xbbus7eck5ineika@teco.navytux.spb.ru>
-Date:   Mon, 12 Sep 2016 12:21:35 -0700
-In-Reply-To: <20160910145925.xbbus7eck5ineika@teco.navytux.spb.ru> (Kirill
-        Smelkov's message of "Sat, 10 Sep 2016 17:59:25 +0300")
-Message-ID: <xmqq8tuw3ow0.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1751894AbcILT2Y (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 15:28:24 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:34826 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753971AbcILT2X (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2016 15:28:23 -0400
+Received: by mail-wm0-f65.google.com with SMTP id a6so15057225wmc.2
+        for <git@vger.kernel.org>; Mon, 12 Sep 2016 12:28:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=0rPT/glDjn7w+flKVIJ+vcXaaqLZ4jItZL7PthePJwg=;
+        b=l8QwmBBxbVimyMTbl/YvnvToCnPv+y5+cYTW265UiX4axJAEAfRcQVPIJoMH//WiDr
+         aGa6wDPxqsdTtfHL5WaaAuI/QOUv2WZaykBFeeQ+wODRrv9AGZ9mNkd4FzKuF157IoQC
+         JsnvJyLh90jqXYJ6+coNedEOdiRcB295XyKivkiCSjTHV7XWDuyPJN4whfjSRuSACuJs
+         T6I9B55Z63qgkZEmAUnCgUTinWuEgzRAyCw1OBJsvBwiVaDJ+M8tj1wvSWGBRRe7oKN4
+         /IIilVjrpuCZysc3zWoilnrDCQhToTd5FhrExGz+1L/Xpa1RMYn2Vv9xBhcGQVVI+ufe
+         U1cA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=0rPT/glDjn7w+flKVIJ+vcXaaqLZ4jItZL7PthePJwg=;
+        b=NJ+n5/r4CJDo8LoHLaZFXLr17ug1FjVyDO2n7jZ52h6p8P5gKB9cJGD07zm+ZVla+V
+         1DVOSKEb9AvpQuV4GageoasSOGIWPOOT2OAxniEA+ngn/y6r4hQFYfUzsDempna2LZJK
+         ArfnbONvLz2ssui76HzZ7F7WOPNFJ3YBKgTTrvqOSoGKiTd/YlXA6ry7O5pqHV1arURc
+         v6SI4Ch8IXTir3zI9l3GTeEwK66t/OJDMKXGq+VVEeoPZa2y1GNmT6P8Sh48U3I5lFpq
+         r2JDQHiPEu0BwddUBKh391ikiOWqh01x2MCrgVdvNUaB/284ZMbOiJATPGYV5W0p0eKA
+         ySrg==
+X-Gm-Message-State: AE9vXwP0Q+f46tCE2Gk65nHMHCAsDfFg77Equxm3V572rgIAygIRTAE7j9oS4TGZko1cw8f0ag2btpU25zaa9w==
+X-Received: by 10.28.63.84 with SMTP id m81mr1555231wma.88.1473708501882; Mon,
+ 12 Sep 2016 12:28:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1FF2C774-791E-11E6-B0A2-F7BB12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.194.85.12 with HTTP; Mon, 12 Sep 2016 12:28:21 -0700 (PDT)
+From:   Michael Felt <aixtools@gmail.com>
+Date:   Mon, 12 Sep 2016 21:28:21 +0200
+Message-ID: <CANvxniXkbAKgjm+NZ0cyyCToEYp23Kd8s4yxSqUOsAUAHJSA7g@mail.gmail.com>
+Subject: build issues on AIX - aka non-GNU environment, no gnu grep, no gcc
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kirill Smelkov <kirr@nexedi.com> writes:
+I had a couple of issues when packaging git for AIX
+a) option -Wall by default - works fine with gcc I am sure, but not so
+well when gcc is not your compiler
+b) needs a special (GNU) grep argument (-a from memory). This I
+resolved by downloading and packaging GNU grep. However, I hope this
+has not introduced a new dependency.
 
->> This is v7, but as I understand your numbering, it goes with v5 of patch
->> 1/2 that I just reviewed (usually we just increment the version number
->> on the whole series and treat it as a unit, even if some patches didn't
->> change from version to version).
->
-> The reason those patches are having their own numbers is that they are
-> orthogonal to each other and can be applied / rejected independently.
+FYI: as I recall, the last time I build git (2.6.4 I believe) I had
+neither of these problems (although I did later find I had once upon a
+time packaged, just never published grep-2.22)
 
-In such a case, we wouldn't label them 1/2 and 2/2, which tells the
-readers that these are two pieces that are to be applied together to
-form a single unit of change.  That was what these numbered patches
-with different version numbers confusing.
+Also, if you wish to add my aixtools as a place to get git packaged
+for AIX - just get in touch and we can exchange details.
 
-> But ok, since now we have them considered both together, their next
-> versions posted will be uniform v8.
-
-OK.  Thanks for clarifying.
+Michael
