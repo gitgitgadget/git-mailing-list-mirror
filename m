@@ -2,65 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1C93207DF
-	for <e@80x24.org>; Mon, 12 Sep 2016 22:24:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 18E45207DF
+	for <e@80x24.org>; Mon, 12 Sep 2016 22:44:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756044AbcILWYH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Sep 2016 18:24:07 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56546 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755550AbcILWYG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2016 18:24:06 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 826C23E797;
-        Mon, 12 Sep 2016 18:24:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=y1gMwzgW/sGrE6iuzXXQu5pL8zE=; b=ZEZhe2
-        ESHiYTSGs9evA8mrEufSsGfd4PF36zMHjEvZRYo4GNtpun34hY9uoLYlrN8hgkTY
-        pD8Cn2BcTS3/8HDu0Eu2iFWlL71VVfL4LAvbuqXEe8elbJQcnxd3GdSLngRV1vl2
-        zm6UOdCPjjPF+u9uofaxj+2LxE7w0BPLzBpis=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=t0/KJNkVWBlmuw1OwC/Lcoas4A04dHRH
-        xnpVHEzvV93dhS4nsnNJdPnpy1+mzzhSPSDmI7JB1TE4oM06TY0jpjhYLxDsbHqg
-        b5H/amjYjulNs5sEjLZnusQaeYRzdJdJX/6dSI9aAMu5Hdil4k8n2Bdp4wRiLRLW
-        go4pmQIE2Qc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7A0933E796;
-        Mon, 12 Sep 2016 18:24:05 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EAF3B3E793;
-        Mon, 12 Sep 2016 18:24:04 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Ray <tvvocold@163.com>, Ray Chen <oldsharp@gmail.com>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [GIT PULL] l10n updates for 2.10.0 maint branch
-References: <CANYiYbFa42-q7=dbJHir5hfipK_L=x37NKQFX8WdBeeFU4V1Gg@mail.gmail.com>
-Date:   Mon, 12 Sep 2016 15:24:03 -0700
-In-Reply-To: <CANYiYbFa42-q7=dbJHir5hfipK_L=x37NKQFX8WdBeeFU4V1Gg@mail.gmail.com>
-        (Jiang Xin's message of "Sun, 11 Sep 2016 22:25:16 +0800")
-Message-ID: <xmqqtwdkycxo.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1757420AbcILWof (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 18:44:35 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:35370 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752762AbcILWoe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2016 18:44:34 -0400
+Received: by mail-wm0-f67.google.com with SMTP id c131so332522wmh.2
+        for <git@vger.kernel.org>; Mon, 12 Sep 2016 15:44:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=4KXqrnrAE3g2bnnsOGDN37CogQ4unMRtJCqFwYGU7Bk=;
+        b=qc+mYMAeP+8uWw4ODifauSF6OJ4hYpzm4tlsBrxiRUpoHQ9Ck5N0u06hnZ70GBM2n0
+         G+9VD+USYtOu4/a+c8nNCdAckh47lPwhacBWXYBl5SMyAryUyj1u3ee4YS1hRaCZGAUX
+         seWeVSV7HdfObg4rNe0FbV1R37i96d6Vxn0OAsbs2gNmACQwdlz/ZB3rTbxLApjxENlE
+         L9L63H2fi5nYnAQYv12ihyRbl99hplL+F8CCWAdqJd6LseiOiBhQKGmHx9BTpKTUy78K
+         MCjI/stFAydhkhPIB6ZInCoGAkhNMusQHT+/6Zk7hGPJoA9/7JHT51xWNr8+lNzVBjeq
+         rOAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=4KXqrnrAE3g2bnnsOGDN37CogQ4unMRtJCqFwYGU7Bk=;
+        b=RB2MsQj9MSnPYOmenxbpfiMYmX5wrP/o0sj2dBK2vwkBoiFdZ22VJctbOUlfBoo/eR
+         e49e+RuE9sAyl1yOFREO9F7I7bRyI3Tt37JFB6T0/iev8eM1VIGpA/0XIBnqT6gZnmwp
+         V9GOS+0jZUeg0qbuxoxe0uFlN1FGSIAlO1tRInipBVQ+SaNUS+vOhGNa3LwrNikkIdnG
+         V6NNYGOYkWXVN4co2hTLlzFESwzCcSjkqs9zNDW5Q+804TupqOOEaGYlbPct+UasAgt0
+         td77SD6/LAaZwRXdBMqQI1/YgKo9S74XJzzB05vvD+dIsfvmATQMmD7/lWZHW91p6MQi
+         hsow==
+X-Gm-Message-State: AE9vXwNKhKvl8TRNXQUDNTPQdFtwMPXU6g4XyXrja+AXhPkqqoT8yAifn+plJIwnI1Ta9w==
+X-Received: by 10.28.18.18 with SMTP id 18mr1911715wms.28.1473720272495;
+        Mon, 12 Sep 2016 15:44:32 -0700 (PDT)
+Received: from [10.1.2.89] (dslc-082-083-141-056.pools.arcor-ip.net. [82.83.141.56])
+        by smtp.gmail.com with ESMTPSA id t65sm19887647wmt.15.2016.09.12.15.44.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 12 Sep 2016 15:44:31 -0700 (PDT)
+Subject: Re: build issues on AIX - aka non-GNU environment, no gnu grep, no
+ gcc
+To:     Junio C Hamano <gitster@pobox.com>
+References: <CANvxniXkbAKgjm+NZ0cyyCToEYp23Kd8s4yxSqUOsAUAHJSA7g@mail.gmail.com>
+ <xmqqy42wzx1f.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org
+From:   Michael Felt <aixtools@gmail.com>
+Message-ID: <d746a170-a0b0-cc2a-9d27-f146d872595e@gmail.com>
+Date:   Tue, 13 Sep 2016 00:44:29 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9D497C18-7937-11E6-B308-51057B1B28F4-77302942!pb-smtp2.pobox.com
+In-Reply-To: <xmqqy42wzx1f.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Try again, reply all this time...
 
-> There are some l10n updates for Git 2.10.0, please merge them to the
-> maint branch.
 
-Thanks.
+On 12-Sep-16 22:24, Junio C Hamano wrote:
+> Michael Felt <aixtools@gmail.com> writes:
+>
+>> I had a couple of issues when packaging git for AIX
+>> a) option -Wall by default - works fine with gcc I am sure, but not so
+>> well when gcc is not your compiler
+> That is expected.  As you said, it is merely "by default" and there
+> are mechanisms like config.mak provided for people to override them.
+>
+>> b) needs a special (GNU) grep argument (-a from memory). This I
+>> resolved by downloading and packaging GNU grep. However, I hope this
+>> has not introduced a new dependency.
+> Read the Makefile and find SANE_TEXT_GREP, perhaps?
+Ah - read the manual heh?. Generally, I just download, unpack, and run 
+configure.
+I do not mind needing an extra tool - as long as it is only for the build.
+
+And, since you have something about it in your (still unread) install 
+Notes - it has not slipped in by accident.
+>
+> Thanks for helping to spread Git to minority platforms.
+The link is: http://www.aixtools.net/index.php/git
+I do not use it much (I prefer to package "distributed" src tarballs, 
+but when testing a potential fix - git can be extremely useful!
+
+All in all, thanks for an easy to port to a "minority" platform!
+
