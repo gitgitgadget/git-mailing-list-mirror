@@ -2,75 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB4631FCA9
-	for <e@80x24.org>; Mon, 12 Sep 2016 02:19:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A1281FCA9
+	for <e@80x24.org>; Mon, 12 Sep 2016 04:56:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932355AbcILCTw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Sep 2016 22:19:52 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33388 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932258AbcILCTw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Sep 2016 22:19:52 -0400
-Received: by mail-wm0-f68.google.com with SMTP id b187so11593908wme.0
-        for <git@vger.kernel.org>; Sun, 11 Sep 2016 19:19:51 -0700 (PDT)
+        id S1752978AbcILE4q (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 00:56:46 -0400
+Received: from mail-yb0-f170.google.com ([209.85.213.170]:36847 "EHLO
+        mail-yb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751633AbcILE4p (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2016 00:56:45 -0400
+Received: by mail-yb0-f170.google.com with SMTP id u125so46038668ybg.3
+        for <git@vger.kernel.org>; Sun, 11 Sep 2016 21:56:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=Zyet0I9gzdmUF7cpZ90DbiUPm9sJqD0JrbeYjZMGag8=;
-        b=cjQPXLzAl0yny7Bomnin6k0Avx0gWrb2MitFehGZ6XnXr10ca7bZRgcblUvR1Dh5Xk
-         qIDVDB/2LC5clsvyqC/WEX/as0RDGUD9vMPMK5mXiLo4BKu/LWHNznGOSmWYh10CYwQm
-         VVOCjx7JrHN3ick6SD8I5INPF3fZKGDIqSTqUdMsayVN3V0UNFAEIaCzMBnza9j9SrtJ
-         cfaArGjQ10RkgCVPRJdt7HNANSTCDDQe9hJ+j0EXww8GMeUw/yBWeNHManDIT+FyacaQ
-         3TFSz3h/XrOxROjukw1S2yTCY23WcXO/SOtqBoLbxbgVCHn1KGVd/sr04/KEMHO/FO+4
-         OVyg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=JiUvqcMyOTOXLEy0bk0zpIbjVF6Zz7o9fxrPh1ffVz0=;
+        b=0v/VE0d57maBlz7gd6EpijsGWChHEa7vSiVY/9AVDsmwIU0T6IVsaKXAkH28eTw9UA
+         q7OBXmDsaSxy6+pEIE+SWhsY1HKqdgNEwDcId6qYgdJaM/51pG6yTurmURwwqkVq7zyg
+         ckkh5lzL77oBmGBF+LPjx87Gy2PsudTfq5RayF9S0UMfZeqA5/gHY0icDqVqOp5k9jsR
+         fs+bsKtnQcT9+75w7emKf7sR/7PKiinf/7AJknxLd1WT28ojyafMvfM20yDntNWveivs
+         LV0praA9wQg79zw/RgdLEq/7TsnSuBeI3iXFsiSkSYWldEg9Lequkx/KJTOok3BIBdQF
+         UfTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=Zyet0I9gzdmUF7cpZ90DbiUPm9sJqD0JrbeYjZMGag8=;
-        b=L7bgcx4bwmjR1oR3hcd9qnfvADj9W5eWgNKELvtMLwssNN1hRO+O3MxQwGaIKDv5Yq
-         4xs0NQyfYqjOwlE4GYUPE4yXfGRwii3LFfUgI/lH2816mMXrPZwC0FyW0e+MC0hFWelQ
-         ChEOnXF1e3vXZQTPhHJFX2f/UtIfKTFadJDcncdMV7QI3iPJEL4wnDsJ+Sq0nalamS7b
-         BLeRYYYRIdwdn1zQ+gCRelrCqdPso4aqOfut+haa2t8Tu0llxDrXEe0whe1oEdTb4iYi
-         GlDXH9K7RiKzUeR6tLm0ejyUy3wQoBWGjlr21BkriIbGCQc8V8ATtvqbrmfA542v2evO
-         4yBg==
-X-Gm-Message-State: AE9vXwO4AHzdASyPswkGSHueAgeLk6LkoiWfOHKWZ42mEETnAGW97P9rwG8vgu0r/5bkGGm2jz76EwvJappsHQ==
-X-Received: by 10.194.184.78 with SMTP id es14mr12100361wjc.85.1473646790449;
- Sun, 11 Sep 2016 19:19:50 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=JiUvqcMyOTOXLEy0bk0zpIbjVF6Zz7o9fxrPh1ffVz0=;
+        b=IAzqjPPGtRSAity4KPf+eTEuEWX+/VypgEgHtewmZcTyQuU6vp58YdTt+kg57ypQgY
+         adUNTF8e7qyLNE+sFQwvf/h918/ZHhrfsyMhh1ZV1br2dVKU31PWXON6u/6uwXYwjKtr
+         PAW3+knmJrap8q4U4uhsYAl3K8up/KolhE5w3PHA/UO6Gket3D2JEH1xSnptOp1V5IB/
+         ExiExXhX1CqKHg8HSIk518w309VqyQ6+lY2F8S8vU7ZhRk86W3nNpBlNcQThuyi73hgn
+         6DT+OHHBTSV6htNPOukCFk1bRkLoF16BZpkPoN0kDDkwfhyxG1U3YaI4rMOgDEZO2dXX
+         YCgA==
+X-Gm-Message-State: AE9vXwN+O7r0EyORHhNkzbcnILNWhCkppjGgmEjWgrVi0m7Pha1QReunEr+QTgOmAQW0w4IcQr/80gk4zlCqYA==
+X-Received: by 10.37.214.75 with SMTP id n72mr16036502ybg.118.1473656204985;
+ Sun, 11 Sep 2016 21:56:44 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.194.91.244 with HTTP; Sun, 11 Sep 2016 19:19:30 -0700 (PDT)
-In-Reply-To: <xmqqeg4p6fxb.fsf@gitster.mtv.corp.google.com>
-References: <CAN7QDo+S21T=1zjBEM7rq3epzvVx7GhmTZ5+sgV0BPvNYhvvUg@mail.gmail.com>
- <xmqqd1kzwegi.fsf@gitster.mtv.corp.google.com> <CAN7QDoJOzVvCzM80v=jP7RTB0od4exFLMZGkvPx9Uz6Lkm16Tg@mail.gmail.com>
- <xmqqeg4p6fxb.fsf@gitster.mtv.corp.google.com>
-From:   David Glasser <glasser@davidglasser.net>
-Date:   Sun, 11 Sep 2016 19:19:30 -0700
-X-Google-Sender-Auth: 8iOmIamk_hapJoIZ9Ec1v7rzOx0
-Message-ID: <CAN7QDo+9QN6QVqqeZh9_0h0=MtZik_HLQLnCOFabrAYFgHcANA@mail.gmail.com>
-Subject: Re: [PATCH] doc: mention `git -c` in git-config(1)
+Received: by 10.37.96.195 with HTTP; Sun, 11 Sep 2016 21:56:24 -0700 (PDT)
+In-Reply-To: <xmqqa8fd6fs7.fsf@gitster.mtv.corp.google.com>
+References: <87zinmhx68.fsf@juno.home.vuxu.org> <CA+P7+xoN+q_Kst=qXG_HRznxbN7cbyi5uZe15zq1c16EifeK1Q@mail.gmail.com>
+ <xmqq8tv1c5nb.fsf@gitster.mtv.corp.google.com> <23de5ffe-eaf8-2d62-2202-f1bf6087d44b@gmail.com>
+ <87inu4bxt7.fsf@juno.home.vuxu.org> <b9d63103-011a-9486-2fa1-dcf3a82cbe64@gmail.com>
+ <xmqqvay26r8u.fsf@gitster.mtv.corp.google.com> <CA+P7+xqdWbERVQenZJTLyirBy2VFrKV2-uBOxB1CwcWs+gy43A@mail.gmail.com>
+ <xmqqa8fd6fs7.fsf@gitster.mtv.corp.google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Sun, 11 Sep 2016 21:56:24 -0700
+Message-ID: <CA+P7+xo8QWRjON9Wp9vS0ymnSYTjnq=Qh4iR_EWYiULk86hBOg@mail.gmail.com>
+Subject: Re: git commit -p with file arguments
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Christian Neukirchen <chneukirchen@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 11, 2016 at 6:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> The patch that was commented on in that exchange should be part of
-> v2.10.0 already.
+On Sun, Sep 11, 2016 at 6:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> You are excused ;-)
+>
+> In ancient days, "git commit <pathspec>" was to add the contents
+> from working tree files that match <pathspec> to what is already in
+> the index and create a commit from that state.  This ran against the
+> intuition of many users who knew older systems (e.g. cvs) and we had
+> to migrate it to the current behaviour by breaking backward
+> compatibility.
 
-My mistake: I was accidentally searching for the paragraph I added in
-config.txt instead of git-config.txt. Thanks and sorry for wasting
-your time!
+I see.
 
---dave
-
--- 
-glasser@davidglasser.net | langtonlabs.org | flickr.com/photos/glasser/
+Thanks,
+Jake
