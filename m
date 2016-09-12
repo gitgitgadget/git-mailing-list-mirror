@@ -2,75 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6FF2207DF
-	for <e@80x24.org>; Mon, 12 Sep 2016 12:23:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0120E207DF
+	for <e@80x24.org>; Mon, 12 Sep 2016 12:55:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758065AbcILMXO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Sep 2016 08:23:14 -0400
-Received: from smtp6-g21.free.fr ([212.27.42.6]:7187 "EHLO smtp6-g21.free.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754615AbcILMXO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2016 08:23:14 -0400
-Received: from [192.168.1.112] (unknown [164.177.97.114])
-        (Authenticated sender: jn.avila)
-        by smtp6-g21.free.fr (Postfix) with ESMTPSA id 16089780398;
-        Mon, 12 Sep 2016 14:23:02 +0200 (CEST)
-Subject: Re: [PATCH v2 09/14] i18n: notes: mark error messages for translation
-To:     Vasco Almeida <vascomalmeida@sapo.pt>, git@vger.kernel.org
-References: <1473679802-31381-1-git-send-email-vascomalmeida@sapo.pt>
- <1473679802-31381-9-git-send-email-vascomalmeida@sapo.pt>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Jean-No=c3=abl_Avila?= <jn.avila@free.fr>
-Message-ID: <83f72924-9a9d-dc1c-109f-341f0cd7ac96@free.fr>
-Date:   Mon, 12 Sep 2016 14:23:02 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S1758284AbcILMzj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 08:55:39 -0400
+Received: from mail-lf0-f45.google.com ([209.85.215.45]:35662 "EHLO
+        mail-lf0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758196AbcILMze (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2016 08:55:34 -0400
+Received: by mail-lf0-f45.google.com with SMTP id l131so85954676lfl.2
+        for <git@vger.kernel.org>; Mon, 12 Sep 2016 05:55:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=Q468lU0vtcadK1zQuamFx37TPHvHKj9VU6tkR9uOEmw=;
+        b=yIxRObyhyDW14VQL+UHUDyxWJO+MH0LKoyttV2ghCyhIStIVHhAc+KLH0zlSKLDUI8
+         pHMOXN8mh7YPM6zP20BgFV/LNrc0Ixh+8mJncUUr15/GKAxgmBGvuTNwAxjYmESESG9t
+         gJ3q/Ws9f2vHEB1JJfxmz9RwpGtd1b8pUeZ2FwUtV/9/vgNgu3sgTo0KVghdERVZxW5i
+         gLcMOx6RUpRDj/Ch89KamP59DYqEKVT5r66IJhf2XfiAvyEUodrAfDWuGDoyBAczUUQE
+         XqmOuIRii6FBrbCrUt/BtFsGJOEVVvX/Jo5agK+c0iJ8XNAivzpPnMT7jKvJcX8NkY4f
+         x44g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Q468lU0vtcadK1zQuamFx37TPHvHKj9VU6tkR9uOEmw=;
+        b=fvomUwDjtXrYBv4UwhZwLeP1wURR1lMw+F0lDXgN5OK3DgEUEI1NVX+ndkyxj7clCd
+         UR03QDSD1E7JNnZC7eyTPfDHBqfm3W/yRZEteQgBs9XoxasE4qnkCNJJbT6ALQRsyGHP
+         hsLD7wyKDES1050EblTMkEaMTYwG9G/YoMExviMJuLgacgz2wZP0Ga+65ofHaXpdZzcy
+         ju6jX43x67oJ7vShEQCMlt3QNS8OY/8shi0XelBNVwjKfUlMSTeUNfP+A8MBAxmD5A8N
+         C2oeXPu0jNn0v0/KZPAie+9CD2sZD6LcaYck1dsIYKo47iLi8UIquagIrS3hvs6qYkwP
+         glgw==
+X-Gm-Message-State: AE9vXwOwM+qNYxKcSp6nYOxNo34A0c861xvkes/gpC+O9ciIaPZJPchoRi/ZVZVyMthZdXHuiaIjKqtx79zZRQ==
+X-Received: by 10.25.146.197 with SMTP id u188mr4766939lfd.146.1473684932182;
+ Mon, 12 Sep 2016 05:55:32 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1473679802-31381-9-git-send-email-vascomalmeida@sapo.pt>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
+Received: by 10.25.165.194 with HTTP; Mon, 12 Sep 2016 05:55:31 -0700 (PDT)
+From:   =?UTF-8?B?0JLQuNGC0LDQu9C40Lkg0JjRidC10L3QutC+?= <betalb@gmail.com>
+Date:   Mon, 12 Sep 2016 15:55:31 +0300
+Message-ID: <CANYoZJng0GNZWU=eUEnXgVQ_NKQQOKM+mhJ9bsXMEJxxEhwQMw@mail.gmail.com>
+Subject: Gitattributes file is not respected when switching between branches
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Le 12/09/2016 à 13:29, Vasco Almeida a écrit :
-> Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
-> ---
->  builtin/notes.c | 18 +++++++++---------
->  1 file changed, 9 insertions(+), 9 deletions(-)
->
-> diff --git a/builtin/notes.c b/builtin/notes.c
-> index f848b89..abacae2 100644
-> --- a/builtin/notes.c
-> +++ b/builtin/notes.c
-> @@ -340,7 +340,7 @@ static struct notes_tree *init_notes_check(const char *subcommand,
->  
->  	ref = (flags & NOTES_INIT_WRITABLE) ? t->update_ref : t->ref;
->  	if (!starts_with(ref, "refs/notes/"))
-> -		die("Refusing to %s notes in %s (outside of refs/notes/)",
-> +		die(_("Refusing to %s notes in %s (outside of refs/notes/)"),
->  		    subcommand, ref);
->  	return t;
->  }
+Good day
 
-Not sure this one will be easy to localize. The verb is passed as a
-parameter : see line 366 "list", line 426 "add", line 517 "copy", line
-658 "show", line 816 "merge", line 908 "remove" or line 595 with argv[0].
+I faced following issue with gitattributes file (at least eol setting)
+when was trying to force `lf` mode on windows.
 
-If all the verbs are real subcommands, then the translators should be
-warned that this is some english twisting, but that they need to refer
-to the subcommand on the command line.
+We have 2 branches: master & dev. With master set as HEAD in repository
 
-Otherwise,
+I've added `.gitattributes` with following content to `dev` branch
 
-Acked-by: Jean-Noël Avila <jean-noel.avila@free.fr>
+```
+* text eol=lf
+```
 
-JN
+Now when you clone this repo on other machine and checkout dev branch,
+eol setting is not respected.
+As a workaround you can rm all files except .git folder and do hard reset.
+
+Issue is reproducible on windows & unix versions. Test repo can be
+found on github
+https://github.com/betalb/gitattributes-issue
+
+master branch - one file without gitattributes
+feature-branch - .gitattributes added with eol=lf
+unix-feature-branch - .gitattributes added with eol=crlf
+
+Thanks,
+Vitalii
