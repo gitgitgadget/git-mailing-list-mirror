@@ -7,21 +7,21 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A5CC20984
-	for <e@80x24.org>; Mon, 12 Sep 2016 11:37:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1BC8F20984
+	for <e@80x24.org>; Mon, 12 Sep 2016 11:38:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758009AbcILLho (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Sep 2016 07:37:44 -0400
-Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:51558 "EHLO sapo.pt"
+        id S1758018AbcILLhr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 07:37:47 -0400
+Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:53976 "EHLO sapo.pt"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1757964AbcILLhl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2016 07:37:41 -0400
-Received: (qmail 10299 invoked from network); 12 Sep 2016 11:37:39 -0000
-Received: (qmail 5423 invoked from network); 12 Sep 2016 11:30:50 -0000
+        id S1757964AbcILLhq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2016 07:37:46 -0400
+Received: (qmail 28225 invoked from network); 12 Sep 2016 11:37:43 -0000
+Received: (qmail 7323 invoked from network); 12 Sep 2016 11:30:56 -0000
 Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 12 Sep 2016 11:30:45 -0000
+          for <git@vger.kernel.org>; 12 Sep 2016 11:30:53 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -33,10 +33,12 @@ Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
         <avarab@gmail.com>,
         =?UTF-8?q?Jean-No=C3=ABl=20AVILA?= <jn.avila@free.fr>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 01/14] i18n: apply: mark plural string for translation
-Date:   Mon, 12 Sep 2016 11:29:49 +0000
-Message-Id: <1473679802-31381-1-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH v2 02/14] i18n: apply: mark error messages for translation
+Date:   Mon, 12 Sep 2016 11:29:50 +0000
+Message-Id: <1473679802-31381-2-git-send-email-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1473679802-31381-1-git-send-email-vascomalmeida@sapo.pt>
+References: <1473679802-31381-1-git-send-email-vascomalmeida@sapo.pt>
 In-Reply-To: <1473259758-11836-1-git-send-email-vascomalmeida@sapo.pt>
 References: <1473259758-11836-1-git-send-email-vascomalmeida@sapo.pt>
 Sender: git-owner@vger.kernel.org
@@ -44,34 +46,145 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark plural string for translation using Q_().
+Mark error messages for translation passed to error() and die()
+functions.
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- builtin/apply.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ builtin/apply.c | 46 +++++++++++++++++++++++-----------------------
+ 1 file changed, 23 insertions(+), 23 deletions(-)
 
 diff --git a/builtin/apply.c b/builtin/apply.c
-index 1a488f9..ef03c74 100644
+index ef03c74..ef2c084 100644
 --- a/builtin/apply.c
 +++ b/builtin/apply.c
-@@ -4768,10 +4768,12 @@ static int apply_all_patches(struct apply_state *state,
- 			       state->whitespace_error),
- 			    state->whitespace_error);
- 		if (state->applied_after_fixing_ws && state->apply)
--			warning("%d line%s applied after"
--				" fixing whitespace errors.",
--				state->applied_after_fixing_ws,
--				state->applied_after_fixing_ws == 1 ? "" : "s");
-+			warning(Q_("%d line applied after"
-+				   " fixing whitespace errors.",
-+				   "%d lines applied after"
-+				   " fixing whitespace errors.",
-+				   state->applied_after_fixing_ws),
-+				state->applied_after_fixing_ws);
- 		else if (state->whitespace_error)
- 			warning(Q_("%d line adds whitespace errors.",
- 				   "%d lines add whitespace errors.",
+@@ -3065,8 +3065,8 @@ static int apply_binary_fragment(struct apply_state *state,
+ 	/* Binary patch is irreversible without the optional second hunk */
+ 	if (state->apply_in_reverse) {
+ 		if (!fragment->next)
+-			return error("cannot reverse-apply a binary patch "
+-				     "without the reverse hunk to '%s'",
++			return error(_("cannot reverse-apply a binary patch "
++				       "without the reverse hunk to '%s'"),
+ 				     patch->new_name
+ 				     ? patch->new_name : patch->old_name);
+ 		fragment = fragment->next;
+@@ -3111,8 +3111,8 @@ static int apply_binary(struct apply_state *state,
+ 	    strlen(patch->new_sha1_prefix) != 40 ||
+ 	    get_sha1_hex(patch->old_sha1_prefix, sha1) ||
+ 	    get_sha1_hex(patch->new_sha1_prefix, sha1))
+-		return error("cannot apply binary patch to '%s' "
+-			     "without full index line", name);
++		return error(_("cannot apply binary patch to '%s' "
++			       "without full index line"), name);
+ 
+ 	if (patch->old_name) {
+ 		/*
+@@ -3121,16 +3121,16 @@ static int apply_binary(struct apply_state *state,
+ 		 */
+ 		hash_sha1_file(img->buf, img->len, blob_type, sha1);
+ 		if (strcmp(sha1_to_hex(sha1), patch->old_sha1_prefix))
+-			return error("the patch applies to '%s' (%s), "
+-				     "which does not match the "
+-				     "current contents.",
++			return error(_("the patch applies to '%s' (%s), "
++				       "which does not match the "
++				       "current contents."),
+ 				     name, sha1_to_hex(sha1));
+ 	}
+ 	else {
+ 		/* Otherwise, the old one must be empty. */
+ 		if (img->len)
+-			return error("the patch applies to an empty "
+-				     "'%s' but it is not empty", name);
++			return error(_("the patch applies to an empty "
++				       "'%s' but it is not empty"), name);
+ 	}
+ 
+ 	get_sha1_hex(patch->new_sha1_prefix, sha1);
+@@ -3147,8 +3147,8 @@ static int apply_binary(struct apply_state *state,
+ 
+ 		result = read_sha1_file(sha1, &type, &size);
+ 		if (!result)
+-			return error("the necessary postimage %s for "
+-				     "'%s' cannot be read",
++			return error(_("the necessary postimage %s for "
++				       "'%s' cannot be read"),
+ 				     patch->new_sha1_prefix, name);
+ 		clear_image(img);
+ 		img->buf = result;
+@@ -3523,7 +3523,7 @@ static int try_threeway(struct apply_state *state,
+ 		write_sha1_file("", 0, blob_type, pre_sha1);
+ 	else if (get_sha1(patch->old_sha1_prefix, pre_sha1) ||
+ 		 read_blob_object(&buf, pre_sha1, patch->old_mode))
+-		return error("repository lacks the necessary blob to fall back on 3-way merge.");
++		return error(_("repository lacks the necessary blob to fall back on 3-way merge."));
+ 
+ 	fprintf(stderr, "Falling back to three-way merge...\n");
+ 
+@@ -3541,11 +3541,11 @@ static int try_threeway(struct apply_state *state,
+ 	/* our_sha1[] is ours */
+ 	if (patch->is_new) {
+ 		if (load_current(state, &tmp_image, patch))
+-			return error("cannot read the current contents of '%s'",
++			return error(_("cannot read the current contents of '%s'"),
+ 				     patch->new_name);
+ 	} else {
+ 		if (load_preimage(state, &tmp_image, patch, st, ce))
+-			return error("cannot read the current contents of '%s'",
++			return error(_("cannot read the current contents of '%s'"),
+ 				     patch->old_name);
+ 	}
+ 	write_sha1_file(tmp_image.buf, tmp_image.len, blob_type, our_sha1);
+@@ -4020,29 +4020,29 @@ static void build_fake_ancestor(struct patch *list, const char *filename)
+ 			if (!preimage_sha1_in_gitlink_patch(patch, sha1))
+ 				; /* ok, the textual part looks sane */
+ 			else
+-				die("sha1 information is lacking or useless for submodule %s",
++				die(_("sha1 information is lacking or useless for submodule %s"),
+ 				    name);
+ 		} else if (!get_sha1_blob(patch->old_sha1_prefix, sha1)) {
+ 			; /* ok */
+ 		} else if (!patch->lines_added && !patch->lines_deleted) {
+ 			/* mode-only change: update the current */
+ 			if (get_current_sha1(patch->old_name, sha1))
+-				die("mode change for %s, which is not "
+-				    "in current HEAD", name);
++				die(_("mode change for %s, which is not "
++				    "in current HEAD"), name);
+ 		} else
+-			die("sha1 information is lacking or useless "
+-			    "(%s).", name);
++			die(_("sha1 information is lacking or useless "
++			    "(%s)."), name);
+ 
+ 		ce = make_cache_entry(patch->old_mode, sha1, name, 0, 0);
+ 		if (!ce)
+ 			die(_("make_cache_entry failed for path '%s'"), name);
+ 		if (add_index_entry(&result, ce, ADD_CACHE_OK_TO_ADD))
+-			die ("Could not add %s to temporary index", name);
++			die(_("Could not add %s to temporary index"), name);
+ 	}
+ 
+ 	hold_lock_file_for_update(&lock, filename, LOCK_DIE_ON_ERROR);
+ 	if (write_locked_index(&result, &lock, COMMIT_LOCK))
+-		die ("Could not write temporary index to %s", filename);
++		die(_("Could not write temporary index to %s"), filename);
+ 
+ 	discard_index(&result);
+ }
+@@ -4693,9 +4693,9 @@ static void check_apply_state(struct apply_state *state, int force_apply)
+ 	int is_not_gitdir = !startup_info->have_repository;
+ 
+ 	if (state->apply_with_reject && state->threeway)
+-		die("--reject and --3way cannot be used together.");
++		die(_("--reject and --3way cannot be used together."));
+ 	if (state->cached && state->threeway)
+-		die("--cached and --3way cannot be used together.");
++		die(_("--cached and --3way cannot be used together."));
+ 	if (state->threeway) {
+ 		if (is_not_gitdir)
+ 			die(_("--3way outside a repository"));
 -- 
 2.7.4
 
