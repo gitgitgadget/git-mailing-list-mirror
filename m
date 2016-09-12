@@ -2,91 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F39B2207DF
-	for <e@80x24.org>; Mon, 12 Sep 2016 21:23:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5491207DF
+	for <e@80x24.org>; Mon, 12 Sep 2016 21:24:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750998AbcILVXg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Sep 2016 17:23:36 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:35701 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751227AbcILVXe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2016 17:23:34 -0400
-Received: by mail-wm0-f43.google.com with SMTP id i130so1309032wmf.0
-        for <git@vger.kernel.org>; Mon, 12 Sep 2016 14:23:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=bCi4a1uyqvm18wbe82C5Y1x+oI0Chrzph+Zf6Ln+enM=;
-        b=F7+Q5TJS/B1pStiEDfMQm6Gv0MWmyD4+3Izik1cbxpNPr7+PSKhZyNas5mJr4rVPCp
-         uuGaXeN0vS6dAvAitrfZtANBVplTPqZ5aiT3lA8+NU7djHp8PVvUX5/vErWpZVHwR22H
-         zFtCuIji1ku6+zWnEuzgD6XgdVt+1dr60PchDk0VC/fgIOHRWbCZa1uSUnylJJvjRHVR
-         IDK0cJiBK6KaUirHhDodZu0mUPaE9VXWVbFxlucCaZcf5wqOAUkpwwqFaSR0K9bh4AeB
-         3KwOlmBiUV8NceOml9f/eUj58OV7R7k5inYJYytU7C28w5O+UNWjpCQ/qWVVde7OzB5O
-         eTOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=bCi4a1uyqvm18wbe82C5Y1x+oI0Chrzph+Zf6Ln+enM=;
-        b=T6SPMXRlSSbY24Ek/0PvEFqmouSwZhIBGozc5bxM7E/cudEdSi5uQ0JG+xNMYQQER9
-         q+n/wchd4ZdeaJjdR/ASE5Ur9A2k4HvCDM7VKcFJY62Sr9nMgO2m/4h39OzZ52/heg4K
-         YiEeAG6/Y79lApaI4tkFAIxohv484b3sAnAKCjD7cOQujPn3obOWptWZPd3S0FSUPwwt
-         xbxtIrpdwhKDg6Y8p6pXf+w1wrjf1/e+9zRLuPvXrr1M8Uc3+XAXmkztIiqViF3xvqsT
-         h8KSRopBXSMhPF+NRcqFAkTtCdxOKXE+NeoZwn60lVgcpcYoTAixPgcGG/GocEbx2P4q
-         eNOQ==
-X-Gm-Message-State: AE9vXwNhFho8esOyNOzKBPYVbqCAYMkZulDdqT4UCiYbqW2QAlEqZTI2/pKWXg1BxhC+HA==
-X-Received: by 10.194.88.74 with SMTP id be10mr16599927wjb.120.1473715413164;
-        Mon, 12 Sep 2016 14:23:33 -0700 (PDT)
-Received: from [192.168.1.26] (elj71.neoplus.adsl.tpnet.pl. [83.21.203.71])
-        by smtp.googlemail.com with ESMTPSA id a1sm6037421wju.41.2016.09.12.14.23.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 12 Sep 2016 14:23:32 -0700 (PDT)
-Subject: Re: Git Miniconference at Plumbers
-To:     Jon Loeliger <jdl@jdl.com>,
-        David Bainbridge <david.bainbridge@ericsson.com>
-References: <E1bhKNo-0005m2-5z@mylo.jdl.com>
- <20160912004233.qh6uf35v5ylrboz6@sigill.intra.peff.net>
- <E1bjRLd-0005k0-Vb@mylo.jdl.com>
- <DB5PR07MB1448B5EDFE2E2D84C42A8AFCE2FF0@DB5PR07MB1448.eurprd07.prod.outlook.com>
- <E1bjVfp-0006sG-89@mylo.jdl.com>
-Cc:     Jeff King <peff@peff.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <bf2edfe8-667c-8a98-64f1-510983abf9f9@gmail.com>
-Date:   Mon, 12 Sep 2016 23:23:27 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S1752306AbcILVYE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 17:24:04 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59608 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751936AbcILVYD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2016 17:24:03 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3C1303E07B;
+        Mon, 12 Sep 2016 17:24:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+mZ7qXASJx7Xsn2GcY51u7Iun0Q=; b=wa1+Hg
+        VNNm4kuQRvBaLdHZCalHdl+h4ZXTukIdOPBMdumFux3sWiAc7YprM3kXYdpcbuQl
+        HuYIAV+xuxhX09rpEizdaCG1jfG/RW1xLkr2GdAs0Ce9UTPOC+ePWMIZwEsKLHXv
+        r7Rm0nyFO0rdA4gL1XUWIjeZLjz7a1l8SXjZU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=o369Cah7Wm29IqxZiesMwXY+1IE+13e4
+        lgxNyLiEYvbOFan/nYuzl6zxK4BgpNA1m9k2Y9NVgKWB4AwHCFvXEQtQ+HRoOJOW
+        dbciarSX3ghGTu7hnfhrRGcYAixe/P1tMTuamMb9E4ErRCpLz2P7l+Hh5+e2laQZ
+        6MamEkCBjIE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 311493E07A;
+        Mon, 12 Sep 2016 17:24:02 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 166153E078;
+        Mon, 12 Sep 2016 17:24:01 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 19/25] sequencer: remember do_recursive_merge()'s return value
+References: <cover.1472457609.git.johannes.schindelin@gmx.de>
+        <cover.1473590966.git.johannes.schindelin@gmx.de>
+        <44c455710fd9c420a3f759d021c4864f3a83c97a.1473590966.git.johannes.schindelin@gmx.de>
+Date:   Mon, 12 Sep 2016 14:23:58 -0700
+In-Reply-To: <44c455710fd9c420a3f759d021c4864f3a83c97a.1473590966.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Sun, 11 Sep 2016 12:55:41 +0200
+        (CEST)")
+Message-ID: <xmqqh99kzua9.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <E1bjVfp-0006sG-89@mylo.jdl.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 392DBE5E-792F-11E6-B1B7-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 12.09.2016 o 20:09, Jon Loeliger napisał:
-> So, like, David Bainbridge said:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
->> Does anyone know whether the sessions will be recorded in any way?
-> 
-> I am uncertain about outright recording (digital video/audio),
-> but there will be at least summarizing notes taken and posted.
-> Anyone wishing to record the talks/discussions is likely welcome
-> to do so.
+> The return value of do_recursive_merge() may be positive (indicating merge
+> conflicts), so let's OR later error conditions so as not to overwrite them
+> with 0.
 
-I think LWN.net usually covers Linux Plumbers Conference, see e.g.
-https://lwn.net/Archives/ConferenceByYear/#2015-Linux_Plumbers_Conference
+Are the untold assumptions as follows?
 
-Hopefully they would cover it this year too.
+ - The caller wants to act on positive (not quite an error), zero
+   (success) or negative (error);
 
-HTH
--- 
-Jakub Narębski
+ - do_recursive_merge() can return positive (success with
+   reservation), zero or negative, and the call to it would return
+   immediately if it got negative;
 
+ - all other functions that come later may return either zero or negative, and 
+   never positive;
+
+ - Hence the caller can be assured that "res" being positive can
+   only mean do_recursive_merge() succeeded with reservation and
+   everything else succeeded.
+
+This can be extended if the only thing the caller cares about is
+positive/zero/negative and it does not care what exact positive
+value it gets--in such a case, we can loosen the condition on the
+return values from other functions whose return values are OR'ed
+together; they may also return positive to signal the same "not
+quite an error", i.e. updating the latter two points to
+
+ - all other functions that come later can return positive (success
+   with reservation), zero or negative.
+
+ - Hence the caller can be assured that "res" being positive can
+   mean nobody failed with negative return, but it is not an
+   unconditional success, which is signalled by value "res" being
+   0.
+
+I cannot quite tell which is the case, especially what is planned in
+the future.  The proposed log message is a good place to explain the
+future course this code will take.
+
+> This is not yet a problem, but preparing for the patches to come: we will
+> teach the sequencer to do rebase -i's job.
+
+Thanks.
