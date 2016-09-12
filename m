@@ -2,71 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F3D6207DF
-	for <e@80x24.org>; Mon, 12 Sep 2016 15:42:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04D2E207DF
+	for <e@80x24.org>; Mon, 12 Sep 2016 15:59:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752335AbcILPmY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Sep 2016 11:42:24 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53536 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752243AbcILPmV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2016 11:42:21 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 379EC3D3C2;
-        Mon, 12 Sep 2016 11:42:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=xbQiyfV+g/6aDu3d8g5aFdv8QEc=; b=GbA+uA
-        ho3tBG1x5jqPZSsZ941gmcrwVh/qEcx8d/6IdNz/7+Mjh+g+WfjuS5zJIwvGVwuc
-        j+PvgoN1G9YnQ3GDsz3LELivp6zqaTpbRDa2N8RdhaV0CMqGAp5JO0sG6Ca/59C4
-        Axl8qtMW/p+glY3l9c/jrT1kj/pXNGUbS5AYw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=gnX42ECzSsJniZHpH4xS7lLXl7D7syYz
-        hwueTP4SBecqJ7SVKx2cUsv4DlRdSqdZFkQ/DfbyyZy2le5RYL4hSPj8xdt6N1FP
-        FHSTh+QoDgpaE298bs9YiMDDxbey8ytxMrxflpOJVhTrCJGKnOUuGoopGkvhg60a
-        7+UcbkeFQjo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2F56F3D3C1;
-        Mon, 12 Sep 2016 11:42:20 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A5E723D3C0;
-        Mon, 12 Sep 2016 11:42:19 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org,
-        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 20/25] sequencer: left-trim lines read from the script
-References: <cover.1472457609.git.johannes.schindelin@gmx.de>
-        <cover.1473590966.git.johannes.schindelin@gmx.de>
-        <09e05e7ac23164625f2076ff06d2b034101878da.1473590966.git.johannes.schindelin@gmx.de>
-        <xmqqsht657ls.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1609121019290.129229@virtualbox>
-Date:   Mon, 12 Sep 2016 08:42:17 -0700
-In-Reply-To: <alpine.DEB.2.20.1609121019290.129229@virtualbox> (Johannes
-        Schindelin's message of "Mon, 12 Sep 2016 10:23:28 +0200 (CEST)")
-Message-ID: <xmqqr38p3z1i.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1751574AbcILP7g (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 11:59:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41929 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751400AbcILP7f (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2016 11:59:35 -0400
+Received: (qmail 12251 invoked by uid 109); 12 Sep 2016 15:59:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 12 Sep 2016 15:59:34 +0000
+Received: (qmail 14009 invoked by uid 111); 12 Sep 2016 15:59:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 12 Sep 2016 11:59:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Sep 2016 11:59:31 -0400
+Date:   Mon, 12 Sep 2016 11:59:31 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+        Kevin Willford <kewillf@microsoft.com>,
+        Xiaolong Ye <xiaolong.ye@intel.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Josh Triplett <josh@joshtriplett.org>
+Subject: Re: [PATCH v3 0/2] patch-id for merges
+Message-ID: <20160912155930.2acw4265nfjq3uyj@sigill.intra.peff.net>
+References: <20160907075346.z6wtmqnfc6bsunjb@sigill.intra.peff.net>
+ <20160907220101.hwwutkiagfottbdd@sigill.intra.peff.net>
+ <20160909203406.5j5pmom442yoe4su@sigill.intra.peff.net>
+ <xmqqfup8aiud.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7D6204CA-78FF-11E6-AB12-51057B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqfup8aiud.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Fri, Sep 09, 2016 at 02:01:14PM -0700, Junio C Hamano wrote:
 
->> I do not offhand see why we want to be lenient here,
->> especially only to the left.
->
-> Postel's Law.
+> Jeff King <peff@peff.net> writes:
+> 
+> > And here is v3. Besides commit-message fixups, it drops patch 2, and
+> > instead the third patch teaches commit_patch_id() to distinguish between
+> > errors and "no patch id".
+> >
+> > Frankly, I still like v2 better, but I do not feel like arguing with
+> > Johannes about it anymore.
+> 
+> FWIW, I too like the simplicity of v2, as all the error-to-die
+> conversion is for cases in which there is no sane recovery path.
+> 
+> I'll have to take a bit deeper look at [v3 2/2] that had to become
+> more involved to decide if the additional flexibility is really
+> worth it.
 
-How would that compare/relate to yagni, though?
+One other option I didn't really look at: commit_patch_id() could
+consider feeding it a merge as an error, and it would be come the
+caller's responsibility to avoid doing so. That should already be the
+case for "format-patch --base".
+
+We'd probably have to change add_commit_patch_id() and
+has_commit_patch_id() to return NULL early when fed a merge, but that is
+not too bad.
+
+The reason I didn't pursue this is that I didn't want the definition of
+"what constitutes something with no patch-id" to cross too many
+abstraction layers. But it's not like we expect a multitude of
+conditions; it will probably remain just "we don't handle merges" for
+the foreseeable future.
+
+That looks like the patch below (as a replacement for patch 2), which is
+even less invasive. It also performs a little better on my example case,
+because we avoid adding merges to the hashmap entirely.
+
+diff --git a/patch-ids.c b/patch-ids.c
+index 77e4663..5d2d96a 100644
+--- a/patch-ids.c
++++ b/patch-ids.c
+@@ -7,10 +7,12 @@
+ int commit_patch_id(struct commit *commit, struct diff_options *options,
+ 		    unsigned char *sha1, int diff_header_only)
+ {
+-	if (commit->parents)
++	if (commit->parents) {
++		if (commit->parents->next)
++			return -1;
+ 		diff_tree_sha1(commit->parents->item->object.oid.hash,
+ 			       commit->object.oid.hash, "", options);
+-	else
++	} else
+ 		diff_root_tree_sha1(commit->object.oid.hash, "", options);
+ 	diffcore_std(options);
+ 	return diff_flush_patch_id(options, sha1, diff_header_only);
+@@ -72,11 +74,20 @@ static int init_patch_id_entry(struct patch_id *patch,
+ 	return 0;
+ }
+ 
++static int patch_id_defined(struct commit *commit)
++{
++	/* must be 0 or 1 parents */
++	return !commit->parents || !commit->parents->next;
++}
++
+ struct patch_id *has_commit_patch_id(struct commit *commit,
+ 				     struct patch_ids *ids)
+ {
+ 	struct patch_id patch;
+ 
++	if (!patch_id_defined(commit))
++		return NULL;
++
+ 	memset(&patch, 0, sizeof(patch));
+ 	if (init_patch_id_entry(&patch, commit, ids))
+ 		return NULL;
+@@ -89,6 +100,9 @@ struct patch_id *add_commit_patch_id(struct commit *commit,
+ {
+ 	struct patch_id *key = xcalloc(1, sizeof(*key));
+ 
++	if (!patch_id_defined(commit))
++		return NULL;
++
+ 	if (init_patch_id_entry(key, commit, ids)) {
+ 		free(key);
+ 		return NULL;
+
+I'd probably do a preparatory patch to drop the return value from
+add_commit_patch_id(). No callers actually look at it.
+
+-Peff
