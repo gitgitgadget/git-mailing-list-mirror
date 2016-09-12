@@ -6,77 +6,88 @@ X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 26DA7207DF
-	for <e@80x24.org>; Mon, 12 Sep 2016 20:31:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5FD3B20985
+	for <e@80x24.org>; Mon, 12 Sep 2016 20:45:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752595AbcILUbf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Sep 2016 16:31:35 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56838 "EHLO
+        id S1753167AbcILUpD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 16:45:03 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64048 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750832AbcILUbe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2016 16:31:34 -0400
+        with ESMTP id S1752736AbcILUpA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2016 16:45:00 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1ADA43D843;
-        Mon, 12 Sep 2016 16:31:33 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 810703E195;
+        Mon, 12 Sep 2016 16:44:59 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=HjCLeOmTjW3EY/Qat5II8m+C7i4=; b=QVdOvS
-        GsT00MFC7reZ5JFisqx2XM6Hp6PQZV1vxyTeczWT015eCVdMtTiEGCdyQCFcYjsV
-        j5MaSTFz/rv0TAANkQt3A1Q3St72UWtOOnAobGYrD4hyK/Db+dsx5zAl0Ybt75u5
-        2WdIYlbOjFgVNPUD+E+LHBQLr6O84aJhFP43A=
+        :content-type; s=sasl; bh=mt6FCTh2WlQVs7Z3m/RAGCZZDLo=; b=gVJtEi
+        1SbOKQ92QsArl14RTfMdwvlJ/tUOdrwQo8UNLa0gWVPJqA8zWnC15S2v9RYHd7vB
+        Woei2YuNBLUbjP+XVJYO2yIji55Xb+PYpjw8sb2mrF825DsSXsdgXkrE7oBKCCWa
+        4Bu0tFM18vVrOubGDyclfKbXKRY9t8weNFbrs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=GLMif6eZPOW8v/8F7OsiMU6SwfiGqKML
-        3D6vcYwvaLrv/tIm/+M0zNL4oq63pJniMLdYNBomd8g6v6TQUZjqdBgarJ2oQk3R
-        Mb48IgM6eHunum+CX4ezFWFPntoazPuFazzKzNd3NfbCREGXLynQAaTLIO/elKLO
-        nse4QtbWzMg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 128333D842;
-        Mon, 12 Sep 2016 16:31:33 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=l2LNDyM286JPs1xzOGcsGH4OyGH/v6/X
+        vxDOA832XWiO/tqo6AbBRnRcklnXo9uT4rhwkJQuOsIuokoS5TV2FKmgTyQ4chGF
+        UEbsQ1fXa84WaDCNUpqA/XL0XctjZIykOl4bP7IE7LcsPbM/s6xbEvb6xBS68+BX
+        R9peFsYBWWg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 781623E194;
+        Mon, 12 Sep 2016 16:44:59 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 915C13D841;
-        Mon, 12 Sep 2016 16:31:32 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 00E4A3E193;
+        Mon, 12 Sep 2016 16:44:59 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Ben Peart" <peartben@gmail.com>
-Cc:     <git@vger.kernel.org>, <pclouds@gmail.com>,
-        "'Ben Peart'" <benpeart@microsoft.com>
-Subject: Re: [PATCH v2] checkout: eliminate unnecessary merge for trivial checkout
-References: <20160909192520.4812-1-benpeart@microsoft.com>
-        <xmqq1t0sagcm.fsf@gitster.mtv.corp.google.com>
-        <13ef001d20d21$2d2ea840$878bf8c0$@gmail.com>
-Date:   Mon, 12 Sep 2016 13:31:30 -0700
-In-Reply-To: <13ef001d20d21$2d2ea840$878bf8c0$@gmail.com> (Ben Peart's message
-        of "Mon, 12 Sep 2016 14:12:07 -0400")
-Message-ID: <xmqqtwdkzwpp.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+        Kevin Willford <kewillf@microsoft.com>,
+        Xiaolong Ye <xiaolong.ye@intel.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Josh Triplett <josh@joshtriplett.org>
+Subject: Re: [PATCH v3 0/2] patch-id for merges
+References: <20160907075346.z6wtmqnfc6bsunjb@sigill.intra.peff.net>
+        <20160907220101.hwwutkiagfottbdd@sigill.intra.peff.net>
+        <20160909203406.5j5pmom442yoe4su@sigill.intra.peff.net>
+        <xmqqfup8aiud.fsf@gitster.mtv.corp.google.com>
+        <20160912155930.2acw4265nfjq3uyj@sigill.intra.peff.net>
+        <xmqq37l53ul2.fsf@gitster.mtv.corp.google.com>
+        <20160912175641.nj4h6oupbwaedwbx@sigill.intra.peff.net>
+Date:   Mon, 12 Sep 2016 13:44:57 -0700
+In-Reply-To: <20160912175641.nj4h6oupbwaedwbx@sigill.intra.peff.net> (Jeff
+        King's message of "Mon, 12 Sep 2016 13:56:41 -0400")
+Message-ID: <xmqqpoo8zw3a.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: E4866560-7927-11E6-9466-51057B1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: C538048C-7929-11E6-9521-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Ben Peart" <peartben@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> I completely agree that optimizing within merge_working_tree would provide 
-> more opportunities for optimization.  I can certainly move the test into
-> that function as a first step.
+> On Mon, Sep 12, 2016 at 10:18:33AM -0700, Junio C Hamano wrote:
+>
+>> > +static int patch_id_defined(struct commit *commit)
+>> > +{
+>> > +	/* must be 0 or 1 parents */
+>> > +	return !commit->parents || !commit->parents->next;
+>> > +}
+>> 
+>> If we make the first hunk begin like so:
+>> 
+>> > +	if (commit->parents) {
+>> > +		if (!patch_id_defined(commit))
+>> > +			return -1;
+>> 
+>> I wonder if the compiler gives us the same code.
+>
+> Good idea. I actually put the "patch_id_defined" check outside the "if"
+> block you've quoted (otherwise we're making assumptions about the
+> contents of patch_id_defined).
 
-Note that "optimizing more" was not the primary point of my
-response.
+Facepalm.  I was mis-reading the condition in the helper function.
+Of course, guarding up-front makes more sense.
 
-Quite honestly, I'd rather see us speed up _ONLY_ obviously correct
-and commonly used cases, while leaving most cases that _MAY_ turn
-out to be optimizable (if we did careful analysis) unoptimized, and
-instead have them handled by generic but known to be correct
-codepath, if it means we do NOT to have to spend mental bandwidth to
-analyze not-common case--that is a much better tradeoff.
-
-The suggestion to move the check one level down in the callchain was
-primarily to avoid the proposed optimization from being overly eager
-and ending up skipping necessary parts of what merge_working_tree()
-does (e.g. like I suspected in the review that the proposed patch
-skips the check for "you have unmerged entries" situation).
