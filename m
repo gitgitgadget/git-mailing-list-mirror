@@ -2,74 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2281520984
-	for <e@80x24.org>; Mon, 12 Sep 2016 08:35:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24F8720984
+	for <e@80x24.org>; Mon, 12 Sep 2016 08:45:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756464AbcILIf1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Sep 2016 04:35:27 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:53694 "EHLO bsmtp4.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756309AbcILIf0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2016 04:35:26 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp4.bon.at (Postfix) with ESMTPSA id 3sXh2h1MYCz5tmD;
-        Mon, 12 Sep 2016 10:35:23 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 8153452E4;
-        Mon, 12 Sep 2016 10:35:23 +0200 (CEST)
-Subject: Re: [PATCH v2 21/25] sequencer: refactor write_message()
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <cover.1472457609.git.johannes.schindelin@gmx.de>
- <cover.1473590966.git.johannes.schindelin@gmx.de>
- <da2293aee439da2274e30304e2d1f097b9644e64.1473590966.git.johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <e21e3391-bfc3-68b8-8eaf-0e15e5a436c5@kdbg.org>
-Date:   Mon, 12 Sep 2016 10:35:22 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
+        id S1757152AbcILIpM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 04:45:12 -0400
+Received: from forward2h.cmail.yandex.net ([87.250.230.17]:45982 "EHLO
+        forward2h.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1757091AbcILIpL (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 12 Sep 2016 04:45:11 -0400
+X-Greylist: delayed 426 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 Sep 2016 04:45:10 EDT
+Received: from mxback2o.mail.yandex.net (mxback2o.mail.yandex.net [37.140.190.16])
+        by forward2h.cmail.yandex.net (Yandex) with ESMTP id 8B04820C4C
+        for <git@vger.kernel.org>; Mon, 12 Sep 2016 11:38:01 +0300 (MSK)
+Received: from web11o.yandex.ru (web11o.yandex.ru [95.108.205.111])
+        by mxback2o.mail.yandex.net (nwsmtp/Yandex) with ESMTP id Rr8xDEsEw5-c0t4cWVB;
+        Mon, 12 Sep 2016 11:38:00 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=filippov.me; s=mail; t=1473669480;
+        bh=0ZaG2VU3/0ZYz8Po6vatFiCbAOB8RlKrH3kwk90j2Ss=;
+        h=From:To:In-Reply-To:References:Subject:Message-Id:Date;
+        b=i/4RXZNRygteOSGpkodFeOj+sIYrzNpiap03mt4AKp51W93qRHwWxOkZ63XhOeYTU
+         FmHC3xWAHlQqLdhCPlIsLh7GxpU7Zohm78RB/3N1SQjPVICM5ELqGvQbXpNTh9ntd6
+         gc/4//63mfQzCUMpTEk7x3iiiDoK6ndRjoaFgduQ=
+Authentication-Results: mxback2o.mail.yandex.net; dkim=pass header.i=@filippov.me
+Received: by web11o.yandex.ru with HTTP;
+        Mon, 12 Sep 2016 11:38:00 +0300
+From:   Mikhail Filippov <mikhail@filippov.me>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+In-Reply-To: <xmqqeg4q6mw4.fsf@gitster.mtv.corp.google.com>
+References: <1473625505-7641-1-git-send-email-mikhail@filippov.me> <xmqqeg4q6mw4.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH] Do not record unstaged deleted file upon recursive merge if file was moved outside of working tree with enabled sparse-checkout.
 MIME-Version: 1.0
-In-Reply-To: <da2293aee439da2274e30304e2d1f097b9644e64.1473590966.git.johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Message-Id: <798801473669480@web11o.yandex.ru>
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date:   Mon, 12 Sep 2016 11:38:00 +0300
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 11.09.2016 um 12:55 schrieb Johannes Schindelin:
-> -static int write_message(struct strbuf *msgbuf, const char *filename)
-> +static int write_with_lock_file(const char *filename,
-> +				const void *buf, size_t len, int append_eol)
->  {
->  	static struct lock_file msg_file;
+It's a very unexpected behaviour when a user sees a deleted file after a merge with enabled sparse-checkout. Moreover, when the user resolves merge conflicts and commits the changes with the command "git commit -am xxx", a repository can be broken because all the moved files will be deleted. Finally, it's really hard to find a user who deleted these files because "git log file" doesn't show any merge commits by default. I'm not sure that my fix is correct but I checked all tests and I didn't find a better way to prevent files deleting.
+
+12.09.2016, 02:24, "Junio C Hamano" <gitster@pobox.com>:
+>    Mikhail Filippov <mikhail@filippov.me> writes:
 >
->  	int msg_fd = hold_lock_file_for_update(&msg_file, filename, 0);
->  	if (msg_fd < 0)
->  		return error_errno(_("Could not lock '%s'"), filename);
-> -	if (write_in_full(msg_fd, msgbuf->buf, msgbuf->len) < 0)
-> -		return error_errno(_("Could not write to %s"), filename);
-> -	strbuf_release(msgbuf);
-> +	if (write_in_full(msg_fd, buf, len) < 0)
-> +		return error_errno(_("Could not write to '%s'"), filename);
-> +	if (append_eol && write(msg_fd, "\n", 1) < 0)
-> +		return error_errno(_("Could not write eol to '%s"), filename);
->  	if (commit_lock_file(&msg_file) < 0)
->  		return error(_("Error wrapping up %s."), filename);
+>>     ---
 >
->  	return 0;
->  }
+>    You'd need a lot more explanation on why this is needed
+>    (i.e. without it what behaviour you would get, and why that
+>    behaviour is wrong).
+>
+>>      merge-recursive.c | 9 +++++---
+>>      t/t6042-merge-rename-corner-cases.sh | 42 ++++++++++++++++++++++++++++++++++++
+>>      2 files changed, 48 insertions(+), 3 deletions(-)
+>>
+>>     diff --git a/merge-recursive.c b/merge-recursive.c
+>>     index e349126..25dc701 100644
+>>     --- a/merge-recursive.c
+>>     +++ b/merge-recursive.c
+>>     @@ -1724,9 +1724,12 @@ static int merge_content(struct merge_options *o,
+>>                       */
+>>                      path_renamed_outside_HEAD = !path2 || !strcmp(path, path2);
+>>                      if (!path_renamed_outside_HEAD) {
+>>     - add_cacheinfo(o, mfi.mode, &mfi.oid, path,
+>>     - 0, (!o->call_depth), 0);
+>>     - return mfi.clean;
+>>     + struct stat st;
+>>     + if (lstat(path, &st) == 0) {
+>>     + add_cacheinfo(o, mfi.mode, &mfi.oid, path,
+>>     + 0, (!o->call_depth), 0);
+>>     + return mfi.clean;
+>>     + }
+>
+>    I cannot guess what you are trying to achieve without explanation in
+>    the proposed log message, but I can say that this unconditional
+>    checking of a working tree file cannot be correct (there may or may
+>    not be other things that are wrong with this change, which cannot be
+>    judged without more information).
+>
+>    Imagine your o->call_depth is not zero, i.e. we are making a virtual
+>    common ancestor with this merge, in which case any of the three
+>    trees involved may have nothing to do with the current working tree
+>    files.
+>
+>>     +test_expect_success 'move file/sparse-checkout/merge should not delete moved file' '
+>>     + git rm -rf . &&
+>>     + git clean -fdqx &&
+>>     + rm -rf .git &&
+>>     + git init &&
+>
+>    Yuck. This is inherited from existing tests but I think they need
+>    to be cleaned up. It is not your fault, and it is not in the scope
+>    of this change.
+>
+>>     + git status >output &&
+>>     + cp output /tmp/a &&
+>
+>    Huh?
+>
+>>     + test_i18ngrep "nothing to commit" output
+>>     +'
+>>     +
+>>      test_done
 
-The two error paths in the added lines should both
 
-		rollback_lock_file(&msg_file);
 
-, I think. But I do notice that this is not exactly new, so...
 
--- Hannes
-
+-- 
+Mikhail Filippov 
+Software Developer
+JetBrains
+http://jetbrains.com
+“The Drive To Develop"
