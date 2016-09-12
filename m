@@ -2,93 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CB06207DF
-	for <e@80x24.org>; Mon, 12 Sep 2016 20:10:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1700C207DF
+	for <e@80x24.org>; Mon, 12 Sep 2016 20:11:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754957AbcILUK2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Sep 2016 16:10:28 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:34288 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754922AbcILUK1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2016 16:10:27 -0400
-Received: by mail-lf0-f67.google.com with SMTP id k12so6238721lfb.1
-        for <git@vger.kernel.org>; Mon, 12 Sep 2016 13:10:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=to:date:subject:mime-version:content-transfer-encoding:from
-         :message-id:user-agent;
-        bh=PSpehFGiRJRZv/fCXOYrXLD5oC/G5AQIXtI0KGZAaQY=;
-        b=UvJzwV2R2z4F7o6r5dKjfgBaIwNJCbvmfGAdB8AnSWTbCq5mXd8NhGsl/Q1cuSjcGj
-         i9+rP9wN88tog7WoCEyXSxrqMjJTzqe+LIgzI2nGQD8inaGchyVNKgqaAOciMsxewTrP
-         CLZs+8q4Epvj1tiwXcV1NVI/05zaxmwbuWZ+3VHIiduRZqdF0plczTHCJe+9xYyJ/MJv
-         yPszT0rO1EYiPNh2nHqHfMRS5mgA1BUI17lgFPnYf+VkuyP0WmzfwzGvSfD5lZik3ad5
-         GS6XU114gBIcd7NNm0Ufeio6whfKI5ajsrkudMtMz1+r3QBpp7t4Ca2tnJJX4I2bQ2Fs
-         FV9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:to:date:subject:mime-version
-         :content-transfer-encoding:from:message-id:user-agent;
-        bh=PSpehFGiRJRZv/fCXOYrXLD5oC/G5AQIXtI0KGZAaQY=;
-        b=FqLG0Gajf9vcMkqta2k/6Yo9x2Xc+v1UD2YVNRtVnaRBwUSxx/1cGGIv6JZtCuqqq0
-         O0fXwBGzVzd4BjJlS2J4Tz6eicBhtn4hs9cnuToyoSZ70ODuqsSu37QZpP0CsH6xXmu1
-         sGqcRVGh9z4NV5bgcAPfNxrQnG5SNRvofBmKpYtWlT9JGJaHjTC7zfF8Hmp8+hzQlioo
-         D16gqJWwE8kathO7qnSRBJe6i00gnsLIyjq8hHm5sLwODdjvCb5RxATYhPN8ObmBYu3s
-         EZKjhsFumxDLqODZf283goskyVajViDbqWUhn4AZdJakNFnlvHXPA68GckUem82AZIiM
-         J44g==
-X-Gm-Message-State: AE9vXwP82ijh/ZqBFiRlIeJvw4s42ckfbIzkfFK1Cz1y9Noizo09V4xRjoH/WmlKvI9m0g==
-X-Received: by 10.25.198.147 with SMTP id w141mr3353586lff.112.1473711025319;
-        Mon, 12 Sep 2016 13:10:25 -0700 (PDT)
-Received: from localhost.localdomain (system8589175140xdeo.mtvk.pl. [85.89.175.140])
-        by smtp.gmail.com with ESMTPSA id k133sm1238038lfb.2.2016.09.12.13.10.24
-        for <git@vger.kernel.org>
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Mon, 12 Sep 2016 13:10:24 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8; format=flowed; delsp=yes
-To:     git@vger.kernel.org
-Date:   Mon, 12 Sep 2016 22:10:23 +0200
-Subject: git-am includes escape characters from 'From' field
+        id S1752292AbcILULw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 16:11:52 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58657 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751092AbcILULv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2016 16:11:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9B38F3D491;
+        Mon, 12 Sep 2016 16:11:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=gDqY5FN1CMjmScJB5pyTTPYDgBk=; b=HKQ+su
+        idIvxbOBUDVvU05E9DidtYP0FYoIWkVBxZpWhl0nwQTGxdljp5TIEhLMIy25C91G
+        qvD0umXi1bcAB2lWaZ+wyD1PoQY2t6rIu5iW9ozLRrQymL/jQ9Cry3LQNW1wX5ZP
+        eJzBNPDsYVcbFz6Dmq69k0HDMxPScXGMAoZKg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=FIxXYHMHFvvcFxtjxTC/tACqhQ+g/yaT
+        HyOQ0JAloUBeieGqwDWW25WyVIY5cRo4+pi5TacslCzKWkYiY1Z63XLhq1yZ1EPX
+        97L1XFNhm59wRf0ikJ+eqv4fTl+dD5SQlIWuIAwcwj8YuLICMB9bXRFO56hNviw+
+        3+cmy0DWAXc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 944923D490;
+        Mon, 12 Sep 2016 16:11:49 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 155113D48F;
+        Mon, 12 Sep 2016 16:11:49 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jon Loeliger <jdl@jdl.com>
+Cc:     David Bainbridge <david.bainbridge@ericsson.com>,
+        Jeff King <peff@peff.net>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Git Miniconference at Plumbers
+References: <E1bhKNo-0005m2-5z@mylo.jdl.com>
+        <20160912004233.qh6uf35v5ylrboz6@sigill.intra.peff.net>
+        <E1bjRLd-0005k0-Vb@mylo.jdl.com>
+        <DB5PR07MB1448B5EDFE2E2D84C42A8AFCE2FF0@DB5PR07MB1448.eurprd07.prod.outlook.com>
+        <E1bjVfp-0006sG-89@mylo.jdl.com>
+Date:   Mon, 12 Sep 2016 13:11:47 -0700
+In-Reply-To: <E1bjVfp-0006sG-89@mylo.jdl.com> (Jon Loeliger's message of "Mon,
+        12 Sep 2016 13:09:41 -0500")
+Message-ID: <xmqqeg4o27zw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-From:   "Swift Geek" <swiftgeek@gmail.com>
-Message-ID: <op.yno0zli7ig5ot5@localhost.localdomain>
-User-Agent: Opera Mail/12.16 (Linux)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 23195B3C-7925-11E6-BB18-51057B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git-am seems to add backslash that escapes double quote character, example  
-git format-patch
+Jon Loeliger <jdl@jdl.com> writes:
 
- From 63da989a5295214f9bd06cd7b409a86a65241eea Mon Sep 17 00:00:00 2001
-From: "Sebastian \"Swift Geek\" Grzywna" <swiftgeek@gmail.com>
-Date: Mon, 12 Sep 2016 21:27:32 +0200
-Subject: [PATCH] Example showing git-am bug that includes escape characters
+> So, like, David Bainbridge said:
+>> Hi,
+>> 
+>> The subject matter of the conference looks really interesting but I am
+>> unlikely to be able to attend, unfortunately.
+>> 
+>> The subjects being covered like the current State of Git and the
+>> Future of Git, for example, deserve much wider exposure, and I would
+>> certainly appreciate hearing the thoughts of Junio and others.
+>
+> Indeed.
 
----
-  testfile | 1 +
-  1 file changed, 1 insertion(+)
-  create mode 100644 testfile
+You do not need to go to NM to _hear_ that.  Basically, I want us
+not to have "big" plans that come from the top.
 
-diff --git a/testfile b/testfile
-new file mode 100644
-index 0000000..b48e119
---- /dev/null
-+++ b/testfile
-@@ -0,0 +1 @@
-+test file contents
--- 
-2.9.3
+Now, you heard it ;-)
 
-In .gitconfig I have
-name = Sebastian \"Swift Geek\" Grzywna
-which appears to work fine with regular git commit - backslashes are not  
-included in 'From' field.
+There are areas that we as Git community would want to address for
+some audience that were discovered over the years, and that "some
+audience" might even be a large population of Git users, but if that
+does not have overlap with Kernel Plumbers, the Plumbers mini-conf
+may not be a suitable venue for even mentioning them.  E.g. the
+enhancement of the submodule subsystem to allow more end-user facing
+commands to recurse into them; rearchitecting the index and redoing
+the "sparse checkout" hack so that we can do narrow clones more
+properly; supporting "huge objects" better in the object layer,
+without having to resort to ugly hacks like GitLFS that will never
+be part of the core Git.  These things may all be worth talking
+about in wider Git setting, but some of them may be waste of time to
+bring up in the Plumbers' venue.
 
-Regards,
-Swift Geek
+The future of Git is shaped largely by end-user itches.  From my
+point of view, Git people are going there primarily to find what
+Kernel Plubmbers' itches are, and help assessing the workflow
+improvements around Git the Plumbers are wishing for or designing
+themselves by being there, because we are at the best position to
+tell what kind of enhancement to Git is feasible and what is
+unlikely to happen in the near term.
