@@ -7,21 +7,21 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6225A20984
-	for <e@80x24.org>; Mon, 12 Sep 2016 11:38:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA2D620984
+	for <e@80x24.org>; Mon, 12 Sep 2016 11:38:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758064AbcILLiM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Sep 2016 07:38:12 -0400
-Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:51809 "EHLO sapo.pt"
+        id S1758066AbcILLiR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 07:38:17 -0400
+Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:54643 "EHLO sapo.pt"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1758012AbcILLiK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2016 07:38:10 -0400
-Received: (qmail 10919 invoked from network); 12 Sep 2016 11:38:08 -0000
-Received: (qmail 17102 invoked from network); 12 Sep 2016 11:31:26 -0000
+        id S1757525AbcILLiQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2016 07:38:16 -0400
+Received: (qmail 30002 invoked from network); 12 Sep 2016 11:38:14 -0000
+Received: (qmail 19409 invoked from network); 12 Sep 2016 11:31:33 -0000
 Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 12 Sep 2016 11:31:23 -0000
+          for <git@vger.kernel.org>; 12 Sep 2016 11:31:28 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -33,9 +33,9 @@ Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
         <avarab@gmail.com>,
         =?UTF-8?q?Jean-No=C3=ABl=20AVILA?= <jn.avila@free.fr>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 08/14] i18n: merge-recursive: mark verbose message for translation
-Date:   Mon, 12 Sep 2016 11:29:56 +0000
-Message-Id: <1473679802-31381-8-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH v2 09/14] i18n: notes: mark error messages for translation
+Date:   Mon, 12 Sep 2016 11:29:57 +0000
+Message-Id: <1473679802-31381-9-git-send-email-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1473679802-31381-1-git-send-email-vascomalmeida@sapo.pt>
 References: <1473679802-31381-1-git-send-email-vascomalmeida@sapo.pt>
@@ -48,22 +48,65 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- builtin/merge-recursive.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/notes.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
-index 0bc88a7..1c21802 100644
---- a/builtin/merge-recursive.c
-+++ b/builtin/merge-recursive.c
-@@ -71,7 +71,7 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
- 	o.branch2 = better_branch_name(o.branch2);
+diff --git a/builtin/notes.c b/builtin/notes.c
+index f848b89..abacae2 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -340,7 +340,7 @@ static struct notes_tree *init_notes_check(const char *subcommand,
  
- 	if (o.verbosity >= 3)
--		printf("Merging %s with %s\n", o.branch1, o.branch2);
-+		printf(_("Merging %s with %s\n"), o.branch1, o.branch2);
+ 	ref = (flags & NOTES_INIT_WRITABLE) ? t->update_ref : t->ref;
+ 	if (!starts_with(ref, "refs/notes/"))
+-		die("Refusing to %s notes in %s (outside of refs/notes/)",
++		die(_("Refusing to %s notes in %s (outside of refs/notes/)"),
+ 		    subcommand, ref);
+ 	return t;
+ }
+@@ -680,11 +680,11 @@ static int merge_abort(struct notes_merge_options *o)
+ 	 */
  
- 	failed = merge_recursive_generic(&o, &h1, &h2, bases_count, bases, &result);
- 	if (failed < 0)
+ 	if (delete_ref("NOTES_MERGE_PARTIAL", NULL, 0))
+-		ret += error("Failed to delete ref NOTES_MERGE_PARTIAL");
++		ret += error(_("Failed to delete ref NOTES_MERGE_PARTIAL"));
+ 	if (delete_ref("NOTES_MERGE_REF", NULL, REF_NODEREF))
+-		ret += error("Failed to delete ref NOTES_MERGE_REF");
++		ret += error(_("Failed to delete ref NOTES_MERGE_REF"));
+ 	if (notes_merge_abort(o))
+-		ret += error("Failed to remove 'git notes merge' worktree");
++		ret += error(_("Failed to remove 'git notes merge' worktree"));
+ 	return ret;
+ }
+ 
+@@ -704,11 +704,11 @@ static int merge_commit(struct notes_merge_options *o)
+ 	 */
+ 
+ 	if (get_sha1("NOTES_MERGE_PARTIAL", sha1))
+-		die("Failed to read ref NOTES_MERGE_PARTIAL");
++		die(_("Failed to read ref NOTES_MERGE_PARTIAL"));
+ 	else if (!(partial = lookup_commit_reference(sha1)))
+-		die("Could not find commit from NOTES_MERGE_PARTIAL.");
++		die(_("Could not find commit from NOTES_MERGE_PARTIAL."));
+ 	else if (parse_commit(partial))
+-		die("Could not parse commit from NOTES_MERGE_PARTIAL.");
++		die(_("Could not parse commit from NOTES_MERGE_PARTIAL."));
+ 
+ 	if (partial->parents)
+ 		hashcpy(parent_sha1, partial->parents->item->object.oid.hash);
+@@ -721,10 +721,10 @@ static int merge_commit(struct notes_merge_options *o)
+ 	o->local_ref = local_ref_to_free =
+ 		resolve_refdup("NOTES_MERGE_REF", 0, sha1, NULL);
+ 	if (!o->local_ref)
+-		die("Failed to resolve NOTES_MERGE_REF");
++		die(_("Failed to resolve NOTES_MERGE_REF"));
+ 
+ 	if (notes_merge_commit(o, t, partial, sha1))
+-		die("Failed to finalize notes merge");
++		die(_("Failed to finalize notes merge"));
+ 
+ 	/* Reuse existing commit message in reflog message */
+ 	memset(&pretty_ctx, 0, sizeof(pretty_ctx));
 -- 
 2.7.4
 
