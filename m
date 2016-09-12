@@ -2,50 +2,50 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23741207DF
-	for <e@80x24.org>; Mon, 12 Sep 2016 21:08:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2532B207DF
+	for <e@80x24.org>; Mon, 12 Sep 2016 21:08:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932427AbcILVIq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Sep 2016 17:08:46 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33404 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932404AbcILVIq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2016 17:08:46 -0400
-Received: by mail-wm0-f66.google.com with SMTP id b187so15383351wme.0
-        for <git@vger.kernel.org>; Mon, 12 Sep 2016 14:08:45 -0700 (PDT)
+        id S1753113AbcILVIt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 17:08:49 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35077 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932404AbcILVIs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2016 17:08:48 -0400
+Received: by mail-wm0-f68.google.com with SMTP id c131so70199wmh.2
+        for <git@vger.kernel.org>; Mon, 12 Sep 2016 14:08:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=nlhz65ju66ZQWdEkq+MadmtuPoi/AgWQUCWMuiji8ZM=;
-        b=ikHJSVRq6VFWKOQZhE3RG4v0dcHWBE7IGFd9mysQ4SJNCUS2jcJ9YYvsM0iYIJWBtB
-         JPxfEODb3rVGBUKRxbjWTxVmsYa5j5fQ4BvzMsRswW1F818heyvHvhmgwPSIfYiyxbRB
-         mVHmueOi0ksj5zJxnfc3AmQqnBWIgl48o7NBHTUr+vfXMRcCiAw+k3FXzqJIzdb+ZO4h
-         igo/5HfK5Yh6nfjwWEO+ZJEq0lwB8MLFVVsfie7detZOmK9lc3rQIzL0t8ttDhUxxrfg
-         IyS42sC9hp99a5UQ2mafZcFaq8bEsM7oZPF9gqm6o01HGBK/JBFQ7S//WFUBs611kD+s
-         EG0w==
+        bh=zsCK1HOCfzAHfR9XStvXGsylwYK1FWoxVrM99a0EWx8=;
+        b=SvFuzvH4/TLkeF8TMf+jid4/yOLE8pr97T6dTn63d0XPhscowWTKTdAlxk5BfFPEuE
+         byeoay7HlXOviLd6SpUSkzK223B1wxdtfD1klmh0Bjg5jveMVxiNxwXG7X+hH4aRyU8R
+         X/7ChqlH0kUe7gcXKKHdgL8/Gi0saKSnwVJp0doEOLnAIqUyRfU6n1Wk34kds/7+wUye
+         zPnfsaGsHH4srVHFOOalRpzR7WfPhqKMsBPJQ5ayzwcNwWLOz12SKrfFTu2je99kk+Lg
+         pmdXYRYWfmJDzZDsvfRiEVxDxeGP99GRTcq5UU56kgikWIAD8jh+lgo3HsbIwgldQt4f
+         jMhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=nlhz65ju66ZQWdEkq+MadmtuPoi/AgWQUCWMuiji8ZM=;
-        b=VBlIcCne0NjwWejD6hn7atIHl+9KVj/BOdyd9PJBcvAIhaF+cp3zP9vo9vJUzxtJPu
-         sy49UY4+isE3uI4SbvUL6tx3BFMeVVDQFApueHEl+h56pNuC1zi6eljjeodz5AhLH80K
-         RdxQ7PBmU5In3NSP6H5Ewgi1sH7gLZfsa05+0N2mf7gpMY4F8tnn9DKu4G3DTIyd5e13
-         JeOFa7PgudSE45Q42pfZxe4onnBUbRjatupB5uaDoaWTVymY9d/OHrQJj2SAQMo60dxS
-         EA26G8nKa055R2M9HQsCOPH6g5aqPEkBZp7lCHJ+7fhvxAvDIxMZgmvruLR2MtDFMDsL
-         TMGw==
-X-Gm-Message-State: AE9vXwMcDL5XP/rSmHmoWwevMUtRvbsoRU2mXHd+nOjBVyS4FTnAakzw+jxNqVNyFnQ7Ww==
-X-Received: by 10.28.67.6 with SMTP id q6mr3780978wma.31.1473714524450;
-        Mon, 12 Sep 2016 14:08:44 -0700 (PDT)
+        bh=zsCK1HOCfzAHfR9XStvXGsylwYK1FWoxVrM99a0EWx8=;
+        b=HDaJqGaHSYRJvwzd1FZYvsq6qXJt1CyXdlSNntoR/WUuwfh07N5WHfMFfjr8TB8G5n
+         JR8oKsAFAH5ZhCbZtxaisAT4NexJYY5R4BjdHLgQpqa64fs25Q6i1uPFHSD2u+CtrABo
+         7kyeWrK6U6B6P+Kj0+a7V1y7g6cpYMvVU4D1tElOiC9eJ7MpSETsMD0ZccOX1Q1Xqrea
+         da8/HnRdUVZvxpGJjQbciMYBzLTt45a5cAy5E93Mfjbfd2c3nT/U6h7WdaO6oTFx9mZS
+         2AZh8tr1geEZI8C+qARLu1yZ8tFZ0+6vO4KrslXFIEwYrGDplNc/YDwmpmWdgqmAIfRI
+         sp9w==
+X-Gm-Message-State: AE9vXwMkABmx7tqQV0FVLQo9y5+V80nWiwS/Lw5syo+95IKYpYEZpeDynu5D5StK/l7eRA==
+X-Received: by 10.28.156.144 with SMTP id f138mr1851078wme.86.1473714526273;
+        Mon, 12 Sep 2016 14:08:46 -0700 (PDT)
 Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
-        by smtp.gmail.com with ESMTPSA id 190sm19581806wmk.13.2016.09.12.14.08.43
+        by smtp.gmail.com with ESMTPSA id u7sm19595203wmf.8.2016.09.12.14.08.45
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 12 Sep 2016 14:08:43 -0700 (PDT)
+        Mon, 12 Sep 2016 14:08:45 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -54,43 +54,52 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Edward Thomson <ethomson@edwardthomson.com>,
         Junio C Hamano <gitster@pobox.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v3 0/4] git add --chmod: always change the file
-Date:   Mon, 12 Sep 2016 22:08:14 +0100
-Message-Id: <20160912210818.26282-1-t.gummerer@gmail.com>
+Subject: [PATCH v3 1/4] add: document the chmod option
+Date:   Mon, 12 Sep 2016 22:08:15 +0100
+Message-Id: <20160912210818.26282-2-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.10.0.304.gf2ff484
-In-Reply-To: <20160911103028.5492-1-t.gummerer@gmail.com>
+In-Reply-To: <20160912210818.26282-1-t.gummerer@gmail.com>
 References: <20160911103028.5492-1-t.gummerer@gmail.com>
+ <20160912210818.26282-1-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks to Junio on setting me straight on the change of behaviour in
-the previous round.
+The git add --chmod option was introduced in 4e55ed3 ("add: add
+--chmod=+x / --chmod=-x options", 2016-05-31), but was never
+documented.  Document the feature.
 
-This round includes a similar change, which does however not change
-the behaviour of update-index with repeated arguments.  I still think
-the unification of the way git add and git update-index handle chmod
-is useful, when we can keep the behaviour with multiple arguments in
-update-index the same.
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+---
+ Documentation/git-add.txt | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-Thomas Gummerer (4):
-  add: document the chmod option
-  update-index: use the same structure for chmod as add
-  read-cache: introduce chmod_index_entry
-  add: modify already added files when --chmod is given
-
- Documentation/git-add.txt     |  7 ++++++-
- builtin/add.c                 | 36 +++++++++++++++++++++++-----------
- builtin/checkout.c            |  2 +-
- builtin/commit.c              |  2 +-
- builtin/update-index.c        | 45 ++++++++++++++++++-------------------------
- cache.h                       | 12 +++++++-----
- read-cache.c                  | 33 +++++++++++++++++++++++--------
- t/t2107-update-index-basic.sh | 13 +++++++++++++
- t/t3700-add.sh                | 21 ++++++++++++++++++++
- 9 files changed, 118 insertions(+), 53 deletions(-)
-
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index 6a96a66..7ed63dc 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ 'git add' [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [--patch | -p]
+ 	  [--edit | -e] [--[no-]all | --[no-]ignore-removal | [--update | -u]]
+ 	  [--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-missing]
+-	  [--] [<pathspec>...]
++	  [--chmod=(+|-)x] [--] [<pathspec>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -165,6 +165,11 @@ for "git add --no-all <pathspec>...", i.e. ignored removed files.
+ 	be ignored, no matter if they are already present in the work
+ 	tree or not.
+ 
++--chmod=(+|-)x::
++	Override the executable bit of the added files.  The executable
++	bit is only changed in the index, the files on disk are left
++	unchanged.
++
+ \--::
+ 	This option can be used to separate command-line options from
+ 	the list of files, (useful when filenames might be mistaken
 -- 
 2.10.0.304.gf2ff484
 
