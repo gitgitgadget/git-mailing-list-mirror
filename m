@@ -2,137 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DDBB207DF
-	for <e@80x24.org>; Mon, 12 Sep 2016 21:59:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64AC5207DF
+	for <e@80x24.org>; Mon, 12 Sep 2016 22:02:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755996AbcILV7s (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Sep 2016 17:59:48 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51231 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755738AbcILV7r (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2016 17:59:47 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DD01D3E445;
-        Mon, 12 Sep 2016 17:59:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=XjL8lp5NRYrk5xRtpa+H/BoC7CM=; b=iKRdks
-        VIVeA6fW4MEZidHJEIwdrm2LM+xpRS4O5k2swkA7kXwYfi1BP5EU6LhVIPdD2Q1E
-        1Ic2aMxGMJqAbjDDQYwh1cBt+vLyxYHdel0MldAuSwvsjm5ITQwvKbESjzvaBYdm
-        hA4hkq9nhEEOWa+KVqMNFcMCp0U/1J8FjauFw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=JfEJA+nhRUXQUP235sGt2raC0Y2BeODa
-        6BItcFhswoj1hnv3INikGKIXaKBk+RlE1FkrbXDr6z5xZ1UOcTUs1ow5kl1tA9lM
-        lp/X9POqxNvSMMnOnp+qYMiq+1t5c1khaceV7jRlLrv5jP0dfcCXukCwWzqzzZyj
-        xg2M9pFKjkE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D5CA23E444;
-        Mon, 12 Sep 2016 17:59:45 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5AD493E441;
-        Mon, 12 Sep 2016 17:59:45 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Jan Keromnes <janx@linux.com>,
-        Ingo =?utf-8?Q?Br=C3=BCckl?= <ib@wupperonline.de>,
-        Edward Thomson <ethomson@edwardthomson.com>
-Subject: Re: [PATCH v3 2/4] update-index: use the same structure for chmod as add
-References: <20160911103028.5492-1-t.gummerer@gmail.com>
-        <20160912210818.26282-1-t.gummerer@gmail.com>
-        <20160912210818.26282-3-t.gummerer@gmail.com>
-Date:   Mon, 12 Sep 2016 14:59:43 -0700
-In-Reply-To: <20160912210818.26282-3-t.gummerer@gmail.com> (Thomas Gummerer's
-        message of "Mon, 12 Sep 2016 22:08:16 +0100")
-Message-ID: <xmqq37l4zsmo.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 374DBFA8-7934-11E6-9AFA-51057B1B28F4-77302942!pb-smtp2.pobox.com
+        id S1755468AbcILWCa (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 18:02:30 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:34816 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751882AbcILWC3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2016 18:02:29 -0400
+Received: by mail-qt0-f195.google.com with SMTP id 38so6319505qte.2
+        for <git@vger.kernel.org>; Mon, 12 Sep 2016 15:02:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=mG3EU7lSnK47hHTpmrDldM6kA5p6fHQWVW+cZgOOR5w=;
+        b=n/RZisAwOcb9EDU3ME4UAevfQMBIqsUeRrs1ro2zufgdTTJaBPdAskUbhQ9r5RFNde
+         RQozu9FV3Qh/dlbBQ/REE03ayOVmAd3sRiQVpTRKbZOMI1qFu8J2D8CyOdZN4CCV6zyi
+         Ztdp3TJ862LrOQDKu5Z3+53AjAQglb0SdJLZIadQ+vTOv3BR/LymCrpmqrc/CGgUCbwZ
+         R87LYXMmy3bWt2AYRcsAUVx/PKzk9MaDgfTWUwUhmrisOsB7WYu92vsG4cPy4oQ2oGYB
+         cJPvBX3VFR/7T5IXtQOF2D4hFLaAmD2VgMoiNPHgqYd3r4ILbzpyp0eySBtc8hIwpXj7
+         Ayyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=mG3EU7lSnK47hHTpmrDldM6kA5p6fHQWVW+cZgOOR5w=;
+        b=W8qpoGtm9tAQZyD9au3AHOHemHpGdKzKvXpGMlc2qlIi8qR/cT/EP+wM5W2BaVLliJ
+         EBBTg6wzaZvvcye6TlA+8QqTUCh4Fs5PuhDnOJ4uLE1l1PS8PtLNieNhtZ1kAj7SVV3T
+         s0X4jVB90382YDGBzUBuDdJ050KPz+HICTKdTjswwa670Ccpzc6uoYE6dlD1cmq0SVIE
+         P1PHtflAJ3nnPDPKAAVQtojQ941HdqqY/9G4bvMvBhm7V7TKHb/tLkapoHPd2FedhUCT
+         ZesRbTzj2wCST+1vsshW9JL4ozrxXsnZ49vPw9bEVmcEKQ4XdlNluyqC29BJgQ38qABJ
+         D2Hg==
+X-Gm-Message-State: AE9vXwOeKzuPRtnlc74OFxGqkVMlKK8GVPZYgCfdRssqX2I3P9ecQR4n6onECv2rff+ZuA==
+X-Received: by 10.237.57.162 with SMTP id m31mr22835879qte.6.1473717748300;
+        Mon, 12 Sep 2016 15:02:28 -0700 (PDT)
+Received: from CHIC02QV065G8WN.sea.corp.expecn ([172.56.13.215])
+        by smtp.gmail.com with ESMTPSA id o65sm11724292qkc.48.2016.09.12.15.02.25
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Mon, 12 Sep 2016 15:02:27 -0700 (PDT)
+From:   Ori Rawlings <orirawlings@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Vitor Antunes <vitor.hda@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Luke Diamand <luke@diamand.org>, Pete Wyckoff <pw@padd.com>,
+        Ori Rawlings <orirawlings@gmail.com>
+Subject: [PATCH] [git-p4.py] Add --checkpoint-period option to sync/clone
+Date:   Mon, 12 Sep 2016 17:02:12 -0500
+Message-Id: <1473717733-65682-1-git-send-email-orirawlings@gmail.com>
+X-Mailer: git-send-email 2.7.4 (Apple Git-66)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+Importing a long history from Perforce into git using the git-p4 tool
+can be especially challenging. The `git p4 clone` operation is based
+on an all-or-nothing transactionality guarantee. Under real-world
+conditions like network unreliability or a busy Perforce server,
+`git p4 clone` and  `git p4 sync` operations can easily fail, forcing a
+user to restart the import process from the beginning. The longer the
+history being imported, the more likely a fault occurs during the
+process. Long enough imports thus become statistically unlikely to ever
+succeed.
 
-> +	char flip = force_mode == 0777 ? '+' : '-';
->  
->  	pos = cache_name_pos(path, strlen(path));
->  	if (pos < 0)
-> @@ -432,17 +433,11 @@ static void chmod_path(int flip, const char *path)
->  	mode = ce->ce_mode;
->  	if (!S_ISREG(mode))
->  		goto fail;
-> -	switch (flip) {
-> -	case '+':
-> -		ce->ce_mode |= 0111; break;
-> -	case '-':
-> -		ce->ce_mode &= ~0111; break;
-> -	default:
-> -		goto fail;
-> -	}
-> +	ce->ce_mode = create_ce_mode(force_mode);
+I'm looking for feedback on a potential approach for addressing the
+problem. My idea was to leverage the checkpoint feature of git 
+fast-import. I've included a patch which exposes a new option to the 
+sync/clone commands in the git-p4 tool. The option enables explict 
+checkpoints on a periodic basis (approximately every x seconds).
 
-create_ce_mode() is supposed to take the st_mode taken from a
-"struct stat", but here force_mode is 0777 or something else.  The
-above to feed only 0777 or 0666 may happen to work with the way how
-create_ce_mode() is implemented now, but it is a time-bomb waiting
-to go off.
+If the sync/clone command fails during processing of Perforce changes, 
+the user can craft a new git p4 sync command that will identify 
+changes that have already been imported and proceed with importing 
+only changes more recent than the last successful checkpoint.
 
-Instead of using force_mode that is unsigned, keep the 'flip' as
-argument, and do:
+Assuming this approach makes sense, there are a few questions/items I
+have:
 
-	if (!S_ISREG(mode))
-        	goto fail;
-+	if (flip == '+')
-+		mode |= 0111;
-+	else
-+		mode &= ~0111;
-	ce->ce_mode = create_ce_mode(mode);
+  1. To add tests for this option, I'm thinking I'd need to simulate a 
+     Perforce server or client that exits abnormally after first 
+     processing some operations successfully. I'm looking for 
+     suggestions on sane approaches for implementing that.
+  2. From a usability perspective, I think it makes sense to print 
+     out a message upon clone/sync failure if the user has enabled the 
+     option. This message would describe how long ago the last 
+     successful checkpoint was completed and document what command/s 
+     to execute to continue importing Perforce changes. Ideally, the 
+     commmand to continue would be exactly the same as the command 
+     which failed, but today, clone will ignore any commits already 
+     imported to git. There are some lingering TODO comments in 
+     git-p4.py suggesting that clone should try to avoid reimporting
+     changes. I don't mind taking a stab at addressing the TODO, but 
+     am worried I'll quickly encounter edge cases in the clone/sync 
+     features I don't understand.
+  3. This is my first attempt at a git contribution, so I'm definitely 
+     looking for feedback on commit messages, etc.
 
-perhaps, as you do not need and are not using the full 9 bits in
-force_mode anyway.
 
-That would mean chmod_index_entry() introduced in 3/4 and its user
-in 4/4 need to be updated to pass '+' or '-' down the callchain, but
-I think that is a good change for the same reason.  We do not allow
-you to set full 9 bits; let's not pretend as if we do so by passing
-just a single bit '+' or '-' around.
+Cheers!
 
-I think 3/4 needs to be fixed where it calls create_ce_mode() with
-only the 0666/0777 in chmod_index_entry() anyway, regardless of the
-above suggested change.
+Ori Rawlings (1):
+  [git-p4.py] Add --checkpoint-period option to sync/clone
 
-> diff --git a/t/t2107-update-index-basic.sh b/t/t2107-update-index-basic.sh
-> index dfe02f4..32ac6e0 100755
-> --- a/t/t2107-update-index-basic.sh
-> +++ b/t/t2107-update-index-basic.sh
-> @@ -80,4 +80,17 @@ test_expect_success '.lock files cleaned up' '
->  	)
->  '
->  
-> +test_expect_success '--chmod=+x and chmod=-x in the same argument list' '
-> +	>A &&
-> +	>B &&
-> +	git add A B &&
-> +	git update-index --chmod=+x A --chmod=-x B &&
-> +	cat >expect <<-\EOF &&
-> +	100755 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	A
-> +	100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	B
-> +	EOF
-> +	git ls-files --stage A B >actual &&
-> +	test_cmp expect actual
-> +'
+ git-p4.py | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-Thanks for adding this test.  We may want to cross the b/c bridge in
-a later version bump, but until then it is good to make sure we know
-what the currently expected behaviour is.
+-- 
+2.7.4 (Apple Git-66)
+
