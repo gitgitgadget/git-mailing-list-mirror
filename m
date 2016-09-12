@@ -7,21 +7,21 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67A1E20984
-	for <e@80x24.org>; Mon, 12 Sep 2016 11:38:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4ACA20984
+	for <e@80x24.org>; Mon, 12 Sep 2016 11:38:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757930AbcILLih (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Sep 2016 07:38:37 -0400
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:55237 "EHLO sapo.pt"
+        id S1758072AbcILLim (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 07:38:42 -0400
+Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:55016 "EHLO sapo.pt"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1757388AbcILLig (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2016 07:38:36 -0400
-Received: (qmail 15736 invoked from network); 12 Sep 2016 11:38:33 -0000
-Received: (qmail 24905 invoked from network); 12 Sep 2016 11:31:53 -0000
+        id S1757388AbcILLil (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2016 07:38:41 -0400
+Received: (qmail 31015 invoked from network); 12 Sep 2016 11:38:36 -0000
+Received: (qmail 22793 invoked from network); 12 Sep 2016 11:31:46 -0000
 Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 12 Sep 2016 11:31:48 -0000
+          for <git@vger.kernel.org>; 12 Sep 2016 11:31:41 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -33,9 +33,9 @@ Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
         <avarab@gmail.com>,
         =?UTF-8?q?Jean-No=C3=ABl=20AVILA?= <jn.avila@free.fr>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 12/14] i18n: show-branch: mark error messages for translation
-Date:   Mon, 12 Sep 2016 11:30:00 +0000
-Message-Id: <1473679802-31381-12-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH v2 11/14] i18n: receive-pack: mark messages for translation
+Date:   Mon, 12 Sep 2016 11:29:59 +0000
+Message-Id: <1473679802-31381-11-git-send-email-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1473679802-31381-1-git-send-email-vascomalmeida@sapo.pt>
 References: <1473679802-31381-1-git-send-email-vascomalmeida@sapo.pt>
@@ -46,71 +46,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lowercase some messages first word to match style of the others.
+Mark messages refuse_unconfigured_deny_msg and
+refuse_unconfigured_deny_delete_current_msg for translation.
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- builtin/show-branch.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ builtin/receive-pack.c | 58 ++++++++++++++++++++++----------------------------
+ 1 file changed, 25 insertions(+), 33 deletions(-)
 
-diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-index 2566935..6bf82cd 100644
---- a/builtin/show-branch.c
-+++ b/builtin/show-branch.c
-@@ -538,7 +538,7 @@ static void append_one_rev(const char *av)
- 		for_each_ref(append_matching_ref, NULL);
- 		if (saved_matches == ref_name_cnt &&
- 		    ref_name_cnt < MAX_REVS)
--			error("no matching refs with %s", av);
-+			error(_("no matching refs with %s"), av);
- 		if (saved_matches + 1 < ref_name_cnt)
- 			sort_ref_range(saved_matches, ref_name_cnt);
- 		return;
-@@ -701,8 +701,8 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 			 *
- 			 * Also --all and --remotes do not make sense either.
- 			 */
--			die("--reflog is incompatible with --all, --remotes, "
--			    "--independent or --merge-base");
-+			die(_("--reflog is incompatible with --all, --remotes, "
-+			      "--independent or --merge-base"));
- 	}
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index f1ce05c..896b16f 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -781,47 +781,39 @@ static int is_ref_checked_out(const char *ref)
+ 	return !strcmp(head_name, ref);
+ }
  
- 	/* If nothing is specified, show all branches by default */
-@@ -725,16 +725,16 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 			av = fake_av;
- 			ac = 1;
- 			if (!*av)
--				die("no branches given, and HEAD is not valid");
-+				die(_("no branches given, and HEAD is not valid"));
- 		}
- 		if (ac != 1)
--			die("--reflog option needs one branch name");
-+			die(_("--reflog option needs one branch name"));
+-static char *refuse_unconfigured_deny_msg[] = {
+-	"By default, updating the current branch in a non-bare repository",
+-	"is denied, because it will make the index and work tree inconsistent",
+-	"with what you pushed, and will require 'git reset --hard' to match",
+-	"the work tree to HEAD.",
+-	"",
+-	"You can set 'receive.denyCurrentBranch' configuration variable to",
+-	"'ignore' or 'warn' in the remote repository to allow pushing into",
+-	"its current branch; however, this is not recommended unless you",
+-	"arranged to update its work tree to match what you pushed in some",
+-	"other way.",
+-	"",
+-	"To squelch this message and still keep the default behaviour, set",
+-	"'receive.denyCurrentBranch' configuration variable to 'refuse'."
+-};
++static char *refuse_unconfigured_deny_msg =
++	N_("By default, updating the current branch in a non-bare repository\n"
++	   "is denied, because it will make the index and work tree inconsistent\n"
++	   "with what you pushed, and will require 'git reset --hard' to match\n"
++	   "the work tree to HEAD.\n"
++	   "\n"
++	   "You can set 'receive.denyCurrentBranch' configuration variable to\n"
++	   "'ignore' or 'warn' in the remote repository to allow pushing into\n"
++	   "its current branch; however, this is not recommended unless you\n"
++	   "arranged to update its work tree to match what you pushed in some\n"
++	   "other way.\n"
++	   "\n"
++	   "To squelch this message and still keep the default behaviour, set\n"
++	   "'receive.denyCurrentBranch' configuration variable to 'refuse'.");
  
- 		if (MAX_REVS < reflog)
--			die("Only %d entries can be shown at one time.",
-+			die("only %d entries can be shown at one time.",
- 			    MAX_REVS);
- 		if (!dwim_ref(*av, strlen(*av), oid.hash, &ref))
--			die("No such ref %s", *av);
-+			die(_("no such ref %s"), *av);
+ static void refuse_unconfigured_deny(void)
+ {
+-	int i;
+-	for (i = 0; i < ARRAY_SIZE(refuse_unconfigured_deny_msg); i++)
+-		rp_error("%s", refuse_unconfigured_deny_msg[i]);
++	rp_error("%s", _(refuse_unconfigured_deny_msg));
+ }
  
- 		/* Has the base been specified? */
- 		if (reflog_base) {
-@@ -828,10 +828,10 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 		if (MAX_REVS <= num_rev)
- 			die("cannot handle more than %d revs.", MAX_REVS);
- 		if (get_sha1(ref_name[num_rev], revkey.hash))
--			die("'%s' is not a valid ref.", ref_name[num_rev]);
-+			die(_("'%s' is not a valid ref."), ref_name[num_rev]);
- 		commit = lookup_commit_reference(revkey.hash);
- 		if (!commit)
--			die("cannot find commit %s (%s)",
-+			die(_("cannot find commit %s (%s)"),
- 			    ref_name[num_rev], oid_to_hex(&revkey));
- 		parse_commit(commit);
- 		mark_seen(commit, &seen);
+-static char *refuse_unconfigured_deny_delete_current_msg[] = {
+-	"By default, deleting the current branch is denied, because the next",
+-	"'git clone' won't result in any file checked out, causing confusion.",
+-	"",
+-	"You can set 'receive.denyDeleteCurrent' configuration variable to",
+-	"'warn' or 'ignore' in the remote repository to allow deleting the",
+-	"current branch, with or without a warning message.",
+-	"",
+-	"To squelch this message, you can set it to 'refuse'."
+-};
++static char *refuse_unconfigured_deny_delete_current_msg =
++	N_("By default, deleting the current branch is denied, because the next\n"
++	   "'git clone' won't result in any file checked out, causing confusion.\n"
++	   "\n"
++	   "You can set 'receive.denyDeleteCurrent' configuration variable to\n"
++	   "'warn' or 'ignore' in the remote repository to allow deleting the\n"
++	   "current branch, with or without a warning message.\n"
++	   "\n"
++	   "To squelch this message, you can set it to 'refuse'.");
+ 
+ static void refuse_unconfigured_deny_delete_current(void)
+ {
+-	int i;
+-	for (i = 0;
+-	     i < ARRAY_SIZE(refuse_unconfigured_deny_delete_current_msg);
+-	     i++)
+-		rp_error("%s", refuse_unconfigured_deny_delete_current_msg[i]);
++	rp_error("%s", _(refuse_unconfigured_deny_delete_current_msg));
+ }
+ 
+ static int command_singleton_iterator(void *cb_data, unsigned char sha1[20]);
 -- 
 2.7.4
 
