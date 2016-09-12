@@ -7,21 +7,21 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31A5120985
-	for <e@80x24.org>; Mon, 12 Sep 2016 11:38:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D567520984
+	for <e@80x24.org>; Mon, 12 Sep 2016 11:38:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758021AbcILLhs (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Sep 2016 07:37:48 -0400
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:54399 "EHLO sapo.pt"
+        id S1758054AbcILLiA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 07:38:00 -0400
+Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:54660 "EHLO sapo.pt"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1758012AbcILLhq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2016 07:37:46 -0400
-Received: (qmail 13069 invoked from network); 12 Sep 2016 11:37:40 -0000
-Received: (qmail 8642 invoked from network); 12 Sep 2016 11:31:00 -0000
+        id S1758012AbcILLh7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2016 07:37:59 -0400
+Received: (qmail 14037 invoked from network); 12 Sep 2016 11:37:52 -0000
+Received: (qmail 12413 invoked from network); 12 Sep 2016 11:31:12 -0000
 Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 12 Sep 2016 11:30:58 -0000
+          for <git@vger.kernel.org>; 12 Sep 2016 11:31:07 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -33,9 +33,9 @@ Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
         <avarab@gmail.com>,
         =?UTF-8?q?Jean-No=C3=ABl=20AVILA?= <jn.avila@free.fr>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 03/14] i18n: apply: mark info messages for translation
-Date:   Mon, 12 Sep 2016 11:29:51 +0000
-Message-Id: <1473679802-31381-3-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH v2 05/14] i18n: branch: mark option description for translation
+Date:   Mon, 12 Sep 2016 11:29:53 +0000
+Message-Id: <1473679802-31381-5-git-send-email-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1473679802-31381-1-git-send-email-vascomalmeida@sapo.pt>
 References: <1473679802-31381-1-git-send-email-vascomalmeida@sapo.pt>
@@ -46,47 +46,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark messages for translation printed to stderr.
-
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- builtin/apply.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ builtin/branch.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index ef2c084..43ab7c5 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -3525,7 +3525,7 @@ static int try_threeway(struct apply_state *state,
- 		 read_blob_object(&buf, pre_sha1, patch->old_mode))
- 		return error(_("repository lacks the necessary blob to fall back on 3-way merge."));
- 
--	fprintf(stderr, "Falling back to three-way merge...\n");
-+	fprintf(stderr, _("Falling back to three-way merge...\n"));
- 
- 	img = strbuf_detach(&buf, &len);
- 	prepare_image(&tmp_image, img, len, 1);
-@@ -3555,7 +3555,7 @@ static int try_threeway(struct apply_state *state,
- 	status = three_way_merge(image, patch->new_name,
- 				 pre_sha1, our_sha1, post_sha1);
- 	if (status < 0) {
--		fprintf(stderr, "Failed to fall back on three-way merge...\n");
-+		fprintf(stderr, _("Failed to fall back on three-way merge...\n"));
- 		return status;
- 	}
- 
-@@ -3567,9 +3567,9 @@ static int try_threeway(struct apply_state *state,
- 			hashcpy(patch->threeway_stage[0].hash, pre_sha1);
- 		hashcpy(patch->threeway_stage[1].hash, our_sha1);
- 		hashcpy(patch->threeway_stage[2].hash, post_sha1);
--		fprintf(stderr, "Applied patch to '%s' with conflicts.\n", patch->new_name);
-+		fprintf(stderr, _("Applied patch to '%s' with conflicts.\n"), patch->new_name);
- 	} else {
--		fprintf(stderr, "Applied patch to '%s' cleanly.\n", patch->new_name);
-+		fprintf(stderr, _("Applied patch to '%s' cleanly.\n"), patch->new_name);
- 	}
- 	return 0;
- }
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 7df0543..d5d93a8 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -657,7 +657,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		OPT_SET_INT( 0, "set-upstream",  &track, N_("change upstream info"),
+ 			BRANCH_TRACK_OVERRIDE),
+ 		OPT_STRING('u', "set-upstream-to", &new_upstream, N_("upstream"), N_("change the upstream info")),
+-		OPT_BOOL(0, "unset-upstream", &unset_upstream, "Unset the upstream info"),
++		OPT_BOOL(0, "unset-upstream", &unset_upstream, N_("Unset the upstream info")),
+ 		OPT__COLOR(&branch_use_color, N_("use colored output")),
+ 		OPT_SET_INT('r', "remotes",     &filter.kind, N_("act on remote-tracking branches"),
+ 			FILTER_REFS_REMOTES),
 -- 
 2.7.4
 
