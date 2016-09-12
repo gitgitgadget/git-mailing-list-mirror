@@ -2,88 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C997B207DF
-	for <e@80x24.org>; Mon, 12 Sep 2016 17:33:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BA3B207DF
+	for <e@80x24.org>; Mon, 12 Sep 2016 17:40:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756155AbcILRdS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Sep 2016 13:33:18 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60076 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752070AbcILRdP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2016 13:33:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1972B3AC23;
-        Mon, 12 Sep 2016 13:33:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=dmEYoPY9ZrXIGIuZtBdW8E/58Qg=; b=M62ook
-        LW3hGA6c1LysDFBTaBKZ7ZHQGL9gWOpZx1Y6GIt6JfjznQ5xCwJuMV/yzJRqc4XJ
-        lxS1nq3/2PoknWIg2b89p7JEUEeYeGjUItd+8CZWqpWkNWkmBA/orWlNRuXyFaDe
-        7uYsPGEGPOV84Oo8lWT1mwkCHeWtPsZ8CYxgM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hAdo0rFBwB5kDIbQPXzjx3LgiDX6SGP+
-        qO07k/1AhiHNM9xq97UTWNsGkutWLv61w0787q/ptA6VVD+nzSlg5XbDnKXt8uF7
-        q75p62VnqsIgAOFXY/fD5taXvZ12jDw31cR2KdmdrjGne7Z0l7CwlPJwAaZQ234m
-        DviJ9XsR90k=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 103AE3AC22;
-        Mon, 12 Sep 2016 13:33:14 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8F6B63AC1E;
-        Mon, 12 Sep 2016 13:33:13 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kirill Smelkov <kirr@nexedi.com>
-Cc:     Jeff King <peff@peff.net>, Vicent Marti <tanoku@gmail.com>,
-        =?utf-8?Q?J=C3=A9rome?= Perrin <jerome@nexedi.com>,
-        Isabelle Vallet <isabelle.vallet@nexedi.com>,
-        Kazuhiko Shiozaki <kazuhiko@nexedi.com>,
-        Julien Muchembled <jm@nexedi.com>, git@vger.kernel.org
-Subject: Re: [PATCH 1/2 v5] pack-objects: respect --local/--honor-pack-keep/--incremental when bitmap is in use
-References: <20160809192858.GA25822@teco.navytux.spb.ru>
-        <20160809193143.32213-1-kirr@nexedi.com>
-        <20160818175222.bmm3ivjheokf2qzl@sigill.intra.peff.net>
-        <20160910145738.x6ihp2gqzpk7dbi3@teco.navytux.spb.ru>
-Date:   Mon, 12 Sep 2016 10:33:11 -0700
-In-Reply-To: <20160910145738.x6ihp2gqzpk7dbi3@teco.navytux.spb.ru> (Kirill
-        Smelkov's message of "Sat, 10 Sep 2016 17:57:39 +0300")
-Message-ID: <xmqqy42x2fc8.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1755619AbcILRkJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 13:40:09 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:35129 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751936AbcILRkB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2016 13:40:01 -0400
+Received: by mail-wm0-f52.google.com with SMTP id a6so66142072wmc.0
+        for <git@vger.kernel.org>; Mon, 12 Sep 2016 10:40:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=GzK2OqVIbwJafmEt50Zc+VYOiRNGL83nH8AFNY185NA=;
+        b=cU840Vqn2KxZJ1oe8+3ExSUd77QrEgbW8YzjL6F7PfyGlgSiaboCeF+ABvwuzFG8+y
+         YyjhP6BDi4dLBj/X3pCi83Luiw6ZpjQzLeE2L2jzdP+TUn55qYt5i+aR7124WC/u8IUD
+         aiXBmkAss73dtl/5nZh04eKjmO6GoITiyQP7/MD0FcMeUo4mlEtTJTqvtwSn1TM6uZ6A
+         XHW7X5PPIRLspWukQci4wh3QVrfj8QX2ogg/eJZQTY9Vf5F5LCc1LQ5//xQOwJpw7dyz
+         PHO99ah7CQ0oX1PHB9lRiEmLeq+3SyW82++tns8lxTytXT9Qh7TdRvA15lc/Xa6pQmYL
+         BuDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=GzK2OqVIbwJafmEt50Zc+VYOiRNGL83nH8AFNY185NA=;
+        b=anROxdW5h9Ho4bJ9T+z3abY3hXVu2mEz/e/5vRhR2dCbQE6pfVbUq8fB3z6AdX8jZW
+         nyp/yAWKJjWsNx4pflRhfJecFLt1emuYKae9JGJOaFe51yl/QkjeksWczUVRmidD6qgG
+         zislrAP61nPu+vWRvjUlUEC2Gi2Af/mUAO0rjiTFSgiadLymYPF6lW0xsPwpfHQoC1Jw
+         4V4B5FnRySot48KSyynUVGQf+jzUhX77OfssratdAKWntmEk+lAg1K1O+5iove0JVP7N
+         tSOCH3yNZXax4/zC5qomvtUd/OUApvTOJ1uzZWNiy9m0WoSGYsvlBnPCxWfA90BWWo71
+         9p1g==
+X-Gm-Message-State: AE9vXwNeYuehfHXZ7RK3osFqC3iJG3Ipznbz0NM3VijL5GF0RqMrsJwa9Ufg6K9YyDgzRtSKWwKAkcLysVe/FRta
+X-Received: by 10.194.123.35 with SMTP id lx3mr18093202wjb.126.1473702000190;
+ Mon, 12 Sep 2016 10:40:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FB711FE0-790E-11E6-8838-F7BB12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.28.15.79 with HTTP; Mon, 12 Sep 2016 10:39:59 -0700 (PDT)
+In-Reply-To: <CAKoko1oSEac_Nr1SkRB=dM_r3Jnew1Et2ZKj716iU3JLyHe2GQ@mail.gmail.com>
+References: <1473458004-41460-1-git-send-email-bmwill@google.com>
+ <xmqqh99o8ypm.fsf@gitster.mtv.corp.google.com> <CAGZ79kaWNykEAZcjZ2Y19j2_3TF+qcz+vb8zSi1U+me3k+06LA@mail.gmail.com>
+ <xmqqmvje6qbe.fsf@gitster.mtv.corp.google.com> <20160912005106.fj7adhmtfklv4vir@sigill.intra.peff.net>
+ <20160912005229.6njhgfq7h6cb34s4@sigill.intra.peff.net> <xmqqmvjd3y5l.fsf@gitster.mtv.corp.google.com>
+ <CAKoko1oSEac_Nr1SkRB=dM_r3Jnew1Et2ZKj716iU3JLyHe2GQ@mail.gmail.com>
+From:   Brandon Williams <bmwill@google.com>
+Date:   Mon, 12 Sep 2016 10:39:59 -0700
+Message-ID: <CAKoko1rNUaoC7pKH=aWQQP83AoeZjakFSNq_w-G2OL78ZKg+=w@mail.gmail.com>
+Subject: Re: [RFC/PATCH] ls-files: adding support for submodules
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kirill Smelkov <kirr@nexedi.com> writes:
+Thanks for all the comments.  What it sounds like is that using ls-files as
+a means to power a recursive git-grep may not be like the best approach (I
+assumed that would be the case but thought it a decent place to start).
 
-> On Thu, Aug 18, 2016 at 01:52:22PM -0400, Jeff King wrote:
-> > 
-> > Good to know there is no regression. It is curious that there is a
-> > slight _improvement_ across the board. Do we have an explanation for
-> > that? It seems odd that noise would be so consistent.
->
-> Yes, I too thought it and it turned out to be t/perf/run does not copy
-> config.mak.autogen & friends to build/ and I'm using autoconf with
-> CFLAGS="-march=native -O3 ..."
->
-> Junio, I could not resist to the following:
-> ...
-> With corrected t/perf/run the timings are more realistic - e.g. 3
-> consecutive runs of `./run 56dfeb62 . ./p5310-pack-bitmaps.sh`:
-
-Wow, that's what I call an exchange with quality during a review ;-)
-
-Thanks for the curiosity and digging it to the root cause of the
-anomaly.  Some GNUism/bashism in the way copying is spelled in the
-patch bothers me, but that is easily fixable.
-
-Thanks.
+I agree that not all operating modes would be useful for a recursive
+ls-files, which is why I initially don't have support for them.  I guess
+the question would be which modes would be worth supporting in a recursive
+case?
