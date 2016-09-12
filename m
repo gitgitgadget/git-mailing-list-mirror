@@ -7,81 +7,90 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA7EC20984
-	for <e@80x24.org>; Mon, 12 Sep 2016 11:47:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA1EE20984
+	for <e@80x24.org>; Mon, 12 Sep 2016 11:58:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758043AbcILLrr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Sep 2016 07:47:47 -0400
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:35257 "EHLO
-        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757772AbcILLrq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2016 07:47:46 -0400
-Received: by mail-wm0-f53.google.com with SMTP id a6so49378366wmc.0
-        for <git@vger.kernel.org>; Mon, 12 Sep 2016 04:47:46 -0700 (PDT)
+        id S1756193AbcILL6A (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 07:58:00 -0400
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:38687 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757549AbcILL57 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2016 07:57:59 -0400
+Received: by mail-wm0-f44.google.com with SMTP id 1so140191905wmz.1
+        for <git@vger.kernel.org>; Mon, 12 Sep 2016 04:57:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=TFqA0ysLUsDpN6+vTwvTgxoVYoHU04S3Gkp6B9xaApE=;
-        b=RoWk70j2NtGyLz6xGkhbY9IeLBaobU+oAW3Ss/SquoKgfz0txvIcQDD493c0O636dW
-         kvJ0zJTkj0+oTS+0qD7jkkFzx/1NHLueykXaqOiA67BwrrftIUsBh5ac7TjUaB33Qrhk
-         kn4zr6IxwEYv0ZgNvWKCGb7z37tg46iuSV1pQU9jAzIK745gkUsgjqptV+1rlz95NNbN
-         mevTzDaOzGi0Z4m6iVdGDWPzLaqzkmX2QjprBW9a4ozR2sXDgWqMDbIEkEQCtEZ8EBgr
-         j5NiaIIO6aZ2iuy+hktvpsDnBHdhBQJHaet1/niNDUfl/6fEUzQG4T8n8nWWKaXNNAT0
-         OOgQ==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=T54Z6h1Riie+ZBsc4nAEYRjHT7Lh8uqEpzhbQxjQYyU=;
+        b=AcdaUnOQWk8E2PLri+Vj5D0ZVvOMb2EbVIfHWV66p39Ujhmm7cEHs5Rvao80kDdddh
+         xLP3Uf9l3ksPJDkTHAeSB+j0Os0goAZgFDv824TqHd3pMqmA4PqOxBO6p0nCPFAgZIvt
+         3zrSiwCw0loAeGQPFHmUh/rdeSAUb1uPstsVXDZt1CpOZY6i/aZP4cu5VWDdm+WpdqZB
+         nSAv7gHtvC8HvFdHbZg6vqM7bt5wxLiReqWWyblEiMSzNdHgHG/UTuRN9ymEofVVesLY
+         IZDcbPNff5wPM952dw3uvNt/XjdeVl1JPnL6mzeaJdJpNBvXDuMjoK15TbVuW3JpS6bZ
+         C4wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=TFqA0ysLUsDpN6+vTwvTgxoVYoHU04S3Gkp6B9xaApE=;
-        b=F/JAZdrqA+2AxHL9KOqmaL3Y/DS4HOQ5BOJkVYeDL0v8oiHABToz+gbvCTVyVZefkf
-         8jN9Iil7wd6Y4MgkQLQNwSI3wpDX+wme4oH1C/LPRL/BRCAO/EcwesIQJf/H42dOnFgH
-         Y1YKEqyQ4LoO4VP2VembBK7Ua3A4c/bPJVYA+F6oWhB7WSkTW2wjUFS4ikO6Cwc37SGe
-         udF1zODspOFBKUs02037oNBt/Q3TC6G2tQoqHWa6+Lt5wNCI1ll+FREHL1rfLmepj6KO
-         KFmo5Y527/UCYT8CwF/Q8VmJ4M7XXwv3BDVyuMsK4LzrvEkuHNCSSiQ/X1QAitY6Ymsk
-         MAAw==
-X-Gm-Message-State: AE9vXwNvhmTTz310OkEMEv9lt8hv36vl4eQkRaRWEVkUubKMtJHsLV0QPRKDHo3Z9+5mAQ==
-X-Received: by 10.28.0.202 with SMTP id 193mr6125459wma.29.1473680865487;
-        Mon, 12 Sep 2016 04:47:45 -0700 (PDT)
-Received: from [192.168.1.112] (static-csq-cds-097114.business.bouyguestelecom.com. [164.177.97.114])
-        by smtp.googlemail.com with ESMTPSA id jd4sm17529012wjb.6.2016.09.12.04.47.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 12 Sep 2016 04:47:44 -0700 (PDT)
-Subject: Re: [PATCH v2 07/14] i18n: merge-recursive: mark error messages for
- translation
-To:     Vasco Almeida <vascomalmeida@sapo.pt>, git@vger.kernel.org
-References: <1473679802-31381-1-git-send-email-vascomalmeida@sapo.pt>
- <1473679802-31381-7-git-send-email-vascomalmeida@sapo.pt>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        =?UTF-8?Q?Jean-No=c3=abl_AVILA?= <jn.avila@free.fr>,
-        Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Jean-No=c3=abl_Avila?= <avila.jn@gmail.com>
-Message-ID: <882dcaf3-fd9b-0d83-2756-f3315dd6bb4e@gmail.com>
-Date:   Mon, 12 Sep 2016 13:47:43 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
-MIME-Version: 1.0
-In-Reply-To: <1473679802-31381-7-git-send-email-vascomalmeida@sapo.pt>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=T54Z6h1Riie+ZBsc4nAEYRjHT7Lh8uqEpzhbQxjQYyU=;
+        b=ZYZXSQ+apnBhzEA0/4R3RNylifZNwzr1o4Bn+mviouFnWGiBOhnIn4lA+reCPfixJT
+         sx2o0AlJ6/h0LXQLX3xtPBno565wciwy5j6I6dI0bHFdl+dhrl/ba68PmclZXZj9rXUT
+         W1QWKOsIaKr8PWbjCtRvzfnNJcEsVnUxK9CTqUEnRFGV9xr2g3RSE38p0LVle6zZILSE
+         3mZwbcIQaTwpJcjMsymdgZeiIaPCvxuYSdG6il8Xp1j2b4KF+2BnE7/k+s4Rs7P9+Ap7
+         Iu2qFwBW2wUUcDQlt14zhVWB7jp1orVBOWf+qYnRwFW2DxSBw1QAB3oM7B0eximMjNbS
+         JOXw==
+X-Gm-Message-State: AE9vXwNXVPOg+lLHv2vMaIGZ2PHeFz68AyexwbogZXrHj7xwYBD+JoeGU2PD8EKki5G4Jw==
+X-Received: by 10.194.141.13 with SMTP id rk13mr14051905wjb.25.1473681478506;
+        Mon, 12 Sep 2016 04:57:58 -0700 (PDT)
+Received: from [172.31.96.158] ([91.231.145.254])
+        by smtp.gmail.com with ESMTPSA id q139sm17515399wmb.18.2016.09.12.04.57.56
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 12 Sep 2016 04:57:57 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v7 03/10] pkt-line: add packet_write_fmt_gently()
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <CAGZ79kZaRdJqbjfacdxT5eqOaK-RObJo+AddZ8heaU-KzWCOwQ@mail.gmail.com>
+Date:   Mon, 12 Sep 2016 11:22:24 +0200
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+        Martin-Louis Bright <mlbright@gmail.com>,
+        =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        Jacob Keller <jacob.keller@gmail.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <0365589B-7733-4C97-A566-957BACC67B29@gmail.com>
+References: <20160908182132.50788-1-larsxschneider@gmail.com> <20160908182132.50788-4-larsxschneider@gmail.com> <CAGZ79kY0GaWuuh_MzKL6FZ7KWF2Kwhfh9qnEYd-qX8VDQWNmCQ@mail.gmail.com> <714C1346-6A7D-4A8B-AAA2-BA936EB6B739@gmail.com> <CAGZ79kZaRdJqbjfacdxT5eqOaK-RObJo+AddZ8heaU-KzWCOwQ@mail.gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-Le 12/09/2016 à 13:29, Vasco Almeida a écrit :
-> -			warning("Cannot handle more than %d bases. "
-> -				"Ignoring %s.",
-> +			warning(_("cannot handle more than %d bases. "
-> +				  "Ignoring %s."),
->  				(int)ARRAY_SIZE(bases)-1, argv[i]);
->  	}
+> On 11 Sep 2016, at 18:01, Stefan Beller <sbeller@google.com> wrote:
+> 
+> On Sun, Sep 11, 2016 at 4:36 AM, Lars Schneider
+> <larsxschneider@gmail.com> wrote:
+> 
+>>> 
+>>>   call check_pipe from write_or_die here instead of
+>>>   reproducing that function?
+>> [...]
+> 
+>> Maybe it would be more suitable to move check_pipe to
+>> run-command.h/c?
+> 
+> That's certainly possible.
+> I don't have a strong opinion, where the code actually
+> resides, but I do have a strong-ish opinion on code
+> duplication. ;)
 
-This one is also missing the plural form.
+OK, then I will move check_pipe() to run-command.
 
 Thanks,
+Lars
 
-JN
