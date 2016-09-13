@@ -6,110 +6,120 @@ X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF3EE207DF
-	for <e@80x24.org>; Tue, 13 Sep 2016 03:22:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1EC0B207DF
+	for <e@80x24.org>; Tue, 13 Sep 2016 03:23:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751561AbcIMDWr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Sep 2016 23:22:47 -0400
-Received: from cloud.peff.net ([104.130.231.41]:42259 "HELO cloud.peff.net"
+        id S1752105AbcIMDXQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 23:23:16 -0400
+Received: from cloud.peff.net ([104.130.231.41]:42265 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750747AbcIMDWq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2016 23:22:46 -0400
-Received: (qmail 20197 invoked by uid 109); 13 Sep 2016 03:22:46 -0000
+        id S1750953AbcIMDXP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2016 23:23:15 -0400
+Received: (qmail 20209 invoked by uid 109); 13 Sep 2016 03:23:15 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Sep 2016 03:22:46 +0000
-Received: (qmail 18380 invoked by uid 111); 13 Sep 2016 03:22:55 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Sep 2016 03:23:15 +0000
+Received: (qmail 18410 invoked by uid 111); 13 Sep 2016 03:23:25 -0000
 Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 12 Sep 2016 23:22:55 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Sep 2016 23:22:42 -0400
-Date:   Mon, 12 Sep 2016 23:22:42 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 12 Sep 2016 23:23:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Sep 2016 20:23:12 -0700
+Date:   Mon, 12 Sep 2016 20:23:12 -0700
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Dennis Kaarsemaker <dennis@kaarsemaker.net>,
         =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: [PATCH 0/16] fix config-reading in non-repos
-Message-ID: <20160913032242.coyuhyhn6uklewuk@sigill.intra.peff.net>
+Subject: [PATCH 01/16] t1007: factor out repeated setup
+Message-ID: <20160913032312.yheky2o25lmibvmb@sigill.intra.peff.net>
+References: <20160913032242.coyuhyhn6uklewuk@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <20160913032242.coyuhyhn6uklewuk@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The motivation for this series is to fix the regression in v2.9 where
-core.logallrefupdates is sometimes not set properly in a newly
-initialized repository, as described in this thread:
+We have a series of 3 CRLF tests that do exactly the same
+(long) setup sequence. Let's pull it out into a common setup
+test, which is shorter, more efficient, and will make it
+easier to add new tests.
 
-  http://public-inbox.org/git/c46d36ef-3c2e-374f-0f2e-ffe31104e023@gmx.de/T/#u
+Note that we don't have to worry about cleaning up any of
+the setup which was previously per-test; we call pop_repo
+after the CRLF tests, which cleans up everything.
 
-The root of the problem is that we are overly eager to read and use
-config from ".git/config", even when we have not established that it is
-part of a repository. This is especially bad for git-init, which would
-not want to read anything until we've created the new repo.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t1007-hash-object.sh | 32 ++++++++------------------------
+ 1 file changed, 8 insertions(+), 24 deletions(-)
 
-So the two interesting parts of the fix are:
+diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
+index 7d2baa1..c89faa6 100755
+--- a/t/t1007-hash-object.sh
++++ b/t/t1007-hash-object.sh
+@@ -101,7 +101,7 @@ test_expect_success 'git hash-object --stdin file1 <file0 first operates on file
+ 	test "$obname1" = "$obname1new"
+ '
+ 
+-test_expect_success 'check that appropriate filter is invoke when --path is used' '
++test_expect_success 'set up crlf tests' '
+ 	echo fooQ | tr Q "\\015" >file0 &&
+ 	cp file0 file1 &&
+ 	echo "file0 -crlf" >.gitattributes &&
+@@ -109,7 +109,10 @@ test_expect_success 'check that appropriate filter is invoke when --path is used
+ 	git config core.autocrlf true &&
+ 	file0_sha=$(git hash-object file0) &&
+ 	file1_sha=$(git hash-object file1) &&
+-	test "$file0_sha" != "$file1_sha" &&
++	test "$file0_sha" != "$file1_sha"
++'
++
++test_expect_success 'check that appropriate filter is invoke when --path is used' '
+ 	path1_sha=$(git hash-object --path=file1 file0) &&
+ 	path0_sha=$(git hash-object --path=file0 file1) &&
+ 	test "$file0_sha" = "$path0_sha" &&
+@@ -117,38 +120,19 @@ test_expect_success 'check that appropriate filter is invoke when --path is used
+ 	path1_sha=$(cat file0 | git hash-object --path=file1 --stdin) &&
+ 	path0_sha=$(cat file1 | git hash-object --path=file0 --stdin) &&
+ 	test "$file0_sha" = "$path0_sha" &&
+-	test "$file1_sha" = "$path1_sha" &&
+-	git config --unset core.autocrlf
++	test "$file1_sha" = "$path1_sha"
+ '
+ 
+ test_expect_success 'check that --no-filters option works' '
+-	echo fooQ | tr Q "\\015" >file0 &&
+-	cp file0 file1 &&
+-	echo "file0 -crlf" >.gitattributes &&
+-	echo "file1 crlf" >>.gitattributes &&
+-	git config core.autocrlf true &&
+-	file0_sha=$(git hash-object file0) &&
+-	file1_sha=$(git hash-object file1) &&
+-	test "$file0_sha" != "$file1_sha" &&
+ 	nofilters_file1=$(git hash-object --no-filters file1) &&
+ 	test "$file0_sha" = "$nofilters_file1" &&
+ 	nofilters_file1=$(cat file1 | git hash-object --stdin) &&
+-	test "$file0_sha" = "$nofilters_file1" &&
+-	git config --unset core.autocrlf
++	test "$file0_sha" = "$nofilters_file1"
+ '
+ 
+ test_expect_success 'check that --no-filters option works with --stdin-paths' '
+-	echo fooQ | tr Q "\\015" >file0 &&
+-	cp file0 file1 &&
+-	echo "file0 -crlf" >.gitattributes &&
+-	echo "file1 crlf" >>.gitattributes &&
+-	git config core.autocrlf true &&
+-	file0_sha=$(git hash-object file0) &&
+-	file1_sha=$(git hash-object file1) &&
+-	test "$file0_sha" != "$file1_sha" &&
+ 	nofilters_file1=$(echo "file1" | git hash-object --stdin-paths --no-filters) &&
+-	test "$file0_sha" = "$nofilters_file1" &&
+-	git config --unset core.autocrlf
++	test "$file0_sha" = "$nofilters_file1"
+ '
+ 
+ pop_repo
+-- 
+2.10.0.230.g6f8d04b
 
-  1. We stop blindly reading ".git/config" when we don't know there's an
-     actual git directory. This is in patch 14, and is actually enough
-     to fix the v2.9 regression.
-
-  2. We are more thorough about dropping any cached config values when
-     we move into the new repository in git-init (patch 16).
-
-     I didn't dig into when this was broken, but it was probably when we
-     switched git_config() to use cached values in the v2.2.0
-     time-frame.
-
-Doing (1) required fixing up some builtins that depended on the blind
-.git/config thing, as the tests demonstrated. But I think this is a sign
-that we are moving in the right direction, because each one of those
-programs could easily be demonstrated to be broken in scenarios only
-slightly more exotic than the test scripts (e.g., see patch 3 for one of
-the simplest cases).
-
-So I think notwithstanding their use as prep for patch 14, patches 1-13
-fix useful bugs.
-
-I won't be surprised if there are other fallouts that were not caught by
-the test suite (i.e., programs that expect to read config, don't do
-RUN_SETUP, but aren't covered well by tests). I poked around the list of
-builtins in git.c that do not use RUN_SETUP, and they seem to correctly
-end up in setup_git_directory_gently() before reading config. But it's
-possible I missed a case.
-
-So this is definitely a bit larger than I'd hope for a regression-fix to
-maint. But anything that doesn't address this issue at the config layer
-is going to end up as a bit of a hack, and I'd rather not pile up hacks
-if we can avoid it.
-
-I have a few patches on top that go even further and disallow the
-auto-fallback of looking in ".git" at all for non-repositories. I think
-that's the right thing to do, and after years of chipping away at the
-setup code, I think we're finally at a point to make that change (with a
-few fixes of course). But that's an even riskier change and not fixing
-an immediate regression. So I'll hold that back for now, and hopefully
-it would become "master" material once this is sorted out.
-
-I've cc'd Dennis, who helped investigate solutions in the thread
-mentioned above, and Duy, because historically he has been the one most
-willing and able to battle the dragon of our setup code. :)
-
-  [01/16]: t1007: factor out repeated setup
-  [02/16]: hash-object: always try to set up the git repository
-  [03/16]: patch-id: use RUN_SETUP_GENTLY
-  [04/16]: diff: skip implicit no-index check when given --no-index
-  [05/16]: diff: handle --no-index prefixes consistently
-  [06/16]: diff: always try to set up the repository
-  [07/16]: pager: remove obsolete comment
-  [08/16]: pager: stop loading git_default_config()
-  [09/16]: pager: make pager_program a file-local static
-  [10/16]: pager: use callbacks instead of configset
-  [11/16]: pager: handle early config
-  [12/16]: t1302: use "git -C"
-  [13/16]: test-config: setup git directory
-  [14/16]: config: only read .git/config from configured repos
-  [15/16]: init: expand comments explaining config trickery
-  [16/16]: init: reset cached config when entering new repo
-
--Peff
