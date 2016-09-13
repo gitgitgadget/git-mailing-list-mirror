@@ -2,126 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0D2E207DF
+	by dcvr.yhbt.net (Postfix) with ESMTP id C127520996
 	for <e@80x24.org>; Tue, 13 Sep 2016 00:26:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752190AbcIMA0E (ORCPT <rfc822;e@80x24.org>);
+        id S1752603AbcIMA0G (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 20:26:06 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:55834 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750975AbcIMA0E (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 12 Sep 2016 20:26:04 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61053 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752152AbcIMA0C (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2016 20:26:02 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 905F13E280;
-        Mon, 12 Sep 2016 20:26:00 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=B0ciCQ5NXCtRU5u/cL2zt0/u9Ds=; b=YXwr5T
-        BMCBwiUzzaUSE3kfj9Qe519MAT/mnQjr3xKB3Ev/zYbqMBy12yaz3WgFEtgjqFyq
-        eaQjOMta5ZwafVx0Al0WOq6f7j6pkWLNkkS7pkKE/9WYhDtJxMalFZUlb9q00NNb
-        f/jPhgJk7z1mDbRSNCw9OMjqjrtc4d9SL7pzc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=pVJW2en67cWwFtiSrLBjU4QmEgD8J0YN
-        A1K0/FQbkQrAQc4eKeIj17UgNw8NciQirL8kesLllPihXO9gH/OaRA0NIA4Vk/MJ
-        Li+KQDrtbKhFEod8A881/X0SA+g9I/l7cGzj+jKNuq8XMISYbc5I7uiB+/XtSYfK
-        LHoIW/pWV8A=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 415F53E27F;
-        Mon, 12 Sep 2016 20:26:00 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B1B6E3E27E;
-        Mon, 12 Sep 2016 20:25:59 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <stefanbeller@gmail.com>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 07/10] diff.c: convert fn_out_consume to use emit_line_*
-References: <1473572530-25764-1-git-send-email-stefanbeller@gmail.com>
-        <1473572530-25764-8-git-send-email-stefanbeller@gmail.com>
-Date:   Mon, 12 Sep 2016 17:25:56 -0700
-In-Reply-To: <1473572530-25764-8-git-send-email-stefanbeller@gmail.com>
-        (Stefan Beller's message of "Sat, 10 Sep 2016 22:42:07 -0700")
-Message-ID: <xmqqk2egwsq3.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A5308186-7948-11E6-98DF-F7BB12518317-77302942!pb-smtp1.pobox.com
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id EA38320994;
+        Tue, 13 Sep 2016 00:25:57 +0000 (UTC)
+From:   Eric Wong <e@80x24.org>
+To:     Yaroslav Halchenko <yoh@onerussian.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [RFC 2/3] http: consolidate #ifdefs for curl_multi_remove_handle
+Date:   Tue, 13 Sep 2016 00:25:56 +0000
+Message-Id: <20160913002557.10671-3-e@80x24.org>
+In-Reply-To: <20160913002557.10671-1-e@80x24.org>
+References: <20160913002557.10671-1-e@80x24.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <stefanbeller@gmail.com> writes:
+I find #ifdefs makes code difficult-to-follow.
 
-> diff --git a/diff.c b/diff.c
-> index 2aefd0f..7dcef73 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -493,6 +493,19 @@ static void emit_line(struct diff_options *o, const char *set, const char *reset
->  	emit_line_0(o, set, reset, line[0], line+1, len-1);
->  }
->  
-> +static void emit_line_fmt(struct diff_options *o,
-> +			  const char *set, const char *reset,
-> +			  const char *fmt, ...)
-> +{
-> +	struct strbuf sb = STRBUF_INIT;
-> +	va_list ap;
-> +	va_start(ap, fmt);
-> +	strbuf_vaddf(&sb, fmt, ap);
-> +	va_end(ap);
-> +
-> +	emit_line(o, set, reset, sb.buf, sb.len);
-> +}
-> +
->  static int new_blank_line_at_eof(struct emit_callback *ecbdata, const char *line, int len)
->  {
->  	if (!((ecbdata->ws_rule & WS_BLANK_AT_EOF) &&
-> @@ -1217,7 +1230,6 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
->  	const char *context = diff_get_color(ecbdata->color_diff, DIFF_CONTEXT);
->  	const char *reset = diff_get_color(ecbdata->color_diff, DIFF_RESET);
->  	struct diff_options *o = ecbdata->opt;
-> -	const char *line_prefix = diff_line_prefix(o);
->  
->  	o->found_changes = 1;
->  
-> @@ -1233,10 +1245,12 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
->  		name_a_tab = strchr(ecbdata->label_path[0], ' ') ? "\t" : "";
->  		name_b_tab = strchr(ecbdata->label_path[1], ' ') ? "\t" : "";
->  
-> -		fprintf(o->file, "%s%s--- %s%s%s\n",
-> -			line_prefix, meta, ecbdata->label_path[0], reset, name_a_tab);
-> -		fprintf(o->file, "%s%s+++ %s%s%s\n",
-> -			line_prefix, meta, ecbdata->label_path[1], reset, name_b_tab);
-> +		emit_line_fmt(o, meta, reset, "--- %s%s\n",
-> +			      ecbdata->label_path[0], name_a_tab);
-> +
-> +		emit_line_fmt(o, meta, reset, "+++ %s%s\n",
-> +			      ecbdata->label_path[1], name_b_tab);
+An early version of this patch had error checking for
+curl_multi_remove_handle calls, but caused some tests (e.g.
+t5541) to fail under curl 7.26.0 on old Debian wheezy.
 
-Hmph, the original showed the following for the name-a line:
+Signed-off-by: Eric Wong <e@80x24.org>
+---
+ http.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-	diff_line_prefix(o) META "--- " label_path RESET name_a_tab LF
-
-The updated one calls emit_line_fmt() with o, meta, reset, fmt and
-args, and then
-
- * strbuf_vaddf(&buf, "--- %s%s\n", label_path, name_a_tab) creates
-   a string "--- " + label_path + LF
-
- * emit_line() is called on the whole thing with META and RESET
-
- * which is emit_line_0() that encloses the whole thing between META
-   and RESET but knows the trailing LF should come after RESET.
-
-So the coloring seems to be correct, but I am not sure where the
-line-prefix went.
-
-
+diff --git a/http.c b/http.c
+index cac5db9..a7eaf7b 100644
+--- a/http.c
++++ b/http.c
+@@ -201,6 +201,13 @@ static void finish_active_slot(struct active_request_slot *slot)
+ 		slot->callback_func(slot->callback_data);
+ }
+ 
++static void xmulti_remove_handle(struct active_request_slot *slot)
++{
++#ifdef USE_CURL_MULTI
++	curl_multi_remove_handle(curlm, slot->curl);
++#endif
++}
++
+ #ifdef USE_CURL_MULTI
+ static void process_curl_messages(void)
+ {
+@@ -216,7 +223,7 @@ static void process_curl_messages(void)
+ 			       slot->curl != curl_message->easy_handle)
+ 				slot = slot->next;
+ 			if (slot != NULL) {
+-				curl_multi_remove_handle(curlm, slot->curl);
++				xmulti_remove_handle(slot);
+ 				slot->curl_result = curl_result;
+ 				finish_active_slot(slot);
+ 			} else {
+@@ -881,9 +888,7 @@ void http_cleanup(void)
+ 	while (slot != NULL) {
+ 		struct active_request_slot *next = slot->next;
+ 		if (slot->curl != NULL) {
+-#ifdef USE_CURL_MULTI
+-			curl_multi_remove_handle(curlm, slot->curl);
+-#endif
++			xmulti_remove_handle(slot);
+ 			curl_easy_cleanup(slot->curl);
+ 		}
+ 		free(slot);
+@@ -1164,9 +1169,7 @@ static void release_active_slot(struct active_request_slot *slot)
+ {
+ 	closedown_active_slot(slot);
+ 	if (slot->curl && curl_session_count > min_curl_sessions) {
+-#ifdef USE_CURL_MULTI
+-		curl_multi_remove_handle(curlm, slot->curl);
+-#endif
++		xmulti_remove_handle(slot);
+ 		curl_easy_cleanup(slot->curl);
+ 		slot->curl = NULL;
+ 		curl_session_count--;
+-- 
+EW
 
