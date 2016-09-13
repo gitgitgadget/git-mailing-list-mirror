@@ -2,161 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 002391FCA9
-	for <e@80x24.org>; Tue, 13 Sep 2016 07:50:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DC481FCA9
+	for <e@80x24.org>; Tue, 13 Sep 2016 08:10:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751967AbcIMHuK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Sep 2016 03:50:10 -0400
-Received: from mail2.tiolive.com ([94.23.229.207]:41922 "EHLO
-        mail2.tiolive.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751625AbcIMHuJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Sep 2016 03:50:09 -0400
-Received: from teco.navytux.spb.ru (pppoe.95-55-154-162.dynamic.avangarddsl.ru [95.55.154.162])
-        by mail2.tiolive.com (Postfix) with ESMTPSA id 112BCBF0346;
-        Tue, 13 Sep 2016 09:50:05 +0200 (CEST)
-Received: from kirr by teco.navytux.spb.ru with local (Exim 4.87)
-        (envelope-from <kirr@teco.navytux.spb.ru>)
-        id 1bjiTl-0006It-6c; Tue, 13 Sep 2016 10:50:05 +0300
-Date:   Tue, 13 Sep 2016 10:50:05 +0300
-From:   Kirill Smelkov <kirr@nexedi.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Vicent Marti <tanoku@gmail.com>,
-        =?iso-8859-1?Q?J=E9rome?= Perrin <jerome@nexedi.com>,
-        Isabelle Vallet <isabelle.vallet@nexedi.com>,
-        Kazuhiko Shiozaki <kazuhiko@nexedi.com>,
-        Julien Muchembled <jm@nexedi.com>, git@vger.kernel.org
-Subject: Re: [PATCH 1/2 v8] pack-objects: respect
- --local/--honor-pack-keep/--incremental when bitmap is in use
-Message-ID: <20160913075004.xlteg44fgtemkcwh@teco.navytux.spb.ru>
-References: <20160910150110.18844-1-kirr@nexedi.com>
- <xmqqd1k8wc6h.fsf@gitster.mtv.corp.google.com>
+        id S1752289AbcIMIKS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Sep 2016 04:10:18 -0400
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:36014 "EHLO
+        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751042AbcIMIKQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Sep 2016 04:10:16 -0400
+Received: by mail-qk0-f173.google.com with SMTP id z190so157271580qkc.3
+        for <git@vger.kernel.org>; Tue, 13 Sep 2016 01:10:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=A9WWkdDdkjSjzAqkoe9X9O+I7cOVrftXNVDmOFpZ2Y0=;
+        b=inv78al2lj/vf2EYCj8mkmgKPQ48JlMhvi12lihk3rg3ZIA+rHbupS4yiZ3LRicC7f
+         oYpWP0gCi+ba80d8Q1/V5e4oGjTkYa7mnohChpy3H6ydb5dA+AIt/eNJew2I76BOQehH
+         tf/YME8yMrqTZrvTG2cJ6/68YlGqnhhQlGzwU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=A9WWkdDdkjSjzAqkoe9X9O+I7cOVrftXNVDmOFpZ2Y0=;
+        b=LQyeUForEWTmpjdx41myKtogz3hs0VEZ0mQ+Z2AEPTJfpBgOk12Qw8Ng8+UXXKRAk4
+         6mDlKukX1Hd1QdQMlPv7piUf0qp4uv3YcHjvaAEZLWtBKmFgkx8t3HU2KfQzGcsIpgrr
+         wva5uIOU1WEPN7R7Mr49dWY9I+llTXyRMpF6S9jlgghYbRsERAE+MqaIJGsq0z4yd4kS
+         Me7IHMEZIClNzASSJlN3vpg0qDvT4d0Vp7KUclipya0Z0X//HHyZADE2W5ScLwZiABjb
+         Xn8aKvk/1hhSK5s+U3gS8/IPatplaEWyFeWwiR0xwv1CJymNDNZasPDuOHiFbTk5Mxhc
+         4Pzw==
+X-Gm-Message-State: AE9vXwOXPSgnwPUMsIIc/qWrZY7U41hv5LHZFcq7hkyS0Jn+I4knLzFN5wmFPfmMOD82pjQxRMT+hoGr/0CEsg==
+X-Received: by 10.55.101.7 with SMTP id z7mr24436499qkb.186.1473754215773;
+ Tue, 13 Sep 2016 01:10:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqd1k8wc6h.fsf@gitster.mtv.corp.google.com>
-User-Agent: NeoMutt/ (1.7.0)
+Received: by 10.237.33.104 with HTTP; Tue, 13 Sep 2016 01:10:15 -0700 (PDT)
+In-Reply-To: <1473717733-65682-2-git-send-email-orirawlings@gmail.com>
+References: <1473717733-65682-1-git-send-email-orirawlings@gmail.com> <1473717733-65682-2-git-send-email-orirawlings@gmail.com>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Tue, 13 Sep 2016 09:10:15 +0100
+Message-ID: <CAE5ih79LCdUsTXXBYXdR-KL=A2wN=TfQ+SSD4g+_o2YDHKsQ3A@mail.gmail.com>
+Subject: Re: [PATCH] [git-p4.py] Add --checkpoint-period option to sync/clone
+To:     Ori Rawlings <orirawlings@gmail.com>
+Cc:     Git Users <git@vger.kernel.org>,
+        Vitor Antunes <vitor.hda@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Pete Wyckoff <pw@padd.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 12, 2016 at 11:23:18PM -0700, Junio C Hamano wrote:
-> Kirill Smelkov <kirr@nexedi.com> writes:
-> 
-> > +static int want_found_object(int exclude, struct packed_git *p)
-> > +{
-> > +	if (exclude)
-> > +		return 1;
-> > +	if (incremental)
-> > +		return 0;
-> > +
-> > +	/*
-> > +	 * When asked to do --local (do not include an object that appears in a
-> > +	 * pack we borrow from elsewhere) or --honor-pack-keep (do not include
-> > +	 * an object that appears in a pack marked with .keep), finding a pack
-> > +	 * that matches the criteria is sufficient for us to decide to omit it.
-> > +	 * However, even if this pack does not satisfy the criteria, we need to
-> > +	 * make sure no copy of this object appears in _any_ pack that makes us
-> > +	 * to omit the object, so we need to check all the packs.
-> > +	 *
-> > +	 * We can however first check whether these options can possible matter;
-> > +	 * if they do not matter we know we want the object in generated pack.
-> > +	 * Otherwise, we signal "-1" at the end to tell the caller that we do
-> > +	 * not know either way, and it needs to check more packs.
-> > +	 */
-> > +	if (!ignore_packed_keep &&
-> > +	    (!local || !have_non_local_packs))
-> > +		return 1;
-> > +
-> > +	if (local && !p->pack_local)
-> > +		return 0;
-> > +	if (ignore_packed_keep && p->pack_local && p->pack_keep)
-> > +		return 0;
-> > +
-> > +	/* we don't know yet; keep looking for more packs */
-> > +	return -1;
-> > +}
-> 
-> Moving this logic out to this helper made the main logic in the
-> caller easier to grasp.
-> 
-> > @@ -958,15 +993,30 @@ static int want_object_in_pack(const unsigned char *sha1,
-> >  			       off_t *found_offset)
-> >  {
-> >  	struct packed_git *p;
-> > +	int want;
-> >  
-> >  	if (!exclude && local && has_loose_object_nonlocal(sha1))
-> >  		return 0;
-> >  
-> > +	/*
-> > +	 * If we already know the pack object lives in, start checks from that
-> > +	 * pack - in the usual case when neither --local was given nor .keep files
-> > +	 * are present we will determine the answer right now.
-> > +	 */
-> > +	if (*found_pack) {
-> > +		want = want_found_object(exclude, *found_pack);
-> > +		if (want != -1)
-> > +			return want;
-> > +	}
-> >  
-> >  	for (p = packed_git; p; p = p->next) {
-> > +		off_t offset;
-> > +
-> > +		if (p == *found_pack)
-> > +			offset = *found_offset;
-> > +		else
-> > +			offset = find_pack_entry_one(sha1, p);
-> > +
-> >  		if (offset) {
-> >  			if (!*found_pack) {
-> >  				if (!is_pack_valid(p))
-> > @@ -974,31 +1024,9 @@ static int want_object_in_pack(const unsigned char *sha1,
-> >  				*found_offset = offset;
-> >  				*found_pack = p;
-> >  			}
-> > +			want = want_found_object(exclude, p);
-> > +			if (want != -1)
-> > +				return want;
-> >  		}
-> >  	}
-> 
-> As Peff noted in his earlier review, however, MRU code needed to be
-> grafted in to the caller (an update to the MRU list was done in the
-> code that was moved to the want_found_object() helper).  I think I
-> did it correctly, which ended up looking like this:
-> 
->                 want = want_found_object(exclude, p);
->                 if (!exclude && want > 0)
->                         mru_mark(packed_git_mru, entry);
->                 if (want != -1)
->                         return want;
-> 
-> I somewhat feel that it is ugly that the helper knows about exclude
-> (i.e. in the original code, we immediately returned 1 without
-> futzing with the MRU when we find an entry that is to be excluded,
-> which now is done in the helper), and the caller also knows about
-> exclude (i.e. the caller knows that the helper may return positive
-> in two cases, it knows that MRU marking needs to happen only one of
-> the two cases, and it also knows that "exclude" is what
-> differentiates between the two cases) at the same time.
-> 
-> But probably the reason why I feel it ugly is only because I knew
-> how the original looked like.  I dunno.
+On 12 September 2016 at 23:02, Ori Rawlings <orirawlings@gmail.com> wrote:
+> Importing a long history from Perforce into git using the git-p4 tool
+> can be especially challenging. The `git p4 clone` operation is based
+> on an all-or-nothing transactionality guarantee. Under real-world
+> conditions like network unreliability or a busy Perforce server,
+> `git p4 clone` and  `git p4 sync` operations can easily fail, forcing a
+> user to restart the import process from the beginning. The longer the
+> history being imported, the more likely a fault occurs during the
+> process. Long enough imports thus become statistically unlikely to ever
+> succeed.
 
-Junio, the code above is correct semantic merge of pack-mru and my
-topic, because in pack-mru if found and exclude=1, 1 was returned
-without marking found pack.
+That would never happen :-)
 
-But I wonder: even if we exclude an object, we were still looking for it
-in packs, and when we found it, we found the corresponding pack too. So,
-that pack _was_ most-recently-used, and it is correct to mark it as MRU.
+The usual thing that I find is that my Perforce login session expires.
 
-We can do the simplification in the follow-up patch after the merge, so
-merge does not change semantics and it is all bisectable, etc.
+>
+> The underlying git fast-import protocol supports an explicit checkpoint
+> command. The idea here is to optionally allow the user to force an
+> explicit checkpoint every <x> seconds. If the sync/clone operation fails
+> branches are left updated at the appropriate commit available during the
+> latest checkpoint. This allows a user to resume importing Perforce
+> history while only having to repeat at most approximately <x> seconds
+> worth of import activity.
 
-Jeff?
+I think this ought to work, and could be quite useful. It would be
+good to have some kind of test case for it though, and updated
+documentation.
+
+Luke
+
+>
+> Signed-off-by: Ori Rawlings <orirawlings@gmail.com>
+> ---
+>  git-p4.py | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+>
+> diff --git a/git-p4.py b/git-p4.py
+> index fd5ca52..40cb64f 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -2244,6 +2244,7 @@ class P4Sync(Command, P4UserMap):
+>                  optparse.make_option("-/", dest="cloneExclude",
+>                                       action="append", type="string",
+>                                       help="exclude depot path"),
+> +                optparse.make_option("--checkpoint-period", dest="checkpointPeriod", type="int", help="Period in seconds between explict git fast-import checkpoints (by default, no explicit checkpoints are performed)"),
+>          ]
+>          self.description = """Imports from Perforce into a git repository.\n
+>      example:
+> @@ -2276,6 +2277,7 @@ class P4Sync(Command, P4UserMap):
+>          self.tempBranches = []
+>          self.tempBranchLocation = "refs/git-p4-tmp"
+>          self.largeFileSystem = None
+> +        self.checkpointPeriod = -1
+
+Or use None?
+
+>
+>          if gitConfig('git-p4.largeFileSystem'):
+>              largeFileSystemConstructor = globals()[gitConfig('git-p4.largeFileSystem')]
+> @@ -3031,6 +3033,8 @@ class P4Sync(Command, P4UserMap):
+>
+>      def importChanges(self, changes):
+>          cnt = 1
+> +        if self.checkpointPeriod > -1:
+> +            self.lastCheckpointTime = time.time()
+
+Could you just always set the lastCheckpointTime?
+
+>          for change in changes:
+>              description = p4_describe(change)
+>              self.updateOptionDict(description)
+> @@ -3107,6 +3111,10 @@ class P4Sync(Command, P4UserMap):
+>                                  self.initialParent)
+>                      # only needed once, to connect to the previous commit
+>                      self.initialParent = ""
+> +
+> +                    if self.checkpointPeriod > -1 and time.time() - self.lastCheckpointTime > self.checkpointPeriod:
+> +                        self.checkpoint()
+> +                        self.lastCheckpointTime = time.time()
+
+If you use time.time(), then this could fail to work as expected if
+the system time goes backwards (e.g. NTP updates). However, Python 2
+doesn't have access to clock_gettime() without jumping through hoops,
+so perhaps we leave this as a bug until git-p4 gets ported to Python
+3.
+
+
+
+>              except IOError:
+>                  print self.gitError.read()
+>                  sys.exit(1)
+> --
+> 2.7.4 (Apple Git-66)
+>
