@@ -2,92 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C8E820984
-	for <e@80x24.org>; Tue, 13 Sep 2016 20:11:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA8DE20984
+	for <e@80x24.org>; Tue, 13 Sep 2016 20:23:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760462AbcIMULJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Sep 2016 16:11:09 -0400
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:38031 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1760242AbcIMULI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Sep 2016 16:11:08 -0400
-Received: by mail-wm0-f54.google.com with SMTP id 1so221650641wmz.1
-        for <git@vger.kernel.org>; Tue, 13 Sep 2016 13:11:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=b/cWjQiFcPnOX+M5vehhRvHTnFM2A4xsq+yxaBseV70=;
-        b=QUgWS0Z8MncqFZWYRhXeRLKDbtKSvN9UwhzTBpSYQ7FNkmy496gv1b0mDMfnTD/DfG
-         bCmgSqrDoqzc7wD81oijV4dy1I7rijdCwfxIpKwdrIPFuSNKt+dpR/GJ4r1aPQdL8v7T
-         ciPpny7oS6CwOk1x+uQqFYgYvXukBEIzREatwMD5Z5U6UFykpbZtR1FBGZYOPtSyjbwh
-         fPe+XcROAB7i5XpWPmR0bIWPdoV+YDoIZpwqE2BIEM/dB59AwFGEX9uPdp0B+NJxBuQ0
-         z4gQCMv+fk2qKG94oZWkiLeSexw864fq/Glce6xAz+mdB8zXiXPCJ1fhzHatFDhjbE9p
-         QUVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=b/cWjQiFcPnOX+M5vehhRvHTnFM2A4xsq+yxaBseV70=;
-        b=nNetPu9rsbPZUSeNUJWNm3QFyNJ2curwu6BRSQf+FXOieapygiQdiIt2wW2UG6R1ks
-         gYTA7LmUb8IaAbC59IpW+2cBoVlma2rWp4hQKNS2LHIbKHVX8ox3Xqc1761vnt2jChJM
-         TmK/7eLDqCVFo25R7pyuSh7X0uNBYNnTVQM8T+gvt5vaXlur5+yCL2u8k3SO3Qt9owfL
-         mPigsXlcdxzY0CmlRK42MT1k9xwX+k6XsJuEXEuaG5/ydgcxXEdgnIJ/bryIX2hMF9Y1
-         /WLpyaRO4KG2Xgn4T/HAh4YjW7wfJUOYBMrJlRlZ/yZeR6cDfoi7GjpPi5zT5ogCR0Lb
-         eSVQ==
-X-Gm-Message-State: AE9vXwMk6ta/BcOltbzIqmmQO/NxlQfRqN9dO9RgXWINwMvYJazkMFmLnBmCNmX9ms/Mlg==
-X-Received: by 10.194.88.137 with SMTP id bg9mr21605220wjb.155.1473797466970;
-        Tue, 13 Sep 2016 13:11:06 -0700 (PDT)
-Received: from [10.32.248.227] (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id e5sm6990354wma.13.2016.09.13.13.11.05
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 13 Sep 2016 13:11:06 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [ANNOUNCE] Git User's Survey 2016
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <CANQwDwcLrfkj96pqOM8b=TUWCf-Ui6s9WFo75MoWKfGGvsvZmg@mail.gmail.com>
-Date:   Tue, 13 Sep 2016 21:11:04 +0100
-Cc:     David Bainbridge <david.bainbridge@ericsson.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Doug Rathbone <doug@dougrathbone.com>,
-        David Bainbridge <david.bainbridge@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Andrew Ardill <andrew.ardill@gmail.com>,
-        Eric Wong <e@80x24.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <0284BD61-8DCF-4EAD-8163-191C56AFD7C8@gmail.com>
-References: <de39c03d-e84e-8e45-69cb-a2e01fd25df2@gmail.com> <DB5PR07MB14487D7F217ECA53CD712D60E2FE0@DB5PR07MB1448.eurprd07.prod.outlook.com> <CANQwDwcLrfkj96pqOM8b=TUWCf-Ui6s9WFo75MoWKfGGvsvZmg@mail.gmail.com>
-To:     =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-X-Mailer: Apple Mail (2.3124)
+        id S1759809AbcIMUXP convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 13 Sep 2016 16:23:15 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1]:49979 "EHLO smtp1-g21.free.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754740AbcIMUXO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Sep 2016 16:23:14 -0400
+Received: from cayenne.localnet (unknown [IPv6:2a01:e35:2ef1:f910:86a6:c8ff:fe05:d3e0])
+        by smtp1-g21.free.fr (Postfix) with ESMTPS id 48B3EB004D9;
+        Tue, 13 Sep 2016 22:23:08 +0200 (CEST)
+From:   =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
+To:     Vasco Almeida <vascomalmeida@sapo.pt>
+Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 09/14] i18n: notes: mark error messages for translation
+Date:   Tue, 13 Sep 2016 22:23:07 +0200
+Message-ID: <2523910.zLOPm9a3mF@cayenne>
+User-Agent: KMail/5.2.3 (Linux/4.6.0-1-amd64; KDE/5.25.0; x86_64; ; )
+In-Reply-To: <1473784505.7329.18.camel@sapo.pt>
+References: <1473679802-31381-1-git-send-email-vascomalmeida@sapo.pt> <83f72924-9a9d-dc1c-109f-341f0cd7ac96@free.fr> <1473784505.7329.18.camel@sapo.pt>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset="iso-8859-1"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On mardi 13 septembre 2016 16:35:05 CEST Vasco Almeida wrote:
+> A Seg, 12-09-2016 às 14:23 +0200, Jean-Noël Avila escreveu:
+> > Not sure this one will be easy to localize. The verb is passed as a
+> > parameter : see line 366 "list", line 426 "add", line 517 "copy",
+> > line
+> > 658 "show", line 816 "merge", line 908 "remove" or line 595 with
+> > argv[0].
+> > 
+> > If all the verbs are real subcommands, then the translators should be
+> > warned that this is some english twisting, but that they need to
+> > refer
+> > to the subcommand on the command line.
+> 
+> Yes, these verbs are git notes subcommands. I will add a Translators
+> comment to it explaining so. Or we can unfold that error messages like
+> 
+> if (!strcmp(subcommand, "add")
+> 	die(_("Refusing to add notes in %s (outside of refs/notes/)"),
+> ref);
+> elseif ...
+> 
+> else
+> 	die(_("Refusing to %s notes in %s (outside of refs/notes/)"),
+> subcommand, ref);
 
-> On 13 Sep 2016, at 17:54, Jakub Nar=C4=99bski <jnareb@gmail.com> =
-wrote:
->=20
-> On 13 September 2016 at 18:15, David Bainbridge
-> <david.bainbridge@ericsson.com> wrote:
->> Hi Jakub,
->>=20
->> You said:
->> P.S. At request I can open a separate channel in survey, with
->> a separate survey URL, so that responses from particular site
->> or organization could be separated out.
->>=20
->> Please can you open a channel for use by Ericsson?
->=20
-> Sent (privately to David).
+This would be counter productive to use the inject strings as keys just to 
+test them just after.
 
-Could you send me a channel for Autodesk, too?
+> 
+> This is more verbose but translations would benefit from it being more
+> natural. What do we prefer: (1) concise source and a little unnatural
+> translations or (2) verbose code and natural translations?
+> 
+> Compare, imaging that English is a target translation language, the
+> user would read:
+> "Refusing to do add of notes in /path [...]" (1)
+> "Refusing do add notes in /path [...]" (2)
 
-Thank you,
-Lars=
+Having one sentence per action is cumbersome, but avoiding sentence lego is 
+mandatory for proper i18n. How about  just adding quotes around the subcommand 
+and warn translators ? 
+
+
+
+
