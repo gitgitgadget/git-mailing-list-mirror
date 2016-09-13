@@ -6,25 +6,25 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C127520996
-	for <e@80x24.org>; Tue, 13 Sep 2016 00:26:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33E77207DF
+	for <e@80x24.org>; Tue, 13 Sep 2016 00:26:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752603AbcIMA0G (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Sep 2016 20:26:06 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:55834 "EHLO dcvr.yhbt.net"
+        id S1752793AbcIMA0M (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Sep 2016 20:26:12 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:55852 "EHLO dcvr.yhbt.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750975AbcIMA0E (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2016 20:26:04 -0400
+        id S1752152AbcIMA0L (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2016 20:26:11 -0400
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id EA38320994;
-        Tue, 13 Sep 2016 00:25:57 +0000 (UTC)
+        by dcvr.yhbt.net (Postfix) with ESMTP id 4FD0E20995;
+        Tue, 13 Sep 2016 00:25:58 +0000 (UTC)
 From:   Eric Wong <e@80x24.org>
 To:     Yaroslav Halchenko <yoh@onerussian.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [RFC 2/3] http: consolidate #ifdefs for curl_multi_remove_handle
-Date:   Tue, 13 Sep 2016 00:25:56 +0000
-Message-Id: <20160913002557.10671-3-e@80x24.org>
+Subject: [RFC 3/3] http: always remove curl easy from curlm session on release
+Date:   Tue, 13 Sep 2016 00:25:57 +0000
+Message-Id: <20160913002557.10671-4-e@80x24.org>
 In-Reply-To: <20160913002557.10671-1-e@80x24.org>
 References: <20160913002557.10671-1-e@80x24.org>
 Sender: git-owner@vger.kernel.org
@@ -32,66 +32,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I find #ifdefs makes code difficult-to-follow.
-
-An early version of this patch had error checking for
-curl_multi_remove_handle calls, but caused some tests (e.g.
-t5541) to fail under curl 7.26.0 on old Debian wheezy.
+We must call curl_multi_remove_handle when releasing the slot to
+prevent subsequent calls to curl_multi_add_handle from failing
+with CURLM_ADDED_ALREADY (in curl 7.32.1+; older versions
+returned CURLM_BAD_EASY_HANDLE)
 
 Signed-off-by: Eric Wong <e@80x24.org>
 ---
- http.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ http.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/http.c b/http.c
-index cac5db9..a7eaf7b 100644
+index a7eaf7b..3c4c3f5 100644
 --- a/http.c
 +++ b/http.c
-@@ -201,6 +201,13 @@ static void finish_active_slot(struct active_request_slot *slot)
- 		slot->callback_func(slot->callback_data);
- }
- 
-+static void xmulti_remove_handle(struct active_request_slot *slot)
-+{
-+#ifdef USE_CURL_MULTI
-+	curl_multi_remove_handle(curlm, slot->curl);
-+#endif
-+}
-+
- #ifdef USE_CURL_MULTI
- static void process_curl_messages(void)
- {
-@@ -216,7 +223,7 @@ static void process_curl_messages(void)
- 			       slot->curl != curl_message->easy_handle)
- 				slot = slot->next;
- 			if (slot != NULL) {
--				curl_multi_remove_handle(curlm, slot->curl);
-+				xmulti_remove_handle(slot);
- 				slot->curl_result = curl_result;
- 				finish_active_slot(slot);
- 			} else {
-@@ -881,9 +888,7 @@ void http_cleanup(void)
- 	while (slot != NULL) {
- 		struct active_request_slot *next = slot->next;
- 		if (slot->curl != NULL) {
--#ifdef USE_CURL_MULTI
--			curl_multi_remove_handle(curlm, slot->curl);
--#endif
-+			xmulti_remove_handle(slot);
- 			curl_easy_cleanup(slot->curl);
- 		}
- 		free(slot);
-@@ -1164,9 +1169,7 @@ static void release_active_slot(struct active_request_slot *slot)
+@@ -1168,11 +1168,13 @@ void run_active_slot(struct active_request_slot *slot)
+ static void release_active_slot(struct active_request_slot *slot)
  {
  	closedown_active_slot(slot);
- 	if (slot->curl && curl_session_count > min_curl_sessions) {
--#ifdef USE_CURL_MULTI
--		curl_multi_remove_handle(curlm, slot->curl);
--#endif
-+		xmulti_remove_handle(slot);
- 		curl_easy_cleanup(slot->curl);
- 		slot->curl = NULL;
- 		curl_session_count--;
+-	if (slot->curl && curl_session_count > min_curl_sessions) {
++	if (slot->curl) {
+ 		xmulti_remove_handle(slot);
+-		curl_easy_cleanup(slot->curl);
+-		slot->curl = NULL;
+-		curl_session_count--;
++		if (curl_session_count > min_curl_sessions) {
++			curl_easy_cleanup(slot->curl);
++			slot->curl = NULL;
++			curl_session_count--;
++		}
+ 	}
+ #ifdef USE_CURL_MULTI
+ 	fill_active_slots();
 -- 
 EW
 
