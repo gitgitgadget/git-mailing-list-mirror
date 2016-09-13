@@ -2,115 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE19220984
-	for <e@80x24.org>; Tue, 13 Sep 2016 21:46:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CFEF20984
+	for <e@80x24.org>; Tue, 13 Sep 2016 22:00:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754940AbcIMVqF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Sep 2016 17:46:05 -0400
-Received: from hahler.de ([188.40.33.212]:34553 "EHLO elfe.thequod.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753382AbcIMVqF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Sep 2016 17:46:05 -0400
-X-Greylist: delayed 357 seconds by postgrey-1.27 at vger.kernel.org; Tue, 13 Sep 2016 17:46:04 EDT
-Received: from localhost (amavis [10.122.1.24])
-        by elfe.thequod.de (Postfix) with ESMTP id 9EE6562088
-        for <git@vger.kernel.org>; Tue, 13 Sep 2016 23:40:05 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=thequod.de; h=
-        content-type:content-type:mime-version:user-agent:date:date
-        :message-id:subject:subject:from:from:received:received; s=
-        postfix2; t=1473802805; bh=MCezf4riC4hNO6xfWgL3I3KagfdvJaX8EaH3N
-        mg7Y0I=; b=SG13q5HK3GhTul41xsMvKJ/sbqaIOMePvHPtDrre3NSt17AEVscAu
-        v5AA4IcmCD5xnUNCsvnOO0motNCmLcPOkA0NP4lYU3/Am25BJC+wlI9E7+SMPir5
-        lx/kRLdAirYBOlvBLV7iUIzaLjFdJkcej/h6ycJKZzdk5ey3mdSXzg=
-Received: from elfe.thequod.de ([10.122.1.25])
-        by localhost (amavis.thequod.de [10.122.1.24]) (amavisd-new, port 10026)
-        with ESMTP id dd22t327aEah for <git@vger.kernel.org>;
-        Tue, 13 Sep 2016 23:40:05 +0200 (CEST)
-To:     git@vger.kernel.org
-From:   Daniel Hahler <genml+git-2016@thequod.de>
-Subject: Left with empty files after "git stash pop" when system hung
-Message-ID: <5b203a8e-faa8-9f6e-8cdd-1024194e74a3@thequod.de>
-Date:   Tue, 13 Sep 2016 23:39:56 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
+        id S1758145AbcIMWAU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Sep 2016 18:00:20 -0400
+Received: from mail-it0-f46.google.com ([209.85.214.46]:37308 "EHLO
+        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758428AbcIMWAS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Sep 2016 18:00:18 -0400
+Received: by mail-it0-f46.google.com with SMTP id 186so64694654itf.0
+        for <git@vger.kernel.org>; Tue, 13 Sep 2016 15:00:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=7f8Y9NYFYrQ2KhGaP0OUCaiSOxteNV6A8a1i7FH+Pl8=;
+        b=gbGAXyXNanmkVbhKk94pdZFMl9djjh3VOJsvC9sXnOJ7dHONM4jzwYmZpXMrU+eWzG
+         heNZ5Xcm07JFta9zgKr50cyGCdgV/cy2icvzhxd2p/DBm4NK8Kr/A3YUq6MnxWBG+JwI
+         VBOIVIcOyT9LHEfdWnOtqI5uZ7euNDcixDYcmJGrOi9xrniZWbcYA2ja2D8CqAxczjvS
+         iZckSQmfykHbrPz9KqFVjmgXSzcGxqKvrxIrE6ulEA3nvwtdvm20O2MRgXWNfWU7b9xO
+         yAIGueJw9RrOstlOXMIXACO0NgWv6oMPQBuWszgtZN6vr6+c/TnHynwdUXpRqo4N6u9Q
+         UPDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=7f8Y9NYFYrQ2KhGaP0OUCaiSOxteNV6A8a1i7FH+Pl8=;
+        b=gVp7r2p3V+3MqdmE7rbIvc2lGyEdXTQUOU1/IdqY2inpUZNjzBO7174LrHERBVvEwC
+         8/BwZCd4kM8vqA992mOIiztS/b4o9qOvXYUOxFQJL5uoTX/a4SWqorE8W56u7U+YGEYV
+         uSRScWnaRN0w2lTiiUd0egN9bc80D9Z9JvLCWtYNWzFfOkPco25ZbsaRscyWS6/pCxYC
+         E+K8Y2xtqTlHlSnXjmtJWQGeBviIqgg7NEhjicA0QgcrGBcCGi3PQBVdbjzTptSixbnc
+         qL+NX9BVac5NFyLgJWFKcHtThWAOOtIKTcamtGpOKwBIquy/ghWpy7b5iVHdoYOXHpNW
+         BeIA==
+X-Gm-Message-State: AE9vXwOwpgF+2ELZnAGtleZWIDCY9yfv5BmNR44Ow9s6VTS+bFAAYCR//PW+MBYziyUWToTcIJiuFFrKwoscFgGU
+X-Received: by 10.107.12.166 with SMTP id 38mr6126773iom.159.1473804017550;
+ Tue, 13 Sep 2016 15:00:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="s8p2mpb29rSaOjmnNNiuFFOisxHlbQ6P4"
+Received: by 10.107.173.98 with HTTP; Tue, 13 Sep 2016 15:00:17 -0700 (PDT)
+In-Reply-To: <20160913032336.cur3rrzpgepulqi6@sigill.intra.peff.net>
+References: <20160913032242.coyuhyhn6uklewuk@sigill.intra.peff.net> <20160913032336.cur3rrzpgepulqi6@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 13 Sep 2016 15:00:17 -0700
+Message-ID: <CAGZ79kYNfUmBG+9irQoZ+C6qfiiz0P7pGKHZVk-8569gk4+_EQ@mail.gmail.com>
+Subject: Re: [PATCH 06/16] diff: always try to set up the repository
+To:     Jeff King <peff@peff.net>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---s8p2mpb29rSaOjmnNNiuFFOisxHlbQ6P4
-Content-Type: multipart/mixed; boundary="ptlkigkub1PVUQgrbARigeFR8TesDua1k";
- protected-headers="v1"
-From: Daniel Hahler <genml+git-2016@thequod.de>
-To: git@vger.kernel.org
-Message-ID: <5b203a8e-faa8-9f6e-8cdd-1024194e74a3@thequod.de>
-Subject: Left with empty files after "git stash pop" when system hung
+On Mon, Sep 12, 2016 at 8:23 PM, Jeff King <peff@peff.net> wrote:
 
---ptlkigkub1PVUQgrbARigeFR8TesDua1k
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+>   2. If you're in a subdirectory of a repository, then we
+>      still try to read ".git/config", but it generally
+>      doesn't exist. So "diff --no-index" there does not
+>      respect repo config.
 
-I have used "git stash --include-untracked", checked out another branch,
-went back, and "git stash pop"ed the changes.
-Then my system crashed/hung (music that was playing was repeated in a
-loop).  I have waited for some minutes, and then turned it off.
+Nit:
+So IIUC your cover letter even this /used/ to work but
+broke only recently? So I feel like the message is a bit
+misleading (i.e. you argue for a change in behavior instead of
+calling it a bug fix for a regression. I think a bug fix for a regression
+is harder to revert as compared to a "new" behavior)
 
-Afterwards, the repository in question was in a state where all files
-contained in the stash were empty.
-"git status" looked good on first sight: all the untracked and modified
-files were listed there; but they were empty.
-
-  % git fsck --lost-found
-  error: object file .git/objects/04/1e659b5dbfd3f0be351a782b54743692875a=
-ec is empty
-  error: object file .git/objects/04/1e659b5dbfd3f0be351a782b54743692875a=
-ec is empty
-  fatal: loose object 041e659b5dbfd3f0be351a782b54743692875aec (stored in=
- .git/objects/04/1e659b5dbfd3f0be351a782b54743692875aec) is corrupt
-  % find .git/objects -size 0|wc -l
-  12
-
-I would have assumed that the "stash pop" operation would be "atomic",
-i.e. it should not remove the stash object before other objects have
-been written successfully.
-
-The filesystem in question is ext4, and I am using Arch Linux.
-
-I have removed all empty files in .git/objects and tried to find the
-previous stash with `gitk --all $( git fsck | awk '{print $3}' )` then,
-but it appears to have disappeared.
-
-Please CC me in replies.
-
-
-Cheers,
-Daniel.
-
---=20
-http://daniel.hahler.de/
-
-
---ptlkigkub1PVUQgrbARigeFR8TesDua1k--
-
---s8p2mpb29rSaOjmnNNiuFFOisxHlbQ6P4
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iEYEARECAAYFAlfYcjUACgkQfAK/hT/mPgAfQwCfRfc8TrZQ5MICzLe6pSRos2lJ
-Bq0An3rN1M6UT0Ol87u6AxrWIfaEdFnF
-=TQjg
------END PGP SIGNATURE-----
-
---s8p2mpb29rSaOjmnNNiuFFOisxHlbQ6P4--
+I agree on the code, though.
