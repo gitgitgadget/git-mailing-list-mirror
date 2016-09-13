@@ -2,154 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DC481FCA9
-	for <e@80x24.org>; Tue, 13 Sep 2016 08:10:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF97520984
+	for <e@80x24.org>; Tue, 13 Sep 2016 12:33:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752289AbcIMIKS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Sep 2016 04:10:18 -0400
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:36014 "EHLO
+        id S1752933AbcIMMdU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Sep 2016 08:33:20 -0400
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:36692 "EHLO
         mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751042AbcIMIKQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Sep 2016 04:10:16 -0400
-Received: by mail-qk0-f173.google.com with SMTP id z190so157271580qkc.3
-        for <git@vger.kernel.org>; Tue, 13 Sep 2016 01:10:16 -0700 (PDT)
+        with ESMTP id S1751203AbcIMMdT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Sep 2016 08:33:19 -0400
+Received: by mail-qk0-f173.google.com with SMTP id z190so162623629qkc.3
+        for <git@vger.kernel.org>; Tue, 13 Sep 2016 05:33:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=A9WWkdDdkjSjzAqkoe9X9O+I7cOVrftXNVDmOFpZ2Y0=;
-        b=inv78al2lj/vf2EYCj8mkmgKPQ48JlMhvi12lihk3rg3ZIA+rHbupS4yiZ3LRicC7f
-         oYpWP0gCi+ba80d8Q1/V5e4oGjTkYa7mnohChpy3H6ydb5dA+AIt/eNJew2I76BOQehH
-         tf/YME8yMrqTZrvTG2cJ6/68YlGqnhhQlGzwU=
+        d=gmail.com; s=20120113;
+        h=from:to:cc:references:in-reply-to:subject:date:message-id
+         :mime-version:content-transfer-encoding:thread-index
+         :content-language;
+        bh=z5sqLcgY2cmABAAHosmeZ5RfYu2q4Vs2FKWo0QY3ac0=;
+        b=KlxLtob775z5iMvuOagc7Y6TzHwergmZJobfszeTLqQjDgfmqnP0/WKaze67WYzzoL
+         +MMjx4DyA7qHn7Z8Ty13S8dNpAzhim0ctzNYH9AEEMAT4laOk0+e3bNkIPGaabZoJC/g
+         HRSzpBltaaGAh+Xhs2r60ED4nvSrkr7ZWYIWu7l6N26K/J3uJ2dpGjPGyAlnjwotaNy3
+         wwBQnurW2LqZ63Bauw8fSAjlTedC7a1nlaIx+kvjCIEiJA+g268siTb0JDI4DigzzaF3
+         4j/SQhmsRX0vW/vxrkp3hTf+BJrNcHedkhHPY1DidZXEkwFgihxnv42tTI4+dYunSqya
+         BiAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=A9WWkdDdkjSjzAqkoe9X9O+I7cOVrftXNVDmOFpZ2Y0=;
-        b=LQyeUForEWTmpjdx41myKtogz3hs0VEZ0mQ+Z2AEPTJfpBgOk12Qw8Ng8+UXXKRAk4
-         6mDlKukX1Hd1QdQMlPv7piUf0qp4uv3YcHjvaAEZLWtBKmFgkx8t3HU2KfQzGcsIpgrr
-         wva5uIOU1WEPN7R7Mr49dWY9I+llTXyRMpF6S9jlgghYbRsERAE+MqaIJGsq0z4yd4kS
-         Me7IHMEZIClNzASSJlN3vpg0qDvT4d0Vp7KUclipya0Z0X//HHyZADE2W5ScLwZiABjb
-         Xn8aKvk/1hhSK5s+U3gS8/IPatplaEWyFeWwiR0xwv1CJymNDNZasPDuOHiFbTk5Mxhc
-         4Pzw==
-X-Gm-Message-State: AE9vXwOXPSgnwPUMsIIc/qWrZY7U41hv5LHZFcq7hkyS0Jn+I4knLzFN5wmFPfmMOD82pjQxRMT+hoGr/0CEsg==
-X-Received: by 10.55.101.7 with SMTP id z7mr24436499qkb.186.1473754215773;
- Tue, 13 Sep 2016 01:10:15 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
+         :message-id:mime-version:content-transfer-encoding:thread-index
+         :content-language;
+        bh=z5sqLcgY2cmABAAHosmeZ5RfYu2q4Vs2FKWo0QY3ac0=;
+        b=PxBSlfl6gNUq+rRwfNfrSGorfIPq+6EYfOHmJMeoaIYtspFDFbn5/9EZo6swGo/eUL
+         HN/FcFXhfqBXMwWB42fa/n7CzJ78oRCXOQRfEjqsDolpKamcIrarJMjuo77E8Wvtembs
+         dIxPXQzq65J1AgklnaL+Z9lWnvpLbvRbDQP+HMFE6K700vbCFkocIk9eKkoBWBf5VYPH
+         2fdHzOG+lQXBwnCTNWbX3CYJYfd1AtcVwoEI8bghl5wInMBxB/gSmhkExkf2RoI/ySqd
+         SsU4YQy4x3dhOOKhqX8LsIvmDqgi5P+Rs6jJdX3B13edoN+Abu0Jjp6tQ9HD2djidpNl
+         Xlyg==
+X-Gm-Message-State: AE9vXwNHggBqJEZLjAsiRFTUDZPJTU+lwEF8qOdjKiE/S84CI5iW6uvsNdrjZATg18iryw==
+X-Received: by 10.55.156.5 with SMTP id f5mr561362qke.177.1473769998556;
+        Tue, 13 Sep 2016 05:33:18 -0700 (PDT)
+Received: from BenPeartHP ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id t64sm4425649qke.5.2016.09.13.05.33.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 13 Sep 2016 05:33:17 -0700 (PDT)
+From:   "Ben Peart" <peartben@gmail.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>
+Cc:     <git@vger.kernel.org>, <pclouds@gmail.com>,
+        "'Ben Peart'" <benpeart@microsoft.com>
+References: <20160909192520.4812-1-benpeart@microsoft.com>      <xmqq1t0sagcm.fsf@gitster.mtv.corp.google.com>  <13ef001d20d21$2d2ea840$878bf8c0$@gmail.com> <xmqqtwdkzwpp.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqqtwdkzwpp.fsf@gitster.mtv.corp.google.com>
+Subject: RE: [PATCH v2] checkout: eliminate unnecessary merge for trivial checkout
+Date:   Tue, 13 Sep 2016 08:33:17 -0400
+Message-ID: <001901d20dbb$0218f080$064ad180$@gmail.com>
 MIME-Version: 1.0
-Received: by 10.237.33.104 with HTTP; Tue, 13 Sep 2016 01:10:15 -0700 (PDT)
-In-Reply-To: <1473717733-65682-2-git-send-email-orirawlings@gmail.com>
-References: <1473717733-65682-1-git-send-email-orirawlings@gmail.com> <1473717733-65682-2-git-send-email-orirawlings@gmail.com>
-From:   Luke Diamand <luke@diamand.org>
-Date:   Tue, 13 Sep 2016 09:10:15 +0100
-Message-ID: <CAE5ih79LCdUsTXXBYXdR-KL=A2wN=TfQ+SSD4g+_o2YDHKsQ3A@mail.gmail.com>
-Subject: Re: [PATCH] [git-p4.py] Add --checkpoint-period option to sync/clone
-To:     Ori Rawlings <orirawlings@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>,
-        Vitor Antunes <vitor.hda@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Pete Wyckoff <pw@padd.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQFCTziZO7Bhn9UGJz40Mb8DwNCg2wIQnMjDAagnmEYCoJoXaKFkCzKQ
+Content-Language: en-us
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12 September 2016 at 23:02, Ori Rawlings <orirawlings@gmail.com> wrote:
-> Importing a long history from Perforce into git using the git-p4 tool
-> can be especially challenging. The `git p4 clone` operation is based
-> on an all-or-nothing transactionality guarantee. Under real-world
-> conditions like network unreliability or a busy Perforce server,
-> `git p4 clone` and  `git p4 sync` operations can easily fail, forcing a
-> user to restart the import process from the beginning. The longer the
-> history being imported, the more likely a fault occurs during the
-> process. Long enough imports thus become statistically unlikely to ever
-> succeed.
+> -----Original Message-----
+> From: Junio C Hamano [mailto:gitster@pobox.com]
+> Sent: Monday, September 12, 2016 4:32 PM
+> To: Ben Peart <peartben@gmail.com>
+> Cc: git@vger.kernel.org; pclouds@gmail.com; 'Ben Peart'
+> <benpeart@microsoft.com>
+> Subject: Re: [PATCH v2] checkout: eliminate unnecessary merge for trivial
+> checkout
+> 
+> "Ben Peart" <peartben@gmail.com> writes:
+> 
+> > I completely agree that optimizing within merge_working_tree would
+> > provide more opportunities for optimization.  I can certainly move the
+> > test into that function as a first step.
+> 
+> Note that "optimizing more" was not the primary point of my response.
+> 
+> Quite honestly, I'd rather see us speed up _ONLY_ obviously correct and
+> commonly used cases, while leaving most cases that _MAY_ turn out to be
+> optimizable (if we did careful analysis) unoptimized, and instead have
+them
+> handled by generic but known to be correct codepath, if it means we do NOT
+> to have to spend mental bandwidth to analyze not-common case--that is a
+> much better tradeoff.
+> 
+> The suggestion to move the check one level down in the callchain was
+> primarily to avoid the proposed optimization from being overly eager and
+> ending up skipping necessary parts of what merge_working_tree() does (e.g.
+> like I suspected in the review that the proposed patch skips the check for
+> "you have unmerged entries" situation).
 
-That would never happen :-)
-
-The usual thing that I find is that my Perforce login session expires.
-
->
-> The underlying git fast-import protocol supports an explicit checkpoint
-> command. The idea here is to optionally allow the user to force an
-> explicit checkpoint every <x> seconds. If the sync/clone operation fails
-> branches are left updated at the appropriate commit available during the
-> latest checkpoint. This allows a user to resume importing Perforce
-> history while only having to repeat at most approximately <x> seconds
-> worth of import activity.
-
-I think this ought to work, and could be quite useful. It would be
-good to have some kind of test case for it though, and updated
-documentation.
-
-Luke
-
->
-> Signed-off-by: Ori Rawlings <orirawlings@gmail.com>
-> ---
->  git-p4.py | 8 ++++++++
->  1 file changed, 8 insertions(+)
->
-> diff --git a/git-p4.py b/git-p4.py
-> index fd5ca52..40cb64f 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -2244,6 +2244,7 @@ class P4Sync(Command, P4UserMap):
->                  optparse.make_option("-/", dest="cloneExclude",
->                                       action="append", type="string",
->                                       help="exclude depot path"),
-> +                optparse.make_option("--checkpoint-period", dest="checkpointPeriod", type="int", help="Period in seconds between explict git fast-import checkpoints (by default, no explicit checkpoints are performed)"),
->          ]
->          self.description = """Imports from Perforce into a git repository.\n
->      example:
-> @@ -2276,6 +2277,7 @@ class P4Sync(Command, P4UserMap):
->          self.tempBranches = []
->          self.tempBranchLocation = "refs/git-p4-tmp"
->          self.largeFileSystem = None
-> +        self.checkpointPeriod = -1
-
-Or use None?
-
->
->          if gitConfig('git-p4.largeFileSystem'):
->              largeFileSystemConstructor = globals()[gitConfig('git-p4.largeFileSystem')]
-> @@ -3031,6 +3033,8 @@ class P4Sync(Command, P4UserMap):
->
->      def importChanges(self, changes):
->          cnt = 1
-> +        if self.checkpointPeriod > -1:
-> +            self.lastCheckpointTime = time.time()
-
-Could you just always set the lastCheckpointTime?
-
->          for change in changes:
->              description = p4_describe(change)
->              self.updateOptionDict(description)
-> @@ -3107,6 +3111,10 @@ class P4Sync(Command, P4UserMap):
->                                  self.initialParent)
->                      # only needed once, to connect to the previous commit
->                      self.initialParent = ""
-> +
-> +                    if self.checkpointPeriod > -1 and time.time() - self.lastCheckpointTime > self.checkpointPeriod:
-> +                        self.checkpoint()
-> +                        self.lastCheckpointTime = time.time()
-
-If you use time.time(), then this could fail to work as expected if
-the system time goes backwards (e.g. NTP updates). However, Python 2
-doesn't have access to clock_gettime() without jumping through hoops,
-so perhaps we leave this as a bug until git-p4 gets ported to Python
-3.
+The check for unmerged entries makes complete sense when you are about 
+to attempt to merge different commit trees and generate an updated index 
+and working directory.  This optimization however is trying to skip 
+those expensive steps for the specific case of creating a new branch and 
+switching to it.  In this narrow (but common) case, all that needs to 
+happen is that a new ref is created and HEAD switched to it.  Since 
+we're not doing a merge, I don't believe the check is necessary.
 
 
-
->              except IOError:
->                  print self.gitError.read()
->                  sys.exit(1)
-> --
-> 2.7.4 (Apple Git-66)
->
