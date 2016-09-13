@@ -2,78 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC2F120984
-	for <e@80x24.org>; Tue, 13 Sep 2016 16:40:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00EA820984
+	for <e@80x24.org>; Tue, 13 Sep 2016 16:42:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755164AbcIMQkq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Sep 2016 12:40:46 -0400
-Received: from mout.web.de ([212.227.17.12]:51459 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753562AbcIMQkp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Sep 2016 12:40:45 -0400
-Received: from [192.168.178.36] ([79.213.113.239]) by smtp.web.de (mrweb103)
- with ESMTPSA (Nemesis) id 0MZDTE-1bRCur07bw-00KvAt; Tue, 13 Sep 2016 18:40:33
- +0200
-X-Mozilla-News-Host: news://news.gmane.org:119
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] strbuf: use valid pointer in strbuf_remove()
-Message-ID: <408af1a3-6867-2ff5-c97f-3eb884412ad8@web.de>
-Date:   Tue, 13 Sep 2016 18:40:22 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S1758646AbcIMQmT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Sep 2016 12:42:19 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63025 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754894AbcIMQmP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Sep 2016 12:42:15 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F3CDF3DD85;
+        Tue, 13 Sep 2016 12:42:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=pO3lQiCACnlH
+        5/XxJiEWbJfpbFQ=; b=siBXrh0e5TLf065/JRK5ONIA7nhv4t+NGQDYLYpifMV4
+        7j9P370nd/xpxrpyzldtmCcm+XARU/wZUxjM+7p2Kd1r+l7021lKgN55Kzf+6AHS
+        c1GOyuLqcDMvkWkbrmF9YtWuDxSQSejvLte9gO3myUYKySuid891Q3ejXHF2AbY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=uyrqEN
+        l721a7TRn5nUtFJPeu2yW5yEsZWY0wee5KRrrWGXVs4gU1aWrgXFORGVjN7ZZRWL
+        4l3CfncIhYKpbTS7BmP+OMq9eNeSW6F/eWlDVOOQn7nNOf3KjFOt3bRMmo4y1+xJ
+        cCh5RwpnbB/BzyyPWeaiBWxMJAzrrO4Sj1wD0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E989B3DD84;
+        Tue, 13 Sep 2016 12:42:13 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6E1403DD83;
+        Tue, 13 Sep 2016 12:42:13 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>, peff@peff.net,
+        sbeller@google.com, Johannes.Schindelin@gmx.de, jnareb@gmail.com,
+        mlbright@gmail.com, jacob.keller@gmail.com
+Subject: Re: [PATCH v7 10/10] convert: add filter.<driver>.process option
+References: <20160908182132.50788-1-larsxschneider@gmail.com>
+        <20160908182132.50788-11-larsxschneider@gmail.com>
+        <20160910062919.GB11001@tb-raspi>
+        <10020380-76ED-4371-A0BA-59D07AF33CE0@gmail.com>
+        <96554f6d-988d-e0b8-7936-8d0f29a7564f@web.de>
+Date:   Tue, 13 Sep 2016 09:42:11 -0700
+In-Reply-To: <96554f6d-988d-e0b8-7936-8d0f29a7564f@web.de> ("Torsten
+        =?utf-8?Q?B=C3=B6gershausen=22's?= message of "Tue, 13 Sep 2016 16:44:18
+ +0200")
+Message-ID: <xmqqvaxzvjj0.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:dMew4R9kGgV2P+waKVkLCeuJ4TabLnFJ8lZTTA41jf81QCElz0S
- j2eVjIgOXr3XlL2Un1PJNGdR7m5Dp5FbI4POVfCKQg4FRSUVCCY5hxxdj8ckK3OV5mhYlH0
- /cR/FRq6ordPqLUCYBgb1xFZ3PHLL2yNTGBE+guQTFfzTcGbAok199ZA5ejdvkMXkvRcI/z
- JFIBmDsOUf7Lx/6Q3kwRw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/+FJSEZArVk=:srfsdPFv42T/Y+Pym+a669
- 2bRVuEI9khVK2NFG1RBWV8Gfx+fsf55DvBRTRaTjnwqYMGlelshHOhcMwTVJt9efsSKhTK/ch
- aCENW7/u9crCOtDQhRukXBdL7WgCBrfcu6FFdKWpcrwXxKZqjXwtf83PicPmgyZkB7JLkTlxe
- rS85UomsOuiRE21gKgyV/G1q/ZlGH9LYsPqgiSaiY3wuvRR9rKS+a8rdz/4bFJwgwS/+jUM/F
- RTUcDsNrDphXVbMCqsR0LLYwwNFAkIbBhn0rHgC18gmo4WsGI3oTELVWdlfYog8fQpyuU9Clt
- s5YEZNgwTL8UfJQcpxPYe5BE6wqV0zpoCAhPnBKKNYcXiBtEsgkEyuNAOsl9L37QFJpHtkLQ5
- YgwxzNlLblmW0ebkTxJIhiEHE/qSlIpVsDax8X3yRRs3QaDqXgP3mlLEl8Rptx6h2YWPVqBur
- WMd2NyOEltbtgUZa+RjNc8aupRyTIuj/FDWzP27QO8q5/dgIMMCp7wvWOfkpPZJRBvc3luU0O
- w9Id4LCj2ngs0h5U8tgGhxDPAuzfyS1SgwD3ws0F+bK+oEfthJ+gy7zBUsD6vP469yEM3Bpnk
- jFiT9cHmc2UBC4lWY0/QWQWQL3nOo/ZwhO6I3Ga6TEwq+3+ixJkc+tMhKAElxvbfuqm9TtxMe
- EAE4EUIRv3ghqpRaSR3i8w6GLHPMlFkMv5WjHzDQfZLOseKMUV038pgLcj9V2UOXg9bEYhUwp
- 0W7smmpN1gF5kRGQxsHn78BVfeGBTwkmrRjpxojlePExkZelCaAXvSMdiWNhFfYmBo4gQkT52
- B7X1ViM
+X-Pobox-Relay-ID: 05E362E0-79D1-11E6-9035-F7BB12518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The fourth argument of strbuf_splice() is passed to memcpy(3), which is
-not supposed to handle NULL pointers.  Let's be extra careful and use a
-valid empty string instead.  It even shortens the source code. :)
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- strbuf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> I would really consider to treat pathnames as binary, and not add a tra=
+iling '\n',
+> are there other opinions ?
 
-diff --git a/strbuf.c b/strbuf.c
-index f3bd571..b839be4 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -187,7 +187,7 @@ void strbuf_insert(struct strbuf *sb, size_t pos, const void *data, size_t len)
- 
- void strbuf_remove(struct strbuf *sb, size_t pos, size_t len)
- {
--	strbuf_splice(sb, pos, len, NULL, 0);
-+	strbuf_splice(sb, pos, len, "", 0);
- }
- 
- void strbuf_add(struct strbuf *sb, const void *data, size_t len)
--- 
-2.10.0
+It would be the most consistent if the same format as
+write_name_quoted() is used for this, I would think.
