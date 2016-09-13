@@ -2,109 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5024120984
-	for <e@80x24.org>; Tue, 13 Sep 2016 23:26:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E23F20984
+	for <e@80x24.org>; Tue, 13 Sep 2016 23:28:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759540AbcIMXZz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Sep 2016 19:25:55 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59100 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754521AbcIMXZw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Sep 2016 19:25:52 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 425933C964;
-        Tue, 13 Sep 2016 19:25:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=5QvJkbYevcct
-        sfXaL8r9VPxebXQ=; b=r7p4TEwbTJnALeTvA5/7T4wTgrtGmpqyX0nb39Y+wOtW
-        dm1xHFMw5AiUzJqmO3Dk+ImRsT4fzEeu5mh8XgKG8bix0r6yhxewCzPChmSymmkT
-        JXJ8wjn50/yaGQN5vkGErMuTQ89nbYzoQeuJa6UGezXtSrWBohx+NJTBmQE4DHs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=YK7iml
-        nAMktkABlOLHXLDbRouwOscQMKmvL3t7C7aqOhIXM3pJVNnzwleBZlqcEVuw87Az
-        mJxuBNKwrh0KdFnLHmEVgeXp/XpuBfxeRYe5jLQbJb4uJZSGCOOA3Q45ugypqJep
-        dqS4Xy09tTnKWLcm5HDWfZM/lkXDvvVS1LKDY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3B4963C963;
-        Tue, 13 Sep 2016 19:25:51 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A9DCE3C962;
-        Tue, 13 Sep 2016 19:25:49 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] unpack-trees: pass checkout state explicitly to check_updates()
-References: <b57982ca-d508-5016-a187-fc3b829f9b0c@web.de>
-Date:   Tue, 13 Sep 2016 16:25:47 -0700
-In-Reply-To: <b57982ca-d508-5016-a187-fc3b829f9b0c@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Tue, 13 Sep 2016 19:37:06 +0200")
-Message-ID: <xmqqa8fbtm9w.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1759131AbcIMX2I (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Sep 2016 19:28:08 -0400
+Received: from mail-it0-f54.google.com ([209.85.214.54]:36005 "EHLO
+        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755700AbcIMX2I (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Sep 2016 19:28:08 -0400
+Received: by mail-it0-f54.google.com with SMTP id o3so19997500ita.1
+        for <git@vger.kernel.org>; Tue, 13 Sep 2016 16:28:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Y0RpY2jgJaZiArjnEfeDdk94QiEgNMoWMiX8pczzwEk=;
+        b=VM0m8yzV/YthzkQu58di18GBmvdWqrcxLXFGiguctIq4n3hT0rMW4W7HoYq4+toYB0
+         Y+dqdECrvsIT4VPbrCde/eTGNp2dFo5g1ELqDftTizCNgKUYQr6XhhI1ueKVLA4L7Y0M
+         Kte6oSjbMS8gI2cxnGVYbxB0yVd7R/04bvxyIIiQRWb5tTrOMY4+c9uQTdMP5sJ+y+5N
+         x0pQCYGROlyPgwEJzw7DA4k/YzMmTXSdgAEabZaOnOeF3d2DVi4ZOLRMRJ4S2kjBD0VV
+         bokNy2X4uZi2YrAyxdaNuH1g65MjZLeny1ZwiI4c1KOm8qaJY8b8TdpcK0vkbN7aFGDY
+         dPLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Y0RpY2jgJaZiArjnEfeDdk94QiEgNMoWMiX8pczzwEk=;
+        b=frjpxnjbWmdTU35Up2zWIY7g5PIu8/L7jSPERt+N1e0kAmtUkXQLfW2lL9mpHuCiLO
+         /aX+mHXIKh95JGmDC6TfL9hFQq5fI55MWMFkb8viLhxVsWs3yNdhUEids8YV9QRL3Tf1
+         rlGZvuNVM2jE5V9+v5tspK5pRy2EwQ8nvxPtGHo2zSlDP6bitn3onPYVAd9uKaQQQRbV
+         NaaPLwag+vqqrh7wPjDaLqFvO/TF+clDXVgJQwbDUZK6d5v1U+njw/eThtsNydm4nSxB
+         Pu5Q9p+jAPaqruDXFm5ujLKIpbn5vWJTGncSF+5wjgHd4qfGaHTO9CA/J+W3y489WSIL
+         j5hw==
+X-Gm-Message-State: AE9vXwNnzCBwwSCKWZ7lOQ7JAPGLy8fzj8zudpVvhGkLhW863CVHBbUFNuobpLKFeNdjIr5v87aFURIwEufrqTEl
+X-Received: by 10.107.131.8 with SMTP id f8mr46685iod.91.1473809286713; Tue,
+ 13 Sep 2016 16:28:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 67DB3C7E-7A09-11E6-B372-51057B1B28F4-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Received: by 10.107.173.98 with HTTP; Tue, 13 Sep 2016 16:28:06 -0700 (PDT)
+In-Reply-To: <xmqqlgyvtn6l.fsf@gitster.mtv.corp.google.com>
+References: <20160913044613.1037-1-sbeller@google.com> <20160913044613.1037-17-sbeller@google.com>
+ <xmqqlgyvtn6l.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 13 Sep 2016 16:28:06 -0700
+Message-ID: <CAGZ79kb4Rm=AT-hFutXW5jhZRL0ThDFr789=AbxKC-o+jQ341g@mail.gmail.com>
+Subject: Re: [RFC/PATCH 16/17] diff: buffer output in emit_line_0
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+On Tue, Sep 13, 2016 at 4:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> +struct line_emission {
+>> +     const char *set;
+>> +     const char *line;
+>> +     const char *ws;
+>> +     const char *reset;
+>> +     int first;
+>> +     int len;
+>> +     int whitespace_check;
+>> +     unsigned ws_rule;
+>> +     int has_trailing_carriage_return;
+>> +     int has_trailing_newline;
+>> +};
+>
+> It is somewhat strange to see whitespace things are per-line here.
+> I'd understand it if it were per-path, though.
 
-> Add a parameter for the struct checkout variable to check_updates()
-> instead of using a static global variable.  Passing it explicitly makes
-> object ownership and usage more easily apparent.  And we get rid of a
-> static variable; those can be problematic in library-like code.
-> ...
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 11c37fb..74d6dd4 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -218,8 +218,8 @@ static void unlink_entry(const struct cache_entry *=
-ce)
->  	schedule_dir_for_removal(ce->name, ce_namelen(ce));
->  }
-> =20
-> -static struct checkout state;
+Yeah we have to have it at least per path as that is the granularity
+the user can configure it.
 
-> ...
-> @@ -1094,6 +1094,7 @@ int unpack_trees(unsigned len, struct tree_desc *=
-t, struct unpack_trees_options
->  	int i, ret;
->  	static struct cache_entry *dfc;
->  	struct exclude_list el;
-> +	struct checkout state;
+So would we rather want to keep the ecbdata around for each file pair and
+just reference that? I thought we deliberately want to avoid ecbdata, so maybe
+we rather want to have another struct that keeps path related information
+around (pointer to the blob and white space information).
 
-Does the distinction between this thing in BSS implicitly cleared
-and the new one on stack that does not seem to have any
-initialization matter?
-
-	... goes and looks ...
-
-OK, after this hunk we clear and set up everything in state, so
-there is no difference in behaviour.  Just we got rid of an
-unnecessary file-scope global.
-
-Nice.  Thanks.
- =20
->  	if (len > MAX_UNPACK_TREES)
->  		die("unpack_trees takes at most %d trees", MAX_UNPACK_TREES);
-> @@ -1239,7 +1240,7 @@ int unpack_trees(unsigned len, struct tree_desc *=
-t, struct unpack_trees_options
->  	}
-> =20
->  	o->src_index =3D NULL;
-> -	ret =3D check_updates(o) ? (-2) : 0;
-> +	ret =3D check_updates(o, &state) ? (-2) : 0;
->  	if (o->dst_index) {
->  		if (!ret) {
->  			if (!o->result.cache_tree)
+Thanks,
+Stefan
