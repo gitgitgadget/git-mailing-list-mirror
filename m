@@ -2,95 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79DEE20984
-	for <e@80x24.org>; Tue, 13 Sep 2016 17:27:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 723C420984
+	for <e@80x24.org>; Tue, 13 Sep 2016 17:37:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755062AbcIMR1C (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Sep 2016 13:27:02 -0400
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:33562 "EHLO
-        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752337AbcIMR1B (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Sep 2016 13:27:01 -0400
-Received: by mail-qk0-f175.google.com with SMTP id w204so182597584qka.0
-        for <git@vger.kernel.org>; Tue, 13 Sep 2016 10:27:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=3DqJV7ZeMkOft3+jMyBy+Mwe6UHio5qLLgMw+0NPfQM=;
-        b=yz1pn4mvNJE4cuEHuFvzHKxiQGG2zALVNIEyVQDWv93ZaEeAp7fWMI9wwQRjohAqbT
-         BHm5jCKSaxzDGmdMiwaOZKhmX/DSg8WJZyh84ab6cxl2YkisNJgFMvsQEj/z7160b1T1
-         jER0C2abbw6Evv1xcDEBJMpiUfZOC2W+VsR+XM0JP3avTzTLoqYhgfLxHNHny8EL74Dr
-         7Zjl8JH6Is+3wOAfrqGbUVi/bHf2FY/HHzdooZMplNKgno8Gvp/SYRs3V5ZvGh5WVRRS
-         WrCeOBM89QMMVBgrAUT3OQEE+7YbITIb60mfE/eR7j8e0A9OGKjZofOAAnGt95xpnvLE
-         gItg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=3DqJV7ZeMkOft3+jMyBy+Mwe6UHio5qLLgMw+0NPfQM=;
-        b=TDuy5slso3K9m7s03w06sBCvzx+kjXladPLrfyL2iyv1CQHNisSFu0d6L9tf2Qofze
-         0iWosg3zH+m7iiOESMXuUnhZSweJO3UoBr+gcYsCmZjmHm0JecqpcQ/wmPhTKrQilIL1
-         eRSLO/9q9MjZmvjkb2OPGvjvkRaI7vG0G18SZSsa3Mx5ehvnFcbxOTH3yjakOnfIKtvE
-         YlEcxXQBoNVT1by3QdZcdJ6LVyR/Q5eA1Ao0YOTq4YcCWojJg9vqjGrLn6waYORV19Os
-         gSUouqV2PeytgWesZFPNQ7Q0y+Vq2wPiOhb9u4VqVv/QsABBh+McM9HG4C9A3IzbfTsW
-         2vRg==
-X-Gm-Message-State: AE9vXwP18dOoejZU0iTtq6Bl5zUqDFk0TG2SFv5wIOfYp25POMczmjkocJrXs5nZr5AEE/eK
-X-Received: by 10.55.167.67 with SMTP id q64mr2355232qke.97.1473787620869;
-        Tue, 13 Sep 2016 10:27:00 -0700 (PDT)
-Received: from LykOS.localdomain (NYUFWA-WLESSAUTHCLIENTS-11.NATPOOL.NYU.EDU. [216.165.95.0])
-        by smtp.gmail.com with ESMTPSA id h25sm13981027qtc.38.2016.09.13.10.27.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 Sep 2016 10:27:00 -0700 (PDT)
-Date:   Tue, 13 Sep 2016 13:26:59 -0400
-From:   Santiago Torres <santiago@nyu.edu>
-To:     Mike Hawes <mhawes24@gmail.com>
-Cc:     git@vger.kernel.org, mh351681@wne.edu
-Subject: Re: Bug
-Message-ID: <20160913172658.7s4rhxjwp7j76zp4@LykOS.localdomain>
-References: <B1BB8E37-C36E-4F4A-BC5F-FDA32CE162AF@gmail.com>
+        id S1756134AbcIMRhj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Sep 2016 13:37:39 -0400
+Received: from mout.web.de ([212.227.17.11]:62063 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1755062AbcIMRhg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Sep 2016 13:37:36 -0400
+Received: from [192.168.178.36] ([79.213.113.239]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0MXYWA-1bYL3A18YY-00WUjj; Tue, 13 Sep 2016 19:37:18
+ +0200
+X-Mozilla-News-Host: news://news.gmane.org:119
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] unpack-trees: pass checkout state explicitly to
+ check_updates()
+Message-ID: <b57982ca-d508-5016-a187-fc3b829f9b0c@web.de>
+Date:   Tue, 13 Sep 2016 19:37:06 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <B1BB8E37-C36E-4F4A-BC5F-FDA32CE162AF@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:eKfxIgJI2HPjDTYGSjDGb5c2eEIKtMvnJirVzhTeshcCclY6uPQ
+ zKxjkVO3I/XdP+Z3OOIzW6SMB284qZWe+mMjq7jUHde/CNgqtITowmtLsQYnpsN95czFCg1
+ HzStsyUkEVZVLjFy/EhTU/iATR+PhHDyy7qLI7aQu2+BjNVbwPfF5NoSKEh0gaEKmAetYr5
+ AXcF57nhjZlQAxeKyTbpA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:oUHc0jD/gaA=:l8AL5bb9xrCHY1DG6xUJoV
+ j6i4XlvfZRnneZJtgSOhGvPODODUiGlHvsvsax762WThGEmahWMsfzBJG75YTSqC3MEoFUZXq
+ msOhpZCHmJhLNLcSprt2MbhML40lh1lMDkxYI87D1z6n6uJc63FexN5qBgcSsgGS4KNKUIu+T
+ bVe5n/zyC1PXPdjKWi/nD2ExNofjxcOdFEHIVk62RLbrVtMdknCsUF6YZ0w6kjAArPfl94pG3
+ gjLPFiYHew4Rco/fL0eyuxyrKRK0iEPkp353F+jRAMzmhqizB0TGn4QLyd3UMfIXOhARrbgWR
+ lvNMggnbrkOEdfgBObeU2i9e8H7XlyqxiI9TdLyRY3xLS79xVsPAAwLT0ya2xBJkEu9xyzjNy
+ IeImbJ+/yjqPKTYbagTTeavssAFWX85jiu3iKCn1PLqcMkmy+AYCgbgDqZobrVbqeGX6Lk2Ui
+ 2cootARvwvlfp61wyZlKbyB+8cCr7SZlyLkR4O6uedB3gwB20aXmr5RpOs6DSAnKpnfURoRwu
+ gvdsAssVvCU/4KmCS/35XDkwqvkchkHH4Tghy0/ojigj1TG4PuS4E1oSG2/86M+YJo+1U9nr2
+ h4Ta+zgO6fncZGbwrhajNtTTQCC0gWRbXmuBuG91NWGIbLxg9wy6dp/Xw6zV36cf8K9iw65R9
+ nBmFqUAfa131Iaaougtngv/p34n69Nw2EnNFiLbwUcYOMusAKJ479e9rt4CH10fcjGr6SMU6F
+ DadA1x9zUH/7R5znZwYL9VSoEvbuILu+y7jbKElP5a8CgF+1pFcP9avge2mTnw18UsEittkjy
+ 3NFTQ6Y
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Michael.
+Add a parameter for the struct checkout variable to check_updates()
+instead of using a static global variable.  Passing it explicitly makes
+object ownership and usage more easily apparent.  And we get rid of a
+static variable; those can be problematic in library-like code.
 
-It would be helpful to get more context on what triggered this bug. I'm
-not a 'core' dev, so there may be a better way to send this. In general,
-you want to state the following:
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ unpack-trees.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-0) Information about your git installation, host system, etc.
-1) Information about your repo (was it GitHub? local? self-hosted?)
-2) What did you do? (git push origin master? git push?)
-3) What happened instead of working? (the error message would be
-   helpful.
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 11c37fb..74d6dd4 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -218,8 +218,8 @@ static void unlink_entry(const struct cache_entry *ce)
+ 	schedule_dir_for_removal(ce->name, ce_namelen(ce));
+ }
+ 
+-static struct checkout state;
+-static int check_updates(struct unpack_trees_options *o)
++static int check_updates(struct unpack_trees_options *o,
++			 const struct checkout *state)
+ {
+ 	unsigned cnt = 0, total = 0;
+ 	struct progress *progress = NULL;
+@@ -264,7 +264,7 @@ static int check_updates(struct unpack_trees_options *o)
+ 			display_progress(progress, ++cnt);
+ 			ce->ce_flags &= ~CE_UPDATE;
+ 			if (o->update && !o->dry_run) {
+-				errs |= checkout_entry(ce, &state, NULL);
++				errs |= checkout_entry(ce, state, NULL);
+ 			}
+ 		}
+ 	}
+@@ -1094,6 +1094,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 	int i, ret;
+ 	static struct cache_entry *dfc;
+ 	struct exclude_list el;
++	struct checkout state;
+ 
+ 	if (len > MAX_UNPACK_TREES)
+ 		die("unpack_trees takes at most %d trees", MAX_UNPACK_TREES);
+@@ -1239,7 +1240,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 	}
+ 
+ 	o->src_index = NULL;
+-	ret = check_updates(o) ? (-2) : 0;
++	ret = check_updates(o, &state) ? (-2) : 0;
+ 	if (o->dst_index) {
+ 		if (!ret) {
+ 			if (!o->result.cache_tree)
+-- 
+2.10.0
 
-Hope this helps.
-
-Cheers!
--Santiago.
-
-On Tue, Sep 13, 2016 at 01:18:52PM -0400, Mike Hawes wrote:
-> To whom this may concern,
-> 
-> I found a bug in git while trying to push my website.
-> 
-> I redid the process and it happened again.
-> 
-> I also tried it on another computer and it happened again.
-> 
-> I was wondering how to claim a bug?
-> 
-> Thank you,
-> 
-> 
-> Michael Hawes
