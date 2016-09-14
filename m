@@ -2,94 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F51B1FCA9
-	for <e@80x24.org>; Wed, 14 Sep 2016 15:56:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A60391FCA9
+	for <e@80x24.org>; Wed, 14 Sep 2016 16:03:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1763868AbcINP4X (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Sep 2016 11:56:23 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62715 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1762054AbcINP4X (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Sep 2016 11:56:23 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7481B3EFB3;
-        Wed, 14 Sep 2016 11:56:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZycKoqGpsZ/HZfgdyGFw6/CrZ9Y=; b=iqIs/+
-        osuff3CeSJXn9NupKWsJ+4ki33WfmV+0aMqGkLJMwYKFQWW7bj+gQLPt1ZiC7bST
-        idRrl/gCB68CxmyaA1thv6HbLhA828FEOeHOweuaVYhqFYxqqcvNx5LuD6zlqtBL
-        C+kZobaZRYmExlDjJPkcRZB/yQsTiwo1maq94=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=MmDHJZpJPuRJD0tTMpANlNE9T7w55Hmb
-        Br/d/vczOKaGx4eTPxCa6FfNFunTYlX/b+eIvj/XYeyGWpel2ojTRoYB609qO1fZ
-        P5zkECtjAKaF9X7ySyHYaGavTif2ut89aQrvPdMd+LTIPUwmaGTG0yTVTr7OUQz7
-        MBHaJEtFd9k=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6588D3EFAF;
-        Wed, 14 Sep 2016 11:56:21 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DBB223EFAE;
-        Wed, 14 Sep 2016 11:56:20 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Mike Ralphson <mike.ralphson@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] vcs-svn/fast_export: fix timestamp fmt specifiers
-References: <01020157276d4d1f-9c995462-4aea-4949-8d29-3dbdbec77dd7-000000@eu-west-1.amazonses.com>
-Date:   Wed, 14 Sep 2016 08:56:18 -0700
-In-Reply-To: <01020157276d4d1f-9c995462-4aea-4949-8d29-3dbdbec77dd7-000000@eu-west-1.amazonses.com>
-        (Mike Ralphson's message of "Wed, 14 Sep 2016 06:40:57 +0000")
-Message-ID: <xmqqeg4mscf1.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1764267AbcINQDQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Sep 2016 12:03:16 -0400
+Received: from ikke.info ([178.21.113.177]:44104 "EHLO vps892.directvps.nl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1764248AbcINQDP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Sep 2016 12:03:15 -0400
+Received: by vps892.directvps.nl (Postfix, from userid 1008)
+        id 1647C4400B9; Wed, 14 Sep 2016 18:03:08 +0200 (CEST)
+Date:   Wed, 14 Sep 2016 18:03:08 +0200
+From:   Kevin Daudt <me@ikke.info>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [RFC 0/1] mailinfo: de-quote quoted-pair in header fields
+Message-ID: <20160914160308.GB26893@ikke.info>
+References: <20160913152622.2xtyn6mki6p6afsg@sigill.intra.peff.net>
+ <20160913234612.22806-1-me@ikke.info>
+ <20160913234612.22806-2-me@ikke.info>
+ <xmqqr38ns5wi.fsf@gitster.mtv.corp.google.com>
+ <20160914050919.qhv2gxzjyj5ydpub@sigill.intra.peff.net>
+ <xmqqmvjbrpp4.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C79D0CAC-7A93-11E6-9536-F7BB12518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqmvjbrpp4.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.7.0 (2016-08-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mike Ralphson <mike.ralphson@gmail.com> writes:
+On Tue, Sep 13, 2016 at 10:54:47PM -0700, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > It has been a while since I looked at rfc2822, but aren't the quoting
+> > and syntax rules different for addresses versus other headers? We would
+> > not want to dequote a Subject header, I think.
+> 
+> You're absolutely right.  RFC2822 does not quite _want_ to dequote
+> anything.  As you pointed out in a separate message, we are the one
+> who want to strip out "" quoting when mailinfo says
+> 
+> 	Author: "Jeff King"
+> 
+> to its standard output (aka "info"), and turn it into
+> 
+> 	GIT_AUTHOR_NAME='Jeff King'
+> 
+> and do so ONLY for the author name.
+> 
+> So I would think it is the responsibility of the one that reads the
+> "info" file that is produced by mailinfo to dequote the backslash
+> thing if the mailinfo gave us
+> 
+> 	Author: "Jeff \"Peff\" King"
+> 
 
-> Two instances of %ld being used for unsigned longs.
->
-> Signed-off-by: Mike Ralphson <mike.ralphson@gmail.com>
-> ---
+The RFC makes a distinction between structured fields and unstructured
+fields. Quoting would not even be necessary for unstructured fields
+(like Subject), so yes, that those fields should be left alone.
 
-Good eyes.  Thanks for spotting.
+Unstructures fields are subject, comments, keywords and optional fields,
+the rest is considered structured.
 
->  vcs-svn/fast_export.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
-> index bd0f2c2..97cba39 100644
-> --- a/vcs-svn/fast_export.c
-> +++ b/vcs-svn/fast_export.c
-> @@ -73,7 +73,7 @@ void fast_export_begin_note(uint32_t revision, const char *author,
->  	static int firstnote = 1;
->  	size_t loglen = strlen(log);
->  	printf("commit %s\n", note_ref);
-> -	printf("committer %s <%s@%s> %ld +0000\n", author, author, "local", timestamp);
-> +	printf("committer %s <%s@%s> %lu +0000\n", author, author, "local", timestamp);
->  	printf("data %"PRIuMAX"\n", (uintmax_t)loglen);
->  	fwrite(log, loglen, 1, stdout);
->  	if (firstnote) {
-> @@ -107,7 +107,7 @@ void fast_export_begin_commit(uint32_t revision, const char *author,
->  	}
->  	printf("commit %s\n", local_ref);
->  	printf("mark :%"PRIu32"\n", revision);
-> -	printf("committer %s <%s@%s> %ld +0000\n",
-> +	printf("committer %s <%s@%s> %lu +0000\n",
->  		   *author ? author : "nobody",
->  		   *author ? author : "nobody",
->  		   *uuid ? uuid : "local", timestamp);
->
-> --
-> https://github.com/git/git/pull/293
+Because the only field where this is a problem is the From field, I
+think it would be safe to limit the unquoting just to that field.
+
+My reasoning to do the unquoting here is because it's the RFC requires
+the quoting in the first place.
+
+I already noticed a bug in the current unquoting of the author when
+adding a comment to the From: field.
+
+    From: "A U Thor" <au@thor.com> (test)
+
+When applied the the author of this patch shows up as:
+
+    Author: A U Thor" (test) <au@thor.com>
+
+So I agree with Jeff[1] where he states that the surrounding quotes
+should be removed, if that's not a problem for git.
+
+[1]:https://public-inbox.org/git/20160914051305.vphknpsikyxi3hg3@sigill.intra.peff.net/
