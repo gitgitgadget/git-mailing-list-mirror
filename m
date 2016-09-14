@@ -2,125 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD9951FCA9
-	for <e@80x24.org>; Wed, 14 Sep 2016 16:05:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A567D1FCA9
+	for <e@80x24.org>; Wed, 14 Sep 2016 16:27:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1763373AbcINQFr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Sep 2016 12:05:47 -0400
-Received: from mout.web.de ([212.227.17.12]:52242 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1762269AbcINQFq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Sep 2016 12:05:46 -0400
-Received: from [192.168.178.36] ([79.213.113.239]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0MPHGG-1bfmq40GBc-004UCq; Wed, 14 Sep 2016 18:05:40
- +0200
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] xdiff: fix merging of hunks with -W context and -u context
-Message-ID: <a6f5a3cb-74d3-6072-a611-8dd63b902057@web.de>
-Date:   Wed, 14 Sep 2016 18:05:27 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S1759928AbcINQ1f (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Sep 2016 12:27:35 -0400
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:38693 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752028AbcINQ1e (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Sep 2016 12:27:34 -0400
+Received: by mail-wm0-f54.google.com with SMTP id 1so41587078wmz.1
+        for <git@vger.kernel.org>; Wed, 14 Sep 2016 09:27:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=KajBOBeHbeY71MkntuZeCX1r0DkaijEV18pd3ejOFqA=;
+        b=f/qd6WfWG1cDxiWlZopma/ZukCIqGyrPYZaqXHiBL9Pywf6+3HmUoXH1ZQWrws32Qr
+         8QgLmYJcufhRu1d25T2cN/22VrmcHpmkck3ohgYbYuznXfCyyxXYHSQGBf9cGDYmUFgL
+         2DyxK+7CyHlfZhKIN0x0Zad0wCpUPTOCCiPsY0d7+DUykN4dfAYF8e/RXfCjZp+OMakK
+         xYdXEyms+cwVF+2O7s8BiI3rqrsxKBSwZFOPYzWzC9SzR85rgSV6Q41AmagwR7AwWK3u
+         XxnusZrfxrwkwgXZ4KV9rVjBsFdmxpqMDCxuMBhxQShOgJ/gfU8hxJlHUOTNh80LAbAc
+         i4yQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=KajBOBeHbeY71MkntuZeCX1r0DkaijEV18pd3ejOFqA=;
+        b=Sjj1W/SQ3atAe12T2Xg9gD6yt7z6xIV9FuQVqE/k/7voPMGb2G23+GGjyluJPYxl6F
+         ixz6ebmejlgHtaYQuQJ02Q2d76yZgGPguq6xvib2UsvnJ6A9STgW9zBr1QAeHkHer+VF
+         gRswo1+sK4ENL2zWk0sp7eA8N+TR45AkItKEWimHS4PFoVmZBaDsijm/AA50J+sua41e
+         jHLya8QTbkqNOUnqDfV+4RWE7fNzAL3UQY4jyMJbcn9N1WTah/gNl3PKwqA4q6JtbiO9
+         ecExe2VnHoVazWWpYp03cD/39nXyjsXHvY10DG5nvMlYUmC2RHhap/LCoXt3IlkqwbsI
+         0eog==
+X-Gm-Message-State: AE9vXwPPqT+oJW8mZKhT6QXhjqYM57cUVafKw08GF419fr8PdjtHPN/yMVRLVNqQXCA09duCHPaUomqgbfA70w==
+X-Received: by 10.28.86.8 with SMTP id k8mr4099670wmb.33.1473870453320; Wed,
+ 14 Sep 2016 09:27:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:20vYS/Ym24URcuxTIWDfgpfL/WjJkfXificPQkbwyeF1+3aFQWb
- e36qkHAim2O9DLI8Df26AtENWaZ8GDOENO+7pD+KVyxhyISUPOtWjJViBRg/JsH0+fRKFh3
- JtkQzomxCUbstzrDgKoAfW8vHTCz3sZh9Jle36K1lSWwaBCCYqF4nEGUMARDGFzFoev21Jy
- qBVAYsXdglA3QwJG9mnTQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:CZmVRcjEMAE=:6e0n0ngTztndfy47izgvx8
- 5uIUaPaHnD93Lsag3jxKYdth+HyWRft2paF32KgiTDHpnoTdzb7hVgIhAlkGaPOXZ1/EgYAc6
- P4a3j88p30nQXLpoim/YvdC6wo9aB/L2QpQNTu2g8okuhNqb/9c0KlL9aXwiL/Y3VDRFQ5MW1
- o1EVaYhyjYTvea7gr85RNgV9nK7uHFlb7LVErag2duyP2jbKsz6lTfscg0G4IgF8zPBbwW7L/
- SGEIAP/VQi93JNkgda6P3TMAopRB4fzVv3Bku5Ba9g1K6dgXdrJ8GedM+wtrpdtQCERDqLY3A
- /YjZ4LT0v2ytD011IhDln5sDZiQBRB/Ew3FRHIQBCuuWzTeAfx+UZX1WV8v39stNaCkpwGCRs
- ncHMq8Sxp1nf7pOXoUOo4n2xOIywSe7L0Bp14IdKwUXCjhxjG1ohHCHfR2tSvtRchLTjvYJDK
- CBPj4Xwi8G4lKuuG79TOIL3S4XMH52BcX2HUk4f8JTL9Mv3glYGzQwO49DxjfuQlFRle6eXWV
- MLf33cNM6ZVZJ42y87rR3xsTukfs9P0BvjaexYrr7KguebZ0ZYjp1N33wyqz6kvmlFZP5enCK
- A38xiT4x2nGYr6sqsXXt8uEvRiN7zqv+3ZsPYxszPQvMXM9/b524XPB2pNHDWw/mwlZ19aHWm
- HV/PccTXCuGWXX0ZQaTuG1NchqdNFUozsi+zeMNAD8b32cRRK/GZ21XJFDBaTLKLTz0SXpsV4
- ufM9WpLhWK7eSmnfeTBj4ZhvbbolxkMTDMkW/9wewWZAiSuCYrEEpGN6qKr8ysaMVKlPowBn2
- 8/TaWLh
+Received: by 10.194.38.132 with HTTP; Wed, 14 Sep 2016 09:27:32 -0700 (PDT)
+In-Reply-To: <1019E7FD-0AC0-4BCE-B810-BE20968DFEE9@gmail.com>
+References: <E1bhKNo-0005m2-5z@mylo.jdl.com> <20160912004233.qh6uf35v5ylrboz6@sigill.intra.peff.net>
+ <E1bjRLd-0005k0-Vb@mylo.jdl.com> <DB5PR07MB1448B5EDFE2E2D84C42A8AFCE2FF0@DB5PR07MB1448.eurprd07.prod.outlook.com>
+ <E1bjVfp-0006sG-89@mylo.jdl.com> <xmqqeg4o27zw.fsf@gitster.mtv.corp.google.com>
+ <1019E7FD-0AC0-4BCE-B810-BE20968DFEE9@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 14 Sep 2016 18:27:32 +0200
+Message-ID: <CAP8UFD0M8MDs-0UAFgx288XVdWg_XP=bOwAWoXdY=5Sg7pMFsw@mail.gmail.com>
+Subject: Re: Git Miniconference at Plumbers
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jon Loeliger <jdl@jdl.com>,
+        David Bainbridge <david.bainbridge@ericsson.com>,
+        Jeff King <peff@peff.net>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If the function context for a hunk (with -W) reaches the beginning of
-the next hunk then we need to merge these two -- otherwise we'd show
-some lines twice, which looks strange and even confuses git apply.  We
-already do this checking and merging in xdl_emit_diff(), but forget to
-consider regular context (with -u or -U).
+On Tue, Sep 13, 2016 at 1:14 AM, Lars Schneider
+<larsxschneider@gmail.com> wrote:
+>
+>> On 12 Sep 2016, at 21:11, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> [..]
+>> properly; supporting "huge objects" better in the object layer,
+>> without having to resort to ugly hacks like GitLFS that will never
+>> be part of the core Git. [...]
+>
+> I agree with you that GitLFS is an ugly hack.
+>
+> Some applications have test data, image assets, and other data sets that
+> need to be versioned along with the source code.
+>
+> How would you deal with these kind of "huge objects" _today_?
 
-Fix that by merging hunks already if function context of the first one
-touches or overlaps regular context of the second one.
+I think that Junio was saying that this problem and other problems
+like this one are indeed itches for some people, but maybe not for
+kernel community.
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- t/t4051-diff-function-context.sh | 25 +++++++++++++++++++++++++
- xdiff/xemit.c                    |  2 +-
- 2 files changed, 26 insertions(+), 1 deletion(-)
+About this specific problem, as you probably know, I started working
+on adding support for external object databases, on top of some
+previous work that Peff had started some years ago:
 
-diff --git a/t/t4051-diff-function-context.sh b/t/t4051-diff-function-context.sh
-index b79b877..6154acb 100755
---- a/t/t4051-diff-function-context.sh
-+++ b/t/t4051-diff-function-context.sh
-@@ -67,6 +67,15 @@ test_expect_success 'setup' '
- 	commit_and_tag long_common_tail file.c &&
- 
- 	git checkout initial &&
-+	cat "$dir/hello.c" "$dir/dummy.c" >file.c &&
-+	commit_and_tag hello_dummy file.c &&
-+
-+	# overlap function context of 1st change and -u context of 2nd change
-+	grep -v "delete me from hello" <"$dir/hello.c" >file.c &&
-+	sed 2p <"$dir/dummy.c" >>file.c &&
-+	commit_and_tag changed_hello_dummy file.c &&
-+
-+	git checkout initial &&
- 	grep -v "delete me from hello" <file.c >file.c.new &&
- 	mv file.c.new file.c &&
- 	cat "$dir/appended1.c" >>file.c &&
-@@ -179,4 +188,20 @@ test_expect_success ' context does not include other functions' '
- 	test $(grep -c "^[ +-].*Begin" changed_hello_appended.diff) -le 2
- '
- 
-+check_diff changed_hello_dummy 'changed two consecutive functions'
-+
-+test_expect_success ' context includes begin' '
-+	grep "^ .*Begin of hello" changed_hello_dummy.diff &&
-+	grep "^ .*Begin of dummy" changed_hello_dummy.diff
-+'
-+
-+test_expect_success ' context includes end' '
-+	grep "^ .*End of hello" changed_hello_dummy.diff &&
-+	grep "^ .*End of dummy" changed_hello_dummy.diff
-+'
-+
-+test_expect_success ' overlapping hunks are merged' '
-+	test $(grep -c "^@@" changed_hello_dummy.diff) -eq 1
-+'
-+
- test_done
-diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-index b52b4b9..7389ce4 100644
---- a/xdiff/xemit.c
-+++ b/xdiff/xemit.c
-@@ -239,7 +239,7 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
- 			if (xche->next) {
- 				long l = XDL_MIN(xche->next->i1,
- 						 xe->xdf1.nrec - 1);
--				if (l <= e1 ||
-+				if (l - xecfg->ctxlen <= e1 ||
- 				    get_func_line(xe, xecfg, NULL, l, e1) < 0) {
- 					xche = xche->next;
- 					goto post_context_calculation;
--- 
-2.10.0
+https://public-inbox.org/git/20160628181933.24620-1-chriscool@tuxfamily.org/
 
+So if you want to better deal with huge objects in the near future,
+you are welcome to help on this.
