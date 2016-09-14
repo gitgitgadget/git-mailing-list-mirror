@@ -2,99 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DC811FCA9
-	for <e@80x24.org>; Wed, 14 Sep 2016 19:32:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A5AF1FCA9
+	for <e@80x24.org>; Wed, 14 Sep 2016 19:38:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1761984AbcINTcO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Sep 2016 15:32:14 -0400
-Received: from mail-it0-f51.google.com ([209.85.214.51]:35413 "EHLO
-        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1759857AbcINTcN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Sep 2016 15:32:13 -0400
-Received: by mail-it0-f51.google.com with SMTP id r192so59887652ita.0
-        for <git@vger.kernel.org>; Wed, 14 Sep 2016 12:32:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=CQdseH78OFpWA/yh6Wh6qnfnE6Xb2udZiNktOIpONZ0=;
-        b=Il3eMUw2bellMGe3Yvvo62Wg+wjvYag4bpFz8Jt1xVBxl6Low+GWHrjEcLfQRyB/8j
-         noXoC6kwWau4RStdrNonCnyZpIIxKSwPNXc0D5OnU6haPMN9vVQdBrKIHZhnXvfWYtjs
-         4y55aM+dhALHbWdNXUvBWGsx264pC4nmYNPyxvizPA6t/LK8mg8zzp7NSOHCP+QJXDpv
-         yC56ZgJZGwEBKHh2rruUNRJgZ2+JDcO4OjyCwi7iXuNUGKAApNisiI/XRVYUUuB1AbrV
-         PlWQkAEHePdobwhUOFfIdS1cZZqEPKIMPUsVNAV+D3Z836Z84TCpI07Na+Tpving3rYo
-         iIOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=CQdseH78OFpWA/yh6Wh6qnfnE6Xb2udZiNktOIpONZ0=;
-        b=dDteIptu6ylkNJj5egQJzg6n9ZaGYu2TBW/oOPZtBkfeEkLBjneZkwbPNqfxeeuTBB
-         ZPm7S1vaBu+ta5BoFxKBuUYhAvnFh+h9ehmwMPhcwUUk/yuCvpaZtLP2qmTTWihLGDj/
-         qv/pVRRo//lyfni/PeANfpZqcXVJYAo7v18zYOSpZeXapl6H5ZtHj5cE7LoQ26jJ1jm1
-         HYx1tGxsYO5RBWtpAQOCmpfgcFT+28BqlfvzU64j1nYIZ+bNsH1rk+VTe9mcWjnxvrLl
-         xwwebgGe9Ta1sFRPnuRswaoIf4oJSLIsEe5d/HLr7t91U8D20OBxyW45w0U0GOvi/iOg
-         TRvQ==
-X-Gm-Message-State: AE9vXwPem94mT6SGWmYEDGyIeWyE9DcZb418P4iW6X6crPyW9IYcJDT44L51UUgozGHeqe+8C2gN1Moorx277/Sn
-X-Received: by 10.107.20.16 with SMTP id 16mr4166057iou.13.1473881532284; Wed,
- 14 Sep 2016 12:32:12 -0700 (PDT)
+        id S1762024AbcINTiY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Sep 2016 15:38:24 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43328 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1755286AbcINTiX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Sep 2016 15:38:23 -0400
+Received: (qmail 8020 invoked by uid 109); 14 Sep 2016 19:38:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 14 Sep 2016 19:38:23 +0000
+Received: (qmail 2744 invoked by uid 111); 14 Sep 2016 19:38:33 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 14 Sep 2016 15:38:33 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Sep 2016 12:38:20 -0700
+Date:   Wed, 14 Sep 2016 12:38:20 -0700
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Kevin Daudt <me@ikke.info>, git@vger.kernel.org
+Subject: Re: [RFC 0/1] mailinfo: de-quote quoted-pair in header fields
+Message-ID: <20160914193819.ua5ubvbf5wz7tvuj@sigill.intra.peff.net>
+References: <20160913152622.2xtyn6mki6p6afsg@sigill.intra.peff.net>
+ <20160913234612.22806-1-me@ikke.info>
+ <20160913234612.22806-2-me@ikke.info>
+ <xmqqr38ns5wi.fsf@gitster.mtv.corp.google.com>
+ <20160914050919.qhv2gxzjyj5ydpub@sigill.intra.peff.net>
+ <xmqqmvjbrpp4.fsf@gitster.mtv.corp.google.com>
+ <20160914160308.GB26893@ikke.info>
+ <xmqqoa3qqsw9.fsf@gitster.mtv.corp.google.com>
+ <20160914191759.5unwaq2eequ4pifr@sigill.intra.peff.net>
+ <xmqqfup2qny9.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.107.173.98 with HTTP; Wed, 14 Sep 2016 12:32:11 -0700 (PDT)
-In-Reply-To: <20160914140318.GB9833@onerussian.com>
-References: <20160909221942.GS9830@onerussian.com> <20160914140318.GB9833@onerussian.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 14 Sep 2016 12:32:11 -0700
-Message-ID: <CAGZ79kbdfWHDGzoe21LVqt6naMJPWGf45S1oknrAp6=Z-Qm8dQ@mail.gmail.com>
-Subject: Re: git submodule add spits unrelated to actual problem error msg
- about .gitignore
-To:     Yaroslav Halchenko <yoh@onerussian.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqfup2qny9.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 14, 2016 at 7:03 AM, Yaroslav Halchenko <yoh@onerussian.com> wrote:
-> I have spent some time chasing the wild goose (well - the .gitignore
-> file) after getting:
->
->     $> git-submodule add --name fcx-1 ./fcx-1/ ./fcx-1/
->     The following path is ignored by one of your .gitignore files:
->     fcx-1
->     Use -f if you really want to add it.
->
-> long story short -- the culprit is this piece of code in git-submodule:
->
->     if test -z "$force" && ! git add --dry-run --ignore-missing "$sm_path" > /dev/null 2>&1
->     then
->         eval_gettextln "The following path is ignored by one of your .gitignore files:
-> \$sm_path
-> Use -f if you really want to add it." >&2
->         exit 1
->     fi
->
->
-> so if anything goes wrong in git add, it just reports  this error
-> message.
+On Wed, Sep 14, 2016 at 12:30:06PM -0700, Junio C Hamano wrote:
 
-Thanks for the bug report!
-I think we could chop off "2>&1" as that would have exposed the
-underlying error.
+> Another small thing I am not sure about is if the \ quoting can hide
+> an embedded newline in the author name.  Would we end up turning
+> 
+> 	From: "Jeff \
+>             King" <peff@peff.net>
+> 
+> or somesuch into
+> 
+> 	Author: Jeff
+>         King
+>         Email: peff@peff.net
+> 
+> ;-)
 
-Another way to go would be to use verbose git-add and grep for
-the string "add '$sm_path'".
+Heh, yeah. That is another reason to clean up and sanitize as much as
+possible before stuffing it into another text format that will be
+parsed.
 
-     if test -z "$force" && ! git add --verbose --dry-run
---ignore-missing "$sm_path" |grep "add $sm_path"
+> So let's roll the \" -> " into mailinfo.
+> 
+> I am not sure if we also should remove the surrounding "", i.e. we
+> currently do not turn this
+> 
+> 	From: "Jeff King" <peff@peff.net>
+> 
+> into this:
+> 
+> 	Author: Jeff King
+>         Email: peff@peff.net
+> 
+> I think we probably should, and remove the one that does so from the
+> reader.
 
-git-add already gives the correct (the same error message) for  the
-ignored files, so maybe we'd just do:
+I think you have to, or else you cannot tell the difference between
+surrounding quotes that need to be stripped, and ones that were
+backslash-escaped. Like:
 
-    # no need for a if, but this single line will do:
-    test -z "$force" && git add --dry-run git.o >/dev/null || exit 1
+  From: "Jeff King" <peff@peff.net>
+  From: \"Jeff King\" <peff@peff.net>
+
+which would both become:
+
+  Author: "Jeff King"
+  Email: peff@peff.net
+
+though I am not sure the latter one is actually valid; you might need to
+be inside syntactic quotes in order to include backslashed quotes. I
+haven't read rfc2822 carefully recently enough to know.
+
+Anyway, I think that:
+
+  From: One "Two \"Three\" Four" Five
+
+may also be valid. So the quote-stripping in the reader is not just "at
+the outside", but may need to handle interior syntactic quotes, too. So
+it really makes sense for me to clean and sanitize as much as possible
+in one step, and then make the parser of mailinfo as dumb as possible.
+
+-Peff
