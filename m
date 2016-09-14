@@ -2,190 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 511681FCA9
-	for <e@80x24.org>; Wed, 14 Sep 2016 17:31:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 18E181FCA9
+	for <e@80x24.org>; Wed, 14 Sep 2016 17:43:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1761999AbcINRbd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Sep 2016 13:31:33 -0400
-Received: from smtprelay06.ispgateway.de ([80.67.31.101]:49379 "EHLO
-        smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757740AbcINRbc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Sep 2016 13:31:32 -0400
-Received: from [84.131.240.40] (helo=sandbox)
-        by smtprelay06.ispgateway.de with esmtpsa (TLSv1.2:AES128-GCM-SHA256:128)
-        (Exim 4.84)
-        (envelope-from <hvoigt@hvoigt.net>)
-        id 1bkE1u-0002r0-9P; Wed, 14 Sep 2016 19:31:26 +0200
-Date:   Wed, 14 Sep 2016 19:31:24 +0200
-From:   Heiko Voigt <hvoigt@hvoigt.net>
-To:     Jeff King <peff@peff.net>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jens Lehmann <Jens.Lehmann@web.de>,
-        Fredrik Gustafsson <iveqy@iveqy.com>,
-        Leandro Lucarella <leandro.lucarella@sociomantic.com>
-Subject: [PATCH 1/2] serialize collection of changed submodules
-Message-ID: <20160914173124.GA7613@sandbox>
-References: <20160824173017.24782-1-sbeller@google.com>
- <20160824183112.ceekegpzavnbybxp@sigill.intra.peff.net>
- <xmqqh9aaot49.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kYOBqQ0FF4J-+KbefSD8HRrUeMqpO27m_jprhm93aB+LA@mail.gmail.com>
- <20160824230115.jhmcr4r7wobj5ejb@sigill.intra.peff.net>
+        id S1762000AbcINRnX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Sep 2016 13:43:23 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52751 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1758858AbcINRnW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Sep 2016 13:43:22 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9EC1B3E9A3;
+        Wed, 14 Sep 2016 13:43:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=lVLoYNjxrpLkNAgQfYShVMwctqI=; b=TvnEtu
+        xRfBe6sqB8vxBvwShP2ejATIBQZUDBC3k6qL+yobHNMmTWoY0897fsQLo3o4ZZUc
+        ySB4KFrGzfeHtJvxEJvi5jtu2xEbarckduP55kcPfSOtmWbiUYihWpN232NXiADz
+        eziq2UdIBiOaxXOVXPi8MAtB+6yY6OCmNJ5zQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=DSP27TWHQeb0WGfdJnzL0XBxDAvhJiou
+        EPN6LmL6XbVxIWMVJGdxXio2khgUHQ53/vAosnOB2drlyOMk0vPs8VoAGJH3OOiR
+        x64WD39+dP/f7zrd7Mo2i1QdvQeI1owCluO8erSmv8GM5QGiw13I0vaPqIAZbky1
+        t2Cojd9Zw8M=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 979E13E9A2;
+        Wed, 14 Sep 2016 13:43:20 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 205363E9A1;
+        Wed, 14 Sep 2016 13:43:20 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kevin Daudt <me@ikke.info>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [RFC 0/1] mailinfo: de-quote quoted-pair in header fields
+References: <20160913152622.2xtyn6mki6p6afsg@sigill.intra.peff.net>
+        <20160913234612.22806-1-me@ikke.info>
+        <20160913234612.22806-2-me@ikke.info>
+        <xmqqr38ns5wi.fsf@gitster.mtv.corp.google.com>
+        <20160914050919.qhv2gxzjyj5ydpub@sigill.intra.peff.net>
+        <xmqqmvjbrpp4.fsf@gitster.mtv.corp.google.com>
+        <20160914160308.GB26893@ikke.info>
+Date:   Wed, 14 Sep 2016 10:43:18 -0700
+In-Reply-To: <20160914160308.GB26893@ikke.info> (Kevin Daudt's message of
+        "Wed, 14 Sep 2016 18:03:08 +0200")
+Message-ID: <xmqqoa3qqsw9.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160824230115.jhmcr4r7wobj5ejb@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+Content-Type: text/plain
+X-Pobox-Relay-ID: B9C643F0-7AA2-11E6-A328-F7BB12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To check whether a submodule needs to be pushed we need to collect all
-changed submodules. Lets collect them first and then execute the
-possibly expensive test whether certain revisions are already pushed
-only once per submodule.
+Kevin Daudt <me@ikke.info> writes:
 
-There is further potential for optimization since we can assemble one
-command and only issued that instead of one call for each remote ref in
-the submodule.
+> When applied the the author of this patch shows up as:
+>
+>     Author: A U Thor" (test) <au@thor.com>
+>
+> So I agree with Jeff[1] where he states that the surrounding quotes
+> should be removed, if that's not a problem for git.
+>
+> [1]:https://public-inbox.org/git/20160914051305.vphknpsikyxi3hg3@sigill.intra.peff.net/
 
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
----
-Sorry about the late reply. I was not able to process emails until now.
-Here are two patches that should help to improve the situation and batch
-up some processing. This one is for repositories with submodules, so
-that they do not iterate over the same submodule twice with the same
-hash.
+I think we can go either way and it does not matter all that much if
+"mailinfo" changes its output or the reader of "mailinfo" output
+changes its input--we will either be munging data read from "From:"
+when producing the "Author:" line, or taking the "Author:" output by
+mailinfo and removing the quotes.
 
-The second one will be the one people without submodules are interested
-in.
+As an output from mailinfo that looks like this:
 
-Cheers Heiko
+	Author: "A U Thor"
+        Email: au@thor.com
 
- submodule.c | 67 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 62 insertions(+), 5 deletions(-)
+is made into a commit object that has this:
 
-diff --git a/submodule.c b/submodule.c
-index 0ef2ff4..b04c066 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -554,19 +554,38 @@ static int submodule_needs_pushing(const char *path, const unsigned char sha1[20
- 	return 0;
- }
- 
-+static struct sha1_array *get_sha1s_from_list(struct string_list *submodules,
-+		const char *path)
-+{
-+	struct string_list_item *item;
-+	struct sha1_array *hashes;
-+
-+	item = string_list_insert(submodules, path);
-+	if (item->util)
-+		return (struct sha1_array *) item->util;
-+
-+	hashes = (struct sha1_array *) xmalloc(sizeof(struct sha1_array));
-+	/* NEEDSWORK: should we add an initializer function for
-+	 * sha1_array ? */
-+	memset(hashes, 0, sizeof(struct sha1_array));
-+	item->util = hashes;
-+	return hashes;
-+}
-+
- static void collect_submodules_from_diff(struct diff_queue_struct *q,
- 					 struct diff_options *options,
- 					 void *data)
- {
- 	int i;
--	struct string_list *needs_pushing = data;
-+	struct string_list *submodules = data;
- 
- 	for (i = 0; i < q->nr; i++) {
- 		struct diff_filepair *p = q->queue[i];
-+		struct sha1_array *hashes;
- 		if (!S_ISGITLINK(p->two->mode))
- 			continue;
--		if (submodule_needs_pushing(p->two->path, p->two->oid.hash))
--			string_list_insert(needs_pushing, p->two->path);
-+		hashes = get_sha1s_from_list(submodules, p->two->path);
-+		sha1_array_append(hashes, p->two->oid.hash);
- 	}
- }
- 
-@@ -582,14 +601,41 @@ static void find_unpushed_submodule_commits(struct commit *commit,
- 	diff_tree_combined_merge(commit, 1, &rev);
- }
- 
-+struct collect_submodule_from_sha1s_data {
-+	char *submodule_path;
-+	struct string_list *needs_pushing;
-+};
-+
-+static void collect_submodules_from_sha1s(const unsigned char sha1[20],
-+		void *data)
-+{
-+	struct collect_submodule_from_sha1s_data *me =
-+		(struct collect_submodule_from_sha1s_data *) data;
-+
-+	if (submodule_needs_pushing(me->submodule_path, sha1))
-+		string_list_insert(me->needs_pushing, me->submodule_path);
-+}
-+
-+static void free_submodules_sha1s(struct string_list *submodules)
-+{
-+	int i;
-+	for (i = 0; i < submodules->nr; i++) {
-+		struct string_list_item *item = &submodules->items[i];
-+		struct sha1_array *hashes = (struct sha1_array *) item->util;
-+		sha1_array_clear(hashes);
-+	}
-+	string_list_clear(submodules, 1);
-+}
-+
- int find_unpushed_submodules(unsigned char new_sha1[20],
- 		const char *remotes_name, struct string_list *needs_pushing)
- {
- 	struct rev_info rev;
- 	struct commit *commit;
- 	const char *argv[] = {NULL, NULL, "--not", "NULL", NULL};
--	int argc = ARRAY_SIZE(argv) - 1;
-+	int argc = ARRAY_SIZE(argv) - 1, i;
- 	char *sha1_copy;
-+	struct string_list submodules = STRING_LIST_INIT_DUP;
- 
- 	struct strbuf remotes_arg = STRBUF_INIT;
- 
-@@ -603,12 +649,23 @@ int find_unpushed_submodules(unsigned char new_sha1[20],
- 		die("revision walk setup failed");
- 
- 	while ((commit = get_revision(&rev)) != NULL)
--		find_unpushed_submodule_commits(commit, needs_pushing);
-+		find_unpushed_submodule_commits(commit, &submodules);
- 
- 	reset_revision_walk();
- 	free(sha1_copy);
- 	strbuf_release(&remotes_arg);
- 
-+	for (i = 0; i < submodules.nr; i++) {
-+		struct string_list_item *item = &submodules.items[i];
-+		struct collect_submodule_from_sha1s_data data;
-+		data.submodule_path = item->string;
-+		data.needs_pushing = needs_pushing;
-+		sha1_array_for_each_unique((struct sha1_array *) item->util,
-+				collect_submodules_from_sha1s,
-+				&data);
-+	}
-+	free_submodules_sha1s(&submodules);
-+
- 	return needs_pushing->nr;
- }
- 
--- 
-2.0.2.832.g083c931
+	author A U Thor <au@thor.com>
 
+we know that the reader of mailinfo output _already_ has some logic
+to strip the surrounding double quotes.  That is the only reason why
+I think it is a better approach to not dequote in the "mailinfo" but
+in the reader to turn
+
+	Author: "A \"U\" Thor"
+        Email: au@thor.com
+
+into a commit object that has this:
+
+	author A "U" Thor <au@thor.com>
+
+than updating mailinfo to produce
+
+	Author: A "U" Thor
+        Email: au@thor.com
+
+and then create the same result.
