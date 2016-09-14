@@ -2,109 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A5AF1FCA9
-	for <e@80x24.org>; Wed, 14 Sep 2016 19:38:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C83401FCA9
+	for <e@80x24.org>; Wed, 14 Sep 2016 19:56:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1762024AbcINTiY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Sep 2016 15:38:24 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43328 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755286AbcINTiX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Sep 2016 15:38:23 -0400
-Received: (qmail 8020 invoked by uid 109); 14 Sep 2016 19:38:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 14 Sep 2016 19:38:23 +0000
-Received: (qmail 2744 invoked by uid 111); 14 Sep 2016 19:38:33 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 14 Sep 2016 15:38:33 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Sep 2016 12:38:20 -0700
-Date:   Wed, 14 Sep 2016 12:38:20 -0700
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Kevin Daudt <me@ikke.info>, git@vger.kernel.org
-Subject: Re: [RFC 0/1] mailinfo: de-quote quoted-pair in header fields
-Message-ID: <20160914193819.ua5ubvbf5wz7tvuj@sigill.intra.peff.net>
-References: <20160913152622.2xtyn6mki6p6afsg@sigill.intra.peff.net>
- <20160913234612.22806-1-me@ikke.info>
- <20160913234612.22806-2-me@ikke.info>
- <xmqqr38ns5wi.fsf@gitster.mtv.corp.google.com>
- <20160914050919.qhv2gxzjyj5ydpub@sigill.intra.peff.net>
- <xmqqmvjbrpp4.fsf@gitster.mtv.corp.google.com>
- <20160914160308.GB26893@ikke.info>
- <xmqqoa3qqsw9.fsf@gitster.mtv.corp.google.com>
- <20160914191759.5unwaq2eequ4pifr@sigill.intra.peff.net>
- <xmqqfup2qny9.fsf@gitster.mtv.corp.google.com>
+        id S1764352AbcINT4S (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Sep 2016 15:56:18 -0400
+Received: from smtprelay03.ispgateway.de ([80.67.29.7]:46022 "EHLO
+        smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755879AbcINT4R (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Sep 2016 15:56:17 -0400
+X-Greylist: delayed 355 seconds by postgrey-1.27 at vger.kernel.org; Wed, 14 Sep 2016 15:56:17 EDT
+Received: from [84.131.240.40] (helo=sandbox)
+        by smtprelay03.ispgateway.de with esmtpsa (TLSv1.2:AES128-GCM-SHA256:128)
+        (Exim 4.84)
+        (envelope-from <hvoigt@hvoigt.net>)
+        id 1bkG8r-0004oZ-GB; Wed, 14 Sep 2016 21:46:45 +0200
+Date:   Wed, 14 Sep 2016 21:46:43 +0200
+From:   Heiko Voigt <hvoigt@hvoigt.net>
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jens Lehmann <Jens.Lehmann@web.de>,
+        Fredrik Gustafsson <iveqy@iveqy.com>,
+        Leandro Lucarella <leandro.lucarella@sociomantic.com>
+Subject: Re: [PATCH 2/2] serialize collection of refs that contain submodule
+ changes
+Message-ID: <20160914194643.GC7613@sandbox>
+References: <20160824173017.24782-1-sbeller@google.com>
+ <20160824183112.ceekegpzavnbybxp@sigill.intra.peff.net>
+ <xmqqh9aaot49.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kYOBqQ0FF4J-+KbefSD8HRrUeMqpO27m_jprhm93aB+LA@mail.gmail.com>
+ <20160824230115.jhmcr4r7wobj5ejb@sigill.intra.peff.net>
+ <20160914175130.GB7613@sandbox>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqfup2qny9.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20160914175130.GB7613@sandbox>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 14, 2016 at 12:30:06PM -0700, Junio C Hamano wrote:
-
-> Another small thing I am not sure about is if the \ quoting can hide
-> an embedded newline in the author name.  Would we end up turning
+On Wed, Sep 14, 2016 at 07:51:30PM +0200, Heiko Voigt wrote:
+> Here are some numbers (using the my development clone of git
+> itself) from my local machine:
 > 
-> 	From: "Jeff \
->             King" <peff@peff.net>
+> rm -rf <test-git> && mkdir <test-git> &&
+> (cd <test-git> && git init) &&
+> time git push --mirror <test-git>
 > 
-> or somesuch into
+>    real	0m16.056s
+>    user	0m24.424s
+>    sys	0m1.380s
 > 
-> 	Author: Jeff
->         King
->         Email: peff@peff.net
+>    real	0m15.885s
+>    user	0m24.204s
+>    sys	0m1.296s
 > 
-> ;-)
-
-Heh, yeah. That is another reason to clean up and sanitize as much as
-possible before stuffing it into another text format that will be
-parsed.
-
-> So let's roll the \" -> " into mailinfo.
+>    real	0m16.731s
+>    user	0m24.176s
+>    sys	0m1.244s
 > 
-> I am not sure if we also should remove the surrounding "", i.e. we
-> currently do not turn this
+> rm -rf <test-git> && mkdir <test-git> &&
+> (cd <test-git> && git init) &&
+> time git push --mirror --recurse-submodules=check <test-git>
 > 
-> 	From: "Jeff King" <peff@peff.net>
+>    real	0m21.441s
+>    user	0m29.560s
+>    sys	0m1.480s
 > 
-> into this:
+>    real	0m21.319s
+>    user	0m29.484s
+>    sys	0m1.464s
 > 
-> 	Author: Jeff King
->         Email: peff@peff.net
+>    real	0m21.261s
+>    user	0m29.252s
+>    sys	0m1.592s
 > 
-> I think we probably should, and remove the one that does so from the
-> reader.
+> Without my patches and --recurse-submodules=check the numbers are
+> basically the same. I stopped the test with --recurse-submodules=check
+> after ~ 9 minutes.
 
-I think you have to, or else you cannot tell the difference between
-surrounding quotes that need to be stripped, and ones that were
-backslash-escaped. Like:
+Fun fact, I let the push without my patch and with
+--recurse-submodules=check finish:
 
-  From: "Jeff King" <peff@peff.net>
-  From: \"Jeff King\" <peff@peff.net>
+real	27m7.962s
+user	27m15.568s
+sys	0m2.016s
 
-which would both become:
+Thats quite some time...
 
-  Author: "Jeff King"
-  Email: peff@peff.net
-
-though I am not sure the latter one is actually valid; you might need to
-be inside syntactic quotes in order to include backslashed quotes. I
-haven't read rfc2822 carefully recently enough to know.
-
-Anyway, I think that:
-
-  From: One "Two \"Three\" Four" Five
-
-may also be valid. So the quote-stripping in the reader is not just "at
-the outside", but may need to handle interior syntactic quotes, too. So
-it really makes sense for me to clean and sanitize as much as possible
-in one step, and then make the parser of mailinfo as dumb as possible.
-
--Peff
+Cheers Heiko
