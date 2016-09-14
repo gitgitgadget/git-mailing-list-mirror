@@ -2,78 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2CCF1FCA9
-	for <e@80x24.org>; Wed, 14 Sep 2016 19:30:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DC811FCA9
+	for <e@80x24.org>; Wed, 14 Sep 2016 19:32:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1761935AbcINTaw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Sep 2016 15:30:52 -0400
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:37782 "EHLO
-        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756249AbcINTav (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Sep 2016 15:30:51 -0400
-Received: by mail-wm0-f44.google.com with SMTP id k186so26886071wmd.0
-        for <git@vger.kernel.org>; Wed, 14 Sep 2016 12:30:51 -0700 (PDT)
+        id S1761984AbcINTcO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Sep 2016 15:32:14 -0400
+Received: from mail-it0-f51.google.com ([209.85.214.51]:35413 "EHLO
+        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1759857AbcINTcN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Sep 2016 15:32:13 -0400
+Received: by mail-it0-f51.google.com with SMTP id r192so59887652ita.0
+        for <git@vger.kernel.org>; Wed, 14 Sep 2016 12:32:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=R9Um3gtWbTRKOG9ubxTm77X1Q8qzhNVX+Qccc8hspdE=;
-        b=GvoeQ0ZuR4ns4oRtezum4ee2hBIAyj+oN1nWWADhbGzMDU5jXsPDWZG42s6D8in2L2
-         VEAwCX7XsqxgvDdOtlemfKUEikjUHBfKYEXUjoAFSLEB8BZpJhsXizH0dRhZ72hQM9fC
-         oTdSJc6Q2q5iVkFLPUAc/IdjSe7e07ma9+BGRsZo7Ee6brCOC0lxdoc6US+dB4vB+2/G
-         OiMzLv290MZYngihT06MJPIjO4RJwGp4gqrFL4ExCQRxUcBEUsNRegnc7GLV5j1rXNMv
-         dzInZkGHhjzNYi0qRnppmy2JE419n10hVlc3wv+WiaNSQ6C5MzGNZ/gBEqrjQyYIT5DU
-         8Udg==
+        bh=CQdseH78OFpWA/yh6Wh6qnfnE6Xb2udZiNktOIpONZ0=;
+        b=Il3eMUw2bellMGe3Yvvo62Wg+wjvYag4bpFz8Jt1xVBxl6Low+GWHrjEcLfQRyB/8j
+         noXoC6kwWau4RStdrNonCnyZpIIxKSwPNXc0D5OnU6haPMN9vVQdBrKIHZhnXvfWYtjs
+         4y55aM+dhALHbWdNXUvBWGsx264pC4nmYNPyxvizPA6t/LK8mg8zzp7NSOHCP+QJXDpv
+         yC56ZgJZGwEBKHh2rruUNRJgZ2+JDcO4OjyCwi7iXuNUGKAApNisiI/XRVYUUuB1AbrV
+         PlWQkAEHePdobwhUOFfIdS1cZZqEPKIMPUsVNAV+D3Z836Z84TCpI07Na+Tpving3rYo
+         iIOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=R9Um3gtWbTRKOG9ubxTm77X1Q8qzhNVX+Qccc8hspdE=;
-        b=hirQsUtovGWxD75Qio/q/yfUn03X1qsFrLJ1wdh+giFQBN+QqpO5grFbbUYQYS+9bi
-         /TNeDEyPrzhz6rliYBydeq6Dkix7dxaNuZGMwzCmoMtPp3GDhoZoMnnSgEAn9/Srtu1/
-         WjFpP0I8HztR90Z4lE7jZqEmMCaVFbxIoOD1v3JwWcOqidkX2bedzgnfrS4S5p23qNHH
-         nkn5a99a+fDLEJAA9+W+yFuoNzo2/xMbZFJl+PChXOORnfbtf9Cs7oCR3zoM0T8J8n75
-         P/hTxkrQM0VYFHlf0K5/9pgnTR+R3RwZMkPJ8/g55XPu2EpCZEjx7Mo/wVO/gZO7Wxca
-         /bjQ==
-X-Gm-Message-State: AE9vXwP7UBA9Mb8GoR56RMLXfu6YFW/D2znBd/ia7Ab8/2SDKd7lrgB+sPui4SPBX1RkLh+grpOFxY9GcG4ncLw7
-X-Received: by 10.28.197.76 with SMTP id v73mr5057368wmf.100.1473881450379;
- Wed, 14 Sep 2016 12:30:50 -0700 (PDT)
+        bh=CQdseH78OFpWA/yh6Wh6qnfnE6Xb2udZiNktOIpONZ0=;
+        b=dDteIptu6ylkNJj5egQJzg6n9ZaGYu2TBW/oOPZtBkfeEkLBjneZkwbPNqfxeeuTBB
+         ZPm7S1vaBu+ta5BoFxKBuUYhAvnFh+h9ehmwMPhcwUUk/yuCvpaZtLP2qmTTWihLGDj/
+         qv/pVRRo//lyfni/PeANfpZqcXVJYAo7v18zYOSpZeXapl6H5ZtHj5cE7LoQ26jJ1jm1
+         HYx1tGxsYO5RBWtpAQOCmpfgcFT+28BqlfvzU64j1nYIZ+bNsH1rk+VTe9mcWjnxvrLl
+         xwwebgGe9Ta1sFRPnuRswaoIf4oJSLIsEe5d/HLr7t91U8D20OBxyW45w0U0GOvi/iOg
+         TRvQ==
+X-Gm-Message-State: AE9vXwPem94mT6SGWmYEDGyIeWyE9DcZb418P4iW6X6crPyW9IYcJDT44L51UUgozGHeqe+8C2gN1Moorx277/Sn
+X-Received: by 10.107.20.16 with SMTP id 16mr4166057iou.13.1473881532284; Wed,
+ 14 Sep 2016 12:32:12 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.28.15.79 with HTTP; Wed, 14 Sep 2016 12:30:49 -0700 (PDT)
-In-Reply-To: <20160914192341.mgpcc35kgmjqunbh@sigill.intra.peff.net>
-References: <1473785571-60439-1-git-send-email-bmwill@google.com>
- <20160913181552.74bhacoa2q76yv6k@sigill.intra.peff.net> <20160914192341.mgpcc35kgmjqunbh@sigill.intra.peff.net>
-From:   Brandon Williams <bmwill@google.com>
-Date:   Wed, 14 Sep 2016 12:30:49 -0700
-Message-ID: <CAKoko1qKLPWZEZxzHkrpm-tvz4oLMf=odRLNSRgrHXPxGhHFvg@mail.gmail.com>
-Subject: Re: [PATCH] pathspec: removed unnecessary function prototypes
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
+Received: by 10.107.173.98 with HTTP; Wed, 14 Sep 2016 12:32:11 -0700 (PDT)
+In-Reply-To: <20160914140318.GB9833@onerussian.com>
+References: <20160909221942.GS9830@onerussian.com> <20160914140318.GB9833@onerussian.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 14 Sep 2016 12:32:11 -0700
+Message-ID: <CAGZ79kbdfWHDGzoe21LVqt6naMJPWGf45S1oknrAp6=Z-Qm8dQ@mail.gmail.com>
+Subject: Re: git submodule add spits unrelated to actual problem error msg
+ about .gitignore
+To:     Yaroslav Halchenko <yoh@onerussian.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 14, 2016 at 12:23 PM, Jeff King <peff@peff.net> wrote:
-
-> On Tue, Sep 13, 2016 at 11:15:52AM -0700, Jeff King wrote:
-> I should have done a better job of not just providing the answer, but
-> showing how. The easiest tool here is "git log -S":
+On Wed, Sep 14, 2016 at 7:03 AM, Yaroslav Halchenko <yoh@onerussian.com> wrote:
+> I have spent some time chasing the wild goose (well - the .gitignore
+> file) after getting:
 >
->   git log -1 -p -Scheck_path_for_gitlink
+>     $> git-submodule add --name fcx-1 ./fcx-1/ ./fcx-1/
+>     The following path is ignored by one of your .gitignore files:
+>     fcx-1
+>     Use -f if you really want to add it.
 >
-> (and then you can see that the whole function went away there).
+> long story short -- the culprit is this piece of code in git-submodule:
 >
-> -Peff
+>     if test -z "$force" && ! git add --dry-run --ignore-missing "$sm_path" > /dev/null 2>&1
+>     then
+>         eval_gettextln "The following path is ignored by one of your .gitignore files:
+> \$sm_path
+> Use -f if you really want to add it." >&2
+>         exit 1
+>     fi
+>
+>
+> so if anything goes wrong in git add, it just reports  this error
+> message.
 
-Perfect thanks! There's still a lot of little features like this that
-I'm unaware
-of so I really appreciate the pointer.
+Thanks for the bug report!
+I think we could chop off "2>&1" as that would have exposed the
+underlying error.
 
--Brandon
+Another way to go would be to use verbose git-add and grep for
+the string "add '$sm_path'".
+
+     if test -z "$force" && ! git add --verbose --dry-run
+--ignore-missing "$sm_path" |grep "add $sm_path"
+
+git-add already gives the correct (the same error message) for  the
+ignored files, so maybe we'd just do:
+
+    # no need for a if, but this single line will do:
+    test -z "$force" && git add --dry-run git.o >/dev/null || exit 1
