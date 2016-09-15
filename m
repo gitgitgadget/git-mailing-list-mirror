@@ -2,113 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA8512070F
-	for <e@80x24.org>; Thu, 15 Sep 2016 21:26:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E4A42070F
+	for <e@80x24.org>; Thu, 15 Sep 2016 21:37:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756199AbcIOV0h (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Sep 2016 17:26:37 -0400
-Received: from mout.web.de ([212.227.15.3]:52565 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753255AbcIOV0f (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Sep 2016 17:26:35 -0400
-Received: from [192.168.178.36] ([79.213.113.239]) by smtp.web.de (mrweb004)
- with ESMTPSA (Nemesis) id 0MMIdp-1beroE08CL-0085ro; Thu, 15 Sep 2016 23:26:11
- +0200
-Subject: Re: [PATCH] use strbuf_addstr() for adding constant strings to a
- strbuf, part 2
-To:     Junio C Hamano <gitster@pobox.com>
-References: <f7294ac5-8302-03fb-d756-81a1c029a813@web.de>
- <20160915184448.awipvg2kmlq7weei@sigill.intra.peff.net>
- <xmqqbmzpnex4.fsf@gitster.mtv.corp.google.com>
- <20160915193804.d2mmmeard2rj6vye@sigill.intra.peff.net>
- <79f6cfb5-3b9b-2ae7-d9a3-5c1c65c7d4cf@web.de>
- <xmqq7fadnd9s.fsf@gitster.mtv.corp.google.com>
-Cc:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <67756074-836f-2238-37c3-0d186325bd00@web.de>
-Date:   Thu, 15 Sep 2016 23:25:55 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S1754118AbcIOVhI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Sep 2016 17:37:08 -0400
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:37330 "EHLO
+        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753360AbcIOVhH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Sep 2016 17:37:07 -0400
+Received: by mail-wm0-f53.google.com with SMTP id k186so7542016wmd.0
+        for <git@vger.kernel.org>; Thu, 15 Sep 2016 14:37:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=KnpeYqsTnZfUcazNzTI57UP/YN+Jw0B8PvWEl7++n1U=;
+        b=goB8THt80i2FUnCYaRFzHarEIv/aX5GnS3UbjKKxwrx99hWIZ//MGQO+YnUWopsJra
+         xNH0pjkNV5SoW5tEg4unA6kO9TECQ9JZFaVroDeFGudaKsbh0y1OSqH8vE3RRrz3NRVs
+         WfAUhRu4IGIITch5WiwTYfkaAAPCw07IjtpdyC2j8BtrdLIcztrsl+2VsQicFjhlXmcq
+         /Lj4l12+DIeAnEiZ/Y5T6Wkk6ig1DOwbtkv1AoBzsTOrrG5wr/hYwlMRPsxnS9l1BDUc
+         F7eCU6ozmQ0eALSlYN+jtcYYST0ZE8/oSqmDbYx+YLcUcc6ORvruG+aMzlYYIitTy8Uu
+         BClA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=KnpeYqsTnZfUcazNzTI57UP/YN+Jw0B8PvWEl7++n1U=;
+        b=gJzfXzm4iNG+B7mesQGeKWeFs8ojnATjGgod7BSkPnWXqyUWqF5RkvWvN9CcTuGAA4
+         ZDfkpy0EXTACS5JGtRfee94/Tm3kxsy67zth665vDX8P7SUbhIrA1JKd/8LFKOkuvOVH
+         mOlqkGaOeis8bjom0U83pOjUUhN5UtQG4/FIY4vXmNpv7Db0T6N//+R4N7/3n5e4Q1Ou
+         rJb8ZzFxvgE0wdto8wGHyjmaCDM3JP8hRsYh9SBFig82hRwkKVCA+lxePjpkKrH7JKMY
+         MoVvsn3RvJUX4wZi2FyMQK6yWNRpgnqa5eQoer5X8kMzNeZnaYnsB0JRkDtmk/37PN/H
+         iytA==
+X-Gm-Message-State: AE9vXwPxbpqhPd7z710oqeZ+EIcMOeylpZRmvV8Rz1WGjfmN8p2MOIMwMiNMrl5yDzEPuy9p84gXvDphjgMngDE8
+X-Received: by 10.194.164.102 with SMTP id yp6mr9804267wjb.50.1473975425230;
+ Thu, 15 Sep 2016 14:37:05 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqq7fadnd9s.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:HxlqVT0fvfgnFYKSfzSnstH5LLHF4GGIvOTqE7EuPbIQ2mJ+SCt
- KbMO1rtJ9SROwB82uruTd2twFh5Lwg/EXKfBYp9c75m3HpdE3Wjl8RYfcCMUOXwjZtjwcvV
- BLPLrKMDbCALZsvAwqD0ZbaMv9ZzKABFUONuPrdURKVSAinXZVfXJVwp+0Hkxexsu3H9tGo
- Z5YbPU6EKLj3/sIWACstg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YiRqWlM2TX0=:1LP1Sb18kGYh79A7gdAtcr
- 1Q5L6XgAkhFxAiFPj0rlgQvwscNd7x/cWLbhfPbmKr01CJ89DbdaK2CM3n6DZJIE6ZIshIqhO
- gKlHQFcc8UmbAYiknU0bFUgxemQ9RLxSkpaI24PeVjD5eZ25qpv7VTWvcxmq0zR649YR012by
- RbfHV3aUMwptSFY+Mf4LyosIzxeye00w7FlbHqphGR9CrpqM6ddmO1wayugCQrBAokW2Q8hq1
- s56/NQE9+r/YjG74tBdiY/nprQ3+Qa5f53wEM3nSQs9GJjAxPQduOwxQrNEuOefLM0zl/nPHu
- FUX0hsfKGnqaTMZzafqHO+NnMAPNTYFUtAyEaBAgXgh1Nz7syUMDUkGilSmBoCRes2ATBi1pc
- Cu92ax5c2al30okEwEXv6moulhaPCCqLjiUaf94WhVh8/6kv+48WuyFmDdPDwFw8r6ECxJ7Om
- /HRmnKFfcwmjJbk1GrQVo6fgeF7iKKqEjpX2UBicllmc+rH0ag+tPq7xISTYhzdxJ6+EbXZ+Y
- +cyQVgmkFPuhYbrHEwEDsSy4VRxTPUD75U43xkXHnJl2LOQeBIpHit/faRx8P2t3FlW1so6r9
- EVFqJHxGu4ozA4R0wg7y4B9QNk9hQ73rHYh+a/7ziANkzIW6ZTe9LFSU7cU58iSnzsPadjEWu
- 3mTlfH2FpqSiRHX8LFPudPcHHj6agtFTnmBPvfVQ6I6kaYQxFvofsCuganAzBt5v7XVbQKHps
- WfFuwOAgCLX7/9uSbk5yOH/TOhzJ8PKzRO42Q9nBFewkZIsddk9URjPblkJKLUhk5p80rh+JS
- qSD4IdP
+Received: by 10.28.69.25 with HTTP; Thu, 15 Sep 2016 14:37:04 -0700 (PDT)
+In-Reply-To: <CAGZ79kaCVZ-Z+XSYWK6YtkT8L=pDrDQE-pAyseHNf5w2NO5XMw@mail.gmail.com>
+References: <xmqqzinbvk15.fsf@gitster.mtv.corp.google.com> <20160915205109.12240-1-gitster@pobox.com>
+ <20160915205109.12240-3-gitster@pobox.com> <CAGZ79kaCVZ-Z+XSYWK6YtkT8L=pDrDQE-pAyseHNf5w2NO5XMw@mail.gmail.com>
+From:   Brandon Williams <bmwill@google.com>
+Date:   Thu, 15 Sep 2016 14:37:04 -0700
+Message-ID: <CAKoko1qj4FS=g-H0UzeTmKNoJQyxmf5bBsQJFhJjH1hYyFtQcQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] SQUASH??? Undecided
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 15.09.2016 um 22:01 schrieb Junio C Hamano:
-> René Scharfe <l.s.r@web.de> writes:
-> 
->> Take this for example:
+Yeah if that is the convention then I have no problem with the change.
+
+-Brandon
+
+On Thu, Sep 15, 2016 at 2:12 PM, Stefan Beller <sbeller@google.com> wrote:
+> + cc Brandon
+>
+> On Thu, Sep 15, 2016 at 1:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> If we were to follow the convention to leave an optional string
+>> variable to NULL, we'd need to do this on top.  I am not sure if it
+>> is a good change, though.
+>
+> I think it is a good change.
+>
+> Thanks,
+> Stefan
+>
+>> ---
+>>  builtin/ls-files.c | 7 ++++---
+>>  1 file changed, 4 insertions(+), 3 deletions(-)
 >>
->> -			strbuf_addf(&o->obuf, _("(bad commit)\n"));
->> +			strbuf_addstr(&o->obuf, _("(bad commit)\n"));
+>> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+>> index 6e78c71..687e475 100644
+>> --- a/builtin/ls-files.c
+>> +++ b/builtin/ls-files.c
+>> @@ -29,7 +29,7 @@ static int show_valid_bit;
+>>  static int line_terminator = '\n';
+>>  static int debug_mode;
+>>  static int show_eol;
+>> -static const char *output_path_prefix = "";
+>> +static const char *output_path_prefix;
+>>  static int recurse_submodules;
 >>
->> If there's a language that uses percent signs instead of parens or as
->> regular letters, then they need to be escaped in the translated string
->> before, but not after the patch.  As I wrote: silly.
-> 
-> Ahh, OK, so "This use of addf only has format part and nothing else,
-> hence the format part can be taken as-is" which is the Coccinelle rule
-> used to produce this patch is incomplete and always needs manual
-> inspection, in case the format part wanted to give a literal % in
-> the output.  E.g. it is a bug to convert this
-> 
-> 	strbuf_addf(&buf, _("this is 100%% wrong!"));
-> 
-> to
-> 
-> 	strbuf_addstr(&buf, _("this is 100%% wrong!"));
-
-Right.  Such strings seem to be quite rare in practice, though. 
-
-> Thanks for clarification.  Perhaps the strbuf.cocci rule file can
-> have some comment to warn the person who builds *.patch file to look
-> for % in E2, or something?
-
-Something like this?
-
----
- contrib/coccinelle/strbuf.cocci | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/contrib/coccinelle/strbuf.cocci b/contrib/coccinelle/strbuf.cocci
-index 7932d48..3f535ca 100644
---- a/contrib/coccinelle/strbuf.cocci
-+++ b/contrib/coccinelle/strbuf.cocci
-@@ -1,3 +1,5 @@
-+// Careful, this is not fully equivalent: "%" is no longer treated
-+// specially.  Check for "%%", "%m" etc. in the format string (E2).
- @@
- expression E1, E2;
- @@
--- 
-2.10.0
-
-
-
+>>  static const char *prefix;
+>> @@ -78,7 +78,7 @@ static void write_name(const char *name)
+>>          * churn.
+>>          */
+>>         static struct strbuf full_name = STRBUF_INIT;
+>> -       if (*output_path_prefix) {
+>> +       if (output_path_prefix && *output_path_prefix) {
+>>                 strbuf_reset(&full_name);
+>>                 strbuf_addstr(&full_name, output_path_prefix);
+>>                 strbuf_addstr(&full_name, name);
+>> @@ -181,7 +181,8 @@ static void show_gitlink(const struct cache_entry *ce)
+>>         argv_array_push(&cp.args, "ls-files");
+>>         argv_array_push(&cp.args, "--recurse-submodules");
+>>         argv_array_pushf(&cp.args, "--output-path-prefix=%s%s/",
+>> -                        output_path_prefix, ce->name);
+>> +                        output_path_prefix ? output_path_prefix : "",
+>> +                        ce->name);
+>>         cp.git_cmd = 1;
+>>         cp.dir = ce->name;
+>>         status = run_command(&cp);
+>> --
+>> 2.10.0-458-g97b4043
+>>
