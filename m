@@ -7,112 +7,205 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E6332070F
-	for <e@80x24.org>; Thu, 15 Sep 2016 18:31:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01F712070F
+	for <e@80x24.org>; Thu, 15 Sep 2016 18:31:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752619AbcIOSbd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Sep 2016 14:31:33 -0400
-Received: from mout.web.de ([212.227.15.3]:55532 "EHLO mout.web.de"
+        id S1752666AbcIOSbj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Sep 2016 14:31:39 -0400
+Received: from mout.web.de ([212.227.15.4]:57097 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752194AbcIOSbc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Sep 2016 14:31:32 -0400
-Received: from [192.168.178.36] ([79.213.113.239]) by smtp.web.de (mrweb003)
- with ESMTPSA (Nemesis) id 0M2uXO-1au9hx1qre-00seWG; Thu, 15 Sep 2016 20:31:11
+        id S1752627AbcIOSbh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Sep 2016 14:31:37 -0400
+Received: from [192.168.178.36] ([79.213.113.239]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0M9XbT-1brzYZ0XNP-00D2u2; Thu, 15 Sep 2016 20:31:16
  +0200
 X-Mozilla-News-Host: news://news.gmane.org:119
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] add coccicheck make target
-Message-ID: <e47359bc-1bf0-e1bd-b076-6f95c3f15abd@web.de>
-Date:   Thu, 15 Sep 2016 20:30:56 +0200
+Subject: [PATCH] use strbuf_addstr() for adding constant strings to a strbuf,
+ part 2
+Message-ID: <f7294ac5-8302-03fb-d756-81a1c029a813@web.de>
+Date:   Thu, 15 Sep 2016 20:31:00 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.2.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:PbhX6RZzvSRgqzdj6wvQjfQgO5HtOO4pPjQI6BxwN0JgB+T86+H
- nNKKCLvcBYrO9RhsMu4pSoN9Lbpt93Qh1EYNNt8RYz2nOU8oXahGlB5wV5QtXJE26dJVQ5A
- yRzpT0zmcNMEZqcwW6Cwbf9gV4qSmxjE4v8OwnHljYI0eoiif5B3Rik/twD4mqDMCsrDvtH
- 0qfxPqOs9URQtxYpHqpZQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:lJAaiPcikSI=:2x5Xaar0mTdfq+dFVyW2Ai
- vdyyEsgbcnuzPT+3AGRubA8GAJdkH9XYfTH3E3W1NvFfaNvaaC4dVgScYN88oCCqhDHbkGSiM
- y3wZgIFg/VqrPMFg0l41ovI5uD1UZ1ebPQpHzaRwIHhp+8gCfpVB+Gx5q9ocl0bacdxOVNDQz
- iXhfl06ve9Z7kf4WcPHjZohX412MbBgfihPmNWGpDpgY/mROiAsIT78hF6zoRKE5KLig4POhE
- Dbbzsd3sKFALXcRNMEaIhgfQA3babYwkGb8P54Axd9ukW9xOvp4O1c6xldhZEkOXF2B1fCfuS
- 7SQt+tZpeztyJDugFnpoeWaGT0C4VSRwumLcbGlf4bJoqLAHeUPX4Kv1D4IL84EpN3QEfSGYE
- qaaZ94AJKM5B0ADaf3SAZzC+ZFm2HGRvwOAWuoNeuAT/gvm++hMDLRexK2rT6IJXdWE3lb1vK
- fE8c+Mu/T/ItkRstxintEBVNTSoN8dhd2VMq95TsrzyfGcNau4Fa74txyga13OfQ9iybd3R1P
- oyEImruA0cA+UyR+2JVsQfE+MugxjHJvG5S3nJwHONmxb3Lz+yW93LtGR/Kb0QurfZw2nmT6/
- Z/2i3VEFaXqyysHeS0Co6P0HOWj3vIz6zaaa+DMtRAr75+whGzhvZoQlngNWHukdR0JVwvWwC
- /r87wjdMWcLevQKuOCnVMA6bvcr6Ww2UvR2vP7bpAwtvaDht6kk5d76cE8XUJhwuuHh6iOY1O
- brOVXb5mkULnhdrBhilk19eSEgri2dzNmLuEFq5BKTx88Pz+J8NVQUbJM/YGqswyenWQb1i70
- f/DDgGh
+X-Provags-ID: V03:K0:TwiYhwxFEU9XvUuXir5zvXACEykz/vQwRZcnk2PXNG21ZsW/KGC
+ +k+gaJCECcWvmr0TybH8IaLeNdEiSXHvk8sCbt+VYlI7A/0kLWq2WiJevhZB7qbjFgIMOX3
+ Yd3so02vckPsBZZ+OSU7A2fX4f+MY+phWvuu9ACfCgoZXATk/6PXuEhbwZ9QRzj9ideqBtF
+ 38Sot4ld9dUzOwZoztvzg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:utnr5/zxJgE=:l4u5MjqxM58RwJuFbORhnb
+ MHw5al67ohhFJElsXVdC4gkNona2PsQrZmmabxoQyyykOKs+zNZulX3JiRlYKjb3Lz3uWoiRR
+ lodTJtzFjSmyVKKoYgR+34jqrWtYHP0Sfa0LfkKGip8qvVs4x1C58uwfe9DUt4LPvaQPCBgho
+ LLhE65cJ7AJN95DCwTehROV/PZIJhDQ5L7qdagHPEF5Q0193Q8YeYSIM3JntFo5nofvDonJ/b
+ 9vcvb2HVZp3hKp1FJQadLxFkLO5M9y0rSdVIaM0OyR9tgnpxLPceJ+CfgURDL0Cgr1GO4v0m+
+ 0k/iXJLVqDc12gzg068yv1KQaSusiSotR6mlqRr26MD0ZstnuJcH3a3mDoNSpbUqUKN5Dx0cN
+ M/Scjgr/14K5b/wrO4YcDgiS5eatFfcVw+/M7ulLR1CAPmLFnINV91dEDDJV6AmhFE+LuLdBY
+ ZECjDfzBYcA+dBIFxXQK9snMe2XlqwVnBRoaA0saK8PYOnjbu9ImqudwtbCqa5AB6AgAZmDY/
+ 5mdLCgNWzUxUAd/WM7gVADqBN/r3PdaQYrtFcAcsZXxk/vnpMuN8eokQDtHT4pcR3/u29/dG/
+ iY7TnZ5/kZgGoSuTvIvswnunqMBkX8gMOOtd4X7UT88N4RewlszL+qXmH9XmzOxMwGmIN5Qy6
+ DrchFgMg7G2EnYFtkRVHOivajSA/5SpIiuVnfBaIvQ6ZVpdXLJpEMnMEu81gu6ByP+fHZT0a9
+ RiIZv1y+1bPaLq664i2G/bI5cgde0Bm+mkLzUt3UdHqjEDXmdLV+VWg0/SxffC++HFfUttt7H
+ 0gY7pUy
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Provide a simple way to run Coccinelle against all source files, in the
-form of a Makefile target.  Running "make coccicheck" applies each
-.cocci file in contrib/coccinelle/ on all source files.  It generates
-a .patch file for each .cocci file, containing the actual changes for
-effecting the transformations described by the semantic patches.
+Replace uses of strbuf_addf() for adding strings with more lightweight
+strbuf_addstr() calls.  This makes the intent clearer and avoids
+potential issues with printf format specifiers.
 
-Non-empty .patch files are reported.  They can be applied to the work
-tree using "patch -p0", but should be checked to e.g. make sure they
-don't screw up formatting or create circular references.
+02962d36845b89145cd69f8bc65e015d78ae3434 already converted six cases,
+this patch covers eleven more.
 
-Coccinelle's diagnostic output (stderr) is piped into .log files.
-
-Linux has a much more elaborate make target of the same name; let's
-start nice and easy.
+A semantic patch for Coccinelle is included for easier checking for
+new cases that might be introduced in the future.
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- Makefile | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+Silly question: Is there a natural language that uses percent signs
+as letters or e.g. instead of commas? :)
 
-diff --git a/Makefile b/Makefile
-index 7f18492..74b2788 100644
---- a/Makefile
-+++ b/Makefile
-@@ -461,6 +461,7 @@ CURL_CONFIG = curl-config
- PTHREAD_LIBS = -lpthread
- PTHREAD_CFLAGS =
- GCOV = gcov
-+SPATCH = spatch
+ builtin/fmt-merge-msg.c         | 2 +-
+ builtin/merge.c                 | 2 +-
+ builtin/submodule--helper.c     | 5 +++--
+ contrib/coccinelle/strbuf.cocci | 5 +++++
+ merge-recursive.c               | 2 +-
+ remote.c                        | 8 ++++----
+ wt-status.c                     | 6 +++---
+ 7 files changed, 18 insertions(+), 12 deletions(-)
+ create mode 100644 contrib/coccinelle/strbuf.cocci
+
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index ac84e99..dc2e9e4 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -395,7 +395,7 @@ static void shortlog(const char *name,
  
- export TCL_PATH TCLTK_PATH
+ 	for (i = 0; i < subjects.nr; i++)
+ 		if (i >= limit)
+-			strbuf_addf(out, "  ...\n");
++			strbuf_addstr(out, "  ...\n");
+ 		else
+ 			strbuf_addf(out, "  %s\n", subjects.items[i].string);
  
-@@ -2307,6 +2308,18 @@ check: common-cmds.h
- 		exit 1; \
- 	fi
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 0ae099f..a8b57c7 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -940,7 +940,7 @@ static void write_merge_state(struct commit_list *remoteheads)
  
-+C_SOURCES = $(patsubst %.o,%.c,$(C_OBJ))
-+%.cocci.patch: %.cocci $(C_SOURCES)
-+	@echo '    ' SPATCH $<; \
-+	for f in $(C_SOURCES); do \
-+		$(SPATCH) --sp-file $< $$f; \
-+	done >$@ 2>$@.log; \
-+	if test -s $@; \
-+	then \
-+		echo '    ' SPATCH result: $@; \
-+	fi
-+coccicheck: $(patsubst %.cocci,%.cocci.patch,$(wildcard contrib/coccinelle/*.cocci))
-+
- ### Installation rules
+ 	strbuf_reset(&buf);
+ 	if (fast_forward == FF_NO)
+-		strbuf_addf(&buf, "no-ff");
++		strbuf_addstr(&buf, "no-ff");
+ 	write_file_buf(git_path_merge_mode(), buf.buf, buf.len);
+ }
  
- ifneq ($(filter /%,$(firstword $(template_dir))),)
-@@ -2498,6 +2511,7 @@ clean: profile-clean coverage-clean
- 	$(RM) -r $(GIT_TARNAME) .doc-tmp-dir
- 	$(RM) $(GIT_TARNAME).tar.gz git-core_$(GIT_VERSION)-*.tar.gz
- 	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
-+	$(RM) contrib/coccinelle/*.cocci.patch*
- 	$(MAKE) -C Documentation/ clean
- ifndef NO_PERL
- 	$(MAKE) -C gitweb clean
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 9d79f19..ad23155 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -859,8 +859,9 @@ static int update_clone_get_next_task(struct child_process *child,
+ 		ce = suc->failed_clones[index];
+ 		if (!prepare_to_clone_next_submodule(ce, child, suc, err)) {
+ 			suc->current ++;
+-			strbuf_addf(err, "BUG: submodule considered for cloning,"
+-				    "doesn't need cloning any more?\n");
++			strbuf_addstr(err, "BUG: submodule considered for "
++					   "cloning, doesn't need cloning "
++					   "any more?\n");
+ 			return 0;
+ 		}
+ 		p = xmalloc(sizeof(*p));
+diff --git a/contrib/coccinelle/strbuf.cocci b/contrib/coccinelle/strbuf.cocci
+new file mode 100644
+index 0000000..7932d48
+--- /dev/null
++++ b/contrib/coccinelle/strbuf.cocci
+@@ -0,0 +1,5 @@
++@@
++expression E1, E2;
++@@
++- strbuf_addf(E1, E2);
+++ strbuf_addstr(E1, E2);
+diff --git a/merge-recursive.c b/merge-recursive.c
+index e349126..d2b191b 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -206,7 +206,7 @@ static void output_commit_title(struct merge_options *o, struct commit *commit)
+ 			find_unique_abbrev(commit->object.oid.hash,
+ 				DEFAULT_ABBREV));
+ 		if (parse_commit(commit) != 0)
+-			strbuf_addf(&o->obuf, _("(bad commit)\n"));
++			strbuf_addstr(&o->obuf, _("(bad commit)\n"));
+ 		else {
+ 			const char *title;
+ 			const char *msg = get_commit_buffer(commit, NULL);
+diff --git a/remote.c b/remote.c
+index d29850a..ad6c542 100644
+--- a/remote.c
++++ b/remote.c
+@@ -2073,7 +2073,7 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
+ 			_("Your branch is based on '%s', but the upstream is gone.\n"),
+ 			base);
+ 		if (advice_status_hints)
+-			strbuf_addf(sb,
++			strbuf_addstr(sb,
+ 				_("  (use \"git branch --unset-upstream\" to fixup)\n"));
+ 	} else if (!ours && !theirs) {
+ 		strbuf_addf(sb,
+@@ -2086,7 +2086,7 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
+ 			   ours),
+ 			base, ours);
+ 		if (advice_status_hints)
+-			strbuf_addf(sb,
++			strbuf_addstr(sb,
+ 				_("  (use \"git push\" to publish your local commits)\n"));
+ 	} else if (!ours) {
+ 		strbuf_addf(sb,
+@@ -2097,7 +2097,7 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
+ 			   theirs),
+ 			base, theirs);
+ 		if (advice_status_hints)
+-			strbuf_addf(sb,
++			strbuf_addstr(sb,
+ 				_("  (use \"git pull\" to update your local branch)\n"));
+ 	} else {
+ 		strbuf_addf(sb,
+@@ -2110,7 +2110,7 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
+ 			   ours + theirs),
+ 			base, ours, theirs);
+ 		if (advice_status_hints)
+-			strbuf_addf(sb,
++			strbuf_addstr(sb,
+ 				_("  (use \"git pull\" to merge the remote branch into yours)\n"));
+ 	}
+ 	free(base);
+diff --git a/wt-status.c b/wt-status.c
+index 539aac1..f928f0f 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -367,11 +367,11 @@ static void wt_longstatus_print_change_data(struct wt_status *s,
+ 		if (d->new_submodule_commits || d->dirty_submodule) {
+ 			strbuf_addstr(&extra, " (");
+ 			if (d->new_submodule_commits)
+-				strbuf_addf(&extra, _("new commits, "));
++				strbuf_addstr(&extra, _("new commits, "));
+ 			if (d->dirty_submodule & DIRTY_SUBMODULE_MODIFIED)
+-				strbuf_addf(&extra, _("modified content, "));
++				strbuf_addstr(&extra, _("modified content, "));
+ 			if (d->dirty_submodule & DIRTY_SUBMODULE_UNTRACKED)
+-				strbuf_addf(&extra, _("untracked content, "));
++				strbuf_addstr(&extra, _("untracked content, "));
+ 			strbuf_setlen(&extra, extra.len - 2);
+ 			strbuf_addch(&extra, ')');
+ 		}
 -- 
 2.10.0
 
