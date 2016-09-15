@@ -2,107 +2,194 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 259891FCA9
-	for <e@80x24.org>; Thu, 15 Sep 2016 01:22:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB91E1FCA9
+	for <e@80x24.org>; Thu, 15 Sep 2016 02:01:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756264AbcIOBWU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Sep 2016 21:22:20 -0400
-Received: from mail-it0-f45.google.com ([209.85.214.45]:37011 "EHLO
-        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755955AbcIOBWT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Sep 2016 21:22:19 -0400
-Received: by mail-it0-f45.google.com with SMTP id 186so51777789itf.0
-        for <git@vger.kernel.org>; Wed, 14 Sep 2016 18:22:18 -0700 (PDT)
+        id S1756775AbcIOCBs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Sep 2016 22:01:48 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:36139 "EHLO
+        mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756404AbcIOCBr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Sep 2016 22:01:47 -0400
+Received: by mail-pa0-f44.google.com with SMTP id id6so10820216pad.3
+        for <git@vger.kernel.org>; Wed, 14 Sep 2016 19:01:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=+iwKqATkiaiheyknKeL6F/1Urv+G+dZ+GRvUdA8Hrro=;
-        b=JaKaCjjkyaNQpMbdMJHYNkGj/HjoxKwYPA56iEhdkC64vyUP6EABJxrMx4JQP67upQ
-         eIemhY7dkBDphIgDbLdBBiDInbPadk0Wj59uYCpsXHdOOnq+nbeqSVUNkFmZhsgKMrIy
-         W7X1KKvF1jZ2TDvK2rESg1R55PfiiKQDxkZWPVHDXfSbmtb0SQbyxVpPz3Bmpc3c10Gk
-         HXqRivFOORQgj6P4c/nkRiSgP33X1LpboWVWvviiu+lSXMgRv0xgxwF6kZXrxewIobmY
-         Q+ZeDK3VYsWAZrnfk/80bjYYavMLHRtR1EVv0B3csgyv7ZTyJYa8P8/XSBh9MTeLUtbo
-         roHQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=b75daTApO+PxmJNRbkkrrWjAXgFYdQtFTGA77/Yjg+o=;
+        b=NWF1ar9hwhL7J10uvzMHdTH2cKK9iP7TuCfKudN4WLdYXdF+JIbHRgBsMYsCDnpB74
+         zY7Gr2m4/pOB3RamRjO0xbJpzeljMKwJ1sxZAJ2WiEpwdzuKTezilZVSmaFFd2sh0jma
+         C8Xiwv4xVBPRtbmFZyyU53cXGD1EakrYUOtIdQqMI9bcrQ2J6Besj/VahMAYS4gwU53G
+         D6CClHrolH0YKYKai1/snRnG2nxK9LioUS+6vBoo+BP/VRs3y9n96Na84OH3jypfTcxx
+         CFDnCAM5GY4l7/ikyjRqYpX27a4pznojKEfI7Q1SgZKHa11ARwQPd7gXHmuBdRJWNvHA
+         s26g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=+iwKqATkiaiheyknKeL6F/1Urv+G+dZ+GRvUdA8Hrro=;
-        b=fEtQywTULjFIYunNuqW/IRtOT76o1PL3wb44OLIorN2aMkVJGo7fAt7dJI36bZMCYv
-         /pcnF5W7HiyWFGmyb0AexDWVolomwXRnUT1E4a7CktTK1LPoGmT23R8zq1H1YTQi/qWv
-         EGGP3fGAZLR3GfaRH0i8gbwooxTp/vKuK6nMlK3dz0eaI32qbYXjjy4pZUKpbIehmPzd
-         9ttDWOLRVYVZ68SQdi0rb7osGP0KN1dsE2YOWsoCCUE+s01bzWqCxA31GymIQ8lX6+gi
-         gAIC3u6Ii5u+Hi3D55D0K44iMLTAalDvKldP/gBHIHcxLO4b3Qy6COwn/zpI+CiNtzld
-         7Ypw==
-X-Gm-Message-State: AE9vXwPlnImkoDsnCw/x7DX51wt6xc0ZWnudhcxu9J091bv9ZuuABE2BdckVNVrbwMbJISOFjgSo/KZTkHZGtL5v
-X-Received: by 10.107.170.168 with SMTP id g40mr11837998ioj.173.1473902537922;
- Wed, 14 Sep 2016 18:22:17 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.173.98 with HTTP; Wed, 14 Sep 2016 18:22:17 -0700 (PDT)
-In-Reply-To: <20160914235843.nacr54ekvl6rjipk@sigill.intra.peff.net>
-References: <20160914235547.h3n2otje2hec6u7k@sigill.intra.peff.net> <20160914235843.nacr54ekvl6rjipk@sigill.intra.peff.net>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=b75daTApO+PxmJNRbkkrrWjAXgFYdQtFTGA77/Yjg+o=;
+        b=B6sgeS5cGYniVwIICokswOaefZFc2wgk2bNnAX/+9JfjeYFqQiIIxsW/1VDXvnKuZI
+         OLyPXnG3TY34QYXODTvPTAyihePydC0poy7yeRK28qen/BZoOOnu3xLJoxaxzY9ifIut
+         XzsQ5cgklViwFbuTG0OY1yXdPrjJVS4w4qlCYUaANK0LpoWbpqXdJIyCEiF15HFPoun9
+         AKaQpd4MjxBPqCA94/XnPIRlkXuKOwPmWGGx9DU/ATsoXR0cl/dLCAWwlFd1z2GXFWbh
+         Z+1EzN/B0KODF5bZ8V94+0FbdF5IfbXHcvmX8XfbTX1XipIAZyHFcDV8kMj9gD75cMHu
+         SwlQ==
+X-Gm-Message-State: AE9vXwOljwk0i514+Ihc9VdPpFpDuBAxr9b6M1GvNuzZabqoPaHyuIY9aFCgfbR8j6kvkJb4
+X-Received: by 10.66.156.72 with SMTP id wc8mr10171768pab.53.1473904906222;
+        Wed, 14 Sep 2016 19:01:46 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:a826:8aac:4af5:7046])
+        by smtp.gmail.com with ESMTPSA id bx9sm689296pab.17.2016.09.14.19.01.45
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 14 Sep 2016 19:01:45 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 14 Sep 2016 18:22:17 -0700
-Message-ID: <CAGZ79kYcB-x40_w1fcWL3NSp8JU9SPrTAEiru-6Jpb7fDM1Y0w@mail.gmail.com>
-Subject: Re: [PATCH 2/2] use zstd zlib wrapper
-To:     Jeff King <peff@peff.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+To:     peff@peff.net
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: [PATCH] object: measure time needed for resolving hash collisions
+Date:   Wed, 14 Sep 2016 19:01:41 -0700
+Message-Id: <20160915020141.32000-1-sbeller@google.com>
+X-Mailer: git-send-email 2.10.0.130.gef2bcd7.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 14, 2016 at 4:58 PM, Jeff King <peff@peff.net> wrote:
-> There's a fancy new compression algorithm called "zstd". The
-> idea is that it's supposed to get similar compression ratios
-> to zlib, but with much faster compression and decompression
-> times. And on top of that, a nice sliding scale to trade off
-> size versus time on the compression side.
->
-> The zstd site at https://facebook.github.io/zstd/ claims
-> close to 3x speedup for both compression and decompression
-> versus zlib, with similar compression ratios. There are
-> other fast algorithms (like lz4), but they usually compress
-> much worse (follow the link above for a nice table of
-> results).
->
-> Since any git operations that have to access objects need to
-> do a zlib inflate, in theory we can speed up everything by
-> using zstd. And then on the packing side, use higher
-> compression levels when making on-disk packfiles (which will
-> be accessed many times) and lower ones when making loose
-> objects, or deflating packed objects on the fly when serving
-> fetches.
->
-> The catch, of course, is that it's a new incompatible
-> format. This would be a pretty huge change and totally break
-> backwards compatibility for git, not just on disk but
-> on-the-wire as well. So my goal here was not a finished
-> product but just a quick experiment to see if it did indeed
-> bring the promise speedups.
->
-> Disappointingly, the answer seems to be "no".
+$ time ./git rev-list HEAD --count
+44271
+print_time_spent_object: measure time needed for resolving hash collisions
 
-After having looked at the data, I disagree with the conclusion.
-And for that I think we need to reason about the frequency
-of the operations happening.
+This shows that we roughly spent a third of the time in resolving
+hash collisions:
 
-* As an enduser, happily hacking away at one repository,
-  I probably do not care about the pack size on disk as much
-  as I care about timing of the local operations. And I assume
-  that for each repack we have about 1000 reads (log/rev-list)
-  The 1000 is a wild speculation without any data to back it up.
-  So as an end user I'd be happy about [zstd, ~5]
-  For the end user LZ4 seems to be the best solution if it were available.
+I am using linux.git to measure:
 
-* As a service provider, I know we have a lot more reads than
-  writes, and repacking is annoying. Also at that scale the disk
-  isn't negligible cheap. So we need to weigh the numbers differently,
-  but how? I suspect depending on the weighting it could still be
-  considered beneficial to go with zstd5. (No hard numbers here)
+$ time git rev-list --objects --count HEAD >/dev/null
+print_time_spent_resolving_hash_collisions 9:445591664
+
+real	0m31.733s
+user	0m31.220s
+sys	0m0.463s
+
+For fun I reverted 9a414486d9f0:
+
+$ time git rev-list --objects --count HEAD >/dev/null
+print_time_spent_resolving_hash_collisions 14:338605504
+
+real	0m37.008s
+user	0m36.524s
+sys	0m0.423s
+
+The 17% that Jeff measured in there, equals to 1-31.733/37.008 = 0.14
+in these measurements.
+The time spent in collision resolving went down by 1/3 on itself
+(14.33s to 9.44s), so there is still room for improvement.
+
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+
+ According to Jeff, sending patches that don't get accepted is the new hype!
+
+ builtin/rev-list.c |  2 ++
+ object.c           | 36 ++++++++++++++++++++++++++++++++++++
+ object.h           |  2 ++
+ 3 files changed, 40 insertions(+)
+
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 8479f6e..d0e5922 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -412,5 +412,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 			printf("%d\n", revs.count_left + revs.count_right);
+ 	}
+ 
++	print_time_spent_resolving_hash_collisions();
++
+ 	return 0;
+ }
+diff --git a/object.c b/object.c
+index 67d9a9e..e9e73e0 100644
+--- a/object.c
++++ b/object.c
+@@ -5,9 +5,40 @@
+ #include "commit.h"
+ #include "tag.h"
+ 
++#include <time.h>
++
+ static struct object **obj_hash;
+ static int nr_objs, obj_hash_size;
+ 
++struct timespec caching = {0, 0};
++
++void diff(struct timespec *start, struct timespec *end, struct timespec *dst)
++{
++	if ((end->tv_nsec-start->tv_nsec)<0) {
++		dst->tv_sec = end->tv_sec-start->tv_sec-1;
++		dst->tv_nsec = 1000000000+end->tv_nsec-start->tv_nsec;
++	} else {
++		dst->tv_sec = end->tv_sec-start->tv_sec;
++		dst->tv_nsec = end->tv_nsec-start->tv_nsec;
++	}
++}
++
++void add_time_to(struct timespec *dst, struct timespec *addend)
++{
++	dst->tv_sec += addend->tv_sec;
++	dst->tv_nsec += addend->tv_nsec;
++	while (dst->tv_nsec > 1000000000) {
++		dst->tv_nsec -= 1000000000;
++		dst->tv_sec ++;
++	}
++}
++
++void print_time_spent_resolving_hash_collisions(void)
++{
++	fprintf(stderr, "print_time_spent_resolving_hash_collisions %ld:%9ld\n",
++		(long)caching.tv_sec, (long)caching.tv_nsec);
++}
++
+ unsigned int get_max_object_index(void)
+ {
+ 	return obj_hash_size;
+@@ -86,11 +117,13 @@ struct object *lookup_object(const unsigned char *sha1)
+ {
+ 	unsigned int i, first;
+ 	struct object *obj;
++	struct timespec time1, time2, t_diff;
+ 
+ 	if (!obj_hash)
+ 		return NULL;
+ 
+ 	first = i = hash_obj(sha1, obj_hash_size);
++	clock_gettime(CLOCK_MONOTONIC, &time1);
+ 	while ((obj = obj_hash[i]) != NULL) {
+ 		if (!hashcmp(sha1, obj->oid.hash))
+ 			break;
+@@ -98,6 +131,9 @@ struct object *lookup_object(const unsigned char *sha1)
+ 		if (i == obj_hash_size)
+ 			i = 0;
+ 	}
++	clock_gettime(CLOCK_MONOTONIC, &time2);
++	diff(&time1, &time2, &t_diff);
++	add_time_to(&caching, &t_diff);
+ 	if (obj && i != first) {
+ 		/*
+ 		 * Move object to where we started to look for it so
+diff --git a/object.h b/object.h
+index f8b6442..ee6ab3a 100644
+--- a/object.h
++++ b/object.h
+@@ -56,6 +56,8 @@ extern const char *typename(unsigned int type);
+ extern int type_from_string_gently(const char *str, ssize_t, int gentle);
+ #define type_from_string(str) type_from_string_gently(str, -1, 0)
+ 
++void print_time_spent_resolving_hash_collisions(void);
++
+ /*
+  * Return the current number of buckets in the object hashmap.
+  */
+-- 
+2.10.0.130.gef2bcd7.dirty
+
