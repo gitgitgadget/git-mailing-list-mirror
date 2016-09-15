@@ -7,58 +7,60 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C7DF22070F
-	for <e@80x24.org>; Thu, 15 Sep 2016 19:36:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFACF2070F
+	for <e@80x24.org>; Thu, 15 Sep 2016 19:36:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753910AbcIOTgH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Sep 2016 15:36:07 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35254 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751627AbcIOTgG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Sep 2016 15:36:06 -0400
-Received: by mail-wm0-f67.google.com with SMTP id 133so196650wmq.2
-        for <git@vger.kernel.org>; Thu, 15 Sep 2016 12:36:05 -0700 (PDT)
+        id S1753974AbcIOTgO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Sep 2016 15:36:14 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:32946 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754029AbcIOTgM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Sep 2016 15:36:12 -0400
+Received: by mail-wm0-f66.google.com with SMTP id b187so208032wme.0
+        for <git@vger.kernel.org>; Thu, 15 Sep 2016 12:36:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=W9IZ1pgavxfieS+jTaJhPYyNK+WmqWwd2kinj6NNVHQ=;
-        b=wVqDM5XpmYcIzilKbilmEzbJLvXl7hnrLSRb1fchGYVsh5aWSba/i2J179fpdZEm8o
-         idOfaeIIapyoYlAWavVQ7xLyaHTt9kmnSSeD+s177KB6IUgq4mbPhmc/Q9OMlJxBPrbx
-         bw0/zyrzsIPupIDxzyB8VNzEHOWSedIfostIzfPYxTTDBXXjpIQP1rpkuvLIyQ30bbU0
-         c22blnzHi5mcKDkr95N4R570+KJ1UAeDGub1SZkifJUaFB/Q+4tItkN8ou9Pmi6cMp+V
-         GKNwMscgnTPO4X2AEFAfNB4cqfYDPyb078bQHyzZoCiGDPl/qWgL0bAPOlt2PQodXJPS
-         hQMw==
+        bh=qDtYxIDOZ9t7hiMyXVxVXPS24iE3UTgF8aBlPU4yQkI=;
+        b=JZdkOiO79mvICcqsbQ97I+aYbVlpmyILhLABWf+nFjcb50F+V1ZiC6835tYZw6cSyY
+         q6waWHyTqyIbJrywc2EOCkhg+dWLGVVYwIyXLmhF/hzcS/hRDvg5yTYpZu2Dk9nG8sZe
+         2womjyqQZUSFNsoGMvIKd3RpxOT7w+A95HlWgmvn3aySR/dIb4YreBbqZtuhGs0sPhOj
+         K0EEiZJy/PGZ2J0SokXpx4i8Dl8NyGoP6hUQp7ixiJyyDTKUd2rug8yudQs6DhWgs4r2
+         HghX2n4qae8ApAJjRTFi6KRibr6Gp3QNqPd4QmQnKlYvzY5oYvpwDl4v/93FFdj+ujuw
+         cr3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=W9IZ1pgavxfieS+jTaJhPYyNK+WmqWwd2kinj6NNVHQ=;
-        b=SFsXJ7q2PjrRoxNkH81bUzIw89bEzSOmY0W1SbeIdujyq0wgVV7D9eKHQzYn7O8kWO
-         q6fb8SaqvDRAxQVQkj0SkHuHVnB+Q0xrNqJq6bYKPSCswLgFC+2OrSj1PMCFuLV9qUlT
-         c+SCsltPWkElTZZ7N6l4HBWY01Pn+H+Z2+Rg75rGzFrA0bpBlgO06cuLJ8qjiNlOq6e+
-         93CBR9sZHnwKxbpg1frVoE1P3iFUwcpa4Clai2yT0x5zcvUXYQYVmywFRYoPwMaXDHW8
-         zDgCgUNYi/08e4XKymmXHHubd9QzY4wlQ+HUVJjgDNXyjnRTvjRsIN/dbU+AwCGB7UGl
-         1Ecw==
-X-Gm-Message-State: AE9vXwNhlGZaC1F0ESa3zeGzXLrBXqjLRmPvoHQHliI9RqbNRcnis3kSmd6mZd8isqVt7A==
-X-Received: by 10.28.232.18 with SMTP id f18mr4536154wmh.51.1473968164658;
-        Thu, 15 Sep 2016 12:36:04 -0700 (PDT)
+        bh=qDtYxIDOZ9t7hiMyXVxVXPS24iE3UTgF8aBlPU4yQkI=;
+        b=QrT+v8k+DnvaRgjvdawQiNmtzfU2BJJ+fDBneqaGOODB3Bm9wr+EBdnlrcpyflQXuh
+         soENZaKXnwASmo7DyMGll9RxxutJ4YfvfmNX52uG/vT7hdwCp+yI+WU+hTi4blJyryX+
+         0r1CSmODLJZBCb8suXlfyEy6Bg0YGECnEHJV5Xs2PH4fsottj5ow212PbKzYTURX0Usl
+         Nm9w4J9hahZrWQao2G4PBmRS+CaqK9zhz039UHcGhyZszC9xXpK7hYfbRx33FRbnMSVb
+         q3hkYNcCewzH7z3LC1f9J3zrBxSFtZESKldXy01QfTUYehMK/Ioty4oNLyCx4TkepX+P
+         1apg==
+X-Gm-Message-State: AE9vXwOE2USRkNMKAU7EmaFolcIDSgkOCCZBCotdk0glf1nAVybxycgi5dtphlYvJ0DthA==
+X-Received: by 10.28.170.197 with SMTP id t188mr4408068wme.42.1473968171106;
+        Thu, 15 Sep 2016 12:36:11 -0700 (PDT)
 Received: from slxbook4.fritz.box (p5DDB61FE.dip0.t-ipconnect.de. [93.219.97.254])
-        by smtp.gmail.com with ESMTPSA id b188sm3797450wmg.24.2016.09.15.12.36.03
+        by smtp.gmail.com with ESMTPSA id b188sm3797450wmg.24.2016.09.15.12.36.08
         (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 15 Sep 2016 12:36:04 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
+        Thu, 15 Sep 2016 12:36:10 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
 Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH] pkt-line: mark a file-local symbol static
+Subject: Re: [PATCH v7 10/10] convert: add filter.<driver>.process option
 From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <6373d68b-574d-59f3-7b8d-60dd3a673806@ramsayjones.plus.com>
-Date:   Thu, 15 Sep 2016 17:46:09 +0100
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
+In-Reply-To: <xmqqvaxzvjj0.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 15 Sep 2016 18:23:25 +0100
+Cc:     =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        Git Mailing List <git@vger.kernel.org>, peff@peff.net,
+        sbeller@google.com, Johannes.Schindelin@gmx.de, jnareb@gmail.com,
+        mlbright@gmail.com, jacob.keller@gmail.com
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <86997B2A-EF9B-4DC2-84DE-785C1747B7CA@gmail.com>
-References: <6373d68b-574d-59f3-7b8d-60dd3a673806@ramsayjones.plus.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-Id: <5E675A29-628F-4076-A5D9-E359CCF04295@gmail.com>
+References: <20160908182132.50788-1-larsxschneider@gmail.com> <20160908182132.50788-11-larsxschneider@gmail.com> <20160910062919.GB11001@tb-raspi> <10020380-76ED-4371-A0BA-59D07AF33CE0@gmail.com> <96554f6d-988d-e0b8-7936-8d0f29a7564f@web.de> <xmqqvaxzvjj0.fsf@gitster.mtv.corp.google.com>
+To:     Junio C Hamano <gitster@pobox.com>
 X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -66,28 +68,34 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-> On 14 Sep 2016, at 14:31, Ramsay Jones <ramsay@ramsayjones.plus.com> =
-wrote:
+> On 13 Sep 2016, at 17:42, Junio C Hamano <gitster@pobox.com> wrote:
 >=20
+> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 >=20
-> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> ---
+>> I would really consider to treat pathnames as binary, and not add a =
+trailing '\n',
+>> are there other opinions ?
 >=20
-> Hi Lars,
->=20
-> If you need to re-roll your 'ls/filter-process' branch, could you
-> please squash this into the relevant patch; commit 2afd9b22
-> ("pkt-line: add packet_write_gently()", 08-09-2016).
->=20
-> [...]
-> -int packet_write_gently(const int fd_out, const char *buf, size_t =
-size)
-> +static int packet_write_gently(const int fd_out, const char *buf, =
-size_t size)
-> {
-> 	static char packet_write_buffer[LARGE_PACKET_MAX];
+> It would be the most consistent if the same format as
+> write_name_quoted() is used for this, I would think.
 
-Done!
+Is that the solution you had in mind?
 
-Thank you,
-Lars=
+	quote_c_style(path, &quoted_path, NULL, 0);
+	err =3D packet_write_fmt_gently(process->in, "pathname=3D%s\n", =
+quoted_path.buf);
+
+Wouldn't that complicate the pathname parsing on the filter side?
+Can't we just define in our filter protocol documentation that our=20
+"pathname" packet _always_ has a trailing "\n"? That would mean the=20
+receiver would know a packet "pathname=3DABC\n\n" encodes the path
+"ABC\n" [1].
+
+Thanks,
+Lars
+
+
+[1] Following Torsten's example in=20
+http://public-inbox.org/git/96554f6d-988d-e0b8-7936-8d0f29a7564f@web.de =
+)
+
