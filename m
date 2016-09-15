@@ -2,157 +2,207 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B03791FCA9
-	for <e@80x24.org>; Thu, 15 Sep 2016 00:00:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 877BB1FCA9
+	for <e@80x24.org>; Thu, 15 Sep 2016 00:42:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1764231AbcIOAAd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Sep 2016 20:00:33 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:35307 "EHLO
-        mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1763763AbcIOAAc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Sep 2016 20:00:32 -0400
-Received: by mail-pa0-f48.google.com with SMTP id oz2so5485151pac.2
-        for <git@vger.kernel.org>; Wed, 14 Sep 2016 17:00:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=2SByAs8Q5Y2w8RC7vRWz42+uSfZgRMAWpEA1N6vmrRE=;
-        b=YjcsIqaRo9w7Q6vQYWG9ulu2DBIGFuOtcWPqXk9ljoxr6xb1dTbywzPV8HOuoqPVYG
-         6rhcAjIv9vUB1JIjl7xlSnRW/UZnjCWeMJAH2Vb/QVaOngSN1GO0caZQ1FBcxsNaJRH/
-         I7yVZN4PcSKyZe0btR8oeTd4HXXrACD+4YrZpxLWPkCrpkhkLbv3Z+IaPE/vdbaSKVwp
-         ZPtNiFYTTL3d6w+F0wcEiIzYrCXToDQgrbughKWzBx1x3Q1Y3uOSvZHCDg/2noXAFIeP
-         BjR9o6NwqxCsd5hvEbG0RzRYGfBRT5Ql5W8rRY7sWUlprarw4s+iA3I87J05nTmO9yjG
-         SZ3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=2SByAs8Q5Y2w8RC7vRWz42+uSfZgRMAWpEA1N6vmrRE=;
-        b=hvJcDwQFrP+8CGMpUiZ2WLP7A7wcfTnOWnFcYnY31PrlLzHCHWFatxkPh/bV5dhBYd
-         rPr/NmI+I0D7yDB8NV/E7bM1icGV2Bvu5tUNQsXl6OMPrnes7crOIowPJUv/JbZR4bKY
-         oPkz+R63vkKCj0HemtbiyOrzxkBIZNjD5uuDdjOmgZ+BIMslMERY3ei089aS85g2lGzy
-         AErw76l+zb3vFtWSkYNBLWONwQqOjxeteql5N3vJbKi0y8ZaabpA2AL7yTJ3SPL7ub9g
-         2/2H5WpO4lBMBmxgwZNrsqPu5/ApjgtUj39LKBTtmMPL1I4LiJWyBcjFrxDGGinK/L0W
-         a+LQ==
-X-Gm-Message-State: AE9vXwNZgZB44Ta4ZOTQ6YI3z2u+5tV94QoyGTNgkjyYxYR7ZgYAKqZdD1GWYaNQT1k7H+Ms
-X-Received: by 10.66.127.14 with SMTP id nc14mr9394354pab.18.1473897626510;
-        Wed, 14 Sep 2016 17:00:26 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b00:9d02:b75:eb8f:7e1])
-        by smtp.gmail.com with ESMTPSA id t21sm40463597pfa.71.2016.09.14.17.00.25
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 14 Sep 2016 17:00:25 -0700 (PDT)
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org, pclouds@gmail.com
-Cc:     Brandon Williams <bmwill@google.com>
-Subject: [RFC] extending pathspec support to submodules
-Date:   Wed, 14 Sep 2016 16:57:53 -0700
-Message-Id: <1473897473-154528-1-git-send-email-bmwill@google.com>
-X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1755693AbcIOAme (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Sep 2016 20:42:34 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:38428 "EHLO
+        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754654AbcIOAmd (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 14 Sep 2016 20:42:33 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.nyi.internal (Postfix) with ESMTP id 3D96C2089D;
+        Wed, 14 Sep 2016 20:42:32 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute3.internal (MEProxy); Wed, 14 Sep 2016 20:42:32 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=jonathonmah.com;
+         h=cc:content-transfer-encoding:content-type:date:from
+        :message-id:mime-version:subject:to:x-sasl-enc:x-sasl-enc; s=
+        mesmtp; bh=T6K0W1Y8KTP+8zSGvE8wQR/krdc=; b=I4AZBd7Q90pxV5S6d368/
+        hSWPmJB8XIU21dDZq13PeMyeF4jZLcPiP2wo8hOSI2VZcOyJFuof/WGQL4lz00En
+        QtHIAn4r5FB4W+uXmyMa99x73yB7ZJpvBPFvrWul1rIPmB0VEjGPwsocJiUKscDk
+        CHJf5jthE6iu/FFEbVwiU4=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:message-id:mime-version:subject:to:x-sasl-enc
+        :x-sasl-enc; s=smtpout; bh=T6K0W1Y8KTP+8zSGvE8wQR/krdc=; b=OFVe4
+        uK7HqsGo+9ISbPm5VsJ2gsLbeMFtsv++Js12HbbBNpZLvN54cJs6T6jVBlIt2Lug
+        GhMbm/HfKTEMHlUdl2XGRf29od1IsBGJ4RGleBxsWTRdbg/O/LLF/SZEu7NsrX4u
+        c47aFZioXbhDZGhHGmS0ROg+TgeINtWc1VrCmU=
+X-Sasl-enc: V8gAq91i2+RZioQoBke71BHFJx90j975jcl5Gt6comGv 1473900151
+Received: from [10.132.44.52] (unknown [76.74.153.49])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 69044F2985;
+        Wed, 14 Sep 2016 20:42:31 -0400 (EDT)
+From:   Jonathon Mah <me@jonathonmah.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 10.0 \(3226\))
+Subject: Tracking down a segfault in delta_base_cache
+Message-Id: <3946EE74-219D-4E9C-9CED-69D53B940955@jonathonmah.com>
+Date:   Wed, 14 Sep 2016 17:42:29 -0700
+Cc:     Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3226)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
----
-I've been trying to think through how we could potentially add pathspec support
-for --recurse-submodule options (for builtins like ls-files or grep down the
-line).  This is something that could be useful if the user supply's a pathspec
-that could match to a file in a submodule.  We could match the submodule to the
-pathspec and then fork the process to recursively run the command on the
-submodule which can be passed a modified pathspec.
+Hi git, I've been seeing git segfault over the past few days. I'm on Mac =
+OS X 10.12, 64-bit, compiling with clang (Apple LLVM version 8.0.0 =
+(clang-800.0.40)).
 
-For example with a pathspec 'sub/dir/a', where sub is a submodule in the root
-directory of the supermodule's repo, we could match 'sub' to that spec and then
-recursively call the git command with a pathspec of 'dir/a'.  The child process
-would then have the responsibility of matching 'dir/a' to files in its repo.
+I first noticed it during a checkout, then also during `log -u`. I'm =
+still debugging, but wanted to give a heads-up in case anyone else is =
+seeing this.
 
-Does this seem like a reasonable feature to add? And if so are how is my
-initial approach at solving the problem?
+~/D/S/A/HLT $ git-log -u -n1000 >/dev/null
+fish: 'git-log' terminated by signal SIGSEGV (Address boundary error)
 
-One idea I had was to add a submodule match flag in order to perform special
-matching just in the --recurse-submodules cases since we'll want somethings to
-match here that wouldn't normally match.
+~/D/S/A/HLT $ git fsck
+Checking object directories: 100% (256/256), done.
+fish: 'git fsck' terminated by signal SIGSEGV (Address boundary error)
 
-@@ -283,6 +284,29 @@ static int match_pathspec_item(const struct pathspec_item *item, int prefix,
- 			 item->nowildcard_len - prefix))
- 		return MATCHED_FNMATCH;
- 
-+	/*
-+	 * Preform some checks to see if "name" is a super set of the pathspec
-+	 */
-+	if (flags & DO_MATCH_SUBMODULE) {
-+		struct strbuf buf = STRBUF_INIT;
-+		strbuf_addstr(&buf, name);
-+		strbuf_addch(&buf, '/');
-+		/*
-+		 * Check if the name is a prefix of the pathspec
-+		 */
-+		if ((item->match[namelen] == '/') &&
-+		    !ps_strncmp(item, match, name, namelen))
-+			return MATCHED_RECURSIVELY;
-+		/*
-+		 * Check if the name wildmatches to the pathspec
-+		 */
-+		if (!wildmatch(item->match, buf.buf,
-+			       WM_PREFIX |
-+			       (item->magic & PATHSPEC_ICASE ? WM_CASEFOLD : 0),
-+			       NULL));
-+		    return MATCHED_FNMATCH;
-+	}
-+
- 	return 0;
- }
- 
-One of the main difficulties I was having is figuring out how wildmatching
-should be applied in this case.  What I believe we want is the ability for the
-whole name of the submodule to match a prefix of the pathspec pattern.  To do
-this I was thinking of adding a flag to do prefix matching to the wildmatch
-function like so: 
+~/D/S/A/HLT $ git --version
+git version 2.10.0.129.g35f6318
+
+Running git-fsck from 2.9.2 validates the repository data.
+
+Bisect says:
+
+8261e1f139db3f8aa6f9fd7d98c876cbeb0f927c is the first bad commit
+commit 8261e1f139db3f8aa6f9fd7d98c876cbeb0f927c
+Author: Jeff King <peff@peff.net>
+Date:   Mon Aug 22 18:00:07 2016 -0400
+
+    delta_base_cache: use hashmap.h
 
 
-diff --git a/wildmatch.c b/wildmatch.c
-index 57c8765..f1e1725 100644
---- a/wildmatch.c
-+++ b/wildmatch.c
-@@ -60,8 +60,12 @@ static int dowild(const uchar *p, const uchar *text, unsigned int flags)
- 	for ( ; (p_ch = *p) != '\0'; text++, p++) {
- 		int matched, match_slash, negated;
- 		uchar t_ch, prev_ch;
--		if ((t_ch = *text) == '\0' && p_ch != '*')
--			return WM_ABORT_ALL;
-+		if ((t_ch = *text) == '\0' && p_ch != '*') {
-+			if ((flags & WM_PREFIX) && (*(p-1) == '/'))
-+				return WM_MATCH;
-+			else
-+				return WM_ABORT_ALL;
-+		}
- 		if ((flags & WM_CASEFOLD) && ISUPPER(t_ch))
- 			t_ch = tolower(t_ch);
- 		if ((flags & WM_CASEFOLD) && ISUPPER(p_ch))
-diff --git a/wildmatch.h b/wildmatch.h
-index 4090c8f..490db51 100644
---- a/wildmatch.h
-+++ b/wildmatch.h
-@@ -3,6 +3,7 @@
- 
- #define WM_CASEFOLD 1
- #define WM_PATHNAME 2
-+#define WM_PREFIX 4
- 
- #define WM_ABORT_MALFORMED 2
- #define WM_NOMATCH 1
--- 
+Backtrace for the `log -u` case is below. I'll follow up with my =
+progress.
+-Jonathon
 
-Any comments or thoughts on this would be appreciated.
+$ lldb /Users/jmah/Documents/Streams/git/git-log -- -u
+(lldb) target create "/Users/jmah/Documents/Streams/git/git-log"
+Current executable set to '/Users/jmah/Documents/Streams/git/git-log' =
+(x86_64).
+(lldb) settings set -- target.run-args  "-u"
+(lldb) process launch -o /dev/null
+Process 92815 launched: '/Users/jmah/Documents/Streams/git/git-log' =
+(x86_64)
+Process 92815 stopped
+* thread #1: tid =3D 0x1c30677, 0x00000001001bba80 =
+git-log`release_delta_base_cache(ent=3D0xffffffffffffffd0) + 16 at =
+sha1_file.c:2171, queue =3D 'com.apple.main-thread', stop reason =3D =
+EXC_BAD_ACCESS (code=3D1, address=3D0x10)
+    frame #0: 0x00000001001bba80 =
+git-log`release_delta_base_cache(ent=3D0xffffffffffffffd0) + 16 at =
+sha1_file.c:2171
+   2168=09
+   2169	static inline void release_delta_base_cache(struct =
+delta_base_cache_entry *ent)
+   2170	{
+-> 2171		free(ent->data);
+   2172		detach_delta_base_cache_entry(ent);
+   2173	}
+   2174=09
+(lldb) bt
+warning: could not load any Objective-C class information. This will =
+significantly reduce the quality of type information available.
+* thread #1: tid =3D 0x1c30677, 0x00000001001bba80 =
+git-log`release_delta_base_cache(ent=3D0xffffffffffffffd0) + 16 at =
+sha1_file.c:2171, queue =3D 'com.apple.main-thread', stop reason =3D =
+EXC_BAD_ACCESS (code=3D1, address=3D0x10)
+  * frame #0: 0x00000001001bba80 =
+git-log`release_delta_base_cache(ent=3D0xffffffffffffffd0) + 16 at =
+sha1_file.c:2171
+    frame #1: 0x00000001001bcadf =
+git-log`add_delta_base_cache(p=3D0x00000001006062f0, =
+base_offset=3D1792781, base=3D0x000000015749a000, base_size=3D1617761, =
+type=3DOBJ_BLOB) + 143 at sha1_file.c:2199
+    frame #2: 0x00000001001bc0d6 =
+git-log`unpack_entry(p=3D0x00000001006062f0, obj_offset=3D1792781, =
+final_type=3D0x00007fff5fbfe7fc, final_size=3D0x000000010185a5a0) + 1590 =
+at sha1_file.c:2345
+    frame #3: 0x00000001001c2209 =
+git-log`cache_or_unpack_entry(p=3D0x00000001006062f0, =
+base_offset=3D2692554, base_size=3D0x000000010185a5a0, =
+type=3D0x00007fff5fbfe7fc) + 73 at sha1_file.c:2162
+    frame #4: 0x00000001001bed8d =
+git-log`read_packed_sha1(sha1=3D"?c?????}\x0e'\x81=D2=84MH;yP?, =
+type=3D0x00007fff5fbfe7fc, size=3D0x000000010185a5a0) + 93 at =
+sha1_file.c:2765
+    frame #5: 0x00000001001bcc17 =
+git-log`read_object(sha1=3D"?c?????}\x0e'\x81=D2=84MH;yP?, =
+type=3D0x00007fff5fbfe7fc, size=3D0x000000010185a5a0) + 119 at =
+sha1_file.c:2813
+    frame #6: 0x00000001001be013 =
+git-log`read_sha1_file_extended(sha1=3D"?c?????}\x0e'\x81=D2=84MH;yP?, =
+type=3D0x00007fff5fbfe7fc, size=3D0x000000010185a5a0, flag=3D1) + 67 at =
+sha1_file.c:2841
+    frame #7: 0x00000001001073ba =
+git-log`read_sha1_file(sha1=3D"?c?????}\x0e'\x81=D2=84MH;yP?, =
+type=3D0x00007fff5fbfe7fc, size=3D0x000000010185a5a0) + 42 at =
+cache.h:1056
+    frame #8: 0x0000000100106ce6 =
+git-log`diff_populate_filespec(s=3D0x000000010185a570, flags=3D2) + 1334 =
+at diff.c:2845
+    frame #9: 0x0000000100106670 =
+git-log`diff_filespec_is_binary(one=3D0x000000010185a570) + 160 at =
+diff.c:2248
+    frame #10: 0x00000001001124bc =
+git-log`builtin_diff(name_a=3D"Applications/IDE/PlugIns/IDEPlugIns/IDEPlug=
+Ins.xcodeproj/project.pbxproj", =
+name_b=3D"Applications/IDE/PlugIns/IDEPlugIns/IDEPlugIns.xcodeproj/project=
+.pbxproj", one=3D0x000000010185a570, two=3D0x0000000101878310, =
+xfrm_msg=3D"index e063d6f..288f95f 100644\n", must_show_header=3D0, =
+o=3D0x00007fff5fbff4b8, complete_rewrite=3D0) + 1852 at diff.c:2383
+    frame #11: 0x00000001001116ce =
+git-log`run_diff_cmd(pgm=3D0x0000000000000000, =
+name=3D"Applications/IDE/PlugIns/IDEPlugIns/IDEPlugIns.xcodeproj/project.p=
+bxproj", other=3D0x0000000000000000, =
+attr_path=3D"Applications/IDE/PlugIns/IDEPlugIns/IDEPlugIns.xcodeproj/proj=
+ect.pbxproj", one=3D0x000000010185a570, two=3D0x0000000101878310, =
+msg=3D0x00007fff5fbfed18, o=3D0x00007fff5fbff4b8, p=3D0x000000010186c130) =
++ 734 at diff.c:3134
+    frame #12: 0x0000000100111350 git-log`run_diff(p=3D0x000000010186c130,=
+ o=3D0x00007fff5fbff4b8) + 720 at diff.c:3222
+    frame #13: 0x000000010010d75d =
+git-log`diff_flush_patch(p=3D0x000000010186c130, o=3D0x00007fff5fbff4b8) =
++ 157 at diff.c:4202
+    frame #14: 0x000000010010b9bc =
+git-log`diff_flush(options=3D0x00007fff5fbff4b8) + 1148 at diff.c:4722
+    frame #15: 0x000000010014418b =
+git-log`log_tree_diff_flush(opt=3D0x00007fff5fbfefc0) + 507 at =
+log-tree.c:781
+    frame #16: 0x00000001001445fe =
+git-log`log_tree_diff(opt=3D0x00007fff5fbfefc0, =
+commit=3D0x0000000153506540, log=3D0x00007fff5fbfeed8) + 606 at =
+log-tree.c:848
+    frame #17: 0x000000010014428e =
+git-log`log_tree_commit(opt=3D0x00007fff5fbfefc0, =
+commit=3D0x0000000153506540) + 238 at log-tree.c:877
+    frame #18: 0x0000000100064b89 =
+git-log`cmd_log_walk(rev=3D0x00007fff5fbfefc0) + 185 at log.c:360
+    frame #19: 0x0000000100066405 git-log`cmd_log(argc=3D2, =
+argv=3D0x00007fff5fbff9d0, prefix=3D0x0000000000000000) + 309 at =
+log.c:682
+    frame #20: 0x000000010000274f =
+git-log`run_builtin(p=3D0x0000000100264970, argc=3D2, =
+argv=3D0x00007fff5fbff9d0) + 431 at git.c:352
+    frame #21: 0x0000000100001a9a git-log`handle_builtin(argc=3D2, =
+argv=3D0x00007fff5fbff9d0) + 138 at git.c:539
+    frame #22: 0x00000001000017e4 git-log`cmd_main(argc=3D2, =
+argv=3D0x00007fff5fbff9d0) + 116 at git.c:635
+    frame #23: 0x00000001000c9eb4 git-log`main(argc=3D2, =
+argv=3D0x00007fff5fbff9d0) + 68 at common-main.c:40
+    frame #24: 0x00007fffd87ff255 libdyld.dylib`start + 1
 
-Thanks,
-Brandon
+
+
+
