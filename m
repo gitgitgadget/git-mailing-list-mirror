@@ -2,114 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD0981FCA9
-	for <e@80x24.org>; Thu, 15 Sep 2016 05:15:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8D6D207DF
+	for <e@80x24.org>; Thu, 15 Sep 2016 06:28:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756147AbcIOFPg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Sep 2016 01:15:36 -0400
-Received: from ikke.info ([178.21.113.177]:35852 "EHLO vps892.directvps.nl"
+        id S933799AbcIOG2v (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Sep 2016 02:28:51 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43550 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752154AbcIOFPf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Sep 2016 01:15:35 -0400
-Received: by vps892.directvps.nl (Postfix, from userid 1008)
-        id 87E004400B9; Thu, 15 Sep 2016 07:15:33 +0200 (CEST)
-Date:   Thu, 15 Sep 2016 07:15:33 +0200
-From:   Kevin Daudt <me@ikke.info>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [RFC 0/1] mailinfo: de-quote quoted-pair in header fields
-Message-ID: <20160915051533.GC26893@ikke.info>
-References: <20160913234612.22806-1-me@ikke.info>
- <20160913234612.22806-2-me@ikke.info>
- <xmqqr38ns5wi.fsf@gitster.mtv.corp.google.com>
- <20160914050919.qhv2gxzjyj5ydpub@sigill.intra.peff.net>
- <xmqqmvjbrpp4.fsf@gitster.mtv.corp.google.com>
- <20160914160308.GB26893@ikke.info>
- <xmqqoa3qqsw9.fsf@gitster.mtv.corp.google.com>
- <20160914191759.5unwaq2eequ4pifr@sigill.intra.peff.net>
- <xmqqfup2qny9.fsf@gitster.mtv.corp.google.com>
- <20160914193819.ua5ubvbf5wz7tvuj@sigill.intra.peff.net>
+        id S1756182AbcIOG2v (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Sep 2016 02:28:51 -0400
+Received: (qmail 12945 invoked by uid 109); 15 Sep 2016 06:28:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Sep 2016 06:28:49 +0000
+Received: (qmail 7006 invoked by uid 111); 15 Sep 2016 06:29:00 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Sep 2016 02:29:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Sep 2016 23:28:46 -0700
+Date:   Wed, 14 Sep 2016 23:28:46 -0700
+From:   Jeff King <peff@peff.net>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] use zstd zlib wrapper
+Message-ID: <20160915062845.sfackmnezb7oy3j5@sigill.intra.peff.net>
+References: <20160914235547.h3n2otje2hec6u7k@sigill.intra.peff.net>
+ <20160914235843.nacr54ekvl6rjipk@sigill.intra.peff.net>
+ <CAGZ79kYcB-x40_w1fcWL3NSp8JU9SPrTAEiru-6Jpb7fDM1Y0w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20160914193819.ua5ubvbf5wz7tvuj@sigill.intra.peff.net>
-User-Agent: Mutt/1.7.0 (2016-08-17)
+In-Reply-To: <CAGZ79kYcB-x40_w1fcWL3NSp8JU9SPrTAEiru-6Jpb7fDM1Y0w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 14, 2016 at 12:38:20PM -0700, Jeff King wrote:
-> On Wed, Sep 14, 2016 at 12:30:06PM -0700, Junio C Hamano wrote:
-> 
-> > Another small thing I am not sure about is if the \ quoting can hide
-> > an embedded newline in the author name.  Would we end up turning
-> > 
-> > 	From: "Jeff \
-> >             King" <peff@peff.net>
-> > 
-> > or somesuch into
-> > 
-> > 	Author: Jeff
-> >         King
-> >         Email: peff@peff.net
-> > 
-> > ;-)
-> 
-> Heh, yeah. That is another reason to clean up and sanitize as much as
-> possible before stuffing it into another text format that will be
-> parsed.
+On Wed, Sep 14, 2016 at 06:22:17PM -0700, Stefan Beller wrote:
 
-A quoted string cannot contain newlines according to the RFC, so I think
-we don't need to care about that.
+> > Disappointingly, the answer seems to be "no".
+> 
+> After having looked at the data, I disagree with the conclusion.
+> And for that I think we need to reason about the frequency
+> of the operations happening.
 
-> 
-> > So let's roll the \" -> " into mailinfo.
-> > 
-> > I am not sure if we also should remove the surrounding "", i.e. we
-> > currently do not turn this
-> > 
-> > 	From: "Jeff King" <peff@peff.net>
-> > 
-> > into this:
-> > 
-> > 	Author: Jeff King
-> >         Email: peff@peff.net
-> > 
-> > I think we probably should, and remove the one that does so from the
-> > reader.
-> 
-> I think you have to, or else you cannot tell the difference between
-> surrounding quotes that need to be stripped, and ones that were
-> backslash-escaped. Like:
-> 
->   From: "Jeff King" <peff@peff.net>
->   From: \"Jeff King\" <peff@peff.net>
-> 
-> which would both become:
-> 
->   Author: "Jeff King"
->   Email: peff@peff.net
-> 
-> though I am not sure the latter one is actually valid; you might need to
-> be inside syntactic quotes in order to include backslashed quotes. I
-> haven't read rfc2822 carefully recently enough to know.
-> 
-> Anyway, I think that:
-> 
->   From: One "Two \"Three\" Four" Five
-> 
-> may also be valid. So the quote-stripping in the reader is not just "at
-> the outside", but may need to handle interior syntactic quotes, too. So
-> it really makes sense for me to clean and sanitize as much as possible
-> in one step, and then make the parser of mailinfo as dumb as possible.
-> 
+I definitely agree that reads outnumber writes, and it's OK to have an
+asymmetric tradeoff between the two. zstd5 isn't _too_ bad in that
+respect. I guess I was just disappointed that the pack size was still
+bigger, as I was really hoping to see some speed tradeoff without
+getting a worse pack.
 
-Makes sense, the current itteration of my patch already strips exterior
-quotes, no matter where they happen.
+The other thing to weigh against is "if we were designing it today"
+versus "is it worth the compatibility headaches now". A 6% improvement
+in "rev-list --objects" is not that amazing for a data format change.
+Bitmaps were an _easier_ data format change and are more like a 99%
+speedup.
 
-I will send a patch soon.
+They do not apply to every operations, but we may be able to do similar
+space/time tradeoffs that are easier to handle in terms of backwards
+compatibility, and which yield bigger results.
+
+-Peff
