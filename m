@@ -2,74 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD,SUBJ_ALL_CAPS shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B04CA2070F
-	for <e@80x24.org>; Thu, 15 Sep 2016 21:00:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D9952070F
+	for <e@80x24.org>; Thu, 15 Sep 2016 21:09:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753219AbcIOVAS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Sep 2016 17:00:18 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55832 "EHLO
+        id S1753360AbcIOVJD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Sep 2016 17:09:03 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54399 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752161AbcIOVAR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Sep 2016 17:00:17 -0400
+        with ESMTP id S1752388AbcIOVJB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Sep 2016 17:09:01 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 66EC33D7F7;
-        Thu, 15 Sep 2016 16:51:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:in-reply-to:references; s=sasl; bh=u5Bs
-        2e7AufeEWl3TYfi9KJ/MdPY=; b=lMQsLqGS5tuxPN0Gxy8SYry60gS2h13UQHMA
-        Cf4QGa32TZIZJ+CLjH4BmCGwnZ6i7vWrNwhyLk+SAxRzbuGxvwCA6URMHo5Tptfn
-        7WpxxL6mEPQNzKvYhEXHfTj/VM0WhGMQHxH2coaT5JU4M/ACxwzZZ3bLNrwPnNw5
-        7akR91s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-        :date:message-id:in-reply-to:references; q=dns; s=sasl; b=Y34z1s
-        yPinPLkHd+QRIfaGwpi8JPSVZl9hag6De+0qmxqJX/opIbvWrz9Cw81v8KzPVEUN
-        6GIy9Bv7aonN40/xs30gC2oxXEALTgNYR/YftD/j+Qs44zjcEUj2sMeCpWMQ7iqz
-        aI3AhENFVOJD1u/WHkFeJifK2opHD8N4X3TwY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5EB2B3D7F6;
-        Thu, 15 Sep 2016 16:51:15 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 832F53D7DC;
+        Thu, 15 Sep 2016 17:09:00 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=sXMlRV9CRpYIg2fF9zUxKEuJa4w=; b=Z4vCKa
+        yLHZdcEFV8dxJ+8Xowd2MBx9ERsHR0orptmMzUVHiVZhxSgfjcOkOw8RI4UQR5O3
+        qpGsi/gLszYLforc+vbEjj9mTwAqaulMkCzpKdMJ5i0a0PQvnQQf/9rAOTAbH5Nm
+        yEZxoDxzKrEHcNqxlC+lb1OZEwgH7cqLBAijs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=paskigZxVqV8lzN0/Vf/Ao1Uguq+qLhO
+        GaqfGC0y92C1v13VUexHHeHCoH/c3aaa5tClyJ28LHZQE0RexnYz3fRfpqIzO7KI
+        AgnFnDW7kgvndU8y8eDvUKcQ8vOsmU6ERzpgAmkBpZWLVLeD4L3RFj9mMKEegNYf
+        0ZHmow32/Gs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 767603D7DB;
+        Thu, 15 Sep 2016 17:09:00 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D8CDA3D7F5;
-        Thu, 15 Sep 2016 16:51:14 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E11163D7DA;
+        Thu, 15 Sep 2016 17:08:59 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: [PATCH 1/2] SQUASH???
-Date:   Thu, 15 Sep 2016 13:51:08 -0700
-Message-Id: <20160915205109.12240-2-gitster@pobox.com>
-X-Mailer: git-send-email 2.10.0-458-g97b4043
-In-Reply-To: <20160915205109.12240-1-gitster@pobox.com>
-References: <xmqqzinbvk15.fsf@gitster.mtv.corp.google.com>
- <20160915205109.12240-1-gitster@pobox.com>
-X-Pobox-Relay-ID: 2477728A-7B86-11E6-B117-5D827B1B28F4-77302942!pb-smtp2.pobox.com
+To:     Heiko Voigt <hvoigt@hvoigt.net>
+Cc:     Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Jens Lehmann <Jens.Lehmann@web.de>,
+        Fredrik Gustafsson <iveqy@iveqy.com>,
+        Leandro Lucarella <leandro.lucarella@sociomantic.com>
+Subject: Re: [PATCH 3/2] batch check whether submodule needs pushing into one call
+References: <20160824173017.24782-1-sbeller@google.com>
+        <20160824183112.ceekegpzavnbybxp@sigill.intra.peff.net>
+        <xmqqh9aaot49.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kYOBqQ0FF4J-+KbefSD8HRrUeMqpO27m_jprhm93aB+LA@mail.gmail.com>
+        <20160824230115.jhmcr4r7wobj5ejb@sigill.intra.peff.net>
+        <20160914173124.GA7613@sandbox>
+        <xmqqwpiep10i.fsf@gitster.mtv.corp.google.com>
+        <20160915121044.GA96648@book.hvoigt.net>
+Date:   Thu, 15 Sep 2016 14:08:58 -0700
+In-Reply-To: <20160915121044.GA96648@book.hvoigt.net> (Heiko Voigt's message
+        of "Thu, 15 Sep 2016 14:10:44 +0200")
+Message-ID: <xmqq1t0kna51.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9F50E142-7B88-11E6-9631-096F12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
----
- builtin/ls-files.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index c0bce00..6e78c71 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -78,7 +78,7 @@ static void write_name(const char *name)
- 	 * churn.
- 	 */
- 	static struct strbuf full_name = STRBUF_INIT;
--	if (output_path_prefix != '\0') {
-+	if (*output_path_prefix) {
- 		strbuf_reset(&full_name);
- 		strbuf_addstr(&full_name, output_path_prefix);
- 		strbuf_addstr(&full_name, name);
--- 
-2.10.0-458-g97b4043
+>  	if (for_each_remote_ref_submodule(path, has_remote, NULL) > 0) {
+>  		struct child_process cp = CHILD_PROCESS_INIT;
+> -		const char *argv[] = {"rev-list", NULL, "--not", "--remotes", "-n", "1" , NULL};
+> +
+> +		argv_array_push(&cp.args, "rev-list");
+> +		sha1_array_for_each_unique(hashes, append_hash_to_argv, &cp.args);
+> +		argv_array_pushl(&cp.args, "--not", "--remotes", "-n", "1" , NULL);
+> +
+>  		struct strbuf buf = STRBUF_INIT;
+>  		int needs_pushing = 0;
+
+These two become decl-after-stmt; move your new lines a bit lower,
+perhaps?
+
+> -		argv[1] = sha1_to_hex(sha1);
+> -		cp.argv = argv;
+>  		prepare_submodule_repo_env(&cp.env_array);
+
+By the way, with the two new patches, 'pu' seems to start failing
+some tests, e.g. 5533 5404 5405.
 
