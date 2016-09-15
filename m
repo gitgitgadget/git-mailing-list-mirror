@@ -6,94 +6,80 @@ X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2DA32070F
-	for <e@80x24.org>; Thu, 15 Sep 2016 19:21:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B94F22070F
+	for <e@80x24.org>; Thu, 15 Sep 2016 19:25:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753085AbcIOTVq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Sep 2016 15:21:46 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59547 "EHLO
+        id S1753409AbcIOTZs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Sep 2016 15:25:48 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64127 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751127AbcIOTVp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Sep 2016 15:21:45 -0400
+        with ESMTP id S1752936AbcIOTZr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Sep 2016 15:25:47 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7E5C43C38A;
-        Thu, 15 Sep 2016 15:21:43 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A02703C418;
+        Thu, 15 Sep 2016 15:25:45 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wYWR7DFNHItPI3WT+LoZc0MrA8s=; b=NQ7QB+
-        2nGC38AVBBKoKPT3g8d4KnkDy3oxnThMlnCH3xwbBQC0fVBJe0um1t//jbcttVd0
-        m+41Dn0ze2rs+1MKaOo0TKy6YGaXk8byVQFudpEku3e/jwZM6u/RlBdVMVh4OQdN
-        XxeFXxVnH8Hdj0FJCiy+mFtAyVN64T1VHZ8Qk=
+        :content-type:content-transfer-encoding; s=sasl; bh=tbSClzqPjOFK
+        l815Tb9ft62TA6E=; b=L8nG6y1C8EnRCJQ8kQUpKa3eUhFzxNmvf1pVOq1Qft0S
+        9qglwN52kP6Y0EZ070Kgbl7Y/T/5l1qA6AsixAoEX/kASOXnCwuNhdPieCdACA3i
+        Eg7sxP3kKO6r1rZJ1UdvjjU0VhDK5e8ovT8SDb1E4RBEnBzmGlNAjckSp+vyyIg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=YvrHjWj4ZAMORqE0U7CKY/QTu332SlDv
-        /PTdQ3JzCQc+oXRLNwYSLTEla731cb9+SqYh58mCSrJER3xqk7Z52YkmWF6qPTk7
-        O7HgjzpEIW0en88JnOGFXc/HuNUscrA9ZJBO4znXwRvRP/owHYnM2HLMhWt3Wt9s
-        k2MUk2sZ8XI=
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=HAGEHY
+        LjASzpx5wWbFFFGKOcAajfxeTfKf/K+DGZE379TbEb2cyvzfMknbW6AqqVJCcz/f
+        gZe6Xbs8r/wRVpaoJ8GCqr3rBhiQS2dxvkg8Jp9gcRQOGdbcKe6BDKsWvu9V5TKx
+        Zek8k4yQ5dR4M1U6ygVsZi2HFe7xZ2aA2ZNyU=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7621C3C389;
-        Thu, 15 Sep 2016 15:21:43 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 969CB3C416;
+        Thu, 15 Sep 2016 15:25:45 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ECD9C3C387;
-        Thu, 15 Sep 2016 15:21:42 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 216823C415;
+        Thu, 15 Sep 2016 15:25:45 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org,
-        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH v2 21/25] sequencer: refactor write_message()
-References: <cover.1472457609.git.johannes.schindelin@gmx.de>
-        <cover.1473590966.git.johannes.schindelin@gmx.de>
-        <da2293aee439da2274e30304e2d1f097b9644e64.1473590966.git.johannes.schindelin@gmx.de>
-        <e21e3391-bfc3-68b8-8eaf-0e15e5a436c5@kdbg.org>
-Date:   Thu, 15 Sep 2016 12:21:41 -0700
-In-Reply-To: <e21e3391-bfc3-68b8-8eaf-0e15e5a436c5@kdbg.org> (Johannes Sixt's
-        message of "Mon, 12 Sep 2016 10:35:22 +0200")
-Message-ID: <xmqqfup1nf3u.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] use strbuf_addstr() for adding constant strings to a strbuf, part 2
+References: <f7294ac5-8302-03fb-d756-81a1c029a813@web.de>
+        <20160915184448.awipvg2kmlq7weei@sigill.intra.peff.net>
+Date:   Thu, 15 Sep 2016 12:25:43 -0700
+In-Reply-To: <20160915184448.awipvg2kmlq7weei@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 15 Sep 2016 11:44:48 -0700")
+Message-ID: <xmqqbmzpnex4.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A28DC4D8-7B79-11E6-A934-92D512518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 32E53AB6-7B7A-11E6-958D-92D512518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> Am 11.09.2016 um 12:55 schrieb Johannes Schindelin:
->> -static int write_message(struct strbuf *msgbuf, const char *filename)
->> +static int write_with_lock_file(const char *filename,
->> +				const void *buf, size_t len, int append_eol)
->>  {
->>  	static struct lock_file msg_file;
->>
->>  	int msg_fd = hold_lock_file_for_update(&msg_file, filename, 0);
->>  	if (msg_fd < 0)
->>  		return error_errno(_("Could not lock '%s'"), filename);
->> -	if (write_in_full(msg_fd, msgbuf->buf, msgbuf->len) < 0)
->> -		return error_errno(_("Could not write to %s"), filename);
->> -	strbuf_release(msgbuf);
->> +	if (write_in_full(msg_fd, buf, len) < 0)
->> +		return error_errno(_("Could not write to '%s'"), filename);
->> +	if (append_eol && write(msg_fd, "\n", 1) < 0)
->> +		return error_errno(_("Could not write eol to '%s"), filename);
->>  	if (commit_lock_file(&msg_file) < 0)
->>  		return error(_("Error wrapping up %s."), filename);
->>
->>  	return 0;
->>  }
+> On Thu, Sep 15, 2016 at 08:31:00PM +0200, Ren=C3=A9 Scharfe wrote:
 >
-> The two error paths in the added lines should both
+>> Replace uses of strbuf_addf() for adding strings with more lightweight
+>> strbuf_addstr() calls.  This makes the intent clearer and avoids
+>> potential issues with printf format specifiers.
+>>=20
+>> 02962d36845b89145cd69f8bc65e015d78ae3434 already converted six cases,
+>> this patch covers eleven more.
 >
-> 		rollback_lock_file(&msg_file);
->
-> , I think. But I do notice that this is not exactly new, so...
+> Great, these all look obviously correct.
 
-It may not be new for this step, but overall the series is aiming to
-libify the stuff, so we should fix fd and lockfile leaks like this
-as we notice them.
+Yes.
 
-Thanks.
+>> Silly question: Is there a natural language that uses percent signs
+>> as letters or e.g. instead of commas? :)
+>
+> I don't know, but if they do, they'd better get used to escaping them.
+> :)
+
+I do not know either, but I am curious where that question comes
+from.  I stared at this patch for a few minutes but couldn't guess.
