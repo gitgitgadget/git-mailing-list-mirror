@@ -7,21 +7,21 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E158B2070F
-	for <e@80x24.org>; Thu, 15 Sep 2016 15:00:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3767F2070F
+	for <e@80x24.org>; Thu, 15 Sep 2016 15:00:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752117AbcIOPAm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Sep 2016 11:00:42 -0400
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:60209 "EHLO sapo.pt"
+        id S1751968AbcIOPAp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Sep 2016 11:00:45 -0400
+Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:60262 "EHLO sapo.pt"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1751613AbcIOPAk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Sep 2016 11:00:40 -0400
-Received: (qmail 27082 invoked from network); 15 Sep 2016 15:00:37 -0000
-Received: (qmail 18608 invoked from network); 15 Sep 2016 15:00:37 -0000
+        id S1751613AbcIOPAn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Sep 2016 11:00:43 -0400
+Received: (qmail 27228 invoked from network); 15 Sep 2016 15:00:41 -0000
+Received: (qmail 19524 invoked from network); 15 Sep 2016 15:00:41 -0000
 Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 15 Sep 2016 15:00:35 -0000
+          for <git@vger.kernel.org>; 15 Sep 2016 15:00:39 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -33,9 +33,9 @@ Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
         <avarab@gmail.com>,
         =?UTF-8?q?Jean-No=C3=ABl=20AVILA?= <jn.avila@free.fr>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 06/14] i18n: config: mark error message for translation
-Date:   Thu, 15 Sep 2016 14:59:00 +0000
-Message-Id: <1473951548-31733-6-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH v3 07/14] i18n: merge-recursive: mark error messages for translation
+Date:   Thu, 15 Sep 2016 14:59:01 +0000
+Message-Id: <1473951548-31733-7-git-send-email-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1473951548-31733-1-git-send-email-vascomalmeida@sapo.pt>
 References: <1473951548-31733-1-git-send-email-vascomalmeida@sapo.pt>
@@ -46,26 +46,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Lowercase first word of such error messages following the usual style.
+
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- builtin/config.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ builtin/merge-recursive.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/config.c b/builtin/config.c
-index 6cbf733..05843a0 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -622,8 +622,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		value = normalize_value(argv[0], argv[1]);
- 		ret = git_config_set_in_file_gently(given_config_source.file, argv[0], value);
- 		if (ret == CONFIG_NOTHING_SET)
--			error("cannot overwrite multiple values with a single value\n"
--			"       Use a regexp, --add or --replace-all to change %s.", argv[0]);
-+			error(_("cannot overwrite multiple values with a single value\n"
-+			"       Use a regexp, --add or --replace-all to change %s."), argv[0]);
- 		return ret;
+diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
+index fd2c455..3b09610 100644
+--- a/builtin/merge-recursive.c
++++ b/builtin/merge-recursive.c
+@@ -42,30 +42,33 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
+ 			if (!arg[2])
+ 				break;
+ 			if (parse_merge_opt(&o, arg + 2))
+-				die("Unknown option %s", arg);
++				die(_("unknown option %s"), arg);
+ 			continue;
+ 		}
+ 		if (bases_count < ARRAY_SIZE(bases)-1) {
+ 			struct object_id *oid = xmalloc(sizeof(struct object_id));
+ 			if (get_oid(argv[i], oid))
+-				die("Could not parse object '%s'", argv[i]);
++				die(_("could not parse object '%s'"), argv[i]);
+ 			bases[bases_count++] = oid;
+ 		}
+ 		else
+-			warning("Cannot handle more than %d bases. "
+-				"Ignoring %s.",
++			warning(Q_("cannot handle more than %d base. "
++				   "Ignoring %s.",
++				   "cannot handle more than %d bases. "
++				   "Ignoring %s.",
++				    (int)ARRAY_SIZE(bases)-1),
+ 				(int)ARRAY_SIZE(bases)-1, argv[i]);
  	}
- 	else if (actions == ACTION_SET_ALL) {
+ 	if (argc - i != 3) /* "--" "<head>" "<remote>" */
+-		die("Not handling anything other than two heads merge.");
++		die(_("not handling anything other than two heads merge."));
+ 
+ 	o.branch1 = argv[++i];
+ 	o.branch2 = argv[++i];
+ 
+ 	if (get_oid(o.branch1, &h1))
+-		die("Could not resolve ref '%s'", o.branch1);
++		die(_("could not resolve ref '%s'"), o.branch1);
+ 	if (get_oid(o.branch2, &h2))
+-		die("Could not resolve ref '%s'", o.branch2);
++		die(_("could not resolve ref '%s'"), o.branch2);
+ 
+ 	o.branch1 = better_branch_name(o.branch1);
+ 	o.branch2 = better_branch_name(o.branch2);
 -- 
 2.7.4
 
