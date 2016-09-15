@@ -2,117 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97F8A2070F
-	for <e@80x24.org>; Thu, 15 Sep 2016 15:42:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D7792070F
+	for <e@80x24.org>; Thu, 15 Sep 2016 16:05:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753047AbcIOPmb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Sep 2016 11:42:31 -0400
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:47714 "EHLO
-        out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751125AbcIOPm3 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 15 Sep 2016 11:42:29 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 81D5D2054C;
-        Thu, 15 Sep 2016 11:42:28 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute3.internal (MEProxy); Thu, 15 Sep 2016 11:42:28 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=jonathonmah.com;
-         h=cc:content-transfer-encoding:content-type:date:from
-        :in-reply-to:message-id:mime-version:references:subject:to
-        :x-sasl-enc:x-sasl-enc; s=mesmtp; bh=YeE84AbHa+ejwLx7HY0JY8BnK9g
-        =; b=TK5H2PJyQR1ck3zwbx1R3u3w5kz9vzdqBCMa1JHrzYgUOe1iu7hF/6SyDyD
-        XtRRevNWZiFbW++4CFFQlfwcfY/EOMPQDWdTlc5eoSb20ixBV55Ha18b+xclXhGt
-        Xl/6rNF7yYZa49hmA1oDkxAPfMANbcFv3MzXOUzEo5AOfUfY=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=YeE84AbHa+ejwLx
-        7HY0JY8BnK9g=; b=geCH6XEFxrL83FP5u2kjUKZBoyp3+kJkdi42hX9A7yTSVoB
-        +uWU1HPkE5B7UjXN4+7aOfNlQS95XgpQXuNc75N9XaRwq+I05sIYM1r4w98Jfqjz
-        D5Y9K4IHcO9/3zPLUf/GoYluZEdh3/SYDeyq7znfa4b3l98SOHV9lFyytj28=
-X-Sasl-enc: 6KPzte8dAnyCY0jwt/5k6Ddk17AYqLl/kTkWVt/C6MRs 1473954148
-Received: from [192.168.120.105] (c-76-126-140-87.hsd1.ca.comcast.net [76.126.140.87])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 084D1CCE9A;
-        Thu, 15 Sep 2016 11:42:27 -0400 (EDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 10.1 \(3243\))
-Subject: Re: Tracking down a segfault in delta_base_cache
-From:   Jonathon Mah <me@jonathonmah.com>
-In-Reply-To: <20160915005640.3ui4qfmiqjz2lsov@sigill.intra.peff.net>
-Date:   Thu, 15 Sep 2016 08:42:26 -0700
-Cc:     git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <6FA0A47C-61CB-4602-8629-46448E582292@jonathonmah.com>
-References: <3946EE74-219D-4E9C-9CED-69D53B940955@jonathonmah.com>
- <20160915005640.3ui4qfmiqjz2lsov@sigill.intra.peff.net>
-To:     Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3243)
+        id S1751900AbcIOQFN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Sep 2016 12:05:13 -0400
+Received: from mail-it0-f54.google.com ([209.85.214.54]:36052 "EHLO
+        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751085AbcIOQFM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Sep 2016 12:05:12 -0400
+Received: by mail-it0-f54.google.com with SMTP id o3so102996186ita.1
+        for <git@vger.kernel.org>; Thu, 15 Sep 2016 09:05:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ADg6XjRa1GX06o11eg3CiYY0wpsgcrMR7y2Ihf0LJXc=;
+        b=KlIW0D1wN5zMMNsXIE9wVbxdi9Ak7e2Vf3DL3CW0AabG308Zz7sc3ohGWKeqGHSogj
+         rLaGExvppPT9/DljQKnxxzDzrNB27TcmS4Wd7UbJjAWP7hP+xCa1XtM0nVY4jhY7kevM
+         il74RrdscAyWI/s6PJimf/EduXcjhktO+b3StQ8OVnV9ytNtK58GQHwIo+LXHbwCgyQM
+         /9WuDwjO7XxqLN961OjqlANNwb20tkIKkC19nMh9lYJLCxZ7UDosDpjYVAzzHirrFD95
+         zkW0oVpTk2kdUuezjhO/HV2auRCfty/Dt4OJorvorR3Sn+EXDIFPvLNEoN5wPLU2G0sz
+         V6yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ADg6XjRa1GX06o11eg3CiYY0wpsgcrMR7y2Ihf0LJXc=;
+        b=Vo6NWcnZG2xGYECPdWraJM1cjS9KfIceJ04gKyBTI9QV89Dx2c4Id+dL4gUYQOs4BZ
+         M2MR/Tfv1VTD/UFruiPKasR64JghWESaXD0KF8teh4K+gvPfNZAxk/ZgxqRMNZjjKlle
+         /1Sdv+cK2dD5L7I2G9SVqC4rvaWO57mVzXRhxcuaSj3PNksWxWGmLSHrjbKKyCglEAYY
+         LquSfIaEPEdECe1AXwGH+zOuZeqn+95tcTi47V6BCex9Y4yDkbOjL6nT5IIuTKTAbVIo
+         c30Im1OeihOWv1QRGMLuU44Akv4wZg9vbyUMOSG2SckLw9BX4VB8r19ftg3zqPwS5ohc
+         4qMg==
+X-Gm-Message-State: AE9vXwMarNmQGR9Hv+5fz3GsDhLbvnXD5HVz/z+OnaouXAgHcK6AgIJdUFz8S/bFFvDOgmKtshkcETpHaminLxad
+X-Received: by 10.107.201.78 with SMTP id z75mr1436693iof.202.1473955511093;
+ Thu, 15 Sep 2016 09:05:11 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.107.173.98 with HTTP; Thu, 15 Sep 2016 09:05:10 -0700 (PDT)
+In-Reply-To: <20160915130233.GC9833@onerussian.com>
+References: <20160915130233.GC9833@onerussian.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 15 Sep 2016 09:05:10 -0700
+Message-ID: <CAGZ79kZLdsKcf0t=dDB24VVe+V=uqQCW_VNQwSJ638m5Keu2nQ@mail.gmail.com>
+Subject: Re: [wishlist?] make submodule commands robust to having
+ non-submodule Subprojects
+To:     Yaroslav Halchenko <yoh@onerussian.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Sep 15, 2016 at 6:02 AM, Yaroslav Halchenko <yoh@onerussian.com> wrote:
+> NB echos some questions of mine a few days back on IRC about Subprojects
+> and submodules
+>
+> If e.g. you just 'git add' a subdirectory which is a git repository, git
+> adds it as a subproject but doesn't initiate any entry in .gitmodules
+> since it is the job done by submodule and git core itself is
+> agnostic of those beasts.
+>
+> But having then this "Subproject"s which aren't registered as submodules
+> (and I haven't found any other use for them besides being a submodule)
+> brakes "git submodule" commands, e.g.
+>
+> $> git submodule
+>  cc6a09ac06c13cf06b4f4c8b54cda9a535e4e385 ds000001 (2.0.0+4)
+>  0a9f3b66e06a2137311a537b7377c336f1fb30ad ds000002 (1.0.0-3-g0a9f3b6)
+>  9da7e4f4221699915645ac2003298c6aba2db109 ds000003 (1.1.0+4)
+>  fe16cacb5cb9b4d53c50e498298fab182500e147 ds000005 (2.0.0+3)
+>  6898d99ff3ba26880183ed3672a458a7fcde1737 ds000006 (2.0.0+2)
+>  bbd10f634fe87e9d5853df3a891edbdb18cda7f9 ds000007 (2.0.0+3)
+>  138e6730193c0585a69b8baf5b9d7a4439e83ecc ds000008 (2.0.0+2)
+>  ddf3a4cf7ce51a01a664e6faff4b8334b8414b1f ds000009 (2.0.1+1)
+>  7fa73b4df8166dba950c7dc07c3f8cdd50fca313 ds000011 (1.0.0-5-g7fa73b4)
+> fatal: no submodule mapping found in .gitmodules for path 'ds000017
+>
+> which then stops without even looking at other submodules.
+>
+> I think it would be more logical to make it a 'warning:' not a 'fatal:' and
+> proceed.
 
-> On 2016-09-14, at 17:56, Jeff King <peff@peff.net> wrote:
->=20
-> On Wed, Sep 14, 2016 at 05:42:29PM -0700, Jonathon Mah wrote:
->=20
->> Hi git, I've been seeing git segfault over the past few days. I'm on =
-Mac OS X 10.12, 64-bit, compiling with clang (Apple LLVM version 8.0.0 =
-(clang-800.0.40)).
->> [...]
->> Bisect says:
->>=20
->> 8261e1f139db3f8aa6f9fd7d98c876cbeb0f927c is the first bad commit
->> commit 8261e1f139db3f8aa6f9fd7d98c876cbeb0f927c
->> Author: Jeff King <peff@peff.net>
->> Date:   Mon Aug 22 18:00:07 2016 -0400
->>=20
->>    delta_base_cache: use hashmap.h
->=20
-> Have you tried with the patch in:
->=20
->  =
-http://public-inbox.org/git/20160912164616.vg33kldazuthff3d@sigill.intra.p=
-eff.net/
->=20
-> ?
+So maybe we would want to introduce a switch
+  `--existing-but-unconfigure-gitlinks=(warn|ignore)`
+as well as
+`git config submodule.existing-but-unconfigured (warn|ignore)`
+for a more permanent solution?
 
-All the examples I've tried work when I use that. Thanks!
 
->> $ lldb /Users/jmah/Documents/Streams/git/git-log -- -u
->> (lldb) target create "/Users/jmah/Documents/Streams/git/git-log"
->> Current executable set to '/Users/jmah/Documents/Streams/git/git-log' =
-(x86_64).
->> (lldb) settings set -- target.run-args  "-u"
->> (lldb) process launch -o /dev/null
->> Process 92815 launched: '/Users/jmah/Documents/Streams/git/git-log' =
-(x86_64)
->> Process 92815 stopped
->> * thread #1: tid =3D 0x1c30677, 0x00000001001bba80 =
-git-log`release_delta_base_cache(ent=3D0xffffffffffffffd0) + 16 at =
-sha1_file.c:2171, queue =3D 'com.apple.main-thread', stop reason =3D =
-EXC_BAD_ACCESS (code=3D1, address=3D0x10)
->>    frame #0: 0x00000001001bba80 =
-git-log`release_delta_base_cache(ent=3D0xffffffffffffffd0) + 16 at =
-sha1_file.c:2171
->>   2168=09
->>   2169	static inline void release_delta_base_cache(struct =
-delta_base_cache_entry *ent)
->>   2170	{
->> -> 2171		free(ent->data);
->>   2172		detach_delta_base_cache_entry(ent);
->=20
-> The problems I saw with valgrind weren't here, but would explain this.
-> We free() the previous node, then walk forward from its "next" =
-pointer.
-> On my Linux box, that happens to work, but we could be feeding total
-> junk to the list pointer, which would meant ent->data is junk, and
-> free() notices.
->=20
-> -Peff
 
+>
+> Thank you for consideration
+> --
+> Yaroslav O. Halchenko
+> Center for Open Neuroscience     http://centerforopenneuroscience.org
+> Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
+> Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
+> WWW:   http://www.linkedin.com/in/yarik
