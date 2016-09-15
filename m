@@ -7,21 +7,21 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C44572070F
-	for <e@80x24.org>; Thu, 15 Sep 2016 15:00:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E158B2070F
+	for <e@80x24.org>; Thu, 15 Sep 2016 15:00:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752099AbcIOPAi (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Sep 2016 11:00:38 -0400
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:60151 "EHLO sapo.pt"
+        id S1752117AbcIOPAm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Sep 2016 11:00:42 -0400
+Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:60209 "EHLO sapo.pt"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1751613AbcIOPAh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Sep 2016 11:00:37 -0400
-Received: (qmail 26904 invoked from network); 15 Sep 2016 15:00:34 -0000
-Received: (qmail 17573 invoked from network); 15 Sep 2016 15:00:34 -0000
+        id S1751613AbcIOPAk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Sep 2016 11:00:40 -0400
+Received: (qmail 27082 invoked from network); 15 Sep 2016 15:00:37 -0000
+Received: (qmail 18608 invoked from network); 15 Sep 2016 15:00:37 -0000
 Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 15 Sep 2016 15:00:29 -0000
+          for <git@vger.kernel.org>; 15 Sep 2016 15:00:35 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -33,9 +33,9 @@ Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
         <avarab@gmail.com>,
         =?UTF-8?q?Jean-No=C3=ABl=20AVILA?= <jn.avila@free.fr>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 05/14] i18n: branch: mark option description for translation
-Date:   Thu, 15 Sep 2016 14:58:59 +0000
-Message-Id: <1473951548-31733-5-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH v3 06/14] i18n: config: mark error message for translation
+Date:   Thu, 15 Sep 2016 14:59:00 +0000
+Message-Id: <1473951548-31733-6-git-send-email-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1473951548-31733-1-git-send-email-vascomalmeida@sapo.pt>
 References: <1473951548-31733-1-git-send-email-vascomalmeida@sapo.pt>
@@ -48,22 +48,24 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- builtin/branch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/config.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 7df0543..d5d93a8 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -657,7 +657,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		OPT_SET_INT( 0, "set-upstream",  &track, N_("change upstream info"),
- 			BRANCH_TRACK_OVERRIDE),
- 		OPT_STRING('u', "set-upstream-to", &new_upstream, N_("upstream"), N_("change the upstream info")),
--		OPT_BOOL(0, "unset-upstream", &unset_upstream, "Unset the upstream info"),
-+		OPT_BOOL(0, "unset-upstream", &unset_upstream, N_("Unset the upstream info")),
- 		OPT__COLOR(&branch_use_color, N_("use colored output")),
- 		OPT_SET_INT('r', "remotes",     &filter.kind, N_("act on remote-tracking branches"),
- 			FILTER_REFS_REMOTES),
+diff --git a/builtin/config.c b/builtin/config.c
+index 6cbf733..05843a0 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -622,8 +622,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		value = normalize_value(argv[0], argv[1]);
+ 		ret = git_config_set_in_file_gently(given_config_source.file, argv[0], value);
+ 		if (ret == CONFIG_NOTHING_SET)
+-			error("cannot overwrite multiple values with a single value\n"
+-			"       Use a regexp, --add or --replace-all to change %s.", argv[0]);
++			error(_("cannot overwrite multiple values with a single value\n"
++			"       Use a regexp, --add or --replace-all to change %s."), argv[0]);
+ 		return ret;
+ 	}
+ 	else if (actions == ACTION_SET_ALL) {
 -- 
 2.7.4
 
