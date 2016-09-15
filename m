@@ -2,68 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 376642070F
-	for <e@80x24.org>; Thu, 15 Sep 2016 18:29:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B086B2070F
+	for <e@80x24.org>; Thu, 15 Sep 2016 18:31:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753259AbcIOS3H (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Sep 2016 14:29:07 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53539 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753295AbcIOS3F (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Sep 2016 14:29:05 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6FD233DF16;
-        Thu, 15 Sep 2016 14:29:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Wtz9fbAdg/Fl1Fk+cVbNMvGB6qs=; b=rV6Z0v
-        n4lX0/FX6pXFRc2BJDkRqMZ0H4JvRi30XYXkYZR/AV99p2dmNW+osszPKHqMFAAv
-        1Fhd4y2cFrveVEBvKESai1NCAOEsyzZBV3zl0EXZEZzC4o4Ujwu7LhpiyiVL95TP
-        gfQYXV3TKEdHF/hva0kW/7LlZDzxCcMArXV7o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=iDgWcXB6socg+quHkLhDR2MlnLkHe0K0
-        kUQpDEIz/V6qC2BhtloqxLTOoRzLk+WRn4EbyQ0/AQME6tYvdFKiPOcNVOvT4mVM
-        g6y8xtcgfvEvtK9sH9vu68yPbFSvOqfmyvim+Z5eYqoQZeT9OtczzhOloMyfRvB6
-        YqI6+rVyWC0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 695F93DF15;
-        Thu, 15 Sep 2016 14:29:03 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C42AF3DF13;
-        Thu, 15 Sep 2016 14:29:02 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Yaroslav Halchenko <yoh@onerussian.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [wishlist?] make submodule commands robust to having non-submodule Subprojects
-References: <20160915130233.GC9833@onerussian.com>
-        <CAGZ79kZLdsKcf0t=dDB24VVe+V=uqQCW_VNQwSJ638m5Keu2nQ@mail.gmail.com>
-        <xmqqwpidniry.fsf@gitster.mtv.corp.google.com>
-        <20160915181254.GN9830@onerussian.com>
-Date:   Thu, 15 Sep 2016 11:29:00 -0700
-In-Reply-To: <20160915181254.GN9830@onerussian.com> (Yaroslav Halchenko's
-        message of "Thu, 15 Sep 2016 14:12:54 -0400")
-Message-ID: <xmqqoa3pnhjn.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1752197AbcIOSbc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Sep 2016 14:31:32 -0400
+Received: from mout.web.de ([212.227.15.4]:53782 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751704AbcIOSba (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Sep 2016 14:31:30 -0400
+Received: from [192.168.178.36] ([79.213.113.239]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0Lym5H-1ayoXN1Nm3-0169DA; Thu, 15 Sep 2016 20:31:06
+ +0200
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] contrib/coccinelle: fix semantic patch for oid_to_hex_r()
+Message-ID: <423e8ce2-354b-3088-e051-ff44f53806cb@web.de>
+Date:   Thu, 15 Sep 2016 20:30:52 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 46F24DE4-7B72-11E6-8929-2D857A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:xzVBjcCFn3pE4mazfHbXvPQBrouo/JRUh/w2rAnlpKYf9VNAsYN
+ pvj8oRrG9ggFXfCSTUl6YfumYHIsa0zzjLNDxYs1MmOKvKXDYv8v71s6lWymK/vSDWtkhkr
+ 21R3jocxqCpqeBwOG2Vs4GhOGjgu/FMebydh+oG0RRu8l+1A3o9XdC33tlNF/JWR5wYgfwh
+ ES4b/9iOsj1cM8zUo+sjw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:v5Tjo0Ayu7s=:ktVgSCDCHL6LBmlp1D5RZm
+ 8CHQoWIckv/AQ62+Mebvu2w2qyKFQNtO+bwypXkcVw5cqs/TPWdbT+M2kcbqEqG+vxq4fhQ1B
+ ZZDzdLJmNBAZyzBcYykPVY4xxQU1rwC8/6zTzzfUUa/28djX/Esw8G68WqtUYdTEfvZaVKm/N
+ +foJvRbmJjjylFxPEo6c+e4CLkv6r1AISXTdP9sRM4KHxlDJN6mMaAtPihCwr1VYPhMTollp3
+ zr5sGcAdQngYMlzn8XbWp93YURB0TO3RUspkGo5WL4e+Hbq33PD5ZCzTgLK13Y0BLvYR01XXs
+ wradNRTz5w5Eah0qRDWN2fZNkn6scx7xCn91wUOSK5YRrt8dL0R4INtigw4C/3d9hW/zwe4IL
+ GjSP4har52D3b5JH7WMDzSiAVgKIuW1GNw7kEOlx0ZEH6BDuZivW8sVawkenYn32wCVO+C7Og
+ PxTzTAqCxLdT3wsWC57ONwCWebtEXKXOCVK7mzN0qyAOQZER+bp3z/hVXTnRDGV0Jq1Gpevte
+ 5SOZZ7ZyB7fxEaz6+H713L3o9sD1q6iHs9wph+nKn6/XBjP1qzv7y0yMz6/c6YdM/WukGQOWT
+ J+QnOsZ/0JDuft8eFHFKL0/MOfdeLOyyjvXSRwUv5FfsaqDB2EGSgzP39VLH95tvEfXqMQVyb
+ jQujvImzxYFKND5/tVr/khriwe8Z6d9mVPUjDrgazyslvgjK7Mb/K+sJrlKjaxDKEx//Zse/n
+ fxIuPcBPKcVAqoS1xei+zF1uM5+Lk0pEsR1yN+aA66f9auyM0vQARUHv0Ek6XV0+zYpvFxLCP
+ 5TYivdj
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Yaroslav Halchenko <yoh@onerussian.com> writes:
+Both sha1_to_hex_r() and oid_to_hex_r() take two parameters, so use two
+expressions in the semantic patch for transforming calls of the former
+to the latter one.
 
-> do you foresee any unpleasant side-effects from above manual editing
-> .gitmodules/submodule update --init ?
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ contrib/coccinelle/object_id.cocci | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-I do not think so; you essentially did what a canned command we
-should have had should have done by hand because of a lack of such a
-feature.
+diff --git a/contrib/coccinelle/object_id.cocci b/contrib/coccinelle/object_id.cocci
+index 8ccdbb5..0307624 100644
+--- a/contrib/coccinelle/object_id.cocci
++++ b/contrib/coccinelle/object_id.cocci
+@@ -23,16 +23,16 @@ expression E1;
+ + oid_to_hex(E1)
+ 
+ @@
+-expression E1;
++expression E1, E2;
+ @@
+-- sha1_to_hex_r(E1.hash)
+-+ oid_to_hex_r(&E1)
++- sha1_to_hex_r(E1, E2.hash)
+++ oid_to_hex_r(E1, &E2)
+ 
+ @@
+-expression E1;
++expression E1, E2;
+ @@
+-- sha1_to_hex_r(E1->hash)
+-+ oid_to_hex_r(E1)
++- sha1_to_hex_r(E1, E2->hash)
+++ oid_to_hex_r(E1, E2)
+ 
+ @@
+ expression E1;
+-- 
+2.10.0
+
