@@ -6,63 +6,64 @@ X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6886E2070F
-	for <e@80x24.org>; Thu, 15 Sep 2016 18:44:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0C9D2070F
+	for <e@80x24.org>; Thu, 15 Sep 2016 18:47:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752020AbcIOSo4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Sep 2016 14:44:56 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43821 "EHLO cloud.peff.net"
+        id S1753441AbcIOSrn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Sep 2016 14:47:43 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43829 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751334AbcIOSoy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Sep 2016 14:44:54 -0400
-Received: (qmail 21624 invoked by uid 109); 15 Sep 2016 18:44:53 -0000
+        id S1751098AbcIOSrm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Sep 2016 14:47:42 -0400
+Received: (qmail 21802 invoked by uid 109); 15 Sep 2016 18:47:41 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Sep 2016 18:44:53 +0000
-Received: (qmail 11047 invoked by uid 111); 15 Sep 2016 18:45:04 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Sep 2016 18:47:41 +0000
+Received: (qmail 11087 invoked by uid 111); 15 Sep 2016 18:47:52 -0000
 Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Sep 2016 14:45:04 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Sep 2016 11:44:48 -0700
-Date:   Thu, 15 Sep 2016 11:44:48 -0700
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Sep 2016 14:47:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Sep 2016 11:47:38 -0700
+Date:   Thu, 15 Sep 2016 11:47:38 -0700
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] use strbuf_addstr() for adding constant strings to a
- strbuf, part 2
-Message-ID: <20160915184448.awipvg2kmlq7weei@sigill.intra.peff.net>
-References: <f7294ac5-8302-03fb-d756-81a1c029a813@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] object: measure time needed for resolving hash collisions
+Message-ID: <20160915184737.2vcarwyhdp7xl3mg@sigill.intra.peff.net>
+References: <20160915020141.32000-1-sbeller@google.com>
+ <20160915064701.c4ishixuynbzpgwx@sigill.intra.peff.net>
+ <xmqq60pxoy4h.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f7294ac5-8302-03fb-d756-81a1c029a813@web.de>
+In-Reply-To: <xmqq60pxoy4h.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 15, 2016 at 08:31:00PM +0200, René Scharfe wrote:
+On Thu, Sep 15, 2016 at 10:45:34AM -0700, Junio C Hamano wrote:
 
-> Replace uses of strbuf_addf() for adding strings with more lightweight
-> strbuf_addstr() calls.  This makes the intent clearer and avoids
-> potential issues with printf format specifiers.
+> Jeff King <peff@peff.net> writes:
 > 
-> 02962d36845b89145cd69f8bc65e015d78ae3434 already converted six cases,
-> this patch covers eleven more.
+> > Measuring _just_ the collisions is more like the patch below. In my
+> > measurements it's more like 30ms, compared to 10s for all of the
+> > hashcmps.
+> >
+> > So we really aren't dealing with collisions, but rather just verifying
+> > that our hash landed at the right spot. And _any_ data structure is
+> > going to have to do that.
+> 
+> The reverse side of the coin may be if we can shrink the hashtable
+> smaller and load it more heavily without sacrificing performance by
+> making the necessary "have we landed at the right spot" check cheap
+> enough, I guess.
 
-Great, these all look obviously correct.
+I think that's where things like cuckoo hashing come into play. They
+didn't have any effect for us because we already keep the table very
+unloaded. But you could _probably_ increase the load factor without
+sacrificing performance using a more clever scheme.
 
-> A semantic patch for Coccinelle is included for easier checking for
-> new cases that might be introduced in the future.
-
-I think there was some discussion in brian's object_id patches about
-whether we wanted to carry Coccinelle transformations in the tree, but I
-don't remember the outcome. I don't have an opinion myself.
-
-> Silly question: Is there a natural language that uses percent signs
-> as letters or e.g. instead of commas? :)
-
-I don't know, but if they do, they'd better get used to escaping them.
-:)
+It's not clear to me that the current table size is a big problem,
+though. It might be hurting us with cache effects, but I think the only
+way we'd know is to measure.
 
 -Peff
