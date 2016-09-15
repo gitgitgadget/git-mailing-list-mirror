@@ -2,91 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D9952070F
-	for <e@80x24.org>; Thu, 15 Sep 2016 21:09:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5224A2070F
+	for <e@80x24.org>; Thu, 15 Sep 2016 21:12:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753360AbcIOVJD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Sep 2016 17:09:03 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54399 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752388AbcIOVJB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Sep 2016 17:09:01 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 832F53D7DC;
-        Thu, 15 Sep 2016 17:09:00 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=sXMlRV9CRpYIg2fF9zUxKEuJa4w=; b=Z4vCKa
-        yLHZdcEFV8dxJ+8Xowd2MBx9ERsHR0orptmMzUVHiVZhxSgfjcOkOw8RI4UQR5O3
-        qpGsi/gLszYLforc+vbEjj9mTwAqaulMkCzpKdMJ5i0a0PQvnQQf/9rAOTAbH5Nm
-        yEZxoDxzKrEHcNqxlC+lb1OZEwgH7cqLBAijs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=paskigZxVqV8lzN0/Vf/Ao1Uguq+qLhO
-        GaqfGC0y92C1v13VUexHHeHCoH/c3aaa5tClyJ28LHZQE0RexnYz3fRfpqIzO7KI
-        AgnFnDW7kgvndU8y8eDvUKcQ8vOsmU6ERzpgAmkBpZWLVLeD4L3RFj9mMKEegNYf
-        0ZHmow32/Gs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 767603D7DB;
-        Thu, 15 Sep 2016 17:09:00 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E11163D7DA;
-        Thu, 15 Sep 2016 17:08:59 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Heiko Voigt <hvoigt@hvoigt.net>
-Cc:     Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Jens Lehmann <Jens.Lehmann@web.de>,
-        Fredrik Gustafsson <iveqy@iveqy.com>,
-        Leandro Lucarella <leandro.lucarella@sociomantic.com>
-Subject: Re: [PATCH 3/2] batch check whether submodule needs pushing into one call
-References: <20160824173017.24782-1-sbeller@google.com>
-        <20160824183112.ceekegpzavnbybxp@sigill.intra.peff.net>
-        <xmqqh9aaot49.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kYOBqQ0FF4J-+KbefSD8HRrUeMqpO27m_jprhm93aB+LA@mail.gmail.com>
-        <20160824230115.jhmcr4r7wobj5ejb@sigill.intra.peff.net>
-        <20160914173124.GA7613@sandbox>
-        <xmqqwpiep10i.fsf@gitster.mtv.corp.google.com>
-        <20160915121044.GA96648@book.hvoigt.net>
-Date:   Thu, 15 Sep 2016 14:08:58 -0700
-In-Reply-To: <20160915121044.GA96648@book.hvoigt.net> (Heiko Voigt's message
-        of "Thu, 15 Sep 2016 14:10:44 +0200")
-Message-ID: <xmqq1t0kna51.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1753387AbcIOVMf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Sep 2016 17:12:35 -0400
+Received: from mail-it0-f54.google.com ([209.85.214.54]:35280 "EHLO
+        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752448AbcIOVMe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Sep 2016 17:12:34 -0400
+Received: by mail-it0-f54.google.com with SMTP id r192so2790586ita.0
+        for <git@vger.kernel.org>; Thu, 15 Sep 2016 14:12:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=h9vxI4tzvEHx2vWriisdd1SyqxXr3RtHCJRujbUm3ZQ=;
+        b=dDpQALvZIQT7EOymMEkhVtguGrHLoIVV+n9PnStrQhw5TFjmMazAFHmwzRp47d+weM
+         FN5QHYfB9t9FR/BrjRhdulpT+tm68G8u6qeF08HNDPq2AKyJo29MoC4wrPXl3cU0wKAN
+         o5XG5n9Et6oKzlCWRgbUdmY9uAsn/Ff24lYX8She6tNSC8uK3wJiT/E0iRwVcTA215g3
+         DALiudue1De5PqNi++eHauzVYN9bHbDD8SwrESnMR6UxjPrYKdt59WRJ2wZ3IX20UZu2
+         YTbElkszkFA+8zSi9G9E+U9WDFxDcwlDSkW4TFii/VQmaTxiGseDDkeJ2gt5+OyW7Vux
+         X7Nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=h9vxI4tzvEHx2vWriisdd1SyqxXr3RtHCJRujbUm3ZQ=;
+        b=K2wyn6xmH9AyziG5rIWDAwEBCHuGf3b6rbVPc2ApmdCQ5WtfYabw4guzo1ex8faWuG
+         qLBcvannGeymQrCCJwKAFNvNAorbPGRX7IOKGXL2xGyr58kHvtPt/LEe/4FojeAtp9W2
+         ojqiL3lKWcj4osqnMKal4NRCc1KqpoiRCNjtOw28Y6FN+ZVYWlBoy1t4/mR9xPLdT2Mm
+         0vj86iq36U8yK3FrMv4LkX5iM7wL4QMJZWqgfqNKi5RAQXroPWX0106yW0PaD/1gJ+Xh
+         EHuiyScJSTBxJxDGvEVhZN1cVeH7sWoDO9rWx3zPYXEDq5cVXjG/L52gYo4SzET4Sqqc
+         rymA==
+X-Gm-Message-State: AE9vXwMati+dLvvJpQfWkVx8295UkCiZd5VAT+q5xfiVy7yPDRziufZgKrvJAU8OzOxcK/QCHul8F+7TbgFwj7jm
+X-Received: by 10.36.120.76 with SMTP id p73mr1976644itc.23.1473973953139;
+ Thu, 15 Sep 2016 14:12:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9F50E142-7B88-11E6-9631-096F12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.107.173.98 with HTTP; Thu, 15 Sep 2016 14:12:32 -0700 (PDT)
+In-Reply-To: <20160915205109.12240-3-gitster@pobox.com>
+References: <xmqqzinbvk15.fsf@gitster.mtv.corp.google.com> <20160915205109.12240-1-gitster@pobox.com>
+ <20160915205109.12240-3-gitster@pobox.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 15 Sep 2016 14:12:32 -0700
+Message-ID: <CAGZ79kaCVZ-Z+XSYWK6YtkT8L=pDrDQE-pAyseHNf5w2NO5XMw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] SQUASH??? Undecided
+To:     Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Heiko Voigt <hvoigt@hvoigt.net> writes:
++ cc Brandon
 
->  	if (for_each_remote_ref_submodule(path, has_remote, NULL) > 0) {
->  		struct child_process cp = CHILD_PROCESS_INIT;
-> -		const char *argv[] = {"rev-list", NULL, "--not", "--remotes", "-n", "1" , NULL};
-> +
-> +		argv_array_push(&cp.args, "rev-list");
-> +		sha1_array_for_each_unique(hashes, append_hash_to_argv, &cp.args);
-> +		argv_array_pushl(&cp.args, "--not", "--remotes", "-n", "1" , NULL);
-> +
->  		struct strbuf buf = STRBUF_INIT;
->  		int needs_pushing = 0;
+On Thu, Sep 15, 2016 at 1:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> If we were to follow the convention to leave an optional string
+> variable to NULL, we'd need to do this on top.  I am not sure if it
+> is a good change, though.
 
-These two become decl-after-stmt; move your new lines a bit lower,
-perhaps?
+I think it is a good change.
 
-> -		argv[1] = sha1_to_hex(sha1);
-> -		cp.argv = argv;
->  		prepare_submodule_repo_env(&cp.env_array);
+Thanks,
+Stefan
 
-By the way, with the two new patches, 'pu' seems to start failing
-some tests, e.g. 5533 5404 5405.
-
+> ---
+>  builtin/ls-files.c | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+> index 6e78c71..687e475 100644
+> --- a/builtin/ls-files.c
+> +++ b/builtin/ls-files.c
+> @@ -29,7 +29,7 @@ static int show_valid_bit;
+>  static int line_terminator = '\n';
+>  static int debug_mode;
+>  static int show_eol;
+> -static const char *output_path_prefix = "";
+> +static const char *output_path_prefix;
+>  static int recurse_submodules;
+>
+>  static const char *prefix;
+> @@ -78,7 +78,7 @@ static void write_name(const char *name)
+>          * churn.
+>          */
+>         static struct strbuf full_name = STRBUF_INIT;
+> -       if (*output_path_prefix) {
+> +       if (output_path_prefix && *output_path_prefix) {
+>                 strbuf_reset(&full_name);
+>                 strbuf_addstr(&full_name, output_path_prefix);
+>                 strbuf_addstr(&full_name, name);
+> @@ -181,7 +181,8 @@ static void show_gitlink(const struct cache_entry *ce)
+>         argv_array_push(&cp.args, "ls-files");
+>         argv_array_push(&cp.args, "--recurse-submodules");
+>         argv_array_pushf(&cp.args, "--output-path-prefix=%s%s/",
+> -                        output_path_prefix, ce->name);
+> +                        output_path_prefix ? output_path_prefix : "",
+> +                        ce->name);
+>         cp.git_cmd = 1;
+>         cp.dir = ce->name;
+>         status = run_command(&cp);
+> --
+> 2.10.0-458-g97b4043
+>
