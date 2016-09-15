@@ -7,21 +7,21 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A3D32070F
-	for <e@80x24.org>; Thu, 15 Sep 2016 15:00:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 275FD2070F
+	for <e@80x24.org>; Thu, 15 Sep 2016 15:01:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752478AbcIOPAy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Sep 2016 11:00:54 -0400
-Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:60362 "EHLO sapo.pt"
+        id S1752564AbcIOPBB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Sep 2016 11:01:01 -0400
+Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:55844 "EHLO sapo.pt"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1752144AbcIOPAw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Sep 2016 11:00:52 -0400
-Received: (qmail 27525 invoked from network); 15 Sep 2016 15:00:50 -0000
-Received: (qmail 21797 invoked from network); 15 Sep 2016 15:00:50 -0000
+        id S1751757AbcIOPBA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Sep 2016 11:01:00 -0400
+Received: (qmail 18838 invoked from network); 15 Sep 2016 15:00:58 -0000
+Received: (qmail 23926 invoked from network); 15 Sep 2016 15:00:57 -0000
 Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 15 Sep 2016 15:00:45 -0000
+          for <git@vger.kernel.org>; 15 Sep 2016 15:00:55 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -33,9 +33,9 @@ Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
         <avarab@gmail.com>,
         =?UTF-8?q?Jean-No=C3=ABl=20AVILA?= <jn.avila@free.fr>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 09/14] i18n: notes: mark error messages for translation
-Date:   Thu, 15 Sep 2016 14:59:03 +0000
-Message-Id: <1473951548-31733-9-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH v3 11/14] i18n: receive-pack: mark messages for translation
+Date:   Thu, 15 Sep 2016 14:59:05 +0000
+Message-Id: <1473951548-31733-11-git-send-email-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1473951548-31733-1-git-send-email-vascomalmeida@sapo.pt>
 References: <1473951548-31733-1-git-send-email-vascomalmeida@sapo.pt>
@@ -46,69 +46,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Mark messages refuse_unconfigured_deny_msg and
+refuse_unconfigured_deny_delete_current_msg for translation.
+
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- builtin/notes.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ builtin/receive-pack.c | 58 ++++++++++++++++++++++----------------------------
+ 1 file changed, 25 insertions(+), 33 deletions(-)
 
-diff --git a/builtin/notes.c b/builtin/notes.c
-index f848b89..229ad6d 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -340,7 +340,9 @@ static struct notes_tree *init_notes_check(const char *subcommand,
- 
- 	ref = (flags & NOTES_INIT_WRITABLE) ? t->update_ref : t->ref;
- 	if (!starts_with(ref, "refs/notes/"))
--		die("Refusing to %s notes in %s (outside of refs/notes/)",
-+		/* TRANSLATORS: the first %s will be replaced by a
-+		   git notes command: 'add', 'merge', 'remove', etc.*/
-+		die(_("Refusing to %s notes in %s (outside of refs/notes/)"),
- 		    subcommand, ref);
- 	return t;
- }
-@@ -680,11 +682,11 @@ static int merge_abort(struct notes_merge_options *o)
- 	 */
- 
- 	if (delete_ref("NOTES_MERGE_PARTIAL", NULL, 0))
--		ret += error("Failed to delete ref NOTES_MERGE_PARTIAL");
-+		ret += error(_("Failed to delete ref NOTES_MERGE_PARTIAL"));
- 	if (delete_ref("NOTES_MERGE_REF", NULL, REF_NODEREF))
--		ret += error("Failed to delete ref NOTES_MERGE_REF");
-+		ret += error(_("Failed to delete ref NOTES_MERGE_REF"));
- 	if (notes_merge_abort(o))
--		ret += error("Failed to remove 'git notes merge' worktree");
-+		ret += error(_("Failed to remove 'git notes merge' worktree"));
- 	return ret;
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index f1ce05c..896b16f 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -781,47 +781,39 @@ static int is_ref_checked_out(const char *ref)
+ 	return !strcmp(head_name, ref);
  }
  
-@@ -704,11 +706,11 @@ static int merge_commit(struct notes_merge_options *o)
- 	 */
+-static char *refuse_unconfigured_deny_msg[] = {
+-	"By default, updating the current branch in a non-bare repository",
+-	"is denied, because it will make the index and work tree inconsistent",
+-	"with what you pushed, and will require 'git reset --hard' to match",
+-	"the work tree to HEAD.",
+-	"",
+-	"You can set 'receive.denyCurrentBranch' configuration variable to",
+-	"'ignore' or 'warn' in the remote repository to allow pushing into",
+-	"its current branch; however, this is not recommended unless you",
+-	"arranged to update its work tree to match what you pushed in some",
+-	"other way.",
+-	"",
+-	"To squelch this message and still keep the default behaviour, set",
+-	"'receive.denyCurrentBranch' configuration variable to 'refuse'."
+-};
++static char *refuse_unconfigured_deny_msg =
++	N_("By default, updating the current branch in a non-bare repository\n"
++	   "is denied, because it will make the index and work tree inconsistent\n"
++	   "with what you pushed, and will require 'git reset --hard' to match\n"
++	   "the work tree to HEAD.\n"
++	   "\n"
++	   "You can set 'receive.denyCurrentBranch' configuration variable to\n"
++	   "'ignore' or 'warn' in the remote repository to allow pushing into\n"
++	   "its current branch; however, this is not recommended unless you\n"
++	   "arranged to update its work tree to match what you pushed in some\n"
++	   "other way.\n"
++	   "\n"
++	   "To squelch this message and still keep the default behaviour, set\n"
++	   "'receive.denyCurrentBranch' configuration variable to 'refuse'.");
  
- 	if (get_sha1("NOTES_MERGE_PARTIAL", sha1))
--		die("Failed to read ref NOTES_MERGE_PARTIAL");
-+		die(_("Failed to read ref NOTES_MERGE_PARTIAL"));
- 	else if (!(partial = lookup_commit_reference(sha1)))
--		die("Could not find commit from NOTES_MERGE_PARTIAL.");
-+		die(_("Could not find commit from NOTES_MERGE_PARTIAL."));
- 	else if (parse_commit(partial))
--		die("Could not parse commit from NOTES_MERGE_PARTIAL.");
-+		die(_("Could not parse commit from NOTES_MERGE_PARTIAL."));
+ static void refuse_unconfigured_deny(void)
+ {
+-	int i;
+-	for (i = 0; i < ARRAY_SIZE(refuse_unconfigured_deny_msg); i++)
+-		rp_error("%s", refuse_unconfigured_deny_msg[i]);
++	rp_error("%s", _(refuse_unconfigured_deny_msg));
+ }
  
- 	if (partial->parents)
- 		hashcpy(parent_sha1, partial->parents->item->object.oid.hash);
-@@ -721,10 +723,10 @@ static int merge_commit(struct notes_merge_options *o)
- 	o->local_ref = local_ref_to_free =
- 		resolve_refdup("NOTES_MERGE_REF", 0, sha1, NULL);
- 	if (!o->local_ref)
--		die("Failed to resolve NOTES_MERGE_REF");
-+		die(_("Failed to resolve NOTES_MERGE_REF"));
+-static char *refuse_unconfigured_deny_delete_current_msg[] = {
+-	"By default, deleting the current branch is denied, because the next",
+-	"'git clone' won't result in any file checked out, causing confusion.",
+-	"",
+-	"You can set 'receive.denyDeleteCurrent' configuration variable to",
+-	"'warn' or 'ignore' in the remote repository to allow deleting the",
+-	"current branch, with or without a warning message.",
+-	"",
+-	"To squelch this message, you can set it to 'refuse'."
+-};
++static char *refuse_unconfigured_deny_delete_current_msg =
++	N_("By default, deleting the current branch is denied, because the next\n"
++	   "'git clone' won't result in any file checked out, causing confusion.\n"
++	   "\n"
++	   "You can set 'receive.denyDeleteCurrent' configuration variable to\n"
++	   "'warn' or 'ignore' in the remote repository to allow deleting the\n"
++	   "current branch, with or without a warning message.\n"
++	   "\n"
++	   "To squelch this message, you can set it to 'refuse'.");
  
- 	if (notes_merge_commit(o, t, partial, sha1))
--		die("Failed to finalize notes merge");
-+		die(_("Failed to finalize notes merge"));
+ static void refuse_unconfigured_deny_delete_current(void)
+ {
+-	int i;
+-	for (i = 0;
+-	     i < ARRAY_SIZE(refuse_unconfigured_deny_delete_current_msg);
+-	     i++)
+-		rp_error("%s", refuse_unconfigured_deny_delete_current_msg[i]);
++	rp_error("%s", _(refuse_unconfigured_deny_delete_current_msg));
+ }
  
- 	/* Reuse existing commit message in reflog message */
- 	memset(&pretty_ctx, 0, sizeof(pretty_ctx));
+ static int command_singleton_iterator(void *cb_data, unsigned char sha1[20]);
 -- 
 2.7.4
 
