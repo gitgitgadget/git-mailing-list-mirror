@@ -7,59 +7,58 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C38A2070F
-	for <e@80x24.org>; Thu, 15 Sep 2016 19:36:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7DF22070F
+	for <e@80x24.org>; Thu, 15 Sep 2016 19:36:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753409AbcIOTgA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Sep 2016 15:36:00 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:38717 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751627AbcIOTf6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Sep 2016 15:35:58 -0400
-Received: by mail-wm0-f43.google.com with SMTP id 1so2194135wmz.1
-        for <git@vger.kernel.org>; Thu, 15 Sep 2016 12:35:58 -0700 (PDT)
+        id S1753910AbcIOTgH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Sep 2016 15:36:07 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:35254 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751627AbcIOTgG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Sep 2016 15:36:06 -0400
+Received: by mail-wm0-f67.google.com with SMTP id 133so196650wmq.2
+        for <git@vger.kernel.org>; Thu, 15 Sep 2016 12:36:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=M19wCyl6huV/gReIBSwAx33bQEli2hnheMlhVxNNuDU=;
-        b=U1EPZBOJczi5XjImHsXDHZdeRXuOAe7Zl/2hMaqrAzKfEJBrvL2hg8+MnAtiVXb/Dy
-         ZHVbtM8SalultVh6ET6n8sOv8BQbOPSaaPMZKw4zGtHv/yTQ+vJeKYevBNLX8uREVdpr
-         q7N6SjKATt7KgYBcBiLtUMRU10uyRpXzUGMGe5z8aYYrT0kPuFWaTmDazmyXWZPir6PW
-         uqUUe5yqerDWHWDJjY3InOB48MZnE2CeZMjqTl6M+UMFksqobfXB33YIp/3Vi8XO0ui0
-         r1j0ORQiC8tcPjIOzxY47ED/yRYjn+Yy/AALIz3i0vlhmmLEJpe7zbKM0Hb2lFJbr2kB
-         aMEA==
+        bh=W9IZ1pgavxfieS+jTaJhPYyNK+WmqWwd2kinj6NNVHQ=;
+        b=wVqDM5XpmYcIzilKbilmEzbJLvXl7hnrLSRb1fchGYVsh5aWSba/i2J179fpdZEm8o
+         idOfaeIIapyoYlAWavVQ7xLyaHTt9kmnSSeD+s177KB6IUgq4mbPhmc/Q9OMlJxBPrbx
+         bw0/zyrzsIPupIDxzyB8VNzEHOWSedIfostIzfPYxTTDBXXjpIQP1rpkuvLIyQ30bbU0
+         c22blnzHi5mcKDkr95N4R570+KJ1UAeDGub1SZkifJUaFB/Q+4tItkN8ou9Pmi6cMp+V
+         GKNwMscgnTPO4X2AEFAfNB4cqfYDPyb078bQHyzZoCiGDPl/qWgL0bAPOlt2PQodXJPS
+         hQMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=M19wCyl6huV/gReIBSwAx33bQEli2hnheMlhVxNNuDU=;
-        b=K3pXZuwB4ojKGd3U5QuGXwMhNDYV0J8zh1qiPQY7xP+LrgoZjiXRJNaeT9bB4sciCQ
-         LyHElu2H1h0Z6ZrtiNFZgI9ycAWMRWaxEsHvk9QLoJNmQsrXz7LoJP8v6jyIpehGf4g/
-         /TaGJTFqo8qX8jwezPiGDQq+Mp8BtoSxNP6pYRHYjvGYUETSolPRfm9uKwOgUhQfsd9J
-         cyh8pnYLrQtsrDGAMYNk3LNyaTHMFalhUpSthMntEMBih4bKuRzTTpXNbUGIK/oWA6gH
-         HF+IkTbVti4CzYoPdoYZzK39sMHvtxUuQAwKXA5vvkZt69R1vVNogs2OKtUUBqru/Zg0
-         Nx1w==
-X-Gm-Message-State: AE9vXwNe0HAc3Qd5cuYDYJAKFLMFi3PrWX1Nst8epiSaAv3V0TMEFt64d9QGgQMl4yDAhQ==
-X-Received: by 10.194.39.5 with SMTP id l5mr9360671wjk.33.1473968157180;
-        Thu, 15 Sep 2016 12:35:57 -0700 (PDT)
+        bh=W9IZ1pgavxfieS+jTaJhPYyNK+WmqWwd2kinj6NNVHQ=;
+        b=SFsXJ7q2PjrRoxNkH81bUzIw89bEzSOmY0W1SbeIdujyq0wgVV7D9eKHQzYn7O8kWO
+         q6fb8SaqvDRAxQVQkj0SkHuHVnB+Q0xrNqJq6bYKPSCswLgFC+2OrSj1PMCFuLV9qUlT
+         c+SCsltPWkElTZZ7N6l4HBWY01Pn+H+Z2+Rg75rGzFrA0bpBlgO06cuLJ8qjiNlOq6e+
+         93CBR9sZHnwKxbpg1frVoE1P3iFUwcpa4Clai2yT0x5zcvUXYQYVmywFRYoPwMaXDHW8
+         zDgCgUNYi/08e4XKymmXHHubd9QzY4wlQ+HUVJjgDNXyjnRTvjRsIN/dbU+AwCGB7UGl
+         1Ecw==
+X-Gm-Message-State: AE9vXwNhlGZaC1F0ESa3zeGzXLrBXqjLRmPvoHQHliI9RqbNRcnis3kSmd6mZd8isqVt7A==
+X-Received: by 10.28.232.18 with SMTP id f18mr4536154wmh.51.1473968164658;
+        Thu, 15 Sep 2016 12:36:04 -0700 (PDT)
 Received: from slxbook4.fritz.box (p5DDB61FE.dip0.t-ipconnect.de. [93.219.97.254])
-        by smtp.gmail.com with ESMTPSA id b188sm3797450wmg.24.2016.09.15.12.35.54
+        by smtp.gmail.com with ESMTPSA id b188sm3797450wmg.24.2016.09.15.12.36.03
         (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 15 Sep 2016 12:35:56 -0700 (PDT)
+        Thu, 15 Sep 2016 12:36:04 -0700 (PDT)
 Content-Type: text/plain; charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v7 04/10] pkt-line: add packet_flush_gently()
+Subject: Re: [PATCH] pkt-line: mark a file-local symbol static
 From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqq37l3v2rk.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 15 Sep 2016 17:42:58 +0100
-Cc:     Git Mailing List <git@vger.kernel.org>, peff@peff.net,
-        sbeller@google.com, Johannes.Schindelin@gmx.de, jnareb@gmail.com,
-        mlbright@gmail.com, tboegi@web.de, jacob.keller@gmail.com
-Content-Transfer-Encoding: 7bit
-Message-Id: <385016D3-8298-4273-81E7-876CB25B2789@gmail.com>
-References: <20160908182132.50788-1-larsxschneider@gmail.com> <20160908182132.50788-5-larsxschneider@gmail.com> <xmqqinu0y9v1.fsf@gitster.mtv.corp.google.com> <B138B703-08A6-45C4-9D54-80F87C75356B@gmail.com> <xmqq37l3v2rk.fsf@gitster.mtv.corp.google.com>
-To:     Junio C Hamano <gitster@pobox.com>
+In-Reply-To: <6373d68b-574d-59f3-7b8d-60dd3a673806@ramsayjones.plus.com>
+Date:   Thu, 15 Sep 2016 17:46:09 +0100
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <86997B2A-EF9B-4DC2-84DE-785C1747B7CA@gmail.com>
+References: <6373d68b-574d-59f3-7b8d-60dd3a673806@ramsayjones.plus.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
 X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -67,53 +66,28 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-> On 13 Sep 2016, at 23:44, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> Lars Schneider <larsxschneider@gmail.com> writes:
-> 
->>> On 13 Sep 2016, at 00:30, Junio C Hamano <gitster@pobox.com> wrote:
->>> 
->>> larsxschneider@gmail.com writes:
->>> 
->>>> From: Lars Schneider <larsxschneider@gmail.com>
->>>> 
->>>> packet_flush() would die in case of a write error even though for some
->>>> callers an error would be acceptable. Add packet_flush_gently() which
->>>> writes a pkt-line flush packet and returns `0` for success and `-1` for
->>>> failure.
->>>> ...
->>>> +int packet_flush_gently(int fd)
->>>> +{
->>>> +	packet_trace("0000", 4, 1);
->>>> +	if (write_in_full(fd, "0000", 4) == 4)
->>>> +		return 0;
->>>> +	error("flush packet write failed");
->>>> +	return -1;
->>> 
->>> It is more idiomatic to do
->>> 
->>> 	return error(...);
->>> 
->>> but more importantly, does the caller even want an error message
->>> unconditionally printed here?
->>> 
->>> I suspect that it is a strong sign that the caller wants to be in
->>> control of when and what error message is produced; otherwise it
->>> wouldn't be calling the _gently() variant, no?
->> 
->> Agreed!
-> 
-> I am also OK with the current form, too.  Those who need to enhance
-> it to packet_flush_gently(int fd, int quiet) can come later.
+> On 14 Sep 2016, at 14:31, Ramsay Jones <ramsay@ramsayjones.plus.com> =
+wrote:
+>=20
+>=20
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+>=20
+> Hi Lars,
+>=20
+> If you need to re-roll your 'ls/filter-process' branch, could you
+> please squash this into the relevant patch; commit 2afd9b22
+> ("pkt-line: add packet_write_gently()", 08-09-2016).
+>=20
+> [...]
+> -int packet_write_gently(const int fd_out, const char *buf, size_t =
+size)
+> +static int packet_write_gently(const int fd_out, const char *buf, =
+size_t size)
+> {
+> 	static char packet_write_buffer[LARGE_PACKET_MAX];
 
-"caller wants to be in control [...] otherwise it wouldn't be calling 
-the _gently() variant" convinced me. I would like to change it like
-this:
+Done!
 
-	trace_printf_key(&trace_packet, "flush packet write failed");
-	return -1;
-
-Objections?
-
-Thanks,
-Lars
+Thank you,
+Lars=
