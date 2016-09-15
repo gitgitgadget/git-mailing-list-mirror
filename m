@@ -2,125 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C5802070F
-	for <e@80x24.org>; Thu, 15 Sep 2016 20:19:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 203822070F
+	for <e@80x24.org>; Thu, 15 Sep 2016 20:24:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754485AbcIOUTX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Sep 2016 16:19:23 -0400
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:37836 "EHLO
-        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751031AbcIOUTV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Sep 2016 16:19:21 -0400
-Received: by mail-wm0-f44.google.com with SMTP id k186so4306264wmd.0
-        for <git@vger.kernel.org>; Thu, 15 Sep 2016 13:19:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=5QqJqNfJBHNR6Pshg392ms2/8EEs+4oUFYOl70KA0RY=;
-        b=Bq2Ou/gK0wHqVEBvkm93YNK66NjV2hUqJbHNfO2rD4/ngfhkJoTdVDIlIvW6YNFHXd
-         x+GF60pFkHBREL0tzoWCpK+NI6868OtXvSG3OksguoBAcqdcqJFYOoV9gN6VnG/ptSXG
-         KUmJAtriFIplzAwdPwqXlGqW+UBLzy+pN77CmzBFgHinyJuFSeOj1erncOkmaloxBQEm
-         FRu7DO0ppsmjXc3qSBJiPow7ENGrz1HHy8nJYZJAzpB6H/E1bGnKRwKWd4ZGN3EJ4G3W
-         C8Rk/SYmHk3Yt6KAdcmYmDdnw0vKZ7pdqLtiBnSrUd9GNdl57g2480pNzKoNo+vW6X4k
-         M4jQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=5QqJqNfJBHNR6Pshg392ms2/8EEs+4oUFYOl70KA0RY=;
-        b=JOY6KMWXmpf96UCD3VGgrQbtG9rWOg17KolctDDpswPphVzoRSlNOKV+dkq1a2D5bL
-         lJOgWa6w7Xh1vw+vI54tdtSAz8PuYzkjwgAccT+HKBDlddY2T8Cf0h53tx2MfP5kjp99
-         CCB9daVcya/T8Mbe9tW0rYflng0rTkCCXRNxLNXv1AvbHSQQdQjOWon895hyBSLO809W
-         UwHT+WZ7dCu86bZFXsNilvFW8Iv4e83TjcXEep0bs5RybAPnE3lnDX2tSvS6yOPS45RQ
-         H51t74AMqP1+pcl4wqXO/PXylKhm0WvCtgJn1BUboGQo5BfGRPIPV/otEnsUC158QGWr
-         2ypA==
-X-Gm-Message-State: AE9vXwP0geZsJXffYiDDRIKnlmIhQD+XAnWd1MlY/jl88Tes5xhp8lW0ldWUe1eKjzzmzA==
-X-Received: by 10.28.135.129 with SMTP id j123mr4751215wmd.110.1473970760035;
-        Thu, 15 Sep 2016 13:19:20 -0700 (PDT)
-Received: from slxbook4.fritz.box (p5DDB61FE.dip0.t-ipconnect.de. [93.219.97.254])
-        by smtp.gmail.com with ESMTPSA id i195sm3981617wmg.14.2016.09.15.13.19.18
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 15 Sep 2016 13:19:19 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v7 04/10] pkt-line: add packet_flush_gently()
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20160915194443.x7zvkkryvworqcxt@sigill.intra.peff.net>
-Date:   Thu, 15 Sep 2016 22:19:19 +0200
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>, sbeller@google.com,
-        Johannes.Schindelin@gmx.de, jnareb@gmail.com, mlbright@gmail.com,
-        tboegi@web.de, jacob.keller@gmail.com
-Content-Transfer-Encoding: 7bit
-Message-Id: <744FA3D5-888A-4032-90C4-6BFC7D5D4010@gmail.com>
-References: <20160908182132.50788-1-larsxschneider@gmail.com> <20160908182132.50788-5-larsxschneider@gmail.com> <xmqqinu0y9v1.fsf@gitster.mtv.corp.google.com> <B138B703-08A6-45C4-9D54-80F87C75356B@gmail.com> <xmqq37l3v2rk.fsf@gitster.mtv.corp.google.com> <385016D3-8298-4273-81E7-876CB25B2789@gmail.com> <20160915194443.x7zvkkryvworqcxt@sigill.intra.peff.net>
-To:     Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3124)
+        id S1754545AbcIOUY1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Sep 2016 16:24:27 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63697 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754512AbcIOUY0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Sep 2016 16:24:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 20A1D3D215;
+        Thu, 15 Sep 2016 16:24:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=RRmKOaCjCgelwI4e1TBNe6yO8d0=; b=iqq8Bw
+        dIQyQWmH48LRlG4EDgQcZk37o3DHzEqSW+a8M1HSQaoG3XxOHHkyVVw2MBIqXxJd
+        KYpftqKb9S35XrWpvvpAhTDtBxP7lvwQvEWFMWTJY1Igun7sZUMJWlXWCODPI4PS
+        M0rcYCeSe4qcmZeRMdiDBe747LoJ/UxIAYeLU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=kiEMgGqg2sRh8w7BNKATxkfp5p97li4y
+        Bzfjm8n7RwAZGnosJrcxZfDIdyKLcmcgKgpzQ2obu/yHalI0WTqq0dlWJS20Gj3B
+        lOAfGqLU5N/rkT1ybvWch7WJLrRDptSzN6UbY7bYHurkEqhELRLCwtsShRR1019O
+        YXBcfipIslY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1987D3D214;
+        Thu, 15 Sep 2016 16:24:25 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9573D3D213;
+        Thu, 15 Sep 2016 16:24:24 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>, peff@peff.net,
+        sbeller@google.com, Johannes.Schindelin@gmx.de, jnareb@gmail.com,
+        mlbright@gmail.com, tboegi@web.de, jacob.keller@gmail.com
+Subject: Re: [PATCH v7 10/10] convert: add filter.<driver>.process option
+References: <20160908182132.50788-1-larsxschneider@gmail.com>
+        <20160908182132.50788-11-larsxschneider@gmail.com>
+        <xmqq8tuvx1sz.fsf@gitster.mtv.corp.google.com>
+        <928655D2-312B-4805-99DB-E73448232B9A@gmail.com>
+Date:   Thu, 15 Sep 2016 13:24:22 -0700
+In-Reply-To: <928655D2-312B-4805-99DB-E73448232B9A@gmail.com> (Lars
+        Schneider's message of "Thu, 15 Sep 2016 22:16:41 +0200")
+Message-ID: <xmqqpoo4nc7d.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 64B48FB2-7B82-11E6-9AF5-46717A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-> On 15 Sep 2016, at 21:44, Jeff King <peff@peff.net> wrote:
-> 
-> On Thu, Sep 15, 2016 at 05:42:58PM +0100, Lars Schneider wrote:
-> 
->>>>>> +int packet_flush_gently(int fd)
->>>>>> +{
->>>>>> +	packet_trace("0000", 4, 1);
->>>>>> +	if (write_in_full(fd, "0000", 4) == 4)
->>>>>> +		return 0;
->>>>>> +	error("flush packet write failed");
->>>>>> +	return -1;
->> [...]
->>>>> I suspect that it is a strong sign that the caller wants to be in
->>>>> control of when and what error message is produced; otherwise it
->>>>> wouldn't be calling the _gently() variant, no?
->>>> 
->>>> Agreed!
->>> 
->>> I am also OK with the current form, too.  Those who need to enhance
->>> it to packet_flush_gently(int fd, int quiet) can come later.
+>> On 13 Sep 2016, at 17:22, Junio C Hamano <gitster@pobox.com> wrote:
 >> 
->> "caller wants to be in control [...] otherwise it wouldn't be calling 
->> the _gently() variant" convinced me. I would like to change it like
->> this:
+>> larsxschneider@gmail.com writes:
 >> 
->> 	trace_printf_key(&trace_packet, "flush packet write failed");
->> 	return -1;
->> 
->> Objections?
-> 
-> I'm not sure that a trace makes sense, because it means that 99% of the
-> time we are silent. AFAICT, the question is not "sometimes the user
-> needs to see an error and sometimes not, and they should decide before
-> starting the program". It is "sometimes the caller will report the error
-> to the user as appropriate, and sometimes we need to do so". And only
-> the calling code knows which is which.
-> 
-> So the "right" pattern is either:
-> 
->  1. Return -1 and the caller is responsible for telling the user.
-> 
-> or
-> 
->  2. Return -1 and stuff the error into an error strbuf, so it can be
->     passed up the call chain easily (and callers do not have to come up
->     with their own wording).
-> 
-> But if all current callers would just call error() themselves anyway,
-> then it's OK to punt on this and let somebody else handle it later if
-> they add a new caller who wants different behavior (and that is what
-> Junio was saying above, I think).
+>>> diff --git a/contrib/long-running-filter/example.pl b/contrib/long-running-filter/example.pl
+>>> ...
+>>> +packet_write( "clean=true\n" );
+>>> +packet_write( "smudge=true\n" );
+>>
+>> These extra SP around the contents inside () pair look unfamiliar
+>> and somewhat strange to me, but as long as they are consistently
+>> done (and I think you are mostly being consistent), it is OK.
+>
+> Ups. I forgot to run PerlTidy here. I run PerlTidy with the flag 
+> "-pbp" (= Perl Best Practices). This seems to add no extra SP for
+> functions with one parameter (e.g. `foo("bar")`) and extra SP
+> for functions with multiple parameter (e.g. `foo( "bar", 1 )`).
+> Is this still OK?
 
-OK. I'll go with 1. then.
+Your choice.  I already said I do not care too much either way as
+long as you are consistent.
 
-Thanks,
-Lars
+If you prefer PerlTidy's PBP output over what you wrote, and if you
+are resending the patch anyway, then why not? ;-)
+
+> Does anyone have a "Git PerlTidy configuration"?
+
+Not me.
+
+Thanks.
