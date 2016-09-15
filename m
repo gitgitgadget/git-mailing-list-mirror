@@ -2,100 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-5.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E86A42070F
-	for <e@80x24.org>; Thu, 15 Sep 2016 15:01:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F2BFA20985
+	for <e@80x24.org>; Thu, 15 Sep 2016 15:26:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752785AbcIOPBU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Sep 2016 11:01:20 -0400
-Received: from relay5.ptmail.sapo.pt ([212.55.154.25]:48164 "EHLO sapo.pt"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1752577AbcIOPBT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Sep 2016 11:01:19 -0400
-Received: (qmail 10163 invoked from network); 15 Sep 2016 15:01:16 -0000
-Received: (qmail 26028 invoked from network); 15 Sep 2016 15:01:04 -0000
-Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
-          (envelope-sender <vascomalmeida@sapo.pt>)
-          by ptmail-mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 15 Sep 2016 15:01:02 -0000
-X-PTMail-RemoteIP: 85.246.157.91
-X-PTMail-AllowedSender-Action: 
-X-PTMail-Service: default
-From:   Vasco Almeida <vascomalmeida@sapo.pt>
-To:     git@vger.kernel.org
-Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20AVILA?= <jn.avila@free.fr>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 13/14] i18n: show-branch: mark plural strings for translation
-Date:   Thu, 15 Sep 2016 14:59:07 +0000
-Message-Id: <1473951548-31733-13-git-send-email-vascomalmeida@sapo.pt>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1473951548-31733-1-git-send-email-vascomalmeida@sapo.pt>
-References: <1473951548-31733-1-git-send-email-vascomalmeida@sapo.pt>
-In-Reply-To: <1473259758-11836-1-git-send-email-vascomalmeida@sapo.pt>
-References: <1473259758-11836-1-git-send-email-vascomalmeida@sapo.pt>
+        id S1752840AbcIOP0Z (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Sep 2016 11:26:25 -0400
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:35707 "EHLO
+        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750922AbcIOP0X (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Sep 2016 11:26:23 -0400
+Received: by mail-qk0-f173.google.com with SMTP id t7so56994535qkh.2
+        for <git@vger.kernel.org>; Thu, 15 Sep 2016 08:26:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=UMqh/oBxiAV5lCCkTIv4JngWWJTELrQ6lAfbOygfmbw=;
+        b=TnMSlO0EcSKd016g/sozIkfmYwTKgsEJCxbSvuDtdjIQI8Q921BzdXQECHqY7nWges
+         HaH/zav5LhMOFNLj08EIXAbs5ycfTGjuDV82Jecl5Nd30A8jK0aOzAZbR8db2u6D8fGI
+         4p6Pp31tmzY1rpq0HNSXl77CbT0lDTO9yBNBixu7D9u1MQtKYbyp3NWOvVCt9sLxj1cQ
+         jIGiJykVTuwkgKKlXCnJ+yfUmHmtHcWlWnxusaLZ2KJDEU5GWs1O58yeweap6JJn3JH3
+         i75taF1Hr9YG/5JUG2FRFKr9T/rpClNlZQk/epmW85qsID5D89B+AUKRSmyTUQ9DdB4j
+         HERQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=UMqh/oBxiAV5lCCkTIv4JngWWJTELrQ6lAfbOygfmbw=;
+        b=MrTyjY57bXEHnFaWE5H+jmR/dt0ZNaAOcae+jFKtzTYX1nMvA68tx03+c/HfvC0x0H
+         R/+7KKjM2ouRuq904g7kidUl6Tbzu1EeuuWYyHgvV9b8aMBI4QQ82wp77hE5z2TWI7Vq
+         PNyNrXuXU1XAJtiMwBY38MFjIfLUjpDta9Qe2OG1FqsLQdNGHc+5MVRpNz5CtvjkUmbH
+         Bz26iZzM8KnGi15wSnPOyF/+U15o9gEZKU+hGhePVUnevZot2H1J2+hsVCg09xgH9yFg
+         WzdoAT+HiFyx/Wf9nKVwfC9w4Q3i+fv+xqWMxV5jJl31vj+c8GiAIu4N98PYp8G8zQoc
+         32LA==
+X-Gm-Message-State: AE9vXwM+xIVKiO8sHNy8o9tTdKLbw/j1KrjUHe9a3ldGgU7Vz7mIxnqZbNPaS4tISSwDEdNtJlqf5hplJFjpcVAW
+X-Received: by 10.194.164.102 with SMTP id yp6mr8548730wjb.50.1473953182666;
+ Thu, 15 Sep 2016 08:26:22 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.28.69.25 with HTTP; Thu, 15 Sep 2016 08:26:22 -0700 (PDT)
+In-Reply-To: <20160915115752.GA37903@book.hvoigt.net>
+References: <1473897473-154528-1-git-send-email-bmwill@google.com> <20160915115752.GA37903@book.hvoigt.net>
+From:   Brandon Williams <bmwill@google.com>
+Date:   Thu, 15 Sep 2016 08:26:22 -0700
+Message-ID: <CAKoko1rtEydwbWoEq9MBW41qqa10Bm+x0d6zS+Bptk51RjMOMA@mail.gmail.com>
+Subject: Re: [RFC] extending pathspec support to submodules
+To:     Heiko Voigt <hvoigt@hvoigt.net>
+Cc:     git@vger.kernel.org, pclouds@gmail.com,
+        Jens Lehmann <jens.lehmann@web.de>,
+        Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark plural string for translation using Q_().
+On Thu, Sep 15, 2016 at 4:57 AM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
+>
+> The problem when you do that is that the child is not aware that it is
+> actually run as a submodule process. E.g.
+>
+>    git grep --recurse-submodules foobar -- sub/dir/a
+>
+> would report back matches in 'dir/a' instead of 'sub/dir/a'. From the
+> users perspective this will be confusing since she started the grep in
+> the superproject.
+>
+> So what I would suggest is that we make the childs aware of the fact
+> that they are called from a superproject by passing a prefix when
+> calling it. E.g. like this
+>
+>    git grep --submodule-prefix=sub foobar -- sub/dir/a
+>
+> Whether we pass the full or stripped path is now a matter of taste or
+> ease of implementation, since we could either preprend or strip it in
+> the child. But the important difference is that we have information
+> about the original path.
+>
+> Another approach could, of course, be to omit passing the prefix and
+> parse the output of the child and try to substitute, paths but that
+> seems quite error prone to me.
+>
+> Cheers Heiko
 
-Although we already know that the plural sentence is always used in the
-English source, other languages have complex plural rules they must
-comply according to the value of MAX_REVS.
+You're right that seems like the best course of action and it already falls
+inline with what I did with a first patch to ls-files to support submodules.
+In that patch I did exactly as you suggest and pass in the prefix to the
+submodule and make the child responsible for prepending the prefix to all of
+its output.  This way we can simply pass through the whole pathspec (as apposed
+to my original idea of stripping the prefix off the pathspec prior to passing
+it to the child...which can get complicated with wild characters) to the
+childprocess and when checking if a file matches the pathspec we can check if
+the prefix + file path matches.
 
-Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
----
- builtin/show-branch.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-index 5809371..623ca56 100644
---- a/builtin/show-branch.c
-+++ b/builtin/show-branch.c
-@@ -373,8 +373,9 @@ static int append_ref(const char *refname, const struct object_id *oid,
- 				return 0;
- 	}
- 	if (MAX_REVS <= ref_name_cnt) {
--		warning("ignoring %s; cannot handle more than %d refs",
--			refname, MAX_REVS);
-+		warning(Q_("ignoring %s; cannot handle more than %d ref",
-+			   "ignoring %s; cannot handle more than %d refs",
-+			   MAX_REVS), refname, MAX_REVS);
- 		return 0;
- 	}
- 	ref_name[ref_name_cnt++] = xstrdup(refname);
-@@ -731,8 +732,9 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 			die(_("--reflog option needs one branch name"));
- 
- 		if (MAX_REVS < reflog)
--			die("Only %d entries can be shown at one time.",
--			    MAX_REVS);
-+			die(Q_("only %d entry can be shown at one time.",
-+			       "only %d entries can be shown at one time.",
-+			       MAX_REVS), MAX_REVS);
- 		if (!dwim_ref(*av, strlen(*av), oid.hash, &ref))
- 			die(_("no such ref %s"), *av);
- 
-@@ -826,7 +828,9 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 		unsigned int flag = 1u << (num_rev + REV_SHIFT);
- 
- 		if (MAX_REVS <= num_rev)
--			die("cannot handle more than %d revs.", MAX_REVS);
-+			die(Q_("cannot handle more than %d rev.",
-+			       "cannot handle more than %d revs.",
-+			       MAX_REVS), MAX_REVS);
- 		if (get_sha1(ref_name[num_rev], revkey.hash))
- 			die(_("'%s' is not a valid ref."), ref_name[num_rev]);
- 		commit = lookup_commit_reference(revkey.hash);
--- 
-2.7.4
-
+-Brandon
