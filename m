@@ -2,84 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B94F22070F
-	for <e@80x24.org>; Thu, 15 Sep 2016 19:25:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C38A2070F
+	for <e@80x24.org>; Thu, 15 Sep 2016 19:36:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753409AbcIOTZs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Sep 2016 15:25:48 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64127 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752936AbcIOTZr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Sep 2016 15:25:47 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A02703C418;
-        Thu, 15 Sep 2016 15:25:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=tbSClzqPjOFK
-        l815Tb9ft62TA6E=; b=L8nG6y1C8EnRCJQ8kQUpKa3eUhFzxNmvf1pVOq1Qft0S
-        9qglwN52kP6Y0EZ070Kgbl7Y/T/5l1qA6AsixAoEX/kASOXnCwuNhdPieCdACA3i
-        Eg7sxP3kKO6r1rZJ1UdvjjU0VhDK5e8ovT8SDb1E4RBEnBzmGlNAjckSp+vyyIg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=HAGEHY
-        LjASzpx5wWbFFFGKOcAajfxeTfKf/K+DGZE379TbEb2cyvzfMknbW6AqqVJCcz/f
-        gZe6Xbs8r/wRVpaoJ8GCqr3rBhiQS2dxvkg8Jp9gcRQOGdbcKe6BDKsWvu9V5TKx
-        Zek8k4yQ5dR4M1U6ygVsZi2HFe7xZ2aA2ZNyU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 969CB3C416;
-        Thu, 15 Sep 2016 15:25:45 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 216823C415;
-        Thu, 15 Sep 2016 15:25:45 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] use strbuf_addstr() for adding constant strings to a strbuf, part 2
-References: <f7294ac5-8302-03fb-d756-81a1c029a813@web.de>
-        <20160915184448.awipvg2kmlq7weei@sigill.intra.peff.net>
-Date:   Thu, 15 Sep 2016 12:25:43 -0700
-In-Reply-To: <20160915184448.awipvg2kmlq7weei@sigill.intra.peff.net> (Jeff
-        King's message of "Thu, 15 Sep 2016 11:44:48 -0700")
-Message-ID: <xmqqbmzpnex4.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 32E53AB6-7B7A-11E6-958D-92D512518317-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        id S1753409AbcIOTgA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Sep 2016 15:36:00 -0400
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:38717 "EHLO
+        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751627AbcIOTf6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Sep 2016 15:35:58 -0400
+Received: by mail-wm0-f43.google.com with SMTP id 1so2194135wmz.1
+        for <git@vger.kernel.org>; Thu, 15 Sep 2016 12:35:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=M19wCyl6huV/gReIBSwAx33bQEli2hnheMlhVxNNuDU=;
+        b=U1EPZBOJczi5XjImHsXDHZdeRXuOAe7Zl/2hMaqrAzKfEJBrvL2hg8+MnAtiVXb/Dy
+         ZHVbtM8SalultVh6ET6n8sOv8BQbOPSaaPMZKw4zGtHv/yTQ+vJeKYevBNLX8uREVdpr
+         q7N6SjKATt7KgYBcBiLtUMRU10uyRpXzUGMGe5z8aYYrT0kPuFWaTmDazmyXWZPir6PW
+         uqUUe5yqerDWHWDJjY3InOB48MZnE2CeZMjqTl6M+UMFksqobfXB33YIp/3Vi8XO0ui0
+         r1j0ORQiC8tcPjIOzxY47ED/yRYjn+Yy/AALIz3i0vlhmmLEJpe7zbKM0Hb2lFJbr2kB
+         aMEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=M19wCyl6huV/gReIBSwAx33bQEli2hnheMlhVxNNuDU=;
+        b=K3pXZuwB4ojKGd3U5QuGXwMhNDYV0J8zh1qiPQY7xP+LrgoZjiXRJNaeT9bB4sciCQ
+         LyHElu2H1h0Z6ZrtiNFZgI9ycAWMRWaxEsHvk9QLoJNmQsrXz7LoJP8v6jyIpehGf4g/
+         /TaGJTFqo8qX8jwezPiGDQq+Mp8BtoSxNP6pYRHYjvGYUETSolPRfm9uKwOgUhQfsd9J
+         cyh8pnYLrQtsrDGAMYNk3LNyaTHMFalhUpSthMntEMBih4bKuRzTTpXNbUGIK/oWA6gH
+         HF+IkTbVti4CzYoPdoYZzK39sMHvtxUuQAwKXA5vvkZt69R1vVNogs2OKtUUBqru/Zg0
+         Nx1w==
+X-Gm-Message-State: AE9vXwNe0HAc3Qd5cuYDYJAKFLMFi3PrWX1Nst8epiSaAv3V0TMEFt64d9QGgQMl4yDAhQ==
+X-Received: by 10.194.39.5 with SMTP id l5mr9360671wjk.33.1473968157180;
+        Thu, 15 Sep 2016 12:35:57 -0700 (PDT)
+Received: from slxbook4.fritz.box (p5DDB61FE.dip0.t-ipconnect.de. [93.219.97.254])
+        by smtp.gmail.com with ESMTPSA id b188sm3797450wmg.24.2016.09.15.12.35.54
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 15 Sep 2016 12:35:56 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v7 04/10] pkt-line: add packet_flush_gently()
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqq37l3v2rk.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 15 Sep 2016 17:42:58 +0100
+Cc:     Git Mailing List <git@vger.kernel.org>, peff@peff.net,
+        sbeller@google.com, Johannes.Schindelin@gmx.de, jnareb@gmail.com,
+        mlbright@gmail.com, tboegi@web.de, jacob.keller@gmail.com
+Content-Transfer-Encoding: 7bit
+Message-Id: <385016D3-8298-4273-81E7-876CB25B2789@gmail.com>
+References: <20160908182132.50788-1-larsxschneider@gmail.com> <20160908182132.50788-5-larsxschneider@gmail.com> <xmqqinu0y9v1.fsf@gitster.mtv.corp.google.com> <B138B703-08A6-45C4-9D54-80F87C75356B@gmail.com> <xmqq37l3v2rk.fsf@gitster.mtv.corp.google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
-> On Thu, Sep 15, 2016 at 08:31:00PM +0200, Ren=C3=A9 Scharfe wrote:
->
->> Replace uses of strbuf_addf() for adding strings with more lightweight
->> strbuf_addstr() calls.  This makes the intent clearer and avoids
->> potential issues with printf format specifiers.
->>=20
->> 02962d36845b89145cd69f8bc65e015d78ae3434 already converted six cases,
->> this patch covers eleven more.
->
-> Great, these all look obviously correct.
+> On 13 Sep 2016, at 23:44, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> Lars Schneider <larsxschneider@gmail.com> writes:
+> 
+>>> On 13 Sep 2016, at 00:30, Junio C Hamano <gitster@pobox.com> wrote:
+>>> 
+>>> larsxschneider@gmail.com writes:
+>>> 
+>>>> From: Lars Schneider <larsxschneider@gmail.com>
+>>>> 
+>>>> packet_flush() would die in case of a write error even though for some
+>>>> callers an error would be acceptable. Add packet_flush_gently() which
+>>>> writes a pkt-line flush packet and returns `0` for success and `-1` for
+>>>> failure.
+>>>> ...
+>>>> +int packet_flush_gently(int fd)
+>>>> +{
+>>>> +	packet_trace("0000", 4, 1);
+>>>> +	if (write_in_full(fd, "0000", 4) == 4)
+>>>> +		return 0;
+>>>> +	error("flush packet write failed");
+>>>> +	return -1;
+>>> 
+>>> It is more idiomatic to do
+>>> 
+>>> 	return error(...);
+>>> 
+>>> but more importantly, does the caller even want an error message
+>>> unconditionally printed here?
+>>> 
+>>> I suspect that it is a strong sign that the caller wants to be in
+>>> control of when and what error message is produced; otherwise it
+>>> wouldn't be calling the _gently() variant, no?
+>> 
+>> Agreed!
+> 
+> I am also OK with the current form, too.  Those who need to enhance
+> it to packet_flush_gently(int fd, int quiet) can come later.
 
-Yes.
+"caller wants to be in control [...] otherwise it wouldn't be calling 
+the _gently() variant" convinced me. I would like to change it like
+this:
 
->> Silly question: Is there a natural language that uses percent signs
->> as letters or e.g. instead of commas? :)
->
-> I don't know, but if they do, they'd better get used to escaping them.
-> :)
+	trace_printf_key(&trace_packet, "flush packet write failed");
+	return -1;
 
-I do not know either, but I am curious where that question comes
-from.  I stared at this patch for a few minutes but couldn't guess.
+Objections?
+
+Thanks,
+Lars
