@@ -2,112 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B4AF2070F
-	for <e@80x24.org>; Thu, 15 Sep 2016 22:29:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56A502070F
+	for <e@80x24.org>; Thu, 15 Sep 2016 23:47:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757015AbcIOW24 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Sep 2016 18:28:56 -0400
-Received: from mail-io0-f176.google.com ([209.85.223.176]:32972 "EHLO
-        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757196AbcIOW2d (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Sep 2016 18:28:33 -0400
-Received: by mail-io0-f176.google.com with SMTP id r145so7002811ior.0
-        for <git@vger.kernel.org>; Thu, 15 Sep 2016 15:28:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=XYCzyCoMl8vwbXRDvOH0B2hU+4Agoweri5IoMGqfRJs=;
-        b=GWGP1ugL649y6Rip+Yrrz7C1kBN/SA7iWbPGwxFezThJipbaJDjYNBFIIhmZ+ocRZZ
-         3ciCkCraYYTnaBtrUk1q/EKoXEdP8buMqKRJVxs3DagxKKkjNMGENBP0IufSaQnCywSG
-         iIlc555nXiJ4jpHwlbDlcf3BBkD0l8QTXqDgqBKHlvjnzsBb2j37JlDiZJaYYBeJvA4M
-         KENtLRoigXRcGJcI7aQsUSJMGOlVQc62B3ROFfqboBdbcg2h1UcO6Uhx2/6BhcrhhKU9
-         wWg6oj2XDedJHNVxQLVRXJSs2kurlgxK6Su7aBHorEZp0u5wvSfNvxmjcVCQDs/jXnFN
-         jLBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=XYCzyCoMl8vwbXRDvOH0B2hU+4Agoweri5IoMGqfRJs=;
-        b=GU9w4rw2F5U/SSaOV4Txtapz3aSQwSe+BEmF/+sFyF9RHTqsbaK3l0pvVn2P+LriIa
-         ZM3gMQHBOYQA3OKgSTjCe1FU5sir2gUfGrDYvcdoBRcZHXYxnA6TxgxNmTmw+evtBYSF
-         jiHKNcaq0w8VreoJzcZGf7fLYUg5WcLrYYHrRC48NqPeK4GjvTzPjpFWMVURSSJJ08NY
-         HfwHc/hj7STFDkiuyGSxUWzC2mk571CfRsXeKQ+qm8vVJTXWL2mSN3MO00Eqpx4QVtMy
-         OQ84RvbbpmO2lt2nECcw1ri1bQ/N+T6L0geZloPII3IWYRJrkXG3OadS6ZdWyD/lfDWx
-         hfaQ==
-X-Gm-Message-State: AE9vXwM9/QqTrDaB+Iq33NjO8W7ZhheSPBv9WiNOjFQI0kzs9khNRxLldbfLuGBCNV2mdqRUQqM+MAE3tmA7R8pb
-X-Received: by 10.107.180.11 with SMTP id d11mr4015679iof.203.1473978501685;
- Thu, 15 Sep 2016 15:28:21 -0700 (PDT)
+        id S1756944AbcIOXrj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Sep 2016 19:47:39 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:45952 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752117AbcIOXrh (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 15 Sep 2016 19:47:37 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id EBE09280A6;
+        Thu, 15 Sep 2016 23:47:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1473983254;
+        bh=pRoTZIjIZcszArH6AZ97tyxQRXNwVzZTd2dcQu1sTDo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=APcm84sk6I/Cvcd1jm9Vwj+7lHl42XsKlT/DJ2s8F7bMekm+Sbvx7WkSGMlxNQ8Lk
+         Xf8MHc/cZmqyFe7FY3L+UKYTVlT5Z9LYFyk+AMost1iFg7wsoFaIBONrQ/27hx4O6H
+         pOB2CgdKxc7EpNorjhFy3HyrCESrxVSOtrz+EiN5EJTD6OcNZeRouYCSHHPyM35cK7
+         SxiWqGoWPnwG+DOIhkLzSt2QWmYcCUb58/VE87RnZvjWT3ZdWrHXoZ/lbyj9XKfPIW
+         XVj2tAyJ3vS2OLI19HhL1k/4aQ3H2NRzoO1KSRDDKEPn6lhEBL9gZaYzs5fgvaHsY7
+         0y462HhHip/MnjcZaAPUcT/JdRCU8vwtql0tNHwFZEFHFJ+y/RE/DKSv6Ed8PWc6lz
+         tk6h3VPqfDChy776nw71kUjkCB6VzmZNimwR91i+2BeiFsOsBeGmFSgwa3wpsmFKY2
+         Mu3iSS872WlNwvLJ7yn0bWZkjR9uul74HWJcNw8ty74JYwW7ANZ
+Date:   Thu, 15 Sep 2016 23:47:31 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] use strbuf_addstr() for adding constant strings to a
+ strbuf, part 2
+Message-ID: <20160915234731.3oqd6x7zxtcxuk3h@vauxhall.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
+References: <f7294ac5-8302-03fb-d756-81a1c029a813@web.de>
 MIME-Version: 1.0
-Received: by 10.107.173.98 with HTTP; Thu, 15 Sep 2016 15:28:21 -0700 (PDT)
-In-Reply-To: <xmqqr38klst6.fsf@gitster.mtv.corp.google.com>
-References: <1473897473-154528-1-git-send-email-bmwill@google.com>
- <20160915115752.GA37903@book.hvoigt.net> <CAKoko1rtEydwbWoEq9MBW41qqa10Bm+x0d6zS+Bptk51RjMOMA@mail.gmail.com>
- <xmqqr38klst6.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 15 Sep 2016 15:28:21 -0700
-Message-ID: <CAGZ79kZJUQhY_bEi1G3zMYR2iGq5gosfVsBP_CFoaMydXP6QUw@mail.gmail.com>
-Subject: Re: [RFC] extending pathspec support to submodules
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Heiko Voigt <hvoigt@hvoigt.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Jens Lehmann <jens.lehmann@web.de>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="prtrbuga2bw47tes"
+Content-Disposition: inline
+In-Reply-To: <f7294ac5-8302-03fb-d756-81a1c029a813@web.de>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.7.0-1-amd64)
+User-Agent: NeoMutt/20160910 (1.7.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 15, 2016 at 3:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Brandon Williams <bmwill@google.com> writes:
->
->> You're right that seems like the best course of action and it already falls
->> inline with what I did with a first patch to ls-files to support submodules.
->> In that patch I did exactly as you suggest and pass in the prefix to the
->> submodule and make the child responsible for prepending the prefix to all of
->> its output.  This way we can simply pass through the whole pathspec (as apposed
->> to my original idea of stripping the prefix off the pathspec prior to passing
->> it to the child...which can get complicated with wild characters) to the
->> childprocess and when checking if a file matches the pathspec we can check if
->> the prefix + file path matches.
->
-> That's brilliant.  A few observations.
->
->  * With that change to tell the command that is spawned in a
->    submodule directory where the submodule repository is in the
->    context of the top-level superproject _and_ require it to take a
->    pathspec as relative to the top-level superproject, you no longer
->    worry about having to find where to cut the pathspec given at the
->    top-level to adjust it for the submodule's context.  That may
->    simplify things.
 
-I wonder how this plays together with the prefix in the superproject, e.g.
+--prtrbuga2bw47tes
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-    cd super/unrelated-path
-    # when invoking a git command the internal prefix is "unrelated-path/"
-    git ls-files ../submodule-*
-    # a submodule in submodule-A would be run in  submodule-A
-    # with a superproject prefix of super/ ? but additionally we nned
-to know we're
-    # not at the root of the superproject.
+On Thu, Sep 15, 2016 at 08:31:00PM +0200, Ren=C3=A9 Scharfe wrote:
+> Replace uses of strbuf_addf() for adding strings with more lightweight
+> strbuf_addstr() calls.  This makes the intent clearer and avoids
+> potential issues with printf format specifiers.
+>=20
+> 02962d36845b89145cd69f8bc65e015d78ae3434 already converted six cases,
+> this patch covers eleven more.
+>=20
+> A semantic patch for Coccinelle is included for easier checking for
+> new cases that might be introduced in the future.
 
->    So we may have to rethink what this option name should be.  "You
->    are running in a repository that is used as a submodule in a
->    larger context, which has the submodule at this path" is what the
->    option tells the command; if any existing command already has
->    such an option, we should use it.  If we are inventing one,
->    perhaps "--submodule-path" (I didn't check if there are existing
->    options that sound similar to it and mean completely different
->    things, in which case that name is not usable)?
+I think all three of these patches look good.  I'm glad to see us
+getting better use out of Coccinelle.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
-Would it make sense to add the '--submodule-path' to a more generic
-part of the code? It's not just ls-files/grep that have to solve exactly this
-problem. Up to now we just did not go for those commands, though.
+--prtrbuga2bw47tes
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.15 (GNU/Linux)
+
+iQIcBAABCgAGBQJX2zMSAAoJEL9TXYEfUvaLXnMQAItKICiSGibjLNw84Iyr10Ji
+DzTn2S2+8nxe5d8q2D6moDaeQ3z0QH5RS0HfAQpLzAL0rYgF0xnzjyd8fRytlDj9
+bg7wRaUGF5tLlC/aOnte2At3oSvbMkG3wgNWz5ZhLwqvimaHC02c1jq9e374kNb6
+WavPlJuimZVfWb23kaiWPtblFf93DVFfxlj/9tzSUO5dEDJFwgDwa8d9ZF5FR/Pu
+OTU0TDdbE6ExtnAlJLVPV2nQ0T32xmE9DjV5m9EqZ3yuBg/NgdqC1J1H1SC4fFkn
+CvxIo5VrWSJnjRONvMxbVZ7dm3ePsBnQyAMmlYD9OXn4DpoNiSW4azw1thmkXojU
+JxzzE0A2BSDvdvbvDRhiuh0/aLfGDYPERgE7V2oiemcYv7VHawZDGz6ULWkA6eaU
+BVmQurYccgD/FsvyFjrD5PjWWY/KdEImJTlXACOK6bdmBVPHlcsvA/c4JV7niJNA
+yadOsfoA0qCk2/oy645GegnAa8hyfTNBnIegnmX3NfQWbKrrflj38IQ48Ikxcend
+8rioiz7GE2kBKlsSWHNSSvf5I8yPk218oC1oaW1MGAcCHAxGZ+y4kwuHaZoGFcrl
+KiAq3RrI4oFmW6iRN4tV1a2YAw05EX6d81unnpgt+lLdES8Tz7enVevGy6iRR13b
+VDvuhCsFzEyJK+1PbMDn
+=KR/w
+-----END PGP SIGNATURE-----
+
+--prtrbuga2bw47tes--
