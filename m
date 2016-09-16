@@ -2,104 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DCD1207DF
-	for <e@80x24.org>; Fri, 16 Sep 2016 17:27:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5087F207DF
+	for <e@80x24.org>; Fri, 16 Sep 2016 17:35:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965105AbcIPR1w (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Sep 2016 13:27:52 -0400
-Received: from relay3-d.mail.gandi.net ([217.70.183.195]:48642 "EHLO
-        relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933711AbcIPR1u (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Sep 2016 13:27:50 -0400
-Received: from x (unknown [IPv6:2620:15c:f:fd00:c069:9ab4:c274:dfa7])
-        (Authenticated sender: josh@joshtriplett.org)
-        by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 40D7EA80D0;
-        Fri, 16 Sep 2016 19:27:46 +0200 (CEST)
-Date:   Fri, 16 Sep 2016 10:27:45 -0700
-From:   Josh Triplett <josh@joshtriplett.org>
-To:     git@vger.kernel.org
-Cc:     Andrew Donnellan <andrew.donnellan@au1.ibm.com>
-Subject: [PATCH] format-patch: Add --rfc for the common case of [RFC PATCH]
-Message-ID: <28c5d2c59851279858df22e844c6ff7c09f33199.1474046573.git-series.josh@joshtriplett.org>
+        id S1756293AbcIPRfv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Sep 2016 13:35:51 -0400
+Received: from mail-yw0-f177.google.com ([209.85.161.177]:34284 "EHLO
+        mail-yw0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753154AbcIPRfu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Sep 2016 13:35:50 -0400
+Received: by mail-yw0-f177.google.com with SMTP id g192so93440553ywh.1
+        for <git@vger.kernel.org>; Fri, 16 Sep 2016 10:34:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=k4X0ieaecwXrg0FQg1ybblMX2/baCQyWMCdoqErh4wk=;
+        b=QooqgcFtcw9pOZljHKwzo3IDNTCOael3v19ONkvuNjvYb98poyxX9d6n8LSqp7J3nv
+         m3mMzUe4cWcQArUfAoTerV/IWVyqJLijPBy3P1OlCIMsQKa/Fuhp39dpvcdr+DcnBmuO
+         VVS+hOpnKH8gNUZ/2bilHsqNTeWrfInBPxBlHhi12Rhp9AX6+wloHelnKhajMQSGSs4j
+         vQODVPsleIEzGRxjkDkrKE9kJJHQuljHtEc3emX7yLbk9y/sHTd5y/hrIQ+ATyKWYfAe
+         MOPR5e3iLf3AFNdIdE4oU3ubSRWe6Ktye3Ly+or2Dkf1+ZUSm7AvW55cUsAPLhiWOgD6
+         xvbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=k4X0ieaecwXrg0FQg1ybblMX2/baCQyWMCdoqErh4wk=;
+        b=PnkNZBIgZapOrTZrvn8Qy77+G1UAcv09e43pDAWrgE4hyZvZSO8aMm+L+ViBp7w9oA
+         1S+C1/H3qRyTLGIgFcmIJHyXqjbZNsOYvOhaRPStwYeFS2vE+Tnks6ddyHSizu9F4Czl
+         b+hQEWVLxtQS+EzfnxCLgHiU4rPsN8Mbt1LtOC2bSf+BeFDt6N3DvnIbQZGsa2gutLEb
+         YJPE9FNkVQebUrLD3Bg8KRrEFXYrtbrmETJCmrcEhr/Ng7SlhZARcZF1NsQilXCkXvT8
+         6WpTqSUvqLRPlM2QJNeJDM8jgDbfQU11mlex3cVZAODAfSDoWLqTAtBUfJPDNiy1Wj47
+         Y6DQ==
+X-Gm-Message-State: AE9vXwOcPUN27CM/dx/K7dO3o4EtxJ00RSAoKyuqXWq2+eRZCKcSN2L4RZ7qi/ZrFlZv9m+Ts79hce4mn7pdKg==
+X-Received: by 10.129.76.6 with SMTP id z6mr15203082ywa.257.1474047288497;
+ Fri, 16 Sep 2016 10:34:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: NeoMutt/20160910 (1.7.0)
+Received: by 10.37.96.195 with HTTP; Fri, 16 Sep 2016 10:34:28 -0700 (PDT)
+In-Reply-To: <28c5d2c59851279858df22e844c6ff7c09f33199.1474046573.git-series.josh@joshtriplett.org>
+References: <28c5d2c59851279858df22e844c6ff7c09f33199.1474046573.git-series.josh@joshtriplett.org>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Fri, 16 Sep 2016 10:34:28 -0700
+Message-ID: <CA+P7+xo5vijUhWvoM4q_sW5Ps4rii7=wFBREP-Q_bn+mBTbCiw@mail.gmail.com>
+Subject: Re: [PATCH] format-patch: Add --rfc for the common case of [RFC PATCH]
+To:     Josh Triplett <josh@joshtriplett.org>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Andrew Donnellan <andrew.donnellan@au1.ibm.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This provides a shorter and more convenient alias for
---subject-prefix='RFC PATCH'.
+On Fri, Sep 16, 2016 at 10:27 AM, Josh Triplett <josh@joshtriplett.org> wrote:
+> This provides a shorter and more convenient alias for
+> --subject-prefix='RFC PATCH'.
+>
+> Add a test covering --rfc.
+>
+> Signed-off-by: Josh Triplett <josh@joshtriplett.org>
+> ---
+>
+> By far, the most common subject-prefix I've seen other than "PATCH" is
+> "RFC PATCH" (or occasionally "PATCH RFC").  Seems worth optimizing for
+> the common case, to avoid having to spell it out the long way as
+> --subject-prefix='RFC PATCH'.
+>
 
-Add a test covering --rfc.
+I agree!
 
-Signed-off-by: Josh Triplett <josh@joshtriplett.org>
----
-
-By far, the most common subject-prefix I've seen other than "PATCH" is
-"RFC PATCH" (or occasionally "PATCH RFC").  Seems worth optimizing for
-the common case, to avoid having to spell it out the long way as
---subject-prefix='RFC PATCH'.
-
- builtin/log.c           | 10 ++++++++++
- t/t4014-format-patch.sh |  9 +++++++++
- 2 files changed, 19 insertions(+), 0 deletions(-)
-
-diff --git a/builtin/log.c b/builtin/log.c
-index 92dc34d..48d6a38 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1112,6 +1112,13 @@ static int subject_prefix_callback(const struct option *opt, const char *arg,
- 	return 0;
- }
- 
-+static int rfc_callback(const struct option *opt, const char *arg, int unset)
-+{
-+	subject_prefix = 1;
-+	((struct rev_info *)opt->value)->subject_prefix = xstrdup("RFC PATCH");
-+	return 0;
-+}
-+
- static int numbered_cmdline_opt = 0;
- 
- static int numbered_callback(const struct option *opt, const char *arg,
-@@ -1419,6 +1426,9 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			    N_("start numbering patches at <n> instead of 1")),
- 		OPT_INTEGER('v', "reroll-count", &reroll_count,
- 			    N_("mark the series as Nth re-roll")),
-+		{ OPTION_CALLBACK, 0, "rfc", &rev, NULL,
-+			    N_("Use [RFC PATCH] instead of [PATCH]"),
-+			    PARSE_OPT_NOARG | PARSE_OPT_NONEG, rfc_callback },
- 		{ OPTION_CALLBACK, 0, "subject-prefix", &rev, N_("prefix"),
- 			    N_("Use [<prefix>] instead of [PATCH]"),
- 			    PARSE_OPT_NONEG, subject_prefix_callback },
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index b0579dd..81b0498 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -1073,6 +1073,15 @@ test_expect_success 'empty subject prefix does not have extra space' '
- 	test_cmp expect actual
- '
- 
-+cat >expect <<'EOF'
-+Subject: [RFC PATCH 1/1] header with . in it
-+EOF
-+test_expect_success '--rfc' '
-+	git format-patch -n -1 --stdout --rfc >patch &&
-+	grep ^Subject: patch >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success '--from=ident notices bogus ident' '
- 	test_must_fail git format-patch -1 --stdout --from=foo >patch
- '
-
-base-commit: 6ebdac1bab966b720d776aa43ca188fe378b1f4b
--- 
-git-series 0.8.10
+Thanks,
+Jake
