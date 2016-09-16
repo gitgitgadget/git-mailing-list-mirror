@@ -2,121 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 931671FCA9
-	for <e@80x24.org>; Fri, 16 Sep 2016 07:33:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F8651FCA9
+	for <e@80x24.org>; Fri, 16 Sep 2016 09:35:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757143AbcIPHdL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Sep 2016 03:33:11 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:49195 "EHLO mx2.imag.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756931AbcIPHdK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Sep 2016 03:33:10 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-        by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u8G7X2Nn015017
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-        Fri, 16 Sep 2016 09:33:02 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.42.32])
-        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u8G7X3hw003583;
-        Fri, 16 Sep 2016 09:33:03 +0200
-From:   Matthieu Moy <Matthieu.Moy@imag.fr>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Anatoly Borodin <anatoly.borodin@gmail.com>,
-        Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] Documentation/config: default for color.* is color.ui
-Date:   Fri, 16 Sep 2016 09:32:48 +0200
-Message-Id: <20160916073248.30285-1-Matthieu.Moy@imag.fr>
-X-Mailer: git-send-email 2.10.0.rc0.1.g07c9292
-In-Reply-To: <nrfihd@blaine.gmane.org>
-References: <nrfihd@blaine.gmane.org>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Fri, 16 Sep 2016 09:33:03 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u8G7X2Nn015017
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@imag.fr
-MailScanner-NULL-Check: 1474615984.20272@77rLB2haDAGSr2pAI3V+rQ
+        id S1757285AbcIPJfE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Sep 2016 05:35:04 -0400
+Received: from smtprelay01.ispgateway.de ([80.67.29.23]:38919 "EHLO
+        smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757104AbcIPJfD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Sep 2016 05:35:03 -0400
+Received: from [84.46.92.130] (helo=book.hvoigt.net)
+        by smtprelay01.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.84)
+        (envelope-from <hvoigt@hvoigt.net>)
+        id 1bkpXu-0002XR-Nq; Fri, 16 Sep 2016 11:34:58 +0200
+Date:   Fri, 16 Sep 2016 11:34:57 +0200
+From:   Heiko Voigt <hvoigt@hvoigt.net>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Jens Lehmann <jens.lehmann@web.de>
+Subject: Re: [RFC] extending pathspec support to submodules
+Message-ID: <20160916093456.GA1488@book.hvoigt.net>
+References: <1473897473-154528-1-git-send-email-bmwill@google.com>
+ <20160915115752.GA37903@book.hvoigt.net>
+ <CAKoko1rtEydwbWoEq9MBW41qqa10Bm+x0d6zS+Bptk51RjMOMA@mail.gmail.com>
+ <xmqqr38klst6.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kZJUQhY_bEi1G3zMYR2iGq5gosfVsBP_CFoaMydXP6QUw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kZJUQhY_bEi1G3zMYR2iGq5gosfVsBP_CFoaMydXP6QUw@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since 4c7f181 (make color.ui default to 'auto', 2013-06-10), the
-default for color.* when nothing is set is 'auto' and we still claimed
-that the default was 'false'. Be more precise by saying explicitly
-that the default is to follow color.ui, and recall that the default is
-'auto' to avoid one indirection for the reader.
+Hi,
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- Documentation/config.txt | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+On Thu, Sep 15, 2016 at 03:28:21PM -0700, Stefan Beller wrote:
+> On Thu, Sep 15, 2016 at 3:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> > Brandon Williams <bmwill@google.com> writes:
+> >
+> >> You're right that seems like the best course of action and it already falls
+> >> inline with what I did with a first patch to ls-files to support submodules.
+> >> In that patch I did exactly as you suggest and pass in the prefix to the
+> >> submodule and make the child responsible for prepending the prefix to all of
+> >> its output.  This way we can simply pass through the whole pathspec (as apposed
+> >> to my original idea of stripping the prefix off the pathspec prior to passing
+> >> it to the child...which can get complicated with wild characters) to the
+> >> childprocess and when checking if a file matches the pathspec we can check if
+> >> the prefix + file path matches.
+> >
+> > That's brilliant.  A few observations.
+> >
+> >  * With that change to tell the command that is spawned in a
+> >    submodule directory where the submodule repository is in the
+> >    context of the top-level superproject _and_ require it to take a
+> >    pathspec as relative to the top-level superproject, you no longer
+> >    worry about having to find where to cut the pathspec given at the
+> >    top-level to adjust it for the submodule's context.  That may
+> >    simplify things.
+> 
+> I wonder how this plays together with the prefix in the superproject, e.g.
+> 
+>     cd super/unrelated-path
+>     # when invoking a git command the internal prefix is "unrelated-path/"
+>     git ls-files ../submodule-*
+>     # a submodule in submodule-A would be run in  submodule-A
+>     # with a superproject prefix of super/ ? but additionally we nned
+> to know we're
+>     # not at the root of the superproject.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 32f065c..66429fb 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -953,7 +953,8 @@ color.branch::
- 	A boolean to enable/disable color in the output of
- 	linkgit:git-branch[1]. May be set to `always`,
- 	`false` (or `never`) or `auto` (or `true`), in which case colors are used
--	only when the output is to a terminal. Defaults to false.
-+	only when the output is to a terminal. If unset, then the
-+	value of `color.ui` is used (`auto` by default).
- 
- color.branch.<slot>::
- 	Use customized color for branch coloration. `<slot>` is one of
-@@ -968,7 +969,8 @@ color.diff::
- 	linkgit:git-log[1], and linkgit:git-show[1] will use color
- 	for all patches.  If it is set to `true` or `auto`, those
- 	commands will only use color when output is to the terminal.
--	Defaults to false.
-+	If unset, then the value of `color.ui` is used (`auto` by
-+	default).
- +
- This does not affect linkgit:git-format-patch[1] or the
- 'git-diff-{asterisk}' plumbing commands.  Can be overridden on the
-@@ -991,7 +993,8 @@ color.decorate.<slot>::
- color.grep::
- 	When set to `always`, always highlight matches.  When `false` (or
- 	`never`), never.  When set to `true` or `auto`, use color only
--	when the output is written to the terminal.  Defaults to `false`.
-+	when the output is written to the terminal.  If unset, then the
-+	value of `color.ui` is used (`auto` by default).
- 
- color.grep.<slot>::
- 	Use customized color for grep colorization.  `<slot>` specifies which
-@@ -1024,7 +1027,8 @@ color.interactive::
- 	and displays (such as those used by "git-add --interactive" and
- 	"git-clean --interactive"). When false (or `never`), never.
- 	When set to `true` or `auto`, use colors only when the output is
--	to the terminal. Defaults to false.
-+	to the terminal. If unset, then the value of `color.ui` is
-+	used (`auto` by default).
- 
- color.interactive.<slot>::
- 	Use customized color for 'git add --interactive' and 'git clean
-@@ -1040,13 +1044,15 @@ color.showBranch::
- 	A boolean to enable/disable color in the output of
- 	linkgit:git-show-branch[1]. May be set to `always`,
- 	`false` (or `never`) or `auto` (or `true`), in which case colors are used
--	only when the output is to a terminal. Defaults to false.
-+	only when the output is to a terminal. If unset, then the
-+	value of `color.ui` is used (`auto` by default).
- 
- color.status::
- 	A boolean to enable/disable color in the output of
- 	linkgit:git-status[1]. May be set to `always`,
- 	`false` (or `never`) or `auto` (or `true`), in which case colors are used
--	only when the output is to a terminal. Defaults to false.
-+	only when the output is to a terminal. If unset, then the
-+	value of `color.ui` is used (`auto` by default).
- 
- color.status.<slot>::
- 	Use customized color for status colorization. `<slot>` is
--- 
-2.10.0.rc0.1.g07c9292
+Do we need to know that? The internal prefix is internal to each
+repository and can be treated as such. I would expect that the prefix is
+only prefixed when needed. E.g. when we display output to the user,
+match files, ...
 
+How about "../submodule-A" as the submodule prefix in the situation you
+describe? The wildcard would be resolved by the superproject since the
+directory is still in its domain.
+
+I would think of the submodule prefix as the path relative to the
+command that started everything. E.g. if we have a tree like this:
+
+        *--subA
+       /
+super *--subB--subsubB
+       \
+        *--dirC
+
+where subA, subB and subsubB are submodules and dirC is just a
+directory inside super.
+
+We would get the following prefixes when issuing a command in dirC that
+has a pathspec for subsubB:
+
+  subB: ../subB
+  subsubB: ../subB/subsubB
+
+An interesting case is when we issue a command in subA:
+
+  super:   ..
+  subB:    ../subB
+  subsubB: ../subB/subsubB
+
+A rule for the prefix option could be: Always specified when crossing a
+repository boundary with the pathspec (including upwards).
+
+I have not completely thought this through though so just take this as
+some food for thought. Since I am not sure what Junio's rationale behind
+making the prefix relative to the toplevel superproject was, but I guess
+finding it could be a challenge in some situations. I.e. is the
+repository in home directory tracking all the dot-files really the
+superproject or was it that other one I found before?
+
+> >    So we may have to rethink what this option name should be.  "You
+> >    are running in a repository that is used as a submodule in a
+> >    larger context, which has the submodule at this path" is what the
+> >    option tells the command; if any existing command already has
+> >    such an option, we should use it.  If we are inventing one,
+> >    perhaps "--submodule-path" (I didn't check if there are existing
+> >    options that sound similar to it and mean completely different
+> >    things, in which case that name is not usable)?
+> 
+> Would it make sense to add the '--submodule-path' to a more generic
+> part of the code? It's not just ls-files/grep that have to solve exactly this
+> problem. Up to now we just did not go for those commands, though.
+
+Yes I think so, since it should also handle starting from a submodule
+with a pathspec to the superproject or other submodule. In case we
+go with my above suggestion I would suggest a more generic name since
+the option could also be passed to processes handling the superproject.
+E.g. something like --module-prefix or --repository-prefix comes to my
+mind, not checked though.
+
+Cheers Heiko
