@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 66093207E6
-	for <e@80x24.org>; Fri, 16 Sep 2016 00:12:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B1442070F
+	for <e@80x24.org>; Fri, 16 Sep 2016 00:12:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757407AbcIPAMt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Sep 2016 20:12:49 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:34388 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757069AbcIPAMb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Sep 2016 20:12:31 -0400
-Received: by mail-qk0-f195.google.com with SMTP id b204so4477878qkc.1
-        for <git@vger.kernel.org>; Thu, 15 Sep 2016 17:12:31 -0700 (PDT)
+        id S1757327AbcIPAMw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Sep 2016 20:12:52 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:34838 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757290AbcIPAMd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Sep 2016 20:12:33 -0400
+Received: by mail-qk0-f194.google.com with SMTP id w204so4450487qka.2
+        for <git@vger.kernel.org>; Thu, 15 Sep 2016 17:12:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:subject:date:message-id:in-reply-to:references;
-        bh=NZsn9nVoc99E/YMFlQepkPQERt8hIt0zGwXTmKFefek=;
-        b=iLM/CyEHDUX8NWnL+T13c2eReGPxb9FzBCcus36q43O9MIdZTO6t8r6pb8sJ0yMuGi
-         eNmnS9jopME548NM0+0twCoYzyMPwLEnSj7S7wpNu9x68xdvkvm8vDiXuxus4Cr4N/Uf
-         r4B7WKd7g5eOAs5yn8JJZHeB/UFHWQe1omwImLeVUV1UMGHJoKy16eg7n3wBbiJrTKqA
-         5kcthytU2Y74rx08WeyPUfhNq0J7E2vA39tKI8xZ1pjku9Vk0hM8IqTn7yQUkPl1+Hhv
-         LKL1XKdwU1+lN6kVzjGJatbxk+Xj/vGEI+BsffxBOxljs6RFVI+N/OMBSMuMRIYr0ZP2
-         91MA==
+        bh=Y0jb8NOiGyjGg5fzVURBk3tzb97pQomYf80wzoDMAbQ=;
+        b=zBlcfF3tj5QivQRObvglDhxrps28QwMHSJ+rQ+WOtgYQo+BlfBXV7v5U8AchmNLBBb
+         b8/UyMv5twW84c6Q+eNJQ2xLiuXWl9M48q9qz4G6koiY3PyJHRFPCTEW73hY4XrORfDP
+         Rru24oE6fcVTpn+u7x1uxltwxpbDJ2Ku2r61PRuTMQbgN3SZFadG/mlgNYDzO9XTc4nL
+         KH8ufRZqHreFI1Xq+3EFOU0AhhbHhuC5YVtaDRjv4MlV7zdLhXnpOvySlHPaKhMV7Uk1
+         dolX9EEu6hEJZXG0v6e3iUZCe7zO7roi75HTFOLO7F5JKv3VwMgKpOZNuKv6ZwVJIh0Z
+         HBhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references;
-        bh=NZsn9nVoc99E/YMFlQepkPQERt8hIt0zGwXTmKFefek=;
-        b=K5/iZnvRV4+YHtbfi2s7nSSWqwDJvYbHn7+5sWQiHpK4pNTzgLZO4zntp9OgOuJnpy
-         yeoezTFUbGKJTjs92qiBxwKl8PUIW97Xwt7bXthN+z6ZkWUZUc4n9Hui/GBKTZsukaiT
-         ZMjR4oiXkP8X4ACEO+kDLtUC2lfO5m+I05DMpu9ZTBGWUs1DZsRtzUSLbVkp5yyj3jMW
-         x3jc8cTMQNvcQTMOCRtxQjgCu7ZuRAZELjPJ1Y7fdXSPewYtggcgPsFuOEMtlnkPEyPF
-         TopUGtVEebGU+STIZR54OvmkKmcVD5HtTS8K59F194e7RuI4bTVZMKSN3T94yHnUjjE5
-         nC1g==
-X-Gm-Message-State: AE9vXwNoc6b4B1DtOMYRby1HMU5YCONq1ZhyjaiFtg/9xhs08pFtEd5oUOxGTUk6OwUiRg==
-X-Received: by 10.55.107.193 with SMTP id g184mr12943926qkc.145.1473984750590;
-        Thu, 15 Sep 2016 17:12:30 -0700 (PDT)
+        bh=Y0jb8NOiGyjGg5fzVURBk3tzb97pQomYf80wzoDMAbQ=;
+        b=PKN3xOFFUACDPzg4dgVuAIE772eDtThYTIcXaiWngwuT4esS1JyyftIIN0roXElQYz
+         yBarkw1QQsFBUQxINRUjI7ipvQhVskrzR85YKo/VDTEd2zc3dBOS9ChafwNzSRlEHFch
+         xSPkyKlnXUnTHEk0Ml3ITaGuR5WCV4/v7BV9fghCj2Lnowqnr4NFapoMRdHZDCUVQ3Bu
+         hXCw0S5DBENbbE9Zvp2WMDTPpEb3CuY+By+1FsM0jHC3z7Xm0gJJ05YRCGeJuuP+4TIV
+         cdUYo4J1IVwfjwxnZq2C0NeF8zAbion7DJcEVow0ocrxisM0f8AXRNSf8Ghy8SxYpXpg
+         fRSg==
+X-Gm-Message-State: AE9vXwMstLNTxtWj7Tl/PCFl3tbe8qLwpfjb+f+LXJ01PoAxmpBNJvIA+HeaW46pGLF+jg==
+X-Received: by 10.55.191.132 with SMTP id p126mr4086765qkf.302.1473984752015;
+        Thu, 15 Sep 2016 17:12:32 -0700 (PDT)
 Received: from localhost.localdomain (ool-457850cc.dyn.optonline.net. [69.120.80.204])
-        by smtp.gmail.com with ESMTPSA id d27sm3227196qtd.37.2016.09.15.17.12.29
+        by smtp.gmail.com with ESMTPSA id d27sm3227196qtd.37.2016.09.15.17.12.31
         for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 15 Sep 2016 17:12:30 -0700 (PDT)
+        Thu, 15 Sep 2016 17:12:31 -0700 (PDT)
 From:   Kevin Wern <kevin.m.wern@gmail.com>
 To:     git@vger.kernel.org
-Subject: [PATCH 08/11] Resumable clone: create transport_download_primer
-Date:   Thu, 15 Sep 2016 20:12:19 -0400
-Message-Id: <1473984742-12516-9-git-send-email-kevin.m.wern@gmail.com>
+Subject: [PATCH 10/11] run command: add RUN_COMMAND_NO_STDOUT
+Date:   Thu, 15 Sep 2016 20:12:21 -0400
+Message-Id: <1473984742-12516-11-git-send-email-kevin.m.wern@gmail.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1473984742-12516-1-git-send-email-kevin.m.wern@gmail.com>
 References: <1473984742-12516-1-git-send-email-kevin.m.wern@gmail.com>
@@ -60,117 +60,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create function transport_download_primer and components
-to invoke and pass commands to remote-curl.
+Add option RUN_COMMAND_NO_STDOUT, which sets no_stdout on a child
+process.
+
+This will be used by git clone when calling index-pack on a downloaded
+packfile.
 
 Signed-off-by: Kevin Wern <kevin.m.wern@gmail.com>
 ---
- transport-helper.c | 24 ++++++++++++++++++++++++
- transport.c        |  9 +++++++++
- transport.h        |  7 +++++++
- 3 files changed, 40 insertions(+)
+ run-command.c | 1 +
+ run-command.h | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/transport-helper.c b/transport-helper.c
-index eb185d5..2ff96ef 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -29,6 +29,7 @@ struct helper_data {
- 		check_connectivity : 1,
- 		no_disconnect_req : 1,
- 		no_private_update : 1,
-+		download_primer : 1,
- 		prime_clone : 1;
- 	char *export_marks;
- 	char *import_marks;
-@@ -183,6 +184,8 @@ static struct child_process *get_helper(struct transport *transport)
- 			data->check_connectivity = 1;
- 		else if (!strcmp(capname, "prime-clone"))
- 			data->prime_clone = 1;
-+		else if (!strcmp(capname, "download-primer"))
-+			data->download_primer = 1;
- 		else if (!data->refspecs && skip_prefix(capname, "refspec ", &arg)) {
- 			ALLOC_GROW(refspecs,
- 				   refspec_nr + 1,
-@@ -1058,6 +1061,26 @@ static struct ref *get_refs_list(struct transport *transport, int for_push)
- 	return ret;
- }
+diff --git a/run-command.c b/run-command.c
+index 863dad5..c4f82f9 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -574,6 +574,7 @@ int run_command_v_opt_cd_env(const char **argv, int opt, const char *dir, const
+ 	cmd.silent_exec_failure = opt & RUN_SILENT_EXEC_FAILURE ? 1 : 0;
+ 	cmd.use_shell = opt & RUN_USING_SHELL ? 1 : 0;
+ 	cmd.clean_on_exit = opt & RUN_CLEAN_ON_EXIT ? 1 : 0;
++	cmd.no_stdout = opt & RUN_COMMAND_NO_STDOUT ? 1 : 0;
+ 	cmd.dir = dir;
+ 	cmd.env = env;
+ 	return run_command(&cmd);
+diff --git a/run-command.h b/run-command.h
+index 42917e8..2d2c871 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -70,6 +70,7 @@ extern int run_hook_ve(const char *const *env, const char *name, va_list args);
+ #define RUN_SILENT_EXEC_FAILURE 8
+ #define RUN_USING_SHELL 16
+ #define RUN_CLEAN_ON_EXIT 32
++#define RUN_COMMAND_NO_STDOUT 64
+ int run_command_v_opt(const char **argv, int opt);
  
-+static const char *download_primer(struct transport *transport,
-+				   const struct alt_resource *res,
-+				   const char *base_path)
-+{
-+	struct helper_data *data = transport->data;
-+	struct child_process *helper;
-+	struct strbuf buf = STRBUF_INIT, out = STRBUF_INIT;
-+	char *ret = NULL;
-+
-+	helper = get_helper(transport);
-+
-+	strbuf_addf(&buf, "download-primer %s %s\n", res->url, base_path);
-+	sendline(data, &buf);
-+	recvline(data, &out);
-+	strbuf_release(&buf);
-+	if (out.len > 0)
-+		ret = strbuf_detach(&out, NULL);
-+	return ret;
-+}
-+
- static const struct alt_resource *const get_alt_res_helper(struct transport *transport)
- {
- 	struct helper_data *data = transport->data;
-@@ -1115,6 +1138,7 @@ int transport_helper_init(struct transport *transport, const char *name)
- 	transport->data = data;
- 	transport->set_option = set_helper_option;
- 	transport->get_refs_list = get_refs_list;
-+	transport->download_primer = download_primer;
- 	transport->prime_clone = get_alt_res_helper;
- 	transport->fetch = fetch;
- 	transport->push_refs = push_refs;
-diff --git a/transport.c b/transport.c
-index dd0d839..3b33029 100644
---- a/transport.c
-+++ b/transport.c
-@@ -572,6 +572,15 @@ const struct alt_resource *const transport_prime_clone(struct transport *transpo
- 	return transport->alt_res;
- }
- 
-+const char *transport_download_primer(struct transport *transport,
-+				      const struct alt_resource *alt_res,
-+				      const char *base_dir)
-+{
-+	if (transport->download_primer)
-+		return transport->download_primer(transport, alt_res, base_dir);
-+	return NULL;
-+}
-+
- static int connect_git(struct transport *transport, const char *name,
- 		       const char *executable, int fd[2])
- {
-diff --git a/transport.h b/transport.h
-index 2bb6963..1484d6d 100644
---- a/transport.h
-+++ b/transport.h
-@@ -83,6 +83,10 @@ struct transport {
- 	 **/
- 	const struct alt_resource *const (*prime_clone)(struct transport *transport);
- 
-+	const char *(*download_primer)(struct transport *transport,
-+			const struct alt_resource *alt_res,
-+			const char *base_path);
-+
- 	/**
- 	 * Fetch the objects for the given refs. Note that this gets
- 	 * an array, and should ignore the list structure.
-@@ -228,6 +232,9 @@ int transport_push(struct transport *connection,
- 
- const struct ref *transport_get_remote_refs(struct transport *transport);
- const struct alt_resource *const transport_prime_clone(struct transport *transport);
-+const char *transport_download_primer(struct transport *transport,
-+		const struct alt_resource *alt_res,
-+		const char *base_path);
- 
- int transport_fetch_refs(struct transport *transport, struct ref *refs);
- void transport_unlock_pack(struct transport *transport);
+ /*
 -- 
 2.7.4
 
