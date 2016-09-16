@@ -2,80 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5087F207DF
-	for <e@80x24.org>; Fri, 16 Sep 2016 17:35:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAE51207DF
+	for <e@80x24.org>; Fri, 16 Sep 2016 17:37:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756293AbcIPRfv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Sep 2016 13:35:51 -0400
-Received: from mail-yw0-f177.google.com ([209.85.161.177]:34284 "EHLO
-        mail-yw0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753154AbcIPRfu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Sep 2016 13:35:50 -0400
-Received: by mail-yw0-f177.google.com with SMTP id g192so93440553ywh.1
-        for <git@vger.kernel.org>; Fri, 16 Sep 2016 10:34:49 -0700 (PDT)
+        id S934485AbcIPRha (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Sep 2016 13:37:30 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:33184 "EHLO
+        mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1759216AbcIPRh2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Sep 2016 13:37:28 -0400
+Received: by mail-pa0-f45.google.com with SMTP id cm16so27987887pac.0
+        for <git@vger.kernel.org>; Fri, 16 Sep 2016 10:37:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=k4X0ieaecwXrg0FQg1ybblMX2/baCQyWMCdoqErh4wk=;
-        b=QooqgcFtcw9pOZljHKwzo3IDNTCOael3v19ONkvuNjvYb98poyxX9d6n8LSqp7J3nv
-         m3mMzUe4cWcQArUfAoTerV/IWVyqJLijPBy3P1OlCIMsQKa/Fuhp39dpvcdr+DcnBmuO
-         VVS+hOpnKH8gNUZ/2bilHsqNTeWrfInBPxBlHhi12Rhp9AX6+wloHelnKhajMQSGSs4j
-         vQODVPsleIEzGRxjkDkrKE9kJJHQuljHtEc3emX7yLbk9y/sHTd5y/hrIQ+ATyKWYfAe
-         MOPR5e3iLf3AFNdIdE4oU3ubSRWe6Ktye3Ly+or2Dkf1+ZUSm7AvW55cUsAPLhiWOgD6
-         xvbw==
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=erZHtlc7V8fxWm8ZMftsIv6eatklt32xyCKKCY0uw1k=;
+        b=S3XwKBr2beqVVCZZrVqiR6kPFpp+aXuMo93fqSUTnmN/frzBbdDQmhetetKl0gubXC
+         c5J5qewqmYAbpuw6r4EB+u2gYuPzUPOZWGcg2YVfuxTztCOOfTey65BxTC2GsFmHlixX
+         eb6qstcYTH4DxMr24eRMHcWz22wl79pMCFUbZArzukDShotjeTa77Aqlv7o8CP8913LL
+         9BV+ybfdor17y1NVJ56Usj7ALjMhmhomhaBZ948u4o3TqmYTdofd6A6SWoZ/L+FnH9YS
+         PV6msbWpvNPreSVxqf7vi7iFzRR3+2syM6gnifky2nRA0OBOWO6x4lJ0lPG52qRxTizV
+         I1HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=k4X0ieaecwXrg0FQg1ybblMX2/baCQyWMCdoqErh4wk=;
-        b=PnkNZBIgZapOrTZrvn8Qy77+G1UAcv09e43pDAWrgE4hyZvZSO8aMm+L+ViBp7w9oA
-         1S+C1/H3qRyTLGIgFcmIJHyXqjbZNsOYvOhaRPStwYeFS2vE+Tnks6ddyHSizu9F4Czl
-         b+hQEWVLxtQS+EzfnxCLgHiU4rPsN8Mbt1LtOC2bSf+BeFDt6N3DvnIbQZGsa2gutLEb
-         YJPE9FNkVQebUrLD3Bg8KRrEFXYrtbrmETJCmrcEhr/Ng7SlhZARcZF1NsQilXCkXvT8
-         6WpTqSUvqLRPlM2QJNeJDM8jgDbfQU11mlex3cVZAODAfSDoWLqTAtBUfJPDNiy1Wj47
-         Y6DQ==
-X-Gm-Message-State: AE9vXwOcPUN27CM/dx/K7dO3o4EtxJ00RSAoKyuqXWq2+eRZCKcSN2L4RZ7qi/ZrFlZv9m+Ts79hce4mn7pdKg==
-X-Received: by 10.129.76.6 with SMTP id z6mr15203082ywa.257.1474047288497;
- Fri, 16 Sep 2016 10:34:48 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.37.96.195 with HTTP; Fri, 16 Sep 2016 10:34:28 -0700 (PDT)
-In-Reply-To: <28c5d2c59851279858df22e844c6ff7c09f33199.1474046573.git-series.josh@joshtriplett.org>
-References: <28c5d2c59851279858df22e844c6ff7c09f33199.1474046573.git-series.josh@joshtriplett.org>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Fri, 16 Sep 2016 10:34:28 -0700
-Message-ID: <CA+P7+xo5vijUhWvoM4q_sW5Ps4rii7=wFBREP-Q_bn+mBTbCiw@mail.gmail.com>
-Subject: Re: [PATCH] format-patch: Add --rfc for the common case of [RFC PATCH]
-To:     Josh Triplett <josh@joshtriplett.org>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Andrew Donnellan <andrew.donnellan@au1.ibm.com>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=erZHtlc7V8fxWm8ZMftsIv6eatklt32xyCKKCY0uw1k=;
+        b=M6/CdhZ670wWVeI/Pr90JUHzimgmB2ohaZvVE2my67fSZQUBtVWmB3lRtEHGg57bL0
+         BaQWVITcixPMAZT1vbdDc/Q3ueT2cEhajL1WaHBVeabLBLBV9iKB2bnIBBMDd50fAlBS
+         Wu/XSL3f/ajA7qWS8fBAUZJLincy6OtP1TXoU8w5P84fleQ/yt/iVM1ZK5npdYcTRSJn
+         RuCwke23jLfZe6g2tC5wMVYQnohhDWlh7M5LItWH+92ecB4T6Od4ezBegnia9igg6xSm
+         CqDyhh2Gtp9IgDIa06o5vMFliKWWYLoftmLevF0MUeVW3yA797ZKboNuAoiqQXo0qDGl
+         1tQA==
+X-Gm-Message-State: AE9vXwNdza0FLsinYOtx3xyZI/qWyBFdJjHvHxhROwHAtAY7vFy9pal1renICb3MOBFbU5gZ
+X-Received: by 10.66.249.164 with SMTP id yv4mr24971940pac.89.1474047448081;
+        Fri, 16 Sep 2016 10:37:28 -0700 (PDT)
+Received: from twelve2.mtv.corp.google.com ([100.96.238.21])
+        by smtp.gmail.com with ESMTPSA id m128sm53664348pfm.42.2016.09.16.10.37.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 16 Sep 2016 10:37:26 -0700 (PDT)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, peff@peff.net,
+        gitster@pobox.com
+Subject: [RFC/PATCH 0/3] handle multiline in-body headers
+Date:   Fri, 16 Sep 2016 10:37:21 -0700
+Message-Id: <cover.1474047135.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.10.0.rc2.20.g5b18e70
+In-Reply-To: <20160907063819.dd7aulnlsytcuyqj@sigill.intra.peff.net>
+References: <20160907063819.dd7aulnlsytcuyqj@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 16, 2016 at 10:27 AM, Josh Triplett <josh@joshtriplett.org> wrote:
-> This provides a shorter and more convenient alias for
-> --subject-prefix='RFC PATCH'.
->
-> Add a test covering --rfc.
->
-> Signed-off-by: Josh Triplett <josh@joshtriplett.org>
-> ---
->
-> By far, the most common subject-prefix I've seen other than "PATCH" is
-> "RFC PATCH" (or occasionally "PATCH RFC").  Seems worth optimizing for
-> the common case, to avoid having to spell it out the long way as
-> --subject-prefix='RFC PATCH'.
->
+Thanks, Peff, for the explanation and the method to reproduce the issue.
 
-I agree!
+The issue seems to be in mailinfo.c - this patch set addresses that, and I have
+also included a test for "git am" in t/t4150-am.sh to show the effect of this
+patch set on that command.
 
-Thanks,
-Jake
+Jonathan Tan (3):
+  mailinfo: refactor commit message processing
+  mailinfo: correct malformed test example
+  mailinfo: handle in-body header continuations
+
+ mailinfo.c                           | 165 ++++++++++++++++++++++++++++-------
+ mailinfo.h                           |   1 +
+ t/t4150-am.sh                        |  23 +++++
+ t/t5100-mailinfo.sh                  |   4 +-
+ t/t5100/info0008--no-inbody-headers  |   5 ++
+ t/t5100/info0018                     |   5 ++
+ t/t5100/msg0008--no-inbody-headers   |   6 ++
+ t/t5100/msg0015--no-inbody-headers   |   1 +
+ t/t5100/msg0018                      |   2 +
+ t/t5100/patch0008--no-inbody-headers |   0
+ t/t5100/patch0018                    |   6 ++
+ t/t5100/sample.mbox                  |  20 +++++
+ 12 files changed, 206 insertions(+), 32 deletions(-)
+ create mode 100644 t/t5100/info0008--no-inbody-headers
+ create mode 100644 t/t5100/info0018
+ create mode 100644 t/t5100/msg0008--no-inbody-headers
+ create mode 100644 t/t5100/msg0018
+ create mode 100644 t/t5100/patch0008--no-inbody-headers
+ create mode 100644 t/t5100/patch0018
+
+-- 
+2.10.0.rc2.20.g5b18e70
+
