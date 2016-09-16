@@ -2,109 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 160A2207DF
-	for <e@80x24.org>; Fri, 16 Sep 2016 22:55:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8AFF4207DF
+	for <e@80x24.org>; Fri, 16 Sep 2016 23:04:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753932AbcIPWzz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Sep 2016 18:55:55 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53423 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752835AbcIPWzz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Sep 2016 18:55:55 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DDBDD3F470;
-        Fri, 16 Sep 2016 18:55:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BJYj079hV5EQgCvbUeerPEHcNrE=; b=kzFrPo
-        giZC0fP3XXerOrFsM+oa3vybHD6hkdXqr1zVSQiNmKMwwEHoQiKHgWo9UvqcI5Mt
-        7NqSNb8/dO7HlFz3+fyudDf9ZSjththd7qG8E9W+XWeC1SL3VD4ABYS/iJ5xduBr
-        aguaXyDCvDrjszS5xfU70MgxnXydtx7dd5+q4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hITNXamHInw76hgbtsHlFnhtOooCcRZ7
-        a1eIWKItwE2WB80nelVpqv0+11sBm4gWH9NKPdHXNL+cA2bOB+9LMuxu61z5T22/
-        JTAY0Q64nY/U8N1MuQvnc15LSLEmTMdfCMfhwXvKmg9e9v1SHH7atVLMz+7WQrUO
-        v7Ku21ucmz4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D60963F46E;
-        Fri, 16 Sep 2016 18:55:53 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 588A13F46D;
-        Fri, 16 Sep 2016 18:55:53 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [RFC/PATCH 2/3] mailinfo: correct malformed test example
-References: <cover.1474047135.git.jonathantanmy@google.com>
-        <20160907063819.dd7aulnlsytcuyqj@sigill.intra.peff.net>
-        <cover.1474047135.git.jonathantanmy@google.com>
-        <5dbb0b0f64906fd18c217908cd2c04e74d80fa68.1474047135.git.jonathantanmy@google.com>
-        <xmqqk2ebk5zh.fsf@gitster.mtv.corp.google.com>
-        <2bfc2fc7-f16b-6d51-7353-54d38353464a@google.com>
-Date:   Fri, 16 Sep 2016 15:55:51 -0700
-In-Reply-To: <2bfc2fc7-f16b-6d51-7353-54d38353464a@google.com> (Jonathan Tan's
-        message of "Fri, 16 Sep 2016 15:42:48 -0700")
-Message-ID: <xmqqbmznihe0.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1755524AbcIPXEc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Sep 2016 19:04:32 -0400
+Received: from mail-io0-f179.google.com ([209.85.223.179]:33063 "EHLO
+        mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755267AbcIPXEa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Sep 2016 19:04:30 -0400
+Received: by mail-io0-f179.google.com with SMTP id r145so41001808ior.0
+        for <git@vger.kernel.org>; Fri, 16 Sep 2016 16:04:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Vuwir7aHWoF9M3y0fbz3q6PYP83lP9duAJrFAxxqz78=;
+        b=mt7HP2u24stF/AKrRbPj09tO9EHZnCQOQ0ptostgrPjNOsgGLDOoZYsos23A2VCMvC
+         HV2iOtWHqxqX9Kt5V3U1IhdSraIqcSOoej8k5La/JdaBlFP+YT587yda32i0I8xGi6JZ
+         mqN1gkdBMs+zpb4eNelApH4gNpvheR2H/0ghyX9u89uRmj8LFsWZMKQHwtt6FmKs/3fg
+         9iFFjnAZnZ3NKH5AveF77iCb1oKhie7dpDditWeGRdx81GK/xVbbXoQLfyDgPfT321I8
+         Z7ivrwfK6dr0sY03XIEwOxV/7tBUbzZAXsy3xR1Sq8XyqOueJQ3F0mFx0yjAtNslhE/b
+         Xr3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Vuwir7aHWoF9M3y0fbz3q6PYP83lP9duAJrFAxxqz78=;
+        b=QdMGHdyU1UVmw2xbK0TQoh6tE47ozhUPU0/sf4euDH6k3fnKSv0T3wXS0rW1msTJC6
+         N3DBtAzB2Y14PbtgMVdbC16sn8TbHGAm6W2L+MKNI/nQOWZ9IkuqWVW1jnHWZ6PNZcK/
+         ENS0thw4atfC+pZ95MOLm9l3xfYJv2y3a7tI6CUbxGt2ZL/smBZOSguZ1jjcj3m0CAOh
+         gFJssTV3ooC0gSk4pv227DRJvLUAqdjhJO6sm6xw+DTB6dXkgXhoFzFNVcjOa9BsvCZK
+         8/7uKnPATwJTCYW5U+FdvNIb6Zo+4mYGRg7v5Go6LY9vIntp3gliTsQA+vMzd2WBmUTx
+         WCQQ==
+X-Gm-Message-State: AE9vXwPfXQdMEqYvDvAttfuuWrblj1hqGxRtHBdG6zRLkXRV8ZGfddX6vxDVC5GDW2Pfy8oo6r1JPwzJD2Di0QRS
+X-Received: by 10.107.153.129 with SMTP id b123mr26176538ioe.160.1474067069624;
+ Fri, 16 Sep 2016 16:04:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B865FB44-7C60-11E6-BC49-5D827B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.107.173.98 with HTTP; Fri, 16 Sep 2016 16:04:29 -0700 (PDT)
+In-Reply-To: <xmqq1t0oy8t8.fsf@gitster.mtv.corp.google.com>
+References: <1473572530-25764-1-git-send-email-stefanbeller@gmail.com>
+ <1473572530-25764-4-git-send-email-stefanbeller@gmail.com> <xmqq1t0oy8t8.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 16 Sep 2016 16:04:29 -0700
+Message-ID: <CAGZ79kbRBqEMib=ym9xE2E_Tw4r_nA+wvU9NDfjnJRLKXk8ZzQ@mail.gmail.com>
+Subject: Re: [PATCH 03/10] diff.c: drop tautologous condition in emit_line_0
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <stefanbeller@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
-
-> On 09/16/2016 12:19 PM, Junio C Hamano wrote:
->> Jonathan Tan <jonathantanmy@google.com> writes:
->>
->>> An existing sample message (0015) in the tests for mailinfo contains an
->>> indented line immediately after an in-body header (without any
->>> intervening blank line).
->>
->> This comes from d25e5159 ("git am/mailinfo: Don't look at in-body
->> headers when rebasing", 2009-11-20), where we want to make sure that
->> a "From: bogosity" that isn't meant to be an in-body header is not
->> identified as such, even when it is immediately followed by a
->> non-blank line.  "From: bogosity" is for msg0015 but the same
->> applies to the header-looking block for msg0008.
->>
->> Adding a blank line there will defeat the whole point of the test,
->> which is to make sure we don't do anything funky when --no-inbody-headers
->> is asked for, no?
+On Mon, Sep 12, 2016 at 4:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <stefanbeller@gmail.com> writes:
 >
-> Before I revise the patch set...I think that the point of 0015 would
-> be handled by 0008 (after this patch is applied), but if you prefer
-> that 0015 retain its purpose, I can unindent the bullet list in 0015
-> instead of adding the extra line (and then dropping all 0008
-> changes). Would that be better? (0015 needs to be changed somehow,
-> because its indented line would be interpreted as a continuation line
-> after RFC/PATCH 3/3 is applied.)
+>> diff --git a/diff.c b/diff.c
+>> index 156c2aa..9d2e704 100644
+>> --- a/diff.c
+>> +++ b/diff.c
+>> @@ -460,8 +460,7 @@ static void emit_line_0(struct diff_options *o, const char *set, const char *res
+>>
+>>       if (len == 0) {
+>>               has_trailing_newline = (first == '\n');
+>> -             has_trailing_carriage_return = (!has_trailing_newline &&
+>> -                                             (first == '\r'));
+>> +             has_trailing_carriage_return = (first == '\r');
+>>               nofirst = has_trailing_newline || has_trailing_carriage_return;
+>>       } else {
+>>               has_trailing_newline = (len > 0 && line[len-1] == '\n');
+>
+> Interesting.
+>
+> This may be a mis-conversion at 250f7993 ("diff.c: split emit_line()
+> from the first char and the rest of the line", 2009-09-14), I
+> suspect.  The original took line[] with length and peeked for '\n',
+> and when it saw one, it decremented length before checking
+> line[len-1] for '\r'.
+>
+> But of course if there is only one byte on the line (i.e. len == 0
+> after first is stripped off), it cannot be both '\n' or '\r' at the
+> same time.
+>
+> Thanks for spotting.
 
-Hmph, these:
+Oh, right, it used to be possible to remove \r\n completely and that information
+was then kept as has_trailing_newline = has_trailing_carriage_return = 1;
+and the resulting line is kept completely without ending line.
 
- t/t5100/info0008--no-inbody-headers  | 5 +++++
- t/t5100/msg0008--no-inbody-headers   | 6 ++++++
- t/t5100/msg0015--no-inbody-headers   | 1 +
+After some thought I don't think I can use this mis-conversion
+to trigger a bug though, because the len=0 can only ever happen
+if first is '\n' alone essentially.
 
-have --no-inbody-headers in their names; wouldn't that an indication
-that they are expected output when mailinfo is run while in-body
-header feature disabled?
+Another thing I noticed when playing around with diffs:
 
-I would have expected that it would make more sense to make no
-change to sample.mbox and have updated expectation to outputs in the
-case where in-body header feature is enabled.
-
-To make sure this new feature will not break in the future, we would
-want a brand new message with a folded in-body header added to the
-sample.mbox, and see how it is parsed by mailinfo with in-body
-header feature enabled (and disabled).
-
+    $ printf "\r\n" >crlf
+    $ git commit crlf -m "add file crlf, empty line"
+    $ printf "non zero length\r\n" >crlf
+    $ diff --git a/crlf b/crlf
+    $ index d3f5a12..ece7140 100644
+    --- a/crlf
+    +++ b/crlf
+    @@ -1 +1 @@
+    -
+    +non zero length^M
+    $ # The - line is missing a ^M ?
