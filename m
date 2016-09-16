@@ -2,157 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6584207DF
-	for <e@80x24.org>; Fri, 16 Sep 2016 20:49:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A5FF207DF
+	for <e@80x24.org>; Fri, 16 Sep 2016 20:53:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965082AbcIPUtW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Sep 2016 16:49:22 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:36750 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965467AbcIPUtV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Sep 2016 16:49:21 -0400
-Received: by mail-pf0-f173.google.com with SMTP id q2so10505446pfj.3
-        for <git@vger.kernel.org>; Fri, 16 Sep 2016 13:49:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=+LixrSYHz+8mtXmqXnarerMQ/SfWvCNUkWZ1B8NpI/E=;
-        b=aPdLzP74o3ABjWKPQLyDRIql9G0jzcC7Q7ykX0/WHVRcvOFzdtg3a1dnx2ETgr21Qw
-         WIeigxPKop+OdYfSe3FlBErcLofq7KYNghef0sAgjACFZKwM2zL6TXGnli0ek4ICuEPM
-         kWbMxntUYxgpDv3yARHTs6U2AG4knIzGwhNEMhRA7aydUTh3UsKnzEc67I2XSfKOP05R
-         QeLtWcoaMRf3EJqijhMEZqjIx/0UuKiwvfavVOLmdZoUoAnOt4+22BFMUnnaYvFoj0tP
-         A/cGTVN1f0CqjRvV39j2l5ljHY66bIIJKc7wPlS8oTqG3uES3EMvq0G2+9sNX9nzIwQ/
-         TrAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=+LixrSYHz+8mtXmqXnarerMQ/SfWvCNUkWZ1B8NpI/E=;
-        b=lsqYvM970sy9fLGMBL2hmPMj2jY5WjJTi+eLCrlL5NWNgKTzLTT6BXUf2ieXGaZc+A
-         ZN1IsyJN0XmyXF1m3oWBgVi+UvFQyo7yJruvkVV7r+xylg6kiQxNQ7kU2M2HM4Gec7b1
-         /FJ9kCgcWnruGNGW/8TQY4ym81NWMhVXFMzNPNYlA9OQt7Y1QoMirCC6PMDSpeM8QaTH
-         E4GI2HhgCxkkvOVAUYsHCw8Gp3q2rYYIksgxPsifOAHWoZUH1DT9mzL86yVyydJQ00wX
-         7RR9RgPcMDos1nzbsejM1vpa4vryXP1qePKGbS3dgMMivIMoni/lVYCmgTXgveRjYHW7
-         8B7w==
-X-Gm-Message-State: AE9vXwN3tH6eaMnAZLEGz9XkAchUaN91yURN28ulnMC71Kbn2bxvpQdHdL3Y+VOWyriiwc4z
-X-Received: by 10.98.37.130 with SMTP id l124mr25872708pfl.60.1474058960229;
-        Fri, 16 Sep 2016 13:49:20 -0700 (PDT)
-Received: from twelve2.mtv.corp.google.com ([2620:0:1000:5b10:c82e:43dd:7495:3b10])
-        by smtp.gmail.com with ESMTPSA id q25sm20268023pfj.48.2016.09.16.13.49.18
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 16 Sep 2016 13:49:19 -0700 (PDT)
-Subject: Re: [RFC/PATCH 3/3] mailinfo: handle in-body header continuations
-To:     Junio C Hamano <gitster@pobox.com>
-References: <cover.1474047135.git.jonathantanmy@google.com>
- <20160907063819.dd7aulnlsytcuyqj@sigill.intra.peff.net>
- <cover.1474047135.git.jonathantanmy@google.com>
- <0152df30db0972d61ff45b2b099ad1242aacd431.1474047135.git.jonathantanmy@google.com>
- <xmqq8turk3aw.fsf@gitster.mtv.corp.google.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-From:   Jonathan Tan <jonathantanmy@google.com>
-Message-ID: <1b392241-461e-3b87-400d-70d66903e3d7@google.com>
-Date:   Fri, 16 Sep 2016 13:49:18 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S965642AbcIPUxU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Sep 2016 16:53:20 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54935 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S965431AbcIPUxT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Sep 2016 16:53:19 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E575F3F003;
+        Fri, 16 Sep 2016 16:53:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=6z54kOOWNwELbM0QxG6tU0ziVAc=; b=m9H+r5
+        dhsFGr05Sdfb0K04hLDH3GSrQRPV+JCiZfqmIygQTYqXgGh+BCXg8uDd6HHTdOAc
+        7iBGX+cNlHk+edY67Nbc/90WBJf+uUBap3D8YPYnsXfa9e5uAcQLU/90gcbJEIy6
+        lvipH7N48Am2s7d1k/k/Id4uX/87wNQ2lWOnY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=E9WKBKEBH/9DryNaTEa2McVZFpziqZzA
+        TAWJ5dct+OZFVixhPpj66ymaAW5lM6mmqokKW5S6z+eVc91/5+QIjmiPeKhg21Ad
+        sty7Mw8kJKV8A7cs08dMBq1BEv0lu82Ee5f+pebjMvtYzm1nQfBj7MKDfSOiqa7r
+        x2XEvb3R6cc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DEB113F002;
+        Fri, 16 Sep 2016 16:53:17 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 675F23F000;
+        Fri, 16 Sep 2016 16:53:17 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kevin Wern <kevin.m.wern@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 01/11] Resumable clone: create service git-prime-clone
+References: <1473984742-12516-1-git-send-email-kevin.m.wern@gmail.com>
+        <1473984742-12516-2-git-send-email-kevin.m.wern@gmail.com>
+Date:   Fri, 16 Sep 2016 13:53:15 -0700
+In-Reply-To: <1473984742-12516-2-git-send-email-kevin.m.wern@gmail.com> (Kevin
+        Wern's message of "Thu, 15 Sep 2016 20:12:12 -0400")
+Message-ID: <xmqqzin7in2c.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqq8turk3aw.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 97EAA4CA-7C4F-11E6-9877-096F12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/16/2016 01:17 PM, Junio C Hamano wrote:
-> In other words, wouldn't something like the illustration at the end
-> of this message sufficient?  If the body consists solely of in-body
-> header without any patch or patchbreak, we may reach EOF with
-> something in mi->in_line_header buffer and nothing in
-> mi->log_message and without this function getting any chance to
-> return 1, so a careful caller may want to flush in_line_header, but
-> the overall result of the mailinfo subsystem in such a case would be
-> an error ("you didn't have any patch or a message?"), so it may not
-> matter too much.
+Kevin Wern <kevin.m.wern@gmail.com> writes:
 
-Noted. (This was one of my concerns - that the caller should, but did 
-not, flush.)
+> Create git-prime-clone, a program to be executed on the server that
+> returns the location and type of static resource to download before
+> performing the rest of a clone.
+>
+> Additionally, as this executable's location will be configurable (see:
+> upload-pack and receive-pack), add the program to
+> BINDIR_PROGRAMS_NEED_X, in addition to the usual builtin places. Add
+> git-prime-clone executable to gitignore, as well
+>
+> Signed-off-by: Kevin Wern <kevin.m.wern@gmail.com>
+> ---
 
-> What am I missing?
->
-> handle_commit_msg(...)
-> {
-> 	if (mi->in_line_header->len) {
-> 		/* we have read the beginning of one in-line header */
-> 		if (line->len && isspace(*line->buf))
+I wonder if we even need a separate service like this.
 
-This would mean that a message like the following:
+Wouldn't a new protocol capability that is advertised from
+upload-pack sufficient to tell the "git clone" that it can
+and should consider priming from this static resource?
 
-   From: Me <me@example.com>
-     -- 8< -- this scissors line will be treated as part of "From"
+> +static void prime_clone(void)
+> +{
+> +	if (!enabled) {
+> +		fprintf(stderr, _("prime-clone not enabled\n"));
+> +	}
+> +	else if (url && filetype){
+> +		packet_write(1, "%s %s\n", filetype, url);
+> +	}
+> +	else if (url || filetype) {
+> +		if (filetype)
+> +			fprintf(stderr, _("prime-clone not properly "
+> +					  "configured: missing url\n"));
+> +		else if (url)
+> +			fprintf(stderr, _("prime-clone not properly "
+> +					  "configured: missing filetype\n"));
+> +	}
+> +	packet_flush(1);
+> +}
 
-would have its scissors line treated as a header.
+Two minor comments:
 
-The main reason why I reordered the checks (in RFC/PATCH 1/3) is to 
-avoid this (treating a scissors line with an initial space immediately 
-following an in-body header as part of a header).
+ - For whom are you going to localize these strings?  This program
+   is running on the server side and we do not know the locale
+   preferred by the end-user who is sitting on the other end of the
+   connection, no?
 
-(If this is not a concern then yes, I agree that the way you described 
-is simpler and better.)
+ - Turn "}\n\s+else " into "} else ", please.
 
-> 			append to mi->in_line_header strbuf;
->                         return 0;
-> 		/* otherwise we know mi->in_line_header is now complete */
-> 		check_header(mi, mi->in_line_header, ...);
-> 		strbuf_reset(&mi->in_line_header);
-> 	}
->
-> 	if (mi->header_stage && (it is a blank line))
-> 		return 0;
->
-> 	if (mi->use_inbody_headers && mi->header_stage &&
-> 	    (the line looks like beginning of 2822 header)) {
-> 		strbuf_addbuf(&mi->in_line_header, line);
-> 		return 0;
-> 	}
->         /* otherwise we are no longer looking at headers */
->         mi->header_stage = 0;
->
-> 	/* normalize the log message to UTF-8. */
-> 	if (convert_to_utf8(mi, line, mi->charset.buf))
-> 		return 0; /* mi->input_error already set */
->
-> 	if (mi->use_scissors && is_scissors_line(line)) {
-> 		int i;
->
-> 		strbuf_setlen(&mi->log_message, 0);
-> 		mi->header_stage = 1;
->
-> 		/*
-> 		 * We may have already read "secondary headers"; purge
-> 		 * them to give ourselves a clean restart.
-> 		 */
-> 		for (i = 0; header[i]; i++) {
-> 			if (mi->s_hdr_data[i])
-> 				strbuf_release(mi->s_hdr_data[i]);
-> 			mi->s_hdr_data[i] = NULL;
-> 		}
-> 		return 0;
-> 	}
->
-> 	if (patchbreak(line)) {
-> 		if (mi->message_id)
-> 			strbuf_addf(&mi->log_message,
-> 				    "Message-Id: %s\n", mi->message_id);
-> 		return 1;
-> 	}
->
-> 	strbuf_addbuf(&mi->log_message, line);
-> 	return 0;
-> }
->
->
