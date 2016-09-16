@@ -2,112 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E303E207DF
-	for <e@80x24.org>; Fri, 16 Sep 2016 21:00:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34441207DF
+	for <e@80x24.org>; Fri, 16 Sep 2016 21:02:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965167AbcIPU7y (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Sep 2016 16:59:54 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64186 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S936132AbcIPU7v (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Sep 2016 16:59:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D88253F0DC;
-        Fri, 16 Sep 2016 16:59:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=J278KXlvNve0umiIJpJsmLgyPHA=; b=SgShgK
-        n+DqAdfvQG0BKayhxm7wQn6PEBu22tdAprldCbrAyQmKf5RB/3A6BOO832qvXcwc
-        Bc5Ycz2oCgyaiZuZoxRzsAnSWF+BJU4EY93e1dOtFGTaOMaTrOOTF3DoSefUA2lR
-        DoWKZJFP2gQOKW1uXK90c3/fie4DC0XI6bmTo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fgUcQmrT6OAyJyxGwzdRrE2THZmRDrgu
-        tA1J5vjMECswbG3Qx0qP0ZDs6R4C14I+8V2NoD3UHpK2EbBrASaGig+BAzo0zDMt
-        JdZYqSXcSvtytTaWgT2eOdh9LW1aICtn9uoExJTs41JxieYHt1snEG7ytENCoxb9
-        J0BIRlwCQgI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D110E3F0DB;
-        Fri, 16 Sep 2016 16:59:48 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5984D3F0D9;
-        Fri, 16 Sep 2016 16:59:48 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [RFC/PATCH 3/3] mailinfo: handle in-body header continuations
-References: <cover.1474047135.git.jonathantanmy@google.com>
-        <20160907063819.dd7aulnlsytcuyqj@sigill.intra.peff.net>
-        <cover.1474047135.git.jonathantanmy@google.com>
-        <0152df30db0972d61ff45b2b099ad1242aacd431.1474047135.git.jonathantanmy@google.com>
-        <xmqq8turk3aw.fsf@gitster.mtv.corp.google.com>
-        <1b392241-461e-3b87-400d-70d66903e3d7@google.com>
-Date:   Fri, 16 Sep 2016 13:59:46 -0700
-In-Reply-To: <1b392241-461e-3b87-400d-70d66903e3d7@google.com> (Jonathan Tan's
-        message of "Fri, 16 Sep 2016 13:49:18 -0700")
-Message-ID: <xmqqshszimrh.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 80EFFBE8-7C50-11E6-9C35-096F12518317-77302942!pb-smtp1.pobox.com
+        id S1757262AbcIPVCy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Sep 2016 17:02:54 -0400
+Received: from ikke.info ([178.21.113.177]:39100 "EHLO vps892.directvps.nl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752437AbcIPVCw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Sep 2016 17:02:52 -0400
+Received: by vps892.directvps.nl (Postfix, from userid 182)
+        id 8DD924400C5; Fri, 16 Sep 2016 23:02:50 +0200 (CEST)
+Received: from io.ikke (unknown [10.8.0.30])
+        by vps892.directvps.nl (Postfix) with ESMTP id 4274E4400B7;
+        Fri, 16 Sep 2016 23:02:49 +0200 (CEST)
+From:   Kevin Daudt <me@ikke.info>
+To:     git@vger.kernel.org
+Cc:     Kevin Daudt <me@ikke.info>, Swift Geek <swiftgeek@gmail.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] mailinfo: unescape quoted-pair in header fields
+Date:   Fri, 16 Sep 2016 23:02:04 +0200
+Message-Id: <20160916210204.31282-1-me@ikke.info>
+X-Mailer: git-send-email 2.10.0.86.g6ffa4f1.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+rfc2822 has provisions for quoted strings in structured header fields,
+but also allows for escaping these with so-called quoted-pairs.
 
->> handle_commit_msg(...)
->> {
->> 	if (mi->in_line_header->len) {
->> 		/* we have read the beginning of one in-line header */
->> 		if (line->len && isspace(*line->buf))
->
-> This would mean that a message like the following:
->
->   From: Me <me@example.com>
->     -- 8< -- this scissors line will be treated as part of "From"
->
-> would have its scissors line treated as a header.
->
-> The main reason why I reordered the checks (in RFC/PATCH 1/3) is to
-> avoid this (treating a scissors line with an initial space immediately
-> following an in-body header as part of a header).
->
-> (If this is not a concern then yes, I agree that the way you described
-> is simpler and better.)
+The only thing git currently does is removing exterior quotes, but
+quotes within are left alone.
 
-Ahh, OK.  I do not think anybody sane would do the "From:" thing,
-but with the "does it look like 2822 header" check to decide if the
-first header-looking line should be queued, another failure mode may
-be:
+Tell mailinfo to remove exterior quotes and remove escape characters from the
+author so that they don't show up in the commits author field.
 
-	any-random-alpha-and-dash-string: 
-         -- >8 -- cut here -- >8 --
-        Subject: real subject
+Signed-off-by: Kevin Daudt <me@ikke.info>
+---
+The only thing I could not easily fix is the prevent git am from removing any quotes around the author. This is done in fmt_ident, which calls `strbuf_addstr_without_crud`. 
 
-        The first line of the real message
-        
-I personally do not think it matters that much, but if we wanted to
-protect us from it we could easily do
+ mailinfo.c                 | 54 ++++++++++++++++++++++++++++++++++++++++++++++
+ t/t5100-mailinfo.sh        |  6 ++++++
+ t/t5100/quoted-pair.expect |  5 +++++
+ t/t5100/quoted-pair.in     |  9 ++++++++
+ 4 files changed, 74 insertions(+)
+ create mode 100644 t/t5100/quoted-pair.expect
+ create mode 100644 t/t5100/quoted-pair.in
 
-        if (mi->in_line_header->len) {
-                /* we have read the beginning of one in-line header */
-                if (line->len && isspace(*line->buf) &&
-                    !(mi->use_scissors && is_scissors_line(line))) {
-                        append to mi->in_line_header strbuf;
-                        return 0;
-                }
-                /* otherwise we know mi->in_line_header is now complete */
-                check_header(mi, mi->in_line_header, ...);
-                strbuf_reset(&mi->in_line_header);
-        }
-	...
+diff --git a/mailinfo.c b/mailinfo.c
+index e19abe3..04036f3 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -54,15 +54,69 @@ static void parse_bogus_from(struct mailinfo *mi, const struct strbuf *line)
+ 	get_sane_name(&mi->name, &mi->name, &mi->email);
+ }
+ 
++static int unquote_quoted_string(struct strbuf *line)
++{
++	struct strbuf outbuf;
++	const char *in = line->buf;
++	int c, take_next_literally = 0;
++	int found_error = 0;
++	char escape_context=0;
++
++	strbuf_init(&outbuf, line->len);
++
++	while ((c = *in++) != 0) {
++		if (take_next_literally) {
++			take_next_literally = 0;
++		} else {
++			switch (c) {
++			case '"':
++				if (!escape_context)
++					escape_context = '"';
++				else if (escape_context == '"')
++					escape_context = 0;
++				continue;
++			case '\\':
++				if (escape_context) {
++					take_next_literally = 1;
++					continue;
++				}
++				break;
++			case '(':
++				if (!escape_context)
++					escape_context = '(';
++				else if (escape_context == '(')
++					found_error = 1;
++				break;
++			case ')':
++				if (escape_context == '(')
++					escape_context = 0;
++				break;
++			}
++		}
++
++		strbuf_addch(&outbuf, c);
++	}
++
++	strbuf_reset(line);
++	strbuf_addbuf(line, &outbuf);
++	strbuf_release(&outbuf);
++
++	return found_error;
++
++}
++
+ static void handle_from(struct mailinfo *mi, const struct strbuf *from)
+ {
+ 	char *at;
+ 	size_t el;
+ 	struct strbuf f;
+ 
++
+ 	strbuf_init(&f, from->len);
+ 	strbuf_addbuf(&f, from);
+ 
++	unquote_quoted_string(&f);
++
+ 	at = strchr(f.buf, '@');
+ 	if (!at) {
+ 		parse_bogus_from(mi, from);
+diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
+index 1a5a546..d0c21fc 100755
+--- a/t/t5100-mailinfo.sh
++++ b/t/t5100-mailinfo.sh
+@@ -142,4 +142,10 @@ test_expect_success 'mailinfo unescapes with --mboxrd' '
+ 	test_cmp expect mboxrd/msg
+ '
+ 
++test_expect_success 'mailinfo unescapes rfc2822 quoted-string' '
++    mkdir quoted-pair &&
++    git mailinfo /dev/null /dev/null <"$TEST_DIRECTORY"/t5100/quoted-pair.in >quoted-pair/info &&
++    test_cmp "$TEST_DIRECTORY"/t5100/quoted-pair.expect quoted-pair/info
++'
++
+ test_done
+diff --git a/t/t5100/quoted-pair.expect b/t/t5100/quoted-pair.expect
+new file mode 100644
+index 0000000..cab1bce
+--- /dev/null
++++ b/t/t5100/quoted-pair.expect
+@@ -0,0 +1,5 @@
++Author: Author "The Author" Name
++Email: somebody@example.com
++Subject: testing quoted-pair
++Date: Sun, 25 May 2008 00:38:18 -0700
++
+diff --git a/t/t5100/quoted-pair.in b/t/t5100/quoted-pair.in
+new file mode 100644
+index 0000000..e2e627a
+--- /dev/null
++++ b/t/t5100/quoted-pair.in
+@@ -0,0 +1,9 @@
++From 1234567890123456789012345678901234567890 Mon Sep 17 00:00:00 2001
++From: "Author \"The Author\" Name" <somebody@example.com>
++Date: Sun, 25 May 2008 00:38:18 -0700
++Subject: [PATCH] testing quoted-pair
++
++
++
++---
++patch
+-- 
+2.10.0.86.g6ffa4f1.dirty
 
-instead, I think.
