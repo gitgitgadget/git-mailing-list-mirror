@@ -2,173 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 34441207DF
-	for <e@80x24.org>; Fri, 16 Sep 2016 21:02:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F796207DF
+	for <e@80x24.org>; Fri, 16 Sep 2016 21:46:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757262AbcIPVCy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Sep 2016 17:02:54 -0400
-Received: from ikke.info ([178.21.113.177]:39100 "EHLO vps892.directvps.nl"
+        id S1755022AbcIPVqq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Sep 2016 17:46:46 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44431 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752437AbcIPVCw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Sep 2016 17:02:52 -0400
-Received: by vps892.directvps.nl (Postfix, from userid 182)
-        id 8DD924400C5; Fri, 16 Sep 2016 23:02:50 +0200 (CEST)
-Received: from io.ikke (unknown [10.8.0.30])
-        by vps892.directvps.nl (Postfix) with ESMTP id 4274E4400B7;
-        Fri, 16 Sep 2016 23:02:49 +0200 (CEST)
-From:   Kevin Daudt <me@ikke.info>
-To:     git@vger.kernel.org
-Cc:     Kevin Daudt <me@ikke.info>, Swift Geek <swiftgeek@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] mailinfo: unescape quoted-pair in header fields
-Date:   Fri, 16 Sep 2016 23:02:04 +0200
-Message-Id: <20160916210204.31282-1-me@ikke.info>
-X-Mailer: git-send-email 2.10.0.86.g6ffa4f1.dirty
+        id S1754074AbcIPVqp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Sep 2016 17:46:45 -0400
+Received: (qmail 17343 invoked by uid 109); 16 Sep 2016 21:46:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Sep 2016 21:46:44 +0000
+Received: (qmail 20783 invoked by uid 111); 16 Sep 2016 21:46:55 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Sep 2016 17:46:55 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Sep 2016 14:46:41 -0700
+Date:   Fri, 16 Sep 2016 14:46:41 -0700
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [RFC/PATCH 1/3] mailinfo: refactor commit message processing
+Message-ID: <20160916214641.ib7khsl3fbtn6smg@sigill.intra.peff.net>
+References: <cover.1474047135.git.jonathantanmy@google.com>
+ <20160907063819.dd7aulnlsytcuyqj@sigill.intra.peff.net>
+ <cover.1474047135.git.jonathantanmy@google.com>
+ <7dbb4bc0659056211b27f0033c73f0d558efdb54.1474047135.git.jonathantanmy@google.com>
+ <xmqqoa3nk6a5.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqoa3nk6a5.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-rfc2822 has provisions for quoted strings in structured header fields,
-but also allows for escaping these with so-called quoted-pairs.
+On Fri, Sep 16, 2016 at 12:12:50PM -0700, Junio C Hamano wrote:
 
-The only thing git currently does is removing exterior quotes, but
-quotes within are left alone.
+> > +static int check_header_raw(struct mailinfo *mi,
+> > +			    char *buf, size_t len,
+> > +			    struct strbuf *hdr_data[], int overwrite) {
+> > +	const struct strbuf sb = {0, len, buf};
+> > +	return check_header(mi, &sb, hdr_data, overwrite);
+> > +}
+> 
+> IIUC, this is a helper for callers that do not have a strbuf but
+> instead have <buf, len> pair to perform the same check_header() the
+> callers that have strbuf can do.
+> 
+> As check_header() uses the strbuf as a read-only entity, wrapping
+> the <buf, len> pair in a temporary strbuf like this is safe.
+> 
+> The incoming <buf> should conceptually be "const char *", but it's
+> OK.
 
-Tell mailinfo to remove exterior quotes and remove escape characters from the
-author so that they don't show up in the commits author field.
+I think the "right" way to do this would be to continue taking a "char
+*", and then strbuf_attach() it. That saves us from unexpectedly
+violating any strbuf invariants.
 
-Signed-off-by: Kevin Daudt <me@ikke.info>
----
-The only thing I could not easily fix is the prevent git am from removing any quotes around the author. This is done in fmt_ident, which calls `strbuf_addstr_without_crud`. 
+If our assumption that check_header() does not touch the
+contents turns out to be wrong, neither strategy would inform our
+caller, though. I think you'd want something like:
 
- mailinfo.c                 | 54 ++++++++++++++++++++++++++++++++++++++++++++++
- t/t5100-mailinfo.sh        |  6 ++++++
- t/t5100/quoted-pair.expect |  5 +++++
- t/t5100/quoted-pair.in     |  9 ++++++++
- 4 files changed, 74 insertions(+)
- create mode 100644 t/t5100/quoted-pair.expect
- create mode 100644 t/t5100/quoted-pair.in
+  assert(sb.buf == buf);
 
-diff --git a/mailinfo.c b/mailinfo.c
-index e19abe3..04036f3 100644
---- a/mailinfo.c
-+++ b/mailinfo.c
-@@ -54,15 +54,69 @@ static void parse_bogus_from(struct mailinfo *mi, const struct strbuf *line)
- 	get_sane_name(&mi->name, &mi->name, &mi->email);
- }
- 
-+static int unquote_quoted_string(struct strbuf *line)
-+{
-+	struct strbuf outbuf;
-+	const char *in = line->buf;
-+	int c, take_next_literally = 0;
-+	int found_error = 0;
-+	char escape_context=0;
-+
-+	strbuf_init(&outbuf, line->len);
-+
-+	while ((c = *in++) != 0) {
-+		if (take_next_literally) {
-+			take_next_literally = 0;
-+		} else {
-+			switch (c) {
-+			case '"':
-+				if (!escape_context)
-+					escape_context = '"';
-+				else if (escape_context == '"')
-+					escape_context = 0;
-+				continue;
-+			case '\\':
-+				if (escape_context) {
-+					take_next_literally = 1;
-+					continue;
-+				}
-+				break;
-+			case '(':
-+				if (!escape_context)
-+					escape_context = '(';
-+				else if (escape_context == '(')
-+					found_error = 1;
-+				break;
-+			case ')':
-+				if (escape_context == '(')
-+					escape_context = 0;
-+				break;
-+			}
-+		}
-+
-+		strbuf_addch(&outbuf, c);
-+	}
-+
-+	strbuf_reset(line);
-+	strbuf_addbuf(line, &outbuf);
-+	strbuf_release(&outbuf);
-+
-+	return found_error;
-+
-+}
-+
- static void handle_from(struct mailinfo *mi, const struct strbuf *from)
- {
- 	char *at;
- 	size_t el;
- 	struct strbuf f;
- 
-+
- 	strbuf_init(&f, from->len);
- 	strbuf_addbuf(&f, from);
- 
-+	unquote_quoted_string(&f);
-+
- 	at = strchr(f.buf, '@');
- 	if (!at) {
- 		parse_bogus_from(mi, from);
-diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
-index 1a5a546..d0c21fc 100755
---- a/t/t5100-mailinfo.sh
-+++ b/t/t5100-mailinfo.sh
-@@ -142,4 +142,10 @@ test_expect_success 'mailinfo unescapes with --mboxrd' '
- 	test_cmp expect mboxrd/msg
- '
- 
-+test_expect_success 'mailinfo unescapes rfc2822 quoted-string' '
-+    mkdir quoted-pair &&
-+    git mailinfo /dev/null /dev/null <"$TEST_DIRECTORY"/t5100/quoted-pair.in >quoted-pair/info &&
-+    test_cmp "$TEST_DIRECTORY"/t5100/quoted-pair.expect quoted-pair/info
-+'
-+
- test_done
-diff --git a/t/t5100/quoted-pair.expect b/t/t5100/quoted-pair.expect
-new file mode 100644
-index 0000000..cab1bce
---- /dev/null
-+++ b/t/t5100/quoted-pair.expect
-@@ -0,0 +1,5 @@
-+Author: Author "The Author" Name
-+Email: somebody@example.com
-+Subject: testing quoted-pair
-+Date: Sun, 25 May 2008 00:38:18 -0700
-+
-diff --git a/t/t5100/quoted-pair.in b/t/t5100/quoted-pair.in
-new file mode 100644
-index 0000000..e2e627a
---- /dev/null
-+++ b/t/t5100/quoted-pair.in
-@@ -0,0 +1,9 @@
-+From 1234567890123456789012345678901234567890 Mon Sep 17 00:00:00 2001
-+From: "Author \"The Author\" Name" <somebody@example.com>
-+Date: Sun, 25 May 2008 00:38:18 -0700
-+Subject: [PATCH] testing quoted-pair
-+
-+
-+
-+---
-+patch
--- 
-2.10.0.86.g6ffa4f1.dirty
+after check_header() returns (though I guess we are in theory protected
+by the "const").
 
+That being said...
+
+> If check_header() didn't call any helper function that gets passed
+> &sb as a strbuf, or if convertiong the helper function to take a
+> <buf, len> pair instead, I would actually suggest refactoring this
+> the other way around, though.  That is, move the implementation of
+> check_header() to this function, updating its reference to line->buf
+> and line->len to reference to <buf> and <len>, and then make
+> check_header() a thin wrapper that does
+> 
+>         check_header(mi, const struct strbuf *line,
+>                      struct strbuf *hdr_data[], int overwrite)
+>         {
+>                 return check_header_raw(mi, line->buf, line->len,
+>                                         hdr_data, overwrite);
+>         }
+
+This is _way_ better, and it looks like check_header() could handle it
+easily. Looking at it, I also suspect the cascading if in that function
+could be made more pleasant by modeling cmp_header()'s interface after
+skip_prefix_mem(), but that is totally orthogonal and optional.
+
+-Peff
