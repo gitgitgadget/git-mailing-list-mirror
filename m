@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A9E0B207E6
-	for <e@80x24.org>; Fri, 16 Sep 2016 00:12:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C2062070F
+	for <e@80x24.org>; Fri, 16 Sep 2016 00:12:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757375AbcIPAMp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Sep 2016 20:12:45 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:33043 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757006AbcIPAMa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Sep 2016 20:12:30 -0400
-Received: by mail-qk0-f195.google.com with SMTP id n66so4509981qkf.0
+        id S1757392AbcIPAMr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Sep 2016 20:12:47 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:34831 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757058AbcIPAMb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Sep 2016 20:12:31 -0400
+Received: by mail-qk0-f194.google.com with SMTP id w204so4450443qka.2
         for <git@vger.kernel.org>; Thu, 15 Sep 2016 17:12:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:subject:date:message-id:in-reply-to:references;
-        bh=6HFvVJy3GDx2JfJqOBsxFJ41Nmx5K8jDA9duXA0RO48=;
-        b=WOjElycr1yBf2ZPmMIElzGdqVM8oRid8tbQd4vN1KgRNrXAPDWO0PZFAVCrMiK+Lye
-         uWdfGp6rokx4BEXIU+Xc+ykGGHXcZXEGaWGRk0fRGMd/V+hQzxEwLISBvM2K79spuWHg
-         cBU+sgrQnW4jFpXC7gv477gb2cLRiltqSvWn+UGl/eIC3WzvbnPEdWtyTOnpQkNgeVuo
-         sFhTMQYqNHfebsyrroze8T7wSfVB3bZQoYz4PgfgVo2sUKrl94lxJH9lG3Ch24W0ystE
-         s0RDN0ccomPhBdpDCaynI5JKph9LYVpTnkmp0L22LQ65mTTIfK/Zhhw7doOA8rFdKQmP
-         4i3w==
+        bh=p2feG4VWbKDi6st1npJbLMkZfpMhXTWoRvuki5YIsTY=;
+        b=ATxlOGhZdZOSyU5bZOwPRvSF83Iblae3f5Zfyb6XrwhoKyhdXo9z3hhA+rUCzy+cRc
+         juukkEci3R6uKa29rIJvo6RcRXOZYEEkvBJvnMZe4dtPujo1C4vdI8D8dbQrDDY8Mnrc
+         mlxR1ytSidbhkll0Krup/PqYOWKtPmxLYkW/dFZ12595qShH1rTzpSLtfZu7xEC9RHJc
+         STdHUCUHaKp2he6MYApS5c2L1QwT3ToGHMl5zzbQdDkXC6HeCrbIFpZhkSjklJ4IBtRQ
+         B8NGHoyIY7nBI4faHaKuPEmoDIb/LJTqBpzZlKoqOokgpXUxQHnt7ERYZ4RErBmf7R9A
+         47cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references;
-        bh=6HFvVJy3GDx2JfJqOBsxFJ41Nmx5K8jDA9duXA0RO48=;
-        b=JhKWqcxqPGng9zVQDX2nVsgHBzoTKK/0uj+LM2P3Z66NApQ19HrcHrNG1or5/Za4Ce
-         dErU91qF0GPpMYmTWWz6oLCOMNNc4jCnup2Jk0VzS+qS13zg2mKRHOBKz8YiNj6xGRao
-         LyVEANHqZgX69uQKxYwLcb305ZB4PlVi4xqLWaZ8kSLDByhJg/MGhM+fv+kIYm2xzFV7
-         pfbkfbl0LpW058540y4SKy0AirwL8B0XObkPC/fwObnyVvibQOaAZOWqzcMLnktSIJ/v
-         MbeX+yMZpyDkVexnFrCb5dBT9pk/mMwJFJttLOfYoO/OqWD+UJ1QUE7qK2U76hsVYY0z
-         YQnw==
-X-Gm-Message-State: AE9vXwPflTpKeiwsrjRx3YHfK7KWAiQzSKa4uTeDB3j/ICf5J3wuKZYmEr0iYWlQMB90Tw==
-X-Received: by 10.55.119.134 with SMTP id s128mr13140322qkc.39.1473984748970;
-        Thu, 15 Sep 2016 17:12:28 -0700 (PDT)
+        bh=p2feG4VWbKDi6st1npJbLMkZfpMhXTWoRvuki5YIsTY=;
+        b=QwHDcYiwzmabTnhoZ26CTkbMrubBzLCdvd6zsw0gFanUyeX2MMktovQTvd3B0hWnwF
+         Zc/ZLeLbCVdV8JCXT27CN7AjTUW6jgmkDzAzGRyuSVl7X2ossCWVHDgV+B+oGGjsDLvL
+         /qwN+ciISfWa9dJGuqyqUJREPxFq979JkBHtV6vS0HsG701YWyfcQ1fX4RnIu7xa1COQ
+         rrfkz5FCIq6pb1uxq/eW/gXZTx3XRSTu8Ghd9B0MGHPRAJqPS3gWnvGd0v8pAUM3bltp
+         +ugyGLEuzhPXCG9MOeFk9byE3Fc9NJAwVYw3yGrcJIc3fo0dT+v8Yrof3uMC2gtdIuLY
+         jMNg==
+X-Gm-Message-State: AE9vXwPKhKMF7rTHQmhszejNoO3+MLGmg8YKO/W9rXlLVKpam1P3hdG2pfrAaKixXH0fag==
+X-Received: by 10.55.97.130 with SMTP id v124mr13038292qkb.51.1473984749773;
+        Thu, 15 Sep 2016 17:12:29 -0700 (PDT)
 Received: from localhost.localdomain (ool-457850cc.dyn.optonline.net. [69.120.80.204])
-        by smtp.gmail.com with ESMTPSA id d27sm3227196qtd.37.2016.09.15.17.12.28
+        by smtp.gmail.com with ESMTPSA id d27sm3227196qtd.37.2016.09.15.17.12.29
         for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 15 Sep 2016 17:12:28 -0700 (PDT)
+        Thu, 15 Sep 2016 17:12:29 -0700 (PDT)
 From:   Kevin Wern <kevin.m.wern@gmail.com>
 To:     git@vger.kernel.org
-Subject: [PATCH 06/11] Resumable clone: implement transport_prime_clone
-Date:   Thu, 15 Sep 2016 20:12:17 -0400
-Message-Id: <1473984742-12516-7-git-send-email-kevin.m.wern@gmail.com>
+Subject: [PATCH 07/11] Resumable clone: add resumable download to http/curl
+Date:   Thu, 15 Sep 2016 20:12:18 -0400
+Message-Id: <1473984742-12516-8-git-send-email-kevin.m.wern@gmail.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1473984742-12516-1-git-send-email-kevin.m.wern@gmail.com>
 References: <1473984742-12516-1-git-send-email-kevin.m.wern@gmail.com>
@@ -60,252 +60,238 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create transport_prime_clone API, as well as all internal methods.
-Create representations of alt_resource and prime-clone path options.
+Create resumable download procedure and progress display function.
+The conversion from B to KB occurs because otherwise the byte counts
+for large repos (i.e. Linux) overflow calculating percentage.
 
-The intention of get_alt_res_helper is solely to parse the output of
-remote-curl because transport-helper does not handle verbose options
-or speaking to the user verbosely. Therefore, all error parsing is
-done with remote-curl, and any protocol breach between remote-curl and
-transport-helper will treated as a bug and result in death.
+The download protocol includes the resource's URL, and the directory
+the resource will be downloaded to. The url passed to remote-curl on
+invocation does not matter (git clone will use the resource url
+again here).
 
 Signed-off-by: Kevin Wern <kevin.m.wern@gmail.com>
 ---
- transport-helper.c | 51 ++++++++++++++++++++++++++++++++++++++++++++++++++-
- transport.c        | 44 ++++++++++++++++++++++++++++++++++++++++++++
- transport.h        | 20 ++++++++++++++++++++
- 3 files changed, 114 insertions(+), 1 deletion(-)
+ http.c        | 86 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ http.h        |  7 ++++-
+ remote-curl.c | 27 +++++++++++++++++++
+ 3 files changed, 118 insertions(+), 2 deletions(-)
 
-diff --git a/transport-helper.c b/transport-helper.c
-index b934183..eb185d5 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -28,7 +28,8 @@ struct helper_data {
- 		signed_tags : 1,
- 		check_connectivity : 1,
- 		no_disconnect_req : 1,
--		no_private_update : 1;
-+		no_private_update : 1,
-+		prime_clone : 1;
- 	char *export_marks;
- 	char *import_marks;
- 	/* These go from remote name (as in "list") to private name */
-@@ -180,6 +181,8 @@ static struct child_process *get_helper(struct transport *transport)
- 			data->export = 1;
- 		else if (!strcmp(capname, "check-connectivity"))
- 			data->check_connectivity = 1;
-+		else if (!strcmp(capname, "prime-clone"))
-+			data->prime_clone = 1;
- 		else if (!data->refspecs && skip_prefix(capname, "refspec ", &arg)) {
- 			ALLOC_GROW(refspecs,
- 				   refspec_nr + 1,
-@@ -248,6 +251,7 @@ static int disconnect_helper(struct transport *transport)
+diff --git a/http.c b/http.c
+index 1d5e3bb..93d6324 100644
+--- a/http.c
++++ b/http.c
+@@ -10,6 +10,8 @@
+ #include "pkt-line.h"
+ #include "gettext.h"
+ #include "transport.h"
++#include "progress.h"
++#include "dir.h"
+ 
+ #if LIBCURL_VERSION_NUM >= 0x070a08
+ long int git_curl_ipresolve = CURL_IPRESOLVE_WHATEVER;
+@@ -1136,7 +1138,10 @@ static int handle_curl_result(struct slot_results *results)
+ 				curl_easy_strerror(results->curl_result),
+ 				sizeof(curl_errorstr));
+ #endif
+-		return HTTP_ERROR;
++		if (results->http_code >= 400)
++			return HTTP_ERROR;
++		else
++			return HTTP_ERROR_RESUMABLE;
+ 	}
  }
  
- static const char *unsupported_options[] = {
-+	TRANS_OPT_PRIMECLONE,
- 	TRANS_OPT_UPLOADPACK,
- 	TRANS_OPT_RECEIVEPACK,
- 	TRANS_OPT_THIN,
-@@ -1054,6 +1058,50 @@ static struct ref *get_refs_list(struct transport *transport, int for_push)
+@@ -1365,6 +1370,40 @@ static void http_opt_request_remainder(CURL *curl, off_t pos)
+ #define HTTP_REQUEST_STRBUF	0
+ #define HTTP_REQUEST_FILE	1
+ 
++static int bytes_to_rounded_kb(double bytes)
++{
++	return (int) (bytes + 512)/1024;
++}
++
++int progress_func(void *data, double total_to_download, double now_downloaded,
++		  double total_to_upload, double now_uploadeded)
++{
++	struct progress **progress = data;
++	int kilobytes = total_to_download >= 1024;
++
++	if (total_to_download <= 0.0) {
++		return 0;
++	}
++	if (kilobytes) {
++		now_downloaded = bytes_to_rounded_kb(now_downloaded);
++		total_to_download = bytes_to_rounded_kb(total_to_download);
++	}
++	if (!*progress && now_downloaded < total_to_download) {
++		if (total_to_download > 1024)
++			*progress = start_progress("Downloading (KB)",
++						   total_to_download);
++		else
++			*progress = start_progress("Downloading (B)",
++						   total_to_download);
++	}
++	display_progress(*progress, now_downloaded);
++	if (now_downloaded == total_to_download) {
++		stop_progress(progress);
++	}
++	return 0;
++}
++
++
+ static int http_request(const char *url,
+ 			void *result, int target,
+ 			const struct http_get_options *options)
+@@ -1373,6 +1412,7 @@ static int http_request(const char *url,
+ 	struct slot_results results;
+ 	struct curl_slist *headers = NULL;
+ 	struct strbuf buf = STRBUF_INIT;
++	struct progress *progress = NULL;
+ 	const char *accept_language;
+ 	int ret;
+ 
+@@ -1389,6 +1429,16 @@ static int http_request(const char *url,
+ 			off_t posn = ftello(result);
+ 			curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION,
+ 					 fwrite);
++			if (options && options->progress) {
++				curl_easy_setopt(slot->curl,
++						 CURLOPT_NOPROGRESS, 0);
++				curl_easy_setopt(slot->curl,
++						 CURLOPT_PROGRESSFUNCTION,
++						 progress_func);
++				curl_easy_setopt(slot->curl,
++						 CURLOPT_PROGRESSDATA,
++						 &progress);
++			}
+ 			if (posn > 0)
+ 				http_opt_request_remainder(slot->curl, posn);
+ 		} else
+@@ -1559,6 +1609,40 @@ cleanup:
  	return ret;
  }
  
-+static const struct alt_resource *const get_alt_res_helper(struct transport *transport)
++int http_download_primer(const char *url, const char *out_file)
 +{
-+	struct helper_data *data = transport->data;
-+	char *url = NULL, *filetype = NULL;
-+	struct alt_resource *ret = NULL;
-+	struct strbuf out = STRBUF_INIT;
-+	struct child_process *helper = get_helper(transport);
-+	int err = 0;
++	int ret = 0, try_count = HTTP_TRY_COUNT;
++	struct http_get_options options = {0};
++	options.progress = 1;
 +
-+	helper = get_helper(transport);
-+	write_constant(helper->in, "prime-clone\n");
++	if (file_exists(out_file)) {
++		fprintf(stderr,
++			"File already downloaded: '%s', skipping...\n",
++			out_file);
++		return ret;
++	}
 +
-+	while (!recvline(data, &out)) {
-+		char *space = strchr(out.buf, ' ');
-+
-+		if (!*out.buf)
-+			break;
-+
-+		if (starts_with(out.buf, "error")) {
-+			err = 1;
-+			continue;
++	do {
++		if (try_count != HTTP_TRY_COUNT) {
++			fprintf(stderr, "Connection interrupted for some "
++				"reason, retrying (%d attempts left)\n",
++				try_count);
++			struct timeval time = {10, 0}; // 1s
++			select(0, NULL, NULL, NULL, &time);
 +		}
++		ret = http_get_file(url, out_file, &options);
++		try_count--;
++	} while (try_count > 0 && ret == HTTP_ERROR_RESUMABLE);
 +
-+		if (!space || strchr(space + 1, ' '))
-+			die("malformed alternate resource response: %s\n",
-+			    out.buf);
-+
-+		if ((filetype && url) || err)
-+			continue;
-+
-+		filetype = xstrndup(out.buf, (space - out.buf));
-+		url = xstrdup(space + 1);
++	if (ret != HTTP_OK) {
++		error("Unable to get resource: %s", url);
++		ret = -1;
 +	}
 +
-+	if (filetype && url && !err) {
-+		ret = xcalloc(1, sizeof(*ret));
-+		ret->filetype = filetype;
-+		ret->url = url;
-+	}
-+
-+	strbuf_release(&out);
 +	return ret;
 +}
 +
- int transport_helper_init(struct transport *transport, const char *name)
++
+ int http_fetch_ref(const char *base, struct ref *ref)
  {
- 	struct helper_data *data = xcalloc(1, sizeof(*data));
-@@ -1067,6 +1115,7 @@ int transport_helper_init(struct transport *transport, const char *name)
- 	transport->data = data;
- 	transport->set_option = set_helper_option;
- 	transport->get_refs_list = get_refs_list;
-+	transport->prime_clone = get_alt_res_helper;
- 	transport->fetch = fetch;
- 	transport->push_refs = push_refs;
- 	transport->disconnect = release_helper;
-diff --git a/transport.c b/transport.c
-index 7bd3206..dd0d839 100644
---- a/transport.c
-+++ b/transport.c
-@@ -131,6 +131,9 @@ static int set_git_option(struct git_transport_options *opts,
- 	} else if (!strcmp(name, TRANS_OPT_RECEIVEPACK)) {
- 		opts->receivepack = value;
- 		return 0;
-+	} else if (!strcmp(name, TRANS_OPT_PRIMECLONE)) {
-+		opts->primeclone = value;
-+		return 0;
- 	} else if (!strcmp(name, TRANS_OPT_THIN)) {
- 		opts->thin = !!value;
- 		return 0;
-@@ -533,6 +536,42 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
- 	return ret;
+ 	struct http_get_options options = {0};
+diff --git a/http.h b/http.h
+index 4ef4bbd..6a7ce7b 100644
+--- a/http.h
++++ b/http.h
+@@ -138,7 +138,8 @@ extern char *get_remote_object_url(const char *url, const char *hex,
+ /* Options for http_get_*() */
+ struct http_get_options {
+ 	unsigned no_cache:1,
+-		 keep_error:1;
++		 keep_error:1,
++		 progress:1;
+ 
+ 	/* If non-NULL, returns the content-type of the response. */
+ 	struct strbuf *content_type;
+@@ -172,6 +173,7 @@ struct http_get_options {
+ #define HTTP_START_FAILED	3
+ #define HTTP_REAUTH	4
+ #define HTTP_NOAUTH	5
++#define HTTP_ERROR_RESUMABLE	6
+ 
+ /*
+  * Requests a URL and stores the result in a strbuf.
+@@ -180,6 +182,9 @@ struct http_get_options {
+  */
+ int http_get_strbuf(const char *url, struct strbuf *result, struct http_get_options *options);
+ 
++#define HTTP_TRY_COUNT 5
++int http_download_primer(const char *url, const char *out_file);
++
+ extern int http_fetch_ref(const char *base, struct ref *ref);
+ 
+ /* Helpers for fetching packs */
+diff --git a/remote-curl.c b/remote-curl.c
+index 8ebb587..051ba52 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -394,6 +394,30 @@ static void prime_clone(void)
+ 	free(result_full);
  }
  
-+const struct alt_resource *const get_alt_res_via_connect(struct transport *transport)
++static void download_primer(const char *url, const char *base_dir)
 +{
-+	struct git_transport_data *data = transport->data;
-+	const struct alt_resource *res = NULL;
-+	int flags = transport->verbose > 0 ? 0 : CONNECT_SUPPRESS_ERRORS;
-+
-+	data->conn = git_connect(data->fd, transport->url,
-+				 transport->smart_options->primeclone, flags);
-+	res = get_alt_res_connect(data->fd[0], flags);
-+
-+	close(data->fd[0]);
-+	close(data->fd[1]);
-+	finish_connect(data->conn);
-+	data->conn = NULL;
-+
-+	return res;
++	char *slash_ptr = strchr(url, '/'), *out_file;
++	struct strbuf out_path = STRBUF_INIT;
++	do {
++		out_file = slash_ptr + 1;
++	} while (slash_ptr = strchr(out_file, '/'));
++	strbuf_addf(&out_path, "%s/%s", base_dir, out_file);
++	if (!http_download_primer(url, out_path.buf))
++		printf("%s\n", out_path.buf);
++	printf("\n");
++	fflush(stdout);
 +}
 +
-+const struct alt_resource *const transport_prime_clone(struct transport *transport)
++static void parse_download_primer(struct strbuf *buf)
 +{
-+	if (transport->prime_clone && !transport->alt_res)
-+		transport->alt_res = transport->prime_clone(transport);
-+	if (transport->verbose > 0) {
-+		if (transport->alt_res)
-+			// redundant at this point, but will be
-+			// more useful in future iterations with
-+			// lists of potential resources
-+			fprintf(stderr, "alt resource found: %s (%s)\n",
-+				transport->alt_res->url,
-+				transport->alt_res->filetype);
-+		else
-+			fprintf(stderr, "alt res not found\n");
++	const char *remote_url;
++	if (skip_prefix(buf->buf, "download-primer ", &remote_url)) {
++		char *base_path;
++		base_path = strchr(remote_url, ' ');
++		*base_path++ = '\0';
++		download_primer(remote_url, base_path);
 +	}
-+	return transport->alt_res;
 +}
-+
- static int connect_git(struct transport *transport, const char *name,
- 		       const char *executable, int fd[2])
+ 
+ static struct discovery *discover_refs(const char *service, int for_push)
  {
-@@ -691,6 +730,7 @@ struct transport *transport_get(struct remote *remote, const char *url)
- 		ret->set_option = NULL;
- 		ret->get_refs_list = get_refs_via_connect;
- 		ret->fetch = fetch_refs_via_pack;
-+		ret->prime_clone = get_alt_res_via_connect;
- 		ret->push_refs = git_transport_push;
- 		ret->connect = connect_git;
- 		ret->disconnect = disconnect_git;
-@@ -713,6 +753,10 @@ struct transport *transport_get(struct remote *remote, const char *url)
- 		ret->smart_options->receivepack = "git-receive-pack";
- 		if (remote->receivepack)
- 			ret->smart_options->receivepack = remote->receivepack;
-+		// No remote.*.primeclone config because prime-clone only
-+		// applies to clone. After that, it is never used the repo
-+		// again.
-+		ret->smart_options->primeclone = "git-prime-clone";
- 	}
- 
- 	return ret;
-diff --git a/transport.h b/transport.h
-index c681408..2bb6963 100644
---- a/transport.h
-+++ b/transport.h
-@@ -15,6 +15,7 @@ struct git_transport_options {
- 	int depth;
- 	const char *uploadpack;
- 	const char *receivepack;
-+	const char *primeclone;
- 	struct push_cas_option *cas;
- };
- 
-@@ -24,11 +25,17 @@ enum transport_family {
- 	TRANSPORT_FAMILY_IPV6
- };
- 
-+struct alt_resource {
-+	char *url;
-+	char *filetype;
-+};
-+
- struct transport {
- 	struct remote *remote;
- 	const char *url;
- 	void *data;
- 	const struct ref *remote_refs;
-+	const struct alt_resource *alt_res;
- 
- 	/**
- 	 * Indicates whether we already called get_refs_list(); set by
-@@ -68,6 +75,15 @@ struct transport {
- 	struct ref *(*get_refs_list)(struct transport *transport, int for_push);
- 
- 	/**
-+	 * Returns the location of an alternate resource to fetch before
-+	 * cloning.
-+	 *
-+	 * If the transport cannot determine an alternate resource, then
-+	 * NULL is returned.
-+	 **/
-+	const struct alt_resource *const (*prime_clone)(struct transport *transport);
-+
-+	/**
- 	 * Fetch the objects for the given refs. Note that this gets
- 	 * an array, and should ignore the list structure.
- 	 *
-@@ -164,6 +180,9 @@ int transport_restrict_protocols(void);
- /* The program to use on the remote side to send a pack */
- #define TRANS_OPT_UPLOADPACK "uploadpack"
- 
-+/* The program to use on the remote side to check for alternate resource */
-+#define TRANS_OPT_PRIMECLONE "primeclone"
-+
- /* The program to use on the remote side to receive a pack */
- #define TRANS_OPT_RECEIVEPACK "receivepack"
- 
-@@ -208,6 +227,7 @@ int transport_push(struct transport *connection,
- 		   unsigned int * reject_reasons);
- 
- const struct ref *transport_get_remote_refs(struct transport *transport);
-+const struct alt_resource *const transport_prime_clone(struct transport *transport);
- 
- int transport_fetch_refs(struct transport *transport, struct ref *refs);
- void transport_unlock_pack(struct transport *transport);
+@@ -1105,6 +1129,8 @@ int main(int argc, const char **argv)
+ 		} else if (!strcmp(buf.buf, "list") || starts_with(buf.buf, "list ")) {
+ 			int for_push = !!strstr(buf.buf + 4, "for-push");
+ 			output_refs(get_refs(for_push));
++		} else if (starts_with(buf.buf, "download-primer")) {
++			parse_download_primer(&buf);
+ 		} else if (!strcmp(buf.buf, "prime-clone")) {
+ 			prime_clone();
+ 		} else if (starts_with(buf.buf, "push ")) {
+@@ -1132,6 +1158,7 @@ int main(int argc, const char **argv)
+ 			printf("fetch\n");
+ 			printf("option\n");
+ 			printf("push\n");
++			printf("download-primer\n");
+ 			printf("prime-clone\n");
+ 			printf("check-connectivity\n");
+ 			printf("\n");
 -- 
 2.7.4
 
