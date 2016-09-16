@@ -4,90 +4,102 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0727C207DF
-	for <e@80x24.org>; Fri, 16 Sep 2016 18:29:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0E40207DF
+	for <e@80x24.org>; Fri, 16 Sep 2016 18:47:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752784AbcIPS3i (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Sep 2016 14:29:38 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61547 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751704AbcIPS3h (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Sep 2016 14:29:37 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 92D323F7C2;
-        Fri, 16 Sep 2016 14:29:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=bqIj3P/4QNyGVjb8oHTaS/dFiLs=; b=XS2UXu
-        7YKzYPzBhb3cV9POlxXYs/b7x+CgJ0NEjguMB3G6ffpEIvUFhze4KasAtaM3KxhF
-        PaEHBox7ieZPf+Om+QkkuGUFwddsJrMZ80Q3f6aTDSlLvAxfjjLENFBkS4yX75S6
-        /Lps5JUZ0gH3B6rues3uagJ+dSl2jbLli6Wj0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=CadCke39oEp3jDr9wFIk9ARQH5vHKw3i
-        8EZ/BKGgmpzA/IwjwuqFqUEutU2DigPXbdRhL/nSX1ePDFGT59U5pUjzcoxu3BeG
-        6ISHgzT5YB/aDi3h292rCr1I84a/SGFOkBy38I4e7tQ1zY31QZAY2Qbnw/131JOm
-        9FIVz9ce56o=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8B7403F7C1;
-        Fri, 16 Sep 2016 14:29:29 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0738E3F7C0;
-        Fri, 16 Sep 2016 14:29:28 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [RFC/PATCH 0/3] handle multiline in-body headers
-References: <20160907063819.dd7aulnlsytcuyqj@sigill.intra.peff.net>
-        <cover.1474047135.git.jonathantanmy@google.com>
-Date:   Fri, 16 Sep 2016 11:29:27 -0700
-In-Reply-To: <cover.1474047135.git.jonathantanmy@google.com> (Jonathan Tan's
-        message of "Fri, 16 Sep 2016 10:37:21 -0700")
-Message-ID: <xmqqshszk8ag.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1754783AbcIPSrk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Sep 2016 14:47:40 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:38138 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753255AbcIPSrj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Sep 2016 14:47:39 -0400
+Received: by mail-wm0-f52.google.com with SMTP id 1so57514668wmz.1
+        for <git@vger.kernel.org>; Fri, 16 Sep 2016 11:47:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=0T3YLC9rniJ8mlw2fRR40UZqXoX54Zcui3ThjizPHVk=;
+        b=KbIPbRfM4f+mcQG1+Wj3evSBonBFxPuZZ1CxBhA1u57kVbdlYTcebyhwlem3fHiRbL
+         VQjuPAsBxUdFyvsMHzEBBDkSeWrOPsIBjW4XgXYwpm8AH7pSYCpQw6VXEGn6jb4PnGhj
+         CBI/T9jjqCdptkhq5v83n5szficGRH1wgY7xeL8tCxbMfIufCYluOlQ/FeU4PT1VIuXf
+         1hZawN73N6YteuQC9w1Ay1CcAKczCGsQYhZFudIivqe+Dgb5nmRIWwbcX34L83FV6P+k
+         Zobh1GPfJpFzXeyf1qFSNK/AKNyz7PmT90+z2jEgh5gzUSA5UwaDoIibgdWPC7qLv9rJ
+         eegg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=0T3YLC9rniJ8mlw2fRR40UZqXoX54Zcui3ThjizPHVk=;
+        b=aAtC40pvKdp3EGHQV/1PeT+usZjjIF3003UB+B+PWKnBOrVP8H0HC4o8V44tZS7K6K
+         hg2JQQCpo00v4YVS5wYM5xlVmYKn5Fu4ANoMj7v2UKXsmcAwB/5eZAmcmoHgCTo2IHZE
+         XqCNzrwzr4mhcBmUucrO2fL4u4YO7rfqIzkkk76t/O21uArx48IhaSsXsjqNMbRnUC6K
+         XtSL7W4FwQgMx6qROZrtVEcV/V2N+EAVBAP6qLewPHrxagrPnjL2PxtSsaC94Ggt/S5z
+         2t97Gvz2tm2gYF2t0fCSyF3kSxbCRxio9/JFOjxANGws8nJSLilfsht+n6VQc0qOl9hu
+         MTfA==
+X-Gm-Message-State: AE9vXwOHgoZdo+ssUuSjJ0W5B4UhWnWQh7xG7zJJ1hZrIC7ZepRpslMnywDIhHcsMBFciO7sPzJRtLK3ys/IIUnX
+X-Received: by 10.28.22.6 with SMTP id 6mr9637511wmw.55.1474051227066; Fri, 16
+ Sep 2016 11:40:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 80FE241C-7C3B-11E6-B5DC-096F12518317-77302942!pb-smtp1.pobox.com
+Received: by 10.28.69.25 with HTTP; Fri, 16 Sep 2016 11:40:26 -0700 (PDT)
+In-Reply-To: <20160916093456.GA1488@book.hvoigt.net>
+References: <1473897473-154528-1-git-send-email-bmwill@google.com>
+ <20160915115752.GA37903@book.hvoigt.net> <CAKoko1rtEydwbWoEq9MBW41qqa10Bm+x0d6zS+Bptk51RjMOMA@mail.gmail.com>
+ <xmqqr38klst6.fsf@gitster.mtv.corp.google.com> <CAGZ79kZJUQhY_bEi1G3zMYR2iGq5gosfVsBP_CFoaMydXP6QUw@mail.gmail.com>
+ <20160916093456.GA1488@book.hvoigt.net>
+From:   Brandon Williams <bmwill@google.com>
+Date:   Fri, 16 Sep 2016 11:40:26 -0700
+Message-ID: <CAKoko1pewoxD4=_9M45pchdDg03K8fc73raJOsf4A+=KKw_EMw@mail.gmail.com>
+Subject: Re: [RFC] extending pathspec support to submodules
+To:     Heiko Voigt <hvoigt@hvoigt.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Jens Lehmann <jens.lehmann@web.de>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
-
-> Thanks, Peff, for the explanation and the method to reproduce the issue.
+On Thu, Sep 15, 2016 at 3:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> The issue seems to be in mailinfo.c - this patch set addresses that, and I have
-> also included a test for "git am" in t/t4150-am.sh to show the effect of this
-> patch set on that command.
-
-Thanks, will take a look.
-
-> Jonathan Tan (3):
->   mailinfo: refactor commit message processing
->   mailinfo: correct malformed test example
->   mailinfo: handle in-body header continuations
+>  * Your program that runs in the top-level superproject still needs
+>    to be able to say "this pathspec from the top cannot possibly
+>    match anything in the submodule, so let's not even bother
+>    descending into it".
 >
->  mailinfo.c                           | 165 ++++++++++++++++++++++++++++-------
->  mailinfo.h                           |   1 +
->  t/t4150-am.sh                        |  23 +++++
->  t/t5100-mailinfo.sh                  |   4 +-
->  t/t5100/info0008--no-inbody-headers  |   5 ++
->  t/t5100/info0018                     |   5 ++
->  t/t5100/msg0008--no-inbody-headers   |   6 ++
->  t/t5100/msg0015--no-inbody-headers   |   1 +
->  t/t5100/msg0018                      |   2 +
->  t/t5100/patch0008--no-inbody-headers |   0
->  t/t5100/patch0018                    |   6 ++
->  t/t5100/sample.mbox                  |  20 +++++
->  12 files changed, 206 insertions(+), 32 deletions(-)
->  create mode 100644 t/t5100/info0008--no-inbody-headers
->  create mode 100644 t/t5100/info0018
->  create mode 100644 t/t5100/msg0008--no-inbody-headers
->  create mode 100644 t/t5100/msg0018
->  create mode 100644 t/t5100/patch0008--no-inbody-headers
->  create mode 100644 t/t5100/patch0018
+
+Yes, we would need to first check if the submodule is a prefix match to the
+pathspec.  ie a submodule 'sub' would need to match the pathspec 'sub/somedir'
+or '*.txt' but not the pathspecs 'subdirectory' or 'otherdir'
+
+> > >    So we may have to rethink what this option name should be.  "You
+> > >    are running in a repository that is used as a submodule in a
+> > >    larger context, which has the submodule at this path" is what the
+> > >    option tells the command; if any existing command already has
+> > >    such an option, we should use it.  If we are inventing one,
+> > >    perhaps "--submodule-path" (I didn't check if there are existing
+> > >    options that sound similar to it and mean completely different
+> > >    things, in which case that name is not usable)?
+> >
+> > Would it make sense to add the '--submodule-path' to a more generic
+> > part of the code? It's not just ls-files/grep that have to solve exactly this
+> > problem. Up to now we just did not go for those commands, though.
+>
+> Yes I think so, since it should also handle starting from a submodule
+> with a pathspec to the superproject or other submodule. In case we
+> go with my above suggestion I would suggest a more generic name since
+> the option could also be passed to processes handling the superproject.
+> E.g. something like --module-prefix or --repository-prefix comes to my
+> mind, not checked though.
+
+Yeah we may want to come up with a more descriptive option name now which can
+be generally applied, especially if we are going to continue adding submodule
+support for other commands.
+
+-Brandon
