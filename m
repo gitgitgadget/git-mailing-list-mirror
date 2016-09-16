@@ -6,75 +6,117 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C93FF1FCA9
-	for <e@80x24.org>; Fri, 16 Sep 2016 07:25:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 931671FCA9
+	for <e@80x24.org>; Fri, 16 Sep 2016 07:33:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756654AbcIPHZP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Sep 2016 03:25:15 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:45612 "EHLO mx1.imag.fr"
+        id S1757143AbcIPHdL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Sep 2016 03:33:11 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:49195 "EHLO mx2.imag.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752183AbcIPHZN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Sep 2016 03:25:13 -0400
+        id S1756931AbcIPHdK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Sep 2016 03:33:10 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-        by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u8G7P7DL009115
+        by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u8G7X2Nn015017
         (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-        Fri, 16 Sep 2016 09:25:07 +0200
-Received: from anie (anie.imag.fr [129.88.42.32])
-        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u8G7P7uN003437;
-        Fri, 16 Sep 2016 09:25:07 +0200
-From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To:     Anatoly Borodin <anatoly.borodin@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Potentially misleading color.* defaults explanation in git-config(1)
-References: <nrfihd$a4o$1@blaine.gmane.org>
-Date:   Fri, 16 Sep 2016 09:25:07 +0200
-In-Reply-To: <nrfihd$a4o$1@blaine.gmane.org> (Anatoly Borodin's message of
-        "Fri, 16 Sep 2016 01:40:01 +0000 (UTC)")
-Message-ID: <vpqeg4k1f3g.fsf@anie.imag.fr>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Fri, 16 Sep 2016 09:25:07 +0200 (CEST)
+        Fri, 16 Sep 2016 09:33:02 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.42.32])
+        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u8G7X3hw003583;
+        Fri, 16 Sep 2016 09:33:03 +0200
+From:   Matthieu Moy <Matthieu.Moy@imag.fr>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, Anatoly Borodin <anatoly.borodin@gmail.com>,
+        Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] Documentation/config: default for color.* is color.ui
+Date:   Fri, 16 Sep 2016 09:32:48 +0200
+Message-Id: <20160916073248.30285-1-Matthieu.Moy@imag.fr>
+X-Mailer: git-send-email 2.10.0.rc0.1.g07c9292
+In-Reply-To: <nrfihd@blaine.gmane.org>
+References: <nrfihd@blaine.gmane.org>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Fri, 16 Sep 2016 09:33:03 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u8G7P7DL009115
+X-MailScanner-ID: u8G7X2Nn015017
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1474615510.57972@45+qzfXB2+YB+XvPf2rghw
+X-IMAG-MailScanner-From: matthieu.moy@imag.fr
+MailScanner-NULL-Check: 1474615984.20272@77rLB2haDAGSr2pAI3V+rQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Anatoly Borodin <anatoly.borodin@gmail.com> writes:
+Since 4c7f181 (make color.ui default to 'auto', 2013-06-10), the
+default for color.* when nothing is set is 'auto' and we still claimed
+that the default was 'false'. Be more precise by saying explicitly
+that the default is to follow color.ui, and recall that the default is
+'auto' to avoid one indirection for the reader.
 
-> Hi All!
->
-> git-config(1) says:
->
->        color.branch
->            A boolean to enable/disable color in the output of git-branch(1).
->            May be set to always, false (or never) or auto (or true), in which
->            case colors are used only when the output is to a terminal.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ Documentation/config.txt | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-So far, so good.
-
->            Defaults to false.
-
-The truth is: Defaults to following color.ui, which used to default to
-false but now defaults to auto.
-
-My bad, I forgot to update these parts of the docs when changing the
-default for color.ui (a while back already). Patch follows.
-
-> (2)	git config color.branch false ; git branch
-
-Unrelated from the question, but you could write
-
-git -c color.branch=false git branch
-
-to set a configuration value just for one command.
-
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 32f065c..66429fb 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -953,7 +953,8 @@ color.branch::
+ 	A boolean to enable/disable color in the output of
+ 	linkgit:git-branch[1]. May be set to `always`,
+ 	`false` (or `never`) or `auto` (or `true`), in which case colors are used
+-	only when the output is to a terminal. Defaults to false.
++	only when the output is to a terminal. If unset, then the
++	value of `color.ui` is used (`auto` by default).
+ 
+ color.branch.<slot>::
+ 	Use customized color for branch coloration. `<slot>` is one of
+@@ -968,7 +969,8 @@ color.diff::
+ 	linkgit:git-log[1], and linkgit:git-show[1] will use color
+ 	for all patches.  If it is set to `true` or `auto`, those
+ 	commands will only use color when output is to the terminal.
+-	Defaults to false.
++	If unset, then the value of `color.ui` is used (`auto` by
++	default).
+ +
+ This does not affect linkgit:git-format-patch[1] or the
+ 'git-diff-{asterisk}' plumbing commands.  Can be overridden on the
+@@ -991,7 +993,8 @@ color.decorate.<slot>::
+ color.grep::
+ 	When set to `always`, always highlight matches.  When `false` (or
+ 	`never`), never.  When set to `true` or `auto`, use color only
+-	when the output is written to the terminal.  Defaults to `false`.
++	when the output is written to the terminal.  If unset, then the
++	value of `color.ui` is used (`auto` by default).
+ 
+ color.grep.<slot>::
+ 	Use customized color for grep colorization.  `<slot>` specifies which
+@@ -1024,7 +1027,8 @@ color.interactive::
+ 	and displays (such as those used by "git-add --interactive" and
+ 	"git-clean --interactive"). When false (or `never`), never.
+ 	When set to `true` or `auto`, use colors only when the output is
+-	to the terminal. Defaults to false.
++	to the terminal. If unset, then the value of `color.ui` is
++	used (`auto` by default).
+ 
+ color.interactive.<slot>::
+ 	Use customized color for 'git add --interactive' and 'git clean
+@@ -1040,13 +1044,15 @@ color.showBranch::
+ 	A boolean to enable/disable color in the output of
+ 	linkgit:git-show-branch[1]. May be set to `always`,
+ 	`false` (or `never`) or `auto` (or `true`), in which case colors are used
+-	only when the output is to a terminal. Defaults to false.
++	only when the output is to a terminal. If unset, then the
++	value of `color.ui` is used (`auto` by default).
+ 
+ color.status::
+ 	A boolean to enable/disable color in the output of
+ 	linkgit:git-status[1]. May be set to `always`,
+ 	`false` (or `never`) or `auto` (or `true`), in which case colors are used
+-	only when the output is to a terminal. Defaults to false.
++	only when the output is to a terminal. If unset, then the
++	value of `color.ui` is used (`auto` by default).
+ 
+ color.status.<slot>::
+ 	Use customized color for status colorization. `<slot>` is
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+2.10.0.rc0.1.g07c9292
+
