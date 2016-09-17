@@ -7,26 +7,25 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 025422070F
-	for <e@80x24.org>; Sat, 17 Sep 2016 08:17:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B02741FCA9
+	for <e@80x24.org>; Sat, 17 Sep 2016 12:52:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758202AbcIQIRd (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Sep 2016 04:17:33 -0400
-Received: from [195.159.176.226] ([195.159.176.226]:38896 "EHLO
+        id S1756383AbcIQMwG (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Sep 2016 08:52:06 -0400
+Received: from [195.159.176.226] ([195.159.176.226]:38496 "EHLO
         blaine.gmane.org" rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org
-        with ESMTP id S1758171AbcIQIR3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Sep 2016 04:17:29 -0400
+        with ESMTP id S1755022AbcIQMwG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Sep 2016 08:52:06 -0400
 Received: from list by blaine.gmane.org with local (Exim 4.84_2)
         (envelope-from <gcvg-git-2@m.gmane.org>)
-        id 1blAoG-00022t-Jc
-        for git@vger.kernel.org; Sat, 17 Sep 2016 10:17:16 +0200
+        id 1blF68-00087b-0B
+        for git@vger.kernel.org; Sat, 17 Sep 2016 14:52:00 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 To:     git@vger.kernel.org
 From:   Anatoly Borodin <anatoly.borodin@gmail.com>
-Subject: Re: Potentially misleading color.* defaults explanation in git-config(1)
-Date:   Sat, 17 Sep 2016 08:16:55 +0000 (UTC)
-Message-ID: <nriu5n$uss$1@blaine.gmane.org>
-References: <nrfihd$a4o$1@blaine.gmane.org> <vpqeg4k1f3g.fsf@anie.imag.fr>
+Subject: Two bugs in --pretty with %C(auto)
+Date:   Sat, 17 Sep 2016 12:51:50 +0000 (UTC)
+Message-ID: <nrje96$q7s$1@blaine.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -37,20 +36,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi!
+Hi All!
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
-> My bad, I forgot to update these parts of the docs when changing the
-> default for color.ui (a while back already). Patch follows.
+First bug:
 
-Thanks for the patch!
+	git log -3 --pretty='%C(cyan)%C(auto)%h%C(auto)%d %s'
 
-> git -c color.branch=false git branch
+prints %h with the default color (normal yellow), but
 
-Oh, that's a nice one! I don't get a chance to use those
-between-git-and-command options often.
+	git log -3 --pretty='%C(bold cyan)%C(auto)%h%C(auto)%d %s'
 
-Merci!
+shows %h with bold yellow, as if only the color was reset, but not
+the attributes (blink, ul, reverse also work this way). %d and %s are
+printed with the right color both times.
+
+Second bug, maybe related to the first one:
+
+	git log -3 --pretty='%C(bold cyan)%h%C(auto)%d %s %an %h %h %s'
+
+The first line looks as expected. Well, almost: the '(' of %d is bold
+yellow.
+
+The second line looks like this:
+
+* %h, %s, %an with bold cyan;
+* %h with bold yellow;
+* %h with normal yellow and %s with normal white (default colors).
+
+PS git version 2.9.2
 
 -- 
 Mit freundlichen Grüßen,
