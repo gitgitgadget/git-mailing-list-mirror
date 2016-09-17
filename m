@@ -2,76 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E3381FCA9
-	for <e@80x24.org>; Sat, 17 Sep 2016 17:47:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 434941FCA9
+	for <e@80x24.org>; Sat, 17 Sep 2016 18:26:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753793AbcIQRr4 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Sep 2016 13:47:56 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:36333 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753430AbcIQRry (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Sep 2016 13:47:54 -0400
-Received: by mail-wm0-f41.google.com with SMTP id w84so11820978wmg.1
-        for <git@vger.kernel.org>; Sat, 17 Sep 2016 10:47:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=+3KD0gwVrt1chfaBvS+GMGT4kjO715qXmJethpGDUp0=;
-        b=t9kk4SF39R7CvvKM9eAkvlEbVJ/UpD+BS1oJnK9lvB19Dk5PXPVvxyqoLBmknJ+8S+
-         1TuYBMv0EldPL1leKKa2XvHOrQ71O+v9Ec8zpLxXWY63bAaLlUze2yhunFkaDxHg17OC
-         9/8E6BymaFh7tUklnFNTIz0Op78kvd6C4gcirwRuu9O5jntOcoGG2hmHSivcconbAtNg
-         XC1q8yDp0hknMb2TfoPlLWTcAJwSWf39AzClDOxm3ZwQpQQL2RfxtDMJyEYT3jy5rHM0
-         ny/KTwyN/EB2Wtk4rqbse1IV+3EiXRmu9dZLrICks/RMsyVyL5sVefFgXLMkzgWyIsZN
-         0p7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=+3KD0gwVrt1chfaBvS+GMGT4kjO715qXmJethpGDUp0=;
-        b=JllV0mwxo/y5NLUYwUqy25Yyk5VwQlyes5sOvt04sbAEot/PbjONsEjAjKaCVAo0oR
-         Dtld3T/KCjwpwz/3RLFPofhIGwJFq/2sPV/rWXqA+lmJ6g+0jbUawns3UBkfmhA6vndG
-         Fp4Ncb4swK5wo4uB9tueeVqj4gExM2c8HhPOdpjk8rRG3wFzDdeTRTZg9UYrEfmFe0J9
-         Zqgq2C2JMVSoFhwV4+47QOG0VUsH6gji3VIkbPcVIe0JK2jOuFf4gaHM5Oi5Z4kVccE0
-         hL6cyun6X1dd8Slri8VhElTnAN+bw2HYSUw88bciQubPohxtn1JO0tOO8ByQqLkUPeIT
-         jJbA==
-X-Gm-Message-State: AE9vXwMdDsKQdSrauIdPz1dkqx+wD9SXd1hwgSAKSBw9e+KoGKMuBNtrKamKiUyBzExcTlLDPM6/t64BfSYaKQ==
-X-Received: by 10.28.132.71 with SMTP id g68mr2479756wmd.20.1474134473151;
- Sat, 17 Sep 2016 10:47:53 -0700 (PDT)
+        id S1754048AbcIQS0J (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Sep 2016 14:26:09 -0400
+Received: from mout.web.de ([212.227.15.3]:54082 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753271AbcIQS0H (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Sep 2016 14:26:07 -0400
+Received: from [192.168.178.36] ([79.213.113.239]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0M3Bqx-1atdgn1kCl-00ssxm; Sat, 17 Sep 2016 20:25:42
+ +0200
+Subject: Re: Two bugs in --pretty with %C(auto)
+To:     Anatoly Borodin <anatoly.borodin@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>
+References: <nrje96$q7s$1@blaine.gmane.org>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <db20ae0c-9c33-1e65-b201-1b6a9ed11340@web.de>
+Date:   Sat, 17 Sep 2016 20:25:24 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Received: by 10.28.71.92 with HTTP; Sat, 17 Sep 2016 10:47:52 -0700 (PDT)
-From:   Andrew Johnson <ajohnson388@gmail.com>
-Date:   Sat, 17 Sep 2016 13:47:52 -0400
-Message-ID: <CAM_5GX48gDAZSvAWnxO5n8uhYf8vmfAJ88_31_ewsQxyPfF7iA@mail.gmail.com>
-Subject: Why are there multiple ways to get the manual in Git?
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <nrje96$q7s$1@blaine.gmane.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:FdJQf+Nel+SCLlnwGDq1/QlBa0bYrXhKCpO+lOhqJ7P1SQ/e/1H
+ E+8AltcWEzqFqxMHxWSLwmTXJ9vCsq6EY++FdmItTPkHwq1YYxbcWKMPuY8fO2iBNJkKo4m
+ jGD9szc0KjwLGMBt/Hp5qeykc4Q8TnxdmFMdxzLQ0c+MN/9z4pFNA9eAtfHvmZQoViNvCvA
+ upkFHj3JRgne8/gl+3HAA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:bh1fbnKLVKE=:DTb7ekUJo+aSQ1SIiP44dr
+ pZMdrb1eJFkBEZ+2/udfFxn8ASSTQwPkMxCJWy4AydxIMlgEu6sWMu7JBJ0mIALt+I7e2Hyam
+ xqajdkXz+XO6Y/37/s8Zivz8Jc0MBZYv5FkbNbZnR2HauSrepyQ1Imy7pP2nmNEl5ctatOXs8
+ ANEDaHiNmQVHFc7mVNe0ColEZ2sW2A5c88yaruUA3oJ9lhJySkYqXOtTbj3xQqUaWMVQYQIQM
+ 2uGL28D6WeIsx4OyC0hI9LgcCYSdm3YADfVJw/OUTXb9IJwHKucdHdeOomC89TAiIE2XYeg+u
+ PiskfsOE4ntByXGrkgOILKecLIFCVeboU80gM+kQLHG3TvDbceJvxgbkSq03T8EFx2m5z+DP5
+ 7JZwmg9ITjpYnIIcLsiweQRS/5myIkuyfAoMg7M2u8qhPcLfWkpECZzsftCgTNt+9zwSgRNky
+ JIO47x4ptKrFy8MuLoRv53AyZii0d4pFmLyw82nTQkBrzx3YdAw+Yzxdl2pHyfqiz5+rHIYHG
+ NJQGXfUODQp0N9zs9XWevGrGYI7pLb6e81QCWb4f4Y7X0jIJ8CxEOAPu+qsHO9atwvDeSm6uB
+ eMlIOdu8KBLqUSE7lpDOs1ZOIf/eAdlHWlfFaKyzYLeXCKe7N2kWQwv1VVfrzOqbs4CaId1EV
+ CqzyoozmdU4TdSQ21/gwAQu4FLS0VMuH3qi74upAUBkizn0CU8P91wzQCKVkq2PwTmMZLbciW
+ tb+RxkGC5H1kWknJpz0bQJOhHmIUXdk8rrBtJ3U1YOjkdGz1Nvq4ICoOKJSzYLBRZPjHQel2J
+ Y9DhiMN
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Am 17.09.2016 um 14:51 schrieb Anatoly Borodin:
+> Hi All!
+> 
+> First bug:
+> 
+> 	git log -3 --pretty='%C(cyan)%C(auto)%h%C(auto)%d %s'
+> 
+> prints %h with the default color (normal yellow), but
+> 
+> 	git log -3 --pretty='%C(bold cyan)%C(auto)%h%C(auto)%d %s'
+> 
+> shows %h with bold yellow, as if only the color was reset, but not
+> the attributes (blink, ul, reverse also work this way). %d and %s are
+> printed with the right color both times.
+> 
+> Second bug, maybe related to the first one:
+> 
+> 	git log -3 --pretty='%C(bold cyan)%h%C(auto)%d %s %an %h %h %s'
+> 
+> The first line looks as expected. Well, almost: the '(' of %d is bold
+> yellow.
+> 
+> The second line looks like this:
+> 
+> * %h, %s, %an with bold cyan;
+> * %h with bold yellow;
+> * %h with normal yellow and %s with normal white (default colors).
+> 
+> PS git version 2.9.2
 
-I was curious as to why the developers of Git decided to have three
-methods to get the manual for a verb. I am a developer who strives to
-understand Git to its fullest extent, and will share any information
-given on this question.
+Well, in both cases you could add %Creset before %C(auto) to get what
+you want.
 
-While reading Pro Git 2nd Ed. I came across these three methods:
+I'm not sure how just how automatic %C(auto) is supposed to be, but you
+expected it do emit the reset for you, right?  Sounds reasonable to me.
+The following patch implements that behavior.
 
-$ git help <verb>
-$ git <verb> --help
-$ man git-<verb>
+Duy, what do you think?
 
-I tested all three to confirm they were equivalent.
+-- >8 --
+Subject: pretty: let %C(auto) reset all attributes
 
-What was the motivation behind the complication, if any? I presume
-most developers would not provide multiple commands that do the same
-thing for absolutely no reason, so I led myself to ask this question.
+Reset colors and attributes upon %C(auto) to enable full automatic
+control over them; otherwise attributes like bold or reverse could
+still be in effect from previous %C placeholders.
 
-Respectfully,
-Andrew Johnson
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ pretty.c                   | 2 ++
+ t/t6006-rev-list-format.sh | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/pretty.c b/pretty.c
+index 9788bd8..493edb0 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1072,6 +1072,8 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 	case 'C':
+ 		if (starts_with(placeholder + 1, "(auto)")) {
+ 			c->auto_color = want_color(c->pretty_ctx->color);
++			if (c->auto_color)
++				strbuf_addstr(sb, GIT_COLOR_RESET);
+ 			return 7; /* consumed 7 bytes, "C(auto)" */
+ 		} else {
+ 			int ret = parse_color(sb, placeholder, c);
+diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
+index a1dcdb8..f6020cd 100755
+--- a/t/t6006-rev-list-format.sh
++++ b/t/t6006-rev-list-format.sh
+@@ -225,7 +225,7 @@ test_expect_success '%C(auto,...) respects --color=auto (stdout not tty)' '
+ 
+ test_expect_success '%C(auto) respects --color' '
+ 	git log --color --format="%C(auto)%H" -1 >actual &&
+-	printf "\\033[33m%s\\033[m\\n" $(git rev-parse HEAD) >expect &&
++	printf "\\033[m\\033[33m%s\\033[m\\n" $(git rev-parse HEAD) >expect &&
+ 	test_cmp expect actual
+ '
+ 
+-- 
+2.10.0
+
+
