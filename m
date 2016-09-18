@@ -2,78 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 631012070F
-	for <e@80x24.org>; Sun, 18 Sep 2016 19:23:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B56AF2070F
+	for <e@80x24.org>; Sun, 18 Sep 2016 19:32:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759519AbcIRTXA (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Sep 2016 15:23:00 -0400
-Received: from mout.gmx.net ([212.227.17.22]:55358 "EHLO mout.gmx.net"
+        id S932595AbcIRTb7 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Sep 2016 15:31:59 -0400
+Received: from mout.web.de ([217.72.192.78]:63728 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755737AbcIRTW5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Sep 2016 15:22:57 -0400
-Received: from virtualbox ([99.48.236.64]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0MM0bQ-1be16l0nxE-007kKO; Sun, 18 Sep 2016 21:22:51
+        id S932228AbcIRTb5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Sep 2016 15:31:57 -0400
+Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0MYNzx-1bYh8S0QbJ-00V7LO; Sun, 18 Sep 2016 21:31:53
  +0200
-Date:   Sun, 18 Sep 2016 21:22:47 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Kevin Wern <kevin.m.wern@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 10/11] run command: add RUN_COMMAND_NO_STDOUT
-In-Reply-To: <xmqq37kzigvf.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1609182118380.129229@virtualbox>
-References: <1473984742-12516-1-git-send-email-kevin.m.wern@gmail.com>        <1473984742-12516-11-git-send-email-kevin.m.wern@gmail.com> <xmqq37kzigvf.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+Subject: Re: Gitattributes file is not respected when switching between
+ branches
+To:     =?UTF-8?B?0JLQuNGC0LDQu9C40Lkg0JjRidC10L3QutC+?= <betalb@gmail.com>,
+        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+References: <CANYoZJng0GNZWU=eUEnXgVQ_NKQQOKM+mhJ9bsXMEJxxEhwQMw@mail.gmail.com>
+ <8df2883f-ec3c-3446-2e06-207c93452332@web.de>
+ <7c14756e-29f9-b475-f5f5-597acb8cea98@web.de>
+ <CANYoZJnB81rEGNAjGj6jOscmdSW_niSy6jRP6acw2xB4ssX8xA@mail.gmail.com>
+Cc:     git@vger.kernel.org
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <beaf2e9c-70c9-b80a-b201-aeed830f8807@web.de>
+Date:   Sun, 18 Sep 2016 21:31:48 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
+ Gecko/20100101 Thunderbird/45.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:93tit3XzaLAZkn/z3X9eUTq32BFgfyYSEgB5L8siHNNny/JFjTK
- JusuFv7iqiL6kWWWlXbLDIUdl0vMy4Yjpkpp6totqWRZ+9et5DRtCayA/rwV3xeIcszulk/
- WDThjcjQ1NZvDeiRxDCOqy/nOg/aN4zZl459R/vziliJLXjWXPw9nIQUgTJotOuGv5XOODr
- 4ulR1z2jVP3MLepEl7d6w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:lrIXJAF7gXY=:mFSj397xXUi63mqLKI4MmI
- uA/LhKuqdGg0Aphb6V7VFfAnUZcLQ4Dljsu+VrkKlR5nat8k3iDqjqRSOcIjkIlfDc/n+iJCj
- Qw37+wFpilJPYv/ofttwRVwg8XxOAlmRGTpenhbtDkjN3OWpIAUGfm+H2vUq1LDIF+nTbvZTU
- tZTa4MY4q6Q8f5Jr7yYK12xCLKMdyyirlRRnf58Fvg0LeA4JNd8XKySKY+X6BV2uVuZ9z95iH
- p33x+Yc99cGXR7F5dCv+ac/Gsydl2koog2M+9HLivKG4oEUQJwUx16jRbbZmt1F8DegkH48Az
- 9ZF41Uqwvrzp+e41j/TvQgsI1gx5U0VTETQzo0Fp6+KNgJ4V9cYLSu0DBuHRIArc6lqpYuFPq
- zuC9KY4ln0NYjypdyz4kwsVhs040ubupuAzJrI8Y723MX4k3P0yqhb9UFAfTovYgRhfwdb+NC
- lwhv3H50928uZzt+yxWS8CmBoraUhJMYkdVkGiv227bTg8u2GpTUkSx5DpzmFtcike7KDQvL8
- hoFp/4ObQKKIXswwEt10PSLM0g9QZtCktD2TvUbdBAqMlbLr21WvuAG3roIydl19dv692AoAJ
- k7OXaz+sSUghFXDzpXQ/LpjSNx8ACHwgi8nMrz1pSUUXScNa5x0lcBf0DYYO7d75TLhpz1xR1
- mfWDYtx/znCc3Ho4dDuy0St3NcDjx9JOtalMIrXH4ojDz/2wfGK2/zz5/HD23fJDQS7UrKmnw
- /dNe3xZ2lKLEgl62Tzp0bAv4l3J/dc0zwX3o16BucUCDQCMoizhmUGkojKmbKoh8x7/t56Io5
- H6vQXvG
+In-Reply-To: <CANYoZJnB81rEGNAjGj6jOscmdSW_niSy6jRP6acw2xB4ssX8xA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:GJxrEcS5ICVkoOFLmz9R+HZXFEz7ovTl/VYFd/+UgxEiQaOb6u3
+ kXncjmOXdEa9F2Jte5KVF1QU0mT8dOKSImJpJTa9xidhceaZaEkcI30OGDhk2zA/FwlwS95
+ fZ8TFN1f1FriBVLGaUpuZFEdMiJ5s08BSD0P9iKQHMsJHLGZraPHhcB49vGqOHMbGb8pdAD
+ W3nXkOX9MikHwifb2kBlg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:yKYXcPjeBNc=:D6Ld4C4ees/+93veSHlSfk
+ ipsmLuzQfVAKaHwu1RDbMVs2w1jQTuP/uIR9W48c/hkwTU0aGfTEyWq7mV/8qIJt5/WytIfZ6
+ biuw4PQGEXFfRK/L5b1Kz8e5odqUtmVMF7hNhuD5EwitzZQFeIlfQFEAwXFFxpCkJzZsdPKha
+ Wyd0RzZXThD9/8wTtn59Wu3We9rhFCCqr9mySf0EvKm5Jg11UsTkkWflcjwDom5klNrxxoJ10
+ fWB2U0PeM3BsBHbWforfgSbOo64xcOdG6lIAof0qa1POoGdNiQjTWVOdwIsSHmFY+DiDTfCPf
+ zgA0N4fjsagLkJbPl4aHAwKkvUMF/WrboXTqEILKwdJ1hUTShmGOKBJKiJS+9Vhh4v8O/8NNc
+ yNOsDrBes1ejnVl/f0um7/YD9RLgBrSdkW47GCRQQZ8tj0fwYsmbvKvsq7BdhqkEarbB3wjk9
+ dt1APPBjtBFjJLg9gxgaLOlADqglRXgeGJhQvX6syitYjPNxgoQiy3xtVFd7b7EZeFT2yy691
+ TrAYPSG/ubsPkX/oyASLjJYMWPTIqc+TcGDONFSPrXLXa+Z3hl45skYmZj8qr4SCw4MTDHcq5
+ DBDsPSnKbaWZpRO/PwcwFGaRhOGLBkNyG9bGM8OtgQM836jGpnZPE/gm85T++5CRJ14oVZUWS
+ EG1gcCOMA0Q6Som9dKlr775tjrYxMfn2pD00eGPcBHb9etiAssal2uK35ePr+e79iQpjBgjM0
+ PwfhWXfZCY0aDAFkp1I9KEVJeFqkDbu1s2EeABeutbUnInOyGY17tsgh1kleSFzrTLXa/D08V
+ 6ZuicMI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Fri, 16 Sep 2016, Junio C Hamano wrote:
-
-> Kevin Wern <kevin.m.wern@gmail.com> writes:
+On 16.09.16 08:51, Виталий Ищенко wrote:
+> Sorry for delay.
 > 
-> > Add option RUN_COMMAND_NO_STDOUT, which sets no_stdout on a child
-> > process.
-> >
-> > This will be used by git clone when calling index-pack on a downloaded
-> > packfile.
-> 
-> If it is just one caller, would't it make more sense for that caller
-> set no_stdout explicitly itself?
+No problem about the delay.
 
-Taking a step back, maybe it is not such a good idea to swallow the output
-in all cases, including the error cases?
+(And please no top-posting)
 
-Maybe the best course of action is to hide stdout/stderr by default but
-show it in case of a non-zero exit code, i.e. using
-https://public-inbox.org/git/6383b7afcdeb6c999862aa32ba437997f2dd3d4e.1472633606.git.johannes.schindelin@gmx.de/ ?
 
-Ciao,
-Dscho
+If you say
+> ".gitattributes" indeed is not present in "master", but this is intentionally
+then nobody has (to my knowledge) thought about this situation/workflow yet.
+
+
+The short version:
+Git is designed to have the same .gitattributes in different branches.
+At least not in the long run.
+
+A typical use case is to create a repo, adjust the
+.gitattributes and keep this in all branches.
+
+
+
+ 
+
+
+
