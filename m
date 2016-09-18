@@ -2,97 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5989207DF
-	for <e@80x24.org>; Sun, 18 Sep 2016 10:51:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE6A12070F
+	for <e@80x24.org>; Sun, 18 Sep 2016 12:31:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759245AbcIRKvn (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Sep 2016 06:51:43 -0400
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:20059 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1759057AbcIRKvn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Sep 2016 06:51:43 -0400
-Received: from PhilipOakley ([92.22.63.19])
-        by smtp.talktalk.net with SMTP
-        id lZhDbvHdXY8RwlZhEbHQAZ; Sun, 18 Sep 2016 11:51:40 +0100
-X-Originating-IP: [92.22.63.19]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=b+Xw2ZOx c=1 sm=1 tr=0 a=vjlzJYBYqocBNNOviNpP3A==:117
- a=vjlzJYBYqocBNNOviNpP3A==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=A4Y335kgy9w4ghY8J98A:9 a=QEXdDO2ut3YA:10 a=6kGIvZw6iX1k4Y-7sg4_:22
-Message-ID: <630656BFF8F84E43A2E4C67138A9A675@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Fredrik Gustafsson" <iveqy@iveqy.com>,
-        "Andrew Johnson" <ajohnson388@gmail.com>,
-        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Cc:     <git@vger.kernel.org>,
-        "Christian Couder" <christian.couder@gmail.com>
-References: <CAM_5GX48gDAZSvAWnxO5n8uhYf8vmfAJ88_31_ewsQxyPfF7iA@mail.gmail.com> <20160917183919.GJ20666@paksenarrion.iveqy.com> <223e818d-6d10-2679-c2d0-150011e74a59@gmail.com>
-Subject: Re: Why are there multiple ways to get the manual in Git?
-Date:   Sun, 18 Sep 2016 11:51:41 +0100
-Organization: OPDS
+        id S1756552AbcIRMbe (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Sep 2016 08:31:34 -0400
+Received: from mail-lf0-f46.google.com ([209.85.215.46]:35925 "EHLO
+        mail-lf0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754166AbcIRMbc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Sep 2016 08:31:32 -0400
+Received: by mail-lf0-f46.google.com with SMTP id g62so89109955lfe.3
+        for <git@vger.kernel.org>; Sun, 18 Sep 2016 05:31:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=YZLq++bMR/S7Q2xJJPTocW8odZBZb96hDNmVL8MVEhs=;
+        b=G7nmdfeLFUp4WGw0JynQClNq4/6psOs/lFl9Y/XmxrZxRI+wacpu3TJX8yzmfNKz6J
+         xwiE8LxYQulIHkNKRf7W+9VNEKpakJohN+V9YJ25K9Ycwl5njxjHJ4NjLzK8RVlr4meM
+         p03PC/hr5ZcJa3LidG2uWx6xwyHmuXDgFdxP0YLzJrdz+uQbfbbnQO5RspsQPywWxfZD
+         hCtEDV7wxx0jfWd4rVh+Nz3DZt3Y3LofzJvSseUjrIPxxOtrI2DukVKMKfnhdtdHkUvF
+         kA+1d9zx4OeWs0TLRKIYqz4rmTszarDU7AHHlUeDKvolFBCH750P4mWpKPn5GtFOTiwQ
+         86BA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=YZLq++bMR/S7Q2xJJPTocW8odZBZb96hDNmVL8MVEhs=;
+        b=bk4m0vxOmvKoK7Iw2Yn46QdQwzGfunNFPEVg5256CBR5DGeizBNSmxIQRma3gvBSNw
+         i8CyDtxoulDIYTyb7V9EnYKa9cbRV7R8W76MC1+H6y04FLnDzWYPab/NM3gx8wY5IGOp
+         iacqOpBVq2L/q+JPAzsugRMcuq3/y4LBS8E5wLycu7lZ9MCypXUM/YtddF96YjFEFZd1
+         raT8NJ7AXAwUkXuEdQ0yErZf30l3e0b1opdj97v8vWAOE3aTrm4pfh7hS36blkLDTi/g
+         /cU7ck5NHOP0zgGrbDkCeGbPjqAHGxKnM+lvlFzmJsgiXoLRQGYAj44jrpOh27uoeLjk
+         a8Pg==
+X-Gm-Message-State: AE9vXwNR+xXd3neZP+pv99bo2BYxLLZLHORMnZVllDLAoHx3iRx11EJGlMNRJnCveL3+MYdmp6f2qsynmaAKug==
+X-Received: by 10.25.18.23 with SMTP id h23mr2093680lfi.5.1474201873522; Sun,
+ 18 Sep 2016 05:31:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="UTF-8";
-        reply-type=original
-Content-Transfer-Encoding: 8bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfAvcW3RnlpbNs2OInaH1fcrE3uyH5oCjQtUDicKbNZ5cWotM8z/mR54dweCmeB6O58CpQZ3WaA9cpYrsrX7eOMZk8/L8p9WLhA05kKTuImy+IF8zaFhd
- jBf20dZOTXUicFXVocIiNHi2Ae4daLtjVoXRF3+c4TPdpsjtn8aa9G/7rGIRq3H1ocOQwb7rEABxUnRbCSlstDWKvMuirWBNcGLgDZYp+cEoeHLEgt67XlcE
- N/hoOGSmDWoYLFiCypIRa21aK3APyPtP/9Mhvpwo2gukyM/QascAhHYSuFpEPftW
+Received: by 10.114.173.193 with HTTP; Sun, 18 Sep 2016 05:30:52 -0700 (PDT)
+In-Reply-To: <db20ae0c-9c33-1e65-b201-1b6a9ed11340@web.de>
+References: <nrje96$q7s$1@blaine.gmane.org> <db20ae0c-9c33-1e65-b201-1b6a9ed11340@web.de>
+From:   Anatoly Borodin <anatoly.borodin@gmail.com>
+Date:   Sun, 18 Sep 2016 14:30:52 +0200
+X-Google-Sender-Auth: FKTAjygm2Ol7JhrMegfM8oG2j-o
+Message-ID: <CACNzp2mkD7Se9R=SVwXhyRstkGAs1N9YbNgaZRQYKkpPM1kj8A@mail.gmail.com>
+Subject: Re: Two bugs in --pretty with %C(auto)
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     Duy Nguyen <pclouds@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Jakub Narębski" <jnareb@gmail.com>
->W dniu 17.09.2016 o 20:39, Fredrik Gustafsson pisze:
->> On Sat, Sep 17, 2016 at 01:47:52PM -0400, Andrew Johnson wrote:
->
->>> $ git help <verb>
->>> $ git <verb> --help
->>> $ man git-<verb>
->>>
->>> I tested all three to confirm they were equivalent.
->>
->> While I'm not able to answer your question, I can shred a little light
->> about them not being equal. For example using a windows machine
->>
->> $ man git-<verb>
->>
->> does not work and
->>
->> $ git help <verb>
->>
->> opens a webbrowser instead of a man page. Using a unix system I would
->> however assume that
->>
->> $ man git-<verb>
->>
->> would work since it's the standard way of getting help on those systems.
->
-> There is also additional difference.  There are help pages which are
-> not about specific Git command, but about concepts (gitcli, gitrevisions,
-> githooks, gitrepository-layout, gitglossary), or about files (gitignore,
-> gitattributes, to some extent githooks).
->
-> Those are only accessible with `git help <concept>` or, on OS with
-> installed 'man', also `man <gitconcept>`.
+Hi Ren=C3=A9!
 
-The `git revisions --help` does work ;-) But like you say, its apparent 
-"command" name is 'gitrevisions'.
 
-Thus real commands gave a git-command name, while concepts have a gitconcept 
-name which can then be found via the man command.
+On Sat, Sep 17, 2016 at 8:25 PM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+> I'm not sure how just how automatic %C(auto) is supposed to be, but you
+> expected it do emit the reset for you, right?  Sounds reasonable to me.
 
---
-Philip 
+I don't see a good reason not to do so. Spare some bytes?..
 
+> The following patch implements that behavior.
+
+Thanks, the patch works great!
+
+
+--=20
+Mit freundlichen Gr=C3=BC=C3=9Fen,
+Anatoly Borodin
