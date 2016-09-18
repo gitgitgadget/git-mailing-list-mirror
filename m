@@ -2,86 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B56AF2070F
-	for <e@80x24.org>; Sun, 18 Sep 2016 19:32:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFC1B2070F
+	for <e@80x24.org>; Sun, 18 Sep 2016 19:37:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932595AbcIRTb7 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Sep 2016 15:31:59 -0400
-Received: from mout.web.de ([217.72.192.78]:63728 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932228AbcIRTb5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Sep 2016 15:31:57 -0400
-Received: from birne9.local ([195.252.60.88]) by smtp.web.de (mrweb103) with
- ESMTPSA (Nemesis) id 0MYNzx-1bYh8S0QbJ-00V7LO; Sun, 18 Sep 2016 21:31:53
- +0200
-Subject: Re: Gitattributes file is not respected when switching between
- branches
-To:     =?UTF-8?B?0JLQuNGC0LDQu9C40Lkg0JjRidC10L3QutC+?= <betalb@gmail.com>,
-        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-References: <CANYoZJng0GNZWU=eUEnXgVQ_NKQQOKM+mhJ9bsXMEJxxEhwQMw@mail.gmail.com>
- <8df2883f-ec3c-3446-2e06-207c93452332@web.de>
- <7c14756e-29f9-b475-f5f5-597acb8cea98@web.de>
- <CANYoZJnB81rEGNAjGj6jOscmdSW_niSy6jRP6acw2xB4ssX8xA@mail.gmail.com>
-Cc:     git@vger.kernel.org
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <beaf2e9c-70c9-b80a-b201-aeed830f8807@web.de>
-Date:   Sun, 18 Sep 2016 21:31:48 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0)
- Gecko/20100101 Thunderbird/45.3.0
+        id S1756246AbcIRThd (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Sep 2016 15:37:33 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:65047 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756101AbcIRThc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Sep 2016 15:37:32 -0400
+Received: from PhilipOakley ([92.22.21.30])
+        by smtp.talktalk.net with SMTP
+        id lhu5bydUw0Kuvlhu5bhLJf; Sun, 18 Sep 2016 20:37:30 +0100
+X-Originating-IP: [92.22.21.30]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=RZjSMBlv c=1 sm=1 tr=0 a=iMv/OWFaO6rICWONOtAd4w==:117
+ a=iMv/OWFaO6rICWONOtAd4w==:17 a=IkcTkHD0fZMA:10 a=xtxXYLxNAAAA:8
+ a=G2-PVLz0Au7u-NYypO4A:9 a=QEXdDO2ut3YA:10 a=xts0dhWdiJbonKbuqhAr:22
+Message-ID: <4BB675F0AED14A309DC90DDDB08F441B@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Philip Oakley" <philipoakley@iee.org>,
+        "Junio C Hamano" <gitster@pobox.com>
+Cc:     "Git List" <git@vger.kernel.org>
+References: <3C23ED270E0C486EB2063BC5AEC25678@PhilipOakley> <CAPc5daUN7s+asu=drJRp=d1a5VRvG_EFNTsTqaQB+NZGDrzRmw@mail.gmail.com> <CAPc5daUsRtR0=C8D=gqTtk=2erqX1DHsYNbQzmyAyw+prCBrfQ@mail.gmail.com> <CAPc5daUdM4wwY7C_YKx0DkW3kty+VewksMMXG39bBr1K-JxBag@mail.gmail.com> <FD07B781038A4C878F6D0152A4ECE580@PhilipOakley>
+Subject: Re: Finding a commit based on the diff index line?
+Date:   Sun, 18 Sep 2016 20:37:31 +0100
+Organization: OPDS
 MIME-Version: 1.0
-In-Reply-To: <CANYoZJnB81rEGNAjGj6jOscmdSW_niSy6jRP6acw2xB4ssX8xA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:GJxrEcS5ICVkoOFLmz9R+HZXFEz7ovTl/VYFd/+UgxEiQaOb6u3
- kXncjmOXdEa9F2Jte5KVF1QU0mT8dOKSImJpJTa9xidhceaZaEkcI30OGDhk2zA/FwlwS95
- fZ8TFN1f1FriBVLGaUpuZFEdMiJ5s08BSD0P9iKQHMsJHLGZraPHhcB49vGqOHMbGb8pdAD
- W3nXkOX9MikHwifb2kBlg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:yKYXcPjeBNc=:D6Ld4C4ees/+93veSHlSfk
- ipsmLuzQfVAKaHwu1RDbMVs2w1jQTuP/uIR9W48c/hkwTU0aGfTEyWq7mV/8qIJt5/WytIfZ6
- biuw4PQGEXFfRK/L5b1Kz8e5odqUtmVMF7hNhuD5EwitzZQFeIlfQFEAwXFFxpCkJzZsdPKha
- Wyd0RzZXThD9/8wTtn59Wu3We9rhFCCqr9mySf0EvKm5Jg11UsTkkWflcjwDom5klNrxxoJ10
- fWB2U0PeM3BsBHbWforfgSbOo64xcOdG6lIAof0qa1POoGdNiQjTWVOdwIsSHmFY+DiDTfCPf
- zgA0N4fjsagLkJbPl4aHAwKkvUMF/WrboXTqEILKwdJ1hUTShmGOKBJKiJS+9Vhh4v8O/8NNc
- yNOsDrBes1ejnVl/f0um7/YD9RLgBrSdkW47GCRQQZ8tj0fwYsmbvKvsq7BdhqkEarbB3wjk9
- dt1APPBjtBFjJLg9gxgaLOlADqglRXgeGJhQvX6syitYjPNxgoQiy3xtVFd7b7EZeFT2yy691
- TrAYPSG/ubsPkX/oyASLjJYMWPTIqc+TcGDONFSPrXLXa+Z3hl45skYmZj8qr4SCw4MTDHcq5
- DBDsPSnKbaWZpRO/PwcwFGaRhOGLBkNyG9bGM8OtgQM836jGpnZPE/gm85T++5CRJ14oVZUWS
- EG1gcCOMA0Q6Som9dKlr775tjrYxMfn2pD00eGPcBHb9etiAssal2uK35ePr+e79iQpjBgjM0
- PwfhWXfZCY0aDAFkp1I9KEVJeFqkDbu1s2EeABeutbUnInOyGY17tsgh1kleSFzrTLXa/D08V
- 6ZuicMI
+Content-Type: text/plain;
+        format=flowed;
+        charset="UTF-8";
+        reply-type=response
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfNtMUxLbsi/S5gJVZ8MzUwRvNRJfluA5YkJbPfJGwcneDMmspnU+8S6lEOMsSBk96Glcc7IithU5FORn5ClIZG6jcc6HNIDJmsUXdtjGWGBebb64Nt4O
+ WGTHrzzb+xcc/K020HNLTILr/r1jJ4UVsEizx+Py0tGuspn7XQ16ColzA09fQMQUej5PbxBjetE5+syUMcJGdqG+fbY+ns9eZtABj/WbB5IlrQM5zJyEdpoo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 16.09.16 08:51, Виталий Ищенко wrote:
-> Sorry for delay.
+From: "Philip Oakley" <philipoakley@iee.org>
+>> From: Junio C Hamano
+>> Sent: Saturday, September 17, 2016 5:30 PM
+>>
+>> Does it count as simple to use pager's search feature in
+>> "log --raw" output piped to it?
+>>
+>> Pardon typos & html; typed on a phone
+>>
+>
+> The `log --raw` looks useful, though I think (IIUC) I also have a problem 
+> that (obviously?) these commits are not linked behind any existing ref 
+> (except maybe the reflogs which I'm not up to speed on).
+>
+For others that may be reading... The command I eventually ended up using to 
+find old series was:
+
+git reflog HEAD --grep-reflog='rebase -i (finish)' | cut -c1-7 | xargs -n1 
+git quote
+
+where the alias.quote = log -1 --pretty='tformat:%h (%s, %ad)' --date=short
+
+I can then compare the dates of my corrective rebases to the patch 
+submission dates to find the (local sha1 of) missing series.
+
+> I had somehow hoped for some neat magic command or rev specifier that took 
+> the revs as alternates to the `-- <paths>` in rev-parse or some such....
+
+Though locating a commit based on a diff's index line does still feel to be 
+something that should be possible.
+>
+> It's tricky curating old mistakes ;-)
+>
+> Thanks for the pointer.
+>
+>> On Sep 17, 2016 07:33, "Philip Oakley" <philipoakley@iee.org> wrote:
+>>
+>> > Hi,
+>> >
+>> > I'm curating some of my old patch series (i.e. doing some tidying up) 
+>> > and
+>> > I'm trying to determine the commits that generated some of my patches 
+>> > so
+>> > that I can see if I still have them after they were rebased (a 'name 
+>> > that
+>> > dangling branch' problem).
+>> >
+>> > Is there an easy way of finding the commit sha1 that contains the given 
+>> > diff
+>> > index line.
+>> >
+>> > For example.
+>> > index fa05269..57033dd 100755
+>> > or
+>> > index 8ebcded..d9ab360 100644
+>> >
+>> > which both should get back to Jeff King's 36d6792 (t0006: test various 
+>> > date
+>> > formats, 2016-06-20).
+>> >
+>> > It feels like it is something that should already possible without a
+>> > mini-script. We have the rev range which should limit the range to a 
+>> > single
+>> > commit, though if random blob revs were given the commit range would be
+>> > 'scattered'.
+>> >
+>> >
+>> > Is there a simple quick way of achieving this?
+>> >
+>> > --
+>> > Philip
+>
 > 
-No problem about the delay.
-
-(And please no top-posting)
-
-
-If you say
-> ".gitattributes" indeed is not present in "master", but this is intentionally
-then nobody has (to my knowledge) thought about this situation/workflow yet.
-
-
-The short version:
-Git is designed to have the same .gitattributes in different branches.
-At least not in the long run.
-
-A typical use case is to create a repo, adjust the
-.gitattributes and keep this in all branches.
-
-
-
- 
-
-
 
