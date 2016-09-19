@@ -6,85 +6,94 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74B7C2070F
-	for <e@80x24.org>; Mon, 19 Sep 2016 16:06:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5D3A2070F
+	for <e@80x24.org>; Mon, 19 Sep 2016 16:12:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751543AbcISQF6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Sep 2016 12:05:58 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61485 "EHLO
+        id S932094AbcISQMQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Sep 2016 12:12:16 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54868 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751003AbcISQF5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2016 12:05:57 -0400
+        with ESMTP id S1751579AbcISQMP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2016 12:12:15 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B78DB3FBD5;
-        Mon, 19 Sep 2016 12:05:56 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1E6E73FE77;
+        Mon, 19 Sep 2016 12:12:14 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=h889sFJFu3kx0Ug25cvyzMEU+eI=; b=Imd71e
-        sBsalPqeoQZjHuwr80CiUrXBY2vtM1mQ64ZeggHo9af3ucMTB9CBvsjQmciVK0tB
-        7mtuLVzT+9iJIPvHON834SVczHiFRbiC8DNSUVN7bcwkVy27cZx0bachKzbgJAmT
-        1ykIdY0GfAmoYSiFIi8xbZ5wxDhsDN0kuMFiY=
+        :content-type; s=sasl; bh=DNtXTpgTSZs3re97r5KjfhCfyWo=; b=ABl9tZ
+        uzsQhgl0GqxyeXI5HjOI2S+i9UUWXSPd1SM9O08AfgcjuInW/x0P6JBuTEMvBEFg
+        pikQAjbRCwDWul1ssin3NEQzIZREv6naQxV1WMdISn89eiFCeAOCfsWwOC3I6lCL
+        uY9qX+b1loLVFiMJdHSehgG54gt+04Sd6E8rc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tirE3voONzdmXaZ0BXG/IuP3WUBpEWcp
-        PCipmDk/TNf/mNQchIHD5mNkSyL5HgxH5xh7RywyhrS1AKKYMGXwwHcRDXjHXK+M
-        aywcQHtRB4XZC44m0s656+iDfD5njkDnO/t/4nMoBCkOnuPK/b7xsBNgKoMXfJ8F
-        VCICLXeq+lU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AF1103FBD4;
-        Mon, 19 Sep 2016 12:05:56 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=WbW3FO1ed3Y9vZX4kGOkW7W7uTfmFd6e
+        hDi4zz58Itg84N27GWQjfxJTXM0DneHRVOdo2st2eWRvUKafom2IvUl30WQJMWZY
+        KKzJx6+RWVeCb9U6NhVykVOorZbPKi+SlH+qUrKQEptTkZudnEf8AQeqyqe+bGwf
+        40nzKB0A7cM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1777A3FE75;
+        Mon, 19 Sep 2016 12:12:14 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1B4F43FBCF;
-        Mon, 19 Sep 2016 12:05:56 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 91A393FE74;
+        Mon, 19 Sep 2016 12:12:13 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-        Jakub =?utf-8?Q?Nar?= =?utf-8?Q?=C4=99bski?= <jnareb@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v3 0/8] Better heuristics make prettier diffs
-References: <cover.1473068229.git.mhagger@alum.mit.edu>
-        <xmqqr38vjns0.fsf@gitster.mtv.corp.google.com>
-        <c381d458-4c81-f46c-592a-98957b3a177c@alum.mit.edu>
-Date:   Mon, 19 Sep 2016 09:05:54 -0700
-In-Reply-To: <c381d458-4c81-f46c-592a-98957b3a177c@alum.mit.edu> (Michael
-        Haggerty's message of "Mon, 19 Sep 2016 08:35:38 +0200")
-Message-ID: <xmqqd1jzho2l.fsf@gitster.mtv.corp.google.com>
+To:     Michael J Gruber <git@drmicha.warpmail.net>
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        Git List <git@vger.kernel.org>
+Subject: Re: clarification of `rev-list --no-walk ^<rev>`?
+References: <2AD952BD65034D25BF26C7F138D24F25@PhilipOakley>
+        <3b06b9ee-3975-acf1-41d8-02b774a2dd3c@drmicha.warpmail.net>
+Date:   Mon, 19 Sep 2016 09:12:11 -0700
+In-Reply-To: <3b06b9ee-3975-acf1-41d8-02b774a2dd3c@drmicha.warpmail.net>
+        (Michael J. Gruber's message of "Mon, 19 Sep 2016 15:46:35 +0200")
+Message-ID: <xmqq8tunhns4.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: F292537A-7E82-11E6-BB7F-096F12518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: D387EDCC-7E83-11E6-8FEB-5D827B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> On 09/08/2016 01:25 AM, Junio C Hamano wrote:
->> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>> It can be read that
 >> 
->>>   * Add test t4059 as part of this commit, not as part of its
->>>     successor.
+>> $ git cherry-pick maint next
 >> 
->> Which needs to be moved to somewhere else, as another topics that
->> has already been in 'next' uses t4059.
+>> would pick two single commits, while
 >> 
->> I'd move it temporarily to t4061 with a separate SQUASH??? at the
->> tip for now, as I am running out of time today.
->
-> I didn't realize you were waiting for an ACK. Yes, it's totally OK to
-> rename the test.
+>> $ git cherry-pick maint next ^master
+>> 
+>> could implicitly be read as
+>> 
+>> $ git cherry-pick maint next --do-walk ^master
 
-I actually wasn't asking for an Ack.
+You can read it as "master..next maint" that does force walking.
 
-As the issue was in the one that is buried a few commits from the
-tip, and there is a later one that adds more tests to it, I didn't
-find enough energy to rename the new file in a buried commit and
-then adjust the patch later updates it, I was hoping that you'd
-reroll to save me effort, rather than forcing me to do the rebase
-myself ;-).
+>> Clearly that's not what is intended, which is
+>> 
+>> $ git cherry-pick --do-walk maint next ^master
+
+I do not see the distinction betwee the above two you seem to be
+trying to make.  Care to explain?
+
+>> but it is open to interpretation as to where in the command line the caret
+>> range prefix's --do-walk (to countermand the --no-walk) should applied.
+
+I do not think it can be position dependent.  Philip probably has a
+confused notion that "rev-list A..B C..D" is somehow a union of set
+A..B and C..D?
+
+>> If the user did want just the single commit at the tip of maint, and then
+>> the range master..next, what would be their command line, and also, how
+>> would the man page warn against false expectations?
+
+Yeah, this can show us that all of the have is coming from that
+exact confusion I suspected Philip has.  We need to clarify in the
+documentation that rev-list set operation does *NOT* have union of
+multiple sets to unconfuse the readers.
 
