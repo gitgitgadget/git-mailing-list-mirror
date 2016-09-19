@@ -2,26 +2,26 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 787412070F
+	by dcvr.yhbt.net (Postfix) with ESMTP id 88B84207DF
 	for <e@80x24.org>; Mon, 19 Sep 2016 13:09:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759837AbcISNJW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Sep 2016 09:09:22 -0400
-Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:47312 "EHLO sapo.pt"
+        id S936372AbcISNJ1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Sep 2016 09:09:27 -0400
+Received: from relay4.ptmail.sapo.pt ([212.55.154.24]:57069 "EHLO sapo.pt"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1756331AbcISNJT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2016 09:09:19 -0400
-Received: (qmail 31499 invoked from network); 19 Sep 2016 13:09:17 -0000
-Received: (qmail 30657 invoked from network); 19 Sep 2016 13:09:16 -0000
+        id S1760574AbcISNJ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2016 09:09:27 -0400
+Received: (qmail 23396 invoked from network); 19 Sep 2016 13:09:25 -0000
+Received: (qmail 32688 invoked from network); 19 Sep 2016 13:09:25 -0000
 Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
           (envelope-sender <vascomalmeida@sapo.pt>)
           by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
-          for <git@vger.kernel.org>; 19 Sep 2016 13:09:14 -0000
+          for <git@vger.kernel.org>; 19 Sep 2016 13:09:20 -0000
 X-PTMail-RemoteIP: 85.246.157.91
 X-PTMail-AllowedSender-Action: 
 X-PTMail-Service: default
@@ -32,9 +32,9 @@ Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>,
         =?UTF-8?q?Jean-No=C3=ABl=20AVILA?= <jn.avila@free.fr>
-Subject: [PATCH 3/6] i18n: diff: mark die errors for translation
-Date:   Mon, 19 Sep 2016 13:08:18 +0000
-Message-Id: <1474290501-2743-3-git-send-email-vascomalmeida@sapo.pt>
+Subject: [PATCH 5/6] i18n: notes-merge: mark die messages for translation
+Date:   Mon, 19 Sep 2016 13:08:20 +0000
+Message-Id: <1474290501-2743-5-git-send-email-vascomalmeida@sapo.pt>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1474290501-2743-1-git-send-email-vascomalmeida@sapo.pt>
 References: <1474290501-2743-1-git-send-email-vascomalmeida@sapo.pt>
@@ -43,60 +43,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Update test to reflect changes.
+
 Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
 ---
- diff.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ notes-merge.c                         | 8 ++++----
+ t/t3310-notes-merge-manual-resolve.sh | 2 +-
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index b4310f8..d82ad79 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3325,7 +3325,7 @@ void diff_setup_done(struct diff_options *options)
- 	if (options->output_format & DIFF_FORMAT_NO_OUTPUT)
- 		count++;
- 	if (count > 1)
--		die("--name-only, --name-status, --check and -s are mutually exclusive");
-+		die(_("--name-only, --name-status, --check and -s are mutually exclusive"));
+diff --git a/notes-merge.c b/notes-merge.c
+index 97fc42f..3bbeb86 100644
+--- a/notes-merge.c
++++ b/notes-merge.c
+@@ -269,15 +269,15 @@ static void check_notes_merge_worktree(struct notes_merge_options *o)
+ 		if (file_exists(git_path(NOTES_MERGE_WORKTREE)) &&
+ 		    !is_empty_dir(git_path(NOTES_MERGE_WORKTREE))) {
+ 			if (advice_resolve_conflict)
+-				die("You have not concluded your previous "
++				die(_("You have not concluded your previous "
+ 				    "notes merge (%s exists).\nPlease, use "
+ 				    "'git notes merge --commit' or 'git notes "
+ 				    "merge --abort' to commit/abort the "
+ 				    "previous merge before you start a new "
+-				    "notes merge.", git_path("NOTES_MERGE_*"));
++				    "notes merge."), git_path("NOTES_MERGE_*"));
+ 			else
+-				die("You have not concluded your notes merge "
+-				    "(%s exists).", git_path("NOTES_MERGE_*"));
++				die(_("You have not concluded your notes merge "
++				    "(%s exists)."), git_path("NOTES_MERGE_*"));
+ 		}
  
- 	/*
- 	 * Most of the time we can say "there are changes"
-@@ -3521,7 +3521,7 @@ static int stat_opt(struct diff_options *options, const char **av)
- 			if (*arg == '=')
- 				width = strtoul(arg + 1, &end, 10);
- 			else if (!*arg && !av[1])
--				die("Option '--stat-width' requires a value");
-+				die(_("Option '--stat-width' requires a value"));
- 			else if (!*arg) {
- 				width = strtoul(av[1], &end, 10);
- 				argcount = 2;
-@@ -3530,7 +3530,7 @@ static int stat_opt(struct diff_options *options, const char **av)
- 			if (*arg == '=')
- 				name_width = strtoul(arg + 1, &end, 10);
- 			else if (!*arg && !av[1])
--				die("Option '--stat-name-width' requires a value");
-+				die(_("Option '--stat-name-width' requires a value"));
- 			else if (!*arg) {
- 				name_width = strtoul(av[1], &end, 10);
- 				argcount = 2;
-@@ -3539,7 +3539,7 @@ static int stat_opt(struct diff_options *options, const char **av)
- 			if (*arg == '=')
- 				graph_width = strtoul(arg + 1, &end, 10);
- 			else if (!*arg && !av[1])
--				die("Option '--stat-graph-width' requires a value");
-+				die(_("Option '--stat-graph-width' requires a value"));
- 			else if (!*arg) {
- 				graph_width = strtoul(av[1], &end, 10);
- 				argcount = 2;
-@@ -3548,7 +3548,7 @@ static int stat_opt(struct diff_options *options, const char **av)
- 			if (*arg == '=')
- 				count = strtoul(arg + 1, &end, 10);
- 			else if (!*arg && !av[1])
--				die("Option '--stat-count' requires a value");
-+				die(_("Option '--stat-count' requires a value"));
- 			else if (!*arg) {
- 				count = strtoul(av[1], &end, 10);
- 				argcount = 2;
+ 		if (safe_create_leading_directories_const(git_path(
+diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-merge-manual-resolve.sh
+index 6967436..baef2d6 100755
+--- a/t/t3310-notes-merge-manual-resolve.sh
++++ b/t/t3310-notes-merge-manual-resolve.sh
+@@ -225,7 +225,7 @@ test_expect_success 'cannot do merge w/conflicts when previous merge is unfinish
+ 	test -d .git/NOTES_MERGE_WORKTREE &&
+ 	test_must_fail git notes merge z >output 2>&1 &&
+ 	# Output should indicate what is wrong
+-	grep -q "\\.git/NOTES_MERGE_\\* exists" output
++	test_i18ngrep -q "\\.git/NOTES_MERGE_\\* exists" output
+ '
+ 
+ # Setup non-conflicting merge between x and new notes ref w
 -- 
 2.7.4
 
