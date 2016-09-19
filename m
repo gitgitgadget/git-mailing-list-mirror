@@ -2,70 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 582B32070F
-	for <e@80x24.org>; Mon, 19 Sep 2016 20:11:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19FE02070F
+	for <e@80x24.org>; Mon, 19 Sep 2016 20:12:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752098AbcISULy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Sep 2016 16:11:54 -0400
-Received: from smtprelay04.ispgateway.de ([80.67.31.27]:40308 "EHLO
-        smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751414AbcISULx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2016 16:11:53 -0400
-Received: from [84.168.70.3] (helo=book.hvoigt.net)
-        by smtprelay04.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.84)
-        (envelope-from <hvoigt@hvoigt.net>)
-        id 1bm4rk-0004rv-Gp; Mon, 19 Sep 2016 22:08:36 +0200
-Date:   Mon, 19 Sep 2016 22:08:35 +0200
-From:   Heiko Voigt <hvoigt@hvoigt.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jens Lehmann <Jens.Lehmann@web.de>,
-        Fredrik Gustafsson <iveqy@iveqy.com>,
-        Leandro Lucarella <leandro.lucarella@sociomantic.com>
-Subject: Re: [PATCH 3/2] batch check whether submodule needs pushing into one
- call
-Message-ID: <20160919200835.GD62429@book.hvoigt.net>
-References: <xmqqh9aaot49.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kYOBqQ0FF4J-+KbefSD8HRrUeMqpO27m_jprhm93aB+LA@mail.gmail.com>
- <20160824230115.jhmcr4r7wobj5ejb@sigill.intra.peff.net>
- <20160914173124.GA7613@sandbox>
- <xmqqwpiep10i.fsf@gitster.mtv.corp.google.com>
- <20160915121044.GA96648@book.hvoigt.net>
- <xmqq1t0kna51.fsf@gitster.mtv.corp.google.com>
- <20160916094019.GB1488@book.hvoigt.net>
- <20160916123155.GA40725@book.hvoigt.net>
- <xmqq1t0jlnm2.fsf@gitster.mtv.corp.google.com>
+        id S1753000AbcISUMw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Sep 2016 16:12:52 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:12243 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752901AbcISUMv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2016 16:12:51 -0400
+Received: from PhilipOakley ([92.22.33.116])
+        by smtp.talktalk.net with SMTP
+        id m4vobetWAxR4bm4vobyf9z; Mon, 19 Sep 2016 21:12:49 +0100
+X-Originating-IP: [92.22.33.116]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=JNN5iICb c=1 sm=1 tr=0 a=7PoCAWDTb98b1EGiAsJI/w==:117
+ a=7PoCAWDTb98b1EGiAsJI/w==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
+ a=xtxXYLxNAAAA:8 a=3Eyz6yWsl_VLsd-ZWU0A:9 a=wPNLvfGTeEIA:10
+ a=0RhZnL1DYvcuLYC8JZ5M:22 a=xts0dhWdiJbonKbuqhAr:22
+Message-ID: <DDC820F0373F4534B4A9D12E8B7B866B@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Junio C Hamano" <gitster@pobox.com>
+Cc:     "Michael J Gruber" <git@drmicha.warpmail.net>,
+        "Git List" <git@vger.kernel.org>
+References: <2AD952BD65034D25BF26C7F138D24F25@PhilipOakley><3b06b9ee-3975-acf1-41d8-02b774a2dd3c@drmicha.warpmail.net><xmqq8tunhns4.fsf@gitster.mtv.corp.google.com><989F47918A374EEF8C7FECD3CFC6767E@PhilipOakley> <xmqqintrek64.fsf@gitster.mtv.corp.google.com>
+Subject: Re: clarification of `rev-list --no-walk ^<rev>`?
+Date:   Mon, 19 Sep 2016 21:12:51 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq1t0jlnm2.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfGbs+/WrKapqUFsLgAz+xIWFXtqSJezGQM/KJaWCNIb/wGIRNIEfx9yO6xhHddJ0MgF+jtt0lpD7LM1Rcbasf07f1l7nrZyeIktPamfR5F0SZc2eu81J
+ EY9hbBNbDIbmsbOQpyfpKjZEir6ys2jY8s+5t5J1OddligON5GMuUTcEOi20/1YUyLVT/7CVEj0JScBqGdUiJ3BfEsqi+wRn6SVyY/ohzez5GrbdRdboyU3k
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 16, 2016 at 11:13:09AM -0700, Junio C Hamano wrote:
-> Heiko Voigt <hvoigt@hvoigt.net> writes:
-> > The most exact solution would be to use all actual remote refs available
-> > (not sure if we have them at this point in the process?) another
-> > solution would be to still append the --remotes=<remotename> option as a
-> > fallback to reduce the revisions.
-> 
-> I'd say --remotes=<remotename> is the least problematic thing to do.
+From: "Junio C Hamano" <gitster@pobox.com>
+> "Philip Oakley" <philipoakley@iee.org> writes:
+>
+>>>     Philip probably has a
+>>> confused notion
 
-Ok then lets drop my last patch and keep it the way it was. Because if
-the remote sha1 differs we probably do not have it locally anyway. The
-only case this does not catch is when the user specifies a remote URL.
-But that just means we will iterate over all revisions instead of a
-reduced set, which makes the check slower but still correct. As one can
-see from my measurements that should not be that bad anymore.
+Hi Junio,
 
-Cheers Heiko
+Could you clarify a particular point from here..
+
+> The "--no-walk" tells the rev-list machinery "I have only positives;
+> do not traverse from them AT ALL but just use these positives".
+> Only under that condition, the order of the positive ends you list
+> on the command line matters.
+
+What does "--do-walk" do ("Overrides a previous --no-walk"), and when would 
+it be applied?
+
+--
+Philip 
+
