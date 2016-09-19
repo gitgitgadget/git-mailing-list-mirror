@@ -2,92 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E37E82070F
-	for <e@80x24.org>; Mon, 19 Sep 2016 16:19:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C3C82070F
+	for <e@80x24.org>; Mon, 19 Sep 2016 16:22:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751648AbcISQTv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Sep 2016 12:19:51 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51684 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750801AbcISQTv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2016 12:19:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EA6133FFED;
-        Mon, 19 Sep 2016 12:19:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=XnFr45cCNpRbpYjWQ5juLOGN+vg=; b=XlMntC
-        MnNNDfb0gMavemtanTcfhQuZ2vS2RPXJtxuywTQhhnPzN1oEpjc6YGLCiHaohz2z
-        NOjYS0yNk/ygeXRo8Frm2EkQlGRcM4cEge/0kd99GLq91PK24PgOuuRQ7ZvjkyeP
-        4o8T9UXOJSSPDx9lYVNPMO2lDsEIAflL7bADw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=OtFhGCFxVSbwvlhEj44bI6kmalMMEpnS
-        tS98Ow3Dcvi32lvwejyg/QdzJ5CVNiv7bxhQ11WgLd4sPH41K4NpJcYNBvpP3lox
-        I0t+sE0VPkew7l3Mu93a1PxNK9X+JyXH7rEoBSZ7RZEAnJvvIuisGLTyYDYGupFb
-        gAMWsDBw5Cw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E33EE3FFEC;
-        Mon, 19 Sep 2016 12:19:49 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 69E183FFEA;
-        Mon, 19 Sep 2016 12:19:49 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Philip Oakley" <philipoakley@iee.org>
-Cc:     "Git List" <git@vger.kernel.org>,
-        "Michael J Gruber" <git@drmicha.warpmail.net>
-Subject: Re: clarification of `rev-list --no-walk ^<rev>`?
-References: <2AD952BD65034D25BF26C7F138D24F25@PhilipOakley>
-        <3b06b9ee-3975-acf1-41d8-02b774a2dd3c@drmicha.warpmail.net>
-        <033051503D8C4F618B1E4879AFF8C28D@PhilipOakley>
-Date:   Mon, 19 Sep 2016 09:19:47 -0700
-In-Reply-To: <033051503D8C4F618B1E4879AFF8C28D@PhilipOakley> (Philip Oakley's
-        message of "Mon, 19 Sep 2016 15:46:50 +0100")
-Message-ID: <xmqq4m5bhnfg.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1751635AbcISQWL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Sep 2016 12:22:11 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:10184 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751146AbcISQWK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2016 12:22:10 -0400
+Received: from PhilipOakley ([92.22.33.116])
+        by smtp.talktalk.net with SMTP
+        id m1KabM1UPcpskm1KabadIR; Mon, 19 Sep 2016 17:22:09 +0100
+X-Originating-IP: [92.22.33.116]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=ILRAMUnG c=1 sm=1 tr=0 a=7PoCAWDTb98b1EGiAsJI/w==:117
+ a=7PoCAWDTb98b1EGiAsJI/w==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
+ a=xtxXYLxNAAAA:8 a=3Eyz6yWsl_VLsd-ZWU0A:9 a=wPNLvfGTeEIA:10
+ a=0RhZnL1DYvcuLYC8JZ5M:22 a=xts0dhWdiJbonKbuqhAr:22
+Message-ID: <15B3BA8028D444A0B458BEDF18929D4C@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Junio C Hamano" <gitster@pobox.com>
+Cc:     "Fredrik Gustafsson" <iveqy@iveqy.com>,
+        "Andrew Johnson" <ajohnson388@gmail.com>,
+        "Jakub Narebski" <jnareb@gmail.com>, <git@vger.kernel.org>,
+        "Christian Couder" <christian.couder@gmail.com>
+References: <CAM_5GX48gDAZSvAWnxO5n8uhYf8vmfAJ88_31_ewsQxyPfF7iA@mail.gmail.com>        <20160917183919.GJ20666@paksenarrion.iveqy.com>        <223e818d-6d10-2679-c2d0-150011e74a59@gmail.com>        <630656BFF8F84E43A2E4C67138A9A675@PhilipOakley> <xmqqlgynhocy.fsf@gitster.mtv.corp.google.com>
+Subject: Re: Why are there multiple ways to get the manual in Git?
+Date:   Mon, 19 Sep 2016 17:22:10 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E33B4286-7E84-11E6-831A-5D827B1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfMGKKEdyaEm3h62VN9OyNrGwgy1hIA/5hOj1ztAbabc93BD7j5dS2Z9zSNRLMsdS7zcAPEnIKoCUxX5/D+NXSQ+rYKtDDiTfpEMzApX7mgbQu4E+WhcX
+ raHgJyZ4sITC49ZZjgZ6lV7rMdQ1MgHTl9Rh8REkY8V9wq8TC43YCXSte7cCYTvMP/Iuod9HLCnJFnKVhyvgGsYmILwUsXJhgM1iS/dn1kwNLiI4wyJHlbPm
+ 4h+rKOhip4TB6UVS0gqbY6/HzV8Xttrm++oEgrfyd+sU04nvy9eKJht2oivJ28zO6jLmjbKuUWaAU4AelWfBww==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+From: "Junio C Hamano" <gitster@pobox.com>
+> "Philip Oakley" <philipoakley@iee.org> writes:
+> 
+>> The `git revisions --help` does work ;-)
+> 
+> Not anymore ;-)
+> 
+> I think Ralf Thielow fixed it recently.
 
-> At the moment the cherry-pick man page's example implies that
-> --do-walk is applied from the beginning, rather from the point given
-> on the command line.
->
-> I had a very quick search of the *.c code for the options but didn't
-> get any further. Hopefully the user issue/misunderstanding is
-> elsewhere... I'll add this to my little list.
+hmm, I sort of though it would still work with a valid guide.
 
-I think the confusion is coming from not understanding that revision
-specifiers cannot have position-dependent semantics, because there
-is no "union of multiple sets".  You said
-
-	commits in 'master..next' range and the tip of 'maint'
-
-earlier, and that is a prime specimen of that confusion.  That is
-asking "things reachable from next excluding things reachable from
-master" computed independently from everything else on the command
-line (i.e. that is one set), and "the commit at the tip of 'maint'"
-(i.e. that is another set, which consists of a singleton element),
-and wanting to take a union of it.  But the revision machinery is
-not structured to work that way.  It can only do "reachable from one
-enumeration of positive tips, excluding ones reachable from another
-enumeration of negative tips".  "no-walk" is a cheap hack that tells
-the machinery "stop after collecting that 'one enumeration of
-positive tips' and do not walk. Make that enumeration the resulting
-set".  Having anything negative in the enumeration of starting
-points from the command line automatically turns "no-walk" off, even
-for commands that default to "no-walk".
-
-We may need further documentation updates to unconfuse readers.
+I'd only checked with my last GfW version.
+--
+hey ho
+Philip
