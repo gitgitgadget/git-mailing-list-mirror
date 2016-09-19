@@ -7,84 +7,83 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15DEC2070F
-	for <e@80x24.org>; Mon, 19 Sep 2016 13:15:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A441F2070F
+	for <e@80x24.org>; Mon, 19 Sep 2016 13:17:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965320AbcISNPj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Sep 2016 09:15:39 -0400
-Received: from mail-it0-f52.google.com ([209.85.214.52]:34947 "EHLO
-        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935293AbcISNPc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2016 09:15:32 -0400
-Received: by mail-it0-f52.google.com with SMTP id r192so67874209ita.0
-        for <git@vger.kernel.org>; Mon, 19 Sep 2016 06:15:31 -0700 (PDT)
+        id S938866AbcISNR3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Sep 2016 09:17:29 -0400
+Received: from mail-io0-f180.google.com ([209.85.223.180]:32847 "EHLO
+        mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S936528AbcISNRZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2016 09:17:25 -0400
+Received: by mail-io0-f180.google.com with SMTP id r145so90627717ior.0
+        for <git@vger.kernel.org>; Mon, 19 Sep 2016 06:17:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=lkdTDCe0Nk3NzcvMzJhZ0zTfiSMD4UWNCvtacyen/kg=;
-        b=z4FQ1DLaC5UX2EaWW1WlG9uQk1GVR9Ew2K8A4XIcqvYSSFONpE7ccD4FthP/TpaSRm
-         X6QGvw6Rqw7daILGeuhY7hZYaKDr88KGQRfR+GkRAWKbqw5H0rkVxe0sOZ4C+NdDDTsW
-         FTmgTinxOX3STSfJK2XPR3/TRMu0AgzHhhcKys3XHjNfCCCaK/QmlG8ugbeKdg91uZVH
-         k35OGH3NGVHk8439C+gXHIzdKpesI2NCIlFBZaTLpiaAKsXmulXFunn3VKQy5iyh9Ca0
-         pqB5SQpTV5ufepQ+x0AVyjkosrMkdiV3Rd+wVWM7zDHBlinx2PEacUnLl8Yevzt75urQ
-         ObWA==
+        bh=C2KI6s3MgpPgUm+MdR4MjgZm9R/B/xF73HTGLnEuykw=;
+        b=lYoNzYgcXddFk4i7aiR1k2l628S9WAn3zYEhItQP5G0LlUETBvKW6Y8CKerVStiNyU
+         8F+EwFYwFUJzX9IGCDn9MrvjwFlecp5HAfoBYbOVrk+ljtFgfcCb8jkoCFf+dnBWRTer
+         ipCPsGk8d5yY1OSEqykoUjI+TJmdEzzR1mbb+daLDqnHCLf5r9mtkW96N7ni4n1cdFD4
+         1K5izOdsVwMONfKn519LsVd6FnFVuxPMZSela7QtTr8rG1DNbYEFjwYeGHtjEJYHTEZL
+         MuqVuvB6rVPrnzv2IT0syn0rzq155QUhp3ybv6DU8bw1qDA9mKt7soLhb6UWhBPCIKW4
+         iXTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=lkdTDCe0Nk3NzcvMzJhZ0zTfiSMD4UWNCvtacyen/kg=;
-        b=LfrDgBNGxQxoDIHbYJLxThUQYcIltJfnT80Hrxo0eM5zRCC30+MXWZDRGBHwcLalKS
-         7YrhzOy8NEpyQLxcXQTy2rZ2r5lQXeEnDhxuVGe/9bz9pB+E/75usBAte8L51w+bUDwj
-         gG/I1reFRF2YwYFrLbfHrs+mKxJVocAN7tBPr6o/YiM41WEu38ctTHLbCtoXceIU1Kr9
-         aCKhjg+moZZMLnqmdZdoVoSmpGrJxRmUNvtwmays/6K+1Jda0xDVcaH6XsgdwolRRlji
-         DW41Uccpz8kpKswiXN2qs0ikrVcRjHLWu9e7IHtaM3hbLCdyQ6DRdPutPEaOrnu7H5xN
-         CjZw==
-X-Gm-Message-State: AE9vXwMqzGabSf/TEYyZQBj6/JsMX5zpiVMWVYD63WQIWS4QwHoH3Qyxm1kB8kAhrQbnoOBOkefyhFCKeeceFA==
-X-Received: by 10.36.239.134 with SMTP id i128mr11163751ith.88.1474290931208;
- Mon, 19 Sep 2016 06:15:31 -0700 (PDT)
+        bh=C2KI6s3MgpPgUm+MdR4MjgZm9R/B/xF73HTGLnEuykw=;
+        b=ZImYpAyPcvtfQl8mCgXBzXxIDfyBHZ7gaVgcFGCsuhys5mmnu2vzrTsjsZkFmUP6XJ
+         6+oyIg4nFG5qDUDngVowiN/Fir/59d7Gmj3DvcC8qOh/HiKe2JfWEyT1aqZHuMFZzkyq
+         oqVKb99YUalLInsfMjqOYVZCfejhe1trX3c9KKgsgH5KJ8sa2Bx/aWsLzX5PAhYl2Aho
+         9bRcBdIOOxp9lWy9nlgRXxVvtqOAMQvVfyuR3r4ELMlxWhOzkb7aC24TtguCM6EGHEDz
+         VpfhRoTDbE0LDpvZkOYwfvWKV4h6eOevmzPN19rh8qGRhAkidTFZiKK5e33TScgXQaLo
+         8L2Q==
+X-Gm-Message-State: AE9vXwMvOQdOZXOg36xPWOro0EDhiCb9jLxzeGWd9Y6kAKzsz7e0TlEDg/t7zp5v8tKi1PUFAyPZ3eAcoaSrQg==
+X-Received: by 10.107.175.18 with SMTP id y18mr36025053ioe.86.1474291044165;
+ Mon, 19 Sep 2016 06:17:24 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.64.21.6 with HTTP; Mon, 19 Sep 2016 06:15:00 -0700 (PDT)
-In-Reply-To: <1473984742-12516-3-git-send-email-kevin.m.wern@gmail.com>
-References: <1473984742-12516-1-git-send-email-kevin.m.wern@gmail.com> <1473984742-12516-3-git-send-email-kevin.m.wern@gmail.com>
+Received: by 10.64.21.6 with HTTP; Mon, 19 Sep 2016 06:16:53 -0700 (PDT)
+In-Reply-To: <xmqq1t0loxz4.fsf@gitster.mtv.corp.google.com>
+References: <CAGHT48L2s_nf-oSGPKrOB7uo5UAkCScNh+Ju5xH1dE5DFVnHwA@mail.gmail.com>
+ <xmqq1t0loxz4.fsf@gitster.mtv.corp.google.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 19 Sep 2016 20:15:00 +0700
-Message-ID: <CACsJy8ARu_PkduP-McnE26OFEgr_YAkLtmfaxwYX7i9m47mJmg@mail.gmail.com>
-Subject: Re: [PATCH 02/11] Resumable clone: add prime-clone endpoints
-To:     Kevin Wern <kevin.m.wern@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Date:   Mon, 19 Sep 2016 20:16:53 +0700
+Message-ID: <CACsJy8AGYPfX9936QJyKU8paxbt+SABMbeCWnpgVvODFr7v4LA@mail.gmail.com>
+Subject: Re: git add --intent-to-add silently creates empty commits
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Aviv Eyal <avivey@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 16, 2016 at 7:12 AM, Kevin Wern <kevin.m.wern@gmail.com> wrote:
->  static struct daemon_service daemon_service[] = {
->         { "upload-archive", "uploadarch", upload_archive, 0, 1 },
->         { "upload-pack", "uploadpack", upload_pack, 1, 1 },
->         { "receive-pack", "receivepack", receive_pack, 0, 1 },
-> +       { "prime-clone", "primeclone", prime_clone, 0, 1 },
->  };
+On Fri, Sep 16, 2016 at 12:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Aviv Eyal <avivey@gmail.com> writes:
+>
+>> Using `git add -N` allows creating of empty commits:
+>>
+>> git init test && cd test
+>> echo text > file
+>> git add --intent-to-add file
+>> git commit -m 'Empty commit'
+>> echo $?                                    # prints 0
+>> ...
+>> I'd expect `git commit` to error out instead of producing an empty commit.
+>>
+>> I've seen this with git 2.8.1 and 2.10.0.129.g35f6318
+>
+> I think I've seen this reported some time ago.
+>
+> https://public-inbox.org/git/%3CCACsJy8A8-RgpYxYsJBaLrMia7D3DfQPr4cxASNsaLyCnmgm3ZQ@mail.gmail.com%3E/
+>
+> I do not offhand recall what happend to the topic after that.
 
-I guess this is why you chose to implement a new command in 01/11,
-simpler to be called from http-backend?
-
-> +               // prime-clone does not need --stateless-rpc and
-> +               // --advertise-refs options. Maybe it will in the future, but
-> +               // until then it seems best to do this instead of adding
-> +               // "dummy" options.
-
-Stick to /* .. */
-
-> +               if (strcmp(svc->name, "prime-clone") != 0) {
-> +                       argv_array_pushl(&argv, "--stateless-rpc",
-> +                                        "--advertise-refs", NULL);
-> +               }
-
-We also have an exception for select_getanyfile() below. I think it's
-time we add a function callback in struct rpc_service to run each
-service the way they want. Then prime-clone won't need an exception
-(neither does select_anyfile, mostly)
+Yeah. I'm a bit behind, no, I'm waaaay behind my git backlog. This
+definitely gets a rise-up, together with the multiworktree bug fix in
+git-init.
 -- 
 Duy
