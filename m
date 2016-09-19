@@ -2,97 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAE6F2070F
-	for <e@80x24.org>; Mon, 19 Sep 2016 18:16:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25DE62070F
+	for <e@80x24.org>; Mon, 19 Sep 2016 18:18:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932564AbcISSQZ convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 19 Sep 2016 14:16:25 -0400
-Received: from mail-by2on0079.outbound.protection.outlook.com ([207.46.100.79]:3736
-        "EHLO na01-by2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S932536AbcISSQZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2016 14:16:25 -0400
-X-Greylist: delayed 882 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Sep 2016 14:16:24 EDT
-Received: from YQXPR01MB0023.CANPRD01.PROD.OUTLOOK.COM (10.165.130.13) by
- YQXPR01MB0021.CANPRD01.PROD.OUTLOOK.COM (10.165.130.11) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.629.8; Mon, 19 Sep 2016 18:01:39 +0000
-Received: from YQXPR01MB0023.CANPRD01.PROD.OUTLOOK.COM ([10.165.130.13]) by
- YQXPR01MB0023.CANPRD01.PROD.OUTLOOK.COM ([10.165.130.13]) with mapi id
- 15.01.0629.006; Mon, 19 Sep 2016 18:01:39 +0000
-From:   Paul Williamson <paul.williamson@mediamiser.com>
-To:     Philip Oakley <philipoakley@iee.org>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: Switching branches not working in a cloned repo
-Thread-Topic: Switching branches not working in a cloned repo
-Thread-Index: AdISfZQ3kSlGE8JHQfuYXxD9ERxQOgAE6ZZFAANrQ2A=
-Date:   Mon, 19 Sep 2016 18:01:39 +0000
-Message-ID: <YQXPR01MB0023C5D73A5C4634D1D76E259EF40@YQXPR01MB0023.CANPRD01.PROD.OUTLOOK.COM>
-References: <YQXPR01MB0023CDCFA27BDD4959B4F9B19EF40@YQXPR01MB0023.CANPRD01.PROD.OUTLOOK.COM>
- <3999677D12354A3CB2035E932353981A@PhilipOakley>
-In-Reply-To: <3999677D12354A3CB2035E932353981A@PhilipOakley>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=paul.williamson@mediamiser.com; 
-x-originating-ip: [72.143.112.138]
-x-ms-office365-filtering-correlation-id: d57d3d53-8137-46b1-4564-08d3e0b70168
-x-microsoft-exchange-diagnostics: 1;YQXPR01MB0021;6:JM9LfM5UyVgJ0YaKOIjdXGAtaSCW1RFvui8jhAwFhXPbH72u5F3Sg9r41VkRGTKudR/gqAyR9kw5gqSULx8c9VzSsCw8AbAh4/UNW1OCjFT+o7nHpwyTjyLtbCOiyeIHjFW+y+rHLG3z9YFYPZyM+QXkCgFCGxgdlgfX8n5kLd1r57DknFDz6GXXR3SKNtYpGZgzfjT38AuohcQKEGz+7nmFFQPd4/VDCi4WO5nWopcZGE9B4l2vpiH+VG+pvTh0fZ2LydSi6qiqjJEcqFo56h7ALtgjyff+iheYgzyEnCkYDcAfHe+H/IAgiM1EZwiD;5:lyLpOQLJ5I4lNHFxCD/eI7/o5GcuK+pHvTB3NZ4oyOEDh8JbKMieYmKY3/tIF6XD7JxLymA1dFVi72bo4iiLRkKL+EqTvEhy/ndR2u/NEnZwn4FVynuZyOXnfi68F4+xZVs5dO0eYPoxhex/nJmMjw==;24:lcjd8V7Gr2OyhWFCcNy2OhTUPzLE68Q48AqlNc086z8QlENVaGzIXgnx0N0VHVgpwL1lLRpi7ARgBrOVQrk9ibO7ZzsDiyuY2W3OMLNvPrM=;7:yBor5Sx2tefEL2cPha2O9vqH12qKoYD0oVrfnpyl02F0RjbLBkKS3yiKS1v8hHJLHF79oMockHCklJdPl6nC1/tsNGyTfaYnEGLU6pIDH3lr8aFXzKqW47g3NVh8knvjW86CAbk1I4QeAlUU3W5+07OmCDVNrpFxPE6HS7W9BDibrTuQu9EV4ccNLU7QfSUfkyKiS1G5LaaZSAzLY7eTUr9xlaVKM1117kitno9+G2bANUQcl0IIF9Wuu0TSTTRhxKu8lYMH9eZWTtsW+RhlV6Li708gmbFw9P8TFBFElrSxQorey5MjSxxT3TYoaDU1
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:YQXPR01MB0021;
-x-microsoft-antispam-prvs: <YQXPR01MB00214281BA0416961D33BC1E9EF40@YQXPR01MB0021.CANPRD01.PROD.OUTLOOK.COM>
-x-exchange-antispam-report-test: UriScan:(158342451672863);
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040176)(2401047)(8121501046)(5005006)(3002001)(10201501046)(6042046)(6043046);SRVR:YQXPR01MB0021;BCL:0;PCL:0;RULEID:;SRVR:YQXPR01MB0021;
-x-forefront-prvs: 0070A8666B
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(6009001)(7916002)(199003)(189002)(13464003)(3846002)(7696004)(2906002)(305945005)(102836003)(92566002)(7736002)(6116002)(7846002)(107886002)(2501003)(105586002)(74316002)(11100500001)(87936001)(586003)(86362001)(10400500002)(66066001)(8676002)(1720100001)(81156014)(81166006)(5002640100001)(8936002)(19580395003)(122556002)(15975445007)(19580405001)(77096005)(3660700001)(5660300001)(68736007)(2950100001)(189998001)(5001770100001)(97736004)(54356999)(106356001)(76176999)(101416001)(9686002)(2900100001)(50986999)(33656002)(3280700002);DIR:OUT;SFP:1101;SCL:1;SRVR:YQXPR01MB0021;H:YQXPR01MB0023.CANPRD01.PROD.OUTLOOK.COM;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
-received-spf: None (protection.outlook.com: mediamiser.com does not designate
- permitted sender hosts)
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        id S932679AbcISSSk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Sep 2016 14:18:40 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55251 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932593AbcISSSj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2016 14:18:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 918EA3FAED;
+        Mon, 19 Sep 2016 14:18:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ERjxBkNOxZ0rmMsoPVH6Tnboee8=; b=RkMTWN
+        N2jXqAs/qk79X5yyZg+XSDOuO3Y/d4G/CiacsheoI2Za80LW7zsSXSjplexnmykm
+        9hlVWEENpP+hhIhTzbnEpQs6be5SrF8Z6+ZFLqNhAEH2RTHtWR/TTGTiDNo+l5mV
+        12+DnQgQSQh5qcQJ9qIeFbKlwiTe+QGunN11c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ml4Gn6coKSOntgRoAtuh2i++4o81M6QZ
+        pRornho2ET984u3JvKAahsVSmnw/MaWV/1mwEkFFxVchWSwxhArOYxEoYXBMQtLC
+        ZVJqzRlNd9ynUBbunbzOkVcfwhGkCeJdtpuZyImc0OJV0PXBRH98sGV7jfjYPaIq
+        7zzUqucmp/4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 89EDA3FAEC;
+        Mon, 19 Sep 2016 14:18:37 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0FC0D3FAEB;
+        Mon, 19 Sep 2016 14:18:36 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] ls-files: add pathspec matching for submodules
+References: <CAKoko1pewoxD4=_9M45pchdDg03K8fc73raJOsf4A+=KKw_EMw@mail.gmail.com>
+        <1474073981-96620-1-git-send-email-bmwill@google.com>
+Date:   Mon, 19 Sep 2016 11:18:35 -0700
+In-Reply-To: <1474073981-96620-1-git-send-email-bmwill@google.com> (Brandon
+        Williams's message of "Fri, 16 Sep 2016 17:59:41 -0700")
+Message-ID: <xmqqwpi7eosk.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-X-OriginatorOrg: mediamiser.com
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Sep 2016 18:01:39.4617
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 9009f71a-c1b6-4b55-a665-0aeb582e95d3
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: YQXPR01MB0021
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7BA1AD7A-7E95-11E6-9074-5D827B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
------Original Message-----
-From: Philip Oakley [mailto:philipoakley@iee.org] 
+Brandon Williams <bmwill@google.com> writes:
 
->Have you tried `git ls-remote` ?
->The `branch -r` just lists the local 'rtb's (IIUC).
+>  static void show_ce_entry(const char *tag, const struct cache_entry *ce)
+>  {
+> +	struct strbuf name = STRBUF_INIT;
+>  	int len = max_prefix_len;
+> +	if (submodule_prefix)
+> +		strbuf_addstr(&name, submodule_prefix);
+> +	strbuf_addstr(&name, ce->name);
 
-Nice, I didn't know about that command - I tried it though and it does list the remote branches correctly. I checked the commit refs given and it tallies with the refs at the gitolite server end.
+Continuing with the previous review, which concentrated on what
+happens in the superproject; let's see what happens in the recursive
+invocation in a submodule.
 
->It could be someone has accidently pruned or deleted that branch at the remote.
+So a recursively spawned "ls-files --submodule-prefix=sub/" finds
+a path in the index PATH and forms "sub/PATH" in "name".  From here
+on, where we used to match pathspec against ce->name, we would be
+matching it against name->buf.
 
-I don't think so, as I say it's a gitolite server, so usually nobody is on it. We just push to it and set up post-receive hooks for if updates need to be pushed on to a deployment server.
+> +	if (recurse_submodules && S_ISGITLINK(ce->ce_mode) &&
+> +	    submodule_path_match(&pathspec, name.buf, ps_matched)) {
+>  		show_gitlink(ce);
 
-Do you know of ways to check if anything is corrupted within the repo? I ran git fsck, but that didn't show up anything.
+This is primarily what happens in the superproject to decide if the
+submodule is worth showing.  When we are in a submodule, we can
+descend into subsubmodule (if our ls-files run in the superproject
+passed --recurse-submodule down) from here.
 
->What version are you (they) on?
+> +	} else if (match_pathspec(&pathspec, name.buf, name.len,
+> +				  len, ps_matched,
+> +				  S_ISDIR(ce->ce_mode) ||
+> +				  S_ISGITLINK(ce->ce_mode))) {
 
-1.9.1 at both ends (my laptop and our gitolite server)
+This is interesting bit to see what happens in the recursive
+invocation.  It uses the usual match_pathspec(), as we want to be
+precise and correct, iow, we do not want to use DO_MATCH_SUBMODULE,
+aka "it might be worth descending into submodule".
 
-> Gmane had to quit. Try http://public-inbox.org/git (see the help link)
+> +		if (tag && *tag && show_valid_bit &&
+> +		    (ce->ce_flags & CE_VALID)) {
+> +...
+> +		}
+> +		write_eolinfo(ce, ce->name);
+> +		write_name(ce->name);
 
-Ah! Thanks. I tried searching but so far only turned up this thread.
+The prefixing is taken care of by write_name(), so it is correct to
+use ce->name here.
 
-> philip 
+> ...  
+> +	strbuf_release(&name);
+>  }
 
-Thanks for your reply, Philip.
+OK, everything I saw so far for the recursive invocation here makes
+sense.
 
-Paul
-
+Thanks.
