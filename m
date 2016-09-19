@@ -2,109 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B7DA72070F
-	for <e@80x24.org>; Mon, 19 Sep 2016 12:59:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A09A2070F
+	for <e@80x24.org>; Mon, 19 Sep 2016 13:09:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759406AbcISM7g (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Sep 2016 08:59:36 -0400
-Received: from mail-io0-f176.google.com ([209.85.223.176]:33510 "EHLO
-        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755245AbcISM7f (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2016 08:59:35 -0400
-Received: by mail-io0-f176.google.com with SMTP id r145so90097538ior.0
-        for <git@vger.kernel.org>; Mon, 19 Sep 2016 05:59:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=WgFy/wo6TiXWaSzB39N2ZqhaWF8tcwuW1ctDKXYQRwo=;
-        b=EQCsiTLLLQpm7Kox6S5EdGfGTammtXSZybhpr+BsYpxr6fyoPdha1n6veqnX4w3gK5
-         BhtadWvniyLgX6dPzbBWzr+EWhdThge2aCJ7L8HZ17dHaADvb8ssdf1YkzJ6/oVirxZO
-         yqDqNVtDEXPtJVog3ngNNLfezJrpX5Zd9PS5SL3rlYM6p9ZMXj3k3wflExPs2BWQy4LP
-         LbPrrQ9egKZ326UNBP6LZ5ywI10KMVFxEX8WZcPhh6jwJOZ+Zk6deIZqYob9RtJ6m2u8
-         +fh2EX8CItqUkxHkvrBlR6n7LU4/bFss11SYRvGL7/qFuCIaaUvXFCcEaYyNe0gfscEj
-         X9dQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=WgFy/wo6TiXWaSzB39N2ZqhaWF8tcwuW1ctDKXYQRwo=;
-        b=RSndZiIsQ8xE1WtAz+zNQAaDLP+CXavC+acrI0ahnLEgLOF5WkeRLhkW+JexSrDI7n
-         XNFLfEB5z/1zqlLHCoCTyGJ8DA+5MgMIxxfW0knjIdRj96csN0eKmIchRQ/d4MND3Wz2
-         5RAqltgqtscjDBFO+YowcM/g4Xw3wfLS4UfTmeRcoqFk/APHpIQRUo2I+pb6q3MohwmD
-         4ykBwRUKhRXYdTpPRwYTSoziuD2QoPd6R3bthKoJYg7Q87SCjb8938c72vZbRmzjCXi4
-         CWVwvUqhBZZfHkx4O81lFdoiZKCVIcC+HcJe9HRa5pfgZC4eYTxuwHcliYhjNkNBZcIm
-         f3Dg==
-X-Gm-Message-State: AE9vXwORoMvjrPhqR0zOpMgU3TUP8ixgHAGJlUunl10IfJj0UY7VdkR7LtMnFc5mdTM00j0dESK3bZKeXol+yQ==
-X-Received: by 10.107.142.77 with SMTP id q74mr16764930iod.0.1474289974046;
- Mon, 19 Sep 2016 05:59:34 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.64.21.6 with HTTP; Mon, 19 Sep 2016 05:59:03 -0700 (PDT)
-In-Reply-To: <db20ae0c-9c33-1e65-b201-1b6a9ed11340@web.de>
-References: <nrje96$q7s$1@blaine.gmane.org> <db20ae0c-9c33-1e65-b201-1b6a9ed11340@web.de>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 19 Sep 2016 19:59:03 +0700
-Message-ID: <CACsJy8BUT6wypU5yn4izCadEF0y32n4m9x8ZLgfod+HNfSZiqg@mail.gmail.com>
-Subject: Re: Two bugs in --pretty with %C(auto)
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     Anatoly Borodin <anatoly.borodin@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+        id S1759722AbcISNJR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Sep 2016 09:09:17 -0400
+Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:47285 "EHLO sapo.pt"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1756331AbcISNJQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2016 09:09:16 -0400
+Received: (qmail 31420 invoked from network); 19 Sep 2016 13:09:13 -0000
+Received: (qmail 29027 invoked from network); 19 Sep 2016 13:09:11 -0000
+Received: from unknown (HELO catarina.localdomain) (vascomalmeida@sapo.pt@[85.246.157.91])
+          (envelope-sender <vascomalmeida@sapo.pt>)
+          by ptmail-mta-auth02 (qmail-ptmail-1.0.0) with ESMTPA
+          for <git@vger.kernel.org>; 19 Sep 2016 13:09:06 -0000
+X-PTMail-RemoteIP: 85.246.157.91
+X-PTMail-AllowedSender-Action: 
+X-PTMail-Service: default
+From:   Vasco Almeida <vascomalmeida@sapo.pt>
+To:     git@vger.kernel.org
+Cc:     Vasco Almeida <vascomalmeida@sapo.pt>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>,
+        =?UTF-8?q?Jean-No=C3=ABl=20AVILA?= <jn.avila@free.fr>
+Subject: [PATCH 1/6] i18n: commit: mark message for translation
+Date:   Mon, 19 Sep 2016 13:08:16 +0000
+Message-Id: <1474290501-2743-1-git-send-email-vascomalmeida@sapo.pt>
+X-Mailer: git-send-email 2.7.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 18, 2016 at 1:25 AM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
-> Am 17.09.2016 um 14:51 schrieb Anatoly Borodin:
->> Hi All!
->>
->> First bug:
->>
->>       git log -3 --pretty=3D'%C(cyan)%C(auto)%h%C(auto)%d %s'
->>
->> prints %h with the default color (normal yellow), but
->>
->>       git log -3 --pretty=3D'%C(bold cyan)%C(auto)%h%C(auto)%d %s'
->>
->> shows %h with bold yellow, as if only the color was reset, but not
->> the attributes (blink, ul, reverse also work this way). %d and %s are
->> printed with the right color both times.
->>
->> Second bug, maybe related to the first one:
->>
->>       git log -3 --pretty=3D'%C(bold cyan)%h%C(auto)%d %s %an %h %h %s'
->>
->> The first line looks as expected. Well, almost: the '(' of %d is bold
->> yellow.
->>
->> The second line looks like this:
->>
->> * %h, %s, %an with bold cyan;
->> * %h with bold yellow;
->> * %h with normal yellow and %s with normal white (default colors).
->>
->> PS git version 2.9.2
->
-> Well, in both cases you could add %Creset before %C(auto) to get what
-> you want.
->
-> I'm not sure how just how automatic %C(auto) is supposed to be, but you
-> expected it do emit the reset for you, right?  Sounds reasonable to me.
-> The following patch implements that behavior.
->
-> Duy, what do you think?
+Mark message commit_utf8_warn for translation.
 
-Even though letting some attributes before %C(auto) through sounds
-interesting, I'd say it's a bit unpredictable, especially when the
-main usage of %C(auto) is %d which could use plenty of colors. So yes,
-your changes look good.
---=20
-Duy
+Update tests to reflect changes.
+
+Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
+---
+ commit.c               | 8 ++++----
+ t/t3900-i18n-commit.sh | 8 ++++----
+ t/t3901-i18n-patch.sh  | 2 +-
+ 3 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/commit.c b/commit.c
+index ba6dee3..8eb1707 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1511,9 +1511,9 @@ static int verify_utf8(struct strbuf *buf)
+ }
+ 
+ static const char commit_utf8_warn[] =
+-"Warning: commit message did not conform to UTF-8.\n"
+-"You may want to amend it after fixing the message, or set the config\n"
+-"variable i18n.commitencoding to the encoding your project uses.\n";
++N_("Warning: commit message did not conform to UTF-8.\n"
++   "You may want to amend it after fixing the message, or set the config\n"
++   "variable i18n.commitencoding to the encoding your project uses.\n");
+ 
+ int commit_tree_extended(const char *msg, size_t msg_len,
+ 			 const unsigned char *tree,
+@@ -1566,7 +1566,7 @@ int commit_tree_extended(const char *msg, size_t msg_len,
+ 
+ 	/* And check the encoding */
+ 	if (encoding_is_utf8 && !verify_utf8(&buffer))
+-		fprintf(stderr, commit_utf8_warn);
++		fprintf(stderr, _(commit_utf8_warn));
+ 
+ 	if (sign_commit && do_sign_commit(&buffer, sign_commit))
+ 		return -1;
+diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
+index 4bf1dbe..3b94283 100755
+--- a/t/t3900-i18n-commit.sh
++++ b/t/t3900-i18n-commit.sh
+@@ -45,7 +45,7 @@ test_expect_success 'UTF-8 invalid characters refused' '
+ 	printf "Commit message\n\nInvalid surrogate:\355\240\200\n" \
+ 		>"$HOME/invalid" &&
+ 	git commit -a -F "$HOME/invalid" 2>"$HOME"/stderr &&
+-	grep "did not conform" "$HOME"/stderr
++	test_i18ngrep "did not conform" "$HOME"/stderr
+ '
+ 
+ test_expect_success 'UTF-8 overlong sequences rejected' '
+@@ -55,7 +55,7 @@ test_expect_success 'UTF-8 overlong sequences rejected' '
+ 	printf "\340\202\251ommit message\n\nThis is not a space:\300\240\n" \
+ 		>"$HOME/invalid" &&
+ 	git commit -a -F "$HOME/invalid" 2>"$HOME"/stderr &&
+-	grep "did not conform" "$HOME"/stderr
++	test_i18ngrep "did not conform" "$HOME"/stderr
+ '
+ 
+ test_expect_success 'UTF-8 non-characters refused' '
+@@ -64,7 +64,7 @@ test_expect_success 'UTF-8 non-characters refused' '
+ 	printf "Commit message\n\nNon-character:\364\217\277\276\n" \
+ 		>"$HOME/invalid" &&
+ 	git commit -a -F "$HOME/invalid" 2>"$HOME"/stderr &&
+-	grep "did not conform" "$HOME"/stderr
++	test_i18ngrep "did not conform" "$HOME"/stderr
+ '
+ 
+ test_expect_success 'UTF-8 non-characters refused' '
+@@ -73,7 +73,7 @@ test_expect_success 'UTF-8 non-characters refused' '
+ 	printf "Commit message\n\nNon-character:\357\267\220\n" \
+ 		>"$HOME/invalid" &&
+ 	git commit -a -F "$HOME/invalid" 2>"$HOME"/stderr &&
+-	grep "did not conform" "$HOME"/stderr
++	test_i18ngrep "did not conform" "$HOME"/stderr
+ '
+ 
+ for H in ISO8859-1 eucJP ISO-2022-JP
+diff --git a/t/t3901-i18n-patch.sh b/t/t3901-i18n-patch.sh
+index 509084e..f663d56 100755
+--- a/t/t3901-i18n-patch.sh
++++ b/t/t3901-i18n-patch.sh
+@@ -295,7 +295,7 @@ test_expect_success 'am --no-utf8 (U/L)' '
+ 
+ 	# commit-tree will warn that the commit message does not contain valid UTF-8
+ 	# as mailinfo did not convert it
+-	grep "did not conform" err &&
++	test_i18ngrep "did not conform" err &&
+ 
+ 	check_encoding 2
+ '
+-- 
+2.7.4
+
