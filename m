@@ -2,91 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F31E02070F
-	for <e@80x24.org>; Mon, 19 Sep 2016 20:54:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4FD122070F
+	for <e@80x24.org>; Mon, 19 Sep 2016 21:01:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752039AbcISUyJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Sep 2016 16:54:09 -0400
-Received: from mail-yw0-f173.google.com ([209.85.161.173]:33189 "EHLO
-        mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751029AbcISUyI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2016 16:54:08 -0400
-Received: by mail-yw0-f173.google.com with SMTP id i129so164070715ywb.0
-        for <git@vger.kernel.org>; Mon, 19 Sep 2016 13:54:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=8oPzItRN3kmvt5/K4GjqU+wN0Yvj5CajGwxz0xk+jtY=;
-        b=qvWTb9sD55fdET1tI35VFWZxVZBO14YiKlo5utPZe1UOvIYl8v7lo6u7K3SmOklLhG
-         vVMUZpavg1JfqHQ849EnsWlk8s6InKHy+LUaJN492tePE1Vx1hunAVJnZVQo0YOmnaEI
-         Ex+sCAh309+xE37XuUl834vXtLEnuCHzgdZB0JmB/AWMt+xAkJMaIA+2nZp4r21DA1NY
-         aZQnf5C+IhcF5Pft9yavZadNMSq+E1iTtqKq6AkAB9IDjB3ZyvvBYZJJLyCYbDtdXC8Z
-         3Hf6kidatmQPc9GDbW8Ai9RXt2Tell75f5FjLZ5nwVJvI24OWV3GKk4BjAzyKGrQgKrt
-         ngNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=8oPzItRN3kmvt5/K4GjqU+wN0Yvj5CajGwxz0xk+jtY=;
-        b=MEjRP6hpEQyxprN5jQc9HOC49s9OhPRjmwL3gW+cI/VD7D8RxOhl/4xwqRfjlyH2Qi
-         XX9lwqCkmkPw4vOOv0TY11B/tSNgJDz/MOzglBKvFudGTjOod+WIdBtvpdSXKiFPoxA0
-         ZZfGlc0kZ3wvnNMO9qfy+OffFD9e/UoGzG9XghbqwoT8YDYS96o5YhYW5NtSOFkTmTnR
-         rh/EA3DZWgy0Kfo/u2kcrhF9+VbYQdpmrUQOoecUu6t+nzZefKB5E2QEyAovp7NWovZ9
-         0STB9+sRkZjENOVVqnHnnP386XXO/s/3UnshVhL8Y60qg9h04GWxRAmVguFj8lrdg/G+
-         8I/A==
-X-Gm-Message-State: AE9vXwP4TyrzTFXP4X7kKrUF0wEYL9YSlUeB+BmRLCswxdjd2Qp3UepHnoBDNOTjJc3QW24oDzs/dJFi9CxpLg==
-X-Received: by 10.129.78.18 with SMTP id c18mr27625840ywb.160.1474318448051;
- Mon, 19 Sep 2016 13:54:08 -0700 (PDT)
+        id S932484AbcISVBm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Sep 2016 17:01:42 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62964 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932163AbcISVBk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2016 17:01:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0A11640722;
+        Mon, 19 Sep 2016 17:01:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=URTYeksC5I+QY5v+vyZ7zLuACUc=; b=QY9jfr
+        JVG88pYyYsJxq8FMhz9uJ5QlEIOHj0aKs4kNgztIknqn0yw3vB3aB5GMDdBVSKvf
+        Tp2Dknv7C/VfPT5yfiObDvqMccDOcGRZkvziwim6QPwTTP4GRneslQxqQrKyN3xW
+        yUFfXI2u12asFmYnFaTCrbFFBkSmJyK2I/7rc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=OPat3FsvE0EBKYXOcjshz9RivuY+EmCi
+        aJY1hXuyS4OdeuBxBGQa+U5k0rWZrxUX+Qkb/qaLlpYpGzIlHtAK9Prva9wiEiQX
+        SZjW5uFnLB+qZFzIdxus000dYqZSx1rmwdu7NYmGqXHDHY1HEyhZjWTf2tujUJ63
+        Hmed8qDIYPw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EE23840720;
+        Mon, 19 Sep 2016 17:01:38 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 925574071A;
+        Mon, 19 Sep 2016 17:01:33 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Philip Oakley" <philipoakley@iee.org>
+Cc:     "Michael J Gruber" <git@drmicha.warpmail.net>,
+        "Git List" <git@vger.kernel.org>
+Subject: Re: clarification of `rev-list --no-walk ^<rev>`?
+References: <2AD952BD65034D25BF26C7F138D24F25@PhilipOakley>
+        <3b06b9ee-3975-acf1-41d8-02b774a2dd3c@drmicha.warpmail.net>
+        <xmqq8tunhns4.fsf@gitster.mtv.corp.google.com>
+        <989F47918A374EEF8C7FECD3CFC6767E@PhilipOakley>
+        <xmqqintrek64.fsf@gitster.mtv.corp.google.com>
+        <DDC820F0373F4534B4A9D12E8B7B866B@PhilipOakley>
+Date:   Mon, 19 Sep 2016 14:00:45 -0700
+In-Reply-To: <DDC820F0373F4534B4A9D12E8B7B866B@PhilipOakley> (Philip Oakley's
+        message of "Mon, 19 Sep 2016 21:12:51 +0100")
+Message-ID: <xmqqa8f3ehaa.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.96.195 with HTTP; Mon, 19 Sep 2016 13:53:47 -0700 (PDT)
-In-Reply-To: <1474317076.23916.6.camel@gmail.com>
-References: <1474317076.23916.6.camel@gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Mon, 19 Sep 2016 13:53:47 -0700
-Message-ID: <CA+P7+xp5ehLnuQjekhJ6mfRVmm-pdxm96wcCDfBH15Hj+RTuAg@mail.gmail.com>
-Subject: Re: .git directory tree as tar-file
-To:     Martin Bammer <mrbm74@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3F7EF520-7EAC-11E6-BA94-096F12518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 19, 2016 at 1:31 PM, Martin Bammer <mrbm74@gmail.com> wrote:
-> Hi,
+"Philip Oakley" <philipoakley@iee.org> writes:
+
+>> The "--no-walk" tells the rev-list machinery "I have only positives;
+>> do not traverse from them AT ALL but just use these positives".
+>> Only under that condition, the order of the positive ends you list
+>> on the command line matters.
 >
-> it would be nice to have an option to have a .git.tar instead of the .git
-> directory tree. This tree quickly gets very big and copy and compare actions
-> take very long. I've observed that even in small projects with only a few files
-> the .git tree can contain several thousand entries. Especially when projects are
-> saved on shares copy and compare actions are getting very slow.
-> Is such a feature already planned or is there a chance to have such a feature in
-> the near future?
->
-> Best regards,
->
+> What does "--do-walk" do ("Overrides a previous --no-walk"), and when
+> would it be applied?
 
-It sounds like you're mis-using the git directory and attempting to
-share by copying it instead of using any of the protocols designed for
-sharing such as local file, ssh, or https.
+Wouldn't 
 
-I don't believe that storing the git via compression is really a good
-idea, as many of the operations inside are based on files and we
-already try to keep things compressed using various methods already
-(pack files)
+    $ git cherry-pick --no-walk --do-walk A
 
-If you want to actually share a git repository as a bundle, you can
-generate such a bundle. See "git help bundle" for more information.
+end up walking the history behind A and reproducing the history
+since the root commit?
 
-Regards,
-Jake
-
-> Martin
->
