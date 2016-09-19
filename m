@@ -6,53 +6,53 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C68C32070F
+	by dcvr.yhbt.net (Postfix) with ESMTP id D98CA207DF
 	for <e@80x24.org>; Mon, 19 Sep 2016 21:09:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752582AbcISVJJ (ORCPT <rfc822;e@80x24.org>);
+        id S1752458AbcISVJJ (ORCPT <rfc822;e@80x24.org>);
         Mon, 19 Sep 2016 17:09:09 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:33098 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752163AbcISVJI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2016 17:09:08 -0400
-Received: by mail-pf0-f173.google.com with SMTP id 21so43929079pfy.0
-        for <git@vger.kernel.org>; Mon, 19 Sep 2016 14:09:08 -0700 (PDT)
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:33094 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752315AbcISVJH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2016 17:09:07 -0400
+Received: by mail-pf0-f180.google.com with SMTP id 21so43928929pfy.0
+        for <git@vger.kernel.org>; Mon, 19 Sep 2016 14:09:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=IAs15tqcrxyM/fb0/pH1biR5KVMBqHFQrgkFMpV+jDI=;
-        b=ie0gGnSjeguPYKEXOWKjrtNXDiKuR3OPyQPonQpfvMkCjD3Np7SGgNW3FqT7djlQuH
-         FQcSL9++ebJ4F4nd5WMwi5zAax18AZkShe7DZi0Miecu2X4SCwAcfzPtCf54GeVUe/fP
-         kx4cJJaruccc+kH2Etby8K27ZUqd8SS+GhQ4RSdLVUEXVbt5QNSKWtQCjRcL2QbiBmQJ
-         9vwbE7z7WnUWS8obN9CiGWp0dU71oOoMHVBPwtE8/6vB5vqXfbwNKfdHjkC1HrmySonP
-         CjybOHZi9ThgZrU6CwUmPQga0UdysJFIkEsHzP2eD5ngvynH0b0EpIUCJRf2l+Yd+gML
-         qJFg==
+        bh=kbEtZJlISeum4XXCTjuKiF195pmvM6RmwmwoQCv0XUo=;
+        b=QHmxpwnrsivOPJwnCEA4n6Srvxlailx4/fhVnilafmyOcwEtp9KflYixaKx5BjLQr6
+         gq3eiLZ+T0/f4X1ibR0/gzNv3Q9tG19g8/VXOOHXPhNjFZGoKbXTY8aLZVw670GRlgT3
+         zT3P71dYQkV8XqDWabkSixDVVjn99obh6s0k1R7U7iAfPOwEREwe7K8ElmDjkFXIk0Pe
+         VQXcXhAlqMFt4uwkrpC2s5fJN3Fxr/9u3xH30Z12ncqHjwJTQIX9fxKzWO7eaucplGRG
+         vSFs0T4r6S8L7fx67+VSZ9lB5F/hqzaFOzWN5vgsRsfbpi6O3m0lhTkh1Hut/CP5P+1m
+         rpNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=IAs15tqcrxyM/fb0/pH1biR5KVMBqHFQrgkFMpV+jDI=;
-        b=FI4WRG6VrWHo/8kcqcgAAWvVrpuK9AVMt3cUtmxRcvxNIzBLPFoVmrws2sJ2+MYNbu
-         5mtr/Aiie0I4uc9PZW0BQB5R9mmN0aOauO5PgFV6RjJpkejWVuZY4aM1df7OmhpHhFfb
-         pJ3XN9+75omHpcpwsh8LMMS+8rm8Ml/i1BZAPqfh9H56WC54apBsVWDRKP36Ee5/poFN
-         k/LqCr01D5Z5SZQBLSwJkBVW0hLO9WZj1l25wdnP1vi43EMgR/xZi411ceJtJl4kIwqt
-         PG7jLSYD9J0en3eidg8bSMGKTMNvlM8mrvtc5Z5rqum8sXO0LuLwPahrWoVl5h/51C5F
-         lDYg==
-X-Gm-Message-State: AE9vXwMHe9SRt8LvMAL7lsQ6pg3ma9M3LLPbeZA8/MwwzGu/zhJVbOIzsgnlqF4VSF3PCB79
-X-Received: by 10.98.134.201 with SMTP id x192mr40969518pfd.21.1474319347795;
-        Mon, 19 Sep 2016 14:09:07 -0700 (PDT)
-Received: from twelve2.mtv.corp.google.com ([100.96.238.21])
-        by smtp.gmail.com with ESMTPSA id q14sm54484171pfg.63.2016.09.19.14.09.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        bh=kbEtZJlISeum4XXCTjuKiF195pmvM6RmwmwoQCv0XUo=;
+        b=RoLiHOahS0WqBa8HU1oPJNZ8HVzx/BjA5eZMIcnH9cWH0530qWOfv2giyHvuxW5Cl1
+         tLYG2q/Wi3N4xUaLXIouVYeSjIT1RbfeGjzREeLnDBDhsL53KFNGIQAiWtP7afnLKt1d
+         sutwCRjZ2Fe9+F2yAhX5gtzk+BbRIOaEAlgpCmiGwkPGMNw7crZcNU6Gw0mbF7ilnqhx
+         XIB5oSqvNazDtJo6Uxd9GPq9NHFSXsDjBd3Fwxo1CgaXTccsy+f5jrJfJNGZGopM1ayx
+         NFup6iijn02uYTxRHvNgzgmpkjpqu7iaa6QGsw+wH40XsaFc+tkI+CSYgqJvJi4q1bww
+         aSJA==
+X-Gm-Message-State: AE9vXwOqXl7Q7DZpz8IBoxEbgqYuQllLPtrnt+/xHsUb0Zg2YmS5tCEunBIodUOJtUgxCGd+
+X-Received: by 10.98.205.66 with SMTP id o63mr49678146pfg.37.1474319346538;
         Mon, 19 Sep 2016 14:09:06 -0700 (PDT)
+Received: from twelve2.mtv.corp.google.com ([100.96.238.21])
+        by smtp.gmail.com with ESMTPSA id q14sm54484171pfg.63.2016.09.19.14.09.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 19 Sep 2016 14:09:05 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
         peff@peff.net
-Subject: [PATCH v2 3/4] mailinfo: make is_scissors_line take plain char *
-Date:   Mon, 19 Sep 2016 14:08:52 -0700
-Message-Id: <fe75e92ee7108ef410cb0edad81d1b464b7694eb.1474319086.git.jonathantanmy@google.com>
+Subject: [PATCH v2 2/4] mailinfo: refactor to support utf8 decode attempts
+Date:   Mon, 19 Sep 2016 14:08:51 -0700
+Message-Id: <e882f6395d1079037843e6e5b632c0010e1f4cdf.1474319086.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.10.0.rc2.20.g5b18e70
 In-Reply-To: <cover.1474319086.git.jonathantanmy@google.com>
 References: <cover.1474319086.git.jonathantanmy@google.com>
@@ -63,90 +63,78 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The is_scissors_line takes a struct strbuf * when a char * would
-suffice. Make it take char *.
+mailinfo.c currently has a convert_to_utf8 function that overrides its
+argument and prints an error message when the decoding fails. Refactor
+it, creating another function that does not override anything and does
+not print an error message when the decoding fails. This is to be used
+by a subsequent patch.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- mailinfo.c | 35 ++++++++++++++++++-----------------
- 1 file changed, 18 insertions(+), 17 deletions(-)
+ mailinfo.c | 42 +++++++++++++++++++++++++++++++++---------
+ 1 file changed, 33 insertions(+), 9 deletions(-)
 
 diff --git a/mailinfo.c b/mailinfo.c
-index aadad09..1f487df 100644
+index 0c4738a..aadad09 100644
 --- a/mailinfo.c
 +++ b/mailinfo.c
-@@ -581,37 +581,35 @@ static inline int patchbreak(const struct strbuf *line)
+@@ -340,23 +340,47 @@ static struct strbuf *decode_b_segment(const struct strbuf *b_seg)
+ 	return out;
+ }
+ 
++/*
++ * Attempts to convert line into UTF-8.
++ *
++ * This differs from convert_to_utf8 in that no inputs are overridden, and that
++ * conversion non-success is not considered an error case - mi->input_error is
++ * not set, and no error message is printed.
++ *
++ * If the conversion is unnecessary, returns 1 and stores NULL in result.
++ *
++ * If the conversion is successful, returns 1 and stores the converted string
++ * in result.
++ *
++ * If the conversion is unsuccessful, returns 0 and stores NULL in result.
++ */
++static int try_convert_to_utf8(const struct mailinfo *mi, const char *line,
++			       const char *charset, char **result)
++{
++	if (!mi->metainfo_charset || !charset || !*charset ||
++	    same_encoding(mi->metainfo_charset, charset)) {
++		*result = NULL;
++		return 1;
++	}
++
++	*result = reencode_string(line, mi->metainfo_charset, charset);
++	return !!*result;
++}
++
++/*
++ * Converts line into UTF-8, setting mi->input_error to -1 upon failure.
++ */
+ static int convert_to_utf8(struct mailinfo *mi,
+ 			   struct strbuf *line, const char *charset)
+ {
+ 	char *out;
+-
+-	if (!mi->metainfo_charset || !charset || !*charset)
+-		return 0;
+-
+-	if (same_encoding(mi->metainfo_charset, charset))
+-		return 0;
+-	out = reencode_string(line->buf, mi->metainfo_charset, charset);
+-	if (!out) {
++	if (!try_convert_to_utf8(mi, line->buf, charset, &out)) {
+ 		mi->input_error = -1;
+ 		return error("cannot convert from %s to %s",
+ 			     charset, mi->metainfo_charset);
+ 	}
+-	strbuf_attach(line, out, strlen(out), strlen(out));
++	if (out)
++		strbuf_attach(line, out, strlen(out), strlen(out));
  	return 0;
  }
  
--static int is_scissors_line(const struct strbuf *line)
-+static int is_scissors_line(const char *line)
- {
--	size_t i, len = line->len;
-+	const char *c;
- 	int scissors = 0, gap = 0;
--	int first_nonblank = -1;
--	int last_nonblank = 0, visible, perforation = 0, in_perforation = 0;
--	const char *buf = line->buf;
-+	const char *first_nonblank = NULL, *last_nonblank = NULL;
-+	int visible, perforation = 0, in_perforation = 0;
- 
--	for (i = 0; i < len; i++) {
--		if (isspace(buf[i])) {
-+	for (c = line; *c; c++) {
-+		if (isspace(*c)) {
- 			if (in_perforation) {
- 				perforation++;
- 				gap++;
- 			}
- 			continue;
- 		}
--		last_nonblank = i;
--		if (first_nonblank < 0)
--			first_nonblank = i;
--		if (buf[i] == '-') {
-+		last_nonblank = c;
-+		if (first_nonblank == NULL)
-+			first_nonblank = c;
-+		if (*c == '-') {
- 			in_perforation = 1;
- 			perforation++;
- 			continue;
- 		}
--		if (i + 1 < len &&
--		    (!memcmp(buf + i, ">8", 2) || !memcmp(buf + i, "8<", 2) ||
--		     !memcmp(buf + i, ">%", 2) || !memcmp(buf + i, "%<", 2))) {
-+		if ((!memcmp(c, ">8", 2) || !memcmp(c, "8<", 2) ||
-+		     !memcmp(c, ">%", 2) || !memcmp(c, "%<", 2))) {
- 			in_perforation = 1;
- 			perforation += 2;
- 			scissors += 2;
--			i++;
-+			c++;
- 			continue;
- 		}
- 		in_perforation = 0;
-@@ -626,7 +624,10 @@ static int is_scissors_line(const struct strbuf *line)
- 	 * than half of the perforation.
- 	 */
- 
--	visible = last_nonblank - first_nonblank + 1;
-+	if (first_nonblank && last_nonblank)
-+		visible = last_nonblank - first_nonblank + 1;
-+	else
-+		visible = 0;
- 	return (scissors && 8 <= visible &&
- 		visible < perforation * 3 &&
- 		gap * 2 < perforation);
-@@ -671,7 +672,7 @@ static int handle_commit_msg(struct mailinfo *mi, struct strbuf *line)
- 	if (convert_to_utf8(mi, line, mi->charset.buf))
- 		return 0; /* mi->input_error already set */
- 
--	if (mi->use_scissors && is_scissors_line(line)) {
-+	if (mi->use_scissors && is_scissors_line(line->buf)) {
- 		int i;
- 
- 		strbuf_setlen(&mi->log_message, 0);
 -- 
 2.10.0.rc2.20.g5b18e70
 
