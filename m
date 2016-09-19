@@ -2,117 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE,TVD_FINGER_02 shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFED82070F
-	for <e@80x24.org>; Mon, 19 Sep 2016 14:47:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7AF9E2070F
+	for <e@80x24.org>; Mon, 19 Sep 2016 15:31:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752039AbcISOrD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Sep 2016 10:47:03 -0400
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:49328 "EHLO
-        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751764AbcISOrB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2016 10:47:01 -0400
-Received: from PhilipOakley ([92.22.33.116])
-        by smtp.talktalk.net with SMTP
-        id lzqKbe7yVxR4blzqKbyPNC; Mon, 19 Sep 2016 15:46:49 +0100
-X-Originating-IP: [92.22.33.116]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=JNN5iICb c=1 sm=1 tr=0 a=7PoCAWDTb98b1EGiAsJI/w==:117
- a=7PoCAWDTb98b1EGiAsJI/w==:17 a=N659UExz7-8A:10 a=cCri8_SAAAAA:8
- a=U6JZQEu2cVQQrebrB9wA:9 a=pILNOxqGKmIA:10 a=sbRuPzbSW-bVi6QwGVni:22
-Message-ID: <033051503D8C4F618B1E4879AFF8C28D@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Git List" <git@vger.kernel.org>,
-        "Michael J Gruber" <git@drmicha.warpmail.net>
-References: <2AD952BD65034D25BF26C7F138D24F25@PhilipOakley> <3b06b9ee-3975-acf1-41d8-02b774a2dd3c@drmicha.warpmail.net>
-Subject: Re: clarification of `rev-list --no-walk ^<rev>`?
-Date:   Mon, 19 Sep 2016 15:46:50 +0100
-Organization: OPDS
+        id S1751146AbcISPbr convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 19 Sep 2016 11:31:47 -0400
+Received: from mail-bn1bon0087.outbound.protection.outlook.com ([157.56.111.87]:36032
+        "EHLO na01-bn1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1751076AbcISPbq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2016 11:31:46 -0400
+X-Greylist: delayed 3580 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Sep 2016 11:31:46 EDT
+Received: from YQXPR01MB0023.CANPRD01.PROD.OUTLOOK.COM (10.165.130.13) by
+ YQXPR01MB0024.CANPRD01.PROD.OUTLOOK.COM (10.165.130.14) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
+ 15.1.629.8; Mon, 19 Sep 2016 13:58:00 +0000
+Received: from YQXPR01MB0023.CANPRD01.PROD.OUTLOOK.COM ([10.165.130.13]) by
+ YQXPR01MB0023.CANPRD01.PROD.OUTLOOK.COM ([10.165.130.13]) with mapi id
+ 15.01.0629.006; Mon, 19 Sep 2016 13:58:00 +0000
+From:   Paul Williamson <paul.williamson@mediamiser.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Switching branches not working in a cloned repo
+Thread-Topic: Switching branches not working in a cloned repo
+Thread-Index: AdISfZQ3kSlGE8JHQfuYXxD9ERxQOg==
+Date:   Mon, 19 Sep 2016 13:58:00 +0000
+Message-ID: <YQXPR01MB0023CDCFA27BDD4959B4F9B19EF40@YQXPR01MB0023.CANPRD01.PROD.OUTLOOK.COM>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=paul.williamson@mediamiser.com; 
+x-originating-ip: [72.143.112.138]
+x-ms-office365-filtering-correlation-id: f4903b78-e73d-42fe-6a77-08d3e094f788
+x-microsoft-exchange-diagnostics: 1;YQXPR01MB0024;6:mZE4Ekfax7e+iBgqt0YO00VxuoGe1SjPBoiH3nc/eK1nqbH5pcr/jsVxdMqL0yxMTuqGUvtAFtC9UeXtVRlrCD5wPikNpOjVNJ4KDxVk3Fxp8Aqd0EXAL06Z1p0Dw5bTkLuD5ELcdIN/7HMAYqCqgWrNXaib4yE09usmSPA6MPwTiDyJzgQO+mSkt6sWAq4/ZwOilRkDXAWJ2VMcRDgIsLI84XLiIZwVxmwsyT+xr4TW44wMbkFhKgTzANClsj7TkVl9r1HKUzTYSPL2P1aM8jGywwwgLLtqs5lw3KNyMUbVmm5FLmnDuAp/qbuc85Kd;5:OM22aqyOfqsQ6JvLvutpLg8OJZD5KQjl70f5SyHXu0qcAyWaUSnrTsik6Bn0UxJuIDt/QnIVeAywEVvR9QUS+93CL9oJlsIbLmBQOEssKhEJFJRdicPbwNDH5izS02Aewsng5h8U8QJ6yOK3YLKs/w==;24:/VVo6ysN2zYAaVOZqUKEptFfFqLCXkWNYht2pnMDJOSln1koHCHfxud6ocwRkPYZxhdb25K9h957zQgEVAvf7yV8LxLfWrU8x04KI69nLFY=;7:YmZEywhBkrc94zPsC66CO6b0fK7UZVA+8JE45FL8EHJxM3MZsS2KVEzJUUsNIUqMvImdyJE3+75aGMiHXpoEEaOx82TTnIo9PIfZaI+JePFLUsqYGdYTGS31HQFlfHJh5ML7c8ykSMOx1kErKbvNnqnNLljhc+xVwLZ2xzZYnmKA/eyszNj5y9JZEgj/0TumTE7X17+kWhhf62EOBSoBjMyjGQcFAd9jgwqWMk3Q2sHp5RX4FwxZWAh0t1V6IWX2rQwifWqwfDjo2y+b6PKglfXsea2FqOQOEV45ANRTCBQWV3bY2JmuZtmVQ0yylNzC
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:YQXPR01MB0024;
+x-microsoft-antispam-prvs: <YQXPR01MB0024C19CD5831073E2DDAC9E9EF40@YQXPR01MB0024.CANPRD01.PROD.OUTLOOK.COM>
+x-exchange-antispam-report-test: UriScan:;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040176)(2401047)(8121501046)(5005006)(3002001)(10201501046)(6042046)(6043046);SRVR:YQXPR01MB0024;BCL:0;PCL:0;RULEID:;SRVR:YQXPR01MB0024;
+x-forefront-prvs: 0070A8666B
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(6009001)(7916002)(189002)(199003)(2351001)(92566002)(229853001)(66066001)(33656002)(189998001)(107886002)(87936001)(3660700001)(10400500002)(122556002)(11100500001)(68736007)(9686002)(2501003)(3280700002)(1730700003)(50986999)(106356001)(6116002)(5660300001)(102836003)(54356999)(3846002)(2906002)(586003)(105586002)(8936002)(7736002)(110136003)(450100001)(305945005)(101416001)(7846002)(81166006)(77096005)(7696004)(74316002)(5002640100001)(2900100001)(86362001)(97736004)(81156014)(8676002);DIR:OUT;SFP:1101;SCL:1;SRVR:YQXPR01MB0024;H:YQXPR01MB0023.CANPRD01.PROD.OUTLOOK.COM;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
+received-spf: None (protection.outlook.com: mediamiser.com does not designate
+ permitted sender hosts)
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="Windows-1252";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfPLhxCsBbjV6JxMh1fkFiaE+ZCYUqWnSzZSCZYJreLIJt2pIuIY4srPP+rP1QoaKN8oUXQeEJFup2vfFvWYHUfiPrQ2/O54kTuTh6/p/NAhl20uUVz8t
- QUut8+tuo1XQcZWZAEc+IRi1fCnZgXkGMTQghq0YYwnJfx3wLfJnDi8b+LWOYc1A7c5BtFlNdFx5ZwzYsi/70ZGZOBCfonPAxIU=
+X-OriginatorOrg: mediamiser.com
+X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Sep 2016 13:58:00.1355
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 9009f71a-c1b6-4b55-a665-0aeb582e95d3
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: YQXPR01MB0024
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Michael J Gruber" <git@drmicha.warpmail.net>
-> Philip Oakley venit, vidit, dixit 19.09.2016 12:56:
->> A question came up on the Git user list regarding cherry-pick that got me
->> reading the manual (again), in this case regarding --no-walk ranges.
->>
->> Essentially my question is: If --no-walk is given to rev-list (e.g. via
->> charry-pick), and the user includes a caret prefixed rev, when does that
->> range definition take effect on the command line, especially in light of
->> the --do-walk option?
->>
->> In rev-list(1) there are only 8 references to  'range', with only
->> the --no-walk option saying "This has no effect if a range is specified."
->> but leaving open the decision as to what does (and does not) comprises 
->> the
->> specification of a range on the cli.
->>
->> The two and three dot notations are fairly obvious ranges from
->> gitrevisions(7) as they are complete strings, while the caret prefix is 
->> an
->> implied range (it needs additional parameters to complete the range, and
->> there-in lies the issue).
->>
->> It can be read that
->>
->> $ git cherry-pick maint next
->>
->> would pick two single commits, while
->>
->> $ git cherry-pick maint next ^master
->>
->> could implicitly be read as
->>
->> $ git cherry-pick maint next --do-walk ^master
->>
->> because the ^ caret starts the range that cancels the --no-walk.
->>
->> Clearly that's not what is intended, which is
->>
->> $ git cherry-pick --do-walk maint next ^master
->>
->> but it is open to interpretation as to where in the command line the 
->> caret
->> range prefix's --do-walk (to countermand the --no-walk) should applied.
->>
->> If the user did want just the single commit at the tip of maint, and then
->> the range master..next, what would be their command line, and also, how
->> would the man page warn against false expectations?
->
-> Maybe:
->
-> Every negative rev (rev prefixed with ^, or a range) implies a
-> `--do-walk` (right at its position on the command line).
->
-> And then curb the misleading range sentence in the `--no-walk` 
-> description.
+Hi,
 
-At the moment the cherry-pick man page's example implies that --do-walk is 
-applied from the beginning, rather from the point given on the command line.
+We use git extensively on a number of repos. Recently, we have had a problem with one of them. This repo has a 'web_dev' branch. For copies of the repo cloned before a certain (recent but unidentified) time, we could 'git checkout' between master and web_dev and everything would be normal.
 
-I had a very quick search of the *.c code for the options but didn't get any 
-further. Hopefully the user issue/misunderstanding is elsewhere... I'll add 
-this to my little list.
+However, now if we clone the repo, we can no longer do 'git checkout web_dev'. Git doesn't complain, in fact there is no feedback and we are still in the master branch. Running 'git branch -r' still shows the branch as existing at origin.
 
---
-Philip 
+If we try 'git branch web_dev' we then see web_dev listed locally and can switch to it BUT on closer inspection we realise that this action has created a new branch off master.
+
+The first time we saw this was under Bash on Windows, so we thought maybe it was a beta problem, but a) other repos work as expected under that environment, and b) under cygwin, pulling the same repo to a new directory alongside an older copy shows that the problem occurs with the new clone, but not the one that that was cloned longer ago.
+
+Also in this situation, there are no local outstanding code changes that might cause problems switching branches. This occurs right from a cleanly cloned repo.
+
+It seems something has gone wrong with this repo, and we don't know what. It's a tough problem to google, and I was not able to search the gmane archives (DNS errors).
+
+Any idea how to investigate?
+
+Thanks,
+Paul
+
 
