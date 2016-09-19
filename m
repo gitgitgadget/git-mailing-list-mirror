@@ -2,247 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE,STOX_REPLY_TYPE_WITHOUT_QUOTES shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E09861FCA9
-	for <e@80x24.org>; Mon, 19 Sep 2016 10:51:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3FA441FCA9
+	for <e@80x24.org>; Mon, 19 Sep 2016 10:56:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751581AbcISKvh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Sep 2016 06:51:37 -0400
-Received: from ikke.info ([178.21.113.177]:37392 "EHLO vps892.directvps.nl"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750933AbcISKvg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2016 06:51:36 -0400
-Received: by vps892.directvps.nl (Postfix, from userid 1008)
-        id 86F2A4400B9; Mon, 19 Sep 2016 12:51:33 +0200 (CEST)
-Date:   Mon, 19 Sep 2016 12:51:33 +0200
-From:   Kevin Daudt <me@ikke.info>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Swift Geek <swiftgeek@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] mailinfo: unescape quoted-pair in header fields
-Message-ID: <20160919105133.GA10901@ikke.info>
-References: <20160916210204.31282-1-me@ikke.info>
- <20160916222206.jz2d4gpaxxccia5p@sigill.intra.peff.net>
+        id S1753245AbcISK44 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Sep 2016 06:56:56 -0400
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:57386 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752809AbcISK4z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2016 06:56:55 -0400
+Received: from PhilipOakley ([92.22.33.116])
+        by smtp.talktalk.net with SMTP
+        id lwFobyVLLY8RwlwFobHz9X; Mon, 19 Sep 2016 11:56:53 +0100
+X-Originating-IP: [92.22.33.116]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=b+Xw2ZOx c=1 sm=1 tr=0 a=7PoCAWDTb98b1EGiAsJI/w==:117
+ a=7PoCAWDTb98b1EGiAsJI/w==:17 a=8nJEP1OIZ-IA:10 a=Vf10gz7hqFkv3s2VqOcA:9
+ a=wPNLvfGTeEIA:10
+Message-ID: <2AD952BD65034D25BF26C7F138D24F25@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Git List" <git@vger.kernel.org>
+Subject: clarification of `rev-list --no-walk ^<rev>`?
+Date:   Mon, 19 Sep 2016 11:56:54 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160916222206.jz2d4gpaxxccia5p@sigill.intra.peff.net>
-User-Agent: Mutt/1.7.0 (2016-08-17)
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfKypzCcix3YumbKFFQHCmo2fRKL6PxbbWUR6oPVZENGi83VjYzWwQpnS4czLe1WYbKHDmFtud+Nl9jVosVeUd+WpO0PHE6V0gP37lmhpxvYGnpxN9r53
+ NDtD10vrOi4NEn8kDzewQLIszw69evhGWUXdOhmlIRkKgIotO0e3foDx
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for the review
+A question came up on the Git user list regarding cherry-pick that got me
+reading the manual (again), in this case regarding --no-walk ranges.
 
-On Fri, Sep 16, 2016 at 03:22:06PM -0700, Jeff King wrote:
-> On Fri, Sep 16, 2016 at 11:02:04PM +0200, Kevin Daudt wrote:
-> 
-> >  mailinfo.c                 | 54 ++++++++++++++++++++++++++++++++++++++++++++++
-> >  t/t5100-mailinfo.sh        |  6 ++++++
-> >  t/t5100/quoted-pair.expect |  5 +++++
-> >  t/t5100/quoted-pair.in     |  9 ++++++++
-> >  4 files changed, 74 insertions(+)
-> >  create mode 100644 t/t5100/quoted-pair.expect
-> >  create mode 100644 t/t5100/quoted-pair.in
-> > 
-> > diff --git a/mailinfo.c b/mailinfo.c
-> > index e19abe3..04036f3 100644
-> > --- a/mailinfo.c
-> > +++ b/mailinfo.c
-> > @@ -54,15 +54,69 @@ static void parse_bogus_from(struct mailinfo *mi, const struct strbuf *line)
-> >  	get_sane_name(&mi->name, &mi->name, &mi->email);
-> >  }
-> >  
-> > +static int unquote_quoted_string(struct strbuf *line)
-> > +{
-> > +	struct strbuf outbuf;
-> > +	const char *in = line->buf;
-> > +	int c, take_next_literally = 0;
-> > +	int found_error = 0;
-> > +	char escape_context=0;
-> 
-> Style: whitespace around "=".
-> 
-> I had to wonder why we needed both escape_context and
-> take_next_literally; shouldn't we just need a single state bit. But
-> escape_context is not "escape the next character", it is "we are
-> currently in a mode where we should be escaping".
-> 
-> Could we give it a more descriptive name? I guess it is more than just
-> "we are in a mode", but rather "here is the character that will end the
-> escaped mode". Maybe a comment would be more appropriate.
-> 
+Essentially my question is: If --no-walk is given to rev-list (e.g. via
+charry-pick), and the user includes a caret prefixed rev, when does that
+range definition take effect on the command line, especially in light of
+the --do-walk option?
 
-Yes, your analysis is right, we need to know what character would end
-the 'escape context'. I'll add a comment.
+In rev-list(1) there are only 8 references to  'range', with only
+the --no-walk option saying "This has no effect if a range is specified."
+but leaving open the decision as to what does (and does not) comprises the
+specification of a range on the cli.
 
-> > +	while ((c = *in++) != 0) {
-> > +		if (take_next_literally) {
-> > +			take_next_literally = 0;
-> > +		} else {
-> 
-> OK, so that means the previous one was backslash-quoted, and we don't do
-> any other cleverness. Good.
-> 
-> > +			switch (c) {
-> > +			case '"':
-> > +				if (!escape_context)
-> > +					escape_context = '"';
-> > +				else if (escape_context == '"')
-> > +					escape_context = 0;
-> > +				continue;
-> 
-> And here we open or close the quoted portion, depending. Makes sense.
-> 
-> > +			case '\\':
-> > +				if (escape_context) {
-> > +					take_next_literally = 1;
-> > +					continue;
-> > +				}
-> > +				break;
-> 
-> I didn't look in the RFC. Is:
-> 
->   From: my \"name\" <foo@example.com>
-> 
-> really the same as:
-> 
->   From: "my \\\"name\\\"" <foo@example.com>
-> 
-> ? That seems weird, but I think it may be that the former is simply
-> bogus (you are not supposed to use backslashes outside of the quoted
-> section at all).
+The two and three dot notations are fairly obvious ranges from
+gitrevisions(7) as they are complete strings, while the caret prefix is an 
+implied range (it needs additional parameters to complete the range, and 
+there-in lies the issue).
 
-Correct, the quoted-pair (escape sequence) can only occur in a quoted
-string or a comment. Even more so, the display name *needs* to be quoted
-when consisting of more then one word according to the RFC.
+It can be read that
 
-> 
-> > +			case '(':
-> > +				if (!escape_context)
-> > +					escape_context = '(';
-> > +				else if (escape_context == '(')
-> > +					found_error = 1;
-> > +				break;
-> 
-> Hmm. Is:
-> 
->   From: Name (Comment with (another comment))
-> 
-> really disallowed? RFC2822 seems to say that "comment" can contain
-> "ccontent", which can itself be a comment.
+$ git cherry-pick maint next
 
-Yes, you are right, it is allowed, I was just looking at the ctext when
-adding this, but failed to see that comments can be nested at that time.
+would pick two single commits, while
 
-> 
-> This is obviously getting pretty silly, but if we are going to follow
-> the RFC, I think you actually have to do a recursive parse, and keep
-> track of an arbitrary depth of context.
-> 
-> I dunno. This method probably covers most cases in practice, and it's
-> easy to reason about.
+$ git cherry-pick maint next ^master
 
-The problem is, how do you differentiate between nested comments, and
-escaped braces within a comment after one run?
-> 
-> > +			case ')':
-> > +				if (escape_context == '(')
-> > +					escape_context = 0;
-> > +				break;
-> > +			}
-> > +		}
-> > +
-> > +		strbuf_addch(&outbuf, c);
-> > +	}
-> > +
-> > +	strbuf_reset(line);
-> > +	strbuf_addbuf(line, &outbuf);
-> > +	strbuf_release(&outbuf);
-> 
-> I think you can use strbuf_swap() here to avoid copying the line an
-> extra time, like:
-> 
->   strbuf_swap(line, &outbuf);
->   strbuf_release(&outbuf);
-> 
-> Another option would be to just:
-> 
->   in = strbuf_detach(&line);
-> 
-> at the beginning, and then output back into "line".
-> 
+could implicitly be read as
 
-Thanks, I just looked at what other functions were doing, but this is
-much better indeed.
+$ git cherry-pick maint next --do-walk ^master
 
-> > +	return found_error;
-> 
-> What happens when we get here and take_next_literally is set? I.e., a
-> backslash at the end of the string. We'll silently print nothing, which
-> seems reasonable to me (the other option is to print a literal
-> backslash).
-> 
-> Ditto, what if escape_context is non-zero? We're in the middle of an
-> unterminated quoted string (or comment).
-> 
-> I'm fine with silently continuing, but it seems weird that we notice
-> embedded comments (and return an error), but not these other conditions.
-> 
+because the ^ caret starts the range that cancels the --no-walk.
 
-I agree. I'm thinking it's better to just be lenient in this method. If
-a quote wasn't properly closed, there would be no e-mail adress for
-example. I think it would do little harm, and I'd remove the checking
-for the opening brace too.
+Clearly that's not what is intended, which is
 
-> >  static void handle_from(struct mailinfo *mi, const struct strbuf *from)
-> >  {
-> >  	char *at;
-> >  	size_t el;
-> >  	struct strbuf f;
-> >  
-> > +
-> >  	strbuf_init(&f, from->len);
-> >  	strbuf_addbuf(&f, from);
-> 
-> Funny extra line?
+$ git cherry-pick --do-walk maint next ^master
 
-Ugh
+but it is open to interpretation as to where in the command line the caret
+range prefix's --do-walk (to countermand the --no-walk) should applied.
 
-> 
-> > +test_expect_success 'mailinfo unescapes rfc2822 quoted-string' '
-> > +    mkdir quoted-pair &&
-> > +    git mailinfo /dev/null /dev/null <"$TEST_DIRECTORY"/t5100/quoted-pair.in >quoted-pair/info &&
-> > +    test_cmp "$TEST_DIRECTORY"/t5100/quoted-pair.expect quoted-pair/info
-> > +'
-> 
-> We usually break long lines with backslash-escapes. Like:
-> 
->   git mailinfo /dev/null /dev/null \
-> 	<"$TEST_DIRECTORY"/t5100/quoted-pair.in \
-> 	>quoted-pair/info
-> 
-> I'd also wonder if things might be made much more readable by putting
-> "$TEST_DIRECTORY/t5100" into a shorter variable like $data or something.
-> That would be best done as a preparatory patch which updates all of the
-> tests.
-> 
-> > --- /dev/null
-> > +++ b/t/t5100/quoted-pair.in
-> > @@ -0,0 +1,9 @@
-> > +From 1234567890123456789012345678901234567890 Mon Sep 17 00:00:00 2001
-> > +From: "Author \"The Author\" Name" <somebody@example.com>
-> > +Date: Sun, 25 May 2008 00:38:18 -0700
-> > +Subject: [PATCH] testing quoted-pair
-> 
-> I do not care that much about the "()" comment behavior myself, but if
-> we are going to implement it, it probably makes sense to protect it from
-> regression with a test.
+If the user did want just the single commit at the tip of maint, and then
+the range master..next, what would be their command line, and also, how
+would the man page warn against false expectations?
 
-Yeah, good idea.
-> 
-> -Peff
+--
+
+Philip
+
+
+
+
+
