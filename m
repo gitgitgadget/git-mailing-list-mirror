@@ -6,86 +6,65 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3FBA2070F
-	for <e@80x24.org>; Mon, 19 Sep 2016 17:27:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9C2A2070F
+	for <e@80x24.org>; Mon, 19 Sep 2016 17:45:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932090AbcISR1t (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Sep 2016 13:27:49 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51636 "EHLO
+        id S1752040AbcISRpd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Sep 2016 13:45:33 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50507 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932163AbcISR1t (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2016 13:27:49 -0400
+        with ESMTP id S1751443AbcISRpd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2016 13:45:33 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BB80D3ED08;
-        Mon, 19 Sep 2016 13:27:47 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 98DF73F391;
+        Mon, 19 Sep 2016 13:45:31 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=EltCNJQiUpdHLfAxqTJtANdYkjk=; b=w5JUUq
-        DMYF8ZX9Ws7StaxZ++DZIG7I+AvKRh+9WGQi80EbzQEqwNE9v5n6VcqYgFlpP1dA
-        MsN/aGzH43QPzU3Ch11a9rqgOtyoF+DkUNWsOWcksStAUk+5DbJ8tMQ28sSqjFD5
-        hcWMxMAgr2imfgTdjMheqme1YfZpxpuUDvXJc=
+        :content-type; s=sasl; bh=lxUJbt+J9GZ4D6HRYAn8ohqXLRI=; b=jNhmmN
+        j/91AOeI+SsxzG8OFelTLuZvRaofJ8ufDbeOjI/SDtKmobYdwSsyj6+1oAODg2/e
+        7YXtoGiBR4+FwQWgw1gllYXb8xdZnU4QbRbQ4FpdNtyq9pN0q66xib7jMXiXltw5
+        5ibINO9/fuxf3J0rtO5+4k9n1k6ELQ4+tO6AE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=aBne5wbhW1abYTCswrjhaQi6mCxji3Tn
-        u407S2fPLlC5zqznUHia6UEUKAo7e0Fxb0lbguQK7Kz6u7tE8sn+M7biBB7xhSUM
-        roAoZnDMCXFLKt0lXYLNEQTVqCqOLB6tm7j7w7fi29wR/R0MLuPLQG+FgGSjJM4o
-        HSZCXhxSsEg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B26913ED07;
-        Mon, 19 Sep 2016 13:27:47 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=N1hVSPZ+uq4/R8smkVpQYkPotpqSmzcZ
+        kqVa/SqUTxUy6uLDakDW4HRtCBGufQmVeFDYwSZvMzi7LLVOjEQPT4q4i9FpPXc+
+        0gVUyeVzg/9QH7a3Y8QPQ2gE271XM34S39sIjIljkLpjqNGfUR5QjFQovUlQescW
+        5EnVPFpokxs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 912F83F390;
+        Mon, 19 Sep 2016 13:45:31 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 292023ED06;
-        Mon, 19 Sep 2016 13:27:47 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0AA813F38E;
+        Mon, 19 Sep 2016 13:45:30 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-        Jakub =?utf-8?Q?Nar?= =?utf-8?Q?=C4=99bski?= <jnareb@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v3 0/8] Better heuristics make prettier diffs
-References: <cover.1473068229.git.mhagger@alum.mit.edu>
-        <xmqqr38vjns0.fsf@gitster.mtv.corp.google.com>
-        <c381d458-4c81-f46c-592a-98957b3a177c@alum.mit.edu>
-        <xmqqd1jzho2l.fsf@gitster.mtv.corp.google.com>
-Date:   Mon, 19 Sep 2016 10:27:45 -0700
-In-Reply-To: <xmqqd1jzho2l.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Mon, 19 Sep 2016 09:05:54 -0700")
-Message-ID: <xmqqintrg5pq.fsf@gitster.mtv.corp.google.com>
+To:     Nicolas Cuillery <nicolas.cuillery@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [Bug] Custom git-dir directory shouldn't be listed as
+ =?utf-8?B?4oCcdW50cmFja2Vk4oCd?=
+References: <CACmQg1hE=ytaatDfUJLkhL0p5c43wZZvgt+8pc5zoo0YFdQw6A@mail.gmail.com>
+Date:   Mon, 19 Sep 2016 10:45:29 -0700
+In-Reply-To: <CACmQg1hE=ytaatDfUJLkhL0p5c43wZZvgt+8pc5zoo0YFdQw6A@mail.gmail.com>
+        (Nicolas Cuillery's message of "Mon, 19 Sep 2016 16:26:42 +0200")
+Message-ID: <xmqqeg4fg4w6.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 61C9D8FC-7E8E-11E6-9A94-096F12518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: DBDE851E-7E90-11E6-8C85-5D827B1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Nicolas Cuillery <nicolas.cuillery@gmail.com> writes:
 
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
->
->> On 09/08/2016 01:25 AM, Junio C Hamano wrote:
->>> I'd move it temporarily to t4061 with a separate SQUASH??? at the
->>> tip for now, as I am running out of time today.
->>
->> I didn't realize you were waiting for an ACK. Yes, it's totally OK to
->> rename the test.
->
-> I actually wasn't asking for an Ack.
->
-> As the issue was in the one that is buried a few commits from the
-> tip, and there is a later one that adds more tests to it, I didn't
-> find enough energy to rename the new file in a buried commit and
-> then adjust the patch later updates it, I was hoping that you'd
-> reroll to save me effort, rather than forcing me to do the rebase
-> myself ;-).
+> When using the default directory ".git", it logically doesn't appear
+> in the "git status" command's output. Don't you think it should be the
+> same when using a custom dir name ?
 
-Now I did, so no need to resend (unless you have changes other than
-the renaming of the test script, that is).
+Not really.
 
-Let's move it down to 'next' soonish.
-
-Thanks.
+GIT_DIR=<there> mechanism was never meant to be used to name a
+directory that sitsinside your working tree (an exception is if it
+is actually ".git" at the top).
