@@ -4,112 +4,117 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25DE62070F
-	for <e@80x24.org>; Mon, 19 Sep 2016 18:18:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CFAE2070F
+	for <e@80x24.org>; Mon, 19 Sep 2016 18:20:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932679AbcISSSk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Sep 2016 14:18:40 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55251 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932593AbcISSSj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2016 14:18:39 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 918EA3FAED;
-        Mon, 19 Sep 2016 14:18:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ERjxBkNOxZ0rmMsoPVH6Tnboee8=; b=RkMTWN
-        N2jXqAs/qk79X5yyZg+XSDOuO3Y/d4G/CiacsheoI2Za80LW7zsSXSjplexnmykm
-        9hlVWEENpP+hhIhTzbnEpQs6be5SrF8Z6+ZFLqNhAEH2RTHtWR/TTGTiDNo+l5mV
-        12+DnQgQSQh5qcQJ9qIeFbKlwiTe+QGunN11c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ml4Gn6coKSOntgRoAtuh2i++4o81M6QZ
-        pRornho2ET984u3JvKAahsVSmnw/MaWV/1mwEkFFxVchWSwxhArOYxEoYXBMQtLC
-        ZVJqzRlNd9ynUBbunbzOkVcfwhGkCeJdtpuZyImc0OJV0PXBRH98sGV7jfjYPaIq
-        7zzUqucmp/4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 89EDA3FAEC;
-        Mon, 19 Sep 2016 14:18:37 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0FC0D3FAEB;
-        Mon, 19 Sep 2016 14:18:36 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] ls-files: add pathspec matching for submodules
-References: <CAKoko1pewoxD4=_9M45pchdDg03K8fc73raJOsf4A+=KKw_EMw@mail.gmail.com>
-        <1474073981-96620-1-git-send-email-bmwill@google.com>
-Date:   Mon, 19 Sep 2016 11:18:35 -0700
-In-Reply-To: <1474073981-96620-1-git-send-email-bmwill@google.com> (Brandon
-        Williams's message of "Fri, 16 Sep 2016 17:59:41 -0700")
-Message-ID: <xmqqwpi7eosk.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S932388AbcISSUX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Sep 2016 14:20:23 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:36522 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932237AbcISSUW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2016 14:20:22 -0400
+Received: by mail-wm0-f46.google.com with SMTP id w84so90645313wmg.1
+        for <git@vger.kernel.org>; Mon, 19 Sep 2016 11:20:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ND9+T3qGvEcSkr1yLuxeiu/TuBckkl1AlAZjGFm5Ys0=;
+        b=j+fafezgN4Vbn/0Dr1zWtMzCnOrUXn6JrwWyAxkxXWKmOaHtr2o+pGuv6PNh31feLC
+         h5duiIMyc6hNIkrHFb7OFEvHFOO4FlNFUXhGf69q0SYXMuQQB7wWnzFB2On3uzpPLyL6
+         tSSh8L/5pfMrcKGFr1Am8kB6vWclKVIfA9ZpEvKFCYhWzWc6z6HbA0OqYhAjZ+Kta+4+
+         ZbCr7IxZukZQrMyw1qQ3sJRqh1K+dWvFuXBf2mWEBFGcnvQsDeYwaUaJoJDe/EY3yqqO
+         JnveN0hu9T7XI1hgt0ub+6W4MPJPAv7hraDh1lx2Ska1rM9QseJvEhIwdXFC52O4CaBJ
+         ugYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ND9+T3qGvEcSkr1yLuxeiu/TuBckkl1AlAZjGFm5Ys0=;
+        b=bGW+p//sVxLtJjurQ6SqkgycgUDumtEOfWfn1L8fs69cXaZQ2SyXM+WLPsqTw+S7tS
+         cr4BcrwUVoLilcg5+OEZpFuM0Ggaixb95tAQ7ZuByU+3i+3eVmG7FdWrY9HqkGnolEev
+         iX6SAUg0nYp0u2kff9F7Hzsje1NxsZZogIRhQ69RvP6L8nsWtdX/6qb+UYYGn+94KWMl
+         v054ljp8mfg/3PWAizBbJJyjlnT/pdkbR0XJhNNuQ1b2bR1YhEcqBU//+kv7Kkkdx91/
+         +Z+S6GZFQHzGseBYrtBUWWKRGA/3H+pzcIlpVTnh7XRwzwUURzFbgHAX31Nxwc7/OixS
+         bavA==
+X-Gm-Message-State: AE9vXwMLrTax6op+7OjYW4pP56JG2FWmGXaCciZPIQtfP6mCq6xSu6Bphfj+NxLwcGuWfUzxW54alpUgvDaRABH5
+X-Received: by 10.194.164.102 with SMTP id yp6mr24757157wjb.50.1474309220321;
+ Mon, 19 Sep 2016 11:20:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7BA1AD7A-7E95-11E6-9074-5D827B1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.28.69.25 with HTTP; Mon, 19 Sep 2016 11:20:19 -0700 (PDT)
+In-Reply-To: <xmqq1t0fg417.fsf@gitster.mtv.corp.google.com>
+References: <CAKoko1pewoxD4=_9M45pchdDg03K8fc73raJOsf4A+=KKw_EMw@mail.gmail.com>
+ <1474073981-96620-1-git-send-email-bmwill@google.com> <xmqqtwdfgpd0.fsf@gitster.mtv.corp.google.com>
+ <CAKoko1r6cfv-2HVCJPgGbXyCVe-wdUBS+2nXtaTHO3jshVg8MA@mail.gmail.com>
+ <xmqqvaxrg6zt.fsf@gitster.mtv.corp.google.com> <CAKoko1r_WATxJzxQrQW2VBkhuKquv=yQv6sB_eCMgH6qavS__Q@mail.gmail.com>
+ <xmqq1t0fg417.fsf@gitster.mtv.corp.google.com>
+From:   Brandon Williams <bmwill@google.com>
+Date:   Mon, 19 Sep 2016 11:20:19 -0700
+Message-ID: <CAKoko1oSvBF3=-hvSGVMQYpZkUvnwAEYg=U-g8927F6dt4Q8mA@mail.gmail.com>
+Subject: Re: [PATCH] ls-files: add pathspec matching for submodules
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Heiko Voigt <hvoigt@hvoigt.net>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+On Mon, Sep 19, 2016 at 11:04 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Brandon Williams <bmwill@google.com> writes:
+>
+>>> Again, what do we have in "name" and "item" at this point?  If we
+>>> have a submodule at "sub/" and we are checking a pathspec element
+>>> "sub/dir1/*", what is the non-wildcard part of the pathspec and what
+>>> is the "string"?  Aren't they "sub/dir1/" and "sub/" respectively,
+>>> which would not pass ps_strncmp() and produce a (false) negative?
+>>
+>> item will be the pathspec_item struct that we are trying to match against.
+>
+> ... which would mean "sub/dir1/" in the above example (which is
+> followed by '*' that is wildcard).
+>
+>> name will be the file we are trying to match, which should already have the
+>> 'prefix' cut off (this is the prefix that is used as an optimization
+>> in the common
+>> case, which isn't used in the submodule case).
+>
+> ... which would be "sub/" in the above example, because we disable
+> the common-prefix optimization.
+>
+> So in short, the answer to the last questions in the first quoted
+> paragraph are yes, yes, and "no they do not pass ps_strncmp()"?
 
->  static void show_ce_entry(const char *tag, const struct cache_entry *ce)
->  {
-> +	struct strbuf name = STRBUF_INIT;
->  	int len = max_prefix_len;
-> +	if (submodule_prefix)
-> +		strbuf_addstr(&name, submodule_prefix);
-> +	strbuf_addstr(&name, ce->name);
+Yes in that case it wouldn't have passed ps_strncmp()...but we should have never
+made it there in the first place due to a piece of logic in match_pathspec_item:
 
-Continuing with the previous review, which concentrated on what
-happens in the superproject; let's see what happens in the recursive
-invocation in a submodule.
+@@ -283,6 +308,24 @@ static int match_pathspec_item(const struct
+pathspec_item *item, int prefix,
+                         item->nowildcard_len - prefix))
+                return MATCHED_FNMATCH;
 
-So a recursively spawned "ls-files --submodule-prefix=sub/" finds
-a path in the index PATH and forms "sub/PATH" in "name".  From here
-on, where we used to match pathspec against ce->name, we would be
-matching it against name->buf.
++       /* Perform checks to see if "name" is a super set of the pathspec */
++       if (flags & DO_MATCH_SUBMODULE) {
++               int matched = 0;
++
++               /* Check if the name is a literal prefix of the pathspec */
++               if ((item->match[namelen] == '/') &&
++                   !ps_strncmp(item, match, name, namelen)) {
++                       matched = MATCHED_RECURSIVELY;
++               /* Check if the name wildmatches to the pathspec */
++               } else if (item->nowildcard_len < item->len &&
++                          !prefix_fnmatch(item, match, name,
++                                          item->nowildcard_len - prefix)) {
++                       matched = MATCHED_FNMATCH;
++               }
++
++               return matched;
++       }
 
-> +	if (recurse_submodules && S_ISGITLINK(ce->ce_mode) &&
-> +	    submodule_path_match(&pathspec, name.buf, ps_matched)) {
->  		show_gitlink(ce);
-
-This is primarily what happens in the superproject to decide if the
-submodule is worth showing.  When we are in a submodule, we can
-descend into subsubmodule (if our ls-files run in the superproject
-passed --recurse-submodule down) from here.
-
-> +	} else if (match_pathspec(&pathspec, name.buf, name.len,
-> +				  len, ps_matched,
-> +				  S_ISDIR(ce->ce_mode) ||
-> +				  S_ISGITLINK(ce->ce_mode))) {
-
-This is interesting bit to see what happens in the recursive
-invocation.  It uses the usual match_pathspec(), as we want to be
-precise and correct, iow, we do not want to use DO_MATCH_SUBMODULE,
-aka "it might be worth descending into submodule".
-
-> +		if (tag && *tag && show_valid_bit &&
-> +		    (ce->ce_flags & CE_VALID)) {
-> +...
-> +		}
-> +		write_eolinfo(ce, ce->name);
-> +		write_name(ce->name);
-
-The prefixing is taken care of by write_name(), so it is correct to
-use ce->name here.
-
-> ...  
-> +	strbuf_release(&name);
->  }
-
-OK, everything I saw so far for the recursive invocation here makes
-sense.
-
-Thanks.
+Perhaps the call structure and code organization could be changes a bit to make
+a little more sense.
