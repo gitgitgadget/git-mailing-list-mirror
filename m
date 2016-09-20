@@ -2,128 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 947D21F4FF
-	for <e@80x24.org>; Tue, 20 Sep 2016 18:45:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0499209A9
+	for <e@80x24.org>; Tue, 20 Sep 2016 18:54:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754374AbcITSpe (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Sep 2016 14:45:34 -0400
-Received: from mout.gmx.net ([212.227.17.20]:52414 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754312AbcITSpc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Sep 2016 14:45:32 -0400
-Received: from [136.0.0.139] by 3capp-gmx-bs45.server.lan (via HTTP); Tue,
- 20 Sep 2016 20:45:28 +0200
+        id S932640AbcITSyk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Sep 2016 14:54:40 -0400
+Received: from mail-qt0-f175.google.com ([209.85.216.175]:36857 "EHLO
+        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932189AbcITSyj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Sep 2016 14:54:39 -0400
+Received: by mail-qt0-f175.google.com with SMTP id l91so11999488qte.3
+        for <git@vger.kernel.org>; Tue, 20 Sep 2016 11:54:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=EPIJe0ummRf68j7A0/AUndGjrVdBKZpWxdiAY2nYgWk=;
+        b=lnAtp+44SSWzL2n7W4jBmfgIRxjNBbwTi39RoXuZbKEQ+wthded3DqU5ZUpt1heOQW
+         s2D6zJvmN0d+46ZWNUoEGcKM5aij045jdH8QdWZopo0dNs17yJhm1cYUTIqvrqJXXN8T
+         LY/zGtG5mr2KoGwoyZ+YgZqPkJH9py6zZVOvFbOlXRVFC98MN6Yl0QJqm+2nSytZXlth
+         BaNli/bxkAq4U6bs6r6pt3DcXv4Xa9eoqDPKOaIgvxPhxfaTWYCBdD6qphQsThVt9Law
+         fdGIhvNDf0JjQjO0fv1CgCCP5TUO69Lj0VW5s5Jp3PxkAXQh1506f3Gjr5MQoSXpnc39
+         tWdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=EPIJe0ummRf68j7A0/AUndGjrVdBKZpWxdiAY2nYgWk=;
+        b=aL3liP4cykjYjFLLhCzkA9M5OLLR8ZdBBtzdCCH6LclIWhmZfDFLVBEFeF8tE6YHf1
+         aALHkiaYwEfGlTQwHW4sjbzmWZ0Ezu4nlyoUH6FNDqZOVgqHrt9PI8M5phmMaa8VdLGC
+         SsVwTV32ljdkSnj/zJEjlue5E1lXul5idLEEDSMhhCl5aBRkvOquTJEz+2gdts2nXohK
+         vcGZQZkL32zE+Q5Ah7HApEjf6/FEmpA+nQhevss+J6LK+IviQol5u7xZ/pUo1YoGOvJQ
+         rwGNLkc4HRze837Q4QpEssTiczJ9RT1PKxO7hdgDCd2/BwAuwoRExSVYesRgtDnHlemo
+         FMXQ==
+X-Gm-Message-State: AE9vXwP2KcouZTco7hdytvkOC73kzXt3OTvY0JGVB5jSrJ79Jr8Btu6mZZcFZvBDXhJQT3sd2mzYChI1el353wf6
+X-Received: by 10.237.43.163 with SMTP id e32mr37777617qtd.124.1474397678315;
+ Tue, 20 Sep 2016 11:54:38 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID: <trinity-6d892636-de41-4169-b9e1-491b5b904a4b-1474397128781@3capp-gmx-bs45>
-From:   "Jonas Thiel" <jonas.lierschied@gmx.de>
-To:     "Heiko Voigt" <hvoigt@hvoigt.net>
-Cc:     git@vger.kernel.org
-Subject: Aw: Re: Homebrew and Git
+Received: by 10.55.105.1 with HTTP; Tue, 20 Sep 2016 11:54:37 -0700 (PDT)
+In-Reply-To: <20160920162309.l0neYMQ3l%steffen@sdaoden.eu>
+References: <20160920162309.l0neYMQ3l%steffen@sdaoden.eu>
+From:   Bryan Turner <bturner@atlassian.com>
+Date:   Tue, 20 Sep 2016 11:54:37 -0700
+Message-ID: <CAGyf7-FR11Ludt3vNZX7Ek4n_JLSON5+Y9By83GvNgpg94TWcg@mail.gmail.com>
+Subject: Re: v2.9.3 and v2.10.0: `name-ref' HEAD gives wrong branch name
+To:     Steffen Nurpmeso <steffen@sdaoden.eu>
+Cc:     Git Users <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Date:   Tue, 20 Sep 2016 20:45:28 +0200
-Importance: normal
-Sensitivity: Normal
-In-Reply-To: <20160920110228.GA64315@book.hvoigt.net>
-References: <trinity-9c8f1bd1-d6be-48f3-8575-03be09bd1243-1474213828361@3capp-gmx-bs53>,
- <20160920110228.GA64315@book.hvoigt.net>
-X-UI-Message-Type: mail
-X-Priority: 3
-X-Provags-ID: V03:K0:/s+8VXhEC/V2W1yJxZbFeQf/XWfyoGzKmxQqG+bk4IG
- 804Xm5q/cX8tK5MEPxtnp8cwtm4gDqRW0Pd+r3u8NcckeyEWDR
- w0Ys14StoqjOjPwHfEWCc5ykd8rGZXOHcDHefk3Z69VjheDN/v
- 2L3AWEX0Hmm15Mk1qr/slqQxpOFmL7dhdWNTvSAxx4JXdqi4RZ
- NPNM0Z4+cint1vV5d5qrHpR1cRwWzJjZJ0rLz3B5wRJgXcThfU
- WYcDEwXuiHfpamKn0R4Nks7lAHJZt+paBF3toYoJ36BTAW2hv0 1euV8A=
-X-UI-Out-Filterresults: notjunk:1;V01:K0:FtybWjquXF0=:UujdBeCGCK0RsnKbvCVBv9
- fkNKH69L68uUHX6nlY7lDwLxuOT/MngjFmkgc6DTZ/v5/BRfHH1mQbWDP9k1fz5tt9E/jafAq
- cpy17ImtCu4QBCPrZZi4z11ksMNmfHvYxCDWO70DNanVzMP3JHYTG6I6VKz+xHBfbYNlQZzou
- +DpX9dvMnc7HIWu/Kkn0qkGptWleCasPQuA2YCnb1UZzM90Ml8jglnH8fVSJbxTTnXJfURjtz
- dy+Q86nDnukA4NGba7Z39CBI7RkO4htQzgH3jGXqJ9Aet+64yTiZiGSpAGJuuYaH7/Xo3jAXG
- XaIOCWrSmiOCIQTTgT+81GEFZFYHv+oeVctVQe3lOPmMq3yimRAuLzEPTEEHvw14bH1+FhG9N
- Knhi6MlNAYXqj+psl0Gsxx9m93TTU+iMTB5mQyV8WQ4m3zPWWAFpkizdohOS9cdc5gNhcADaN
- 12BJL8vw2Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Heiko,
-
-thanks for your reply on my issue. 
-
-Here are the following outputs you asked for:
-
-git version
-git version 2.7.4 (Apple Git-66)
-
-hostname -f
-0x6A6E73
-
-whoami
-jns
-
-I have tried the Homebrew version of git, but no change in case of the issue.
-
-I just customized my system with the Mathias Bynens dotfiles (https://github.com/mathiasbynens/dotfiles) as well as with drduhs OS X Security Guide (https://github.com/drduh/OS-X-Security-and-Privacy-Guide). Because I reinstall my Mac on a regularly basis, wherefore I can say that one year ago these tweaks have not caused any issue.
-
-Thanks a lot. I really appreciate your help.
-
-Cheers,
-Jonas
-
-> Gesendet: Dienstag, 20. September 2016 um 13:02 Uhr
-> Von: "Heiko Voigt" <hvoigt@hvoigt.net>
-> An: "Jonas Thiel" <jonas.lierschied@gmx.de>
-> Cc: git@vger.kernel.org
-> Betreff: Re: Homebrew and Git
+On Tue, Sep 20, 2016 at 9:23 AM, Steffen Nurpmeso <steffen@sdaoden.eu> wrote:
+> Hello again,
 >
-> Hi,
-> 
-> On Sun, Sep 18, 2016 at 05:50:28PM +0200, Jonas Thiel wrote:
-> > A while ago I have described my problem with Homebrew at the following
-> > GitHub channel
-> > (https://github.com/Homebrew/homebrew-core/issues/2970). In the
-> > meanwhile, I believe that I my problem with Homebrew is based on an
-> > issues with my Git. I have found the attached Git Crash reports on my
-> > Mac and because I am not familiar with reading/analysing Crash
-> > Reports, it would be great if someone could give me some feedback on
-> > it.
-> >  
-> > If you have any question, please do not hesitate to contact me.
-> 
-> From your crash reports I see that git is apparently crashing in a
-> strchr() call from within ident_default_email() which is a function that
-> tries to assemble a name and email to put into your commits.
-> 
-> Can you post us the output of
-> 
-> 	hostname -f
-> 
-> and
-> 
-> 	whoami
-> 
-> ?
-> 
-> Since it seems you are using an Apple git can you also give us the
-> output of
-> 
-> 	git version
-> 
-> Since it seems that Apple is compiling its own git (and not publishing
-> the changes they made conveniently via git). Have you tried
-> installing a vanilla git via homebrew and seeing whether that also
-> produces the issue?
-> 
-> In your bugreport you are talking about modifications you do to your
-> system after which the issue occurred. I would suggest to exactly find
-> out which step lead to git crashing (if it actually is the issue). First
-> to identify an issue we need something that is reproduceable.
-> 
-> Cheers Heiko
-> 
+> yah, sorry, i'm back again..
+> I try to find a way to find the name of the current branch in an
+> automated way, because i need to ensure that a commit happens on
+> it and no other branch.  Now the problem arises that the commit
+> ref at the time of that commit maybe shared in between several
+> different branches, but no more thereafter, of course:
+>
+>   ?0[steffen@wales ]$ git branch|grep '^*'
+>   * stable/v14.9
+>   ?0[steffen@wales ]$ git name-rev --name-only HEAD
+>   stable/v14.8
+>
+> Is there another way except looking into .git/HEAD or using sed(1)
+> on the output of `branch' to find the right name?
+
+Have you tried "git symbolic-ref HEAD"?
+
+$ git symbolic-ref HEAD
+refs/heads/master
+
+If you don't want the fully-qualified ref, you can add --short:
+
+$ git symbolic-ref --short HEAD
+master
+
+> Thank you.
+> Ciao!
+>
+> --steffen
