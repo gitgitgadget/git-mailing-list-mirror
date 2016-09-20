@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44CB8209A9
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3443C209AA
 	for <e@80x24.org>; Tue, 20 Sep 2016 19:03:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932975AbcITTDK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Sep 2016 15:03:10 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:34764 "EHLO
+        id S932973AbcITTDI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Sep 2016 15:03:08 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:36493 "EHLO
         mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932934AbcITTDE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Sep 2016 15:03:04 -0400
-Received: by mail-wm0-f65.google.com with SMTP id l132so4895770wmf.1
-        for <git@vger.kernel.org>; Tue, 20 Sep 2016 12:03:03 -0700 (PDT)
+        with ESMTP id S932904AbcITTC7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Sep 2016 15:02:59 -0400
+Received: by mail-wm0-f65.google.com with SMTP id b184so4913292wma.3
+        for <git@vger.kernel.org>; Tue, 20 Sep 2016 12:02:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=q6IDNkfZnJWbgYtec6ja1/ZL9grHbKifSk1xXmCbjPs=;
-        b=MH3e4T5RkvqFuNdM+eObi/1BGZjCdq8wwVpMGRj3V7dQpcYy8vdc1LKITvtPqKe8s4
-         gRfo0XbXKfVU/IPaf1XNP9ZLxqh/BBh6AkyB2o7eBuEZuckodnMlkXLNVjfmgdvSrZwn
-         IDpOdeypbxkQjEYK4EoON1LfgTMM1EKFy32S1yoPPKtV54zdihjvFs26kL2ixd/i4+0G
-         i5cr7H1x0Q3xLnvIh73MqISCkF29X8TLrCG09cWYjwlPHdCXfB3FGkasi88NUcForHCI
-         57TpGql/j67t7HesnA4aOT4Z43t4txMXKlPe2Cy6wLbqUg2bMX7eoqIAS37vT66ILGKN
-         scRA==
+        bh=9QTSO1HVpgE/HG3xYkwiwhzgKuHHIlkZvSgzRP/sXvE=;
+        b=eFqICqC2iEHfZVv57tN6AAV/sSZ8BtmTDVxnW8QiyfiGyEVsE6sbNESEuYA2x3JExG
+         xB9cbNgmkhoQ+KCN3lB61x+HDHwo81KxYzIugIvxXoM6YoXvALppGb4cDk8lhCWF4/xG
+         ixgWAH0dL2R40bg8HhEelZbqTR7YM+yNu+/VFpS1Zgil02T//fMXxRBy7/llq4zIuFvI
+         JfgLjJEJGPUZS82huqmqi+RqRKz05TDYUNIlsJL9Iw8pox3ijeVuBMH7hXqghJgFXYHv
+         E3+wFA8RjmqQZTWOKo0H4BKOuau7N+OEQv8IuDGhigOBW3C4Ds5fEnRKTC69CYN79frq
+         hyJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=q6IDNkfZnJWbgYtec6ja1/ZL9grHbKifSk1xXmCbjPs=;
-        b=bL2kXNYzalzE89kWFxusEleqXBeYApo+1iKtDSAe+LX2wvE02I8BvJUx4q9Becejqx
-         /udP3fJu7iuOjMsivm4gBFbZuWR2+uHJGG+JmggVItxIek9sXpVVh3Ccv4LsGvcyxO7/
-         2Ep4+qxuwFXEDvwwcNSsMHVtIJ7z9rw8a8UVEFKgEEjuINcIsG3chTKkkgYPtcxuOW5A
-         Hj8FazSyA+1cVcCX4OGcRLS5KUpnEXKT01DWMnkaWMJnETYHN5pK1GWbn/wqeXbvqYDX
-         EZdbleNwl1A6P3Jqiw5OdkfX6oONBZTv40k8bbv9rwWXZ7DupTsyb4KMLQSkDfN0cdAJ
-         TFvw==
-X-Gm-Message-State: AE9vXwMrX5Hecfp/igxXl3XIQ1Bbosen9ifMliI0Zk1wvUBubMXuFWK/XNHrBXbe7v5qWw==
-X-Received: by 10.28.199.3 with SMTP id x3mr5006057wmf.41.1474398182705;
-        Tue, 20 Sep 2016 12:03:02 -0700 (PDT)
+        bh=9QTSO1HVpgE/HG3xYkwiwhzgKuHHIlkZvSgzRP/sXvE=;
+        b=dOGoxIU20hkVwSxn9NZGrsdVFisH3/NAzWEfRb2dij8MtINQ1qke4kJwEuM2aCJlgG
+         FPdkZJIbA5U1M3zgfoKnjkNSCGJ504iWSWLu+DJuSoWo+YCNXvzPvC0T69BhYwXqq5dq
+         0oygfTdLiT7L0PJN7xqHjhGCId8un2eIKaJExq7PlMoX6hXztkX2/7To4ivaYcwxgA+r
+         bMhe42vmAG/S0sgtIjbhtn+QiBX3fKA1qMqwg880KC3uQ0oq0XFJ5/5aKu7ku2ht4FZt
+         x1SxfDmZvbsC+j/mmXuUNv/zVTFDNrAnv5TuhzS7JkZ45MgQzKdpFMUjgbGc/2cbGbFH
+         vT+A==
+X-Gm-Message-State: AE9vXwPrxf5pn+i3/xJYA4q0brk9tR7rOZsmIgyepApIxHqhiBJYGwQntjl39/c6tnxBWw==
+X-Received: by 10.194.112.68 with SMTP id io4mr29062347wjb.1.1474398177695;
+        Tue, 20 Sep 2016 12:02:57 -0700 (PDT)
 Received: from slxBook4.fritz.box (p508BA5EF.dip0.t-ipconnect.de. [80.139.165.239])
-        by smtp.gmail.com with ESMTPSA id gg10sm29820728wjd.4.2016.09.20.12.03.01
+        by smtp.gmail.com with ESMTPSA id gg10sm29820728wjd.4.2016.09.20.12.02.56
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 20 Sep 2016 12:03:02 -0700 (PDT)
+        Tue, 20 Sep 2016 12:02:57 -0700 (PDT)
 From:   larsxschneider@gmail.com
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, gitster@pobox.com, sbeller@google.com,
         jnareb@gmail.com, mlbright@gmail.com, tboegi@web.de,
         ramsay@ramsayjones.plus.com,
         Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v8 10/11] convert: make apply_filter() adhere to standard Git error handling
-Date:   Tue, 20 Sep 2016 21:02:46 +0200
-Message-Id: <20160920190247.82189-11-larsxschneider@gmail.com>
+Subject: [PATCH v8 06/11] pkt-line: add packet_write_gently()
+Date:   Tue, 20 Sep 2016 21:02:42 +0200
+Message-Id: <20160920190247.82189-7-larsxschneider@gmail.com>
 X-Mailer: git-send-email 2.10.0
 In-Reply-To: <20160920190247.82189-1-larsxschneider@gmail.com>
 References: <20160920190247.82189-1-larsxschneider@gmail.com>
@@ -65,61 +65,46 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-apply_filter() returns a boolean that tells the caller if it
-"did convert or did not convert". The variable `ret` was used throughout
-the function to track errors whereas `1` denoted success and `0`
-failure. This is unusual for the Git source where `0` denotes success.
+packet_write_fmt_gently() uses format_packet() which lets the caller
+only send string data via "%s". That means it cannot be used for
+arbitrary data that may contain NULs.
 
-Rename the variable and flip its value to make the function easier
-readable for Git developers.
+Add packet_write_gently() which writes arbitrary data and does not die
+in case of an error. The function is used by other pkt-line functions in
+a subsequent patch.
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- convert.c | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ pkt-line.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/convert.c b/convert.c
-index 986c239..597f561 100644
---- a/convert.c
-+++ b/convert.c
-@@ -451,7 +451,7 @@ static int apply_filter(const char *path, const char *src, size_t len, int fd,
- 	 *
- 	 * (child --> cmd) --> us
- 	 */
--	int ret = 1;
-+	int err = 0;
- 	struct strbuf nbuf = STRBUF_INIT;
- 	struct async async;
- 	struct filter_params params;
-@@ -477,23 +477,20 @@ static int apply_filter(const char *path, const char *src, size_t len, int fd,
- 		return 0;	/* error was already reported */
- 
- 	if (strbuf_read(&nbuf, async.out, len) < 0) {
--		error("read from external filter '%s' failed", cmd);
--		ret = 0;
-+		err = error("read from external filter '%s' failed", cmd);
- 	}
- 	if (close(async.out)) {
--		error("read from external filter '%s' failed", cmd);
--		ret = 0;
-+		err = error("read from external filter '%s' failed", cmd);
- 	}
- 	if (finish_async(&async)) {
--		error("external filter '%s' failed", cmd);
--		ret = 0;
-+		err = error("external filter '%s' failed", cmd);
- 	}
- 
--	if (ret) {
-+	if (!err) {
- 		strbuf_swap(dst, &nbuf);
- 	}
- 	strbuf_release(&nbuf);
--	return ret;
-+	return !err;
+diff --git a/pkt-line.c b/pkt-line.c
+index 19f0271..fc0ac12 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -171,6 +171,22 @@ int packet_write_fmt_gently(int fd, const char *fmt, ...)
+ 	return status;
  }
  
- static struct convert_driver {
++static int packet_write_gently(const int fd_out, const char *buf, size_t size)
++{
++	static char packet_write_buffer[LARGE_PACKET_MAX];
++
++	if (size > sizeof(packet_write_buffer) - 4) {
++		return error("packet write failed - data exceeds max packet size");
++	}
++	packet_trace(buf, size, 1);
++	size += 4;
++	set_packet_header(packet_write_buffer, size);
++	memcpy(packet_write_buffer + 4, buf, size - 4);
++	if (write_in_full(fd_out, packet_write_buffer, size) == size)
++		return 0;
++	return error("packet write failed");
++}
++
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
+ {
+ 	va_list args;
 -- 
 2.10.0
 
