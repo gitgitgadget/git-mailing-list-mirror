@@ -2,57 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 63DE31F4F8
-	for <e@80x24.org>; Tue, 20 Sep 2016 00:49:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C06221F4F8
+	for <e@80x24.org>; Tue, 20 Sep 2016 01:37:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752344AbcITAtK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Sep 2016 20:49:10 -0400
-Received: from [195.159.176.226] ([195.159.176.226]:47182 "EHLO
-        blaine.gmane.org" rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org
-        with ESMTP id S1751579AbcITAtJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2016 20:49:09 -0400
-Received: from list by blaine.gmane.org with local (Exim 4.84_2)
-        (envelope-from <gcvg-git-2@m.gmane.org>)
-        id 1bm9F7-0003Ai-I1
-        for git@vger.kernel.org; Tue, 20 Sep 2016 02:49:01 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To:     git@vger.kernel.org
-From:   Anatoly Borodin <anatoly.borodin@gmail.com>
-Subject: Re: .git directory tree as tar-file
-Date:   Tue, 20 Sep 2016 00:48:45 +0000 (UTC)
-Message-ID: <nrq11d$4l9$1@blaine.gmane.org>
-References: <1474317076.23916.6.camel@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Complaints-To: usenet@blaine.gmane.org
-User-Agent: tin/2.3.4-20160628 ("Newton") (UNIX) (FreeBSD/10.2-STABLE (i386))
+        id S932225AbcITBhI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Sep 2016 21:37:08 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45359 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932185AbcITBhI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2016 21:37:08 -0400
+Received: (qmail 11992 invoked by uid 109); 20 Sep 2016 01:37:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 20 Sep 2016 01:37:07 +0000
+Received: (qmail 16184 invoked by uid 111); 20 Sep 2016 01:37:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 19 Sep 2016 21:37:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Sep 2016 18:37:04 -0700
+Date:   Mon, 19 Sep 2016 18:37:04 -0700
+From:   Jeff King <peff@peff.net>
+To:     Josh Triplett <josh@joshtriplett.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Andrew Donnellan <andrew.donnellan@au1.ibm.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2] format-patch: Add --rfc for the common case of [RFC
+ PATCH]
+Message-ID: <20160920013704.7hk2creytmfrla6h@sigill.intra.peff.net>
+References: <b5bf39015fdd20dd0aa4f38eb365bbbd0d07a4ca.1474096535.git-series.josh@joshtriplett.org>
+ <3df15bbb-7eac-86ec-2ccb-74a973482e8c@au1.ibm.com>
+ <xmqqa8f3g4pu.fsf@gitster.mtv.corp.google.com>
+ <20160919204408.GA28962@cloud>
+ <20160919233434.fhkikksi4cxzrzb5@sigill.intra.peff.net>
+ <20160919234022.GA29421@cloud>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20160919234022.GA29421@cloud>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Martin,
+On Mon, Sep 19, 2016 at 04:40:22PM -0700, Josh Triplett wrote:
 
-if multiple small loose files are the problem, this could be interesting
-for you:
+> >   - there are a non-trivial number of patches for other projects (JGIT,
+> >     EGIT, StGit, etc). This is somewhat unique to git, where we discuss
+> >     a lot of related projects on the list. But I wonder if other
+> >     projects would use subsystems in a similar way (though I guess for
+> >     the kernel, there are separate subsystems lists, so the "to" or "cc"
+> >     header becomes the more interesting tag).
+> 
+> The kernel mostly uses "[PATCH] subsystem: ...".  Occasionally I see
+> "[PATCH somegitrepo ...] ..." when it's necessary to explicitly say
+> whose git repo the patch needs to go through, but that's pretty rare.
 
-https://git-scm.com/docs/git-gc
+We do both. "foo: blah" is for subsystem "foo" of Git itself, but
+all-caps "JGIT PATCH" is "this is not even for Git". I don't know that
+the kernel really has an equivalent.
 
-This command is run automatically from time to time, and you can
-configure it or run manually.
-
-PS To see how bad the situation is, you can use
-
-https://git-scm.com/docs/git-count-objects
-
-
--- 
-Mit freundlichen Grüßen,
-Anatoly Borodin
-
+-Peff
