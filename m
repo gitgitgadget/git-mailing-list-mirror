@@ -6,114 +6,83 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 328F01F4F8
-	for <e@80x24.org>; Tue, 20 Sep 2016 03:57:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42A7D1F4F8
+	for <e@80x24.org>; Tue, 20 Sep 2016 03:59:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752974AbcITD5P (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Sep 2016 23:57:15 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45396 "EHLO cloud.peff.net"
+        id S1753251AbcITD7v (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Sep 2016 23:59:51 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45401 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751518AbcITD5O (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2016 23:57:14 -0400
-Received: (qmail 22171 invoked by uid 109); 20 Sep 2016 03:57:13 -0000
+        id S1752938AbcITD7u (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2016 23:59:50 -0400
+Received: (qmail 22411 invoked by uid 109); 20 Sep 2016 03:59:50 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 20 Sep 2016 03:57:13 +0000
-Received: (qmail 16786 invoked by uid 111); 20 Sep 2016 03:57:25 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 20 Sep 2016 03:59:50 +0000
+Received: (qmail 16808 invoked by uid 111); 20 Sep 2016 04:00:02 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 19 Sep 2016 23:57:25 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Sep 2016 20:57:11 -0700
-Date:   Mon, 19 Sep 2016 20:57:11 -0700
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 20 Sep 2016 00:00:02 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Sep 2016 20:59:47 -0700
+Date:   Mon, 19 Sep 2016 20:59:47 -0700
 From:   Jeff King <peff@peff.net>
-To:     Kevin Daudt <me@ikke.info>
-Cc:     git@vger.kernel.org, Swift Geek <swiftgeek@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] mailinfo: unescape quoted-pair in header fields
-Message-ID: <20160920035710.qw2byl3qeqwih7t5@sigill.intra.peff.net>
-References: <20160916210204.31282-1-me@ikke.info>
- <20160916222206.jz2d4gpaxxccia5p@sigill.intra.peff.net>
- <20160919105133.GA10901@ikke.info>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Kevin Daudt <me@ikke.info>, git@vger.kernel.org,
+        Swift Geek <swiftgeek@gmail.com>
+Subject: Re: [PATCH v2 1/2] t5100-mailinfo: replace common path prefix with
+ variable
+Message-ID: <20160920035947.nicx55ql4xlue66m@sigill.intra.peff.net>
+References: <20160919185440.18234-1-me@ikke.info>
+ <20160916210204.31282-1-me@ikke.info>
+ <20160919185440.18234-2-me@ikke.info>
+ <xmqqzin3d1zs.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20160919105133.GA10901@ikke.info>
+In-Reply-To: <xmqqzin3d1zs.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 19, 2016 at 12:51:33PM +0200, Kevin Daudt wrote:
+On Mon, Sep 19, 2016 at 02:16:23PM -0700, Junio C Hamano wrote:
 
-> > I didn't look in the RFC. Is:
-> > 
-> >   From: my \"name\" <foo@example.com>
-> > 
-> > really the same as:
-> > 
-> >   From: "my \\\"name\\\"" <foo@example.com>
-> > 
-> > ? That seems weird, but I think it may be that the former is simply
-> > bogus (you are not supposed to use backslashes outside of the quoted
-> > section at all).
+> Kevin Daudt <me@ikke.info> writes:
 > 
-> Correct, the quoted-pair (escape sequence) can only occur in a quoted
-> string or a comment. Even more so, the display name *needs* to be quoted
-> when consisting of more then one word according to the RFC.
-
-Hmm. So, I guess a follow-up question is: what would it be OK to do if
-we see a quoted-pair outside of quotes? If the top one above violates
-the RFC, it seems like stripping the backslashes would be a reasonable
-outcome.
-
-So if that's the case, do we actually need to care if we see any
-parenthesized comments? I think we should just leave comments in place
-either way, so syntactically they are only interesting insofar as we
-replace quoted pairs or not.
-
-IOW, I wonder if:
-
-  while ((c = *in++)) {
-	switch (c) {
-	case '\\':
-		if (!*in)
-			return 0; /* ignore trailing backslash */
-		/* quoted pair */
-		strbuf_addch(out, *in++);
-		break;
-	case '"':
-		/*
-		 * This may be starting or ending a quoted section,
-		 * but we do not care whether we are in such a section.
-		 * We _do_ need to remove the quotes, though, as they
-		 * are syntactic.
-		 */
-		break;
-	default:
-		/*
-		 * Anything else is a normal character we keep. These
-		 * _might_ be violating the RFC if they are magic
-		 * characters outside of a quoted section, but we'd
-		 * rather be liberal and pass them through.
-		 */
-		strbuf_addch(out, c);
-		break;
-	}
-  }
-
-would work. I certainly do not mind following the RFC more closely, but
-AFAICT the very simple code above gives a pretty forgiving outcome.
-
-> > This is obviously getting pretty silly, but if we are going to follow
-> > the RFC, I think you actually have to do a recursive parse, and keep
-> > track of an arbitrary depth of context.
-> > 
-> > I dunno. This method probably covers most cases in practice, and it's
-> > easy to reason about.
+> > Many tests need to store data in a file, and repeat the same pattern to
+> > refer to that path:
+> >
+> >     "$TEST_DATA"/t5100/
 > 
-> The problem is, how do you differentiate between nested comments, and
-> escaped braces within a comment after one run?
+> That obviously is a typo of
+> 
+> 	"$TEST_DIRECTORY/t5100"
+> 
+> It is a good change, even though I would have chosen a name
+> that is a bit more descriptive than "$DATA".
 
-I'm not sure what you mean. Escaped characters are always handled first
-in your loop. Can you give an example (although if you agree with what I
-wrote above, it may not be worth discussing further)?
+The name "$DATA" was my suggestion. I was shooting for something short
+since this is used a lot and is really a script-local variable (I'd have
+kept it lowercase to indicate that, but maybe that is just me).
+Something like "$root" would also work. I dunno.
+
+> > -	test_cmp "$TEST_DIRECTORY"/t5100/msg$mo msg$mo &&
+> > -	test_cmp "$TEST_DIRECTORY"/t5100/patch$mo patch$mo &&
+> > -	test_cmp "$TEST_DIRECTORY"/t5100/info$mo info$mo
+> > +	test_cmp "$DATA"/msg$mo msg$mo &&
+> > +	test_cmp "$DATA"/patch$mo patch$mo &&
+> > +	test_cmp "$DATA"/info$mo info$mo
+> 
+> make me wonder why we don't quote the whole thing, i.e.
+> 
+> 	test_cmp "$TEST_DATA/info$mo" "info$mo"
+> 
+> as leaving $mo part unquoted forces reader to wonder if it is our
+> deliberate attempt to allow shell $IFS in $mo and have the argument
+> split when that happens, which can be avoided if we quoted more
+> explicitly.
+> 
+> Perhaps we'd leave that as a low-hanging fruit for future people.
+
+Yeah, I agree that quoting the whole thing makes it more obvious (though
+I guess quoting the second info$mo does add two characters).
 
 -Peff
