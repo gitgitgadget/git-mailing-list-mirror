@@ -6,83 +6,146 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42A7D1F4F8
-	for <e@80x24.org>; Tue, 20 Sep 2016 03:59:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 716061F4F8
+	for <e@80x24.org>; Tue, 20 Sep 2016 04:23:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753251AbcITD7v (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Sep 2016 23:59:51 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45401 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752938AbcITD7u (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2016 23:59:50 -0400
-Received: (qmail 22411 invoked by uid 109); 20 Sep 2016 03:59:50 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 20 Sep 2016 03:59:50 +0000
-Received: (qmail 16808 invoked by uid 111); 20 Sep 2016 04:00:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 20 Sep 2016 00:00:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Sep 2016 20:59:47 -0700
-Date:   Mon, 19 Sep 2016 20:59:47 -0700
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Kevin Daudt <me@ikke.info>, git@vger.kernel.org,
-        Swift Geek <swiftgeek@gmail.com>
-Subject: Re: [PATCH v2 1/2] t5100-mailinfo: replace common path prefix with
- variable
-Message-ID: <20160920035947.nicx55ql4xlue66m@sigill.intra.peff.net>
-References: <20160919185440.18234-1-me@ikke.info>
- <20160916210204.31282-1-me@ikke.info>
- <20160919185440.18234-2-me@ikke.info>
- <xmqqzin3d1zs.fsf@gitster.mtv.corp.google.com>
+        id S1751211AbcITEXe (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Sep 2016 00:23:34 -0400
+Received: from relay4-d.mail.gandi.net ([217.70.183.196]:53680 "EHLO
+        relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751105AbcITEXd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Sep 2016 00:23:33 -0400
+Received: from mfilter20-d.gandi.net (mfilter20-d.gandi.net [217.70.178.148])
+        by relay4-d.mail.gandi.net (Postfix) with ESMTP id 620CB1720A5;
+        Tue, 20 Sep 2016 06:23:30 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mfilter20-d.gandi.net
+Received: from relay4-d.mail.gandi.net ([IPv6:::ffff:217.70.183.196])
+        by mfilter20-d.gandi.net (mfilter20-d.gandi.net [::ffff:10.0.15.180]) (amavisd-new, port 10024)
+        with ESMTP id Bw8u3DdC6xzl; Tue, 20 Sep 2016 06:23:28 +0200 (CEST)
+X-Originating-IP: 50.39.163.18
+Received: from x (50-39-163-18.bvtn.or.frontiernet.net [50.39.163.18])
+        (Authenticated sender: josh@joshtriplett.org)
+        by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id A2C3D17209D;
+        Tue, 20 Sep 2016 06:23:27 +0200 (CEST)
+Date:   Mon, 19 Sep 2016 21:23:25 -0700
+From:   Josh Triplett <josh@joshtriplett.org>
+To:     git@vger.kernel.org
+Cc:     Andrew Donnellan <andrew.donnellan@au1.ibm.com>,
+        Jeff King <peff@peff.net>
+Subject: [PATCH v3] format-patch: Add --rfc for the common case of [RFC PATCH]
+Message-ID: <501a6bfb2a70f44f080b2f119e4503ccbf88f639.1474330487.git-series.josh@joshtriplett.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqzin3d1zs.fsf@gitster.mtv.corp.google.com>
+User-Agent: NeoMutt/20160910 (1.7.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 19, 2016 at 02:16:23PM -0700, Junio C Hamano wrote:
+This provides a shorter and more convenient alias for
+--subject-prefix='RFC PATCH'.
 
-> Kevin Daudt <me@ikke.info> writes:
-> 
-> > Many tests need to store data in a file, and repeat the same pattern to
-> > refer to that path:
-> >
-> >     "$TEST_DATA"/t5100/
-> 
-> That obviously is a typo of
-> 
-> 	"$TEST_DIRECTORY/t5100"
-> 
-> It is a good change, even though I would have chosen a name
-> that is a bit more descriptive than "$DATA".
+Includes documentation in the format-patch manpage, and a new test
+covering --rfc.
 
-The name "$DATA" was my suggestion. I was shooting for something short
-since this is used a lot and is really a script-local variable (I'd have
-kept it lowercase to indicate that, but maybe that is just me).
-Something like "$root" would also work. I dunno.
+Signed-off-by: Josh Triplett <josh@joshtriplett.org>
+---
+v3:
+- Fix an error message referring to --subject-prefix
+- Expand the acronym "RFC"
+v2:
+- Add documentation to the format-patch manpage
+- Call subject_prefix_callback rather than reimplementing it
+- Update test to move expectations inside
 
-> > -	test_cmp "$TEST_DIRECTORY"/t5100/msg$mo msg$mo &&
-> > -	test_cmp "$TEST_DIRECTORY"/t5100/patch$mo patch$mo &&
-> > -	test_cmp "$TEST_DIRECTORY"/t5100/info$mo info$mo
-> > +	test_cmp "$DATA"/msg$mo msg$mo &&
-> > +	test_cmp "$DATA"/patch$mo patch$mo &&
-> > +	test_cmp "$DATA"/info$mo info$mo
-> 
-> make me wonder why we don't quote the whole thing, i.e.
-> 
-> 	test_cmp "$TEST_DATA/info$mo" "info$mo"
-> 
-> as leaving $mo part unquoted forces reader to wonder if it is our
-> deliberate attempt to allow shell $IFS in $mo and have the argument
-> split when that happens, which can be avoided if we quoted more
-> explicitly.
-> 
-> Perhaps we'd leave that as a low-hanging fruit for future people.
+ Documentation/git-format-patch.txt |  8 +++++++-
+ builtin/log.c                      | 10 +++++++++-
+ t/t4014-format-patch.sh            |  9 +++++++++
+ 3 files changed, 25 insertions(+), 2 deletions(-)
 
-Yeah, I agree that quoting the whole thing makes it more obvious (though
-I guess quoting the second info$mo does add two characters).
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 9624c84..9b200b3 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -19,7 +19,8 @@ SYNOPSIS
+ 		   [--start-number <n>] [--numbered-files]
+ 		   [--in-reply-to=Message-Id] [--suffix=.<sfx>]
+ 		   [--ignore-if-in-upstream]
+-		   [--subject-prefix=Subject-Prefix] [(--reroll-count|-v) <n>]
++		   [--rfc] [--subject-prefix=Subject-Prefix]
++		   [(--reroll-count|-v) <n>]
+ 		   [--to=<email>] [--cc=<email>]
+ 		   [--[no-]cover-letter] [--quiet] [--notes[=<ref>]]
+ 		   [<common diff options>]
+@@ -172,6 +173,11 @@ will want to ensure that threading is disabled for `git send-email`.
+ 	allows for useful naming of a patch series, and can be
+ 	combined with the `--numbered` option.
+ 
++--rfc::
++	Alias for `--subject-prefix="RFC PATCH"`. RFC means "Request For
++	Comments"; use this when sending an experimental patch for
++	discussion rather than application.
++
+ -v <n>::
+ --reroll-count=<n>::
+ 	Mark the series as the <n>-th iteration of the topic. The
+diff --git a/builtin/log.c b/builtin/log.c
+index 92dc34d..c657900 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1112,6 +1112,11 @@ static int subject_prefix_callback(const struct option *opt, const char *arg,
+ 	return 0;
+ }
+ 
++static int rfc_callback(const struct option *opt, const char *arg, int unset)
++{
++	return subject_prefix_callback(opt, "RFC PATCH", unset);
++}
++
+ static int numbered_cmdline_opt = 0;
+ 
+ static int numbered_callback(const struct option *opt, const char *arg,
+@@ -1419,6 +1424,9 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 			    N_("start numbering patches at <n> instead of 1")),
+ 		OPT_INTEGER('v', "reroll-count", &reroll_count,
+ 			    N_("mark the series as Nth re-roll")),
++		{ OPTION_CALLBACK, 0, "rfc", &rev, NULL,
++			    N_("Use [RFC PATCH] instead of [PATCH]"),
++			    PARSE_OPT_NOARG | PARSE_OPT_NONEG, rfc_callback },
+ 		{ OPTION_CALLBACK, 0, "subject-prefix", &rev, N_("prefix"),
+ 			    N_("Use [<prefix>] instead of [PATCH]"),
+ 			    PARSE_OPT_NONEG, subject_prefix_callback },
+@@ -1557,7 +1565,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	if (numbered && keep_subject)
+ 		die (_("-n and -k are mutually exclusive."));
+ 	if (keep_subject && subject_prefix)
+-		die (_("--subject-prefix and -k are mutually exclusive."));
++		die (_("--subject-prefix/--rfc and -k are mutually exclusive."));
+ 	rev.preserve_subject = keep_subject;
+ 
+ 	argc = setup_revisions(argc, argv, &rev, &s_r_opt);
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index b0579dd..ed4d3c2 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -1073,6 +1073,15 @@ test_expect_success 'empty subject prefix does not have extra space' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '--rfc' '
++	cat >expect <<-\EOF &&
++	Subject: [RFC PATCH 1/1] header with . in it
++	EOF
++	git format-patch -n -1 --stdout --rfc >patch &&
++	grep ^Subject: patch >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success '--from=ident notices bogus ident' '
+ 	test_must_fail git format-patch -1 --stdout --from=foo >patch
+ '
 
--Peff
+base-commit: 6ebdac1bab966b720d776aa43ca188fe378b1f4b
+-- 
+git-series 0.8.10
