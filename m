@@ -2,59 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A663209A9
-	for <e@80x24.org>; Tue, 20 Sep 2016 19:02:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED06B209A9
+	for <e@80x24.org>; Tue, 20 Sep 2016 19:03:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932830AbcITTCy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Sep 2016 15:02:54 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:36402 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932536AbcITTCw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Sep 2016 15:02:52 -0400
-Received: by mail-wm0-f68.google.com with SMTP id b184so4912704wma.3
-        for <git@vger.kernel.org>; Tue, 20 Sep 2016 12:02:51 -0700 (PDT)
+        id S932882AbcITTC4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Sep 2016 15:02:56 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35136 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932558AbcITTCx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Sep 2016 15:02:53 -0400
+Received: by mail-wm0-f66.google.com with SMTP id 133so4911891wmq.2
+        for <git@vger.kernel.org>; Tue, 20 Sep 2016 12:02:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=DiWNeAOJrY3f3rHCSXj5EAfRiVsbb23aTFf45fdrXs0=;
-        b=ECBC1KVgLtH+FFqrRd05ZXh1o01o06bOmVEb7Z9tf2eH+WSqnVp60Hl2g4Py+erG9j
-         wcX5IPlgsl/tSpnGy0/2x8t30sZwMrVLIGxbwyl4LBkmmi832RG+QsNwuelKjsIJQYG8
-         1paIzmZAMeIBI/Y7wx8gtEyGT+d2kfZ7t0bSaHEUEXaS/bwIqLapvQ59Q+baUb92HyIO
-         mW79eBrVlFiXAzbAwGTYg2IoFKFkUu1CnZyPFp8uNmmJMm/dXtIGrwCOAcGT+5PzMYbC
-         37TasGhQTyc25IjYul0fpNkYVHt5xKYoNWEIu5c3/bouJvUZbzJzoWIG17D6s9SRnHE3
-         cE3Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=afIAQWhK7yj2ajFuy3wJec20QTiuaizSRDw8Eg+bagc=;
+        b=r/Xo8JJ7TdewzeBEogS/kMnGVJSTelG/JBNhJ9Nx6No6EfRrLvKyNNeP++doYIxeba
+         OQzc5izmpA8B3dmrqhSSztQk90S7llDo1czG233PD2ey/8kdn02kbQ7v1pIzw409OyKR
+         MGlFUq/us9wJgBg1BOoIqOuPgtTC77wlrR7WGbo9BYlZkPL33ElgGHAZofBAuBrZKJEB
+         8URoggkC+e0piYgVN3/0D/qqhqutNn9n/7eTaIBz0xyDldWGoh/cHj7nSRXdRU+PStdZ
+         DdEPKud8nKUnoqQZPLHZBHA7xnrkg5er+FK4YlZy9SZJQzMYCk3oJiOEtoi6lKANt3Mu
+         ogQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=DiWNeAOJrY3f3rHCSXj5EAfRiVsbb23aTFf45fdrXs0=;
-        b=PchVQ2oqHzQOZX3RYnKQdBUmSBqf+lCIKNCaXqN5QVSGoQUDTBLFFfaDvUU5u4BU4i
-         DQeg5RLIlElwaF9+ChYA0v0y91aoBgdFEFIfQf2FgT/wp7U7yTas78sgHbU7gfl3zCYa
-         LsR2jHEklJYizrnSpVddqweP4MKnG1qVNWbH1VN1pseMT/Fk2Qakw8UHiXHnxfA6s3qf
-         3YenySas9vNarsSafnMsTRxX8zKQ+EEVsBS8FdbLSCgTrB0HRGKcHzBDrKMchugXiJWz
-         uClvffg40wH4vxtTHBq64aAsN/xUNGw6LLc47Q9+Z12cvtuVD944wzNLHBGfNGr7s/a6
-         d8Tw==
-X-Gm-Message-State: AE9vXwN0nHrpgNvRuv/q7PE2pSEyQ0sr1Zp9DrVe/yAga1jw97aSDiZKYFizGTz5uLCJeg==
-X-Received: by 10.194.21.200 with SMTP id x8mr29978716wje.129.1474398170375;
-        Tue, 20 Sep 2016 12:02:50 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=afIAQWhK7yj2ajFuy3wJec20QTiuaizSRDw8Eg+bagc=;
+        b=RpqWyrGLzapLCym+PzyJ40iry/OyzcvVyDtggm6v9sv085CjNpltg9HkpXnEwLqc10
+         plzrbfFXjNHePuqTJF9i04i/kX4z1y/ygpskCLgtsXcPo0mm3fUsxo1MFqk8OpS4h2Tw
+         cybiIABobFVVWi34zKroiD77fZhe3Q4GfHOa+M8gkeugcITDblrUPmpFcAc47YLWB8Pi
+         g12ZtKTOSGRjkH7iuRYPZ93vAJAcPhr+joDl4o+Xw6YfmHHuVMObh47O4MWFBL/eo0q8
+         LSNU2U+Em44yxd9FSazzOmR2/KwGgApQrLMAXZ637sUBrOnKVPG93T7B7P4VXPdXs7cc
+         KfWA==
+X-Gm-Message-State: AE9vXwMBZojT1Kms58fs7OSuG6RK4/Rj3uMyPymMjzo5dZ5/VpLK8Kv3k3aUNG7e7uTQ3Q==
+X-Received: by 10.194.145.101 with SMTP id st5mr30472438wjb.94.1474398171763;
+        Tue, 20 Sep 2016 12:02:51 -0700 (PDT)
 Received: from slxBook4.fritz.box (p508BA5EF.dip0.t-ipconnect.de. [80.139.165.239])
-        by smtp.gmail.com with ESMTPSA id gg10sm29820728wjd.4.2016.09.20.12.02.48
+        by smtp.gmail.com with ESMTPSA id gg10sm29820728wjd.4.2016.09.20.12.02.50
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 20 Sep 2016 12:02:49 -0700 (PDT)
+        Tue, 20 Sep 2016 12:02:51 -0700 (PDT)
 From:   larsxschneider@gmail.com
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, gitster@pobox.com, sbeller@google.com,
         jnareb@gmail.com, mlbright@gmail.com, tboegi@web.de,
         ramsay@ramsayjones.plus.com,
         Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v8 00/11] Git filter protocol
-Date:   Tue, 20 Sep 2016 21:02:36 +0200
-Message-Id: <20160920190247.82189-1-larsxschneider@gmail.com>
+Subject: [PATCH v8 01/11] pkt-line: rename packet_write() to packet_write_fmt()
+Date:   Tue, 20 Sep 2016 21:02:37 +0200
+Message-Id: <20160920190247.82189-2-larsxschneider@gmail.com>
 X-Mailer: git-send-email 2.10.0
+In-Reply-To: <20160920190247.82189-1-larsxschneider@gmail.com>
+References: <20160920190247.82189-1-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -62,767 +65,277 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-The goal of this series is to avoid launching a new clean/smudge filter
-process for each file that is filtered.
+packet_write() should be called packet_write_fmt() as the string
+parameter can be formatted.
 
-A short summary about v1 to v5 can be found here:
-https://git.github.io/rev_news/2016/08/17/edition-18/
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
+ builtin/archive.c        |  4 ++--
+ builtin/receive-pack.c   |  4 ++--
+ builtin/remote-ext.c     |  4 ++--
+ builtin/upload-archive.c |  4 ++--
+ connect.c                |  2 +-
+ daemon.c                 |  2 +-
+ http-backend.c           |  2 +-
+ pkt-line.c               |  2 +-
+ pkt-line.h               |  2 +-
+ shallow.c                |  2 +-
+ upload-pack.c            | 30 +++++++++++++++---------------
+ 11 files changed, 29 insertions(+), 29 deletions(-)
 
-This series is also published on web:
-https://github.com/larsxschneider/git/pull/12
-
-Thanks a lot to
-  Stefan, Torsten, Junio, Jeff, and Ramsay
-for very helpful reviews,
-Lars
-
-
-
-## Major changes since v7
-
-* explicitly define all packets as text packets terminated by an LF (except CONTENT and flush)
-* move check_pipe() from write_or_die to run_command and reuse it
-
-
-
-## All changes since v7
-
-### Stefan
-
-* http://public-inbox.org/git/CAGZ79kY0GaWuuh_MzKL6FZ7KWF2Kwhfh9qnEYd-qX8VDQWNmCQ@mail.gmail.com/
-    * move check_pipe() from write_or_die to run_command and reuse it
-    * use error() (== -1) as return value
-
-* http://public-inbox.org/git/CAGZ79kZdroDdD5SHP+-9svSTYbJfn2vsFXAwC4aen3hMVEOOPA@mail.gmail.com/
-    * remove verbose return value explanation in commit messages
-    * on "packet_flush_gently" introduction, mention that the function is used later
-
-
-### Torsten
-
-* http://public-inbox.org/git/20160910164056.GA14646@tb-raspi/
-    * remove unnecessary parenthesis
-
-
-* http://public-inbox.org/git/20160910062919.GB11001@tb-raspi/
-    * explicitly define all packets as text packets terminated by an LF (except CONTENT and flush)
-
-
-
-### Junio
-
-* http://public-inbox.org/git/xmqq8tuvx1sz.fsf@gitster.mtv.corp.google.com/
-    * fix SP in Perl script
-    * use `unsigned int` for CAP_CLEAN and CAP_SMUDGE
-    * fix pointer notation
-    * remove invalid "convert.h" include
-
-
-### Ramsay
-
-* http://public-inbox.org/git/6373d68b-574d-59f3-7b8d-60dd3a673806@ramsayjones.plus.com
-    * declare packet_write_gently() static
-
-
-### Lars
-* add SP in paths for test case
-* fix "{" code formatting
-
-
-
-## Interdiff (v7..v8)
-
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index ac000ea..946dcad 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -385,9 +385,11 @@ Long Running Filter Process
- If the filter command (a string value) is defined via
- `filter.<driver>.process` then Git can process all blobs with a
- single filter invocation for the entire life of a single Git
--command. This is achieved by using the following packet format
--(pkt-line, see technical/protocol-common.txt) based protocol over
--standard input and standard output.
-+command. This is achieved by using a packet format (pkt-line,
-+see technical/protocol-common.txt) based protocol over standard
-+input and standard output as follows. All packets are considered
-+text and therefore are terminated by an LF. Exceptions are the
-+"*CONTENT" packets and the flush packet.
-
- Git starts the filter when it encounters the first file
- that needs to be cleaned or smudged. After the filter started
-@@ -430,8 +432,8 @@ to filter relative to the repository root. Right after these packets
- Git sends the content split in zero or more pkt-line packets and a
- flush packet to terminate content.
- ------------------------
--packet:          git> command=smudge\n
--packet:          git> pathname=path/testfile.dat\n
-+packet:          git> command=smudge
-+packet:          git> pathname=path/testfile.dat
- packet:          git> 0000
- packet:          git> CONTENT
- packet:          git> 0000
-@@ -445,7 +447,7 @@ or more pkt-line packets and a flush packet at the end. Finally, a
- second list of "key=value" pairs terminated with a flush packet
- is expected. The filter can change the status in the second list.
- ------------------------
--packet:          git< status=success\n
-+packet:          git< status=success
- packet:          git< 0000
- packet:          git< SMUDGED_CONTENT
- packet:          git< 0000
-@@ -455,7 +457,7 @@ packet:          git< 0000  # empty list!
- If the result content is empty then the filter is expected to respond
- with a success status and an empty list.
- ------------------------
--packet:          git< status=success\n
-+packet:          git< status=success
- packet:          git< 0000
- packet:          git< 0000  # empty content!
- packet:          git< 0000  # empty list!
-@@ -466,7 +468,7 @@ it is expected to respond with an "error" status. Depending on the
- `filter.<driver>.required` flag Git will interpret that as error
- but it will not stop or restart the filter process.
- ------------------------
--packet:          git< status=error\n
-+packet:          git< status=error
- packet:          git< 0000
- ------------------------
-
-@@ -476,11 +478,11 @@ completely) sent. Depending on the `filter.<driver>.required` flag
- Git will interpret that as error but it will not stop or restart the
- filter process.
- ------------------------
--packet:          git< status=success\n
-+packet:          git< status=success
- packet:          git< 0000
- packet:          git< HALF_WRITTEN_ERRONEOUS_CONTENT
- packet:          git< 0000
--packet:          git< status=error\n
-+packet:          git< status=error
- packet:          git< 0000
- ------------------------
-
-@@ -500,7 +502,7 @@ the `filter.<driver>.required` flag Git will interpret that as error
- for the content as well as any future content for the lifetime of the
- Git process but it will not stop or restart the filter process.
- ------------------------
--packet:          git< status=abort\n
-+packet:          git< status=abort
- packet:          git< 0000
- ------------------------
-
-@@ -510,8 +512,8 @@ the command pipe on exit. The filter is expected to detect EOF
- and exit gracefully on its own.
-
- A long running filter demo implementation can be found in
--`contrib/long-running-filter/example.pl` located in the Git
--core repository. If you develop your own long running filter
-+`contrib/long-running-filter/example.pl` located in the Git
-+core repository. If you develop your own long running filter
- process then the `GIT_TRACE_PACKET` environment variables can be
- very helpful for debugging (see linkgit:git[1]).
-
-diff --git a/contrib/long-running-filter/example.pl b/contrib/long-running-filter/example.pl
-index 279fbfb..c13a631 100755
---- a/contrib/long-running-filter/example.pl
-+++ b/contrib/long-running-filter/example.pl
-@@ -9,7 +9,7 @@ use warnings;
-
- my $MAX_PACKET_CONTENT_SIZE = 65516;
-
--sub packet_read {
-+sub packet_bin_read {
-     my $buffer;
-     my $bytes_read = read STDIN, $buffer, 4;
-     if ( $bytes_read == 0 ) {
-@@ -37,38 +37,50 @@ sub packet_read {
-     }
- }
-
--sub packet_write {
-+sub packet_txt_read {
-+    my ( $res, $buf ) = packet_bin_read();
-+    unless ( $buf =~ /\n$/ ) {
-+        die "A non-binary line SHOULD BE terminated by an LF.";
-+    }
-+    return ( $res, substr( $buf, 0, -1 ) );
-+}
-+
-+sub packet_bin_write {
-     my ($packet) = @_;
-     print STDOUT sprintf( "%04x", length($packet) + 4 );
-     print STDOUT $packet;
-     STDOUT->flush();
- }
-
-+sub packet_txt_write {
-+    packet_bin_write( $_[0] . "\n" );
-+}
-+
- sub packet_flush {
-     print STDOUT sprintf( "%04x", 0 );
-     STDOUT->flush();
- }
-
--( packet_read() eq ( 0, "git-filter-client" ) ) || die "bad initialization";
--( packet_read() eq ( 0, "version=2" ) )         || die "bad version";
--( packet_read() eq ( 1, "" ) )                  || die "bad version end";
-+( packet_txt_read() eq ( 0, "git-filter-client" ) ) || die "bad initialize";
-+( packet_txt_read() eq ( 0, "version=2" ) )         || die "bad version";
-+( packet_bin_read() eq ( 1, "" ) )                  || die "bad version end";
-
--packet_write("git-filter-server\n");
--packet_write("version=2\n");
-+packet_txt_write("git-filter-server");
-+packet_txt_write("version=2");
-
--( packet_read() eq ( 0, "clean=true" ) )  || die "bad capability";
--( packet_read() eq ( 0, "smudge=true" ) ) || die "bad capability";
--( packet_read() eq ( 1, "" ) )            || die "bad capability end";
-+( packet_txt_read() eq ( 0, "clean=true" ) )  || die "bad capability";
-+( packet_txt_read() eq ( 0, "smudge=true" ) ) || die "bad capability";
-+( packet_bin_read() eq ( 1, "" ) )            || die "bad capability end";
-
--packet_write( "clean=true\n" );
--packet_write( "smudge=true\n" );
-+packet_txt_write("clean=true");
-+packet_txt_write("smudge=true");
- packet_flush();
-
- while (1) {
--    my ($command) = packet_read() =~ /^command=([^=]+)\n$/;
--    my ($pathname) = packet_read() =~ /^pathname=([^=]+)\n$/;
-+    my ($command)  = packet_txt_read() =~ /^command=([^=]+)$/;
-+    my ($pathname) = packet_txt_read() =~ /^pathname=([^=]+)$/;
-
--    packet_read();
-+    packet_bin_read();
-
-     my $input = "";
-     {
-@@ -76,7 +88,7 @@ while (1) {
-         my $buffer;
-         my $done = 0;
-         while ( !$done ) {
--            ( $done, $buffer ) = packet_read();
-+            ( $done, $buffer ) = packet_bin_read();
-             $input .= $buffer;
-         }
-     }
-@@ -94,11 +106,11 @@ while (1) {
-         die "bad command '$command'";
-     }
-
--    packet_write("status=success\n");
-+    packet_txt_write("status=success");
-     packet_flush();
-     while ( length($output) > 0 ) {
-         my $packet = substr( $output, 0, $MAX_PACKET_CONTENT_SIZE );
--        packet_write($packet);
-+        packet_bin_write($packet);
-         if ( length($output) > $MAX_PACKET_CONTENT_SIZE ) {
-             $output = substr( $output, $MAX_PACKET_CONTENT_SIZE );
-         }
-@@ -106,6 +118,6 @@ while (1) {
-             $output = "";
-         }
-     }
--    packet_flush(); # flush content!
--    packet_flush(); # empty list!
-+    packet_flush();    # flush content!
-+    packet_flush();    # empty list!
- }
-diff --git a/convert.c b/convert.c
-index 0ed48ed..bd66257 100644
---- a/convert.c
-+++ b/convert.c
-@@ -472,16 +472,13 @@ static int apply_single_file_filter(const char *path, const char *src, size_t le
-    return 0; /* error was already reported */
-
-  if (strbuf_read(&nbuf, async.out, len) < 0) {
--   error("read from external filter '%s' failed", cmd);
--   err = -1;
-+   err = error("read from external filter '%s' failed", cmd);
-  }
-  if (close(async.out)) {
--   error("read from external filter '%s' failed", cmd);
--   err = -1;
-+   err = error("read from external filter '%s' failed", cmd);
-  }
-  if (finish_async(&async)) {
--   error("external filter '%s' failed", cmd);
--   err = -1;
-+   err = error("external filter '%s' failed", cmd);
-  }
-
-  if (!err) {
-@@ -496,7 +493,7 @@ static int apply_single_file_filter(const char *path, const char *src, size_t le
-
- struct cmd2process {
-  struct hashmap_entry ent; /* must be the first member! */
-- int supported_capabilities;
-+ unsigned int supported_capabilities;
-  const char *cmd;
-  struct child_process process;
- };
-@@ -541,13 +538,12 @@ static int packet_write_list(int fd, const char *line, ...)
-  va_list args;
-  int err;
-  va_start(args, line);
-- for (;;)
-- {
-+ for (;;) {
-    if (!line)
-      break;
-    if (strlen(line) > PKTLINE_DATA_MAXLEN)
-      return -1;
--   err = packet_write_fmt_gently(fd, "%s", line);
-+   err = packet_write_fmt_gently(fd, "%s\n", line);
-    if (err)
-      return err;
-    line = va_arg(args, const char*);
-@@ -601,8 +597,7 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
-
-  err = packet_write_list(process->in, "clean=true", "smudge=true", NULL);
-
-- for (;;)
-- {
-+ for (;;) {
-    cap_buf = packet_read_line(process->out, NULL);
-    if (!cap_buf)
-      break;
-@@ -658,7 +653,7 @@ static void read_multi_file_filter_values(int fd, struct strbuf *status) {
-
- static int apply_multi_file_filter(const char *path, const char *src, size_t len,
-                                    int fd, struct strbuf *dst, const char *cmd,
--                                   const int wanted_capability)
-+                                   const unsigned int wanted_capability)
+diff --git a/builtin/archive.c b/builtin/archive.c
+index a1e3b94..49f4914 100644
+--- a/builtin/archive.c
++++ b/builtin/archive.c
+@@ -47,10 +47,10 @@ static int run_remote_archiver(int argc, const char **argv,
+ 	if (name_hint) {
+ 		const char *format = archive_format_from_filename(name_hint);
+ 		if (format)
+-			packet_write(fd[1], "argument --format=%s\n", format);
++			packet_write_fmt(fd[1], "argument --format=%s\n", format);
+ 	}
+ 	for (i = 1; i < argc; i++)
+-		packet_write(fd[1], "argument %s\n", argv[i]);
++		packet_write_fmt(fd[1], "argument %s\n", argv[i]);
+ 	packet_flush(fd[1]);
+ 
+ 	buf = packet_read_line(fd[0], NULL);
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 011db00..1ce7682 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -218,7 +218,7 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
+ static void show_ref(const char *path, const unsigned char *sha1)
  {
-  int err;
-  struct cmd2process *entry;
-@@ -703,17 +698,18 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
-
-  sigchain_push(SIGPIPE, SIG_IGN);
-
--
-- err = (strlen(filter_type) > PKTLINE_DATA_MAXLEN);
-+ err = strlen(filter_type) > PKTLINE_DATA_MAXLEN;
-  if (err)
-    goto done;
-+
-  err = packet_write_fmt_gently(process->in, "command=%s\n", filter_type);
-  if (err)
-    goto done;
-
-- err = (strlen(path) > PKTLINE_DATA_MAXLEN);
-+ err = strlen(path) > PKTLINE_DATA_MAXLEN;
-  if (err)
-    goto done;
-+
-  err = packet_write_fmt_gently(process->in, "pathname=%s\n", path);
-  if (err)
-    goto done;
-@@ -780,9 +776,9 @@ static struct convert_driver {
-
- static int apply_filter(const char *path, const char *src, size_t len,
-                         int fd, struct strbuf *dst, struct convert_driver *drv,
--                        const int wanted_capability)
-+                        const unsigned int wanted_capability)
+ 	if (sent_capabilities) {
+-		packet_write(1, "%s %s\n", sha1_to_hex(sha1), path);
++		packet_write_fmt(1, "%s %s\n", sha1_to_hex(sha1), path);
+ 	} else {
+ 		struct strbuf cap = STRBUF_INIT;
+ 
+@@ -233,7 +233,7 @@ static void show_ref(const char *path, const unsigned char *sha1)
+ 		if (advertise_push_options)
+ 			strbuf_addstr(&cap, " push-options");
+ 		strbuf_addf(&cap, " agent=%s", git_user_agent_sanitized());
+-		packet_write(1, "%s %s%c%s\n",
++		packet_write_fmt(1, "%s %s%c%s\n",
+ 			     sha1_to_hex(sha1), path, 0, cap.buf);
+ 		strbuf_release(&cap);
+ 		sent_capabilities = 1;
+diff --git a/builtin/remote-ext.c b/builtin/remote-ext.c
+index 88eb8f9..11b48bf 100644
+--- a/builtin/remote-ext.c
++++ b/builtin/remote-ext.c
+@@ -128,9 +128,9 @@ static void send_git_request(int stdin_fd, const char *serv, const char *repo,
+ 	const char *vhost)
  {
-- const char* cmd = NULL;
-+ const char *cmd = NULL;
-
-  if (!drv)
-    return 0;
+ 	if (!vhost)
+-		packet_write(stdin_fd, "%s %s%c", serv, repo, 0);
++		packet_write_fmt(stdin_fd, "%s %s%c", serv, repo, 0);
+ 	else
+-		packet_write(stdin_fd, "%s %s%chost=%s%c", serv, repo, 0,
++		packet_write_fmt(stdin_fd, "%s %s%chost=%s%c", serv, repo, 0,
+ 			     vhost, 0);
+ }
+ 
+diff --git a/builtin/upload-archive.c b/builtin/upload-archive.c
+index 2caedf1..dc872f6 100644
+--- a/builtin/upload-archive.c
++++ b/builtin/upload-archive.c
+@@ -88,11 +88,11 @@ int cmd_upload_archive(int argc, const char **argv, const char *prefix)
+ 	writer.git_cmd = 1;
+ 	if (start_command(&writer)) {
+ 		int err = errno;
+-		packet_write(1, "NACK unable to spawn subprocess\n");
++		packet_write_fmt(1, "NACK unable to spawn subprocess\n");
+ 		die("upload-archive: %s", strerror(err));
+ 	}
+ 
+-	packet_write(1, "ACK\n");
++	packet_write_fmt(1, "ACK\n");
+ 	packet_flush(1);
+ 
+ 	while (1) {
+diff --git a/connect.c b/connect.c
+index 722dc3f..5330d9c 100644
+--- a/connect.c
++++ b/connect.c
+@@ -730,7 +730,7 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 		 * Note: Do not add any other headers here!  Doing so
+ 		 * will cause older git-daemon servers to crash.
+ 		 */
+-		packet_write(fd[1],
++		packet_write_fmt(fd[1],
+ 			     "%s %s%chost=%s%c",
+ 			     prog, path, 0,
+ 			     target_host, 0);
+diff --git a/daemon.c b/daemon.c
+index 425aad0..afce1b9 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -281,7 +281,7 @@ static int daemon_error(const char *dir, const char *msg)
+ {
+ 	if (!informative_errors)
+ 		msg = "access denied or repository not exported";
+-	packet_write(1, "ERR %s: %s", msg, dir);
++	packet_write_fmt(1, "ERR %s: %s", msg, dir);
+ 	return -1;
+ }
+ 
+diff --git a/http-backend.c b/http-backend.c
+index adc8c8c..eef0a36 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -464,7 +464,7 @@ static void get_info_refs(struct strbuf *hdr, char *arg)
+ 		hdr_str(hdr, content_type, buf.buf);
+ 		end_headers(hdr);
+ 
+-		packet_write(1, "# service=git-%s\n", svc->name);
++		packet_write_fmt(1, "# service=git-%s\n", svc->name);
+ 		packet_flush(1);
+ 
+ 		argv[0] = svc->name;
 diff --git a/pkt-line.c b/pkt-line.c
-index 5001a07..a0a8543 100644
+index 62fdb37..0a9b61c 100644
 --- a/pkt-line.c
 +++ b/pkt-line.c
-@@ -96,8 +96,7 @@ int packet_flush_gently(int fd)
-  packet_trace("0000", 4, 1);
-  if (write_in_full(fd, "0000", 4) == 4)
-    return 0;
-- error("flush packet write failed");
-- return -1;
-+ return error("flush packet write failed");
+@@ -118,7 +118,7 @@ static void format_packet(struct strbuf *out, const char *fmt, va_list args)
+ 	packet_trace(out->buf + orig_len + 4, n - 4, 1);
  }
-
- void packet_buf_flush(struct strbuf *buf)
-@@ -146,19 +145,10 @@ static int packet_write_fmt_1(int fd, int gently,
-    return 0;
-
-  if (!gently) {
--   if (errno == EPIPE) {
--     if (in_async())
--       async_exit(141);
--
--     signal(SIGPIPE, SIG_DFL);
--     raise(SIGPIPE);
--     /* Should never happen, but just in case... */
--     exit(141);
--   }
--   die_errno("packet write error");
-+   check_pipe(errno);
-+   die_errno("packet write with format failed");
-  }
-- error("packet write failed");
-- return -1;
-+ return error("packet write with format failed");
- }
-
- void packet_write_fmt(int fd, const char *fmt, ...)
-@@ -181,13 +171,12 @@ int packet_write_fmt_gently(int fd, const char *fmt, ...)
-  return status;
- }
-
--int packet_write_gently(const int fd_out, const char *buf, size_t size)
-+static int packet_write_gently(const int fd_out, const char *buf, size_t size)
+ 
+-void packet_write(int fd, const char *fmt, ...)
++void packet_write_fmt(int fd, const char *fmt, ...)
  {
-  static char packet_write_buffer[LARGE_PACKET_MAX];
-
-  if (size > sizeof(packet_write_buffer) - 4) {
--   error("packet write failed");
--   return -1;
-+   return error("packet write failed - data exceeds max packet size");
-  }
-  packet_trace(buf, size, 1);
-  size += 4;
-@@ -195,9 +184,7 @@ int packet_write_gently(const int fd_out, const char *buf, size_t size)
-  memcpy(packet_write_buffer + 4, buf, size - 4);
-  if (write_in_full(fd_out, packet_write_buffer, size) == size)
-    return 0;
--
-- error("packet write failed");
-- return -1;
-+ return error("packet write failed");
- }
-
- void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
-diff --git a/run-command.c b/run-command.c
-index 5a4dbb6..b72f6d1 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -6,6 +6,19 @@
- #include "thread-utils.h"
- #include "strbuf.h"
-
-+void check_pipe(int err)
-+{
-+ if (err == EPIPE) {
-+   if (in_async())
-+     async_exit(141);
-+
-+   signal(SIGPIPE, SIG_DFL);
-+   raise(SIGPIPE);
-+   /* Should never happen, but just in case... */
-+   exit(141);
-+ }
-+}
-+
- void child_process_init(struct child_process *child)
+ 	static struct strbuf buf = STRBUF_INIT;
+ 	va_list args;
+diff --git a/pkt-line.h b/pkt-line.h
+index 3cb9d91..1902fb3 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -20,7 +20,7 @@
+  * side can't, we stay with pure read/write interfaces.
+  */
+ void packet_flush(int fd);
+-void packet_write(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
++void packet_write_fmt(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ void packet_buf_flush(struct strbuf *buf);
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ 
+diff --git a/shallow.c b/shallow.c
+index 54e2db7..d666e24 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -260,7 +260,7 @@ static int advertise_shallow_grafts_cb(const struct commit_graft *graft, void *c
  {
-  memset(child, 0, sizeof(*child));
-diff --git a/run-command.h b/run-command.h
-index 5066649..e7c5f71 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -54,6 +54,8 @@ int finish_command(struct child_process *);
- int finish_command_in_signal(struct child_process *);
- int run_command(struct child_process *);
-
-+void check_pipe(int err);
-+
- /*
-  * Returns the path to the hook file, or NULL if the hook is missing
-  * or disabled. Note that this points to static storage that will be
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index 1c98ac3..210c4f6 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -34,7 +34,7 @@ test_expect_success setup '
-  git checkout -- test test.t test.i &&
-
-  echo "content-test2" >test2.o &&
-- echo "content-test3-subdir" >test3-subdir.o
-+ echo "content-test3 - subdir" >"test3 - subdir.o"
- '
-
- script='s/^\$Id: \([0-9a-f]*\) \$/\1/p'
-@@ -317,9 +317,9 @@ check_filter_no_call () {
+ 	int fd = *(int *)cb;
+ 	if (graft->nr_parent == -1)
+-		packet_write(fd, "shallow %s\n", oid_to_hex(&graft->oid));
++		packet_write_fmt(fd, "shallow %s\n", oid_to_hex(&graft->oid));
+ 	return 0;
  }
-
- check_rot13 () {
-- test_cmp $1 $2 &&
-- ./../rot13.sh <$1 >expected &&
-- git cat-file blob :$2 >actual &&
-+ test_cmp "$1" "$2" &&
-+ ./../rot13.sh <"$1" >expected &&
-+ git cat-file blob :"$2" >actual &&
-  test_cmp expected actual
+ 
+diff --git a/upload-pack.c b/upload-pack.c
+index ca7f941..cd47de6 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -393,13 +393,13 @@ static int get_common_commits(void)
+ 			if (multi_ack == 2 && got_common
+ 			    && !got_other && ok_to_give_up()) {
+ 				sent_ready = 1;
+-				packet_write(1, "ACK %s ready\n", last_hex);
++				packet_write_fmt(1, "ACK %s ready\n", last_hex);
+ 			}
+ 			if (have_obj.nr == 0 || multi_ack)
+-				packet_write(1, "NAK\n");
++				packet_write_fmt(1, "NAK\n");
+ 
+ 			if (no_done && sent_ready) {
+-				packet_write(1, "ACK %s\n", last_hex);
++				packet_write_fmt(1, "ACK %s\n", last_hex);
+ 				return 0;
+ 			}
+ 			if (stateless_rpc)
+@@ -416,20 +416,20 @@ static int get_common_commits(void)
+ 					const char *hex = sha1_to_hex(sha1);
+ 					if (multi_ack == 2) {
+ 						sent_ready = 1;
+-						packet_write(1, "ACK %s ready\n", hex);
++						packet_write_fmt(1, "ACK %s ready\n", hex);
+ 					} else
+-						packet_write(1, "ACK %s continue\n", hex);
++						packet_write_fmt(1, "ACK %s continue\n", hex);
+ 				}
+ 				break;
+ 			default:
+ 				got_common = 1;
+ 				memcpy(last_hex, sha1_to_hex(sha1), 41);
+ 				if (multi_ack == 2)
+-					packet_write(1, "ACK %s common\n", last_hex);
++					packet_write_fmt(1, "ACK %s common\n", last_hex);
+ 				else if (multi_ack)
+-					packet_write(1, "ACK %s continue\n", last_hex);
++					packet_write_fmt(1, "ACK %s continue\n", last_hex);
+ 				else if (have_obj.nr == 1)
+-					packet_write(1, "ACK %s\n", last_hex);
++					packet_write_fmt(1, "ACK %s\n", last_hex);
+ 				break;
+ 			}
+ 			continue;
+@@ -437,10 +437,10 @@ static int get_common_commits(void)
+ 		if (!strcmp(line, "done")) {
+ 			if (have_obj.nr > 0) {
+ 				if (multi_ack)
+-					packet_write(1, "ACK %s\n", last_hex);
++					packet_write_fmt(1, "ACK %s\n", last_hex);
+ 				return 0;
+ 			}
+-			packet_write(1, "NAK\n");
++			packet_write_fmt(1, "NAK\n");
+ 			return -1;
+ 		}
+ 		die("git upload-pack: expected SHA1 list, got '%s'", line);
+@@ -650,7 +650,7 @@ static void receive_needs(void)
+ 		while (result) {
+ 			struct object *object = &result->item->object;
+ 			if (!(object->flags & (CLIENT_SHALLOW|NOT_SHALLOW))) {
+-				packet_write(1, "shallow %s",
++				packet_write_fmt(1, "shallow %s",
+ 						oid_to_hex(&object->oid));
+ 				register_shallow(object->oid.hash);
+ 				shallow_nr++;
+@@ -662,7 +662,7 @@ static void receive_needs(void)
+ 			struct object *object = shallows.objects[i].item;
+ 			if (object->flags & NOT_SHALLOW) {
+ 				struct commit_list *parents;
+-				packet_write(1, "unshallow %s",
++				packet_write_fmt(1, "unshallow %s",
+ 					oid_to_hex(&object->oid));
+ 				object->flags &= ~CLIENT_SHALLOW;
+ 				/* make sure the real parents are parsed */
+@@ -741,7 +741,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
+ 		struct strbuf symref_info = STRBUF_INIT;
+ 
+ 		format_symref_info(&symref_info, cb_data);
+-		packet_write(1, "%s %s%c%s%s%s%s%s agent=%s\n",
++		packet_write_fmt(1, "%s %s%c%s%s%s%s%s agent=%s\n",
+ 			     oid_to_hex(oid), refname_nons,
+ 			     0, capabilities,
+ 			     (allow_unadvertised_object_request & ALLOW_TIP_SHA1) ?
+@@ -753,11 +753,11 @@ static int send_ref(const char *refname, const struct object_id *oid,
+ 			     git_user_agent_sanitized());
+ 		strbuf_release(&symref_info);
+ 	} else {
+-		packet_write(1, "%s %s\n", oid_to_hex(oid), refname_nons);
++		packet_write_fmt(1, "%s %s\n", oid_to_hex(oid), refname_nons);
+ 	}
+ 	capabilities = NULL;
+ 	if (!peel_ref(refname, peeled.hash))
+-		packet_write(1, "%s %s^{}\n", oid_to_hex(&peeled), refname_nons);
++		packet_write_fmt(1, "%s %s^{}\n", oid_to_hex(&peeled), refname_nons);
+ 	return 0;
  }
-
-@@ -340,7 +340,7 @@ test_expect_success PERL 'required process filter should filter data' '
-    cp ../test.o test.r &&
-    cp ../test2.o test2.r &&
-    mkdir testsubdir &&
--   cp ../test3-subdir.o testsubdir/test3-subdir.r &&
-+   cp "../test3 - subdir.o" "testsubdir/test3 - subdir.r" &&
-    >test4-empty.r &&
-
-    check_filter \
-@@ -349,7 +349,7 @@ test_expect_success PERL 'required process filter should filter data' '
-          1 IN: clean test.r 57 [OK] -- OUT: 57 . [OK]
-          1 IN: clean test2.r 14 [OK] -- OUT: 14 . [OK]
-          1 IN: clean test4-empty.r 0 [OK] -- OUT: 0  [OK]
--         1 IN: clean testsubdir/test3-subdir.r 21 [OK] -- OUT: 21 . [OK]
-+         1 IN: clean testsubdir/test3 - subdir.r 23 [OK] -- OUT: 23 . [OK]
-          1 START
-          1 STOP
-          1 wrote filter header
-@@ -361,13 +361,13 @@ test_expect_success PERL 'required process filter should filter data' '
-          x IN: clean test.r 57 [OK] -- OUT: 57 . [OK]
-          x IN: clean test2.r 14 [OK] -- OUT: 14 . [OK]
-          x IN: clean test4-empty.r 0 [OK] -- OUT: 0  [OK]
--         x IN: clean testsubdir/test3-subdir.r 21 [OK] -- OUT: 21 . [OK]
-+         x IN: clean testsubdir/test3 - subdir.r 23 [OK] -- OUT: 23 . [OK]
-          1 START
-          1 STOP
-          1 wrote filter header
-        EOF
-
--   rm -f test?.r testsubdir/test3-subdir.r &&
-+   rm -f test?.r "testsubdir/test3 - subdir.r" &&
-
-    check_filter_ignore_clean \
-      git checkout . \
-@@ -375,7 +375,7 @@ test_expect_success PERL 'required process filter should filter data' '
-          START
-          wrote filter header
-          IN: smudge test2.r 14 [OK] -- OUT: 14 . [OK]
--         IN: smudge testsubdir/test3-subdir.r 21 [OK] -- OUT: 21 . [OK]
-+         IN: smudge testsubdir/test3 - subdir.r 23 [OK] -- OUT: 23 . [OK]
-          STOP
-        EOF
-
-@@ -395,13 +395,13 @@ test_expect_success PERL 'required process filter should filter data' '
-          IN: smudge test.r 57 [OK] -- OUT: 57 . [OK]
-          IN: smudge test2.r 14 [OK] -- OUT: 14 . [OK]
-          IN: smudge test4-empty.r 0 [OK] -- OUT: 0  [OK]
--         IN: smudge testsubdir/test3-subdir.r 21 [OK] -- OUT: 21 . [OK]
-+         IN: smudge testsubdir/test3 - subdir.r 23 [OK] -- OUT: 23 . [OK]
-          STOP
-        EOF
-
-    check_rot13 ../test.o test.r &&
-    check_rot13 ../test2.o test2.r &&
--   check_rot13 ../test3-subdir.o testsubdir/test3-subdir.r
-+   check_rot13 "../test3 - subdir.o" "testsubdir/test3 - subdir.r"
-  )
- '
-
-diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
-index 8e27877..8958f71 100755
---- a/t/t0021/rot13-filter.pl
-+++ b/t/t0021/rot13-filter.pl
-@@ -34,7 +34,7 @@ sub rot13 {
-     return $str;
- }
-
--sub packet_read {
-+sub packet_bin_read {
-     my $buffer;
-     my $bytes_read = read STDIN, $buffer, 4;
-     if ( $bytes_read == 0 ) {
-@@ -63,13 +63,25 @@ sub packet_read {
-     }
- }
-
--sub packet_write {
-+sub packet_txt_read {
-+    my ( $res, $buf ) = packet_bin_read();
-+    unless ( $buf =~ /\n$/ ) {
-+        die "A non-binary line SHOULD BE terminated by an LF.";
-+    }
-+    return ( $res, substr( $buf, 0, -1 ) );
-+}
-+
-+sub packet_bin_write {
-     my ($packet) = @_;
-     print STDOUT sprintf( "%04x", length($packet) + 4 );
-     print STDOUT $packet;
-     STDOUT->flush();
- }
-
-+sub packet_txt_write {
-+    packet_bin_write( $_[0] . "\n" );
-+}
-+
- sub packet_flush {
-     print STDOUT sprintf( "%04x", 0 );
-     STDOUT->flush();
-@@ -78,35 +90,35 @@ sub packet_flush {
- print $debug "START\n";
- $debug->flush();
-
--( packet_read() eq ( 0, "git-filter-client" ) ) || die "bad initialization";
--( packet_read() eq ( 0, "version=2" ) )         || die "bad version";
--( packet_read() eq ( 1, "" ) )                  || die "bad version end";
-+( packet_txt_read() eq ( 0, "git-filter-client" ) ) || die "bad initialize";
-+( packet_txt_read() eq ( 0, "version=2" ) )         || die "bad version";
-+( packet_bin_read() eq ( 1, "" ) )                  || die "bad version end";
-
--packet_write("git-filter-server\n");
--packet_write("version=2\n");
-+packet_txt_write("git-filter-server");
-+packet_txt_write("version=2");
-
--( packet_read() eq ( 0, "clean=true" ) )  || die "bad capability";
--( packet_read() eq ( 0, "smudge=true" ) ) || die "bad capability";
--( packet_read() eq ( 1, "" ) )            || die "bad capability end";
-+( packet_txt_read() eq ( 0, "clean=true" ) )  || die "bad capability";
-+( packet_txt_read() eq ( 0, "smudge=true" ) ) || die "bad capability";
-+( packet_bin_read() eq ( 1, "" ) )            || die "bad capability end";
-
- foreach (@capabilities) {
--    packet_write( $_ . "=true\n" );
-+    packet_txt_write( $_ . "=true" );
- }
- packet_flush();
- print $debug "wrote filter header\n";
- $debug->flush();
-
- while (1) {
--    my ($command) = packet_read() =~ /^command=([^=]+)\n$/;
-+    my ($command) = packet_txt_read() =~ /^command=([^=]+)$/;
-     print $debug "IN: $command";
-     $debug->flush();
-
--    my ($pathname) = packet_read() =~ /^pathname=([^=]+)\n$/;
-+    my ($pathname) = packet_txt_read() =~ /^pathname=([^=]+)$/;
-     print $debug " $pathname";
-     $debug->flush();
-
-     # Flush
--    packet_read();
-+    packet_bin_read();
-
-     my $input = "";
-     {
-@@ -114,7 +126,7 @@ while (1) {
-         my $buffer;
-         my $done = 0;
-         while ( !$done ) {
--            ( $done, $buffer ) = packet_read();
-+            ( $done, $buffer ) = packet_bin_read();
-             $input .= $buffer;
-         }
-         print $debug " " . length($input) . " [OK] -- ";
-@@ -141,17 +153,17 @@ while (1) {
-     if ( $pathname eq "error.r" ) {
-         print $debug "[ERROR]\n";
-         $debug->flush();
--        packet_write("status=error\n");
-+        packet_txt_write("status=error");
-         packet_flush();
-     }
-     elsif ( $pathname eq "abort.r" ) {
-         print $debug "[ABORT]\n";
-         $debug->flush();
--        packet_write("status=abort\n");
-+        packet_txt_write("status=abort");
-         packet_flush();
-     }
-     else {
--        packet_write("status=success\n");
-+        packet_txt_write("status=success");
-         packet_flush();
-
-         if ( $pathname eq "${command}-write-fail.r" ) {
-@@ -162,7 +174,7 @@ while (1) {
-
-         while ( length($output) > 0 ) {
-             my $packet = substr( $output, 0, $MAX_PACKET_CONTENT_SIZE );
--            packet_write($packet);
-+            packet_bin_write($packet);
-             print $debug ".";
-             if ( length($output) > $MAX_PACKET_CONTENT_SIZE ) {
-                 $output = substr( $output, $MAX_PACKET_CONTENT_SIZE );
-diff --git a/unpack-trees.c b/unpack-trees.c
-index f6798f8..11c37fb 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -10,7 +10,6 @@
- #include "attr.h"
- #include "split-index.h"
- #include "dir.h"
--#include "convert.h"
-
- /*
-  * Error messages expected by scripts out of plumbing commands such as
-diff --git a/write_or_die.c b/write_or_die.c
-index 0734432..eab8c8d 100644
---- a/write_or_die.c
-+++ b/write_or_die.c
-@@ -1,19 +1,6 @@
- #include "cache.h"
- #include "run-command.h"
-
--static void check_pipe(int err)
--{
-- if (err == EPIPE) {
--   if (in_async())
--     async_exit(141);
--
--   signal(SIGPIPE, SIG_DFL);
--   raise(SIGPIPE);
--   /* Should never happen, but just in case... */
--   exit(141);
-- }
--}
--
- /*
-  * Some cases use stdio, but want to flush after the write
-  * to get error handling (and to get better interactive
-
-
-
-Lars Schneider (11):
-  pkt-line: rename packet_write() to packet_write_fmt()
-  pkt-line: extract set_packet_header()
-  run-command: move check_pipe() from write_or_die to run_command
-  pkt-line: add packet_write_fmt_gently()
-  pkt-line: add packet_flush_gently()
-  pkt-line: add packet_write_gently()
-  pkt-line: add functions to read/write flush terminated packet streams
-  convert: quote filter names in error messages
-  convert: modernize tests
-  convert: make apply_filter() adhere to standard Git error handling
-  convert: add filter.<driver>.process option
-
- Documentation/gitattributes.txt        | 156 +++++++++++-
- builtin/archive.c                      |   4 +-
- builtin/receive-pack.c                 |   4 +-
- builtin/remote-ext.c                   |   4 +-
- builtin/upload-archive.c               |   4 +-
- connect.c                              |   2 +-
- contrib/long-running-filter/example.pl | 123 ++++++++++
- convert.c                              | 369 ++++++++++++++++++++++++----
- daemon.c                               |   2 +-
- http-backend.c                         |   2 +-
- pkt-line.c                             | 147 +++++++++++-
- pkt-line.h                             |  12 +-
- run-command.c                          |  13 +
- run-command.h                          |   2 +
- shallow.c                              |   2 +-
- t/t0021-conversion.sh                  | 423 ++++++++++++++++++++++++++++++---
- t/t0021/rot13-filter.pl                | 191 +++++++++++++++
- upload-pack.c                          |  30 +--
- write_or_die.c                         |  13 -
- 19 files changed, 1379 insertions(+), 124 deletions(-)
- create mode 100755 contrib/long-running-filter/example.pl
- create mode 100755 t/t0021/rot13-filter.pl
-
---
+ 
+-- 
 2.10.0
 
