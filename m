@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEF54209A9
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFDC6209AA
 	for <e@80x24.org>; Tue, 20 Sep 2016 19:03:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932987AbcITTDS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Sep 2016 15:03:18 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:36514 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932933AbcITTDB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Sep 2016 15:03:01 -0400
-Received: by mail-wm0-f68.google.com with SMTP id b184so4913474wma.3
-        for <git@vger.kernel.org>; Tue, 20 Sep 2016 12:03:01 -0700 (PDT)
+        id S933005AbcITTDU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Sep 2016 15:03:20 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34729 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932825AbcITTDA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Sep 2016 15:03:00 -0400
+Received: by mail-wm0-f67.google.com with SMTP id l132so4895589wmf.1
+        for <git@vger.kernel.org>; Tue, 20 Sep 2016 12:03:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=w5JTII9Cch1JZSmMCaMI98mX6ENRQdQ+ECxCbdlsA0Y=;
-        b=03UEDnWnTRYhKV0U4bmQZA8orWFFkw2/4ZCJcL63lg8oxi5MRMV8Byue5z21JL+EMw
-         7UsdcPZO2X7fwFq8imjwWyQqUJ2BiMOUWZn+YXH7PIPAJnwodz9mHQz/+VBEof8R3OoH
-         vhi3VQ0T/4lXuygLo7C4xDECXK3GlQDgGddnpBSl7zJPi1Kyc2skwy7sUgalC8MVbiht
-         8FfNXMA/tz+rXTVSVwUNj+6N8+vpt8bRBIbmtIczy/beus5Yh0V86xGcDpBszNln3mfS
-         eWe6tirz8hkHLqyTQZcg8jpggzH1AnzrwD1v+mRsEbVehfriZAttTgjJZHp2JRBMdhde
-         fTog==
+        bh=mRBDFum78QF5MKoZHTQKDh2oRX/7NRePIEOa9LWcOiM=;
+        b=XAHa4GeimGqPfg9Sbua1HKjQrx+D1/WXiEZ82bUTa5J7D5U39NoWeBImYJGu3HDF17
+         HK3gc2nCwj7678KlivLYj5ri+el14z+qsvOFzJDNFIJpg2clC/d+CWvE68IQCZxmWhZL
+         QXXQWVW567ucKLDAiP0NePj9Nc9PUSeoWKN9x1grOsIs0it53XT9afO1M7ckcG8fyYCn
+         qgNKqTtPyMs+rWVaLpS/cDZSlbSfy/vCpjzBmy4qBERlLFfmnWMR7S/54SG7RbcWlJEz
+         6/WYLF0tfvkXK72aT5TwLsC6FdtmFgddTQMnIv2Q7ozk09TqUw6hNu08HpvCQV2TKkIr
+         m78w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=w5JTII9Cch1JZSmMCaMI98mX6ENRQdQ+ECxCbdlsA0Y=;
-        b=dnN6DrC3RFuje2Eq7folf65Sj9WzDLuFKPJ31i3iNUhYlhsNqSCxmAOuZ3JUbDAHWM
-         AbShuv4GxWxKa1HpGbCxcfGeaSFARzu/RQfcBxEFlUFP4u7euzBqRqLsKGlFMPTXfMho
-         Eqf0Z+p26MO1S3lq4ngEiIDp5yCaVP26j4g5j4WPQMkTrZECauMHip9/0sQmSnUP6/Qx
-         9WbHQ6z5hMFmUAjtTqL9Dz4EjdhwEj3nkRITR2bAaKgtI5hu1OBCmuz6LyO5gGg+RAZ3
-         1U2ZWlYaZuWZFharDFe4ayrBmBD72L2fBmRum3UgSJQG9O13fsDO50chxJ/L0adDmEpe
-         I7Yw==
-X-Gm-Message-State: AE9vXwMZY8IMuv1w/QIhkkYifIodKVKkLxuZXN/mH8LehKE0/RobX0sY2ulVdfyS1b63Nw==
-X-Received: by 10.194.72.133 with SMTP id d5mr28558256wjv.96.1474398180384;
-        Tue, 20 Sep 2016 12:03:00 -0700 (PDT)
+        bh=mRBDFum78QF5MKoZHTQKDh2oRX/7NRePIEOa9LWcOiM=;
+        b=lln2lkiwOervLNg4E+tp/tRDMiR6rCYTmjdwaGMksfedYIxYT+pNpUb5mfHTO31btw
+         GP93cVhozOH5EXeXZXlUOTAgmWvaSOuLIZ6wTqcy9XefDuz6oPfuvr6OUtGgKTtAfTmz
+         P+BJkhoerzqCKW2OLmEcmRX3d5WeLXg6asvUomX8IfvlBEZLHROrHqI91bI/WIcnwycA
+         F7tWr4NAsw7Es1it5vFVGYV2YM5YJheQ0pnENwFmtkveA90EgMWizM7uEyJ1hmHSaBRF
+         f/wAVHVAAf9J5F5e7Wcx+1zGexUeTDz4viuUpVXXVrirLWOKv5aDKG5HQoWDJna9x+5k
+         gd2w==
+X-Gm-Message-State: AE9vXwMDi9rGPzBzlcDq1Rjwb5zrabbnNPIw64v4ZkZvsM3PN2ekceqkjyYyEsnY1XiZZw==
+X-Received: by 10.28.208.134 with SMTP id h128mr4422023wmg.101.1474398178945;
+        Tue, 20 Sep 2016 12:02:58 -0700 (PDT)
 Received: from slxBook4.fritz.box (p508BA5EF.dip0.t-ipconnect.de. [80.139.165.239])
-        by smtp.gmail.com with ESMTPSA id gg10sm29820728wjd.4.2016.09.20.12.02.58
+        by smtp.gmail.com with ESMTPSA id gg10sm29820728wjd.4.2016.09.20.12.02.57
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 20 Sep 2016 12:02:59 -0700 (PDT)
+        Tue, 20 Sep 2016 12:02:58 -0700 (PDT)
 From:   larsxschneider@gmail.com
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, gitster@pobox.com, sbeller@google.com,
         jnareb@gmail.com, mlbright@gmail.com, tboegi@web.de,
         ramsay@ramsayjones.plus.com,
         Lars Schneider <larsxschneider@gmail.com>
-Subject: [PATCH v8 08/11] convert: quote filter names in error messages
-Date:   Tue, 20 Sep 2016 21:02:44 +0200
-Message-Id: <20160920190247.82189-9-larsxschneider@gmail.com>
+Subject: [PATCH v8 07/11] pkt-line: add functions to read/write flush terminated packet streams
+Date:   Tue, 20 Sep 2016 21:02:43 +0200
+Message-Id: <20160920190247.82189-8-larsxschneider@gmail.com>
 X-Mailer: git-send-email 2.10.0
 In-Reply-To: <20160920190247.82189-1-larsxschneider@gmail.com>
 References: <20160920190247.82189-1-larsxschneider@gmail.com>
@@ -65,62 +65,128 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-Git filter driver commands with spaces (e.g. `filter.sh foo`) are hard
-to read in error messages. Quote them to improve the readability.
+write_packetized_from_fd() and write_packetized_from_buf() write a
+stream of packets. All content packets use the maximal packet size
+except for the last one. After the last content packet a `flush` control
+packet is written.
+
+read_packetized_to_buf() reads arbitrary sized packets until it detects
+a `flush` packet.
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- convert.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ pkt-line.c | 68 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ pkt-line.h |  7 +++++++
+ 2 files changed, 75 insertions(+)
 
-diff --git a/convert.c b/convert.c
-index 077f5e6..986c239 100644
---- a/convert.c
-+++ b/convert.c
-@@ -412,7 +412,7 @@ static int filter_buffer_or_fd(int in, int out, void *data)
- 	child_process.out = out;
+diff --git a/pkt-line.c b/pkt-line.c
+index fc0ac12..a0a8543 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -196,6 +196,47 @@ void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
+ 	va_end(args);
+ }
  
- 	if (start_command(&child_process))
--		return error("cannot fork to run external filter %s", params->cmd);
-+		return error("cannot fork to run external filter '%s'", params->cmd);
++int write_packetized_from_fd(int fd_in, int fd_out)
++{
++	static char buf[PKTLINE_DATA_MAXLEN];
++	int err = 0;
++	ssize_t bytes_to_write;
++
++	while (!err) {
++		bytes_to_write = xread(fd_in, buf, sizeof(buf));
++		if (bytes_to_write < 0)
++			return COPY_READ_ERROR;
++		if (bytes_to_write == 0)
++			break;
++		err = packet_write_gently(fd_out, buf, bytes_to_write);
++	}
++	if (!err)
++		err = packet_flush_gently(fd_out);
++	return err;
++}
++
++int write_packetized_from_buf(const char *src_in, size_t len, int fd_out)
++{
++	static char buf[PKTLINE_DATA_MAXLEN];
++	int err = 0;
++	size_t bytes_written = 0;
++	size_t bytes_to_write;
++
++	while (!err) {
++		if ((len - bytes_written) > sizeof(buf))
++			bytes_to_write = sizeof(buf);
++		else
++			bytes_to_write = len - bytes_written;
++		if (bytes_to_write == 0)
++			break;
++		err = packet_write_gently(fd_out, src_in + bytes_written, bytes_to_write);
++		bytes_written += bytes_to_write;
++	}
++	if (!err)
++		err = packet_flush_gently(fd_out);
++	return err;
++}
++
+ static int get_packet_data(int fd, char **src_buf, size_t *src_size,
+ 			   void *dst, unsigned size, int options)
+ {
+@@ -305,3 +346,30 @@ char *packet_read_line_buf(char **src, size_t *src_len, int *dst_len)
+ {
+ 	return packet_read_line_generic(-1, src, src_len, dst_len);
+ }
++
++ssize_t read_packetized_to_buf(int fd_in, struct strbuf *sb_out)
++{
++	int paket_len;
++	int options = PACKET_READ_GENTLE_ON_EOF;
++
++	size_t oldlen = sb_out->len;
++	size_t oldalloc = sb_out->alloc;
++
++	for (;;) {
++		strbuf_grow(sb_out, PKTLINE_DATA_MAXLEN+1);
++		paket_len = packet_read(fd_in, NULL, NULL,
++			sb_out->buf + sb_out->len, PKTLINE_DATA_MAXLEN+1, options);
++		if (paket_len <= 0)
++			break;
++		sb_out->len += paket_len;
++	}
++
++	if (paket_len < 0) {
++		if (oldalloc == 0)
++			strbuf_release(sb_out);
++		else
++			strbuf_setlen(sb_out, oldlen);
++		return paket_len;
++	}
++	return sb_out->len - oldlen;
++}
+diff --git a/pkt-line.h b/pkt-line.h
+index 3fa0899..6df8449 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -25,6 +25,8 @@ void packet_buf_flush(struct strbuf *buf);
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ int packet_flush_gently(int fd);
+ int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
++int write_packetized_from_fd(int fd_in, int fd_out);
++int write_packetized_from_buf(const char *src_in, size_t len, int fd_out);
  
- 	sigchain_push(SIGPIPE, SIG_IGN);
+ /*
+  * Read a packetized line into the buffer, which must be at least size bytes
+@@ -77,6 +79,11 @@ char *packet_read_line(int fd, int *size);
+  */
+ char *packet_read_line_buf(char **src_buf, size_t *src_len, int *size);
  
-@@ -430,13 +430,13 @@ static int filter_buffer_or_fd(int in, int out, void *data)
- 	if (close(child_process.in))
- 		write_err = 1;
- 	if (write_err)
--		error("cannot feed the input to external filter %s", params->cmd);
-+		error("cannot feed the input to external filter '%s'", params->cmd);
- 
- 	sigchain_pop(SIGPIPE);
- 
- 	status = finish_command(&child_process);
- 	if (status)
--		error("external filter %s failed %d", params->cmd, status);
-+		error("external filter '%s' failed %d", params->cmd, status);
- 
- 	strbuf_release(&cmd);
- 	return (write_err || status);
-@@ -477,15 +477,15 @@ static int apply_filter(const char *path, const char *src, size_t len, int fd,
- 		return 0;	/* error was already reported */
- 
- 	if (strbuf_read(&nbuf, async.out, len) < 0) {
--		error("read from external filter %s failed", cmd);
-+		error("read from external filter '%s' failed", cmd);
- 		ret = 0;
- 	}
- 	if (close(async.out)) {
--		error("read from external filter %s failed", cmd);
-+		error("read from external filter '%s' failed", cmd);
- 		ret = 0;
- 	}
- 	if (finish_async(&async)) {
--		error("external filter %s failed", cmd);
-+		error("external filter '%s' failed", cmd);
- 		ret = 0;
- 	}
- 
++/*
++ * Reads a stream of variable sized packets until a flush packet is detected.
++ */
++ssize_t read_packetized_to_buf(int fd_in, struct strbuf *sb_out);
++
+ #define DEFAULT_PACKET_MAX 1000
+ #define LARGE_PACKET_MAX 65520
+ extern char packet_buffer[LARGE_PACKET_MAX];
 -- 
 2.10.0
 
