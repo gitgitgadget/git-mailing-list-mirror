@@ -2,113 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 033EF209A9
-	for <e@80x24.org>; Tue, 20 Sep 2016 19:04:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F909209A9
+	for <e@80x24.org>; Tue, 20 Sep 2016 19:16:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932825AbcITTEg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Sep 2016 15:04:36 -0400
-Received: from smtp1-g21.free.fr ([212.27.42.1]:38114 "EHLO smtp1-g21.free.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932624AbcITTEf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Sep 2016 15:04:35 -0400
-Received: from cayenne.localnet (unknown [IPv6:2a01:e35:2ef1:f910:86a6:c8ff:fe05:d3e0])
-        by smtp1-g21.free.fr (Postfix) with ESMTPS id D9D5FB0054B;
-        Tue, 20 Sep 2016 21:04:28 +0200 (CEST)
-From:   =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Vasco Almeida <vascomalmeida@sapo.pt>, git@vger.kernel.org,
-        Jiang Xin <worldhello.net@gmail.com>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 1/6] i18n: commit: mark message for translation
-Date:   Tue, 20 Sep 2016 21:04:27 +0200
-Message-ID: <1579845.fzuqLqrEJ8@cayenne>
-User-Agent: KMail/5.2.3 (Linux/4.6.0-1-amd64; KDE/5.25.0; x86_64; ; )
-In-Reply-To: <xmqq4m5begxj.fsf@gitster.mtv.corp.google.com>
-References: <1474290501-2743-1-git-send-email-vascomalmeida@sapo.pt> <34292875.FKhN8jTqO5@cayenne> <xmqq4m5begxj.fsf@gitster.mtv.corp.google.com>
+        id S1752187AbcITTQG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Sep 2016 15:16:06 -0400
+Received: from mta02.prd.rdg.aluminati.org ([94.76.243.215]:40367 "EHLO
+        mta02.prd.rdg.aluminati.org" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751594AbcITTQF (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 20 Sep 2016 15:16:05 -0400
+Received: from mta02.prd.rdg.aluminati.org (localhost [127.0.0.1])
+        by mta.aluminati.local (Postfix) with ESMTP id 7A3CA2331C;
+        Tue, 20 Sep 2016 20:16:03 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+        by mta02.prd.rdg.aluminati.org (Postfix) with ESMTP id 7283833CA;
+        Tue, 20 Sep 2016 20:16:03 +0100 (BST)
+X-Quarantine-ID: <chqvApYG8WmK>
+X-Virus-Scanned: Debian amavisd-new at mta02.prd.rdg.aluminati.org
+Received: from mta.aluminati.local ([127.0.0.1])
+        by localhost (mta02.prd.rdg.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id chqvApYG8WmK; Tue, 20 Sep 2016 20:16:00 +0100 (BST)
+Received: from john.keeping.me.uk (unknown [10.2.0.9])
+        by mta02.prd.rdg.aluminati.org (Postfix) with ESMTPSA id B738633CD;
+        Tue, 20 Sep 2016 20:15:57 +0100 (BST)
+Date:   Tue, 20 Sep 2016 20:15:55 +0100
+From:   John Keeping <john@keeping.me.uk>
+To:     Heiko Voigt <hvoigt@hvoigt.net>
+Cc:     Jonas Thiel <jonas.lierschied@gmx.de>, git@vger.kernel.org
+Subject: Re: Re: Homebrew and Git
+Message-ID: <20160920191555.GB1673@john.keeping.me.uk>
+References: <trinity-9c8f1bd1-d6be-48f3-8575-03be09bd1243-1474213828361@3capp-gmx-bs53>
+ <20160920110228.GA64315@book.hvoigt.net>
+ <20160920110700.GB64315@book.hvoigt.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20160920110700.GB64315@book.hvoigt.net>
+User-Agent: Mutt/1.7.0 (2016-08-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
-Signed-off-by: Jean-Noel Avila <jn.avila@free.fr>
----
+On Tue, Sep 20, 2016 at 01:07:00PM +0200, Heiko Voigt wrote:
+> On Tue, Sep 20, 2016 at 01:02:28PM +0200, Heiko Voigt wrote:
+> > Hi,
+> > 
+> > On Sun, Sep 18, 2016 at 05:50:28PM +0200, Jonas Thiel wrote:
+> > > A while ago I have described my problem with Homebrew at the following
+> > > GitHub channel
+> > > (https://github.com/Homebrew/homebrew-core/issues/2970). In the
+> > > meanwhile, I believe that I my problem with Homebrew is based on an
+> > > issues with my Git. I have found the attached Git Crash reports on my
+> > > Mac and because I am not familiar with reading/analysing Crash
+> > > Reports, it would be great if someone could give me some feedback on
+> > > it.
+> > >  
+> > > If you have any question, please do not hesitate to contact me.
+> > 
+> > From your crash reports I see that git is apparently crashing in a
+> > strchr() call from within ident_default_email() which is a function that
+> > tries to assemble a name and email to put into your commits.
+> 
+> BTW, here is the callstack inlined from the crashreport:
+> 
+> bsystem_platform.dylib      	0x00007fff840db41c _platform_strchr$VARIANT$Haswell + 28
+> 1   git                           	0x000000010ba1d3f4 ident_default_email + 801
+> 2   git                           	0x000000010ba1d68f fmt_ident + 66
+> 3   git                           	0x000000010ba4b495 files_log_ref_write + 175
+> 4   git                           	0x000000010ba4b0a6 commit_ref_update + 106
+> 5   git                           	0x000000010ba4c3a8 ref_transaction_commit + 468
+> 6   git                           	0x000000010b994dd8 s_update_ref + 271
+> 7   git                           	0x000000010b994556 fetch_refs + 1969
+> 8   git                           	0x000000010b9935f2 fetch_one + 1913
+> 9   git                           	0x000000010b992bc4 cmd_fetch + 549
+> 10  git                           	0x000000010b9666c4 handle_builtin + 478
+> 11  git                           	0x000000010b96602f main + 376
+> 12  libdyld.dylib                 	0x00007fff834ef5ad start + 1
+> 
+> Maybe someone else has an idea what might be causing this...
 
-Instead of distillating change requests, I'd better do it by myself. Here is the reworked version of the patch.
+The only strchr I can see that could be called here is in
+canonical_name(), where it's called with addrinfo::ai_canonname.
 
- diff.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+Searching for OS X and ai_canonname, leads me straight back to this
+list, although 7 years ago!  I think ident.c needs a fix similar to
+commit 3e8a00a (daemon.c: fix segfault on OS X, 2009-04-27); from the
+commit message there:
 
-diff --git a/diff.c b/diff.c
-index c6da383..494f723 100644
---- a/diff.c
-+++ b/diff.c
-@@ -55,6 +55,11 @@ static char diff_colors[][COLOR_MAXLEN] = {
- 	GIT_COLOR_NORMAL,	/* FUNCINFO */
- };
- 
-+static NORETURN void die_want_option(const char *option_name)
-+{
-+	die(_("option '%s' requires a value"), option_name);
-+}
-+
- static int parse_diff_color_slot(const char *var)
- {
- 	if (!strcasecmp(var, "context") || !strcasecmp(var, "plain"))
-@@ -3325,7 +3330,7 @@ void diff_setup_done(struct diff_options *options)
- 	if (options->output_format & DIFF_FORMAT_NO_OUTPUT)
- 		count++;
- 	if (count > 1)
--		die("--name-only, --name-status, --check and -s are mutually exclusive");
-+		die(_("--name-only, --name-status, --check and -s are mutually exclusive"));
- 
- 	/*
- 	 * Most of the time we can say "there are changes"
-@@ -3521,7 +3526,7 @@ static int stat_opt(struct diff_options *options, const char **av)
- 			if (*arg == '=')
- 				width = strtoul(arg + 1, &end, 10);
- 			else if (!*arg && !av[1])
--				die("Option '--stat-width' requires a value");
-+				die_want_option("--stat-width");
- 			else if (!*arg) {
- 				width = strtoul(av[1], &end, 10);
- 				argcount = 2;
-@@ -3530,7 +3535,7 @@ static int stat_opt(struct diff_options *options, const char **av)
- 			if (*arg == '=')
- 				name_width = strtoul(arg + 1, &end, 10);
- 			else if (!*arg && !av[1])
--				die("Option '--stat-name-width' requires a value");
-+				die_want_option("--stat-name-width");
- 			else if (!*arg) {
- 				name_width = strtoul(av[1], &end, 10);
- 				argcount = 2;
-@@ -3539,7 +3544,7 @@ static int stat_opt(struct diff_options *options, const char **av)
- 			if (*arg == '=')
- 				graph_width = strtoul(arg + 1, &end, 10);
- 			else if (!*arg && !av[1])
--				die("Option '--stat-graph-width' requires a value");
-+				die_want_option("--stat-graph-width");
- 			else if (!*arg) {
- 				graph_width = strtoul(av[1], &end, 10);
- 				argcount = 2;
-@@ -3548,7 +3553,7 @@ static int stat_opt(struct diff_options *options, const char **av)
- 			if (*arg == '=')
- 				count = strtoul(arg + 1, &end, 10);
- 			else if (!*arg && !av[1])
--				die("Option '--stat-count' requires a value");
-+				die_want_option("--stat-count");
- 			else if (!*arg) {
- 				count = strtoul(av[1], &end, 10);
- 				argcount = 2;
--- 
-2.10.0
-
-
+	On OS X (and maybe other unices), getaddrinfo(3) returns NULL
+	in the ai_canonname field if it's called with an IP address for
+	the hostname.
