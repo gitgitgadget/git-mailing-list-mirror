@@ -2,107 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DE3F209A9
-	for <e@80x24.org>; Tue, 20 Sep 2016 19:28:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A07C0209A9
+	for <e@80x24.org>; Tue, 20 Sep 2016 19:28:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752869AbcITT2L (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Sep 2016 15:28:11 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:34279 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752163AbcITT2K (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Sep 2016 15:28:10 -0400
-Received: by mail-wm0-f65.google.com with SMTP id l132so4992332wmf.1
-        for <git@vger.kernel.org>; Tue, 20 Sep 2016 12:28:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=uILQjeHe4D6Mf7fVVOfgUM1cjVqb17RrQNA9nhiv7WY=;
-        b=REBUSrr+QNRVIUveFRkiSGHEQc0t4P813Bvg1PecDIViBAA1QhgVoA+123DsbNRUnU
-         AbJMPXIoVjmdmHw/c0JMD/5ebxWdIw/1+AW83TYkFGor7jo8aqdSX9gJ2AoBUP7oSvOG
-         qHKnpaPXKH4aF/D9p9LFjRqaXs1KGI2Gr9aa/bLuBlQQFKRoq/gsG2cCl8ya58x94djX
-         tFJ/oeUZM32+vki/eGMYcts9KmM6sE3/1To+SapTPyC43/gSflxfOEnDqX/IShdQtccu
-         6dpcdd8RTMiJxtmopXZta6GkvWsQI3A6gLFVzXu9D7QfwnK2hpzlZ85dJA0gD1X4mdm/
-         boxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=uILQjeHe4D6Mf7fVVOfgUM1cjVqb17RrQNA9nhiv7WY=;
-        b=Y20x6R2uMY8XjmaFIwrEtbHu9iHLFtX5NWPhCxzM3pmA9u2Ec5JIZO2P/XIdv4EhUp
-         SJkxXOnIYXseM8EVWzeyw7m4Tk/btFRKKmPggAE9uZNrv6C2mkqylI3NxkTmB5SdmoUe
-         6Rv1981FI1oh3sU7dqeDoSgXpmioMhqG8jmg0SR1mHFTWNkNbFBv07PvKUQH39+M8L1W
-         zWCXAliJV95/VW+fqklnSx1dcMgHVlzUwTb2M9gUc8WK/LAPGSDZh1M/oJ8jo/yeNQMi
-         3B5vwS9X8VR8ZRqr8u+4PDALqOi+K173NIxlAKKKGJXGVU/BBkVO+dqgJf/HSZhZvhrn
-         Agkg==
-X-Gm-Message-State: AE9vXwP7Xw5znLieebIeRgVTSK0isfvvTRZaF1/ajoI+v+wtEQnDRm+izijzVTLCmbMb3g==
-X-Received: by 10.194.0.116 with SMTP id 20mr29922841wjd.123.1474399688840;
-        Tue, 20 Sep 2016 12:28:08 -0700 (PDT)
-Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
-        by smtp.gmail.com with ESMTPSA id bo7sm29874996wjb.28.2016.09.20.12.28.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 20 Sep 2016 12:28:07 -0700 (PDT)
-Date:   Tue, 20 Sep 2016 20:28:28 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH tg/add-chmod+x-fix 1/2] t3700-add: create subdirectory
- gently
-Message-ID: <20160920192828.GF8254@hank>
-References: <cee3c784-8f03-c524-2f67-d35cb3755a41@kdbg.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cee3c784-8f03-c524-2f67-d35cb3755a41@kdbg.org>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+        id S1752844AbcITT2x (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Sep 2016 15:28:53 -0400
+Received: from sdaoden.eu ([217.144.132.164]:39274 "EHLO sdaoden.eu"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752163AbcITT2x (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Sep 2016 15:28:53 -0400
+Received: by sdaoden.eu (Postfix, from userid 1000)
+        id DF78E1604A; Tue, 20 Sep 2016 21:28:49 +0200 (CEST)
+Date:   Tue, 20 Sep 2016 21:29:44 +0200
+From:   Steffen Nurpmeso <steffen@sdaoden.eu>
+To:     Bryan Turner <bturner@atlassian.com>
+Cc:     Git Users <git@vger.kernel.org>
+Subject: Re: v2.9.3 and v2.10.0: `name-ref' HEAD gives wrong branch
+ name
+Message-ID: <20160920192944.hGZZKLLwD%steffen@sdaoden.eu>
+References: <20160920162309.l0neYMQ3l%steffen@sdaoden.eu>
+ <CAGyf7-FR11Ludt3vNZX7Ek4n_JLSON5+Y9By83GvNgpg94TWcg@mail.gmail.com>
+In-Reply-To: <CAGyf7-FR11Ludt3vNZX7Ek4n_JLSON5+Y9By83GvNgpg94TWcg@mail.gmail.com>
+Mail-Followup-To: Steffen Nurpmeso <steffen@sdaoden.eu>,
+ Git Users <git@vger.kernel.org>, Bryan Turner <bturner@atlassian.com>
+User-Agent: s-nail v14.9.0-pre1-42-g7211cd5
+OpenPGP: id=95F382CE;
+ url=https://www.sdaoden.eu/downloads/steffen.asc
+X-BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors
+ in the world can make no bugs.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+Hey.
 
-On 09/20, Johannes Sixt wrote:
-> The subdirectory 'sub' is created early in the test file. Later, a test
-> case removes it during its clean-up actions. However, this test case is
-> protected by POSIXPERM. Consequently, 'sub' remains when the POSIXPERM
-> prerequisite is not satisfied. Later, a recently introduced test case
-> creates 'sub' again. Use -p with mkdir so that it does not fail if 'sub'
-> already exists.
+Bryan Turner <bturner@atlassian.com> wrote:
+ |On Tue, Sep 20, 2016 at 9:23 AM, Steffen Nurpmeso <steffen@sdaoden.eu> \
+ |wrote:
+ |> yah, sorry, i'm back again..
+ |> I try to find a way to find the name of the current branch in an
+ |> automated way, because i need to ensure that a commit happens on
+ |> it and no other branch.  Now the problem arises that the commit
+ |> ref at the time of that commit maybe shared in between several
+ |> different branches, but no more thereafter, of course:
+ |>
+ |>   ?0[steffen@wales ]$ git branch|grep '^*'
+ |>   * stable/v14.9
+ |>   ?0[steffen@wales ]$ git name-rev --name-only HEAD
+ |>   stable/v14.8
+ |>
+ |> Is there another way except looking into .git/HEAD or using sed(1)
+ |> on the output of `branch' to find the right name?
+ |
+ |Have you tried "git symbolic-ref HEAD"?
 
-Thanks for catching and fixing this.  Having a look at the tests shows
-that this happens through a git reset --hard at the start of the tests
-that require POSIXPERM, which makes me wonder whether we should do
-such a cleanup somewhere unconditionally, or move the tests that do
-require POSIXPERM to the end of the test file to possibly prevent
-similar breakages in the future?
+Not until now.
 
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
->  t/t3700-add.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-> index 0a962a6..16ab2da 100755
-> --- a/t/t3700-add.sh
-> +++ b/t/t3700-add.sh
-> @@ -380,7 +380,7 @@ test_expect_success 'no file status change if no pathspec is given' '
->  '
->  
->  test_expect_success 'no file status change if no pathspec is given in subdir' '
-> -	mkdir sub &&
-> +	mkdir -p sub &&
->  	(
->  		cd sub &&
->  		>sub-foo1 &&
-> -- 
-> 2.10.0.85.gea34e30
-> 
+ |$ git symbolic-ref HEAD
+ |refs/heads/master
 
--- 
-Thomas
+Works.
+
+ |If you don't want the fully-qualified ref, you can add --short:
+ |
+ |$ git symbolic-ref --short HEAD
+ |master
+
+Yep, works even better.  Fantastic.  Thank you.  And that command
+was already existing when i have learned to use git(1), it is even
+in the progit-09.markdown as of 2011-09-22 that i have laying
+around.  Five years, and anything forgotten.  That is what you get
+from working with blinkers on.  Shame!
+
+Thank you Bryan.
+
+--steffen
