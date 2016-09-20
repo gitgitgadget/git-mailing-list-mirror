@@ -2,131 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F0B21F4FF
-	for <e@80x24.org>; Tue, 20 Sep 2016 16:30:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E4181F4FF
+	for <e@80x24.org>; Tue, 20 Sep 2016 16:42:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755281AbcITQab (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Sep 2016 12:30:31 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:37639 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754835AbcITQaa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Sep 2016 12:30:30 -0400
-Received: by mail-wm0-f46.google.com with SMTP id b130so44202798wmc.0
-        for <git@vger.kernel.org>; Tue, 20 Sep 2016 09:30:29 -0700 (PDT)
+        id S1754803AbcITQmf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Sep 2016 12:42:35 -0400
+Received: from mail-db5eur01on0071.outbound.protection.outlook.com ([104.47.2.71]:64224
+        "EHLO EUR01-DB5-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1753964AbcITQmd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Sep 2016 12:42:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=8GUnCja+dg6wkxIPuiIpkc/Q1HWT5cr8adZ79DvTQrQ=;
-        b=ks1wJ6Ymf2q9duVs6H3xNiHIh1zz4e33EPa9+n6NSaiGz9vxoKoYC49YXnk36FxTMC
-         LgWb8qXxW/mxv/plQ8imu2rNB5/X/qzaDG01qz2H3y03k84tsG82f/aI3VJGVNbBQk/Q
-         WwCsP1n38szj0gw73VOGv93quuHUI1b6tb+xsFwYrizFWOPnyZwx0bp4llnUmdv3d9gl
-         G81jq3ybJeS4WYNhyeAYrVJEeNU/x/LnmALPvdUgEHu5GplSWo3GBL9RCJIA+rZY5SON
-         ZA5j2oLzIJH02/j9MLI0dpgX7H5axu1x7iV1tEmtqU8qi0KRvK3JGJ7U105hIehA9N+j
-         q9Ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=8GUnCja+dg6wkxIPuiIpkc/Q1HWT5cr8adZ79DvTQrQ=;
-        b=hy4RF/L7uGZsDlN/7kg3iNFC+TZ2/fUPVKAGAEVvm4T8Wqb47eOcq/ntlnNqdzRfVU
-         HFVLLDTSQrYV5awaktc2ezw0uo3eoIk0S7TqR8BHvuU/9b4CSHtGNhh8S/aifEYEhhjg
-         VVbp4oVPxLtImON9xZpGmsvRvGcLsYiEsBU0NZkrGNhziAaI/xKeBwawNaq3ngKurABo
-         464PfyykfzbQ5ZfSACwTfN/Ex5Tpaniy5FcJn6LtyqSHzdeYbEEiKmCrQpcbd5grzDBq
-         s/fiM7Tiz7FdVTsroPdU0KHSfzNUSBY06xj6v9pDiEMtjTCBztX5tMeb984Xg3Cfoox2
-         QRzg==
-X-Gm-Message-State: AE9vXwPs5lKgjybcqiWjCHJcus5/myQ4jXTAuIOWUFhvKdB0Jgf42FpjDVRwqin461KOyFWRdCkrST5l9fmPGYmh
-X-Received: by 10.28.46.204 with SMTP id u195mr4420219wmu.57.1474389028289;
- Tue, 20 Sep 2016 09:30:28 -0700 (PDT)
+ d=sociomanticlabsgmbh.onmicrosoft.com; s=selector1-sociomantic-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=skZt/qHaLnD1vCv1FzC9Sg4eOiM9f3A78P+Ud4GqsFw=;
+ b=Ja3sxU/zur/fo3HBt3m+w6MDyrryP9u5WsL0yPQNvs3+dQfGgxEKvQIkcJ9fVSLSXtqTNOUP0uXVzXlw6rU7t80mFVAQLIuB3dXObkWIvJcRqUTCRkIslhYHFQ0ffZ0/LxMMtPFxCsEVZL+AnONr77uw2ol9LFPiPYYIxHaqOFA=
+Authentication-Results: spf=none (sender IP is )
+ smtp.mailfrom=leandro.lucarella@sociomantic.com; 
+Received: from labs-064.localdomain (87.151.175.108) by
+ AM4PR0101MB2131.eurprd01.prod.exchangelabs.com (10.165.23.8) with Microsoft
+ SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.629.8; Tue, 20 Sep
+ 2016 15:09:57 +0000
+Received: from localhost.localdomain ([127.0.0.1] helo=labs-064.localdomain)
+        by labs-064.localdomain with esmtp (Exim 4.82)
+        (envelope-from <leandro.lucarella@sociomantic.com>)
+        id 1bmMgE-0008R2-OA
+        for git@vger.kernel.org; Tue, 20 Sep 2016 17:09:54 +0200
+Date:   Tue, 20 Sep 2016 17:09:54 +0200
+From:   Leandro Lucarella <leandro.lucarella@sociomantic.com>
+To:     <git@vger.kernel.org>
+Subject: 2.10.0: git log --oneline prints gpg signatures in 4 lines
+Message-ID: <20160920170954.38b24284@labs-064.localdomain>
+Organization: Sociomantic Labs GmbH
+X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Received: by 10.28.69.25 with HTTP; Tue, 20 Sep 2016 09:30:27 -0700 (PDT)
-In-Reply-To: <xmqqh99bcw6m.fsf@gitster.mtv.corp.google.com>
-References: <CAKoko1qrAuLhn6qQax-BSZFhEqbFdiBbVrip8TD3NVjD8Xzy0g@mail.gmail.com>
- <1474311151-117883-1-git-send-email-bmwill@google.com> <xmqqh99bcw6m.fsf@gitster.mtv.corp.google.com>
-From:   Brandon Williams <bmwill@google.com>
-Date:   Tue, 20 Sep 2016 09:30:27 -0700
-Message-ID: <CAKoko1oU+QR61Vy0eSxaRe_w8u4q_bC9gx9H7oMqH=CwNzBVCA@mail.gmail.com>
-Subject: Re: [PATCH v2] ls-files: add pathspec matching for submodules
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [87.151.175.108]
+X-ClientProxiedBy: VI1PR03CA0014.eurprd03.prod.outlook.com (10.166.38.152) To
+ AM4PR0101MB2131.eurprd01.prod.exchangelabs.com (10.165.23.8)
+X-MS-Office365-Filtering-Correlation-Id: 677c4ee0-2b5a-4b22-03cb-08d3e1682f65
+X-Microsoft-Exchange-Diagnostics: 1;AM4PR0101MB2131;2:DmwG2JgskjxZ7cFxxyjtUG+/IS3Rw5B3Qgyodg1oxbLfSVvTi6kNoAhh6P1DHZthwrDu7Y4ts3zkD1KtcLMeCHdxxanvhIJKN3BTubvC44SttsSNJ58JFw28SQdQvFVBsG33ap2oK8P5G+BDLH8ljaKx9rs1x1z557BRvo9iVrgdeVc14LW8MaxNvld7nfsy;3:jN32oIzdXo73FnOQSzQyVCd0RRuvo15R2B1rppJrNGIx4DKp8mFT5XFx0C/DZwiH4qLfhSbzXvM1hp0tV/r2iQvx915+hq6sGyM+7TGse0aCsx1HL1mYoip+NjXPx0lK;25:TL2M9NlLjHWyMfaF0V3N2sYTeKy3AGLxSqWMUP8rz2ei3n/jNR8YyiYo9YUmwYg7kWH3r8Li+qa92wmLANHgtoMR9mvu7+vh+7BXvEbDhudDeR4QjTDE9lYTFcQAz35Dkga2UlcyR96wdx9bGwOlQR0AYBlBDIm3ss2fdo3Uu3BHzv5cLa6VLEPiWxDAEdTL9h0H77iKYw01Syy2LxuWgmqa+0QKU5MRbd3aSMcQ8+lbGKT7BuZzKP7sDohc/xfl6VtUfD15RwZj9N57pInp4ppwpEWeNHB/74MdAk11tsPWglM3UyQtDlsR3ZMq1ktZjCf9cIqXXasypSMA5lCZ79pYFtCqxqeETCMJwRBq0zmoeokE1wiUjZ9DnB1avh1koUuE/Vqtv0OKF8UlKE4B21OOdRbQMfQKT3Q56/QkYyQ=
+X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:AM4PR0101MB2131;
+X-Microsoft-Exchange-Diagnostics: 1;AM4PR0101MB2131;31:Yexpwmco9eaT87GnVzlJkMOrlDV0XBUfEKFckpoAnS/5CqINZDL/g3hV3MtToHbY+9hHRuKYHSnjgQivLSwVkZsF5O+3hNirJAzTRsxVVAS1ng/4GnzW48LkVRIEDPywnrQ8oUuniDqDZeFrMRTXCdcEIXqssCnPEN9Ilq4A03MxgD53dZgNC/c6YiZeWW4FbU0uJhVMIFNSKtJdAM976LMroQ+QyU7rfkWo9Y85uSo=;20:vsML0M7BluJbrWSWbaimOgEajWko+7jvbr8yK5gHw5FEHuBLiUrI3Zbf78izjE0GWSt7n+P/F9fLqkGtFnxT9zQLVugFFhlal/YcyCeMyq0xZHJjuIKNPOEZNxdEzGL7brPDHtooQgH4ufj3j+/Qcm/Pc15Ys/r8+zRgnmyjdeViVdJhdYQZ52E9/yz/PLNAn/ir8PErrajWWFhV1LdmSTpy8DLPsnR0AEkrD2zQIFBpKyBybxF4KI+uhy72Ve2w;4:1m60U/zzxFynzJEn51BglPHVNEXPBgrq4iLRfnpEMmETv0p2p3T0n7sVbveUuzlAzESFqVTfgLPQPzLzKjPPuXX0F4S+Z2G/f0LFg0OE7oEB7EDnOixG7qJaTCcD/FXjd4QDzj3hLxjHEx882CnG7gE4YYUwpcSRFr0BxwgRpEooaLi8Y64XIN7vqKrJ3wzWMC6+GzhNP1Bpj5rXDPccDWWYf7ejhrxnzQAT1XC5TNCC4+GMRQnalEDTuiX1PQphUiC8X6ARcMXRf8Z4DIJuQWpbfcEMcCrlDTQXDQPoRvk1pVknMVm7VrEUJPDTsF/Y9L2TUEcvqKP3acEoRkB09nax899WNVJf01NKp3gTwzNVs9u/3YXsmujeToYr2/gmtX6+yFenGDHk0VA/P0j2gHix+r8H+htbo26DlJ5NpPs9cQul/a1ug+re+mydDOY5iJyT1krERhDDtTLZsbVHIA==
+X-Microsoft-Antispam-PRVS: <AM4PR0101MB2131B6ACC730A9048849ACBFECF70@AM4PR0101MB2131.eurprd01.prod.exchangelabs.com>
+X-Exchange-Antispam-Report-Test: UriScan:(7783539604369);
+X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(6040176)(601004)(2401047)(8121501046)(5005006)(3002001)(10201501046)(6043046)(6042046);SRVR:AM4PR0101MB2131;BCL:0;PCL:0;RULEID:;SRVR:AM4PR0101MB2131;
+X-Forefront-PRVS: 0071BFA85B
+X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10009020)(4630300001)(6009001)(7916002)(189002)(199003)(229853001)(450100001)(19580395003)(92566002)(230700001)(106356001)(305945005)(66066001)(2351001)(47776003)(68736007)(110136003)(105586002)(7846002)(7126002)(7696004)(97736004)(107886002)(5660300001)(122856001)(15975445007)(2906002)(77096005)(189998001)(23726003)(33646002)(49486002)(6116002)(3846002)(86362001)(50986999)(1076002)(586003)(101416001)(9686002)(9786002)(8676002)(46406003)(50226002)(7736002)(81156014)(81166006)(50466002)(39210200001);DIR:OUT;SFP:1101;SCL:1;SRVR:AM4PR0101MB2131;H:labs-064.localdomain;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
+Received-SPF: None (protection.outlook.com: sociomantic.com does not designate
+ permitted sender hosts)
+X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;AM4PR0101MB2131;23:yWs55TNl6eXXHNr+L8m+RFT0gR/XJHNN+67nm7U?=
+ =?us-ascii?Q?vvzzGC8nO7Sm5h0UQ5fogwceHdhJOiCl2mBNJA+6NCdnfltHODDo0nJ31ylP?=
+ =?us-ascii?Q?xyQjRVlI6EBG6EW8cRrEhHK/eAN01B8lEgGBtxscv50/Z/a20RiS6lKqPo2c?=
+ =?us-ascii?Q?6gHkDht7U92QJ2u4Y2LQhnHroLcrAnK+9dAgONzzH7Th05DNx5xAABXZVUdU?=
+ =?us-ascii?Q?PSrThBZ4RaDsrNSF3JZTeFj6JlY6/gKb0tvEeOTlvsqo4H7lkL5yPTOvmsrG?=
+ =?us-ascii?Q?czsoOqM7Kl1e6Ru3zHPtipwJmKd1LvxDmnxmNHMekXurGEbS47BSlmeGndww?=
+ =?us-ascii?Q?MGALEWSapLMtniMhRwhfdmfDG20UqTXcjOg65AX2lkm9G08ls1cguF9rUAzH?=
+ =?us-ascii?Q?3P1hVY+Zjny84pnxZHRG3Gucry1VmXdfDbPDadQBRGV/TI2+H4qHf5tS4PC2?=
+ =?us-ascii?Q?2lviR0LF4QO1K2mjKkUOulw9+tPett0MeAv2LWFRkaAFbrfWZNuR4RdwenVY?=
+ =?us-ascii?Q?LDveDcs/mkHWTzkwpueHF1+sIYaIg7JCV+z+lX2uRgCfXFF4HEg07FtGmJ6Q?=
+ =?us-ascii?Q?1ITDm5fZPH91y2bkyNhyiNJH+jQEP5vNnZWHDEXr9BilYRSkicppMyHHbpZf?=
+ =?us-ascii?Q?6aTs3m0zmr06E23wlgioA1nKl0YDNA/vkLg5QCKumRP0qkAX9FbHBrNtVBq6?=
+ =?us-ascii?Q?UmIQPHR0xbmGYpTTgP5SBo4omddBtP9R4SOnE4AXL4YOJ+ZJza8PtkjLaWFi?=
+ =?us-ascii?Q?EdFlt5LjRyj6mT4QwLFgT3pd094zHJvwLviYBdYapJb7kN6g0DYpdUCX6NJA?=
+ =?us-ascii?Q?b0tDvg68Lcp5zlnur61LJaAIzHi1VHgjvPltWHKIdkSa3HybU2VLviYbzdZ0?=
+ =?us-ascii?Q?GMve7ODr6FOJCJ7PnEHuW/iw/DN2wfhEZlvtXjTEmHQIFJ2EpG66FHde4yA/?=
+ =?us-ascii?Q?tDMehG9LOKH/Vak2EVG+rEei2/duU5MbbtudFBoVZTXNoob6dAUmwHTMLdjq?=
+ =?us-ascii?Q?pm0Ip53zHllgbdt4z6S7m9L0TaGnKf7o1HYHW51elHVSUYcgmEtc+pPIzH3w?=
+ =?us-ascii?Q?zyybDTtfp3rTSoA1i3A42ocEPI6uDofbiCBmFaRkz3R63nxeKRfr5ZXdN6qj?=
+ =?us-ascii?Q?/rk3uIZiSqecnkbFHq9pUBjzNKskeu07ni6eB9R4vdqtIIeqnaE9g7Q=3D?=
+ =?us-ascii?Q?=3D?=
+X-Microsoft-Exchange-Diagnostics: 1;AM4PR0101MB2131;6:UDqnlDjqAXHX+dWSkFMJLNYYsV8AXPD9IUVA3lDrIxiaa1x+fqVIGmnm8HFKZZ1T9DTE5WauTEsqbK/RHjPHE7qBhgjAjC/4rL/LyaYPl7WgPL6rMRUixtU9gmJu6EczpdEWSQTTs2cP6/qNmAda4BRjHWX3wRHsVaOGOf3sfRWl+PhiuMIHmu2q0hCnGeFnULkLCzShUhZoaLmqrX979kfVSffqtG3HVnZgXH9XaTokZ6YFj9DeCLzKtwsNDQAc/cqs4KryzE/sic1HCtvnxLWOzECbW0PWRmQ5AbNGYqTJtHkavLOkVT7aoiTym8d6;5:rGyMqqlWsS/XkGK0VR/MOnk78UTVcuUgvO+cBgCXTHHgLxLLH+La9qSb++xuyaWkRgiHpBHMwexSYhcdksUQcmhhUpZUYd11ziRs8Q6+EAEX4X0fNRTYKsLyzd7D2IEcwsNWrYrd3sAvPp75qrHm+w==;24:1pULkROyLw8bex3d5t8L4+O/gjgKKbSTsfdG0li8cIORjlrhD6dnLqXdy2FFIaLewLMSDw52/i31R6OAPDruYqO6XT7PGrmtM0QQdweL2NE=;7:rC7u4sALRDo6OG87ihFEXbHeuUaZPJq8Xmten1luEU3KhFf7U/oqkH9ts3O/srC013tENHLNs77aYzg+pn5zrWAPFFtRbIcfAhETWyGA9kPJrT65L3I/xBHKd8OBsLHSWBwhknYXoJNRL9Z62qsJyhzEEAKkbD7T+MJdW+iCQe1R3ncGWRQ2oP6aRxIqvBk6McXwOeB5V/7Gf+aF6a6py6tjlQC3utxK9vasuTZK/fzL1sB0MORl3NfH4WvHmnL228MhKCKhNGR+dhIZhYmAjsgxjf/XkN7MxAhw8XsYGXdbq6LQ7ZXnKY4XwIZWF5IG
+SpamDiagnosticOutput: 1:99
+SpamDiagnosticMetadata: NSPM
+X-OriginatorOrg: sociomantic.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Sep 2016 15:09:57.6708 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM4PR0101MB2131
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 19, 2016 at 4:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> As the previous one that used a wrong (sorry) argument is not even
-> in 'next' yet, let's pretend that it never happened.  It is OK to
-> still keep it and this patch as two separate steps, i.e. a topic
-> with two patches in it.
->
-> That means that this patch will become 2/2 of a series, and 1/2 is
-> rerolled to use submodule_prefix from the get-go, without ever
-> introducing output_path_prefix variable, so that many of the above
-> lines we won't have to review in 2/2.
+Hi, starting from 2.10.0 I noticed that when using git log --oneline,
+if commits are signed with GPG, now the signatures are printed too, and
+it takes 3 lines for the signature information + 1 line for the title
+of the commit, so suddenly --oneline became --fourline :)
 
-Ah ok.  Would you like me to resend the first patch with the desired
-change then?
+Is this really intended?
 
->
->> +     /*
->> +      * Pass in the original pathspec args.  The submodule will be
->> +      * responsible for prepending the 'submodule_prefix' prior to comparing
->> +      * against the pathspec for matches.
->> +      */
->
-> Good.
->
->> +     argv_array_push(&cp.args, "--");
->> +     for (i = 0; i < pathspec.nr; ++i)
->> +             argv_array_push(&cp.args, pathspec.items[i].original);
->> +
->
-> Please prefer post-increment i++ over pre-increment ++i when writing
-> a for(;;) loop, unless there is a strong reason not to (familiarlity
-> in C++ is not a good reason).
-
-I had a compiler instructor drill into my head that ++i in a for loop
-was faster historically
-since it wouldn't have to create a temporary value.  Of course now a days there
-probably isn't much (or any) difference between the two.  If post-fix
-operators are the
-norm in git code then I can try to remember to use them :)
-
->> +
->> +     if (item->flags & PATHSPEC_ONESTAR) {
->> +             return WM_MATCH;
->> +     } else if (item->magic & PATHSPEC_GLOB) {
->> +             return wildmatch(pattern, string,
->> +                              WM_PATHNAME |
->> +                              (item->magic & PATHSPEC_ICASE ?
->> +                               WM_CASEFOLD : 0),
->> +                              NULL);
->
-> Isn't this last one overly tight?  I am wondering about a scenario
-> where you have a submodule at "sub/" in the superproject, and "sub/"
-> has a "file" at the top of its working tree.  And you do:
->
->         git ls-files --recurse-submodules ':(glob)??b/fi?e'
->
-> at the top of the superproject.  The "pattern" would be '??b/fi?e"
-> while string would be 'sub', and wildmatch() would not like it, but
-> there is no way for this caller to append anything to 'sub' before
-> making this call, as it hasn't looked into what paths appear in the
-> submodule repository (and it should not want to).  And I think we
-> would want it to recurse to find sub/file.  IOW, this looks like a
-> false negative we must avoid in this function.  As we cannot afford
-> to check if anything that matches 'fi?e' is in the index file of the
-> submodule repository, we shouldn't try to match 'fi?e' portion of
-> the given pathspec pattern.
-
-good point.  Let me think about this some more.
+-- 
+Leandro Lucarella
+Technical Development Lead
+Sociomantic Labs GmbH <http://www.sociomantic.com>
