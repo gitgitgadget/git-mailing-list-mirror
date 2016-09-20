@@ -6,69 +6,83 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 549C61F4F8
-	for <e@80x24.org>; Tue, 20 Sep 2016 01:37:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C68B71F4F8
+	for <e@80x24.org>; Tue, 20 Sep 2016 01:47:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752582AbcITBhf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Sep 2016 21:37:35 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45365 "EHLO cloud.peff.net"
+        id S1752830AbcITBrh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Sep 2016 21:47:37 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45373 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751119AbcITBhe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2016 21:37:34 -0400
-Received: (qmail 12011 invoked by uid 109); 20 Sep 2016 01:37:34 -0000
+        id S1752263AbcITBrg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2016 21:47:36 -0400
+Received: (qmail 12575 invoked by uid 109); 20 Sep 2016 01:47:36 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 20 Sep 2016 01:37:34 +0000
-Received: (qmail 16204 invoked by uid 111); 20 Sep 2016 01:37:46 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 20 Sep 2016 01:47:36 +0000
+Received: (qmail 16258 invoked by uid 111); 20 Sep 2016 01:47:48 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 19 Sep 2016 21:37:46 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Sep 2016 18:37:32 -0700
-Date:   Mon, 19 Sep 2016 18:37:32 -0700
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 19 Sep 2016 21:47:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Sep 2016 18:47:34 -0700
+Date:   Mon, 19 Sep 2016 18:47:34 -0700
 From:   Jeff King <peff@peff.net>
-To:     Josh Triplett <josh@joshtriplett.org>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Andrew Donnellan <andrew.donnellan@au1.ibm.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH v2] format-patch: Add --rfc for the common case of [RFC
- PATCH]
-Message-ID: <20160920013731.ljmbs4vspcxgbvhu@sigill.intra.peff.net>
-References: <b5bf39015fdd20dd0aa4f38eb365bbbd0d07a4ca.1474096535.git-series.josh@joshtriplett.org>
- <3df15bbb-7eac-86ec-2ccb-74a973482e8c@au1.ibm.com>
- <xmqqa8f3g4pu.fsf@gitster.mtv.corp.google.com>
- <20160919204408.GA28962@cloud>
- <20160919233434.fhkikksi4cxzrzb5@sigill.intra.peff.net>
- <20160919234022.GA29421@cloud>
- <CA+P7+xp-CupfFwQv+U-KNh4bxG9Mxkbfip5RJebKX9gjffoOsw@mail.gmail.com>
- <20160919235550.GC29421@cloud>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Anatoly Borodin <anatoly.borodin@gmail.com>, git@vger.kernel.org
+Subject: Re: Bug: pager.<cmd> doesn't work well with editors
+Message-ID: <20160920014733.7whjuxfuimx5ztdb@sigill.intra.peff.net>
+References: <nrmbrl$hsk$1@blaine.gmane.org>
+ <nrmd6u$imf$1@blaine.gmane.org>
+ <xmqqh99bho7a.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20160919235550.GC29421@cloud>
+In-Reply-To: <xmqqh99bho7a.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 19, 2016 at 04:55:50PM -0700, Josh Triplett wrote:
+On Mon, Sep 19, 2016 at 09:03:05AM -0700, Junio C Hamano wrote:
 
-> On Mon, Sep 19, 2016 at 04:46:06PM -0700, Jacob Keller wrote:
-> > On Mon, Sep 19, 2016 at 4:40 PM, Josh Triplett <josh@joshtriplett.org> wrote:
-> > > On Mon, Sep 19, 2016 at 04:34:35PM -0700, Jeff King wrote:
-> > >> As far as your patch goes, I'd be OK with defining:
-> > >>
-> > >>   --rfc::
-> > >>       Pretend as if `--subject-prefix='RFC PATCH'` was given.
-> > >>
-> > 
-> > Would:
-> > 
-> > Shorthand for `--subject-prefix='RFC PATCH'`
-> > 
-> > be a better reading? I feel like using "pretend" is a bit weird here.
+> Anatoly Borodin <anatoly.borodin@gmail.com> writes:
 > 
-> My patch used "Alias for"; if you prefer "Shorthand for" I'm
-> indifferent. :)
+> >> I think, the pagination should be turned off when the editor is being
+> >> called.
+> 
+> This is a fun one.  IIRC, we decide to spawn a pager and run our
+> output via pipe thru it fairly early, even before we figure out
+> which subcommand is being run (especially if you do "git -p
+> subcommand"), which by definition is way before we know if that
+> subcommand wants to let the user edit things with the editor.
 
-Or maybe "Act as if...".
+Right. Once the pager is spawned, it is too late to change things (even
+if we spawned the editor directed to /dev/tty, it would be racily
+competing for input with the pager).
+
+And this isn't really limited to the editor. It's more _annoying_ with
+the editor, but really "pager.tag" does not make any sense to set right
+now, because it is handled outside of the "tag" command entirely, and
+doesn't know what mode the tag command will be running in. So it's
+_also_ the wrong thing to do with "git tag foo", which doesn't run an
+editor (but you don't tend to notice if you use "less -F" because the
+pager just quits immediately).
+
+So you really only want to page tag-listing (and the same for branch,
+config, etc). A long time ago I had a patch to add "pager.tag.list", and
+the tag command would decide whether and how to page after realizing it
+was in listing mode. Looks like I did send it to the list:
+
+  http://public-inbox.org/git/20111007144438.GA30318@sigill.intra.peff.net/
+
+though I think there are some rough edges (like handling "git stash
+list").
+
+I also wonder if there are any commands that actually have more than one
+sub-command. So another option would be to teach the main git.c a
+blacklist of "do not respect pager config" commands (like tag), and then
+tag itself could decide to respect pager.tag at the right moment.
+
+I think that makes things worse for a third-party command, though; we
+cannot know whether a script "git-foobar" dropped into the $PATH would
+like us to respect pager.foobar or if it would prefer to decide itself
+later.
 
 -Peff
