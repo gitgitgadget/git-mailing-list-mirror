@@ -2,116 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEAD91F935
-	for <e@80x24.org>; Wed, 21 Sep 2016 21:12:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C1F820985
+	for <e@80x24.org>; Wed, 21 Sep 2016 21:46:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756735AbcIUVM5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Sep 2016 17:12:57 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55274 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754886AbcIUVM4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2016 17:12:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7A38640861;
-        Wed, 21 Sep 2016 17:12:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=mpoxM6+VQZw9uSZLq4nUfadxoiM=; b=onxcD7
-        Mf1bW9hEnlGaEyimRKtWZIUCGtaIP3113Sx/ygeUMjf3sesh/gYUNAJTfwtHe+B0
-        Y2xDd5eM0JUoAeQZq/jB8dMxosxx1pAleqaI06hbOBWPL6tcFKQ2unIMAwC3FSa+
-        P4pV+/g1Xet3ZQc9cxbDDrkPpNMnFoIXplPO4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mVJAMZTpcLfEGbh3ja2md11WNu1U4bXQ
-        efySqd5URz9W8GtsJ39DaYt3YVKPcWrigFUE20pZ7jdJT9GoveIFijzjb7c8HJi4
-        1i9OVvEPlPB1COmDuL5lva0CuMsE+oCVOSjY0yq9fffy+Jc73LkYwKBeQwOy5PeB
-        /jZ//msG+Jc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7029140860;
-        Wed, 21 Sep 2016 17:12:55 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E496F4085E;
-        Wed, 21 Sep 2016 17:12:54 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH tg/add-chmod+x-fix 2/2] t3700-add: protect one --chmod=+x test with POSIXPERM
-References: <cee3c784-8f03-c524-2f67-d35cb3755a41@kdbg.org>
-        <5effaf36-d017-3ff1-1de1-d9b303c04f23@kdbg.org>
-        <20160920193444.GG8254@hank>
-        <xmqqtwd986ml.fsf@gitster.mtv.corp.google.com>
-        <xmqqa8f16kup.fsf@gitster.mtv.corp.google.com>
-        <c3aefd9d-b794-21a1-619e-bce6a3c2cf47@kdbg.org>
-Date:   Wed, 21 Sep 2016 14:12:52 -0700
-In-Reply-To: <c3aefd9d-b794-21a1-619e-bce6a3c2cf47@kdbg.org> (Johannes Sixt's
-        message of "Wed, 21 Sep 2016 22:58:55 +0200")
-Message-ID: <xmqq60pp6jor.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1756347AbcIUVqZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Sep 2016 17:46:25 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:45876 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1756249AbcIUVqY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2016 17:46:24 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id 5EE1B1F935;
+        Wed, 21 Sep 2016 21:46:23 +0000 (UTC)
+Date:   Wed, 21 Sep 2016 21:46:23 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Yaroslav Halchenko <yoh@onerussian.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>
+Subject: [PATCH 4/3] http: check curl_multi_remove_handle error code
+Message-ID: <20160921214623.GA1919@whir>
+References: <20160913002557.10671-1-e@80x24.org>
+ <xmqqr38nv8ul.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 29D5E180-8040-11E6-AB41-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqr38nv8ul.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Wong <e@80x24.org> writes:
+> > The key patch here is 3/3 which seems like an obvious fix to
+> > adding the problem of adding a curl easy handle to a curl multi
+> > handle repeatedly.
+> 
+> Yeah, sounds like the right thing to do and 2/3 makes it really easy
+> to read the resulting code.
+> 
+> > I will investigate those failures in a week or two when I regain
+> > regular computer access.
+> 
+> Thanks. Will tentatively queue on 'pu' and wait for updates.
 
-> But I came to a different conclusion as I said in a message that
-> crossed yours. I hope Thomas can pick up the baton again.
+I'm comfortable with the original 3 patch series in 'next'
+and being merged to 'master' and 'maint', soon.
 
-Yeah, our mails crossed, apparently, and I do agree with your
-reasoning.  How about this, then?
+I don't think the following 4/3 is strictly necessary now, so
+I'd be more comfortable with it being tested in 'pu' or 'next'
+for a longer period.
 
--- >8 -- 
-From: Johannes Sixt <j6t@kdbg.org>
-Date: Tue, 20 Sep 2016 08:18:25 +0200
-Subject: [PATCH] t3700-add: do not check working tree file mode without POSIXPERM
+(online today, but not much tomorrow or another few days after)
 
-A recently introduced test checks the result of 'git status' after
-setting the executable bit on a file. This check does not yield the
-expected result when the filesystem does not support the executable
-bit.
+-----------8<-----------
+Subject: [PATCH] http: check curl_multi_remove_handle error code
 
-What we care about is that a file added with "--chmod=+x" has
-executable bit in the index and that "--chmod=+x" (or any other
-options for that matter) does not muck with working tree files.
-The former is tested by other existing tests, so let's check the
-latter more explicitly and only under POSIXPERM prerequisite.
+This should help detect bugs in future changes.  While we're at
+it, fix a (probably innocuous) bug in our http_cleanup function
+for users of older curl.
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+curl_multi_remove_handle was not idempotent until curl 7.33.0
+with commit 84f3b3dd448399f9548468676e1bd1475dba8de5
+("curl_multi_remove_handle: allow multiple removes"),
+so we track the "curlm" membership of the curl easy handle
+ourselves with a new "in_multi" flag.
+
+Tested with curl 7.26.0 and 7.38.0 on Debian 7.x (wheezy) and
+Debian 8.x (jessie) respectively.
+
+Signed-off-by: Eric Wong <e@80x24.org>
 ---
- t/t3700-add.sh | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ http.c | 12 ++++++++++--
+ http.h |  1 +
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-index 16ab2da..924a266 100755
---- a/t/t3700-add.sh
-+++ b/t/t3700-add.sh
-@@ -361,13 +361,11 @@ test_expect_success 'git add --chmod=[+-]x changes index with already added file
- 	test_mode_in_index 100644 xfoo3
- '
+diff --git a/http.c b/http.c
+index 82ed542..9f97749 100644
+--- a/http.c
++++ b/http.c
+@@ -204,7 +204,12 @@ static void finish_active_slot(struct active_request_slot *slot)
+ static void xmulti_remove_handle(struct active_request_slot *slot)
+ {
+ #ifdef USE_CURL_MULTI
+-	curl_multi_remove_handle(curlm, slot->curl);
++	CURLMcode code = curl_multi_remove_handle(curlm, slot->curl);
++
++	if (code != CURLM_OK)
++		die("curl_multi_remove_handle failed (%p): %s",
++			slot->curl, curl_multi_strerror(code));
++	slot->in_multi = 0;
+ #endif
+ }
  
--test_expect_success 'file status is changed after git add --chmod=+x' '
--	echo "AM foo4" >expected &&
-+test_expect_success POSIXPERM 'git add --chmod=[+-]x does not change the working tree' '
- 	echo foo >foo4 &&
- 	git add foo4 &&
- 	git add --chmod=+x foo4 &&
--	git status -s foo4 >actual &&
--	test_cmp expected actual
-+	! test -x foo4
- '
+@@ -888,7 +893,8 @@ void http_cleanup(void)
+ 	while (slot != NULL) {
+ 		struct active_request_slot *next = slot->next;
+ 		if (slot->curl != NULL) {
+-			xmulti_remove_handle(slot);
++			if (slot->in_multi)
++				xmulti_remove_handle(slot);
+ 			curl_easy_cleanup(slot->curl);
+ 		}
+ 		free(slot);
+@@ -965,6 +971,7 @@ struct active_request_slot *get_active_slot(void)
+ 		newslot = xmalloc(sizeof(*newslot));
+ 		newslot->curl = NULL;
+ 		newslot->in_use = 0;
++		newslot->in_multi = 0;
+ 		newslot->next = NULL;
  
- test_expect_success 'no file status change if no pathspec is given' '
+ 		slot = active_queue_head;
+@@ -1033,6 +1040,7 @@ int start_active_slot(struct active_request_slot *slot)
+ 		slot->in_use = 0;
+ 		return 0;
+ 	}
++	slot->in_multi = 1;
+ 
+ 	/*
+ 	 * We know there must be something to do, since we just added
+diff --git a/http.h b/http.h
+index 5ab9d9c..3339d70 100644
+--- a/http.h
++++ b/http.h
+@@ -60,6 +60,7 @@ struct slot_results {
+ struct active_request_slot {
+ 	CURL *curl;
+ 	int in_use;
++	int in_multi;
+ 	CURLcode curl_result;
+ 	long http_code;
+ 	int *finished;
 -- 
-2.10.0-515-g9036219
+EW
 
