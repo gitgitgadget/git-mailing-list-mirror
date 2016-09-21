@@ -6,119 +6,101 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94FE61F935
-	for <e@80x24.org>; Wed, 21 Sep 2016 15:57:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 059EA1F935
+	for <e@80x24.org>; Wed, 21 Sep 2016 16:08:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756548AbcIUP5v (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Sep 2016 11:57:51 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58704 "EHLO
+        id S1756418AbcIUQH6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Sep 2016 12:07:58 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56949 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753152AbcIUP5u (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2016 11:57:50 -0400
+        with ESMTP id S1755320AbcIUQH5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2016 12:07:57 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 06C663C06C;
-        Wed, 21 Sep 2016 11:57:49 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E30503C2C2;
+        Wed, 21 Sep 2016 12:07:55 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=2zZkT5u/CGUcx9+QY1zdi6MZIHg=; b=bw+3Al
-        NuREkQZ1SC/0mBKv1KN+BcipFxLzKirFsvkVwI6Q+pB7CMWK1GyQsWl8RxhZCgl1
-        0nIE5tvpMXggP79Mj7qyMVR6FGTK5H5YtPTlz39tsJg6ZZUrirgiCsz8RO7nZFuV
-        +llbJvw9tEO7IprezWgR+Bqozx8Bt5qciZqLQ=
+        :content-type; s=sasl; bh=41ypPM47aesaf0EqA4IxQ/D690I=; b=bSM0A0
+        9Kd/4TTomOLJxTG1GY7UiyUliyY+G4W9r2OAMHzTMkHJEy5mVbNv5dmXCUdkrb6T
+        uUwcSp8W39xojssj435nMW02jTountKMHPcImtSzqFd6p1gGzxJJzak+X/RHJNZE
+        JIJOFJJIFFcvPrmGzyvAN8ZGf3YbuSMVylm5k=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=VVyMSMl8FxipwiTNR3H9i+U5mjyoX+jm
-        1nnSPBZDMN3kkUXHYjXpq84MkJZBzBfhaLkK4xoqxprOWxAq1qi/w8dT6GxkOO+e
-        DKZvQDc+BRDmXkvl6HOi/7RzpxNGeTJAHrKvzcqLg37eO0TxL9jF/plP3kn442LX
-        dOVLyMSfNEI=
+        :content-type; q=dns; s=sasl; b=cUeXr2ZGv6upjPDJ4lRm863F7UW0IOqQ
+        1kmtsb7q1B2WUdgSUB3BY7qNUB/na4fGJIubAdc4+xa8U6Z1frGTVLqrvUspS5KZ
+        FQE72YaHDIxyoTvnPgGnU4a7SvIcbu7N50qquol8oTiLG3mUayjq2CD1YGs3tS2Y
+        8m4qJqvg6r8=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F35663C06B;
-        Wed, 21 Sep 2016 11:57:48 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DB5A33C2C1;
+        Wed, 21 Sep 2016 12:07:55 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7BBB73C068;
-        Wed, 21 Sep 2016 11:57:48 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 62FFF3C2C0;
+        Wed, 21 Sep 2016 12:07:55 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Triplett <josh@joshtriplett.org>
-Cc:     git@vger.kernel.org,
-        Andrew Donnellan <andrew.donnellan@au1.ibm.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3] format-patch: Add --rfc for the common case of [RFC PATCH]
-References: <501a6bfb2a70f44f080b2f119e4503ccbf88f639.1474330487.git-series.josh@joshtriplett.org>
-Date:   Wed, 21 Sep 2016 08:57:46 -0700
-In-Reply-To: <501a6bfb2a70f44f080b2f119e4503ccbf88f639.1474330487.git-series.josh@joshtriplett.org>
-        (Josh Triplett's message of "Mon, 19 Sep 2016 21:23:25 -0700")
-Message-ID: <xmqqy42lb5z9.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Kevin Daudt <me@ikke.info>, git@vger.kernel.org,
+        Swift Geek <swiftgeek@gmail.com>
+Subject: Re: [PATCH] mailinfo: unescape quoted-pair in header fields
+References: <20160916210204.31282-1-me@ikke.info>
+        <20160916222206.jz2d4gpaxxccia5p@sigill.intra.peff.net>
+        <20160919105133.GA10901@ikke.info>
+        <20160920035710.qw2byl3qeqwih7t5@sigill.intra.peff.net>
+Date:   Wed, 21 Sep 2016 09:07:53 -0700
+In-Reply-To: <20160920035710.qw2byl3qeqwih7t5@sigill.intra.peff.net> (Jeff
+        King's message of "Mon, 19 Sep 2016 20:57:11 -0700")
+Message-ID: <xmqqtwd9b5ie.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 24B92436-8014-11E6-A4F9-C26412518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 8E76C3BE-8015-11E6-B12B-C26412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Triplett <josh@joshtriplett.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> This provides a shorter and more convenient alias for
-> --subject-prefix='RFC PATCH'.
+> So if that's the case, do we actually need to care if we see any
+> parenthesized comments? I think we should just leave comments in place
+> either way, so syntactically they are only interesting insofar as we
+> replace quoted pairs or not.
+>
+> IOW, I wonder if:
+>
+>   while ((c = *in++)) {
+> 	switch (c) {
+> 	case '\\':
+> 		if (!*in)
+> 			return 0; /* ignore trailing backslash */
+> 		/* quoted pair */
+> 		strbuf_addch(out, *in++);
+> 		break;
+> 	case '"':
+> 		/*
+> 		 * This may be starting or ending a quoted section,
+> 		 * but we do not care whether we are in such a section.
+> 		 * We _do_ need to remove the quotes, though, as they
+> 		 * are syntactic.
+> 		 */
+> 		break;
+> 	default:
+> 		/*
+> 		 * Anything else is a normal character we keep. These
+> 		 * _might_ be violating the RFC if they are magic
+> 		 * characters outside of a quoted section, but we'd
+> 		 * rather be liberal and pass them through.
+> 		 */
+> 		strbuf_addch(out, c);
+> 		break;
+> 	}
+>   }
+>
+> would work. I certainly do not mind following the RFC more closely, but
+> AFAICT the very simple code above gives a pretty forgiving outcome.
 
-Shorter and more convenient is quite subjective but more important
-as a justification is that we believe [RFC PATCH] is used fairly
-commonly (at least in certain circles).
+The simplicity of the code does look attractive to me.  I do not
+offhand see an obvious case/flaw that this simplified rule would
+mangle a valid human-readable part.
 
-> Includes documentation in the format-patch manpage, and a new test
-> covering --rfc.
-
-We can see that from diffstat ;-)
-
-I'd retitle this like so:
-
-    format-patch: add "--rfc" for the common case of [RFC PATCH]
-
-    Add an alias for --subject-prefix='RFC PATCH', which is used
-    commonly in some development communities to deserve such a
-    short-hand.
-
-    Signed-off-by: Josh Triplett <josh@joshtriplett.org>
-    Reviewed-by: Jeff King <peff@peff.net>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-> index 9624c84..9b200b3 100644
-> --- a/Documentation/git-format-patch.txt
-> +++ b/Documentation/git-format-patch.txt
-> @@ -19,7 +19,8 @@ SYNOPSIS
->  		   [--start-number <n>] [--numbered-files]
->  		   [--in-reply-to=Message-Id] [--suffix=.<sfx>]
->  		   [--ignore-if-in-upstream]
-> -		   [--subject-prefix=Subject-Prefix] [(--reroll-count|-v) <n>]
-> +		   [--rfc] [--subject-prefix=Subject-Prefix]
-> +		   [(--reroll-count|-v) <n>]
->  		   [--to=<email>] [--cc=<email>]
->  		   [--[no-]cover-letter] [--quiet] [--notes[=<ref>]]
->  		   [<common diff options>]
-> @@ -172,6 +173,11 @@ will want to ensure that threading is disabled for `git send-email`.
->  	allows for useful naming of a patch series, and can be
->  	combined with the `--numbered` option.
->  
-> +--rfc::
-> +	Alias for `--subject-prefix="RFC PATCH"`. RFC means "Request For
-> +	Comments"; use this when sending an experimental patch for
-> +	discussion rather than application.
-> +
-
-I do not think we want to be in the business of encouragign or
-discouraging the use of "[RFC PATCH]".  
-
-	--rfc:: A short-hand for `--subject-prefix="RFC PATCH"`.
-        	RFC stands for "request for comments" and such a
-        	prefix is used in some development communities when
-        	sending a patch primarily to illustrate an idea to
-        	help discussion, rather than to be applied.
-
-perhaps?
-
-The code and test both look good to me.
-
-Thanks.
