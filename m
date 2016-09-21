@@ -4,126 +4,111 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2C5A1F935
-	for <e@80x24.org>; Wed, 21 Sep 2016 13:43:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A936209A9
+	for <e@80x24.org>; Wed, 21 Sep 2016 14:17:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753999AbcIUNng (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Sep 2016 09:43:36 -0400
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:37322 "EHLO
-        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753970AbcIUNnf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2016 09:43:35 -0400
-Received: by mail-wm0-f53.google.com with SMTP id b130so92725979wmc.0
-        for <git@vger.kernel.org>; Wed, 21 Sep 2016 06:43:34 -0700 (PDT)
+        id S932932AbcIUORd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Sep 2016 10:17:33 -0400
+Received: from mail-qt0-f182.google.com ([209.85.216.182]:33822 "EHLO
+        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754557AbcIUORc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2016 10:17:32 -0400
+Received: by mail-qt0-f182.google.com with SMTP id 38so23031918qte.1
+        for <git@vger.kernel.org>; Wed, 21 Sep 2016 07:17:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=f653ilADFN5L5tDsFzEIzhOpIAN0Q26GAve3CGN2pMo=;
-        b=yKT4Ff+Al4ilNM+b/dDbl4sl8KJsi6XyKV7e9ZYtPSB9FAL7dRfyTJzbDuzfXZvWUW
-         pCtQlXXS1lfmvBY3EGombRf+Bq8w9ZA13Zl/idYWCtvEyoSXaiAaDPgenh8YQz1tiexO
-         HSlp+RyBWzh2EvEtD34njeGijtWc2hqv6tUCFyy7IR1/QLrootLJvdaJvzAH44j1scNe
-         s7L7psr/JxgzES9s2sQSfZdkR2fMt+rgX+Hl/eeJztFA++7e8DLCuDPJNmx2P+W25nkd
-         lLF0sUr0lde+yRT6GCqE5UpLWRxO6se+ruTv1XS+p/ruf45r28N9OpI0QX9cNUWyO9Tc
-         iSlQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ThbS2ld5UGz+2Bddl/h9xwlGAySvXAbggeeMIxAPTJM=;
+        b=DP3JjlfDxhIE72e6MWqqRKIu1CNpU9vHBi9guMoyeMj8qMI+EUov1yMDr82aYOx7SK
+         llrefIsLR58Z8BKZ6vfyaAE2UQPu1JfumwZC1mWLgBveeKxRrwebquU9hOZ1s0kZOLsw
+         wu9LMrc9ib3ePHBzChQlIyOWMWNuDwFJvFVF+e4+L6jvkD+/gVo9+2Pf6K7qZYR5GzD+
+         8lDDiiai/4kuaihiv/jsnSb9+DTh9q1aTCnqeafxy+UiWr3wcygCQ4r1goeH0FBLMgiv
+         AulriDLNkU+BGCsfxWHKOg7HmYzc5/SybzMnTxDm3aJm/edbsvi2cKQltcWRW3J26KLX
+         Ycdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=f653ilADFN5L5tDsFzEIzhOpIAN0Q26GAve3CGN2pMo=;
-        b=lfSZAr/YIr+Z9MWPsuIs6zpp8NgxsALTz1hmtSCPZhqDip2v6KbWsCjIekyPgNRUmc
-         aHMYKW+j7REgG+smSeXVJ8DRIZW9d9AQqPLZmMOP3983K2vJ0+pWqZQPOk6ZhahLbj4f
-         RIfQVi/kpWg2+i/Ggn8tmheZ0BN+nFeyc8Ba3x1HhRHw9AJzUK4Rd7rxahlrgfNpvH2C
-         Rv026g25viMJyzac76lL806vvkROTUSKc8XW0pix1vHtLfSCsJTSkOdkzZJNwJ/2XjHt
-         6qtwGDAFBo7X/uXMrKg5wABxgovNmNVO0q23MEqGg5eZzM/Okg0RL+MyzMPXwkkY0MuA
-         7p8A==
-X-Gm-Message-State: AE9vXwMY9dCleG5mhrMs3KI/2J8nQRf6c2tngNrZvjp7VSAq1lPG4okO0c56Y1VebX8pfA==
-X-Received: by 10.28.203.196 with SMTP id b187mr3157873wmg.120.1474465413471;
-        Wed, 21 Sep 2016 06:43:33 -0700 (PDT)
-Received: from [192.168.1.26] (enn40.neoplus.adsl.tpnet.pl. [83.20.3.40])
-        by smtp.googlemail.com with ESMTPSA id yt4sm33642322wjc.48.2016.09.21.06.43.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 21 Sep 2016 06:43:32 -0700 (PDT)
-Subject: Re: v2.9.3 and v2.10.0: `name-ref' HEAD gives wrong branch name
-To:     Bryan Turner <bturner@atlassian.com>,
-        Steffen Nurpmeso <steffen@sdaoden.eu>
-References: <20160920162309.l0neYMQ3l%steffen@sdaoden.eu>
- <CAGyf7-FR11Ludt3vNZX7Ek4n_JLSON5+Y9By83GvNgpg94TWcg@mail.gmail.com>
-Cc:     Git Users <git@vger.kernel.org>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <b1d35732-4b4c-e0c1-59da-44d3e3b28799@gmail.com>
-Date:   Wed, 21 Sep 2016 15:43:16 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ThbS2ld5UGz+2Bddl/h9xwlGAySvXAbggeeMIxAPTJM=;
+        b=HgDHv39BfhG6raLNj2MBgbgdYWBSX/eBH7f8mJC8ycBoIg6BxGcnX6VcXC37gd4FDj
+         GFOsRlEwAM8/4kEr0EQZqLuCH+Y1+v5qd1/2ZJm/BqUs/oNi+RjggE514gwO6VkEbh88
+         Ki1jin418ysNstYxSYe2cBMvhAtcxSnYYvVDwxm9+StNrxDn4JnbfSR3eKo67TTawm6b
+         AsowEAA3YM9gcJd6m8gsapBzfEzOYBffZuG3ifr9hZCgNRZOyfenHwQKlf1tAoJU66nw
+         i00mQCiFaRjNO2LDpZDETea3th6OR+5hLlT8ozk19z6E0cg2wgPbyIPYjZvLxYoUIyo0
+         66Mw==
+X-Gm-Message-State: AE9vXwMmxwCUlRK0p7Vn1UhQSOO9OtSlIw0kXOhGJ0yLVKB2KSQqjPnSpadYsVGwMBO8FjnGMBWZ9ZfsZrcvyQ==
+X-Received: by 10.200.38.241 with SMTP id 46mr41933988qtp.135.1474467451534;
+ Wed, 21 Sep 2016 07:17:31 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAGyf7-FR11Ludt3vNZX7Ek4n_JLSON5+Y9By83GvNgpg94TWcg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.55.87.133 with HTTP; Wed, 21 Sep 2016 07:17:11 -0700 (PDT)
+In-Reply-To: <d047a76d-8f13-5c90-3946-6821957d9278@gmail.com>
+References: <20160921114428.28664-1-avarab@gmail.com> <d047a76d-8f13-5c90-3946-6821957d9278@gmail.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Wed, 21 Sep 2016 16:17:11 +0200
+Message-ID: <CACBZZX4QDTNYDpOF+GsK3tMQamoXQhJoXuPTgB3O+iEW3jBxag@mail.gmail.com>
+Subject: Re: [PATCH 1/3] gitweb: Fix an ancient typo in v1.7.7-rc1-1-g0866786
+To:     =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Cc:     Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Kay Sievers <kay.sievers@suse.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 20.09.2016 o 20:54, Bryan Turner pisze:
-> On Tue, Sep 20, 2016 at 9:23 AM, Steffen Nurpmeso <steffen@sdaoden.eu> wrote:
->> Hello again,
+On Wed, Sep 21, 2016 at 3:33 PM, Jakub Nar=C4=99bski <jnareb@gmail.com> wro=
+te:
+> W dniu 21.09.2016 o 13:44, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason napisa=
+=C5=82:
+>
+>> Subject: [PATCH 1/3] gitweb: Fix an ancient typo in v1.7.7-rc1-1-g086678=
+6
+>
+> It is more "ancient typo from v1.7.7-rc1-1-g0866786", but perhaps more
+> important is "ancient typo in a comment"
+
+Yeah, will rephrase.
+
 >>
->> yah, sorry, i'm back again..
->> I try to find a way to find the name of the current branch in an
->> automated way, because i need to ensure that a commit happens on
->> it and no other branch.  Now the problem arises that the commit
->> ref at the time of that commit maybe shared in between several
->> different branches, but no more thereafter, of course:
+>> The Content-Type is application/xhtml+xml, not application/xhtm+xml.
+>
+> Right.  Thanks for the patch.
+>
+> Signoff?
+
+Blast! I forgot that for these 3x patches. I'll re-submit pending
+further comments on the rest of the code changes in the series.
+
+>> ---
+>>  gitweb/gitweb.perl | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
 >>
->>   ?0[steffen@wales ]$ git branch|grep '^*'
->>   * stable/v14.9
-
-Not good, 'git branch' is a porcelain (user facing) command, so it
-output may change; e.g. '*' could be replaced with '•'. For example
-output for detached HEAD had changed!
-
->>   ?0[steffen@wales ]$ git name-rev --name-only HEAD
->>   stable/v14.8
+>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+>> index 33d701d..9473daf 100755
+>> --- a/gitweb/gitweb.perl
+>> +++ b/gitweb/gitweb.perl
+>> @@ -1616,7 +1616,7 @@ sub esc_path {
+>>       return $str;
+>>  }
 >>
->> Is there another way except looking into .git/HEAD or using sed(1)
->> on the output of `branch' to find the right name?
-> 
-> Have you tried "git symbolic-ref HEAD"?
-> 
-> $ git symbolic-ref HEAD
-> refs/heads/master
-> 
-> If you don't want the fully-qualified ref, you can add --short:
-> 
-> $ git symbolic-ref --short HEAD
-> master
+>> -# Sanitize for use in XHTML + application/xml+xhtm (valid XML 1.0)
+>> +# Sanitize for use in XHTML + application/xml+xhtml (valid XML 1.0)
+>
+> Nb. I wonder how common is use of XHTML nowadays, with HTML5 as standard.=
+..
 
-This does not work for detached HEAD, but perhaps you don't need
-to worry about this.
+It's sent to modern browsers, I noticed it because when doing the rest
+of the patches in the series the slightest mistake in the HTML syntax
+would cause the page not to render in Chrome, because
+application/xml+xhtm activates its anal parsing mode.
 
-  $ git rev-parse --symbolic-full-name HEAD
-  refs/heads/master
-
-But
-
-  $ git checkout HEAD^0
-  Note: checking out 'HEAD^0'.
-
-  You are in 'detached HEAD' state. [...]
- 
-  $ git rev-parse --symbolic-full-name HEAD
-  HEAD
-
-  $ git symbolic-ref HEAD
-  fatal: ref HEAD is not a symbolic ref
-
-  $ git branch
-  * (HEAD detached at 3e2ebf9)
-    master
-
--- 
-Jakub Narębski
-
+>>  sub sanitize {
+>>       my $str =3D shift;
+>>
+>>
+>
