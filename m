@@ -2,93 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 773011F4F8
-	for <e@80x24.org>; Wed, 21 Sep 2016 09:32:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FC111F4F8
+	for <e@80x24.org>; Wed, 21 Sep 2016 11:09:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932283AbcIUJcF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Sep 2016 05:32:05 -0400
-Received: from mail95.atlas.de ([194.156.172.85]:21273 "EHLO mail95.atlas.de"
+        id S1755610AbcIULJj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Sep 2016 07:09:39 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45975 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751493AbcIUJcD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2016 05:32:03 -0400
-X-IPAS-Result: =?us-ascii?q?A2DQAgBcU+JX/wTKxApeGwEBAQMBAQEJAQEBgzsBAQEBAXU?=
- =?us-ascii?q?qUo0znwCKNYIPggQmhT42AgICHIF+FAECAQEBAQEBAYEFhGEBAQEBAgEjEUUFC?=
- =?us-ascii?q?wIBCBUCAwImAgICHwsGFQgIAgQBDAEFAgEBiC0DDxauLokcDYMyAQEBAQEBAQE?=
- =?us-ascii?q?BAQEBAQEBAQEBAQEBFwWBBoctCIJQgkeBTTAXgm2CWgEEiDWRCjWGJ4ZGhGKHd?=
- =?us-ascii?q?IYKhwSBU0CDT4N8HoQBgThyBYQ6gi4BAQE?=
-Received: from scesrv01.atlas.de ([10.196.202.4])
-  by MGW101FE.atlas.de with ESMTP/TLS/DHE-RSA-AES128-GCM-SHA256; 21 Sep 2016 11:31:44 +0200
-Received: by SCESRV01.atlas.de (Postfix, from userid 600)
-        id 3sfDsX2XK2z17mSg; Wed, 21 Sep 2016 09:31:40 +0000 (UTC)
-Received: from MGW201PAR.atlas.de (unknown [10.206.101.60])
-        by SCESRV01.atlas.de (Postfix) with ESMTPS id 3sfDsS1tJFz17mSm
-        for <git@vger.kernel.org>; Wed, 21 Sep 2016 09:31:40 +0000 (UTC)
-Received: from atlas-elektronik.com (HELO MSEXSRV1.atlas.de) ([10.200.102.56])
-  by MGW201DAT.atlas.de with ESMTP/TLS/DHE-RSA-AES256-SHA; 21 Sep 2016 11:31:40 +0200
-Received: from MSEXSRV5.atlas.de ([169.254.3.46]) by MSEXSRV1.atlas.de
- ([10.200.102.56]) with mapi id 14.03.0301.000; Wed, 21 Sep 2016 11:31:40
- +0200
-From:   <stefan.naewe@atlas-elektronik.com>
-To:     <larsxschneider@gmail.com>, <git@vger.kernel.org>
-CC:     <gitster@pobox.com>
-Subject: Re: [PATCH v1] travis-ci: ask homebrew for the its path instead of
- hardcoding it
-Thread-Topic: [PATCH v1] travis-ci: ask homebrew for the its path instead of
- hardcoding it
-Thread-Index: AQHSE+SXXXhrCf54P02Q6FakyOAp8qCDjJcA
-Date:   Wed, 21 Sep 2016 09:31:38 +0000
-Message-ID: <83e3049c-34ea-4440-7b4d-061cb98ba2dd@atlas-elektronik.com>
-References: <20160921084518.13091-1-larsxschneider@gmail.com>
-In-Reply-To: <20160921084518.13091-1-larsxschneider@gmail.com>
-Accept-Language: de-DE, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <1C9C1DBEA308C44AB8482D14A79D6484@atlas.de>
-Content-Transfer-Encoding: base64
+        id S1753933AbcIULJi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2016 07:09:38 -0400
+Received: (qmail 16741 invoked by uid 109); 21 Sep 2016 11:09:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 21 Sep 2016 11:09:37 +0000
+Received: (qmail 30904 invoked by uid 111); 21 Sep 2016 11:09:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 21 Sep 2016 07:09:50 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Sep 2016 07:09:35 -0400
+Date:   Wed, 21 Sep 2016 07:09:35 -0400
+From:   Jeff King <peff@peff.net>
+To:     Kevin Daudt <me@ikke.info>
+Cc:     git@vger.kernel.org, Swift Geek <swiftgeek@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] mailinfo: unescape quoted-pair in header fields
+Message-ID: <20160921110934.f6eu2dz6i2mlpa45@sigill.intra.peff.net>
+References: <20160916210204.31282-1-me@ikke.info>
+ <20160919185440.18234-3-me@ikke.info>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20160919185440.18234-3-me@ikke.info>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SW4gdGhlIFN1YmplY3Q6IHMvdGhlIC8vDQoNCkFtIDIxLjA5LjIwMTYgdW0gMTA6NDUgc2Nocmll
-YiBsYXJzeHNjaG5laWRlckBnbWFpbC5jb206DQo+IEZyb206IExhcnMgU2NobmVpZGVyIDxsYXJz
-eHNjaG5laWRlckBnbWFpbC5jb20+DQo+IA0KPiBUaGUgVHJhdmlzQ0kgbWFjT1MgYnVpbGQgaXMg
-YnJva2VuIGJlY2F1c2UgaG9tZWJyZXcgKGEgbWFjT1MgZGVwZWRlbmN5DQoNCnMvZGVwZWRlbmN5
-L2RlcGVuZGVuY3kvDQoNCj4gbWFuYWdlcikgY2hhbmdlZCBpdHMgaW50ZXJuYWwgZGlyZWN0b3J5
-IHN0cnVjdHVyZSBbMV0uIFRoaXMgaXMgYSBwcm9ibGVtDQo+IGJlY2F1c2Ugd2UgbW9kaWZ5IHRo
-ZSBQZXJmb3JjZSBkZXBlbmRlbmNpZXMgaW4gdGhlIGhvbWVicmV3IHJlcG9zaXRvcnkNCj4gYmVm
-b3JlIGluc3RhbGxpbmcgdGhlbS4NCj4gDQo+IEZpeCBpdCBieSBhc2tpbmcgaG9tZWJyZXcgZm9y
-IGl0cyBwYXRoIGluc3RlYWQgb2YgaGFyZGNvZGluZyBpdC4NCj4gDQo+IFsxXSBodHRwczovL2dp
-dGh1Yi5jb20vSG9tZWJyZXcvYnJldy9jb21taXQvMGEwOWFlMzBmOGI2MTE3YWQ2OTliNGEwNDM5
-MDEwNzM4OTg5YzU0Nw0KPiANCj4gU2lnbmVkLW9mZi1ieTogTGFycyBTY2huZWlkZXIgPGxhcnN4
-c2NobmVpZGVyQGdtYWlsLmNvbT4NCj4gLS0tDQo+IA0KPiBIaSBKdW5pbywNCj4gDQo+IHRoZSBw
-cm9ibGVtIGFmZmVjdHMgYWxsIGJyYW5jaGVzIChwdSwgbmV4dCwgbWFzdGVyLCBtYWludCk6DQo+
-IGh0dHBzOi8vdHJhdmlzLWNpLm9yZy9naXQvZ2l0L2JyYW5jaGVzDQo+IA0KPiBJcyBpdCBwb3Nz
-aWJsZSBmb3IgdGhpcyBmaXggdG8gZ3JhZHVhdGUgbW9yZSBxdWlja2x5Pw0KPiANCj4gVGhhbmtz
-LA0KPiBMYXJzDQo+IA0KPiAgLnRyYXZpcy55bWwgfCAyICstDQo+ICAxIGZpbGUgY2hhbmdlZCwg
-MSBpbnNlcnRpb24oKyksIDEgZGVsZXRpb24oLSkNCj4gDQo+IGRpZmYgLS1naXQgYS8udHJhdmlz
-LnltbCBiLy50cmF2aXMueW1sDQo+IGluZGV4IDQ3N2MzZDIuLjM3YTFlMWYgMTAwNjQ0DQo+IC0t
-LSBhLy50cmF2aXMueW1sDQo+ICsrKyBiLy50cmF2aXMueW1sDQo+IEBAIC03OCw3ICs3OCw3IEBA
-IGJlZm9yZV9pbnN0YWxsOg0KPiAgICAgICAgICBGT1JNVUxBPSQxDQo+ICAgICAgICAgIFNIQT0k
-KGJyZXcgZmV0Y2ggLS1mb3JjZSAkRk9STVVMQSAyPiYxIHwgZ3JlcCBeU0hBMjU2OiB8IGN1dCAt
-ZCAnICcgLWYgMikNCj4gICAgICAgICAgc2VkIC1FIC1pLmJhayAicy9zaGEyNTYgXCJbMC05YS1m
-XXs2NH1cIi9zaGEyNTYgXCIkU0hBXCIvZyIgXA0KPiAtICAgICAgICAgIC91c3IvbG9jYWwvTGli
-cmFyeS9UYXBzL2hvbWVicmV3L2hvbWVicmV3LWJpbmFyeS8kRk9STVVMQS5yYg0KPiArICAgICAg
-ICAgICIkKGJyZXcgLS1yZXBvc2l0b3J5IGhvbWVicmV3L2hvbWVicmV3LWJpbmFyeSkvJEZPUk1V
-TEEucmIiDQo+ICAgICAgICB9DQo+ICAgICAgICBicmV3IHVwZGF0ZSAtLXF1aWV0DQo+ICAgICAg
-ICBicmV3IHRhcCBob21lYnJldy9iaW5hcnkgLS1xdWlldA0KPiAtLQ0KPiAyLjEwLjANCj4gDQo+
-IA0KDQoNCi0tIA0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLQ0KL2Rldi9yYW5kb20gc2F5czogSWYgd2lubmluZyBpc24ndCBp
-bXBvcnRhbnQgdGhlbiB3aHkga2VlcCBzY29yZT8NCnB5dGhvbiAtYyAicHJpbnQgJzczNzQ2NTY2
-NjE2ZTJlNmU2MTY1Nzc2NTQwNjE3NDZjNjE3MzJkNjU2YzY1NmI3NDcyNmY2ZTY5NmIyZTYzNmY2
-ZCcuZGVjb2RlKCdoZXgnKSIgDQpHUEcgS2V5IGZpbmdlcnByaW50ID0gMkRGNSBFMDFCIDA5QzMg
-NzUwMSBCQ0E5ICA5NjY2IDgyOUIgNDlDNSA5MjIxIDI3QUY=
+On Mon, Sep 19, 2016 at 08:54:40PM +0200, Kevin Daudt wrote:
+
+> diff --git a/mailinfo.c b/mailinfo.c
+> index e19abe3..6a7c2f2 100644
+> --- a/mailinfo.c
+> +++ b/mailinfo.c
+> @@ -54,6 +54,50 @@ static void parse_bogus_from(struct mailinfo *mi, const struct strbuf *line)
+>  	get_sane_name(&mi->name, &mi->name, &mi->email);
+>  }
+>  
+> +static void unquote_quoted_string(struct strbuf *line)
+> +{
+> +	const char *in = strbuf_detach(line, NULL);
+
+I see that this version uses the "detach, and then write into the
+replacement" approach, which is good. But...
+
+> +	int c, take_next_literally = 0;
+> +	int found_error = 0;
+> +
+> +	/*
+> +	 * Stores the character that started the escape mode so that we know what
+> +	 * character will stop it
+> +	 */
+> +	char escape_context = 0;
+> +
+> +	while ((c = *in++) != 0) {
+> +		if (take_next_literally) {
+> +			take_next_literally = 0;
+> +		} else {
+> [...]
+> +		}
+> +
+> +		strbuf_addch(line, c);
+> +	}
+> +}
+
+It needs to `free(in)` at the end of the function.
+
+Your original also fed "line->len" as a hint, but I doubt it really
+matters in practice, so I don't mind losing that.
+
+-Peff
