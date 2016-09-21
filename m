@@ -2,77 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 245E41F935
-	for <e@80x24.org>; Wed, 21 Sep 2016 18:18:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4526E1F935
+	for <e@80x24.org>; Wed, 21 Sep 2016 18:22:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933606AbcIUSST (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Sep 2016 14:18:19 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50095 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S933024AbcIUSST (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2016 14:18:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B06253F7EB;
-        Wed, 21 Sep 2016 14:18:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=zQtYtxagp/iN
-        +d45mQJMDH69Lxc=; b=WKaEmPziE3o0phQvRQAxhxAaxMiPXw2l8rNhe4rjX0se
-        ez/fHsVOrJqMltvS8CgXrF7myOhVWv6+CTQxeMVfg3cZU+mUjt2g2Yf6nIFpZlSS
-        0swx1yR8huQGNc2gUHghjoaf0q013+nibzskuN8n+o2GTcEPOyRQi6ytOBTcZkg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=eFTBuc
-        cecStffCtYAhtpfBVZ4VD4D5c+UKPXkn0IuVpDCzD+eJ+VrS2SO2JCAwaoSLomVo
-        g63wuLLIHmo+bgS6wWkQV6+sN14Y9Kzean/I6IR8XVuEeH3Vu5MhEjbsWBub4sc9
-        bwkZQFYc2sR5UarDU20ReTsDPiOmPRdHGH4b0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A5EEE3F7EA;
-        Wed, 21 Sep 2016 14:18:17 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2B0E03F7E9;
-        Wed, 21 Sep 2016 14:18:17 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, git@drmicha.warpmail.net,
-        max.nordlund@sqore.com
-Subject: Re: [PATCH v2 0/3] Fix git-init in linked worktrees
-References: <20160908134719.27955-1-pclouds@gmail.com>
-        <20160921112939.3444-1-pclouds@gmail.com>
-Date:   Wed, 21 Sep 2016 11:18:15 -0700
-In-Reply-To: <20160921112939.3444-1-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
- =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
-        Duy"'s message of "Wed, 21 Sep 2016 18:29:36 +0700")
-Message-ID: <xmqqh99986c8.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S934161AbcIUSWm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Sep 2016 14:22:42 -0400
+Received: from mout.gmx.net ([212.227.15.19]:61398 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S933024AbcIUSWl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2016 14:22:41 -0400
+Received: from virtualbox ([108.198.118.51]) by mail.gmx.com (mrgmx002) with
+ ESMTPSA (Nemesis) id 0MD9NE-1bliMQ3GP6-00GXX2; Wed, 21 Sep 2016 20:22:35
+ +0200
+Date:   Wed, 21 Sep 2016 20:22:32 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Sep 2016, #05; Mon, 19)
+In-Reply-To: <xmqq8tulclcu.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1609211937360.129229@virtualbox>
+References: <xmqqd1jzcvs5.fsf@gitster.mtv.corp.google.com>        <alpine.DEB.2.20.1609202349260.129229@virtualbox> <xmqq8tulclcu.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: C49A16FA-8027-11E6-8260-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:6JE5MpE31S+Ubm08jmJWdvy5gwiO1wceoIRgwT9dUEFjVLPZ9S/
+ Js6yF1c0B3pXXKmtObX+U0NoZ0re1QSrnNty51qFQYZmXfdRth4VyY/0KwlxTNXJL5AuZHN
+ VJsBUAd4Ky2myB5O617VHoCuDEnv7j+SyspU+ZGes04pQbPftSumNqBePK4dtY/ErxHObV0
+ 4FQ0yHCbyd4N8VuFBsuXA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+mHQhZrbh0w=:TCDomIpbMjvqhTq11YRysf
+ szSkXSW5zanQghplAg5gVHkqqixDNs1Tzt20R/GUh6gQqpRR3N0lp55ecU36OTe9kxGvJT1xI
+ wAPscN5/OpwDBpzLvQjjcqilfaTjPOjSEM7vosU79UWsvQHDMbOibIxchr4ExGv0Uv9LNp9Tb
+ pJ/oQflxGrBwv9sYOnRQaugCYIgg87eCYQpEiErovW2cm/VnVTsXos3DgON8JEM2iOR2IHWhP
+ MRwWnJHu/ONsWLX3xaBP0D9xyqXFGkCRc8nXkDs4lY0F9wbcKrmRObXluugEtJz/NHNO0tzrZ
+ comAgdhkxh8aiylsYZaacmDhfP/aReBCDgbS9zJuL4tdFkG90F+j2UzH55wo4ypoKetTPzIrg
+ EzEDC13eE2kUnhmNZK2+u1PKBxqIk2vJ/06JZL9nyyCg0HoOTfQ+TeM2+TwtMMmecpcOF/Y2i
+ DfXqpN1lM6TswLDRGm246Vd4y6ixOubymXo1RS4LESoZqu+YDkQKTZHA4/ccqTO25cGOboIVD
+ 335XcN5/OMscwKRpKFunWhhwFTWIiR2hJrH3a4OJMoEKh665k69yi8tFXtZFxEsTI4l13bNVn
+ 5FGPWV969BHwa883Tr3bJP2ucHj+ukcBkqKJW5oWygNZiXsxkDveTQdXf2qvUd6euhtBGIZTA
+ E9SlT22Hd5EmEgVWVCiXnqOro6xBYetV4qkIRZbU5oPdi3oP9JML/j9xZoAEjWaImKLF8H5w3
+ e9U8u17y0A53lDJVeSNo3qhNHnizfZke9L6wTfD7IIrDMGAKFqvI99miCA0Vu+lI0c4yyvY/n
+ xJONjSy
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Hi Junio,
 
-> v2 requires jk/setup-sequence-update so I could kill my workaround
-> patch and avoid conflicts in t0001. And:
->
->  - 1/3 has a few missing words back in its commit message
->  - 2/3, which was 3/3 in v1, no longer has the ugly hacky
->    get_first_git_dir()
->  - 3/3 is a new tiny code improvement after the new 2/3
->
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (3):
->   init: correct re-initialization from a linked worktree
->   init: do not set core.worktree more often than necessary
->   init: reuse original_git_dir in set_git_dir_init()
+On Wed, 21 Sep 2016, Junio C Hamano wrote:
 
-Thanks. Will take a look.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> * jk/rebase-i-drop-ident-check (2016-07-29) 1 commit
+> >>   (merged to 'next' on 2016-08-14 at 6891bcd)
+> >>  + rebase-interactive: drop early check for valid ident
+> >> 
+> >>  Even when "git pull --rebase=preserve" (and the underlying "git
+> >>  rebase --preserve") can complete without creating any new commit
+> >>  (i.e. fast-forwards), it still insisted on having a usable ident
+> >>  information (read: user.email is set correctly), which was less
+> >>  than nice.  As the underlying commands used inside "git rebase"
+> >>  would fail with a more meaningful error message and advice text
+> >>  when the bogus ident matters, this extra check was removed.
+> >> 
+> >>  Will hold to see if people scream.
+> >>  cf. <20160729224944.GA23242@sigill.intra.peff.net>
+> >
+> > Let's do this.
+> 
+> We have already been doing it (i.e. "hold to see if people scream")
+> for some time.
+
+I meant: let's merge this to `master`.
+
+> Does it conflict with your effort to reimplement "rebase -i" in C
+
+I do not think so.
+
+> to keep this in 'next'?  Do you want it to move to 'master'?  I was
+> under the impression that it would not make a difference to have or not
+> have this patch once your reimplementation gets merged (meaning: the
+> removal of the three lines will be done by wholesale removal of
+> git-rebase--interactive.sh done the endgame of your series), so...
+
+Oh, I failed to make clear that my patch series do *not* remove
+git-rebase--interactive.sh. I just barely started to work to that end.
+While the speed improvements are quite noticable, the rebase--helper
+command still only implements the performance-critical code paths in C.
+
+There is quite a bit of work left to do before git-rebase--interactive.sh
+can be retired:
+
+- --root is not handled via the sequencer yet,
+
+- --preserve-merges is not handled either [*1*],
+
+- the shell script still sets up the state directory,
+
+- option parsing is still all-shell,
+
+- probably more tasks I forgot.
+
+The good news is that these parts can be converted independently from each
+other, and even by independent developers (hint, hint ;-)).
+
+Ciao,
+Dscho
+
+Footnote *1*: I am not sure that I want to port -p to C: in my view, this
+is a failed experiment, to be replaced with a design based on my Git
+garden shears. I tend to think that that part should be moved to a new
+shell script ("git-rebase--preserve-merges.sh"?) unless some developer
+other than me feels strongly enough to put their money where their mouth
+is and teach the sequencer about it.
