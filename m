@@ -6,77 +6,115 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C11651F935
-	for <e@80x24.org>; Wed, 21 Sep 2016 16:45:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 761A120985
+	for <e@80x24.org>; Wed, 21 Sep 2016 16:50:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936498AbcIUQpS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Sep 2016 12:45:18 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51130 "EHLO
+        id S938728AbcIUQun (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Sep 2016 12:50:43 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58014 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S934522AbcIUQpR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2016 12:45:17 -0400
+        with ESMTP id S934786AbcIUQum (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2016 12:50:42 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B61B23E254;
-        Wed, 21 Sep 2016 12:42:59 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 39DB73CC88;
+        Wed, 21 Sep 2016 12:50:41 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=bbjBINsA1wzYfhccTGjuZazmxGA=; b=pk4LHG
-        Xjsvx3/R/UvRFbB7so3EETpjw/J6vA13Q84KaRwHQa/XLg5IX3+e2AzaBLqPiOrH
-        /Ecj45myAGAUhdABKUxpgf+yjA8qTnjAqA+ea5yamZAjXvelY1947KGBABqMU6qI
-        8vuO+csGncLWj289cmJNxEVuLUV38UXj2WXX4=
+        :content-type:content-transfer-encoding; s=sasl; bh=IbpaB8G5GeA/
+        r75UBj3AaUk20d0=; b=cQj/kvp7FSk3Ir8zcXozgSswb0DK2OQKUI3+vKvIlELH
+        f8pjkPbCEf9aI2ucN8kOiDRC/cUUehrEZ0FWOcZABT9bXfe8wBnWx+JzTBuOv/q0
+        hDyLHpA4o9j6bEbMVa+YJoGSRrEr41DXv0+sAV38iLVaFapirWPD/ip4xtd4u/g=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=U8Ybfkm+pMncO3uEzMV2UZXkv4u+ztSH
-        xdOMHk4sIVNML6z6+MIeYAfJhvQGQQMm3mxf4ZGFaY9eV77XYUFc6BdExzWKRj+Z
-        w8gG2k897YGSadD5B5eSFgeYVJyxhPdxsHtkDG6vIQ4xtf4XaI2Bc/a5pWNYC5Nz
-        xeO/DmStxpI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id ADCA13E253;
-        Wed, 21 Sep 2016 12:42:59 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=BzGwvi
+        /oOcCfQC3G2YqH9MDb3QitX1DoKK2l6WMQ1Mqy4pKS8IywnHFVHOxfXK89uQnJL3
+        sNsk+AdMbzZi+nwypBeErulX/5eXeuTLvR6K5gFqyS0uSqXFk65bLOeNVAJdf8J6
+        +lMGLCirrtr5te51SMbEnYG14bnP5AEyg2wQ8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3108C3CC85;
+        Wed, 21 Sep 2016 12:50:41 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 146783E24F;
-        Wed, 21 Sep 2016 12:42:58 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A1A8F3CC80;
+        Wed, 21 Sep 2016 12:50:40 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     stefan.naewe@atlas-elektronik.com, git@vger.kernel.org
-Subject: Re: [PATCH v1] travis-ci: ask homebrew for the its path instead of hardcoding it
-References: <20160921084518.13091-1-larsxschneider@gmail.com>
-        <83e3049c-34ea-4440-7b4d-061cb98ba2dd@atlas-elektronik.com>
-        <14C21417-491B-4C8E-90FE-47154EEDD9FE@gmail.com>
-Date:   Wed, 21 Sep 2016 09:42:56 -0700
-In-Reply-To: <14C21417-491B-4C8E-90FE-47154EEDD9FE@gmail.com> (Lars
-        Schneider's message of "Wed, 21 Sep 2016 15:28:51 +0200")
-Message-ID: <xmqqzin19pbj.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
+        Kay Sievers <kay.sievers@suse.de>
+Subject: Re: [PATCH 3/3] gitweb: Link to "git describe"'d commits in log messages
+References: <20160921114428.28664-1-avarab@gmail.com>
+        <20160921114428.28664-3-avarab@gmail.com>
+Date:   Wed, 21 Sep 2016 09:50:38 -0700
+In-Reply-To: <20160921114428.28664-3-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 21 Sep 2016 11:44:28 +0000")
+Message-ID: <xmqqvaxp9oyp.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 73C2791E-801A-11E6-A66B-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 877A5E62-801B-11E6-BA91-C26412518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lars Schneider <larsxschneider@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
->> On 21 Sep 2016, at 11:31, stefan.naewe@atlas-elektronik.com wrote:
->> 
->> In the Subject: s/the //
->> 
->> Am 21.09.2016 um 10:45 schrieb larsxschneider@gmail.com:
->>> From: Lars Schneider <larsxschneider@gmail.com>
->>> 
->>> The TravisCI macOS build is broken because homebrew (a macOS depedency
->> 
->> s/depedency/dependency/
->
-> Thanks for spotting both errors!
->
-> @Junio: Should I make a v2?
+> There's surely room for improvement here, but I just wanted to address
+> the very common case of sticking "git describe" output into commit
+> messages without trying to link to all possible refnames, that's going
+> to be a rather futile exercise given that this is free text, and it
+> would be prohibitively expensive to look up whether the references in
+> question exist in our repository.
 
-No.  osx before_install stuff was in there since the very beginning,
-i.e. 522354d7 ("Add Travis CI support", 2015-11-27), so I guess this
-needs to go to maint-2.7 and upwards, but I guess we should discourage
-people to stay on an older maintenance track forever, so let's do
-this only for 'maint' and upwards.
+When I saw 2/3 I wondered about one thing and 3/3 shares the same,
+which is that we only use regex match and do not validate for a
+false match.  Would it be too expensive to pick up what _looks_ like
+a rev (e.g. hex or g(refname regexp)-hex) then validate it with
+"rev-parse --verify --quiet" to make sure it is a rev, before
+actually making it a link?  Even if are we trying to account for
+people referring to commits that do not exist in this repository
+(e.g. some other project, in a submodule repository, or just an
+earlier incarnation of rebasing that has since been lost), it seems
+to me that it does not help to mark them with a link that won't
+resolve.
+
+> ---
+>  gitweb/gitweb.perl | 18 ++++++++++++++++--
+>  1 file changed, 16 insertions(+), 2 deletions(-)
+>
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 101dbc0..3a52bc7 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -2036,10 +2036,24 @@ sub format_log_line_html {
+>  	my $line =3D shift;
+> =20
+>  	$line =3D esc_html($line, -nbsp=3D>1);
+> -	$line =3D~ s{\b([0-9a-fA-F]{7,40})\b}{
+> +	$line =3D~ s{
+> +        \b
+> +        (
+> +            # The output of "git describe", e.g. v2.10.0-297-gf6727b0
+> +            # or hadoop-20160921-113441-20-g094fb7d
+> +            (?<!-) # see strbuf_check_tag_ref(). Tags can't start with=
+ -
+> +            [A-Za-z0-9.-]+
+> +            (?!\.) # refs can't end with ".", see check_refname_format=
+()
+> +            -g[0-9a-fA-F]{7,40}
+> +            |
+> +            # Just a normal looking Git SHA1
+> +            [0-9a-fA-F]{7,40}
+> +        )
+> +        \b
+> +    }{
+>  		$cgi->a({-href =3D> href(action=3D>"object", hash=3D>$1),
+>  					-class =3D> "text"}, $1);
+> -	}eg;
+> +	}egx;
+> =20
+>  	return $line;
+>  }
