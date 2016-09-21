@@ -2,122 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCB0C1F935
-	for <e@80x24.org>; Wed, 21 Sep 2016 17:49:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 339C91F935
+	for <e@80x24.org>; Wed, 21 Sep 2016 17:51:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758275AbcIURtz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Sep 2016 13:49:55 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55229 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1756421AbcIURty (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2016 13:49:54 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A9E743E910;
-        Wed, 21 Sep 2016 13:49:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ot5QDN4ifxK1v/ba7mnJlY2CgTo=; b=IE42Bo
-        bT+6mK/NdFmHRg2296tpBIITcvMQH6bGnZ0R/AgWus9lf2xXGu5hToypJiMsNL+z
-        JURl9ms9gbpiGODlx60WaKzWgypf5C6hJeNjbDfypFc1tQpe584gLUObwiqao80G
-        BXCpVswQ80LpRSfUyhOJm4Jz0LBfrBbAMVbag=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=uOY1Otb3wBENxVFb5GD0om+/TSvD/VSD
-        Ex+wof0pF1snIgH+geZHuNdKLpYDDeICnNz4kp8baCD0uGQ2QJLhN/+HwHqRFOni
-        TDBdu2n9T73NqC4ZjCxKQn8NDSIErpr/o0Gc06R6WK2BR4TBmoZ3mKRx5pzJo8ok
-        n+v3pky7uII=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A181D3E90F;
-        Wed, 21 Sep 2016 13:49:51 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 32B8D3E90E;
-        Wed, 21 Sep 2016 13:49:50 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v2] ls-files: add pathspec matching for submodules
-References: <CAKoko1qrAuLhn6qQax-BSZFhEqbFdiBbVrip8TD3NVjD8Xzy0g@mail.gmail.com>
-        <1474311151-117883-1-git-send-email-bmwill@google.com>
-        <xmqqh99bcw6m.fsf@gitster.mtv.corp.google.com>
-        <CAKoko1oU+QR61Vy0eSxaRe_w8u4q_bC9gx9H7oMqH=CwNzBVCA@mail.gmail.com>
-        <CAKoko1qS0+DgnMeNnjayEK3sWnvpuiS4oRDBSR=6s8i4okQ_Hw@mail.gmail.com>
-        <xmqqmvj19nyp.fsf@gitster.mtv.corp.google.com>
-Date:   Wed, 21 Sep 2016 10:49:48 -0700
-In-Reply-To: <xmqqmvj19nyp.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Wed, 21 Sep 2016 10:12:14 -0700")
-Message-ID: <xmqq37kt9m83.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1758427AbcIURve (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Sep 2016 13:51:34 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34357 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756502AbcIURvd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2016 13:51:33 -0400
+Received: by mail-wm0-f66.google.com with SMTP id l132so9852966wmf.1
+        for <git@vger.kernel.org>; Wed, 21 Sep 2016 10:51:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=3GfabYC6Xb5iYGmXApGNHnwnPtaKEy9XxgiehXZFi24=;
+        b=xCQb1tx7pKKwkKRxH1lnNp0whXmNw5ZaKLWo47ocB0BrWocUM9+1HqnOaueuBw7eI8
+         h18C2AXcxaNnbxPUOHrVXvq6e9Zwb3ehzKt2MpK/IC9/7BC1z9XJtiTzLz3sXThJe5M2
+         oiB1SrL+ipRSQc4J/Xprgw6HS75g0Kd9Fm8oXdfAEi5cczIXlqgCDlZZlhQQMGhh0cPj
+         6d79W4O0sNEqQjHOvbIBfPfdDz5drYhZv+kZtd50c9rKtXyZIlp0RikZpZfSqSa9aP5I
+         BEgm3Vch3cUOvP8iYx/+xaGytXZkBPL+o8sKbyKFZkulNwjOcGLO265nGkPEjBwQERM8
+         6j9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=3GfabYC6Xb5iYGmXApGNHnwnPtaKEy9XxgiehXZFi24=;
+        b=E5XPLws+9Xwp2vSEzpg0oAYrnGA+j3d/8GZ5NjurPwCESPX4XwhojmmBCSIGn11nRF
+         YXMODxZu1oVK4gJ0j3FEHn6lc/GIFnWsSiZlLl9cp/0FoDpMrHVH0uUYeQtGwqXgOJP6
+         bVjGu4CjqCTWiezUsb8XBaDSATfck6bi/eLpYdJPAut6EQIKe81brfVgodtVxGcNDnOM
+         cZZvrrfSze+aHSMZqISfFzXbGfebwv/+dIz69KCi90KS4nXDPRoH9pz7Acj5TYCVvUDC
+         N0Ul76XowttiDe9ZyI2nz+Ga1p95cBoxrN96RN0AoFFNy4/4w+ZDOSgeyL8KeGP2Cr4F
+         KN8A==
+X-Gm-Message-State: AE9vXwMwvb63XdgAznkKnE6maqOYm7jZGTD2cXmTQBBhmJxRSbmUokfrK1KWSwxHl2WC2g==
+X-Received: by 10.195.9.73 with SMTP id dq9mr34125065wjd.31.1474480291816;
+        Wed, 21 Sep 2016 10:51:31 -0700 (PDT)
+Received: from [192.168.1.26] (enn40.neoplus.adsl.tpnet.pl. [83.20.3.40])
+        by smtp.googlemail.com with ESMTPSA id xb6sm34671633wjb.30.2016.09.21.10.51.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 21 Sep 2016 10:51:30 -0700 (PDT)
+Subject: Re: [PATCH] gitweb: use highlight's shebang detection
+To:     Junio C Hamano <gitster@pobox.com>
+References: <20160906190037.12442-1-ian@iankelling.org>
+ <108ce713-337a-801a-6c3b-089ef25a3883@gmail.com>
+ <xmqq4m59b43v.fsf@gitster.mtv.corp.google.com>
+Cc:     Ian Kelling <ian@iankelling.org>, git@vger.kernel.org
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <bef8e911-0f4a-2b42-3f98-98686bf2de44@gmail.com>
+Date:   Wed, 21 Sep 2016 19:51:14 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CB2BCBC0-8023-11E6-872B-C26412518317-77302942!pb-smtp1.pobox.com
+In-Reply-To: <xmqq4m59b43v.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+W dniu 21.09.2016 o 18:38, Junio C Hamano pisze:
+> Jakub Narębski <jnareb@gmail.com> writes:
+>> W dniu 06.09.2016 o 21:00, Ian Kelling pisze:
+>>
+>>> The highlight binary can detect language by shebang when we can't tell
+>>> the syntax type by the name of the file. 
+>>
+>> Was it something always present among highlight[1] binary capabilities,
+>> or is it something present only in new enough highlight app?  Or only
+>> in some specific fork / specific binary?  I couldn't find language
+>> detection in highlight[1] documentation...
+>> ...
+>> Thank you for your work on this patch,
+> 
+> Thanks for reviewing.  It seems that there will be further exchange
+> needed before I can pick it up?
 
-> Brandon Williams <bmwill@google.com> writes:
->
->> On a similar but slightly different note.  In general do we want
->> the pathspec '??b' to match against the sib/ directory and
->> subsequently have ls-files print all entries inside of the sib/
->> directory?  (this is in the non-recursive case)
->
-> I'd need to find time to dig a bit of history before I can give a
-> firm opinion on this, but here is a knee-jerk version of my reaction.
+Yes, I think so.
 
-In the context of what you are doing, i.e. "ls-files that recurses
-into submodules", my opinion is that "ls-files --recurse-submodules"
-should behave wrt pathspecs AS IF all the submodule contents are
-flattened into a single index of the superproject.
+-- 
+Jakub Narębski
 
-In the sample scenario under discussion, i.e.
-
-    In the superproject we have these
-    $ git ls-files -s
-    100644 c489803d5bdec1755f650854fe7ef5ab7a3ee58d 0       .gitmodules
-    100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       sib/file
-    160000 1f5a0695289c500f25e7fa55e3ad27e394d1206b 0       sub
-
-    In 'sub' submodule we have this
-    100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       file
-
-such a flattend index would look like this:
-
-    100644 c489803d5bdec1755f650854fe7ef5ab7a3ee58d 0       .gitmodules
-    100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       sib/file
-    100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       sub/file
-
-i.e. removing 'sub' submodule entry from the index of the
-superproject and overlay everything in the submodule with sub/
-prefixed to its path.
-
-And with such an index, if and only if a path matches a pathspec,
-"git ls-files --recurse-submodules" run at the toplevel with the
-same pathspec should show the path.  That means
-
-    $ git ls-files --recurse-submodules '??b'
-
-would show nothing (not even 'sub'), while
-
-    $ git ls-files --recurse-submodules '??b*'
-
-should show sib/file and sub/file.  That is because that is how the
-command without "--recurse-submodules" working on that flat index
-would produce.
-
-The "we have historically two kinds of pathspecs and they differ how
-they work with wildcard" is a separate issue, I would think, even
-though the result would affect what should happen in the above
-example (i.e. if we said "either a pattern match or a literal match
-to a leading directory path should make everything underneath
-match", '??b' would make sib/<anything> and sub/<anything> to be
-shown).
