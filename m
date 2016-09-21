@@ -2,108 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 344681F935
-	for <e@80x24.org>; Wed, 21 Sep 2016 17:49:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCB0C1F935
+	for <e@80x24.org>; Wed, 21 Sep 2016 17:49:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758204AbcIURtn (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Sep 2016 13:49:43 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33943 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756421AbcIURtm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2016 13:49:42 -0400
-Received: by mail-wm0-f68.google.com with SMTP id l132so9845293wmf.1
-        for <git@vger.kernel.org>; Wed, 21 Sep 2016 10:49:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=xuubjluHt0H1AWYUUuYFbN79pb/7glp6mCKHWYmGGwI=;
-        b=G1yT40Io1UcwCQofK5f3724pYC9rjjWoG2GfwNS5mrld+HK3UhBwUM5zd94lBK3TcC
-         zyOAPrS0IyVG9E7Y4mcEiP/NEZ8mbOoZOtIGr9N7PRpOIyCFgFl6tCw4rLzrD6pZfcMq
-         X+56dkAY45Vbd86o4GXojFKzvxTEJNMg5mjpWh1+0U6RhTHgeoafs2hBV64qJqgi2uMC
-         9+Pm5t0aN3gk6W5T75gM46U4M4yyAcMeJqCpVUqw29eggPVjyTjmvAbEDMAHZleUauw2
-         0SWqiar6gufMbxLHdIhIPmhA+6QYde/F5iWA3D02peQ7qbIwv8J11j1B0BRExpsarvJ3
-         4mlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=xuubjluHt0H1AWYUUuYFbN79pb/7glp6mCKHWYmGGwI=;
-        b=MI+I85ZelZtM1xLL/v+TThXgKkzA+TuPkp/0VRZ7kU44305Ljg7Lex8hKUVd/hVsN+
-         xw2mWfXjMXmufpUkvXH7051x6ajlBwVgPrfcNXESjcQEjKJ7QnxZBy3Sg1ldW5UEHXL0
-         ZEwswJhNYXOXi0H6G53d2AYsKHjWskiaz5BsWgsnkM9FXVOlr4EfMH23r0v2qQKPknge
-         qiI8KpNPnTIPTs82bv2SF2C55n+zFT2DViwSGHxNm+wo17K+Bwz9CgCC4GKoj2Z6lpXJ
-         SAstT63PNpWc+0lKJQMtShCK4aUdyU7gdXbD54DOzLjpe+Lzla7ag1wIsIL7ukDFfjcH
-         zOAg==
-X-Gm-Message-State: AE9vXwO1jn/ri0HdYXJuiyB1XaWTmVphHjvc3ZpcfW07M5dxd8oQjP8r5gAuFul8e09k2g==
-X-Received: by 10.194.30.97 with SMTP id r1mr34000310wjh.8.1474480180804;
-        Wed, 21 Sep 2016 10:49:40 -0700 (PDT)
-Received: from [192.168.1.26] (enn40.neoplus.adsl.tpnet.pl. [83.20.3.40])
-        by smtp.googlemail.com with ESMTPSA id ub8sm34710449wjc.39.2016.09.21.10.49.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 21 Sep 2016 10:49:40 -0700 (PDT)
-Subject: Re: [PATCH 3/3] gitweb: Link to "git describe"'d commits in log
- messages
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <20160921114428.28664-1-avarab@gmail.com>
- <20160921114428.28664-3-avarab@gmail.com>
- <xmqqvaxp9oyp.fsf@gitster.mtv.corp.google.com>
-Cc:     git@vger.kernel.org
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <ba9d9c82-4b5e-4d62-95f1-a1c56cfc70af@gmail.com>
-Date:   Wed, 21 Sep 2016 19:49:23 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+        id S1758275AbcIURtz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Sep 2016 13:49:55 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55229 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1756421AbcIURty (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2016 13:49:54 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A9E743E910;
+        Wed, 21 Sep 2016 13:49:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ot5QDN4ifxK1v/ba7mnJlY2CgTo=; b=IE42Bo
+        bT+6mK/NdFmHRg2296tpBIITcvMQH6bGnZ0R/AgWus9lf2xXGu5hToypJiMsNL+z
+        JURl9ms9gbpiGODlx60WaKzWgypf5C6hJeNjbDfypFc1tQpe584gLUObwiqao80G
+        BXCpVswQ80LpRSfUyhOJm4Jz0LBfrBbAMVbag=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=uOY1Otb3wBENxVFb5GD0om+/TSvD/VSD
+        Ex+wof0pF1snIgH+geZHuNdKLpYDDeICnNz4kp8baCD0uGQ2QJLhN/+HwHqRFOni
+        TDBdu2n9T73NqC4ZjCxKQn8NDSIErpr/o0Gc06R6WK2BR4TBmoZ3mKRx5pzJo8ok
+        n+v3pky7uII=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A181D3E90F;
+        Wed, 21 Sep 2016 13:49:51 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 32B8D3E90E;
+        Wed, 21 Sep 2016 13:49:50 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v2] ls-files: add pathspec matching for submodules
+References: <CAKoko1qrAuLhn6qQax-BSZFhEqbFdiBbVrip8TD3NVjD8Xzy0g@mail.gmail.com>
+        <1474311151-117883-1-git-send-email-bmwill@google.com>
+        <xmqqh99bcw6m.fsf@gitster.mtv.corp.google.com>
+        <CAKoko1oU+QR61Vy0eSxaRe_w8u4q_bC9gx9H7oMqH=CwNzBVCA@mail.gmail.com>
+        <CAKoko1qS0+DgnMeNnjayEK3sWnvpuiS4oRDBSR=6s8i4okQ_Hw@mail.gmail.com>
+        <xmqqmvj19nyp.fsf@gitster.mtv.corp.google.com>
+Date:   Wed, 21 Sep 2016 10:49:48 -0700
+In-Reply-To: <xmqqmvj19nyp.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Wed, 21 Sep 2016 10:12:14 -0700")
+Message-ID: <xmqq37kt9m83.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqvaxp9oyp.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: CB2BCBC0-8023-11E6-872B-C26412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 21.09.2016 o 18:50, Junio C Hamano pisze:
-> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
-> 
->> There's surely room for improvement here, but I just wanted to address
->> the very common case of sticking "git describe" output into commit
->> messages without trying to link to all possible refnames, that's going
->> to be a rather futile exercise given that this is free text, and it
->> would be prohibitively expensive to look up whether the references in
->> question exist in our repository.
-> 
-> When I saw 2/3 I wondered about one thing and 3/3 shares the same,
-> which is that we only use regex match and do not validate for a
-> false match.  Would it be too expensive to pick up what _looks_ like
-> a rev (e.g. hex or g(refname regexp)-hex) then validate it with
-> "rev-parse --verify --quiet" to make sure it is a rev, before
-> actually making it a link?  Even if are we trying to account for
-> people referring to commits that do not exist in this repository
-> (e.g. some other project, in a submodule repository, or just an
-> earlier incarnation of rebasing that has since been lost), it seems
-> to me that it does not help to mark them with a link that won't
-> resolve.
+Junio C Hamano <gitster@pobox.com> writes:
 
-I think it could be a good *option*, but revision verification
-could be costly, for example in the 'log' view with multiple commits
-and multiple revision-like looking candidates, even if we were able
-to do it with one command.
+> Brandon Williams <bmwill@google.com> writes:
+>
+>> On a similar but slightly different note.  In general do we want
+>> the pathspec '??b' to match against the sib/ directory and
+>> subsequently have ls-files print all entries inside of the sib/
+>> directory?  (this is in the non-recursive case)
+>
+> I'd need to find time to dig a bit of history before I can give a
+> firm opinion on this, but here is a knee-jerk version of my reaction.
 
-Also, "git rev-parse --verify [--quiet]" can verify only one
-revision at once, isn't it? Maybe something like 'git cat-file
---batch-check' would be better (one fork)?
+In the context of what you are doing, i.e. "ls-files that recurses
+into submodules", my opinion is that "ls-files --recurse-submodules"
+should behave wrt pathspecs AS IF all the submodule contents are
+flattened into a single index of the superproject.
 
-It's a matter of balance between false positives (and unresolving
-links) and performance...
+In the sample scenario under discussion, i.e.
 
-Best,
--- 
-Jakub Narębski
+    In the superproject we have these
+    $ git ls-files -s
+    100644 c489803d5bdec1755f650854fe7ef5ab7a3ee58d 0       .gitmodules
+    100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       sib/file
+    160000 1f5a0695289c500f25e7fa55e3ad27e394d1206b 0       sub
 
+    In 'sub' submodule we have this
+    100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       file
+
+such a flattend index would look like this:
+
+    100644 c489803d5bdec1755f650854fe7ef5ab7a3ee58d 0       .gitmodules
+    100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       sib/file
+    100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       sub/file
+
+i.e. removing 'sub' submodule entry from the index of the
+superproject and overlay everything in the submodule with sub/
+prefixed to its path.
+
+And with such an index, if and only if a path matches a pathspec,
+"git ls-files --recurse-submodules" run at the toplevel with the
+same pathspec should show the path.  That means
+
+    $ git ls-files --recurse-submodules '??b'
+
+would show nothing (not even 'sub'), while
+
+    $ git ls-files --recurse-submodules '??b*'
+
+should show sib/file and sub/file.  That is because that is how the
+command without "--recurse-submodules" working on that flat index
+would produce.
+
+The "we have historically two kinds of pathspecs and they differ how
+they work with wildcard" is a separate issue, I would think, even
+though the result would affect what should happen in the above
+example (i.e. if we said "either a pattern match or a literal match
+to a leading directory path should make everything underneath
+match", '??b' would make sib/<anything> and sub/<anything> to be
+shown).
