@@ -2,67 +2,321 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F67C1F935
-	for <e@80x24.org>; Wed, 21 Sep 2016 22:04:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFC6D1F935
+	for <e@80x24.org>; Wed, 21 Sep 2016 22:05:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932313AbcIUWER (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Sep 2016 18:04:17 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46349 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754056AbcIUWEQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2016 18:04:16 -0400
-Received: (qmail 21188 invoked by uid 109); 21 Sep 2016 22:04:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 21 Sep 2016 22:04:16 +0000
-Received: (qmail 3545 invoked by uid 111); 21 Sep 2016 22:04:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 21 Sep 2016 18:04:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Sep 2016 18:04:13 -0400
-Date:   Wed, 21 Sep 2016 18:04:13 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Benjamin Kramer <benny.kra@googlemail.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH v4 0/3] Fix a segfault caused by regexec() being called
- on mmap()ed data
-Message-ID: <20160921220413.5iedndabx7v6wdl7@sigill.intra.peff.net>
-References: <cover.1473321437.git.johannes.schindelin@gmx.de>
- <cover.1474482164.git.johannes.schindelin@gmx.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1474482164.git.johannes.schindelin@gmx.de>
+        id S1754823AbcIUWFP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Sep 2016 18:05:15 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:33536 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753010AbcIUWFO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2016 18:05:14 -0400
+Received: by mail-pf0-f180.google.com with SMTP id 21so23300976pfy.0
+        for <git@vger.kernel.org>; Wed, 21 Sep 2016 15:05:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=/YFnjRMuu3SM2j1ZJl9CND3ZJS7q8yFP3FcSf902Hl8=;
+        b=Ecg98K4ihcX3NdYe9+OqaU21yiNHvbIL7oXk8QfhQWXceKP/b8BqI1r9w9tlq6Ps9o
+         GO716lfhHc0nuKTfHFbvS3vFMHbsv5UoUYXUXCi5iFvH+v9MdncJ9jhuNtYf2317Cvd5
+         n9sH166jilumf2AP9jFwTEXd77CGOdMcU+3nvAQhpHBx741N4JaL028CaHvPbD6KpDK0
+         m/VuRPALMAJL6n1g4vo+F2n0G9mDK9AAWiVAVio/mCuX2+NMdMB4skxA4YJNBJ/qKzOS
+         Cx/pGC0vzZBw9cAjfa0alyH542gat3xWWB9plGYTjUuXUThq8HFnXPKA5yq3jjr2bvot
+         h9Sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=/YFnjRMuu3SM2j1ZJl9CND3ZJS7q8yFP3FcSf902Hl8=;
+        b=b1xaqZTZu8ajwMwxUmUa6UtFAiOQOOO8ozWiAPBIe51sxnN4AeXyRQSIkHX3TVHWZY
+         mkgLQJL3REw6XOBrd60uk7dKEDoq4CUdDywZwrp7eExvl2jqAW/59bX6lwmlPTxRNLFL
+         i8Efgz2X7pXOYSmVcY2gEtsFGHVLk4oj0myyl0fMvkbON0wBEHPQwHVAuoGUFDnRzMba
+         GO+asKrYpl6zCyCk1B3n4+kz/j/Ihhx0Ove0GnEkUTJcuFdmJ8k6EYZlzg3rpMg9pfdW
+         zpaE9MlJKsZSjAQa1+vJOqexHvdpreNTdWchssB+wr4M9xGYBi2YXa5PEaKw0b8aB1y+
+         pCZQ==
+X-Gm-Message-State: AE9vXwNC6l7Mk1d9B4IZpfEk7qM2B6vqg5kgOYwAcRBGbaTDOFXDvDKl/t86IHWM/8odR9Kd
+X-Received: by 10.98.69.73 with SMTP id s70mr67810977pfa.115.1474495513871;
+        Wed, 21 Sep 2016 15:05:13 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b00:e91b:12fd:4246:c4bd])
+        by smtp.gmail.com with ESMTPSA id ra13sm48837906pac.29.2016.09.21.15.05.12
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 21 Sep 2016 15:05:12 -0700 (PDT)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Williams <bmwill@google.com>
+Subject: [PATCH 1/2] ls-files: adding support for submodules
+Date:   Wed, 21 Sep 2016 15:04:31 -0700
+Message-Id: <1474495472-94190-1-git-send-email-bmwill@google.com>
+X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 21, 2016 at 08:23:11PM +0200, Johannes Schindelin wrote:
+Allow ls-files to recognize submodules in order to retrieve a list of
+files from a repository's submodules.  This is done by forking off a
+process to recursively call ls-files on all submodules. Also added a
+submodule-prefix command in order to prepend paths to child processes.
 
-> We solve this by introducing a helper, regexec_buf(), that takes a
-> pointer and a length instead of a NUL-terminated string.
-> 
-> This helper then uses REG_STARTEND where available, and falls back to
-> allocating and constructing a NUL-terminated string. Given the
-> wide-spread support for REG_STARTEND (Linux has it, MacOSX has it, Git
-> for Windows has it because it uses compat/regex/ that has it), I think
-> this is a fair trade-off.
+Signed-off-by: Brandon Williams <bmwill@google.com>
+---
+ Documentation/git-ls-files.txt         | 11 +++-
+ builtin/ls-files.c                     | 61 +++++++++++++++++++++
+ t/t3007-ls-files-recurse-submodules.sh | 99 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 170 insertions(+), 1 deletion(-)
+ create mode 100755 t/t3007-ls-files-recurse-submodules.sh
 
-I did a double-take on this, but then read:
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+index 0d933ac..09e4449 100644
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -18,7 +18,9 @@ SYNOPSIS
+ 		[--exclude-per-directory=<file>]
+ 		[--exclude-standard]
+ 		[--error-unmatch] [--with-tree=<tree-ish>]
+-		[--full-name] [--abbrev] [--] [<file>...]
++		[--full-name] [--recurse-submodules]
++		[--submodule-prefix=<path>]
++		[--abbrev] [--] [<file>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -137,6 +139,13 @@ a space) at the start of each line:
+ 	option forces paths to be output relative to the project
+ 	top directory.
+ 
++--recurse-submodules::
++	Recursively calls ls-files on each submodule in the repository.
++	Currently there is only support for the --cached mode.
++
++--submodule-prefix=<path>::
++	Prepend the provided path to the output of each file
++
+ --abbrev[=<n>]::
+ 	Instead of showing the full 40-byte hexadecimal object
+ 	lines, show only a partial prefix.
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 00ea91a..ffd9ea6 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -14,6 +14,7 @@
+ #include "resolve-undo.h"
+ #include "string-list.h"
+ #include "pathspec.h"
++#include "run-command.h"
+ 
+ static int abbrev;
+ static int show_deleted;
+@@ -28,6 +29,8 @@ static int show_valid_bit;
+ static int line_terminator = '\n';
+ static int debug_mode;
+ static int show_eol;
++static const char *submodule_prefix;
++static int recurse_submodules;
+ 
+ static const char *prefix;
+ static int max_prefix_len;
+@@ -68,6 +71,21 @@ static void write_eolinfo(const struct cache_entry *ce, const char *path)
+ static void write_name(const char *name)
+ {
+ 	/*
++	 * NEEDSWORK: To make this thread-safe, full_name would have to be owned
++	 * by the caller.
++	 *
++	 * full_name get reused across output lines to minimize the allocation
++	 * churn.
++	 */
++	static struct strbuf full_name = STRBUF_INIT;
++	if (submodule_prefix && *submodule_prefix) {
++		strbuf_reset(&full_name);
++		strbuf_addstr(&full_name, submodule_prefix);
++		strbuf_addstr(&full_name, name);
++		name = full_name.buf;
++	}
++
++	/*
+ 	 * With "--full-name", prefix_len=0; this caller needs to pass
+ 	 * an empty string in that case (a NULL is good for "").
+ 	 */
+@@ -152,6 +170,26 @@ static void show_killed_files(struct dir_struct *dir)
+ 	}
+ }
+ 
++/**
++ * Recursively call ls-files on a submodule
++ */
++static void show_gitlink(const struct cache_entry *ce)
++{
++	struct child_process cp = CHILD_PROCESS_INIT;
++	int status;
++
++	argv_array_push(&cp.args, "ls-files");
++	argv_array_push(&cp.args, "--recurse-submodules");
++	argv_array_pushf(&cp.args, "--submodule-prefix=%s%s/",
++			 submodule_prefix ? submodule_prefix : "",
++			 ce->name);
++	cp.git_cmd = 1;
++	cp.dir = ce->name;
++	status = run_command(&cp);
++	if (status)
++		exit(status);
++}
++
+ static void show_ce_entry(const char *tag, const struct cache_entry *ce)
+ {
+ 	int len = max_prefix_len;
+@@ -163,6 +201,10 @@ static void show_ce_entry(const char *tag, const struct cache_entry *ce)
+ 			    len, ps_matched,
+ 			    S_ISDIR(ce->ce_mode) || S_ISGITLINK(ce->ce_mode)))
+ 		return;
++	if (recurse_submodules && S_ISGITLINK(ce->ce_mode)) {
++		show_gitlink(ce);
++		return;
++	}
+ 
+ 	if (tag && *tag && show_valid_bit &&
+ 	    (ce->ce_flags & CE_VALID)) {
+@@ -468,6 +510,10 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 		{ OPTION_SET_INT, 0, "full-name", &prefix_len, NULL,
+ 			N_("make the output relative to the project top directory"),
+ 			PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL },
++		OPT_STRING(0, "submodule-prefix", &submodule_prefix,
++			N_("path"), N_("prepend <path> to each file")),
++		OPT_BOOL(0, "recurse-submodules", &recurse_submodules,
++			N_("recurse through submodules")),
+ 		OPT_BOOL(0, "error-unmatch", &error_unmatch,
+ 			N_("if any <file> is not in the index, treat this as an error")),
+ 		OPT_STRING(0, "with-tree", &with_tree, N_("tree-ish"),
+@@ -519,6 +565,21 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 	if (require_work_tree && !is_inside_work_tree())
+ 		setup_work_tree();
+ 
++	if (recurse_submodules &&
++	    (show_stage || show_deleted || show_others || show_unmerged ||
++	     show_killed || show_modified || show_resolve_undo ||
++	     show_valid_bit || show_tag || show_eol))
++		die("ls-files --recurse-submodules can only be used in "
++		    "--cached mode");
++
++	if (recurse_submodules && error_unmatch)
++		die("ls-files --recurse-submodules does not support "
++		    "--error-unmatch");
++
++	if (recurse_submodules && argc)
++		die("ls-files --recurse-submodules does not support path "
++		    "arguments");
++
+ 	parse_pathspec(&pathspec, 0,
+ 		       PATHSPEC_PREFER_CWD |
+ 		       PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP,
+diff --git a/t/t3007-ls-files-recurse-submodules.sh b/t/t3007-ls-files-recurse-submodules.sh
+new file mode 100755
+index 0000000..caf3815
+--- /dev/null
++++ b/t/t3007-ls-files-recurse-submodules.sh
+@@ -0,0 +1,99 @@
++#!/bin/sh
++
++test_description='Test ls-files recurse-submodules feature
++
++This test verifies the recurse-submodules feature correctly lists files from
++submodules.
++'
++
++. ./test-lib.sh
++
++test_expect_success 'setup directory structure and submodules' '
++	echo a >a &&
++	mkdir b &&
++	echo b >b/b &&
++	git add a b &&
++	git commit -m "add a and b" &&
++	git init submodule &&
++	echo c >submodule/c &&
++	git -C submodule add c &&
++	git -C submodule commit -m "add c" &&
++	git submodule add ./submodule &&
++	git commit -m "added submodule"
++'
++
++test_expect_success 'ls-files correctly outputs files in submodule' '
++	cat >expect <<-\EOF &&
++	.gitmodules
++	a
++	b/b
++	submodule/c
++	EOF
++
++	git ls-files --recurse-submodules >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'ls-files does not output files not added to a repo' '
++	cat >expect <<-\EOF &&
++	.gitmodules
++	a
++	b/b
++	submodule/c
++	EOF
++
++	echo a >not_added &&
++	echo b >b/not_added &&
++	echo c >submodule/not_added &&
++	git ls-files --recurse-submodules >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'ls-files recurses more than 1 level' '
++	cat >expect <<-\EOF &&
++	.gitmodules
++	a
++	b/b
++	submodule/.gitmodules
++	submodule/c
++	submodule/subsub/d
++	EOF
++
++	git init submodule/subsub &&
++	echo d >submodule/subsub/d &&
++	git -C submodule/subsub add d &&
++	git -C submodule/subsub commit -m "add d" &&
++	git -C submodule submodule add ./subsub &&
++	git -C submodule commit -m "added subsub" &&
++	git ls-files --recurse-submodules >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '--recurse-submodules does not support using path arguments' '
++	test_must_fail git ls-files --recurse-submodules b 2>actual &&
++	test_i18ngrep "does not support path arguments" actual
++'
++
++test_expect_success '--recurse-submodules does not support --error-unmatch' '
++	test_must_fail git ls-files --recurse-submodules --error-unmatch 2>actual &&
++	test_i18ngrep "does not support --error-unmatch" actual
++'
++
++test_incompatible_with_recurse_submodules () {
++	test_expect_success "--recurse-submodules and $1 are incompatible" "
++		test_must_fail git ls-files --recurse-submodules $1 2>actual &&
++		test_i18ngrep 'can only be used in --cached mode' actual
++	"
++}
++
++test_incompatible_with_recurse_submodules -v
++test_incompatible_with_recurse_submodules -t
++test_incompatible_with_recurse_submodules --deleted
++test_incompatible_with_recurse_submodules --modified
++test_incompatible_with_recurse_submodules --others
++test_incompatible_with_recurse_submodules --stage
++test_incompatible_with_recurse_submodules --killed
++test_incompatible_with_recurse_submodules --unmerged
++test_incompatible_with_recurse_submodules --eol
++
++test_done
+-- 
+2.8.0.rc3.226.g39d4020
 
-> Changes since v3:
-> [...]
-> - removed fallback when REG_STARTEND is not supported, in favor of
->   requiring NO_REGEX.
-
-So I think we are all in agreement. :)
-
-With the exception of a few commit message fixups that Junio already
-pointed out, this looks good to me. Thanks.
-
--Peff
