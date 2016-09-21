@@ -6,72 +6,77 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A6B7E1F935
-	for <e@80x24.org>; Wed, 21 Sep 2016 16:38:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C11651F935
+	for <e@80x24.org>; Wed, 21 Sep 2016 16:45:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934533AbcIUQiR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Sep 2016 12:38:17 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61788 "EHLO
+        id S936498AbcIUQpS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Sep 2016 12:45:18 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51130 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755445AbcIUQiQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2016 12:38:16 -0400
+        with ESMTP id S934522AbcIUQpR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2016 12:45:17 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 856743C996;
-        Wed, 21 Sep 2016 12:38:15 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B61B23E254;
+        Wed, 21 Sep 2016 12:42:59 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=TXZknRfiY7KR
-        ao5N5sxvCM/w7I8=; b=B/LiP9+44Cls29cPUWCki+zhgV2C3Tl48NBXFoSq60Mm
-        Fl+1dQMsqm7SSP1Sm+BqIkZi2RwBxVSEg5yfBSneDHjiuUt8I/Urb3MdZv+3M38o
-        ShuzWCe8Z9tH7AeiLH7uGVYccNUE1e+B5nouA7I95qwjIQDhb6WlJ/6pDlVt4Ok=
+        :content-type; s=sasl; bh=bbjBINsA1wzYfhccTGjuZazmxGA=; b=pk4LHG
+        Xjsvx3/R/UvRFbB7so3EETpjw/J6vA13Q84KaRwHQa/XLg5IX3+e2AzaBLqPiOrH
+        /Ecj45myAGAUhdABKUxpgf+yjA8qTnjAqA+ea5yamZAjXvelY1947KGBABqMU6qI
+        8vuO+csGncLWj289cmJNxEVuLUV38UXj2WXX4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=hNdqZz
-        1/5AMmqfD6Of/Wp7OnsLbguhku1oOf9A+aVIMNFFz/QgHbE8kfEIzG/Z+pTqvrus
-        JAh1IBVl9or05w8d1Vai5TLfPxUBenYAEk9Wh28L2qYQJ5dld16cCfieeI/mEvbe
-        owlHdZ2/IiHD0wLiwTHB5Yq3KV0mnrV8GLTDs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7D09D3C995;
-        Wed, 21 Sep 2016 12:38:15 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=U8Ybfkm+pMncO3uEzMV2UZXkv4u+ztSH
+        xdOMHk4sIVNML6z6+MIeYAfJhvQGQQMm3mxf4ZGFaY9eV77XYUFc6BdExzWKRj+Z
+        w8gG2k897YGSadD5B5eSFgeYVJyxhPdxsHtkDG6vIQ4xtf4XaI2Bc/a5pWNYC5Nz
+        xeO/DmStxpI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id ADCA13E253;
+        Wed, 21 Sep 2016 12:42:59 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EFA063C994;
-        Wed, 21 Sep 2016 12:38:14 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 146783E24F;
+        Wed, 21 Sep 2016 12:42:58 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-Cc:     Ian Kelling <ian@iankelling.org>, git@vger.kernel.org
-Subject: Re: [PATCH] gitweb: use highlight's shebang detection
-References: <20160906190037.12442-1-ian@iankelling.org>
-        <108ce713-337a-801a-6c3b-089ef25a3883@gmail.com>
-Date:   Wed, 21 Sep 2016 09:38:12 -0700
-In-Reply-To: <108ce713-337a-801a-6c3b-089ef25a3883@gmail.com> ("Jakub
-        =?utf-8?Q?Nar=C4=99bski=22's?= message of "Tue, 20 Sep 2016 22:22:48
- +0200")
-Message-ID: <xmqq4m59b43v.fsf@gitster.mtv.corp.google.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     stefan.naewe@atlas-elektronik.com, git@vger.kernel.org
+Subject: Re: [PATCH v1] travis-ci: ask homebrew for the its path instead of hardcoding it
+References: <20160921084518.13091-1-larsxschneider@gmail.com>
+        <83e3049c-34ea-4440-7b4d-061cb98ba2dd@atlas-elektronik.com>
+        <14C21417-491B-4C8E-90FE-47154EEDD9FE@gmail.com>
+Date:   Wed, 21 Sep 2016 09:42:56 -0700
+In-Reply-To: <14C21417-491B-4C8E-90FE-47154EEDD9FE@gmail.com> (Lars
+        Schneider's message of "Wed, 21 Sep 2016 15:28:51 +0200")
+Message-ID: <xmqqzin19pbj.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: CB03F686-8019-11E6-AE41-C26412518317-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 73C2791E-801A-11E6-A66B-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-> W dniu 06.09.2016 o 21:00, Ian Kelling pisze:
+>> On 21 Sep 2016, at 11:31, stefan.naewe@atlas-elektronik.com wrote:
+>> 
+>> In the Subject: s/the //
+>> 
+>> Am 21.09.2016 um 10:45 schrieb larsxschneider@gmail.com:
+>>> From: Lars Schneider <larsxschneider@gmail.com>
+>>> 
+>>> The TravisCI macOS build is broken because homebrew (a macOS depedency
+>> 
+>> s/depedency/dependency/
 >
->> The highlight binary can detect language by shebang when we can't tell
->> the syntax type by the name of the file.=20
+> Thanks for spotting both errors!
 >
-> Was it something always present among highlight[1] binary capabilities,
-> or is it something present only in new enough highlight app?  Or only
-> in some specific fork / specific binary?  I couldn't find language
-> detection in highlight[1] documentation...
-> ...
-> Thank you for your work on this patch,
+> @Junio: Should I make a v2?
 
-Thanks for reviewing.  It seems that there will be further exchange
-needed before I can pick it up?
+No.  osx before_install stuff was in there since the very beginning,
+i.e. 522354d7 ("Add Travis CI support", 2015-11-27), so I guess this
+needs to go to maint-2.7 and upwards, but I guess we should discourage
+people to stay on an older maintenance track forever, so let's do
+this only for 'maint' and upwards.
