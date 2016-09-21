@@ -2,100 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE164209A9
-	for <e@80x24.org>; Wed, 21 Sep 2016 08:48:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A3401F4F8
+	for <e@80x24.org>; Wed, 21 Sep 2016 09:11:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755631AbcIUIsr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Sep 2016 04:48:47 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45921 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755556AbcIUIso (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2016 04:48:44 -0400
-Received: (qmail 9025 invoked by uid 109); 21 Sep 2016 08:48:43 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 21 Sep 2016 08:48:43 +0000
-Received: (qmail 28807 invoked by uid 111); 21 Sep 2016 08:48:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 21 Sep 2016 04:48:56 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Sep 2016 04:48:41 -0400
-Date:   Wed, 21 Sep 2016 04:48:41 -0400
-From:   Jeff King <peff@peff.net>
-To:     John Keeping <john@keeping.me.uk>
-Cc:     Heiko Voigt <hvoigt@hvoigt.net>,
-        Jonas Thiel <jonas.lierschied@gmx.de>, git@vger.kernel.org
-Subject: Re: Re: Homebrew and Git
-Message-ID: <20160921084841.phq7cfbagi5k7ku4@sigill.intra.peff.net>
-References: <trinity-9c8f1bd1-d6be-48f3-8575-03be09bd1243-1474213828361@3capp-gmx-bs53>
- <20160920110228.GA64315@book.hvoigt.net>
- <20160920110700.GB64315@book.hvoigt.net>
- <20160920191555.GB1673@john.keeping.me.uk>
+        id S1754938AbcIUJLe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Sep 2016 05:11:34 -0400
+Received: from mail-it0-f44.google.com ([209.85.214.44]:33781 "EHLO
+        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754718AbcIUJLc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2016 05:11:32 -0400
+Received: by mail-it0-f44.google.com with SMTP id x192so30141697itb.0
+        for <git@vger.kernel.org>; Wed, 21 Sep 2016 02:11:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=oL6qRD9b7z3JyU6iOuBxsFbYglf2zQaDmkojMTXns0c=;
+        b=Lm7JrwHor1Wi9fOq2SESONOQFkbkioNdwCb1PDsH4QyFq/DdWnR2w5Qze4aF4sXj5n
+         Vjnyg1q6XXbr2QB72Md7j2PhrV+NOV2AXIxtPLeVQGWPay1/WogPM4qZ/WUm1OlsCw1s
+         sx4KmSXWBphgvnXr+TQwrWwf2ATfJqr1wu1TM7t0DtalpPEoEkxNJwCUPib3bzsewZUN
+         7UG1dtL7fdKJIj1Cjbfo0m6ssi5PbU/U77HyLilC2s/KUK3F/puI1YVVB8WCvHdhAHmz
+         Co96VSkHR+FVoIE52OdTwkSYzci0k2LQ6B701saC8q8BSUC0t/Q71S9I2YtkxJ5rHRL8
+         AzXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=oL6qRD9b7z3JyU6iOuBxsFbYglf2zQaDmkojMTXns0c=;
+        b=VAnEBxMj/81uAaWF/oXbEaidOlPzeO1aYmdlumSunt6dNKXPAunZ94pPrcjsOAvezH
+         E5xcKgLfuCGn6SUAkPLs9AAuLkP4eGwEo+PLlqYQ7dyGIiyKTnS0kswOvwbsxiVgqhY8
+         VUdwauUEdCXSisKDHCz8uM+jvprvPIm/rzEJMqJVpsSZYgHZCoOB7Mghgda5OoRJFR+o
+         WkbiupU80AYAMs0+CkC5rqaZunca1P9i9rNeEmt0IgJ3q+M2tUEn0iSN8uKc2+ejj1I1
+         pbf+7qGCqRmXfDz+UpNUzekuB6+Z36S7u9vl7SE1SVDQyhd18vPuSq1R99MxURrH9/nQ
+         1OXw==
+X-Gm-Message-State: AE9vXwMUysRz/OkhkIBykoIhZbxFsfuiEmUr5HJ4pWxquVZqJbizzwyuvRNWjWWgrfL6QgPV1ejcctdsfhbRKQ==
+X-Received: by 10.36.53.214 with SMTP id k205mr2662642ita.85.1474449091287;
+ Wed, 21 Sep 2016 02:11:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20160920191555.GB1673@john.keeping.me.uk>
+Received: by 10.64.21.6 with HTTP; Wed, 21 Sep 2016 02:11:00 -0700 (PDT)
+In-Reply-To: <xmqqd1jzcvs5.fsf@gitster.mtv.corp.google.com>
+References: <xmqqd1jzcvs5.fsf@gitster.mtv.corp.google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 21 Sep 2016 16:11:00 +0700
+Message-ID: <CACsJy8Dwe1n-YQfNMOyduLksNhAkAEPpBE3S0n==T-D1E0BneA@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Sep 2016, #05; Mon, 19)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 20, 2016 at 08:15:55PM +0100, John Keeping wrote:
+On Tue, Sep 20, 2016 at 6:30 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> * nd/checkout-disambiguation (2016-09-09) 4 commits
+>  - fixup! checkout.txt: document a common case that ignores ambiguation rules
+>  - checkout: fix ambiguity check in subdir
+>  - checkout.txt: document a common case that ignores ambiguation rules
+>  - checkout: add some spaces between code and comment
+>
+>  "git checkout <word>" does not follow the usual disambiguation
+>  rules when the <word> can be both a rev and a path, to allow
+>  checking out a branch 'foo' in a project that happens to have a
+>  file 'foo' in the working tree without having to disambiguate.
+>  This was poorly documented and the check was incorrect when the
+>  command was run from a subdirectory.
+>
+>  Waiting for an Ack for fixup!
 
-> > BTW, here is the callstack inlined from the crashreport:
-> > 
-> > bsystem_platform.dylib      	0x00007fff840db41c _platform_strchr$VARIANT$Haswell + 28
-> > 1   git                           	0x000000010ba1d3f4 ident_default_email + 801
-> > 2   git                           	0x000000010ba1d68f fmt_ident + 66
-> > 3   git                           	0x000000010ba4b495 files_log_ref_write + 175
-> > 4   git                           	0x000000010ba4b0a6 commit_ref_update + 106
-> > 5   git                           	0x000000010ba4c3a8 ref_transaction_commit + 468
-> > 6   git                           	0x000000010b994dd8 s_update_ref + 271
-> > 7   git                           	0x000000010b994556 fetch_refs + 1969
-> > 8   git                           	0x000000010b9935f2 fetch_one + 1913
-> > 9   git                           	0x000000010b992bc4 cmd_fetch + 549
-> > 10  git                           	0x000000010b9666c4 handle_builtin + 478
-> > 11  git                           	0x000000010b96602f main + 376
-> > 12  libdyld.dylib                 	0x00007fff834ef5ad start + 1
-> > 
-> > Maybe someone else has an idea what might be causing this...
-> 
-> The only strchr I can see that could be called here is in
-> canonical_name(), where it's called with addrinfo::ai_canonname.
-
-There's one in add_domainname(), too, but it can never be NULL (we could
-walk off the end of the buffer, but only if gethostname() lies to us
-about its result code, which seems unlikely). So I agree it's probably
-the call in canonical_name().
-
-> Searching for OS X and ai_canonname, leads me straight back to this
-> list, although 7 years ago!  I think ident.c needs a fix similar to
-> commit 3e8a00a (daemon.c: fix segfault on OS X, 2009-04-27); from the
-> commit message there:
-> 
-> 	On OS X (and maybe other unices), getaddrinfo(3) returns NULL
-> 	in the ai_canonname field if it's called with an IP address for
-> 	the hostname.
-
-Interesting. We are already prepared for failure from getaddrinfo()
-here, so probably:
-
-diff --git a/ident.c b/ident.c
-index e20a772..d17b5bd 100644
---- a/ident.c
-+++ b/ident.c
-@@ -101,7 +101,7 @@ static int canonical_name(const char *host, struct strbuf *out)
- 	memset (&hints, '\0', sizeof (hints));
- 	hints.ai_flags = AI_CANONNAME;
- 	if (!getaddrinfo(host, NULL, &hints, &ai)) {
--		if (ai && strchr(ai->ai_canonname, '.')) {
-+		if (ai && ai->ai_canonname && strchr(ai->ai_canonname, '.')) {
- 			strbuf_addstr(out, ai->ai_canonname);
- 			status = 0;
- 		}
-
-would be sufficient. Jonas, can you see if that patch helps?
-
--Peff
+Oops, I didn't know (I have about 300 unread git mails in my inbox), Ack.
+-- 
+Duy
