@@ -2,103 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 437EC1F4F8
-	for <e@80x24.org>; Wed, 21 Sep 2016 11:30:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60FC41F4F8
+	for <e@80x24.org>; Wed, 21 Sep 2016 11:44:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932640AbcIULaV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Sep 2016 07:30:21 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:36814 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932289AbcIULaU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2016 07:30:20 -0400
-Received: by mail-pf0-f196.google.com with SMTP id n24so2285042pfb.3
-        for <git@vger.kernel.org>; Wed, 21 Sep 2016 04:30:20 -0700 (PDT)
+        id S933629AbcIULon (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Sep 2016 07:44:43 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33479 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933502AbcIULom (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2016 07:44:42 -0400
+Received: by mail-wm0-f66.google.com with SMTP id w84so8116566wmg.0
+        for <git@vger.kernel.org>; Wed, 21 Sep 2016 04:44:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=q5nqyQjDvJuA2dAFnnMrEzPeQeKuWM325Rnk/aWGwvw=;
-        b=O+UKnTzdz8c+sW1UO7S8LHr1DhQDUpEnVmrC+krVuSJCvtB4y7IkMXBAJ25aFa6195
-         SpLK3zhqDs8yRr1di139W6u2cASYTlV62nmqx+RAgFjKd+OXKMWBck0eVJVYMplMKjDA
-         BHempQeLyQvQoVNMCKum1g3ikKSohrlu2xAiyhnL1Ja4QebEVwi2+ukZ0mJlDpMCSlby
-         IO8H2dpTFgUx76ALLtHK8vRaXb+pVZpg6nzgUI2/HHXBNrOdbf4jg5MMzMq3lS8rJm+o
-         Okiq0WB8/rneu1KtQNTEV23LVcaBA9FVNJ2Ef4j4AyrseynTWaBkqtZCQ962g6b1/04a
-         YAqw==
+        h=from:to:cc:subject:date:message-id;
+        bh=j3FoL86m4GNX9r+GEzxHrjtNJ8XoKwqv/d8rhHerdUs=;
+        b=XI2sUXDWBNqRm6qa6JfH2AN/2/0AGCo8Jp7RpbKnZ5j8nonWusuWaARXViq8erhXBk
+         Mna38Yo2WNUO8XEExQd7T3MdGgwokTY4R3h1nac0omoc6smgAa1JTQ1xFuka6oqKEa4J
+         Eqx9X9dLA9vfDQ5/iWzsacMDcDuXP6bcwwaJlrB0eb+G4F2jtRlhAp0TxP7PeGIrfi0Z
+         v0a+lt6JOIgUzCDbhc2BVr0MXv3jcwX6ALKOA7OBYH1/9HrUwBVbwV7B2s1UYsz7WyOB
+         8FMx6GLkB7rx4T+WVKfW/DrnISuq5pkSaJk4VT97XAomcfQsKgDqZRAdOAqjY14yYlUC
+         SPeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=q5nqyQjDvJuA2dAFnnMrEzPeQeKuWM325Rnk/aWGwvw=;
-        b=Ab4NxAMZWuRPXaqSq2/bTXUMfkxIzXLbYgMKCyU57U+hp1OSASiD9mr6Mgs0Y/azSo
-         9d+ySShIk5BejK9Z0u6unOETVxVd43RvxFwQC0N6cWQcq0rE2yrdVhDHP4tlcWQA3LBU
-         jHaH9/5qm8ksMVq4IHPUnN4nlO7EJ0GfX1cV/pTi8nWK775U5hWFcc+roH652MsqHasX
-         YHYfPId/yx2y3Mrj4K0UzqC2W7+imsuHQV+Me1G+HqmsgNQHpn/i3w5SfRatf92i98Oy
-         k/l0iDXsFpD7zwZ481ne/n1wd5x8CFE99i0poWbNq9WQ5HqwEYBLfiDE6NxOp0FPEsy5
-         hyYw==
-X-Gm-Message-State: AE9vXwN1UxlwBqzoUK7cZ/P5LGyzgpDGKinAczvNAOjra+G8UK5GIcEsp4FrVTbypV+HaQ==
-X-Received: by 10.98.67.139 with SMTP id l11mr47558145pfi.16.1474457420256;
-        Wed, 21 Sep 2016 04:30:20 -0700 (PDT)
-Received: from ash ([115.76.130.63])
-        by smtp.gmail.com with ESMTPSA id i78sm53714442pfj.67.2016.09.21.04.30.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 21 Sep 2016 04:30:19 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 21 Sep 2016 18:30:15 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=j3FoL86m4GNX9r+GEzxHrjtNJ8XoKwqv/d8rhHerdUs=;
+        b=d9bH0QGZgnGW4jfa2m5eYwzigK7FJduYHdXt2yehShDRvRAWeeAkYtx++GdsKZzDn9
+         EKw4JElRJgDyzTKBrWL6rN8DFlOJEQLB8l4vFfj/UkX6Di0OT70BuzIYyD3ntverOg3v
+         +jPdnoGyCyLvlIpNNFuEtGTR31pq5vaLE0TV867xvj0Srv6w69YY4WG1L4cWkKkuZs98
+         htFYe2KY147Ia7Fh7MtP25Bu0LvOe9r4D0PZPF3wLiJyOD5pBIMvOy4gND9Rsm4UV1hr
+         irF2vALlAJ/+ZQlFkebX3JNOe79aToTabYUFsDSwqfVtSnfHEmUnuWWA4LDpxWMSei3O
+         msaA==
+X-Gm-Message-State: AE9vXwN+ayqKYtqeJBkco+BkXeNBkO/cAi8aZ4V5AThbDuHVUrkbvQarc/6hFgicygTsEw==
+X-Received: by 10.28.51.21 with SMTP id z21mr2661956wmz.24.1474458280745;
+        Wed, 21 Sep 2016 04:44:40 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id au10sm33165171wjc.12.2016.09.21.04.44.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 21 Sep 2016 04:44:40 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, git@drmicha.warpmail.net,
-        max.nordlund@sqore.com,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH v2 3/3] init: reuse original_git_dir in set_git_dir_init()
-Date:   Wed, 21 Sep 2016 18:29:39 +0700
-Message-Id: <20160921112939.3444-4-pclouds@gmail.com>
-X-Mailer: git-send-email 2.8.2.524.g6ff3d78
-In-Reply-To: <20160921112939.3444-1-pclouds@gmail.com>
-References: <20160908134719.27955-1-pclouds@gmail.com>
- <20160921112939.3444-1-pclouds@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Kay Sievers <kay.sievers@suse.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 1/3] gitweb: Fix an ancient typo in v1.7.7-rc1-1-g0866786
+Date:   Wed, 21 Sep 2016 11:44:26 +0000
+Message-Id: <20160921114428.28664-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.9.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since original_git_dir is a copy of real_path(git_dir), let's reuse it
-and avoid calling real_path() more than necessary.
-
-The xstrdup() is removed too because original_git_dir is already a copy,
-and we're not going to free git_link in this code probably forever.
-
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+The Content-Type is application/xhtml+xml, not application/xhtm+xml.
 ---
- builtin/init-db.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ gitweb/gitweb.perl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 0d5cc76..d70fc45 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -330,11 +330,11 @@ int set_git_dir_init(const char *git_dir, const char *real_git_dir,
- 		 * make sure symlinks are resolved because we'll be
- 		 * moving the target repo later on in separate_git_dir()
- 		 */
--		git_link = xstrdup(real_path(git_dir));
-+		git_link = original_git_dir;
- 		set_git_dir(real_path(real_git_dir));
- 	}
- 	else {
--		set_git_dir(real_path(git_dir));
-+		set_git_dir(original_git_dir);
- 		git_link = NULL;
- 	}
- 	startup_info->have_repository = 1;
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 33d701d..9473daf 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1616,7 +1616,7 @@ sub esc_path {
+ 	return $str;
+ }
+ 
+-# Sanitize for use in XHTML + application/xml+xhtm (valid XML 1.0)
++# Sanitize for use in XHTML + application/xml+xhtml (valid XML 1.0)
+ sub sanitize {
+ 	my $str = shift;
+ 
 -- 
-2.8.2.524.g6ff3d78
+2.1.3
 
