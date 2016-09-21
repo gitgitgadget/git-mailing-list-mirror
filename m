@@ -2,141 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C1F820985
-	for <e@80x24.org>; Wed, 21 Sep 2016 21:46:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D726E20985
+	for <e@80x24.org>; Wed, 21 Sep 2016 22:03:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756347AbcIUVqZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Sep 2016 17:46:25 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:45876 "EHLO dcvr.yhbt.net"
+        id S1754694AbcIUWDP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Sep 2016 18:03:15 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46341 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756249AbcIUVqY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2016 17:46:24 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 5EE1B1F935;
-        Wed, 21 Sep 2016 21:46:23 +0000 (UTC)
-Date:   Wed, 21 Sep 2016 21:46:23 +0000
-From:   Eric Wong <e@80x24.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Yaroslav Halchenko <yoh@onerussian.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>
-Subject: [PATCH 4/3] http: check curl_multi_remove_handle error code
-Message-ID: <20160921214623.GA1919@whir>
-References: <20160913002557.10671-1-e@80x24.org>
- <xmqqr38nv8ul.fsf@gitster.mtv.corp.google.com>
+        id S1754056AbcIUWDO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2016 18:03:14 -0400
+Received: (qmail 21117 invoked by uid 109); 21 Sep 2016 22:03:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 21 Sep 2016 22:03:13 +0000
+Received: (qmail 3523 invoked by uid 111); 21 Sep 2016 22:03:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 21 Sep 2016 18:03:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Sep 2016 18:03:10 -0400
+Date:   Wed, 21 Sep 2016 18:03:10 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Benjamin Kramer <benny.kra@googlemail.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH v4 3/3] regex: use regexec_buf()
+Message-ID: <20160921220310.5wk76qdsjyhvstk4@sigill.intra.peff.net>
+References: <cover.1473321437.git.johannes.schindelin@gmx.de>
+ <cover.1474482164.git.johannes.schindelin@gmx.de>
+ <53f3609d99c865d59d7bfd8219a5334339e9e6bc.1474482164.git.johannes.schindelin@gmx.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqr38nv8ul.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <53f3609d99c865d59d7bfd8219a5334339e9e6bc.1474482164.git.johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Wong <e@80x24.org> writes:
-> > The key patch here is 3/3 which seems like an obvious fix to
-> > adding the problem of adding a curl easy handle to a curl multi
-> > handle repeatedly.
+On Wed, Sep 21, 2016 at 08:24:14PM +0200, Johannes Schindelin wrote:
+
+> The new regexec_buf() function operates on buffers with an explicitly
+> specified length, rather than NUL-terminated strings.
 > 
-> Yeah, sounds like the right thing to do and 2/3 makes it really easy
-> to read the resulting code.
+> We need to use this function whenever the buffer we want to pass to
+> regexec() may have been mmap()ed (and is hence not NUL-terminated).
 > 
-> > I will investigate those failures in a week or two when I regain
-> > regular computer access.
-> 
-> Thanks. Will tentatively queue on 'pu' and wait for updates.
+> Note: the original motivation for this patch was to fix a bug where
+> `git diff -G <regex>` would crash. This patch converts more callers,
+> though, some of which explicitly allocated and constructed
+> NUL-terminated strings (or worse: modified read-only buffers to insert
+> NULs).
 
-I'm comfortable with the original 3 patch series in 'next'
-and being merged to 'master' and 'maint', soon.
+Nice. I probably would have split these into their own patch, but I
+think it is OK here.
 
-I don't think the following 4/3 is strictly necessary now, so
-I'd be more comfortable with it being tested in 'pu' or 'next'
-for a longer period.
+> @@ -228,18 +227,16 @@ static long ff_regexp(const char *line, long len,
+>  			len--;
+>  	}
+>  
+> -	line_buffer = xstrndup(line, len); /* make NUL terminated */
+> -
 
-(online today, but not much tomorrow or another few days after)
+Nice to see this one going away in particular, since it's called quite a
+lot. According to perf, "git log -p" on git.git drops about 1.5 million
+malloc calls (about 9% of the total). And here are best-of-five results
+for that same command:
 
------------8<-----------
-Subject: [PATCH] http: check curl_multi_remove_handle error code
+  [before]
+  real    0m14.676s
+  user    0m13.988s
+  sys     0m0.676s
 
-This should help detect bugs in future changes.  While we're at
-it, fix a (probably innocuous) bug in our http_cleanup function
-for users of older curl.
+  [after]
+  real    0m14.394s
+  user    0m13.624s
+  sys     0m0.760s
 
-curl_multi_remove_handle was not idempotent until curl 7.33.0
-with commit 84f3b3dd448399f9548468676e1bd1475dba8de5
-("curl_multi_remove_handle: allow multiple removes"),
-so we track the "curlm" membership of the curl easy handle
-ourselves with a new "in_multi" flag.
+Not a _huge_ improvement, but more significant than the run-to-run
+noise.
 
-Tested with curl 7.26.0 and 7.38.0 on Debian 7.x (wheezy) and
-Debian 8.x (jessie) respectively.
-
-Signed-off-by: Eric Wong <e@80x24.org>
----
- http.c | 12 ++++++++++--
- http.h |  1 +
- 2 files changed, 11 insertions(+), 2 deletions(-)
-
-diff --git a/http.c b/http.c
-index 82ed542..9f97749 100644
---- a/http.c
-+++ b/http.c
-@@ -204,7 +204,12 @@ static void finish_active_slot(struct active_request_slot *slot)
- static void xmulti_remove_handle(struct active_request_slot *slot)
- {
- #ifdef USE_CURL_MULTI
--	curl_multi_remove_handle(curlm, slot->curl);
-+	CURLMcode code = curl_multi_remove_handle(curlm, slot->curl);
-+
-+	if (code != CURLM_OK)
-+		die("curl_multi_remove_handle failed (%p): %s",
-+			slot->curl, curl_multi_strerror(code));
-+	slot->in_multi = 0;
- #endif
- }
- 
-@@ -888,7 +893,8 @@ void http_cleanup(void)
- 	while (slot != NULL) {
- 		struct active_request_slot *next = slot->next;
- 		if (slot->curl != NULL) {
--			xmulti_remove_handle(slot);
-+			if (slot->in_multi)
-+				xmulti_remove_handle(slot);
- 			curl_easy_cleanup(slot->curl);
- 		}
- 		free(slot);
-@@ -965,6 +971,7 @@ struct active_request_slot *get_active_slot(void)
- 		newslot = xmalloc(sizeof(*newslot));
- 		newslot->curl = NULL;
- 		newslot->in_use = 0;
-+		newslot->in_multi = 0;
- 		newslot->next = NULL;
- 
- 		slot = active_queue_head;
-@@ -1033,6 +1040,7 @@ int start_active_slot(struct active_request_slot *slot)
- 		slot->in_use = 0;
- 		return 0;
- 	}
-+	slot->in_multi = 1;
- 
- 	/*
- 	 * We know there must be something to do, since we just added
-diff --git a/http.h b/http.h
-index 5ab9d9c..3339d70 100644
---- a/http.h
-+++ b/http.h
-@@ -60,6 +60,7 @@ struct slot_results {
- struct active_request_slot {
- 	CURL *curl;
- 	int in_use;
-+	int in_multi;
- 	CURLcode curl_result;
- 	long http_code;
- 	int *finished;
--- 
-EW
-
+-Peff
