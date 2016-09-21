@@ -2,321 +2,494 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFC6D1F935
-	for <e@80x24.org>; Wed, 21 Sep 2016 22:05:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D49731F935
+	for <e@80x24.org>; Wed, 21 Sep 2016 22:05:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754823AbcIUWFP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Sep 2016 18:05:15 -0400
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:33536 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753010AbcIUWFO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2016 18:05:14 -0400
-Received: by mail-pf0-f180.google.com with SMTP id 21so23300976pfy.0
-        for <git@vger.kernel.org>; Wed, 21 Sep 2016 15:05:14 -0700 (PDT)
+        id S932584AbcIUWFS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Sep 2016 18:05:18 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:33997 "EHLO
+        mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753010AbcIUWFR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2016 18:05:17 -0400
+Received: by mail-pa0-f46.google.com with SMTP id wk8so22252115pab.1
+        for <git@vger.kernel.org>; Wed, 21 Sep 2016 15:05:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=/YFnjRMuu3SM2j1ZJl9CND3ZJS7q8yFP3FcSf902Hl8=;
-        b=Ecg98K4ihcX3NdYe9+OqaU21yiNHvbIL7oXk8QfhQWXceKP/b8BqI1r9w9tlq6Ps9o
-         GO716lfhHc0nuKTfHFbvS3vFMHbsv5UoUYXUXCi5iFvH+v9MdncJ9jhuNtYf2317Cvd5
-         n9sH166jilumf2AP9jFwTEXd77CGOdMcU+3nvAQhpHBx741N4JaL028CaHvPbD6KpDK0
-         m/VuRPALMAJL6n1g4vo+F2n0G9mDK9AAWiVAVio/mCuX2+NMdMB4skxA4YJNBJ/qKzOS
-         Cx/pGC0vzZBw9cAjfa0alyH542gat3xWWB9plGYTjUuXUThq8HFnXPKA5yq3jjr2bvot
-         h9Sg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=x526hQm+oIw2GqBT0lmsS7DtLQkpjyDDWBjH7qB9RyU=;
+        b=kEshOmQxWICKNCl5Cr77XATOYkBRcTkQTV9J4HBXAz/KEiRLRXvsUaGLeORuWcRJAz
+         NLjifIIwfFte6KBSBEWg/f6fPQfO/TojZ90fI2eKvF4OpzjEr/LlMOrMZIufqltkId7w
+         tC/12/MFQsP7JWtj9yWwJ/pXF1uUKl2TthaTKs0zuWCQxhR69L9qaAoUkZPI6xDXopVX
+         u3KXjdyvb9qjEeO/qc0aEld4DV+gvrunrwG2K9KocaCU4L2KND0sa0fY3zwZsnEosznK
+         g7m8W+Cdesa5lw6lKoEDrmxiuUw2jTxDHPFiI/HrQaLNfqbadrMEXTShN2d7IBtidylE
+         X1SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=/YFnjRMuu3SM2j1ZJl9CND3ZJS7q8yFP3FcSf902Hl8=;
-        b=b1xaqZTZu8ajwMwxUmUa6UtFAiOQOOO8ozWiAPBIe51sxnN4AeXyRQSIkHX3TVHWZY
-         mkgLQJL3REw6XOBrd60uk7dKEDoq4CUdDywZwrp7eExvl2jqAW/59bX6lwmlPTxRNLFL
-         i8Efgz2X7pXOYSmVcY2gEtsFGHVLk4oj0myyl0fMvkbON0wBEHPQwHVAuoGUFDnRzMba
-         GO+asKrYpl6zCyCk1B3n4+kz/j/Ihhx0Ove0GnEkUTJcuFdmJ8k6EYZlzg3rpMg9pfdW
-         zpaE9MlJKsZSjAQa1+vJOqexHvdpreNTdWchssB+wr4M9xGYBi2YXa5PEaKw0b8aB1y+
-         pCZQ==
-X-Gm-Message-State: AE9vXwNC6l7Mk1d9B4IZpfEk7qM2B6vqg5kgOYwAcRBGbaTDOFXDvDKl/t86IHWM/8odR9Kd
-X-Received: by 10.98.69.73 with SMTP id s70mr67810977pfa.115.1474495513871;
-        Wed, 21 Sep 2016 15:05:13 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=x526hQm+oIw2GqBT0lmsS7DtLQkpjyDDWBjH7qB9RyU=;
+        b=bVX0YbrAE0kcPkfj7tBM8FZl4xFWwMkTLRyiEXtVZE0tM4gzHTRERekhIRR9JRNmAB
+         Y22sDUL/c5xfvm+4+Nv6fY6FcvMI0C9WFvS559d0QHbmiHCE9rgelmO1adzJ8bPKg/FX
+         KD/pGQqIPpbWVVdvXdr05PQG+vNag/E9lT8Xua47Hv1K5ekZzORNPGONmqIMYcnQmauJ
+         MCWT9fsqNykuR8Q8M8Te6hDKDgCE3ism6hgweosYTcLFqfieGPCGmp+yPmz7EzkqDObP
+         4tvnw0XoS45Jkjmm9lGixSGcLtfu7cguHN3l0VN0Pi8Wn/ABZxpooGmR1Pc/Hy9cxXFM
+         z5mA==
+X-Gm-Message-State: AE9vXwN0p0b3Z4gTP56cI3QKjT2d7sdQGhOdgyIuu74cdUYGdngphJZNSLq1YB0rsfztQjWz
+X-Received: by 10.66.148.202 with SMTP id tu10mr68736781pab.52.1474495516315;
+        Wed, 21 Sep 2016 15:05:16 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b00:e91b:12fd:4246:c4bd])
-        by smtp.gmail.com with ESMTPSA id ra13sm48837906pac.29.2016.09.21.15.05.12
+        by smtp.gmail.com with ESMTPSA id mz4sm48800313pab.21.2016.09.21.15.05.15
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 21 Sep 2016 15:05:12 -0700 (PDT)
+        Wed, 21 Sep 2016 15:05:15 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>
-Subject: [PATCH 1/2] ls-files: adding support for submodules
-Date:   Wed, 21 Sep 2016 15:04:31 -0700
-Message-Id: <1474495472-94190-1-git-send-email-bmwill@google.com>
+Subject: [PATCH 2/2] ls-files: add pathspec matching for submodules
+Date:   Wed, 21 Sep 2016 15:04:32 -0700
+Message-Id: <1474495472-94190-2-git-send-email-bmwill@google.com>
 X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
+In-Reply-To: <1474495472-94190-1-git-send-email-bmwill@google.com>
+References: <1474495472-94190-1-git-send-email-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Allow ls-files to recognize submodules in order to retrieve a list of
-files from a repository's submodules.  This is done by forking off a
-process to recursively call ls-files on all submodules. Also added a
-submodule-prefix command in order to prepend paths to child processes.
+Pathspecs can be a bit tricky when trying to apply them to submodules.
+The main challenge is that the pathspecs will be with respect to the
+super module and not with respect to paths in the submodule.  The
+approach this patch takes is to pass in the identical pathspec from the
+super module to the submodule in addition to the submodule-prefix, which
+is the path from the root of the super module to the submodule, and then
+we can compare an entry in the submodule prepended with the
+submodule-prefix to the pathspec in order to determine if there is a
+match.
+
+This patch also permits the pathspec logic to perform a prefix match against
+submodules since a pathspec could refer to a file inside of a submodule.
+Due to limitations in the wildmatch logic, a prefix match is only done
+literally.  If any wildcard character is encountered we'll simply punt
+and produce a false positive match.  More accurate matching will be done
+once inside the submodule.  This is due to the super module not knowing
+what files could exist in the submodule.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- Documentation/git-ls-files.txt         | 11 +++-
- builtin/ls-files.c                     | 61 +++++++++++++++++++++
- t/t3007-ls-files-recurse-submodules.sh | 99 ++++++++++++++++++++++++++++++++++
- 3 files changed, 170 insertions(+), 1 deletion(-)
- create mode 100755 t/t3007-ls-files-recurse-submodules.sh
+ builtin/ls-files.c                     | 132 ++++++++++++++++++++-------------
+ dir.c                                  |  43 ++++++++++-
+ dir.h                                  |   4 +
+ t/t3007-ls-files-recurse-submodules.sh | 114 ++++++++++++++++++++++++++--
+ 4 files changed, 231 insertions(+), 62 deletions(-)
 
-diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-index 0d933ac..09e4449 100644
---- a/Documentation/git-ls-files.txt
-+++ b/Documentation/git-ls-files.txt
-@@ -18,7 +18,9 @@ SYNOPSIS
- 		[--exclude-per-directory=<file>]
- 		[--exclude-standard]
- 		[--error-unmatch] [--with-tree=<tree-ish>]
--		[--full-name] [--abbrev] [--] [<file>...]
-+		[--full-name] [--recurse-submodules]
-+		[--submodule-prefix=<path>]
-+		[--abbrev] [--] [<file>...]
- 
- DESCRIPTION
- -----------
-@@ -137,6 +139,13 @@ a space) at the start of each line:
- 	option forces paths to be output relative to the project
- 	top directory.
- 
-+--recurse-submodules::
-+	Recursively calls ls-files on each submodule in the repository.
-+	Currently there is only support for the --cached mode.
-+
-+--submodule-prefix=<path>::
-+	Prepend the provided path to the output of each file
-+
- --abbrev[=<n>]::
- 	Instead of showing the full 40-byte hexadecimal object
- 	lines, show only a partial prefix.
 diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 00ea91a..ffd9ea6 100644
+index ffd9ea6..fa4029e 100644
 --- a/builtin/ls-files.c
 +++ b/builtin/ls-files.c
-@@ -14,6 +14,7 @@
- #include "resolve-undo.h"
- #include "string-list.h"
- #include "pathspec.h"
-+#include "run-command.h"
- 
- static int abbrev;
- static int show_deleted;
-@@ -28,6 +29,8 @@ static int show_valid_bit;
- static int line_terminator = '\n';
- static int debug_mode;
- static int show_eol;
-+static const char *submodule_prefix;
-+static int recurse_submodules;
- 
- static const char *prefix;
- static int max_prefix_len;
-@@ -68,6 +71,21 @@ static void write_eolinfo(const struct cache_entry *ce, const char *path)
- static void write_name(const char *name)
+@@ -177,12 +177,34 @@ static void show_gitlink(const struct cache_entry *ce)
  {
- 	/*
-+	 * NEEDSWORK: To make this thread-safe, full_name would have to be owned
-+	 * by the caller.
-+	 *
-+	 * full_name get reused across output lines to minimize the allocation
-+	 * churn.
-+	 */
-+	static struct strbuf full_name = STRBUF_INIT;
-+	if (submodule_prefix && *submodule_prefix) {
-+		strbuf_reset(&full_name);
-+		strbuf_addstr(&full_name, submodule_prefix);
-+		strbuf_addstr(&full_name, name);
-+		name = full_name.buf;
-+	}
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 	int status;
++	int i;
+ 
+ 	argv_array_push(&cp.args, "ls-files");
+ 	argv_array_push(&cp.args, "--recurse-submodules");
+ 	argv_array_pushf(&cp.args, "--submodule-prefix=%s%s/",
+ 			 submodule_prefix ? submodule_prefix : "",
+ 			 ce->name);
++	/* add options */
++	if (show_eol)
++		argv_array_push(&cp.args, "--eol");
++	if (show_valid_bit)
++		argv_array_push(&cp.args, "-v");
++	if (show_stage)
++		argv_array_push(&cp.args, "--stage");
++	if (show_cached)
++		argv_array_push(&cp.args, "--cached");
++	if (debug_mode)
++		argv_array_push(&cp.args, "--debug");
 +
 +	/*
- 	 * With "--full-name", prefix_len=0; this caller needs to pass
- 	 * an empty string in that case (a NULL is good for "").
- 	 */
-@@ -152,6 +170,26 @@ static void show_killed_files(struct dir_struct *dir)
- 	}
- }
++	 * Pass in the original pathspec args.  The submodule will be
++	 * responsible for prepending the 'submodule_prefix' prior to comparing
++	 * against the pathspec for matches.
++	 */
++	argv_array_push(&cp.args, "--");
++	for (i = 0; i < pathspec.nr; i++)
++		argv_array_push(&cp.args, pathspec.items[i].original);
++
+ 	cp.git_cmd = 1;
+ 	cp.dir = ce->name;
+ 	status = run_command(&cp);
+@@ -192,57 +214,62 @@ static void show_gitlink(const struct cache_entry *ce)
  
-+/**
-+ * Recursively call ls-files on a submodule
-+ */
-+static void show_gitlink(const struct cache_entry *ce)
-+{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	int status;
-+
-+	argv_array_push(&cp.args, "ls-files");
-+	argv_array_push(&cp.args, "--recurse-submodules");
-+	argv_array_pushf(&cp.args, "--submodule-prefix=%s%s/",
-+			 submodule_prefix ? submodule_prefix : "",
-+			 ce->name);
-+	cp.git_cmd = 1;
-+	cp.dir = ce->name;
-+	status = run_command(&cp);
-+	if (status)
-+		exit(status);
-+}
-+
  static void show_ce_entry(const char *tag, const struct cache_entry *ce)
  {
++	struct strbuf name = STRBUF_INIT;
  	int len = max_prefix_len;
-@@ -163,6 +201,10 @@ static void show_ce_entry(const char *tag, const struct cache_entry *ce)
- 			    len, ps_matched,
- 			    S_ISDIR(ce->ce_mode) || S_ISGITLINK(ce->ce_mode)))
- 		return;
-+	if (recurse_submodules && S_ISGITLINK(ce->ce_mode)) {
-+		show_gitlink(ce);
-+		return;
-+	}
++	if (submodule_prefix)
++		strbuf_addstr(&name, submodule_prefix);
++	strbuf_addstr(&name, ce->name);
  
- 	if (tag && *tag && show_valid_bit &&
- 	    (ce->ce_flags & CE_VALID)) {
-@@ -468,6 +510,10 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 		{ OPTION_SET_INT, 0, "full-name", &prefix_len, NULL,
- 			N_("make the output relative to the project top directory"),
- 			PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL },
-+		OPT_STRING(0, "submodule-prefix", &submodule_prefix,
-+			N_("path"), N_("prepend <path> to each file")),
-+		OPT_BOOL(0, "recurse-submodules", &recurse_submodules,
-+			N_("recurse through submodules")),
- 		OPT_BOOL(0, "error-unmatch", &error_unmatch,
- 			N_("if any <file> is not in the index, treat this as an error")),
- 		OPT_STRING(0, "with-tree", &with_tree, N_("tree-ish"),
-@@ -519,6 +565,21 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 	if (require_work_tree && !is_inside_work_tree())
+ 	if (len >= ce_namelen(ce))
+ 		die("git ls-files: internal error - cache entry not superset of prefix");
+ 
+-	if (!match_pathspec(&pathspec, ce->name, ce_namelen(ce),
+-			    len, ps_matched,
+-			    S_ISDIR(ce->ce_mode) || S_ISGITLINK(ce->ce_mode)))
+-		return;
+-	if (recurse_submodules && S_ISGITLINK(ce->ce_mode)) {
++	if (recurse_submodules && S_ISGITLINK(ce->ce_mode) &&
++	    submodule_path_match(&pathspec, name.buf, ps_matched)) {
+ 		show_gitlink(ce);
+-		return;
+-	}
++	} else if (match_pathspec(&pathspec, name.buf, name.len,
++				  len, ps_matched,
++				  S_ISDIR(ce->ce_mode) ||
++				  S_ISGITLINK(ce->ce_mode))) {
++		if (tag && *tag && show_valid_bit &&
++		    (ce->ce_flags & CE_VALID)) {
++			static char alttag[4];
++			memcpy(alttag, tag, 3);
++			if (isalpha(tag[0]))
++				alttag[0] = tolower(tag[0]);
++			else if (tag[0] == '?')
++				alttag[0] = '!';
++			else {
++				alttag[0] = 'v';
++				alttag[1] = tag[0];
++				alttag[2] = ' ';
++				alttag[3] = 0;
++			}
++			tag = alttag;
++		}
+ 
+-	if (tag && *tag && show_valid_bit &&
+-	    (ce->ce_flags & CE_VALID)) {
+-		static char alttag[4];
+-		memcpy(alttag, tag, 3);
+-		if (isalpha(tag[0]))
+-			alttag[0] = tolower(tag[0]);
+-		else if (tag[0] == '?')
+-			alttag[0] = '!';
+-		else {
+-			alttag[0] = 'v';
+-			alttag[1] = tag[0];
+-			alttag[2] = ' ';
+-			alttag[3] = 0;
++		if (!show_stage) {
++			fputs(tag, stdout);
++		} else {
++			printf("%s%06o %s %d\t",
++			       tag,
++			       ce->ce_mode,
++			       find_unique_abbrev(ce->sha1,abbrev),
++			       ce_stage(ce));
++		}
++		write_eolinfo(ce, ce->name);
++		write_name(ce->name);
++		if (debug_mode) {
++			const struct stat_data *sd = &ce->ce_stat_data;
++
++			printf("  ctime: %d:%d\n", sd->sd_ctime.sec, sd->sd_ctime.nsec);
++			printf("  mtime: %d:%d\n", sd->sd_mtime.sec, sd->sd_mtime.nsec);
++			printf("  dev: %d\tino: %d\n", sd->sd_dev, sd->sd_ino);
++			printf("  uid: %d\tgid: %d\n", sd->sd_uid, sd->sd_gid);
++			printf("  size: %d\tflags: %x\n", sd->sd_size, ce->ce_flags);
+ 		}
+-		tag = alttag;
+ 	}
+ 
+-	if (!show_stage) {
+-		fputs(tag, stdout);
+-	} else {
+-		printf("%s%06o %s %d\t",
+-		       tag,
+-		       ce->ce_mode,
+-		       find_unique_abbrev(ce->sha1,abbrev),
+-		       ce_stage(ce));
+-	}
+-	write_eolinfo(ce, ce->name);
+-	write_name(ce->name);
+-	if (debug_mode) {
+-		const struct stat_data *sd = &ce->ce_stat_data;
+-
+-		printf("  ctime: %d:%d\n", sd->sd_ctime.sec, sd->sd_ctime.nsec);
+-		printf("  mtime: %d:%d\n", sd->sd_mtime.sec, sd->sd_mtime.nsec);
+-		printf("  dev: %d\tino: %d\n", sd->sd_dev, sd->sd_ino);
+-		printf("  uid: %d\tgid: %d\n", sd->sd_uid, sd->sd_gid);
+-		printf("  size: %d\tflags: %x\n", sd->sd_size, ce->ce_flags);
+-	}
++	strbuf_release(&name);
+ }
+ 
+ static void show_ru_info(void)
+@@ -566,27 +593,28 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
  		setup_work_tree();
  
-+	if (recurse_submodules &&
-+	    (show_stage || show_deleted || show_others || show_unmerged ||
-+	     show_killed || show_modified || show_resolve_undo ||
-+	     show_valid_bit || show_tag || show_eol))
-+		die("ls-files --recurse-submodules can only be used in "
-+		    "--cached mode");
-+
-+	if (recurse_submodules && error_unmatch)
-+		die("ls-files --recurse-submodules does not support "
-+		    "--error-unmatch");
-+
-+	if (recurse_submodules && argc)
-+		die("ls-files --recurse-submodules does not support path "
-+		    "arguments");
-+
+ 	if (recurse_submodules &&
+-	    (show_stage || show_deleted || show_others || show_unmerged ||
+-	     show_killed || show_modified || show_resolve_undo ||
+-	     show_valid_bit || show_tag || show_eol))
+-		die("ls-files --recurse-submodules can only be used in "
+-		    "--cached mode");
++	    (show_deleted || show_others || show_unmerged ||
++	     show_killed || show_modified || show_resolve_undo))
++		die("ls-files --recurse-submodules unsupported mode");
+ 
+ 	if (recurse_submodules && error_unmatch)
+ 		die("ls-files --recurse-submodules does not support "
+ 		    "--error-unmatch");
+ 
+-	if (recurse_submodules && argc)
+-		die("ls-files --recurse-submodules does not support path "
+-		    "arguments");
+-
  	parse_pathspec(&pathspec, 0,
  		       PATHSPEC_PREFER_CWD |
  		       PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP,
-diff --git a/t/t3007-ls-files-recurse-submodules.sh b/t/t3007-ls-files-recurse-submodules.sh
-new file mode 100755
-index 0000000..caf3815
---- /dev/null
-+++ b/t/t3007-ls-files-recurse-submodules.sh
-@@ -0,0 +1,99 @@
-+#!/bin/sh
+ 		       prefix, argv);
+ 
+-	/* Find common prefix for all pathspec's */
+-	max_prefix = common_prefix(&pathspec);
++	/*
++	 * Find common prefix for all pathspec's
++	 * This is used as a performance optimization which unfortunately cannot
++	 * be done when recursing into submodules
++	 */
++	if (recurse_submodules)
++		max_prefix = NULL;
++	else
++		max_prefix = common_prefix(&pathspec);
+ 	max_prefix_len = max_prefix ? strlen(max_prefix) : 0;
+ 
+ 	/* Treat unmatching pathspec elements as errors */
+diff --git a/dir.c b/dir.c
+index 0ea235f..9df6d36 100644
+--- a/dir.c
++++ b/dir.c
+@@ -207,8 +207,9 @@ int within_depth(const char *name, int namelen,
+ 	return 1;
+ }
+ 
+-#define DO_MATCH_EXCLUDE   1
+-#define DO_MATCH_DIRECTORY 2
++#define DO_MATCH_EXCLUDE   (1<<0)
++#define DO_MATCH_DIRECTORY (1<<1)
++#define DO_MATCH_SUBMODULE (1<<2)
+ 
+ /*
+  * Does 'match' match the given name?
+@@ -283,6 +284,29 @@ static int match_pathspec_item(const struct pathspec_item *item, int prefix,
+ 			 item->nowildcard_len - prefix))
+ 		return MATCHED_FNMATCH;
+ 
++	/* Perform checks to see if "name" is a super set of the pathspec */
++	if (flags & DO_MATCH_SUBMODULE) {
++		/* Check if the name is a literal prefix of the pathspec */
++		if ((item->match[namelen] == '/') &&
++		    !ps_strncmp(item, match, name, namelen))
++			return MATCHED_RECURSIVELY;
 +
-+test_description='Test ls-files recurse-submodules feature
++		/*
++		 * Here is where we would perform a wildmatch to check if
++		 * "name" can be matched as a directory (or a prefix) against
++		 * the pathspec.  Since wildmatch doesn't have this capability
++		 * at the present we have to punt and say that it is a match,
++		 * esentially returning a false positive (as long as "name"
++		 * matches upto the first wild character).
++		 * The submodules themselves will be able to perform more
++		 * accurate matching to determine if the pathspec matches.
++		 */
++		if (item->nowildcard_len < item->len &&
++		    !ps_strncmp(item, match, name,
++				item->nowildcard_len - prefix))
++			return MATCHED_RECURSIVELY;
++	}
 +
-+This test verifies the recurse-submodules feature correctly lists files from
-+submodules.
-+'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup directory structure and submodules' '
-+	echo a >a &&
-+	mkdir b &&
-+	echo b >b/b &&
-+	git add a b &&
-+	git commit -m "add a and b" &&
-+	git init submodule &&
-+	echo c >submodule/c &&
-+	git -C submodule add c &&
-+	git -C submodule commit -m "add c" &&
-+	git submodule add ./submodule &&
-+	git commit -m "added submodule"
-+'
-+
-+test_expect_success 'ls-files correctly outputs files in submodule' '
-+	cat >expect <<-\EOF &&
-+	.gitmodules
-+	a
-+	b/b
-+	submodule/c
-+	EOF
-+
-+	git ls-files --recurse-submodules >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'ls-files does not output files not added to a repo' '
-+	cat >expect <<-\EOF &&
-+	.gitmodules
-+	a
-+	b/b
-+	submodule/c
-+	EOF
-+
-+	echo a >not_added &&
-+	echo b >b/not_added &&
-+	echo c >submodule/not_added &&
-+	git ls-files --recurse-submodules >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'ls-files recurses more than 1 level' '
-+	cat >expect <<-\EOF &&
-+	.gitmodules
-+	a
-+	b/b
-+	submodule/.gitmodules
-+	submodule/c
-+	submodule/subsub/d
-+	EOF
-+
-+	git init submodule/subsub &&
-+	echo d >submodule/subsub/d &&
-+	git -C submodule/subsub add d &&
-+	git -C submodule/subsub commit -m "add d" &&
-+	git -C submodule submodule add ./subsub &&
-+	git -C submodule commit -m "added subsub" &&
-+	git ls-files --recurse-submodules >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--recurse-submodules does not support using path arguments' '
-+	test_must_fail git ls-files --recurse-submodules b 2>actual &&
-+	test_i18ngrep "does not support path arguments" actual
-+'
-+
-+test_expect_success '--recurse-submodules does not support --error-unmatch' '
-+	test_must_fail git ls-files --recurse-submodules --error-unmatch 2>actual &&
-+	test_i18ngrep "does not support --error-unmatch" actual
-+'
-+
-+test_incompatible_with_recurse_submodules () {
-+	test_expect_success "--recurse-submodules and $1 are incompatible" "
-+		test_must_fail git ls-files --recurse-submodules $1 2>actual &&
-+		test_i18ngrep 'can only be used in --cached mode' actual
-+	"
+ 	return 0;
+ }
+ 
+@@ -386,6 +410,21 @@ int match_pathspec(const struct pathspec *ps,
+ 	return negative ? 0 : positive;
+ }
+ 
++/**
++ * Check if a submodule is a superset of the pathspec
++ */
++int submodule_path_match(const struct pathspec *ps,
++			 const char *submodule_name,
++			 char *seen)
++{
++	int matched = do_match_pathspec(ps, submodule_name,
++					strlen(submodule_name),
++					0, seen,
++					DO_MATCH_DIRECTORY |
++					DO_MATCH_SUBMODULE);
++	return matched;
 +}
 +
-+test_incompatible_with_recurse_submodules -v
-+test_incompatible_with_recurse_submodules -t
-+test_incompatible_with_recurse_submodules --deleted
-+test_incompatible_with_recurse_submodules --modified
-+test_incompatible_with_recurse_submodules --others
-+test_incompatible_with_recurse_submodules --stage
-+test_incompatible_with_recurse_submodules --killed
-+test_incompatible_with_recurse_submodules --unmerged
-+test_incompatible_with_recurse_submodules --eol
+ int report_path_error(const char *ps_matched,
+ 		      const struct pathspec *pathspec,
+ 		      const char *prefix)
+diff --git a/dir.h b/dir.h
+index da1a858..97c83bb 100644
+--- a/dir.h
++++ b/dir.h
+@@ -304,6 +304,10 @@ extern int git_fnmatch(const struct pathspec_item *item,
+ 		       const char *pattern, const char *string,
+ 		       int prefix);
+ 
++extern int submodule_path_match(const struct pathspec *ps,
++				const char *submodule_name,
++				char *seen);
 +
-+test_done
+ static inline int ce_path_match(const struct cache_entry *ce,
+ 				const struct pathspec *pathspec,
+ 				char *seen)
+diff --git a/t/t3007-ls-files-recurse-submodules.sh b/t/t3007-ls-files-recurse-submodules.sh
+index caf3815..ca79fda 100755
+--- a/t/t3007-ls-files-recurse-submodules.sh
++++ b/t/t3007-ls-files-recurse-submodules.sh
+@@ -69,9 +69,111 @@ test_expect_success 'ls-files recurses more than 1 level' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success '--recurse-submodules does not support using path arguments' '
+-	test_must_fail git ls-files --recurse-submodules b 2>actual &&
+-	test_i18ngrep "does not support path arguments" actual
++test_expect_success '--recurse-submodules and pathspecs setup' '
++	echo e >submodule/subsub/e.txt &&
++	git -C submodule/subsub add e.txt &&
++	git -C submodule/subsub commit -m "adding e.txt" &&
++	echo f >submodule/f.TXT &&
++	echo g >submodule/g.txt &&
++	git -C submodule add f.TXT g.txt &&
++	git -C submodule commit -m "add f and g" &&
++	echo h >h.txt &&
++	mkdir sib &&
++	echo sib >sib/file &&
++	git add h.txt sib/file &&
++	git commit -m "add h and sib/file" &&
++	git init sub &&
++	echo sub >sub/file &&
++	git -C sub add file &&
++	git -C sub commit -m "add file" &&
++	git submodule add ./sub &&
++	git commit -m "added sub" &&
++
++	cat >expect <<-\EOF &&
++	.gitmodules
++	a
++	b/b
++	h.txt
++	sib/file
++	sub/file
++	submodule/.gitmodules
++	submodule/c
++	submodule/f.TXT
++	submodule/g.txt
++	submodule/subsub/d
++	submodule/subsub/e.txt
++	EOF
++
++	git ls-files --recurse-submodules >actual &&
++	test_cmp expect actual &&
++	cat actual &&
++	git ls-files --recurse-submodules "*" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '--recurse-submodules and pathspecs' '
++	cat >expect <<-\EOF &&
++	h.txt
++	submodule/g.txt
++	submodule/subsub/e.txt
++	EOF
++
++	git ls-files --recurse-submodules "*.txt" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '--recurse-submodules and pathspecs' '
++	cat >expect <<-\EOF &&
++	h.txt
++	submodule/f.TXT
++	submodule/g.txt
++	submodule/subsub/e.txt
++	EOF
++
++	git ls-files --recurse-submodules ":(icase)*.txt" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '--recurse-submodules and pathspecs' '
++	cat >expect <<-\EOF &&
++	h.txt
++	submodule/f.TXT
++	submodule/g.txt
++	EOF
++
++	git ls-files --recurse-submodules ":(icase)*.txt" ":(exclude)submodule/subsub/*" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '--recurse-submodules and pathspecs' '
++	cat >expect <<-\EOF &&
++	sub/file
++	EOF
++
++	git ls-files --recurse-submodules "sub" >actual &&
++	test_cmp expect actual &&
++	git ls-files --recurse-submodules "sub/" >actual &&
++	test_cmp expect actual &&
++	git ls-files --recurse-submodules "sub/file" >actual &&
++	test_cmp expect actual &&
++	git ls-files --recurse-submodules "su*/file" >actual &&
++	test_cmp expect actual &&
++	git ls-files --recurse-submodules "su?/file" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '--recurse-submodules and pathspecs' '
++	cat >expect <<-\EOF &&
++	sib/file
++	sub/file
++	EOF
++
++	git ls-files --recurse-submodules "s??/file" >actual &&
++	test_cmp expect actual &&
++	git ls-files --recurse-submodules "s???file" >actual &&
++	test_cmp expect actual &&
++	git ls-files --recurse-submodules "s*file" >actual &&
++	test_cmp expect actual
+ '
+ 
+ test_expect_success '--recurse-submodules does not support --error-unmatch' '
+@@ -82,18 +184,14 @@ test_expect_success '--recurse-submodules does not support --error-unmatch' '
+ test_incompatible_with_recurse_submodules () {
+ 	test_expect_success "--recurse-submodules and $1 are incompatible" "
+ 		test_must_fail git ls-files --recurse-submodules $1 2>actual &&
+-		test_i18ngrep 'can only be used in --cached mode' actual
++		test_i18ngrep 'unsupported mode' actual
+ 	"
+ }
+ 
+-test_incompatible_with_recurse_submodules -v
+-test_incompatible_with_recurse_submodules -t
+ test_incompatible_with_recurse_submodules --deleted
+ test_incompatible_with_recurse_submodules --modified
+ test_incompatible_with_recurse_submodules --others
+-test_incompatible_with_recurse_submodules --stage
+ test_incompatible_with_recurse_submodules --killed
+ test_incompatible_with_recurse_submodules --unmerged
+-test_incompatible_with_recurse_submodules --eol
+ 
+ test_done
 -- 
 2.8.0.rc3.226.g39d4020
 
