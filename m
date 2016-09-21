@@ -6,67 +6,73 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB1BE1F935
-	for <e@80x24.org>; Wed, 21 Sep 2016 18:17:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 245E41F935
+	for <e@80x24.org>; Wed, 21 Sep 2016 18:18:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933504AbcIUSRI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Sep 2016 14:17:08 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63141 "EHLO
+        id S933606AbcIUSST (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Sep 2016 14:18:19 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50095 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932340AbcIUSRH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2016 14:17:07 -0400
+        with ESMTP id S933024AbcIUSST (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2016 14:18:19 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 657E53EE9B;
-        Wed, 21 Sep 2016 14:16:24 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B06253F7EB;
+        Wed, 21 Sep 2016 14:18:17 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=IutKrUgPCEHZxejU3R19fkmhxmU=; b=r1Ac+n
-        Ya3ji6aX34iW+f54CAePDmXTNWsiYRadG0QGtomdt0920u9fyIrWpF60asU/Q9g8
-        rCwKEGZNG5b1FoPaBflAd+TnFFy73WClZsXlOrardRKyTp8vECx+ArUGaSgPsAW/
-        UGmyXVGbiQh10rXgfjfR7/6hiSlRWdMcKIIhI=
+        :content-type:content-transfer-encoding; s=sasl; bh=zQtYtxagp/iN
+        +d45mQJMDH69Lxc=; b=WKaEmPziE3o0phQvRQAxhxAaxMiPXw2l8rNhe4rjX0se
+        ez/fHsVOrJqMltvS8CgXrF7myOhVWv6+CTQxeMVfg3cZU+mUjt2g2Yf6nIFpZlSS
+        0swx1yR8huQGNc2gUHghjoaf0q013+nibzskuN8n+o2GTcEPOyRQi6ytOBTcZkg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=PVTmqEW+FZX+dmVi7zrPZMTVkZd1ojxx
-        cyUEhnDFZaD+UJWfk8YdJJ6Be1JdcjAK8vEefOK1S2fLmE1GDRbWI/Y2Z8mCOiF1
-        G+KMTSl753a0B8RTS7CHdL69+7LYdKVvC1N+MlunZ9sC/HR0REDBiDoQ3qNtLeDH
-        XROUX0l2Qzo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5D0B43EE9A;
-        Wed, 21 Sep 2016 14:16:24 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=eFTBuc
+        cecStffCtYAhtpfBVZ4VD4D5c+UKPXkn0IuVpDCzD+eJ+VrS2SO2JCAwaoSLomVo
+        g63wuLLIHmo+bgS6wWkQV6+sN14Y9Kzean/I6IR8XVuEeH3Vu5MhEjbsWBub4sc9
+        bwkZQFYc2sR5UarDU20ReTsDPiOmPRdHGH4b0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A5EEE3F7EA;
+        Wed, 21 Sep 2016 14:18:17 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D81ED3EE98;
-        Wed, 21 Sep 2016 14:16:23 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2B0E03F7E9;
+        Wed, 21 Sep 2016 14:18:17 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Vasco Almeida <vascomalmeida@sapo.pt>
-Cc:     git@vger.kernel.org, Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: git-gui, was Re: [PATCH v2 6/6] git-gui: Update Japanese information
-References: <1474378663.1884.41.camel@sapo.pt>
-Date:   Wed, 21 Sep 2016 11:16:21 -0700
-In-Reply-To: <1474378663.1884.41.camel@sapo.pt> (Vasco Almeida's message of
-        "Tue, 20 Sep 2016 13:37:43 +0000")
-Message-ID: <xmqqlgyl86fe.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, git@drmicha.warpmail.net,
+        max.nordlund@sqore.com
+Subject: Re: [PATCH v2 0/3] Fix git-init in linked worktrees
+References: <20160908134719.27955-1-pclouds@gmail.com>
+        <20160921112939.3444-1-pclouds@gmail.com>
+Date:   Wed, 21 Sep 2016 11:18:15 -0700
+In-Reply-To: <20160921112939.3444-1-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
+ =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
+        Duy"'s message of "Wed, 21 Sep 2016 18:29:36 +0700")
+Message-ID: <xmqqh99986c8.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 81133902-8027-11E6-B845-C26412518317-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: C49A16FA-8027-11E6-8260-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Vasco Almeida <vascomalmeida@sapo.pt> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> I have sent some git-gui patches on May this year and I think it will
-> add value to accepted them at some point:
+> v2 requires jk/setup-sequence-update so I could kill my workaround
+> patch and avoid conflicts in t0001. And:
+>
+>  - 1/3 has a few missing words back in its commit message
+>  - 2/3, which was 3/3 in v1, no longer has the ugly hacky
+>    get_first_git_dir()
+>  - 3/3 is a new tiny code improvement after the new 2/3
+>
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (3):
+>   init: correct re-initialization from a linked worktree
+>   init: do not set core.worktree more often than necessary
+>   init: reuse original_git_dir in set_git_dir_init()
 
-Yeah, they may be of value, but the thing is, I am not really in the
-position to review or apply them (I don't do git-gui).
-
-If Pat is not going to return, we would need to find volunteers to
-be maintainers of "git-gui" first.
-
-Thanks.  I may get to these patches when/if I find time, but it is
-not likely to happen very soon.
-
+Thanks. Will take a look.
