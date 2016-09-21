@@ -2,131 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 668771F935
-	for <e@80x24.org>; Wed, 21 Sep 2016 14:25:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 273511F935
+	for <e@80x24.org>; Wed, 21 Sep 2016 14:46:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934257AbcIUOZM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Sep 2016 10:25:12 -0400
-Received: from mail-db5eur01on0081.outbound.protection.outlook.com ([104.47.2.81]:54400
-        "EHLO EUR01-DB5-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S932822AbcIUOZL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2016 10:25:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sociomanticlabsgmbh.onmicrosoft.com; s=selector1-sociomantic-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=mv8fX1uZRFToGaiqawCbIqbulur/tftstDtFDnPWyuk=;
- b=ZM3iccZOwcYeKraS2/7UA0MQeXgKcnmZWRPghWOOBGmnZCw0DvTW3Ufl/Jd+O22RPo33m9PVfsWufrIzbkcW/3ZJz6IIG2YUjmHhutmT7/rxmqo/57mj9Ervg8BfiLXywHajnvwuhCeaKGwV4B+Rlat1Xd3brAd+e9xZVcHyKUI=
-Authentication-Results: spf=none (sender IP is )
- smtp.mailfrom=leandro.lucarella@sociomantic.com; 
-Received: from labs-064.localdomain (87.149.183.221) by
- VI1PR0101MB2144.eurprd01.prod.exchangelabs.com (10.169.130.9) with Microsoft
- SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.629.8; Wed, 21 Sep
- 2016 13:53:04 +0000
-Received: from localhost.localdomain ([127.0.0.1] helo=labs-064.localdomain)
-        by labs-064.localdomain with esmtp (Exim 4.82)
-        (envelope-from <leandro.lucarella@sociomantic.com>)
-        id 1bmhxM-0003ad-GF; Wed, 21 Sep 2016 15:53:00 +0200
-Date:   Wed, 21 Sep 2016 15:53:00 +0200
-From:   Leandro Lucarella <leandro.lucarella@sociomantic.com>
-To:     Jeff King <peff@peff.net>
-CC:     Mehul Jain <mehul.jain2029@gmail.com>, <git@vger.kernel.org>
-Subject: Re: 2.10.0: git log --oneline prints gpg signatures in 4 lines
-Message-ID: <20160921155300.79252e68@labs-064.localdomain>
-In-Reply-To: <20160920231533.fxcdjgphz25hnbxt@sigill.intra.peff.net>
-References: <20160920170954.38b24284@labs-064.localdomain>
-        <20160920231533.fxcdjgphz25hnbxt@sigill.intra.peff.net>
-Organization: Sociomantic Labs GmbH
-X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+        id S933581AbcIUOqt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Sep 2016 10:46:49 -0400
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:57718 "EHLO
+        out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S933564AbcIUOqs (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 21 Sep 2016 10:46:48 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.nyi.internal (Postfix) with ESMTP id BDCBE207AB;
+        Wed, 21 Sep 2016 10:46:46 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute3.internal (MEProxy); Wed, 21 Sep 2016 10:46:46 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+        :content-transfer-encoding:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-sasl-enc
+        :x-sasl-enc; s=mesmtp; bh=6Zl6EEb6jJ/E/wB4UE9/EAuBhjs=; b=e7TFA2
+        BNdUx3Wi1pksTZW/9AkKgsxDdWibH3hXm5JqCFQyS/RFCMF+ota5FO2GckqnXrzo
+        1MMScWLYvbAE2GN7QDVN2qo29Pf2hZD/clDS4JF+lYwejlco3UonLU/6fZ+FGPvn
+        BG+xsoP5E2YfRRdyJyLnTkKfZa+ozwVo/daow=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=6Zl6EEb6jJ/E/wB
+        4UE9/EAuBhjs=; b=tBxxi0PtE7vd9xdinSEWM+oj/Poy0Anbz+tI7pGKVOBjtYb
+        ectCsM9LKsbekC6EfOZbMQJMgTpZS21K+26d/SFhB4US1XteMoVEFwR5LJEJKzyu
+        RFw1tusTXJt79xhPk1DTIEWarn8SoGt7cO107GxBGqd05vr+v+Mp5wlwfy0E=
+X-Sasl-enc: aoT8E9yidiM3ELkwCNgc5Tt7/ssx0vTgeoc3E1YLPRAt 1474469206
+Received: from skimbleshanks.math.uni-hannover.de (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 2982EF29CF;
+        Wed, 21 Sep 2016 10:46:46 -0400 (EDT)
+Subject: Re: clarification of `rev-list --no-walk ^<rev>`?
+To:     Junio C Hamano <gitster@pobox.com>
+References: <2AD952BD65034D25BF26C7F138D24F25@PhilipOakley>
+ <3b06b9ee-3975-acf1-41d8-02b774a2dd3c@drmicha.warpmail.net>
+ <xmqq8tunhns4.fsf@gitster.mtv.corp.google.com>
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        Git List <git@vger.kernel.org>
+From:   Michael J Gruber <git@drmicha.warpmail.net>
+Message-ID: <affca640-4ed8-268a-9f7d-e2c7ce6d66fc@drmicha.warpmail.net>
+Date:   Wed, 21 Sep 2016 16:46:45 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [87.149.183.221]
-X-ClientProxiedBy: VI1PR02CA0018.eurprd02.prod.outlook.com (10.162.7.156) To
- VI1PR0101MB2144.eurprd01.prod.exchangelabs.com (10.169.130.9)
-X-MS-Office365-Filtering-Correlation-Id: 1e165cf3-7100-4857-9284-08d3e2269c4c
-X-Microsoft-Exchange-Diagnostics: 1;VI1PR0101MB2144;2:iPPqBa85j3Nkf5ZLBeL0E10/lpwvrYX4PW4kYkJP+iNaLMQQBgdIEJOco7Om1pydBQMm469vfFfU59sOlRpzW1nUrLQ3nxMyn4AE3REeLjQiiMmKU8HXp36fcSMnnEEPJh7hsffKZcHzSEEJBts+ALX0x0fzm0CNFbrmDiD00kQKce4IQM97kLZV57itd9qe;3:XERd4sknDJyZ2hffIzFVsx5lNz1zxwT/PDpqdauvhUyWfHq3KFzhH7G2ZfORx8z/DyjSomcIyMRy9511yG+23jtML2gslFpXne85RUUWCgyuC/oPt6g682wvOy26Zjw1
-X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:VI1PR0101MB2144;
-X-Microsoft-Exchange-Diagnostics: 1;VI1PR0101MB2144;25:otI1ypYEgtCC57liRrkggwexD4dXtTsRLjkJm1PBMufTzNslRCD0qutuPoQdQSgoFOv7pnov7PepE3oqsirwIoUAxaMFCTJBcgUwI4KFZk8CUEm492aymQ4KIASjwrqX6f4AKfSlcl4k9U3/MNCh7xmD8xgLaijYIUNXFqavyA1YT6IC53yyUDht5Fh34VoGs8vuB17PzwBhbPbPTSV0REJBCyeETeMoeuZ9dPiqQn3A6g8tVpdxv5qGnUXzQeBbj+vwxwOrBkj8kQCAR1E1mVT5jsekffEJ9s/o5WKpvM6pRxvAd7uGsdbtSTzRlQRtaN/Ek7a59+bTX1FkihiK7Y5W1NwbUiCO5Ok+P9ywRsxqhmXzq0Zf8hz/NfZfLKdJp08onjrwodZvS19q8K6gqRhWDBavyklfKf4V7D2nF3PtCuOkFysOxuwtnCHQZTmHUNEntTuSeAwMjSD+3vRR0BYW4ZaPDKHTYyhB1eU0mZdfjDCTAvsAQuvxv+M/gg+Orjs9zs8CUwbOy5a+FV8eoLuvLEMiurwENUBYLQf9ctJyIRJ5gI5AN9uc7ex+uykUWMYyxvMP/OKXDOINRkn4dRy0aq5Bl3o9rTPoZ1ikEPV9jVSofbzY/yMe5LKWgJwGOQ5RbXM2oeDzUNWLCQGL25Dggb4J7UJ+/vg5mYvOLpu2MAvO/CuVc3NpMc7mAzFXEjDLwQKch9Dqu9zyb1o/oZR7a+ji0UnhlBjrYZurW6xHtA2TJljGaleMf3xgBzq5ukU3UR7WxEjXY8Z3QBHCh69HLvjYUkolX87b33ll21akc6qX/kJM5NEwfiDpqQ02
-X-Microsoft-Exchange-Diagnostics: 1;VI1PR0101MB2144;31:8EsdppPos0rj39xnJvqbq9TWf6kHSo2m+P/1lvP77osutC22woiHRc/8PO79sR7o6O5/GKdpCKXuPBbEPv18n++KEC2Yu3Zo1AB4ZnHFxk8aP4nZClGdBsrHOGXy8DZxZxTQb7VnMnri1CPiorl7VeluWsgy9WyOTCJ4DDFkS2zgT3GS/tNTlq+hrq0aYigEuph3RlmrMfcw84isU8fVfr5n0qnKsBanyRN3xoycono=;20:Lh+PWfUKk6CYMwL1IQWb5euxW452WXvCZwV6KJ/pUwu4R8s3pJaXMmAbdb3ilWImw0lVST7y9evIPp6d+2/zprdf02dikxwNYcO1htwlDsAdTo9+81w/WxweXLxcqMtuo/yHuUMzTDRgWz+m7bCDMpQAmayOUdZMGHpZ/zSAHfpbwqReWMLAOxLfzv3d49KDgJ+988+PQ1w9Gd9d1y/pKNJR/N6tOBqpVY4RDez5hoVdPMB+FQAJsNVE2kZ4JJHA;4:YQOgvNsZPeic+3C70k474xgeCF+xyMWznyr3YrF/1rVU6GJFwktyY2PwjT898qy6VSE35mCuzzcPs0MlOx0V4JWLVbopChYr0BT//+LmhJdf63g95P+04XG/I54HOggYs+5iNkRIvChAECf3FKmgQwYfgsgGOr7knh7BpxPuX/IBsH1wa/jx0VkXQTMqesIqmFPkgZ2S4LHJNekq/AQs3PI8fDG6vFTxlQNa5WO+3sfLaG0Up6237b6vjGJLEWdVNrLFmD175iAYfjwHfZpwjt+goAiaGBx02XVyhZ1c4EN8x5TlbRQBvuUfw2vvj7WJKBVzP5XVg1o0SaLtdZXIn4ORyYOBO9bIfuAnVt9YwymTYf4j0o1k4e+Xa8oH/ENSCU+sHgJXXfaPREeKNsf/qivp4R+JfXZXAU18TAUBmru8H8bG4VuKM1r815ABHhoPA/5bUDRpW8dzfj+We7Whpw==
-X-Microsoft-Antispam-PRVS: <VI1PR0101MB21443436217E5299F83DEC15ECF60@VI1PR0101MB2144.eurprd01.prod.exchangelabs.com>
-X-Exchange-Antispam-Report-Test: UriScan:(7783539604369);
-X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(6040176)(601004)(2401047)(8121501046)(5005006)(3002001)(10201501046)(6042046)(6043046);SRVR:VI1PR0101MB2144;BCL:0;PCL:0;RULEID:;SRVR:VI1PR0101MB2144;
-X-Forefront-PRVS: 007271867D
-X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10009020)(4630300001)(6009001)(7916002)(199003)(24454002)(189002)(1076002)(23726003)(46406003)(230700001)(6116002)(3846002)(33646002)(305945005)(586003)(7736002)(7846002)(50986999)(76176999)(19580395003)(106356001)(105586002)(19580405001)(101416001)(50466002)(9686002)(9786002)(2950100001)(68736007)(77096005)(8676002)(7126002)(47776003)(81166006)(66066001)(81156014)(122856001)(50226002)(189998001)(49486002)(4326007)(97736004)(6862003)(7696004)(2906002)(92566002)(110136003)(6916008)(5660300001)(86362001)(15975445007)(39210200001);DIR:OUT;SFP:1101;SCL:1;SRVR:VI1PR0101MB2144;H:labs-064.localdomain;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
-Received-SPF: None (protection.outlook.com: sociomantic.com does not designate
- permitted sender hosts)
-X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;VI1PR0101MB2144;23:C2DdgJj6RKXLYGvHevFCRy+qGJj3Nfk2czsthTe?=
- =?us-ascii?Q?Juyc3Kk7Y/JMIW6aX3vBbKttIge/sEfAHsUFUgkTHFhC7tYCFYK0y5QW3vgQ?=
- =?us-ascii?Q?wO4DSX1sR+awwrtSh7hPf0jsLW/KPmqwDQrorSpEyOCndRUjTvVDPGQpmRvd?=
- =?us-ascii?Q?0ZWWFmQ/5rXHtIBGUOc6sm+IN/NYq874Jcq3cJd6P24o595kFd8JSA/f1UAd?=
- =?us-ascii?Q?bLR7PJsTyC7a+tq8VLLUUP8y3apC3rWld/XRO2xml76EBI760rG6910+7ilc?=
- =?us-ascii?Q?AUytL3ZvnFawN1Qa829mfidPoYPMMp0BMP6NHo1bGA7HVuQHNaF/GAZ1h86u?=
- =?us-ascii?Q?lbMloc52V7WXm7QiuSInWCj5/MWx2FHlh3tTFRp3rUyI2vga6CDQFTsyB32e?=
- =?us-ascii?Q?G0HQFeVLnOS3KwRBRG0g55Qv17nXlJVbEHwPFLC7KxI+RfJ7wQp5E8Qv0aih?=
- =?us-ascii?Q?Bea9ejP2k1gQ7w7qVGIOLUyiq8uTOYRbQs2l0M56/bTcTVt2WeCiyc3Ls8I8?=
- =?us-ascii?Q?aZzTMwwJu+vMKUwnPZz3TVDNOFWDB6S1mJ88l/TfOh2har5nN2Vn+YV0C8f6?=
- =?us-ascii?Q?nL02+ivjNXbOYFvDbd74LUXWUtOVkBtOA9UVROPGcGiebejoWDyn6hSaBPL2?=
- =?us-ascii?Q?zm2G7+tg4JhdNA52hIQ9gsk/jewVw5oyd9LjQd43Ei5xTcLE7cYkZRtGxcm3?=
- =?us-ascii?Q?XTl8LiyCM8Jeq/GQ9mJBJt/HGXBCaH5X9JsOXgHxhXIRbOWMa464XlIZVNMX?=
- =?us-ascii?Q?bX9ioNC0uo2jTJCyyYwmgjSbfAVtZNnQP+rF7SsAjBrcY9fOhqHqlleIITIo?=
- =?us-ascii?Q?CdAc72gLCMNBxzA7/Cbi1JEcNuK6YLnTW1MoLJ5uTHBomNlpkwLt6nPZXAi7?=
- =?us-ascii?Q?VOmib0YX4zMO7Bb7NGsrmi+6kKbFL98Hf9mG2qcEqXCt1nUeZYIJGmyDEVpi?=
- =?us-ascii?Q?F0fPMWEvebTlpxXUbfG0GF1YMKADfsHbn7o95YZyJTpKL9991iZmqKFhDyif?=
- =?us-ascii?Q?xKu6oZ+QSb7hOP7wU36a9QdvpkYbJlf/i3iN3OSo3SqgEl0MY7OGz2mxmidB?=
- =?us-ascii?Q?Vb7wMZF4d2QhcfLPzKLvl6IJcUxyx96rFrWxb6DSsNWj6PAahYNDk4eWJZ/w?=
- =?us-ascii?Q?IUVI+/eHNhwjakcByHtqOn3DWKLZxILUNlmie4AI+Vw7S6LZMeIvQ7wvWfaD?=
- =?us-ascii?Q?onxPxuDAli5wyJcl/u/FtUutM281HlMZDbsjbfv2phwCv7ZNt/IvvZ+utFQ?=
- =?us-ascii?Q?=3D=3D?=
-X-Microsoft-Exchange-Diagnostics: 1;VI1PR0101MB2144;6:Uf+09Ac6XsvVq2mtR+bJymDgSLo5q/KfTtdjzq6on0uxoH6Nw0Rs2DwqGv/6jQ2BJvsbeDH0LS8toyjprFP7xEIRB1PPaKxu7YOBy1RVJYaHIHnRLE4YrRb0Qgmpw5oKheGi8wnNBZk4bCRLi6nToghFbiLei9jaqzC76LkI0HIkwoEWMHUGJzWRy1kkq6oQzRUD1BI0OlCROb9ezcgVP0pgn/o8uXRNxX0TrvqPZe0Vu8mXRvqwwZZI7Oyv8eqUxfcdSaOJO3/ahnZlROqpTgURz/Hnjg852dr+xLCME2nYQpUjsfVbt53HDQibGF3c;5:+tg2Cq2gAqsZTrptJVp6LsyMT4NbTlyubFKSbCc8AEX1sU8gGGolxtTmmuDyUYCcc5jhyDH7BVTeK85K8GyR4Tfre3d3uE31+jw6Wb9zN91RRfgXeDI/ogRrf9yWosE/ZC6ZcdcUJXTSoreLneGvnA==;24:sKBc95As3HJIBICk+m8vHfR10bJea8wn8N1FvN37cYHRDU/FrYbu4tpXSGx9GKBxIBYvfOpqbbxAeUzuFwEDdu9XxjQiOV5wHUqxTLB2OCs=;7:plHuktdFh/qwex1AmE846fs3D4Lbpqswf5CC9rN2MxV54C4F+rO9zJ2Nrceh6Cn/hXm2Vu0rbmdUARP5/mr/7ZW7ooeEyQw9b62inTkxQ5wgJfURTseZr3EzKpHTKGsqlpZ2YodU+8cUXqOeseCiyvDrePgtYewWa0jUdvuyKRGoZTlDu+wkJqXBfrAjslwPTW10qfgWJbSvvTvYr7yPze5iXgrzo1ZbUFOZRfVEr9fBTypIE7ejvtyFfQi4qhktkx9vTFnm2kIx7oEOWxkCyAdQiGNYrl+V2jYRkQKMKiHU+8tZ+NVZVPMyUqf05V5v
-SpamDiagnosticOutput: 1:99
-SpamDiagnosticMetadata: NSPM
-X-OriginatorOrg: sociomantic.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Sep 2016 13:53:04.7349 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR0101MB2144
+In-Reply-To: <xmqq8tunhns4.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 20 Sep 2016 19:15:33 -0400
-Jeff King <peff@peff.net> wrote:
-
-> On Tue, Sep 20, 2016 at 05:09:54PM +0200, Leandro Lucarella wrote:
+Junio C Hamano venit, vidit, dixit 19.09.2016 18:12:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
 > 
-> > Hi, starting from 2.10.0 I noticed that when using git log
-> > --oneline, if commits are signed with GPG, now the signatures are
-> > printed too, and it takes 3 lines for the signature information + 1
-> > line for the title of the commit, so suddenly --oneline became
-> > --fourline :)
-> > 
-> > Is this really intended?
+>>> It can be read that
+>>>
+>>> $ git cherry-pick maint next
+>>>
+>>> would pick two single commits, while
+>>>
+>>> $ git cherry-pick maint next ^master
+>>>
+>>> could implicitly be read as
+>>>
+>>> $ git cherry-pick maint next --do-walk ^master
 > 
-> I don't think anything has changed here in 2.10. Running "git log
-> --oneline --show-signature" has _always_ been horribly ugly. However,
-> 2.10 did introduce the "log.showsignature" config, which makes "git
-> log --oneline" pretty unusable when it is enabled. Ditto for
-> one-liner uses of "--format".
+> You can read it as "master..next maint" that does force walking.
 > 
-> I think we should probably ignore the config entirely when using any
-> of the one-liner formats (and I'd include --format, too, even though
-> it can sometimes be multi-line; it already has %GG to include that
-> information as appropriate).
+>>> Clearly that's not what is intended, which is
+>>>
+>>> $ git cherry-pick --do-walk maint next ^master
+> 
+> I do not see the distinction betwee the above two you seem to be
+> trying to make.  Care to explain?
 
-Woops! Definitely it shouldn't be added when --format is used, this is
-also breaking some scripts I have using git log --format to get some
-information about commits, and GPG information is being output even
-when there is anything about GPG requested in the chosen format.
+I think you answered to e-mail (in-reply-to) and to Philip's actual text
+(quotes), but just in case:
 
-I guess I will disable log.showsignatures for now... :(
+[git]✓ git rev-list --no-walk ^HEAD~3 HEAD
+47d74601f5c6bbef215a887be2ca877e34391c9f
+574dece7b651fbae385add51d7aaea1cc414007a
+3fbbf6e9e40b151215cce6c6e25cd4db0232d870
+[git]✓ git rev-list ^HEAD~3 --no-walk HEAD
+47d74601f5c6bbef215a887be2ca877e34391c9f
 
--- 
-Leandro Lucarella
-Technical Development Lead
-Sociomantic Labs GmbH <http://www.sociomantic.com>
+The order of revision arguments and options does play role (but where I
+put my HEAD does not, uhm), i.e. walk-options vs. negative refs.
+
+The reason is that negative revs come with an implicit --do-walk (we
+need to walk to mark uninteresting revs), and the last
+--do-walk/--no-walk wins. That's what I meant with my comment.
+
+But there is only one walk (or none), and one setting effective for all
+revision arguments.
+
+Michael
