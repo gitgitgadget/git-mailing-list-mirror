@@ -6,72 +6,70 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68BDF1F4F8
-	for <e@80x24.org>; Thu, 22 Sep 2016 18:27:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB5841F4F8
+	for <e@80x24.org>; Thu, 22 Sep 2016 18:37:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1033990AbcIVS1T (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Sep 2016 14:27:19 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57867 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S966179AbcIVS1D (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Sep 2016 14:27:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C5BE03D2C9;
-        Thu, 22 Sep 2016 14:27:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=cfzdCFl20co/IcU0W/n2UJvg7fE=; b=egOAwz
-        vQGIGQO+8NSsqrEkguL0HWNUt9KoYWvDpbfovUF+oUr51apiCsr6NCygUq6Gze64
-        bP/5xYAQz5CQD75tVPrb34JzoLJ+f5/U9DqzAzYnyq084zydYeflf+7EWT/BS3Wj
-        3LuPDuBnGfot+XomGw3OFgjvj6WhWxV3MmyH8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=d41qkFZMscYOw0b1VhTbfqXvFGBT8+ft
-        IOZt0YtUo0jb5fkqyJMCxTCu+Ntc/G5wtxttIJSa+UkPxzW8lZFS2Vcu3MkxwXYA
-        vLcyvefmwAnONCmitmqQFhxwjp9jojFLwY3a7WZufwIdxhISnBoDRiVoom8o4wWj
-        9Wx8dRAOPs8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B711A3D2C7;
-        Thu, 22 Sep 2016 14:27:01 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F0DF53D2C3;
-        Thu, 22 Sep 2016 14:27:00 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kevin Daudt <me@ikke.info>
-Cc:     Timur Tabi <timur@codeaurora.org>, git <git@vger.kernel.org>
-Subject: Re: .gitignore does not ignore Makefile
-References: <CAOZdJXWpcSZ+jAoV8HttkaB7Fh=wzWDTCsHy8W-S9xOOBodVFw@mail.gmail.com>
-        <20160922154421.GA6641@ikke.info>
-Date:   Thu, 22 Sep 2016 11:26:58 -0700
-In-Reply-To: <20160922154421.GA6641@ikke.info> (Kevin Daudt's message of "Thu,
-        22 Sep 2016 17:44:21 +0200")
-Message-ID: <xmqqy42j4wp9.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 273B9160-80F2-11E6-BF11-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
+        id S1030345AbcIVShJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Sep 2016 14:37:09 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:35613 "EHLO
+        mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030267AbcIVShG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Sep 2016 14:37:06 -0400
+Received: by mail-pa0-f46.google.com with SMTP id oz2so31733715pac.2
+        for <git@vger.kernel.org>; Thu, 22 Sep 2016 11:37:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=7+t8bAQUzruyBRHSgUrmJoq1uBuQptdUgOZdxK3CVho=;
+        b=F9ELBzU8BAGU6N0bJUKXQIblZQUpqM8oWaf+dD6W72yFaTjsennm7JCazzyLTohxng
+         PhNJFP1jr8dL1dMWY+BeM8w8Fz7jJyg+HpCnK7fur6gBSNOrORMqyp7Dcua2XCfcQJ7z
+         GBRMKJhuxuC2KlfddhuZnvB8WR6hP0zcwSD1LxdfGgT6F1Gh1PsKMDzutlNKqiQ4QLJp
+         fr8o1eh1xSRg8tchaI7k1Yzt6T+CQ/hvWV6+4DlbGQrlUjBvbFpmbW5Dh4di6AV7lwcj
+         qEzBjmDkxsSGoVCRdHxpYLnfj1oxAnWjB0KWjKQicy1BS3OprC3whjxciwhoFnYzFpqL
+         QnDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=7+t8bAQUzruyBRHSgUrmJoq1uBuQptdUgOZdxK3CVho=;
+        b=NCYy3Tf+Uqtj9lAy1m00lUr/dEgYTk3hh/uoDC9jkPOVnd179sV4s6MURBfXgsFtOH
+         e28l/VOsI4bviSVFU4zyvV/UtjLSMku7jHBjkzjE4nip2HVKANvFU5VhRmOGO4nK1wbA
+         OJoTVfih1/xMJrVnzBrsSA5IfsD9pz4oetC8y7gNQdCO9BhlT3MX99lFbxeWm54QYr9K
+         P0siyaX2w58A75Gsow0QbmVcCPcD78mZJjdh1KcScRHWqL9kwm20YynDIGksHlX3F9h6
+         I8NibeC2Sy2dv+m+IyuKOap/SfCImAY7xFvNDIuKPXs7WaLB2E8PR9A/OEoQSvnrkUjo
+         DhZg==
+X-Gm-Message-State: AE9vXwN29RjWGSCPVC8YzOKxF0vQsAkaq3vDKJvscqnlR8ddizAOYL1q081HDFmkyWO6yzTW
+X-Received: by 10.66.150.134 with SMTP id ui6mr5574041pab.41.1474569425184;
+        Thu, 22 Sep 2016 11:37:05 -0700 (PDT)
+Received: from twelve2.mtv.corp.google.com ([100.96.238.21])
+        by smtp.gmail.com with ESMTPSA id x9sm5802715pff.19.2016.09.22.11.37.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 22 Sep 2016 11:37:03 -0700 (PDT)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Subject: [PATCH] do not reset in_vain on non-novel acks
+Date:   Thu, 22 Sep 2016 11:36:54 -0700
+Message-Id: <cover.1474568670.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kevin Daudt <me@ikke.info> writes:
+This is regarding the packfile negotiation in fetch-pack. If there is a
+concern that MAX_IN_VAIN would be hit too early (as a consequence of the
+patch below), I'm currently investigating the possibility of improving
+the negotiation ability of the client side further (for example, by
+prioritizing refs or heads instead of merely prioritizing by date in the
+priority queue of objects), but I thought I'd send the patch out first
+anyway to see what others think.
 
-> Often people advise tricks like `git update-index --assume-unchanges
-> <file>`, but this does not work as expected. It's merely a promise to
-> git that this file does not change (and hence, git will not check if
-> this file has changed when doing git status), but command that try to
-> change this file will abort saying that the file has changed.
+Jonathan Tan (1):
+  fetch-pack: do not reset in_vain on non-novel acks
 
-It actually is even worse.  As the user promised Git that the <file>
-will not be modified and will be kept the same as the version in the
-index, Git reserves the right to _overwrite_ it with the version in
-the index anytime when it is convenient to do so, removing whatever
-local change the user had despite the promise to Git.  The "abort
-saying that the file has changed" is merely various codepaths in the
-current implementation trying to be extra nice.
+ fetch-pack.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-
+-- 
+2.8.0.rc3.226.g39d4020
 
