@@ -2,110 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44C771F4F8
-	for <e@80x24.org>; Thu, 22 Sep 2016 16:04:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43CA01F4F8
+	for <e@80x24.org>; Thu, 22 Sep 2016 16:11:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752263AbcIVQEi (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Sep 2016 12:04:38 -0400
-Received: from mail-it0-f48.google.com ([209.85.214.48]:38350 "EHLO
-        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752022AbcIVQEh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Sep 2016 12:04:37 -0400
-Received: by mail-it0-f48.google.com with SMTP id n143so86209001ita.1
-        for <git@vger.kernel.org>; Thu, 22 Sep 2016 09:04:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=74c/7q6q8y7Yj0ysTnYChfmrMpr0zRqNBeGkxYaBKcs=;
-        b=OmfwHmFMIzIPaGcGEfROVszi0vMvO3NtsAKgsJDyMtRX8DQcy6P7EHQom4M4LuRRPl
-         2PCyBjtAMsdVwcvcvhiXlG/BNs2fxsatg/uu/q3+KoKjBqAp4fF5Q1I5M1I1kwgHfTwt
-         mkCfMgb/LcFufNg7a9/owr0gorIWWW96O4oYcMB6FPZoFs0jEW3JO9KbXbYaU7eYpH67
-         OKgvnH6PGznOgfISw3zB1/ewpEqlWaPTjsj5Aw/vV2S5+J+S6p8A3tdXLb44uj+s+c+4
-         55unRTKuqAJF1Xyav9YGtOzvHOgbqPJz737lI7+OyJ5YHB/LRUWcOrBn+ikmGzN8pOhH
-         NBtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=74c/7q6q8y7Yj0ysTnYChfmrMpr0zRqNBeGkxYaBKcs=;
-        b=SRdS0Gm8rYeVWLYmEJZD+TknJVqlA2xmsC4K0+w94ThmE2qUR8T3iI/Rge76kIIyS4
-         NiZWD9rvkwM5atPRZnXoE1fUrr3gOQarZs0o33iya6qsou/bcdyFkSBV3v8QissLOpV3
-         5jAH8mRIZJhdkV6+bRBfj/1qyvJ5YpM/TsXj0A9XPkp1mk3N6r+px40vCfTxombUJEhR
-         fILTv1jwqWFGw2yQcsE5jPFT5JQktRqwiPNcxE6LH02+kY60wSehcCe2Qzf7jvLTc7Kp
-         GCAFag8+EYshaRw3PuP05beGU97KZHNUKqiI4WzqTrvgrKMRyaxYRhxdO6F98Bl3Dtyx
-         B9Xg==
-X-Gm-Message-State: AE9vXwOiNK5dOMFlHPQAKBlQ2MW3JLTrLHCbcqkLPKUUAYvh39sk35eK4HcdFQJ75pwiYmyUBg8MdsB5aF3yJOIJ
-X-Received: by 10.36.4.143 with SMTP id 137mr11013101itb.39.1474560276026;
- Thu, 22 Sep 2016 09:04:36 -0700 (PDT)
+        id S1756257AbcIVQLr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Sep 2016 12:11:47 -0400
+Received: from mout.web.de ([212.227.15.4]:63264 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751220AbcIVQLq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Sep 2016 12:11:46 -0400
+Received: from [192.168.178.36] ([79.213.113.239]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0LiCbT-1bAWJC3aXz-00nNmp; Thu, 22 Sep 2016 18:11:33
+ +0200
+X-Mozilla-News-Host: news://news.gmane.org:119
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] introduce CHECKOUT_INIT
+Message-ID: <c2defe5a-3a49-d776-7806-f3abfbd79770@web.de>
+Date:   Thu, 22 Sep 2016 18:11:33 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Received: by 10.107.173.98 with HTTP; Thu, 22 Sep 2016 09:04:35 -0700 (PDT)
-In-Reply-To: <20160922041854.7754ujcynhk7mdnh@sigill.intra.peff.net>
-References: <1474495472-94190-1-git-send-email-bmwill@google.com>
- <CAKoko1q7Mb6_cnaA1ecZJ2y1PWUrW4RSu6RiviyN91JV5-QR5g@mail.gmail.com>
- <xmqq1t0c7ur2.fsf@gitster.mtv.corp.google.com> <CAKoko1qch_odsEWba0rtCv-DWO0ABS2yprnwGPCgyT6-7H-LdQ@mail.gmail.com>
- <xmqqponw6e3x.fsf@gitster.mtv.corp.google.com> <20160922041854.7754ujcynhk7mdnh@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 22 Sep 2016 09:04:35 -0700
-Message-ID: <CAGZ79kYQVhVN1mzJCWCH8bLEFTmgL8yqrN=KUiAY5PT1t7-D6A@mail.gmail.com>
-Subject: Re: [PATCH 1/2] ls-files: adding support for submodules
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:skRsqSaCRuXseCPFaRoOm4BEJoB1i9f0nPrhEshl+26/tuDWI4J
+ 7VcjfHKHYx4uBIVF2eEN1orIGJkX0ZFAeOq3F81R9zrZvmZPGDGT73tPf3V4uj5ecmQow6J
+ VSBUuD76W2j0YEta/FVaTskIagXcVvp4rFHUCt63qsA8xnLRtTbYQyVCuQswkmA82F6og/n
+ JkI3ZA1J+LDQxs9w+oIwA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:zTlv7eYG+wQ=:wKP7fECwA+czveN7Y8J9CR
+ bhkieS88LDSshBb0pK7MVmqSW57+yiPYeCKGVNp3k2ZaH2yPWW5jQgVRgiv+9lN9mOo0CeVoV
+ 9Bcwz+pNwRSToX0xJ84gFmjaVPFN2ZqTt4HfLzs06dR8bzZWpOrvIMMZVY/M0qP7w+o0D8pYO
+ 3cLTGrSWg9wMzyF0JVt77RPzmrib2IU9Ma+r4T3p6IxqlIIQEeK1NivQIF0t8EzQ/ezuqNuvR
+ WZerIcsVhQGb4tv0ZhwSSfPQW8prMKNQUSrYhPAOUMRMCGi38g53feKMIRqnRm8L41GAee/bO
+ dxU+7l6g8R3CQ0fG+F/4+yLLohed6hSUMSaIfTfV0s57v4RnSi5fDHyx3oJn+cPtPbTTffVOz
+ VzvtZDLtm3GyJ1oPUtLT7G8YBrFXH0VqE+O8o8IJBVgS+x6jVQ8kLzZknjDSgknAsMKUie60i
+ YlzuGjiWFDNh4hxXy7UyA0ka4q0iS0XeqmdSuSEl+3O4SZuMapHljnSuPk4FnlzS0aGxQcOfA
+ gWlScOSZjtVQZ1muc2k6HI11VN5pP+4YndDkvJrAmKCYZGA7TD24RtUKw9NWefewc3dkTE0yv
+ ARLdwMz2lSv06yS6mOy0m6o7AZtkHB+2CGVFFeWqhjH4/AOJ9nMknKpiq4OjTU/xlDW7cVsQN
+ KxJ8RoiDM4QBGWffsnu7TzEXH8z4DArZZUUuMt/1LdICloF0eGqqhtzh48nL4saQRkYr7RV27
+ ksHEinYzrvkiAIOcz3ixSe3Cc2pnF1OQnCPaRHn6A+yOh7ldaF9eUjpqFxMM4uVzMoRzE7+Z9
+ 6yAWy4n
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 21, 2016 at 9:18 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Sep 21, 2016 at 04:13:22PM -0700, Junio C Hamano wrote:
->
->> Brandon Williams <bmwill@google.com> writes:
->>
->> > yes you mentioned this and I meant to change that before sending it out.
->> > Looks like it slipped through have slipped through.
->>
->> I already fixed it up locally when I sent the reply, but thanks for
->> resending (which assures me that your local copy is up-to-date and I
->> do not have to worry about having to repeat me in the future, if
->> this ever needs further rerolling ;-).
->
-> While we are on the subject, the commit message also uses some past
-> tense:
->
->   Allow ls-files to recognize submodules in order to retrieve a list of
->   files from a repository's submodules.  This is done by forking off a
->   process to recursively call ls-files on all submodules. Also added a
->   submodule-prefix command in order to prepend paths to child processes.
->
-> The final sentence should be "Also add...".
->
-> Since this final bit of logic was sufficiently non-obvious that it only
-> came about in v2, maybe it is worth describing a little more fully:
->
->   Also add a submodule-prefix option, which instructs the child
->   processes to prepend the prefix to each path they output. This makes
->   the output paths match what is on the filesystem (i.e., as if the
->   submodule boundaries were not there at all).
->
-> Should this option just be "--prefix", or maybe "--output-prefix"?
+Add a static initializer for struct checkout and use it throughout the
+code base.  It's shorter, avoids a memset(3) call and makes sure the
+base_dir member is initialized to a valid (empty) string.
 
-I think --prefix can easily be confused with the internal prefix that we hand
-down to each command. --output-prefix works for the ls-files case, but as
-soon as we do more than just printing out file names, we'd use that prefix for
-more than just output, e.g. in grep it becomes part of the pathspec IIUC.
-I agree however that we probably don't want to keep it submodule specific.
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ apply.c                  | 4 +---
+ builtin/checkout-index.c | 2 +-
+ builtin/checkout.c       | 3 +--
+ cache.h                  | 1 +
+ unpack-trees.c           | 4 +---
+ 5 files changed, 5 insertions(+), 9 deletions(-)
 
-> Submodules are the obvious use case here, but I could see somebody
-> adapting this for other uses (alternatively, if we _do_ want to keep it
-> just as an implementation detail for submodules, we should probably
-> discourage people in the documentation from using it themselves).
->
-> -Peff
+diff --git a/apply.c b/apply.c
+index e327021..b03d274 100644
+--- a/apply.c
++++ b/apply.c
+@@ -3334,10 +3334,8 @@ static void prepare_fn_table(struct apply_state *state, struct patch *patch)
+ static int checkout_target(struct index_state *istate,
+ 			   struct cache_entry *ce, struct stat *st)
+ {
+-	struct checkout costate;
++	struct checkout costate = CHECKOUT_INIT;
+ 
+-	memset(&costate, 0, sizeof(costate));
+-	costate.base_dir = "";
+ 	costate.refresh_cache = 1;
+ 	costate.istate = istate;
+ 	if (checkout_entry(ce, &costate, NULL) || lstat(ce->name, st))
+diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
+index 92c6967..30a49d9 100644
+--- a/builtin/checkout-index.c
++++ b/builtin/checkout-index.c
+@@ -16,7 +16,7 @@ static int checkout_stage; /* default to checkout stage0 */
+ static int to_tempfile;
+ static char topath[4][TEMPORARY_FILENAME_LENGTH + 1];
+ 
+-static struct checkout state;
++static struct checkout state = CHECKOUT_INIT;
+ 
+ static void write_tempfile_record(const char *name, const char *prefix)
+ {
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 9941abc..4c86272 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -239,7 +239,7 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 			  const char *revision)
+ {
+ 	int pos;
+-	struct checkout state;
++	struct checkout state = CHECKOUT_INIT;
+ 	static char *ps_matched;
+ 	struct object_id rev;
+ 	struct commit *head;
+@@ -352,7 +352,6 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 		return 1;
+ 
+ 	/* Now we are committed to check them out */
+-	memset(&state, 0, sizeof(state));
+ 	state.force = 1;
+ 	state.refresh_cache = 1;
+ 	state.istate = &the_index;
+diff --git a/cache.h b/cache.h
+index d0494c8..5d9116c 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1354,6 +1354,7 @@ struct checkout {
+ 		 not_new:1,
+ 		 refresh_cache:1;
+ };
++#define CHECKOUT_INIT { NULL, "" }
+ 
+ #define TEMPORARY_FILENAME_LENGTH 25
+ extern int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *topath);
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 3db3f02..ea6bdd2 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1094,12 +1094,10 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 	int i, ret;
+ 	static struct cache_entry *dfc;
+ 	struct exclude_list el;
+-	struct checkout state;
++	struct checkout state = CHECKOUT_INIT;
+ 
+ 	if (len > MAX_UNPACK_TREES)
+ 		die("unpack_trees takes at most %d trees", MAX_UNPACK_TREES);
+-	memset(&state, 0, sizeof(state));
+-	state.base_dir = "";
+ 	state.force = 1;
+ 	state.quiet = 1;
+ 	state.refresh_cache = 1;
+-- 
+2.10.0
+
