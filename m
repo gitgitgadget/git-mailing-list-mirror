@@ -2,150 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 050E51F4F8
-	for <e@80x24.org>; Thu, 22 Sep 2016 16:56:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42EE91F4F8
+	for <e@80x24.org>; Thu, 22 Sep 2016 17:19:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935153AbcIVQ4R (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Sep 2016 12:56:17 -0400
-Received: from avasout02.plus.net ([212.159.14.17]:39176 "EHLO
-        avasout02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935051AbcIVQ4P (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Sep 2016 12:56:15 -0400
-Received: from [10.0.2.15] ([194.75.29.46])
-        by avasout02 with smtp
-        id mgw61t00B0zhorE01gw77o; Thu, 22 Sep 2016 17:56:08 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=G/5eKJs5 c=1 sm=1 tr=0
- a=g54qAj+LxVGqXy9pVcJ+0w==:117 a=g54qAj+LxVGqXy9pVcJ+0w==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=GAj3AVI_n7FsPzfEt7YA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] run-command: async_exit no longer needs to be public
-Message-ID: <78f2bdd0-f6ad-db5c-f9f2-f90528bc4f77@ramsayjones.plus.com>
-Date:   Thu, 22 Sep 2016 17:56:05 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
+        id S933345AbcIVRTh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Sep 2016 13:19:37 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55048 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752210AbcIVRTg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Sep 2016 13:19:36 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B2EDE3F149;
+        Thu, 22 Sep 2016 13:19:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=461RkHMDuR0UlZ8jgYPMROKx6Wg=; b=I/dd3G
+        zxrvmhHeFAlYp+GCDvmkZU61vwkNfwK/WSwxUeV4rI9tDixvvu5qu6GAXbdh8hSD
+        mw1aRyjSrXn8h4PDeI/UT5V9leBHl6nyLRzoxwcBNu7qnBN8qoQ4rvyjbISEEixY
+        dKs2yPUC4iDhs5ua+fczTuwACCtSfQWairn10=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=nQIgx8R0lxb3YA90uFo4dXGtKXKak9FW
+        wHa8tH8xf6IsnY0YanZ2RqaZtNynZ0JdSb39crksBOkzkt2F6LCEfrQ4mFtZdDan
+        JoRughIzo2RUrppDoS4QmopEcxhwF0Yr02z46VZkb7oI1BspJHtnNaRnRRUeUiIG
+        HlpFkENph0w=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id ABAD63F148;
+        Thu, 22 Sep 2016 13:19:34 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2F33C3F145;
+        Thu, 22 Sep 2016 13:19:34 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Anatoly Borodin <anatoly.borodin@gmail.com>, git@vger.kernel.org
+Subject: Re: Bug: pager.<cmd> doesn't work well with editors
+References: <nrmbrl$hsk$1@blaine.gmane.org> <nrmd6u$imf$1@blaine.gmane.org>
+        <xmqqh99bho7a.fsf@gitster.mtv.corp.google.com>
+        <20160920014733.7whjuxfuimx5ztdb@sigill.intra.peff.net>
+        <xmqqponxb56a.fsf@gitster.mtv.corp.google.com>
+        <20160922064730.277nzkqlxbcx2kjg@sigill.intra.peff.net>
+Date:   Thu, 22 Sep 2016 10:19:32 -0700
+In-Reply-To: <20160922064730.277nzkqlxbcx2kjg@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 22 Sep 2016 02:47:30 -0400")
+Message-ID: <xmqqfuor6ee3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: BB274E3C-80E8-11E6-AB96-C26412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
+> I don't think it is a bad move overall. I use "pager.log" to pipe
+> through a specific command (that is different than I would use for other
+> commands).
+>
+> So I like the idea of configurability; the problem is just that it is
+> happening at the wrong level.
 
-Hi Lars,
+The level at which configurability happens might be one issue
+(i.e. you may want different pager for two operating modes for the
+same command, hence your need to use "tag.list" not just "tag"), but
+I think another issue is that it conflates if the output need to be
+paged (on/off) and what pager should be used when the output is
+paged.  When we see that a user sets "pager.tag", we should not have
+made it an instruction to Git that _all_ output from "git tag" must
+be paged.
 
-If you need to re-roll your 'ls/filter-process' branch, could you please
-squash this into the relevant commit c42a4cbc ("run-command: move check_pipe()
-from write_or_die to run_command", 20-09-2016).
+If there were no need for supporting separate pagers per operating
+mode of a Git command, say "git tag", you would not want to page the
+output unless you are producing "git tag [-l]" listing.  You do not
+want your interaction with the usual "git tag <name> [<an object>]"
+to be paged, even if you want to use a pager different from GIT_PAGER
+when you are viewing the tags.
 
-[Note that commit 9658846c ("write_or_die: handle EPIPE in async threads",
-24-02-2016) introduced async_exit() specifically for use in the implementation
-of check_pipe(). Now that you have moved check_pipe() into run-command.c,
-it no longer needs to be public.]
+It is good that each codepath can give default in this example
 
-Thanks!
+> The individual commands should be in
+> charge of it, with something like:
+>
+>   setup_auto_pager("log", 1);
+> ...
+>   if (mode_list)
+> 	  setup_auto_pager("tag.list", 0);
 
-ATB,
-Ramsay Jones
+as the second parameter to setup_auto_pager(), but I think the first
+parameter being "tag.list" vs "tag" is a separate issue.  Until
+there comes another codepath in "git tag" that wants to call
+setup_auto_pager(), it does not make any difference from the end-user's
+point of view.  Starting with "tag.list" may futureproof it
+(e.g. perhaps somebody wants to use a separate pager for "git tag --help"
+and "tag.help" can be added without disrupting existing use of "tag.list")
 
- run-command.c | 30 +++++++++++++++---------------
- run-command.h |  3 +--
- 2 files changed, 16 insertions(+), 17 deletions(-)
+So I think we are fundamentally on the same page; it is just you are
+aiming higher than I was, but we both recognize the need for separate 
+codepaths in a single command to decide if the output should be paged.
 
-diff --git a/run-command.c b/run-command.c
-index b72f6d1..3269362 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -6,19 +6,6 @@
- #include "thread-utils.h"
- #include "strbuf.h"
- 
--void check_pipe(int err)
--{
--	if (err == EPIPE) {
--		if (in_async())
--			async_exit(141);
--
--		signal(SIGPIPE, SIG_DFL);
--		raise(SIGPIPE);
--		/* Should never happen, but just in case... */
--		exit(141);
--	}
--}
--
- void child_process_init(struct child_process *child)
- {
- 	memset(child, 0, sizeof(*child));
-@@ -647,7 +634,7 @@ int in_async(void)
- 	return !pthread_equal(main_thread, pthread_self());
- }
- 
--void NORETURN async_exit(int code)
-+static void NORETURN async_exit(int code)
- {
- 	pthread_exit((void *)(intptr_t)code);
- }
-@@ -697,13 +684,26 @@ int in_async(void)
- 	return process_is_async;
- }
- 
--void NORETURN async_exit(int code)
-+static void NORETURN async_exit(int code)
- {
- 	exit(code);
- }
- 
- #endif
- 
-+void check_pipe(int err)
-+{
-+	if (err == EPIPE) {
-+		if (in_async())
-+			async_exit(141);
-+
-+		signal(SIGPIPE, SIG_DFL);
-+		raise(SIGPIPE);
-+		/* Should never happen, but just in case... */
-+		exit(141);
-+	}
-+}
-+
- int start_async(struct async *async)
- {
- 	int need_in, need_out;
-diff --git a/run-command.h b/run-command.h
-index e7c5f71..bb89c30 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -54,7 +54,6 @@ int finish_command(struct child_process *);
- int finish_command_in_signal(struct child_process *);
- int run_command(struct child_process *);
- 
--void check_pipe(int err);
- 
- /*
-  * Returns the path to the hook file, or NULL if the hook is missing
-@@ -141,7 +140,7 @@ struct async {
- int start_async(struct async *async);
- int finish_async(struct async *async);
- int in_async(void);
--void NORETURN async_exit(int code);
-+void check_pipe(int err);
- 
- /**
-  * This callback should initialize the child process and preload the
--- 
-2.10.0
+> I don't have a particular plan to work on it anytime soon, but maybe
+> somebody could pick it up as relatively low-hanging fruit.
+
+;-)
