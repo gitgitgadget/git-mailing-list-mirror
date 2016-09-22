@@ -2,88 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C49E01F4F8
-	for <e@80x24.org>; Thu, 22 Sep 2016 18:38:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1C761F4F8
+	for <e@80x24.org>; Thu, 22 Sep 2016 18:44:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1034403AbcIVSim (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Sep 2016 14:38:42 -0400
-Received: from mout.gmx.net ([212.227.15.18]:64224 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S965609AbcIVSiO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Sep 2016 14:38:14 -0400
-Received: from virtualbox ([108.198.118.51]) by mail.gmx.com (mrgmx003) with
- ESMTPSA (Nemesis) id 0M2cYX-1aviqk2mCj-00sLxW; Thu, 22 Sep 2016 20:38:04
- +0200
-Date:   Thu, 22 Sep 2016 20:38:00 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Benjamin Kramer <benny.kra@googlemail.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [PATCH v4 2/3] regex: add regexec_buf() that can work on a non
- NUL-terminated string
-In-Reply-To: <xmqqtwd96p0b.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1609222032330.129229@virtualbox>
-References: <cover.1473321437.git.johannes.schindelin@gmx.de>        <cover.1474482164.git.johannes.schindelin@gmx.de>        <270cea11c4d8bfb332a6c014a11673b7f4666ee4.1474482164.git.johannes.schindelin@gmx.de>
- <xmqqtwd96p0b.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S966100AbcIVSoR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Sep 2016 14:44:17 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:35017 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030244AbcIVSoO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Sep 2016 14:44:14 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 3DCB261254; Thu, 22 Sep 2016 18:44:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1474569853;
+        bh=HD/W4SsU4Qvp8wqt70EmP3pH/MbfqospGFlCj9ESnqY=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=I3xtoQB4pRrMM48xPtk/5HxAhKVJUy3oBkbrxB07R/ZYqWHFh68uLOBJ1uQsL+nzW
+         lhHnX2hWt+ZIBqoak39DyAoH0CMIRp1R51aCz0aeX191BYuqzS6PCxJfWgFC66e6AE
+         q2TrbpjX/0VWThqiDb5bZ/A29FEdjWkXLRnqsZDE=
+Received: from [10.222.143.167] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: timur@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 94B7460CF5;
+        Thu, 22 Sep 2016 18:44:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1474569853;
+        bh=HD/W4SsU4Qvp8wqt70EmP3pH/MbfqospGFlCj9ESnqY=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=I3xtoQB4pRrMM48xPtk/5HxAhKVJUy3oBkbrxB07R/ZYqWHFh68uLOBJ1uQsL+nzW
+         lhHnX2hWt+ZIBqoak39DyAoH0CMIRp1R51aCz0aeX191BYuqzS6PCxJfWgFC66e6AE
+         q2TrbpjX/0VWThqiDb5bZ/A29FEdjWkXLRnqsZDE=
+DMARC-Filter: OpenDMARC Filter v1.3.1 smtp.codeaurora.org 94B7460CF5
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=pass smtp.mailfrom=timur@codeaurora.org
+Subject: Re: .gitignore does not ignore Makefile
+To:     Junio C Hamano <gitster@pobox.com>, Kevin Daudt <me@ikke.info>
+Cc:     git <git@vger.kernel.org>
+References: <CAOZdJXWpcSZ+jAoV8HttkaB7Fh=wzWDTCsHy8W-S9xOOBodVFw@mail.gmail.com>
+ <20160922154421.GA6641@ikke.info>
+ <xmqqy42j4wp9.fsf@gitster.mtv.corp.google.com>
+From:   Timur Tabi <timur@codeaurora.org>
+Message-ID: <57E4267B.1050507@codeaurora.org>
+Date:   Thu, 22 Sep 2016 13:44:11 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:43.0) Gecko/20100101
+ Firefox/43.0 SeaMonkey/2.40
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:TmD9Vwyje8whQbhl9742Pq/vzEDuThRSpAZ4igm3SwFKaBGYMpi
- CQ2KGmQfd9C1K+I6T+W5VOj88b5dYSFCVLQJq29G6P9o6Hkq/JLHwesj30IcM/x+KhJWfHi
- Sgu0jDck3KPEov+N/nOg35C84RamnGJqsU/06to49Wke5JxWQZUwJ5WBDWo6snHGTZkkveR
- RKCDp/6hYzU13lkADKvaQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:F6VxQtO/TmY=:NwtKgv7s/VvYVOyF0VzbgW
- QS8pM/dDpfUQV9l82Yh5OLkLxvub9vxe10CW9GrsLl8wJWApTgiSVfrD3WB5poCfPK86pSEne
- MCg9qBbgYmQTZjgmmaH5E8QmmFgZXOAXgMb8jzy6uunAI7j/UBSlsjnG0zuoot26GzBSsxojP
- vTFOvyg0/RrqWkGyw9q4cqv9B9Cz5XZ5ZCRtu2JO3rNyc38ucc8Q3m/o2nTkrGHzIhWs/koi7
- gbXIM5LqFfJpxI/7680FVREiBiNwXd1eg1FVqgHnhLiuayXXrNaiX9DK0qaSyB8RTFtTU7seQ
- q0W05rG6rU0D0iMx4/IiSFctsTAJc/0fsHvKAsLb3f7Ml+jkXWOis8fSrRQDEWU4YLxYp8Iag
- 6YzwhunnaJKPMykbea3giWM8xfCkdp69SVcgH3Cy6811BaTlnuwfME309sP2gCIoptHUjAKg+
- OmhciDj3pzgibl9R+tZUYdocdVAvYoODwWbyuwoEeDraz/wtFjTTsTtHqx+ygZiT/Oful9ghe
- LsdynYR340EV9M9hTKB7nGaCwnxvdSzvzimgaHC2F1TzTBBiImqTG4Vkl3C3UNwnqjkCNnb9O
- wU4/w0LMvLejCkUSVcNhOIWd+5Os///1oSypP0RM3Dj4Z0goMUiqKZ+AooYEO5OfokFnwJ1Fd
- MILj2bt3Jy+bEgnClliTQJ6zwwk4yHdcGAC8tP6ZmAPE9NAH4tS63OQ6LxddPwqqJftzLWXlS
- U8q1T5mzThWHpHrKTGJ3arQKyY1ThTrv77eifB+hQquGXmsN5/VDs9H5axdpDDQLceO7ZAM9K
- TK4S6V6
+In-Reply-To: <xmqqy42j4wp9.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Junio C Hamano wrote:
+> It actually is even worse.  As the user promised Git that the <file>
+> will not be modified and will be kept the same as the version in the
+> index, Git reserves the right to_overwrite_  it with the version in
+> the index anytime when it is convenient to do so, removing whatever
+> local change the user had despite the promise to Git.  The "abort
+> saying that the file has changed" is merely various codepaths in the
+> current implementation trying to be extra nice.
 
-On Wed, 21 Sep 2016, Junio C Hamano wrote:
+So .gitignore only ignores new files, not modified ones?  That seems 
+odd, but I guess that's the way it's always been and I just haven't 
+noticed until now.
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > ...
-> > Happily, there is an extension to regexec() introduced by the NetBSD
-> > project and present in all major regex implementation including
-> > Linux', MacOSX' and the one Git includes in compat/regex/: by using
-> > the (non-POSIX) REG_STARTEND flag, it is possible to tell the
-> > regexec() function that it should only look at the offsets between
-> > pmatch[0].rm_so and pmatch[0].rm_eo.
-> >
-> > That is exactly what we need.
-> 
-> Wonderful.
-> 
-> > Since support for REG_STARTEND is so widespread by now, let's just
-> > introduce a helper function that uses it, and fall back to allocating
-> > and constructing a NUL-terminated when REG_STARTEND is not available.
-> 
-> I'd somehow reword the last paragraph here, though ;-)
-
-Oh drats. I thought I had prepared the fixed commit messages already :-(
-
-What you have in `pu` as of today looks good.
-
-Ciao,
-Dscho
+-- 
+Qualcomm Datacenter Technologies, Inc. as an affiliate of Qualcomm
+Technologies, Inc.  Qualcomm Technologies, Inc. is a member of the
+Code Aurora Forum, a Linux Foundation Collaborative Project.
