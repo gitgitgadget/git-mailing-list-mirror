@@ -2,182 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 475841F4F8
-	for <e@80x24.org>; Thu, 22 Sep 2016 18:45:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C03621F4F8
+	for <e@80x24.org>; Thu, 22 Sep 2016 18:53:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1034590AbcIVSpH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Sep 2016 14:45:07 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:35740 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1034576AbcIVSo5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Sep 2016 14:44:57 -0400
-Received: by mail-wm0-f49.google.com with SMTP id l132so344457484wmf.0
-        for <git@vger.kernel.org>; Thu, 22 Sep 2016 11:44:56 -0700 (PDT)
+        id S965957AbcIVSxb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Sep 2016 14:53:31 -0400
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:35964 "EHLO
+        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S940420AbcIVSx1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Sep 2016 14:53:27 -0400
+Received: by mail-qt0-f193.google.com with SMTP id 11so2852394qtc.3
+        for <git@vger.kernel.org>; Thu, 22 Sep 2016 11:53:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:content-transfer-encoding:mime-version:subject:message-id
-         :references:to:date;
-        bh=VDbQ7ZWGWdKo250qIUj1jUlVrB3j+PyofdQvQVutHrI=;
-        b=QVC0C9hOEh+WLtryE56tLf/JVnpZyCE+OcBPzyF8M+ekXAx7FTp6v1QfjgkgKeOSM+
-         S49mn/iaJmOvypUNGxlQMGVgwyDY0R7GGi6zZEwzJoamD1/vmaD/5ei/Jxt3VLxtxQFK
-         729FbDsWn1uUMg0VvL08PykggdlViC5Kk0bOh+pMY/ykDDNwQUk1popFPIyiTHSVxOss
-         W8HofZ9g6d31IkROY+P3YgqFQsBlNPvqJiZAOXQz9HXdgKe6kzdZBEa64S91hxyY3nuQ
-         jprl9z/sBUugKFMrBbm0nh8lfY1CXITkfquv+YCfUvRLNCasXdWYwDXagoWHvfVQf1Ss
-         kSSw==
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=2pNKtxyFiOajb4E12j5iJTRpdEfdQFYqx+EgDNHfLLo=;
+        b=IKnyFRYtpbav6Mr7GkKN8AbDISYRWXnkr0VWm+5H6655sdmZY2nO7DId0L8520ZDgQ
+         mwhC2mi3/S3mGh4Pgpl5ncfFVm+AyTc5CEVlWj352unaXgxraW7erMdZpg5kcJJWUemn
+         vQK2ZKAwcZm8K0mfdfmDuIswMOzufySqUcMTzBIRZMUfUgiWrH0+jAT4UcmNHGlwI87v
+         v9+qTKXfk0rWTyDc2Kb4cG2ac5w6N8g4y5goFHRsrfhgzK8IRX8cr2TP3lrbrPDQT2++
+         VELBkjRa1aOC147PiwroB44YjSTjQDwL7QMWcHMsV0P6YwiTqjBU5Ar7UYr7L15VMDYz
+         xZhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:references:to:date;
-        bh=VDbQ7ZWGWdKo250qIUj1jUlVrB3j+PyofdQvQVutHrI=;
-        b=Cv5gTz1rVgtQ3bq46CHaoN7ozHNfndV07YkpvUR6z1ju3reloF3uqMRXze2AnMqoEz
-         1SFu8+05aMIejVp5gQxxQuihh69AOFoNLOFytpd3qjz1cjOIZ/26FuzrmcHqF5JxX0F3
-         mDZGuOvZXL2Ci3tJXrBVqhrBfFaXisFkztbdrV9NwxQYf6C36HV2xZMIr/WKN/jmKUus
-         xVeEmzn59p3nZEHrYFftxn6Ffsg15YhJpm/0g8RJtag4aGzemdcLUtbFH5CFw4qfwFjv
-         bLfgF4UZWG1O4scOJ4TU8PSIY6WYz5u80oyLi8T3i84i66f1n0q8VyFgpR4NqdqU/dQG
-         fq0Q==
-X-Gm-Message-State: AA6/9RnKVuk9uul/LoQWhu5qcknwZylqGTnMtLMIoKPslj5Vl7yMr6n+4mr6okDpb17w2Q==
-X-Received: by 10.194.140.77 with SMTP id re13mr3820046wjb.79.1474569895979;
-        Thu, 22 Sep 2016 11:44:55 -0700 (PDT)
-Received: from [10.10.20.9] (fw1.hnojniknet.cz. [94.229.92.42])
-        by smtp.gmail.com with ESMTPSA id w71sm3781633wmw.17.2016.09.22.11.44.55
-        for <git@vger.kernel.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=2pNKtxyFiOajb4E12j5iJTRpdEfdQFYqx+EgDNHfLLo=;
+        b=bGbrK+oA1kYjWJ305IsVPSBB1qrFZRBxmOHD1K3Ow36Jk6e4CmlhaxRKx+RoKl+Dmb
+         GmQU7cfa61an4ZkpMdb5QI9rAeGCcP/KZ7Z5iHntO/RFo3S0EcDHdrCyY7W6bpd6BshX
+         BpXqUFqYuVb+8pgwvCbLRKzLmXVAPwRLVDgWE3GGK6kpycAMW48xNTCCgyOATj1kMUlK
+         12PmFopAjmXNXtFwmycpsf20bkQNvpJ+Vwec9jsgYp8xL1L7fzN46w7FrMHddMI+lTz7
+         P+zN9ThUX8Voqa0ZqCj3u4mqQDwp9Ftfm+Rs8U41MoorpZrJwfSZxZRuYrWZfNGUsgU9
+         30Zw==
+X-Gm-Message-State: AA6/9Rn5cIWu93gt+CWiyRyYEINHvtbcPMhduFwBUrJzaGflwP24IIK/vXpztfoQaT3uzgDB
+X-Received: by 10.237.45.39 with SMTP id h36mr3733843qtd.155.1474570405308;
+        Thu, 22 Sep 2016 11:53:25 -0700 (PDT)
+Received: from LykOS.nyu.edu (NYUFWA-WLESSAUTHCLIENTS-19.NATPOOL.NYU.EDU. [216.165.95.8])
+        by smtp.gmail.com with ESMTPSA id m87sm1675117qkl.21.2016.09.22.11.53.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 22 Sep 2016 11:44:55 -0700 (PDT)
-From:   =?utf-8?Q?P=C5=99emek_Koch?= <premek.koch@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 10.0 \(3226\))
-Subject: Fwd: [git/git-scm.com] Git Gui crash on Mac OS Sierra (#853)
-Message-Id: <EB727288-20B8-4CB0-8B6A-340E5A972B03@gmail.com>
-References: <3DDE880D-8746-4E37-903E-B23B1AD338DC@gmail.com>
+        Thu, 22 Sep 2016 11:53:24 -0700 (PDT)
+From:   santiago@nyu.edu
 To:     git@vger.kernel.org
-Date:   Thu, 22 Sep 2016 20:44:54 +0200
-X-Mailer: Apple Mail (2.3226)
+Cc:     gitster@pobox.com, peff@peff.net, sunshine@sunshineco.com,
+        walters@verbum.org, Lukas P <luk.puehringer@gmail.com>,
+        Lukas Puehringer <lukas.puehringer@nyu.edu>
+Subject: [PATCH 3/6] ref-filter: Expose wrappers for ref_item functions
+Date:   Thu, 22 Sep 2016 14:53:14 -0400
+Message-Id: <20160922185317.349-4-santiago@nyu.edu>
+X-Mailer: git-send-email 2.10.0
+In-Reply-To: <20160922185317.349-1-santiago@nyu.edu>
+References: <20160922185317.349-1-santiago@nyu.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Lukas P <luk.puehringer@gmail.com>
 
-> Hello, maybe right place this time...
->=20
->=20
-> I want to report a bug:
->=20
-> On MacOS Sierra git gui crashes randomly with this message:
->=20
-> 2016-09-22 13:17:36.759 Wish[23615:1501726] *** Terminating app due to =
-uncaught exception 'CALayerInvalidGeometry', reason: 'CALayer position =
-contains NaN: [0 nan]'
-> *** First throw call stack:
-> (
->         0   CoreFoundation                      0x00007fff7f0407bb =
-__exceptionPreprocess + 171
->         1   libobjc.A.dylib                     0x00007fff937ada2a =
-objc_exception_throw + 48
->         2   CoreFoundation                      0x00007fff7f0bda65 =
-+[NSException raise:format:] + 197
->         3   QuartzCore                          0x00007fff84c09980 =
-_ZN2CA5Layer12set_positionERKNS_4Vec2IdEEb + 152
->         4   QuartzCore                          0x00007fff84c09af5 =
--[CALayer setPosition:] + 44
->         5   QuartzCore                          0x00007fff84c0a14b =
--[CALayer setFrame:] + 644
->         6   CoreUI                              0x00007fff8a9b0112 =
-_ZN20CUICoreThemeRenderer26MakeOrUpdateScrollBarLayerEPK13CUIDescriptoraPP=
-7CALayer + 1284
->         7   CoreUI                              0x00007fff8a9ac317 =
-_ZN20CUICoreThemeRenderer19CreateOrUpdateLayerEPK13CUIDescriptorPP7CALayer=
- + 1755
->         8   CoreUI                              0x00007fff8a92e4d1 =
-_ZN11CUIRenderer19CreateOrUpdateLayerEPK14__CFDictionaryPP7CALayer + 175
->         9   CoreUI                              0x00007fff8a931185 =
-CUICreateOrUpdateLayer + 221
->         10  AppKit                              0x00007fff7d675623 =
--[NSCompositeAppearance _callCoreUIWithBlock:options:] + 226
->         11  AppKit                              0x00007fff7cd22a9d =
--[NSAppearance _createOrUpdateLayer:options:] + 76
->         12  AppKit                              0x00007fff7cf9b143 =
--[NSScrollerImp _animateToRolloverState] + 274
->         13  AppKit                              0x00007fff7cf5ab79 =
-__49-[NSScrollerImp _installDelayedRolloverAnimation]_block_invoke + 673
->         14  AppKit                              0x00007fff7ce21331 =
--[NSScrollerImp _doWork:] + 15
->         15  Foundation                          0x00007fff80a3ec88 =
-__NSFireDelayedPerform + 417
->         16  CoreFoundation                      0x00007fff7efc0f44 =
-__CFRUNLOOP_IS_CALLING_OUT_TO_A_TIMER_CALLBACK_FUNCTION__ + 20
->         17  CoreFoundation                      0x00007fff7efc0bd3 =
-__CFRunLoopDoTimer + 1075
->         18  CoreFoundation                      0x00007fff7efc072a =
-__CFRunLoopDoTimers + 298
->         19  CoreFoundation                      0x00007fff7efb82f1 =
-__CFRunLoopRun + 2081
->         20  CoreFoundation                      0x00007fff7efb7874 =
-CFRunLoopRunSpecific + 420
->         21  HIToolbox                           0x00007fff7e557f6c =
-RunCurrentEventLoopInMode + 240
->         22  HIToolbox                           0x00007fff7e557ca9 =
-ReceiveNextEventCommon + 184
->         23  HIToolbox                           0x00007fff7e557bd6 =
-_BlockUntilNextEventMatchingListInModeWithFilter + 71
->         24  AppKit                              0x00007fff7cc4e5f5 =
-_DPSNextEvent + 1093
->         25  AppKit                              0x00007fff7d35e8eb =
--[NSApplication(NSEvent) =
-_nextEventMatchingEventMask:untilDate:inMode:dequeue:] + 1637
->         26  Tk                                  0x00000001047cc285 =
-TkGenerateButtonEvent + 494
->         27  Tk                                  0x00000001047cc54d =
-Tk_MacOSXSetupTkNotifier + 395
->         28  Tcl                                 0x00000001048be5a8 =
-Tcl_DoOneEvent + 237
->         29  Tk                                  0x0000000104726f4f =
-Tk_MainLoop + 33
->         30  Tk                                  0x0000000104732a5b =
-Tk_MainEx + 1566
->         31  Wish                                0x000000010470d55a =
-Wish + 9562
->         32  libdyld.dylib                       0x00007fff94089255 =
-start + 1
-> )
-> libc++abi.dylib: terminating with uncaught exception of type =
-NSException
-> error: git-gui died of signal 6
->=20
->=20
-> Premek Koch
-> premek.koch@gmail.com
->=20
->=20
->=20
->> Za=C4=8D=C3=A1tek p=C5=99epos=C3=ADlan=C3=A9 zpr=C3=A1vy:
->>=20
->> Od: Jean-No=C3=ABl Avila <notifications@github.com>
->> P=C5=99edm=C4=9Bt: Re: [git/git-scm.com] Git Gui crash on Mac OS =
-Sierra (#853)
->> Datum: 22. z=C3=A1=C5=99=C3=AD 2016 19:43:30 SEL=C4=8C
->> Komu: "git/git-scm.com" <git-scm.com@noreply.github.com>
->> Kopie: Premek Koch <premek.koch@gmail.com>, Author =
-<author@noreply.github.com>
->> Odpov=C4=9B=C4=8F na: "git/git-scm.com" =
-<reply+000da9c18ad6de0541ea9352a4e1e834fbf1dde22ff10e3b92cf0000000113fbda4=
-292a169ce0aa4f922@reply.github.com>
->>=20
->> This issue tracker is dedicated to the git-scm.com website.
->>=20
->> The issue you have raised is related to the git program. If you think =
-there is a bug in the git program, please, send your issue to the git =
-mailing list git@vger.kernel.org
->>=20
->> =E2=80=94
->> You are receiving this because you authored the thread.
->> Reply to this email directly, view it on GitHub, or mute the thread.
->>=20
->=20
+Ref-filter functions are useful for printing git object information
+without a format specifier. However, some functions may not want to use
+a complete ref-array, and just a single item instead. Expose
+create/show/free functions for ref_array_items through wrappers around
+the original functions.
+
+Signed-off-by: Lukas Puehringer <lukas.puehringer@nyu.edu>
+---
+ ref-filter.c | 20 ++++++++++++++++++++
+ ref-filter.h | 10 ++++++++++
+ 2 files changed, 30 insertions(+)
+
+diff --git a/ref-filter.c b/ref-filter.c
+index 9adbb8a..b013799 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1329,6 +1329,14 @@ static struct ref_array_item *new_ref_array_item(const char *refname,
+ 	return ref;
+ }
+ 
++/* Wrapper: Create ref_array_item w/o referencing container in function name */
++struct ref_array_item *new_ref_item(const char *refname,
++						 const unsigned char *objectname,
++						 int flag)
++{
++	return new_ref_array_item(refname, objectname, flag);
++}
++
+ static int filter_ref_kind(struct ref_filter *filter, const char *refname)
+ {
+ 	unsigned int i;
+@@ -1426,6 +1434,12 @@ static void free_array_item(struct ref_array_item *item)
+ 	free(item);
+ }
+ 
++/* Wrapper: Free ref_array_item w/o referencing container in function name */
++void free_ref_item(struct ref_array_item *ref_item)
++{
++	free_array_item(ref_item);
++}
++
+ /* Free all memory allocated for ref_array */
+ void ref_array_clear(struct ref_array *array)
+ {
+@@ -1637,6 +1651,12 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
+ 	putchar('\n');
+ }
+ 
++/* Wrapper: Show ref_array_item w/o referencing container in function name */
++void show_ref_item(struct ref_array_item *ref_item, const char *format, int quote_style)
++{
++	show_ref_array_item(ref_item, format, quote_style);
++}
++
+ /*  If no sorting option is given, use refname to sort as default */
+ struct ref_sorting *ref_default_sorting(void)
+ {
+diff --git a/ref-filter.h b/ref-filter.h
+index 14d435e..0f0ffe9 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -107,4 +107,14 @@ struct ref_sorting *ref_default_sorting(void);
+ /*  Function to parse --merged and --no-merged options */
+ int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset);
+ 
++/*
++ * Wrappers exposing the ref_array_item data structure independently
++ * of the container ref_array, e.g. to format-print individual refs.
++ */
++struct ref_array_item *new_ref_item(const char *refname,
++		const unsigned char *objectname, int flag);
++void show_ref_item(struct ref_array_item *ref_item, const char *format,
++		int quote_style);
++void free_ref_item(struct ref_array_item *ref_item);
++
+ #endif /*  REF_FILTER_H  */
+-- 
+2.10.0
 
