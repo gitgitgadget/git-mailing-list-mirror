@@ -6,53 +6,54 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D10E51F4F8
-	for <e@80x24.org>; Thu, 22 Sep 2016 20:23:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1DC91F4F8
+	for <e@80x24.org>; Thu, 22 Sep 2016 20:25:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934981AbcIVUXh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Sep 2016 16:23:37 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50244 "EHLO
+        id S1030936AbcIVUZT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Sep 2016 16:25:19 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62344 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S934727AbcIVUXg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Sep 2016 16:23:36 -0400
+        with ESMTP id S1030459AbcIVUZR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Sep 2016 16:25:17 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CE8F03F018;
-        Thu, 22 Sep 2016 16:23:34 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A34B13F4F9;
+        Thu, 22 Sep 2016 16:25:15 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=WBkapiBtrUX59IK34PwTuBLCzS4=; b=sOaLov
-        byIAr1xjFf6kd6AX8tGXXM1Er/cMwiLLVSrhKXetP/kv7Sr9KttLSFfP45fH2Ekm
-        gjlV6NN795BE3nAQ8SJaCsua0pSKaQFbjS0+r8cEyhkjPXYhX18d2prNZvZwX8id
-        CLOJkiGUf/Xk3qxXHZdJQxAWnX/O+/TTjrdk4=
+        :content-type; s=sasl; bh=Fv2ZxMHwPHr8hi91xHfO2kHvS80=; b=rqkiZr
+        HyhUehuR1y4jc45HI5hUrudOKQpCQzl7wEClTVnNNRHJHK92Qn99038xFfWqFJ9z
+        8j/pkYqPAUzkgnd5IKyUDk7cNy4uObhdTZj9y454uJ+fTyWgJ4AWeAcVGb+xMC5B
+        zB27rLK3uOTQnPX7W7JaCiFuiVHpC0MiQhZIQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=dI1F4bGBZ8z+12kIbyVGoLIYunqWnY00
-        vxPRuGp0YjKc690JaRxe6i3MnXR0zcoWeNkAuOa2WQ8M57kYpKvEkViGrNJMAoR3
-        AFo9Xn8Plns5AfaJCFSfQ4hd70tUj6CfFvecq2SGllfpsR8iIITNEC7SVmtu8o6R
-        m/2ctLBoh30=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C6BC13F017;
-        Thu, 22 Sep 2016 16:23:34 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=e+omtZbnXjmsx+9D69tr17QEOeEvp648
+        dRoScfH3qve5agKgrdlDvtXfPWo4Sztz1MzbhVojv49PpBKjSK24xEJuICSlIUgo
+        ToIikbKFBr5GAT5MbsWBSQ/Wv5rM0PUrtAlhojIxH6KU+Hih5uHQaUte+79JrytT
+        DqilyYtzQ7Y=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9B32B3F4F8;
+        Thu, 22 Sep 2016 16:25:15 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4AFF63F016;
-        Thu, 22 Sep 2016 16:23:34 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 21F543F4F7;
+        Thu, 22 Sep 2016 16:25:15 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     santiago@nyu.edu
 Cc:     git@vger.kernel.org, peff@peff.net, sunshine@sunshineco.com,
-        walters@verbum.org
-Subject: Re: [PATCH 1/6] builtin/tag: move format specifier to global var
+        walters@verbum.org, Lukas P <luk.puehringer@gmail.com>,
+        Lukas Puehringer <lukas.puehringer@nyu.edu>
+Subject: Re: [PATCH 2/6] gpg-interface: add GPG_VERIFY_QUIET flag
 References: <20160922185317.349-1-santiago@nyu.edu>
-        <20160922185317.349-2-santiago@nyu.edu>
-Date:   Thu, 22 Sep 2016 13:23:32 -0700
-In-Reply-To: <20160922185317.349-2-santiago@nyu.edu> (santiago@nyu.edu's
-        message of "Thu, 22 Sep 2016 14:53:12 -0400")
-Message-ID: <xmqqbmzf4raz.fsf@gitster.mtv.corp.google.com>
+        <20160922185317.349-3-santiago@nyu.edu>
+Date:   Thu, 22 Sep 2016 13:25:13 -0700
+In-Reply-To: <20160922185317.349-3-santiago@nyu.edu> (santiago@nyu.edu's
+        message of "Thu, 22 Sep 2016 14:53:13 -0400")
+Message-ID: <xmqq7fa34r86.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 6F9CAF38-8102-11E6-9713-C26412518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: ABB6B0EA-8102-11E6-8F04-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,19 +61,18 @@ X-Mailing-List: git@vger.kernel.org
 
 santiago@nyu.edu writes:
 
-> From: Santiago Torres <santiago@nyu.edu>
->
-> The format specifier will be likely used in other functions throughout
-> git tag. One likely candidate to require format strings in the future is
-> the gpg_verify_tag function. However, changing the signature of
-> functions such as for_each_ref or verify_tag would be quite burdensome.
+> diff --git a/gpg-interface.c b/gpg-interface.c
+> index 8672eda..b82bc50 100644
+> --- a/gpg-interface.c
+> +++ b/gpg-interface.c
+> @@ -88,6 +88,9 @@ int check_signature(const char *payload, size_t plen, const char *signature,
+>  
+>  void print_signature_buffer(const struct signature_check *sigc, unsigned flags)
+>  {
+> +	if (flags & GPG_VERIFY_QUIET)
+> +		return;
+> +
+>  	const char *output = flags & GPG_VERIFY_RAW ?
+>  		sigc->gpg_status : sigc->gpg_output;
 
-I do not understand the above excuse.  for-each-ref takes a
-callback data pointer exactly because it wants you to be able to
-extend what data the callback function gets without changing its
-signature.  builtin/tag.c::verify_tag() is a helper static to the
-file--why should it be "burdensome" to change it to fit your needs?
-
-Adding technical debt by going backwards is never a good idea
-especially done to add a new feature that is not desperately needed.
-
+This will not compile with -Werror=declaration-after-statement.
