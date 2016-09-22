@@ -6,139 +6,100 @@ X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C03621F4F8
-	for <e@80x24.org>; Thu, 22 Sep 2016 18:53:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3FF231F4F8
+	for <e@80x24.org>; Thu, 22 Sep 2016 18:53:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965957AbcIVSxb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Sep 2016 14:53:31 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:35964 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S940420AbcIVSx1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Sep 2016 14:53:27 -0400
-Received: by mail-qt0-f193.google.com with SMTP id 11so2852394qtc.3
-        for <git@vger.kernel.org>; Thu, 22 Sep 2016 11:53:26 -0700 (PDT)
+        id S965709AbcIVSx3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Sep 2016 14:53:29 -0400
+Received: from mail-qk0-f193.google.com ([209.85.220.193]:34351 "EHLO
+        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934752AbcIVSxY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Sep 2016 14:53:24 -0400
+Received: by mail-qk0-f193.google.com with SMTP id b204so5745415qkc.1
+        for <git@vger.kernel.org>; Thu, 22 Sep 2016 11:53:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=2pNKtxyFiOajb4E12j5iJTRpdEfdQFYqx+EgDNHfLLo=;
-        b=IKnyFRYtpbav6Mr7GkKN8AbDISYRWXnkr0VWm+5H6655sdmZY2nO7DId0L8520ZDgQ
-         mwhC2mi3/S3mGh4Pgpl5ncfFVm+AyTc5CEVlWj352unaXgxraW7erMdZpg5kcJJWUemn
-         vQK2ZKAwcZm8K0mfdfmDuIswMOzufySqUcMTzBIRZMUfUgiWrH0+jAT4UcmNHGlwI87v
-         v9+qTKXfk0rWTyDc2Kb4cG2ac5w6N8g4y5goFHRsrfhgzK8IRX8cr2TP3lrbrPDQT2++
-         VELBkjRa1aOC147PiwroB44YjSTjQDwL7QMWcHMsV0P6YwiTqjBU5Ar7UYr7L15VMDYz
-         xZhg==
+        h=from:to:cc:subject:date:message-id;
+        bh=7YSWfeV8tNUftR/V8/0DYMDalFN+eIcwI08XWsBujwM=;
+        b=Ez9j17Ub27T/xzcdvMSyW6BXhgvw3DX1KSrJWuO+x6X5IwxMJjq6KgPLrE4K8YbtRQ
+         GgRl+S+ENBRNZte2ZQyZRem6ITcKfit7g6ceppdRxt02QNQ7r65ort2ky7+K6RZKNzh/
+         cK7w+iQEQgayvFvfBpac1tuN7kx4Ewh+nHDKTgIH4KlfUx3Z/bNhXai3JHB4q6WgU5tk
+         3f1eIlXvnJFrnRTIVJgxYlZgER32JY2XpMAyVJDcLOwczF6N/zQ7+y1oaN5nK3ur2YhF
+         tzFB2QSMXwCDv04uobrI0cLSlqL7oF4PdqD/5R8r7oU1M8bmtl5s7GXdNuU/CoeVFiob
+         wCtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=2pNKtxyFiOajb4E12j5iJTRpdEfdQFYqx+EgDNHfLLo=;
-        b=bGbrK+oA1kYjWJ305IsVPSBB1qrFZRBxmOHD1K3Ow36Jk6e4CmlhaxRKx+RoKl+Dmb
-         GmQU7cfa61an4ZkpMdb5QI9rAeGCcP/KZ7Z5iHntO/RFo3S0EcDHdrCyY7W6bpd6BshX
-         BpXqUFqYuVb+8pgwvCbLRKzLmXVAPwRLVDgWE3GGK6kpycAMW48xNTCCgyOATj1kMUlK
-         12PmFopAjmXNXtFwmycpsf20bkQNvpJ+Vwec9jsgYp8xL1L7fzN46w7FrMHddMI+lTz7
-         P+zN9ThUX8Voqa0ZqCj3u4mqQDwp9Ftfm+Rs8U41MoorpZrJwfSZxZRuYrWZfNGUsgU9
-         30Zw==
-X-Gm-Message-State: AA6/9Rn5cIWu93gt+CWiyRyYEINHvtbcPMhduFwBUrJzaGflwP24IIK/vXpztfoQaT3uzgDB
-X-Received: by 10.237.45.39 with SMTP id h36mr3733843qtd.155.1474570405308;
-        Thu, 22 Sep 2016 11:53:25 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=7YSWfeV8tNUftR/V8/0DYMDalFN+eIcwI08XWsBujwM=;
+        b=VscpyKzJAuLivrVE87wvKHnXugCPE9W9AWRQG/ovI9W6hsvCE9FA5o4DSwxXX4ts1g
+         KpjOsWMoTLmXuMGVPZ4ZoZB1Sm04eXm8d7bOuv4vqNaevRn1og4wtMu/OQjeXezzMKfK
+         AEVZKJIVWy4TFz+0lmwlmr5N6D/AO2hcvYIVipcneLdV2tulCMsDb533EQb6h3xGVjUO
+         g02By9N4+vj+pW7kzIFL5rYHPYN5rVIugia2MwOcqTcG3oK3YW3BOBiuT+SqTX57cpFl
+         cEOAgu2iagv2gFlMFDLmrjhA+ceO+B3IHBaLxPbjEGH3PHWWmKETIxeJK9NrADXQUwql
+         5L4A==
+X-Gm-Message-State: AA6/9RmSC48Tud2IfYpmu2fQmkNsU/GtHhbZfCdujyMJa5Z+uC4em/Y11ukWwrHXVWkLZQaP
+X-Received: by 10.55.16.139 with SMTP id 11mr3637939qkq.226.1474570403188;
+        Thu, 22 Sep 2016 11:53:23 -0700 (PDT)
 Received: from LykOS.nyu.edu (NYUFWA-WLESSAUTHCLIENTS-19.NATPOOL.NYU.EDU. [216.165.95.8])
-        by smtp.gmail.com with ESMTPSA id m87sm1675117qkl.21.2016.09.22.11.53.24
+        by smtp.gmail.com with ESMTPSA id m87sm1675117qkl.21.2016.09.22.11.53.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 22 Sep 2016 11:53:24 -0700 (PDT)
+        Thu, 22 Sep 2016 11:53:22 -0700 (PDT)
 From:   santiago@nyu.edu
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, sunshine@sunshineco.com,
-        walters@verbum.org, Lukas P <luk.puehringer@gmail.com>,
-        Lukas Puehringer <lukas.puehringer@nyu.edu>
-Subject: [PATCH 3/6] ref-filter: Expose wrappers for ref_item functions
-Date:   Thu, 22 Sep 2016 14:53:14 -0400
-Message-Id: <20160922185317.349-4-santiago@nyu.edu>
+        walters@verbum.org, Santiago Torres <santiago@nyu.edu>
+Subject: [RFC/PATCH 0/6]  Add --format to tag verification
+Date:   Thu, 22 Sep 2016 14:53:11 -0400
+Message-Id: <20160922185317.349-1-santiago@nyu.edu>
 X-Mailer: git-send-email 2.10.0
-In-Reply-To: <20160922185317.349-1-santiago@nyu.edu>
-References: <20160922185317.349-1-santiago@nyu.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Lukas P <luk.puehringer@gmail.com>
+From: Santiago Torres <santiago@nyu.edu>
 
-Ref-filter functions are useful for printing git object information
-without a format specifier. However, some functions may not want to use
-a complete ref-array, and just a single item instead. Expose
-create/show/free functions for ref_array_items through wrappers around
-the original functions.
+Hello everyone,
 
-Signed-off-by: Lukas Puehringer <lukas.puehringer@nyu.edu>
----
- ref-filter.c | 20 ++++++++++++++++++++
- ref-filter.h | 10 ++++++++++
- 2 files changed, 30 insertions(+)
+This is a followup on [1]. There we discussed what would be the best way
+to provide automated scripts with mechanisms to inspect the contents of
+a tag upon verification.
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 9adbb8a..b013799 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1329,6 +1329,14 @@ static struct ref_array_item *new_ref_array_item(const char *refname,
- 	return ref;
- }
- 
-+/* Wrapper: Create ref_array_item w/o referencing container in function name */
-+struct ref_array_item *new_ref_item(const char *refname,
-+						 const unsigned char *objectname,
-+						 int flag)
-+{
-+	return new_ref_array_item(refname, objectname, flag);
-+}
-+
- static int filter_ref_kind(struct ref_filter *filter, const char *refname)
- {
- 	unsigned int i;
-@@ -1426,6 +1434,12 @@ static void free_array_item(struct ref_array_item *item)
- 	free(item);
- }
- 
-+/* Wrapper: Free ref_array_item w/o referencing container in function name */
-+void free_ref_item(struct ref_array_item *ref_item)
-+{
-+	free_array_item(ref_item);
-+}
-+
- /* Free all memory allocated for ref_array */
- void ref_array_clear(struct ref_array *array)
- {
-@@ -1637,6 +1651,12 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
- 	putchar('\n');
- }
- 
-+/* Wrapper: Show ref_array_item w/o referencing container in function name */
-+void show_ref_item(struct ref_array_item *ref_item, const char *format, int quote_style)
-+{
-+	show_ref_array_item(ref_item, format, quote_style);
-+}
-+
- /*  If no sorting option is given, use refname to sort as default */
- struct ref_sorting *ref_default_sorting(void)
- {
-diff --git a/ref-filter.h b/ref-filter.h
-index 14d435e..0f0ffe9 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -107,4 +107,14 @@ struct ref_sorting *ref_default_sorting(void);
- /*  Function to parse --merged and --no-merged options */
- int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset);
- 
-+/*
-+ * Wrappers exposing the ref_array_item data structure independently
-+ * of the container ref_array, e.g. to format-print individual refs.
-+ */
-+struct ref_array_item *new_ref_item(const char *refname,
-+		const unsigned char *objectname, int flag);
-+void show_ref_item(struct ref_array_item *ref_item, const char *format,
-+		int quote_style);
-+void free_ref_item(struct ref_array_item *ref_item);
-+
- #endif /*  REF_FILTER_H  */
+We struggled a little bit with how to make this fit the current git
+codebase in the best way. Specifically, we are not sure if adding the
+GPG_QUIET flags and/or exposing the primitives to allocate individual
+git_ref_item's would be the best way forward.
+
+This applies on the current HEAD as well as v 2.9.10.
+
+Thanks!
+-Santiago.
+
+P.S. Gmane seems to be broken for git after it was rebooted. Should we ping
+them about it?
+
+[1] http://lists-archives.com/git/869122-verify-tag-add-check-name-flag.html
+
+Lukas P (4):
+  gpg-interface: add GPG_VERIFY_QUIET flag
+  ref-filter: Expose wrappers for ref_item functions
+  tag: add format specifier to gpg_verify_tag
+  builtin/tag: add --format argument for tag -v
+
+Santiago Torres (2):
+  builtin/tag: move format specifier to global var
+  builtin/verify-tag: Add --format to verify-tag
+
+ builtin/tag.c        | 33 +++++++++++++++++++++------------
+ builtin/verify-tag.c | 17 ++++++++++++++---
+ gpg-interface.c      |  3 +++
+ gpg-interface.h      |  1 +
+ ref-filter.c         | 20 ++++++++++++++++++++
+ ref-filter.h         | 10 ++++++++++
+ tag.c                | 14 ++++++++++++--
+ tag.h                |  4 ++--
+ 8 files changed, 83 insertions(+), 19 deletions(-)
+
 -- 
 2.10.0
 
