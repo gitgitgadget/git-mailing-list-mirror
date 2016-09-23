@@ -2,227 +2,192 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C7FFF1F935
-	for <e@80x24.org>; Fri, 23 Sep 2016 10:56:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F0FF1F935
+	for <e@80x24.org>; Fri, 23 Sep 2016 11:13:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965843AbcIWKz7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Sep 2016 06:55:59 -0400
-Received: from userp1040.oracle.com ([156.151.31.81]:22079 "EHLO
-        userp1040.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934960AbcIWKz4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2016 06:55:56 -0400
-Received: from aserv0022.oracle.com (aserv0022.oracle.com [141.146.126.234])
-        by userp1040.oracle.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id u8NArDJx028646
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Fri, 23 Sep 2016 10:53:14 GMT
-Received: from lenuta.oracle.com (dhcp-ukc1-twvpn-1-vpnpool-10-175-171-194.vpn.oracle.com [10.175.171.194])
-        by aserv0022.oracle.com (8.14.4/8.14.4) with ESMTP id u8NArBAB013547;
-        Fri, 23 Sep 2016 10:53:11 GMT
-From:   Vegard Nossum <vegard.nossum@oracle.com>
+        id S1759036AbcIWLNR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Sep 2016 07:13:17 -0400
+Received: from mail-pa0-f66.google.com ([209.85.220.66]:33804 "EHLO
+        mail-pa0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758875AbcIWLNQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Sep 2016 07:13:16 -0400
+Received: by mail-pa0-f66.google.com with SMTP id i5so1803747pad.1
+        for <git@vger.kernel.org>; Fri, 23 Sep 2016 04:13:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=uYlaR1ljJ2XVmYB377toON09JH6uUaXR7zns3EUGJ1M=;
+        b=Tzt4v/Yxmb2NRHE9C4EPLkzZXR4Cuz4ehPOCxD2tMqx/qN2kOvuKrmGLurM+icf9Tv
+         iljyV3w/yUC7laF846ylR5nB5Eb5Zx+y60RqWnrrDPDLjfgleXBN10O6AvtwVIm4fw2U
+         Drc8uHFHfFa+Ci2xbfkis3sH3iN4TpdA5NUeTfsIv2YHL9D9DaudCjkrcQTe1yjBOVZ7
+         fB2D/Xt4s2SZGpikapNNbUhRt8xWGuMyZJ07awngY1b4qwWUVjAP0LEig9FqyIBugiwC
+         BHOjt76lFCKrLzhAh0CHqNQ+tVyFd6mqM34OKkSL6OZ8Sbp+155oz0cGIoMzDFdl+Opg
+         fX3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=uYlaR1ljJ2XVmYB377toON09JH6uUaXR7zns3EUGJ1M=;
+        b=GVdrAol+NXhrSELes3zXF0JWhM94bvBgFt8vB6XSwO3emSwP/X3LJqQOL8/BjQGiuQ
+         kchLC1/pAeFFnNTyKtCqS7YGY7IWtu1guPWorn2x8YL2r+9HtJbYCSmLUIYuZtgvBbPI
+         he82vqS/6XGH6zjODNCNpgbf19ifQV5TGsII2RrrdCHxVEQLrXX7IX7CH05tPlpe98lT
+         LGItbq0Hti6JFhgD/6MT/5akn2AKRYSMRzXkX4xSH1eZitS5DOYTy7y0k7ihLd4jTTeS
+         h3LSt1b33nvD3WpjIpDNj6PIhOOG3BvU0HcxcohwUBU5Yg5HhTf/rpq3msVDT2bFGDuW
+         939w==
+X-Gm-Message-State: AE9vXwM+tB3NOR+6VrB84TsVNR3pmcj8Yfu4f80cvBiJVbh+fAaV5bCe1KYvFi4T/dO9PQ==
+X-Received: by 10.66.27.137 with SMTP id t9mr11392055pag.11.1474629195166;
+        Fri, 23 Sep 2016 04:13:15 -0700 (PDT)
+Received: from ash ([115.76.130.63])
+        by smtp.gmail.com with ESMTPSA id v6sm10868089pfv.8.2016.09.23.04.13.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 23 Sep 2016 04:13:14 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Fri, 23 Sep 2016 18:13:09 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Santi=20B=C3=A9jar?= <sbejar@gmail.com>,
-        Kevin Bracey <kevin@bracey.fi>,
-        Philip Oakley <philipoakley@iee.org>,
-        Vegard Nossum <vegard.nossum@oracle.com>
-Subject: [RFC PATCH] revision: new rev%n shorthand for rev^n..rev
-Date:   Fri, 23 Sep 2016 12:52:54 +0200
-Message-Id: <20160923105254.10235-1-vegard.nossum@oracle.com>
-X-Mailer: git-send-email 2.10.0.rc0.1.g07c9292
-X-Source-IP: aserv0022.oracle.com [141.146.126.234]
+Cc:     Junio C Hamano <gitster@pobox.com>, git@drmicha.warpmail.net,
+        max.nordlund@sqore.com,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH v2 4/3] init: combine set_git_dir_init() and init_db() into one
+Date:   Fri, 23 Sep 2016 18:12:06 +0700
+Message-Id: <20160923111206.8596-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.8.2.524.g6ff3d78
+In-Reply-To: <xmqqbmzf6e0r.fsf@gitster.mtv.corp.google.com>
+References: <xmqqbmzf6e0r.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I use rev^..rev daily, and I'm surely not the only one. To save typing
-(or copy-pasting, if the rev is long -- like a full SHA-1 or branch name)
-we can make rev% a shorthand for that.
+Commit "init: do not set core.worktree more often than necessary" adds a
+subtle dependency between set_git_dir_init() and init_db(). The former
+_must_ be called before init_db() so that original_git_dir can be set
+properly. If something else, like enter_repo() or setup_git_directory(),
+is used instead, the trick in that commit breaks down.
 
-The existing syntax rev^! seems like it should do the same, but it
-doesn't really do the right thing for merge commits (it gives only the
-merge itself).
+To eliminate the possibility that init_db() in future may be called
+without set_git_dir_init(), init_db() now calls that function internally
+(and does not allow anybody else to use it).
 
-As a natural generalisation, we also accept rev%n where n excludes the
-nth parent of rev. It _may_ be more useful to define rev%n for an m-way
-merge as:
-
- rev
- ^rev^1
- ^rev^[... except n]
- ^rev^m
-
-so that you can see only the commits that arrived via the nth parent,
-but this might be questionable/unintuitive in case any of the parents
-that share commits (as you would get fewer commits than expected).
-
-Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/revisions.txt | 14 +++++++++++++
- builtin/rev-parse.c         | 38 ++++++++++++++++++++++++++++++++++
- revision.c                  | 50 +++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 102 insertions(+)
+ I think a separate commit for this is better than combining back to
+ 2/3 so we can explain the problem properly (without making 2/3 commit
+ message even longer)
 
-diff --git Documentation/revisions.txt Documentation/revisions.txt
-index 4bed5b1..ab2dc2c 100644
---- Documentation/revisions.txt
-+++ Documentation/revisions.txt
-@@ -281,6 +281,14 @@ is a shorthand for 'HEAD..origin' and asks "What did the origin do since
- I forked from them?"  Note that '..' would mean 'HEAD..HEAD' which is an
- empty range that is both reachable and unreachable from HEAD.
+ Not sure if you want to s/contains/contain/ in 2/3 by yourself or I
+ should resend the whole series. Let me know.
+
+ builtin/clone.c   | 15 +++++++--------
+ builtin/init-db.c | 18 +++++++++++-------
+ cache.h           |  5 +++--
+ 3 files changed, 21 insertions(+), 17 deletions(-)
+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 6616392..29b1832 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -928,23 +928,22 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		set_git_work_tree(work_tree);
+ 	}
  
-+Parent Exclusion Notation
-+~~~~~~~~~~~~~~~~~~~~~~~~~
-+The '<rev>%{<n>}', Parent Exclusion Notation::
-+Shorthand for '<rev>{caret}<n>..<rev>', with '<n>' = 1 if not
-+given. This is typically useful for merge commits where you
-+can just pass '<commit>%' to get all the commits in the branch
-+that was merged in merge commit '<commit>'.
-+
- Other <rev>{caret} Parent Shorthand Notations
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- Two other shorthands exist, particularly useful for merge commits,
-@@ -316,6 +324,10 @@ Revision Range Summary
- 	<rev2> but exclude those that are reachable from both.  When
- 	either <rev1> or <rev2> is omitted, it defaults to `HEAD`.
+-	junk_git_dir = git_dir;
++	junk_git_dir = real_git_dir ? real_git_dir : git_dir;
+ 	if (safe_create_leading_directories_const(git_dir) < 0)
+ 		die(_("could not create leading directories of '%s'"), git_dir);
  
-+'<rev>%{<n>}', e.g. 'HEAD%, HEAD%2'::
-+	Equivalent to '<rev>{caret}<n>..<rev>', with '<n>' = 1 if not
-+	given.
+-	set_git_dir_init(git_dir, real_git_dir, 0);
+-	if (real_git_dir) {
+-		git_dir = real_git_dir;
+-		junk_git_dir = real_git_dir;
+-	}
+-
+ 	if (0 <= option_verbosity) {
+ 		if (option_bare)
+ 			fprintf(stderr, _("Cloning into bare repository '%s'...\n"), dir);
+ 		else
+ 			fprintf(stderr, _("Cloning into '%s'...\n"), dir);
+ 	}
+-	init_db(option_template, INIT_DB_QUIET);
 +
- '<rev>{caret}@', e.g. 'HEAD{caret}@'::
-   A suffix '{caret}' followed by an at sign is the same as listing
-   all parents of '<rev>' (meaning, include anything reachable from
-@@ -339,6 +351,8 @@ spelt out:
-    C                            I J F C
-    B..C   = ^B C                C
-    B...C  = B ^F C              G H D E B C
-+   B%     = B^..B
-+	  = B ^B^1              E I J F B
-    C^@    = C^1
- 	  = F                   I J F
-    B^@    = B^1 B^2 B^3
-diff --git builtin/rev-parse.c builtin/rev-parse.c
-index 76cf05e..f081b81 100644
---- builtin/rev-parse.c
-+++ builtin/rev-parse.c
-@@ -292,6 +292,42 @@ static int try_difference(const char *arg)
- 	return 0;
++	init_db(git_dir, real_git_dir, option_template, INIT_DB_QUIET);
++
++	if (real_git_dir)
++		git_dir = real_git_dir;
++
+ 	write_config(&option_config);
+ 
+ 	git_config(git_default_config, NULL);
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index d70fc45..ee7942f 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -312,8 +312,9 @@ static void create_object_directory(void)
+ 	strbuf_release(&path);
  }
  
-+static int try_branch(const char *arg)
-+{
-+	char *percent;
-+	unsigned char sha1[20];
-+	unsigned char end[20];
-+
-+	/*
-+	 * <rev>%{<n>} is shorthand for <rev>^<n>..<rev>, with <n> = 1 if
-+	 * not given. This is typically used for merge commits where you
-+	 * can just pass <merge>% and it will show you all the commits in
-+	 * the branch that was merged (for octopus merges, <n> is the nth
-+	 * branch).
-+	 */
-+
-+	if (!(percent = strstr(arg, "%")))
-+		return 0;
-+
-+	*percent = '^';
-+	if (!get_sha1_committish(arg, sha1)) {
-+		*percent = '%';
-+		return 0;
-+	}
-+
-+	*percent = '\0';
-+	if (!get_sha1_committish(arg, end)) {
-+		*percent = '%';
-+		return 0;
-+	}
-+
-+	show_rev(NORMAL, end, arg);
-+	*percent = '^';
-+	show_rev(REVERSED, sha1, arg);
-+	*percent = '%';
-+	return 1;
-+}
-+
- static int try_parent_shorthands(const char *arg)
+-int set_git_dir_init(const char *git_dir, const char *real_git_dir,
+-		     int exist_ok)
++static int set_git_dir_init(const char *git_dir,
++			    const char *real_git_dir,
++			    int exist_ok)
  {
- 	char *dotdot;
-@@ -839,6 +875,8 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 		/* Not a flag argument */
- 		if (try_difference(arg))
- 			continue;
-+		if (try_branch(arg))
-+			continue;
- 		if (try_parent_shorthands(arg))
- 			continue;
- 		name = arg;
-diff --git revision.c revision.c
-index 969b3d1..e20b618 100644
---- revision.c
-+++ revision.c
-@@ -1519,6 +1519,56 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
- 		}
- 		*dotdot = '.';
+ 	original_git_dir = xstrdup(real_path(git_dir));
+ 
+@@ -362,10 +363,14 @@ static void separate_git_dir(const char *git_dir)
+ 	write_file(git_link, "gitdir: %s", git_dir);
+ }
+ 
+-int init_db(const char *template_dir, unsigned int flags)
++int init_db(const char *git_dir, const char *real_git_dir,
++	    const char *template_dir, unsigned int flags)
+ {
+ 	int reinit;
+-	const char *git_dir = get_git_dir();
++
++	set_git_dir_init(git_dir, real_git_dir, flags & INIT_DB_EXIST_OK);
++
++	git_dir = get_git_dir();
+ 
+ 	if (git_link)
+ 		separate_git_dir(git_dir);
+@@ -585,7 +590,6 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ 			set_git_work_tree(work_tree);
  	}
-+
-+	/*
-+	 * <rev>%{<n>} is shorthand for <rev>^<n>..<rev>, with <n> = 1 if
-+	 * not given. This is typically used for merge commits where you
-+	 * can just pass <merge>% and it will show you all the commits in
-+	 * the branch that was merged (for octopus merges, <n> is the nth
-+	 * branch).
-+	 */
-+	dotdot = strstr(arg, "%");
-+	if (dotdot) {
-+		unsigned char sha1[20];
-+		unsigned char end[20];
-+		struct object *a_obj, *b_obj;
-+		unsigned int flags_exclude = flags ^ (UNINTERESTING | BOTTOM);
-+		unsigned int a_flags;
-+
-+		*dotdot = '\0';
-+		if (get_sha1_committish(arg, end)) {
-+			if (revs->ignore_missing)
-+				return 0;
-+			die("Unknown revision %s", arg);
-+		}
-+
-+		*dotdot = '^';
-+		if (get_sha1_committish(arg, sha1)) {
-+			if (revs->ignore_missing)
-+				return 0;
-+			die("Unknown revision %s", arg);
-+		}
-+
-+		a_obj = parse_object(sha1);
-+		b_obj = parse_object(end);
-+		if (!a_obj || !b_obj) {
-+			if (revs->ignore_missing)
-+				return 0;
-+			die("Invalid revision range %s", arg);
-+		}
-+
-+		a_flags = flags_exclude;
-+		a_obj->flags |= a_flags;
-+		b_obj->flags |= flags;
-+		*dotdot = '^';
-+		add_rev_cmdline(revs, a_obj, arg, REV_CMD_LEFT, a_flags);
-+		add_pending_object(revs, a_obj, arg);
-+		*dotdot = '\0';
-+		add_rev_cmdline(revs, b_obj, arg, REV_CMD_RIGHT, flags);
-+		add_pending_object(revs, b_obj, arg);
-+		*dotdot = '%';
-+		return 0;
-+	}
- 	dotdot = strstr(arg, "^@");
- 	if (dotdot && !dotdot[2]) {
- 		*dotdot = 0;
+ 
+-	set_git_dir_init(git_dir, real_git_dir, 1);
+-
+-	return init_db(template_dir, flags);
++	flags |= INIT_DB_EXIST_OK;
++	return init_db(git_dir, real_git_dir, template_dir, flags);
+ }
+diff --git a/cache.h b/cache.h
+index b2d77f3..7fc875f 100644
+--- a/cache.h
++++ b/cache.h
+@@ -525,9 +525,10 @@ extern void verify_non_filename(const char *prefix, const char *name);
+ extern int path_inside_repo(const char *prefix, const char *path);
+ 
+ #define INIT_DB_QUIET 0x0001
++#define INIT_DB_EXIST_OK 0x0002
+ 
+-extern int set_git_dir_init(const char *git_dir, const char *real_git_dir, int);
+-extern int init_db(const char *template_dir, unsigned int flags);
++extern int init_db(const char *git_dir, const char *real_git_dir,
++		   const char *template_dir, unsigned int flags);
+ 
+ extern void sanitize_stdfds(void);
+ extern int daemonize(void);
 -- 
-2.10.0.rc0.1.g07c9292
+2.8.2.524.g6ff3d78
 
