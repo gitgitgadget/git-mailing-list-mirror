@@ -2,70 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45BF6207EC
-	for <e@80x24.org>; Fri, 23 Sep 2016 19:57:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DCED2207EC
+	for <e@80x24.org>; Fri, 23 Sep 2016 20:45:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754423AbcIWT5a (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Sep 2016 15:57:30 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60806 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751710AbcIWT53 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2016 15:57:29 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 45D6A3FE1A;
-        Fri, 23 Sep 2016 15:57:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=DK4yKjkiFGOM
-        2wu6eFl4ALrnnkk=; b=MgmE0pM/XsklUsTvJ25GzUdp8TCTmpULUm8sXnR37cpR
-        TjlBJagwNJwQoSePeS+MvaFQEDbMl3mgQZ/iNawb0Rr18vkU9HVqOnXNbvllSsip
-        /L78hhurevK1lZqUVblkhbdAL+Rz9043o7GPDeZ9XMCZm2NlrorMIqQCmxCyOAw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=nOHD+l
-        6ZLCE5zdNDu3lmwtO9kbsoFZHpI+HntGFFUlqqwWmRHvbiY9V7I9KXwsaAFU+hDO
-        KV0BAz4aRKS28NXHR0OJF2I+9sbu+qwZ2kUA/ucZEfS5GGc/pxf04alDBfWwwBN7
-        9UmEYM2P4IMoM+4UVPqmkrKBdEnaY/rqE7YhA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3BF2F3FE19;
-        Fri, 23 Sep 2016 15:57:28 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B5DBA3FE18;
-        Fri, 23 Sep 2016 15:57:27 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-Cc:     Ian Kelling <ian@iankelling.org>, git@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] gitweb: remove unused function parameter
-References: <2a5aead0-d521-85eb-f304-7091683d8b40@gmail.com>
-        <20160923090846.3086-1-ian@iankelling.org>
-        <4a616b43-cd22-e2fe-6085-a65c48687560@gmail.com>
-Date:   Fri, 23 Sep 2016 12:57:25 -0700
-In-Reply-To: <4a616b43-cd22-e2fe-6085-a65c48687560@gmail.com> ("Jakub
-        =?utf-8?Q?Nar=C4=99bski=22's?= message of "Fri, 23 Sep 2016 21:44:56
- +0200")
-Message-ID: <xmqqwpi2z8wq.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1760499AbcIWUpS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Sep 2016 16:45:18 -0400
+Received: from mout.gmx.net ([212.227.17.20]:56693 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1758358AbcIWUpR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Sep 2016 16:45:17 -0400
+Received: from virtualbox ([108.198.118.51]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0M82zV-1b0mRD3VxZ-00viG7; Fri, 23 Sep 2016 22:45:11
+ +0200
+Date:   Fri, 23 Sep 2016 22:45:07 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Sep 2016, #06; Wed, 21)
+In-Reply-To: <xmqqk2e46da3.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1609232244140.129229@virtualbox>
+References: <xmqqk2e46da3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: F43EFF1E-81C7-11E6-BDE2-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:whVxw3rSDZNszS43wUc6H/8UFz9WZj2mrmv06oDwa21aMmushdR
+ XPti83Bou33hgAR/7sSFxZeYft0JwSEp4xCsBepEQqL8jLJQNydTnDFoKE6wbsX3Gk69sPS
+ MQ1KgUusHIKCDqLgixIei5M+azgwkJ5XR7YSUbagyU9Qwa2+YRUF+I8/Zfs5PN1RSRU6Bmg
+ sovIo5dHpv2D+24Ahjmiw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:awY8ZUSywxs=:9vjpEM8z6dP6vvLe/YdR4K
+ m3gdfGLnOmjhoKWUXR6E3hDZFoaodUVyLaoNEptuluXDQEZeGKzP2y3S+I7YRKDWSYWXX9qoG
+ 6wL6qVDMVen0ZpjPjdwpoOTv8wmUPpxGLtL1tQH3Y9HVv1ynxDsaiX3sCHtDTyh4AR6UiVTMZ
+ QMyE8+HsiRxAcDoikl74mH2ZnWeTT+hQC3yuexNfzQ9kpz8e5ksPRC01bmzZo2upftZ+N5lRg
+ pbA15TQOveZiS1xtmp3H95XlyhPLdiYKoPyVrwEg6lFt7Cm39kD+Aa7gaaRq/JMu/qvbLyZVD
+ gM+pmFKI4QybAEUnZs3ujN+yI4f2tt04LZhh8XqqC/0TM2L3wSOwjwd6N4MyLgqEfsv1bs9JS
+ jXegWBqmttCrzRsvKcbVoHlJ2Uze8B1xjOAEdfLHoVijE52lzhtvUwHQ7QxXJTpwVEHGRdWTP
+ cYAhofUggem5nmheDyABaOVV3skvxGVF4MOBN/R6/vS01qHuBUz9XxbDuobnvlpUHKgsRnnUv
+ dssQZKabrcEFquQfdFLFgYs0yE+1Lcbyt0fkWpOOEH2sV0Es6hCb7TgByFODIkLhYzPjkARRq
+ FXR/WHOMdCu2g+h8IALILm8QSqLbyScgj8NEZN9nkZMxWVoAuGBQJcDREJRHFKSNzIvw4PtlW
+ ttyady8EP2EKeElLtJVDDRYdtTc3Ins7gsRCGEd1U501bmCQGOUEI0Zmgn9Btv1/HADkqlNAu
+ tCKQa/liwh+AoTrwkhCYqF9m4RCQUiO4mYUUfY9x+cyNUnJoLhoYyAY18swL+hFu5V/Zh/kYw
+ MmQg1us
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
+Hi,
 
-> I think it would be better to be more descriptive, and say:
->
->   Subject: [PATCH v3 1/2] gitweb: remove unused parameter from guess_fi=
-le_syntax()
-> Acked-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
+On Wed, 21 Sep 2016, Junio C Hamano wrote:
 
-Thanks.
+> * rt/rebase-i-broken-insn-advise (2016-09-07) 1 commit
+>  - rebase -i: improve advice on bad instruction lines
+> 
+>  When "git rebase -i" is given a broken instruction, it told the
+>  user to fix it with "--edit-todo", but didn't say what the step
+>  after that was (i.e. "--continue").
+> 
+>  Will hold.
+>  Dscho's "rebase -i" hopefully will become available in 'pu', by
+>  which time an equivalent of this fix would be ported to C.  This is
+>  queued merely as a reminder.
+
+Porting the fix was surprisingly easy:
+
+-- snipsnap --
+[PATCH] fixup! rebase -i: check for missing commits in the rebase--helper
+
+---
+ sequencer.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/sequencer.c b/sequencer.c
+index 8f27524..386d16e 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2567,9 +2567,10 @@ int check_todo_list(void)
+ 
+ 	if (raise_error)
+ 		fprintf(stderr,
+-			_("You can fix this with 'git rebase --edit-todo'.\n"
+-			"Or you can abort the rebase with 'git rebase"
+-			" --abort'.\n"));
++			_("You can fix this with 'git rebase --edit-todo' "
++			  "and then run 'git rebase --continue'.\n"
++			  "Or you can abort the rebase with 'git rebase"
++			  " --abort'.\n"));
+ 
+ 	return res;
+ }
+-- 
+2.10.0.windows.1.10.g803177d
+
