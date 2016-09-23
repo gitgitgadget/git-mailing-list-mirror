@@ -2,167 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C14F7207EC
-	for <e@80x24.org>; Fri, 23 Sep 2016 22:26:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6D55207EC
+	for <e@80x24.org>; Fri, 23 Sep 2016 22:29:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965992AbcIWW0L (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Sep 2016 18:26:11 -0400
-Received: from mail-io0-f176.google.com ([209.85.223.176]:35261 "EHLO
-        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965693AbcIWW0J (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2016 18:26:09 -0400
-Received: by mail-io0-f176.google.com with SMTP id m186so132048892ioa.2
-        for <git@vger.kernel.org>; Fri, 23 Sep 2016 15:26:08 -0700 (PDT)
+        id S1757756AbcIWW3x (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Sep 2016 18:29:53 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:32906 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752017AbcIWW3w (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Sep 2016 18:29:52 -0400
+Received: by mail-wm0-f68.google.com with SMTP id w84so4764017wmg.0
+        for <git@vger.kernel.org>; Fri, 23 Sep 2016 15:29:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=el+PbecBMkhRIVK89lDLvIN8mL93Pwpvb10qqCqObuI=;
-        b=OmigGoYuHitPtUsm/DR/zvPc8DrsCFS0aZs4ysPfoiWXeB4866mbaEHmXoknZaH+qt
-         pGR8E0+pCnRbcYK/gZKTpz1o688hxuc0RX3Gh6nNnPVTk8xWkuZN+lOCyegLabPIQRDM
-         4PU9Msb7XJG6ywRorVwlDXsBsf2SS4Zq3kD6cTnFZmTpnKoTks5qxVCy0Nz2OxJmTiu1
-         uVuFjbzmeupzz0sRbLeSTM2EvOvKwEGfcL6QgOwZy1GiqKMdm8zazf8H3Y7s7vK4NBpu
-         DHGdz6F/pQGK9iOsL5/0iqdeoP3GHQA0KSAa/aVMdwTNSfjnzKdJZDaazJqeIT9w/JKt
-         nonA==
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=xG0iohEnZ+DOi+xy9xLr3dCAUV/flvH6MLYpmGL+TdI=;
+        b=yJNMGYN61Vt8JsZWpM64cxI1dx+tzlHopW+MCutQh+ofrflzuKbJykRg5G1JRl9klP
+         mnxVoLRYyJZqy3L7sk1yK/fPVq0VdzaAJBvuqZT4Ttwk//HuAPahkSzdAXs2CeXymnzv
+         AY34QqnM3IAifPfQB8HkWmIPEvDl752qflJkjCpoAoh7AR7r2WEFqWGnaV6qRGjeGg+W
+         sIcUgfLHG8oNU8vlTvJf+qWVvf2DNjIofFIBdoeuavtnTuGYsQrzPd1Zk/g5o/6XoJq9
+         p+bdJCs2UNDHdIO1og6ddA1jl9aiKaPaxLwuY/LR2CJrMhES3w8rsa0IaCSMetdRSO0E
+         gMuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=el+PbecBMkhRIVK89lDLvIN8mL93Pwpvb10qqCqObuI=;
-        b=J3LJfVD4jEWL+oBtHgWfhB3BNG3JX2jdBXlcdaDbEwKQN/B8MNFnX09rnsWhs5oP5y
-         dQPBaWWTUtvhsP1RMkA0PlQzimv4b72rpyA9DtPUvrztIehuwSTKJa5jOy5rb3NfqlS9
-         yRzTMXyFvhGA3+Y2qtwpUKeWdn9BwDnXL+uJRm+zVuhSIOy/R2wOtFB1LCnFo3V3T6UK
-         mpc/qKgHURkRfMOV5qusNeP1qMtq2ec91kHei4S6zZP2i2ZgkbcjXQ5X9toVnxcuTurN
-         yE5HT76fTDn77aUkiklyfcd3kVb2JEv4+4vPiwDucQ0O9WCtljbpMSVXuOqzgJiV/ViW
-         druQ==
-X-Gm-Message-State: AE9vXwPKvf/tIeEA/JBhVaeLfvn/3YIAZKZZ+9qpItSBKAVoBMdiPkgvgHMZXR00eRipzbCZ60UttUZ/41snFsac
-X-Received: by 10.107.59.199 with SMTP id i190mr11500973ioa.18.1474669568016;
- Fri, 23 Sep 2016 15:26:08 -0700 (PDT)
+        h=x-gm-message-state:subject:to:references:cc:newsgroups:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-transfer-encoding;
+        bh=xG0iohEnZ+DOi+xy9xLr3dCAUV/flvH6MLYpmGL+TdI=;
+        b=E7fLmjotvdPFATedi1BVVSNZ8mzBTJgGGtg2uxMRzhoZ4XsQztlAW7CtAe+84qq6Bi
+         NOVOL0+FoZoksRpMmABYG0IuLbyeQRJ1W3JRlMPJ1WExaVf98+zSGoTt4+ZhioTKwLwu
+         mre2Gsuqcotv1r2Ztgf86PYrr5aeJKX5QupCUuUCVUnHz0TV7wwcCI05EIekp6YF12sS
+         eFUOcwFJjLZzRtLrsE90gyB4qFVQ8XLuPA2n4Ynf0NnY3IS/JuYbAwLNeCtT/zMEHtxv
+         txo/iDsreqYVP29BD6yVmwZaMakToSWnR0/kM58ISoo8DI1rkws+6LKEtxEjIw/VY2m4
+         F/Xg==
+X-Gm-Message-State: AA6/9Rn7Hfh/uwDzHi4a8Hgw5O8H0m/CrTJWdoWugSeOg/+z6ziNDulwGW2rXeSVpS2OAA==
+X-Received: by 10.28.93.20 with SMTP id r20mr4453841wmb.89.1474669790586;
+        Fri, 23 Sep 2016 15:29:50 -0700 (PDT)
+Received: from [192.168.1.26] (epq151.neoplus.adsl.tpnet.pl. [83.20.58.151])
+        by smtp.googlemail.com with ESMTPSA id uw3sm9240459wjb.21.2016.09.23.15.29.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 23 Sep 2016 15:29:49 -0700 (PDT)
+Subject: Re: .gitignore does not ignore Makefile
+To:     Junio C Hamano <gitster@pobox.com>, Kevin Daudt <me@ikke.info>
+References: <CAOZdJXWpcSZ+jAoV8HttkaB7Fh=wzWDTCsHy8W-S9xOOBodVFw@mail.gmail.com>
+ <20160922154421.GA6641@ikke.info>
+ <xmqqy42j4wp9.fsf@gitster.mtv.corp.google.com>
+Cc:     Timur Tabi <timur@codeaurora.org>, git <git@vger.kernel.org>
+Newsgroups: gmane.comp.version-control.git
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <d98bd20f-870a-71a0-fda2-aabe71a5f981@gmail.com>
+Date:   Sat, 24 Sep 2016 00:29:29 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Received: by 10.107.173.98 with HTTP; Fri, 23 Sep 2016 15:26:07 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1609232305590.129229@virtualbox>
-References: <1mu0zrn.cs3kf31kttpjkM%lists@haller-berlin.de> <alpine.DEB.2.20.1609232305590.129229@virtualbox>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 23 Sep 2016 15:26:07 -0700
-Message-ID: <CAGZ79kY_5FrMNrEBB19c4tZR+vFz-6uBudDtgVpWosL22mPzGg@mail.gmail.com>
-Subject: Re: Limitiations of git rebase --preserve-merges --interactive
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Stefan Haller <lists@haller-berlin.de>, Kevin Daudt <me@ikke.info>,
-        Anatoly Borodin <anatoly.borodin@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <xmqqy42j4wp9.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 23, 2016 at 2:13 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Stefan,
->
-> On Fri, 23 Sep 2016, Stefan Haller wrote:
->
->> Stefan Beller <sbeller@google.com> wrote:
->>
->> > On Thu, Sep 22, 2016 at 12:48 PM, Kevin Daudt <me@ikke.info> wrote:
->> > > On Thu, Sep 22, 2016 at 07:33:11PM +0000, Anatoly Borodin wrote:
->> > >> Hi Stefan,
->> > >>
->> > >> this section was added to the manual in the commit
->> > >> cddb42d2c58a9de9b2b5ef68817778e7afaace3e by "Jonathan Nieder"
->> > >> <jrnieder@gmail.com> 6 years ago. Maybe he remembers better?
->> > >>
->> > >
->> > > Just to make it clear, this section explicitly talks about 'bugs' with
->> > > preserve-merges and interactive rebase.  Without the --preserve-merges
->> > > option, those operations works as expected.
->> > >
->> > > The reason, as that section explains, is that it's not possible to store
->> > > the merge structure in the flat todo list. I assume this means git
->> > > internally remembers where the merge commit was, and then restores it
->> > > while rebasing.
->> > >
->> > > Changing the order, or dropping commits might then give unexpected
->> > > results.
->> > >
->> >
->> > The commit message may help as well:
->> >
->> >     rebase -i -p: document shortcomings
->> >
->> >     The rebase --preserve-merges facility presents a list of commits
->> >     in its instruction sheet and uses a separate table to keep
->> >     track of their parents.  Unfortunately, in practice this means
->> >     that with -p after most attempts to rearrange patches, some
->> >     commits have the "wrong" parent and the resulting history is
->> >     rarely what the caller expected.
->> >
->> >     Yes, it would be nice to fix that.  But first, add a warning to the
->> >     manual to help the uninitiated understand what is going on.
->>
->> Thanks, but all of this still talks about the issues in very generic
->> terms ("most attempts to rearrange patches"). I'm interested in more
->> details as to exactly what kind of attempts do or don't work. In
->> particular, I'm interested in fixup/squash commands (without reordering
->> anything else), or dropping (non-merge) commits.
->>
->> I could of course experiment with these and try to find out myself, but
->> I was hoping someone would just know the answer off the top of their
->> head, saving me some time.
->
-> The fundamental problem here is the underlying design of bolting on the
-> "recreate a merge" functionality onto the "pick" command.
->
-> That is, if you try to rebase non-linear commit history, it will still
-> generate a linear list of "pick <commit-name>" lines, as if it were
-> linear, except that it will include the merge commits, too.
+W dniu 22.09.2016 o 20:26, Junio C Hamano napisał:
+> Kevin Daudt <me@ikke.info> writes:
+> 
+>> Often people advise tricks like `git update-index --assume-unchanges
+>> <file>`, but this does not work as expected. It's merely a promise to
+>> git that this file does not change (and hence, git will not check if
+>> this file has changed when doing git status), but command that try to
+>> change this file will abort saying that the file has changed.
+> 
+> It actually is even worse.  As the user promised Git that the <file>
+> will not be modified and will be kept the same as the version in the
+> index, Git reserves the right to _overwrite_ it with the version in
+> the index anytime when it is convenient to do so, removing whatever
+> local change the user had despite the promise to Git.  The "abort
+> saying that the file has changed" is merely various codepaths in the
+> current implementation trying to be extra nice.
+ 
+There is a trick that works almost as 'ignore changes' for tracked
+files, namely `git update-index --skip-worktree <file>`.  From the
+documentation:
 
-Which on a more fundamental design level would be ok.
-(C.f. your shell history is a linear list of git commands, but it
-deals just fine
-with non linear DAGSs)
+  Skip-worktree bit
+  ~~~~~~~~~~~~~~~~~
 
->
-> It then will try to guess what you want to do by recording which commit
-> was rewritten as which commit. And when it encounters a "pick" with a
-> merge commit, it will try to merge the *rewritten* commit.
+  Skip-worktree bit can be defined in one (long) sentence: When
+  reading an entry, if it is marked as skip-worktree, then Git
+  pretends its working directory version is up to date and read
+  the index version instead.
 
-Instead of guessing we'd need to differentiate between "pick" and "pickmerge",
-whereas the later describes creating commits with more than one parent (i.e.
-the prior pick line).
+  [...] Writing is not affected by this bit, content safety is still
+  first priority. [...]
 
-I could imagine the "pickmerge" to list all additional parents (The
-first parent being
-the previously picked commit) via symbolic naming:
+It works quite well; the only problem is that `git stash` would
+not stash away your changes, and you would need to unmark such
+file before saving a stash.
 
-    pick 1234affe implement foo
-    pickmerge 3456feed origin/js/new-feature-1 # Merge origin/js/new-feature-1
-    pick 45678ead implement feature-2
 
-The "pickmerge" would have first the merge tips, and then the old
-subject line after
-a # character.
+With --assume-unchanged used for ignoring changes to tracked files,
+you can quite easily lose your work because you are lying to Git.
 
->
-> In other words, the design does not allow for changing the tip of any
-> merged branch. Not reordering, not dropping.
 
-I see how the current design is problematic as there is no argument
-possible that
-allows the user to correct the wrong guess.
+Note also that in Git classic "ignored" implies unimportant.
+-- 
+Jakub Narębski
 
->
-> And I do not think that there is a way to fix that design. That is why I
-> came up with the Git garden shears (see the link I sent elsewhere in this
-> thread).
-
-I'll look into that.
-
-Thanks,
-Stefan
