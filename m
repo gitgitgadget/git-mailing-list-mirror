@@ -2,106 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 764CC207EC
-	for <e@80x24.org>; Fri, 23 Sep 2016 16:34:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8D4C207EC
+	for <e@80x24.org>; Fri, 23 Sep 2016 16:43:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758113AbcIWQex (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Sep 2016 12:34:53 -0400
-Received: from mail-io0-f169.google.com ([209.85.223.169]:36300 "EHLO
-        mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754046AbcIWQew (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2016 12:34:52 -0400
-Received: by mail-io0-f169.google.com with SMTP id m79so123974853ioo.3
-        for <git@vger.kernel.org>; Fri, 23 Sep 2016 09:34:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=2dObjhgxxVx87f28wmPfGPkeSJrqoT3/E/BCkjCU8uQ=;
-        b=J4CJgh903gaSdpf1HbJWorSY2ZhP9VC9HTCRpCqYNeR3Ua3RI2EbGVVRDpDrTC1roz
-         3Kiti7w2qqpcsxB30YHNp51XANVCecBwuTy0UQkc+bI0OrvXAam6HvtVhZlCsF25EUT1
-         4wtVErO3S3ax1oMYUi7Q1JvqLHoyimKUCzC+E8pvx+NlJyKDS945BbJer80PQc2G2oEn
-         egfthJcLXgr8+ddCVs79P4zpvQ5FZBfyYMhkl9Xblvlf2pR8tFrY2GY033aXFW8IHs4F
-         RKrogCpkzZfILNbHQAZ7r6zh0xc5gAcfSW2qUENUszotFbZEcoG1XoJRTk4n7lOfSjkl
-         FPHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=2dObjhgxxVx87f28wmPfGPkeSJrqoT3/E/BCkjCU8uQ=;
-        b=OQ6Croa4LRnHl2oAxe56A4knS22qgWmWy7f2hVloexJqfqInNUwG+YEruQXjpFUKky
-         OpJooe5STD6Trw24NffEye+QlUdCgAdECNTsLDKdTlW+jv2zSLQwBoaS/45FilUku23R
-         7hXAo6VU6pAHFMDB9O0rTTJlhtbj6Ojj9l3pY7PVACKfaJG528iS0s07PswtBlRoWQec
-         YwizbUngW1X117HlS7W3I7/Qv/OHxmYkIpF2hkabYRKBNcuiK1wcUxpOYJYMrfohpsQ7
-         3T7osRtrQnY17QmmT7cQI+LhDTADQEQWfuc91jS7SJEFLNzQ8CyiV+xglstZpHA0wWjH
-         Oerg==
-X-Gm-Message-State: AE9vXwM5E70q+lJG6gLnl1OIQGjAV9bnc3IyaGCUERWa46703212xI1yjfuBUEZgoJuUT7ApPzScq+ki1vtEX+up
-X-Received: by 10.107.201.78 with SMTP id z75mr10025294iof.202.1474648491677;
- Fri, 23 Sep 2016 09:34:51 -0700 (PDT)
+        id S966341AbcIWQnt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Sep 2016 12:43:49 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61267 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S966306AbcIWQnt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Sep 2016 12:43:49 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A9CA93E296;
+        Fri, 23 Sep 2016 12:43:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=AsagiWVXk8XNGsMHQqJFXT2bDxA=; b=dAKzMI
+        U1uW7uibn7/NlUoruF4har+OKP1C9dU+5NKmUyBnxD0QEp/z5vMs/2IZ3xu8sqQV
+        EhRHM8ssfqDuRqETWoEWqXozUL07al0sQ6mA2qbm/weeb5yZBUqZIMUe+MNPuiLr
+        wr4RZg8BjOTzIF+0wAG3RIpjGADlnTLNGrb/Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=qI5r1lVXi94BthD5l3Wdp1hl2hExoljB
+        8eP7pUQUv6JTWirUNV3Wtfn287uVTXHASNJrSj0aA4WgZj9N0TQf7l6Ja7dXtXz9
+        wXs53UY+5lOoQsG6Cc7Ns7JZPePp9Od5kFa6GUb2nzOe4iJzce7bsgRl54WjJaMv
+        RotxmAWnf4c=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A159A3E295;
+        Fri, 23 Sep 2016 12:43:47 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 18F413E294;
+        Fri, 23 Sep 2016 12:43:47 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Vegard Nossum <vegard.nossum@oracle.com>
+Cc:     git@vger.kernel.org,
+        Santi =?utf-8?Q?B=C3=A9jar?= <sbejar@gmail.com>,
+        Kevin Bracey <kevin@bracey.fi>,
+        Philip Oakley <philipoakley@iee.org>
+Subject: Re: [RFC PATCH] revision: new rev%n shorthand for rev^n..rev
+References: <20160923105254.10235-1-vegard.nossum@oracle.com>
+Date:   Fri, 23 Sep 2016 09:43:45 -0700
+In-Reply-To: <20160923105254.10235-1-vegard.nossum@oracle.com> (Vegard
+        Nossum's message of "Fri, 23 Sep 2016 12:52:54 +0200")
+Message-ID: <xmqqr38a1s8u.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.173.98 with HTTP; Fri, 23 Sep 2016 09:34:51 -0700 (PDT)
-In-Reply-To: <CAKoko1p+M3X_y+DH+65fUDRZjkiZrKE3Z-jjq=RSjqoi7He8pw@mail.gmail.com>
-References: <1474495472-94190-1-git-send-email-bmwill@google.com>
- <CAKoko1q7Mb6_cnaA1ecZJ2y1PWUrW4RSu6RiviyN91JV5-QR5g@mail.gmail.com>
- <xmqq1t0c7ur2.fsf@gitster.mtv.corp.google.com> <CAKoko1qch_odsEWba0rtCv-DWO0ABS2yprnwGPCgyT6-7H-LdQ@mail.gmail.com>
- <xmqqponw6e3x.fsf@gitster.mtv.corp.google.com> <20160922041854.7754ujcynhk7mdnh@sigill.intra.peff.net>
- <xmqq7fa36bwm.fsf@gitster.mtv.corp.google.com> <20160923034113.4rnps3nogvzxkfjx@sigill.intra.peff.net>
- <CAGZ79kZ+LTd5PuT4+Z9K6d+GQ-33E=tLY1Fokbp22uNoygaEtg@mail.gmail.com>
- <20160923060643.3ubr5gn7qczzs2ut@sigill.intra.peff.net> <CAKoko1p+M3X_y+DH+65fUDRZjkiZrKE3Z-jjq=RSjqoi7He8pw@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 23 Sep 2016 09:34:51 -0700
-Message-ID: <CAGZ79kYF6nYL42VQ_mbVzD+2QFLPELe9-8DOQjbSwArM20SCKA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] ls-files: adding support for submodules
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: E5CD7A70-81AC-11E6-8717-C26412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 23, 2016 at 9:16 AM, Brandon Williams <bmwill@google.com> wrote:
->> Yeah, a positive "I support this" flag would at least let us correctly
->> flag errors, which is the best we can do. That won't work for
->> non-builtins, but perhaps it is good enough in practice.
->>
->> -Peff
->
->
-> So it sounds like we agree that this prefix option should be pushed to
-> the top level.
-> The question is have we come to a consensus on what we should be
-> calling the option?
+Vegard Nossum <vegard.nossum@oracle.com> writes:
 
-The option itself is very similar to -C, which changes the directory to the
-given argument before executing the git command.
-e.g. in git:
+> I use rev^..rev daily, and I'm surely not the only one. To save typing
+> (or copy-pasting, if the rev is long -- like a full SHA-1 or branch name)
+> we can make rev% a shorthand for that.
 
-    git -C builtin ls-files
-    add.c
-    ...
+No, we cannot.
 
-So for the submodule case we'd want that plus keeping around that prefix,
-which makes me wonder if we could just store the argument of -C into a global
-and use that when --keep-prefix is given, so you'd do a
+'%' is not reserved as a special character that is forbidden in
+reference names, and for somebody who has a branch whose name is
+'master%', such a change will suddenly make 'master%' mean something
+completely different, breaking existing users' repositories.
 
-    git -C path/to/sub --keep-prefix ls-files
-    path/to/sub/file1
-    ...
+This is why existing rev^@ and rev^! both use the "^" as the first
+character that introduces the "magic" semantics; "^" cannot be a
+part of a refname.  Also sequences that begin with "^{" and "@{" are
+reserved as escape hatches to allow us extend the revision syntax in
+the future ("^{" works on history, while "@{" bases its working on
+the reflog data).
 
-maybe --[keep|use]-[path|prefix] ?
-
-You could of course go with a fully independent option, but how
-would that work together with -C ?
-(first change the dir and then change again while remembering the prefix?
-or the other way round?)
-
-> Leave it as submodule-prefix or do we need to come up with a different name?
->
-> -Brandon
+As "rev^$n" is "nth parent", it may be a possibility to use "rev^-$n"
+as a short-hand for "^rev^$n rev".
