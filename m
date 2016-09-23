@@ -2,87 +2,227 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F27621F935
-	for <e@80x24.org>; Fri, 23 Sep 2016 10:40:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7FFF1F935
+	for <e@80x24.org>; Fri, 23 Sep 2016 10:56:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759007AbcIWKke (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Sep 2016 06:40:34 -0400
-Received: from dd28836.kasserver.com ([85.13.147.76]:52364 "EHLO
-        dd28836.kasserver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758987AbcIWKkb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2016 06:40:31 -0400
-Received: from [10.1.1.70] (nat1.ableton.net [217.110.199.117])
-        by dd28836.kasserver.com (Postfix) with ESMTPSA id B4DA0300B32;
-        Fri, 23 Sep 2016 12:40:28 +0200 (CEST)
-To:     sbeller@google.com (Stefan Beller), me@ikke.info (Kevin Daudt)
-Cc:     anatoly.borodin@gmail.com (Anatoly Borodin),
-        git@vger.kernel.org (git@vger.kernel.org),
-        jrnieder@gmail.com (Jonathan Nieder)
-In-Reply-To: <CAGZ79kYoFH0dbQwvL_2JOtd8aybH8MKCtzy+p_88+QykVTGUtg@mail.gmail.com>
-Subject: Re: Limitiations of git rebase --preserve-merges --interactive
-From:   lists@haller-berlin.de (Stefan Haller)
-Date:   Fri, 23 Sep 2016 12:40:29 +0200
-Message-ID: <1mu0zrn.cs3kf31kttpjkM%lists@haller-berlin.de>
-User-Agent: MacSOUP/2.8.6b1 (Mac OS 10.11.6)
+        id S965843AbcIWKz7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Sep 2016 06:55:59 -0400
+Received: from userp1040.oracle.com ([156.151.31.81]:22079 "EHLO
+        userp1040.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934960AbcIWKz4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Sep 2016 06:55:56 -0400
+Received: from aserv0022.oracle.com (aserv0022.oracle.com [141.146.126.234])
+        by userp1040.oracle.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id u8NArDJx028646
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Fri, 23 Sep 2016 10:53:14 GMT
+Received: from lenuta.oracle.com (dhcp-ukc1-twvpn-1-vpnpool-10-175-171-194.vpn.oracle.com [10.175.171.194])
+        by aserv0022.oracle.com (8.14.4/8.14.4) with ESMTP id u8NArBAB013547;
+        Fri, 23 Sep 2016 10:53:11 GMT
+From:   Vegard Nossum <vegard.nossum@oracle.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Santi=20B=C3=A9jar?= <sbejar@gmail.com>,
+        Kevin Bracey <kevin@bracey.fi>,
+        Philip Oakley <philipoakley@iee.org>,
+        Vegard Nossum <vegard.nossum@oracle.com>
+Subject: [RFC PATCH] revision: new rev%n shorthand for rev^n..rev
+Date:   Fri, 23 Sep 2016 12:52:54 +0200
+Message-Id: <20160923105254.10235-1-vegard.nossum@oracle.com>
+X-Mailer: git-send-email 2.10.0.rc0.1.g07c9292
+X-Source-IP: aserv0022.oracle.com [141.146.126.234]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> wrote:
+I use rev^..rev daily, and I'm surely not the only one. To save typing
+(or copy-pasting, if the rev is long -- like a full SHA-1 or branch name)
+we can make rev% a shorthand for that.
 
-> On Thu, Sep 22, 2016 at 12:48 PM, Kevin Daudt <me@ikke.info> wrote:
-> > On Thu, Sep 22, 2016 at 07:33:11PM +0000, Anatoly Borodin wrote:
-> >> Hi Stefan,
-> >>
-> >> this section was added to the manual in the commit
-> >> cddb42d2c58a9de9b2b5ef68817778e7afaace3e by "Jonathan Nieder"
-> >> <jrnieder@gmail.com> 6 years ago. Maybe he remembers better?
-> >>
-> >
-> > Just to make it clear, this section explicitly talks about 'bugs' with
-> > preserve-merges and interactive rebase.  Without the --preserve-merges
-> > option, those operations works as expected.
-> >
-> > The reason, as that section explains, is that it's not possible to store
-> > the merge structure in the flat todo list. I assume this means git
-> > internally remembers where the merge commit was, and then restores it
-> > while rebasing.
-> >
-> > Changing the order, or dropping commits might then give unexpected
-> > results.
-> >
-> 
-> The commit message may help as well:
-> 
->     rebase -i -p: document shortcomings
-> 
->     The rebase --preserve-merges facility presents a list of commits
->     in its instruction sheet and uses a separate table to keep
->     track of their parents.  Unfortunately, in practice this means
->     that with -p after most attempts to rearrange patches, some
->     commits have the "wrong" parent and the resulting history is
->     rarely what the caller expected.
-> 
->     Yes, it would be nice to fix that.  But first, add a warning to the
->     manual to help the uninitiated understand what is going on.
+The existing syntax rev^! seems like it should do the same, but it
+doesn't really do the right thing for merge commits (it gives only the
+merge itself).
 
-Thanks, but all of this still talks about the issues in very generic
-terms ("most attempts to rearrange patches"). I'm interested in more
-details as to exactly what kind of attempts do or don't work. In
-particular, I'm interested in fixup/squash commands (without reordering
-anything else), or dropping (non-merge) commits.
+As a natural generalisation, we also accept rev%n where n excludes the
+nth parent of rev. It _may_ be more useful to define rev%n for an m-way
+merge as:
 
-I could of course experiment with these and try to find out myself, but
-I was hoping someone would just know the answer off the top of their
-head, saving me some time.
+ rev
+ ^rev^1
+ ^rev^[... except n]
+ ^rev^m
 
+so that you can see only the commits that arrived via the nth parent,
+but this might be questionable/unintuitive in case any of the parents
+that share commits (as you would get fewer commits than expected).
 
+Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
+---
+ Documentation/revisions.txt | 14 +++++++++++++
+ builtin/rev-parse.c         | 38 ++++++++++++++++++++++++++++++++++
+ revision.c                  | 50 +++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 102 insertions(+)
+
+diff --git Documentation/revisions.txt Documentation/revisions.txt
+index 4bed5b1..ab2dc2c 100644
+--- Documentation/revisions.txt
++++ Documentation/revisions.txt
+@@ -281,6 +281,14 @@ is a shorthand for 'HEAD..origin' and asks "What did the origin do since
+ I forked from them?"  Note that '..' would mean 'HEAD..HEAD' which is an
+ empty range that is both reachable and unreachable from HEAD.
+ 
++Parent Exclusion Notation
++~~~~~~~~~~~~~~~~~~~~~~~~~
++The '<rev>%{<n>}', Parent Exclusion Notation::
++Shorthand for '<rev>{caret}<n>..<rev>', with '<n>' = 1 if not
++given. This is typically useful for merge commits where you
++can just pass '<commit>%' to get all the commits in the branch
++that was merged in merge commit '<commit>'.
++
+ Other <rev>{caret} Parent Shorthand Notations
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ Two other shorthands exist, particularly useful for merge commits,
+@@ -316,6 +324,10 @@ Revision Range Summary
+ 	<rev2> but exclude those that are reachable from both.  When
+ 	either <rev1> or <rev2> is omitted, it defaults to `HEAD`.
+ 
++'<rev>%{<n>}', e.g. 'HEAD%, HEAD%2'::
++	Equivalent to '<rev>{caret}<n>..<rev>', with '<n>' = 1 if not
++	given.
++
+ '<rev>{caret}@', e.g. 'HEAD{caret}@'::
+   A suffix '{caret}' followed by an at sign is the same as listing
+   all parents of '<rev>' (meaning, include anything reachable from
+@@ -339,6 +351,8 @@ spelt out:
+    C                            I J F C
+    B..C   = ^B C                C
+    B...C  = B ^F C              G H D E B C
++   B%     = B^..B
++	  = B ^B^1              E I J F B
+    C^@    = C^1
+ 	  = F                   I J F
+    B^@    = B^1 B^2 B^3
+diff --git builtin/rev-parse.c builtin/rev-parse.c
+index 76cf05e..f081b81 100644
+--- builtin/rev-parse.c
++++ builtin/rev-parse.c
+@@ -292,6 +292,42 @@ static int try_difference(const char *arg)
+ 	return 0;
+ }
+ 
++static int try_branch(const char *arg)
++{
++	char *percent;
++	unsigned char sha1[20];
++	unsigned char end[20];
++
++	/*
++	 * <rev>%{<n>} is shorthand for <rev>^<n>..<rev>, with <n> = 1 if
++	 * not given. This is typically used for merge commits where you
++	 * can just pass <merge>% and it will show you all the commits in
++	 * the branch that was merged (for octopus merges, <n> is the nth
++	 * branch).
++	 */
++
++	if (!(percent = strstr(arg, "%")))
++		return 0;
++
++	*percent = '^';
++	if (!get_sha1_committish(arg, sha1)) {
++		*percent = '%';
++		return 0;
++	}
++
++	*percent = '\0';
++	if (!get_sha1_committish(arg, end)) {
++		*percent = '%';
++		return 0;
++	}
++
++	show_rev(NORMAL, end, arg);
++	*percent = '^';
++	show_rev(REVERSED, sha1, arg);
++	*percent = '%';
++	return 1;
++}
++
+ static int try_parent_shorthands(const char *arg)
+ {
+ 	char *dotdot;
+@@ -839,6 +875,8 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 		/* Not a flag argument */
+ 		if (try_difference(arg))
+ 			continue;
++		if (try_branch(arg))
++			continue;
+ 		if (try_parent_shorthands(arg))
+ 			continue;
+ 		name = arg;
+diff --git revision.c revision.c
+index 969b3d1..e20b618 100644
+--- revision.c
++++ revision.c
+@@ -1519,6 +1519,56 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
+ 		}
+ 		*dotdot = '.';
+ 	}
++
++	/*
++	 * <rev>%{<n>} is shorthand for <rev>^<n>..<rev>, with <n> = 1 if
++	 * not given. This is typically used for merge commits where you
++	 * can just pass <merge>% and it will show you all the commits in
++	 * the branch that was merged (for octopus merges, <n> is the nth
++	 * branch).
++	 */
++	dotdot = strstr(arg, "%");
++	if (dotdot) {
++		unsigned char sha1[20];
++		unsigned char end[20];
++		struct object *a_obj, *b_obj;
++		unsigned int flags_exclude = flags ^ (UNINTERESTING | BOTTOM);
++		unsigned int a_flags;
++
++		*dotdot = '\0';
++		if (get_sha1_committish(arg, end)) {
++			if (revs->ignore_missing)
++				return 0;
++			die("Unknown revision %s", arg);
++		}
++
++		*dotdot = '^';
++		if (get_sha1_committish(arg, sha1)) {
++			if (revs->ignore_missing)
++				return 0;
++			die("Unknown revision %s", arg);
++		}
++
++		a_obj = parse_object(sha1);
++		b_obj = parse_object(end);
++		if (!a_obj || !b_obj) {
++			if (revs->ignore_missing)
++				return 0;
++			die("Invalid revision range %s", arg);
++		}
++
++		a_flags = flags_exclude;
++		a_obj->flags |= a_flags;
++		b_obj->flags |= flags;
++		*dotdot = '^';
++		add_rev_cmdline(revs, a_obj, arg, REV_CMD_LEFT, a_flags);
++		add_pending_object(revs, a_obj, arg);
++		*dotdot = '\0';
++		add_rev_cmdline(revs, b_obj, arg, REV_CMD_RIGHT, flags);
++		add_pending_object(revs, b_obj, arg);
++		*dotdot = '%';
++		return 0;
++	}
+ 	dotdot = strstr(arg, "^@");
+ 	if (dotdot && !dotdot[2]) {
+ 		*dotdot = 0;
 -- 
-Stefan Haller
-Berlin, Germany
-http://www.haller-berlin.de/
+2.10.0.rc0.1.g07c9292
+
