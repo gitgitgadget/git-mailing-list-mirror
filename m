@@ -6,55 +6,68 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E9161F4F8
-	for <e@80x24.org>; Fri, 23 Sep 2016 04:46:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 16BB41F4F8
+	for <e@80x24.org>; Fri, 23 Sep 2016 04:48:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752911AbcIWEqi (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Sep 2016 00:46:38 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47023 "EHLO cloud.peff.net"
+        id S1755949AbcIWEsB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Sep 2016 00:48:01 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47028 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750763AbcIWEqh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2016 00:46:37 -0400
-Received: (qmail 28374 invoked by uid 109); 23 Sep 2016 04:46:37 -0000
+        id S1755125AbcIWEsA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Sep 2016 00:48:00 -0400
+Received: (qmail 28488 invoked by uid 109); 23 Sep 2016 04:48:00 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 23 Sep 2016 04:46:37 +0000
-Received: (qmail 14647 invoked by uid 111); 23 Sep 2016 04:46:50 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 23 Sep 2016 04:48:00 +0000
+Received: (qmail 14666 invoked by uid 111); 23 Sep 2016 04:48:13 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 23 Sep 2016 00:46:50 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Sep 2016 00:46:34 -0400
-Date:   Fri, 23 Sep 2016 00:46:34 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 23 Sep 2016 00:48:13 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Sep 2016 00:47:57 -0400
+Date:   Fri, 23 Sep 2016 00:47:57 -0400
 From:   Jeff King <peff@peff.net>
-To:     Luciano Schillagi <luko.web@gmail.com>
+To:     Anatoly Borodin <anatoly.borodin@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: error
-Message-ID: <20160923044634.mkqyal4cgss5js2p@sigill.intra.peff.net>
-References: <15EA3A56-BAE8-4FAF-B277-9628307899AF@gmail.com>
+Subject: Re: Bug? Short command line options
+Message-ID: <20160923044757.7pwwzkqzkb2fqa7l@sigill.intra.peff.net>
+References: <ns19t4$s0t$1@blaine.gmane.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <15EA3A56-BAE8-4FAF-B277-9628307899AF@gmail.com>
+In-Reply-To: <ns19t4$s0t$1@blaine.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 22, 2016 at 08:02:35PM -0300, Luciano Schillagi wrote:
+On Thu, Sep 22, 2016 at 07:03:00PM +0000, Anatoly Borodin wrote:
 
-> please, what should I do to fix this error? thanks
+> is there a good reason why
 > 
-> Luko ~ $ git init
-> error: malformed value for push.default: aguas
-> error: Must be one of nothing, matching, simple, upstream or current.
-> fatal: bad config variable 'push.default' in file '/Users/imac/.gitconfig' at line 16
-> -bash: __git_ps1: command not found
+> 	git fetch -vpnf
+> 
+> works like
+> 
+> 	git fetch -v -p -n -f
+> 
+> and
+> 	
+> 	git commit -avem msg
+> 
+> works like
+> 
+> 	git commit -a -v -e -m msg
+> 
+> etc etc, but
+> 
+> 	git log -wWp
+> 
+> says
+> 
+> 	fatal: unrecognized argument: -wWp
 
-Your config file has a bogus value in it.  Try:
+Yes. The reason is that the arguments to git-log are passed to the
+revision.c parser, which predates our parse_options() infrastructure,
+and does not understand bundled options.
 
-  git config --global --unset push.default
-
-Or you may want to simply edit /Users/imac/.gitconfig by hand. It is not
-clear where the bogus value came from, but possibly the file is
-corrupted in some way (so you are better off examining it first before
-asking git to blindly change it).
+It could be updated to use parse_options(), but nobody has done so yet.
 
 -Peff
