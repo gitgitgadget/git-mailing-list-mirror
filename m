@@ -6,79 +6,70 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A8FB2207EC
-	for <e@80x24.org>; Fri, 23 Sep 2016 15:18:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A57D207EC
+	for <e@80x24.org>; Fri, 23 Sep 2016 15:37:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1035389AbcIWPS4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Sep 2016 11:18:56 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58995 "EHLO
+        id S966854AbcIWPhG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Sep 2016 11:37:06 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56057 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S965055AbcIWPSw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2016 11:18:52 -0400
+        with ESMTP id S966191AbcIWPhF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Sep 2016 11:37:05 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7A38C3B5C5;
-        Fri, 23 Sep 2016 11:18:50 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 553853D5AB;
+        Fri, 23 Sep 2016 11:37:03 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=3qHRhehXcIvn
-        n2+l7Na2QPkl0fQ=; b=ubafgQ8dlytlUeveTwWvYWw8M9cRYCyberlxllDKGdRr
-        tdfLUMXjOqfwsPDFfNoXOUKKbu5fPXZUlxM8jDJo4D8QEQPcxD9KGqis3/wliSa4
-        JWcvX0n/QoZXbF6fsU32W6uctv5qlluSKElhYNf3UbTCxTTzjNd+ZwxHP8i4+7g=
+        :content-type; s=sasl; bh=xgE1LXyaiB0KAKe+c4k/j0kVn1g=; b=GzgDvZ
+        EF9/KrS50ViTM5NX1/G0wIgblInk82nfXV4K3o2TVETofsE401UdVE4nqNqgy2pF
+        HTU4sX5z2DA8vAWTB0DVJZNergKH2iRPy9TxCwOcWUnoOGLAi/bXxnnOM8rSQ+sb
+        IqHBz3XiHRGoUEoB8ZRBjntIEDpM/+/WPNMEk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=quw1Ba
-        1cShFqFhX4gKkmFHKFrkUMUj0vNdENV4zP9wqDex7ZQKq2tldbBwp2QrZpG/kHyG
-        0b/CzMdqGzHfjaTSb9+mfOuR59WYXz7A77IrDCkb49lk5p7dDZifeoBpulUlUZXF
-        9zqUnsvVy6bSHvZM1ltVXNZQm8kom16hap2Ck=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 731BB3B5C4;
-        Fri, 23 Sep 2016 11:18:50 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=YNL++33R749M5w8ViNSyhOyhHzi5nyss
+        GuoJRsSCrR71QOHwcnCNsWb3XmcNaGE5OKUsMSgyy93CsLrSn65+p9ihe9bARj2I
+        Igw8S71Vdkfzi4FV3tBT8ExQnpCje2ZEIxzd2YsyiHSekuC1qIM1c7/3mdPz6UPV
+        v5Rz78dXqR0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 45D3B3D5AA;
+        Fri, 23 Sep 2016 11:37:03 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E618B3B5C3;
-        Fri, 23 Sep 2016 11:18:49 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B43EF3D5A8;
+        Fri, 23 Sep 2016 11:37:02 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, git@drmicha.warpmail.net,
-        max.nordlund@sqore.com
-Subject: Re: [PATCH v2 4/3] init: combine set_git_dir_init() and init_db() into one
-References: <xmqqbmzf6e0r.fsf@gitster.mtv.corp.google.com>
-        <20160923111206.8596-1-pclouds@gmail.com>
-Date:   Fri, 23 Sep 2016 08:18:47 -0700
-In-Reply-To: <20160923111206.8596-1-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
- =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
-        Duy"'s message of "Fri, 23 Sep 2016 18:12:06 +0700")
-Message-ID: <xmqqzimy1w6g.fsf@gitster.mtv.corp.google.com>
+To:     lists@haller-berlin.de (Stefan Haller)
+Cc:     anatoly.borodin@gmail.com (Anatoly Borodin), git@vger.kernel.org
+Subject: Re: Limitiations of git rebase --preserve-merges --interactive
+References: <1mu13z0.1hye7bq1uqj26sM%lists@haller-berlin.de>
+Date:   Fri, 23 Sep 2016 08:37:00 -0700
+In-Reply-To: <1mu13z0.1hye7bq1uqj26sM%lists@haller-berlin.de> (Stefan Haller's
+        message of "Fri, 23 Sep 2016 12:40:29 +0200")
+Message-ID: <xmqqvaxm1vc3.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 07A83F7E-81A1-11E6-8745-C26412518317-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 930368EE-81A3-11E6-8842-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+lists@haller-berlin.de (Stefan Haller) writes:
 
->  I think a separate commit for this is better than combining back to
->  2/3 so we can explain the problem properly (without making 2/3 commit
->  message even longer)
->
->  Not sure if you want to s/contains/contain/ in 2/3 by yourself or I
->  should resend the whole series. Let me know.
+> Thanks, this is interesting; I'm having trouble understanding the tests
+> though. Some of them use rebase -p -i, but I don't understand why they
+> use -i, or why that even works in a test (i.e. why it doesn't open an
+> editor).
 
-OK, I just amended it before applying this on top.
+Upon starting up, tests dot-source t/test-lib.sh file and it
+unsets most of GIT_* environment variables to obtain a stable
+testing environment that is not affected by things that testers
+may have in their environment.
 
-> +	flags |=3D INIT_DB_EXIST_OK;
-> +	return init_db(git_dir, real_git_dir, template_dir, flags);
-
-I do not think of anything better, but EXIST_OK does not sound
-grammatical.  "REINIT" is not quite it--we are merely allowing
-the function to re-init if there already is a repository.  And
-OK_TO_REINIT is a bit too long.  Let's take the patch as-is for
-now.
-
-Thanks.
-
+There is EDITOR=: in t/test-lib.sh, which was added in 2006 before
+GIT_EDITOR was invented.  That is the one in effect for git
+subcommands that usually interacts with editors during the test,
+unless specific tests further override it with test_set_editor
+helper.
