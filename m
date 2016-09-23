@@ -2,100 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCED2207EC
-	for <e@80x24.org>; Fri, 23 Sep 2016 20:45:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE969207EC
+	for <e@80x24.org>; Fri, 23 Sep 2016 20:49:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760499AbcIWUpS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Sep 2016 16:45:18 -0400
-Received: from mout.gmx.net ([212.227.17.20]:56693 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1758358AbcIWUpR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2016 16:45:17 -0400
-Received: from virtualbox ([108.198.118.51]) by mail.gmx.com (mrgmx102) with
- ESMTPSA (Nemesis) id 0M82zV-1b0mRD3VxZ-00viG7; Fri, 23 Sep 2016 22:45:11
- +0200
-Date:   Fri, 23 Sep 2016 22:45:07 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Sep 2016, #06; Wed, 21)
-In-Reply-To: <xmqqk2e46da3.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1609232244140.129229@virtualbox>
-References: <xmqqk2e46da3.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1761682AbcIWUtt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Sep 2016 16:49:49 -0400
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:36196 "EHLO
+        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1759174AbcIWUts (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Sep 2016 16:49:48 -0400
+Received: by mail-wm0-f41.google.com with SMTP id w84so53058216wmg.1
+        for <git@vger.kernel.org>; Fri, 23 Sep 2016 13:49:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=mKltPSXbc3G9V6hBgSOdU1T1SlosuLhIGPC7LvGmHZ0=;
+        b=mvJgOFklkwyDaBYKTsY8XNDp/Th4K0qM7ZFi1lgjnHXLlSHGB1/y5z1uXy5NPEiYvf
+         fI5NncOw0jH3hc+J6gpy3SMD+VHQHcuWIeCylS7O6pCep8WgeAcqdDYI1VMKYLKIYLWx
+         wKeboQfCrh4R7VeL0YEik+QgPIM1SdGEa9vXPwU2x/Aa7JwfbfQg+pPOqB9YjTS6wk35
+         uDo+P1wXk5mIUWlT4CiQR8CMEe+Pdh2XzAG0OFVNBTpj5i5n2lluhyN/WWavKL6Gg5O4
+         68EYw2fH2eKzko9VXzG9jBHx/QsKgBfdj34xAD/Zktop9uywoUPGUcFJNKkiE3NA9An/
+         Iy4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=mKltPSXbc3G9V6hBgSOdU1T1SlosuLhIGPC7LvGmHZ0=;
+        b=QkVebMKIyMYlLhvh+qjNE5xopjwB5VBspTEbMPOjpOIm0i9q3kS9+p2LEmpgVuQ6ww
+         Omc7/nB4Tylpz2skzBVa1UgxtrPeaDekybgo/DF0yv+5L3LCecdej/Deq563uJH3SrqZ
+         m0lje6E0wvsvViHZ4ezZ1QmYo4wM48KW49YMiTClvuwOjpRnz60Cer3OvSXXfngZBtwQ
+         OtDbSwl40sTChsSHVB6g7QtWWHvn/WRlsPUfoquCvVSRdaJ0ipf+ja0xT3rutn99XnS9
+         NhfsAhvtIqEX74wSY4zhEZiCA6/PWne9vGLCCIOei1JaZUFMTKEqT3BsJneSog6jL4k3
+         wtAQ==
+X-Gm-Message-State: AA6/9Rl/uDOBcr/jsBmCTrUXZPvjwmBvTVenyklcTMGQmaKH6buQhyp6BQ8Jl7VHLZmnqoFXlrOVzknJTZuieMuP
+X-Received: by 10.28.128.88 with SMTP id b85mr4280013wmd.2.1474663787352; Fri,
+ 23 Sep 2016 13:49:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:whVxw3rSDZNszS43wUc6H/8UFz9WZj2mrmv06oDwa21aMmushdR
- XPti83Bou33hgAR/7sSFxZeYft0JwSEp4xCsBepEQqL8jLJQNydTnDFoKE6wbsX3Gk69sPS
- MQ1KgUusHIKCDqLgixIei5M+azgwkJ5XR7YSUbagyU9Qwa2+YRUF+I8/Zfs5PN1RSRU6Bmg
- sovIo5dHpv2D+24Ahjmiw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:awY8ZUSywxs=:9vjpEM8z6dP6vvLe/YdR4K
- m3gdfGLnOmjhoKWUXR6E3hDZFoaodUVyLaoNEptuluXDQEZeGKzP2y3S+I7YRKDWSYWXX9qoG
- 6wL6qVDMVen0ZpjPjdwpoOTv8wmUPpxGLtL1tQH3Y9HVv1ynxDsaiX3sCHtDTyh4AR6UiVTMZ
- QMyE8+HsiRxAcDoikl74mH2ZnWeTT+hQC3yuexNfzQ9kpz8e5ksPRC01bmzZo2upftZ+N5lRg
- pbA15TQOveZiS1xtmp3H95XlyhPLdiYKoPyVrwEg6lFt7Cm39kD+Aa7gaaRq/JMu/qvbLyZVD
- gM+pmFKI4QybAEUnZs3ujN+yI4f2tt04LZhh8XqqC/0TM2L3wSOwjwd6N4MyLgqEfsv1bs9JS
- jXegWBqmttCrzRsvKcbVoHlJ2Uze8B1xjOAEdfLHoVijE52lzhtvUwHQ7QxXJTpwVEHGRdWTP
- cYAhofUggem5nmheDyABaOVV3skvxGVF4MOBN/R6/vS01qHuBUz9XxbDuobnvlpUHKgsRnnUv
- dssQZKabrcEFquQfdFLFgYs0yE+1Lcbyt0fkWpOOEH2sV0Es6hCb7TgByFODIkLhYzPjkARRq
- FXR/WHOMdCu2g+h8IALILm8QSqLbyScgj8NEZN9nkZMxWVoAuGBQJcDREJRHFKSNzIvw4PtlW
- ttyady8EP2EKeElLtJVDDRYdtTc3Ins7gsRCGEd1U501bmCQGOUEI0Zmgn9Btv1/HADkqlNAu
- tCKQa/liwh+AoTrwkhCYqF9m4RCQUiO4mYUUfY9x+cyNUnJoLhoYyAY18swL+hFu5V/Zh/kYw
- MmQg1us
+Received: by 10.28.69.25 with HTTP; Fri, 23 Sep 2016 13:49:46 -0700 (PDT)
+In-Reply-To: <xmqqbmze1kzt.fsf@gitster.mtv.corp.google.com>
+References: <CAKoko1oacXxrSMZBvfM9X6iGDq+KcUUZnUrD2qD3X8+ze8vUXg@mail.gmail.com>
+ <1474500486-101640-1-git-send-email-bmwill@google.com> <xmqqbmze1kzt.fsf@gitster.mtv.corp.google.com>
+From:   Brandon Williams <bmwill@google.com>
+Date:   Fri, 23 Sep 2016 13:49:46 -0700
+Message-ID: <CAKoko1qZCBPx9T4WoYZc0LdDhU5bpUaGa+emFL-1RvVU4MX8Ow@mail.gmail.com>
+Subject: Re: [PATCH 2/2 v2] ls-files: add pathspec matching for submodules
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Fri, Sep 23, 2016 at 12:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> There is an interesting observation around this code.  Note that it
+> is just something to keep in mind, even though I think we are in no
+> position to solve this within the scope of this series, or in fact I
+> am not sure if there is anything to "fix".
+>
+> The expectation here is that the leading part of pathspec elements
+> contain path components above and outside the current working tree,
+> e.g. in a superproject with a submodule at "sub/", the end-user may
+> have said from the top of the superproject
+>
+> A saving grace is that "s*b/file" in this case is what the end-user
+> is giving us, not something we internally generated.  So we can
+> simply blame the end user, saying "what --recurse-submodules does is
+> to (conceptually) flatten the indices of submodules into the index
+> of the superproject and show the entries that match your pathspec.
+> Because you gave us 's*b/file', which does match 's*b/oob/file',
+> that is what you get."
+>
+> ;-)
 
-On Wed, 21 Sep 2016, Junio C Hamano wrote:
+Yeah I've been thinking a bit about that as well.  To me, it is
+incredibly silly to
+have a wildcard character in a filename (its unfortunate that its
+allowed).  We can
+easily do as you suggest and simply blame the user and if they do have wildcard
+characters in their filenames they would just need to force the
+pathspec code to
+do checks literally (using the appropriate pathspec magic).  This
+would just limit their
+ability to use actual wildcards in their pathspecs, ie they have to
+pick wildcards in their
+filenames or the ability to do wildmatching.
 
-> * rt/rebase-i-broken-insn-advise (2016-09-07) 1 commit
->  - rebase -i: improve advice on bad instruction lines
-> 
->  When "git rebase -i" is given a broken instruction, it told the
->  user to fix it with "--edit-todo", but didn't say what the step
->  after that was (i.e. "--continue").
-> 
->  Will hold.
->  Dscho's "rebase -i" hopefully will become available in 'pu', by
->  which time an equivalent of this fix would be ported to C.  This is
->  queued merely as a reminder.
-
-Porting the fix was surprisingly easy:
-
--- snipsnap --
-[PATCH] fixup! rebase -i: check for missing commits in the rebase--helper
-
----
- sequencer.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index 8f27524..386d16e 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2567,9 +2567,10 @@ int check_todo_list(void)
- 
- 	if (raise_error)
- 		fprintf(stderr,
--			_("You can fix this with 'git rebase --edit-todo'.\n"
--			"Or you can abort the rebase with 'git rebase"
--			" --abort'.\n"));
-+			_("You can fix this with 'git rebase --edit-todo' "
-+			  "and then run 'git rebase --continue'.\n"
-+			  "Or you can abort the rebase with 'git rebase"
-+			  " --abort'.\n"));
- 
- 	return res;
- }
--- 
-2.10.0.windows.1.10.g803177d
-
+-Brandon
