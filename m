@@ -2,96 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE969207EC
-	for <e@80x24.org>; Fri, 23 Sep 2016 20:49:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F2F51207EC
+	for <e@80x24.org>; Fri, 23 Sep 2016 21:04:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1761682AbcIWUtt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Sep 2016 16:49:49 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:36196 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1759174AbcIWUts (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2016 16:49:48 -0400
-Received: by mail-wm0-f41.google.com with SMTP id w84so53058216wmg.1
-        for <git@vger.kernel.org>; Fri, 23 Sep 2016 13:49:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=mKltPSXbc3G9V6hBgSOdU1T1SlosuLhIGPC7LvGmHZ0=;
-        b=mvJgOFklkwyDaBYKTsY8XNDp/Th4K0qM7ZFi1lgjnHXLlSHGB1/y5z1uXy5NPEiYvf
-         fI5NncOw0jH3hc+J6gpy3SMD+VHQHcuWIeCylS7O6pCep8WgeAcqdDYI1VMKYLKIYLWx
-         wKeboQfCrh4R7VeL0YEik+QgPIM1SdGEa9vXPwU2x/Aa7JwfbfQg+pPOqB9YjTS6wk35
-         uDo+P1wXk5mIUWlT4CiQR8CMEe+Pdh2XzAG0OFVNBTpj5i5n2lluhyN/WWavKL6Gg5O4
-         68EYw2fH2eKzko9VXzG9jBHx/QsKgBfdj34xAD/Zktop9uywoUPGUcFJNKkiE3NA9An/
-         Iy4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=mKltPSXbc3G9V6hBgSOdU1T1SlosuLhIGPC7LvGmHZ0=;
-        b=QkVebMKIyMYlLhvh+qjNE5xopjwB5VBspTEbMPOjpOIm0i9q3kS9+p2LEmpgVuQ6ww
-         Omc7/nB4Tylpz2skzBVa1UgxtrPeaDekybgo/DF0yv+5L3LCecdej/Deq563uJH3SrqZ
-         m0lje6E0wvsvViHZ4ezZ1QmYo4wM48KW49YMiTClvuwOjpRnz60Cer3OvSXXfngZBtwQ
-         OtDbSwl40sTChsSHVB6g7QtWWHvn/WRlsPUfoquCvVSRdaJ0ipf+ja0xT3rutn99XnS9
-         NhfsAhvtIqEX74wSY4zhEZiCA6/PWne9vGLCCIOei1JaZUFMTKEqT3BsJneSog6jL4k3
-         wtAQ==
-X-Gm-Message-State: AA6/9Rl/uDOBcr/jsBmCTrUXZPvjwmBvTVenyklcTMGQmaKH6buQhyp6BQ8Jl7VHLZmnqoFXlrOVzknJTZuieMuP
-X-Received: by 10.28.128.88 with SMTP id b85mr4280013wmd.2.1474663787352; Fri,
- 23 Sep 2016 13:49:47 -0700 (PDT)
+        id S1760368AbcIWVEc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Sep 2016 17:04:32 -0400
+Received: from mout.gmx.net ([212.227.15.18]:53910 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1759154AbcIWVEb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Sep 2016 17:04:31 -0400
+Received: from virtualbox ([108.198.118.51]) by mail.gmx.com (mrgmx003) with
+ ESMTPSA (Nemesis) id 0LqiJO-1bJ8ln2va6-00eO7J; Fri, 23 Sep 2016 23:04:26
+ +0200
+Date:   Fri, 23 Sep 2016 23:04:22 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Stefan Beller <sbeller@google.com>
+cc:     Anatoly Borodin <anatoly.borodin@gmail.com>,
+        Stefan Haller <lists@haller-berlin.de>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Limitiations of git rebase --preserve-merges --interactive
+In-Reply-To: <CAGZ79kadpe5wG0gSpk-oasxCGuUp+3bSv-A4vhyFC+y0oL-+ww@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1609232300500.129229@virtualbox>
+References: <1mtveu4.19lvgi1c0hmhaM%lists@haller-berlin.de> <ns1gr4$pjs$1@blaine.gmane.org> <CAGZ79kadpe5wG0gSpk-oasxCGuUp+3bSv-A4vhyFC+y0oL-+ww@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.28.69.25 with HTTP; Fri, 23 Sep 2016 13:49:46 -0700 (PDT)
-In-Reply-To: <xmqqbmze1kzt.fsf@gitster.mtv.corp.google.com>
-References: <CAKoko1oacXxrSMZBvfM9X6iGDq+KcUUZnUrD2qD3X8+ze8vUXg@mail.gmail.com>
- <1474500486-101640-1-git-send-email-bmwill@google.com> <xmqqbmze1kzt.fsf@gitster.mtv.corp.google.com>
-From:   Brandon Williams <bmwill@google.com>
-Date:   Fri, 23 Sep 2016 13:49:46 -0700
-Message-ID: <CAKoko1qZCBPx9T4WoYZc0LdDhU5bpUaGa+emFL-1RvVU4MX8Ow@mail.gmail.com>
-Subject: Re: [PATCH 2/2 v2] ls-files: add pathspec matching for submodules
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:uWzd7CNNeivozZjYjyFk5jockKtxSkm/0WHEuXlaUSzlfwjpmR6
+ 3vEh7Dq/ancXhpeuWPUucmxNPD+uQOYImQj4zWz0UkU9oV8M+uuCZGTQyBFIscUFG5PBrR1
+ ul9CnCj8a1jcwlYWHUzG2jkzQZ0XvdxxN+TfpadHWQahTJfp8KWDSZEUZdMVy96jd4+fcAl
+ 08bb6pJgALDFysoMxALEA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6Xx3RadRmxM=:zGVmirNdDZmGkMlvEWjmD+
+ 6sXV2eYdznYlvNPhKbTY4ojviQlyK6OLf5ScvFzoxdFGiudrb5eLR6KMMiAneuM51y3soZrSq
+ OR1xWFmIsBjEPWARF9HLDqETzCiCTwpMNWVqtv72m4pO0vandmBQ3X7WiQrURO4Cqjqel1ZnO
+ uZZ/KmuKdF+SxEono3eFo7RBP+wc5gCQwRW/Gso02Ntfk+wOhLUvONgIcDMaelvUXzTS2Hv+S
+ iCefSPrNdIxHurK8cysgETIY9xGOpBXAT6lunrErvEavF8i7C3YvpKD6alAEp4UeoxRz6gGne
+ 7IW0wVaA4sVAVsqkjl9DrobagRxPE4RcfexopD6cV38wuzjJz5vy7ZizCRyf3gPMthB4zsN2f
+ fCxleFnPOLINCYl1m68mTliCqzHQeOLcSaJrqvgLh/uRo7rVJaM2ncDNdO7aVAwDhKLUqNLTD
+ yfgCR+5lazGZCcHobosK71AnogrlLGYALs5E3fGDVxPu33cZ7lrzMF5aZ5BtN5Z2VvjhqWayB
+ n40I4qED4x6fw0G2HoulPxEfdQdw4wcZbzi34ykDjrf4fi4YtN2YN643TD9Nsx2VDMq/W7SUi
+ Bt7AMLY9YctGSNQLyjPYmA9VXC6yMVkwuvdZIjoxhSISF+rWHVf/oFJoYR7OTV4dHyPuSrnkv
+ c1W/kB6XTxRth4WvYjAA97kSBBXDGxLle1JkGr8q8UExQ/An16E3L3HKLQHzYjpEl8beFnOLV
+ +FSb4ZW66Z55rDq5zSmmjjMH0GsbFrE0JivbLYFEiKbNdZ2kSXmeYsr5rltgdLf7EVp4qHKre
+ kBQYikm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 23, 2016 at 12:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> There is an interesting observation around this code.  Note that it
-> is just something to keep in mind, even though I think we are in no
-> position to solve this within the scope of this series, or in fact I
-> am not sure if there is anything to "fix".
->
-> The expectation here is that the leading part of pathspec elements
-> contain path components above and outside the current working tree,
-> e.g. in a superproject with a submodule at "sub/", the end-user may
-> have said from the top of the superproject
->
-> A saving grace is that "s*b/file" in this case is what the end-user
-> is giving us, not something we internally generated.  So we can
-> simply blame the end user, saying "what --recurse-submodules does is
-> to (conceptually) flatten the indices of submodules into the index
-> of the superproject and show the entries that match your pathspec.
-> Because you gave us 's*b/file', which does match 's*b/oob/file',
-> that is what you get."
->
-> ;-)
+Hi,
 
-Yeah I've been thinking a bit about that as well.  To me, it is
-incredibly silly to
-have a wildcard character in a filename (its unfortunate that its
-allowed).  We can
-easily do as you suggest and simply blame the user and if they do have wildcard
-characters in their filenames they would just need to force the
-pathspec code to
-do checks literally (using the appropriate pathspec magic).  This
-would just limit their
-ability to use actual wildcards in their pathspecs, ie they have to
-pick wildcards in their
-filenames or the ability to do wildmatching.
+On Thu, 22 Sep 2016, Stefan Beller wrote:
 
--Brandon
+> On Thu, Sep 22, 2016 at 2:01 PM, Anatoly Borodin
+> <anatoly.borodin@gmail.com> wrote:
+> > Hi Stefan,
+> >
+> > I've also done some archaeology and found that the original version of
+> > the merge preserving code was written by Johannes Schindelin
+> > <Johannes.Schindelin@gmx.de>, see e.g.
+> 
+> I think it would be helpful if you'd cc those folks involved, not just
+> the mailing list.
+
+Indeed. It is quite tedious to re-Cc: people. Anatoly, please do not force
+me to put in that work in the future.
+
+Also: I mentioned recently that I am not happy with the original design,
+either, and that I came up with a new design that I intend to port to the
+rebase--helper, once it is included in an official Git version:
+
+https://public-inbox.org/git/alpine.DEB.2.20.1609111027330.129229@virtualbox/
+
+Ciao,
+Johannes
