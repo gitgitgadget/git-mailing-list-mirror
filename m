@@ -2,106 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 708F4207EC
-	for <e@80x24.org>; Fri, 23 Sep 2016 18:48:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56D9A207EC
+	for <e@80x24.org>; Fri, 23 Sep 2016 18:56:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1035000AbcIWSsX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Sep 2016 14:48:23 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58337 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1034692AbcIWSsW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2016 14:48:22 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BC8053F485;
-        Fri, 23 Sep 2016 14:48:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/eAaiJ8DWN175yjMzmfplGXVVVc=; b=fcZCrv
-        NcW8cHAimc9ZSWYIQthtCxK+GNuPYOSDNOHlFvieyy2MRJowaOqKoLVOtX36jfzc
-        HT8biBQMEwchjqeDJEeqUDo744IU8Ctgsa/ZyB74oWeehU/m5VW494sKEn3s8hgy
-        XIpAI63RHk/B+fiLPfUfBs5DatUhDIYIr/lRU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=akW/qZ9bCsMjfY3VcGi2N1MGee/XjYPG
-        xdY8MPdvEPh19DYwJbzEnvvt6Z8LybD0MzGrz7gyMyevgn2d9XUoXwM2FKf4yzIv
-        be4rBx788xKM0eJSOvn+xQZyOq4iL2xnu/mu0csAIq4kWlpF8L+eUJqRFOl1zmVt
-        Zb2MMApY6zw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B49D33F484;
-        Fri, 23 Sep 2016 14:48:20 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3AD443F483;
-        Fri, 23 Sep 2016 14:48:20 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2 v2] ls-files: add pathspec matching for submodules
-References: <CAKoko1oacXxrSMZBvfM9X6iGDq+KcUUZnUrD2qD3X8+ze8vUXg@mail.gmail.com>
-        <1474500486-101640-1-git-send-email-bmwill@google.com>
-Date:   Fri, 23 Sep 2016 11:48:18 -0700
-In-Reply-To: <1474500486-101640-1-git-send-email-bmwill@google.com> (Brandon
-        Williams's message of "Wed, 21 Sep 2016 16:28:06 -0700")
-Message-ID: <xmqqfuoq1mh9.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4C243122-81BE-11E6-BF23-C26412518317-77302942!pb-smtp1.pobox.com
+        id S1034361AbcIWS4j (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Sep 2016 14:56:39 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:36644 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758823AbcIWS4i (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Sep 2016 14:56:38 -0400
+Received: by mail-wm0-f65.google.com with SMTP id b184so4134275wma.3
+        for <git@vger.kernel.org>; Fri, 23 Sep 2016 11:56:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=references:mime-version:in-reply-to:content-transfer-encoding
+         :message-id:cc:from:subject:date:to;
+        bh=kiWsqpnuGowAMs7TTeahyG0R0I0OiAys9JEdK3VSA7U=;
+        b=u6SNmULq962AH7YpneFG5jnWZBI+24qHpOc7JRpgulPJj45Bart+zDbhtHaU8dzVbd
+         bpcDMCzHRA13OelCS8zbrcehuiztsw6eOpompvG+yLxNmeaww8+EAzwPiFer6p1iQBdW
+         bPLE/IowprE9R+KOLe+criJAO0wDHbE1DZhIdJmODk4/ufpGZHvQlxyHJLFoOqNJE83e
+         QUHrwh+mx8YcAeyjeN5b4CHsb0bBmhtfJ6eS6Bf3+NZ3ik4/AFn87rjwI5Hy6C4/63f8
+         BU2JcRj+v3Npcq4i7K3Yu/fxwc4lrGu6nWiXU2CFF87D7vZBbnV1b48LeANeAS4VNeuv
+         InCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:references:mime-version:in-reply-to
+         :content-transfer-encoding:message-id:cc:from:subject:date:to;
+        bh=kiWsqpnuGowAMs7TTeahyG0R0I0OiAys9JEdK3VSA7U=;
+        b=P2aZLQzMjABWCJo7Be4kBzTcNI5+RjVjvWkPC80uJokchKk8ac68FfJAE8Tw0+c4IB
+         GoJDkmo32lZqNx5wS+ldJ7ksZoZb13r0LKcG/8/gN1+tQmddN/6snSsPPKAgcd/COrZP
+         6jnuobt5Y/ZhugxgYxe8N55fDxhVJkRkgKFV/DfuamxrBChZE7BovIfkTIVN/Cq3rVoY
+         SkkJLlw9cXILJweYtifELeGi16Vf2o5o8/i8I2kdHlixb38FtodvuVjOwlQdvaCIySw0
+         cpMzLqvfHLFWTp/M8pv/Fw/2Yu4eAjmwQFGUGKIFNNVYzNAPdNmF7rymwAunqlbdFuBL
+         pCPA==
+X-Gm-Message-State: AA6/9RmMrI2qwcgJMk+oRarK4NIMrn4Xs1PwrUjSjYcE++6ul8jR+P2w7lS+L4rqVfREog==
+X-Received: by 10.28.185.71 with SMTP id j68mr3937815wmf.116.1474656997117;
+        Fri, 23 Sep 2016 11:56:37 -0700 (PDT)
+Received: from [10.207.88.212] (tmo-105-67.customers.d1-online.com. [80.187.105.67])
+        by smtp.gmail.com with ESMTPSA id n7sm8508106wjs.34.2016.09.23.11.56.36
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 23 Sep 2016 11:56:36 -0700 (PDT)
+References: <78f2bdd0-f6ad-db5c-f9f2-f90528bc4f77@ramsayjones.plus.com> <58164A5E-AC93-48A9-9139-B69CFB854CA8@gmail.com> <xmqqmviy1qux.fsf@gitster.mtv.corp.google.com>
+Mime-Version: 1.0 (1.0)
+In-Reply-To: <xmqqmviy1qux.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <6DE6D03D-F496-4FAB-866A-BC6802312B43@gmail.com>
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jeff King <peff@peff.net>,
+        GIT Mailing-list <git@vger.kernel.org>
+X-Mailer: iPhone Mail (13G36)
+From:   Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH] run-command: async_exit no longer needs to be public
+Date:   Fri, 23 Sep 2016 20:56:34 +0200
+To:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
 
-> -	/* Find common prefix for all pathspec's */
-> -	max_prefix = common_prefix(&pathspec);
-> +	/*
-> +	 * Find common prefix for all pathspec's
-> +	 * This is used as a performance optimization which unfortunately cannot
-> +	 * be done when recursing into submodules
-> +	 */
-> +	if (recurse_submodules)
-> +		max_prefix = NULL;
-> +	else
-> +		max_prefix = common_prefix(&pathspec);
->  	max_prefix_len = max_prefix ? strlen(max_prefix) : 0;
+> On 23 Sep 2016, at 19:13, Junio C Hamano <gitster@pobox.com> wrote:
+>=20
+> Lars Schneider <larsxschneider@gmail.com> writes:
+>=20
+>>> If you need to re-roll your 'ls/filter-process' branch, could you please=
 
-This is OK for now, but for a future enhancement, I think we could
-do better than this.  In a superproject with a submodule at "sub/",
-the current implementation of the common_prefix() helper would yield
-"sub/a/" when given "sub/a/x" and "sub/a/y" (a pathspec with two
-elements), which we want to avoid.
+>>> squash this into the relevant commit c42a4cbc ("run-command: move check_=
+pipe()
+>>> from write_or_die to run_command", 20-09-2016).
+>>>=20
+>>> [Note that commit 9658846c ("write_or_die: handle EPIPE in async threads=
+",
+>>> 24-02-2016) introduced async_exit() specifically for use in the implemen=
+tation
+>>> of check_pipe(). Now that you have moved check_pipe() into run-command.c=
+,
+>>> it no longer needs to be public.]
+>>=20
+>> Hi Ramsay,
+>>=20
+>> thanks for noticing this. I actually hope that I don't need another re-ro=
+ll :-)
+>> If I don't re-roll. Should I make a patch with this cleanup or do you
+>> take care of it?
+>=20
+> I can just squash the the patch you are responding to into c42a4cbc,
+> with an additional paragraph "While at it, retire async_exit() as a
+> public function as it no longer is called outside run-command API
+> implementation", or something like that.
+>=20
+> I do not offhand know if the topic is otherwise ready as-is, or
+> needs further work.  When you need to reroll, you'd also need to
+> fetch from the result of the above from me first and then start your
+> work from it, though, if we go that route.
 
-But somebody should be able to notice, before "sub/a/" is given to
-max_prefix here, that "sub/" is the leaf level in our repository and
-reduce the max_prefix to it.  dir.c::common_prefix_len() might be 
-a place we could do so, but I didn't think about the ramifications
-of doing so for other callers of common_prefix() or when we are not
-recursing into submodules.  Doing it in the caller here, i.e.
+Sounds good to me!
 
-	max_prefix = common_prefix(&pathspec);
-        if (recurse_submodules)
-        	max_prefix = chomp_at_submodule_boundary(max_prefix);
-
-is certainly safer.
-
-If the superproject has submodules at "a/b/{sub1,sub2,...}", this
-matters more.  We do want to notice that we won't have to scan
-outside "a/b/" of the index given "a/b/sub1" and "a/b/sub2" as a
-pathspec.
-
-The common_prefix_len() function also looks beyond symbolic links,
-which is another thing that we may want to think about.  In a
-repository with a symbolic link "link" pointing somewhere else, when
-you give "link/a/x" and "link/a/y" (a pathspec with two elements),
-we would get "link/a/" as a common prefix, but we won't find
-anything underneath "link" in our index.  In such a case, leaving
-the common prefix to "link/a/" _might_ allow us to notice that no
-pathspec elements can ever match, so not noticing that the common
-prefix points beyond a symbolic link might be a feature.  I dunno.
+Thank you, Junio!=
