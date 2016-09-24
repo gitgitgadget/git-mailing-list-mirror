@@ -2,78 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CC0220985
-	for <e@80x24.org>; Sat, 24 Sep 2016 22:36:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 227391F935
+	for <e@80x24.org>; Sat, 24 Sep 2016 22:56:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965590AbcIXWf7 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Sep 2016 18:35:59 -0400
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:40610 "EHLO
-        out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S965111AbcIXWf6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 24 Sep 2016 18:35:58 -0400
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.nyi.internal (Postfix) with ESMTP id 849DD2031D;
-        Sat, 24 Sep 2016 18:35:57 -0400 (EDT)
-Received: from web3 ([10.202.2.213])
-  by compute5.internal (MEProxy); Sat, 24 Sep 2016 18:35:57 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=iankelling.org; h=
-        content-transfer-encoding:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-sasl-enc
-        :x-sasl-enc; s=mesmtp; bh=iv12C/V97txvx+LtOpNql9fNPRg=; b=WAeQEQ
-        Yaxe8qvkdCWKzK9HsT1PRpN8VhhSWAlahFXdEjVym6WaEMy204ncGLZPa/vVp0s8
-        wVknAD6L7uyljdOHUX511G7clfFFNKvnYmdi2HVbxQ4vIPyMW4J2T2Xel9eUqkkm
-        sP1TNevlZ/rPBCZQ2oZtCQLiUhTdP3yrF4EvE=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=iv12C/V97txvx+L
-        tOpNql9fNPRg=; b=Y2jRnHAvtTYoauXVZAH/eaFWn3FYftBTqNtzLY/PrJBSj4l
-        XYXtgxSJ/AS92+aDmiSh9ZWOBOmLr0c8yvs5CGGa35EPMy5iVB9OMmwFYnN1nQZc
-        9xihWdydQChdKBw39+vrToxY4UEmss2JskfapmGvJ2MKSHj6m4+kr9u9NsXM=
-Received: by mailuser.nyi.internal (Postfix, from userid 99)
-        id 593C62E184; Sat, 24 Sep 2016 18:35:57 -0400 (EDT)
-Message-Id: <1474756557.3745593.735971977.2A054EBA@webmail.messagingengine.com>
-X-Sasl-Enc: 3TZIBbJVLe/ZZ8yUeO78MLOOwuNpBomqhyC6oO2KvVHt 1474756557
-From:   Ian Kelling <ian@iankelling.org>
-To:     =?utf-8?Q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
-        git@vger.kernel.org
+        id S965385AbcIXW4y (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Sep 2016 18:56:54 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:36564 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934155AbcIXW4w (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Sep 2016 18:56:52 -0400
+Received: by mail-wm0-f66.google.com with SMTP id b184so8330584wma.3
+        for <git@vger.kernel.org>; Sat, 24 Sep 2016 15:56:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=Ei8CFIqGqtZhk/YpkgL11DIENF63IOriEmsvNwLsYjE=;
+        b=iZQslr4ngaS187n7DjiMBGUp4JxTxX03ldHTZlloglSy2A6WZP/1AlbzeDoIVzGZoG
+         wvq/uomYv4S0Z1DCO9WJgN30OP8XnFDtkRXHndzAIUDarwojjPkNUxXblEF76UnYPpo0
+         f7yXIi6vji/1RqyIDCW3H6Dq7ZgmsQ0cGbZwliy8Q3ELooeZNBFG/74qYN7wqMvUlpVt
+         0PokzzZlpiuAsx6xIKtqx84xRECDsdY72TkgRGmE+Mjo7mpK/obiw+17wjpyXwJ1yHvy
+         XkY+vexJe2qyxBJYyFQOa+pW4T3S9yeo/hi8aFQ2Q97uSBP63SWWVDPIwifV4sIbYGXd
+         1enQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=Ei8CFIqGqtZhk/YpkgL11DIENF63IOriEmsvNwLsYjE=;
+        b=lEDJZVLl9MCak0hLMEwI3KG1IimkJpI0xZ6JU9NXgt5YTor25EuuurzP2wZwXORHD3
+         ap+/JNveMSHIDe6RzxZGGpUqCDeCXJwjOEocetQzD5DiGlccNZ5J6VJzfLYyh2qVEctW
+         W+/8PjPZHj6jjVvbD8R435ZEbwnXYAuDns66OAGel2QX2UXTP78LHJ05qeOsI9eE4Ggu
+         yDFlaC0gQW5cHiv3+Y0LiDJ0SgYlvHkzmpd6OTOm8kRR/lXdUmJ/RDB+fsn9B33WPQ3G
+         xgWcGMKJxNVk9c0MFiUbjintaX6HZjjfB5sIAb0TLNCXPsJKq3r4Jf53m2PTwEM5mO5v
+         j6SA==
+X-Gm-Message-State: AE9vXwOod44B4D2waiuh/NSPSRZh16931ia7HWfZjMqaEVedq7dFaQygzAFRf18bDeyDww==
+X-Received: by 10.194.93.198 with SMTP id cw6mr12328733wjb.212.1474757810809;
+        Sat, 24 Sep 2016 15:56:50 -0700 (PDT)
+Received: from [192.168.1.26] (dce219.neoplus.adsl.tpnet.pl. [83.23.56.219])
+        by smtp.googlemail.com with ESMTPSA id q10sm3114583wme.6.2016.09.24.15.56.49
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 24 Sep 2016 15:56:49 -0700 (PDT)
+Subject: Re: [PATCH v8 05/11] pkt-line: add packet_flush_gently()
+To:     Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
+References: <20160920190247.82189-1-larsxschneider@gmail.com>
+ <20160920190247.82189-6-larsxschneider@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Martin-Louis Bright <mlbright@gmail.com>,
+        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <0763ff86-9593-ff58-6d9d-1ff920bf1071@gmail.com>
+Date:   Sun, 25 Sep 2016 00:56:29 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-X-Mailer: MessagingEngine.com Webmail Interface - ajax-3ce3fca2
-Subject: Re: [PATCH v3 2/2] gitweb: use highlight's shebang detection
-Date:   Sat, 24 Sep 2016 15:35:57 -0700
-In-Reply-To: <946807ff-1570-2d81-1026-06529164f8ef@gmail.com>
-References: <2a5aead0-d521-85eb-f304-7091683d8b40@gmail.com>
- <20160923090846.3086-1-ian@iankelling.org>
- <20160923090846.3086-2-ian@iankelling.org>
- <2a4c3efb-2145-b699-c980-3079f165a6e1@gmail.com>
- <946807ff-1570-2d81-1026-06529164f8ef@gmail.com>
+In-Reply-To: <20160920190247.82189-6-larsxschneider@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 24, 2016, at 09:21 AM, Jakub Nar=C4=99bski wrote:
-> W dniu 24.09.2016 o 00:15, Jakub Nar=C4=99bski pisze:
->=20
-> Sidenote: this way of benchmarking of gitweb falls between two ways of
-> doing a benchmark.
->=20
-> The first method is to simply run gitweb as a standalone script, passing
-> its parameters in CGI environment variables; just like the test suite
-> does it.  You would 'time' / 'times' it a few times, drop outliers, and
-> take average or a median.  With this method you don't even need to set
-> up a web server.
->=20
-> The second is to use a specialized program to benchmark the server-side
-> of a web page, for example 'ab' (ApacheBench), httperf, curl-loader
-> or JMeter.  The first one is usually distributed together with Apache
-> web server, so you probably have it installed already.  Those tools
-> provide timing statistics.
+W dniu 20.09.2016 o 21:02, larsxschneider@gmail.com pisze:
+> From: Lars Schneider <larsxschneider@gmail.com>
+> 
+> packet_flush() would die in case of a write error even though for some
+> callers an error would be acceptable. Add packet_flush_gently() which
+> writes a pkt-line flush packet like packet_flush() but does not die in
+> case of an error. The function is used in a subsequent patch.
+> 
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 
-Good to know. Thanks.
+Looks good.
+
+I guess the difference in treatment from packet_write_fmt_gently() in
+the previous patch is that there isn't anything to extract to form
+a common code function... I have skipped a few iterations of this series.
+
+> ---
+>  pkt-line.c | 8 ++++++++
+>  pkt-line.h | 1 +
+>  2 files changed, 9 insertions(+)
+> 
+> diff --git a/pkt-line.c b/pkt-line.c
+> index 3b465fd..19f0271 100644
+> --- a/pkt-line.c
+> +++ b/pkt-line.c
+> @@ -91,6 +91,14 @@ void packet_flush(int fd)
+>  	write_or_die(fd, "0000", 4);
+>  }
+>  
+> +int packet_flush_gently(int fd)
+> +{
+> +	packet_trace("0000", 4, 1);
+> +	if (write_in_full(fd, "0000", 4) == 4)
+> +		return 0;
+> +	return error("flush packet write failed");
+> +}
+> +
+>  void packet_buf_flush(struct strbuf *buf)
+>  {
+>  	packet_trace("0000", 4, 1);
+> diff --git a/pkt-line.h b/pkt-line.h
+> index 3caea77..3fa0899 100644
+> --- a/pkt-line.h
+> +++ b/pkt-line.h
+> @@ -23,6 +23,7 @@ void packet_flush(int fd);
+>  void packet_write_fmt(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+>  void packet_buf_flush(struct strbuf *buf);
+>  void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+> +int packet_flush_gently(int fd);
+>  int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+>  
+>  /*
+> 
+
