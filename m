@@ -2,89 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A57D1F4F8
-	for <e@80x24.org>; Sat, 24 Sep 2016 11:30:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D71EA1F935
+	for <e@80x24.org>; Sat, 24 Sep 2016 14:28:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754815AbcIXLaq (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Sep 2016 07:30:46 -0400
-Received: from mout.web.de ([212.227.15.3]:55010 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750726AbcIXLap (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Sep 2016 07:30:45 -0400
-Received: from [192.168.178.36] ([79.213.113.239]) by smtp.web.de (mrweb003)
- with ESMTPSA (Nemesis) id 0MT8cQ-1bLbuB1JXa-00S9Wg; Sat, 24 Sep 2016 13:30:25
- +0200
-X-Mozilla-News-Host: news://news.gmane.org:119
-To:     Git List <git@vger.kernel.org>,
-        Pat Thoyts <patthoyts@users.sourceforge.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] git-gui: stop using deprecated merge syntax
-Message-ID: <cbb1815e-0ebc-e103-927e-14d7d038245a@web.de>
-Date:   Sat, 24 Sep 2016 13:30:22 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
+        id S1758595AbcIXO2N (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Sep 2016 10:28:13 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:6270 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754578AbcIXO2M (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Sep 2016 10:28:12 -0400
+Received: from PhilipOakley ([92.22.56.237])
+        by smtp.talktalk.net with SMTP
+        id nnw1bokMgxR4bnnw1b1j34; Sat, 24 Sep 2016 15:28:10 +0100
+X-Originating-IP: [92.22.56.237]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=JNN5iICb c=1 sm=1 tr=0 a=STbUQm/7X+VKdJQF1oCBnA==:117
+ a=STbUQm/7X+VKdJQF1oCBnA==:17 a=8nJEP1OIZ-IA:10 a=yMhMjlubAAAA:8
+ a=ybZZDoGAAAAA:8 a=5rxgeBVgAAAA:8 a=PKzvZo6CAAAA:8 a=4PqRy3kfYJMmc3sGEKQA:9
+ a=wPNLvfGTeEIA:10 a=BKKCjISod1eDJeS0ORpz:22 a=0RhZnL1DYvcuLYC8JZ5M:22
+ a=PwKx63F5tFurRwaNxrlG:22 a=q92HNjYiIAC_jH7JDaYf:22
+Message-ID: <99A866BEF8944598A50C6E061A703297@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Ben Peart" <Ben.Peart@microsoft.com>,
+        "Junio C Hamano" <gitster@pobox.com>
+Cc:     <pclouds@gmail.com>, <git@vger.kernel.org>
+References: <20160913142628.15440-1-benpeart@microsoft.com>        <xmqq7fafv376.fsf@gitster.mtv.corp.google.com>        <BL2PR03MB3232D3128A72D4EC9ADC2C6F4F10@BL2PR03MB323.namprd03.prod.outlook.com>        <BL2PR03MB323E1B2F810C63CB01AA234F4F30@BL2PR03MB323.namprd03.prod.outlook.com>        <007401d21278$445eba80$cd1c2f80$@gmail.com>        <xmqqzin3g8di.fsf@gitster.mtv.corp.google.com> <xmqqr38fg6tk.fsf@gitster.mtv.corp.google.com> <BL2PR03MB323ADC371E49EFD1CBBC566F4F60@BL2PR03MB323.namprd03.prod.outlook.com>
+Subject: Re: [PATCH v3] checkout: eliminate unnecessary merge for trivial checkout
+Date:   Sat, 24 Sep 2016 15:28:11 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:Hv3NcmtqnYX0ggfb/3Md4lQ+ZxeAB45iWZm32uBswd5GuLF9ptD
- TJYPJN2dZFoPQdbwfnQCMEbO6C5unhQjV5JflqTLh8St5ytdMALkLhfEY5Esa5dpv/gFoi8
- TSToyG2RUbC+O2gwB2nLqNU64a3cx87eFSWHmy7//tKwliPKOPyaobsls2byYE6RNA6tQTu
- oDoZFJym1VDmnatYAEH9A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:lTWXJNRF2TI=:YBdjwBCVxW2Co0i3SnmeLm
- cHGV7q4uan3MkVGcDoTQK9ECvEf861t80e/YZ2NUI6kx218MwlaVoAPzIzqyJ0K5tjiUR37UH
- PV+6u0Nzx7dSVOnUKBLyjvXKqxHqyNDtKspVmk4WPwK20uy01sDIjrPQ1Gf1YITUf4XTHJjBz
- tlZu48NDPFOyrfLCNKtKNgMKgY5EcNFWzHn+0gXa9/YiFTqfvAaP3TVj2w17OtXvz6PbFxSxl
- S/Gu46Ehywrv96oGVQAvCo7I0gbRx8OwKbuRjLE3KZHkgZecVY7X/4S5cBSSpD69oTRRCBQqp
- UQLqxZCahdjxlwLKiPzQ+f43hFk/h9vpFdKZyg2UnFMEs9z32Vb4R3Bf8pHOYpEoFUiIyYC7f
- O+ob5t9/GqS3E4aZS4owRb5wx3gsge7QQnZ3+t5lFQK8/7msu75paLmGqN9ELXj/eqbefBkot
- SSsbbcv6wzzpjGRZEntN/gyv4crDLIDW5xjSc0jmfn+JKYQUhzokGp73Vo7DH8WVKFbMqrmEV
- fp2jSOXMc+emHe80lDN1zF1Fm1jxqPE26KTmuHb7pnIOyTWS8PAG8yiMBmcAmsWeSX+b0tzsr
- EyhDW232SecIvn+2hNrjeVLkSADpP8j/eiEFK9aCgDAP9B25zQd3O1agwYjNXU6iyvzv+joH6
- qEcwZvHiaS07YYS1jH2SlVicZWi1fQcwgCcvNAfz9+yY3eUhpGo6kS2kDyJDqDW38R5yJ7/CT
- bdtI3nEftJgDxoeUQWum0quaVIYraKP+UMdGL6WgzZ+NERQboyv1wHx/FCmaZE5L2EYCAlrht
- sXeEpCp
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfL/wijFW0njHuDCTnauQ5eDLcIf7mO8wO62eJBXXOMNVhIp4rNGfm/HQnbfemc1pimnaJMcXznuWNdqvDYDPv1ESS1t3zNe5ebiIrjC9qLCtGom03/7C
+ fz/V65lEHZBMchQ/N0lH8QObWoiqeOxb0ZGu+RV9LfX05r12CFa2/CPJZLdD0fF8hIbhHX0bregFcqHqsFUNfDYw1dbSEhJvgCiGScp30OpURZiNnw9gGTYX
+ 32+ORH7BrVgXgEVDYe2Z+A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Starting with v2.5.0 git merge can handle FETCH_HEAD internally and
-warns when it's called like 'git merge <message> HEAD <commit>' because
-that syntax is deprecated.  Use this feature in git-gui and get rid of
-that warning.
+Ben,
+Using a 'bottom / in-line' posting flow is much preferred, which may require 
+some manual editing[1], hopefully I have it about right...
+Philip
+--
+[1] this is massaged and mangled Outlook Express, sometimes one has to work 
+with the tools at hand...
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
-Tested only _very_ lightly!
+From: "Ben Peart" <Ben.Peart@microsoft.com>
+> From: Junio C Hamano [mailto:gitster@pobox.com]
+> > Junio C Hamano <gitster@pobox.comwrites:
+> >
+> > >"git checkout -b foo" (without -f -m or <start_point>) is defined in
+> > >the manual as being a shortcut for/equivalent to:
+> > >
+> > >        (1a) "git branch foo"
+> > >        (1b) "git checkout foo"
+> > >
+> > >However, it has been our experience in our observed use cases and all
+> > >the existing git tests, that it can be treated as equivalent to:
+> > >
+> > >        (2a) "git branch foo"
+> > >        (2b) "git symbolic-ref HEAD refs/heads/foo"
+> > >...
+> > >
+> > I am still not sure if I like the change of what "checkout -b" is this
+> > late in the game, though.
+> >
+> > Having said all that.
+> >
+> > I do see the merit of having a shorthand way to invoke your 2 above.
+> > It is just that I am not convinced that it is the best way to achieve 
+> > that goal to redefine what "git checkout -b <new-name>" (no other 
+> > parameters) does.
+> >
+> ---
+>
+> I understand the reluctance to change the existing behavior of the "git 
+> checkout -b <new-name>" command.
+>
+> I see this as a tradeoff between taking advantage of the muscle memory for 
+> the existing command and coming up with a new shortcut command and 
+> training people to use it instead.
+>
+> The fact that all the use cases we've observed and all the git test cases 
+> actually produce the same results but significantly faster with that 
+> change in behavior made me hope we could redefine the command to take 
+> advantage of the muscle memory.
+>
+> That said, you're much more on the frontline of receiving negative 
+> feedback about doing that than I am. :)  How would you like to proceed?
 
- git-gui/lib/merge.tcl | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+The discussion can often feel harsh [2], especially if there is accidental 
+'talking past each other', which is usually because of differing 
+perspectives on the issues.
 
-diff --git a/git-gui/lib/merge.tcl b/git-gui/lib/merge.tcl
-index 460d32f..5ab6f8f 100644
---- a/git-gui/lib/merge.tcl
-+++ b/git-gui/lib/merge.tcl
-@@ -112,12 +112,7 @@ method _start {} {
- 	close $fh
- 	set _last_merged_branch $branch
- 
--	set cmd [list git]
--	lappend cmd merge
--	lappend cmd --strategy=recursive
--	lappend cmd [git fmt-merge-msg <[gitdir FETCH_HEAD]]
--	lappend cmd HEAD
--	lappend cmd $name
-+	set cmd [list git merge --strategy=recursive FETCH_HEAD]
- 
- 	ui_status [mc "Merging %s and %s..." $current_branch $stitle]
- 	set cons [console::new [mc "Merge"] "merge $stitle"]
--- 
-2.10.0
+I didn't see an initial confirmation as to what the issue really was. You 
+indicated the symptom ('a long checkout time'), but then we missed out on 
+hard facts and example repos, so that the issue was replicable.
+
+Is there an example public repo that you can show the issue on? (or 
+anonymise a private one - there is a script for that [3])
+
+Can you give local timings (and indication of the hardware and software 
+versions used for the test, and if appropriate, network setup)?
+
+I know at my work that sometime our home drives are multiply mapped to H:, a 
+C:/homedrive directory and a $netshare/me network directory via the 
+Microsofy roaming profiles, and if there is hard synchronization (or 
+whatever term is appropriate) there can be sudden slowdowns as local C: 
+writes drop from 'instant' to 'forever'...
+
+Is there anything special about the repos that have the delays? Is it a 
+local process issue that causes the repos to develop those symptoms (see 
+above about not being sure why you have these issues), in which case it 
+could be local self inflicted issues, or it could be that you have a 
+regulatory issue for that domain that requires such symptoms, which would 
+shift the problem from a 'don't do that' response to a 'hmm, how to cover 
+this'.
+
+
+At the moment there is the simple workaround of an alias that executes that 
+two step command dance to achieve what you needed, and Junio has outlined 
+the issues he needed to be covered from his maintainer perspective (e.g. the 
+detection of sparse checkouts). Confirming the root causes would help in 
+setting a baseline.
+
+I hope that is of help - I'd seen that the discussion had gone quiet.
+
+--
+Philip
+
+
+[2] Been there, feel your pain. It's not in any way malicious, just a 
+reflection that email can be a poor medium for such discussions.
+[3] https://public-inbox.org/git/20140827170127.GA6138@peff.net/ suggest 
+that the `git fast-export --anonymize --all` maybe the approach. 
 
