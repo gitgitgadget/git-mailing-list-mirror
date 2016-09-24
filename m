@@ -2,87 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2CBE1F935
-	for <e@80x24.org>; Sat, 24 Sep 2016 17:52:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A9A261F935
+	for <e@80x24.org>; Sat, 24 Sep 2016 18:22:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934316AbcIXRwo (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Sep 2016 13:52:44 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52057 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755304AbcIXRwn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Sep 2016 13:52:43 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 566A53FFED;
-        Sat, 24 Sep 2016 13:52:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=MD2+4LS29DAS
-        k/qoHP5Y8uMiIHA=; b=KeKT8ZovyJ9n38NDymDpxNaAanrMhSB2pRVe8x7upI6m
-        fqkJXwDkDALol6o9/2JfFsey8wlKOcyWeib1j1qLyYltEPFROhRSeM2ySnyd5fM7
-        iTtU8dz+Q/CkTlmOsxbOIuE+xbMdqw6SeEEdnOyYuYrnTCmFp5btxfxNORNRmeU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=uxd21/
-        b3VTILNhFlEWh2jXFEyyOLQC61SY8Y/MgQsxCppLpjcKtrQ013qZc/tV5bhg8B7h
-        Sej3KySNrhUZjOymGffJiW4bJssmDY3DHL5KSA/J+c1n+5dErT9sBzApfSRY43cv
-        uyHYILcSg+FoLAmp21SgO4CSIy9hQsiBaFxtE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4E2363FFEC;
-        Sat, 24 Sep 2016 13:52:42 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C49C93FFEA;
-        Sat, 24 Sep 2016 13:52:41 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-Cc:     Ian Kelling <ian@iankelling.org>, git@vger.kernel.org
-Subject: Re: [PATCH v3 2/2] gitweb: use highlight's shebang detection
-References: <2a5aead0-d521-85eb-f304-7091683d8b40@gmail.com>
-        <20160923090846.3086-1-ian@iankelling.org>
-        <20160923090846.3086-2-ian@iankelling.org>
-        <2a4c3efb-2145-b699-c980-3079f165a6e1@gmail.com>
-        <946807ff-1570-2d81-1026-06529164f8ef@gmail.com>
-Date:   Sat, 24 Sep 2016 10:52:39 -0700
-In-Reply-To: <946807ff-1570-2d81-1026-06529164f8ef@gmail.com> ("Jakub
-        =?utf-8?Q?Nar=C4=99bski=22's?= message of "Sat, 24 Sep 2016 18:21:57
- +0200")
-Message-ID: <xmqqh995yyl4.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S934852AbcIXSWd (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Sep 2016 14:22:33 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:53370 "EHLO bsmtp4.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932768AbcIXSWc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Sep 2016 14:22:32 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp4.bon.at (Postfix) with ESMTPSA id 3shJVY5xfrz5tlJ;
+        Sat, 24 Sep 2016 20:22:29 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id A5E885326;
+        Sat, 24 Sep 2016 20:22:28 +0200 (CEST)
+Subject: Re: [PATCH] git-gui: stop using deprecated merge syntax
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+References: <cbb1815e-0ebc-e103-927e-14d7d038245a@web.de>
+Cc:     Git List <git@vger.kernel.org>,
+        Pat Thoyts <patthoyts@users.sourceforge.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <a5b001fd-3ba2-bcc0-2104-eb630796ab09@kdbg.org>
+Date:   Sat, 24 Sep 2016 20:22:28 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: B0B0B00E-827F-11E6-8FF9-C26412518317-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <cbb1815e-0ebc-e103-927e-14d7d038245a@web.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
-
->> Also, "curling" is not the word I would like to see. I would say:
->>=20
->>   Simple benchmark comparing performance of 'blob' view of files witho=
-ut
->>   syntax highlighting in gitweb before and after this change indicates
->>   =C2=B11% difference in request time for all file types.  Benchmark w=
-as
->>   performed on local instance on Debian, using Apache/2.4.23 web serve=
-r
->>   and CGI/PSGI/FCGI/mod_perl.
->>=20
->>       ^^^^^^^^^^^^^^^^^^^^^^--- select one
-
-or state that all of them produced similar results ;-)
-
->> Or something like that; I'm not sure how detailed this should be.
->> But it is nice to have such benchmark in the commit message.
+Am 24.09.2016 um 13:30 schrieb René Scharfe:
+> Starting with v2.5.0 git merge can handle FETCH_HEAD internally and
+> warns when it's called like 'git merge <message> HEAD <commit>' because
+> that syntax is deprecated.  Use this feature in git-gui and get rid of
+> that warning.
 >
-> Sidenote: this way of benchmarking of gitweb falls between two ways of
-> doing a benchmark.
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
+> Tested only _very_ lightly!
+>
+>  git-gui/lib/merge.tcl | 7 +------
+>  1 file changed, 1 insertion(+), 6 deletions(-)
+>
+> diff --git a/git-gui/lib/merge.tcl b/git-gui/lib/merge.tcl
+> index 460d32f..5ab6f8f 100644
+> --- a/git-gui/lib/merge.tcl
+> +++ b/git-gui/lib/merge.tcl
+> @@ -112,12 +112,7 @@ method _start {} {
+>  	close $fh
+>  	set _last_merged_branch $branch
+>
+> -	set cmd [list git]
+> -	lappend cmd merge
+> -	lappend cmd --strategy=recursive
+> -	lappend cmd [git fmt-merge-msg <[gitdir FETCH_HEAD]]
+> -	lappend cmd HEAD
+> -	lappend cmd $name
+> +	set cmd [list git merge --strategy=recursive FETCH_HEAD]
+>
+>  	ui_status [mc "Merging %s and %s..." $current_branch $stitle]
+>  	set cons [console::new [mc "Merge"] "merge $stitle"]
+>
 
-All good comments.  Thanks.
+Much better than my version. I had left fmt-merge-msg and added --no-log 
+to treat merge.log config suitably. But this works too, and is much more 
+obvious.
+
+Tested-by: Johannes Sixt <j6t@kdbg.org>
+
+-- Hannes
+
