@@ -2,247 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E89C20985
-	for <e@80x24.org>; Sun, 25 Sep 2016 21:08:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7AF4120985
+	for <e@80x24.org>; Sun, 25 Sep 2016 22:38:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1034567AbcIYVIs (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Sep 2016 17:08:48 -0400
-Received: from ikke.info ([178.21.113.177]:39966 "EHLO vps892.directvps.nl"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1034497AbcIYVIr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Sep 2016 17:08:47 -0400
-Received: by vps892.directvps.nl (Postfix, from userid 182)
-        id A460D4400BD; Sun, 25 Sep 2016 23:08:44 +0200 (CEST)
-Received: from io.ikke (unknown [10.8.0.30])
-        by vps892.directvps.nl (Postfix) with ESMTP id BD2374400A5;
-        Sun, 25 Sep 2016 23:08:43 +0200 (CEST)
-From:   Kevin Daudt <me@ikke.info>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Swift Geek <swiftgeek@gmail.com>, Jeff King <peff@peff.net>,
-        Kevin Daudt <me@ikke.info>
-Subject: [PATCH v3 2/2] mailinfo: unescape quoted-pair in header fields
-Date:   Sun, 25 Sep 2016 23:08:08 +0200
-Message-Id: <20160925210808.26424-2-me@ikke.info>
-X-Mailer: git-send-email 2.10.0.89.ge802c3a.dirty
-In-Reply-To: <20160925210808.26424-1-me@ikke.info>
-References: <20160919185440.18234-1-me@ikke.info>
- <20160925210808.26424-1-me@ikke.info>
+        id S938417AbcIYWit (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Sep 2016 18:38:49 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:36380 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933709AbcIYWis (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Sep 2016 18:38:48 -0400
+Received: by mail-wm0-f65.google.com with SMTP id b184so11490114wma.3
+        for <git@vger.kernel.org>; Sun, 25 Sep 2016 15:38:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=EOqxtz0cfY9QNiMuH3YCVhEgiVv15seOiEfBBxcQlb0=;
+        b=w5zhp19HdDVuSL9TMLrZsM6cvEUrsvNQblGa9udKCsjdxTGnLmJyg2n2O1bO0nlUvC
+         aSOnUXkBY8zDPZniqxQ5XDSpef7fPdf6GMUJ9vyzxEJWtvp8oG0m5pcRern2VoydtZHX
+         bAkYdTiF8FnQS4Oo6XwogWCdyWx7DX5Se973Nx2DyLLPJ8pkJpxtGOpz9Fp6EMivxM/P
+         CpfyRbQ0E4hXN7URmWpF0sp4xLKGXAlR3k6ZKWkXYLoL8s6UHMEa3S0fEQeCl0C97jMZ
+         EdnO1lrz9smHEqXuSiXR3cF9Jy10KwiVR/tXrhCQYIPFnjZl96uX1Y7ko2BbrSHOCn4p
+         9SvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=EOqxtz0cfY9QNiMuH3YCVhEgiVv15seOiEfBBxcQlb0=;
+        b=hEMFG266xZv64UiUOO8nV0SiE2YA4o8Q1DJI9IZDUQg4auG1nVYTrNa+j56mTMYCiy
+         ibcfocmGvvlFYJd5bHUuk6edB9wSQddoYDi7bUdJvx3XPKiMr36OnuBNeFVBd9PZSLqV
+         9ZwhNzEAUhcIOuKjE48JeeluhJnz9rsxK7xs+duM07bm45f7D9Jon3CGWZqweeAnESDx
+         48pn4jLHdVh2Sn6z7kHda5PgCO3tgMj63LW095rtQkm8rcMo6IuGFmGX8rXep1p7iRKN
+         R600IyMoNywCEWo/SjbAo6sivLp2mwVzEBowPB4qgr9OH7MvAaDrm+XQXBOiqPYTeFLW
+         pJgw==
+X-Gm-Message-State: AE9vXwM8NIhxqXXgKXdK4D6WnilUgd4pJpOPviM9zNleouurI0cn7Xwi3u12YxhtIEdRCg==
+X-Received: by 10.194.81.106 with SMTP id z10mr15099492wjx.140.1474843126995;
+        Sun, 25 Sep 2016 15:38:46 -0700 (PDT)
+Received: from [192.168.1.26] (dbd108.neoplus.adsl.tpnet.pl. [83.23.29.108])
+        by smtp.googlemail.com with ESMTPSA id xb6sm19074496wjb.30.2016.09.25.15.38.45
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 25 Sep 2016 15:38:45 -0700 (PDT)
+Subject: Re: [PATCH v2 2/2] mailinfo: unescape quoted-pair in header fields
+To:     Kevin Daudt <me@ikke.info>, Jeff King <peff@peff.net>
+References: <20160916210204.31282-1-me@ikke.info>
+ <20160919185440.18234-3-me@ikke.info>
+ <20160921110934.f6eu2dz6i2mlpa45@sigill.intra.peff.net>
+ <xmqq60pn37gs.fsf@gitster.mtv.corp.google.com>
+ <20160923041540.5fvl6ytp2tvcflsk@sigill.intra.peff.net>
+ <20160925201713.GA6937@ikke.info>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Swift Geek <swiftgeek@gmail.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <0b6cbc53-e058-f064-59e8-b73203f3e400@gmail.com>
+Date:   Mon, 26 Sep 2016 00:38:42 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
+MIME-Version: 1.0
+In-Reply-To: <20160925201713.GA6937@ikke.info>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-rfc2822 has provisions for quoted strings and comments in structured header
-fields, but also allows for escaping these with so-called quoted-pairs.
+W dniu 25.09.2016 o 22:17, Kevin Daudt pisze:
+> On Fri, Sep 23, 2016 at 12:15:41AM -0400, Jeff King wrote:
 
-The only thing git currently does is removing exterior quotes, but
-quotes within are left alone.
+>> Oops, yes. It is beginning to make the "strbuf_swap()" look less
+>> convoluted. :)
+>>
+> 
+> I've switched to strbuf_swap now, much better. I've implemented
+> recursive parsing without looking at what you provided, just to see what
+> I'd came up with. Though I've not implemented a recursive descent
+> parser, but it might suffice.
 
-Remove exterior quotes and remove escape characters so that they don't
-show up in the author field.
+I think you can implement a parser handling proper nesting of parens
+without recursion.
 
-Signed-off-by: Kevin Daudt <me@ikke.info>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Changes since v2:
-
- - handle comments inside comments recursively
- - renamed the main function to unquote_quoted_pairs because it also
-   handles quoted pairs in comments
-
-
- mailinfo.c                   | 82 ++++++++++++++++++++++++++++++++++++++++++++
- t/t5100-mailinfo.sh          | 14 ++++++++
- t/t5100/comment.expect       |  5 +++
- t/t5100/comment.in           |  9 +++++
- t/t5100/quoted-string.expect |  5 +++
- t/t5100/quoted-string.in     |  9 +++++
- 6 files changed, 124 insertions(+)
- create mode 100644 t/t5100/comment.expect
- create mode 100644 t/t5100/comment.in
- create mode 100644 t/t5100/quoted-string.expect
- create mode 100644 t/t5100/quoted-string.in
-
-diff --git a/mailinfo.c b/mailinfo.c
-index e19abe3..b4118a0 100644
---- a/mailinfo.c
-+++ b/mailinfo.c
-@@ -54,6 +54,86 @@ static void parse_bogus_from(struct mailinfo *mi, const struct strbuf *line)
- 	get_sane_name(&mi->name, &mi->name, &mi->email);
- }
- 
-+static const char *unquote_comment(struct strbuf *outbuf, const char *in)
-+{
-+	int c;
-+	int take_next_litterally = 0;
-+
-+	strbuf_addch(outbuf, '(');
-+
-+	while ((c = *in++) != 0) {
-+		if (take_next_litterally == 1) {
-+			take_next_litterally = 0;
-+		} else {
-+			switch (c) {
-+			case '\\':
-+				take_next_litterally = 1;
-+				continue;
-+			case '(':
-+				in = unquote_comment(outbuf, in);
-+				continue;
-+			case ')':
-+				strbuf_addch(outbuf, ')');
-+				return in;
-+			}
-+		}
-+
-+		strbuf_addch(outbuf, c);
-+	}
-+
-+	return in;
-+}
-+
-+static const char *unquote_quoted_string(struct strbuf *outbuf, const char *in)
-+{
-+	int c;
-+	int take_next_litterally = 0;
-+
-+	while ((c = *in++) != 0) {
-+		if (take_next_litterally == 1) {
-+			take_next_litterally = 0;
-+		} else {
-+			switch (c) {
-+			case '\\':
-+				take_next_litterally = 1;
-+				continue;
-+			case '"':
-+				return in;
-+			}
-+		}
-+
-+		strbuf_addch(outbuf, c);
-+	}
-+
-+	return in;
-+}
-+
-+static void unquote_quoted_pair(struct strbuf *line)
-+{
-+	struct strbuf outbuf;
-+	const char *in = line->buf;
-+	int c;
-+
-+	strbuf_init(&outbuf, line->len);
-+
-+	while ((c = *in++) != 0) {
-+		switch (c) {
-+		case '"':
-+			in = unquote_quoted_string(&outbuf, in);
-+			continue;
-+		case '(':
-+			in = unquote_comment(&outbuf, in);
-+			continue;
-+		}
-+
-+		strbuf_addch(&outbuf, c);
-+	}
-+
-+	strbuf_swap(&outbuf, line);
-+	strbuf_release(&outbuf);
-+
-+}
-+
- static void handle_from(struct mailinfo *mi, const struct strbuf *from)
- {
- 	char *at;
-@@ -63,6 +143,8 @@ static void handle_from(struct mailinfo *mi, const struct strbuf *from)
- 	strbuf_init(&f, from->len);
- 	strbuf_addbuf(&f, from);
- 
-+	unquote_quoted_pair(&f);
-+
- 	at = strchr(f.buf, '@');
- 	if (!at) {
- 		parse_bogus_from(mi, from);
-diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
-index c4ed0f4..3e983c0 100755
---- a/t/t5100-mailinfo.sh
-+++ b/t/t5100-mailinfo.sh
-@@ -144,4 +144,18 @@ test_expect_success 'mailinfo unescapes with --mboxrd' '
- 	test_cmp expect mboxrd/msg
- '
- 
-+test_expect_success 'mailinfo handles rfc2822 quoted-string' '
-+	mkdir quoted-string &&
-+	git mailinfo /dev/null /dev/null <"$DATA"/quoted-string.in \
-+		>quoted-string/info &&
-+	test_cmp "$DATA"/quoted-string.expect quoted-string/info
-+'
-+
-+test_expect_success 'mailinfo handles rfc2822 comment' '
-+	mkdir comment &&
-+	git mailinfo /dev/null /dev/null <"$DATA"/comment.in \
-+		>comment/info &&
-+	test_cmp "$DATA"/comment.expect comment/info
-+'
-+
- test_done
-diff --git a/t/t5100/comment.expect b/t/t5100/comment.expect
-new file mode 100644
-index 0000000..7228177
---- /dev/null
-+++ b/t/t5100/comment.expect
-@@ -0,0 +1,5 @@
-+Author: A U Thor (this is (really) a comment (honestly))
-+Email: somebody@example.com
-+Subject: testing comments
-+Date: Sun, 25 May 2008 00:38:18 -0700
-+
-diff --git a/t/t5100/comment.in b/t/t5100/comment.in
-new file mode 100644
-index 0000000..c53a192
---- /dev/null
-+++ b/t/t5100/comment.in
-@@ -0,0 +1,9 @@
-+From 1234567890123456789012345678901234567890 Mon Sep 17 00:00:00 2001
-+From: "A U Thor" <somebody@example.com> (this is \(really\) a comment (honestly))
-+Date: Sun, 25 May 2008 00:38:18 -0700
-+Subject: [PATCH] testing comments
-+
-+
-+
-+---
-+patch
-diff --git a/t/t5100/quoted-string.expect b/t/t5100/quoted-string.expect
-new file mode 100644
-index 0000000..cab1bce
---- /dev/null
-+++ b/t/t5100/quoted-string.expect
-@@ -0,0 +1,5 @@
-+Author: Author "The Author" Name
-+Email: somebody@example.com
-+Subject: testing quoted-pair
-+Date: Sun, 25 May 2008 00:38:18 -0700
-+
-diff --git a/t/t5100/quoted-string.in b/t/t5100/quoted-string.in
-new file mode 100644
-index 0000000..e2e627a
---- /dev/null
-+++ b/t/t5100/quoted-string.in
-@@ -0,0 +1,9 @@
-+From 1234567890123456789012345678901234567890 Mon Sep 17 00:00:00 2001
-+From: "Author \"The Author\" Name" <somebody@example.com>
-+Date: Sun, 25 May 2008 00:38:18 -0700
-+Subject: [PATCH] testing quoted-pair
-+
-+
-+
-+---
-+patch
+Though... what is the definition in the RFC?
 -- 
-2.10.0.89.ge802c3a.dirty
+Jakub Narębski
 
