@@ -2,86 +2,271 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADD69207EC
-	for <e@80x24.org>; Sun, 25 Sep 2016 07:41:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC7C6207EC
+	for <e@80x24.org>; Sun, 25 Sep 2016 08:58:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1422927AbcIYHlt (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Sep 2016 03:41:49 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47678 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1422788AbcIYHls (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Sep 2016 03:41:48 -0400
-Received: (qmail 22706 invoked by uid 109); 25 Sep 2016 07:41:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 25 Sep 2016 07:41:47 +0000
-Received: (qmail 28824 invoked by uid 111); 25 Sep 2016 07:42:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 25 Sep 2016 03:42:01 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 25 Sep 2016 03:41:44 -0400
-Date:   Sun, 25 Sep 2016 03:41:44 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] add COPY_ARRAY
-Message-ID: <20160925074144.44onzv5pub5dxuix@sigill.intra.peff.net>
-References: <6f402d35-b483-7552-2fb2-a5350112b8a6@web.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6f402d35-b483-7552-2fb2-a5350112b8a6@web.de>
+        id S940135AbcIYI6L (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Sep 2016 04:58:11 -0400
+Received: from userp1040.oracle.com ([156.151.31.81]:27797 "EHLO
+        userp1040.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753023AbcIYI6J (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Sep 2016 04:58:09 -0400
+Received: from aserv0021.oracle.com (aserv0021.oracle.com [141.146.126.233])
+        by userp1040.oracle.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id u8P8tLNw011983
+        (version=TLSv1 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+        Sun, 25 Sep 2016 08:55:22 GMT
+Received: from lenuta.oracle.com (dhcp-ukc1-twvpn-2-vpnpool-10-175-214-67.vpn.oracle.com [10.175.214.67])
+        by aserv0021.oracle.com (8.13.8/8.13.8) with ESMTP id u8P8tJZW011922;
+        Sun, 25 Sep 2016 08:55:19 GMT
+From:   Vegard Nossum <vegard.nossum@oracle.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Santi=20B=C3=A9jar?= <sbejar@gmail.com>,
+        Kevin Bracey <kevin@bracey.fi>,
+        Philip Oakley <philipoakley@iee.org>,
+        Vegard Nossum <vegard.nossum@oracle.com>
+Subject: [RFC PATCH v2] revision: new rev^-n shorthand for rev^n..rev
+Date:   Sun, 25 Sep 2016 10:55:11 +0200
+Message-Id: <20160925085511.12515-1-vegard.nossum@oracle.com>
+X-Mailer: git-send-email 2.10.0.rc0.1.g07c9292
+X-Source-IP: aserv0021.oracle.com [141.146.126.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 25, 2016 at 09:15:42AM +0200, René Scharfe wrote:
+I use rev^..rev daily, and I'm surely not the only one. To save typing
+(or copy-pasting, if the rev is long -- like a full SHA-1 or branch name)
+we can make rev^- a shorthand for that.
 
-> Add COPY_ARRAY, a safe and convenient helper for copying arrays,
-> complementing ALLOC_ARRAY and REALLOC_ARRAY.  Users just specify source,
-> destination and the number of elements; the size of an element is
-> inferred automatically.
+The existing syntax rev^! seems like it should do the same, but it
+doesn't really do the right thing for merge commits (it gives only the
+merge itself).
 
-Seems like a fairly readable construct to have.
+As a natural generalisation, we also accept rev^-n where n excludes the
+nth parent of rev, although this is expected to be generally less useful.
 
-> It checks if the multiplication of size and element count overflows.
-> The inferred size is passed first to st_mult, which allows the division
-> there to be done at compilation time.
+[v2: Use ^- instead of % as suggested by Junio Hamano and use some
+ common helper functions for parsing.]
 
-I wonder if this actually stops any real overflows. My goal with
-ALLOC_ARRAY, etc, was to catch these at the malloc stage (which is the
-really dangerous part, because we don't want to under-allocate). So the
-first hunk of your patch is:
+Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
+---
+ Documentation/revisions.txt | 14 +++++++
+ builtin/rev-parse.c         | 28 ++++++++++++++
+ revision.c                  | 91 +++++++++++++++++++++++++++++++++++++++++++++
+ revision.h                  |  1 +
+ 4 files changed, 134 insertions(+)
 
-        ALLOC_ARRAY(result, count + 1);
--       memcpy(result, pathspec, count * sizeof(const char *));
-+       COPY_ARRAY(result, pathspec, count);
+diff --git Documentation/revisions.txt Documentation/revisions.txt
+index 4bed5b1..6e33801 100644
+--- Documentation/revisions.txt
++++ Documentation/revisions.txt
+@@ -281,6 +281,14 @@ is a shorthand for 'HEAD..origin' and asks "What did the origin do since
+ I forked from them?"  Note that '..' would mean 'HEAD..HEAD' which is an
+ empty range that is both reachable and unreachable from HEAD.
+ 
++Parent Exclusion Notation
++~~~~~~~~~~~~~~~~~~~~~~~~~
++The '<rev>{caret}-{<n>}', Parent Exclusion Notation::
++Shorthand for '<rev>{caret}<n>..<rev>', with '<n>' = 1 if not
++given. This is typically useful for merge commits where you
++can just pass '<commit>{caret}-' to get all the commits in the branch
++that was merged in merge commit '<commit>'.
++
+ Other <rev>{caret} Parent Shorthand Notations
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ Two other shorthands exist, particularly useful for merge commits,
+@@ -316,6 +324,10 @@ Revision Range Summary
+ 	<rev2> but exclude those that are reachable from both.  When
+ 	either <rev1> or <rev2> is omitted, it defaults to `HEAD`.
+ 
++'<rev>{caret}-{<n>}', e.g. 'HEAD{caret}, HEAD{caret}-2'::
++	Equivalent to '<rev>{caret}<n>..<rev>', with '<n>' = 1 if not
++	given.
++
+ '<rev>{caret}@', e.g. 'HEAD{caret}@'::
+   A suffix '{caret}' followed by an at sign is the same as listing
+   all parents of '<rev>' (meaning, include anything reachable from
+@@ -339,6 +351,8 @@ spelt out:
+    C                            I J F C
+    B..C   = ^B C                C
+    B...C  = B ^F C              G H D E B C
++   B^-    = B^..B
++	  = B ^B^1              E I J F B
+    C^@    = C^1
+ 	  = F                   I J F
+    B^@    = B^1 B^2 B^3
+diff --git builtin/rev-parse.c builtin/rev-parse.c
+index 76cf05e..ad5e6ac 100644
+--- builtin/rev-parse.c
++++ builtin/rev-parse.c
+@@ -292,6 +292,32 @@ static int try_difference(const char *arg)
+ 	return 0;
+ }
+ 
++static int try_parent_exclusion(const char *arg)
++{
++	int ret = 0;
++	char *to_rev = NULL;
++	char *from_rev = NULL;
++	unsigned char to_sha1[20];
++	unsigned char from_sha1[20];
++
++	if (parse_parent_exclusion(arg, &to_rev, &from_rev))
++		goto out;
++	if (get_sha1_committish(to_rev, to_sha1))
++		goto out;
++	if (get_sha1_committish(from_rev, from_sha1))
++		goto out;
++
++	show_rev(NORMAL, to_sha1, to_rev);
++	show_rev(REVERSED, from_sha1, from_rev);
++
++	ret = 1;
++
++out:
++	free(to_rev);
++	free(from_rev);
++	return ret;
++}
++
+ static int try_parent_shorthands(const char *arg)
+ {
+ 	char *dotdot;
+@@ -839,6 +865,8 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 		/* Not a flag argument */
+ 		if (try_difference(arg))
+ 			continue;
++		if (try_parent_exclusion(arg))
++			continue;
+ 		if (try_parent_shorthands(arg))
+ 			continue;
+ 		name = arg;
+diff --git revision.c revision.c
+index 969b3d1..0480f19 100644
+--- revision.c
++++ revision.c
+@@ -1419,6 +1419,93 @@ static void prepare_show_merge(struct rev_info *revs)
+ 	revs->limited = 1;
+ }
+ 
++/*
++ * If 'arg' is on the form '<rev>^-{<n>}', then return 0 and
++ * '*to_rev' and '*from_rev' will contain '<rev>' and '<rev>^<n>',
++ * respectively.
++ */
++int parse_parent_exclusion(const char *arg, char **to_rev, char **from_rev)
++{
++	char *caret;
++	unsigned int n = 1;
++
++	/*
++	 * <rev>^-{<n>} is shorthand for <rev>^<n>..<rev>, with <n> = 1 if
++	 * not given. This is typically used for merge commits where you
++	 * can just pass '<merge>^-' and it will show you all the commits in
++	 * the branch that was merged.
++	 */
++
++	if (!(caret = strstr(arg, "^-")))
++		return 1;
++	if (caret[2]) {
++		char *end;
++		n = strtoul(&caret[2], &end, 10);
++		if (*end != '\0')
++			return 1;
++	}
++	*to_rev = xstrndup(arg, caret - arg);
++	*from_rev = xstrfmt("%s^%u", *to_rev, n);
++	return 0;
++}
++
++static int handle_parent_exclusion(const char *arg, struct rev_info *revs, int flags)
++{
++	int ret = 1;
++	char *to_rev = NULL;
++	char *from_rev = NULL;
++	unsigned char to_sha1[20];
++	unsigned char from_sha1[20];
++
++	struct object *a_obj, *b_obj;
++	unsigned int flags_exclude = flags ^ (UNINTERESTING | BOTTOM);
++	unsigned int a_flags;
++
++	/*
++	 * <rev>^-{<n>} is shorthand for <rev>^<n>..<rev>, with <n> = 1 if
++	 * not given. This is typically used for merge commits where you
++	 * can just pass <merge>^- and it will show you all the commits in
++	 * the branches that were merged.
++	 */
++
++	if (parse_parent_exclusion(arg, &to_rev, &from_rev))
++		goto out;
++
++	if (get_sha1_committish(to_rev, to_sha1)) {
++		if (revs->ignore_missing)
++			goto out;
++		die("Unknown revision %s", to_rev);
++	}
++
++	if (get_sha1_committish(from_rev, from_sha1)) {
++		if (revs->ignore_missing)
++			goto out;
++		die("Unknown revision %s", from_rev);
++	}
++
++	a_obj = parse_object(from_sha1);
++	b_obj = parse_object(to_sha1);
++	if (!a_obj || !b_obj) {
++		if (revs->ignore_missing)
++			goto out;
++		die("Invalid revision range %s", arg);
++	}
++
++	a_flags = flags_exclude;
++	a_obj->flags |= a_flags;
++	b_obj->flags |= flags;
++	add_rev_cmdline(revs, a_obj, from_rev, REV_CMD_LEFT, a_flags);
++	add_pending_object(revs, a_obj, from_rev);
++	add_rev_cmdline(revs, b_obj, to_rev, REV_CMD_RIGHT, flags);
++	add_pending_object(revs, b_obj, to_rev);
++
++	ret = 0;
++out:
++	free(to_rev);
++	free(from_rev);
++	return ret;
++}
++
+ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsigned revarg_opt)
+ {
+ 	struct object_context oc;
+@@ -1519,6 +1606,10 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
+ 		}
+ 		*dotdot = '.';
+ 	}
++
++	if (!handle_parent_exclusion(arg, revs, flags))
++		return 0;
++
+ 	dotdot = strstr(arg, "^@");
+ 	if (dotdot && !dotdot[2]) {
+ 		*dotdot = 0;
+diff --git revision.h revision.h
+index 9fac1a6..ca5bebc 100644
+--- revision.h
++++ revision.h
+@@ -243,6 +243,7 @@ extern int setup_revisions(int argc, const char **argv, struct rev_info *revs,
+ extern void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
+ 			       const struct option *options,
+ 			       const char * const usagestr[]);
++extern int parse_parent_exclusion(const char *arg, char **to_rev, char **from_rev);
+ #define REVARG_CANNOT_BE_FILENAME 01
+ #define REVARG_COMMITTISH 02
+ extern int handle_revision_arg(const char *arg, struct rev_info *revs,
+-- 
+2.10.0.rc0.1.g07c9292
 
-which clearly cannot trigger the st_mult() check, because we would have
-done so in the ALLOC_ARRAY call[1].
-
-Other calls are not so obvious, but in general I would expect the
-allocation step to be doing this check. If we missed one, then it's
-possible that this macro could detect it and prevent a problem. But it
-seems like the wrong time to check. The allocation is buggy, and we'd
-have to just get lucky to be using COPY_ARRAY(). And I don't even mean
-"lucky that we switched to COPY_ARRAY from memcpy for this callsite".
-There are lots of sites that allocate and then fill the array one by
-one, without ever computing the full size again. So allocation is the
-only sensible place to enforce integer overflow.
-
-So I'm not sold on this providing any real integer overflow safety. But
-I do otherwise like it, as it drops the extra "sizeof" which has to
-repeat either the variable name or the type).
-
--Peff
-
-[1] Actually, this particular example probably should be using
-    st_add(count, 1), though it's likely not a problem in practice
-    ("count" is an int, so you cannot easily overflow it back to 0 by
-    incrementing 1, though of course overflowing it at all is undefined
-    behavior).
