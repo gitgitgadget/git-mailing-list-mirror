@@ -2,78 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 033C9207EC
-	for <e@80x24.org>; Sun, 25 Sep 2016 11:03:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9756220985
+	for <e@80x24.org>; Sun, 25 Sep 2016 11:26:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754259AbcIYLDX (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Sep 2016 07:03:23 -0400
-Received: from mail-it0-f49.google.com ([209.85.214.49]:38337 "EHLO
-        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751237AbcIYLDW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Sep 2016 07:03:22 -0400
-Received: by mail-it0-f49.google.com with SMTP id n143so52391682ita.1
-        for <git@vger.kernel.org>; Sun, 25 Sep 2016 04:03:21 -0700 (PDT)
+        id S966033AbcIYL0s (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Sep 2016 07:26:48 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35388 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S938708AbcIYL0q (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Sep 2016 07:26:46 -0400
+Received: by mail-wm0-f68.google.com with SMTP id 133so9714380wmq.2
+        for <git@vger.kernel.org>; Sun, 25 Sep 2016 04:26:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=e3qoCSJssqRHrp3IQocIwZy4XIWtjZdpB5oXb6g9ei8=;
-        b=mMLtyBG7lJKsElSqPPDCjeRt4f/oJvwm0CnXzZY7Bc168F6/OCKSvtSxd7lhxWdbzC
-         9nrgqvnJrl6L0uCd3wVG+12UfFmcwrv2pJKBFMjX4aEk+tIia+2JOuss1Iv8kg/KY99D
-         ad7HrVZadS2AVAo05A8RDxhJovuB9Gt4Jm0q55tiAJ9W1vjESL5eazuH4fkx1c2z39cH
-         yIFojEuoh380LHSdL5ITinrx2QQlXXuQtMQHCikP+FSEy5MvV5PWUnzX6S2+Xv/wpDEn
-         QBMzpxg8JXQEW3u0HfplG5WkK2XJ4ZlGjEVQs09MWyoqZFCaK3WAp2L7mcvhbfujKCGY
-         rVtQ==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=Qc80ZFYgZSr8WY+0j6LFZAO8cWW2oGRzxRGUyM3Klbk=;
+        b=0WyzkCoCmPxS1r35C9aanX+3RtIWnAm3iE9VdGHeoq2JNkm4COQOR5EZkqlioBpedU
+         VQssYbRpN17TNwAlFFB1SHTlPjXFm0Y8anXVWvv3tzU4exbj5xbq61mgweqemrMe/nKk
+         t4SeJdSK8yYPljivruncmS5IsKp1rWbiQfFhpqwC1IDn0mgSm1W0sC5aemvD3okGVjzW
+         x+iwJcz1lXTl0Pr1/wkQ2S1vA/Zwxg8CHu65k6k9jndzD4S2HtpMBQQ6OvF8rXPmK2+0
+         ddmJDxXznsQBWGlBfbzUlnxoRDfY+fciOXtk3nGtGvAu1HIPXeR1WXgLqs2GdRXSMDbC
+         YHbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=e3qoCSJssqRHrp3IQocIwZy4XIWtjZdpB5oXb6g9ei8=;
-        b=jwC2LhPk+2X01yNekGhvTMkjvkjI/I+oKCr7HR3yOht2khqBMCdn5IJrhx4pqtm5gK
-         qp2cwsSrHexZZ6CBDtuc/7YcJF61GnK1YeKfCtTfN0UlCWCJzNs/pz/1JN7c+ejfrhmb
-         5I8SbPxhfHBa6ZufyHMlfAmPbUdhF/+CAMA9k3hWIB0IHhkHkv1N/KNO3RVklyZnWydB
-         lSoFuWJryCyvPkhioSCnoVbq1cJKCWy9ykBktV2rEZUPJ1gM++43Eo51vqBzGmoMfJZM
-         ZIfEBu5EPWGvlWCaLl3Fg5VYefckYFn6aoPbwqklsJ52/8wwiWhjxXr3JZ4j+UtL02mu
-         aUMw==
-X-Gm-Message-State: AA6/9Rlhp7gU7sxswBjrTIYtZ9jZ3b4AF+oydQmAsR18qpRfOeKXE+LF8O0faaToWQCDJ6DhBa4cw/HQV6eulw==
-X-Received: by 10.36.228.7 with SMTP id o7mr12871639ith.30.1474801401247; Sun,
- 25 Sep 2016 04:03:21 -0700 (PDT)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=Qc80ZFYgZSr8WY+0j6LFZAO8cWW2oGRzxRGUyM3Klbk=;
+        b=UWMc8XmK6dbleoXYIgimpaXw+cYp3XrznxQMSuyYI5nkeMZp11oAwH3CR3+e5RRu9P
+         yCwqhkYJu9O5uFBq7LyTDlFKfisrSkZ9XXlfmgjjD25g/e6gVk7KkgjrfC1blHlCWVxE
+         9BnIBUOE2ygBxh0MvXxyhxRlR98oDolgBRpCGrKjswAmt3Nv/Fq91utsCyRh3C3a7LD2
+         awC4v7EqbojDkQiAOaChhe0E8vpHu1kliHkO/m8G+f6yaKdXnhcdVawJozqBgKcUMVhG
+         Kr4EmaTyf+STU4OItkmyRK8leuVi6pPoUYuqOirhxcrs5fgFnqF18tEHN1tQY252pM3b
+         oIeQ==
+X-Gm-Message-State: AA6/9Rl/2IC+XLaRChQE9+1ud22sGgYx25TrmzeGmtRWqwNUGQQJGdMd7TeeC/pPwgFLyg==
+X-Received: by 10.28.132.82 with SMTP id g79mr9675989wmd.3.1474802805176;
+        Sun, 25 Sep 2016 04:26:45 -0700 (PDT)
+Received: from [192.168.1.26] (dce219.neoplus.adsl.tpnet.pl. [83.23.56.219])
+        by smtp.googlemail.com with ESMTPSA id c5sm16630854wjw.29.2016.09.25.04.26.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 25 Sep 2016 04:26:44 -0700 (PDT)
+Subject: Re: [PATCH v8 06/11] pkt-line: add packet_write_gently()
+To:     Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
+References: <20160920190247.82189-1-larsxschneider@gmail.com>
+ <20160920190247.82189-7-larsxschneider@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Martin-Louis Bright <mlbright@gmail.com>,
+        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <55c5a86e-4055-f36d-bbf1-e8bae919088a@gmail.com>
+Date:   Sun, 25 Sep 2016 13:26:42 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Received: by 10.79.138.195 with HTTP; Sun, 25 Sep 2016 04:03:20 -0700 (PDT)
-In-Reply-To: <CAGZ79kYF6nYL42VQ_mbVzD+2QFLPELe9-8DOQjbSwArM20SCKA@mail.gmail.com>
-References: <1474495472-94190-1-git-send-email-bmwill@google.com>
- <CAKoko1q7Mb6_cnaA1ecZJ2y1PWUrW4RSu6RiviyN91JV5-QR5g@mail.gmail.com>
- <xmqq1t0c7ur2.fsf@gitster.mtv.corp.google.com> <CAKoko1qch_odsEWba0rtCv-DWO0ABS2yprnwGPCgyT6-7H-LdQ@mail.gmail.com>
- <xmqqponw6e3x.fsf@gitster.mtv.corp.google.com> <20160922041854.7754ujcynhk7mdnh@sigill.intra.peff.net>
- <xmqq7fa36bwm.fsf@gitster.mtv.corp.google.com> <20160923034113.4rnps3nogvzxkfjx@sigill.intra.peff.net>
- <CAGZ79kZ+LTd5PuT4+Z9K6d+GQ-33E=tLY1Fokbp22uNoygaEtg@mail.gmail.com>
- <20160923060643.3ubr5gn7qczzs2ut@sigill.intra.peff.net> <CAKoko1p+M3X_y+DH+65fUDRZjkiZrKE3Z-jjq=RSjqoi7He8pw@mail.gmail.com>
- <CAGZ79kYF6nYL42VQ_mbVzD+2QFLPELe9-8DOQjbSwArM20SCKA@mail.gmail.com>
-From:   Nazri Ramliy <ayiehere@gmail.com>
-Date:   Sun, 25 Sep 2016 19:03:20 +0800
-Message-ID: <CAEY4ZpMm3o2fNb6_3zQYq5x2_EDquGoBPyoafGrrfYQ9B0qouA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] ls-files: adding support for submodules
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Brandon Williams <bmwill@google.com>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20160920190247.82189-7-larsxschneider@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 24, 2016 at 12:34 AM, Stefan Beller <sbeller@google.com> wrote:
->     git -C path/to/sub --keep-prefix ls-files
+W dniu 20.09.2016 o 21:02, larsxschneider@gmail.com pisze:
+> From: Lars Schneider <larsxschneider@gmail.com>
+> 
+> packet_write_fmt_gently() uses format_packet() which lets the caller
+> only send string data via "%s". That means it cannot be used for
+> arbitrary data that may contain NULs.
+> 
+> Add packet_write_gently() which writes arbitrary data and does not die
+> in case of an error. The function is used by other pkt-line functions in
+> a subsequent patch.
 
-Note that the above can also be written like so (and works
-identically), due to the fact that -C can be given multiple times:
+Nice; obviously needed for sending binary data.
 
-    git -C path -C to -C sub --keep-prefix ls-files
+I wonder how send-pack / receive-pack handles sending binary files.
+Though this is outside of scope of this patch series, it is something
+to think about for later.
 
-nazri
+> 
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+> ---
+>  pkt-line.c | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
+> 
+> diff --git a/pkt-line.c b/pkt-line.c
+> index 19f0271..fc0ac12 100644
+> --- a/pkt-line.c
+> +++ b/pkt-line.c
+> @@ -171,6 +171,22 @@ int packet_write_fmt_gently(int fd, const char *fmt, ...)
+>  	return status;
+>  }
+>  
+> +static int packet_write_gently(const int fd_out, const char *buf, size_t size)
+
+I'm not sure what naming convention the rest of Git uses, but isn't
+it more like '*data' rather than '*buf' here?
+
+> +{
+> +	static char packet_write_buffer[LARGE_PACKET_MAX];
+
+I think there should be warning (as a comment before function
+declaration, or before function definition), that packet_write_gently()
+is not thread-safe (nor reentrant, but the latter does not matter here,
+I think).
+
+Thread-safe vs reentrant: http://stackoverflow.com/a/33445858/46058
+
+This is not something terribly important; I guess git code has tons
+of functions not marked as thread-unsafe...
+
+> +
+> +	if (size > sizeof(packet_write_buffer) - 4) {
+
+First, wouldn't the following be more readable:
+
+  +	if (size + 4 > LARGE_PACKET_MAX) {
+
+> +		return error("packet write failed - data exceeds max packet size");
+> +	}
+
+Second, CodingGuidelines is against using braces (blocks) for one
+line conditionals: "We avoid using braces unnecessarily."
+
+But this is just me nitpicking.
+
+> +	packet_trace(buf, size, 1);
+> +	size += 4;
+> +	set_packet_header(packet_write_buffer, size);
+> +	memcpy(packet_write_buffer + 4, buf, size - 4);
+> +	if (write_in_full(fd_out, packet_write_buffer, size) == size)
+
+Hmmm... in some places we use original size, in others (original) size + 4;
+perhaps it would be more readable to add a new local temporary variable
+
+	size_t full_size = size + 4;
+
+Or perhaps use 'data_size' and 'packet_size', where 'packet_size = data_size + 4'.
+But that might be too chatty for variable names ;-)
+
+> +		return 0;
+> +	return error("packet write failed");
+> +}
+
+Compared to previous iterations, where there were two versions
+of this function, IIRC sharing no common code: one taking buffer
+which had to be with place for packet size info, one with a separate
+local buffer for packet size only and using two writes.  This
+version uses static buffer (thus not thread-safe, I think; and
+not reentrant), and memcpy.
+
+Anyway, if reentrant / thread-safe version would be required,
+or not doing memcpy turns out to be important with respect to
+performance, we can provide with the *_r version:
+
+  static int packet_write_gently_r(const int fd_out, const char *data, size_t size,
+                                   char *restrict buf)
+
+We can check if 'buf + 4 == data', and if it is, we can skip
+memcpy() as an optimization.
+
+This is something for the future, but not very important for
+having this patch series accepted.
+
+> +
+>  void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
+>  {
+>  	va_list args;
+> 
+
+Best,
+-- 
+Jakub Narębski
+
