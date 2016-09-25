@@ -2,96 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED0D71F4F8
-	for <e@80x24.org>; Sun, 25 Sep 2016 14:20:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F55E1F4F8
+	for <e@80x24.org>; Sun, 25 Sep 2016 14:31:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S938951AbcIYOUE (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Sep 2016 10:20:04 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35379 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S938708AbcIYOUD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Sep 2016 10:20:03 -0400
-Received: by mail-wm0-f67.google.com with SMTP id 133so10161780wmq.2
-        for <git@vger.kernel.org>; Sun, 25 Sep 2016 07:20:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=HKJKMxuYKMmszSEr3FOYkyAEGQXUt6YM18uq1DcQwnA=;
-        b=IxMSgIc34yBObkHbKA8Lp9HGrR7tj4iFiOZ6P+6frMequjDShX67zCJief4W+STpP6
-         SoW295NAKEvj2RYrLhwRlCLVNTDD5u2intc/durWZ380hyRHWYBNIN6YNByLfCdzVZq7
-         ENjIOjv9wMIRMHUQ02lw7ye4AMWuVDsGk4Wr8NuWiIQRBFPISVIMMBgB16JXfux7rv4L
-         WNyMxvnXKf4q5oJAV6wS3dtYHAW70t7Pc4QRkFx+/wvhzPCro+Q2lKMnOWXV37qgDNWt
-         0a9I/f2N2RsB4+f31gPhMarOwNtYK9YF40Vz7Zh5IgF77utq8ZYxASW56vsPb+e6Gejv
-         IOpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=HKJKMxuYKMmszSEr3FOYkyAEGQXUt6YM18uq1DcQwnA=;
-        b=YeX13s6yYLkmTCvuDHSQSIGKxoPasiaoADoTjP52BEPEeZgZG0BMRG7aFmgwDWNZ6t
-         xbRQSYpf++fHcVNiq0/9WYOOYXswkdP84wC0kVM1dhl4QEu6bXPKgzfVHBsMP95qyDdh
-         hsD/oNB+5P0W14zOwxjr0lESsDEcVgy3/hXDiogzjX5/E4LZXxmjF8O9PFzVThgzh+HU
-         GRrPpuKfPCXwAJOAEDlgukKKN698DFsanGoOYqQDUKtXxBTT6PbuCQ01QH9uvDPI/GJo
-         n/K9VVwb16yds1xYY9dLrPEGvJdXfK8i+wMPc9V0IUDt+jOqymxuKJ7LqBA+ICg0DPjN
-         3CrQ==
-X-Gm-Message-State: AA6/9RkqrLfhX6Dt+/ABlSTEmSDWQLpu7ZiKSLtNJl7+FJ3NuW6vJPwMb1TT846lytu/MQ==
-X-Received: by 10.194.158.193 with SMTP id ww1mr2391996wjb.176.1474813202076;
-        Sun, 25 Sep 2016 07:20:02 -0700 (PDT)
-Received: from [192.168.1.26] (dce219.neoplus.adsl.tpnet.pl. [83.23.56.219])
-        by smtp.googlemail.com with ESMTPSA id gf4sm17293929wjb.47.2016.09.25.07.20.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 25 Sep 2016 07:20:00 -0700 (PDT)
-Subject: Re: [RFC PATCH v2] revision: new rev^-n shorthand for rev^n..rev
-To:     Vegard Nossum <vegard.nossum@oracle.com>, git@vger.kernel.org
-References: <20160925085511.12515-1-vegard.nossum@oracle.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Santi_B=c3=a9jar?= <sbejar@gmail.com>,
-        Kevin Bracey <kevin@bracey.fi>,
-        Philip Oakley <philipoakley@iee.org>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <ab725c6e-5c8f-d137-fefc-7f094ea7b7bb@gmail.com>
-Date:   Sun, 25 Sep 2016 16:19:58 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
+        id S1034174AbcIYObQ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Sep 2016 10:31:16 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:54968 "EHLO mx1.imag.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S934881AbcIYObP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Sep 2016 10:31:15 -0400
+X-Greylist: delayed 1105 seconds by postgrey-1.27 at vger.kernel.org; Sun, 25 Sep 2016 10:31:14 EDT
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+        by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u8PECjnL013411
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO)
+        for <git@vger.kernel.org>; Sun, 25 Sep 2016 16:12:45 +0200
+Received: from z8-mb-verimag.imag.fr (z8-mb-verimag.imag.fr [129.88.4.38])
+        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u8PECk02016965
+        for <git@vger.kernel.org>; Sun, 25 Sep 2016 16:12:46 +0200
+Date:   Sun, 25 Sep 2016 16:12:46 +0200 (CEST)
+From:   Gustavo Grieco <gustavo.grieco@imag.fr>
+To:     git@vger.kernel.org
+Message-ID: <1825523389.8224664.1474812766424.JavaMail.zimbra@imag.fr>
+In-Reply-To: <1399913289.8224468.1474810664933.JavaMail.zimbra@imag.fr>
+Subject: Stack read out-of-bounds in parse_sha1_header_extended using git
+ 2.10.0
 MIME-Version: 1.0
-In-Reply-To: <20160925085511.12515-1-vegard.nossum@oracle.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [129.88.6.115]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF48 (Linux)/8.0.9_GA_6191)
+Thread-Topic: Stack read out-of-bounds in parse_sha1_header_extended using git 2.10.0
+Thread-Index: Ay05G10Kp6A9IsvDGeSD/7k29LNjow==
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Sun, 25 Sep 2016 16:12:45 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u8PECjnL013411
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: gustavo.grieco@imag.fr
+MailScanner-NULL-Check: 1475417566.44364@L55uXy9IlJ6sgDiluCuGmA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 25.09.2016 o 10:55, Vegard Nossum pisze:
-> I use rev^..rev daily, and I'm surely not the only one. To save typing
-> (or copy-pasting, if the rev is long -- like a full SHA-1 or branch name)
-> we can make rev^- a shorthand for that.
-> 
-> The existing syntax rev^! seems like it should do the same, but it
-> doesn't really do the right thing for merge commits (it gives only the
-> merge itself).
-> 
-> As a natural generalisation, we also accept rev^-n where n excludes the
-> nth parent of rev, although this is expected to be generally less useful.
-> 
-> [v2: Use ^- instead of % as suggested by Junio Hamano and use some
->  common helper functions for parsing.]
+Hi,
 
-Minor sidenote: the above should go after the "---" line, as it should
-be not included in the final commit message.
+We found a stack read out-of-bounds parsing object files using git 2.10.0. It was tested on ArchLinux x86_64. To reproduce, first recompile git with ASAN support and then execute:
 
-> 
-> Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
-> ---
->  Documentation/revisions.txt | 14 +++++++
->  builtin/rev-parse.c         | 28 ++++++++++++++
->  revision.c                  | 91 +++++++++++++++++++++++++++++++++++++++++++++
->  revision.h                  |  1 +
->  4 files changed, 134 insertions(+)
+$ git init ; mkdir -p .git/objects/b2 ; printf 'x' > .git/objects/b2/93584ddd61af21260be75ee9f73e9d53f08cd0
 
+Finally you can trigger the bug using several commands from git (other commands that parses all objects will work too), for instance:
+
+$ git fsck
+
+The ASAN report is here:
+
+==2763==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7ffe16e4a690 at pc 0x0000006fe5dc bp 0x7ffe16e4a530 sp 0x7ffe16e4a520
+READ of size 1 at 0x7ffe16e4a690 thread T0
+    #0 0x6fe5db in parse_sha1_header_extended /home/g/Work/Code/git-2.10.0/sha1_file.c:1684
+    #1 0x702cd4 in sha1_loose_object_info /home/g/Work/Code/git-2.10.0/sha1_file.c:2660
+    #2 0x70332c in sha1_object_info_extended /home/g/Work/Code/git-2.10.0/sha1_file.c:2696
+    #3 0x7038e0 in sha1_object_info /home/g/Work/Code/git-2.10.0/sha1_file.c:2745
+    #4 0x648498 in parse_object /home/g/Work/Code/git-2.10.0/object.c:260
+    #5 0x48d46d in fsck_sha1 builtin/fsck.c:367
+    #6 0x48da47 in fsck_loose builtin/fsck.c:493
+    #7 0x707514 in for_each_file_in_obj_subdir /home/g/Work/Code/git-2.10.0/sha1_file.c:3477
+    #8 0x70775b in for_each_loose_file_in_objdir_buf /home/g/Work/Code/git-2.10.0/sha1_file.c:3512
+    #9 0x707885 in for_each_loose_file_in_objdir /home/g/Work/Code/git-2.10.0/sha1_file.c:3532
+    #10 0x48dc1d in fsck_object_dir builtin/fsck.c:521
+    #11 0x48e2e6 in cmd_fsck builtin/fsck.c:644
+    #12 0x407a8f in run_builtin /home/g/Work/Code/git-2.10.0/git.c:352
+    #13 0x407e35 in handle_builtin /home/g/Work/Code/git-2.10.0/git.c:539
+    #14 0x408175 in run_argv /home/g/Work/Code/git-2.10.0/git.c:593
+    #15 0x408458 in cmd_main /home/g/Work/Code/git-2.10.0/git.c:665
+    #16 0x53fc70 in main /home/g/Work/Code/git-2.10.0/common-main.c:40
+    #17 0x7f0f46d43290 in __libc_start_main (/usr/lib/libc.so.6+0x20290)
+    #18 0x405209 in _start (/home/g/Work/Code/git-2.10.0/git+0x405209)
+
+Address 0x7ffe16e4a690 is located in stack of thread T0 at offset 192 in frame
+    #0 0x702834 in sha1_loose_object_info /home/g/Work/Code/git-2.10.0/sha1_file.c:2614
+
+  This frame has 5 object(s):
+    [32, 40) 'mapsize'
+    [96, 120) 'hdrbuf'
+    [160, 192) 'hdr' <== Memory access at offset 192 overflows this variable
+    [224, 368) 'st'
+    [416, 576) 'stream'
+HINT: this may be a false positive if your program uses some custom stack unwind mechanism or swapcontext
+      (longjmp and C++ exceptions *are* supported)
+SUMMARY: AddressSanitizer: stack-buffer-overflow /home/g/Work/Code/git-2.10.0/sha1_file.c:1684 in parse_sha1_header_extended
+Shadow bytes around the buggy address:
+  0x100042dc1480: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x100042dc1490: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x100042dc14a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x100042dc14b0: 00 00 00 00 00 00 00 00 00 00 f1 f1 f1 f1 00 f4
+  0x100042dc14c0: f4 f4 f2 f2 f2 f2 00 00 00 f4 f2 f2 f2 f2 00 00
+=>0x100042dc14d0: 00 00[f2]f2 f2 f2 00 00 00 00 00 00 00 00 00 00
+  0x100042dc14e0: 00 00 00 00 00 00 00 00 f4 f4 f2 f2 f2 f2 00 00
+  0x100042dc14f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x100042dc1500: 00 00 f3 f3 f3 f3 00 00 00 00 00 00 00 00 00 00
+  0x100042dc1510: 00 00 00 00 f1 f1 f1 f1 04 f4 f4 f4 f2 f2 f2 f2
+  0x100042dc1520: 00 00 00 00 00 f4 f4 f4 f3 f3 f3 f3 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+
+
+Regards,
+Gustavo.
