@@ -7,64 +7,66 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9756220985
-	for <e@80x24.org>; Sun, 25 Sep 2016 11:26:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F50B1F4F8
+	for <e@80x24.org>; Sun, 25 Sep 2016 13:46:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966033AbcIYL0s (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Sep 2016 07:26:48 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35388 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S938708AbcIYL0q (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Sep 2016 07:26:46 -0400
-Received: by mail-wm0-f68.google.com with SMTP id 133so9714380wmq.2
-        for <git@vger.kernel.org>; Sun, 25 Sep 2016 04:26:46 -0700 (PDT)
+        id S1034079AbcIYNqw (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Sep 2016 09:46:52 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36366 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966303AbcIYNqu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Sep 2016 09:46:50 -0400
+Received: by mail-wm0-f67.google.com with SMTP id b184so10087347wma.3
+        for <git@vger.kernel.org>; Sun, 25 Sep 2016 06:46:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=subject:to:references:cc:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding;
-        bh=Qc80ZFYgZSr8WY+0j6LFZAO8cWW2oGRzxRGUyM3Klbk=;
-        b=0WyzkCoCmPxS1r35C9aanX+3RtIWnAm3iE9VdGHeoq2JNkm4COQOR5EZkqlioBpedU
-         VQssYbRpN17TNwAlFFB1SHTlPjXFm0Y8anXVWvv3tzU4exbj5xbq61mgweqemrMe/nKk
-         t4SeJdSK8yYPljivruncmS5IsKp1rWbiQfFhpqwC1IDn0mgSm1W0sC5aemvD3okGVjzW
-         x+iwJcz1lXTl0Pr1/wkQ2S1vA/Zwxg8CHu65k6k9jndzD4S2HtpMBQQ6OvF8rXPmK2+0
-         ddmJDxXznsQBWGlBfbzUlnxoRDfY+fciOXtk3nGtGvAu1HIPXeR1WXgLqs2GdRXSMDbC
-         YHbQ==
+        bh=vmuV4S6kuYpieCUEtpsGczVbBnVy6+cAFj+ERs0UaOQ=;
+        b=TxdW+LBtE7Sg2Joda2bZRrFCGPWG0ajXjIi+uYkojjI7UxCliPzslTbn8Q1DnJFm2G
+         3mBCLTLbq94MY7JvCfTO4roOpMEdwOVLgbF25JeUsrmL0ddtsN0gw8Tk8u7hSl4AlTTi
+         A7dBG3teSdc14rBZ+L3XP+XdcZDEjgEylMVwvkpN64v51kss4+ovNSs1xqMDqggVfMTX
+         jVwZZkGF0sX/C1+jXjQDRFgrBDJ8aVFbtgarvpAMYvOFJDu/y4iJmjdkwVESksiFhFqe
+         O690llRBit3I1MOBz1TQk2AZIN4ina66W2tIZKKGw5bcT2h+/oZ9Yui+IwsRbsqYYy6y
+         2TTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:subject:to:references:cc:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=Qc80ZFYgZSr8WY+0j6LFZAO8cWW2oGRzxRGUyM3Klbk=;
-        b=UWMc8XmK6dbleoXYIgimpaXw+cYp3XrznxQMSuyYI5nkeMZp11oAwH3CR3+e5RRu9P
-         yCwqhkYJu9O5uFBq7LyTDlFKfisrSkZ9XXlfmgjjD25g/e6gVk7KkgjrfC1blHlCWVxE
-         9BnIBUOE2ygBxh0MvXxyhxRlR98oDolgBRpCGrKjswAmt3Nv/Fq91utsCyRh3C3a7LD2
-         awC4v7EqbojDkQiAOaChhe0E8vpHu1kliHkO/m8G+f6yaKdXnhcdVawJozqBgKcUMVhG
-         Kr4EmaTyf+STU4OItkmyRK8leuVi6pPoUYuqOirhxcrs5fgFnqF18tEHN1tQY252pM3b
-         oIeQ==
-X-Gm-Message-State: AA6/9Rl/2IC+XLaRChQE9+1ud22sGgYx25TrmzeGmtRWqwNUGQQJGdMd7TeeC/pPwgFLyg==
-X-Received: by 10.28.132.82 with SMTP id g79mr9675989wmd.3.1474802805176;
-        Sun, 25 Sep 2016 04:26:45 -0700 (PDT)
+        bh=vmuV4S6kuYpieCUEtpsGczVbBnVy6+cAFj+ERs0UaOQ=;
+        b=eTHk48cmiGBCr4IkLpEaICKhAVmsAMDL1qTt4nqRc82hzD48DZaJDL8UFNQM5+NRxz
+         RSQeNED+lZd00cw+0BLHuH4pbBbztc5odau1HahVwjEF6xclwtX+JXUnDvjQzA+L/GE/
+         EDhqjf/joSNxSZoPPk4TbLXrh19/pr82pfVxiof3b/igrzUdqDS/wJB/lyOGDMSTNqam
+         f/p6M62bk5hU+X11FxaR1xHrCB6q5un3m8KY2uKmP+atiEhBiQruLZ3kWL3jZbUnD2Ay
+         aLXp57irZwuvrKjieuqUcrrOK+qFPy7JIqm3ZL7XCS3RAJqU0soHEfHDa9cJNykUxPCA
+         JigA==
+X-Gm-Message-State: AA6/9Rniu0mkYUdO6mbPkQuw+eO027qhkW9ib5nUUZmtmNpQhKUOqVdYn9Z4xit/7maOYQ==
+X-Received: by 10.28.209.76 with SMTP id i73mr9947111wmg.104.1474811209028;
+        Sun, 25 Sep 2016 06:46:49 -0700 (PDT)
 Received: from [192.168.1.26] (dce219.neoplus.adsl.tpnet.pl. [83.23.56.219])
-        by smtp.googlemail.com with ESMTPSA id c5sm16630854wjw.29.2016.09.25.04.26.43
+        by smtp.googlemail.com with ESMTPSA id n131sm6083080wmd.3.2016.09.25.06.46.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 25 Sep 2016 04:26:44 -0700 (PDT)
-Subject: Re: [PATCH v8 06/11] pkt-line: add packet_write_gently()
-To:     Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
+        Sun, 25 Sep 2016 06:46:47 -0700 (PDT)
+Subject: Re: [PATCH v8 07/11] pkt-line: add functions to read/write flush
+ terminated packet streams
+To:     Lars Schneider <larsxschneider@gmail.com>,
+        git <git@vger.kernel.org>
 References: <20160920190247.82189-1-larsxschneider@gmail.com>
- <20160920190247.82189-7-larsxschneider@gmail.com>
+ <20160920190247.82189-8-larsxschneider@gmail.com>
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         Martin-Louis Bright <mlbright@gmail.com>,
         =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
 From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <55c5a86e-4055-f36d-bbf1-e8bae919088a@gmail.com>
-Date:   Sun, 25 Sep 2016 13:26:42 +0200
+Message-ID: <507a29a1-99ff-c13e-cf1f-76631345a822@gmail.com>
+Date:   Sun, 25 Sep 2016 15:46:44 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.3.0
 MIME-Version: 1.0
-In-Reply-To: <20160920190247.82189-7-larsxschneider@gmail.com>
+In-Reply-To: <20160920190247.82189-8-larsxschneider@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -73,112 +75,215 @@ X-Mailing-List: git@vger.kernel.org
 W dniu 20.09.2016 o 21:02, larsxschneider@gmail.com pisze:
 > From: Lars Schneider <larsxschneider@gmail.com>
 > 
-> packet_write_fmt_gently() uses format_packet() which lets the caller
-> only send string data via "%s". That means it cannot be used for
-> arbitrary data that may contain NULs.
+> write_packetized_from_fd() and write_packetized_from_buf() write a
+> stream of packets. All content packets use the maximal packet size
+> except for the last one. After the last content packet a `flush` control
+> packet is written.
 > 
-> Add packet_write_gently() which writes arbitrary data and does not die
-> in case of an error. The function is used by other pkt-line functions in
-> a subsequent patch.
+> read_packetized_to_buf() reads arbitrary sized packets until it detects
+> a `flush` packet.
 
-Nice; obviously needed for sending binary data.
+I guess that read_packetized_to_fd(), for completeness, is not needed
+for the filter protocol (though it might be useful for the receive
+side of send-pack / receive-pack).
 
-I wonder how send-pack / receive-pack handles sending binary files.
-Though this is outside of scope of this patch series, it is something
-to think about for later.
+Also, should it be read_packetized_to_strbuf()?  I guess using strbuf
+to read is here because we might need more size to read in full, isn't
+it.
 
 > 
 > Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 > ---
->  pkt-line.c | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
+>  pkt-line.c | 68 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  pkt-line.h |  7 +++++++
+>  2 files changed, 75 insertions(+)
 > 
 > diff --git a/pkt-line.c b/pkt-line.c
-> index 19f0271..fc0ac12 100644
+> index fc0ac12..a0a8543 100644
 > --- a/pkt-line.c
 > +++ b/pkt-line.c
-> @@ -171,6 +171,22 @@ int packet_write_fmt_gently(int fd, const char *fmt, ...)
->  	return status;
+> @@ -196,6 +196,47 @@ void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
+>  	va_end(args);
 >  }
 >  
-> +static int packet_write_gently(const int fd_out, const char *buf, size_t size)
+> +int write_packetized_from_fd(int fd_in, int fd_out)
 
-I'm not sure what naming convention the rest of Git uses, but isn't
-it more like '*data' rather than '*buf' here?
+I wonder if it would be worth it to name parameters in such way that
+it is known from the name which one is to be packetized, for example
+fd_out_pkt here...
+
+But it might be not worth it; you can get it from the function name.
 
 > +{
-> +	static char packet_write_buffer[LARGE_PACKET_MAX];
+> +	static char buf[PKTLINE_DATA_MAXLEN];
 
-I think there should be warning (as a comment before function
-declaration, or before function definition), that packet_write_gently()
-is not thread-safe (nor reentrant, but the latter does not matter here,
-I think).
+Static buffer means not thread-safe and not reentrant. It would be
+nice to have this information in a comment for this function, but
+it is not necessary.
 
-Thread-safe vs reentrant: http://stackoverflow.com/a/33445858/46058
+Also, is using static variable better than using global variable
+`packet_buffer`?  Well, scope for weird interactions is smaller...
 
-This is not something terribly important; I guess git code has tons
-of functions not marked as thread-unsafe...
+Sidenote: we have LARGE_PACKET_MAX (used in previous patch), but
+PKTLINE_DATA_MAXLEN not LARGE_PACKET_DATA_MAX.
 
+> +	int err = 0;
+> +	ssize_t bytes_to_write;
 > +
-> +	if (size > sizeof(packet_write_buffer) - 4) {
-
-First, wouldn't the following be more readable:
-
-  +	if (size + 4 > LARGE_PACKET_MAX) {
-
-> +		return error("packet write failed - data exceeds max packet size");
+> +	while (!err) {
+> +		bytes_to_write = xread(fd_in, buf, sizeof(buf));
+> +		if (bytes_to_write < 0)
+> +			return COPY_READ_ERROR;
+> +		if (bytes_to_write == 0)
+> +			break;
+> +		err = packet_write_gently(fd_out, buf, bytes_to_write);
 > +	}
-
-Second, CodingGuidelines is against using braces (blocks) for one
-line conditionals: "We avoid using braces unnecessarily."
-
-But this is just me nitpicking.
-
-> +	packet_trace(buf, size, 1);
-> +	size += 4;
-> +	set_packet_header(packet_write_buffer, size);
-> +	memcpy(packet_write_buffer + 4, buf, size - 4);
-> +	if (write_in_full(fd_out, packet_write_buffer, size) == size)
-
-Hmmm... in some places we use original size, in others (original) size + 4;
-perhaps it would be more readable to add a new local temporary variable
-
-	size_t full_size = size + 4;
-
-Or perhaps use 'data_size' and 'packet_size', where 'packet_size = data_size + 4'.
-But that might be too chatty for variable names ;-)
-
-> +		return 0;
-> +	return error("packet write failed");
+> +	if (!err)
+> +		err = packet_flush_gently(fd_out);
+> +	return err;
 > +}
 
-Compared to previous iterations, where there were two versions
-of this function, IIRC sharing no common code: one taking buffer
-which had to be with place for packet size info, one with a separate
-local buffer for packet size only and using two writes.  This
-version uses static buffer (thus not thread-safe, I think; and
-not reentrant), and memcpy.
+Looks good: clean and readable.
 
-Anyway, if reentrant / thread-safe version would be required,
-or not doing memcpy turns out to be important with respect to
-performance, we can provide with the *_r version:
-
-  static int packet_write_gently_r(const int fd_out, const char *data, size_t size,
-                                   char *restrict buf)
-
-We can check if 'buf + 4 == data', and if it is, we can skip
-memcpy() as an optimization.
-
-This is something for the future, but not very important for
-having this patch series accepted.
+Sidenote (probably outside of scope of this patch): what are the
+errors that we can get from this function, beside COPY_READ_ERROR
+of course?
 
 > +
->  void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
->  {
->  	va_list args;
-> 
+> +int write_packetized_from_buf(const char *src_in, size_t len, int fd_out)
+> +{
+> +	static char buf[PKTLINE_DATA_MAXLEN];
+> +	int err = 0;
+> +	size_t bytes_written = 0;
+> +	size_t bytes_to_write;
 
-Best,
--- 
-Jakub Narębski
+Those two variables, instead of modifying the values of len and/or src_in,
+make code very easy to read.
+
+> +
+> +	while (!err) {
+> +		if ((len - bytes_written) > sizeof(buf))
+> +			bytes_to_write = sizeof(buf);
+> +		else
+> +			bytes_to_write = len - bytes_written;
+> +		if (bytes_to_write == 0)
+> +			break;
+> +		err = packet_write_gently(fd_out, src_in + bytes_written, bytes_to_write);
+> +		bytes_written += bytes_to_write;
+> +	}
+> +	if (!err)
+> +		err = packet_flush_gently(fd_out);
+> +	return err;
+> +}
+
+Looks good: clean and readable.
+
+> +
+>  static int get_packet_data(int fd, char **src_buf, size_t *src_size,
+>  			   void *dst, unsigned size, int options)
+>  {
+> @@ -305,3 +346,30 @@ char *packet_read_line_buf(char **src, size_t *src_len, int *dst_len)
+>  {
+>  	return packet_read_line_generic(-1, src, src_len, dst_len);
+>  }
+> +
+> +ssize_t read_packetized_to_buf(int fd_in, struct strbuf *sb_out)
+
+It's a bit strange that the signature of write_packetized_from_buf() is
+that different from read_packetized_to_buf().  This includes the return
+value: int vs ssize_t.  As I have checked, write() and read() both
+use ssize_t, while fread() and fwrite() both use size_t.
+
+Perhaps this function should be named read_packetized_to_strbuf()
+(err, I asked this already)?
+
+> +{
+> +	int paket_len;
+
+Possible typo: shouldn't it be called packet_len?
+Shouldn't it be initialized to 0?
+
+  +	int packet_len = 0;
+
+> +	int options = PACKET_READ_GENTLE_ON_EOF;
+
+Why is this even a local variable?  It is never changed, and it is
+used only in one place; we can inline it.
+
+If it would be needed in subsequent patches, then such information
+should be included in the commit message.
+
+> +
+> +	size_t oldlen = sb_out->len;
+> +	size_t oldalloc = sb_out->alloc;
+
+Just a nitpick (feel free to ignore): doesn't this looks better:
+
+  +	size_t old_len   = sb_out->len;
+  +	size_t old_alloc = sb_out->alloc;
+
+Also perhaps s/old_/orig_/g.
+
+> +
+> +	for (;;) {
+
+I see that you used the more popular way of coding forever loop:
+
+  $ git grep 'for (;;)' -- '*.c'  | wc -l
+  120
+  $ git grep 'while (1)' -- '*.c' | wc -l
+  86
+
+
+> +		strbuf_grow(sb_out, PKTLINE_DATA_MAXLEN+1);
+> +		paket_len = packet_read(fd_in, NULL, NULL,
+> +			sb_out->buf + sb_out->len, PKTLINE_DATA_MAXLEN+1, options);
+
+A question (which perhaps was answered during the development of this
+patch series): why is this +1 in PKTLINE_DATA_MAXLEN+1 here?
+
+> +		if (paket_len <= 0)
+> +			break;
+> +		sb_out->len += paket_len;
+> +	}
+> +
+> +	if (paket_len < 0) {
+> +		if (oldalloc == 0)
+> +			strbuf_release(sb_out);
+> +		else
+> +			strbuf_setlen(sb_out, oldlen);
+
+A question (maybe I don't understand strbufs): why there is a special
+case for oldalloc == 0?
+
+> +		return paket_len;
+> +	}
+> +	return sb_out->len - oldlen;
+> +}
+> diff --git a/pkt-line.h b/pkt-line.h
+> index 3fa0899..6df8449 100644
+> --- a/pkt-line.h
+> +++ b/pkt-line.h
+> @@ -25,6 +25,8 @@ void packet_buf_flush(struct strbuf *buf);
+>  void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+>  int packet_flush_gently(int fd);
+>  int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+> +int write_packetized_from_fd(int fd_in, int fd_out);
+> +int write_packetized_from_buf(const char *src_in, size_t len, int fd_out);
+>  
+>  /*
+>   * Read a packetized line into the buffer, which must be at least size bytes
+> @@ -77,6 +79,11 @@ char *packet_read_line(int fd, int *size);
+>   */
+>  char *packet_read_line_buf(char **src_buf, size_t *src_len, int *size);
+>  
+> +/*
+> + * Reads a stream of variable sized packets until a flush packet is detected.
+> + */
+> +ssize_t read_packetized_to_buf(int fd_in, struct strbuf *sb_out);
+> +
+>  #define DEFAULT_PACKET_MAX 1000
+>  #define LARGE_PACKET_MAX 65520
+>  extern char packet_buffer[LARGE_PACKET_MAX];
+> 
 
