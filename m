@@ -2,96 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E144207EC
-	for <e@80x24.org>; Sun, 25 Sep 2016 08:58:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 757C9207EC
+	for <e@80x24.org>; Sun, 25 Sep 2016 10:26:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S940711AbcIYI6j (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Sep 2016 04:58:39 -0400
-Received: from mout.web.de ([212.227.17.11]:62205 "EHLO mout.web.de"
+        id S965819AbcIYK0O (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Sep 2016 06:26:14 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:52054 "EHLO mx1.imag.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753542AbcIYI6h (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Sep 2016 04:58:37 -0400
-Received: from [192.168.178.36] ([79.213.113.239]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0LtnzN-1an56t1vnh-011Co5; Sun, 25 Sep 2016 10:58:26
- +0200
-Subject: Re: [PATCH 1/2] add COPY_ARRAY
-To:     Jeff King <peff@peff.net>
-References: <6f402d35-b483-7552-2fb2-a5350112b8a6@web.de>
- <20160925074144.44onzv5pub5dxuix@sigill.intra.peff.net>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <19dabb44-dba1-d1e0-7935-8e1aec0bf7b9@web.de>
-Date:   Sun, 25 Sep 2016 10:58:22 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
+        id S1751582AbcIYK0N (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Sep 2016 06:26:13 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+        by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u8PAPfss008644
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+        Sun, 25 Sep 2016 12:25:41 +0200
+Received: from anie (anie.imag.fr [129.88.42.32])
+        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u8PAPg8X014676;
+        Sun, 25 Sep 2016 12:25:42 +0200
+From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To:     Vegard Nossum <vegard.nossum@oracle.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Santi =?iso-8859-1?Q?B=E9jar?= <sbejar@gmail.com>,
+        Kevin Bracey <kevin@bracey.fi>,
+        Philip Oakley <philipoakley@iee.org>
+Subject: Re: [RFC PATCH v2] revision: new rev^-n shorthand for rev^n..rev
+References: <20160925085511.12515-1-vegard.nossum@oracle.com>
+Date:   Sun, 25 Sep 2016 12:25:42 +0200
+In-Reply-To: <20160925085511.12515-1-vegard.nossum@oracle.com> (Vegard
+        Nossum's message of "Sun, 25 Sep 2016 10:55:11 +0200")
+Message-ID: <vpq4m54wa1l.fsf@anie.imag.fr>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20160925074144.44onzv5pub5dxuix@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:YDCgXRmSUF/WnY5RtEoaRq4CYc5SIaxudT352ZWJw22guHJ6yu+
- y0xN6HO89eKg1OihkUFSy0R8E+glbrshjrklqJojYpBhhBJ2Btx76x01tRdvsx6D5cMVwOF
- RiRzw6JC33Kv4EMvuBsumtU6MXUE47oDo3YvIIS2cav72UMDSRaU0Rn5kQcHKQLEliBb2Ux
- U7zX6T47oqlmbaLcbpvWA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:4MuoRODymio=:rUTS+opMSjkglDWrgsvKNw
- HpoflJm2k3JHarYNesmxjizI+heNlvG8LH7puCh5ULsaKlQKQiz1KNLKtmAFEOcpp5gemrG+m
- 6rOkrvAg/EXNdsC3Q16I7k+bZheXBdy6THlJ3YTnPRyTtSmlMGYM6lKp10q5stiQJYLYgvjRq
- /mAq84QHHhyfEAHEoArhnpPISJ4R2iksjro89wn93TWsRHfaq+Mi9/4AYrHdnSN1i7+IqZwhP
- BUekrKIcU/Mg2ZRbQLnZkpGwlyNNgLqawAbmCRJzFDCvJtVhejNnt4vhVF5DAQTVCzl9yYmsr
- zIIjZWPTo24p4K+NQrnNoKdS/jQvUWQrB978H3H7O4YR/PN2brhp+4+VLVR0n6mvl1XVWOQjs
- pFAL65krtN6HaFQgpRdYNv4tcbreWJXHpHQFmsB/ziXC6qyaHF/k+D8i6pNonlL3k7JfpYGYQ
- yLH10/GtdwwcuvDcc6jczjMR6N2ZiesFmA0OomSKxieD4pFpQe+R0p7G6BlHnxu59Q3cyDLZg
- JOCybBwJI1Ag75NM49y4I8LHLsnYJryWm1DURut9uBF0hRNT8MBg6MBQVCwLXbu4ugS69rS2/
- A8o+NmEgGUKigoapfiOCzW5j3IxbOSc6a+cFzkxAblaT/jwgVwnC10QQelCrDnUwvLDOnrm51
- rBC18IwXGNp2G+v32i6Kqy0PgLBmteAQzSPIiCWe3zaf6qBTEwHSqWebjIekmjbjDUzB9jant
- uRg3Q3ZTNkM8+T0z5rY+dkC+KR9owAwlSRIL/CJoJH7HtEAeJh3riKuLk7rEnlXodi29GpHGu
- dm86K03
+Content-Type: text/plain
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Sun, 25 Sep 2016 12:25:42 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: u8PAPfss008644
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1475403945.16996@2j2UwxdPl+ok9f4aaI9Wkw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 25.09.2016 um 09:41 schrieb Jeff King:
-> On Sun, Sep 25, 2016 at 09:15:42AM +0200, René Scharfe wrote:
->> It checks if the multiplication of size and element count overflows.
->> The inferred size is passed first to st_mult, which allows the division
->> there to be done at compilation time.
->
-> I wonder if this actually stops any real overflows. My goal with
-> ALLOC_ARRAY, etc, was to catch these at the malloc stage (which is the
-> really dangerous part, because we don't want to under-allocate). So the
-> first hunk of your patch is:
->
->         ALLOC_ARRAY(result, count + 1);
-> -       memcpy(result, pathspec, count * sizeof(const char *));
-> +       COPY_ARRAY(result, pathspec, count);
->
-> which clearly cannot trigger the st_mult() check, because we would have
-> done so in the ALLOC_ARRAY call[1].
->
-> Other calls are not so obvious, but in general I would expect the
-> allocation step to be doing this check. If we missed one, then it's
-> possible that this macro could detect it and prevent a problem. But it
-> seems like the wrong time to check. The allocation is buggy, and we'd
-> have to just get lucky to be using COPY_ARRAY(). And I don't even mean
-> "lucky that we switched to COPY_ARRAY from memcpy for this callsite".
-> There are lots of sites that allocate and then fill the array one by
-> one, without ever computing the full size again. So allocation is the
-> only sensible place to enforce integer overflow.
->
-> So I'm not sold on this providing any real integer overflow safety. But
-> I do otherwise like it, as it drops the extra "sizeof" which has to
-> repeat either the variable name or the type).
+Vegard Nossum <vegard.nossum@oracle.com> writes:
 
-Well, yes, checking if the destination object is big enough requires 
-calculating the size of the source object and thus should include a 
-check for multiplication overflow already.  Note the word "should". :) 
-If that's the case then a smart compiler could elide the duplicate 
-check.  Keeping the check in COPY_ARRAY reduces the assumptions we have 
-make about its use as well as any previous checks and doesn't cost much.
+>  Documentation/revisions.txt | 14 +++++++
+>  builtin/rev-parse.c         | 28 ++++++++++++++
+>  revision.c                  | 91 +++++++++++++++++++++++++++++++++++++++++++++
+>  revision.h                  |  1 +
 
-René
+This would obviously need tests before you can drop the RFC flag.
+
+> --- builtin/rev-parse.c
+> +++ builtin/rev-parse.c
+> @@ -292,6 +292,32 @@ static int try_difference(const char *arg)
+>  	return 0;
+>  }
+>  
+> +static int try_parent_exclusion(const char *arg)
+> +{
+> +	int ret = 0;
+> +	char *to_rev = NULL;
+> +	char *from_rev = NULL;
+> +	unsigned char to_sha1[20];
+> +	unsigned char from_sha1[20];
+
+I didn't follow closely, but there are patch series by brian m. carlson
+to convert these unsigned char array[20] to struct object_id. I guess
+adding more arrays is going in the wrong direction. You may want to Cc
+brian if unsure.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
