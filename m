@@ -2,109 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47F821F4F8
-	for <e@80x24.org>; Sun, 25 Sep 2016 14:47:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A229F1F4F8
+	for <e@80x24.org>; Sun, 25 Sep 2016 16:32:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966376AbcIYOre (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Sep 2016 10:47:34 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:36286 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934881AbcIYOrd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Sep 2016 10:47:33 -0400
-Received: by mail-wm0-f68.google.com with SMTP id b184so10253286wma.3
-        for <git@vger.kernel.org>; Sun, 25 Sep 2016 07:47:32 -0700 (PDT)
+        id S1034297AbcIYQct (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Sep 2016 12:32:49 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:33336 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1034150AbcIYQcs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Sep 2016 12:32:48 -0400
+Received: by mail-pf0-f176.google.com with SMTP id 21so57298343pfy.0
+        for <git@vger.kernel.org>; Sun, 25 Sep 2016 09:32:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=amJo19IktT0xfVpS/s3fbKC/AYebkRJl6J7d5GMtQEM=;
-        b=QYsr4wkZHKJdJCwlDqPB/BIIZnBpzVst9qpjDYEqfr/MfgsiYOUueIzGtKIlgdSIfH
-         SUUglntJhWY/JdRzXMVUGWq1es1y3zd+LsUQhAO8HIeu8NAwQZw7ewezpR3ZrBt+s9ox
-         Axs3W8kAFQpyt+px1/G9paZVu8+8MTLfIe9DD/HSBCpAajqjBSmr4oW+AMj3WFt+i7di
-         41gnClVec4jyLKt/C3ZuBy3BAHdyYzuoHJALNz9+SmqC+2hJTbXb4xVIUYVUkOht6xa2
-         TjLCfOxODaS//8CvbjTNGLdcXkx4rDsFmyrcXftpumyWqI4VSquogqJloIzkIrI1hCBl
-         e+5w==
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=DQyLM0QWhcszbMtBaBk2JVFk09/f119uiFaKRrP/kk4=;
+        b=GbQk7eAUlkF2X58b8U6E2hrYhnKg3AYwnzOAIUg2pnIYv9ChsChopZWT7vz1heECRm
+         R731Bm8PiWMLyRiGEyoOXOErbLoeN86ZL41ltpDmQzOeH0WhKLN3fztNFNzf8rJfkRGp
+         BYsZwXXF2CmgS2XqHv5v083QVdEIm/IU/muwE3cpIYTwZ1HjnEWqrkaffOuFjiuKHgrN
+         FMfqb8h9WBCLLXnAYvwvBAQX/dr7f6CF8Uu4jR48SCPZprKokxBTaohOYARB07GrbtRn
+         sms+/BSyhdQHOBEb+zX+jW+ita4KX19elfCVP9Yr59tCIIjuPWXNbntJckO+quK4K7mr
+         NUlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=amJo19IktT0xfVpS/s3fbKC/AYebkRJl6J7d5GMtQEM=;
-        b=QPZ5Uei6FANSLm373Pjzim7PurZnSgfD3l28816tQ9EKfVUxtPsr+ixiIT8cth3dF/
-         MoFHlvExPSel7cMLFaMCaHPphbYvZV/t1GJTTUu2fNz7lNN4zC2YbQ0F/9xtkZ77NyA7
-         irT05/Zty+Sc2C1+lw52CqJjzDlV3yBsztZaVlUHZBH+q1d0YZzOrY9pEZ+NhsAMX92s
-         BN7FDFopRo+Vg1uCqGE46T6OGkjbnW3Mzmq+G8gjInM8hcETLHgtY/Qett0lLEArZIm/
-         42aPE8PKEtiXSiRS194j3Kmol1cc8f7/YdqYNFYkFl8V3TUxLdvEGX6p00t9Pgf/7Qkz
-         FdUg==
-X-Gm-Message-State: AE9vXwMEa9P6zjpHjvLyccUOdaVIo2v9evfFa2G8v54JXGAPWq/ZN0u26ydZypLqsvzwCg==
-X-Received: by 10.194.5.230 with SMTP id v6mr16521454wjv.92.1474814851695;
-        Sun, 25 Sep 2016 07:47:31 -0700 (PDT)
-Received: from [192.168.1.26] (dce219.neoplus.adsl.tpnet.pl. [83.23.56.219])
-        by smtp.googlemail.com with ESMTPSA id gr7sm17457413wjc.1.2016.09.25.07.47.30
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=DQyLM0QWhcszbMtBaBk2JVFk09/f119uiFaKRrP/kk4=;
+        b=GWI+oMlLGhpUP/kVGbxcaqPclG1B9oxrBT78GAC0acETBfvtR8Dzq+ezlhFjdUyUOM
+         /vpifBVwqfLrWwIepK4fMPkRmzlyC/KzBAVCvGSP28EahPJvW5hDvl+e7G7+JfdOntBX
+         kRRXAYfrpki9eZYUGgV350NKFBm3i/pX0T0658GRCb5FsCpzMn5hdBT1C6cIo2WMITjK
+         cUhIs+8xjG8GBYXcZ6QkHnaTWB4sJwleDNxPnQkAJxs/hdxkriu+84ugva+3J6a5yqhS
+         rq/jWBnLpAwov9R71BunKGKF+AG//AK8EUfvcPuI5umCCc4SENRCnIS9mXMk+J3viUTX
+         quuw==
+X-Gm-Message-State: AE9vXwMHD4zzbA7FS6JH8qhlwGjnOWi12ew3nYsUajTuWIgGRv9cZk4bjbj2QwS3B/Y+zWwp
+X-Received: by 10.98.79.27 with SMTP id d27mr31237482pfb.127.1474821167408;
+        Sun, 25 Sep 2016 09:32:47 -0700 (PDT)
+Received: from google.com ([2601:647:5401:1458:653c:74a9:fbd4:6400])
+        by smtp.gmail.com with ESMTPSA id d2sm18762809pfe.94.2016.09.25.09.32.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 25 Sep 2016 07:47:30 -0700 (PDT)
-Subject: Re: [PATCH v8 10/11] convert: make apply_filter() adhere to standard
- Git error handling
-To:     Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
-References: <20160920190247.82189-1-larsxschneider@gmail.com>
- <20160920190247.82189-11-larsxschneider@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Martin-Louis Bright <mlbright@gmail.com>,
-        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <c305f3c8-cb01-c806-9b8d-fa9e805714cc@gmail.com>
-Date:   Sun, 25 Sep 2016 16:47:27 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
+        Sun, 25 Sep 2016 09:32:46 -0700 (PDT)
+Date:   Sun, 25 Sep 2016 09:32:44 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/3] recursive support for ls-files
+Message-ID: <20160925163244.GB66080@google.com>
+References: <1474676014-134568-1-git-send-email-bmwill@google.com>
+ <20160925071744.2qcz7cntc7xxpjqv@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <20160920190247.82189-11-larsxschneider@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20160925071744.2qcz7cntc7xxpjqv@sigill.intra.peff.net>
+User-Agent: Mutt/1.7.0 (2016-08-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 20.09.2016 o 21:02, larsxschneider@gmail.com pisze:
-> From: Lars Schneider <larsxschneider@gmail.com>
+On 09/25, Jeff King wrote:
+> On Fri, Sep 23, 2016 at 05:13:31PM -0700, Brandon Williams wrote:
 > 
-> apply_filter() returns a boolean that tells the caller if it
-> "did convert or did not convert". The variable `ret` was used throughout
-> the function to track errors whereas `1` denoted success and `0`
-> failure. This is unusual for the Git source where `0` denotes success.
+> > After looking at the feedback I rerolled a few things, in particular the
+> > --submodule_prefix option that existed to give a submodule context about where
+> > it had been invoked from.  People didn't seem to like the idea of exposing this
+> > to the users (yet anyways) so I removed it as an option and instead have it
+> > being passed to a child process via an environment variable
+> > GIT_INTERNAL_SUBMODULE_PREFIX.  This way we don't have to support anything to
+> > external users at the moment.
 > 
-> Rename the variable and flip its value to make the function easier
-> readable for Git developers.
-
-This also allow to use the 'err = error("<error message>");' idiom,
-isn't it...
-
+> I think we can still have it as a command-line argument and declare it
+> internal. It's not like environment variables cannot also be set by our
+> callers. :)
 > 
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
->  convert.c | 15 ++++++---------
->  1 file changed, 6 insertions(+), 9 deletions(-)
+> I don't mind it as an environment variable, though. In some ways it
+> makes things easier. I just think "internal versus external" and the
+> exact implementation are orthogonal.
+> 
 
-...which allows to delete some lines of code.  Very nice.
+We may still want it to be an option at some point in the future.  This
+way we can revisit making it an option once we know more about the other
+uses it could have (aside from just being for submodules as someone
+suggested).
 
-> -	int ret = 1;
-> +	int err = 0;
+> > Also fixed a bug (and added a test) for the -z options as pointed out by Jeff
+> > King.
+> 
+> Hmm. It is broken after patch 2, and then fixed in patch 3. Usually we'd
+> try not to have a broken state in the history. It's less important in
+> this case, because the breakage is not a regression
+> (--recurse-submodules is a new feature, so you could consider it "not
+> working" until the 3rd patch). But I think it's still a good rule to
+> follow, because it makes the commits easier to review, look at later,
+> etc.
+> 
+> For that matter, I do not understand why options like "-s" get enabled
+> in patch 3. I do not mind them starting as disabled in patch 2, but it
+> seems like "pass along some known-safe options" should be its own patch
+> somewhere between patches 2 and 3.
 
-> -		error("read from external filter '%s' failed", cmd);
-> -		ret = 0;
-> +		err = error("read from external filter '%s' failed", cmd);
+I'll keep that in mind for future patches.  I figured that since it was
+fixed in the end that would be fine but if things shouldn't be broken at
+any state in the patch series I'll make sure to not do that in the
+future.
 
-> -	if (ret) {
-> +	if (!err) {
+> There are some other options that are ignored (neither disabled nor
+> passed along to children). Most of them are related to exclusions, which
+> I _think_ are safe to ignore (they do not do anything interesting unless
+> you specify "-o", which is explicitly disabled). I'm not sure about
+> --with-tree, though (or what it would even mean in the context of
+> recursing).
 
-> -	return ret;
-> +	return !err;
+These other features that are disabled now could be enabled in a future
+patch.  You're right though I'd have to think about the --with-tree
+option a bit more and what it would mean with submodules.
 
-Looks good.
-
+-Brandon
