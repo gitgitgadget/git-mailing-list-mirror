@@ -6,83 +6,200 @@ X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A5CE1F4F8
-	for <e@80x24.org>; Sun, 25 Sep 2016 20:17:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCB051F4F8
+	for <e@80x24.org>; Sun, 25 Sep 2016 21:08:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759526AbcIYURQ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Sep 2016 16:17:16 -0400
-Received: from ikke.info ([178.21.113.177]:38138 "EHLO vps892.directvps.nl"
+        id S1034298AbcIYVIa (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Sep 2016 17:08:30 -0400
+Received: from ikke.info ([178.21.113.177]:39934 "EHLO vps892.directvps.nl"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756166AbcIYURP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Sep 2016 16:17:15 -0400
-Received: by vps892.directvps.nl (Postfix, from userid 1008)
-        id 116164400AA; Sun, 25 Sep 2016 22:17:13 +0200 (CEST)
-Date:   Sun, 25 Sep 2016 22:17:13 +0200
+        id S1034182AbcIYVI3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Sep 2016 17:08:29 -0400
+Received: by vps892.directvps.nl (Postfix, from userid 182)
+        id 8CE514400BF; Sun, 25 Sep 2016 23:08:27 +0200 (CEST)
+Received: from io.ikke (unknown [10.8.0.30])
+        by vps892.directvps.nl (Postfix) with ESMTP id 6AEF84400A5;
+        Sun, 25 Sep 2016 23:08:25 +0200 (CEST)
 From:   Kevin Daudt <me@ikke.info>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Swift Geek <swiftgeek@gmail.com>
-Subject: Re: [PATCH v2 2/2] mailinfo: unescape quoted-pair in header fields
-Message-ID: <20160925201713.GA6937@ikke.info>
-References: <20160916210204.31282-1-me@ikke.info>
- <20160919185440.18234-3-me@ikke.info>
- <20160921110934.f6eu2dz6i2mlpa45@sigill.intra.peff.net>
- <xmqq60pn37gs.fsf@gitster.mtv.corp.google.com>
- <20160923041540.5fvl6ytp2tvcflsk@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160923041540.5fvl6ytp2tvcflsk@sigill.intra.peff.net>
-User-Agent: Mutt/1.7.0 (2016-08-17)
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Swift Geek <swiftgeek@gmail.com>, Jeff King <peff@peff.net>,
+        Kevin Daudt <me@ikke.info>
+Subject: [PATCH v3 1/2] t5100-mailinfo: replace common path prefix with variable
+Date:   Sun, 25 Sep 2016 23:08:07 +0200
+Message-Id: <20160925210808.26424-1-me@ikke.info>
+X-Mailer: git-send-email 2.10.0.89.ge802c3a.dirty
+In-Reply-To: <20160919185440.18234-1-me@ikke.info>
+References: <20160919185440.18234-1-me@ikke.info>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 23, 2016 at 12:15:41AM -0400, Jeff King wrote:
-> On Thu, Sep 22, 2016 at 03:17:23PM -0700, Junio C Hamano wrote:
-> 
-> > Jeff King <peff@peff.net> writes:
-> > 
-> > > On Mon, Sep 19, 2016 at 08:54:40PM +0200, Kevin Daudt wrote:
-> > >
-> > >> + ...
-> > >> +	while ((c = *in++) != 0) {
-> > >> +		if (take_next_literally) {
-> > >> +			take_next_literally = 0;
-> > >> +		} else {
-> > >> [...]
-> > >> +		}
-> > >> +
-> > >> +		strbuf_addch(line, c);
-> > >> +	}
-> > >> +}
-> > >
-> > > It needs to `free(in)` at the end of the function.
-> > 
-> > Ehh, in has been incremented and is pointing at the terminating NUL
-> > there, so it would be more like
-> > 
-> > 	char *to_free, *in;
-> > 
-> >         to_free = strbuf_detach(line, NULL);
-> >         in = to_free;
-> > 	...
-> >         while ((c = *in++)) {
-> >         	...
-> > 	}
-> >         free(to_free);
-> > 
-> > I would think ;-).
-> 
-> Oops, yes. It is beginning to make the "strbuf_swap()" look less
-> convoluted. :)
-> 
+Many tests need to store data in a file, and repeat the same pattern to
+refer to that path:
 
-I've switched to strbuf_swap now, much better. I've implemented
-recursive parsing without looking at what you provided, just to see what
-I'd came up with. Though I've not implemented a recursive descent
-parser, but it might suffice.
+    "$TEST_DIRECTORY"/t5100/
 
-I'm sending the patches now.
+Create a variable that contains this path, and use that instead.
+
+Signed-off-by: Kevin Daudt <me@ikke.info>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Changes since v2:
+ - changed $DATA to $data to indicate it's a script-local variable
+
+ t/t5100-mailinfo.sh | 56 +++++++++++++++++++++++++++--------------------------
+ 1 file changed, 29 insertions(+), 27 deletions(-)
+
+diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
+index 1a5a546..c4ed0f4 100755
+--- a/t/t5100-mailinfo.sh
++++ b/t/t5100-mailinfo.sh
+@@ -7,8 +7,10 @@ test_description='git mailinfo and git mailsplit test'
+ 
+ . ./test-lib.sh
+ 
++data="$TEST_DIRECTORY/t5100"
++
+ test_expect_success 'split sample box' \
+-	'git mailsplit -o. "$TEST_DIRECTORY"/t5100/sample.mbox >last &&
++	'git mailsplit -o. "$data"/sample.mbox >last &&
+ 	last=$(cat last) &&
+ 	echo total is $last &&
+ 	test $(cat last) = 17'
+@@ -17,9 +19,9 @@ check_mailinfo () {
+ 	mail=$1 opt=$2
+ 	mo="$mail$opt"
+ 	git mailinfo -u $opt msg$mo patch$mo <$mail >info$mo &&
+-	test_cmp "$TEST_DIRECTORY"/t5100/msg$mo msg$mo &&
+-	test_cmp "$TEST_DIRECTORY"/t5100/patch$mo patch$mo &&
+-	test_cmp "$TEST_DIRECTORY"/t5100/info$mo info$mo
++	test_cmp "$data"/msg$mo msg$mo &&
++	test_cmp "$data"/patch$mo patch$mo &&
++	test_cmp "$data"/info$mo info$mo
+ }
+ 
+ 
+@@ -27,15 +29,15 @@ for mail in 00*
+ do
+ 	test_expect_success "mailinfo $mail" '
+ 		check_mailinfo $mail "" &&
+-		if test -f "$TEST_DIRECTORY"/t5100/msg$mail--scissors
++		if test -f "$data"/msg$mail--scissors
+ 		then
+ 			check_mailinfo $mail --scissors
+ 		fi &&
+-		if test -f "$TEST_DIRECTORY"/t5100/msg$mail--no-inbody-headers
++		if test -f "$data"/msg$mail--no-inbody-headers
+ 		then
+ 			check_mailinfo $mail --no-inbody-headers
+ 		fi &&
+-		if test -f "$TEST_DIRECTORY"/t5100/msg$mail--message-id
++		if test -f "$data"/msg$mail--message-id
+ 		then
+ 			check_mailinfo $mail --message-id
+ 		fi
+@@ -45,7 +47,7 @@ done
+ 
+ test_expect_success 'split box with rfc2047 samples' \
+ 	'mkdir rfc2047 &&
+-	git mailsplit -orfc2047 "$TEST_DIRECTORY"/t5100/rfc2047-samples.mbox \
++	git mailsplit -orfc2047 "$data"/rfc2047-samples.mbox \
+ 	  >rfc2047/last &&
+ 	last=$(cat rfc2047/last) &&
+ 	echo total is $last &&
+@@ -56,18 +58,18 @@ do
+ 	test_expect_success "mailinfo $mail" '
+ 		git mailinfo -u $mail-msg $mail-patch <$mail >$mail-info &&
+ 		echo msg &&
+-		test_cmp "$TEST_DIRECTORY"/t5100/empty $mail-msg &&
++		test_cmp "$data"/empty $mail-msg &&
+ 		echo patch &&
+-		test_cmp "$TEST_DIRECTORY"/t5100/empty $mail-patch &&
++		test_cmp "$data"/empty $mail-patch &&
+ 		echo info &&
+-		test_cmp "$TEST_DIRECTORY"/t5100/rfc2047-info-$(basename $mail) $mail-info
++		test_cmp "$data"/rfc2047-info-$(basename $mail) $mail-info
+ 	'
+ done
+ 
+ test_expect_success 'respect NULs' '
+ 
+-	git mailsplit -d3 -o. "$TEST_DIRECTORY"/t5100/nul-plain &&
+-	test_cmp "$TEST_DIRECTORY"/t5100/nul-plain 001 &&
++	git mailsplit -d3 -o. "$data"/nul-plain &&
++	test_cmp "$data"/nul-plain 001 &&
+ 	(cat 001 | git mailinfo msg patch) &&
+ 	test_line_count = 4 patch
+ 
+@@ -75,52 +77,52 @@ test_expect_success 'respect NULs' '
+ 
+ test_expect_success 'Preserve NULs out of MIME encoded message' '
+ 
+-	git mailsplit -d5 -o. "$TEST_DIRECTORY"/t5100/nul-b64.in &&
+-	test_cmp "$TEST_DIRECTORY"/t5100/nul-b64.in 00001 &&
++	git mailsplit -d5 -o. "$data"/nul-b64.in &&
++	test_cmp "$data"/nul-b64.in 00001 &&
+ 	git mailinfo msg patch <00001 &&
+-	test_cmp "$TEST_DIRECTORY"/t5100/nul-b64.expect patch
++	test_cmp "$data"/nul-b64.expect patch
+ 
+ '
+ 
+ test_expect_success 'mailinfo on from header without name works' '
+ 
+ 	mkdir info-from &&
+-	git mailsplit -oinfo-from "$TEST_DIRECTORY"/t5100/info-from.in &&
+-	test_cmp "$TEST_DIRECTORY"/t5100/info-from.in info-from/0001 &&
++	git mailsplit -oinfo-from "$data"/info-from.in &&
++	test_cmp "$data"/info-from.in info-from/0001 &&
+ 	git mailinfo info-from/msg info-from/patch \
+ 	  <info-from/0001 >info-from/out &&
+-	test_cmp "$TEST_DIRECTORY"/t5100/info-from.expect info-from/out
++	test_cmp "$data"/info-from.expect info-from/out
+ 
+ '
+ 
+ test_expect_success 'mailinfo finds headers after embedded From line' '
+ 	mkdir embed-from &&
+-	git mailsplit -oembed-from "$TEST_DIRECTORY"/t5100/embed-from.in &&
+-	test_cmp "$TEST_DIRECTORY"/t5100/embed-from.in embed-from/0001 &&
++	git mailsplit -oembed-from "$data"/embed-from.in &&
++	test_cmp "$data"/embed-from.in embed-from/0001 &&
+ 	git mailinfo embed-from/msg embed-from/patch \
+ 	  <embed-from/0001 >embed-from/out &&
+-	test_cmp "$TEST_DIRECTORY"/t5100/embed-from.expect embed-from/out
++	test_cmp "$data"/embed-from.expect embed-from/out
+ '
+ 
+ test_expect_success 'mailinfo on message with quoted >From' '
+ 	mkdir quoted-from &&
+-	git mailsplit -oquoted-from "$TEST_DIRECTORY"/t5100/quoted-from.in &&
+-	test_cmp "$TEST_DIRECTORY"/t5100/quoted-from.in quoted-from/0001 &&
++	git mailsplit -oquoted-from "$data"/quoted-from.in &&
++	test_cmp "$data"/quoted-from.in quoted-from/0001 &&
+ 	git mailinfo quoted-from/msg quoted-from/patch \
+ 	  <quoted-from/0001 >quoted-from/out &&
+-	test_cmp "$TEST_DIRECTORY"/t5100/quoted-from.expect quoted-from/msg
++	test_cmp "$data"/quoted-from.expect quoted-from/msg
+ '
+ 
+ test_expect_success 'mailinfo unescapes with --mboxrd' '
+ 	mkdir mboxrd &&
+ 	git mailsplit -omboxrd --mboxrd \
+-		"$TEST_DIRECTORY"/t5100/sample.mboxrd >last &&
++		"$data"/sample.mboxrd >last &&
+ 	test x"$(cat last)" = x2 &&
+ 	for i in 0001 0002
+ 	do
+ 		git mailinfo mboxrd/msg mboxrd/patch \
+ 		  <mboxrd/$i >mboxrd/out &&
+-		test_cmp "$TEST_DIRECTORY"/t5100/${i}mboxrd mboxrd/msg
++		test_cmp "$data"/${i}mboxrd mboxrd/msg
+ 	done &&
+ 	sp=" " &&
+ 	echo "From " >expect &&
+-- 
+2.10.0.89.ge802c3a.dirty
 
