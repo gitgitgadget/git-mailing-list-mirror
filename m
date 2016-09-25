@@ -2,109 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 876301F4F8
-	for <e@80x24.org>; Sun, 25 Sep 2016 14:02:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B10631F4F8
+	for <e@80x24.org>; Sun, 25 Sep 2016 14:04:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756202AbcIYOCP (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Sep 2016 10:02:15 -0400
-Received: from mout.gmx.net ([212.227.17.21]:55800 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756006AbcIYOCO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Sep 2016 10:02:14 -0400
-Received: from virtualbox ([108.198.118.51]) by mail.gmx.com (mrgmx103) with
- ESMTPSA (Nemesis) id 0MYwQh-1bRHw212A7-00Vgph; Sun, 25 Sep 2016 16:02:02
- +0200
-Date:   Sun, 25 Sep 2016 16:01:54 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jeff King <peff@peff.net>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Benjamin Kramer <benny.kra@googlemail.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [PATCH v4 3/3] regex: use regexec_buf()
-In-Reply-To: <20160921220310.5wk76qdsjyhvstk4@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1609251600120.129229@virtualbox>
-References: <cover.1473321437.git.johannes.schindelin@gmx.de> <cover.1474482164.git.johannes.schindelin@gmx.de> <53f3609d99c865d59d7bfd8219a5334339e9e6bc.1474482164.git.johannes.schindelin@gmx.de> <20160921220310.5wk76qdsjyhvstk4@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1756269AbcIYOEF (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Sep 2016 10:04:05 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34009 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752787AbcIYOEF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Sep 2016 10:04:05 -0400
+Received: by mail-wm0-f67.google.com with SMTP id l132so10105339wmf.1
+        for <git@vger.kernel.org>; Sun, 25 Sep 2016 07:04:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=OQqq9Ki1kuTkrUZV79O4UZxgLh/meCSvbLS74jb/Jok=;
+        b=jrpxrg/v3QCHEHeGDaao1tnd4awrghvKSq2VSrthaSUqz0i3uETa8Pv/qAiURK4eAp
+         PsCLpKj6MoBgEanwPLiDwNfFbXatyDDtz0D1aVBaGWl/CUTzrP8RufTx4F469uha1cCB
+         S5yjmiwk8PDXlWQchHhFlpUJNrsFHZpLHp+M8RrOuNzGOGNFiGoqlOn0FHV9hMd5GM33
+         iYjtv/zNDW7hl7fOMFtSZhEgqesM6P4142zZEZ9HapxBkOZdQrYdP4xGbrPGZWCB1gtK
+         /Tt93EIfBD0j9CWz42hTMkFhIOMAkNM9UJohE2LscN2cF78BfLkP79H0/+PGLRXq6RkJ
+         fvSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=OQqq9Ki1kuTkrUZV79O4UZxgLh/meCSvbLS74jb/Jok=;
+        b=dOBmV2Tm5LI/fUa69zKCiqQOpwE3meP1+fm1fV66jS9bn9u5cHfDFCSJUIdvC4KVN0
+         sIpp604W3fUkDH3GWaE6P8h0fwZ/GVC+EPm2dWE66Q6h5sjtymfT/3jVgT29A/chtJPU
+         jlwcKzJIpsJRGFIp/2pmEoWSLogDTYs7bpVxL9Q84+2EcmirLcitW2oAa7G4DuQir8/Q
+         nV6Tmdf4PwkV9MyFdhmmcgMepn2pjwkSZicT2QOpQGGojrYab0wGTmdMLJlluG7fjUJq
+         ylhipM6FcwdCe6W74Uw/BRMvWBy0PjjNFsORGGkSYBNA8LgDWK8jh3kmvT0I9K/q20oQ
+         lwIg==
+X-Gm-Message-State: AA6/9Rm9Bb5BYxaMrQELNqBy0zKllPOLuCJiwnieN7R0qTeKo/gOWOJI6nCHDOu7rfCPFw==
+X-Received: by 10.28.229.20 with SMTP id c20mr11795591wmh.0.1474812243604;
+        Sun, 25 Sep 2016 07:04:03 -0700 (PDT)
+Received: from [192.168.1.26] (dce219.neoplus.adsl.tpnet.pl. [83.23.56.219])
+        by smtp.googlemail.com with ESMTPSA id 74sm6123393wmi.7.2016.09.25.07.04.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 25 Sep 2016 07:04:02 -0700 (PDT)
+Subject: Re: [PATCH v8 08/11] convert: quote filter names in error messages
+To:     larsxschneider@gmail.com, git@vger.kernel.org
+References: <20160920190247.82189-1-larsxschneider@gmail.com>
+ <20160920190247.82189-9-larsxschneider@gmail.com>
+Cc:     peff@peff.net, gitster@pobox.com, sbeller@google.com,
+        mlbright@gmail.com, tboegi@web.de, ramsay@ramsayjones.plus.com
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <6fc996fd-cdae-43c1-3ea9-2408e9ea47de@gmail.com>
+Date:   Sun, 25 Sep 2016 16:03:59 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:cpZW+oTK2O+ipHwWiNyVVM/UsJlOmDBrzm/7ZpwQIU2GlU1cquQ
- jElMaLNZIl+6PeRWs97ZyBz9wmzq5evu7OFR1pKE1d07Kf/9EcUXQynSrsz/lf4ETmhXpaa
- peCt9FQLY/ETzLYDfdPH/0mnwNqQ46dxGq0/RUSjs20g3NrTIQ359IB0iNR9oIerZA93Rxb
- BrZwoaOzCdZQitkfh/Opw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:LGUurQ6iyWs=:DNTidWJzms/csBe8/ZdA7D
- CrRMh3LqjecV5UcSPrMVPnBvKD6iGS9KAxeanX0wm55NBA4jIQ2Wx9Wh8raRQBYHt4izm0Du3
- d235oCW+xIh/eqXun/7L64cuklmlLMdQuuOn6JFrgwMWzLTOAANf7/0gCkih6G/XD5NCAsKn0
- ZTvD7StsBynLoBzFMFhoCC2/p0OR1Ncxn4AMQYEJ8p7Z5y6WlVhxVMAwhLgwKndkWGRD/UfpM
- ZNgpZxGVfZsqLbQLoFPw/jCvKHkQ1ghHZCYft2FtyvhMoFam9iFsIRQK0rHp4wvgV6f14D9u0
- dBUqI8njT1Iff59p6Yj6LPnQ5Ii/eTOBWfqByr8NnR/tkOXYU64OX1EWHjGm1pSH/pIPCsLHK
- lg77EKrSOlnoP35dmGu2OyvzSGIpsekwq2OBjsuGPKcdsZ/BAxFJojaIZWKtV2ReTJ7Z/gEVR
- 3HBd1NKkmn4aYlOEsSQuG30JcUM54Q60dH2uvFpJqOMGWpSC+EPAMsn21HW/qmiD6H9ahqCqm
- +FkOJwvs5/iMqNvSHllX5AVZ4eS72lv4YJGIMsWpZh/4rQfH0LWofhNHpnRQkP8nVbkaLNmuP
- 1M5c/YGXeGXQ/6E2UGcLtsHKYRApFc90SFvVF5CkrpQh0/AEKk+nlAfcQbSyXCdJfmocmpEFG
- jAwbQCChDMIsmpwi/ZRMtqQT8bca6NEQ+B+hwC+zgRGoDWZFqbHMKBOqAMvdd0KUFEdqq3fNo
- 48+QKPhUT1MfAvJcAhfEquls1LVbss9nqgK0eQ1igaG5M0wgqhcdU2JklU+Dh9KhaVe6Xp97a
- pDo4LUQ
+In-Reply-To: <20160920190247.82189-9-larsxschneider@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
-
-On Wed, 21 Sep 2016, Jeff King wrote:
-
-> On Wed, Sep 21, 2016 at 08:24:14PM +0200, Johannes Schindelin wrote:
+W dniu 20.09.2016 o 21:02, larsxschneider@gmail.com pisze:
+> From: Lars Schneider <larsxschneider@gmail.com>
 > 
-> > The new regexec_buf() function operates on buffers with an explicitly
-> > specified length, rather than NUL-terminated strings.
-> > 
-> > We need to use this function whenever the buffer we want to pass to
-> > regexec() may have been mmap()ed (and is hence not NUL-terminated).
-> > 
-> > Note: the original motivation for this patch was to fix a bug where
-> > `git diff -G <regex>` would crash. This patch converts more callers,
-> > though, some of which explicitly allocated and constructed
-> > NUL-terminated strings (or worse: modified read-only buffers to insert
-> > NULs).
+> Git filter driver commands with spaces (e.g. `filter.sh foo`) are hard
+> to read in error messages. Quote them to improve the readability.
 > 
-> Nice. I probably would have split these into their own patch, but I
-> think it is OK here.
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+> ---
+>  convert.c | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
 
-True. I guess I was a little lazy...
+Looks good (those are all sites matching 'error.*%s' in convert.c).
 
-> > @@ -228,18 +227,16 @@ static long ff_regexp(const char *line, long len,
-> >  			len--;
-> >  	}
-> >  
-> > -	line_buffer = xstrndup(line, len); /* make NUL terminated */
-> > -
-> 
-> Nice to see this one going away in particular, since it's called quite a
-> lot. According to perf, "git log -p" on git.git drops about 1.5 million
-> malloc calls (about 9% of the total). And here are best-of-five results
-> for that same command:
-> 
->   [before]
->   real    0m14.676s
->   user    0m13.988s
->   sys     0m0.676s
-> 
->   [after]
->   real    0m14.394s
->   user    0m13.624s
->   sys     0m0.760s
-> 
-> Not a _huge_ improvement, but more significant than the run-to-run
-> noise.
+> -		return error("cannot fork to run external filter %s", params->cmd);
+> +		return error("cannot fork to run external filter '%s'", params->cmd);
 
-Oh, that's nice! As you guessed, my aim was not to improve performance,
-but it is a pretty side effect...
+> -		error("cannot feed the input to external filter %s", params->cmd);
+> +		error("cannot feed the input to external filter '%s'", params->cmd);
 
-Thanks for testing!
-Dscho
+> -		error("external filter %s failed %d", params->cmd, status);
+> +		error("external filter '%s' failed %d", params->cmd, status);
+
+> -		error("read from external filter %s failed", cmd);
+> +		error("read from external filter '%s' failed", cmd);
+
+> -		error("read from external filter %s failed", cmd);
+> +		error("read from external filter '%s' failed", cmd);
+
+> -		error("external filter %s failed", cmd);
+> +		error("external filter '%s' failed", cmd);
+
