@@ -2,116 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E7F9207EC
-	for <e@80x24.org>; Mon, 26 Sep 2016 18:53:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A27D207EC
+	for <e@80x24.org>; Mon, 26 Sep 2016 19:06:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1161652AbcIZSxZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Sep 2016 14:53:25 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:36264 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1161518AbcIZSxY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2016 14:53:24 -0400
-Received: by mail-lf0-f67.google.com with SMTP id s29so10380739lfg.3
-        for <git@vger.kernel.org>; Mon, 26 Sep 2016 11:53:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=ivuGCJ0R++xOKqDVT3lA8DBvTxmz84aO9QXAaLKNECs=;
-        b=lfDH3rImJANLEHmRZzvPlfHLGIPgZdYc8TUKvqLrtts2l6wD+0isDq+Qxibyy4ThVC
-         eBpt/WvfqX+1WU5cxkXrbudJko45IZHoqqD18qaPORdj0225SnvLvDmv76Pz/64HZbvM
-         3KefJGH2JaLH1KsnoHTgkgZIaiOob0cJC+CY2pwQJeYa/5/nG5JiX6xwBh7VE1BzzO8n
-         lsfFY8BgXC3HQ6y80d/ISNrA1jtqewK64z1ArLqytv8MpQ6PU/rqMkjVyuHmvGcTdXNk
-         gsQdz4hIa5wcurmWWaFZNagXdqkT7n4JHdI8K69cRVNHuVcADa3/sMn/Hjy8SOQVyyCz
-         vaaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=ivuGCJ0R++xOKqDVT3lA8DBvTxmz84aO9QXAaLKNECs=;
-        b=XtehI3HKG5Ayse12kMa9pAuN3ra03B27j6dzGo8xuAGIow9xywzg5pwM+MLUKnDxZj
-         HYqlIBN5b5juq0HI/BLuhPoIsFYdaJLqRfG/0anqjp7hOeIWDzNYNkCLx8rTC6xKcWiF
-         6PjiM1dCcIvMEKOPC+4z22rG1jHf+JYHBeEEaqcncZx9WG/saVEN0Dif0xepUrlPfONa
-         4mzqX1iUejRHpPOvmkwHovuaCeWbfLc61v3t85P3Lm/iBnD+na/+Mn48Kf23JBEHoLix
-         G+zPna8Ll4DsIv8vzc4S/zfOSFCpoyPCBEz62aCqADY3Ngcsn6JG9wIl8mXtc8gjhA50
-         VLZw==
-X-Gm-Message-State: AA6/9RlBTICZ3AzIsnR+PnXSbEpiuasCFH/+4rzhdYBIBRmAAU+3Y3qwoOCDgBkCirb7gQ==
-X-Received: by 10.28.135.71 with SMTP id j68mr14736229wmd.130.1474916003021;
-        Mon, 26 Sep 2016 11:53:23 -0700 (PDT)
-Received: from slxbook3.fritz.box (p5DDB4342.dip0.t-ipconnect.de. [93.219.67.66])
-        by smtp.gmail.com with ESMTPSA id ce6sm23709156wjc.27.2016.09.26.11.53.21
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 26 Sep 2016 11:53:22 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Subject: Re: [PATCH v8 02/11] pkt-line: extract set_packet_header()
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <a5b9a46d-592e-089d-d156-36c4d61902c9@gmail.com>
-Date:   Mon, 26 Sep 2016 20:53:20 +0200
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Martin-Louis Bright <mlbright@gmail.com>,
-        =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <C797715E-97C3-4EEA-AD9F-C22FA27F0421@gmail.com>
-References: <20160920190247.82189-1-larsxschneider@gmail.com> <20160920190247.82189-3-larsxschneider@gmail.com> <a5b9a46d-592e-089d-d156-36c4d61902c9@gmail.com>
-To:     =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-X-Mailer: Apple Mail (2.1878.6)
+        id S1161652AbcIZTGe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Sep 2016 15:06:34 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56035 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S941581AbcIZTGd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2016 15:06:33 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 239F441EC2;
+        Mon, 26 Sep 2016 15:06:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=I/JihapTmaDaRJxBRfrheSGmn1E=; b=TN4tlu
+        wMXQLli28jxMAPKZ0a0VZu4LqF/4Oa0vMmUKLSRmIM2GCVF4oSuzgQuEXi5Su+bF
+        z3ZmDrM7l2D2W6vkX7rp1GUVwqjRhP3Pd9AxKG38sX/pofChJ3pVvcID5S30tnzK
+        TZ8PBDq4tV2uJ367Yg5j7h/2/Tw134fWGEBCI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=QUli2h4vNun4QSbX2SBzWgJaMNY1Rz/l
+        ADABAwcpGpv033p8+P/JvNnSTRclCvE7QUqt7Gk3ScsirBTV73glDGNfUKV8kUIi
+        +vpoVHMGPMpWfufVV85ublLApKNMjrG8FCHJK2UhVWWcTHfQwMa3BouaxzwI8sbh
+        YbVmwwKrhuQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1AB1C41EC0;
+        Mon, 26 Sep 2016 15:06:32 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 957DC41EBF;
+        Mon, 26 Sep 2016 15:06:31 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kevin Daudt <me@ikke.info>
+Cc:     git@vger.kernel.org, Swift Geek <swiftgeek@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 1/2] t5100-mailinfo: replace common path prefix with variable
+References: <20160919185440.18234-1-me@ikke.info>
+        <20160925210808.26424-1-me@ikke.info>
+Date:   Mon, 26 Sep 2016 12:06:28 -0700
+In-Reply-To: <20160925210808.26424-1-me@ikke.info> (Kevin Daudt's message of
+        "Sun, 25 Sep 2016 23:08:07 +0200")
+Message-ID: <xmqqd1jqscp7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 55E3B092-841C-11E6-B8E5-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Kevin Daudt <me@ikke.info> writes:
 
-On 24 Sep 2016, at 23:22, Jakub Nar=C4=99bski <jnareb@gmail.com> wrote:
+> Many tests need to store data in a file, and repeat the same pattern to
+> refer to that path:
+>
+>     "$TEST_DIRECTORY"/t5100/
+>
+> Create a variable that contains this path, and use that instead.
+>
+> Signed-off-by: Kevin Daudt <me@ikke.info>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Changes since v2:
+>  - changed $DATA to $data to indicate it's a script-local variable
 
-> W dniu 20.09.2016 o 21:02, larsxschneider@gmail.com pisze:
->=20
->> From: Lars Schneider <larsxschneider@gmail.com>
->>=20
->> Subject: [PATCH v8 02/11] pkt-line: extract set_packet_header()
->>=20
->> set_packet_header() converts an integer to a 4 byte hex string. Make
->> this function locally available so that other pkt-line functions can
->> use it.
->=20
-> Ah. I have trouble understanding this commit message, as the
-> set_packet_header() was not available before this patch, but it
-> is good if one reads it together with commit summary / title.
->=20
-> Writing
->=20
->  Extracted set_packet_header() function converts...
->=20
-> or
->=20
->  New set_packet_header() function converts...=20
->=20
-> would make it more clear, but it is all right as it is now.
-> Perhaps also
->=20
->  ... could use it.
->=20
-> as currently no other pkt-line function but the one =
-set_packet_header()
-> was extracted from, namely format_packet(), uses it.
->=20
-> But that is just nitpicking; no need to change on that account.
+If you are rerolling anyway, I would have liked to see the "why is
+only the variable part quoted?"  issue addressed which was raised
+during the previous round of the review.  I may have said it is OK
+to leave it as a low-hanging fruit for others but that only meant
+that it alone is not a strong enough reason to reroll this patch.
 
-Changed it:
+Other than that, looks good to me, though ;-)
 
-Extracted set_packet_header() function converts an integer to a 4 byte=20=
-
-hex string. Make this function locally available so that other pkt-line=20=
-
-functions could use it.
-
-Thanks,
-Lars=
