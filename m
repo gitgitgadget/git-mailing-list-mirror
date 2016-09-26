@@ -2,104 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E891207EC
-	for <e@80x24.org>; Mon, 26 Sep 2016 19:51:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 431E6207EC
+	for <e@80x24.org>; Mon, 26 Sep 2016 20:07:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1034445AbcIZTvY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Sep 2016 15:51:24 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52797 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S936198AbcIZTvX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2016 15:51:23 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D3A4D41601;
-        Mon, 26 Sep 2016 15:51:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=EsY6FIgKvnmnOXu00kalM2GgoDo=; b=k6apOW
-        pzLoYST+e2NmO9OoHEU8XA1mYOPEtOV/AVhBf00oAxET/SRztBVfwxE6rYqSN++q
-        kkp7yrEyJ6M4zjVFiOBdImEZXaUMm3y450caMEKy01XqyvRO8odhiIMo2w0bf6bK
-        TzPM3ugERfHW42T8cJ3/Lvjt66dWbohhG5XiM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=N/oz4XrBICZRJlRg6ptGIfcKPamb+NUb
-        nkJ0Zr8gFRWVhgGsWlACYrhYTv0Pkioyc+tNr+AKfAwMQPtCaLB+Yvhdce3qcBEn
-        pP9Cs3KdxSN5CJUuPUgs8J9cITH+pNSMa8M1Wf4TTqMEfGQYM5mP3QJwpXB9xMoM
-        dKldJfSE9vg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CD11841600;
-        Mon, 26 Sep 2016 15:51:21 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 540A6415FF;
-        Mon, 26 Sep 2016 15:51:21 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     David Turner <novalis@novalis.org>
-Cc:     git@vger.kernel.org, peff@peff.net, mhagger@alum.mit.edu,
-        David Turner <dturner@twosigma.com>
-Subject: Re: [PATCH 2/2] fsck: handle bad trees like other errors
-References: <1474918365-10937-1-git-send-email-novalis@novalis.org>
-        <1474918365-10937-3-git-send-email-novalis@novalis.org>
-Date:   Mon, 26 Sep 2016 12:51:19 -0700
-In-Reply-To: <1474918365-10937-3-git-send-email-novalis@novalis.org> (David
-        Turner's message of "Mon, 26 Sep 2016 15:32:45 -0400")
-Message-ID: <xmqqlgyeqw20.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1752865AbcIZUG5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Sep 2016 16:06:57 -0400
+Received: from mail-lf0-f47.google.com ([209.85.215.47]:36373 "EHLO
+        mail-lf0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751800AbcIZUG4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2016 16:06:56 -0400
+Received: by mail-lf0-f47.google.com with SMTP id g62so155851735lfe.3
+        for <git@vger.kernel.org>; Mon, 26 Sep 2016 13:06:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=nRd0mMCygZBr/gKyj1dA/hJWVvnWmw5JH/hhaun/Q/k=;
+        b=C9StGGTj8HQUhH5dF0RfcXm+W2doweqPzdg6dUYqEU0bYxjnaBENaTHzmZuprCor9Z
+         jorxbdknWVQ25OSYMPO8siU4940x79t6iqCyFNv5N4r4eS/fdw4QFXyqQsn7z9m4FX2W
+         pMt71dZwZQslvttzpWPQsjdL/HGWVEIw3HgbxvdAgxb0WbHPxwWKchAla1jN5wgiq/HU
+         mtIrWz9ohohvgQvdt8xgKuvBQ8dwa4utmdW9N7cS3nmLDwSSLfheRoAv8YJZknQPh8hV
+         rQY5foBxIZDIo7F3McpMEYQWU9aP4c2qLDi8Fblt+hJ9vRWXecEASeB84iX3xDXoFOrZ
+         7Ixw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=nRd0mMCygZBr/gKyj1dA/hJWVvnWmw5JH/hhaun/Q/k=;
+        b=ZBCJZHmlZEEdVhEBwqssglMGWLQ8tngvVAj+HiPsrDxUhbocq406mGdHxBEPrA0uUT
+         Xm0YXxIRgxqlfyjFBPJexqAtVKKGXnBBuZMAGWWZBCbWgiFX/x961k97fOWI81IQBG0h
+         gMjw09LWJSkyg/43/A28suBe9R5Ltbnqa4NSW8N6h6TxrekHEswYyu3DWTNg4C415KIt
+         fLIacdWN+Vlvl65OQzHBhd32tWbx654fCKbsGKM7G8C6qapSdu6Ttt6jFSz67l3HHgqz
+         qzey4tDVUKrMhCDmYcdA5ao8PLz+RadRaSceVrocb1tUVTODWKbarKvoShLeQXqLY8bX
+         7m/w==
+X-Gm-Message-State: AA6/9Rl6KAn0rEtOpln9kAmL8piobbXk815y3q645WJnnum0dsfJCTU5GnQk3VT2xl3vzOMUVpVISWdulEn72w==
+X-Received: by 10.28.154.142 with SMTP id c136mr17311876wme.102.1474920413563;
+ Mon, 26 Sep 2016 13:06:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9917B33A-8422-11E6-85B5-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
+Received: by 10.80.148.198 with HTTP; Mon, 26 Sep 2016 13:06:53 -0700 (PDT)
+In-Reply-To: <CAGHpTBLgwyw_iYK927Yed+XG9ti+tKboz07-FVYWox9WoQkjOg@mail.gmail.com>
+References: <1462458182-4488-1-git-send-email-orgads@gmail.com>
+ <xmqqwpn8bes0.fsf@gitster.mtv.corp.google.com> <CAGHpTBLdy9R7xvfcFWoMkvGNJjY-wM5=HfWxs8XF_yh-+2Rc3w@mail.gmail.com>
+ <CAGHpTBLgwyw_iYK927Yed+XG9ti+tKboz07-FVYWox9WoQkjOg@mail.gmail.com>
+From:   Orgad Shaneh <orgads@gmail.com>
+Date:   Mon, 26 Sep 2016 23:06:53 +0300
+Message-ID: <CAGHpTB+Fnu4x1bV9TSNo8pYdOzJzRsXA9r3CwxVz64mjW_qsGw@mail.gmail.com>
+Subject: Re: [PATCH] git-gui: Do not reset author details on amend
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Pat Thoyts <patthoyts@users.sourceforge.net>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-David Turner <novalis@novalis.org> writes:
+4.5 months and counting... :(
 
-> @@ -535,7 +536,10 @@ static int fsck_tree(struct tree *item, struct fsck_options *options)
->  	unsigned o_mode;
->  	const char *o_name;
->  
-> -	init_tree_desc(&desc, item->buffer, item->size);
-> +	if (init_tree_desc_gently(&desc, item->buffer, item->size)) {
-> +		retval += report(options, &item->object, FSCK_MSG_BAD_TREE, "cannot be parsed as a tree");
-> +		return retval;
-> +	}
+- Orgad
 
-Good.  If BAD_TREE is being ignored, this may report a non-error,
-but we won't descend into the unreadable tree so it is OK.
-
-> @@ -556,7 +560,10 @@ static int fsck_tree(struct tree *item, struct fsck_options *options)
->  			       is_hfs_dotgit(name) ||
->  			       is_ntfs_dotgit(name));
->  		has_zero_pad |= *(char *)desc.buffer == '0';
-> -		update_tree_entry(&desc);
-> +		if (update_tree_entry_gently(&desc)) {
-> +			retval += report(options, &item->object, FSCK_MSG_BAD_TREE, "cannot be parsed as a tree");
-> +			break;
-> +		}
-
-Likewise; breaking out of the loop will stop us from reading further
-into the corrupted tree data, so this is good.
-
-> @@ -597,7 +604,6 @@ static int fsck_tree(struct tree *item, struct fsck_options *options)
->  		o_name = name;
->  	}
->  
-> -	retval = 0;
-
-Good code hygiene that you moved this to the very top where it is
-defined, so anybody before this step can set it if it wants to.
-
-Reading purely from the text of this function, it was surprising
-that you can do without a gently variant of tree_entry_extract(),
-but it merely reads into two variables and does not do any error
-detection (which happens all in the caller), so it is not at all
-surprising after all ;-)
-
-I didn't see anything objectionable in this patch.  Thanks for
-working on this.
+On Sun, Jul 10, 2016 at 7:36 AM, Orgad Shaneh <orgads@gmail.com> wrote:
+> It's been over 2 months. Can anyone please review and merge it?
+>
+> Thanks.
+> - Orgad
+>
+> On Wed, May 18, 2016 at 9:12 AM, Orgad Shaneh <orgads@gmail.com> wrote:
+>> ping?
+>>
+>> On Thu, May 5, 2016 at 8:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Pat, we haven't heard from you for a long time.  Are you still
+>>> around and interested in helping us by maintaining git-gui?
+>>>
+>>> Otherwise we may have to start recruiting a volunteer or two to take
+>>> this over.
+>>>
+>>> Thanks.
+>>>
+>>> Orgad Shaneh <orgads@gmail.com> writes:
+>>>
+>>>> git commit --amend preserves the author details unless --reset-author is
+>>>> given.
+>>>>
+>>>> git-gui discards the author details on amend.
+>>>>
+>>>> Fix by reading the author details along with the commit message, and
+>>>> setting the appropriate environment variables required for preserving
+>>>> them.
+>>>>
+>>>> Reported long ago in the mailing list[1].
+>>>>
+>>>> [1] http://article.gmane.org/gmane.comp.version-control.git/243921
+>>>>
+>>>> Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+>>>> ---
+>>>>  git-gui/lib/commit.tcl | 19 +++++++++++++++++++
+>>>>  1 file changed, 19 insertions(+)
+>>>>
+>>>> diff --git a/git-gui/lib/commit.tcl b/git-gui/lib/commit.tcl
+>>>> index 864b687..60edf99 100644
+>>>> --- a/git-gui/lib/commit.tcl
+>>>> +++ b/git-gui/lib/commit.tcl
+>>>> @@ -1,8 +1,13 @@
+>>>>  # git-gui misc. commit reading/writing support
+>>>>  # Copyright (C) 2006, 2007 Shawn Pearce
+>>>>
+>>>> +set author_name ""
+>>>> +set author_email ""
+>>>> +set author_date ""
+>>>> +
+>>>>  proc load_last_commit {} {
+>>>>       global HEAD PARENT MERGE_HEAD commit_type ui_comm
+>>>> +     global author_name author_email author_date
+>>>>       global repo_config
+>>>>
+>>>>       if {[llength $PARENT] == 0} {
+>>>> @@ -34,6 +39,10 @@ You are currently in the middle of a merge that has not been fully completed.  Y
+>>>>                                       lappend parents [string range $line 7 end]
+>>>>                               } elseif {[string match {encoding *} $line]} {
+>>>>                                       set enc [string tolower [string range $line 9 end]]
+>>>> +                             } elseif {[regexp "author (.*)\\s<(.*)>\\s(\\d.*$)" $line all name email time]} {
+>>>> +                                     set author_name $name
+>>>> +                                     set author_email $email
+>>>> +                                     set author_date $time
+>>>>                               }
+>>>>                       }
+>>>>                       set msg [read $fd]
+>>>> @@ -107,8 +116,12 @@ proc do_signoff {} {
+>>>>
+>>>>  proc create_new_commit {} {
+>>>>       global commit_type ui_comm
+>>>> +     global author_name author_email author_date
+>>>>
+>>>>       set commit_type normal
+>>>> +     set author_name ""
+>>>> +     set author_email ""
+>>>> +     set author_date ""
+>>>>       $ui_comm delete 0.0 end
+>>>>       $ui_comm edit reset
+>>>>       $ui_comm edit modified false
+>>>> @@ -327,6 +340,7 @@ proc commit_committree {fd_wt curHEAD msg_p} {
+>>>>       global ui_comm selected_commit_type
+>>>>       global file_states selected_paths rescan_active
+>>>>       global repo_config
+>>>> +     global env author_name author_email author_date
+>>>>
+>>>>       gets $fd_wt tree_id
+>>>>       if {[catch {close $fd_wt} err]} {
+>>>> @@ -366,6 +380,11 @@ A rescan will be automatically started now.
+>>>>               }
+>>>>       }
+>>>>
+>>>> +     if {$author_name ne ""} {
+>>>> +             set env(GIT_AUTHOR_NAME) $author_name
+>>>> +             set env(GIT_AUTHOR_EMAIL) $author_email
+>>>> +             set env(GIT_AUTHOR_DATE) $author_date
+>>>> +     }
+>>>>       # -- Create the commit.
+>>>>       #
+>>>>       set cmd [list commit-tree $tree_id]
