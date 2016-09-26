@@ -2,177 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F9A0207EC
-	for <e@80x24.org>; Mon, 26 Sep 2016 13:26:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1834D207EC
+	for <e@80x24.org>; Mon, 26 Sep 2016 13:51:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S940135AbcIZN00 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Sep 2016 09:26:26 -0400
-Received: from mail.pdinc.us ([67.90.184.27]:51060 "EHLO mail.pdinc.us"
+        id S941479AbcIZNu7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Sep 2016 09:50:59 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48082 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S938814AbcIZN0Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2016 09:26:25 -0400
-Received: from black7 (nsa1.pdinc.us [67.90.184.2])
-        (authenticated bits=0)
-        by mail.pdinc.us (8.14.4/8.14.4) with ESMTP id u8QDQNwx011403
-        for <git@vger.kernel.org>; Mon, 26 Sep 2016 09:26:24 -0400
-Reply-To: <git@vger.kernel.org>
-From:   "Jason Pyeron" <jpyeron@pdinc.us>
-To:     <git@vger.kernel.org>
-References: <66A60DA77398CD439FA676CEF593977D692508@exchange.1.internal.pdinc.us>
-In-Reply-To: <66A60DA77398CD439FA676CEF593977D692508@exchange.1.internal.pdinc.us>
-Subject: RE: git-upload-pack hangs
-Date:   Mon, 26 Sep 2016 09:26:21 -0400
-Organization: PD Inc
-Message-ID: <62E3FC352BE4428A90D7E4E9B137A9FB@black7>
+        id S941470AbcIZNu6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2016 09:50:58 -0400
+Received: (qmail 25114 invoked by uid 109); 26 Sep 2016 13:50:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 26 Sep 2016 13:50:57 +0000
+Received: (qmail 4956 invoked by uid 111); 26 Sep 2016 13:51:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 26 Sep 2016 09:51:12 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Sep 2016 09:50:55 -0400
+Date:   Mon, 26 Sep 2016 09:50:55 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Gustavo Grieco <gustavo.grieco@imag.fr>, git@vger.kernel.org
+Subject: Re: Stack read out-of-bounds in parse_sha1_header_extended using git
+ 2.10.0
+Message-ID: <20160926135055.zeagw6mj3udzhv7s@sigill.intra.peff.net>
+References: <1825523389.8224664.1474812766424.JavaMail.zimbra@imag.fr>
+ <xmqqbmzbwmfc.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Office Outlook 11
-Thread-Index: AdIXugLhNNMUd/T+SzyAnGWQrIniwgAPttTA
-X-MimeOLE: Produced By Microsoft MimeOLE V6.1.7601.17609
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqbmzbwmfc.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> -----Original Message-----
-> From: Jason Pyeron 
-> Sent: Monday, September 26, 2016 01:51
-> 
-> git is hanging on clone. I am runnig (cygwin) git 2.8.3 on 
-> IIS7 (windows server 2012 R2).
-> 
-> Where can I start to perform additional debugging?
-> 
+On Sun, Sep 25, 2016 at 05:10:31PM -0700, Junio C Hamano wrote:
 
-Reading this thread, it seems plausible as a cause since it aligns with my testing.
+> Gustavo Grieco <gustavo.grieco@imag.fr> writes:
+> 
+> > We found a stack read out-of-bounds parsing object files using git 2.10.0. It was tested on ArchLinux x86_64. To reproduce, first recompile git with ASAN support and then execute:
+> >
+> > $ git init ; mkdir -p .git/objects/b2 ; printf 'x' > .git/objects/b2/93584ddd61af21260be75ee9f73e9d53f08cd0
+> 
+> Interesting.  If you prepare such a broken loose object file in your
+> local repository, I would expect that either unpack_sha1_header() or
+> unpack_sha1_header_to_strbuf() that sha1_loose_object_info() calls
+> would detect and barf by noticing that an error came from libz while
+> it attempts to inflate and would not even call parse_sha1_header.
+> 
+> But it is nevertheless bad to assume that whatever happens to
+> inflate without an error must be formatted correctly to allow
+> parsing (i.e. has ' ' and then NUL termination within the first 32
+> bytes after inflation), which is exactly what the hdr[32] is saying.
 
-http://www.spinics.net/lists/git/msg279437.html [ and http://www.spinics.net/lists/git/attachments/binQFGHirNLw3.bin ]
+Yeah. I also was surprised that we didn't barf on a zlib failure. But
+based on previous debugging of corrupted zlib data, my recollection
+is that there are a large number of weird corruptions that zlib will
+happily pass back and only later complain about a checksum error. So
+presumably "x" is one of those, and it might not hold for other
+corruptions (but I didn't try).
 
-I will start to trudge into the code to see if this (or similar) has been applied and if not, does it fix it.
+> Note that this is totally unteseted and not thought through; I
+> briefly thought about what unpack_sha1_header_to_strbuf() does with
+> this change (it first lets unpack_sha1_header() to attempt with a
+> small buffer but it seems to discard the error code from it before
+> seeing if the returned buffer has NUL in it); there may be bad
+> interactions with it.
 
-> Selected items I have read, but they did not help:
-> 
-> http://unix.stackexchange.com/questions/98959/git-upload-pack-
-> hangs-indefinitely
-> 
-> https://sparethought.wordpress.com/2012/12/06/setting-git-to-w
-ork-behind-ntlm-authenticated-proxy-cntlm-to-the-rescue/
-> 
-> https://sourceforge.net/p/cntlm/bugs/24/
-> 
-> invocation of the clone:
-> 
-> jpyeron.adm@SERVER /tmp
-> $ GIT_TRACE=1  GIT_CURL_VERBOSE=true git clone 
-> http://SERVER.domain.com/git/test.git
-> 01:23:37.020476 git.c:350               trace: built-in: git 
-> 'clone' 'http://SERVER.domain.com/git/test.git'
-> Cloning into 'test'...
-> 01:23:37.206046 run-command.c:336       trace: run_command: 
-> 'git-remote-http' 'origin' 'http://SERVER.domain.com/git/test.git'
-> * STATE: INIT => CONNECT handle 0x60009a140; line 1397 
-> (connection #-5000)
-> * Couldn't find host SERVER.domain.com in the .netrc file; 
-> using defaults
-> * Added connection 0. The cache now contains 1 members
-> *   Trying ::1...
-> * TCP_NODELAY set
-> * STATE: CONNECT => WAITCONNECT handle 0x60009a140; line 1450 
-> (connection #0)
-> * Connected to SERVER.domain.com (::1) port 80 (#0)
-> * STATE: WAITCONNECT => SENDPROTOCONNECT handle 0x60009a140; 
-> line 1557 (connection #0)
-> * Marked for [keep alive]: HTTP default
-> * STATE: SENDPROTOCONNECT => DO handle 0x60009a140; line 1575 
-> (connection #0)
-> > GET /git/test.git/info/refs?service=git-upload-pack HTTP/1.1
-> Host: SERVER.domain.com
-> User-Agent: git/2.8.3
-> Accept: */*
-> Accept-Encoding: gzip
-> Accept-Language: en-US, *;q=0.9
-> Pragma: no-cache
-> 
-> * STATE: DO => DO_DONE handle 0x60009a140; line 1654 (connection #0)
-> * STATE: DO_DONE => WAITPERFORM handle 0x60009a140; line 1781 
-> (connection #0)
-> * STATE: WAITPERFORM => PERFORM handle 0x60009a140; line 1791 
-> (connection #0)
-> * HTTP 1.1 or later with persistent connection, pipelining supported
-> < HTTP/1.1 200 OK
-> < Cache-Control: no-cache, max-age=0, must-revalidate
-> < Pragma: no-cache
-> < Content-Type: application/x-git-upload-pack-advertisement
-> < Expires: Fri, 01 Jan 1980 00:00:00 GMT
-> * Server Microsoft-IIS/8.5 is not blacklisted
-> < Server: Microsoft-IIS/8.5
-> < X-Powered-By: ASP.NET
-> < Date: Mon, 26 Sep 2016 05:23:37 GMT
-> * Marked for [closure]: Connection: close used
-> < Connection: close
-> < Content-Length: 310
-> <
-> * STATE: PERFORM => DONE handle 0x60009a140; line 1955 (connection #0)
-> * multi_done
-> * Curl_http_done: called premature == 0
-> * Closing connection 0
-> * The cache now contains 0 members
-> 01:23:37.688252 run-command.c:336       trace: run_command: 
-> 'fetch-pack' '--stateless-rpc' '--stdin' '--lock-pack' 
-> '--thin' '--check-self-contained-and-connected' '--cloning' 
-> 'http://SERVER.domain.com/git/test.git/'
-> 01:23:37.717168 exec_cmd.c:120          trace: exec: 'git' 
-> 'fetch-pack' '--stateless-rpc' '--stdin' '--lock-pack' 
-> '--thin' '--check-self-contained-and-connected' '--cloning' 
-> 'http://SERVER.domain.com/git/test.git/'
-> 01:23:37.749820 git.c:350               trace: built-in: git 
-> 'fetch-pack' '--stateless-rpc' '--stdin' '--lock-pack' 
-> '--thin' '--check-self-contained-and-connected' '--cloning' 
-> 'http://SERVER.domain.com/git/test.git/'
-> * STATE: INIT => CONNECT handle 0x60009a140; line 1397 
-> (connection #-5000)
-> * Couldn't find host SERVER.domain.com in the .netrc file; 
-> using defaults
-> * Added connection 1. The cache now contains 1 members
-> * Hostname SERVER.domain.com was found in DNS cache
-> *   Trying ::1...
-> * TCP_NODELAY set
-> * STATE: CONNECT => WAITCONNECT handle 0x60009a140; line 1450 
-> (connection #1)
-> * Connected to SERVER.domain.com (::1) port 80 (#1)
-> * STATE: WAITCONNECT => SENDPROTOCONNECT handle 0x60009a140; 
-> line 1557 (connection #1)
-> * Marked for [keep alive]: HTTP default
-> * STATE: SENDPROTOCONNECT => DO handle 0x60009a140; line 1575 
-> (connection #1)
-> > POST /git/test.git/git-upload-pack HTTP/1.1
-> Host: SERVER.domain.com
-> User-Agent: git/2.8.3
-> Accept-Encoding: gzip
-> Content-Type: application/x-git-upload-pack-request
-> Accept: application/x-git-upload-pack-result
-> Content-Length: 140
-> 
-> * upload completely sent off: 140 out of 140 bytes
-> * STATE: DO => DO_DONE handle 0x60009a140; line 1654 (connection #1)
-> * STATE: DO_DONE => WAITPERFORM handle 0x60009a140; line 1781 
-> (connection #1)
-> * STATE: WAITPERFORM => PERFORM handle 0x60009a140; line 1791 
-> (connection #1)
+Yeah, that seems wrong. I don't think it would involve an out of bounds
+read, but we probably could fail to correctly report zlib corruption.
 
---
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
--                                                               -
-- Jason Pyeron                      PD Inc. http://www.pdinc.us -
-- Principal Consultant              10 West 24th Street #100    -
-- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
--                                                               -
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- 
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 60ff21f..dfcbd76 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -1648,6 +1648,8 @@ unsigned long unpack_object_header_buffer(const unsigned char *buf,
+>  
+>  int unpack_sha1_header(git_zstream *stream, unsigned char *map, unsigned long mapsize, void *buffer, unsigned long bufsiz)
+>  {
+> +	int status;
+> +
+>  	/* Get the data stream */
+>  	memset(stream, 0, sizeof(*stream));
+>  	stream->next_in = map;
+> @@ -1656,7 +1658,15 @@ int unpack_sha1_header(git_zstream *stream, unsigned char *map, unsigned long ma
+>  	stream->avail_out = bufsiz;
+>  
+>  	git_inflate_init(stream);
+> -	return git_inflate(stream, 0);
+> +	status = git_inflate(stream, 0);
+> +	if (status)
+> +		return status;
+> +
+> +	/* Make sure we got the terminating NUL for the object header */
+> +	if (!memchr(buffer, '\0', stream->next_out - (unsigned char *)buffer))
+> +		return -1;
+> +
+> +	return 0;
 
+This doesn't look too invasive as an approach, though I would have done
+it differently. We're making the assumption that once there is a NUL,
+the header-parser won't do anything stupid, which creates a coupling
+between those two bits of code. My inclination would have been to just
+treat the header as a ptr/len pair, and make sure the parser never reads
+past the end.
 
+But I implemented that, and it _is_ rather invasive. And it's not like
+coupling unpack_sha1_header() and parse_sha1_header() is all that
+terrible; they are meant to be paired.
+
+I haven't read through your follow-up yet; I'll do that before posting
+my version.
+
+>  static int unpack_sha1_header_to_strbuf(git_zstream *stream, unsigned char *map,
+> @@ -1758,6 +1768,8 @@ static int parse_sha1_header_extended(const char *hdr, struct object_info *oi,
+>  		char c = *hdr++;
+>  		if (c == ' ')
+>  			break;
+> +		if (!c)
+> +			die("invalid object header");
+>  		type_len++;
+>  	}
+
+We keep reading from hdr after this, though I think those bits would all
+bail correctly on seeing NUL.
+
+-Peff
