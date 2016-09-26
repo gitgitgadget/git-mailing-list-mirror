@@ -6,29 +6,29 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D7E3209AA
-	for <e@80x24.org>; Mon, 26 Sep 2016 12:00:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57545209AA
+	for <e@80x24.org>; Mon, 26 Sep 2016 12:00:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030356AbcIZMAg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Sep 2016 08:00:36 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48041 "EHLO cloud.peff.net"
+        id S1032472AbcIZMAj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Sep 2016 08:00:39 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48047 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S965590AbcIZMAf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2016 08:00:35 -0400
-Received: (qmail 18726 invoked by uid 109); 26 Sep 2016 12:00:35 -0000
+        id S965590AbcIZMAi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2016 08:00:38 -0400
+Received: (qmail 18740 invoked by uid 109); 26 Sep 2016 12:00:38 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 26 Sep 2016 12:00:35 +0000
-Received: (qmail 4431 invoked by uid 111); 26 Sep 2016 12:00:49 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 26 Sep 2016 12:00:38 +0000
+Received: (qmail 4436 invoked by uid 111); 26 Sep 2016 12:00:53 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 26 Sep 2016 08:00:49 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Sep 2016 08:00:33 -0400
-Date:   Mon, 26 Sep 2016 08:00:33 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 26 Sep 2016 08:00:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Sep 2016 08:00:36 -0400
+Date:   Mon, 26 Sep 2016 08:00:36 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
         Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 09/10] for_each_abbrev: drop duplicate objects
-Message-ID: <20160926120032.7zl65iam3hgk5t62@sigill.intra.peff.net>
+Subject: [PATCH 10/10] get_short_sha1: list ambiguous objects on error
+Message-ID: <20160926120036.mqs435a36njeihq6@sigill.intra.peff.net>
 References: <20160926115720.p2yb22lcq37gboon@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -39,96 +39,172 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If an object appears multiple times in the object database
-(e.g., in both loose and packed form, or in two separate
-packs), the disambiguation machinery may see it more than
-once. The get_short_sha1() function handles this already,
-but for_each_abbrev() blindly fires the callback for each
-instance it finds.
+When the user gives us an ambiguous short sha1, we print an
+error and refuse to resolve it. In some cases, the next step
+is for them to feed us more characters (e.g., if they were
+retyping or cut-and-pasting from a full sha1). But in other
+cases, that might be all they have. For example, an old
+commit message may have used a 7-character hex that was
+unique at the time, but is now ambiguous.  Git doesn't
+provide any information about the ambiguous objects it
+found, so it's hard for the user to find out which one they
+probably meant.
 
-We can fix this by collecting the output in a sha1 array and
-de-duplicating it.  As a bonus, the sort done for the
-de-duplication means that our output will be stable,
-regardless of the order in which the objects are found.
+This patch teaches get_short_sha1() to list the sha1s of the
+objects it found, along with a few bits of information that
+may help the user decide which one they meant. Here's what
+it looks like on git.git:
 
-Note that the old code normalized the callback's output to
-0/1 to store in the 1-bit ds->ambiguous flag (which both
-halted the iteration and was returned from the
-for_each_abbrev function). Now that we are using sha1_array,
-we can return the real value. In practice, it doesn't matter
-as the sole caller only ever returns 0.
+  $ git rev-parse b2e1
+  error: short SHA1 b2e1 is ambiguous
+  hint: The candidates are:
+  hint:   b2e1196 tag v2.8.0-rc1
+  hint:   b2e11d1 tree
+  hint:   b2e1632 commit 2007-11-14 - Merge branch 'bs/maint-commit-options'
+  hint:   b2e1759 blob
+  hint:   b2e18954 blob
+  hint:   b2e1895c blob
+  fatal: ambiguous argument 'b2e1': unknown revision or path not in the working tree.
+  Use '--' to separate paths from revisions, like this:
+  'git <command> [<revision>...] -- [<file>...]'
+
+We show the tagname for tags, and the date and subject for
+commits. For trees and blobs, in theory we could dig in the
+history to find the paths at which they were present. But
+that's very expensive (on the order of 30s for the kernel),
+and it's not likely to be all that helpful. Most short
+references are to commits, so the useful information is
+typically going to be that the object in question _isn't_ a
+commit. So it's silly to spend a lot of CPU preemptively
+digging up the path; the user can do it themselves if they
+really need to.
+
+And of course it's somewhat ironic that we abbreviate the
+sha1s in the disambiguation hint. But full sha1s would cause
+annoying line wrapping for the commit lines, and presumably
+the user is going to just re-issue their command immediately
+with the corrected sha1.
+
+We also restrict the list to those that match any
+disambiguation hint. E.g.:
+
+  $ git rev-parse b2e1:foo
+  error: short SHA1 b2e1 is ambiguous
+  hint: The candidates are:
+  hint:   b2e1196 tag v2.8.0-rc1
+  hint:   b2e11d1 tree
+  hint:   b2e1632 commit 2007-11-14 - Merge branch 'bs/maint-commit-options'
+  fatal: Invalid object name 'b2e1'.
+
+does not bother reporting the blobs, because they cannot
+work as a treeish.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- sha1_name.c                         | 19 +++++++++++++++----
- t/t1512-rev-parse-disambiguation.sh |  7 +++++++
- 2 files changed, 22 insertions(+), 4 deletions(-)
+ sha1_name.c                         | 50 +++++++++++++++++++++++++++++++++++--
+ t/t1512-rev-parse-disambiguation.sh | 24 ++++++++++++++++++
+ 2 files changed, 72 insertions(+), 2 deletions(-)
 
 diff --git a/sha1_name.c b/sha1_name.c
-index d4c7e26..f7403d7 100644
+index f7403d7..35d943d 100644
 --- a/sha1_name.c
 +++ b/sha1_name.c
-@@ -7,6 +7,7 @@
- #include "refs.h"
- #include "remote.h"
- #include "dir.h"
-+#include "sha1-array.h"
- 
- static int get_sha1_oneline(const char *, unsigned char *, struct commit_list *);
- 
-@@ -355,20 +356,30 @@ static int get_short_sha1(const char *name, int len, unsigned char *sha1,
- 	return status;
+@@ -318,6 +318,38 @@ static int init_object_disambiguation(const char *name, int len,
+ 	return 0;
  }
  
-+static int collect_ambiguous(const unsigned char *sha1, void *data)
++static int show_ambiguous_object(const unsigned char *sha1, void *data)
 +{
-+	sha1_array_append(data, sha1);
++	const struct disambiguate_state *ds = data;
++	struct strbuf desc = STRBUF_INIT;
++	int type;
++
++	if (ds->fn && !ds->fn(sha1, ds->cb_data))
++		return 0;
++
++	type = sha1_object_info(sha1, NULL);
++	if (type == OBJ_COMMIT) {
++		struct commit *commit = lookup_commit(sha1);
++		if (commit) {
++			struct pretty_print_context pp = {0};
++			pp.date_mode.type = DATE_SHORT;
++			format_commit_message(commit, " %ad - %s", &desc, &pp);
++		}
++	} else if (type == OBJ_TAG) {
++		struct tag *tag = lookup_tag(sha1);
++		if (!parse_tag(tag) && tag->tag)
++			strbuf_addf(&desc, " %s", tag->tag);
++	}
++
++	advise("  %s %s%s",
++	       find_unique_abbrev(sha1, DEFAULT_ABBREV),
++	       typename(type) ? typename(type) : "unknown type",
++	       desc.buf);
++
++	strbuf_release(&desc);
 +	return 0;
 +}
 +
- int for_each_abbrev(const char *prefix, each_abbrev_fn fn, void *cb_data)
+ static int multiple_bits_set(unsigned flags)
  {
-+	struct sha1_array collect = SHA1_ARRAY_INIT;
- 	struct disambiguate_state ds;
-+	int ret;
- 
- 	if (init_object_disambiguation(prefix, strlen(prefix), &ds) < 0)
- 		return -1;
- 
- 	ds.always_call_fn = 1;
--	ds.cb_data = cb_data;
--	ds.fn = fn;
--
-+	ds.fn = collect_ambiguous;
-+	ds.cb_data = &collect;
- 	find_short_object_filename(&ds);
+ 	return !!(flags & (flags - 1));
+@@ -351,8 +383,22 @@ static int get_short_sha1(const char *name, int len, unsigned char *sha1,
  	find_short_packed_object(&ds);
--	return ds.ambiguous;
+ 	status = finish_object_disambiguation(&ds, sha1);
+ 
+-	if (!quietly && (status == SHORT_NAME_AMBIGUOUS))
+-		return error(_("short SHA1 %s is ambiguous"), ds.hex_pfx);
++	if (!quietly && (status == SHORT_NAME_AMBIGUOUS)) {
++		error(_("short SHA1 %s is ambiguous"), ds.hex_pfx);
 +
-+	ret = sha1_array_for_each_unique(&collect, fn, cb_data);
-+	sha1_array_clear(&collect);
-+	return ret;
++		/*
++		 * We may still have ambiguity if we simply saw a series of
++		 * candidates that did not satisfy our hint function. In
++		 * that case, we still want to show them, so disable the hint
++		 * function entirely.
++		 */
++		if (!ds.ambiguous)
++			ds.fn = NULL;
++
++		advise(_("The candidates are:"));
++		for_each_abbrev(ds.hex_pfx, show_ambiguous_object, &ds);
++	}
++
+ 	return status;
  }
  
- int find_unique_abbrev_r(char *hex, const unsigned char *sha1, int len)
 diff --git a/t/t1512-rev-parse-disambiguation.sh b/t/t1512-rev-parse-disambiguation.sh
-index dfd3567..1d8f550 100755
+index 1d8f550..c5447ef 100755
 --- a/t/t1512-rev-parse-disambiguation.sh
 +++ b/t/t1512-rev-parse-disambiguation.sh
-@@ -280,6 +280,13 @@ test_expect_success 'rev-parse --disambiguate' '
- 	test "$(sed -e "s/^\(.........\).*/\1/" actual | sort -u)" = 000000000
+@@ -323,4 +323,28 @@ test_expect_success C_LOCALE_OUTPUT 'ambiguity errors are not repeated (peel)' '
+ 	test_line_count = 1 errors
  '
  
-+test_expect_success 'rev-parse --disambiguate drops duplicates' '
-+	git rev-parse --disambiguate=000000000 >expect &&
-+	git pack-objects .git/objects/pack/pack <expect &&
-+	git rev-parse --disambiguate=000000000 >actual &&
-+	test_cmp expect actual
++test_expect_success C_LOCALE_OUTPUT 'ambiguity hints' '
++	test_must_fail git rev-parse 000000000 2>stderr &&
++	grep ^hint: stderr >hints &&
++	# 16 candidates, plus one intro line
++	test_line_count = 17 hints
 +'
 +
- test_expect_success 'ambiguous 40-hex ref' '
- 	TREE=$(git mktree </dev/null) &&
- 	REF=$(git rev-parse HEAD) &&
++test_expect_success C_LOCALE_OUTPUT 'ambiguity hints respect type' '
++	test_must_fail git rev-parse 000000000^{commit} 2>stderr &&
++	grep ^hint: stderr >hints &&
++	# 5 commits, 1 tag (which is a commitish), plus intro line
++	test_line_count = 7 hints
++'
++
++test_expect_success C_LOCALE_OUTPUT 'failed type-selector still shows hint' '
++	# these two blobs share the same prefix "ee3d", but neither
++	# will pass for a commit
++	echo 851 | git hash-object --stdin -w &&
++	echo 872 | git hash-object --stdin -w &&
++	test_must_fail git rev-parse ee3d^{commit} 2>stderr &&
++	grep ^hint: stderr >hints &&
++	test_line_count = 3 hints
++'
++
+ test_done
 -- 
 2.10.0.492.g14f803f
-
