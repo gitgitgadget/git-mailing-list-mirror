@@ -6,80 +6,168 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 783DF207EC
-	for <e@80x24.org>; Mon, 26 Sep 2016 21:34:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32C64207EC
+	for <e@80x24.org>; Mon, 26 Sep 2016 21:56:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966483AbcIZVeX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Sep 2016 17:34:23 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54280 "EHLO
+        id S1034361AbcIZV4O (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Sep 2016 17:56:14 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51359 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S965507AbcIZVeW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2016 17:34:22 -0400
+        with ESMTP id S965529AbcIZV4N (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2016 17:56:13 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B103E427EB;
-        Mon, 26 Sep 2016 17:34:20 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DAFC142A44;
+        Mon, 26 Sep 2016 17:56:11 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=UOy0HkOYCPRJKH3APRLio43Fcyw=; b=o8DVkx
-        ICuj8YUkbT1Zs0b5uH0vnD1QXbqsPxyS0xBT6ynS4H7SPc6hqVnmnshT5TRcuR8i
-        MgI3xFDsjZEFgjBIDDew+91nK67lM6SyUYwUZMRSyEQHxxIWwxtj1cQ66VCgBA9d
-        QOxPKSo4sMBxScP2o53jKuP8v6KJ7OGqsDtnE=
+        :content-type; s=sasl; bh=vSXemKVLcJYJ50ii0mtJcTlHFMY=; b=dgc4hn
+        Pdt4Q45dPZrH3VMWzRgfhCKoD6eCWN2zVv5GGqcgqTAgg+t2A6zPfv+g4jnN9hhR
+        ivSeFGBw62ThkSbpchnS6SaHbpTi+nNYjNRoDZrAai6nNg7sHbV8pObmVIuOEPyB
+        ngv5ZNctGHyhoL8JBOzbSsOLooCcxONhdsbo8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ef8Jb074Aa1ulv4qWTXEYZF44/ua7sNO
-        4a5pMG2KDY/dCpQDMuqqmwAfkIFtB/39N6NEQTiWAESvC9I+8vDhXcVbYyDd1eML
-        2jVLTKZW4Gq4S1pyt1K+qb2O4WwabozLkYpddl3BwC+JfMoKzy69renZoTKt5hDl
-        aGXeGh/qXEs=
+        :content-type; q=dns; s=sasl; b=w5nhWOMOzFz/HnZiAKoxufOKqQoPySAp
+        eEfR/GsXYn51XNYyXI038bcaxAxamcJboTg9365OuDCA0fn3ZjEX8TmaAIkIluFZ
+        0hKzvWBNw5GxjHKH9BRGhSSeGR4y6K3xU7G0T7wVPf1ZOksfKXDDIcF6I6b1cgf9
+        803u0aa2sE4=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A9538427EA;
-        Mon, 26 Sep 2016 17:34:20 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D087B42A43;
+        Mon, 26 Sep 2016 17:56:11 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2D4B8427E9;
-        Mon, 26 Sep 2016 17:34:20 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F0EE442A3F;
+        Mon, 26 Sep 2016 17:56:03 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Orgad Shaneh <orgads@gmail.com>
-Cc:     Pat Thoyts <patthoyts@users.sourceforge.net>,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH] git-gui: Do not reset author details on amend
-References: <1462458182-4488-1-git-send-email-orgads@gmail.com>
-        <xmqqwpn8bes0.fsf@gitster.mtv.corp.google.com>
-        <CAGHpTBLdy9R7xvfcFWoMkvGNJjY-wM5=HfWxs8XF_yh-+2Rc3w@mail.gmail.com>
-        <CAGHpTBLgwyw_iYK927Yed+XG9ti+tKboz07-FVYWox9WoQkjOg@mail.gmail.com>
-        <CAGHpTB+Fnu4x1bV9TSNo8pYdOzJzRsXA9r3CwxVz64mjW_qsGw@mail.gmail.com>
-Date:   Mon, 26 Sep 2016 14:34:18 -0700
-In-Reply-To: <CAGHpTB+Fnu4x1bV9TSNo8pYdOzJzRsXA9r3CwxVz64mjW_qsGw@mail.gmail.com>
-        (Orgad Shaneh's message of "Mon, 26 Sep 2016 23:06:53 +0300")
-Message-ID: <xmqqmviupcpx.fsf@gitster.mtv.corp.google.com>
+To:     Vegard Nossum <vegard.nossum@oracle.com>
+Cc:     git@vger.kernel.org,
+        Santi =?utf-8?Q?B=C3=A9jar?= <sbejar@gmail.com>,
+        Kevin Bracey <kevin@bracey.fi>,
+        Philip Oakley <philipoakley@iee.org>,
+        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [RFC PATCH v4] revision: new rev^-n shorthand for rev^n..rev
+References: <20160926204959.26007-1-vegard.nossum@oracle.com>
+        <xmqqr386pd7d.fsf@gitster.mtv.corp.google.com>
+Date:   Mon, 26 Sep 2016 14:55:45 -0700
+In-Reply-To: <xmqqr386pd7d.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Mon, 26 Sep 2016 14:23:50 -0700")
+Message-ID: <xmqqh992pbq6.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: FBF7A196-8430-11E6-9C62-C26412518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 062C4CF4-8434-11E6-8972-C26412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Orgad Shaneh <orgads@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Sun, Jul 10, 2016 at 7:36 AM, Orgad Shaneh <orgads@gmail.com> wrote:
+> Micronit.  When splitting "for (init; fini; cont)" into multiple
+> lines, it is often easier to read to make that into three lines:
 >
->> On Wed, May 18, 2016 at 9:12 AM, Orgad Shaneh <orgads@gmail.com> wrote:
->>> ping?
->>>
->> It's been over 2 months. Can anyone please review and merge it?
->>
-> 4.5 months and counting... :(
->>
->>> On Thu, May 5, 2016 at 8:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>>> Pat, we haven't heard from you for a long time.  Are you still
->>>> around and interested in helping us by maintaining git-gui?
->>>>
->>>> Otherwise we may have to start recruiting a volunteer or two to take
->>>> this over.
+> 	for (parent_number = 1, parents = commit->parents;
+> 	     parents;
+> 	     parents = parents->next, parent_number++) {
+>
+>> +		if (exclude_parent && parent_number != exclude_parent)
+>> +			continue;
+>> +
+>> +		show_rev(include_parents ? NORMAL : REVERSED,
+>> +			 parents->item->object.oid.hash, arg);
+>> +	}
+>
+> It is very clear to see what is going on.  Good job.
+>
+>>  	*dotdot = '^';
+>> +	if (exclude_parent >= parent_number)
+>> +		return 0;
+>
+> This is not quite nice.  You've already called show_rev() number of
+> times, and it is too late to signal an error here.  I think you
+> would need to count the number of parents much earlier when
+> exclude_parent option is in effect and error out before making any
+> call to show_rev().
+> ...
+> Likewise.  It is way too late to say "Nah, this wasn't a valid rev^-
+> notation after all" to the caller after calling add_rev_cmdline()
+> and add_pending_object() in the above loop.
 
-Sorry about that.  No volunteers materialized yet X-<, and I really
-really do not want to apply anything other than trivial patches to
-it myself, as I am not a git-gui user.
+Taking these two together, perhaps squashing this in may be
+sufficient.
 
+Please do not use --no-prefix when sending a patch to this list, by
+the way.
+
+ builtin/rev-parse.c | 18 +++++++++++++++---
+ revision.c          | 17 ++++++++++++++++-
+ 2 files changed, 31 insertions(+), 4 deletions(-)
+
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index 2c3da19..9474c37 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -333,8 +333,22 @@ static int try_parent_shorthands(const char *arg)
+ 	if (include_rev)
+ 		show_rev(NORMAL, sha1, arg);
+ 	commit = lookup_commit_reference(sha1);
++
++	if (exclude_parent) {
++		/* do we have enough parents? */
++		for (parent_number = 0, parents = commit->parents;
++		     parents;
++		     parents = parents->next)
++			parent_number++;
++		if (parent_number < exclude_parent) {
++			*dotdot = '^';
++			return 0;
++		}
++	}
++
+ 	for (parent_number = 1, parents = commit->parents;
+-	     parents; parents = parents->next, parent_number++) {
++	     parents;
++	     parents = parents->next, parent_number++) {
+ 		if (exclude_parent && parent_number != exclude_parent)
+ 			continue;
+ 
+@@ -343,8 +357,6 @@ static int try_parent_shorthands(const char *arg)
+ 	}
+ 
+ 	*dotdot = '^';
+-	if (exclude_parent >= parent_number)
+-		return 0;
+ 	return 1;
+ }
+ 
+diff --git a/revision.c b/revision.c
+index 511e1ed..09da7f4 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1318,8 +1318,23 @@ static int add_parents_only(struct rev_info *revs, const char *arg_, int flags,
+ 	if (it->type != OBJ_COMMIT)
+ 		return 0;
+ 	commit = (struct commit *)it;
++
++	if (exclude_parent) {
++		struct commit_list *parents;
++		int parent_number;
++
++		/* do we have enough parents? */
++		for (parent_number = 0, parents = commit->parents;
++		     parents;
++		     parents = parents->next)
++			parent_number++;
++		if (parent_number < exclude_parent)
++			return 0;
++	}
++
+ 	for (parent_number = 1, parents = commit->parents;
+-	     parents; parents = parents->next, parent_number++) {
++	     parents;
++	     parents = parents->next, parent_number++) {
+ 		if (exclude_parent && parent_number != exclude_parent)
+ 			continue;
+ 
