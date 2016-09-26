@@ -2,78 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EAC8E207EC
-	for <e@80x24.org>; Mon, 26 Sep 2016 18:11:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68998207EC
+	for <e@80x24.org>; Mon, 26 Sep 2016 18:15:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1162156AbcIZSK7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Sep 2016 14:10:59 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51377 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1161770AbcIZSK6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2016 14:10:58 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DEEC44161F;
-        Mon, 26 Sep 2016 14:10:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=btf8f5jbhhC8HxY+zi8TcAcBW9c=; b=eOfRxv
-        WgQ3b+OzgT54FFMU24gUUZB0rRZmVCV6Uz0dRtlKIqkwioE1XpkHGH47X8GKCnFy
-        4MX0Yesj4a42RRbjuuq6zpwCZhC/QnkNROnFpfGUTSGgr6g06g6YnlISpoVXmy68
-        S5EqU7kmFEsaBB2eUMlocWuIoLuubZlauLE+I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=lmHPodce6LybUVYVJGwXcQrRpjC78a73
-        IvfMtEFOB9IiQb4GefC+wQJWMvcltU9uPWwf/WQy8JtfjqgUlgGSdEolxUQDbmr7
-        2zwvEmz35dFU04YCujfZ1y/Rz7Z/X/MmcLoZERlyKRsbvadrDRdZMpuiWDpgd1tf
-        FQgWg7hidOU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D67404161E;
-        Mon, 26 Sep 2016 14:10:56 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 513CE4161C;
-        Mon, 26 Sep 2016 14:10:56 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Gustavo Grieco <gustavo.grieco@imag.fr>
-Cc:     git@vger.kernel.org
-Subject: Re: Stack read out-of-bounds in parse_sha1_header_extended using git 2.10.0
-References: <1825523389.8224664.1474812766424.JavaMail.zimbra@imag.fr>
-        <xmqqbmzbwmfc.fsf@gitster.mtv.corp.google.com>
-        <790613313.8353074.1474912139102.JavaMail.zimbra@imag.fr>
-        <xmqq37kmtukf.fsf@gitster.mtv.corp.google.com>
-Date:   Mon, 26 Sep 2016 11:10:54 -0700
-In-Reply-To: <xmqq37kmtukf.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Mon, 26 Sep 2016 10:55:12 -0700")
-Message-ID: <xmqqtwd2sf9t.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 91E7679E-8414-11E6-BD48-C26412518317-77302942!pb-smtp1.pobox.com
+        id S941579AbcIZSP2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Sep 2016 14:15:28 -0400
+Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:53830 "EHLO sapo.pt"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S941577AbcIZSP1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2016 14:15:27 -0400
+Received: (qmail 21100 invoked from network); 26 Sep 2016 18:15:24 -0000
+Received: (qmail 11923 invoked from network); 26 Sep 2016 18:15:24 -0000
+Received: from unknown (HELO catarina) (vascomalmeida@sapo.pt@[85.246.157.91])
+          (envelope-sender <vascomalmeida@sapo.pt>)
+          by ptmail-mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
+          for <gitster@pobox.com>; 26 Sep 2016 18:15:22 -0000
+X-PTMail-RemoteIP: 85.246.157.91
+X-PTMail-AllowedSender-Action: 
+X-PTMail-Service: default
+Message-ID: <1474913721.1035.9.camel@sapo.pt>
+Subject: Re: [PATCH v2 04/11] i18n: add--interactive: mark plural strings
+From:   Vasco Almeida <vascomalmeida@sapo.pt>
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc:     Jiang Xin <worldhello.net@gmail.com>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        David Aguilar <davvid@gmail.com>
+Date:   Mon, 26 Sep 2016 18:15:21 +0000
+In-Reply-To: <1472646690-9699-5-git-send-email-vascomalmeida@sapo.pt>
+References: <1472646690-9699-1-git-send-email-vascomalmeida@sapo.pt>
+         <1472646690-9699-5-git-send-email-vascomalmeida@sapo.pt>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.20.5 (3.20.5-1.fc24) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+A Qua, 31-08-2016 às 12:31 +0000, Vasco Almeida escreveu:
+> Mark plural strings for translation.  Unfold each action case in one
+> entire sentence.
+> 
+> Pass new keyword for xgettext to extract.
+> 
+> Update test to include new subrotine Q__() for plural strings handling.
+> 
+> > Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
+> ---
+>  Makefile                  |  3 ++-
+>  git-add--interactive.perl | 24 ++++++++++++++++--------
+>  perl/Git/I18N.pm          |  4 +++-
+>  t/t0202/test.pl           | 11 ++++++++++-
+>  4 files changed, 31 insertions(+), 11 deletions(-)
+> 
+> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+> index 4e1e857..08badfa 100755
+> --- a/git-add--interactive.perl
+> +++ b/git-add--interactive.perl
+> @@ -666,12 +666,18 @@ sub status_cmd {
+>  sub say_n_paths {
+> >  	my $did = shift @_;
+> >  	my $cnt = scalar @_;
+> > -	print "$did ";
+> > -	if (1 < $cnt) {
+> > -		print "$cnt paths\n";
+> > -	}
+> > -	else {
+> > -		print "one path\n";
+> > +	if ($did eq 'added') {
+> > +		printf(Q__("added one path\n", "added %d paths\n",
+> > +			   $cnt), $cnt);
+> > +	} elsif ($did eq 'updated') {
+> > +		printf(Q__("updated one path\n", "updated %d paths\n",
+> > +			   $cnt), $cnt);
+> > +	} elsif ($did eq 'reversed') {
+> > +		printf(Q__("reversed one path\n", "reversed %d paths\n",
 
-> I am inclined to say that it has no security implications.  You have
-> to be able to write a bogus loose object in an object store you
-> already have write access to in the first place, in order to cause
-> this ...
+This should be 'reverted' not 'reversed'.
 
-Note that you could social-engineer others to fetch from you and
-feed a small enough update that results in loose objects created in
-their repositories, without you having a direct write access to the
-repository.
+> > +			   $cnt), $cnt);
+> > +	} else {
+> > +		printf(Q__("touched one path\n", "touched %d paths\n",
+> > +			   $cnt), $cnt);
+> >  	}
+>  }
 
-The codepath under discussion in this thread however cannot be used
-as an attack vector via that route, because the "fetch from
-elsewhere" codepath runs verification of the incoming data stream
-before storing the results (either in loose object files, or in a
-packfile) on disk.
+When $cnt is 1 I get the following warning:
+Redundant argument in printf at /home/vasco/dev/local/libexec/git-core/git-add--interactive line 680.
 
+The singular form does not have a %d to consume $cnt argument to
+printf(). Either we find a way to suppress that warning or we change
+the singular form to contain %d.
+
+> @@ -1508,8 +1514,10 @@ sub patch_update_file {
+> ...
+> > -					print colored $header_color, "Split into ",
+> > -					scalar(@split), " hunks.\n";
+> > +					print colored $header_color, sprintf(
+> > +						Q__("Split into %d hunk.\n",
+> > +						    "Split into %d hunks.\n",
+> > +						    scalar(@split)), scalar(@split));
+Like we do with this.
+> > 
+> > 
