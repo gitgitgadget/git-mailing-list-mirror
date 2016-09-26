@@ -2,71 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C151A207EC
-	for <e@80x24.org>; Mon, 26 Sep 2016 12:29:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F9A0207EC
+	for <e@80x24.org>; Mon, 26 Sep 2016 13:26:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1034469AbcIZM3q (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Sep 2016 08:29:46 -0400
-Received: from mail-it0-f45.google.com ([209.85.214.45]:35904 "EHLO
-        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934871AbcIZM3q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2016 08:29:46 -0400
-Received: by mail-it0-f45.google.com with SMTP id u134so9085672itb.1
-        for <git@vger.kernel.org>; Mon, 26 Sep 2016 05:29:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=YPHD8upUIFQbiZM8GOhyXDqyQlYleqLV30iyuDql1o8=;
-        b=vMTWN+8RXIHJ394x0tZCXoNtHnVklH+jpuseq+UbpX1D4+47cAY/DqmcH15C4ZARm7
-         msxno3O4m6dOoYSeAHe4lNBUlUtbrE3gtHS5BiECx6fyW40j9n8YHNPqL4QOC7FcWDJi
-         zXYLqVYVNUE4elnrSI52MtpLPa45c/Mpfa8TnNRxctDNRdpyRmtIDkwZ/qcp3EM+MWNH
-         Bh9WvfCFBuvpcQTWf71ywZnAMg85h3bc+vwZuKULHHqIfuTFvhG/JS1/RDjbox3FBB2h
-         iXdO3jlvyFrlU1FUWibEaPbkGMOEYLu++zilyV9j6FKNcax2B2hLYyKTBvsQl5jZnymq
-         dEhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=YPHD8upUIFQbiZM8GOhyXDqyQlYleqLV30iyuDql1o8=;
-        b=Cx6SOZdkzhaH/h0m8HXNBD7jI5VzS0I1OAwe5ZP7WWtbs8Sd2/B1602pfsaGituc41
-         p+ocec9UzZYA1Vgj0rJB4CN4bg9Pkc5LZ5SFhYd1TdZenz/NukPF/3SBQeipG2M7EDEz
-         kwvhjXmH7kk1CcZR1dAcM94ho1CY5ld9GV3YM5c6NX1IK5nO0962HpxPEDdvEU3ZFWx7
-         qQqV8ulSFhB6CVbI8HYJOGtNZGn5pB+NRnr+VXEnqNSf4iZtB92AAEIm1qno7DDM2mVR
-         7/VuisiUUo3CTFl23GUeYd6mj7tVnTmEqPZyySjwFpbpMnCKtW6a3HKV1QtilFz7wlP3
-         1Avw==
-X-Gm-Message-State: AA6/9RmfaWUXFTvBLLCsFi9BL4CWTjK1pIrSabO7+ObHt9Psr2DXxLFzbHOq3/pHnlNAOvZFFKuHGTu3wMi2/w==
-X-Received: by 10.36.112.135 with SMTP id f129mr17320975itc.3.1474892985146;
- Mon, 26 Sep 2016 05:29:45 -0700 (PDT)
+        id S940135AbcIZN00 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Sep 2016 09:26:26 -0400
+Received: from mail.pdinc.us ([67.90.184.27]:51060 "EHLO mail.pdinc.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S938814AbcIZN0Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2016 09:26:25 -0400
+Received: from black7 (nsa1.pdinc.us [67.90.184.2])
+        (authenticated bits=0)
+        by mail.pdinc.us (8.14.4/8.14.4) with ESMTP id u8QDQNwx011403
+        for <git@vger.kernel.org>; Mon, 26 Sep 2016 09:26:24 -0400
+Reply-To: <git@vger.kernel.org>
+From:   "Jason Pyeron" <jpyeron@pdinc.us>
+To:     <git@vger.kernel.org>
+References: <66A60DA77398CD439FA676CEF593977D692508@exchange.1.internal.pdinc.us>
+In-Reply-To: <66A60DA77398CD439FA676CEF593977D692508@exchange.1.internal.pdinc.us>
+Subject: RE: git-upload-pack hangs
+Date:   Mon, 26 Sep 2016 09:26:21 -0400
+Organization: PD Inc
+Message-ID: <62E3FC352BE4428A90D7E4E9B137A9FB@black7>
 MIME-Version: 1.0
-Received: by 10.107.16.93 with HTTP; Mon, 26 Sep 2016 05:29:44 -0700 (PDT)
-From:   Eric Amodio <eamodio@gmail.com>
-Date:   Mon, 26 Sep 2016 08:29:44 -0400
-Message-ID: <CAJxnqO6oMG2RvwP7y0Yt_xTrfeqqO6ZOUn5HWF7-h1hcjY+=bg@mail.gmail.com>
-Subject: BUG: Git blame provides incorrect previous commit if the line is uncommitted
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Office Outlook 11
+Thread-Index: AdIXugLhNNMUd/T+SzyAnGWQrIniwgAPttTA
+X-MimeOLE: Produced By Microsoft MimeOLE V6.1.7601.17609
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the first time I've reported a bug with Git so please forgive
-me if this isn't the right place, format, etc.
+> -----Original Message-----
+> From: Jason Pyeron 
+> Sent: Monday, September 26, 2016 01:51
+> 
+> git is hanging on clone. I am runnig (cygwin) git 2.8.3 on 
+> IIS7 (windows server 2012 R2).
+> 
+> Where can I start to perform additional debugging?
+> 
 
-If git blame --porcelain (or --line-porcelain or --incremental) is run
-on a file that has uncommitted changes any uncommitted lines have the
-wrong previous sha. Instead of the sha the last time that line was
-changed or even the last time the file was changed it seem to return
-the last commit in the repository. This seems to only affect
-uncommitted lines, other line seem to be populated properly.
+Reading this thread, it seems plausible as a cause since it aligns with my testing.
 
-I am using git version 2.10.0 on macOS 10.12 (16A323).
+http://www.spinics.net/lists/git/msg279437.html [ and http://www.spinics.net/lists/git/attachments/binQFGHirNLw3.bin ]
 
-Please let me know if I can provide any more information.
+I will start to trudge into the code to see if this (or similar) has been applied and if not, does it fix it.
 
-Thanks,
-Eric Amodio
+> Selected items I have read, but they did not help:
+> 
+> http://unix.stackexchange.com/questions/98959/git-upload-pack-
+> hangs-indefinitely
+> 
+> https://sparethought.wordpress.com/2012/12/06/setting-git-to-w
+ork-behind-ntlm-authenticated-proxy-cntlm-to-the-rescue/
+> 
+> https://sourceforge.net/p/cntlm/bugs/24/
+> 
+> invocation of the clone:
+> 
+> jpyeron.adm@SERVER /tmp
+> $ GIT_TRACE=1  GIT_CURL_VERBOSE=true git clone 
+> http://SERVER.domain.com/git/test.git
+> 01:23:37.020476 git.c:350               trace: built-in: git 
+> 'clone' 'http://SERVER.domain.com/git/test.git'
+> Cloning into 'test'...
+> 01:23:37.206046 run-command.c:336       trace: run_command: 
+> 'git-remote-http' 'origin' 'http://SERVER.domain.com/git/test.git'
+> * STATE: INIT => CONNECT handle 0x60009a140; line 1397 
+> (connection #-5000)
+> * Couldn't find host SERVER.domain.com in the .netrc file; 
+> using defaults
+> * Added connection 0. The cache now contains 1 members
+> *   Trying ::1...
+> * TCP_NODELAY set
+> * STATE: CONNECT => WAITCONNECT handle 0x60009a140; line 1450 
+> (connection #0)
+> * Connected to SERVER.domain.com (::1) port 80 (#0)
+> * STATE: WAITCONNECT => SENDPROTOCONNECT handle 0x60009a140; 
+> line 1557 (connection #0)
+> * Marked for [keep alive]: HTTP default
+> * STATE: SENDPROTOCONNECT => DO handle 0x60009a140; line 1575 
+> (connection #0)
+> > GET /git/test.git/info/refs?service=git-upload-pack HTTP/1.1
+> Host: SERVER.domain.com
+> User-Agent: git/2.8.3
+> Accept: */*
+> Accept-Encoding: gzip
+> Accept-Language: en-US, *;q=0.9
+> Pragma: no-cache
+> 
+> * STATE: DO => DO_DONE handle 0x60009a140; line 1654 (connection #0)
+> * STATE: DO_DONE => WAITPERFORM handle 0x60009a140; line 1781 
+> (connection #0)
+> * STATE: WAITPERFORM => PERFORM handle 0x60009a140; line 1791 
+> (connection #0)
+> * HTTP 1.1 or later with persistent connection, pipelining supported
+> < HTTP/1.1 200 OK
+> < Cache-Control: no-cache, max-age=0, must-revalidate
+> < Pragma: no-cache
+> < Content-Type: application/x-git-upload-pack-advertisement
+> < Expires: Fri, 01 Jan 1980 00:00:00 GMT
+> * Server Microsoft-IIS/8.5 is not blacklisted
+> < Server: Microsoft-IIS/8.5
+> < X-Powered-By: ASP.NET
+> < Date: Mon, 26 Sep 2016 05:23:37 GMT
+> * Marked for [closure]: Connection: close used
+> < Connection: close
+> < Content-Length: 310
+> <
+> * STATE: PERFORM => DONE handle 0x60009a140; line 1955 (connection #0)
+> * multi_done
+> * Curl_http_done: called premature == 0
+> * Closing connection 0
+> * The cache now contains 0 members
+> 01:23:37.688252 run-command.c:336       trace: run_command: 
+> 'fetch-pack' '--stateless-rpc' '--stdin' '--lock-pack' 
+> '--thin' '--check-self-contained-and-connected' '--cloning' 
+> 'http://SERVER.domain.com/git/test.git/'
+> 01:23:37.717168 exec_cmd.c:120          trace: exec: 'git' 
+> 'fetch-pack' '--stateless-rpc' '--stdin' '--lock-pack' 
+> '--thin' '--check-self-contained-and-connected' '--cloning' 
+> 'http://SERVER.domain.com/git/test.git/'
+> 01:23:37.749820 git.c:350               trace: built-in: git 
+> 'fetch-pack' '--stateless-rpc' '--stdin' '--lock-pack' 
+> '--thin' '--check-self-contained-and-connected' '--cloning' 
+> 'http://SERVER.domain.com/git/test.git/'
+> * STATE: INIT => CONNECT handle 0x60009a140; line 1397 
+> (connection #-5000)
+> * Couldn't find host SERVER.domain.com in the .netrc file; 
+> using defaults
+> * Added connection 1. The cache now contains 1 members
+> * Hostname SERVER.domain.com was found in DNS cache
+> *   Trying ::1...
+> * TCP_NODELAY set
+> * STATE: CONNECT => WAITCONNECT handle 0x60009a140; line 1450 
+> (connection #1)
+> * Connected to SERVER.domain.com (::1) port 80 (#1)
+> * STATE: WAITCONNECT => SENDPROTOCONNECT handle 0x60009a140; 
+> line 1557 (connection #1)
+> * Marked for [keep alive]: HTTP default
+> * STATE: SENDPROTOCONNECT => DO handle 0x60009a140; line 1575 
+> (connection #1)
+> > POST /git/test.git/git-upload-pack HTTP/1.1
+> Host: SERVER.domain.com
+> User-Agent: git/2.8.3
+> Accept-Encoding: gzip
+> Content-Type: application/x-git-upload-pack-request
+> Accept: application/x-git-upload-pack-result
+> Content-Length: 140
+> 
+> * upload completely sent off: 140 out of 140 bytes
+> * STATE: DO => DO_DONE handle 0x60009a140; line 1654 (connection #1)
+> * STATE: DO_DONE => WAITPERFORM handle 0x60009a140; line 1781 
+> (connection #1)
+> * STATE: WAITPERFORM => PERFORM handle 0x60009a140; line 1791 
+> (connection #1)
+
+--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-                                                               -
+- Jason Pyeron                      PD Inc. http://www.pdinc.us -
+- Principal Consultant              10 West 24th Street #100    -
+- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
+-                                                               -
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- 
+
+
