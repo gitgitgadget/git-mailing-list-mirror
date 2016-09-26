@@ -2,70 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,URI_HEX shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91377207EC
-	for <e@80x24.org>; Mon, 26 Sep 2016 19:27:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B5FF207EC
+	for <e@80x24.org>; Mon, 26 Sep 2016 19:33:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1161531AbcIZT0T (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Sep 2016 15:26:19 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50887 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1034564AbcIZT0R (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2016 15:26:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 990AD402D6;
-        Mon, 26 Sep 2016 15:26:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=C88tpNqS5wd+bpq3hiH1uaIdkaY=; b=FrBN4D
-        wjw2nEVz6FeD3wlrculO7syTjdxmt1pnVVn3rXfxgIFHDpBkr2gQ+TnSA/ZE6SPJ
-        Ra9tb8/sEbGAeXNItqTeyhbrW00cnkIsoa6CSdq2rXQXMOy5ae5CMJSximOKKNT8
-        usgAOKY463vPIFNmg+5gf3tL0DcUoMRH/Qa8Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Whz/rPWkU28PPkGGMfMTFeZICTm/Myp1
-        L342v9bj3DoTrWv149DRRp+N5tMkFEpKiZyfCX5WzvjwLgBsalU2V1KdSIGiAotD
-        MjcgJYG/xKXWa5UKFbpUBHbK+rcuZmFtBMxMnY4j5QTwP3uZc/gl5SdQCesjX4Mt
-        O+34ARO9Zdc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8B48A402D4;
-        Mon, 26 Sep 2016 15:26:16 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        id S966560AbcIZTc7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Sep 2016 15:32:59 -0400
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:57459 "EHLO
+        homiemail-a19.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S966506AbcIZTc6 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 26 Sep 2016 15:32:58 -0400
+Received: from homiemail-a19.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a19.g.dreamhost.com (Postfix) with ESMTP id 9D4A2604076;
+        Mon, 26 Sep 2016 12:32:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=from:to:cc
+        :subject:date:message-id; s=novalis.org; bh=9ldfWcdRVA1ek8mxYyhe
+        3yK4x4g=; b=kzkdKCPoiuexnaZ7EX41x3G1hpttGT1LDWyTybUtOjrIEuyEqXwU
+        ABN5XvUNZjaNb1/LA+7YSQ7nPq/tIeioTvV0QX/PJfPjtMbriW3zIHotvYFblUh+
+        j+gVvS2qAkXhP2UTUkVR7Ne7xyfShRjWoZNa5f/qLIDZ82i14Ax5ikc=
+Received: from localhost.localdomain (gzac10-107-1.nje.twosigma.com [208.77.214.155])
+        (using TLSv1 with cipher AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0889C402D3;
-        Mon, 26 Sep 2016 15:26:15 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kevin Daudt <me@ikke.info>
-Cc:     git@vger.kernel.org, Swift Geek <swiftgeek@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 2/2] mailinfo: unescape quoted-pair in header fields
-References: <20160919185440.18234-1-me@ikke.info>
-        <20160925210808.26424-1-me@ikke.info>
-        <20160925210808.26424-2-me@ikke.info>
-        <xmqq4m52scg7.fsf@gitster.mtv.corp.google.com>
-Date:   Mon, 26 Sep 2016 12:26:13 -0700
-In-Reply-To: <xmqq4m52scg7.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Mon, 26 Sep 2016 12:11:52 -0700")
-Message-ID: <xmqqzimuqx7u.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 17DB9DDE-841F-11E6-96E9-C26412518317-77302942!pb-smtp1.pobox.com
+        (Authenticated sender: novalis@novalis.org)
+        by homiemail-a19.g.dreamhost.com (Postfix) with ESMTPSA id 1EDE1604061;
+        Mon, 26 Sep 2016 12:32:57 -0700 (PDT)
+From:   David Turner <novalis@novalis.org>
+To:     git@vger.kernel.org, peff@peff.net, mhagger@alum.mit.edu
+Cc:     David Turner <novalis@novalis.org>
+Subject: [PATCH 0/2] tree-walk improvements
+Date:   Mon, 26 Sep 2016 15:32:43 -0400
+Message-Id: <1474918365-10937-1-git-send-email-novalis@novalis.org>
+X-Mailer: git-send-email 2.8.0.rc4.22.g8ae061a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+The first patch is a re-roll of Peff's patch from 2014 -- here's
+the archive message:
 
-> Don't these also need to be downcased if you prefer $data over
-> $DATA, though?
+http://git.661346.n2.nabble.com/PATCH-tree-walk-be-more-specific-about-corrupt-tree-errors-td7603558.html
 
-For now, I'll queue a SQUASH??? that reverts s/DATA/data/ you did to
-1/2 between your 1/2 and 2/2.
+Not sure why this wasn't applied then, but I thought it looked pretty
+good, so I added a few tests.
 
-Thanks.
+Hopefully the encoding works correctly on these patches. If not, you
+can fetch from
+https://github.com/novalis/git/
+on branch dturner/bad-trees
+
+Email address note 1: my employer wants me to use my company address,
+but not my company computer, for patches I write on work time.  This
+means that I'm going to continue corresponding from
+novalis@novalis.org, but will send patches with the @twosigma.com
+address in the author line.
+
+Email address note 2: I'm not subscribed to the mailing list these
+days, so please CC me (at novalis@novalis.org) on replies.
+
+David Turner (1):
+  fsck: handle bad trees like other errors
+
+Jeff King (1):
+  tree-walk: be more specific about corrupt tree errors
+
+ fsck.c                                             |  18 +++--
+ t/t1007-hash-object.sh                             |  15 +++-
+ t/t1007/tree-with-empty-filename                   | Bin 0 -> 28 bytes
+ t/t1007/tree-with-malformed-mode                   | Bin 0 -> 39 bytes
+ t/t1450-fsck.sh                                    |  17 ++++-
+ .../307e300745b82417cc1a903f875c7d22e45ef907       |   4 +
+ .../f506a346749bb96f52d8605ffba9fb93d46b5ffd       | Bin 0 -> 45 bytes
+ tree-walk.c                                        |  83 ++++++++++++++++++---
+ tree-walk.h                                        |   8 ++
+ 9 files changed, 125 insertions(+), 20 deletions(-)
+ create mode 100644 t/t1007/tree-with-empty-filename
+ create mode 100644 t/t1007/tree-with-malformed-mode
+ create mode 100644 t/t1450/bad-objects/307e300745b82417cc1a903f875c7d22e45ef907
+ create mode 100644 t/t1450/bad-objects/f506a346749bb96f52d8605ffba9fb93d46b5ffd
+
+-- 
+2.8.0.rc4.22.g8ae061a
+
