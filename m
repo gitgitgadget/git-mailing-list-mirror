@@ -2,92 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 358C1207EC
-	for <e@80x24.org>; Mon, 26 Sep 2016 22:14:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2470B209A9
+	for <e@80x24.org>; Mon, 26 Sep 2016 22:18:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753243AbcIZWON (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Sep 2016 18:14:13 -0400
-Received: from mail-oi0-f48.google.com ([209.85.218.48]:35595 "EHLO
-        mail-oi0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753022AbcIZWOM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2016 18:14:12 -0400
-Received: by mail-oi0-f48.google.com with SMTP id w11so224254047oia.2
-        for <git@vger.kernel.org>; Mon, 26 Sep 2016 15:14:12 -0700 (PDT)
+        id S934510AbcIZWSJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Sep 2016 18:18:09 -0400
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:33151 "EHLO
+        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932356AbcIZWSI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2016 18:18:08 -0400
+Received: by mail-pf0-f171.google.com with SMTP id 21so70019147pfy.0
+        for <git@vger.kernel.org>; Mon, 26 Sep 2016 15:18:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=/PyUVj3JkJ4MC92z4WRHyDh6sedzHgHjDK4aqLq8F3k=;
-        b=Y0fbELZEIeuIxbkqB6mb6Ip8tS5fGoj5P2sOKaHeXF4xo1D5a9QVit/6LjCmmec19T
-         U0HSM5hyZIme+nkzUuq/s8h5zsWtXmdTCsZbvKGLQhHIKVtddDDbfj+KhUpyLqLq9mHx
-         mXsbCI6FlGnK6B6sh7c69M6JeZ5oWU8doqI6emyc/JwfqWjEK14XxQHCSH1gzHzlVmxX
-         e89bK+wa1co+5E1KT1by/96QmJzaz/lkjQWDIeJVAee1UHX59ZLyq8FvfL6ojccJvELI
-         Qe0T+Z4kPIgzYj3Xbn4z2opW26Tsm6XxAuIYs7VjoHj2QZGbWUPzCUQk8aoIPeiCfUDY
-         Amwg==
+        d=google.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=asSbE6ue/rXV5JELdjum7twenbbZR1mAkyxgq58K5hA=;
+        b=PFJKpjpiATBwDG+2KoP0LpiIkndl45oPdeUoDuMp48PIAkL+GJDU4B3yL9IGAmDOlq
+         CVAzJUdqI9HDuJDiDmb6mLWr7U2DG3REcJtvzddpQjj9bYRVdgB1Juqkvt3EEmCWuUDp
+         Ew5k5FsI5/tHAtS18jfuM+fE8Yqq9obyHRdk5JtJTeYY9FTDPdDwoqXvgjxO6MDWFw3k
+         Ze1ZBYC7GN4zAKxnL4P7gsbiIiABWAadP7Jj7t4bDTbzOkz0zfsiNJBqPExF6XEmyckT
+         WATpENKj8GvdrDtLyeA5T7uIUhdtLMKohaJ2JGArURX+2npMvUtibCZZ6uXF2Ck1hS5K
+         7/Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=/PyUVj3JkJ4MC92z4WRHyDh6sedzHgHjDK4aqLq8F3k=;
-        b=m7lHKoYSAz7SJIpbYbkzWo2t3in9sKS1yZfmmLoRf4aortetLe3ktXWTlsvNq99vuh
-         VXGdpOiS7zn0hmj8efl875ovSXLp9phPVhA/BNRf9kc6Jw2eXu8D0C98DqVMoXaMYYgY
-         cLdQNFl4SQ4JOlwL7GakWi75atYdjE2tviAVRdUd7928myYHpDdrx+cqES/I9bWAnHs8
-         MRQ7pINrNtI/TfWUJEnuue8G+7JnWJaXWRfrigHrPZRdBnsTtJ0W4wPNEndDvXB/9+Pk
-         D4FVC4u8jNA6TpaY0uqG112ghaPrR+nuqpwfn30TuBLSwzi8WiMpXUCUPk1CJd4tuFiw
-         TZ0A==
-X-Gm-Message-State: AE9vXwNEFRtzFPFWS93uCgNmuCjGgrts5TQXpjCgh4yB8r4RLBELQzUxl1W/anNlgDp5xSuPYSwzM4xFI20awA==
-X-Received: by 10.202.240.11 with SMTP id o11mr29969922oih.23.1474928051300;
- Mon, 26 Sep 2016 15:14:11 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=asSbE6ue/rXV5JELdjum7twenbbZR1mAkyxgq58K5hA=;
+        b=JyNq2dgfetaQ1IcpSyKZ5e31ej/70+8HXf+pU8bSTD5+/sqbylmq6wEA90704OFtkv
+         HNX7QMrk4DUyI0Iti/Z8OiMdpBr5s2XiL6dJO5ZQtQmH8LLwEY5B0mm4TzudVtjz8X8y
+         mMkrJbDLQXwhue3GiFynOjGBS7jqdK9NGh9gU2rGqdnu4ZSc/inhK8ovchdXsz8GYowc
+         PGIQXEETolj1RIeUIlRm7P77zqjcrlVvvwfYu87fXXCRyXw66y/TPHpgWhaINh+eKO4n
+         JghkjUHq3mO2YD7lqRX7HCowvM/nvAkBWsxsb1nZd28vw3gDa4KMJXu16S9sGQCFapbB
+         yeKQ==
+X-Gm-Message-State: AE9vXwO4DSoncGZWAXqMys3aPk574wgKQISqZuIAfs2CpfPOTcwMiD0XyCzOxi9TZk4NuaRK
+X-Received: by 10.98.83.130 with SMTP id h124mr41581150pfb.154.1474928287455;
+        Mon, 26 Sep 2016 15:18:07 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5e00:68f5:3ae7:a09a:2077])
+        by smtp.gmail.com with ESMTPSA id b125sm33312320pfg.36.2016.09.26.15.18.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 26 Sep 2016 15:18:06 -0700 (PDT)
+Date:   Mon, 26 Sep 2016 15:18:03 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] Documentation/fetch-options: emit recurse-submodules,
+ jobs unconditionally
+Message-ID: <20160926221803.GA10222@google.com>
+References: <20160926193553.32631-1-sbeller@google.com>
+ <xmqq7f9yqu9w.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kbeq+Wznm=ChWO0tU5A_haPQ6DvKNHbK+8Y3es5OVcRag@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.182.66.14 with HTTP; Mon, 26 Sep 2016 15:13:50 -0700 (PDT)
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Tue, 27 Sep 2016 00:13:50 +0200
-Message-ID: <CACBZZX5wdnA-96e11edE7xRnAHo19RFTrZmqFQj-0ogLOJTncQ@mail.gmail.com>
-Subject: A couple of bugs / things TODO I encountered
-To:     Git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kbeq+Wznm=ChWO0tU5A_haPQ6DvKNHbK+8Y3es5OVcRag@mail.gmail.com>
+User-Agent: Mutt/1.7.0 (2016-08-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have these on my TODO list to look at at some point, but who knows
-when, meanwhile I thought I'd send them to the list if anyone's
-interested or wants to comment on them.
+> > By the way, 7dce19d3 is interesting in another way and worth
+> > studying in that it adds --submodule-prefix ;-) It may be something
+> > we want to consider consolidating with what Brandon has been working
+> > on.
+> 
+> That's why Brandon is cc'd now. :)
 
-= Inconsistent regexp usage:
+Interesting.  Once we get something we agree on for adding the
+--submodule-prefix option to the top level we'll definitely have to
+update this section of code with the change.
 
-If you supply --perl-regexp to git-log it only applies to --grep. The
-documentation says "Consider the limiting patterns to be
-Perl-compatible regular expressions". Which might lead you to think
-that e.g. -G uses it too. It doesn't, only grep.c does PCRE, but -G is
-handled by diffcore-pickaxe.c.
-
-Looking at "git grep -l regexec -- '*.c'" this whole thing is a mess.
-Ideally you should be able to say you want to use PCRE for everything,
-except maybe things that end up in your .gitconfig or e.g. the diff
-driver. But we could really use a more generic regexp interface.
-
-In general Git's regexp use is a huge mess, e.g. there's
---regexp-ignore-case but no way to supply various other regexp options
-like REG_NEWLINE or PCRE options consistently.
-
-= "git describe" really needs some overhaul
-
-$ git describe  6ebdac1
-v2.10.0
-$ git describe  --contains 6ebdac1
-v2.10.0^0
-
-As far as I can tell for the former there's no options that'll give me
-v2.10.0-g6ebdac1, or v2.10.0-g6ebdac1 for the latter.
-
-The reason I want that is that I like using "git describe" to give me
-approximately when a commit happened in a repo, but the tags may get
-deleted. In that case the *g<commit> syntax makes sure we can still
-look up the commit, but omitting the commit if it exactly corresponds
-to a tag, or the entire otherwise useful --contains option breaks
-that.
+-- 
+Brandon Williams
