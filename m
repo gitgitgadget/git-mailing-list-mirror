@@ -3,126 +3,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-5.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68DB720986
-	for <e@80x24.org>; Mon, 26 Sep 2016 22:43:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C14B207EC
+	for <e@80x24.org>; Mon, 26 Sep 2016 22:47:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933332AbcIZWnH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Sep 2016 18:43:07 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:36242 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933262AbcIZWnA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2016 18:43:00 -0400
-Received: by mail-qk0-f193.google.com with SMTP id m184so4646624qkb.3
-        for <git@vger.kernel.org>; Mon, 26 Sep 2016 15:43:00 -0700 (PDT)
+        id S1752929AbcIZWrH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Sep 2016 18:47:07 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:36238 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751070AbcIZWrF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2016 18:47:05 -0400
+Received: by mail-pf0-f176.google.com with SMTP id q2so70137434pfj.3
+        for <git@vger.kernel.org>; Mon, 26 Sep 2016 15:47:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Gm1Wl4++KD7L9aQDygo/zpgnAGF8Vqf4fxBjuS0gwys=;
-        b=tiRFyk34LcvUw4rCPUu2Y/U0QCEUHeGTcbI+Blgk9TJAB2jlQnZaWPyiC83kgmT+SP
-         RFaqIHp1yFfR7Mn0ITQEYm3eKIjL7Ryie81U4uSK3DLUR4SL5wjXFOYTI4YOxX9HcsuG
-         +AdPM549gtWX941LMRIxkjXJnfDlGz949evvsQYM7m8KxjNwQ/fUV09vCFRztWh6HSoi
-         aO39fmJHnxp0vxB2/la6vtwqb7qzIpE68njgsJIeq8qojYAn6hnEgfyWpjAmgzVqqqFS
-         1o+soNPA910oXdeVpDcjHgT4XJEdJP+8sAcGDmRf2HGm9CVz99niuWe38Ll5ypVKDe1v
-         5SLQ==
+        bh=2GBoN8GfbmuX7pDyj4Kn3oJ5qdU1dpgxGiGQTDpuwuI=;
+        b=BVfyzVA+vSyk9lR09t6pJMBAzdhwA3gbUdd/LuAO/l1yneBAAZlAewx5ysl0nq6T+G
+         X9q9lEnro5DztvT7c3xDUufYnmoCMdgqaQZXg6KZnqv0rvoUlv2z84+WcurdS9Ex8qKT
+         v+mS3RkFOIy37TZIeuTRJwh6o0L4n72OAji5BtaKbuXfyKwuk3prMNafMSsAIulztHyD
+         kPVzCshd8KO3c+AeY4bEem+0Oh6a/O6omQkv5fY7bFwPS8iLTaib1DY4X8+9qu22MvX4
+         IGiLpHwWRJyhMjg6WSBn4O/yYzcSZ7m8XOUJ+2igAHq3hVr3enIryR/gL9T4HEhgDjdO
+         bBqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Gm1Wl4++KD7L9aQDygo/zpgnAGF8Vqf4fxBjuS0gwys=;
-        b=ljeg1/ss6zRJO2Z5fADA59GNBGoeYAjVNFCGefsUDbA+vTy10OuDSjOZBnvAodMI+M
-         78oNPMF3IjWy4V5OPdlcbH/8/pjDM5bwuPV+9s6B+OOIvzXJ5Ezgbz9gWTVUG/z146nG
-         GLesuJQrK2wjnea81M1Z3jRgnTiNPfQo3km/3I7PZmHxYCzQzNiPJi4kcWYQKFh0Effq
-         U67rLR6D2BilmRPSXiHCPwWxzMSPZQQcjetGMfHlCl9xuwt4XcTCFGEZsz4xjcDtiYCy
-         PonMzRKWypUKJWzirvMZavyKBvuWiu7J1xCMH2oJcA4/LhT27D6DotJS7H9f3HEurSPr
-         RRcg==
-X-Gm-Message-State: AA6/9Rny1qtGSaXioNnNCCpvQgNUg5g0WfU3WCSi83o42j3olf+SyNn9ReTE8D0A2FKY4xBE
-X-Received: by 10.55.5.21 with SMTP id 21mr2950589qkf.231.1474929774719;
-        Mon, 26 Sep 2016 15:42:54 -0700 (PDT)
-Received: from LykOS.localdomain (cpe-74-65-203-27.nyc.res.rr.com. [74.65.203.27])
-        by smtp.gmail.com with ESMTPSA id 62sm12840092qtg.14.2016.09.26.15.42.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 26 Sep 2016 15:42:54 -0700 (PDT)
-From:   santiago@nyu.edu
+        bh=2GBoN8GfbmuX7pDyj4Kn3oJ5qdU1dpgxGiGQTDpuwuI=;
+        b=XjVWC70PwcGtzOOuk+/du8SRKmwaieWzPLpT3OiOwzuTJbHSvkqCwWH9h7atncynz2
+         7F9CYDTz5Br8s/WtLBXraQx4pvp7YQ9ezT/0rQZkMqFrhCVndhYvAD7P7CvJ1LaPSuoj
+         xu/QfmYRlfpCmr9FxGOm3UfF2Qs03apfM0Rxs3xlttRnU9sU8CaxUCpuw+BarvD/xxnO
+         pJQ9Wp9wA+visj5RD82cSLxq/TU4K/hhwq5Q3YvEnzkb9JgQLSx6u5i0TExQb4AdxO8Z
+         2YwjsESF5gXr9EarsDPDezjIaPvCzVbArlshFZo+Km2BCBMUp6rNRu/TWZTTe7AViLYy
+         74DQ==
+X-Gm-Message-State: AE9vXwO8le2C8ztpFVDYsibLqEfq5MJVEYiX6IkzWh6kY7fqLc2uC5KCBlRksJxIQDeVax8O
+X-Received: by 10.98.131.193 with SMTP id h184mr42182745pfe.92.1474930024896;
+        Mon, 26 Sep 2016 15:47:04 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b00:9046:8098:b971:afcc])
+        by smtp.gmail.com with ESMTPSA id y1sm33306775pfd.90.2016.09.26.15.47.03
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 26 Sep 2016 15:47:03 -0700 (PDT)
+From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, sunshine@sunshineco.com,
-        walters@verbum.org, Santiago Torres <santiago@nyu.edu>
-Subject: [PATCH v2 4/5] builtin/verify-tag: add --format to verify-tag
-Date:   Mon, 26 Sep 2016 18:42:32 -0400
-Message-Id: <20160926224233.32702-5-santiago@nyu.edu>
-X-Mailer: git-send-email 2.10.0
-In-Reply-To: <20160926224233.32702-1-santiago@nyu.edu>
-References: <20160926224233.32702-1-santiago@nyu.edu>
+Cc:     Brandon Williams <bmwill@google.com>
+Subject: [PATCH 0/4 v4] recursive support for ls-files
+Date:   Mon, 26 Sep 2016 15:46:39 -0700
+Message-Id: <1474930003-83750-1-git-send-email-bmwill@google.com>
+X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
+In-Reply-To: <1474676014-134568-1-git-send-email-bmwill@google.com>
+References: <1474676014-134568-1-git-send-email-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Santiago Torres <santiago@nyu.edu>
+A couple things have changed in v4:
 
-Callers of verify-tag may want to cross-check the tagname from refs/tags
-with the tagname from the tag object header upon GPG verification. This
-is to avoid tag refs that point to an incorrect object.
+- Restructured the patch series to prevent a breakage mid-way.
+- Added an additional patch in the middle to pass through safe options.  This
+  way the series is structured in a more coherent manor.
+- Added --submodule-prefix to top-level git.c
 
-Add a --format parameter to git verify-tag to print the formatted tag
-object header in addition to or instead of the --verbose or --raw GPG
-verification output.
+Hopefully this series addresses some of issues brought up in v3
 
-Signed-off-by: Santiago Torres <santiago@nyu.edu>
----
- builtin/verify-tag.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+Brandon Williams (4):
+  submodules: make submodule-prefix option
+  ls-files: optionally recurse into submodules
+  ls-files: pass through safe options for --recurse-submodules
+  ls-files: add pathspec matching for submodules
 
-diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
-index de10198..a941053 100644
---- a/builtin/verify-tag.c
-+++ b/builtin/verify-tag.c
-@@ -12,12 +12,15 @@
- #include <signal.h>
- #include "parse-options.h"
- #include "gpg-interface.h"
-+#include "ref-filter.h"
- 
- static const char * const verify_tag_usage[] = {
--		N_("git verify-tag [-v | --verbose] <tag>..."),
-+		N_("git verify-tag [-v | --verbose] [--format=<format>] <tag>..."),
- 		NULL
- };
- 
-+static char *fmt_pretty;
-+
- static int git_verify_tag_config(const char *var, const char *value, void *cb)
- {
- 	int status = git_gpg_config(var, value, cb);
-@@ -33,6 +36,7 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
- 	const struct option verify_tag_options[] = {
- 		OPT__VERBOSE(&verbose, N_("print tag contents")),
- 		OPT_BIT(0, "raw", &flags, N_("print raw gpg status output"), GPG_VERIFY_RAW),
-+		OPT_STRING(  0 , "format", &fmt_pretty, N_("format"), N_("format to use for the output")),
- 		OPT_END()
- 	};
- 
-@@ -46,12 +50,17 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
- 	if (verbose)
- 		flags |= GPG_VERIFY_VERBOSE;
- 
-+	if (fmt_pretty) {
-+		verify_ref_format(fmt_pretty);
-+		flags |= GPG_VERIFY_QUIET;
-+	}
-+
- 	while (i < argc) {
- 		unsigned char sha1[20];
- 		const char *name = argv[i++];
- 		if (get_sha1(name, sha1))
- 			had_error = !!error("tag '%s' not found.", name);
--		else if (verify_and_format_tag(sha1, name, NULL, flags))
-+		else if (verify_and_format_tag(sha1, name, fmt_pretty, flags))
- 			had_error = 1;
- 	}
- 	return had_error;
+ Documentation/git-ls-files.txt         |   7 +-
+ Documentation/git.txt                  |   5 +
+ builtin/ls-files.c                     | 187 ++++++++++++++++++++++-------
+ cache.h                                |   1 +
+ dir.c                                  |  46 +++++++-
+ dir.h                                  |   4 +
+ environment.c                          |   1 +
+ git.c                                  |  21 +++-
+ t/t3007-ls-files-recurse-submodules.sh | 209 +++++++++++++++++++++++++++++++++
+ 9 files changed, 437 insertions(+), 44 deletions(-)
+ create mode 100755 t/t3007-ls-files-recurse-submodules.sh
+
 -- 
-2.10.0
+2.8.0.rc3.226.g39d4020
 
