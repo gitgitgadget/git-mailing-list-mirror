@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DD15207EC
-	for <e@80x24.org>; Mon, 26 Sep 2016 22:42:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06A5E207EC
+	for <e@80x24.org>; Mon, 26 Sep 2016 22:43:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754364AbcIZWmw (ORCPT <rfc822;e@80x24.org>);
+        id S932495AbcIZWm4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Sep 2016 18:42:56 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:36230 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753022AbcIZWmw (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 26 Sep 2016 18:42:52 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:36157 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753918AbcIZWmt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2016 18:42:49 -0400
-Received: by mail-qt0-f194.google.com with SMTP id 11so6215839qtc.3
-        for <git@vger.kernel.org>; Mon, 26 Sep 2016 15:42:49 -0700 (PDT)
+Received: by mail-qk0-f195.google.com with SMTP id m184so4646558qkb.3
+        for <git@vger.kernel.org>; Mon, 26 Sep 2016 15:42:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=nyu-edu.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fvvD8giTVjsc8Te4tOUXQgnSw4t2XlyI9yWSBSfxdP8=;
-        b=gRNKPZYxY/M45ZvdlIYo4P9r3uxUAIXT6PVeOSNlZFQopoogHgylkWqAcODh/9zWhs
-         mVP0FyhtnDS5X7LEaAX9gIFsUTzj/8+t9CvYA3D1HL0whe73HA302Si3MiyS2CYsJW8H
-         O34R7+IX5RxYMESvxVYu6FAbkvJI4DZktrU4qhNR4VN2QNntfBZ2oYnR3Q7jiQxoqzcs
-         fN4Zn6bngAYnI3Ao+K9PqCxYVWkBfGMIBCy+e2c5LhfLwBPWPsm2uaoeslBN8ax2MNgO
-         34KSdXnXh1ed7K5k2n0Xn8D2NY/0Z6EMblsHNUdfkjdyIE2mWB4bAER1Ac0aQ1VjBB5T
-         xqbA==
+        bh=8cZ1EX+gapOJ5v9UCJkT8CWzvgVWzN0zi3nQxOMet3Y=;
+        b=fw76p/iWg30W57EjgXy++GiEk0tfqzCH5sYd+7mR14WQ2qL0J/hK7JWmClzCv1QYjr
+         MGOcqn6l2RZjf+W91zoYs/SjISA0dq25f2+jg1oLxkGFfSXqP+7yAUztwwAs5zBS0Sa7
+         pcVlfdo7wjvhgNIXoxdhOownNbXDzRUiQ2+7L5DVM8ucj6c2SQ8EJCzlTUGnEvdg9SNR
+         0ExZh2YqPH/oTAbCamjxSD6oK7QIkgaci+WVOJvXex07PWeC0FxhdsdFB5Rx6pRkLl4w
+         4eWkU4pW4qPPuCXE/nNkfI+8PY3N/nSxIU77/vJifDz7H6G/WQYweRZJYq0B0DY6zl8s
+         mroA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=fvvD8giTVjsc8Te4tOUXQgnSw4t2XlyI9yWSBSfxdP8=;
-        b=lmye9cgxHlXZwk3cQ4hLhyn850emWdWlx6NofQEs7JqVzNO+sjNORnYY7DpXNMvTCB
-         Ze353ufA4vQV6ESvO3bYYlKAhoVB29FhTaztfFwktR3ZvoMmBYH6z1KRzHvVxbVLqrce
-         HA3JINrKV3u77Fru4XMw88QREUpWmZlaSaurIQdj3rZs5Fit8pcN4r5W2dQ7HXoTf1xf
-         uiQRiJ30pFcxBzHzpMEEwHnes8FgVrVqGqxw0C2dntY7epKiXPy7meJSiqlEIVqEtLeY
-         5zvm2/HrzKJvlFgEYhPKpyawEuprep8ShYg78EvEN+FIuA7sEwHdGl6mf9gNppvkoibI
-         a/Cg==
-X-Gm-Message-State: AA6/9Rnns8oJc3R3gwlmpi5+xGDJd04tszXUY/kTT3PSrqb4jUQ9FNq0AoIACLe53msBvcpp
-X-Received: by 10.200.36.204 with SMTP id t12mr499642qtt.0.1474929768764;
-        Mon, 26 Sep 2016 15:42:48 -0700 (PDT)
+        bh=8cZ1EX+gapOJ5v9UCJkT8CWzvgVWzN0zi3nQxOMet3Y=;
+        b=TjV/K+1dnXyD5LEqGF0xD/5w63wCZzm1YyalChGkEeei2mLS9h49VxhMTkCZe0XtMy
+         j8edtFkwk6bXADWEzSAsFjR3mrPgH8IYgfvXJujuZUHYq9jjG1JbAsAI6VkBdAsZwUE6
+         izxQeqZbuzqaaLFuFAHuO/tAHpvqmla74unQJwwKZRDhQlrCf1dCcpcq7t3j1k35pC3k
+         o3sSMQ+TkXOKhpYDkyiNXNg1fNAc2pDEofj3d4QIMv+SHCBDCmZAcLVPySJdUnynHbeY
+         ZShrw/9evSEoCo5by2lEwAmKHvFqJR2l5ojbd/q/Fg55sEqfsveNgNvSa280Ba+duaMH
+         f3Bw==
+X-Gm-Message-State: AA6/9Rn/B4sXyT318A+anZgtx52UvA5TgzQ+WbxJMbiCg4iUYeuaHaum7kCAzmUV4SxXZYAA
+X-Received: by 10.55.71.198 with SMTP id u189mr25969725qka.251.1474929771255;
+        Mon, 26 Sep 2016 15:42:51 -0700 (PDT)
 Received: from LykOS.localdomain (cpe-74-65-203-27.nyc.res.rr.com. [74.65.203.27])
-        by smtp.gmail.com with ESMTPSA id 62sm12840092qtg.14.2016.09.26.15.42.47
+        by smtp.gmail.com with ESMTPSA id 62sm12840092qtg.14.2016.09.26.15.42.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 26 Sep 2016 15:42:48 -0700 (PDT)
+        Mon, 26 Sep 2016 15:42:50 -0700 (PDT)
 From:   santiago@nyu.edu
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, sunshine@sunshineco.com,
         walters@verbum.org, Lukas P <luk.puehringer@gmail.com>
-Subject: [PATCH v2 1/5] gpg-interface, tag: add GPG_VERIFY_QUIET flag
-Date:   Mon, 26 Sep 2016 18:42:29 -0400
-Message-Id: <20160926224233.32702-2-santiago@nyu.edu>
+Subject: [PATCH v2 2/5] ref-filter: add function to print single ref_array_item
+Date:   Mon, 26 Sep 2016 18:42:30 -0400
+Message-Id: <20160926224233.32702-3-santiago@nyu.edu>
 X-Mailer: git-send-email 2.10.0
 In-Reply-To: <20160926224233.32702-1-santiago@nyu.edu>
 References: <20160926224233.32702-1-santiago@nyu.edu>
@@ -62,51 +62,53 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lukas P <luk.puehringer@gmail.com>
 
-Functions that print git object information may require that the
-gpg-interface functions be silent. Add GPG_VERIFY_QUIET flag and prevent
-print_signature_buffer from being called if flag is set.
+ref-filter functions are useful for printing git object information
+using a format specifier. However, some other modules may not want to use
+this functionality on a ref-array but only print a single item.
+
+Expose a format_ref function to create, pretty print and free individual
+ref-items.
 
 Signed-off-by: Lukas P <luk.puehringer@gmail.com>
 ---
- gpg-interface.h | 1 +
- tag.c           | 5 ++++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ ref-filter.c | 10 ++++++++++
+ ref-filter.h |  4 ++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/gpg-interface.h b/gpg-interface.h
-index ea68885..85dc982 100644
---- a/gpg-interface.h
-+++ b/gpg-interface.h
-@@ -3,6 +3,7 @@
+diff --git a/ref-filter.c b/ref-filter.c
+index bc551a7..e0aaf5f 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1655,6 +1655,16 @@ void show_ref_array_item(struct ref_array_item *info, const char *format, int qu
+ 	putchar('\n');
+ }
  
- #define GPG_VERIFY_VERBOSE	1
- #define GPG_VERIFY_RAW		2
-+#define GPG_VERIFY_QUIET	4
- 
- struct signature_check {
- 	char *payload;
-diff --git a/tag.c b/tag.c
-index d1dcd18..291073f 100644
---- a/tag.c
-+++ b/tag.c
-@@ -3,6 +3,7 @@
- #include "commit.h"
- #include "tree.h"
- #include "blob.h"
-+#include "gpg-interface.h"
- 
- const char *tag_type = "tag";
- 
-@@ -24,7 +25,9 @@ static int run_gpg_verify(const char *buf, unsigned long size, unsigned flags)
- 
- 	ret = check_signature(buf, payload_size, buf + payload_size,
- 				size - payload_size, &sigc);
--	print_signature_buffer(&sigc, flags);
++void format_ref(const char *name, const unsigned char *sha1, const char *format,
++		unsigned kind)
++{
++	struct ref_array_item *ref_item;
++	ref_item = new_ref_array_item(name, sha1, 0);
++	ref_item->kind = kind;
++	show_ref_array_item(ref_item, format, 0);
++	free_array_item(ref_item);
++}
 +
-+	if (!(flags & GPG_VERIFY_QUIET))
-+		print_signature_buffer(&sigc, flags);
+ /*  If no sorting option is given, use refname to sort as default */
+ struct ref_sorting *ref_default_sorting(void)
+ {
+diff --git a/ref-filter.h b/ref-filter.h
+index 14d435e..1ef7999 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -107,4 +107,8 @@ struct ref_sorting *ref_default_sorting(void);
+ /*  Function to parse --merged and --no-merged options */
+ int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset);
  
- 	signature_check_clear(&sigc);
- 	return ret;
++/* Pretty-print a single ref */
++void format_ref(const char *name, const unsigned char *sha1, const char *format,
++		unsigned kind);
++
+ #endif /*  REF_FILTER_H  */
 -- 
 2.10.0
 
