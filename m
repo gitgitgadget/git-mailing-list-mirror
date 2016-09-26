@@ -6,61 +6,74 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2787207EC
-	for <e@80x24.org>; Mon, 26 Sep 2016 17:23:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1391F207EC
+	for <e@80x24.org>; Mon, 26 Sep 2016 17:25:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1034842AbcIZRXy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Sep 2016 13:23:54 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48181 "EHLO cloud.peff.net"
+        id S1161424AbcIZRZU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Sep 2016 13:25:20 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48184 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1030192AbcIZRXy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2016 13:23:54 -0400
-Received: (qmail 5349 invoked by uid 109); 26 Sep 2016 17:23:53 -0000
+        id S1034882AbcIZRZT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2016 13:25:19 -0400
+Received: (qmail 5421 invoked by uid 109); 26 Sep 2016 17:25:18 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 26 Sep 2016 17:23:53 +0000
-Received: (qmail 6434 invoked by uid 111); 26 Sep 2016 17:24:07 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 26 Sep 2016 17:25:18 +0000
+Received: (qmail 6483 invoked by uid 111); 26 Sep 2016 17:25:33 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 26 Sep 2016 13:24:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Sep 2016 13:23:50 -0400
-Date:   Mon, 26 Sep 2016 13:23:50 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 26 Sep 2016 13:25:33 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Sep 2016 13:25:16 -0400
+Date:   Mon, 26 Sep 2016 13:25:16 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
         Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 04/10] get_short_sha1: peel tags when looking for treeish
-Message-ID: <20160926172350.ikqfnanrrj5oepmq@sigill.intra.peff.net>
+Subject: Re: [PATCH 06/10] get_short_sha1: NUL-terminate hex prefix
+Message-ID: <20160926172516.frftagyt6aycp75q@sigill.intra.peff.net>
 References: <20160926115720.p2yb22lcq37gboon@sigill.intra.peff.net>
- <20160926115947.hksmtkqp3i4tfftx@sigill.intra.peff.net>
- <xmqq7f9yvbwn.fsf@gitster.mtv.corp.google.com>
+ <20160926120007.eswpfrzs2ed66d2o@sigill.intra.peff.net>
+ <xmqq37kmvb6x.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq7f9yvbwn.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqq37kmvb6x.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 26, 2016 at 09:55:20AM -0700, Junio C Hamano wrote:
+On Mon, Sep 26, 2016 at 10:10:46AM -0700, Junio C Hamano wrote:
 
-> > Instead, we can use parse_object(). Note that this is the
-> > same fix done by 94d75d1 (get_short_sha1(): correctly
-> > disambiguate type-limited abbreviation, 2013-07-01), but
-> > that commit fixed only the committish disambiguator, and
-> > left the bug in the treeish one.
+> >  struct disambiguate_state {
+> >  	int len; /* length of prefix in hex chars */
+> > -	char hex_pfx[GIT_SHA1_HEXSZ];
+> > +	char hex_pfx[GIT_SHA1_HEXSZ + 1];
+> >  	unsigned char bin_pfx[GIT_SHA1_RAWSZ];
+> >  
+> >  	disambiguate_hint_fn fn;
+> > @@ -291,7 +291,6 @@ static int init_object_disambiguation(const char *name, int len,
+> >  		return -1;
+> >  
+> >  	memset(ds, 0, sizeof(*ds));
+> > -	memset(ds->hex_pfx, 'x', GIT_SHA1_HEXSZ);
 > 
-> Can you share your secret tool you use to find this kind of thing?
-> Yes, the patch from that commit does look very similar to what we
-> see in this patch, but I'd love to see "I am fixing an incorrect
-> call to lookup-object by replacing it with parse-object; has there
-> been a similar fix?" automated ;-)
+> As the whole thing is cleared here...
+> 
+> >  
+> >  	for (i = 0; i < len ;i++) {
+> >  		unsigned char c = name[i];
+> > @@ -313,6 +312,7 @@ static int init_object_disambiguation(const char *name, int len,
+> >  	}
+> >  
+> >  	ds->len = len;
+> > +	ds->hex_pfx[len] = '\0';
+> 
+> ... do we even need this one?  It would not hurt, though.
 
-I wish there was an answer besides "persistence and patience". I was
-just finishing up the commit message for the final patch, and noticed
-that the tag was not present in the second example output, which happens
-to use the tree-ish syntax. And I noticed it was doubly weird that the
-same bug did not show up in the test scripts, which look for
-committishes. That made me peek at the implementation, and from there it
-was an easy `git blame` away.
+Sharp eyes. I noticed that while writing it, but wondered if anybody
+else would. :)
+
+I left the second one in to make the intention more explicit, and so
+readers did not have to worry that the NULs were overwritten in the
+loop. I'd be OK with it either way, though.
 
 -Peff
