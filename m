@@ -2,112 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68998207EC
-	for <e@80x24.org>; Mon, 26 Sep 2016 18:15:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E61C207EC
+	for <e@80x24.org>; Mon, 26 Sep 2016 18:17:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S941579AbcIZSP2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Sep 2016 14:15:28 -0400
-Received: from relay3.ptmail.sapo.pt ([212.55.154.23]:53830 "EHLO sapo.pt"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S941577AbcIZSP1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2016 14:15:27 -0400
-Received: (qmail 21100 invoked from network); 26 Sep 2016 18:15:24 -0000
-Received: (qmail 11923 invoked from network); 26 Sep 2016 18:15:24 -0000
-Received: from unknown (HELO catarina) (vascomalmeida@sapo.pt@[85.246.157.91])
-          (envelope-sender <vascomalmeida@sapo.pt>)
-          by ptmail-mta-auth01 (qmail-ptmail-1.0.0) with ESMTPA
-          for <gitster@pobox.com>; 26 Sep 2016 18:15:22 -0000
-X-PTMail-RemoteIP: 85.246.157.91
-X-PTMail-AllowedSender-Action: 
-X-PTMail-Service: default
-Message-ID: <1474913721.1035.9.camel@sapo.pt>
-Subject: Re: [PATCH v2 04/11] i18n: add--interactive: mark plural strings
-From:   Vasco Almeida <vascomalmeida@sapo.pt>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        David Aguilar <davvid@gmail.com>
-Date:   Mon, 26 Sep 2016 18:15:21 +0000
-In-Reply-To: <1472646690-9699-5-git-send-email-vascomalmeida@sapo.pt>
-References: <1472646690-9699-1-git-send-email-vascomalmeida@sapo.pt>
-         <1472646690-9699-5-git-send-email-vascomalmeida@sapo.pt>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.20.5 (3.20.5-1.fc24) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1162958AbcIZSRy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Sep 2016 14:17:54 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60246 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1162426AbcIZSRx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2016 14:17:53 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 659C741719;
+        Mon, 26 Sep 2016 14:17:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=5a4/fOC+yG3WgYeCtbyjVGTtU78=; b=qE1Txi
+        CSAFW74NBbfN+VxkWei6Vy9V9CeqWOIw5+NmlUCBhxhpj458sHv5Y4JI9OEsNBVV
+        /mcML4kpkmzcXIG7l9synuRiUj7ZHEfa8WAp3ibovWdL97UNaWW7PViEBJja6hRh
+        5vrTFSO3TM2DPR/LVBkWl85OiZOUyBf//A1hg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=cjxs/O3gWPNyjppqB8uyE5Eyp3etsQRw
+        SqGfkq1Vvi5PKMsdap9we1mHKj6DjDyXIkJPCC6qqs6O2a+/V7xK8m62OPvKd8gI
+        9aCcsLliuNt4SlqpzbSon/CEoRHG0gYngHjueDTjNZoCd6BcQWj03e2AQ4mmXIbW
+        BtwZrsJBkGI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 57B7241718;
+        Mon, 26 Sep 2016 14:17:52 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C454841717;
+        Mon, 26 Sep 2016 14:17:51 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH 0/3] recursive support for ls-files
+References: <1474676014-134568-1-git-send-email-bmwill@google.com>
+        <20160925071744.2qcz7cntc7xxpjqv@sigill.intra.peff.net>
+        <20160925163244.GB66080@google.com>
+        <xmqqzimvygdt.fsf@gitster.mtv.corp.google.com>
+        <20160926170429.GA3624@google.com>
+Date:   Mon, 26 Sep 2016 11:17:49 -0700
+In-Reply-To: <20160926170429.GA3624@google.com> (Brandon Williams's message of
+        "Mon, 26 Sep 2016 10:04:29 -0700")
+Message-ID: <xmqqponqseya.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 898B429A-8415-11E6-9988-C26412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A Qua, 31-08-2016 às 12:31 +0000, Vasco Almeida escreveu:
-> Mark plural strings for translation.  Unfold each action case in one
-> entire sentence.
-> 
-> Pass new keyword for xgettext to extract.
-> 
-> Update test to include new subrotine Q__() for plural strings handling.
-> 
-> > Signed-off-by: Vasco Almeida <vascomalmeida@sapo.pt>
-> ---
->  Makefile                  |  3 ++-
->  git-add--interactive.perl | 24 ++++++++++++++++--------
->  perl/Git/I18N.pm          |  4 +++-
->  t/t0202/test.pl           | 11 ++++++++++-
->  4 files changed, 31 insertions(+), 11 deletions(-)
-> 
-> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-> index 4e1e857..08badfa 100755
-> --- a/git-add--interactive.perl
-> +++ b/git-add--interactive.perl
-> @@ -666,12 +666,18 @@ sub status_cmd {
->  sub say_n_paths {
-> >  	my $did = shift @_;
-> >  	my $cnt = scalar @_;
-> > -	print "$did ";
-> > -	if (1 < $cnt) {
-> > -		print "$cnt paths\n";
-> > -	}
-> > -	else {
-> > -		print "one path\n";
-> > +	if ($did eq 'added') {
-> > +		printf(Q__("added one path\n", "added %d paths\n",
-> > +			   $cnt), $cnt);
-> > +	} elsif ($did eq 'updated') {
-> > +		printf(Q__("updated one path\n", "updated %d paths\n",
-> > +			   $cnt), $cnt);
-> > +	} elsif ($did eq 'reversed') {
-> > +		printf(Q__("reversed one path\n", "reversed %d paths\n",
+Brandon Williams <bmwill@google.com> writes:
 
-This should be 'reverted' not 'reversed'.
+> In a previous email you mentioned that this feature should be completely
+> hidden from users, which is why I removed the command line option for
+> this latest series.
 
-> > +			   $cnt), $cnt);
-> > +	} else {
-> > +		printf(Q__("touched one path\n", "touched %d paths\n",
-> > +			   $cnt), $cnt);
-> >  	}
->  }
+I may have said something like that; I do not recall, though, so a
+more accurate description might be "I may have said something that
+can be (mis)interpreted like so".  Sorry for the confusion.
 
-When $cnt is 1 I get the following warning:
-Redundant argument in printf at /home/vasco/dev/local/libexec/git-core/git-add--interactive line 680.
+In any case, an environment is not "completely hidden from users",
+so it is not fundamentallly different from a command line option
+anyway ;-)
 
-The singular form does not have a %d to consume $cnt argument to
-printf(). Either we find a way to suppress that warning or we change
-the singular form to contain %d.
+> If that isn't what you intended that I can
+> definitely add the option to git.c.  And you would rather we perform the
+> checking in git.c to see if a subcommand supports the prefix versus
+> silently ignoring it if it hasn't?  I'm assuming this checking would
+> also be done in git.c?
 
-> @@ -1508,8 +1514,10 @@ sub patch_update_file {
-> ...
-> > -					print colored $header_color, "Split into ",
-> > -					scalar(@split), " hunks.\n";
-> > +					print colored $header_color, sprintf(
-> > +						Q__("Split into %d hunk.\n",
-> > +						    "Split into %d hunks.\n",
-> > +						    scalar(@split)), scalar(@split));
-Like we do with this.
-> > 
-> > 
+I actually do not care strongly _where_ the check happens.  It was
+just that in the subcommand dispatcher would be the single place
+that is easiest-to-implement to perform that check, that made me
+suggest that.  We already have various bits like NEEDS_WORK_TREE,
+RUN_SETUP, etc. so REJECT_EXTERNAL_PREFIX (or whatever its name be;
+I do not offhand recall current proposal) bit would fit there
+naturally, I would think.  Of course, non-built-in commands need to
+protect themselves separately, if they want to.
