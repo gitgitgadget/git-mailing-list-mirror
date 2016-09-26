@@ -2,96 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D51BC207EC
-	for <e@80x24.org>; Mon, 26 Sep 2016 16:16:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A49FD207EC
+	for <e@80x24.org>; Mon, 26 Sep 2016 16:22:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1422744AbcIZQQA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Sep 2016 12:16:00 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59167 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1422737AbcIZQP6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2016 12:15:58 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E28C04027F;
-        Mon, 26 Sep 2016 12:15:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=OsETcZjE38R8LP/xIUE1qUrz4Vk=; b=nLGtGW
-        elohjkX7YYRdtjx0l5WOcVDqfZKx6FScH/Hgo0Han4GWVFowDb9XHUnvx01G6ba+
-        HAE4CLaGQSDj/QvQVYW9SDa2Rho4wVKj6QYnZrecZuRBgddPv1rcw1CNnLmHr1QH
-        xeKssUUspjrdt12cUJwj9DpVPDMojdMIbDD8U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cmnXlG4yjKNW7EDRWMb5mqMeDG0z1oqd
-        5m/ug6YOlAkeU1eYl1rO0ueqhVHCaUGgXUXSvW3B63vlrtBfdgIEDDVM/KstIBLn
-        El8uWu31dH0ZSCOaRGAlSsDMFEnxIl4tjEW6lkdCPUZsODwM1JOlR6R/uioLG5Nz
-        x70vetvxIMM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DA6894027E;
-        Mon, 26 Sep 2016 12:15:55 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 63AB34027D;
-        Mon, 26 Sep 2016 12:15:55 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-        Gustavo Grieco <gustavo.grieco@imag.fr>
-Subject: Re: [PATCH] unpack_sha1_header(): detect malformed object header
-References: <1825523389.8224664.1474812766424.JavaMail.zimbra@imag.fr>
-        <xmqqbmzbwmfc.fsf@gitster.mtv.corp.google.com>
-        <xmqqshsnuvvz.fsf_-_@gitster.mtv.corp.google.com>
-        <20160926140309.l2h4b65gpqyutepn@sigill.intra.peff.net>
-Date:   Mon, 26 Sep 2016 09:15:53 -0700
-In-Reply-To: <20160926140309.l2h4b65gpqyutepn@sigill.intra.peff.net> (Jeff
-        King's message of "Mon, 26 Sep 2016 10:03:09 -0400")
-Message-ID: <xmqqfuomvdqe.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1753556AbcIZQWa (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Sep 2016 12:22:30 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35070 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1422751AbcIZQW3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2016 12:22:29 -0400
+Received: by mail-wm0-f68.google.com with SMTP id 133so14893964wmq.2
+        for <git@vger.kernel.org>; Mon, 26 Sep 2016 09:22:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=tMzh3Es7ImjxSrdQUZR86nWnFTuyRkeCCQplnYgRdh0=;
+        b=mIt37P/geKoezruCdw7EBKGBGoWD7ogD8BjCPA3f2lhfp8wYuTDBL4/OQmh5vrJecU
+         9NSzO0+XLfMm3TQBWiv08a4tvx7obsp3EqhEWEGlUZBJ93V77TN1jqjwKJu07/rp4sTQ
+         9hNUhd2q6Iwu/iyCc+BLljRIIzvx/EB/Ga/RH2ztQuqnLfnsry2ERpACdKxOLhzYtl3m
+         4Aa8rPYSw96XA8/lS2ILn1C/glxPGKJGg/gAd5MNTnGYRgXyzjMWox1gNQkgUZ25jTXd
+         mhAlKjGEKD/Yr/CVPrhIBnk+4+SDuYyoMWvo6Yu3Ko+vBWEDaOt2rA2fTr25vX8Y5wA7
+         3QxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=tMzh3Es7ImjxSrdQUZR86nWnFTuyRkeCCQplnYgRdh0=;
+        b=JG4ol9Ln1QBiC+8LcsbHuzGsI+DJ4sHY41QL6a+InA5kBeP5b1nnkSpr+2+BvaITqI
+         BBp/IURLrqXkNSfgQ0YsGSH0KSG+6rWzRVs3MyGGqA4aI8bUjqMDbAT7enT7TBTkhusX
+         u6VlJMrHlgzFu3VB4JAaLKz1NWPFIQ4bm5geoTtt0xYqHBnLBzy5N+1NfMiHrbxp9HWJ
+         zDRbX62IQTv6H/2IsEqMJ73rzscDob324sd+05CYR1CqtUuf56GoNWpOJsNHMCD8Gtkg
+         WUYkGteJtUs8Q15sRHNB49vOuuByZQEyxUkRs7N9NUn90MRxwmGhCX6GvG264kl7FxIU
+         1Hyg==
+X-Gm-Message-State: AA6/9RkEKkdE9EDitENrI1PqAaxw11inZ0FG0xghCsgUWzubMSVsZ8VS/1Wurn+NuxeNVXieu0UfH2kMqPV1xA==
+X-Received: by 10.28.91.11 with SMTP id p11mr14465483wmb.98.1474906947604;
+ Mon, 26 Sep 2016 09:22:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 80A28078-8404-11E6-BB36-C26412518317-77302942!pb-smtp1.pobox.com
+Received: by 10.28.136.12 with HTTP; Mon, 26 Sep 2016 09:21:47 -0700 (PDT)
+In-Reply-To: <4B4255C0-4C0C-45F0-B37D-0C78C2AAFAE9@gmail.com>
+References: <20160920190247.82189-1-larsxschneider@gmail.com>
+ <20160920190247.82189-4-larsxschneider@gmail.com> <854ff387-57a4-4c27-4c27-b834f7797694@gmail.com>
+ <4B4255C0-4C0C-45F0-B37D-0C78C2AAFAE9@gmail.com>
+From:   =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Date:   Mon, 26 Sep 2016 18:21:47 +0200
+Message-ID: <CANQwDwd7YMjoyO3Y=FqcX720_vcqa0L=z6veTgYO==LorhqqFQ@mail.gmail.com>
+Subject: Re: [PATCH v8 03/11] run-command: move check_pipe() from write_or_die
+ to run_command
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Martin-Louis Bright <mlbright@gmail.com>,
+        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On 26 September 2016 at 18:13, Lars Schneider <larsxschneider@gmail.com> wr=
+ote:
+>> On 25 Sep 2016, at 00:12, Jakub Nar=C4=99bski <jnareb@gmail.com> wrote:
+>> W dniu 20.09.2016 o 21:02, larsxschneider@gmail.com pisze:
+>>> From: Lars Schneider <larsxschneider@gmail.com>
+>>>
+>>> Move check_pipe() to run_command and make it public. This is necessary
+>>> to call the function from pkt-line in a subsequent patch.
+>>
+>> All right.
+>
+> Does this mean I can add your "Acked-by: Jakub Narebski <jnareb@gmail.com=
+>" ?
 
-> This part I don't understand, though. We clearly need to look for the
-> NUL. But why do we need to look for the space? The loop in
-> parse_sha1_header() can easily detect this as it looks for the end of
-> the type name (and if it hits the end-of-string, can bail as in your
-> original patch).
-> I.e., the root of the problem is that we pass parse_sha1_header() a the
-> "ptr" half of a ptr/len buffer, and it has no idea how much we read.
-> But once we get it that information (either by passing the length, or by
-> ensuring that the buffer is NUL-terminated, it should be easy for it to
-> do the right thing.
+Well, Acked-by makes sense if it is from subsystem maintainer. I can only
+claim gitweb subsystem where my ACKs might make sense.
 
-Yup.
+This "All right" is here to note that I have read this patch (and not
+skipped it),
+and I have't found anything to complain about or nitpick ;-P
 
-> Anyway, here's my ptr/len version (which passes the length back out of
-> unpack_sha1_header via an in/out pointer). After thinking on it, though,
-> I'm of the opinion that we're better off just ensuring that "hdr" is
-> NUL-terminated. We end up assuming that anyway later, since we have to
-> know how much of the header buffer was consumed by parsing.
-
-I'd agree, not because I didn't first go in this <ptr,len> route
-myself, but because the attached change does look quite invasive.
-Also, I think it is OK to ask unpack_*_header() to fail if what it
-turns can no way be a header, e.g. lacks NUL termination.
-
-> Do note the final call below in the streaming loose-open code, which
-> exhibits that, but also seems to call parse_sha1_header() without
-> checking its return value. I think that needs fixed regardless of the
-> approach.
-
-Good that your attempt to signature-changing change caught it.  I'll
-take a further look.
-
-Thanks.
+Best,
+--=20
+Jakub Nar=C4=99bski
