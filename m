@@ -2,239 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 112C6207EC
-	for <e@80x24.org>; Mon, 26 Sep 2016 20:23:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8821B207EC
+	for <e@80x24.org>; Mon, 26 Sep 2016 20:29:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1033024AbcIZUXj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Sep 2016 16:23:39 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:34574 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933488AbcIZUXh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2016 16:23:37 -0400
-Received: by mail-lf0-f68.google.com with SMTP id b71so9965323lfg.1
-        for <git@vger.kernel.org>; Mon, 26 Sep 2016 13:23:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Xk66157v9ic5jtEYfkGk1MKLKvgawpc0h+rcAsFYjqw=;
-        b=H5b9Cf9cvNvbVrfRd7TioUd6+gAqJu5h3ndB++1kEb5xP11UVnDhYACCUS+qcVC63T
-         MAJePYUX5AmltoRcXugygCPeg+Mehb94CfON4Okm6gan+Dn/Wye39DEGYZotZjc6AnVL
-         Th7AtBrxuuTbCHo5bGZE0/RTg6Hz5BubYN4x/LwcxlrilliWpXm9LQH19ovnseEflLSJ
-         CppuM9ucHUoj5mklUoo5CpxwwcEyILruTE5b9sWMZZSw1l1oZF5SJXtafAx5k0TQmtBV
-         7FwwExpCC8aV9XRkHa8BmhMcEhLkJPOLqB3Z5kIl4VbJ5SOTK9+Pu1HABQvbhMacrqiL
-         W3/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Xk66157v9ic5jtEYfkGk1MKLKvgawpc0h+rcAsFYjqw=;
-        b=cZrUdJ557oTJdqr9EmANyEWvXf/EL+LW1RuhLIyuCGw4d5fMNzdtxjzCD9TUPPVeTT
-         AZWkPcx5UlHT6n3/+3hiGz9pppqEm0E2tlwO92syKRmqfGv+CS84nGD+FZOHJv2JCgrn
-         xptUKUx2oeRBfn0HCIvO/0kLE8KJe+ggkdd6fr9U1nKJS8pMqXVlmbWGOz+XodF5Gwjs
-         qTVGAxjK+CozYK961iwyls308J1pdg5NFaLOM/t/5InNfxvY8FgMcB/ebdmFNdiDm0X0
-         qBRVKCwesqqXwEUz5mkqxw5BTI5Ja3SxYOQ5+d5sbWA3Sdj4YehZ2mVPFEdkQ6hQ7nCu
-         sgJA==
-X-Gm-Message-State: AA6/9RnpsvRkM+rsTOI+aCBzyPD9sp3hIsjJAqp1g3g+nkJVVFU1gIDO1DxKZhyZlEDShA==
-X-Received: by 10.194.102.132 with SMTP id fo4mr18954539wjb.157.1474921415222;
-        Mon, 26 Sep 2016 13:23:35 -0700 (PDT)
-Received: from slxbook3.fritz.box (p5DDB4342.dip0.t-ipconnect.de. [93.219.67.66])
-        by smtp.gmail.com with ESMTPSA id i127sm12980627wmf.4.2016.09.26.13.23.33
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 26 Sep 2016 13:23:34 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Subject: Re: [PATCH v8 07/11] pkt-line: add functions to read/write flush terminated packet streams
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <507a29a1-99ff-c13e-cf1f-76631345a822@gmail.com>
-Date:   Mon, 26 Sep 2016 22:23:32 +0200
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Martin-Louis Bright <mlbright@gmail.com>,
-        =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <77315FC2-47F3-433A-8D70-5497FB04CBBE@gmail.com>
-References: <20160920190247.82189-1-larsxschneider@gmail.com> <20160920190247.82189-8-larsxschneider@gmail.com> <507a29a1-99ff-c13e-cf1f-76631345a822@gmail.com>
-To:     =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-X-Mailer: Apple Mail (2.1878.6)
+        id S1422684AbcIZU3w (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Sep 2016 16:29:52 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54965 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1422674AbcIZU3v (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2016 16:29:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1406B40DB0;
+        Mon, 26 Sep 2016 16:29:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ijmTcHku9sNE2uDyTmikMnWUo0M=; b=xiK0EE
+        JJoA5JjV+ZXoaaYJJFq4KgQcTGC4khWXp2SVxqodVY/FLgdLzTjhEm+efEzB7MWr
+        4atucv0dRbWap3oGrbCJ/PtEriVVuEMX4l8o3A7e+PZrikSEyTwFvCObjHVLRSRC
+        LpfyDDYK8vM9W8GSeJfENQJXGn/OsECSdRtpc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=c07G+Vr+4o/uSk7ruiHGRyXx+vJi7TXj
+        Eq5SHoT+aUCeaS2wb7VYDX2nwItMurDTKkHi6zXcRuiB7acp2aUzZEYB/sZCrnJ6
+        EpcwbRjP+6aX33Q8Pft5iOW9nXNVd3SFDMuqYhlpTMEN3M8v2jHDk2jlGQFuTLB0
+        VG6vGFfaPcA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0B33840DAF;
+        Mon, 26 Sep 2016 16:29:50 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8665440DAE;
+        Mon, 26 Sep 2016 16:29:49 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, Jens.Lehmann@web.de
+Subject: Re: [PATCH] Documentation/fetch-options: emit recurse-submodules, jobs unconditionally
+References: <20160926193553.32631-1-sbeller@google.com>
+Date:   Mon, 26 Sep 2016 13:29:47 -0700
+In-Reply-To: <20160926193553.32631-1-sbeller@google.com> (Stefan Beller's
+        message of "Mon, 26 Sep 2016 12:35:53 -0700")
+Message-ID: <xmqq7f9yqu9w.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: F8E3F364-8427-11E6-A41A-C26412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Stefan Beller <sbeller@google.com> writes:
 
-On 25 Sep 2016, at 15:46, Jakub Nar=C4=99bski <jnareb@gmail.com> wrote:
+> Currently the section about recursing into submodules is repeated in
+> git-pull word for word as it is in fetch-options.
+>
+> Don't repeat ourselves here and include the --recurse-submodules via
+> fetch options.
+>
+> As a bonus expose the --jobs parameter in git-pull as well as that is
+> declared as a OPT_PASSTHRU for fetch internally already.
 
-> W dniu 20.09.2016 o 21:02, larsxschneider@gmail.com pisze:
->> From: Lars Schneider <larsxschneider@gmail.com>
+The above may not be technically wrong, but smells like an
+under-researched description.
 
+IOW, "Why did the commit that introduced the option described it
+this way in the first place?  Was there a specific reason why it had
+to be that way, and that reason is no longer with us now, which
+makes this change safe?" is a very natural question somebody who
+sees this patch, and your description does not answer it.
 
->> +{
->> +	static char buf[PKTLINE_DATA_MAXLEN];
->=20
-> Sidenote: we have LARGE_PACKET_MAX (used in previous patch), but
-> PKTLINE_DATA_MAXLEN not LARGE_PACKET_DATA_MAX.
+It seems that the option to recurse into submodules was added by
+Jens's 7dce19d3 ("fetch/pull: Add the --recurse-submodules option",
+2010-11-12) to both fetch and pull at the same time.  I suspected
+perhaps we hid it from pull initially while describing it for fetch,
+but that does not seem to be the case, and back at that version,
+pull and fetch shared the description without duplicating.
 
-Agreed, I will rename it.
+So where did we go wrong?  Was there a good reason why we have two
+instances of these option descriptions, and if so, are we sure that
+that reason is no longer applicable to today's system that we can
+safely share the description?  The proposed log message is a place
+to answer these questions.
 
+By the way, 7dce19d3 is interesting in another way and worth
+studying in that it adds --submodule-prefix ;-) It may be something
+we want to consider consolidating with what Brandon has been working
+on.
 
->=20
->> +	int err =3D 0;
->> +	ssize_t bytes_to_write;
->> +
->> +	while (!err) {
->> +		bytes_to_write =3D xread(fd_in, buf, sizeof(buf));
->> +		if (bytes_to_write < 0)
->> +			return COPY_READ_ERROR;
->> +		if (bytes_to_write =3D=3D 0)
->> +			break;
->> +		err =3D packet_write_gently(fd_out, buf, =
-bytes_to_write);
->> +	}
->> +	if (!err)
->> +		err =3D packet_flush_gently(fd_out);
->> +	return err;
->> +}
->=20
-> Looks good: clean and readable.
->=20
-> Sidenote (probably outside of scope of this patch): what are the
-> errors that we can get from this function, beside COPY_READ_ERROR
-> of course?
+By the way^2, the "unconditionally" on the title conveyed less
+information than their bits weigh.  Unless a reader knows
+fetch-options are shared between fetch and pull, s/he would not know
+you meant by "unconditionally" to show these in both fetch and pull.
 
-Everything that is returned by "read()"
+    Documentation: share more descriptions for options between fetch and pull
 
+perhaps?
 
->> +
->> static int get_packet_data(int fd, char **src_buf, size_t *src_size,
->> 			   void *dst, unsigned size, int options)
->> {
->> @@ -305,3 +346,30 @@ char *packet_read_line_buf(char **src, size_t =
-*src_len, int *dst_len)
->> {
->> 	return packet_read_line_generic(-1, src, src_len, dst_len);
->> }
->> +
->> +ssize_t read_packetized_to_buf(int fd_in, struct strbuf *sb_out)
->=20
-> It's a bit strange that the signature of write_packetized_from_buf() =
-is
-> that different from read_packetized_to_buf().  This includes the =
-return
-> value: int vs ssize_t.  As I have checked, write() and read() both
-> use ssize_t, while fread() and fwrite() both use size_t.
-
-read_packetized_to_buf() returns the number of bytes read or a negative=20=
-
-error code.
-
-write_packetized_from_buf() returns 0 if the call was successful and an=20=
-
-error code if not.
-
-That's the reason these two functions have a different signature
-
-
-> Perhaps this function should be named read_packetized_to_strbuf()
-> (err, I asked this already)?
-
-I agree with the rename as makes it distinct from=20
-write_packetized_from_buf().
-
-
->> +{
->> +	int paket_len;
->=20
-> Possible typo: shouldn't it be called packet_len?
-
-True!
-
-
-> Shouldn't it be initialized to 0?
-
-Well, it is set for sure later. That's why I think it is not necessary.
-
-Plus, Eric Wong thought me not to:
-"Compilers complain about uninitialized variables."
-http://public-inbox.org/git/20160725072745.GB11634@starla/
-(Note: he was talking about pointers there :-)
-
-
->> +	int options =3D PACKET_READ_GENTLE_ON_EOF;
->=20
-> Why is this even a local variable?  It is never changed, and it is
-> used only in one place; we can inline it.
-
-Removed.
-
-
->> +
->> +	size_t oldlen =3D sb_out->len;
->> +	size_t oldalloc =3D sb_out->alloc;
->=20
-> Just a nitpick (feel free to ignore): doesn't this looks better:
->=20
->  +	size_t old_len   =3D sb_out->len;
->  +	size_t old_alloc =3D sb_out->alloc;
->=20
-> Also perhaps s/old_/orig_/g.
-
-Agreed. That matches the other variables better.
-
-
->> +		strbuf_grow(sb_out, PKTLINE_DATA_MAXLEN+1);
->> +		paket_len =3D packet_read(fd_in, NULL, NULL,
->> +			sb_out->buf + sb_out->len, =
-PKTLINE_DATA_MAXLEN+1, options);
->=20
-> A question (which perhaps was answered during the development of this
-> patch series): why is this +1 in PKTLINE_DATA_MAXLEN+1 here?
-
-Nice catch. I think this is wrong:
-=
-https://github.com/git/git/blob/6fe1b1407ed91823daa5d487abe457ff37463349/p=
-kt-line.c#L196
-
-It should be "if (len > size)" ... then we don't need the "+1" here.
-(but I need to think a bit more about this)
-
->=20
->> +		if (paket_len <=3D 0)
->> +			break;
->> +		sb_out->len +=3D paket_len;
->> +	}
->> +
->> +	if (paket_len < 0) {
->> +		if (oldalloc =3D=3D 0)
->> +			strbuf_release(sb_out);
->> +		else
->> +			strbuf_setlen(sb_out, oldlen);
->=20
-> A question (maybe I don't understand strbufs): why there is a special
-> case for oldalloc =3D=3D 0?
-
-I tried to mimic the behavior of strbuf_read() [1]. The error handling
-was introduced in 2fc647 [2] to ease error handling:
-
-"This allows for easier error handling, as callers only need to call
-strbuf_release() if A) the command succeeded or B) if they would have =
-had
-to do so anyway because they added something to the strbuf themselves."
-
-[1] =
-https://github.com/git/git/blob/cda1bbd474805e653dda8a71d4ea3790e2a66cbb/s=
-trbuf.c#L377-L383
-[2] =
-https://github.com/git/git/commit/2fc647004ac7016128372a85db8245581e493812=
-
-
-
-Thanks,
-Lars=
+Thanks.
