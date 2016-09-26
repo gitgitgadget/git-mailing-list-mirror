@@ -6,87 +6,187 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8972E1F4F8
-	for <e@80x24.org>; Mon, 26 Sep 2016 03:46:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F4081F4F8
+	for <e@80x24.org>; Mon, 26 Sep 2016 04:29:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1034686AbcIZDqq (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Sep 2016 23:46:46 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50120 "EHLO
+        id S1751372AbcIZE3J (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Sep 2016 00:29:09 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56258 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S941394AbcIZDqo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Sep 2016 23:46:44 -0400
+        with ESMTP id S1750754AbcIZE3I (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2016 00:29:08 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 139D6412AE;
-        Sun, 25 Sep 2016 23:46:42 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2276342DCB;
+        Mon, 26 Sep 2016 00:29:07 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=WQcTovAin32hHEKK/UW2y1Y9SSU=; b=Ynr5RQ
-        hSiMpAx9vwRBtyU7K0ohQOPa0LcApnJIL0XQk1CbwZ0uFVyYdISYLoupbiFpl0gX
-        QcgUQQ9KVaDhciQRE6bZkOCkY0+pRb1waV0lFyAcXLu/mxMAIP3cs36u1VTPA/9z
-        j0ooNejhB5q2fCF9dKZLzPPvGZW1SxKfkLsGM=
+        :content-type; s=sasl; bh=8SoMjn53UNkVtFikHn1V/LW6ves=; b=EBqWYY
+        8H7j9PAfP1Q+RteQERebbNoTmSr3EubbX2b5F07OHF6DKdvPFlrHrJOKbFc6fER6
+        2CDjk4g5az4xut0G4F/UISen5v/kHvdOexkqaV5oFaHRtmxeem7WjCIfT0yPIgn2
+        J3Np/DeqekbOEMToUL0SPb3In1gIx/mYsTgho=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=MLzcX5pAqkEOfGWchSPxFOouDPiTBEXk
-        yZGUit+34PjsVl9V8yT5BctnwsvJ/NOqCKp9rpmoD4oKtjAo1Uo8RGV8/9fpqRC1
-        AizyYbkS5wv58ZTL7qMwy3G/+FwOSUAbN8OoWvQBA6Tpvvja3UIVG52cH/WXsnZt
-        fJC8f1R4kno=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0B200412AD;
-        Sun, 25 Sep 2016 23:46:42 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=gZ1p+iiaaH5Oq34EIyofKtyNH2bmKx+U
+        SW/BQXm1bpudwUtdYYhtN+zA71RkZnsZQCVi4YhUWpGh0v72wd6pYPEq0hvjZCM/
+        JAH763cBG+Q+UYqQt8D7y1vj08tSsI735I5LTkDOaPBXU3lA2PCOK3CiF8RONfhl
+        D8yKLr2bw/k=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1858D42DCA;
+        Mon, 26 Sep 2016 00:29:07 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8709D412AC;
-        Sun, 25 Sep 2016 23:46:41 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7A68F42DC9;
+        Mon, 26 Sep 2016 00:29:06 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: Changing the default for "core.abbrev"?
-References: <CA+55aFy0_pwtFOYS1Tmnxipw9ZkRNCQHmoYyegO00pjMiZQfbg@mail.gmail.com>
-Date:   Sun, 25 Sep 2016 20:46:39 -0700
-In-Reply-To: <CA+55aFy0_pwtFOYS1Tmnxipw9ZkRNCQHmoYyegO00pjMiZQfbg@mail.gmail.com>
-        (Linus Torvalds's message of "Sun, 25 Sep 2016 18:39:35 -0700")
-Message-ID: <xmqq37knwcf4.fsf@gitster.mtv.corp.google.com>
+To:     git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+        Jeff King <peff@peff.net>
+Cc:     Gustavo Grieco <gustavo.grieco@imag.fr>
+Subject: [PATCH] unpack_sha1_header(): detect malformed object header
+References: <1825523389.8224664.1474812766424.JavaMail.zimbra@imag.fr>
+        <xmqqbmzbwmfc.fsf@gitster.mtv.corp.google.com>
+Date:   Sun, 25 Sep 2016 21:29:04 -0700
+In-Reply-To: <xmqqbmzbwmfc.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Sun, 25 Sep 2016 17:10:31 -0700")
+Message-ID: <xmqqshsnuvvz.fsf_-_@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: D60BF45E-839B-11E6-9040-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: C2F51D5E-83A1-11E6-85AC-C26412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+When opening a loose object file, we often do this sequence:
 
-> I can just keep reminding kernel maintainers and developers to update
-> their git config, but maybe it would be a good idea to just admit that
-> the defaults picked in 2005 weren't necessarily the best ones
-> possible, and those could be bumped up a bit?
->
-> I think I mentioned this some time ago, and it's not a huge deal, but
-> I thought I'd just mention it again because it came up again today for
-> me..
+ - prepare a short buffer for the object header (on stack)
 
-I am not quite sure how good any new default would be, though.  Just
-like any timeout is not long enough for somebody, growing projects
-will eventually hit whatever abbreviation length they start with.
+ - call unpack_sha1_header() and have early part of the object data
+   inflated, enough to fill the buffer
 
-Even if we bump it to 12 for everybody, majority of projects at
-GitHub would probably be just wasting 5 more hexdigits in addition
-to whatever they are already wasting.  The kernel folks will keep
-having the problem of having harder time looking up objects referred
-to by ancient commits no matter what the new default is anyway, and
-then they will again regret we didn't bump it to 16 in year 2016 in
-several decades; by that time both of us are probably retired so it
-may no longer be our problems, though ;-)
+ - parse that data in the short buffer, assuming that the first part
+   of the object is <type> SP <length> NUL
 
-I am not opposed to bump the default to 12 or whatever, but I
-suspect any lengthening today may need to be accompanied by a tool
-support that finds the set of objects that are reachable from a
-commit whose names begin with non-unique abbreviations that appear
-in the commit log message. Assuming that it is very hard to refer to
-future objects in the log message you write today, such a tool may
-find a single object that used to be the unique instance of that
-abbreviation back then, and with reachability bitmap support, it may
-not be too expensive to run.
+Nobody in this sequence however actually verifies that the loop that
+tries to find SP that must come after the typename or NUL that must
+come after the length exist in the inflated data.  Because the
+parsing function parse_sha1_header_extended() is not even given the
+number of bytes inflated into the header buffer, it can easily read
+past it, looking for the SP byte that may not even exist.
 
+A variant recently introduced to support "--allow-unknown-type"
+option of "git cat-file -t" changes the second step to use
+unpack_sha1_header_to_strbuf(), but the story is essentially the
+same.  It did check to see if it saw enough to include NUL, but
+nobody checked for SP before calling the parsing function.
+
+To correct this, do these three things:
+
+ - rename unpack_sha1_header() to unpack_sha1_short_header() and
+   have unpack_sha1_header_to_strbuf() keep calling that as its
+   helper function.  This will detect and report zlib errors, but is
+   not aware of the format of a loose object (as before).
+
+ - introduce unpack_sha1_header() that calls the same helper
+   function, and when zlib reports it inflated OK into the buffer,
+   check if the buffer has both SP and NUL in this order.  This
+   would ensure that parsing function will terminate within the
+   buffer that holds the inflated header.
+
+ - update unpack_sha1_header_to_strbuf() to check if the resulting
+   buffer has both SP and NUL in this order for the same effect.
+
+Reported-by: Gustavo Grieco <gustavo.grieco@imag.fr>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ * Unlike the "something like this" version, this does the "we got
+   some data, does it look like an object header, safely parseable
+   by our parser?" check in the unpack code, without touching the
+   parser, as I think that division of labor between the unpacker
+   and the parser makes more sense.
+
+   The strbuf codepath came in 46f03448 ("sha1_file: support reading
+   from a loose object of unknown type", 2015-05-03) by Karthik,
+   whose log says it was written by me, and helped by Peff, so I'm
+   asking these two to lend their eyes.
+
+ sha1_file.c | 40 +++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 37 insertions(+), 3 deletions(-)
+
+diff --git a/sha1_file.c b/sha1_file.c
+index b9c1fa3..445e763 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1646,7 +1646,9 @@ unsigned long unpack_object_header_buffer(const unsigned char *buf,
+ 	return used;
+ }
+ 
+-int unpack_sha1_header(git_zstream *stream, unsigned char *map, unsigned long mapsize, void *buffer, unsigned long bufsiz)
++static int unpack_sha1_short_header(git_zstream *stream,
++				    unsigned char *map, unsigned long mapsize,
++				    void *buffer, unsigned long bufsiz)
+ {
+ 	/* Get the data stream */
+ 	memset(stream, 0, sizeof(*stream));
+@@ -1659,13 +1661,37 @@ int unpack_sha1_header(git_zstream *stream, unsigned char *map, unsigned long ma
+ 	return git_inflate(stream, 0);
+ }
+ 
++int unpack_sha1_header(git_zstream *stream,
++		       unsigned char *map, unsigned long mapsize,
++		       void *buffer, unsigned long bufsiz)
++{
++	const char *eoh;
++	int status = unpack_sha1_short_header(stream, map, mapsize,
++					      buffer, bufsiz);
++
++	if (status < Z_OK)
++		return status;
++
++	/* Make sure we have the terminating NUL */
++	eoh = memchr(buffer, '\0', stream->next_out - (unsigned char *)buffer);
++	if (!eoh)
++		return -1;
++	/* Make sure we have ' ' at the end of type */
++	if (!memchr(buffer, ' ', eoh - (const char *)buffer))
++		return -1;
++	return 0;
++}
++
+ static int unpack_sha1_header_to_strbuf(git_zstream *stream, unsigned char *map,
+ 					unsigned long mapsize, void *buffer,
+ 					unsigned long bufsiz, struct strbuf *header)
+ {
++	const char *eoh;
+ 	int status;
+ 
+-	status = unpack_sha1_header(stream, map, mapsize, buffer, bufsiz);
++	status = unpack_sha1_short_header(stream, map, mapsize, buffer, bufsiz);
++	if (status < Z_OK)
++		return -1;
+ 
+ 	/*
+ 	 * Check if entire header is unpacked in the first iteration.
+@@ -1686,11 +1712,19 @@ static int unpack_sha1_header_to_strbuf(git_zstream *stream, unsigned char *map,
+ 		status = git_inflate(stream, 0);
+ 		strbuf_add(header, buffer, stream->next_out - (unsigned char *)buffer);
+ 		if (memchr(buffer, '\0', stream->next_out - (unsigned char *)buffer))
+-			return 0;
++			goto enough;
+ 		stream->next_out = buffer;
+ 		stream->avail_out = bufsiz;
+ 	} while (status != Z_STREAM_END);
+ 	return -1;
++
++enough:
++	eoh = memchr(header->buf, '\0', header->len);
++	if (!eoh)
++		die("BUG: the NUL we earlier saw is gone???");
++	if (!memchr(header->buf, ' ', eoh - header->buf))
++		return -1;
++	return 0;
+ }
+ 
+ static void *unpack_sha1_rest(git_zstream *stream, void *buffer, unsigned long size, const unsigned char *sha1)
