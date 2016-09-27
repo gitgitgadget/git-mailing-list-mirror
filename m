@@ -6,62 +6,57 @@ X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D96E20986
-	for <e@80x24.org>; Tue, 27 Sep 2016 19:21:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A33D020986
+	for <e@80x24.org>; Tue, 27 Sep 2016 19:25:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934274AbcI0TVw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Sep 2016 15:21:52 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49031 "EHLO cloud.peff.net"
+        id S933931AbcI0TZn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Sep 2016 15:25:43 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49035 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933425AbcI0TVu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2016 15:21:50 -0400
-Received: (qmail 3675 invoked by uid 109); 27 Sep 2016 19:21:50 -0000
+        id S933380AbcI0TZn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2016 15:25:43 -0400
+Received: (qmail 3923 invoked by uid 109); 27 Sep 2016 19:25:42 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 27 Sep 2016 19:21:50 +0000
-Received: (qmail 19052 invoked by uid 111); 27 Sep 2016 19:22:04 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 27 Sep 2016 19:25:42 +0000
+Received: (qmail 19086 invoked by uid 111); 27 Sep 2016 19:25:57 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 27 Sep 2016 15:22:04 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Sep 2016 15:21:48 -0400
-Date:   Tue, 27 Sep 2016 15:21:48 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 27 Sep 2016 15:25:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Sep 2016 15:25:40 -0400
+Date:   Tue, 27 Sep 2016 15:25:40 -0400
 From:   Jeff King <peff@peff.net>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] xdiff: rename "struct group" to "struct xdlgroup"
-Message-ID: <20160927192147.k2borko6ryxfx2gf@sigill.intra.peff.net>
-References: <20160927043733.u3emlanbipu2cn5h@sigill.intra.peff.net>
- <9fb14a41-00b3-f8d1-d8d2-8aa41261492e@alum.mit.edu>
+Subject: Re: [Q] would it be bad to make /etc/gitconfig runtime configurable?
+Message-ID: <20160927192539.ybooc34iodnzs2ab@sigill.intra.peff.net>
+References: <xmqqoa39p926.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <9fb14a41-00b3-f8d1-d8d2-8aa41261492e@alum.mit.edu>
+In-Reply-To: <xmqqoa39p926.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 27, 2016 at 03:18:02PM +0200, Michael Haggerty wrote:
+On Tue, Sep 27, 2016 at 10:05:37AM -0700, Junio C Hamano wrote:
 
-> > Let's resolve by giving the xdiff variant a scoped name,
-> > which is closer to other xdiff types anyway (e.g.,
-> > xdlfile_t, though note that xdiff is fond if typedefs when
-> > Git usually is not).
+> The subject says it all.  Would it be bad if we introduce an
+> environment variable, GIT_SYSTEM_CONFIG=/etc/gitconfig, that names
+> an alternative location of the system-wide configuration file?
 > 
-> Makes sense to me. I didn't try to adhere to xdiff conventions too
-> tightly because I don't think that project is alive anymore, so I don't
-> expect we'll be upstreaming anything [1]. But this change definitely
-> makes sense.
+> That would supersede/deprecate GIT_CONFIG_NOSYSTEM that we
+> introduced primarily so that we can run our tests without getting
+> affected by the configuration that happens to be effective on the
+> host that the test is being run.
 
-Yeah, TBH I don't really care about following xdiff coding conventions.
-They're pretty far from our own, and at this point I think xdiff is
-basically just an imported part of our code base. Mostly my rationale
-was that it's not too terribly out of place to give it an "xdl" name,
-and it happens to solve my other problem, too. :)
+I can't think of a reason it would be bad. There shouldn't be a security
+question, as controlling the environment already lets you run arbitrary
+code, override system config variables, etc.
 
-> [1] Though I've since learned that libgit2 also bases their diff code on
-> xdiff, so if we avoid changing things gratuitously there is more chance
-> that our two projects can benefit from each other's improvements
-> whenever they are also licensed compatibly.
-
-I'd agree on not changing things gratuitously.
+I know when I was writing the tests for 0d44a2d (config: return
+configset value for current_config_ functions, 2016-05-26) I had to omit
+the "system" case, because we had no way of pointing at a specific file.
+So I do not know whether a runtime system config variable would be
+useful for users, but it would definitely make testing easier.
 
 -Peff
