@@ -2,71 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0071C20986
-	for <e@80x24.org>; Tue, 27 Sep 2016 12:13:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FCE720986
+	for <e@80x24.org>; Tue, 27 Sep 2016 12:28:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933475AbcI0MNl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Sep 2016 08:13:41 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48753 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932916AbcI0MNk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2016 08:13:40 -0400
-Received: (qmail 9578 invoked by uid 109); 27 Sep 2016 12:13:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 27 Sep 2016 12:13:39 +0000
-Received: (qmail 15457 invoked by uid 111); 27 Sep 2016 12:13:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 27 Sep 2016 08:13:53 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Sep 2016 08:13:36 -0400
-Date:   Tue, 27 Sep 2016 08:13:36 -0400
-From:   Jeff King <peff@peff.net>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Martin-Louis Bright <mlbright@gmail.com>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH v8 07/11] pkt-line: add functions to read/write flush
- terminated packet streams
-Message-ID: <20160927121336.7ftrqw2242tetcf3@sigill.intra.peff.net>
-References: <20160920190247.82189-1-larsxschneider@gmail.com>
- <20160920190247.82189-8-larsxschneider@gmail.com>
- <507a29a1-99ff-c13e-cf1f-76631345a822@gmail.com>
- <77315FC2-47F3-433A-8D70-5497FB04CBBE@gmail.com>
- <6D8B988C-8E54-4AA6-980C-A6BA40983D88@gmail.com>
- <20160927090031.jjb3dmhspbbnizja@sigill.intra.peff.net>
- <AF15F1E5-4DA0-459F-84EE-EDCB5FA23EF7@gmail.com>
+        id S1754755AbcI0M2Q (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Sep 2016 08:28:16 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:34758 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751939AbcI0M2O (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2016 08:28:14 -0400
+Received: by mail-io0-f193.google.com with SMTP id y139so813059ioy.1
+        for <git@vger.kernel.org>; Tue, 27 Sep 2016 05:28:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Cri6qIWbXAAM/Vuh0QPdgZ4tEPJlr1/H6pARbhme1Vw=;
+        b=DeH1R4cN0GT+7b/GhxeHFdZSr8KlzAiBfQOqLWojUmijbziJ+nGkCTt+mlSqyFx5Cg
+         2WD9aZG4d/uTLB7LgRzn/aJagZdvIMRKkC09BBsFbNOZe4bEn8qUeQ76ervzRzISKsbs
+         Kze/1XAjtyPjYjxQJMZkXzC/Wn7qM6oWEOX1ugy4WRrafo6/NlC6r8a8IUDb+qt3Lhop
+         aGqaoB+pdQdK7pkRimbXjQvZ17dzhNHgU+BS0/WjxeDyrLpE528vbzQ2Hgh4ALKiYNRG
+         bwV9mFAD62JJZBLmobESVagvQkm8BPmogc+b6b8Y1mADBW5H+xMmDXXuMslonpysC+KH
+         rpag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Cri6qIWbXAAM/Vuh0QPdgZ4tEPJlr1/H6pARbhme1Vw=;
+        b=bY0pycMO0ncwnTzpyHTTkN8kQvxGh8Yip8qWOY+oQetp2QpS1jOU4cYDPVmP5z7uuH
+         /5XvfcRU7QeKCRlHR62wjIcAp3sDCXFYGRq01s7syLMwm86zC8kywQEydSr+inXWJYIs
+         6ofG1mYUNISMTv4GKgnIN9OmCvmJl9eEz9BHgqNzFpYALIO4pghPxdcn7S7HVGJyq4vC
+         3ECa4R5kx3zds62WH20j9H6iuBy1NDZoZ9BrbWhDZekcN35J8vhWZBw8ocTmN6MakGe3
+         seqjDOjq16nZIkVoutusXyNXNqlrI+DQzwNgoJodG9bzy6JkmrkQLWK0m/nAPkRPdPLv
+         rpQg==
+X-Gm-Message-State: AA6/9RkRAQo8IG3PV9lFCOBDH9fc+TUy3tt15xTcdzf2Fi2B2lsMomT4iKgMQEF9HagBt5BUU/UtSRdilRc1HA==
+X-Received: by 10.107.175.18 with SMTP id y18mr1197870ioe.86.1474979293359;
+ Tue, 27 Sep 2016 05:28:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <AF15F1E5-4DA0-459F-84EE-EDCB5FA23EF7@gmail.com>
+Received: by 10.64.21.6 with HTTP; Tue, 27 Sep 2016 05:27:42 -0700 (PDT)
+In-Reply-To: <CACsJy8A_CWgcS5za-Dha6Khgd6HqHk9UWHq7qqAeR-kns-syXg@mail.gmail.com>
+References: <20160606111643.7122-1-pclouds@gmail.com> <20160606111643.7122-3-pclouds@gmail.com>
+ <alpine.DEB.2.20.1606091815310.2680@virtualbox> <CACsJy8A_CWgcS5za-Dha6Khgd6HqHk9UWHq7qqAeR-kns-syXg@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 27 Sep 2016 19:27:42 +0700
+Message-ID: <CACsJy8CsfPqOXReM6tzBDyVob-oSAKinoA6C6TKjSyy6Y9WuJQ@mail.gmail.com>
+Subject: Re: [PATCH 2/4] Resurrect "diff-lib.c: adjust position of i-t-a
+ entries in diff"
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 27, 2016 at 02:10:50PM +0200, Lars Schneider wrote:
+On Tue, Sep 27, 2016 at 5:58 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+>> but then you also have to change the type of xdl_opts
+>> to uint64_t, which in turn means that you will have to change the
+>> definition of xpparam_t's "flags" field from unsigned long to uint64_t.
+>
+> I miss a connection here. This new flag is intended to be used in
+> "flags" field in struct diff_options. Is there any chance it can be
+> set on xdl_opts (of the same struct, I assume)?
+>
+>> Maybe this can be avoided?
+>
+> I don't see a good way to avoid it. We normally enable or disable diff
+> features as bit flags and now we run out of bits. Adding something
+> like "flags2" works, but not pretty. Any suggestion is welcome.
 
-> > That being said, why don't you just use LARGE_PACKET_MAX here? It is
-> > already the accepted size for feeding to packet_read(), and we know it
-> > has enough space to hold a NUL terminator. Yes, we may over-allocate by
-> > 4 bytes, but that isn't really relevant. Strbufs over-allocate anyway.
-> 
-> TBH in that case I would prefer the "PKTLINE_DATA_MAXLEN+1" solution with
-> an additional comment explaining "+1".
-> 
-> Would that be OK for you?
-> 
-> I am not worried about the extra 4 bytes. I am worried that we make it harder
-> to see what is going on if we use LARGE_PACKET_MAX.
-
-I guess I don't feel to strongly either way. My interest in
-LARGE_PACKET_MAX is mostly that this is how all the rest of the
-packet_read() callers behave.
-
--Peff
+Never mind. I think I found some way that does not look particularly bad.
+-- 
+Duy
