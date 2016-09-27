@@ -2,100 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F343420986
-	for <e@80x24.org>; Tue, 27 Sep 2016 20:59:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31BBE20986
+	for <e@80x24.org>; Tue, 27 Sep 2016 20:59:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755693AbcI0U7V (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Sep 2016 16:59:21 -0400
-Received: from mail-it0-f52.google.com ([209.85.214.52]:38139 "EHLO
-        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752586AbcI0U7U (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2016 16:59:20 -0400
-Received: by mail-it0-f52.google.com with SMTP id n143so26465434ita.1
-        for <git@vger.kernel.org>; Tue, 27 Sep 2016 13:59:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=i5gyGx2CqyhgZWmlXtXy0IvPT/X5U+LwL+AbPx0heEg=;
-        b=gCB69HSXvpfT+H5IS0SSefSjGkH2nG8NbXetLcw1L52qQNzxnHYuN4UNWyMTvQcmKv
-         rSwo2QEOXyIN2gOayutvmaq3fYvdWo725RCejC1HMCNjPyxvDtUapf6kAGmWqM/r2wAv
-         nJDfdlgUmxsPJB1NFNCJRV5hy+PGtjtIAmOPk5p9fhl0JR23+0Cs4cMKiPEu1C6qFspX
-         lubaRruc18BafX1Hxe1bKQpoJ7L3GI//pissCCMDvtTcUjs37IJ/quuUWyEOXeL7ngSK
-         gDaqreVU39vh+VhpZNRCdYPG9tyX3aGOUmBozi09L5aFhZiTXrK/hjeehi95geSTkTY5
-         S06g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=i5gyGx2CqyhgZWmlXtXy0IvPT/X5U+LwL+AbPx0heEg=;
-        b=N66LDFezh3GmqxmDjNiAx8AVItfNr0HvjcWtCF4UW6fZ0MlP23MBfgnjF3ViyZj1al
-         VS6bTUVDsdoiEtUUySfzNu9N7EC3sv6JdgEsDlZ++PTc5GmkSirfWbSocuGhvTOju/WK
-         h7txwvnnU8kPaDPz3YF2HBt2pKYWP2Y/5zhbJiNuRgsxajV+ar9fHURloa3vqi1G7Iby
-         wuMdOkNWV1QYiXGhYo8c/uoy+SPdY8l24HwhIbMMHGhPhba7A1tKWThNZrru0N3xvE6H
-         Cbf0+o0rRDZMsa1dhfxbJTzWTtKThpC/20veXUig2TdvzVKtyht6Q6qV9Y9crykaKSGL
-         IWCg==
-X-Gm-Message-State: AA6/9Rln9XFtt1Oiigrq/Qc2epuaZupkcM20h0TEryEtnINKr4peCPOxKzVrmXRCpLpVLUrr4NBYtJqohyA0N63E
-X-Received: by 10.36.92.196 with SMTP id q187mr6801638itb.33.1475009959367;
- Tue, 27 Sep 2016 13:59:19 -0700 (PDT)
+        id S934047AbcI0U70 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Sep 2016 16:59:26 -0400
+Received: from mout.web.de ([212.227.17.11]:57812 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752586AbcI0U7W (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2016 16:59:22 -0400
+Received: from [192.168.178.36] ([79.213.113.239]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0MgwdY-1bbhnx37Q0-00M10O; Tue, 27 Sep 2016 22:59:09
+ +0200
+Subject: Re: [PATCH 2/2] use strbuf_add_unique_abbrev() for adding short
+ hashes, part 2
+To:     Junio C Hamano <gitster@pobox.com>
+References: <b7a61c78-3c46-375c-4cc3-7c363e551bc6@web.de>
+ <29e75b7b-6dd0-8c52-e444-cad1ba613cd0@web.de>
+ <xmqqshslm6jo.fsf@gitster.mtv.corp.google.com>
+Cc:     Git List <git@vger.kernel.org>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <3c80f7d7-a145-3a4a-4bf2-2d8fb6dda04b@web.de>
+Date:   Tue, 27 Sep 2016 22:59:03 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Received: by 10.107.173.98 with HTTP; Tue, 27 Sep 2016 13:59:18 -0700 (PDT)
-In-Reply-To: <20160927205202.GG32565@google.com>
-References: <1474676014-134568-1-git-send-email-bmwill@google.com>
- <1474930003-83750-1-git-send-email-bmwill@google.com> <1474930003-83750-4-git-send-email-bmwill@google.com>
- <xmqqh991nq34.fsf@gitster.mtv.corp.google.com> <xmqqwphxm7av.fsf@gitster.mtv.corp.google.com>
- <20160927205202.GG32565@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 27 Sep 2016 13:59:18 -0700
-Message-ID: <CAGZ79kZgchm1usviUWvLqrBC133mDuQwOMcay6k3L6Vsv-CPzA@mail.gmail.com>
-Subject: Re: [PATCH 3/4 v4] ls-files: pass through safe options for --recurse-submodules
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <xmqqshslm6jo.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:1iVY0Itw5GNne6/xT10q8JFvQDWZC6IB2As288lm+r+SSACrs0l
+ 2URZMYC7mq8ejDNcFpMnfMO4c9CstLh3UKC5fgPMbj9iqQZewwVpOjg9gE+UJDtpXurioFB
+ LrIC8EOqJBfa2dpk7QNJosRZYm7PYKCcCBh0/4TKCCbmiFuUju67eJmyELGbdN16RonsyEg
+ Si4OOfoIBZReTLb5c8KTw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:AH9hcwmggns=:0aUYr8QzJuyFM9TAumv0eK
+ L1q4v6D748Yoo3jC90mqMo1RSQiIaSBxOFnflRctKu8hq3gTbnyJEjtOJLbcIALHvu0Iiaunk
+ yr/E8zyflnpiwD7qWHIFB/f699Olnlf5dZiGmmhTBH3xohZyYbLL9sHYZ1pPaGj+HzSa0k9WW
+ L0KAEdFzdRVVkl+5FfjImFDgpZiCNDPXy9+stzaQC34rk5AX/tpy5or45ZREyta9A+oPPvh5y
+ gpBlOvtPtDz9HtWoONt/6Qressj7eXnLZ8dmPmPhcafCWmvCRC8srlakQBrt3jYRssE6jZzAK
+ 2HmbmSjy4ZNc4VRTybAVYznj1diW7HKiJbx3TQID0wX+o+efvT9ZZUMHAsAPvClaoad9//z5w
+ Vbi54xpSrUxvsT5zQ33NSFZawp80h2tJZZPLnzoPTB1EDGgcJKlr+yRvhaxZjV3Fbxd0OPoUk
+ 9SUUiZsJ6Pl/Kkn4z2XnMfZ9kZr13FJ6D0kpppILtNzp6beWwhlO/q8RnrWYd+jTgbYZ4FiOS
+ daHzCnmLVHmK/7Odg8Uxx9M9v295/JsSf4tecnzXvxiNlWYO/aTXkBQi8V3DZFqzsxBE5pYg4
+ xMUO/U9e9kKJEhUQWVkmgul+tc1mdU4MPvURUKyq/7Vm0aX2DynlLMJfjKDkHeVgUcYivda84
+ W4SG9F97ruPzh52eX7ZGA7mpHNdt3hCEI73YZaf89LpErQbWZZWOMHiwf8NC3rHvf/51XrBlJ
+ BdlJ+jNFqyWieFgSTbwr22dtThJqmKsZD4s3hE8K9/q/kd2Q7tfm/k4VqQ0QJoJXQ0V4hE7vV
+ 3XjkCnx
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 27, 2016 at 1:52 PM, Brandon Williams <bmwill@google.com> wrote:
-> On 09/27, Junio C Hamano wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->> > In nul_to_q and q_to_nul implementations (t/test-lib-functions.sh)
->> > we seem to avoid using "tr", even though q_to_cr and others do use
->> > it.  I wonder if we had some portability issues with passing NUL
->> > through tr or something?
->> >
->> >     ... digs and finds e85fe4d8 ("more tr portability test script
->> >     fixes", 2008-03-12)
->> >
->> > So use something like
->> >
->> >     perl -pe 'y/\012/\000/' <<\-EOF
->> >         ...
->> >         EOF
->> >
->> > instead, perhaps?
->>
->> I actually think it would make more sense to add
->>
->>     lf_to_nul () {
->>             perl -pe 'y/\012/\000/'
->>     }
->>
->> to t/test-lib-functions.sh somewhere near q_to_nul if we were to go
->> this route.
->
-> my mind is drawing a blank, what does the 'lf' in 'lf_to_nul' stand for?
-> line feed?
->
+Am 27.09.2016 um 22:28 schrieb Junio C Hamano:
+> René Scharfe <l.s.r@web.de> writes:
+>> diff --git a/submodule.c b/submodule.c
+>> index dcc5ce3..8cf40ea 100644
+>> --- a/submodule.c
+>> +++ b/submodule.c
+>> @@ -396,7 +396,7 @@ static void show_submodule_header(FILE *f, const char *path,
+>>  			find_unique_abbrev(one->hash, DEFAULT_ABBREV));
+>>  	if (!fast_backward && !fast_forward)
+>>  		strbuf_addch(&sb, '.');
+>> -	strbuf_addstr(&sb, find_unique_abbrev(two->hash, DEFAULT_ABBREV));
+>> +	strbuf_add_unique_abbrev(&sb->hash, two, DEFAULT_ABBREV);
+> 
+> I wonder how could this change come out of this definition:
+> 
+>     @@
+>     expression E1, E2, E3;
+>     @@
+>     - strbuf_addstr(E1, find_unique_abbrev(E2, E3));
+>     + strbuf_add_unique_abbrev(E1, E2, E3);
 
-Yes, line feed. (Note that Git has to deal with this cross platform new lines
-e.g. CRLF is common on Windows, CR was common on MAC, and LF is
-Windows, so naming the new line as they are, makes sense here.)
+Impossible.  I added "->hash" manually during a rebase (merging
+a0d12c44, wrongly).  Good catch, thanks!
+
+Seeing proof of skipping compile-testing I wonder what else I do
+forget in my daily life. :-|  I'll better go to sleep now..
+
+Fixup patch, generated by reverting the diff, re-adding the
+semantic patch and using coccicheck; compiles and survives make
+test:
+---
+ submodule.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/submodule.c b/submodule.c
+index 8cf40ea..bb06b60 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -396,7 +396,7 @@ static void show_submodule_header(FILE *f, const char *path,
+ 			find_unique_abbrev(one->hash, DEFAULT_ABBREV));
+ 	if (!fast_backward && !fast_forward)
+ 		strbuf_addch(&sb, '.');
+-	strbuf_add_unique_abbrev(&sb->hash, two, DEFAULT_ABBREV);
++	strbuf_add_unique_abbrev(&sb, two->hash, DEFAULT_ABBREV);
+ 	if (message)
+ 		strbuf_addf(&sb, " %s%s\n", message, reset);
+ 	else
+-- 
+2.10.0
+
