@@ -2,89 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2215E20986
-	for <e@80x24.org>; Tue, 27 Sep 2016 13:25:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2235920986
+	for <e@80x24.org>; Tue, 27 Sep 2016 14:10:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750840AbcI0NZG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Sep 2016 09:25:06 -0400
-Received: from gproxy6-pub.mail.unifiedlayer.com ([67.222.39.168]:34001 "HELO
-        gproxy6-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with SMTP id S1751631AbcI0NZE (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 27 Sep 2016 09:25:04 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 Sep 2016 09:25:04 EDT
-Received: (qmail 17721 invoked by uid 0); 27 Sep 2016 13:18:23 -0000
-Received: from unknown (HELO cmgw4) (10.0.90.85)
-  by gproxy6.mail.unifiedlayer.com with SMTP; 27 Sep 2016 13:18:23 -0000
-Received: from box531.bluehost.com ([74.220.219.131])
-        by cmgw4 with 
-        id odJG1t00r2qhmhE01dJKfB; Tue, 27 Sep 2016 07:18:23 -0600
-X-Authority-Analysis: v=2.1 cv=Hq7lRSjS c=1 sm=1 tr=0
- a=GcR8MKwCKDX7fzHfRD/fNg==:117 a=GcR8MKwCKDX7fzHfRD/fNg==:17
- a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
- a=GW1xBdLrtEIA:10 a=pBbsfl06AAAA:8 a=7Fc2rPtaS4-xxt_ugvUA:9 a=QEXdDO2ut3YA:10
- a=Pykvx6M6Og9ney6Qs4Vj:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=mad-scientist.net; s=default; h=Content-Transfer-Encoding:Mime-Version:
-        Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:
-        Message-ID; bh=CaoDROwZLrg16A1jPemcc62RzCeXEBVsTqhza0og6Rc=; b=Pe77NJDfTmUeUM
-        dCiKgSIBNM1Dhg5RUphUQ129JJR11QrhyDripDx7vfu6vJ+6S/KymsperYw7gqg76JwM29O+fsmIv
-        +VO1LHlpCSCgIcQvzTlhkf09zrLSZyw9ac8k1;
-Received: from pool-173-76-103-154.bstnma.fios.verizon.net ([173.76.103.154]:46126 helo=homebase)
-        by box531.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
-        (Exim 4.86_1)
-        (envelope-from <paul@mad-scientist.net>)
-        id 1bosH2-0005HT-NH; Tue, 27 Sep 2016 07:18:16 -0600
-Message-ID: <1474982294.3190.32.camel@mad-scientist.net>
-Subject: Re: git 2.9.2: is RUNTIME_PREFIX supposed to work?
-From:   Paul Smith <paul@mad-scientist.net>
-Reply-To: paul@mad-scientist.net
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Date:   Tue, 27 Sep 2016 09:18:14 -0400
-In-Reply-To: <CAPc5daU_nnHRjtC02bxqRaoU+0Rgi7pS6e912Fqk-Xy=qdKWFA@mail.gmail.com>
-References: <1474925524.4270.35.camel@mad-scientist.net>
-         <CAPc5daU_nnHRjtC02bxqRaoU+0Rgi7pS6e912Fqk-Xy=qdKWFA@mail.gmail.com>
-Organization: Please remain calm: I may be mad but I am a professional --
- Mad Scientist
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.20.5-0ubuntu1~ubuntu16.04.2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box531.bluehost.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - mad-scientist.net
-X-BWhitelist: no
-X-Source-IP: 173.76.103.154
-X-Exim-ID: 1bosH2-0005HT-NH
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: pool-173-76-103-154.bstnma.fios.verizon.net (homebase) [173.76.103.154]:46126
-X-Source-Auth: paul@mad-scientist.us
-X-Email-Count: 1
-X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTMxLmJsdWVob3N0LmNvbQ==
+        id S1752183AbcI0OKZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Sep 2016 10:10:25 -0400
+Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:46456
+        "EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753865AbcI0OKY (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 27 Sep 2016 10:10:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1474985422;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=TMgfLKK8saUXGFL0JpigHXviWsJ+21I4qQQyaFV01No=;
+        b=csGvkqFC72kDIHPq1MXic2meUBa4Xb9ud7d9adsiIoN9IcXnqFOm1RAwr5dRIAJV
+        YhLKy5BIKyaBbW54jBaurzn8w7Agplq48sR1If52vj0evXj/42OUSg6MfZOmJ7kICx+
+        lcwbKMqx9qG0fnllthVU+EmbXi/1/K7wjFdS8hdM=
+From:   Pranit Bauva <pranit.bauva@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <010201576bfb6c7d-0b68228f-9503-4dd1-9721-713477fa2596-000000@eu-west-1.amazonses.com>
+In-Reply-To: <201609271240.19759.sweet_f_a@gmx.de>
+References: <201609271240.19759.sweet_f_a@gmx.de>
+Subject: [PATCH] rev-list-options: clarify the usage of -n/--max-number
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 27 Sep 2016 14:10:22 +0000
+X-SES-Outgoing: 2016.09.27-54.240.7.17
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2016-09-26 at 14:57 -0700, Junio C Hamano wrote:
-> On Mon, Sep 26, 2016 at 2:32 PM, Paul Smith <paul@mad-scientist.net> wrote:
-> > 
-> > Hi all.  I'm trying to create a relocatable installation of Git 2.9.2,
-> > so I can copy it anywhere and it continues to run without any problem.
-> > This is on GNU/Linux systems, FWIW.
-> 
-> I had an impression that the setting was only to support MS Windows.
+-n=<number>, -<number>, --max-number=<number> shows the last n commits
+specified in <number> irrespective of whether --reverse is used or not.
+With --reverse, it just shows the last n commits in reverse order.
 
-Hm.  You may be right.  If so that's too bad, because a relocatable Git
-is very handy even on UNIX systems.  Is there a reason for invoking the
-subcommands by providing the plain command ("fetch", "merge-base") as
-argv[0], rather than giving the fully-qualified path to a Git command?
+Reported-by: Ruediger Meier <sweet_f_a@gmx.de>
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+
+---
+Hey Ruegiger,
+
+The description is a bit inappropriate for --max-count and thus this
+patch.
+
+I cannot comment whether --max-count=-n would be a good choice or not
+because personally I never left the need of it. I normally use --reverse
+so as to review my patches in a branch serially. So for me the current
+usage of --reverse seems more appropriate.
+---
+ Documentation/rev-list-options.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 7e462d3..6b7c2e5 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -18,7 +18,7 @@ ordering and formatting options, such as `--reverse`.
+ -<number>::
+ -n <number>::
+ --max-count=<number>::
+-	Limit the number of commits to output.
++	Limit to last n number of commits to output specified in <number>.
+ 
+ --skip=<number>::
+ 	Skip 'number' commits before starting to show the commit output.
+
+--
+https://github.com/git/git/pull/296
