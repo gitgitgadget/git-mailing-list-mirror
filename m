@@ -2,78 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA204209A6
-	for <e@80x24.org>; Tue, 27 Sep 2016 07:20:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 851791F4F8
+	for <e@80x24.org>; Tue, 27 Sep 2016 07:22:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752911AbcI0HTk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Sep 2016 03:19:40 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48634 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752695AbcI0HTj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2016 03:19:39 -0400
-Received: (qmail 24347 invoked by uid 109); 27 Sep 2016 07:19:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 27 Sep 2016 07:19:38 +0000
-Received: (qmail 13495 invoked by uid 111); 27 Sep 2016 07:19:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 27 Sep 2016 03:19:53 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Sep 2016 03:19:36 -0400
-Date:   Tue, 27 Sep 2016 03:19:36 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Gustavo Grieco <gustavo.grieco@imag.fr>, git@vger.kernel.org
-Subject: Re: Stack read out-of-bounds in parse_sha1_header_extended using git
- 2.10.0
-Message-ID: <20160927071936.5hneqhv22zw73asy@sigill.intra.peff.net>
-References: <1825523389.8224664.1474812766424.JavaMail.zimbra@imag.fr>
- <xmqqbmzbwmfc.fsf@gitster.mtv.corp.google.com>
- <790613313.8353074.1474912139102.JavaMail.zimbra@imag.fr>
- <xmqq37kmtukf.fsf@gitster.mtv.corp.google.com>
- <xmqqtwd2sf9t.fsf@gitster.mtv.corp.google.com>
+        id S1751643AbcI0HWW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Sep 2016 03:22:22 -0400
+Received: from mail-qk0-f172.google.com ([209.85.220.172]:35218 "EHLO
+        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751468AbcI0HWU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2016 03:22:20 -0400
+Received: by mail-qk0-f172.google.com with SMTP id t7so6351008qkh.2
+        for <git@vger.kernel.org>; Tue, 27 Sep 2016 00:22:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=yAbpjWqZ0gPFARM8DNTk2qs2HVJCTCEE4Rhl+KRVQtw=;
+        b=mfoQfu5X4TCGFuajKKttvHql4dtj5zSt+IVICbKbyRISz/c1U42uj4AhuI51TD6YcF
+         nvzfM1K9ULhRgGVX5t2yMdgVEc520OYYQcwOcPyp4q+JLUXPTkWVItSTeodmGWQkfPWn
+         bHS5s5jbMt0aL6lEnm0ZYp6bXV3YMYr9dahjwc+YN1rtvkg1co6rdXopupR5xGovPrZG
+         uNzobsi/Mp1Tc4r0+l5zIe+vUz8aQ+GooElYdvILjLyu6fx+/QaK9RGTPvjmTkR0wLXF
+         s5i4vcySRi8AJ08XL5Xmww/pv/V4marurA1fHVWEtbA74NoVtpmcioRO4X+1VFRk6HDT
+         uKug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=yAbpjWqZ0gPFARM8DNTk2qs2HVJCTCEE4Rhl+KRVQtw=;
+        b=jr2l19QQyrG41hvGTJlFrJKPnr27VG+FiOyicmiM969uA+cZT31zStLS4XjpME5rKU
+         ZGiFixAEZ85SfyDDYZdMKwwmnXIKsCTY6oLLyInB4CX0qOIzTUhzD6V4KP84JdYuFuvh
+         E/oJ4/BEU7pc81kSiZHYWbd6AYPCDu8aDPhXJnIihkAZ6Rz4/8nHHcry76/K+bkltchU
+         DcIi1XnpIeplDnMY2744KUKUpiYEtY8bPtBlIr3F7m5PbS8inM+L/PVsvTN61xaiMuhX
+         +UJLQ7tqCCrthxO14yilFy1ocwZBUuB9hJ0CquUsSG/OFvf0tTBl78ieUPnuaAyzSuaH
+         3F7w==
+X-Gm-Message-State: AE9vXwPS83TJbsgeN4MdgrZbLVlzOBlTL70WBOLpHAmqvaP7SHMMAT+MQwsPtcgoZBI8jghrY3khDcaZ1NE1Rg==
+X-Received: by 10.194.216.233 with SMTP id ot9mr21626697wjc.166.1474960939866;
+ Tue, 27 Sep 2016 00:22:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqtwd2sf9t.fsf@gitster.mtv.corp.google.com>
+Received: by 10.80.148.198 with HTTP; Tue, 27 Sep 2016 00:22:19 -0700 (PDT)
+In-Reply-To: <xmqqmviupcpx.fsf@gitster.mtv.corp.google.com>
+References: <1462458182-4488-1-git-send-email-orgads@gmail.com>
+ <xmqqwpn8bes0.fsf@gitster.mtv.corp.google.com> <CAGHpTBLdy9R7xvfcFWoMkvGNJjY-wM5=HfWxs8XF_yh-+2Rc3w@mail.gmail.com>
+ <CAGHpTBLgwyw_iYK927Yed+XG9ti+tKboz07-FVYWox9WoQkjOg@mail.gmail.com>
+ <CAGHpTB+Fnu4x1bV9TSNo8pYdOzJzRsXA9r3CwxVz64mjW_qsGw@mail.gmail.com> <xmqqmviupcpx.fsf@gitster.mtv.corp.google.com>
+From:   Orgad Shaneh <orgads@gmail.com>
+Date:   Tue, 27 Sep 2016 10:22:19 +0300
+Message-ID: <CAGHpTBLPvQDD4hhMKiOFdhxug-joi-38mNozuzm3=EJCnS9UEA@mail.gmail.com>
+Subject: Re: [PATCH] git-gui: Do not reset author details on amend
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Pat Thoyts <patthoyts@users.sourceforge.net>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 26, 2016 at 11:10:54AM -0700, Junio C Hamano wrote:
+On Tue, Sep 27, 2016 at 12:34 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Orgad Shaneh <orgads@gmail.com> writes:
+>
+>> On Sun, Jul 10, 2016 at 7:36 AM, Orgad Shaneh <orgads@gmail.com> wrote:
+>>
+>>> On Wed, May 18, 2016 at 9:12 AM, Orgad Shaneh <orgads@gmail.com> wrote:
+>>>> ping?
+>>>>
+>>> It's been over 2 months. Can anyone please review and merge it?
+>>>
+>> 4.5 months and counting... :(
+>>>
+>>>> On Thu, May 5, 2016 at 8:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>>> Pat, we haven't heard from you for a long time.  Are you still
+>>>>> around and interested in helping us by maintaining git-gui?
+>>>>>
+>>>>> Otherwise we may have to start recruiting a volunteer or two to take
+>>>>> this over.
+>
+> Sorry about that.  No volunteers materialized yet X-<, and I really
+> really do not want to apply anything other than trivial patches to
+> it myself, as I am not a git-gui user.
+>
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > I am inclined to say that it has no security implications.  You have
-> > to be able to write a bogus loose object in an object store you
-> > already have write access to in the first place, in order to cause
-> > this ...
-> 
-> Note that you could social-engineer others to fetch from you and
-> feed a small enough update that results in loose objects created in
-> their repositories, without you having a direct write access to the
-> repository.
-> 
-> The codepath under discussion in this thread however cannot be used
-> as an attack vector via that route, because the "fetch from
-> elsewhere" codepath runs verification of the incoming data stream
-> before storing the results (either in loose object files, or in a
-> packfile) on disk.
+This patch has been in use in Git for Windows for a decent period of time.
 
-I don't think it could be used at all for anything that speaks the git
-protocol, because the object header is not present at all in a packfile.
-So even if you hit unpack-objects, it would be writing the (correct)
-loose object header itself.
+I actually see that there is a problem with it:
+https://github.com/git-for-windows/git/issues/761
 
-But when we grab loose objects _directly_ from a remote, as in dumb-http
-fetch, I'd suspect that the code doing the verification calls
-unpack_sha1_header() as part of it. So I didn't test, but I'd strongly
-suspect that's a viable attack vector.
+I'll try to revise it and resubmit.
 
-I'm not sure what the actual attack would look like, though, aside from
-locally accessing memory in a read-only way.
-
--Peff
+- Orgad
