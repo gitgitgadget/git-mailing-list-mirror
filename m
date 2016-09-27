@@ -2,154 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A528D20986
-	for <e@80x24.org>; Tue, 27 Sep 2016 00:12:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E8BC207EC
+	for <e@80x24.org>; Tue, 27 Sep 2016 00:13:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756226AbcI0AMD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Sep 2016 20:12:03 -0400
-Received: from hapkido.dreamhost.com ([66.33.216.122]:36194 "EHLO
-        hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756200AbcI0AL7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2016 20:11:59 -0400
-Received: from homiemail-a12.g.dreamhost.com (sub3.mail.dreamhost.com [69.163.253.7])
-        by hapkido.dreamhost.com (Postfix) with ESMTP id AF577E4389
-        for <git@vger.kernel.org>; Mon, 26 Sep 2016 17:11:58 -0700 (PDT)
-Received: from homiemail-a12.g.dreamhost.com (localhost [127.0.0.1])
-        by homiemail-a12.g.dreamhost.com (Postfix) with ESMTP id B6CA4103006A;
-        Mon, 26 Sep 2016 17:11:56 -0700 (PDT)
-Received: from frank.cable.rcn.com (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com [207.38.164.98])
-        (using TLSv1 with cipher AES128-SHA (128/128 bits))
+        id S933018AbcI0ANP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Sep 2016 20:13:15 -0400
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:54537 "EHLO
+        homiemail-a20.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932449AbcI0ANN (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 26 Sep 2016 20:13:13 -0400
+Received: from homiemail-a20.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a20.g.dreamhost.com (Postfix) with ESMTP id 2898A7EC064;
+        Mon, 26 Sep 2016 17:13:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=message-id
+        :subject:from:to:cc:date:in-reply-to:references:content-type
+        :mime-version:content-transfer-encoding; s=novalis.org; bh=DtgOY
+        em/oCOYVZf2u9c0qSAw0AQ=; b=RHKQw863/jPQyWg0mgFClf2CLeJjNEITFRVaq
+        H7ufUTFV1oW4uN0FaT8Zod2UqnJC7ke7yy2rrBzud3WIuSd5fbFn8DrF1dOE7OdC
+        id/otvzW84RKttKzuxgrM2o57bw9dIgkxzPl61b4NgHBJA51iCsOxO2tUxAdSdLb
+        1g88W0=
+Received: from [10.0.1.180] (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com [207.38.164.98])
+        (using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: novalis@novalis.org)
-        by homiemail-a12.g.dreamhost.com (Postfix) with ESMTPSA id 465171030063;
-        Mon, 26 Sep 2016 17:11:56 -0700 (PDT)
-From:   David Turner <dturner@twosigma.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, David Turner <dturner@twosigma.com>
-Subject: [PATCH 1/3] tree-walk: be more specific about corrupt tree errors
-Date:   Mon, 26 Sep 2016 20:11:31 -0400
-Message-Id: <1474935093-26757-1-git-send-email-dturner@twosigma.com>
-X-Mailer: git-send-email 2.8.0.rc4.22.g8ae061a
+        by homiemail-a20.g.dreamhost.com (Postfix) with ESMTPSA id C23B77EC061;
+        Mon, 26 Sep 2016 17:13:12 -0700 (PDT)
+Message-ID: <1474935191.26902.0.camel@frank>
+Subject: Re: [PATCH 3/3] add David Turner's Two Sigma address
+From:   David Turner <novalis@novalis.org>
+To:     David Turner <dturner@twosigma.com>
+Cc:     git@vger.kernel.org
+Date:   Mon, 26 Sep 2016 20:13:11 -0400
+In-Reply-To: <1474935093-26757-3-git-send-email-dturner@twosigma.com>
+References: <1474935093-26757-1-git-send-email-dturner@twosigma.com>
+         <1474935093-26757-3-git-send-email-dturner@twosigma.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.10.4-0ubuntu2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+Sorry for the bad subject line, this is of course v2 of the series.
 
-When the tree-walker runs into an error, it just calls
-die(), and the message is always "corrupt tree file".
-However, we are actually covering several cases here; let's
-give the user a hint about what happened.
+On Mon, 2016-09-26 at 20:11 -0400, David Turner wrote:
+> From: David Turner <novalis@novalis.org>
+>=20
+> Signed-off-by: David Turner <novalis@novalis.org>
+> ---
+>  .mailmap | 1 +
+>  1 file changed, 1 insertion(+)
+>=20
+> diff --git a/.mailmap b/.mailmap
+> index 9441a54..9cc33e9 100644
+> --- a/.mailmap
+> +++ b/.mailmap
+> @@ -48,6 +48,7 @@ David K=C3=A5gedal <davidk@lysator.liu.se>
+>  David Reiss <dreiss@facebook.com> <dreiss@dreiss-vmware.(none)>
+>  David S. Miller <davem@davemloft.net>
+>  David Turner <novalis@novalis.org> <dturner@twopensource.com>
+> +David Turner <novalis@novalis.org> <dturner@twosigma.com>
+>  Deskin Miller <deskinm@umich.edu>
+>  Dirk S=C3=BCsserott <newsletter@dirk.my1.cc>
+>  Eric Blake <eblake@redhat.com> <ebb9@byu.net>
 
-Let's also avoid using the word "corrupt", which makes it
-seem like the data bit-rotted on disk. Our sha1 check would
-already have found that. These errors are ones of data that
-is malformed in the first place.
-
-Signed-off-by: David Turner <dturner@twosigma.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/t1007-hash-object.sh           |  15 +++++++++++++--
- t/t1007/.gitattributes           |   1 +
- t/t1007/tree-with-empty-filename | Bin 0 -> 28 bytes
- t/t1007/tree-with-malformed-mode | Bin 0 -> 39 bytes
- tree-walk.c                      |  12 +++++++-----
- 5 files changed, 21 insertions(+), 7 deletions(-)
- create mode 100644 t/t1007/.gitattributes
- create mode 100644 t/t1007/tree-with-empty-filename
- create mode 100644 t/t1007/tree-with-malformed-mode
-
-diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
-index acca9ac..f21848b 100755
---- a/t/t1007-hash-object.sh
-+++ b/t/t1007-hash-object.sh
-@@ -183,9 +183,20 @@ for args in "-w --stdin-paths" "--stdin-paths -w"; do
- 	pop_repo
- done
- 
--test_expect_success 'corrupt tree' '
-+test_expect_success 'too-short tree' '
- 	echo abc >malformed-tree &&
--	test_must_fail git hash-object -t tree malformed-tree
-+	test_must_fail git hash-object -t tree malformed-tree 2>err &&
-+	grep "too-short tree object" err
-+'
-+
-+test_expect_success 'malformed mode in tree' '
-+	test_must_fail git hash-object -t tree ../t1007/tree-with-malformed-mode 2>err &&
-+	grep "malformed mode in tree entry" err
-+'
-+
-+test_expect_success 'empty filename in tree' '
-+	test_must_fail git hash-object -t tree ../t1007/tree-with-empty-filename 2>err &&
-+	grep "empty filename in tree entry" err
- '
- 
- test_expect_success 'corrupt commit' '
-diff --git a/t/t1007/.gitattributes b/t/t1007/.gitattributes
-new file mode 100644
-index 0000000..7352ef5
---- /dev/null
-+++ b/t/t1007/.gitattributes
-@@ -0,0 +1 @@
-+tree-with-*	-diff
-diff --git a/t/t1007/tree-with-empty-filename b/t/t1007/tree-with-empty-filename
-new file mode 100644
-index 0000000000000000000000000000000000000000..aeb1ceb20e485eebd0acbb81c974d1c6fedcc1fe
-GIT binary patch
-literal 28
-kcmXpsFfcPQQDAsB_tET47q2;ccWbUIkGgT_Nl)-Z0Hx{;SO5S3
-
-literal 0
-HcmV?d00001
-
-diff --git a/t/t1007/tree-with-malformed-mode b/t/t1007/tree-with-malformed-mode
-new file mode 100644
-index 0000000000000000000000000000000000000000..24aa84d60ef8e269fb0b29c67b5208639b9da3ae
-GIT binary patch
-literal 39
-vcmYewPcJRb%}+^HNXyJg%}dNpWq3CC(d<nZuQ_{nYpyGgx^d`9Pw+$lU*Quk
-
-literal 0
-HcmV?d00001
-
-diff --git a/tree-walk.c b/tree-walk.c
-index ce27842..ba544cf 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -27,12 +27,14 @@ static void decode_tree_entry(struct tree_desc *desc, const char *buf, unsigned
- 	const char *path;
- 	unsigned int mode, len;
- 
--	if (size < 24 || buf[size - 21])
--		die("corrupt tree file");
-+	if (size < 23 || buf[size - 21])
-+		die("too-short tree object");
- 
- 	path = get_mode(buf, &mode);
--	if (!path || !*path)
--		die("corrupt tree file");
-+	if (!path)
-+		die("malformed mode in tree entry for tree");
-+	if (!*path)
-+		die("empty filename in tree entry for tree");
- 	len = strlen(path) + 1;
- 
- 	/* Initialize the descriptor entry */
-@@ -81,7 +83,7 @@ void update_tree_entry(struct tree_desc *desc)
- 	unsigned long len = end - (const unsigned char *)buf;
- 
- 	if (size < len)
--		die("corrupt tree file");
-+		die("too-short tree file");
- 	buf = end;
- 	size -= len;
- 	desc->buffer = buf;
--- 
-2.8.0.rc4.22.g8ae061a
 
