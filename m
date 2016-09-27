@@ -6,97 +6,252 @@ X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C5B8207EC
-	for <e@80x24.org>; Tue, 27 Sep 2016 02:30:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34E7F207EC
+	for <e@80x24.org>; Tue, 27 Sep 2016 03:45:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933064AbcI0Ca3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Sep 2016 22:30:29 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:47752 "EHLO mx2.imag.fr"
+        id S1754740AbcI0DpO convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 26 Sep 2016 23:45:14 -0400
+Received: from mail.pdinc.us ([67.90.184.27]:52201 "EHLO mail.pdinc.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751220AbcI0Ca1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2016 22:30:27 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-        by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u8R2UNU9012665
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO)
-        for <git@vger.kernel.org>; Tue, 27 Sep 2016 04:30:23 +0200
-Received: from z8-mb-verimag.imag.fr (z8-mb-verimag.imag.fr [129.88.4.38])
-        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u8R2UN9B013434
-        for <git@vger.kernel.org>; Tue, 27 Sep 2016 04:30:23 +0200
-Date:   Tue, 27 Sep 2016 04:30:23 +0200 (CEST)
-From:   Gustavo Grieco <gustavo.grieco@imag.fr>
-To:     git@vger.kernel.org
-Message-ID: <381383122.8376940.1474943423005.JavaMail.zimbra@imag.fr>
-In-Reply-To: <1825523389.8224664.1474812766424.JavaMail.zimbra@imag.fr>
-Subject: Possible integer overflow parsing malformed objects in git 2.10.0
+        id S1754147AbcI0DpN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2016 23:45:13 -0400
+Received: from black7 (nsa1.pdinc.us [67.90.184.2])
+        (authenticated bits=0)
+        by mail.pdinc.us (8.14.4/8.14.4) with ESMTP id u8R3jBur026358;
+        Mon, 26 Sep 2016 23:45:12 -0400
+From:   "Jason Pyeron" <jpyeron@pdinc.us>
+To:     <git@vger.kernel.org>
+References: <66A60DA77398CD439FA676CEF593977D692508@exchange.1.internal.pdinc.us> <62E3FC352BE4428A90D7E4E9B137A9FB@black7>
+In-Reply-To: <62E3FC352BE4428A90D7E4E9B137A9FB@black7>
+Subject: RE: git-upload-pack hangs
+Date:   Mon, 26 Sep 2016 23:45:19 -0400
+Organization: PD Inc
+Message-ID: <50DEA1C222E449F59BC8488C921D6F95@black7>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [129.88.6.115]
-X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF48 (Linux)/8.0.9_GA_6191)
-Thread-Topic: Possible integer overflow parsing malformed objects in git 2.10.0
-Thread-Index: KW6fOjM7OfRWif1grfy3JGfeWXe4oQ==
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Tue, 27 Sep 2016 04:30:23 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u8R2UNU9012665
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: gustavo.grieco@imag.fr
-MailScanner-NULL-Check: 1475548224.34255@ygp51wCWXHCPzYJX3krB1g
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Office Outlook 11
+Thread-Index: AdIXugLhNNMUd/T+SzyAnGWQrIniwgAPttTAAB4Iu0A=
+X-MimeOLE: Produced By Microsoft MimeOLE V6.1.7601.17609
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+This is a very, very first draft.
 
-We found a malformed object file that triggers an allocation with a negative size when parsed in git 2.10.0. It can be caused by an integer overflow somewhere, so it is better to verify how the code got such value. It was tested on ArchLinux x86_64. To reproduce, first recompile git with ASAN support and then execute:
+It is allowing IIS to work right now.
 
-$ git init ; mkdir -p .git/objects/b2 ; printf 'eJyVT8ERAjEIXKiEBpyBHJdcCroGHAvQjyX49m1ZtmADQjL68uMnZFnYZU/HfRfb3Gtz17Y07etqXhX6ul9uAnCJh6DCAKxUCWABok9J2PN8jYn42iwqYA2OYoKRzVAY67mYgIOfQP8WOthUKubNt6V6/yn5YSPEowsxKGPk0Jdq6ZLKxJYX2LTjYTNi52WTAN4RVyPd' | base64 -d > .git/objects/b2/93584ddd61af21260be75ee9f73e9d53f08cd0
+I still need to address chunked issues, where there is no content length (see http://www.gossamer-threads.com/lists/apache/users/373042)
 
-Finally you can trigger the bug using several commands from git (other commands that parses all objects will work too), for instance:
+Any comments, sugestions?
 
-$ git fsck
+-Jason
 
-The ASAN report is here:
+--- ./origsrc/git-v2.8.3/http-backend.c 2016-05-18 18:32:41.000000000 -0400
++++ ./src/git-v2.8.3/http-backend.c     2016-09-26 22:52:02.636135000 -0400
+@@ -279,14 +279,17 @@
+ {
+        size_t len = 0, alloc = 8192;
+        unsigned char *buf = xmalloc(alloc);
++       /* get request size */
++       size_t req_len = git_env_ulong("CONTENT_LENGTH", -1);
 
-==24709==WARNING: AddressSanitizer failed to allocate 0xffffffffffffff65 bytes
-==24709==AddressSanitizer's allocator is terminating the process instead of returning 0
-==24709==If you don't like this behavior set allocator_may_return_null=1
-==24709==AddressSanitizer CHECK failed: /build/gcc-multilib/src/gcc/libsanitizer/sanitizer_common/sanitizer_allocator.cc:145 "((0)) != (0)" (0x0, 0x0)
-    #0 0x7f571ae467aa in AsanCheckFailed /build/gcc-multilib/src/gcc/libsanitizer/asan/asan_rtl.cc:65
-    #1 0x7f571ae4d163 in __sanitizer::CheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) /build/gcc-multilib/src/gcc/libsanitizer/sanitizer_common/sanitizer_common.cc:157
-    #2 0x7f571ae4b326 in __sanitizer::ReportAllocatorCannotReturnNull() /build/gcc-multilib/src/gcc/libsanitizer/sanitizer_common/sanitizer_allocator.cc:145
-    #3 0x7f571ad9b2f4 in __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 4398046511104ul, 0ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __asan::AsanMapUnmapCallback>, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 4398046511104ul, 0ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __asan::AsanMapUnmapCallback> >, __sanitizer::LargeMmapAllocator<__asan::AsanMapUnmapCallback> >::ReturnNullOrDie() /build/gcc-multilib/src/gcc/libsanitizer/sanitizer_common/sanitizer_allocator.h:1315
-    #4 0x7f571ad9b2f4 in __asan::Allocator::Allocate(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /build/gcc-multilib/src/gcc/libsanitizer/asan/asan_allocator.cc:357
-    #5 0x7f571ad9b2f4 in __asan::asan_malloc(unsigned long, __sanitizer::BufferedStackTrace*) /build/gcc-multilib/src/gcc/libsanitizer/asan/asan_allocator.cc:716
-    #6 0x7f571ae3ce24 in __interceptor_malloc /build/gcc-multilib/src/gcc/libsanitizer/asan/asan_malloc_linux.cc:63
-    #7 0x767816 in do_xmalloc /home/g/Work/Code/git-2.10.0/wrapper.c:59
-    #8 0x76794c in do_xmallocz /home/g/Work/Code/git-2.10.0/wrapper.c:99
-    #9 0x7679bd in xmallocz /home/g/Work/Code/git-2.10.0/wrapper.c:107
-    #10 0x6fe36c in unpack_sha1_rest /home/g/Work/Code/git-2.10.0/sha1_file.c:1625
-    #11 0x6feb40 in unpack_sha1_file /home/g/Work/Code/git-2.10.0/sha1_file.c:1751
-    #12 0x703fe0 in read_object /home/g/Work/Code/git-2.10.0/sha1_file.c:2811
-    #13 0x70410a in read_sha1_file_extended /home/g/Work/Code/git-2.10.0/sha1_file.c:2834
-    #14 0x647676 in read_sha1_file /home/g/Work/Code/git-2.10.0/cache.h:1056
-    #15 0x648545 in parse_object /home/g/Work/Code/git-2.10.0/object.c:269
-    #16 0x48d46d in fsck_sha1 builtin/fsck.c:367
-    #17 0x48da47 in fsck_loose builtin/fsck.c:493
-    #18 0x707514 in for_each_file_in_obj_subdir /home/g/Work/Code/git-2.10.0/sha1_file.c:3477
-    #19 0x70775b in for_each_loose_file_in_objdir_buf /home/g/Work/Code/git-2.10.0/sha1_file.c:3512
-    #20 0x707885 in for_each_loose_file_in_objdir /home/g/Work/Code/git-2.10.0/sha1_file.c:3532
-    #21 0x48dc1d in fsck_object_dir builtin/fsck.c:521
-    #22 0x48e2e6 in cmd_fsck builtin/fsck.c:644
-    #23 0x407a8f in run_builtin /home/g/Work/Code/git-2.10.0/git.c:352
-    #24 0x407e35 in handle_builtin /home/g/Work/Code/git-2.10.0/git.c:539
-    #25 0x408175 in run_argv /home/g/Work/Code/git-2.10.0/git.c:593
-    #26 0x408458 in cmd_main /home/g/Work/Code/git-2.10.0/git.c:665
-    #27 0x53fc70 in main /home/g/Work/Code/git-2.10.0/common-main.c:40
-    #28 0x7f5719f46290 in __libc_start_main (/usr/lib/libc.so.6+0x20290)
-    #29 0x405209 in _start (/home/g/Work/Code/git-2.10.0/git+0x405209)
+        if (max_request_buffer < alloc)
+                max_request_buffer = alloc;
 
+-       while (1) {
++       while (req_len>0 || req_len==-1 ) {
++               ssize_t maxread=alloc>req_len && req_len!=-1?req_len:alloc;
+                ssize_t cnt;
 
-This test case was found using QuickFuzz.
+-               cnt = read_in_full(fd, buf + len, alloc - len);
++               cnt = read_in_full(fd, buf + len, maxread - len);
+                if (cnt < 0) {
+                        free(buf);
+                        return -1;
+@@ -294,13 +297,19 @@
 
+                /* partial read from read_in_full means we hit EOF */
+                len += cnt;
+-               if (len < alloc) {
++               if (len < maxread) {
+                        *out = buf;
+                        return len;
+                }
 
-Regards,
-Gustavo.
++               if (req_len>0) {
++                       req_len -= cnt;
++                       if (req_len<0)
++                               req_len=0;
++               }
++
+                /* otherwise, grow and try again (if we can) */
+-               if (alloc == max_request_buffer)
++               if (alloc == max_request_buffer && maxread == alloc)
+                        die("request was larger than our maximum size (%lu);"
+                            " try setting GIT_HTTP_MAX_REQUEST_BUFFER",
+                            max_request_buffer);
+@@ -310,6 +319,10 @@
+                        alloc = max_request_buffer;
+                REALLOC_ARRAY(buf, alloc);
+        }
++
++       free(buf);
++
++       return len;
+ }
+
+ static void inflate_request(const char *prog_name, int out, int buffer_input)
+ 
+
+> -----Original Message-----
+> From: git-owner@vger.kernel.org 
+> [mailto:git-owner@vger.kernel.org] On Behalf Of Jason Pyeron
+> Sent: Monday, September 26, 2016 09:26
+> To: git@vger.kernel.org
+> Subject: RE: git-upload-pack hangs
+> 
+> > -----Original Message-----
+> > From: Jason Pyeron 
+> > Sent: Monday, September 26, 2016 01:51
+> > 
+> > git is hanging on clone. I am runnig (cygwin) git 2.8.3 on 
+> > IIS7 (windows server 2012 R2).
+> > 
+> > Where can I start to perform additional debugging?
+> > 
+> 
+> Reading this thread, it seems plausible as a cause since it 
+> aligns with my testing.
+> 
+> http://www.spinics.net/lists/git/msg279437.html [ and 
+> http://www.spinics.net/lists/git/attachments/binQFGHirNLw3.bin ]
+> 
+> I will start to trudge into the code to see if this (or 
+> similar) has been applied and if not, does it fix it.
+> 
+> > Selected items I have read, but they did not help:
+> > 
+> > http://unix.stackexchange.com/questions/98959/git-upload-pack-
+> > hangs-indefinitely
+> > 
+> > https://sparethought.wordpress.com/2012/12/06/setting-git-to-w
+> ork-behind-ntlm-authenticated-proxy-cntlm-to-the-rescue/
+> > 
+> > https://sourceforge.net/p/cntlm/bugs/24/
+> > 
+> > invocation of the clone:
+> > 
+> > jpyeron.adm@SERVER /tmp
+> > $ GIT_TRACE=1  GIT_CURL_VERBOSE=true git clone 
+> > http://SERVER.domain.com/git/test.git
+> > 01:23:37.020476 git.c:350               trace: built-in: git 
+> > 'clone' 'http://SERVER.domain.com/git/test.git'
+> > Cloning into 'test'...
+> > 01:23:37.206046 run-command.c:336       trace: run_command: 
+> > 'git-remote-http' 'origin' 'http://SERVER.domain.com/git/test.git'
+> > * STATE: INIT => CONNECT handle 0x60009a140; line 1397 
+> > (connection #-5000)
+> > * Couldn't find host SERVER.domain.com in the .netrc file; 
+> > using defaults
+> > * Added connection 0. The cache now contains 1 members
+> > *   Trying ::1...
+> > * TCP_NODELAY set
+> > * STATE: CONNECT => WAITCONNECT handle 0x60009a140; line 1450 
+> > (connection #0)
+> > * Connected to SERVER.domain.com (::1) port 80 (#0)
+> > * STATE: WAITCONNECT => SENDPROTOCONNECT handle 0x60009a140; 
+> > line 1557 (connection #0)
+> > * Marked for [keep alive]: HTTP default
+> > * STATE: SENDPROTOCONNECT => DO handle 0x60009a140; line 1575 
+> > (connection #0)
+> > > GET /git/test.git/info/refs?service=git-upload-pack HTTP/1.1
+> > Host: SERVER.domain.com
+> > User-Agent: git/2.8.3
+> > Accept: */*
+> > Accept-Encoding: gzip
+> > Accept-Language: en-US, *;q=0.9
+> > Pragma: no-cache
+> > 
+> > * STATE: DO => DO_DONE handle 0x60009a140; line 1654 (connection #0)
+> > * STATE: DO_DONE => WAITPERFORM handle 0x60009a140; line 1781 
+> > (connection #0)
+> > * STATE: WAITPERFORM => PERFORM handle 0x60009a140; line 1791 
+> > (connection #0)
+> > * HTTP 1.1 or later with persistent connection, pipelining supported
+> > < HTTP/1.1 200 OK
+> > < Cache-Control: no-cache, max-age=0, must-revalidate
+> > < Pragma: no-cache
+> > < Content-Type: application/x-git-upload-pack-advertisement
+> > < Expires: Fri, 01 Jan 1980 00:00:00 GMT
+> > * Server Microsoft-IIS/8.5 is not blacklisted
+> > < Server: Microsoft-IIS/8.5
+> > < X-Powered-By: ASP.NET
+> > < Date: Mon, 26 Sep 2016 05:23:37 GMT
+> > * Marked for [closure]: Connection: close used
+> > < Connection: close
+> > < Content-Length: 310
+> > <
+> > * STATE: PERFORM => DONE handle 0x60009a140; line 1955 
+> (connection #0)
+> > * multi_done
+> > * Curl_http_done: called premature == 0
+> > * Closing connection 0
+> > * The cache now contains 0 members
+> > 01:23:37.688252 run-command.c:336       trace: run_command: 
+> > 'fetch-pack' '--stateless-rpc' '--stdin' '--lock-pack' 
+> > '--thin' '--check-self-contained-and-connected' '--cloning' 
+> > 'http://SERVER.domain.com/git/test.git/'
+> > 01:23:37.717168 exec_cmd.c:120          trace: exec: 'git' 
+> > 'fetch-pack' '--stateless-rpc' '--stdin' '--lock-pack' 
+> > '--thin' '--check-self-contained-and-connected' '--cloning' 
+> > 'http://SERVER.domain.com/git/test.git/'
+> > 01:23:37.749820 git.c:350               trace: built-in: git 
+> > 'fetch-pack' '--stateless-rpc' '--stdin' '--lock-pack' 
+> > '--thin' '--check-self-contained-and-connected' '--cloning' 
+> > 'http://SERVER.domain.com/git/test.git/'
+> > * STATE: INIT => CONNECT handle 0x60009a140; line 1397 
+> > (connection #-5000)
+> > * Couldn't find host SERVER.domain.com in the .netrc file; 
+> > using defaults
+> > * Added connection 1. The cache now contains 1 members
+> > * Hostname SERVER.domain.com was found in DNS cache
+> > *   Trying ::1...
+> > * TCP_NODELAY set
+> > * STATE: CONNECT => WAITCONNECT handle 0x60009a140; line 1450 
+> > (connection #1)
+> > * Connected to SERVER.domain.com (::1) port 80 (#1)
+> > * STATE: WAITCONNECT => SENDPROTOCONNECT handle 0x60009a140; 
+> > line 1557 (connection #1)
+> > * Marked for [keep alive]: HTTP default
+> > * STATE: SENDPROTOCONNECT => DO handle 0x60009a140; line 1575 
+> > (connection #1)
+> > > POST /git/test.git/git-upload-pack HTTP/1.1
+> > Host: SERVER.domain.com
+> > User-Agent: git/2.8.3
+> > Accept-Encoding: gzip
+> > Content-Type: application/x-git-upload-pack-request
+> > Accept: application/x-git-upload-pack-result
+> > Content-Length: 140
+> > 
+> > * upload completely sent off: 140 out of 140 bytes
+> > * STATE: DO => DO_DONE handle 0x60009a140; line 1654 (connection #1)
+> > * STATE: DO_DONE => WAITPERFORM handle 0x60009a140; line 1781 
+> > (connection #1)
+> > * STATE: WAITPERFORM => PERFORM handle 0x60009a140; line 1791 
+> > (connection #1)
+> 
+> --
+> -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+> -                                                               -
+> - Jason Pyeron                      PD Inc. http://www.pdinc.us -
+> - Principal Consultant              10 West 24th Street #100    -
+> - +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
+> -                                                               -
+> -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- 
+> 
+> 
+> 
+
