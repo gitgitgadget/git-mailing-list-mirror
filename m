@@ -2,94 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B230320986
-	for <e@80x24.org>; Tue, 27 Sep 2016 22:23:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5BFA720986
+	for <e@80x24.org>; Tue, 27 Sep 2016 22:57:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753281AbcI0WXI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Sep 2016 18:23:08 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54050 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752240AbcI0WXH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2016 18:23:07 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 69C633F306;
-        Tue, 27 Sep 2016 18:23:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KPkDKPbuPzn8IyKpwBJIqLPTPHE=; b=fDlpdz
-        uo5bTJvYueKJgNUtofDVUXcn/lB4is9JVKognkiJjCBIpzKKalkEsx5ADcZT8xKp
-        9PNggQCbUEkQdspRWLg8msAaizMTtUvW7oreIwT3s/SFUudI9XdI11R/+m3hDjOe
-        07rltr0KSXyMdrad/TcHuJpCfgiLJcZaGKOiA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=pEuOjcT6dh72ljDP6Hydy3EApIe34XWU
-        aw5nzjw+FB5QJIHHIogLcWiPXpNuOl2kOkXIqtxY6c9nzADzONFHSViHDrAZC84a
-        oPCweu8TvMncjMuumDUpKJx4GioMB5T79gZZdoBTv9n6jRY0me6OcX7Tj0+wLhKU
-        Ia4AwOo4/ng=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 60B363F305;
-        Tue, 27 Sep 2016 18:23:05 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        id S1753049AbcI0W5i (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Sep 2016 18:57:38 -0400
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:40106 "EHLO
+        homiemail-a20.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751762AbcI0W5h (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 27 Sep 2016 18:57:37 -0400
+Received: from homiemail-a20.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a20.g.dreamhost.com (Postfix) with ESMTP id 387A27EC064;
+        Tue, 27 Sep 2016 15:57:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=message-id
+        :subject:from:to:cc:date:in-reply-to:references:content-type
+        :mime-version:content-transfer-encoding; s=novalis.org; bh=OBytV
+        gO5LRPqOqcX5c4FV3xiI/I=; b=TuQ4gR2n7l90ZlxCHxLrPV6UiGV/gXcIOYQtB
+        vlLscb+YAyuwFtftWQngHVA4bmSOhtLaww0vUj0Ce01iwSxB36mHO03vqCOk+ReT
+        9HAAenT8+cjeffdkR7ZhL0h4gdB1MIyQ6qXsl5dYPYRMuexHDIxPE7w0HH1PCki9
+        g9k9G8=
+Received: from [172.31.11.72] (gzac10-107-1.nje.twosigma.com [208.77.214.155])
+        (using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D66223F301;
-        Tue, 27 Sep 2016 18:23:04 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH 1/2] ls-files: adding support for submodules
-References: <1474495472-94190-1-git-send-email-bmwill@google.com>
-        <CAKoko1q7Mb6_cnaA1ecZJ2y1PWUrW4RSu6RiviyN91JV5-QR5g@mail.gmail.com>
-        <xmqq1t0c7ur2.fsf@gitster.mtv.corp.google.com>
-        <CAKoko1qch_odsEWba0rtCv-DWO0ABS2yprnwGPCgyT6-7H-LdQ@mail.gmail.com>
-        <xmqqponw6e3x.fsf@gitster.mtv.corp.google.com>
-        <20160922041854.7754ujcynhk7mdnh@sigill.intra.peff.net>
-        <xmqq7fa36bwm.fsf@gitster.mtv.corp.google.com>
-        <xmqq60phm39w.fsf@gitster.mtv.corp.google.com>
-        <20160927214854.GA180705@google.com>
-        <xmqqwphxknoj.fsf@gitster.mtv.corp.google.com>
-        <20160927220955.GA38615@google.com>
-Date:   Tue, 27 Sep 2016 15:23:02 -0700
-In-Reply-To: <20160927220955.GA38615@google.com> (Brandon Williams's message
-        of "Tue, 27 Sep 2016 15:09:55 -0700")
-Message-ID: <xmqqh991kmnt.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F5A225AC-8500-11E6-A22A-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
+        (Authenticated sender: novalis@novalis.org)
+        by homiemail-a20.g.dreamhost.com (Postfix) with ESMTPSA id A9F017EC063;
+        Tue, 27 Sep 2016 15:57:35 -0700 (PDT)
+Message-ID: <1475017054.13103.3.camel@frank>
+Subject: Re: thoughts on error passing, was Re: [PATCH 2/2] fsck: handle bad
+ trees like other errors
+From:   David Turner <novalis@novalis.org>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, mhagger@alum.mit.edu,
+        David Turner <dturner@twosigma.com>
+Date:   Tue, 27 Sep 2016 18:57:34 -0400
+In-Reply-To: <20160927191955.mympqgylrxhkp24n@sigill.intra.peff.net>
+References: <1474918365-10937-1-git-send-email-novalis@novalis.org>
+         <1474918365-10937-3-git-send-email-novalis@novalis.org>
+         <20160927052754.bs4frcfy4y7fey62@sigill.intra.peff.net>
+         <1474989574.26902.7.camel@frank>
+         <20160927191955.mympqgylrxhkp24n@sigill.intra.peff.net>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.10.4-0ubuntu2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+On Tue, 2016-09-27 at 15:19 -0400, Jeff King wrote:
+> On Tue, Sep 27, 2016 at 11:19:34AM -0400, David Turner wrote:
+> 
+> > >   typedef void (*err_fn)(const char *, ...);
+> > > 
+> > >   static int decode_tree_entry(struct tree_desc *desc,
+> > >                                const char *buf, unsigned long size,
+> > > 			       err_fn err)
+> > >   {
+> > >          ...
+> > >          if (size < 23 || buf[size - 21]) {
+> > > 	        err("too-short tree object");
+> > > 		return -1;
+> > > 	 }
+> > >   }
+> > > 
+> > > I dunno. Maybe that is overengineering. I guess we only hit the strbufs
+> > > in the error path (which used to die!), so nobody really cares that much
+> > > about the extra allocation.
+> > 
+> > I don't really like err_fn because:
+> > (a) without a baton, it's somewhat less general (or less thread-safe)
+> > than the strbuf approach and
+> > (b) with a baton, it's two arguments instead of one.
+> 
+> I'm going to ramble for a minute, and I don't think it's worth exploring
+> for this patch series in particular, so feel free to ignore me.
+> 
+> I think this error concept could be extended fairly elegantly with
+> something like:
+> 
+>   typedef void (*err_fn)(void *, const char *fmt, va_list ap)
+>   struct error_context {
+>         err_fn fn;
+>         void *data;
+>   };
+> 
+>   int report_error(struct error_context *err, const char *fmt, ...)
+>   {
+>         if (err->fn) {
+>                 va_list ap;
+>                 va_start(ap, fmt);
+>                 err->fn(err->data, fmt, ap);
+>                 va_end(ap);
+>         }
+>         return -1;
+>   }
+> 
+> Then low-level functions just take a context and do:
+> 
+>   return report_error(&err, "some error: %s", foo);
+> 
+> And then the callers would pick one of a few generic error contexts:
+> 
+>   - passing NULL silences the errors
 
->> If you are in a subdirectory of your superproject, say, a/,
->> 
->>     cd a && git ls-files --recurse-submodules -- "b*"
->> 
->> I would expect we would recurse into the submodule at "a/b" and find
->> "b/file-at-top-of-B".  What does the internal invocation to do so
->> would look like?  I would think "git -C b --super=b ls-files" that
->> is run from "a".
+Overall, +1.
 
-Actually, the internal invocation may have to be
+I guess I would rather have a sentinel value for silencing errors,
+because I'm worried that someone might read NULL as "don't handle the
+errors, just die".  Of course, code review would hopefully catch this,
+but even so, it would be easier to read foo(x, y, silence_errors) than
+foo(x, y, null).
 
-	$ git --super=a/b ls-files -- "a/b*"
 
-if the desired overall output needs to be in the "--full-name" mode.
-That is, the top-level recursive one may be
-
-    cd a && git ls-files --recurse-submodules --full-name -- "b*"
-
-This top-level "ls-files" will have "prefix" set to "a/".  Because
-it is run in the "--full-name" mode, after finding that the
-submodule at "a/b" matches the given pathspec and deciding to
-recurse into it, it needs to arrange that paths stored in the index
-of the submodule are prefixed with "a/b/", not with "b/", when
-shown.
 
