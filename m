@@ -2,85 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F33AE20986
-	for <e@80x24.org>; Tue, 27 Sep 2016 15:33:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CE3420986
+	for <e@80x24.org>; Tue, 27 Sep 2016 15:34:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755231AbcI0Pd1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Sep 2016 11:33:27 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50875 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754640AbcI0Pd0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2016 11:33:26 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BF3AA3B9C7;
-        Tue, 27 Sep 2016 11:33:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Hy1EtzO5V8NOi67J87rsk0c+oCY=; b=oVp7BD
-        ODpVX4u9GToQ5lGL1DA2qPrI23Pc11wEbLq1rr0X8PE/7sBQGepXFu7icPRIF/jL
-        9rTCXvHyFqIDmmGeUqMl8GF/Wa80FcWQ3fUWLLWeiQKMYD7MT8Spo4HPXugDX5o2
-        xW4ZoXbQmcR55886ch3th7A75Jfzk6aa1eRXs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=RVzbHfZ2bQwII/OLeuoca32MhfdRQ8Gh
-        4aUZLw6oIxsQ9Lxzs/q8Ze9SbGr6OS2kZlEf9gp6R7d/k998ot1kecTDowonAnbe
-        ioanVPtLMH7mZcpFA+KubjUlIscSt+L6K/19ckYAQEuMh1jVJC98nRqeVxFRyY4l
-        g8Bqhh/ZYqM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B652C3B9C6;
-        Tue, 27 Sep 2016 11:33:24 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 360D93B9C5;
-        Tue, 27 Sep 2016 11:33:24 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] utf8: refactor code to decide fallback encoding
-References: <20160927012211.9378-1-gitster@pobox.com>
-        <20160927012211.9378-2-gitster@pobox.com>
-        <20160927055202.4ucddki3xkns45om@sigill.intra.peff.net>
-Date:   Tue, 27 Sep 2016 08:33:22 -0700
-In-Reply-To: <20160927055202.4ucddki3xkns45om@sigill.intra.peff.net> (Jeff
-        King's message of "Tue, 27 Sep 2016 01:52:02 -0400")
-Message-ID: <xmqqvaxhqrwd.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S932674AbcI0Ped (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Sep 2016 11:34:33 -0400
+Received: from mout.gmx.net ([212.227.17.22]:62609 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754640AbcI0Peb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2016 11:34:31 -0400
+Received: from virtualbox ([108.198.118.51]) by mail.gmx.com (mrgmx102) with
+ ESMTPSA (Nemesis) id 0LjuR3-1bDeli0wEz-00bs17; Tue, 27 Sep 2016 17:34:23
+ +0200
+Date:   Tue, 27 Sep 2016 17:34:20 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Paul Smith <paul@mad-scientist.net>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: git 2.9.2: is RUNTIME_PREFIX supposed to work?
+In-Reply-To: <1474982294.3190.32.camel@mad-scientist.net>
+Message-ID: <alpine.DEB.2.20.1609271732440.129229@virtualbox>
+References: <1474925524.4270.35.camel@mad-scientist.net>         <CAPc5daU_nnHRjtC02bxqRaoU+0Rgi7pS6e912Fqk-Xy=qdKWFA@mail.gmail.com> <1474982294.3190.32.camel@mad-scientist.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BA6B8156-84C7-11E6-913A-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: multipart/mixed; BOUNDARY="8323329-58138269-1474990463=:129229"
+X-Provags-ID: V03:K0:5VyxG3kPv8nuKlLfx32bLqoaKLnrrijtixrooEKUy1q1uCG4/dA
+ BW8o3qFpkuXlL+yijpMKK/B60o1byiBRg8Zi1JIcC+pkMBtTxMwzIVd/EtOqrtGRNWT3vV4
+ 817OQ5mh4Q4pyibHUSQZqzEbO50whc3JCiDWZYBANrymeHV1uMgi7ftoRw5iHYg5fBoNNQX
+ +UC8kttpgfdqTDQuQOEMQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:aXz+PVQG+mU=:jHK4GDT2DjHy1gz9vPkyRD
+ BQ/4hGeMy2L4tGtW56ZMnzNCzDkaU0jd3KMM41oIJNxQMdR0ww2guGFk6QFzZ/QPA6BJXlgiF
+ M1++Q6dRlRCq0nfvwFXqmGvqDx0BVFrIrFuFImp0u3nWKBPGJvwVCCzaXbQTCw1VFsEHD2bxU
+ Y/k0CI09W3ycfCyeUy944DFKo4jj3GzSgIHvKaYB6u9PBuuZXzVsvaUTFOmXjLfOfch+QDrSn
+ vbMZBX/lFrk+dUsYuJVD3KryxoExpOeW9cXlABihwEdxLb9e6TmBGYSIwgvUpBDmVvTqFbusv
+ lTgBln5mqJaIOsOEUbTV3K+TCDrh7P2pyPScplcmqYFIXrDZKsT5js1QvYMb03j5tqYMt0RIa
+ G6xIJXqkX1uGlE8q2xTkB37FyrStkdR/yLoDEc9O0l3YJGViqqFM8/JfZvlzSbfbBjlw6d5L0
+ 49bhjgU6QLiVgsKpk/9G3nQw9VKd2pfOmfLnZ9FJsXfMJBszg4MK5vQcmKOmQd4JCZRnxn6ML
+ fEUpi9h0jZOcISNvZ05OoXXdYO4HS0s3dsosNIFIjQga3KoRiuB4It0DbBe21ZDGjiupWxsrr
+ d+zCPHagKTIEQm/Zqeb/WTh7Y4QMtBsAOQenbcK0IJ68ioarMWKzs09Isbg98VXpmEGE+sEH5
+ LH1gCzq3wBNGELR08wDZOEeg/WL3OtxMFpV5gcqFZZZA9Mhn2ohvRpQw98Nx1T0cYk9BKp+Ia
+ AsKXLRdjXK/LeLW/IvhKo4NsW0ING0XA2yYEOXgF8NBXU6v8MruTCJ0fcpx3EPvfOh2dRFrHC
+ yl/oGwu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> But once we introduce other fallbacks, then "utf8 -> latin1" may become
-> "UTF-8 -> iso8859-1". A system that knows only "utf8" and "iso8859-1"
-> _could_ work if we turned the knobs individually, but won't if we turn
-> them both at once. Worse, a system that knows only "UTF-8" and "latin1"
-> works now, but would break with your patches.
->
-> I'm not convinced it's worth worrying about, though. The existence of
-> such a system is theoretical at this point. I'm not even sure how common
-> the "know about utf8 but not UTF-8" thing is, or if we were merely being
-> overly cautious.
+--8323329-58138269-1474990463=:129229
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Yeah, I did consider having to try the permutations until it works,
-but suspecting that somebody takes "utf8" without taking "UTF-8" is
-to pretty much invalidate the basic premise of the existing code,
-i.e. spelling it as "UTF-8" is the most likely to work anywhere as
-long as UTF-8 is supported, so I stopped worrying about it at that
-point.
+Hi Paul,
 
-I'd actually welcome a more generic suggestions we can put in our
-documentation so that we can _lose_ the fallback entirely (e.g. "if
-your contributor spelled 'utf8' and your system, which does take
-'UTF-8', does not like it, then here is what you can do to your
-/etc/locale.alias").
+On Tue, 27 Sep 2016, Paul Smith wrote:
 
+> On Mon, 2016-09-26 at 14:57 -0700, Junio C Hamano wrote:
+> > On Mon, Sep 26, 2016 at 2:32 PM, Paul Smith <paul@mad-scientist.net> wr=
+ote:
+> > >=20
+> > > Hi all.  I'm trying to create a relocatable installation of Git 2.9.2=
+,
+> > > so I can copy it anywhere and it continues to run without any problem=
+=2E
+> > > This is on GNU/Linux systems, FWIW.
+> >=20
+> > I had an impression that the setting was only to support MS Windows.
+>=20
+> Hm. =C2=A0You may be right. =C2=A0If so that's too bad, because a relocat=
+able Git
+> is very handy even on UNIX systems.
+
+I see no reason why we have to keep the RUNTIME_PREFIX functional for
+Windows only. Paul, how about giving it a try to fix things? I can make
+sure that your changes do not break anything on Windows.
+
+Ciao,
+Johannes
+--8323329-58138269-1474990463=:129229--
