@@ -6,86 +6,97 @@ X-Spam-Status: No, score=-6.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F6A7207EC
-	for <e@80x24.org>; Tue, 27 Sep 2016 02:13:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C5B8207EC
+	for <e@80x24.org>; Tue, 27 Sep 2016 02:30:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933214AbcI0CNb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Sep 2016 22:13:31 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:47621 "EHLO mx2.imag.fr"
+        id S933064AbcI0Ca3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Sep 2016 22:30:29 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:47752 "EHLO mx2.imag.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932914AbcI0CNa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2016 22:13:30 -0400
+        id S1751220AbcI0Ca1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2016 22:30:27 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-        by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u8R2DNep010739
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-        Tue, 27 Sep 2016 04:13:24 +0200
+        by mx2.imag.fr (8.13.8/8.13.8) with ESMTP id u8R2UNU9012665
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO)
+        for <git@vger.kernel.org>; Tue, 27 Sep 2016 04:30:23 +0200
 Received: from z8-mb-verimag.imag.fr (z8-mb-verimag.imag.fr [129.88.4.38])
-        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u8R2DNCs013344;
-        Tue, 27 Sep 2016 04:13:23 +0200
-Date:   Tue, 27 Sep 2016 04:13:22 +0200 (CEST)
+        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u8R2UN9B013434
+        for <git@vger.kernel.org>; Tue, 27 Sep 2016 04:30:23 +0200
+Date:   Tue, 27 Sep 2016 04:30:23 +0200 (CEST)
 From:   Gustavo Grieco <gustavo.grieco@imag.fr>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Message-ID: <140080419.8376708.1474942402912.JavaMail.zimbra@imag.fr>
-In-Reply-To: <xmqqtwd2sf9t.fsf@gitster.mtv.corp.google.com>
-References: <1825523389.8224664.1474812766424.JavaMail.zimbra@imag.fr> <xmqqbmzbwmfc.fsf@gitster.mtv.corp.google.com> <790613313.8353074.1474912139102.JavaMail.zimbra@imag.fr> <xmqq37kmtukf.fsf@gitster.mtv.corp.google.com> <xmqqtwd2sf9t.fsf@gitster.mtv.corp.google.com>
-Subject: Re: Stack read out-of-bounds in parse_sha1_header_extended using
- git 2.10.0
+To:     git@vger.kernel.org
+Message-ID: <381383122.8376940.1474943423005.JavaMail.zimbra@imag.fr>
+In-Reply-To: <1825523389.8224664.1474812766424.JavaMail.zimbra@imag.fr>
+Subject: Possible integer overflow parsing malformed objects in git 2.10.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [129.88.6.115]
 X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF48 (Linux)/8.0.9_GA_6191)
-Thread-Topic: Stack read out-of-bounds in parse_sha1_header_extended using git 2.10.0
-Thread-Index: fLfagERWPSgNm6fR7/acxMnyHq/8Pw==
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Tue, 27 Sep 2016 04:13:24 +0200 (CEST)
+Thread-Topic: Possible integer overflow parsing malformed objects in git 2.10.0
+Thread-Index: KW6fOjM7OfRWif1grfy3JGfeWXe4oQ==
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (mx2.imag.fr [129.88.30.17]); Tue, 27 Sep 2016 04:30:23 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u8R2DNep010739
+X-MailScanner-ID: u8R2UNU9012665
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: gustavo.grieco@imag.fr
-MailScanner-NULL-Check: 1475547205.62871@AxRqlo0M3Od70vkJUw5qvw
+MailScanner-NULL-Check: 1475548224.34255@ygp51wCWXHCPzYJX3krB1g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Btw, this other test case will trigger a similar issue, but in another line of code:
+Hi,
 
-To reproduce: 
+We found a malformed object file that triggers an allocation with a negative size when parsed in git 2.10.0. It can be caused by an integer overflow somewhere, so it is better to verify how the code got such value. It was tested on ArchLinux x86_64. To reproduce, first recompile git with ASAN support and then execute:
 
-$ git init ; mkdir -p .git/objects/b2 ; printf 'eJwNwoENgDAIBECkDsII5Z8CHagLGPePXu59zjHGRIOZG3OzI/lnRc4KemXDPdYSml6iQ+4ATIZ+nAEK4g==' | base64 -d > .git/objects/b2/93584ddd61af21260be75ee9f73e9d53f08cd0
+$ git init ; mkdir -p .git/objects/b2 ; printf 'eJyVT8ERAjEIXKiEBpyBHJdcCroGHAvQjyX49m1ZtmADQjL68uMnZFnYZU/HfRfb3Gtz17Y07etqXhX6ul9uAnCJh6DCAKxUCWABok9J2PN8jYn42iwqYA2OYoKRzVAY67mYgIOfQP8WOthUKubNt6V6/yn5YSPEowsxKGPk0Jdq6ZLKxJYX2LTjYTNi52WTAN4RVyPd' | base64 -d > .git/objects/b2/93584ddd61af21260be75ee9f73e9d53f08cd0
 
-Then:
+Finally you can trigger the bug using several commands from git (other commands that parses all objects will work too), for instance:
 
 $ git fsck
 
-notice: HEAD points to an unborn branch (master)
-=================================================================
-==24569==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7ffe7645fda0 at pc 0x0000006fe799 bp 0x7ffe7645fc40 sp 0x7ffe7645fc30
-READ of size 1 at 0x7ffe7645fda0 thread T0
-    #0 0x6fe798 in parse_sha1_header_extended /home/g/Work/Code/git-2.10.0/sha1_file.c:1714
-...
+The ASAN report is here:
 
-It will be nice to test the current patch.
+==24709==WARNING: AddressSanitizer failed to allocate 0xffffffffffffff65 bytes
+==24709==AddressSanitizer's allocator is terminating the process instead of returning 0
+==24709==If you don't like this behavior set allocator_may_return_null=1
+==24709==AddressSanitizer CHECK failed: /build/gcc-multilib/src/gcc/libsanitizer/sanitizer_common/sanitizer_allocator.cc:145 "((0)) != (0)" (0x0, 0x0)
+    #0 0x7f571ae467aa in AsanCheckFailed /build/gcc-multilib/src/gcc/libsanitizer/asan/asan_rtl.cc:65
+    #1 0x7f571ae4d163 in __sanitizer::CheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) /build/gcc-multilib/src/gcc/libsanitizer/sanitizer_common/sanitizer_common.cc:157
+    #2 0x7f571ae4b326 in __sanitizer::ReportAllocatorCannotReturnNull() /build/gcc-multilib/src/gcc/libsanitizer/sanitizer_common/sanitizer_allocator.cc:145
+    #3 0x7f571ad9b2f4 in __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 4398046511104ul, 0ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __asan::AsanMapUnmapCallback>, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 4398046511104ul, 0ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __asan::AsanMapUnmapCallback> >, __sanitizer::LargeMmapAllocator<__asan::AsanMapUnmapCallback> >::ReturnNullOrDie() /build/gcc-multilib/src/gcc/libsanitizer/sanitizer_common/sanitizer_allocator.h:1315
+    #4 0x7f571ad9b2f4 in __asan::Allocator::Allocate(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /build/gcc-multilib/src/gcc/libsanitizer/asan/asan_allocator.cc:357
+    #5 0x7f571ad9b2f4 in __asan::asan_malloc(unsigned long, __sanitizer::BufferedStackTrace*) /build/gcc-multilib/src/gcc/libsanitizer/asan/asan_allocator.cc:716
+    #6 0x7f571ae3ce24 in __interceptor_malloc /build/gcc-multilib/src/gcc/libsanitizer/asan/asan_malloc_linux.cc:63
+    #7 0x767816 in do_xmalloc /home/g/Work/Code/git-2.10.0/wrapper.c:59
+    #8 0x76794c in do_xmallocz /home/g/Work/Code/git-2.10.0/wrapper.c:99
+    #9 0x7679bd in xmallocz /home/g/Work/Code/git-2.10.0/wrapper.c:107
+    #10 0x6fe36c in unpack_sha1_rest /home/g/Work/Code/git-2.10.0/sha1_file.c:1625
+    #11 0x6feb40 in unpack_sha1_file /home/g/Work/Code/git-2.10.0/sha1_file.c:1751
+    #12 0x703fe0 in read_object /home/g/Work/Code/git-2.10.0/sha1_file.c:2811
+    #13 0x70410a in read_sha1_file_extended /home/g/Work/Code/git-2.10.0/sha1_file.c:2834
+    #14 0x647676 in read_sha1_file /home/g/Work/Code/git-2.10.0/cache.h:1056
+    #15 0x648545 in parse_object /home/g/Work/Code/git-2.10.0/object.c:269
+    #16 0x48d46d in fsck_sha1 builtin/fsck.c:367
+    #17 0x48da47 in fsck_loose builtin/fsck.c:493
+    #18 0x707514 in for_each_file_in_obj_subdir /home/g/Work/Code/git-2.10.0/sha1_file.c:3477
+    #19 0x70775b in for_each_loose_file_in_objdir_buf /home/g/Work/Code/git-2.10.0/sha1_file.c:3512
+    #20 0x707885 in for_each_loose_file_in_objdir /home/g/Work/Code/git-2.10.0/sha1_file.c:3532
+    #21 0x48dc1d in fsck_object_dir builtin/fsck.c:521
+    #22 0x48e2e6 in cmd_fsck builtin/fsck.c:644
+    #23 0x407a8f in run_builtin /home/g/Work/Code/git-2.10.0/git.c:352
+    #24 0x407e35 in handle_builtin /home/g/Work/Code/git-2.10.0/git.c:539
+    #25 0x408175 in run_argv /home/g/Work/Code/git-2.10.0/git.c:593
+    #26 0x408458 in cmd_main /home/g/Work/Code/git-2.10.0/git.c:665
+    #27 0x53fc70 in main /home/g/Work/Code/git-2.10.0/common-main.c:40
+    #28 0x7f5719f46290 in __libc_start_main (/usr/lib/libc.so.6+0x20290)
+    #29 0x405209 in _start (/home/g/Work/Code/git-2.10.0/git+0x405209)
 
------ Original Message -----
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > I am inclined to say that it has no security implications.  You have
-> > to be able to write a bogus loose object in an object store you
-> > already have write access to in the first place, in order to cause
-> > this ...
-> 
-> Note that you could social-engineer others to fetch from you and
-> feed a small enough update that results in loose objects created in
-> their repositories, without you having a direct write access to the
-> repository.
-> 
-> The codepath under discussion in this thread however cannot be used
-> as an attack vector via that route, because the "fetch from
-> elsewhere" codepath runs verification of the incoming data stream
-> before storing the results (either in loose object files, or in a
-> packfile) on disk.
-> 
-> 
+
+This test case was found using QuickFuzz.
+
+
+Regards,
+Gustavo.
