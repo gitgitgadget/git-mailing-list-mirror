@@ -2,86 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4D5F20986
-	for <e@80x24.org>; Tue, 27 Sep 2016 20:11:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B039B20986
+	for <e@80x24.org>; Tue, 27 Sep 2016 20:12:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934274AbcI0UL5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Sep 2016 16:11:57 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62409 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932573AbcI0ULz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2016 16:11:55 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BF18D3EB93;
-        Tue, 27 Sep 2016 16:11:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=AB0B6gXrddrf8YKs6Z9PiEE8HFw=; b=rlKJes
-        lFPukNOvzUWo/Enw0eiUvnk7zU74mXbDNKZaXFFzf7p1XUevbfPb5Ss85EFSdDsb
-        iBtburGsEUR2eE1U17eidZL1GsxMKn6B9VjLLsu6U9BO4UjD/x/9e026Vd1b+lAy
-        M3yeONuPLlt30lAm8dhbxoGKiO/4xxx1EuV2Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=pPIag62ICuML5IVxOv6AjKa2EQ78467P
-        Yk7nsb6Lr7mvq3/6nNV+dkkl3hbv0havB6zYBriWnVGVt4lYUMHfKXXmsRvqGSiH
-        xVpTPiS98bHmO7A6VOqJugunZ0oqOWAYZ8j9lj0cAsLx8GsIxSaJYRD/KelQa3AT
-        J3m4CXbUFvQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B82A33EB92;
-        Tue, 27 Sep 2016 16:11:54 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 439613EB91;
-        Tue, 27 Sep 2016 16:11:54 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/4 v4] ls-files: pass through safe options for --recurse-submodules
-References: <1474676014-134568-1-git-send-email-bmwill@google.com>
-        <1474930003-83750-1-git-send-email-bmwill@google.com>
-        <1474930003-83750-4-git-send-email-bmwill@google.com>
-        <xmqqh991nq34.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 27 Sep 2016 13:11:52 -0700
-In-Reply-To: <xmqqh991nq34.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Tue, 27 Sep 2016 11:40:47 -0700")
-Message-ID: <xmqqwphxm7av.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S934832AbcI0UMu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Sep 2016 16:12:50 -0400
+Received: from mout.web.de ([212.227.17.12]:61010 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S934791AbcI0UMs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2016 16:12:48 -0400
+Received: from [192.168.178.36] ([79.213.113.239]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0LZvgf-1b64CT3vzR-00lpCr; Tue, 27 Sep 2016 22:12:41
+ +0200
+Subject: Re: [PATCH] gitignore: ignore output files of coccicheck make target
+To:     =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
+        Git List <git@vger.kernel.org>
+References: <93adb7c5-aac7-7241-e383-3ff7997faf7e@web.de>
+ <745b0eed-4c03-9e72-4903-ab1dbbc3622d@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <4ff9d5f4-afee-d7a8-7a50-4b3d3f80ab89@web.de>
+Date:   Tue, 27 Sep 2016 22:12:33 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A263B930-84EE-11E6-ADA8-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
+In-Reply-To: <745b0eed-4c03-9e72-4903-ab1dbbc3622d@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:Y3gz2ddPxSmyveKndLB+hiW4g2tPzaPKDc8SEoQabSuDcE8Rnwn
+ g6hvk2D3neqpF1sLDh4B22hajcHLeIhZd2zOAclF5cF2SpjrHwO0Czjau3edM1IllbPwNPU
+ BhKDa9aS5Rj5qqjcg96hWiIxPIwVBN9Ol/mthHblSg0TuggQAonRIyw4BAoV6yxmj/fLdge
+ FQHnkUK0kh8ApfrsTXCYQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:1HHbP8oztRk=:aPE345HoNq9FBI2nlqicxj
+ gVxdpisiP0Oom+YTZHFyilkEtMlXj6PzZRiY1SfA/x/KDFRftx/BUoo2zL4pdzOnBWiCxRV8J
+ BMqUoDCwAikxwi5t8Z92EFi6TgtHG8D/oa1UXd29mPO4+psALNtn78m2E3vHQcY/8b2dCbNJj
+ L4F28zXLm7L8oxsFyAXDkgdBVkrImU4NyGoGiWzdO7hQSw2Y/kK2ay7XJ80SbYzrKSTQhL/z0
+ SgyAysWjxbkPm8yaiIAxHE6kYfE5RR2LR5Bq4RamQrAf/HVvbRwiSIFJbYDUGjGbSCVB7icdC
+ MOIk5bZ9sy8vuEjHo9Jy7ilfVn9sM6liSYmoeZEntkSeCYf7em+CACjoK4TJlLuBLIbDxTuQS
+ V435tb8v9lxuiE0tA5kE61SWr6ETyBwj0wI67mxu1FFWvcAErReYPCjRxCY2Gy1/kq/sTh2G0
+ il7loboVtxuaFvCFB+yXamaeFcMuh1VaQsZGLgnyyaLPLqwalk//kpuXfd1XeDv9c+tVfaQh9
+ aRDIwTptqxESEPRkZwfpq2hnLC4cOzZWD7EvO1JQx+1kHm4/zdJgZz7aWpeOu/0E5wqVAQ5eb
+ PWVvba8FKLBZ7ZxsWz4kpYhsvgRViW09KaAsxeXTgeChzRfFTOSzYJSk7mr+SjRuqk/L7XcuX
+ IwrtFu5VpdaJ8Rv/Gmfupf2mFO7pAcpAXvF6Emiv4npa1v1kJ1jkNmHuDeE7DcTmHO1+wATTo
+ WDsLjEGMBrOtRxkDKqaHGnNnhIOECApUW1uCsYnwAJdsevJ4JZ7z8btz4e4soGR8WV3CIKk1x
+ c/DyRMl
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Am 27.09.2016 um 21:52 schrieb Jakub Narębski:
+> W dniu 27.09.2016 o 21:01, René Scharfe pisze:
+>> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+>> ---
+>>  .gitignore | 1 +
+>>  1 file changed, 1 insertion(+)
+>>
+>> diff --git a/.gitignore b/.gitignore
+>> index 05cb58a..f370ba0 100644
+>> --- a/.gitignore
+>> +++ b/.gitignore
+> 
+> Wouldn't it be better to have this in contrib/coccinelle/.gitignore?
 
-> In nul_to_q and q_to_nul implementations (t/test-lib-functions.sh)
-> we seem to avoid using "tr", even though q_to_cr and others do use
-> it.  I wonder if we had some portability issues with passing NUL
-> through tr or something?
->
->     ... digs and finds e85fe4d8 ("more tr portability test script
->     fixes", 2008-03-12)
->
-> So use something like
->
-> 	perl -pe 'y/\012/\000/' <<\-EOF
->         ...
->         EOF
->
-> instead, perhaps?
+True.
 
-I actually think it would make more sense to add
+-- >8 --
+Subject: [PATCH v2] gitignore: ignore output files of coccicheck make target
 
-    lf_to_nul () {
-            perl -pe 'y/\012/\000/'
-    }
+Helped-by: Jakub Narębski <jnareb@gmail.com>
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ contrib/coccinelle/.gitignore | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 contrib/coccinelle/.gitignore
 
-to t/test-lib-functions.sh somewhere near q_to_nul if we were to go
-this route.
+diff --git a/contrib/coccinelle/.gitignore b/contrib/coccinelle/.gitignore
+new file mode 100644
+index 0000000..d3f2964
+--- /dev/null
++++ b/contrib/coccinelle/.gitignore
+@@ -0,0 +1 @@
++*.patch*
+-- 
+2.10.0
+
