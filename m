@@ -2,89 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A883520986
-	for <e@80x24.org>; Tue, 27 Sep 2016 19:52:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6760220986
+	for <e@80x24.org>; Tue, 27 Sep 2016 20:01:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754129AbcI0Tw6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Sep 2016 15:52:58 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:33639 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753284AbcI0Tw4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2016 15:52:56 -0400
-Received: by mail-wm0-f67.google.com with SMTP id w84so2715270wmg.0
-        for <git@vger.kernel.org>; Tue, 27 Sep 2016 12:52:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=eRxY2GKbqjfRpFA77U0gQZm9FiRu1REtv0X2EVDqyuM=;
-        b=PRoNuw9BFaKKIOYBmsBhJhXAt+e3jvLxS6Bhacuix1GdQi0dasEIw9ye9eOgK9R6gh
-         jXyLXkxee98C7c3HSToO3/KNWWeRIDp801FL6tD7uaTEVuHLQiuqolOKLnc9w/vUN3/7
-         UCiDO2AMvf8Gv2gBTo6ZADE0+N+tlVnU2z2xHSgnizCeK+x9ljcZo+9SGu8gWv9wxrlo
-         zRuacKBD8bkZWCk83EOqTREP4A3r/FND7uvLmz4hsoFZ2I8BFtiN8RDnjdXOd4umAire
-         68DEWKCP8Q4NrO63S0v+M8/NIqQnzxo6tMUO/Hk9CDhzeOjnDXd8kOx7yoe6S/VQoUS9
-         3I8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=eRxY2GKbqjfRpFA77U0gQZm9FiRu1REtv0X2EVDqyuM=;
-        b=OQMcFotVyZoBnZ2ekqSKrMDihdanFZ0T2ugPVgjov9SXipi7KtZish9PcV/BB/nyIH
-         IIPkutKq9+vhZPgiMQsvS4HBoFl5a9CcdBXRYz8Qb9/4CBmBOEUJsvu8t4naX7TCpdtG
-         SNDseW3IBkrT6tdEVsIUSKcfXGZ6KttcgF1s86rhw57dGH3xLnVnfujH5heDSksh4yy+
-         qSYcUn+mqiGRFrGEZ8BPYJ5H783FIwMPy+HTTuIvzdtVd85lYoAyh2KAC3v2NYBr4e9k
-         sT6sD0WXeOWsZvOW6iDOgsiGcVy5VHejPSSvYGgROi0R4Ri6lbyzTM2GfvIIvcumWRUm
-         ov7g==
-X-Gm-Message-State: AE9vXwOW2NXthuOolHQTFDz81JZclbgFtpT4938N63xsj5xEzc/vo+tkt6A6dqUPumfukw==
-X-Received: by 10.194.42.133 with SMTP id o5mr28420729wjl.200.1475005962558;
-        Tue, 27 Sep 2016 12:52:42 -0700 (PDT)
-Received: from [192.168.1.26] (dbw202.neoplus.adsl.tpnet.pl. [83.23.48.202])
-        by smtp.googlemail.com with ESMTPSA id yt4sm4317875wjc.48.2016.09.27.12.52.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 27 Sep 2016 12:52:41 -0700 (PDT)
-Subject: Re: [PATCH] gitignore: ignore output files of coccicheck make target
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>
-References: <93adb7c5-aac7-7241-e383-3ff7997faf7e@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <745b0eed-4c03-9e72-4903-ab1dbbc3622d@gmail.com>
-Date:   Tue, 27 Sep 2016 21:52:36 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
+        id S934732AbcI0UB3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Sep 2016 16:01:29 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62812 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S934274AbcI0UB1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2016 16:01:27 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5C11F3E9CC;
+        Tue, 27 Sep 2016 16:01:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=W8mnO8FB/FN6X72eACjxE1hy+0k=; b=AkJJ7S
+        nA2OhvL/liqv5UBhUmITd1afYYnEjvuk5MNaPrQje0qmpe+0lIjmbb3QbqkFyugn
+        RxvrfBrSUU2kHR1GdoHt7rFst4uvVumTezad38sGfjqRyKXHCQg6j0sA9VQiBfvF
+        ZFjc3i+aVSZfeI09YlsSWRLdZ95BBw8KKajjE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=cdohQT4DR4s69tYrUjLnmU/dypfMWyeT
+        iboUCbB8ABeA1WSf+X5REVHd1Bfc4hW/cX5QMCzV2B98tvCUFkisKMp/Mj+c2cOo
+        5CbZXcufHiI20j69MTFHeoLZ3IPAK3hQcdE6cxSXpriVDsFb6977IYtbSWko6pBs
+        ppnlANIw49M=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 531623E9CB;
+        Tue, 27 Sep 2016 16:01:26 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C7A313E9CA;
+        Tue, 27 Sep 2016 16:01:25 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 4/4 v4] ls-files: add pathspec matching for submodules
+References: <1474676014-134568-1-git-send-email-bmwill@google.com>
+        <1474930003-83750-1-git-send-email-bmwill@google.com>
+        <1474930003-83750-5-git-send-email-bmwill@google.com>
+Date:   Tue, 27 Sep 2016 13:01:23 -0700
+In-Reply-To: <1474930003-83750-5-git-send-email-bmwill@google.com> (Brandon
+        Williams's message of "Mon, 26 Sep 2016 15:46:43 -0700")
+Message-ID: <xmqq1t05nmcs.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <93adb7c5-aac7-7241-e383-3ff7997faf7e@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2BCC58C8-84ED-11E6-B58B-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 27.09.2016 o 21:01, René Scharfe pisze:
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
->  .gitignore | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/.gitignore b/.gitignore
-> index 05cb58a..f370ba0 100644
-> --- a/.gitignore
-> +++ b/.gitignore
+Brandon Williams <bmwill@google.com> writes:
 
-Wouldn't it be better to have this in contrib/coccinelle/.gitignore?
+> -	/* Find common prefix for all pathspec's */
+> -	max_prefix = common_prefix(&pathspec);
+> +	/*
+> +	 * Find common prefix for all pathspec's
+> +	 * This is used as a performance optimization which unfortunately cannot
+> +	 * be done when recursing into submodules
+> +	 */
+> +	if (recurse_submodules)
+> +		max_prefix = NULL;
+> +	else
+> +		max_prefix = common_prefix(&pathspec);
+>  	max_prefix_len = max_prefix ? strlen(max_prefix) : 0;
 
-> @@ -207,6 +207,7 @@
->  /tags
->  /TAGS
->  /cscope*
-> +/contrib/coccinelle/*.patch*
->  *.obj
->  *.lib
->  *.res
+I still wonder if we can do better than this, as this would be a big
+cycle-saver especially in recurse-submodules case.
+
+When you get max_prefix that is "a/b/c", there are three cases:
+
+ * a/b/c is a path prefix for an entry in the index, e.g. a/b/c/d;
+   you then can safely use it and you do not have to do any
+   recursive invocation of ls-files outside "a/b/c".  You may match
+   a/b/c/d in the toplevel, or you may recurse a/b/c/e that is a
+   submodule, but you won't have to pay attention to submodules
+   outside.
+
+ * a leading path of a/b/c, e.g. a/b, is a gitlink or a blob in the
+   index; you can use a/b and you only have to recurse into a/b if
+   that is a submodule; if a/b is a blob, you'd show nothing.
+
+ * a/b/c itself and no leading path of it appears in the index; you
+   know that nothing will match once you know that you are in this
+   situation.
+
+Because a gitlink "a/b" sorts at the same location in the index as a
+regular blob "a/b" would, by feeding the max_prefix common_prefix()
+gives you (i.e. "a/b/c") to index_name_pos() to see which one of the
+three situations you are in can be done fairly cheaply, I would
+think.  The index_name_pos() call may find "a/b/c" exactly (case 1),
+or return a location where "a/b/c" would be inserted in the list of
+existing entries.  If there were "a/b" (or "a") in the index, there
+wouldn't be any "a/b/x" (or "a/x") at the same time, so a query for
+"a/b/c" would land you next to (just after) an existing entry that
+is a leading path of it, if such an entry exists, no?  That would
+allow you to tell case 2 above fairly cheaply, I would expect.
+
+It is a separate issue if adding that support to 4/4 is a good idea;
+I personally think doing it as a separate follow-up patch would make
+more sense, so all of the above is tangent.
 
