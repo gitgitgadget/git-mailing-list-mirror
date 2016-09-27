@@ -2,182 +2,345 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 853AE207EC
-	for <e@80x24.org>; Mon, 26 Sep 2016 22:47:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A4F4207EC
+	for <e@80x24.org>; Tue, 27 Sep 2016 00:12:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933366AbcIZWr2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Sep 2016 18:47:28 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:35888 "EHLO
-        mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932241AbcIZWrX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2016 18:47:23 -0400
-Received: by mail-pa0-f47.google.com with SMTP id qn7so49772499pac.3
-        for <git@vger.kernel.org>; Mon, 26 Sep 2016 15:47:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=h34BN9Be3+B2UjV6LjuDI6jp+ZniBhiKi5b3W+ynPrY=;
-        b=ehLH1sj1bfRHmYLGP8heubMyORPGCWnfGr3K5O4zOhJbAQMj18SS5AaIjO5bhLp7iy
-         qbB5lAN/xRnUXP3UFJr7KzGMxtIHkfoWNr/suW/JpJspkEzVlZwTLDyGDr3a3EZi+Dcy
-         5XE71J7dLyH7rKtwV2j8hHDakdrv9FB3hvBcKStBJeRkriBAqnhLcvXnf9jfeE9B4Qrl
-         AmL4C8q+PDf1bWM0hEhsDLArspy+2z/MYQIIXNFaJPGuix6HcrEzC05l8MVnKk7Va8xx
-         /ilV8bZ5yoGuZnD3J5KcNlIv/fCY/mTqT6qvEOz7bAV5SXfogKMxxX4qd61aDTmM9Qh+
-         +uQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=h34BN9Be3+B2UjV6LjuDI6jp+ZniBhiKi5b3W+ynPrY=;
-        b=jMtNnkIyOSSJssEsowb57zP62ytMY/OYAML46vdAj/+R8K1e425ahpySnlqlZF4xKJ
-         3yLvZ3VDGEI5Q010xYG+gp51q8wXTtYDMoF/vgOPrTYZcL/BAnUgawE8xYQA5B2IB2Te
-         HPYPAOIL5KkoJDOQN6wVuMqffPJS5RWSq8uPvrvloreMPU+mSW6IgiyliM42ud6FlbIO
-         WRZEvivsUafMyHlwATJLc/VJCFv0Bs+sBrK//oSKrYHFI3kAINNh7wwl2ZrBPtQ74tUE
-         rVmkW9ojIlAIp6t6iFaf86JukbH5CbcySkfpZqxmrZn3q3/oDTepjZknJo4uxUWyFShS
-         aO2A==
-X-Gm-Message-State: AA6/9Rm1dgGh+VvEQzmbNW7WIV0aWh7ye+V+X8KEq35hRvydJzvDrt3nG/ibz6OVu2ZckC0N
-X-Received: by 10.66.85.198 with SMTP id j6mr7375638paz.110.1474930032470;
-        Mon, 26 Sep 2016 15:47:12 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b00:9046:8098:b971:afcc])
-        by smtp.gmail.com with ESMTPSA id i4sm33424677pav.27.2016.09.26.15.47.11
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 26 Sep 2016 15:47:11 -0700 (PDT)
-From:   Brandon Williams <bmwill@google.com>
+        id S1756217AbcI0AMB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Sep 2016 20:12:01 -0400
+Received: from hapkido.dreamhost.com ([66.33.216.122]:36195 "EHLO
+        hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754696AbcI0AL7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2016 20:11:59 -0400
+Received: from homiemail-a12.g.dreamhost.com (sub3.mail.dreamhost.com [69.163.253.7])
+        by hapkido.dreamhost.com (Postfix) with ESMTP id E474BE438C
+        for <git@vger.kernel.org>; Mon, 26 Sep 2016 17:11:58 -0700 (PDT)
+Received: from homiemail-a12.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a12.g.dreamhost.com (Postfix) with ESMTP id 5E29F103006C;
+        Mon, 26 Sep 2016 17:11:57 -0700 (PDT)
+Received: from frank.cable.rcn.com (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com [207.38.164.98])
+        (using TLSv1 with cipher AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: novalis@novalis.org)
+        by homiemail-a12.g.dreamhost.com (Postfix) with ESMTPSA id E3A4B1030063;
+        Mon, 26 Sep 2016 17:11:56 -0700 (PDT)
+From:   David Turner <dturner@twosigma.com>
 To:     git@vger.kernel.org
-Cc:     Brandon Williams <bmwill@google.com>
-Subject: [PATCH 3/4 v4] ls-files: pass through safe options for --recurse-submodules
-Date:   Mon, 26 Sep 2016 15:46:42 -0700
-Message-Id: <1474930003-83750-4-git-send-email-bmwill@google.com>
-X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
-In-Reply-To: <1474930003-83750-1-git-send-email-bmwill@google.com>
-References: <1474676014-134568-1-git-send-email-bmwill@google.com>
- <1474930003-83750-1-git-send-email-bmwill@google.com>
+Cc:     David Turner <dturner@twosigma.com>
+Subject: [PATCH 2/3] fsck: handle bad trees like other errors
+Date:   Mon, 26 Sep 2016 20:11:32 -0400
+Message-Id: <1474935093-26757-2-git-send-email-dturner@twosigma.com>
+X-Mailer: git-send-email 2.8.0.rc4.22.g8ae061a
+In-Reply-To: <1474935093-26757-1-git-send-email-dturner@twosigma.com>
+References: <1474935093-26757-1-git-send-email-dturner@twosigma.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pass through some known-safe options when recursing into submodules.
-(--cached, --stage, -v, -t, -z, --debug, --eol)
+Instead of dying when fsck hits a malformed tree object, log the error
+like any other and continue.  Now fsck can tell the user which tree is
+bad, too.
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
+Signed-off-by: David Turner <dturner@twosigma.com>
 ---
- builtin/ls-files.c                     | 34 ++++++++++++++++++++++++++++++----
- t/t3007-ls-files-recurse-submodules.sh | 17 ++++++++++++-----
- 2 files changed, 42 insertions(+), 9 deletions(-)
+ fsck.c                                             |  18 +++--
+ t/t1450-fsck.sh                                    |  17 ++++-
+ t/t1450/bad-objects/.gitattributes                 |   1 +
+ .../307e300745b82417cc1a903f875c7d22e45ef907       | Bin 0 -> 137 bytes
+ .../f506a346749bb96f52d8605ffba9fb93d46b5ffd       | Bin 0 -> 45 bytes
+ tree-walk.c                                        |  83 ++++++++++++++++++---
+ tree-walk.h                                        |   8 ++
+ 7 files changed, 108 insertions(+), 19 deletions(-)
+ create mode 100644 t/t1450/bad-objects/.gitattributes
+ create mode 100644 t/t1450/bad-objects/307e300745b82417cc1a903f875c7d22e45ef907
+ create mode 100644 t/t1450/bad-objects/f506a346749bb96f52d8605ffba9fb93d46b5ffd
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index d4bfc60..a39367f 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -31,6 +31,7 @@ static int debug_mode;
- static int show_eol;
- static int recurse_submodules;
- static const char *submodule_prefix;
-+static struct argv_array recurse_submodules_opts = ARGV_ARRAY_INIT;
+diff --git a/fsck.c b/fsck.c
+index c9cf3de..4a3069e 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -347,8 +347,9 @@ static int fsck_walk_tree(struct tree *tree, void *data, struct fsck_options *op
+ 		return -1;
  
- static const char *prefix;
- static int max_prefix_len;
-@@ -170,6 +171,27 @@ static void show_killed_files(struct dir_struct *dir)
+ 	name = get_object_name(options, &tree->object);
+-	init_tree_desc(&desc, tree->buffer, tree->size);
+-	while (tree_entry(&desc, &entry)) {
++	if (init_tree_desc_gently(&desc, tree->buffer, tree->size))
++		return -1;
++	while (tree_entry_gently(&desc, &entry)) {
+ 		struct object *obj;
+ 		int result;
+ 
+@@ -520,7 +521,7 @@ static int verify_ordered(unsigned mode1, const char *name1, unsigned mode2, con
+ 
+ static int fsck_tree(struct tree *item, struct fsck_options *options)
+ {
+-	int retval;
++	int retval = 0;
+ 	int has_null_sha1 = 0;
+ 	int has_full_path = 0;
+ 	int has_empty_name = 0;
+@@ -535,7 +536,10 @@ static int fsck_tree(struct tree *item, struct fsck_options *options)
+ 	unsigned o_mode;
+ 	const char *o_name;
+ 
+-	init_tree_desc(&desc, item->buffer, item->size);
++	if (init_tree_desc_gently(&desc, item->buffer, item->size)) {
++		retval += report(options, &item->object, FSCK_MSG_BAD_TREE, "cannot be parsed as a tree");
++		return retval;
++	}
+ 
+ 	o_mode = 0;
+ 	o_name = NULL;
+@@ -556,7 +560,10 @@ static int fsck_tree(struct tree *item, struct fsck_options *options)
+ 			       is_hfs_dotgit(name) ||
+ 			       is_ntfs_dotgit(name));
+ 		has_zero_pad |= *(char *)desc.buffer == '0';
+-		update_tree_entry(&desc);
++		if (update_tree_entry_gently(&desc)) {
++			retval += report(options, &item->object, FSCK_MSG_BAD_TREE, "cannot be parsed as a tree");
++			break;
++		}
+ 
+ 		switch (mode) {
+ 		/*
+@@ -597,7 +604,6 @@ static int fsck_tree(struct tree *item, struct fsck_options *options)
+ 		o_name = name;
  	}
+ 
+-	retval = 0;
+ 	if (has_null_sha1)
+ 		retval += report(options, &item->object, FSCK_MSG_NULL_SHA1, "contains entries pointing to null sha1");
+ 	if (has_full_path)
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 8f52da2..f456963 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -188,8 +188,7 @@ test_expect_success 'commit with NUL in header' '
+ 	grep "error in commit $new.*unterminated header: NUL at offset" out
+ '
+ 
+-test_expect_success 'malformatted tree object' '
+-	test_when_finished "git update-ref -d refs/tags/wrong" &&
++test_expect_success 'tree object with duplicate entries' '
+ 	test_when_finished "remove_object \$T" &&
+ 	T=$(
+ 		GIT_INDEX_FILE=test-index &&
+@@ -208,6 +207,20 @@ test_expect_success 'malformatted tree object' '
+ 	grep "error in tree .*contains duplicate file entries" out
+ '
+ 
++test_expect_success 'unparseable tree object' '
++	test_when_finished "git update-ref -d refs/heads/wrong" &&
++	test_when_finished "remove_object 307e300745b82417cc1a903f875c7d22e45ef907" &&
++	test_when_finished "remove_object f506a346749bb96f52d8605ffba9fb93d46b5ffd" &&
++	mkdir -p .git/objects/30 mkdir -p .git/objects/f5 &&
++	cp ../t1450/bad-objects/307e300745b82417cc1a903f875c7d22e45ef907 .git/objects/30/7e300745b82417cc1a903f875c7d22e45ef907 &&
++	cp ../t1450/bad-objects/f506a346749bb96f52d8605ffba9fb93d46b5ffd .git/objects/f5/06a346749bb96f52d8605ffba9fb93d46b5ffd &&
++	git update-ref refs/heads/wrong 307e300745b82417cc1a903f875c7d22e45ef907 &&
++	test_must_fail git fsck 2>out &&
++	grep "warning: empty filename in tree entry" out &&
++	grep "f506a346749bb96f52d8605ffba9fb93d46b5ffd" out &&
++	! grep "fatal: empty filename in tree entry" out
++'
++
+ test_expect_success 'tag pointing to nonexistent' '
+ 	cat >invalid-tag <<-\EOF &&
+ 	object ffffffffffffffffffffffffffffffffffffffff
+diff --git a/t/t1450/bad-objects/.gitattributes b/t/t1450/bad-objects/.gitattributes
+new file mode 100644
+index 0000000..a173f27
+--- /dev/null
++++ b/t/t1450/bad-objects/.gitattributes
+@@ -0,0 +1 @@
++[0-9a-f]*[0-9a-f]	-diff
+diff --git a/t/t1450/bad-objects/307e300745b82417cc1a903f875c7d22e45ef907 b/t/t1450/bad-objects/307e300745b82417cc1a903f875c7d22e45ef907
+new file mode 100644
+index 0000000000000000000000000000000000000000..6e23d625531856540364837ad76f8ce620b16102
+GIT binary patch
+literal 137
+zcmV;40CxX)0iBLP4#FT1MO|}>xqxP{K%K-G7aqY2Fa=r?TM`QO`l9IxT>bpTd;bq<
+zo?`(?@=&t(5HuRwDbp)rCKL48T@30F*ivBXoHE>+6SkHqWq8;vI(XK+_zc%2ZT1z{
+r`<|zi#~Vo1WD<KV;fM-R48P6NfPd&6hj%O!a2o3h-{;~3ChI@mcIrR_
+
+literal 0
+HcmV?d00001
+
+diff --git a/t/t1450/bad-objects/f506a346749bb96f52d8605ffba9fb93d46b5ffd b/t/t1450/bad-objects/f506a346749bb96f52d8605ffba9fb93d46b5ffd
+new file mode 100644
+index 0000000000000000000000000000000000000000..9111a7fc3c8578906e13c930a0fbd3cae047762e
+GIT binary patch
+literal 45
+zcmb=Jqpj)X8)~pA!NA18z}PS_p~CF@#W%j<>n*Fxv)5_&?<#!Z>Hoon;loq@NdS%f
+B6F2|>
+
+literal 0
+HcmV?d00001
+
+diff --git a/tree-walk.c b/tree-walk.c
+index ba544cf..0fb830b 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -22,33 +22,60 @@ static const char *get_mode(const char *str, unsigned int *modep)
+ 	return str;
+ }
+ 
+-static void decode_tree_entry(struct tree_desc *desc, const char *buf, unsigned long size)
++static int decode_tree_entry(struct tree_desc *desc, const char *buf, unsigned long size, struct strbuf *err)
+ {
+ 	const char *path;
+ 	unsigned int mode, len;
+ 
+-	if (size < 23 || buf[size - 21])
+-		die("too-short tree object");
++	if (size < 23 || buf[size - 21]) {
++		strbuf_addstr(err, "too-short tree object");
++		return -1;
++	}
+ 
+ 	path = get_mode(buf, &mode);
+-	if (!path)
+-		die("malformed mode in tree entry for tree");
+-	if (!*path)
+-		die("empty filename in tree entry for tree");
++	if (!path) {
++		strbuf_addstr(err, "malformed mode in tree entry");
++		return -1;
++	}
++	if (!*path) {
++		strbuf_addstr(err, "empty filename in tree entry");
++		return -1;
++	}
+ 	len = strlen(path) + 1;
+ 
+ 	/* Initialize the descriptor entry */
+ 	desc->entry.path = path;
+ 	desc->entry.mode = canon_mode(mode);
+ 	desc->entry.oid  = (const struct object_id *)(path + len);
++
++	return 0;
+ }
+ 
+-void init_tree_desc(struct tree_desc *desc, const void *buffer, unsigned long size)
++static int init_tree_desc_internal(struct tree_desc *desc, const void *buffer, unsigned long size, struct strbuf *err)
+ {
+ 	desc->buffer = buffer;
+ 	desc->size = size;
+ 	if (size)
+-		decode_tree_entry(desc, buffer, size);
++		return decode_tree_entry(desc, buffer, size, err);
++	return 0;
++}
++
++void init_tree_desc(struct tree_desc *desc, const void *buffer, unsigned long size)
++{
++	struct strbuf err = STRBUF_INIT;
++	if (init_tree_desc_internal(desc, buffer, size, &err))
++		die("%s", err.buf);
++	strbuf_release(&err);
++}
++
++int init_tree_desc_gently(struct tree_desc *desc, const void *buffer, unsigned long size)
++{
++	struct strbuf err = STRBUF_INIT;
++	int result = init_tree_desc_internal(desc, buffer, size, &err);
++	if (result)
++		warning("%s", err.buf);
++	strbuf_release(&err);
++	return result;
+ }
+ 
+ void *fill_tree_descriptor(struct tree_desc *desc, const unsigned char *sha1)
+@@ -75,7 +102,7 @@ static void entry_extract(struct tree_desc *t, struct name_entry *a)
+ 	*a = t->entry;
+ }
+ 
+-void update_tree_entry(struct tree_desc *desc)
++static int update_tree_entry_internal(struct tree_desc *desc, struct strbuf *err)
+ {
+ 	const void *buf = desc->buffer;
+ 	const unsigned char *end = desc->entry.oid->hash + 20;
+@@ -89,7 +116,30 @@ void update_tree_entry(struct tree_desc *desc)
+ 	desc->buffer = buf;
+ 	desc->size = size;
+ 	if (size)
+-		decode_tree_entry(desc, buf, size);
++		return decode_tree_entry(desc, buf, size, err);
++	return 0;
++}
++
++void update_tree_entry(struct tree_desc *desc)
++{
++	struct strbuf err = STRBUF_INIT;
++	if (update_tree_entry_internal(desc, &err))
++		die("%s", err.buf);
++	strbuf_release(&err);
++}
++
++int update_tree_entry_gently(struct tree_desc *desc)
++{
++	struct strbuf err = STRBUF_INIT;
++	if (update_tree_entry_internal(desc, &err)) {
++		warning("%s", err.buf);
++		strbuf_release(&err);
++		/* Stop processing this tree after error */
++		desc->size = 0;
++		return -1;
++	}
++	strbuf_release(&err);
++	return 0;
+ }
+ 
+ int tree_entry(struct tree_desc *desc, struct name_entry *entry)
+@@ -102,6 +152,17 @@ int tree_entry(struct tree_desc *desc, struct name_entry *entry)
+ 	return 1;
+ }
+ 
++int tree_entry_gently(struct tree_desc *desc, struct name_entry *entry)
++{
++	if (!desc->size)
++		return 0;
++
++	*entry = desc->entry;
++	if (update_tree_entry_gently(desc))
++		return 0;
++	return 1;
++}
++
+ void setup_traverse_info(struct traverse_info *info, const char *base)
+ {
+ 	int pathlen = strlen(base);
+diff --git a/tree-walk.h b/tree-walk.h
+index 97a7d69..68bb78b 100644
+--- a/tree-walk.h
++++ b/tree-walk.h
+@@ -25,14 +25,22 @@ static inline int tree_entry_len(const struct name_entry *ne)
+ 	return (const char *)ne->oid - ne->path - 1;
  }
  
 +/*
-+ * Compile an argv_array with all of the options supported by --recurse_submodules
++ * The _gently versions of these functions warn and return false on a
++ * corrupt tree entry rather than dying,
 + */
-+static void compile_submodule_options(int show_tag)
-+{
-+	if (show_cached)
-+		argv_array_push(&recurse_submodules_opts, "--cached");
-+	if (show_stage)
-+		argv_array_push(&recurse_submodules_opts, "--stage");
-+	if (show_valid_bit)
-+		argv_array_push(&recurse_submodules_opts, "-v");
-+	if (show_tag)
-+		argv_array_push(&recurse_submodules_opts, "-t");
-+	if (line_terminator == '\0')
-+		argv_array_push(&recurse_submodules_opts, "-z");
-+	if (debug_mode)
-+		argv_array_push(&recurse_submodules_opts, "--debug");
-+	if (show_eol)
-+		argv_array_push(&recurse_submodules_opts, "--eol");
-+}
 +
- /**
-  * Recursively call ls-files on a submodule
+ void update_tree_entry(struct tree_desc *);
++int update_tree_entry_gently(struct tree_desc *);
+ void init_tree_desc(struct tree_desc *desc, const void *buf, unsigned long size);
++int init_tree_desc_gently(struct tree_desc *desc, const void *buf, unsigned long size);
+ 
+ /*
+  * Helper function that does both tree_entry_extract() and update_tree_entry()
+  * and returns true for success
   */
-@@ -184,6 +206,9 @@ static void show_gitlink(const struct cache_entry *ce)
- 	argv_array_push(&cp.args, "ls-files");
- 	argv_array_push(&cp.args, "--recurse-submodules");
+ int tree_entry(struct tree_desc *, struct name_entry *);
++int tree_entry_gently(struct tree_desc *, struct name_entry *);
  
-+	/* add supported options */
-+	argv_array_pushv(&cp.args, recurse_submodules_opts.argv);
-+
- 	cp.git_cmd = 1;
- 	cp.dir = ce->name;
- 	status = run_command(&cp);
-@@ -568,14 +593,15 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 	if (require_work_tree && !is_inside_work_tree())
- 		setup_work_tree();
+ void *fill_tree_descriptor(struct tree_desc *desc, const unsigned char *sha1);
  
--	if (recurse_submodules)
-+	if (recurse_submodules) {
- 		submodule_prefix = getenv(GIT_SUBMODULE_PREFIX_ENVIRONMENT);
-+		compile_submodule_options(show_tag);
-+	}
- 
- 	if (recurse_submodules &&
--	    (show_stage || show_deleted || show_others || show_unmerged ||
-+	    (show_deleted || show_others || show_unmerged ||
- 	     show_killed || show_modified || show_resolve_undo ||
--	     show_valid_bit || show_tag || show_eol || with_tree ||
--	     (line_terminator == '\0')))
-+	     with_tree))
- 		die("ls-files --recurse-submodules unsupported mode");
- 
- 	if (recurse_submodules && error_unmatch)
-diff --git a/t/t3007-ls-files-recurse-submodules.sh b/t/t3007-ls-files-recurse-submodules.sh
-index 7d225ac..40767da 100755
---- a/t/t3007-ls-files-recurse-submodules.sh
-+++ b/t/t3007-ls-files-recurse-submodules.sh
-@@ -34,6 +34,18 @@ test_expect_success 'ls-files correctly outputs files in submodule' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'ls-files correctly outputs files in submodule with -z' '
-+	cat | tr "\n" "\0" >expect <<-\EOF &&
-+	.gitmodules
-+	a
-+	b/b
-+	submodule/c
-+	EOF
-+
-+	git ls-files --recurse-submodules -z >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'ls-files does not output files not added to a repo' '
- 	cat >expect <<-\EOF &&
- 	.gitmodules
-@@ -86,15 +98,10 @@ test_incompatible_with_recurse_submodules () {
- 	"
- }
- 
--test_incompatible_with_recurse_submodules -z
--test_incompatible_with_recurse_submodules -v
--test_incompatible_with_recurse_submodules -t
- test_incompatible_with_recurse_submodules --deleted
- test_incompatible_with_recurse_submodules --modified
- test_incompatible_with_recurse_submodules --others
--test_incompatible_with_recurse_submodules --stage
- test_incompatible_with_recurse_submodules --killed
- test_incompatible_with_recurse_submodules --unmerged
--test_incompatible_with_recurse_submodules --eol
- 
- test_done
 -- 
-2.8.0.rc3.226.g39d4020
+2.8.0.rc4.22.g8ae061a
 
