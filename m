@@ -2,108 +2,305 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31BBE20986
-	for <e@80x24.org>; Tue, 27 Sep 2016 20:59:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F96320986
+	for <e@80x24.org>; Tue, 27 Sep 2016 21:00:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934047AbcI0U70 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Sep 2016 16:59:26 -0400
-Received: from mout.web.de ([212.227.17.11]:57812 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752586AbcI0U7W (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2016 16:59:22 -0400
-Received: from [192.168.178.36] ([79.213.113.239]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0MgwdY-1bbhnx37Q0-00M10O; Tue, 27 Sep 2016 22:59:09
- +0200
-Subject: Re: [PATCH 2/2] use strbuf_add_unique_abbrev() for adding short
- hashes, part 2
-To:     Junio C Hamano <gitster@pobox.com>
-References: <b7a61c78-3c46-375c-4cc3-7c363e551bc6@web.de>
- <29e75b7b-6dd0-8c52-e444-cad1ba613cd0@web.de>
- <xmqqshslm6jo.fsf@gitster.mtv.corp.google.com>
-Cc:     Git List <git@vger.kernel.org>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <3c80f7d7-a145-3a4a-4bf2-2d8fb6dda04b@web.de>
-Date:   Tue, 27 Sep 2016 22:59:03 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
-MIME-Version: 1.0
-In-Reply-To: <xmqqshslm6jo.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:1iVY0Itw5GNne6/xT10q8JFvQDWZC6IB2As288lm+r+SSACrs0l
- 2URZMYC7mq8ejDNcFpMnfMO4c9CstLh3UKC5fgPMbj9iqQZewwVpOjg9gE+UJDtpXurioFB
- LrIC8EOqJBfa2dpk7QNJosRZYm7PYKCcCBh0/4TKCCbmiFuUju67eJmyELGbdN16RonsyEg
- Si4OOfoIBZReTLb5c8KTw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:AH9hcwmggns=:0aUYr8QzJuyFM9TAumv0eK
- L1q4v6D748Yoo3jC90mqMo1RSQiIaSBxOFnflRctKu8hq3gTbnyJEjtOJLbcIALHvu0Iiaunk
- yr/E8zyflnpiwD7qWHIFB/f699Olnlf5dZiGmmhTBH3xohZyYbLL9sHYZ1pPaGj+HzSa0k9WW
- L0KAEdFzdRVVkl+5FfjImFDgpZiCNDPXy9+stzaQC34rk5AX/tpy5or45ZREyta9A+oPPvh5y
- gpBlOvtPtDz9HtWoONt/6Qressj7eXnLZ8dmPmPhcafCWmvCRC8srlakQBrt3jYRssE6jZzAK
- 2HmbmSjy4ZNc4VRTybAVYznj1diW7HKiJbx3TQID0wX+o+efvT9ZZUMHAsAPvClaoad9//z5w
- Vbi54xpSrUxvsT5zQ33NSFZawp80h2tJZZPLnzoPTB1EDGgcJKlr+yRvhaxZjV3Fbxd0OPoUk
- 9SUUiZsJ6Pl/Kkn4z2XnMfZ9kZr13FJ6D0kpppILtNzp6beWwhlO/q8RnrWYd+jTgbYZ4FiOS
- daHzCnmLVHmK/7Odg8Uxx9M9v295/JsSf4tecnzXvxiNlWYO/aTXkBQi8V3DZFqzsxBE5pYg4
- xMUO/U9e9kKJEhUQWVkmgul+tc1mdU4MPvURUKyq/7Vm0aX2DynlLMJfjKDkHeVgUcYivda84
- W4SG9F97ruPzh52eX7ZGA7mpHNdt3hCEI73YZaf89LpErQbWZZWOMHiwf8NC3rHvf/51XrBlJ
- BdlJ+jNFqyWieFgSTbwr22dtThJqmKsZD4s3hE8K9/q/kd2Q7tfm/k4VqQ0QJoJXQ0V4hE7vV
- 3XjkCnx
+        id S965087AbcI0VAt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Sep 2016 17:00:49 -0400
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:44371 "EHLO
+        homiemail-a15.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S935013AbcI0VAA (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 27 Sep 2016 17:00:00 -0400
+Received: from homiemail-a15.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a15.g.dreamhost.com (Postfix) with ESMTP id 9C7C476C06E;
+        Tue, 27 Sep 2016 13:59:59 -0700 (PDT)
+Received: from localhost.localdomain (gzac10-107-1.nje.twosigma.com [208.77.214.155])
+        (using TLSv1 with cipher AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: novalis@novalis.org)
+        by homiemail-a15.g.dreamhost.com (Postfix) with ESMTPSA id 2884076C058;
+        Tue, 27 Sep 2016 13:59:59 -0700 (PDT)
+From:   David Turner <dturner@twosigma.com>
+To:     git@vger.kernel.org, peff@peff.net
+Cc:     David Turner <dturner@twosigma.com>
+Subject: [PATCH v4 2/2] fsck: handle bad trees like other errors
+Date:   Tue, 27 Sep 2016 16:59:51 -0400
+Message-Id: <1475009991-16368-2-git-send-email-dturner@twosigma.com>
+X-Mailer: git-send-email 2.8.0.rc4.22.g8ae061a
+In-Reply-To: <1475009991-16368-1-git-send-email-dturner@twosigma.com>
+References: <1475009991-16368-1-git-send-email-dturner@twosigma.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 27.09.2016 um 22:28 schrieb Junio C Hamano:
-> René Scharfe <l.s.r@web.de> writes:
->> diff --git a/submodule.c b/submodule.c
->> index dcc5ce3..8cf40ea 100644
->> --- a/submodule.c
->> +++ b/submodule.c
->> @@ -396,7 +396,7 @@ static void show_submodule_header(FILE *f, const char *path,
->>  			find_unique_abbrev(one->hash, DEFAULT_ABBREV));
->>  	if (!fast_backward && !fast_forward)
->>  		strbuf_addch(&sb, '.');
->> -	strbuf_addstr(&sb, find_unique_abbrev(two->hash, DEFAULT_ABBREV));
->> +	strbuf_add_unique_abbrev(&sb->hash, two, DEFAULT_ABBREV);
-> 
-> I wonder how could this change come out of this definition:
-> 
->     @@
->     expression E1, E2, E3;
->     @@
->     - strbuf_addstr(E1, find_unique_abbrev(E2, E3));
->     + strbuf_add_unique_abbrev(E1, E2, E3);
+Instead of dying when fsck hits a malformed tree object, log the error
+like any other and continue.  Now fsck can tell the user which tree is
+bad, too.
 
-Impossible.  I added "->hash" manually during a rebase (merging
-a0d12c44, wrongly).  Good catch, thanks!
-
-Seeing proof of skipping compile-testing I wonder what else I do
-forget in my daily life. :-|  I'll better go to sleep now..
-
-Fixup patch, generated by reverting the diff, re-adding the
-semantic patch and using coccicheck; compiles and survives make
-test:
+Signed-off-by: David Turner <dturner@twosigma.com>
 ---
- submodule.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fsck.c          | 18 ++++++++-----
+ t/t1450-fsck.sh | 16 +++++++++--
+ tree-walk.c     | 83 +++++++++++++++++++++++++++++++++++++++++++++++++--------
+ tree-walk.h     |  8 ++++++
+ 4 files changed, 106 insertions(+), 19 deletions(-)
 
-diff --git a/submodule.c b/submodule.c
-index 8cf40ea..bb06b60 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -396,7 +396,7 @@ static void show_submodule_header(FILE *f, const char *path,
- 			find_unique_abbrev(one->hash, DEFAULT_ABBREV));
- 	if (!fast_backward && !fast_forward)
- 		strbuf_addch(&sb, '.');
--	strbuf_add_unique_abbrev(&sb->hash, two, DEFAULT_ABBREV);
-+	strbuf_add_unique_abbrev(&sb, two->hash, DEFAULT_ABBREV);
- 	if (message)
- 		strbuf_addf(&sb, " %s%s\n", message, reset);
- 	else
+diff --git a/fsck.c b/fsck.c
+index c9cf3de..4a3069e 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -347,8 +347,9 @@ static int fsck_walk_tree(struct tree *tree, void *data, struct fsck_options *op
+ 		return -1;
+ 
+ 	name = get_object_name(options, &tree->object);
+-	init_tree_desc(&desc, tree->buffer, tree->size);
+-	while (tree_entry(&desc, &entry)) {
++	if (init_tree_desc_gently(&desc, tree->buffer, tree->size))
++		return -1;
++	while (tree_entry_gently(&desc, &entry)) {
+ 		struct object *obj;
+ 		int result;
+ 
+@@ -520,7 +521,7 @@ static int verify_ordered(unsigned mode1, const char *name1, unsigned mode2, con
+ 
+ static int fsck_tree(struct tree *item, struct fsck_options *options)
+ {
+-	int retval;
++	int retval = 0;
+ 	int has_null_sha1 = 0;
+ 	int has_full_path = 0;
+ 	int has_empty_name = 0;
+@@ -535,7 +536,10 @@ static int fsck_tree(struct tree *item, struct fsck_options *options)
+ 	unsigned o_mode;
+ 	const char *o_name;
+ 
+-	init_tree_desc(&desc, item->buffer, item->size);
++	if (init_tree_desc_gently(&desc, item->buffer, item->size)) {
++		retval += report(options, &item->object, FSCK_MSG_BAD_TREE, "cannot be parsed as a tree");
++		return retval;
++	}
+ 
+ 	o_mode = 0;
+ 	o_name = NULL;
+@@ -556,7 +560,10 @@ static int fsck_tree(struct tree *item, struct fsck_options *options)
+ 			       is_hfs_dotgit(name) ||
+ 			       is_ntfs_dotgit(name));
+ 		has_zero_pad |= *(char *)desc.buffer == '0';
+-		update_tree_entry(&desc);
++		if (update_tree_entry_gently(&desc)) {
++			retval += report(options, &item->object, FSCK_MSG_BAD_TREE, "cannot be parsed as a tree");
++			break;
++		}
+ 
+ 		switch (mode) {
+ 		/*
+@@ -597,7 +604,6 @@ static int fsck_tree(struct tree *item, struct fsck_options *options)
+ 		o_name = name;
+ 	}
+ 
+-	retval = 0;
+ 	if (has_null_sha1)
+ 		retval += report(options, &item->object, FSCK_MSG_NULL_SHA1, "contains entries pointing to null sha1");
+ 	if (has_full_path)
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 8f52da2..ee7d473 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -188,8 +188,7 @@ test_expect_success 'commit with NUL in header' '
+ 	grep "error in commit $new.*unterminated header: NUL at offset" out
+ '
+ 
+-test_expect_success 'malformatted tree object' '
+-	test_when_finished "git update-ref -d refs/tags/wrong" &&
++test_expect_success 'tree object with duplicate entries' '
+ 	test_when_finished "remove_object \$T" &&
+ 	T=$(
+ 		GIT_INDEX_FILE=test-index &&
+@@ -208,6 +207,19 @@ test_expect_success 'malformatted tree object' '
+ 	grep "error in tree .*contains duplicate file entries" out
+ '
+ 
++test_expect_success 'unparseable tree object' '
++	test_when_finished "git update-ref -d refs/heads/wrong" &&
++	test_when_finished "remove_object \$tree_sha1" &&
++	test_when_finished "remove_object \$commit_sha1" &&
++	tree_sha1=$(printf "100644 \0twenty-bytes-of-junk" | git hash-object -t tree --stdin -w --literally) &&
++	commit_sha1=$(git commit-tree $tree_sha1) &&
++	git update-ref refs/heads/wrong $commit_sha1 &&
++	test_must_fail git fsck 2>out &&
++	test_i18ngrep "error: empty filename in tree entry" out &&
++	test_i18ngrep "$tree_sha1" out &&
++	test_i18ngrep ! "fatal: empty filename in tree entry" out
++'
++
+ test_expect_success 'tag pointing to nonexistent' '
+ 	cat >invalid-tag <<-\EOF &&
+ 	object ffffffffffffffffffffffffffffffffffffffff
+diff --git a/tree-walk.c b/tree-walk.c
+index 24f9a0f..828f435 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -22,33 +22,60 @@ static const char *get_mode(const char *str, unsigned int *modep)
+ 	return str;
+ }
+ 
+-static void decode_tree_entry(struct tree_desc *desc, const char *buf, unsigned long size)
++static int decode_tree_entry(struct tree_desc *desc, const char *buf, unsigned long size, struct strbuf *err)
+ {
+ 	const char *path;
+ 	unsigned int mode, len;
+ 
+-	if (size < 23 || buf[size - 21])
+-		die(_("too-short tree object"));
++	if (size < 23 || buf[size - 21]) {
++		strbuf_addstr(err, _("too-short tree object"));
++		return -1;
++	}
+ 
+ 	path = get_mode(buf, &mode);
+-	if (!path)
+-		die(_("malformed mode in tree entry for tree"));
+-	if (!*path)
+-		die(_("empty filename in tree entry for tree"));
++	if (!path) {
++		strbuf_addstr(err, _("malformed mode in tree entry"));
++		return -1;
++	}
++	if (!*path) {
++		strbuf_addstr(err, _("empty filename in tree entry"));
++		return -1;
++	}
+ 	len = strlen(path) + 1;
+ 
+ 	/* Initialize the descriptor entry */
+ 	desc->entry.path = path;
+ 	desc->entry.mode = canon_mode(mode);
+ 	desc->entry.oid  = (const struct object_id *)(path + len);
++
++	return 0;
+ }
+ 
+-void init_tree_desc(struct tree_desc *desc, const void *buffer, unsigned long size)
++static int init_tree_desc_internal(struct tree_desc *desc, const void *buffer, unsigned long size, struct strbuf *err)
+ {
+ 	desc->buffer = buffer;
+ 	desc->size = size;
+ 	if (size)
+-		decode_tree_entry(desc, buffer, size);
++		return decode_tree_entry(desc, buffer, size, err);
++	return 0;
++}
++
++void init_tree_desc(struct tree_desc *desc, const void *buffer, unsigned long size)
++{
++	struct strbuf err = STRBUF_INIT;
++	if (init_tree_desc_internal(desc, buffer, size, &err))
++		die("%s", err.buf);
++	strbuf_release(&err);
++}
++
++int init_tree_desc_gently(struct tree_desc *desc, const void *buffer, unsigned long size)
++{
++	struct strbuf err = STRBUF_INIT;
++	int result = init_tree_desc_internal(desc, buffer, size, &err);
++	if (result)
++		error("%s", err.buf);
++	strbuf_release(&err);
++	return result;
+ }
+ 
+ void *fill_tree_descriptor(struct tree_desc *desc, const unsigned char *sha1)
+@@ -75,7 +102,7 @@ static void entry_extract(struct tree_desc *t, struct name_entry *a)
+ 	*a = t->entry;
+ }
+ 
+-void update_tree_entry(struct tree_desc *desc)
++static int update_tree_entry_internal(struct tree_desc *desc, struct strbuf *err)
+ {
+ 	const void *buf = desc->buffer;
+ 	const unsigned char *end = desc->entry.oid->hash + 20;
+@@ -89,7 +116,30 @@ void update_tree_entry(struct tree_desc *desc)
+ 	desc->buffer = buf;
+ 	desc->size = size;
+ 	if (size)
+-		decode_tree_entry(desc, buf, size);
++		return decode_tree_entry(desc, buf, size, err);
++	return 0;
++}
++
++void update_tree_entry(struct tree_desc *desc)
++{
++	struct strbuf err = STRBUF_INIT;
++	if (update_tree_entry_internal(desc, &err))
++		die("%s", err.buf);
++	strbuf_release(&err);
++}
++
++int update_tree_entry_gently(struct tree_desc *desc)
++{
++	struct strbuf err = STRBUF_INIT;
++	if (update_tree_entry_internal(desc, &err)) {
++		error("%s", err.buf);
++		strbuf_release(&err);
++		/* Stop processing this tree after error */
++		desc->size = 0;
++		return -1;
++	}
++	strbuf_release(&err);
++	return 0;
+ }
+ 
+ int tree_entry(struct tree_desc *desc, struct name_entry *entry)
+@@ -102,6 +152,17 @@ int tree_entry(struct tree_desc *desc, struct name_entry *entry)
+ 	return 1;
+ }
+ 
++int tree_entry_gently(struct tree_desc *desc, struct name_entry *entry)
++{
++	if (!desc->size)
++		return 0;
++
++	*entry = desc->entry;
++	if (update_tree_entry_gently(desc))
++		return 0;
++	return 1;
++}
++
+ void setup_traverse_info(struct traverse_info *info, const char *base)
+ {
+ 	int pathlen = strlen(base);
+diff --git a/tree-walk.h b/tree-walk.h
+index 97a7d69..68bb78b 100644
+--- a/tree-walk.h
++++ b/tree-walk.h
+@@ -25,14 +25,22 @@ static inline int tree_entry_len(const struct name_entry *ne)
+ 	return (const char *)ne->oid - ne->path - 1;
+ }
+ 
++/*
++ * The _gently versions of these functions warn and return false on a
++ * corrupt tree entry rather than dying,
++ */
++
+ void update_tree_entry(struct tree_desc *);
++int update_tree_entry_gently(struct tree_desc *);
+ void init_tree_desc(struct tree_desc *desc, const void *buf, unsigned long size);
++int init_tree_desc_gently(struct tree_desc *desc, const void *buf, unsigned long size);
+ 
+ /*
+  * Helper function that does both tree_entry_extract() and update_tree_entry()
+  * and returns true for success
+  */
+ int tree_entry(struct tree_desc *, struct name_entry *);
++int tree_entry_gently(struct tree_desc *, struct name_entry *);
+ 
+ void *fill_tree_descriptor(struct tree_desc *desc, const unsigned char *sha1);
+ 
 -- 
-2.10.0
+2.8.0.rc4.22.g8ae061a
 
