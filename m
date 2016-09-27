@@ -2,82 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C3B0A20986
-	for <e@80x24.org>; Tue, 27 Sep 2016 17:23:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06A4120986
+	for <e@80x24.org>; Tue, 27 Sep 2016 17:25:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753345AbcI0RXV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Sep 2016 13:23:21 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:37894 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751064AbcI0RXU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2016 13:23:20 -0400
-Received: by mail-wm0-f48.google.com with SMTP id l132so24790405wmf.1
-        for <git@vger.kernel.org>; Tue, 27 Sep 2016 10:23:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=moD6dC+NoywNreddQxOYr+ctrsnL3nlqqSIjjRQZ4No=;
-        b=SaofBDarymrzZYRwsCheredqKfaCRv9fq+veq2hUDaSEPSGh+7xz6ncD0gfpza5Ldx
-         cDQwtnBntEGDTyEpL4hKk/gKs+bUpiEH/IM9vtXew2JIRNM2Vsy1xj1mqyPn6i9nkURb
-         dRKxh8OZa86PPPj8HaiD7eMrxvscgyDrGScj2qqsOfe5ylP8xV6iZ7WljTf+0xV0F8O7
-         Z6WBA8BqAlvYNZGsTXHcdvMyiamQvkOHjNGWvlDaFRzi7qpQqfuvUFbvAn66LdJHpYXa
-         eiJyX6QN9nIeSz9/i/cOWIhKASGvZACOmXUW9u06LwFkfS+aNAXKdSjFNWyrjO0gorWa
-         17vA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=moD6dC+NoywNreddQxOYr+ctrsnL3nlqqSIjjRQZ4No=;
-        b=cJ2Qw3rn7ZQwM4FVNpoyxMmDJTT3SOVo2iRL12XJ3DJY/aqxAkX73U6MxvjBjtx9Iv
-         +d6ryNAGSufuiYxXjiF0AVdN202LIUews4LC8tJ+lCdsm6JjWg0eFiz9I2umj45oAWh+
-         1Q4or6w3T5oVjgboByce5l5YfeUBphDArplK6qV6GSGTDFH9t2L41dgASWe8GkOjSURP
-         Zm3IJ6E3Cu1u7JxyyLyjSUJqMZ716R+ZKGo+XvXhl9JiahvZfZWf2CFkE8wPmu9wXdmx
-         SbUvdW3J3NcEMFl6M0PTFMJ0XqyjHLwK8PTVDsIJ/aHR6TUdB0rxOeuK602bEADH7BbT
-         sbuQ==
-X-Gm-Message-State: AA6/9RkQHS0pgYiImyUoQ5390+4Zau9hZJjXVFdHqnYDN/Sr/iDQ6thvk/ExdNkD5WV1xx87IlErNsDQOEGWNA==
-X-Received: by 10.28.154.142 with SMTP id c136mr4196313wme.102.1474996999023;
- Tue, 27 Sep 2016 10:23:19 -0700 (PDT)
+        id S1753865AbcI0RZz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Sep 2016 13:25:55 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64573 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751064AbcI0RZy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2016 13:25:54 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7F2B13FA53;
+        Tue, 27 Sep 2016 13:25:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vFJ6G0AdIJ78ULE9SGtAVi7Cgsk=; b=f1atXy
+        dA19xbhYAd9Dcs7UfNy2Mfn7Y8IexEHa1ctarmJgQC/750U76htmE2yelgn6LYT5
+        mX+ezUybnuD7sRJUvXc7RqOg7pAc2xn+2hqXLnzW5Sz9yNl5e/YK1cfcO9OzPR1+
+        5tHKTrjFtbB3kZali6yb5LTTbOk3W+KyAAZHU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=QapJIPp8dLe/aYd27ew5gRQn6y/SRsMP
+        huJQ+I5BRLe09PMJr/vetyS4UIWkeUZdHmljUGjfNtldJUZQIHYcPkIzoYx0nEyx
+        r2qtjaCkzJy6YOcraWcrp45pGyvXnUe4XydpX0FQv604Oz+89Zbph2Npgq1jieXd
+        N+ltSA4TtZo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 75A103FA51;
+        Tue, 27 Sep 2016 13:25:52 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E89FD3FA4D;
+        Tue, 27 Sep 2016 13:25:51 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Michael J Gruber <git@drmicha.warpmail.net>
+Cc:     git@vger.kernel.org, Alex <agrambot@gmail.com>
+Subject: Re: [PATCH] gpg-interface: use more status letters
+References: <87y42ey3z4.fsf@gmail.com>
+        <06b5e0bfb898c7b3c6a866df5bda0ab4587284c6.1474986563.git.git@drmicha.warpmail.net>
+Date:   Tue, 27 Sep 2016 10:25:49 -0700
+In-Reply-To: <06b5e0bfb898c7b3c6a866df5bda0ab4587284c6.1474986563.git.git@drmicha.warpmail.net>
+        (Michael J. Gruber's message of "Tue, 27 Sep 2016 16:31:40 +0200")
+Message-ID: <xmqqk2dxp84i.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.80.148.198 with HTTP; Tue, 27 Sep 2016 10:23:18 -0700 (PDT)
-In-Reply-To: <xmqqd1jpqp7p.fsf@gitster.mtv.corp.google.com>
-References: <1462458182-4488-1-git-send-email-orgads@gmail.com>
- <xmqqwpn8bes0.fsf@gitster.mtv.corp.google.com> <CAGHpTBLdy9R7xvfcFWoMkvGNJjY-wM5=HfWxs8XF_yh-+2Rc3w@mail.gmail.com>
- <CAGHpTBLgwyw_iYK927Yed+XG9ti+tKboz07-FVYWox9WoQkjOg@mail.gmail.com>
- <CAGHpTB+Fnu4x1bV9TSNo8pYdOzJzRsXA9r3CwxVz64mjW_qsGw@mail.gmail.com>
- <xmqqmviupcpx.fsf@gitster.mtv.corp.google.com> <CAGHpTBLPvQDD4hhMKiOFdhxug-joi-38mNozuzm3=EJCnS9UEA@mail.gmail.com>
- <xmqqd1jpqp7p.fsf@gitster.mtv.corp.google.com>
-From:   Orgad Shaneh <orgads@gmail.com>
-Date:   Tue, 27 Sep 2016 20:23:18 +0300
-Message-ID: <CAGHpTB+XOxMh=o_dKGx-j2P15zsmcMn0MB7BuKFksOn4O_FXYw@mail.gmail.com>
-Subject: Re: [PATCH] git-gui: Do not reset author details on amend
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Pat Thoyts <patthoyts@users.sourceforge.net>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7061BD54-84D7-11E6-87F6-C26412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 27, 2016 at 7:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Orgad Shaneh <orgads@gmail.com> writes:
->
->> On Tue, Sep 27, 2016 at 12:34 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Orgad Shaneh <orgads@gmail.com> writes:
->>>
->> I actually see that there is a problem with it:
->> https://github.com/git-for-windows/git/issues/761
->>
->> I'll try to revise it and resubmit.
->
-> Are you by chance volunteering to be git-gui maintainer?
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-No way, sorry. I don't speak TCL at all. Every change is a true pain... ;)
+> According to gpg2's doc/DETAILS:
+> "For each signature only one of the codes GOODSIG, BADSIG, EXPSIG,
+> EXPKEYSIG, REVKEYSIG or ERRSIG will be emitted."
+>
+> gpg1 ("classic") behaves the same (although doc/DETAILS
+> differs).
+>
+> Currently, we parse gpg's status output for GOODSIG, BADSIG and trust
+> information and translate that into status codes G, B, U, N for the %G?
+> format specifier.
+>
+> git-verify-* returns success in the GOODSIG case only. This is somewhat in
+> disagreement with gpg, which considers the first 5 of the 6 above as VALIDSIG,
+> but we err on the very safe side.
+>
+> Introduce additional status codes E, X, R for ERRSIG, EXP*SIG, REVKEYSIG
+> so that a user of %G? gets more information about the absence of a 'G'
+> on first glance.
+>
+> Reported-by: Alex <agrambot@gmail.com>
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 
-- Orgad
+That probably was requested-by, but that's OK.
+
+> I'd be happy to learn are more portable/safer/cooler way to make gpg forget
+> that key in the added test...
+
+We seem to set GNUPGHOME to $HOME/gnupg-home-not-used in test-lib.sh
+to say "No gnupg keys for you!" for all the tests by default, which
+is overriden by the signature tests like 7510.  I do not know if
+that is more portable/safer/cooler than setting it to /dev/null but
+imitating it might be a way for you to push the potential problem
+away to other people ;-)  If it becomes an issue to set it to a
+directory that does not exist with an updated future version of GPG,
+this new test will share the same problem with everybody else, and
+hopefully the solution would be the same ;-)
+
+Having said that, if GNUPGHOME=/dev/null works for you, that's good
+enough for now, so that people on other platforms can test it and
+report.
+
+Thanks.
+
+> diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+> index 6e839f5..fd22742 100755
+> --- a/t/t7510-signed-commit.sh
+> +++ b/t/t7510-signed-commit.sh
+> @@ -190,7 +190,7 @@ test_expect_success GPG 'show bad signature with custom format' '
+>  	test_cmp expect actual
+>  '
+>  
+> -test_expect_success GPG 'show unknown signature with custom format' '
+> +test_expect_success GPG 'show untrusted signature with custom format' '
+>  	cat >expect <<-\EOF &&
+>  	U
+>  	61092E85B7227189
+> @@ -200,6 +200,15 @@ test_expect_success GPG 'show unknown signature with custom format' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success GPG 'show unknown signature with custom format' '
+> +	cat >expect <<-\EOF &&
+> +	E
+> +	61092E85B7227189
+> +	EOF
+> +	GNUPGHOME=/dev/null git log -1 --format="%G?%n%GK" eighth-signed-alt >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_expect_success GPG 'show lack of signature with custom format' '
+>  	cat >expect <<-\EOF &&
+>  	N
