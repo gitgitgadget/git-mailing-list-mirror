@@ -2,75 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E8BC207EC
-	for <e@80x24.org>; Tue, 27 Sep 2016 00:13:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C40FD20986
+	for <e@80x24.org>; Tue, 27 Sep 2016 00:35:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933018AbcI0ANP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Sep 2016 20:13:15 -0400
-Received: from sub3.mail.dreamhost.com ([69.163.253.7]:54537 "EHLO
-        homiemail-a20.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932449AbcI0ANN (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 26 Sep 2016 20:13:13 -0400
-Received: from homiemail-a20.g.dreamhost.com (localhost [127.0.0.1])
-        by homiemail-a20.g.dreamhost.com (Postfix) with ESMTP id 2898A7EC064;
-        Mon, 26 Sep 2016 17:13:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=message-id
-        :subject:from:to:cc:date:in-reply-to:references:content-type
-        :mime-version:content-transfer-encoding; s=novalis.org; bh=DtgOY
-        em/oCOYVZf2u9c0qSAw0AQ=; b=RHKQw863/jPQyWg0mgFClf2CLeJjNEITFRVaq
-        H7ufUTFV1oW4uN0FaT8Zod2UqnJC7ke7yy2rrBzud3WIuSd5fbFn8DrF1dOE7OdC
-        id/otvzW84RKttKzuxgrM2o57bw9dIgkxzPl61b4NgHBJA51iCsOxO2tUxAdSdLb
-        1g88W0=
-Received: from [10.0.1.180] (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com [207.38.164.98])
-        (using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        id S932495AbcI0Aff (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Sep 2016 20:35:35 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58069 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755416AbcI0Afe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2016 20:35:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0556942E62;
+        Mon, 26 Sep 2016 20:35:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=AGDC614T1soYkmyQscTRQ6xM+JE=; b=cQJc4I
+        ck3Ef0yZZGpcWk6pEYV44fI49Or3PoMjdnDUyGuEmdHf3nX2d06ZymDIgGZ6cciO
+        t7s2f2K16ubb7tEyVlLDI9ctw275B4ShHKDbcJbNNe29Nh4H10tPStVe32HRqI+l
+        RybAp5z/U9xJrQ9WvZJXWobX1FD88FebKGjvU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=jlmpXKH3wqa77R+HtDlTx4/GlGiyG7hw
+        NV1JkEEtgkfRg2UpuOzPPKm/9X6RVzUW05phJK05L3e962j9XnVbE6nhj7TTZiG3
+        46MqzBAv3FrDw+TQMjNBVH4xF5g0SHAxMWsvOsSoXjGAKeVVYbwqufhllgss2lH1
+        jVmnh65R2aE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E596542E61;
+        Mon, 26 Sep 2016 20:35:31 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: novalis@novalis.org)
-        by homiemail-a20.g.dreamhost.com (Postfix) with ESMTPSA id C23B77EC061;
-        Mon, 26 Sep 2016 17:13:12 -0700 (PDT)
-Message-ID: <1474935191.26902.0.camel@frank>
-Subject: Re: [PATCH 3/3] add David Turner's Two Sigma address
-From:   David Turner <novalis@novalis.org>
-To:     David Turner <dturner@twosigma.com>
-Cc:     git@vger.kernel.org
-Date:   Mon, 26 Sep 2016 20:13:11 -0400
-In-Reply-To: <1474935093-26757-3-git-send-email-dturner@twosigma.com>
-References: <1474935093-26757-1-git-send-email-dturner@twosigma.com>
-         <1474935093-26757-3-git-send-email-dturner@twosigma.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.10.4-0ubuntu2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4CEE442E5F;
+        Mon, 26 Sep 2016 20:35:31 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     David Turner <novalis@novalis.org>
+Cc:     git@vger.kernel.org, peff@peff.net, mhagger@alum.mit.edu
+Subject: Re: [PATCH 0/2] tree-walk improvements
+References: <1474918365-10937-1-git-send-email-novalis@novalis.org>
+        <xmqqshsmqwfr.fsf@gitster.mtv.corp.google.com>
+        <1474921343.13374.1.camel@frank>
+Date:   Mon, 26 Sep 2016 17:35:29 -0700
+In-Reply-To: <1474921343.13374.1.camel@frank> (David Turner's message of "Mon,
+        26 Sep 2016 16:22:23 -0400")
+Message-ID: <xmqqy42enpri.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4BAAFA1C-844A-11E6-BA36-C26412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sorry for the bad subject line, this is of course v2 of the series.
+David Turner <novalis@novalis.org> writes:
 
-On Mon, 2016-09-26 at 20:11 -0400, David Turner wrote:
-> From: David Turner <novalis@novalis.org>
->=20
-> Signed-off-by: David Turner <novalis@novalis.org>
-> ---
->  .mailmap | 1 +
->  1 file changed, 1 insertion(+)
->=20
-> diff --git a/.mailmap b/.mailmap
-> index 9441a54..9cc33e9 100644
-> --- a/.mailmap
-> +++ b/.mailmap
-> @@ -48,6 +48,7 @@ David K=C3=A5gedal <davidk@lysator.liu.se>
->  David Reiss <dreiss@facebook.com> <dreiss@dreiss-vmware.(none)>
->  David S. Miller <davem@davemloft.net>
->  David Turner <novalis@novalis.org> <dturner@twopensource.com>
-> +David Turner <novalis@novalis.org> <dturner@twosigma.com>
->  Deskin Miller <deskinm@umich.edu>
->  Dirk S=C3=BCsserott <newsletter@dirk.my1.cc>
->  Eric Blake <eblake@redhat.com> <ebb9@byu.net>
+> Because truncated, to me, means "something that has been cut off". Here,
+> the recorded length is too short, so it's probably not the case that
+> something was cut off -- it was never right to begin with.
 
-
+That's perfectly sensible. Thanks.
