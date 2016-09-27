@@ -6,94 +6,115 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E882420986
-	for <e@80x24.org>; Tue, 27 Sep 2016 16:37:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 441FE20986
+	for <e@80x24.org>; Tue, 27 Sep 2016 16:52:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934907AbcI0Qhg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Sep 2016 12:37:36 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59395 "EHLO
+        id S935435AbcI0Qvk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Sep 2016 12:51:40 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54392 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S934922AbcI0Qhe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2016 12:37:34 -0400
+        with ESMTP id S934860AbcI0Qvh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2016 12:51:37 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5E0153F1AC;
-        Tue, 27 Sep 2016 12:37:28 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 576FC3F3EE;
+        Tue, 27 Sep 2016 12:51:25 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Hbv2vFn1Hrk7gcJjwYnAISUgBNk=; b=GtveFM
-        H9Nji2OAn7+hcAZA9d2kciWzVJaznd+qXbcOUH2nMvabCPB86azzNvaMR/zwReDr
-        k3FNUHp8L8vXVTtsaDLOHN9fa1S6l6Ia6nxEHqf4OyY0QvJksXVv5h6ie2bwA3Uh
-        STisDqt+1Fh12cESIDaA/h8jWEcS4Jp+vPmbg=
+        :content-type; s=sasl; bh=Hn+VdYpE2bs61Aouu7f7Fh92OVI=; b=DqTRP1
+        GSQ4Xo61movsp9SPiye3QTrxos5xRUb1BBDsFEKhXq7ZJNNF/kg3zGVpBPgJoH1q
+        yO4gCbu9X+KzSHdDda5VBDRZWzYM/9foeohrBqWIGSOI5AsZJqg39S4cI8JFP2ey
+        F5ojdB0sh8l7JYC4LwjXNUdTsIEOsjbSjwFRs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Ro04gOHAzVLK0bwzViNtGGe5JNs7n5ty
-        j+Gz8zuojEZ8WYmwJNCHXmNRY4oiFMkKLpinSlQgraRu3HWJ/JngIfBRg99yPhLc
-        Ba6x+6y5kGRyylCItmCjR9+wluZ8E7ShbvRYObIxLEFA6Rz7qDtBLv62MawkaMAD
-        XqtdBwPwGQI=
+        :content-type; q=dns; s=sasl; b=Eh2vsdjMVRVqTZu9uhv79Kuy+00Ojpyp
+        hHIG/C3bG82t9TRfbqf3ueKwrpFjus6lUC6JX6HNobNmbYkGlsT7Vli+DCQFe8Qb
+        AKi5+8pWlD1lZ+Tpf4SAA/C4bOYVE8m9LuE8IiYn7LARq8InGTjRzwiAQwA1CkQE
+        NJO0+5EZWgA=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4C1F03F1AB;
-        Tue, 27 Sep 2016 12:37:28 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 437B73F3ED;
+        Tue, 27 Sep 2016 12:51:25 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AC54C3F1AA;
-        Tue, 27 Sep 2016 12:37:27 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B51B13F3EC;
+        Tue, 27 Sep 2016 12:51:24 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Paul Smith <paul@mad-scientist.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: git 2.9.2: is RUNTIME_PREFIX supposed to work?
-References: <1474925524.4270.35.camel@mad-scientist.net>
-        <CAPc5daU_nnHRjtC02bxqRaoU+0Rgi7pS6e912Fqk-Xy=qdKWFA@mail.gmail.com>
-        <1474982294.3190.32.camel@mad-scientist.net>
-        <xmqqh991qpyn.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 27 Sep 2016 09:37:25 -0700
-In-Reply-To: <xmqqh991qpyn.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Tue, 27 Sep 2016 09:15:12 -0700")
-Message-ID: <xmqq8tudqoxm.fsf@gitster.mtv.corp.google.com>
+To:     Pranit Bauva <pranit.bauva@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] rev-list-options: clarify the usage of -n/--max-number
+References: <201609271240.19759.sweet_f_a@gmx.de>
+        <010201576bfb6c7d-0b68228f-9503-4dd1-9721-713477fa2596-000000@eu-west-1.amazonses.com>
+Date:   Tue, 27 Sep 2016 09:51:22 -0700
+In-Reply-To: <010201576bfb6c7d-0b68228f-9503-4dd1-9721-713477fa2596-000000@eu-west-1.amazonses.com>
+        (Pranit Bauva's message of "Tue, 27 Sep 2016 14:10:22 +0000")
+Message-ID: <xmqq1t05qoad.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: AD51245E-84D0-11E6-87CF-C26412518317-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: A03A8542-84D2-11E6-89FC-C26412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Pranit Bauva <pranit.bauva@gmail.com> writes:
 
-> Paul Smith <paul@mad-scientist.net> writes:
+> -n=<number>, -<number>, --max-number=<number> shows the last n commits
+> specified in <number> irrespective of whether --reverse is used or not.
+> With --reverse, it just shows the last n commits in reverse order.
+
+I think it is easier to understand if you updated the description of
+"--reverse", rather than "-<n>".  "rev-list -n $N" that stops after
+showing $N commits is something everybody understands.  What often
+dissapoints some users is that "--reverse" kicks in _after_ what
+commits are to be shown are decided.
+
+>  Documentation/rev-list-options.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
->> On Mon, 2016-09-26 at 14:57 -0700, Junio C Hamano wrote:
->>> On Mon, Sep 26, 2016 at 2:32 PM, Paul Smith <paul@mad-scientist.net> wrote:
->>> > 
->>> > Hi all.  I'm trying to create a relocatable installation of Git 2.9.2,
->>> > so I can copy it anywhere and it continues to run without any problem.
->>> > This is on GNU/Linux systems, FWIW.
->>> 
->>> I had an impression that the setting was only to support MS Windows.
->>
->> Hm.  You may be right.  If so that's too bad, because a relocatable Git
->> is very handy even on UNIX systems.  Is there a reason for invoking the
->> subcommands by providing the plain command ("fetch", "merge-base") as
->> argv[0], rather than giving the fully-qualified path to a Git command?
->
-> I do not think of any reason offhand. It just is that we never
-> needed it.
+> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+> index 7e462d3..6b7c2e5 100644
+> --- a/Documentation/rev-list-options.txt
+> +++ b/Documentation/rev-list-options.txt
+> @@ -18,7 +18,7 @@ ordering and formatting options, such as `--reverse`.
+>  -<number>::
+>  -n <number>::
+>  --max-count=<number>::
+> -	Limit the number of commits to output.
+> +	Limit to last n number of commits to output specified in <number>.
 
-If you are talking about invoking "git-fetch", then there is a very
-good reason.  Built-in's do not need any actual binary on the
-filesystem (they only need "git").
+These essentially say the same thing.  The original does not mention
+where and how <number> is used, but "Limit the number of commits" as
+a description for "-<number>" would be understood by anybody halfway
+intelligent that the given number is used as that limit, so I do not
+think an updated description is making it easier to understand.
 
-But that does not have any relevance to the part below.
+There is a paragraph of interest in an earlier part of "Commit
+Limiting" section (which is the section "-n" appears in, among other
+options):
 
-> If you want to add support without making the resulting codebase too
-> ugly, without breaking the classic way of installing into a fixed
-> locations, and without breaking the existing support of platforms
-> that does know the runtime-prefix thing, not just I wouldn't mind
-> but I would welcome such an addition ;-)
+    Note that these are applied before commit
+    ordering and formatting options, such as `--reverse`.
 
-If you can make runtime-prefix honored on more platforms, that would
-be good, though you _might_ have just added another "without" to the
-above list: without using full paths e.g. /usr/local/git/bin/git-fetch
-unconditionally.
+So the documentation already makes an attempt to avoid confusion
+Ruediger saw, i.e. "rev-list traverses, limits the output to N, and
+then shows these N commits in reverse" is what it expects readers to
+understand, and that it also expects it would lead naturally to
+"these N commits are still from the newest part of the history,
+hence 'rev-list --reverse -n N' is not how you grab the earliest N".
 
+But apparently the attempt by the current documentation is not
+enough.  Let's see how it describes the '--reverse' option:
+
+    Commit Ordering
+    ~~~~~~~~~~~~~~~
+
+    By default, the commits are shown in reverse chronological order.
+    ...
+
+    --reverse::
+            Output the commits in reverse order.
+            Cannot be combined with `--walk-reflogs`.
+
+Perhaps "Output the commits chosen to be shown (see Commit Limiting
+section above) in reverse order." would make it clearer?
