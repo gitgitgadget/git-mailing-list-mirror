@@ -2,86 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61AE920986
-	for <e@80x24.org>; Tue, 27 Sep 2016 13:18:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2215E20986
+	for <e@80x24.org>; Tue, 27 Sep 2016 13:25:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753403AbcI0NSH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Sep 2016 09:18:07 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:61245 "EHLO
-        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750851AbcI0NSH (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 27 Sep 2016 09:18:07 -0400
-X-AuditID: 12074412-1c3ff70000000931-4b-57ea718d7d2a
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        by  (Symantec Messaging Gateway) with SMTP id 06.4E.02353.D817AE75; Tue, 27 Sep 2016 09:18:05 -0400 (EDT)
-Received: from [192.168.69.190] (p5790747A.dip0.t-ipconnect.de [87.144.116.122])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id u8RDI3Ir013234
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Tue, 27 Sep 2016 09:18:04 -0400
-Subject: Re: [PATCH] xdiff: rename "struct group" to "struct xdlgroup"
-To:     Jeff King <peff@peff.net>
-References: <20160927043733.u3emlanbipu2cn5h@sigill.intra.peff.net>
-Cc:     git@vger.kernel.org
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <9fb14a41-00b3-f8d1-d8d2-8aa41261492e@alum.mit.edu>
-Date:   Tue, 27 Sep 2016 15:18:02 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.2.0
-MIME-Version: 1.0
-In-Reply-To: <20160927043733.u3emlanbipu2cn5h@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrAIsWRmVeSWpSXmKPExsUixO6iqNtb+CrcYHOfuUXXlW4mix8tPcwO
-        TB7PevcwenzeJBfAFMVlk5Kak1mWWqRvl8CVcWxjP3vBKa6KfV+PMTcwHuHoYuTkkBAwkTi5
-        6idLFyMXh5DAVkaJq8unsUE4F5gkJjRNZQWpEhZwk5jfvJMFxBYRkJX4fngjI4gtJOAssWjt
-        P7A4s4C4xLq559lBbDYBXYlFPc1MIDavgL3E749/2EBsFgFViRcTvzGD2KICIRLty9ZD1QhK
-        nJz5BGwOp4CLxO6FV9khZqpL/Jl3iRnClpfY/nYO8wRG/llIWmYhKZuFpGwBI/MqRrnEnNJc
-        3dzEzJzi1GTd4uTEvLzUIl0zvdzMEr3UlNJNjJCAFNrBuP6k3CFGAQ5GJR7eCZUvw4VYE8uK
-        K3MPMUpyMCmJ8hbEvQoX4kvKT6nMSCzOiC8qzUktPsQowcGsJMJrnAeU401JrKxKLcqHSUlz
-        sCiJ8/5crO4nJJCeWJKanZpakFoEk5Xh4FCS4N1eANQoWJSanlqRlplTgpBm4uAEGc4DNPwR
-        SA1vcUFibnFmOkT+FKOilDivFEhCACSRUZoH1wtLGK8YxYFeEeZ9CFLFA0w2cN2vgAYzAQ1e
-        euIFyOCSRISUVANjymLbDa0BJS0dSx9N9I76ZPP2ZZxms8AFv6SfOVYpe92CnK7O5o8751b6
-        ckOnKWuQzPfSf8nTUgWnOoutFnbZwTKjweLFjmVsqjNexC6dzlkhdu5IRscxpc+acz8bNziV
-        Z8z446LkoHDd/GZ5UIX7RaFV716vmHRuoY/PlnzTnkdPHtgul5qixFKckWioxVxUnAgAM1Zc
-        OfMCAAA=
+        id S1750840AbcI0NZG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Sep 2016 09:25:06 -0400
+Received: from gproxy6-pub.mail.unifiedlayer.com ([67.222.39.168]:34001 "HELO
+        gproxy6-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with SMTP id S1751631AbcI0NZE (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 27 Sep 2016 09:25:04 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 Sep 2016 09:25:04 EDT
+Received: (qmail 17721 invoked by uid 0); 27 Sep 2016 13:18:23 -0000
+Received: from unknown (HELO cmgw4) (10.0.90.85)
+  by gproxy6.mail.unifiedlayer.com with SMTP; 27 Sep 2016 13:18:23 -0000
+Received: from box531.bluehost.com ([74.220.219.131])
+        by cmgw4 with 
+        id odJG1t00r2qhmhE01dJKfB; Tue, 27 Sep 2016 07:18:23 -0600
+X-Authority-Analysis: v=2.1 cv=Hq7lRSjS c=1 sm=1 tr=0
+ a=GcR8MKwCKDX7fzHfRD/fNg==:117 a=GcR8MKwCKDX7fzHfRD/fNg==:17
+ a=L9H7d07YOLsA:10 a=9cW_t1CCXrUA:10 a=s5jvgZ67dGcA:10 a=IkcTkHD0fZMA:10
+ a=GW1xBdLrtEIA:10 a=pBbsfl06AAAA:8 a=7Fc2rPtaS4-xxt_ugvUA:9 a=QEXdDO2ut3YA:10
+ a=Pykvx6M6Og9ney6Qs4Vj:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.net; s=default; h=Content-Transfer-Encoding:Mime-Version:
+        Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:
+        Message-ID; bh=CaoDROwZLrg16A1jPemcc62RzCeXEBVsTqhza0og6Rc=; b=Pe77NJDfTmUeUM
+        dCiKgSIBNM1Dhg5RUphUQ129JJR11QrhyDripDx7vfu6vJ+6S/KymsperYw7gqg76JwM29O+fsmIv
+        +VO1LHlpCSCgIcQvzTlhkf09zrLSZyw9ac8k1;
+Received: from pool-173-76-103-154.bstnma.fios.verizon.net ([173.76.103.154]:46126 helo=homebase)
+        by box531.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+        (Exim 4.86_1)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1bosH2-0005HT-NH; Tue, 27 Sep 2016 07:18:16 -0600
+Message-ID: <1474982294.3190.32.camel@mad-scientist.net>
+Subject: Re: git 2.9.2: is RUNTIME_PREFIX supposed to work?
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Date:   Tue, 27 Sep 2016 09:18:14 -0400
+In-Reply-To: <CAPc5daU_nnHRjtC02bxqRaoU+0Rgi7pS6e912Fqk-Xy=qdKWFA@mail.gmail.com>
+References: <1474925524.4270.35.camel@mad-scientist.net>
+         <CAPc5daU_nnHRjtC02bxqRaoU+0Rgi7pS6e912Fqk-Xy=qdKWFA@mail.gmail.com>
+Organization: Please remain calm: I may be mad but I am a professional --
+ Mad Scientist
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.20.5-0ubuntu1~ubuntu16.04.2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box531.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 173.76.103.154
+X-Exim-ID: 1bosH2-0005HT-NH
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: pool-173-76-103-154.bstnma.fios.verizon.net (homebase) [173.76.103.154]:46126
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 1
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTMxLmJsdWVob3N0LmNvbQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/27/2016 06:37 AM, Jeff King wrote:
-> Commit e8adf23 (xdl_change_compact(): introduce the concept
-> of a change group, 2016-08-22) added a "struct group" type
-> to xdiff/xdiffi.c. But the POSIX system header "grp.h"
-> already defines "struct group" (it is part of the getgrnam
-> interface). This happens to work because the new type is
-> local to xdiffi.c, and the xdiff code includes a relatively
-> small set of system headers. But it will break compilation
-> if xdiff ever switches to using git-compat-util.h.  It can
-> also probably cause confusion with tools that look at the
-> whole code base, like coccinelle or ctags.
+On Mon, 2016-09-26 at 14:57 -0700, Junio C Hamano wrote:
+> On Mon, Sep 26, 2016 at 2:32 PM, Paul Smith <paul@mad-scientist.net> wrote:
+> > 
+> > Hi all.  I'm trying to create a relocatable installation of Git 2.9.2,
+> > so I can copy it anywhere and it continues to run without any problem.
+> > This is on GNU/Linux systems, FWIW.
 > 
-> Let's resolve by giving the xdiff variant a scoped name,
-> which is closer to other xdiff types anyway (e.g.,
-> xdlfile_t, though note that xdiff is fond if typedefs when
-> Git usually is not).
+> I had an impression that the setting was only to support MS Windows.
 
-Makes sense to me. I didn't try to adhere to xdiff conventions too
-tightly because I don't think that project is alive anymore, so I don't
-expect we'll be upstreaming anything [1]. But this change definitely
-makes sense.
-
-Thanks,
-Michael
-
-[1] Though I've since learned that libgit2 also bases their diff code on
-xdiff, so if we avoid changing things gratuitously there is more chance
-that our two projects can benefit from each other's improvements
-whenever they are also licensed compatibly.
-
+Hm.  You may be right.  If so that's too bad, because a relocatable Git
+is very handy even on UNIX systems.  Is there a reason for invoking the
+subcommands by providing the plain command ("fetch", "merge-base") as
+argv[0], rather than giving the fully-qualified path to a Git command?
