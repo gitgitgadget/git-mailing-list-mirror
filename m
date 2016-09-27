@@ -2,96 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 851791F4F8
-	for <e@80x24.org>; Tue, 27 Sep 2016 07:22:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A9241F4F8
+	for <e@80x24.org>; Tue, 27 Sep 2016 07:45:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751643AbcI0HWW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Sep 2016 03:22:22 -0400
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:35218 "EHLO
-        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751468AbcI0HWU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2016 03:22:20 -0400
-Received: by mail-qk0-f172.google.com with SMTP id t7so6351008qkh.2
-        for <git@vger.kernel.org>; Tue, 27 Sep 2016 00:22:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=yAbpjWqZ0gPFARM8DNTk2qs2HVJCTCEE4Rhl+KRVQtw=;
-        b=mfoQfu5X4TCGFuajKKttvHql4dtj5zSt+IVICbKbyRISz/c1U42uj4AhuI51TD6YcF
-         nvzfM1K9ULhRgGVX5t2yMdgVEc520OYYQcwOcPyp4q+JLUXPTkWVItSTeodmGWQkfPWn
-         bHS5s5jbMt0aL6lEnm0ZYp6bXV3YMYr9dahjwc+YN1rtvkg1co6rdXopupR5xGovPrZG
-         uNzobsi/Mp1Tc4r0+l5zIe+vUz8aQ+GooElYdvILjLyu6fx+/QaK9RGTPvjmTkR0wLXF
-         s5i4vcySRi8AJ08XL5Xmww/pv/V4marurA1fHVWEtbA74NoVtpmcioRO4X+1VFRk6HDT
-         uKug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=yAbpjWqZ0gPFARM8DNTk2qs2HVJCTCEE4Rhl+KRVQtw=;
-        b=jr2l19QQyrG41hvGTJlFrJKPnr27VG+FiOyicmiM969uA+cZT31zStLS4XjpME5rKU
-         ZGiFixAEZ85SfyDDYZdMKwwmnXIKsCTY6oLLyInB4CX0qOIzTUhzD6V4KP84JdYuFuvh
-         E/oJ4/BEU7pc81kSiZHYWbd6AYPCDu8aDPhXJnIihkAZ6Rz4/8nHHcry76/K+bkltchU
-         DcIi1XnpIeplDnMY2744KUKUpiYEtY8bPtBlIr3F7m5PbS8inM+L/PVsvTN61xaiMuhX
-         +UJLQ7tqCCrthxO14yilFy1ocwZBUuB9hJ0CquUsSG/OFvf0tTBl78ieUPnuaAyzSuaH
-         3F7w==
-X-Gm-Message-State: AE9vXwPS83TJbsgeN4MdgrZbLVlzOBlTL70WBOLpHAmqvaP7SHMMAT+MQwsPtcgoZBI8jghrY3khDcaZ1NE1Rg==
-X-Received: by 10.194.216.233 with SMTP id ot9mr21626697wjc.166.1474960939866;
- Tue, 27 Sep 2016 00:22:19 -0700 (PDT)
+        id S932470AbcI0Hpv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Sep 2016 03:45:51 -0400
+Received: from a1i216.smtp2go.com ([43.228.184.216]:39574 "EHLO
+        a1i216.smtp2go.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932455AbcI0Hpr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2016 03:45:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=smtpcorp.com; s=a0-2; h=Feedback-ID:X-Smtpcorp-Track:Date:Subject:To:From:
+        Reply-To:Message-ID:List-Unsubscribe;
+        bh=mByiWOY8NHqEQLVLtdfjU7XHgM+aHmyRjNsJN2CyprI=; b=2GEvcsMXkkd3YAdpwQtvtfvi1l
+        n/hPP4XbSJW0g1fafXu+xAe3b4t2g7Zry+LLZlWbOmLwuj+8fNOCUrAtFVf3UY2AEBJZPqRqPxwQu
+        ErH6uolDfXDuvh1Fqq9a8p8jwozElXULR5pKf7agtu1UTC4sxXbyWCVjD4Jyoac0UJ7vX1YZE9fbC
+        KBQdr800xAWWFr0IC2OMIUNkP83PQiuxkRLkH/KWO3phL5Ywb3mRzzCluD/kYCe/kPapbydX7wE39
+        WHNMvQkTVf0JMMitB/PYLvJNIovq5iIuLLeLJWlQMH9/bn8CX1ZHckGF8nXnJas01L7Pql8f31ziU
+        Wv9vO6oQ==;
+Message-ID: <D5DC2D99E1F84C308DDB99096B0E3BCD@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     <santiago@nyu.edu>, <git@vger.kernel.org>
+Cc:     <gitster@pobox.com>, <peff@peff.net>, <sunshine@sunshineco.com>,
+        <walters@verbum.org>, "Santiago Torres" <santiago@nyu.edu>
+References: <20160926224233.32702-1-santiago@nyu.edu> <20160926224233.32702-5-santiago@nyu.edu>
+Subject: Re: [PATCH v2 4/5] builtin/verify-tag: add --format to verify-tag
+Date:   Tue, 27 Sep 2016 08:44:57 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.80.148.198 with HTTP; Tue, 27 Sep 2016 00:22:19 -0700 (PDT)
-In-Reply-To: <xmqqmviupcpx.fsf@gitster.mtv.corp.google.com>
-References: <1462458182-4488-1-git-send-email-orgads@gmail.com>
- <xmqqwpn8bes0.fsf@gitster.mtv.corp.google.com> <CAGHpTBLdy9R7xvfcFWoMkvGNJjY-wM5=HfWxs8XF_yh-+2Rc3w@mail.gmail.com>
- <CAGHpTBLgwyw_iYK927Yed+XG9ti+tKboz07-FVYWox9WoQkjOg@mail.gmail.com>
- <CAGHpTB+Fnu4x1bV9TSNo8pYdOzJzRsXA9r3CwxVz64mjW_qsGw@mail.gmail.com> <xmqqmviupcpx.fsf@gitster.mtv.corp.google.com>
-From:   Orgad Shaneh <orgads@gmail.com>
-Date:   Tue, 27 Sep 2016 10:22:19 +0300
-Message-ID: <CAGHpTBLPvQDD4hhMKiOFdhxug-joi-38mNozuzm3=EJCnS9UEA@mail.gmail.com>
-Subject: Re: [PATCH] git-gui: Do not reset author details on amend
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Pat Thoyts <patthoyts@users.sourceforge.net>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Smtpcorp-Track: 1Pon5C9EFLOyFh.6gOkaQ510
+Feedback-ID: 66524m:66524aMf6O2Y:66524s8zHVxOmgQ:SMTPCORP
+X-Report-Abuse: Please forward a copy of this message, including all
+ headers, to <abuse@smtp2go.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 27, 2016 at 12:34 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Orgad Shaneh <orgads@gmail.com> writes:
+From: <santiago@nyu.edu>
+> From: Santiago Torres <santiago@nyu.edu>
 >
->> On Sun, Jul 10, 2016 at 7:36 AM, Orgad Shaneh <orgads@gmail.com> wrote:
->>
->>> On Wed, May 18, 2016 at 9:12 AM, Orgad Shaneh <orgads@gmail.com> wrote:
->>>> ping?
->>>>
->>> It's been over 2 months. Can anyone please review and merge it?
->>>
->> 4.5 months and counting... :(
->>>
->>>> On Thu, May 5, 2016 at 8:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>>>> Pat, we haven't heard from you for a long time.  Are you still
->>>>> around and interested in helping us by maintaining git-gui?
->>>>>
->>>>> Otherwise we may have to start recruiting a volunteer or two to take
->>>>> this over.
+> Callers of verify-tag may want to cross-check the tagname from refs/tags
+> with the tagname from the tag object header upon GPG verification. This
+> is to avoid tag refs that point to an incorrect object.
 >
-> Sorry about that.  No volunteers materialized yet X-<, and I really
-> really do not want to apply anything other than trivial patches to
-> it myself, as I am not a git-gui user.
+> Add a --format parameter to git verify-tag to print the formatted tag
+> object header in addition to or instead of the --verbose or --raw GPG
+> verification output.
 >
+> Signed-off-by: Santiago Torres <santiago@nyu.edu>
+> ---
+> builtin/verify-tag.c | 13 +++++++++++--
+> 1 file changed, 11 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
+> index de10198..a941053 100644
+> --- a/builtin/verify-tag.c
+> +++ b/builtin/verify-tag.c
+> @@ -12,12 +12,15 @@
+> #include <signal.h>
+> #include "parse-options.h"
+> #include "gpg-interface.h"
+> +#include "ref-filter.h"
+>
+> static const char * const verify_tag_usage[] = {
+> - N_("git verify-tag [-v | --verbose] <tag>..."),
+> + N_("git verify-tag [-v | --verbose] [--format=<format>] <tag>..."),
 
-This patch has been in use in Git for Windows for a decent period of time.
+Does this require a corresponding documentation change? (also 5/5)
 
-I actually see that there is a problem with it:
-https://github.com/git-for-windows/git/issues/761
+>  NULL
+> };
+>
+> +static char *fmt_pretty;
+> +
+> static int git_verify_tag_config(const char *var, const char *value, void 
+> *cb)
+> {
+>  int status = git_gpg_config(var, value, cb);
+> @@ -33,6 +36,7 @@ int cmd_verify_tag(int argc, const char **argv, const 
+> char *prefix)
+>  const struct option verify_tag_options[] = {
+>  OPT__VERBOSE(&verbose, N_("print tag contents")),
+>  OPT_BIT(0, "raw", &flags, N_("print raw gpg status output"), 
+> GPG_VERIFY_RAW),
+> + OPT_STRING(  0 , "format", &fmt_pretty, N_("format"), N_("format to use 
+> for the output")),
+>  OPT_END()
+>  };
+>
+> @@ -46,12 +50,17 @@ int cmd_verify_tag(int argc, const char **argv, const 
+> char *prefix)
+>  if (verbose)
+>  flags |= GPG_VERIFY_VERBOSE;
+>
+> + if (fmt_pretty) {
+> + verify_ref_format(fmt_pretty);
+> + flags |= GPG_VERIFY_QUIET;
+> + }
+> +
+>  while (i < argc) {
+>  unsigned char sha1[20];
+>  const char *name = argv[i++];
+>  if (get_sha1(name, sha1))
+>  had_error = !!error("tag '%s' not found.", name);
+> - else if (verify_and_format_tag(sha1, name, NULL, flags))
+> + else if (verify_and_format_tag(sha1, name, fmt_pretty, flags))
+>  had_error = 1;
+>  }
+>  return had_error;
+> -- 
+> 2.10.0
+>
+--
+Philip 
 
-I'll try to revise it and resubmit.
-
-- Orgad
