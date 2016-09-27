@@ -2,78 +2,166 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2235920986
-	for <e@80x24.org>; Tue, 27 Sep 2016 14:10:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6306F20986
+	for <e@80x24.org>; Tue, 27 Sep 2016 14:31:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752183AbcI0OKZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Sep 2016 10:10:25 -0400
-Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:46456
-        "EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753865AbcI0OKY (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 27 Sep 2016 10:10:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1474985422;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=TMgfLKK8saUXGFL0JpigHXviWsJ+21I4qQQyaFV01No=;
-        b=csGvkqFC72kDIHPq1MXic2meUBa4Xb9ud7d9adsiIoN9IcXnqFOm1RAwr5dRIAJV
-        YhLKy5BIKyaBbW54jBaurzn8w7Agplq48sR1If52vj0evXj/42OUSg6MfZOmJ7kICx+
-        lcwbKMqx9qG0fnllthVU+EmbXi/1/K7wjFdS8hdM=
-From:   Pranit Bauva <pranit.bauva@gmail.com>
+        id S1753995AbcI0Obr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Sep 2016 10:31:47 -0400
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:56183 "EHLO
+        out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753622AbcI0Obn (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 27 Sep 2016 10:31:43 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.nyi.internal (Postfix) with ESMTP id 89DD220776;
+        Tue, 27 Sep 2016 10:31:42 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute3.internal (MEProxy); Tue, 27 Sep 2016 10:31:42 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+        :date:from:in-reply-to:message-id:references:subject:to
+        :x-sasl-enc:x-sasl-enc; s=mesmtp; bh=Zxi7DRlXLYIlju6hvu6Kh7l+qxk
+        =; b=S2YVGVq5mS2vwefK1cd/BQpnaqGFzcjqaOq5ZefG0n7O6Fi4SqROhnTTJyQ
+        aJMQl3W/WjWYtS3OSJloWuUwkENkxwFh5o4/9pj61sf8xCnxfUNLTPohw79H3u+s
+        haloGegc24qMjrGJjwBFLZ5LV2RobDHN89fwiRiSiHDK14e0=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:date:from:in-reply-to:message-id
+        :references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=Zxi7
+        DRlXLYIlju6hvu6Kh7l+qxk=; b=WmDyLxGuRVbw4v2gBWfxhkusCEnx8nex/fvX
+        lHI5RivI/P5Aw9EvT7bcBCsqNUcrgyE2urlYHX+geFtYjrOAu3X6fLy/oNpObRgA
+        zP9qV9mFZLwi7jflQRg3atn8K3Edg5ZkAS/0LGYstqbTiIVvUVfCUlBfVKXQTRar
+        pVH0wgA=
+X-Sasl-enc: wiXdZnixdAGqAPXVxC81h9qLcFGIhl4xQwfbrZ7NX99m 1474986702
+Received: from localhost (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 2063CCC085;
+        Tue, 27 Sep 2016 10:31:42 -0400 (EDT)
+From:   Michael J Gruber <git@drmicha.warpmail.net>
 To:     git@vger.kernel.org
-Message-ID: <010201576bfb6c7d-0b68228f-9503-4dd1-9721-713477fa2596-000000@eu-west-1.amazonses.com>
-In-Reply-To: <201609271240.19759.sweet_f_a@gmx.de>
-References: <201609271240.19759.sweet_f_a@gmx.de>
-Subject: [PATCH] rev-list-options: clarify the usage of -n/--max-number
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 27 Sep 2016 14:10:22 +0000
-X-SES-Outgoing: 2016.09.27-54.240.7.17
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Cc:     Alex <agrambot@gmail.com>
+Subject: [PATCH] gpg-interface: use more status letters
+Date:   Tue, 27 Sep 2016 16:31:40 +0200
+Message-Id: <06b5e0bfb898c7b3c6a866df5bda0ab4587284c6.1474986563.git.git@drmicha.warpmail.net>
+X-Mailer: git-send-email 2.10.0.527.gbcb6904
+In-Reply-To: <87y42ey3z4.fsf@gmail.com>
+References: <87y42ey3z4.fsf@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
--n=<number>, -<number>, --max-number=<number> shows the last n commits
-specified in <number> irrespective of whether --reverse is used or not.
-With --reverse, it just shows the last n commits in reverse order.
+According to gpg2's doc/DETAILS:
+"For each signature only one of the codes GOODSIG, BADSIG, EXPSIG,
+EXPKEYSIG, REVKEYSIG or ERRSIG will be emitted."
 
-Reported-by: Ruediger Meier <sweet_f_a@gmx.de>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+gpg1 ("classic") behaves the same (although doc/DETAILS
+differs).
 
+Currently, we parse gpg's status output for GOODSIG, BADSIG and trust
+information and translate that into status codes G, B, U, N for the %G?
+format specifier.
+
+git-verify-* returns success in the GOODSIG case only. This is somewhat in
+disagreement with gpg, which considers the first 5 of the 6 above as VALIDSIG,
+but we err on the very safe side.
+
+Introduce additional status codes E, X, R for ERRSIG, EXP*SIG, REVKEYSIG
+so that a user of %G? gets more information about the absence of a 'G'
+on first glance.
+
+Reported-by: Alex <agrambot@gmail.com>
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
-Hey Ruegiger,
+I'd be happy to learn are more portable/safer/cooler way to make gpg forget
+that key in the added test...
 
-The description is a bit inappropriate for --max-count and thus this
-patch.
+ Documentation/pretty-formats.txt |  9 +++++++--
+ gpg-interface.c                  |  4 ++++
+ pretty.c                         |  3 +++
+ t/t7510-signed-commit.sh         | 11 ++++++++++-
+ 4 files changed, 24 insertions(+), 3 deletions(-)
 
-I cannot comment whether --max-count=-n would be a good choice or not
-because personally I never left the need of it. I normally use --reverse
-so as to review my patches in a branch serially. So for me the current
-usage of --reverse seems more appropriate.
----
- Documentation/rev-list-options.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 7e462d3..6b7c2e5 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -18,7 +18,7 @@ ordering and formatting options, such as `--reverse`.
- -<number>::
- -n <number>::
- --max-count=<number>::
--	Limit the number of commits to output.
-+	Limit to last n number of commits to output specified in <number>.
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index a942d57..806b47f 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -143,8 +143,13 @@ ifndef::git-rev-list[]
+ - '%N': commit notes
+ endif::git-rev-list[]
+ - '%GG': raw verification message from GPG for a signed commit
+-- '%G?': show "G" for a good (valid) signature, "B" for a bad signature,
+-  "U" for a good signature with unknown validity and "N" for no signature
++- '%G?': show "G" for a good (rather: valid) signature,
++  "B" for a bad signature,
++  "U" for a good signature with unknown validity,
++  "X" for a good expired signature, or good signature made by an expired key,
++  "R" for a good signature made by a revoked key,
++  "E" if the signature cannot be checked (e.g. missing key)
++  and "N" for no signature
+ - '%GS': show the name of the signer for a signed commit
+ - '%GK': show the key used to sign a signed commit
+ - '%gD': reflog selector, e.g., `refs/stash@{1}` or
+diff --git a/gpg-interface.c b/gpg-interface.c
+index 8672eda..8a3e245 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -33,6 +33,10 @@ static struct {
+ 	{ 'B', "\n[GNUPG:] BADSIG " },
+ 	{ 'U', "\n[GNUPG:] TRUST_NEVER" },
+ 	{ 'U', "\n[GNUPG:] TRUST_UNDEFINED" },
++	{ 'E', "\n[GNUPG:] ERRSIG "},
++	{ 'X', "\n[GNUPG:] EXPSIG "},
++	{ 'X', "\n[GNUPG:] EXPKEYSIG "},
++	{ 'R', "\n[GNUPG:] REVKEYSIG "},
+ };
  
- --skip=<number>::
- 	Skip 'number' commits before starting to show the commit output.
+ void parse_gpg_output(struct signature_check *sigc)
+diff --git a/pretty.c b/pretty.c
+index 493edb0..39a36cd 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1232,8 +1232,11 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 			switch (c->signature_check.result) {
+ 			case 'G':
+ 			case 'B':
++			case 'E':
+ 			case 'U':
+ 			case 'N':
++			case 'X':
++			case 'R':
+ 				strbuf_addch(sb, c->signature_check.result);
+ 			}
+ 			break;
+diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+index 6e839f5..fd22742 100755
+--- a/t/t7510-signed-commit.sh
++++ b/t/t7510-signed-commit.sh
+@@ -190,7 +190,7 @@ test_expect_success GPG 'show bad signature with custom format' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success GPG 'show unknown signature with custom format' '
++test_expect_success GPG 'show untrusted signature with custom format' '
+ 	cat >expect <<-\EOF &&
+ 	U
+ 	61092E85B7227189
+@@ -200,6 +200,15 @@ test_expect_success GPG 'show unknown signature with custom format' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success GPG 'show unknown signature with custom format' '
++	cat >expect <<-\EOF &&
++	E
++	61092E85B7227189
++	EOF
++	GNUPGHOME=/dev/null git log -1 --format="%G?%n%GK" eighth-signed-alt >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success GPG 'show lack of signature with custom format' '
+ 	cat >expect <<-\EOF &&
+ 	N
+-- 
+2.10.0.527.gbcb6904
 
---
-https://github.com/git/git/pull/296
