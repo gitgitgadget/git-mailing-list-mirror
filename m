@@ -2,69 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E1896207EC
-	for <e@80x24.org>; Wed, 28 Sep 2016 07:37:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 36805207EC
+	for <e@80x24.org>; Wed, 28 Sep 2016 08:58:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751038AbcI1Hhg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Sep 2016 03:37:36 -0400
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:59964 "EHLO
-        out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750997AbcI1Hhe (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 28 Sep 2016 03:37:34 -0400
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.nyi.internal (Postfix) with ESMTP id CF3B8207F0;
-        Wed, 28 Sep 2016 03:37:33 -0400 (EDT)
-Received: from web3 ([10.202.2.213])
-  by compute5.internal (MEProxy); Wed, 28 Sep 2016 03:37:33 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=iankelling.org; h=
-        content-transfer-encoding:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-sasl-enc
-        :x-sasl-enc; s=mesmtp; bh=cX2T1ydeyyi0ClY/JqPzlJIP99g=; b=R2L1ld
-        vTmoEp+lgmsfjyomgCOxzc9kMCRBpEAhkQgiLpJWM4yloMSoiBPJXyMdhCZOOsbB
-        TCrdDkFQPm56yQUP0p7OXnO3gNhModZpi/zC2n4khoIK7aZiLutqh3AvR0V+H4/B
-        9bRYX4Q10B7ZJAJhvmEDxBnkvneCYoXK8cNHU=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=cX2T1ydeyyi0ClY
-        /JqPzlJIP99g=; b=QNhl/j8ExvheJsbuIXEbQR1GZI4sJ94QVQ/Dl1wTjzT2UdV
-        aqpZqa8wt/gMwDIjpcxcCp7xNhT2kVIkGpNf5z24hn7DA850E1Cz0FbfLFz09IJ1
-        v3yiMCaRUZ/bWuXwB+CVCMto+D84bZ2cw5tWkYpygKx9Mu2gezQpWGEU68as=
-Received: by mailuser.nyi.internal (Postfix, from userid 99)
-        id 9CF702E6CC; Wed, 28 Sep 2016 03:37:33 -0400 (EDT)
-Message-Id: <1475048253.906881.739334657.11813C91@webmail.messagingengine.com>
-X-Sasl-Enc: hviEXmk7pMvHHUFlptRzJMKF7j5kLw/1c2g9+Nw3O1ru 1475048253
-From:   Ian Kelling <ian@iankelling.org>
-To:     =?utf-8?Q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
-        git@vger.kernel.org
+        id S1752029AbcI1I6p (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Sep 2016 04:58:45 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49329 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751003AbcI1I6p (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2016 04:58:45 -0400
+Received: (qmail 21655 invoked by uid 109); 28 Sep 2016 08:58:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 28 Sep 2016 08:58:43 +0000
+Received: (qmail 23185 invoked by uid 111); 28 Sep 2016 08:58:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 28 Sep 2016 04:58:59 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Sep 2016 04:58:41 -0400
+Date:   Wed, 28 Sep 2016 04:58:41 -0400
+From:   Jeff King <peff@peff.net>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     David Turner <novalis@novalis.org>, git@vger.kernel.org,
+        David Turner <dturner@twosigma.com>
+Subject: Re: thoughts on error passing, was Re: [PATCH 2/2] fsck: handle bad
+ trees like other errors
+Message-ID: <20160928085841.aoisson3fnuke47q@sigill.intra.peff.net>
+References: <1474918365-10937-1-git-send-email-novalis@novalis.org>
+ <1474918365-10937-3-git-send-email-novalis@novalis.org>
+ <20160927052754.bs4frcfy4y7fey62@sigill.intra.peff.net>
+ <1474989574.26902.7.camel@frank>
+ <20160927191955.mympqgylrxhkp24n@sigill.intra.peff.net>
+ <06b1a3bc-18dc-bd9e-4200-a2eedbec7b97@alum.mit.edu>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-X-Mailer: MessagingEngine.com Webmail Interface - ajax-3ce3fca2
-Subject: Re: [PATCH v4 2/2] gitweb: use highlight's shebang detection
-Date:   Wed, 28 Sep 2016 00:37:33 -0700
-In-Reply-To: <c35fc760-ae64-5df3-5985-7eecd06d937f@gmail.com>
-References: <20160923090846.3086-2-ian@iankelling.org>
- <20160924223258.9449-1-ian@iankelling.org>
- <20160924223258.9449-2-ian@iankelling.org>
- <c35fc760-ae64-5df3-5985-7eecd06d937f@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <06b1a3bc-18dc-bd9e-4200-a2eedbec7b97@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 25, 2016, at 11:04 AM, Jakub Nar=C4=99bski wrote:
->=20
-> For what it is worth it:
->=20
-> Acked-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
->=20
-> (but unfortunately *not* tested by).
+On Wed, Sep 28, 2016 at 07:01:38AM +0200, Michael Haggerty wrote:
 
-Thank you for all your help.
---
-Ian Kelling
+> >   - a global for chaining to error, like:
+> > 
+> >        struct error_context print_errors = {
+> >           error, /* actually a wrapper to handle va_list and NULL data */
+> >           NULL
+> >        };
+> 
+> There could also be a global for chaining to `warn()` or `die()`.
+
+I played around a little with this. The latter actually makes a lot of
+code cleaner, because we can rely on the functions not returning at all.
+So for example, you get:
+
+diff --git a/branch.c b/branch.c
+index a5a8dcb..53404b8 100644
+--- a/branch.c
++++ b/branch.c
+@@ -303,17 +303,13 @@ void create_branch(const char *head,
+ 
+ 	if (!dont_change_ref) {
+ 		struct ref_transaction *transaction;
+-		struct strbuf err = STRBUF_INIT;
+-
+-		transaction = ref_transaction_begin(&err);
+-		if (!transaction ||
+-		    ref_transaction_update(transaction, ref.buf,
+-					   sha1, forcing ? NULL : null_sha1,
+-					   0, msg, &err) ||
+-		    ref_transaction_commit(transaction, &err))
+-			die("%s", err.buf);
++
++		transaction = ref_transaction_begin(&error_die);
++		ref_transaction_update(transaction, ref.buf,
++				       sha1, forcing ? NULL : null_sha1,
++				       0, msg, &error_die);
++		ref_transaction_commit(transaction, &error_die);
+ 		ref_transaction_free(transaction);
+-		strbuf_release(&err);
+ 	}
+ 
+ 	if (real_ref && track)
+
+which is much shorter and to the point (it does rely on the called
+functions always calling report_error() and never just returning NULL or
+"-1", but that should be the already. If it isn't, we'd be printing
+"fatal: " with no message).
+
+Cases that call:
+
+  error("%s", err.buf);
+
+can drop the strbuf handling, but of course still need to retain their
+conditionals. So they're better, but not as much. I did a half-hearted
+conversion of some of the ref code that uses strbufs, and it seems like
+it would save a few hundred lines of boilerplate.
+
+There are some cases that are _worse_, because they want to prefix the
+error. E.g., in init-db, we have:
+
+  struct strbuf err = STRBUF_INIT;
+  ...
+  if (refs_init_db(&err))
+	die("failed to set up refs db: %s", err.buf);
+
+which is fairly clean. Using an error_context adds slightly to the
+boilerplate:
+
+  struct strbuf err_buf = STRBUF_INIT;
+  struct error_context err = STRBUF_ERR(&err_buf);
+  ...
+  if (refs_init_db(&err))
+	die("failed to set up refs db: %s", err_buf.buf);
+
+Though if we wanted to get really magical, the err_buf/err pattern could
+be its own single-line macro.
+
+You could solve this more generally with something like:
+
+  struct error_prefix_data err;
+
+  error_prefix(&err, &error_die, "failed to set up refs db");
+  refs_init_db(&err.err);
+
+where error_prefix() basically sets us up to call back a function which
+concatenates the prefix to the real error, then chains to error_die.
+But to cover all cases, error_prefix() would actually have to format the
+prefix string. Because some callers would be more like:
+
+  error_prefix(&err, &error_print, "unable to frob %s", foo);
+  do_frob(foo, &err);
+
+We can't just save the va_list passed to error_prefix(), because it's
+not valid after we return. So you have to format the prefix into a
+buffer, even though in most cases we won't see an error at all (and
+doing it completely correctly would involve using a strbuf, which means
+there needs to be a cleanup step; yuck).
+
+-Peff
