@@ -2,106 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C526E1F4F8
-	for <e@80x24.org>; Wed, 28 Sep 2016 15:10:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD8A11F4F8
+	for <e@80x24.org>; Wed, 28 Sep 2016 16:09:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933015AbcI1PKQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Sep 2016 11:10:16 -0400
-Received: from avasout03.plus.net ([84.93.230.244]:60634 "EHLO
-        avasout03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932486AbcI1PKP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2016 11:10:15 -0400
-Received: from [10.0.2.15] ([194.75.29.46])
-        by avasout03 with smtp
-        id p3AB1t0020zhorE013ACkv; Wed, 28 Sep 2016 16:10:12 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=YLLd8lOx c=1 sm=1 tr=0
- a=g54qAj+LxVGqXy9pVcJ+0w==:117 a=g54qAj+LxVGqXy9pVcJ+0w==:17
- a=N659UExz7-8A:10 a=pGLkceISAAAA:8 a=cCri8_SAAAAA:8 a=NbMcLem9hdnjO6TtWB8A:9
- a=pILNOxqGKmIA:10 a=6kGIvZw6iX1k4Y-7sg4_:22 a=sbRuPzbSW-bVi6QwGVni:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v2] gpg-interface: use more status letters
-To:     Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-References: <xmqqk2dxp84i.fsf@gitster.mtv.corp.google.com>
- <c4777ef68059034d7ad4697a06bba3cabbdc9265.1475053649.git.git@drmicha.warpmail.net>
-Cc:     Alex <agrambot@gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <dc55746d-ccca-e5d5-be08-01082b5610d4@ramsayjones.plus.com>
-Date:   Wed, 28 Sep 2016 16:10:10 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
-MIME-Version: 1.0
-In-Reply-To: <c4777ef68059034d7ad4697a06bba3cabbdc9265.1475053649.git.git@drmicha.warpmail.net>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
+        id S933120AbcI1QJd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Sep 2016 12:09:33 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:45254 "EHLO mx1.redhat.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932798AbcI1QJb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2016 12:09:31 -0400
+Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mx1.redhat.com (Postfix) with ESMTPS id 35B44633FE
+        for <git@vger.kernel.org>; Wed, 28 Sep 2016 16:09:31 +0000 (UTC)
+Received: from pirat-work.brq.redhat.com (unused-4-182.brq.redhat.com [10.34.4.182])
+        by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id u8SG9UDJ027831;
+        Wed, 28 Sep 2016 12:09:30 -0400
+From:   Petr Stodulka <pstodulk@redhat.com>
+To:     git@vger.kernel.org
+Cc:     pstodulk@redhat.com
+Subject: [PATCH] http: Control GSSAPI credential delegation.
+Date:   Wed, 28 Sep 2016 18:05:52 +0200
+Message-Id: <1475078752-31195-1-git-send-email-pstodulk@redhat.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.27]); Wed, 28 Sep 2016 16:09:31 +0000 (UTC)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Delegation of credentials is disabled by default in libcurl since
+version 7.21.7 due to security vulnerability CVE-2011-2192. Which
+makes troubles with GSS/kerberos authentication where delegation
+of credentials is required. This can be changed with option
+CURLOPT_GSSAPI_DELEGATION in libcurl with set expected parameter
+since libcurl version 7.22.0.
 
+This patch provides new configuration variable http.delegation
+which corresponds to curl parameter "--delegation" (see man 1 curl).
 
-On 28/09/16 15:24, Michael J Gruber wrote:
-> According to gpg2's doc/DETAILS:
-> "For each signature only one of the codes GOODSIG, BADSIG, EXPSIG,
-> EXPKEYSIG, REVKEYSIG or ERRSIG will be emitted."
-> 
-> gpg1 ("classic") behaves the same (although doc/DETAILS
-> differs).
-> 
-> Currently, we parse gpg's status output for GOODSIG, BADSIG and trust
-> information and translate that into status codes G, B, U, N for the %G?
-> format specifier.
-> 
-> git-verify-* returns success in the GOODSIG case only. This is somewhat in
-> disagreement with gpg, which considers the first 5 of the 6 above as VALIDSIG,
-> but we err on the very safe side.
-> 
-> Introduce additional status codes E, X, R for ERRSIG, EXP*SIG, REVKEYSIG
-> so that a user of %G? gets more information about the absence of a 'G'
-> on first glance.
-> 
-> Requested-by: Alex <agrambot@gmail.com>
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
-> Changes in v2:
-> 
-> - Use GNUPGHOME="$HOME/gnupg-home-not-used" just like in other tests (lib).
-> - Do not parse for signer UID in the ERRSIG case (and test that we do not).
-> - Retreat "rather" addition from the doc: good/valid are terms that we use
->   differently from gpg anyways.
-> 
->  Documentation/pretty-formats.txt |  9 +++++++--
->  gpg-interface.c                  | 13 ++++++++++---
->  pretty.c                         |  3 +++
->  t/t7510-signed-commit.sh         | 12 +++++++++++-
->  4 files changed, 31 insertions(+), 6 deletions(-)
-> 
-> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-> index a942d57..c28ff2b 100644
-> --- a/Documentation/pretty-formats.txt
-> +++ b/Documentation/pretty-formats.txt
-> @@ -143,8 +143,13 @@ ifndef::git-rev-list[]
->  - '%N': commit notes
->  endif::git-rev-list[]
->  - '%GG': raw verification message from GPG for a signed commit
-> -- '%G?': show "G" for a good (valid) signature, "B" for a bad signature,
-> -  "U" for a good signature with unknown validity and "N" for no signature
-> +- '%G?': show "G" for a good (valid) signature,
-> +  "B" for a bad signature,
-> +  "U" for a good signature with unknown validity,
-> +  "X" for a good expired signature, or good signature made by an expired key,
+The following values are supported:
 
-Hmm, this looks odd. Would the following:
+* none (default).
+* policy
+* always
 
-    "X" for a good signature made with an expired key,
+Signed-off-by: Petr Stodulka <pstodulk@redhat.com>
+---
+ Documentation/config.txt | 14 ++++++++++++++
+ http.c                   | 32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 46 insertions(+)
 
-mean something different?
-
-ATB,
-Ramsay Jones
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index e78293b..a179474 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1736,6 +1736,20 @@ http.emptyAuth::
+ 	a username in the URL, as libcurl normally requires a username for
+ 	authentication.
+ 
++http.delegation::
++	Control GSSAPI credential delegation. The delegation is disabled
++	by default in libcurl since version 7.21.7. Set parameter to tell
++	the server what it is allowed to delegate when it comes to user
++	credentials. Used with GSS/kerberos. Possible values are:
+++
++--
++* `none` - Don't allow any delegation.
++* `policy` - Delegates if and only if the OK-AS-DELEGATE flag is set in the
++  Kerberos service ticket, which is a matter of realm policy.
++* `always` - Unconditionally allow the server to delegate.
++--
++
++
+ http.extraHeader::
+ 	Pass an additional HTTP header when communicating with a server.  If
+ 	more than one such entry exists, all of them are added as extra
+diff --git a/http.c b/http.c
+index 82ed542..5f8fab3 100644
+--- a/http.c
++++ b/http.c
+@@ -90,6 +90,18 @@ static struct {
+ 	 * here, too
+ 	 */
+ };
++#if LIBCURL_VERSION_NUM >= 0x071600
++static const char *curl_deleg;
++static struct {
++	const char *name;
++	long curl_deleg_param;
++} curl_deleg_levels[] = {
++	{ "none", CURLGSSAPI_DELEGATION_NONE },
++	{ "policy", CURLGSSAPI_DELEGATION_POLICY_FLAG },
++	{ "always", CURLGSSAPI_DELEGATION_FLAG },
++};
++#endif
++
+ static struct credential proxy_auth = CREDENTIAL_INIT;
+ static const char *curl_proxyuserpwd;
+ static const char *curl_cookie_file;
+@@ -323,6 +335,10 @@ static int http_options(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp("http.delegation", var)) {
++		return git_config_string(&curl_deleg, var, value);
++	}
++
+ 	if (!strcmp("http.pinnedpubkey", var)) {
+ #if LIBCURL_VERSION_NUM >= 0x072c00
+ 		return git_config_pathname(&ssl_pinnedkey, var, value);
+@@ -629,6 +645,22 @@ static CURL *get_curl_handle(void)
+ 	curl_easy_setopt(result, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+ #endif
+ 
++#if LIBCURL_VERSION_NUM >= 0x071600
++	if (curl_deleg) {
++		int i;
++		for (i = 0; i < ARRAY_SIZE(curl_deleg_levels); i++) {
++			if (!strcmp(curl_deleg, curl_deleg_levels[i].name)) {
++				curl_easy_setopt(result, CURLOPT_GSSAPI_DELEGATION,
++						curl_deleg_levels[i].curl_deleg_param);
++				break;
++			}
++		}
++		if (i == ARRAY_SIZE(curl_deleg_levels))
++			warning("Unknown delegation method '%s': using default",
++				curl_deleg);
++	}
++#endif
++
+ 	if (http_proactive_auth)
+ 		init_curl_http_auth(result);
+ 
+-- 
+2.5.5
 
