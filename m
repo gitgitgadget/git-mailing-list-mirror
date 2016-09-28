@@ -2,84 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C9F4207EC
-	for <e@80x24.org>; Wed, 28 Sep 2016 06:45:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44973207EC
+	for <e@80x24.org>; Wed, 28 Sep 2016 06:49:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750719AbcI1Gp0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Sep 2016 02:45:26 -0400
-Received: from mail-qk0-f169.google.com ([209.85.220.169]:36024 "EHLO
-        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750749AbcI1GpX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2016 02:45:23 -0400
-Received: by mail-qk0-f169.google.com with SMTP id z190so38567053qkc.3
-        for <git@vger.kernel.org>; Tue, 27 Sep 2016 23:45:23 -0700 (PDT)
+        id S1750940AbcI1GtJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Sep 2016 02:49:09 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:33113 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750877AbcI1GtI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2016 02:49:08 -0400
+Received: by mail-wm0-f68.google.com with SMTP id w84so4362122wmg.0
+        for <git@vger.kernel.org>; Tue, 27 Sep 2016 23:49:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=3RU/J+2oO/HoXzLwr7urZFADtP0wGGYBXLmUwJP50lo=;
-        b=tHANkYmhbf9WNi6PrA/TMsUnezcUIjw/O4nJy28uQ0f8MI24F5Nbz45kmVed3tOb1S
-         J0mp8WnhV4n1092HxFyGfvjhyWT8rLgmZMt+nEfJsl39B7kk7Q2gV8jOVr5a/P2a1VNx
-         IASlQEm/8E8QVtZlTcqQuGW/xc44vN+gocgzCS7XzTSmWPy0ABVR413eb1hheK2Gfw/1
-         8EyZ1sqtoboc7gqACQPYxz9qZtVnQRkw293LnZv32KlUmQ1dNuNiJBieO8x5/lVV1EWN
-         CC9VbJEHVjZlVAAP6G35oyvK0SEfsvxpasZ1NskzteuJwcCSkL8XIiGKR6Ed9KQ43stV
-         To5g==
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:date:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=wMv5BX4CnjJogrD6SKkWgKOHdToHvMOheGKmbCTXOTQ=;
+        b=q6+Xht23tq1pMy9AtAOjvgwWSGpyU9TdODCA8mahAHKTFqLkzAilFfTYtis5YRAZlW
+         nXG0xgj4DFYjvrSj7EKA+xMPxLoQOwxXYq2aiVLM81IKRb3/Imni124icYFqaMTGY8yc
+         qMmbYKvdVtjU7c7+vDBWTW7RU3Z9GUJfr/0GWUVYMWZwuZC1Ql2nd2qDAe0nux1iMGyl
+         qDrGk/DKBH8m8zUzofwKpKlCVewR4MXoXSxKS315VfqrZxgoVV74GH7Rm+z7Ka8fe0We
+         h2GXEaSIb5Miwi0PNw6IT/04Qvcfs7zIQ1elV3l9A9sa4xoUBwomlgf5RX/sylHWv9Nr
+         w4lA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=3RU/J+2oO/HoXzLwr7urZFADtP0wGGYBXLmUwJP50lo=;
-        b=cWdSAlywhY6ZFrPXqVxLvSxaOJrUgbHd12UXgGTpLdkohdyBtzwX+USJ9a9jnMZgVj
-         GoPmk+L6+QLUMpkY2nYaL4aKtUX2J87gKlPcgKfqAUM92VXfnJ8+Rp9wyQSElgTJONIc
-         gekeg5TaWBTneprrfAfJvP3AP/WIo99BQmIjjhgolNdC4C9OEG08fkU0T9w+SHeYDPbG
-         m9mH+qdFwCux1AarN6KSUJW9tiKxhimwWIuSBZ/X+2f603DIq2ZAjp3z8mkJj95rOlT/
-         J0dntre4F/I+JM1XB7iZzc6VJp2lTVqVpW7HpMfjVcw5OuYREVPtaCAMJB0sOvB9s4Jd
-         0I5Q==
-X-Gm-Message-State: AA6/9Rk8lhJqr3g9scQ/70m6KZqKp2oJLQjVt7uDR9h6QJQ84lPpTHhQ1aZ+36epgDmAsw==
-X-Received: by 10.233.216.194 with SMTP id u185mr32827697qkf.173.1475045122844;
-        Tue, 27 Sep 2016 23:45:22 -0700 (PDT)
-Received: from kwern-HP-Pavilion-dv5-Notebook-PC (ool-457850cc.dyn.optonline.net. [69.120.80.204])
-        by smtp.gmail.com with ESMTPSA id z186sm3225308qkb.13.2016.09.27.23.45.22
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=wMv5BX4CnjJogrD6SKkWgKOHdToHvMOheGKmbCTXOTQ=;
+        b=ebUq39SdCcXxrkGMx68cAI0TCkFCsjFQBMPLZfYO54aJK1md99lKvaVRiTP22mLMy6
+         w4nVn6L2XxLT0oKf0xx0j+RB0wntby1ZBSDY3AeQvaT7+oe0sqkPgRbReg/vzougUaLB
+         KSL70WHO4Wl2Liz8y7rnhNYkYFR2L/aN9v//ib/RQ3o+eaOyTwWcKCGY9cDpfS6HPJIX
+         +sQ5mgpU9DjUqKUNjIzTwtCscfscGNLxGnsvEyK5lfxoGU9Gg04Xt+YW3QtgTAKStkrG
+         OJN+h0FkZA+0Ae1DUVMMzDn+sqd/iIav2QRgS80eoiEWmxqgOqmuRpNbvlfBqxBwiLOM
+         Mvlg==
+X-Gm-Message-State: AA6/9Rkke1qBSvFqTRHSJwtOaW5rfco7J9GCxewV/JmXTijoQcnIyc9Kx/39lERdEb5lYw==
+X-Received: by 10.194.112.131 with SMTP id iq3mr14181857wjb.123.1475045346453;
+        Tue, 27 Sep 2016 23:49:06 -0700 (PDT)
+Received: from [10.156.63.164] (proxy-gw-l.booking.com. [5.57.20.8])
+        by smtp.gmail.com with ESMTPSA id k2sm20589945wmg.23.2016.09.27.23.49.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 27 Sep 2016 23:45:22 -0700 (PDT)
-From:   Kevin Wern <kevin.m.wern@gmail.com>
-X-Google-Original-From: Kevin Wern <kwern@kwern-HP-Pavilion-dv5-Notebook-PC>
-Date:   Wed, 28 Sep 2016 02:45:20 -0400
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Kevin Wern <kevin.m.wern@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 04/11] Resumable clone: add prime-clone to remote-curl
-Message-ID: <20160928064520.GH3762@kwern-HP-Pavilion-dv5-Notebook-PC>
-References: <1473984742-12516-1-git-send-email-kevin.m.wern@gmail.com>
- <1473984742-12516-5-git-send-email-kevin.m.wern@gmail.com>
- <CACsJy8C+0M8o15E+iVX+f=izO2CtK7U642NC=XXaG-g41wYAUg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACsJy8C+0M8o15E+iVX+f=izO2CtK7U642NC=XXaG-g41wYAUg@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+        Tue, 27 Sep 2016 23:49:05 -0700 (PDT)
+Message-ID: <1475045345.7623.26.camel@kaarsemaker.net>
+Subject: Re: Repeatable Extraction
+From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
+To:     chris king <kingces95@gmail.com>, git@vger.kernel.org
+Date:   Wed, 28 Sep 2016 08:49:05 +0200
+In-Reply-To: <CAJQwtsidixAAJKp7-b2PmXgs=mS+PbT5ebOmKLJU1nEn7UJ2og@mail.gmail.com>
+References: <CAJQwtsidixAAJKp7-b2PmXgs=mS+PbT5ebOmKLJU1nEn7UJ2og@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.18.5.2-0ubuntu3 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 19, 2016 at 08:52:34PM +0700, Duy Nguyen wrote:
+On di, 2016-09-27 at 20:14 -0700, chris king wrote:
+> Hello, first off thanks for such a wonderful tool! I have a general
+> question and I hope this is an appropriate spot to ask it.
 > 
-> A brief overview for this service in
-> Documentation/technical/http-protocol.txt (and maybe
-> Documentation/gitremote-helpers.txt as well) would be great help. It's
-> a bit hard to follow because at this point I don't know anything about
-> the server side (and on top of that I was confused between http
-> send/receive vs transport send/receive, but this is my fault).
+> Is there a way automate extraction that will repeatably generate the
+> same files? Currently, each time I extract git portable many of the
+> binaries change slightly. For example, if I extract twice using
 > 
+>     PortableGit-2.10.0-32-bit.7z.exe -y -gm2
+> 
+> then Beyond Compare tells me that many of the files in usr\bin have
+> changed at offset 0x88 and 0x89. Why is that?
 
-I figured I would miss something in this vein. So many things to cover!
+Hi Chris,
 
-Thanks again for reading.
+That file is specific to the git for windows project, not git itself.
+While you may be able to find somebody on the git@vger mailinglist who
+knows the answer, git for windows also has a separate mailinglist at
+https://groups.google.com/forum/#!forum/git-for-windows and a chat room
+at https://gitter.im/git-for-windows/git -- these may be of more
+assistance in this case.
 
-- Kevin
+-- 
+Dennis Kaarsemaker
+http://www.kaarsemaker.net
+
+
