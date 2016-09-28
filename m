@@ -6,84 +6,78 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 125E91F4F8
-	for <e@80x24.org>; Wed, 28 Sep 2016 17:55:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE4C01F4F8
+	for <e@80x24.org>; Wed, 28 Sep 2016 17:59:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753226AbcI1Ry7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Sep 2016 13:54:59 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52638 "EHLO
+        id S1753004AbcI1R7K (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Sep 2016 13:59:10 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53181 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752219AbcI1Ry4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2016 13:54:56 -0400
+        with ESMTP id S1752625AbcI1R7J (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2016 13:59:09 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A8C1940961;
-        Wed, 28 Sep 2016 13:54:54 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2162B420E9;
+        Wed, 28 Sep 2016 13:59:08 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Yhx+LSlfNhxy9ETfg3tQE3CfJvE=; b=QGGrbx
-        4yKsHLASoomWwQ14HYcgKmRuNuab+t1nAR4/h0FTKDhsKPk2Y3qqprAOCHkCYjwP
-        YvHtnJ5iCzWalDIMNAeUizmIVlmarlH5oe1k2pDf/sYe/IbSvmJch3cDVm7sZqoU
-        7zf1ckUle0a+uEJ7tFhTYVhSimvICdjZ4yRyg=
+        :content-type; s=sasl; bh=+YXEtrVa7/EpTUDl8HkFoR6eny0=; b=lJCTDt
+        mFiwoe4m3TCeh6s4BaDkMyxWWIskRfmVrbUk6xCUclAU4z19pivWw1vyPaG55q72
+        BUBa1uhZhSZjxzQQyecvhRL3/OzV1/QmLVVUz/hZBh9Qm1Pvd73V/Wd0ZFbo1ZVq
+        +EH1zEGCy1V3HPe9Hx4wN+7vxidIm63m2I1JY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=wFFfuLggu4tGaQPSzApDRpQIOhQvjtGs
-        V56fi+/J1M4+eBY81L589Asux9KgGKSSAj44uqNr+9vlg8djSAVMITrKwKjZDRvT
-        WxkqfgdGiKxgawBcH+fk2GKld2iPX7zVfpRJjVpbPd3VstbesYR5bBRd+DdJNTRY
-        PrwtHfYz1j0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A0DAE4095F;
-        Wed, 28 Sep 2016 13:54:54 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=D7LxVN1X70EV1sLFf/qAV36X3ZRoNq6Q
+        g7ZfXDkof/uqYP2MSkuWGh2YZzDgKZ+f+iKDOjXZaZECc/LUjjRVc/l8VKj9YW8x
+        7+k3AuCs3w333+q0d+eWBFA6/drhUVjlUHEzzEpMI4Jt4QSG9apkE9PewU8K0PAF
+        x3CR9OqUaB4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 19C5D420E7;
+        Wed, 28 Sep 2016 13:59:08 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1FB434095E;
-        Wed, 28 Sep 2016 13:54:54 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 81962420E4;
+        Wed, 28 Sep 2016 13:59:07 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Kevin Wern <kevin.m.wern@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 10/11] run command: add RUN_COMMAND_NO_STDOUT
-References: <1473984742-12516-1-git-send-email-kevin.m.wern@gmail.com>
-        <1473984742-12516-11-git-send-email-kevin.m.wern@gmail.com>
-        <xmqq37kzigvf.fsf@gitster.mtv.corp.google.com>
-        <20160928044622.GE3762@kwern-HP-Pavilion-dv5-Notebook-PC>
-Date:   Wed, 28 Sep 2016 10:54:52 -0700
-In-Reply-To: <20160928044622.GE3762@kwern-HP-Pavilion-dv5-Notebook-PC> (Kevin
-        Wern's message of "Wed, 28 Sep 2016 00:46:22 -0400")
-Message-ID: <xmqqponnkiz7.fsf@gitster.mtv.corp.google.com>
+To:     "Eric S. Raymond" <esr@thyrsus.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH 3/3] docs/cvs-migration: mention cvsimport caveats
+References: <20160922072350.ivjrfuedodd2rezn@sigill.intra.peff.net>
+        <20160922072628.rs47hfiowtobw46s@sigill.intra.peff.net>
+        <20160922131526.GB6320@thyrsus.com>
+        <20160923035601.f5czdieouzvm3ptz@sigill.intra.peff.net>
+        <20160928001108.GA9120@thyrsus.com>
+Date:   Wed, 28 Sep 2016 10:59:05 -0700
+In-Reply-To: <20160928001108.GA9120@thyrsus.com> (Eric S. Raymond's message of
+        "Tue, 27 Sep 2016 20:11:08 -0400")
+Message-ID: <xmqqlgybkis6.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: A936B896-85A4-11E6-B56E-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 404088FC-85A5-11E6-B5B5-C26412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kevin Wern <kevin.m.wern@gmail.com> writes:
+"Eric S. Raymond" <esr@thyrsus.com> writes:
 
-> On Fri, Sep 16, 2016 at 04:07:00PM -0700, Junio C Hamano wrote:
->> Kevin Wern <kevin.m.wern@gmail.com> writes:
->> 
->> > Add option RUN_COMMAND_NO_STDOUT, which sets no_stdout on a child
->> > process.
->> >
->> > This will be used by git clone when calling index-pack on a downloaded
->> > packfile.
->> 
->> If it is just one caller, would't it make more sense for that caller
->> set no_stdout explicitly itself?
+> Jeff King <peff@peff.net>:
+>>               I am not qualified to write on the current state of
+>> the art in CVS importing.
 >
-> I based the calling code in do_index_pack on dissociate_from_references, which
-> uses run_command_v_opt, so it never occured to me to do that. I thought it was
-> just good, uniform style and encapsulation. Like how transport's methods and
-> internals aren't really intended to be changed or accessed--unless it's through
-> the APIs we create.
->
-> However, I don't feel very strongly about this, so I'm okay with this change.
+> I *am* qualified; cvs-fast-export has had a lot of work put into it by
+> myself and others over the last five years.  Nobody else is really
+> working this problem anymore, not much else than cvs2git is even left
+> standing at this point.
 
-I am neutral and with no opinion.  I may have offered a solution to
-a problem that did not exist.
+It sounds like you, as a better qualified person, would be in the
+best position to send an update to the documentation to tell people
+not to use older and unmaintained ones and guides them instead to a
+newer and better tool.
 
-I just got an impression that you were apologetic for having to add
-this option that is otherwise useless and tried to suggest a simpler
-solution that does not involve such an addition.
+    ... ah, I notice that peff said the same already.
+
+I'd be fine with reviewing and applying such a patch.
+
+Thanks.
