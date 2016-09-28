@@ -2,239 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2089B1F4F8
-	for <e@80x24.org>; Wed, 28 Sep 2016 19:52:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E382B1F4F8
+	for <e@80x24.org>; Wed, 28 Sep 2016 19:59:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754088AbcI1Two (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Sep 2016 15:52:44 -0400
-Received: from ikke.info ([178.21.113.177]:48058 "EHLO vps892.directvps.nl"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753091AbcI1Twm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2016 15:52:42 -0400
-Received: by vps892.directvps.nl (Postfix, from userid 182)
-        id D01D34400CA; Wed, 28 Sep 2016 21:52:40 +0200 (CEST)
-Received: from io.ikke (unknown [10.8.0.30])
-        by vps892.directvps.nl (Postfix) with ESMTP id EFD674400BD;
-        Wed, 28 Sep 2016 21:52:39 +0200 (CEST)
-From:   Kevin Daudt <me@ikke.info>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Swift Geek <swiftgeek@gmail.com>, Jeff King <peff@peff.net>,
-        Kevin Daudt <me@ikke.info>
-Subject: [PATCH v4 2/2] mailinfo: unescape quoted-pair in header fields
-Date:   Wed, 28 Sep 2016 21:52:32 +0200
-Message-Id: <20160928195232.7843-2-me@ikke.info>
-X-Mailer: git-send-email 2.10.0.372.g6fe1b14
-In-Reply-To: <20160928194939.7706-1-me@ikke.info>
-References: <20160928194939.7706-1-me@ikke.info>
+        id S1753982AbcI1T7d (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Sep 2016 15:59:33 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52380 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753963AbcI1T7b (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2016 15:59:31 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A4FF741511;
+        Wed, 28 Sep 2016 15:59:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=HPZk45hjt1zRAKGdCmBVRMJ8ius=; b=r0gGsM
+        e6HtbUEuonJlZMBS7J2qAHmYz+uYL6+XRM0b6QAlVAl7fy7VcbilBY8U6A92qyeP
+        36MjMoxRwGFjESInxqKBQMRxA2tQhuKqlEojt5zKo/dNzoeaMxcdIWeAvrpy4m+z
+        qw7owGTUK70BW5O9SCsDepoUm4BHZCgVECyPA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=B4UcdfC1fqADrvRW2mPjhV3nsYYZwd4p
+        37ucBIqmA+5sKJGcDHbmtsnDP1PDI+i21zwZd0JXbX3RXkFtYefIbwDBw5MmKs6m
+        iCGJzHQyzsMHT92VOlEE/kIRNLqf1y8zJkNthl++vfzSFwNMpeueaGwa+Od6OX6t
+        A8H1+a/dMUU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9A89441510;
+        Wed, 28 Sep 2016 15:59:29 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 21D014150F;
+        Wed, 28 Sep 2016 15:59:29 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Michael J Gruber <git@drmicha.warpmail.net>
+Cc:     git@vger.kernel.org, Alex <agrambot@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v2] gpg-interface: use more status letters
+References: <xmqqk2dxp84i.fsf@gitster.mtv.corp.google.com>
+        <c4777ef68059034d7ad4697a06bba3cabbdc9265.1475053649.git.git@drmicha.warpmail.net>
+Date:   Wed, 28 Sep 2016 12:59:27 -0700
+In-Reply-To: <c4777ef68059034d7ad4697a06bba3cabbdc9265.1475053649.git.git@drmicha.warpmail.net>
+        (Michael J. Gruber's message of "Wed, 28 Sep 2016 16:24:13 +0200")
+Message-ID: <xmqqshsjiyn4.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 10AA83CA-85B6-11E6-A4A1-C26412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-rfc2822 has provisions for quoted strings in structured header fields,
-but also allows for escaping these with so-called quoted-pairs.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-The only thing git currently does is removing exterior quotes, but
-quotes within are left alone.
+> - Use GNUPGHOME="$HOME/gnupg-home-not-used" just like in other tests (lib).
 
-Remove exterior quotes and remove escape characters so that they don't
-show up in the author field.
+If you are not using /dev/null, I expected you to do
 
-Signed-off-by: Kevin Daudt <me@ikke.info>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- mailinfo.c                   | 82 ++++++++++++++++++++++++++++++++++++++++++++
- t/t5100-mailinfo.sh          | 14 ++++++++
- t/t5100/comment.expect       |  5 +++
- t/t5100/comment.in           |  9 +++++
- t/t5100/quoted-string.expect |  5 +++
- t/t5100/quoted-string.in     |  9 +++++
- 6 files changed, 124 insertions(+)
- create mode 100644 t/t5100/comment.expect
- create mode 100644 t/t5100/comment.in
- create mode 100644 t/t5100/quoted-string.expect
- create mode 100644 t/t5100/quoted-string.in
+	. ./test-lib.sh
+	GNUPGHOME_saved=$GNPGHOME
+        . "$TEST_DIRECTORY/lib-gpg.sh"
 
-diff --git a/mailinfo.c b/mailinfo.c
-index e19abe3..b4118a0 100644
---- a/mailinfo.c
-+++ b/mailinfo.c
-@@ -54,6 +54,86 @@ static void parse_bogus_from(struct mailinfo *mi, const struct strbuf *line)
- 	get_sane_name(&mi->name, &mi->name, &mi->email);
- }
- 
-+static const char *unquote_comment(struct strbuf *outbuf, const char *in)
-+{
-+	int c;
-+	int take_next_litterally = 0;
-+
-+	strbuf_addch(outbuf, '(');
-+
-+	while ((c = *in++) != 0) {
-+		if (take_next_litterally == 1) {
-+			take_next_litterally = 0;
-+		} else {
-+			switch (c) {
-+			case '\\':
-+				take_next_litterally = 1;
-+				continue;
-+			case '(':
-+				in = unquote_comment(outbuf, in);
-+				continue;
-+			case ')':
-+				strbuf_addch(outbuf, ')');
-+				return in;
-+			}
-+		}
-+
-+		strbuf_addch(outbuf, c);
-+	}
-+
-+	return in;
-+}
-+
-+static const char *unquote_quoted_string(struct strbuf *outbuf, const char *in)
-+{
-+	int c;
-+	int take_next_litterally = 0;
-+
-+	while ((c = *in++) != 0) {
-+		if (take_next_litterally == 1) {
-+			take_next_litterally = 0;
-+		} else {
-+			switch (c) {
-+			case '\\':
-+				take_next_litterally = 1;
-+				continue;
-+			case '"':
-+				return in;
-+			}
-+		}
-+
-+		strbuf_addch(outbuf, c);
-+	}
-+
-+	return in;
-+}
-+
-+static void unquote_quoted_pair(struct strbuf *line)
-+{
-+	struct strbuf outbuf;
-+	const char *in = line->buf;
-+	int c;
-+
-+	strbuf_init(&outbuf, line->len);
-+
-+	while ((c = *in++) != 0) {
-+		switch (c) {
-+		case '"':
-+			in = unquote_quoted_string(&outbuf, in);
-+			continue;
-+		case '(':
-+			in = unquote_comment(&outbuf, in);
-+			continue;
-+		}
-+
-+		strbuf_addch(&outbuf, c);
-+	}
-+
-+	strbuf_swap(&outbuf, line);
-+	strbuf_release(&outbuf);
-+
-+}
-+
- static void handle_from(struct mailinfo *mi, const struct strbuf *from)
- {
- 	char *at;
-@@ -63,6 +143,8 @@ static void handle_from(struct mailinfo *mi, const struct strbuf *from)
- 	strbuf_init(&f, from->len);
- 	strbuf_addbuf(&f, from);
- 
-+	unquote_quoted_pair(&f);
-+
- 	at = strchr(f.buf, '@');
- 	if (!at) {
- 		parse_bogus_from(mi, from);
-diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
-index 56988b7..45d228e 100755
---- a/t/t5100-mailinfo.sh
-+++ b/t/t5100-mailinfo.sh
-@@ -144,4 +144,18 @@ test_expect_success 'mailinfo unescapes with --mboxrd' '
- 	test_cmp expect mboxrd/msg
- '
- 
-+test_expect_success 'mailinfo handles rfc2822 quoted-string' '
-+	mkdir quoted-string &&
-+	git mailinfo /dev/null /dev/null <"$DATA/quoted-string.in" \
-+		>quoted-string/info &&
-+	test_cmp "$DATA/quoted-string.expect" quoted-string/info
-+'
-+
-+test_expect_success 'mailinfo handles rfc2822 comment' '
-+	mkdir comment &&
-+	git mailinfo /dev/null /dev/null <"$DATA/comment.in" \
-+		>comment/info &&
-+	test_cmp "$DATA/comment.expect" comment/info
-+'
-+
- test_done
-diff --git a/t/t5100/comment.expect b/t/t5100/comment.expect
-new file mode 100644
-index 0000000..7228177
---- /dev/null
-+++ b/t/t5100/comment.expect
-@@ -0,0 +1,5 @@
-+Author: A U Thor (this is (really) a comment (honestly))
-+Email: somebody@example.com
-+Subject: testing comments
-+Date: Sun, 25 May 2008 00:38:18 -0700
-+
-diff --git a/t/t5100/comment.in b/t/t5100/comment.in
-new file mode 100644
-index 0000000..c53a192
---- /dev/null
-+++ b/t/t5100/comment.in
-@@ -0,0 +1,9 @@
-+From 1234567890123456789012345678901234567890 Mon Sep 17 00:00:00 2001
-+From: "A U Thor" <somebody@example.com> (this is \(really\) a comment (honestly))
-+Date: Sun, 25 May 2008 00:38:18 -0700
-+Subject: [PATCH] testing comments
-+
-+
-+
-+---
-+patch
-diff --git a/t/t5100/quoted-string.expect b/t/t5100/quoted-string.expect
-new file mode 100644
-index 0000000..cab1bce
---- /dev/null
-+++ b/t/t5100/quoted-string.expect
-@@ -0,0 +1,5 @@
-+Author: Author "The Author" Name
-+Email: somebody@example.com
-+Subject: testing quoted-pair
-+Date: Sun, 25 May 2008 00:38:18 -0700
-+
-diff --git a/t/t5100/quoted-string.in b/t/t5100/quoted-string.in
-new file mode 100644
-index 0000000..e2e627a
---- /dev/null
-+++ b/t/t5100/quoted-string.in
-@@ -0,0 +1,9 @@
-+From 1234567890123456789012345678901234567890 Mon Sep 17 00:00:00 2001
-+From: "Author \"The Author\" Name" <somebody@example.com>
-+Date: Sun, 25 May 2008 00:38:18 -0700
-+Subject: [PATCH] testing quoted-pair
-+
-+
-+
-+---
-+patch
--- 
-2.10.0.372.g6fe1b14
+and then use
 
+	GNUPGHOME="$GNUPGHOME_saved" git log -1 ...
+
+in the test.
+
+Otherwise, you are not futureproofing your use and only adding to
+maintenance burden.  The gnupg-home-not-used hack may turn out to be
+a problematic and test-lib.sh may update to point to somewhere else,
+which will leave your copy still pointing at the old problematic
+place).
+
+> - Do not parse for signer UID in the ERRSIG case (and test that we do not).
+
+Good.
+
+> - Retreat "rather" addition from the doc: good/valid are terms that we use
+>   differently from gpg anyways.
+
+OK.
+
+> +  "X" for a good expired signature, or good signature made by an expired key,
+
+As an attempt to clarify that we cover both EXPSIG and EXPKEYSIG
+cases, I think this is good enough.  I may have phrased the former
+slightly differently, though: "a good signature that has expired".
+
+I have no strong opinion if we want to stress that we cover both
+cases, though, which is I think what Ramsay's comment was about.
+
+Thanks.
