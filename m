@@ -2,162 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A2481F4F8
-	for <e@80x24.org>; Wed, 28 Sep 2016 22:11:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 565101F4F8
+	for <e@80x24.org>; Wed, 28 Sep 2016 22:19:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754643AbcI1WL0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Sep 2016 18:11:26 -0400
-Received: from mail-it0-f53.google.com ([209.85.214.53]:38629 "EHLO
-        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753890AbcI1WLY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2016 18:11:24 -0400
-Received: by mail-it0-f53.google.com with SMTP id n143so49296830ita.1
-        for <git@vger.kernel.org>; Wed, 28 Sep 2016 15:11:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=LEva8SJWjZzH+l8rPB7vgn6IwsTvR6uroYFAfIJhiro=;
-        b=dBoYSFtOD1NqLRABd/elFQLOCd3YRdoeGMLLN8Kji7rWLiWC7iJnrXwzMS6Wo+x5ht
-         YFrOuBvnuBLCHxAlHE7oXxPFfBgGi3utGZBHcFW3WrX8EvCVI6kRNHTcq0Ty7McpnG4R
-         OcNRjF0XSGT46zBbnZlm3ArEz9YjZVXEOuyGB6nQGzT9X7r65nS7sSlmT7SZWMMaXcun
-         c/2eFPir/5d2a8gUEB9igeyKy+kBm5Y+bKvPgB45lYOZRNYXolQKv5HPmJYKIbIcPvza
-         3mB4+VStyxtSmYBBNllHQzxWGjKEJNzulLp24iBbw3n7KIZ4FA5FF4b2NkPEk7KfRx4e
-         XdNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=LEva8SJWjZzH+l8rPB7vgn6IwsTvR6uroYFAfIJhiro=;
-        b=ebJmdGOqNZlT7kHk1EFd2LQMct08R4+obUUvD2b0i1BmyV1kRr6CWWg7p0/9VQzBmt
-         71Jre3bu5bzObbm0WMcVJw9dpzWUJj6BeUZvK/BCFou0BByDMOU/SjIUuRnrAkmI4CmY
-         1KH6b5mUn4v9jk/w5itn/Nd03DKkZlaL0yJrAVHYmfLebnNcy+gxj2YL88Qno9++gKzJ
-         tPweYXnyiR3RKVBHe2wRNClPx99627fOo5gbxWna8tFADHZLDD3mdLD6lYmGRLOnnDe4
-         PXheRnBClfLMI8FjHGqsRtSeeEjl9ZIDXkYkbCqzb5sEUBaN7UxUiF6aEVNI6unxX6tB
-         MoBw==
-X-Gm-Message-State: AA6/9RmwttaFFXSz/f5GmzOF29qs2jXOJkScJM/ShDtiQHKaCERLs/ZC7dtFQYlLYmlhwCf0i6N7XhdKPZd6LBM8
-X-Received: by 10.36.50.149 with SMTP id j143mr4547884ita.91.1475100683632;
- Wed, 28 Sep 2016 15:11:23 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.173.98 with HTTP; Wed, 28 Sep 2016 15:11:23 -0700 (PDT)
-In-Reply-To: <1475099443-145608-3-git-send-email-bmwill@google.com>
-References: <1474930003-83750-1-git-send-email-bmwill@google.com>
- <1475099443-145608-1-git-send-email-bmwill@google.com> <1475099443-145608-3-git-send-email-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 28 Sep 2016 15:11:23 -0700
-Message-ID: <CAGZ79kZy5LrXeq_w1oNzXnMsQdBaWqbqR0Dh6FHL39vmg7gZQQ@mail.gmail.com>
-Subject: Re: [PATCH v5 2/4] ls-files: optionally recurse into submodules
+        id S1754310AbcI1WT2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Sep 2016 18:19:28 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56812 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753890AbcI1WT0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2016 18:19:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E6F70411C9;
+        Wed, 28 Sep 2016 18:19:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ETXc05c/92AHW/joT9VHBkm2Oh0=; b=RB8SZH
+        x4jIOMl5sufM0ynao2wFtGGKMqUIqNwV8FPCmoE2kwNkUSqmrjMJaazec7DuvkB1
+        O+cUIar9Ws9FwQCog4YIbXg8TqWkR+qwwQPrcMq72G2uTaDYt7O+UXuEyIB2KzgO
+        rHZygJLHmGmy/8iJ/fUilSXyj3iXgEjOnAXOo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=WFSxIKb0rHHd8lcoze5ndl3LkjsHIeci
+        lKpk5DzcN0a5CXe00dBxspiBDQLXD57daVO1EtP6FsIadorBQPt+nR1zeRy0MS+k
+        OuY5S/V4R+ajrIsEXN96RhmuZiAlZ9XGPkSmUhyC9LloVjwKw/u8k1tuxZBCOgl0
+        DQTRdg3SEdw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DBA13411C8;
+        Wed, 28 Sep 2016 18:19:24 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4D195411C7;
+        Wed, 28 Sep 2016 18:19:24 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net
+Subject: Re: [PATCH v5 1/4] git: make super-prefix option
+References: <1474930003-83750-1-git-send-email-bmwill@google.com>
+        <1475099443-145608-1-git-send-email-bmwill@google.com>
+        <1475099443-145608-2-git-send-email-bmwill@google.com>
+Date:   Wed, 28 Sep 2016 15:19:22 -0700
+In-Reply-To: <1475099443-145608-2-git-send-email-bmwill@google.com> (Brandon
+        Williams's message of "Wed, 28 Sep 2016 14:50:40 -0700")
+Message-ID: <xmqqzimrhdlh.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9C956CAC-85C9-11E6-97B2-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 28, 2016 at 2:50 PM, Brandon Williams <bmwill@google.com> wrote:
-> Allow ls-files to recognize submodules in order to retrieve a list of
-> files from a repository's submodules.  This is done by forking off a
-> process to recursively call ls-files on all submodules. Use top-level
-> --super-prefix option to pass a path to the submodule which it can
-> use to prepend to output or pathspec matching logic.
->
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-> ---
->  Documentation/git-ls-files.txt         |   7 +-
->  builtin/ls-files.c                     | 139 ++++++++++++++++++++++++---------
->  git.c                                  |   2 +-
->  t/t3007-ls-files-recurse-submodules.sh | 100 ++++++++++++++++++++++++
->  4 files changed, 208 insertions(+), 40 deletions(-)
->  create mode 100755 t/t3007-ls-files-recurse-submodules.sh
->
-> diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-> index 0d933ac..446209e 100644
-> --- a/Documentation/git-ls-files.txt
-> +++ b/Documentation/git-ls-files.txt
-> @@ -18,7 +18,8 @@ SYNOPSIS
->                 [--exclude-per-directory=<file>]
->                 [--exclude-standard]
->                 [--error-unmatch] [--with-tree=<tree-ish>]
-> -               [--full-name] [--abbrev] [--] [<file>...]
-> +               [--full-name] [--recurse-submodules]
-> +               [--abbrev] [--] [<file>...]
->
->  DESCRIPTION
->  -----------
-> @@ -137,6 +138,10 @@ a space) at the start of each line:
->         option forces paths to be output relative to the project
->         top directory.
->
-> +--recurse-submodules::
-> +       Recursively calls ls-files on each submodule in the repository.
-> +       Currently there is only support for the --cached mode.
-> +
->  --abbrev[=<n>]::
->         Instead of showing the full 40-byte hexadecimal object
->         lines, show only a partial prefix.
-> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-> index 00ea91a..e0e5cf5 100644
-> --- a/builtin/ls-files.c
-> +++ b/builtin/ls-files.c
-> @@ -14,6 +14,7 @@
->  #include "resolve-undo.h"
->  #include "string-list.h"
->  #include "pathspec.h"
-> +#include "run-command.h"
->
->  static int abbrev;
->  static int show_deleted;
-> @@ -28,8 +29,10 @@ static int show_valid_bit;
->  static int line_terminator = '\n';
->  static int debug_mode;
->  static int show_eol;
-> +static int recurse_submodules;
->
->  static const char *prefix;
-> +static const char *super_prefix;
->  static int max_prefix_len;
->  static int prefix_len;
->  static struct pathspec pathspec;
-> @@ -68,6 +71,19 @@ static void write_eolinfo(const struct cache_entry *ce, const char *path)
->  static void write_name(const char *name)
->  {
->         /*
-> +        * Prepend the super_prefix to name to construct the full_name to be
-> +        * written.  'full_name' gets reused across output lines to minimize the
-> +        * allocation churn.
-> +        */
+Brandon Williams <bmwill@google.com> writes:
 
-When doing these tricks with the allocation churn (i.e. we make it
-hard to read and understand
-for a reader, then we should do it completely, i.e. keep full_name in
-the strbuf and
-only do a strbuf_setlen to reset the buffer just a bit. With this
-implementation we burden the
-reader/user to understand how the memory is kept over multiple calls
-to this function,
-but we still do more work than expected). So either I'd not worry
-about performance
-and provide an 'obvious correct' implementation, with e.g. no static
-here and we free the memory
-correctly. Or you'd go the performance route, but then we'd usually
-ask for numbers.
-(How much faster is it; Does the trickyness trade off well to the
-performance gain?)
+> Add a super-prefix environment variable 'GIT_INTERNAL_SUPER_PREFIX'
+> which can be used to specify a path from above a repository down to its
+> root.  The immediate use of this option is by commands which have a
+> --recurse-submodule option in order to give context to submodules about
+> how they were invoked.  This option is currently only allowed for
+> builtins which support a super-prefix.
 
+Yes, it can be used to specify that, but it is unclear (1) how such
+a path thusly specified is used, (2) how it affects the outcome of
+the operations, and (3) what it means (the same applies to the
+documentation update).
 
-> +       static struct strbuf full_name = STRBUF_INIT;
-> +       if (super_prefix && *super_prefix) {
+It would help future readers of "git log", "tig blame", etc. to have
+a few sentences after the first sentence above.  Perhaps
 
-Why do we have to check twice here? Wouldn't just
+    ... specify a path from above ... down to its root.  When such a
+    super-prefix is specified, the paths reported by Git are
+    prefixed with it to make them relative to that directory
+    "above".  The paths given by the users on the command line
+    (e.g. "git subcmd --output-file=path/to/a/file" and pathspecs)
+    are taken relative to that directory "above" to match.
 
-    if (super_prefix) {
-        ...
+or something like that?
 
-be enough?
+> @@ -468,6 +469,7 @@ extern int get_common_dir_noenv(struct strbuf *sb, const char *gitdir);
+>  extern int get_common_dir(struct strbuf *sb, const char *gitdir);
+>  extern const char *get_git_namespace(void);
+>  extern const char *strip_namespace(const char *namespaced_ref);
+> +extern const char *get_super_prefix();
+
+Nice, but 
+
+    extern const char *get_super_prefix(void);
+
+> +const char *get_super_prefix()
+
+Likewise.
+
+> +{
+> +	if (!super_prefix)
+> +		super_prefix = getenv(GIT_SUPER_PREFIX_ENVIRONMENT);
+> +	return super_prefix;
+> +}
+
+Good.
+
+>  	commit_pager_choice();
+>  
+> +	if (!help && get_super_prefix()) {
+> +		if (!(p->option & SUPPORT_SUPER_PREFIX))
+> +			die("%s doesn't support --super-prefix", p->cmd);
+> +		if (prefix)
+> +			die("can't have both a prefix and super-prefix");
+> +	}
+
+Nice.  I'd phrase the latter as "can't use--super-prefix from a
+subdirectory", though.
+
