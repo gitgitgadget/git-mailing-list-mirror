@@ -3,100 +3,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADF6A1F4F8
-	for <e@80x24.org>; Wed, 28 Sep 2016 18:02:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F9571F4F8
+	for <e@80x24.org>; Wed, 28 Sep 2016 18:06:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752168AbcI1SCx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Sep 2016 14:02:53 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52847 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750726AbcI1SCv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2016 14:02:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 20E5240A9D;
-        Wed, 28 Sep 2016 14:02:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=iwEUZTtocDzd+Gyl9SUH8V/xjvo=; b=dT0hSk
-        k6zolYjPO3dZito9V9JjbTmsXZSgRQDaURKQniEXoZKEIo8AlhZndM5YvJs/i4fs
-        4X1ETv0sAJAv1VNp+uct8UpT8sFFBheosknsL2GG6g+Y3DbuMnVE9GLmQo1y8ump
-        +iepbwlOQj5fqBuZRWVp4aTxF7EzHy4A7q7TI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=n+mf4w6vGXQ26/QbbiReTmti0jRPcURY
-        oB7v8lhyh8WVzUnDWA/3VKadeAit8/NCx4PBY5Upp4jWbJiCkzYQ+Dve9jnIoSGV
-        RqoXJJ/+kVEHT3rGkPJT5LutQ7hxpMuk738bmcxhMI84vfWGWdT7m3WfAdEL9IBt
-        fmfHXYhwAyQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1885440A9C;
-        Wed, 28 Sep 2016 14:02:50 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 35AA540A9A;
-        Wed, 28 Sep 2016 14:02:42 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        David Turner <novalis@novalis.org>, git@vger.kernel.org,
-        David Turner <dturner@twosigma.com>
-Subject: Re: thoughts on error passing, was Re: [PATCH 2/2] fsck: handle bad trees like other errors
-References: <1474918365-10937-1-git-send-email-novalis@novalis.org>
-        <1474918365-10937-3-git-send-email-novalis@novalis.org>
-        <20160927052754.bs4frcfy4y7fey62@sigill.intra.peff.net>
-        <1474989574.26902.7.camel@frank>
-        <20160927191955.mympqgylrxhkp24n@sigill.intra.peff.net>
-        <06b1a3bc-18dc-bd9e-4200-a2eedbec7b97@alum.mit.edu>
-        <20160928085841.aoisson3fnuke47q@sigill.intra.peff.net>
-Date:   Wed, 28 Sep 2016 11:02:27 -0700
-In-Reply-To: <20160928085841.aoisson3fnuke47q@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 28 Sep 2016 04:58:41 -0400")
-Message-ID: <xmqqh98zkimk.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1753298AbcI1SG3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Sep 2016 14:06:29 -0400
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:36727 "EHLO
+        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752196AbcI1SGT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2016 14:06:19 -0400
+Received: by mail-qk0-f176.google.com with SMTP id z190so54957962qkc.3
+        for <git@vger.kernel.org>; Wed, 28 Sep 2016 11:06:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=PBwpTHs4yrJyM7zOPF1s0ina3mLaRifIQsToT4XTlw8=;
+        b=HKMaKSeyxyQTvfVCqYFN6yssRdHAQvNOh8pci20yhKxE21B925o0W2JtGltL+wrtCP
+         byuw2KKYolFkFNa4ZzqIXGeWtqsM4NS+5Gtf84UXsRuYycUsvUyuU56/Ul9KMtd8Mcm2
+         f4jmZb09y0Ob/7yE5VNlrmhvkYgQIVVc+I69OMgdotzr+68HZYjRMmZjG9Yt8GkG1xQ8
+         UwQOnJ9G3tqERBHEEkMVfn6xibkW0tFyMj2M3s8X3dEd/zO+kizm38uBOrpINARKFipv
+         cTBqa5sEKOz3wVVyAw2/Qt2ePJhexoz9xzCs1iOlpU9/j3Q90ZZq5Jt/FHlZvejsekE2
+         iHXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=PBwpTHs4yrJyM7zOPF1s0ina3mLaRifIQsToT4XTlw8=;
+        b=g9OSGr1qndUc8MDoP37lFYuXfZltcyhe26WnRlxlgFO/fVWu3LMakOA7WPJC09YOOJ
+         jDYypy5eaK/lWNhL/Aot/SC4DSsAqbFECzEkxowqIsI+kZR8QK4xno2alNYUbLJ8weLq
+         CLC1xlvIcnWtc3XXj3NGtXwAHS50BZDJ1eCk5UzWDOhBYLtGJbKSZvDb+SUSwK7Go/es
+         u9jF/+cjaRjGEV9LosV/HXi13XdQeHylbaXiI30sjRtlsJrW5d+cmoR9I0jtU+CcYsp3
+         +2lt4ze/KZ46FfZb9dSpUEHM0wQl1JlebFjuvslT6Uw0Wp0f18d4+xil487G11Kgdl/Z
+         NzkA==
+X-Gm-Message-State: AA6/9RliuvY+a9/OrXYSlT13/OkMBhfWwV+cdbLbCCr2s9y0ksagfBNY5tYZfLFmv7g8JQ==
+X-Received: by 10.55.26.87 with SMTP id a84mr13991958qka.187.1475085977928;
+        Wed, 28 Sep 2016 11:06:17 -0700 (PDT)
+Received: from kwern-HP-Pavilion-dv5-Notebook-PC (ool-457850cc.dyn.optonline.net. [69.120.80.204])
+        by smtp.gmail.com with ESMTPSA id 44sm4466184qtt.5.2016.09.28.11.06.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 28 Sep 2016 11:06:17 -0700 (PDT)
+From:   Kevin Wern <kevin.m.wern@gmail.com>
+X-Google-Original-From: Kevin Wern <kwern@kwern-HP-Pavilion-dv5-Notebook-PC>
+Date:   Wed, 28 Sep 2016 14:06:15 -0400
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Kevin Wern <kevin.m.wern@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 10/11] run command: add RUN_COMMAND_NO_STDOUT
+Message-ID: <20160928180615.GA3942@kwern-HP-Pavilion-dv5-Notebook-PC>
+References: <1473984742-12516-1-git-send-email-kevin.m.wern@gmail.com>
+ <1473984742-12516-11-git-send-email-kevin.m.wern@gmail.com>
+ <xmqq37kzigvf.fsf@gitster.mtv.corp.google.com>
+ <20160928044622.GE3762@kwern-HP-Pavilion-dv5-Notebook-PC>
+ <xmqqponnkiz7.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C168BF30-85A5-11E6-9D68-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqponnkiz7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Wed, Sep 28, 2016 at 10:54:52AM -0700, Junio C Hamano wrote:
+> 
+> I just got an impression that you were apologetic for having to add
+> this option that is otherwise useless and tried to suggest a simpler
+> solution that does not involve such an addition.
 
->  	if (!dont_change_ref) {
->  		struct ref_transaction *transaction;
-> -		struct strbuf err = STRBUF_INIT;
-> -
-> -		transaction = ref_transaction_begin(&err);
-> -		if (!transaction ||
-> -		    ref_transaction_update(transaction, ref.buf,
-> -					   sha1, forcing ? NULL : null_sha1,
-> -					   0, msg, &err) ||
-> -		    ref_transaction_commit(transaction, &err))
-> -			die("%s", err.buf);
-> +
-> +		transaction = ref_transaction_begin(&error_die);
-> +		ref_transaction_update(transaction, ref.buf,
-> +				       sha1, forcing ? NULL : null_sha1,
-> +				       0, msg, &error_die);
-> +		ref_transaction_commit(transaction, &error_die);
->  		ref_transaction_free(transaction);
-> -		strbuf_release(&err);
->  	}
->  
->  	if (real_ref && track)
->
-> which is much shorter and to the point (it does rely on the called
-> functions always calling report_error() and never just returning NULL or
-> "-1", but that should be the already. If it isn't, we'd be printing
-> "fatal: " with no message).
-
-Yes but... grepping for die() got a lot harder, which may not be a
-good thing.
-
-I do like the flexibility such a mechanism offers, but
-wrapping/hiding die in it is probably an example that the
-flexibility went a bit too far.
+Sorry, to be clear, I meant I was ok with your suggestion. That's what I meant
+by 'this change.'
