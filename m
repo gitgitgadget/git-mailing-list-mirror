@@ -2,144 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD8A11F4F8
-	for <e@80x24.org>; Wed, 28 Sep 2016 16:09:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A54E11F4F8
+	for <e@80x24.org>; Wed, 28 Sep 2016 16:59:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933120AbcI1QJd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Sep 2016 12:09:33 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:45254 "EHLO mx1.redhat.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932798AbcI1QJb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2016 12:09:31 -0400
-Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S933281AbcI1Q7O (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Sep 2016 12:59:14 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58393 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932771AbcI1Q7M (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2016 12:59:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8103B40040;
+        Wed, 28 Sep 2016 12:59:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=8O2wKWLSmafdilh2lkSPmZptpqA=; b=YoAcX+
+        z7dYsCAFBH8WZxreabz4nR/FvNnmkuhD4nCdmcl+AxJpy8xzAGsiXzgtzfLkJZm7
+        5S2Z5j9u0l9hJX/2kfIpvtHyrPNMvjt6YO1QhgHSMtiLNkOVVWpirLC+fHnyPk9n
+        tApNik5ug2D4P/qEpQr/AbmC7k2EdkCk4M+UI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=YvDNl+oSYB3CIg2nVQjdespajHJvEK30
+        U22NRRff2gH3/TsaqbLHr5qksn9WOzWRm9RZWdtWsGla6wv4tGFj15QldqxoGC9h
+        dmazNf5M+GMRKc+LxAj7F0YU9ZgyN4VZlOCai8hv8gdtn8w0g4JcOgxtcrP/ur/t
+        dViok0UU5J8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 79D1D4003F;
+        Wed, 28 Sep 2016 12:59:11 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by mx1.redhat.com (Postfix) with ESMTPS id 35B44633FE
-        for <git@vger.kernel.org>; Wed, 28 Sep 2016 16:09:31 +0000 (UTC)
-Received: from pirat-work.brq.redhat.com (unused-4-182.brq.redhat.com [10.34.4.182])
-        by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id u8SG9UDJ027831;
-        Wed, 28 Sep 2016 12:09:30 -0400
-From:   Petr Stodulka <pstodulk@redhat.com>
-To:     git@vger.kernel.org
-Cc:     pstodulk@redhat.com
-Subject: [PATCH] http: Control GSSAPI credential delegation.
-Date:   Wed, 28 Sep 2016 18:05:52 +0200
-Message-Id: <1475078752-31195-1-git-send-email-pstodulk@redhat.com>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.27]); Wed, 28 Sep 2016 16:09:31 +0000 (UTC)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F3DAF4003E;
+        Wed, 28 Sep 2016 12:59:10 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Vasco Almeida <vascomalmeida@sapo.pt>
+Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v2 01/11] i18n: add--interactive: mark strings for translation
+References: <1472646690-9699-1-git-send-email-vascomalmeida@sapo.pt>
+        <1472646690-9699-2-git-send-email-vascomalmeida@sapo.pt>
+        <xmqqr387y4le.fsf@gitster.mtv.corp.google.com>
+        <1475066620.3257.12.camel@sapo.pt>
+Date:   Wed, 28 Sep 2016 09:59:09 -0700
+In-Reply-To: <1475066620.3257.12.camel@sapo.pt> (Vasco Almeida's message of
+        "Wed, 28 Sep 2016 12:43:40 +0000")
+Message-ID: <xmqq4m50klk2.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: E0976A68-859C-11E6-A14F-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Delegation of credentials is disabled by default in libcurl since
-version 7.21.7 due to security vulnerability CVE-2011-2192. Which
-makes troubles with GSS/kerberos authentication where delegation
-of credentials is required. This can be changed with option
-CURLOPT_GSSAPI_DELEGATION in libcurl with set expected parameter
-since libcurl version 7.22.0.
+Vasco Almeida <vascomalmeida@sapo.pt> writes:
 
-This patch provides new configuration variable http.delegation
-which corresponds to curl parameter "--delegation" (see man 1 curl).
+> As far as I understand, %12s means that the argument printed will have
+> a minimum length of 12 columns. So if the translation of 'stage' is
+> longer than 12 it will be printed fully no matter what. Though in that
+> case, the header will not be align correctly anymore:
 
-The following values are supported:
+Exactly.  That was where my suggestion comes from.  In such a case
+you may want to raise these numbers so that the fixed part
+(i.e. header that you are letting the translators insert their
+version of these words) would fit.
 
-* none (default).
-* policy
-* always
-
-Signed-off-by: Petr Stodulka <pstodulk@redhat.com>
----
- Documentation/config.txt | 14 ++++++++++++++
- http.c                   | 32 ++++++++++++++++++++++++++++++++
- 2 files changed, 46 insertions(+)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index e78293b..a179474 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1736,6 +1736,20 @@ http.emptyAuth::
- 	a username in the URL, as libcurl normally requires a username for
- 	authentication.
- 
-+http.delegation::
-+	Control GSSAPI credential delegation. The delegation is disabled
-+	by default in libcurl since version 7.21.7. Set parameter to tell
-+	the server what it is allowed to delegate when it comes to user
-+	credentials. Used with GSS/kerberos. Possible values are:
-++
-+--
-+* `none` - Don't allow any delegation.
-+* `policy` - Delegates if and only if the OK-AS-DELEGATE flag is set in the
-+  Kerberos service ticket, which is a matter of realm policy.
-+* `always` - Unconditionally allow the server to delegate.
-+--
-+
-+
- http.extraHeader::
- 	Pass an additional HTTP header when communicating with a server.  If
- 	more than one such entry exists, all of them are added as extra
-diff --git a/http.c b/http.c
-index 82ed542..5f8fab3 100644
---- a/http.c
-+++ b/http.c
-@@ -90,6 +90,18 @@ static struct {
- 	 * here, too
- 	 */
- };
-+#if LIBCURL_VERSION_NUM >= 0x071600
-+static const char *curl_deleg;
-+static struct {
-+	const char *name;
-+	long curl_deleg_param;
-+} curl_deleg_levels[] = {
-+	{ "none", CURLGSSAPI_DELEGATION_NONE },
-+	{ "policy", CURLGSSAPI_DELEGATION_POLICY_FLAG },
-+	{ "always", CURLGSSAPI_DELEGATION_FLAG },
-+};
-+#endif
-+
- static struct credential proxy_auth = CREDENTIAL_INIT;
- static const char *curl_proxyuserpwd;
- static const char *curl_cookie_file;
-@@ -323,6 +335,10 @@ static int http_options(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
- 
-+	if (!strcmp("http.delegation", var)) {
-+		return git_config_string(&curl_deleg, var, value);
-+	}
-+
- 	if (!strcmp("http.pinnedpubkey", var)) {
- #if LIBCURL_VERSION_NUM >= 0x072c00
- 		return git_config_pathname(&ssl_pinnedkey, var, value);
-@@ -629,6 +645,22 @@ static CURL *get_curl_handle(void)
- 	curl_easy_setopt(result, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
- #endif
- 
-+#if LIBCURL_VERSION_NUM >= 0x071600
-+	if (curl_deleg) {
-+		int i;
-+		for (i = 0; i < ARRAY_SIZE(curl_deleg_levels); i++) {
-+			if (!strcmp(curl_deleg, curl_deleg_levels[i].name)) {
-+				curl_easy_setopt(result, CURLOPT_GSSAPI_DELEGATION,
-+						curl_deleg_levels[i].curl_deleg_param);
-+				break;
-+			}
-+		}
-+		if (i == ARRAY_SIZE(curl_deleg_levels))
-+			warning("Unknown delegation method '%s': using default",
-+				curl_deleg);
-+	}
-+#endif
-+
- 	if (http_proactive_auth)
- 		init_curl_http_auth(result);
- 
--- 
-2.5.5
-
+As Duy points out in his response to your message, that widening
+further needs to take into account how many display columns each
+translated words and phrases occupies, not just its byte length.
