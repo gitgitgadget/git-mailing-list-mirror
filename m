@@ -7,81 +7,82 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5737020986
-	for <e@80x24.org>; Wed, 28 Sep 2016 04:44:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0545220986
+	for <e@80x24.org>; Wed, 28 Sep 2016 04:46:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751255AbcI1Eoe (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Sep 2016 00:44:34 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:36808 "EHLO
+        id S1751268AbcI1Eq0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Sep 2016 00:46:26 -0400
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:33357 "EHLO
         mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750954AbcI1Eoc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2016 00:44:32 -0400
-Received: by mail-qt0-f193.google.com with SMTP id 11so1034559qtc.3
-        for <git@vger.kernel.org>; Tue, 27 Sep 2016 21:44:31 -0700 (PDT)
+        with ESMTP id S1750861AbcI1EqZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2016 00:46:25 -0400
+Received: by mail-qt0-f193.google.com with SMTP id z36so1014049qtc.0
+        for <git@vger.kernel.org>; Tue, 27 Sep 2016 21:46:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:date:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=N3OkgJUb3quSFWymeNqMC3NFX4LRunN6TDFcd/QEVvg=;
-        b=xHvYWM8cl5v8AYYlrLmRKJlJDVsHPOvym77LNBdGnCWn2CsT/4aqJLBSy0noTg389M
-         wAfcuRR0iJobCrJCuOaItpa3RYA/rm+yp7B+GypSCn4P7fvsUyWhkIohW5KQrtwuBt56
-         s1GKmpG8WAvls0NVMHB29jm25VQfsF5YWI8bBP5k8IMYOnRxY8PALrrsQj0Zo83GkaOv
-         6Aum5KEH9Yi1uRw6j1kp/ROYvaF5eUxcWlCkpCMMhiCtPWBgFOpi6R6ktyog8Y9su/n2
-         CVP2mqjQy0EA9FXxZ1KWYdyZnvINZIWB8GWv/8ryVqUDzOgM+g1B9PLY4yR0K9hnyRkL
-         9GSw==
+        bh=nuTP1e9FUvALwgIpvbHWGboY9+oQsFSG/FoZdwev0V0=;
+        b=dwLmsRv/WTfF0fWvQZvl2Kg2q5yQ4hfSbdLrHFussFcsoGYtAfuekpS4shF+9FVZ6T
+         R4rrHu63pfzCBdV8zV3RDm2mq3jPMrWx7YG5aJwNlFU3nYwO+ZnzGTxd6+iFBAaGCgjx
+         mRhkmU7b+BlVeCjTUL5+q07KEoj5xueaYiNWuvw3Eimsh43ZJbtiNmsyN8mVwvAEwMi1
+         308biR2vcet7UHGl8zP3Nwl+EJR3IsWw3elZdnwbvd3TSMVotQd8kxl1uaOmWJaYcOF8
+         WC83dGlM5v4+5WZOiRJW8qnrdR0DCCSEMv4YZ1CAXaYWkgzDeLGg2J8UrDQt+gr87SBR
+         Kimg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:date:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=N3OkgJUb3quSFWymeNqMC3NFX4LRunN6TDFcd/QEVvg=;
-        b=PWOCZfyVh15DH5+3J1CdkNF8BbVdlSekXAh3JrvZ9Zz3HNCZ3kDk1lqaba+dE8uzho
-         f78i2oPtDRp6Ge7IbkXDoUdytcGfr9pnXrgyZF+V9WDcA8uySyGOgqnO3TbVQ7Zt2Qvz
-         z7ee9CMo+TMMmK3SJ1wio/kgWE6AeL8L2Lheqznw3SAP8avBGyucYTDdHa6bntYbSLl9
-         GvKMZAz8vTS/BEaouzB9s8qVbVylfmseMPu+INNZpanUZ50TV112n7GHcXuYywoJO8/c
-         MWRpAO+dPVMLbuk7I9G5pk6SOvWWRX+erAsePfSX/hf176Rv39AQQ6XeCTCwZU9DZmt8
-         B5EA==
-X-Gm-Message-State: AA6/9RlrC9oaeCqh9vEunEluhX8klD5THFkE54HpzeV7bVSAwi4Y+hGUI+2tLx3yXvci/Q==
-X-Received: by 10.200.42.130 with SMTP id b2mr30309399qta.106.1475037870851;
-        Tue, 27 Sep 2016 21:44:30 -0700 (PDT)
+        bh=nuTP1e9FUvALwgIpvbHWGboY9+oQsFSG/FoZdwev0V0=;
+        b=NoaSaUrlNseYL2cF+iGIv55c1pUk/TgdCLa5Zr32lMuFUTrVwnVWGd8PlU87fVYrAc
+         NVSzbRnPVY72GRoQnRqd4E59Tj1YexJMAnHQnyLkDGTPvDabL1n9KGWfedrU2KxuMmCz
+         w4eMbubk/7DhJUrCaNpoQH7L4y7RziPA2fmrjUW1VjVFLaOT8Ge3HnZHwsAfysEptIGV
+         Ju7tUEII1P0pB3rHhbhNsjkf9MlIce7K8Jixz8ARdlqqAEkDj/kV8ZghGF77fIvmUEnq
+         3HxAenxjUg8OcPKxUAE17bvwaWoRrQfB1Rl5L5D3igIBMd8b5CTbj/YUJ4CF3d8MWRn5
+         4eNQ==
+X-Gm-Message-State: AA6/9RlPQfndJTmHAXP4mKZKWOcnNJjw6WoQj1tlYJ7HqcR5160CpMFL/FcOEZNnItt2XA==
+X-Received: by 10.237.57.136 with SMTP id m8mr5198339qte.12.1475037984409;
+        Tue, 27 Sep 2016 21:46:24 -0700 (PDT)
 Received: from kwern-HP-Pavilion-dv5-Notebook-PC (ool-457850cc.dyn.optonline.net. [69.120.80.204])
-        by smtp.gmail.com with ESMTPSA id q62sm3063836qkb.4.2016.09.27.21.44.30
+        by smtp.gmail.com with ESMTPSA id v10sm3052438qkg.20.2016.09.27.21.46.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 27 Sep 2016 21:44:30 -0700 (PDT)
+        Tue, 27 Sep 2016 21:46:23 -0700 (PDT)
 From:   Kevin Wern <kevin.m.wern@gmail.com>
 X-Google-Original-From: Kevin Wern <kwern@kwern-HP-Pavilion-dv5-Notebook-PC>
-Date:   Wed, 28 Sep 2016 00:44:28 -0400
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Kevin Wern <kevin.m.wern@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 11/11] Resumable clone: implement primer logic in
- git-clone
-Message-ID: <20160928044428.GD3762@kwern-HP-Pavilion-dv5-Notebook-PC>
+Date:   Wed, 28 Sep 2016 00:46:22 -0400
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Kevin Wern <kevin.m.wern@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 10/11] run command: add RUN_COMMAND_NO_STDOUT
+Message-ID: <20160928044622.GE3762@kwern-HP-Pavilion-dv5-Notebook-PC>
 References: <1473984742-12516-1-git-send-email-kevin.m.wern@gmail.com>
- <1473984742-12516-12-git-send-email-kevin.m.wern@gmail.com>
- <CACsJy8B1bbKBhg1ke4u6PV3k4FWz-bhBPyN2X=mV2Z2=8Mhy=A@mail.gmail.com>
+ <1473984742-12516-11-git-send-email-kevin.m.wern@gmail.com>
+ <xmqq37kzigvf.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CACsJy8B1bbKBhg1ke4u6PV3k4FWz-bhBPyN2X=mV2Z2=8Mhy=A@mail.gmail.com>
+In-Reply-To: <xmqq37kzigvf.fsf@gitster.mtv.corp.google.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 19, 2016 at 09:04:40PM +0700, Duy Nguyen wrote:
-> On Fri, Sep 16, 2016 at 7:12 AM, Kevin Wern <kevin.m.wern@gmail.com> wrote:
-> >  builtin/clone.c             | 590 +++++++++++++++++++++++++++++++++++++-------
+On Fri, Sep 16, 2016 at 04:07:00PM -0700, Junio C Hamano wrote:
+> Kevin Wern <kevin.m.wern@gmail.com> writes:
 > 
-> Argh.. this is too big for my brain at this hour. It might be easier
-> to follow if you separate out some code move (I think I've seen some,
-> not sure). I'll try to have another look when I find time. But it's
-> great to hear from you again, the pleasant surprise in my inbox today,
-> as I thought we lost you ;-) There's hope for resumable clone maybe
-> before 2018 again.
+> > Add option RUN_COMMAND_NO_STDOUT, which sets no_stdout on a child
+> > process.
+> >
+> > This will be used by git clone when calling index-pack on a downloaded
+> > packfile.
+> 
+> If it is just one caller, would't it make more sense for that caller
+> set no_stdout explicitly itself?
 
-Sorry, I didn't mean to hurt anyone haha. I probably should have broken it down
-into the bare process (priming from static resource, with no options), and the
-resume option.
+I based the calling code in do_index_pack on dissociate_from_references, which
+uses run_command_v_opt, so it never occured to me to do that. I thought it was
+just good, uniform style and encapsulation. Like how transport's methods and
+internals aren't really intended to be changed or accessed--unless it's through
+the APIs we create.
 
-Thanks so much for your feedback! :)
+However, I don't feel very strongly about this, so I'm okay with this change.
