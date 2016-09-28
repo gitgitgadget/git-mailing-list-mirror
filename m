@@ -3,186 +3,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08F661F4F8
-	for <e@80x24.org>; Wed, 28 Sep 2016 14:24:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9D7F1F4F8
+	for <e@80x24.org>; Wed, 28 Sep 2016 14:30:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932557AbcI1OYS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Sep 2016 10:24:18 -0400
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:45110 "EHLO
-        out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932362AbcI1OYQ (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 28 Sep 2016 10:24:16 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 63C1120647;
-        Wed, 28 Sep 2016 10:24:15 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute3.internal (MEProxy); Wed, 28 Sep 2016 10:24:15 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-        :date:from:in-reply-to:message-id:references:subject:to
-        :x-sasl-enc:x-sasl-enc; s=mesmtp; bh=APs5/qP2MfGcsUdDgnp8S8Fn/lE
-        =; b=A+X7LAks1i07VN+ELJHPE5zHDflZJ48bIU1iGpx4pDKvTDg66Mb24UmPauz
-        TYzJIC/CLrCEdVxxIgOXK25ZpApmB0VF8YNlNMuxeY8g6lPITckdsLj7LnWLQLqN
-        9aXv4fVmKrkN4AyaUwlmrWeFQEXAuKSvxueuRXrzSs6UhLic=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:date:from:in-reply-to:message-id
-        :references:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=APs5
-        /qP2MfGcsUdDgnp8S8Fn/lE=; b=OAN5RUwTjcfruD8TrCM9nz1ITnoOZqEUDlf+
-        bys/Yb7Evlqy+5q1JNPo3bLI3ljVBb6Uj3Gjib7nhWFNTuM6kKrdwfInelgJTpiw
-        RzsnR0WhGcdux9gBnIPAHDQodr6EwXj/qNhvmPOL8cogEcxZEUbnWULazbsLp/BO
-        lVfuAKg=
-X-Sasl-enc: apnGrnLN8rDXZo2LJxG22eR2JQqffKaRJOc0zM2HfkwD 1475072654
-Received: from localhost (skimbleshanks.math.uni-hannover.de [130.75.46.4])
-        by mail.messagingengine.com (Postfix) with ESMTPA id E95A6F29CF;
-        Wed, 28 Sep 2016 10:24:14 -0400 (EDT)
-From:   Michael J Gruber <git@drmicha.warpmail.net>
-To:     git@vger.kernel.org
-Cc:     Alex <agrambot@gmail.com>
-Subject: [PATCH v2] gpg-interface: use more status letters
-Date:   Wed, 28 Sep 2016 16:24:13 +0200
-Message-Id: <c4777ef68059034d7ad4697a06bba3cabbdc9265.1475053649.git.git@drmicha.warpmail.net>
-X-Mailer: git-send-email 2.10.0.527.gbcb6904
-In-Reply-To: <xmqqk2dxp84i.fsf@gitster.mtv.corp.google.com>
-References: <xmqqk2dxp84i.fsf@gitster.mtv.corp.google.com>
+        id S932582AbcI1OaY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Sep 2016 10:30:24 -0400
+Received: from mail-io0-f172.google.com ([209.85.223.172]:35287 "EHLO
+        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932362AbcI1OaW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2016 10:30:22 -0400
+Received: by mail-io0-f172.google.com with SMTP id 92so61203405iol.2
+        for <git@vger.kernel.org>; Wed, 28 Sep 2016 07:30:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=jMLqkcXW0uhHlqi3hM005xM114GEV7RoTAWfvgFkH/4=;
+        b=ar0B0FmC5PqRlxC5xQIzMeAnjYUj+9TslVAsJIvq3HeiAcEm6Ooo176DlgvdoJAyDq
+         4OfmQUHwowwd+0h0T800OKE6V/+PmLkRYayjJejERAyyA4JeXrQgpdXCb5DJjqCtTx8N
+         yrjyRXw4pYPlnpCuPAvsB2xpZfxrQ8HYixSkeWlGH0e3mcQao0psPCu43ZpGKY5dVBsB
+         9CtWXl5SOfBbQZRl6t+FJVP/7N5GY+G4KwVcC88Zy8Bi8lEe3vfyFjHXjtQZjuxSUKBQ
+         kn9cnxcDj/a5W7sBma9fpOkC1hBjpYEXE/iu1JmYkBjgnt8fPUE0PU3BVCeRqtFkNR4+
+         1PWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=jMLqkcXW0uhHlqi3hM005xM114GEV7RoTAWfvgFkH/4=;
+        b=R2mHzkZ4YWBsCv0ebbgBNAgi7/wMSGU33/NzHK9++LCLXGRnVtaiP07fHQbXL1pfMd
+         RoNBA8ia5FDWV59rek+AfzulQtxhQFdgD3hRb8gMnbwPp1hpFUh/Q7RF1w1auccNuy8Y
+         KImIufjcXqPyIoNsPl7DC7DzFq3Yw7lJFwZhIsevxDJ2jJzvwZTiQYDk3H5Jsud1Lxt/
+         G3GYAHyJmV7kPxRaGbr3o/G308nyeQXVQJJz+NpSH4LSreG2hrGU7ezLzcASyvxtRGAV
+         BqEd30wONLrUy3/+cDpTFOI49oUf37KCz09nIuncHFhhtPo945vpDnku6tzKod8RHD3I
+         DmBQ==
+X-Gm-Message-State: AE9vXwM1qSPcOs/YX/EGl6MrLSrSYNjOSmWgvl37962VjTxqSgCInrYY60bMco1h3AyG6Wl/avEwfMfwy+Q7Yw==
+X-Received: by 10.107.30.69 with SMTP id e66mr34534690ioe.107.1475073017540;
+ Wed, 28 Sep 2016 07:30:17 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.64.21.6 with HTTP; Wed, 28 Sep 2016 07:29:47 -0700 (PDT)
+In-Reply-To: <1475066620.3257.12.camel@sapo.pt>
+References: <1472646690-9699-1-git-send-email-vascomalmeida@sapo.pt>
+ <1472646690-9699-2-git-send-email-vascomalmeida@sapo.pt> <xmqqr387y4le.fsf@gitster.mtv.corp.google.com>
+ <1475066620.3257.12.camel@sapo.pt>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 28 Sep 2016 21:29:47 +0700
+Message-ID: <CACsJy8BUaJ8sRw2EtgrTe0X4khCsuKFD75ON12oC1FvqdMXr=g@mail.gmail.com>
+Subject: Re: [PATCH v2 01/11] i18n: add--interactive: mark strings for translation
+To:     Vasco Almeida <vascomalmeida@sapo.pt>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        David Aguilar <davvid@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-According to gpg2's doc/DETAILS:
-"For each signature only one of the codes GOODSIG, BADSIG, EXPSIG,
-EXPKEYSIG, REVKEYSIG or ERRSIG will be emitted."
+On Wed, Sep 28, 2016 at 7:43 PM, Vasco Almeida <vascomalmeida@sapo.pt> wrot=
+e:
+> A Dom, 25-09-2016 =C3=A0s 15:52 -0700, Junio C Hamano escreveu:
+>> > @@ -252,7 +253,7 @@ sub list_untracked {
+>> >  }
+>> >
+>> >  my $status_fmt =3D '%12s %12s %s';
+>> > -my $status_head =3D sprintf($status_fmt, 'staged', 'unstaged', 'path'=
+);
+>> > +my $status_head =3D sprintf($status_fmt, __('staged'), __('unstaged')=
+, __('path'));
+>>
+>> Wouldn't it make sense to allow translators to tweak $status_fmt if
+>> you are allowing the earlier elements that are formatted with %12s,
+>> as their translation may not fit within that width, in which case
+>> they may want to make these columns wider?
+>
+> As far as I understand, %12s means that the argument printed will have
+> a minimum length of 12 columns. So if the translation of 'stage' is
+> longer than 12 it will be printed fully no matter what. Though in that
+> case, the header will not be align correctly anymore:
+> for other instances of this in the present patch series.
 
-gpg1 ("classic") behaves the same (although doc/DETAILS
-differs).
-
-Currently, we parse gpg's status output for GOODSIG, BADSIG and trust
-information and translate that into status codes G, B, U, N for the %G?
-format specifier.
-
-git-verify-* returns success in the GOODSIG case only. This is somewhat in
-disagreement with gpg, which considers the first 5 of the 6 above as VALIDSIG,
-but we err on the very safe side.
-
-Introduce additional status codes E, X, R for ERRSIG, EXP*SIG, REVKEYSIG
-so that a user of %G? gets more information about the absence of a 'G'
-on first glance.
-
-Requested-by: Alex <agrambot@gmail.com>
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-Changes in v2:
-
-- Use GNUPGHOME="$HOME/gnupg-home-not-used" just like in other tests (lib).
-- Do not parse for signer UID in the ERRSIG case (and test that we do not).
-- Retreat "rather" addition from the doc: good/valid are terms that we use
-  differently from gpg anyways.
-
- Documentation/pretty-formats.txt |  9 +++++++--
- gpg-interface.c                  | 13 ++++++++++---
- pretty.c                         |  3 +++
- t/t7510-signed-commit.sh         | 12 +++++++++++-
- 4 files changed, 31 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index a942d57..c28ff2b 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -143,8 +143,13 @@ ifndef::git-rev-list[]
- - '%N': commit notes
- endif::git-rev-list[]
- - '%GG': raw verification message from GPG for a signed commit
--- '%G?': show "G" for a good (valid) signature, "B" for a bad signature,
--  "U" for a good signature with unknown validity and "N" for no signature
-+- '%G?': show "G" for a good (valid) signature,
-+  "B" for a bad signature,
-+  "U" for a good signature with unknown validity,
-+  "X" for a good expired signature, or good signature made by an expired key,
-+  "R" for a good signature made by a revoked key,
-+  "E" if the signature cannot be checked (e.g. missing key)
-+  and "N" for no signature
- - '%GS': show the name of the signer for a signed commit
- - '%GK': show the key used to sign a signed commit
- - '%gD': reflog selector, e.g., `refs/stash@{1}` or
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 8672eda..6999e7b 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -33,6 +33,10 @@ static struct {
- 	{ 'B', "\n[GNUPG:] BADSIG " },
- 	{ 'U', "\n[GNUPG:] TRUST_NEVER" },
- 	{ 'U', "\n[GNUPG:] TRUST_UNDEFINED" },
-+	{ 'E', "\n[GNUPG:] ERRSIG "},
-+	{ 'X', "\n[GNUPG:] EXPSIG "},
-+	{ 'X', "\n[GNUPG:] EXPKEYSIG "},
-+	{ 'R', "\n[GNUPG:] REVKEYSIG "},
- };
- 
- void parse_gpg_output(struct signature_check *sigc)
-@@ -54,9 +58,12 @@ void parse_gpg_output(struct signature_check *sigc)
- 		/* The trust messages are not followed by key/signer information */
- 		if (sigc->result != 'U') {
- 			sigc->key = xmemdupz(found, 16);
--			found += 17;
--			next = strchrnul(found, '\n');
--			sigc->signer = xmemdupz(found, next - found);
-+			/* The ERRSIG message is not followed by signer information */
-+			if (sigc-> result != 'E') {
-+				found += 17;
-+				next = strchrnul(found, '\n');
-+				sigc->signer = xmemdupz(found, next - found);
-+			}
- 		}
- 	}
- }
-diff --git a/pretty.c b/pretty.c
-index 493edb0..39a36cd 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1232,8 +1232,11 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 			switch (c->signature_check.result) {
- 			case 'G':
- 			case 'B':
-+			case 'E':
- 			case 'U':
- 			case 'N':
-+			case 'X':
-+			case 'R':
- 				strbuf_addch(sb, c->signature_check.result);
- 			}
- 			break;
-diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
-index 6e839f5..9f487f9 100755
---- a/t/t7510-signed-commit.sh
-+++ b/t/t7510-signed-commit.sh
-@@ -190,7 +190,7 @@ test_expect_success GPG 'show bad signature with custom format' '
- 	test_cmp expect actual
- '
- 
--test_expect_success GPG 'show unknown signature with custom format' '
-+test_expect_success GPG 'show untrusted signature with custom format' '
- 	cat >expect <<-\EOF &&
- 	U
- 	61092E85B7227189
-@@ -200,6 +200,16 @@ test_expect_success GPG 'show unknown signature with custom format' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success GPG 'show unknown signature with custom format' '
-+	cat >expect <<-\EOF &&
-+	E
-+	61092E85B7227189
-+
-+	EOF
-+	GNUPGHOME="$HOME/gnupg-home-not-used" git log -1 --format="%G?%n%GK%n%GS" eighth-signed-alt >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success GPG 'show lack of signature with custom format' '
- 	cat >expect <<-\EOF &&
- 	N
--- 
-2.10.0.527.gbcb6904
-
+It's 12 bytes, not columns (unless perl understands input string's
+encoding, which I doubt). Think about multi-byte encodings like utf-8,
+where three letters (or "columns") do not necessary mean three bytes.
+The result is most likely unaligned in that case.
+--=20
+Duy
