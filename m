@@ -2,82 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE4C01F4F8
-	for <e@80x24.org>; Wed, 28 Sep 2016 17:59:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04D3E1F4F8
+	for <e@80x24.org>; Wed, 28 Sep 2016 18:01:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753004AbcI1R7K (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Sep 2016 13:59:10 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53181 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752625AbcI1R7J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2016 13:59:09 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2162B420E9;
-        Wed, 28 Sep 2016 13:59:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+YXEtrVa7/EpTUDl8HkFoR6eny0=; b=lJCTDt
-        mFiwoe4m3TCeh6s4BaDkMyxWWIskRfmVrbUk6xCUclAU4z19pivWw1vyPaG55q72
-        BUBa1uhZhSZjxzQQyecvhRL3/OzV1/QmLVVUz/hZBh9Qm1Pvd73V/Wd0ZFbo1ZVq
-        +EH1zEGCy1V3HPe9Hx4wN+7vxidIm63m2I1JY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=D7LxVN1X70EV1sLFf/qAV36X3ZRoNq6Q
-        g7ZfXDkof/uqYP2MSkuWGh2YZzDgKZ+f+iKDOjXZaZECc/LUjjRVc/l8VKj9YW8x
-        7+k3AuCs3w333+q0d+eWBFA6/drhUVjlUHEzzEpMI4Jt4QSG9apkE9PewU8K0PAF
-        x3CR9OqUaB4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 19C5D420E7;
-        Wed, 28 Sep 2016 13:59:08 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        id S1752850AbcI1SBs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Sep 2016 14:01:48 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:36454 "EHLO mx1.redhat.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751220AbcI1SBr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2016 14:01:47 -0400
+Received: from int-mx09.intmail.prod.int.phx2.redhat.com (int-mx09.intmail.prod.int.phx2.redhat.com [10.5.11.22])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 81962420E4;
-        Wed, 28 Sep 2016 13:59:07 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Eric S. Raymond" <esr@thyrsus.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH 3/3] docs/cvs-migration: mention cvsimport caveats
-References: <20160922072350.ivjrfuedodd2rezn@sigill.intra.peff.net>
-        <20160922072628.rs47hfiowtobw46s@sigill.intra.peff.net>
-        <20160922131526.GB6320@thyrsus.com>
-        <20160923035601.f5czdieouzvm3ptz@sigill.intra.peff.net>
-        <20160928001108.GA9120@thyrsus.com>
-Date:   Wed, 28 Sep 2016 10:59:05 -0700
-In-Reply-To: <20160928001108.GA9120@thyrsus.com> (Eric S. Raymond's message of
-        "Tue, 27 Sep 2016 20:11:08 -0400")
-Message-ID: <xmqqlgybkis6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 404088FC-85A5-11E6-B5B5-C26412518317-77302942!pb-smtp1.pobox.com
+        by mx1.redhat.com (Postfix) with ESMTPS id B3E96C0921A5
+        for <git@vger.kernel.org>; Wed, 28 Sep 2016 18:01:46 +0000 (UTC)
+Received: from pirat-work.brq.redhat.com (unused-4-182.brq.redhat.com [10.34.4.182])
+        by int-mx09.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id u8SI1j2v028741;
+        Wed, 28 Sep 2016 14:01:45 -0400
+From:   Petr Stodulka <pstodulk@redhat.com>
+To:     git@vger.kernel.org
+Cc:     pstodulk@redhat.com
+Subject: [PATCH v2] http: Control GSSAPI credential delegation.
+Date:   Wed, 28 Sep 2016 20:01:34 +0200
+Message-Id: <1475085694-10056-1-git-send-email-pstodulk@redhat.com>
+In-Reply-To: <20160928171610.pbghg4sk23vm4xnp@sigill.intra.peff.net>
+References: <20160928171610.pbghg4sk23vm4xnp@sigill.intra.peff.net>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.32]); Wed, 28 Sep 2016 18:01:46 +0000 (UTC)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Eric S. Raymond" <esr@thyrsus.com> writes:
+Delegation of credentials is disabled by default in libcurl since
+version 7.21.7 due to security vulnerability CVE-2011-2192. Which
+makes troubles with GSS/kerberos authentication when delegation
+of credentials is required. This can be changed with option
+CURLOPT_GSSAPI_DELEGATION in libcurl with set expected parameter
+since libcurl version 7.22.0.
 
-> Jeff King <peff@peff.net>:
->>               I am not qualified to write on the current state of
->> the art in CVS importing.
->
-> I *am* qualified; cvs-fast-export has had a lot of work put into it by
-> myself and others over the last five years.  Nobody else is really
-> working this problem anymore, not much else than cvs2git is even left
-> standing at this point.
+This patch provides new configuration variable http.delegation
+which corresponds to curl parameter "--delegation" (see man 1 curl).
 
-It sounds like you, as a better qualified person, would be in the
-best position to send an update to the documentation to tell people
-not to use older and unmaintained ones and guides them instead to a
-newer and better tool.
+The following values are supported:
 
-    ... ah, I notice that peff said the same already.
+* none (default).
+* policy
+* always
 
-I'd be fine with reviewing and applying such a patch.
+Signed-off-by: Petr Stodulka <pstodulk@redhat.com>
+---
+ Documentation/config.txt | 14 ++++++++++++++
+ http.c                   | 37 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 51 insertions(+)
 
-Thanks.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index e78293b..a179474 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1736,6 +1736,20 @@ http.emptyAuth::
+ 	a username in the URL, as libcurl normally requires a username for
+ 	authentication.
+ 
++http.delegation::
++	Control GSSAPI credential delegation. The delegation is disabled
++	by default in libcurl since version 7.21.7. Set parameter to tell
++	the server what it is allowed to delegate when it comes to user
++	credentials. Used with GSS/kerberos. Possible values are:
+++
++--
++* `none` - Don't allow any delegation.
++* `policy` - Delegates if and only if the OK-AS-DELEGATE flag is set in the
++  Kerberos service ticket, which is a matter of realm policy.
++* `always` - Unconditionally allow the server to delegate.
++--
++
++
+ http.extraHeader::
+ 	Pass an additional HTTP header when communicating with a server.  If
+ 	more than one such entry exists, all of them are added as extra
+diff --git a/http.c b/http.c
+index 82ed542..0c65639 100644
+--- a/http.c
++++ b/http.c
+@@ -90,6 +90,18 @@ static struct {
+ 	 * here, too
+ 	 */
+ };
++#if LIBCURL_VERSION_NUM >= 0x071600
++static const char *curl_deleg;
++static struct {
++	const char *name;
++	long curl_deleg_param;
++} curl_deleg_levels[] = {
++	{ "none", CURLGSSAPI_DELEGATION_NONE },
++	{ "policy", CURLGSSAPI_DELEGATION_POLICY_FLAG },
++	{ "always", CURLGSSAPI_DELEGATION_FLAG },
++};
++#endif
++
+ static struct credential proxy_auth = CREDENTIAL_INIT;
+ static const char *curl_proxyuserpwd;
+ static const char *curl_cookie_file;
+@@ -323,6 +335,15 @@ static int http_options(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp("http.delegation", var)) {
++#if LIBCURL_VERSION_NUM >= 0x071600
++		return git_config_string(&curl_deleg, var, value);
++#else
++		warning(_("Delegation control is not supported with cURL < 7.22.0"));
++		return 0;
++#endif
++	}
++
+ 	if (!strcmp("http.pinnedpubkey", var)) {
+ #if LIBCURL_VERSION_NUM >= 0x072c00
+ 		return git_config_pathname(&ssl_pinnedkey, var, value);
+@@ -629,6 +650,22 @@ static CURL *get_curl_handle(void)
+ 	curl_easy_setopt(result, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+ #endif
+ 
++#if LIBCURL_VERSION_NUM >= 0x071600
++	if (curl_deleg) {
++		int i;
++		for (i = 0; i < ARRAY_SIZE(curl_deleg_levels); i++) {
++			if (!strcmp(curl_deleg, curl_deleg_levels[i].name)) {
++				curl_easy_setopt(result, CURLOPT_GSSAPI_DELEGATION,
++						curl_deleg_levels[i].curl_deleg_param);
++				break;
++			}
++		}
++		if (i == ARRAY_SIZE(curl_deleg_levels))
++			warning("Unknown delegation method '%s': using default",
++				curl_deleg);
++	}
++#endif
++
+ 	if (http_proactive_auth)
+ 		init_curl_http_auth(result);
+ 
+-- 
+2.5.5
+
