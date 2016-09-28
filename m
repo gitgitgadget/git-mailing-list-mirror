@@ -2,143 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE3291F4F8
-	for <e@80x24.org>; Wed, 28 Sep 2016 19:18:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E10F91F4F8
+	for <e@80x24.org>; Wed, 28 Sep 2016 19:28:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932389AbcI1TSh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Sep 2016 15:18:37 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:52014 "EHLO mx1.redhat.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932306AbcI1TSg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2016 15:18:36 -0400
-Received: from int-mx09.intmail.prod.int.phx2.redhat.com (int-mx09.intmail.prod.int.phx2.redhat.com [10.5.11.22])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S932607AbcI1T2E (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Sep 2016 15:28:04 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56126 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932299AbcI1T2E (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2016 15:28:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A56E541047;
+        Wed, 28 Sep 2016 15:28:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=u3U6QrEiO0Nm
+        ijkTl8ygHNhl2x8=; b=NZQyR8BYdM+M4owwES0DVlzi9pw451ya0pMZk/sIP9yB
+        OROmErX3iQSVM44rfMfXDzngTH0wdBxr6S3e259TiHeznzxNGy/vSWM4H+BHhWg6
+        tqfv+t5agDmBsXT3VRLw7srF/tLYXA8uKSo+dscz0m2mXYPFqOsXbE12NOmcJMc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=nBF5gT
+        BxnMIrpgKjeBEHye3+ddb+dp1r4pE4TObJ/m+67phrh7gFKLxOB5mFmCDoKg6yPq
+        io19ur3bolSZSoegyEhvo34Yeh07Eu/Can3UJDHuUFK5eHenShxVPcj+HPArIGFq
+        pk1SIW8ppbkxPKVA/1sHBTk4bVP9GPSXOImy4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9E92441046;
+        Wed, 28 Sep 2016 15:28:02 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by mx1.redhat.com (Postfix) with ESMTPS id E28D431A349;
-        Wed, 28 Sep 2016 19:18:35 +0000 (UTC)
-Received: from [10.34.4.182] (unused-4-182.brq.redhat.com [10.34.4.182])
-        by int-mx09.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id u8SIJvcj011032
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-        Wed, 28 Sep 2016 14:19:58 -0400
-Subject: Re: [PATCH] http: Control GSSAPI credential delegation.
-To:     Jeff King <peff@peff.net>
-References: <1475078752-31195-1-git-send-email-pstodulk@redhat.com>
- <20160928171610.pbghg4sk23vm4xnp@sigill.intra.peff.net>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 281484103E;
+        Wed, 28 Sep 2016 15:28:02 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
 Cc:     git@vger.kernel.org
-From:   Petr Stodulka <pstodulk@redhat.com>
-Message-ID: <9c9e9949-cfe0-5465-6ae1-3e8254ff055b@redhat.com>
-Date:   Wed, 28 Sep 2016 20:19:47 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
+Subject: Re: [PATCH 1/3] Resurrect "diff-lib.c: adjust position of i-t-a entries in diff"
+References: <20160928114348.1470-1-pclouds@gmail.com>
+        <20160928114348.1470-2-pclouds@gmail.com>
+Date:   Wed, 28 Sep 2016 12:28:00 -0700
+In-Reply-To: <20160928114348.1470-2-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
+ =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
+        Duy"'s message of "Wed, 28 Sep 2016 18:43:46 +0700")
+Message-ID: <xmqqzimrj03j.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20160928171610.pbghg4sk23vm4xnp@sigill.intra.peff.net>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="Kq9aiEn4Nk8Cf16AL7HWTstVXI8pPdTF8"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.29]); Wed, 28 Sep 2016 19:18:36 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: ABF13EFA-85B1-11E6-A23D-C26412518317-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---Kq9aiEn4Nk8Cf16AL7HWTstVXI8pPdTF8
-Content-Type: multipart/mixed; boundary="8wjjRsJpPMCSaeRmioiBX5w68mfQMCREB";
- protected-headers="v1"
-From: Petr Stodulka <pstodulk@redhat.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Message-ID: <9c9e9949-cfe0-5465-6ae1-3e8254ff055b@redhat.com>
-Subject: Re: [PATCH] http: Control GSSAPI credential delegation.
-References: <1475078752-31195-1-git-send-email-pstodulk@redhat.com>
- <20160928171610.pbghg4sk23vm4xnp@sigill.intra.peff.net>
-In-Reply-To: <20160928171610.pbghg4sk23vm4xnp@sigill.intra.peff.net>
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
---8wjjRsJpPMCSaeRmioiBX5w68mfQMCREB
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+> The original commit d95d728aba06a34394d15466045cbdabdada58a2 was
+> reverted in commit 78cc1a540ba127b13f2f3fd531777b57f3a9cd46 because we
+> were (and still are) not ready for a new world order. A lot more
+> investigation must be done to see what is impacted. See the 78cc1a5 for
+> details.
+>
+> This patch takes a smaller and safer step. The new behavior is
+> controlled by shift_ita flag. We can gradually move more diff users to
+> the new behavior after we are sure it's safe to do so. This flag is
+> exposed to outside temporarily as "--shift-ita" for people who prefer
+> "git diff [--cached] --stat" to "git status"
 
+Let's stop advertising this as a resurrection of something else.
+The original that was unconditional was simply broken.
 
+It is very good to refer to it (and its reversion), when justifying
+why this version takes the particular approach to introduce a new
+optional behaviour that can be toggled on selectively, by explaining
+why doing this unconditionally was a broken idea that needed to be
+reverted later.
 
-On 28.9.2016 19:16, Jeff King wrote:
-> On Wed, Sep 28, 2016 at 06:05:52PM +0200, Petr Stodulka wrote:
->=20
->> Delegation of credentials is disabled by default in libcurl since
->> version 7.21.7 due to security vulnerability CVE-2011-2192. Which
->> makes troubles with GSS/kerberos authentication where delegation
->> of credentials is required. This can be changed with option
->> CURLOPT_GSSAPI_DELEGATION in libcurl with set expected parameter
->> since libcurl version 7.22.0.
->=20
-> I don't have any real knowledge of GSSAPI, so I'll refrain from
-> commenting on that aspect. But I did notice one mechanical issue:
->=20
+But you would need to explain what problem this patch attempts to
+solve and how before even going into that.  The above two paragraphs
+are backwards.
 
-Me neither. I have just basic knowledge and I am not able to configure
-virtual machine, which really need set delegation in libcurl (I need
-just negotiation, which is in git possible, I guess since v2.8.0).
+As I already said, --shift-ita is not quite descriptive and I think
+it should be renamed to something else, but I kept that in the
+following attempt to rewrite:
 
-However, I discuss it with libcurl maintainer and he confirm that this
-option can be required in some cases and this is what I need to do.
-this already. I tested just setting of parameter in libcurl according
-to description and nothing else seems broken. So anyone else who will
-be able to test complete behaviour, where delegation is needed, is welcom=
-ed.
+    Subject: diff-lib: allow ita entries treated as "not yet exist in ind=
+ex"
 
-[snip]
-> We only declare the curl_deleg variable if we have a new-enough curl.
-> But...
->=20
->> @@ -323,6 +335,10 @@ static int http_options(const char *var, const ch=
-ar *value, void *cb)
->>  		return 0;
->>  	}
->> =20
->> +	if (!strcmp("http.delegation", var)) {
->> +		return git_config_string(&curl_deleg, var, value);
->> +	}
->> +
->=20
-> ...here we try to use it regardless. I think you want another #ifdef,
-> and probably to warn the user in the #else block (similar to what the
-> http.pinnedpubkey code does).
->=20
-> -Peff
->=20
+    When comparing the index and the working tree to show which
+    paths are new, and comparing the tree recorded in the HEAD and
+    the index to see if committing the contents recorded in the
+    index would result in an empty commit, we would want the former
+    comparison to say "these are new paths" and the latter to say
+    "there is no change" for paths that are marked as intent-to-add.
 
-You are right. Thanks. I sent new version of patch with fix.
+    We made a similar attempt at d95d728a ("diff-lib.c: adjust
+    position of i-t-a entries in diff", 2015-03-16), which redefined
+    the semantics of these two comparison modes globally, which was
+    a disastor and had to be reverted at 78cc1a54 ("Revert
+    "diff-lib.c: adjust position of i-t-a entries in diff"",
+    2015-06-23).  To make sure we do not repeat the same mistake,
+    introduce a new internal diffopt option so that this different
+    semantics can be asked for only by callers that ask it, while
+    making sure other unaudited callers will get the same comparison
+    result.  This internal option is also exposed temporarily as
+    "--shift-ita" to help experiment.
 
-Petr
+After reading the three patches through, however, I do not think we
+use the command line option anywhere.  I'm inclined to say that we
+shouldn't add it at all.  Or at least do so in a separate follow-up
+patch "now we have an internal mechanism, let's expose it anyway" at
+the end.  Which means that the last sentence in my attempted rewrite
+should go.
 
+The patch to diff-lib.c machinery looks good.
 
---8wjjRsJpPMCSaeRmioiBX5w68mfQMCREB--
-
---Kq9aiEn4Nk8Cf16AL7HWTstVXI8pPdTF8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJX7AnDAAoJEPiGu5hNgNqPN6QP/2olXNmiCmOpFIffwEHVfLg0
-wOT0TyUKcj22LA+zF4RAucnatPCx3zI1q+QqlDK+3RMGKgCeMqJa7Ff3DmWO6RZy
-HhYdoZ52CHxK69X2SPFvFVGXtZuhxmQgsXFQKAjDPYERHMOdE/XAqKe+7ND6o+x1
-1+/KaBOqnTutXaxrdyhAvrdPWNFSi6H/4q0D70DP/uVhLaOzBNbpRcT0K5l9ja02
-tsdIlQR7QMY6ic1cWtbnmbQpkSu8ngXh5mZHu+3R4kSwUB9rG5jnSxBo5aTXmK1R
-009b/0BPPsMmxSpCS1EJnupkyQDyEIWNosbjpWKfOuDGrKxEL+UA968D1vIRYGz0
-dzW/FN1UPTQcXMhWzKIKcPFjSf7kwdAhabuKSKyyhDie86i9dHjY/gM3WP6AzjcY
-iaGBP1iMkZ+stVUpf34Pm5lIM4fIoVJif7WeNNpZMlQrnoYmJ2rQROXO795WLsvz
-LLWzQ4cg1GWVnJMjB6Y3BTxL9fSsDVee0+dDHkko59s798zgn2PS1jI2yhlADIpL
-tAaQPGtR9iQy1hbt3MkzVs8rSYHk1OuObEn/xd0HH/mcULzqgYHqEeY7fXa965h/
-2SEyBIRd7MN036j0qOOnXNhnAkkemR5IG41nelHbxe5YU9qDfuhXOnyuet9GNfA0
-amjhAIS6B+/QqtrtGxld
-=BZ2P
------END PGP SIGNATURE-----
-
---Kq9aiEn4Nk8Cf16AL7HWTstVXI8pPdTF8--
+Thanks.
