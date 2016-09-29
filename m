@@ -2,110 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C770A20986
-	for <e@80x24.org>; Thu, 29 Sep 2016 10:39:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C857420986
+	for <e@80x24.org>; Thu, 29 Sep 2016 11:00:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755635AbcI2Kjb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Sep 2016 06:39:31 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35312 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755412AbcI2K21 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2016 06:28:27 -0400
-Received: by mail-wm0-f67.google.com with SMTP id b4so10042790wmb.2
-        for <git@vger.kernel.org>; Thu, 29 Sep 2016 03:28:26 -0700 (PDT)
+        id S1752479AbcI2LAM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Sep 2016 07:00:12 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:32928 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750700AbcI2LAK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2016 07:00:10 -0400
+Received: by mail-pf0-f196.google.com with SMTP id q2so3453969pfj.0
+        for <git@vger.kernel.org>; Thu, 29 Sep 2016 04:00:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=KCWHuRKAfF+rLWuhXzCKY1dccXHB+9jH6gOTlhNkiZQ=;
-        b=I0hl5DiHYF6hH9Bf/vkxnUp66i2Kj/l6Rz7E/70nZJx8ZjOZcp/Ws+gw2UuHTQK4B5
-         DwGrhed9+Rrquo2FycXotILh7Jqc1hDocrUKDUkapAN2l7PZ5FQbvbbDwZG4P0LaRwON
-         d+kNoDSBDrwLYlk+bOuyp0idHdtWL7eLtg6fpuceaGqehgrIlOTrX5PQ9MubQl8Qaarv
-         y4gdYAmQSJAiF6YANvu2DCvLp+OyPQMYlw8NnJJLTsuHFPXLvgETAOodzxws4vGirutB
-         16+ah8aZoQjNS5O+9up+u603s9Z3ej5XJYZin+pAazkgYQ/e/+llWGbnGj567dmxU81Q
-         ovhQ==
+        h=from:to:in-reply-to:subject:references:message-id
+         :content-transfer-encoding:mime-version:date:cc;
+        bh=Q3Ulazua7eb3O7Lmjyt9xvjBcFNIe4/FO+TVh2nXJ+Y=;
+        b=kgFVByh0msXEQnfBFsCkZwLrnxuGuBSz6+doTe6cEvDNpX1vLAckBX+US4H8GwJArw
+         IArQX1YY2g7XBahjTnBRbf31tg+Mv+YLZ+gRtUDwTQuwGT1s7JLZFu8SDlV54TWh2r0M
+         PfQkV6ZNAWY5+mogqGNtlBmajbziW2TBUgB1hjPMQ358OJY9BKa6EceJ7wr2IKAmOm/9
+         uEz/zZ3kdZpT8aIms7jxAWN6+1cM4sJS+DDb3nuXTJtzET3lfYGoQf2SVm8mwbiYVXBG
+         UObS6uzjj5++GyMx/Ul0xuy6kiJxH8HbGS54qakG8+gLErJ1+97UpbpPCvFS4jJX2CkN
+         mO8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=KCWHuRKAfF+rLWuhXzCKY1dccXHB+9jH6gOTlhNkiZQ=;
-        b=GmxL36xgqgU/oYyawEB/RZdHjk+GGEXHd0PniC19NPGPqmFpAtXOSKp0RJPIH7CvrQ
-         EMs2KOkuY9tK3PeT7H4FqVm4glSlhbnWyhNZldQiSmafAKa1+r3TOU8rOrLJz7DbtDNH
-         0dG22+iMHC+JX2qDShpkaMI/va1ZbFavQlGg3GiO9Q6gCfOgstot71jkbwETeODV+cWP
-         P2l1ZpAMj08cio8aBPXVeCaDKJeZPci++ueWvdDZRl2998BRXl0XqFUg3rte2Q4x/0gT
-         GJYNx1JODh54srPKPlkb9MrtisNPtg1zmxACEZ5Oqm8JdSYCZDMe6VoERCsgssdIJumh
-         7JUw==
-X-Gm-Message-State: AA6/9Rm7UhDjSqAoDiD5Rp2UpLBP2CYedCjSggiGln0afXOQ/JQggF+44nWg21Zf2i1GSQ==
-X-Received: by 10.194.71.104 with SMTP id t8mr747290wju.17.1475144904822;
-        Thu, 29 Sep 2016 03:28:24 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id e12sm27390470wmg.17.2016.09.29.03.28.22
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 29 Sep 2016 03:28:23 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v8 00/11] Git filter protocol
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqq8tubitjs.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 29 Sep 2016 12:28:23 +0200
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>,
-        =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-        Martin-Louis Bright <mlbright@gmail.com>,
-        =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        ramsay@ramsayjones.plus.com
+        h=x-gm-message-state:from:to:in-reply-to:subject:references
+         :message-id:content-transfer-encoding:mime-version:date:cc;
+        bh=Q3Ulazua7eb3O7Lmjyt9xvjBcFNIe4/FO+TVh2nXJ+Y=;
+        b=NdUj9joo4GJkeKzZYiphTFk+jg2xzAf5UmJI8jbooLdvqdrMPtDWIEw4YIUsJYAHCm
+         ozj2EPzaX3YDJRb6/ZE7OGj6auOMp2RI5umZpUDy2tE0HFiZtyNHxjLojrYYnP8tKx8r
+         EaUWrlYqPOGcZTFJvkcc2yR/jlf8vaSWC4X5JG0+sUqFmicMXq2n8FCrNcl/eoxEdMmH
+         P2McNZLMQ9oVBnNzANBHeJKQ25k2dm4gJ621E43iuswXTgGIlciADEccWZOJE1FQFhhB
+         J4rIxJdz9EwP9mMvVPAiRQG4AZhMHJKlW/r53USVqZfcqkV53HYh6MBJcFV2d2fRBvsb
+         NypQ==
+X-Gm-Message-State: AA6/9RkHahCV7qk9LYkeQzwD8nZYaU79bgGyNNzLNI5apI0Yy6+p/r3DW42b8Dgg/BLUPg==
+X-Received: by 10.98.194.133 with SMTP id w5mr1363196pfk.42.1475146809249;
+        Thu, 29 Sep 2016 04:00:09 -0700 (PDT)
+Received: from ?IPv6:2002:46b5:ad14::223:12ff:fe05:eebd? ([2002:46b5:ad14:0:223:12ff:fe05:eebd])
+        by smtp.gmail.com with ESMTPSA id y2sm19356018pan.31.2016.09.29.04.00.08
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Thu, 29 Sep 2016 04:00:08 -0700 (PDT)
+From:   "Kyle J. McKay" <mackyle@gmail.com>
+To:     Jeff King <peff@peff.net>
+In-Reply-To: <20160929083315.vwb3aurwbyjwlkjn@sigill.intra.peff.net>
+Subject: Re: [PATCH/RFC] git log --oneline alternative with dates, times and initials
+References: <git-log-times@mackyle-at-gmail-com> <20160929083315.vwb3aurwbyjwlkjn@sigill.intra.peff.net>
+Message-Id: <82EE6519-E58F-4382-87A5-55D9D1BBDCA9@gmail.com>
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Message-Id: <C2C9761E-986F-473D-BFB7-CBEF900D9FA3@gmail.com>
-References: <20160920190247.82189-1-larsxschneider@gmail.com> <xmqq8tubitjs.fsf@gitster.mtv.corp.google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+Mime-Version: 1.0 (Apple Message framework v936)
+Date:   Thu, 29 Sep 2016 04:00:06 -0700
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+X-Mauler: Craptastic (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sep 29, 2016, at 01:33, Jeff King wrote:
 
-> On 28 Sep 2016, at 23:49, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> I suspect that you are preparing a reroll already, but the one that
-> is sitting in 'pu' seems to be flaky in t/t0021 and I seem to see
-> occasional failures from it.
-> 
-> I didn't trace where the test goes wrong, but one easy mistake you
-> could make (I am not saying that is the reason of the failure) is to
-> assume your filter will not be called under certain condition (like
-> immediately after you checked out from the index to the working
-> tree), when the automated test goes fast enough and get you into a
-> "racy git" situation---the filter may be asked to filter the
-> contents from the working tree again to re-validate what's there is
-> still what is in the index.
+> On Wed, Sep 28, 2016 at 10:34:51PM -0700, Kyle J. McKay wrote:
+>
+>> git log-times --graph --date-order --decorate --no-merges -n 5 v2.5.3
+>>
+>>    === 2015-09-17 ===
+>>  * ee6ad5f4 12:16 jch (tag: v2.5.3) Git 2.5.3
+>>    === 2015-09-09 ===
+>>  * b9d66899 14:22 js  am --skip/--abort: merge HEAD/ORIG_HEAD tree  
+>> into index
+>>  |   === 2015-09-04 ===
+>>  | * 27ea6f85 10:46 jch (tag: v2.5.2) Git 2.5.2
+>>  * 74b67638 10:36 jch (tag: v2.4.9) Git 2.4.9
+>>                       ..........
+>>  * ecad27cf 10:32 jch (tag: v2.3.9) Git 2.3.9
+>
+> I was surprised to see this as a separate script, but it is true  
+> that we
+> cannot quite pull it off with --format. I think we are very close,
+> though.  With the patches below I think you can do:
+>
+>  git log \
+>    --commit-header='%C(auto,bold blue)== %as ==%C(auto,reset)'
+>    --format='%C(auto)%h %C(auto,green)%ad %C(auto,red)%aS/%cS%C(auto) 
+> %d%C(auto,reset) %s' \
+>    --graph --no-merges --author-date-order --date=format:%H:%M
+>
+> and get the same (or very similar) output.
+>
+>  [1/5]: pretty: allow formatting DATE_SHORT
+>  [2/5]: pretty: allow formatting names as initials
+>  [3/5]: graph: fix extra spaces in graph_padding_line
+>  [4/5]: graph: helper functions for printing commit header
+>  [5/5]: log: add --commit-header option
+>
+> Each of those commits[1] needs some minor polish, and as I'm not  
+> really
+> that interested in fancy log output myself, I don't plan on working on
+> them further. I was mostly curious just how close we were. But if  
+> you'd
+> like to pursue it, feel free to use them as a starting point.
 
-Thanks for the heads-up! 
+Those patches are missing some of the features like showing root  
+commits, handling two letter initials, showing the weekday, inserting  
+a break where needed to avoid parent-child confusion in graph output  
+and properly handling Duy's initials. :)
 
-This is what happens:
+I suppose if all the objects that output a date took a '(' <strftime>  
+')' option that would get you part of the way -- it could replace  
+DATE_SHORT with DATE_STRFTIME.
 
-1) Git exits
-2) The filter process receives EOF and prints "STOP" to the log
-3) t0021 checks the content of the log
+Also the above example doesn't handle marks properly in graph mode.   
+Yes, you can add the "%m" format option but it does something odd and  
+the script fixes it up.
 
-Sometimes 3 happened before 2 which makes the test fail.
-(Example: https://travis-ci.org/git/git/jobs/162660563 )
+On the other hand, git-log-times started out as a script for something  
+else (a shell script actually) and just got embellished further and  
+turned into a perl script for speed.
 
-I added a this to wait until the filter process terminates:
+Your patches are a good first start though but reading the --graph  
+code gives me headaches and I figured it would be like going down a  
+rabbit hole to make the code support everything the script does.
 
-+wait_for_filter_termination () {
-+	while ps | grep -v grep | grep -F "/t0021/rot13-filter.pl" >/dev/null 2>&1
-+	do
-+		echo "Waiting for /t0021/rot13-filter.pl to finish..."
-+		sleep 1
-+	done
-+}
+The script also has one big advantage.  It works with the version of  
+Git everybody already has installed.  :)
 
-Does this look OK to you?
+And nobody is ever going to want to type several lines of arcane  
+formatting instructions to get the output.  ;_)
 
-- Lars
+It would need a new option, perhaps --oneline-extended or something.
+
+The patches are a good start but that doesn't help anyone using Git  
+today which is why git-log-times is submitted as a contrib script --  
+much like the way diff-highlight is still a contrib script and not  
+supported directly by Git either.
+
+--Kyle
+
