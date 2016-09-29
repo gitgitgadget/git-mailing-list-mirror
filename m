@@ -2,84 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA870207EC
-	for <e@80x24.org>; Thu, 29 Sep 2016 18:02:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8A09207EC
+	for <e@80x24.org>; Thu, 29 Sep 2016 18:05:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934432AbcI2SCw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Sep 2016 14:02:52 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49997 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933876AbcI2SCv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2016 14:02:51 -0400
-Received: (qmail 10118 invoked by uid 109); 29 Sep 2016 18:02:50 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 29 Sep 2016 18:02:50 +0000
-Received: (qmail 3127 invoked by uid 111); 29 Sep 2016 18:03:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 29 Sep 2016 14:03:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Sep 2016 14:02:48 -0400
-Date:   Thu, 29 Sep 2016 14:02:48 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        git <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
-        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-        Martin-Louis Bright <mlbright@gmail.com>,
-        ramsay@ramsayjones.plus.com
-Subject: Re: [PATCH v8 00/11] Git filter protocol
-Message-ID: <20160929180247.d4owhzwyawtanw3r@sigill.intra.peff.net>
-References: <20160920190247.82189-1-larsxschneider@gmail.com>
- <xmqq8tubitjs.fsf@gitster.mtv.corp.google.com>
- <C2C9761E-986F-473D-BFB7-CBEF900D9FA3@gmail.com>
- <f7a4f828-bb1d-0ffa-e369-3b4fa476d9e5@web.de>
- <xmqqk2duhcdm.fsf@gitster.mtv.corp.google.com>
+        id S934559AbcI2SFy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Sep 2016 14:05:54 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64692 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S934382AbcI2SFx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2016 14:05:53 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3860641D5D;
+        Thu, 29 Sep 2016 14:05:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=77psWww5TtCY4Nw0WAA0ylzplIc=; b=NJRu+/
+        FSaHmJHziFsKQ57RwdeVvrghCLvwOm88/6G41GRtFoaD2xPZ56fatZSkANkDQSrq
+        CH+o9piYj/9uzUPpDXjsiZr9KCB5BLA4/WqYLE34gmXk6dc7dUohTQm8AA09axBw
+        RVflLa4fp3wvqe6a0PwrBvlV+u9aaOeHbzYRo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=WfPA57HcLG8AhkMdpKRl+IUOKpTeMAH0
+        SWzA8uU5bVvWUFAvNUmZ0PhUcTFAUJjRCV18E6274lhPpnDXcNXj16ZU6zygXdW/
+        2ZzDlaDLEGJRTeEmFPhHqupoBDPG1BqXlba8piJRs7iPvDeG34UV3mUIqAmz3NXO
+        cFxJu31ShK8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2F11F41D5C;
+        Thu, 29 Sep 2016 14:05:52 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 417A741D5B;
+        Thu, 29 Sep 2016 14:05:49 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     git@vger.kernel.org, peff@peff.net, torvalds@linux-foundation.org
+Subject: Re: [PATCH 4/4] core.abbrev: raise the default abbreviation to 12 hexdigits
+References: <CA+55aFy0_pwtFOYS1Tmnxipw9ZkRNCQHmoYyegO00pjMiZQfbg@mail.gmail.com>
+        <20160928233047.14313-1-gitster@pobox.com>
+        <20160928233047.14313-5-gitster@pobox.com>
+        <ae9dbf3b-4190-8145-a59f-0d578067032a@kdbg.org>
+Date:   Thu, 29 Sep 2016 11:05:34 -0700
+In-Reply-To: <ae9dbf3b-4190-8145-a59f-0d578067032a@kdbg.org> (Johannes Sixt's
+        message of "Thu, 29 Sep 2016 07:58:49 +0200")
+Message-ID: <xmqqmviqfuoh.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqk2duhcdm.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5AB7AC72-866F-11E6-8A63-C26412518317-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 29, 2016 at 09:57:57AM -0700, Junio C Hamano wrote:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> > +wait_for_filter_termination () {
-> > +	while ! grep "STOP"  LOGFILENAME >/dev/null
-> > +	do
-> > +		echo "Waiting for /t0021/rot13-filter.pl to finish..."
-> > +		sleep 1
-> > +	done
-> > +}
-> 
-> Running "ps" and grepping for a command is not suitable for script
-> to reliably tell things, so it is out of question.  Compared to
-> that, your version looks slightly better, but what if the machinery
-> that being tested, i.e. the part that drives the filter process, is
-> buggy or becomes buggy and causes the filter process that writes
-> "STOP" to die before it actually writes that string?
+> Am 29.09.2016 um 01:30 schrieb Junio C Hamano:
+>> As Peff said, responding in a thread started by Linus's suggestion
+>> to raise the default abbreviation to 12 hexdigits:
+>
+> This is waayy too large for a new default. The vast majority of
+> repositories is smallish. For those, the long sequences of hex digits
+> are an uglification that is almost unbearable.
+>
+> I know that kernel developers are important, but their importance has
+> long been outnumbered by the anonymous and silent masses of users.
+>
+> Personally, I use 8 digits just because it is a "rounder" number than
+> 7, but in all of my repositories 7 would still work just as well.
 
-I'm of the opinion that any busy-waiting is a good sign that something
-is suboptimal. The right solution here seems like it should be signaling
-the test script via a descriptor.
+Yes, "git log --oneline" looks somewhat different and strange for
+me, too ;-)
 
-I don't necessarily agree, though, that the timing of filter-process
-cleanup needs to be part of the public interface. So in your list:
-
->     3) Git waits until the filter process finishes.
-
-That seems simple and elegant, but I can think of reasons we might not
-want to wait (e.g., if the filter has to do some maintenance task and
-does not the user to have to wait).
-
-OTOH, we already face this in git, and we solve it by explicitly
-backgrounding the maintenance task (i.e., auto-gc). So one could argue
-that it is the responsibility of the filter process to manage its own
-processes. It certainly makes the interaction with git simpler.
-
--Peff
+I am sure I'll get used to it if I keep using it, but I suspect that
+I'd be irritated as I find myself typing 'q' more and more often to
+"less -S" that is automatically invoked when I do "git log --oneline
+master.." to see what commits are on my current topic branch.
