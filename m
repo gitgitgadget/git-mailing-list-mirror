@@ -2,170 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A09620987
-	for <e@80x24.org>; Thu, 29 Sep 2016 19:06:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC75720987
+	for <e@80x24.org>; Thu, 29 Sep 2016 19:06:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932929AbcI2TGU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Sep 2016 15:06:20 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55048 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932684AbcI2TGT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2016 15:06:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 178824283B;
-        Thu, 29 Sep 2016 15:06:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=kcK9fpiMoLzjAmM8PRvp0c/e3wY=; b=DmFIP4
-        6VC1rG+Z5x0ZXHAHdgdyztnzT6q2MPhZfYobz36ddPkHjdb4N6yumMF1Z+A0Ihf8
-        W4B0jkaWxK7pyYN3VQSvwUOaNC9STLUzcoeiRvx8vrvUIT/qgJUrNBqt8ubAsGUh
-        PPbEEnJ4HMkWhe4Lr//WZa2DOdMi5jjzgmp8A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=eFd/N6exHTtRvAfkM/yXfBIB4mCrBuFn
-        fmYZnBq/Y/g4oBM5opaTXY3rfeTMMq8PB59y5of7ldZc3Jlvg6W9PC2JjqPYW0R+
-        wStrIeiYW3jnRseT4RjZOCfFnE4Hql1Fkcdl6Humq3bTEzXBaAi3VSJpqY+UCZA7
-        +Mi5/SPs/F8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0EFC04283A;
-        Thu, 29 Sep 2016 15:06:18 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 87FFD42839;
-        Thu, 29 Sep 2016 15:06:17 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, torvalds@linux-foundation.org
-Subject: Re: [PATCH 2/4] t13xx: do not assume system config is empty
-References: <CA+55aFy0_pwtFOYS1Tmnxipw9ZkRNCQHmoYyegO00pjMiZQfbg@mail.gmail.com>
-        <20160928233047.14313-1-gitster@pobox.com>
-        <20160928233047.14313-3-gitster@pobox.com>
-        <20160929090108.hf2jzfcvbcsfaxw7@sigill.intra.peff.net>
-        <xmqqintefuau.fsf@gitster.mtv.corp.google.com>
-        <20160929182621.lobihscwl7amtu7s@sigill.intra.peff.net>
-Date:   Thu, 29 Sep 2016 12:06:15 -0700
-In-Reply-To: <20160929182621.lobihscwl7amtu7s@sigill.intra.peff.net> (Jeff
-        King's message of "Thu, 29 Sep 2016 14:26:21 -0400")
-Message-ID: <xmqq60pefrvc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S933191AbcI2TG0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Sep 2016 15:06:26 -0400
+Received: from mail-oi0-f65.google.com ([209.85.218.65]:36375 "EHLO
+        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932603AbcI2TGZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2016 15:06:25 -0400
+Received: by mail-oi0-f65.google.com with SMTP id h186so1400568oia.3
+        for <git@vger.kernel.org>; Thu, 29 Sep 2016 12:06:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=NCOtw2lSPg0dMsgGuepqXCjkhkP4hs6vHRbjggFi5R8=;
+        b=aBD0d1nT/6ca37+CopAvqWqTqOv+biRvlMLiSrVWd+PNf0m/dichJx6jrBzI8KCcYj
+         axaEkKyrrS9VeDe27yFx7CC18s+RmebWTWcSAC5NwqwWssWQUyjzjqzWJENXYrJk/7hW
+         JSIEmk+boTqQUWlGDAQpckXqZIhdYPIp1W1gSgn45RqvOM3W6BlNGB1YF8x8dPuGSX5Q
+         03/5AJ9648JkSNyFdUrcmAH+Ro9XR8uNjElAl7d4DET/irV3U0ujxguXOgc1oE4Dk3RO
+         /j0q2HTmCn5aTx6+W6fG13BWUpTsaxu20LpJewT35vCrnnKvbuF7B6Z3RoV61uumOuqY
+         T0RQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=NCOtw2lSPg0dMsgGuepqXCjkhkP4hs6vHRbjggFi5R8=;
+        b=JW1eSn09fk4m1f+E/d5q0CI78pFlh/FoQjyXOTTvAG6OmMDEJNoWWIrUlOH9U/gS06
+         GF0BfOjEde+YIE4VGWCVJZhmGDIFnTi3SYC30F70Ew9kRGDRkrdfF5VGzXAaDOGYvW79
+         fX+OVbIU8koXnNLkfH56DElVQjZTpbAAC/YL3J+SoK7xN+M2DQYNg4EdnjHETadGdqhk
+         LpD2uRkF9cX00VYuDOsiOg6C7WuEwQY5rFo/qwnSR5kAr4pAWL9TL/WKn2dsO1IH1wAo
+         AqGp+juOtAC2/yLQZCtqW8q8s9LLx/ZkKfXru3NBR76IwzQ3rV39RfVZTC8HG8y5Xsa3
+         Fmcg==
+X-Gm-Message-State: AA6/9RlvycB1bPyzmyHhuWIoITpdHU9m1Ltdw8/gHn4pcfmOOv1s5zsgpFD4Ew75yYwsUcHIyNLlJIKI0QDf5A==
+X-Received: by 10.157.43.124 with SMTP id f57mr2344805otd.83.1475175984059;
+ Thu, 29 Sep 2016 12:06:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CCBF33BE-8677-11E6-A878-C26412518317-77302942!pb-smtp1.pobox.com
+Received: by 10.182.241.106 with HTTP; Thu, 29 Sep 2016 12:06:23 -0700 (PDT)
+In-Reply-To: <CA+55aFwbCNiF0nDppZ5SuRcZwc9kNvKYzgyd_bR8Ut8XRW_p4Q@mail.gmail.com>
+References: <CA+55aFy0_pwtFOYS1Tmnxipw9ZkRNCQHmoYyegO00pjMiZQfbg@mail.gmail.com>
+ <20160928233047.14313-1-gitster@pobox.com> <20160928233047.14313-5-gitster@pobox.com>
+ <ae9dbf3b-4190-8145-a59f-0d578067032a@kdbg.org> <xmqqmviqfuoh.fsf@gitster.mtv.corp.google.com>
+ <CA+55aFyYWWpz+9+KKf=9y3vBrEDyy-5h6J3boiitGE7Zb=uL-Q@mail.gmail.com> <CA+55aFwbCNiF0nDppZ5SuRcZwc9kNvKYzgyd_bR8Ut8XRW_p4Q@mail.gmail.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Thu, 29 Sep 2016 12:06:23 -0700
+X-Google-Sender-Auth: 4jBW1HDkqqWZXKsvmjTxlEdJCSc
+Message-ID: <CA+55aFx9Utm9yDZceks+5q9c8ydc2QMYshWwJ0G0GHWWLwSsXQ@mail.gmail.com>
+Subject: Re: [PATCH 4/4] core.abbrev: raise the default abbreviation to 12 hexdigits
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> On Thu, Sep 29, 2016 at 11:13:45AM -0700, Junio C Hamano wrote:
+On Thu, Sep 29, 2016 at 11:55 AM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
 >
->> Jeff King <peff@peff.net> writes:
->> 
->> > I think anytime you would use GIT_CONFIG_NOSYSTEM over --local, it is an
->> > indication that the test is trying to check how multiple sources
->> > interact. And the right thing to do for them is to set GIT_ETC_GITCONFIG
->> > to some known quantity. We just couldn't do that before, so we skipped
->> > it.  IOW, something like the patch below (on top of yours).
->> 
->> OK, that way we can make sure that "multiple sources" operations do
->> look at the system-wide stuff.
->
-> Exactly.
+> For the kernel, just the *math* right now actually gives 12
+> characters. For current git it actually seems to say that 8 is the
+> correct number. For small projects, you'll still see 7.
 
-I think it deserves a separate patch and the result is more
-understandable.  I've queued this for now (on top of a revised 1/4
-that uses GIT_CONFIG_SYSTEM_PATH instead).
+Sorry, the git number is 9, not 8. The reason is that git has roughly
+212k objects, and 9 hex digits gets expected collisions at about 256k
+objects.
 
--- >8 --
-From: Jeff King <peff@peff.net>
-Date: Thu, 29 Sep 2016 11:29:10 -0700
-Subject: [PATCH] t1300: check also system-wide configuration file in
- --show-origin tests
+So the logic means that we'll see 7 hex digits for projects with less
+than 16k objects, 8 hex digits if there are less than 64k objects, and
+9 hex digits for projects like git that currently have fewer than 256k
+objects.
 
-Because we used to run our tests with GIT_CONFIG_NOSYSTEM, these did
-not test that the system-wide configuration file is also read and
-shown as one of the origins.  Create a custom/fake system-wide
-configuration file and make sure it appears in the output, using the
-newly introduced GIT_CONFIG_SYSTEM_PATH mechanism.
+But git itself might not be *that* far from going to 10 hex digits
+with my patch.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t1300-repo-config.sh | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+The kernel uses 12 he digits because the collision math says that's
+the right thing for a project with between 4M and 16M objects (with
+the kernel being at 5M).
 
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 0543b62227bf..aa25577709c5 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -1236,6 +1236,11 @@ test_expect_success 'set up --show-origin tests' '
- 		[user]
- 			relative = include
- 	EOF
-+	cat >"$HOME"/etc-gitconfig <<-\EOF &&
-+		[user]
-+			system = true
-+			override = system
-+	EOF
- 	cat >"$HOME"/.gitconfig <<-EOF &&
- 		[user]
- 			global = true
-@@ -1254,6 +1259,8 @@ test_expect_success 'set up --show-origin tests' '
- 
- test_expect_success '--show-origin with --list' '
- 	cat >expect <<-EOF &&
-+		file:$HOME/etc-gitconfig	user.system=true
-+		file:$HOME/etc-gitconfig	user.override=system
- 		file:$HOME/.gitconfig	user.global=true
- 		file:$HOME/.gitconfig	user.override=global
- 		file:$HOME/.gitconfig	include.path=$INCLUDE_DIR/absolute.include
-@@ -1264,13 +1271,16 @@ test_expect_success '--show-origin with --list' '
- 		file:.git/../include/relative.include	user.relative=include
- 		command line:	user.cmdline=true
- 	EOF
-+	GIT_CONFIG_SYSTEM_PATH=$HOME/etc-gitconfig \
- 	git -c user.cmdline=true config --list --show-origin >output &&
- 	test_cmp expect output
- '
- 
- test_expect_success '--show-origin with --list --null' '
- 	cat >expect <<-EOF &&
--		file:$HOME/.gitconfigQuser.global
-+		file:$HOME/etc-gitconfigQuser.system
-+		trueQfile:$HOME/etc-gitconfigQuser.override
-+		systemQfile:$HOME/.gitconfigQuser.global
- 		trueQfile:$HOME/.gitconfigQuser.override
- 		globalQfile:$HOME/.gitconfigQinclude.path
- 		$INCLUDE_DIR/absolute.includeQfile:$INCLUDE_DIR/absolute.includeQuser.absolute
-@@ -1281,6 +1291,7 @@ test_expect_success '--show-origin with --list --null' '
- 		includeQcommand line:Quser.cmdline
- 		trueQ
- 	EOF
-+	GIT_CONFIG_SYSTEM_PATH=$HOME/etc-gitconfig \
- 	git -c user.cmdline=true config --null --list --show-origin >output.raw &&
- 	nul_to_q <output.raw >output &&
- 	# The here-doc above adds a newline that the --null output would not
-@@ -1304,6 +1315,7 @@ test_expect_success '--show-origin with --get-regexp' '
- 		file:$HOME/.gitconfig	user.global true
- 		file:.git/config	user.local true
- 	EOF
-+	GIT_CONFIG_SYSTEM_PATH=$HOME/etc-gitconfig \
- 	git config --show-origin --get-regexp "user\.[g|l].*" >output &&
- 	test_cmp expect output
- '
-@@ -1312,6 +1324,7 @@ test_expect_success '--show-origin getting a single key' '
- 	cat >expect <<-\EOF &&
- 		file:.git/config	local
- 	EOF
-+	GIT_CONFIG_SYSTEM_PATH=$HOME/etc-gitconfig \
- 	git config --show-origin user.override >output &&
- 	test_cmp expect output
- '
--- 
-2.10.0-589-g5adf4e1
+So on the whole the patch really does seem to just do the right thing
+automatically.
 
+              Linus
