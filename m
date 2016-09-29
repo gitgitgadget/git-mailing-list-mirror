@@ -2,138 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 538EE207EC
-	for <e@80x24.org>; Thu, 29 Sep 2016 20:50:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD134207EC
+	for <e@80x24.org>; Thu, 29 Sep 2016 21:00:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933938AbcI2Uuw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Sep 2016 16:50:52 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:36759 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933484AbcI2Uuv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2016 16:50:51 -0400
-Received: by mail-wm0-f68.google.com with SMTP id b184so551346wma.3
-        for <git@vger.kernel.org>; Thu, 29 Sep 2016 13:50:50 -0700 (PDT)
+        id S934015AbcI2VAH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Sep 2016 17:00:07 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:34688 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933604AbcI2VAG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2016 17:00:06 -0400
+Received: by mail-wm0-f65.google.com with SMTP id w72so590873wmf.1
+        for <git@vger.kernel.org>; Thu, 29 Sep 2016 14:00:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=bTaz3afTwMx/34tJirxo2prKTc0XTQMhg5hVZVth5Ro=;
-        b=JR/v9VYM5plJ2uBaMlRkPFKKHHEBPhnYObtOJoec1oR1OEkPaeh5sQYPEwnPlqQv7f
-         7oigtcy+PkWxeDhJs4zJGoCYvFDjMPWDL5AmOkI9B5Sc7MqLYHAIinxmljoSMomAG4w5
-         ztJPALHc//WpK45SwlzqyXlrXGmVg1SITwY34KC7ooSCizTVmQAt7eXk3D5/EaIvXGpj
-         oLHnZC+qqC4pjrW/bS6bbzIqmwSjdk5GVmiwlg4Q5EFzk7RGBLLlSpoiAYErt2cJ+7qc
-         mw5r17GKYrSbZ69/tg/GyY5pXuS7ewRbw0J+sSK0B7qJgDQiBo+uihx9ozMTmNBh6YM0
-         uw7Q==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=foTDtJ48BkVDUrz6mJCdfnQDNOToF2Mw9N7SstuuBK0=;
+        b=VCDSU4L0rAIwV+VI/aiW8ahNzAyTFxkDILTgLYcRxwKjhZzr3OFVYBAt7uI7UudvZ2
+         T/hTvtsQ+r69rAxo5cQnvmTN6yuI8jRaQaqyuEbVhBRhiNSReXQTEeu2A/Yd3zZItoyU
+         7YYkYyUbl9hUNTKzbu0Uvi2wM6vkpCtaZ3nM8zW7PvWOtH75hWObeI9CYLiuS/mmAZcM
+         nAfrSPsMqCMb4DkQVKG/Zs26fM5BzI2mPZrNolnM/rL1B02XMfsQK6qM8tZOU6xZAGFR
+         qp9q8XgiCbKUWY77ETt0FUiapozlnZO6ChDpILdHRFiKlayqdTSnxvePc3tLpZQhjyQe
+         eTTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=bTaz3afTwMx/34tJirxo2prKTc0XTQMhg5hVZVth5Ro=;
-        b=S59e3F8Vc7F5oBmClTXNPPLI3J4AswaQI2HI+Q/oDQa1rpjphws9+sdolgyM/qPHw+
-         oIinK8eCY8umPhfJguQDs7bsySJEmKMgEBSZFcUUSKfDStJb+hKg2TWZxCYVzti7HlZy
-         Y7x9Cjaudva2Failzp+js+uCpED9EFTG7rqnLJ43GYd+vuTGzVVpJqZzZMCYOg8bgTYk
-         TR5HqFAtQEKmWkK5NwlOkwzQdTM2ojxXvcBCj9wt3n3TRl4IDpGEtUIUa37NBjGHFi7H
-         5XvlzBCx6TpOOdhnWDV1U8KEYu6pSGMDpnyCkDIg7hcfuj/xJPxawPdEIfI9OcyfDHkV
-         kCoQ==
-X-Gm-Message-State: AA6/9RmsTC0CvFvhFEa4hOBf8pf9BDJmA8f1LWWeM2yAlC4Tk5s4Cms+aBbKa6nGmCNFkg==
-X-Received: by 10.28.14.202 with SMTP id 193mr510983wmo.125.1475182250059;
-        Thu, 29 Sep 2016 13:50:50 -0700 (PDT)
-Received: from remjtf6f32.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id p13sm599652wmd.1.2016.09.29.13.50.47
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 29 Sep 2016 13:50:49 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=foTDtJ48BkVDUrz6mJCdfnQDNOToF2Mw9N7SstuuBK0=;
+        b=V9SawOmjHgNBrCSWRhB2XF4lUlR3vAnNLig3Z79UdTYpLl7L7j7XYr6kKRfx8xh04D
+         S+RVlP9/P0igTYS8VDGCyDSSzvUaZMPHMEYzBCIOvIdH/XcqBYlbWR94j2gzneE11gkj
+         GAKXcCOydXbEAo8+MBRuBGWDgBa3QunGYu9Adw1PnG+E/qaOIfI1HjMQ5edIrfBysQLo
+         uTa5Vx9P2msXoIIIWruSx0sF9LLlRr9wrZReDgmy6xHQo/Qo3VU4OtaLTkFYEHzaKc83
+         c8jeyomO5PbQuMTkFEje2GYFIwBKkUYjj3vdjaP4Cxa/CTaHGKq9I5cbAN+Sjh27PDDl
+         6bsw==
+X-Gm-Message-State: AA6/9RklIjgr5/YWd+ZwqFNL86KrI2zDNRKJEq6Bxt/cmXlKFLOFOcDhX0V8CYRyigpRdQ==
+X-Received: by 10.28.38.69 with SMTP id m66mr476987wmm.133.1475182804449;
+        Thu, 29 Sep 2016 14:00:04 -0700 (PDT)
+Received: from [192.168.1.26] (eln216.neoplus.adsl.tpnet.pl. [83.21.207.216])
+        by smtp.googlemail.com with ESMTPSA id s6sm16093473wjm.25.2016.09.29.14.00.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 29 Sep 2016 14:00:03 -0700 (PDT)
 Subject: Re: [PATCH v8 00/11] Git filter protocol
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqk2duhcdm.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 29 Sep 2016 22:50:46 +0200
-Cc:     =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+To:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20160920190247.82189-1-larsxschneider@gmail.com>
+ <xmqq8tubitjs.fsf@gitster.mtv.corp.google.com>
+ <C2C9761E-986F-473D-BFB7-CBEF900D9FA3@gmail.com>
+ <f7a4f828-bb1d-0ffa-e369-3b4fa476d9e5@web.de>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Stefan Beller <sbeller@google.com>,
-        =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
         Martin-Louis Bright <mlbright@gmail.com>,
-        ramsay@ramsayjones.plus.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <DADB0C80-1EDF-4498-8DAC-A1B09E596518@gmail.com>
-References: <20160920190247.82189-1-larsxschneider@gmail.com> <xmqq8tubitjs.fsf@gitster.mtv.corp.google.com> <C2C9761E-986F-473D-BFB7-CBEF900D9FA3@gmail.com> <f7a4f828-bb1d-0ffa-e369-3b4fa476d9e5@web.de> <xmqqk2duhcdm.fsf@gitster.mtv.corp.google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <f9a6dd02-34c0-d48b-3cbc-73202488920c@gmail.com>
+Date:   Thu, 29 Sep 2016 22:59:54 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
+MIME-Version: 1.0
+In-Reply-To: <f7a4f828-bb1d-0ffa-e369-3b4fa476d9e5@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+W dniu 29.09.2016 o 13:57, Torsten Bögershausen pisze: 
+> On 29/09/16 12:28, Lars Schneider wrote:
 
-> On 29 Sep 2016, at 18:57, Junio C Hamano <gitster@pobox.com> wrote:
->=20
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->=20
->>> 1) Git exits
->>> 2) The filter process receives EOF and prints "STOP" to the log
->>> 3) t0021 checks the content of the log
->>>=20
->>> Sometimes 3 happened before 2 which makes the test fail.
->>> (Example: https://travis-ci.org/git/git/jobs/162660563 )
->>>=20
->>> I added a this to wait until the filter process terminates:
->>>=20
->>> +wait_for_filter_termination () {
->>> +	while ps | grep -v grep | grep -F "/t0021/rot13-filter.pl" =
->/dev/null 2>&1
->>> +	do
->>> +		echo "Waiting for /t0021/rot13-filter.pl to finish..."
->>> +		sleep 1
->>> +	done
->>> +}
->>>=20
->>> Does this look OK to you?
->> Do we need the ps at all ?
->> How about this:
->>=20
+>> This is what happens:
+>>
+>> 1) Git exits
+>> 2) The filter process receives EOF and prints "STOP" to the log
+>> 3) t0021 checks the content of the log
+>>
+>> Sometimes 3 happened before 2 which makes the test fail.
+>> (Example: https://travis-ci.org/git/git/jobs/162660563 )
+>>
+>> I added a this to wait until the filter process terminates:
+>>
 >> +wait_for_filter_termination () {
->> +	while ! grep "STOP"  LOGFILENAME >/dev/null
->> +	do
->> +		echo "Waiting for /t0021/rot13-filter.pl to finish..."
->> +		sleep 1
->> +	done
+>> +    while ps | grep -v grep | grep -F "/t0021/rot13-filter.pl" >/dev/null 2>&1
+>> +    do
+>> +        echo "Waiting for /t0021/rot13-filter.pl to finish..."
+>> +        sleep 1
+>> +    done
 >> +}
->=20
-> Running "ps" and grepping for a command is not suitable for script
-> to reliably tell things, so it is out of question.  Compared to
-> that, your version looks slightly better, but what if the machinery
-> that being tested, i.e. the part that drives the filter process, is
-> buggy or becomes buggy and causes the filter process that writes
-> "STOP" to die before it actually writes that string?
->=20
-> I have a feeling that the machinery being tested needs to be fixed
-> so that the sequence is always be:
->=20
->    0) Git spawns the filter process, as it needs some contents to
->       be filtered.
->=20
->    1) Git did everything it needed to do and decides that is time
->       to go.
->=20
->    2) Filter process receives EOF and prints "STOP" to the log.
->=20
->    3) Git waits until the filter process finishes.
->=20
->    4) t0021, after Git finishes, checks the log.
+>>
+>> Does this look OK to you?
+> Do we need the ps at all ?
+> How about this:
+> 
+> +wait_for_filter_termination () {
+> +    while ! grep "STOP"  LOGFILENAME >/dev/null
+> +    do
+> +        echo "Waiting for /t0021/rot13-filter.pl to finish..."
+> +        sleep 1
+> +    done
+> +}
 
+Or even better: make filter driver write its pid to pidfile, and then
+"wait $(cat rot13-filter.pid)".  That's what we do in lib-git-daemon.sh
+(I think).
 
-A pragmatic approach:
+If the problem is exit status of "wait" builtin, then filter driver
+can remove its pidfile after writing "STOP", just before ending.
 
-I could drop the "STOP" message that the filter writes to the log
-on exit and everything would work as is. We could argue that this=20
-is OK because Git doesn't care anyways if the filter process has=20
-stopped or not.
+-- 
+Jakub Narębski
 
-Would that be OK for everyone?
-
-- Lars=
