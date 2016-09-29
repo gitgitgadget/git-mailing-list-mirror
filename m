@@ -2,86 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93720207EC
-	for <e@80x24.org>; Thu, 29 Sep 2016 21:20:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 975D7207EC
+	for <e@80x24.org>; Thu, 29 Sep 2016 21:22:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934184AbcI2VT7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Sep 2016 17:19:59 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53160 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S933484AbcI2VT5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2016 17:19:57 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B1EDE42C30;
-        Thu, 29 Sep 2016 17:19:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ffqfFAl59qNDrLIJ5n3JHIrrXJU=; b=GomAW3
-        azJRAPbHcsvFIikWOP0SeLfTNtkkZqh0nSTYETm2e241rDeVG8zrBFilGyuDxXKZ
-        AqhhvjQsMoB0ZWi+5Bn+w/zf/7AABKjj+uIECgjqWqiZN6QEGp3o3M2fBCeKIn5Y
-        W7RwRc+pKEUItIB9YJ2/mHBhr0S7NwD/RDwhg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=JlDb4cmWh7yTZstEHdsvZGprymW0Pm1l
-        zehaVWlVrwnjlUkySDlYJteAuGMyrVMgkUcq/2L8tBy4lfe08R8m0Q5+eS5irpMJ
-        JD70AGTeOeNY9H7qutBf6saVwPfvnp1TEwOBd/FATSLD93p30osuEoFSf3203xm2
-        Tgszjj6iAII=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A8E4F42C2F;
-        Thu, 29 Sep 2016 17:19:56 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0E89142C2E;
-        Thu, 29 Sep 2016 17:19:56 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        git <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
-        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-        Martin-Louis Bright <mlbright@gmail.com>,
-        ramsay@ramsayjones.plus.com
-Subject: Re: [PATCH v8 00/11] Git filter protocol
-References: <20160920190247.82189-1-larsxschneider@gmail.com>
-        <xmqq8tubitjs.fsf@gitster.mtv.corp.google.com>
-        <C2C9761E-986F-473D-BFB7-CBEF900D9FA3@gmail.com>
-        <f7a4f828-bb1d-0ffa-e369-3b4fa476d9e5@web.de>
-        <xmqqk2duhcdm.fsf@gitster.mtv.corp.google.com>
-        <20160929180247.d4owhzwyawtanw3r@sigill.intra.peff.net>
-Date:   Thu, 29 Sep 2016 14:19:53 -0700
-In-Reply-To: <20160929180247.d4owhzwyawtanw3r@sigill.intra.peff.net> (Jeff
-        King's message of "Thu, 29 Sep 2016 14:02:48 -0400")
-Message-ID: <xmqqa8eqe746.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        id S934636AbcI2VWB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Sep 2016 17:22:01 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35387 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933484AbcI2VV7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2016 17:21:59 -0400
+Received: by mail-wm0-f66.google.com with SMTP id b4so657259wmb.2
+        for <git@vger.kernel.org>; Thu, 29 Sep 2016 14:21:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=NpYrQ9fJqBKmZfsxaF6NEUdTfZa0Lil7dv96Des30OY=;
+        b=YXWHRkAbi0anF+r9RWyFLuH6H3mdIbR/MGlZFQG8IEijE3vpBSYr01n/r5GddfFxZh
+         aCLCS1Xv99ZAuasu3ec3MyUBXC4SN6gb+yWiH72TJ2D20G1fHddctFjNwmBC0JElQPRs
+         4J/yqxyNQR9OCQrnBPHSbZSD0KTvDXrFyzSAaftxxzr6DTqWVt5TQO6CQu9x5MYa5xDp
+         tQqUCSsuQWNpK/xvtyZ+sqrA8x84QaF68hEry5okGwuDjgj70yZAHHzTdM1CWyupw+2S
+         iLIdu1eELicr/Y9Vq+Bbh7u7IyZj9rMAfsZ8smshaYNXTS0ej1SdTb0LW175nnWcMRhW
+         WU+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=NpYrQ9fJqBKmZfsxaF6NEUdTfZa0Lil7dv96Des30OY=;
+        b=fgIcDz+F4BKCg7Be6Lnvlswc70n6GkAUrfdkCJEZkhJznUXC44Mysn/KzAkigVCQym
+         IHsPE5NEfWS4gBJpCL892rq91OOFU0EPDfEbr55K7v17XBxPuQhU/Fo7YtVzIdQIQDSC
+         Wal9bmWnxH+19Obqm7GuaRPtLMECKVmnjFXKhXXEfIENh7oYLVVvEhblmAonZbxEhom4
+         mqjsM2Ue1cuTkUdZVITB4SxHtbnewvXihoy6fZvxSdNu7kxDQ5cQhgq4E47VAfsrPLqn
+         HjVo3o2wE3rARtQh+TpMwcBFKcYskSMwxPp3cnBPtOG3qa3pm1pnhO1ICPmxwTBJus0u
+         4X+A==
+X-Gm-Message-State: AA6/9RkDHNgpZSpP9Ztu09cG2XlnnnO7rJVXr5FRXKMIzDgRQ9E32vRlgwFEcTtBRGWYPA==
+X-Received: by 10.28.66.6 with SMTP id p6mr548843wma.59.1475184105643;
+        Thu, 29 Sep 2016 14:21:45 -0700 (PDT)
+Received: from [192.168.1.26] (eln216.neoplus.adsl.tpnet.pl. [83.21.207.216])
+        by smtp.googlemail.com with ESMTPSA id iq2sm16158308wjb.19.2016.09.29.14.21.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 29 Sep 2016 14:21:44 -0700 (PDT)
+Subject: Re: [PATCH v2 01/11] i18n: add--interactive: mark strings for
+ translation
+To:     Junio C Hamano <gitster@pobox.com>,
+        Vasco Almeida <vascomalmeida@sapo.pt>
+References: <1472646690-9699-1-git-send-email-vascomalmeida@sapo.pt>
+ <1472646690-9699-2-git-send-email-vascomalmeida@sapo.pt>
+ <xmqqr387y4le.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        David Aguilar <davvid@gmail.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <906445d8-25df-1b9a-8656-631ce007fc39@gmail.com>
+Date:   Thu, 29 Sep 2016 23:21:37 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 78308E66-868A-11E6-A9D1-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
+In-Reply-To: <xmqqr387y4le.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+W dniu 26.09.2016 o 00:52, Junio C Hamano pisze:
+> Vasco Almeida <vascomalmeida@sapo.pt> writes: 
 
-> I don't necessarily agree, though, that the timing of filter-process
-> cleanup needs to be part of the public interface. So in your list:
->
->>     3) Git waits until the filter process finishes.
->
-> That seems simple and elegant, but I can think of reasons we might not
-> want to wait (e.g., if the filter has to do some maintenance task and
-> does not the user to have to wait).
->
-> OTOH, we already face this in git, and we solve it by explicitly
-> backgrounding the maintenance task (i.e., auto-gc). So one could argue
-> that it is the responsibility of the filter process to manage its own
-> processes. It certainly makes the interaction with git simpler.
+>>  my $status_fmt = '%12s %12s %s';
+>> -my $status_head = sprintf($status_fmt, 'staged', 'unstaged', 'path');
+>> +my $status_head = sprintf($status_fmt, __('staged'), __('unstaged'), __('path'));
+> 
+> Wouldn't it make sense to allow translators to tweak $status_fmt if
+> you are allowing the earlier elements that are formatted with %12s,
+> as their translation may not fit within that width, in which case
+> they may want to make these columns wider?
 
-Yup, that summarizes my thinking a lot better than I managed to do
-in the previous message.
+Perl's printf, sprintf, and format think all codepoints take up 1 print
+column; also, without "use utf8;" they all think that one byte is one
+codepoint (as it is in latin1 encoding).
+
+Many codepoints can take 0 print columns (zero-width joiners), or 2
+columns (so called wide characters).
+
+The proper way to justify Unicode output is described e.g. in
+http://www.perl.com/pub/2012/05/perlunicook-unicode-column-width-for-printing.html
+
+  use Unicode::GCString;
+
+  my $gcs  = Unicode::GCString->new($str);  # grapheme cluster string
+  my $cols = $gcs->columns;
+  my $pad  = " " x (12 - $cols);
+
+  $status_head .= $str . $pad . " ";
+
+Though we would need to provide fallback if there is no perl-i18n,
+no extended Unicode support in Perl (also, if we are not using
+gettext).
+
+
+So it is even more complicated.
+
+>>  			prompt_yesno(
+>> -				'Your edited hunk does not apply. Edit again '
+>> -				. '(saying "no" discards!) [y/n]? '
+>> +				# TRANSLATORS: do not translate [y/n]
+>> +				# The program will only accept that input
+>> +				# at this point.
+>> +				__('Your edited hunk does not apply. Edit again '
+>> +				   . '(saying "no" discards!) [y/n]? ')
+> 
+> Not just [y/n], but "no" in "saying no discards!" also needs to
+> stay, no?  I wonder if it is a good idea to lose the TRANSLATORS
+> comment by ejecting "[y/n]" outside the "__()" construct here.
+
+Actually the message to translators should also mention that if
+the translation of "no" doesn't begin with 'n', then one needs
+to say something like '(saying "n" for "no" discards!)'.
+
+Best,
+-- 
+Jakub Narębski
 
