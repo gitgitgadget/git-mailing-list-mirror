@@ -2,76 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-6.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15821207EC
-	for <e@80x24.org>; Thu, 29 Sep 2016 17:45:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20B3C207EC
+	for <e@80x24.org>; Thu, 29 Sep 2016 17:49:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934401AbcI2Rpu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Sep 2016 13:45:50 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:55106 "EHLO mx1.imag.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934123AbcI2Rps (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2016 13:45:48 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-        by mx1.imag.fr (8.13.8/8.13.8) with ESMTP id u8THjXYI003559
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-        Thu, 29 Sep 2016 19:45:33 +0200
-Received: from anie (anie.imag.fr [129.88.42.32])
-        by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id u8THjYfP014942;
-        Thu, 29 Sep 2016 19:45:34 +0200
-From:   Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 1/4] config: allow customizing /etc/gitconfig location
-References: <CA+55aFy0_pwtFOYS1Tmnxipw9ZkRNCQHmoYyegO00pjMiZQfbg@mail.gmail.com>
-        <20160928233047.14313-1-gitster@pobox.com>
-        <20160928233047.14313-2-gitster@pobox.com>
-        <f239b2eb-d122-9c4b-187b-fbd40a94bcf4@gmail.com>
-        <xmqq7f9uhbc4.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 29 Sep 2016 19:45:34 +0200
-In-Reply-To: <xmqq7f9uhbc4.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Thu, 29 Sep 2016 10:20:27 -0700")
-Message-ID: <vpqmviqk3b5.fsf@anie.imag.fr>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S934368AbcI2RtK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Sep 2016 13:49:10 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64413 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S934123AbcI2RtI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2016 13:49:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2A2E340EE9;
+        Thu, 29 Sep 2016 13:49:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3loC9irl0WXAYUV1sceXLRfk48s=; b=biw8z6
+        cYJsHqX9Q6soqA17j6IMJ1VKW/nwg3R6W1NWcmSfUWgc4KsVHuOaaLIPorgbUM+U
+        bmAK3U63W1oDQmsjPbEVuPRNxGs/BE8XtxCbqdbt8o86559gqGTYcujACuNy+L+y
+        YLkH3SS+9gpdN0KMtTDESqf2/qjvPw/Y5ckz0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=PkN4qWbxPs+mDdXOsJ0jt1w01yPU8Txr
+        Nr0Gx5/gmtS7jVIaxmpTebKiBXi0t8+cZ8dGApf0Q6yFuLdeRK1zaB1cOGHa+e/i
+        hJSQ7I20s8Y5p1noCjlapdZ2dRnui0Mj9VjaBwAUQrRtJyLWZXdcHjPgUVQi6inw
+        1hsiR3HFIvg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2284840EE8;
+        Thu, 29 Sep 2016 13:49:07 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9A1A940EE7;
+        Thu, 29 Sep 2016 13:49:06 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     "Kyle J. McKay" <mackyle@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH 5/5] log: add --commit-header option
+References: <20160929083315.vwb3aurwbyjwlkjn@sigill.intra.peff.net>
+        <20160929083851.kx6itvrh4n2rttrx@sigill.intra.peff.net>
+Date:   Thu, 29 Sep 2016 10:49:04 -0700
+In-Reply-To: <20160929083851.kx6itvrh4n2rttrx@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 29 Sep 2016 04:38:51 -0400")
+Message-ID: <xmqqtwcyfvfz.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (mx1.imag.fr [129.88.30.5]); Thu, 29 Sep 2016 19:45:33 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: u8THjXYI003559
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1475775935.05333@q5MLCX9HkmuOLkBF0SqrGQ
+Content-Type: text/plain
+X-Pobox-Relay-ID: 04803E02-866D-11E6-8EBA-EAAE7A1B28F4-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Jakub Narębski <jnareb@gmail.com> writes:
+> This lets you stick a header right before a commit, but
+> suppresses headers that are duplicates. This means you can
+> do something like:
 >
->> W dniu 29.09.2016 o 01:30, Junio C Hamano pisze:
->>> With a new environment variable GIT_ETC_GITCONFIG, the users can
->>> specify a file that is used instead of /etc/gitconfig to read (and
->>> write) the system-wide configuration.
->>
->> Why it is named GIT_ETC_GITCONFIG (which is Unix-ism), and not
->> GIT_CONFIG_SYSTEM / GIT_CONFIG_SYSTEM_PATH, that is something
->> OS-neutral?
+>   git log --graph --author-date-order --commit-header='== %as =='
 >
-> Isn't "environment variable" something that came from POSIX world?
+> to get a marker in the graph whenever the day changes.
 
-I don't know who invented the concept, but environment variables have
-been there in the windows world since it exists I think (it existed in
-MS-DOS).
+That's interesting.  So it is not really "commit" header, but a
+header for groups of commits.  Credits for realizing the usefulness
+of such grouping may go to Kyle, but the implementation is also
+brilliant ;-).
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> This probably needs some refactoring around the setup of the
+> pretty-print context.
+
