@@ -2,74 +2,871 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5A371F4F8
-	for <e@80x24.org>; Thu, 29 Sep 2016 05:33:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1707F1F4F8
+	for <e@80x24.org>; Thu, 29 Sep 2016 05:35:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753073AbcI2Fdr convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 29 Sep 2016 01:33:47 -0400
-Received: from elnino.lfos.de ([46.165.227.75]:37937 "EHLO elnino.lfos.de"
-        rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1751038AbcI2Fdp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2016 01:33:45 -0400
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Thu, 29 Sep 2016 01:33:45 EDT
-Received: by elnino.lfos.de (OpenSMTPD) with ESMTPSA id a9cdd700 (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO);
-        Thu, 29 Sep 2016 07:27:02 +0200 (CEST)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-To:     git@vger.kernel.org
-From:   Lukas Fleischer <lfleischer@lfos.de>
-In-Reply-To: <20160929024400.22605-1-szeder@ira.uka.de>
-Cc:     =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>, peff@peff.net,
-        torvalds@linux-foundation.org, git@vger.kernel.org
-References: <20160928233047.14313-5-gitster@pobox.com>
- <20160929024400.22605-1-szeder@ira.uka.de>
-Message-ID: <147512682170.7989.11263315726387435240@typhoon>
-User-Agent: alot/0.3.7
-Subject: Re: [PATCH 4/4] core.abbrev: raise the default abbreviation to 12 hexdigits
-Date:   Thu, 29 Sep 2016 07:27:01 +0200
+        id S1753963AbcI2FfA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Sep 2016 01:35:00 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:36362 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751425AbcI2Fe5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2016 01:34:57 -0400
+Received: by mail-pf0-f194.google.com with SMTP id n24so3047578pfb.3
+        for <git@vger.kernel.org>; Wed, 28 Sep 2016 22:34:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=REZMU2qztK0dDvbV+kiH4x1Hs1Pxr9uQwy7PW2Z3S2o=;
+        b=j9Ho6jDywwH7smmSFwm507hjsIvECv4FPwoJQz7YYiVsEm16GkQemWiXYcrmpGCtV6
+         i8M7TizlOWDdXhks3YwNs7qpjLgine1mvdtypD0r4tKxYQ75YXJVmJu/0gBL6v84NS38
+         qaM3v+q+VnpXwHTLByuX+o8tbyUjwruNA6MOtpdrkNwBsUYCfJgYojZp98U7TF+fIhKz
+         q26cFywZVt3SJiUEpu3kfCy/Ifwwx+zmt1JdQkavZjzxLfxbCgG2mRJsFZ/pXImcmWZZ
+         kdVYvA1m3sPUx67iJzxRAoyYbp9IeUxf9GEoyvB6wav9TOONNsgBhOA55gZdZCZOI0xt
+         PFCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=REZMU2qztK0dDvbV+kiH4x1Hs1Pxr9uQwy7PW2Z3S2o=;
+        b=bRe026aGgCNF9kxDgCDrrPnvfloQmfDF35G8FrGGU7T/vlcuVTEA6qTcG+KRVA04Hl
+         U1XiwZ+9ms87wHLmApAatQnQSpgJxIJxPFSVgglrD9QvQCRiR3p6+w7YUExrg32sAcQz
+         59w8HDZptM8z8RlyFMJNTfb39Ix4dTskX5WWq5dKNbexUX826YJhBKTzeYWjPe2V7Wza
+         BSFqkdcUJkvQ3mlxS654lUf4K+E327txOMZjTO1BmjvX+RqLSyiTgCyA9TQ4BMFOrhuj
+         SMacpc39dpTaN1dTAnPD/yWGL5G35p3Qv7EV22Rs6YumhOG4U8ioGniCyJzGjKq2SHPd
+         k4Xg==
+X-Gm-Message-State: AE9vXwNHvWcA1n7LJ7SGlTh0YHkql+iQCSDrkFRaHMdw3DbETjqioIgcFLGN4BfNv3rPLQ==
+X-Received: by 10.98.102.148 with SMTP id s20mr64621710pfj.79.1475127296649;
+        Wed, 28 Sep 2016 22:34:56 -0700 (PDT)
+Received: from localhost.localdomain ([2002:46b5:ad14:0:223:12ff:fe05:eebd])
+        by smtp.gmail.com with ESMTPSA id ak3sm16408811pad.19.2016.09.28.22.34.55
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Wed, 28 Sep 2016 22:34:56 -0700 (PDT)
+From:   "Kyle J. McKay" <mackyle@gmail.com>
+To:     Git mailing list <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH/RFC] git log --oneline alternative with dates, times and initials
+Date:   Wed, 28 Sep 2016 22:34:51 -0700
+Message-Id: <git-log-times@mackyle-at-gmail-com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 29 Sep 2016 at 04:44:00, SZEDER Gábor wrote:
-> I for one raise my hand in protest...
-> 
-> "few extra bytes" is not the only downside, and it's not at all about
-> how many characters are copy-and-pasted.  In my opinion it's much more
-> important that this change wastes 5 columns worth of valuable screen
-> real estate e.g. for 'git blame' or 'git log --oneline' in projects
-> that don't need it and certainly won't ever need it.
-> 
-> Sure, users working on smaller repos are free to reset core.abbrev to
-> its original value.  I don't have any numbers, of course, but I
-> suspect that there are many more smaller repos out there that this
-> change will affect disadvantageously, than there are large repos for
-> which it's beneficial.
+Simple example output from the Git repository:
 
-I know this suggestion comes a bit late but would it make sense to let
-the repository owner overwrite the core.abbrev setting?
+git log-times --graph --date-order --decorate --no-merges -n 5 v2.5.3
 
-One possible way to implement this would be adding .gitconfig support to
-repositories with a very limited set of whitelisted variables allowed in
-there (could be core.abbrev only to begin with). Or some entirely
-separate mechanism like .gitignore.
+    === 2015-09-17 ===
+  * ee6ad5f4 12:16 jch (tag: v2.5.3) Git 2.5.3
+    === 2015-09-09 ===
+  * b9d66899 14:22 js  am --skip/--abort: merge HEAD/ORIG_HEAD tree into index
+  |   === 2015-09-04 ===
+  | * 27ea6f85 10:46 jch (tag: v2.5.2) Git 2.5.2
+  * 74b67638 10:36 jch (tag: v2.4.9) Git 2.4.9
+                       ..........
+  * ecad27cf 10:32 jch (tag: v2.3.9) Git 2.3.9
 
-With such a mechanism, we could keep the default of 7 which works fine
-for most projects. Linus could bump the default to 12 for linux.git. If
-some users are not happy with that, they can still overwrite it in their
-local Git config. Anybody starting a project could change the initial
-value to a suitable value in one of the first commits -- provided they
-already have an idea how much the project will grow. That way, hashes
-will be "long enough" even for early commits, before any heuristics
-could guess that the project would become large.
+I have been wanting a compact one line output format that included dates,
+times and initials for some time that is compatible with --graph, clearly
+shows root commits and eliminates confusion over whether or not two adjacent
+lines in the output are related as parent/child (the --show-linear-break
+option does not work with --graph).
 
-Opinions?
+The git-log-times utility is the result.  Except for --notes, --pretty and
+--format options (which would make the output a non-oneline format) any
+other `git log` option may be used (including things like --cherry-mark,
+--patch, --raw, --stat, --summary, --show-linear-break etc.),
 
-Regards,
-Lukas
+There are a few new options specific to git-log-times which are described
+in the README and the `git-log-times -h` output that can be used to alter
+the dates, times and/or initials displayed.
+
+The patch below adds a contrib/git-log-times directory containing the
+executable (git-log-times) and the README.
+
+--Kyle
+
+P.S. git am complains about 26 lines with whitespace errors.  They are
+     not whitespace errors.  The README is in markdown format and they
+     are explicit line break instructions to markdown (2 trailing blanks).
+     Removing them would corrupt the markdown output.
+
+P.P.S A picture is worth a thousand words, so the formatted help text,
+      and several images of actual git-log-times output are available at
+      https://gist.github.com/mackyle/4c33e4802a8269b3f200f2c00352ce6a
+
+-- 8< --
+Subject: [PATCH] contrib/git-log-times: alternative git log --oneline utility
+
+The git-log-times utility provides an alternative interface to using
+git log --oneline that includes dates, times and author initials.
+
+Additionally root commits are marked for easy identification and
+when using --graph mode breaks are inserted when necessary to prevent
+two adjacent output lines from being misconstrued as having a parent
+child relationship when they actually do not.
+
+Other than --notes, --pretty and --format options which are not
+allowed (because that would no longer be a one line format) all git
+log options are available for use.
+
+Output will be colorized using the same rules used for git log
+output.
+
+The three extra items in the output (dates, times and initials) use
+'color.log-times.date', 'color.log-times.time' and
+'color.log-times.initials' to change their default color.
+
+Other options specific to git-log-times may be shown by using the
+-h option (i.e. `git-log-times -h`).
+
+One or more default options which behave as though they are the
+first option argument(s) on the command line may be set by assigning
+them to the 'log-times.defaults' config value as space-separated
+options each including its leading '-' or '--'.
+
+Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
+---
+ contrib/git-log-times/README        | 256 ++++++++++++++++++++
+ contrib/git-log-times/git-log-times | 464 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 720 insertions(+)
+ create mode 100644 contrib/git-log-times/README
+ create mode 100755 contrib/git-log-times/git-log-times
+
+diff --git a/contrib/git-log-times/README b/contrib/git-log-times/README
+new file mode 100644
+index 00000000..65f1d2c5
+--- /dev/null
++++ b/contrib/git-log-times/README
+@@ -0,0 +1,256 @@
++git-log-times
++=============
++
++An alterative to `git log --oneline` that includes dates, times and
++author initials in a compact one line output format.
++
++The `--notes`, `--pretty` and `--format` options are not allowed but any
++other `git log` options should work fine including `--graph`.
++
++In both `--graph` and non `--graph` modes:
++
++   * Root commits are identified by `_` on either side of the hash
++
++When `--graph` mode is enabled, the graph output is enhanced as follows:
++
++   * Breaks are inserted when necessary to avoid parent/child ambiguity
++
++
++Installation
++------------
++
++Put the `git-log-times` executable file in one of the directories
++included in the `PATH` environment variable.
++
++Optionally set a global alias to save typing such as `lo` like so:
++
++    git config --global alias.lo log-times
++
++Optionally set global default options such as `--two-initials` and
++`--abbrev=8` like so:
++
++    git config --global log-times.defaults "--two-initials --abbrev=8"
++
++
++Dates & Times
++-------------
++
++Dates and times are shown in the local timezone.  Set the TZ variable
++before running `git log-times` (e.g. `TZ=UTC git log-times` to show
++dates and times in UTC) or use the `--time-zone=` option (e.g.
++`git log-times --time-zone=UTC`) to change that.
++
++Dates are shown on a date line all by themselves like so:
++
++    === 2015-11-13 ===
++
++The date line indicates that the times on all the following lines
++(regardless of whether or not `--reverse` is being used) up until
++the next date line take place on the indicated date.  For example
++this output:
++
++    === 2015-09-28 ===
++    be08dee9 13:18 jc (tag: v2.6.0) Git 2.6
++    === 2015-09-21 ===
++    8d530c4d 13:26 jc (tag: v2.6.0-rc3) Git 2.6-rc3
++    904f6e7c 10:51 bn send-email: fix uninitialized var warning for $
++    === 2015-09-20 ===
++    18a21c19 09:49 ps l10n: de.po: better language for one string
++    2e0f3663 09:49 rt l10n: de.po: translate 2 messages
++    5fc31c1f 09:44 tq l10n: Update and review Vietnamese translation
++
++shows one commit on 2015-09-28, two commits on 2015-09-21 and three
++commits on 2015-09-20.
++
++Note that a date line may appear more than once for the same date
++(this is especially common when using `--graph` with its defualt
++`--topo-order`).
++
++The purpose of a date line is to indicate what date has been elided
++from the following lines, nothing more.
++
++
++Examples
++--------
++
++For example, running `git log-times --decorate --graph -n 17 v2.6.1`
++on the Git repository produces this output (which will be colorized
++on the terminal if color is enabled):
++
++      === 2015-09-28 ===
++    * 22f698cb 19:19 jch (tag: v2.6.1) Git 2.6.1
++    *   3adc4ec7 19:16 jch Sync with v2.5.4
++    |\
++    | * 24358560 15:34 jch (tag: v2.5.4) Git 2.5.4
++    | *   11a458be 15:33 jch Sync with 2.4.10
++    | |\
++    | | * a2558fb8 15:30 jch (tag: v2.4.10) Git 2.4.10
++    | | *   6343e2f6 15:28 jch Sync with 2.3.10
++    | | |\
++    | | | * 18b58f70 15:26 jch (tag: v2.3.10) Git 2.3.10
++    | | | *   92cdfd21 14:59 jch Merge branch 'jk/xdiff-memory-limits
++    | | | |\
++    | | | | * 83c4d380 14:58 jk  merge-file: enforce MAX_XDIFF_SIZE o
++    | | | | * dcd1742e 14:57 jk  xdiff: reject files larger than ~1GB
++    | | | | * 3efb9880 14:57 jk  react to errors in xdi_diff
++    | | | * |   f2df3104 14:46 jch Merge branch 'jk/transfer-limit-re
++    | | | |\ \
++    | | | | | | === 2015-09-25 ===
++    | | | | * | b2581164 15:32 bb  http: limit redirection depth
++    | | | | * | f4113cac 15:30 bb  http: limit redirection to protoco
++    | | | | * | 5088d3b3 15:28 jk  transport: refactor protocol white
++    | | | | | |   === 2015-09-28 ===
++    | | | * | |   df37727a 14:33 jch Merge branch 'jk/transfer-limit-
++    | | | |\ \ \
++    | | | | |/ /
++    | | | | | /
++    | | | | |/
++    | | | |/|
++    | | | | | === 2015-09-23 ===
++    | | | | * 33cfccbb 11:35 jk  submodule: allow only certain protoc
++
++The output will be colorized according to the same settings used to enable/
++disable color for git log output.
++
++Additionally, the color of the three new items (dates, times and
++initials) can be controlled with the `color.log-times.date`,
++`color.log-times.time` and `color.log-times.initials` config options.
++
++Running `git log-times --graph --max-parents=0` on the Git repository gives:
++
++      === 2009-04-24 ===
++    *_0ca71b37_11:13 ap  basic options parsing and whatnot.
++      === 2007-01-30 ===
++    *_16d6b8ab_15:16 sh  Initial import of a python script to import ch
++      === 2006-11-06 ===
++    *_cb07fc2a_11:20 sop git-gui: Initial revision.
++      === 2005-08-07 ===
++    *_161332a5_10:49 ks  first working version
++      === 2005-04-11 ===
++    *_2744b234_23:46 lt  Start of early patch applicator tools for git.
++      === 2005-05-08 ===
++    *_1db95b00_21:08 pm  Add initial version of gitk to the CVS reposit
++      === 2005-04-07 ===
++    *_e83c5163_15:13 lt  Initial revision of "git", the information man
++
++Notice the `_` on either side of the hash identifying those commits
++as root commits.  The `_` will only appear on the left side of the
++hash if the selected output format would have normally included a
++space there.  In `--graph` mode, all the spaces between the commit mark
++(e.g. `*`) and the hash are turned into `_`.
++
++Running `git log-times --decorate --graph --no-merges -n 13 v2.6.1`
++on the Git repository results in this output:
++
++      === 2015-09-28 ===
++    * 22f698cb 19:19 jch (tag: v2.6.1) Git 2.6.1
++                         ..........
++    * 24358560 15:34 jch (tag: v2.5.4) Git 2.5.4
++                         ..........
++    * a2558fb8 15:30 jch (tag: v2.4.10) Git 2.4.10
++                         ..........
++    * 18b58f70 15:26 jch (tag: v2.3.10) Git 2.3.10
++                         ..........
++    * 83c4d380 14:58 jk  merge-file: enforce MAX_XDIFF_SIZE on incomi
++    * dcd1742e 14:57 jk  xdiff: reject files larger than ~1GB
++    * 3efb9880 14:57 jk  react to errors in xdi_diff
++    |   === 2015-09-25 ===
++    | * b2581164 15:32 bb  http: limit redirection depth
++    | * f4113cac 15:30 bb  http: limit redirection to protocol-whitel
++    | * 5088d3b3 15:28 jk  transport: refactor protocol whitelist cod
++    | | === 2015-09-23 ===
++    | * 33cfccbb 11:35 jk  submodule: allow only certain protocols fo
++    | * a5adaced 11:35 jk  transport: add a protocol-whitelist enviro
++    |/
++    |   === 2015-09-28 ===
++    | * be08dee9 13:18 jch (tag: v2.6.0) Git 2.6
++
++Notice how four linear breaks (`..........`) were automatically
++inserted to avoid parent child relationship confusion.
++
++In non `--graph` mode, linear breaks are NOT automatically inserted.
++They must be requested with the usual `--show-linear-break` option.
++
++
++Options
++-------
++
++In addition to allowing all the normal `git log` options except for
++`--notes`, `--format` and `--pretty` (`--oneline` is allowed and
++silently ignored), the following additional options may be utilized:
++
++   * `--seconds`  
++     include seconds in the time (i.e. HH:MM:SS instead of just HH:MM)
++
++   * `--minutes`  
++     include minutes but not seconds in the time (i.e. HH:MM not HH:MM:SS)  
++     This is the default
++
++   * `--no-times`  
++     omit the time field entirely
++
++   * `--two-initials`  
++     only show at most two initials instead of the usual three  
++     This is the default if `--initials=author,committer` or
++     `--initials=committer,author` is used.
++
++   * `--three-initials`  
++     show at most three initials  
++     This is the default unless `--initials=author,committer` or
++     `--initials=committer,author` is used.
++
++   * `--no-initials`  
++     omit the initials field entirely
++
++   * `--commit-message`  
++     when using `--walk-reflogs` show commit message not reflog message
++
++   * `--author-date`  
++     force use of author dates and times  
++     The default is to use committer dates and times unless
++     `--author-date-order` is in effect.  This option forces author
++     dates and times to always be used and overrides `--committer-date`.
++
++   * `--committer-date`  
++     force use of committer dates and times  
++     The default is to use committer dates and times if `--date-order` or
++     `--topo-order` is in effect or `--author-date-order` is NOT in effect.
++     This option forces committer dates and times to always be used and
++     overrides a previous `--author-date` option.
++
++   * `--initials=author`  
++     show author initials  
++     This is the default behavior
++
++   * `--initials=committer`  
++     show committer initials instead of author initials
++
++   * `--initials=author,committer`  
++     show author and commiter initials separated by a `/`  
++     This changes the initials width default from three to two.
++
++   * `--initials=committer,author`  
++     show commiter and author initials separated by a `/`  
++     This changes the initials width default from three to two.
++
++   * `--time-zone=zone`  
++     set the TZ environment variable to `zone`  
++     This is an alterative to setting TZ before running `git log-times`
++     and will affect the time zone dates and times are displayed in.
++
++   * `--weekday`  
++     show the weekday with the date
++
++   * `--no-weekday`  
++     do not show the weekday with the date  
++     This is the default behavior
++
++In addition to the above options, color output is controlled as normal
++for `git log` with the addition of `color.log-times.date`,
++`color.log-times.time` and `color.log-times.initials` config options to alter
++the default colors for dates, times and initials respectively.
++
++Furthermore, default options may be set in the `log-times.defaults`
++config value and they will be treated as though they appeared at
++the very beginning of the `git log-times` command line option list
++(e.g. `git config log-times.defaults "--abbrev=8 --seconds"`).
+diff --git a/contrib/git-log-times/git-log-times b/contrib/git-log-times/git-log-times
+new file mode 100755
+index 00000000..d0e5face
+--- /dev/null
++++ b/contrib/git-log-times/git-log-times
+@@ -0,0 +1,464 @@
++#!/usr/bin/env perl
++
++# git-log-times.pl -- git log --oneline variation with dates, times and initials
++# Copyright (C) 2015,2016 Kyle J. McKay <mackyle@gmail.com>.  All rights reserved.
++
++# License GPL v2
++
++# Version 1.0
++
++use 5.008;
++use strict;
++use warnings;
++use File::Basename qw(basename);
++use POSIX qw(strftime _exit);
++use Encode;
++
++my $USAGE = <<'USAGE';
++usage: git%slog-times [<options>] [<revision-range>] [[--] <path>...]
++
++    -h                    Show this help
++    --seconds             Use HH:MM:SS instead of just the default HH:MM
++    --minutes             Use just HH:MM (default) for times not HH:MM:SS
++    --no-times            Omit the time field entirely
++    --two-initials        Use maximum of two initials instead of default three
++    --three-initials      Use maximum of three initials (default)
++    --no-initials         Omit the initials field entirely
++    --commit-message      Show the commit message when using --walk-reflogs
++    --author-date         Use author dates and times
++    --committer-date      Use committer dates and times (default)
++    --initials=author     Use author initials (default)
++    --initials=committer  Use committer initials
++    --intiials=author,committer
++                          Use author/committer initials and --two-initials
++    --intiials=committer,author
++                          Use committer/author initials and --two-initials
++    --time-zone=<zone>    Set TZ environment variable to <zone>
++    --weekday             Show the weekday with the date
++    --no-weekday          Do not show the weekday with the date (default)
++
++    other log options     See `git help log` for more information
++
++Default colors for dates, times and initials may be changed by setting
++`color.log-times.date`, `color.log-times.time` and/or
++`color.log-times.initials` config values.  Dates and times are shown in the
++local time zone if TZ is not set in the environment and the `--time-zone`
++option has not been used.  Default options may be set in the
++`log-times.defaults` config value and they will be treated as though they were
++listed first in the command line options list (e.g.
++`git config log-times.defaults "--abbrev=8 --seconds"`)
++USAGE
++
++my $timeformat = "%H:%M";
++
++$SIG{PIPE} = sub {_exit 1};
++
++sub dodie {
++	my $msg = join(" ", @_);
++	chomp $msg;
++	die basename($0).": fatal: ".$msg."\n";
++}
++
++my ($setusedecorate, $usedecorate);
++sub use_decorate {
++	return $usedecorate if $setusedecorate;
++	my $do = qx(git config --get log.decorate 2>/dev/null) || "0";
++	chomp $do;
++	return 0 if $do eq "0" || $do eq "false" || $do eq "off";
++	return 0 if $do eq "auto" && ! -t STDOUT;
++	return 1;
++}
++
++my $iw;
++sub get_initials {
++	my $initials = shift;
++	my $wasutf8 = utf8::decode($initials);
++	$initials = lc($initials)." ";
++	$initials =~ s/[.]/ /g;
++	$initials =~ s/ iii? / /g;
++	$initials =~ s/ iv / /g;
++	$initials =~ s/ [js]r / /g;
++	$initials =~ s/[,;:'\042+_-]//g;
++	$initials =~ s/\([^(]*?\)/ /g;
++	$initials =~ s/\[[^[]*?\]/ /g;
++	$initials =~ s/\s+/ /g;
++	$initials =~ s/^ //g;
++	return "jc" if $iw == 2 && $initials eq "junio c hamano ";
++	$initials =~ s/([^ ])[^ ]* /$1/g;
++	if ($iw == 2) {
++		$initials =~ s/^(.).+(.)$/$1$2/;
++	} else {
++		$initials =~ s/^(..).+(.)$/$1$2/;
++	}
++	utf8::encode($initials) if $wasutf8;
++	return $initials;
++}
++
++sub get_nocolor_indent {
++	my $indent = shift;
++	$indent =~ s/\033[^m]*m//g;
++	$indent =~ s/\s+$//;
++	$indent =~ s/-+\.$//;
++	return $indent;
++}
++
++sub get_blank_graph_indent {
++	my $indent = shift;
++	chomp $indent;
++	$indent =~ s/\033[^m]*m//g;
++	$indent =~ s/^[\s|]+//;
++	return $indent;
++}
++
++sub get_first_indent {
++	my $indent = shift;
++	$indent =~ s/\033[^m]*m//g;
++	$indent =~ s/./ /gs;
++	return $indent;
++}
++
++my $nobar;
++my $barcolor;
++my $resetcolor = "";
++
++sub get_bar_color {
++	my ($prefix, $index) = @_;
++	my $c = (split(m{[-=^<>*+o /|\\_]}, $prefix))[$index];
++	$c =~ s/\Q$resetcolor\E//g if $resetcolor;
++	return $c;
++}
++
++sub get_indent {
++	my $indent = shift;
++	if ($nobar) {
++		$indent =~ tr/\-=^<>*+o./         /;
++	} else {
++		$indent =~ s/[-=^<>*+o]/$barcolor ? $barcolor."|".$resetcolor : "|"/e;
++		$indent =~ tr/\-./  /;
++	}
++	return $indent;
++}
++
++sub get_prefix {
++	my $indent = shift;
++	$indent =~ tr'\/'||';
++	return $indent;
++}
++
++sub get_defaults {
++	# defaults are cumulative, but an empty setting resets
++	my @defaults = ();
++	my $opts = qx(git config --get-all log-times.defaults 2>/dev/null);
++	chomp($opts);
++	foreach (split(/\r\n|\r|\n/, $opts, -1)) {
++		s/^\s+//; s/\s+$//;
++		if ($_ eq "") {
++			@defaults = ();
++			next;
++		}
++		push(@defaults, $_);
++	}
++	return split(" ", join(" ", @defaults));
++}
++
++system("git rev-parse --git-dir >/dev/null") == 0 or exit(1);
++my ($usemark, $usegraph, $usereflog, $useboundary, $useleftright, $usecherry, $setusecolor, $usecolor, $usecad);
++my @args = ();
++my $lastwasgrep;
++my $dateopt = "%ct";
++my $usewkday;
++my $reflogsubj = "%gs";
++my $sawdashdash;
++$iw = undef;
++my $iw2 = "";
++my ($committer, $author, $ivar, $ivar2);
++$ivar = \$author;
++foreach my $arg (get_defaults(), @ARGV) {
++	my $nextisgrep;
++	if ($sawdashdash || $lastwasgrep) {
++		push(@args, $arg);
++		$lastwasgrep = $nextisgrep;
++		next;
++	}
++	if ($arg eq "-h") {
++		my $dash = "-";
++		my $exec_path = qx(git --exec-path 2>/dev/null);
++		chomp $exec_path;
++		$dash = " " if $ENV{PATH} =~ /^\Q$exec_path\E:/;
++		printf "$USAGE\n", $dash;
++		exit 0;
++	} elsif ($arg eq "--oneline") {
++		# silently ignore --oneline as we are always in a one line format
++		next;
++	} elsif ($arg eq "--seconds") {
++		# extra option
++		$timeformat = "%H:%M:%S";
++		next;
++	} elsif ($arg eq "--minutes") {
++		# extra option
++		$timeformat = "%H:%M";
++		next;
++	} elsif ($arg eq "--no-times") {
++		# extra option
++		$timeformat = "";
++		next;
++	} elsif ($arg eq "--two-initials") {
++		# extra option
++		$iw = 2;
++		next;
++	} elsif ($arg eq "--three-initials") {
++		# extra option
++		$iw = 3;
++		next;
++	} elsif ($arg eq "--no-initials") {
++		# extra option
++		$iw = 0;
++		next;
++	} elsif ($arg eq "--two-initials") {
++		# extra option
++		$iw = 3;
++		next;
++	} elsif ($arg eq "--commit-message") {
++		# extra option
++		$reflogsubj = "%s";
++		next;
++	} elsif ($arg eq "--author-date") {
++		# extra option
++		$dateopt = "%at";
++		$usecad = 1;
++		next;
++	} elsif ($arg eq "--committer-date") {
++		# extra option
++		$dateopt = "%ct";
++		$usecad = 1;
++		next;
++	} elsif ($arg eq "--weekday") {
++		# extra option
++		$usewkday = 1;
++		next;
++	} elsif ($arg eq "--no-weekday") {
++		# extra option
++		$usewkday = undef;
++		next;
++	} elsif ($arg =~ /^--initials=/) {
++		# extra option
++		$arg =~ s/^--initials=//;
++		if ($arg eq "author") {
++			$ivar = \$author;
++			$ivar2 = undef;
++		} elsif ($arg eq "committer") {
++			$ivar = \$committer;
++			$ivar2 = undef;
++		} elsif ($arg eq "committer,author" || $arg eq "committer/author") {
++			$ivar = \$committer;
++			$ivar2 = \$author;
++		} elsif ($arg eq "author,committer" || $arg eq "author/committer") {
++			$ivar = \$author;
++			$ivar2 = \$committer;
++		} else {
++			dodie "--initials= requires 'author', 'committer' or 'committer,author'";
++		}
++		next;
++	} elsif ($arg =~ /^--time-zone=/) {
++		# extra option
++		$arg =~ s/^--time-zone=//;
++		$ENV{TZ} = $arg;
++		next;
++	} elsif ($arg eq "--date-order" || $arg eq "--topo-order") {
++		$dateopt = "%ct" unless $usecad;
++	} elsif ($arg eq "--author-date-order") {
++		$dateopt = "%at";
++	} elsif ($arg =~ /^--(pretty|pretty=.*|format=.*|notes|show-notes|show-notes=.*|standard-notes)$/) {
++		dodie "formatting/notes option not allowed: $arg";
++	} elsif ($arg eq "--no-decorate" || $arg eq "--decorate=no") {
++		$setusedecorate = 1;
++		$usedecorate = undef;
++	} elsif ($arg eq "--decorate=auto") {
++		$setusedecorate = 1;
++		$usedecorate = -t STDOUT ? 1 : undef;
++	} elsif ($arg eq "--decorate" || $arg =~ /^--decorate=/) {
++		$setusedecorate = 1;
++		$usedecorate = 1;
++	} elsif ($arg eq "--color" || $arg eq "--color=always") {
++		$setusecolor = 1;
++		$usecolor = 1;
++	} elsif ($arg eq "--no-color" || $arg eq "--color=never") {
++		$setusecolor = 1;
++		$usecolor = undef;
++	} elsif ($arg eq "--color=auto") {
++		$setusecolor = 1;
++		$usecolor = -t STDOUT ? 1 : undef;
++	} elsif ($arg eq "-g" || $arg eq "--walk-reflogs") {
++		$usereflog = 1;
++	} elsif ($arg eq "--boundary") {
++		$useboundary = 1;
++		$usemark = 1;
++	} elsif ($arg eq "--cherry-mark" || $arg eq "--cherry") {
++		$usecherry = 1;
++		$usemark = 1;
++	} elsif ($arg eq "--left-right") {
++		$useleftright = 1;
++		$usemark = 1;
++	} elsif ($arg eq "--graph") {
++		$usegraph = 1;
++	} elsif ($arg =~ /^(--grep|--grep-reflog|-S|-G)$/) {
++		$nextisgrep = 1;
++	} elsif ($arg eq "--") {
++		$sawdashdash = 1;
++	}
++	push(@args, $arg);
++	$lastwasgrep = $nextisgrep;
++}
++$iw = defined($ivar2) ? 2 : 3 unless defined($iw);
++$iw = "" if !$iw;
++$iw2 = $iw if defined($ivar2);
++my ($mark, $fixmark) = ("");
++$mark = "%m " unless $usegraph || !$usemark;
++if ($mark && !$useleftright) {
++	$fixmark = " ";
++	$fixmark = "+" if $usecherry;
++}
++
++my $color = "never";
++my ($hashcolor, $datecolor, $timecolor, $initialscolor, $autocolor) = ("", "", "", "", "");
++$usecolor = 1 if !$setusecolor && system("git", "config", "--get-colorbool", "color.diff") == 0;
++if ($usecolor) {
++	$color = "always";
++	$autocolor = "%C(auto)";
++	$hashcolor= qx(git config --get-color color.diff.commit "yellow");
++	$datecolor= qx(git config --get-color color.log-times.date "bold blue");
++	$timecolor= qx(git config --get-color color.log-times.time "green") if $timeformat;
++	$initialscolor = qx(git config --get-color color.log-times.initials "red") if $iw;
++	$resetcolor = qx(git config --get-color "" "reset");
++}
++my $decopt = "";
++$decopt = "$autocolor%d" if use_decorate;
++my $pager = qx(git var GIT_PAGER);
++defined($pager) and chomp $pager;
++$ENV{LESS} = "-FRX" unless exists $ENV{LESS};
++$ENV{LV} = "-c" unless exists $ENV{LV};
++
++my ($lastdate, $lastprefix, $lastplainprefix) = ("");
++my $msgopt = "%s";
++$msgopt = "%gd: $reflogsubj" if $usereflog;
++my $lastwasroot = 1;
++open(LOG, '-|', "git", "log", "--color=$color",
++	"--format=tformat:$mark%x1fCOMMIT %H %h $dateopt%x1f%cn%x1f%an%x1f%P%x1f$decopt $msgopt%x1f",
++	@args) or exit(1);
++if (defined($pager) && $pager ne "cat") {
++	open OUT, "|$pager" or dodie "could not run pager \"$pager\": $!\n";
++} else {
++	open OUT, '>&STDOUT' or die "could not dupe STDOUT: $!";
++}
++select((select(OUT),$|=1)[0]);
++my $delblank;
++my @lastparents = ();
++my $lastwascommit;
++my ($prefix, $data, $parentlist, $subject);
++while (my $logline = <LOG>) {
++	($prefix, $data, $committer, $author, $parentlist, $subject) = split(/\x1f/, $logline, -1);
++	$subject =~ s/ // if $subject;
++	my ($flag, $fullhash, $hash, $timestamp) = split(" ", $data, 4) if defined($data);
++	if (!defined($flag) || $flag ne "COMMIT") {
++		chomp $prefix;
++		$delblank = 0, next if $delblank && !$usegraph && $prefix =~ /^\s*$/;
++		$delblank = 0, next if $delblank && $usegraph && !get_blank_graph_indent($prefix);
++		print OUT "$prefix\n";
++		$lastprefix = $prefix;
++		$lastplainprefix = undef;
++		@lastparents = ();
++		$lastwascommit = undef;
++		next;
++	}
++	my $isroot = !$parentlist;
++	my @parents = split(' ', $parentlist) if $usegraph;
++	my $initials = $iw ? get_initials($$ivar) : "";
++	my $initials2 = $iw2 ? get_initials($$ivar2) : "";
++	my ($newdate, $newday, $newtime) = split(" ", strftime("%Y-%m-%d %a $timeformat", localtime($timestamp)));
++	$newdate .= " " . $newday if $usewkday;
++	my $mightneedbreak = $lastwascommit && !$lastwasroot && $usegraph && !grep($_ eq $fullhash, @lastparents);
++	if ($lastdate ne $newdate || $mightneedbreak) {
++		my $indent = "";
++		if (!$lastdate || $mark) {
++			$indent = get_first_indent($prefix);
++			$lastprefix = $prefix;
++			$lastplainprefix = undef;
++		} elsif ($prefix ne "") {
++			my $newplainprefix = get_nocolor_indent($prefix);
++			defined($lastplainprefix) or $lastplainprefix = get_nocolor_indent($lastprefix);
++			$nobar = undef;
++			$barcolor = undef;
++			if ($newplainprefix =~ /^(.*?[-=^<>*+o])/) {{
++				my $marklen = length($1);
++				my $difflen = length($lastplainprefix) - length($1);
++				$nobar = 1;
++				if ($difflen >= 0) {
++					my $lastmark = substr($lastplainprefix, $marklen-1, 1);
++					$lastmark =~ /[-=^<>*+o]/ and $nobar = $lastwasroot || $mightneedbreak, last;
++					$lastmark eq "|" && $lastdate ne $newdate and
++						$nobar = 0,
++						$barcolor = get_bar_color($lastprefix, $marklen - 1),
++						last;
++				}
++				if ($lastdate eq $newdate) {
++					$lastprefix = $prefix;
++					$lastplainprefix = $newplainprefix;
++					goto NOBREAKNEEDED;
++				}
++				$difflen >= -1 or last;
++				substr($lastplainprefix, $marklen-2, 1) eq "\\" and
++					$nobar = 0,
++					$barcolor = get_bar_color($lastprefix, $marklen - 2),
++					last;
++				$difflen >= 1 &&
++				substr($lastplainprefix, $marklen, 1) eq "/" and
++					$nobar = 0,
++					$barcolor = get_bar_color($lastprefix, $marklen);
++			}}
++			$indent = get_indent($prefix);
++			$lastprefix = $prefix;
++			$prefix = get_prefix($prefix);
++			$lastplainprefix = $newplainprefix;
++		}
++		if ($lastdate ne $newdate) {
++			printf OUT "%s%s=== %s ===%s\n", $indent,
++				$datecolor, $newdate, $resetcolor;
++			$lastdate = $newdate;
++		} else {
++			printf OUT "%s%s %s%s%-${iw}s%s%-${iw2}s %s\n", $indent,
++				' ' x length($hash), ' ' x length($newtime),
++				($iw ? " " : ""), "", ($iw2 ? " " : ""), "",
++				"..........";
++		}
++	} else {
++		$lastprefix = $prefix;
++		$lastplainprefix = undef;
++	}
++NOBREAKNEEDED:
++	$lastwasroot = $isroot;
++	@lastparents = @parents;
++	$lastwascommit = 1;
++	my $rootflag = " ";
++	if ($isroot) {
++		$rootflag = "_";
++		$prefix = substr($prefix, 0, length($prefix) - 1) . "_"
++			if length($prefix);
++		if ($prefix =~ /^(.*?[-=^<>*+o])(.+)$/) {
++			my ($initial, $trail) = ($1, $2);
++			$trail =~ tr/ /_/;
++			$prefix = $initial . $trail;
++		}
++	}
++	if ($fixmark) {
++		$prefix = $fixmark . substr($prefix, 1)
++			if $prefix =~ /^[<>]/;
++	}
++	printf OUT "%s%s%s%s%s%-${iw}s%s%-${iw2}s%s%s\n", $prefix,
++		"$hashcolor$hash$resetcolor",
++		$rootflag, ($timeformat ? "$timecolor$newtime$resetcolor " : ""),
++		$initialscolor, $initials, ($iw2 ? "/" : ""), $initials2,
++		($iw ? "$resetcolor " : ""), $subject;
++	$delblank = 1;
++}
++close LOG;
++close OUT;
+---
