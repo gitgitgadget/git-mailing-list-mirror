@@ -2,62 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C566207EC
-	for <e@80x24.org>; Thu, 29 Sep 2016 18:38:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4893207EC
+	for <e@80x24.org>; Thu, 29 Sep 2016 18:40:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754639AbcI2SiI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Sep 2016 14:38:08 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:48690 "EHLO bsmtp.bon.at"
+        id S934123AbcI2Sjp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Sep 2016 14:39:45 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50054 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751795AbcI2SiH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2016 14:38:07 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 3slNcC74YZz5tlD;
-        Thu, 29 Sep 2016 20:38:03 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id CE8FC5330;
-        Thu, 29 Sep 2016 20:38:02 +0200 (CEST)
-Subject: Re: [PATCH v8 00/11] Git filter protocol
-To:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-References: <20160920190247.82189-1-larsxschneider@gmail.com>
- <xmqq8tubitjs.fsf@gitster.mtv.corp.google.com>
- <C2C9761E-986F-473D-BFB7-CBEF900D9FA3@gmail.com>
- <f7a4f828-bb1d-0ffa-e369-3b4fa476d9e5@web.de>
- <xmqqk2duhcdm.fsf@gitster.mtv.corp.google.com>
- <1A8A9127-4DF9-44AD-9497-F8A630AB1193@gmail.com>
- <7f8ab626-ecdb-70a8-aa19-615c3c84148e@web.de>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>,
-        =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
-        Martin-Louis Bright <mlbright@gmail.com>,
-        ramsay@ramsayjones.plus.com
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <049fad9b-d625-a80b-bd6b-9b80c9701f7a@kdbg.org>
-Date:   Thu, 29 Sep 2016 20:38:02 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
+        id S1755690AbcI2Sjn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2016 14:39:43 -0400
+Received: (qmail 12200 invoked by uid 109); 29 Sep 2016 18:39:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 29 Sep 2016 18:39:42 +0000
+Received: (qmail 3614 invoked by uid 111); 29 Sep 2016 18:39:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 29 Sep 2016 14:39:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Sep 2016 14:39:40 -0400
+Date:   Thu, 29 Sep 2016 14:39:40 -0400
+From:   Jeff King <peff@peff.net>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com
+Subject: Re: [PATCH v5 1/4] git: make super-prefix option
+Message-ID: <20160929183940.vgac7by74gmglaf2@sigill.intra.peff.net>
+References: <1474930003-83750-1-git-send-email-bmwill@google.com>
+ <1475099443-145608-1-git-send-email-bmwill@google.com>
+ <1475099443-145608-2-git-send-email-bmwill@google.com>
 MIME-Version: 1.0
-In-Reply-To: <7f8ab626-ecdb-70a8-aa19-615c3c84148e@web.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1475099443-145608-2-git-send-email-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 29.09.2016 um 20:18 schrieb Torsten Bögershausen:
-> I would agree that  Git should not wait for the filter.
-> But does the test suite need to wait for the filter ?
+On Wed, Sep 28, 2016 at 02:50:40PM -0700, Brandon Williams wrote:
 
-We have fixed a test case on Windows recently where a process hung 
-around too long (5babb5bd). So, yes, the test suite has to wait for the 
-filter.
+> Add a super-prefix environment variable 'GIT_INTERNAL_SUPER_PREFIX'
+> which can be used to specify a path from above a repository down to its
+> root.  The immediate use of this option is by commands which have a
+> --recurse-submodule option in order to give context to submodules about
+> how they were invoked.  This option is currently only allowed for
+> builtins which support a super-prefix.
 
--- Hannes
+What about non-builtins?
 
+E.g., what should
+
+  git --super-prefix=foo bar
+
+do? Should the externals and scripts check the presence of
+GIT_INTERNAL_SUPER_PREFIX and barf if it is set? Most scripts would
+probably notice eventually when calling some other builtin that doesn't
+support SUPER_PREFIX, but it seems hacky to count on that.
+
+There's also the question of 3rd-party programs. If we want to be
+conservative, I think you'd want to just always bail in
+execv_dashed_external() if --super-prefix is in use. That doesn't give
+an option for scripts to say "hey, I support this", but we can perhaps
+worry about loosening later.
+
+-Peff
