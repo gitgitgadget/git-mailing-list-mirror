@@ -2,75 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 63725207EC
-	for <e@80x24.org>; Thu, 29 Sep 2016 18:37:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C566207EC
+	for <e@80x24.org>; Thu, 29 Sep 2016 18:38:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932648AbcI2Shn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Sep 2016 14:37:43 -0400
-Received: from mail-oi0-f67.google.com ([209.85.218.67]:34591 "EHLO
-        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751670AbcI2Shm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2016 14:37:42 -0400
-Received: by mail-oi0-f67.google.com with SMTP id r132so2110964oig.1
-        for <git@vger.kernel.org>; Thu, 29 Sep 2016 11:37:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=fQVVdGDb3Q7Vkb7IJgMIh5zgrHdHv+81RG/Nw8ZMYXo=;
-        b=x0abUH8F+2mIkZtrnM7SDdjeYARFV87sIdgaWm+snOGg3557zFFSwxtKxieU2mZ8c/
-         lsski8RJtVWmv3gwd5kbmKa38TxhjCiz8furiSBHXlKyCuB0to+0Loi7W+AFSjdFz7td
-         Es4Lm0+PFmVsA71QGLo76Fknz74uMiWp8SrbeitFu4wcx/TBYg+lpJGyPer4FtC8nVIh
-         w7eqFQn6AuEOhR6XhOb+rAsMaz72ojUHQkLa8QHZVyDE+bTvE/IvoYrkQ6XNS1uTtZeT
-         Vj1igFxLLG5CQ1qNWFJNr+pIRMf/h04CklgM0lBrnuHbdV5SBvwixoOz+ZJ7gEZfueDr
-         DTQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=fQVVdGDb3Q7Vkb7IJgMIh5zgrHdHv+81RG/Nw8ZMYXo=;
-        b=SNJ8e8ZNMHaO/qbe12MzaieGmHPmG/+DDtoASrRNIeW3HEYDkTrb2SDXaVeWWmusBo
-         aFtvGpmzyLbEeMogkonrCjTmgwpmFrAExTN67pPibgdtSBugKd2dA0MCtLRWtEM1mpbi
-         VkMjm1qYMuBScWStB7OoEtndpc3AAknQxi3PoGIeR+I9wG58/B1ReAy/1POazVUNhhxw
-         0mCWrZj7rY6qAXl+lr+UvApIBXRfKKghvNlCKigd/SEpKvVCEnPFDjuVBZErLGxQJHG0
-         hE6RuBEldqMbOr4LThnx7dt3xE8/T8RhOmfNZxA14ortDFzQE/qLJrnvpH4+OjrHliDR
-         qfnA==
-X-Gm-Message-State: AA6/9Rn4R29w5pfca2afbr3BbXM6lqPCZtVRrGl+wcwuaPXFRZ0kyYrALigkuUCSWncLc4eGSsKdWZArmZYthA==
-X-Received: by 10.157.39.2 with SMTP id r2mr2177742ota.103.1475174261820; Thu,
- 29 Sep 2016 11:37:41 -0700 (PDT)
+        id S1754639AbcI2SiI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Sep 2016 14:38:08 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:48690 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751795AbcI2SiH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2016 14:38:07 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 3slNcC74YZz5tlD;
+        Thu, 29 Sep 2016 20:38:03 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id CE8FC5330;
+        Thu, 29 Sep 2016 20:38:02 +0200 (CEST)
+Subject: Re: [PATCH v8 00/11] Git filter protocol
+To:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+References: <20160920190247.82189-1-larsxschneider@gmail.com>
+ <xmqq8tubitjs.fsf@gitster.mtv.corp.google.com>
+ <C2C9761E-986F-473D-BFB7-CBEF900D9FA3@gmail.com>
+ <f7a4f828-bb1d-0ffa-e369-3b4fa476d9e5@web.de>
+ <xmqqk2duhcdm.fsf@gitster.mtv.corp.google.com>
+ <1A8A9127-4DF9-44AD-9497-F8A630AB1193@gmail.com>
+ <7f8ab626-ecdb-70a8-aa19-615c3c84148e@web.de>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Stefan Beller <sbeller@google.com>,
+        =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
+        Martin-Louis Bright <mlbright@gmail.com>,
+        ramsay@ramsayjones.plus.com
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <049fad9b-d625-a80b-bd6b-9b80c9701f7a@kdbg.org>
+Date:   Thu, 29 Sep 2016 20:38:02 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-Received: by 10.182.241.106 with HTTP; Thu, 29 Sep 2016 11:37:41 -0700 (PDT)
-In-Reply-To: <xmqqmviqfuoh.fsf@gitster.mtv.corp.google.com>
-References: <CA+55aFy0_pwtFOYS1Tmnxipw9ZkRNCQHmoYyegO00pjMiZQfbg@mail.gmail.com>
- <20160928233047.14313-1-gitster@pobox.com> <20160928233047.14313-5-gitster@pobox.com>
- <ae9dbf3b-4190-8145-a59f-0d578067032a@kdbg.org> <xmqqmviqfuoh.fsf@gitster.mtv.corp.google.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Thu, 29 Sep 2016 11:37:41 -0700
-X-Google-Sender-Auth: 9BbCEtOi163zDYNP7v0EiCRNm5w
-Message-ID: <CA+55aFyYWWpz+9+KKf=9y3vBrEDyy-5h6J3boiitGE7Zb=uL-Q@mail.gmail.com>
-Subject: Re: [PATCH 4/4] core.abbrev: raise the default abbreviation to 12 hexdigits
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <7f8ab626-ecdb-70a8-aa19-615c3c84148e@web.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 29, 2016 at 11:05 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Yes, "git log --oneline" looks somewhat different and strange for
-> me, too ;-)
+Am 29.09.2016 um 20:18 schrieb Torsten Bögershausen:
+> I would agree that  Git should not wait for the filter.
+> But does the test suite need to wait for the filter ?
 
-I'm playing with an early patch to make the default more dynamic.
-Let's see how well it works in practice, but it looks fairly
-promising. Let me test a bit more and send out an RFC patch..
+We have fixed a test case on Windows recently where a process hung 
+around too long (5babb5bd). So, yes, the test suite has to wait for the 
+filter.
 
-              Linus
+-- Hannes
+
